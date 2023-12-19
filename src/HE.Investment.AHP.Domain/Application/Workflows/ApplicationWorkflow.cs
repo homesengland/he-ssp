@@ -1,3 +1,4 @@
+using HE.Investments.Loans.Common.Exceptions;
 using HE.Investments.Loans.Common.Routing;
 using Stateless;
 
@@ -7,9 +8,12 @@ public class ApplicationWorkflow : IStateRouting<ApplicationWorkflowState>
 {
     private readonly StateMachine<ApplicationWorkflowState, Trigger> _machine;
 
-    public ApplicationWorkflow(ApplicationWorkflowState currentWorkflowState)
+    private readonly bool _isReadOnly;
+
+    public ApplicationWorkflow(ApplicationWorkflowState currentWorkflowState, bool isReadOnly)
     {
         _machine = new StateMachine<ApplicationWorkflowState, Trigger>(currentWorkflowState);
+        _isReadOnly = isReadOnly;
         ConfigureTransitions();
     }
 
@@ -22,6 +26,16 @@ public class ApplicationWorkflow : IStateRouting<ApplicationWorkflowState>
     public Task<bool> StateCanBeAccessed(ApplicationWorkflowState nextState)
     {
         return Task.FromResult(true);
+    }
+
+    public ApplicationWorkflowState CurrentState(ApplicationWorkflowState targetState)
+    {
+        if (_isReadOnly)
+        {
+            throw new NotFoundException("State could not be accessed when application is read only.");
+        }
+
+        return targetState;
     }
 
     private void ConfigureTransitions()

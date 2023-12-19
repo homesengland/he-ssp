@@ -17,15 +17,18 @@ internal class HomeTypeQuestionFactory
 
     private readonly IUrlHelper _urlHelper;
 
+    private readonly bool _isReadOnly;
+
     private readonly HomeTypesWorkflow _workflow;
 
     private readonly EncodedWorkflow<HomeTypesWorkflowState>? _encodedWorkflow;
 
-    public HomeTypeQuestionFactory(FullHomeType homeType, IUrlHelper urlHelper, bool useWorkflowRedirection)
+    public HomeTypeQuestionFactory(FullHomeType homeType, IUrlHelper urlHelper, bool isReadOnly, bool useWorkflowRedirection)
     {
         _homeType = homeType;
         _urlHelper = urlHelper;
-        _workflow = new HomeTypesWorkflow(homeType);
+        _isReadOnly = isReadOnly;
+        _workflow = new HomeTypesWorkflow(homeType, isReadOnly);
         _encodedWorkflow = useWorkflowRedirection ? _workflow.GetEncodedWorkflow() : null;
     }
 
@@ -35,13 +38,13 @@ internal class HomeTypeQuestionFactory
         params string?[]? answers)
     {
         var workflowState = GetWorkflowState(controllerActionName);
-        if (!_workflow.CanBeAccessed(workflowState))
+        if (!_workflow.CanBeAccessed(workflowState, false))
         {
             return null;
         }
 
         var validAnswers = answers?.Where(x => x != null).Select(x => x!).ToList() ?? new List<string>();
-        return new SectionSummaryItemModel(questionName, validAnswers, CreateActionUrl(controllerActionName));
+        return new SectionSummaryItemModel(questionName, validAnswers, CreateActionUrl(controllerActionName), IsEditable: !_isReadOnly);
     }
 
     public SectionSummaryItemModel? Question(
@@ -80,7 +83,8 @@ internal class HomeTypeQuestionFactory
             questionName,
             string.IsNullOrWhiteSpace(answer) ? null : new[] { answer },
             CreateActionUrl(controllerActionName),
-            Files: files);
+            Files: files,
+            IsEditable: !_isReadOnly);
     }
 
     public SectionSummaryItemModel? DeadEnd(string controllerActionName)

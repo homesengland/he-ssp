@@ -16,16 +16,20 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
 
     private readonly bool _isLocked;
 
-    public HomeTypesWorkflow(HomeTypesWorkflowState currentHomeTypesWorkflowState, HomeType? homeTypeModel, bool isLocked = false)
+    private readonly bool _isReadOnly;
+
+    public HomeTypesWorkflow(HomeTypesWorkflowState currentHomeTypesWorkflowState, HomeType? homeTypeModel, bool isReadOnly, bool isLocked = false)
     {
         _homeTypeModel = homeTypeModel;
         _machine = new StateMachine<HomeTypesWorkflowState, Trigger>(currentHomeTypesWorkflowState);
         _isLocked = isLocked;
+        _isReadOnly = isReadOnly;
         ConfigureTransitions();
     }
 
-    public HomeTypesWorkflow(FullHomeType homeType)
+    public HomeTypesWorkflow(FullHomeType homeType, bool isReadOnly)
     {
+        _isReadOnly = isReadOnly;
         _homeTypeModel = new HomeType(
             homeType.Id,
             homeType.Name,
@@ -44,8 +48,8 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
         ConfigureTransitions();
     }
 
-    public HomeTypesWorkflow()
-        : this(HomeTypesWorkflowState.Index, null)
+    public HomeTypesWorkflow(bool isReadOnly)
+        : this(HomeTypesWorkflowState.Index, null, isReadOnly)
     {
     }
 
@@ -65,8 +69,20 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
         return Task.FromResult(CanBeAccessed(nextState));
     }
 
-    public bool CanBeAccessed(HomeTypesWorkflowState state)
+    public bool CanBeAccessed(HomeTypesWorkflowState state, bool? isReadOnlyMode = null)
     {
+        if (isReadOnlyMode ?? _isReadOnly)
+        {
+            return state switch
+            {
+                HomeTypesWorkflowState.Index => true,
+                HomeTypesWorkflowState.List => true,
+                HomeTypesWorkflowState.HomeTypeDetails => true,
+                HomeTypesWorkflowState.CheckAnswers => true,
+                _ => false,
+            };
+        }
+
         var isStateEligible = BuildDeadEndConditions(state).All(isValid => isValid());
         return isStateEligible && state switch
         {
@@ -113,7 +129,7 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
 
     public EncodedWorkflow<HomeTypesWorkflowState> GetEncodedWorkflow()
     {
-        return new EncodedWorkflow<HomeTypesWorkflowState>(CanBeAccessed);
+        return new EncodedWorkflow<HomeTypesWorkflowState>(x => CanBeAccessed(x));
     }
 
     private void ConfigureTransitions()
@@ -292,12 +308,13 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
 
         _machine.Configure(HomeTypesWorkflowState.CheckAnswers)
             .Permit(Trigger.Continue, HomeTypesWorkflowState.List)
-            .PermitIf(Trigger.Back, HomeTypesWorkflowState.ExemptFromTheRightToSharedOwnership, () => IsTenure(Tenure.AffordableRent, Tenure.SocialRent) && !IsExemptFromTheRightToSharedOwnership())
-            .PermitIf(Trigger.Back, HomeTypesWorkflowState.ExemptionJustification, () => IsTenure(Tenure.AffordableRent, Tenure.SocialRent) && IsExemptFromTheRightToSharedOwnership())
-            .PermitIf(Trigger.Back, HomeTypesWorkflowState.SharedOwnership, () => IsTenure(Tenure.SharedOwnership))
-            .PermitIf(Trigger.Back, HomeTypesWorkflowState.RentToBuy, () => IsTenure(Tenure.RentToBuy))
-            .PermitIf(Trigger.Back, HomeTypesWorkflowState.FloorArea, () => IsTenure(Tenure.OlderPersonsSharedOwnership, Tenure.HomeOwnershipLongTermDisabilities) && !IsNotMeetNationallyDescribedSpaceStandards())
-            .PermitIf(Trigger.Back, HomeTypesWorkflowState.FloorAreaStandards, () => IsTenure(Tenure.OlderPersonsSharedOwnership, Tenure.HomeOwnershipLongTermDisabilities) && IsNotMeetNationallyDescribedSpaceStandards());
+            .PermitIf(Trigger.Back, HomeTypesWorkflowState.List, () => _isReadOnly)
+            .PermitIf(Trigger.Back, HomeTypesWorkflowState.ExemptFromTheRightToSharedOwnership, () => !_isReadOnly && IsTenure(Tenure.AffordableRent, Tenure.SocialRent) && !IsExemptFromTheRightToSharedOwnership())
+            .PermitIf(Trigger.Back, HomeTypesWorkflowState.ExemptionJustification, () => !_isReadOnly && IsTenure(Tenure.AffordableRent, Tenure.SocialRent) && IsExemptFromTheRightToSharedOwnership())
+            .PermitIf(Trigger.Back, HomeTypesWorkflowState.SharedOwnership, () => !_isReadOnly && IsTenure(Tenure.SharedOwnership))
+            .PermitIf(Trigger.Back, HomeTypesWorkflowState.RentToBuy, () => !_isReadOnly && IsTenure(Tenure.RentToBuy))
+            .PermitIf(Trigger.Back, HomeTypesWorkflowState.FloorArea, () => !_isReadOnly && IsTenure(Tenure.OlderPersonsSharedOwnership, Tenure.HomeOwnershipLongTermDisabilities) && !IsNotMeetNationallyDescribedSpaceStandards())
+            .PermitIf(Trigger.Back, HomeTypesWorkflowState.FloorAreaStandards, () => !_isReadOnly && IsTenure(Tenure.OlderPersonsSharedOwnership, Tenure.HomeOwnershipLongTermDisabilities) && IsNotMeetNationallyDescribedSpaceStandards());
     }
 
     private IEnumerable<Func<bool>> BuildDeadEndConditions(HomeTypesWorkflowState state)

@@ -11,9 +11,23 @@ namespace HE.Investment.AHP.WWW.Models.HomeTypes.Factories;
 
 public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
 {
-    public IEnumerable<SectionSummaryViewModel> CreateSummaryModel(FullHomeType homeType, IUrlHelper urlHelper, bool useWorkflowRedirection = false)
+    public IEnumerable<SectionSummaryViewModel> CreateSummaryModel(
+        FullHomeType homeType,
+        IUrlHelper urlHelper,
+        bool isReadOnly,
+        bool useWorkflowRedirection = false)
     {
-        var factory = new HomeTypeQuestionFactory(homeType, urlHelper, useWorkflowRedirection);
+        return CreateSummarySectionsModel(homeType, urlHelper, isReadOnly, useWorkflowRedirection)
+            .Where(x => x.Items != null && x.Items.Any());
+    }
+
+    private static IEnumerable<SectionSummaryViewModel> CreateSummarySectionsModel(
+        FullHomeType homeType,
+        IUrlHelper urlHelper,
+        bool isReadOnly,
+        bool useWorkflowRedirection)
+    {
+        var factory = new HomeTypeQuestionFactory(homeType, urlHelper, isReadOnly, useWorkflowRedirection);
 
         yield return CreateHomeTypeDetailsSection(homeType, factory);
 

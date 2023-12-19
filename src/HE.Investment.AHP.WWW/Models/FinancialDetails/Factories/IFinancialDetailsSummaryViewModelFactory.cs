@@ -8,5 +8,6 @@ public interface IFinancialDetailsSummaryViewModelFactory
     Task<FinancialDetailsCheckAnswersModel> GetFinancialDetailsAndCreateSummary(
         string applicationId,
         IUrlHelper urlHelper,
+        bool isReadOnly,
         CancellationToken cancellationToken);
 }

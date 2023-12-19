@@ -19,7 +19,7 @@ public class ApplicationListTests : ViewTestBase
     public async Task ShouldDisplayView_WhenThereIsNoApplications()
     {
         // given
-        var applicationListModel = new ApplicationsListModel("Organisation Name", PaginationResult(new List<ApplicationBasicDetails>()));
+        var applicationListModel = new ApplicationsListModel("Organisation Name", PaginationResult(new List<ApplicationBasicDetails>()), false);
 
         // when
         var document = await Render(_viewPath, applicationListModel);
@@ -35,7 +35,7 @@ public class ApplicationListTests : ViewTestBase
         var application1 = new ApplicationBasicDetails("1", "Application 1", ApplicationStatus.ApplicationSubmitted, "Local Authority 1", 10, 12);
         var application2 = new ApplicationBasicDetails("2", "Application 2", ApplicationStatus.Draft, null, 20, null);
 
-        var applicationListModel = new ApplicationsListModel("Organisation Name", PaginationResult(new List<ApplicationBasicDetails> { application1, application2, }));
+        var applicationListModel = new ApplicationsListModel("Organisation Name", PaginationResult(new List<ApplicationBasicDetails> { application1, application2, }), false);
 
         // when
         var document = await Render(_viewPath, applicationListModel);

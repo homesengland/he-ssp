@@ -8,10 +8,10 @@ using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Documents.Config;
 using HE.Investment.AHP.Domain.HomeTypes;
 using HE.Investment.AHP.Domain.HomeTypes.Commands;
-using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.WWW.Models.Common;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
 using HE.Investment.AHP.WWW.Models.HomeTypes.Factories;
+using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Messages;
@@ -38,11 +38,18 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
 
     private readonly IHomeTypeSummaryViewModelFactory _summaryViewModelFactory;
 
-    public HomeTypesController(IMediator mediator, IAhpDocumentSettings documentSettings, IHomeTypeSummaryViewModelFactory summaryViewModelFactory)
+    private readonly IAccountAccessContext _accountAccessContext;
+
+    public HomeTypesController(
+        IMediator mediator,
+        IAhpDocumentSettings documentSettings,
+        IHomeTypeSummaryViewModelFactory summaryViewModelFactory,
+        IAccountAccessContext accountAccessContext)
     {
         _mediator = mediator;
         _documentSettings = documentSettings;
         _summaryViewModelFactory = summaryViewModelFactory;
+        _accountAccessContext = accountAccessContext;
     }
 
     [WorkflowState(HomeTypesWorkflowState.Index)]
@@ -68,6 +75,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         return View(new HomeTypeListModel(homeTypes.ApplicationName)
         {
             HomeTypes = homeTypes.HomeTypes.Select(x => new HomeTypeItemModel(x.Id, x.Name, x.HousingType, x.NumberOfHomes)).ToList(),
+            IsEditable = await _accountAccessContext.CanEditApplication(),
         });
     }
 
@@ -163,11 +171,17 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         [FromQuery] bool redirect,
         CancellationToken cancellationToken)
     {
+        var isReadOnly = !await _accountAccessContext.CanEditApplication();
+        if (isReadOnly)
+        {
+            return RedirectToAction("CheckAnswers", new { applicationId, homeTypeId });
+        }
+
         if (redirect)
         {
             var homeType = await _mediator.Send(new GetFullHomeTypeQuery(applicationId, homeTypeId), cancellationToken);
             var firstNotAnsweredQuestion = _summaryViewModelFactory
-                .CreateSummaryModel(homeType, Url)
+                .CreateSummaryModel(homeType, Url, isReadOnly)
                 .Where(x => x.Items != null)
                 .SelectMany(x => x.Items!)
                 .FirstOrDefault(x => x is { HasAnswer: false, HasRedirectAction: true });
@@ -1086,26 +1100,27 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         var applicationId = Request.GetRouteValue("applicationId")
                                 ?? routeData?.GetPropertyValue<string>("applicationId")
                                 ?? throw new NotFoundException($"{nameof(HomeTypesController)} required applicationId path parameter.");
+        var isReadOnly = !await _accountAccessContext.CanEditApplication();
         if (string.IsNullOrEmpty(applicationId))
         {
-            return new HomeTypesWorkflow();
+            return new HomeTypesWorkflow(isReadOnly);
         }
 
         var homeTypeId = Request.GetRouteValue("homeTypeId") ?? routeData?.GetPropertyValue<string>("homeTypeId");
         if (string.IsNullOrEmpty(homeTypeId))
         {
-            return new HomeTypesWorkflow(currentState, null);
+            return new HomeTypesWorkflow(currentState, null, isReadOnly);
         }
 
         var homeType = await _mediator.Send(new GetHomeTypeQuery(applicationId, homeTypeId));
-        var workflow = new HomeTypesWorkflow(currentState, homeType);
+        var workflow = new HomeTypesWorkflow(currentState, homeType, isReadOnly);
         if (TryGetWorkflowQueryParameter(out var lastEncodedWorkflow))
         {
             var lastWorkflow = new EncodedWorkflow<HomeTypesWorkflowState>(lastEncodedWorkflow);
             var currentWorkflow = workflow.GetEncodedWorkflow();
             var changedState = currentWorkflow.GetNextChangedWorkflowState(currentState, lastWorkflow);
 
-            return new HomeTypesWorkflow(changedState, homeType, true);
+            return new HomeTypesWorkflow(changedState, homeType, isReadOnly, true);
         }
 
         return workflow;
@@ -1191,13 +1206,15 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         string homeTypeId,
         CancellationToken cancellationToken)
     {
+        var isEditable = await _accountAccessContext.CanEditApplication();
         var homeType = await _mediator.Send(new GetFullHomeTypeQuery(applicationId, homeTypeId), cancellationToken);
-        var sections = _summaryViewModelFactory.CreateSummaryModel(homeType, urlHelper, true);
+        var sections = _summaryViewModelFactory.CreateSummaryModel(homeType, urlHelper, !isEditable, true);
 
         return new HomeTypeSummaryModel(homeType.ApplicationName, homeType.Name)
         {
             IsSectionCompleted = homeType.IsCompleted ? IsSectionCompleted.Yes : IsSectionCompleted.Undefied,
             Sections = sections.ToList(),
+            IsEditable = isEditable,
         };
     }
 }

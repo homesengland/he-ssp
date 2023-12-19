@@ -2,7 +2,7 @@
 @using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.Contract.HomeTypes.Enums
 @using HE.Investments.Common.Extensions
-@model HE.Investment.AHP.WWW.Models.HomeTypes.HomeTypeListModel;
+@model HE.Investment.AHP.WWW.Models.HomeTypes.HomeTypeListModel
 
 @{
     var applicationId = this.GetApplicationIdFromRoute();
@@ -22,12 +22,14 @@
     <span class="govuk-caption-l govuk-!-margin-top-1">@Model.ApplicationName</span>
     <gds-h1>Home types</gds-h1>
 
-    <gds-p class="govuk-!-width-three-quarters">
+    <gds-p class="govuk-!-width-three-quarters" hidden="@Model.IsReadOnly">
         Add the home types for this application. You can duplicate and edit a home type.
     </gds-p>
 
     <form asp-controller="HomeTypes" asp-action="List" asp-method="post" novalidate>
         @Html.HiddenFor(m => Model.ApplicationName)
+        @Html.HiddenFor(m => Model.IsEditable)
+
         @if (Model.HomeTypes.Any())
         {
             <table class="govuk-table govuk-!-margin-bottom-0">
@@ -62,7 +64,7 @@
                         <td class="govuk-table__cell">
                             @(Model.HomeTypes[index].HousingType == HousingType.Undefined ? "Not provided" : Model.HomeTypes[index].HousingType.GetDescription())
                         </td>
-                        <td class="govuk-table__cell govuk-!-text-align-right">
+                        <td class="govuk-table__cell govuk-!-text-align-right" hidden="@Model.IsReadOnly">
                             <gds-link class="govuk-link--no-visited-state"
                                       href="@Url.RouteUrl("subSection", new { controller = "HomeTypes", action = "Duplicate", applicationId, id = Model.HomeTypes[index].HomeTypeId })">
                                 Duplicate
@@ -77,12 +79,12 @@
 
                 <tr>
                     <td class="govuk-!-padding-top-6">
-                        <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="continue-button">
+                        <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="continue-button" disabled="@Model.IsReadOnly">
                             Save and continue
                         </button>
                     </td>
                     <td class="govuk-!-padding-top-6" colspan="3">
-                        <link-button is-secondary="true" href="@Url.RouteUrl("section", new { controller = "HomeTypes", action = "HomeTypeDetails", applicationId })">Add another home type</link-button>
+                        <link-button is-secondary="true" href="@Url.RouteUrl("section", new { controller = "HomeTypes", action = "HomeTypeDetails", applicationId })" is-disabled="@Model.IsReadOnly">Add another home type</link-button>
                     </td>
                 </tr>
                 </tbody>
@@ -94,10 +96,10 @@
                 Your home type details will appear here once added.
             </gds-p>
 
-            <link-button href="@Url.RouteUrl("section", new { controller = "HomeTypes", action = "HomeTypeDetails", applicationId })">Add a home type</link-button>
+            <link-button href="@Url.RouteUrl("section", new { controller = "HomeTypes", action = "HomeTypeDetails", applicationId })" is-disabled="@Model.IsReadOnly">Add a home type</link-button>
         }
     </form>
 
     <br/>
-    <vc:return-to-application-link application-id="@applicationId"/>
+    <vc:return-to-application-link application-id="@applicationId" is-editable="@Model.IsEditable"/>
 </div>

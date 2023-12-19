@@ -1,4 +1,3 @@
-using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Contract.Scheme;
 using HE.Investment.AHP.Contract.Scheme.Queries;
@@ -9,6 +8,7 @@ using HE.Investment.AHP.Domain.Scheme.Workflows;
 using HE.Investment.AHP.WWW.Models.Scheme;
 using HE.Investment.AHP.WWW.Models.Scheme.Factories;
 using HE.Investment.AHP.WWW.Utils;
+using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Exceptions;
@@ -33,17 +33,20 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     private readonly ISchemeSummaryViewModelFactory _summaryViewModelFactory;
     private readonly IAhpDocumentSettings _documentSettings;
     private readonly ISchemeProvider _schemeProvider;
+    private readonly IAccountAccessContext _accountAccessContext;
 
     public SchemeController(
         IMediator mediator,
         ISchemeSummaryViewModelFactory summaryViewModelFactory,
         IAhpDocumentSettings documentSettings,
-        ISchemeProvider schemeProvider)
+        ISchemeProvider schemeProvider,
+        IAccountAccessContext accountAccessContext)
     {
         _mediator = mediator;
         _summaryViewModelFactory = summaryViewModelFactory;
         _documentSettings = documentSettings;
         _schemeProvider = schemeProvider;
+        _accountAccessContext = accountAccessContext;
     }
 
     [WorkflowState(SchemeWorkflowState.Start)]
@@ -259,8 +262,8 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
         }
 
         var scheme = await _schemeProvider.Get(new GetApplicationSchemeQuery(applicationId), CancellationToken.None);
-
-        return await Task.FromResult(new SchemeWorkflow(currentState, scheme));
+        var isReadOnly = !await _accountAccessContext.CanEditApplication();
+        return await Task.FromResult(new SchemeWorkflow(currentState, scheme, isReadOnly));
     }
 
     private SchemeViewModel CreateModel(string applicationId, Scheme scheme)
@@ -312,9 +315,14 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
         CancellationToken cancellationToken)
     {
         var scheme = await _schemeProvider.Get(new GetApplicationSchemeQuery(applicationId, true), cancellationToken);
+        var isEditable = await _accountAccessContext.CanEditApplication();
+        var section = _summaryViewModelFactory.GetSchemeAndCreateSummary("Scheme information", scheme, urlHelper, !isEditable);
 
-        var section = _summaryViewModelFactory.GetSchemeAndCreateSummary("Scheme information", scheme, urlHelper);
-
-        return new SchemeSummaryViewModel(scheme.ApplicationId, scheme.ApplicationName, scheme.Status == SectionStatus.Completed ? true : null, section);
+        return new SchemeSummaryViewModel(
+            scheme.ApplicationId,
+            scheme.ApplicationName,
+            scheme.Status == SectionStatus.Completed ? true : null,
+            section,
+            isEditable);
     }
 }
