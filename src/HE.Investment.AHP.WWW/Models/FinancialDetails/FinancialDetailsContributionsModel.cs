@@ -17,7 +17,7 @@ public class FinancialDetailsContributionsModel : FinancialDetailsBaseModel
         string? ownResources,
         string? rCGFContribution,
         string? otherCapitalSources,
-        string? initialSalesOfSharedHomes,
+        string? sharedOwnershipSales,
         string? homesTransferValue,
         bool isSharedOwnership,
         bool isUnregisteredBodyAccount,
@@ -30,7 +30,7 @@ public class FinancialDetailsContributionsModel : FinancialDetailsBaseModel
         OwnResources = ownResources;
         RCGFContribution = rCGFContribution;
         OtherCapitalSources = otherCapitalSources;
-        InitialSalesOfSharedHomes = initialSalesOfSharedHomes;
+        SharedOwnershipSales = sharedOwnershipSales;
         HomesTransferValue = homesTransferValue;
         IsSharedOwnership = isSharedOwnership;
         IsUnregisteredBodyAccount = isUnregisteredBodyAccount;
@@ -49,7 +49,7 @@ public class FinancialDetailsContributionsModel : FinancialDetailsBaseModel
 
     public string? OtherCapitalSources { get; set; }
 
-    public string? InitialSalesOfSharedHomes { get; set; }
+    public string? SharedOwnershipSales { get; set; }
 
     public string? HomesTransferValue { get; set; }
 
