@@ -1,4 +1,5 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.Investments.Account.Contract.Users;
 using HE.Investments.Account.Shared;
 using HE.Investments.Loans.Common.Exceptions;
 using HE.Investments.Organisation.Services;
@@ -24,9 +25,18 @@ public class UsersCrmContext : IUsersCrmContext
 
     public async Task<IList<ContactDto>> GetUsers()
     {
-        return await _contactService.GetAllOrganisationContactsForPortal(
+        var x = await _contactService.GetAllOrganisationContactsForPortal(
             _organizationServiceAsync,
-            await TryGetOrganisationId());
+            new ContactService.ContactFilters(10, 1, await TryGetOrganisationId(), new List<int>
+            {
+                UserRoleMapper.ToDto(UserRole.Admin)!.Value,
+                UserRoleMapper.ToDto(UserRole.Enhanced)!.Value,
+                UserRoleMapper.ToDto(UserRole.Input)!.Value,
+                UserRoleMapper.ToDto(UserRole.ViewOnly)!.Value,
+                UserRoleMapper.ToDto(UserRole.Limited)!.Value,
+            }));
+
+        return x.Items;
     }
 
     public async Task<ContactDto> GetUser(string id)

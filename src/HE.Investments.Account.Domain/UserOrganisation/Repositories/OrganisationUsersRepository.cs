@@ -1,4 +1,5 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.Investments.Account.Contract.Users;
 using HE.Investments.Account.Domain.Data;
 using HE.Investments.Account.Domain.Data.Extensions;
 using HE.Investments.Account.Domain.Organisation.ValueObjects;
@@ -32,9 +33,17 @@ public class OrganisationUsersRepository : IOrganisationUsersRepository
 
     public async Task<OrganisationUsersEntity> GetOrganisationUsers(OrganisationId organisationId, CancellationToken cancellationToken)
     {
-        var contacts = await _contactService.GetAllOrganisationContactsForPortal(_organizationServiceAsync, organisationId.Value);
-        var activeUsers = contacts.Where(x => x.IsConnectedWithExternalIdentity()).Select(x => new EmailAddress(x.email));
-        var invitedUsers = contacts.Where(x => !x.IsConnectedWithExternalIdentity()).Select(x => new EmailAddress(x.email));
+        var filter = new ContactService.ContactFilters(10, 1, organisationId.Value, new List<int>
+        {
+            UserRoleMapper.ToDto(UserRole.Admin)!.Value,
+            UserRoleMapper.ToDto(UserRole.Enhanced)!.Value,
+            UserRoleMapper.ToDto(UserRole.Input)!.Value,
+            UserRoleMapper.ToDto(UserRole.ViewOnly)!.Value,
+            UserRoleMapper.ToDto(UserRole.Limited)!.Value,
+        });
+        var contacts = await _contactService.GetAllOrganisationContactsForPortal(_organizationServiceAsync, filter);
+        var activeUsers = contacts.Items.Where(x => x.IsConnectedWithExternalIdentity()).Select(x => new EmailAddress(x.email));
+        var invitedUsers = contacts.Items.Where(x => !x.IsConnectedWithExternalIdentity()).Select(x => new EmailAddress(x.email));
 
         return new OrganisationUsersEntity(organisationId, activeUsers, invitedUsers);
     }
