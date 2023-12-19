@@ -10,7 +10,5 @@ public interface IUsersCrmContext
 
     Task<int?> GetUserRole(string id);
 
-    Task<Dictionary<string, int?>> GetUsersRole(List<string> userIds);
-
     Task ChangeUserRole(string userId, int role);
 }

@@ -1,0 +1,15 @@
+@using HE.Investments.Common.WWW.Components.Table
+
+@model (IList<TableHeaderViewModel> Headers, HE.Investments.Common.Utils.Pagination.PaginationResult<TableRowViewModel> Rows, string NavigationUrl)
+
+<div class="govuk-!-padding-bottom-8">
+    <vc:table
+        headers="@Model.Headers"
+        rows="@Model.Rows.Items"/>
+    <he-pagination
+        base-url="@Model.NavigationUrl"
+        page="@Model.Rows.CurrentPage"
+        items-per-page="@Model.Rows.ItemsPerPage"
+        total-items="@Model.Rows.TotalItems">
+    </he-pagination>
+</div>
