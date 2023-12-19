@@ -2,10 +2,9 @@ using System.Text;
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
-using He.AspNetCore.Mvc.Gds.Components.Constants;
-using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Extensions;
+using HE.Investments.Common.WWW.Components;
 
-namespace HE.Investments.Loans.IntegrationTests.IntegrationFramework.Extensions;
+namespace HE.Investments.IntegrationTestsFramework.Extensions;
 
 public static class HtmlDocumentExtensions
 {
