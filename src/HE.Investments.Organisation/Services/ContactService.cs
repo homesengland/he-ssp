@@ -15,10 +15,6 @@ public class ContactService : IContactService
 
     private readonly int _commonPortalTypeOption = 858110002;
 
-    public record ContactFilters(int PageSize, int PageNumber, Guid OrganisationGuid, IList<int> Roles, int? portalType = null);
-
-    public record PagedResponse(int PageNumber, int TotalCount, List<ContactDto> Items);
-
     public ContactService(IContactRepository contactRepository, IWebRoleRepository webRoleRepository, IPortalPermissionRepository permissionRepository, IOrganizationRepository organizationRepository)
     {
         _contactRepository = contactRepository;
@@ -159,7 +155,7 @@ public class ContactService : IContactService
 
     public Task<PagedResponse> GetAllOrganisationContactsForPortal(IOrganizationServiceAsync2 service, ContactFilters contactFilter)
     {
-        var portalTypeFilter = GeneratePortalTypeFilter(contactFilter.portalType);
+        var portalTypeFilter = GeneratePortalTypeFilter(contactFilter.PortalType);
         var rolesFilter = string.Empty;
         if (contactFilter.Roles.Any())
         {
@@ -362,4 +358,8 @@ public class ContactService : IContactService
                         <condition attribute=""invln_portal"" operator=""eq"" value=""" + portalType + @""" />
                    </filter>";
     }
+
+    public record ContactFilters(int PageSize, int PageNumber, Guid OrganisationGuid, IList<int> Roles, int? PortalType = null);
+
+    public record PagedResponse(int PageNumber, int TotalCount, List<ContactDto> Items);
 }
