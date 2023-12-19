@@ -30,7 +30,7 @@ public class BuildingInformationTests : HomeTypesTestBase
                     "Maisonette",
                 })
             .HasElementWithText("span", "A single self-contained residential dwelling, usually of more than one storey.")
-            .HasElementWithText("span", "A single self-contained residential dwelling, usually of one storey, withing a single structure containing multiple dwellings.")
+            .HasElementWithText("span", "A single self-contained residential dwelling, usually of one storey, within a single structure containing multiple dwellings.")
             .HasElementWithText("span", "Single unit within a shared property.")
             .HasElementWithText("span", "A single self-contained residential dwelling that is only on one storey.")
             .HasElementWithText("span", "A single self-contained residential dwelling usually of two storeys with your own front door.")
