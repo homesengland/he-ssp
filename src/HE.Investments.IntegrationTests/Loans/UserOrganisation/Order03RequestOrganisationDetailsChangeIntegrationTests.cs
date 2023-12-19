@@ -1,12 +1,12 @@
 using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
 using HE.Investments.Common.Messages;
+using HE.Investments.IntegrationTestsFramework.Extensions;
 using HE.Investments.Loans.Common.Tests.TestData;
 using HE.Investments.Loans.Common.Utils.Constants;
 using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using HE.Investments.Loans.Common.Utils.Constants.ViewName;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
-using HE.Investments.Loans.IntegrationTests.IntegrationFramework.Extensions;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
 using HE.Investments.Loans.WWW;
 using Xunit;

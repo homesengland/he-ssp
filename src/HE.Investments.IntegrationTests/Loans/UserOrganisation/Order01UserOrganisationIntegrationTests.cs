@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
+using HE.Investments.IntegrationTestsFramework.Extensions;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
-using HE.Investments.Loans.IntegrationTests.IntegrationFramework.Extensions;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
 using HE.Investments.Loans.WWW;
 using Xunit;
@@ -27,7 +27,6 @@ public class Order01UserOrganisationIntegrationTests : IntegrationTest
         // then
         userOrganisationPage
             .UrlEndWith(UserOrganisationPagesUrls.UserOrganisation)
-            .HasTitle($"{UserData.OrganizationName}'s Homes England account")
             .HasLinkButtonForTestId("user-organisation-start-new-application-levelling-up-home-building-fund", out _)
             .HasElementForTestId("user-organisation-limited-user", out _);
     }

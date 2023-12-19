@@ -1,4 +1,4 @@
-namespace HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Extensions;
+namespace HE.Investments.IntegrationTestsFramework.Extensions;
 
 public static class UriExtensions
 {

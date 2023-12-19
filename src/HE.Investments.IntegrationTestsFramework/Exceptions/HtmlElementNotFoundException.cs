@@ -1,4 +1,4 @@
-namespace HE.Investments.Loans.IntegrationTests.IntegrationFramework.Exceptions;
+namespace HE.Investments.IntegrationTestsFramework.Exceptions;
 public class HtmlElementNotFoundException : Exception
 {
     public HtmlElementNotFoundException(string? message)

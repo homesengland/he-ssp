@@ -3,7 +3,7 @@ using FluentAssertions;
 using FluentAssertions.Execution;
 using FluentAssertions.Primitives;
 
-namespace HE.Investments.Loans.IntegrationTests.IntegrationFramework.Assertions;
+namespace HE.Investments.IntegrationTestsFramework.Assertions;
 
 public class ElementFluentAssertions : ReferenceTypeAssertions<IElement?, ElementFluentAssertions>
 {

@@ -31,7 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AngleSharp" Version="1.0.5" />
+    <PackageReference Include="AngleSharp" Version="1.0.7" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="6.0.24" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.435">
       <PrivateAssets>all</PrivateAssets>
@@ -60,12 +60,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\HE.Investments.IntegrationTestsFramework\HE.Investments.IntegrationTestsFramework.csproj" />
     <ProjectReference Include="..\HE.Investments.Loans.Common.Tests\HE.Investments.Loans.Common.Tests.csproj" />
     <ProjectReference Include="..\HE.Investments.Loans.WWW\HE.Investments.Loans.WWW.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Loans\Dashboards\" />
   </ItemGroup>
 
 </Project>

@@ -1,8 +1,8 @@
 using AngleSharp.Html.Dom;
 using HE.Investments.Common.Extensions;
+using HE.Investments.IntegrationTestsFramework.Exceptions;
 using HE.Investments.Loans.IntegrationTests.Config;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework.Auth;
-using HE.Investments.Loans.IntegrationTests.IntegrationFramework.Exceptions;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework.Helpers;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework.Helpers.DataPackages;
 
