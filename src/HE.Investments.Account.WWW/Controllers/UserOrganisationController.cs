@@ -1,5 +1,6 @@
 using HE.Investments.Account.Contract.Organisation;
 using HE.Investments.Account.Contract.Organisation.Queries;
+using HE.Investments.Account.Contract.UserOrganisation;
 using HE.Investments.Account.Contract.UserOrganisation.Commands;
 using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
@@ -7,12 +8,10 @@ using HE.Investments.Account.Shared.Routing;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.WWW.Models.UserOrganisation;
 using HE.Investments.Account.WWW.Utils;
-using HE.Investments.Common;
 using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Utils;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.FeatureManagement;
 
 namespace HE.Investments.Account.WWW.Controllers;
 
@@ -38,6 +37,9 @@ public class UserOrganisationController : Controller
     {
         var userOrganisationResult = await _mediator.Send(new GetUserOrganisationInformationQuery());
         var canViewOrganisationDetails = await _accountAccessContext.CanAccessOrganisationView();
+        var programmeModels = await GetProgrammes(
+            userOrganisationResult.ProgrammesTypesToApply.Concat(userOrganisationResult.ProgrammesToAccess.Select(x => x.Type)).Distinct().ToList());
+
         return View(
             "UserOrganisation",
             new UserOrganisationModel(
@@ -46,7 +48,7 @@ public class UserOrganisationController : Controller
                 userOrganisationResult.IsLimitedUser,
                 userOrganisationResult.ProgrammesToAccess.Select(
                     p => new ProgrammeToAccessModel(
-                        _programmes.GetProgramme(p.Type),
+                        programmeModels[p.Type],
                         p.Applications.Select(a =>
                                 new ApplicationBasicDetailsModel(
                                         a.Id,
@@ -55,7 +57,7 @@ public class UserOrganisationController : Controller
                                         _programmes.GetApplicationUrl(p.Type, a.Id)))
                             .ToList()))
                     .ToList(),
-                userOrganisationResult.ProgrammesTypesToApply.Select(t => _programmes.GetProgramme(t)).ToList(),
+                userOrganisationResult.ProgrammesTypesToApply.Select(t => programmeModels[t]).ToList(),
                 new List<Common.WWW.Models.ActionModel>
                 {
                     new($"Manage {userOrganisationResult.OrganizationBasicInformation.RegisteredCompanyName} details", "Details", "UserOrganisation", canViewOrganisationDetails),
@@ -106,5 +108,12 @@ public class UserOrganisationController : Controller
                 new ControllerName(nameof(UserOrganisationController)).WithoutPrefix()),
             () => View(viewModel),
             cancellationToken);
+    }
+
+    private async Task<Dictionary<ProgrammeType, ProgrammeModel>> GetProgrammes(IList<ProgrammeType> programmeTypes)
+    {
+        var programmes = await Task.WhenAll(programmeTypes.Select(x => _programmes.GetProgramme(x)));
+
+        return programmeTypes.Zip(programmes).ToDictionary(x => x.First, x => x.Second);
     }
 }
