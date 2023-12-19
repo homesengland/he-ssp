@@ -15,6 +15,10 @@ public class ContactService : IContactService
 
     private readonly int _commonPortalTypeOption = 858110002;
 
+    public record ContactFilters(int PageSize, int PageNumber, Guid OrganisationGuid, IList<int> Roles, int? portalType = null);
+
+    public record PagedResponse(int PageNumber, int TotalCount, List<ContactDto> Items);
+
     public ContactService(IContactRepository contactRepository, IWebRoleRepository webRoleRepository, IPortalPermissionRepository permissionRepository, IOrganizationRepository organizationRepository)
     {
         _contactRepository = contactRepository;
@@ -153,17 +157,26 @@ public class ContactService : IContactService
         }
     }
 
-    public Task<List<ContactDto>> GetAllOrganisationContactsForPortal(IOrganizationServiceAsync2 service, Guid organisationGuid, int? portalType = null)
+    public Task<PagedResponse> GetAllOrganisationContactsForPortal(IOrganizationServiceAsync2 service, ContactFilters contactFilter)
     {
-        var contactList = new List<ContactDto>();
-        var portalTypeFilter = GeneratePortalTypeFilter(portalType);
-        var contacts = _contactRepository.GetContactsForOrganisation(service, organisationGuid, portalTypeFilter);
-        foreach (var contact in contacts)
+        var portalTypeFilter = GeneratePortalTypeFilter(contactFilter.portalType);
+        var rolesFilter = string.Empty;
+        if (contactFilter.Roles.Any())
         {
-            contactList.Add(MapContactEntityToDto(contact));
+            foreach (var role in contactFilter.Roles)
+            {
+                rolesFilter += $"<value>{role}</value>";
+            }
         }
 
-        return Task.FromResult(contactList);
+        var contacts = _contactRepository.GetContactsForOrganisationWithPaging(service, contactFilter.OrganisationGuid, contactFilter.PageSize, contactFilter.PageNumber, rolesFilter, portalTypeFilter);
+        var pagedResponse = new PagedResponse(contactFilter.PageNumber, contacts.TotalRecordCount, new List<ContactDto>());
+        foreach (var contact in contacts.Entities.ToList())
+        {
+            pagedResponse.Items.Add(MapContactEntityToDto(contact));
+        }
+
+        return Task.FromResult(pagedResponse);
     }
 
     public async Task UpdateContactWebrole(IOrganizationServiceAsync2 service, string contactExternalId, Guid organisationGuid, int newWebRole, int? portalType = null)

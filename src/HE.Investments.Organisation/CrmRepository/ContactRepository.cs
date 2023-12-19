@@ -6,9 +6,9 @@ using Microsoft.Xrm.Sdk.Query;
 namespace HE.Investments.Organisation.CrmRepository;
 public class ContactRepository : IContactRepository
 {
-    public List<Entity> GetContactsForOrganisation(IOrganizationServiceAsync2 service, Guid organisationId, string? portalTypeFilter = null)
+    public EntityCollection GetContactsForOrganisationWithPaging(IOrganizationServiceAsync2 service, Guid organisationId, int pageSize, int pageNumber, string rolesFilter, string? portalTypeFilter = null)
     {
-        var fetchXml = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+        var fetchXml = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false' count=""10"" returntotalrecordcount=""true"" page=""1"">
                       <entity name=""contact"">
                         <attribute name=""emailaddress1"" />
                         <attribute name=""firstname"" />
@@ -20,6 +20,13 @@ public class ContactRepository : IContactRepository
                             <condition attribute=""invln_accountid"" operator=""eq"" value=""" + organisationId + @""" />
                           </filter>
                           <link-entity name=""invln_webrole"" from=""invln_webroleid"" to=""invln_webroleid"">
+                            <link-entity name=""invln_portalpermissionlevel"" from=""invln_portalpermissionlevelid"" to=""invln_portalpermissionlevelid"">
+                                  <filter>
+                                    <condition attribute=""invln_permission"" operator=""in"">"
+                                      + rolesFilter +
+                                    @"</condition>
+                                  </filter>
+                                </link-entity>
                             <link-entity name=""invln_portal"" from=""invln_portalid"" to=""invln_portalid"">" +
                               portalTypeFilter
                               + @"</link-entity>
@@ -28,8 +35,7 @@ public class ContactRepository : IContactRepository
                       </entity>
                     </fetch>";
 
-        var result = service.RetrieveMultiple(new FetchExpression(fetchXml));
-        return result.Entities.ToList();
+        return service.RetrieveMultiple(new FetchExpression(fetchXml));
     }
 
     public Entity? GetContactViaExternalId(IOrganizationServiceAsync2 service, string contactExternalId, string[]? columnSet = null)

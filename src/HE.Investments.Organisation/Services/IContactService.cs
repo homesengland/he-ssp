@@ -1,5 +1,6 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using Microsoft.PowerPlatform.Dataverse.Client;
+using static HE.Investments.Organisation.Services.ContactService;
 
 namespace HE.Investments.Organisation.Services;
 
@@ -17,7 +18,7 @@ public interface IContactService
 
     Task UpdateContactWebrole(IOrganizationServiceAsync2 service, string contactExternalId, Guid organisationGuid, int newWebRole, int? portalType = null);
 
-    Task<List<ContactDto>> GetAllOrganisationContactsForPortal(IOrganizationServiceAsync2 service, Guid organisationGuid, int? portalType = null);
+    Task<PagedResponse> GetAllOrganisationContactsForPortal(IOrganizationServiceAsync2 service, ContactFilters contactFilter);
 
     Task<List<ContactRolesDto>> GetContactRolesForOrganisationContacts(IOrganizationServiceAsync2 service, List<string> contactExternalId, Guid organisationGuid);
 
