@@ -13,13 +13,6 @@
     var (costsAndFundingAreInvalid, costAndFundingErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.CostsAndFunding);
     var errorCssClass = costsAndFundingAreInvalid ? "govuk-form-group--error" : string.Empty;
     var customBackLinkUrl = Model.IsReadOnly ? @Url.Action("TaskList", "Application", new { applicationId = Model.ApplicationId }) : null;
-
-    var values = CommonFormOptions.IsSectionCompleted
-        .Select(r => new ExtendedSelectListItem(
-            r.Text,
-            r.Value,
-            (r.Value == Model.IsSectionCompleted.ToString()) && (Model.IsSectionCompleted == IsSectionCompleted.Yes) ? true : false ))
-        .ToList();
 }
 <div class="govuk-grid-column-full">
     <form asp-controller="FinancialDetails" asp-action="CheckAnswers" asp-route-applicationId="@Model.ApplicationId" asp-method="post" novalidate>
@@ -45,9 +38,14 @@
         @Html.HiddenFor(m => Model.IsReadOnly)
 
         <gds-field-set role="group" hidden="@Model.IsReadOnly">
-            <vc:radio-list field-name="IsSectionCompleted"
-                           title="Have you completed this section?"
-                           available-options="@values"/>
+            <gds-legend>
+                <gds-h2>Have you completed this section?</gds-h2>
+            </gds-legend>
+            <gds-radio govuk-formgroup-asp-for="IsSectionCompleted"
+                       asp-hiddenlabeltext="Have you completed this section?"
+                       value="@Model.IsSectionCompleted"
+                       asp-selectlistitems="@CommonFormOptions.IsSectionCompleted">
+            </gds-radio>
             <button id="continue-button" class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
                 Save and continue
             </button>
