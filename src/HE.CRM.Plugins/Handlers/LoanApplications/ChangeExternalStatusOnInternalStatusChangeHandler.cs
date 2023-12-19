@@ -9,7 +9,7 @@ using HE.CRM.Plugins.Services.LoanApplication;
 
 namespace HE.CRM.Plugins.Handlers.LoanApplications
 {
-    public class SendInternalNotificationOnStatusChangeHandler : CrmEntityHandlerBase<invln_Loanapplication, DataverseContext>
+    public class ChangeExternalStatusOnInternalStatusChangeHandler : CrmEntityHandlerBase<invln_Loanapplication, DataverseContext>
     {
         #region Fields
 
@@ -25,7 +25,7 @@ namespace HE.CRM.Plugins.Handlers.LoanApplications
 
         public override void DoWork()
         {
-            CrmServicesFactory.Get<ILoanApplicationService>().SendInternalNotificationOnStatusChange(target, preImage);
+            CrmServicesFactory.Get<ILoanApplicationService>().ChangeExternalStatusOnInternalStatusChange(target, preImage);
         }
 
         #endregion

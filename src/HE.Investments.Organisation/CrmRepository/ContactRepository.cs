@@ -20,6 +20,9 @@ public class ContactRepository : IContactRepository
                             <condition attribute=""invln_accountid"" operator=""eq"" value=""" + organisationId + @""" />
                           </filter>
                           <link-entity name=""invln_webrole"" from=""invln_webroleid"" to=""invln_webroleid"">
+                            <link-entity name=""invln_portalpermissionlevel"" from=""invln_portalpermissionlevelid"" to=""invln_portalpermissionlevelid"" alias=""ppl"">
+                                  <attribute name=""invln_permission"" />
+                                </link-entity>
                             <link-entity name=""invln_portal"" from=""invln_portalid"" to=""invln_portalid"">" +
                               portalTypeFilter
                               + @"</link-entity>
