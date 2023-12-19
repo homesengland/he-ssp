@@ -27,12 +27,12 @@ public class ApplicationSummaryViewModelFactory : IApplicationSummaryViewModelFa
         _financialDetailsSummaryViewModelFactory = financialDetailsSummaryViewModelFactory;
     }
 
-    public async Task<ApplicationSummaryViewModel> GetDataAndCreate(string applicationId, IUrlHelper urlHelper, CancellationToken cancellationToken)
+    public async Task<ApplicationSummaryViewModel> GetDataAndCreate(string applicationId, IUrlHelper urlHelper, bool isReadOnly, CancellationToken cancellationToken)
     {
         var scheme = await _mediator.Send(new GetApplicationSchemeQuery(applicationId), cancellationToken);
-        var schemeSummary = _schemeSummaryViewModelFactory.GetSchemeAndCreateSummary("Scheme information", scheme, urlHelper);
-        var homeTypesSummaries = await GetHomeTypesAndCreateSummary(applicationId, urlHelper, cancellationToken);
-        var financialDetailsSummary = await _financialDetailsSummaryViewModelFactory.GetFinancialDetailsAndCreateSummary(applicationId, urlHelper, cancellationToken);
+        var schemeSummary = _schemeSummaryViewModelFactory.GetSchemeAndCreateSummary("Scheme information", scheme, urlHelper, isReadOnly);
+        var homeTypesSummaries = await GetHomeTypesAndCreateSummary(applicationId, urlHelper, isReadOnly, cancellationToken);
+        var financialDetailsSummary = await _financialDetailsSummaryViewModelFactory.GetFinancialDetailsAndCreateSummary(applicationId, urlHelper, isReadOnly, cancellationToken);
 
         var summaries = new List<SectionSummaryViewModel> { schemeSummary };
         summaries.AddRange(homeTypesSummaries);
@@ -43,14 +43,14 @@ public class ApplicationSummaryViewModelFactory : IApplicationSummaryViewModelFa
         return new ApplicationSummaryViewModel(applicationId, scheme.ApplicationName, summaries);
     }
 
-    private async Task<IList<SectionSummaryViewModel>> GetHomeTypesAndCreateSummary(string applicationId, IUrlHelper urlHelper, CancellationToken cancellationToken)
+    private async Task<IList<SectionSummaryViewModel>> GetHomeTypesAndCreateSummary(string applicationId, IUrlHelper urlHelper, bool isReadOnly, CancellationToken cancellationToken)
     {
         var sections = new List<SectionSummaryViewModel>();
         var homeTypes = await _mediator.Send(new GetHomeTypesQuery(applicationId), cancellationToken);
         foreach (var homeType in homeTypes.HomeTypes)
         {
             var fullHomeType = await _mediator.Send(new GetFullHomeTypeQuery(applicationId, homeType.Id), cancellationToken);
-            sections.AddRange(_homeTypeSummaryViewModelFactory.CreateSummaryModel(fullHomeType, urlHelper));
+            sections.AddRange(_homeTypeSummaryViewModelFactory.CreateSummaryModel(fullHomeType, urlHelper, isReadOnly));
         }
 
         return sections;

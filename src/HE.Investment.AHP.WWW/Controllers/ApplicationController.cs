@@ -22,19 +22,25 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     private readonly string _siteName = "Test Site";
     private readonly IMediator _mediator;
     private readonly IApplicationSummaryViewModelFactory _applicationSummaryViewModelFactory;
+    private readonly IAccountAccessContext _accountAccessContext;
 
-    public ApplicationController(IMediator mediator, IApplicationSummaryViewModelFactory applicationSummaryViewModelFactory)
+    public ApplicationController(
+        IMediator mediator,
+        IApplicationSummaryViewModelFactory applicationSummaryViewModelFactory,
+        IAccountAccessContext accountAccessContext)
     {
         _mediator = mediator;
         _applicationSummaryViewModelFactory = applicationSummaryViewModelFactory;
+        _accountAccessContext = accountAccessContext;
     }
 
     [HttpGet]
     public async Task<IActionResult> Index([FromQuery] int? page, CancellationToken cancellationToken)
     {
         var applicationsQueryResult = await _mediator.Send(new GetApplicationsQuery(new PaginationRequest(page ?? 1)), cancellationToken);
+        var isReadOnly = !await _accountAccessContext.CanEditApplication();
 
-        return View("Index", new ApplicationsListModel(applicationsQueryResult.OrganisationName, applicationsQueryResult.PaginationResult));
+        return View("Index", new ApplicationsListModel(applicationsQueryResult.OrganisationName, applicationsQueryResult.PaginationResult, isReadOnly));
     }
 
     [WorkflowState(ApplicationWorkflowState.ApplicationName)]
@@ -67,7 +73,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
             return View(model);
         }
 
-        return await RedirectOrContinue(result.ReturnedData!.Value);
+        return await RedirectOrContinue(result.ReturnedData.Value);
     }
 
     [WorkflowState(ApplicationWorkflowState.ApplicationTenure)]
@@ -91,7 +97,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
             return View(model);
         }
 
-        return await RedirectOrContinue(result.ReturnedData!.Value, nameof(TaskList));
+        return await RedirectOrContinue(result.ReturnedData.Value, nameof(TaskList));
     }
 
     [HttpGet("{applicationId}/task-list")]
@@ -108,7 +114,8 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     [HttpGet("{applicationId}/check-answers")]
     public async Task<IActionResult> CheckAnswers(string applicationId, CancellationToken cancellationToken)
     {
-        var applicationSummary = await _applicationSummaryViewModelFactory.GetDataAndCreate(applicationId, Url, cancellationToken);
+        var isReadOnly = !await _accountAccessContext.CanEditApplication();
+        var applicationSummary = await _applicationSummaryViewModelFactory.GetDataAndCreate(applicationId, Url, isReadOnly, cancellationToken);
 
         return View("CheckAnswers", applicationSummary);
     }
@@ -121,7 +128,8 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
 
         if (result.HasValidationErrors)
         {
-            var applicationSummary = await _applicationSummaryViewModelFactory.GetDataAndCreate(applicationId, Url, cancellationToken);
+            var isReadOnly = !await _accountAccessContext.CanEditApplication();
+            var applicationSummary = await _applicationSummaryViewModelFactory.GetDataAndCreate(applicationId, Url, isReadOnly, cancellationToken);
 
             ModelState.AddValidationErrors(result);
             return View("CheckAnswers", applicationSummary);
@@ -144,7 +152,8 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
 
     protected override async Task<IStateRouting<ApplicationWorkflowState>> Routing(ApplicationWorkflowState currentState, object? routeData = null)
     {
-        return await Task.FromResult(new ApplicationWorkflow(currentState));
+        var isReadOnly = !await _accountAccessContext.CanEditApplication();
+        return new ApplicationWorkflow(currentState, isReadOnly);
     }
 
     private static ApplicationBasicModel CreateModel(Application application)

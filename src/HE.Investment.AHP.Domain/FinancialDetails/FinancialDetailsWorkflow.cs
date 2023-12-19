@@ -12,10 +12,16 @@ public class FinancialDetailsWorkflow : IStateRouting<FinancialDetailsWorkflowSt
 
     private readonly StateMachine<FinancialDetailsWorkflowState, Trigger> _machine;
 
-    public FinancialDetailsWorkflow(FinancialDetailsWorkflowState currentFinancialDetailsWorkflowState, Contract.FinancialDetails.FinancialDetails model)
+    private readonly bool _isReadOnly;
+
+    public FinancialDetailsWorkflow(
+        FinancialDetailsWorkflowState currentFinancialDetailsWorkflowState,
+        Contract.FinancialDetails.FinancialDetails model,
+        bool isReadOnly)
     {
         _model = model;
         _machine = new StateMachine<FinancialDetailsWorkflowState, Trigger>(currentFinancialDetailsWorkflowState);
+        _isReadOnly = isReadOnly;
         ConfigureTransitions();
     }
 
@@ -27,6 +33,11 @@ public class FinancialDetailsWorkflow : IStateRouting<FinancialDetailsWorkflowSt
 
     public FinancialDetailsWorkflowState CurrentState(FinancialDetailsWorkflowState targetState)
     {
+        if (_isReadOnly)
+        {
+            return FinancialDetailsWorkflowState.CheckAnswers;
+        }
+
         if (targetState != FinancialDetailsWorkflowState.Index || _model.SectionStatus == SectionStatus.NotStarted)
         {
             return targetState;

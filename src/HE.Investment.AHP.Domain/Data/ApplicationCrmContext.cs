@@ -24,7 +24,7 @@ public class ApplicationCrmContext : IApplicationCrmContext
         var account = await TryGetUserAccountForSelectedOrganisation();
         var request = new invln_getahpapplicationRequest
         {
-            invln_userid = account.UserGlobalId.ToString(),
+            invln_userid = account.Role() == UserAccountRole.AnLimitedUser() ? account.UserGlobalId.ToString() : string.Empty,
             invln_organisationid = account.AccountId.ToString(),
             invln_applicationid = id,
             invln_appfieldstoretrieve = FormatFields(fieldsToRetrieve),
@@ -71,7 +71,7 @@ public class ApplicationCrmContext : IApplicationCrmContext
         var account = await TryGetUserAccountForSelectedOrganisation();
         var request = new invln_getmultipleahpapplicationsRequest
         {
-            inlvn_userid = account.UserGlobalId.ToString(),
+            inlvn_userid = account.Role() == UserAccountRole.AnLimitedUser() ? account.UserGlobalId.ToString() : string.Empty,
             invln_organisationid = account.AccountId.ToString(),
             invln_appfieldstoretrieve = FormatFields(fieldsToRetrieve),
         };

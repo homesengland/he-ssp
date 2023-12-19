@@ -1,5 +1,4 @@
 using HE.Investments.Common.Contract;
-using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Loans.Common.Routing;
 using Stateless;
@@ -12,10 +11,13 @@ public class SchemeWorkflow : IStateRouting<SchemeWorkflowState>
 
     private readonly StateMachine<SchemeWorkflowState, Trigger> _machine;
 
-    public SchemeWorkflow(SchemeWorkflowState currentWorkflowState, Contract.Scheme.Scheme scheme)
+    private readonly bool _isReadOnly;
+
+    public SchemeWorkflow(SchemeWorkflowState currentWorkflowState, Contract.Scheme.Scheme scheme, bool isReadOnly)
     {
         _scheme = scheme;
         _machine = new StateMachine<SchemeWorkflowState, Trigger>(currentWorkflowState);
+        _isReadOnly = isReadOnly;
         ConfigureTransitions();
     }
 
@@ -32,6 +34,11 @@ public class SchemeWorkflow : IStateRouting<SchemeWorkflowState>
 
     public SchemeWorkflowState CurrentState(SchemeWorkflowState targetState)
     {
+        if (_isReadOnly)
+        {
+            return SchemeWorkflowState.CheckAnswers;
+        }
+
         if (targetState != SchemeWorkflowState.Start || _scheme.Status == SectionStatus.NotStarted)
         {
             return targetState;

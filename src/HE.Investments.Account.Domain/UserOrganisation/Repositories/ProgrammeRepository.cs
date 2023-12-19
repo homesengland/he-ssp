@@ -1,13 +1,9 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Contract.UserOrganisation;
 using HE.Investments.Account.Shared.User;
-using HE.Investments.Common;
-using HE.Investments.Common.Contract;
 using HE.Investments.Common.CRM;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Services;
-using HE.Investments.Common.Domain;
-using Microsoft.FeatureManagement;
 
 namespace HE.Investments.Account.Domain.UserOrganisation.Repositories;
 
@@ -63,8 +59,9 @@ public class ProgrammeRepository : IProgrammeRepository
     {
         var request = new invln_getmultipleahpapplicationsRequest
         {
-            inlvn_userid = userAccount.UserGlobalId.ToString(),
+            inlvn_userid = userAccount.Role() == UserAccountRole.AnLimitedUser() ? userAccount.UserGlobalId.ToString() : string.Empty,
             invln_organisationid = userAccount.AccountId.ToString(),
+            invln_appfieldstoretrieve = $"{nameof(invln_scheme.invln_schemename)},{nameof(invln_scheme.statuscode)}".ToLowerInvariant(),
         };
 
         var applications = await _crmService.ExecuteAsync<invln_getmultipleahpapplicationsRequest, invln_getmultipleahpapplicationsResponse, IList<AhpApplicationDto>>(
@@ -75,7 +72,7 @@ public class ProgrammeRepository : IProgrammeRepository
         return applications.Select(a => new UserApplication(
                 a.id,
                 a.name,
-                ApplicationStatus.New))
+                ApplicationStatusMapper.MapToPortalStatus(a.applicationStatus)))
             .ToList();
     }
 }

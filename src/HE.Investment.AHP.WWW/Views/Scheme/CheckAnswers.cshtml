@@ -21,13 +21,22 @@
 }
 
 <div class="govuk-grid-column-three-quarters">
-    <vc:workflow-back-button action="@SchemeWorkflowState.CheckAnswers.ToString()" />
+    @if (Model.IsReadOnly)
+    {
+        <gds-back-link href="@Url.Action("TaskList", "Application", new{ applicationId = Model.ApplicationId})" class="govuk-!-margin-bottom-8"></gds-back-link>
+    }
+    else
+    {
+        <vc:workflow-back-button action="@SchemeWorkflowState.CheckAnswers.ToString()"/>
+    }
+
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <vc:form-header caption="@Model.ApplicationName" title="@title" />
     <vc:section-summary title="@Model.Section.Title" items="@Model.Section.Items" />
 
-    <form asp-controller="Scheme" asp-action="Complete" asp-route-applicationId="@Model.ApplicationId" asp-method="post" novalidate>
+    <form asp-controller="Scheme" asp-action="Complete" asp-route-applicationId="@Model.ApplicationId" asp-method="post" novalidate hidden="@Model.IsReadOnly">
         @Html.HiddenFor(m => Model.ApplicationName)
+        @Html.HiddenFor(m => Model.IsReadOnly)
         <gds-field-set role="group">
             <vc:radio-list field-name="@(nameof(Model.IsCompleted))"
                            title="Have you completed this section?"
@@ -35,4 +44,6 @@
         </gds-field-set>
         <vc:form-button />
     </form>
+
+    <vc:return-to-application-link application-id="@Model.ApplicationId" is-editable="@Model.IsEditable"/>
 </div>

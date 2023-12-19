@@ -187,6 +187,6 @@ public class CanBeAccessedTests
 
     private static HomeTypesWorkflow BuildWorkflow(HomeType homeType, HomeTypesWorkflowState state)
     {
-        return new HomeTypesWorkflow(state, homeType);
+        return new HomeTypesWorkflow(state, homeType, false);
     }
 }

@@ -2,6 +2,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Shared;
+using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Services;
 
@@ -28,7 +29,7 @@ public class HomeTypeCrmContext : IHomeTypeCrmContext
         var account = await _accountUserContext.GetSelectedAccount();
         var request = new invln_getahpapplicationRequest
         {
-            invln_userid = account.UserGlobalId.ToString(),
+            invln_userid = account.Role() == UserAccountRole.AnLimitedUser() ? account.UserGlobalId.ToString() : string.Empty,
             invln_organisationid = account.AccountId.ToString(),
             invln_applicationid = applicationId,
             invln_appfieldstoretrieve = nameof(invln_scheme.invln_hometypessectioncompletionstatus).ToLowerInvariant(),
@@ -65,7 +66,7 @@ public class HomeTypeCrmContext : IHomeTypeCrmContext
         var account = await _accountUserContext.GetSelectedAccount();
         var request = new invln_gettypeofhomeslistRequest
         {
-            invln_userid = account.UserGlobalId.ToString(),
+            invln_userid = account.Role() == UserAccountRole.AnLimitedUser() ? account.UserGlobalId.ToString() : string.Empty,
             invln_organisationid = account.AccountId.ToString(),
             invln_applicationid = applicationId,
             invln_fieldstoretrieve = string.Join(FieldNamesSeparator, fieldsToRetrieve).ToLowerInvariant(),
@@ -82,7 +83,7 @@ public class HomeTypeCrmContext : IHomeTypeCrmContext
         var account = await _accountUserContext.GetSelectedAccount();
         var request = new invln_getsinglehometypeRequest
         {
-            invln_userid = account.UserGlobalId.ToString(),
+            invln_userid = account.Role() == UserAccountRole.AnLimitedUser() ? account.UserGlobalId.ToString() : string.Empty,
             invln_organisationid = account.AccountId.ToString(),
             invln_applicationid = applicationId,
             invln_hometypeid = homeTypeId,
