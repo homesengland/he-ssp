@@ -1,16 +1,15 @@
+using HE.Investments.Common.Contract;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investments.Common.WWW.Components.Table;
 
 public class Table : ViewComponent
 {
-    public IViewComponentResult Invoke(TableViewModel model)
+    public IViewComponentResult Invoke(IList<TableHeaderViewModel> headers, IList<TableRowViewModel> rows)
     {
-        return View("Table", model);
+        return View("Table", (headers, rows));
     }
 }
-
-public record TableViewModel(IList<TableHeaderViewModel> Headers, IList<TableRowViewModel> Rows);
 
 public record TableHeaderViewModel(string Title, int? Width = null, bool IsHidden = false);
 

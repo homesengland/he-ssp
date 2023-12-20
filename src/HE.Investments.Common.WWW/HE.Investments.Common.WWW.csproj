@@ -78,5 +78,6 @@
     <EmbeddedResource Include="Components\TextAreaInput\TextAreaInput.cshtml" />
     <EmbeddedResource Include="Components\RadioListHeader\RadioListHeader.cshtml" />
     <EmbeddedResource Include="Components\NumericTextInput\NumericTextInput.cshtml" />
+    <EmbeddedResource Include="Components\PagedTable\PagedTable.cshtml" />
   </ItemGroup>
 </Project>

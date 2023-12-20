@@ -5,9 +5,9 @@ using HE.Investments.Account.Contract.Users.Commands;
 using HE.Investments.Account.Contract.Users.Queries;
 using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
-using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.WWW.Models.Users;
 using HE.Investments.Common.Messages;
+using HE.Investments.Common.Utils.Pagination;
 using HE.Investments.Common.Validators;
 using HE.Investments.Loans.Contract.Application.Enums;
 using MediatR;
@@ -27,9 +27,9 @@ public class UsersController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index(CancellationToken cancellationToken)
+    public async Task<IActionResult> Index([FromQuery] int? page, CancellationToken cancellationToken)
     {
-        var model = await _mediator.Send(new GetUsersAndJoinRequestsQuery(), cancellationToken);
+        var model = await _mediator.Send(new GetUsersAndJoinRequestsQuery(new PaginationRequest(page ?? 1)), cancellationToken);
 
         return View("Index", (model, UserRolesDescription.All));
     }

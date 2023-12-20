@@ -50,16 +50,6 @@ public class UsersCrmContext : IUsersCrmContext
         return roles.Select(GetUserRole).FirstOrDefault();
     }
 
-    public async Task<Dictionary<string, int?>> GetUsersRole(List<string> userIds)
-    {
-        var roles = await _contactService.GetContactRolesForOrganisationContacts(
-            _organizationServiceAsync,
-            userIds,
-            await TryGetOrganisationId());
-
-        return roles.ToDictionary(c => c.externalId, GetUserRole);
-    }
-
     public async Task ChangeUserRole(string userId, int role)
     {
         var organisationId = await TryGetOrganisationId();

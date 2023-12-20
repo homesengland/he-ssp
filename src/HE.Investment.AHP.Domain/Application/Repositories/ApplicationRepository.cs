@@ -8,6 +8,7 @@ using HE.Investment.AHP.Domain.Data;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.CRM;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.Common.Utils.Pagination;
 using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
@@ -52,8 +53,7 @@ public class ApplicationRepository : IApplicationRepository
 
         var filtered = applications
             .OrderByDescending(x => x.lastExternalModificationOn)
-            .Skip(paginationRequest.ItemsPerPage * (paginationRequest.Page - 1))
-            .Take(paginationRequest.ItemsPerPage)
+            .TakePage(paginationRequest)
             .Select(x => new ApplicationWithFundingDetails(
                 new ApplicationId(x.id),
                 x.name,

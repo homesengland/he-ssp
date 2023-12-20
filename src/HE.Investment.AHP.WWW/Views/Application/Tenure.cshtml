@@ -27,6 +27,7 @@
             @Html.HiddenFor(m => m.Name)
 
             <vc:radio-list
+                hint="You cannot change the tenure once you have started this application. If you want to change the tenure, you will have to start a new application."
                 field-name="@(nameof(Model.Tenure))"
                 available-options="@tenures"/>
 
