@@ -1,32 +1,30 @@
 using AngleSharp.Html.Dom;
 using HE.Investments.Common.Extensions;
+using HE.Investments.IntegrationTestsFramework.Auth;
 using HE.Investments.IntegrationTestsFramework.Exceptions;
-using HE.Investments.Loans.IntegrationTests.Config;
-using HE.Investments.Loans.IntegrationTests.IntegrationFramework.Auth;
-using HE.Investments.Loans.IntegrationTests.IntegrationFramework.Helpers;
-using HE.Investments.Loans.IntegrationTests.IntegrationFramework.Helpers.DataPackages;
+using HE.Investments.IntegrationTestsFramework.Helpers;
 
-namespace HE.Investments.Loans.IntegrationTests.IntegrationFramework;
+namespace HE.Investments.IntegrationTestsFramework;
 
 public class IntegrationTestClient
 {
     private readonly HttpClient _client;
 
-    private readonly IntegrationUserData _userData;
+    private readonly ILoginData _loginData;
 
-    public IntegrationTestClient(HttpClient client, IntegrationUserData userData)
+    public IntegrationTestClient(HttpClient client, ILoginData loginData)
     {
         _client = client;
         _client.BaseAddress = new Uri("https://localhost/");
-        _userData = userData;
+        _loginData = loginData;
         AsLoggedUser();
     }
 
-    public IntegrationTestClient AsLoggedUser(UserGlobalIdWithEmail? user = null)
+    public IntegrationTestClient AsLoggedUser()
     {
         ClearAuthHeaders();
-        _client.DefaultRequestHeaders.Add(TestAuthHandler.HeaderUserGlobalId, user?.UserGlobalId ?? _userData.UserGlobalId);
-        _client.DefaultRequestHeaders.Add(TestAuthHandler.HeaderUserEmail, user?.Email ?? _userData.Email);
+        _client.DefaultRequestHeaders.Add(TestAuthHandler.HeaderUserGlobalId, _loginData.UserGlobalId);
+        _client.DefaultRequestHeaders.Add(TestAuthHandler.HeaderUserEmail, _loginData.Email);
         return this;
     }
 

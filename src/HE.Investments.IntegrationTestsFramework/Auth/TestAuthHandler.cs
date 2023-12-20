@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace HE.Investments.Loans.IntegrationTests.IntegrationFramework.Auth;
+namespace HE.Investments.IntegrationTestsFramework.Auth;
 
 public class TestAuthHandler : AuthenticationHandler<AuthenticationSchemeOptions>
 {
@@ -23,7 +23,7 @@ public class TestAuthHandler : AuthenticationHandler<AuthenticationSchemeOptions
     {
         if (!Context.Request.Headers.TryGetValue(HeaderUserGlobalId, out var userGlobalId))
         {
-            return Task.FromResult(AuthenticateResult.Fail("Fail"));
+            return Task.FromResult(AuthenticateResult.Fail("User Global Id is not provided"));
         }
 
         Context.Request.Headers.TryGetValue(HeaderUserEmail, out var emailAddress);

@@ -1,6 +1,6 @@
 using HE.Investments.DocumentService.Configs;
+using HE.Investments.IntegrationTestsFramework.Auth;
 using HE.Investments.Loans.IntegrationTests.Config;
-using HE.Investments.Loans.IntegrationTests.IntegrationFramework.Auth;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;

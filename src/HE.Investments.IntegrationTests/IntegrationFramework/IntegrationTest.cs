@@ -1,4 +1,5 @@
 using AngleSharp.Html.Dom;
+using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.Loans.IntegrationTests.Config;
 using HE.Investments.Loans.IntegrationTests.Loans;
 using HE.Investments.Loans.WWW;

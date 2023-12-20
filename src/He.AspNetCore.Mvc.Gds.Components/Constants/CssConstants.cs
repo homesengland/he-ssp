@@ -65,8 +65,6 @@ namespace He.AspNetCore.Mvc.Gds.Components.Constants
         /// </summary>
         public const string GovUkHl = "govuk-heading-l";
 
-
-
         /// <summary>
         /// The gov uk hxl.
         /// </summary>
