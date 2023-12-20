@@ -401,10 +401,10 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
             throw new DomainValidationException(result);
         }
 
-        return RedirectToAction("DesignPlans", new { applicationId, homeTypeId });
+        TryGetWorkflowQueryParameter(out var workflow);
+        return RedirectToAction("DesignPlans", new { applicationId, homeTypeId, workflow });
     }
 
-    [WorkflowState(HomeTypesWorkflowState.DesignPlans)]
     [HttpGet("{homeTypeId}/DownloadDesignPlansFile")]
     public async Task<IActionResult> DownloadDesignPlansFile(
         [FromRoute] string applicationId,
@@ -1176,6 +1176,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
 
     private string GetDesignFileAction(string actionName, string applicationId, string homeTypeId, string fileId)
     {
+        TryGetWorkflowQueryParameter(out var workflow);
         return Url.RouteUrl(
             "subSection",
             new
@@ -1185,6 +1186,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
                 applicationId,
                 id = homeTypeId,
                 fileId,
+                workflow,
             }) ?? string.Empty;
     }
 

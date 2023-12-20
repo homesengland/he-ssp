@@ -102,7 +102,7 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
     {
         var files = designPlans.UploadedFiles.ToDictionary(
             x => x.FileName,
-            x => DownloadDesignFileUrl(urlHelper, homeType.ApplicationId, homeType.Id, x.FileName));
+            x => DownloadDesignFileUrl(urlHelper, homeType.ApplicationId, homeType.Id, x.FileId));
         return SectionSummaryViewModel.New(
             "Design Plans",
             factory.FileQuestion("Design Plans", nameof(Controller.DesignPlans), designPlans.MoreInformation, files));
