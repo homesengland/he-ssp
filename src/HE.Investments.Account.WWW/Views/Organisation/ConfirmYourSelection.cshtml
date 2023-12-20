@@ -15,7 +15,7 @@
         @OrganizationPageTitles.ConfirmYourSelection
     </gds-h1>
 
-    <gds-ul non-bullet-list>
+    <ul class="govuk-list">
         <li>
             <span class="govuk-body">
                 <strong>@Model.ViewModel.Name</strong>
@@ -38,7 +38,7 @@
             }
             <p class="govuk-body govuk-!-margin-bottom-6">Companies house number: @Model.ViewModel.CompaniesHouseNumber</p>
         </li>
-    </gds-ul>
+    </ul>
     <form asp-controller="Organisation" asp-action="ConfirmOrganizationPost" asp-route-organizationNumberOrId=@(Model.ViewModel.OrganisationId ?? Model.ViewModel.CompaniesHouseNumber) asp-method="post" novalidate>
         <gds-div-form-group>
             <gds-field-set>

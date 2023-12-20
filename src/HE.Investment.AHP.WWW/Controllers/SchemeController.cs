@@ -215,7 +215,6 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
         return RedirectToAction("StakeholderDiscussions", new { applicationId });
     }
 
-    [WorkflowState(SchemeWorkflowState.StakeholderDiscussions)]
     [HttpGet("download-stakeholder-discussions-file")]
     public async Task<IActionResult> DownloadStakeholderDiscussionsFile(
         [FromRoute] string applicationId,
