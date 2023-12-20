@@ -50,6 +50,7 @@
                 Save and continue
             </button>
         </gds-field-set>
-        <vc:return-to-application-link application-id="@Model.ApplicationId.ToString()" is-editable="@Model.IsEditable" />
     </form>
+
+    <vc:return-to-application-link application-id="@Model.ApplicationId.ToString()" is-editable="@false" />
 </div>
