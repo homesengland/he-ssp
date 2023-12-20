@@ -33,7 +33,7 @@ public class SchemeFunding : ValueObject
         var fundingOperationResult = OperationResult.New();
         var housesOperationResult = OperationResult.New();
 
-        var requiredFundingName = "total funding you require";
+        var requiredFundingName = "the total of funding you are requesting";
         RequiredFunding = NumericValidator
             .For(requiredFundingGbp, nameof(RequiredFunding), requiredFundingName, fundingOperationResult)
             .IsProvided()
@@ -41,7 +41,7 @@ public class SchemeFunding : ValueObject
             .IsWholeNumber()
             .IsBetween(1, 99999999999);
 
-        var housesToDeliverName = "number of homes this scheme will deliver";
+        var housesToDeliverName = "the number of homes this scheme will deliver";
         HousesToDeliver = NumericValidator
             .For(housesToDeliver, nameof(HousesToDeliver), housesToDeliverName, housesOperationResult)
             .IsProvided()
