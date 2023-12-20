@@ -32,7 +32,7 @@ public class UserController : Controller
     [HttpPost(UserAccountEndpoints.ProfileDetailsSuffix)]
     public async Task<IActionResult> SaveProfileDetails(
         UserProfileDetailsModel viewModel,
-        string callback,
+        string? callback,
         CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(
@@ -57,6 +57,6 @@ public class UserController : Controller
                 new ControllerName(nameof(OrganisationController)).WithoutPrefix());
         }
 
-        return Redirect(callback);
+        return Redirect(callback!);
     }
 }
