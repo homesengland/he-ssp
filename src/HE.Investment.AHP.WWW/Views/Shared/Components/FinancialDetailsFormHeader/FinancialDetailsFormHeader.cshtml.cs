@@ -12,8 +12,11 @@ public class FinancialDetailsFormHeader : ViewComponent
         string applicationId,
         string? homeTypeId = null,
         string? title = null,
-        string? caption = null)
+        string? caption = null,
+        string? customBackLinkUrl = null)
     {
-        return View("FinancialDetailsFormHeader", (Title: title, Caption: caption, ApplicationId: applicationId, CurrentPage: currentPage));
+        return View(
+            "FinancialDetailsFormHeader",
+            (Title: title, Caption: caption, ApplicationId: applicationId, CurrentPage: currentPage, CustomBackLinkUrl: customBackLinkUrl));
     }
 }

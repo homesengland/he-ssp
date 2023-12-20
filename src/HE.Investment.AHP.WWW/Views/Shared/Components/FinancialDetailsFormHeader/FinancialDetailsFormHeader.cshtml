@@ -1,9 +1,16 @@
-@model (string Title, string Caption, string ApplicationId, HE.Investment.AHP.Domain.FinancialDetails.FinancialDetailsWorkflowState CurrentPage)
+@model (string Title, string Caption, string ApplicationId, HE.Investment.AHP.Domain.FinancialDetails.FinancialDetailsWorkflowState CurrentPage, string CustomBackLinkUrl)
 @{
     var redirectParameters = new { applicationId = Model.ApplicationId, currentPage = Model.CurrentPage };
 }
 
-<gds-back-link href="@Url.Action("Back", "FinancialDetails", redirectParameters)" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
+@if (string.IsNullOrWhiteSpace(Model.CustomBackLinkUrl))
+{
+    <gds-back-link href="@Url.Action("Back", "FinancialDetails", redirectParameters)" class="govuk-!-margin-bottom-8"></gds-back-link>
+}
+else
+{
+    <gds-back-link href="@Model.CustomBackLinkUrl" class="govuk-!-margin-bottom-8"></gds-back-link>
+}
 
 @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 

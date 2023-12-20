@@ -6,6 +6,14 @@
     var standardSignInUrl = Url.Action("SignIn", "HeIdentity");
     var signInUrl = Context.Request.Path == "/verify-email" ? Url.Action("SignOut", "HeIdentity", new { redirectUri = standardSignInUrl }) : standardSignInUrl;
     var signOutUrl = Url.Action("SignOut", "HeIdentity", new { redirectUri = "/" });
+
+    #if DEBUG
+    var userDetails = User.Identity?.IsAuthenticated == true
+        ? $"{User.Claims.FirstOrDefault(x => x.Type.Contains("emailaddress"))?.Value} / {User.Claims.FirstOrDefault(x => x.Type.Contains("nameidentifier"))?.Value}"
+        : string.Empty;
+    #else
+    var userDetails = string.Empty;
+    #endif
 }
 
 <!DOCTYPE html>
@@ -70,6 +78,12 @@
                 </a>
                     @if (User.Identity is {IsAuthenticated: true })
                     {
+                        @if (!string.IsNullOrEmpty(userDetails))
+                        {
+                            <br/>
+                            <span>@userDetails</span>
+                        }
+
                         <a class="govuk-header__link govuk-header__signin govuk-link--no-visited-state" href="@signOutUrl">Sign out</a>
                     }
                     else

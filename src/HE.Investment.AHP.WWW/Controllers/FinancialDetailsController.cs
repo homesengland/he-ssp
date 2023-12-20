@@ -1,12 +1,11 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Queries;
-using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.FinancialDetails.Queries;
 using HE.Investment.AHP.Domain.FinancialDetails;
 using HE.Investment.AHP.Domain.FinancialDetails.Commands;
-using HE.Investment.AHP.Domain.FinancialDetails.Constants;
 using HE.Investment.AHP.WWW.Models.FinancialDetails;
 using HE.Investment.AHP.WWW.Models.FinancialDetails.Factories;
+using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
@@ -27,11 +26,16 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
 {
     private readonly IMediator _mediator;
     private readonly IFinancialDetailsSummaryViewModelFactory _financialDetailsSummaryViewModelFactory;
+    private readonly IAccountAccessContext _accountAccessContext;
 
-    public FinancialDetailsController(IMediator mediator, IFinancialDetailsSummaryViewModelFactory financialDetailsSummaryViewModelFactory)
+    public FinancialDetailsController(
+        IMediator mediator,
+        IFinancialDetailsSummaryViewModelFactory financialDetailsSummaryViewModelFactory,
+        IAccountAccessContext accountAccessContext)
     {
         _mediator = mediator;
         _financialDetailsSummaryViewModelFactory = financialDetailsSummaryViewModelFactory;
+        _accountAccessContext = accountAccessContext;
     }
 
     [HttpGet("start")]
@@ -255,7 +259,12 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
     [WorkflowState(FinancialDetailsWorkflowState.CheckAnswers)]
     public async Task<IActionResult> CheckAnswers(Guid applicationId, CancellationToken cancellationToken)
     {
-        var model = await _financialDetailsSummaryViewModelFactory.GetFinancialDetailsAndCreateSummary(applicationId.ToString(), Url, cancellationToken);
+        var isReadOnly = !await _accountAccessContext.CanEditApplication();
+        var model = await _financialDetailsSummaryViewModelFactory.GetFinancialDetailsAndCreateSummary(
+            applicationId.ToString(),
+            Url,
+            isReadOnly,
+            cancellationToken);
 
         return View(model);
     }
@@ -268,10 +277,15 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
 
         if (result.HasValidationErrors)
         {
+            var isReadOnly = !await _accountAccessContext.CanEditApplication();
+            var summary = await _financialDetailsSummaryViewModelFactory.GetFinancialDetailsAndCreateSummary(
+                applicationId.ToString(),
+                Url,
+                isReadOnly,
+                cancellationToken);
+
             ModelState.AddValidationErrors(result);
-            return View(
-                "CheckAnswers",
-                await _financialDetailsSummaryViewModelFactory.GetFinancialDetailsAndCreateSummary(applicationId.ToString(), Url, cancellationToken));
+            return View("CheckAnswers", summary);
         }
 
         return RedirectToAction("TaskList", "Application", new { applicationId });
@@ -294,7 +308,8 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
             throw new InvalidOperationException("Cannot find applicationId.");
         }
 
+        var isReadOnly = !await _accountAccessContext.CanEditApplication();
         var financialDetails = await _mediator.Send(new GetFinancialDetailsQuery(applicationId));
-        return new FinancialDetailsWorkflow(currentState, financialDetails);
+        return new FinancialDetailsWorkflow(currentState, financialDetails, isReadOnly);
     }
 }

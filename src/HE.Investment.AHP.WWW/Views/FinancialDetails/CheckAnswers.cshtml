@@ -1,3 +1,4 @@
+@using HE.Investment.AHP.Contract.Common.Enums;
 @using HE.Investment.AHP.Contract.FinancialDetails.Constants;
 @using HE.Investment.AHP.Domain.FinancialDetails;
 @using HE.Investment.AHP.WWW.Models.Common;
@@ -5,23 +6,26 @@
 @using HE.Investment.AHP.WWW.Views.FinancialDetails.Consts;
 @using HE.Investments.Common.WWW.Components.RadioList
 @using HE.Investments.Common.WWW.Extensions;
+@using HE.Investments.Common.WWW.Models;
 @model FinancialDetailsCheckAnswersModel
 @{
     ViewData["Title"] = FinancialDetailsPageTitles.CheckAnswers;
     var (costsAndFundingAreInvalid, costAndFundingErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.CostsAndFunding);
     var errorCssClass = costsAndFundingAreInvalid ? "govuk-form-group--error" : string.Empty;
+    var customBackLinkUrl = Model.IsReadOnly ? @Url.Action("TaskList", "Application", new { applicationId = Model.ApplicationId }) : null;
 }
 <div class="govuk-grid-column-full">
     <form asp-controller="FinancialDetails" asp-action="CheckAnswers" asp-route-applicationId="@Model.ApplicationId" asp-method="post" novalidate>
         <vc:financial-details-form-header title="@FinancialDetailsPageTitles.CheckAnswers"
                                           current-page="@FinancialDetailsWorkflowState.CheckAnswers"
                                           application-id="@Model.ApplicationId.ToString()"
-                                          caption="@Model.ApplicationName - Finance details" />
+                                          caption="@Model.ApplicationName - Finance details"
+                                          custom-back-link-url="@customBackLinkUrl"/>
 
-        <gds-p>
+        <gds-p hidden="@Model.IsReadOnly">
             Total scheme costs and total contributions must match for you to continue.
         </gds-p>
-        <gds-p>
+        <gds-p hidden="@Model.IsReadOnly">
             You can edit this page until figures match. You can save and return to this section later if you do not have the correct figures.
         </gds-p>
         <vc:section-summary title="@Model.LandValueSummary.Title" items="@Model.LandValueSummary.Items" />
@@ -31,14 +35,21 @@
         </div>
 
         @Html.HiddenFor(m => Model.ApplicationName)
-        <gds-field-set role="group">
-            <vc:radio-list field-name="IsSectionCompleted"
-            title="Have you completed this section?"
-            available-options="@CommonFormOptions.IsSectionCompletedExtended.ToList()" />
+        @Html.HiddenFor(m => Model.IsReadOnly)
+
+        <gds-field-set role="group" hidden="@Model.IsReadOnly">
+            <gds-legend>
+                <gds-h2>Have you completed this section?</gds-h2>
+            </gds-legend>
+            <gds-radio govuk-formgroup-asp-for="IsSectionCompleted"
+                       asp-hiddenlabeltext="Have you completed this section?"
+                       value="@Model.IsSectionCompleted"
+                       asp-selectlistitems="@CommonFormOptions.IsSectionCompleted">
+            </gds-radio>
             <button id="continue-button" class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
                 Save and continue
             </button>
         </gds-field-set>
-        <vc:return-to-application-link application-id="@Model.ApplicationId.ToString()" />
+        <vc:return-to-application-link application-id="@Model.ApplicationId.ToString()" is-editable="@Model.IsEditable" />
     </form>
 </div>

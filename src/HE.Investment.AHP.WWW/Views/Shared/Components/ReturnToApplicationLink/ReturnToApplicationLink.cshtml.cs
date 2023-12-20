@@ -6,8 +6,8 @@ namespace HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink;
 
 public class ReturnToApplicationLink : ViewComponent
 {
-    public IViewComponentResult Invoke(string applicationId)
+    public IViewComponentResult Invoke(string applicationId, bool isEditable = true)
     {
-        return View("ReturnToApplicationLink", applicationId);
+        return View("ReturnToApplicationLink", (ApplicationId: applicationId, IsEditable: isEditable));
     }
 }

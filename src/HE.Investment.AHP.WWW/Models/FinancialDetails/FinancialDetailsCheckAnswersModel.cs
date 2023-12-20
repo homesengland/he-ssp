@@ -1,9 +1,10 @@
 using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.WWW.Models.Application;
+using HE.Investments.Common.WWW.Models;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace HE.Investment.AHP.WWW.Models.FinancialDetails;
-public class FinancialDetailsCheckAnswersModel : FinancialDetailsBaseModel
+public class FinancialDetailsCheckAnswersModel : FinancialDetailsBaseModel, IEditableViewModel
 {
     public FinancialDetailsCheckAnswersModel()
     {
@@ -15,13 +16,15 @@ public class FinancialDetailsCheckAnswersModel : FinancialDetailsBaseModel
         SectionSummaryViewModel landValueSummary,
         SectionSummaryViewModel costsSummary,
         SectionSummaryViewModel contributionsSummary,
-        IsSectionCompleted isSectionCompleted)
+        IsSectionCompleted isSectionCompleted,
+        bool isEditable)
         : base(applicationId, applicationName)
     {
         LandValueSummary = landValueSummary;
         CostsSummary = costsSummary;
         ContributionsSummary = contributionsSummary;
         IsSectionCompleted = isSectionCompleted;
+        IsEditable = isEditable;
     }
 
     [ValidateNever]
@@ -35,6 +38,10 @@ public class FinancialDetailsCheckAnswersModel : FinancialDetailsBaseModel
 
     [ValidateNever]
     public bool? CostsAndFunding { get; set; }
+
+    public bool IsEditable { get; set; }
+
+    public bool IsReadOnly => !IsEditable;
 
     public IsSectionCompleted IsSectionCompleted { get; set; }
 }

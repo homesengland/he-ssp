@@ -31,9 +31,10 @@
     </div>
 
     <gds-div-grid-column-two-thirds>
-        <form asp-controller="HomeTypes" asp-action="CheckAnswers" asp-method="post" novalidate>
+        <form asp-controller="HomeTypes" asp-action="CheckAnswers" asp-method="post" novalidate hidden="@Model.IsReadOnly">
             @Html.HiddenFor(m => Model.ApplicationName)
             @Html.HiddenFor(m => Model.HomeTypeName)
+            @Html.HiddenFor(m => Model.IsEditable)
 
             <gds-field-set role="group">
                 <he-error-form-group asp-for="IsSectionCompleted">
@@ -49,6 +50,6 @@
             </gds-field-set>
             <vc:form-button />
         </form>
-        <vc:return-to-application-link application-id="@applicationId" />
+        <vc:return-to-application-link application-id="@applicationId" is-editable="@Model.IsEditable"/>
     </gds-div-grid-column-two-thirds>
 </div>

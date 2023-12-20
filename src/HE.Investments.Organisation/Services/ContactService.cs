@@ -309,6 +309,7 @@ public class ContactService : IContactService
             country = contact.Contains("address1_country") ? contact["address1_country"].ToString() : string.Empty,
             contactId = contact.Id.ToString(),
             contactExternalId = contact.Contains("invln_externalid") ? contact["invln_externalid"].ToString() : string.Empty,
+            webrole = (GetAliasedValueAsObjectOrDefault(contact, "ppl.invln_permission") as OptionSetValue)?.Value,
         };
 
         if (contact.Contains("invln_termsandconditionsaccepted") && bool.TryParse(contact["invln_termsandconditionsaccepted"].ToString(), out var termsAccepted))

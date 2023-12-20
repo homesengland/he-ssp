@@ -1,11 +1,9 @@
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.Entities;
 using HE.Investments.Account.Shared.User.ValueObjects;
-using HE.Investments.Common;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Loans.Common.Exceptions;
 using HE.Investments.Organisation.Services;
-using Microsoft.FeatureManagement;
 using Microsoft.PowerPlatform.Dataverse.Client;
 
 namespace HE.Investments.Account.Shared.Repositories;
@@ -16,13 +14,10 @@ public class AccountCrmRepository : IAccountRepository
 
     private readonly IOrganizationServiceAsync2 _serviceClient;
 
-    private readonly IFeatureManager _featureManager;
-
-    public AccountCrmRepository(IContactService contactService, IOrganizationServiceAsync2 serviceClient, IFeatureManager featureManager)
+    public AccountCrmRepository(IContactService contactService, IOrganizationServiceAsync2 serviceClient)
     {
         _contactService = contactService;
         _serviceClient = serviceClient;
-        _featureManager = featureManager;
     }
 
     public async Task<IList<UserAccount>> GetUserAccounts(UserGlobalId userGlobalId, string userEmail)
@@ -34,7 +29,6 @@ public class AccountCrmRepository : IAccountRepository
             return Array.Empty<UserAccount>();
         }
 
-        var useNewRoles = await _featureManager.IsEnabledAsync(FeatureFlags.NewRoles);
         return contactRoles
             .contactRoles
             .GroupBy(x => x.accountId)
@@ -43,7 +37,7 @@ public class AccountCrmRepository : IAccountRepository
                 userEmail,
                 x.Key,
                 x.FirstOrDefault(y => y.accountId == x.Key)?.accountName ?? string.Empty,
-                x.Select(y => new UserAccountRole(useNewRoles ? y.webRoleName : UserAccountRole.AdminRole))))
+                x.Select(y => new UserAccountRole(y.webRoleName)).ToList()))
             .ToList();
     }
 
@@ -53,11 +47,11 @@ public class AccountCrmRepository : IAccountRepository
                          ?? throw new NotFoundException(nameof(UserProfileDetails), userGlobalId.ToString());
 
         return new UserProfileDetails(
-            new FirstName(contactDto.firstName),
-            new LastName(contactDto.lastName),
-            new JobTitle(contactDto.jobTitle),
+            contactDto.firstName.IsProvided() ? new FirstName(contactDto.firstName) : null,
+            contactDto.lastName.IsProvided() ? new LastName(contactDto.lastName) : null,
+            contactDto.jobTitle.IsProvided() ? new JobTitle(contactDto.jobTitle) : null,
             contactDto.email,
-            new TelephoneNumber(contactDto.phoneNumber),
+            contactDto.phoneNumber.IsProvided() ? new TelephoneNumber(contactDto.phoneNumber) : null,
             contactDto.secondaryPhoneNumber.IsProvided() ? new SecondaryTelephoneNumber(contactDto.secondaryPhoneNumber) : null,
             contactDto.isTermsAndConditionsAccepted);
     }
