@@ -1,3 +1,4 @@
+@using HE.Investment.AHP.Contract.Common.Enums;
 @using HE.Investment.AHP.Contract.FinancialDetails.Constants;
 @using HE.Investment.AHP.Domain.FinancialDetails;
 @using HE.Investment.AHP.WWW.Models.Common;
@@ -5,6 +6,7 @@
 @using HE.Investment.AHP.WWW.Views.FinancialDetails.Consts;
 @using HE.Investments.Common.WWW.Components.RadioList
 @using HE.Investments.Common.WWW.Extensions;
+@using HE.Investments.Common.WWW.Models;
 @model FinancialDetailsCheckAnswersModel
 @{
     ViewData["Title"] = FinancialDetailsPageTitles.CheckAnswers;
@@ -36,9 +38,14 @@
         @Html.HiddenFor(m => Model.IsReadOnly)
 
         <gds-field-set role="group" hidden="@Model.IsReadOnly">
-            <vc:radio-list field-name="IsSectionCompleted"
-                           title="Have you completed this section?"
-                           available-options="@CommonFormOptions.IsSectionCompletedExtended.ToList()"/>
+            <gds-legend>
+                <gds-h2>Have you completed this section?</gds-h2>
+            </gds-legend>
+            <gds-radio govuk-formgroup-asp-for="IsSectionCompleted"
+                       asp-hiddenlabeltext="Have you completed this section?"
+                       value="@Model.IsSectionCompleted"
+                       asp-selectlistitems="@CommonFormOptions.IsSectionCompleted">
+            </gds-radio>
             <button id="continue-button" class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
                 Save and continue
             </button>
