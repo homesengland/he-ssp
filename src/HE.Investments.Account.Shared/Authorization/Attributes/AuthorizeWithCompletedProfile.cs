@@ -1,3 +1,4 @@
+using HE.Investments.Account.Contract.Users;
 using HE.Investments.Account.Shared.Routing;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Extensions;
@@ -10,10 +11,15 @@ namespace HE.Investments.Account.Shared.Authorization.Attributes;
 [AttributeUsage(AttributeTargets.All)]
 public class AuthorizeWithCompletedProfile : AuthorizeAttribute, IAsyncActionFilter
 {
-    private readonly IEnumerable<string> _allowedFor;
+    private readonly IEnumerable<UserRole> _allowedFor;
 
     public AuthorizeWithCompletedProfile(string allowedFor)
         : this(allowedFor.Split(','))
+    {
+    }
+
+    public AuthorizeWithCompletedProfile(UserRole allowedFor)
+        : this(allowedFor.ToString())
     {
     }
 
@@ -23,16 +29,16 @@ public class AuthorizeWithCompletedProfile : AuthorizeAttribute, IAsyncActionFil
         {
             _allowedFor = new[]
             {
-                UserAccountRole.AdminRole,
-                UserAccountRole.EnhancedRole,
-                UserAccountRole.InputRole,
-                UserAccountRole.ViewOnlyRole,
-                UserAccountRole.LimitedRole,
+                UserRole.Admin,
+                UserRole.Enhanced,
+                UserRole.Input,
+                UserRole.ViewOnly,
+                UserRole.Limited,
             };
         }
         else
         {
-            _allowedFor = allowedFor!;
+            _allowedFor = allowedFor!.Select(x => (UserRole)Enum.Parse(typeof(UserRole), x)).ToList();
         }
     }
 
@@ -60,7 +66,7 @@ public class AuthorizeWithCompletedProfile : AuthorizeAttribute, IAsyncActionFil
         }
 
         var userRoles = (await accountUserContext.GetSelectedAccount()).Roles;
-        if (!_allowedFor.Any(allowedRole => userRoles.Any(role => role.Role == allowedRole)))
+        if (!_allowedFor.Any(allowedRole => userRoles.Any(role => role == allowedRole)))
         {
             throw new UnauthorizedAccessException();
         }

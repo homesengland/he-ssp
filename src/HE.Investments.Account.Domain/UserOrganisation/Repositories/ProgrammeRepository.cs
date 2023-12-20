@@ -1,5 +1,6 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Contract.UserOrganisation;
+using HE.Investments.Account.Contract.Users;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.CRM;
 using HE.Investments.Common.CRM.Model;
@@ -59,7 +60,7 @@ public class ProgrammeRepository : IProgrammeRepository
     {
         var request = new invln_getmultipleahpapplicationsRequest
         {
-            inlvn_userid = userAccount.Role() == UserAccountRole.AnLimitedUser() ? userAccount.UserGlobalId.ToString() : string.Empty,
+            inlvn_userid = userAccount.Role() == UserRole.Limited ? userAccount.UserGlobalId.ToString() : string.Empty,
             invln_organisationid = userAccount.AccountId.ToString(),
             invln_appfieldstoretrieve = $"{nameof(invln_scheme.invln_schemename)},{nameof(invln_scheme.statuscode)}".ToLowerInvariant(),
         };

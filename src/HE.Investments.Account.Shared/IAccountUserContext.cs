@@ -1,3 +1,4 @@
+using HE.Investments.Account.Contract.Users;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.Entities;
 
@@ -23,5 +24,5 @@ public interface IAccountUserContext
 
     Task<bool> IsLinkedWithOrganisation();
 
-    Task<bool> HasOneOfRole(UserAccountRole[] roles);
+    Task<bool> HasOneOfRole(UserRole[] roles);
 }

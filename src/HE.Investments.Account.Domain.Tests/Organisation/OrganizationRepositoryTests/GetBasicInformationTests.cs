@@ -1,6 +1,7 @@
 extern alias Org;
 
 using FluentAssertions;
+using HE.Investments.Account.Contract.Users;
 using HE.Investments.Account.Domain.Organisation.Entities;
 using HE.Investments.Account.Domain.Organisation.Repositories;
 using HE.Investments.Account.Domain.Tests.Organisation.TestObjectBuilder;
@@ -57,7 +58,7 @@ public class GetBasicInformationTests : TestBase<OrganizationRepository>
 
         var userAccount = UserAccountTestData.UserAccountOne;
 
-        var fakeUserAccount = new UserAccount(UserGlobalId.From("FakeId"), string.Empty, GuidTestData.GuidTwo, string.Empty, Array.Empty<UserAccountRole>());
+        var fakeUserAccount = new UserAccount(UserGlobalId.From("FakeId"), string.Empty, GuidTestData.GuidTwo, string.Empty, Array.Empty<UserRole>());
 
         OrganizationServiceMockTestBuilder
             .New()

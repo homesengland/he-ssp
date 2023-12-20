@@ -2,6 +2,7 @@ using HE.Investments.Account.Contract.Organisation;
 using HE.Investments.Account.Contract.Organisation.Queries;
 using HE.Investments.Account.Contract.UserOrganisation;
 using HE.Investments.Account.Contract.UserOrganisation.Commands;
+using HE.Investments.Account.Contract.Users;
 using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Account.Shared.Routing;
@@ -75,7 +76,7 @@ public class UserOrganisationController : Controller
     }
 
     [HttpGet("request-details-change")]
-    [AuthorizeWithCompletedProfile(UserAccountRole.AdminRole)]
+    [AuthorizeWithCompletedProfile(UserRole.Admin)]
     public async Task<IActionResult> ChangeOrganisationDetails()
     {
         var organisationResult = await _mediator.Send(new GetOrganisationDetailsQuery());
@@ -88,7 +89,7 @@ public class UserOrganisationController : Controller
     }
 
     [HttpPost("request-details-change")]
-    [AuthorizeWithCompletedProfile(UserAccountRole.AdminRole)]
+    [AuthorizeWithCompletedProfile(UserRole.Admin)]
     public async Task<IActionResult> ChangeOrganisationDetails(OrganisationDetailsViewModel viewModel, CancellationToken cancellationToken)
     {
         var command = new ChangeOrganisationDetailsCommand(

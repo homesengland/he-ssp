@@ -1,3 +1,5 @@
+using HE.Investments.Account.Contract.Users;
+
 namespace HE.Investments.Account.Shared.User;
 
 public record UserAccount(
@@ -5,7 +7,7 @@ public record UserAccount(
     string UserEmail,
     Guid? AccountId,
     string AccountName,
-    IReadOnlyCollection<UserAccountRole> Roles)
+    IReadOnlyCollection<UserRole> Roles)
 {
-    public UserAccountRole Role() => Roles.FirstOrDefault() ?? throw new UnauthorizedAccessException();
+    public UserRole Role() => Roles.Count > 0 ? Roles.FirstOrDefault() : throw new UnauthorizedAccessException();
 }

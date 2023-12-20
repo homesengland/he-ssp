@@ -1,3 +1,4 @@
+using HE.Investments.Account.Contract.Users;
 using HE.Investments.Account.Shared.Repositories;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.Entities;
@@ -74,7 +75,7 @@ public class AccountUserContext : IAccountUserContext
         return _selectedAccount is not null;
     }
 
-    public async Task<bool> HasOneOfRole(UserAccountRole[] roles)
+    public async Task<bool> HasOneOfRole(UserRole[] roles)
     {
         var selectedAccount = await GetSelectedAccount();
         return roles.Contains(selectedAccount.Role());
