@@ -23,7 +23,7 @@
 <div class="govuk-grid-column-three-quarters">
     @if (Model.IsReadOnly)
     {
-        <gds-back-link href="@Url.Action("TaskList", "Application", new{ applicationId = Model.ApplicationId})" class="govuk-!-margin-bottom-8"></gds-back-link>
+        <gds-back-link href="@Url.Action("TaskList", "Application", new { applicationId = Model.ApplicationId })" class="govuk-!-margin-bottom-8"></gds-back-link>
     }
     else
     {
@@ -31,8 +31,8 @@
     }
 
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
-    <vc:form-header caption="@Model.ApplicationName" title="@title" />
-    <vc:section-summary title="@Model.Section.Title" items="@Model.Section.Items" />
+    <vc:form-header caption="@Model.ApplicationName" title="@title"/>
+    <vc:section-summary title="@Model.Section.Title" items="@Model.Section.Items"/>
 
     <form asp-controller="Scheme" asp-action="Complete" asp-route-applicationId="@Model.ApplicationId" asp-method="post" novalidate hidden="@Model.IsReadOnly">
         @Html.HiddenFor(m => Model.ApplicationName)
@@ -40,10 +40,11 @@
         <gds-field-set role="group">
             <vc:radio-list field-name="@(nameof(Model.IsCompleted))"
                            title="Have you completed this section?"
-                           available-options="@values" />
+                           available-options="@values"/>
         </gds-field-set>
-        <vc:form-button />
+        <vc:form-button/>
+        <div>
+            <vc:return-to-application-link application-id="@Model.ApplicationId" is-editable="@Model.IsEditable"/>
+        </div>
     </form>
-
-    <vc:return-to-application-link application-id="@Model.ApplicationId" is-editable="@Model.IsEditable"/>
 </div>

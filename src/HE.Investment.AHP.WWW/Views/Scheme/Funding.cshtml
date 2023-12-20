@@ -20,14 +20,16 @@
                                value="@Model.RequiredFunding"
                                label="Enter how much AHP CME 21-26 funding you require on this scheme"
                                prefix="£"
-                               css-class="govuk-input--width-10" />
+                               css-class="govuk-input--width-10"/>
 
         <vc:numeric-text-input field-name="@nameof(Model.HousesToDeliver)"
                                value="@Model.HousesToDeliver"
                                label="Enter how many homes you intend to deliver"
-                               css-class="govuk-input--width-5" />
+                               css-class="govuk-input--width-5"/>
 
         <vc:form-button/>
+        <div>
+            <vc:return-to-application-link application-id="@Model.ApplicationId"/>
+        </div>
     </form>
-    <vc:return-to-application-link application-id="@Model.ApplicationId"/>
 </gds-div-grid-column-two-thirds>

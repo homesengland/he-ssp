@@ -13,10 +13,12 @@ using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Routing;
+using HE.Investments.Common.WWW.Utils;
 using HE.Investments.Loans.Common.Exceptions;
 using HE.Investments.Loans.Common.Routing;
 using MediatR;
@@ -75,13 +77,14 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
 
     [WorkflowState(SchemeWorkflowState.Funding)]
     [HttpPost("funding")]
-    public async Task<IActionResult> Funding(SchemeViewModel model, CancellationToken cancellationToken)
+    public async Task<IActionResult> Funding(SchemeViewModel model, string action, CancellationToken cancellationToken)
     {
         return await ExecuteCommand(
             new ChangeSchemeFundingCommand(model.ApplicationId, model.RequiredFunding, model.HousesToDeliver),
             model.ApplicationId,
             nameof(Funding),
             model,
+            action,
             cancellationToken);
     }
 
@@ -96,13 +99,14 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
 
     [WorkflowState(SchemeWorkflowState.Affordability)]
     [HttpPost("affordability")]
-    public async Task<IActionResult> Affordability(SchemeViewModel model, CancellationToken cancellationToken)
+    public async Task<IActionResult> Affordability(SchemeViewModel model, string action, CancellationToken cancellationToken)
     {
         return await ExecuteCommand(
             new ChangeSchemeAffordabilityCommand(model.ApplicationId, model.AffordabilityEvidence),
             model.ApplicationId,
             nameof(Affordability),
             model,
+            action,
             cancellationToken);
     }
 
@@ -117,13 +121,14 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
 
     [WorkflowState(SchemeWorkflowState.SalesRisk)]
     [HttpPost("sales-risk")]
-    public async Task<IActionResult> SalesRisk(SchemeViewModel model, CancellationToken cancellationToken)
+    public async Task<IActionResult> SalesRisk(SchemeViewModel model, string action, CancellationToken cancellationToken)
     {
         return await ExecuteCommand(
             new ChangeSchemeSalesRiskCommand(model.ApplicationId, model.SalesRisk),
             model.ApplicationId,
             nameof(SalesRisk),
             model,
+            action,
             cancellationToken);
     }
 
@@ -138,7 +143,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
 
     [WorkflowState(SchemeWorkflowState.HousingNeeds)]
     [HttpPost("housing-needs")]
-    public async Task<IActionResult> HousingNeeds(SchemeViewModel model, CancellationToken cancellationToken)
+    public async Task<IActionResult> HousingNeeds(SchemeViewModel model, string action, CancellationToken cancellationToken)
     {
         return await ExecuteCommand(
             new ChangeSchemeHousingNeedsCommand(
@@ -148,6 +153,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
             model.ApplicationId,
             nameof(HousingNeeds),
             model,
+            action,
             cancellationToken);
     }
 
@@ -162,7 +168,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
 
     [WorkflowState(SchemeWorkflowState.StakeholderDiscussions)]
     [HttpPost("stakeholder-discussions")]
-    public async Task<IActionResult> StakeholderDiscussions(SchemeViewModel model, CancellationToken cancellationToken)
+    public async Task<IActionResult> StakeholderDiscussions(SchemeViewModel model, string action, CancellationToken cancellationToken)
     {
         var fileToUpload = model.StakeholderDiscussionFile == null
             ? null
@@ -181,6 +187,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
                 model.ApplicationId,
                 nameof(StakeholderDiscussions),
                 model,
+                action,
                 cancellationToken);
         }
         finally
@@ -229,7 +236,11 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
 
     [WorkflowState(SchemeWorkflowState.CheckAnswers)]
     [HttpPost("check-answers")]
-    public async Task<IActionResult> Complete([FromRoute] string applicationId, [FromForm] bool? isCompleted, CancellationToken cancellationToken)
+    public async Task<IActionResult> Complete(
+        [FromRoute] string applicationId,
+        [FromForm] bool? isCompleted,
+        string action,
+        CancellationToken cancellationToken)
     {
         if (isCompleted == null)
         {
@@ -242,9 +253,19 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
             var result = await _mediator.Send(new CompleteSchemeCommand(applicationId), cancellationToken);
             if (result.HasValidationErrors)
             {
-                ModelState.AddModelError(nameof(SchemeSummaryViewModel.IsCompleted), "You have not completed this section. Select no if you want to come back later");
+                ModelState.AddModelError(
+                    nameof(SchemeSummaryViewModel.IsCompleted),
+                    "You have not completed this section. Select no if you want to come back later");
                 return View("CheckAnswers", await GetSchemeAndCreateSummary(Url, applicationId, cancellationToken));
             }
+        }
+
+        if (action == GenericMessages.SaveAndReturn)
+        {
+            return RedirectToAction(
+                nameof(ApplicationController.TaskList),
+                new ControllerName(nameof(ApplicationController)).WithoutPrefix(),
+                new { applicationId });
         }
 
         return RedirectToAction("TaskList", "Application", new { applicationId });
@@ -296,6 +317,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
         string applicationId,
         string viewName,
         object model,
+        string action,
         CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(command, cancellationToken);
@@ -304,6 +326,14 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
         {
             ModelState.AddValidationErrors(result);
             return View(viewName, model);
+        }
+
+        if (action == GenericMessages.SaveAndReturn)
+        {
+            return RedirectToAction(
+                nameof(ApplicationController.TaskList),
+                new ControllerName(nameof(ApplicationController)).WithoutPrefix(),
+                new { applicationId });
         }
 
         return await ContinueWithRedirect(new { applicationId });
