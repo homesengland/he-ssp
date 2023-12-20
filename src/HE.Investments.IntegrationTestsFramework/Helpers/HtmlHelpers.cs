@@ -3,7 +3,7 @@ using AngleSharp;
 using AngleSharp.Html.Dom;
 using AngleSharp.Io;
 
-namespace HE.Investments.Loans.IntegrationTests.IntegrationFramework.Helpers;
+namespace HE.Investments.IntegrationTestsFramework.Helpers;
 
 public class HtmlHelpers
 {

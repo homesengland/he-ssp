@@ -1,10 +1,11 @@
 using System.Globalization;
 using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.Extensions;
+using HE.Investments.IntegrationTestsFramework.Auth;
 
 namespace HE.Investments.Loans.IntegrationTests.Config;
 
-public class IntegrationUserData
+public class IntegrationUserData : ILoginData
 {
     public IntegrationUserData()
     {
