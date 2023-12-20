@@ -2,7 +2,7 @@ using HE.Investments.Account.Contract.Users;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.Extensions;
 
-namespace HE.Investments.Account.Domain.Data;
+namespace HE.Investments.Account.Shared.Repositories;
 
 public static class UserRoleMapper
 {

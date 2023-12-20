@@ -2,6 +2,7 @@ using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Contract.Users;
 using HE.Investments.Account.Domain.Data;
 using HE.Investments.Account.Domain.Data.Extensions;
+using HE.Investments.Account.Shared.Repositories;
 
 namespace HE.Investments.Account.Domain.Users.Repositories;
 

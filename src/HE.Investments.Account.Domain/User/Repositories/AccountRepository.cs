@@ -1,3 +1,5 @@
+using System.Collections.ObjectModel;
+using HE.Investments.Account.Contract.Users;
 using HE.Investments.Account.Domain.User.Repositories.Mappers;
 using HE.Investments.Account.Shared.Repositories;
 using HE.Investments.Account.Shared.User;
@@ -37,7 +39,7 @@ public class AccountRepository : IProfileRepository, IAccountRepository
                 userEmail,
                 x.Key,
                 x.FirstOrDefault(y => y.accountId == x.Key)?.accountName ?? string.Empty,
-                x.Select(y => new UserAccountRole(y.webRoleName)).ToList()))
+                new ReadOnlyCollection<UserRole>(x.Where(y => y.permission.HasValue).Select(y => UserRoleMapper.ToDomain(y.permission)!.Value).ToList())))
             .ToList();
     }
 

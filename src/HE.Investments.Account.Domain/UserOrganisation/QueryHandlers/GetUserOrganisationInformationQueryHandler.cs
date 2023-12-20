@@ -1,5 +1,6 @@
 using HE.Investments.Account.Contract.Organisation.Queries;
 using HE.Investments.Account.Contract.UserOrganisation;
+using HE.Investments.Account.Contract.Users;
 using HE.Investments.Account.Domain.Organisation.Repositories;
 using HE.Investments.Account.Domain.User.Repositories;
 using HE.Investments.Account.Domain.UserOrganisation.Repositories;
@@ -44,7 +45,7 @@ public class GetUserOrganisationInformationQueryHandler : IRequestHandler<GetUse
             return new GetUserOrganisationInformationQueryResponse(
                 organisationDetails,
                 userDetails.FirstName?.Value,
-                account.Roles.All(r => r.Role == UserAccountRole.LimitedRole),
+                account.Roles.All(r => r == UserRole.Limited),
                 await _programmeRepository.GetLoanProgrammes(account, cancellationToken),
                 new List<ProgrammeType> { ProgrammeType.Loans });
         }
@@ -52,7 +53,7 @@ public class GetUserOrganisationInformationQueryHandler : IRequestHandler<GetUse
         return new GetUserOrganisationInformationQueryResponse(
             organisationDetails,
             userDetails.FirstName?.Value,
-            account.Roles.All(r => r.Role == UserAccountRole.LimitedRole),
+            account.Roles.All(r => r == UserRole.Limited),
             await _programmeRepository.GetAllProgrammes(account, cancellationToken),
             new List<ProgrammeType> { ProgrammeType.Loans, ProgrammeType.Ahp });
     }

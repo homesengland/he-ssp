@@ -1,4 +1,5 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.Investments.Account.Contract.Users;
 using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.CRM.Model;
@@ -24,7 +25,7 @@ public class ApplicationCrmContext : IApplicationCrmContext
         var account = await TryGetUserAccountForSelectedOrganisation();
         var request = new invln_getahpapplicationRequest
         {
-            invln_userid = account.Role() == UserAccountRole.AnLimitedUser() ? account.UserGlobalId.ToString() : string.Empty,
+            invln_userid = account.Role() == UserRole.Limited ? account.UserGlobalId.ToString() : string.Empty,
             invln_organisationid = account.AccountId.ToString(),
             invln_applicationid = id,
             invln_appfieldstoretrieve = FormatFields(fieldsToRetrieve),
@@ -71,7 +72,7 @@ public class ApplicationCrmContext : IApplicationCrmContext
         var account = await TryGetUserAccountForSelectedOrganisation();
         var request = new invln_getmultipleahpapplicationsRequest
         {
-            inlvn_userid = account.Role() == UserAccountRole.AnLimitedUser() ? account.UserGlobalId.ToString() : string.Empty,
+            inlvn_userid = account.Role() == UserRole.Limited ? account.UserGlobalId.ToString() : string.Empty,
             invln_organisationid = account.AccountId.ToString(),
             invln_appfieldstoretrieve = FormatFields(fieldsToRetrieve),
         };

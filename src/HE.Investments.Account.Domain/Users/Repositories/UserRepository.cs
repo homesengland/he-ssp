@@ -2,6 +2,7 @@ using HE.Investments.Account.Contract.Users;
 using HE.Investments.Account.Domain.Data;
 using HE.Investments.Account.Domain.Users.Entities;
 using HE.Investments.Account.Domain.Users.ValueObjects;
+using HE.Investments.Account.Shared.Repositories;
 
 namespace HE.Investments.Account.Domain.Users.Repositories;
 
