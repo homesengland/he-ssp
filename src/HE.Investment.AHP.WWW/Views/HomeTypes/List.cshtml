@@ -98,9 +98,7 @@
 
             <link-button href="@Url.RouteUrl("section", new { controller = "HomeTypes", action = "HomeTypeDetails", applicationId })" is-disabled="@Model.IsReadOnly">Add a home type</link-button>
         }
-        <div>
             <vc:return-to-application-link application-id="@applicationId" is-editable="@Model.IsEditable"/>
-        </div>
 
     </form>
     <br/>

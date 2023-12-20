@@ -45,7 +45,7 @@ public class OtherSchemeCostsTests : ViewTestBase
         document
             .HasElementWithText("h1", "Other application costs")
             .HasElementWithText("h2", "Enter your expected works costs")
-            .HasElementWithText("button", "Return to application")
+            .HasElementWithText("button", "Save and return to application")
             .HasElementWithText("button", "Save and continue")
             .HasSummaryErrorMessage(nameof(FinancialDetailsValidationFieldNames.ExpectedWorksCosts), errorMessage, !string.IsNullOrEmpty(errorMessage))
             .HasErrorMessage(nameof(FinancialDetailsValidationFieldNames.ExpectedWorksCosts), errorMessage, !string.IsNullOrEmpty(errorMessage));
