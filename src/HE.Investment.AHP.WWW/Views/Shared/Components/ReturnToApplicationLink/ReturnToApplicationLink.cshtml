@@ -1,12 +1,12 @@
 @using HE.Investments.Common.Messages
+
+
 @model (string ApplicationId, bool IsEditable)
 
 <div>
-    @if (@Model.IsEditable)
+    @if (Model.IsEditable)
     {
-        <button type="submit" class="govuk-link--no-visited-state govuk-button-link" name="action" value="@GenericMessages.SaveAndReturn">
-            Save and return to application
-        </button>
+        <vc:link-working-as-button text="Save and return to application" name="action" value="@GenericMessages.SaveAndReturn"/>
     }
     else
     {
