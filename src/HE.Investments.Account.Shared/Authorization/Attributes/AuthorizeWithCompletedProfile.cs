@@ -1,6 +1,5 @@
 using HE.Investments.Account.Contract.Users;
 using HE.Investments.Account.Shared.Routing;
-using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -14,7 +13,7 @@ public class AuthorizeWithCompletedProfile : AuthorizeAttribute, IAsyncActionFil
     private readonly IEnumerable<UserRole> _allowedFor;
 
     public AuthorizeWithCompletedProfile(string allowedFor)
-        : this(allowedFor.Split(','))
+        : this(allowedFor.Split(',').Select(x => (UserRole)Enum.Parse(typeof(UserRole), x)).ToArray())
     {
     }
 
@@ -23,7 +22,7 @@ public class AuthorizeWithCompletedProfile : AuthorizeAttribute, IAsyncActionFil
     {
     }
 
-    public AuthorizeWithCompletedProfile(string[]? allowedFor = null)
+    public AuthorizeWithCompletedProfile(UserRole[]? allowedFor = null)
     {
         if (allowedFor.IsNotProvided())
         {
@@ -38,7 +37,7 @@ public class AuthorizeWithCompletedProfile : AuthorizeAttribute, IAsyncActionFil
         }
         else
         {
-            _allowedFor = allowedFor!.Select(x => (UserRole)Enum.Parse(typeof(UserRole), x)).ToList();
+            _allowedFor = allowedFor!;
         }
     }
 
