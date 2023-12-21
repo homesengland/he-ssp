@@ -26,7 +26,7 @@ public class NotificationService : INotificationService
         var notification = _cacheService.GetValue<Notification>(_userNotificationKey);
         if (notification != null)
         {
-            _cacheService.SetValue<Notification?>(_userNotificationKey, null);
+            _cacheService.Delete(_userNotificationKey);
             return Map(notification);
         }
 

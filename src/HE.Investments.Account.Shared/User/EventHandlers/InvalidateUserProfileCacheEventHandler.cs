@@ -26,7 +26,7 @@ public class InvalidateUserProfileCacheEventHandler : IEventHandler<UserProfileC
         }
         else
         {
-            await _cacheService.SetValueAsync<UserProfileDetails?>(CacheKeys.ProfileDetails(notification.UserGlobalId), null);
+            await _cacheService.DeleteAsync(CacheKeys.ProfileDetails(notification.UserGlobalId));
         }
     }
 }

@@ -9,4 +9,8 @@ public interface ICacheService
     public void SetValue<T>(string key, T value);
 
     public Task SetValueAsync<T>(string key, T value);
+
+    public void Delete(string key);
+
+    public Task DeleteAsync(string key);
 }

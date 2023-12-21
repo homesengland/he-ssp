@@ -63,4 +63,14 @@ public class RedisService : ICacheService
     {
         await Cache.StringSetAsync(key, JsonSerializer.Serialize(value), TimeSpan.FromMinutes(_cacheConfig.ExpireMinutes));
     }
+
+    public void Delete(string key)
+    {
+        Cache.KeyDelete(key);
+    }
+
+    public async Task DeleteAsync(string key)
+    {
+        await Cache.KeyDeleteAsync(key);
+    }
 }
