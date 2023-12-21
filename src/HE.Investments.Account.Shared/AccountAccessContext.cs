@@ -21,22 +21,26 @@ public class AccountAccessContext : IAccountAccessContext
 
     public async Task<bool> CanManageUsers()
     {
-        return await _accountUserContext.HasOneOfRole(ToUserAccountRoles(ManageUsers));
+        var account = await _accountUserContext.GetSelectedAccount();
+        return account.HasOneOfRole(ToUserAccountRoles(ManageUsers));
     }
 
     public async Task<bool> CanAccessOrganisationView()
     {
-        return await _accountUserContext.HasOneOfRole(ToUserAccountRoles(OrganisationView));
+        var account = await _accountUserContext.GetSelectedAccount();
+        return account.HasOneOfRole(ToUserAccountRoles(OrganisationView));
     }
 
     public async Task<bool> CanSubmitApplication()
     {
-        return await _accountUserContext.HasOneOfRole(ToUserAccountRoles(SubmitApplication));
+        var account = await _accountUserContext.GetSelectedAccount();
+        return account.HasOneOfRole(ToUserAccountRoles(SubmitApplication));
     }
 
     public async Task<bool> CanEditApplication()
     {
-        return await _accountUserContext.HasOneOfRole(ToUserAccountRoles(EditApplications));
+        var account = await _accountUserContext.GetSelectedAccount();
+        return account.HasOneOfRole(ToUserAccountRoles(EditApplications));
     }
 
     private static UserRole[] ToUserAccountRoles(string roles)

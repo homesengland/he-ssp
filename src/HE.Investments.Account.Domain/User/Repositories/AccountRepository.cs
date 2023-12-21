@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using HE.Investments.Account.Contract.User.Events;
 using HE.Investments.Account.Contract.Users;
 using HE.Investments.Account.Domain.User.Repositories.Mappers;
 using HE.Investments.Account.Shared.Repositories;
@@ -6,6 +7,7 @@ using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.Entities;
 using HE.Investments.Loans.Common.Exceptions;
 using HE.Investments.Organisation.Services;
+using MediatR;
 using Microsoft.PowerPlatform.Dataverse.Client;
 
 namespace HE.Investments.Account.Domain.User.Repositories;
@@ -16,10 +18,13 @@ public class AccountRepository : IProfileRepository, IAccountRepository
 
     private readonly IOrganizationServiceAsync2 _serviceClient;
 
-    public AccountRepository(IContactService contactService, IOrganizationServiceAsync2 serviceClient)
+    private readonly IMediator _mediator;
+
+    public AccountRepository(IContactService contactService, IOrganizationServiceAsync2 serviceClient, IMediator mediator)
     {
         _contactService = contactService;
         _serviceClient = serviceClient;
+        _mediator = mediator;
     }
 
     public async Task<IList<UserAccount>> GetUserAccounts(UserGlobalId userGlobalId, string userEmail)
@@ -58,5 +63,6 @@ public class AccountRepository : IProfileRepository, IAccountRepository
         var contactDto = UserProfileMapper.MapUserDetailsToContactDto(userProfileDetails);
 
         await _contactService.UpdateUserProfile(_serviceClient, userGlobalId.ToString(), contactDto, cancellationToken);
+        await _mediator.Publish(new UserProfileChangedEvent(userGlobalId.ToString()), cancellationToken);
     }
 }

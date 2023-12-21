@@ -1,4 +1,4 @@
-using HE.Investments.Account.Contract.Users;
+using HE.Investments.Account.Shared.Config;
 using HE.Investments.Account.Shared.Repositories;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.Entities;
@@ -12,21 +12,22 @@ public class AccountUserContext : IAccountUserContext
 {
     private readonly IUserContext _userContext;
 
-    private readonly ICacheService _cacheService;
+    private readonly CachedEntity<UserProfileDetails> _userProfile;
 
-    private readonly IAccountRepository _accountRepository;
-
-    private IList<UserAccount> _accounts = new List<UserAccount>();
-
-    private UserAccount? _selectedAccount;
-
-    private UserProfileDetails? _userProfile;
+    private readonly CachedEntity<IList<UserAccount>> _userAccounts;
 
     public AccountUserContext(IAccountRepository accountRepository, ICacheService cacheService, IUserContext userContext)
     {
-        _accountRepository = accountRepository;
-        _cacheService = cacheService;
         _userContext = userContext;
+        _userProfile = new CachedEntity<UserProfileDetails>(
+            cacheService,
+            CacheKeys.ProfileDetails(_userContext.UserGlobalId),
+            async () => await accountRepository.GetProfileDetails(UserGlobalId) ??
+                        throw new NotFoundException(nameof(UserProfileDetails), UserGlobalId.ToString()));
+        _userAccounts = new CachedEntity<IList<UserAccount>>(
+            cacheService,
+            CacheKeys.UserAccounts(_userContext.UserGlobalId),
+            async () => await accountRepository.GetUserAccounts(UserGlobalId, _userContext.Email));
     }
 
     public bool IsLogged => _userContext.IsAuthenticated;
@@ -35,87 +36,64 @@ public class AccountUserContext : IAccountUserContext
 
     public string Email => _userContext.Email;
 
-    public async Task RefreshAccounts()
-    {
-        _accounts = await _accountRepository.GetUserAccounts(
-            UserGlobalId.From(_userContext.UserGlobalId),
-            _userContext.Email)!;
-
-        _selectedAccount = _accounts.MinBy(x => x.AccountId);
-        await _cacheService.SetValueAsync($"{nameof(UserAccount)}-{_userContext.UserGlobalId}", _accounts);
-    }
-
     public async Task<UserAccount> GetSelectedAccount()
     {
-        if (_selectedAccount is null)
-        {
-            await LoadUserAccounts();
-        }
-
-        return _selectedAccount!;
+        var accounts = await _userAccounts.GetAsync();
+        return accounts?.MinBy(x => x.AccountId) ?? throw new NotFoundException(nameof(UserAccount));
     }
 
-    public async Task<bool> IsProfileCompleted()
+    public async Task RefreshUserData()
     {
-        if (_userProfile is null)
-        {
-            await LoadProfileDetails();
-        }
-
-        return _userProfile!.IsCompleted();
+        await _userAccounts.InvalidateAsync();
+        await _userProfile.InvalidateAsync();
     }
 
     public async Task<bool> IsLinkedWithOrganisation()
     {
-        if (_selectedAccount is null)
-        {
-            await LoadUserAccounts();
-        }
-
-        return _selectedAccount is not null;
+        var accounts = await _userAccounts.GetAsync();
+        return accounts != null && accounts.Any();
     }
 
-    public async Task<bool> HasOneOfRole(UserRole[] roles)
+    public async Task<bool> IsProfileCompleted()
     {
-        var selectedAccount = await GetSelectedAccount();
-        return roles.Contains(selectedAccount.Role());
-    }
-
-    public async Task LoadUserAccounts()
-    {
-        _accounts = (await _cacheService.GetValueAsync(
-            $"{nameof(UserAccount)}-{_userContext.UserGlobalId}",
-            async () => await _accountRepository.GetUserAccounts(
-                UserGlobalId.From(_userContext.UserGlobalId),
-                _userContext.Email)))!;
-
-        _selectedAccount = _accounts?.MinBy(x => x.AccountId);
+        var userProfile = await _userProfile.GetAsync();
+        return userProfile!.IsCompleted();
     }
 
     public async Task<UserProfileDetails> GetProfileDetails()
     {
-        if (_userProfile is null)
+        var userProfile = await _userProfile.GetAsync();
+        return userProfile!;
+    }
+
+    private class CachedEntity<TEntity>
+        where TEntity : class
+    {
+        private readonly ICacheService _cacheService;
+
+        private readonly string _cacheKey;
+
+        private readonly Func<Task<TEntity>> _loadEntity;
+
+        private TEntity? _entity;
+
+        public CachedEntity(ICacheService cacheService, string cacheKey, Func<Task<TEntity>> loadEntity)
         {
-            await LoadProfileDetails();
+            _cacheKey = cacheKey;
+            _loadEntity = loadEntity;
+            _cacheService = cacheService;
+            _entity = null;
         }
 
-        return _userProfile!;
-    }
+        public async ValueTask<TEntity?> GetAsync()
+        {
+            return _entity ??= await _cacheService.GetValueAsync(_cacheKey, _loadEntity);
+        }
 
-    public async Task RefreshProfileDetails()
-    {
-        _userProfile = await _accountRepository.GetProfileDetails(UserGlobalId)
-                       ?? throw new NotFoundException(nameof(UserProfileDetails), UserGlobalId.ToString());
-
-        await _cacheService.SetValueAsync($"{nameof(UserProfileDetails)}-{UserGlobalId}", _userProfile);
-    }
-
-    private async Task LoadProfileDetails()
-    {
-        await LoadUserAccounts();
-        _userProfile = await _cacheService.GetValueAsync(
-                           $"{nameof(UserProfileDetails)}-{UserGlobalId}",
-                           async () => await _accountRepository.GetProfileDetails(UserGlobalId))
-                       ?? throw new NotFoundException(nameof(UserProfileDetails), UserGlobalId.ToString());
+        public async Task InvalidateAsync()
+        {
+            _entity = await _loadEntity();
+            await _cacheService.SetValueAsync(_cacheKey, _entity);
+        }
     }
 }

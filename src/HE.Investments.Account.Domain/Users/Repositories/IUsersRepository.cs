@@ -4,5 +4,5 @@ namespace HE.Investments.Account.Domain.Users.Repositories;
 
 public interface IUsersRepository
 {
-    Task<IList<UserDetails>> GetUsers();
+    Task<IList<UserDetails>> GetUsers(Guid organisationId);
 }

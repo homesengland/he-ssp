@@ -1,4 +1,5 @@
 using HE.Investments.Account.Contract.Organisation.Commands;
+using HE.Investments.Account.Contract.User.Events;
 using HE.Investments.Account.Domain.Organisation.Entities;
 using HE.Investments.Account.Domain.Organisation.Repositories;
 using HE.Investments.Account.Domain.Organisation.ValueObjects;
@@ -15,28 +16,31 @@ namespace HE.Investments.Account.Domain.Organisation.CommandHandlers;
 
 public class CreateAndLinkOrganisationCommandHandler : IRequestHandler<CreateAndLinkOrganisationCommand, OperationResult>
 {
-    private readonly IAccountUserContext _loanUserContext;
+    private readonly IAccountUserContext _userContext;
     private readonly IOrganizationRepository _repository;
     private readonly IContactRepository _contactRepository;
+    private readonly IMediator _mediator;
 
     public CreateAndLinkOrganisationCommandHandler(
-        IAccountUserContext loanUserContext,
+        IAccountUserContext userContext,
         IOrganizationRepository repository,
-        IContactRepository contactRepository)
+        IContactRepository contactRepository,
+        IMediator mediator)
     {
-        _loanUserContext = loanUserContext;
+        _userContext = userContext;
         _repository = repository;
         _contactRepository = contactRepository;
+        _mediator = mediator;
     }
 
     public async Task<OperationResult> Handle(CreateAndLinkOrganisationCommand request, CancellationToken cancellationToken)
     {
         try
         {
-            if (await _loanUserContext.IsLinkedWithOrganisation())
+            if (await _userContext.IsLinkedWithOrganisation())
             {
                 throw new DomainException(
-                    $"Cannot link organization to user account id: {_loanUserContext.UserGlobalId}, because it is already linked to other organization.",
+                    $"Cannot link organization to user account id: {_userContext.UserGlobalId}, because it is already linked to other organization.",
                     CommonErrorCodes.ContactAlreadyLinkedWithOrganization);
             }
 
@@ -51,6 +55,7 @@ public class CreateAndLinkOrganisationCommandHandler : IRequestHandler<CreateAnd
             var organisationId = await _repository.CreateOrganisation(organisation);
 
             await _contactRepository.LinkOrganisation(organisationId, PortalConstants.CommonPortalType);
+            await _mediator.Publish(new UserAccountsChangedEvent(_userContext.UserGlobalId.ToString()), cancellationToken);
 
             return OperationResult.Success();
         }
