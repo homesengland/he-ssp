@@ -1,3 +1,5 @@
+using HE.Investment.AHP.Contract.HomeTypes.Enums;
+
 namespace HE.Investment.AHP.WWW.Models.HomeTypes;
 
 public class RemoveHomeTypeModel : HomeTypeBasicModel
@@ -11,4 +13,6 @@ public class RemoveHomeTypeModel : HomeTypeBasicModel
         : base(string.Empty, string.Empty)
     {
     }
+
+    public RemoveHomeTypeAnswer RemoveHomeTypeAnswer { get; set; }
 }

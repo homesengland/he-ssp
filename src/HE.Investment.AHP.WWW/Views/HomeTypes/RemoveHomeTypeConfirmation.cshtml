@@ -1,5 +1,7 @@
 @using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.Domain.HomeTypes
+@using HE.Investment.AHP.WWW.Models.HomeTypes
+@using HE.Investment.AHP.WWW.Views.Shared.Components.HomeTypeFormHeader
 @model HE.Investment.AHP.WWW.Models.HomeTypes.RemoveHomeTypeModel;
 
 @{
@@ -11,21 +13,21 @@
     <form asp-controller="HomeTypes" asp-action="Remove" asp-method="post" novalidate>
         @Html.HiddenFor(m => Model.ApplicationName)
         @Html.HiddenFor(m => Model.HomeTypeName)
-        <vc:home-type-form-header title="Remove @Model.HomeTypeName Home type"
-                                  current-page="@HomeTypesWorkflowState.RemoveHomeType"
+        <vc:home-type-form-header current-page="@HomeTypesWorkflowState.RemoveHomeType"
                                   application-id="@applicationId"
                                   home-type-id="@homeTypeId"
                                   caption="@Model.Header"/>
-        <gds-p>
-            Are you sure you want to remove this Home Type?
-        </gds-p>
 
-        <button class="govuk-button govuk-button--warning" data-module="govuk-button" name="action" type="submit">
-            Remove Home Type
-        </button>
+        <he-error-form-group asp-for="RemoveHomeTypeAnswer">
+            <gds-h1>Are you sure you want to remove this home type?</gds-h1>
+            <gds-radio govuk-formgroup-asp-for="RemoveHomeTypeAnswer"
+                       asp-hiddenlabeltext="Are you sure you want to remove this home type?"
+                       value="@Model.RemoveHomeTypeAnswer"
+                       asp-selectlistitems="@HomeTypesFormOptions.RemoveHomeTypes">
+            </gds-radio>
+        </he-error-form-group>
+
+        <vc:form-button/>
+        <vc:return-to-application-link application-id="@applicationId"/>
     </form>
-
-    <a href="@Url.RouteUrl("section", new { controller = "HomeTypes", action = "List", applicationId })">
-        Go back to Home Types
-    </a>
 </div>

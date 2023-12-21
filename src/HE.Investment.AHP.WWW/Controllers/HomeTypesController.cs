@@ -159,7 +159,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     [HttpPost("{homeTypeId}/Remove")]
     public async Task<IActionResult> Remove([FromRoute] string applicationId, string homeTypeId, RemoveHomeTypeModel model, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new RemoveHomeTypeCommand(applicationId, homeTypeId), cancellationToken);
+        var result = await _mediator.Send(new RemoveHomeTypeCommand(applicationId, homeTypeId, model.RemoveHomeTypeAnswer), cancellationToken);
         if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
