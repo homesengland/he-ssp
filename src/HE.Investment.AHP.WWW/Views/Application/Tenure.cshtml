@@ -18,12 +18,11 @@
         .ToList();
 }
 <gds-div-grid-column-two-thirds>
-    <vc:back-link-with-callback url="@Url.Action("Name", "Application", new { applicationId = Model.Id })"/>
+    <vc:back-link-with-callback url="@Url.Action("Name", "Application", new { applicationName = Model.Name })"/>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
-    <form asp-controller="Application" asp-action="Tenure" asp-method="post" asp-route-callbackUrl="@Context.Request.Query["callbackUrl"]" novalidate>
+    <form asp-controller="Application" asp-action="Tenure" asp-method="post" asp-route-applicationName="@Model.Name" novalidate>
         <vc:form-header caption="@Model.Name" title="What is the tenure of the homes on this application?"/>
         <gds-field-set role="group">
-            @Html.HiddenFor(m => m.Id)
             @Html.HiddenFor(m => m.Name)
 
             <vc:radio-list

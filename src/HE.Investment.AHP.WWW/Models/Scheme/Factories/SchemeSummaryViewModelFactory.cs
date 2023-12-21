@@ -18,13 +18,11 @@ public class SchemeSummaryViewModelFactory : ISchemeSummaryViewModelFactory
             new(
                 "Application name",
                 scheme.ApplicationName.ToOneElementList(),
-                IsEditable: !isReadOnly,
-                ActionUrl: CreateApplicationActionUrl(urlHelper, scheme.ApplicationId, nameof(ApplicationController.Name))),
+                IsEditable: false),
             new(
                 "Tenure",
                 scheme.ApplicationTenure?.GetDescription().ToOneElementList(),
-                IsEditable: !isReadOnly,
-                ActionUrl: CreateApplicationActionUrl(urlHelper, scheme.ApplicationId, nameof(ApplicationController.Tenure))),
+                IsEditable: false),
             new(
                 "Funding required",
                 scheme.RequiredFunding.ToWholeNumberString().ToOneElementList(),
@@ -73,12 +71,6 @@ public class SchemeSummaryViewModelFactory : ISchemeSummaryViewModelFactory
 
         return $"{action}{(allowWcagDuplicate ? "#" : string.Empty)}";
     }
-
-    private string CreateApplicationActionUrl(IUrlHelper urlHelper, string applicationId, string actionName) =>
-        urlHelper.Action(
-            actionName,
-            new ControllerName(nameof(ApplicationController)).WithoutPrefix(),
-            new { applicationId, callbackUrl = urlHelper.Action("CheckAnswers", "Scheme", new { applicationId }) }) ?? string.Empty;
 
     private Dictionary<string, string>? ConvertFiles(IUrlHelper urlHelper, string applicationId, UploadedFile? uploadedFile)
     {
