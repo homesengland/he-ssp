@@ -18,5 +18,5 @@ public static class UserAccountTestData
         "User@one.com",
         GuidTestData.GuidTwo,
         "AccountOne",
-        new[] { UserRole.Limited, UserRole.Admin });
+        new[] { UserRole.Admin, UserRole.Limited });
 }
