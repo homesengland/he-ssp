@@ -21,7 +21,6 @@ public class HeErrorFormGroup : TagHelper
         if (output != null)
         {
             output.TagName = HtmlConstants.Div;
-            output.Attributes.Add(new TagHelperAttribute("id", For.Name));
 
             var (hasError, _) = ViewContext.GetErrorFrom(For);
 
