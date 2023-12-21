@@ -9,5 +9,5 @@ public record UserAccount(
     string AccountName,
     IReadOnlyCollection<UserRole> Roles)
 {
-    public UserRole Role() => Roles.Count > 0 ? Roles.FirstOrDefault() : throw new UnauthorizedAccessException();
+    public UserRole Role() => Roles.Count > 0 ? Roles.Max() : throw new UnauthorizedAccessException();
 }
