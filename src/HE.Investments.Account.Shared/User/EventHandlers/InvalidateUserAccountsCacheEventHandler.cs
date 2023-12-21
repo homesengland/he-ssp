@@ -36,7 +36,7 @@ public class InvalidateUserAccountsCacheEventHandler : IEventHandler<UserAccount
         }
         else
         {
-            await _cacheService.SetValueAsync<IList<UserAccount>?>(CacheKeys.UserAccounts(userGlobalId), null);
+            await _cacheService.DeleteAsync(CacheKeys.UserAccounts(userGlobalId));
         }
     }
 }
