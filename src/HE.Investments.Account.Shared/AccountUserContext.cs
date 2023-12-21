@@ -56,6 +56,7 @@ public class AccountUserContext : IAccountUserContext
 
     public async Task<bool> IsProfileCompleted()
     {
+        await _userAccounts.GetAsync();
         var userProfile = await _userProfile.GetAsync();
         return userProfile!.IsCompleted();
     }
