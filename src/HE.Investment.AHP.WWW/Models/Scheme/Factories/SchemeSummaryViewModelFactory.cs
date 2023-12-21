@@ -58,7 +58,7 @@ public class SchemeSummaryViewModelFactory : ISchemeSummaryViewModelFactory
                 scheme.StakeholderDiscussionsReport.ToOneElementList(),
                 ActionUrl: CreateSchemeActionUrl(urlHelper, scheme.ApplicationId, nameof(SchemeController.StakeholderDiscussions)),
                 IsEditable: !isReadOnly,
-                Files: ConvertFiles(urlHelper, scheme.ApplicationId, scheme.StakeholderDiscussionsFile)),
+                Files: ConvertFiles(urlHelper, scheme.ApplicationId, scheme.LocalAuthoritySupportFile)),
         });
     }
 

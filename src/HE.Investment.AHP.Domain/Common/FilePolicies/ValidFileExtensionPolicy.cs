@@ -1,4 +1,5 @@
 using HE.Investment.AHP.Domain.Common.ValueObjects;
+using HE.Investment.AHP.Domain.Documents.Config;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
 
@@ -6,22 +7,21 @@ namespace HE.Investment.AHP.Domain.Common.FilePolicies;
 
 public class ValidFileExtensionPolicy : IFilePolicy<FileName>
 {
-    private static readonly IList<FileExtension> AllowedExtensions =
-        new[] { new FileExtension("jpg"), new FileExtension("png"), new FileExtension("pdf"), new FileExtension("docx") };
-
     private readonly string _fieldName;
+    private readonly IAhpDocumentSettings _documentSettings;
 
-    public ValidFileExtensionPolicy(string fieldName)
+    public ValidFileExtensionPolicy(string fieldName, IAhpDocumentSettings documentSettings)
     {
         _fieldName = fieldName;
+        _documentSettings = documentSettings;
     }
 
     public void Apply(FileName value)
     {
-        if (!AllowedExtensions.Contains(value.Extension))
+        if (!_documentSettings.AllowedExtensions.Contains(value.Extension))
         {
             OperationResult.New()
-                .AddValidationError(_fieldName, GenericValidationError.InvalidFileType(value.Value, AllowedExtensions.Select(x => x.Value)))
+                .AddValidationError(_fieldName, GenericValidationError.InvalidFileType(value.Value, _documentSettings.AllowedExtensions.Select(x => x.Value)))
                 .CheckErrors();
         }
     }

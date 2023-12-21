@@ -30,13 +30,13 @@
 
             <vc:upload-file title="Upload any evidence you have of Local Authority support (optional)"
                             allowed-extensions="@Model.AllowedExtensions"
-                            field-name="StakeholderDiscussionFile"
+                            field-name="LocalAuthoritySupportFile"
                             description="This could be any correspondence, including an email chain. We only require one document."
                             max-file-size-in-mb="@Model.MaxFileSizeInMegabytes"
-                            is-hidden="@(Model.UploadedStakeholderDiscussionFiles != null && Model.UploadedStakeholderDiscussionFiles.Any())"/>
+                            is-hidden="@(Model.UploadedLocalAuthoritySupportFiles != null && Model.UploadedLocalAuthoritySupportFiles.Any())"/>
         </div>
         <div class="govuk-grid-column-full govuk-!-padding-left-0">
-            <vc:files-table asp-for="@Model.UploadedStakeholderDiscussionFiles"/>
+            <vc:files-table asp-for="@Model.UploadedLocalAuthoritySupportFiles"/>
         </div>
         <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0">
             <vc:form-button/>
