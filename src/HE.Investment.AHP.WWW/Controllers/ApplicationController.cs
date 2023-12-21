@@ -1,4 +1,3 @@
-using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Domain.Application.Commands;
 using HE.Investment.AHP.Domain.Application.Workflows;
@@ -45,27 +44,16 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
 
     [WorkflowState(ApplicationWorkflowState.ApplicationName)]
     [HttpGet("name")]
-    [HttpGet("{applicationId}/name")]
-    public async Task<IActionResult> Name(string? applicationId, CancellationToken cancellationToken)
+    public IActionResult Name([FromQuery] string? applicationName)
     {
-        if (string.IsNullOrWhiteSpace(applicationId))
-        {
-            return View();
-        }
-
-        var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
-
-        return View("Name", CreateModel(application));
+        return View("Name", new ApplicationBasicModel(null, applicationName, Contract.Application.Tenure.Undefined));
     }
 
     [WorkflowState(ApplicationWorkflowState.ApplicationName)]
     [HttpPost("name")]
-    [HttpPost("{applicationId}/name")]
     public async Task<IActionResult> Name(ApplicationBasicModel model, CancellationToken cancellationToken)
     {
-        var result = string.IsNullOrWhiteSpace(model.Id)
-            ? await _mediator.Send(new CreateApplicationCommand(model.Name), cancellationToken)
-            : await _mediator.Send(new UpdateApplicationNameCommand(model.Id, model.Name), cancellationToken);
+        var result = await _mediator.Send(new IsApplicationNameAvailableQuery(model.Name), cancellationToken);
 
         if (result.HasValidationErrors)
         {
@@ -73,23 +61,21 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
             return View(model);
         }
 
-        return await RedirectOrContinue(result.ReturnedData.Value);
+        return await Continue(new { applicationName = model.Name });
     }
 
     [WorkflowState(ApplicationWorkflowState.ApplicationTenure)]
-    [HttpGet("{applicationId}/tenure")]
-    public async Task<IActionResult> Tenure(string applicationId, CancellationToken cancellationToken)
+    [HttpGet("tenure")]
+    public IActionResult Tenure([FromQuery] string applicationName)
     {
-        var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
-
-        return View("Tenure", CreateModel(application));
+        return View("Tenure", new ApplicationBasicModel(null, applicationName, Contract.Application.Tenure.Undefined));
     }
 
     [WorkflowState(ApplicationWorkflowState.ApplicationTenure)]
-    [HttpPost("{applicationId}/tenure")]
-    public async Task<IActionResult> Tenure(string applicationId, ApplicationBasicModel model, CancellationToken cancellationToken)
+    [HttpPost("tenure")]
+    public async Task<IActionResult> Tenure(ApplicationBasicModel model, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new UpdateApplicationTenureCommand(applicationId, model.Tenure), cancellationToken);
+        var result = await _mediator.Send(new CreateApplicationCommand(model.Name, model.Tenure), cancellationToken);
 
         if (result.HasValidationErrors)
         {
@@ -97,7 +83,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
             return View(model);
         }
 
-        return await RedirectOrContinue(result.ReturnedData.Value, nameof(TaskList));
+        return RedirectToAction(nameof(TaskList), new { applicationId = result.ReturnedData.Value });
     }
 
     [HttpGet("{applicationId}/task-list")]
@@ -106,7 +92,14 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     {
         var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
 
-        var model = new ApplicationSectionsModel(applicationId, _siteName, application.Name, application.Status, application.ReferenceNumber, application.LastModificationDetails, application.Sections);
+        var model = new ApplicationSectionsModel(
+            applicationId,
+            _siteName,
+            application.Name,
+            application.Status,
+            application.ReferenceNumber,
+            application.LastModificationDetails,
+            application.Sections);
 
         return View("TaskList", model);
     }
@@ -154,25 +147,5 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     {
         var isReadOnly = !await _accountAccessContext.CanEditApplication();
         return new ApplicationWorkflow(currentState, isReadOnly);
-    }
-
-    private static ApplicationBasicModel CreateModel(Application application)
-    {
-        return new ApplicationBasicModel(application.Id, application.Name, application.Tenure);
-    }
-
-    private async Task<IActionResult> RedirectOrContinue(string applicationId, string? action = null)
-    {
-        if (!string.IsNullOrWhiteSpace(Request.Query["callbackUrl"]))
-        {
-            return Redirect(Request.Query["callbackUrl"]!);
-        }
-
-        if (!string.IsNullOrWhiteSpace(action))
-        {
-            return RedirectToAction(action, new { applicationId });
-        }
-
-        return await Continue(new { applicationId });
     }
 }

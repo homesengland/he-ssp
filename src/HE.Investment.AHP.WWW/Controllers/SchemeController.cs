@@ -61,9 +61,15 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     }
 
     [HttpGet("back")]
-    public Task<IActionResult> Back([FromRoute] string applicationId, SchemeWorkflowState currentPage)
+    public async Task<IActionResult> Back([FromRoute] string applicationId, SchemeWorkflowState currentPage)
     {
-        return Back(currentPage, new { applicationId });
+        var scheme = await _schemeProvider.Get(new GetApplicationSchemeQuery(applicationId), CancellationToken.None);
+        if (currentPage == SchemeWorkflowState.Funding && scheme.Status == SectionStatus.InProgress)
+        {
+            return RedirectToAction("TaskList", "Application", new { applicationId });
+        }
+
+        return await Back(currentPage, new { applicationId });
     }
 
     [WorkflowState(SchemeWorkflowState.Funding)]

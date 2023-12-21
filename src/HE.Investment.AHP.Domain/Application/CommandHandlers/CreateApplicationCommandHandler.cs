@@ -26,7 +26,7 @@ public class CreateApplicationCommandHandler : IRequestHandler<CreateApplication
             throw new FoundException("Name", "There is already an application with this name. Enter a different name");
         }
 
-        var applicationToCreate = ApplicationEntity.New(name);
+        var applicationToCreate = ApplicationEntity.New(name, new ApplicationTenure(request.Tenure));
         var application = await _repository.Save(applicationToCreate, cancellationToken);
 
         return new OperationResult<ApplicationId>(application.Id);
