@@ -49,9 +49,7 @@ public class RemoveLinkBetweenUserAndOrganisationCommandHandler : IRequestHandle
             account.AccountId.Value,
             request.UserId);
 
-        await _userContext.RefreshAccounts();
-
-        await _eventDispatcher.Publish(new UserUnlinkedEvent(user.firstName, user.lastName), cancellationToken);
+        await _eventDispatcher.Publish(new UserUnlinkedEvent(request.UserId, user.firstName, user.lastName), cancellationToken);
 
         return OperationResult.Success();
     }

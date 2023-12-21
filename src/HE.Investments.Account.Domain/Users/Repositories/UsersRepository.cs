@@ -15,9 +15,9 @@ public class UsersRepository : IUsersRepository
         _usersCrmContext = usersCrmContext;
     }
 
-    public async Task<IList<UserDetails>> GetUsers()
+    public async Task<IList<UserDetails>> GetUsers(Guid organisationId)
     {
-        var users = await _usersCrmContext.GetUsers();
+        var users = await _usersCrmContext.GetUsers(organisationId);
         if (!users.Any())
         {
             return new List<UserDetails>();

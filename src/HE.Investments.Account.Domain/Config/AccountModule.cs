@@ -4,6 +4,7 @@ using HE.Investments.Account.Domain.User.Repositories;
 using HE.Investments.Account.Domain.UserOrganisation.Repositories;
 using HE.Investments.Account.Domain.Users.Repositories;
 using HE.Investments.Account.Shared;
+using HE.Investments.Account.Shared.Config;
 using HE.Investments.Account.Shared.Repositories;
 using HE.Investments.Organisation.Config;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,13 +17,13 @@ public static class AccountModule
     {
         services.AddOrganizationsModule();
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(AccountModule).Assembly));
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(AccountSharedModule).Assembly));
         services.AddScoped<IProfileRepository, AccountRepository>();
         services.AddScoped<IContactRepository, ContactRepository>();
         services.AddScoped<IAccountRepository, AccountRepository>();
         services.AddScoped<IAccountUserContext, AccountUserContext>();
         services.AddScoped<IAccountAccessContext, AccountAccessContext>();
         services.AddScoped<IOrganizationRepository, OrganizationRepository>();
-        services.AddScoped<ICurrentOrganisationRepository, CurrentOrganisationRepository>();
         services.AddScoped<IProgrammeRepository, ProgrammeRepository>();
         services.AddScoped<IUsersCrmContext, UsersCrmContext>();
         services.AddScoped<IUsersRepository, UsersRepository>();

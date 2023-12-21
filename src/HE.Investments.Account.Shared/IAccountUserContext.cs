@@ -1,4 +1,3 @@
-using HE.Investments.Account.Contract.Users;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.Entities;
 
@@ -16,13 +15,9 @@ public interface IAccountUserContext
 
     Task<UserProfileDetails> GetProfileDetails();
 
-    Task RefreshProfileDetails();
-
-    Task RefreshAccounts();
+    Task RefreshUserData();
 
     Task<bool> IsProfileCompleted();
 
     Task<bool> IsLinkedWithOrganisation();
-
-    Task<bool> HasOneOfRole(UserRole[] roles);
 }

@@ -10,6 +10,7 @@ public static class AccountSharedModule
 {
     public static void AddAccountSharedModule(this IServiceCollection services, bool useAccountService = false)
     {
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(AccountSharedModule).Assembly));
         services.AddScoped<IAccountUserContext, AccountUserContext>();
         services.AddScoped<IAccountAccessContext, AccountAccessContext>();
         services.AddScoped<IAccountRepository, AccountCrmRepository>();
