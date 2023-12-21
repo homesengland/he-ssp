@@ -16,10 +16,12 @@
                                           application-id="@Model.ApplicationId.ToString()"
                                           caption="@Model.ApplicationName - Finance details" />
 
-        <div class="govuk-caption-m govuk-!-margin-bottom-6">
+        <gds-p>
             For multi-tenure sites, ensure the costs and contributions are apportioned across the development and only those applicable to the homes on this application are recorded here.
+        </gds-p>
+        <gds-p>
             Enter to the nearest pound. If you have not received any grants from other public bodies, enter 0.
-        </div>
+        </gds-p>
 
         <gds-field-set>
             <he-error-form-group asp-for="CountyCouncilGrants">
