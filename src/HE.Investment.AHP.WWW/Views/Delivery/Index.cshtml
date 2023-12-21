@@ -1,0 +1,44 @@
+@using HE.Investment.AHP.Contract.Application;
+@using HE.Investment.AHP.WWW.Views.Delivery.Consts;
+@using HE.Investments.Common.WWW.Components.FormHeader;
+@using HE.Investment.AHP.WWW.Extensions;
+@model Application;
+@{
+    ViewData["Title"] = DeliveryPageTitles.StartPage;
+    var applicationId = this.GetApplicationIdFromRoute();
+}
+<gds-div-grid-column-two-thirds>
+    <form asp-controller="FinancialDetails" asp-action="Start" asp-route-applicationId="@Model.Id" asp-route-applicationName="@Model.Name" asp-method="post" novalidate>
+        <gds-back-link href="@Url.Action("TaskList", "Application", new { applicationId })" text="Back" class="govuk-!-margin-bottom-8">
+        </gds-back-link>
+        <vc:form-header title="@DeliveryPageTitles.StartPage" caption="@Model.Name"/>
+
+        <div class="govuk-!-padding-bottom-8">
+            <gds-p>In this section you'll need to provide information about your delivery. Each delivery phase should contain only one build activity type, for example acquisition and works or purchase and repair.</gds-p>
+            <gds-p>This includes: </gds-p>
+            <ul class="govuk-list govuk-list govuk-list--bullet">
+                <li>build activity type</li>
+                <li>the number of each home type in each phase</li>
+                <li>milestone dates</li>
+            </ul>
+
+            <gds-p>The milestone dates you may need to provideinformation about are:</gds-p>
+            <ul class="govuk-list govuk-list govuk-list--bullet">
+                <li>acquisition</li>
+                <li>start on site</li>
+                <li>practical completition</li>
+            </ul>
+
+            <gds-p>Each delivery phase should contain only one build avtivity type.</gds-p>
+
+            <gds-p>If your application consist of multiple activities, set up separate delivery phases to cover them. Do this if you are delivering a mix of new build and rehab, or delivering the homes on this application in phases.</gds-p>
+        </div>
+        <button role="navigation" id="start-now-button" class="govuk-button govuk-button--start" data-module="govuk-button" name="action" type="submit" value="Continue">
+            Start now
+            <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
+                <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z"/>
+            </svg>
+        </button>
+
+    </form>
+</gds-div-grid-column-two-thirds>
