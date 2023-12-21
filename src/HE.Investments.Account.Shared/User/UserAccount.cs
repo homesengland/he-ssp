@@ -10,7 +10,7 @@ public record UserAccount(
     string AccountName,
     IReadOnlyCollection<UserRole> Roles)
 {
-    public UserRole Role() => Roles.Count > 0 ? Roles.FirstOrDefault() : throw new UnauthorizedAccessException();
+    public UserRole Role() => Roles.Count > 0 ? Roles.Max() : throw new UnauthorizedAccessException();
 
     public Guid OrganisationId() => AccountId ?? throw new NotFoundException("User is not connected to any Organisation");
 
