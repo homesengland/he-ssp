@@ -1,0 +1,26 @@
+@using HE.Investments.Common.WWW.Extensions
+@model (string fieldName, string label, string hint, string value, string cssClass, int rows, int maxLength)
+
+@{
+    var (hasError, errors) = ViewData.ModelState.GetErrors(Model.fieldName);
+    var groupClass = hasError ? "govuk-form-group--error" : string.Empty;
+    var inputClass = $"govuk-textarea govuk-js-character-count {Model.cssClass}";
+    inputClass += hasError ? " govuk-textarea--error" : string.Empty;
+}
+
+<div class="govuk-character-count" data-module="govuk-character-count" data-maxlength="@Model.maxLength">
+    <gds-div-form-group class="@groupClass">
+        <vc:input-header
+            field-name="@Model.fieldName"
+            label="@Model.label"
+            hint="@Model.hint"/>
+
+        <vc:error-message field-name="@Model.fieldName"/>
+
+        <textarea class="@inputClass" id="@Model.fieldName" name="@Model.fieldName" rows="@Model.rows">@Model.value</textarea>
+
+        <div id="@($"{Model.fieldName}-info")" class="govuk-hint govuk-character-count__message">
+            You can enter up to @Model.maxLength characters
+        </div>
+    </gds-div-form-group>
+</div>

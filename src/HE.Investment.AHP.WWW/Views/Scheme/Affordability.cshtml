@@ -17,9 +17,10 @@
     <form asp-controller="Scheme" asp-action="Affordability" asp-method="post" asp-route-redirect="@Context.Request.Query["redirect"]" novalidate>
         <vc:form-header caption="@Model.ApplicationName" title="@title"/>
         @Html.HiddenFor(m => Model.ApplicationName)
-        <vc:text-area-input field-name="@nameof(Model.AffordabilityEvidence)"
-                            label="Tell us about any evidence and analysis you have that the homes will be affordable to the target market"
-                            value="@Model.AffordabilityEvidence"/>
+        <vc:text-area-input-with-counter
+            field-name="@nameof(Model.AffordabilityEvidence)"
+            label="Tell us about any evidence and analysis you have that the homes will be affordable to the target market"
+            value="@Model.AffordabilityEvidence"/>
 
         <vc:form-button/>
         <vc:return-to-application-link application-id="@Model.ApplicationId"/>
