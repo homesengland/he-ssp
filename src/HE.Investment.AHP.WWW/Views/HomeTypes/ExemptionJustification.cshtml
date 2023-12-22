@@ -1,5 +1,10 @@
 @using HE.Investment.AHP.Domain.HomeTypes
 @using HE.Investment.AHP.WWW.Extensions
+@using HE.Investment.AHP.WWW.Views.Shared.Components.HomeTypeFormHeader
+@using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
+@using HE.Investment.AHP.WWW.Views.Shared.Components.SharedOwnershipRightSummary
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investments.Common.WWW.Components.TextAreaInputWithCounter
 @model HE.Investment.AHP.WWW.Models.HomeTypes.MoreInformationModel;
 
 @{
@@ -15,38 +20,17 @@
         <vc:home-type-form-header current-page="@HomeTypesWorkflowState.ExemptionJustification"
                                   application-id="@applicationId"
                                   home-type-id="@homeTypeId"
-                                  caption="@Model.Header"
-                                  title="Outline the criteria under which you intend to apply for an exemption to the Right to Shared Ownership" />
+                                  caption="@Model.Header"/>
 
-        <gds-field-set class="govuk-!-margin-bottom-6 govuk-!-margin-top-6">
-            <he-error-form-group asp-for="MoreInformation">
-                <details class="govuk-details govuk-!-margin-bottom-6" data-module="govuk-details">
-                    <summary class="govuk-details__summary">
-                        <span class="govuk-details__summary-text">
-                            What is the Right to Shared Ownership?
-                        </span>
-                    </summary>
-                    <div class="govuk-details__text">
-                        The Right to Shared Ownership applies to all new rented homes delivered through the Affordable Homes Programme 2021-26, with limited exceptions.
-                        <a class="govuk-link" target="_blank"
-                           href="https://www.gov.uk/government/publications/right-to-shared-ownership-initial-guidance-for-registered-providers/right-to-shared-ownership-initial-guidance-for-registered-providers">
-                            Read about the Right to Shared Ownership and the types of property that are in scope (opens in the new tab).
-                        </a>
-                    </div>
-                </details>
+        <vc:text-area-input-with-counter
+            field-name="@nameof(Model.MoreInformation)"
+            label="Outline the criteria under which you intend to apply for an exemption to the Right to Shared Ownership"
+            description-component="@(new ComponentViewModel(nameof(SharedOwnershipRightSummary), null))"
+            value="@Model.MoreInformation"
+            is-heading-label="true"/>
 
-                <vc:form-hidden-label field-name="MoreInformation"
-                                      title="More information" />
-                <he-text-area asp-for="MoreInformation" rows="7" class="govuk-!-margin-bottom-1" label="asd"></he-text-area>
-                <gds-span-hint>You can enter up to 1500 characters</gds-span-hint>
-            </he-error-form-group>
-        </gds-field-set>
-
-        <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="continue-button">
-            Save and continue
-        </button>
+        <vc:form-button/>
         <br />
-
         <vc:return-to-application-link application-id="@applicationId" />
     </form>
 </gds-div-grid-column-two-thirds>

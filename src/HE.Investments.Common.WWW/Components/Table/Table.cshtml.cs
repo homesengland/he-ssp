@@ -16,5 +16,3 @@ public record TableHeaderViewModel(string Title, int? Width = null, bool IsHidde
 public record TableRowViewModel(IList<TableValueViewModel> Values);
 
 public record TableValueViewModel(string? Value = null, ComponentViewModel? Component = null);
-
-public record ComponentViewModel(string Name, object? Arguments);
