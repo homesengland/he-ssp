@@ -3,7 +3,7 @@ using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investments.Common.Workflow;
-using HE.Investments.Loans.Common.Routing;
+using HE.Investments.Common.WWW.Routing;
 using Stateless;
 
 namespace HE.Investment.AHP.Domain.HomeTypes;

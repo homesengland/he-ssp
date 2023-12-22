@@ -1,4 +1,4 @@
-namespace HE.Investments.Loans.Common.Routing;
+namespace HE.Investments.Common.WWW.Routing;
 
 public enum Trigger
 {

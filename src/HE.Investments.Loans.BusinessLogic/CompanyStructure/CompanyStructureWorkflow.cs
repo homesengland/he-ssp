@@ -1,7 +1,7 @@
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
-using HE.Investments.Loans.Common.Routing;
+using HE.Investments.Common.WWW.Routing;
 using HE.Investments.Loans.Contract.CompanyStructure;
 using Stateless;
 
