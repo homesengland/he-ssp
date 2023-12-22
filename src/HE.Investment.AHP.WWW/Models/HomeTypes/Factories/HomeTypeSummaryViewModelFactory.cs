@@ -236,9 +236,9 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
 
     private static string? ToPounds(int? value) => value?.ToString("\u00a30", CultureInfo.InvariantCulture);
 
-    private static string? ToPoundsPences(decimal? value) => value?.ToString("\u00a300.##", CultureInfo.InvariantCulture);
+    private static string? ToPoundsPences(decimal? value) => value?.ToString("\u00a30.##", CultureInfo.InvariantCulture);
 
-    private static string? ToPercentage(decimal? value) => value?.ToString("00.00\\%", CultureInfo.InvariantCulture);
+    private static string? ToPercentage(decimal? value) => value?.ToString("0.##\\%", CultureInfo.InvariantCulture);
 
     private static string? ToSquareMeters(decimal? value) => value?.ToString("0.##m\u00B2", CultureInfo.InvariantCulture);
 }
