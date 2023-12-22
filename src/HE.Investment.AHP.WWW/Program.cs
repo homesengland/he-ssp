@@ -25,7 +25,6 @@ builder.Services.AddCommonBuildingBlocks();
 var mvcBuilder = builder.Services
     .AddControllersWithViews(options =>
     {
-        options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
         options.Filters.Add<ExceptionFilter>();
     })
     .AddMvcOptions(options =>
@@ -71,7 +70,10 @@ app.MapControllerRoute(
 app.Run();
 
 #pragma warning disable CA1050
-public partial class Program
+namespace HE.Investment.AHP.WWW
 {
+    public partial class Program
+    {
+    }
 }
 #pragma warning restore CA1050

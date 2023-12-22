@@ -40,4 +40,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\HE.Investment.AHP.WWW\HE.Investment.AHP.WWW.csproj" />
+    <ProjectReference Include="..\HE.Investments.IntegrationTestsFramework\HE.Investments.IntegrationTestsFramework.csproj" />
+  </ItemGroup>
+
 </Project>

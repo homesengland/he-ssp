@@ -18,8 +18,8 @@ public class IntegrationTestFixture<TProgram> : WebApplicationFactory<TProgram>
         DataBag = new Dictionary<string, object>();
         Configuration = new ConfigurationBuilder().AddJsonFile("appsettings.Development.json", true).Build();
 
-        var userConfig = Configuration.GetSection("IntegrationTestsConfig:UserConfig").Get<UserData>();
-        LoginData = userConfig ?? new UserData();
+        var userConfig = Configuration.GetSection("IntegrationTestsConfig:UserConfig").Get<UserLoginData>();
+        LoginData = userConfig ?? new UserLoginData();
     }
 
     public IDictionary<string, object> DataBag { get; }

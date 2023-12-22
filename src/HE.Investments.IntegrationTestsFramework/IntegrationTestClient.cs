@@ -20,6 +20,8 @@ public class IntegrationTestClient
         AsLoggedUser();
     }
 
+    public IHtmlDocument CurrentPage { get; private set; }
+
     public IntegrationTestClient AsLoggedUser()
     {
         ClearAuthHeaders();
@@ -38,7 +40,8 @@ public class IntegrationTestClient
     public async Task<IHtmlDocument> NavigateTo(string path)
     {
         var response = await _client.GetAsync(path);
-        return await HtmlHelpers.GetDocumentAsync(response);
+        CurrentPage = await HtmlHelpers.GetDocumentAsync(response);
+        return CurrentPage;
     }
 
     public async Task<IHtmlDocument> NavigateTo(IHtmlAnchorElement anchorElement)
@@ -75,6 +78,8 @@ public class IntegrationTestClient
         }
 
         var submit = form.GetSubmission(submitButton)!;
+        StreamReader reader = new StreamReader(submit.Body);
+        string text = reader.ReadToEnd();
         var target = (Uri)submit.Target;
         using var submission = new HttpRequestMessage(new HttpMethod(submit.Method.ToString()), target) { Content = new StreamContent(submit.Body), };
 
@@ -85,7 +90,8 @@ public class IntegrationTestClient
         }
 
         var clientResponse = await _client.SendAsync(submission);
-        return await HtmlHelpers.GetDocumentAsync(clientResponse);
+        CurrentPage = await HtmlHelpers.GetDocumentAsync(clientResponse);
+        return CurrentPage;
     }
 
     private static bool HandleRadioInputs(IHtmlFormElement form, KeyValuePair<string, string> formValue)

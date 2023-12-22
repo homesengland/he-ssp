@@ -11,10 +11,36 @@ public class IntegrationTestBase<TProgram>
     protected IntegrationTestBase(IntegrationTestFixture<TProgram> fixture)
     {
         _fixture = fixture;
-        TestClient = new IntegrationTestClient(fixture.CreateClient(), _fixture.LoginData);
+        TestClient = InitializeTestClient(fixture);
     }
 
     protected IntegrationTestClient TestClient { get; }
+
+    protected void SaveCurrentPage()
+    {
+        SetSharedData(CommonKeys.CurrentPageKey, TestClient.CurrentPage);
+    }
+
+    protected async Task<IHtmlDocument> GetCurrentPage(string? pageUrl = null)
+    {
+        var currentPage = GetSharedDataOrNull<IHtmlDocument>(CommonKeys.CurrentPageKey);
+        if (currentPage is null && string.IsNullOrEmpty(pageUrl))
+        {
+            throw new InvalidOperationException("Current page is not set and pageUrl is not provided");
+        }
+
+        if (!string.IsNullOrEmpty(pageUrl) && (!currentPage?.Url.EndsWith(pageUrl, StringComparison.InvariantCulture) ?? true))
+        {
+            return await TestClient.NavigateTo(pageUrl);
+        }
+
+        if (currentPage is null)
+        {
+            throw new InvalidOperationException("Current page is not set");
+        }
+
+        return currentPage;
+    }
 
     protected void SetSharedData<T>(string key, T data)
         where T : notnull
@@ -32,32 +58,17 @@ public class IntegrationTestBase<TProgram>
         return _fixture.DataBag.TryGetValue(key, out var data) ? (T)data : default;
     }
 
-    protected void SetCurrentPage(IHtmlDocument page)
+    private IntegrationTestClient InitializeTestClient(IntegrationTestFixture<TProgram> fixture)
     {
-        SetSharedData(CommonKeys.CurrentPageKey, page);
-    }
-
-    protected async Task<IHtmlDocument> GetCurrentPage(string navigateTo)
-    {
-        var currentPage = GetSharedDataOrNull<IHtmlDocument>(CommonKeys.CurrentPageKey);
-
-        if (currentPage is null)
+        if (_fixture.DataBag.TryGetValue(nameof(TestClient), out var testClient))
         {
-            return await TestClient.NavigateTo(navigateTo);
+            return (IntegrationTestClient)testClient;
         }
-
-        return currentPage;
-    }
-
-    protected async Task<IHtmlDocument> GetCurrentPage(Func<Task<IHtmlDocument>> alternativeNavigate)
-    {
-        var currentPage = GetSharedDataOrNull<IHtmlDocument>(CommonKeys.CurrentPageKey);
-
-        if (currentPage is null)
+        else
         {
-            return await alternativeNavigate();
+            var newTestClient = new IntegrationTestClient(fixture.CreateClient(), _fixture.LoginData);
+            _fixture.DataBag[nameof(TestClient)] = newTestClient;
+            return newTestClient;
         }
-
-        return currentPage;
     }
 }
