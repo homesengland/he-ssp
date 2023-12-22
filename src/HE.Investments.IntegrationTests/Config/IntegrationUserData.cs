@@ -1,11 +1,10 @@
 using System.Globalization;
 using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.Extensions;
-using HE.Investments.IntegrationTestsFramework.Auth;
 
 namespace HE.Investments.Loans.IntegrationTests.Config;
 
-public class IntegrationUserData : ILoginData
+public class IntegrationUserData
 {
     public IntegrationUserData()
     {
@@ -25,8 +24,6 @@ public class IntegrationUserData : ILoginData
     {
         if (userConfig.UseConfigData)
         {
-            UserGlobalId = userConfig.UserGlobalId;
-            Email = userConfig.Email;
             FirstName = new FirstName(userConfig.FirstName)!;
             LastName = new LastName(userConfig.LastName)!;
             OrganizationName = userConfig.OrganizationName;
@@ -45,10 +42,6 @@ public class IntegrationUserData : ILoginData
         FirstName = new FirstName("Integration")!;
         LastName = new LastName($"Test-{DateTime.UtcNow.ToString(CultureInfo.InvariantCulture)}")!;
     }
-
-    public string UserGlobalId { get; private set; }
-
-    public string Email { get; private set; }
 
     public string OrganizationName { get; private set; } = "HOMES OF ENGLAND LIMITED";
 
@@ -79,17 +72,6 @@ public class IntegrationUserData : ILoginData
     public string ProjectInDraftStateId { get; private set; }
 
     public bool IsDeveloperProvidedUserData { get; }
-
-    public void ProvideData(string userGlobalId)
-    {
-        if (IsDeveloperProvidedUserData)
-        {
-            throw new NotSupportedException("Developer provided user data and new user cannot be created");
-        }
-
-        UserGlobalId = userGlobalId;
-        Email = $"{userGlobalId}@integrationTests.it";
-    }
 
     public void SetApplicationLoanId(string loanApplicationId)
     {
@@ -136,8 +118,6 @@ public class IntegrationUserData : ILoginData
             return;
         }
 
-        UserGlobalId = "auth0|64a3bdb420d21a3fc5193e4d";
-        Email = "luci_001@pwc.com";
         FirstName = new FirstName("John");
         LastName = new LastName("Doe");
         JobTitle = new JobTitle("Developer");

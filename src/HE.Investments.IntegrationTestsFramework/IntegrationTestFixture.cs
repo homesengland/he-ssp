@@ -1,6 +1,6 @@
 using HE.Investments.DocumentService.Configs;
 using HE.Investments.IntegrationTestsFramework.Auth;
-using HE.Investments.Loans.IntegrationTests.Config;
+using HE.Investments.IntegrationTestsFramework.Config;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace HE.Investments.Loans.IntegrationTests.IntegrationFramework;
+namespace HE.Investments.IntegrationTestsFramework;
 
 public class IntegrationTestFixture<TProgram> : WebApplicationFactory<TProgram>
     where TProgram : class
@@ -16,24 +16,22 @@ public class IntegrationTestFixture<TProgram> : WebApplicationFactory<TProgram>
     public IntegrationTestFixture()
     {
         DataBag = new Dictionary<string, object>();
+        Configuration = new ConfigurationBuilder().AddJsonFile("appsettings.Development.json", true).Build();
 
-        var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.Development.json", true).Build();
-
-        var userConfig = configuration.GetSection("IntegrationTestsConfig:UserConfig").Get<UserConfig>();
-
-        if (userConfig is not null)
-        {
-            UserData = new IntegrationUserData(userConfig);
-        }
-        else
-        {
-            UserData = new IntegrationUserData();
-        }
+        var userConfig = Configuration.GetSection("IntegrationTestsConfig:UserConfig").Get<UserData>();
+        LoginData = userConfig ?? new UserData();
     }
 
     public IDictionary<string, object> DataBag { get; }
 
-    public IntegrationUserData UserData { get; set; }
+    public ILoginData LoginData { get; }
+
+    public IConfiguration Configuration { get; }
+
+    public void ProvideLoginData(ILoginData loginData)
+    {
+        LoginData.Change(loginData);
+    }
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
