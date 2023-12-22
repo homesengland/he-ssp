@@ -24,9 +24,10 @@
         @Html.HiddenFor(x => x.MaxFileSizeInMegabytes)
         <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0">
             <vc:form-header caption="@Model.ApplicationName" title="@title"/>
-            <vc:text-area-input field-name="@nameof(Model.StakeholderDiscussionsReport)"
-                                label="Tell us about discussions you have had with local stakeholders"
-                                value="@Model.StakeholderDiscussionsReport"/>
+            <vc:text-area-input-with-counter
+                field-name="@nameof(Model.StakeholderDiscussionsReport)"
+                label="Tell us about discussions you have had with local stakeholders"
+                value="@Model.StakeholderDiscussionsReport"/>
 
             <vc:upload-file title="Upload any evidence you have of Local Authority support (optional)"
                             allowed-extensions="@Model.AllowedExtensions"

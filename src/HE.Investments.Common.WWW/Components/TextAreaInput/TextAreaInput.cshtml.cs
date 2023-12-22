@@ -10,9 +10,8 @@ public class TextAreaInput : ViewComponent
         string? hint = null,
         string? value = null,
         string? cssClass = null,
-        int? rows = null,
-        int? maxLength = null)
+        int? rows = null)
     {
-        return View("TextAreaInput", (fieldName, label, hint, value, cssClass, rows ?? 5, maxLength ?? 1500));
+        return View("TextAreaInput", (fieldName, label, hint, value, cssClass, rows ?? 5));
     }
 }
