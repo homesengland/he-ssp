@@ -1,6 +1,6 @@
 namespace HE.Investment.AHP.Contract.HomeTypes.Queries;
 
-public record CalculateSharedOwnershipQuery(
+public record CalculateHomeOwnershipDisabilitiesQuery(
         string ApplicationId,
         string HomeTypeId,
         string? MarketValue,

@@ -3,9 +3,9 @@ using HE.Investments.Common.WWWTestsFramework.Helpers;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.HomeTypes;
 
-public class SharedOwnershipIneligibleTests : HomeTypesTestBase
+public class ProspectiveRentIneligibleTests : HomeTypesTestBase
 {
-    private const string ViewPath = "/Views/HomeTypes/SharedOwnershipIneligible.cshtml";
+    private const string ViewPath = "/Views/HomeTypes/ProspectiveRentIneligible.cshtml";
 
     private static readonly HomeTypeBasicModel Model = new("My application", "My homes");
 

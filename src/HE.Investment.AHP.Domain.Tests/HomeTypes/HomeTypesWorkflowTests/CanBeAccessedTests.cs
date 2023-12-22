@@ -141,7 +141,7 @@ public class CanBeAccessedTests
         // given
         var homeType = new HomeTypeTestDataBuilder()
             .WithTenure(Tenure.SharedOwnership)
-            .WithSharedOwnershipIneligible()
+            .WithProspectiveRentIneligible()
             .Build();
         var workflow = BuildWorkflow(homeType, HomeTypesWorkflowState.Index);
 
@@ -174,7 +174,7 @@ public class CanBeAccessedTests
         // given
         var homeType = new HomeTypeTestDataBuilder()
             .WithTenure(Tenure.SharedOwnership)
-            .WithSharedOwnershipIneligible()
+            .WithProspectiveRentIneligible()
             .Build();
         var workflow = BuildWorkflow(homeType, HomeTypesWorkflowState.Index);
 

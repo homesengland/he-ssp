@@ -71,6 +71,10 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
         {
             yield return CreateRentToBuySection(homeType.TenureDetails, factory);
         }
+        else if (homeType.Tenure is Tenure.HomeOwnershipLongTermDisabilities)
+        {
+            yield return CreateHomeOwnershipDisabilitiesSection(homeType.TenureDetails, factory);
+        }
     }
 
     private static SectionSummaryViewModel CreateHomeTypeDetailsSection(FullHomeType homeType, HomeTypeQuestionFactory factory)
@@ -204,8 +208,8 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
             factory.Question(
                 "Shared Ownership rent as percentage of the unsold share",
                 nameof(Controller.SharedOwnership),
-                ToPercentage(tenure.SharedOwnershipRentAsPercentageOfTheUnsoldShare)),
-            factory.DeadEnd(nameof(Controller.SharedOwnershipIneligible)));
+                ToPercentage(tenure.RentAsPercentageOfTheUnsoldShare)),
+            factory.DeadEnd(nameof(Controller.ProspectiveRentIneligible)));
     }
 
     private static SectionSummaryViewModel CreateRentToBuySection(TenureDetails tenure, HomeTypeQuestionFactory factory)
@@ -218,6 +222,21 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
             factory.Question("Rent as percentage of market rent", nameof(Controller.RentToBuy), ToPercentage(tenure.ProspectiveRentAsPercentageOfMarketRent)),
             factory.Question("Target rent exceed 80% of market rent", nameof(Controller.RentToBuy), tenure.TargetRentExceedMarketRent),
             factory.DeadEnd(nameof(Controller.RentToBuyIneligible)));
+    }
+
+    private static SectionSummaryViewModel CreateHomeOwnershipDisabilitiesSection(TenureDetails tenure, HomeTypeQuestionFactory factory)
+    {
+        return SectionSummaryViewModel.New(
+            "HOLD details",
+            factory.Question("Market value of each home", nameof(Controller.HomeOwnershipDisabilities), ToPounds(tenure.MarketValue)),
+            factory.Question("Average first tranche sale percentage", nameof(Controller.HomeOwnershipDisabilities), ToPercentage(tenure.InitialSale)),
+            factory.Question("First tranche sales receipt", nameof(Controller.HomeOwnershipDisabilities), ToPoundsPences(tenure.ExpectedFirstTranche)),
+            factory.Question("Rent per week", nameof(Controller.HomeOwnershipDisabilities), ToPoundsPences(tenure.ProspectiveRent)),
+            factory.Question(
+                "Rent as percentage of the unsold share",
+                nameof(Controller.HomeOwnershipDisabilities),
+                ToPercentage(tenure.RentAsPercentageOfTheUnsoldShare)),
+            factory.DeadEnd(nameof(Controller.ProspectiveRentIneligible)));
     }
 
     private static string DownloadDesignFileUrl(IUrlHelper urlHelper, string applicationId, string homeTypeId, string fileId)

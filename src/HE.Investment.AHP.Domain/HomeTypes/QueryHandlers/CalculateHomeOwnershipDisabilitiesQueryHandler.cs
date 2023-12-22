@@ -6,18 +6,18 @@ using Microsoft.Extensions.Logging;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.QueryHandlers;
 
-internal sealed class CalculateSharedOwnershipQueryHandler : CalculateQueryHandlerBase<CalculateSharedOwnershipQuery>
+internal sealed class CalculateHomeOwnershipDisabilitiesQueryHandler : CalculateQueryHandlerBase<CalculateHomeOwnershipDisabilitiesQuery>
 {
-    public CalculateSharedOwnershipQueryHandler(IHomeTypeRepository homeTypeRepository, ILogger<CalculateSharedOwnershipQueryHandler> logger)
+    public CalculateHomeOwnershipDisabilitiesQueryHandler(IHomeTypeRepository homeTypeRepository, ILogger<CalculateHomeOwnershipDisabilitiesQueryHandler> logger)
         : base(homeTypeRepository, logger)
     {
     }
 
     protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => new[] { HomeTypeSegmentType.TenureDetails };
 
-    protected override IEnumerable<Action<CalculateSharedOwnershipQuery, IHomeTypeEntity>> CalculateActions => new[]
+    protected override IEnumerable<Action<CalculateHomeOwnershipDisabilitiesQuery, IHomeTypeEntity>> CalculateActions => new[]
     {
-        (CalculateSharedOwnershipQuery request, IHomeTypeEntity homeType) => homeType.TenureDetails.ChangeMarketValue(request.MarketValue, true),
+        (CalculateHomeOwnershipDisabilitiesQuery request, IHomeTypeEntity homeType) => homeType.TenureDetails.ChangeMarketValue(request.MarketValue, true),
         (request, homeType) => homeType.TenureDetails.ChangeInitialSale(request.InitialSale, true),
         (_, homeType) => homeType.TenureDetails.ChangeExpectedFirstTranche(),
         (request, homeType) => homeType.TenureDetails.ChangeProspectiveRent(request.ProspectiveRent, true),
