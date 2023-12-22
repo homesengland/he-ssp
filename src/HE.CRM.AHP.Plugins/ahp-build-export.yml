@@ -24,3 +24,4 @@ resources:
 
 stages:
 - template: azure-pipelines-crm-ahp-build-export.yml@he-invst-deployment
+- template: azure-pipelines-crm-ahp-upgrade.yml@he-invst-deployment
