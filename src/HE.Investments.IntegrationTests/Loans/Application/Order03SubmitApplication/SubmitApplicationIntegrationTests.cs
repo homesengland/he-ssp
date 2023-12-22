@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
 using He.AspNetCore.Mvc.Gds.Components.Constants;
+using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.IntegrationTestsFramework.Extensions;
 using HE.Investments.Loans.Common.Extensions;
 using HE.Investments.Loans.Contract.Projects.ViewModels;
