@@ -1,13 +1,13 @@
 namespace HE.Investment.AHP.WWW.Models.HomeTypes;
 
-public class SharedOwnershipModel : HomeTypeBasicModel
+public class HomeOwnershipDisabilitiesModel : HomeTypeBasicModel
 {
-    public SharedOwnershipModel(string applicationName, string homeTypeName)
+    public HomeOwnershipDisabilitiesModel(string applicationName, string homeTypeName)
         : base(applicationName, homeTypeName)
     {
     }
 
-    public SharedOwnershipModel()
+    public HomeOwnershipDisabilitiesModel()
         : this(string.Empty, string.Empty)
     {
     }

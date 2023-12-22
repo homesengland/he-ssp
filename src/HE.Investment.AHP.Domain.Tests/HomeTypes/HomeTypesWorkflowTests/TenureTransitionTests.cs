@@ -1,5 +1,3 @@
-using System;
-using System.Threading.Tasks;
 using FluentAssertions;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Common.Enums;
@@ -7,7 +5,6 @@ using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Domain.HomeTypes;
 using HE.Investment.AHP.Domain.Tests.HomeTypes.TestDataBuilders;
 using HE.Investments.Loans.Common.Routing;
-using Xunit;
 
 namespace HE.Investment.AHP.Domain.Tests.HomeTypes.HomeTypesWorkflowTests;
 
@@ -264,12 +261,14 @@ public class TenureTransitionTests
         states[1].Should().Be(HomeTypesWorkflowState.FloorArea);
     }
 
-    [Fact]
-    public async Task ShouldNavigateForward_WhenSpaceStandardsAreNotMetAndTenureIsSharedOwnership()
+    [Theory]
+    [InlineData(Tenure.SharedOwnership, HomeTypesWorkflowState.SharedOwnership)]
+    [InlineData(Tenure.HomeOwnershipLongTermDisabilities, HomeTypesWorkflowState.HomeOwnershipDisabilities)]
+    public async Task ShouldNavigateForward_WhenSpaceStandardsAreNotMetAndTenureIs(Tenure tenure, HomeTypesWorkflowState nextWorkflowState)
     {
         // given
         var homeType = new HomeTypeTestDataBuilder()
-            .WithTenure(Tenure.SharedOwnership)
+            .WithTenure(tenure)
             .WithSpaceStandardsMet(YesNoType.No)
             .Build();
         var workflow = BuildWorkflow(homeType, HomeTypesWorkflowState.FloorArea);
@@ -284,7 +283,7 @@ public class TenureTransitionTests
 
         // then
         states[0].Should().Be(HomeTypesWorkflowState.FloorAreaStandards);
-        states[1].Should().Be(HomeTypesWorkflowState.SharedOwnership);
+        states[1].Should().Be(nextWorkflowState);
         states[2].Should().Be(HomeTypesWorkflowState.CheckAnswers);
     }
 
@@ -312,12 +311,14 @@ public class TenureTransitionTests
         states[2].Should().Be(HomeTypesWorkflowState.FloorArea);
     }
 
-    [Fact]
-    public async Task ShouldNavigateForward_WhenSpaceStandardsAreMetAndTenureIsSharedOwnership()
+    [Theory]
+    [InlineData(Tenure.SharedOwnership, HomeTypesWorkflowState.SharedOwnership)]
+    [InlineData(Tenure.HomeOwnershipLongTermDisabilities, HomeTypesWorkflowState.HomeOwnershipDisabilities)]
+    public async Task ShouldNavigateForward_WhenSpaceStandardsAreMetAndTenureIs(Tenure tenure, HomeTypesWorkflowState nextWorkflowState)
     {
         // given
         var homeType = new HomeTypeTestDataBuilder()
-            .WithTenure(Tenure.SharedOwnership)
+            .WithTenure(tenure)
             .WithSpaceStandardsMet(YesNoType.Yes)
             .Build();
         var workflow = BuildWorkflow(homeType, HomeTypesWorkflowState.FloorArea);
@@ -330,16 +331,18 @@ public class TenureTransitionTests
         };
 
         // then
-        states[0].Should().Be(HomeTypesWorkflowState.SharedOwnership);
+        states[0].Should().Be(nextWorkflowState);
         states[1].Should().Be(HomeTypesWorkflowState.CheckAnswers);
     }
 
-    [Fact]
-    public async Task ShouldNavigateBackward_WhenSpaceStandardsAreMetAndTenureIsSharedOwnership()
+    [Theory]
+    [InlineData(Tenure.SharedOwnership, HomeTypesWorkflowState.SharedOwnership)]
+    [InlineData(Tenure.HomeOwnershipLongTermDisabilities, HomeTypesWorkflowState.HomeOwnershipDisabilities)]
+    public async Task ShouldNavigateBackward_WhenSpaceStandardsAreMetAndTenureIs(Tenure tenure, HomeTypesWorkflowState previousWorkflowState)
     {
         // given
         var homeType = new HomeTypeTestDataBuilder()
-            .WithTenure(Tenure.SharedOwnership)
+            .WithTenure(tenure)
             .WithSpaceStandardsMet(YesNoType.Yes)
             .Build();
         var workflow = BuildWorkflow(homeType, HomeTypesWorkflowState.CheckAnswers);
@@ -352,26 +355,28 @@ public class TenureTransitionTests
         };
 
         // then
-        states[0].Should().Be(HomeTypesWorkflowState.SharedOwnership);
+        states[0].Should().Be(previousWorkflowState);
         states[1].Should().Be(HomeTypesWorkflowState.FloorArea);
     }
 
-    [Fact]
-    public async Task ShouldNavigateForward_WhenSharedOwnershipIsNotEligible()
+    [Theory]
+    [InlineData(Tenure.SharedOwnership, HomeTypesWorkflowState.SharedOwnership)]
+    [InlineData(Tenure.HomeOwnershipLongTermDisabilities, HomeTypesWorkflowState.HomeOwnershipDisabilities)]
+    public async Task ShouldNavigateForward_WhenProspectiveRentIsNotEligibleAndTenureIs(Tenure tenure, HomeTypesWorkflowState currentWorkflowState)
     {
         // given
         var homeType = new HomeTypeTestDataBuilder()
-            .WithTenure(Tenure.SharedOwnership)
-            .WithSharedOwnershipIneligible()
+            .WithTenure(tenure)
+            .WithProspectiveRentIneligible()
             .Build();
-        var workflow = BuildWorkflow(homeType, HomeTypesWorkflowState.SharedOwnership);
+        var workflow = BuildWorkflow(homeType, currentWorkflowState);
 
         // when
         var state = await workflow.NextState(Trigger.Continue);
         var nextState = () => workflow.NextState(Trigger.Continue);
 
         // then
-        state.Should().Be(HomeTypesWorkflowState.SharedOwnershipIneligible);
+        state.Should().Be(HomeTypesWorkflowState.ProspectiveRentIneligible);
         await nextState.Should().ThrowAsync<InvalidOperationException>();
     }
 
@@ -488,7 +493,6 @@ public class TenureTransitionTests
 
     [Theory]
     [InlineData(Tenure.OlderPersonsSharedOwnership)]
-    [InlineData(Tenure.HomeOwnershipLongTermDisabilities)]
     public async Task ShouldNavigateForwardToCheckAnswers_WhenSpaceStandardsAreNotMetAndTenureIs(Tenure tenure)
     {
         // given
@@ -512,7 +516,6 @@ public class TenureTransitionTests
 
     [Theory]
     [InlineData(Tenure.OlderPersonsSharedOwnership)]
-    [InlineData(Tenure.HomeOwnershipLongTermDisabilities)]
     public async Task ShouldNavigateBackwardFromCheckAnswers_WhenSpaceStandardsAreNotMetAndTenureIs(Tenure tenure)
     {
         // given
@@ -531,7 +534,6 @@ public class TenureTransitionTests
 
     [Theory]
     [InlineData(Tenure.OlderPersonsSharedOwnership)]
-    [InlineData(Tenure.HomeOwnershipLongTermDisabilities)]
     public async Task ShouldNavigateForwardToCheckAnswers_WhenSpaceStandardsAreMetAndTenureIs(Tenure tenure)
     {
         // given
@@ -550,7 +552,6 @@ public class TenureTransitionTests
 
     [Theory]
     [InlineData(Tenure.OlderPersonsSharedOwnership)]
-    [InlineData(Tenure.HomeOwnershipLongTermDisabilities)]
     public async Task ShouldNavigateBackwardFromCheckAnswers_WhenSpaceStandardsAreMetAndTenureIs(Tenure tenure)
     {
         // given

@@ -24,7 +24,6 @@ public class TenureDetailsSegmentContractMapper : IHomeTypeSegmentContractMapper
             segment.IsProspectiveRentIneligible,
             segment.InitialSale?.Value,
             segment.ExpectedFirstTranche?.Value,
-            segment.SharedOwnershipRentAsPercentageOfTheUnsoldShare?.Value,
-            segment.IsSharedOwnershipIneligible);
+            segment.RentAsPercentageOfTheUnsoldShare?.Value);
     }
 }

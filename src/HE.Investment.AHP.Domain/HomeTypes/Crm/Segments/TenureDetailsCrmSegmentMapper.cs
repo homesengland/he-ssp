@@ -57,6 +57,6 @@ public class TenureDetailsCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Tenure
         dto.exemptionJustification = segment.ExemptionJustification?.Value;
         dto.initialSalePercent = segment.InitialSale?.Value;
         dto.expectedFirstTrancheSaleReceipt = segment.ExpectedFirstTranche?.Value;
-        dto.proposedRentAsPercentOfUnsoldShare = segment.SharedOwnershipRentAsPercentageOfTheUnsoldShare?.Value;
+        dto.proposedRentAsPercentOfUnsoldShare = segment.RentAsPercentageOfTheUnsoldShare?.Value;
     }
 }

@@ -25,8 +25,6 @@ public class HomeTypeTestDataBuilder
 
     private bool _isProspectiveRentIneligible;
 
-    private bool _isSharedOwnershipIneligible;
-
     public HomeTypeTestDataBuilder WithTenure(Tenure tenure)
     {
         _tenure = tenure;
@@ -81,12 +79,6 @@ public class HomeTypeTestDataBuilder
         return this;
     }
 
-    public HomeTypeTestDataBuilder WithSharedOwnershipIneligible()
-    {
-        _isSharedOwnershipIneligible = true;
-        return this;
-    }
-
     public HomeType Build()
     {
         return new HomeType(
@@ -101,7 +93,6 @@ public class HomeTypeTestDataBuilder
                 _accessibilityStandards,
                 _spaceStandardsMet,
                 _exemptFromTheRightToSharedOwnership,
-                _isProspectiveRentIneligible,
-                _isSharedOwnershipIneligible));
+                _isProspectiveRentIneligible));
     }
 }

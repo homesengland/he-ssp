@@ -1012,8 +1012,8 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
             InitialSale = tenureDetails.InitialSale?.ToString(CultureInfo.InvariantCulture),
             ExpectedFirstTranche = tenureDetails.ExpectedFirstTranche?.ToString("0.##", CultureInfo.InvariantCulture),
             ProspectiveRent = tenureDetails.ProspectiveRent?.ToString("0.##", CultureInfo.InvariantCulture),
-            SharedOwnershipRentAsPercentageOfTheUnsoldShare =
-                tenureDetails.SharedOwnershipRentAsPercentageOfTheUnsoldShare?.ToString("0.##", CultureInfo.InvariantCulture),
+            RentAsPercentageOfTheUnsoldShare =
+                tenureDetails.RentAsPercentageOfTheUnsoldShare?.ToString("0.##", CultureInfo.InvariantCulture),
         };
 
         return View(model);
@@ -1040,7 +1040,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
                 cancellationToken);
 
             model.ExpectedFirstTranche = calculationResult.ExpectedFirstTranche?.ToString("0.##", CultureInfo.InvariantCulture);
-            model.SharedOwnershipRentAsPercentageOfTheUnsoldShare = calculationResult.ProspectiveRentPercentage?.ToString("0.##", CultureInfo.InvariantCulture);
+            model.RentAsPercentageOfTheUnsoldShare = calculationResult.ProspectiveRentPercentage?.ToString("0.##", CultureInfo.InvariantCulture);
 
             ModelState.AddValidationErrors(operationResult);
 
@@ -1059,13 +1059,13 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
             cancellationToken);
     }
 
-    [WorkflowState(HomeTypesWorkflowState.SharedOwnershipIneligible)]
-    [HttpGet("{homeTypeId}/SharedOwnershipIneligible")]
-    public async Task<IActionResult> SharedOwnershipIneligible([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
+    [WorkflowState(HomeTypesWorkflowState.ProspectiveRentIneligible)]
+    [HttpGet("{homeTypeId}/ProspectiveRentIneligible")]
+    public async Task<IActionResult> ProspectiveRentIneligible([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
     {
         var tenureDetails = await _mediator.Send(new GetTenureDetailsQuery(applicationId, homeTypeId), cancellationToken);
 
-        return View(new HomeTypeBasicModel(tenureDetails.ApplicationName, tenureDetails.HomeTypeName));
+        return View(new ProspectiveRentIneligibleModel(tenureDetails.ApplicationName, tenureDetails.HomeTypeName));
     }
 
     [WorkflowState(HomeTypesWorkflowState.RentToBuy)]
@@ -1131,6 +1131,64 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         var tenureDetails = await _mediator.Send(new GetTenureDetailsQuery(applicationId, homeTypeId), cancellationToken);
 
         return View(new HomeTypeBasicModel(tenureDetails.ApplicationName, tenureDetails.HomeTypeName));
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.HomeOwnershipDisabilities)]
+    [HttpGet("{homeTypeId}/HomeOwnershipDisabilities")]
+    public async Task<IActionResult> HomeOwnershipDisabilities([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
+    {
+        var tenureDetails = await _mediator.Send(new GetTenureDetailsQuery(applicationId, homeTypeId), cancellationToken);
+        var model = new HomeOwnershipDisabilitiesModel(tenureDetails.ApplicationName, tenureDetails.HomeTypeName)
+        {
+            MarketValue = tenureDetails.MarketValue?.ToString(CultureInfo.InvariantCulture),
+            InitialSale = tenureDetails.InitialSale?.ToString(CultureInfo.InvariantCulture),
+            ExpectedFirstTranche = tenureDetails.ExpectedFirstTranche?.ToString("0.##", CultureInfo.InvariantCulture),
+            ProspectiveRent = tenureDetails.ProspectiveRent?.ToString("0.##", CultureInfo.InvariantCulture),
+            RentAsPercentageOfTheUnsoldShare =
+                tenureDetails.RentAsPercentageOfTheUnsoldShare?.ToString("0.##", CultureInfo.InvariantCulture),
+        };
+
+        return View(model);
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.HomeOwnershipDisabilities)]
+    [HttpPost("{homeTypeId}/HomeOwnershipDisabilities")]
+    public async Task<IActionResult> HomeOwnershipDisabilities(
+        [FromRoute] string applicationId,
+        string homeTypeId,
+        HomeOwnershipDisabilitiesModel model,
+        string action,
+        CancellationToken cancellationToken)
+    {
+        if (action == GenericMessages.Calculate)
+        {
+            var (operationResult, calculationResult) = await _mediator.Send(
+                new CalculateHomeOwnershipDisabilitiesQuery(
+                    applicationId,
+                    homeTypeId,
+                    model.MarketValue,
+                    model.InitialSale,
+                    model.ProspectiveRent),
+                cancellationToken);
+
+            model.ExpectedFirstTranche = calculationResult.ExpectedFirstTranche?.ToString("0.##", CultureInfo.InvariantCulture);
+            model.RentAsPercentageOfTheUnsoldShare = calculationResult.ProspectiveRentPercentage?.ToString("0.##", CultureInfo.InvariantCulture);
+
+            ModelState.AddValidationErrors(operationResult);
+
+            return View(model);
+        }
+
+        return await SaveHomeTypeSegment(
+            new SaveHomeOwnershipDisabilitiesCommand(
+                applicationId,
+                homeTypeId,
+                model.MarketValue,
+                model.InitialSale,
+                model.ProspectiveRent),
+            model,
+            action,
+            cancellationToken);
     }
 
     [WorkflowState(HomeTypesWorkflowState.ExemptFromTheRightToSharedOwnership)]
