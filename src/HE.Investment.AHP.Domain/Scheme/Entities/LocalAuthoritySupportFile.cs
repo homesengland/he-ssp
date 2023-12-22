@@ -7,8 +7,17 @@ namespace HE.Investment.AHP.Domain.Scheme.Entities;
 
 public class LocalAuthoritySupportFile : FileEntity
 {
-    public LocalAuthoritySupportFile(FileName name, FileSize size, Stream content, IAhpDocumentSettings documentSettings)
-        : base(name, size, content, new ValidFileExtensionPolicy(nameof(LocalAuthoritySupportFile)), new FileSizePolicy(nameof(LocalAuthoritySupportFile), documentSettings.MaxFileSize))
+    public LocalAuthoritySupportFile(
+        FileName name,
+        FileSize size,
+        Stream content,
+        IAhpDocumentSettings documentSettings)
+        : base(
+            name,
+            size,
+            content,
+            new ValidFileExtensionPolicy(nameof(LocalAuthoritySupportFile), documentSettings),
+            new FileSizePolicy(nameof(LocalAuthoritySupportFile), documentSettings.MaxFileSize))
     {
     }
 }

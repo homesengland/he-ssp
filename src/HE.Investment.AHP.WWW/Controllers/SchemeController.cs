@@ -176,12 +176,12 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     [HttpPost("stakeholder-discussions")]
     public async Task<IActionResult> StakeholderDiscussions(SchemeViewModel model, string action, CancellationToken cancellationToken)
     {
-        var fileToUpload = model.StakeholderDiscussionFile == null
+        var fileToUpload = model.LocalAuthoritySupportFile == null
             ? null
             : new FileToUpload(
-                model.StakeholderDiscussionFile.FileName,
-                model.StakeholderDiscussionFile.Length,
-                model.StakeholderDiscussionFile.OpenReadStream());
+                model.LocalAuthoritySupportFile.FileName,
+                model.LocalAuthoritySupportFile.Length,
+                model.LocalAuthoritySupportFile.OpenReadStream());
 
         try
         {
@@ -244,7 +244,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     public async Task<IActionResult> Complete(
         [FromRoute] string applicationId,
         [FromForm] bool? isCompleted,
-        string action,
+        string? action,
         CancellationToken cancellationToken)
     {
         if (isCompleted == null)
@@ -261,6 +261,17 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
                 ModelState.AddModelError(
                     nameof(SchemeSummaryViewModel.IsCompleted),
                     "You have not completed this section. Select no if you want to come back later");
+                return View("CheckAnswers", await GetSchemeAndCreateSummary(Url, applicationId, cancellationToken));
+            }
+        }
+        else
+        {
+            var result = await _mediator.Send(new UnCompleteSchemeCommand(applicationId), cancellationToken);
+            if (result.HasValidationErrors)
+            {
+                ModelState.AddModelError(
+                    nameof(SchemeSummaryViewModel.IsCompleted),
+                    "You cannot change status for completed section.");
                 return View("CheckAnswers", await GetSchemeAndCreateSummary(Url, applicationId, cancellationToken));
             }
         }
@@ -312,7 +323,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
             scheme.MeetingLocalPriorities,
             scheme.MeetingLocalHousingNeed,
             scheme.StakeholderDiscussionsReport,
-            CreateFileModel(scheme.StakeholderDiscussionsFile),
+            CreateFileModel(scheme.LocalAuthoritySupportFile),
             _documentSettings.MaxFileSize.Megabytes,
             string.Join(", ", _documentSettings.AllowedExtensions.Select(x => x.Value.ToUpperInvariant())));
     }

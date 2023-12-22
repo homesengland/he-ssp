@@ -99,6 +99,11 @@ public class SchemeEntity
         Status = _modificationTracker.Change(Status, SectionStatus.Completed);
     }
 
+    public void UnComplete()
+    {
+        Status = _modificationTracker.Change(Status, SectionStatus.InProgress);
+    }
+
     private void SetInProgress()
     {
         Status = _modificationTracker.Change(Status, SectionStatus.InProgress);

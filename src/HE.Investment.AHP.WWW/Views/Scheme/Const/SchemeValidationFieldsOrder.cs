@@ -22,6 +22,6 @@ public static class SchemeValidationFieldsOrder
     public static List<string> StakeholderDiscussions => new()
     {
         SchemeValidationFieldNames.StakeholderDiscussionsReport,
-        SchemeValidationFieldNames.StakeholderDiscussionFile,
+        SchemeValidationFieldNames.LocalAuthoritySupportFile,
     };
 }
