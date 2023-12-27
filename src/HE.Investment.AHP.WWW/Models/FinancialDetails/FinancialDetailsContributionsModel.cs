@@ -1,6 +1,3 @@
-using System.Globalization;
-using HE.Investments.Common.Extensions;
-
 namespace HE.Investment.AHP.WWW.Models.FinancialDetails;
 public class FinancialDetailsContributionsModel : FinancialDetailsBaseModel
 {

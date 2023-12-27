@@ -1,6 +1,5 @@
 using HE.Investments.Account.Contract.User.Events;
 using HE.Investments.Account.Shared.Config;
-using HE.Investments.Account.Shared.User.Entities;
 using HE.Investments.Common.Infrastructure.Cache.Interfaces;
 using HE.Investments.Common.Infrastructure.Events;
 

@@ -1,6 +1,4 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.Investments.Account.Contract.Users;
-using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Services;
 using HE.Investments.Common.User;

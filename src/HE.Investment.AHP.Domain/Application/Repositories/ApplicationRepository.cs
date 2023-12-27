@@ -5,7 +5,6 @@ using HE.Investment.AHP.Domain.Application.Entities;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Data;
-using HE.Investments.Account.Contract.Users;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.CRM;

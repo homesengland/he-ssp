@@ -1,5 +1,4 @@
 using FluentAssertions;
-using HE.Investments.Account.Domain.Data;
 using HE.Investments.Account.Domain.User.Repositories;
 using HE.Investments.Account.Shared.Repositories;
 using HE.Investments.Account.Shared.User;

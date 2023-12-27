@@ -1,6 +1,4 @@
 extern alias Org;
-
-using HE.Investments.Common.CRM.Model;
 using HE.Investments.Loans.Common.Tests.TestData;
 using ContactRoleDto = Org::HE.Common.IntegrationModel.PortalIntegrationModel.ContactRoleDto;
 using ContactRolesDto = Org::HE.Common.IntegrationModel.PortalIntegrationModel.ContactRolesDto;

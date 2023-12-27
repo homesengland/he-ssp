@@ -1,6 +1,5 @@
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.CRM.Model;
-using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.Domain.Application.Repositories;
