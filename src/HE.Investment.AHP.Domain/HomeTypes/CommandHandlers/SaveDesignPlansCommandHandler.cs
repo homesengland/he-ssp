@@ -4,6 +4,7 @@ using HE.Investment.AHP.Domain.Documents.Config;
 using HE.Investment.AHP.Domain.HomeTypes.Commands;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
+using HE.Investments.Account.Shared;
 using HE.Investments.Common.Validators;
 using Microsoft.Extensions.Logging;
 
@@ -15,9 +16,10 @@ public class SaveDesignPlansCommandHandler : SaveHomeTypeSegmentCommandHandlerBa
 
     public SaveDesignPlansCommandHandler(
         IHomeTypeRepository homeTypeRepository,
+        IAccountUserContext accountUserContext,
         IAhpDocumentSettings documentSettings,
         ILogger<SaveDesignPlansCommandHandler> logger)
-        : base(homeTypeRepository, logger)
+        : base(homeTypeRepository, accountUserContext, logger)
     {
         _documentSettings = documentSettings;
     }

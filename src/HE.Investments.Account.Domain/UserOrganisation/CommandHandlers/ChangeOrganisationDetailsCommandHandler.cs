@@ -11,7 +11,6 @@ using HE.Investments.Common.Validators;
 using HE.Investments.Loans.Common.Exceptions;
 using HE.Investments.Loans.Common.Utils.Constants;
 using HE.Investments.Loans.Common.Utils.Constants.FormOption;
-using HE.Investments.Loans.Contract;
 using MediatR;
 
 namespace HE.Investments.Account.Domain.UserOrganisation.CommandHandlers;
@@ -67,7 +66,7 @@ public class ChangeOrganisationDetailsCommandHandler : IRequestHandler<ChangeOrg
 
             var organisation = new OrganisationEntity(name, address, phoneNumber);
 
-            await _repository.Save(organisation, userAccount, cancellationToken);
+            await _repository.Save(userAccount.SelectedOrganisationId(), organisation, cancellationToken);
 
             await _notificationService.Publish(new ChangeOrganisationDetailsRequestedNotification());
 

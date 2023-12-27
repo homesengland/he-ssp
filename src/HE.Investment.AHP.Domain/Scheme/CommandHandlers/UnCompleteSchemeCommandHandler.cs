@@ -1,13 +1,14 @@
 using HE.Investment.AHP.Domain.Scheme.Commands;
 using HE.Investment.AHP.Domain.Scheme.Entities;
 using HE.Investment.AHP.Domain.Scheme.Repositories;
+using HE.Investments.Account.Shared;
 
 namespace HE.Investment.AHP.Domain.Scheme.CommandHandlers;
 
 public class UnCompleteSchemeCommandHandler : UpdateSchemeCommandHandler<UnCompleteSchemeCommand>
 {
-    public UnCompleteSchemeCommandHandler(ISchemeRepository repository)
-        : base(repository, false)
+    public UnCompleteSchemeCommandHandler(ISchemeRepository repository, IAccountUserContext accountUserContext)
+        : base(repository, accountUserContext, false)
     {
     }
 

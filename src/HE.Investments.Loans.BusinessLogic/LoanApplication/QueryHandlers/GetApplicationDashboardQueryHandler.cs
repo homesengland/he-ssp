@@ -27,7 +27,7 @@ public class GetApplicationDashboardQueryHandler : IRequestHandler<GetApplicatio
             loanApplication.Name,
             loanApplication.ExternalStatus,
             loanApplication.ReferenceNumber,
-            account.AccountName,
+            account.OrganisationName,
             loanApplication.LastModificationDate,
             loanApplication.LastModifiedBy);
     }

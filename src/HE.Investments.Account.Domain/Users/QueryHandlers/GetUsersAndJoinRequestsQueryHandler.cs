@@ -30,8 +30,8 @@ public class GetUsersAndJoinRequestsQueryHandler : IRequestHandler<GetUsersAndJo
     public async Task<UsersAndJoinRequests> Handle(GetUsersAndJoinRequestsQuery request, CancellationToken cancellationToken)
     {
         var userAccount = await _accountUserContext.GetSelectedAccount();
-        var organisation = await _organizationRepository.GetBasicInformation(userAccount, cancellationToken);
-        var allUsers = await _usersRepository.GetUsers(userAccount.OrganisationId());
+        var organisation = await _organizationRepository.GetBasicInformation(userAccount.SelectedOrganisationId(), cancellationToken);
+        var allUsers = await _usersRepository.GetUsers(userAccount.SelectedOrganisationId());
 
         var users = allUsers.Where(u => u.Role != UserRole.Limited).ToList();
         var limited = allUsers.Where(u => u.Role == UserRole.Limited).ToList();

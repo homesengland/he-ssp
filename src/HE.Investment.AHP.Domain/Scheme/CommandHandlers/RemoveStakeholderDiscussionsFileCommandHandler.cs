@@ -2,13 +2,14 @@ using HE.Investment.AHP.Domain.Common.ValueObjects;
 using HE.Investment.AHP.Domain.Scheme.Commands;
 using HE.Investment.AHP.Domain.Scheme.Entities;
 using HE.Investment.AHP.Domain.Scheme.Repositories;
+using HE.Investments.Account.Shared;
 
 namespace HE.Investment.AHP.Domain.Scheme.CommandHandlers;
 
 public class RemoveStakeholderDiscussionsFileCommandHandler : UpdateSchemeCommandHandler<RemoveStakeholderDiscussionsFileCommand>
 {
-    public RemoveStakeholderDiscussionsFileCommandHandler(ISchemeRepository repository)
-        : base(repository, true)
+    public RemoveStakeholderDiscussionsFileCommandHandler(ISchemeRepository repository, IAccountUserContext accountUserContext)
+        : base(repository, accountUserContext, true)
     {
     }
 

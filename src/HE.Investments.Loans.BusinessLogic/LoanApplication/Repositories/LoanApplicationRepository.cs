@@ -38,7 +38,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
     {
         var req = new invln_getsingleloanapplicationforaccountandcontactRequest
         {
-            invln_accountid = userAccount.AccountId.ToString(),
+            invln_accountid = userAccount.OrganisationId.ToString(),
             invln_externalcontactid = userAccount.UserGlobalId.ToString(),
             invln_loanapplicationid = loanApplicationId.ToString(),
             invln_fieldstoretrieve = nameof(invln_Loanapplication.invln_LoanapplicationId).ToLowerInvariant(),
@@ -64,7 +64,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
         var req = new invln_checkifloanapplicationwithgivennameexistsRequest
         {
             invln_loanname = loanApplicationName.Value,
-            invln_organisationid = userAccount.AccountId?.ToString(),
+            invln_organisationid = userAccount.OrganisationId?.ToString(),
         };
 
         var response = (invln_checkifloanapplicationwithgivennameexistsResponse)await _serviceClient.ExecuteAsync(req, cancellationToken);
@@ -75,7 +75,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
     {
         var req = new invln_getsingleloanapplicationforaccountandcontactRequest
         {
-            invln_accountid = userAccount.AccountId.ToString(),
+            invln_accountid = userAccount.OrganisationId.ToString(),
             invln_externalcontactid = userAccount.UserGlobalId.ToString(),
             invln_loanapplicationid = id.ToString(),
         };
@@ -116,7 +116,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
     {
         var req = new invln_getloanapplicationsforaccountandcontactRequest()
         {
-            invln_accountid = userAccount.AccountId.ToString(),
+            invln_accountid = userAccount.OrganisationId.ToString(),
             invln_externalcontactid = userAccount.UserGlobalId.ToString(),
         };
 
@@ -149,7 +149,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
         var req = new invln_sendinvestmentloansdatatocrmRequest
         {
             invln_entityfieldsparameters = loanApplicationSerialized,
-            invln_accountid = loanApplication.UserAccount.AccountId.ToString(),
+            invln_accountid = loanApplication.UserAccount.OrganisationId.ToString(),
             invln_contactexternalid = loanApplication.UserAccount.UserGlobalId.ToString(),
         };
 

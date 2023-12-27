@@ -3,7 +3,7 @@ using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
 
-namespace HE.Investments.Account.Domain.Organisation.ValueObjects;
+namespace HE.Investments.Account.Shared.User.ValueObjects;
 
 public class OrganisationId : ValueObject
 {

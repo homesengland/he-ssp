@@ -2,8 +2,8 @@ using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Contract.Organisation;
 using HE.Investments.Account.Contract.Organisation.Queries;
 using HE.Investments.Account.Domain.Organisation.Entities;
-using HE.Investments.Account.Domain.Organisation.ValueObjects;
-using HE.Investments.Account.Shared.User;
+using HE.Investments.Account.Shared.User.ValueObjects;
+using HE.Investments.Common.User;
 using HE.Investments.Loans.Common.Exceptions;
 using HE.Investments.Organisation.Services;
 
@@ -13,15 +13,18 @@ public class OrganizationRepository : IOrganizationRepository
 {
     private readonly IOrganizationService _organizationService;
 
-    public OrganizationRepository(IOrganizationService organizationService)
+    private readonly IUserContext _userContext;
+
+    public OrganizationRepository(IOrganizationService organizationService, IUserContext userContext)
     {
         _organizationService = organizationService;
+        _userContext = userContext;
     }
 
-    public async Task<OrganizationBasicInformation> GetBasicInformation(UserAccount userAccount, CancellationToken cancellationToken)
+    public async Task<OrganizationBasicInformation> GetBasicInformation(OrganisationId organisationId, CancellationToken cancellationToken)
     {
-        var organizationDetailsDto = await _organizationService.GetOrganizationDetails(userAccount.AccountId.ToString()!, userAccount.UserGlobalId.ToString())
-                                        ?? throw new NotFoundException(nameof(OrganizationBasicInformation), userAccount.AccountId.ToString()!);
+        var organizationDetailsDto = await _organizationService.GetOrganizationDetails(organisationId.ToString(), _userContext.UserGlobalId)
+                                        ?? throw new NotFoundException(nameof(OrganizationBasicInformation), organisationId);
 
         return new OrganizationBasicInformation(
             organizationDetailsDto.registeredCompanyName,
@@ -38,18 +41,16 @@ public class OrganizationRepository : IOrganizationRepository
                 organizationDetailsDto.compayAdminContactEmail));
     }
 
-    public async Task<OrganisationChangeRequestState> GetOrganisationChangeRequestDetails(UserAccount userAccount, CancellationToken cancellationToken)
+    public async Task<OrganisationChangeRequestState> GetOrganisationChangeRequestDetails(OrganisationId organisationId, CancellationToken cancellationToken)
     {
-        var accountId = userAccount.AccountId ?? throw new NotFoundException(nameof(userAccount.AccountId));
-
-        var response = await _organizationService.GetOrganisationChangeDetailsRequestContact(accountId);
+        var response = await _organizationService.GetOrganisationChangeDetailsRequestContact(organisationId.Value);
 
         if (response == null)
         {
             return OrganisationChangeRequestState.NoPendingRequest;
         }
 
-        if (response.contactExternalId == userAccount.UserGlobalId.ToString())
+        if (response.contactExternalId == _userContext.UserGlobalId)
         {
             return OrganisationChangeRequestState.PendingRequestByYou;
         }
@@ -74,12 +75,12 @@ public class OrganizationRepository : IOrganizationRepository
         return await Task.FromResult(new OrganisationId(id));
     }
 
-    public async Task Save(OrganisationEntity organisation, UserAccount userAccount, CancellationToken cancellationToken)
+    public async Task Save(OrganisationId organisationId, OrganisationEntity organisation, CancellationToken cancellationToken)
     {
         await _organizationService.CreateOrganisationChangeRequest(
             new OrganizationDetailsDto
             {
-                organisationId = userAccount.AccountId.ToString(),
+                organisationId = organisationId.ToString(),
                 registeredCompanyName = organisation.Name.ToString(),
                 organisationPhoneNumber = organisation.PhoneNumber.ToString(),
                 addressLine1 = organisation.Address.AddressLine1,
@@ -90,6 +91,6 @@ public class OrganizationRepository : IOrganizationRepository
                 postalcode = organisation.Address.Postcode.Value,
                 county = organisation.Address.County,
             },
-            userAccount.UserGlobalId.ToString());
+            _userContext.UserGlobalId);
     }
 }

@@ -21,7 +21,7 @@ public class IsExistTests : TestBase<LoanApplicationRepository>
         var loanApplicationName = LoanApplicationNameTestData.MyFirstApplication;
         var userAccount = UserAccountTestData.UserAccountOne;
 
-        RegisterCrmMock(loanApplicationName.Value, userAccount.AccountId.ToString() ?? "empty", isExist);
+        RegisterCrmMock(loanApplicationName.Value, userAccount.SelectedOrganisationId().ToString(), isExist);
 
         // when
         var result = await TestCandidate.IsExist(loanApplicationName, userAccount, CancellationToken.None);
