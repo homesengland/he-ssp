@@ -28,7 +28,7 @@ public class CompanyStructureRepository : ICompanyStructureRepository
 
         var req = new invln_getsingleloanapplicationforaccountandcontactRequest
         {
-            invln_accountid = userAccount.OrganisationId.ToString(),
+            invln_accountid = userAccount.SelectedOrganisationId().ToString(),
             invln_externalcontactid = userAccount.UserGlobalId.ToString(),
             invln_loanapplicationid = loanApplicationId.ToString(),
             invln_fieldstoretrieve = fieldsToRetrieve,
@@ -77,7 +77,7 @@ public class CompanyStructureRepository : ICompanyStructureRepository
         {
             invln_loanapplication = loanApplicationSerialized,
             invln_loanapplicationid = companyStructure.LoanApplicationId.Value.ToString(),
-            invln_accountid = userAccount.OrganisationId.ToString(),
+            invln_accountid = userAccount.SelectedOrganisationId().ToString(),
             invln_contactexternalid = userAccount.UserGlobalId.ToString(),
             invln_fieldstoupdate = CompanyStructureCrmFieldNameMapper.Map(CompanyStructureFieldsSet.SaveAllFields),
         };

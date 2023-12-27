@@ -45,7 +45,7 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository, ILo
     {
         var req = new invln_getsingleloanapplicationforaccountandcontactRequest
         {
-            invln_accountid = userAccount.OrganisationId.ToString(),
+            invln_accountid = userAccount.SelectedOrganisationId().ToString(),
             invln_externalcontactid = userAccount.UserGlobalId.ToString(),
             invln_loanapplicationid = loanApplicationId.ToString(),
         };
@@ -77,7 +77,7 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository, ILo
 
         var req = new invln_getsinglesitedetailsRequest
         {
-            invln_accountid = userAccount.OrganisationId.ToString(),
+            invln_accountid = userAccount.SelectedOrganisationId().ToString(),
             invln_externalcontactid = userAccount.UserGlobalId.ToString(),
             invln_sitedetailsid = projectId.ToString(),
             invln_fieldstoretrieve = fieldsToRetrieve,
