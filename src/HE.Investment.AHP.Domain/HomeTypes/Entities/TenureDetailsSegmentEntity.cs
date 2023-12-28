@@ -23,7 +23,7 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
         MoreInformation? exemptionJustification = null,
         InitialSale? initialSale = null,
         ExpectedFirstTranche? expectedFirstTranche = null,
-        ProspectiveRentPercentage? sharedOwnershipRentAsPercentageOfTheUnsoldShare = null)
+        ProspectiveRentPercentage? rentAsPercentageOfTheUnsoldShare = null)
     {
         _modificationTracker = new ModificationTracker(() => SegmentModified?.Invoke());
         MarketValue = marketValue;
@@ -35,7 +35,7 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
         ExemptionJustification = exemptionJustification;
         InitialSale = initialSale;
         ExpectedFirstTranche = expectedFirstTranche;
-        SharedOwnershipRentAsPercentageOfTheUnsoldShare = sharedOwnershipRentAsPercentageOfTheUnsoldShare;
+        RentAsPercentageOfTheUnsoldShare = rentAsPercentageOfTheUnsoldShare;
     }
 
     public event EntityModifiedEventHandler? SegmentModified;
@@ -52,7 +52,8 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
 
     public TargetRentExceedMarketRent? TargetRentExceedMarketRent { get; private set; }
 
-    public bool IsProspectiveRentIneligible => ProspectiveRentAsPercentageOfMarketRent?.Value > 80 && TargetRentExceedMarketRent?.Value == YesNoType.No;
+    public bool IsProspectiveRentIneligible => (ProspectiveRentAsPercentageOfMarketRent?.Value > 80 && TargetRentExceedMarketRent?.Value == YesNoType.No)
+                                               || RentAsPercentageOfTheUnsoldShare?.Value > 3;
 
     public YesNoType ExemptFromTheRightToSharedOwnership { get; private set; }
 
@@ -62,9 +63,7 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
 
     public ExpectedFirstTranche? ExpectedFirstTranche { get; private set; }
 
-    public ProspectiveRentPercentage? SharedOwnershipRentAsPercentageOfTheUnsoldShare { get; private set; }
-
-    public bool IsSharedOwnershipIneligible => SharedOwnershipRentAsPercentageOfTheUnsoldShare?.Value > 3;
+    public ProspectiveRentPercentage? RentAsPercentageOfTheUnsoldShare { get; private set; }
 
     public static decimal? CalculateProspectiveRent(MarketRent? marketRent, ProspectiveRent? prospectiveRent)
     {
@@ -165,9 +164,9 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
     public void ChangeProspectiveRentAsPercentageOfTheUnsoldShare()
     {
         var result = CalculateProspectiveRentAsPercentageOfTheUnsoldShare(MarketValue, ProspectiveRent, InitialSale);
-        var newValue = new ProspectiveRentPercentage(result, nameof(SharedOwnershipRentAsPercentageOfTheUnsoldShare));
+        var newValue = new ProspectiveRentPercentage(result, nameof(RentAsPercentageOfTheUnsoldShare));
 
-        SharedOwnershipRentAsPercentageOfTheUnsoldShare = _modificationTracker.Change(SharedOwnershipRentAsPercentageOfTheUnsoldShare, newValue);
+        RentAsPercentageOfTheUnsoldShare = _modificationTracker.Change(RentAsPercentageOfTheUnsoldShare, newValue);
     }
 
     public void ChangeExpectedFirstTranche()
@@ -199,7 +198,7 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
             ExemptionJustification,
             InitialSale,
             ExpectedFirstTranche,
-            SharedOwnershipRentAsPercentageOfTheUnsoldShare);
+            RentAsPercentageOfTheUnsoldShare);
     }
 
     public bool IsRequired(HousingType housingType)
@@ -215,7 +214,7 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
             Tenure.SocialRent => IsSocialRentTenureCompleted(),
             Tenure.SharedOwnership => IsSharedOwnershipTenureCompleted(),
             Tenure.RentToBuy => IsRentToBuyTenureCompleted(),
-            Tenure.HomeOwnershipLongTermDisabilities => true, // Out of MVP scope
+            Tenure.HomeOwnershipLongTermDisabilities => IsHomeOwnershipDisabilitiesTenureCompleted(),
             Tenure.OlderPersonsSharedOwnership => true, // Out of MVP scope
             _ => throw new ArgumentOutOfRangeException(nameof(tenure), tenure, "Not supported tenure"),
         };
@@ -260,7 +259,7 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
             && InitialSale.IsProvided()
             && ExpectedFirstTranche.IsProvided()
             && ProspectiveRent.IsProvided()
-            && !IsSharedOwnershipIneligible;
+            && !IsProspectiveRentIneligible;
     }
 
     private bool IsRentToBuyTenureCompleted()
@@ -269,6 +268,15 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
                && MarketRent.IsProvided()
                && ProspectiveRent.IsProvided()
                && TargetRentExceedMarketRent?.Value != YesNoType.Undefined
+               && !IsProspectiveRentIneligible;
+    }
+
+    private bool IsHomeOwnershipDisabilitiesTenureCompleted()
+    {
+        return MarketValue.IsProvided()
+               && InitialSale.IsProvided()
+               && ExpectedFirstTranche.IsProvided()
+               && ProspectiveRent.IsProvided()
                && !IsProspectiveRentIneligible;
     }
 }

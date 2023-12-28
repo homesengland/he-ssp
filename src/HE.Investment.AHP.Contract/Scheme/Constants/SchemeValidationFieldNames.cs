@@ -15,5 +15,5 @@ public static class SchemeValidationFieldNames
 
     public const string StakeholderDiscussionsReport = nameof(StakeholderDiscussionsReport);
 
-    public const string StakeholderDiscussionFile = nameof(StakeholderDiscussionFile);
+    public const string LocalAuthoritySupportFile = nameof(LocalAuthoritySupportFile);
 }

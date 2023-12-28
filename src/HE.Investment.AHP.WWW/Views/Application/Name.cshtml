@@ -8,7 +8,7 @@
 
     <vc:back-link-with-callback url="@Url.Action("Index", "Application")"/>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
-    <form asp-controller="Application" asp-action="Name" asp-method="post" asp-route-callbackUrl="@Context.Request.Query["callbackUrl"]" novalidate>
+    <form asp-controller="Application" asp-action="Name" asp-method="post" novalidate>
         <vc:form-header title="Name your application"/>
         <gds-field-set role="group">
             <legend>
@@ -18,12 +18,10 @@
 
                 <gds-p >You should include the tenure type within your application name. For example, Village Way – Affordable Rent or Village Way – Shared Ownership.</gds-p>
             </legend>
-            @Html.HiddenFor(m => m.Id)
 
             <gds-input asp-hiddenlabeltext="Name"
                        class="govuk-!-width-one-third"
-                       govuk-formgroup-asp-for="Name"
-                       value="@Model?.Name"/>
+                       govuk-formgroup-asp-for="Name"/>
         </gds-field-set>
 
         <vc:form-button text="Continue"/>

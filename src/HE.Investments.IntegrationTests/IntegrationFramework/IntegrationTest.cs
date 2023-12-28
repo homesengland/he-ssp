@@ -1,7 +1,11 @@
 using AngleSharp.Html.Dom;
+using HE.Investments.IntegrationTestsFramework;
+using HE.Investments.IntegrationTestsFramework.Auth;
+using HE.Investments.IntegrationTestsFramework.Config;
 using HE.Investments.Loans.IntegrationTests.Config;
 using HE.Investments.Loans.IntegrationTests.Loans;
 using HE.Investments.Loans.WWW;
+using Microsoft.Extensions.Configuration;
 using Xunit;
 
 namespace HE.Investments.Loans.IntegrationTests.IntegrationFramework;
@@ -14,13 +18,47 @@ public class IntegrationTest
     protected IntegrationTest(IntegrationTestFixture<Program> fixture)
     {
         _fixture = fixture;
-        UserData = _fixture.UserData;
-        TestClient = new IntegrationTestClient(fixture.CreateClient(), UserData);
+        if (_fixture.DataBag.TryGetValue("UserData", out var userData))
+        {
+            UserData = (userData as IntegrationUserData)!;
+        }
+        else
+        {
+            var userConfig = _fixture.Configuration.GetSection("IntegrationTestsConfig:UserConfig").Get<UserConfig>();
+            if (userConfig is not null)
+            {
+                UserData = new IntegrationUserData(userConfig);
+            }
+            else
+            {
+                UserData = new IntegrationUserData();
+            }
+
+            _fixture.DataBag["UserData"] = UserData;
+        }
+
+        TestClient = new IntegrationTestClient(fixture.CreateClient(), fixture.LoginData);
     }
 
     protected IntegrationTestClient TestClient { get; }
 
     protected IntegrationUserData UserData { get; }
+
+    protected ILoginData LoginData => _fixture.LoginData;
+
+    protected void ProvideLoginData(string userGlobalId)
+    {
+        if (UserData.IsDeveloperProvidedUserData)
+        {
+            throw new NotSupportedException("Developer provided user data and new user cannot be created");
+        }
+
+        _fixture.ProvideLoginData(new UserData()
+        {
+            UserGlobalId = userGlobalId,
+            Email = $"{userGlobalId}@integrationTests.it",
+        });
+    }
 
     protected void SetSharedData<T>(string key, T data)
         where T : notnull

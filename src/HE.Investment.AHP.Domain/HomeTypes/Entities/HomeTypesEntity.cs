@@ -48,20 +48,26 @@ public class HomeTypesEntity
         return homeType;
     }
 
-    public void Remove(HomeTypeId homeTypeId)
+    public void Remove(HomeTypeId homeTypeId, RemoveHomeTypeAnswer removeAnswer)
     {
-        var homeType = GetEntityById(homeTypeId);
-        if (homeType.IsUsedInDeliveryPhase)
+        if (removeAnswer == RemoveHomeTypeAnswer.Undefined)
         {
-            throw new DomainValidationException(
-                new OperationResult().AddValidationErrors(new List<ErrorItem>
-                {
-                    new($"HomeType-{homeTypeId}", "Home Type cannot be removed because it is used in Delivery Phase"),
-                }));
+            OperationResult.New().AddValidationError(nameof(RemoveHomeTypeAnswer), "Select whether you want to remove this home type").CheckErrors();
         }
 
-        _toRemove.Add(homeType);
-        _homeTypes.Remove(homeType);
+        if (removeAnswer == RemoveHomeTypeAnswer.Yes)
+        {
+            var homeType = GetEntityById(homeTypeId);
+            if (homeType.IsUsedInDeliveryPhase)
+            {
+                OperationResult.New()
+                    .AddValidationError($"HomeType-{homeTypeId}", "Home Type cannot be removed because it is used in Delivery Phase")
+                    .CheckErrors();
+            }
+
+            _toRemove.Add(homeType);
+            _homeTypes.Remove(homeType);
+        }
     }
 
     public void ChangeName(IHomeTypeEntity homeTypeEntity, string? name)

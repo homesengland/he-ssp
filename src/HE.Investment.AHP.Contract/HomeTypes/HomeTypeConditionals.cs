@@ -10,5 +10,4 @@ public record HomeTypeConditionals(
     YesNoType AccessibleStandards,
     YesNoType MeetNationallyDescribedSpaceStandards,
     YesNoType ExemptFromTheRightToSharedOwnership,
-    bool IsProspectiveRentIneligible,
-    bool IsSharedOwnershipIneligible);
+    bool IsProspectiveRentIneligible);

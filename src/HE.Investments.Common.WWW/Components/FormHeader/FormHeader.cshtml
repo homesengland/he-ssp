@@ -1,4 +1,4 @@
-@model (string Caption, string Title, string CssClass)
+@model (string Caption, string Title, string Hint, string CssClass)
 
 <div class="@Model.CssClass">
     @if (!string.IsNullOrWhiteSpace(Model.Caption))
@@ -10,8 +10,15 @@
 
     @if (!string.IsNullOrEmpty(Model.Title))
     {
-        <gds-h1 class="govuk-heading-xl">
+        <gds-h1>
             @Model.Title
         </gds-h1>
+    }
+
+    @if (!string.IsNullOrEmpty(Model.Hint))
+    {
+        <he-div-hint>
+            @Model.Hint
+        </he-div-hint>
     }
 </div>

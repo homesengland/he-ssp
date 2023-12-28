@@ -1,10 +1,16 @@
+.govuk-breadcrumbs__link--inactive{
+  pointer-events: none;
+}
+
+.govuk-button--disabled{
+  pointer-events: none;
+}
+
 .link-disabled {
   cursor: not-allowed;
   opacity: 0.5;
   text-decoration: none;
 }
-
-
 
 .govuk-table__header--hidden{
   visibility: hidden;

@@ -2,6 +2,7 @@ using HE.Investment.AHP.Domain.FinancialDetails.Commands;
 using HE.Investment.AHP.Domain.FinancialDetails.Entities;
 using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
+using HE.Investments.Account.Shared;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
 using MediatR;
@@ -11,8 +12,8 @@ namespace HE.Investment.AHP.Domain.FinancialDetails.CommandHandlers;
 
 public class ProvideLandStatusCommandHandler : FinancialDetailsCommandHandlerBase, IRequestHandler<ProvideLandStatusCommand, OperationResult>
 {
-    public ProvideLandStatusCommandHandler(IFinancialDetailsRepository repository, ILogger<FinancialDetailsCommandHandlerBase> logger)
-        : base(repository, logger)
+    public ProvideLandStatusCommandHandler(IFinancialDetailsRepository repository, IAccountUserContext accountUserContext, ILogger<FinancialDetailsCommandHandlerBase> logger)
+        : base(repository, accountUserContext, logger)
     {
     }
 

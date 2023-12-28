@@ -39,7 +39,7 @@ public static class LoanApplicationMapper
     {
         return new UserAccountDto
         {
-            AccountId = (Guid)userAccount.AccountId!,
+            AccountId = userAccount.SelectedOrganisationId().Value,
             ContactEmail = userAccount.UserEmail,
             ContactExternalId = userAccount.UserGlobalId.ToString(),
             ContactFirstName = userProfileDetails.FirstName?.ToString(),

@@ -71,6 +71,10 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
         {
             yield return CreateRentToBuySection(homeType.TenureDetails, factory);
         }
+        else if (homeType.Tenure is Tenure.HomeOwnershipLongTermDisabilities)
+        {
+            yield return CreateHomeOwnershipDisabilitiesSection(homeType.TenureDetails, factory);
+        }
     }
 
     private static SectionSummaryViewModel CreateHomeTypeDetailsSection(FullHomeType homeType, HomeTypeQuestionFactory factory)
@@ -102,7 +106,7 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
     {
         var files = designPlans.UploadedFiles.ToDictionary(
             x => x.FileName,
-            x => DownloadDesignFileUrl(urlHelper, homeType.ApplicationId, homeType.Id, x.FileName));
+            x => DownloadDesignFileUrl(urlHelper, homeType.ApplicationId, homeType.Id, x.FileId));
         return SectionSummaryViewModel.New(
             "Design Plans",
             factory.FileQuestion("Design Plans", nameof(Controller.DesignPlans), designPlans.MoreInformation, files));
@@ -204,8 +208,8 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
             factory.Question(
                 "Shared Ownership rent as percentage of the unsold share",
                 nameof(Controller.SharedOwnership),
-                ToPercentage(tenure.SharedOwnershipRentAsPercentageOfTheUnsoldShare)),
-            factory.DeadEnd(nameof(Controller.SharedOwnershipIneligible)));
+                ToPercentage(tenure.RentAsPercentageOfTheUnsoldShare)),
+            factory.DeadEnd(nameof(Controller.ProspectiveRentIneligible)));
     }
 
     private static SectionSummaryViewModel CreateRentToBuySection(TenureDetails tenure, HomeTypeQuestionFactory factory)
@@ -218,6 +222,21 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
             factory.Question("Rent as percentage of market rent", nameof(Controller.RentToBuy), ToPercentage(tenure.ProspectiveRentAsPercentageOfMarketRent)),
             factory.Question("Target rent exceed 80% of market rent", nameof(Controller.RentToBuy), tenure.TargetRentExceedMarketRent),
             factory.DeadEnd(nameof(Controller.RentToBuyIneligible)));
+    }
+
+    private static SectionSummaryViewModel CreateHomeOwnershipDisabilitiesSection(TenureDetails tenure, HomeTypeQuestionFactory factory)
+    {
+        return SectionSummaryViewModel.New(
+            "HOLD details",
+            factory.Question("Market value of each home", nameof(Controller.HomeOwnershipDisabilities), ToPounds(tenure.MarketValue)),
+            factory.Question("Average first tranche sale percentage", nameof(Controller.HomeOwnershipDisabilities), ToPercentage(tenure.InitialSale)),
+            factory.Question("First tranche sales receipt", nameof(Controller.HomeOwnershipDisabilities), ToPoundsPences(tenure.ExpectedFirstTranche)),
+            factory.Question("Rent per week", nameof(Controller.HomeOwnershipDisabilities), ToPoundsPences(tenure.ProspectiveRent)),
+            factory.Question(
+                "Rent as percentage of the unsold share",
+                nameof(Controller.HomeOwnershipDisabilities),
+                ToPercentage(tenure.RentAsPercentageOfTheUnsoldShare)),
+            factory.DeadEnd(nameof(Controller.ProspectiveRentIneligible)));
     }
 
     private static string DownloadDesignFileUrl(IUrlHelper urlHelper, string applicationId, string homeTypeId, string fileId)
@@ -236,9 +255,9 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
 
     private static string? ToPounds(int? value) => value?.ToString("\u00a30", CultureInfo.InvariantCulture);
 
-    private static string? ToPoundsPences(decimal? value) => value?.ToString("\u00a300.##", CultureInfo.InvariantCulture);
+    private static string? ToPoundsPences(decimal? value) => value?.ToString("\u00a30.##", CultureInfo.InvariantCulture);
 
-    private static string? ToPercentage(decimal? value) => value?.ToString("00.00\\%", CultureInfo.InvariantCulture);
+    private static string? ToPercentage(decimal? value) => value?.ToString("0.##\\%", CultureInfo.InvariantCulture);
 
     private static string? ToSquareMeters(decimal? value) => value?.ToString("0.##m\u00B2", CultureInfo.InvariantCulture);
 }

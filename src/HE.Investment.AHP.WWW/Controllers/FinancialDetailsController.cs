@@ -8,9 +8,11 @@ using HE.Investment.AHP.WWW.Models.FinancialDetails.Factories;
 using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Routing;
+using HE.Investments.Common.WWW.Utils;
 using HE.Investments.Loans.Common.Exceptions;
 using HE.Investments.Loans.Common.Routing;
 using HE.Investments.Loans.Common.Utils.Constants.FormOption;
@@ -71,20 +73,13 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
 
     [HttpPost("land-status")]
     [WorkflowState(FinancialDetailsWorkflowState.LandStatus)]
-    public async Task<IActionResult> LandStatus(Guid applicationId, FinancialDetailsLandStatusModel model, CancellationToken cancellationToken)
+    public async Task<IActionResult> LandStatus(Guid applicationId, FinancialDetailsLandStatusModel model, string action, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(
+        return await ProvideFinancialDetails(
             new ProvideLandStatusCommand(ApplicationId.From(applicationId), model.PurchasePrice, model.IsFinal),
+            model,
+            action,
             cancellationToken);
-
-        if (result.HasValidationErrors)
-        {
-            ModelState.AddValidationErrors(result);
-
-            return View("LandStatus", model);
-        }
-
-        return await ContinueWithRedirect(new { applicationId });
     }
 
     [HttpGet("land-value")]
@@ -107,20 +102,13 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
 
     [HttpPost("land-value")]
     [WorkflowState(FinancialDetailsWorkflowState.LandValue)]
-    public async Task<IActionResult> LandValue(Guid applicationId, FinancialDetailsLandValueModel model, CancellationToken cancellationToken)
+    public async Task<IActionResult> LandValue(Guid applicationId, FinancialDetailsLandValueModel model, string action, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(
+        return await ProvideFinancialDetails(
             new ProvideLandValueCommand(ApplicationId.From(applicationId), model.IsOnPublicLand, model.LandValue),
+            model,
+            action,
             cancellationToken);
-
-        if (result.HasValidationErrors)
-        {
-            ModelState.AddValidationErrors(result);
-
-            return View("LandValue", model);
-        }
-
-        return await ContinueWithRedirect(new { applicationId });
     }
 
     [HttpGet("other-application-costs")]
@@ -140,20 +128,14 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
     public async Task<IActionResult> OtherApplicationCosts(
         Guid applicationId,
         FinancialDetailsOtherApplicationCostsModel model,
+        string action,
         CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(
+        return await ProvideFinancialDetails(
             new ProvideOtherApplicationCostsCommand(ApplicationId.From(applicationId), model.ExpectedWorksCosts, model.ExpectedOnCosts),
+            model,
+            action,
             cancellationToken);
-
-        if (result.HasValidationErrors)
-        {
-            ModelState.AddValidationErrors(result);
-
-            return View("OtherApplicationCosts", model);
-        }
-
-        return await ContinueWithRedirect(new { applicationId });
     }
 
     [HttpGet("expected-contributions")]
@@ -186,9 +168,13 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
 
     [HttpPost("expected-contributions")]
     [WorkflowState(FinancialDetailsWorkflowState.Contributions)]
-    public async Task<IActionResult> Contributions(Guid applicationId, FinancialDetailsContributionsModel model, CancellationToken cancellationToken)
+    public async Task<IActionResult> Contributions(
+        Guid applicationId,
+        FinancialDetailsContributionsModel model,
+        string action,
+        CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(
+        return await ProvideFinancialDetails(
             new ProvideExpecteContributionsCommand(
                 ApplicationId.From(applicationId),
                 model.RentalIncomeBorrowing,
@@ -199,16 +185,9 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
                 model.OtherCapitalSources,
                 model.SharedOwnershipSales,
                 model.HomesTransferValue),
+            model,
+            action,
             cancellationToken);
-
-        if (result.HasValidationErrors)
-        {
-            ModelState.AddValidationErrors(result);
-
-            return View("Contributions", model);
-        }
-
-        return await ContinueWithRedirect(new { applicationId });
     }
 
     [HttpGet("grants")]
@@ -231,9 +210,9 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
 
     [HttpPost("grants")]
     [WorkflowState(FinancialDetailsWorkflowState.Grants)]
-    public async Task<IActionResult> Grants(Guid applicationId, FinancialDetailsGrantsModel model, CancellationToken cancellationToken)
+    public async Task<IActionResult> Grants(Guid applicationId, FinancialDetailsGrantsModel model, string action, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(
+        return await ProvideFinancialDetails(
             new ProvideGrantsCommand(
                 ApplicationId.From(applicationId),
                 model.CountyCouncilGrants,
@@ -243,16 +222,9 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
                 model.HealthRelatedGrants,
                 model.LotteryGrants,
                 model.OtherPublicBodiesGrants),
+            model,
+            action,
             cancellationToken);
-
-        if (result.HasValidationErrors)
-        {
-            ModelState.AddValidationErrors(result);
-
-            return View("Grants", model);
-        }
-
-        return await ContinueWithRedirect(new { applicationId });
     }
 
     [HttpGet("check-answers")]
@@ -271,7 +243,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
 
     [HttpPost("check-answers")]
     [WorkflowState(FinancialDetailsWorkflowState.CheckAnswers)]
-    public async Task<IActionResult> Complete(Guid applicationId, FinancialDetailsCheckAnswersModel model, CancellationToken cancellationToken)
+    public async Task<IActionResult> Complete(Guid applicationId, FinancialDetailsCheckAnswersModel model, string action, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new CompleteFinancialDetailsCommand(ApplicationId.From(applicationId), model.IsSectionCompleted), cancellationToken);
 
@@ -286,6 +258,14 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
 
             ModelState.AddValidationErrors(result);
             return View("CheckAnswers", summary);
+        }
+
+        if (action == GenericMessages.SaveAndReturn)
+        {
+            return RedirectToAction(
+                nameof(ApplicationController.TaskList),
+                new ControllerName(nameof(ApplicationController)).WithoutPrefix(),
+                new { model.ApplicationId });
         }
 
         return RedirectToAction("TaskList", "Application", new { applicationId });
@@ -311,5 +291,31 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
         var isReadOnly = !await _accountAccessContext.CanEditApplication();
         var financialDetails = await _mediator.Send(new GetFinancialDetailsQuery(applicationId));
         return new FinancialDetailsWorkflow(currentState, financialDetails, isReadOnly);
+    }
+
+    private async Task<IActionResult> ProvideFinancialDetails<TModel, TCommand>(
+        TCommand command,
+        TModel model,
+        string action,
+        CancellationToken cancellationToken)
+        where TCommand : IRequest<OperationResult>
+        where TModel : FinancialDetailsBaseModel
+    {
+        var result = await _mediator.Send(command, cancellationToken);
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+            return View(model);
+        }
+
+        if (action == GenericMessages.SaveAndReturn)
+        {
+            return RedirectToAction(
+                nameof(ApplicationController.TaskList),
+                new ControllerName(nameof(ApplicationController)).WithoutPrefix(),
+                new { model.ApplicationId });
+        }
+
+        return await ContinueWithRedirect(new { model.ApplicationId });
     }
 }

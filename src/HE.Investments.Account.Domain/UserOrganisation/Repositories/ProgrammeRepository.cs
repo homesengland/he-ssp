@@ -37,7 +37,7 @@ public class ProgrammeRepository : IProgrammeRepository
     {
         var req = new invln_getloanapplicationsforaccountandcontactRequest()
         {
-            invln_accountid = userAccount.AccountId.ToString(),
+            invln_accountid = userAccount.SelectedOrganisationId().ToString(),
             invln_externalcontactid = userAccount.UserGlobalId.ToString(),
         };
 
@@ -59,8 +59,8 @@ public class ProgrammeRepository : IProgrammeRepository
     {
         var request = new invln_getmultipleahpapplicationsRequest
         {
-            inlvn_userid = userAccount.Role() == UserAccountRole.AnLimitedUser() ? userAccount.UserGlobalId.ToString() : string.Empty,
-            invln_organisationid = userAccount.AccountId.ToString(),
+            inlvn_userid = userAccount.CanViewAllApplications() ? string.Empty : userAccount.UserGlobalId.ToString(),
+            invln_organisationid = userAccount.SelectedOrganisationId().ToString(),
             invln_appfieldstoretrieve = $"{nameof(invln_scheme.invln_schemename)},{nameof(invln_scheme.statuscode)}".ToLowerInvariant(),
         };
 

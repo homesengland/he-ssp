@@ -16,8 +16,8 @@
 }
 
 <div class="govuk-grid-column-full govuk-!-margin-top-6">
-    <partial name="~/Partials/Errors/_ErrorSummaryPartial.cshtml" />
-    <partial name="~/Partials/_Notification.cshtml" />
+    <partial name="~/Partials/Errors/_ErrorSummaryPartial.cshtml"/>
+    <partial name="~/Partials/_Notification.cshtml"/>
 
     <span class="govuk-caption-l govuk-!-margin-top-1">@Model.ApplicationName</span>
     <gds-h1>Home types</gds-h1>
@@ -98,8 +98,8 @@
 
             <link-button href="@Url.RouteUrl("section", new { controller = "HomeTypes", action = "HomeTypeDetails", applicationId })" is-disabled="@Model.IsReadOnly">Add a home type</link-button>
         }
-    </form>
+            <vc:return-to-application-link application-id="@applicationId" is-editable="@Model.IsEditable"/>
 
+    </form>
     <br/>
-    <vc:return-to-application-link application-id="@applicationId" is-editable="@Model.IsEditable"/>
 </div>

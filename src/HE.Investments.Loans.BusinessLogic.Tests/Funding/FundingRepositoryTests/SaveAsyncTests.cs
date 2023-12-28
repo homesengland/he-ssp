@@ -35,7 +35,7 @@ public class SaveAsyncTests : TestBase<FundingRepository>
         x =>
             x.ExecuteAsync(
                 It.Is<invln_updatesingleloanapplicationRequest>(y =>
-                    y.invln_accountid == userAccount.AccountId.ToString() &&
+                    y.invln_accountid == userAccount.SelectedOrganisationId().ToString() &&
                     y.invln_loanapplicationid == fundingEntity.LoanApplicationId.ToString() &&
                     y.invln_loanapplication.Contains($"projectGdv\":{fundingEntity.GrossDevelopmentValue!.Value}") &&
                     y.invln_loanapplication.Contains($"projectEstimatedTotalCost\":{fundingEntity.EstimatedTotalCosts!.Value}") &&

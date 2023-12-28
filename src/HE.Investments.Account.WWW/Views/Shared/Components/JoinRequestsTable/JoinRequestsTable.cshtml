@@ -20,9 +20,7 @@
         tableHeaders.Add(new("Manage", IsHidden: true));
     }
 
-    var usersDetails = new TableViewModel(
-        tableHeaders,
-        Model.Select(u =>
+    var usersDetails = Model.Select(u =>
         {
             var tableItems = new List<TableValueViewModel>
             {
@@ -40,7 +38,9 @@
             }
 
             return new TableRowViewModel(tableItems);
-        }).ToList());
+        }).ToList();
 }
 
-<vc:table model="@usersDetails"/>
+<vc:table
+    headers="@tableHeaders"
+    rows="@usersDetails"/>

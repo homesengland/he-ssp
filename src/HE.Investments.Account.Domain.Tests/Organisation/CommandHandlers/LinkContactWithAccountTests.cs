@@ -9,7 +9,6 @@ using HE.Investments.Common.Errors;
 using HE.Investments.Loans.Common.Exceptions;
 using HE.Investments.Loans.Common.Tests.Extensions.FluentAssertionsExtensions;
 using HE.Investments.Loans.Common.Tests.TestData;
-using HE.Investments.Loans.Contract;
 using HE.Investments.TestsUtils.TestFramework;
 using Moq;
 using Xunit;

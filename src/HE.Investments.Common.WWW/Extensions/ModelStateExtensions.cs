@@ -1,6 +1,5 @@
 using System.Text;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.Extensions.Hosting;
 
 namespace HE.Investments.Common.WWW.Extensions;
 

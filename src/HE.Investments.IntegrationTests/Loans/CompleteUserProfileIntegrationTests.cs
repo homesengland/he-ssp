@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
+using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.IntegrationTestsFramework.Extensions;
 using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
@@ -18,9 +19,9 @@ public class CompleteUserProfileIntegrationTests : IntegrationTest
     public CompleteUserProfileIntegrationTests(IntegrationTestFixture<Program> fixture)
         : base(fixture)
     {
-        if (string.IsNullOrWhiteSpace(UserData.UserGlobalId) && !UserData.IsDeveloperProvidedUserData)
+        if (string.IsNullOrWhiteSpace(LoginData.UserGlobalId) && !UserData.IsDeveloperProvidedUserData)
         {
-            UserData.ProvideData($"itests|{Guid.NewGuid()}");
+            ProvideLoginData($"itests|{Guid.NewGuid()}");
             TestClient.AsLoggedUser();
         }
 

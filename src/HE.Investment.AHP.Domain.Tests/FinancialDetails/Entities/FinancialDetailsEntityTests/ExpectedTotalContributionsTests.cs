@@ -1,7 +1,6 @@
 using FluentAssertions;
 using HE.Investment.AHP.Domain.Tests.Application.TestData;
 using HE.Investment.AHP.Domain.Tests.FinancialDetails.TestObjectBuilders;
-using Xunit;
 
 namespace HE.Investment.AHP.Domain.Tests.FinancialDetails.Entities.FinancialDetailsEntityTests;
 

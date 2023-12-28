@@ -6,6 +6,6 @@ public class TextInput : ViewComponent
 {
     public IViewComponentResult Invoke(string fieldName, string? value = null, string? label = null, string? hint = null, string? cssClass = null)
     {
-        return View("TextInput", (fieldName, value, label, hint, cssClass));
+        return View("TextInput", (fieldName, value, label, hint, cssClass ?? "govuk-input--width-full"));
     }
 }

@@ -1,5 +1,4 @@
 using HE.Investments.Account.Domain.Tests.User.TestData;
-using HE.Investments.Account.Domain.User;
 using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.Entities;

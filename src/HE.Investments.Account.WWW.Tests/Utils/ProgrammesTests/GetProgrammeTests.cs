@@ -11,14 +11,14 @@ namespace HE.Investments.Account.WWW.Tests.Utils.ProgrammesTests;
 public class GetProgrammeTests : TestBase<Programmes>
 {
     [Fact]
-    public void ShouldReturnAhpProgramme()
+    public async Task ShouldReturnAhpProgramme()
     {
         // given
         var programmeConfig = new ProgrammeUrlConfig { Loans = "https://loans.com", Ahp = "https://ahp.com" };
         RegisterDependency(programmeConfig);
 
         // when
-        var result = TestCandidate.GetProgramme(ProgrammeType.Ahp);
+        var result = await TestCandidate.GetProgramme(ProgrammeType.Ahp);
 
         // then
         result.Name.Should().Be("Affordable Homes Programme 2021-2026 Continuous Market Engagement");
@@ -29,14 +29,14 @@ public class GetProgrammeTests : TestBase<Programmes>
     }
 
     [Fact]
-    public void ShouldReturnLoansProgramme()
+    public async Task ShouldReturnLoansProgramme()
     {
         // given
         var programmeConfig = new ProgrammeUrlConfig { Loans = "https://loans.com", Ahp = "https://ahp.com" };
         RegisterDependency(programmeConfig);
 
         // when
-        var result = TestCandidate.GetProgramme(ProgrammeType.Loans);
+        var result = await TestCandidate.GetProgramme(ProgrammeType.Loans);
 
         // then
         result.Name.Should().Be("Levelling up Home Building Fund");
@@ -47,12 +47,12 @@ public class GetProgrammeTests : TestBase<Programmes>
     }
 
     [Fact]
-    public void ShouldThrowExceptionWhenProgrammeDoesNotExist()
+    public async Task ShouldThrowExceptionWhenProgrammeDoesNotExist()
     {
         // given & when
-        Action action = () => TestCandidate.GetProgramme((ProgrammeType)3);
+        var action = () => TestCandidate.GetProgramme((ProgrammeType)3);
 
         // then
-        action.Should().Throw<InvalidEnumArgumentException>().WithMessage("Programme for 3 does not exist.");
+        await action.Should().ThrowAsync<InvalidEnumArgumentException>().WithMessage("Programme for 3 does not exist.");
     }
 }

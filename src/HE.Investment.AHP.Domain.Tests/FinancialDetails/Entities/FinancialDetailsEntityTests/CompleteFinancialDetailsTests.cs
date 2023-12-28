@@ -1,4 +1,3 @@
-using Auth0.ManagementApi.Models.Actions;
 using FluentAssertions;
 using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Domain.FinancialDetails.Constants;
@@ -8,7 +7,6 @@ using HE.Investments.Common.Contract;
 using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.Tests.FluentAssertions;
-using Xunit;
 
 namespace HE.Investment.AHP.Domain.Tests.FinancialDetails.Entities.FinancialDetailsEntityTests;
 

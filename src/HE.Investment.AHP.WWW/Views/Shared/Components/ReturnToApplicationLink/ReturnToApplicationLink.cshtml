@@ -1,8 +1,18 @@
+@using HE.Investments.Common.Messages
+
+
 @model (string ApplicationId, bool IsEditable)
 
-
-<gds-link class="govuk-link--no-visited-state"
-          href="@Url.Action("TaskList", "Application", new { applicationId = Model.ApplicationId })">
-    @(Model.IsEditable ? "Save and return to application" : "Return to application")
-</gds-link>
-
+<div>
+    @if (Model.IsEditable)
+    {
+        <vc:link-working-as-button text="Save and return to application" name="action" value="@GenericMessages.SaveAndReturn"/>
+    }
+    else
+    {
+        <gds-link class="govuk-link--no-visited-state"
+                  href="@Url.Action("TaskList", "Application", new { applicationId = Model.ApplicationId })">
+            Return to application
+        </gds-link>
+    }
+</div>

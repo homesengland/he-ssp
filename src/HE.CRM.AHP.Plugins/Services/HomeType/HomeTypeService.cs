@@ -30,7 +30,7 @@ namespace HE.CRM.AHP.Plugins.Services.HomeType
             if (Guid.TryParse(homeTypeId, out var homeTypeGuid) && Guid.TryParse(organisationId, out var organisationGuid) &&
                 Guid.TryParse(applicationId, out var applicationGuid))
             {
-                if (_homeTypeRepository.CheckIfGivenHomeTypeIsAssignedToGivenUserAndOrganisationAndApplication(homeTypeGuid, userId, organisationGuid, applicationGuid))
+                if (_homeTypeRepository.CheckIfGivenHomeTypeIsAssignedToGivenOrganisationAndApplication(homeTypeGuid, organisationGuid, applicationGuid))
                 {
                     var contact = _contactRepository.GetContactViaExternalId(userId);
                     _homeTypeRepository.Delete(new invln_HomeType() { Id = homeTypeGuid });
@@ -82,13 +82,13 @@ namespace HE.CRM.AHP.Plugins.Services.HomeType
                 var homeTypeMapped = HomeTypeMapper.MapDtoToRegularEntity(homeTypeDto, applicationId);
                 var contact = _contactRepository.GetContactViaExternalId(userId);
                 if (string.IsNullOrEmpty(homeTypeDto.id) &&
-                    _ahpApplicationRepository.ApplicationWithGivenIdExistsForOrganisationAndContract(applicationGuid, organisationGuid, userId))
+                    _ahpApplicationRepository.ApplicationWithGivenIdExistsForOrganisation(applicationGuid, organisationGuid))
                 {
                     UpdateApplicationModificationFields(applicationGuid, contact.Id);
                     return _homeTypeRepository.Create(homeTypeMapped);
                 }
                 else if (Guid.TryParse(homeTypeDto.id, out var homeTypeGuid) &&
-                    _homeTypeRepository.CheckIfGivenHomeTypeIsAssignedToGivenUserAndOrganisationAndApplication(homeTypeGuid, userId, organisationGuid, applicationGuid))
+                    _homeTypeRepository.CheckIfGivenHomeTypeIsAssignedToGivenOrganisationAndApplication(homeTypeGuid, organisationGuid, applicationGuid))
                 {
                     invln_HomeType homeTypeToUpdateOrCreate;
                     if (!string.IsNullOrEmpty(fieldsToSet))

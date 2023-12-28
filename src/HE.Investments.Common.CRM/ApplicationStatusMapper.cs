@@ -1,5 +1,4 @@
 using HE.Investments.Common.Contract;
-using HE.Investments.Common.Domain;
 using HE.Investments.Common.CRM.Model;
 
 namespace HE.Investments.Common.CRM;

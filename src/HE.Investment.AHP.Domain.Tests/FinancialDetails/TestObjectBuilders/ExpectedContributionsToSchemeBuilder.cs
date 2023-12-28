@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Domain.FinancialDetails.Entities;
 using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;

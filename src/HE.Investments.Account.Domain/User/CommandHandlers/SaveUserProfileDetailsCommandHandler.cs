@@ -1,9 +1,7 @@
 using HE.Investments.Account.Domain.User.Commands;
 using HE.Investments.Account.Domain.User.Repositories;
 using HE.Investments.Account.Shared;
-using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Exceptions;
-using HE.Investments.Common.User;
 using HE.Investments.Common.Validators;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -46,7 +44,6 @@ public class SaveUserProfileDetailsCommandHandler : IRequestHandler<SaveUserProf
         }
 
         await _profileRepository.SaveAsync(userDetails, _accountContext.UserGlobalId, cancellationToken);
-        await _accountContext.RefreshProfileDetails();
 
         return OperationResult.Success();
     }

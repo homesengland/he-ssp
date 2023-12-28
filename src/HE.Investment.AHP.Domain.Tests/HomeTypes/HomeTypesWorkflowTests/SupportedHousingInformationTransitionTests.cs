@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using FluentAssertions;
 using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.HomeTypes;
@@ -6,7 +5,6 @@ using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Domain.HomeTypes;
 using HE.Investment.AHP.Domain.Tests.HomeTypes.TestDataBuilders;
 using HE.Investments.Loans.Common.Routing;
-using Xunit;
 
 namespace HE.Investment.AHP.Domain.Tests.HomeTypes.HomeTypesWorkflowTests;
 

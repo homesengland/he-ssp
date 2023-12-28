@@ -1,4 +1,3 @@
-using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.User;
 using Microsoft.AspNetCore.Mvc;
 
