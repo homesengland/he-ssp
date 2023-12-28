@@ -1,6 +1,6 @@
 using FluentAssertions;
-using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
+using HE.Investment.AHP.Domain.Tests.HomeTypes.TestDataBuilders;
 using HE.Investments.Common.Exceptions;
 
 namespace HE.Investment.AHP.Domain.Tests.HomeTypes.EntitiesTests.TenureDetailsSegmentEntityTests;
@@ -19,11 +19,16 @@ public class CalculateProspectiveRentTests
         var marketRentVO = new MarketRent(marketRent);
         var prospectiveRentVO = new ProspectiveRent(prospectiveRent);
 
+        var tenureDetails = new TenureDetailsTestDataBuilder()
+            .WithMarketRent(marketRentVO)
+            .WithProspectiveRent(prospectiveRentVO)
+            .Build();
+
         // when
-        var result = TenureDetailsSegmentEntity.CalculateProspectiveRent(marketRentVO, prospectiveRentVO);
+        tenureDetails.ChangeProspectiveRentAsPercentageOfMarketRent();
 
         // then
-        result.Should().Be(expectedResult);
+        tenureDetails.ProspectiveRentAsPercentageOfMarketRent?.Value.Should().Be(expectedResult);
     }
 
     [Theory]
@@ -34,8 +39,11 @@ public class CalculateProspectiveRentTests
     [InlineData("", "")]
     public void ShouldReturnZero_WhenMarketRentOrProspectiveRentIsNotANumber(string marketRent, string prospectiveRent)
     {
-        // given && when
-        Action action = () => _ = TenureDetailsSegmentEntity.CalculateProspectiveRent(
+        // given
+        var tenureDetails = new TenureDetailsTestDataBuilder().Build();
+
+        // when
+        Action action = () => _ = tenureDetails.CalculateProspectiveRent(
             new MarketRent(marketRent, true),
             new ProspectiveRent(prospectiveRent, true));
 
