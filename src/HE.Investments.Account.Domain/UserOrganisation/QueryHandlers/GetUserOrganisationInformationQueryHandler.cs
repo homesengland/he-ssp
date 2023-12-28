@@ -5,7 +5,6 @@ using HE.Investments.Account.Domain.Organisation.Repositories;
 using HE.Investments.Account.Domain.User.Repositories;
 using HE.Investments.Account.Domain.UserOrganisation.Repositories;
 using HE.Investments.Account.Shared;
-using HE.Investments.Account.Shared.User;
 using HE.Investments.Common;
 using MediatR;
 using Microsoft.FeatureManagement;
@@ -37,10 +36,10 @@ public class GetUserOrganisationInformationQueryHandler : IRequestHandler<GetUse
     public async Task<GetUserOrganisationInformationQueryResponse> Handle(GetUserOrganisationInformationQuery request, CancellationToken cancellationToken)
     {
         var account = await _accountUserContext.GetSelectedAccount();
-        var organisationDetails = await _organizationRepository.GetBasicInformation(account, cancellationToken);
+        var organisationDetails = await _organizationRepository.GetBasicInformation(account.SelectedOrganisationId(), cancellationToken);
         var userDetails = await _profileRepository.GetProfileDetails(_accountUserContext.UserGlobalId);
 
-        if (await _featureManager.IsEnabledAsync(FeatureFlags.AhpProgram, account.AccountId.ToString()) is false)
+        if (await _featureManager.IsEnabledAsync(FeatureFlags.AhpProgram, account.SelectedOrganisationId().ToString()) is false)
         {
             return new GetUserOrganisationInformationQueryResponse(
                 organisationDetails,

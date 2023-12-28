@@ -1,6 +1,7 @@
 using HE.Investment.AHP.Contract.Scheme.Queries;
 using HE.Investment.AHP.Domain.Scheme.Entities;
 using HE.Investment.AHP.Domain.Scheme.Repositories;
+using HE.Investments.Account.Shared;
 using MediatR;
 using UploadedFile = HE.Investment.AHP.Contract.Common.UploadedFile;
 
@@ -10,14 +11,18 @@ public class GetSchemeQueryHandler : IRequestHandler<GetApplicationSchemeQuery, 
 {
     private readonly ISchemeRepository _repository;
 
-    public GetSchemeQueryHandler(ISchemeRepository repository)
+    private readonly IAccountUserContext _accountUserContext;
+
+    public GetSchemeQueryHandler(ISchemeRepository repository, IAccountUserContext accountUserContext)
     {
         _repository = repository;
+        _accountUserContext = accountUserContext;
     }
 
     public async Task<Contract.Scheme.Scheme> Handle(GetApplicationSchemeQuery request, CancellationToken cancellationToken)
     {
-        var entity = await _repository.GetByApplicationId(new(request.ApplicationId), request.IncludeFiles, cancellationToken);
+        var account = await _accountUserContext.GetSelectedAccount();
+        var entity = await _repository.GetByApplicationId(new(request.ApplicationId), account, request.IncludeFiles, cancellationToken);
 
         return new Contract.Scheme.Scheme(
             entity.Application.Id.Value,

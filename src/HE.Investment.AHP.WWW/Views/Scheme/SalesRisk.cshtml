@@ -17,9 +17,10 @@
     <form asp-controller="Scheme" asp-action="SalesRisk" asp-method="post" asp-route-redirect="@Context.Request.Query["redirect"]" novalidate>
         <vc:form-header caption="@Model.ApplicationName" title="@title"/>
         @Html.HiddenFor(m => Model.ApplicationName)
-        <vc:text-area-input field-name="@nameof(Model.SalesRisk)"
-                            label="Tell us your assessment of the sales risk and how you will mitigate this"
-                            value="@Model.SalesRisk"/>
+        <vc:text-area-input-with-counter
+            field-name="@nameof(Model.SalesRisk)"
+            label="Tell us your assessment of the sales risk and how you will mitigate this"
+            value="@Model.SalesRisk"/>
         <vc:form-button/>
         <vc:return-to-application-link application-id="@Model.ApplicationId"/>
     </form>

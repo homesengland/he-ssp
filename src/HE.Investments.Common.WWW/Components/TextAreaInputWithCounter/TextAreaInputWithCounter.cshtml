@@ -1,0 +1,35 @@
+@using HE.Investments.Common.WWW.Extensions
+@using HE.Investments.Common.WWW.Components.InputHeader
+@using HE.Investments.Common.WWW.Components.ErrorMessage
+@model (string fieldName, string label, HE.Investments.Common.WWW.Components.ComponentViewModel descriptionComponent, string hint, string value, string inputCssClass, bool isHeadingLabel, int rows, int maxLength)
+
+@{
+    #nullable enable
+    var (hasError, errors) = ViewData.ModelState.GetErrors(Model.fieldName);
+    var groupClass = hasError ? "govuk-form-group--error" : string.Empty;
+    var inputClass = $"govuk-textarea govuk-js-character-count {Model.inputCssClass}";
+    inputClass += hasError ? " govuk-textarea--error" : string.Empty;
+}
+
+<div class="govuk-character-count" data-module="govuk-character-count" data-maxlength="@Model.maxLength">
+    <gds-div-form-group class="@groupClass">
+        <vc:input-header
+            field-name="@Model.fieldName"
+            label="@Model.label"
+            hint="@Model.hint"
+            is-heading-label="@Model.isHeadingLabel"/>
+
+        @if (Model.descriptionComponent != null)
+        {
+            @await Component.InvokeAsync(Model.descriptionComponent.Name, Model.descriptionComponent.Arguments)
+        }
+
+        <vc:error-message field-name="@Model.fieldName"/>
+
+        <textarea class="@inputClass" id="@Model.fieldName" name="@Model.fieldName" rows="@Model.rows">@Model.value</textarea>
+
+        <div id="@($"{Model.fieldName}-info")" class="govuk-hint govuk-character-count__message">
+            You can enter up to @Model.maxLength characters
+        </div>
+    </gds-div-form-group>
+</div>

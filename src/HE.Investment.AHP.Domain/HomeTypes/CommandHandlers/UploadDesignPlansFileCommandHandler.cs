@@ -5,6 +5,7 @@ using HE.Investment.AHP.Domain.HomeTypes.Commands;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
+using HE.Investments.Account.Shared;
 using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Validators;
 using MediatR;
@@ -17,19 +18,24 @@ public class UploadDesignPlansFileCommandHandler : IRequestHandler<UploadDesignP
 {
     private readonly IHomeTypeRepository _homeTypeRepository;
 
+    private readonly IAccountUserContext _accountUserContext;
+
     private readonly IAhpDocumentSettings _documentSettings;
 
-    public UploadDesignPlansFileCommandHandler(IHomeTypeRepository homeTypeRepository, IAhpDocumentSettings documentSettings)
+    public UploadDesignPlansFileCommandHandler(IHomeTypeRepository homeTypeRepository, IAccountUserContext accountUserContext, IAhpDocumentSettings documentSettings)
     {
         _homeTypeRepository = homeTypeRepository;
+        _accountUserContext = accountUserContext;
         _documentSettings = documentSettings;
     }
 
     public async Task<OperationResult<UploadedFileContract?>> Handle(UploadDesignPlansFileCommand request, CancellationToken cancellationToken)
     {
+        var account = await _accountUserContext.GetSelectedAccount();
         var homeType = await _homeTypeRepository.GetById(
             new ApplicationId(request.ApplicationId),
             new HomeTypeId(request.HomeTypeId),
+            account,
             new[] { HomeTypeSegmentType.DesignPlans },
             cancellationToken);
 
@@ -42,7 +48,7 @@ public class UploadDesignPlansFileCommandHandler : IRequestHandler<UploadDesignP
                 _documentSettings);
             homeType.DesignPlans.AddFilesToUpload(new[] { designFile });
 
-            await _homeTypeRepository.Save(homeType, new[] { HomeTypeSegmentType.DesignPlans }, cancellationToken);
+            await _homeTypeRepository.Save(homeType, account.SelectedOrganisationId(), new[] { HomeTypeSegmentType.DesignPlans }, cancellationToken);
 
             var uploadedFile = homeType.DesignPlans.UploadedFiles.Single(x => x.Id == designFile.Id);
             return OperationResult.Success<UploadedFileContract?>(Map(uploadedFile));

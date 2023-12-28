@@ -6,7 +6,6 @@ using HE.Investments.Account.Contract.Users;
 using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Account.Shared.Routing;
-using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.WWW.Models.UserOrganisation;
 using HE.Investments.Account.WWW.Utils;
 using HE.Investments.Common.WWW.Controllers;

@@ -36,7 +36,7 @@ public static class Registrations
 
             return new ServiceClient(
                 new Uri(config.BaseUri!),
-                uri => Task.FromResult(cachedAuthToken));
+                _ => Task.FromResult(cachedAuthToken));
         });
         services.AddScoped<ICrmService, CrmService>();
     }

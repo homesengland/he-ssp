@@ -2,6 +2,8 @@ using HE.Investment.AHP.Domain.HomeTypes.Commands;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
+using HE.Investments.Account.Shared;
+using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
@@ -14,31 +16,37 @@ public class SaveHomeTypeDetailsCommandHandler : HomeTypeCommandHandlerBase, IRe
 {
     private readonly IHomeTypeRepository _repository;
 
-    public SaveHomeTypeDetailsCommandHandler(IHomeTypeRepository repository, ILogger<SaveHomeTypeDetailsCommand> logger)
+    private readonly IAccountUserContext _accountUserContext;
+
+    public SaveHomeTypeDetailsCommandHandler(IHomeTypeRepository repository, IAccountUserContext accountUserContext, ILogger<SaveHomeTypeDetailsCommand> logger)
         : base(logger)
     {
         _repository = repository;
+        _accountUserContext = accountUserContext;
     }
 
     public async Task<OperationResult<HomeTypeId?>> Handle(SaveHomeTypeDetailsCommand request, CancellationToken cancellationToken)
     {
+        var account = await _accountUserContext.GetSelectedAccount();
         var applicationId = new Domain.Application.ValueObjects.ApplicationId(request.ApplicationId);
-        var homeTypes = await _repository.GetByApplicationId(applicationId, HomeTypeSegmentTypes.All, cancellationToken);
+        var homeTypes = await _repository.GetByApplicationId(applicationId, account, HomeTypeSegmentTypes.All, cancellationToken);
+        var organisationId = account.SelectedOrganisationId();
 
         return request.HomeTypeId.IsNotProvided()
-            ? await CreateNewHomeType(homeTypes, request, cancellationToken)
-            : await UpdateExistingHomeType(homeTypes, request, cancellationToken);
+            ? await CreateNewHomeType(homeTypes, organisationId, request, cancellationToken)
+            : await UpdateExistingHomeType(homeTypes, organisationId, request, cancellationToken);
     }
 
     private async Task<OperationResult<HomeTypeId?>> CreateNewHomeType(
         HomeTypesEntity homeTypes,
+        OrganisationId organisationId,
         SaveHomeTypeDetailsCommand request,
         CancellationToken cancellationToken)
     {
         try
         {
             var homeType = homeTypes.CreateHomeType(request.HomeTypeName, request.HousingType);
-            await _repository.Save(homeType, HomeTypeSegmentTypes.All, cancellationToken);
+            await _repository.Save(homeType, organisationId, HomeTypeSegmentTypes.All, cancellationToken);
 
             return new OperationResult<HomeTypeId?>(homeType.Id);
         }
@@ -50,6 +58,7 @@ public class SaveHomeTypeDetailsCommandHandler : HomeTypeCommandHandlerBase, IRe
 
     private async Task<OperationResult<HomeTypeId?>> UpdateExistingHomeType(
         HomeTypesEntity homeTypes,
+        OrganisationId organisationId,
         SaveHomeTypeDetailsCommand request,
         CancellationToken cancellationToken)
     {
@@ -62,7 +71,7 @@ public class SaveHomeTypeDetailsCommandHandler : HomeTypeCommandHandlerBase, IRe
             return new OperationResult<HomeTypeId?>(validationErrors, null);
         }
 
-        await _repository.Save(homeType, HomeTypeSegmentTypes.All, cancellationToken);
+        await _repository.Save(homeType, organisationId, HomeTypeSegmentTypes.All, cancellationToken);
 
         return new OperationResult<HomeTypeId?>(homeType.Id);
     }

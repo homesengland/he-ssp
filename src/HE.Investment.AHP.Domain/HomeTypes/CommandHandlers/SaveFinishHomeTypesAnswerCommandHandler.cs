@@ -1,6 +1,7 @@
 using HE.Investment.AHP.Domain.HomeTypes.Commands;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
+using HE.Investments.Account.Shared;
 using HE.Investments.Common.Validators;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -12,15 +13,19 @@ public class SaveFinishHomeTypesAnswerCommandHandler : HomeTypeCommandHandlerBas
 {
     private readonly IHomeTypeRepository _repository;
 
-    public SaveFinishHomeTypesAnswerCommandHandler(IHomeTypeRepository repository, ILogger<SaveFinishHomeTypesAnswerCommandHandler> logger)
+    private readonly IAccountUserContext _accountUserContext;
+
+    public SaveFinishHomeTypesAnswerCommandHandler(IHomeTypeRepository repository, IAccountUserContext accountUserContext, ILogger<SaveFinishHomeTypesAnswerCommandHandler> logger)
         : base(logger)
     {
         _repository = repository;
+        _accountUserContext = accountUserContext;
     }
 
     public async Task<OperationResult> Handle(SaveFinishHomeTypesAnswerCommand request, CancellationToken cancellationToken)
     {
-        var homeTypes = await _repository.GetByApplicationId(new ApplicationId(request.ApplicationId), HomeTypeSegmentTypes.None, cancellationToken);
+        var account = await _accountUserContext.GetSelectedAccount();
+        var homeTypes = await _repository.GetByApplicationId(new ApplicationId(request.ApplicationId), account, HomeTypeSegmentTypes.None, cancellationToken);
         var validationErrors = PerformWithValidation(() => homeTypes.CompleteSection(request.FinishHomeTypesAnswer));
         if (validationErrors.Any())
         {
@@ -29,7 +34,7 @@ public class SaveFinishHomeTypesAnswerCommandHandler : HomeTypeCommandHandlerBas
 
         if (!request.IsCheckOnly)
         {
-            await _repository.Save(homeTypes, cancellationToken);
+            await _repository.Save(homeTypes, account.SelectedOrganisationId(), cancellationToken);
         }
 
         return OperationResult.Success();

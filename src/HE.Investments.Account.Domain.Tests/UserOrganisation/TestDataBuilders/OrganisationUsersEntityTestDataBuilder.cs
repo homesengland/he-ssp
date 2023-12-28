@@ -1,4 +1,3 @@
-using HE.Investments.Account.Domain.Organisation.ValueObjects;
 using HE.Investments.Account.Domain.UserOrganisation.Entities;
 using HE.Investments.Account.Shared.User.ValueObjects;
 

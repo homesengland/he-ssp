@@ -4,6 +4,7 @@ using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Mappers;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
+using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
 using MediatR;
 
@@ -12,6 +13,8 @@ namespace HE.Investment.AHP.Domain.HomeTypes.QueryHandlers;
 internal sealed class GetFullHomeTypeQueryHandler : IRequestHandler<GetFullHomeTypeQuery, FullHomeType>
 {
     private readonly IHomeTypeRepository _repository;
+
+    private readonly IAccountUserContext _accountUserContext;
 
     private readonly IHomeTypeSegmentContractMapper<DesignPlansSegmentEntity, DesignPlans> _designPlansSegmentMapper;
 
@@ -27,6 +30,7 @@ internal sealed class GetFullHomeTypeQueryHandler : IRequestHandler<GetFullHomeT
 
     public GetFullHomeTypeQueryHandler(
         IHomeTypeRepository repository,
+        IAccountUserContext accountUserContext,
         IHomeTypeSegmentContractMapper<DesignPlansSegmentEntity, DesignPlans> designPlansSegmentMapper,
         IHomeTypeSegmentContractMapper<DisabledPeopleHomeTypeDetailsSegmentEntity, DisabledPeopleHomeTypeDetails> disabledPeopleSegmentMapper,
         IHomeTypeSegmentContractMapper<HomeInformationSegmentEntity, HomeInformation> homeInformationSegmentMapper,
@@ -35,6 +39,7 @@ internal sealed class GetFullHomeTypeQueryHandler : IRequestHandler<GetFullHomeT
         IHomeTypeSegmentContractMapper<TenureDetailsSegmentEntity, TenureDetails> tenureDetailsSegmentMapper)
     {
         _repository = repository;
+        _accountUserContext = accountUserContext;
         _designPlansSegmentMapper = designPlansSegmentMapper;
         _disabledPeopleSegmentMapper = disabledPeopleSegmentMapper;
         _homeInformationSegmentMapper = homeInformationSegmentMapper;
@@ -45,9 +50,11 @@ internal sealed class GetFullHomeTypeQueryHandler : IRequestHandler<GetFullHomeT
 
     public async Task<FullHomeType> Handle(GetFullHomeTypeQuery request, CancellationToken cancellationToken)
     {
+        var account = await _accountUserContext.GetSelectedAccount();
         var homeType = await _repository.GetById(
             new Domain.Application.ValueObjects.ApplicationId(request.ApplicationId),
             new HomeTypeId(request.HomeTypeId),
+            account,
             HomeTypeSegmentTypes.All,
             cancellationToken);
 

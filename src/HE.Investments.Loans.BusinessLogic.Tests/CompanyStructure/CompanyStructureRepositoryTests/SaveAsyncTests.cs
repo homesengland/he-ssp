@@ -37,7 +37,7 @@ public class SaveAsyncTests : TestBase<CompanyStructureRepository>
                 x =>
                     x.ExecuteAsync(
                         It.Is<invln_updatesingleloanapplicationRequest>(y =>
-                            y.invln_accountid == userAccount.AccountId.ToString() &&
+                            y.invln_accountid == userAccount.SelectedOrganisationId().ToString() &&
                             y.invln_loanapplicationid == companyStructureEntity.LoanApplicationId.ToString() &&
                             y.invln_loanapplication.Contains($"companyPurpose\":{companyStructureEntity.Purpose}") &&
                             y.invln_loanapplication.Contains($"existingCompany\":\"{companyStructureEntity.MoreInformation!.Information}\"") &&

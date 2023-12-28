@@ -37,6 +37,6 @@ public class GetApplicationDashboardQueryHandlerTests : TestBase<GetApplicationD
         result.ApplicationStatus.Should().Be(loanApplicationEntity.ExternalStatus);
         result.ApplicationReferenceNumber.Should().Be(loanApplicationEntity.ReferenceNumber);
         result.LastEditedOn.Should().Be(loanApplicationEntity.LastModificationDate);
-        result.OrganizationName.Should().Be(userAccount.AccountName);
+        result.OrganizationName.Should().Be(userAccount.OrganisationName);
     }
 }

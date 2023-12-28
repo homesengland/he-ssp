@@ -1,7 +1,6 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.WWW.Controllers;
 using HE.Investments.Common.Contract;
-using HE.Investments.Common.Domain;
 using HE.Investments.Common.WWW.Models.TaskList;
 using HE.Investments.Common.WWW.Utils;
 using Microsoft.AspNetCore.Mvc;

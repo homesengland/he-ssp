@@ -5,6 +5,7 @@ using HE.Investments.Account.Domain.User.Repositories.Mappers;
 using HE.Investments.Account.Shared.Repositories;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.Entities;
+using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Loans.Common.Exceptions;
 using HE.Investments.Organisation.Services;
 using MediatR;
@@ -42,7 +43,7 @@ public class AccountRepository : IProfileRepository, IAccountRepository
             .Select(x => new UserAccount(
                 UserGlobalId.From(contactExternalId),
                 userEmail,
-                x.Key,
+                new OrganisationId(x.Key),
                 x.FirstOrDefault(y => y.accountId == x.Key)?.accountName ?? string.Empty,
                 new ReadOnlyCollection<UserRole>(x.Where(y => y.permission.HasValue).Select(y => UserRoleMapper.ToDomain(y.permission)!.Value).ToList())))
             .ToList();

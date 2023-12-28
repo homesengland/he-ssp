@@ -1,6 +1,7 @@
 using HE.Investment.AHP.Contract.FinancialDetails.Queries;
 using HE.Investment.AHP.Domain.FinancialDetails.Entities;
 using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
+using HE.Investments.Account.Shared;
 using MediatR;
 using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
@@ -10,14 +11,18 @@ public class GetFinancialDetailsQueryHandler : IRequestHandler<GetFinancialDetai
 {
     private readonly IFinancialDetailsRepository _financialDetailsRepository;
 
-    public GetFinancialDetailsQueryHandler(IFinancialDetailsRepository financialDetailsRepository)
+    private readonly IAccountUserContext _accountUserContext;
+
+    public GetFinancialDetailsQueryHandler(IFinancialDetailsRepository financialDetailsRepository, IAccountUserContext accountUserContext)
     {
         _financialDetailsRepository = financialDetailsRepository;
+        _accountUserContext = accountUserContext;
     }
 
     public async Task<Contract.FinancialDetails.FinancialDetails> Handle(GetFinancialDetailsQuery request, CancellationToken cancellationToken)
     {
-        var financialDetails = await _financialDetailsRepository.GetById(ApplicationId.From(request.ApplicationId), cancellationToken);
+        var account = await _accountUserContext.GetSelectedAccount();
+        var financialDetails = await _financialDetailsRepository.GetById(ApplicationId.From(request.ApplicationId), account, cancellationToken);
 
         var financialDetailsDto = new Contract.FinancialDetails.FinancialDetails
         {
@@ -31,7 +36,7 @@ public class GetFinancialDetailsQueryHandler : IRequestHandler<GetFinancialDetai
             SectionStatus = financialDetails.SectionStatus,
         };
 
-        MapPublicGrants(financialDetailsDto, financialDetails!.PublicGrants);
+        MapPublicGrants(financialDetailsDto, financialDetails.PublicGrants);
         MapExpectedContributions(financialDetailsDto, financialDetails.ExpectedContributions);
 
         return financialDetailsDto;

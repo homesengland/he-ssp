@@ -2,54 +2,34 @@ using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Queries;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
-using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
-using HE.Investments.Common.Validators;
-using MediatR;
+using HE.Investments.Account.Shared;
 using Microsoft.Extensions.Logging;
-using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.QueryHandlers;
 
-internal sealed class CalculateSharedOwnershipQueryHandler : BaseQueryHandler, IRequestHandler<CalculateSharedOwnershipQuery, (OperationResult OperationResult, CalculationResult CalculationResult)>
+internal sealed class CalculateSharedOwnershipQueryHandler : CalculateQueryHandlerBase<CalculateSharedOwnershipQuery>
 {
-    private readonly IHomeTypeRepository _homeTypeRepository;
-
-    public CalculateSharedOwnershipQueryHandler(IHomeTypeRepository homeTypeRepository, ILogger<CalculateSharedOwnershipQueryHandler> logger)
-        : base(logger)
+    public CalculateSharedOwnershipQueryHandler(
+        IHomeTypeRepository homeTypeRepository,
+        IAccountUserContext accountUserContext,
+        ILogger<CalculateSharedOwnershipQueryHandler> logger)
+        : base(homeTypeRepository, accountUserContext, logger)
     {
-        _homeTypeRepository = homeTypeRepository;
     }
 
-    private IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => new[] { HomeTypeSegmentType.TenureDetails };
+    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => new[] { HomeTypeSegmentType.TenureDetails };
 
-    private IEnumerable<Action<CalculateSharedOwnershipQuery, IHomeTypeEntity>> CalculateActions => new[]
+    protected override IEnumerable<Action<CalculateSharedOwnershipQuery, IHomeTypeEntity>> CalculateActions => new[]
     {
         (CalculateSharedOwnershipQuery request, IHomeTypeEntity homeType) => homeType.TenureDetails.ChangeMarketValue(request.MarketValue, true),
         (request, homeType) => homeType.TenureDetails.ChangeInitialSale(request.InitialSale, true),
-        (request, homeType) => homeType.TenureDetails.ChangeExpectedFirstTranche(),
+        (_, homeType) => homeType.TenureDetails.ChangeExpectedFirstTranche(),
         (request, homeType) => homeType.TenureDetails.ChangeProspectiveRent(request.ProspectiveRent, true),
-        (request, homeType) =>
-            homeType.TenureDetails.ChangeProspectiveRentAsPercentageOfTheUnsoldShare(),
+        (_, homeType) => homeType.TenureDetails.ChangeProspectiveRentAsPercentageOfTheUnsoldShare(),
     };
 
-    public async Task<(OperationResult OperationResult, CalculationResult CalculationResult)> Handle(CalculateSharedOwnershipQuery request, CancellationToken cancellationToken)
+    protected override CalculationResult BuildCalculationResult(IHomeTypeEntity homeType)
     {
-        var applicationId = new ApplicationId(request.ApplicationId);
-        var homeType = await _homeTypeRepository.GetById(
-            applicationId,
-            new HomeTypeId(request.HomeTypeId),
-            SegmentTypes,
-            cancellationToken);
-
-        var errors = PerformWithValidation(CalculateActions
-            .Select<Action<CalculateSharedOwnershipQuery, IHomeTypeEntity>, Action>(x => () => x(request, homeType))
-            .ToArray());
-
-        var operationResult = errors.Any() ? new OperationResult(errors) : OperationResult.Success();
-        var calculationResult = new CalculationResult(
-            homeType.TenureDetails.SharedOwnershipRentAsPercentageOfTheUnsoldShare?.Value,
-            homeType.TenureDetails.ExpectedFirstTranche?.Value);
-
-        return (operationResult, calculationResult);
+        return new CalculationResult(homeType.TenureDetails.RentAsPercentageOfTheUnsoldShare?.Value, homeType.TenureDetails.ExpectedFirstTranche?.Value);
     }
 }

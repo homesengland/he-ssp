@@ -1,6 +1,5 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investments.Common.Contract;
-using HE.Investments.Common.Domain;
 
 namespace HE.Investment.AHP.WWW.Models.Application;
 

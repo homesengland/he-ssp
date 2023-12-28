@@ -12,27 +12,19 @@
     <form asp-controller="HomeTypes" asp-action="ExitPlan" asp-method="post" asp-route-workflow="@workflow" novalidate>
         @Html.HiddenFor(m => Model.ApplicationName)
         @Html.HiddenFor(m => Model.HomeTypeName)
-        <vc:home-type-form-header current-page="@HomeTypesWorkflowState.ExitPlan"
-                                  application-id="@applicationId"
-                                  home-type-id="@homeTypeId"
-                                  caption="@Model.Header"/>
+        <vc:home-type-form-header
+            current-page="@HomeTypesWorkflowState.ExitPlan"
+            application-id="@applicationId"
+            home-type-id="@homeTypeId"
+            caption="@Model.Header"/>
 
-        <gds-field-set class="govuk-!-margin-bottom-4">
-            <he-error-form-group asp-for="MoreInformation">
-                <gds-h1 class="govuk-heading-xl">
-                    Tell us the exit plan or alternative use for these homes should commissioning priorities change in the future
-                </gds-h1>
-                <vc:form-hidden-label
-                    field-name="MoreInformation"
-                    title="More information"/>
-                <he-text-area asp-for="MoreInformation" rows="7" class="govuk-!-margin-bottom-1" label="asd"></he-text-area>
-                <gds-span-hint>You can enter up to 1500 characters</gds-span-hint>
-            </he-error-form-group>
-        </gds-field-set>
+        <vc:text-area-input-with-counter
+            field-name="@nameof(Model.MoreInformation)"
+            value="@Model.MoreInformation"
+            label="Tell us the exit plan or alternative use for these homes should commissioning priorities change in the future"
+            is-heading-label="true"/>
 
-        <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="continue-button">
-            Save and continue
-        </button>
+        <vc:form-button/>
         <br/>
 
         <vc:return-to-application-link application-id="@applicationId"/>

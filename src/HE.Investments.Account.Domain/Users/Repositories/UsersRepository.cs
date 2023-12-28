@@ -3,6 +3,7 @@ using HE.Investments.Account.Contract.Users;
 using HE.Investments.Account.Domain.Data;
 using HE.Investments.Account.Domain.Data.Extensions;
 using HE.Investments.Account.Shared.Repositories;
+using HE.Investments.Account.Shared.User.ValueObjects;
 
 namespace HE.Investments.Account.Domain.Users.Repositories;
 
@@ -15,9 +16,9 @@ public class UsersRepository : IUsersRepository
         _usersCrmContext = usersCrmContext;
     }
 
-    public async Task<IList<UserDetails>> GetUsers(Guid organisationId)
+    public async Task<IList<UserDetails>> GetUsers(OrganisationId organisationId)
     {
-        var users = await _usersCrmContext.GetUsers(organisationId);
+        var users = await _usersCrmContext.GetUsers(organisationId.Value);
         if (!users.Any())
         {
             return new List<UserDetails>();

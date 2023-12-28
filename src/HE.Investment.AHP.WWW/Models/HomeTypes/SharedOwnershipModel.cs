@@ -20,5 +20,5 @@ public class SharedOwnershipModel : HomeTypeBasicModel
 
     public string? ProspectiveRent { get; set; }
 
-    public string? SharedOwnershipRentAsPercentageOfTheUnsoldShare { get; set; }
+    public string? RentAsPercentageOfTheUnsoldShare { get; set; }
 }

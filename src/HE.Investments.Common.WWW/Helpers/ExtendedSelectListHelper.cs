@@ -1,6 +1,5 @@
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Models;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace HE.Investments.Common.WWW.Helpers;
 

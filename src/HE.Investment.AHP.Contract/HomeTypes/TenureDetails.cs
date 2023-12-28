@@ -15,6 +15,5 @@ public record TenureDetails(
     bool IsProspectiveRentIneligible,
     decimal? InitialSale,
     decimal? ExpectedFirstTranche,
-    decimal? SharedOwnershipRentAsPercentageOfTheUnsoldShare,
-    bool IsSharedOwnershipIneligible)
+    decimal? RentAsPercentageOfTheUnsoldShare)
     : HomeTypeSegmentBase(ApplicationName, HomeTypeName);
