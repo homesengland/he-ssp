@@ -1191,6 +1191,64 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
             cancellationToken);
     }
 
+    [WorkflowState(HomeTypesWorkflowState.OlderPersonsSharedOwnership)]
+    [HttpGet("{homeTypeId}/OlderPersonsSharedOwnership")]
+    public async Task<IActionResult> OlderPersonsSharedOwnership([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
+    {
+        var tenureDetails = await _mediator.Send(new GetTenureDetailsQuery(applicationId, homeTypeId), cancellationToken);
+        var model = new OlderPersonsSharedOwnershipModel(tenureDetails.ApplicationName, tenureDetails.HomeTypeName)
+        {
+            MarketValue = tenureDetails.MarketValue?.ToString(CultureInfo.InvariantCulture),
+            InitialSale = tenureDetails.InitialSale?.ToString(CultureInfo.InvariantCulture),
+            ExpectedFirstTranche = tenureDetails.ExpectedFirstTranche?.ToString("0.##", CultureInfo.InvariantCulture),
+            ProspectiveRent = tenureDetails.ProspectiveRent?.ToString("0.##", CultureInfo.InvariantCulture),
+            RentAsPercentageOfTheUnsoldShare =
+                tenureDetails.RentAsPercentageOfTheUnsoldShare?.ToString("0.##", CultureInfo.InvariantCulture),
+        };
+
+        return View(model);
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.OlderPersonsSharedOwnership)]
+    [HttpPost("{homeTypeId}/OlderPersonsSharedOwnership")]
+    public async Task<IActionResult> OlderPersonsSharedOwnership(
+        [FromRoute] string applicationId,
+        string homeTypeId,
+        OlderPersonsSharedOwnershipModel model,
+        string action,
+        CancellationToken cancellationToken)
+    {
+        if (action == GenericMessages.Calculate)
+        {
+            var (operationResult, calculationResult) = await _mediator.Send(
+                new CalculateOlderPersonsSharedOwnershipQuery(
+                    applicationId,
+                    homeTypeId,
+                    model.MarketValue,
+                    model.InitialSale,
+                    model.ProspectiveRent),
+                cancellationToken);
+
+            model.ExpectedFirstTranche = calculationResult.ExpectedFirstTranche?.ToString("0.##", CultureInfo.InvariantCulture);
+            model.RentAsPercentageOfTheUnsoldShare = calculationResult.ProspectiveRentPercentage?.ToString("0.##", CultureInfo.InvariantCulture);
+
+            ModelState.AddValidationErrors(operationResult);
+
+            return View(model);
+        }
+
+        return await SaveHomeTypeSegment(
+            new SaveOlderPersonsSharedOwnershipCommand(
+                applicationId,
+                homeTypeId,
+                model.MarketValue,
+                model.InitialSale,
+                model.ProspectiveRent),
+            model,
+            action,
+            cancellationToken);
+    }
+
     [WorkflowState(HomeTypesWorkflowState.ExemptFromTheRightToSharedOwnership)]
     [HttpGet("{homeTypeId}/ExemptFromTheRightToSharedOwnership")]
     public async Task<IActionResult> ExemptFromTheRightToSharedOwnership(

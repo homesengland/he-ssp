@@ -215,7 +215,7 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
             Tenure.SharedOwnership => IsSharedOwnershipTenureCompleted(),
             Tenure.RentToBuy => IsRentToBuyTenureCompleted(),
             Tenure.HomeOwnershipLongTermDisabilities => IsHomeOwnershipDisabilitiesTenureCompleted(),
-            Tenure.OlderPersonsSharedOwnership => true, // Out of MVP scope
+            Tenure.OlderPersonsSharedOwnership => IsOlderPersonsSharedOwnershipTenureCompleted(),
             _ => throw new ArgumentOutOfRangeException(nameof(tenure), tenure, "Not supported tenure"),
         };
     }
@@ -272,6 +272,15 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
     }
 
     private bool IsHomeOwnershipDisabilitiesTenureCompleted()
+    {
+        return MarketValue.IsProvided()
+               && InitialSale.IsProvided()
+               && ExpectedFirstTranche.IsProvided()
+               && ProspectiveRent.IsProvided()
+               && !IsProspectiveRentIneligible;
+    }
+
+    private bool IsOlderPersonsSharedOwnershipTenureCompleted()
     {
         return MarketValue.IsProvided()
                && InitialSale.IsProvided()
