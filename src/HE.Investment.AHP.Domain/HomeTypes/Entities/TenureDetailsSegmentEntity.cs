@@ -109,27 +109,21 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
 
     public void ChangeMarketValue(string? marketValue, bool isCalculation = false)
     {
-        var newValue = marketValue.IsProvided() || isCalculation
-            ? new MarketValue(marketValue, isCalculation)
-            : null;
+        var newValue = new MarketValue(marketValue, isCalculation);
 
         MarketValue = _modificationTracker.Change(MarketValue, newValue);
     }
 
     public void ChangeMarketRent(string? marketRent, bool isCalculation = false)
     {
-        var newValue = marketRent.IsProvided() || isCalculation
-            ? new MarketRent(marketRent, isCalculation)
-            : null;
+        var newValue = new MarketRent(marketRent, isCalculation);
 
         MarketRent = _modificationTracker.Change(MarketRent, newValue);
     }
 
     public void ChangeProspectiveRent(string? prospectiveRent, bool isCalculation = false)
     {
-        var newValue = prospectiveRent.IsProvided() || isCalculation
-            ? new ProspectiveRent(prospectiveRent, isCalculation)
-            : null;
+        var newValue = new ProspectiveRent(prospectiveRent, isCalculation);
 
         ProspectiveRent = _modificationTracker.Change(ProspectiveRent, newValue);
     }
@@ -144,9 +138,7 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
 
     public void ChangeTargetRentExceedMarketRent(YesNoType targetRentExceedMarketRent, bool isCalculation = false)
     {
-        var newValue = targetRentExceedMarketRent.IsProvided() || isCalculation
-            ? new TargetRentExceedMarketRent(targetRentExceedMarketRent, isCalculation)
-            : null;
+        var newValue = new TargetRentExceedMarketRent(targetRentExceedMarketRent, isCalculation);
 
         TargetRentExceedMarketRent = _modificationTracker.Change(TargetRentExceedMarketRent, newValue);
     }
@@ -179,9 +171,7 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
 
     public void ChangeInitialSale(string? initialSale, bool isCalculation = false)
     {
-        var newValue = initialSale.IsProvided() || isCalculation
-            ? new InitialSale(initialSale, isCalculation)
-            : null;
+        var newValue = new InitialSale(initialSale, isCalculation);
 
         InitialSale = _modificationTracker.Change(InitialSale, newValue);
     }
@@ -222,6 +212,17 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
 
     public void HousingTypeChanged(HousingType sourceHousingType, HousingType targetHousingType)
     {
+    }
+
+    public void ClearValuesForNewCalculation()
+    {
+        MarketValue = null;
+        MarketRent = null;
+        ProspectiveRent = null;
+        InitialSale = null;
+        ExpectedFirstTranche = null;
+        ProspectiveRentAsPercentageOfMarketRent = null;
+        RentAsPercentageOfTheUnsoldShare = null;
     }
 
     private bool IsExemptJustificationProvided()

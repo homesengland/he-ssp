@@ -2,7 +2,7 @@ namespace HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 
 public class InitialSale : RequiredIntForCalculationValueObject
 {
-    private const string DisplayName = "initial sale";
+    private const string DisplayName = "assumed average first tranche sale";
 
     private const int MinValue = 10;
 

@@ -19,7 +19,9 @@ public abstract class DecimalValueObject : ValueObject
     {
         if (value.IsNotProvided() && !isCalculation)
         {
-            throw new DomainValidationException(OperationResult.New());
+            OperationResult.New()
+                .AddValidationError(fieldName, ValidationErrorMessage.MissingRequiredField(displayName))
+                .CheckErrors();
         }
 
         if (value.IsNotProvided() && isCalculation)
