@@ -16,13 +16,13 @@ using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.Applicat
 namespace HE.Investment.AHP.WWW.Controllers;
 
 [AuthorizeWithCompletedProfile]
-[Route("application/{applicationId}/delivery")]
-public class DeliveryController : WorkflowController<DeliveryWorkflowState>
+[Route("application/{applicationId}/deliveries")]
+public class DeliveriesController : WorkflowController<DeliveriesWorkflowState>
 {
     private readonly IMediator _mediator;
     private readonly IAccountAccessContext _accountAccessContext;
 
-    public DeliveryController(
+    public DeliveriesController(
         IMediator mediator,
         IAccountAccessContext accountAccessContext)
     {
@@ -31,31 +31,32 @@ public class DeliveryController : WorkflowController<DeliveryWorkflowState>
     }
 
     [HttpGet("start")]
-    [WorkflowState(DeliveryWorkflowState.Index)]
+    [WorkflowState(DeliveriesWorkflowState.Index)]
     public async Task<IActionResult> Start(Guid applicationId, CancellationToken cancellationToken)
     {
         var application = await _mediator.Send(new GetApplicationQuery(applicationId.ToString()), cancellationToken);
         return View("Index", application);
     }
 
-    [HttpPost("start")]
-    [WorkflowState(DeliveryWorkflowState.Index)]
-    public async Task<IActionResult> StartPost(Guid applicationId, CancellationToken cancellationToken)
+    [HttpGet("delivery-list")]
+    [WorkflowState(DeliveriesWorkflowState.Index)]
+    public async Task<IActionResult> List(Guid applicationId, CancellationToken cancellationToken)
     {
-        return await Continue(new { applicationId });
+        var application = await _mediator.Send(new GetApplicationQuery(applicationId.ToString()), cancellationToken);
+        return View("Index", application);
     }
 
     [HttpGet("back")]
-    public Task<IActionResult> Back(DeliveryWorkflowState currentPage, Guid applicationId)
+    public Task<IActionResult> Back(DeliveriesWorkflowState currentPage, Guid applicationId)
     {
         return Back(currentPage, new { applicationId });
     }
 
-    protected override async Task<IStateRouting<DeliveryWorkflowState>> Routing(DeliveryWorkflowState currentState, object? routeData = null)
+    protected override async Task<IStateRouting<DeliveriesWorkflowState>> Routing(DeliveriesWorkflowState currentState, object? routeData = null)
     {
         var applicationId = Request.GetRouteValue("applicationId")
                             ?? routeData?.GetPropertyValue<string>("applicationId")
-                            ?? throw new NotFoundException($"{nameof(DeliveryController)} required applicationId path parameter.");
+                            ?? throw new NotFoundException($"{nameof(DeliveriesController)} required applicationId path parameter.");
 
         if (string.IsNullOrEmpty(applicationId))
         {
@@ -64,6 +65,6 @@ public class DeliveryController : WorkflowController<DeliveryWorkflowState>
 
         var isReadOnly = !await _accountAccessContext.CanEditApplication();
         var delivery = new Delivery();
-        return new DeliveryWorkflow(currentState, delivery, isReadOnly);
+        return new DeliveriesWorkflow(currentState, delivery, isReadOnly);
     }
 }
