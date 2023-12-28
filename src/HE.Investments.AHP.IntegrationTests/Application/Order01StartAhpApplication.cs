@@ -1,10 +1,10 @@
+using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.WWW;
 using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investment.AHP.WWW.Views.Application;
 using HE.Investments.AHP.IntegrationTests.Framework;
 using HE.Investments.AHP.IntegrationTests.Pages;
 using HE.Investments.IntegrationTestsFramework;
-using HE.Investments.IntegrationTestsFramework.Config;
 using HE.Investments.IntegrationTestsFramework.Extensions;
 using Xunit;
 using Xunit.Extensions.Ordering;
@@ -12,6 +12,7 @@ using Xunit.Extensions.Ordering;
 namespace HE.Investments.AHP.IntegrationTests.Application;
 
 [Order(1)]
+[SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
 public class Order01StartAhpApplication : AhpIntegrationTest
 {
     public Order01StartAhpApplication(IntegrationTestFixture<Program> fixture)
@@ -19,7 +20,7 @@ public class Order01StartAhpApplication : AhpIntegrationTest
     {
     }
 
-    [Fact]
+    [Fact(Skip = AhpConfig.SkipTest)]
     [Order(1)]
     public async Task Order01_ShouldRedirectToApplicationList_WhenUserIsLoggedIn()
     {
@@ -34,7 +35,7 @@ public class Order01StartAhpApplication : AhpIntegrationTest
         SaveCurrentPage();
     }
 
-    [Fact]
+    [Fact(Skip = AhpConfig.SkipTest)]
     [Order(2)]
     public async Task Order02_ShouldNavigateToApplicationNamePage()
     {
@@ -53,7 +54,7 @@ public class Order01StartAhpApplication : AhpIntegrationTest
         SaveCurrentPage();
     }
 
-    [Fact]
+    [Fact(Skip = AhpConfig.SkipTest)]
     [Order(3)]
     public async Task Order03_ShouldProvideApplicationNameAndNavigateToTenurePage()
     {
