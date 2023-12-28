@@ -185,7 +185,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         string action,
         CancellationToken cancellationToken)
     {
-        return await SaveHomeTypeDetails(applicationId, null, model, action, cancellationToken);
+        return await SaveHomeTypeDetails(applicationId, null, model, cancellationToken);
     }
 
     [WorkflowState(HomeTypesWorkflowState.HomeTypeDetails)]
@@ -232,7 +232,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         string action,
         CancellationToken cancellationToken)
     {
-        return await SaveHomeTypeDetails(applicationId, homeTypeId, model, action, cancellationToken);
+        return await SaveHomeTypeDetails(applicationId, homeTypeId, model, cancellationToken);
     }
 
     [WorkflowState(HomeTypesWorkflowState.HomeInformation)]
@@ -268,7 +268,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
                 model.MaximumOccupancy,
                 model.NumberOfStoreys),
             model,
-            action,
             cancellationToken);
     }
 
@@ -295,7 +294,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         return await SaveHomeTypeSegment(
             new SaveDisabledPeopleHousingTypeCommand(applicationId, homeTypeId, model.HousingType),
             model,
-            action,
             cancellationToken);
     }
 
@@ -322,7 +320,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         return await SaveHomeTypeSegment(
             new SaveDisabledPeopleClientGroupTypeCommand(applicationId, homeTypeId, model.DisabledPeopleClientGroup),
             model,
-            action,
             cancellationToken);
     }
 
@@ -346,7 +343,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         string action,
         CancellationToken cancellationToken)
     {
-        return await SaveHomeTypeSegment(new SaveOlderPeopleHousingTypeCommand(applicationId, homeTypeId, model.HousingType), model, action, cancellationToken);
+        return await SaveHomeTypeSegment(new SaveOlderPeopleHousingTypeCommand(applicationId, homeTypeId, model.HousingType), model, cancellationToken);
     }
 
     [WorkflowState(HomeTypesWorkflowState.HappiDesignPrinciples)]
@@ -376,7 +373,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         return await SaveHomeTypeSegment(
             new SaveHappiDesignPrinciplesCommand(applicationId, homeTypeId, designPrinciples.Concat(otherDesignPrinciples).ToList()),
             model,
-            action,
             cancellationToken);
     }
 
@@ -444,7 +440,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
             return await SaveHomeTypeSegment(
                 new SaveDesignPlansCommand(applicationId, homeTypeId, model.MoreInformation, filesToUpload),
                 model,
-                action,
                 cancellationToken);
         }
         finally
@@ -516,7 +511,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
                 model.ShortStayAccommodation,
                 model.RevenueFundingType),
             model,
-            action,
             cancellationToken);
     }
 
@@ -546,7 +540,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         return await SaveHomeTypeSegment(
             new SaveRevenueFundingCommand(applicationId, homeTypeId, revenueFundingSources.ToList()),
             model,
-            action,
             cancellationToken);
     }
 
@@ -574,7 +567,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         return await SaveHomeTypeSegment(
             new SaveMoveOnAccommodationCommand(applicationId, homeTypeId, model.IntendedAsMoveOnAccommodation),
             model,
-            action,
             cancellationToken);
     }
 
@@ -605,7 +597,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         return await SaveHomeTypeSegment(
             new SavePeopleGroupForSpecificDesignFeaturesCommand(applicationId, homeTypeId, model.PeopleGroupForSpecificDesignFeatures),
             model,
-            action,
             cancellationToken);
     }
 
@@ -633,7 +624,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         return await SaveHomeTypeSegment(
             new SaveMoveOnArrangementsCommand(applicationId, homeTypeId, model.MoreInformation),
             model,
-            action,
             cancellationToken);
     }
 
@@ -661,7 +651,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         return await SaveHomeTypeSegment(
             new SaveTypologyLocationAndDesignCommand(applicationId, homeTypeId, model.MoreInformation),
             model,
-            action,
             cancellationToken);
     }
 
@@ -689,7 +678,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         return await SaveHomeTypeSegment(
             new SaveExitPlanCommand(applicationId, homeTypeId, model.MoreInformation),
             model,
-            action,
             cancellationToken);
     }
 
@@ -715,7 +703,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         return await SaveHomeTypeSegment(
             new SaveBuildingInformationCommand(applicationId, homeTypeId, model.BuildingType),
             model,
-            action,
             cancellationToken);
     }
 
@@ -749,7 +736,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         return await SaveHomeTypeSegment(
             new SaveCustomBuildPropertyCommand(applicationId, homeTypeId, model.CustomBuild),
             model,
-            action,
             cancellationToken);
     }
 
@@ -777,7 +763,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         return await SaveHomeTypeSegment(
             new SaveFacilityTypeCommand(applicationId, homeTypeId, model.FacilityType),
             model,
-            action,
             cancellationToken);
     }
 
@@ -805,7 +790,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         return await SaveHomeTypeSegment(
             new SaveAccessibilityStandardsCommand(applicationId, homeTypeId, model.AccessibilityStandards),
             model,
-            action,
             cancellationToken);
     }
 
@@ -833,7 +817,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         return await SaveHomeTypeSegment(
             new SaveAccessibilityCategoryCommand(applicationId, homeTypeId, model.AccessibilityCategory),
             model,
-            action,
             cancellationToken);
     }
 
@@ -862,7 +845,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         return await SaveHomeTypeSegment(
             new SaveFloorAreaCommand(applicationId, homeTypeId, model.FloorArea, model.MeetNationallyDescribedSpaceStandards),
             model,
-            action,
             cancellationToken);
     }
 
@@ -899,7 +881,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
                 homeTypeId,
                 nationallyDescribedSpaceStandards.Concat(otherNationallyDescribedSpaceStandards).ToList()),
             model,
-            action,
             cancellationToken);
     }
 
@@ -954,7 +935,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
                 model.ProspectiveRent,
                 model.TargetRentExceedMarketRent),
             model,
-            action,
             cancellationToken);
     }
 
@@ -997,7 +977,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
                 model.MarketValue,
                 model.ProspectiveRent),
             model,
-            action,
             cancellationToken);
     }
 
@@ -1055,7 +1034,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
                 model.InitialSale,
                 model.ProspectiveRent),
             model,
-            action,
             cancellationToken);
     }
 
@@ -1120,7 +1098,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
                 model.ProspectiveRent,
                 model.TargetRentExceedMarketRent),
             model,
-            action,
             cancellationToken);
     }
 
@@ -1187,7 +1164,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
                 model.InitialSale,
                 model.ProspectiveRent),
             model,
-            action,
             cancellationToken);
     }
 
@@ -1245,7 +1221,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
                 model.InitialSale,
                 model.ProspectiveRent),
             model,
-            action,
             cancellationToken);
     }
 
@@ -1277,7 +1252,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         return await SaveHomeTypeSegment(
             new SaveExemptFromTheRightToSharedOwnershipCommand(applicationId, homeTypeId, model.ExemptFromTheRightToSharedOwnership),
             model,
-            action,
             cancellationToken);
     }
 
@@ -1305,7 +1279,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         return await SaveHomeTypeSegment(
             new SaveExemptionJustificationCommand(applicationId, homeTypeId, model.MoreInformation),
             model,
-            action,
             cancellationToken);
     }
 
@@ -1379,7 +1352,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         string applicationId,
         string? homeTypeId,
         HomeTypeDetailsModel model,
-        string action,
         CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(
@@ -1391,13 +1363,13 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
             return View("HomeTypeDetails", model);
         }
 
+        var action = HttpContext.Request.Form["action"];
         return await ProcessAction(applicationId, result.ReturnedData!.Value, action);
     }
 
     private async Task<IActionResult> SaveHomeTypeSegment<TModel, TSaveSegmentCommand>(
         TSaveSegmentCommand command,
         TModel model,
-        string action,
         CancellationToken cancellationToken)
         where TSaveSegmentCommand : SaveHomeTypeSegmentCommandBase
     {
@@ -1408,6 +1380,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
             return View(model);
         }
 
+        var action = HttpContext.Request.Form["action"];
         return await ProcessAction(command.ApplicationId, command.HomeTypeId, action);
     }
 
@@ -1427,7 +1400,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
             }) ?? string.Empty;
     }
 
-    private async Task<IActionResult> ProcessAction(string applicationId, string homeTypeId, string action)
+    private async Task<IActionResult> ProcessAction(string applicationId, string homeTypeId, string? action)
     {
         if (action == GenericMessages.SaveAndReturn)
         {

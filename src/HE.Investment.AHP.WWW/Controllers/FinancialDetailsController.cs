@@ -78,7 +78,6 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
         return await ProvideFinancialDetails(
             new ProvideLandStatusCommand(ApplicationId.From(applicationId), model.PurchasePrice, model.IsFinal),
             model,
-            action,
             cancellationToken);
     }
 
@@ -107,7 +106,6 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
         return await ProvideFinancialDetails(
             new ProvideLandValueCommand(ApplicationId.From(applicationId), model.IsOnPublicLand, model.LandValue),
             model,
-            action,
             cancellationToken);
     }
 
@@ -134,7 +132,6 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
         return await ProvideFinancialDetails(
             new ProvideOtherApplicationCostsCommand(ApplicationId.From(applicationId), model.ExpectedWorksCosts, model.ExpectedOnCosts),
             model,
-            action,
             cancellationToken);
     }
 
@@ -186,7 +183,6 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
                 model.SharedOwnershipSales,
                 model.HomesTransferValue),
             model,
-            action,
             cancellationToken);
     }
 
@@ -223,7 +219,6 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
                 model.LotteryGrants,
                 model.OtherPublicBodiesGrants),
             model,
-            action,
             cancellationToken);
     }
 
@@ -296,7 +291,6 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
     private async Task<IActionResult> ProvideFinancialDetails<TModel, TCommand>(
         TCommand command,
         TModel model,
-        string action,
         CancellationToken cancellationToken)
         where TCommand : IRequest<OperationResult>
         where TModel : FinancialDetailsBaseModel
@@ -308,6 +302,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
             return View(model);
         }
 
+        var action = HttpContext.Request.Form["action"];
         if (action == GenericMessages.SaveAndReturn)
         {
             return RedirectToAction(
