@@ -1,5 +1,3 @@
-using System;
-
 namespace HE.Investment.AHP.Domain.Tests.TestData;
 
 public static class GuidTestData

@@ -2,14 +2,17 @@ extern alias Org;
 
 using FluentAssertions;
 using HE.Investments.Account.Contract.Users;
-using HE.Investments.Account.Domain.Organisation.Entities;
 using HE.Investments.Account.Domain.Organisation.Repositories;
+using HE.Investments.Account.Domain.Tests.Organisation.TestData;
 using HE.Investments.Account.Domain.Tests.Organisation.TestObjectBuilder;
 using HE.Investments.Account.Domain.Tests.User.TestData;
 using HE.Investments.Account.Shared.User;
+using HE.Investments.Account.Shared.User.ValueObjects;
+using HE.Investments.Common.User;
 using HE.Investments.Loans.Common.Exceptions;
 using HE.Investments.Loans.Common.Tests.TestData;
 using HE.Investments.TestsUtils.TestFramework;
+using Moq;
 using Xunit;
 
 namespace HE.Investments.Account.Domain.Tests.Organisation.OrganizationRepositoryTests;
@@ -20,11 +23,7 @@ public class GetBasicInformationTests : TestBase<OrganizationRepository>
     public async Task ShouldReturnOrganizationBasicInformation_WhenUserGlobalIdAndAccountIdAreCorrect()
     {
         // given
-        var organizationDetailsDto = OrganizationServiceMockTestBuilder
-            .New()
-            .Register(this)
-            .OrganizationDetailsDtoMock;
-
+        var organizationDetailsDto = OrganizationDetailsDtoTestData.OrganizationDetailsDto;
         var userAccount = UserAccountTestData.UserAccountOne;
 
         OrganizationServiceMockTestBuilder
@@ -32,9 +31,10 @@ public class GetBasicInformationTests : TestBase<OrganizationRepository>
             .ReturnUserAccount(userAccount)
             .ReturnOrganizationDetailsDto(organizationDetailsDto)
             .Register(this);
+        RegisterUserContext(userAccount.UserGlobalId.Value);
 
         // when
-        var result = await TestCandidate.GetBasicInformation(userAccount, CancellationToken.None);
+        var result = await TestCandidate.GetBasicInformation(userAccount.SelectedOrganisationId(), CancellationToken.None);
 
         // then
         result.CompanyRegistrationNumber.Should().Be(organizationDetailsDto.companyRegistrationNumber);
@@ -51,25 +51,29 @@ public class GetBasicInformationTests : TestBase<OrganizationRepository>
     public async Task ShouldThrowNotFoundException_WhenUserGlobalIdAndAccountIdAreNotCorrect()
     {
         // given
-        var organizationDetailsDto = OrganizationServiceMockTestBuilder
-            .New()
-            .Register(this)
-            .OrganizationDetailsDtoMock;
-
+        var organizationDetailsDto = OrganizationDetailsDtoTestData.OrganizationDetailsDto;
         var userAccount = UserAccountTestData.UserAccountOne;
-
-        var fakeUserAccount = new UserAccount(UserGlobalId.From("FakeId"), string.Empty, GuidTestData.GuidTwo, string.Empty, Array.Empty<UserRole>());
+        var fakeUserAccount = new UserAccount(UserGlobalId.From("FakeId"), string.Empty, new OrganisationId(GuidTestData.GuidTwo), string.Empty, Array.Empty<UserRole>());
 
         OrganizationServiceMockTestBuilder
             .New()
             .ReturnUserAccount(userAccount)
             .ReturnOrganizationDetailsDto(organizationDetailsDto)
             .Register(this);
+        RegisterUserContext(fakeUserAccount.UserGlobalId.Value);
 
         // when
-        var action = () => TestCandidate.GetBasicInformation(fakeUserAccount, CancellationToken.None);
+        var action = () => TestCandidate.GetBasicInformation(fakeUserAccount.SelectedOrganisationId(), CancellationToken.None);
 
         // then
-        await action.Should().ThrowExactlyAsync<NotFoundException>().WithMessage($"*{fakeUserAccount.AccountId}*");
+        await action.Should().ThrowExactlyAsync<NotFoundException>().WithMessage($"*{fakeUserAccount.OrganisationId}*");
+    }
+
+    private void RegisterUserContext(string userGlobalId)
+    {
+        var userContextMock = new Mock<IUserContext>();
+        userContextMock.Setup(x => x.UserGlobalId).Returns(userGlobalId);
+
+        RegisterDependency(userContextMock.Object);
     }
 }

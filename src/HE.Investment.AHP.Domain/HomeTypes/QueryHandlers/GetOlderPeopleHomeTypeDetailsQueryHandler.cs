@@ -3,6 +3,7 @@ using HE.Investment.AHP.Contract.HomeTypes.Queries;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Mappers;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
+using HE.Investments.Account.Shared;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.QueryHandlers;
 
@@ -11,8 +12,9 @@ internal sealed class GetOlderPeopleHomeTypeDetailsQueryHandler
 {
     public GetOlderPeopleHomeTypeDetailsQueryHandler(
         IHomeTypeRepository repository,
-        IHomeTypeSegmentContractMapper<OlderPeopleHomeTypeDetailsSegmentEntity, OlderPeopleHomeTypeDetails> mapper)
-        : base(repository, mapper)
+        IHomeTypeSegmentContractMapper<OlderPeopleHomeTypeDetailsSegmentEntity, OlderPeopleHomeTypeDetails> mapper,
+        IAccountUserContext accountUserContext)
+        : base(repository, mapper, accountUserContext)
     {
     }
 

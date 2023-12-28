@@ -37,7 +37,7 @@ public class AccountCrmRepository : IAccountRepository
             .Select(x => new UserAccount(
                 UserGlobalId.From(contactExternalId),
                 userEmail,
-                x.Key,
+                new OrganisationId(x.Key),
                 x.FirstOrDefault(y => y.accountId == x.Key)?.accountName ?? string.Empty,
                 new ReadOnlyCollection<UserRole>(x.Where(y => y.permission.HasValue).Select(y => UserRoleMapper.ToDomain(y.permission)!.Value).ToList())))
             .ToList();

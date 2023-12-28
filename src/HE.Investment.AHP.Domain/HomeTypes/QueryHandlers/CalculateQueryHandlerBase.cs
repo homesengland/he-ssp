@@ -3,6 +3,7 @@ using HE.Investment.AHP.Contract.HomeTypes.Queries;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
+using HE.Investments.Account.Shared;
 using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Validators;
 using MediatR;
@@ -16,11 +17,14 @@ public abstract class CalculateQueryHandlerBase<TQuery> : IRequestHandler<TQuery
 {
     private readonly IHomeTypeRepository _homeTypeRepository;
 
+    private readonly IAccountUserContext _accountUserContext;
+
     private readonly ILogger _logger;
 
-    protected CalculateQueryHandlerBase(IHomeTypeRepository homeTypeRepository, ILogger logger)
+    protected CalculateQueryHandlerBase(IHomeTypeRepository homeTypeRepository, IAccountUserContext accountUserContext, ILogger logger)
     {
         _homeTypeRepository = homeTypeRepository;
+        _accountUserContext = accountUserContext;
         _logger = logger;
     }
 
@@ -30,10 +34,12 @@ public abstract class CalculateQueryHandlerBase<TQuery> : IRequestHandler<TQuery
 
     public async Task<(OperationResult OperationResult, CalculationResult CalculationResult)> Handle(TQuery request, CancellationToken cancellationToken)
     {
+        var account = await _accountUserContext.GetSelectedAccount();
         var applicationId = new ApplicationId(request.ApplicationId);
         var homeType = await _homeTypeRepository.GetById(
             applicationId,
             new HomeTypeId(request.HomeTypeId),
+            account,
             SegmentTypes,
             cancellationToken);
 

@@ -2,14 +2,18 @@ using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Queries;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
+using HE.Investments.Account.Shared;
 using Microsoft.Extensions.Logging;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.QueryHandlers;
 
 internal sealed class CalculateProspectiveRentQueryHandler : CalculateQueryHandlerBase<CalculateProspectiveRentQuery>
 {
-    public CalculateProspectiveRentQueryHandler(IHomeTypeRepository homeTypeRepository, ILogger<CalculateProspectiveRentQueryHandler> logger)
-        : base(homeTypeRepository, logger)
+    public CalculateProspectiveRentQueryHandler(
+        IHomeTypeRepository homeTypeRepository,
+        IAccountUserContext accountUserContext,
+        ILogger<CalculateProspectiveRentQueryHandler> logger)
+        : base(homeTypeRepository, accountUserContext, logger)
     {
     }
 

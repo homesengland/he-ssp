@@ -2,14 +2,18 @@ using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Queries;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
+using HE.Investments.Account.Shared;
 using Microsoft.Extensions.Logging;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.QueryHandlers;
 
 internal sealed class CalculateHomeOwnershipDisabilitiesQueryHandler : CalculateQueryHandlerBase<CalculateHomeOwnershipDisabilitiesQuery>
 {
-    public CalculateHomeOwnershipDisabilitiesQueryHandler(IHomeTypeRepository homeTypeRepository, ILogger<CalculateHomeOwnershipDisabilitiesQueryHandler> logger)
-        : base(homeTypeRepository, logger)
+    public CalculateHomeOwnershipDisabilitiesQueryHandler(
+        IHomeTypeRepository homeTypeRepository,
+        IAccountUserContext accountUserContext,
+        ILogger<CalculateHomeOwnershipDisabilitiesQueryHandler> logger)
+        : base(homeTypeRepository, accountUserContext, logger)
     {
     }
 

@@ -46,7 +46,7 @@ public class OrganizationServiceMockTestBuilder
         OrganizationDetailsDtoMock = organizationDetailsDto;
 
         _mock.Setup(x => x.GetOrganizationDetails(
-                UserAccountFromMock.AccountId.ToString()!,
+                UserAccountFromMock.SelectedOrganisationId().ToString(),
                 UserAccountFromMock.UserGlobalId.ToString()))
             .ReturnsAsync(OrganizationDetailsDtoMock);
 

@@ -1,4 +1,4 @@
-using HE.Investments.Account.Domain.Organisation.ValueObjects;
+using HE.Investments.Account.Shared.User.ValueObjects;
 
 namespace HE.Investments.Account.Domain.Organisation.Repositories;
 

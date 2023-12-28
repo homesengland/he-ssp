@@ -2,17 +2,18 @@ using HE.Investment.AHP.Domain.FinancialDetails.Commands;
 using HE.Investment.AHP.Domain.FinancialDetails.Entities;
 using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
-using HE.Investments.Common;
+using HE.Investments.Account.Shared;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.CommandHandlers;
+
 public class ProvideGrantsCommandHandler : FinancialDetailsCommandHandlerBase, IRequestHandler<ProvideGrantsCommand, OperationResult>
 {
-    public ProvideGrantsCommandHandler(IFinancialDetailsRepository repository, ILogger<FinancialDetailsCommandHandlerBase> logger)
-        : base(repository, logger)
+    public ProvideGrantsCommandHandler(IFinancialDetailsRepository repository, IAccountUserContext accountUserContext, ILogger<FinancialDetailsCommandHandlerBase> logger)
+        : base(repository, accountUserContext, logger)
     {
     }
 

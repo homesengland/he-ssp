@@ -21,8 +21,8 @@ public class GetApplicationsQueryHandler : IRequestHandler<GetApplicationsQuery,
 
     public async Task<GetApplicationsQueryResult> Handle(GetApplicationsQuery request, CancellationToken cancellationToken)
     {
-        var applicationsWithPagination = await _repository.GetApplicationsWithFundingDetails(request.PaginationRequest, cancellationToken);
-        var organisationName = (await _accountUserContext.GetSelectedAccount()).AccountName;
+        var account = await _accountUserContext.GetSelectedAccount();
+        var applicationsWithPagination = await _repository.GetApplicationsWithFundingDetails(account, request.PaginationRequest, cancellationToken);
 
         var applicationsBasicDetails = applicationsWithPagination.Items
             .Select(s => new ApplicationBasicDetails(
@@ -35,7 +35,7 @@ public class GetApplicationsQueryHandler : IRequestHandler<GetApplicationsQuery,
             .ToList();
 
         return new GetApplicationsQueryResult(
-            organisationName,
+            account.OrganisationName,
             new PaginationResult<ApplicationBasicDetails>(
                 applicationsBasicDetails,
                 applicationsWithPagination.CurrentPage,

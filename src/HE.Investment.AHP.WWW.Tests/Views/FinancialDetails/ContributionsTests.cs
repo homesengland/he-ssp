@@ -1,6 +1,5 @@
 using AngleSharp.Html.Dom;
 using HE.Investment.AHP.Contract.FinancialDetails.Constants;
-using HE.Investment.AHP.Domain.FinancialDetails.Constants;
 using HE.Investment.AHP.WWW.Models.FinancialDetails;
 using HE.Investments.Common.WWWTestsFramework;
 using HE.Investments.Common.WWWTestsFramework.Helpers;

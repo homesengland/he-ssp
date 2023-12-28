@@ -1,14 +1,18 @@
 using HE.Investment.AHP.Domain.HomeTypes.Commands;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
+using HE.Investments.Account.Shared;
 using Microsoft.Extensions.Logging;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.CommandHandlers;
 
 public class SaveSupportedHousingInformationCommandHandler : SaveHomeTypeSegmentCommandHandlerBase<SaveSupportedHousingInformationCommand>
 {
-    public SaveSupportedHousingInformationCommandHandler(IHomeTypeRepository homeTypeRepository, ILogger<SaveSupportedHousingInformationCommandHandler> logger)
-        : base(homeTypeRepository, logger)
+    public SaveSupportedHousingInformationCommandHandler(
+        IHomeTypeRepository homeTypeRepository,
+        IAccountUserContext accountUserContext,
+        ILogger<SaveSupportedHousingInformationCommandHandler> logger)
+        : base(homeTypeRepository, accountUserContext, logger)
     {
     }
 

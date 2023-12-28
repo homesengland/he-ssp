@@ -4,6 +4,7 @@ using HE.Investment.AHP.Domain.Scheme.Commands;
 using HE.Investment.AHP.Domain.Scheme.Entities;
 using HE.Investment.AHP.Domain.Scheme.Repositories;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
+using HE.Investments.Account.Shared;
 using HE.Investments.Common.Validators;
 
 namespace HE.Investment.AHP.Domain.Scheme.CommandHandlers;
@@ -12,8 +13,8 @@ public class ChangeSchemeStakeholderDiscussionsCommandHandler : UpdateSchemeComm
 {
     private readonly IAhpDocumentSettings _documentSettings;
 
-    public ChangeSchemeStakeholderDiscussionsCommandHandler(ISchemeRepository repository, IAhpDocumentSettings documentSettings)
-        : base(repository, true)
+    public ChangeSchemeStakeholderDiscussionsCommandHandler(ISchemeRepository repository, IAccountUserContext accountUserContext, IAhpDocumentSettings documentSettings)
+        : base(repository, accountUserContext, true)
     {
         _documentSettings = documentSettings;
     }

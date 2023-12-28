@@ -22,7 +22,7 @@ public class OrganizationRepositoryTestBuilder
         UserAccount userAccount,
         OrganizationBasicInformation organizationBasicInformation)
     {
-        _mock.Setup(x => x.GetBasicInformation(userAccount, CancellationToken.None)).ReturnsAsync(organizationBasicInformation);
+        _mock.Setup(x => x.GetBasicInformation(userAccount.SelectedOrganisationId(), CancellationToken.None)).ReturnsAsync(organizationBasicInformation);
         return this;
     }
 

@@ -1,7 +1,6 @@
 using HE.Investments.Account.Contract.Organisation;
 using HE.Investments.Account.Contract.Organisation.Queries;
 using HE.Investments.Account.Domain.Organisation.Repositories;
-using HE.Investments.Account.Domain.User;
 using HE.Investments.Account.Shared;
 using MediatR;
 
@@ -11,17 +10,18 @@ public class GetOrganisationDetailsQueryHandler : IRequestHandler<GetOrganisatio
 {
     private readonly IOrganizationRepository _organizationRepository;
 
-    private readonly IAccountUserContext _loanUserContext;
+    private readonly IAccountUserContext _accountUserContext;
 
-    public GetOrganisationDetailsQueryHandler(IOrganizationRepository organizationRepository, IAccountUserContext loanUserContext)
+    public GetOrganisationDetailsQueryHandler(IOrganizationRepository organizationRepository, IAccountUserContext accountUserContext)
     {
         _organizationRepository = organizationRepository;
-        _loanUserContext = loanUserContext;
+        _accountUserContext = accountUserContext;
     }
 
     public async Task<GetOrganisationDetailsQueryResponse> Handle(GetOrganisationDetailsQuery request, CancellationToken cancellationToken)
     {
-        var basicInformation = await _organizationRepository.GetBasicInformation(await _loanUserContext.GetSelectedAccount(), cancellationToken);
+        var account = await _accountUserContext.GetSelectedAccount();
+        var basicInformation = await _organizationRepository.GetBasicInformation(account.SelectedOrganisationId(), cancellationToken);
         var address = new List<string>()
         {
             basicInformation.Address.Line1,
@@ -30,7 +30,7 @@ public class GetOrganisationDetailsQueryHandler : IRequestHandler<GetOrganisatio
             basicInformation.Address.PostalCode,
         };
 
-        var organisationDataChangeRequestState = await _organizationRepository.GetOrganisationChangeRequestDetails(await _loanUserContext.GetSelectedAccount(), cancellationToken);
+        var organisationDataChangeRequestState = await _organizationRepository.GetOrganisationChangeRequestDetails(account.SelectedOrganisationId(), cancellationToken);
 
         return new GetOrganisationDetailsQueryResponse(
             new OrganisationDetailsViewModel(

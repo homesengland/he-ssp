@@ -7,7 +7,8 @@ using HE.Investment.AHP.Domain.Data;
 using HE.Investment.AHP.Domain.Documents.Services;
 using HE.Investment.AHP.Domain.Scheme.Entities;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
-using HE.Investments.Account.Shared;
+using HE.Investments.Account.Shared.User;
+using HE.Investments.Account.Shared.User.ValueObjects;
 using DomainApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.Scheme.Repositories;
@@ -15,22 +16,21 @@ namespace HE.Investment.AHP.Domain.Scheme.Repositories;
 public class SchemeRepository : ISchemeRepository
 {
     private readonly IApplicationCrmContext _repository;
-    private readonly IAccountUserContext _accountUserContext;
+
     private readonly IAhpFileService<LocalAuthoritySupportFileParams> _fileService;
 
-    public SchemeRepository(
-        IApplicationCrmContext repository,
-        IAccountUserContext accountUserContext,
-        IAhpFileService<LocalAuthoritySupportFileParams> fileService)
+    public SchemeRepository(IApplicationCrmContext repository, IAhpFileService<LocalAuthoritySupportFileParams> fileService)
     {
         _repository = repository;
-        _accountUserContext = accountUserContext;
         _fileService = fileService;
     }
 
-    public async Task<SchemeEntity> GetByApplicationId(DomainApplicationId id, bool includeFiles, CancellationToken cancellationToken)
+    public async Task<SchemeEntity> GetByApplicationId(DomainApplicationId id, UserAccount userAccount, bool includeFiles, CancellationToken cancellationToken)
     {
-        var application = await _repository.GetById(id.Value, CrmFields.SchemeToRead, cancellationToken);
+        var organisationId = userAccount.SelectedOrganisationId().Value;
+        var application = userAccount.CanViewAllApplications()
+            ? await _repository.GetOrganisationApplicationById(id.Value, organisationId, CrmFields.SchemeToRead, cancellationToken)
+            : await _repository.GetUserApplicationById(id.Value, organisationId, CrmFields.SchemeToRead, cancellationToken);
 
         UploadedFile? file = null;
         if (includeFiles)
@@ -43,18 +43,17 @@ public class SchemeRepository : ISchemeRepository
         return CreateEntity(application, file);
     }
 
-    public async Task<SchemeEntity> Save(SchemeEntity entity, CancellationToken cancellationToken)
+    public async Task<SchemeEntity> Save(SchemeEntity entity, OrganisationId organisationId, CancellationToken cancellationToken)
     {
         if (!entity.IsModified)
         {
             return entity;
         }
 
-        var account = await _accountUserContext.GetSelectedAccount();
         var dto = new AhpApplicationDto
         {
             id = entity.Application.Id.Value,
-            organisationId = account.AccountId.ToString(),
+            organisationId = organisationId.ToString(),
             schemeInformationSectionCompletionStatus = SectionStatusMapper.ToDto(entity.Status),
             fundingRequested = entity.Funding.RequiredFunding,
             noOfHomes = entity.Funding.HousesToDeliver,
@@ -65,7 +64,7 @@ public class SchemeRepository : ISchemeRepository
             sharedOwnershipSalesRisk = entity.SalesRisk.Value,
         };
 
-        await _repository.Save(dto, CrmFields.SchemeToUpdate, cancellationToken);
+        await _repository.Save(dto, organisationId.Value, CrmFields.SchemeToUpdate, cancellationToken);
 
         await entity.StakeholderDiscussions.SaveChanges(entity.Application.Id, _fileService, cancellationToken);
 

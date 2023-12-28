@@ -1,7 +1,5 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.Investments.Account.Domain.Data;
 using HE.Investments.Account.Domain.Data.Extensions;
-using HE.Investments.Account.Domain.Organisation.ValueObjects;
 using HE.Investments.Account.Domain.UserOrganisation.Entities;
 using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Repositories;

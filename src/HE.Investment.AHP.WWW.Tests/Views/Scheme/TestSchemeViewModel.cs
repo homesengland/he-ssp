@@ -1,6 +1,5 @@
 using HE.Investment.AHP.WWW.Models.Scheme;
 using HE.Investments.Common.WWW.Models;
-using Microsoft.AspNetCore.Http;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.Scheme;
 

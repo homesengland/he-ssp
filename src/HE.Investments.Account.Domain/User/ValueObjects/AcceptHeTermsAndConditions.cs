@@ -7,7 +7,7 @@ namespace HE.Investments.Account.Domain.User.ValueObjects;
 
 public class AcceptHeTermsAndConditions : ValueObject
 {
-    public AcceptHeTermsAndConditions(bool value)
+    private AcceptHeTermsAndConditions(bool value)
     {
         if (!value)
         {
@@ -17,12 +17,12 @@ public class AcceptHeTermsAndConditions : ValueObject
                 .CheckErrors();
         }
 
-        Value = value!;
+        Value = value;
     }
 
     public bool Value { get; }
 
-    public static AcceptHeTermsAndConditions? FromString(string? value)
+    public static AcceptHeTermsAndConditions FromString(string? value)
     {
         return value == CommonResponse.Checked ? new AcceptHeTermsAndConditions(true) : new AcceptHeTermsAndConditions(false);
     }
