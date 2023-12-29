@@ -15,6 +15,7 @@ using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investment.AHP.Domain.Scheme.Repositories;
 using HE.Investment.AHP.Domain.Scheme.Services;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
+using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investments.Account.Shared.Config;
 using HE.Investments.Loans.Common.Utils;
 using MediatR.Pipeline;
@@ -38,6 +39,7 @@ public static class DomainModule
         AddFinancialDetails(services);
         AddApplication(services);
         AddScheme(services);
+        AddSite(services);
     }
 
     private static void AddHomeTypes(IServiceCollection services)
@@ -79,5 +81,10 @@ public static class DomainModule
 
         services.AddScoped<IAhpFileLocationProvider<LocalAuthoritySupportFileParams>, LocalAuthoritySupportFileLocationProvider>();
         services.AddScoped<IAhpFileService<LocalAuthoritySupportFileParams>, AhpFileService<LocalAuthoritySupportFileParams>>();
+    }
+
+    private static void AddSite(IServiceCollection services)
+    {
+        services.AddScoped<ISiteRepository, SiteRepository>();
     }
 }
