@@ -1,4 +1,4 @@
-﻿using HE.Investments.Common.Contract;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Routing;
 using Stateless;
@@ -11,16 +11,12 @@ public class DeliveriesWorkflow : IStateRouting<DeliveriesWorkflowState>
 
     private readonly StateMachine<DeliveriesWorkflowState, Trigger> _machine;
 
-    private readonly bool _isReadOnly;
-
     public DeliveriesWorkflow(
         DeliveriesWorkflowState currentDeliveriesWorkflowState,
-        Delivery model,
-        bool isReadOnly)
+        Delivery model)
     {
         _model = model;
         _machine = new StateMachine<DeliveriesWorkflowState, Trigger>(currentDeliveriesWorkflowState);
-        _isReadOnly = isReadOnly;
         ConfigureTransitions();
     }
 
