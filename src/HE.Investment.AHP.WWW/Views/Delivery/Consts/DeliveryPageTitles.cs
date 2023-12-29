@@ -1,4 +1,4 @@
-namespace HE.Investment.AHP.WWW.Views.Deliveries.Consts;
+namespace HE.Investment.AHP.WWW.Views.Delivery.Consts;
 
 public static class DeliveryPageTitles
 {

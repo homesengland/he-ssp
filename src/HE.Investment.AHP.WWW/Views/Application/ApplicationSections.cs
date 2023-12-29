@@ -40,7 +40,7 @@ public static class ApplicationSections
                     "Delivery phases",
                     "Complete information about your delivery phases and milestone dates.",
                     "Add delivery phases",
-                    _ => GetAction(url, applicationId, typeof(DeliveriesController), nameof(DeliveriesController.Start))),
+                    _ => GetAction(url, applicationId, typeof(DeliveryController), nameof(DeliveryController.Start))),
             }
             .Where(i => i != null)
             .Cast<TaskListSectionModel>()
