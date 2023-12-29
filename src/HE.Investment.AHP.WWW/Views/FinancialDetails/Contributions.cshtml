@@ -1,8 +1,6 @@
 @using HE.Investment.AHP.Domain.FinancialDetails;
 @using HE.Investment.AHP.WWW.Models.FinancialDetails;
 @using HE.Investment.AHP.WWW.Views.FinancialDetails.Consts;
-@using HE.Investments.Common.Gds;
-@using HE.Investments.Common.Messages
 @using HE.Investments.Common.WWW.Extensions;
 @model FinancialDetailsContributionsModel;
 @{
@@ -16,10 +14,11 @@
                                           application-id="@Model.ApplicationId.ToString()"
                                           caption="@Model.ApplicationName - Finance details" />
 
-        <div class="govuk-caption-m govuk-!-margin-bottom-6">
+        
+        <gds-p>
             For multi-tenure sites, ensure the costs and contributions are apportioned across the development and only those applicable to the homes on this application are recorded here.
-            You can add any grants you receive from other public bodies in the next section.
-        </div>
+            <br />You can add any grants you receive from other public bodies in the next section. Enter to the nerarest pound. If you have not contributed, enter 0.
+        </gds-p>
 
         <gds-field-set>
             <he-error-form-group asp-for="RentalIncomeBorrowing">

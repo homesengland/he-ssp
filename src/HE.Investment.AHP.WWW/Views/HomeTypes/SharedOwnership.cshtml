@@ -13,8 +13,8 @@
     var homeTypeId = this.GetHomeTypeIdFromRoute();
     var workflow = Context.Request.Query["workflow"];
     ViewBag.ValidationErrors = ViewData.ModelState.GetOrderedErrors(HomeTypesValidationFieldsOrder.SharedOwnership);
-    var (expectedFirstTrancheInvalid, expectedFirstTrancheError) = @ViewData.ModelState.GetErrors("ExpectedFirstTranche");
-    var (sharedOwnershipRentAsPercentageOfTheUnsoldShareInvalid, sharedOwnershipRentAsPercentageOfTheUnsoldShareError) = @ViewData.ModelState.GetErrors("SharedOwnershipRentAsPercentageOfTheUnsoldShare");
+    var (expectedFirstTrancheInvalid, expectedFirstTrancheError) = ViewData.ModelState.GetErrors(nameof(Model.ExpectedFirstTranche));
+    var (rentAsPercentageOfTheUnsoldShareInvalid, rentAsPercentageOfTheUnsoldShareError) = ViewData.ModelState.GetErrors(nameof(Model.RentAsPercentageOfTheUnsoldShare));
 }
 
 <gds-div-grid-column-two-thirds>
@@ -94,7 +94,7 @@
                     asp-suffixtext="GdsInputSuffixText.PerWeek"/>
             </he-error-form-group>
 
-            <he-error-form-group asp-for="SharedOwnershipRentAsPercentageOfTheUnsoldShare">
+            <he-error-form-group asp-for="RentAsPercentageOfTheUnsoldShare">
                 <gds-legend>
                     <gds-h2 class="govuk-!-margin-bottom-0">Shared Ownership rent as percentage of the unsold share</gds-h2>
                 </gds-legend>
@@ -105,15 +105,15 @@
                     </gds-span-hint>
                 </div>
 
-                @if (sharedOwnershipRentAsPercentageOfTheUnsoldShareInvalid)
+                @if (rentAsPercentageOfTheUnsoldShareInvalid)
                 {
                     <p class="govuk-error-message field-validation-error govuk-!-margin-top-1">
-                        <span class="govuk-visually-hidden">Error:</span> @sharedOwnershipRentAsPercentageOfTheUnsoldShareError
+                        <span class="govuk-visually-hidden">Error:</span> @rentAsPercentageOfTheUnsoldShareError
                     </p>
                 }
 
                 <gds-p class="govuk-!-margin-top-1">
-                    @(Model.SharedOwnershipRentAsPercentageOfTheUnsoldShare.IsProvided() ? $"{Model.SharedOwnershipRentAsPercentageOfTheUnsoldShare}%"
+                    @(Model.RentAsPercentageOfTheUnsoldShare.IsProvided() ? $"{Model.RentAsPercentageOfTheUnsoldShare}%"
                         : "To calculate the Shared Ownership rent as percentage of the unsold share, enter the rent per week once you have found the assumed first tranche sales receipt. Then select the calculate button.")
                 </gds-p>
             </he-error-form-group>

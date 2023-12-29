@@ -9,8 +9,11 @@ public class InputHeader : ViewComponent
     public IViewComponentResult Invoke(
         string fieldName,
         string? label = null,
+        bool? isHeadingLabel = null,
         string? hint = null)
     {
-        return View("InputHeader", (fieldName, label, hint));
+        // We may need to display label as a page heading when there is only one input on the page
+        // Is important to display vertical red line next to label/heading in case of error
+        return View("InputHeader", (fieldName, label, isHeadingLabel ?? false, hint));
     }
 }

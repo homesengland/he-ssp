@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
+using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.IntegrationTestsFramework.Extensions;
 using HE.Investments.Loans.Common.Extensions;
 using HE.Investments.Loans.Contract.Application.Enums;
@@ -107,7 +108,7 @@ public class Order01StartApplicationIntegrationTests : IntegrationTest
         items[CheckYourDetailsFields.CompanyRegistrationNumber].Should().Be(UserData.OrganizationRegistrationNumber);
         items[CheckYourDetailsFields.CompanyAddress].Should().Be(UserData.OrganizationAddress);
         items[CheckYourDetailsFields.ContactName].Should().Be(UserData.ContactName);
-        items[CheckYourDetailsFields.EmailAddress].Should().Be(UserData.Email);
+        items[CheckYourDetailsFields.EmailAddress].Should().Be(LoginData.Email);
         items[CheckYourDetailsFields.TelephoneNumber].Should().Be(UserData.TelephoneNumber.ToString());
         SetSharedData(CurrentPageKey, checkYourDetailsPage);
     }

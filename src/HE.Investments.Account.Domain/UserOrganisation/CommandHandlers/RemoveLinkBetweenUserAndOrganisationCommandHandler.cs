@@ -33,7 +33,7 @@ public class RemoveLinkBetweenUserAndOrganisationCommandHandler : IRequestHandle
     public async Task<OperationResult> Handle(RemoveLinkBetweenUserAndOrganisationCommand request, CancellationToken cancellationToken)
     {
         var account = await _userContext.GetSelectedAccount();
-        if (account.AccountId == null)
+        if (account.OrganisationId == null)
         {
             throw new InvalidOperationException("Cannot find user linked with organisation.");
         }
@@ -46,12 +46,10 @@ public class RemoveLinkBetweenUserAndOrganisationCommandHandler : IRequestHandle
 
         await _contactService.RemoveLinkBetweenContactAndOrganisation(
             _organizationServiceAsync,
-            account.AccountId.Value,
+            account.OrganisationId.Value,
             request.UserId);
 
-        await _userContext.RefreshAccounts();
-
-        await _eventDispatcher.Publish(new UserUnlinkedEvent(user.firstName, user.lastName), cancellationToken);
+        await _eventDispatcher.Publish(new UserUnlinkedEvent(request.UserId, user.firstName, user.lastName), cancellationToken);
 
         return OperationResult.Success();
     }

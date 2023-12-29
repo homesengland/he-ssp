@@ -8,5 +8,7 @@ public static class GenericMessages
 
     public const string Continue = "Continue";
 
+    public const string SaveAndReturn = "SaveAndReturn";
+
     public const string PoundFieldDefaultName = "The amount";
 }

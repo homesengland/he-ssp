@@ -1,11 +1,9 @@
-using System;
 using FluentAssertions;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Domain.HomeTypes;
 using HE.Investment.AHP.Domain.Tests.HomeTypes.TestDataBuilders;
-using Xunit;
 
 namespace HE.Investment.AHP.Domain.Tests.HomeTypes.HomeTypesWorkflowTests;
 
@@ -141,7 +139,7 @@ public class CanBeAccessedTests
         // given
         var homeType = new HomeTypeTestDataBuilder()
             .WithTenure(Tenure.SharedOwnership)
-            .WithSharedOwnershipIneligible()
+            .WithProspectiveRentIneligible()
             .Build();
         var workflow = BuildWorkflow(homeType, HomeTypesWorkflowState.Index);
 
@@ -174,7 +172,7 @@ public class CanBeAccessedTests
         // given
         var homeType = new HomeTypeTestDataBuilder()
             .WithTenure(Tenure.SharedOwnership)
-            .WithSharedOwnershipIneligible()
+            .WithProspectiveRentIneligible()
             .Build();
         var workflow = BuildWorkflow(homeType, HomeTypesWorkflowState.Index);
 

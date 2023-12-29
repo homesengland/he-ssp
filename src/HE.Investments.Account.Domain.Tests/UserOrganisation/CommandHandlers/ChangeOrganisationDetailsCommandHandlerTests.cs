@@ -6,7 +6,7 @@ using HE.Investments.Account.Domain.Organisation.Entities;
 using HE.Investments.Account.Domain.Tests.Organisation.TestObjectBuilder;
 using HE.Investments.Account.Domain.Tests.User.TestObjectBuilder;
 using HE.Investments.Account.Domain.UserOrganisation.CommandHandlers;
-using HE.Investments.Account.Shared.User;
+using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.TestsUtils.TestFramework;
 using Moq;
 using Xunit;
@@ -47,6 +47,6 @@ public class ChangeOrganisationDetailsCommandHandlerTests : TestBase<ChangeOrgan
 
         // then
         result.IsValid.Should().BeTrue();
-        organisationRepository.Verify(c => c.Save(It.IsAny<OrganisationEntity>(), It.IsAny<UserAccount>(), CancellationToken.None));
+        organisationRepository.Verify(c => c.Save(It.IsAny<OrganisationId>(), It.IsAny<OrganisationEntity>(), CancellationToken.None));
     }
 }

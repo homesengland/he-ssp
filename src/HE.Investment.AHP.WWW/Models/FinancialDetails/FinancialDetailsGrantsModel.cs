@@ -1,17 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
-using HE.Investments.Common.Extensions;
-
 namespace HE.Investment.AHP.WWW.Models.FinancialDetails;
+
 public class FinancialDetailsGrantsModel : FinancialDetailsBaseModel
 {
     public FinancialDetailsGrantsModel()
-        : base()
     {
     }
 

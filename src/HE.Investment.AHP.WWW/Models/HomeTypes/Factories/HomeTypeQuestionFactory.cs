@@ -74,7 +74,7 @@ internal class HomeTypeQuestionFactory
         Dictionary<string, string> files)
     {
         var workflowState = GetWorkflowState(controllerActionName);
-        if (!_workflow.CanBeAccessed(workflowState))
+        if (!_workflow.CanBeAccessed(workflowState, false))
         {
             return null;
         }
@@ -90,7 +90,7 @@ internal class HomeTypeQuestionFactory
     public SectionSummaryItemModel? DeadEnd(string controllerActionName)
     {
         var workflowState = GetWorkflowState(controllerActionName);
-        if (!_workflow.CanBeAccessed(workflowState))
+        if (!_workflow.CanBeAccessed(workflowState, false))
         {
             return null;
         }

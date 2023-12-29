@@ -2,9 +2,11 @@
 @using HE.Investments.Common.WWW.Helpers
 @using HE.Investments.Common.Extensions
 @using HE.Investments.Account.Shared
+@using HE.Investments.Common.Utils.Pagination
+@using HE.Investments.Common.WWW.Components.PagedTable
 
 @inject IAccountAccessContext AccountAccessContext
-@model IList<HE.Investments.Account.Contract.Users.UserDetails>;
+@model PaginationResult<HE.Investments.Account.Contract.Users.UserDetails>;
 @{
     var canManageUsers = await AccountAccessContext.CanManageUsers();
     var tableHeaders = new List<TableHeaderViewModel>
@@ -23,28 +25,31 @@
         tableHeaders.Add(new("Manage", IsHidden: true));
     }
 
-    var usersDetails = new TableViewModel(
-        tableHeaders,
-        Model.Select(u =>
+    var usersDetails = Model.Items.Select(u =>
+    {
+        var tableItems = new List<TableValueViewModel>
         {
-            var tableItems = new List<TableValueViewModel>
-            {
-                new(u.FirstName),
-                new(u.LastName),
-                new(u.Email),
-                new(u.JobTitle),
-                new(u.Role?.GetDescription()),
-                new(u.LastActiveAt == null ? "-" : DateHelper.DisplayAsUkFormatDateTime(u.LastActiveAt))
-            };
+            new(u.FirstName),
+            new(u.LastName),
+            new(u.Email),
+            new(u.JobTitle),
+            new(u.Role?.GetDescription()),
+            new(u.LastActiveAt == null ? "-" : DateHelper.DisplayAsUkFormatDateTime(u.LastActiveAt))
+        };
 
-            if (canManageUsers)
-            {
-                tableItems.Add(new(Component: new("Link", new { text = "Remove", action = "Remove", controller = "Users", values = new { id = u.Id } })));
-                tableItems.Add(new(Component: new("Link", new { text = "Change", action = "Change", controller = "Users", values = new { id = u.Id } }))) ;
-            }
+        if (canManageUsers)
+        {
+            tableItems.Add(new(Component: new("Link", new { text = "Remove", action = "ConfirmUnlink", controller = "Users", values = new { id = u.Id } })));
+            tableItems.Add(new(Component: new("Link", new { text = "Change", action = "Change", controller = "Users", values = new { id = u.Id } })));
+        }
 
-            return new TableRowViewModel(tableItems);
-        }).ToList());
+        return new TableRowViewModel(tableItems);
+    }).ToList();
+
+    var rows = new PaginationResult<TableRowViewModel>(usersDetails, Model.CurrentPage, Model.ItemsPerPage, Model.TotalItems );
 }
 
-<vc:table model="@usersDetails"/>
+<vc:paged-table
+    headers="@tableHeaders"
+    rows="@rows"
+    navigation-url="@Url.Action("Index", "Users")"/>

@@ -12,7 +12,7 @@ public record SchemeViewModel(
     string? MeetingLocalPriorities,
     string? MeetingLocalHousingNeed,
     string? StakeholderDiscussionsReport,
-    IList<FileModel>? UploadedStakeholderDiscussionFiles,
+    IList<FileModel>? UploadedLocalAuthoritySupportFiles,
     int MaxFileSizeInMegabytes,
     string? AllowedExtensions,
-    IFormFile? StakeholderDiscussionFile = null);
+    IFormFile? LocalAuthoritySupportFile = null);

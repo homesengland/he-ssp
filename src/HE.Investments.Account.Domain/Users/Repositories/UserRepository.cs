@@ -1,7 +1,11 @@
-using HE.Investments.Account.Contract.Users;
+using HE.Investments.Account.Contract.User.Events;
 using HE.Investments.Account.Domain.Data;
 using HE.Investments.Account.Domain.Users.Entities;
 using HE.Investments.Account.Domain.Users.ValueObjects;
+using HE.Investments.Account.Shared.Repositories;
+using HE.Investments.Account.Shared.User;
+using HE.Investments.Account.Shared.User.ValueObjects;
+using MediatR;
 
 namespace HE.Investments.Account.Domain.Users.Repositories;
 
@@ -9,15 +13,18 @@ public class UserRepository : IUserRepository
 {
     private readonly IUsersCrmContext _usersCrmContext;
 
-    public UserRepository(IUsersCrmContext usersCrmContext)
+    private readonly IMediator _mediator;
+
+    public UserRepository(IUsersCrmContext usersCrmContext, IMediator mediator)
     {
         _usersCrmContext = usersCrmContext;
+        _mediator = mediator;
     }
 
-    public async Task<UserEntity> GetUser(string id, CancellationToken cancellationToken)
+    public async Task<UserEntity> GetUser(UserGlobalId userGlobalId, OrganisationId organisationId, CancellationToken cancellationToken)
     {
-        var user = await _usersCrmContext.GetUser(id);
-        var role = await _usersCrmContext.GetUserRole(id);
+        var user = await _usersCrmContext.GetUser(userGlobalId.Value);
+        var role = await _usersCrmContext.GetUserRole(userGlobalId.Value, organisationId.Value);
 
         return new UserEntity(
             new UserId(user.contactExternalId),
@@ -29,14 +36,15 @@ public class UserRepository : IUserRepository
             null);
     }
 
-    public async Task Save(UserEntity entity, CancellationToken cancellationToken)
+    public async Task Save(UserEntity entity, OrganisationId organisationId, CancellationToken cancellationToken)
     {
         if (entity.IsRoleModified)
         {
             var role = UserRoleMapper.ToDto(entity.Role);
             if (role != null)
             {
-                await _usersCrmContext.ChangeUserRole(entity.Id.Value, role.Value);
+                await _usersCrmContext.ChangeUserRole(entity.Id.Value, role.Value, organisationId.Value);
+                await _mediator.Publish(new UserAccountsChangedEvent(entity.Id.Value), cancellationToken);
             }
         }
     }

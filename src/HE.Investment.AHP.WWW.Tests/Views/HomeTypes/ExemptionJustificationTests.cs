@@ -20,8 +20,8 @@ public class ExemptionJustificationTests : HomeTypesTestBase
         // then
         document
             .HasElementWithText("span", "My application - My homes")
-            .HasElementWithText("h1", "Outline the criteria under which you intend to apply for an exemption to the Right to Shared Ownership")
-            .HasElementWithText("span", "You can enter up to 1500 characters")
+            .HasElementWithText("label", "Outline the criteria under which you intend to apply for an exemption to the Right to Shared Ownership")
+            .HasElementWithText("div", "You can enter up to 1500 characters")
             .HasElementWithText("a", "Read about the Right to Shared Ownership and the types of property that are in scope (opens in the new tab).")
             .HasInput("MoreInformation", value: "My new important information")
             .HasElementWithText("button", "Save and continue");

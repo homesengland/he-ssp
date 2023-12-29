@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Domain.FinancialDetails.Entities;
 using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
@@ -31,7 +30,7 @@ public class ExpectedContributionsToSchemeBuilder
             new ExpectedContributionValue(ExpectedContributionFields.OwnResources, 50),
             new ExpectedContributionValue(ExpectedContributionFields.RcgfContribution, 50),
             new ExpectedContributionValue(ExpectedContributionFields.OtherCapitalSources, 50),
-            new ExpectedContributionValue(ExpectedContributionFields.InitialSalesOfSharedHomes, 50),
+            new ExpectedContributionValue(ExpectedContributionFields.SharedOwnershipSales, 50),
             new ExpectedContributionValue(ExpectedContributionFields.HomesTransferValue, 50),
             Tenure.SharedOwnership);
 
@@ -53,7 +52,7 @@ public class ExpectedContributionsToSchemeBuilder
         PrivatePropertySetter.SetPropertyWithNoSetter(
             _item,
             nameof(_item.SharedOwnershipSales),
-            new ExpectedContributionValue(ExpectedContributionFields.InitialSalesOfSharedHomes, sharedOwnershipSales));
+            new ExpectedContributionValue(ExpectedContributionFields.SharedOwnershipSales, sharedOwnershipSales));
 
         return this;
     }

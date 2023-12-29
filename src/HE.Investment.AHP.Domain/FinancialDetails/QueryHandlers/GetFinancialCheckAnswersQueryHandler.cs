@@ -1,5 +1,6 @@
 using HE.Investment.AHP.Contract.FinancialDetails.Queries;
 using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
+using HE.Investments.Account.Shared;
 using MediatR;
 using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
@@ -9,14 +10,18 @@ public class GetFinancialCheckAnswersQueryHandler : IRequestHandler<GetFinancial
 {
     private readonly IFinancialDetailsRepository _financialDetailsRepository;
 
-    public GetFinancialCheckAnswersQueryHandler(IFinancialDetailsRepository financialDetailsRepository)
+    private readonly IAccountUserContext _accountUserContext;
+
+    public GetFinancialCheckAnswersQueryHandler(IFinancialDetailsRepository financialDetailsRepository, IAccountUserContext accountUserContext)
     {
         _financialDetailsRepository = financialDetailsRepository;
+        _accountUserContext = accountUserContext;
     }
 
     public async Task<GetFinancialCheckAnswersResult> Handle(GetFinancialCheckAnswersQuery request, CancellationToken cancellationToken)
     {
-        var financialDetails = await _financialDetailsRepository.GetById(ApplicationId.From(request.ApplicationId), cancellationToken);
+        var account = await _accountUserContext.GetSelectedAccount();
+        var financialDetails = await _financialDetailsRepository.GetById(ApplicationId.From(request.ApplicationId), account, cancellationToken);
 
         var landValueSummary = new LandValueSummary(
             financialDetails.LandStatus.PurchasePrice?.Value ?? financialDetails.LandStatus.ExpectedPurchasePrice?.Value,

@@ -3,7 +3,7 @@
 
 @foreach (var option in Model.availableOptions)
 {
-    var id = $"{Model.fieldName}-{option.Value}";
+    var id = option == Model.availableOptions[0] ? Model.fieldName : $"{Model.fieldName}-{option.Value}";
     <div class="govuk-radios__item">
         @Html.RadioButton(Model.fieldName, option.Value, option.Selected, new { id, @class = "govuk-radios__input" })
         <label class="govuk-label govuk-radios__label" for="@id">

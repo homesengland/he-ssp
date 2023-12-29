@@ -1,7 +1,6 @@
 using AngleSharp.Html.Dom;
 using HE.Investments.Account.WWW.Models.UserOrganisation;
 using HE.Investments.Common.Contract;
-using HE.Investments.Common.Domain;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWWTestsFramework;
 using HE.Investments.Common.WWWTestsFramework.Helpers;
@@ -60,7 +59,7 @@ public class UserOrganisationTests : ViewTestBase
             programmesToAccess: new List<ProgrammeToAccessModel>
             {
                 new(
-                    new ProgrammeModel("P1", "Desc1", "C", "V"),
+                    new ProgrammeModel("P1", "Desc1", "C", "V", true),
                     new List<ApplicationBasicDetailsModel>()),
             });
 
@@ -97,7 +96,7 @@ public class UserOrganisationTests : ViewTestBase
         AssertUserOrganisation(document, model, actionsExist: false);
     }
 
-    private static IHtmlDocument AssertUserOrganisation(
+    private static void AssertUserOrganisation(
         IHtmlDocument document,
         UserOrganisationModel model,
         bool isLimitedUser = true,
@@ -116,8 +115,6 @@ public class UserOrganisationTests : ViewTestBase
         {
             document.HasElementWithText("a", model.Actions.First().Label);
         }
-
-        return document;
     }
 
     private static List<ProgrammeToAccessModel> ProgrammesToToAccess()
@@ -125,7 +122,7 @@ public class UserOrganisationTests : ViewTestBase
         return new List<ProgrammeToAccessModel>
         {
             new(
-                new ProgrammeModel("P1", "Desc1", "C", "V"),
+                new ProgrammeModel("P1", "Desc1", "C", "V", false),
                 new List<ApplicationBasicDetailsModel> { new("1", "AP1", ApplicationStatus.Withdrawn, "http://localhost/app/") }),
         };
     }
@@ -143,7 +140,7 @@ public class UserOrganisationTests : ViewTestBase
             userName ?? "Jan Muzykant",
             isLimitedUser,
             programmesToAccess ?? ProgrammesToToAccess(),
-            programmesToApply ?? new List<ProgrammeModel> { new ProgrammeModel("P2", "D2", "C", "V") },
-            actions ?? new List<ActionModel> { new ActionModel("ViewAllApplicationsUrl Name", "A", "C", true) });
+            programmesToApply ?? new List<ProgrammeModel> { new("P2", "D2", "C", "V", true) },
+            actions ?? new List<ActionModel> { new("ViewAllApplicationsUrl Name", "A", "C", true) });
     }
 }

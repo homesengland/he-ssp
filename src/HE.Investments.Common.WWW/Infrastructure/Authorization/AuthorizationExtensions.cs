@@ -45,6 +45,6 @@ public static class AuthorizationExtensions
     public static void AddHttpUserContext(this IServiceCollection serviceCollections)
     {
         serviceCollections.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-        serviceCollections.AddScoped<IUserContext, UserContext>(x => new UserContext(x.GetRequiredService<IHttpContextAccessor>()!.HttpContext!));
+        serviceCollections.AddScoped<IUserContext, UserContext>(x => new UserContext(x.GetRequiredService<IHttpContextAccessor>().HttpContext!));
     }
 }

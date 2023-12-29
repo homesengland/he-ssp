@@ -20,8 +20,8 @@ public class MoveOnArrangementsTests : HomeTypesTestBase
         // then
         document
             .HasElementWithText("span", "My application - My homes")
-            .HasElementWithText("h1", "Tell us the move on arrangements that are in place for when these homes are used as short stay accommodation")
-            .HasElementWithText("span", "You can enter up to 1500 characters")
+            .HasElementWithText("label", "Tell us the move on arrangements that are in place for when these homes are used as short stay accommodation")
+            .HasElementWithText("div", "You can enter up to 1500 characters")
             .HasInput("MoreInformation", value: "My new important information")
             .HasElementWithText("button", "Save and continue");
     }

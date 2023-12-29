@@ -1,3 +1,4 @@
+using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.Loans.WWW;
 using Xunit;
 

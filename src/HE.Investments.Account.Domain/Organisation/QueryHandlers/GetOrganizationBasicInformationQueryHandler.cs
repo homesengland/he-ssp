@@ -1,6 +1,5 @@
 using HE.Investments.Account.Contract.Organisation.Queries;
 using HE.Investments.Account.Domain.Organisation.Repositories;
-using HE.Investments.Account.Domain.User;
 using HE.Investments.Account.Shared;
 using MediatR;
 
@@ -20,7 +19,9 @@ public class GetOrganizationBasicInformationQueryHandler : IRequestHandler<GetOr
 
     public async Task<GetOrganizationBasicInformationQueryResponse> Handle(GetOrganizationBasicInformationQuery request, CancellationToken cancellationToken)
     {
-        var result = await _organizationRepository.GetBasicInformation(await _accountUserContext.GetSelectedAccount(), cancellationToken);
+        var account = await _accountUserContext.GetSelectedAccount();
+        var result = await _organizationRepository.GetBasicInformation(account.SelectedOrganisationId(), cancellationToken);
+
         return new GetOrganizationBasicInformationQueryResponse(result);
     }
 }

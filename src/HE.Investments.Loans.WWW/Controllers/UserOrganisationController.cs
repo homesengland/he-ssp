@@ -54,7 +54,7 @@ public class UserOrganisationController : BaseController
                         "Details",
                         "UserOrganisation",
                         true),
-                    new ActionModel($"Manage your account", string.Empty, "Dashboard", true),
+                    new ActionModel($"Manage your account", "ProfileDetails", "User", true),
                 }));
     }
 

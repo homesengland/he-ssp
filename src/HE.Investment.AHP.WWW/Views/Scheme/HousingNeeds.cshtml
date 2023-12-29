@@ -12,19 +12,20 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <vc:workflow-back-button action="@SchemeWorkflowState.HousingNeeds.ToString()" />
+    <vc:workflow-back-button action="@SchemeWorkflowState.HousingNeeds.ToString()"/>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <form asp-controller="Scheme" asp-action="HousingNeeds" asp-method="post" asp-route-redirect="@Context.Request.Query["redirect"]" novalidate>
-        <vc:form-header caption="@Model.ApplicationName" title="@title" />
+        <vc:form-header caption="@Model.ApplicationName" title="@title"/>
         @Html.HiddenFor(m => Model.ApplicationName)
-        <vc:text-area-input field-name="@nameof(Model.MeetingLocalPriorities)"
-                            label="Tell us how this type and tenure of home meets the identified priorities for the local housing market"
-                            value="@Model.MeetingLocalPriorities" />
-
-        <vc:text-area-input field-name="@nameof(Model.MeetingLocalHousingNeed)"
-                            label="Tell us how this scheme and proposal contributes to a locally identified housing need"
-                            value="@Model.MeetingLocalHousingNeed" />
-        <vc:form-button />
+        <vc:text-area-input-with-counter
+            field-name="@nameof(Model.MeetingLocalPriorities)"
+            label="Tell us how this type and tenure of home meets the identified priorities for the local housing market"
+            value="@Model.MeetingLocalPriorities"/>
+        <vc:text-area-input-with-counter
+            field-name="@nameof(Model.MeetingLocalHousingNeed)"
+            label="Tell us how this scheme and proposal contributes to a locally identified housing need"
+            value="@Model.MeetingLocalHousingNeed"/>
+        <vc:form-button/>
+        <vc:return-to-application-link application-id="@Model.ApplicationId"/>
     </form>
-    <vc:return-to-application-link application-id="@Model.ApplicationId" />
 </gds-div-grid-column-two-thirds>

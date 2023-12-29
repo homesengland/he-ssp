@@ -14,7 +14,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
         void DeleteLoanApplication(string loanApplicationId);
         void CheckIfOwnerCanBeChanged(invln_Loanapplication target, invln_Loanapplication preImage);
         void SetFieldsWhenChangingStatusFromDraft(invln_Loanapplication target, invln_Loanapplication preImage);
-        void SendInternalNotificationOnStatusChange(invln_Loanapplication target, invln_Loanapplication preImage);
+        void ChangeExternalStatusOnInternalStatusChange(invln_Loanapplication target, invln_Loanapplication preImage);
         void SendEmailToNewOwner(invln_Loanapplication target, invln_Loanapplication preImage);
         string GetFileLocationForApplicationLoan(string loanApplicationId);
         void SetLastModificationDate(invln_Loanapplication target);

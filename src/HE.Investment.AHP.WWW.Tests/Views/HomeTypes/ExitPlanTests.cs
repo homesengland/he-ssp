@@ -20,8 +20,8 @@ public class ExitPlanTests : HomeTypesTestBase
         // then
         document
             .HasElementWithText("span", "My application - My homes")
-            .HasElementWithText("h1", "Tell us the exit plan or alternative use for these homes should commissioning priorities change in the future")
-            .HasElementWithText("span", "You can enter up to 1500 characters")
+            .HasElementWithText("label", "Tell us the exit plan or alternative use for these homes should commissioning priorities change in the future")
+            .HasElementWithText("div", "You can enter up to 1500 characters")
             .HasInput("MoreInformation", value: "My new important information")
             .HasElementWithText("button", "Save and continue");
     }

@@ -1,5 +1,4 @@
 using HE.Investments.Account.Contract.UserOrganisation.Events;
-using HE.Investments.Account.Domain.Organisation.ValueObjects;
 using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Validators;

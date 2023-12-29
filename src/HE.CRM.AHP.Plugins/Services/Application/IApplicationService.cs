@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DataverseModel;
 using HE.Base.Services;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using Microsoft.Xrm.Sdk;
 
 namespace HE.CRM.AHP.Plugins.Services.Application
 {
@@ -17,5 +18,6 @@ namespace HE.CRM.AHP.Plugins.Services.Application
         string GetFileLocationForAhpApplication(string ahpApplicationId, bool isAbsolute);
         void SendReminderEmailForRefferedBackToApplicant(Guid applicationId);
         void SendReminderEmailForFinaliseDraftApplication(Guid applicationId);
+        void ChangeExternalStatus(invln_scheme target, invln_scheme preImage);
     }
 }

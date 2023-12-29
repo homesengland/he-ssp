@@ -18,6 +18,7 @@ public static class ContactRolesDtoTestData
                 accountName = "Organization",
                 webRoleName = "Limited user",
                 permissionLevel = "Test permission level",
+                permission = 858110001,
             },
         },
         email = "test@test.com",

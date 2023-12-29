@@ -48,4 +48,15 @@ public class MemoryCacheService : ICacheService
         SetValue(key, value);
         return Task.CompletedTask;
     }
+
+    public void Delete(string key)
+    {
+        _memoryCache.Remove(key);
+    }
+
+    public Task DeleteAsync(string key)
+    {
+        _memoryCache.Remove(key);
+        return Task.CompletedTask;
+    }
 }

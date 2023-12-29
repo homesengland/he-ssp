@@ -16,4 +16,4 @@ public record Scheme(
     string? MeetingLocalPriorities,
     string? MeetingLocalHousingNeed,
     string? StakeholderDiscussionsReport,
-    UploadedFile? StakeholderDiscussionsFile);
+    UploadedFile? LocalAuthoritySupportFile);
