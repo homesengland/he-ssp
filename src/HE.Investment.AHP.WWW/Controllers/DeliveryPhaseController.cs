@@ -12,21 +12,21 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
 {
     [HttpGet("new")]
     [WorkflowState(DeliveryPhaseWorkflowState.New)]
-    public async Task<IActionResult> New()
+    public IActionResult New()
     {
         return View("Name");
     }
 
     [HttpGet("{deliveryPhaseId}/name")]
     [WorkflowState(DeliveryPhaseWorkflowState.Name)]
-    public async Task<IActionResult> Name()
+    public IActionResult Name()
     {
         return View("Name");
     }
 
     [WorkflowState(DeliveryPhaseWorkflowState.Remove)]
     [HttpGet("{deliveryPhaseId}/remove")]
-    public async Task<IActionResult> Remove()
+    public IActionResult Remove()
     {
         return View("RemoveDeliveryPhaseConfirmation");
     }
