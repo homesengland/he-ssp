@@ -1,7 +1,7 @@
 extern alias Org;
 
-using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Domain.Tests.Organisation.TestData;
+using OrganizationDetailsDto = Org::HE.Common.IntegrationModel.PortalIntegrationModel.OrganizationDetailsDto;
 
 namespace HE.Investments.Account.Domain.Tests.Organisation.TestObjectBuilder;
 

@@ -1,4 +1,4 @@
-namespace HE.Investments.Loans.Common.Models.App;
+namespace HE.Investments.Common.CRM.Config;
 
 public class DataverseConfig : IDataverseConfig
 {

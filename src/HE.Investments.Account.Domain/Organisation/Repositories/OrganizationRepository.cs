@@ -3,8 +3,8 @@ using HE.Investments.Account.Contract.Organisation;
 using HE.Investments.Account.Contract.Organisation.Queries;
 using HE.Investments.Account.Domain.Organisation.Entities;
 using HE.Investments.Account.Shared.User.ValueObjects;
+using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.User;
-using HE.Investments.Loans.Common.Exceptions;
 using HE.Investments.Organisation.Services;
 
 namespace HE.Investments.Account.Domain.Organisation.Repositories;

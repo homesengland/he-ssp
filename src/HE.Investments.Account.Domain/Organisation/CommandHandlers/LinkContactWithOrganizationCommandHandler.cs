@@ -3,7 +3,7 @@ using HE.Investments.Account.Contract.Organisation.Commands;
 using HE.Investments.Account.Contract.User.Events;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Errors;
-using HE.Investments.Loans.Common.Exceptions;
+using HE.Investments.Common.Exceptions;
 using HE.Investments.Organisation.Contract;
 using HE.Investments.Organisation.Services;
 using MediatR;

@@ -1,4 +1,4 @@
-namespace HE.Investments.Loans.Common.Tests.CrmCommunication;
+namespace HE.Investments.Common.Tests.Crm.Serialization;
 
 internal sealed class SerializationResult
 {

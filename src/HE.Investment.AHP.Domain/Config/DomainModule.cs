@@ -17,7 +17,7 @@ using HE.Investment.AHP.Domain.Scheme.Repositories;
 using HE.Investment.AHP.Domain.Scheme.Services;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investments.Account.Shared.Config;
-using HE.Investments.Loans.Common.Utils;
+using HE.Investments.Common.Utils;
 using MediatR.Pipeline;
 using Microsoft.Extensions.DependencyInjection;
 

@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
+using HE.Investments.Common.Domain.ValueObjects;
 using HE.Investments.Common.Messages;
-using HE.Investments.Loans.Contract.Common;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 

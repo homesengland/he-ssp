@@ -9,7 +9,6 @@ using HE.Investments.Account.WWW.Models.Users;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.Utils.Pagination;
 using HE.Investments.Common.Validators;
-using HE.Investments.Loans.Contract.Application.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -101,7 +100,7 @@ public class UsersController : Controller
             return await ConfirmUnlink(id, cancellationToken);
         }
 
-        if (unlink == YesNoAnswers.Yes.ToString())
+        if (unlink == "Yes")
         {
             var result = await _mediator.Send(new RemoveLinkBetweenUserAndOrganisationCommand(id), cancellationToken);
 

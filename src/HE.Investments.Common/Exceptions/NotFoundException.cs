@@ -1,4 +1,4 @@
-namespace HE.Investments.Loans.Common.Exceptions;
+namespace HE.Investments.Common.Exceptions;
 
 public class NotFoundException : Exception
 {

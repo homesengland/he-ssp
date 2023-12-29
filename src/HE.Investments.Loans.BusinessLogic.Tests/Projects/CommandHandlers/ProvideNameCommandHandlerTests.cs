@@ -1,4 +1,5 @@
 using HE.Investments.Account.Domain.Tests.User.TestObjectBuilder;
+using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Messages;
 using HE.Investments.Loans.BusinessLogic.Projects.CommandHandlers;
 using HE.Investments.Loans.BusinessLogic.Projects.Entities;
@@ -7,7 +8,6 @@ using HE.Investments.Loans.BusinessLogic.Tests.Assertions;
 using HE.Investments.Loans.BusinessLogic.Tests.Projects.ObjectBuilders;
 using HE.Investments.Loans.BusinessLogic.Tests.Projects.TestData;
 using HE.Investments.Loans.BusinessLogic.Tests.TestData;
-using HE.Investments.Loans.Common.Exceptions;
 using HE.Investments.Loans.Common.Tests.TestData;
 using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using HE.Investments.Loans.Contract.Projects.Commands;
