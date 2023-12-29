@@ -1,0 +1,59 @@
+@using HE.Investments.Account.Shared
+@using HE.Investments.Common.Extensions
+@using HE.Investments.Common.Messages
+@using HE.Investment.AHP.WWW.Views.Site
+@model HE.Investment.AHP.Contract.Site.SitesListModel
+@inject IAccountAccessContext AccountAccessContext
+@{
+    ViewData["Title"] = SitePageTitles.SiteList;
+    var canStartApplication = await AccountAccessContext.CanEditApplication();
+}
+<div class="govuk-grid-column-full">
+    <vc:form-header title="@SitePageTitles.SiteList" caption="@Model.OrganisationName" hint="To view site details or applications connected to a site, click on the site name." additional-css-class="govuk-!-padding-top-8"></vc:form-header>
+
+    <gds-h2 class="govuk-!-padding-top-8">
+        Your sites
+    </gds-h2>
+
+    <div class="govuk-!-padding-bottom-8">
+        <table class="govuk-table">
+            <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header govuk-!-width-one-third">Name</th>
+                <th scope="col" class="govuk-table__header govuk-!-width-one-third">Local Authority</th>
+                <th scope="col" class="govuk-table__header govuk-!-width-one-third">Status</th>
+            </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+            @foreach (var site in Model.Items)
+            {
+                <tr class="govuk-table__row">
+                    <td class="govuk-table__cell">
+                        <span class="app-task-list__task-name">
+                            <strong>
+                                <a href="@Url.Action("Details", "Site", new { siteId = site.Id })"> @site.Name </a>
+                            </strong>
+                        </span>
+                    </td>
+                    <td class="govuk-table__cell">
+                        @(site.LocalAuthority ?? GenericMessages.NotProvided)
+                    </td>
+                    <td class="govuk-table__cell">
+                        <strong class="govuk-tag govuk-tag--grey">
+                            @site.Status.GetDescription()
+                        </strong>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <gds-h2>
+            Affordable Homes Programme 2021-2026 CME
+        </gds-h2>
+        <p class="govuk-body govuk-!-margin-bottom-3">You can start a new Affordable Homes Programme application here. This will not affect any of your previous applications.</p>
+
+        <link-button action-url="@Url.Action("Name", "Application")" is-disabled=@(!canStartApplication) id="start-application-link">Start new application</link-button>
+    </div>
+</div>
