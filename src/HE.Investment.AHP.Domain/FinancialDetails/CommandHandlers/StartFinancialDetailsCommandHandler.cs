@@ -3,8 +3,8 @@ using HE.Investment.AHP.Domain.FinancialDetails.Commands;
 using HE.Investment.AHP.Domain.FinancialDetails.Entities;
 using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 using HE.Investments.Account.Shared;
+using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Validators;
-using HE.Investments.Loans.Common.Exceptions;
 using MediatR;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.CommandHandlers;

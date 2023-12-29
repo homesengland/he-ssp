@@ -1,8 +1,7 @@
 using HE.Investments.Common.Contract;
-using HE.Investments.Common.Domain;
+using HE.Investments.Common.Exceptions;
 using HE.Investments.Loans.BusinessLogic.Projects.Entities;
 using HE.Investments.Loans.BusinessLogic.Projects.ValueObjects;
-using HE.Investments.Loans.Common.Exceptions;
 using HE.Investments.Loans.Contract.Common;
 using Xunit;
 

@@ -1,9 +1,9 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace HE.Investments.Loans.Common.CrmCommunication.Serialization;
+namespace HE.Investments.Common.CRM.Serialization;
 
-public class BoolConverter : JsonConverter<bool>
+internal class BoolConverter : JsonConverter<bool>
 {
     public override void Write(Utf8JsonWriter writer, bool value, JsonSerializerOptions options) =>
         writer.WriteBooleanValue(value);

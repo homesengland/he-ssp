@@ -6,11 +6,9 @@ using HE.Investments.Account.Domain.UserOrganisation.Notifications;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Errors;
 using HE.Investments.Common.Exceptions;
+using HE.Investments.Common.Messages;
 using HE.Investments.Common.Services.Notifications;
 using HE.Investments.Common.Validators;
-using HE.Investments.Loans.Common.Exceptions;
-using HE.Investments.Loans.Common.Utils.Constants;
-using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using MediatR;
 
 namespace HE.Investments.Account.Domain.UserOrganisation.CommandHandlers;
@@ -44,13 +42,14 @@ public class ChangeOrganisationDetailsCommandHandler : IRequestHandler<ChangeOrg
                     CommonErrorCodes.ContactIsNotLinkedWithRequestedOrganization);
             }
 
+            const string fieldName = "Request to change organisation details";
             var operationResult = OperationResult.New();
             var name = operationResult.Aggregate(() => new OrganisationName(
                 request.Name,
                 OrganisationErrorMessages.MissingRegisteredOrganisationName,
-                FieldNameForInputLengthValidation.RequestToChangeOrganisationDetails));
+                fieldName));
             var phoneNumber = operationResult.Aggregate(() =>
-                new OrganisationPhoneNumber(request.PhoneNumber, FieldNameForInputLengthValidation.RequestToChangeOrganisationDetails));
+                new OrganisationPhoneNumber(request.PhoneNumber, fieldName));
             var address = operationResult.Aggregate(() =>
                 new OrganisationAddress(
                     request.AddressLine1,
@@ -60,7 +59,7 @@ public class ChangeOrganisationDetailsCommandHandler : IRequestHandler<ChangeOrg
                     request.Postcode,
                     request.County,
                     null,
-                    FieldNameForInputLengthValidation.RequestToChangeOrganisationDetails));
+                    fieldName));
 
             operationResult.CheckErrors();
 

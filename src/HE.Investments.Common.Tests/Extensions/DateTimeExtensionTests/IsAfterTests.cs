@@ -1,13 +1,12 @@
 using FluentAssertions;
-using HE.Investments.Loans.Common.Extensions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using HE.Investments.Common.Extensions;
+using Xunit;
 
-namespace HE.Investments.Loans.Common.Tests.Extensions.DateTimeExtensionTests;
+namespace HE.Investments.Common.Tests.Extensions.DateTimeExtensionTests;
 
-[TestClass]
 public class IsAfterTests
 {
-    [TestMethod]
+    [Fact]
     public void ReturnFalseWhenProvidedDateIsBeforeOtherDate()
     {
         // given
@@ -18,7 +17,7 @@ public class IsAfterTests
         date.IsAfter(otherDate).Should().BeFalse();
     }
 
-    [TestMethod]
+    [Fact]
     public void ReturnFalseWhenProvidedDateIsEqualToOtherDate()
     {
         // given
@@ -29,7 +28,7 @@ public class IsAfterTests
         date.IsAfter(otherDate).Should().BeFalse();
     }
 
-    [TestMethod]
+    [Fact]
     public void ReturnTrueWhenProvidedDateIsAfterOtherDate()
     {
         // given

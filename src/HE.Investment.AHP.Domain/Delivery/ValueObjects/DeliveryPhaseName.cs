@@ -1,4 +1,4 @@
-using HE.Investments.Loans.Contract.Common;
+using HE.Investments.Common.Domain.ValueObjects;
 
 namespace HE.Investment.AHP.Domain.Delivery.ValueObjects;
 

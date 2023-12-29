@@ -1,7 +1,7 @@
 using HE.Investments.Account.Contract.Users;
+using HE.Investments.Account.Domain.Tests.TestData;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.ValueObjects;
-using HE.Investments.Loans.Common.Tests.TestData;
 
 namespace HE.Investments.Account.Domain.Tests.User.TestData;
 

@@ -1,13 +1,12 @@
 using FluentAssertions;
-using HE.Investments.Loans.Common.Extensions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using HE.Investments.Common.Extensions;
+using Xunit;
 
-namespace HE.Investments.Loans.Common.Tests.Extensions.DateTimeExtensionTests;
+namespace HE.Investments.Common.Tests.Extensions.DateTimeExtensionTests;
 
-[TestClass]
 public class IsBeforeOrEqualToTests
 {
-    [TestMethod]
+    [Fact]
     public void ReturnTrueWhenProvidedDateIsBeforeOtherDate()
     {
         var date = new DateTime(2023, 7, 5);
@@ -16,7 +15,7 @@ public class IsBeforeOrEqualToTests
         date.IsBeforeOrEqualTo(otherDate).Should().BeTrue();
     }
 
-    [TestMethod]
+    [Fact]
     public void ReturnTrueWhenProvidedDateIsEqualToOtherDate()
     {
         var date = new DateTime(2023, 7, 5);
@@ -25,7 +24,7 @@ public class IsBeforeOrEqualToTests
         date.IsBeforeOrEqualTo(otherDate).Should().BeTrue();
     }
 
-    [TestMethod]
+    [Fact]
     public void ReturnFalseWhenProvidedDateIsAfterOtherDate()
     {
         var date = new DateTime(2023, 7, 5);

@@ -7,8 +7,8 @@ using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.ValueObjects;
+using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Infrastructure.Events;
-using HE.Investments.Loans.Common.Exceptions;
 using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Repositories;

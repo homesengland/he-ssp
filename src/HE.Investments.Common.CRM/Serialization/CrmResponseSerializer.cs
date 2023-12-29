@@ -1,6 +1,6 @@
 using System.Text.Json;
 
-namespace HE.Investments.Loans.Common.CrmCommunication.Serialization;
+namespace HE.Investments.Common.CRM.Serialization;
 
 public static class CrmResponseSerializer
 {

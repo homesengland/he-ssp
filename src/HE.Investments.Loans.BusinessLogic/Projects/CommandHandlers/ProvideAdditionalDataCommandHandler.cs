@@ -1,13 +1,13 @@
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
+using HE.Investments.Common.Utils;
 using HE.Investments.Common.Validators;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories;
 using HE.Investments.Loans.BusinessLogic.Projects.Entities;
 using HE.Investments.Loans.BusinessLogic.Projects.Repositories;
 using HE.Investments.Loans.BusinessLogic.Projects.Repositories.Mappers;
 using HE.Investments.Loans.BusinessLogic.Projects.ValueObjects;
-using HE.Investments.Loans.Common.Utils;
 using HE.Investments.Loans.Contract.Common;
 using HE.Investments.Loans.Contract.Projects.Commands;
 using HE.Investments.Loans.Contract.Projects.ViewModels;

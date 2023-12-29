@@ -1,3 +1,5 @@
+using HE.Investments.Common.Config;
+using HE.Investments.Common.CRM.Config;
 using HE.Investments.Common.Infrastructure.Cache.Config;
 
 namespace HE.Investments.Loans.Common.Models.App;

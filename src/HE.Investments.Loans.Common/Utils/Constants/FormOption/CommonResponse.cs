@@ -5,7 +5,6 @@ public class CommonResponse
     public const string No = "No";
     public const string DoNotKnow = "DoNotKnow";
     public const string Other = "other";
-    public const string Checked = "checked";
 
     public class Lowercase
     {

@@ -3,12 +3,12 @@ extern alias Org;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using HE.Investments.Account.Domain.Config;
+using HE.Investments.Common.Utils;
 using HE.Investments.Loans.BusinessLogic.CompanyStructure.Repositories;
 using HE.Investments.Loans.BusinessLogic.Funding.Repositories;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories;
 using HE.Investments.Loans.BusinessLogic.Projects.Repositories;
 using HE.Investments.Loans.BusinessLogic.Security.Repositories;
-using HE.Investments.Loans.Common.Utils;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace HE.Investments.Loans.BusinessLogic.Config;

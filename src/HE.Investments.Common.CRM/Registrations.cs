@@ -1,9 +1,9 @@
 using System.IdentityModel.Tokens.Jwt;
+using HE.Investments.Common.CRM.Config;
 using HE.Investments.Common.CRM.Services;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Infrastructure.Cache.Interfaces;
-using HE.Investments.Loans.Common.Extensions;
-using HE.Investments.Loans.Common.Models.App;
-using HE.Investments.Loans.Common.Utils;
+using HE.Investments.Common.Utils;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.PowerPlatform.Dataverse.Client;

@@ -1,4 +1,4 @@
-namespace HE.Investments.Loans.Common.Utils;
+namespace HE.Investments.Common.Utils;
 
 public class DateTimeProvider : IDateTimeProvider
 {

@@ -1,4 +1,4 @@
-namespace HE.Investments.Loans.Common.Extensions;
+namespace HE.Investments.Common.Extensions;
 
 public static class DateTimeExtensions
 {
