@@ -13,7 +13,8 @@ public class DeliveriesWorkflow : IStateRouting<DeliveriesWorkflowState>
 
     public DeliveriesWorkflow(
         DeliveriesWorkflowState currentDeliveriesWorkflowState,
-        Delivery model)
+        Delivery model,
+        bool isReadOnly)
     {
         _model = model;
         _machine = new StateMachine<DeliveriesWorkflowState, Trigger>(currentDeliveriesWorkflowState);
