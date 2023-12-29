@@ -22,7 +22,7 @@ public class MoveOnArrangementsTests : HomeTypesTestBase
             .HasElementWithText("span", "My application - My homes")
             .HasElementWithText("label", "Tell us the move on arrangements that are in place for when these homes are used as short stay accommodation")
             .HasElementWithText("div", "You can enter up to 1500 characters")
-            .HasInput("MoreInformation", value: "My new important information")
+            .HasTextAreaInput("MoreInformation", value: "My new important information")
             .HasElementWithText("button", "Save and continue");
     }
 

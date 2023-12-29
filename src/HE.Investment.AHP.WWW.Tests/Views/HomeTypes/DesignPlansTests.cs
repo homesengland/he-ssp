@@ -34,7 +34,7 @@ public class DesignPlansTests : HomeTypesTestBase
             .HasElementWithText("td", "uploaded 11/10/2022 01:00:00 by Test User")
             .HasElementWithText("label", "Tell us more about your design plans (optional)")
             .HasElementWithText("div", "Tell us any important information about the plans, or any additional information not included.")
-            .HasInput("MoreInformation", value: "Some details about my Design Plans")
+            .HasTextAreaInput("MoreInformation", value: "Some details about my Design Plans")
             .HasElementWithText("button", "Save and continue");
     }
 
