@@ -28,7 +28,8 @@ public class CalculateProspectiveRentTests
         tenureDetails.ChangeProspectiveRentAsPercentageOfMarketRent();
 
         // then
-        tenureDetails.ProspectiveRentAsPercentageOfMarketRent?.Value.Should().Be(expectedResult);
+        tenureDetails.ProspectiveRentAsPercentageOfMarketRent.Should().NotBeNull();
+        tenureDetails.ProspectiveRentAsPercentageOfMarketRent!.Value.Should().Be(expectedResult);
     }
 
     [Theory]

@@ -29,7 +29,8 @@ public class CalculateExpectedFirstTrancheTests
         tenureDetails.ChangeExpectedFirstTranche();
 
         // then
-        tenureDetails.ExpectedFirstTranche?.Value.Should().Be(expectedResult);
+        tenureDetails.ExpectedFirstTranche.Should().NotBeNull();
+        tenureDetails.ExpectedFirstTranche!.Value.Should().Be(expectedResult);
     }
 
     [Theory]

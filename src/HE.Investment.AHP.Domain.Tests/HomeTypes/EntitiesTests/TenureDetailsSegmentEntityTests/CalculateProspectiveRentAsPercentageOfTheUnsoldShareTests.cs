@@ -30,7 +30,8 @@ public class CalculateProspectiveRentAsPercentageOfTheUnsoldShareTests
         tenureDetails.ChangeProspectiveRentAsPercentageOfTheUnsoldShare();
 
         // then
-        tenureDetails.RentAsPercentageOfTheUnsoldShare?.Value.Should().Be(expectedResult);
+        tenureDetails.RentAsPercentageOfTheUnsoldShare.Should().NotBeNull();
+        tenureDetails.RentAsPercentageOfTheUnsoldShare!.Value.Should().Be(expectedResult);
     }
 
     [Theory]
