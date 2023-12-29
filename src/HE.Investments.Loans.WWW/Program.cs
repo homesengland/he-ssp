@@ -10,12 +10,7 @@ using HE.Investments.Loans.WWW.Extensions;
 using HE.Investments.Loans.WWW.Middlewares;
 using Microsoft.FeatureManagement;
 
-#pragma warning disable CA1852
-#pragma warning disable CA1812
 var builder = WebApplication.CreateBuilder(args);
-#pragma warning restore CA1812
-#pragma warning restore CA1852
-
 builder.Configuration.AddEnvironmentVariables();
 builder.Services.Configure<AppConfig>(builder.Configuration.GetSection("AppConfiguration"));
 

@@ -53,7 +53,7 @@ public class IntegrationTest
             throw new NotSupportedException("Developer provided user data and new user cannot be created");
         }
 
-        _fixture.ProvideLoginData(new UserData()
+        _fixture.ProvideLoginData(new UserLoginData()
         {
             UserGlobalId = userGlobalId,
             Email = $"{userGlobalId}@integrationTests.it",
