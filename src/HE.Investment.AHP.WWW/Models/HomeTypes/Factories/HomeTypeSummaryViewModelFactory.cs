@@ -75,6 +75,10 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
         {
             yield return CreateHomeOwnershipDisabilitiesSection(homeType.TenureDetails, factory);
         }
+        else if (homeType.Tenure is Tenure.OlderPersonsSharedOwnership)
+        {
+            yield return CreateOlderPersonsSharedOwnershipSection(homeType.TenureDetails, factory);
+        }
     }
 
     private static SectionSummaryViewModel CreateHomeTypeDetailsSection(FullHomeType homeType, HomeTypeQuestionFactory factory)
@@ -235,6 +239,21 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
             factory.Question(
                 "Rent as percentage of the unsold share",
                 nameof(Controller.HomeOwnershipDisabilities),
+                ToPercentage(tenure.RentAsPercentageOfTheUnsoldShare)),
+            factory.DeadEnd(nameof(Controller.ProspectiveRentIneligible)));
+    }
+
+    private static SectionSummaryViewModel CreateOlderPersonsSharedOwnershipSection(TenureDetails tenure, HomeTypeQuestionFactory factory)
+    {
+        return SectionSummaryViewModel.New(
+            "OPSO details",
+            factory.Question("Market value of each home", nameof(Controller.OlderPersonsSharedOwnership), ToPounds(tenure.MarketValue)),
+            factory.Question("Average first tranche sale percentage", nameof(Controller.OlderPersonsSharedOwnership), ToPercentage(tenure.InitialSale)),
+            factory.Question("First tranche sales receipt", nameof(Controller.OlderPersonsSharedOwnership), ToPoundsPences(tenure.ExpectedFirstTranche)),
+            factory.Question("Rent per week", nameof(Controller.OlderPersonsSharedOwnership), ToPoundsPences(tenure.ProspectiveRent)),
+            factory.Question(
+                "Rent as percentage of the unsold share",
+                nameof(Controller.OlderPersonsSharedOwnership),
                 ToPercentage(tenure.RentAsPercentageOfTheUnsoldShare)),
             factory.DeadEnd(nameof(Controller.ProspectiveRentIneligible)));
     }

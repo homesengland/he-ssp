@@ -12,7 +12,14 @@ public class StringIdValueObject : ValueObject
         Value = id;
     }
 
+    protected StringIdValueObject()
+    {
+        Value = string.Empty;
+    }
+
     public string Value { get; }
+
+    public bool IsNew => string.IsNullOrEmpty(Value);
 
     public override string ToString()
     {

@@ -20,7 +20,6 @@ using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.Common.WWW.Utils;
 using HE.Investments.Loans.Common.Exceptions;
-using HE.Investments.Loans.Common.Routing;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using UploadedFile = HE.Investment.AHP.Contract.Common.UploadedFile;
@@ -90,7 +89,6 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
             model.ApplicationId,
             nameof(Funding),
             model,
-            action,
             cancellationToken);
     }
 
@@ -112,7 +110,6 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
             model.ApplicationId,
             nameof(Affordability),
             model,
-            action,
             cancellationToken);
     }
 
@@ -134,7 +131,6 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
             model.ApplicationId,
             nameof(SalesRisk),
             model,
-            action,
             cancellationToken);
     }
 
@@ -159,7 +155,6 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
             model.ApplicationId,
             nameof(HousingNeeds),
             model,
-            action,
             cancellationToken);
     }
 
@@ -193,7 +188,6 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
                 model.ApplicationId,
                 nameof(StakeholderDiscussions),
                 model,
-                action,
                 cancellationToken);
         }
         finally
@@ -333,7 +327,6 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
         string applicationId,
         string viewName,
         object model,
-        string action,
         CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(command, cancellationToken);
@@ -344,6 +337,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
             return View(viewName, model);
         }
 
+        var action = HttpContext.Request.Form["action"];
         if (action == GenericMessages.SaveAndReturn)
         {
             return RedirectToAction(

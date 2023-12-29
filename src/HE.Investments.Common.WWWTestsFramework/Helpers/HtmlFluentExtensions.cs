@@ -24,14 +24,19 @@ public static class HtmlFluentExtensions
 
     public static IHtmlDocument HasInput(this IHtmlDocument htmlDocument, string fieldName, string? label = null, string? value = null)
     {
-        var inputs = htmlDocument.GetElementsByName(fieldName);
-        inputs.Length.Should().Be(1, $"Only one element input with name {fieldName} should exist");
+        var inputs = GetAndValidateInput<IHtmlInputElement>(htmlDocument, fieldName, label);
 
-        if (!string.IsNullOrEmpty(label))
+        if (!string.IsNullOrEmpty(value))
         {
-            var labels = htmlDocument.GetLastChildByTagAndText("label", label);
-            labels.Count.Should().Be(1, $"Only one element input with label with innerText {label} should exist");
+            inputs.First().Value.Should().Contain(value);
         }
+
+        return htmlDocument;
+    }
+
+    public static IHtmlDocument HasTextAreaInput(this IHtmlDocument htmlDocument, string fieldName, string? label = null, string? value = null)
+    {
+        var inputs = GetAndValidateInput<IHtmlTextAreaElement>(htmlDocument, fieldName, label);
 
         if (!string.IsNullOrEmpty(value))
         {
@@ -137,5 +142,19 @@ public static class HtmlFluentExtensions
         {
             filtered.Count.Should().Be(0, $"Validation error for {fieldName} should not exist");
         }
+    }
+
+    private static IEnumerable<T> GetAndValidateInput<T>(IHtmlDocument htmlDocument, string fieldName, string? label)
+    {
+        var inputs = htmlDocument.GetElementsByName(fieldName);
+        inputs.Length.Should().Be(1, $"Only one element input with name {fieldName} should exist");
+
+        if (!string.IsNullOrEmpty(label))
+        {
+            var labels = htmlDocument.GetLastChildByTagAndText("label", label);
+            labels.Count.Should().Be(1, $"Only one element input with label with innerText {label} should exist");
+        }
+
+        return inputs.Cast<T>();
     }
 }

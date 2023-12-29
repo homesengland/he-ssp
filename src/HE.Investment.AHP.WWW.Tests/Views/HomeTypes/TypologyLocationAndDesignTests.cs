@@ -23,7 +23,7 @@ public class TypologyLocationAndDesignTests : HomeTypesTestBase
             .HasElementWithText("label", "Tell us how the typology, location and design of these homes meet the needs of the intended residents")
             .HasElementWithText("div", "Typology is the classification and characteristics of the homes you are building.")
             .HasElementWithText("div", "You can enter up to 1500 characters")
-            .HasInput("MoreInformation", value: "My new important information")
+            .HasTextAreaInput("MoreInformation", value: "My new important information")
             .HasElementWithText("button", "Save and continue");
     }
 

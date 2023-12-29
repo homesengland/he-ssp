@@ -1,6 +1,7 @@
 using FluentAssertions;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
+using HE.Investment.AHP.Domain.Tests.HomeTypes.TestDataBuilders;
 using HE.Investments.Common.Exceptions;
 
 namespace HE.Investment.AHP.Domain.Tests.HomeTypes.EntitiesTests.TenureDetailsSegmentEntityTests;
@@ -19,11 +20,17 @@ public class CalculateExpectedFirstTrancheTests
         var marketValueVO = new MarketValue(marketValue);
         var initialSaleVO = new InitialSale(initialSale);
 
+        var tenureDetails = new TenureDetailsTestDataBuilder()
+            .WithMarketValue(marketValueVO)
+            .WithInitialSale(initialSaleVO)
+            .Build();
+
         // when
-        var result = TenureDetailsSegmentEntity.CalculateExpectedFirstTranche(marketValueVO, initialSaleVO);
+        tenureDetails.ChangeExpectedFirstTranche();
 
         // then
-        result.Should().Be(expectedResult);
+        tenureDetails.ExpectedFirstTranche.Should().NotBeNull();
+        tenureDetails.ExpectedFirstTranche!.Value.Should().Be(expectedResult);
     }
 
     [Theory]
@@ -34,8 +41,11 @@ public class CalculateExpectedFirstTrancheTests
     [InlineData("", "")]
     public void ShouldReturnZero_WhenMarketValueOrInitialSaleIsNotANumber(string marketValue, string initialSale)
     {
-        // given && when
-        Action action = () => _ = TenureDetailsSegmentEntity.CalculateExpectedFirstTranche(
+        // given
+        var tenureDetails = new TenureDetailsTestDataBuilder().Build();
+
+        // when
+        Action action = () => _ = tenureDetails.CalculateExpectedFirstTranche(
             new MarketValue(marketValue, true),
             new InitialSale(initialSale, true));
 

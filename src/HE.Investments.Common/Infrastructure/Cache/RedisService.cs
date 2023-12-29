@@ -24,7 +24,7 @@ public class RedisService : ICacheService
         if (Cache.KeyExists(key))
         {
             string? resp = Cache.StringGet(key);
-            return resp != null ? JsonSerializer.Deserialize<T>(resp) : default;
+            return resp != null ? Deserialize<T>(resp) : default;
         }
 
         return default;
@@ -51,7 +51,7 @@ public class RedisService : ICacheService
 
     public void SetValue(string key, object value, int expireMinutes)
     {
-        Cache.StringSet(key, JsonSerializer.Serialize(value), TimeSpan.FromMinutes(expireMinutes));
+        Cache.StringSet(key, Serialize(value), TimeSpan.FromMinutes(expireMinutes));
     }
 
     public void SetValue<T>(string key, T value)
@@ -61,7 +61,7 @@ public class RedisService : ICacheService
 
     public async Task SetValueAsync<T>(string key, T value)
     {
-        await Cache.StringSetAsync(key, JsonSerializer.Serialize(value), TimeSpan.FromMinutes(_cacheConfig.ExpireMinutes));
+        await Cache.StringSetAsync(key, Serialize(value), TimeSpan.FromMinutes(_cacheConfig.ExpireMinutes));
     }
 
     public void Delete(string key)
@@ -72,5 +72,15 @@ public class RedisService : ICacheService
     public async Task DeleteAsync(string key)
     {
         await Cache.KeyDeleteAsync(key);
+    }
+
+    private static string Serialize<T>(T value)
+    {
+        return JsonSerializer.Serialize(value);
+    }
+
+    private static T? Deserialize<T>(string value)
+    {
+        return JsonSerializer.Deserialize<T>(value);
     }
 }

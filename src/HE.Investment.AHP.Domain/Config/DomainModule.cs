@@ -1,6 +1,7 @@
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.Data;
+using HE.Investment.AHP.Domain.Delivery.Repositories;
 using HE.Investment.AHP.Domain.Documents.Config;
 using HE.Investment.AHP.Domain.Documents.Crm;
 using HE.Investment.AHP.Domain.Documents.Services;
@@ -40,6 +41,7 @@ public static class DomainModule
         AddApplication(services);
         AddScheme(services);
         AddSite(services);
+        AddDelivery(services);
     }
 
     private static void AddHomeTypes(IServiceCollection services)
@@ -86,5 +88,10 @@ public static class DomainModule
     private static void AddSite(IServiceCollection services)
     {
         services.AddScoped<ISiteRepository, SiteRepository>();
+    }
+
+    private static void AddDelivery(IServiceCollection services)
+    {
+        services.AddScoped<IDeliveryPhaseRepository, DeliveryPhaseRepository>();
     }
 }

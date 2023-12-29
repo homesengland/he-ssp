@@ -1,6 +1,6 @@
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
-using HE.Investments.Loans.Common.Routing;
+using HE.Investments.Common.WWW.Routing;
 using Stateless;
 
 namespace HE.Investment.AHP.Domain.Scheme.Workflows;

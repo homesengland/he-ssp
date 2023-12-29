@@ -1,23 +1,17 @@
-using Dawn;
-using HE.Investments.Common.Domain;
+using HE.Investments.Common.Domain.ValueObjects;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 
-public class HomeTypeId : ValueObject
+public class HomeTypeId : StringIdValueObject
 {
     public HomeTypeId(string id)
+        : base(id)
     {
-        Value = Guard.Argument(id, nameof(id)).NotEmpty().NotWhiteSpace();
     }
 
     private HomeTypeId()
     {
-        Value = string.Empty;
     }
-
-    public string Value { get; }
-
-    public bool IsNew => string.IsNullOrEmpty(Value);
 
     public static HomeTypeId New() => new();
 
