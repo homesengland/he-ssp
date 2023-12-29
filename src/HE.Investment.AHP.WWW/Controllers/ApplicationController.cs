@@ -8,7 +8,6 @@ using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Utils.Pagination;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Routing;
-using HE.Investments.Loans.Common.Routing;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

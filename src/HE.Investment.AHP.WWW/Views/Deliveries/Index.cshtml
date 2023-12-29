@@ -1,0 +1,37 @@
+@using HE.Investment.AHP.Contract.Application;
+@using HE.Investment.AHP.WWW.Views.Deliveries.Consts;
+@using HE.Investments.Common.WWW.Components.FormHeader;
+@using HE.Investment.AHP.WWW.Extensions;
+@model Application;
+@{
+    ViewData["Title"] = DeliveryPageTitles.StartPage;
+    var applicationId = this.GetApplicationIdFromRoute();
+}
+<gds-div-grid-column-two-thirds>
+        <gds-back-link href="@Url.Action("TaskList", "Application", new { applicationId })" text="Back" class="govuk-!-margin-bottom-8">
+        </gds-back-link>
+        <vc:form-header title="@DeliveryPageTitles.StartPage" caption="@Model.Name"/>
+
+        <div class="govuk-!-padding-bottom-8">
+            <gds-p>In this section you'll need to provide information about your delivery. Each delivery phase should contain only one build activity type, for example acquisition and works or purchase and repair.</gds-p>
+            <gds-p>This includes: </gds-p>
+            <ul class="govuk-list govuk-list govuk-list--bullet">
+                <li>build activity type</li>
+                <li>the number of each home type in each phase</li>
+                <li>milestone dates</li>
+            </ul>
+
+            <gds-p>The milestone dates you may need to provide information about are:</gds-p>
+            <ul class="govuk-list govuk-list govuk-list--bullet">
+                <li>acquisition</li>
+                <li>start on site</li>
+                <li>practical completion</li>
+            </ul>
+
+            <gds-p>Each delivery phase should contain only one build activity type.</gds-p>
+            <gds-p>If your application consist of multiple activities, set up separate delivery phases to cover them. Do this if you are delivering a mix of new build and rehab, or delivering the homes on this application in phases.</gds-p>
+        </div>
+    <a href="@Url.Action("List", "Deliveries", new {applicationId = Model.Id})">
+        <gds-button type="button" class="govuk-!-margin-top-8">Start now</gds-button>
+    </a>
+</gds-div-grid-column-two-thirds>
