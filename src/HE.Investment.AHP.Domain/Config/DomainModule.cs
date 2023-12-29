@@ -1,6 +1,7 @@
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.Data;
+using HE.Investment.AHP.Domain.Delivery.Repositories;
 using HE.Investment.AHP.Domain.Documents.Config;
 using HE.Investment.AHP.Domain.Documents.Crm;
 using HE.Investment.AHP.Domain.Documents.Services;
@@ -38,6 +39,7 @@ public static class DomainModule
         AddFinancialDetails(services);
         AddApplication(services);
         AddScheme(services);
+        AddDelivery(services);
     }
 
     private static void AddHomeTypes(IServiceCollection services)
@@ -79,5 +81,10 @@ public static class DomainModule
 
         services.AddScoped<IAhpFileLocationProvider<LocalAuthoritySupportFileParams>, LocalAuthoritySupportFileLocationProvider>();
         services.AddScoped<IAhpFileService<LocalAuthoritySupportFileParams>, AhpFileService<LocalAuthoritySupportFileParams>>();
+    }
+
+    private static void AddDelivery(IServiceCollection services)
+    {
+        services.AddScoped<IDeliveryPhaseRepository, DeliveryPhaseRepository>();
     }
 }

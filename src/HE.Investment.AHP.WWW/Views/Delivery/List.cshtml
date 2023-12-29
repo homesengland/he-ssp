@@ -1,0 +1,133 @@
+@using HE.Investment.AHP.WWW.Routing
+@using HE.Investment.AHP.WWW.Extensions
+@model HE.Investment.AHP.WWW.Models.Delivery.DeliveryListModel
+@{
+    var applicationId = this.GetApplicationIdFromRoute();
+
+    ViewBag.Breadcrumbs = AhpBreadcrumbsBuilder
+        .New()
+        .WithSites()
+        .WithSchemes()
+        .WithApplication(applicationId, Model.ApplicationName)
+        .Build();
+}
+
+<div class="govuk-grid-column-full govuk-!-margin-top-6">
+    <partial name="~/Partials/Errors/_ErrorSummaryPartial.cshtml"/>
+    <partial name="~/Partials/_Notification.cshtml"/>
+
+    <span class="govuk-caption-l govuk-!-margin-top-1">@Model.ApplicationName</span>
+    <gds-h1>Delivery</gds-h1>
+
+    <gds-p hidden="@Model.IsReadOnly">
+        View and add the delivery phases for this application and add homes to phases.
+    </gds-p>
+
+    <form asp-controller="Delivery" asp-action="List" asp-method="post" novalidate>
+        @Html.HiddenFor(m => Model.ApplicationName)
+        @Html.HiddenFor(m => Model.IsEditable)
+
+        @if (Model.DeliveryPhases.Any())
+        {
+            <table class="govuk-table govuk-!-margin-bottom-0">
+                <thead class="govuk-table__head">
+                <tr class="govuk-table__row">
+                    <th scope="col" class="govuk-table__header">Phase</th>
+                    <th scope="col" class="govuk-table__header">Number of homes</th>
+                    <th scope="col" class="govuk-table__header">Acquisition</th>
+                    <th scope="col" class="govuk-table__header">Start on site</th>
+                    <th scope="col" class="govuk-table__header">Practical completion</th>
+                    <td class="govuk-table__header"/>
+                </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+
+                @for (int i = 0; i < Model.DeliveryPhases.Count; i++)
+                {
+                    var index = i;
+                    @Html.HiddenFor(model => Model.DeliveryPhases[index].DeliveryPhaseId)
+                    @Html.HiddenFor(model => Model.DeliveryPhases[index].NumberOfHomes)
+                    @Html.HiddenFor(model => Model.DeliveryPhases[index].Acquisition)
+                    @Html.HiddenFor(model => Model.DeliveryPhases[index].StartOnSite)
+                    @Html.HiddenFor(model => Model.DeliveryPhases[index].PracticalCompletion)
+
+                    <tr class="govuk-table__row" id="delivery-phase-@Model.DeliveryPhases[index].DeliveryPhaseId">
+                        <td class="govuk-table__cell">
+                            <gds-link class="govuk-link--no-visited-state"
+                                      href="@Url.RouteUrl("subSection", new { controller = "DeliveryPhase", action = "Name", applicationId, id = Model.DeliveryPhases[index].DeliveryPhaseId })">
+                                @(Model.DeliveryPhases[index].DeliveryPhaseName)
+                            </gds-link>
+                        </td>
+                        <td class="govuk-table__cell">
+                            @(Model.DeliveryPhases[index].NumberOfHomes?.ToString() ?? "Not provided")
+                        </td>
+                        <td class="govuk-table__cell">
+                            @(Model.DeliveryPhases[index].Acquisition ?? "Not provided")
+                        </td>
+                        <td class="govuk-table__cell">
+                            @(Model.DeliveryPhases[index].StartOnSite ?? "Not provided")
+                        </td>
+                        <td class="govuk-table__cell">
+                            @(Model.DeliveryPhases[index].PracticalCompletion ?? "Not provided")
+                        </td>
+                        <td class="govuk-table__cell govuk-!-text-align-right" hidden="@Model.IsReadOnly">
+                            <gds-link class="govuk-link--no-visited-state govuk-!-margin-left-4"
+                                      href="@Url.RouteUrl("subSection", new { controller = "DeliveryPhase", action = "Remove", applicationId, id = Model.DeliveryPhases[index].DeliveryPhaseId })">
+                                Remove
+                            </gds-link>
+                        </td>
+                    </tr>
+                }
+
+                @if (Model.UnusedHomeTypesCount > 0)
+                {
+                    <tr>
+                        <td colspan="6">
+                            <gds-div-inset-text>
+                                You have @Model.UnusedHomeTypesCount homes that you need to add to your delivery phases.
+                            </gds-div-inset-text>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="6">
+                            <link-button is-secondary="true" href="@Url.RouteUrl("section", new { controller = "DeliveryPhase", action = "New", applicationId })" is-disabled="@Model.IsReadOnly">Add another delivery phase</link-button>
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="6">
+                            <gds-div-inset-text>
+                                All of your homes have been added to delivery phase. If you want to add another delivery phase, edit the homes in an existing phase or remove a phase.
+                            </gds-div-inset-text>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="6">
+                            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="continue-button" disabled="@Model.IsReadOnly">
+                                Save and continue
+                            </button>
+                        </td>
+                    </tr>
+                }
+
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <gds-p>
+                Your delivery phases will appear here once added.
+            </gds-p>
+
+            <gds-div-inset-text>
+                You have @Model.UnusedHomeTypesCount homes that you need to add to your delivery phases.
+            </gds-div-inset-text>
+
+            <link-button href="@Url.RouteUrl("section", new { controller = "DeliveryPhase", action = "New", applicationId })" is-disabled="@Model.IsReadOnly">Add a delivery phase</link-button>
+        }
+
+        <vc:return-to-application-link application-id="@applicationId" is-editable="@false"/>
+    </form>
+</div>
