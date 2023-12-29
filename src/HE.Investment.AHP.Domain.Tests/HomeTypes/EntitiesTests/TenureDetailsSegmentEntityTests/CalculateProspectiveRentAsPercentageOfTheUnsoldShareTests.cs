@@ -1,6 +1,6 @@
 using FluentAssertions;
-using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
+using HE.Investment.AHP.Domain.Tests.HomeTypes.TestDataBuilders;
 using HE.Investments.Common.Exceptions;
 
 namespace HE.Investment.AHP.Domain.Tests.HomeTypes.EntitiesTests.TenureDetailsSegmentEntityTests;
@@ -20,11 +20,18 @@ public class CalculateProspectiveRentAsPercentageOfTheUnsoldShareTests
         var prospectiveRentVO = new ProspectiveRent(prospectiveRent);
         var initialSaleVO = new InitialSale(initialSale);
 
+        var tenureDetails = new TenureDetailsTestDataBuilder()
+            .WithMarketValue(marketValueVO)
+            .WithInitialSale(initialSaleVO)
+            .WithProspectiveRent(prospectiveRentVO)
+            .Build();
+
         // when
-        var result = TenureDetailsSegmentEntity.CalculateProspectiveRentAsPercentageOfTheUnsoldShare(marketValueVO, prospectiveRentVO, initialSaleVO);
+        tenureDetails.ChangeProspectiveRentAsPercentageOfTheUnsoldShare();
 
         // then
-        result.Should().Be(expectedResult);
+        tenureDetails.RentAsPercentageOfTheUnsoldShare.Should().NotBeNull();
+        tenureDetails.RentAsPercentageOfTheUnsoldShare!.Value.Should().Be(expectedResult);
     }
 
     [Theory]
@@ -34,8 +41,11 @@ public class CalculateProspectiveRentAsPercentageOfTheUnsoldShareTests
     [InlineData("", "", "")]
     public void ShouldReturnZero_WhenProvidedInputIsNotANumber(string marketValue, string prospectiveRent, string initialSale)
     {
-        // given && when
-        Action action = () => _ = TenureDetailsSegmentEntity.CalculateProspectiveRentAsPercentageOfTheUnsoldShare(
+        // given
+        var tenureDetails = new TenureDetailsTestDataBuilder().Build();
+
+        // when
+        Action action = () => _ = tenureDetails.CalculateProspectiveRentAsPercentageOfTheUnsoldShare(
             new MarketValue(marketValue, true),
             new ProspectiveRent(prospectiveRent, true),
             new InitialSale(initialSale, true));

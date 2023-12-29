@@ -46,6 +46,15 @@ public static class HomeTypesValidationFieldsOrder
         nameof(HomeOwnershipDisabilitiesModel.RentAsPercentageOfTheUnsoldShare),
     };
 
+    public static List<string> OlderPersonsSharedOwnership => new()
+    {
+        nameof(OlderPersonsSharedOwnershipModel.MarketValue),
+        nameof(OlderPersonsSharedOwnershipModel.InitialSale),
+        nameof(OlderPersonsSharedOwnershipModel.ExpectedFirstTranche),
+        nameof(OlderPersonsSharedOwnershipModel.ProspectiveRent),
+        nameof(OlderPersonsSharedOwnershipModel.RentAsPercentageOfTheUnsoldShare),
+    };
+
     public static List<string> HomeInformation => new()
     {
         nameof(HomeInformationModel.NumberOfHomes),

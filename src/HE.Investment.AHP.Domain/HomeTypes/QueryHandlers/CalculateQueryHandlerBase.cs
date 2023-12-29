@@ -43,6 +43,8 @@ public abstract class CalculateQueryHandlerBase<TQuery> : IRequestHandler<TQuery
             SegmentTypes,
             cancellationToken);
 
+        homeType.TenureDetails.ClearValuesForNewCalculation();
+
         var errors = PerformWithValidation(CalculateActions
             .Select<Action<TQuery, IHomeTypeEntity>, Action>(x => () => x(request, homeType))
             .ToArray());
