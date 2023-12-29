@@ -1,10 +1,9 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.Investments.Account.Shared;
-using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Services;
+using HE.Investments.Common.User;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Crm;
 
@@ -16,21 +15,20 @@ public class HomeTypeCrmContext : IHomeTypeCrmContext
 
     private readonly ICrmService _service;
 
-    private readonly IAccountUserContext _accountUserContext;
+    private readonly IUserContext _userContext;
 
-    public HomeTypeCrmContext(ICrmService service, IAccountUserContext accountUserContext)
+    public HomeTypeCrmContext(ICrmService service, IUserContext userContext)
     {
         _service = service;
-        _accountUserContext = accountUserContext;
+        _userContext = userContext;
     }
 
-    public async Task<int?> GetHomeTypesStatus(string applicationId, CancellationToken cancellationToken)
+    public async Task<int?> GetHomeTypesStatus(string applicationId, Guid organisationId, CancellationToken cancellationToken)
     {
-        var account = await _accountUserContext.GetSelectedAccount();
         var request = new invln_getahpapplicationRequest
         {
-            invln_userid = account.Role() == UserAccountRole.AnLimitedUser() ? account.UserGlobalId.ToString() : string.Empty,
-            invln_organisationid = account.AccountId.ToString(),
+            invln_userid = string.Empty,
+            invln_organisationid = organisationId.ToString(),
             invln_applicationid = applicationId,
             invln_appfieldstoretrieve = nameof(invln_scheme.invln_hometypessectioncompletionstatus).ToLowerInvariant(),
         };
@@ -43,14 +41,13 @@ public class HomeTypeCrmContext : IHomeTypeCrmContext
         return response.FirstOrDefault()?.homeTypesSectionCompletionStatus;
     }
 
-    public async Task SaveHomeTypesStatus(string applicationId, int homeTypesStatus, CancellationToken cancellationToken)
+    public async Task SaveHomeTypesStatus(string applicationId, Guid organisationId, int homeTypesStatus, CancellationToken cancellationToken)
     {
         var application = new AhpApplicationDto { id = applicationId, homeTypesSectionCompletionStatus = homeTypesStatus };
-        var account = await _accountUserContext.GetSelectedAccount();
         var request = new invln_setahpapplicationRequest
         {
-            invln_userid = account.UserGlobalId.ToString(),
-            invln_organisationid = account.AccountId.ToString(),
+            invln_userid = _userContext.UserGlobalId,
+            invln_organisationid = organisationId.ToString(),
             invln_application = JsonSerializer.Serialize(application),
             invln_fieldstoupdate = nameof(invln_scheme.invln_hometypessectioncompletionstatus).ToLowerInvariant(),
         };
@@ -61,48 +58,84 @@ public class HomeTypeCrmContext : IHomeTypeCrmContext
             cancellationToken);
     }
 
-    public async Task<IList<HomeTypeDto>> GetAll(string applicationId, IEnumerable<string> fieldsToRetrieve, CancellationToken cancellationToken)
+    public async Task<IList<HomeTypeDto>> GetAllOrganisationHomeTypes(
+        string applicationId,
+        Guid organisationId,
+        IEnumerable<string> fieldsToRetrieve,
+        CancellationToken cancellationToken)
     {
-        var account = await _accountUserContext.GetSelectedAccount();
         var request = new invln_gettypeofhomeslistRequest
         {
-            invln_userid = account.Role() == UserAccountRole.AnLimitedUser() ? account.UserGlobalId.ToString() : string.Empty,
-            invln_organisationid = account.AccountId.ToString(),
+            invln_userid = string.Empty,
+            invln_organisationid = organisationId.ToString(),
             invln_applicationid = applicationId,
             invln_fieldstoretrieve = string.Join(FieldNamesSeparator, fieldsToRetrieve).ToLowerInvariant(),
         };
 
-        return await _service.ExecuteAsync<invln_gettypeofhomeslistRequest, invln_gettypeofhomeslistResponse, IList<HomeTypeDto>>(
-            request,
-            x => x.invln_hometypeslist,
-            cancellationToken);
+        return await GetAll(request, cancellationToken);
     }
 
-    public async Task<HomeTypeDto?> GetById(string applicationId, string homeTypeId, IEnumerable<string> fieldsToRetrieve, CancellationToken cancellationToken)
+    public async Task<IList<HomeTypeDto>> GetAllUserHomeTypes(
+        string applicationId,
+        Guid organisationId,
+        IEnumerable<string> fieldsToRetrieve,
+        CancellationToken cancellationToken)
     {
-        var account = await _accountUserContext.GetSelectedAccount();
+        var request = new invln_gettypeofhomeslistRequest
+        {
+            invln_userid = _userContext.UserGlobalId,
+            invln_organisationid = organisationId.ToString(),
+            invln_applicationid = applicationId,
+            invln_fieldstoretrieve = string.Join(FieldNamesSeparator, fieldsToRetrieve).ToLowerInvariant(),
+        };
+
+        return await GetAll(request, cancellationToken);
+    }
+
+    public async Task<HomeTypeDto?> GetOrganisationHomeTypeById(
+        string applicationId,
+        string homeTypeId,
+        Guid organisationId,
+        IEnumerable<string> fieldsToRetrieve,
+        CancellationToken cancellationToken)
+    {
         var request = new invln_getsinglehometypeRequest
         {
-            invln_userid = account.Role() == UserAccountRole.AnLimitedUser() ? account.UserGlobalId.ToString() : string.Empty,
-            invln_organisationid = account.AccountId.ToString(),
+            invln_userid = string.Empty,
+            invln_organisationid = organisationId.ToString(),
             invln_applicationid = applicationId,
             invln_hometypeid = homeTypeId,
             invln_fieldstoretrieve = string.Join(FieldNamesSeparator, fieldsToRetrieve).ToLowerInvariant(),
         };
 
-        return await _service.ExecuteAsync<invln_getsinglehometypeRequest, invln_getsinglehometypeResponse, HomeTypeDto?>(
-            request,
-            x => x.invln_hometype,
-            cancellationToken);
+        return await GetSingle(request, cancellationToken);
     }
 
-    public async Task Remove(string applicationId, string homeTypeId, CancellationToken cancellationToken)
+    public async Task<HomeTypeDto?> GetUserHomeTypeById(
+        string applicationId,
+        string homeTypeId,
+        Guid organisationId,
+        IEnumerable<string> fieldsToRetrieve,
+        CancellationToken cancellationToken)
     {
-        var account = await _accountUserContext.GetSelectedAccount();
+        var request = new invln_getsinglehometypeRequest
+        {
+            invln_userid = _userContext.UserGlobalId,
+            invln_organisationid = organisationId.ToString(),
+            invln_applicationid = applicationId,
+            invln_hometypeid = homeTypeId,
+            invln_fieldstoretrieve = string.Join(FieldNamesSeparator, fieldsToRetrieve).ToLowerInvariant(),
+        };
+
+        return await GetSingle(request, cancellationToken);
+    }
+
+    public async Task Remove(string applicationId, string homeTypeId, Guid organisationId, CancellationToken cancellationToken)
+    {
         var request = new invln_deletehometypeRequest
         {
-            invln_userid = account.UserGlobalId.ToString(),
-            invln_organisationid = account.AccountId.ToString(),
+            invln_userid = _userContext.UserGlobalId,
+            invln_organisationid = organisationId.ToString(),
             invln_applicationid = applicationId,
             invln_hometypeid = homeTypeId,
         };
@@ -113,13 +146,12 @@ public class HomeTypeCrmContext : IHomeTypeCrmContext
             cancellationToken);
     }
 
-    public async Task<string> Save(HomeTypeDto homeType, IEnumerable<string> fieldsToSave, CancellationToken cancellationToken)
+    public async Task<string> Save(HomeTypeDto homeType, Guid organisationId, IEnumerable<string> fieldsToSave, CancellationToken cancellationToken)
     {
-        var account = await _accountUserContext.GetSelectedAccount();
         var request = new invln_sethometypeRequest
         {
-            invln_organisationid = account.AccountId.ToString(),
-            invln_userid = account.UserGlobalId.ToString(),
+            invln_organisationid = organisationId.ToString(),
+            invln_userid = _userContext.UserGlobalId,
             invln_applicationid = homeType.applicationId,
             invln_hometype = JsonSerializer.Serialize(homeType, _serializerOptions),
             invln_fieldstoset = string.Join(FieldNamesSeparator, fieldsToSave).ToLowerInvariant(),
@@ -128,6 +160,22 @@ public class HomeTypeCrmContext : IHomeTypeCrmContext
         return await _service.ExecuteAsync<invln_sethometypeRequest, invln_sethometypeResponse>(
             request,
             x => x.invln_hometypeid,
+            cancellationToken);
+    }
+
+    private async Task<HomeTypeDto?> GetSingle(invln_getsinglehometypeRequest request, CancellationToken cancellationToken)
+    {
+        return await _service.ExecuteAsync<invln_getsinglehometypeRequest, invln_getsinglehometypeResponse, HomeTypeDto?>(
+            request,
+            x => x.invln_hometype,
+            cancellationToken);
+    }
+
+    private async Task<IList<HomeTypeDto>> GetAll(invln_gettypeofhomeslistRequest request, CancellationToken cancellationToken)
+    {
+        return await _service.ExecuteAsync<invln_gettypeofhomeslistRequest, invln_gettypeofhomeslistResponse, IList<HomeTypeDto>>(
+            request,
+            x => x.invln_hometypeslist,
             cancellationToken);
     }
 }

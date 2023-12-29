@@ -1,8 +1,7 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.Investments.Account.Shared;
-using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Services;
+using HE.Investments.Common.User;
 using HE.Investments.Loans.Common.CrmCommunication.Serialization;
 using HE.Investments.Loans.Common.Exceptions;
 
@@ -11,42 +10,42 @@ namespace HE.Investment.AHP.Domain.Data;
 public class ApplicationCrmContext : IApplicationCrmContext
 {
     private readonly ICrmService _service;
-    private readonly IAccountUserContext _accountUserContext;
 
-    public ApplicationCrmContext(ICrmService service, IAccountUserContext accountUserContext)
+    private readonly IUserContext _userContext;
+
+    public ApplicationCrmContext(ICrmService service, IUserContext userContext)
     {
         _service = service;
-        _accountUserContext = accountUserContext;
+        _userContext = userContext;
     }
 
-    public async Task<AhpApplicationDto> GetById(string id, IList<string> fieldsToRetrieve, CancellationToken cancellationToken)
+    public async Task<AhpApplicationDto> GetOrganisationApplicationById(string id, Guid organisationId, IList<string> fieldsToRetrieve, CancellationToken cancellationToken)
     {
-        var account = await TryGetUserAccountForSelectedOrganisation();
         var request = new invln_getahpapplicationRequest
         {
-            invln_userid = account.Role() == UserAccountRole.AnLimitedUser() ? account.UserGlobalId.ToString() : string.Empty,
-            invln_organisationid = account.AccountId.ToString(),
+            invln_userid = string.Empty,
+            invln_organisationid = organisationId.ToString(),
+            invln_applicationid = id,
+            invln_appfieldstoretrieve = FormatFields(fieldsToRetrieve),
+        };
+        return await Get(request, cancellationToken);
+    }
+
+    public async Task<AhpApplicationDto> GetUserApplicationById(string id, Guid organisationId, IList<string> fieldsToRetrieve, CancellationToken cancellationToken)
+    {
+        var request = new invln_getahpapplicationRequest
+        {
+            invln_userid = _userContext.UserGlobalId,
+            invln_organisationid = organisationId.ToString(),
             invln_applicationid = id,
             invln_appfieldstoretrieve = FormatFields(fieldsToRetrieve),
         };
 
-        var response = await _service.ExecuteAsync<invln_getahpapplicationRequest, invln_getahpapplicationResponse, IList<AhpApplicationDto>>(
-            request,
-            r => r.invln_retrievedapplicationfields,
-            cancellationToken);
-
-        if (!response.Any())
-        {
-            throw new NotFoundException("AhpApplication", id);
-        }
-
-        return response.First();
+        return await Get(request, cancellationToken);
     }
 
-    public async Task<bool> IsExist(string applicationName, CancellationToken cancellationToken)
+    public async Task<bool> IsExist(string applicationName, Guid organisationId, CancellationToken cancellationToken)
     {
-        var account = await TryGetUserAccountForSelectedOrganisation();
-
         var dto = new AhpApplicationDto
         {
             name = applicationName,
@@ -55,7 +54,7 @@ public class ApplicationCrmContext : IApplicationCrmContext
         var request = new invln_checkifapplicationwithgivennameexistsRequest
         {
             invln_application = CrmResponseSerializer.Serialize(dto),
-            invln_organisationid = account.AccountId.ToString(),
+            invln_organisationid = organisationId.ToString(),
         };
 
         var response = await _service.ExecuteAsync<invln_checkifapplicationwithgivennameexistsRequest, invln_checkifapplicationwithgivennameexistsResponse>(
@@ -66,29 +65,36 @@ public class ApplicationCrmContext : IApplicationCrmContext
         return bool.TryParse(response, out var result) && result;
     }
 
-    public async Task<IList<AhpApplicationDto>> GetAll(IList<string> fieldsToRetrieve, CancellationToken cancellationToken)
+    public async Task<IList<AhpApplicationDto>> GetOrganisationApplications(Guid organisationId, IList<string> fieldsToRetrieve, CancellationToken cancellationToken)
     {
-        var account = await TryGetUserAccountForSelectedOrganisation();
         var request = new invln_getmultipleahpapplicationsRequest
         {
-            inlvn_userid = account.Role() == UserAccountRole.AnLimitedUser() ? account.UserGlobalId.ToString() : string.Empty,
-            invln_organisationid = account.AccountId.ToString(),
+            inlvn_userid = string.Empty,
+            invln_organisationid = organisationId.ToString(),
             invln_appfieldstoretrieve = FormatFields(fieldsToRetrieve),
         };
 
-        return await _service.ExecuteAsync<invln_getmultipleahpapplicationsRequest, invln_getmultipleahpapplicationsResponse, IList<AhpApplicationDto>>(
-            request,
-            r => r.invln_ahpapplications,
-            cancellationToken);
+        return await GetAll(request, cancellationToken);
     }
 
-    public async Task<string> Save(AhpApplicationDto dto, IList<string> fieldsToUpdate, CancellationToken cancellationToken)
+    public async Task<IList<AhpApplicationDto>> GetUserApplications(Guid organisationId, IList<string> fieldsToRetrieve, CancellationToken cancellationToken)
     {
-        var account = await TryGetUserAccountForSelectedOrganisation();
+        var request = new invln_getmultipleahpapplicationsRequest
+        {
+            inlvn_userid = _userContext.UserGlobalId,
+            invln_organisationid = organisationId.ToString(),
+            invln_appfieldstoretrieve = FormatFields(fieldsToRetrieve),
+        };
+
+        return await GetAll(request, cancellationToken);
+    }
+
+    public async Task<string> Save(AhpApplicationDto dto, Guid organisationId, IList<string> fieldsToUpdate, CancellationToken cancellationToken)
+    {
         var request = new invln_setahpapplicationRequest
         {
-            invln_userid = account.UserGlobalId.ToString(),
-            invln_organisationid = account.AccountId.ToString(),
+            invln_userid = _userContext.UserGlobalId,
+            invln_organisationid = organisationId.ToString(),
             invln_application = CrmResponseSerializer.Serialize(dto),
             invln_fieldstoupdate = FormatFields(fieldsToUpdate),
         };
@@ -104,15 +110,26 @@ public class ApplicationCrmContext : IApplicationCrmContext
         return string.Join(",", fieldsToRetrieve.Select(f => f.ToLowerInvariant()));
     }
 
-    private async Task<UserAccount> TryGetUserAccountForSelectedOrganisation()
+    private async Task<AhpApplicationDto> Get(invln_getahpapplicationRequest request, CancellationToken cancellationToken)
     {
-        var account = await _accountUserContext.GetSelectedAccount();
+        var response = await _service.ExecuteAsync<invln_getahpapplicationRequest, invln_getahpapplicationResponse, IList<AhpApplicationDto>>(
+            request,
+            r => r.invln_retrievedapplicationfields,
+            cancellationToken);
 
-        if (account.AccountId == null)
+        if (!response.Any())
         {
-            throw new InvalidOperationException("User is not linked with any organisation.");
+            throw new NotFoundException("AhpApplication", request.invln_applicationid);
         }
 
-        return account;
+        return response.First();
+    }
+
+    private async Task<IList<AhpApplicationDto>> GetAll(invln_getmultipleahpapplicationsRequest request, CancellationToken cancellationToken)
+    {
+        return await _service.ExecuteAsync<invln_getmultipleahpapplicationsRequest, invln_getmultipleahpapplicationsResponse, IList<AhpApplicationDto>>(
+            request,
+            r => r.invln_ahpapplications,
+            cancellationToken);
     }
 }

@@ -1,5 +1,6 @@
 using FluentAssertions;
 using HE.Investments.Account.Domain.User.Repositories;
+using HE.Investments.Account.Shared.Repositories;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Tests.TestObjectBuilders;
 using HE.Investments.TestsUtils.TestFramework;
@@ -35,7 +36,7 @@ public class GetUserAccountTests : TestBase<AccountRepository>
         var account = result.First();
         account.UserGlobalId.Value.Should().Be(contactRolesDto.externalId);
         account.UserEmail.Should().Be(contactRolesDto.email);
-        account.Roles.Should().ContainSingle(x => x.Role == contactRolesDto.contactRoles.First().webRoleName);
+        account.Roles.Should().ContainSingle(x => x == UserRoleMapper.ToDomain(contactRolesDto.contactRoles.First().permission));
     }
 
     [Fact]

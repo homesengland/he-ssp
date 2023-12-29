@@ -6,6 +6,8 @@ using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Data;
 using HE.Investment.AHP.Domain.FinancialDetails.Entities;
 using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
+using HE.Investments.Account.Shared.User;
+using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.CRM;
 using HE.Investments.Common.Extensions;
 using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
@@ -21,14 +23,17 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
         _applicationCrmContext = applicationCrmContext;
     }
 
-    public async Task<FinancialDetailsEntity> GetById(ApplicationId id, CancellationToken cancellationToken)
+    public async Task<FinancialDetailsEntity> GetById(ApplicationId id, UserAccount userAccount, CancellationToken cancellationToken)
     {
-        var application = await _applicationCrmContext.GetById(id.Value, CrmFields.FinancialDetailsToRead, cancellationToken);
+        var organisationId = userAccount.SelectedOrganisationId().Value;
+        var application = userAccount.CanViewAllApplications()
+            ? await _applicationCrmContext.GetOrganisationApplicationById(id.Value, organisationId, CrmFields.FinancialDetailsToRead, cancellationToken)
+            : await _applicationCrmContext.GetUserApplicationById(id.Value, organisationId, CrmFields.FinancialDetailsToRead, cancellationToken);
 
         return CreateEntity(application);
     }
 
-    public async Task<FinancialDetailsEntity> Save(FinancialDetailsEntity financialDetails, CancellationToken cancellationToken)
+    public async Task<FinancialDetailsEntity> Save(FinancialDetailsEntity financialDetails, OrganisationId organisationId, CancellationToken cancellationToken)
     {
         var dto = new AhpApplicationDto
         {
@@ -46,7 +51,7 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
         MapFromExpectedContributions(financialDetails.ExpectedContributions, dto);
         MapFromPublicGrants(financialDetails.PublicGrants, dto);
 
-        _ = await _applicationCrmContext.Save(dto, CrmFields.FinancialDetailsToUpdate, cancellationToken);
+        _ = await _applicationCrmContext.Save(dto, organisationId.Value, CrmFields.FinancialDetailsToUpdate, cancellationToken);
 
         return financialDetails;
     }
@@ -116,7 +121,7 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
             MapProvidedValues(application.ownResources, ExpectedContributionFields.OwnResources),
             MapProvidedValues(application.recycledCapitalGrantFund, ExpectedContributionFields.RcgfContribution),
             MapProvidedValues(application.otherCapitalSources, ExpectedContributionFields.OtherCapitalSources),
-            MapProvidedValues(application.totalInitialSalesIncome, ExpectedContributionFields.InitialSalesOfSharedHomes),
+            MapProvidedValues(application.totalInitialSalesIncome, ExpectedContributionFields.SharedOwnershipSales),
             MapProvidedValues(application.transferValue, ExpectedContributionFields.HomesTransferValue),
             tenure);
     }

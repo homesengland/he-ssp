@@ -403,7 +403,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             }
         }
 
-        public void SendInternalNotificationOnStatusChange(invln_Loanapplication target, invln_Loanapplication preImage)
+        public void ChangeExternalStatusOnInternalStatusChange(invln_Loanapplication target, invln_Loanapplication preImage)
         {
             if (target.StatusCode != null && preImage.StatusCode != null && target.StatusCode.Value != preImage.StatusCode.Value)
             {

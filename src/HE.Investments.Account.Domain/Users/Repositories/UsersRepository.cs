@@ -2,6 +2,8 @@ using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Contract.Users;
 using HE.Investments.Account.Domain.Data;
 using HE.Investments.Account.Domain.Data.Extensions;
+using HE.Investments.Account.Shared.Repositories;
+using HE.Investments.Account.Shared.User.ValueObjects;
 
 namespace HE.Investments.Account.Domain.Users.Repositories;
 
@@ -14,30 +16,23 @@ public class UsersRepository : IUsersRepository
         _usersCrmContext = usersCrmContext;
     }
 
-    public async Task<IList<UserDetails>> GetUsers()
+    public async Task<IList<UserDetails>> GetUsers(OrganisationId organisationId)
     {
-        var users = await _usersCrmContext.GetUsers();
+        var users = await _usersCrmContext.GetUsers(organisationId.Value);
         if (!users.Any())
         {
             return new List<UserDetails>();
         }
 
-        var roles = await _usersCrmContext.GetUsersRole(users.Select(u => u.contactExternalId).ToList());
-
         return users
             .Where(x => x.IsConnectedWithExternalIdentity())
-            .Select(u => CreateUserDetails(u, r => GetRole(r, roles)))
+            .Select(CreateUserDetails)
             .ToList();
     }
 
-    private static UserDetails CreateUserDetails(ContactDto contact, Func<string, int?> getRole)
+    private static UserDetails CreateUserDetails(ContactDto contact)
     {
-        var role = UserRoleMapper.ToDomain(getRole(contact.contactExternalId));
+        var role = UserRoleMapper.ToDomain(contact.webrole);
         return new UserDetails(contact.contactExternalId, contact.firstName, contact.lastName, contact.email, contact.jobTitle, role, null);
-    }
-
-    private static int? GetRole(string id, IDictionary<string, int?> roles)
-    {
-        return !roles.TryGetValue(id, out var role) ? null : role;
     }
 }

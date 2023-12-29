@@ -1,0 +1,6 @@
+@model (string text, string name, string value);
+
+<button type="submit" class="govuk-link--no-visited-state govuk-button-link" name="@Model.name" value="@Model.value">
+    @Model.text
+</button>
+

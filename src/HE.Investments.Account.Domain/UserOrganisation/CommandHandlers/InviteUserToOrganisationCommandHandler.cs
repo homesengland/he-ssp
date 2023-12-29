@@ -1,5 +1,4 @@
 using HE.Investments.Account.Contract.UserOrganisation.Commands;
-using HE.Investments.Account.Domain.Organisation.ValueObjects;
 using HE.Investments.Account.Domain.UserOrganisation.Entities;
 using HE.Investments.Account.Domain.UserOrganisation.Repositories;
 using HE.Investments.Account.Shared;
@@ -30,8 +29,8 @@ public class InviteUserToOrganisationCommandHandler : IRequestHandler<InviteUser
             return createInvitationResult;
         }
 
-        var organisationId = await GetSelectedOrganisationId();
-        var organisationUsers = await _organisationUsersRepository.GetOrganisationUsers(organisationId, cancellationToken);
+        var account = await _userContext.GetSelectedAccount();
+        var organisationUsers = await _organisationUsersRepository.GetOrganisationUsers(account.SelectedOrganisationId(), cancellationToken);
 
         try
         {
@@ -56,12 +55,5 @@ public class InviteUserToOrganisationCommandHandler : IRequestHandler<InviteUser
         var invitation = operationResult.Aggregate(() => new UserInvitationEntity(firstName, lastName, email, jobTitle, request.NewRole));
 
         return new OperationResult<UserInvitationEntity?>(operationResult.Errors, invitation);
-    }
-
-    private async Task<OrganisationId> GetSelectedOrganisationId()
-    {
-        var myAccount = await _userContext.GetSelectedAccount();
-        return new OrganisationId(myAccount.AccountId
-                                  ?? throw new InvalidOperationException("Cannot send invitation because user is not assigned to any Organisation."));
     }
 }

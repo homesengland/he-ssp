@@ -1,18 +1,17 @@
 using HE.Investments.Account.Contract.Organisation;
 using HE.Investments.Account.Contract.Organisation.Queries;
 using HE.Investments.Account.Domain.Organisation.Entities;
-using HE.Investments.Account.Domain.Organisation.ValueObjects;
-using HE.Investments.Account.Shared.User;
+using HE.Investments.Account.Shared.User.ValueObjects;
 
 namespace HE.Investments.Account.Domain.Organisation.Repositories;
 
 public interface IOrganizationRepository
 {
-    public Task<OrganizationBasicInformation> GetBasicInformation(UserAccount userAccount, CancellationToken cancellationToken);
+    public Task<OrganizationBasicInformation> GetBasicInformation(OrganisationId organisationId, CancellationToken cancellationToken);
 
-    public Task<OrganisationChangeRequestState> GetOrganisationChangeRequestDetails(UserAccount userAccount, CancellationToken cancellationToken);
+    public Task<OrganisationChangeRequestState> GetOrganisationChangeRequestDetails(OrganisationId organisationId, CancellationToken cancellationToken);
 
     Task<OrganisationId> CreateOrganisation(OrganisationEntity organisation);
 
-    Task Save(OrganisationEntity organisation, UserAccount userAccount, CancellationToken cancellationToken);
+    Task Save(OrganisationId organisationId, OrganisationEntity organisation, CancellationToken cancellationToken);
 }

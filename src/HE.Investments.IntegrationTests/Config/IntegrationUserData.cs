@@ -24,8 +24,6 @@ public class IntegrationUserData
     {
         if (userConfig.UseConfigData)
         {
-            UserGlobalId = userConfig.UserGlobalId;
-            Email = userConfig.Email;
             FirstName = new FirstName(userConfig.FirstName)!;
             LastName = new LastName(userConfig.LastName)!;
             OrganizationName = userConfig.OrganizationName;
@@ -44,10 +42,6 @@ public class IntegrationUserData
         FirstName = new FirstName("Integration")!;
         LastName = new LastName($"Test-{DateTime.UtcNow.ToString(CultureInfo.InvariantCulture)}")!;
     }
-
-    public string UserGlobalId { get; private set; }
-
-    public string Email { get; private set; }
 
     public string OrganizationName { get; private set; } = "HOMES OF ENGLAND LIMITED";
 
@@ -78,17 +72,6 @@ public class IntegrationUserData
     public string ProjectInDraftStateId { get; private set; }
 
     public bool IsDeveloperProvidedUserData { get; }
-
-    public void ProvideData(string userGlobalId)
-    {
-        if (IsDeveloperProvidedUserData)
-        {
-            throw new NotSupportedException("Developer provided user data and new user cannot be created");
-        }
-
-        UserGlobalId = userGlobalId;
-        Email = $"{userGlobalId}@integrationTests.it";
-    }
 
     public void SetApplicationLoanId(string loanApplicationId)
     {
@@ -135,8 +118,6 @@ public class IntegrationUserData
             return;
         }
 
-        UserGlobalId = "auth0|64a3bdb420d21a3fc5193e4d";
-        Email = "luci_001@pwc.com";
         FirstName = new FirstName("John");
         LastName = new LastName("Doe");
         JobTitle = new JobTitle("Developer");

@@ -4,6 +4,7 @@ using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Mappers;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
+using HE.Investments.Account.Shared;
 using MediatR;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.QueryHandlers;
@@ -12,16 +13,21 @@ internal sealed class GetHomeTypeQueryHandler : IRequestHandler<GetHomeTypeQuery
 {
     private readonly IHomeTypeRepository _repository;
 
-    public GetHomeTypeQueryHandler(IHomeTypeRepository repository)
+    private readonly IAccountUserContext _accountUserContext;
+
+    public GetHomeTypeQueryHandler(IHomeTypeRepository repository, IAccountUserContext accountUserContext)
     {
         _repository = repository;
+        _accountUserContext = accountUserContext;
     }
 
     public async Task<HomeType> Handle(GetHomeTypeQuery request, CancellationToken cancellationToken)
     {
+        var account = await _accountUserContext.GetSelectedAccount();
         var homeType = await _repository.GetById(
             new Domain.Application.ValueObjects.ApplicationId(request.ApplicationId),
             new HomeTypeId(request.HomeTypeId),
+            account,
             HomeTypeSegmentTypes.WorkflowConditionals,
             cancellationToken);
 

@@ -49,12 +49,12 @@ public class ApplicationEntity
 
     public bool IsNew => Id.IsEmpty();
 
-    public static ApplicationEntity New(ApplicationName name) => new(
+    public static ApplicationEntity New(ApplicationName name, ApplicationTenure tenure) => new(
         ApplicationId.Empty(),
         name,
         ApplicationStatus.New,
         new ApplicationReferenceNumber(null),
-        null,
+        tenure,
         null,
         new ApplicationSections(new List<ApplicationSection>()));
 
@@ -66,16 +66,6 @@ public class ApplicationEntity
         }
 
         Id = newId;
-    }
-
-    public void ChangeName(ApplicationName name)
-    {
-        Name = _modificationTracker.Change(Name, name);
-    }
-
-    public void ChangeTenure(ApplicationTenure tenure)
-    {
-        Tenure = _modificationTracker.Change(Tenure, tenure);
     }
 
     public void Submit()

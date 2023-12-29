@@ -2,6 +2,7 @@ using HE.Investment.AHP.Domain.HomeTypes.Commands;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
+using HE.Investments.Account.Shared;
 using HE.Investments.Common.Extensions;
 using Microsoft.Extensions.Logging;
 
@@ -9,8 +10,11 @@ namespace HE.Investment.AHP.Domain.HomeTypes.CommandHandlers;
 
 public class SaveMoveOnArrangementsCommandHandler : SaveHomeTypeSegmentCommandHandlerBase<SaveMoveOnArrangementsCommand>
 {
-    public SaveMoveOnArrangementsCommandHandler(IHomeTypeRepository homeTypeRepository, ILogger<SaveMoveOnArrangementsCommandHandler> logger)
-        : base(homeTypeRepository, logger)
+    public SaveMoveOnArrangementsCommandHandler(
+        IHomeTypeRepository homeTypeRepository,
+        IAccountUserContext accountUserContext,
+        ILogger<SaveMoveOnArrangementsCommandHandler> logger)
+        : base(homeTypeRepository, accountUserContext, logger)
     {
     }
 

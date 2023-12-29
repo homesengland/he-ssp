@@ -14,7 +14,6 @@ public static class HomeTypeConditionalsMapper
             homeType.HomeInformation.AccessibilityStandards,
             homeType.HomeInformation.MeetNationallyDescribedSpaceStandards,
             homeType.TenureDetails.ExemptFromTheRightToSharedOwnership,
-            homeType.TenureDetails.IsProspectiveRentIneligible,
-            homeType.TenureDetails.IsSharedOwnershipIneligible);
+            homeType.TenureDetails.IsProspectiveRentIneligible);
     }
 }

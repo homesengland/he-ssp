@@ -1,6 +1,7 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Domain.Application.Repositories;
+using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
 using MediatR;
 using ContractApplication = HE.Investment.AHP.Contract.Application.Application;
@@ -11,14 +12,18 @@ public class GetApplicationQueryHandler : IRequestHandler<GetApplicationQuery, C
 {
     private readonly IApplicationRepository _repository;
 
-    public GetApplicationQueryHandler(IApplicationRepository repository)
+    private readonly IAccountUserContext _accountUserContext;
+
+    public GetApplicationQueryHandler(IApplicationRepository repository, IAccountUserContext accountUserContext)
     {
         _repository = repository;
+        _accountUserContext = accountUserContext;
     }
 
     public async Task<ContractApplication> Handle(GetApplicationQuery request, CancellationToken cancellationToken)
     {
-        var application = await _repository.GetById(new(request.ApplicationId), cancellationToken);
+        var account = await _accountUserContext.GetSelectedAccount();
+        var application = await _repository.GetById(new(request.ApplicationId), account, cancellationToken);
 
         return new ContractApplication(
             application.Id.Value,

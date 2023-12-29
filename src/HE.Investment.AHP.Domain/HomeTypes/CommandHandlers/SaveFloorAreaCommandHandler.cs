@@ -1,14 +1,18 @@
 using HE.Investment.AHP.Domain.HomeTypes.Commands;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
+using HE.Investments.Account.Shared;
 using Microsoft.Extensions.Logging;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.CommandHandlers;
 
 public class SaveFloorAreaCommandHandler : SaveHomeTypeSegmentCommandHandlerBase<SaveFloorAreaCommand>
 {
-    public SaveFloorAreaCommandHandler(IHomeTypeRepository homeTypeRepository, ILogger<SaveFloorAreaCommandHandler> logger)
-        : base(homeTypeRepository, logger)
+    public SaveFloorAreaCommandHandler(
+        IHomeTypeRepository homeTypeRepository,
+        IAccountUserContext accountUserContext,
+        ILogger<SaveFloorAreaCommandHandler> logger)
+        : base(homeTypeRepository, accountUserContext, logger)
     {
     }
 

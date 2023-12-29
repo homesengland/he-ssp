@@ -5,7 +5,7 @@ namespace HE.Investments.Account.WWW.Utils;
 
 public interface IProgrammes
 {
-    ProgrammeModel GetProgramme(ProgrammeType programmeType);
+    Task<ProgrammeModel> GetProgramme(ProgrammeType programmeType);
 
     string GetApplicationUrl(ProgrammeType programmeType, string applicationId);
 }

@@ -16,13 +16,12 @@ namespace HE.CRM.Common.Repositories.Implementations
         {
         }
 
-        public bool ApplicationWithGivenIdExistsForOrganisationAndContract(Guid applicationId, Guid organisationId, string userId)
+        public bool ApplicationWithGivenIdExistsForOrganisation(Guid applicationId, Guid organisationId)
         {
             using (DataverseContext ctx = new DataverseContext(service))
             {
                 return (from app in ctx.invln_schemeSet
-                        join cnt in ctx.ContactSet on app.invln_contactid.Id equals cnt.ContactId
-                        where app.invln_schemeId == applicationId && cnt.invln_externalid == userId && app.invln_organisationid.Id == organisationId
+                        where app.invln_schemeId == applicationId && app.invln_organisationid.Id == organisationId
                         select app).AsEnumerable().Any();
 
             }

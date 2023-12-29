@@ -5,8 +5,8 @@ namespace HE.Investments.Common.WWW.Components.FormHeader;
 
 public class FormHeader : ViewComponent
 {
-    public IViewComponentResult Invoke(string title, string? caption = null, string? additionalCssClass = null)
+    public IViewComponentResult Invoke(string title, string? caption = null, string? hint = null, string? additionalCssClass = null)
     {
-        return View("FormHeader", (Caption: caption, Title: title, CssClass: additionalCssClass));
+        return View("FormHeader", (Caption: caption, Title: title, Hint: hint, CssClass: additionalCssClass));
     }
 }

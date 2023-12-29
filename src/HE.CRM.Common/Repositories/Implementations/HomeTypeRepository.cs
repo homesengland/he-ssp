@@ -17,14 +17,13 @@ namespace HE.CRM.Common.Repositories.Implementations
         {
         }
 
-        public bool CheckIfGivenHomeTypeIsAssignedToGivenUserAndOrganisationAndApplication(Guid homeTypeId, string userId, Guid organisationId, Guid applicationId)
+        public bool CheckIfGivenHomeTypeIsAssignedToGivenOrganisationAndApplication(Guid homeTypeId, Guid organisationId, Guid applicationId)
         {
             using (DataverseContext ctx = new DataverseContext(service))
             {
                 return (from ht in ctx.invln_HomeTypeSet
                         join app in ctx.invln_schemeSet on ht.invln_application.Id equals app.invln_schemeId
-                        join cnt in ctx.ContactSet on app.invln_contactid.Id equals cnt.ContactId
-                        where ht.invln_HomeTypeId == homeTypeId && cnt.invln_externalid == userId && app.invln_organisationid.Id == organisationId
+                        where ht.invln_HomeTypeId == homeTypeId && app.invln_organisationid.Id == organisationId
                         && app.invln_schemeId == applicationId
                         select ht).ToList().Any();
 

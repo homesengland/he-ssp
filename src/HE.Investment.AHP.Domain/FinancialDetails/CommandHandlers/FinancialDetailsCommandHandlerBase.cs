@@ -1,26 +1,32 @@
 using HE.Investment.AHP.Domain.FinancialDetails.Entities;
 using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
+using HE.Investments.Account.Shared;
 using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Validators;
 using Microsoft.Extensions.Logging;
 using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.CommandHandlers;
-public class FinancialDetailsCommandHandlerBase
+
+public abstract class FinancialDetailsCommandHandlerBase
 {
     private readonly IFinancialDetailsRepository _repository;
 
+    private readonly IAccountUserContext _accountUserContext;
+
     private readonly ILogger<FinancialDetailsCommandHandlerBase> _logger;
 
-    public FinancialDetailsCommandHandlerBase(IFinancialDetailsRepository repository, ILogger<FinancialDetailsCommandHandlerBase> logger)
+    protected FinancialDetailsCommandHandlerBase(IFinancialDetailsRepository repository, IAccountUserContext accountUserContext, ILogger<FinancialDetailsCommandHandlerBase> logger)
     {
         _repository = repository;
+        _accountUserContext = accountUserContext;
         _logger = logger;
     }
 
-    public async Task<OperationResult> Perform(Action<FinancialDetailsEntity> action, ApplicationId applicationId, CancellationToken cancellationToken)
+    protected async Task<OperationResult> Perform(Action<FinancialDetailsEntity> action, ApplicationId applicationId, CancellationToken cancellationToken)
     {
-        var financialDetails = await _repository.GetById(applicationId, cancellationToken);
+        var account = await _accountUserContext.GetSelectedAccount();
+        var financialDetails = await _repository.GetById(applicationId, account, cancellationToken);
 
         try
         {
@@ -32,7 +38,7 @@ public class FinancialDetailsCommandHandlerBase
             return domainValidationException.OperationResult;
         }
 
-        await _repository.Save(financialDetails, cancellationToken);
+        await _repository.Save(financialDetails, account.SelectedOrganisationId(), cancellationToken);
         return OperationResult.Success();
     }
 }

@@ -15,13 +15,9 @@ public interface IAccountUserContext
 
     Task<UserProfileDetails> GetProfileDetails();
 
-    Task RefreshProfileDetails();
-
-    Task RefreshAccounts();
+    Task RefreshUserData();
 
     Task<bool> IsProfileCompleted();
 
     Task<bool> IsLinkedWithOrganisation();
-
-    Task<bool> HasOneOfRole(UserAccountRole[] roles);
 }

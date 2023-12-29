@@ -2,7 +2,6 @@
 @using HE.Investment.AHP.Domain.FinancialDetails;
 @using HE.Investment.AHP.WWW.Models.FinancialDetails;
 @using HE.Investment.AHP.WWW.Views.FinancialDetails.Consts;
-@using HE.Investments.Common.Gds;
 @using HE.Investments.Common.WWW.Extensions;
 @model FinancialDetailsGrantsModel;
 @{
@@ -16,10 +15,10 @@
                                           application-id="@Model.ApplicationId.ToString()"
                                           caption="@Model.ApplicationName - Finance details" />
 
-        <div class="govuk-caption-m govuk-!-margin-bottom-6">
+        <gds-p>
             For multi-tenure sites, ensure the costs and contributions are apportioned across the development and only those applicable to the homes on this application are recorded here.
-            Enter to the nearest pound. If you have not received any grants from other public bodies, enter 0.
-        </div>
+            <br />Enter to the nearest pound. If you have not received any grants from other public bodies, enter 0.
+        </gds-p>
 
         <gds-field-set>
             <he-error-form-group asp-for="CountyCouncilGrants">

@@ -2,7 +2,6 @@ using FluentAssertions;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Exceptions;
-using Xunit;
 using ApplicationSection = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationSection;
 
 namespace HE.Investment.AHP.Domain.Tests.Application.Entities.ApplicationEntityTests;

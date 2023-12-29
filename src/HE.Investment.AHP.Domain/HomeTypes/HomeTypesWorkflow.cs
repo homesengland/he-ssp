@@ -42,8 +42,7 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
                 homeType.HomeInformation.AccessibilityStandards,
                 homeType.HomeInformation.MeetNationallyDescribedSpaceStandards,
                 homeType.TenureDetails.ExemptFromTheRightToSharedOwnership,
-                homeType.TenureDetails.IsProspectiveRentIneligible,
-                homeType.TenureDetails.IsSharedOwnershipIneligible));
+                homeType.TenureDetails.IsProspectiveRentIneligible));
         _machine = new StateMachine<HomeTypesWorkflowState, Trigger>(HomeTypesWorkflowState.Index);
         ConfigureTransitions();
     }
@@ -117,9 +116,11 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
             HomeTypesWorkflowState.AffordableRentIneligible => IsTenure(Tenure.AffordableRent) && !IsAffordableRentEligible(),
             HomeTypesWorkflowState.SocialRent => IsTenure(Tenure.SocialRent),
             HomeTypesWorkflowState.SharedOwnership => IsTenure(Tenure.SharedOwnership),
-            HomeTypesWorkflowState.SharedOwnershipIneligible => IsTenure(Tenure.SharedOwnership) && !IsSharedOwnershipEligible(),
             HomeTypesWorkflowState.RentToBuy => IsTenure(Tenure.RentToBuy),
             HomeTypesWorkflowState.RentToBuyIneligible => IsTenure(Tenure.RentToBuy) && !IsRentToBuyEligible(),
+            HomeTypesWorkflowState.HomeOwnershipDisabilities => IsTenure(Tenure.HomeOwnershipLongTermDisabilities),
+            HomeTypesWorkflowState.ProspectiveRentIneligible => (IsTenure(Tenure.SharedOwnership) && !IsSharedOwnershipEligible())
+                                                                || (IsTenure(Tenure.HomeOwnershipLongTermDisabilities) && !IsHomeOwnershipEligible()),
             HomeTypesWorkflowState.ExemptFromTheRightToSharedOwnership => IsTenure(Tenure.AffordableRent, Tenure.SocialRent),
             HomeTypesWorkflowState.ExemptionJustification => IsTenure(Tenure.AffordableRent, Tenure.SocialRent) && IsExemptFromTheRightToSharedOwnership(),
             HomeTypesWorkflowState.CheckAnswers => true,
@@ -252,7 +253,8 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.SocialRent, () => !IsNotMeetNationallyDescribedSpaceStandards() && IsTenure(Tenure.SocialRent))
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.SharedOwnership, () => !IsNotMeetNationallyDescribedSpaceStandards() && IsTenure(Tenure.SharedOwnership))
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.RentToBuy, () => !IsNotMeetNationallyDescribedSpaceStandards() && IsTenure(Tenure.RentToBuy))
-            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.CheckAnswers, () => !IsNotMeetNationallyDescribedSpaceStandards() && IsTenure(Tenure.HomeOwnershipLongTermDisabilities, Tenure.OlderPersonsSharedOwnership))
+            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.HomeOwnershipDisabilities, () => !IsNotMeetNationallyDescribedSpaceStandards() && IsTenure(Tenure.HomeOwnershipLongTermDisabilities))
+            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.CheckAnswers, () => !IsNotMeetNationallyDescribedSpaceStandards() && IsTenure(Tenure.OlderPersonsSharedOwnership))
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.AccessibilityStandards, () => !IsAccessibleStandards())
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.AccessibilityCategory, IsAccessibleStandards);
 
@@ -261,7 +263,8 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.SocialRent, () => IsTenure(Tenure.SocialRent))
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.SharedOwnership, () => IsTenure(Tenure.SharedOwnership))
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.RentToBuy, () => IsTenure(Tenure.RentToBuy))
-            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.CheckAnswers, () => IsTenure(Tenure.HomeOwnershipLongTermDisabilities, Tenure.OlderPersonsSharedOwnership))
+            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.HomeOwnershipDisabilities, () => IsTenure(Tenure.HomeOwnershipLongTermDisabilities))
+            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.CheckAnswers, () => IsTenure(Tenure.OlderPersonsSharedOwnership))
             .Permit(Trigger.Back, HomeTypesWorkflowState.FloorArea);
 
         _machine.Configure(HomeTypesWorkflowState.AffordableRent)
@@ -279,13 +282,10 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.FloorAreaStandards, IsNotMeetNationallyDescribedSpaceStandards);
 
         _machine.Configure(HomeTypesWorkflowState.SharedOwnership)
-            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.SharedOwnershipIneligible, () => !IsSharedOwnershipEligible())
+            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.ProspectiveRentIneligible, () => !IsSharedOwnershipEligible())
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.CheckAnswers, IsSharedOwnershipEligible)
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.FloorArea, () => !IsNotMeetNationallyDescribedSpaceStandards())
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.FloorAreaStandards, IsNotMeetNationallyDescribedSpaceStandards);
-
-        _machine.Configure(HomeTypesWorkflowState.SharedOwnershipIneligible)
-            .Permit(Trigger.Back, HomeTypesWorkflowState.SharedOwnership);
 
         _machine.Configure(HomeTypesWorkflowState.RentToBuy)
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.RentToBuyIneligible, () => !IsRentToBuyEligible())
@@ -295,6 +295,16 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
 
         _machine.Configure(HomeTypesWorkflowState.RentToBuyIneligible)
             .Permit(Trigger.Back, HomeTypesWorkflowState.RentToBuy);
+
+        _machine.Configure(HomeTypesWorkflowState.HomeOwnershipDisabilities)
+            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.ProspectiveRentIneligible, () => !IsHomeOwnershipEligible())
+            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.CheckAnswers, IsHomeOwnershipEligible)
+            .PermitIf(Trigger.Back, HomeTypesWorkflowState.FloorArea, () => !IsNotMeetNationallyDescribedSpaceStandards())
+            .PermitIf(Trigger.Back, HomeTypesWorkflowState.FloorAreaStandards, IsNotMeetNationallyDescribedSpaceStandards);
+
+        _machine.Configure(HomeTypesWorkflowState.ProspectiveRentIneligible)
+            .PermitIf(Trigger.Back, HomeTypesWorkflowState.SharedOwnership, () => IsTenure(Tenure.SharedOwnership))
+            .PermitIf(Trigger.Back, HomeTypesWorkflowState.HomeOwnershipDisabilities, () => IsTenure(Tenure.HomeOwnershipLongTermDisabilities));
 
         _machine.Configure(HomeTypesWorkflowState.ExemptFromTheRightToSharedOwnership)
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.ExemptionJustification, IsExemptFromTheRightToSharedOwnership)
@@ -313,8 +323,9 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.ExemptionJustification, () => !_isReadOnly && IsTenure(Tenure.AffordableRent, Tenure.SocialRent) && IsExemptFromTheRightToSharedOwnership())
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.SharedOwnership, () => !_isReadOnly && IsTenure(Tenure.SharedOwnership))
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.RentToBuy, () => !_isReadOnly && IsTenure(Tenure.RentToBuy))
-            .PermitIf(Trigger.Back, HomeTypesWorkflowState.FloorArea, () => !_isReadOnly && IsTenure(Tenure.OlderPersonsSharedOwnership, Tenure.HomeOwnershipLongTermDisabilities) && !IsNotMeetNationallyDescribedSpaceStandards())
-            .PermitIf(Trigger.Back, HomeTypesWorkflowState.FloorAreaStandards, () => !_isReadOnly && IsTenure(Tenure.OlderPersonsSharedOwnership, Tenure.HomeOwnershipLongTermDisabilities) && IsNotMeetNationallyDescribedSpaceStandards());
+            .PermitIf(Trigger.Back, HomeTypesWorkflowState.HomeOwnershipDisabilities, () => !_isReadOnly && IsTenure(Tenure.HomeOwnershipLongTermDisabilities))
+            .PermitIf(Trigger.Back, HomeTypesWorkflowState.FloorArea, () => !_isReadOnly && IsTenure(Tenure.OlderPersonsSharedOwnership) && !IsNotMeetNationallyDescribedSpaceStandards())
+            .PermitIf(Trigger.Back, HomeTypesWorkflowState.FloorAreaStandards, () => !_isReadOnly && IsTenure(Tenure.OlderPersonsSharedOwnership) && IsNotMeetNationallyDescribedSpaceStandards());
     }
 
     private IEnumerable<Func<bool>> BuildDeadEndConditions(HomeTypesWorkflowState state)
@@ -329,9 +340,10 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
             yield return IsAffordableRentEligible;
         }
 
-        if (state > HomeTypesWorkflowState.SharedOwnershipIneligible)
+        if (state > HomeTypesWorkflowState.ProspectiveRentIneligible)
         {
             yield return IsSharedOwnershipEligible;
+            yield return IsHomeOwnershipEligible;
         }
 
         if (state > HomeTypesWorkflowState.RentToBuyIneligible)
@@ -370,7 +382,9 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
 
     private bool IsAffordableRentEligible() => !(IsTenure(Tenure.AffordableRent) && _homeTypeModel is { Conditionals.IsProspectiveRentIneligible: true });
 
-    private bool IsSharedOwnershipEligible() => !(IsTenure(Tenure.SharedOwnership) && _homeTypeModel is { Conditionals.IsSharedOwnershipIneligible: true });
+    private bool IsSharedOwnershipEligible() => !(IsTenure(Tenure.SharedOwnership) && _homeTypeModel is { Conditionals.IsProspectiveRentIneligible: true });
 
     private bool IsRentToBuyEligible() => !(IsTenure(Tenure.RentToBuy) && _homeTypeModel is { Conditionals.IsProspectiveRentIneligible: true });
+
+    private bool IsHomeOwnershipEligible() => !(IsTenure(Tenure.HomeOwnershipLongTermDisabilities) && _homeTypeModel is { Conditionals.IsProspectiveRentIneligible: true });
 }

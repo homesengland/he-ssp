@@ -1,5 +1,5 @@
 @using HE.Investments.Common.WWW.Extensions
-@model (string fieldName, string label, string hint, string value, string cssClass, int rows, int maxLength)
+@model (string fieldName, string label, string hint, string value, string cssClass, int rows)
 
 @{
     var (hasError, errors) = ViewData.ModelState.GetErrors(Model.fieldName);
@@ -17,8 +17,4 @@
     <vc:error-message field-name="@Model.fieldName"/>
 
     <textarea class="@inputClass" id="@Model.fieldName" name="@Model.fieldName" rows="@Model.rows">@Model.value</textarea>
-
-    <he-div-hint>
-        You can enter up to @Model.maxLength characters
-    </he-div-hint>
 </gds-div-form-group>
