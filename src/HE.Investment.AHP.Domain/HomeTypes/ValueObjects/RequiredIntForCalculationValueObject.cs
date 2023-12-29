@@ -32,13 +32,6 @@ public abstract class RequiredIntForCalculationValueObject : ValueObject
 
         if (!int.TryParse(value!, NumberStyles.Integer, CultureInfo.InvariantCulture, out var parsedValue))
         {
-            if (fieldName == nameof(InitialSale))
-            {
-                OperationResult.New()
-                    .AddValidationError(fieldName, ValidationErrorMessage.MustBeNumberBetween(displayName, minValue, maxValue))
-                    .CheckErrors();
-            }
-
             OperationResult.New()
                 .AddValidationError(fieldName, ValidationErrorMessage.MustBeWholeNumberWithExample(displayName))
                 .CheckErrors();
