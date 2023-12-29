@@ -5,7 +5,7 @@ using Moq;
 
 namespace HE.Investments.Organisation.Tests.TestObjectBuilders;
 
-public class CompaniesHouseApiTestBuilder : TestObjectBuilder<ICompaniesHouseApi>
+public class CompaniesHouseApiTestBuilder : TestServiceBuilder<ICompaniesHouseApi>
 {
     public static CompaniesHouseApiTestBuilder New()
     {

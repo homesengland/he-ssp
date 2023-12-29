@@ -1,25 +1,12 @@
-using Moq;
-
 namespace HE.Investments.TestsUtils.TestFramework;
 
-public class TestObjectBuilder<T>
-    where T : class
+public class TestObjectBuilder<TItem>
+    where TItem : class
 {
-    public TestObjectBuilder()
-    {
-        Mock = new Mock<T>();
-    }
+    protected TItem Item { get; set; }
 
-    public Mock<T> Mock { get; }
-
-    public TestObjectBuilder<T> Register(IRegisterDependency registerDependency)
+    public TItem Build()
     {
-        registerDependency.RegisterDependency(Build());
-        return this;
-    }
-
-    public T Build()
-    {
-        return Mock.Object;
+        return Item;
     }
 }
