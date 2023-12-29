@@ -1,4 +1,5 @@
 @using HE.Investment.AHP.WWW.Models.Application
+@using HE.Investment.AHP.WWW.Views.Application
 @using HE.Investments.Common.Extensions
 @using HE.Investments.Common.WWW.Components.BackLinkWithCallback
 @using HE.Investments.Common.WWW.Components.FormButton
@@ -21,7 +22,7 @@
     <vc:back-link-with-callback url="@Url.Action("Name", "Application", new { applicationName = Model.Name })"/>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <form asp-controller="Application" asp-action="Tenure" asp-method="post" asp-route-applicationName="@Model.Name" novalidate>
-        <vc:form-header caption="@Model.Name" title="What is the tenure of the homes on this application?"/>
+        <vc:form-header caption="@Model.Name" title="@ApplicationPageTitles.Tenure"/>
         <gds-field-set role="group">
             @Html.HiddenFor(m => m.Name)
 

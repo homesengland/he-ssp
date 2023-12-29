@@ -2,7 +2,7 @@ using HE.Investments.IntegrationTestsFramework.Auth;
 
 namespace HE.Investments.IntegrationTestsFramework.Config;
 
-public class UserData : ILoginData
+public class UserLoginData : ILoginData
 {
     public string UserGlobalId { get; set; }
 

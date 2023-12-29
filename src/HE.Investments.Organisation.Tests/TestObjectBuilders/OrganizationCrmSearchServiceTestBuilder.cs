@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Organisation.Services;
 using HE.Investments.TestsUtils.TestFramework;
@@ -6,7 +5,7 @@ using Moq;
 
 namespace HE.Investments.Organisation.Tests.TestObjectBuilders;
 
-public class OrganizationCrmSearchServiceTestBuilder : TestObjectBuilder<IOrganizationCrmSearchService>
+public class OrganizationCrmSearchServiceTestBuilder : TestServiceBuilder<IOrganizationCrmSearchService>
 {
     public static OrganizationCrmSearchServiceTestBuilder New() => new();
 
