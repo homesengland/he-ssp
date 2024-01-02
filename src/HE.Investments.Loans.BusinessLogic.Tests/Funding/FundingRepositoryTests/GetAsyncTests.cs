@@ -1,10 +1,9 @@
 using HE.Investments.Common.Contract;
-using HE.Investments.Common.Domain;
+using HE.Investments.Common.Exceptions;
 using HE.Investments.Loans.BusinessLogic.Funding.Repositories;
 using HE.Investments.Loans.BusinessLogic.Tests.TestData;
 using HE.Investments.Loans.BusinessLogic.Tests.TestObjectBuilders;
 using HE.Investments.Loans.BusinessLogic.Tests.User.TestData;
-using HE.Investments.Loans.Common.Exceptions;
 using HE.Investments.Loans.Common.Utils.Enums;
 using HE.Investments.Loans.Contract.Funding.ValueObjects;
 using HE.Investments.TestsUtils.TestFramework;

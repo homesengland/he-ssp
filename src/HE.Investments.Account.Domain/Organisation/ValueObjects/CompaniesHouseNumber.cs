@@ -1,6 +1,6 @@
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Errors;
-using HE.Investments.Loans.Common.Exceptions;
+using HE.Investments.Common.Exceptions;
 
 namespace HE.Investments.Account.Domain.Organisation.ValueObjects;
 

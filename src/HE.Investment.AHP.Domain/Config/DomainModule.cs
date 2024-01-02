@@ -1,6 +1,7 @@
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.Data;
+using HE.Investment.AHP.Domain.Delivery.Repositories;
 using HE.Investment.AHP.Domain.Documents.Config;
 using HE.Investment.AHP.Domain.Documents.Crm;
 using HE.Investment.AHP.Domain.Documents.Services;
@@ -15,8 +16,9 @@ using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investment.AHP.Domain.Scheme.Repositories;
 using HE.Investment.AHP.Domain.Scheme.Services;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
+using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investments.Account.Shared.Config;
-using HE.Investments.Loans.Common.Utils;
+using HE.Investments.Common.Utils;
 using MediatR.Pipeline;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -38,6 +40,8 @@ public static class DomainModule
         AddFinancialDetails(services);
         AddApplication(services);
         AddScheme(services);
+        AddSite(services);
+        AddDelivery(services);
     }
 
     private static void AddHomeTypes(IServiceCollection services)
@@ -79,5 +83,15 @@ public static class DomainModule
 
         services.AddScoped<IAhpFileLocationProvider<LocalAuthoritySupportFileParams>, LocalAuthoritySupportFileLocationProvider>();
         services.AddScoped<IAhpFileService<LocalAuthoritySupportFileParams>, AhpFileService<LocalAuthoritySupportFileParams>>();
+    }
+
+    private static void AddSite(IServiceCollection services)
+    {
+        services.AddScoped<ISiteRepository, SiteRepository>();
+    }
+
+    private static void AddDelivery(IServiceCollection services)
+    {
+        services.AddScoped<IDeliveryPhaseRepository, DeliveryPhaseRepository>();
     }
 }

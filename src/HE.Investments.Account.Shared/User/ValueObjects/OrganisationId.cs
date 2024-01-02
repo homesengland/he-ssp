@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
@@ -7,6 +8,7 @@ namespace HE.Investments.Account.Shared.User.ValueObjects;
 
 public class OrganisationId : ValueObject
 {
+    [JsonConstructor]
     public OrganisationId(Guid value)
     {
         Value = value;

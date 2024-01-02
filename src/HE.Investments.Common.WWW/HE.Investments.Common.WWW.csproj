@@ -80,5 +80,6 @@
     <EmbeddedResource Include="Components\NumericTextInput\NumericTextInput.cshtml" />
     <EmbeddedResource Include="Components\PagedTable\PagedTable.cshtml" />
     <EmbeddedResource Include="Components\TextAreaInputWithCounter\TextAreaInputWithCounter.cshtml" />
+    <EmbeddedResource Include="Components\DateInput\DateInput.cshtml" />
   </ItemGroup>
 </Project>

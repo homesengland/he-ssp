@@ -1,7 +1,6 @@
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
-using HE.Investments.Loans.Common.Utils.Constants;
 
 namespace HE.Investments.Account.Domain.Organisation.ValueObjects;
 
@@ -15,9 +14,9 @@ public class OrganisationAddress : ValueObject
         string? postcode,
         string? county,
         string? country,
-        string? lengthErrorMessage = null)
+        string? fieldName = null)
     {
-        Build(addressLine1, addressLine2, addressLine3, townOrCity, postcode, county, country, lengthErrorMessage).CheckErrors();
+        Build(addressLine1, addressLine2, addressLine3, townOrCity, postcode, county, country, fieldName).CheckErrors();
     }
 
     public string AddressLine1 { get; private set; }
@@ -53,36 +52,36 @@ public class OrganisationAddress : ValueObject
         string? postcode,
         string? county,
         string? country,
-        string? lengthErrorMessage)
+        string? fieldName)
     {
         var operationResult = OperationResult.New();
-        lengthErrorMessage = lengthErrorMessage != null ? ValidationErrorMessage.ShortInputLengthExceeded(lengthErrorMessage) : null;
+        var errorMessage = fieldName != null ? ValidationErrorMessage.ShortInputLengthExceeded(fieldName) : null;
 
         AddressLine1 = Validator
             .For(line1, nameof(AddressLine1), "Address Line 1", operationResult)
             .IsProvided(OrganisationErrorMessages.MissingOrganisationAddress)
-            .IsShortInput(lengthErrorMessage);
+            .IsShortInput(errorMessage);
 
         AddressLine2 = Validator
             .For(line2, nameof(AddressLine2), "Address Line 2", operationResult)
-            .IsShortInput(lengthErrorMessage);
+            .IsShortInput(errorMessage);
 
         AddressLine3 = Validator
             .For(line3, nameof(AddressLine3), "Address Line 3", operationResult)
-            .IsShortInput(lengthErrorMessage);
+            .IsShortInput(errorMessage);
 
         TownOrCity = Validator
             .For(city, nameof(TownOrCity), "Town or City", operationResult)
             .IsProvided(OrganisationErrorMessages.MissingOrganisationTownOrCity)
-            .IsShortInput(lengthErrorMessage);
+            .IsShortInput(errorMessage);
 
         County = Validator
             .For(county, nameof(County), "County", operationResult)
-            .IsShortInput(lengthErrorMessage);
+            .IsShortInput(errorMessage);
 
         Country = Validator
             .For(country, nameof(Country), "Country", operationResult)
-            .IsShortInput(lengthErrorMessage);
+            .IsShortInput(errorMessage);
 
         Postcode = operationResult.Aggregate(() => new Postcode(postcode));
 

@@ -1,8 +1,8 @@
-@model (string Name, bool isVisible, string message)
+@model (string Name, List<string> messages)
 
-@if (Model.isVisible)
+@foreach (var message in Model.messages)
 {
     <span class="govuk-error-message" data-valmsg-for="@Model.Name">
-        <span class="govuk-visually-hidden">Error:</span>@Model.message
+        <span class="govuk-visually-hidden">Error:</span>@message
     </span>
 }

@@ -1,7 +1,6 @@
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
-using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 
 namespace HE.Investments.Account.Domain.User.ValueObjects;
 
@@ -24,7 +23,7 @@ public class AcceptHeTermsAndConditions : ValueObject
 
     public static AcceptHeTermsAndConditions FromString(string? value)
     {
-        return value == CommonResponse.Checked ? new AcceptHeTermsAndConditions(true) : new AcceptHeTermsAndConditions(false);
+        return value == "checked" ? new AcceptHeTermsAndConditions(true) : new AcceptHeTermsAndConditions(false);
     }
 
     public override string ToString()

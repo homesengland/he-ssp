@@ -63,6 +63,7 @@ public class ApplicationRepository : IApplicationRepository
                 new ApplicationId(x.id),
                 x.name,
                 ApplicationStatusMapper.MapToPortalStatus(x.applicationStatus),
+                ApplicationTenureMapper.ToDomain(x.tenure)!.Value,
                 x.noOfHomes,
                 x.fundingRequested))
             .ToList();

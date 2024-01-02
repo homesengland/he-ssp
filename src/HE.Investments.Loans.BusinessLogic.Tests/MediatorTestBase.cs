@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using FluentValidation;
+using HE.Investments.Common.Utils;
 using HE.Investments.Loans.BusinessLogic.ViewModel;
-using HE.Investments.Loans.Common.Utils;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.Extensions.DependencyInjection;

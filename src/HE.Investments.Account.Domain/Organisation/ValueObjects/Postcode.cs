@@ -1,6 +1,6 @@
 using HE.Investments.Common.Domain;
+using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
-using HE.Investments.Loans.Common.Utils.Constants;
 
 namespace HE.Investments.Account.Domain.Organisation.ValueObjects;
 
