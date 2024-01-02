@@ -15,7 +15,7 @@ public abstract class PoundsValueObject : ValueObject
         Value = WholeNumberValidator.Validate(value, UiFields.FieldName, DisplayName, ValidationErrorMessage.WholePoundInput(DisplayName));
     }
 
-    protected PoundsValueObject(string value, UiFields uiFields)
+    protected PoundsValueObject(string? value, UiFields uiFields)
     {
         UiFields = uiFields;
         if (value.IsNotProvided())

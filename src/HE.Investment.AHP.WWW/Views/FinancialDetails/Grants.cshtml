@@ -17,7 +17,7 @@
 
         <gds-p>
             For multi-tenure sites, ensure the costs and contributions are apportioned across the development and only those applicable to the homes on this application are recorded here.
-            <br />Enter to the nearest pound. If you have not received any grants from other public bodies, enter 0.
+            <br/>Enter to the nearest pound. If you have not received any grants from other public bodies, enter 0.
         </gds-p>
 
         <gds-field-set>
@@ -120,6 +120,8 @@
                     <span class="govuk-heading-m">£@(Model.TotalGrants ?? "-")</span>
                 </div>
             </div>
+
+            <partial name="_CalculateButton"/>
             <vc:form-button/>
 
             @Html.HiddenFor(c => c.ApplicationId)

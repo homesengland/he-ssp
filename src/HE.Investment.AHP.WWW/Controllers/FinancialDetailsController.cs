@@ -1,3 +1,4 @@
+using System.Globalization;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Contract.FinancialDetails.Queries;
@@ -171,8 +172,30 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
         string action,
         CancellationToken cancellationToken)
     {
+        if (action == GenericMessages.Calculate)
+        {
+            var (operationResult, calculationSum) = await _mediator.Send(
+                new CalculateExpectedContributionsQuery(
+                    applicationId,
+                    model.RentalIncomeBorrowing,
+                    model.SaleOfHomesOnThisScheme,
+                    model.SaleOfHomesOnOtherSchemes,
+                    model.OwnResources,
+                    model.RCGFContribution,
+                    model.OtherCapitalSources,
+                    model.SharedOwnershipSales,
+                    model.HomesTransferValue),
+                cancellationToken);
+
+            model.TotalExpectedContributions = calculationSum?.TotalExpectedContributions?.ToString("0.##", CultureInfo.InvariantCulture);
+
+            ModelState.AddValidationErrors(operationResult);
+
+            return View(model);
+        }
+
         return await ProvideFinancialDetails(
-            new ProvideExpecteContributionsCommand(
+            new ProvideExpectedContributionsCommand(
                 ApplicationId.From(applicationId),
                 model.RentalIncomeBorrowing,
                 model.SaleOfHomesOnThisScheme,
@@ -208,6 +231,27 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
     [WorkflowState(FinancialDetailsWorkflowState.Grants)]
     public async Task<IActionResult> Grants(Guid applicationId, FinancialDetailsGrantsModel model, string action, CancellationToken cancellationToken)
     {
+        if (action == GenericMessages.Calculate)
+        {
+            var (operationResult, calculationSum) = await _mediator.Send(
+                new CalculateGrantsQuery(
+                    applicationId,
+                    model.CountyCouncilGrants,
+                    model.DhscExtraCareGrants,
+                    model.LocalAuthorityGrants,
+                    model.SocialServicesGrants,
+                    model.HealthRelatedGrants,
+                    model.LotteryGrants,
+                    model.OtherPublicBodiesGrants),
+                cancellationToken);
+
+            model.TotalGrants = calculationSum?.TotalReceivedGrants?.ToString("0.##", CultureInfo.InvariantCulture);
+
+            ModelState.AddValidationErrors(operationResult);
+
+            return View(model);
+        }
+
         return await ProvideFinancialDetails(
             new ProvideGrantsCommand(
                 ApplicationId.From(applicationId),

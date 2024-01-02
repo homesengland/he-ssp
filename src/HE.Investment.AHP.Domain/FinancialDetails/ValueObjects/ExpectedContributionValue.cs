@@ -12,7 +12,7 @@ public class ExpectedContributionValue : PoundsValueObject
         Field = field;
     }
 
-    public ExpectedContributionValue(ExpectedContributionFields field, string value)
+    public ExpectedContributionValue(ExpectedContributionFields field, string? value)
         : base(value, new UiFields(field.ToString(), InvalidValueValidationMessage: FinancialDetailsValidationErrors.GenericAmountValidationError))
     {
         Field = field;

@@ -1,4 +1,5 @@
-using HE.Investment.AHP.Domain.FinancialDetails.Commands;
+using HE.Investment.AHP.Contract.FinancialDetails;
+using HE.Investment.AHP.Contract.FinancialDetails.Queries;
 using HE.Investment.AHP.Domain.FinancialDetails.Entities;
 using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
@@ -7,17 +8,24 @@ using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
-namespace HE.Investment.AHP.Domain.FinancialDetails.CommandHandlers;
+namespace HE.Investment.AHP.Domain.FinancialDetails.QueryHandlers;
 
-public class ProvideExpectedContributionsCommandHandler : FinancialDetailsCommandHandlerBase, IRequestHandler<ProvideExpectedContributionsCommand, OperationResult>
+internal sealed class CalculateExpectedContributionsQueryHandler : CalculateQueryHandlerBase,
+    IRequestHandler<CalculateExpectedContributionsQuery, (OperationResult OperationResult, CalculationSum? CalculationSum)>
 {
-    public ProvideExpectedContributionsCommandHandler(IFinancialDetailsRepository repository, IAccountUserContext accountUserContext, ILogger<FinancialDetailsCommandHandlerBase> logger)
-        : base(repository, accountUserContext, logger)
+    public CalculateExpectedContributionsQueryHandler(
+        IFinancialDetailsRepository financialDetailsRepository,
+        IAccountUserContext accountUserContext,
+        ILogger<CalculateExpectedContributionsQueryHandler> logger)
+        : base(financialDetailsRepository, accountUserContext, logger)
     {
     }
 
-    public async Task<OperationResult> Handle(ProvideExpectedContributionsCommand request, CancellationToken cancellationToken)
+    public async Task<(OperationResult OperationResult, CalculationSum? CalculationSum)> Handle(
+        CalculateExpectedContributionsQuery request,
+        CancellationToken cancellationToken)
     {
         return await Perform(
             financialDetails =>
@@ -33,7 +41,7 @@ public class ProvideExpectedContributionsCommandHandler : FinancialDetailsComman
                     MapProvidedValues(request.SalesOfHomesOnThisScheme, ExpectedContributionFields.SaleOfHomesOnThisScheme),
                     MapProvidedValues(request.SalesOfHomesOnOtherSchemes, ExpectedContributionFields.SaleOfHomesOnOtherSchemes),
                     MapProvidedValues(request.OwnResources, ExpectedContributionFields.OwnResources),
-                    MapProvidedValues(request.RCGFContribution, ExpectedContributionFields.RcgfContribution),
+                    MapProvidedValues(request.RcgfContribution, ExpectedContributionFields.RcgfContribution),
                     MapProvidedValues(request.OtherCapitalSources, ExpectedContributionFields.OtherCapitalSources),
                     MapProvidedValues(request.SharedOwnershipSales, ExpectedContributionFields.SharedOwnershipSales),
                     MapProvidedValues(request.HomesTransferValue, ExpectedContributionFields.HomesTransferValue),
@@ -42,8 +50,12 @@ public class ProvideExpectedContributionsCommandHandler : FinancialDetailsComman
                 result.CheckErrors();
 
                 financialDetails.ProvideExpectedContributions(contributions);
+
+                var total = contributions.CalculateTotal();
+
+                return new CalculationSum(null, total);
             },
-            request.ApplicationId,
+            ApplicationId.From(request.ApplicationId),
             cancellationToken);
     }
 }
