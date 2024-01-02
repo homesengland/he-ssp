@@ -74,7 +74,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
 
     [HttpPost("land-status")]
     [WorkflowState(FinancialDetailsWorkflowState.LandStatus)]
-    public async Task<IActionResult> LandStatus(Guid applicationId, FinancialDetailsLandStatusModel model, string action, CancellationToken cancellationToken)
+    public async Task<IActionResult> LandStatus(Guid applicationId, FinancialDetailsLandStatusModel model, CancellationToken cancellationToken)
     {
         return await ProvideFinancialDetails(
             new ProvideLandStatusCommand(ApplicationId.From(applicationId), model.PurchasePrice, model.IsFinal),
@@ -102,7 +102,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
 
     [HttpPost("land-value")]
     [WorkflowState(FinancialDetailsWorkflowState.LandValue)]
-    public async Task<IActionResult> LandValue(Guid applicationId, FinancialDetailsLandValueModel model, string action, CancellationToken cancellationToken)
+    public async Task<IActionResult> LandValue(Guid applicationId, FinancialDetailsLandValueModel model, CancellationToken cancellationToken)
     {
         return await ProvideFinancialDetails(
             new ProvideLandValueCommand(ApplicationId.From(applicationId), model.IsOnPublicLand, model.LandValue),
@@ -127,7 +127,6 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
     public async Task<IActionResult> OtherApplicationCosts(
         Guid applicationId,
         FinancialDetailsOtherApplicationCostsModel model,
-        string action,
         CancellationToken cancellationToken)
     {
         return await ProvideFinancialDetails(

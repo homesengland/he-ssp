@@ -83,7 +83,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
 
     [WorkflowState(SchemeWorkflowState.Funding)]
     [HttpPost("funding")]
-    public async Task<IActionResult> Funding(SchemeViewModel model, string action, CancellationToken cancellationToken)
+    public async Task<IActionResult> Funding(SchemeViewModel model, CancellationToken cancellationToken)
     {
         return await ExecuteCommand(
             new ChangeSchemeFundingCommand(model.ApplicationId, model.RequiredFunding, model.HousesToDeliver),
@@ -104,7 +104,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
 
     [WorkflowState(SchemeWorkflowState.Affordability)]
     [HttpPost("affordability")]
-    public async Task<IActionResult> Affordability(SchemeViewModel model, string action, CancellationToken cancellationToken)
+    public async Task<IActionResult> Affordability(SchemeViewModel model, CancellationToken cancellationToken)
     {
         return await ExecuteCommand(
             new ChangeSchemeAffordabilityCommand(model.ApplicationId, model.AffordabilityEvidence),
@@ -125,7 +125,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
 
     [WorkflowState(SchemeWorkflowState.SalesRisk)]
     [HttpPost("sales-risk")]
-    public async Task<IActionResult> SalesRisk(SchemeViewModel model, string action, CancellationToken cancellationToken)
+    public async Task<IActionResult> SalesRisk(SchemeViewModel model, CancellationToken cancellationToken)
     {
         return await ExecuteCommand(
             new ChangeSchemeSalesRiskCommand(model.ApplicationId, model.SalesRisk),
@@ -146,7 +146,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
 
     [WorkflowState(SchemeWorkflowState.HousingNeeds)]
     [HttpPost("housing-needs")]
-    public async Task<IActionResult> HousingNeeds(SchemeViewModel model, string action, CancellationToken cancellationToken)
+    public async Task<IActionResult> HousingNeeds(SchemeViewModel model, CancellationToken cancellationToken)
     {
         return await ExecuteCommand(
             new ChangeSchemeHousingNeedsCommand(
@@ -170,7 +170,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
 
     [WorkflowState(SchemeWorkflowState.StakeholderDiscussions)]
     [HttpPost("stakeholder-discussions")]
-    public async Task<IActionResult> StakeholderDiscussions(SchemeViewModel model, string action, CancellationToken cancellationToken)
+    public async Task<IActionResult> StakeholderDiscussions(SchemeViewModel model, CancellationToken cancellationToken)
     {
         var fileToUpload = model.LocalAuthoritySupportFile == null
             ? null
