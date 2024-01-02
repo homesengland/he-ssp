@@ -1,6 +1,6 @@
 using HE.Investment.AHP.Domain.Site.Entities;
 using HE.Investments.Account.Shared.User;
-using HE.Investments.Loans.Common.Exceptions;
+using HE.Investments.Common.Exceptions;
 
 namespace HE.Investment.AHP.Domain.Site.Repositories;
 
