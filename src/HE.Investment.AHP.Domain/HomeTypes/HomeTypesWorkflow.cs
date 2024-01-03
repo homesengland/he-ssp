@@ -125,6 +125,10 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
                                                                 || (IsTenure(Tenure.OlderPersonsSharedOwnership) && !IsOlderPersonsSharedOwnershipEligible()),
             HomeTypesWorkflowState.ExemptFromTheRightToSharedOwnership => IsTenure(Tenure.AffordableRent, Tenure.SocialRent),
             HomeTypesWorkflowState.ExemptionJustification => IsTenure(Tenure.AffordableRent, Tenure.SocialRent) && IsExemptFromTheRightToSharedOwnership(),
+            HomeTypesWorkflowState.ModernMethodsConstruction => true,
+            HomeTypesWorkflowState.ModernMethodsConstructionCategories => true,
+            HomeTypesWorkflowState.ModernMethodsConstruction3DSubcategories => true,
+            HomeTypesWorkflowState.ModernMethodsConstruction2DSubcategories => true,
             HomeTypesWorkflowState.CheckAnswers => true,
             _ => throw new ArgumentOutOfRangeException(nameof(state), state, null),
         };

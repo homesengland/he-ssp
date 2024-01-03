@@ -1,0 +1,44 @@
+@using HE.Investment.AHP.Domain.HomeTypes
+@using HE.Investment.AHP.WWW.Extensions
+@using HE.Investment.AHP.WWW.Models.HomeTypes
+@model HE.Investment.AHP.WWW.Models.HomeTypes.ModernMethodsConstructionModel;
+
+@{
+    var applicationId = this.GetApplicationIdFromRoute();
+    var homeTypeId = this.GetHomeTypeIdFromRoute();
+    var workflow = Context.Request.Query["workflow"];
+}
+
+<gds-div-grid-column-two-thirds>
+    <form asp-controller="HomeTypes" asp-action="ModernMethodsConstruction2DSubcategories" asp-method="post" asp-route-workflow="@workflow" novalidate>
+        @Html.HiddenFor(m => Model.ApplicationName)
+        @Html.HiddenFor(m => Model.HomeTypeName)
+        <vc:home-type-form-header current-page="@HomeTypesWorkflowState.ModernMethodsConstruction2DSubcategories"
+                                  application-id="@applicationId"
+                                  home-type-id="@homeTypeId"
+                                  caption="@Model.Header"
+                                  title="Category 2"/>
+
+        <gds-legend>
+            <gds-h2 class="govuk-!-margin-bottom-0">Which of these sub-categories of 2D primary structural systems are you using?</gds-h2>
+        </gds-legend>
+
+        <gds-field-set class="govuk-!-margin-bottom-6">
+            <span class="govuk-caption-m govuk-!-margin-bottom-6">Select all that apply</span>
+            <vc:form-hidden-label
+                field-name="ModernMethodsConstruction2DSubcategories"
+                title="Modern Methods Construction 2D Subcategories"/>
+            <gds-checkbox class="exclusive-checkbox-group"
+                          govuk-formgroup-asp-for="@Model.ModernMethodsConstruction2DSubcategories"
+                          asp-selectlistitems="HomeTypesFormOptions.ModernMethodsConstruction2DSubcategoriesTypes"
+                          asp-for="@Model.ModernMethodsConstruction2DSubcategories"
+                          asp-excludelabel>
+            </gds-checkbox>
+        </gds-field-set>
+
+        <vc:form-button/>
+        <br/>
+
+        <vc:return-to-application-link application-id="@applicationId"/>
+    </form>
+</gds-div-grid-column-two-thirds>
