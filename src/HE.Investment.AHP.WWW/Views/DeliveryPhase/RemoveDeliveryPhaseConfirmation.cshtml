@@ -1,1 +1,34 @@
-<div>TODO: Remove Delivery Phase confirmation page</div>
+@using HE.Investment.AHP.WWW.Extensions
+@using HE.Investment.AHP.WWW.Models.Delivery
+@model HE.Investment.AHP.WWW.Models.Delivery.RemoveDeliveryPhaseModel;
+@{
+    var applicationId = this.GetApplicationIdFromRoute();
+}
+
+<div class="govuk-grid-column-three-quarters">
+    <vc:back-link-with-callback url="@Url.Action("List", "Delivery", new { applicationId })" />
+
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+
+    <form asp-controller="DeliveryPhase" asp-action="Remove" asp-method="post" novalidate>
+        @Html.HiddenFor(m => Model.ApplicationName)
+        @Html.HiddenFor(m => Model.DeliveryPhaseName)
+
+        <vc:form-header caption="@Model.Header"/>
+        <he-error-form-group asp-for="RemoveDeliveryPhaseAnswer">
+            <gds-h1>Are you sure you want to remove this delivery phase?</gds-h1>
+            <gds-span-hint>
+                By removing this delivery phase, any homes you have assigned to this phase will need to be added to another phase.
+            </gds-span-hint>
+            <gds-radio class="govuk-!-margin-top-3"
+                       govuk-formgroup-asp-for="RemoveDeliveryPhaseAnswer"
+                       asp-hiddenlabeltext="Are you sure you want to remove this delivery phase?"
+                       value="@Model.RemoveDeliveryPhaseAnswer"
+                       asp-selectlistitems="@DeliveryFormOptions.RemoveDeliveryPhase">
+            </gds-radio>
+        </he-error-form-group>
+
+        <vc:form-button/>
+        <vc:return-to-application-link application-id="@applicationId"/>
+    </form>
+</div>

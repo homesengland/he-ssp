@@ -1,8 +1,12 @@
 using HE.Investment.AHP.Contract.Delivery;
+using HE.Investment.AHP.Contract.Delivery.Queries;
+using HE.Investment.AHP.Domain.Delivery.Commands;
 using HE.Investment.AHP.WWW.Models.Delivery;
 using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Account.Shared.Authorization.Attributes;
+using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Routing;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investment.AHP.WWW.Controllers;
@@ -11,6 +15,13 @@ namespace HE.Investment.AHP.WWW.Controllers;
 [Route("application/{applicationId}/DeliveryPhase")]
 public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowState>
 {
+    private readonly IMediator _mediator;
+
+    public DeliveryPhaseController(IMediator mediator)
+    {
+        _mediator = mediator;
+    }
+
     [HttpGet("new")]
     [WorkflowState(DeliveryPhaseWorkflowState.New)]
     public IActionResult New()
@@ -25,11 +36,29 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         return View("Name");
     }
 
-    [WorkflowState(DeliveryPhaseWorkflowState.Remove)]
     [HttpGet("{deliveryPhaseId}/remove")]
-    public IActionResult Remove()
+    public async Task<IActionResult> Remove([FromRoute] string applicationId, string deliveryPhaseId, CancellationToken cancellationToken)
     {
-        return View("RemoveDeliveryPhaseConfirmation");
+        var deliveryPhaseDetails = await _mediator.Send(new GetDeliveryPhaseDetailsQuery(applicationId, deliveryPhaseId), cancellationToken);
+
+        return View("RemoveDeliveryPhaseConfirmation", new RemoveDeliveryPhaseModel(deliveryPhaseDetails.ApplicationName, deliveryPhaseDetails.Name));
+    }
+
+    [HttpPost("{deliveryPhaseId}/remove")]
+    public async Task<IActionResult> Remove(
+        [FromRoute] string applicationId,
+        string deliveryPhaseId,
+        RemoveDeliveryPhaseModel model,
+        CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new RemoveDeliveryPhaseCommand(applicationId, deliveryPhaseId, model.RemoveDeliveryPhaseAnswer), cancellationToken);
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+            return View("RemoveDeliveryPhaseConfirmation", model);
+        }
+
+        return RedirectToAction("List", "Delivery", new { applicationId });
     }
 
     [WorkflowState(DeliveryPhaseWorkflowState.AcquisitionMilestone)]
