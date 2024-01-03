@@ -38,8 +38,8 @@
 
     <ItemGroup>
       <EmbeddedResource Include="Components\DateInputTests\DateInputTests.cshtml" />
-      <EmbeddedResource Include="Components\SectionSummaryItemTests\SectionSummaryItemTests.cshtml" />
       <EmbeddedResource Include="_ViewImports.cshtml" />
+      <EmbeddedResource Include="Components\SectionSummaryItemTests\SectionSummaryItemTests.cshtml" />
     </ItemGroup>
 
     <ItemGroup>
