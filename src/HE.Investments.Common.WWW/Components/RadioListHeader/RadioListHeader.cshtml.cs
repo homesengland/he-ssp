@@ -7,9 +7,10 @@ namespace HE.Investments.Common.WWW.Components.RadioListHeader;
 public class RadioListHeader : ViewComponent
 {
     public IViewComponentResult Invoke(
+        string? header = null,
         string? title = null,
         string? hint = null)
     {
-        return View("RadioListHeader", (title, hint));
+        return View("RadioListHeader", (header, title, hint));
     }
 }

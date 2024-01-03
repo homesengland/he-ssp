@@ -24,10 +24,9 @@
 
         <vc:text-area-input-with-counter
             field-name="@nameof(Model.MoreInformation)"
-            label="Outline the criteria under which you intend to apply for an exemption to the Right to Shared Ownership"
+            header="Outline the criteria under which you intend to apply for an exemption to the Right to Shared Ownership"
             description-component="@(new ComponentViewModel(nameof(SharedOwnershipRightSummary), null))"
-            value="@Model.MoreInformation"
-            is-heading-label="true"/>
+            value="@Model.MoreInformation"/>
 
         <vc:form-button/>
         <br />

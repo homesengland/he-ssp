@@ -1,0 +1,28 @@
+@using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
+@using HE.Investments.Common.WWW.Components.BackLinkWithCallback
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investments.Common.WWW.Components.FormHeader
+@model HE.Investment.AHP.WWW.Models.Delivery.DeliveryViewModelBase
+@{
+    var title = "Would you like to request additional payments for this phase?";
+    ViewData["Title"] = title;
+}
+
+<gds-div-grid-column-two-thirds>
+    <vc:back-link-with-callback url="@Url.Action("Index", "Home")"/>
+
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+
+    <form asp-controller="DeliveryPhase" asp-action="UnregisteredProviderFollowUp" asp-method="post" novalidate>
+        <vc:form-header caption="@($"{Model.ApplicationName} - {Model.DeliveryPhaseName}")"/>
+
+        <vc:radio-yes-no
+            field-name="requestAdditionalPayments"
+            header="@title"
+            hint="Our Provider Services team will review your request and contact you for further details. Any payments disbursed ahead of completion must be backed by an appropriate form of security."/>
+
+        <vc:form-button/>
+
+        <vc:return-to-application-link application-id="@Model.ApplicationId"/>
+    </form>
+</gds-div-grid-column-two-thirds>
