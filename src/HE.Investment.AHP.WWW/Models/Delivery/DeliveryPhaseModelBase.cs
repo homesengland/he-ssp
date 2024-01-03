@@ -9,4 +9,6 @@ public class DeliveryPhaseModelBase : DeliveryModelBase
     }
 
     public string DeliveryPhaseName { get; set; }
+
+    public string Header => $"{ApplicationName} - {DeliveryPhaseName}";
 }
