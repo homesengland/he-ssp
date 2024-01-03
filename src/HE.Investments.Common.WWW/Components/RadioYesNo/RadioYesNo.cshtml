@@ -1,15 +1,28 @@
 @using HE.Investments.Common.WWW.Extensions
-@model (string fieldName, string hint)
+@using HE.Investments.Common.WWW.Models
+@using HE.Investments.Common.WWW.Components.RadioListHeader
+@using HE.Investments.Common.WWW.Components.ErrorMessage
+@using HE.Investments.Common.WWW.Components.RadioListContent
+@model (string fieldName, string header, string title, string hint, bool? value)
 @{
     var (hasError, radioErrors) = ViewData.ModelState.GetErrors(Model.fieldName);
     var groupClass = hasError ? "govuk-form-group--error" : string.Empty;
+    var values = new List<ExtendedSelectListItem>
+    {
+        new("Yes", bool.TrueString, Model.value is true),
+        new("No", bool.FalseString, Model.value is false),
+    };
 }
 
 <gds-div-form-group class="@groupClass">
-    <vc:radio-list-header hint="@Model.hint"/>
+    <gds-field-set>
+        <vc:radio-list-header header="@Model.header" title="@Model.title" hint="@Model.hint"/>
 
-    <vc:error-message field-name="@Model.fieldName"/>
+        <vc:error-message field-name="@Model.fieldName"/>
 
-    <gds-radio-yes-no name="@Model.fieldName"></gds-radio-yes-no>
+        <vc:radio-list-content
+            field-name="@Model.fieldName"
+            available-options="@values"/>
 
+    </gds-field-set>
 </gds-div-form-group>
