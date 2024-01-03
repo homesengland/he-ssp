@@ -52,9 +52,7 @@
                            asp-prefixtext=@(GdsInputPrefixText.Pounds)
                            value=@Model.PurchasePrice />
             </he-error-form-group>
-            <button id="continue-button" class="govuk-button govuk-!-" data-module="govuk-button" name="action" type="submit" value="Continue">
-                Save and continue
-            </button>
+            <vc:form-button/>
 
             @Html.HiddenFor(c => c.IsFinal)
             @Html.HiddenFor(c => c.ApplicationId)

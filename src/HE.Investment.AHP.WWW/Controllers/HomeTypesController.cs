@@ -180,7 +180,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     public async Task<IActionResult> NewHomeTypeDetails(
         [FromRoute] string applicationId,
         HomeTypeDetailsModel model,
-        string action,
         CancellationToken cancellationToken)
     {
         return await SaveHomeTypeDetails(applicationId, null, model, cancellationToken);
@@ -227,7 +226,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         [FromRoute] string applicationId,
         [FromRoute] string homeTypeId,
         HomeTypeDetailsModel model,
-        string action,
         CancellationToken cancellationToken)
     {
         return await SaveHomeTypeDetails(applicationId, homeTypeId, model, cancellationToken);
@@ -254,7 +252,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         [FromRoute] string applicationId,
         string homeTypeId,
         HomeInformationModel model,
-        string action,
         CancellationToken cancellationToken)
     {
         return await SaveHomeTypeSegment(
@@ -286,7 +283,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         [FromRoute] string applicationId,
         string homeTypeId,
         HomesForDisabledPeopleModel model,
-        string action,
         CancellationToken cancellationToken)
     {
         return await SaveHomeTypeSegment(
@@ -312,7 +308,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         [FromRoute] string applicationId,
         string homeTypeId,
         DisabledPeopleClientGroupModel model,
-        string action,
         CancellationToken cancellationToken)
     {
         return await SaveHomeTypeSegment(
@@ -338,7 +333,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         [FromRoute] string applicationId,
         string homeTypeId,
         HomesForOlderPeopleModel model,
-        string action,
         CancellationToken cancellationToken)
     {
         return await SaveHomeTypeSegment(new SaveOlderPeopleHousingTypeCommand(applicationId, homeTypeId, model.HousingType), model, cancellationToken);
@@ -362,7 +356,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         [FromRoute] string applicationId,
         string homeTypeId,
         HappiDesignPrinciplesModel model,
-        string action,
         CancellationToken cancellationToken)
     {
         var designPrinciples = model.DesignPrinciples ?? Array.Empty<HappiDesignPrincipleType>();
@@ -428,7 +421,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         string homeTypeId,
         DesignPlansModel model,
         [FromForm(Name = "File")] List<IFormFile> files,
-        string action,
         CancellationToken cancellationToken)
     {
         var filesToUpload = files.Select(x => new FileToUpload(x.FileName, x.Length, x.OpenReadStream())).ToList();
@@ -498,7 +490,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         [FromRoute] string applicationId,
         string homeTypeId,
         SupportedHousingInformationModel model,
-        string action,
         CancellationToken cancellationToken)
     {
         return await SaveHomeTypeSegment(
@@ -530,7 +521,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         [FromRoute] string applicationId,
         string homeTypeId,
         RevenueFundingModel model,
-        string action,
         CancellationToken cancellationToken)
     {
         var revenueFundingSources = model.Sources ?? Array.Empty<RevenueFundingSourceType>();
@@ -559,7 +549,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         [FromRoute] string applicationId,
         string homeTypeId,
         MoveOnAccommodationModel model,
-        string action,
         CancellationToken cancellationToken)
     {
         return await SaveHomeTypeSegment(
@@ -589,7 +578,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         [FromRoute] string applicationId,
         string homeTypeId,
         PeopleGroupForSpecificDesignFeaturesModel model,
-        string action,
         CancellationToken cancellationToken)
     {
         return await SaveHomeTypeSegment(
@@ -616,7 +604,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         [FromRoute] string applicationId,
         string homeTypeId,
         MoreInformationModel model,
-        string action,
         CancellationToken cancellationToken)
     {
         return await SaveHomeTypeSegment(
@@ -643,7 +630,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         [FromRoute] string applicationId,
         string homeTypeId,
         MoreInformationModel model,
-        string action,
         CancellationToken cancellationToken)
     {
         return await SaveHomeTypeSegment(
@@ -670,7 +656,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         [FromRoute] string applicationId,
         string homeTypeId,
         MoreInformationModel model,
-        string action,
         CancellationToken cancellationToken)
     {
         return await SaveHomeTypeSegment(
@@ -695,7 +680,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         [FromRoute] string applicationId,
         string homeTypeId,
         BuildingInformationModel model,
-        string action,
         CancellationToken cancellationToken)
     {
         return await SaveHomeTypeSegment(
@@ -728,7 +712,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         [FromRoute] string applicationId,
         string homeTypeId,
         CustomBuildPropertyModel model,
-        string action,
         CancellationToken cancellationToken)
     {
         return await SaveHomeTypeSegment(
@@ -755,7 +738,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         [FromRoute] string applicationId,
         string homeTypeId,
         TypeBasicOfFacilitiesModel model,
-        string action,
         CancellationToken cancellationToken)
     {
         return await SaveHomeTypeSegment(
@@ -782,7 +764,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         [FromRoute] string applicationId,
         string homeTypeId,
         AccessibilityModel model,
-        string action,
         CancellationToken cancellationToken)
     {
         return await SaveHomeTypeSegment(
@@ -809,7 +790,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         [FromRoute] string applicationId,
         string homeTypeId,
         AccessibilityModel model,
-        string action,
         CancellationToken cancellationToken)
     {
         return await SaveHomeTypeSegment(
@@ -837,7 +817,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         [FromRoute] string applicationId,
         string homeTypeId,
         FloorAreaModel model,
-        string action,
         CancellationToken cancellationToken)
     {
         return await SaveHomeTypeSegment(
@@ -865,7 +844,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         [FromRoute] string applicationId,
         string homeTypeId,
         FloorAreaModel model,
-        string action,
         CancellationToken cancellationToken)
     {
         var nationallyDescribedSpaceStandards = model.NationallyDescribedSpaceStandards
@@ -965,7 +943,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         [FromRoute] string applicationId,
         string homeTypeId,
         SocialRentModel model,
-        string action,
         CancellationToken cancellationToken)
     {
         return await SaveHomeTypeSegment(
@@ -1244,7 +1221,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         [FromRoute] string applicationId,
         string homeTypeId,
         ExemptFromTheRightToSharedOwnershipModel model,
-        string action,
         CancellationToken cancellationToken)
     {
         return await SaveHomeTypeSegment(
@@ -1271,7 +1247,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         [FromRoute] string applicationId,
         string homeTypeId,
         MoreInformationModel model,
-        string action,
         CancellationToken cancellationToken)
     {
         return await SaveHomeTypeSegment(

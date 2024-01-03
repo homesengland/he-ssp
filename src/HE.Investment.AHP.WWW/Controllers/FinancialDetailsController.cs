@@ -72,7 +72,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
 
     [HttpPost("land-status")]
     [WorkflowState(FinancialDetailsWorkflowState.LandStatus)]
-    public async Task<IActionResult> LandStatus(Guid applicationId, FinancialDetailsLandStatusModel model, string action, CancellationToken cancellationToken)
+    public async Task<IActionResult> LandStatus(Guid applicationId, FinancialDetailsLandStatusModel model, CancellationToken cancellationToken)
     {
         return await ProvideFinancialDetails(
             new ProvideLandStatusCommand(ApplicationId.From(applicationId), model.PurchasePrice, model.IsFinal),
@@ -100,7 +100,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
 
     [HttpPost("land-value")]
     [WorkflowState(FinancialDetailsWorkflowState.LandValue)]
-    public async Task<IActionResult> LandValue(Guid applicationId, FinancialDetailsLandValueModel model, string action, CancellationToken cancellationToken)
+    public async Task<IActionResult> LandValue(Guid applicationId, FinancialDetailsLandValueModel model, CancellationToken cancellationToken)
     {
         return await ProvideFinancialDetails(
             new ProvideLandValueCommand(ApplicationId.From(applicationId), model.IsOnPublicLand, model.LandValue),
@@ -125,7 +125,6 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
     public async Task<IActionResult> OtherApplicationCosts(
         Guid applicationId,
         FinancialDetailsOtherApplicationCostsModel model,
-        string action,
         CancellationToken cancellationToken)
     {
         return await ProvideFinancialDetails(
@@ -170,8 +169,30 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
         string action,
         CancellationToken cancellationToken)
     {
+        if (action == GenericMessages.Calculate)
+        {
+            var (operationResult, calculationResult) = await _mediator.Send(
+                new CalculateExpectedContributionsQuery(
+                    applicationId,
+                    model.RentalIncomeBorrowing,
+                    model.SaleOfHomesOnThisScheme,
+                    model.SaleOfHomesOnOtherSchemes,
+                    model.OwnResources,
+                    model.RCGFContribution,
+                    model.OtherCapitalSources,
+                    model.SharedOwnershipSales,
+                    model.HomesTransferValue),
+                cancellationToken);
+
+            model.TotalExpectedContributions = calculationResult.TotalExpectedContributions.ToPoundsPencesString();
+
+            ModelState.AddValidationErrors(operationResult);
+
+            return View(model);
+        }
+
         return await ProvideFinancialDetails(
-            new ProvideExpecteContributionsCommand(
+            new ProvideExpectedContributionsCommand(
                 ApplicationId.From(applicationId),
                 model.RentalIncomeBorrowing,
                 model.SaleOfHomesOnThisScheme,
@@ -207,6 +228,27 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
     [WorkflowState(FinancialDetailsWorkflowState.Grants)]
     public async Task<IActionResult> Grants(Guid applicationId, FinancialDetailsGrantsModel model, string action, CancellationToken cancellationToken)
     {
+        if (action == GenericMessages.Calculate)
+        {
+            var (operationResult, calculationResult) = await _mediator.Send(
+                new CalculateGrantsQuery(
+                    applicationId,
+                    model.CountyCouncilGrants,
+                    model.DhscExtraCareGrants,
+                    model.LocalAuthorityGrants,
+                    model.SocialServicesGrants,
+                    model.HealthRelatedGrants,
+                    model.LotteryGrants,
+                    model.OtherPublicBodiesGrants),
+                cancellationToken);
+
+            model.TotalGrants = calculationResult.TotalReceivedGrants.ToPoundsPencesString();
+
+            ModelState.AddValidationErrors(operationResult);
+
+            return View(model);
+        }
+
         return await ProvideFinancialDetails(
             new ProvideGrantsCommand(
                 ApplicationId.From(applicationId),

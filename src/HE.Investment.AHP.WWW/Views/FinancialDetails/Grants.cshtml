@@ -13,11 +13,11 @@
         <vc:financial-details-form-header title="@FinancialDetailsPageTitles.ExpectedGrants"
                                           current-page="@FinancialDetailsWorkflowState.Grants"
                                           application-id="@Model.ApplicationId.ToString()"
-                                          caption="@Model.ApplicationName - Finance details" />
+                                          caption="@Model.ApplicationName - Finance details"/>
 
         <gds-p>
             For multi-tenure sites, ensure the costs and contributions are apportioned across the development and only those applicable to the homes on this application are recorded here.
-            <br />Enter to the nearest pound. If you have not received any grants from other public bodies, enter 0.
+            <br/>Enter to the nearest pound. If you have not received any grants from other public bodies, enter 0.
         </gds-p>
 
         <gds-field-set>
@@ -31,7 +31,7 @@
                            govuk-formgroup-asp-for="CountyCouncilGrants"
                            name=@FinancialDetailsValidationFieldNames.CountyCouncilGrants
                            asp-prefixtext=@(GdsInputPrefixText.Pounds)
-                           value=@Model.CountyCouncilGrants />
+                           value=@Model.CountyCouncilGrants/>
             </he-error-form-group>
 
             <he-error-form-group asp-for="DhscExtraCareGrants">
@@ -44,7 +44,7 @@
                            govuk-formgroup-asp-for="DhscExtraCareGrants"
                            name=@FinancialDetailsValidationFieldNames.DhscExtraCareGrants
                            asp-prefixtext=@(GdsInputPrefixText.Pounds)
-                           value=@Model.DhscExtraCareGrants />
+                           value=@Model.DhscExtraCareGrants/>
             </he-error-form-group>
 
             <he-error-form-group asp-for="LocalAuthorityGrants">
@@ -57,7 +57,7 @@
                            govuk-formgroup-asp-for="LocalAuthorityGrants"
                            name=@FinancialDetailsValidationFieldNames.LocalAuthorityGrants
                            asp-prefixtext=@(GdsInputPrefixText.Pounds)
-                           value=@Model.LocalAuthorityGrants />
+                           value=@Model.LocalAuthorityGrants/>
             </he-error-form-group>
 
             <he-error-form-group asp-for="SocialServicesGrants">
@@ -70,7 +70,7 @@
                            govuk-formgroup-asp-for="SocialServicesGrants"
                            name=@FinancialDetailsValidationFieldNames.SocialServicesGrants
                            asp-prefixtext=@(GdsInputPrefixText.Pounds)
-                           value=@Model.SocialServicesGrants />
+                           value=@Model.SocialServicesGrants/>
             </he-error-form-group>
 
             <he-error-form-group asp-for="HealthRelatedGrants">
@@ -83,7 +83,7 @@
                            govuk-formgroup-asp-for="HealthRelatedGrants"
                            name=@FinancialDetailsValidationFieldNames.HealthRelatedGrants
                            asp-prefixtext=@(GdsInputPrefixText.Pounds)
-                           value=@Model.HealthRelatedGrants />
+                           value=@Model.HealthRelatedGrants/>
             </he-error-form-group>
 
             <he-error-form-group asp-for="LotteryGrants">
@@ -96,7 +96,7 @@
                            govuk-formgroup-asp-for="LotteryGrants"
                            name=@FinancialDetailsValidationFieldNames.LotteryGrants
                            asp-prefixtext=@(GdsInputPrefixText.Pounds)
-                           value=@Model.LotteryGrants />
+                           value=@Model.LotteryGrants/>
             </he-error-form-group>
 
             <he-error-form-group asp-for="OtherPublicBodiesGrants">
@@ -109,7 +109,7 @@
                            govuk-formgroup-asp-for="OtherPublicBodiesGrants"
                            name=@FinancialDetailsValidationFieldNames.OtherPublicBodiesGrants
                            asp-prefixtext=@(GdsInputPrefixText.Pounds)
-                           value=@Model.OtherPublicBodiesGrants />
+                           value=@Model.OtherPublicBodiesGrants/>
             </he-error-form-group>
 
             <div class="govuk-grid-row">
@@ -121,13 +121,12 @@
                 </div>
             </div>
 
-            <button id="continue-button" class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
-                Save and continue
-            </button>
+            <partial name="_CalculateButton"/>
+            <vc:form-button/>
 
             @Html.HiddenFor(c => c.ApplicationId)
             @Html.HiddenFor(c => c.ApplicationName)
         </gds-field-set>
-        <vc:return-to-application-link application-id="@Model.ApplicationId.ToString()" />
+        <vc:return-to-application-link application-id="@Model.ApplicationId.ToString()"/>
     </form>
 </gds-div-grid-column-two-thirds>

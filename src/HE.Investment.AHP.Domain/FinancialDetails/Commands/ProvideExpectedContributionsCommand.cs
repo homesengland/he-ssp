@@ -4,7 +4,7 @@ using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.Applicat
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.Commands;
 
-public record ProvideExpecteContributionsCommand(
+public record ProvideExpectedContributionsCommand(
     ApplicationId ApplicationId,
     string? RentalIncomeBorrowing,
     string? SalesOfHomesOnThisScheme,
