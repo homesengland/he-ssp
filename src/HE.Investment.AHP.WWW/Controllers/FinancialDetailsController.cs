@@ -172,7 +172,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
     {
         if (action == GenericMessages.Calculate)
         {
-            var (operationResult, calculationSum) = await _mediator.Send(
+            var (operationResult, calculationResult) = await _mediator.Send(
                 new CalculateExpectedContributionsQuery(
                     applicationId,
                     model.RentalIncomeBorrowing,
@@ -185,7 +185,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
                     model.HomesTransferValue),
                 cancellationToken);
 
-            model.TotalExpectedContributions = calculationSum?.TotalExpectedContributions?.ToString("0.##", CultureInfo.InvariantCulture);
+            model.TotalExpectedContributions = calculationResult?.TotalExpectedContributions?.ToString("0.##", CultureInfo.InvariantCulture);
 
             ModelState.AddValidationErrors(operationResult);
 
@@ -231,7 +231,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
     {
         if (action == GenericMessages.Calculate)
         {
-            var (operationResult, calculationSum) = await _mediator.Send(
+            var (operationResult, calculationResult) = await _mediator.Send(
                 new CalculateGrantsQuery(
                     applicationId,
                     model.CountyCouncilGrants,
@@ -243,7 +243,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
                     model.OtherPublicBodiesGrants),
                 cancellationToken);
 
-            model.TotalGrants = calculationSum?.TotalReceivedGrants?.ToString("0.##", CultureInfo.InvariantCulture);
+            model.TotalGrants = calculationResult?.TotalReceivedGrants?.ToString("0.##", CultureInfo.InvariantCulture);
 
             ModelState.AddValidationErrors(operationResult);
 

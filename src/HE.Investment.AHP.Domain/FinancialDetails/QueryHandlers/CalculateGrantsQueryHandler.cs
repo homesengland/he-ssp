@@ -13,7 +13,7 @@ using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.Applicat
 namespace HE.Investment.AHP.Domain.FinancialDetails.QueryHandlers;
 
 internal sealed class CalculateGrantsQueryHandler : CalculateQueryHandlerBase,
-    IRequestHandler<CalculateGrantsQuery, (OperationResult OperationResult, CalculationSum? CalculationSum)>
+    IRequestHandler<CalculateGrantsQuery, (OperationResult OperationResult, CalculationResult? CalculationResult)>
 {
     public CalculateGrantsQueryHandler(
         IFinancialDetailsRepository financialDetailsRepository,
@@ -23,7 +23,7 @@ internal sealed class CalculateGrantsQueryHandler : CalculateQueryHandlerBase,
     {
     }
 
-    public async Task<(OperationResult OperationResult, CalculationSum? CalculationSum)> Handle(
+    public async Task<(OperationResult OperationResult, CalculationResult? CalculationResult)> Handle(
         CalculateGrantsQuery request,
         CancellationToken cancellationToken)
     {
@@ -51,7 +51,7 @@ internal sealed class CalculateGrantsQueryHandler : CalculateQueryHandlerBase,
 
                 var total = publicGrants.CalculateTotal();
 
-                return new CalculationSum(total, null);
+                return new CalculationResult(total, null);
             },
             ApplicationId.From(request.ApplicationId),
             cancellationToken);

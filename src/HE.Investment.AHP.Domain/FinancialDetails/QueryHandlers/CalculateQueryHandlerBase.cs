@@ -24,15 +24,15 @@ public abstract class CalculateQueryHandlerBase
         _logger = logger;
     }
 
-    protected async Task<(OperationResult OperationResult, CalculationSum? CalculationSum)> Perform(Func<FinancialDetailsEntity, CalculationSum> action, ApplicationId applicationId, CancellationToken cancellationToken)
+    protected async Task<(OperationResult OperationResult, CalculationResult? CalculationResult)> Perform(Func<FinancialDetailsEntity, CalculationResult> action, ApplicationId applicationId, CancellationToken cancellationToken)
     {
         var account = await _accountUserContext.GetSelectedAccount();
         var financialDetails = await _financialDetailsRepository.GetById(applicationId, account, cancellationToken);
-        CalculationSum calculationSum;
+        CalculationResult calculationResult;
 
         try
         {
-            calculationSum = action(financialDetails);
+            calculationResult = action(financialDetails);
         }
         catch (DomainValidationException domainValidationException)
         {
@@ -40,6 +40,6 @@ public abstract class CalculateQueryHandlerBase
             return (domainValidationException.OperationResult, null);
         }
 
-        return (OperationResult.Success(), calculationSum);
+        return (OperationResult.Success(), calculationResult);
     }
 }
