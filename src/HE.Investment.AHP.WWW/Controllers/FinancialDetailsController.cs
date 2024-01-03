@@ -308,9 +308,18 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
     }
 
     [HttpGet("back")]
-    public Task<IActionResult> Back(FinancialDetailsWorkflowState currentPage, Guid applicationId)
+    public async Task<IActionResult> Back(FinancialDetailsWorkflowState currentPage, Guid applicationId)
     {
-        return Back(currentPage, new { applicationId });
+        var financialDetails = await _mediator.Send(new GetFinancialDetailsQuery(applicationId.ToString()));
+        if (financialDetails.SectionStatus != Investments.Common.Contract.SectionStatus.NotStarted)
+        {
+            if (currentPage == FinancialDetailsWorkflowState.LandStatus)
+            {
+                return RedirectToAction("TaskList", "Application", new { applicationId });
+            }
+        }
+
+        return await Back(currentPage, new { applicationId });
     }
 
     protected override async Task<IStateRouting<FinancialDetailsWorkflowState>> Routing(FinancialDetailsWorkflowState currentState, object? routeData = null)
