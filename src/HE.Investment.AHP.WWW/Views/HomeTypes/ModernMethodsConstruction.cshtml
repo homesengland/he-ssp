@@ -1,0 +1,53 @@
+@using HE.Investment.AHP.Domain.HomeTypes
+@using HE.Investment.AHP.WWW.Extensions
+@using HE.Investment.AHP.WWW.Models.Common
+@using HE.Investment.AHP.WWW.Views.Shared.Components.HomeTypeFormHeader
+@using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
+@model HE.Investment.AHP.WWW.Models.HomeTypes.ModernMethodsConstructionModel;
+
+@{
+    var applicationId = this.GetApplicationIdFromRoute();
+    var homeTypeId = this.GetHomeTypeIdFromRoute();
+    var workflow = Context.Request.Query["workflow"];
+}
+
+<gds-div-grid-column-two-thirds xmlns="http://www.w3.org/1999/html">
+    <form asp-controller="HomeTypes" asp-action="ModernMethodsConstruction" asp-method="post" asp-route-workflow="@workflow" novalidate>
+        @Html.HiddenFor(m => Model.ApplicationName)
+        @Html.HiddenFor(m => Model.HomeTypeName)
+        <vc:home-type-form-header current-page="@HomeTypesWorkflowState.ModernMethodsConstruction"
+                                  application-id="@applicationId"
+                                  home-type-id="@homeTypeId"
+                                  caption="@Model.Header"/>
+        <gds-field-set>
+            <he-error-form-group asp-for="ModernMethodsConstructionApplied">
+                <gds-legend>
+                    <gds-h1 class="govuk-!-margin-bottom-2">Are you using Modern Methods of Construction (MMC) for this home type?</gds-h1>
+                </gds-legend>
+                <details class="govuk-details govuk-!-margin-bottom-2" data-module="govuk-details">
+                    <summary class="govuk-details__summary">
+                        <span class="govuk-details__summary-text">
+                            Help with Modern Methods of Construction (MMC)
+                        </span>
+                    </summary>
+                    <div class="govuk-details__text">
+                        The MMC definition framework is a new seven category framework that enables a full and future-proofed range of 'Modern Methods of Construction' used in home building.<br/><br/>
+                        The framework spans all types of pre-manufacturing, site based materials and process innovation.<br/><br/>
+                        <a class="govuk-link" target="_blank"
+                           href="https://www.buildoffsite.com/content/uploads/2019/04/MMC-I-Pad-base_GOVUK-FINAL_SECURE-1.pdf">
+                            Read further information on the MMC categories (opens in a new tab).
+                        </a>
+                    </div>
+                </details>
+                <gds-radio govuk-formgroup-asp-for="ModernMethodsConstructionApplied"
+                           asp-hiddenlabeltext="Modern Methods Construction Applied"
+                           value="@Model.ModernMethodsConstructionApplied"
+                           asp-selectlistitems="@CommonFormOptions.YesNo"
+                           class="govuk-!-margin-bottom-2">
+                </gds-radio>
+            </he-error-form-group>
+            <vc:form-button/>
+        </gds-field-set>
+        <vc:return-to-application-link application-id="@applicationId"/>
+    </form>
+</gds-div-grid-column-two-thirds>

@@ -1255,6 +1255,42 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
             cancellationToken);
     }
 
+    [WorkflowState(HomeTypesWorkflowState.ModernMethodsConstruction)]
+    [HttpGet("{homeTypeId}/ModernMethodsConstruction")]
+    public async Task<IActionResult> ModernMethodsConstruction([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
+    {
+        var homeInformation = await _mediator.Send(new GetHomeInformationQuery(applicationId, homeTypeId), cancellationToken);
+
+        return View(new ModernMethodsConstructionModel(homeInformation.ApplicationName, homeInformation.HomeTypeName));
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.ModernMethodsConstructionCategories)]
+    [HttpGet("{homeTypeId}/ModernMethodsConstructionCategories")]
+    public async Task<IActionResult> ModernMethodsConstructionCategories([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
+    {
+        var homeInformation = await _mediator.Send(new GetHomeInformationQuery(applicationId, homeTypeId), cancellationToken);
+
+        return View(new ModernMethodsConstructionModel(homeInformation.ApplicationName, homeInformation.HomeTypeName));
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.ModernMethodsConstruction2DSubcategories)]
+    [HttpGet("{homeTypeId}/ModernMethodsConstruction2DSubcategories")]
+    public async Task<IActionResult> ModernMethodsConstruction2DSubcategories([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
+    {
+        var homeInformation = await _mediator.Send(new GetHomeInformationQuery(applicationId, homeTypeId), cancellationToken);
+
+        return View(new ModernMethodsConstructionModel(homeInformation.ApplicationName, homeInformation.HomeTypeName));
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.ModernMethodsConstruction3DSubcategories)]
+    [HttpGet("{homeTypeId}/ModernMethodsConstruction3DSubcategories")]
+    public async Task<IActionResult> ModernMethodsConstruction3DSubcategories([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
+    {
+        var homeInformation = await _mediator.Send(new GetHomeInformationQuery(applicationId, homeTypeId), cancellationToken);
+
+        return View(new ModernMethodsConstructionModel(homeInformation.ApplicationName, homeInformation.HomeTypeName));
+    }
+
     [WorkflowState(HomeTypesWorkflowState.CheckAnswers)]
     [HttpGet("{homeTypeId}/CheckAnswers")]
     public async Task<IActionResult> CheckAnswers([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)

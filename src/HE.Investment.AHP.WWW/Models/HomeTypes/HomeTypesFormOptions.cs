@@ -37,4 +37,10 @@ public static class HomeTypesFormOptions
         .Where(x => x.Value != NationallyDescribedSpaceStandardType.NoneOfThese.ToString());
 
     public static IEnumerable<SelectListItem> NationallyDescribedSpaceStandardsOnlyNone => new[] { SelectListHelper.FromEnum(NationallyDescribedSpaceStandardType.NoneOfThese) };
+
+    public static IEnumerable<SelectListItem> ModernMethodsConstructionCategoriesTypes => SelectListHelper.FromEnum<ModernMethodsConstructionCategoriesType>();
+
+    public static IEnumerable<SelectListItem> ModernMethodsConstruction2DSubcategoriesTypes => SelectListHelper.FromEnum<ModernMethodsConstruction2DSubcategoriesType>();
+
+    public static IEnumerable<SelectListItem> ModernMethodsConstruction3DSubcategoriesTypes => SelectListHelper.FromEnum<ModernMethodsConstruction3DSubcategoriesType>();
 }
