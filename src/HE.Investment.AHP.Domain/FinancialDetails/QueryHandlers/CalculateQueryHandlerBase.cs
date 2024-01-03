@@ -24,7 +24,7 @@ public abstract class CalculateQueryHandlerBase
         _logger = logger;
     }
 
-    protected async Task<(OperationResult OperationResult, CalculationResult? CalculationResult)> Perform(Func<FinancialDetailsEntity, CalculationResult> action, ApplicationId applicationId, CancellationToken cancellationToken)
+    protected async Task<(OperationResult OperationResult, CalculationResult CalculationResult)> Perform(Func<FinancialDetailsEntity, CalculationResult> action, ApplicationId applicationId, CancellationToken cancellationToken)
     {
         var account = await _accountUserContext.GetSelectedAccount();
         var financialDetails = await _financialDetailsRepository.GetById(applicationId, account, cancellationToken);
@@ -37,7 +37,7 @@ public abstract class CalculateQueryHandlerBase
         catch (DomainValidationException domainValidationException)
         {
             _logger.LogWarning(domainValidationException, "Validation error(s) occured: {Message}", domainValidationException.Message);
-            return (domainValidationException.OperationResult, null);
+            return (domainValidationException.OperationResult, new CalculationResult(null, null));
         }
 
         return (OperationResult.Success(), calculationResult);

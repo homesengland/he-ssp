@@ -1,4 +1,3 @@
-using System.Globalization;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Contract.FinancialDetails.Queries;
@@ -185,7 +184,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
                     model.HomesTransferValue),
                 cancellationToken);
 
-            model.TotalExpectedContributions = calculationResult?.TotalExpectedContributions?.ToString("0.##", CultureInfo.InvariantCulture);
+            model.TotalExpectedContributions = calculationResult.TotalExpectedContributions.ToPoundsPencesString();
 
             ModelState.AddValidationErrors(operationResult);
 
@@ -243,7 +242,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
                     model.OtherPublicBodiesGrants),
                 cancellationToken);
 
-            model.TotalGrants = calculationResult?.TotalReceivedGrants?.ToString("0.##", CultureInfo.InvariantCulture);
+            model.TotalGrants = calculationResult.TotalReceivedGrants.ToPoundsPencesString();
 
             ModelState.AddValidationErrors(operationResult);
 

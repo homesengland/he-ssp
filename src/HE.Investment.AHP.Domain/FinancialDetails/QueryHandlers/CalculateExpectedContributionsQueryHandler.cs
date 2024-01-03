@@ -13,7 +13,7 @@ using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.Applicat
 namespace HE.Investment.AHP.Domain.FinancialDetails.QueryHandlers;
 
 internal sealed class CalculateExpectedContributionsQueryHandler : CalculateQueryHandlerBase,
-    IRequestHandler<CalculateExpectedContributionsQuery, (OperationResult OperationResult, CalculationResult? CalculationResult)>
+    IRequestHandler<CalculateExpectedContributionsQuery, (OperationResult OperationResult, CalculationResult CalculationResult)>
 {
     public CalculateExpectedContributionsQueryHandler(
         IFinancialDetailsRepository financialDetailsRepository,
@@ -23,7 +23,7 @@ internal sealed class CalculateExpectedContributionsQueryHandler : CalculateQuer
     {
     }
 
-    public async Task<(OperationResult OperationResult, CalculationResult? CalculationResult)> Handle(
+    public async Task<(OperationResult OperationResult, CalculationResult CalculationResult)> Handle(
         CalculateExpectedContributionsQuery request,
         CancellationToken cancellationToken)
     {
@@ -48,8 +48,6 @@ internal sealed class CalculateExpectedContributionsQueryHandler : CalculateQuer
                     financialDetails.ApplicationBasicInfo.Tenure);
 
                 result.CheckErrors();
-
-                financialDetails.ProvideExpectedContributions(contributions);
 
                 var total = contributions.CalculateTotal();
 
