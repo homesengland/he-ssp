@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.WWW;
 using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investment.AHP.WWW.Views.Application;
+using HE.Investments.AHP.IntegrationTests.Extensions;
 using HE.Investments.AHP.IntegrationTests.Framework;
 using HE.Investments.AHP.IntegrationTests.Pages;
 using HE.Investments.IntegrationTestsFramework;
@@ -9,7 +10,7 @@ using HE.Investments.IntegrationTestsFramework.Extensions;
 using Xunit;
 using Xunit.Extensions.Ordering;
 
-namespace HE.Investments.AHP.IntegrationTests.Application;
+namespace HE.Investments.AHP.IntegrationTests.FillApplication;
 
 [Order(1)]
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
@@ -65,12 +66,36 @@ public class Order01StartAhpApplication : AhpIntegrationTest
         // when
         var tenurePage = await TestClient.SubmitButton(
             continueButton,
-            new Dictionary<string, string> { { nameof(ApplicationBasicModel.Name), "Test Application" } });
+            new Dictionary<string, string> { { nameof(ApplicationBasicModel.Name), ApplicationData.GenerateApplicationName() } });
 
         // then
         tenurePage
             .UrlWithoutQueryEndsWith(ApplicationPagesUrl.Tenure)
             .HasTitle(ApplicationPageTitles.Tenure);
+
+        SaveCurrentPage();
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(4)]
+    public async Task Order4_ShouldProvideTenureAndNavigateToApplicationTaskList()
+    {
+        // given
+        var tenurePage = await GetCurrentPage(ApplicationPagesUrl.Tenure);
+        tenurePage.HasGdsSubmitButton("continue-button", out var continueButton);
+
+        // when
+        var taskListPage = await TestClient.SubmitButton(
+            continueButton,
+            (nameof(ApplicationBasicModel.Tenure), "AffordableRent"));
+
+        // then
+        taskListPage
+            .UrlEndWith(ApplicationPagesUrl.TaskListSuffix)
+            .HasTitle(ApplicationData.ApplicationName)
+            .HasValidApplicationReferenceNumber();
+
+        ApplicationData.SetApplicationId(taskListPage.Url.GetApplicationGuidFromUrl());
 
         SaveCurrentPage();
     }
