@@ -7,34 +7,35 @@ public static class RazorPageExtensions
 {
     public static string GetApplicationIdFromRoute(this IRazorPage razorPage)
     {
-        var applicationId = razorPage.ViewContext.RouteData.Values["applicationId"] as string;
-        if (applicationId.IsNotProvided())
-        {
-            throw new ArgumentException("Application Id is not present in Route data");
-        }
-
-        return applicationId!;
+        return razorPage.GetOptionalFromRoute("applicationId")
+               ?? throw new ArgumentException("Application Id is not present in Route data");
     }
 
     public static string GetHomeTypeIdFromRoute(this IRazorPage razorPage)
     {
-        var homeTypeId = razorPage.ViewContext.RouteData.Values["homeTypeId"] as string;
-        if (homeTypeId.IsNotProvided())
-        {
-            throw new ArgumentException("Application Id is not present in Route data");
-        }
+        return razorPage.GetOptionalFromRoute("homeTypeId")
+               ?? throw new ArgumentException("Home Type Id is not present in Route data");
+    }
 
-        return homeTypeId!;
+    public static string GetDeliveryPhaseIdFromRoute(this IRazorPage razorPage)
+    {
+        return razorPage.GetOptionalFromRoute("deliveryPhaseId")
+               ?? throw new ArgumentException("Delivery Phase Id is not present in Route data");
     }
 
     public static string? GetOptionalHomeTypeIdFromRoute(this IRazorPage razorPage)
     {
-        var homeTypeId = razorPage.ViewContext.RouteData.Values["homeTypeId"] as string;
-        if (homeTypeId.IsNotProvided())
+        return razorPage.GetOptionalFromRoute("homeTypeId");
+    }
+
+    private static string? GetOptionalFromRoute(this IRazorPage razorPage, string parameterName)
+    {
+        var parameterValue = razorPage.ViewContext.RouteData.Values[parameterName] as string;
+        if (parameterValue.IsNotProvided())
         {
             return null;
         }
 
-        return homeTypeId!;
+        return parameterValue!;
     }
 }
