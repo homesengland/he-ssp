@@ -36,7 +36,11 @@ public static class MiddlewareExtensions
             var requestPath = context.Request.Path.Value ?? string.Empty;
             if (pathsWithDisabledRequestSizeLimit.Any(x => requestPath.Contains(x)))
             {
-                context.Features.Get<IHttpMaxRequestBodySizeFeature>()!.MaxRequestBodySize = null;
+                var httpMaxRequestBodySizeFeature = context.Features.Get<IHttpMaxRequestBodySizeFeature>();
+                if (httpMaxRequestBodySizeFeature is not null)
+                {
+                    httpMaxRequestBodySizeFeature.MaxRequestBodySize = null;
+                }
             }
 
             return next();

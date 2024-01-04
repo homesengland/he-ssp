@@ -7,10 +7,11 @@
 @using HE.Investments.Common.WWW.Components.RadioList
 @using HE.Investments.Common.WWW.Models
 @using HE.Investment.AHP.Contract.Common.Enums
+@using HE.Investment.AHP.WWW.Views.Scheme.Const
 @model HE.Investment.AHP.WWW.Models.Scheme.SchemeSummaryViewModel
 
 @{
-    var title = "Check your answers before adding scheme information";
+    var title = SchemaInformationPageTitles.CheckAnswers;
     ViewData["Title"] = title;
     var values = CommonFormOptions.IsSectionCompleted
         .Select(r => new ExtendedSelectListItem(

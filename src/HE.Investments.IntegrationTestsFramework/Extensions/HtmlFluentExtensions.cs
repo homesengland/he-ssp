@@ -58,9 +58,11 @@ public static class HtmlFluentExtensions
         return htmlDocument;
     }
 
-    public static IHtmlDocument HasGdsButton(this IHtmlDocument htmlDocument, string elementId)
+    public static IHtmlDocument HasGdsButton(this IHtmlDocument htmlDocument, string elementId, out IHtmlButtonElement htmlButtonElement)
     {
-        htmlDocument.GetElementById(elementId).Should().BeGdsButton();
+        var htmlElement = htmlDocument.GetElementById(elementId);
+        htmlElement.Should().BeGdsButton();
+        htmlButtonElement = (IHtmlButtonElement)htmlElement!;
         return htmlDocument;
     }
 
@@ -88,6 +90,17 @@ public static class HtmlFluentExtensions
     public static IHtmlDocument HasLinkButtonForTestId(this IHtmlDocument htmlDocument, string dataTestId, out IHtmlAnchorElement htmlElement)
     {
         htmlElement = htmlDocument.GetLinkButtonByTestId(dataTestId);
+
+        return htmlDocument;
+    }
+
+    public static IHtmlDocument HasLinkWithId(this IHtmlDocument htmlDocument, string id, out IHtmlAnchorElement htmlElement)
+    {
+        var element = htmlDocument.GetElementById(id);
+
+        var anchorElement = element as IHtmlAnchorElement;
+        anchorElement.Should().NotBeNull($"Element with id {id} should be IHtmlAnchorElement");
+        htmlElement = anchorElement!;
 
         return htmlDocument;
     }

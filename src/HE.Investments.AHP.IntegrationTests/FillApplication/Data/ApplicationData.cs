@@ -1,14 +1,20 @@
-namespace HE.Investments.AHP.IntegrationTests.FillApplication;
+using System.Globalization;
+
+namespace HE.Investments.AHP.IntegrationTests.FillApplication.Data;
 
 public class ApplicationData
 {
+    public ApplicationData()
+    {
+    }
+
     public string ApplicationId { get; private set; }
 
     public string ApplicationName { get; private set; }
 
     public string GenerateApplicationName()
     {
-        ApplicationName = $"TestApplication{Guid.NewGuid()}";
+        ApplicationName = $"IT_{DateTime.UtcNow.ToString(CultureInfo.InvariantCulture)}";
         return ApplicationName;
     }
 
