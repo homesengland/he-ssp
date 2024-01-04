@@ -296,29 +296,25 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
             return View("CheckAnswers", summary);
         }
 
-        if (action == GenericMessages.SaveAndReturn)
-        {
-            return RedirectToAction(
+        return RedirectToAction(
+            nameof(ApplicationController.TaskList),
+            new ControllerName(nameof(ApplicationController)).WithoutPrefix(),
+            new { model.ApplicationId });
+    }
+
+    [HttpGet]
+    [WorkflowState(FinancialDetailsWorkflowState.ReturnToTaskList)]
+    public IActionResult ReturnToTaskList(Guid applicationId, CancellationToken cancellationToken)
+    {
+        return RedirectToAction(
                 nameof(ApplicationController.TaskList),
                 new ControllerName(nameof(ApplicationController)).WithoutPrefix(),
-                new { model.ApplicationId });
-        }
-
-        return RedirectToAction("TaskList", "Application", new { applicationId });
+                new { ApplicationId = applicationId });
     }
 
     [HttpGet("back")]
     public async Task<IActionResult> Back(FinancialDetailsWorkflowState currentPage, Guid applicationId)
     {
-        var financialDetails = await _mediator.Send(new GetFinancialDetailsQuery(applicationId.ToString()));
-        if (financialDetails.SectionStatus != Investments.Common.Contract.SectionStatus.NotStarted)
-        {
-            if (currentPage == FinancialDetailsWorkflowState.LandStatus)
-            {
-                return RedirectToAction("TaskList", "Application", new { applicationId });
-            }
-        }
-
         return await Back(currentPage, new { applicationId });
     }
 
