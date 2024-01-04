@@ -6,7 +6,7 @@
 @using HE.Investments.Common.WWW.Extensions;
 @model HE.Investment.AHP.WWW.Models.Scheme.SchemeViewModel
 @{
-    var title = SchemaInformationPageTitles.SalesRisk;
+    var title = SchemeInformationPageTitles.SalesRisk;
     ViewData["Title"] = title;
     ViewBag.validationErrors = ViewData.ModelState.GetOrderedErrors(SchemeValidationFieldsOrder.SalesRisk);
 }

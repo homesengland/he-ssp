@@ -4,13 +4,13 @@
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
 @model string
 @{
-    ViewData["Title"] = SchemaInformationPageTitles.SchemeDetails;
+    ViewData["Title"] = SchemeInformationPageTitles.SchemeDetails;
     var applicationId = this.GetApplicationIdFromRoute();
 }
 <gds-div-grid-column-two-thirds>
     <gds-back-link href="@Url.Action("TaskList", "Application", new { applicationId })" text="Back" class="govuk-!-margin-bottom-8">
     </gds-back-link>
-    <vc:form-header caption="@Model" title="@SchemaInformationPageTitles.SchemeDetails"/>
+    <vc:form-header caption="@Model" title="@SchemeInformationPageTitles.SchemeDetails"/>
      <div class="govuk-!-padding-bottom-8">
             <gds-p>In this section, you’ll need to provide information about your schemes. This includes:</gds-p>
             <gds-ul class="govuk-!-padding-left-6" asp-lists=@(new[] { "funding you require on a scheme", "local housing needs", "discussions you’ve had with local stakeholders" })>

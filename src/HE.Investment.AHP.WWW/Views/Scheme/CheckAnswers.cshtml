@@ -11,7 +11,7 @@
 @model HE.Investment.AHP.WWW.Models.Scheme.SchemeSummaryViewModel
 
 @{
-    var title = SchemaInformationPageTitles.CheckAnswers;
+    var title = SchemeInformationPageTitles.CheckAnswers;
     ViewData["Title"] = title;
     var values = CommonFormOptions.IsSectionCompleted
         .Select(r => new ExtendedSelectListItem(

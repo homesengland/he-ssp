@@ -1,6 +1,6 @@
 namespace HE.Investment.AHP.WWW.Views.Scheme.Const;
 
-public static class SchemaInformationPageTitles
+public static class SchemeInformationPageTitles
 {
     public const string SchemeDetails = "Scheme details";
 

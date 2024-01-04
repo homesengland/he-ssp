@@ -1,8 +1,8 @@
 namespace HE.Investments.AHP.IntegrationTests.Pages;
 
-public static class SchemaInformationPagesUrl
+public static class SchemeInformationPagesUrl
 {
-    public const string SchemaDetails = "/scheme/start";
+    public const string SchemeDetails = "/scheme/start";
 
     public const string FundingDetailsSuffix = "/scheme/funding";
 

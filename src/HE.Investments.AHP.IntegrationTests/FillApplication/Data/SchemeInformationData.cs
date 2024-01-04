@@ -3,7 +3,7 @@ using System.Security.Principal;
 
 namespace HE.Investments.AHP.IntegrationTests.FillApplication.Data;
 
-public class SchemaInformationData
+public class SchemeInformationData
 {
     public decimal? RequiredFunding { get; private set; }
 
