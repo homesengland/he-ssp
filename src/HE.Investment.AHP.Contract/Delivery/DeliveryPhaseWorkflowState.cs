@@ -7,4 +7,5 @@ public enum DeliveryPhaseWorkflowState
     AcquisitionMilestone,
     StartOnSiteMilestone,
     PracticalCompletionMilestone,
+    UnregisteredProviderFollowUp,
 }

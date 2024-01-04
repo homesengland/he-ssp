@@ -109,6 +109,25 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         return View(CreateMilestoneViewModel(deliveryPhaseId, model.MilestoneDates));
     }
 
+    [WorkflowState(DeliveryPhaseWorkflowState.UnregisteredProviderFollowUp)]
+    [HttpGet("{deliveryPhaseId}/unregistered-provider-follow-up")]
+    public IActionResult UnregisteredProviderFollowUp(string deliveryPhaseId)
+    {
+        return View(CreateMilestoneViewModel(deliveryPhaseId));
+    }
+
+    [WorkflowState(DeliveryPhaseWorkflowState.UnregisteredProviderFollowUp)]
+    [HttpPost("{deliveryPhaseId}/unregistered-provider-follow-up")]
+    public IActionResult UnregisteredProviderFollowUp(string deliveryPhaseId, bool? requestAdditionalPayments, CancellationToken cancellationToken)
+    {
+        if (requestAdditionalPayments == null)
+        {
+            ModelState.AddModelError("requestAdditionalPayments", "Select value");
+        }
+
+        return View(CreateMilestoneViewModel(deliveryPhaseId));
+    }
+
     protected override Task<IStateRouting<DeliveryPhaseWorkflowState>> Routing(DeliveryPhaseWorkflowState currentState, object? routeData = null)
     {
         return Task.FromResult<IStateRouting<DeliveryPhaseWorkflowState>>(new DeliveryPhaseWorkflow());
