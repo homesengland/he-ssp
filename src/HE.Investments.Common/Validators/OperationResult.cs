@@ -78,6 +78,23 @@ public class OperationResult : IOperationResult
         }
     }
 
+    public TReturnedData? AggregateNullable<TReturnedData>(Func<TReturnedData?> action)
+        where TReturnedData : class
+    {
+        try
+        {
+            return action();
+        }
+        catch (DomainValidationException ex)
+        {
+            var result = ex.OperationResult;
+
+            AddValidationErrors(result.Errors);
+
+            return null;
+        }
+    }
+
     public void Aggregate(Action action)
     {
         try

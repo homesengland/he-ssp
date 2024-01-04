@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
-using HE.Investments.Common.WWW.Models;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.WWWTestsFramework;
 using HE.Investments.Common.WWWTestsFramework.Helpers;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -13,7 +13,7 @@ public class DateInputTests : ViewComponentTestBase<DateInputTests>
 {
     private const string Error = "test error";
     private const string ViewPath = "/Components/DateInputTests/DateInputTests.cshtml";
-    private readonly DateInputTestsViewModel _model = new(new DateModel("33", "5", "2024"));
+    private readonly DateInputTestsViewModel _model = new(new DateDetails("33", "5", "2024"));
 
     [Fact(Skip = Constants.SkipTest)]
     public async Task ShouldDisplayViewForMissingModel()
