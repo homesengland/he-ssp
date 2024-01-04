@@ -32,7 +32,7 @@ public class GuidanceIntegrationTests : IntegrationTest
         // then
         mainPage
             .UrlEndWith(GuidancePagesUrls.WhatTheHomeBuildingFundIs)
-            .HasGdsButton("SignInButton");
+            .HasGdsButton("SignInButton", out _);
         SetSharedData(CurrentPageKey, mainPage);
     }
 
@@ -50,7 +50,7 @@ public class GuidanceIntegrationTests : IntegrationTest
         // then
         eligibilityPage
             .UrlEndWith(GuidancePagesUrls.Eligibility)
-            .HasGdsButton("SignInButton");
+            .HasGdsButton("SignInButton", out _);
 
         SetSharedData(CurrentPageKey, eligibilityPage);
     }

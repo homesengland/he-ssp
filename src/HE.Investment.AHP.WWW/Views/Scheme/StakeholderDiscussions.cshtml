@@ -8,7 +8,7 @@
 @model HE.Investment.AHP.WWW.Models.Scheme.SchemeViewModel
 
 @{
-    var title = "Local stakeholder discussions";
+    var title = SchemeInformationPageTitles.StakeholderDiscussions;
     ViewData["Title"] = title;
     ViewBag.validationErrors = ViewData.ModelState.GetOrderedErrors(SchemeValidationFieldsOrder.StakeholderDiscussions);
 }

@@ -64,7 +64,7 @@ public class SubmitApplicationIntegrationTests : IntegrationTest
         // then
         applicationSubmittedPage
             .UrlEndWith(ApplicationPagesUrls.ApplicationSubmittedSuffix)
-            .HasGdsButton("application-submitted-to-dashboard");
+            .HasGdsButton("application-submitted-to-dashboard", out _);
 
         UserData.SetSubmittedLoanApplicationId(_applicationLoanId);
     }

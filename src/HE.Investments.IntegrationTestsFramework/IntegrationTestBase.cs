@@ -29,7 +29,12 @@ public class IntegrationTestBase<TProgram>
             throw new InvalidOperationException("Current page is not set and pageUrl is not provided");
         }
 
-        if (currentPage != null && !string.IsNullOrEmpty(pageUrl) && (!new Uri(currentPage.Url)?.AbsolutePath.EndsWith(pageUrl, StringComparison.InvariantCulture) ?? true))
+        if (currentPage is null && !string.IsNullOrEmpty(pageUrl))
+        {
+            return await TestClient.NavigateTo(pageUrl);
+        }
+
+        if (!string.IsNullOrEmpty(pageUrl) && currentPage is not null && (!new Uri(currentPage.Url)?.AbsolutePath.EndsWith(pageUrl, StringComparison.InvariantCulture) ?? true))
         {
             return await TestClient.NavigateTo(pageUrl);
         }

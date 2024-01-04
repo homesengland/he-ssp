@@ -1,5 +1,6 @@
 using HE.Investment.AHP.WWW;
 using HE.Investments.AHP.IntegrationTests.FillApplication;
+using HE.Investments.AHP.IntegrationTests.FillApplication.Data;
 using HE.Investments.IntegrationTestsFramework;
 using Xunit;
 
