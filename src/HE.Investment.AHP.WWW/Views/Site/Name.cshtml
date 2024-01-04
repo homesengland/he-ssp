@@ -1,0 +1,30 @@
+@using HE.Investments.Common.WWW.Components.FormHeader
+@using HE.Investments.Common.WWW.Components.FormButton
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using HE.Investment.AHP.Contract.Site
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Input
+@using HE.Investment.AHP.WWW.Views.Site
+@model HE.Investment.AHP.WWW.Models.Application.ApplicationBasicModel
+@{
+    ViewData["Title"] = SitePageTitles.SiteName;
+}
+<gds-div-grid-column-two-thirds>
+    <gds-back-link href=@Url.Action("Back", "Site", new { currentPage = SiteWorkflowState.Name }) class="govuk-!-margin-bottom-8"></gds-back-link>
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+    <form asp-controller="Site" asp-action="Name" asp-method="post" novalidate>
+        <vc:form-header title="@SitePageTitles.SiteName" />
+        <gds-field-set role="group">
+            <legend>
+                <gds-p >Each site needs a unique name.</gds-p>
+            </legend>
+
+            <gds-input asp-hiddenlabeltext="Name"
+                       class="govuk-!-width-one-third"
+                       govuk-formgroup-asp-for="Name"/>
+        </gds-field-set>
+
+        <vc:form-button text="Continue"/>
+    </form>
+
+</gds-div-grid-column-two-thirds>
