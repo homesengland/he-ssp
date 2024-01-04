@@ -6,4 +6,5 @@ public enum SiteStatus
 {
     [Description("Not Ready")]
     NotReady,
+    Completed,
 }

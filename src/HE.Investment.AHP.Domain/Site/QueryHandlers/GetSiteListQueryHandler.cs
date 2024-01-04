@@ -23,6 +23,8 @@ public class GetSiteListQueryHandler : IRequestHandler<GetSiteListQuery, SitesLi
         var selectedAccount = await _accountUserContext.GetSelectedAccount();
         var sites = await _siteRepository.GetSites(selectedAccount, cancellationToken);
 
-        return new SitesListModel(selectedAccount.OrganisationName, sites.Select(x => new SiteBasicModel(x.Id, x.Name, x.LocalAuthority, x.Status)).ToArray());
+        return new SitesListModel(
+            selectedAccount.OrganisationName,
+            sites.Select(x => new SiteBasicModel(x.Id.Value, x.Name.Value, x.LocalAuthority, x.Status)).ToArray());
     }
 }
