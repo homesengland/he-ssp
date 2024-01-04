@@ -18,7 +18,7 @@ public class FloorAreaTests : HomeTypesTestBase
         // then
         document
             .HasElementWithText("span", "My application - My homes")
-            .HasElementWithText("h1", "Floor Area")
+            .HasElementWithText("h1", "Floor area")
             .HasElementWithText("h2", "Enter the internal floor area of this home type")
             .HasInput("FloorArea")
             .HasElementWithText("h2", "Do all of the homes of this home type meet all of the Nationally Described Space Standards?")
