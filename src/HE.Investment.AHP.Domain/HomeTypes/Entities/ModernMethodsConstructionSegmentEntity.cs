@@ -7,7 +7,7 @@ using HE.Investments.Common.Domain;
 namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 
 [HomeTypeSegmentType(HomeTypeSegmentType.ModernMethodsConstruction)]
-public class ModernMethodsConstructionEntity : IHomeTypeSegmentEntity
+public class ModernMethodsConstructionSegmentEntity : IHomeTypeSegmentEntity
 {
     private readonly List<ModernMethodsConstructionCategoriesType> _modernMethodsConstructionCategories;
     private readonly List<ModernMethodsConstruction2DSubcategoriesType> _modernMethodsConstruction2DSubcategories;
@@ -15,7 +15,7 @@ public class ModernMethodsConstructionEntity : IHomeTypeSegmentEntity
 
     private readonly ModificationTracker _modificationTracker;
 
-    public ModernMethodsConstructionEntity(
+    public ModernMethodsConstructionSegmentEntity(
         YesNoType modernMethodsConstructionApplied = YesNoType.Undefined,
         IEnumerable<ModernMethodsConstructionCategoriesType>? modernMethodsConstructionCategories = null,
         IEnumerable<ModernMethodsConstruction2DSubcategoriesType>? modernMethodsConstruction2DSubcategories = null,
@@ -83,7 +83,7 @@ public class ModernMethodsConstructionEntity : IHomeTypeSegmentEntity
 
     public IHomeTypeSegmentEntity Duplicate()
     {
-        return new ModernMethodsConstructionEntity(
+        return new ModernMethodsConstructionSegmentEntity(
             ModernMethodsConstructionApplied,
             ModernMethodsConstructionCategories,
             ModernMethodsConstruction2DSubcategories,

@@ -6,7 +6,7 @@ using HE.Investments.Common.CRM.Model;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Crm.Segments;
 
-public class ModernMethodsConstructionCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<ModernMethodsConstructionEntity>
+public class ModernMethodsConstructionCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<ModernMethodsConstructionSegmentEntity>
 {
     public ModernMethodsConstructionCrmSegmentMapper()
         : base(new[]
@@ -23,7 +23,7 @@ public class ModernMethodsConstructionCrmSegmentMapper : HomeTypeCrmSegmentMappe
 
     public override IHomeTypeSegmentEntity MapToEntity(ApplicationBasicInfo application, HomeTypeDto dto, IReadOnlyCollection<UploadedFile> uploadedFiles)
     {
-        return new ModernMethodsConstructionEntity();
+        return new ModernMethodsConstructionSegmentEntity();
 
         // TODO waiting for crm
         // return new ModernMethodsConstructionEntity(
@@ -33,9 +33,9 @@ public class ModernMethodsConstructionCrmSegmentMapper : HomeTypeCrmSegmentMappe
         //     dto.mmcCategory2Subcategories.Select(MapMmcCategory2Subcategories));
     }
 
-    protected override ModernMethodsConstructionEntity GetSegment(HomeTypeEntity entity) => entity.ModernMethodsConstruction;
+    protected override ModernMethodsConstructionSegmentEntity GetSegment(HomeTypeEntity entity) => entity.ModernMethodsConstruction;
 
-    protected override void MapToDto(HomeTypeDto dto, ModernMethodsConstructionEntity segment)
+    protected override void MapToDto(HomeTypeDto dto, ModernMethodsConstructionSegmentEntity segment)
     {
         // TODO waiting for crm
         // dto.mmcApplied = YesNoTypeMapper.Map(segment.ModernMethodsConstructionApplied);
