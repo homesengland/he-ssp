@@ -29,7 +29,7 @@ public class IntegrationTestBase<TProgram>
             throw new InvalidOperationException("Current page is not set and pageUrl is not provided");
         }
 
-        if (!string.IsNullOrEmpty(pageUrl) && (!currentPage?.Url.EndsWith(pageUrl, StringComparison.InvariantCulture) ?? true))
+        if (currentPage != null && !string.IsNullOrEmpty(pageUrl) && (!new Uri(currentPage.Url)?.AbsolutePath.EndsWith(pageUrl, StringComparison.InvariantCulture) ?? true))
         {
             return await TestClient.NavigateTo(pageUrl);
         }
@@ -64,11 +64,9 @@ public class IntegrationTestBase<TProgram>
         {
             return (IntegrationTestClient)testClient;
         }
-        else
-        {
-            var newTestClient = new IntegrationTestClient(fixture.CreateClient(), _fixture.LoginData);
-            _fixture.DataBag[nameof(TestClient)] = newTestClient;
-            return newTestClient;
-        }
+
+        var newTestClient = new IntegrationTestClient(fixture.CreateClient(), _fixture.LoginData);
+        _fixture.DataBag[nameof(TestClient)] = newTestClient;
+        return newTestClient;
     }
 }
