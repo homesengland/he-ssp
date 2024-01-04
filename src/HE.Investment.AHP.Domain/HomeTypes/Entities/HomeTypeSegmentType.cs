@@ -9,4 +9,5 @@ public enum HomeTypeSegmentType
     DesignPlans,
     SupportedHousingInformation,
     TenureDetails,
+    ModernMethodsConstruction,
 }

@@ -63,6 +63,8 @@ public class HomeTypeEntity : IHomeTypeEntity
 
     public TenureDetailsSegmentEntity TenureDetails => GetRequiredSegment<TenureDetailsSegmentEntity>();
 
+    public ModernMethodsConstructionEntity ModernMethodsConstruction => GetRequiredSegment<ModernMethodsConstructionEntity>();
+
     public bool IsNew => Id.IsNew;
 
     public bool IsModified => _modificationTracker.IsModified || _segments.Any(x => x.Value.IsModified);

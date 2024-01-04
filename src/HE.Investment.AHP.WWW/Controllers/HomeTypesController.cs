@@ -1259,36 +1259,98 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     [HttpGet("{homeTypeId}/ModernMethodsConstruction")]
     public async Task<IActionResult> ModernMethodsConstruction([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
     {
-        var homeInformation = await _mediator.Send(new GetHomeInformationQuery(applicationId, homeTypeId), cancellationToken);
+        var modernMethodsConstruction = await _mediator.Send(new GetModernMethodsConstructionQuery(applicationId, homeTypeId), cancellationToken);
 
-        return View(new ModernMethodsConstructionModel(homeInformation.ApplicationName, homeInformation.HomeTypeName));
+        return View(new ModernMethodsConstructionModel(modernMethodsConstruction.ApplicationName, modernMethodsConstruction.HomeTypeName));
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.ModernMethodsConstruction)]
+    [HttpPost("{homeTypeId}/ModernMethodsConstruction")]
+    public async Task<IActionResult> ModernMethodsConstruction(
+        [FromRoute] string applicationId,
+        string homeTypeId,
+        ModernMethodsConstructionModel model,
+        CancellationToken cancellationToken)
+    {
+        return await SaveHomeTypeSegment(
+            new SaveModernMethodsConstructionCommand(applicationId, homeTypeId, model.ModernMethodsConstructionApplied),
+            model,
+            cancellationToken);
     }
 
     [WorkflowState(HomeTypesWorkflowState.ModernMethodsConstructionCategories)]
     [HttpGet("{homeTypeId}/ModernMethodsConstructionCategories")]
     public async Task<IActionResult> ModernMethodsConstructionCategories([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
     {
-        var homeInformation = await _mediator.Send(new GetHomeInformationQuery(applicationId, homeTypeId), cancellationToken);
+        var modernMethodsConstruction = await _mediator.Send(new GetModernMethodsConstructionQuery(applicationId, homeTypeId), cancellationToken);
 
-        return View(new ModernMethodsConstructionModel(homeInformation.ApplicationName, homeInformation.HomeTypeName));
+        return View(new ModernMethodsConstructionModel(modernMethodsConstruction.ApplicationName, modernMethodsConstruction.HomeTypeName));
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.ModernMethodsConstructionCategories)]
+    [HttpPost("{homeTypeId}/ModernMethodsConstructionCategories")]
+    public async Task<IActionResult> ModernMethodsConstructionCategories(
+        [FromRoute] string applicationId,
+        string homeTypeId,
+        ModernMethodsConstructionModel model,
+        CancellationToken cancellationToken)
+    {
+        var modernMethodsConstructionCategories = model.ModernMethodsConstructionCategories ?? Array.Empty<ModernMethodsConstructionCategoriesType>();
+
+        return await SaveHomeTypeSegment(
+            new SaveModernMethodsConstructionCategoriesCommand(applicationId, homeTypeId, modernMethodsConstructionCategories.ToList()),
+            model,
+            cancellationToken);
     }
 
     [WorkflowState(HomeTypesWorkflowState.ModernMethodsConstruction2DSubcategories)]
     [HttpGet("{homeTypeId}/ModernMethodsConstruction2DSubcategories")]
     public async Task<IActionResult> ModernMethodsConstruction2DSubcategories([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
     {
-        var homeInformation = await _mediator.Send(new GetHomeInformationQuery(applicationId, homeTypeId), cancellationToken);
+        var modernMethodsConstruction = await _mediator.Send(new GetModernMethodsConstructionQuery(applicationId, homeTypeId), cancellationToken);
 
-        return View(new ModernMethodsConstructionModel(homeInformation.ApplicationName, homeInformation.HomeTypeName));
+        return View(new ModernMethodsConstructionModel(modernMethodsConstruction.ApplicationName, modernMethodsConstruction.HomeTypeName));
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.ModernMethodsConstruction2DSubcategories)]
+    [HttpPost("{homeTypeId}/ModernMethodsConstruction2DSubcategories")]
+    public async Task<IActionResult> ModernMethodsConstruction2DSubcategories(
+        [FromRoute] string applicationId,
+        string homeTypeId,
+        ModernMethodsConstructionModel model,
+        CancellationToken cancellationToken)
+    {
+        var modernMethodsConstruction2DSubcategories = model.ModernMethodsConstruction2DSubcategories ?? Array.Empty<ModernMethodsConstruction2DSubcategoriesType>();
+
+        return await SaveHomeTypeSegment(
+            new SaveModernMethodsConstruction2DSubcategoriesCommand(applicationId, homeTypeId, modernMethodsConstruction2DSubcategories.ToList()),
+            model,
+            cancellationToken);
     }
 
     [WorkflowState(HomeTypesWorkflowState.ModernMethodsConstruction3DSubcategories)]
     [HttpGet("{homeTypeId}/ModernMethodsConstruction3DSubcategories")]
     public async Task<IActionResult> ModernMethodsConstruction3DSubcategories([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
     {
-        var homeInformation = await _mediator.Send(new GetHomeInformationQuery(applicationId, homeTypeId), cancellationToken);
+        var modernMethodsConstruction = await _mediator.Send(new GetModernMethodsConstructionQuery(applicationId, homeTypeId), cancellationToken);
 
-        return View(new ModernMethodsConstructionModel(homeInformation.ApplicationName, homeInformation.HomeTypeName));
+        return View(new ModernMethodsConstructionModel(modernMethodsConstruction.ApplicationName, modernMethodsConstruction.HomeTypeName));
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.ModernMethodsConstruction3DSubcategories)]
+    [HttpPost("{homeTypeId}/ModernMethodsConstruction3DSubcategories")]
+    public async Task<IActionResult> ModernMethodsConstruction3DSubcategories(
+        [FromRoute] string applicationId,
+        string homeTypeId,
+        ModernMethodsConstructionModel model,
+        CancellationToken cancellationToken)
+    {
+        var modernMethodsConstruction3DSubcategories = model.ModernMethodsConstruction3DSubcategories ?? Array.Empty<ModernMethodsConstruction3DSubcategoriesType>();
+
+        return await SaveHomeTypeSegment(
+            new SaveModernMethodsConstruction3DSubcategoriesCommand(applicationId, homeTypeId, modernMethodsConstruction3DSubcategories.ToList()),
+            model,
+            cancellationToken);
     }
 
     [WorkflowState(HomeTypesWorkflowState.CheckAnswers)]

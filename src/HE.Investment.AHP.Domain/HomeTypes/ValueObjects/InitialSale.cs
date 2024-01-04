@@ -33,14 +33,14 @@ public class InitialSale : ValueObject
         if (!int.TryParse(value!, NumberStyles.Integer, CultureInfo.InvariantCulture, out var parsedValue))
         {
             OperationResult.New()
-                .AddValidationError(nameof(InitialSale), ValidationErrorMessage.MustBeNumberBetween(DisplayName, MinValue, MaxValue))
+                .AddValidationError(nameof(InitialSale), ValidationErrorMessage.MustBeWholeNumberBetween(DisplayName, MinValue, MaxValue))
                 .CheckErrors();
         }
 
         if (parsedValue is < MinValue or > MaxValue)
         {
             OperationResult.New()
-                .AddValidationError(nameof(InitialSale), ValidationErrorMessage.MustBeNumberBetween(DisplayName, MinValue, MaxValue))
+                .AddValidationError(nameof(InitialSale), ValidationErrorMessage.MustBeWholeNumberBetween(DisplayName, MinValue, MaxValue))
                 .CheckErrors();
         }
 
@@ -52,7 +52,7 @@ public class InitialSale : ValueObject
         if (value is < MinValue or > MaxValue)
         {
             OperationResult.New()
-                .AddValidationError(nameof(InitialSale), ValidationErrorMessage.MustBeNumberBetween(DisplayName, MinValue, MaxValue))
+                .AddValidationError(nameof(InitialSale), ValidationErrorMessage.MustBeWholeNumberBetween(DisplayName, MinValue, MaxValue))
                 .CheckErrors();
         }
 
