@@ -43,6 +43,11 @@ public class ModernMethodsConstructionSegmentEntity : IHomeTypeSegmentEntity
     public void ChangeModernMethodsConstructionApplied(YesNoType modernMethodsConstructionApplied)
     {
         ModernMethodsConstructionApplied = _modificationTracker.Change(ModernMethodsConstructionApplied, modernMethodsConstructionApplied);
+
+        if (ModernMethodsConstructionApplied == YesNoType.No)
+        {
+            ChangeModernMethodsConstructionCategories(Enumerable.Empty<ModernMethodsConstructionCategoriesType>());
+        }
     }
 
     public void ChangeModernMethodsConstructionCategories(IEnumerable<ModernMethodsConstructionCategoriesType> modernMethodsConstructionCategories)
@@ -54,6 +59,16 @@ public class ModernMethodsConstructionSegmentEntity : IHomeTypeSegmentEntity
             _modernMethodsConstructionCategories.Clear();
             _modernMethodsConstructionCategories.AddRange(uniqueModernMethodsConstructionCategories);
             _modificationTracker.MarkAsModified();
+        }
+
+        if (!ModernMethodsConstructionCategories.Contains(ModernMethodsConstructionCategoriesType.Category1PreManufacturing3DPrimaryStructuralSystems))
+        {
+            ChangeModernMethodsConstruction3DSubcategories(Enumerable.Empty<ModernMethodsConstruction3DSubcategoriesType>());
+        }
+
+        if (!ModernMethodsConstructionCategories.Contains(ModernMethodsConstructionCategoriesType.Category2PreManufacturing2DPrimaryStructuralSystems))
+        {
+            ChangeModernMethodsConstruction2DSubcategories(Enumerable.Empty<ModernMethodsConstruction2DSubcategoriesType>());
         }
     }
 
@@ -101,10 +116,30 @@ public class ModernMethodsConstructionSegmentEntity : IHomeTypeSegmentEntity
 
         // TODO crm missing - returning true not to block section completion
         // return ModernMethodsConstructionApplied != YesNoType.Undefined
-        //       && BuildConditionalRouteCompletionPredicates().All(isCompleted => isCompleted());
+        //       && BuildConditionalRouteCompletionPredicates().All();
     }
 
     public void HousingTypeChanged(HousingType sourceHousingType, HousingType targetHousingType)
     {
+    }
+
+#pragma warning disable IDE0051
+    private IEnumerable<Func<bool>> BuildConditionalRouteCompletionPredicates()
+#pragma warning restore IDE0051
+    {
+        if (ModernMethodsConstructionApplied is not YesNoType.No)
+        {
+            yield return () => ModernMethodsConstructionCategories.Any();
+        }
+
+        if (ModernMethodsConstructionCategories.Contains(ModernMethodsConstructionCategoriesType.Category1PreManufacturing3DPrimaryStructuralSystems))
+        {
+            yield return () => ModernMethodsConstruction3DSubcategories.Any();
+        }
+
+        if (ModernMethodsConstructionCategories.Contains(ModernMethodsConstructionCategoriesType.Category2PreManufacturing2DPrimaryStructuralSystems))
+        {
+            yield return () => ModernMethodsConstruction2DSubcategories.Any();
+        }
     }
 }

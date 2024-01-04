@@ -10,4 +10,6 @@ public record HomeTypeConditionals(
     YesNoType AccessibleStandards,
     YesNoType MeetNationallyDescribedSpaceStandards,
     YesNoType ExemptFromTheRightToSharedOwnership,
-    bool IsProspectiveRentIneligible);
+    bool IsProspectiveRentIneligible,
+    YesNoType ModernMethodsConstructionApplied,
+    IList<ModernMethodsConstructionCategoriesType> ModernMethodsConstructionCategories);
