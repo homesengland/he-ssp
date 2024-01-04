@@ -1,0 +1,20 @@
+@model (string title, string contentText, HE.Investments.Common.WWW.Components.ComponentViewModel contentComponent)
+
+<details class="govuk-details" data-module="govuk-details">
+    <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+            @Model.title
+        </span>
+    </summary>
+    <div class="govuk-details__text">
+        @if (!string.IsNullOrWhiteSpace(Model.contentText))
+        {
+            @Model.title
+        }
+
+        @if(Model.contentComponent != null)
+        {
+            @await Component.InvokeAsync(Model.contentComponent.Name, Model.contentComponent.Arguments);
+        }
+    </div>
+</details>

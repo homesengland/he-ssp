@@ -41,5 +41,9 @@ public enum HomeTypesWorkflowState
     ProspectiveRentIneligible,
     ExemptFromTheRightToSharedOwnership,
     ExemptionJustification,
+    ModernMethodsConstruction,
+    ModernMethodsConstructionCategories,
+    ModernMethodsConstruction3DSubcategories,
+    ModernMethodsConstruction2DSubcategories,
     CheckAnswers,
 }

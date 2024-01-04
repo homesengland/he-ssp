@@ -1,22 +1,20 @@
-@model (string fieldName, string label, bool isHeadingLabel, string hint)
+@model (string fieldName, string header, string title, string hint)
 
-@if (!string.IsNullOrWhiteSpace(Model.label))
-{
-    <h1 class="govuk-label-wrapper">
-        @if (Model.isHeadingLabel)
-        {
-            <label class="govuk-heading-l" for="@Model.fieldName">
-                @Model.label
-            </label>
-        }
-        else
-        {
-            <label class="govuk-label govuk-label--m" for="@Model.fieldName">
-                @Model.label
-            </label>
-        }
-    </h1>
-}
+<h1 class="govuk-label-wrapper">
+    @if (!string.IsNullOrWhiteSpace(Model.header))
+    {
+        <label class="govuk-heading-l" for="@Model.fieldName">
+            @Model.header
+        </label>
+    }
+
+    @if (!string.IsNullOrWhiteSpace(Model.title))
+    {
+        <label class="govuk-label govuk-label--m" for="@Model.fieldName">
+            @Model.title
+        </label>
+    }
+</h1>
 
 @if (!string.IsNullOrWhiteSpace(Model.hint))
 {

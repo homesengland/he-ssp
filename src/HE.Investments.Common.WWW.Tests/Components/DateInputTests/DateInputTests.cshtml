@@ -1,10 +1,10 @@
 @using HE.Investments.Common.WWW.Components.DateInput
 @model HE.Investments.Common.WWW.Tests.Components.DateInputTests.DateInputTestsViewModel
 
-        <vc:date-input
-            header="Enter start date"
-            description="This can be a date in the past. For future dates, include a reasonable level of risk adjustment in your forecasts."
-            hint="Enter date, for example: 11 05 2024"
-            field-name="@nameof(Model.StartDate)"
-            value="@Model?.StartDate"/>
+<vc:date-input
+    header="Enter start date"
+    description="This can be a date in the past. For future dates, include a reasonable level of risk adjustment in your forecasts."
+    hint="Enter date, for example: 11 05 2024"
+    field-name="@nameof(Model.StartDate)"
+    value="@Model?.StartDate"/>
 

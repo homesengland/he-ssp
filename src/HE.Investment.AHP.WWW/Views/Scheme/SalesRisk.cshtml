@@ -19,7 +19,7 @@
         @Html.HiddenFor(m => Model.ApplicationName)
         <vc:text-area-input-with-counter
             field-name="@nameof(Model.SalesRisk)"
-            label="Tell us your assessment of the sales risk and how you will mitigate this"
+            title="Tell us your assessment of the sales risk and how you will mitigate this"
             value="@Model.SalesRisk"/>
         <vc:form-button/>
         <vc:return-to-application-link application-id="@Model.ApplicationId"/>
