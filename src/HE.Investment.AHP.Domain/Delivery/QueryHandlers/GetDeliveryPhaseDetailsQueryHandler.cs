@@ -33,8 +33,8 @@ public class GetDeliveryPhaseDetailsQueryHandler : IRequestHandler<GetDeliveryPh
             deliveryPhase.Application.Name.Name,
             deliveryPhase.Id.Value,
             deliveryPhase.Name.Value,
-            null, // TODO: map values when available in CRM
-            null,
+            deliveryPhase.TotalHomesToBeDeliveredInThisPhase,
+            null, // TODO: map dates when available in CRM
             null,
             null);
     }

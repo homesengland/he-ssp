@@ -23,6 +23,11 @@ public class HomeTypeName : ShortText
         return new HomeTypeName(duplicatedName);
     }
 
+    public override string ToString()
+    {
+        return Value;
+    }
+
     private static string Suffix(int suffixIndex)
     {
         return $" - {suffixIndex}";
