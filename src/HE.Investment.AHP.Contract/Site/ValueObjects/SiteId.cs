@@ -1,29 +1,22 @@
 using Dawn;
 using HE.Investments.Common.Domain;
+using HE.Investments.Common.Domain.ValueObjects;
 using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.Contract.Site.ValueObjects;
 
-public class SiteId : ValueObject
+public class SiteId : StringIdValueObject
 {
-    private static readonly string NotSaved = "new";
-
     public SiteId(string id)
+        : base(id)
     {
-        if (id == NotSaved)
-        {
-            Value = string.Empty;
-            return;
-        }
-
-        Value = Guard.Argument(id, nameof(id)).NotEmpty().NotWhiteSpace();
     }
 
-    public string Value { get; }
+    private SiteId()
+    {
+    }
 
-    public static SiteId New() => new(NotSaved);
-
-    public bool IsNew() => Value.IsNotProvided();
+    public static SiteId New() => new();
 
     public override string ToString()
     {

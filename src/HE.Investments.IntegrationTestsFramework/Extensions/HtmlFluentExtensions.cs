@@ -68,10 +68,15 @@ public static class HtmlFluentExtensions
 
     public static IHtmlDocument HasGdsContinueButton(this IHtmlDocument htmlDocument)
     {
-        var button = htmlDocument.GetElementById("continue-button");
-        button.Should().NotBeNull();
-        button.Should().BeGdsButton();
+        htmlDocument.HasGdsButton("continue-button", out var button);
         button!.Text().Trim().Should().Be("Continue");
+        return htmlDocument;
+    }
+
+    public static IHtmlDocument HasGdsSaveAndContinueButton(this IHtmlDocument htmlDocument)
+    {
+        htmlDocument.HasGdsButton("continue-button", out var button);
+        button!.Text().Trim().Should().Be("Save and continue");
         return htmlDocument;
     }
 

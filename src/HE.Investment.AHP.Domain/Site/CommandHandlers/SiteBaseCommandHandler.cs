@@ -10,13 +10,10 @@ namespace HE.Investment.AHP.Domain.Site.CommandHandlers;
 
 public class SiteBaseCommandHandler
 {
-    private readonly ILogger<SiteBaseCommandHandler> _logger;
-
     public SiteBaseCommandHandler(ISiteRepository siteRepository, IAccountUserContext accountUserContext, ILogger<SiteBaseCommandHandler> logger)
     {
         SiteRepository = siteRepository;
         AccountUserContext = accountUserContext;
-        _logger = logger;
     }
 
     protected ISiteRepository SiteRepository { get; }
@@ -27,17 +24,7 @@ public class SiteBaseCommandHandler
     {
         var userAccount = await AccountUserContext.GetSelectedAccount();
         var site = await SiteRepository.GetSite(siteId, userAccount, cancellationToken);
-
-        try
-        {
-            await action(site);
-        }
-        catch (DomainValidationException domainValidationException)
-        {
-            _logger.LogWarning(domainValidationException, "Validation error(s) occured: {Message}", domainValidationException.Message);
-            return domainValidationException.OperationResult;
-        }
-
+        await action(site);
         await SiteRepository.Save(site, userAccount, cancellationToken);
         return OperationResult.Success();
     }

@@ -23,7 +23,7 @@ public class SiteRepository : ISiteRepository
 
     public Task<SiteEntity> GetSite(SiteId siteId, UserAccount userAccount, CancellationToken cancellationToken)
     {
-        if (siteId.IsNew())
+        if (siteId.IsNew)
         {
             return Task.FromResult(new SiteEntity());
         }
@@ -33,7 +33,7 @@ public class SiteRepository : ISiteRepository
 
     public Task<SiteId> Save(SiteEntity site, UserAccount userAccount, CancellationToken cancellationToken)
     {
-        if (site.Id.IsNew())
+        if (site.Id.IsNew)
         {
             site.Id = new SiteId((MockedSites.Count + 1).ToString(CultureInfo.InvariantCulture));
             MockedSites.Add(site);

@@ -21,13 +21,13 @@
 
             <vc:text-input
                 field-name="@(nameof(Model.Name))"
-                value=@Model?.Name
-                label="Name"/>
+                css-class="govuk-!-width-one-third"
+                value=@Model?.Name />
         </gds-field-set>
 
         @Html.HiddenFor(x => x.Id)
 
-        <vc:form-button text="Continue"/>
+        <vc:form-button />
     </form>
 
 </gds-div-grid-column-two-thirds>
