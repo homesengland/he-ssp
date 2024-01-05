@@ -20,6 +20,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Dawn.Guard" Version="1.12.0" />
     <PackageReference Include="MediatR.Contracts" Version="2.0.1" />
     <PackageReference Include="Stateless" Version="5.13.0" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.435">

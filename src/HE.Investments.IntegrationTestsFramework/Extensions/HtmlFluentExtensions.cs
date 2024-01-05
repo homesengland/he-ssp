@@ -66,6 +66,37 @@ public static class HtmlFluentExtensions
         return htmlDocument;
     }
 
+    public static IHtmlDocument HasGdsContinueButton(this IHtmlDocument htmlDocument)
+    {
+        htmlDocument.HasGdsButton("continue-button", out var button);
+        button!.Text().Trim().Should().Be("Continue");
+        return htmlDocument;
+    }
+
+    public static IHtmlDocument HasGdsSaveAndContinueButton(this IHtmlDocument htmlDocument)
+    {
+        htmlDocument.HasGdsButton("continue-button", out var button);
+        button!.Text().Trim().Should().Be("Save and continue");
+        return htmlDocument;
+    }
+
+    public static IHtmlDocument HasGdsBackButton(this IHtmlDocument htmlDocument)
+    {
+        var backButton = htmlDocument.GetElementsByClassName("govuk-back-link").SingleOrDefault();
+        backButton.Should().NotBeNull();
+        backButton!.IsLink().Should().BeTrue();
+        backButton!.Text().Trim().Should().Be("Back");
+        return htmlDocument;
+    }
+
+    public static IHtmlDocument HasGdsInput(this IHtmlDocument htmlDocument, string fieldName)
+    {
+        var gdsInput = htmlDocument.GetElementsByName(fieldName).SingleOrDefault();
+        gdsInput.Should().NotBeNull($"GDS input for field {fieldName} should exist");
+        gdsInput!.ClassName.Should().Contain("govuk-input");
+        return htmlDocument;
+    }
+
     public static IHtmlDocument DoesNotHaveGdsButton(this IHtmlDocument htmlDocument, string elementId)
     {
         htmlDocument.GetElementById(elementId).Should().BeNull();
