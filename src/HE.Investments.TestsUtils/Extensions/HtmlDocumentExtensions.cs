@@ -2,9 +2,8 @@ using System.Text;
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
-using HE.Investments.Common.WWW.Components;
 
-namespace HE.Investments.IntegrationTestsFramework.Extensions;
+namespace HE.Investments.TestsUtils.Extensions;
 
 public static class HtmlDocumentExtensions
 {

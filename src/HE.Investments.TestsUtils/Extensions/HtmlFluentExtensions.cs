@@ -1,9 +1,9 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
-using HE.Investments.IntegrationTestsFramework.Assertions;
+using ElementExtensions = HE.Investments.TestsUtils.Assertions.ElementExtensions;
 
-namespace HE.Investments.IntegrationTestsFramework.Extensions;
+namespace HE.Investments.TestsUtils.Extensions;
 
 public static class HtmlFluentExtensions
 {
@@ -61,7 +61,7 @@ public static class HtmlFluentExtensions
     public static IHtmlDocument HasGdsButton(this IHtmlDocument htmlDocument, string elementId, out IHtmlButtonElement htmlButtonElement)
     {
         var htmlElement = htmlDocument.GetElementById(elementId);
-        htmlElement.Should().BeGdsButton();
+        ElementExtensions.Should(htmlElement).BeGdsButton();
         htmlButtonElement = (IHtmlButtonElement)htmlElement!;
         return htmlDocument;
     }
