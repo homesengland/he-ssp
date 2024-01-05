@@ -54,7 +54,7 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
 
     public string HomeTypeConsumerName => "Delivery Phase";
 
-    public bool IsHomeTypeUsed(HomeTypeId homeTypeId) => _homesToDeliver.Any(x => x.HomeTypeId == homeTypeId);
+    public bool IsHomeTypeUsed(HomeTypeId homeTypeId) => _deliveryPhases.Any(x => x.IsHomeTypeUsed(homeTypeId));
 
     public IEnumerable<(HomesToDeliver HomesToDeliver, int ToDeliver)> GetHomesToDeliverInPhase(DeliveryPhaseId deliveryPhaseId)
     {

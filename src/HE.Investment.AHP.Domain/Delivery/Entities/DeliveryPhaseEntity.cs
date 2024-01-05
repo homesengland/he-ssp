@@ -47,6 +47,11 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
 
     public int TotalHomesToBeDeliveredInThisPhase => _homesToDeliver.Select(x => x.ToDeliver).Sum();
 
+    public bool IsHomeTypeUsed(HomeTypeId homeTypeId)
+    {
+        return _homesToDeliver.Any(x => x.HomeTypeId == homeTypeId);
+    }
+
     public int GetHomesToBeDeliveredForHomeType(HomeTypeId homeTypeId)
     {
         return _homesToDeliver
