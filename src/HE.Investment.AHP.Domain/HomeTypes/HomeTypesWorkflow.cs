@@ -385,18 +385,19 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
         _machine.Configure(HomeTypesWorkflowState.CheckAnswers)
             .Permit(Trigger.Continue, HomeTypesWorkflowState.List)
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.List, () => _isReadOnly)
+            .PermitIf(Trigger.Back, HomeTypesWorkflowState.ModernMethodsConstruction, () => !_isReadOnly && IsNotModernMethodsConstruction())
             .PermitIf(
                 Trigger.Back,
-                HomeTypesWorkflowState.ExemptFromTheRightToSharedOwnership,
-                () => !_isReadOnly && IsTenure(Tenure.AffordableRent, Tenure.SocialRent) && !IsExemptFromTheRightToSharedOwnership())
+                HomeTypesWorkflowState.ModernMethodsConstructionCategories,
+                () => !_isReadOnly && IsModernMethodsConstructionOtherCategoryThan1Or2())
             .PermitIf(
                 Trigger.Back,
-                HomeTypesWorkflowState.ExemptionJustification,
-                () => !_isReadOnly && IsTenure(Tenure.AffordableRent, Tenure.SocialRent) && IsExemptFromTheRightToSharedOwnership())
-            .PermitIf(Trigger.Back, HomeTypesWorkflowState.SharedOwnership, () => !_isReadOnly && IsTenure(Tenure.SharedOwnership))
-            .PermitIf(Trigger.Back, HomeTypesWorkflowState.RentToBuy, () => !_isReadOnly && IsTenure(Tenure.RentToBuy))
-            .PermitIf(Trigger.Back, HomeTypesWorkflowState.HomeOwnershipDisabilities, () => !_isReadOnly && IsTenure(Tenure.HomeOwnershipLongTermDisabilities))
-            .PermitIf(Trigger.Back, HomeTypesWorkflowState.OlderPersonsSharedOwnership, () => !_isReadOnly && IsTenure(Tenure.OlderPersonsSharedOwnership));
+                HomeTypesWorkflowState.ModernMethodsConstruction3DSubcategories,
+                () => !_isReadOnly && IsModernMethodsConstructionCategory1() && !IsModernMethodsConstructionCategory2())
+            .PermitIf(
+                Trigger.Back,
+                HomeTypesWorkflowState.ModernMethodsConstruction2DSubcategories,
+                () => !_isReadOnly && IsModernMethodsConstructionCategory2());
     }
 
     private IEnumerable<Func<bool>> BuildDeadEndConditions(HomeTypesWorkflowState state)
@@ -467,7 +468,7 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
 
     private bool IsModernMethodsConstructionCategory1()
     {
-        if (_homeTypeModel.IsProvided())
+        if (_homeTypeModel.IsProvided() && !IsNotModernMethodsConstruction())
         {
             return _homeTypeModel!.Conditionals.ModernMethodsConstructionCategories.Contains(ModernMethodsConstructionCategoriesType
                 .Category1PreManufacturing3DPrimaryStructuralSystems);
@@ -478,9 +479,21 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
 
     private bool IsModernMethodsConstructionCategory2()
     {
-        if (_homeTypeModel.IsProvided())
+        if (_homeTypeModel.IsProvided() && !IsNotModernMethodsConstruction())
         {
             return _homeTypeModel!.Conditionals.ModernMethodsConstructionCategories.Contains(ModernMethodsConstructionCategoriesType
+                .Category2PreManufacturing2DPrimaryStructuralSystems);
+        }
+
+        return false;
+    }
+
+    private bool IsModernMethodsConstructionOtherCategoryThan1Or2()
+    {
+        if (_homeTypeModel.IsProvided() && !IsNotModernMethodsConstruction())
+        {
+            return !_homeTypeModel!.Conditionals.ModernMethodsConstructionCategories.Contains(ModernMethodsConstructionCategoriesType
+                .Category1PreManufacturing3DPrimaryStructuralSystems) && !_homeTypeModel!.Conditionals.ModernMethodsConstructionCategories.Contains(ModernMethodsConstructionCategoriesType
                 .Category2PreManufacturing2DPrimaryStructuralSystems);
         }
 
