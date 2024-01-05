@@ -32,7 +32,7 @@ public interface IHomeTypeEntity
 
     TenureDetailsSegmentEntity TenureDetails { get; }
 
-    ModernMethodsConstructionEntity ModernMethodsConstruction { get; }
+    ModernMethodsConstructionSegmentEntity ModernMethodsConstruction { get; }
 
     void CompleteHomeType(IsSectionCompleted isSectionCompleted);
 }

@@ -16,4 +16,5 @@ public record FullHomeType(
     DesignPlans? DesignPlans,
     SupportedHousingInformation? SupportedHousing,
     HomeInformation HomeInformation,
-    TenureDetails TenureDetails);
+    TenureDetails TenureDetails,
+    ModernMethodsConstruction ModernMethodsConstruction);

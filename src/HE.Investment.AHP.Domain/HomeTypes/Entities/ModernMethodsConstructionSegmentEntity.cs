@@ -7,7 +7,7 @@ using HE.Investments.Common.Domain;
 namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 
 [HomeTypeSegmentType(HomeTypeSegmentType.ModernMethodsConstruction)]
-public class ModernMethodsConstructionEntity : IHomeTypeSegmentEntity
+public class ModernMethodsConstructionSegmentEntity : IHomeTypeSegmentEntity
 {
     private readonly List<ModernMethodsConstructionCategoriesType> _modernMethodsConstructionCategories;
     private readonly List<ModernMethodsConstruction2DSubcategoriesType> _modernMethodsConstruction2DSubcategories;
@@ -15,7 +15,7 @@ public class ModernMethodsConstructionEntity : IHomeTypeSegmentEntity
 
     private readonly ModificationTracker _modificationTracker;
 
-    public ModernMethodsConstructionEntity(
+    public ModernMethodsConstructionSegmentEntity(
         YesNoType modernMethodsConstructionApplied = YesNoType.Undefined,
         IEnumerable<ModernMethodsConstructionCategoriesType>? modernMethodsConstructionCategories = null,
         IEnumerable<ModernMethodsConstruction2DSubcategoriesType>? modernMethodsConstruction2DSubcategories = null,
@@ -43,6 +43,11 @@ public class ModernMethodsConstructionEntity : IHomeTypeSegmentEntity
     public void ChangeModernMethodsConstructionApplied(YesNoType modernMethodsConstructionApplied)
     {
         ModernMethodsConstructionApplied = _modificationTracker.Change(ModernMethodsConstructionApplied, modernMethodsConstructionApplied);
+
+        if (ModernMethodsConstructionApplied == YesNoType.No)
+        {
+            ChangeModernMethodsConstructionCategories(Enumerable.Empty<ModernMethodsConstructionCategoriesType>());
+        }
     }
 
     public void ChangeModernMethodsConstructionCategories(IEnumerable<ModernMethodsConstructionCategoriesType> modernMethodsConstructionCategories)
@@ -54,6 +59,16 @@ public class ModernMethodsConstructionEntity : IHomeTypeSegmentEntity
             _modernMethodsConstructionCategories.Clear();
             _modernMethodsConstructionCategories.AddRange(uniqueModernMethodsConstructionCategories);
             _modificationTracker.MarkAsModified();
+        }
+
+        if (!ModernMethodsConstructionCategories.Contains(ModernMethodsConstructionCategoriesType.Category1PreManufacturing3DPrimaryStructuralSystems))
+        {
+            ChangeModernMethodsConstruction3DSubcategories(Enumerable.Empty<ModernMethodsConstruction3DSubcategoriesType>());
+        }
+
+        if (!ModernMethodsConstructionCategories.Contains(ModernMethodsConstructionCategoriesType.Category2PreManufacturing2DPrimaryStructuralSystems))
+        {
+            ChangeModernMethodsConstruction2DSubcategories(Enumerable.Empty<ModernMethodsConstruction2DSubcategoriesType>());
         }
     }
 
@@ -83,7 +98,7 @@ public class ModernMethodsConstructionEntity : IHomeTypeSegmentEntity
 
     public IHomeTypeSegmentEntity Duplicate()
     {
-        return new ModernMethodsConstructionEntity(
+        return new ModernMethodsConstructionSegmentEntity(
             ModernMethodsConstructionApplied,
             ModernMethodsConstructionCategories,
             ModernMethodsConstruction2DSubcategories,
@@ -101,10 +116,30 @@ public class ModernMethodsConstructionEntity : IHomeTypeSegmentEntity
 
         // TODO crm missing - returning true not to block section completion
         // return ModernMethodsConstructionApplied != YesNoType.Undefined
-        //       && BuildConditionalRouteCompletionPredicates().All(isCompleted => isCompleted());
+        //       && BuildConditionalRouteCompletionPredicates().All();
     }
 
     public void HousingTypeChanged(HousingType sourceHousingType, HousingType targetHousingType)
     {
+    }
+
+#pragma warning disable IDE0051
+    private IEnumerable<Func<bool>> BuildConditionalRouteCompletionPredicates()
+#pragma warning restore IDE0051
+    {
+        if (ModernMethodsConstructionApplied is not YesNoType.No)
+        {
+            yield return () => ModernMethodsConstructionCategories.Any();
+        }
+
+        if (ModernMethodsConstructionCategories.Contains(ModernMethodsConstructionCategoriesType.Category1PreManufacturing3DPrimaryStructuralSystems))
+        {
+            yield return () => ModernMethodsConstruction3DSubcategories.Any();
+        }
+
+        if (ModernMethodsConstructionCategories.Contains(ModernMethodsConstructionCategoriesType.Category2PreManufacturing2DPrimaryStructuralSystems))
+        {
+            yield return () => ModernMethodsConstruction2DSubcategories.Any();
+        }
     }
 }

@@ -79,6 +79,8 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
         {
             yield return CreateOlderPersonsSharedOwnershipSection(homeType.TenureDetails, factory);
         }
+
+        yield return CreateModernMethodsConstructionSection(homeType.ModernMethodsConstruction, factory);
     }
 
     private static SectionSummaryViewModel CreateHomeTypeDetailsSection(FullHomeType homeType, HomeTypeQuestionFactory factory)
@@ -256,6 +258,24 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
                 nameof(Controller.OlderPersonsSharedOwnership),
                 ToPercentage(tenure.RentAsPercentageOfTheUnsoldShare)),
             factory.DeadEnd(nameof(Controller.ProspectiveRentIneligible)));
+    }
+
+    private static SectionSummaryViewModel CreateModernMethodsConstructionSection(ModernMethodsConstruction modernMethodsConstruction, HomeTypeQuestionFactory factory)
+    {
+        return SectionSummaryViewModel.New(
+            "Modern Methods of Construction (MMC)",
+            factory.Question(
+                "MMC categories used",
+                nameof(HomeTypesController.ModernMethodsConstructionCategories),
+                modernMethodsConstruction.ModernMethodsConstructionCategories.ToArray()),
+            factory.Question(
+                "Sub-categories of 3D primary structural systems",
+                nameof(HomeTypesController.ModernMethodsConstruction3DSubcategories),
+                modernMethodsConstruction.ModernMethodsConstruction3DSubcategories.ToArray()),
+            factory.Question(
+                "Sub-categories of 2D primary structural systems",
+                nameof(HomeTypesController.ModernMethodsConstruction2DSubcategories),
+                modernMethodsConstruction.ModernMethodsConstruction2DSubcategories.ToArray()));
     }
 
     private static string DownloadDesignFileUrl(IUrlHelper urlHelper, string applicationId, string homeTypeId, string fileId)
