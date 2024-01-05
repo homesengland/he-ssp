@@ -6,8 +6,6 @@ public class ApplicationData
 {
     public ApplicationData()
     {
-        ApplicationId = "97593982-a6ab-ee11-be37-0022480041cf";
-        ApplicationName = "IT_01/05/2024 08:43:41";
     }
 
     public string ApplicationId { get; private set; }

@@ -12,6 +12,10 @@ public static class FinancialDetailsPagesUrl
 
     public const string ExpectedContributionsSuffix = "/financial-details/expected-contributions";
 
+    public const string GrantsSuffix = "/financial-details/grants";
+
+    public const string CheckAnswersSuffix = "/financial-details/check-answers";
+
     public static string LandStatus(string applicationId) => $"ahp/application/{applicationId}{LandStatusSuffix}";
 
     public static string LandValue(string applicationId) => $"ahp/application/{applicationId}{LandValueSuffix}";
@@ -19,4 +23,8 @@ public static class FinancialDetailsPagesUrl
     public static string OtherApplicationCosts(string applicationId) => $"ahp/application/{applicationId}{OtherApplicationCostsSuffix}";
 
     public static string ExpectedContributions(string applicationId) => $"ahp/application/{applicationId}{ExpectedContributionsSuffix}";
+
+    public static string Grants(string applicationId) => $"ahp/application/{applicationId}{GrantsSuffix}";
+
+    public static string CheckAnswers(string applicationId) => $"ahp/application/{applicationId}{CheckAnswersSuffix}";
 }

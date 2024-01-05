@@ -1,8 +1,5 @@
 using HE.Investment.AHP.WWW;
-using HE.Investment.AHP.WWW.Views.Scheme.Const;
-using HE.Investments.AHP.IntegrationTests.FillApplication;
 using HE.Investments.AHP.IntegrationTests.FillApplication.Data;
-using HE.Investments.AHP.IntegrationTests.Pages;
 using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
@@ -23,6 +20,7 @@ public class AhpIntegrationTest : IntegrationTestBase<Program>
         }
 
         ApplicationData = applicationData;
+        fixture.CheckUserLoginData();
     }
 
     public ApplicationData ApplicationData { get; }
@@ -34,19 +32,19 @@ public class AhpIntegrationTest : IntegrationTestBase<Program>
         params (string InputName, string Value)[] inputs)
     {
         // given
-        var fundingDetailsPage = await GetCurrentPage(startPageUrl);
-        fundingDetailsPage
+        var currentPage = await GetCurrentPage(startPageUrl);
+        currentPage
             .UrlEndWith(startPageUrl)
             .HasTitle(expectedPageTitle)
             .HasGdsSubmitButton("continue-button", out var continueButton);
 
         // when
-        var affordabilityPage = await TestClient.SubmitButton(
+        var nextPage = await TestClient.SubmitButton(
             continueButton,
             inputs);
 
         // then
-        affordabilityPage.UrlEndWith(expectedPageUrlAfterContinue);
+        nextPage.UrlEndWith(expectedPageUrlAfterContinue);
         SaveCurrentPage();
     }
 }

@@ -9,28 +9,22 @@
     var applicationId = this.GetApplicationIdFromRoute();
 }
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="FinancialDetails" asp-action="Start" asp-route-applicationId="@Model.ApplicationId" asp-route-applicationName="@Model.ApplicationName" asp-method="post" novalidate>
-        <gds-back-link href="@Url.Action("TaskList", "Application", new { applicationId })" text="Back" class="govuk-!-margin-bottom-8">
-        </gds-back-link>
-        <vc:form-header title="@title" caption="@Model.ApplicationName"/>
+    <gds-back-link href="@Url.Action("TaskList", "Application", new { applicationId })" text="Back" class="govuk-!-margin-bottom-8">
+    </gds-back-link>
+    <vc:form-header title="@title" caption="@Model.ApplicationName"/>
 
-        <div class="govuk-!-padding-bottom-8">
-            <gds-p>In this section you'll need to provide financial information related to your application. This includes:</gds-p>
-            <ul class="govuk-list govuk-list govuk-list--bullet">
-                <li>land value and acquisition cost</li>
-                <li>other scheme costs</li>
-                <li>borrowing and other contributions</li>
-                <li>grants received from other public bodies</li>
-            </ul>
-            <gds-p>For multi-tenure sites, ensure the costs and contributions are apportioned across the development and only those applicable to the homes on this application are recorded here.</gds-p>
-            <gds-p>If your application concerns existing properties rather than land-led development, this section is still relevant to you. Where we say 'site' or 'land', read 'properties'.</gds-p>
-        </div>
-        <button role="navigation" id="continue-button" class="govuk-button govuk-button--start" data-module="govuk-button" name="action" type="submit" value="Continue">
-            Start now
-            <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
-                <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z"/>
-            </svg>
-        </button>
-
-    </form>
+    <div class="govuk-!-padding-bottom-8">
+        <gds-p>In this section you'll need to provide financial information related to your application. This includes:</gds-p>
+        <ul class="govuk-list govuk-list govuk-list--bullet">
+            <li>land value and acquisition cost</li>
+            <li>other scheme costs</li>
+            <li>borrowing and other contributions</li>
+            <li>grants received from other public bodies</li>
+        </ul>
+        <gds-p>For multi-tenure sites, ensure the costs and contributions are apportioned across the development and only those applicable to the homes on this application are recorded here.</gds-p>
+        <gds-p>If your application concerns existing properties rather than land-led development, this section is still relevant to you. Where we say 'site' or 'land', read 'properties'.</gds-p>
+    </div>
+    <a href="@Url.Action("LandStatus", "FinancialDetails", new { applicationId = Model.ApplicationId })" id="continue-button">
+        <gds-button type="button" class="govuk-!-margin-top-8">Start now</gds-button>
+    </a>
 </gds-div-grid-column-two-thirds>
