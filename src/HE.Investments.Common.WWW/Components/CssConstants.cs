@@ -1,6 +1,6 @@
 namespace HE.Investments.Common.WWW.Components;
 
-public class CssConstants
+public static class CssConstants
 {
     public const string GovUkVisuallyHidden = "govuk-visually-hidden";
 

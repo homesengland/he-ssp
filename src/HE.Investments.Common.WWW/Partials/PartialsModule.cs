@@ -11,10 +11,7 @@ public static class PartialsModule
         var assembly = typeof(AssemblyMarkup).Assembly;
         services.AddControllersWithViews()
             .AddApplicationPart(assembly)
-            .AddRazorOptions(options =>
-            {
-                options.ViewLocationFormats.Add("/{0}.cshtml");
-            })
+            .AddRazorOptions(options => options.ViewLocationFormats.Add("/{0}.cshtml"))
             .AddRazorRuntimeCompilation();
 
         services.Configure<MvcRazorRuntimeCompilationOptions>(

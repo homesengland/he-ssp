@@ -8,7 +8,7 @@ using HE.Investments.Loans.Contract.Application.ValueObjects;
 using HE.Investments.Loans.Contract.Projects.ViewModels;
 
 namespace HE.Investments.Loans.BusinessLogic.Projects;
-internal class ProjectMapper
+internal static class ProjectMapper
 {
     public static ProjectViewModel MapToViewModel(Project project, LoanApplicationId loanApplicationId)
     {

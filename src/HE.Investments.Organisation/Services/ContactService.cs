@@ -11,16 +11,14 @@ public class ContactService : IContactService
     private readonly IContactRepository _contactRepository;
     private readonly IWebRoleRepository _webRoleRepository;
     private readonly IPortalPermissionRepository _permissionRepository;
-    private readonly IOrganizationRepository _organizationRepository;
 
     private readonly int _commonPortalTypeOption = 858110002;
 
-    public ContactService(IContactRepository contactRepository, IWebRoleRepository webRoleRepository, IPortalPermissionRepository permissionRepository, IOrganizationRepository organizationRepository)
+    public ContactService(IContactRepository contactRepository, IWebRoleRepository webRoleRepository, IPortalPermissionRepository permissionRepository)
     {
         _contactRepository = contactRepository;
         _webRoleRepository = webRoleRepository;
         _permissionRepository = permissionRepository;
-        _organizationRepository = organizationRepository;
     }
 
     public Task<ContactDto?> RetrieveUserProfile(IOrganizationServiceAsync2 service, string contactExternalId)
@@ -120,7 +118,7 @@ public class ContactService : IContactService
             {
                 { "invln_accountid", new EntityReference("account", organisationGuid) },
                 { "invln_contactid", contact.ToEntityReference() },
-                { "invln_webroleid", defaultRole.First().ToEntityReference() },
+                { "invln_webroleid", defaultRole[0].ToEntityReference() },
             },
                 };
                 contactWebroleToCreate.Id = await service.CreateAsync(contactWebroleToCreate);

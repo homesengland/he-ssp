@@ -32,7 +32,7 @@ public class EncodedWorkflow<TState>
             .ToList();
         if (stateDifferences.Any())
         {
-            return stateDifferences.First();
+            return stateDifferences[0];
         }
 
         return Enum.GetValues(typeof(TState)).Cast<TState>().Last();

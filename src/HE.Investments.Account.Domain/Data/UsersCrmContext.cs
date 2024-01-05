@@ -25,11 +25,8 @@ public class UsersCrmContext : IUsersCrmContext
 
     public async Task<ContactDto> GetUser(string id)
     {
-        var user = await _contactService.RetrieveUserProfile(_organizationServiceAsync, id);
-        if (user == null)
-        {
-            throw new NotFoundException($"Cannot find User with id {id}.");
-        }
+        var user = await _contactService.RetrieveUserProfile(_organizationServiceAsync, id)
+            ?? throw new NotFoundException($"Cannot find User with id {id}.");
 
         return user;
     }

@@ -8,7 +8,7 @@ using HE.Investments.Loans.Common.Extensions;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
 
 namespace HE.Investments.Loans.BusinessLogic.Projects.Repositories.Mappers;
-internal class ApplicationProjectsMapper
+internal static class ApplicationProjectsMapper
 {
     public static ApplicationProjects Map(LoanApplicationDto loanApplicationDto, DateTime now)
     {

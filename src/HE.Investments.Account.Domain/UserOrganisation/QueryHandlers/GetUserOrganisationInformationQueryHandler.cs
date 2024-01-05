@@ -39,7 +39,7 @@ public class GetUserOrganisationInformationQueryHandler : IRequestHandler<GetUse
         var organisationDetails = await _organizationRepository.GetBasicInformation(account.SelectedOrganisationId(), cancellationToken);
         var userDetails = await _profileRepository.GetProfileDetails(_accountUserContext.UserGlobalId);
 
-        if (await _featureManager.IsEnabledAsync(FeatureFlags.AhpProgram, account.SelectedOrganisationId().ToString()) is false)
+        if (!await _featureManager.IsEnabledAsync(FeatureFlags.AhpProgram, account.SelectedOrganisationId().ToString()))
         {
             return new GetUserOrganisationInformationQueryResponse(
                 organisationDetails,

@@ -3,4 +3,4 @@ using HE.Investments.Loans.Contract.Application.ValueObjects;
 
 namespace HE.Investments.Loans.Contract.Application.Events;
 
-public record LoanApplicationHasBeenWithdrawnEvent(LoanApplicationId LoanApplicationId, LoanApplicationName ApplicationName) : DomainEvent;
+public record LoanApplicationHasBeenWithdrawnEvent(LoanApplicationId LoanApplicationId, LoanApplicationName ApplicationName) : IDomainEvent;

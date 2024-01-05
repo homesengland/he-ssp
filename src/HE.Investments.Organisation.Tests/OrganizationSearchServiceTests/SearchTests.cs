@@ -71,7 +71,7 @@ public class SearchTests : TestBase<OrganisationSearchService>
         await WhenSearchingOrganizations();
 
         _response.Items.Should().HaveCount(1);
-        var foundOrganization = _response.Items.First();
+        var foundOrganization = _response.Items[0];
 
         foundOrganization.CompanyNumber.Should().Be("1234");
         foundOrganization.Name.Should().Be("CrmName");
@@ -124,7 +124,7 @@ public class SearchTests : TestBase<OrganisationSearchService>
 
         await WhenSearchingOrganizations();
 
-        var foundOrganization = _response.Items.First();
+        var foundOrganization = _response.Items[0];
 
         _response.Items.Should().HaveCount(1);
         foundOrganization.CompanyNumber.Should().Be("1234");
@@ -182,7 +182,7 @@ public class SearchTests : TestBase<OrganisationSearchService>
         result.IsSuccessfull().Should().BeTrue();
         result.TotalItems.Should().Be(2);
         result.Items.Count.Should().Be(2);
-        result.Items.First().ShouldBe(companyFromCompanyHouse.CompanyName, companyFromCompanyHouse.CompanyNumber, null, false);
+        result.Items[0].ShouldBe(companyFromCompanyHouse.CompanyName, companyFromCompanyHouse.CompanyNumber, null, false);
         result.Items.Last().ShouldBe(spvCompany.registeredCompanyName, spvCompany.companyRegistrationNumber, spvCompany.organisationId, true);
     }
 
@@ -210,7 +210,7 @@ public class SearchTests : TestBase<OrganisationSearchService>
         result.IsSuccessfull().Should().BeTrue();
         result.TotalItems.Should().Be(3);
         result.Items.Count.Should().Be(2);
-        result.Items.First().ShouldBe(companyFromCompanyHouse1.CompanyName, companyFromCompanyHouse1.CompanyNumber, null, false);
+        result.Items[0].ShouldBe(companyFromCompanyHouse1.CompanyName, companyFromCompanyHouse1.CompanyNumber, null, false);
         result.Items[1].ShouldBe(spvCompany1.registeredCompanyName, spvCompany1.companyRegistrationNumber, spvCompany1.organisationId, true);
     }
 

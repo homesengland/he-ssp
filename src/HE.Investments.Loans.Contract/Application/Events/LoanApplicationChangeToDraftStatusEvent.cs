@@ -3,4 +3,4 @@ using HE.Investments.Loans.Contract.Application.ValueObjects;
 
 namespace HE.Investments.Loans.Contract.Application.Events;
 
-public record LoanApplicationChangeToDraftStatusEvent(LoanApplicationId LoanApplicationId) : DomainEvent;
+public record LoanApplicationChangeToDraftStatusEvent(LoanApplicationId LoanApplicationId) : IDomainEvent;

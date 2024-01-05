@@ -46,19 +46,19 @@ public class AuthorizeWithCompletedProfile : AuthorizeAttribute, IAsyncActionFil
         var accountUserContext = context.HttpContext.RequestServices.GetRequiredService<IAccountUserContext>();
         var accountRoutes = context.HttpContext.RequestServices.GetRequiredService<IAccountRoutes>();
 
-        if (accountUserContext.IsLogged is false)
+        if (!accountUserContext.IsLogged)
         {
             context.Result = accountRoutes.LandingPageForNotLoggedUser();
             return;
         }
 
-        if (await accountUserContext.IsProfileCompleted() is false)
+        if (!await accountUserContext.IsProfileCompleted())
         {
             context.Result = accountRoutes.NotCompleteProfile();
             return;
         }
 
-        if (await accountUserContext.IsLinkedWithOrganisation() is false)
+        if (!await accountUserContext.IsLinkedWithOrganisation())
         {
             context.Result = accountRoutes.NotLinkedOrganisation();
             return;

@@ -1,5 +1,5 @@
 namespace HE.Investments.Loans.Contract.Projects;
-public enum ProjectState : int
+public enum ProjectState
 {
     Index = 1,
     Name,

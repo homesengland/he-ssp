@@ -38,11 +38,8 @@ public class RemoveLinkBetweenUserAndOrganisationCommandHandler : IRequestHandle
             throw new InvalidOperationException("Cannot find user linked with organisation.");
         }
 
-        var user = await _contactService.RetrieveUserProfile(_organizationServiceAsync, request.UserId);
-        if (user == null)
-        {
-            throw new InvalidOperationException($"Cannot find user for given id {request.UserId}.");
-        }
+        var user = await _contactService.RetrieveUserProfile(_organizationServiceAsync, request.UserId)
+            ?? throw new InvalidOperationException($"Cannot find user for given id {request.UserId}.");
 
         await _contactService.RemoveLinkBetweenContactAndOrganisation(
             _organizationServiceAsync,

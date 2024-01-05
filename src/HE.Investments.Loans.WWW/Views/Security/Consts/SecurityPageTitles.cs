@@ -1,6 +1,6 @@
 namespace HE.Investments.Loans.WWW.Views.Security.Consts;
 
-public class SecurityPageTitles
+public static class SecurityPageTitles
 {
     public const string ChargesDebt = "Are there any charges outstanding or debt secured against this organisation?";
     public const string DirLoans = "Do you have any director loans against this company?";

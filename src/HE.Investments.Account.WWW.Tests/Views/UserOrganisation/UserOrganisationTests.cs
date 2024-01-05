@@ -113,7 +113,7 @@ public class UserOrganisationTests : ViewTestBase
 
         if (actionsExist)
         {
-            document.HasElementWithText("a", model.Actions.First().Label);
+            document.HasElementWithText("a", model.Actions[0].Label);
         }
     }
 

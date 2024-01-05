@@ -75,7 +75,7 @@ public class SecurityViewModel : ICompletedSectionViewModel
         return readonlyStatuses.Contains(LoanApplicationStatus);
     }
 
-    public bool IsEditable() => IsReadOnly() is false;
+    public bool IsEditable() => !IsReadOnly();
 
     public ApplicationStatus GetApplicationStatus()
     {

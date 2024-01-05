@@ -5,7 +5,7 @@ using HE.Investments.Loans.BusinessLogic.Projects.ValueObjects;
 using HE.Investments.Loans.Contract.Common;
 
 namespace HE.Investments.Loans.BusinessLogic.Projects.Repositories.Mappers;
-internal class PublicSectorGrantFundingMapper
+internal static class PublicSectorGrantFundingMapper
 {
     public static PublicSectorGrantFunding? MapFromCrm(SiteDetailsDto projectFromCrm)
     {

@@ -45,7 +45,7 @@ public class HeTextAreaTagHelper : InputTagHelper
 
                     contentBuilder.Append(
                         CultureInfo.InvariantCulture,
-                        $"<p id=\"contact-by-email-error\" class=\"govuk-error-message\"><span class=\"govuk-visually-hidden\">Error:</span> {entry.Errors.First().ErrorMessage}</p>");
+                        $"<p id=\"contact-by-email-error\" class=\"govuk-error-message\"><span class=\"govuk-visually-hidden\">Error:</span> {entry.Errors[0].ErrorMessage}</p>");
 
                     contentBuilder.Append(
                         CultureInfo.InvariantCulture,

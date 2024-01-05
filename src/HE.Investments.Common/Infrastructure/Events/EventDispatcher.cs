@@ -23,7 +23,7 @@ public class EventDispatcher : IEventDispatcher
     }
 
     public async Task Publish<TEvent>(TEvent domainEvent, CancellationToken cancellationToken)
-        where TEvent : DomainEvent
+        where TEvent : IDomainEvent
     {
         await _mediator.Publish(domainEvent, cancellationToken);
     }

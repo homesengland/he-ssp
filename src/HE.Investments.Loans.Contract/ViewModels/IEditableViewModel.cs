@@ -4,5 +4,5 @@ public interface IEditableViewModel
 {
     public bool IsEditable();
 
-    public bool IsReadOnly() => IsEditable() is false;
+    public bool IsReadOnly() => !IsEditable();
 }

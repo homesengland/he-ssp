@@ -9,7 +9,7 @@ using HE.Investments.Loans.Contract.Application.ValueObjects;
 
 namespace HE.Investments.Loans.BusinessLogic.Projects.Repositories.Mappers;
 
-internal class ProjectEntityMapper
+internal static class ProjectEntityMapper
 {
     public static Project Map(SiteDetailsDto siteDetailsDto, DateTime now)
     {

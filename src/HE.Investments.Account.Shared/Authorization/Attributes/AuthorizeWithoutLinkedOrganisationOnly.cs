@@ -13,18 +13,18 @@ public class AuthorizeWithoutLinkedOrganisationOnly : AuthorizeAttribute, IAsync
         var accountUserContext = context.HttpContext.RequestServices.GetRequiredService<IAccountUserContext>();
         var accountRoutes = context.HttpContext.RequestServices.GetRequiredService<IAccountRoutes>();
 
-        if (accountUserContext.IsLogged is false)
+        if (!accountUserContext.IsLogged)
         {
             context.Result = accountRoutes.LandingPageForNotLoggedUser();
         }
 
-        if (await accountUserContext.IsLinkedWithOrganisation() is false)
+        if (!await accountUserContext.IsLinkedWithOrganisation())
         {
             await next();
             return;
         }
 
-        if (await accountUserContext.IsProfileCompleted() is false)
+        if (!await accountUserContext.IsProfileCompleted())
         {
             context.Result = accountRoutes.NotCompleteProfile();
             return;

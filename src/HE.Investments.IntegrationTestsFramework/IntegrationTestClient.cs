@@ -78,8 +78,8 @@ public class IntegrationTestClient
         }
 
         var submit = form.GetSubmission(submitButton)!;
-        StreamReader reader = new StreamReader(submit.Body);
-        string text = reader.ReadToEnd();
+        var reader = new StreamReader(submit.Body);
+        var text = reader.ReadToEnd();
         var target = (Uri)submit.Target;
         using var submission = new HttpRequestMessage(new HttpMethod(submit.Method.ToString()), target) { Content = new StreamContent(submit.Body), };
 

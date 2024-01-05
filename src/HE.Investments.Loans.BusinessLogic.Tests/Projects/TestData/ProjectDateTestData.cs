@@ -2,7 +2,7 @@ using HE.Investments.Loans.BusinessLogic.Projects.ValueObjects;
 using HE.Investments.Loans.Common.Tests.TestData;
 
 namespace HE.Investments.Loans.BusinessLogic.Tests.Projects.TestData;
-internal sealed class ProjectDateTestData
+internal static class ProjectDateTestData
 {
     public static readonly (string Year, string Month, string Day) IncorrectDateAsStrings = DateTimeTestData.IncorrectDateAsStrings;
 

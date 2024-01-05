@@ -28,14 +28,14 @@ namespace He.AspNetCore.Mvc.Gds.Components.Validation
         /// Returns true if ... is valid.
         /// </summary>
         /// <param name="value">The value.</param>
-        /// <param name="context">The context.</param>
+        /// <param name="validationContext">The context.</param>
         /// <returns>ValidationResult.</returns>
-        protected override ValidationResult IsValid(object value, ValidationContext context)
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            object instance = context?.ObjectInstance;
-            Type type = instance.GetType();
+            var instance = validationContext?.ObjectInstance;
+            var type = instance.GetType();
 
-            var result = bool.TryParse(type?.GetProperty(this.PropertyName)?.GetValue(instance)?.ToString(), out bool propertyValue);
+            _ = bool.TryParse(type?.GetProperty(this.PropertyName)?.GetValue(instance)?.ToString(), out var propertyValue);
 
             if (propertyValue && string.IsNullOrEmpty(value?.ToString()))
             {
