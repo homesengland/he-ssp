@@ -266,15 +266,15 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
             "Modern Methods of Construction (MMC)",
             factory.Question(
                 "MMC categories used",
-                nameof(HomeTypesController.RevenueFunding),
+                nameof(HomeTypesController.ModernMethodsConstructionCategories),
                 modernMethodsConstruction.ModernMethodsConstructionCategories.ToArray()),
             factory.Question(
                 "Sub-categories of 3D primary structural systems",
-                nameof(HomeTypesController.RevenueFunding),
+                nameof(HomeTypesController.ModernMethodsConstruction3DSubcategories),
                 modernMethodsConstruction.ModernMethodsConstruction3DSubcategories.ToArray()),
             factory.Question(
                 "Sub-categories of 2D primary structural systems",
-                nameof(HomeTypesController.RevenueFunding),
+                nameof(HomeTypesController.ModernMethodsConstruction2DSubcategories),
                 modernMethodsConstruction.ModernMethodsConstruction2DSubcategories.ToArray()));
     }
 
