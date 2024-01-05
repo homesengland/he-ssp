@@ -1,7 +1,7 @@
 using HE.Investment.AHP.WWW;
-using HE.Investments.AHP.IntegrationTests.FillApplication;
 using HE.Investments.AHP.IntegrationTests.FillApplication.Data;
 using HE.Investments.IntegrationTestsFramework;
+using HE.Investments.TestsUtils.Extensions;
 using Xunit;
 
 namespace HE.Investments.AHP.IntegrationTests.Framework;
@@ -20,7 +20,31 @@ public class AhpIntegrationTest : IntegrationTestBase<Program>
         }
 
         ApplicationData = applicationData;
+        fixture.CheckUserLoginData();
     }
 
     public ApplicationData ApplicationData { get; }
+
+    public async Task TestPage(
+        string startPageUrl,
+        string expectedPageTitle,
+        string expectedPageUrlAfterContinue,
+        params (string InputName, string Value)[] inputs)
+    {
+        // given
+        var currentPage = await GetCurrentPage(startPageUrl);
+        currentPage
+            .UrlEndWith(startPageUrl)
+            .HasTitle(expectedPageTitle)
+            .HasGdsSubmitButton("continue-button", out var continueButton);
+
+        // when
+        var nextPage = await TestClient.SubmitButton(
+            continueButton,
+            inputs);
+
+        // then
+        nextPage.UrlEndWith(expectedPageUrlAfterContinue);
+        SaveCurrentPage();
+    }
 }
