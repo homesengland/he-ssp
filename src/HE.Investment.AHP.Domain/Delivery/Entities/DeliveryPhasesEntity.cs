@@ -3,6 +3,7 @@ using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
+using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Domain;
@@ -12,7 +13,7 @@ using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.Applicat
 
 namespace HE.Investment.AHP.Domain.Delivery.Entities;
 
-public class DeliveryPhasesEntity
+public class DeliveryPhasesEntity : IHomeTypeConsumer
 {
     private readonly IList<DeliveryPhaseEntity> _deliveryPhases;
 
@@ -50,6 +51,10 @@ public class DeliveryPhasesEntity
 
     public int UnusedHomeTypesCount => _homesToDeliver.Select(x => x.TotalHomes).Sum() -
                                        _homesToDeliver.Select(x => GetHomesToBeDeliveredInAllPhases(x.HomeTypeId)).Sum();
+
+    public string HomeTypeConsumerName => "Delivery Phase";
+
+    public bool IsHomeTypeUsed(HomeTypeId homeTypeId) => _homesToDeliver.Any(x => x.HomeTypeId == homeTypeId);
 
     public IEnumerable<(HomesToDeliver HomesToDeliver, int ToDeliver)> GetHomesToDeliverInPhase(DeliveryPhaseId deliveryPhaseId)
     {

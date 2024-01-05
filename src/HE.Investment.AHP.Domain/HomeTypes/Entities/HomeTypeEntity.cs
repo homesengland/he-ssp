@@ -69,9 +69,6 @@ public class HomeTypeEntity : IHomeTypeEntity
 
     public bool IsModified => _modificationTracker.IsModified || _segments.Any(x => x.Value.IsModified);
 
-    // TODO: set this value when implementing Delivery Phases
-    public bool IsUsedInDeliveryPhase => false;
-
     public SectionStatus Status { get; private set; }
 
     public void CompleteHomeType(IsSectionCompleted isSectionCompleted)
