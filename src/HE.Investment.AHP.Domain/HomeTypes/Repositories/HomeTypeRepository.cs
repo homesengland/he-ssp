@@ -130,7 +130,7 @@ public class HomeTypeRepository : IHomeTypeRepository
         {
             await _homeTypeCrmContext.Remove(homeTypes.ApplicationId.Value, homeTypeToRemove.Id.Value, organisationId.Value, cancellationToken);
             await _eventDispatcher.Publish(
-                new HomeTypeHasBeenUpdatedEvent(homeTypeToRemove.Application.Id.Value, homeTypeToRemove.Id.Value),
+                new HomeTypeHasBeenRemovedEvent(homeTypeToRemove.Application.Id.Value, homeTypeToRemove.Id.Value),
                 cancellationToken);
         }
     }

@@ -46,6 +46,7 @@
                 {
                     var index = i;
                     @Html.HiddenFor(model => Model.DeliveryPhases[index].DeliveryPhaseId)
+                    @Html.HiddenFor(model => Model.DeliveryPhases[index].DeliveryPhaseName)
                     @Html.HiddenFor(model => Model.DeliveryPhases[index].NumberOfHomes)
                     @Html.HiddenFor(model => Model.DeliveryPhases[index].Acquisition)
                     @Html.HiddenFor(model => Model.DeliveryPhases[index].StartOnSite)

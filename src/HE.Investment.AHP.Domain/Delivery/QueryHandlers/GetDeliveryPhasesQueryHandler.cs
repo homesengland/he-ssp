@@ -27,7 +27,7 @@ public class GetDeliveryPhasesQueryHandler : IRequestHandler<GetDeliveryPhasesQu
 
         return new ApplicationDeliveryPhases(
             deliveryPhases.ApplicationName.Name,
-            3, // TODO: fetch/calculate in entity
+            deliveryPhases.UnusedHomeTypesCount,
             deliveryPhases.DeliveryPhases.OrderByDescending(x => x.CreatedOn).Select(Map).ToList());
     }
 
@@ -37,8 +37,8 @@ public class GetDeliveryPhasesQueryHandler : IRequestHandler<GetDeliveryPhasesQu
             deliveryPhase.Application.Name.Name,
             deliveryPhase.Id.Value,
             deliveryPhase.Name.Value,
-            12,  // TODO: fetch from CRM
-            null,
+            deliveryPhase.TotalHomesToBeDeliveredInThisPhase,
+            null, // TODO: map dates when available in CRM
             null,
             null);
     }
