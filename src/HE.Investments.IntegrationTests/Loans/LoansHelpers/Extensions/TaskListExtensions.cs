@@ -1,6 +1,6 @@
 using System.Globalization;
 using AngleSharp.Html.Dom;
-using HE.Investments.IntegrationTestsFramework.Assertions;
+using HE.Investments.TestsUtils.Assertions;
 
 namespace HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Extensions;
 

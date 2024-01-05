@@ -2,7 +2,6 @@ using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using HE.Investments.Common.Messages;
 using HE.Investments.IntegrationTestsFramework;
-using HE.Investments.IntegrationTestsFramework.Extensions;
 using HE.Investments.Loans.Common.Tests.TestData;
 using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
@@ -11,6 +10,7 @@ using HE.Investments.Loans.WWW;
 using HE.Investments.Loans.WWW.Extensions;
 using HE.Investments.Loans.WWW.Models;
 using HE.Investments.Loans.WWW.Views.Project.Consts;
+using HE.Investments.TestsUtils.Extensions;
 using Xunit;
 using Xunit.Extensions.Ordering;
 

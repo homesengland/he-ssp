@@ -20,6 +20,10 @@ public class IntegrationTestFixture<TProgram> : WebApplicationFactory<TProgram>
 
         var userConfig = Configuration.GetSection("IntegrationTestsConfig:UserConfig").Get<UserLoginData>();
         LoginData = userConfig ?? new UserLoginData();
+        if (LoginData.IsProvided() is false)
+        {
+            throw new InvalidDataException("Please set IntegrationTestsConfig:UserConfig:UserGlobalId and IntegrationTestsConfig:UserConfig:Email in settings");
+        }
     }
 
     public IDictionary<string, object> DataBag { get; }
