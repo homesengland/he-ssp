@@ -9,4 +9,5 @@ public enum FinancialDetailsWorkflowState
     Contributions,
     Grants,
     CheckAnswers,
+    ReturnToTaskList,
 }
