@@ -1,6 +1,6 @@
 using HE.Investment.AHP.Contract.Delivery.Enums;
 
-namespace HE.Investment.AHP.Domain.Delivery.Commands;
+namespace HE.Investment.AHP.Contract.Delivery.Commands;
 
 public record RemoveDeliveryPhaseCommand(
         string ApplicationId,

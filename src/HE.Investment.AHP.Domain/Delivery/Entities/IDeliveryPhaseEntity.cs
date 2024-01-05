@@ -15,4 +15,6 @@ public interface IDeliveryPhaseEntity
     DateTime? CreatedOn { get; }
 
     SectionStatus Status { get; }
+
+    void SetName(DeliveryPhaseName deliveryPhaseName);
 }

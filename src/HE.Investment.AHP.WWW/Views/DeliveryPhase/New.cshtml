@@ -16,7 +16,7 @@
 
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
-    <form asp-controller="DeliveryPhase" asp-action="Name" asp-method="post" novalidate>
+    <form asp-controller="DeliveryPhase" asp-action="New" asp-method="post" novalidate>
 
         <vc:numeric-text-input header="@title"
                        description="Each delivery phase needs a unique name."

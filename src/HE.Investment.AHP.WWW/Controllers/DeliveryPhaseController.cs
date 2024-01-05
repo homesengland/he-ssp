@@ -1,6 +1,8 @@
+using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Contract.Delivery;
+using HE.Investment.AHP.Contract.Delivery.Commands;
 using HE.Investment.AHP.Contract.Delivery.Queries;
-using HE.Investment.AHP.Domain.Delivery.Commands;
+using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investment.AHP.WWW.Models.Delivery;
 using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Account.Shared.Authorization.Attributes;
@@ -24,16 +26,51 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
 
     [HttpGet("new")]
     [WorkflowState(DeliveryPhaseWorkflowState.New)]
-    public IActionResult New()
+    public async Task<IActionResult> New([FromRoute] string applicationId)
     {
-        return View("Name");
+        var application = await _mediator.Send(new GetApplicationQuery(applicationId));
+        var model = new DeliveryViewModelBase(applicationId, application.Name, null);
+        return View("New", model);
+    }
+
+    [HttpPost("new")]
+    [WorkflowState(DeliveryPhaseWorkflowState.New)]
+    public async Task<IActionResult> New([FromRoute] string applicationId, DeliveryViewModelBase model, CancellationToken cancellationToken)
+    {
+        var deliveryPhaseId = await _mediator.Send(new CreateDeliveryPhaseCommand(applicationId, model.DeliveryPhaseName ?? string.Empty), cancellationToken);
+
+        var result = await _mediator.Send(new ProvideDeliveryPhaseNameCommand(applicationId, deliveryPhaseId.Id, model.DeliveryPhaseName), cancellationToken);
+
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+            return View("New", model);
+        }
+
+        return await Continue(new { applicationId, deliveryPhaseId.Id });
     }
 
     [HttpGet("{deliveryPhaseId}/name")]
     [WorkflowState(DeliveryPhaseWorkflowState.Name)]
-    public IActionResult Name()
+    public async Task<IActionResult> Name([FromRoute] string applicationId, [FromRoute] string deliveryPhaseId, CancellationToken cancellationToken)
     {
-        return View("Name");
+        var deliveryPhase = await _mediator.Send(new GetDeliveryPhaseDetailsQuery(applicationId, deliveryPhaseId), cancellationToken);
+        var model = new DeliveryViewModelBase(applicationId, deliveryPhase.ApplicationName, deliveryPhase.Name);
+        return View("Name", model);
+    }
+
+    [WorkflowState(DeliveryPhaseWorkflowState.Name)]
+    [HttpPost("{deliveryPhaseId}/name")]
+    public async Task<IActionResult> Name([FromRoute] string applicationId, [FromRoute] string deliveryPhaseId, DeliveryViewModelBase model, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new ProvideDeliveryPhaseNameCommand(applicationId, deliveryPhaseId, model.DeliveryPhaseName), cancellationToken);
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+            return View("Name", model);
+        }
+
+        return await Continue(new { applicationId, deliveryPhaseId });
     }
 
     [HttpGet("{deliveryPhaseId}/remove")]

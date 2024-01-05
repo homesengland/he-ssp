@@ -29,4 +29,9 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
     public DateTime? CreatedOn { get; }
 
     public SectionStatus Status { get; private set; }
+
+    public void SetName(DeliveryPhaseName deliveryPhaseName)
+    {
+        Name = deliveryPhaseName;
+    }
 }

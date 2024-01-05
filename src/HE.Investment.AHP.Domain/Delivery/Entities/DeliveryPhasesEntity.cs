@@ -34,6 +34,11 @@ public class DeliveryPhasesEntity
 
     public SectionStatus Status { get; private set; }
 
+    public void Add(DeliveryPhaseEntity entity)
+    {
+        _deliveryPhases.Add(entity);
+    }
+
     public void Remove(DeliveryPhaseId deliveryPhaseId, RemoveDeliveryPhaseAnswer removeAnswer)
     {
         if (removeAnswer == RemoveDeliveryPhaseAnswer.Undefined)
