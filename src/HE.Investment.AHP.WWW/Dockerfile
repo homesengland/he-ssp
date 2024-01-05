@@ -22,13 +22,11 @@ COPY ["HE.Investment.AHP.Domain/HE.Investment.AHP.Domain.csproj", "HE.Investment
 COPY ["HE.Investments.Account.Shared/HE.Investments.Account.Shared.csproj", "HE.Investments.Account.Shared/"]
 COPY ["HE.Investments.Account.Contract/HE.Investments.Account.Contract.csproj", "HE.Investments.Account.Contract/"]
 COPY ["HE.Investments.Common.CRM/HE.Investments.Common.CRM.csproj", "HE.Investments.Common.CRM/"]
-COPY ["HE.Investments.Loans.Common/HE.Investments.Loans.Common.csproj", "HE.Investments.Loans.Common/"]
-COPY ["HE.Investments.Loans.Contract/HE.Investments.Loans.Contract.csproj", "HE.Investments.Loans.Contract/"]
-COPY ["HE.Investments.DocumentService/HE.Investments.DocumentService.csproj", "HE.Investments.DocumentService/"]
 COPY ["HE.Investments.Organisation/HE.Investments.Organisation.csproj", "HE.Investments.Organisation/"]
 COPY ["HE.Investments.Common.WWW/HE.Investments.Common.WWW.csproj", "HE.Investments.Common.WWW/"]
+COPY ["HE.Investments.Loans.Common/HE.Investments.Loans.Common.csproj", "HE.Investments.Loans.Common/"]
+COPY ["HE.Investments.DocumentService/HE.Investments.DocumentService.csproj", "HE.Investments.DocumentService/"]
 RUN dotnet restore "./HE.Investment.AHP.WWW/./HE.Investment.AHP.WWW.csproj"
-
 COPY . .
 WORKDIR "/src/HE.Investment.AHP.WWW"
 RUN dotnet build "./HE.Investment.AHP.WWW.csproj" -c $BUILD_CONFIGURATION -o /app/build

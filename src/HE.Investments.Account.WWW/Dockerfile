@@ -16,17 +16,14 @@ WORKDIR /src
 COPY ["nuget.config", "."]
 COPY ["HE.Investments.Account.WWW/HE.Investments.Account.WWW.csproj", "HE.Investments.Account.WWW/"]
 COPY ["HE.Investments.Loans.Common/HE.Investments.Loans.Common.csproj", "HE.Investments.Loans.Common/"]
+COPY ["HE.Investments.Common.CRM/HE.Investments.Common.CRM.csproj", "HE.Investments.Common.CRM/"]
 COPY ["HE.Investments.Common/HE.Investments.Common.csproj", "HE.Investments.Common/"]
 COPY ["HE.Investments.Account.Domain/HE.Investments.Account.Domain.csproj", "HE.Investments.Account.Domain/"]
-COPY ["HE.Investments.Common.CRM/HE.Investments.Common.CRM.csproj", "HE.Investments.Common.CRM/"]
 COPY ["HE.Investments.Account.Contract/HE.Investments.Account.Contract.csproj", "HE.Investments.Account.Contract/"]
 COPY ["HE.Investments.Account.Shared/HE.Investments.Account.Shared.csproj", "HE.Investments.Account.Shared/"]
-COPY ["HE.Investments.Loans.Contract/HE.Investments.Loans.Contract.csproj", "HE.Investments.Loans.Contract/"]
-COPY ["HE.Investments.DocumentService/HE.Investments.DocumentService.csproj", "HE.Investments.DocumentService/"]
 COPY ["HE.Investments.Organisation/HE.Investments.Organisation.csproj", "HE.Investments.Organisation/"]
 COPY ["HE.Investments.Common.WWW/HE.Investments.Common.WWW.csproj", "HE.Investments.Common.WWW/"]
 RUN dotnet restore "./HE.Investments.Account.WWW/./HE.Investments.Account.WWW.csproj"
-
 COPY . .
 WORKDIR "/src/HE.Investments.Account.WWW"
 RUN dotnet build "./HE.Investments.Account.WWW.csproj" -c $BUILD_CONFIGURATION -o /app/build

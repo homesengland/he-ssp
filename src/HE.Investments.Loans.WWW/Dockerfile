@@ -18,16 +18,16 @@ COPY ["HE.Investments.Loans.WWW/HE.Investments.Loans.WWW.csproj", "HE.Investment
 COPY ["He.AspNetCore.Mvc.Gds.Components/He.AspNetCore.Mvc.Gds.Components.csproj", "He.AspNetCore.Mvc.Gds.Components/"]
 COPY ["HE.Investments.Common/HE.Investments.Common.csproj", "HE.Investments.Common/"]
 COPY ["HE.Investments.Loans.BusinessLogic/HE.Investments.Loans.BusinessLogic.csproj", "HE.Investments.Loans.BusinessLogic/"]
+COPY ["HE.Investments.Common.WWW/HE.Investments.Common.WWW.csproj", "HE.Investments.Common.WWW/"]
+COPY ["HE.Investments.Loans.Common/HE.Investments.Loans.Common.csproj", "HE.Investments.Loans.Common/"]
+COPY ["HE.Investments.Common.CRM/HE.Investments.Common.CRM.csproj", "HE.Investments.Common.CRM/"]
 COPY ["HE.Investments.Loans.Common.Contract/HE.Investments.Loans.Common.Contract.csproj", "HE.Investments.Loans.Common.Contract/"]
 COPY ["HE.Investments.Loans.Contract/HE.Investments.Loans.Contract.csproj", "HE.Investments.Loans.Contract/"]
-COPY ["HE.Investments.Loans.Common/HE.Investments.Loans.Common.csproj", "HE.Investments.Loans.Common/"]
-COPY ["HE.Investments.DocumentService/HE.Investments.DocumentService.csproj", "HE.Investments.DocumentService/"]
 COPY ["HE.Investments.Account.Contract/HE.Investments.Account.Contract.csproj", "HE.Investments.Account.Contract/"]
 COPY ["HE.Investments.Account.Domain/HE.Investments.Account.Domain.csproj", "HE.Investments.Account.Domain/"]
-COPY ["HE.Investments.Common.CRM/HE.Investments.Common.CRM.csproj", "HE.Investments.Common.CRM/"]
 COPY ["HE.Investments.Account.Shared/HE.Investments.Account.Shared.csproj", "HE.Investments.Account.Shared/"]
 COPY ["HE.Investments.Organisation/HE.Investments.Organisation.csproj", "HE.Investments.Organisation/"]
-COPY ["HE.Investments.Common.WWW/HE.Investments.Common.WWW.csproj", "HE.Investments.Common.WWW/"]
+COPY ["HE.Investments.DocumentService/HE.Investments.DocumentService.csproj", "HE.Investments.DocumentService/"]
 RUN dotnet restore "./HE.Investments.Loans.WWW/./HE.Investments.Loans.WWW.csproj"
 
 COPY . .
