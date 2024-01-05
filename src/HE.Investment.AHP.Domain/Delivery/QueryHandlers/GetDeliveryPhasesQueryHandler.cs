@@ -1,6 +1,6 @@
 using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Queries;
-using HE.Investment.AHP.Domain.Delivery.Entities;
+using HE.Investment.AHP.Domain.Delivery.Mappers;
 using HE.Investment.AHP.Domain.Delivery.Repositories;
 using HE.Investments.Account.Shared;
 using MediatR;
@@ -27,19 +27,7 @@ public class GetDeliveryPhasesQueryHandler : IRequestHandler<GetDeliveryPhasesQu
 
         return new ApplicationDeliveryPhases(
             deliveryPhases.ApplicationName.Name,
-            3, // TODO: fetch/calculate in entity
-            deliveryPhases.DeliveryPhases.OrderByDescending(x => x.CreatedOn).Select(Map).ToList());
-    }
-
-    private static DeliveryPhaseDetails Map(IDeliveryPhaseEntity deliveryPhase)
-    {
-        return new DeliveryPhaseDetails(
-            deliveryPhase.Application.Name.Name,
-            deliveryPhase.Id.Value,
-            deliveryPhase.Name.Value,
-            12,  // TODO: fetch from CRM
-            null,
-            null,
-            null);
+            deliveryPhases.UnusedHomeTypesCount,
+            deliveryPhases.DeliveryPhases.OrderByDescending(x => x.CreatedOn).Select(DeliveryPhaseEntityMapper.ToContract).ToList());
     }
 }

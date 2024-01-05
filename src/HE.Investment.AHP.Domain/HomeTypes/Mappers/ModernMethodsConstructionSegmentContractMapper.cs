@@ -5,9 +5,9 @@ using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Mappers;
 
-public class ModernMethodsConstructionSegmentContractMapper : IHomeTypeSegmentContractMapper<ModernMethodsConstructionEntity, ModernMethodsConstruction>
+public class ModernMethodsConstructionSegmentContractMapper : IHomeTypeSegmentContractMapper<ModernMethodsConstructionSegmentEntity, ModernMethodsConstruction>
 {
-    public ModernMethodsConstruction Map(ApplicationName applicationName, HomeTypeName homeTypeName, ModernMethodsConstructionEntity segment)
+    public ModernMethodsConstruction Map(ApplicationName applicationName, HomeTypeName homeTypeName, ModernMethodsConstructionSegmentEntity segment)
     {
         return new ModernMethodsConstruction(
             applicationName.Name,

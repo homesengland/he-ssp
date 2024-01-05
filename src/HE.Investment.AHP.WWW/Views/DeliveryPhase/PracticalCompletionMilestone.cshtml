@@ -27,15 +27,15 @@
             header="Enter your practical completion date"
             description="This can be a date in the past. For future dates, include a reasonable level of risk adjustment in your forecasts."
             hint="Enter a date, for example 24 03 2024."
-            field-name="@nameof(Model.MilestoneDates.MilestoneDate)"
-            value="@Model.MilestoneDates?.MilestoneDate"/>
+            field-name="@nameof(Model.MilestoneStartAt)"
+            value="@Model.MilestoneStartAt"/>
 
         <vc:date-input
             header="Enter when you expect to claim this milestone payment"
             description="This date must be in the future, and must be on or after the date when you expect to have achieved all of the requirements of the milestone, as set out in the Capital Funding Guide."
             hint="Enter a date, for example 24 03 2024."
-            field-name="@nameof(Model.MilestoneDates.ClaimMilestonePaymentAt)"
-            value="@Model.MilestoneDates?.ClaimMilestonePaymentAt"/>
+            field-name="@nameof(Model.ClaimMilestonePaymentAt)"
+            value="@Model.ClaimMilestonePaymentAt"/>
 
         <vc:form-button/>
 

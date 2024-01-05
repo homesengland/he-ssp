@@ -6,8 +6,7 @@ using HE.Investments.AHP.IntegrationTests.FillApplication.Data;
 using HE.Investments.AHP.IntegrationTests.Framework;
 using HE.Investments.AHP.IntegrationTests.Pages;
 using HE.Investments.IntegrationTestsFramework;
-using HE.Investments.IntegrationTestsFramework.Extensions;
-using HE.Investments.Loans.Common.Utils.Constants.FormOption;
+using HE.Investments.TestsUtils.Extensions;
 using Xunit;
 using Xunit.Extensions.Ordering;
 
@@ -58,22 +57,15 @@ public class Order02CompleteSchemeInformation : AhpIntegrationTest
     public async Task Order2_ProvideFundingDetails()
     {
         // given
-        var fundingDetailsPage = await GetCurrentPage(SchemeInformationPagesUrl.FundingDetails(ApplicationData.ApplicationId));
-        fundingDetailsPage
-            .UrlEndWith(SchemeInformationPagesUrl.FundingDetailsSuffix)
-            .HasTitle(SchemeInformationPageTitles.FundingDetails)
-            .HasGdsSubmitButton("continue-button", out var continueButton);
-
-        // when
         SchemeInformationData.GenerateFundingDetails();
-        var affordabilityPage = await TestClient.SubmitButton(
-            continueButton,
+
+        // when & then
+        await TestPage(
+            SchemeInformationPagesUrl.FundingDetails(ApplicationData.ApplicationId),
+            SchemeInformationPageTitles.FundingDetails,
+            SchemeInformationPagesUrl.AffordabilitySuffix,
             ("RequiredFunding", SchemeInformationData.RequiredFunding.ToString()!),
             ("HousesToDeliver", SchemeInformationData.HousesToDeliver.ToString()!));
-
-        // then
-        affordabilityPage.UrlEndWith(SchemeInformationPagesUrl.AffordabilitySuffix);
-        SaveCurrentPage();
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
@@ -81,21 +73,14 @@ public class Order02CompleteSchemeInformation : AhpIntegrationTest
     public async Task Order3_ProvideAffordability()
     {
         // given
-        var affordabilityPage = await GetCurrentPage(SchemeInformationPagesUrl.Affordability(ApplicationData.ApplicationId));
-        affordabilityPage
-            .UrlEndWith(SchemeInformationPagesUrl.AffordabilitySuffix)
-            .HasTitle(SchemeInformationPageTitles.Affordability)
-            .HasGdsSubmitButton("continue-button", out var continueButton);
-
-        // when
         SchemeInformationData.GenerateAffordability();
-        var salesRiskPage = await TestClient.SubmitButton(
-            continueButton,
-            ("AffordabilityEvidence", SchemeInformationData.Affordability));
 
-        // then
-        salesRiskPage.UrlEndWith(SchemeInformationPagesUrl.SalesRiskSuffix);
-        SaveCurrentPage();
+        // when & then
+        await TestPage(
+            SchemeInformationPagesUrl.Affordability(ApplicationData.ApplicationId),
+            SchemeInformationPageTitles.Affordability,
+            SchemeInformationPagesUrl.SalesRiskSuffix,
+            ("AffordabilityEvidence", SchemeInformationData.Affordability));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
@@ -103,21 +88,14 @@ public class Order02CompleteSchemeInformation : AhpIntegrationTest
     public async Task Order4_ProvideSaleRisk()
     {
         // given
-        var salesRiskPage = await GetCurrentPage(SchemeInformationPagesUrl.SalesRisk(ApplicationData.ApplicationId));
-        salesRiskPage
-            .UrlEndWith(SchemeInformationPagesUrl.SalesRiskSuffix)
-            .HasTitle(SchemeInformationPageTitles.SalesRisk)
-            .HasGdsSubmitButton("continue-button", out var continueButton);
-
-        // when
         SchemeInformationData.GenerateSalesRisk();
-        var housingNeedsPage = await TestClient.SubmitButton(
-            continueButton,
-            ("SalesRisk", SchemeInformationData.SalesRisk));
 
-        // then
-        housingNeedsPage.UrlEndWith(SchemeInformationPagesUrl.HousingNeedsSuffix);
-        SaveCurrentPage();
+        // when & then
+        await TestPage(
+            SchemeInformationPagesUrl.SalesRisk(ApplicationData.ApplicationId),
+            SchemeInformationPageTitles.SalesRisk,
+            SchemeInformationPagesUrl.HousingNeedsSuffix,
+            ("SalesRisk", SchemeInformationData.SalesRisk));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
@@ -125,22 +103,15 @@ public class Order02CompleteSchemeInformation : AhpIntegrationTest
     public async Task Order5_ProvideHousingNeed()
     {
         // given
-        var housingNeedsPage = await GetCurrentPage(SchemeInformationPagesUrl.HousingNeeds(ApplicationData.ApplicationId));
-        housingNeedsPage
-            .UrlEndWith(SchemeInformationPagesUrl.HousingNeedsSuffix)
-            .HasTitle(SchemeInformationPageTitles.HousingNeeds)
-            .HasGdsSubmitButton("continue-button", out var continueButton);
-
-        // when
         SchemeInformationData.GenerateHousingNeeds();
-        var stakeholderDiscussionsPage = await TestClient.SubmitButton(
-            continueButton,
+
+        // when & then
+        await TestPage(
+            SchemeInformationPagesUrl.HousingNeeds(ApplicationData.ApplicationId),
+            SchemeInformationPageTitles.HousingNeeds,
+            SchemeInformationPagesUrl.StakeholderDiscussionsSuffix,
             ("MeetingLocalPriorities", SchemeInformationData.HousingNeedsMeetingLocalPriorities),
             ("MeetingLocalHousingNeed", SchemeInformationData.HousingNeedsMeetingLocalHousingNeed));
-
-        // then
-        stakeholderDiscussionsPage.UrlEndWith(SchemeInformationPagesUrl.StakeholderDiscussionsSuffix);
-        SaveCurrentPage();
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
@@ -148,21 +119,14 @@ public class Order02CompleteSchemeInformation : AhpIntegrationTest
     public async Task Order6_ProvideStakeholderDiscussions()
     {
         // given
-        var stakeholderDiscussionsPage = await GetCurrentPage(SchemeInformationPagesUrl.StakeholderDiscussions(ApplicationData.ApplicationId));
-        stakeholderDiscussionsPage
-            .UrlEndWith(SchemeInformationPagesUrl.StakeholderDiscussionsSuffix)
-            .HasTitle(SchemeInformationPageTitles.StakeholderDiscussions)
-            .HasGdsSubmitButton("continue-button", out var continueButton);
-
-        // when
         SchemeInformationData.GenerateStakeholderDiscussions();
-        var checkAnswersPage = await TestClient.SubmitButton(
-            continueButton,
-            ("StakeholderDiscussionsReport", SchemeInformationData.StakeholderDiscussions));
 
-        // then
-        checkAnswersPage.UrlEndWith(SchemeInformationPagesUrl.CheckAnswersSuffix);
-        SaveCurrentPage();
+        // when & then
+        await TestPage(
+            SchemeInformationPagesUrl.StakeholderDiscussions(ApplicationData.ApplicationId),
+            SchemeInformationPageTitles.StakeholderDiscussions,
+            SchemeInformationPagesUrl.CheckAnswersSuffix,
+            ("StakeholderDiscussionsReport", SchemeInformationData.StakeholderDiscussions));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]

@@ -1,10 +1,12 @@
 using HE.Investment.AHP.Contract.Delivery;
+using HE.Investment.AHP.Contract.Delivery.Commands;
 using HE.Investment.AHP.Contract.Delivery.Queries;
-using HE.Investment.AHP.Domain.Delivery.Commands;
 using HE.Investment.AHP.WWW.Models.Delivery;
 using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Account.Shared.Authorization.Attributes;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Validators;
+using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Routing;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -70,11 +72,17 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
 
     [WorkflowState(DeliveryPhaseWorkflowState.AcquisitionMilestone)]
     [HttpPost("{deliveryPhaseId}/acquisition-milestone")]
-    public IActionResult AcquisitionMilestone(string deliveryPhaseId, MilestoneViewModel model, CancellationToken cancellationToken)
+    public async Task<IActionResult> AcquisitionMilestone(string deliveryPhaseId, MilestoneViewModel model, CancellationToken cancellationToken)
     {
-        ModelState.AddModelError("MilestoneDate.Day", "invalid day");
-
-        return View(CreateMilestoneViewModel(deliveryPhaseId, model.MilestoneDates));
+        return await ExecuteCommand(
+            new ProvideAcquisitionMilestoneDetailsCommand(
+                this.GetApplicationIdFromRoute(),
+                deliveryPhaseId,
+                model.MilestoneStartAt,
+                model.ClaimMilestonePaymentAt),
+            nameof(AcquisitionMilestone),
+            model,
+            cancellationToken);
     }
 
     [WorkflowState(DeliveryPhaseWorkflowState.StartOnSiteMilestone)]
@@ -86,11 +94,17 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
 
     [WorkflowState(DeliveryPhaseWorkflowState.StartOnSiteMilestone)]
     [HttpPost("{deliveryPhaseId}/start-on-site-milestone")]
-    public IActionResult StartOnSiteMilestone(string deliveryPhaseId, MilestoneViewModel model, CancellationToken cancellationToken)
+    public async Task<IActionResult> StartOnSiteMilestone(string deliveryPhaseId, MilestoneViewModel model, CancellationToken cancellationToken)
     {
-        ModelState.AddModelError("MilestoneDate.Day", "invalid day");
-
-        return View(CreateMilestoneViewModel(deliveryPhaseId, model.MilestoneDates));
+        return await ExecuteCommand(
+            new ProvideStartOnSiteMilestoneDetailsCommand(
+                this.GetApplicationIdFromRoute(),
+                deliveryPhaseId,
+                model.MilestoneStartAt,
+                model.ClaimMilestonePaymentAt),
+            nameof(StartOnSiteMilestone),
+            model,
+            cancellationToken);
     }
 
     [WorkflowState(DeliveryPhaseWorkflowState.PracticalCompletionMilestone)]
@@ -102,11 +116,17 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
 
     [WorkflowState(DeliveryPhaseWorkflowState.PracticalCompletionMilestone)]
     [HttpPost("{deliveryPhaseId}/practical-completion-milestone")]
-    public IActionResult PracticalCompletionMilestone(string deliveryPhaseId, MilestoneViewModel model, CancellationToken cancellationToken)
+    public async Task<IActionResult> PracticalCompletionMilestone(string deliveryPhaseId, MilestoneViewModel model, CancellationToken cancellationToken)
     {
-        ModelState.AddModelError("MilestoneDate.Day", "invalid day");
-
-        return View(CreateMilestoneViewModel(deliveryPhaseId, model.MilestoneDates));
+        return await ExecuteCommand(
+            new ProvideStartOnSiteMilestoneDetailsCommand(
+                this.GetApplicationIdFromRoute(),
+                deliveryPhaseId,
+                model.MilestoneStartAt,
+                model.ClaimMilestonePaymentAt),
+            nameof(PracticalCompletionMilestone),
+            model,
+            cancellationToken);
     }
 
     [WorkflowState(DeliveryPhaseWorkflowState.UnregisteredProviderFollowUp)]
@@ -133,8 +153,28 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         return Task.FromResult<IStateRouting<DeliveryPhaseWorkflowState>>(new DeliveryPhaseWorkflow());
     }
 
-    private MilestoneViewModel CreateMilestoneViewModel(string deliveryPhaseId, MilestoneDatesModel? dates = null)
+    private MilestoneViewModel CreateMilestoneViewModel(string deliveryPhaseId)
     {
-        return new MilestoneViewModel("123", "App name", "delivery phase name", dates);
+        var start = new DateDetails("1", "1", "1");
+        var end = new DateDetails(null, null, null);
+
+        return new MilestoneViewModel("123", "App name", "delivery phase name", start, end);
+    }
+
+    private async Task<IActionResult> ExecuteCommand(
+        IRequest<OperationResult> command,
+        string viewName,
+        object model,
+        CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(command, cancellationToken);
+
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+            return View(viewName, model);
+        }
+
+        return await ContinueWithRedirect(new { applicationId = this.GetApplicationIdFromRoute() });
     }
 }

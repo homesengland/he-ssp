@@ -80,6 +80,11 @@ public class HomeTypesEntity
 
     public void CompleteSection(FinishHomeTypesAnswer finishAnswer)
     {
+        if (finishAnswer == FinishHomeTypesAnswer.Undefined)
+        {
+            OperationResult.New().AddValidationError(nameof(finishAnswer), "Select whether you have completed this section").CheckErrors();
+        }
+
         if (finishAnswer == FinishHomeTypesAnswer.Yes)
         {
             if (!_homeTypes.Any())

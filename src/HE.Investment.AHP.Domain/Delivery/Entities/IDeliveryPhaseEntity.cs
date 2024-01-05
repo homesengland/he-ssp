@@ -15,4 +15,18 @@ public interface IDeliveryPhaseEntity
     DateTime? CreatedOn { get; }
 
     SectionStatus Status { get; }
+
+    int TotalHomesToBeDeliveredInThisPhase { get; }
+
+    AcquisitionMilestoneDetails? AcquisitionMilestone { get; }
+
+    StartOnSiteMilestoneDetails? StartOnSiteMilestone { get; }
+
+    CompletionMilestoneDetails? CompletionMilestone { get; }
+
+    void ProvideAcquisitionMilestoneDetails(AcquisitionMilestoneDetails? details);
+
+    void ProvideStartOnSiteMilestoneDetails(StartOnSiteMilestoneDetails? details);
+
+    void ProvideCompletionMilestoneDetails(CompletionMilestoneDetails? details);
 }
