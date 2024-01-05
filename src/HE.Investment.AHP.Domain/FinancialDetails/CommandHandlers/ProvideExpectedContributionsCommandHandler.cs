@@ -10,14 +10,14 @@ using Microsoft.Extensions.Logging;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.CommandHandlers;
 
-public class ProvideExpectedContributionsCommandHandler : FinancialDetailsCommandHandlerBase, IRequestHandler<ProvideExpecteContributionsCommand, OperationResult>
+public class ProvideExpectedContributionsCommandHandler : FinancialDetailsCommandHandlerBase, IRequestHandler<ProvideExpectedContributionsCommand, OperationResult>
 {
     public ProvideExpectedContributionsCommandHandler(IFinancialDetailsRepository repository, IAccountUserContext accountUserContext, ILogger<FinancialDetailsCommandHandlerBase> logger)
         : base(repository, accountUserContext, logger)
     {
     }
 
-    public async Task<OperationResult> Handle(ProvideExpecteContributionsCommand request, CancellationToken cancellationToken)
+    public async Task<OperationResult> Handle(ProvideExpectedContributionsCommand request, CancellationToken cancellationToken)
     {
         return await Perform(
             financialDetails =>

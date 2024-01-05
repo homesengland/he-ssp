@@ -2,14 +2,14 @@ using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
 using He.AspNetCore.Mvc.Gds.Components.Constants;
+using HE.Investments.Common.Extensions;
 using HE.Investments.IntegrationTestsFramework;
-using HE.Investments.IntegrationTestsFramework.Extensions;
-using HE.Investments.Loans.Common.Extensions;
 using HE.Investments.Loans.Contract.Projects.ViewModels;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Extensions;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
 using HE.Investments.Loans.WWW;
+using HE.Investments.TestsUtils.Extensions;
 using Xunit;
 using Xunit.Extensions.Ordering;
 
@@ -64,7 +64,7 @@ public class SubmitApplicationIntegrationTests : IntegrationTest
         // then
         applicationSubmittedPage
             .UrlEndWith(ApplicationPagesUrls.ApplicationSubmittedSuffix)
-            .HasGdsButton("application-submitted-to-dashboard");
+            .HasGdsButton("application-submitted-to-dashboard", out _);
 
         UserData.SetSubmittedLoanApplicationId(_applicationLoanId);
     }

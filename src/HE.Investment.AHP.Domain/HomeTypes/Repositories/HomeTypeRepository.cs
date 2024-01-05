@@ -7,8 +7,8 @@ using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.ValueObjects;
+using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Infrastructure.Events;
-using HE.Investments.Loans.Common.Exceptions;
 using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Repositories;
@@ -130,7 +130,7 @@ public class HomeTypeRepository : IHomeTypeRepository
         {
             await _homeTypeCrmContext.Remove(homeTypes.ApplicationId.Value, homeTypeToRemove.Id.Value, organisationId.Value, cancellationToken);
             await _eventDispatcher.Publish(
-                new HomeTypeHasBeenUpdatedEvent(homeTypeToRemove.Application.Id.Value, homeTypeToRemove.Id.Value),
+                new HomeTypeHasBeenRemovedEvent(homeTypeToRemove.Application.Id.Value, homeTypeToRemove.Id.Value),
                 cancellationToken);
         }
     }

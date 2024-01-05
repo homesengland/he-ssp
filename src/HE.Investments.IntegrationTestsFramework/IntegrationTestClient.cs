@@ -2,7 +2,7 @@ using AngleSharp.Html.Dom;
 using HE.Investments.Common.Extensions;
 using HE.Investments.IntegrationTestsFramework.Auth;
 using HE.Investments.IntegrationTestsFramework.Exceptions;
-using HE.Investments.IntegrationTestsFramework.Helpers;
+using HE.Investments.TestsUtils.Helpers;
 
 namespace HE.Investments.IntegrationTestsFramework;
 

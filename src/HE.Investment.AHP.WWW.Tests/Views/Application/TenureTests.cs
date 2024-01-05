@@ -1,6 +1,7 @@
 using AngleSharp.Html.Dom;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.WWW.Models.Application;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.WWWTestsFramework;
 using HE.Investments.Common.WWWTestsFramework.Helpers;
 using Microsoft.AspNetCore.Mvc.ModelBinding;

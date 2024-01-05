@@ -1,0 +1,32 @@
+using HE.Investments.Account.Contract.Users;
+using HE.Investments.Account.Shared.User;
+using HE.Investments.Account.Shared.User.ValueObjects;
+using HE.Investments.TestsUtils;
+using HE.Investments.TestsUtils.TestFramework;
+
+namespace HE.Investments.Account.Shared.Tests.TestDataBuilders;
+
+public class UserAccountTestDataBuilder : TestObjectBuilder<UserAccount>
+{
+    public UserAccountTestDataBuilder()
+    {
+        Item = new UserAccount(
+            new UserGlobalId("user-1"),
+            "test@email.com",
+            new OrganisationId("00000000-0000-0000-0000-000000000001"),
+            "Organisation 1",
+            new List<UserRole>());
+    }
+
+    public UserAccountTestDataBuilder WithUserGlobalId(string userGlobalId)
+    {
+        PrivatePropertySetter.SetPropertyWithNoSetter(Item, nameof(Item.UserGlobalId), new UserGlobalId(userGlobalId));
+        return this;
+    }
+
+    public UserAccountTestDataBuilder WithOrganisationId(string organisationId)
+    {
+        PrivatePropertySetter.SetPropertyWithNoSetter(Item, nameof(Item.OrganisationId), new OrganisationId(organisationId));
+        return this;
+    }
+}

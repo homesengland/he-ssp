@@ -32,7 +32,7 @@
                     </gds-div-details-text>
                 </gds-details>
 
-                <span class="govuk-caption-m govuk-!-margin-top-4 govuk-!-margin-bottom-4">Select all that apply</span>
+                <span class="govuk-caption-m govuk-!-margin-top-4 govuk-!-margin-bottom-4">Select all that apply.</span>
 
                 <gds-checkbox class="exclusive-checkbox-group"
                               govuk-formgroup-asp-for="@Model.DesignPrinciples"
@@ -50,9 +50,7 @@
             </he-error-form-group>
         </gds-field-set>
 
-        <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="continue-button">
-            Save and continue
-        </button>
+        <vc:form-button/>
         <br/>
 
         <vc:return-to-application-link application-id="@applicationId"/>

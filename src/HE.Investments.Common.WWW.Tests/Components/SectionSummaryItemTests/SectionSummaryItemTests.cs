@@ -12,13 +12,7 @@ public class SectionSummaryItemTests : ViewComponentTestBase<SectionSummaryItemT
 {
     private const string ViewPath = "/Components/SectionSummaryItemTests/SectionSummaryItemTests.cshtml";
 
-#if DEBUG
-    private const string? SkipTest = null;
-#else
-    private const string? SkipTest = "ViewComponents tests are failing on CI from time to time.";
-#endif
-
-    [Fact(Skip = SkipTest)]
+    [Fact(Skip = Constants.SkipTest)]
     public async Task ShouldDisplayView()
     {
         // given
@@ -31,7 +25,7 @@ public class SectionSummaryItemTests : ViewComponentTestBase<SectionSummaryItemT
         AssertSummaryItem(document, model);
     }
 
-    [Fact(Skip = SkipTest)]
+    [Fact(Skip = Constants.SkipTest)]
     public async Task ShouldNotDisplayView()
     {
         // given
@@ -44,7 +38,7 @@ public class SectionSummaryItemTests : ViewComponentTestBase<SectionSummaryItemT
         AssertSummaryItem(document, model, false, false, false, false, false);
     }
 
-    [Fact(Skip = SkipTest)]
+    [Fact(Skip = Constants.SkipTest)]
     public async Task ShouldDisplayView_ForNotEditable()
     {
         // given
@@ -57,7 +51,7 @@ public class SectionSummaryItemTests : ViewComponentTestBase<SectionSummaryItemT
         AssertSummaryItem(document, model, isEditable: false);
     }
 
-    [Fact(Skip = SkipTest)]
+    [Fact(Skip = Constants.SkipTest)]
     public async Task ShouldDisplayView_ForMissingValue()
     {
         // given

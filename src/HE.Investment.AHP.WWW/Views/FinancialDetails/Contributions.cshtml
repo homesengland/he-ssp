@@ -14,7 +14,7 @@
                                           application-id="@Model.ApplicationId.ToString()"
                                           caption="@Model.ApplicationName - Finance details" />
 
-        
+
         <gds-p>
             For multi-tenure sites, ensure the costs and contributions are apportioned across the development and only those applicable to the homes on this application are recorded here.
             <br />You can add any grants you receive from other public bodies in the next section. Enter to the nerarest pound. If you have not contributed, enter 0.
@@ -137,9 +137,8 @@
                 </div>
             </div>
 
-            <button id="continue-button" class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
-                Save and continue
-            </button>
+            <partial name="_CalculateButton"/>
+            <vc:form-button/>
 
             @Html.HiddenFor(c => c.ApplicationId)
             @Html.HiddenFor(c => c.ApplicationName)

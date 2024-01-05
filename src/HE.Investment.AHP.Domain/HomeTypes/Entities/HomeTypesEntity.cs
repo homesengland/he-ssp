@@ -6,7 +6,6 @@ using HE.Investments.Common.Contract;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Validators;
-using HE.Investments.Loans.Common.Exceptions;
 using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
@@ -81,6 +80,11 @@ public class HomeTypesEntity
 
     public void CompleteSection(FinishHomeTypesAnswer finishAnswer)
     {
+        if (finishAnswer == FinishHomeTypesAnswer.Undefined)
+        {
+            OperationResult.New().AddValidationError(nameof(finishAnswer), "Select whether you have completed this section").CheckErrors();
+        }
+
         if (finishAnswer == FinishHomeTypesAnswer.Yes)
         {
             if (!_homeTypes.Any())

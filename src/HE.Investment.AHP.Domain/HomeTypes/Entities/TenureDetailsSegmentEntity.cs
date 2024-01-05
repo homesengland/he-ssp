@@ -65,71 +65,23 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
 
     public ProspectiveRentPercentage? RentAsPercentageOfTheUnsoldShare { get; private set; }
 
-    public static decimal? CalculateProspectiveRent(MarketRent? marketRent, ProspectiveRent? prospectiveRent)
-    {
-        if (marketRent.IsNotProvided() || prospectiveRent.IsNotProvided())
-        {
-            return null;
-        }
-
-        var result = prospectiveRent!.Value / marketRent!.Value * 100;
-        result = Math.Round(result, 0);
-
-        return result;
-    }
-
-    public static decimal? CalculateExpectedFirstTranche(MarketValue? marketValue, InitialSale? initialSale)
-    {
-        if (marketValue.IsNotProvided() || initialSale.IsNotProvided())
-        {
-            return null;
-        }
-
-        var result = (decimal)marketValue!.Value * initialSale!.Value / 100;
-        result = Math.Round(result, 2);
-
-        return result;
-    }
-
-    public static decimal? CalculateProspectiveRentAsPercentageOfTheUnsoldShare(MarketValue? marketValue, ProspectiveRent? prospectiveRent, InitialSale? initialSale)
-    {
-        const int weeksAYear = 52;
-        if (marketValue.IsNotProvided() || prospectiveRent.IsNotProvided() || initialSale.IsNotProvided())
-        {
-            return null;
-        }
-
-        var expectedFirstTranche = CalculateExpectedFirstTranche(marketValue, initialSale);
-
-        var result = prospectiveRent!.Value * weeksAYear / (marketValue!.Value - expectedFirstTranche!.Value);
-        result = Math.Round(result, 2);
-
-        return result;
-    }
-
     public void ChangeMarketValue(string? marketValue, bool isCalculation = false)
     {
-        var newValue = marketValue.IsProvided() || isCalculation
-            ? new MarketValue(marketValue, isCalculation)
-            : null;
+        var newValue = new MarketValue(marketValue, isCalculation);
 
         MarketValue = _modificationTracker.Change(MarketValue, newValue);
     }
 
     public void ChangeMarketRent(string? marketRent, bool isCalculation = false)
     {
-        var newValue = marketRent.IsProvided() || isCalculation
-            ? new MarketRent(marketRent, isCalculation)
-            : null;
+        var newValue = new MarketRent(marketRent, isCalculation);
 
         MarketRent = _modificationTracker.Change(MarketRent, newValue);
     }
 
     public void ChangeProspectiveRent(string? prospectiveRent, bool isCalculation = false)
     {
-        var newValue = prospectiveRent.IsProvided() || isCalculation
-            ? new ProspectiveRent(prospectiveRent, isCalculation)
-            : null;
+        var newValue = new ProspectiveRent(prospectiveRent, isCalculation);
 
         ProspectiveRent = _modificationTracker.Change(ProspectiveRent, newValue);
     }
@@ -144,9 +96,7 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
 
     public void ChangeTargetRentExceedMarketRent(YesNoType targetRentExceedMarketRent, bool isCalculation = false)
     {
-        var newValue = targetRentExceedMarketRent.IsProvided() || isCalculation
-            ? new TargetRentExceedMarketRent(targetRentExceedMarketRent, isCalculation)
-            : null;
+        var newValue = new TargetRentExceedMarketRent(targetRentExceedMarketRent, isCalculation);
 
         TargetRentExceedMarketRent = _modificationTracker.Change(TargetRentExceedMarketRent, newValue);
     }
@@ -179,11 +129,51 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
 
     public void ChangeInitialSale(string? initialSale, bool isCalculation = false)
     {
-        var newValue = initialSale.IsProvided() || isCalculation
-            ? new InitialSale(initialSale, isCalculation)
-            : null;
+        var newValue = new InitialSale(initialSale, isCalculation);
 
         InitialSale = _modificationTracker.Change(InitialSale, newValue);
+    }
+
+    public decimal? CalculateProspectiveRent(MarketRent? marketRent, ProspectiveRent? prospectiveRent)
+    {
+        if (marketRent.IsNotProvided() || prospectiveRent.IsNotProvided())
+        {
+            return null;
+        }
+
+        var result = prospectiveRent!.Value / marketRent!.Value * 100;
+        result = Math.Round(result, 0);
+
+        return result;
+    }
+
+    public decimal? CalculateExpectedFirstTranche(MarketValue? marketValue, InitialSale? initialSale)
+    {
+        if (marketValue.IsNotProvided() || initialSale.IsNotProvided())
+        {
+            return null;
+        }
+
+        var result = (decimal)marketValue!.Value * initialSale!.Value / 100;
+        result = Math.Round(result, 2);
+
+        return result;
+    }
+
+    public decimal? CalculateProspectiveRentAsPercentageOfTheUnsoldShare(MarketValue? marketValue, ProspectiveRent? prospectiveRent, InitialSale? initialSale)
+    {
+        const int weeksAYear = 52;
+        if (marketValue.IsNotProvided() || prospectiveRent.IsNotProvided() || initialSale.IsNotProvided())
+        {
+            return null;
+        }
+
+        var expectedFirstTranche = CalculateExpectedFirstTranche(marketValue, initialSale);
+
+        var result = prospectiveRent!.Value * weeksAYear / (marketValue!.Value - expectedFirstTranche!.Value);
+        result = Math.Round(result, 2);
+
+        return result;
     }
 
     public IHomeTypeSegmentEntity Duplicate()
@@ -215,13 +205,24 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
             Tenure.SharedOwnership => IsSharedOwnershipTenureCompleted(),
             Tenure.RentToBuy => IsRentToBuyTenureCompleted(),
             Tenure.HomeOwnershipLongTermDisabilities => IsHomeOwnershipDisabilitiesTenureCompleted(),
-            Tenure.OlderPersonsSharedOwnership => true, // Out of MVP scope
+            Tenure.OlderPersonsSharedOwnership => IsOlderPersonsSharedOwnershipTenureCompleted(),
             _ => throw new ArgumentOutOfRangeException(nameof(tenure), tenure, "Not supported tenure"),
         };
     }
 
     public void HousingTypeChanged(HousingType sourceHousingType, HousingType targetHousingType)
     {
+    }
+
+    public void ClearValuesForNewCalculation()
+    {
+        MarketValue = null;
+        MarketRent = null;
+        ProspectiveRent = null;
+        InitialSale = null;
+        ExpectedFirstTranche = null;
+        ProspectiveRentAsPercentageOfMarketRent = null;
+        RentAsPercentageOfTheUnsoldShare = null;
     }
 
     private bool IsExemptJustificationProvided()
@@ -272,6 +273,15 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
     }
 
     private bool IsHomeOwnershipDisabilitiesTenureCompleted()
+    {
+        return MarketValue.IsProvided()
+               && InitialSale.IsProvided()
+               && ExpectedFirstTranche.IsProvided()
+               && ProspectiveRent.IsProvided()
+               && !IsProspectiveRentIneligible;
+    }
+
+    private bool IsOlderPersonsSharedOwnershipTenureCompleted()
     {
         return MarketValue.IsProvided()
                && InitialSale.IsProvided()

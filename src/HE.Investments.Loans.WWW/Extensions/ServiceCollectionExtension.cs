@@ -1,3 +1,4 @@
+using HE.Investments.Common.CRM.Config;
 using HE.Investments.Loans.Common.Models.App;
 using Microsoft.Extensions.Options;
 

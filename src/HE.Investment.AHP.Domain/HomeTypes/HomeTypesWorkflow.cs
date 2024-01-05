@@ -2,8 +2,9 @@ using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Workflow;
-using HE.Investments.Loans.Common.Routing;
+using HE.Investments.Common.WWW.Routing;
 using Stateless;
 
 namespace HE.Investment.AHP.Domain.HomeTypes;
@@ -42,7 +43,9 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
                 homeType.HomeInformation.AccessibilityStandards,
                 homeType.HomeInformation.MeetNationallyDescribedSpaceStandards,
                 homeType.TenureDetails.ExemptFromTheRightToSharedOwnership,
-                homeType.TenureDetails.IsProspectiveRentIneligible));
+                homeType.TenureDetails.IsProspectiveRentIneligible,
+                homeType.ModernMethodsConstruction.ModernMethodsConstructionApplied,
+                homeType.ModernMethodsConstruction.ModernMethodsConstructionCategories));
         _machine = new StateMachine<HomeTypesWorkflowState, Trigger>(HomeTypesWorkflowState.Index);
         ConfigureTransitions();
     }
@@ -119,10 +122,16 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
             HomeTypesWorkflowState.RentToBuy => IsTenure(Tenure.RentToBuy),
             HomeTypesWorkflowState.RentToBuyIneligible => IsTenure(Tenure.RentToBuy) && !IsRentToBuyEligible(),
             HomeTypesWorkflowState.HomeOwnershipDisabilities => IsTenure(Tenure.HomeOwnershipLongTermDisabilities),
+            HomeTypesWorkflowState.OlderPersonsSharedOwnership => IsTenure(Tenure.OlderPersonsSharedOwnership),
             HomeTypesWorkflowState.ProspectiveRentIneligible => (IsTenure(Tenure.SharedOwnership) && !IsSharedOwnershipEligible())
-                                                                || (IsTenure(Tenure.HomeOwnershipLongTermDisabilities) && !IsHomeOwnershipEligible()),
+                                                                || (IsTenure(Tenure.HomeOwnershipLongTermDisabilities) && !IsHomeOwnershipEligible())
+                                                                || (IsTenure(Tenure.OlderPersonsSharedOwnership) && !IsOlderPersonsSharedOwnershipEligible()),
             HomeTypesWorkflowState.ExemptFromTheRightToSharedOwnership => IsTenure(Tenure.AffordableRent, Tenure.SocialRent),
             HomeTypesWorkflowState.ExemptionJustification => IsTenure(Tenure.AffordableRent, Tenure.SocialRent) && IsExemptFromTheRightToSharedOwnership(),
+            HomeTypesWorkflowState.ModernMethodsConstruction => true,
+            HomeTypesWorkflowState.ModernMethodsConstructionCategories => !IsNotModernMethodsConstruction(),
+            HomeTypesWorkflowState.ModernMethodsConstruction3DSubcategories => IsModernMethodsConstructionCategory1(),
+            HomeTypesWorkflowState.ModernMethodsConstruction2DSubcategories => IsModernMethodsConstructionCategory2(),
             HomeTypesWorkflowState.CheckAnswers => true,
             _ => throw new ArgumentOutOfRangeException(nameof(state), state, null),
         };
@@ -249,12 +258,24 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
 
         _machine.Configure(HomeTypesWorkflowState.FloorArea)
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.FloorAreaStandards, IsNotMeetNationallyDescribedSpaceStandards)
-            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.AffordableRent, () => !IsNotMeetNationallyDescribedSpaceStandards() && IsTenure(Tenure.AffordableRent))
+            .PermitIf(
+                Trigger.Continue,
+                HomeTypesWorkflowState.AffordableRent,
+                () => !IsNotMeetNationallyDescribedSpaceStandards() && IsTenure(Tenure.AffordableRent))
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.SocialRent, () => !IsNotMeetNationallyDescribedSpaceStandards() && IsTenure(Tenure.SocialRent))
-            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.SharedOwnership, () => !IsNotMeetNationallyDescribedSpaceStandards() && IsTenure(Tenure.SharedOwnership))
+            .PermitIf(
+                Trigger.Continue,
+                HomeTypesWorkflowState.SharedOwnership,
+                () => !IsNotMeetNationallyDescribedSpaceStandards() && IsTenure(Tenure.SharedOwnership))
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.RentToBuy, () => !IsNotMeetNationallyDescribedSpaceStandards() && IsTenure(Tenure.RentToBuy))
-            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.HomeOwnershipDisabilities, () => !IsNotMeetNationallyDescribedSpaceStandards() && IsTenure(Tenure.HomeOwnershipLongTermDisabilities))
-            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.CheckAnswers, () => !IsNotMeetNationallyDescribedSpaceStandards() && IsTenure(Tenure.OlderPersonsSharedOwnership))
+            .PermitIf(
+                Trigger.Continue,
+                HomeTypesWorkflowState.HomeOwnershipDisabilities,
+                () => !IsNotMeetNationallyDescribedSpaceStandards() && IsTenure(Tenure.HomeOwnershipLongTermDisabilities))
+            .PermitIf(
+                Trigger.Continue,
+                HomeTypesWorkflowState.OlderPersonsSharedOwnership,
+                () => !IsNotMeetNationallyDescribedSpaceStandards() && IsTenure(Tenure.OlderPersonsSharedOwnership))
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.AccessibilityStandards, () => !IsAccessibleStandards())
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.AccessibilityCategory, IsAccessibleStandards);
 
@@ -264,7 +285,7 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.SharedOwnership, () => IsTenure(Tenure.SharedOwnership))
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.RentToBuy, () => IsTenure(Tenure.RentToBuy))
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.HomeOwnershipDisabilities, () => IsTenure(Tenure.HomeOwnershipLongTermDisabilities))
-            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.CheckAnswers, () => IsTenure(Tenure.OlderPersonsSharedOwnership))
+            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.OlderPersonsSharedOwnership, () => IsTenure(Tenure.OlderPersonsSharedOwnership))
             .Permit(Trigger.Back, HomeTypesWorkflowState.FloorArea);
 
         _machine.Configure(HomeTypesWorkflowState.AffordableRent)
@@ -283,13 +304,13 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
 
         _machine.Configure(HomeTypesWorkflowState.SharedOwnership)
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.ProspectiveRentIneligible, () => !IsSharedOwnershipEligible())
-            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.CheckAnswers, IsSharedOwnershipEligible)
+            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.ModernMethodsConstruction, IsSharedOwnershipEligible)
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.FloorArea, () => !IsNotMeetNationallyDescribedSpaceStandards())
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.FloorAreaStandards, IsNotMeetNationallyDescribedSpaceStandards);
 
         _machine.Configure(HomeTypesWorkflowState.RentToBuy)
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.RentToBuyIneligible, () => !IsRentToBuyEligible())
-            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.CheckAnswers, IsRentToBuyEligible)
+            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.ModernMethodsConstruction, IsRentToBuyEligible)
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.FloorArea, () => !IsNotMeetNationallyDescribedSpaceStandards())
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.FloorAreaStandards, IsNotMeetNationallyDescribedSpaceStandards);
 
@@ -298,34 +319,85 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
 
         _machine.Configure(HomeTypesWorkflowState.HomeOwnershipDisabilities)
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.ProspectiveRentIneligible, () => !IsHomeOwnershipEligible())
-            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.CheckAnswers, IsHomeOwnershipEligible)
+            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.ModernMethodsConstruction, IsHomeOwnershipEligible)
+            .PermitIf(Trigger.Back, HomeTypesWorkflowState.FloorArea, () => !IsNotMeetNationallyDescribedSpaceStandards())
+            .PermitIf(Trigger.Back, HomeTypesWorkflowState.FloorAreaStandards, IsNotMeetNationallyDescribedSpaceStandards);
+
+        _machine.Configure(HomeTypesWorkflowState.OlderPersonsSharedOwnership)
+            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.ProspectiveRentIneligible, () => !IsOlderPersonsSharedOwnershipEligible())
+            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.ModernMethodsConstruction, IsOlderPersonsSharedOwnershipEligible)
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.FloorArea, () => !IsNotMeetNationallyDescribedSpaceStandards())
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.FloorAreaStandards, IsNotMeetNationallyDescribedSpaceStandards);
 
         _machine.Configure(HomeTypesWorkflowState.ProspectiveRentIneligible)
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.SharedOwnership, () => IsTenure(Tenure.SharedOwnership))
-            .PermitIf(Trigger.Back, HomeTypesWorkflowState.HomeOwnershipDisabilities, () => IsTenure(Tenure.HomeOwnershipLongTermDisabilities));
+            .PermitIf(Trigger.Back, HomeTypesWorkflowState.HomeOwnershipDisabilities, () => IsTenure(Tenure.HomeOwnershipLongTermDisabilities))
+            .PermitIf(Trigger.Back, HomeTypesWorkflowState.OlderPersonsSharedOwnership, () => IsTenure(Tenure.OlderPersonsSharedOwnership));
 
         _machine.Configure(HomeTypesWorkflowState.ExemptFromTheRightToSharedOwnership)
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.ExemptionJustification, IsExemptFromTheRightToSharedOwnership)
-            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.CheckAnswers, () => !IsExemptFromTheRightToSharedOwnership())
+            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.ModernMethodsConstruction, () => !IsExemptFromTheRightToSharedOwnership())
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.AffordableRent, () => IsTenure(Tenure.AffordableRent))
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.SocialRent, () => IsTenure(Tenure.SocialRent));
 
         _machine.Configure(HomeTypesWorkflowState.ExemptionJustification)
-            .Permit(Trigger.Continue, HomeTypesWorkflowState.CheckAnswers)
+            .Permit(Trigger.Continue, HomeTypesWorkflowState.ModernMethodsConstruction)
             .Permit(Trigger.Back, HomeTypesWorkflowState.ExemptFromTheRightToSharedOwnership);
+
+        _machine.Configure(HomeTypesWorkflowState.ModernMethodsConstruction)
+            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.CheckAnswers, IsNotModernMethodsConstruction)
+            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.ModernMethodsConstructionCategories, () => !IsNotModernMethodsConstruction())
+            .PermitIf(
+                Trigger.Back,
+                HomeTypesWorkflowState.ExemptFromTheRightToSharedOwnership,
+                () => !_isReadOnly && IsTenure(Tenure.AffordableRent, Tenure.SocialRent) && !IsExemptFromTheRightToSharedOwnership())
+            .PermitIf(
+                Trigger.Back,
+                HomeTypesWorkflowState.ExemptionJustification,
+                () => !_isReadOnly && IsTenure(Tenure.AffordableRent, Tenure.SocialRent) && IsExemptFromTheRightToSharedOwnership())
+            .PermitIf(Trigger.Back, HomeTypesWorkflowState.SharedOwnership, () => !_isReadOnly && IsTenure(Tenure.SharedOwnership))
+            .PermitIf(Trigger.Back, HomeTypesWorkflowState.RentToBuy, () => !_isReadOnly && IsTenure(Tenure.RentToBuy))
+            .PermitIf(Trigger.Back, HomeTypesWorkflowState.HomeOwnershipDisabilities, () => !_isReadOnly && IsTenure(Tenure.HomeOwnershipLongTermDisabilities))
+            .PermitIf(Trigger.Back, HomeTypesWorkflowState.OlderPersonsSharedOwnership, () => !_isReadOnly && IsTenure(Tenure.OlderPersonsSharedOwnership));
+
+        _machine.Configure(HomeTypesWorkflowState.ModernMethodsConstructionCategories)
+            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.ModernMethodsConstruction3DSubcategories, IsModernMethodsConstructionCategory1)
+            .PermitIf(
+                Trigger.Continue,
+                HomeTypesWorkflowState.ModernMethodsConstruction2DSubcategories,
+                () => !IsModernMethodsConstructionCategory1() && IsModernMethodsConstructionCategory2())
+            .PermitIf(
+                Trigger.Continue,
+                HomeTypesWorkflowState.CheckAnswers,
+                () => !IsModernMethodsConstructionCategory1() && !IsModernMethodsConstructionCategory2())
+            .Permit(Trigger.Back, HomeTypesWorkflowState.ModernMethodsConstruction);
+
+        _machine.Configure(HomeTypesWorkflowState.ModernMethodsConstruction3DSubcategories)
+            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.ModernMethodsConstruction2DSubcategories, IsModernMethodsConstructionCategory2)
+            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.CheckAnswers, () => !IsModernMethodsConstructionCategory2())
+            .Permit(Trigger.Back, HomeTypesWorkflowState.ModernMethodsConstructionCategories);
+
+        _machine.Configure(HomeTypesWorkflowState.ModernMethodsConstruction2DSubcategories)
+            .Permit(Trigger.Continue, HomeTypesWorkflowState.CheckAnswers)
+            .PermitIf(Trigger.Back, HomeTypesWorkflowState.ModernMethodsConstructionCategories, () => !IsModernMethodsConstructionCategory1())
+            .PermitIf(Trigger.Back, HomeTypesWorkflowState.ModernMethodsConstruction3DSubcategories, IsModernMethodsConstructionCategory1);
 
         _machine.Configure(HomeTypesWorkflowState.CheckAnswers)
             .Permit(Trigger.Continue, HomeTypesWorkflowState.List)
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.List, () => _isReadOnly)
-            .PermitIf(Trigger.Back, HomeTypesWorkflowState.ExemptFromTheRightToSharedOwnership, () => !_isReadOnly && IsTenure(Tenure.AffordableRent, Tenure.SocialRent) && !IsExemptFromTheRightToSharedOwnership())
-            .PermitIf(Trigger.Back, HomeTypesWorkflowState.ExemptionJustification, () => !_isReadOnly && IsTenure(Tenure.AffordableRent, Tenure.SocialRent) && IsExemptFromTheRightToSharedOwnership())
-            .PermitIf(Trigger.Back, HomeTypesWorkflowState.SharedOwnership, () => !_isReadOnly && IsTenure(Tenure.SharedOwnership))
-            .PermitIf(Trigger.Back, HomeTypesWorkflowState.RentToBuy, () => !_isReadOnly && IsTenure(Tenure.RentToBuy))
-            .PermitIf(Trigger.Back, HomeTypesWorkflowState.HomeOwnershipDisabilities, () => !_isReadOnly && IsTenure(Tenure.HomeOwnershipLongTermDisabilities))
-            .PermitIf(Trigger.Back, HomeTypesWorkflowState.FloorArea, () => !_isReadOnly && IsTenure(Tenure.OlderPersonsSharedOwnership) && !IsNotMeetNationallyDescribedSpaceStandards())
-            .PermitIf(Trigger.Back, HomeTypesWorkflowState.FloorAreaStandards, () => !_isReadOnly && IsTenure(Tenure.OlderPersonsSharedOwnership) && IsNotMeetNationallyDescribedSpaceStandards());
+            .PermitIf(Trigger.Back, HomeTypesWorkflowState.ModernMethodsConstruction, () => !_isReadOnly && IsNotModernMethodsConstruction())
+            .PermitIf(
+                Trigger.Back,
+                HomeTypesWorkflowState.ModernMethodsConstructionCategories,
+                () => !_isReadOnly && IsModernMethodsConstructionOtherCategoryThan1Or2())
+            .PermitIf(
+                Trigger.Back,
+                HomeTypesWorkflowState.ModernMethodsConstruction3DSubcategories,
+                () => !_isReadOnly && IsModernMethodsConstructionCategory1() && !IsModernMethodsConstructionCategory2())
+            .PermitIf(
+                Trigger.Back,
+                HomeTypesWorkflowState.ModernMethodsConstruction2DSubcategories,
+                () => !_isReadOnly && IsModernMethodsConstructionCategory2());
     }
 
     private IEnumerable<Func<bool>> BuildDeadEndConditions(HomeTypesWorkflowState state)
@@ -386,5 +458,45 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
 
     private bool IsRentToBuyEligible() => !(IsTenure(Tenure.RentToBuy) && _homeTypeModel is { Conditionals.IsProspectiveRentIneligible: true });
 
-    private bool IsHomeOwnershipEligible() => !(IsTenure(Tenure.HomeOwnershipLongTermDisabilities) && _homeTypeModel is { Conditionals.IsProspectiveRentIneligible: true });
+    private bool IsHomeOwnershipEligible() =>
+        !(IsTenure(Tenure.HomeOwnershipLongTermDisabilities) && _homeTypeModel is { Conditionals.IsProspectiveRentIneligible: true });
+
+    private bool IsOlderPersonsSharedOwnershipEligible() =>
+        !(IsTenure(Tenure.OlderPersonsSharedOwnership) && _homeTypeModel is { Conditionals.IsProspectiveRentIneligible: true });
+
+    private bool IsNotModernMethodsConstruction() => _homeTypeModel is { Conditionals.ModernMethodsConstructionApplied: YesNoType.No };
+
+    private bool IsModernMethodsConstructionCategory1()
+    {
+        if (_homeTypeModel.IsProvided() && !IsNotModernMethodsConstruction())
+        {
+            return _homeTypeModel!.Conditionals.ModernMethodsConstructionCategories.Contains(ModernMethodsConstructionCategoriesType
+                .Category1PreManufacturing3DPrimaryStructuralSystems);
+        }
+
+        return false;
+    }
+
+    private bool IsModernMethodsConstructionCategory2()
+    {
+        if (_homeTypeModel.IsProvided() && !IsNotModernMethodsConstruction())
+        {
+            return _homeTypeModel!.Conditionals.ModernMethodsConstructionCategories.Contains(ModernMethodsConstructionCategoriesType
+                .Category2PreManufacturing2DPrimaryStructuralSystems);
+        }
+
+        return false;
+    }
+
+    private bool IsModernMethodsConstructionOtherCategoryThan1Or2()
+    {
+        if (_homeTypeModel.IsProvided() && !IsNotModernMethodsConstruction())
+        {
+            return !_homeTypeModel!.Conditionals.ModernMethodsConstructionCategories.Contains(ModernMethodsConstructionCategoriesType
+                .Category1PreManufacturing3DPrimaryStructuralSystems) && !_homeTypeModel!.Conditionals.ModernMethodsConstructionCategories.Contains(ModernMethodsConstructionCategoriesType
+                .Category2PreManufacturing2DPrimaryStructuralSystems);
+        }
+
+        return false;
+    }
 }

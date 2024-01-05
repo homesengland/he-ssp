@@ -1,7 +1,7 @@
 @using HE.Investments.Common.WWW.Extensions
 @using HE.Investments.Common.WWW.Components.InputHeader
 @using HE.Investments.Common.WWW.Components.ErrorMessage
-@model (string fieldName, string label, HE.Investments.Common.WWW.Components.ComponentViewModel descriptionComponent, string hint, string value, string inputCssClass, bool isHeadingLabel, int rows, int maxLength)
+@model (string fieldName, string header, string title, HE.Investments.Common.WWW.Components.ComponentViewModel descriptionComponent, string hint, string value, string inputCssClass, int rows, int maxLength)
 
 @{
     #nullable enable
@@ -15,9 +15,9 @@
     <gds-div-form-group class="@groupClass">
         <vc:input-header
             field-name="@Model.fieldName"
-            label="@Model.label"
-            hint="@Model.hint"
-            is-heading-label="@Model.isHeadingLabel"/>
+            header="@Model.header"
+            title="@Model.title"
+            hint="@Model.hint" />
 
         @if (Model.descriptionComponent != null)
         {

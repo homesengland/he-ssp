@@ -20,7 +20,7 @@
                                   title="Where are you receiving revenue funding from for these homes?"/>
 
         <gds-field-set class="govuk-!-margin-bottom-6">
-            <span class="govuk-caption-m govuk-!-margin-bottom-6">Select all that apply</span>
+            <span class="govuk-caption-m govuk-!-margin-bottom-6">Select all that apply.</span>
             <vc:form-hidden-label
                 field-name="Sources"
                 title="Revenue funding sources"/>
@@ -32,9 +32,7 @@
             </gds-checkbox>
         </gds-field-set>
 
-        <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="continue-button">
-            Save and continue
-        </button>
+        <vc:form-button/>
         <br/>
 
         <vc:return-to-application-link application-id="@applicationId"/>

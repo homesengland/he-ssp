@@ -9,6 +9,7 @@ internal static class HomeTypeSegmentTypes
         HomeTypeSegmentType.SupportedHousingInformation,
         HomeTypeSegmentType.HomeInformation,
         HomeTypeSegmentType.TenureDetails,
+        HomeTypeSegmentType.ModernMethodsConstruction,
     };
 
     public static readonly IReadOnlyCollection<HomeTypeSegmentType> All = new[]
@@ -19,5 +20,6 @@ internal static class HomeTypeSegmentTypes
         HomeTypeSegmentType.DesignPlans,
         HomeTypeSegmentType.SupportedHousingInformation,
         HomeTypeSegmentType.TenureDetails,
+        HomeTypeSegmentType.ModernMethodsConstruction,
     };
 }

@@ -7,10 +7,10 @@ using HE.Investment.AHP.Domain.HomeTypes.Attributes;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Domain;
+using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
-using HE.Investments.Loans.Common.Exceptions;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 

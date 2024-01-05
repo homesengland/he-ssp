@@ -8,7 +8,7 @@
 @model HE.Investment.AHP.WWW.Models.Scheme.SchemeViewModel
 
 @{
-    var title = "Local stakeholder discussions";
+    var title = SchemeInformationPageTitles.StakeholderDiscussions;
     ViewData["Title"] = title;
     ViewBag.validationErrors = ViewData.ModelState.GetOrderedErrors(SchemeValidationFieldsOrder.StakeholderDiscussions);
 }
@@ -26,7 +26,7 @@
             <vc:form-header caption="@Model.ApplicationName" title="@title"/>
             <vc:text-area-input-with-counter
                 field-name="@nameof(Model.StakeholderDiscussionsReport)"
-                label="Tell us about discussions you have had with local stakeholders"
+                title="Tell us about discussions you have had with local stakeholders"
                 value="@Model.StakeholderDiscussionsReport"/>
 
             <vc:upload-file title="Upload any evidence you have of Local Authority support (optional)"

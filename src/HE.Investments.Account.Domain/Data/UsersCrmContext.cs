@@ -1,5 +1,5 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.Investments.Loans.Common.Exceptions;
+using HE.Investments.Common.Exceptions;
 using HE.Investments.Organisation.Services;
 using Microsoft.PowerPlatform.Dataverse.Client;
 

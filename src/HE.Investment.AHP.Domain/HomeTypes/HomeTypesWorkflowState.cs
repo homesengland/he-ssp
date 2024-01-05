@@ -37,8 +37,13 @@ public enum HomeTypesWorkflowState
     RentToBuy,
     RentToBuyIneligible,
     HomeOwnershipDisabilities,
+    OlderPersonsSharedOwnership,
     ProspectiveRentIneligible,
     ExemptFromTheRightToSharedOwnership,
     ExemptionJustification,
+    ModernMethodsConstruction,
+    ModernMethodsConstructionCategories,
+    ModernMethodsConstruction3DSubcategories,
+    ModernMethodsConstruction2DSubcategories,
     CheckAnswers,
 }

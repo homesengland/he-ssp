@@ -118,15 +118,8 @@
                 </gds-p>
             </he-error-form-group>
 
-            <div>
-                <button class="govuk-button govuk-button--secondary" data-module="govuk-button" name="action" type="submit" value="@GenericMessages.Calculate" id="calculate-button">
-                    Calculate
-                </button>
-            </div>
-
-            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="@GenericMessages.Continue" id="continue-button">
-                Save and continue
-            </button>
+            <partial name="_CalculateButton"/>
+            <vc:form-button/>
 
         </gds-field-set>
         <vc:return-to-application-link application-id="@applicationId"/>

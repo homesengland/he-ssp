@@ -45,7 +45,7 @@ public class StakeholderDiscussionsTests : ViewTestBase
             .HasElementWithText("span", "Upload a file (PDF, DOCX, PNG)")
             .HasElementWithText("span", "Maximum file size 25 MB")
             .HasFormFieldLabel("Tell us about discussions you have had with local stakeholders", "label")
-            .HasInput("StakeholderDiscussionsReport", value: Model.StakeholderDiscussionsReport)
+            .HasTextAreaInput("StakeholderDiscussionsReport", value: Model.StakeholderDiscussionsReport)
             .HasElementWithText("button", "Save and continue");
     }
 

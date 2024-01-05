@@ -1,6 +1,6 @@
 using HE.Investments.Account.Contract.Users;
 using HE.Investments.Account.Shared.User.ValueObjects;
-using HE.Investments.Loans.Common.Exceptions;
+using HE.Investments.Common.Exceptions;
 
 namespace HE.Investments.Account.Shared.User;
 

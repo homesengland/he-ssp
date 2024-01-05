@@ -1,0 +1,78 @@
+@using HE.Investments.Common.WWW.Extensions
+@using HE.Investments.Common.WWW.Components.ErrorMessage
+@using HE.Investments.Common.WWW.Models
+@model (string fieldName, string header, string description, string hint, DateModel value)
+@{
+    var hasDateError = ViewData.ModelState.HasError(Model.fieldName);
+    var hasDayError = ViewData.ModelState.HasError($"{Model.fieldName}.Day");
+    var hasMonthError = ViewData.ModelState.HasError($"{Model.fieldName}.Month");
+    var hasYearError = ViewData.ModelState.HasError($"{Model.fieldName}.Year");
+
+    var hasAnyError = hasDateError || hasDayError || hasMonthError || hasYearError;
+    var groupClass = hasAnyError ? "govuk-form-group--error" : string.Empty;
+    string GetInputErrorClass(bool condition) => condition ? "govuk-input--error" : string.Empty;
+}
+<gds-div-form-group class="@groupClass">
+    <fieldset class="govuk-fieldset" role="group">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            <h1 class="govuk-fieldset__heading">
+                @Model.header
+            </h1>
+        </legend>
+        <div class="govuk-hint">
+            @Model.description
+        </div>
+        <div class="govuk-hint">
+            @Model.hint
+        </div>
+
+        <vc:error-message field-name="@Model.fieldName"/>
+
+        <div class="govuk-date-input" id="@Model.fieldName">
+            <div class="govuk-date-input__item">
+                <div class="govuk-form-group">
+                    <label class="govuk-label govuk-date-input__label" for="@($"{Model.fieldName}.Day")">
+                        Day
+                    </label>
+                    <input
+                        class="@($"govuk-input govuk-date-input__input govuk-input--width-2 {GetInputErrorClass(hasDayError)}")"
+                        id="@($"{Model.fieldName}.Day")"
+                        name="@($"{Model.fieldName}.Day")"
+                        type="text"
+                        value="@Model.value?.Day"
+                        inputmode="numeric">
+                </div>
+            </div>
+
+            <div class="govuk-date-input__item">
+                <div class="govuk-form-group">
+                    <label class="govuk-label govuk-date-input__label" for="@($"{Model.fieldName}.Month")">
+                        Month
+                    </label>
+                    <input
+                        class="@($"govuk-input govuk-date-input__input govuk-input--width-2 {GetInputErrorClass(hasMonthError)}")"
+                        id="@($"{Model.fieldName}.Month")"
+                        name="@($"{Model.fieldName}.Month")"
+                        type="text"
+                        value="@Model.value?.Month"
+                        inputmode="numeric">
+                </div>
+            </div>
+
+            <div class="govuk-date-input__item">
+                <div class="govuk-form-group">
+                    <label class="govuk-label govuk-date-input__label" for="@($"{Model.fieldName}.Year")">
+                        Year
+                    </label>
+                    <input
+                        class="@($"govuk-input govuk-date-input__input govuk-input--width-4 {GetInputErrorClass(hasYearError)}")"
+                        id="@($"{Model.fieldName}.Year")"
+                        name="@($"{Model.fieldName}.Year")"
+                        type="text"
+                        value="@Model.value?.Year"
+                        inputmode="numeric">
+                </div>
+            </div>
+        </div>
+    </fieldset>
+</gds-div-form-group>

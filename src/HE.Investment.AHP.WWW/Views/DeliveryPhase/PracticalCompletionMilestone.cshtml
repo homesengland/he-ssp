@@ -1,0 +1,44 @@
+@using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
+@using HE.Investments.Common.WWW.Components.BackLinkWithCallback
+@using HE.Investments.Common.WWW.Components.DateInput
+@using HE.Investments.Common.WWW.Components.Details
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investments.Common.WWW.Components.FormHeader
+@using HE.Investment.AHP.WWW.Views.Shared.Components.PracticalCompletionMilestoneDetails
+@model HE.Investment.AHP.WWW.Models.Delivery.MilestoneViewModel
+@{
+    var title = "Practical completion milestone";
+    ViewData["Title"] = title;
+}
+
+<gds-div-grid-column-two-thirds>
+    <vc:back-link-with-callback url="@Url.Action("Index", "Home")"/>
+
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+
+    <form asp-controller="DeliveryPhase" asp-action="PracticalCompletionMilestone" asp-method="post" novalidate>
+        <vc:form-header caption="@($"{Model.ApplicationName} - {Model.DeliveryPhaseName}")" title="@title"/>
+
+        <vc:details
+            title="What are the practical completion milestones?"
+            content-component="@(new ComponentViewModel(nameof(PracticalCompletionMilestoneDetails)))"/>
+
+        <vc:date-input
+            header="Enter your practical completion date"
+            description="This can be a date in the past. For future dates, include a reasonable level of risk adjustment in your forecasts."
+            hint="Enter a date, for example 24 03 2024."
+            field-name="@nameof(Model.MilestoneDates.MilestoneDate)"
+            value="@Model.MilestoneDates?.MilestoneDate"/>
+
+        <vc:date-input
+            header="Enter when you expect to claim this milestone payment"
+            description="This date must be in the future, and must be on or after the date when you expect to have achieved all of the requirements of the milestone, as set out in the Capital Funding Guide."
+            hint="Enter a date, for example 24 03 2024."
+            field-name="@nameof(Model.MilestoneDates.ClaimMilestonePaymentAt)"
+            value="@Model.MilestoneDates?.ClaimMilestonePaymentAt"/>
+
+        <vc:form-button/>
+
+        <vc:return-to-application-link application-id="@Model.ApplicationId"/>
+    </form>
+</gds-div-grid-column-two-thirds>

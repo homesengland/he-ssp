@@ -9,7 +9,6 @@ using HE.Investments.Account.WWW.Models.Users;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.Utils.Pagination;
 using HE.Investments.Common.Validators;
-using HE.Investments.Loans.Contract.Application.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -93,15 +92,15 @@ public class UsersController : Controller
 
     [HttpPost("{id}/confirm-unlink")]
     [AuthorizeWithCompletedProfile(AccountAccessContext.ManageUsers)]
-    public async Task<IActionResult> Unlink([FromRoute] string id, [FromForm] string? unlink, CancellationToken cancellationToken)
+    public async Task<IActionResult> Unlink([FromRoute] string id, [FromForm] bool? unlink, CancellationToken cancellationToken)
     {
-        if (string.IsNullOrWhiteSpace(unlink))
+        if (unlink == null)
         {
             ModelState.AddModelError("Unlink", ValidationErrorMessage.ChooseYourAnswer);
             return await ConfirmUnlink(id, cancellationToken);
         }
 
-        if (unlink == YesNoAnswers.Yes.ToString())
+        if (unlink.Value)
         {
             var result = await _mediator.Send(new RemoveLinkBetweenUserAndOrganisationCommand(id), cancellationToken);
 

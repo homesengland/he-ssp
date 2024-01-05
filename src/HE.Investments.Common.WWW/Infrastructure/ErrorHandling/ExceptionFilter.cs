@@ -1,5 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
-using HE.Investments.Loans.Common.Exceptions;
+using HE.Investments.Common.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.ModelBinding;

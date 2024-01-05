@@ -75,6 +75,12 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
         {
             yield return CreateHomeOwnershipDisabilitiesSection(homeType.TenureDetails, factory);
         }
+        else if (homeType.Tenure is Tenure.OlderPersonsSharedOwnership)
+        {
+            yield return CreateOlderPersonsSharedOwnershipSection(homeType.TenureDetails, factory);
+        }
+
+        yield return CreateModernMethodsConstructionSection(homeType.ModernMethodsConstruction, factory);
     }
 
     private static SectionSummaryViewModel CreateHomeTypeDetailsSection(FullHomeType homeType, HomeTypeQuestionFactory factory)
@@ -237,6 +243,39 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
                 nameof(Controller.HomeOwnershipDisabilities),
                 ToPercentage(tenure.RentAsPercentageOfTheUnsoldShare)),
             factory.DeadEnd(nameof(Controller.ProspectiveRentIneligible)));
+    }
+
+    private static SectionSummaryViewModel CreateOlderPersonsSharedOwnershipSection(TenureDetails tenure, HomeTypeQuestionFactory factory)
+    {
+        return SectionSummaryViewModel.New(
+            "OPSO details",
+            factory.Question("Market value of each home", nameof(Controller.OlderPersonsSharedOwnership), ToPounds(tenure.MarketValue)),
+            factory.Question("Average first tranche sale percentage", nameof(Controller.OlderPersonsSharedOwnership), ToPercentage(tenure.InitialSale)),
+            factory.Question("First tranche sales receipt", nameof(Controller.OlderPersonsSharedOwnership), ToPoundsPences(tenure.ExpectedFirstTranche)),
+            factory.Question("Rent per week", nameof(Controller.OlderPersonsSharedOwnership), ToPoundsPences(tenure.ProspectiveRent)),
+            factory.Question(
+                "Rent as percentage of the unsold share",
+                nameof(Controller.OlderPersonsSharedOwnership),
+                ToPercentage(tenure.RentAsPercentageOfTheUnsoldShare)),
+            factory.DeadEnd(nameof(Controller.ProspectiveRentIneligible)));
+    }
+
+    private static SectionSummaryViewModel CreateModernMethodsConstructionSection(ModernMethodsConstruction modernMethodsConstruction, HomeTypeQuestionFactory factory)
+    {
+        return SectionSummaryViewModel.New(
+            "Modern Methods of Construction (MMC)",
+            factory.Question(
+                "MMC categories used",
+                nameof(HomeTypesController.ModernMethodsConstructionCategories),
+                modernMethodsConstruction.ModernMethodsConstructionCategories.ToArray()),
+            factory.Question(
+                "Sub-categories of 3D primary structural systems",
+                nameof(HomeTypesController.ModernMethodsConstruction3DSubcategories),
+                modernMethodsConstruction.ModernMethodsConstruction3DSubcategories.ToArray()),
+            factory.Question(
+                "Sub-categories of 2D primary structural systems",
+                nameof(HomeTypesController.ModernMethodsConstruction2DSubcategories),
+                modernMethodsConstruction.ModernMethodsConstruction2DSubcategories.ToArray()));
     }
 
     private static string DownloadDesignFileUrl(IUrlHelper urlHelper, string applicationId, string homeTypeId, string fileId)

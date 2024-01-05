@@ -4,11 +4,10 @@ using FluentAssertions;
 using HE.Investments.Account.Contract.Organisation.Commands;
 using HE.Investments.Account.Domain.Organisation.CommandHandlers;
 using HE.Investments.Account.Domain.Tests.Organisation.TestObjectBuilder;
+using HE.Investments.Account.Domain.Tests.TestData;
 using HE.Investments.Account.Domain.Tests.User.TestObjectBuilder;
 using HE.Investments.Common.Errors;
-using HE.Investments.Loans.Common.Exceptions;
-using HE.Investments.Loans.Common.Tests.Extensions.FluentAssertionsExtensions;
-using HE.Investments.Loans.Common.Tests.TestData;
+using HE.Investments.Common.Exceptions;
 using HE.Investments.TestsUtils.TestFramework;
 using Moq;
 using Xunit;
@@ -44,7 +43,7 @@ public class LinkContactWithAccountTests : TestBase<LinkContactWithOrganizationC
         await Invoking(() => TestCandidate.Handle(_command, CancellationToken.None))
             .Should()
             .ThrowAsync<DomainException>()
-            .WithErrorCode(CommonErrorCodes.ContactAlreadyLinkedWithOrganization);
+            .Where(x => x.ErrorCode == CommonErrorCodes.ContactAlreadyLinkedWithOrganization);
     }
 
     [Fact]

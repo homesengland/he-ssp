@@ -7,14 +7,13 @@ using HE.Investment.AHP.WWW.Models.FinancialDetails;
 using HE.Investment.AHP.WWW.Models.FinancialDetails.Factories;
 using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
+using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.Common.WWW.Utils;
-using HE.Investments.Loans.Common.Exceptions;
-using HE.Investments.Loans.Common.Routing;
 using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -73,12 +72,11 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
 
     [HttpPost("land-status")]
     [WorkflowState(FinancialDetailsWorkflowState.LandStatus)]
-    public async Task<IActionResult> LandStatus(Guid applicationId, FinancialDetailsLandStatusModel model, string action, CancellationToken cancellationToken)
+    public async Task<IActionResult> LandStatus(Guid applicationId, FinancialDetailsLandStatusModel model, CancellationToken cancellationToken)
     {
         return await ProvideFinancialDetails(
             new ProvideLandStatusCommand(ApplicationId.From(applicationId), model.PurchasePrice, model.IsFinal),
             model,
-            action,
             cancellationToken);
     }
 
@@ -102,12 +100,11 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
 
     [HttpPost("land-value")]
     [WorkflowState(FinancialDetailsWorkflowState.LandValue)]
-    public async Task<IActionResult> LandValue(Guid applicationId, FinancialDetailsLandValueModel model, string action, CancellationToken cancellationToken)
+    public async Task<IActionResult> LandValue(Guid applicationId, FinancialDetailsLandValueModel model, CancellationToken cancellationToken)
     {
         return await ProvideFinancialDetails(
             new ProvideLandValueCommand(ApplicationId.From(applicationId), model.IsOnPublicLand, model.LandValue),
             model,
-            action,
             cancellationToken);
     }
 
@@ -128,13 +125,11 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
     public async Task<IActionResult> OtherApplicationCosts(
         Guid applicationId,
         FinancialDetailsOtherApplicationCostsModel model,
-        string action,
         CancellationToken cancellationToken)
     {
         return await ProvideFinancialDetails(
             new ProvideOtherApplicationCostsCommand(ApplicationId.From(applicationId), model.ExpectedWorksCosts, model.ExpectedOnCosts),
             model,
-            action,
             cancellationToken);
     }
 
@@ -174,8 +169,30 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
         string action,
         CancellationToken cancellationToken)
     {
+        if (action == GenericMessages.Calculate)
+        {
+            var (operationResult, calculationResult) = await _mediator.Send(
+                new CalculateExpectedContributionsQuery(
+                    applicationId,
+                    model.RentalIncomeBorrowing,
+                    model.SaleOfHomesOnThisScheme,
+                    model.SaleOfHomesOnOtherSchemes,
+                    model.OwnResources,
+                    model.RCGFContribution,
+                    model.OtherCapitalSources,
+                    model.SharedOwnershipSales,
+                    model.HomesTransferValue),
+                cancellationToken);
+
+            model.TotalExpectedContributions = calculationResult.TotalExpectedContributions.ToPoundsPencesString();
+
+            ModelState.AddValidationErrors(operationResult);
+
+            return View(model);
+        }
+
         return await ProvideFinancialDetails(
-            new ProvideExpecteContributionsCommand(
+            new ProvideExpectedContributionsCommand(
                 ApplicationId.From(applicationId),
                 model.RentalIncomeBorrowing,
                 model.SaleOfHomesOnThisScheme,
@@ -186,7 +203,6 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
                 model.SharedOwnershipSales,
                 model.HomesTransferValue),
             model,
-            action,
             cancellationToken);
     }
 
@@ -212,6 +228,27 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
     [WorkflowState(FinancialDetailsWorkflowState.Grants)]
     public async Task<IActionResult> Grants(Guid applicationId, FinancialDetailsGrantsModel model, string action, CancellationToken cancellationToken)
     {
+        if (action == GenericMessages.Calculate)
+        {
+            var (operationResult, calculationResult) = await _mediator.Send(
+                new CalculateGrantsQuery(
+                    applicationId,
+                    model.CountyCouncilGrants,
+                    model.DhscExtraCareGrants,
+                    model.LocalAuthorityGrants,
+                    model.SocialServicesGrants,
+                    model.HealthRelatedGrants,
+                    model.LotteryGrants,
+                    model.OtherPublicBodiesGrants),
+                cancellationToken);
+
+            model.TotalGrants = calculationResult.TotalReceivedGrants.ToPoundsPencesString();
+
+            ModelState.AddValidationErrors(operationResult);
+
+            return View(model);
+        }
+
         return await ProvideFinancialDetails(
             new ProvideGrantsCommand(
                 ApplicationId.From(applicationId),
@@ -223,7 +260,6 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
                 model.LotteryGrants,
                 model.OtherPublicBodiesGrants),
             model,
-            action,
             cancellationToken);
     }
 
@@ -260,21 +296,26 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
             return View("CheckAnswers", summary);
         }
 
-        if (action == GenericMessages.SaveAndReturn)
-        {
-            return RedirectToAction(
+        return RedirectToAction(
+            nameof(ApplicationController.TaskList),
+            new ControllerName(nameof(ApplicationController)).WithoutPrefix(),
+            new { model.ApplicationId });
+    }
+
+    [HttpGet]
+    [WorkflowState(FinancialDetailsWorkflowState.ReturnToTaskList)]
+    public IActionResult ReturnToTaskList(Guid applicationId, CancellationToken cancellationToken)
+    {
+        return RedirectToAction(
                 nameof(ApplicationController.TaskList),
                 new ControllerName(nameof(ApplicationController)).WithoutPrefix(),
-                new { model.ApplicationId });
-        }
-
-        return RedirectToAction("TaskList", "Application", new { applicationId });
+                new { ApplicationId = applicationId });
     }
 
     [HttpGet("back")]
-    public Task<IActionResult> Back(FinancialDetailsWorkflowState currentPage, Guid applicationId)
+    public async Task<IActionResult> Back(FinancialDetailsWorkflowState currentPage, Guid applicationId)
     {
-        return Back(currentPage, new { applicationId });
+        return await Back(currentPage, new { applicationId });
     }
 
     protected override async Task<IStateRouting<FinancialDetailsWorkflowState>> Routing(FinancialDetailsWorkflowState currentState, object? routeData = null)
@@ -296,7 +337,6 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
     private async Task<IActionResult> ProvideFinancialDetails<TModel, TCommand>(
         TCommand command,
         TModel model,
-        string action,
         CancellationToken cancellationToken)
         where TCommand : IRequest<OperationResult>
         where TModel : FinancialDetailsBaseModel
@@ -308,6 +348,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
             return View(model);
         }
 
+        var action = HttpContext.Request.Form["action"];
         if (action == GenericMessages.SaveAndReturn)
         {
             return RedirectToAction(

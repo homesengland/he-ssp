@@ -1,16 +1,12 @@
-using HE.Investments.Loans.Common.Utils;
+using HE.Investments.Common.Utils;
 using HE.Investments.TestsUtils.TestFramework;
 using Moq;
 
 namespace HE.Investments.Loans.Common.Tests.ObjectBuilders;
+
 public class DateTimeProviderTestBuilder : IDependencyTestBuilder<IDateTimeProvider>
 {
-    private readonly Mock<IDateTimeProvider> _mock;
-
-    public DateTimeProviderTestBuilder()
-    {
-        _mock = new Mock<IDateTimeProvider>();
-    }
+    private readonly Mock<IDateTimeProvider> _mock = new();
 
     public static DateTimeProviderTestBuilder New() => new();
 

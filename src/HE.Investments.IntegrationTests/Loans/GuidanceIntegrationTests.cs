@@ -2,10 +2,10 @@ using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
 using HE.Investments.IntegrationTestsFramework;
-using HE.Investments.IntegrationTestsFramework.Extensions;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
 using HE.Investments.Loans.WWW;
+using HE.Investments.TestsUtils.Extensions;
 using Xunit;
 using Xunit.Extensions.Ordering;
 
@@ -32,7 +32,7 @@ public class GuidanceIntegrationTests : IntegrationTest
         // then
         mainPage
             .UrlEndWith(GuidancePagesUrls.WhatTheHomeBuildingFundIs)
-            .HasGdsButton("SignInButton");
+            .HasGdsButton("SignInButton", out _);
         SetSharedData(CurrentPageKey, mainPage);
     }
 
@@ -50,7 +50,7 @@ public class GuidanceIntegrationTests : IntegrationTest
         // then
         eligibilityPage
             .UrlEndWith(GuidancePagesUrls.Eligibility)
-            .HasGdsButton("SignInButton");
+            .HasGdsButton("SignInButton", out _);
 
         SetSharedData(CurrentPageKey, eligibilityPage);
     }

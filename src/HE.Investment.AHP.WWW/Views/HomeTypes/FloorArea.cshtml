@@ -19,7 +19,7 @@
                                   application-id="@applicationId"
                                   home-type-id="@homeTypeId"
                                   caption="@Model.Header"
-                                  title="Floor Area"/>
+                                  title="Floor area"/>
         <gds-field-set>
             <he-error-form-group asp-for="FloorArea">
                 <gds-legend>
@@ -62,9 +62,7 @@
                 </div>
             </details>
 
-            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="continue-button">
-                Save and continue
-            </button>
+            <vc:form-button/>
 
         </gds-field-set>
         <vc:return-to-application-link application-id="@applicationId"/>

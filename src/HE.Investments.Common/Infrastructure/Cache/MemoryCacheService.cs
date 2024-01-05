@@ -1,3 +1,4 @@
+using System.Text.Json;
 using HE.Investments.Common.Infrastructure.Cache.Config;
 using HE.Investments.Common.Infrastructure.Cache.Interfaces;
 using Microsoft.Extensions.Caching.Memory;
@@ -16,22 +17,23 @@ public class MemoryCacheService : ICacheService
         _memoryCache = memoryCache;
     }
 
-    public T? GetValue<T>(string key) => _memoryCache.TryGetValue(key, out T? cacheValue) ? cacheValue : default;
+    public T? GetValue<T>(string key) => _memoryCache.TryGetValue(key, out string? cacheValue) && !string.IsNullOrEmpty(cacheValue)
+        ? Deserialize<T>(cacheValue)
+        : default;
 
     public async Task<T?> GetValueAsync<T>(string key, Func<Task<T>> loadValue)
     {
-        if (_memoryCache.TryGetValue(key, out T? cacheValue))
+        if (_memoryCache.TryGetValue(key, out string? cacheValue) && !string.IsNullOrEmpty(cacheValue))
         {
-            return cacheValue;
+            return Deserialize<T>(cacheValue);
         }
 
         var value = await loadValue();
-
         if (value != null)
         {
             var cacheEntryOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(_config.ExpireMinutes));
 
-            _memoryCache.Set(key, value, cacheEntryOptions);
+            _memoryCache.Set(key, Serialize(value), cacheEntryOptions);
         }
 
         return value;
@@ -40,7 +42,7 @@ public class MemoryCacheService : ICacheService
     public void SetValue<T>(string key, T value)
     {
         var cacheEntryOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(_config.ExpireMinutes));
-        _memoryCache.Set(key, value, cacheEntryOptions);
+        _memoryCache.Set(key, Serialize(value), cacheEntryOptions);
     }
 
     public Task SetValueAsync<T>(string key, T value)
@@ -58,5 +60,15 @@ public class MemoryCacheService : ICacheService
     {
         _memoryCache.Remove(key);
         return Task.CompletedTask;
+    }
+
+    private static string Serialize<T>(T value)
+    {
+        return JsonSerializer.Serialize(value);
+    }
+
+    private static T? Deserialize<T>(string value)
+    {
+        return JsonSerializer.Deserialize<T>(value);
     }
 }

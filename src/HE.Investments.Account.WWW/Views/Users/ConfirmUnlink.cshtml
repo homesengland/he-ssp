@@ -13,13 +13,11 @@
     <vc:form-header title="@title"/>
 
     <form asp-controller="Users" asp-action="Unlink" asp-route-id="@Model.UserId" asp-method="post" novalidate>
-        <gds-field-set>
 
-            <vc:radio-yes-no
-                field-name="Unlink"
-                hint="They will no longer be able to access information or applications for this organisation."/>
+        <vc:radio-yes-no
+            field-name="Unlink"
+            hint="They will no longer be able to access information or applications for this organisation."/>
 
-        </gds-field-set>
         <vc:form-button text="Continue"/>
     </form>
 </gds-div-grid-column-two-thirds>

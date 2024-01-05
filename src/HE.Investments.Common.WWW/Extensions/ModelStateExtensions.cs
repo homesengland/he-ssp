@@ -59,4 +59,14 @@ public static class ModelStateExtensions
 
         return modelStateEntry.Errors.Aggregate(new StringBuilder(), (sb, next) => sb.AppendLine(next.ErrorMessage)).ToString();
     }
+
+    public static bool HasError(this ModelStateDictionary? modelState, string key)
+    {
+        if (modelState is null)
+        {
+            return false;
+        }
+
+        return modelState.GetFieldValidationState(key) == ModelValidationState.Invalid;
+    }
 }

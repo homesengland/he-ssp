@@ -13,4 +13,9 @@ public class UserLoginData : ILoginData
         UserGlobalId = loginData.UserGlobalId;
         Email = loginData.Email;
     }
+
+    public bool IsProvided()
+    {
+        return !string.IsNullOrWhiteSpace(UserGlobalId) && !string.IsNullOrWhiteSpace(Email);
+    }
 }

@@ -6,7 +6,7 @@
 @using HE.Investments.Common.WWW.Extensions;
 @model HE.Investment.AHP.WWW.Models.Scheme.SchemeViewModel
 @{
-    var title = "Affordability of Shared Ownership";
+    var title = SchemeInformationPageTitles.Affordability;
     ViewData["Title"] = title;
     ViewBag.validationErrors = ViewData.ModelState.GetOrderedErrors(SchemeValidationFieldsOrder.Affordability);
 }
@@ -19,7 +19,7 @@
         @Html.HiddenFor(m => Model.ApplicationName)
         <vc:text-area-input-with-counter
             field-name="@nameof(Model.AffordabilityEvidence)"
-            label="Tell us about any evidence and analysis you have that the homes will be affordable to the target market"
+            title="Tell us about any evidence and analysis you have that the homes will be affordable to the target market"
             value="@Model.AffordabilityEvidence"/>
 
         <vc:form-button/>

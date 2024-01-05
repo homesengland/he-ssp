@@ -1,6 +1,7 @@
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
-using HE.Investments.Loans.Common.Routing;
+using HE.Investments.Common.WWW.Routing;
+using Microsoft.AspNetCore.Mvc;
 using Stateless;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails;
@@ -79,7 +80,8 @@ public class FinancialDetailsWorkflow : IStateRouting<FinancialDetailsWorkflowSt
 
         _machine.Configure(FinancialDetailsWorkflowState.LandStatus)
             .Permit(Trigger.Continue, FinancialDetailsWorkflowState.LandValue)
-            .Permit(Trigger.Back, FinancialDetailsWorkflowState.Index);
+            .PermitIf(Trigger.Back, FinancialDetailsWorkflowState.Index, () => _model.SectionStatus == SectionStatus.NotStarted)
+            .PermitIf(Trigger.Back, FinancialDetailsWorkflowState.ReturnToTaskList, () => _model.SectionStatus != SectionStatus.NotStarted);
 
         _machine.Configure(FinancialDetailsWorkflowState.LandValue)
             .Permit(Trigger.Continue, FinancialDetailsWorkflowState.OtherApplicationCosts)

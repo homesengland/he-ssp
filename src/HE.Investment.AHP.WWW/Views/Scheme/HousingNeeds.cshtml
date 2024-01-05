@@ -6,7 +6,7 @@
 @using HE.Investments.Common.WWW.Extensions;
 @model HE.Investment.AHP.WWW.Models.Scheme.SchemeViewModel
 @{
-    var title = "Local housing needs";
+    var title = SchemeInformationPageTitles.HousingNeeds;
     ViewData["Title"] = title;
     ViewBag.validationErrors = ViewData.ModelState.GetOrderedErrors(SchemeValidationFieldsOrder.HousingNeeds);
 }
@@ -19,11 +19,11 @@
         @Html.HiddenFor(m => Model.ApplicationName)
         <vc:text-area-input-with-counter
             field-name="@nameof(Model.MeetingLocalPriorities)"
-            label="Tell us how this type and tenure of home meets the identified priorities for the local housing market"
+            title="Tell us how this type and tenure of home meets the identified priorities for the local housing market"
             value="@Model.MeetingLocalPriorities"/>
         <vc:text-area-input-with-counter
             field-name="@nameof(Model.MeetingLocalHousingNeed)"
-            label="Tell us how this scheme and proposal contributes to a locally identified housing need"
+            title="Tell us how this scheme and proposal contributes to a locally identified housing need"
             value="@Model.MeetingLocalHousingNeed"/>
         <vc:form-button/>
         <vc:return-to-application-link application-id="@Model.ApplicationId"/>

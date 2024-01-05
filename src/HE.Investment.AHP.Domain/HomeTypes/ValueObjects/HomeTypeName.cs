@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
+using HE.Investments.Common.Domain.ValueObjects;
 using HE.Investments.Common.Messages;
-using HE.Investments.Loans.Contract.Common;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 
@@ -21,6 +21,11 @@ public class HomeTypeName : ShortText
         duplicatedName += suffix;
 
         return new HomeTypeName(duplicatedName);
+    }
+
+    public override string ToString()
+    {
+        return Value;
     }
 
     private static string Suffix(int suffixIndex)
