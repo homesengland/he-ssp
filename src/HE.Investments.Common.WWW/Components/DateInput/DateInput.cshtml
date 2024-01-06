@@ -1,7 +1,8 @@
 @using HE.Investments.Common.WWW.Extensions
 @using HE.Investments.Common.WWW.Components.ErrorMessage
-@using HE.Investments.Common.WWW.Models
-@model (string fieldName, string header, string description, string hint, DateModel value)
+@using HE.Investments.Common.Contract
+
+@model (string fieldName, string header, string description, string hint, DateDetails value)
 @{
     var hasDateError = ViewData.ModelState.HasError(Model.fieldName);
     var hasDayError = ViewData.ModelState.HasError($"{Model.fieldName}.Day");

@@ -7,23 +7,23 @@ public enum ModernMethodsConstructionCategoriesType
     Undefined = 0,
 
     [Description("Category 1: Pre-manufacturing: 3D primary structural systems")]
-    PreManufacturing3DPrimaryStructuralSystems,
+    Category1PreManufacturing3DPrimaryStructuralSystems,
 
     [Description("Category 2: Pre-manufacturing: 2D primary structural systems")]
-    PreManufacturing2DPrimaryStructuralSystems,
+    Category2PreManufacturing2DPrimaryStructuralSystems,
 
     [Description("Category 3: Pre-manufactured component: Non-systemised primary structure")]
-    PreManufacturedComponentNonSystemizedPrimaryStructure,
+    Category3PreManufacturedComponentNonSystemizedPrimaryStructure,
 
     [Description("Category 4: Additive manufacturing: structuring and non-structural")]
-    AdditiveManufacturingStructuringAndNonStructural,
+    Category4AdditiveManufacturingStructuringAndNonStructural,
 
     [Description("Category 5: Pre-manufacturing: Non-structural assemblies and sub-assemblies")]
-    PreManufacturingNonStructuralAssembliesAndSubAssemblies,
+    Category5PreManufacturingNonStructuralAssembliesAndSubAssemblies,
 
     [Description("Category 6: Traditional building product led site labour reduction/productivity improvements")]
-    TraditionalBuildingProductLedSiteLabourReductionOrProductivityImprovements,
+    Category6TraditionalBuildingProductLedSiteLabourReductionOrProductivityImprovements,
 
     [Description("Category 7: Site process led labour reduction/productivity/assurance improvements")]
-    SiteProcessLedLabourReductionOrProductivityOrAssuranceImprovements,
+    Category7SiteProcessLedLabourReductionOrProductivityOrAssuranceImprovements,
 }

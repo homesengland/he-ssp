@@ -3,13 +3,13 @@ using AngleSharp.Html.Dom;
 using FluentAssertions;
 using HE.Investments.Common.Extensions;
 using HE.Investments.IntegrationTestsFramework;
-using HE.Investments.IntegrationTestsFramework.Extensions;
 using HE.Investments.Loans.Contract.Application.Enums;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Extensions;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
 using HE.Investments.Loans.WWW;
+using HE.Investments.TestsUtils.Extensions;
 using Xunit;
 using Xunit.Extensions.Ordering;
 

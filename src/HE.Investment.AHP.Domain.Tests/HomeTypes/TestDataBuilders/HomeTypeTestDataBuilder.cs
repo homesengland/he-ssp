@@ -25,6 +25,10 @@ public class HomeTypeTestDataBuilder
 
     private bool _isProspectiveRentIneligible;
 
+    private YesNoType _modernMethodsConstructionApplied = YesNoType.Yes;
+
+    private IList<ModernMethodsConstructionCategoriesType> _modernMethodsConstructionCategories = new List<ModernMethodsConstructionCategoriesType>();
+
     public HomeTypeTestDataBuilder WithTenure(Tenure tenure)
     {
         _tenure = tenure;
@@ -79,6 +83,18 @@ public class HomeTypeTestDataBuilder
         return this;
     }
 
+    public HomeTypeTestDataBuilder WithModernMethodsConstructionApplied(YesNoType modernMethodsConstructionApplied)
+    {
+        _modernMethodsConstructionApplied = modernMethodsConstructionApplied;
+        return this;
+    }
+
+    public HomeTypeTestDataBuilder WithModernMethodsConstructionCategories(IList<ModernMethodsConstructionCategoriesType> modernMethodsConstructionCategories)
+    {
+        _modernMethodsConstructionCategories = modernMethodsConstructionCategories;
+        return this;
+    }
+
     public HomeType Build()
     {
         return new HomeType(
@@ -93,6 +109,8 @@ public class HomeTypeTestDataBuilder
                 _accessibilityStandards,
                 _spaceStandardsMet,
                 _exemptFromTheRightToSharedOwnership,
-                _isProspectiveRentIneligible));
+                _isProspectiveRentIneligible,
+                _modernMethodsConstructionApplied,
+                _modernMethodsConstructionCategories));
     }
 }

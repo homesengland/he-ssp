@@ -1,8 +1,13 @@
 using HE.Investment.AHP.Contract.Application.Queries;
+using HE.Investment.AHP.Contract.Common.Enums;
+using HE.Investment.AHP.Contract.Delivery.Commands;
 using HE.Investment.AHP.Contract.Delivery.Queries;
+using HE.Investment.AHP.WWW.Extensions;
 using HE.Investment.AHP.WWW.Models.Delivery;
 using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
+using HE.Investments.Common.Validators;
+using HE.Investments.Common.WWW.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -45,9 +50,39 @@ public class DeliveryController : Controller
     }
 
     [HttpPost]
-    public IActionResult List(string applicationId, DeliveryListModel model)
+    public async Task<IActionResult> List(string applicationId, DeliveryListModel model, CancellationToken cancellationToken)
     {
-        // TODO: validation + complete section
-        return RedirectToAction("TaskList", "Application", new { applicationId });
+        var result = await _mediator.Send(new CompleteDeliverySectionCommand(applicationId, IsSectionCompleted.Yes, true), cancellationToken);
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+            return View(model);
+        }
+
+        return HttpContext.Request.IsSaveAndReturnAction()
+            ? Url.RedirectToTaskList(applicationId)
+            : RedirectToAction("Complete", new { applicationId });
+    }
+
+    [HttpGet("complete")]
+    public async Task<IActionResult> Complete(string applicationId, CancellationToken cancellationToken)
+    {
+        var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
+        return View(new CompleteDeliverySectionModel(application.Name));
+    }
+
+    [HttpPost("complete")]
+    public async Task<IActionResult> Complete(string applicationId, CompleteDeliverySectionModel model, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new CompleteDeliverySectionCommand(applicationId, model.IsSectionCompleted), cancellationToken);
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+            return View(model);
+        }
+
+        return HttpContext.Request.IsSaveAndReturnAction() || model.IsSectionCompleted == IsSectionCompleted.Yes
+            ? Url.RedirectToTaskList(applicationId)
+            : RedirectToAction("List", new { applicationId });
     }
 }

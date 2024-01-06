@@ -7,4 +7,6 @@ public interface ILoginData
     public string Email { get; }
 
     public void Change(ILoginData loginData);
+
+    bool IsProvided();
 }

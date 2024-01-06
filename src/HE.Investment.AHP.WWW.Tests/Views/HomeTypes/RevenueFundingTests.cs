@@ -21,7 +21,7 @@ public class RevenueFundingTests : HomeTypesTestBase
         document
             .HasElementWithText("span", "My application - My homes")
             .HasElementWithText("h1", "Where are you receiving revenue funding from for these homes?")
-            .HasElementWithText("span", "Select all that apply")
+            .HasElementWithText("span", "Select all that apply.")
             .HasCheckboxes(
                 "Sources",
                 new[]
@@ -71,7 +71,7 @@ public class RevenueFundingTests : HomeTypesTestBase
         document
             .HasElementWithText("span", "My application - My homes")
             .HasElementWithText("h1", "Where are you receiving revenue funding from for these homes?")
-            .HasElementWithText("span", "Select all that apply")
+            .HasElementWithText("span", "Select all that apply.")
             .HasCheckedCheckboxes(
                 "Sources",
                 new[]

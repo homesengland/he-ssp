@@ -6,4 +6,4 @@ public record RemoveDeliveryPhaseCommand(
         string ApplicationId,
         string DeliveryPhaseId,
         RemoveDeliveryPhaseAnswer RemoveDeliveryPhaseAnswer)
-    : DeliveryCommandBase(ApplicationId);
+    : IDeliveryCommand;

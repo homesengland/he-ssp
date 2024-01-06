@@ -296,21 +296,26 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
             return View("CheckAnswers", summary);
         }
 
-        if (action == GenericMessages.SaveAndReturn)
-        {
-            return RedirectToAction(
+        return RedirectToAction(
+            nameof(ApplicationController.TaskList),
+            new ControllerName(nameof(ApplicationController)).WithoutPrefix(),
+            new { model.ApplicationId });
+    }
+
+    [HttpGet]
+    [WorkflowState(FinancialDetailsWorkflowState.ReturnToTaskList)]
+    public IActionResult ReturnToTaskList(Guid applicationId, CancellationToken cancellationToken)
+    {
+        return RedirectToAction(
                 nameof(ApplicationController.TaskList),
                 new ControllerName(nameof(ApplicationController)).WithoutPrefix(),
-                new { model.ApplicationId });
-        }
-
-        return RedirectToAction("TaskList", "Application", new { applicationId });
+                new { ApplicationId = applicationId });
     }
 
     [HttpGet("back")]
-    public Task<IActionResult> Back(FinancialDetailsWorkflowState currentPage, Guid applicationId)
+    public async Task<IActionResult> Back(FinancialDetailsWorkflowState currentPage, Guid applicationId)
     {
-        return Back(currentPage, new { applicationId });
+        return await Back(currentPage, new { applicationId });
     }
 
     protected override async Task<IStateRouting<FinancialDetailsWorkflowState>> Routing(FinancialDetailsWorkflowState currentState, object? routeData = null)

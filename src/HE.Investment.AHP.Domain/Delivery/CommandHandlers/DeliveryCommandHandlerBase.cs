@@ -42,7 +42,7 @@ public abstract class DeliveryCommandHandlerBase
 
 [SuppressMessage("Maintainability Rules", "SA1402", Justification = "Generic version of the same command handler.")]
 public abstract class DeliveryCommandHandlerBase<TCommand> : DeliveryCommandHandlerBase, IRequestHandler<TCommand, OperationResult>
-    where TCommand : DeliveryCommandBase
+    where TCommand : IDeliveryCommand
 {
     private readonly IDeliveryPhaseRepository _repository;
 

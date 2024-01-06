@@ -1,7 +1,10 @@
 using HE.Investment.AHP.Contract.Site;
+using HE.Investment.AHP.Contract.Site.Commands;
 using HE.Investment.AHP.Contract.Site.Queries;
 using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Account.Shared.Authorization.Attributes;
+using HE.Investments.Common.Extensions;
+using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Routing;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -49,23 +52,32 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     }
 
     [HttpGet("name")]
+    [HttpGet("{siteId}/name")]
     [WorkflowState(SiteWorkflowState.Name)]
-    public IActionResult Name()
+    public async Task<IActionResult> Name(string? siteId, CancellationToken cancellationToken)
     {
-        return View("Name");
+        SiteModel siteModel = new();
+        if (siteId.IsProvided())
+        {
+            siteModel = await _mediator.Send(new GetSiteQuery(siteId!), cancellationToken);
+        }
+
+        return View("Name", siteModel);
     }
 
     [HttpPost("name")]
+    [HttpPost("{siteId}/name")]
     [WorkflowState(SiteWorkflowState.Name)]
-    public async Task<IActionResult> NamePost()
+    public async Task<IActionResult> NamePost(string? siteId, SiteModel model, CancellationToken cancellationToken)
     {
-        return await Continue();
-    }
+        var result = await _mediator.Send(new ProvideNameCommand(siteId ?? model.Id, model.Name), cancellationToken);
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+            return View("Name", model);
+        }
 
-    [HttpGet("back")]
-    public Task<IActionResult> Back(SiteWorkflowState currentPage, string? siteId)
-    {
-        return Back(currentPage, new { siteId });
+        return await Continue();
     }
 
     protected override Task<IStateRouting<SiteWorkflowState>> Routing(SiteWorkflowState currentState, object? routeData = null)

@@ -55,6 +55,7 @@ public static class DomainModule
         services.AddSingleton<IHomeTypeCrmSegmentMapper, DesignPlansCrmSegmentMapper>();
         services.AddSingleton<IHomeTypeCrmSegmentMapper, SupportedHousingInformationCrmSegmentMapper>();
         services.AddSingleton<IHomeTypeCrmSegmentMapper, TenureDetailsCrmSegmentMapper>();
+        services.AddSingleton<IHomeTypeCrmSegmentMapper, ModernMethodsConstructionCrmSegmentMapper>();
 
         services.AddSingleton<IHomeTypeSegmentContractMapper<DesignPlansSegmentEntity, DesignPlans>, DesignPlansSegmentContractMapper>();
         services.AddSingleton<IHomeTypeSegmentContractMapper<DisabledPeopleHomeTypeDetailsSegmentEntity, DisabledPeopleHomeTypeDetails>, DisabledPeopleHomeTypeDetailsSegmentContractMapper>();
@@ -62,6 +63,7 @@ public static class DomainModule
         services.AddSingleton<IHomeTypeSegmentContractMapper<OlderPeopleHomeTypeDetailsSegmentEntity, OlderPeopleHomeTypeDetails>, OlderPeopleHomeTypeDetailsSegmentContractMapper>();
         services.AddSingleton<IHomeTypeSegmentContractMapper<SupportedHousingInformationSegmentEntity, SupportedHousingInformation>, SupportedHousingInformationSegmentContractMapper>();
         services.AddSingleton<IHomeTypeSegmentContractMapper<TenureDetailsSegmentEntity, TenureDetails>, TenureDetailsSegmentContractMapper>();
+        services.AddSingleton<IHomeTypeSegmentContractMapper<ModernMethodsConstructionSegmentEntity, ModernMethodsConstruction>, ModernMethodsConstructionSegmentContractMapper>();
 
         services.AddScoped<IAhpFileLocationProvider<DesignFileParams>, DesignFileLocationProvider>();
         services.AddScoped<IAhpFileService<DesignFileParams>, AhpFileService<DesignFileParams>>();

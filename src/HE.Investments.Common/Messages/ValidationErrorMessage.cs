@@ -71,6 +71,8 @@ public static class ValidationErrorMessage
 
     public const string CouldNotCalculate = "Could not calculate as all fields have not been entered";
 
+    public const string EnterDate = "Enter a date. The date must include a day, month and year";
+
     public static string EstimatedPoundInput(string name) => PoundInput($"The estimated {name}");
 
     public static string PoundInput(string name) => new($"{name} must be entered as a number, in pounds and pence");
@@ -84,6 +86,8 @@ public static class ValidationErrorMessage
     public static string MissingRequiredField(string displayName) => $"Enter {displayName}";
 
     public static string MustBeNumberBetween(string displayName, int minValue, int maxValue) => $"The {displayName} must be between {minValue} and {maxValue}";
+
+    public static string MustBeWholeNumberBetween(string displayName, int minValue, int maxValue) => $"The {displayName} must be a whole number between {minValue} and {maxValue}";
 
     public static string MustBeDecimalNumberBetween(string displayName, decimal minValue, decimal maxValue) => $"The {displayName} must be between {minValue} and {maxValue}";
 
@@ -104,4 +108,6 @@ public static class ValidationErrorMessage
     public static string StringLengthExceeded(string displayName, int maxLength) => new($"{displayName.TitleCaseFirstLetterInString()} must be {maxLength} characters or less");
 
     public static string ExclusiveOptionSelected(string displayName, string optionName) => $"{optionName.TitleCaseFirstLetterInString()} {displayName} option is exclusive and cannot be selected with any other option.";
+
+    public static string MustBeDate(string displayName) => $"The {displayName} must be a valid date";
 }

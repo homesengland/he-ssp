@@ -28,6 +28,8 @@ internal sealed class GetFullHomeTypeQueryHandler : IRequestHandler<GetFullHomeT
 
     private readonly IHomeTypeSegmentContractMapper<TenureDetailsSegmentEntity, TenureDetails> _tenureDetailsSegmentMapper;
 
+    private readonly IHomeTypeSegmentContractMapper<ModernMethodsConstructionSegmentEntity, ModernMethodsConstruction> _modernMethodsConstructionSegmentMapper;
+
     public GetFullHomeTypeQueryHandler(
         IHomeTypeRepository repository,
         IAccountUserContext accountUserContext,
@@ -36,7 +38,8 @@ internal sealed class GetFullHomeTypeQueryHandler : IRequestHandler<GetFullHomeT
         IHomeTypeSegmentContractMapper<HomeInformationSegmentEntity, HomeInformation> homeInformationSegmentMapper,
         IHomeTypeSegmentContractMapper<OlderPeopleHomeTypeDetailsSegmentEntity, OlderPeopleHomeTypeDetails> olderPeopleSegmentMapper,
         IHomeTypeSegmentContractMapper<SupportedHousingInformationSegmentEntity, SupportedHousingInformation> supportedHousingSegmentMapper,
-        IHomeTypeSegmentContractMapper<TenureDetailsSegmentEntity, TenureDetails> tenureDetailsSegmentMapper)
+        IHomeTypeSegmentContractMapper<TenureDetailsSegmentEntity, TenureDetails> tenureDetailsSegmentMapper,
+        IHomeTypeSegmentContractMapper<ModernMethodsConstructionSegmentEntity, ModernMethodsConstruction> modernMethodsConstructionSegmentMapper)
     {
         _repository = repository;
         _accountUserContext = accountUserContext;
@@ -46,6 +49,7 @@ internal sealed class GetFullHomeTypeQueryHandler : IRequestHandler<GetFullHomeT
         _olderPeopleSegmentMapper = olderPeopleSegmentMapper;
         _supportedHousingSegmentMapper = supportedHousingSegmentMapper;
         _tenureDetailsSegmentMapper = tenureDetailsSegmentMapper;
+        _modernMethodsConstructionSegmentMapper = modernMethodsConstructionSegmentMapper;
     }
 
     public async Task<FullHomeType> Handle(GetFullHomeTypeQuery request, CancellationToken cancellationToken)
@@ -71,7 +75,8 @@ internal sealed class GetFullHomeTypeQueryHandler : IRequestHandler<GetFullHomeT
             MapOptionalSegment(homeType, homeType.DesignPlans, _designPlansSegmentMapper),
             MapOptionalSegment(homeType, homeType.SupportedHousingInformation, _supportedHousingSegmentMapper),
             MapOptionalSegment(homeType, homeType.HomeInformation, _homeInformationSegmentMapper)!,
-            MapOptionalSegment(homeType, homeType.TenureDetails, _tenureDetailsSegmentMapper)!);
+            MapOptionalSegment(homeType, homeType.TenureDetails, _tenureDetailsSegmentMapper)!,
+            MapOptionalSegment(homeType, homeType.ModernMethodsConstruction, _modernMethodsConstructionSegmentMapper)!);
     }
 
     private static TSegmentContract? MapOptionalSegment<TSegmentEntity, TSegmentContract>(

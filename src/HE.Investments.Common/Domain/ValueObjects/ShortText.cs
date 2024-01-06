@@ -19,7 +19,8 @@ public class ShortText : ValueObject
                 .CheckErrors();
         }
 
-        if (value!.Length > MaximumInputLength.ShortInput)
+        value = value!.Trim();
+        if (value.Length > MaximumInputLength.ShortInput)
         {
             OperationResult.New()
                 .AddValidationError(fieldName, textTooLongErrorMessage)

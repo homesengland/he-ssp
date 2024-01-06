@@ -142,7 +142,7 @@ public class TenureTransitionTests
 
         // then
         states[0].Should().Be(HomeTypesWorkflowState.ExemptionJustification);
-        states[1].Should().Be(HomeTypesWorkflowState.CheckAnswers);
+        states[1].Should().Be(HomeTypesWorkflowState.ModernMethodsConstruction);
     }
 
     [Theory]
@@ -155,7 +155,7 @@ public class TenureTransitionTests
             .WithTenure(tenure)
             .WithExemptFromTheRightToSharedOwnership(YesNoType.Yes)
             .Build();
-        var workflow = BuildWorkflow(homeType, HomeTypesWorkflowState.CheckAnswers);
+        var workflow = BuildWorkflow(homeType, HomeTypesWorkflowState.ModernMethodsConstruction);
 
         // when
         var states = new[]
@@ -285,7 +285,7 @@ public class TenureTransitionTests
         // then
         states[0].Should().Be(HomeTypesWorkflowState.FloorAreaStandards);
         states[1].Should().Be(nextWorkflowState);
-        states[2].Should().Be(HomeTypesWorkflowState.CheckAnswers);
+        states[2].Should().Be(HomeTypesWorkflowState.ModernMethodsConstruction);
     }
 
     [Fact]
@@ -296,7 +296,7 @@ public class TenureTransitionTests
             .WithTenure(Tenure.SharedOwnership)
             .WithSpaceStandardsMet(YesNoType.No)
             .Build();
-        var workflow = BuildWorkflow(homeType, HomeTypesWorkflowState.CheckAnswers);
+        var workflow = BuildWorkflow(homeType, HomeTypesWorkflowState.ModernMethodsConstruction);
 
         // when
         var states = new[]
@@ -334,7 +334,7 @@ public class TenureTransitionTests
 
         // then
         states[0].Should().Be(nextWorkflowState);
-        states[1].Should().Be(HomeTypesWorkflowState.CheckAnswers);
+        states[1].Should().Be(HomeTypesWorkflowState.ModernMethodsConstruction);
     }
 
     [Theory]
@@ -348,7 +348,7 @@ public class TenureTransitionTests
             .WithTenure(tenure)
             .WithSpaceStandardsMet(YesNoType.Yes)
             .Build();
-        var workflow = BuildWorkflow(homeType, HomeTypesWorkflowState.CheckAnswers);
+        var workflow = BuildWorkflow(homeType, HomeTypesWorkflowState.ModernMethodsConstruction);
 
         // when
         var states = new[]
@@ -405,7 +405,7 @@ public class TenureTransitionTests
         // then
         states[0].Should().Be(HomeTypesWorkflowState.FloorAreaStandards);
         states[1].Should().Be(HomeTypesWorkflowState.RentToBuy);
-        states[2].Should().Be(HomeTypesWorkflowState.CheckAnswers);
+        states[2].Should().Be(HomeTypesWorkflowState.ModernMethodsConstruction);
     }
 
     [Fact]
@@ -416,7 +416,7 @@ public class TenureTransitionTests
             .WithTenure(Tenure.RentToBuy)
             .WithSpaceStandardsMet(YesNoType.No)
             .Build();
-        var workflow = BuildWorkflow(homeType, HomeTypesWorkflowState.CheckAnswers);
+        var workflow = BuildWorkflow(homeType, HomeTypesWorkflowState.ModernMethodsConstruction);
 
         // when
         var states = new[]
@@ -451,7 +451,7 @@ public class TenureTransitionTests
 
         // then
         states[0].Should().Be(HomeTypesWorkflowState.RentToBuy);
-        states[1].Should().Be(HomeTypesWorkflowState.CheckAnswers);
+        states[1].Should().Be(HomeTypesWorkflowState.ModernMethodsConstruction);
     }
 
     [Fact]
@@ -462,7 +462,7 @@ public class TenureTransitionTests
             .WithTenure(Tenure.RentToBuy)
             .WithSpaceStandardsMet(YesNoType.Yes)
             .Build();
-        var workflow = BuildWorkflow(homeType, HomeTypesWorkflowState.CheckAnswers);
+        var workflow = BuildWorkflow(homeType, HomeTypesWorkflowState.ModernMethodsConstruction);
 
         // when
         var states = new[]
