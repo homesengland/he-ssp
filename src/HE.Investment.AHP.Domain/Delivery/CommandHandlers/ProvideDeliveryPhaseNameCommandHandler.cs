@@ -25,6 +25,6 @@ public class ProvideDeliveryPhaseNameCommandHandler : DeliveryCommandHandlerBase
     {
         var deliveryPhase = deliveryPhases.GetById(new DeliveryPhaseId(request.DeliveryPhaseId));
 
-        return PerformWithValidation(() => deliveryPhase.SetName(new DeliveryPhaseName(request.DeliveryPhaseName)));
+        return PerformWithValidation(() => deliveryPhase.ProvideName(new DeliveryPhaseName(request.DeliveryPhaseName)));
     }
 }

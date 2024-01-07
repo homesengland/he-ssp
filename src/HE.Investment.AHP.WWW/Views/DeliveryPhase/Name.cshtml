@@ -1,11 +1,8 @@
 @using HE.Investment.AHP.WWW.Models.Delivery;
-@using HE.Investment.AHP.WWW.Views.Shared.Components.DeliveryStartOnSiteMilestoneDetails
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
-@using HE.Investments.Common.WWW.Components.DateInput
-@using HE.Investments.Common.WWW.Components.Details
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.Components.FormHeader
-@model DeliveryViewModelBase;
+@model DeliveryPhaseNameViewModel;
 @{
     var title = "Name your delivery phase";
     ViewData["Title"] = title;
@@ -16,10 +13,10 @@
 
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
-    <form asp-controller="DeliveryPhase" asp-action="Name" asp-method="post" novalidate>
+    <form asp-controller="DeliveryPhase" asp-action="@Model.PostbackActionName" asp-method="post" novalidate>
 
-        <vc:numeric-text-input header="@title"
-                       description="Each delivery phase needs a unique name."
+        <vc:text-input label="@title"
+                       hint="Each delivery phase needs a unique name."
                        field-name="@nameof(Model.DeliveryPhaseName)"
                        value="@Model.DeliveryPhaseName" />
 

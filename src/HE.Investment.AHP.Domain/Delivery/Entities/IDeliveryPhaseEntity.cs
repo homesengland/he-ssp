@@ -16,8 +16,6 @@ public interface IDeliveryPhaseEntity
 
     SectionStatus Status { get; }
 
-    void SetName(DeliveryPhaseName deliveryPhaseName);
-
     int TotalHomesToBeDeliveredInThisPhase { get; }
 
     AcquisitionMilestoneDetails? AcquisitionMilestone { get; }
@@ -25,6 +23,8 @@ public interface IDeliveryPhaseEntity
     StartOnSiteMilestoneDetails? StartOnSiteMilestone { get; }
 
     CompletionMilestoneDetails? CompletionMilestone { get; }
+
+    void ProvideName(DeliveryPhaseName deliveryPhaseName);
 
     void ProvideAcquisitionMilestoneDetails(AcquisitionMilestoneDetails? details);
 

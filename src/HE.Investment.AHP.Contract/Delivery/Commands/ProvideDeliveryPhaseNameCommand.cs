@@ -6,4 +6,4 @@ public record ProvideDeliveryPhaseNameCommand(
         string ApplicationId,
         string DeliveryPhaseId,
         string? DeliveryPhaseName)
-    : DeliveryCommandBase(ApplicationId);
+    : IDeliveryCommand;

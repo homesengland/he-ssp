@@ -31,13 +31,13 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     public async Task<IActionResult> New([FromRoute] string applicationId)
     {
         var application = await _mediator.Send(new GetApplicationQuery(applicationId));
-        var model = new DeliveryViewModelBase(applicationId, application.Name, null);
-        return View("New", model);
+        var model = new DeliveryPhaseNameViewModel(applicationId, application.Name, null, nameof(this.New));
+        return View("Name", model);
     }
 
     [HttpPost("new")]
     [WorkflowState(DeliveryPhaseWorkflowState.New)]
-    public async Task<IActionResult> New([FromRoute] string applicationId, DeliveryViewModelBase model, CancellationToken cancellationToken)
+    public async Task<IActionResult> New([FromRoute] string applicationId, DeliveryPhaseNameViewModel model, CancellationToken cancellationToken)
     {
         var deliveryPhaseId = await _mediator.Send(new CreateDeliveryPhaseCommand(applicationId, model.DeliveryPhaseName ?? string.Empty), cancellationToken);
 
@@ -46,7 +46,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
-            return View("New", model);
+            return View("Name", model);
         }
 
         return await Continue(new { applicationId, deliveryPhaseId.Id });
@@ -57,13 +57,13 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     public async Task<IActionResult> Name([FromRoute] string applicationId, [FromRoute] string deliveryPhaseId, CancellationToken cancellationToken)
     {
         var deliveryPhase = await _mediator.Send(new GetDeliveryPhaseDetailsQuery(applicationId, deliveryPhaseId), cancellationToken);
-        var model = new DeliveryViewModelBase(applicationId, deliveryPhase.ApplicationName, deliveryPhase.Name);
+        var model = new DeliveryPhaseNameViewModel(applicationId, deliveryPhase.ApplicationName, deliveryPhase.Name, nameof(this.Name));
         return View("Name", model);
     }
 
     [WorkflowState(DeliveryPhaseWorkflowState.Name)]
     [HttpPost("{deliveryPhaseId}/name")]
-    public async Task<IActionResult> Name([FromRoute] string applicationId, [FromRoute] string deliveryPhaseId, DeliveryViewModelBase model, CancellationToken cancellationToken)
+    public async Task<IActionResult> Name([FromRoute] string applicationId, [FromRoute] string deliveryPhaseId, DeliveryPhaseNameViewModel model, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new ProvideDeliveryPhaseNameCommand(applicationId, deliveryPhaseId, model.DeliveryPhaseName), cancellationToken);
         if (result.HasValidationErrors)

@@ -41,7 +41,7 @@ public class CreateDeliveryPhaseCommandHandler : DeliveryCommandHandlerBase, IRe
             account,
             CancellationToken.None);
 
-        var deliveryPhase = new DeliveryPhaseEntity(applicationBasicInfo, request.DeliveryPhaseName, Investments.Common.Contract.SectionStatus.NotStarted);
+        var deliveryPhase = new DeliveryPhaseEntity(applicationBasicInfo, request.DeliveryPhaseName, Investments.Common.Contract.SectionStatus.NotStarted, new List<HomesToDeliverInPhase>());
         deliveryPhases.Add(deliveryPhase);
 
         await _deliveryPhaseRepository.Save(deliveryPhases, account.SelectedOrganisationId(), cancellationToken);

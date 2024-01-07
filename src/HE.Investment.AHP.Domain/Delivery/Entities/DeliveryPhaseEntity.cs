@@ -45,11 +45,6 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
 
     public SectionStatus Status { get; private set; }
 
-    public void SetName(DeliveryPhaseName deliveryPhaseName)
-    {
-        Name = deliveryPhaseName;
-    }
-    
     public bool IsNew => Id.IsNew;
 
     public bool IsModified => _modificationTracker.IsModified;
@@ -87,6 +82,11 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
             _modificationTracker.MarkAsModified();
             MarkAsNotCompleted();
         }
+    }
+
+    public void ProvideName(DeliveryPhaseName deliveryPhaseName)
+    {
+        Name = deliveryPhaseName;
     }
 
     public void ProvideAcquisitionMilestoneDetails(AcquisitionMilestoneDetails? details)
