@@ -46,11 +46,6 @@ public class DeliveryPhasesEntity
 
     public SectionStatus Status { get; private set; }
 
-    public void Add(DeliveryPhaseEntity entity)
-    {
-        _deliveryPhases.Add(entity);
-    }
-  
     public bool IsStatusChanged => _statusModificationTracker.IsModified;
 
     public int UnusedHomeTypesCount => _homesToDeliver.Select(x => x.TotalHomes).Sum() -
@@ -82,6 +77,11 @@ public class DeliveryPhasesEntity
         {
             OperationResult.New().AddValidationErrors(errors).CheckErrors();
         }
+    }
+
+    public void Add(DeliveryPhaseEntity entity)
+    {
+        _deliveryPhases.Add(entity);
     }
 
     public void Remove(DeliveryPhaseId deliveryPhaseId, RemoveDeliveryPhaseAnswer removeAnswer)
