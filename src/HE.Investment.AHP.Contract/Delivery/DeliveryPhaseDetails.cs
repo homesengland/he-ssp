@@ -7,6 +7,7 @@ public record DeliveryPhaseDetails(
     string Id,
     string Name,
     int? NumberOfHomes,
+    bool IsUnregisteredBody,
     DateDetails? AcquisitionDate,
     DateDetails? AcquisitionPaymentDate,
     DateDetails? StartOnSiteDate,

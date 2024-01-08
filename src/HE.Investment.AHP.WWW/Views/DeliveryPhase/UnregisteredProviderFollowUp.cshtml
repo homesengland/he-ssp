@@ -11,7 +11,7 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <vc:workflow-back-button action="@DeliveryPhaseWorkflowState.UnregisteredProviderFollowUp.ToString()"/>
+    <vc:workflow-back-button action="@DeliveryPhaseWorkflowState.UnregisteredBodyFollowUp.ToString()" param-name="deliveryPhaseId"/>
 
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 

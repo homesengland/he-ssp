@@ -35,9 +35,4 @@ public static class ControllerExtensions
 
         return await onSuccess();
     }
-
-    public static string GetApplicationIdFromRoute(this Controller controller)
-    {
-        return controller.Request.GetRouteValue("applicationId") ?? throw new NotFoundException("Missing required applicationId path parameter.");
-    }
 }
