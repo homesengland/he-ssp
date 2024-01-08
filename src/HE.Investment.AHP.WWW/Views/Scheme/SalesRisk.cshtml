@@ -12,7 +12,7 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <vc:workflow-back-button action="@SchemeWorkflowState.SalesRisk.ToString()"/>
+    <vc:workflow-back-button current-page="@SchemeWorkflowState.SalesRisk"/>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <form asp-controller="Scheme" asp-action="SalesRisk" asp-method="post" asp-route-redirect="@Context.Request.Query["redirect"]" novalidate>
         <vc:form-header caption="@Model.ApplicationName" title="@title"/>

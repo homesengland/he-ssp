@@ -176,7 +176,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     public async Task<IActionResult> PracticalCompletionMilestone(string deliveryPhaseId, MilestoneViewModel model, CancellationToken cancellationToken)
     {
         return await ExecuteMilestoneCommand(
-            new ProvideStartOnSiteMilestoneDetailsCommand(
+            new ProvideCompletionMilestoneDetailsCommand(
                 this.GetApplicationIdFromRoute(),
                 deliveryPhaseId,
                 model.MilestoneStartAt,
@@ -188,36 +188,39 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     }
 
     [WorkflowState(DeliveryPhaseWorkflowState.UnregisteredBodyFollowUp)]
-    [HttpGet("{deliveryPhaseId}/unregistered-provider-follow-up")]
-    public async Task<IActionResult> UnregisteredProviderFollowUp([FromRoute] string applicationId, string deliveryPhaseId, CancellationToken cancellationToken)
+    [HttpGet("{deliveryPhaseId}/unregistered-body-follow-up")]
+    public async Task<IActionResult> UnregisteredBodyFollowUp([FromRoute] string applicationId, string deliveryPhaseId, CancellationToken cancellationToken)
     {
         var deliveryPhaseDetails = await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(applicationId, deliveryPhaseId), cancellationToken);
 
-        return View(new DeliveryViewModelBase(
+        return View(new DeliveryRequestAdditionalPaymentViewModel(
             applicationId,
             deliveryPhaseDetails.ApplicationName,
-            deliveryPhaseDetails.Name));
+            deliveryPhaseDetails.Name,
+            deliveryPhaseDetails.IsAdditionalPaymentRequested));
     }
 
     [WorkflowState(DeliveryPhaseWorkflowState.UnregisteredBodyFollowUp)]
-    [HttpPost("{deliveryPhaseId}/unregistered-provider-follow-up")]
-    public async Task<IActionResult> UnregisteredProviderFollowUp(
+    [HttpPost("{deliveryPhaseId}/unregistered-body-follow-up")]
+    public async Task<IActionResult> UnregisteredBodyFollowUp(
         [FromRoute] string applicationId,
         string deliveryPhaseId,
-        bool? requestAdditionalPayments,
+        bool? isAdditionalPaymentRequested,
         CancellationToken cancellationToken)
     {
-        var deliveryPhaseDetails = await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(applicationId, deliveryPhaseId), cancellationToken);
-
-        if (requestAdditionalPayments == null)
-        {
-            ModelState.AddModelError("requestAdditionalPayments", "Select value");
-        }
-
-        return View(new DeliveryViewModelBase(
-            applicationId,
-            deliveryPhaseDetails.ApplicationName,
-            deliveryPhaseDetails.Name));
+        return await ExecuteCommand(
+            deliveryPhaseId,
+            new ProvideAdditionalPaymentRequestCommand(
+                this.GetApplicationIdFromRoute(),
+                deliveryPhaseId,
+                isAdditionalPaymentRequested),
+            nameof(UnregisteredBodyFollowUp),
+            savedModel => new DeliveryRequestAdditionalPaymentViewModel(
+                applicationId,
+                savedModel.ApplicationName,
+                savedModel.Name,
+                isAdditionalPaymentRequested),
+            cancellationToken);
     }
 
     protected override async Task<IStateRouting<DeliveryPhaseWorkflowState>> Routing(DeliveryPhaseWorkflowState currentState, object? routeData = null)

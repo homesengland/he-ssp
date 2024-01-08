@@ -9,7 +9,7 @@ public interface IDeliveryPhaseEntity
 {
     ApplicationBasicInfo Application { get; }
 
-    SiteBasicInfo Site { get; }
+    public OrganisationBasicInfo Organisation { get; }
 
     DeliveryPhaseId Id { get; }
 
@@ -29,11 +29,15 @@ public interface IDeliveryPhaseEntity
 
     CompletionMilestoneDetails? CompletionMilestone { get; }
 
+    public IsAdditionalPaymentRequested? IsAdditionalPaymentRequested { get; }
+
     void ProvideAcquisitionMilestoneDetails(AcquisitionMilestoneDetails? details);
 
     void ProvideStartOnSiteMilestoneDetails(StartOnSiteMilestoneDetails? details);
 
     void ProvideCompletionMilestoneDetails(CompletionMilestoneDetails? details);
+
+    void ProvideAdditionalPaymentRequest(IsAdditionalPaymentRequested? isAdditionalPaymentRequested);
 
     void ProvideTypeOfHomes(TypeOfHomes typeOfHomes);
 }

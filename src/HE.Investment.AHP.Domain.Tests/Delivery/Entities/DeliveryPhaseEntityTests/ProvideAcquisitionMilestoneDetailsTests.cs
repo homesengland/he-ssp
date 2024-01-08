@@ -1,6 +1,7 @@
 using FluentAssertions;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investment.AHP.Domain.Tests.Delivery.Entities.TestDataBuilders;
+using HE.Investments.Common.Exceptions;
 
 namespace HE.Investment.AHP.Domain.Tests.Delivery.Entities.DeliveryPhaseEntityTests;
 
@@ -18,7 +19,7 @@ public class ProvideAcquisitionMilestoneDetailsTests
         var action = () => testCandidate.ProvideAcquisitionMilestoneDetails(_testAcquisitionMilestoneDetails);
 
         // then
-        action.Should().Throw<InvalidOperationException>();
+        action.Should().Throw<DomainValidationException>();
     }
 
     [Fact]

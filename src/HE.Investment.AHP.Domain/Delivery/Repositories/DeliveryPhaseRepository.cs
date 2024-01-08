@@ -117,7 +117,7 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
             {
                 new DeliveryPhaseEntity(
                     application,
-                    new SiteBasicInfo(new SiteId("S1"), false),
+                    new OrganisationBasicInfo(true),
                     "Phase 1",
                     null,
                     SectionStatus.InProgress,
