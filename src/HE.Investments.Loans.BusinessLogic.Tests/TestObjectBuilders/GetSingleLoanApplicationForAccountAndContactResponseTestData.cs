@@ -3,8 +3,7 @@ namespace HE.Investments.Loans.BusinessLogic.Tests.TestObjectBuilders;
 public static class GetSingleLoanApplicationForAccountAndContactResponseTestData
 {
     public const string EmptyResponse =
-                         /*lang=json,strict*/
-                         @"
+        @"
             [
                 {
                     ""siteDetailsList"": [],
@@ -15,8 +14,7 @@ public static class GetSingleLoanApplicationForAccountAndContactResponseTestData
         ";
 
     public const string ResponseWithCompanyStructureFields =
-                             /*lang=json,strict*/
-                             @"
+        @"
             [
                 {
                     ""siteDetailsList"": [],
@@ -31,8 +29,7 @@ public static class GetSingleLoanApplicationForAccountAndContactResponseTestData
         ";
 
     public const string ResponseWithFundingFields =
-                             /*lang=json,strict*/
-                             @"
+        @"
             [
                 {
                     ""siteDetailsList"": [],
