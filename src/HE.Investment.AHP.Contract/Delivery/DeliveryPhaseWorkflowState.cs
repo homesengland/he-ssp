@@ -4,8 +4,10 @@ public enum DeliveryPhaseWorkflowState
 {
     New = 1,
     Name,
+    Summary,
     AcquisitionMilestone,
     StartOnSiteMilestone,
     PracticalCompletionMilestone,
-    UnregisteredProviderFollowUp,
+    UnregisteredBodyFollowUp,
+    CheckAnswers,
 }

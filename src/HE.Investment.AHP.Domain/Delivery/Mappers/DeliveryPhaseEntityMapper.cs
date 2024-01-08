@@ -28,6 +28,7 @@ public static class DeliveryPhaseEntityMapper
             deliveryPhase.Id.Value,
             deliveryPhase.Name.Value,
             deliveryPhase.TotalHomesToBeDeliveredInThisPhase,
+            deliveryPhase.Site.IsUnregisteredBody,
             MapDate(deliveryPhase.AcquisitionMilestone?.AcquisitionDate),
             MapDate(deliveryPhase.AcquisitionMilestone?.PaymentDate),
             MapDate(deliveryPhase.StartOnSiteMilestone?.StartOnSiteDate),

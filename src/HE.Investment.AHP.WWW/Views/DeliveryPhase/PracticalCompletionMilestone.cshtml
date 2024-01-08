@@ -13,7 +13,7 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <vc:workflow-back-button action="@DeliveryPhaseWorkflowState.PracticalCompletionMilestone.ToString()"/>
+    <vc:workflow-back-button action="@DeliveryPhaseWorkflowState.PracticalCompletionMilestone.ToString()" param-name="deliveryPhaseId"/>
 
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
