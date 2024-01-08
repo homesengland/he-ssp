@@ -1,0 +1,39 @@
+@using HE.Investment.AHP.WWW.Extensions
+@using HE.Investment.AHP.WWW.Models.Delivery
+@using HE.Investment.AHP.WWW.Views.Delivery.Consts
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investments.Common.WWW.TagHelpers
+@using HE.Investment.AHP.Contract.Delivery
+@model HE.Investment.AHP.Contract.Delivery.DeliveryPhaseDetails;
+@{
+    var applicationId = this.GetApplicationIdFromRoute();
+    var deliveryPhaseId = this.GetDeliveryPhaseIdFromRoute();
+    var title = DeliveryPageTitles.Details;
+    ViewData["Title"] = title;
+}
+
+<gds-div-grid-column-two-thirds>
+    <vc:back-link-with-callback url="@Url.Action("Back", "DeliveryPhase", new { applicationId, deliveryPhaseId, currentPage = DeliveryPhaseWorkflowState.TypeOfHomes })" />
+
+    <form asp-controller="DeliveryPhase" asp-action="Details" asp-method="post" novalidate>
+        <vc:form-header caption="@($"{Model.ApplicationName} - {Model.Name}")" title="@title"/>
+        <gds-field-set role="group">
+            <gds-legend>
+                <gds-h1>What type of homes will be delivered in this phase?</gds-h1>
+            </gds-legend>
+
+            <he-custom-radio
+                asp-for="TypeOfHomes"
+                value="@Model.TypeOfHomes"
+                radio-items="@DeliveryFormOptions.TypeOfHomes"
+                class="govuk-!-margin-bottom-8">
+            </he-custom-radio>
+
+            <vc:form-button/>
+        </gds-field-set>
+
+        <vc:return-to-application-link application-id="@applicationId"/>
+    </form>
+</gds-div-grid-column-two-thirds>

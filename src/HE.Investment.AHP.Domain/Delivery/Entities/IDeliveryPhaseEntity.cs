@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investments.Common.Contract;
@@ -11,6 +12,8 @@ public interface IDeliveryPhaseEntity
     DeliveryPhaseId Id { get; }
 
     DeliveryPhaseName Name { get; }
+
+    public TypeOfHomes TypeOfHomes { get; }
 
     DateTime? CreatedOn { get; }
 
@@ -29,4 +32,6 @@ public interface IDeliveryPhaseEntity
     void ProvideStartOnSiteMilestoneDetails(StartOnSiteMilestoneDetails? details);
 
     void ProvideCompletionMilestoneDetails(CompletionMilestoneDetails? details);
+
+    void ProvideTypeOfHomes(TypeOfHomes typeOfHomes);
 }

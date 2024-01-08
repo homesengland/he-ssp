@@ -12,6 +12,7 @@ public static class DeliveryPhaseEntityMapper
             deliveryPhase.Application.Name.Name,
             deliveryPhase.Id.Value,
             deliveryPhase.Name.Value,
+            deliveryPhase.TypeOfHomes,
             deliveryPhase.TotalHomesToBeDeliveredInThisPhase,
             DateHelper.ToDateOnlyString(deliveryPhase.AcquisitionMilestone?.AcquisitionDate?.Date),
             DateHelper.ToDateOnlyString(deliveryPhase.StartOnSiteMilestone?.StartOnSiteDate?.Date),

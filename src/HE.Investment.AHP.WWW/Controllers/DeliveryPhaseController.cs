@@ -31,11 +31,38 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         return View("Name");
     }
 
-    [HttpGet("{deliveryPhaseId}/name")]
+    [HttpGet("{deliveryPhaseId}/Name")]
     [WorkflowState(DeliveryPhaseWorkflowState.Name)]
-    public IActionResult Name()
+    public IActionResult Name([FromRoute] string applicationId, string deliveryPhaseId)
     {
-        return View("Name");
+        return View("Name", new DeliveryPhaseDetails("test", applicationId, deliveryPhaseId));
+    }
+
+    [HttpPost("{deliveryPhaseId}/Name")]
+    [WorkflowState(DeliveryPhaseWorkflowState.Name)]
+    public async Task<IActionResult> Name([FromRoute] string applicationId, string deliveryPhaseId, DeliveryPhaseDetails deliveryPhaseDetails, CancellationToken cancellationToken)
+    {
+        return await ContinueWithRedirect(new { applicationId, deliveryPhaseId });
+    }
+
+    [HttpGet("{deliveryPhaseId}/Details")]
+    [WorkflowState(DeliveryPhaseWorkflowState.TypeOfHomes)]
+    public async Task<IActionResult> Details([FromRoute] string applicationId, string deliveryPhaseId, CancellationToken cancellationToken)
+    {
+        var deliveryPhaseDetails = await _mediator.Send(new GetDeliveryPhaseDetailsQuery(applicationId, deliveryPhaseId), cancellationToken);
+
+        return View("Details", deliveryPhaseDetails);
+    }
+
+    [HttpPost("{deliveryPhaseId}/Details")]
+    [WorkflowState(DeliveryPhaseWorkflowState.TypeOfHomes)]
+    public async Task<IActionResult> Details([FromRoute] string applicationId, string deliveryPhaseId, DeliveryPhaseDetails deliveryPhaseDetails, CancellationToken cancellationToken)
+    {
+        return await ExecuteCommand(
+            new ProvideTypeOfHomesCommand(applicationId, deliveryPhaseId, deliveryPhaseDetails.TypeOfHomes),
+            nameof(Details),
+            deliveryPhaseDetails,
+            cancellationToken);
     }
 
     [HttpGet("{deliveryPhaseId}/remove")]
@@ -150,7 +177,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
 
     protected override Task<IStateRouting<DeliveryPhaseWorkflowState>> Routing(DeliveryPhaseWorkflowState currentState, object? routeData = null)
     {
-        return Task.FromResult<IStateRouting<DeliveryPhaseWorkflowState>>(new DeliveryPhaseWorkflow());
+        return Task.FromResult<IStateRouting<DeliveryPhaseWorkflowState>>(new DeliveryPhaseWorkflow(currentState));
     }
 
     private MilestoneViewModel CreateMilestoneViewModel(string deliveryPhaseId)
