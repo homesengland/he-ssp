@@ -31,7 +31,7 @@ public abstract class UpdateDeliveryPhaseCommandHandler<TCommand> : IRequestHand
 
         if (result.IsValid)
         {
-            await _repository.Save(deliveryPhase, account.SelectedOrganisationId(), cancellationToken);
+            await _repository.Save(deliveryPhase, account, cancellationToken);
         }
 
         return result;

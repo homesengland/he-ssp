@@ -9,13 +9,13 @@ public interface IDeliveryPhaseEntity
 {
     ApplicationBasicInfo Application { get; }
 
-    public SiteBasicInfo Site { get; }
+    SiteBasicInfo Site { get; }
 
     DeliveryPhaseId Id { get; }
 
     DeliveryPhaseName Name { get; }
 
-    public TypeOfHomes TypeOfHomes { get; }
+    TypeOfHomes? TypeOfHomes { get; }
 
     DateTime? CreatedOn { get; }
 

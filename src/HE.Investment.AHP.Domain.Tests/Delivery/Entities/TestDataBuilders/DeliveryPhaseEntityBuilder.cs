@@ -1,4 +1,5 @@
 using HE.Investment.AHP.Contract.Application;
+using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.Contract.Site.ValueObjects;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
@@ -71,6 +72,7 @@ public class DeliveryPhaseEntityBuilder
                 ApplicationStatus.Draft),
             _siteBasicInfo,
             "First Phase",
+            TypeOfHomes.Rehab,
             _status,
             _homesToDeliver,
             new DeliveryPhaseId(_id),

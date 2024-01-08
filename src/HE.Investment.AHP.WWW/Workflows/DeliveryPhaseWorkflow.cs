@@ -58,10 +58,9 @@ public class DeliveryPhaseWorkflow : IStateRouting<DeliveryPhaseWorkflowState>
             .Permit(Trigger.Continue, DeliveryPhaseWorkflowState.AcquisitionMilestone)
             .Permit(Trigger.Back, DeliveryPhaseWorkflowState.Name);
 
-        // TODO: fix back for summary
         _machine.Configure(DeliveryPhaseWorkflowState.AcquisitionMilestone)
             .PermitIf(Trigger.Continue, DeliveryPhaseWorkflowState.StartOnSiteMilestone)
-            .Permit(Trigger.Back, DeliveryPhaseWorkflowState.Summary);
+            .Permit(Trigger.Back, DeliveryPhaseWorkflowState.TypeOfHomes);
 
         _machine.Configure(DeliveryPhaseWorkflowState.StartOnSiteMilestone)
             .Permit(Trigger.Continue, DeliveryPhaseWorkflowState.PracticalCompletionMilestone)
