@@ -88,7 +88,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     {
         var deliveryPhaseDetails = await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(applicationId, deliveryPhaseId), cancellationToken);
 
-        return View("RemoveDeliveryPhaseConfirmation", new RemoveDeliveryPhaseModel(deliveryPhaseDetails.ApplicationName, deliveryPhaseDetails.Name));
+        return View("RemoveDeliveryPhaseConfirmation", new RemoveDeliveryPhaseModel(deliveryPhaseDetails.ApplicationName, deliveryPhaseDetails?.Name ?? string.Empty));
     }
 
     [HttpPost("{deliveryPhaseId}/remove")]
@@ -237,7 +237,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
 
     private MilestoneViewModel CreateMilestoneViewModel(
         string applicationName,
-        string deliveryPhaseName,
+        string? deliveryPhaseName,
         DateDetails? milestoneDate,
         DateDetails? milestonePaymentDate)
     {

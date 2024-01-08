@@ -14,7 +14,7 @@ public static class DeliveryPhaseEntityMapper
         return new DeliveryPhaseBasicDetails(
             deliveryPhase.Application.Name.Name,
             deliveryPhase.Id.Value,
-            deliveryPhase.Name.Value,
+            deliveryPhase.Name?.Value,
             deliveryPhase.TotalHomesToBeDeliveredInThisPhase,
             DateHelper.ToDateOnlyString(deliveryPhase.AcquisitionMilestone?.AcquisitionDate?.Value),
             DateHelper.ToDateOnlyString(deliveryPhase.StartOnSiteMilestone?.StartOnSiteDate?.Value),
@@ -26,7 +26,7 @@ public static class DeliveryPhaseEntityMapper
         return new DeliveryPhaseDetails(
             deliveryPhase.Application.Name.Name,
             deliveryPhase.Id.Value,
-            deliveryPhase.Name.Value,
+            deliveryPhase.Name?.Value,
             deliveryPhase.TotalHomesToBeDeliveredInThisPhase,
             deliveryPhase.Site.IsUnregisteredBody,
             MapDate(deliveryPhase.AcquisitionMilestone?.AcquisitionDate),

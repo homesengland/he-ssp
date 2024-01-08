@@ -46,7 +46,8 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
 
     public async Task<DeliveryPhaseId> Save(IDeliveryPhaseEntity deliveryPhase, OrganisationId organisationId, CancellationToken cancellationToken)
     {
-        var entity = (DeliveryPhaseEntity)deliveryPhase;
+        var entity = (DeliveryPhaseEntity)deliveryPhase ?? throw new ArgumentException("Provided delivery phase entity was null.");
+
         if (entity.IsNew)
         {
             // TODO: AB#66083 Save Delivery Phase in CRM
@@ -61,7 +62,7 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
             await _eventDispatcher.Publish(new DeliveryPhaseHasBeenUpdatedEvent(entity.Application.Id.Value), cancellationToken);
         }
 
-        return entity.Id;
+        return entity?.Id ?? new DeliveryPhaseId(string.Empty);
     }
 
     public async Task<IDeliveryPhaseEntity> GetById(ApplicationId applicationId, DeliveryPhaseId deliveryPhaseId, UserAccount userAccount, CancellationToken cancellationToken)

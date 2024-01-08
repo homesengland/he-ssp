@@ -5,7 +5,7 @@ namespace HE.Investment.AHP.Contract.Delivery;
 public record DeliveryPhaseDetails(
     string ApplicationName,
     string Id,
-    string Name,
+    string? Name,
     int? NumberOfHomes,
     bool IsUnregisteredBody,
     DateDetails? AcquisitionDate,
