@@ -84,15 +84,15 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
         }
     }
 
-    public DeliveryPhaseEntity CreateDeliveryPhase(string name)
+    public DeliveryPhaseEntity CreateDeliveryPhase(DeliveryPhaseName? name)
     {
-        var deliveryPhaseNameAlreadyUsed = _deliveryPhases.Any(x => x.Name.Value == name);
-        if (deliveryPhaseNameAlreadyUsed)
+        var deliveryPhaseNameAlreadyUsed = _deliveryPhases.Any(x => x.Name == name);
+        if (name != null && deliveryPhaseNameAlreadyUsed)
         {
             OperationResult.New().AddValidationError(nameof(DeliveryPhaseName), "Provided delivery phase name is already in use. Delivery phase name should be unique.").CheckErrors();
         }
 
-        var deliveryPhase = new DeliveryPhaseEntity(_application, name, Status, new List<HomesToDeliverInPhase>());
+        var deliveryPhase = new DeliveryPhaseEntity(_application, name, SectionStatus.InProgress, new List<HomesToDeliverInPhase>());
 
         _deliveryPhases.Add(deliveryPhase);
         return deliveryPhase;

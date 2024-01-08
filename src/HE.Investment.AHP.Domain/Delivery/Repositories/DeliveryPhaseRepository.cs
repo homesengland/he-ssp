@@ -110,7 +110,7 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
             {
                 new DeliveryPhaseEntity(
                     application,
-                    "Phase 1",
+                    new DeliveryPhaseName("Phase 1"),
                     SectionStatus.InProgress,
                     new[] { new HomesToDeliverInPhase(new HomeTypeId("ht-1"), 3) },
                     new DeliveryPhaseId("phase-1"),

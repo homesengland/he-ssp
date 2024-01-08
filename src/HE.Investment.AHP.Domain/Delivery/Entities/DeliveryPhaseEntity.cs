@@ -15,7 +15,7 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
 
     public DeliveryPhaseEntity(
         ApplicationBasicInfo application,
-        string? name,
+        DeliveryPhaseName? name,
         SectionStatus status,
         IEnumerable<HomesToDeliverInPhase> homesToDeliver,
         DeliveryPhaseId? id = null,
@@ -25,7 +25,7 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
         CompletionMilestoneDetails? completionMilestone = null)
     {
         Application = application;
-        Name = new DeliveryPhaseName(name);
+        Name = name;
         Status = status;
         Id = id ?? DeliveryPhaseId.New();
         CreatedOn = createdOn;
@@ -39,7 +39,7 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
 
     public DeliveryPhaseId Id { get; set; }
 
-    public DeliveryPhaseName Name { get; private set; }
+    public DeliveryPhaseName? Name { get; private set; }
 
     public DateTime? CreatedOn { get; }
 
@@ -89,9 +89,9 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
         }
     }
 
-    public void ProvideName(DeliveryPhaseName deliveryPhaseName)
+    public void ProvideName(DeliveryPhaseName? deliveryPhaseName)
     {
-        Name = deliveryPhaseName;
+        Name = _modificationTracker.Change(Name, deliveryPhaseName, MarkAsNotCompleted);
     }
 
     public void ProvideAcquisitionMilestoneDetails(AcquisitionMilestoneDetails? details)

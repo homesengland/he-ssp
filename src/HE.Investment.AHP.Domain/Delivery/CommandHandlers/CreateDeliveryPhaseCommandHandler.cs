@@ -35,11 +35,15 @@ public class CreateDeliveryPhaseCommandHandler : DeliveryCommandHandlerBase, IRe
 
     public async Task<OperationResult<DeliveryPhaseId>> Handle(CreateDeliveryPhaseCommand request, CancellationToken cancellationToken)
     {
-        var account = await _accountUserContext.GetSelectedAccount();
-        var deliveryPhases = await _deliveryPhaseRepository.GetByApplicationId(new ApplicationId.ApplicationId(request.ApplicationId), account, cancellationToken);
-        var deliveryPhase = deliveryPhases.CreateDeliveryPhase(request.DeliveryPhaseName);
+        var operationResult = OperationResult.New();
 
-        var deliveryPhaseId = await _deliveryPhaseRepository.Save(deliveryPhase, account.SelectedOrganisationId(), cancellationToken);
+        var account = await _accountUserContext.GetSelectedAccount();
+
+        var deliveryPhases = await _deliveryPhaseRepository.GetByApplicationId(new ApplicationId.ApplicationId(request.ApplicationId), account, cancellationToken);
+        var newDeliveryPhase = operationResult.CatchResult(() => deliveryPhases.CreateDeliveryPhase(request.DeliveryPhaseName.IsNotNullOrEmpty() ? new DeliveryPhaseName(request.DeliveryPhaseName) : null));
+        operationResult.CheckErrors();
+        var deliveryPhaseId = operationResult.CatchResult(() => _deliveryPhaseRepository.Save(newDeliveryPhase, account.SelectedOrganisationId(), cancellationToken).Result);
+        operationResult.CheckErrors();
 
         return OperationResult.Success(new DeliveryPhaseId(deliveryPhaseId.Value));
     }

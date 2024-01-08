@@ -32,18 +32,18 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         return await Back(currentPage, new { applicationId, deliveryPhaseId });
     }
 
-    [HttpGet("new")]
-    [WorkflowState(DeliveryPhaseWorkflowState.New)]
-    public async Task<IActionResult> New([FromRoute] string applicationId)
+    [HttpGet("create")]
+    [WorkflowState(DeliveryPhaseWorkflowState.Create)]
+    public async Task<IActionResult> Create([FromRoute] string applicationId)
     {
         var application = await _mediator.Send(new GetApplicationQuery(applicationId));
-        var model = new DeliveryPhaseNameViewModel(applicationId, application.Name, null, nameof(this.New));
+        var model = new DeliveryPhaseNameViewModel(applicationId, application.Name, null, nameof(this.Create));
         return View("Name", model);
     }
 
-    [HttpPost("new")]
-    [WorkflowState(DeliveryPhaseWorkflowState.New)]
-    public async Task<IActionResult> New([FromRoute] string applicationId, DeliveryPhaseNameViewModel model, CancellationToken cancellationToken)
+    [HttpPost("create")]
+    [WorkflowState(DeliveryPhaseWorkflowState.Create)]
+    public async Task<IActionResult> Create([FromRoute] string applicationId, DeliveryPhaseNameViewModel model, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new CreateDeliveryPhaseCommand(applicationId, model.DeliveryPhaseName ?? string.Empty), cancellationToken);
 
