@@ -13,7 +13,7 @@ using MediatR;
 using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Extensions.Logging;
 using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects;
-using DeliveryPhaseId = HE.Investment.AHP.Domain.Delivery.ValueObjects.DeliveryPhaseId;
+using DeliveryPhaseId = HE.Investment.AHP.Contract.Delivery.DeliveryPhaseId;
 
 namespace HE.Investment.AHP.Domain.Delivery.CommandHandlers;
 
@@ -41,6 +41,6 @@ public class CreateDeliveryPhaseCommandHandler : DeliveryCommandHandlerBase, IRe
 
         var deliveryPhaseId = await _deliveryPhaseRepository.Save(deliveryPhase, account.SelectedOrganisationId(), cancellationToken);
 
-        return OperationResult.Success(deliveryPhaseId);
+        return OperationResult.Success(new DeliveryPhaseId(deliveryPhaseId.Value));
     }
 }

@@ -28,6 +28,12 @@ public class DeliveryPhaseWorkflow : IStateRouting<DeliveryPhaseWorkflowState>
 
     private void ConfigureTransitions()
     {
+        _machine.Configure(DeliveryPhaseWorkflowState.New)
+            .Permit(Trigger.Continue, DeliveryPhaseWorkflowState.Details);
+
+        _machine.Configure(DeliveryPhaseWorkflowState.Name)
+            .Permit(Trigger.Continue, DeliveryPhaseWorkflowState.Details);
+
         _machine.Configure(DeliveryPhaseWorkflowState.AcquisitionMilestone)
             .Permit(Trigger.Continue, DeliveryPhaseWorkflowState.StartOnSiteMilestone);
 

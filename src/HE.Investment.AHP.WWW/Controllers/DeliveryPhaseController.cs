@@ -32,7 +32,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         return await Back(currentPage, new { applicationId, deliveryPhaseId });
     }
 
-    [HttpGet("create")]
+    [HttpGet("new")]
     [WorkflowState(DeliveryPhaseWorkflowState.New)]
     public async Task<IActionResult> New([FromRoute] string applicationId)
     {
@@ -41,7 +41,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         return View("Name", model);
     }
 
-    [HttpPost("create")]
+    [HttpPost("new")]
     [WorkflowState(DeliveryPhaseWorkflowState.New)]
     public async Task<IActionResult> New([FromRoute] string applicationId, DeliveryPhaseNameViewModel model, CancellationToken cancellationToken)
     {

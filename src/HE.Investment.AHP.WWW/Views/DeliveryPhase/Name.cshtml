@@ -9,7 +9,7 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <vc:back-link-with-callback url="@Url.Action("List", "Delivery")" />
+    <vc:back-link-with-callback url="@Url.Action("List", "Delivery", new { applicationId=Model.ApplicationId })" />
 
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
