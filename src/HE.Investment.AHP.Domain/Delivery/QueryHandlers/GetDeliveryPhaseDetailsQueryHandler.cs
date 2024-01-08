@@ -31,6 +31,6 @@ public class GetDeliveryPhaseDetailsQueryHandler : IRequestHandler<GetDeliveryPh
             userAccount,
             cancellationToken);
 
-        return DeliveryPhaseEntityMapper.ToContract(deliveryPhase);
+        return DeliveryPhaseEntityMapper.ToDeliveryPhaseDetails(deliveryPhase);
     }
 }

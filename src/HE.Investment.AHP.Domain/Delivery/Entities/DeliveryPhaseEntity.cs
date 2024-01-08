@@ -59,6 +59,11 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
 
     public CompletionMilestoneDetails? CompletionMilestone { get; private set; }
 
+    public bool IsHomeTypeUsed(HomeTypeId homeTypeId)
+    {
+        return _homesToDeliver.Any(x => x.HomeTypeId == homeTypeId);
+    }
+
     public int GetHomesToBeDeliveredForHomeType(HomeTypeId homeTypeId)
     {
         return _homesToDeliver

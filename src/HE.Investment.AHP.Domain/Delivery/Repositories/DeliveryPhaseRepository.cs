@@ -47,15 +47,15 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
         var entity = (DeliveryPhaseEntity)deliveryPhase;
         if (entity.IsNew)
         {
-            // TODO: Save Delivery Phase in CRM
+            // TODO: AB#66083 Save Delivery Phase in CRM
             entity.Id = new DeliveryPhaseId(Guid.NewGuid().ToString());
             await _eventDispatcher.Publish(
-                new DeliveryPhaseHasBeenCreatedEvent(entity.Application.Id.Value),
+                new DeliveryPhaseHasBeenCreatedEvent(entity.Application.Id.Value, entity.Name.Value),
                 cancellationToken);
         }
         else if (entity.IsModified)
         {
-            // TODO: Save Delivery Phase in CRM
+            // TODO: AB#66083 Save Delivery Phase in CRM
             await _eventDispatcher.Publish(new DeliveryPhaseHasBeenUpdatedEvent(entity.Application.Id.Value), cancellationToken);
         }
 
@@ -81,12 +81,12 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
     {
         if (deliveryPhases.IsStatusChanged)
         {
-            // TODO: Update Delivery section status to In Progress in CRM
+            // TODO: AB#66083 Update Delivery section status to In Progress in CRM
         }
 
         foreach (var deliveryPhaseToRemove in deliveryPhases.ToRemove)
         {
-            // TODO: remove delivery Phase in CRM
+            // TODO: AB#66083 remove delivery Phase in CRM
             await _eventDispatcher.Publish(
                 new DeliveryPhaseHasBeenRemovedEvent(deliveryPhaseToRemove.Application.Id.Value),
                 cancellationToken);
