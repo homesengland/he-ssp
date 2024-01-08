@@ -1,7 +1,7 @@
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.WWW.Views.Site;
 using HE.Investments.Common.WWWTestsFramework;
-using HE.Investments.IntegrationTestsFramework.Extensions;
+using HE.Investments.TestsUtils.Extensions;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.Site;

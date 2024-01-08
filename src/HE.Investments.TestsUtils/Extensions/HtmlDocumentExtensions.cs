@@ -2,9 +2,8 @@ using System.Text;
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
-using HE.Investments.Common.WWW.Components;
 
-namespace HE.Investments.IntegrationTestsFramework.Extensions;
+namespace HE.Investments.TestsUtils.Extensions;
 
 public static class HtmlDocumentExtensions
 {
@@ -81,8 +80,8 @@ public static class HtmlDocumentExtensions
     public static string GetPageTitle(this IHtmlDocument htmlDocument)
     {
         var header = htmlDocument.GetElementsByClassName(CssConstants.GovUkHxl).FirstOrDefault()
-                     ?? htmlDocument.GetElementsByClassName(CssConstants.GovUkFieldSetHeading).FirstOrDefault()
-                     ?? htmlDocument.GetElementsByClassName(CssConstants.GovUkHl).FirstOrDefault();
+                     ?? htmlDocument.GetElementsByClassName(CssConstants.GovUkHl).FirstOrDefault()
+                     ?? htmlDocument.GetElementsByClassName(CssConstants.GovUkFieldSetHeading).FirstOrDefault();
 
         header.Should().NotBeNull("Page Header does not exist");
         return header!.InnerHtml.Trim();

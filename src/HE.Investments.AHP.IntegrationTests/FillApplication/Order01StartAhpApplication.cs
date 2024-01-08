@@ -6,7 +6,7 @@ using HE.Investments.AHP.IntegrationTests.Extensions;
 using HE.Investments.AHP.IntegrationTests.Framework;
 using HE.Investments.AHP.IntegrationTests.Pages;
 using HE.Investments.IntegrationTestsFramework;
-using HE.Investments.IntegrationTestsFramework.Extensions;
+using HE.Investments.TestsUtils.Extensions;
 using Xunit;
 using Xunit.Extensions.Ordering;
 

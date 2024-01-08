@@ -63,7 +63,7 @@ public static class DomainModule
         services.AddSingleton<IHomeTypeSegmentContractMapper<OlderPeopleHomeTypeDetailsSegmentEntity, OlderPeopleHomeTypeDetails>, OlderPeopleHomeTypeDetailsSegmentContractMapper>();
         services.AddSingleton<IHomeTypeSegmentContractMapper<SupportedHousingInformationSegmentEntity, SupportedHousingInformation>, SupportedHousingInformationSegmentContractMapper>();
         services.AddSingleton<IHomeTypeSegmentContractMapper<TenureDetailsSegmentEntity, TenureDetails>, TenureDetailsSegmentContractMapper>();
-        services.AddSingleton<IHomeTypeSegmentContractMapper<ModernMethodsConstructionEntity, ModernMethodsConstruction>, ModernMethodsConstructionSegmentContractMapper>();
+        services.AddSingleton<IHomeTypeSegmentContractMapper<ModernMethodsConstructionSegmentEntity, ModernMethodsConstruction>, ModernMethodsConstructionSegmentContractMapper>();
 
         services.AddScoped<IAhpFileLocationProvider<DesignFileParams>, DesignFileLocationProvider>();
         services.AddScoped<IAhpFileService<DesignFileParams>, AhpFileService<DesignFileParams>>();

@@ -1,5 +1,6 @@
 using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Queries;
+using HE.Investment.AHP.Domain.Delivery.Mappers;
 using HE.Investment.AHP.Domain.Delivery.Repositories;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investments.Account.Shared;
@@ -29,13 +30,6 @@ public class GetDeliveryPhaseDetailsQueryHandler : IRequestHandler<GetDeliveryPh
             userAccount,
             cancellationToken);
 
-        return new DeliveryPhaseDetails(
-            deliveryPhase.Application.Name.Name,
-            deliveryPhase.Id.Value,
-            deliveryPhase.Name.Value,
-            deliveryPhase.TotalHomesToBeDeliveredInThisPhase,
-            null, // TODO: AB#66086 map dates when available in CRM
-            null,
-            null);
+        return DeliveryPhaseEntityMapper.ToContract(deliveryPhase);
     }
 }

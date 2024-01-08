@@ -27,6 +27,7 @@
     <ItemGroup>
       <ProjectReference Include="..\HE.Investments.Common.WWW\HE.Investments.Common.WWW.csproj" />
       <ProjectReference Include="..\HE.Investments.DocumentService\HE.Investments.DocumentService.csproj" />
+      <ProjectReference Include="..\HE.Investments.TestsUtils\HE.Investments.TestsUtils.csproj" />
     </ItemGroup>
 
 </Project>

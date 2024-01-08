@@ -33,6 +33,14 @@ public class IntegrationTestFixture<TProgram> : WebApplicationFactory<TProgram>
         LoginData.Change(loginData);
     }
 
+    public void CheckUserLoginData()
+    {
+        if (LoginData.IsProvided() is false)
+        {
+            throw new InvalidDataException("Please set IntegrationTestsConfig:UserConfig:UserGlobalId and IntegrationTestsConfig:UserConfig:Email in settings");
+        }
+    }
+
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         builder.ConfigureTestServices(x =>

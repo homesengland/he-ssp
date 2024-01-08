@@ -1,4 +1,4 @@
-namespace HE.Investments.Common.WWW.Components;
+namespace HE.Investments.TestsUtils.Extensions;
 
 public class CssConstants
 {

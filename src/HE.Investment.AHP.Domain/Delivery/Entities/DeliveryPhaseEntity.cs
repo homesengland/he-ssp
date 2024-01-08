@@ -19,13 +19,19 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
         SectionStatus status,
         IEnumerable<HomesToDeliverInPhase> homesToDeliver,
         DeliveryPhaseId? id = null,
-        DateTime? createdOn = null)
+        DateTime? createdOn = null,
+        AcquisitionMilestoneDetails? acquisitionMilestone = null,
+        StartOnSiteMilestoneDetails? startOnSiteMilestone = null,
+        CompletionMilestoneDetails? completionMilestone = null)
     {
         Application = application;
         Name = new DeliveryPhaseName(name);
         Status = status;
         Id = id ?? DeliveryPhaseId.New();
         CreatedOn = createdOn;
+        AcquisitionMilestone = acquisitionMilestone;
+        StartOnSiteMilestone = startOnSiteMilestone;
+        CompletionMilestone = completionMilestone;
         _homesToDeliver = homesToDeliver.ToList();
     }
 
@@ -46,6 +52,12 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
     public IEnumerable<HomesToDeliverInPhase> HomesToDeliver => _homesToDeliver;
 
     public int TotalHomesToBeDeliveredInThisPhase => _homesToDeliver.Select(x => x.ToDeliver).Sum();
+
+    public AcquisitionMilestoneDetails? AcquisitionMilestone { get; private set; }
+
+    public StartOnSiteMilestoneDetails? StartOnSiteMilestone { get; private set; }
+
+    public CompletionMilestoneDetails? CompletionMilestone { get; private set; }
 
     public bool IsHomeTypeUsed(HomeTypeId homeTypeId)
     {
@@ -75,6 +87,21 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
             _modificationTracker.MarkAsModified();
             MarkAsNotCompleted();
         }
+    }
+
+    public void ProvideAcquisitionMilestoneDetails(AcquisitionMilestoneDetails? details)
+    {
+        AcquisitionMilestone = _modificationTracker.Change(AcquisitionMilestone, details, MarkAsNotCompleted);
+    }
+
+    public void ProvideStartOnSiteMilestoneDetails(StartOnSiteMilestoneDetails? details)
+    {
+        StartOnSiteMilestone = _modificationTracker.Change(StartOnSiteMilestone, details, MarkAsNotCompleted);
+    }
+
+    public void ProvideCompletionMilestoneDetails(CompletionMilestoneDetails? details)
+    {
+        CompletionMilestone = _modificationTracker.Change(CompletionMilestone, details, MarkAsNotCompleted);
     }
 
     private void MarkAsNotCompleted()

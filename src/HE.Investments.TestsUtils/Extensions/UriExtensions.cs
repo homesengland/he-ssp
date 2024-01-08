@@ -1,4 +1,4 @@
-namespace HE.Investments.IntegrationTestsFramework.Extensions;
+namespace HE.Investments.TestsUtils.Extensions;
 
 public static class UriExtensions
 {

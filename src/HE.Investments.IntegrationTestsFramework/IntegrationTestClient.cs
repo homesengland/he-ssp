@@ -2,7 +2,7 @@ using AngleSharp.Html.Dom;
 using HE.Investments.Common.Extensions;
 using HE.Investments.IntegrationTestsFramework.Auth;
 using HE.Investments.IntegrationTestsFramework.Exceptions;
-using HE.Investments.IntegrationTestsFramework.Helpers;
+using HE.Investments.TestsUtils.Helpers;
 
 namespace HE.Investments.IntegrationTestsFramework;
 
@@ -118,7 +118,9 @@ public class IntegrationTestClient
             return true;
         }
 
-        var inputElement = radioInputsWithFormName.SingleOrDefault(x => x!.Value == formValue.Value) ?? throw new HtmlElementNotFoundException($"None of radio buttons for property {formValue.Key}, has value {formValue.Value}");
+        var inputElement = radioInputsWithFormName.SingleOrDefault(x => x!.Value == formValue.Value) ??
+                           throw new HtmlElementNotFoundException(
+                               $"None of radio buttons for property {formValue.Key}, has value {formValue.Value}. Possible values: {string.Join(", ", radioInputsWithFormName.Select(x => x!.Value))}");
 
         inputElement!.IsChecked = true;
 
@@ -149,7 +151,8 @@ public class IntegrationTestClient
             return true;
         }
 
-        var inputElement = checkboxInputsWithFormName.SingleOrDefault(x => x!.Value == formValue.Value) ?? throw new HtmlElementNotFoundException($"None of checkboxes for property {formValue.Key}, has value {formValue.Value}");
+        var inputElement = checkboxInputsWithFormName.SingleOrDefault(x => x!.Value == formValue.Value) ??
+                           throw new HtmlElementNotFoundException($"None of checkboxes for property {formValue.Key}, has value {formValue.Value}");
 
         inputElement!.IsChecked = true;
 

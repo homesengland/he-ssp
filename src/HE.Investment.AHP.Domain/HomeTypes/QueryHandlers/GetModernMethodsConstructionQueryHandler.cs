@@ -8,11 +8,11 @@ using HE.Investments.Account.Shared;
 namespace HE.Investment.AHP.Domain.HomeTypes.QueryHandlers;
 
 internal sealed class GetModernMethodsConstructionQueryHandler :
-    GetHomeTypeSegmentQueryHandlerBase<GetModernMethodsConstructionQuery, ModernMethodsConstructionEntity, ModernMethodsConstruction>
+    GetHomeTypeSegmentQueryHandlerBase<GetModernMethodsConstructionQuery, ModernMethodsConstructionSegmentEntity, ModernMethodsConstruction>
 {
     public GetModernMethodsConstructionQueryHandler(
         IHomeTypeRepository repository,
-        IHomeTypeSegmentContractMapper<ModernMethodsConstructionEntity, ModernMethodsConstruction> mapper,
+        IHomeTypeSegmentContractMapper<ModernMethodsConstructionSegmentEntity, ModernMethodsConstruction> mapper,
         IAccountUserContext accountUserContext)
         : base(repository, mapper, accountUserContext)
     {
@@ -20,5 +20,5 @@ internal sealed class GetModernMethodsConstructionQueryHandler :
 
     protected override IReadOnlyCollection<HomeTypeSegmentType> Segments => new[] { HomeTypeSegmentType.ModernMethodsConstruction };
 
-    protected override ModernMethodsConstructionEntity GetSegment(IHomeTypeEntity homeType) => homeType.ModernMethodsConstruction;
+    protected override ModernMethodsConstructionSegmentEntity GetSegment(IHomeTypeEntity homeType) => homeType.ModernMethodsConstruction;
 }

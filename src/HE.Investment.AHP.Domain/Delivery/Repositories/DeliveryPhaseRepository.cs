@@ -29,32 +29,14 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
 
     public async Task<DeliveryPhasesEntity> GetByApplicationId(ApplicationId applicationId, UserAccount userAccount, CancellationToken cancellationToken)
     {
+        if (!DeliveryPhases.Any())
+        {
+            await InitMockedData(applicationId, userAccount, cancellationToken);
+        }
+
         if (!DeliveryPhases.TryGetValue(applicationId, out var deliveryPhases))
         {
-            var application = await _applicationRepository.GetApplicationBasicInfo(applicationId, userAccount, cancellationToken);
-            var homesToDeliver = new[]
-            {
-                new HomesToDeliver(new HomeTypeId("ht-1"), new HomeTypeName("1 bed flat"), 3),
-                new HomesToDeliver(new HomeTypeId("ht-2"), new HomeTypeName("2 bed flat"), 2),
-                new HomesToDeliver(new HomeTypeId("ht-3"), new HomeTypeName("3 bed flat"), 1),
-                new HomesToDeliver(new HomeTypeId("ht-4"), new HomeTypeName("2 bed house"), 4),
-            };
-            deliveryPhases = new DeliveryPhasesEntity(
-                application,
-                new[]
-                {
-                    new DeliveryPhaseEntity(
-                        application,
-                        "Phase 1",
-                        SectionStatus.InProgress,
-                        new[] { new HomesToDeliverInPhase(new HomeTypeId("ht-1"), 3) },
-                        new DeliveryPhaseId("phase-1"),
-                        new DateTime(2023, 12, 12)),
-                },
-                homesToDeliver,
-                SectionStatus.InProgress);
-
-            DeliveryPhases.Add(applicationId, deliveryPhases);
+            throw new NotFoundException(nameof(DeliveryPhasesEntity), applicationId);
         }
 
         return deliveryPhases;
@@ -78,14 +60,19 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
         }
     }
 
-    public Task<IDeliveryPhaseEntity> GetById(ApplicationId applicationId, DeliveryPhaseId deliveryPhaseId, UserAccount userAccount, CancellationToken cancellationToken)
+    public async Task<IDeliveryPhaseEntity> GetById(ApplicationId applicationId, DeliveryPhaseId deliveryPhaseId, UserAccount userAccount, CancellationToken cancellationToken)
     {
+        if (!DeliveryPhases.Any())
+        {
+            await InitMockedData(applicationId, userAccount, cancellationToken);
+        }
+
         if (!DeliveryPhases.TryGetValue(applicationId, out var deliveryPhases))
         {
             throw new NotFoundException(nameof(DeliveryPhaseEntity), deliveryPhaseId);
         }
 
-        return Task.FromResult(deliveryPhases.GetById(deliveryPhaseId));
+        return deliveryPhases.GetById(deliveryPhaseId);
     }
 
     public async Task Save(DeliveryPhasesEntity deliveryPhases, OrganisationId organisationId, CancellationToken cancellationToken)
@@ -102,5 +89,35 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
                 new DeliveryPhaseHasBeenRemovedEvent(deliveryPhaseToRemove.Application.Id.Value),
                 cancellationToken);
         }
+    }
+
+    private async Task InitMockedData(ApplicationId applicationId, UserAccount userAccount, CancellationToken cancellationToken)
+    {
+        var application =
+            await _applicationRepository.GetApplicationBasicInfo(applicationId, userAccount, cancellationToken);
+        var homesToDeliver = new[]
+        {
+            new HomesToDeliver(new HomeTypeId("ht-1"), new HomeTypeName("1 bed flat"), 3),
+            new HomesToDeliver(new HomeTypeId("ht-2"), new HomeTypeName("2 bed flat"), 2),
+            new HomesToDeliver(new HomeTypeId("ht-3"), new HomeTypeName("3 bed flat"), 1),
+            new HomesToDeliver(new HomeTypeId("ht-4"), new HomeTypeName("2 bed house"), 4),
+        };
+        var deliveryPhases = new DeliveryPhasesEntity(
+            application,
+            new[]
+            {
+                new DeliveryPhaseEntity(
+                    application,
+                    "Phase 1",
+                    SectionStatus.InProgress,
+                    new[] { new HomesToDeliverInPhase(new HomeTypeId("ht-1"), 3) },
+                    new DeliveryPhaseId("phase-1"),
+                    new DateTime(2023, 12, 12),
+                    new AcquisitionMilestoneDetails(new AcquisitionDate("1", "2", "2023"), null)),
+            },
+            homesToDeliver,
+            SectionStatus.InProgress);
+
+        DeliveryPhases.Add(applicationId, deliveryPhases);
     }
 }

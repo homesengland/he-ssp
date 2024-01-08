@@ -1,6 +1,5 @@
 using AngleSharp.Html.Dom;
 using FluentAssertions;
-using HE.Investments.IntegrationTestsFramework.Extensions;
 
 namespace HE.Investments.AHP.IntegrationTests.Extensions;
 
