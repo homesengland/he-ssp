@@ -103,10 +103,10 @@ public class UserOrganisationController : Controller
         return await this.ExecuteCommand(
             _mediator,
             command,
-            () => RedirectToAction(
+            () => Task.FromResult<IActionResult>(RedirectToAction(
                 nameof(Details),
-                new ControllerName(nameof(UserOrganisationController)).WithoutPrefix()),
-            () => View(viewModel),
+                new ControllerName(nameof(UserOrganisationController)).WithoutPrefix())),
+            () => Task.FromResult<IActionResult>(View(viewModel)),
             cancellationToken);
     }
 
