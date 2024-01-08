@@ -28,6 +28,6 @@ public class GetDeliveryPhasesQueryHandler : IRequestHandler<GetDeliveryPhasesQu
         return new ApplicationDeliveryPhases(
             deliveryPhases.ApplicationName.Name,
             deliveryPhases.UnusedHomeTypesCount,
-            deliveryPhases.DeliveryPhases.OrderByDescending(x => x.CreatedOn).Select(DeliveryPhaseEntityMapper.ToContract).ToList());
+            deliveryPhases.DeliveryPhases.OrderByDescending(x => x.CreatedOn).Select(DeliveryPhaseEntityMapper.ToDeliveryPhaseBasicDetails).ToList());
     }
 }

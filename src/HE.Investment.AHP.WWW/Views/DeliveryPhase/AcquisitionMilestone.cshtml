@@ -1,10 +1,11 @@
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
-@using HE.Investments.Common.WWW.Components.BackLinkWithCallback
 @using HE.Investments.Common.WWW.Components.DateInput
 @using HE.Investments.Common.WWW.Components.Details
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.Components.FormHeader
 @using HE.Investment.AHP.WWW.Views.Shared.Components.AcquisitionMilestoneDetails
+@using HE.Investments.Common.WWW.Components.WorkflowBackButton
+@using HE.Investment.AHP.Contract.Delivery
 @model HE.Investment.AHP.WWW.Models.Delivery.MilestoneViewModel
 @{
     var title = "Acquisition milestone";
@@ -12,7 +13,7 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <vc:back-link-with-callback url="@Url.Action("Index", "Home")"/>
+    <vc:workflow-back-button action="@DeliveryPhaseWorkflowState.AcquisitionMilestone.ToString()" param-name="deliveryPhaseId"/>
 
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 

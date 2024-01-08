@@ -35,6 +35,7 @@ public static class AhpWebModule
         AddViewModelFactories(service);
 
         service.AddScoped<ISchemeProvider, CachedSchemeProvider>();
+        service.AddScoped<IDeliveryPhaseProvider, CachedDeliveryPhaseProvider>();
     }
 
     private static void AddConfiguration(IServiceCollection services, IConfiguration configuration)

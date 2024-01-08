@@ -12,8 +12,8 @@ public static class ControllerExtensions
         this Controller controller,
         IMediator mediator,
         TCommand command,
-        Func<IActionResult> onSuccess,
-        Func<IActionResult> onError,
+        Func<Task<IActionResult>> onSuccess,
+        Func<Task<IActionResult>> onError,
         CancellationToken cancellationToken)
         where TCommand : IRequest<OperationResult>
     {
@@ -30,14 +30,9 @@ public static class ControllerExtensions
 
             controller.ViewBag.ValidationErrors = validationErrors;
 
-            return onError();
+            return await onError();
         }
 
-        return onSuccess();
-    }
-
-    public static string GetApplicationIdFromRoute(this Controller controller)
-    {
-        return controller.Request.GetRouteValue("applicationId") ?? throw new NotFoundException("Missing required applicationId path parameter.");
+        return await onSuccess();
     }
 }

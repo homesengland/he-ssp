@@ -34,7 +34,7 @@ public static class DateHelper
         return utcDateTime?.ConvertUtcToUkLocalTime().ToString(CultureInfo.GetCultureInfo("en-GB"));
     }
 
-    public static string? ToDateOnlyString(DateTime? date)
+    public static string? ToDateOnlyString(DateOnly? date)
     {
         return date?.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
     }
