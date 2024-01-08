@@ -34,6 +34,7 @@ public class DeliveryPhaseWorkflow : IStateRouting<DeliveryPhaseWorkflowState>
         {
             DeliveryPhaseWorkflowState.New => true,
             DeliveryPhaseWorkflowState.Name => true,
+            DeliveryPhaseWorkflowState.TypeOfHomes => true,
             DeliveryPhaseWorkflowState.Summary => true,
             DeliveryPhaseWorkflowState.AcquisitionMilestone => !_isUnregisteredBody,
             DeliveryPhaseWorkflowState.StartOnSiteMilestone => !_isUnregisteredBody,
