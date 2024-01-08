@@ -1,6 +1,8 @@
 using System.Collections.Concurrent;
 using HE.Investment.AHP.Contract.Delivery.Events;
+using HE.Investment.AHP.Contract.Site.ValueObjects;
 using HE.Investment.AHP.Domain.Application.Repositories;
+using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
@@ -111,6 +113,8 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
                 new DeliveryPhaseEntity(
                     application,
                     new DeliveryPhaseName("Phase 1"),
+                    new SiteBasicInfo(new SiteId("S1"), false),
+                    "Phase 1",
                     SectionStatus.InProgress,
                     new[] { new HomesToDeliverInPhase(new HomeTypeId("ht-1"), 3) },
                     new DeliveryPhaseId("phase-1"),

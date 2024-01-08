@@ -8,6 +8,8 @@ public interface IDeliveryPhaseEntity
 {
     ApplicationBasicInfo Application { get; }
 
+    public SiteBasicInfo Site { get; }
+
     DeliveryPhaseId Id { get; }
 
     DeliveryPhaseName? Name { get; }

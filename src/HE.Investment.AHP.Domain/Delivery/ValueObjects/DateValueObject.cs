@@ -10,7 +10,7 @@ public class DateValueObject : ValueObject
         Build(day, month, year, fieldName, fieldLabel).CheckErrors();
     }
 
-    public DateTime Value { get; private set; }
+    public DateOnly Value { get; private set; }
 
     public static bool ValuesProvided(string? day, string? month, string? year)
     {
@@ -39,7 +39,7 @@ public class DateValueObject : ValueObject
 
         if (value != null)
         {
-            Value = value.Value;
+            Value = new DateOnly(value.Value.Year, value.Value.Month, value.Value.Day);
         }
 
         return operationResult;

@@ -16,6 +16,8 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
     public DeliveryPhaseEntity(
         ApplicationBasicInfo application,
         DeliveryPhaseName? name,
+        SiteBasicInfo site,
+        string? name,
         SectionStatus status,
         IEnumerable<HomesToDeliverInPhase> homesToDeliver,
         DeliveryPhaseId? id = null,
@@ -26,6 +28,8 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
     {
         Application = application;
         Name = name;
+        Site = site;
+        Name = new DeliveryPhaseName(name);
         Status = status;
         Id = id ?? DeliveryPhaseId.New();
         CreatedOn = createdOn;
@@ -36,6 +40,8 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
     }
 
     public ApplicationBasicInfo Application { get; }
+
+    public SiteBasicInfo Site { get; }
 
     public DeliveryPhaseId Id { get; set; }
 
@@ -96,11 +102,21 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
 
     public void ProvideAcquisitionMilestoneDetails(AcquisitionMilestoneDetails? details)
     {
+        if (Site.IsUnregisteredBody)
+        {
+            throw new InvalidOperationException("Cannot provide Acquisition Milestone details for Unregistered Body Partner.");
+        }
+
         AcquisitionMilestone = _modificationTracker.Change(AcquisitionMilestone, details, MarkAsNotCompleted);
     }
 
     public void ProvideStartOnSiteMilestoneDetails(StartOnSiteMilestoneDetails? details)
     {
+        if (Site.IsUnregisteredBody)
+        {
+            throw new InvalidOperationException("Cannot provide Start On Site Milestone details for Unregistered Body Partner.");
+        }
+
         StartOnSiteMilestone = _modificationTracker.Change(StartOnSiteMilestone, details, MarkAsNotCompleted);
     }
 
