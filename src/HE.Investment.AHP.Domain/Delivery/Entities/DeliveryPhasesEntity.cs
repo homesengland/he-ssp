@@ -86,13 +86,14 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
 
     public DeliveryPhaseEntity CreateDeliveryPhase(DeliveryPhaseName? name)
     {
+        var siteBasicInfo = new SiteBasicInfo(new Contract.Site.ValueObjects.SiteId("someid"), false);
         var deliveryPhaseNameAlreadyUsed = _deliveryPhases.Any(x => x.Name == name);
         if (name != null && deliveryPhaseNameAlreadyUsed)
         {
             OperationResult.New().AddValidationError(nameof(DeliveryPhaseName), "Provided delivery phase name is already in use. Delivery phase name should be unique.").CheckErrors();
         }
 
-        var deliveryPhase = new DeliveryPhaseEntity(_application, name, SectionStatus.InProgress, new List<HomesToDeliverInPhase>());
+        var deliveryPhase = new DeliveryPhaseEntity(_application, name, siteBasicInfo, SectionStatus.InProgress, new List<HomesToDeliverInPhase>());
 
         _deliveryPhases.Add(deliveryPhase);
         return deliveryPhase;
@@ -135,7 +136,7 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
             if (notCompletedDeliveryPhases.Any())
             {
                 throw new DomainValidationException(new OperationResult().AddValidationErrors(
-                    notCompletedDeliveryPhases.Select(x => new ErrorItem($"DeliveryPhase-{x.Id}", $"Complete {x.Name.Value} to save and continue")).ToList()));
+                    notCompletedDeliveryPhases.Select(x => new ErrorItem($"DeliveryPhase-{x.Id}", $"Complete {x?.Name?.Value} to save and continue")).ToList()));
             }
 
             if (!AreAllHomeTypesUsed())

@@ -52,7 +52,7 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
             // TODO: AB#66083 Save Delivery Phase in CRM
             entity.Id = new DeliveryPhaseId(Guid.NewGuid().ToString());
             await _eventDispatcher.Publish(
-                new DeliveryPhaseHasBeenCreatedEvent(entity.Application.Id.Value, entity.Name.Value),
+                new DeliveryPhaseHasBeenCreatedEvent(entity.Application.Id.Value, entity?.Name?.Value ?? string.Empty),
                 cancellationToken);
         }
         else if (entity.IsModified)
@@ -114,7 +114,6 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
                     application,
                     new DeliveryPhaseName("Phase 1"),
                     new SiteBasicInfo(new SiteId("S1"), false),
-                    "Phase 1",
                     SectionStatus.InProgress,
                     new[] { new HomesToDeliverInPhase(new HomeTypeId("ht-1"), 3) },
                     new DeliveryPhaseId("phase-1"),

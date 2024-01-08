@@ -32,7 +32,7 @@ public class DeliveryPhaseWorkflow : IStateRouting<DeliveryPhaseWorkflowState>
     {
         return state switch
         {
-            DeliveryPhaseWorkflowState.New => true,
+            DeliveryPhaseWorkflowState.Create => true,
             DeliveryPhaseWorkflowState.Name => true,
             DeliveryPhaseWorkflowState.Summary => true,
             DeliveryPhaseWorkflowState.AcquisitionMilestone => !_isUnregisteredBody,

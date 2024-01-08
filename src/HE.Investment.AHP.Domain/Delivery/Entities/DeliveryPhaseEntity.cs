@@ -17,7 +17,6 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
         ApplicationBasicInfo application,
         DeliveryPhaseName? name,
         SiteBasicInfo site,
-        string? name,
         SectionStatus status,
         IEnumerable<HomesToDeliverInPhase> homesToDeliver,
         DeliveryPhaseId? id = null,
@@ -29,7 +28,6 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
         Application = application;
         Name = name;
         Site = site;
-        Name = new DeliveryPhaseName(name);
         Status = status;
         Id = id ?? DeliveryPhaseId.New();
         CreatedOn = createdOn;
