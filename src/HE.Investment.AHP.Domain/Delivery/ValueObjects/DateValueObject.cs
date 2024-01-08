@@ -10,7 +10,7 @@ public class DateValueObject : ValueObject
         Build(day, month, year, fieldName, fieldLabel).CheckErrors();
     }
 
-    public DateTime Date { get; private set; }
+    public DateTime Value { get; private set; }
 
     public static bool ValuesProvided(string? day, string? month, string? year)
     {
@@ -26,7 +26,7 @@ public class DateValueObject : ValueObject
 
     protected override IEnumerable<object?> GetAtomicValues()
     {
-        yield return Date;
+        yield return Value;
     }
 
     private OperationResult Build(string? day, string? month, string? year, string fieldName, string fieldLabel)
@@ -39,7 +39,7 @@ public class DateValueObject : ValueObject
 
         if (value != null)
         {
-            Date = value.Value;
+            Value = value.Value;
         }
 
         return operationResult;
