@@ -40,11 +40,8 @@ public class SiteRepository : ISiteRepository
         }
         else
         {
-            var existingSite = MockedSites.SingleOrDefault(x => x.Id == site.Id);
-            if (existingSite is null)
-            {
-                throw new NotFoundException("Site not found", site.Id);
-            }
+            var existingSite = MockedSites.SingleOrDefault(x => x.Id == site.Id)
+                ?? throw new NotFoundException("Site not found", site.Id);
 
             MockedSites.Remove(existingSite);
             MockedSites.Add(site);

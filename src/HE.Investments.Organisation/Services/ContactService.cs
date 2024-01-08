@@ -224,7 +224,7 @@ public class ContactService : IContactService
             {
                 ["invln_accountid"] = organisationEntityReference,
                 ["invln_contactid"] = contactToCreate.ToEntityReference(),
-                ["invln_webroleid"] = webrole?.ToEntityReference(),
+                ["invln_webroleid"] = webrole.ToEntityReference(),
             },
         };
         _ = await service.CreateAsync(contactWebroleToCreate);

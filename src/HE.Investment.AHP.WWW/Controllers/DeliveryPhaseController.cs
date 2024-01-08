@@ -67,7 +67,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     [HttpGet("{deliveryPhaseId}/acquisition-milestone")]
     public IActionResult AcquisitionMilestone(string deliveryPhaseId)
     {
-        return View(CreateMilestoneViewModel(deliveryPhaseId));
+        return View(CreateMilestoneViewModel());
     }
 
     [WorkflowState(DeliveryPhaseWorkflowState.AcquisitionMilestone)]
@@ -89,7 +89,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     [HttpGet("{deliveryPhaseId}/start-on-site-milestone")]
     public IActionResult StartOnSiteMilestone(string deliveryPhaseId)
     {
-        return View(CreateMilestoneViewModel(deliveryPhaseId));
+        return View(CreateMilestoneViewModel());
     }
 
     [WorkflowState(DeliveryPhaseWorkflowState.StartOnSiteMilestone)]
@@ -111,7 +111,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     [HttpGet("{deliveryPhaseId}/practical-completion-milestone")]
     public IActionResult PracticalCompletionMilestone(string deliveryPhaseId)
     {
-        return View(CreateMilestoneViewModel(deliveryPhaseId));
+        return View(CreateMilestoneViewModel());
     }
 
     [WorkflowState(DeliveryPhaseWorkflowState.PracticalCompletionMilestone)]
@@ -133,7 +133,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     [HttpGet("{deliveryPhaseId}/unregistered-provider-follow-up")]
     public IActionResult UnregisteredProviderFollowUp(string deliveryPhaseId)
     {
-        return View(CreateMilestoneViewModel(deliveryPhaseId));
+        return View(CreateMilestoneViewModel());
     }
 
     [WorkflowState(DeliveryPhaseWorkflowState.UnregisteredProviderFollowUp)]
@@ -145,7 +145,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
             ModelState.AddModelError("requestAdditionalPayments", "Select value");
         }
 
-        return View(CreateMilestoneViewModel(deliveryPhaseId));
+        return View(CreateMilestoneViewModel());
     }
 
     protected override Task<IStateRouting<DeliveryPhaseWorkflowState>> Routing(DeliveryPhaseWorkflowState currentState, object? routeData = null)
@@ -153,7 +153,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         return Task.FromResult<IStateRouting<DeliveryPhaseWorkflowState>>(new DeliveryPhaseWorkflow());
     }
 
-    private MilestoneViewModel CreateMilestoneViewModel(string deliveryPhaseId)
+    private MilestoneViewModel CreateMilestoneViewModel()
     {
         var start = new DateDetails("1", "1", "1");
         var end = new DateDetails(null, null, null);

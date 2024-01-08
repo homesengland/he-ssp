@@ -39,9 +39,7 @@ public class ApplicationProjects
 
     public void UpdateProject(Project project)
     {
-        var projectToUpdate = Projects.FirstOrDefault(p => p.Id == project.Id) ?? throw new NotFoundException(nameof(Project).ToString(), project.Id!);
-
-        projectToUpdate = project;
+        project = Projects.FirstOrDefault(p => p.Id == project.Id) ?? throw new NotFoundException(nameof(Project).ToString(), project.Id!);
     }
 
     public void DeleteProject(ProjectId projectId)
