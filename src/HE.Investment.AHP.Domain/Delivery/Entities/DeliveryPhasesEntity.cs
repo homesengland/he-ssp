@@ -79,9 +79,18 @@ public class DeliveryPhasesEntity
         }
     }
 
-    public void Add(DeliveryPhaseEntity entity)
+    public DeliveryPhaseEntity CreateDeliveryPhase(string name)
     {
-        _deliveryPhases.Add(entity);
+        var deliveryPhaseNameAlreadyUsed = _deliveryPhases.Any(x => x.Name.Value == name);
+        if (deliveryPhaseNameAlreadyUsed)
+        {
+            OperationResult.New().AddValidationError(nameof(DeliveryPhaseName), "Provided delivery phase name is already in use. Delivery phase name should be unique.").CheckErrors();
+        }
+
+        var deliveryPhase = new DeliveryPhaseEntity(_application, name, Status, new List<HomesToDeliverInPhase>());
+
+        _deliveryPhases.Add(deliveryPhase);
+        return deliveryPhase;
     }
 
     public void Remove(DeliveryPhaseId deliveryPhaseId, RemoveDeliveryPhaseAnswer removeAnswer)

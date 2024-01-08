@@ -42,7 +42,7 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
         return deliveryPhases;
     }
 
-    public async Task Save(IDeliveryPhaseEntity deliveryPhase, OrganisationId organisationId, CancellationToken cancellationToken)
+    public async Task<DeliveryPhaseId> Save(IDeliveryPhaseEntity deliveryPhase, OrganisationId organisationId, CancellationToken cancellationToken)
     {
         var entity = (DeliveryPhaseEntity)deliveryPhase;
         if (entity.IsNew)
@@ -58,6 +58,8 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
             // TODO: Save Delivery Phase in CRM
             await _eventDispatcher.Publish(new DeliveryPhaseHasBeenUpdatedEvent(entity.Application.Id.Value), cancellationToken);
         }
+
+        return entity.Id;
     }
 
     public async Task<IDeliveryPhaseEntity> GetById(ApplicationId applicationId, DeliveryPhaseId deliveryPhaseId, UserAccount userAccount, CancellationToken cancellationToken)

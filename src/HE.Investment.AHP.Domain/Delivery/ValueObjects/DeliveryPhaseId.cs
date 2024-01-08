@@ -13,5 +13,5 @@ public class DeliveryPhaseId : StringIdValueObject
     {
     }
 
-    public static DeliveryPhaseId New() => new(Guid.NewGuid().ToString());
+    public static DeliveryPhaseId New() => new();
 }

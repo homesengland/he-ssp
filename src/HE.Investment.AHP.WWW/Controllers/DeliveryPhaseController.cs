@@ -26,7 +26,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         _mediator = mediator;
     }
 
-    [HttpGet("new")]
+    [HttpGet("create")]
     [WorkflowState(DeliveryPhaseWorkflowState.New)]
     public async Task<IActionResult> New([FromRoute] string applicationId)
     {
@@ -35,13 +35,11 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         return View("Name", model);
     }
 
-    [HttpPost("new")]
+    [HttpPost("create")]
     [WorkflowState(DeliveryPhaseWorkflowState.New)]
     public async Task<IActionResult> New([FromRoute] string applicationId, DeliveryPhaseNameViewModel model, CancellationToken cancellationToken)
     {
-        var deliveryPhaseId = await _mediator.Send(new CreateDeliveryPhaseCommand(applicationId, model.DeliveryPhaseName ?? string.Empty), cancellationToken);
-
-        var result = await _mediator.Send(new ProvideDeliveryPhaseNameCommand(applicationId, deliveryPhaseId.Id, model.DeliveryPhaseName), cancellationToken);
+        var result = await _mediator.Send(new CreateDeliveryPhaseCommand(applicationId, model.DeliveryPhaseName ?? string.Empty), cancellationToken);
 
         if (result.HasValidationErrors)
         {
@@ -49,7 +47,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
             return View("Name", model);
         }
 
-        return await Continue(new { applicationId, deliveryPhaseId.Id });
+        return await Continue(new { applicationId, result.ReturnedData?.Id });
     }
 
     [HttpGet("{deliveryPhaseId}/name")]
