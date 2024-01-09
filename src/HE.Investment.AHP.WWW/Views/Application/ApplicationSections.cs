@@ -40,7 +40,8 @@ public static class ApplicationSections
                     "Delivery phases",
                     "Complete information about your delivery phases and milestone dates.",
                     "Add delivery phases",
-                    _ => GetAction(url, applicationId, typeof(DeliveryController), nameof(DeliveryController.Start))),
+                    _ => GetAction(url, applicationId, typeof(DeliveryController), nameof(DeliveryController.Start)),
+                    isAvailable: sections.FirstOrDefault(s => s.SectionType == SectionType.HomeTypes)?.SectionStatus > SectionStatus.NotStarted),
             }
             .Where(i => i != null)
             .Cast<TaskListSectionModel>()

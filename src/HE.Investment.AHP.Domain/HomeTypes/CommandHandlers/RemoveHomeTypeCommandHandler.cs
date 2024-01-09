@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Domain.Delivery.Repositories;
 using HE.Investment.AHP.Domain.HomeTypes.Commands;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
@@ -14,12 +15,19 @@ public class RemoveHomeTypeCommandHandler : HomeTypeCommandHandlerBase, IRequest
 {
     private readonly IHomeTypeRepository _repository;
 
+    private readonly IDeliveryPhaseRepository _deliveryRepository;
+
     private readonly IAccountUserContext _accountUserContext;
 
-    public RemoveHomeTypeCommandHandler(IHomeTypeRepository repository, IAccountUserContext accountUserContext, ILogger<RemoveHomeTypeCommandHandler> logger)
+    public RemoveHomeTypeCommandHandler(
+        IHomeTypeRepository repository,
+        IDeliveryPhaseRepository deliveryRepository,
+        IAccountUserContext accountUserContext,
+        ILogger<RemoveHomeTypeCommandHandler> logger)
         : base(logger)
     {
         _repository = repository;
+        _deliveryRepository = deliveryRepository;
         _accountUserContext = accountUserContext;
     }
 
@@ -27,7 +35,8 @@ public class RemoveHomeTypeCommandHandler : HomeTypeCommandHandlerBase, IRequest
     {
         var account = await _accountUserContext.GetSelectedAccount();
         var homeTypes = await _repository.GetByApplicationId(new ApplicationId(request.ApplicationId), account, HomeTypeSegmentTypes.None, cancellationToken);
-        var validationErrors = PerformWithValidation(() => homeTypes.Remove(new HomeTypeId(request.HomeTypeId), request.RemoveHomeTypeAnswer));
+        var deliveryPhases = await _deliveryRepository.GetByApplicationId(new ApplicationId(request.ApplicationId), account, cancellationToken);
+        var validationErrors = PerformWithValidation(() => homeTypes.Remove(new HomeTypeId(request.HomeTypeId), request.RemoveHomeTypeAnswer, deliveryPhases));
         if (validationErrors.Any())
         {
             return new OperationResult(validationErrors);

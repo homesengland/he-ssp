@@ -47,7 +47,7 @@ public class HomeTypesEntity
         return homeType;
     }
 
-    public void Remove(HomeTypeId homeTypeId, RemoveHomeTypeAnswer removeAnswer)
+    public void Remove(HomeTypeId homeTypeId, RemoveHomeTypeAnswer removeAnswer, IHomeTypeConsumer homeTypeConsumer)
     {
         if (removeAnswer == RemoveHomeTypeAnswer.Undefined)
         {
@@ -57,10 +57,10 @@ public class HomeTypesEntity
         if (removeAnswer == RemoveHomeTypeAnswer.Yes)
         {
             var homeType = GetEntityById(homeTypeId);
-            if (homeType.IsUsedInDeliveryPhase)
+            if (homeTypeConsumer.IsHomeTypeUsed(homeTypeId))
             {
                 OperationResult.New()
-                    .AddValidationError($"HomeType-{homeTypeId}", "Home Type cannot be removed because it is used in Delivery Phase")
+                    .AddValidationError($"HomeType-{homeTypeId}", $"Home Type cannot be removed because it is used in {homeTypeConsumer.HomeTypeConsumerName}")
                     .CheckErrors();
             }
 

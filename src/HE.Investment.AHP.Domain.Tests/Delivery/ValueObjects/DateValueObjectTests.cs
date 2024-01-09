@@ -23,8 +23,8 @@ public class DateValueObjectTests
         var date = new DateValueObject("25", "2", "2033", "test", "test");
 
         // then
-        date.Date.Day.Should().Be(25);
-        date.Date.Month.Should().Be(2);
-        date.Date.Year.Should().Be(2033);
+        date.Value.Day.Should().Be(25);
+        date.Value.Month.Should().Be(2);
+        date.Value.Year.Should().Be(2033);
     }
 }

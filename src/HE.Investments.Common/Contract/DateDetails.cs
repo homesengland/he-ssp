@@ -1,3 +1,6 @@
 namespace HE.Investments.Common.Contract;
 
-public record DateDetails(string? Day, string? Month, string? Year);
+public record DateDetails(string? Day, string? Month, string? Year)
+{
+    public static DateDetails Empty() => new(string.Empty, string.Empty, string.Empty);
+}
