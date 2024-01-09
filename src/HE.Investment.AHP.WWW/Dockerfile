@@ -25,6 +25,7 @@ COPY ["HE.Investments.Common.CRM/HE.Investments.Common.CRM.csproj", "HE.Investme
 COPY ["HE.Investments.Organisation/HE.Investments.Organisation.csproj", "HE.Investments.Organisation/"]
 COPY ["HE.Investments.Common.WWW/HE.Investments.Common.WWW.csproj", "HE.Investments.Common.WWW/"]
 COPY ["HE.Investments.Loans.Common/HE.Investments.Loans.Common.csproj", "HE.Investments.Loans.Common/"]
+COPY ["HE.Investments.Common.Contract/HE.Investments.Common.Contract.csproj", "HE.Investments.Common.Contract/"]
 COPY ["HE.Investments.DocumentService/HE.Investments.DocumentService.csproj", "HE.Investments.DocumentService/"]
 RUN dotnet restore "./HE.Investment.AHP.WWW/./HE.Investment.AHP.WWW.csproj"
 COPY . .

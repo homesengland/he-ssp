@@ -21,6 +21,7 @@ COPY ["HE.Investments.Loans.BusinessLogic/HE.Investments.Loans.BusinessLogic.csp
 COPY ["HE.Investments.Common.WWW/HE.Investments.Common.WWW.csproj", "HE.Investments.Common.WWW/"]
 COPY ["HE.Investments.Loans.Common/HE.Investments.Loans.Common.csproj", "HE.Investments.Loans.Common/"]
 COPY ["HE.Investments.Common.CRM/HE.Investments.Common.CRM.csproj", "HE.Investments.Common.CRM/"]
+COPY ["HE.Investments.Common.Contract/HE.Investments.Common.Contract.csproj", "HE.Investments.Common.Contract/"]
 COPY ["HE.Investments.Loans.Common.Contract/HE.Investments.Loans.Common.Contract.csproj", "HE.Investments.Loans.Common.Contract/"]
 COPY ["HE.Investments.Loans.Contract/HE.Investments.Loans.Contract.csproj", "HE.Investments.Loans.Contract/"]
 COPY ["HE.Investments.Account.Contract/HE.Investments.Account.Contract.csproj", "HE.Investments.Account.Contract/"]
