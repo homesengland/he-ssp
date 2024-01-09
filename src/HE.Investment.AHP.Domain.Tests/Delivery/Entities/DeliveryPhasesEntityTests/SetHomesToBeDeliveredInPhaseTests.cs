@@ -1,4 +1,6 @@
 using FluentAssertions;
+using HE.Investment.AHP.Contract.Delivery;
+using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;

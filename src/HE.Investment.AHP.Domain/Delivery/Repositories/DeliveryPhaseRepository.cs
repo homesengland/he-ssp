@@ -1,7 +1,8 @@
 using System.Collections.Concurrent;
+using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.Contract.Delivery.Events;
-using HE.Investment.AHP.Contract.Site.ValueObjects;
+using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.Entities;

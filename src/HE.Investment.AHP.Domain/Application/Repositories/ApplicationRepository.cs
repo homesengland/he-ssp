@@ -11,7 +11,6 @@ using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.CRM;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Infrastructure.Events;
-using HE.Investments.Common.Utils.Pagination;
 using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 using ApplicationSection = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationSection;
 

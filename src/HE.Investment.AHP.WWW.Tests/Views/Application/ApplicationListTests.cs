@@ -3,9 +3,9 @@ using AngleSharp.Html.Dom;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investments.Common.Contract;
+using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
-using HE.Investments.Common.Utils.Pagination;
 using HE.Investments.Common.WWWTestsFramework;
 using HE.Investments.Common.WWWTestsFramework.Helpers;
 

@@ -1,7 +1,6 @@
 using HE.Investments.Common.Contract;
-using HE.Investments.Common.Domain.ValueObjects;
 
-namespace HE.Investment.AHP.Domain.Delivery.ValueObjects;
+namespace HE.Investment.AHP.Contract.Delivery;
 
 public record DeliveryPhaseId : StringIdValueObject
 {

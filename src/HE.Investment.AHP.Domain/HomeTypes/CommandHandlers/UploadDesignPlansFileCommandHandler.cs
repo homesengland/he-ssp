@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Common.ValueObjects;
 using HE.Investment.AHP.Domain.Documents.Config;

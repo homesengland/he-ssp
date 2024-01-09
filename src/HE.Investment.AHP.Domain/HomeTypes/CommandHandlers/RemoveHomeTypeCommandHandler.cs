@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Domain.Delivery.Repositories;
 using HE.Investment.AHP.Domain.HomeTypes.Commands;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;

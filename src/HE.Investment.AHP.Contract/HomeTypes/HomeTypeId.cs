@@ -1,7 +1,6 @@
 using HE.Investments.Common.Contract;
-using HE.Investments.Common.Domain.ValueObjects;
 
-namespace HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
+namespace HE.Investment.AHP.Contract.HomeTypes;
 
 public record HomeTypeId : StringIdValueObject
 {

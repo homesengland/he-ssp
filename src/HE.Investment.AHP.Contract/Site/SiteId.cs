@@ -1,6 +1,6 @@
 using HE.Investments.Common.Contract;
 
-namespace HE.Investment.AHP.Contract.Site.ValueObjects;
+namespace HE.Investment.AHP.Contract.Site;
 
 public record SiteId : StringIdValueObject
 {
