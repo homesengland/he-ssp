@@ -40,7 +40,7 @@ public class CreateDeliveryPhaseCommandHandler : DeliveryCommandHandlerBase, IRe
         var account = await _accountUserContext.GetSelectedAccount();
 
         var deliveryPhases = await _deliveryPhaseRepository.GetByApplicationId(new ApplicationId.ApplicationId(request.ApplicationId), account, cancellationToken);
-        var newDeliveryPhase = deliveryPhases.CreateDeliveryPhase(request.DeliveryPhaseName.IsNotNullOrEmpty() ? new DeliveryPhaseName(request.DeliveryPhaseName) : null);
+        var newDeliveryPhase = deliveryPhases.CreateDeliveryPhase(new DeliveryPhaseName(request.DeliveryPhaseName));
         operationResult.CheckErrors();
         var deliveryPhaseId = operationResult.CatchResult(() => _deliveryPhaseRepository.Save(newDeliveryPhase, account.SelectedOrganisationId(), cancellationToken).Result);
         operationResult.CheckErrors();

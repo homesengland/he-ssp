@@ -84,11 +84,11 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
         }
     }
 
-    public DeliveryPhaseEntity CreateDeliveryPhase(DeliveryPhaseName? name)
+    public DeliveryPhaseEntity CreateDeliveryPhase(DeliveryPhaseName name)
     {
         var siteBasicInfo = new SiteBasicInfo(new Contract.Site.ValueObjects.SiteId("someid"), false);
         var deliveryPhaseNameAlreadyUsed = _deliveryPhases.Any(x => x.Name == name);
-        if (name != null && deliveryPhaseNameAlreadyUsed)
+        if (deliveryPhaseNameAlreadyUsed)
         {
             OperationResult.New().AddValidationError(nameof(DeliveryPhaseName), "Provided delivery phase name is already in use. Delivery phase name should be unique.").CheckErrors();
         }

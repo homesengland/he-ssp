@@ -15,7 +15,7 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
 
     public DeliveryPhaseEntity(
         ApplicationBasicInfo application,
-        DeliveryPhaseName? name,
+        DeliveryPhaseName name,
         SiteBasicInfo site,
         SectionStatus status,
         IEnumerable<HomesToDeliverInPhase> homesToDeliver,
@@ -43,7 +43,7 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
 
     public DeliveryPhaseId Id { get; set; }
 
-    public DeliveryPhaseName? Name { get; private set; }
+    public DeliveryPhaseName Name { get; private set; }
 
     public DateTime? CreatedOn { get; }
 
@@ -93,7 +93,7 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
         }
     }
 
-    public void ProvideName(DeliveryPhaseName? deliveryPhaseName)
+    public void ProvideName(DeliveryPhaseName deliveryPhaseName)
     {
         Name = _modificationTracker.Change(Name, deliveryPhaseName, MarkAsNotCompleted);
     }

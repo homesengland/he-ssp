@@ -230,9 +230,14 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
 
     protected override async Task<IStateRouting<DeliveryPhaseWorkflowState>> Routing(DeliveryPhaseWorkflowState currentState, object? routeData = null)
     {
-        var deliveryPhase = await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(this.GetApplicationIdFromRoute(), this.GetDeliveryPhaseIdFromRoute()), CancellationToken.None);
+        var isUnregisteredBody = false;
+        if (currentState != DeliveryPhaseWorkflowState.Create)
+        {
+            var deliveryPhase = await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(this.GetApplicationIdFromRoute(), this.GetDeliveryPhaseIdFromRoute()), CancellationToken.None);
+            isUnregisteredBody = deliveryPhase.IsUnregisteredBody;
+        }
 
-        return new DeliveryPhaseWorkflow(currentState, deliveryPhase.IsUnregisteredBody);
+        return new DeliveryPhaseWorkflow(currentState, isUnregisteredBody);
     }
 
     private MilestoneViewModel CreateMilestoneViewModel(
