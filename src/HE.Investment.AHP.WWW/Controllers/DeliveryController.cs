@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investment.AHP.WWW.Controllers;
 
-[AuthorizeWithCompletedProfile]
+[AuthorizeWithCompletedProfileAttribute]
 [Route("application/{applicationId}/delivery")]
 public class DeliveryController : Controller
 {

@@ -183,7 +183,7 @@ public class SearchTests : TestBase<OrganisationSearchService>
         result.TotalItems.Should().Be(2);
         result.Items.Count.Should().Be(2);
         result.Items[0].ShouldBe(companyFromCompanyHouse.CompanyName, companyFromCompanyHouse.CompanyNumber, null, false);
-        result.Items.Last().ShouldBe(spvCompany.registeredCompanyName, spvCompany.companyRegistrationNumber, spvCompany.organisationId, true);
+        result.Items[result.Items.Count - 1].ShouldBe(spvCompany.registeredCompanyName, spvCompany.companyRegistrationNumber, spvCompany.organisationId, true);
     }
 
     [Fact]

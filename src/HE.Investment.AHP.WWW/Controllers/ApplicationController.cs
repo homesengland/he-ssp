@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HE.Investment.AHP.WWW.Controllers;
 
 [Route("application")]
-[AuthorizeWithCompletedProfile]
+[AuthorizeWithCompletedProfileAttribute]
 public class ApplicationController : WorkflowController<ApplicationWorkflowState>
 {
     private readonly string _siteName = "Test Site";
@@ -114,7 +114,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     }
 
     [HttpPost("{applicationId}/submit")]
-    [AuthorizeWithCompletedProfile(AccountAccessContext.SubmitApplication)]
+    [AuthorizeWithCompletedProfileAttribute(AccountAccessContext.SubmitApplication)]
     public async Task<IActionResult> Submit(string applicationId, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new SubmitApplicationCommand(applicationId), cancellationToken);
@@ -132,7 +132,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     }
 
     [HttpGet("{applicationId}/submitted")]
-    [AuthorizeWithCompletedProfile(AccountAccessContext.SubmitApplication)]
+    [AuthorizeWithCompletedProfileAttribute(AccountAccessContext.SubmitApplication)]
     public async Task<IActionResult> Submitted(string applicationId, CancellationToken cancellationToken)
     {
         var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);

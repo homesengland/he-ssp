@@ -22,7 +22,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HE.Investments.Loans.WWW.Controllers;
 
 [Route("application")]
-[AuthorizeWithCompletedProfile]
+[AuthorizeWithCompletedProfileAttribute]
 public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWorkflow.State>
 {
     private readonly IMediator _mediator;

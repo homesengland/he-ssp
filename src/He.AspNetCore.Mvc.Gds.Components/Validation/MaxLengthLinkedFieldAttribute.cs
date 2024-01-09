@@ -8,7 +8,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.Validation
     /// </summary>
     public class MaxLengthLinkedFieldAttribute : ValidationAttribute
     {
-        private readonly long maxLength;
+        private readonly long _maxLength;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MaxLengthLinkedFieldAttribute"/> class.
@@ -16,7 +16,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.Validation
         /// <param name="maxLength">The maximum allowed length for the linked field.</param>
         public MaxLengthLinkedFieldAttribute(long maxLength)
         {
-            this.maxLength = maxLength;
+            this._maxLength = maxLength;
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.Validation
             {
                 var linkedFieldString = linkedField.GetValue(validationContext.ObjectInstance) as string;
 
-                if (linkedFieldString?.Length > this.maxLength)
+                if (linkedFieldString?.Length > this._maxLength)
                 {
                     validationResult = new ValidationResult(this.ErrorMessage, new List<string>() { validationContext.MemberName });
                 }

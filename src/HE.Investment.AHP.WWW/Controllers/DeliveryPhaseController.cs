@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investment.AHP.WWW.Controllers;
 
-[AuthorizeWithCompletedProfile]
+[AuthorizeWithCompletedProfileAttribute]
 [Route("application/{applicationId}/DeliveryPhase")]
 public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowState>
 {
@@ -73,6 +73,9 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     [HttpGet("{deliveryPhaseId}/acquisition-milestone")]
     public async Task<IActionResult> AcquisitionMilestone([FromRoute] string applicationId, string deliveryPhaseId, CancellationToken cancellationToken)
     {
+<<<<<<< HEAD
+        return View(CreateMilestoneViewModel());
+=======
         var deliveryPhaseDetails = await _mediator.Send(new GetDeliveryPhaseDetailsQuery(applicationId, deliveryPhaseId), cancellationToken);
 
         return View(CreateMilestoneViewModel(
@@ -80,6 +83,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
             deliveryPhaseDetails.Name,
             deliveryPhaseDetails.AcquisitionDate,
             deliveryPhaseDetails.AcquisitionPaymentDate));
+>>>>>>> origin/main
     }
 
     [WorkflowState(DeliveryPhaseWorkflowState.AcquisitionMilestone)]
@@ -102,6 +106,9 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     [HttpGet("{deliveryPhaseId}/start-on-site-milestone")]
     public async Task<IActionResult> StartOnSiteMilestone([FromRoute] string applicationId, string deliveryPhaseId, CancellationToken cancellationToken)
     {
+<<<<<<< HEAD
+        return View(CreateMilestoneViewModel());
+=======
         var deliveryPhaseDetails = await _mediator.Send(new GetDeliveryPhaseDetailsQuery(applicationId, deliveryPhaseId), cancellationToken);
 
         return View(CreateMilestoneViewModel(
@@ -109,6 +116,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
             deliveryPhaseDetails.Name,
             deliveryPhaseDetails.StartOnSiteDate,
             deliveryPhaseDetails.StartOnSitePaymentDate));
+>>>>>>> origin/main
     }
 
     [WorkflowState(DeliveryPhaseWorkflowState.StartOnSiteMilestone)]
@@ -131,6 +139,9 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     [HttpGet("{deliveryPhaseId}/practical-completion-milestone")]
     public async Task<IActionResult> PracticalCompletionMilestone([FromRoute] string applicationId, string deliveryPhaseId, CancellationToken cancellationToken)
     {
+<<<<<<< HEAD
+        return View(CreateMilestoneViewModel());
+=======
         var deliveryPhaseDetails = await _mediator.Send(new GetDeliveryPhaseDetailsQuery(applicationId, deliveryPhaseId), cancellationToken);
 
         return View(CreateMilestoneViewModel(
@@ -138,6 +149,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
             deliveryPhaseDetails.Name,
             deliveryPhaseDetails.PracticalCompletionDate,
             deliveryPhaseDetails.PracticalCompletionPaymentDate));
+>>>>>>> origin/main
     }
 
     [WorkflowState(DeliveryPhaseWorkflowState.PracticalCompletionMilestone)]
@@ -160,12 +172,16 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     [HttpGet("{deliveryPhaseId}/unregistered-provider-follow-up")]
     public async Task<IActionResult> UnregisteredProviderFollowUp([FromRoute] string applicationId, string deliveryPhaseId, CancellationToken cancellationToken)
     {
+<<<<<<< HEAD
+        return View(CreateMilestoneViewModel());
+=======
         var deliveryPhaseDetails = await _mediator.Send(new GetDeliveryPhaseDetailsQuery(applicationId, deliveryPhaseId), cancellationToken);
 
         return View(new DeliveryViewModelBase(
             applicationId,
             deliveryPhaseDetails.ApplicationName,
             deliveryPhaseDetails.Name));
+>>>>>>> origin/main
     }
 
     [WorkflowState(DeliveryPhaseWorkflowState.UnregisteredProviderFollowUp)]
@@ -183,10 +199,14 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
             ModelState.AddModelError("requestAdditionalPayments", "Select value");
         }
 
+<<<<<<< HEAD
+        return View(CreateMilestoneViewModel());
+=======
         return View(new DeliveryViewModelBase(
             applicationId,
             deliveryPhaseDetails.ApplicationName,
             deliveryPhaseDetails.Name));
+>>>>>>> origin/main
     }
 
     protected override Task<IStateRouting<DeliveryPhaseWorkflowState>> Routing(DeliveryPhaseWorkflowState currentState, object? routeData = null)
@@ -194,11 +214,15 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         return Task.FromResult<IStateRouting<DeliveryPhaseWorkflowState>>(new DeliveryPhaseWorkflow(currentState));
     }
 
+<<<<<<< HEAD
+    private MilestoneViewModel CreateMilestoneViewModel()
+=======
     private MilestoneViewModel CreateMilestoneViewModel(
         string applicationName,
         string deliveryPhaseName,
         DateDetails? milestoneDate,
         DateDetails? milestonePaymentDate)
+>>>>>>> origin/main
     {
         return new MilestoneViewModel(
             this.GetApplicationIdFromRoute(),

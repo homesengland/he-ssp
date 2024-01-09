@@ -8,9 +8,9 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Labels
 {
     /// <summary>
     /// Class GdsLabelTagHelper.
-    /// Implements the <see cref="Microsoft.AspNetCore.Razor.TagHelpers.TagHelper" />.
+    /// Implements the <see cref="TagHelper" />.
     /// </summary>
-    /// <seealso cref="Microsoft.AspNetCore.Razor.TagHelpers.TagHelper" />
+    /// <seealso cref="TagHelper" />
     public class GdsLabelTagHelper : TagHelper
     {
         /// <summary>
@@ -28,7 +28,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Labels
         public ControlSize? Size { get; set; }
 
         /// <summary>
-        /// Synchronously executes the <see cref="Microsoft.AspNetCore.Razor.TagHelpers.TagHelper" /> with the given <paramref name="context" /> and
+        /// Synchronously executes the <see cref="TagHelper" /> with the given <paramref name="context" /> and
         /// <paramref name="output" />.
         /// </summary>
         /// <param name="context">Contains information associated with the current HTML tag.</param>
@@ -41,9 +41,13 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Labels
                 TagConstruct.ConstructGeneric(output, HtmlConstants.For, this.For);
 
                 if (Size.HasValue)
+                {
                     TagConstruct.ConstructClassForSize(output, CssConstants.GovUkLabel, Size.Value);
+                }
                 else
+                {
                     TagConstruct.ConstructClass(output, CssConstants.GovUkLabel);
+                }
 
                 output.Content.SetHtmlContent(TagConstruct.ConstructSetHtml(output, this.Text));
             }

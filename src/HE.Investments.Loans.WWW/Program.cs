@@ -36,7 +36,7 @@ builder.Services.AddFeatureManagement();
 builder.Services.AddDocumentServiceModule();
 builder.Services.AddCommonBuildingBlocks();
 
-var mvcBuilder = builder.Services.AddControllersWithViews(x => x.Filters.Add<ExceptionFilter>());
+var mvcBuilder = builder.Services.AddControllersWithViews(x => x.Filters.Add<ExceptionFilterAttribute>());
 builder.AddIdentityProviderConfiguration(mvcBuilder);
 
 var app = builder.Build();

@@ -15,6 +15,6 @@ internal static class ViewContextExtensions
             return (isPropertyInError, null);
         }
 
-        return (isPropertyInError, entry?.Errors.First().ErrorMessage);
+        return (isPropertyInError, entry?.Errors[0].ErrorMessage);
     }
 }

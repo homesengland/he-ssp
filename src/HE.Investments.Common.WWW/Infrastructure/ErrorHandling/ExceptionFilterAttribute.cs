@@ -9,18 +9,18 @@ using Microsoft.Extensions.Logging;
 
 namespace HE.Investments.Common.WWW.Infrastructure.ErrorHandling;
 
-public class ExceptionFilter : ExceptionFilterAttribute
+public class ExceptionFilterAttribute : Microsoft.AspNetCore.Mvc.Filters.ExceptionFilterAttribute
 {
     private readonly IModelMetadataProvider _modelMetadataProvider;
     private readonly IHostEnvironment _hostEnvironment;
     private readonly IErrorViewPaths _errorViewPaths;
-    private readonly ILogger<ExceptionFilter> _logger;
+    private readonly ILogger<ExceptionFilterAttribute> _logger;
 
-    public ExceptionFilter(
+    public ExceptionFilterAttribute(
         IModelMetadataProvider modelMetadataProvider,
         IHostEnvironment hostEnvironment,
         IErrorViewPaths errorViewPaths,
-        ILogger<ExceptionFilter> logger)
+        ILogger<ExceptionFilterAttribute> logger)
     {
         _modelMetadataProvider = modelMetadataProvider;
         _hostEnvironment = hostEnvironment;

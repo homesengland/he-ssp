@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HE.Investments.Loans.WWW.Controllers;
 
 [Route("application/{id}/funding")]
-[AuthorizeWithCompletedProfile]
+[AuthorizeWithCompletedProfileAttribute]
 public class FundingV2Controller : WorkflowController<FundingState>
 {
     private readonly IMediator _mediator;

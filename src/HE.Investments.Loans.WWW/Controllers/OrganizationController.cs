@@ -17,7 +17,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HE.Investments.Loans.WWW.Controllers;
 
 [Route("organization")]
-[AuthorizeWithoutLinkedOrganisationOnly]
+[AuthorizeWithoutLinkedOrganisationOnlyAttribute]
 public class OrganizationController : BaseController
 {
     private readonly IMediator _mediator;

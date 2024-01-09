@@ -73,6 +73,8 @@ public static class ValidationErrorMessage
 
     public const string EnterDate = "Enter a date. The date must include a day, month and year";
 
+    public const string SquareMetersMustBeNumber = "The square meterage in the internal floor each of each home must be a number, like 75.50";
+
     public static string EstimatedPoundInput(string name) => PoundInput($"The estimated {name}");
 
     public static string PoundInput(string name) => new($"{name} must be entered as a number, in pounds and pence");
@@ -102,8 +104,6 @@ public static class ValidationErrorMessage
     public static string MustBeProvidedForCalculation(string displayName) => $"Enter the {displayName} to calculate";
 
     public static string MustBeSelectedForCalculation(string displayName) => $"Select if {displayName} to calculate";
-
-    public static string SquareMetersMustBeNumber() => "The square meterage in the internal floor each of each home must be a number, like 75.50";
 
     public static string StringLengthExceeded(string displayName, int maxLength) => new($"{displayName.TitleCaseFirstLetterInString()} must be {maxLength} characters or less");
 

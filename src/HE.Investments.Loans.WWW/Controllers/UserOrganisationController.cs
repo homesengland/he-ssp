@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HE.Investments.Loans.WWW.Controllers;
 
 [Route("user-organisation")]
-[AuthorizeWithCompletedProfile]
+[AuthorizeWithCompletedProfileAttribute]
 public class UserOrganisationController : BaseController
 {
     private readonly IMediator _mediator;

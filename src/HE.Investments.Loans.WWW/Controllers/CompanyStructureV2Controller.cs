@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HE.Investments.Loans.WWW.Controllers;
 
 [Route("application/{id}/company")]
-[AuthorizeWithCompletedProfile]
+[AuthorizeWithCompletedProfileAttribute]
 public class CompanyStructureV2Controller : WorkflowController<CompanyStructureState>
 {
     private readonly IMediator _mediator;

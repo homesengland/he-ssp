@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 
 namespace HE.Investments.Loans.Common.Infrastructure.Middlewares;
 
@@ -13,7 +13,9 @@ public class HeaderSecurityMiddleware
 
     public async Task InvokeAsync(HttpContext context, NonceModel nonce)
     {
+#pragma warning disable S1075 // URIs should not be hardcoded
         var externalGaScriptUrl = "https://www.googletagmanager.com/gtag/js";
+#pragma warning restore S1075 // URIs should not be hardcoded
         var builtInGaScriptNonceHeader = $"nonce-{nonce.GaNonce}";
         var gaConnectAndImgDomains = "*.analytics.google.com *.google-analytics.com";
 

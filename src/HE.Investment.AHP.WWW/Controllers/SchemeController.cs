@@ -25,7 +25,7 @@ using UploadedFile = HE.Investment.AHP.Contract.Common.UploadedFile;
 
 namespace HE.Investment.AHP.WWW.Controllers;
 
-[AuthorizeWithCompletedProfile]
+[AuthorizeWithCompletedProfileAttribute]
 [Route("application/{applicationId}/scheme")]
 public class SchemeController : WorkflowController<SchemeWorkflowState>
 {

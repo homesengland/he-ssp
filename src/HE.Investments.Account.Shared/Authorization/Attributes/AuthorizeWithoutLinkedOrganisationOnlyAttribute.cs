@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace HE.Investments.Account.Shared.Authorization.Attributes;
 
 [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class)]
-public class AuthorizeWithoutLinkedOrganisationOnly : AuthorizeAttribute, IAsyncActionFilter
+public class AuthorizeWithoutLinkedOrganisationOnlyAttribute : AuthorizeAttribute, IAsyncActionFilter
 {
     public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
     {

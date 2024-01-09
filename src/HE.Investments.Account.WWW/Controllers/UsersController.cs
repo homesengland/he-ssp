@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HE.Investments.Account.WWW.Controllers;
 
 [Route("users")]
-[AuthorizeWithCompletedProfile(AccountAccessContext.OrganisationView)]
+[AuthorizeWithCompletedProfileAttribute(AccountAccessContext.OrganisationView)]
 public class UsersController : Controller
 {
     private readonly IMediator _mediator;
@@ -34,7 +34,7 @@ public class UsersController : Controller
     }
 
     [HttpGet("{id}/change")]
-    [AuthorizeWithCompletedProfile(AccountAccessContext.ManageUsers)]
+    [AuthorizeWithCompletedProfileAttribute(AccountAccessContext.ManageUsers)]
     public async Task<IActionResult> Change([FromRoute] string id, CancellationToken cancellationToken)
     {
         var model = await _mediator.Send(new GetUserDetailsQuery(id), cancellationToken);
@@ -43,7 +43,7 @@ public class UsersController : Controller
     }
 
     [HttpPost("{id}/change")]
-    [AuthorizeWithCompletedProfile(AccountAccessContext.ManageUsers)]
+    [AuthorizeWithCompletedProfileAttribute(AccountAccessContext.ManageUsers)]
     public async Task<IActionResult> ChangeRole([FromRoute] string id, [FromForm] UserRole? role, CancellationToken cancellationToken)
     {
         if (role == null)
@@ -73,7 +73,7 @@ public class UsersController : Controller
     }
 
     [HttpGet("{id}/admin-info")]
-    [AuthorizeWithCompletedProfile(AccountAccessContext.ManageUsers)]
+    [AuthorizeWithCompletedProfileAttribute(AccountAccessContext.ManageUsers)]
     public async Task<IActionResult> AdminInfo([FromRoute] string id, CancellationToken cancellationToken)
     {
         var model = await _mediator.Send(new GetOrganizationBasicInformationQuery(), cancellationToken);
@@ -82,7 +82,7 @@ public class UsersController : Controller
     }
 
     [HttpGet("{id}/confirm-unlink")]
-    [AuthorizeWithCompletedProfile(AccountAccessContext.ManageUsers)]
+    [AuthorizeWithCompletedProfileAttribute(AccountAccessContext.ManageUsers)]
     public async Task<IActionResult> ConfirmUnlink([FromRoute] string id, CancellationToken cancellationToken)
     {
         var model = await _mediator.Send(new GetUserDetailsQuery(id), cancellationToken);
@@ -91,7 +91,7 @@ public class UsersController : Controller
     }
 
     [HttpPost("{id}/confirm-unlink")]
-    [AuthorizeWithCompletedProfile(AccountAccessContext.ManageUsers)]
+    [AuthorizeWithCompletedProfileAttribute(AccountAccessContext.ManageUsers)]
     public async Task<IActionResult> Unlink([FromRoute] string id, [FromForm] bool? unlink, CancellationToken cancellationToken)
     {
         if (unlink == null)
@@ -115,7 +115,7 @@ public class UsersController : Controller
     }
 
     [HttpGet("invite")]
-    [AuthorizeWithCompletedProfile(AccountAccessContext.ManageUsers)]
+    [AuthorizeWithCompletedProfileAttribute(AccountAccessContext.ManageUsers)]
     public async Task<IActionResult> Invite(CancellationToken cancellationToken)
     {
         var organisation = await _mediator.Send(new GetOrganizationBasicInformationQuery(), cancellationToken);
@@ -124,7 +124,7 @@ public class UsersController : Controller
     }
 
     [HttpPost("invite")]
-    [AuthorizeWithCompletedProfile(AccountAccessContext.ManageUsers)]
+    [AuthorizeWithCompletedProfileAttribute(AccountAccessContext.ManageUsers)]
     public async Task<IActionResult> Invite(InviteUserViewModel model, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(

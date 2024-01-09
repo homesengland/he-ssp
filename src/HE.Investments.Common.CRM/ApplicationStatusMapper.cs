@@ -35,11 +35,12 @@ public static class ApplicationStatusMapper
 
     public static ApplicationStatus MapToPortalStatus(int? crmStatus)
     {
+#pragma warning disable S1135 // Track uses of "TODO" tags
         return crmStatus switch
         {
-            // TODO: remove this line when AHP application status mapping will be finished
-            1  => ApplicationStatus.Draft,
-            2  => ApplicationStatus.Draft,
+            // TODO: remove this line when AHP application status mapping will be finished. Once this TODO is removed, also remove the PRAGMA.
+            1 => ApplicationStatus.Draft,
+            2 => ApplicationStatus.Draft,
 
             (int)invln_externalstatus.Draft => ApplicationStatus.Draft,
             (int)invln_externalstatus.ApplicationSubmitted => ApplicationStatus.ApplicationSubmitted,
@@ -64,6 +65,7 @@ public static class ApplicationStatusMapper
             null => ApplicationStatus.Draft,
             _ => throw new ArgumentOutOfRangeException(nameof(crmStatus), crmStatus, null),
         };
+#pragma warning restore S1135 // Track uses of "TODO" tags
     }
 }
 

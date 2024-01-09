@@ -67,7 +67,7 @@ public class AccountUserContext : IAccountUserContext
         return userProfile!;
     }
 
-    private class CachedEntity<TEntity>
+    private sealed class CachedEntity<TEntity>
         where TEntity : class
     {
         private readonly ICacheService _cacheService;

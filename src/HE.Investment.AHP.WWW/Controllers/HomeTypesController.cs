@@ -27,7 +27,7 @@ using Microsoft.AspNetCore.WebUtilities;
 
 namespace HE.Investment.AHP.WWW.Controllers;
 
-[AuthorizeWithCompletedProfile]
+[AuthorizeWithCompletedProfileAttribute]
 [Route("Application/{applicationId}/HomeTypes")]
 public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
 {

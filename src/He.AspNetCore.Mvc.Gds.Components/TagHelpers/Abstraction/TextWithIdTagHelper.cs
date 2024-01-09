@@ -6,7 +6,9 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Abstraction
     public class TextWithIdTagHelper : TagHelper
     {
         private readonly string _tagName;
+#pragma warning disable IDE1006 // Naming Styles
         protected string _class;
+#pragma warning restore IDE1006 // Naming Styles
 
         public string Id { get; set; }
         public string Text { get; set; }
@@ -19,7 +21,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Abstraction
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
-            if ((object)output != (object)null)
+            if (output != null)
             {
                 output.TagName = _tagName;
 

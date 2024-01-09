@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HE.Investments.Loans.WWW.Controllers;
 
 [Route("application/{id}/security")]
-[AuthorizeWithCompletedProfile]
+[AuthorizeWithCompletedProfileAttribute]
 public class SecurityController : WorkflowController<SecurityState>
 {
     private readonly IMediator _mediator;
