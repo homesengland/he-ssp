@@ -87,7 +87,7 @@
                     <td class="govuk-!-padding-top-6" colspan="3">
                         <link-button href="@Url.RouteUrl("section", new { controller = "HomeTypes", action = "HomeTypeDetails", applicationId })"
                                      is-secondary="true"
-                                     id="add-home-type"
+                                     data-testid="add-home-type"
                                      is-disabled="@Model.IsReadOnly">
                             Add another home type
                         </link-button>
@@ -103,7 +103,7 @@
             </gds-p>
 
             <link-button href="@Url.RouteUrl("section", new { controller = "HomeTypes", action = "HomeTypeDetails", applicationId })"
-                         id="add-home-type"
+                         data-testid="add-home-type"
                          is-disabled="@Model.IsReadOnly">
                 Add a home type
             </link-button>

@@ -1,7 +1,6 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
-using HE.Investments.TestsUtils.Helpers;
 using ElementExtensions = HE.Investments.TestsUtils.Assertions.ElementExtensions;
 
 namespace HE.Investments.TestsUtils.Extensions;
@@ -164,5 +163,10 @@ public static class HtmlFluentExtensions
     {
         htmlDocument.GetInsetText().Should().Be(title);
         return htmlDocument;
+    }
+
+    public static IHtmlDocument HasSectionWithStatus(this IHtmlDocument htmlDocument, string sectionStatusId, string expectedStatus)
+    {
+        return htmlDocument.HasElementWithText(sectionStatusId, expectedStatus);
     }
 }

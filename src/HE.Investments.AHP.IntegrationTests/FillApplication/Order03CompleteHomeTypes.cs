@@ -42,7 +42,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
     {
         // given
         var taskListPage = await TestClient.NavigateTo(ApplicationPagesUrl.TaskList(ApplicationData.ApplicationId));
-        taskListPage.HasLinkWithId("add-home-type", out var enterHomeTypesSection);
+        taskListPage.HasLinkButtonForTestId("add-home-type", out var enterHomeTypesSection);
 
         // when
         var landingPage = await TestClient.NavigateTo(enterHomeTypesSection);
@@ -65,7 +65,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         var homeTypeListPage = await TestClient.NavigateTo(HomeTypesPagesUrl.List(ApplicationData.ApplicationId));
         homeTypeListPage.UrlEndWith(HomeTypesPagesUrl.List(ApplicationData.ApplicationId))
             .HasTitle(HomeTypesPageTitles.HomeTypes)
-            .HasLinkWithId("add-home-type", out var enterNewHomeTypePage);
+            .HasLinkButtonForTestId("add-home-type", out var enterNewHomeTypePage);
 
         // when
         var newHomeTypePage = await TestClient.NavigateTo(enterNewHomeTypePage);
@@ -363,7 +363,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         // then
         homeTypeListPage.UrlEndWith(HomeTypesPagesUrl.List(ApplicationData.ApplicationId))
             .HasTitle(HomeTypesPageTitles.HomeTypes)
-            .HasLinkWithId("add-home-type", out _)
+            .HasLinkButtonForTestId("add-home-type", out _)
             .HasElementWithText($"HomeType-{GeneralHomeType.Id}", GeneralHomeType.Name);
         SaveCurrentPage();
     }
@@ -404,7 +404,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
 
         // then
         taskListPage.UrlEndWith(ApplicationPagesUrl.TaskList(ApplicationData.ApplicationId))
-            .HasElementWithText("add-home-type-status", "Completed");
+            .HasSectionWithStatus("add-home-type-status", "Completed");
         SaveCurrentPage();
     }
 

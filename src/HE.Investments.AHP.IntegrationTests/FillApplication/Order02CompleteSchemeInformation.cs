@@ -157,7 +157,7 @@ public class Order02CompleteSchemeInformation : AhpIntegrationTest
 
         // then
         taskListPage.UrlEndWith(ApplicationPagesUrl.TaskListSuffix)
-            .HasElementWithText("enter-scheme-information-status", "Completed");
+            .HasSectionWithStatus("enter-scheme-information-status", "Completed");
         SaveCurrentPage();
     }
 }
