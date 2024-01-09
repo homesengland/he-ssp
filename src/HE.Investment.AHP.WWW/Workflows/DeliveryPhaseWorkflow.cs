@@ -34,6 +34,7 @@ public class DeliveryPhaseWorkflow : IStateRouting<DeliveryPhaseWorkflowState>
         {
             DeliveryPhaseWorkflowState.New => true,
             DeliveryPhaseWorkflowState.Name => true,
+            DeliveryPhaseWorkflowState.TypeOfHomes => true,
             DeliveryPhaseWorkflowState.Summary => true,
             DeliveryPhaseWorkflowState.AcquisitionMilestone => !_isUnregisteredBody,
             DeliveryPhaseWorkflowState.StartOnSiteMilestone => !_isUnregisteredBody,
@@ -50,10 +51,16 @@ public class DeliveryPhaseWorkflow : IStateRouting<DeliveryPhaseWorkflowState>
             .PermitIf(Trigger.Continue, DeliveryPhaseWorkflowState.AcquisitionMilestone, () => !_isUnregisteredBody)
             .PermitIf(Trigger.Continue, DeliveryPhaseWorkflowState.PracticalCompletionMilestone, () => _isUnregisteredBody);
 
-        // TODO: fix back for summary
+        _machine.Configure(DeliveryPhaseWorkflowState.Name)
+            .Permit(Trigger.Continue, DeliveryPhaseWorkflowState.TypeOfHomes);
+
+        _machine.Configure(DeliveryPhaseWorkflowState.TypeOfHomes)
+            .Permit(Trigger.Continue, DeliveryPhaseWorkflowState.AcquisitionMilestone)
+            .Permit(Trigger.Back, DeliveryPhaseWorkflowState.Name);
+
         _machine.Configure(DeliveryPhaseWorkflowState.AcquisitionMilestone)
             .PermitIf(Trigger.Continue, DeliveryPhaseWorkflowState.StartOnSiteMilestone)
-            .Permit(Trigger.Back, DeliveryPhaseWorkflowState.Summary);
+            .Permit(Trigger.Back, DeliveryPhaseWorkflowState.TypeOfHomes);
 
         _machine.Configure(DeliveryPhaseWorkflowState.StartOnSiteMilestone)
             .Permit(Trigger.Continue, DeliveryPhaseWorkflowState.PracticalCompletionMilestone)

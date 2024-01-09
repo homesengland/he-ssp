@@ -29,7 +29,10 @@ public abstract class UpdateDeliveryPhaseCommandHandler<TCommand> : IRequestHand
 
         var result = await Update(deliveryPhase, request);
 
-        await _repository.Save(deliveryPhase, account.SelectedOrganisationId(), cancellationToken);
+        if (result.IsValid)
+        {
+            await _repository.Save(deliveryPhase, account, cancellationToken);
+        }
 
         return result;
     }

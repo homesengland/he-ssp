@@ -1,3 +1,5 @@
+using Dawn;
+using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
@@ -17,6 +19,7 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
         ApplicationBasicInfo application,
         SiteBasicInfo site,
         string? name,
+        TypeOfHomes? typeOfHomes,
         SectionStatus status,
         IEnumerable<HomesToDeliverInPhase> homesToDeliver,
         DeliveryPhaseId? id = null,
@@ -28,6 +31,7 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
         Application = application;
         Site = site;
         Name = new DeliveryPhaseName(name);
+        TypeOfHomes = typeOfHomes;
         Status = status;
         Id = id ?? DeliveryPhaseId.New();
         CreatedOn = createdOn;
@@ -44,6 +48,8 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
     public DeliveryPhaseId Id { get; set; }
 
     public DeliveryPhaseName Name { get; private set; }
+
+    public TypeOfHomes? TypeOfHomes { get; private set; }
 
     public DateTime? CreatedOn { get; }
 
@@ -116,6 +122,11 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
     public void ProvideCompletionMilestoneDetails(CompletionMilestoneDetails? details)
     {
         CompletionMilestone = _modificationTracker.Change(CompletionMilestone, details, MarkAsNotCompleted);
+    }
+
+    public void ProvideTypeOfHomes(TypeOfHomes typeOfHomes)
+    {
+        TypeOfHomes = _modificationTracker.Change(TypeOfHomes, typeOfHomes.NotDefault(), MarkAsNotCompleted);
     }
 
     private void MarkAsNotCompleted()

@@ -41,11 +41,38 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         return View("Name");
     }
 
-    [HttpGet("{deliveryPhaseId}/name")]
+    [HttpGet("{deliveryPhaseId}/Name")]
     [WorkflowState(DeliveryPhaseWorkflowState.Name)]
-    public IActionResult Name()
+    public IActionResult Name([FromRoute] string applicationId, string deliveryPhaseId)
     {
         return View("Name");
+    }
+
+    [HttpPost("{deliveryPhaseId}/Name")]
+    [WorkflowState(DeliveryPhaseWorkflowState.Name)]
+    public async Task<IActionResult> Name([FromRoute] string applicationId, string deliveryPhaseId, DeliveryPhaseDetails deliveryPhaseDetails, CancellationToken cancellationToken)
+    {
+        return await ContinueWithRedirect(new { applicationId, deliveryPhaseId });
+    }
+
+    [HttpGet("{deliveryPhaseId}/Details")]
+    [WorkflowState(DeliveryPhaseWorkflowState.TypeOfHomes)]
+    public async Task<IActionResult> Details([FromRoute] string applicationId, string deliveryPhaseId, CancellationToken cancellationToken)
+    {
+        var deliveryPhaseDetails = await _mediator.Send(new GetDeliveryPhaseDetailsQuery(applicationId, deliveryPhaseId), cancellationToken);
+
+        return View("Details", deliveryPhaseDetails);
+    }
+
+    [HttpPost("{deliveryPhaseId}/Details")]
+    [WorkflowState(DeliveryPhaseWorkflowState.TypeOfHomes)]
+    public async Task<IActionResult> Details([FromRoute] string applicationId, string deliveryPhaseId, DeliveryPhaseDetails deliveryPhaseDetails, CancellationToken cancellationToken)
+    {
+        return await ExecuteCommand(
+            deliveryPhaseId,
+            new ProvideTypeOfHomesCommand(applicationId, deliveryPhaseId, deliveryPhaseDetails.TypeOfHomes),
+            nameof(Details),
+            cancellationToken);
     }
 
     [HttpGet("{deliveryPhaseId}/remove")]
@@ -252,6 +279,26 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
                 var model = createViewModelForError(deliveryPhaseDetails);
 
                 return View(viewName, model);
+            },
+            cancellationToken);
+    }
+
+    private async Task<IActionResult> ExecuteCommand(
+        string deliveryPhaseId,
+        IRequest<OperationResult> command,
+        string viewName,
+        CancellationToken cancellationToken)
+    {
+        var applicationId = this.GetApplicationIdFromRoute();
+
+        return await this.ExecuteCommand(
+            _mediator,
+            command,
+            () => ContinueWithRedirect(new { applicationId, deliveryPhaseId }),
+            async () =>
+            {
+                var deliveryPhaseDetails = await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(applicationId, deliveryPhaseId), cancellationToken);
+                return View(viewName, deliveryPhaseDetails);
             },
             cancellationToken);
     }

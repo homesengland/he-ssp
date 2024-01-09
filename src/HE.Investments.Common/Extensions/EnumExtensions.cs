@@ -35,6 +35,17 @@ public static class EnumExtensions
         return !values.Contains(value);
     }
 
+    public static T NotDefault<T>(this T enumValue)
+        where T : struct, Enum
+    {
+        if (Convert.ToInt32(enumValue, CultureInfo.InvariantCulture) == 0)
+        {
+            throw new ArgumentException($"The value of {nameof(enumValue)} cannot be 0.");
+        }
+
+        return enumValue;
+    }
+
     public static IEnumerable<TEnum> GetDefinedValues<TEnum>()
         where TEnum : struct, Enum
     {
