@@ -1,6 +1,6 @@
-using HE.Investments.Common.Validators;
+using HE.Investments.Common.Contract.Validators;
 
-namespace HE.Investments.Common.Exceptions;
+namespace HE.Investments.Common.Contract.Exceptions;
 
 public class FoundException : DomainValidationException
 {

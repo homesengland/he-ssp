@@ -13,7 +13,7 @@ namespace HE.Base.Repositories
     /// </summary>
     /// <typeparam name="TEntity">The type of the Crm entity.</typeparam>
     /// <typeparam name="TContext">The type of the context inherited from OrganizationServiceCotnext.</typeparam>
-    /// <seealso cref="HE.Base.Repositories.ICrmRepository" />
+    /// <seealso cref="ICrmRepository" />
     public interface ICrmEntityRepository<TEntity, TContext> : ICrmRepository
         where TEntity : Entity
         where TContext : OrganizationServiceContext
@@ -190,7 +190,7 @@ namespace HE.Base.Repositories
     /// <summary>
     /// CrmEntityRepository interface is interface that exposes basic crm methods to operate on data.
     /// </summary>
-    /// <seealso cref="PwC.Plugins.Base.Repositories.ICrmRepository" />
+    /// <seealso cref="ICrmRepository" />
     public interface ICrmEntityRepository : ICrmRepository
     {
         /// <summary>

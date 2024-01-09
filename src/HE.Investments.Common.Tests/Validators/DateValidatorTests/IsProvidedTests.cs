@@ -1,4 +1,5 @@
 using FluentAssertions;
+using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
 using Xunit;

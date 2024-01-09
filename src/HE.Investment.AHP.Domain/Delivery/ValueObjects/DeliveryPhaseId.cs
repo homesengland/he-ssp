@@ -1,8 +1,9 @@
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Domain.ValueObjects;
 
 namespace HE.Investment.AHP.Domain.Delivery.ValueObjects;
 
-public class DeliveryPhaseId : StringIdValueObject
+public record DeliveryPhaseId : StringIdValueObject
 {
     public DeliveryPhaseId(string id)
         : base(id)

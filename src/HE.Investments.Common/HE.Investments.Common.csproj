@@ -34,5 +34,13 @@
     <PackageReference Include="System.Text.Json" Version="6.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Contract\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HE.Investments.Common.Contract\HE.Investments.Common.Contract.csproj" />
+  </ItemGroup>
+
 
 </Project>

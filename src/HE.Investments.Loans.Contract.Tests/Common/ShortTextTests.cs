@@ -1,5 +1,5 @@
 using FluentAssertions;
-using HE.Investments.Common.Exceptions;
+using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Messages;
 using HE.Investments.Loans.Common.Tests.TestData;
 using HE.Investments.Loans.Contract.Common;

@@ -1,6 +1,6 @@
+using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
-using HE.Investments.Common.Validators;
 using HE.Investments.Loans.BusinessLogic.Projects.Consts;
 
 namespace HE.Investments.Loans.BusinessLogic.Projects.ValueObjects;

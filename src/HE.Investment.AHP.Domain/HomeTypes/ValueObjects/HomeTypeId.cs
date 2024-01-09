@@ -1,8 +1,9 @@
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Domain.ValueObjects;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 
-public class HomeTypeId : StringIdValueObject
+public record HomeTypeId : StringIdValueObject
 {
     public HomeTypeId(string id)
         : base(id)
@@ -18,10 +19,5 @@ public class HomeTypeId : StringIdValueObject
     public override string ToString()
     {
         return Value;
-    }
-
-    protected override IEnumerable<object?> GetAtomicValues()
-    {
-        yield return Value;
     }
 }

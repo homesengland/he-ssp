@@ -11,7 +11,7 @@ namespace HE.Base.Plugins.Common.PluginContexts
     /// (create, update, etc. operations)
     /// </summary>
     /// <typeparam name="T">Entity type that will be a Target of a context. Must inherit from Entity type and have parameterless constructor.</typeparam>
-    /// <seealso cref="PwC.Plugins.Base.Common.PluginContexts.PluginExecutionContext" />
+    /// <seealso cref="PluginExecutionContext" />
     public class EntityPluginExecutionContext<T> : PluginExecutionContext
         where T : Entity, new()
     {

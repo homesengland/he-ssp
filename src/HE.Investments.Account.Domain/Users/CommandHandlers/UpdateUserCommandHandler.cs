@@ -3,7 +3,7 @@ using HE.Investments.Account.Domain.Users.Entities;
 using HE.Investments.Account.Domain.Users.Repositories;
 using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.User;
-using HE.Investments.Common.Validators;
+using HE.Investments.Common.Contract.Validators;
 using MediatR;
 
 namespace HE.Investments.Account.Domain.Users.CommandHandlers;

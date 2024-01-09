@@ -1,5 +1,4 @@
 using HE.Investments.Common.Contract;
-using HE.Investments.Common.Domain;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
 using MediatR;
 

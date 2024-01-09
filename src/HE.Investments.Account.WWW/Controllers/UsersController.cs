@@ -6,6 +6,7 @@ using HE.Investments.Account.Contract.Users.Queries;
 using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Account.WWW.Models.Users;
+using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.Utils.Pagination;
 using HE.Investments.Common.Validators;

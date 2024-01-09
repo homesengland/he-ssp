@@ -1,7 +1,7 @@
 using FluentAssertions;
 using HE.Investment.AHP.Domain.Site.ValueObjects;
 using HE.Investment.AHP.Domain.Tests.Site.TestDataBuilders;
-using HE.Investments.Common.Exceptions;
+using HE.Investments.Common.Contract.Exceptions;
 
 namespace HE.Investment.AHP.Domain.Tests.Site.Entities.SiteEntityTests;
 

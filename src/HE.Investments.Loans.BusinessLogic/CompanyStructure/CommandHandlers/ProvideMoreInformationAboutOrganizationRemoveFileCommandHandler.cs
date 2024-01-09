@@ -1,7 +1,6 @@
 using HE.Investments.Account.Shared;
+using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Services.Notifications;
-using HE.Investments.Common.Validators;
-using HE.Investments.DocumentService.Configs;
 using HE.Investments.DocumentService.Models;
 using HE.Investments.DocumentService.Services;
 using HE.Investments.Loans.BusinessLogic.CompanyStructure.Notifications;

@@ -1,4 +1,5 @@
 using HE.Investments.Account.Shared.Authorization.Attributes;
+using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Utils.Pagination;
 using HE.Investments.Common.Validators;

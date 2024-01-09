@@ -3,7 +3,7 @@ using HE.Investment.AHP.Contract.Site.ValueObjects;
 using HE.Investment.AHP.Domain.Site.Entities;
 using HE.Investment.AHP.Domain.Site.ValueObjects;
 using HE.Investments.Account.Shared.User;
-using HE.Investments.Common.Exceptions;
+using HE.Investments.Common.Contract.Exceptions;
 
 namespace HE.Investment.AHP.Domain.Site.Repositories;
 

@@ -1,4 +1,4 @@
-namespace HE.Investments.Common.Validators;
+namespace HE.Investments.Common.Contract.Validators;
 
 public interface IOperationResult
 {
