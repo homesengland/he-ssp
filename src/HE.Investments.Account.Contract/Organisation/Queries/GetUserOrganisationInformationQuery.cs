@@ -3,7 +3,7 @@ using MediatR;
 
 namespace HE.Investments.Account.Contract.Organisation.Queries;
 
-public record GetUserOrganisationInformationQuery : IRequest<GetUserOrganisationInformationQueryResponse>;
+public class GetUserOrganisationInformationQuery : IRequest<GetUserOrganisationInformationQueryResponse>;
 
 public record GetUserOrganisationInformationQueryResponse(
     OrganizationBasicInformation OrganizationBasicInformation,
