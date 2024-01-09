@@ -1,4 +1,4 @@
-using HE.Investment.AHP.Contract.Site.ValueObjects;
+using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Domain.Site.Entities;
 using HE.Investments.Account.Shared.User;
 

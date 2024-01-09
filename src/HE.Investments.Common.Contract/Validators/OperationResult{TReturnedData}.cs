@@ -1,12 +1,7 @@
-namespace HE.Investments.Common.Validators;
+namespace HE.Investments.Common.Contract.Validators;
 
 public class OperationResult<TReturnedData> : OperationResult
 {
-    public OperationResult()
-    {
-        Errors = new List<ErrorItem>();
-    }
-
     public OperationResult(TReturnedData value)
         : base()
     {

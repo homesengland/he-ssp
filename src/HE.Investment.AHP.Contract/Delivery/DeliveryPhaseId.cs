@@ -1,3 +1,22 @@
-﻿namespace HE.Investment.AHP.Contract.Delivery;
+﻿using HE.Investments.Common.Contract;
 
-public record DeliveryPhaseId(string Id);
+namespace HE.Investment.AHP.Contract.Delivery;
+
+public record DeliveryPhaseId : StringIdValueObject
+{
+    public DeliveryPhaseId(string id)
+        : base(id)
+    {
+    }
+
+    private DeliveryPhaseId()
+    {
+    }
+
+    public static DeliveryPhaseId New() => new();
+
+    public override string ToString()
+    {
+        return Value;
+    }
+}

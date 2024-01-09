@@ -1,4 +1,4 @@
-namespace HE.Investments.Common.Utils.Pagination;
+namespace HE.Investments.Common.Contract.Pagination;
 
 public record PaginationResult<TItem>(IList<TItem> Items, int CurrentPage, int ItemsPerPage, int TotalItems)
 {

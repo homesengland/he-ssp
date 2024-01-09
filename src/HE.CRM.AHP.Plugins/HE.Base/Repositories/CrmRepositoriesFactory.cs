@@ -8,7 +8,7 @@ namespace HE.Base.Repositories
     /// <summary>
     /// Implementation of CrmRepositoriesFacctory interface
     /// </summary>
-    /// <seealso cref="HE.Base.Repositories.ICrmRepositoriesFactory" />
+    /// <seealso cref="ICrmRepositoriesFactory" />
     public class CrmRepositoriesFactory : ICrmRepositoriesFactory
     {
         private readonly IContainer container;

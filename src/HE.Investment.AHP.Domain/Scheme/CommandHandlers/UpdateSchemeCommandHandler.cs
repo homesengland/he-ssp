@@ -2,6 +2,7 @@ using HE.Investment.AHP.Domain.Scheme.Commands;
 using HE.Investment.AHP.Domain.Scheme.Entities;
 using HE.Investment.AHP.Domain.Scheme.Repositories;
 using HE.Investments.Account.Shared;
+using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Validators;
 using MediatR;
 using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;

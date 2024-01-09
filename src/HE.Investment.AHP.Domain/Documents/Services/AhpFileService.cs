@@ -1,7 +1,7 @@
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Common.ValueObjects;
 using HE.Investments.Account.Shared;
-using HE.Investments.Common.Exceptions;
+using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Utils;
 using HE.Investments.DocumentService.Models;

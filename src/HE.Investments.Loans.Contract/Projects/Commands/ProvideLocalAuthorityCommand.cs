@@ -1,4 +1,4 @@
-using HE.Investments.Common.Validators;
+using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
 using HE.Investments.Loans.Contract.Projects.ValueObjects;
 using MediatR;

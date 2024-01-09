@@ -1,5 +1,7 @@
 @using HE.Investments.Common.WWW.Components.FormHeader
 @using HE.Investments.Common.WWW.Components.FormButton
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
 @model (string UserId, string OrganisationName, string UserFullName)
 @{
     var title = $"Are you sure you want to remove {Model.UserFullName} from {Model.OrganisationName}?";

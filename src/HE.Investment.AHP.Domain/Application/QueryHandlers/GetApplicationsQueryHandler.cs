@@ -2,7 +2,7 @@ using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investments.Account.Shared;
-using HE.Investments.Common.Utils.Pagination;
+using HE.Investments.Common.Contract.Pagination;
 using MediatR;
 
 namespace HE.Investment.AHP.Domain.Application.QueryHandlers;

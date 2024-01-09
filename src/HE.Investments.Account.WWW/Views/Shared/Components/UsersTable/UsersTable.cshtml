@@ -2,11 +2,11 @@
 @using HE.Investments.Common.WWW.Helpers
 @using HE.Investments.Common.Extensions
 @using HE.Investments.Account.Shared
-@using HE.Investments.Common.Utils.Pagination
+@using HE.Investments.Common.Contract.Pagination
 @using HE.Investments.Common.WWW.Components.PagedTable
 
 @inject IAccountAccessContext AccountAccessContext
-@model PaginationResult<HE.Investments.Account.Contract.Users.UserDetails>;
+@model HE.Investments.Common.Contract.Pagination.PaginationResult<HE.Investments.Account.Contract.Users.UserDetails>;
 @{
     var canManageUsers = await AccountAccessContext.CanManageUsers();
     var tableHeaders = new List<TableHeaderViewModel>

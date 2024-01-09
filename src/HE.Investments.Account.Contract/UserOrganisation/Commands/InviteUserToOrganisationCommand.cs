@@ -1,5 +1,5 @@
 using HE.Investments.Account.Contract.Users;
-using HE.Investments.Common.Validators;
+using HE.Investments.Common.Contract.Validators;
 using MediatR;
 
 namespace HE.Investments.Account.Contract.UserOrganisation.Commands;

@@ -1,7 +1,12 @@
 @using HE.Investments.Common.WWW.Components.FormHeader
 @using HE.Investments.Account.WWW.Models.Users
 @using HE.Investments.Common.Extensions
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investments.Common.WWW.Components.RadioList
+@using HE.Investments.Common.WWW.Components.TextInput
 @using HE.Investments.Common.WWW.Models
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
 @model InviteUserViewModel
 @{
     var title = $"Invite a user to {Model.OrganisationName}";
@@ -26,22 +31,22 @@
             <vc:text-input
                 field-name="@(nameof(Model.FirstName))"
                 value="@Model.FirstName"
-                label="First name"/>
+                title="First name"/>
 
             <vc:text-input
                 field-name="@(nameof(Model.LastName))"
                 value="@Model.LastName"
-                label="Last name"/>
+                title="Last name"/>
 
             <vc:text-input
                 field-name="@(nameof(Model.EmailAddress))"
                 value="@Model.EmailAddress"
-                label="Email"/>
+                title="Email"/>
 
             <vc:text-input
                 field-name="@(nameof(Model.JobTitle))"
                 value="@Model.JobTitle"
-                label="Job title"/>
+                title="Job title"/>
 
             <vc:radio-list
                 field-name="@(nameof(Model.Role))"

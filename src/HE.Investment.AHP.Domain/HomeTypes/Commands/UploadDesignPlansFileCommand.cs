@@ -1,4 +1,5 @@
 using HE.Investment.AHP.Domain.Common;
+using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Validators;
 using MediatR;
 using UploadedFile = HE.Investment.AHP.Contract.Common.UploadedFile;

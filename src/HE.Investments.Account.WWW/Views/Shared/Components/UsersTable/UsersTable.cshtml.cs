@@ -1,6 +1,6 @@
 using HE.Investments.Account.Contract.Users;
 using HE.Investments.Common.Contract;
-using HE.Investments.Common.Utils.Pagination;
+using HE.Investments.Common.Contract.Pagination;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investments.Account.WWW.Views.Shared.Components.UsersTable;

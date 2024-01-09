@@ -1,5 +1,5 @@
 using HE.Investment.AHP.Contract.Application;
-using HE.Investments.Common.Utils.Pagination;
+using HE.Investments.Common.Contract.Pagination;
 
 namespace HE.Investment.AHP.WWW.Models.Application;
 
