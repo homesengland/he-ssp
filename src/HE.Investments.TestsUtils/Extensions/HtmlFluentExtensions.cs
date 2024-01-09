@@ -1,6 +1,7 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
+using HE.Investments.TestsUtils.Helpers;
 using ElementExtensions = HE.Investments.TestsUtils.Assertions.ElementExtensions;
 
 namespace HE.Investments.TestsUtils.Extensions;
@@ -9,7 +10,7 @@ public static class HtmlFluentExtensions
 {
     public static IHtmlDocument UrlEndWith(this IHtmlDocument htmlDocument, string endsWith)
     {
-        htmlDocument.Url.Should().EndWith(endsWith);
+        htmlDocument.Url.ToLowerInvariant().Should().EndWith(endsWith.ToLowerInvariant());
         return htmlDocument;
     }
 
@@ -69,14 +70,14 @@ public static class HtmlFluentExtensions
     public static IHtmlDocument HasGdsContinueButton(this IHtmlDocument htmlDocument)
     {
         htmlDocument.HasGdsButton("continue-button", out var button);
-        button!.Text().Trim().Should().Be("Continue");
+        button.Text().Trim().Should().Be("Continue");
         return htmlDocument;
     }
 
     public static IHtmlDocument HasGdsSaveAndContinueButton(this IHtmlDocument htmlDocument)
     {
         htmlDocument.HasGdsButton("continue-button", out var button);
-        button!.Text().Trim().Should().Be("Save and continue");
+        button.Text().Trim().Should().Be("Save and continue");
         return htmlDocument;
     }
 
@@ -132,6 +133,16 @@ public static class HtmlFluentExtensions
         var anchorElement = element as IHtmlAnchorElement;
         anchorElement.Should().NotBeNull($"Element with id {id} should be IHtmlAnchorElement");
         htmlElement = anchorElement!;
+
+        return htmlDocument;
+    }
+
+    public static IHtmlDocument HasElementWithText(this IHtmlDocument htmlDocument, string id, string text)
+    {
+        var element = htmlDocument.GetElementById(id);
+
+        element.Should().NotBeNull($"Element with id {id} does not exist");
+        element!.TextContent.Should().Contain(text, $"Element with id {id} is missing text \"{text}\"");
 
         return htmlDocument;
     }

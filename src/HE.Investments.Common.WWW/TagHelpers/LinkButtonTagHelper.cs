@@ -11,6 +11,8 @@ public class LinkButtonTagHelper : TagHelper
 {
     public string ActionUrl { get; set; }
 
+    public string Id { get; set; }
+
     public bool IsSecondary { get; set; }
 
     public bool IsDisabled { get; set; }
@@ -20,6 +22,7 @@ public class LinkButtonTagHelper : TagHelper
         output.TagName = HtmlConstants.A;
         output.Attributes.Add("href", ActionUrl);
 
+        TagConstruct.ConstructId(output, Id);
         TagConstruct.ConstructClass(output, "govuk-button");
         TagConstructExtensions.ConstructClass(output, "govuk-button--secondary", IsSecondary);
         TagConstructExtensions.ConstructClass(output, "govuk-button--disabled", IsDisabled);

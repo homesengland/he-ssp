@@ -1,12 +1,17 @@
 @using HE.Investment.AHP.Domain.HomeTypes
 @using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.WWW.Models.HomeTypes
+@using HE.Investment.AHP.WWW.Views.HomeTypes.Const
+@using HE.Investment.AHP.WWW.Views.Shared.Components.HomeTypeFormHeader
+@using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
+@using HE.Investments.Common.WWW.Components.FormButton
 @model HE.Investment.AHP.WWW.Models.HomeTypes.FloorAreaModel;
 
 @{
     var applicationId = this.GetApplicationIdFromRoute();
     var homeTypeId = this.GetHomeTypeIdFromRoute();
     var workflow = Context.Request.Query["workflow"];
+    ViewData["Title"] = HomeTypesPageTitles.FloorAreaStandards;
 }
 
 <div class="govuk-grid-column-two-thirds">
@@ -17,7 +22,7 @@
                                   application-id="@applicationId"
                                   home-type-id="@homeTypeId"
                                   caption="@Model.Header"
-                                  title="Floor area"/>
+                                  title="@HomeTypesPageTitles.FloorAreaStandards"/>
 
         <gds-field-set class="govuk-!-margin-bottom-6">
             <he-error-form-group asp-for="NationallyDescribedSpaceStandards">
