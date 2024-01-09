@@ -5,11 +5,6 @@ namespace HE.Investments.Common.Validators;
 
 public class OperationResult : IOperationResult
 {
-    public OperationResult()
-    {
-        Errors = new List<ErrorItem>();
-    }
-
     public OperationResult(IEnumerable<ErrorItem>? errors = null)
     {
         Errors = errors?.ToList() ?? new List<ErrorItem>();

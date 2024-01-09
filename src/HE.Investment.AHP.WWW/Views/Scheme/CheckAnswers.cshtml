@@ -28,7 +28,7 @@
     }
     else
     {
-        <vc:workflow-back-button action="@SchemeWorkflowState.CheckAnswers.ToString()"/>
+        <vc:workflow-back-button current-page="@SchemeWorkflowState.CheckAnswers"/>
     }
 
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")

@@ -15,4 +15,5 @@ public record DeliveryPhaseDetails(
     DateDetails? StartOnSiteDate,
     DateDetails? StartOnSitePaymentDate,
     DateDetails? PracticalCompletionDate,
-    DateDetails? PracticalCompletionPaymentDate);
+    DateDetails? PracticalCompletionPaymentDate,
+    bool? IsAdditionalPaymentRequested);

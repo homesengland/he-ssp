@@ -10,5 +10,12 @@ public class DomainValidationException : Exception
         OperationResult = operationResult;
     }
 
+    public DomainValidationException(string errorMessage)
+        : base(OperationResult.New().AddValidationError(string.Empty, errorMessage).GetAllErrors())
+    {
+        OperationResult = OperationResult.New();
+        OperationResult.AddValidationError(string.Empty, errorMessage);
+    }
+
     public OperationResult OperationResult { get; }
 }
