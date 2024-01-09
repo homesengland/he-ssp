@@ -58,6 +58,8 @@ public class FinancialDetailsData
 
     public decimal TotalContributions => TotalGrants + TotalExpectedContributions;
 
+    public decimal TotalCost => ExpectedWorksCosts + ExpectedOnCosts + PublicLandValue;
+
     public void GenerateLandStatus()
     {
         LandStatus = DateTime.UtcNow.Millisecond;
@@ -66,7 +68,7 @@ public class FinancialDetailsData
     public void GenerateLandValue()
     {
         IsPublicLand = true;
-        PublicLandValue = DateTime.UtcNow.Millisecond;
+        PublicLandValue = DateTime.UtcNow.Millisecond + 9000;
     }
 
     public void GenerateOtherApplicationCosts()
@@ -94,6 +96,6 @@ public class FinancialDetailsData
         SocialServicesGrants = CountyCouncilGrants + 3;
         HealthRelatedGrants = CountyCouncilGrants + 4;
         LotteryGrants = CountyCouncilGrants + 5;
-        OtherPublicBodiesGrants = CountyCouncilGrants + 6;
+        OtherPublicBodiesGrants = TotalCost - TotalContributions;
     }
 }
