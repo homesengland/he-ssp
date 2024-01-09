@@ -48,10 +48,7 @@ public class DeliveryPhaseWorkflow : IStateRouting<DeliveryPhaseWorkflowState>
     private void ConfigureTransitions()
     {
         _machine.Configure(DeliveryPhaseWorkflowState.Create)
-            .Permit(Trigger.Continue, DeliveryPhaseWorkflowState.Details);
-
-        _machine.Configure(DeliveryPhaseWorkflowState.Name)
-            .Permit(Trigger.Continue, DeliveryPhaseWorkflowState.Details);
+            .Permit(Trigger.Continue, DeliveryPhaseWorkflowState.TypeOfHomes);
 
         _machine.Configure(DeliveryPhaseWorkflowState.Summary)
             .PermitIf(Trigger.Continue, DeliveryPhaseWorkflowState.AcquisitionMilestone, () => !_isUnregisteredBody)
