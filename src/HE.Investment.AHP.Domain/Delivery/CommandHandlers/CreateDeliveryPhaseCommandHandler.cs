@@ -17,7 +17,7 @@ using DeliveryPhaseId = HE.Investment.AHP.Contract.Delivery.DeliveryPhaseId;
 
 namespace HE.Investment.AHP.Domain.Delivery.CommandHandlers;
 
-public class CreateDeliveryPhaseCommandHandler : DeliveryCommandHandlerBase, IRequestHandler<CreateDeliveryPhaseCommand, OperationResult<DeliveryPhaseId>>
+public class CreateDeliveryPhaseCommandHandler : DeliveryCommandHandlerBase, IRequestHandler<CreateDeliveryPhaseCommand, OperationResult<DeliveryPhaseId?>>
 {
     private readonly IDeliveryPhaseRepository _deliveryPhaseRepository;
     private readonly IAccountUserContext _accountUserContext;
@@ -33,18 +33,21 @@ public class CreateDeliveryPhaseCommandHandler : DeliveryCommandHandlerBase, IRe
         _deliveryPhaseRepository = repository;
     }
 
-    public async Task<OperationResult<DeliveryPhaseId>> Handle(CreateDeliveryPhaseCommand request, CancellationToken cancellationToken)
+    public async Task<OperationResult<DeliveryPhaseId?>> Handle(CreateDeliveryPhaseCommand request, CancellationToken cancellationToken)
     {
-        var operationResult = OperationResult.New();
+        try
+        {
+            var account = await _accountUserContext.GetSelectedAccount();
 
-        var account = await _accountUserContext.GetSelectedAccount();
+            var deliveryPhases = await _deliveryPhaseRepository.GetByApplicationId(new ApplicationId.ApplicationId(request.ApplicationId), account, cancellationToken);
+            var deliveryPhase = deliveryPhases.CreateDeliveryPhase(new DeliveryPhaseName(request.DeliveryPhaseName));
+            var result = await _deliveryPhaseRepository.Save(deliveryPhase, account.SelectedOrganisationId(), cancellationToken);
 
-        var deliveryPhases = await _deliveryPhaseRepository.GetByApplicationId(new ApplicationId.ApplicationId(request.ApplicationId), account, cancellationToken);
-        var newDeliveryPhase = deliveryPhases.CreateDeliveryPhase(new DeliveryPhaseName(request.DeliveryPhaseName));
-        operationResult.CheckErrors();
-        var deliveryPhaseId = operationResult.CatchResult(() => _deliveryPhaseRepository.Save(newDeliveryPhase, account.SelectedOrganisationId(), cancellationToken).Result);
-        operationResult.CheckErrors();
-
-        return OperationResult.Success(new DeliveryPhaseId(deliveryPhaseId.Value));
+            return new OperationResult<DeliveryPhaseId?>(new DeliveryPhaseId(result.Value));
+        }
+        catch (DomainValidationException domainValidationException)
+        {
+            return new OperationResult<DeliveryPhaseId?>(domainValidationException.OperationResult.Errors, null);
+        }
     }
 }

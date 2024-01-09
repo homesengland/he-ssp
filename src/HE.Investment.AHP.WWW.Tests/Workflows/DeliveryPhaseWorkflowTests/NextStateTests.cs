@@ -12,6 +12,8 @@ public class NextStateTests
     [InlineData(DeliveryPhaseWorkflowState.AcquisitionMilestone, DeliveryPhaseWorkflowState.StartOnSiteMilestone)]
     [InlineData(DeliveryPhaseWorkflowState.StartOnSiteMilestone, DeliveryPhaseWorkflowState.PracticalCompletionMilestone)]
     [InlineData(DeliveryPhaseWorkflowState.PracticalCompletionMilestone, DeliveryPhaseWorkflowState.CheckAnswers)]
+    [InlineData(DeliveryPhaseWorkflowState.Create, DeliveryPhaseWorkflowState.Details)]
+    [InlineData(DeliveryPhaseWorkflowState.Name, DeliveryPhaseWorkflowState.Details)]
     public async Task ShouldReturnNextState_WhenContinueTriggerExecutedAsUnregisteredBody(DeliveryPhaseWorkflowState current, DeliveryPhaseWorkflowState expectedNext)
     {
         // given
@@ -28,6 +30,8 @@ public class NextStateTests
     [InlineData(DeliveryPhaseWorkflowState.Summary, DeliveryPhaseWorkflowState.PracticalCompletionMilestone)]
     [InlineData(DeliveryPhaseWorkflowState.PracticalCompletionMilestone, DeliveryPhaseWorkflowState.UnregisteredBodyFollowUp)]
     [InlineData(DeliveryPhaseWorkflowState.UnregisteredBodyFollowUp, DeliveryPhaseWorkflowState.CheckAnswers)]
+    [InlineData(DeliveryPhaseWorkflowState.Create, DeliveryPhaseWorkflowState.Details)]
+    [InlineData(DeliveryPhaseWorkflowState.Name, DeliveryPhaseWorkflowState.Details)]
     public async Task ShouldReturnNextState_WhenContinueTriggerExecutedAsRegisteredBody(DeliveryPhaseWorkflowState current, DeliveryPhaseWorkflowState expectedNext)
     {
         // given
