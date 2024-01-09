@@ -35,7 +35,7 @@ public class ApplicationTenureMapper
     {
         if (value == null)
         {
-            return null;
+            return new ApplicationTenure(Tenure.RentToBuy);
         }
 
         var contract = (invln_tenure?)value;
