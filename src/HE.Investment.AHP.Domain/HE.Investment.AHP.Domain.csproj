@@ -40,6 +40,12 @@
     </ProjectReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="HE.Investments.Common.Contract">
+      <HintPath>..\HE.Investments.Common.Contract\bin\Debug\netstandard2.1\HE.Investments.Common.Contract.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
   <Import Project="..\HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems" Label="Shared" />
 
 </Project>
