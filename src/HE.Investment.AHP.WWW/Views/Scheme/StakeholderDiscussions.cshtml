@@ -14,7 +14,7 @@
 }
 
 <div class="govuk-grid-column-full">
-    <vc:workflow-back-button action="@SchemeWorkflowState.StakeholderDiscussions.ToString()"/>
+    <vc:workflow-back-button current-page="@SchemeWorkflowState.StakeholderDiscussions"/>
     <form asp-controller="Scheme" asp-action="StakeholderDiscussions" asp-method="post" asp-route-redirect="@Context.Request.Query["redirect"]" enctype="multipart/form-data" novalidate>
         <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0">
             @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")

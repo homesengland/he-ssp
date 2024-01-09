@@ -1,5 +1,6 @@
 @using HE.Investment.AHP.Domain.HomeTypes
 @using HE.Investment.AHP.WWW.Extensions
+@using HE.Investment.AHP.WWW.Views.HomeTypes.Const
 @using HE.Investment.AHP.WWW.Views.Shared.Components.HomeTypeFormHeader
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
 @using HE.Investment.AHP.WWW.Views.Shared.Components.SharedOwnershipRightSummary
@@ -11,6 +12,7 @@
     var applicationId = this.GetApplicationIdFromRoute();
     var homeTypeId = this.GetHomeTypeIdFromRoute();
     var workflow = Context.Request.Query["workflow"];
+    ViewData["Title"] = HomeTypesPageTitles.ExemptionJustification;
 }
 
 <gds-div-grid-column-two-thirds>
@@ -24,8 +26,8 @@
 
         <vc:text-area-input-with-counter
             field-name="@nameof(Model.MoreInformation)"
-            header="Outline the criteria under which you intend to apply for an exemption to the Right to Shared Ownership"
-            description-component="@(new ComponentViewModel(nameof(SharedOwnershipRightSummary), null))"
+            header="@HomeTypesPageTitles.ExemptionJustification"
+            description-component="@(new ComponentViewModel(nameof(SharedOwnershipRightSummary)))"
             value="@Model.MoreInformation"/>
 
         <vc:form-button/>

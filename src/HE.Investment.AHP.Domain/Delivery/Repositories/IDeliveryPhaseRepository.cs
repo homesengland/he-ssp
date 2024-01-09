@@ -19,7 +19,7 @@ public interface IDeliveryPhaseRepository
         UserAccount userAccount,
         CancellationToken cancellationToken);
 
-    Task<DeliveryPhaseId> Save(IDeliveryPhaseEntity deliveryPhase, OrganisationId organisationId, CancellationToken cancellationToken);
+    Task<DeliveryPhaseId?> Save(IDeliveryPhaseEntity deliveryPhase, OrganisationId organisationId, CancellationToken cancellationToken);
 
     Task Save(DeliveryPhasesEntity deliveryPhases, OrganisationId organisationId, CancellationToken cancellationToken);
 }
