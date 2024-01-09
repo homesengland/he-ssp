@@ -15,4 +15,9 @@ public record DeliveryPhaseId : StringIdValueObject
     }
 
     public static DeliveryPhaseId New() => new();
+
+    public override string ToString()
+    {
+        return Value;
+    }
 }
