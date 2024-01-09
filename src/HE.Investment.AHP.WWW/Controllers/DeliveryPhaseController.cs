@@ -1,6 +1,8 @@
+using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Commands;
 using HE.Investment.AHP.Contract.Delivery.Queries;
+using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investment.AHP.WWW.Extensions;
 using HE.Investment.AHP.WWW.Models.Delivery;
 using HE.Investment.AHP.WWW.Utils;
@@ -35,18 +37,51 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         return await Back(currentPage, new { applicationId, deliveryPhaseId });
     }
 
-    [HttpGet("new")]
-    [WorkflowState(DeliveryPhaseWorkflowState.New)]
-    public IActionResult New()
+    [HttpGet("create")]
+    [WorkflowState(DeliveryPhaseWorkflowState.Create)]
+    public async Task<IActionResult> Create([FromRoute] string applicationId)
     {
-        return View("Name");
+        var application = await _mediator.Send(new GetApplicationQuery(applicationId));
+        var model = new DeliveryPhaseNameViewModel(applicationId, null, application.Name, null, nameof(this.Create));
+        return View("Name", model);
+    }
+
+    [HttpPost("create")]
+    [WorkflowState(DeliveryPhaseWorkflowState.Create)]
+    public async Task<IActionResult> Create([FromRoute] string applicationId, DeliveryPhaseNameViewModel model, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new CreateDeliveryPhaseCommand(applicationId, model.DeliveryPhaseName ?? string.Empty), cancellationToken);
+
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+            return View("Name", model);
+        }
+
+        return await Continue(new { applicationId, result.ReturnedData?.Value });
     }
 
     [HttpGet("{deliveryPhaseId}/Name")]
     [WorkflowState(DeliveryPhaseWorkflowState.Name)]
-    public IActionResult Name([FromRoute] string applicationId, string deliveryPhaseId)
+    public async Task<IActionResult> Name([FromRoute] string applicationId, [FromRoute] string deliveryPhaseId, CancellationToken cancellationToken)
     {
-        return View("Name");
+        var deliveryPhase = await _mediator.Send(new GetDeliveryPhaseDetailsQuery(applicationId, deliveryPhaseId), cancellationToken);
+        var model = new DeliveryPhaseNameViewModel(applicationId, deliveryPhaseId, deliveryPhase.ApplicationName, deliveryPhase.Name, nameof(this.Name));
+        return View("Name", model);
+    }
+
+    [WorkflowState(DeliveryPhaseWorkflowState.Name)]
+    [HttpPost("{deliveryPhaseId}/name")]
+    public async Task<IActionResult> Name([FromRoute] string applicationId, [FromRoute] string deliveryPhaseId, DeliveryPhaseNameViewModel model, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new ProvideDeliveryPhaseNameCommand(applicationId, deliveryPhaseId, model.DeliveryPhaseName), cancellationToken);
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+            return View("Name", model);
+        }
+
+        return await Continue(new { applicationId, deliveryPhaseId });
     }
 
     [HttpPost("{deliveryPhaseId}/Name")]
@@ -81,7 +116,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     {
         var deliveryPhaseDetails = await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(applicationId, deliveryPhaseId), cancellationToken);
 
-        return View("RemoveDeliveryPhaseConfirmation", new RemoveDeliveryPhaseModel(deliveryPhaseDetails.ApplicationName, deliveryPhaseDetails.Name));
+        return View("RemoveDeliveryPhaseConfirmation", new RemoveDeliveryPhaseModel(deliveryPhaseDetails.ApplicationName, deliveryPhaseDetails?.Name ?? string.Empty));
     }
 
     [HttpPost("{deliveryPhaseId}/remove")]
@@ -226,14 +261,19 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
 
     protected override async Task<IStateRouting<DeliveryPhaseWorkflowState>> Routing(DeliveryPhaseWorkflowState currentState, object? routeData = null)
     {
-        var deliveryPhase = await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(this.GetApplicationIdFromRoute(), this.GetDeliveryPhaseIdFromRoute()), CancellationToken.None);
+        var isUnregisteredBody = false;
+        if (currentState != DeliveryPhaseWorkflowState.Create)
+        {
+            var deliveryPhase = await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(this.GetApplicationIdFromRoute(), this.GetDeliveryPhaseIdFromRoute()), CancellationToken.None);
+            isUnregisteredBody = deliveryPhase.IsUnregisteredBody;
+        }
 
-        return new DeliveryPhaseWorkflow(currentState, deliveryPhase.IsUnregisteredBody);
+        return new DeliveryPhaseWorkflow(currentState, isUnregisteredBody);
     }
 
     private MilestoneViewModel CreateMilestoneViewModel(
         string applicationName,
-        string deliveryPhaseName,
+        string? deliveryPhaseName,
         DateDetails? milestoneDate,
         DateDetails? milestonePaymentDate)
     {

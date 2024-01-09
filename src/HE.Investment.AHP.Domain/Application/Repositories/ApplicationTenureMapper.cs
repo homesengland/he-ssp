@@ -40,12 +40,8 @@ public class ApplicationTenureMapper
 
         var contract = (invln_tenure?)value;
 
-        var tenure = Tenures.Where(t => t.Value == contract).Select(t => (Tenure?)t.Key).FirstOrDefault();
-        if (tenure == null)
-        {
-            throw new ArgumentException($"Not supported Tenure value {value}");
-        }
+        var tenure = Tenures.Where(t => t.Value == contract).Select(t => (Tenure?)t.Key).FirstOrDefault() ?? throw new ArgumentException($"Not supported Tenure value {value}");
 
-        return new ApplicationTenure(tenure.Value);
+        return new ApplicationTenure(tenure);
     }
 }

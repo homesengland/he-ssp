@@ -14,7 +14,7 @@ public interface IDeliveryPhaseEntity
 
     DeliveryPhaseId Id { get; }
 
-    DeliveryPhaseName Name { get; }
+    DeliveryPhaseName? Name { get; }
 
     TypeOfHomes? TypeOfHomes { get; }
 
@@ -31,6 +31,8 @@ public interface IDeliveryPhaseEntity
     CompletionMilestoneDetails? CompletionMilestone { get; }
 
     public IsAdditionalPaymentRequested? IsAdditionalPaymentRequested { get; }
+
+    void ProvideName(DeliveryPhaseName deliveryPhaseName);
 
     void ProvideAcquisitionMilestoneDetails(AcquisitionMilestoneDetails? details);
 

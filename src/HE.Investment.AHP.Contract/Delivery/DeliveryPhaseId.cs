@@ -1,4 +1,4 @@
-using HE.Investments.Common.Contract;
+﻿using HE.Investments.Common.Contract;
 
 namespace HE.Investment.AHP.Contract.Delivery;
 

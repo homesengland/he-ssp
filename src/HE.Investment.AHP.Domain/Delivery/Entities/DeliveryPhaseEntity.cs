@@ -19,8 +19,8 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
 
     public DeliveryPhaseEntity(
         ApplicationBasicInfo application,
+        DeliveryPhaseName name,
         OrganisationBasicInfo organisation,
-        string? name,
         TypeOfHomes? typeOfHomes,
         SectionStatus status,
         IEnumerable<HomesToDeliverInPhase> homesToDeliver,
@@ -32,8 +32,8 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
         IsAdditionalPaymentRequested? isAdditionalPaymentRequested = null)
     {
         Application = application;
+        Name = name;
         Organisation = organisation;
-        Name = new DeliveryPhaseName(name);
         TypeOfHomes = typeOfHomes;
         Status = status;
         Id = id ?? DeliveryPhaseId.New();
@@ -103,6 +103,11 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
             _modificationTracker.MarkAsModified();
             MarkAsNotCompleted();
         }
+    }
+
+    public void ProvideName(DeliveryPhaseName deliveryPhaseName)
+    {
+        Name = _modificationTracker.Change(Name, deliveryPhaseName, MarkAsNotCompleted);
     }
 
     public void ProvideAcquisitionMilestoneDetails(AcquisitionMilestoneDetails? details)

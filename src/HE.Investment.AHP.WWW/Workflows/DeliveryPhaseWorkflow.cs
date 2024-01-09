@@ -32,7 +32,7 @@ public class DeliveryPhaseWorkflow : IStateRouting<DeliveryPhaseWorkflowState>
     {
         return state switch
         {
-            DeliveryPhaseWorkflowState.New => true,
+            DeliveryPhaseWorkflowState.Create => true,
             DeliveryPhaseWorkflowState.Name => true,
             DeliveryPhaseWorkflowState.TypeOfHomes => true,
             DeliveryPhaseWorkflowState.Summary => true,
@@ -47,6 +47,9 @@ public class DeliveryPhaseWorkflow : IStateRouting<DeliveryPhaseWorkflowState>
 
     private void ConfigureTransitions()
     {
+        _machine.Configure(DeliveryPhaseWorkflowState.Create)
+            .Permit(Trigger.Continue, DeliveryPhaseWorkflowState.TypeOfHomes);
+
         _machine.Configure(DeliveryPhaseWorkflowState.Summary)
             .PermitIf(Trigger.Continue, DeliveryPhaseWorkflowState.AcquisitionMilestone, () => !_isUnregisteredBody)
             .PermitIf(Trigger.Continue, DeliveryPhaseWorkflowState.PracticalCompletionMilestone, () => _isUnregisteredBody);

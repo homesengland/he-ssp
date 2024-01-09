@@ -43,7 +43,7 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
         return deliveryPhases;
     }
 
-    public async Task Save(IDeliveryPhaseEntity deliveryPhase, UserAccount userAccount, CancellationToken cancellationToken)
+    public async Task<DeliveryPhaseId?> Save(IDeliveryPhaseEntity deliveryPhase, UserAccount userAccount, CancellationToken cancellationToken)
     {
         var entity = (DeliveryPhaseEntity)deliveryPhase;
         await InitMockedData(entity.Application.Id, userAccount, cancellationToken);
@@ -53,7 +53,7 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
             entity.Id = new DeliveryPhaseId(Guid.NewGuid().ToString());
             deliveryPhases.Add(entity);
             await _eventDispatcher.Publish(
-                new DeliveryPhaseHasBeenCreatedEvent(entity.Application.Id.Value, entity.Name.Value),
+                new DeliveryPhaseHasBeenCreatedEvent(entity.Application.Id.Value, entity?.Name?.Value ?? string.Empty),
                 cancellationToken);
         }
         else if (entity.IsModified)
@@ -62,6 +62,8 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
             // deliveryPhases.Add(entity);
             await _eventDispatcher.Publish(new DeliveryPhaseHasBeenUpdatedEvent(entity.Application.Id.Value), cancellationToken);
         }
+
+        return entity?.Id ?? new DeliveryPhaseId(string.Empty);
     }
 
     public async Task<IDeliveryPhaseEntity> GetById(
@@ -118,8 +120,8 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
             {
                 new DeliveryPhaseEntity(
                     application,
+                    new DeliveryPhaseName("Phase 1"),
                     new OrganisationBasicInfo(true),
-                    "Phase 1",
                     null,
                     SectionStatus.InProgress,
                     new[] { new HomesToDeliverInPhase(new HomeTypeId("ht-1"), 3) },
