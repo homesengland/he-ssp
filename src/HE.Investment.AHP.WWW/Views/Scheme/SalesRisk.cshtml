@@ -1,9 +1,12 @@
 @using HE.Investment.AHP.Domain.Scheme.Workflows
 @using HE.Investment.AHP.WWW.Views.Scheme.Const;
+@using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.Components.FormHeader
+@using HE.Investments.Common.WWW.Components.TextAreaInputWithCounter
 @using HE.Investments.Common.WWW.Components.WorkflowBackButton
 @using HE.Investments.Common.WWW.Extensions;
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model HE.Investment.AHP.WWW.Models.Scheme.SchemeViewModel
 @{
     var title = SchemeInformationPageTitles.SalesRisk;

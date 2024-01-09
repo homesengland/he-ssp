@@ -1,5 +1,4 @@
 using HE.Investments.Common.Contract;
-using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.Loans.Common.Utils.Constants.FormOption;

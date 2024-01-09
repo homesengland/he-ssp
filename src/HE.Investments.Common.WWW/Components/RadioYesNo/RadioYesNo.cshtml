@@ -3,6 +3,8 @@
 @using HE.Investments.Common.WWW.Components.RadioListHeader
 @using HE.Investments.Common.WWW.Components.ErrorMessage
 @using HE.Investments.Common.WWW.Components.RadioListContent
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Fieldset
 @model (string fieldName, string header, string title, string hint, bool? value)
 @{
     var (hasError, radioErrors) = ViewData.ModelState.GetErrors(Model.fieldName);

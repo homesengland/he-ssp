@@ -8,7 +8,7 @@ namespace HE.Base.Plugins.Common.PluginContexts
     /// passed inside default CRM plugin. This context is designed to work with Delete message.
     /// </summary>
     /// <typeparam name="T">Entity type that will be a target of deleted entity. Must inherit from Entity type and have parameterless constructor.</typeparam>
-    /// <seealso cref="PwC.Plugins.Base.Common.PluginContexts.PluginExecutionContext" />
+    /// <seealso cref="PluginExecutionContext" />
     public class DeletePluginExecutionContext<T> : PluginExecutionContext
         where T : Entity, new()
     {

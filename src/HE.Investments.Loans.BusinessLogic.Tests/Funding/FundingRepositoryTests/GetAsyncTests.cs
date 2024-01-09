@@ -1,5 +1,5 @@
 using HE.Investments.Common.Contract;
-using HE.Investments.Common.Exceptions;
+using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Loans.BusinessLogic.Funding.Repositories;
 using HE.Investments.Loans.BusinessLogic.Tests.TestData;
 using HE.Investments.Loans.BusinessLogic.Tests.TestObjectBuilders;

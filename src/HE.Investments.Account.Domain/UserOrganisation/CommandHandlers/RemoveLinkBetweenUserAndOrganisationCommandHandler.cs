@@ -1,8 +1,8 @@
 using HE.Investments.Account.Contract.UserOrganisation.Commands;
 using HE.Investments.Account.Contract.UserOrganisation.Events;
 using HE.Investments.Account.Shared;
+using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Infrastructure.Events;
-using HE.Investments.Common.Validators;
 using HE.Investments.Organisation.Services;
 using MediatR;
 using Microsoft.PowerPlatform.Dataverse.Client;

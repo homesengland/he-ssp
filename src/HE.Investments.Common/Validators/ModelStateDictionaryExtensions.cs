@@ -1,3 +1,4 @@
+using HE.Investments.Common.Contract.Validators;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace HE.Investments.Common.Validators;

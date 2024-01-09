@@ -1,10 +1,14 @@
-using HE.Investments.Common.Exceptions;
-using HE.Investments.Common.Extensions;
+using HE.Investments.Common.Contract.Exceptions;
 
-namespace HE.Investments.Common.Validators;
+namespace HE.Investments.Common.Contract.Validators;
 
 public class OperationResult : IOperationResult
 {
+    public OperationResult()
+    {
+        Errors = new List<ErrorItem>();
+    }
+
     public OperationResult(IEnumerable<ErrorItem>? errors = null)
     {
         Errors = errors?.ToList() ?? new List<ErrorItem>();
@@ -47,7 +51,7 @@ public class OperationResult : IOperationResult
             var result = ex.OperationResult;
             var error = result.Errors.Single();
 
-            AddValidationError(overriddenFieldName.IsProvided() ? overriddenFieldName : error.AffectedField, error.ErrorMessage);
+            AddValidationError(string.IsNullOrWhiteSpace(overriddenFieldName) ? error.AffectedField : overriddenFieldName, error.ErrorMessage);
 
             return null!;
         }
@@ -127,9 +131,13 @@ public class OperationResult : IOperationResult
         return this;
     }
 
-    public OperationResult AddValidationErrors(IList<ErrorItem> errorItem)
+    public OperationResult AddValidationErrors(IList<ErrorItem> errorItems)
     {
-        Errors.AddRange(errorItem);
+        foreach (var errorItem in errorItems)
+        {
+            Errors.Add(errorItem);
+        }
+
         return this;
     }
 

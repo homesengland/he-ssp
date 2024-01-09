@@ -1,6 +1,6 @@
-namespace HE.Investments.Common.Domain.ValueObjects;
+namespace HE.Investments.Common.Contract;
 
-public class StringIdValueObject : ValueObject
+public record StringIdValueObject
 {
     protected StringIdValueObject(string id)
     {
@@ -24,10 +24,5 @@ public class StringIdValueObject : ValueObject
     public override string ToString()
     {
         return Value;
-    }
-
-    protected override IEnumerable<object?> GetAtomicValues()
-    {
-        yield return Value;
     }
 }

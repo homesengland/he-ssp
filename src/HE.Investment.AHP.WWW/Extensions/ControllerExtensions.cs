@@ -1,4 +1,4 @@
-using HE.Investments.Common.Exceptions;
+using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.WWW.Extensions;
 using Microsoft.AspNetCore.Mvc;
 

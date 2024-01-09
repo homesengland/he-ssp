@@ -1,3 +1,4 @@
+using HE.Investments.Common.Contract.Infrastructure.Events;
 using HE.Investments.Common.Domain;
 using MediatR;
 
