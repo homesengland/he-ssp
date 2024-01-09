@@ -1,4 +1,4 @@
-namespace HE.Investments.Common.Exceptions;
+namespace HE.Investments.Common.Contract.Exceptions;
 
 public class DomainException : Exception
 {

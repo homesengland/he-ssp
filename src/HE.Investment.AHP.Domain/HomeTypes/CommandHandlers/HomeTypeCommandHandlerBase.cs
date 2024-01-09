@@ -1,4 +1,5 @@
-using HE.Investments.Common.Exceptions;
+using HE.Investments.Common.Contract.Exceptions;
+using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Validators;
 using Microsoft.Extensions.Logging;
 

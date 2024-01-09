@@ -1,5 +1,5 @@
 using FluentAssertions.Specialized;
-using HE.Investments.Common.Exceptions;
+using HE.Investments.Common.Contract.Exceptions;
 
 namespace HE.Investments.Loans.BusinessLogic.Tests.Assertions;
 internal static class NotFoundAssertions

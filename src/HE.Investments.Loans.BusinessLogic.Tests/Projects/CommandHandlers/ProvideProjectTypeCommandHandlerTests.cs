@@ -1,5 +1,5 @@
 using HE.Investments.Account.Domain.Tests.User.TestObjectBuilder;
-using HE.Investments.Common.Exceptions;
+using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Loans.BusinessLogic.Projects.CommandHandlers;
 using HE.Investments.Loans.BusinessLogic.Projects.ValueObjects;
 using HE.Investments.Loans.BusinessLogic.Tests.Projects.ObjectBuilders;

@@ -1,3 +1,4 @@
+using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Validators;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

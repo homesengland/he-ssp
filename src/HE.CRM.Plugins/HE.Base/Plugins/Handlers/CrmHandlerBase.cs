@@ -15,7 +15,7 @@ namespace HE.Base.Plugins.Handlers
     /// and adds some helper methods for handlers development.
     /// </summary>
     /// <typeparam name="TContext">The type of the context inherited from OrganizationServiceCotnext.</typeparam>
-    /// <seealso cref="PwC.Plugins.Base.Handlers.ICrmHandler" />
+    /// <seealso cref="ICrmHandler" />
     public abstract class CrmHandlerBase<TContext> : ICrmHandler where TContext : OrganizationServiceContext
     {
         protected CrmHandlerBase()

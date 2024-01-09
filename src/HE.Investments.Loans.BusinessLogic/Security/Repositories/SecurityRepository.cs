@@ -1,9 +1,9 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Shared.User;
+using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.CRM;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Serialization;
-using HE.Investments.Common.Exceptions;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories.Mapper;
 using HE.Investments.Loans.BusinessLogic.Security.Mappers;
 using HE.Investments.Loans.Common.Utils.Enums;

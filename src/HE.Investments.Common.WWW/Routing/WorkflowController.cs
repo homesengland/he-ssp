@@ -1,5 +1,5 @@
 using System.Reflection;
-using HE.Investments.Common.Exceptions;
+using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Utils;
 using Microsoft.AspNetCore.Mvc;

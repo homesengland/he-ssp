@@ -2,7 +2,7 @@ using HE.Investments.Account.Shared.Config;
 using HE.Investments.Account.Shared.Repositories;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.Entities;
-using HE.Investments.Common.Exceptions;
+using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Infrastructure.Cache.Interfaces;
 using HE.Investments.Common.User;
 

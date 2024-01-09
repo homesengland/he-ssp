@@ -3,8 +3,8 @@ using HE.Investments.Account.Domain.UserOrganisation.Entities;
 using HE.Investments.Account.Domain.UserOrganisation.Repositories;
 using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.User.ValueObjects;
-using HE.Investments.Common.Exceptions;
-using HE.Investments.Common.Validators;
+using HE.Investments.Common.Contract.Exceptions;
+using HE.Investments.Common.Contract.Validators;
 using MediatR;
 
 namespace HE.Investments.Account.Domain.UserOrganisation.CommandHandlers;

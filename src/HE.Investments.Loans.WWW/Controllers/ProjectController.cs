@@ -1,6 +1,6 @@
 using HE.Investments.Account.Shared.Authorization.Attributes;
+using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Extensions;
-using HE.Investments.Common.Utils.Pagination;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Routing;

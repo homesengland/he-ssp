@@ -3,8 +3,8 @@ using HE.Investments.Account.Contract.Users.Queries;
 using HE.Investments.Account.Domain.Organisation.Repositories;
 using HE.Investments.Account.Domain.Users.Repositories;
 using HE.Investments.Account.Shared;
+using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Extensions;
-using HE.Investments.Common.Utils.Pagination;
 using MediatR;
 
 namespace HE.Investments.Account.Domain.Users.QueryHandlers;

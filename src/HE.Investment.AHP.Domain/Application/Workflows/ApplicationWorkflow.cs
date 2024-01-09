@@ -1,4 +1,4 @@
-using HE.Investments.Common.Exceptions;
+using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.WWW.Routing;
 using Stateless;
 

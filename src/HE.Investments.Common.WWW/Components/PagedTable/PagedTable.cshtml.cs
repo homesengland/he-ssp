@@ -1,5 +1,5 @@
 using HE.Investments.Common.Contract;
-using HE.Investments.Common.Utils.Pagination;
+using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.WWW.Components.Table;
 using Microsoft.AspNetCore.Mvc;
 
