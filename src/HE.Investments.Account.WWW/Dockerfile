@@ -1,5 +1,3 @@
-ARG BUILD_CONFIGURATION=Release
-
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
 EXPOSE 80
@@ -26,10 +24,10 @@ COPY ["HE.Investments.Common.WWW/HE.Investments.Common.WWW.csproj", "HE.Investme
 RUN dotnet restore "./HE.Investments.Account.WWW/./HE.Investments.Account.WWW.csproj"
 COPY . .
 WORKDIR "/src/HE.Investments.Account.WWW"
-RUN dotnet build "./HE.Investments.Account.WWW.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "./HE.Investments.Account.WWW.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "./HE.Investments.Account.WWW.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./HE.Investments.Account.WWW.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app

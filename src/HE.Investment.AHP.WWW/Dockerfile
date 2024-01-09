@@ -29,10 +29,10 @@ COPY ["HE.Investments.DocumentService/HE.Investments.DocumentService.csproj", "H
 RUN dotnet restore "./HE.Investment.AHP.WWW/./HE.Investment.AHP.WWW.csproj"
 COPY . .
 WORKDIR "/src/HE.Investment.AHP.WWW"
-RUN dotnet build "./HE.Investment.AHP.WWW.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "./HE.Investment.AHP.WWW.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "./HE.Investment.AHP.WWW.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./HE.Investment.AHP.WWW.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app

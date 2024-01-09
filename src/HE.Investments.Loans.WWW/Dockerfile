@@ -32,10 +32,10 @@ RUN dotnet restore "./HE.Investments.Loans.WWW/./HE.Investments.Loans.WWW.csproj
 
 COPY . .
 WORKDIR "/src/HE.Investments.Loans.WWW"
-RUN dotnet build "./HE.Investments.Loans.WWW.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "./HE.Investments.Loans.WWW.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "./HE.Investments.Loans.WWW.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./HE.Investments.Loans.WWW.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
