@@ -1,3 +1,5 @@
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
+@using HE.Investments.Common.WWW.Components.FormHeader
 @model (string Title, string Caption, string ApplicationId, HE.Investment.AHP.Domain.FinancialDetails.FinancialDetailsWorkflowState CurrentPage, string CustomBackLinkUrl)
 @{
     var redirectParameters = new { applicationId = Model.ApplicationId, currentPage = Model.CurrentPage };

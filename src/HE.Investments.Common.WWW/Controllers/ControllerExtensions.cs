@@ -1,6 +1,5 @@
-using HE.Investments.Common.Exceptions;
+using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Validators;
-using HE.Investments.Common.WWW.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -34,10 +33,5 @@ public static class ControllerExtensions
         }
 
         return await onSuccess();
-    }
-
-    public static string GetApplicationIdFromRoute(this Controller controller)
-    {
-        return controller.Request.GetRouteValue("applicationId") ?? throw new NotFoundException("Missing required applicationId path parameter.");
     }
 }

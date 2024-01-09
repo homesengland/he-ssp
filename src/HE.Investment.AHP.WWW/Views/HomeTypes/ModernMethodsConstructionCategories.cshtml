@@ -1,12 +1,20 @@
 @using HE.Investment.AHP.Domain.HomeTypes
 @using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.WWW.Models.HomeTypes
+@using HE.Investment.AHP.WWW.Views.HomeTypes.Const
+@using HE.Investment.AHP.WWW.Views.Shared.Components.FormHiddenLabel
+@using HE.Investment.AHP.WWW.Views.Shared.Components.HomeTypeFormHeader
+@using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
+@using HE.Investments.Common.WWW.Components.FormButton
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Checkboxes
 @model HE.Investment.AHP.WWW.Models.HomeTypes.ModernMethodsConstructionModel;
 
 @{
     var applicationId = this.GetApplicationIdFromRoute();
     var homeTypeId = this.GetHomeTypeIdFromRoute();
     var workflow = Context.Request.Query["workflow"];
+    ViewData["Title"] = HomeTypesPageTitles.ModernMethodsConstructionCategories;
 }
 
 <gds-div-grid-column-two-thirds>
@@ -17,7 +25,7 @@
                                   application-id="@applicationId"
                                   home-type-id="@homeTypeId"
                                   caption="@Model.Header"
-                                  title="Which Modern Methods of Construction (MMC) categories are you using?"/>
+                                  title="@HomeTypesPageTitles.ModernMethodsConstructionCategories"/>
 
         <gds-field-set class="govuk-!-margin-bottom-6">
             <span class="govuk-caption-m govuk-!-margin-bottom-6">Select all that apply.</span>

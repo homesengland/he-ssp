@@ -1,9 +1,11 @@
+using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Commands;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.Repositories;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investments.Account.Shared;
+using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Validators;
 using MediatR;
 using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
@@ -29,7 +31,10 @@ public abstract class UpdateDeliveryPhaseCommandHandler<TCommand> : IRequestHand
 
         var result = await Update(deliveryPhase, request);
 
-        await _repository.Save(deliveryPhase, account.SelectedOrganisationId(), cancellationToken);
+        if (result.IsValid)
+        {
+            await _repository.Save(deliveryPhase, account, cancellationToken);
+        }
 
         return result;
     }

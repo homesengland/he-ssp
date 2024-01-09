@@ -1,8 +1,14 @@
 @using HE.Investment.AHP.Domain.HomeTypes
 @using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.WWW.Models.HomeTypes
+@using HE.Investment.AHP.WWW.Views.HomeTypes.Const
+@using HE.Investment.AHP.WWW.Views.Shared.Components.HomeTypeFormHeader
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investments.Common.WWW.TagHelpers
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @using tes = He.AspNetCore.Mvc.Gds.Components.TagHelpers.Radios;
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Input
 
 @model HE.Investment.AHP.WWW.Models.HomeTypes.HomeTypeDetailsModel;
 
@@ -11,12 +17,13 @@
     var homeTypeId = this.GetOptionalHomeTypeIdFromRoute();
     var workflow = Context.Request.Query["workflow"];
     var action = homeTypeId == null ? "NewHomeTypeDetails" : "HomeTypeDetails";
+    ViewData["Title"] = HomeTypesPageTitles.HomeTypeDetails;
 }
 
 <div class="govuk-grid-column-two-thirds">
     <form asp-controller="HomeTypes" asp-action="@action" asp-method="post" asp-route-workflow="@workflow" novalidate>
         @Html.HiddenFor(m => Model.ApplicationName)
-        <vc:home-type-form-header title="Home type details"
+        <vc:home-type-form-header title="@HomeTypesPageTitles.HomeTypeDetails"
                                   current-page="@HomeTypesWorkflowState.HomeTypeDetails"
                                   application-id="@applicationId"
                                   caption="@Model.ApplicationName"/>

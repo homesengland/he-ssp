@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investments.Account.Shared.User;
@@ -19,7 +20,7 @@ public interface IDeliveryPhaseRepository
         UserAccount userAccount,
         CancellationToken cancellationToken);
 
-    Task Save(IDeliveryPhaseEntity deliveryPhase, OrganisationId organisationId, CancellationToken cancellationToken);
+    Task Save(IDeliveryPhaseEntity deliveryPhase, UserAccount userAccount, CancellationToken cancellationToken);
 
     Task Save(DeliveryPhasesEntity deliveryPhases, OrganisationId organisationId, CancellationToken cancellationToken);
 }

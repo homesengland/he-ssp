@@ -4,6 +4,12 @@
 @using HE.Investments.Loans.Contract.Projects.ViewModels
 @using HE.Investments.Loans.WWW.Extensions
 @using HE.Investments.Loans.WWW.Views.Project.Consts
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Fieldset
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Input
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Legend
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
 @model HE.Investments.Loans.Contract.Projects.ViewModels.ProjectViewModel;
 @{
     var (radioInvalid, radioErrors) = @ViewData.ModelState.GetErrors(nameof(ProjectViewModel.HasEstimatedStartDate));

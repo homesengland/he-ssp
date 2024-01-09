@@ -1,6 +1,4 @@
 using HE.Investments.Common.Contract;
-using HE.Investments.Common.Domain;
-using HE.Investments.Common.Gds;
 
 namespace HE.Investments.Common.WWW.Models.TaskList;
 

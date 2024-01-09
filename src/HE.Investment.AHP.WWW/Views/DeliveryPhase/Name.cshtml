@@ -1,1 +1,27 @@
-<div>TODO: Delivery Phase name page</div>
+@using HE.Investment.AHP.WWW.Extensions
+@using HE.Investment.AHP.WWW.Models.Delivery
+@using HE.Investment.AHP.WWW.Views.Delivery.Consts
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investments.Common.WWW.Components.FormHeader
+@using HE.Investments.Common.WWW.TagHelpers
+@model HE.Investment.AHP.Contract.Delivery.DeliveryPhaseDetails;
+@{
+    var applicationId = this.GetApplicationIdFromRoute();
+    var title = DeliveryPageTitles.Name;
+    ViewData["Title"] = title;
+}
+
+<gds-div-grid-column-two-thirds>
+    <form asp-controller="DeliveryPhase" asp-action="Name" asp-method="post" novalidate>
+        @Html.HiddenFor(x => x.Id)
+        <vc:form-header title="@title"/>
+        TODO: Delivery Phase name page
+        <gds-field-set role="group">
+            <vc:form-button/>
+        </gds-field-set>
+
+        <vc:return-to-application-link application-id="@applicationId"/>
+    </form>
+</gds-div-grid-column-two-thirds>

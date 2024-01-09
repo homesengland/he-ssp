@@ -1,7 +1,11 @@
+using HE.Investment.AHP.Contract.Delivery;
+using HE.Investment.AHP.Contract.Delivery.Enums;
+using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investments.Common.Contract;
+using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 
@@ -15,31 +19,41 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
 
     public DeliveryPhaseEntity(
         ApplicationBasicInfo application,
+        OrganisationBasicInfo organisation,
         string? name,
+        TypeOfHomes? typeOfHomes,
         SectionStatus status,
         IEnumerable<HomesToDeliverInPhase> homesToDeliver,
         DeliveryPhaseId? id = null,
         DateTime? createdOn = null,
         AcquisitionMilestoneDetails? acquisitionMilestone = null,
         StartOnSiteMilestoneDetails? startOnSiteMilestone = null,
-        CompletionMilestoneDetails? completionMilestone = null)
+        CompletionMilestoneDetails? completionMilestone = null,
+        IsAdditionalPaymentRequested? isAdditionalPaymentRequested = null)
     {
         Application = application;
+        Organisation = organisation;
         Name = new DeliveryPhaseName(name);
+        TypeOfHomes = typeOfHomes;
         Status = status;
         Id = id ?? DeliveryPhaseId.New();
         CreatedOn = createdOn;
         AcquisitionMilestone = acquisitionMilestone;
         StartOnSiteMilestone = startOnSiteMilestone;
         CompletionMilestone = completionMilestone;
+        IsAdditionalPaymentRequested = isAdditionalPaymentRequested;
         _homesToDeliver = homesToDeliver.ToList();
     }
 
     public ApplicationBasicInfo Application { get; }
 
+    public OrganisationBasicInfo Organisation { get; }
+
     public DeliveryPhaseId Id { get; set; }
 
     public DeliveryPhaseName Name { get; private set; }
+
+    public TypeOfHomes? TypeOfHomes { get; private set; }
 
     public DateTime? CreatedOn { get; }
 
@@ -58,6 +72,8 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
     public StartOnSiteMilestoneDetails? StartOnSiteMilestone { get; private set; }
 
     public CompletionMilestoneDetails? CompletionMilestone { get; private set; }
+
+    public IsAdditionalPaymentRequested? IsAdditionalPaymentRequested { get; private set; }
 
     public bool IsHomeTypeUsed(HomeTypeId homeTypeId)
     {
@@ -91,17 +107,66 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
 
     public void ProvideAcquisitionMilestoneDetails(AcquisitionMilestoneDetails? details)
     {
+        if (Organisation.IsUnregisteredBody)
+        {
+            throw new DomainValidationException("Cannot provide Acquisition Milestone details for Unregistered Body Partner.");
+        }
+
         AcquisitionMilestone = _modificationTracker.Change(AcquisitionMilestone, details, MarkAsNotCompleted);
     }
 
     public void ProvideStartOnSiteMilestoneDetails(StartOnSiteMilestoneDetails? details)
     {
+        if (Organisation.IsUnregisteredBody)
+        {
+            throw new DomainValidationException("Cannot provide Start On Site Milestone details for Unregistered Body Partner.");
+        }
+
         StartOnSiteMilestone = _modificationTracker.Change(StartOnSiteMilestone, details, MarkAsNotCompleted);
     }
 
     public void ProvideCompletionMilestoneDetails(CompletionMilestoneDetails? details)
     {
         CompletionMilestone = _modificationTracker.Change(CompletionMilestone, details, MarkAsNotCompleted);
+    }
+
+    public void ProvideTypeOfHomes(TypeOfHomes typeOfHomes)
+    {
+        TypeOfHomes = _modificationTracker.Change(TypeOfHomes, typeOfHomes.NotDefault(), MarkAsNotCompleted);
+    }
+
+    public void ProvideAdditionalPaymentRequest(IsAdditionalPaymentRequested? isAdditionalPaymentRequested)
+    {
+        if (!Organisation.IsUnregisteredBody)
+        {
+            throw new DomainValidationException("Cannot provide Additional Payment Request for Registered Partner.");
+        }
+
+        IsAdditionalPaymentRequested = _modificationTracker.Change(IsAdditionalPaymentRequested, isAdditionalPaymentRequested, MarkAsNotCompleted);
+    }
+
+    public void Complete()
+    {
+        if (!IsAnswered())
+        {
+            // TODO #67047: throw and handle exception
+            throw new DomainValidationException("Cannot complete deliveryPhase.");
+        }
+
+        Status = _modificationTracker.Change(Status, SectionStatus.Completed);
+    }
+
+    private bool IsAnswered()
+    {
+        if (Organisation.IsUnregisteredBody)
+        {
+            return CompletionMilestone != null && CompletionMilestone.IsAnswered() &&
+                   IsAdditionalPaymentRequested != null && IsAdditionalPaymentRequested.IsAnswered();
+        }
+
+        return AcquisitionMilestone != null && AcquisitionMilestone.IsAnswered() &&
+               StartOnSiteMilestone != null && StartOnSiteMilestone.IsAnswered() &&
+               CompletionMilestone != null && CompletionMilestone.IsAnswered();
     }
 
     private void MarkAsNotCompleted()

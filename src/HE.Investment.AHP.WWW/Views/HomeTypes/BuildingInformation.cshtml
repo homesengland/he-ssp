@@ -1,6 +1,11 @@
 @using HE.Investment.AHP.Domain.HomeTypes
 @using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.WWW.Models.HomeTypes
+@using HE.Investment.AHP.WWW.Views.HomeTypes.Const
+@using HE.Investment.AHP.WWW.Views.Shared.Components.HomeTypeFormHeader
+@using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
+@using HE.Investments.Common.WWW.Components.FormButton
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model HE.Investment.AHP.WWW.Models.HomeTypes.BuildingInformationModel;
 
 @{
@@ -15,6 +20,7 @@
         "A single self-contained residential dwelling that is only on one storey.",
         "A single self-contained residential dwelling usually of two storeys with your own front door.",
     };
+    ViewData["Title"] = HomeTypesPageTitles.BuildingInformation;
 }
 
 <gds-div-grid-column-two-thirds>
@@ -25,7 +31,7 @@
                                   application-id="@applicationId"
                                   home-type-id="@homeTypeId"
                                   caption="@Model.Header"
-                                  title="Building information" />
+                                  title="@HomeTypesPageTitles.BuildingInformation" />
         <gds-field-set role="group">
             <he-error-form-group asp-for="BuildingType">
                 <gds-legend class="govuk-!-margin-bottom-6">

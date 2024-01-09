@@ -3,7 +3,10 @@
 @using HE.Investment.AHP.WWW.Views.HomeTypes.Const
 @using HE.Investment.AHP.WWW.Views.Shared.Components.HomeTypeFormHeader
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
+@using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.Extensions
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Input
 @model HE.Investment.AHP.WWW.Models.HomeTypes.HomeInformationModel;
 
 @{
@@ -11,13 +14,14 @@
     var homeTypeId = this.GetHomeTypeIdFromRoute();
     var workflow = Context.Request.Query["workflow"];
     ViewBag.ValidationErrors = ViewData.ModelState.GetOrderedErrors(HomeTypesValidationFieldsOrder.HomeInformation);
+    ViewData["Title"] = HomeTypesPageTitles.HomeInformation;
 }
 
 <div class="govuk-grid-column-two-thirds">
     <form asp-controller="HomeTypes" asp-action="HomeInformation" asp-method="post" asp-route-workflow="@workflow" novalidate>
         @Html.HiddenFor(m => Model.ApplicationName)
         @Html.HiddenFor(m => Model.HomeTypeName)
-        <vc:home-type-form-header title="Home information"
+        <vc:home-type-form-header title="@HomeTypesPageTitles.HomeInformation"
                                   current-page="@HomeTypesWorkflowState.HomeInformation"
                                   application-id="@applicationId"
                                   home-type-id="@homeTypeId"

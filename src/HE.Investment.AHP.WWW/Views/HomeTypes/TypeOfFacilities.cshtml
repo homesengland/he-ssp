@@ -1,18 +1,23 @@
 @using HE.Investment.AHP.Domain.HomeTypes
 @using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.WWW.Models.HomeTypes
+@using HE.Investment.AHP.WWW.Views.HomeTypes.Const
+@using HE.Investment.AHP.WWW.Views.Shared.Components.HomeTypeFormHeader
+@using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
+@using HE.Investments.Common.WWW.Components.FormButton
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model HE.Investment.AHP.WWW.Models.HomeTypes.TypeBasicOfFacilitiesModel;
 
 @{
     var applicationId = this.GetApplicationIdFromRoute();
     var homeTypeId = this.GetHomeTypeIdFromRoute();
     var workflow = Context.Request.Query["workflow"];
-
     var hints = new[]
     {
         "Resident has use of their own facilities, such as bathroom and kitchen, within their own home.",
         "Residents have their own room or rooms but facilities, such as bathroom and kitchen, are shared with others.",
     };
+    ViewData["Title"] = HomeTypesPageTitles.TypeOfFacilities;
 }
 
 <gds-div-grid-column-two-thirds>
@@ -23,7 +28,7 @@
                                   caption="@Model.Header"/>
         <gds-field-set role="group">
             <gds-legend>
-                <gds-h1>What type of facilities do the homes have?</gds-h1>
+                <gds-h1>@HomeTypesPageTitles.TypeOfFacilities</gds-h1>
             </gds-legend>
 
             <he-custom-radio

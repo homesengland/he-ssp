@@ -15,7 +15,7 @@ namespace HE.Base.Repositories
     /// Base Crm repository class that implements ICrmRepository interface
     /// </summary>
     /// <typeparam name="TContext">The type of the context inherited from OrganizationServiceCotnext.</typeparam>
-    /// <seealso cref="HE.Base.Repositories.CrmRepository" />
+    /// <seealso cref="CrmRepository" />
     public class CrmRepository<TContext> : CrmRepository
         where TContext : OrganizationServiceContext
     {
@@ -51,7 +51,7 @@ namespace HE.Base.Repositories
     /// <summary>
     /// Base Crm repository class that implements ICrmRepository interface. Non-generic, without XrmContext version.
     /// </summary>
-    /// <seealso cref="HE.Base.Repositories.ICrmRepository" />
+    /// <seealso cref="ICrmRepository" />
     public class CrmRepository : ICrmRepository
     {
         protected readonly IOrganizationService service;

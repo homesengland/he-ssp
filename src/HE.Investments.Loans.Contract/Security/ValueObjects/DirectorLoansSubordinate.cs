@@ -1,7 +1,7 @@
+using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
-using HE.Investments.Common.Validators;
 using HE.Investments.Loans.Common.Extensions;
 using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 

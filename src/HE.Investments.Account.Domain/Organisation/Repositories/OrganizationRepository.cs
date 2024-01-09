@@ -3,7 +3,7 @@ using HE.Investments.Account.Contract.Organisation;
 using HE.Investments.Account.Contract.Organisation.Queries;
 using HE.Investments.Account.Domain.Organisation.Entities;
 using HE.Investments.Account.Shared.User.ValueObjects;
-using HE.Investments.Common.Exceptions;
+using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.User;
 using HE.Investments.Organisation.Services;
 

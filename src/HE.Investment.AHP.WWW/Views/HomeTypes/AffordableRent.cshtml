@@ -5,8 +5,11 @@
 @using HE.Investment.AHP.WWW.Views.Shared.Components.HomeTypeFormHeader
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
 @using HE.Investments.Common.Extensions
-@using HE.Investments.Common.Messages
+@using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.Extensions
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Input
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Radios
 @model HE.Investment.AHP.WWW.Models.HomeTypes.AffordableRentModel;
 
 @{
@@ -15,6 +18,7 @@
     var workflow = Context.Request.Query["workflow"];
     ViewBag.ValidationErrors = ViewData.ModelState.GetOrderedErrors(HomeTypesValidationFieldsOrder.AffordableRent);
     var (prospectiveRentAsPercentageInvalid, prospectiveRentAsPercentageError) = @ViewData.ModelState.GetErrors("ProspectiveRentAsPercentageOfMarketRent");
+    ViewData["Title"] = HomeTypesPageTitles.AffordableRent;
 }
 
 <gds-div-grid-column-two-thirds>
@@ -25,7 +29,7 @@
                                   application-id="@applicationId"
                                   home-type-id="@homeTypeId"
                                   caption="@Model.Header"
-                                  title="Affordable Rent details"/>
+                                  title="@HomeTypesPageTitles.AffordableRent"/>
         <gds-field-set>
             <he-error-form-group asp-for="MarketValue">
                 <gds-legend>

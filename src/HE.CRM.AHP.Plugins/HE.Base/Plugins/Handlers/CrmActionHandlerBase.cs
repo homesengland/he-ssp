@@ -9,7 +9,7 @@ namespace HE.Base.Plugins.Handlers
     /// </summary>
     /// <typeparam name="TRequest">The type of the Organization request for which handler is developed.</typeparam>
     /// <typeparam name="TContext">The type of the context inherited from OrganizationServiceCotnext.</typeparam>
-    /// <seealso cref="PwC.Plugins.Base.Handlers.CrmHandlerBase{TContext}" />
+    /// <seealso cref="CrmHandlerBase{TContext}" />
     public abstract class CrmActionHandlerBase<TRequest, TContext> : CrmHandlerBase<TContext>, ICrmWorkHandler
         where TRequest : OrganizationRequest
         where TContext : OrganizationServiceContext

@@ -6,6 +6,7 @@
 @using HE.Investment.AHP.WWW.Views.Shared.Components.PracticalCompletionMilestoneDetails
 @using HE.Investments.Common.WWW.Components.WorkflowBackButton
 @using HE.Investment.AHP.Contract.Delivery
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model HE.Investment.AHP.WWW.Models.Delivery.MilestoneViewModel
 @{
     var title = "Practical completion milestone";
@@ -13,7 +14,7 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <vc:workflow-back-button action="@DeliveryPhaseWorkflowState.PracticalCompletionMilestone.ToString()"/>
+    <vc:workflow-back-button current-page="@DeliveryPhaseWorkflowState.PracticalCompletionMilestone" param-name="deliveryPhaseId"/>
 
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 

@@ -7,4 +7,6 @@ namespace HE.Investment.AHP.WWW.Models.Delivery;
 public static class DeliveryFormOptions
 {
     public static IEnumerable<SelectListItem> RemoveDeliveryPhase => SelectListHelper.FromEnum<RemoveDeliveryPhaseAnswer>();
+
+    public static IEnumerable<SelectListItem> TypeOfHomes => SelectListHelper.FromEnum<TypeOfHomes>();
 }

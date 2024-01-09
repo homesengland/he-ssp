@@ -1,13 +1,17 @@
 using System.Collections.Concurrent;
+using HE.Investment.AHP.Contract.Delivery;
+using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.Contract.Delivery.Events;
+using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Domain.Application.Repositories;
+using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.Contract;
-using HE.Investments.Common.Exceptions;
+using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Infrastructure.Events;
 using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
@@ -29,10 +33,7 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
 
     public async Task<DeliveryPhasesEntity> GetByApplicationId(ApplicationId applicationId, UserAccount userAccount, CancellationToken cancellationToken)
     {
-        if (!DeliveryPhases.Any())
-        {
-            await InitMockedData(applicationId, userAccount, cancellationToken);
-        }
+        await InitMockedData(applicationId, userAccount, cancellationToken);
 
         if (!DeliveryPhases.TryGetValue(applicationId, out var deliveryPhases))
         {
@@ -42,31 +43,34 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
         return deliveryPhases;
     }
 
-    public async Task Save(IDeliveryPhaseEntity deliveryPhase, OrganisationId organisationId, CancellationToken cancellationToken)
+    public async Task Save(IDeliveryPhaseEntity deliveryPhase, UserAccount userAccount, CancellationToken cancellationToken)
     {
         var entity = (DeliveryPhaseEntity)deliveryPhase;
+        await InitMockedData(entity.Application.Id, userAccount, cancellationToken);
+        var deliveryPhases = await GetByApplicationId(entity.Application.Id, userAccount, cancellationToken);
         if (entity.IsNew)
         {
-            // TODO: AB#66083 Save Delivery Phase in CRM
             entity.Id = new DeliveryPhaseId(Guid.NewGuid().ToString());
+            deliveryPhases.Add(entity);
             await _eventDispatcher.Publish(
                 new DeliveryPhaseHasBeenCreatedEvent(entity.Application.Id.Value, entity.Name.Value),
                 cancellationToken);
         }
         else if (entity.IsModified)
         {
-            // TODO: AB#66083 Save Delivery Phase in CRM
+            // deliveryPhases.Remove(entity.Id, RemoveDeliveryPhaseAnswer.Yes);
+            // deliveryPhases.Add(entity);
             await _eventDispatcher.Publish(new DeliveryPhaseHasBeenUpdatedEvent(entity.Application.Id.Value), cancellationToken);
         }
     }
 
-    public async Task<IDeliveryPhaseEntity> GetById(ApplicationId applicationId, DeliveryPhaseId deliveryPhaseId, UserAccount userAccount, CancellationToken cancellationToken)
+    public async Task<IDeliveryPhaseEntity> GetById(
+        ApplicationId applicationId,
+        DeliveryPhaseId deliveryPhaseId,
+        UserAccount userAccount,
+        CancellationToken cancellationToken)
     {
-        if (!DeliveryPhases.Any())
-        {
-            await InitMockedData(applicationId, userAccount, cancellationToken);
-        }
-
+        await InitMockedData(applicationId, userAccount, cancellationToken);
         if (!DeliveryPhases.TryGetValue(applicationId, out var deliveryPhases))
         {
             throw new NotFoundException(nameof(DeliveryPhaseEntity), deliveryPhaseId);
@@ -82,7 +86,8 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
             // TODO: AB#66083 Update Delivery section status to In Progress in CRM
         }
 
-        foreach (var deliveryPhaseToRemove in deliveryPhases.ToRemove)
+        var toRemove = deliveryPhases.ToRemove.ToList();
+        foreach (var deliveryPhaseToRemove in toRemove)
         {
             // TODO: AB#66083 remove delivery Phase in CRM
             await _eventDispatcher.Publish(
@@ -93,6 +98,11 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
 
     private async Task InitMockedData(ApplicationId applicationId, UserAccount userAccount, CancellationToken cancellationToken)
     {
+        if (DeliveryPhases.Any())
+        {
+            return;
+        }
+
         var application =
             await _applicationRepository.GetApplicationBasicInfo(applicationId, userAccount, cancellationToken);
         var homesToDeliver = new[]
@@ -108,7 +118,9 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
             {
                 new DeliveryPhaseEntity(
                     application,
+                    new OrganisationBasicInfo(true),
                     "Phase 1",
+                    null,
                     SectionStatus.InProgress,
                     new[] { new HomesToDeliverInPhase(new HomeTypeId("ht-1"), 3) },
                     new DeliveryPhaseId("phase-1"),

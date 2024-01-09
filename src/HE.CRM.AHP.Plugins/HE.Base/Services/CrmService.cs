@@ -7,7 +7,7 @@ namespace HE.Base.Services
     /// <summary>
     /// Basic Crm Service implementation abstract class. Each CrmService should inherit from this CrmService class.
     /// </summary>
-    /// <seealso cref="HE.Base.Services.ICrmService" />
+    /// <seealso cref="ICrmService" />
     public abstract class CrmService : ICrmService
     {
         /// <summary>

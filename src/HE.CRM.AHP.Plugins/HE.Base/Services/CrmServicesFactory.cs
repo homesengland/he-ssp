@@ -5,7 +5,7 @@ namespace HE.Base.Services
     /// <summary>
     /// Implementation of basic CrmService factory interface
     /// </summary>
-    /// <seealso cref="HE.Base.Services.ICrmServicesFactory" />
+    /// <seealso cref="ICrmServicesFactory" />
     public class CrmServicesFactory : ICrmServicesFactory
     {
         private readonly IContainer container;

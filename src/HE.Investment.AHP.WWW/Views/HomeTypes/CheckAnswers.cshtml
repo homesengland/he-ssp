@@ -3,17 +3,22 @@
 @using HE.Investment.AHP.Domain.HomeTypes
 @using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.WWW.Models.Common
+@using HE.Investment.AHP.WWW.Views.HomeTypes.Const
 @using HE.Investment.AHP.WWW.Views.Shared.Components.HomeTypeFormHeader
+@using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Radios
 @model HE.Investment.AHP.WWW.Models.HomeTypes.HomeTypeSummaryModel
 
 @{
     var applicationId = this.GetApplicationIdFromRoute();
     var homeTypeId = this.GetHomeTypeIdFromRoute();
+    ViewData["Title"] = HomeTypesPageTitles.CheckAnswers;
 }
 
 <div>
     <gds-div-grid-column-two-thirds>
-        <vc:home-type-form-header title="Check your answers before adding your home type"
+        <vc:home-type-form-header title="@HomeTypesPageTitles.CheckAnswers"
                                   current-page="@HomeTypesWorkflowState.CheckAnswers"
                                   application-id="@applicationId"
                                   home-type-id="@homeTypeId"

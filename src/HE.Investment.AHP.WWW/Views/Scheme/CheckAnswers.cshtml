@@ -8,6 +8,8 @@
 @using HE.Investments.Common.WWW.Models
 @using HE.Investment.AHP.Contract.Common.Enums
 @using HE.Investment.AHP.WWW.Views.Scheme.Const
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
 @model HE.Investment.AHP.WWW.Models.Scheme.SchemeSummaryViewModel
 
 @{
@@ -28,7 +30,7 @@
     }
     else
     {
-        <vc:workflow-back-button action="@SchemeWorkflowState.CheckAnswers.ToString()"/>
+        <vc:workflow-back-button current-page="@SchemeWorkflowState.CheckAnswers"/>
     }
 
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")

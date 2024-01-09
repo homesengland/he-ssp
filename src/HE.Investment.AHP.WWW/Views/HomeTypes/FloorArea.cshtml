@@ -1,14 +1,20 @@
 @using HE.Investment.AHP.Domain.HomeTypes
 @using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.WWW.Models.Common
+@using HE.Investment.AHP.WWW.Views.HomeTypes.Const
 @using HE.Investment.AHP.WWW.Views.Shared.Components.HomeTypeFormHeader
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
+@using HE.Investments.Common.WWW.Components.FormButton
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Input
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Radios
 @model HE.Investment.AHP.WWW.Models.HomeTypes.FloorAreaModel;
 
 @{
     var applicationId = this.GetApplicationIdFromRoute();
     var homeTypeId = this.GetHomeTypeIdFromRoute();
     var workflow = Context.Request.Query["workflow"];
+    ViewData["Title"] = HomeTypesPageTitles.FloorArea;
 }
 
 <gds-div-grid-column-two-thirds>
@@ -19,7 +25,7 @@
                                   application-id="@applicationId"
                                   home-type-id="@homeTypeId"
                                   caption="@Model.Header"
-                                  title="Floor area"/>
+                                  title="@HomeTypesPageTitles.FloorArea"/>
         <gds-field-set>
             <he-error-form-group asp-for="FloorArea">
                 <gds-legend>

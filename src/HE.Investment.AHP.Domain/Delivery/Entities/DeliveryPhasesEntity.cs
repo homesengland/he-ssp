@@ -1,13 +1,16 @@
 using HE.Investment.AHP.Contract.Common.Enums;
+using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Enums;
+using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investments.Common.Contract;
+using HE.Investments.Common.Contract.Exceptions;
+using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
-using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Validators;
 using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
@@ -148,7 +151,12 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
         Status = _statusModificationTracker.Change(Status, SectionStatus.InProgress);
     }
 
-    private DeliveryPhaseEntity GetEntityById(DeliveryPhaseId deliveryPhaseId) => _deliveryPhases.SingleOrDefault(x => x.Id == deliveryPhaseId)
+    public void Add(DeliveryPhaseEntity deliveryPhase)
+    {
+        _deliveryPhases.Add(deliveryPhase);
+    }
+
+    public DeliveryPhaseEntity GetEntityById(DeliveryPhaseId deliveryPhaseId) => _deliveryPhases.SingleOrDefault(x => x.Id == deliveryPhaseId)
                                                                                   ?? throw new NotFoundException(nameof(DeliveryPhaseEntity), deliveryPhaseId);
 
     private bool AreAllHomeTypesUsed()

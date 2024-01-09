@@ -3,7 +3,10 @@
 @using HE.Investments.Common.WWW.Components.FormHeader
 @using HE.Investments.Common.WWW.Components.WorkflowBackButton
 @using HE.Investment.AHP.Domain.Scheme.Workflows
+@using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
+@using HE.Investments.Common.WWW.Components.NumericTextInput
 @using HE.Investments.Common.WWW.Extensions;
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model HE.Investment.AHP.WWW.Models.Scheme.SchemeViewModel
 @{
     var title = SchemeInformationPageTitles.FundingDetails;
@@ -11,7 +14,7 @@
     ViewBag.validationErrors = ViewData.ModelState.GetOrderedErrors(SchemeValidationFieldsOrder.Funding);
 }
 <gds-div-grid-column-two-thirds>
-    <vc:workflow-back-button action="@SchemeWorkflowState.Funding.ToString()"/>
+    <vc:workflow-back-button current-page="@SchemeWorkflowState.Funding"/>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <form asp-controller="Scheme" asp-action="Funding" asp-method="post" asp-route-redirect="@Context.Request.Query["redirect"]" novalidate>
         <vc:form-header caption="@Model.ApplicationName" title="@title"/>

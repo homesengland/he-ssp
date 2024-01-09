@@ -1,13 +1,19 @@
 @using HE.Investment.AHP.Domain.HomeTypes
 @using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.WWW.Models.HomeTypes
+@using HE.Investment.AHP.WWW.Views.HomeTypes.Const
+@using HE.Investment.AHP.WWW.Views.Shared.Components.HomeTypeFormHeader
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investments.Common.WWW.TagHelpers
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @using tes = He.AspNetCore.Mvc.Gds.Components.TagHelpers.Radios;
 
 @model HE.Investment.AHP.WWW.Models.HomeTypes.FinishHomeTypeModel;
 
 @{
     var applicationId = this.GetApplicationIdFromRoute();
+    ViewData["Title"] = HomeTypesPageTitles.FinishHomeTypes;
 }
 
 <div class="govuk-grid-column-two-thirds">
@@ -20,7 +26,7 @@
         <gds-field-set>
             <he-error-form-group asp-for="FinishAnswer">
                 <gds-legend class="govuk-!-margin-bottom-0">
-                    <gds-h1 class="govuk-!-margin-bottom-0">Have you added all of the home types for this application?</gds-h1>
+                    <gds-h1 class="govuk-!-margin-bottom-0">@HomeTypesPageTitles.FinishHomeTypes</gds-h1>
                 </gds-legend>
 
                 <gds-radio govuk-formgroup-asp-for="FinishAnswer"

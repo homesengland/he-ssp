@@ -1,7 +1,6 @@
 using HE.Investments.Account.Domain.Tests.User.TestObjectBuilder;
 using HE.Investments.Common.Contract;
-using HE.Investments.Common.Domain;
-using HE.Investments.Common.Validators;
+using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Loans.BusinessLogic.Security.CommandHandler;
 using HE.Investments.Loans.BusinessLogic.Tests.Security.TestObjectBuilder;
 using HE.Investments.Loans.BusinessLogic.Tests.TestData;

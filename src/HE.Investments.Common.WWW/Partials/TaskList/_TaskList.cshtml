@@ -30,7 +30,7 @@
                     }
                     else
                     {
-                        <section-status-tag status=@item.Status additional-classes="app-task-list__tag"></section-status-tag>
+                        <section-status-tag id="@(item.Action.ToIdTag())-status" status=@item.Status additional-classes="app-task-list__tag"></section-status-tag>
                     }
                 </li>
             </ul>

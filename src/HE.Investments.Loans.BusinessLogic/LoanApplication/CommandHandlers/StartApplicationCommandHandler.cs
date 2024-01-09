@@ -1,6 +1,6 @@
 using HE.Investments.Account.Shared;
-using HE.Investments.Common.Exceptions;
-using HE.Investments.Common.Validators;
+using HE.Investments.Common.Contract.Exceptions;
+using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Entities;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories;
 using HE.Investments.Loans.BusinessLogic.Projects.Entities;

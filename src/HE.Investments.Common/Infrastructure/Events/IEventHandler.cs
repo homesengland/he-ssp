@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using HE.Investments.Common.Contract.Infrastructure.Events;
 using MediatR;
 
 namespace HE.Investments.Common.Infrastructure.Events;
