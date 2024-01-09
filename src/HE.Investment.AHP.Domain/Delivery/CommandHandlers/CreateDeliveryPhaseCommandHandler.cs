@@ -41,9 +41,9 @@ public class CreateDeliveryPhaseCommandHandler : DeliveryCommandHandlerBase, IRe
 
             var deliveryPhases = await _deliveryPhaseRepository.GetByApplicationId(new ApplicationId.ApplicationId(request.ApplicationId), account, cancellationToken);
             var deliveryPhase = deliveryPhases.CreateDeliveryPhase(new DeliveryPhaseName(request.DeliveryPhaseName));
-            var result = await _deliveryPhaseRepository.Save(deliveryPhase, account.SelectedOrganisationId(), cancellationToken);
+            var result = await _deliveryPhaseRepository.Save(deliveryPhase, account, cancellationToken);
 
-            return new OperationResult<DeliveryPhaseId?>(new DeliveryPhaseId(result.Value));
+            return new OperationResult<DeliveryPhaseId?>(result != null ? new DeliveryPhaseId(result.Value) : null);
         }
         catch (DomainValidationException domainValidationException)
         {

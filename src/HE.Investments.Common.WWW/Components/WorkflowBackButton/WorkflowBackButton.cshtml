@@ -1,4 +1,4 @@
-@model (string Action, string ParamName)
+@model (string CurrentPage, string ParamName)
 
 @{
     #nullable enable
@@ -10,7 +10,7 @@
 
     if (routeData.Any())
     {
-        routeData.Add("currentPage", Model.Action);
+        routeData.Add("currentPage", Model.CurrentPage);
         routeData.Add("action", "Back");
 
         if (isSubSection)
@@ -20,7 +20,6 @@
         }
     }
 }
-
 @if (routeData.Any())
 {
     <gds-back-link href="@Url.RouteUrl(isSubSection ? "subSection" : "section", routeData)" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>

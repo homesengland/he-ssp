@@ -86,14 +86,21 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
 
     public DeliveryPhaseEntity CreateDeliveryPhase(DeliveryPhaseName name)
     {
-        var siteBasicInfo = new SiteBasicInfo(new Contract.Site.ValueObjects.SiteId("someid"), false);
+        // TODO: get proper organisation basic info
+        var orgBasicInfo = new OrganisationBasicInfo(false);
         var deliveryPhaseNameAlreadyUsed = _deliveryPhases.Any(x => x.Name == name);
         if (deliveryPhaseNameAlreadyUsed)
         {
             OperationResult.New().AddValidationError(nameof(DeliveryPhaseName), "Provided delivery phase name is already in use. Delivery phase name should be unique.").CheckErrors();
         }
 
-        var deliveryPhase = new DeliveryPhaseEntity(_application, name, siteBasicInfo, SectionStatus.InProgress, new List<HomesToDeliverInPhase>());
+        var deliveryPhase = new DeliveryPhaseEntity(
+            _application,
+            name,
+            orgBasicInfo,
+            null,
+            SectionStatus.InProgress,
+            new List<HomesToDeliverInPhase>());
 
         _deliveryPhases.Add(deliveryPhase);
         return deliveryPhase;
@@ -163,7 +170,12 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
         Status = _statusModificationTracker.Change(Status, SectionStatus.InProgress);
     }
 
-    private DeliveryPhaseEntity GetEntityById(DeliveryPhaseId deliveryPhaseId) => _deliveryPhases.SingleOrDefault(x => x.Id == deliveryPhaseId)
+    public void Add(DeliveryPhaseEntity deliveryPhase)
+    {
+        _deliveryPhases.Add(deliveryPhase);
+    }
+
+    public DeliveryPhaseEntity GetEntityById(DeliveryPhaseId deliveryPhaseId) => _deliveryPhases.SingleOrDefault(x => x.Id == deliveryPhaseId)
                                                                                   ?? throw new NotFoundException(nameof(DeliveryPhaseEntity), deliveryPhaseId);
 
     private bool AreAllHomeTypesUsed()

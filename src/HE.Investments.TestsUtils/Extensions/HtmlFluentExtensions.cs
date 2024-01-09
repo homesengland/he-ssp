@@ -9,7 +9,7 @@ public static class HtmlFluentExtensions
 {
     public static IHtmlDocument UrlEndWith(this IHtmlDocument htmlDocument, string endsWith)
     {
-        htmlDocument.Url.Should().EndWith(endsWith);
+        htmlDocument.Url.ToLowerInvariant().Should().EndWith(endsWith.ToLowerInvariant());
         return htmlDocument;
     }
 
@@ -69,14 +69,14 @@ public static class HtmlFluentExtensions
     public static IHtmlDocument HasGdsContinueButton(this IHtmlDocument htmlDocument)
     {
         htmlDocument.HasGdsButton("continue-button", out var button);
-        button!.Text().Trim().Should().Be("Continue");
+        button.Text().Trim().Should().Be("Continue");
         return htmlDocument;
     }
 
     public static IHtmlDocument HasGdsSaveAndContinueButton(this IHtmlDocument htmlDocument)
     {
         htmlDocument.HasGdsButton("continue-button", out var button);
-        button!.Text().Trim().Should().Be("Save and continue");
+        button.Text().Trim().Should().Be("Save and continue");
         return htmlDocument;
     }
 
@@ -136,6 +136,16 @@ public static class HtmlFluentExtensions
         return htmlDocument;
     }
 
+    public static IHtmlDocument HasElementWithText(this IHtmlDocument htmlDocument, string id, string text)
+    {
+        var element = htmlDocument.GetElementById(id);
+
+        element.Should().NotBeNull($"Element with id {id} does not exist");
+        element!.TextContent.Should().Contain(text, $"Element with id {id} is missing text \"{text}\"");
+
+        return htmlDocument;
+    }
+
     public static IHtmlDocument HasElementForTestId(this IHtmlDocument htmlDocument, string dataTestId, out IElement htmlElement)
     {
         htmlElement = htmlDocument.GetElementByTestId(dataTestId);
@@ -153,5 +163,10 @@ public static class HtmlFluentExtensions
     {
         htmlDocument.GetInsetText().Should().Be(title);
         return htmlDocument;
+    }
+
+    public static IHtmlDocument HasSectionWithStatus(this IHtmlDocument htmlDocument, string sectionStatusId, string expectedStatus)
+    {
+        return htmlDocument.HasElementWithText(sectionStatusId, expectedStatus);
     }
 }

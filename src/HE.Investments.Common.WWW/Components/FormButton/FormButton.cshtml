@@ -1,6 +1,6 @@
 @using HE.Investments.Common.Messages
-@model string
+@model (string Text, bool IsDisabled)
 
-<button class="govuk-button" data-module="govuk-button" name="action" type="submit" id="continue-button" value="@GenericMessages.Continue">
-    @Model
+<button class="govuk-button" data-module="govuk-button" name="action" type="submit" id="continue-button" value="@GenericMessages.Continue" disabled="@Model.IsDisabled">
+    @Model.Text
 </button>

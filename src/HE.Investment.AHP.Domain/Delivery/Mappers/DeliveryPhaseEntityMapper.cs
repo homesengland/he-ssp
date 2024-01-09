@@ -26,15 +26,17 @@ public static class DeliveryPhaseEntityMapper
         return new DeliveryPhaseDetails(
             deliveryPhase.Application.Name.Name,
             deliveryPhase.Id.Value,
-            deliveryPhase.Name?.Value,
+            deliveryPhase.Name?.Value ?? string.Empty,
+            deliveryPhase.TypeOfHomes,
             deliveryPhase.TotalHomesToBeDeliveredInThisPhase,
-            deliveryPhase.Site.IsUnregisteredBody,
+            deliveryPhase.Organisation.IsUnregisteredBody,
             MapDate(deliveryPhase.AcquisitionMilestone?.AcquisitionDate),
             MapDate(deliveryPhase.AcquisitionMilestone?.PaymentDate),
             MapDate(deliveryPhase.StartOnSiteMilestone?.StartOnSiteDate),
             MapDate(deliveryPhase.StartOnSiteMilestone?.PaymentDate),
             MapDate(deliveryPhase.CompletionMilestone?.CompletionDate),
-            MapDate(deliveryPhase.CompletionMilestone?.PaymentDate));
+            MapDate(deliveryPhase.CompletionMilestone?.PaymentDate),
+            deliveryPhase.IsAdditionalPaymentRequested?.IsRequested);
     }
 
     private static DateDetails? MapDate(DateValueObject? date)

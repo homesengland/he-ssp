@@ -13,7 +13,7 @@ public class DeliveryPhaseNameTests : ViewTestBase
     [Fact]
     public async Task ShouldDisplayView()
     {
-        var model = new DeliveryPhaseNameViewModel(Guid.NewGuid().ToString(), "TestApp", string.Empty, "Name");
+        var model = new DeliveryPhaseNameViewModel(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), "TestApp", string.Empty, "Name");
 
         // given & when
         var document = await Render(_viewPath, model);
@@ -26,7 +26,7 @@ public class DeliveryPhaseNameTests : ViewTestBase
     public async Task ShouldDisplayView_ForInvalid()
     {
         // given
-        var model = new DeliveryPhaseNameViewModel(Guid.NewGuid().ToString(), "TestApp", "Test phase", "Name");
+        var model = new DeliveryPhaseNameViewModel(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), "TestApp", "Test phase", "Name");
         var errorMessage = "some test error";
         var modelState = new ModelStateDictionary();
         modelState.AddModelError(nameof(DeliveryPhaseNameViewModel.DeliveryPhaseName), errorMessage);
