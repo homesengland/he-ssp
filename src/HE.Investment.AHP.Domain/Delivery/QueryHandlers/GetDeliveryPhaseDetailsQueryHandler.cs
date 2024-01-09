@@ -6,7 +6,6 @@ using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investments.Account.Shared;
 using MediatR;
 using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
-using DeliveryPhaseId = HE.Investment.AHP.Domain.Delivery.ValueObjects.DeliveryPhaseId;
 
 namespace HE.Investment.AHP.Domain.Delivery.QueryHandlers;
 

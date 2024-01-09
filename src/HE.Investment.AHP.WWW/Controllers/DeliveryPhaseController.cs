@@ -58,7 +58,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
             return View("Name", model);
         }
 
-        return await Continue(new { applicationId, result.ReturnedData?.Id });
+        return await Continue(new { applicationId, result.ReturnedData?.Value });
     }
 
     [HttpGet("{deliveryPhaseId}/Name")]
