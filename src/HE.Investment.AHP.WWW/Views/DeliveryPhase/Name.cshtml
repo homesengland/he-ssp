@@ -16,6 +16,7 @@
 
     <form asp-controller="DeliveryPhase" asp-action="@Model.PostbackActionName" asp-method="post" novalidate>
         @Html.HiddenFor(x => x.DeliveryPhaseId)
+        @Html.HiddenFor(x => x.PostbackActionName)
         <vc:text-input header="@title"
                        css-class="govuk-!-width-one-third"
                        hint="Each delivery phase needs a unique name."
