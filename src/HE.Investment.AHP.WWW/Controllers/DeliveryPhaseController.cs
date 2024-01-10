@@ -111,6 +111,26 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
             cancellationToken);
     }
 
+    [HttpGet("{deliveryPhaseId}/BuildActivityType")]
+    [WorkflowState(DeliveryPhaseWorkflowState.BuildActivityType)]
+    public async Task<IActionResult> BuildActivityType([FromRoute] string applicationId, string deliveryPhaseId, CancellationToken cancellationToken)
+    {
+        var deliveryPhaseDetails = await _mediator.Send(new GetDeliveryPhaseDetailsQuery(applicationId, deliveryPhaseId), cancellationToken);
+
+        return View("BuildActivityType", deliveryPhaseDetails);
+    }
+
+    [HttpPost("{deliveryPhaseId}/BuildActivityType")]
+    [WorkflowState(DeliveryPhaseWorkflowState.BuildActivityType)]
+    public async Task<IActionResult> BuildActivityType([FromRoute] string applicationId, string deliveryPhaseId, DeliveryPhaseDetails deliveryPhaseDetails, CancellationToken cancellationToken)
+    {
+        return await ExecuteCommand(
+            deliveryPhaseId,
+            new ProvideBuildActivityForNewBuildCommand(applicationId, deliveryPhaseId, deliveryPhaseDetails.BuildActivityTypeForNewBuild),
+            nameof(BuildActivityType),
+            cancellationToken);
+    }
+
     [HttpGet("{deliveryPhaseId}/remove")]
     public async Task<IActionResult> Remove([FromRoute] string applicationId, string deliveryPhaseId, CancellationToken cancellationToken)
     {

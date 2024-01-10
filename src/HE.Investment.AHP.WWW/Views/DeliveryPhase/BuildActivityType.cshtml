@@ -1,0 +1,54 @@
+@using HE.Investment.AHP.WWW.Extensions
+@using HE.Investment.AHP.WWW.Views.Delivery.Consts
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investment.AHP.Contract.Delivery
+@using HE.Investment.AHP.WWW.Views.DeliveryPhase.Consts
+@using HE.Investments.Common.WWW.Components.WorkflowBackButton
+@using HE.Investments.Common.WWW.Components.FormHeader
+@using HE.Investments.Common.WWW.Components.RadioList
+@using HE.Investments.Common.WWW.Models
+@using HE.Investment.AHP.Contract.Delivery.Enums
+@model HE.Investment.AHP.Contract.Delivery.DeliveryPhaseDetails;
+@{
+    var applicationId = this.GetApplicationIdFromRoute();
+    var title = DeliveryPageTitles.BuildActivityType;
+    ViewData["Title"] = title;
+
+    IList <ExtendedSelectListItem> availableOptions;
+    string fieldName;
+
+    if (Model.TypeOfHomes == TypeOfHomes.Rehab)
+    {
+        availableOptions = BuildActivityTypeOptions.BuildActivityTypeForRehabOptions(Model.BuildActivityTypeForRehab);
+        fieldName = nameof(Model.BuildActivityTypeForRehab);
+    }
+    else
+    {
+        availableOptions = BuildActivityTypeOptions.BuildActivityTypeForNewBuildOptions(Model.BuildActivityTypeForNewBuild);
+        fieldName = nameof(Model.BuildActivityTypeForNewBuild);
+    }
+
+    BuildActivityTypeOptions.BuildActivityTypeForNewBuildOptions(Model.BuildActivityTypeForNewBuild);
+}
+
+<gds-div-grid-column-two-thirds>
+    <vc:workflow-back-button action="@DeliveryPhaseWorkflowState.BuildActivityType.ToString()" param-name="deliveryPhaseId"/>
+
+    <form asp-controller="DeliveryPhase" asp-action="BuildActivityType" asp-method="post" novalidate>
+        <vc:form-header caption="@($"{Model.ApplicationName} - {Model.Name}")" title="@title"/>
+        @Html.HiddenFor(m => m.TypeOfHomes)
+        <gds-field-set role="group">
+            <vc:radio-list
+                hint="Each delivery phase should contain only one build activity type."
+                field-name=@fieldName
+                available-options=@availableOptions>
+            </vc:radio-list>
+        </gds-field-set>
+
+        <vc:form-button/>
+
+        <vc:return-to-application-link application-id="@applicationId"/>
+    </form>
+</gds-div-grid-column-two-thirds>
