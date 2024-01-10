@@ -2,7 +2,6 @@ using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Commands;
 using HE.Investment.AHP.Contract.Delivery.Queries;
-using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investment.AHP.WWW.Extensions;
 using HE.Investment.AHP.WWW.Models.Delivery;
 using HE.Investment.AHP.WWW.Utils;
@@ -19,7 +18,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HE.Investment.AHP.WWW.Controllers;
 
 [AuthorizeWithCompletedProfile]
-[Route("application/{applicationId}/DeliveryPhase")]
+[Route("application/{applicationId}/delivery-phase")]
 public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowState>
 {
     private readonly IMediator _mediator;
@@ -61,7 +60,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         return await Continue(new { applicationId, result.ReturnedData?.Value });
     }
 
-    [HttpGet("{deliveryPhaseId}/Name")]
+    [HttpGet("{deliveryPhaseId}/name")]
     [WorkflowState(DeliveryPhaseWorkflowState.Name)]
     public async Task<IActionResult> Name([FromRoute] string applicationId, [FromRoute] string deliveryPhaseId, CancellationToken cancellationToken)
     {
@@ -84,14 +83,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         return await Continue(new { applicationId, deliveryPhaseId });
     }
 
-    [HttpPost("{deliveryPhaseId}/Name")]
-    [WorkflowState(DeliveryPhaseWorkflowState.Name)]
-    public async Task<IActionResult> Name([FromRoute] string applicationId, string deliveryPhaseId, DeliveryPhaseDetails deliveryPhaseDetails, CancellationToken cancellationToken)
-    {
-        return await ContinueWithRedirect(new { applicationId, deliveryPhaseId });
-    }
-
-    [HttpGet("{deliveryPhaseId}/Details")]
+    [HttpGet("{deliveryPhaseId}/details")]
     [WorkflowState(DeliveryPhaseWorkflowState.TypeOfHomes)]
     public async Task<IActionResult> Details([FromRoute] string applicationId, string deliveryPhaseId, CancellationToken cancellationToken)
     {
@@ -100,7 +92,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         return View("Details", deliveryPhaseDetails);
     }
 
-    [HttpPost("{deliveryPhaseId}/Details")]
+    [HttpPost("{deliveryPhaseId}/details")]
     [WorkflowState(DeliveryPhaseWorkflowState.TypeOfHomes)]
     public async Task<IActionResult> Details([FromRoute] string applicationId, string deliveryPhaseId, DeliveryPhaseDetails deliveryPhaseDetails, CancellationToken cancellationToken)
     {
@@ -116,7 +108,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     {
         var deliveryPhaseDetails = await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(applicationId, deliveryPhaseId), cancellationToken);
 
-        return View("RemoveDeliveryPhaseConfirmation", new RemoveDeliveryPhaseModel(deliveryPhaseDetails.ApplicationName, deliveryPhaseDetails?.Name ?? string.Empty));
+        return View("RemoveDeliveryPhaseConfirmation", new RemoveDeliveryPhaseModel(deliveryPhaseDetails.ApplicationName, deliveryPhaseDetails.Name));
     }
 
     [HttpPost("{deliveryPhaseId}/remove")]

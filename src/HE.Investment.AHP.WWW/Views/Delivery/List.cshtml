@@ -1,6 +1,5 @@
 @using HE.Investment.AHP.WWW.Routing
 @using HE.Investment.AHP.WWW.Extensions
-@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model HE.Investment.AHP.WWW.Models.Delivery.DeliveryListModel
 @{
     var applicationId = this.GetApplicationIdFromRoute();
@@ -56,7 +55,7 @@
                     <tr class="govuk-table__row" id="delivery-phase-@Model.DeliveryPhases[index].DeliveryPhaseId">
                         <td class="govuk-table__cell">
                             <gds-link class="govuk-link--no-visited-state"
-                                      href="@Url.RouteUrl("subSection", new { controller = "DeliveryPhase", action = "Name", applicationId, id = Model.DeliveryPhases[index].DeliveryPhaseId })">
+                                      href="@Url.Action("Name", "DeliveryPhase", new { applicationId, deliveryPhaseId = Model.DeliveryPhases[index].DeliveryPhaseId })">
                                 @(Model.DeliveryPhases[index].DeliveryPhaseName)
                             </gds-link>
                         </td>
@@ -74,7 +73,7 @@
                         </td>
                         <td class="govuk-table__cell govuk-!-text-align-right" hidden="@Model.IsReadOnly">
                             <gds-link class="govuk-link--no-visited-state govuk-!-margin-left-4"
-                                      href="@Url.RouteUrl("subSection", new { controller = "DeliveryPhase", action = "Remove", applicationId, id = Model.DeliveryPhases[index].DeliveryPhaseId })">
+                                      href="@Url.Action("Remove", "DeliveryPhase", new { applicationId, deliveryPhaseId = Model.DeliveryPhases[index].DeliveryPhaseId })">
                                 Remove
                             </gds-link>
                         </td>
@@ -92,7 +91,11 @@
                     </tr>
                     <tr>
                         <td colspan="6">
-                            <link-button is-secondary="true" href="@Url.RouteUrl("section", new { controller = "DeliveryPhase", action = "Create", applicationId })" is-disabled="@Model.IsReadOnly">Add another delivery phase</link-button>
+                            <link-button is-secondary="true"
+                                         href="@Url.Action("Create", "DeliveryPhase", new { applicationId })"
+                                         is-disabled="@Model.IsReadOnly">
+                                Add another delivery phase
+                            </link-button>
                         </td>
                     </tr>
                 }
@@ -127,7 +130,10 @@
                 You have @Model.UnusedHomeTypesCount homes that you need to add to your delivery phases.
             </gds-div-inset-text>
 
-            <link-button href="@Url.RouteUrl("section", new { controller = "DeliveryPhase", action = "New", applicationId })" is-disabled="@Model.IsReadOnly">Add a delivery phase</link-button>
+            <link-button is-disabled="@Model.IsReadOnly"
+                         href="@Url.Action("Create", "DeliveryPhase", new { applicationId })">
+                Add a delivery phase
+            </link-button>
         }
 
         <vc:return-to-application-link application-id="@applicationId" is-editable="@false"/>
