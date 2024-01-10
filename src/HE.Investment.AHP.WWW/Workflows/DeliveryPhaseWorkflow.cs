@@ -73,7 +73,8 @@ public class DeliveryPhaseWorkflow : IStateRouting<DeliveryPhaseWorkflowState>
 
         _machine.Configure(DeliveryPhaseWorkflowState.StartOnSiteMilestone)
             .Permit(Trigger.Continue, DeliveryPhaseWorkflowState.PracticalCompletionMilestone)
-            .Permit(Trigger.Back, DeliveryPhaseWorkflowState.AcquisitionMilestone);
+            .PermitIf(Trigger.Back, DeliveryPhaseWorkflowState.BuildActivityType, () => _isUnregisteredBody)
+            .PermitIf(Trigger.Back, DeliveryPhaseWorkflowState.AcquisitionMilestone, () => !_isUnregisteredBody);
 
         _machine.Configure(DeliveryPhaseWorkflowState.PracticalCompletionMilestone)
             .PermitIf(Trigger.Continue, DeliveryPhaseWorkflowState.CheckAnswers, () => !_isUnregisteredBody)

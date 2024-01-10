@@ -4,6 +4,7 @@ using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investment.AHP.Domain.Tests.Delivery.Entities.TestDataBuilders;
 using HE.Investments.Common.Contract;
+using HE.Investments.Common.Contract.Exceptions;
 
 namespace HE.Investment.AHP.Domain.Tests.Delivery.Entities.DeliveryPhaseEntityTests;
 
@@ -24,7 +25,7 @@ public class SetHomesToBeDeliveredInThisPhaseTests
         var setHomes = () => testCandidate.SetHomesToBeDeliveredInThisPhase(homesToDeliver);
 
         // then
-        setHomes.Should().Throw<InvalidOperationException>();
+        setHomes.Should().Throw<DomainValidationException>();
     }
 
     [Fact]

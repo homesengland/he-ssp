@@ -16,7 +16,7 @@
     var title = DeliveryPageTitles.BuildActivityType;
     ViewData["Title"] = title;
 
-    IList <ExtendedSelectListItem> availableOptions;
+    IList<ExtendedSelectListItem> availableOptions;
     string fieldName;
 
     if (Model.TypeOfHomes == TypeOfHomes.Rehab)
@@ -39,13 +39,11 @@
     <form asp-controller="DeliveryPhase" asp-action="BuildActivityType" asp-method="post" novalidate>
         <vc:form-header caption="@($"{Model.ApplicationName} - {Model.Name}")" title="@title"/>
         @Html.HiddenFor(m => m.TypeOfHomes)
-        <gds-field-set role="group">
-            <vc:radio-list
-                hint="Each delivery phase should contain only one build activity type."
-                field-name=@fieldName
-                available-options=@availableOptions>
-            </vc:radio-list>
-        </gds-field-set>
+        <vc:radio-list
+            hint="Each delivery phase should contain only one build activity type."
+            field-name=@fieldName
+            available-options=@availableOptions>
+        </vc:radio-list>
 
         <vc:form-button/>
 
