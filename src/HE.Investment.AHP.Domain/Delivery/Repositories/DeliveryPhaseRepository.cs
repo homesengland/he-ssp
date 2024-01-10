@@ -123,6 +123,7 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
                     new DeliveryPhaseName("Phase 1"),
                     new OrganisationBasicInfo(true),
                     null,
+                    new BuildActivityType(),
                     SectionStatus.InProgress,
                     new[] { new HomesToDeliverInPhase(new HomeTypeId("ht-1"), 3) },
                     new DeliveryPhaseId("phase-1"),

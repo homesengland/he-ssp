@@ -102,6 +102,7 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
             name,
             orgBasicInfo,
             null,
+            new BuildActivityType(),
             SectionStatus.InProgress,
             new List<HomesToDeliverInPhase>());
 

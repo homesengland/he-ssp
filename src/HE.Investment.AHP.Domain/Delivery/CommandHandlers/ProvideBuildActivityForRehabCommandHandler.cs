@@ -7,14 +7,14 @@ using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.Domain.Delivery.CommandHandlers;
 
-public class ProvideBuildActivityForNewBuildCommandHandler : UpdateDeliveryPhaseCommandHandler<ProvideBuildActivityForNewBuildCommand>
+public class ProvideBuildActivityForRehabCommandHandler : UpdateDeliveryPhaseCommandHandler<ProvideBuildActivityForRehabCommand>
 {
-    public ProvideBuildActivityForNewBuildCommandHandler(IDeliveryPhaseRepository repository, IAccountUserContext accountUserContext)
+    public ProvideBuildActivityForRehabCommandHandler(IDeliveryPhaseRepository repository, IAccountUserContext accountUserContext)
         : base(repository, accountUserContext)
     {
     }
 
-    protected override Task<OperationResult> Update(IDeliveryPhaseEntity entity, ProvideBuildActivityForNewBuildCommand request)
+    protected override Task<OperationResult> Update(IDeliveryPhaseEntity entity, ProvideBuildActivityForRehabCommand request)
     {
         var buildActivityType = request.BuildActivityType.IsProvided() ?
             new BuildActivityType(entity.TypeOfHomes.GetValueOfFirstValue(), request.BuildActivityType!.Value)

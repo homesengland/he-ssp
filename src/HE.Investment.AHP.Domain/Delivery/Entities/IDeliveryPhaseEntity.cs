@@ -18,9 +18,7 @@ public interface IDeliveryPhaseEntity
 
     TypeOfHomes? TypeOfHomes { get; }
 
-    BuildActivityTypeForNewBuild? BuildActivityTypeForNewBuild { get; }
-
-    BuildActivityTypeForRehab? BuildActivityTypeForRehab { get; }
+    BuildActivityType BuildActivityType { get; }
 
     DateTime? CreatedOn { get; }
 
@@ -48,5 +46,5 @@ public interface IDeliveryPhaseEntity
 
     void ProvideTypeOfHomes(TypeOfHomes typeOfHomes);
 
-    void ProvideBuildActivityType(BuildActivityTypeForNewBuild requestBuildActivityType);
+    void ProvideBuildActivityType(BuildActivityType buildActivityType);
 }
