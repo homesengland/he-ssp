@@ -54,6 +54,8 @@ public class StateCanBeAccessedTests
     [Theory]
     [InlineData(DeliveryPhaseWorkflowState.Create, true)]
     [InlineData(DeliveryPhaseWorkflowState.Name, true)]
+    [InlineData(DeliveryPhaseWorkflowState.TypeOfHomes, true)]
+    [InlineData(DeliveryPhaseWorkflowState.BuildActivityType, true)]
     [InlineData(DeliveryPhaseWorkflowState.Summary, true)]
     [InlineData(DeliveryPhaseWorkflowState.PracticalCompletionMilestone, true)]
     [InlineData(DeliveryPhaseWorkflowState.CheckAnswers, true)]

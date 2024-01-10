@@ -10,13 +10,12 @@
 @model HE.Investment.AHP.Contract.Delivery.DeliveryPhaseDetails;
 @{
     var applicationId = this.GetApplicationIdFromRoute();
-    var deliveryPhaseId = this.GetDeliveryPhaseIdFromRoute();
     var title = DeliveryPageTitles.Details;
     ViewData["Title"] = title;
 }
 
 <gds-div-grid-column-two-thirds>
-    <vc:workflow-back-button action="@DeliveryPhaseWorkflowState.TypeOfHomes.ToString()" param-name="deliveryPhaseId"/>
+    <vc:workflow-back-button current-page="@DeliveryPhaseWorkflowState.TypeOfHomes" param-name="deliveryPhaseId"/>
 
     <form asp-controller="DeliveryPhase" asp-action="Details" asp-method="post" novalidate>
         <vc:form-header caption="@($"{Model.ApplicationName} - {Model.Name}")" title="@title"/>

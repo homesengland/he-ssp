@@ -8,6 +8,8 @@ public record DeliveryPhaseDetails(
     string Id,
     string Name,
     TypeOfHomes? TypeOfHomes,
+    BuildActivityTypeForNewBuild? BuildActivityTypeForNewBuild,
+    BuildActivityTypeForRehab? BuildActivityTypeForRehab,
     int? NumberOfHomes,
     bool IsUnregisteredBody,
     DateDetails? AcquisitionDate,

@@ -48,7 +48,7 @@ public class NextStateTests
     [InlineData(DeliveryPhaseWorkflowState.CheckAnswers, DeliveryPhaseWorkflowState.PracticalCompletionMilestone)]
     [InlineData(DeliveryPhaseWorkflowState.PracticalCompletionMilestone, DeliveryPhaseWorkflowState.StartOnSiteMilestone)]
     [InlineData(DeliveryPhaseWorkflowState.StartOnSiteMilestone, DeliveryPhaseWorkflowState.AcquisitionMilestone)]
-    [InlineData(DeliveryPhaseWorkflowState.AcquisitionMilestone, DeliveryPhaseWorkflowState.TypeOfHomes)]
+    [InlineData(DeliveryPhaseWorkflowState.AcquisitionMilestone, DeliveryPhaseWorkflowState.BuildActivityType)]
     public async Task ShouldReturnNextState_WhenBackTriggerExecutedAsUnregisteredBody(DeliveryPhaseWorkflowState current, DeliveryPhaseWorkflowState expectedNext)
     {
         // given
@@ -64,7 +64,7 @@ public class NextStateTests
     [Theory]
     [InlineData(DeliveryPhaseWorkflowState.CheckAnswers, DeliveryPhaseWorkflowState.UnregisteredBodyFollowUp)]
     [InlineData(DeliveryPhaseWorkflowState.UnregisteredBodyFollowUp, DeliveryPhaseWorkflowState.PracticalCompletionMilestone)]
-    [InlineData(DeliveryPhaseWorkflowState.PracticalCompletionMilestone, DeliveryPhaseWorkflowState.Summary)]
+    [InlineData(DeliveryPhaseWorkflowState.PracticalCompletionMilestone, DeliveryPhaseWorkflowState.TypeOfHomes)]
     public async Task ShouldReturnNextState_WhenBackTriggerExecutedAsRegisteredBody(DeliveryPhaseWorkflowState current, DeliveryPhaseWorkflowState expectedNext)
     {
         // given
