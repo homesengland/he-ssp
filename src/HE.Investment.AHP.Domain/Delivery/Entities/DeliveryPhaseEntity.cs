@@ -21,6 +21,7 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
         DeliveryPhaseName name,
         OrganisationBasicInfo organisation,
         TypeOfHomes? typeOfHomes,
+        BuildActivityType buildActivityType,
         SectionStatus status,
         IEnumerable<HomesToDeliverInPhase> homesToDeliver,
         DeliveryPhaseId? id = null,
@@ -34,6 +35,7 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
         Name = name;
         Organisation = organisation;
         TypeOfHomes = typeOfHomes;
+        BuildActivityType = buildActivityType;
         Status = status;
         Id = id ?? DeliveryPhaseId.New();
         CreatedOn = createdOn;
@@ -54,9 +56,7 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
 
     public TypeOfHomes? TypeOfHomes { get; private set; }
 
-    public BuildActivityTypeForNewBuild? BuildActivityTypeForNewBuild { get; private set; }
-
-    public BuildActivityTypeForRehab? BuildActivityTypeForRehab { get; private set; }
+    public BuildActivityType BuildActivityType { get; private set; }
 
     public DateTime? CreatedOn { get; }
 
@@ -164,14 +164,9 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
         Status = _modificationTracker.Change(Status, SectionStatus.Completed);
     }
 
-    public void ProvideBuildActivityType(BuildActivityTypeForNewBuild requestBuildActivityType)
+    public void ProvideBuildActivityType(BuildActivityType buildActivityType)
     {
-        BuildActivityTypeForNewBuild = _modificationTracker.Change(BuildActivityTypeForNewBuild, requestBuildActivityType.NotDefault(), MarkAsNotCompleted);
-    }
-
-    public void ProvideBuildActivityType(BuildActivityTypeForRehab requestBuildActivityType)
-    {
-        BuildActivityTypeForRehab = _modificationTracker.Change(BuildActivityTypeForRehab, requestBuildActivityType.NotDefault(), MarkAsNotCompleted);
+        BuildActivityType = _modificationTracker.Change(BuildActivityType, buildActivityType, MarkAsNotCompleted);
     }
 
     private bool IsAnswered()

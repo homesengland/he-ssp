@@ -90,6 +90,7 @@ public class DeliveryPhaseEntityBuilder
             new DeliveryPhaseName("First Phase"),
             _organisationBasicInfo,
             TypeOfHomes.Rehab,
+            new BuildActivityType(),
             _status,
             _homesToDeliver,
             new DeliveryPhaseId(_id),

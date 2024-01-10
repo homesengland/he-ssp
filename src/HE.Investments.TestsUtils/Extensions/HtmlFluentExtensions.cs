@@ -80,11 +80,15 @@ public static class HtmlFluentExtensions
         return htmlDocument;
     }
 
-    public static IHtmlDocument HasGdsBackButton(this IHtmlDocument htmlDocument)
+    public static IHtmlDocument HasGdsBackButton(this IHtmlDocument htmlDocument, bool validateLink = true)
     {
         var backButton = htmlDocument.GetElementsByClassName("govuk-back-link").SingleOrDefault();
         backButton.Should().NotBeNull();
-        backButton!.IsLink().Should().BeTrue();
+        if (validateLink)
+        {
+            backButton!.IsLink().Should().BeTrue();
+        }
+
         backButton!.Text().Trim().Should().Be("Back");
         return htmlDocument;
     }
@@ -94,6 +98,20 @@ public static class HtmlFluentExtensions
         var gdsInput = htmlDocument.GetElementsByName(fieldName).SingleOrDefault();
         gdsInput.Should().NotBeNull($"GDS input for field {fieldName} should exist");
         gdsInput!.ClassName.Should().Contain("govuk-input");
+        return htmlDocument;
+    }
+
+    public static IHtmlDocument HasGdsRadioInputWithValues(this IHtmlDocument htmlDocument, string fieldName, params string[] values)
+    {
+        var gdsRadioInputs = htmlDocument.GetElementsByName(fieldName);
+        gdsRadioInputs.Should().NotBeEmpty($"GDS Radio input for field {fieldName} should exist");
+        foreach (var gdsRadioInput in gdsRadioInputs)
+        {
+            gdsRadioInput.ClassName.Should().Contain("govuk-radios__input");
+            var radioInput = (IHtmlInputElement)gdsRadioInput;
+            values.Should().Contain(radioInput.Value, $"Radio input value should have one of the expected values {string.Join(',', values)}");
+        }
+
         return htmlDocument;
     }
 

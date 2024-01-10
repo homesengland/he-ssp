@@ -36,6 +36,7 @@ public class AhpIntegrationTest : IntegrationTestBase<Program>
         currentPage
             .UrlEndWith(startPageUrl)
             .HasTitle(expectedPageTitle)
+            .HasGdsBackButton()
             .HasGdsSubmitButton("continue-button", out var continueButton);
 
         // when
