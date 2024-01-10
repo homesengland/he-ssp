@@ -1,17 +1,15 @@
-@using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.WWW.Models.Delivery
 @using HE.Investment.AHP.WWW.Views.Delivery.Consts
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
 @using HE.Investments.Common.WWW.Components.FormButton
 @model DeliveryPhaseNameViewModel;
 @{
-    var applicationId = this.GetApplicationIdFromRoute();
     var title = DeliveryPageTitles.Name;
     ViewData["Title"] = title;
 }
 
 <gds-div-grid-column-two-thirds>
-    <vc:back-link-with-callback url="@Url.Action("List", "Delivery", new { applicationId=Model.ApplicationId })" />
+    <vc:back-link-with-callback url="@Url.Action("List", "Delivery", new { applicationId = Model.ApplicationId })"/>
 
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
@@ -20,10 +18,10 @@
         <vc:text-input header="@title"
                        hint="Each delivery phase needs a unique name."
                        field-name="@nameof(Model.DeliveryPhaseName)"
-                       value="@Model.DeliveryPhaseName" />
+                       value="@Model.DeliveryPhaseName"/>
 
-        <vc:form-button />
+        <vc:form-button/>
 
-        <vc:return-to-application-link application-id="@Model.ApplicationId" />
+        <vc:return-to-application-link application-id="@Model.ApplicationId"/>
     </form>
 </gds-div-grid-column-two-thirds>

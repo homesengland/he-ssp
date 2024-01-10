@@ -57,7 +57,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
             return View("Name", model);
         }
 
-        return await Continue(new { applicationId, result.ReturnedData?.Value });
+        return await Continue(new { applicationId, deliveryPhaseId = result.ReturnedData?.Value });
     }
 
     [HttpGet("{deliveryPhaseId}/name")]
@@ -100,6 +100,26 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
             deliveryPhaseId,
             new ProvideTypeOfHomesCommand(applicationId, deliveryPhaseId, deliveryPhaseDetails.TypeOfHomes),
             nameof(Details),
+            cancellationToken);
+    }
+
+    [HttpGet("{deliveryPhaseId}/build-activity-type")]
+    [WorkflowState(DeliveryPhaseWorkflowState.BuildActivityType)]
+    public async Task<IActionResult> BuildActivityType([FromRoute] string applicationId, string deliveryPhaseId, CancellationToken cancellationToken)
+    {
+        var deliveryPhaseDetails = await _mediator.Send(new GetDeliveryPhaseDetailsQuery(applicationId, deliveryPhaseId), cancellationToken);
+
+        return View("BuildActivityType", deliveryPhaseDetails);
+    }
+
+    [HttpPost("{deliveryPhaseId}/build-activity-type")]
+    [WorkflowState(DeliveryPhaseWorkflowState.BuildActivityType)]
+    public async Task<IActionResult> BuildActivityType([FromRoute] string applicationId, string deliveryPhaseId, DeliveryPhaseDetails deliveryPhaseDetails, CancellationToken cancellationToken)
+    {
+        return await ExecuteCommand(
+            deliveryPhaseId,
+            new ProvideBuildActivityForNewBuildCommand(applicationId, deliveryPhaseId, deliveryPhaseDetails.BuildActivityTypeForNewBuild),
+            nameof(BuildActivityType),
             cancellationToken);
     }
 

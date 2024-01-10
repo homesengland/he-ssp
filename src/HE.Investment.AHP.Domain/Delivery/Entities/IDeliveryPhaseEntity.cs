@@ -18,6 +18,10 @@ public interface IDeliveryPhaseEntity
 
     TypeOfHomes? TypeOfHomes { get; }
 
+    BuildActivityTypeForNewBuild? BuildActivityTypeForNewBuild { get; }
+
+    BuildActivityTypeForRehab? BuildActivityTypeForRehab { get; }
+
     DateTime? CreatedOn { get; }
 
     SectionStatus Status { get; }
@@ -43,4 +47,6 @@ public interface IDeliveryPhaseEntity
     void ProvideAdditionalPaymentRequest(IsAdditionalPaymentRequested? isAdditionalPaymentRequested);
 
     void ProvideTypeOfHomes(TypeOfHomes typeOfHomes);
+
+    void ProvideBuildActivityType(BuildActivityTypeForNewBuild requestBuildActivityType);
 }
