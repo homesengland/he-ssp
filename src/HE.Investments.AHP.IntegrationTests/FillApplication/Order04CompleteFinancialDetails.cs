@@ -169,11 +169,13 @@ public class Order04CompleteFinancialDetails : AhpIntegrationTest
         schemaInformationSummary["Grants from other public bodies"].Should().Be($"\u00a3{FinancialDetailsData.TotalGrants.ToString(CultureInfo.InvariantCulture)}");
         schemaInformationSummary["Total contributions"].Should().Be($"\u00a3{FinancialDetailsData.TotalContributions.ToString(CultureInfo.InvariantCulture)}");
 
-        await TestClient.SubmitButton(
+        var taskListPage = await TestClient.SubmitButton(
             continueButton,
             ("IsSectionCompleted", true.MapToCommonResponse()));
 
         // then
+        taskListPage.UrlEndWith(ApplicationPagesUrl.TaskListSuffix)
+            .HasSectionWithStatus("enter-financial-details-status", "Completed");
         SaveCurrentPage();
     }
 }
