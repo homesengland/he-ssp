@@ -280,16 +280,7 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
 
     private static string DownloadDesignFileUrl(IUrlHelper urlHelper, string applicationId, string homeTypeId, string fileId)
     {
-        return urlHelper.RouteUrl(
-            "subSection",
-            new
-            {
-                controller = "HomeTypes",
-                action = "DownloadDesignPlansFile",
-                applicationId,
-                id = homeTypeId,
-                fileId,
-            }) ?? string.Empty;
+        return urlHelper.Action("DownloadDesignPlansFile", "HomeTypes", new { applicationId, homeTypeId, fileId }) ?? string.Empty;
     }
 
     private static string? ToPounds(int? value) => value?.ToString("\u00a30", CultureInfo.InvariantCulture);

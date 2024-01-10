@@ -18,7 +18,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HE.Investment.AHP.WWW.Controllers;
 
 [AuthorizeWithCompletedProfile]
-[Route("application/{applicationId}/DeliveryPhase")]
+[Route("application/{applicationId}/delivery-phase")]
 public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowState>
 {
     private readonly IMediator _mediator;
@@ -128,7 +128,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     {
         var deliveryPhaseDetails = await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(applicationId, deliveryPhaseId), cancellationToken);
 
-        return View("RemoveDeliveryPhaseConfirmation", new RemoveDeliveryPhaseModel(deliveryPhaseDetails.ApplicationName, deliveryPhaseDetails?.Name ?? string.Empty));
+        return View("RemoveDeliveryPhaseConfirmation", new RemoveDeliveryPhaseModel(deliveryPhaseDetails.ApplicationName, deliveryPhaseDetails.Name));
     }
 
     [HttpPost("{deliveryPhaseId}/remove")]
