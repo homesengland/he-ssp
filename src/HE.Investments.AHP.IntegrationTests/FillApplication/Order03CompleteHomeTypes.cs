@@ -42,7 +42,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
     {
         // given
         var taskListPage = await TestClient.NavigateTo(ApplicationPagesUrl.TaskList(ApplicationData.ApplicationId));
-        taskListPage.HasLinkButtonForTestId("add-home-type", out var enterHomeTypesSection);
+        taskListPage.HasLinkWithId("add-home-type", out var enterHomeTypesSection);
 
         // when
         var landingPage = await TestClient.NavigateTo(enterHomeTypesSection);
