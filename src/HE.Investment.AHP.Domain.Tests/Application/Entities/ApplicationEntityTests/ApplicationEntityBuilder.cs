@@ -1,13 +1,14 @@
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Domain.Application.Entities;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investments.Common.Contract;
-using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
+using ApplicationSection = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationSection;
 
 namespace HE.Investment.AHP.Domain.Tests.Application.Entities.ApplicationEntityTests;
 
 public class ApplicationEntityBuilder
 {
-    private readonly ApplicationId _id = new("1");
+    private readonly AhpApplicationId _id = new("1");
 
     private readonly ApplicationName _name = new("zapytanko");
 

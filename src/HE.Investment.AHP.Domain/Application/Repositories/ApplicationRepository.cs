@@ -11,7 +11,6 @@ using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.CRM;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Infrastructure.Events;
-using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 using ApplicationSection = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationSection;
 
 namespace HE.Investment.AHP.Domain.Application.Repositories;
@@ -28,7 +27,7 @@ public class ApplicationRepository : IApplicationRepository
         _eventDispatcher = eventDispatcher;
     }
 
-    public async Task<ApplicationEntity> GetById(ApplicationId id, UserAccount userAccount, CancellationToken cancellationToken)
+    public async Task<ApplicationEntity> GetById(AhpApplicationId id, UserAccount userAccount, CancellationToken cancellationToken)
     {
         var organisationId = userAccount.SelectedOrganisationId().Value;
         var application = userAccount.CanViewAllApplications()
@@ -43,7 +42,7 @@ public class ApplicationRepository : IApplicationRepository
         return await _applicationCrmContext.IsExist(applicationName.Name, organisationId.Value, cancellationToken);
     }
 
-    public async Task<ApplicationBasicInfo> GetApplicationBasicInfo(ApplicationId id, UserAccount userAccount, CancellationToken cancellationToken)
+    public async Task<ApplicationBasicInfo> GetApplicationBasicInfo(AhpApplicationId id, UserAccount userAccount, CancellationToken cancellationToken)
     {
         var application = await GetById(id, userAccount, cancellationToken);
         return new ApplicationBasicInfo(application.Id, application.Name, application.Tenure?.Value ?? Tenure.Undefined, application.Status);
@@ -60,7 +59,7 @@ public class ApplicationRepository : IApplicationRepository
             .OrderByDescending(x => x.lastExternalModificationOn)
             .TakePage(paginationRequest)
             .Select(x => new ApplicationWithFundingDetails(
-                new ApplicationId(x.id),
+                new AhpApplicationId(x.id),
                 x.name,
                 ApplicationStatusMapper.MapToPortalStatus(x.applicationStatus),
                 ApplicationTenureMapper.ToDomain(x.tenure)!.Value,
@@ -80,18 +79,19 @@ public class ApplicationRepository : IApplicationRepository
 
         var dto = new AhpApplicationDto
         {
-            id = application.Id.IsEmpty() ? null : application.Id.Value,
+            id = application.Id.IsNew ? null : application.Id.Value,
             name = application.Name.Name,
             tenure = ApplicationTenureMapper.ToDto(application.Tenure),
             organisationId = organisationId.Value.ToString(),
         };
 
         var id = await _applicationCrmContext.Save(dto, organisationId.Value, CrmFields.ApplicationToUpdate, cancellationToken);
-        if (application.Id.IsEmpty())
+        if (application.Id.IsNew)
         {
-            application.SetId(new ApplicationId(id));
+            var applicationId = AhpApplicationId.From(id);
+            application.SetId(applicationId);
 
-            await _eventDispatcher.Publish(new ApplicationHasBeenCreatedEvent(id), cancellationToken);
+            await _eventDispatcher.Publish(new ApplicationHasBeenCreatedEvent(applicationId), cancellationToken);
         }
 
         return application;
@@ -100,7 +100,7 @@ public class ApplicationRepository : IApplicationRepository
     private static ApplicationEntity CreateEntity(AhpApplicationDto application)
     {
         return new ApplicationEntity(
-            new ApplicationId(application.id),
+            new AhpApplicationId(application.id),
             new ApplicationName(application.name ?? "Unknown"),
             ApplicationStatusMapper.MapToPortalStatus(application.applicationStatus),
             new ApplicationReferenceNumber(application.referenceNumber),

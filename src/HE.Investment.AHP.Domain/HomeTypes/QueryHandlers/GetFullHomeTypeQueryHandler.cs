@@ -3,7 +3,6 @@ using HE.Investment.AHP.Contract.HomeTypes.Queries;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Mappers;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
-using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
 using MediatR;
@@ -56,7 +55,7 @@ internal sealed class GetFullHomeTypeQueryHandler : IRequestHandler<GetFullHomeT
     {
         var account = await _accountUserContext.GetSelectedAccount();
         var homeType = await _repository.GetById(
-            new Domain.Application.ValueObjects.ApplicationId(request.ApplicationId),
+            request.ApplicationId,
             new HomeTypeId(request.HomeTypeId),
             account,
             HomeTypeSegmentTypes.All,
@@ -65,7 +64,7 @@ internal sealed class GetFullHomeTypeQueryHandler : IRequestHandler<GetFullHomeT
         return new FullHomeType(
             homeType.Id.Value,
             homeType.Name.Value,
-            homeType.Application.Id.Value,
+            homeType.Application.Id,
             homeType.Application.Name.Name,
             homeType.Application.Tenure,
             homeType.HousingType,

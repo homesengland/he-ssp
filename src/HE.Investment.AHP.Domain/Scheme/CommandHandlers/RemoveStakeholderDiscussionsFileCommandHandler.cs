@@ -1,5 +1,5 @@
+using HE.Investment.AHP.Contract.Scheme.Commands;
 using HE.Investment.AHP.Domain.Common.ValueObjects;
-using HE.Investment.AHP.Domain.Scheme.Commands;
 using HE.Investment.AHP.Domain.Scheme.Entities;
 using HE.Investment.AHP.Domain.Scheme.Repositories;
 using HE.Investments.Account.Shared;

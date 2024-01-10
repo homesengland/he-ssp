@@ -5,7 +5,6 @@ using HE.Investment.AHP.Domain.Delivery.Repositories;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
 using MediatR;
-using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.Delivery.CommandHandlers;
 
@@ -24,7 +23,7 @@ public abstract class UpdateDeliveryPhaseCommandHandler<TCommand> : IRequestHand
     public async Task<OperationResult> Handle(TCommand request, CancellationToken cancellationToken)
     {
         var account = await _accountUserContext.GetSelectedAccount();
-        var deliveryPhase = await _repository.GetById(new ApplicationId(request.ApplicationId), new DeliveryPhaseId(request.DeliveryPhaseId), account, cancellationToken);
+        var deliveryPhase = await _repository.GetById(request.ApplicationId, new DeliveryPhaseId(request.DeliveryPhaseId), account, cancellationToken);
 
         var result = await Update(deliveryPhase, request);
 

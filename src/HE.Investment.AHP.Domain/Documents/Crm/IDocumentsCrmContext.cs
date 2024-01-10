@@ -1,8 +1,8 @@
-using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
+using HE.Investment.AHP.Contract.Application;
 
 namespace HE.Investment.AHP.Domain.Documents.Crm;
 
 public interface IDocumentsCrmContext
 {
-    Task<string> GetDocumentLocation(ApplicationId applicationId, CancellationToken cancellationToken);
+    Task<string> GetDocumentLocation(AhpApplicationId applicationId, CancellationToken cancellationToken);
 }

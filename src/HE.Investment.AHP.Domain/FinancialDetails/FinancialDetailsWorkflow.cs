@@ -1,7 +1,6 @@
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Routing;
-using Microsoft.AspNetCore.Mvc;
 using Stateless;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails;

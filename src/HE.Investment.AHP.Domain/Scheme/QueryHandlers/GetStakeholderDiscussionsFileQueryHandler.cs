@@ -20,7 +20,7 @@ public class GetStakeholderDiscussionsFileQueryHandler : IRequestHandler<GetStak
     {
         var file = await _fileService.DownloadFile(
             new FileId(request.FileId),
-            new LocalAuthoritySupportFileParams(new(request.ApplicationId)),
+            new LocalAuthoritySupportFileParams(request.ApplicationId),
             cancellationToken);
 
         return new DownloadedFile(file.Name, file.Content);
