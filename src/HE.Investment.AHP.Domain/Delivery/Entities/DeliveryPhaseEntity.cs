@@ -1,9 +1,10 @@
-using Dawn;
+using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Enums;
+using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
-using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investments.Common.Contract;
+using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 
@@ -53,6 +54,10 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
 
     public TypeOfHomes? TypeOfHomes { get; private set; }
 
+    public BuildActivityTypeForNewBuild? BuildActivityTypeForNewBuild { get; private set; }
+
+    public BuildActivityTypeForRehab? BuildActivityTypeForRehab { get; private set; }
+
     public DateTime? CreatedOn { get; }
 
     public SectionStatus Status { get; private set; }
@@ -71,6 +76,8 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
 
     public CompletionMilestoneDetails? CompletionMilestone { get; private set; }
 
+    public IsAdditionalPaymentRequested? IsAdditionalPaymentRequested { get; private set; }
+
     public bool IsHomeTypeUsed(HomeTypeId homeTypeId)
     {
         return _homesToDeliver.Any(x => x.HomeTypeId == homeTypeId);
@@ -88,7 +95,7 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
     {
         if (homesToDeliver.DistinctBy(x => x.HomeTypeId).Count() != homesToDeliver.Count)
         {
-            throw new InvalidOperationException("Each Home Type can be selected only once.");
+            throw new DomainValidationException("Each Home Type can be selected only once.");
         }
 
         var uniqueHomes = homesToDeliver.OrderBy(x => x.HomeTypeId.Value).ToList();
@@ -101,11 +108,16 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
         }
     }
 
+    public void ProvideName(DeliveryPhaseName deliveryPhaseName)
+    {
+        Name = _modificationTracker.Change(Name, deliveryPhaseName, MarkAsNotCompleted);
+    }
+
     public void ProvideAcquisitionMilestoneDetails(AcquisitionMilestoneDetails? details)
     {
-        if (Site.IsUnregisteredBody)
+        if (Organisation.IsUnregisteredBody)
         {
-            throw new InvalidOperationException("Cannot provide Acquisition Milestone details for Unregistered Body Partner.");
+            throw new DomainValidationException("Cannot provide Acquisition Milestone details for Unregistered Body Partner.");
         }
 
         AcquisitionMilestone = _modificationTracker.Change(AcquisitionMilestone, details, MarkAsNotCompleted);
@@ -113,9 +125,9 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
 
     public void ProvideStartOnSiteMilestoneDetails(StartOnSiteMilestoneDetails? details)
     {
-        if (Site.IsUnregisteredBody)
+        if (Organisation.IsUnregisteredBody)
         {
-            throw new InvalidOperationException("Cannot provide Start On Site Milestone details for Unregistered Body Partner.");
+            throw new DomainValidationException("Cannot provide Start On Site Milestone details for Unregistered Body Partner.");
         }
 
         StartOnSiteMilestone = _modificationTracker.Change(StartOnSiteMilestone, details, MarkAsNotCompleted);
@@ -152,6 +164,16 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
         Status = _modificationTracker.Change(Status, SectionStatus.Completed);
     }
 
+    public void ProvideBuildActivityType(BuildActivityTypeForNewBuild requestBuildActivityType)
+    {
+        BuildActivityTypeForNewBuild = _modificationTracker.Change(BuildActivityTypeForNewBuild, requestBuildActivityType.NotDefault(), MarkAsNotCompleted);
+    }
+
+    public void ProvideBuildActivityType(BuildActivityTypeForRehab requestBuildActivityType)
+    {
+        BuildActivityTypeForRehab = _modificationTracker.Change(BuildActivityTypeForRehab, requestBuildActivityType.NotDefault(), MarkAsNotCompleted);
+    }
+
     private bool IsAnswered()
     {
         if (Organisation.IsUnregisteredBody)
@@ -163,16 +185,6 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
         return AcquisitionMilestone != null && AcquisitionMilestone.IsAnswered() &&
                StartOnSiteMilestone != null && StartOnSiteMilestone.IsAnswered() &&
                CompletionMilestone != null && CompletionMilestone.IsAnswered();
-    }
-
-    public void ProvideBuildActivityType(BuildActivityTypeForNewBuild requestBuildActivityType)
-    {
-        BuildActivityTypeForNewBuild = _modificationTracker.Change(BuildActivityTypeForNewBuild, requestBuildActivityType.NotDefault(), MarkAsNotCompleted);
-    }
-
-    public void ProvideBuildActivityType(BuildActivityTypeForRehab requestBuildActivityType)
-    {
-        BuildActivityTypeForRehab = _modificationTracker.Change(BuildActivityTypeForRehab, requestBuildActivityType.NotDefault(), MarkAsNotCompleted);
     }
 
     private void MarkAsNotCompleted()

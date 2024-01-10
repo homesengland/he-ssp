@@ -127,7 +127,7 @@
                 You have @Model.UnusedHomeTypesCount homes that you need to add to your delivery phases.
             </gds-div-inset-text>
 
-            <link-button href="@Url.RouteUrl("section", new { controller = "DeliveryPhase", action = "New", applicationId })" is-disabled="@Model.IsReadOnly">Add a delivery phase</link-button>
+            <link-button href="@Url.RouteUrl("section", new { controller = "DeliveryPhase", action = "Create", applicationId })" is-disabled="@Model.IsReadOnly">Add a delivery phase</link-button>
         }
 
         <vc:return-to-application-link application-id="@applicationId" is-editable="@false"/>

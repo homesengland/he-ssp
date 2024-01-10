@@ -63,7 +63,8 @@ public class DeliveryPhaseWorkflow : IStateRouting<DeliveryPhaseWorkflowState>
             .Permit(Trigger.Back, DeliveryPhaseWorkflowState.Name);
 
         _machine.Configure(DeliveryPhaseWorkflowState.BuildActivityType)
-            .Permit(Trigger.Continue, DeliveryPhaseWorkflowState.AcquisitionMilestone)
+            .PermitIf(Trigger.Continue, DeliveryPhaseWorkflowState.AcquisitionMilestone, () => !_isUnregisteredBody)
+            .PermitIf(Trigger.Continue, DeliveryPhaseWorkflowState.PracticalCompletionMilestone, () => _isUnregisteredBody)
             .Permit(Trigger.Back, DeliveryPhaseWorkflowState.TypeOfHomes);
 
         _machine.Configure(DeliveryPhaseWorkflowState.AcquisitionMilestone)
@@ -78,7 +79,7 @@ public class DeliveryPhaseWorkflow : IStateRouting<DeliveryPhaseWorkflowState>
             .PermitIf(Trigger.Continue, DeliveryPhaseWorkflowState.CheckAnswers, () => !_isUnregisteredBody)
             .PermitIf(Trigger.Continue, DeliveryPhaseWorkflowState.UnregisteredBodyFollowUp, () => _isUnregisteredBody)
             .PermitIf(Trigger.Back, DeliveryPhaseWorkflowState.StartOnSiteMilestone, () => !_isUnregisteredBody)
-            .PermitIf(Trigger.Back, DeliveryPhaseWorkflowState.Summary, () => _isUnregisteredBody);
+            .PermitIf(Trigger.Back, DeliveryPhaseWorkflowState.TypeOfHomes, () => _isUnregisteredBody);
 
         _machine.Configure(DeliveryPhaseWorkflowState.UnregisteredBodyFollowUp)
             .PermitIf(Trigger.Continue, DeliveryPhaseWorkflowState.CheckAnswers)
