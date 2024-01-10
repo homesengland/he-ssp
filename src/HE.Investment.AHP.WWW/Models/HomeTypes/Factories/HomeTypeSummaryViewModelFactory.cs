@@ -114,8 +114,8 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
             x => x.FileName,
             x => DownloadDesignFileUrl(urlHelper, homeType.ApplicationId, homeType.Id, x.FileId));
         return SectionSummaryViewModel.New(
-            "Design Plans",
-            factory.FileQuestion("Design Plans", nameof(Controller.DesignPlans), designPlans.MoreInformation, files));
+            "Design plans",
+            factory.FileQuestion("Design plans", nameof(Controller.DesignPlans), designPlans.MoreInformation, files));
     }
 
     private static SectionSummaryViewModel CreateSupportedHousingSection(SupportedHousingInformation supportedHousing, HomeTypeQuestionFactory factory)
