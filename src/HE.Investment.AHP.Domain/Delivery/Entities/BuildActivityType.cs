@@ -7,6 +7,8 @@ namespace HE.Investment.AHP.Domain.Delivery.Entities;
 
 public class BuildActivityType : ValueObject, IQuestion
 {
+    private readonly TypeOfHomes _typeOfHomes;
+
     public BuildActivityType(TypeOfHomes typeOfHomes, BuildActivityTypeForNewBuild newBuild)
     {
         if (typeOfHomes is not TypeOfHomes.NewBuild)
@@ -14,7 +16,7 @@ public class BuildActivityType : ValueObject, IQuestion
             throw new DomainValidationException("Type of homes must be NewBuild or Rehab when BuildActivityTypeForNewBuild is provided.");
         }
 
-        TypeOfHomes = typeOfHomes;
+        _typeOfHomes = typeOfHomes;
         NewBuild = newBuild;
     }
 
@@ -25,7 +27,7 @@ public class BuildActivityType : ValueObject, IQuestion
             throw new DomainValidationException("Type of homes must be Rehab when BuildActivityTypeForRehab is provided.");
         }
 
-        TypeOfHomes = typeOfHomes;
+        _typeOfHomes = typeOfHomes;
         Rehab = rehab;
     }
 
@@ -37,12 +39,16 @@ public class BuildActivityType : ValueObject, IQuestion
 
     public BuildActivityTypeForRehab? Rehab { get; private set; }
 
-    public TypeOfHomes TypeOfHomes { get; }
+    public void ClearAnswer()
+    {
+        NewBuild = null;
+        Rehab = null;
+    }
 
     public bool IsAnswered()
     {
-        return (TypeOfHomes == TypeOfHomes.Rehab && Rehab.IsProvided())
-               || (TypeOfHomes == TypeOfHomes.NewBuild && NewBuild.IsProvided());
+        return (_typeOfHomes == TypeOfHomes.Rehab && Rehab.IsProvided())
+               || (_typeOfHomes == TypeOfHomes.NewBuild && NewBuild.IsProvided());
     }
 
     protected override IEnumerable<object?> GetAtomicValues()

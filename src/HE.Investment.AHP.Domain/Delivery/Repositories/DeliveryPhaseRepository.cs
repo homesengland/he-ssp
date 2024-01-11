@@ -46,19 +46,15 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
     {
         var entity = (DeliveryPhaseEntity)deliveryPhase;
         await InitMockedData(entity.Application.Id, userAccount, cancellationToken);
-        var deliveryPhases = await GetByApplicationId(entity.Application.Id, userAccount, cancellationToken);
         if (entity.IsNew)
         {
             entity.Id = new DeliveryPhaseId(Guid.NewGuid().ToString());
-            deliveryPhases.Add(entity);
             await _eventDispatcher.Publish(
                 new DeliveryPhaseHasBeenCreatedEvent(entity.Application.Id, entity.Name.Value),
                 cancellationToken);
         }
         else if (entity.IsModified)
         {
-            // deliveryPhases.Remove(entity.Id, RemoveDeliveryPhaseAnswer.Yes);
-            // deliveryPhases.Add(entity);
             await _eventDispatcher.Publish(new DeliveryPhaseHasBeenUpdatedEvent(entity.Application.Id), cancellationToken);
         }
 

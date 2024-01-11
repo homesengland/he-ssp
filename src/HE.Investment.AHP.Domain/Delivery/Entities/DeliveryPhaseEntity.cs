@@ -140,6 +140,11 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
 
     public void ProvideTypeOfHomes(TypeOfHomes typeOfHomes)
     {
+        if (typeOfHomes != TypeOfHomes)
+        {
+            BuildActivityType.ClearAnswer();
+        }
+
         TypeOfHomes = _modificationTracker.Change(TypeOfHomes, typeOfHomes.NotDefault(), MarkAsNotCompleted);
     }
 

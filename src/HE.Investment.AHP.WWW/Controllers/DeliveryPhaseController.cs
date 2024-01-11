@@ -2,6 +2,7 @@ using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Commands;
+using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.Contract.Delivery.Queries;
 using HE.Investment.AHP.WWW.Extensions;
 using HE.Investment.AHP.WWW.Models.Delivery;
@@ -20,6 +21,7 @@ namespace HE.Investment.AHP.WWW.Controllers;
 
 [AuthorizeWithCompletedProfile]
 [Route("application/{applicationId}/delivery-phase")]
+[Route("application/{applicationId}/deliveryPhase")]
 public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowState>
 {
     private readonly IMediator _mediator;
@@ -117,9 +119,14 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     [WorkflowState(DeliveryPhaseWorkflowState.BuildActivityType)]
     public async Task<IActionResult> BuildActivityType([FromRoute] string applicationId, string deliveryPhaseId, DeliveryPhaseDetails deliveryPhaseDetails, CancellationToken cancellationToken)
     {
+        IRequest<OperationResult> Command(TypeOfHomes? typeOfHomes, AhpApplicationId ahpApplicationId) =>
+            typeOfHomes == TypeOfHomes.Rehab ?
+                new ProvideBuildActivityForRehabCommand(ahpApplicationId, deliveryPhaseId, deliveryPhaseDetails.BuildActivityTypeForRehab) :
+                new ProvideBuildActivityForNewBuildCommand(ahpApplicationId, deliveryPhaseId, deliveryPhaseDetails.BuildActivityTypeForNewBuild);
+
         return await ExecuteCommand(
             deliveryPhaseId,
-            new ProvideBuildActivityForNewBuildCommand(AhpApplicationId.From(applicationId), deliveryPhaseId, deliveryPhaseDetails.BuildActivityTypeForNewBuild),
+            Command(deliveryPhaseDetails.TypeOfHomes, AhpApplicationId.From(applicationId)),
             nameof(BuildActivityType),
             cancellationToken);
     }
