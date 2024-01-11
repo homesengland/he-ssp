@@ -1,6 +1,7 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Commands;
 using HE.Investment.AHP.Contract.Application.Queries;
+using HE.Investment.AHP.Contract.Site.Queries;
 using HE.Investment.AHP.Domain.Application.Workflows;
 using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investment.AHP.WWW.Models.Application.Factories;
@@ -40,6 +41,14 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
         var isReadOnly = !await _accountAccessContext.CanEditApplication();
 
         return View("Index", new ApplicationsListModel(applicationsQueryResult.OrganisationName, applicationsQueryResult.PaginationResult, isReadOnly));
+    }
+
+    [HttpGet("splash")]
+    [WorkflowState(ApplicationWorkflowState.ApplicationSplashScreen)]
+    public async Task<IActionResult> Splash(CancellationToken cancellationToken)
+    {
+        var response = await _mediator.Send(new GetSiteListQuery(), cancellationToken);
+        return View("Splash", response);
     }
 
     [WorkflowState(ApplicationWorkflowState.ApplicationName)]
