@@ -2,7 +2,7 @@ using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Models;
 
-namespace HE.Investment.AHP.WWW.Views.DeliveryPhase.Consts;
+namespace HE.Investment.AHP.WWW.Views.DeliveryPhase.Const;
 
 public static class BuildActivityTypeOptions
 {
