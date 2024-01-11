@@ -89,10 +89,13 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
     {
         // TODO: get proper organisation basic info
         var orgBasicInfo = new OrganisationBasicInfo(false);
+
         var deliveryPhaseNameAlreadyUsed = _deliveryPhases.Any(x => x.Name == name);
         if (deliveryPhaseNameAlreadyUsed)
         {
-            OperationResult.New().AddValidationError(nameof(DeliveryPhaseName), "Provided delivery phase name is already in use. Delivery phase name should be unique.").CheckErrors();
+            OperationResult.New()
+                .AddValidationError(nameof(DeliveryPhaseName), "Provided delivery phase name is already in use. Delivery phase name should be unique.")
+                .CheckErrors();
         }
 
         var deliveryPhase = new DeliveryPhaseEntity(
@@ -102,7 +105,8 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
             null,
             new BuildActivityType(),
             SectionStatus.InProgress,
-            new List<HomesToDeliverInPhase>());
+            Array.Empty<HomesToDeliverInPhase>(),
+            new DeliveryPhaseMilestones(orgBasicInfo));
 
         _deliveryPhases.Add(deliveryPhase);
         return deliveryPhase;
@@ -145,7 +149,8 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
             if (notCompletedDeliveryPhases.Any())
             {
                 throw new DomainValidationException(new OperationResult().AddValidationErrors(
-                    notCompletedDeliveryPhases.Select(x => new ErrorItem($"DeliveryPhase-{x.Id}", $"Complete {x?.Name?.Value} to save and continue")).ToList()));
+                    notCompletedDeliveryPhases.Select(x => new ErrorItem($"DeliveryPhase-{x.Id}", $"Complete {x?.Name?.Value} to save and continue"))
+                        .ToList()));
             }
 
             if (!AreAllHomeTypesUsed())
@@ -178,7 +183,7 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
     }
 
     public DeliveryPhaseEntity GetEntityById(DeliveryPhaseId deliveryPhaseId) => _deliveryPhases.SingleOrDefault(x => x.Id == deliveryPhaseId)
-                                                                                  ?? throw new NotFoundException(nameof(DeliveryPhaseEntity), deliveryPhaseId);
+                                                                                 ?? throw new NotFoundException(nameof(DeliveryPhaseEntity), deliveryPhaseId);
 
     private bool AreAllHomeTypesUsed()
     {

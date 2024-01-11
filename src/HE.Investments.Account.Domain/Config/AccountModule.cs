@@ -24,10 +24,17 @@ public static class AccountModule
         services.AddScoped<IAccountUserContext, AccountUserContext>();
         services.AddScoped<IAccountAccessContext, AccountAccessContext>();
         services.AddScoped<IOrganizationRepository, OrganizationRepository>();
-        services.AddScoped<IProgrammeRepository, ProgrammeRepository>();
         services.AddScoped<IUsersCrmContext, UsersCrmContext>();
         services.AddScoped<IUsersRepository, UsersRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
+
+        AddUserOrganisations(services);
+    }
+
+    private static void AddUserOrganisations(IServiceCollection services)
+    {
+        services.AddScoped<IProgrammeApplicationsRepository, ProgrammeApplicationsRepository>();
+        services.AddScoped<IProgrammeRepository, ProgrammeRepository>();
         services.AddScoped<IOrganisationUsersRepository, OrganisationUsersRepository>();
     }
 }

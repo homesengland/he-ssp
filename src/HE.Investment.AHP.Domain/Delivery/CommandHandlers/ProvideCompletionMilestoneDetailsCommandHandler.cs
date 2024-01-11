@@ -1,20 +1,29 @@
 using HE.Investment.AHP.Contract.Delivery.Commands;
 using HE.Investment.AHP.Domain.Delivery.Entities;
+using HE.Investment.AHP.Domain.Delivery.Policies;
 using HE.Investment.AHP.Domain.Delivery.Repositories;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
+using HE.Investments.Account.Contract.UserOrganisation;
 using HE.Investments.Account.Shared;
+using HE.Investments.Account.Shared.Repositories;
 using HE.Investments.Common.Contract.Validators;
 
 namespace HE.Investment.AHP.Domain.Delivery.CommandHandlers;
 
 public class ProvideCompletionMilestoneDetailsCommandHandler : UpdateDeliveryPhaseCommandHandler<ProvideCompletionMilestoneDetailsCommand>
 {
-    public ProvideCompletionMilestoneDetailsCommandHandler(IDeliveryPhaseRepository repository, IAccountUserContext accountUserContext)
+    private readonly IMilestoneDatesInProgrammeDateRangePolicy _programmeDateRangePolicy;
+
+    public ProvideCompletionMilestoneDetailsCommandHandler(
+        IDeliveryPhaseRepository repository,
+        IMilestoneDatesInProgrammeDateRangePolicy programmeDateRangePolicy,
+        IAccountUserContext accountUserContext)
         : base(repository, accountUserContext)
     {
+        _programmeDateRangePolicy = programmeDateRangePolicy;
     }
 
-    protected override Task<OperationResult> Update(IDeliveryPhaseEntity entity, ProvideCompletionMilestoneDetailsCommand request)
+    protected override async Task<OperationResult> Update(IDeliveryPhaseEntity entity, ProvideCompletionMilestoneDetailsCommand request)
     {
         var operationResult = OperationResult.New();
 
@@ -22,10 +31,19 @@ public class ProvideCompletionMilestoneDetailsCommandHandler : UpdateDeliveryPha
             CompletionDate.Create(request.CompletionDate.Day, request.CompletionDate.Month, request.CompletionDate.Year));
         var milestonePaymentDate = operationResult.AggregateNullable(() =>
             MilestonePaymentDate.Create(request.PaymentDate.Day, request.PaymentDate.Month, request.PaymentDate.Year));
-        var details = operationResult.AggregateNullable(() => CompletionMilestoneDetails.Create(completionDate, milestonePaymentDate));
+        var milestone = operationResult.AggregateNullable(() =>
+            CompletionMilestoneDetails.Create(completionDate, milestonePaymentDate));
 
-        entity.ProvideCompletionMilestoneDetails(details);
+        operationResult.CheckErrors();
 
-        return Task.FromResult(operationResult);
+        var milestones = new DeliveryPhaseMilestones(
+            entity.DeliveryPhaseMilestones.Organisation,
+            entity.DeliveryPhaseMilestones.AcquisitionMilestone,
+            entity.DeliveryPhaseMilestones.StartOnSiteMilestone,
+            milestone);
+
+        await entity.ProvideDeliveryPhaseMilestones(milestones, _programmeDateRangePolicy);
+
+        return operationResult;
     }
 }
