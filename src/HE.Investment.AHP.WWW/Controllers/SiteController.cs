@@ -23,6 +23,14 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         _mediator = mediator;
     }
 
+    [HttpGet("splash")]
+    [WorkflowState(SiteWorkflowState.Splash)]
+    public async Task<IActionResult> Splash(CancellationToken cancellationToken)
+    {
+        var response = await _mediator.Send(new GetSiteListQuery(), cancellationToken);
+        return View("Splash", response);
+    }
+
     [HttpGet]
     [WorkflowState(SiteWorkflowState.Index)]
     public async Task<IActionResult> Index(CancellationToken cancellationToken)
