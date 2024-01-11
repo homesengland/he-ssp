@@ -12,7 +12,7 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <vc:workflow-back-button current-page="@DeliveryPhaseWorkflowState.TypeOfHomes" param-name="deliveryPhaseId"/>
+    <vc:ahp-workflow-back-button current-page="@DeliveryPhaseWorkflowState.TypeOfHomes"/>
 
     <form asp-controller="DeliveryPhase" asp-action="Details" asp-method="post" novalidate>
         <vc:form-header caption="@($"{Model.ApplicationName} - {Model.Name}")" title="@title"/>
