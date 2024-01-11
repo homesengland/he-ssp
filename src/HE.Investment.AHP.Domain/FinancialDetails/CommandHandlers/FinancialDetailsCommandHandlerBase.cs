@@ -1,11 +1,10 @@
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Domain.FinancialDetails.Entities;
 using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
-using HE.Investments.Common.Validators;
 using Microsoft.Extensions.Logging;
-using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.CommandHandlers;
 
@@ -24,7 +23,7 @@ public abstract class FinancialDetailsCommandHandlerBase
         _logger = logger;
     }
 
-    protected async Task<OperationResult> Perform(Action<FinancialDetailsEntity> action, ApplicationId applicationId, CancellationToken cancellationToken)
+    protected async Task<OperationResult> Perform(Action<FinancialDetailsEntity> action, AhpApplicationId applicationId, CancellationToken cancellationToken)
     {
         var account = await _accountUserContext.GetSelectedAccount();
         var financialDetails = await _repository.GetById(applicationId, account, cancellationToken);

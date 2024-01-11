@@ -1,8 +1,8 @@
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Domain.Common.ValueObjects;
 using HE.Investment.AHP.Domain.Documents.Services;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investments.Common.Domain;
-using DomainApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.Scheme.Entities;
 
@@ -43,7 +43,7 @@ public class StakeholderDiscussions
     }
 
     public async Task SaveChanges(
-        DomainApplicationId applicationId,
+        AhpApplicationId applicationId,
         IAhpFileService<LocalAuthoritySupportFileParams> fileService,
         CancellationToken cancellationToken)
     {

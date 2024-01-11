@@ -1,9 +1,9 @@
-using HE.Investment.AHP.Contract.Delivery.Enums;
+using HE.Investment.AHP.Contract.Application;
 
 namespace HE.Investment.AHP.Contract.Delivery.Commands;
 
 public record ProvideDeliveryPhaseNameCommand(
-        string ApplicationId,
+        AhpApplicationId ApplicationId,
         string DeliveryPhaseId,
         string? DeliveryPhaseName)
     : IDeliveryCommand;

@@ -1,6 +1,5 @@
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
-using HE.Investments.Common.Validators;
 using MediatR;
 using MediatR.Pipeline;
 using Microsoft.Extensions.Logging;

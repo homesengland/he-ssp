@@ -1,6 +1,6 @@
 using System.Collections.Concurrent;
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Delivery;
-using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.Contract.Delivery.Events;
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Domain.Application.Repositories;
@@ -13,13 +13,12 @@ using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Infrastructure.Events;
-using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.Delivery.Repositories;
 
 public class DeliveryPhaseRepository : IDeliveryPhaseRepository
 {
-    private static readonly IDictionary<ApplicationId, DeliveryPhasesEntity> DeliveryPhases = new ConcurrentDictionary<ApplicationId, DeliveryPhasesEntity>();
+    private static readonly IDictionary<AhpApplicationId, DeliveryPhasesEntity> DeliveryPhases = new ConcurrentDictionary<AhpApplicationId, DeliveryPhasesEntity>();
 
     private readonly IApplicationRepository _applicationRepository;
 
@@ -31,7 +30,7 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
         _eventDispatcher = eventDispatcher;
     }
 
-    public async Task<DeliveryPhasesEntity> GetByApplicationId(ApplicationId applicationId, UserAccount userAccount, CancellationToken cancellationToken)
+    public async Task<DeliveryPhasesEntity> GetByApplicationId(AhpApplicationId applicationId, UserAccount userAccount, CancellationToken cancellationToken)
     {
         await InitMockedData(applicationId, userAccount, cancellationToken);
 
@@ -47,27 +46,23 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
     {
         var entity = (DeliveryPhaseEntity)deliveryPhase;
         await InitMockedData(entity.Application.Id, userAccount, cancellationToken);
-        var deliveryPhases = await GetByApplicationId(entity.Application.Id, userAccount, cancellationToken);
         if (entity.IsNew)
         {
             entity.Id = new DeliveryPhaseId(Guid.NewGuid().ToString());
-            deliveryPhases.Add(entity);
             await _eventDispatcher.Publish(
-                new DeliveryPhaseHasBeenCreatedEvent(entity.Application.Id.Value, entity?.Name?.Value ?? string.Empty),
+                new DeliveryPhaseHasBeenCreatedEvent(entity.Application.Id, entity.Name.Value),
                 cancellationToken);
         }
         else if (entity.IsModified)
         {
-            // deliveryPhases.Remove(entity.Id, RemoveDeliveryPhaseAnswer.Yes);
-            // deliveryPhases.Add(entity);
-            await _eventDispatcher.Publish(new DeliveryPhaseHasBeenUpdatedEvent(entity.Application.Id.Value), cancellationToken);
+            await _eventDispatcher.Publish(new DeliveryPhaseHasBeenUpdatedEvent(entity.Application.Id), cancellationToken);
         }
 
-        return entity?.Id ?? new DeliveryPhaseId(string.Empty);
+        return entity.Id;
     }
 
     public async Task<IDeliveryPhaseEntity> GetById(
-        ApplicationId applicationId,
+        AhpApplicationId applicationId,
         DeliveryPhaseId deliveryPhaseId,
         UserAccount userAccount,
         CancellationToken cancellationToken)
@@ -93,12 +88,12 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
         {
             // TODO: AB#66083 remove delivery Phase in CRM
             await _eventDispatcher.Publish(
-                new DeliveryPhaseHasBeenRemovedEvent(deliveryPhaseToRemove.Application.Id.Value),
+                new DeliveryPhaseHasBeenRemovedEvent(deliveryPhaseToRemove.Application.Id),
                 cancellationToken);
         }
     }
 
-    private async Task InitMockedData(ApplicationId applicationId, UserAccount userAccount, CancellationToken cancellationToken)
+    private async Task InitMockedData(AhpApplicationId applicationId, UserAccount userAccount, CancellationToken cancellationToken)
     {
         if (DeliveryPhases.Any())
         {

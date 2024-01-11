@@ -1,7 +1,9 @@
+using HE.Investment.AHP.Contract.Application;
+
 namespace HE.Investment.AHP.Contract.FinancialDetails.Queries;
 
 public record CalculateExpectedContributionsQuery(
-        Guid ApplicationId,
+        AhpApplicationId ApplicationId,
         string? RentalIncomeBorrowing,
         string? SalesOfHomesOnThisScheme,
         string? SalesOfHomesOnOtherSchemes,

@@ -1,4 +1,4 @@
-using HE.Investments.Account.Domain.User.Commands;
+using HE.Investments.Account.Contract.User.Commands;
 using HE.Investments.Account.Domain.User.Repositories;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Exceptions;

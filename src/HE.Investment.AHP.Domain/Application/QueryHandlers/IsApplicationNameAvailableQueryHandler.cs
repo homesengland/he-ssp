@@ -3,7 +3,6 @@ using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
-using HE.Investments.Common.Validators;
 using MediatR;
 
 namespace HE.Investment.AHP.Domain.Application.QueryHandlers;

@@ -11,9 +11,8 @@
 
 @{
     var applicationId = this.GetApplicationIdFromRoute();
-    var homeTypeId = this.GetOptionalHomeTypeIdFromRoute();
     var workflow = Context.Request.Query["workflow"];
-    var action = homeTypeId == null ? "NewHomeTypeDetails" : "HomeTypeDetails";
+    var action = this.GetOptionalHomeTypeIdFromRoute() == null ? "NewHomeTypeDetails" : "HomeTypeDetails";
     ViewData["Title"] = HomeTypesPageTitles.HomeTypeDetails;
 }
 
@@ -22,7 +21,6 @@
         @Html.HiddenFor(m => Model.ApplicationName)
         <vc:home-type-form-header title="@HomeTypesPageTitles.HomeTypeDetails"
                                   current-page="@HomeTypesWorkflowState.HomeTypeDetails"
-                                  application-id="@applicationId"
                                   caption="@Model.ApplicationName"/>
 
         <div class="govuk-caption-m govuk-!-margin-bottom-6">Create a home type for each identical type of property. If there are any differences, create a new home type.</div>

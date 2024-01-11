@@ -9,7 +9,6 @@
 
 @{
     var applicationId = this.GetApplicationIdFromRoute();
-    var homeTypeId = this.GetHomeTypeIdFromRoute();
     var workflow = Context.Request.Query["workflow"];
     ViewData["Title"] = HomeTypesPageTitles.AccessibilityStandards;
 }
@@ -19,8 +18,6 @@
         @Html.HiddenFor(m => Model.ApplicationName)
         @Html.HiddenFor(m => Model.HomeTypeName)
         <vc:home-type-form-header current-page="@HomeTypesWorkflowState.AccessibilityStandards"
-                                  application-id="@applicationId"
-                                  home-type-id="@homeTypeId"
                                   caption="@Model.Header" />
         <gds-field-set>
             <he-error-form-group asp-for="AccessibilityStandards">

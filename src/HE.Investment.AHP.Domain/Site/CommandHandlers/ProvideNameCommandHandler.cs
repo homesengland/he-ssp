@@ -5,7 +5,6 @@ using HE.Investment.AHP.Domain.Site.ValueObjects;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
-using HE.Investments.Common.Validators;
 using MediatR;
 using Microsoft.Extensions.Logging;
 

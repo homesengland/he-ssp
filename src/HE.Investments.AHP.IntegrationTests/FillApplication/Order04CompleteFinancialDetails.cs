@@ -62,7 +62,7 @@ public class Order04CompleteFinancialDetails : AhpIntegrationTest
         FinancialDetailsData.GenerateLandStatus();
 
         // when & then
-        await TestPage(
+        await TestQuestionPage(
             FinancialDetailsPagesUrl.LandStatus(ApplicationData.ApplicationId),
             FinancialDetailsPageTitles.LandStatusPage,
             FinancialDetailsPagesUrl.LandValueSuffix,
@@ -77,7 +77,7 @@ public class Order04CompleteFinancialDetails : AhpIntegrationTest
         FinancialDetailsData.GenerateLandValue();
 
         // when & then
-        await TestPage(
+        await TestQuestionPage(
             FinancialDetailsPagesUrl.LandValue(ApplicationData.ApplicationId),
             FinancialDetailsPageTitles.LandValuePage,
             FinancialDetailsPagesUrl.OtherApplicationCostsSuffix,
@@ -93,7 +93,7 @@ public class Order04CompleteFinancialDetails : AhpIntegrationTest
         FinancialDetailsData.GenerateOtherApplicationCosts();
 
         // when & then
-        await TestPage(
+        await TestQuestionPage(
             FinancialDetailsPagesUrl.OtherApplicationCosts(ApplicationData.ApplicationId),
             FinancialDetailsPageTitles.OtherApplicationCosts,
             FinancialDetailsPagesUrl.ExpectedContributionsSuffix,
@@ -109,7 +109,7 @@ public class Order04CompleteFinancialDetails : AhpIntegrationTest
         FinancialDetailsData.GenerateExpectedContributions();
 
         // when & then
-        await TestPage(
+        await TestQuestionPage(
             FinancialDetailsPagesUrl.ExpectedContributions(ApplicationData.ApplicationId),
             FinancialDetailsPageTitles.ExpectedContributions,
             FinancialDetailsPagesUrl.GrantsSuffix,
@@ -130,7 +130,7 @@ public class Order04CompleteFinancialDetails : AhpIntegrationTest
         FinancialDetailsData.GenerateGrants();
 
         // when & then
-        await TestPage(
+        await TestQuestionPage(
             FinancialDetailsPagesUrl.Grants(ApplicationData.ApplicationId),
             FinancialDetailsPageTitles.ExpectedGrants,
             FinancialDetailsPagesUrl.CheckAnswersSuffix,

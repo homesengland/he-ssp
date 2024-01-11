@@ -33,7 +33,7 @@
         <gds-p>If your application consist of multiple activities, set up separate delivery phases to cover them. Do this if you are delivering a mix of new build and rehab, or delivering the homes on this application in phases.</gds-p>
     </div>
 
-    <a href="@Url.Action("List", "Delivery", new {applicationId = Model.Id})">
+    <a href="@Url.Action("List", "Delivery", new { applicationId = Model.Id.Value })">
         <gds-button type="button" class="govuk-!-margin-top-8">Start now</gds-button>
     </a>
 </gds-div-grid-column-two-thirds>
