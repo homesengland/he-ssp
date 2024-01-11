@@ -49,7 +49,7 @@ public class ProgrammeRepository : IProgrammeRepository
             .ThenByDescending(x => x.LastModificationOn);
 
         return loanApplications.Select(a => new UserApplication(
-                a.loanApplicationId,
+                HeApplicationId.From(a.loanApplicationId),
                 a.ApplicationName,
                 ApplicationStatusMapper.MapToPortalStatus(a.loanApplicationExternalStatus)))
             .ToList();
@@ -70,7 +70,7 @@ public class ProgrammeRepository : IProgrammeRepository
             cancellationToken);
 
         return applications.Select(a => new UserApplication(
-                a.id,
+                HeApplicationId.From(a.id),
                 a.name,
                 ApplicationStatusMapper.MapToPortalStatus(a.applicationStatus)))
             .ToList();

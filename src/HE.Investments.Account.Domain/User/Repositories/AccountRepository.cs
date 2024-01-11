@@ -6,6 +6,7 @@ using HE.Investments.Account.Shared.Repositories;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.Entities;
 using HE.Investments.Account.Shared.User.ValueObjects;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Organisation.Services;
 using MediatR;
@@ -64,6 +65,6 @@ public class AccountRepository : IProfileRepository, IAccountRepository
         var contactDto = UserProfileMapper.MapUserDetailsToContactDto(userProfileDetails);
 
         await _contactService.UpdateUserProfile(_serviceClient, userGlobalId.ToString(), contactDto, cancellationToken);
-        await _mediator.Publish(new UserProfileChangedEvent(userGlobalId.ToString()), cancellationToken);
+        await _mediator.Publish(new UserProfileChangedEvent(userGlobalId), cancellationToken);
     }
 }

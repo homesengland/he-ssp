@@ -39,8 +39,8 @@
 
         if (canManageUsers)
         {
-            tableItems.Add(new(Component: new("Link", new { text = "Remove", action = "ConfirmUnlink", controller = "Users", values = new { id = u.Id } })));
-            tableItems.Add(new(Component: new("Link", new { text = "Change", action = "Change", controller = "Users", values = new { id = u.Id } })));
+            tableItems.Add(new(Component: new("Link", new { text = "Remove", action = "ConfirmUnlink", controller = "Users", values = new { id = u.Id.Value } })));
+            tableItems.Add(new(Component: new("Link", new { text = "Change", action = "Change", controller = "Users", values = new { id = u.Id.Value } })));
         }
 
         return new TableRowViewModel(tableItems);

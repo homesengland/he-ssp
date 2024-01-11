@@ -1,6 +1,7 @@
 using HE.Investments.Account.Contract.User.Events;
 using HE.Investments.Account.Contract.UserOrganisation.Events;
 using HE.Investments.Account.Shared.Config;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Infrastructure.Cache.Interfaces;
 using HE.Investments.Common.Infrastructure.Events;
 
@@ -28,15 +29,15 @@ public class InvalidateUserAccountsCacheEventHandler : IEventHandler<UserAccount
         await InvalidateCache(notification.UserGlobalId);
     }
 
-    private async Task InvalidateCache(string userGlobalId)
+    private async Task InvalidateCache(UserGlobalId userGlobalId)
     {
-        if (_accountUserContext.UserGlobalId == UserGlobalId.From(userGlobalId))
+        if (_accountUserContext.UserGlobalId == userGlobalId)
         {
             await _accountUserContext.RefreshUserData();
         }
         else
         {
-            await _cacheService.DeleteAsync(CacheKeys.UserAccounts(userGlobalId));
+            await _cacheService.DeleteAsync(CacheKeys.UserAccounts(userGlobalId.Value));
         }
     }
 }

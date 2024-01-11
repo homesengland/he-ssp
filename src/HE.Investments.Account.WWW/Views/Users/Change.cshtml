@@ -6,8 +6,6 @@
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.Components.RadioListWithOr
 @using HE.Investments.Common.WWW.Models
-@using Microsoft.AspNetCore.Mvc.TagHelpers
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
 @model (string OrganisationName, HE.Investments.Account.Contract.Users.UserDetails UserDetails)
 @{
     ViewData["Title"] = "Manage users";
@@ -38,7 +36,7 @@
         <vc:summary-item title="Email" value="@Model.UserDetails.Email"/>
     </gds-summary-list>
 
-    <form asp-controller="Users" asp-action="ChangeRole" asp-route-id="@Model.UserDetails.Id" asp-method="post" novalidate>
+    <form asp-controller="Users" asp-action="ChangeRole" asp-route-id="@Model.UserDetails.Id.Value" asp-method="post" novalidate>
         <gds-field-set>
             <vc:radio-list-with-or
                 field-name="Role"

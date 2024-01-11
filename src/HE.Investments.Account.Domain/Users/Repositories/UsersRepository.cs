@@ -4,6 +4,7 @@ using HE.Investments.Account.Domain.Data;
 using HE.Investments.Account.Domain.Data.Extensions;
 using HE.Investments.Account.Shared.Repositories;
 using HE.Investments.Account.Shared.User.ValueObjects;
+using HE.Investments.Common.Contract;
 
 namespace HE.Investments.Account.Domain.Users.Repositories;
 
@@ -33,6 +34,6 @@ public class UsersRepository : IUsersRepository
     private static UserDetails CreateUserDetails(ContactDto contact)
     {
         var role = UserRoleMapper.ToDomain(contact.webrole);
-        return new UserDetails(contact.contactExternalId, contact.firstName, contact.lastName, contact.email, contact.jobTitle, role, null);
+        return new UserDetails(UserGlobalId.From(contact.contactExternalId), contact.firstName, contact.lastName, contact.email, contact.jobTitle, role, null);
     }
 }

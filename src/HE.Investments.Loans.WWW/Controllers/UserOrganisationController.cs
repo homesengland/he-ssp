@@ -43,7 +43,7 @@ public class UserOrganisationController : BaseController
                     new(
                         ProgrammesConsts.LoansProgramme,
                         userApplications.Select(a =>
-                                new ApplicationBasicDetailsModel(Guid.Parse(a.Id), a.ApplicationName, a.Status))
+                                new ApplicationBasicDetailsModel(Guid.Parse(a.Id.Value), a.ApplicationName, a.Status))
                             .ToList()),
                 },
                 new List<ProgrammeModel> { ProgrammesConsts.LoansProgramme },

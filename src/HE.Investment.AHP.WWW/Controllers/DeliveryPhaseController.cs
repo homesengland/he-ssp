@@ -21,7 +21,6 @@ namespace HE.Investment.AHP.WWW.Controllers;
 
 [AuthorizeWithCompletedProfile]
 [Route("application/{applicationId}/delivery-phase")]
-[Route("application/{applicationId}/deliveryPhase")]
 public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowState>
 {
     private readonly IMediator _mediator;
