@@ -14,8 +14,7 @@ public class AhpWorkflowBackButton : ViewComponent
     {
         return new
         {
-            applicationId = ViewContext.RouteData.Values["applicationId"] as string
-                            ?? throw new ArgumentException("Application Id is not present in Route data"),
+            applicationId = ViewContext.RouteData.Values["applicationId"] as string,
             homeTypeId = ViewContext.RouteData.Values["homeTypeId"] as string,
             deliveryPhaseId = ViewContext.RouteData.Values["deliveryPhaseId"] as string,
             currentPage = currentPage.ToString(),
