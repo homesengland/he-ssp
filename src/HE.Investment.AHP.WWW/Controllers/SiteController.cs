@@ -1,3 +1,4 @@
+using System.Threading;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Commands;
 using HE.Investment.AHP.Contract.Site.Queries;
@@ -20,6 +21,14 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     public SiteController(IMediator mediator)
     {
         _mediator = mediator;
+    }
+
+    [HttpGet("splash")]
+    [WorkflowState(SiteWorkflowState.Splash)]
+    public async Task<IActionResult> Splash(CancellationToken cancellationToken)
+    {
+        var response = await _mediator.Send(new GetSiteListQuery(), cancellationToken);
+        return View("Splash", response);
     }
 
     [HttpGet]
