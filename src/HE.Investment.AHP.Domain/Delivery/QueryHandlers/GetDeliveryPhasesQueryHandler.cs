@@ -4,7 +4,6 @@ using HE.Investment.AHP.Domain.Delivery.Mappers;
 using HE.Investment.AHP.Domain.Delivery.Repositories;
 using HE.Investments.Account.Shared;
 using MediatR;
-using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.Delivery.QueryHandlers;
 
@@ -23,7 +22,7 @@ public class GetDeliveryPhasesQueryHandler : IRequestHandler<GetDeliveryPhasesQu
     public async Task<ApplicationDeliveryPhases> Handle(GetDeliveryPhasesQuery request, CancellationToken cancellationToken)
     {
         var account = await _accountUserContext.GetSelectedAccount();
-        var deliveryPhases = await _repository.GetByApplicationId(new ApplicationId(request.ApplicationId), account, cancellationToken);
+        var deliveryPhases = await _repository.GetByApplicationId(request.ApplicationId, account, cancellationToken);
 
         return new ApplicationDeliveryPhases(
             deliveryPhases.ApplicationName.Name,

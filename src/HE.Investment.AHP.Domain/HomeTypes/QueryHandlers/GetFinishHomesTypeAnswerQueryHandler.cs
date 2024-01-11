@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Contract.HomeTypes.Queries;
@@ -6,7 +7,6 @@ using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
 using MediatR;
-using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.QueryHandlers;
 
@@ -25,7 +25,7 @@ public class GetFinishHomesTypeAnswerQueryHandler : IRequestHandler<GetFinishHom
     public async Task<ApplicationHomeTypesFinishAnswer> Handle(GetFinishHomesTypeAnswerQuery request, CancellationToken cancellationToken)
     {
         var account = await _accountUserContext.GetSelectedAccount();
-        var homeTypes = await _repository.GetByApplicationId(new ApplicationId(request.ApplicationId), account, HomeTypeSegmentTypes.None, cancellationToken);
+        var homeTypes = await _repository.GetByApplicationId(request.ApplicationId, account, HomeTypeSegmentTypes.None, cancellationToken);
 
         return new ApplicationHomeTypesFinishAnswer(
             homeTypes.ApplicationName.Name,

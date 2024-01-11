@@ -1,5 +1,6 @@
+using HE.Investment.AHP.Contract.Application;
+using HE.Investment.AHP.Contract.Application.Commands;
 using HE.Investment.AHP.Contract.Application.Queries;
-using HE.Investment.AHP.Domain.Application.Commands;
 using HE.Investment.AHP.Domain.Application.Workflows;
 using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investment.AHP.WWW.Models.Application.Factories;
@@ -89,7 +90,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     [HttpGet("{applicationId}")]
     public async Task<IActionResult> TaskList(string applicationId, CancellationToken cancellationToken)
     {
-        var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
+        var application = await _mediator.Send(new GetApplicationQuery(AhpApplicationId.From(applicationId)), cancellationToken);
 
         var model = new ApplicationSectionsModel(
             applicationId,
@@ -107,7 +108,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     public async Task<IActionResult> CheckAnswers(string applicationId, CancellationToken cancellationToken)
     {
         var isReadOnly = !await _accountAccessContext.CanEditApplication();
-        var applicationSummary = await _applicationSummaryViewModelFactory.GetDataAndCreate(applicationId, Url, isReadOnly, cancellationToken);
+        var applicationSummary = await _applicationSummaryViewModelFactory.GetDataAndCreate(AhpApplicationId.From(applicationId), Url, isReadOnly, cancellationToken);
 
         return View("CheckAnswers", applicationSummary);
     }
@@ -116,12 +117,12 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     [AuthorizeWithCompletedProfile(AccountAccessContext.SubmitApplication)]
     public async Task<IActionResult> Submit(string applicationId, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new SubmitApplicationCommand(applicationId), cancellationToken);
+        var result = await _mediator.Send(new SubmitApplicationCommand(AhpApplicationId.From(applicationId)), cancellationToken);
 
         if (result.HasValidationErrors)
         {
             var isReadOnly = !await _accountAccessContext.CanEditApplication();
-            var applicationSummary = await _applicationSummaryViewModelFactory.GetDataAndCreate(applicationId, Url, isReadOnly, cancellationToken);
+            var applicationSummary = await _applicationSummaryViewModelFactory.GetDataAndCreate(AhpApplicationId.From(applicationId), Url, isReadOnly, cancellationToken);
 
             ModelState.AddValidationErrors(result);
             return View("CheckAnswers", applicationSummary);
@@ -134,7 +135,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     [AuthorizeWithCompletedProfile(AccountAccessContext.SubmitApplication)]
     public async Task<IActionResult> Submitted(string applicationId, CancellationToken cancellationToken)
     {
-        var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
+        var application = await _mediator.Send(new GetApplicationQuery(AhpApplicationId.From(applicationId)), cancellationToken);
 
         // TODO: set job role and contact details
         return View(

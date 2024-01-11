@@ -4,7 +4,6 @@ using HE.Investment.AHP.Domain.Delivery.Repositories;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
-using HE.Investments.Common.Validators;
 
 namespace HE.Investment.AHP.Domain.Delivery.CommandHandlers;
 

@@ -1,9 +1,10 @@
+using HE.Investment.AHP.Contract.Application;
 using HE.Investments.Common.Contract;
 using MediatR;
 
 namespace HE.Investment.AHP.Contract.FinancialDetails.Queries;
 
-public record GetFinancialCheckAnswersQuery(string ApplicationId) : IRequest<GetFinancialCheckAnswersResult>;
+public record GetFinancialCheckAnswersQuery(AhpApplicationId ApplicationId) : IRequest<GetFinancialCheckAnswersResult>;
 
 public record GetFinancialCheckAnswersResult(string ApplicationName, SectionStatus SectionStatus, LandValueSummary LandValue, TotalSchemeCost TotalSchemeCost, TotalContributions TotalContributions);
 

@@ -6,7 +6,7 @@ namespace HE.Investment.AHP.Contract.HomeTypes;
 public record FullHomeType(
     string Id,
     string Name,
-    string ApplicationId,
+    AhpApplicationId ApplicationId,
     string ApplicationName,
     Tenure Tenure,
     HousingType HousingType,

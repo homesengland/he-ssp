@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
@@ -7,8 +8,6 @@ using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
-using HE.Investments.Common.Validators;
-using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 
@@ -29,7 +28,7 @@ public class HomeTypesEntity
         Status = status;
     }
 
-    public ApplicationId ApplicationId => _application.Id;
+    public AhpApplicationId ApplicationId => _application.Id;
 
     public ApplicationName ApplicationName => _application.Name;
 
