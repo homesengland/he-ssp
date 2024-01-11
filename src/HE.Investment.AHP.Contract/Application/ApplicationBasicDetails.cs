@@ -3,7 +3,7 @@ using HE.Investments.Common.Contract;
 namespace HE.Investment.AHP.Contract.Application;
 
 public record ApplicationBasicDetails(
-    string Id,
+    AhpApplicationId Id,
     string Name,
     ApplicationStatus Status,
     string? LocalAuthority,

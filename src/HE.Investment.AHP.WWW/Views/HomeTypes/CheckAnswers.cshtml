@@ -10,7 +10,6 @@
 
 @{
     var applicationId = this.GetApplicationIdFromRoute();
-    var homeTypeId = this.GetHomeTypeIdFromRoute();
     ViewData["Title"] = HomeTypesPageTitles.CheckAnswers;
 }
 
@@ -18,8 +17,6 @@
     <gds-div-grid-column-two-thirds>
         <vc:home-type-form-header title="@HomeTypesPageTitles.CheckAnswers"
                                   current-page="@HomeTypesWorkflowState.CheckAnswers"
-                                  application-id="@applicationId"
-                                  home-type-id="@homeTypeId"
                                   caption="@Model.Header"/>
 
     </gds-div-grid-column-two-thirds>

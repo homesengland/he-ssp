@@ -5,7 +5,6 @@
 
 @{
     var applicationId = this.GetApplicationIdFromRoute();
-    var homeTypeId = this.GetHomeTypeIdFromRoute();
     var workflow = Context.Request.Query["workflow"];
 }
 
@@ -15,8 +14,6 @@
         @Html.HiddenFor(m => Model.HomeTypeName)
         <vc:home-type-form-header title="What client group are the homes for?"
                                   current-page="@HomeTypesWorkflowState.DisabledPeopleClientGroup"
-                                  application-id="@applicationId"
-                                  home-type-id="@homeTypeId"
                                   caption="@Model.Header" />
 
         <gds-field-set>

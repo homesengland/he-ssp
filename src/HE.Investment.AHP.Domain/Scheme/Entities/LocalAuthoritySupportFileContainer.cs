@@ -1,10 +1,10 @@
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Common.Entities;
 using HE.Investment.AHP.Domain.Common.FilePolicies;
 using HE.Investment.AHP.Domain.Common.ValueObjects;
 using HE.Investment.AHP.Domain.Documents.Services;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
-using DomainApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.Scheme.Entities;
 
@@ -33,7 +33,7 @@ public class LocalAuthoritySupportFileContainer
     }
 
     public async Task SaveChanges(
-        DomainApplicationId applicationId,
+        AhpApplicationId applicationId,
         IAhpFileService<LocalAuthoritySupportFileParams> fileService,
         CancellationToken cancellationToken)
     {

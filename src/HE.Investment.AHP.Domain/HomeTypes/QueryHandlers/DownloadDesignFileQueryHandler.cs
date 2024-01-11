@@ -5,7 +5,6 @@ using HE.Investment.AHP.Domain.Common.ValueObjects;
 using HE.Investment.AHP.Domain.Documents.Services;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using MediatR;
-using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.QueryHandlers;
 
@@ -22,7 +21,7 @@ public class DownloadDesignFileQueryHandler : IRequestHandler<DownloadDesignFile
     {
         var file = await _designFileService.DownloadFile(
             new FileId(request.FileId),
-            new DesignFileParams(new ApplicationId(request.ApplicationId), new HomeTypeId(request.HomeTypeId)),
+            new DesignFileParams(request.ApplicationId, new HomeTypeId(request.HomeTypeId)),
             cancellationToken);
 
         return new DownloadedFile(file.Name, file.Content);

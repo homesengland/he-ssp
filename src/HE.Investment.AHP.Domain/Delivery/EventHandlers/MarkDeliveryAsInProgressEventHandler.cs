@@ -1,8 +1,8 @@
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Delivery.Events;
 using HE.Investment.AHP.Domain.Delivery.Repositories;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Infrastructure.Events;
-using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.Delivery.EventHandlers;
 
@@ -36,10 +36,10 @@ public class MarkDeliveryAsInProgressEventHandler :
         await ChangeStatus(domainEvent.ApplicationId, cancellationToken);
     }
 
-    private async Task ChangeStatus(string applicationId, CancellationToken cancellationToken)
+    private async Task ChangeStatus(AhpApplicationId applicationId, CancellationToken cancellationToken)
     {
         var account = await _accountUserContext.GetSelectedAccount();
-        var deliveryPhases = await _repository.GetByApplicationId(new ApplicationId(applicationId), account, cancellationToken);
+        var deliveryPhases = await _repository.GetByApplicationId(applicationId, account, cancellationToken);
         deliveryPhases.MarkAsInProgress();
 
         await _repository.Save(deliveryPhases, account.SelectedOrganisationId(), cancellationToken);

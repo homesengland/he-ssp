@@ -1,5 +1,6 @@
 using System.Runtime.Serialization;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
@@ -9,7 +10,7 @@ using HE.Investment.AHP.Domain.Scheme.Entities;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.ValueObjects;
-using DomainApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
+using ApplicationBasicDetails = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationBasicDetails;
 
 namespace HE.Investment.AHP.Domain.Scheme.Repositories;
 
@@ -25,7 +26,7 @@ public class SchemeRepository : ISchemeRepository
         _fileService = fileService;
     }
 
-    public async Task<SchemeEntity> GetByApplicationId(DomainApplicationId id, UserAccount userAccount, bool includeFiles, CancellationToken cancellationToken)
+    public async Task<SchemeEntity> GetByApplicationId(AhpApplicationId id, UserAccount userAccount, bool includeFiles, CancellationToken cancellationToken)
     {
         var organisationId = userAccount.SelectedOrganisationId().Value;
         var application = userAccount.CanViewAllApplications()
@@ -75,7 +76,7 @@ public class SchemeRepository : ISchemeRepository
     {
         return new SchemeEntity(
             new ApplicationBasicDetails(
-                new DomainApplicationId(application.id),
+                new AhpApplicationId(application.id),
                 new ApplicationName(application.name),
                 ApplicationTenureMapper.ToDomain(application.tenure)),
             CreateRequiredFunding(application.fundingRequested, application.noOfHomes),

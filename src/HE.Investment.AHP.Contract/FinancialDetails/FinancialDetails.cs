@@ -1,9 +1,11 @@
+using HE.Investment.AHP.Contract.Application;
 using HE.Investments.Common.Contract;
 
 namespace HE.Investment.AHP.Contract.FinancialDetails;
+
 public class FinancialDetails
 {
-    public Guid ApplicationId { get; set; }
+    public AhpApplicationId ApplicationId { get; set; }
 
     public string ApplicationName { get; set; }
 
