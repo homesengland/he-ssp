@@ -17,12 +17,6 @@ public static class RazorPageExtensions
                ?? throw new ArgumentException("Home Type Id is not present in Route data");
     }
 
-    public static string GetDeliveryPhaseIdFromRoute(this IRazorPage razorPage)
-    {
-        return razorPage.GetOptionalFromRoute("deliveryPhaseId")
-               ?? throw new ArgumentException("Delivery Phase Id is not present in Route data");
-    }
-
     public static string? GetOptionalHomeTypeIdFromRoute(this IRazorPage razorPage)
     {
         return razorPage.GetOptionalFromRoute("homeTypeId");

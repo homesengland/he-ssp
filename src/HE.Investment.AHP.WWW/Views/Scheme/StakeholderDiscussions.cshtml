@@ -6,7 +6,6 @@
 @using HE.Investments.Common.WWW.Components.FormHeader
 @using HE.Investments.Common.WWW.Components.TextAreaInputWithCounter
 @using HE.Investments.Common.WWW.Components.UploadFile
-@using HE.Investments.Common.WWW.Components.WorkflowBackButton
 @using HE.Investments.Common.WWW.Extensions;
 @model HE.Investment.AHP.WWW.Models.Scheme.SchemeViewModel
 
@@ -17,7 +16,7 @@
 }
 
 <div class="govuk-grid-column-full">
-    <vc:workflow-back-button current-page="@SchemeWorkflowState.StakeholderDiscussions"/>
+    <vc:ahp-workflow-back-button current-page="@SchemeWorkflowState.StakeholderDiscussions"/>
     <form asp-controller="Scheme" asp-action="StakeholderDiscussions" asp-method="post" asp-route-redirect="@Context.Request.Query["redirect"]" enctype="multipart/form-data" novalidate>
         <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0">
             @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")

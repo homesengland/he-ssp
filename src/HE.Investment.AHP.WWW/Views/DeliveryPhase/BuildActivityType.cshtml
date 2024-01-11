@@ -1,11 +1,9 @@
 @using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.WWW.Views.Delivery.Consts
-@using Microsoft.AspNetCore.Mvc.TagHelpers
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investment.AHP.Contract.Delivery
 @using HE.Investment.AHP.WWW.Views.DeliveryPhase.Consts
-@using HE.Investments.Common.WWW.Components.WorkflowBackButton
 @using HE.Investments.Common.WWW.Components.FormHeader
 @using HE.Investments.Common.WWW.Components.RadioList
 @using HE.Investments.Common.WWW.Models
@@ -34,7 +32,7 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <vc:workflow-back-button current-page="@DeliveryPhaseWorkflowState.BuildActivityType" param-name="deliveryPhaseId"/>
+    <vc:ahp-workflow-back-button current-page="@DeliveryPhaseWorkflowState.BuildActivityType"/>
 
     <form asp-controller="DeliveryPhase" asp-action="BuildActivityType" asp-method="post" novalidate>
         <vc:form-header caption="@($"{Model.ApplicationName} - {Model.Name}")" title="@title"/>

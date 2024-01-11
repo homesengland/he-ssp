@@ -60,6 +60,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\Components\AhpWorkflowBackButton\AhpWorkflowBackButton.cshtml" />
     <EmbeddedResource Include="Views\Shared\Components\ApplicationTaskListHeader\ApplicationTaskListHeader.cshtml" />
   </ItemGroup>
 

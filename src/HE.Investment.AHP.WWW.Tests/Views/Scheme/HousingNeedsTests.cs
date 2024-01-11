@@ -3,6 +3,7 @@ using HE.Investment.AHP.WWW.Models.Scheme;
 using HE.Investments.Common.WWWTestsFramework;
 using HE.Investments.Common.WWWTestsFramework.Helpers;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Routing;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.Scheme;
 
@@ -12,12 +13,13 @@ public class HousingNeedsTests : ViewTestBase
     private const string MeetingLocalPrioritiesError = "Test error";
     private const string MeetingLocalHousingNeedError = "Second error";
     private static readonly SchemeViewModel Model = TestSchemeViewModel.Test;
+    private readonly RouteData _routeData = new(new RouteValueDictionary { { "applicationId", "123" } });
 
     [Fact]
     public async Task ShouldDisplayView_WhenThereAreNoErrors()
     {
         // given & when
-        var document = await Render(ViewPath, Model);
+        var document = await Render(ViewPath, Model, routeData: _routeData);
 
         // then
         AssertView(document);
@@ -33,7 +35,7 @@ public class HousingNeedsTests : ViewTestBase
         modelState.AddModelError(nameof(SchemeViewModel.MeetingLocalHousingNeed), MeetingLocalHousingNeedError);
 
         // when
-        var document = await Render(ViewPath, Model, modelStateDictionary: modelState);
+        var document = await Render(ViewPath, Model, modelStateDictionary: modelState, routeData: _routeData);
 
         // then
         AssertView(document);
