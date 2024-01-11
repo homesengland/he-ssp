@@ -96,7 +96,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         var homeType = GeneralHomeType.GenerateInformation();
 
         // when & then
-        await TestPage(
+        await TestQuestionPage(
             BuildHomeTypePage(HomeTypePagesUrl.HomeInformation, GeneralHomeType),
             HomeTypesPageTitles.HomeInformation,
             BuildHomeTypePage(HomeTypePagesUrl.MoveOnAccommodation, GeneralHomeType),
@@ -114,7 +114,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         var homeType = GeneralHomeType.GenerateMoveOnAccommodation();
 
         // when & then
-        await TestPage(
+        await TestQuestionPage(
             BuildHomeTypePage(HomeTypePagesUrl.MoveOnAccommodation, GeneralHomeType),
             HomeTypesPageTitles.MoveOnAccommodation,
             BuildHomeTypePage(HomeTypePagesUrl.BuildingInformation, GeneralHomeType),
@@ -129,7 +129,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         var homeType = GeneralHomeType.GenerateBuildingInformation();
 
         // when & then
-        await TestPage(
+        await TestQuestionPage(
             BuildHomeTypePage(HomeTypePagesUrl.BuildingInformation, GeneralHomeType),
             HomeTypesPageTitles.BuildingInformation,
             BuildHomeTypePage(HomeTypePagesUrl.CustomBuildProperty, GeneralHomeType),
@@ -144,7 +144,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         var homeType = GeneralHomeType.GenerateCustomBuild();
 
         // when & then
-        await TestPage(
+        await TestQuestionPage(
             BuildHomeTypePage(HomeTypePagesUrl.CustomBuildProperty, GeneralHomeType),
             HomeTypesPageTitles.CustomBuildProperty,
             BuildHomeTypePage(HomeTypePagesUrl.TypeOfFacilities, GeneralHomeType),
@@ -159,7 +159,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         var homeType = GeneralHomeType.GenerateFacilityType();
 
         // when & then
-        await TestPage(
+        await TestQuestionPage(
             BuildHomeTypePage(HomeTypePagesUrl.TypeOfFacilities, GeneralHomeType),
             HomeTypesPageTitles.TypeOfFacilities,
             BuildHomeTypePage(HomeTypePagesUrl.AccessibilityStandards, GeneralHomeType),
@@ -174,7 +174,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         var homeType = GeneralHomeType.GenerateAccessibilityStandards();
 
         // when & then
-        await TestPage(
+        await TestQuestionPage(
             BuildHomeTypePage(HomeTypePagesUrl.AccessibilityStandards, GeneralHomeType),
             HomeTypesPageTitles.AccessibilityStandards,
             BuildHomeTypePage(HomeTypePagesUrl.AccessibilityCategory, GeneralHomeType),
@@ -189,7 +189,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         var homeType = GeneralHomeType.GenerateAccessibilityCategory();
 
         // when & then
-        await TestPage(
+        await TestQuestionPage(
             BuildHomeTypePage(HomeTypePagesUrl.AccessibilityCategory, GeneralHomeType),
             HomeTypesPageTitles.AccessibilityCategory,
             BuildHomeTypePage(HomeTypePagesUrl.FloorArea, GeneralHomeType),
@@ -204,7 +204,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         var homeType = GeneralHomeType.GenerateFloorArea();
 
         // when & then
-        await TestPage(
+        await TestQuestionPage(
             BuildHomeTypePage(HomeTypePagesUrl.FloorArea, GeneralHomeType),
             HomeTypesPageTitles.FloorArea,
             BuildHomeTypePage(HomeTypePagesUrl.FloorAreaStandards, GeneralHomeType),
@@ -220,7 +220,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         var homeType = GeneralHomeType.GenerateFloorAreaStandards();
 
         // when & then
-        await TestPage(
+        await TestQuestionPage(
             BuildHomeTypePage(HomeTypePagesUrl.FloorAreaStandards, GeneralHomeType),
             HomeTypesPageTitles.FloorAreaStandards,
             BuildHomeTypePage(HomeTypePagesUrl.AffordableRent, GeneralHomeType),
@@ -235,7 +235,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         var homeType = GeneralHomeType.GenerateAffordableRent();
 
         // when & then
-        await TestPage(
+        await TestQuestionPage(
             BuildHomeTypePage(HomeTypePagesUrl.AffordableRent, GeneralHomeType),
             HomeTypesPageTitles.AffordableRent,
             BuildHomeTypePage(HomeTypePagesUrl.ExemptFromTheRightToSharedOwnership, GeneralHomeType),
@@ -253,7 +253,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         var homeType = GeneralHomeType.GenerateExemptFromTheRightToSharedOwnership();
 
         // when & then
-        await TestPage(
+        await TestQuestionPage(
             BuildHomeTypePage(HomeTypePagesUrl.ExemptFromTheRightToSharedOwnership, GeneralHomeType),
             HomeTypesPageTitles.ExemptFromTheRightToSharedOwnership,
             BuildHomeTypePage(HomeTypePagesUrl.ExemptionJustification, GeneralHomeType),
@@ -268,7 +268,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         var homeType = GeneralHomeType.GenerateExemptionJustification();
 
         // when & then
-        await TestPage(
+        await TestQuestionPage(
             BuildHomeTypePage(HomeTypePagesUrl.ExemptionJustification, GeneralHomeType),
             HomeTypesPageTitles.ExemptionJustification,
             BuildHomeTypePage(HomeTypePagesUrl.ModernMethodsConstruction, GeneralHomeType),
@@ -283,7 +283,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         var homeType = GeneralHomeType.GenerateModernMethodsOfConstruction();
 
         // when & then
-        await TestPage(
+        await TestQuestionPage(
             BuildHomeTypePage(HomeTypePagesUrl.ModernMethodsConstruction, GeneralHomeType),
             HomeTypesPageTitles.ModernMethodsConstruction,
             BuildHomeTypePage(HomeTypePagesUrl.ModernMethodsConstructionCategories, GeneralHomeType),
@@ -298,7 +298,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         var homeType = GeneralHomeType.GenerateModernMethodsConstructionCategory();
 
         // when & then
-        await TestPage(
+        await TestQuestionPage(
             BuildHomeTypePage(HomeTypePagesUrl.ModernMethodsConstructionCategories, GeneralHomeType),
             HomeTypesPageTitles.ModernMethodsConstructionCategories,
             BuildHomeTypePage(HomeTypePagesUrl.CheckAnswers, GeneralHomeType),
