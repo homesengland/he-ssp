@@ -2,7 +2,6 @@
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.Components.FormHeader
 @using HE.Investments.Common.WWW.Components.RadioYesNo
-@using HE.Investments.Common.WWW.Components.WorkflowBackButton
 @using HE.Investment.AHP.Contract.Delivery
 @using HE.Investment.AHP.WWW.Views.Delivery.Const
 @model HE.Investment.AHP.WWW.Models.Delivery.DeliveryRequestAdditionalPaymentViewModel
@@ -12,7 +11,7 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <vc:workflow-back-button current-page="@DeliveryPhaseWorkflowState.UnregisteredBodyFollowUp" param-name="deliveryPhaseId"/>
+    <vc:ahp-workflow-back-button current-page="@DeliveryPhaseWorkflowState.UnregisteredBodyFollowUp"/>
 
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 

@@ -12,8 +12,6 @@
     <form asp-controller="HomeTypes" asp-action="DesignPlans" asp-method="post" enctype="multipart/form-data" asp-route-workflow="@workflow" novalidate>
         <vc:home-type-form-header title="Upload your design plans"
                                   current-page="@HomeTypesWorkflowState.DesignPlans"
-                                  application-id="@applicationId"
-                                  home-type-id="@homeTypeId"
                                   caption="@Model.Header"/>
 
         @Html.HiddenFor(m => Model.ApplicationName)
