@@ -4,7 +4,6 @@
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.Components.FormHeader
 @using HE.Investment.AHP.WWW.Views.Shared.Components.AcquisitionMilestoneDetails
-@using HE.Investments.Common.WWW.Components.WorkflowBackButton
 @using HE.Investment.AHP.Contract.Delivery
 @model HE.Investment.AHP.WWW.Models.Delivery.MilestoneViewModel
 @{
@@ -13,7 +12,7 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <vc:workflow-back-button current-page="@DeliveryPhaseWorkflowState.AcquisitionMilestone" param-name="deliveryPhaseId"/>
+    <vc:ahp-workflow-back-button current-page="@DeliveryPhaseWorkflowState.AcquisitionMilestone"/>
 
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 

@@ -1,5 +1,4 @@
 @using HE.Investments.Common.WWW.Components.SectionSummary;
-@using HE.Investments.Common.WWW.Components.WorkflowBackButton
 @using HE.Investment.AHP.Domain.Scheme.Workflows
 @using HE.Investment.AHP.WWW.Models.Common
 @using HE.Investments.Common.WWW.Components.FormHeader
@@ -28,7 +27,7 @@
     }
     else
     {
-        <vc:workflow-back-button current-page="@SchemeWorkflowState.CheckAnswers"/>
+        <vc:ahp-workflow-back-button current-page="@SchemeWorkflowState.CheckAnswers"/>
     }
 
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
