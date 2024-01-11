@@ -110,8 +110,8 @@ internal class HomeTypeQuestionFactory
     private string CreateActionUrl(string controllerActionName)
     {
         object routeParameters = _encodedWorkflow != null
-            ? new { applicationId = _homeType.ApplicationId, homeTypeId = _homeType.Id, workflow = _encodedWorkflow.Value }
-            : new { applicationId = _homeType.ApplicationId, homeTypeId = _homeType.Id };
+            ? new { applicationId = _homeType.ApplicationId.Value, homeTypeId = _homeType.Id, workflow = _encodedWorkflow.Value }
+            : new { applicationId = _homeType.ApplicationId.Value, homeTypeId = _homeType.Id };
 
         return _urlHelper.Action(controllerActionName, "HomeTypes", routeParameters) ?? string.Empty;
     }

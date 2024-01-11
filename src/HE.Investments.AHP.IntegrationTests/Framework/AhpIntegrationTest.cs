@@ -25,7 +25,7 @@ public class AhpIntegrationTest : IntegrationTestBase<Program>
 
     public ApplicationData ApplicationData { get; }
 
-    public async Task TestPage(
+    public async Task TestQuestionPage(
         string startPageUrl,
         string expectedPageTitle,
         string expectedPageUrlAfterContinue,

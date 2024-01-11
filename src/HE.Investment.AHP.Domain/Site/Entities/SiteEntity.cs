@@ -2,7 +2,6 @@ using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investment.AHP.Domain.Site.ValueObjects;
 using HE.Investments.Common.Contract.Validators;
-using HE.Investments.Common.Validators;
 
 namespace HE.Investment.AHP.Domain.Site.Entities;
 

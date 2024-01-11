@@ -1,8 +1,8 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Queries;
+using HE.Investment.AHP.Contract.FinancialDetails.Commands;
 using HE.Investment.AHP.Contract.FinancialDetails.Queries;
 using HE.Investment.AHP.Domain.FinancialDetails;
-using HE.Investment.AHP.Domain.FinancialDetails.Commands;
 using HE.Investment.AHP.WWW.Models.FinancialDetails;
 using HE.Investment.AHP.WWW.Models.FinancialDetails.Factories;
 using HE.Investments.Account.Shared;
@@ -18,7 +18,6 @@ using HE.Investments.Common.WWW.Utils;
 using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.WWW.Controllers;
 
@@ -44,17 +43,8 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
     [WorkflowState(FinancialDetailsWorkflowState.Index)]
     public async Task<IActionResult> Start(Guid applicationId, CancellationToken cancellationToken)
     {
-        var application = await _mediator.Send(new GetApplicationQuery(applicationId.ToString()), cancellationToken);
+        var application = await _mediator.Send(new GetApplicationQuery(AhpApplicationId.From(applicationId)), cancellationToken);
         return View("Index", new FinancialDetailsBaseModel(applicationId, application.Name));
-    }
-
-    [HttpPost("start")]
-    [WorkflowState(FinancialDetailsWorkflowState.Index)]
-    public async Task<IActionResult> StartPost(Guid applicationId, string applicationName, CancellationToken cancellationToken)
-    {
-        _ = await _mediator.Send(new StartFinancialDetailsCommand(ApplicationId.From(applicationId), applicationName), cancellationToken);
-
-        return await Continue(new { applicationId });
     }
 
     [HttpGet("land-status")]
@@ -63,7 +53,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
     {
         var siteLandStatus = false;
 
-        var financialDetails = await _mediator.Send(new GetFinancialDetailsQuery(applicationId.ToString()));
+        var financialDetails = await _mediator.Send(new GetFinancialDetailsQuery(AhpApplicationId.From(applicationId)));
         return View(new FinancialDetailsLandStatusModel(
             applicationId,
             financialDetails.ApplicationName,
@@ -76,7 +66,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
     public async Task<IActionResult> LandStatus(Guid applicationId, FinancialDetailsLandStatusModel model, CancellationToken cancellationToken)
     {
         return await ProvideFinancialDetails(
-            new ProvideLandStatusCommand(ApplicationId.From(applicationId), model.PurchasePrice, model.IsFinal),
+            new ProvideLandStatusCommand(AhpApplicationId.From(applicationId), model.PurchasePrice, model.IsFinal),
             model,
             cancellationToken);
     }
@@ -85,7 +75,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
     [WorkflowState(FinancialDetailsWorkflowState.LandValue)]
     public async Task<IActionResult> LandValue(Guid applicationId)
     {
-        var financialDetails = await _mediator.Send(new GetFinancialDetailsQuery(applicationId.ToString()));
+        var financialDetails = await _mediator.Send(new GetFinancialDetailsQuery(AhpApplicationId.From(applicationId)));
 
         var isSchemeOnPublicLand =
             financialDetails.IsSchemaOnPublicLand.HasValue
@@ -104,7 +94,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
     public async Task<IActionResult> LandValue(Guid applicationId, FinancialDetailsLandValueModel model, CancellationToken cancellationToken)
     {
         return await ProvideFinancialDetails(
-            new ProvideLandValueCommand(ApplicationId.From(applicationId), model.IsOnPublicLand, model.LandValue),
+            new ProvideLandValueCommand(AhpApplicationId.From(applicationId), model.IsOnPublicLand, model.LandValue),
             model,
             cancellationToken);
     }
@@ -113,7 +103,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
     [WorkflowState(FinancialDetailsWorkflowState.OtherApplicationCosts)]
     public async Task<IActionResult> OtherApplicationCosts(Guid applicationId)
     {
-        var financialDetails = await _mediator.Send(new GetFinancialDetailsQuery(applicationId.ToString()));
+        var financialDetails = await _mediator.Send(new GetFinancialDetailsQuery(AhpApplicationId.From(applicationId)));
         return View(new FinancialDetailsOtherApplicationCostsModel(
             applicationId,
             financialDetails.ApplicationName,
@@ -129,7 +119,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
         CancellationToken cancellationToken)
     {
         return await ProvideFinancialDetails(
-            new ProvideOtherApplicationCostsCommand(ApplicationId.From(applicationId), model.ExpectedWorksCosts, model.ExpectedOnCosts),
+            new ProvideOtherApplicationCostsCommand(AhpApplicationId.From(applicationId), model.ExpectedWorksCosts, model.ExpectedOnCosts),
             model,
             cancellationToken);
     }
@@ -138,14 +128,14 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
     [WorkflowState(FinancialDetailsWorkflowState.Contributions)]
     public async Task<IActionResult> Contributions(Guid applicationId)
     {
-        var application = await _mediator.Send(new GetApplicationQuery(applicationId.ToString()));
+        var application = await _mediator.Send(new GetApplicationQuery(AhpApplicationId.From(applicationId)));
 
         var isSharedOwnership = application.Tenure
             is Tenure.SharedOwnership
             or Tenure.HomeOwnershipLongTermDisabilities
             or Tenure.OlderPersonsSharedOwnership;
 
-        var financialDetails = await _mediator.Send(new GetFinancialDetailsQuery(applicationId.ToString()));
+        var financialDetails = await _mediator.Send(new GetFinancialDetailsQuery(AhpApplicationId.From(applicationId)));
         return View(new FinancialDetailsContributionsModel(
             applicationId,
             financialDetails.ApplicationName,
@@ -174,7 +164,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
         {
             var (operationResult, calculationResult) = await _mediator.Send(
                 new CalculateExpectedContributionsQuery(
-                    applicationId,
+                    AhpApplicationId.From(applicationId),
                     model.RentalIncomeBorrowing,
                     model.SaleOfHomesOnThisScheme,
                     model.SaleOfHomesOnOtherSchemes,
@@ -194,7 +184,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
 
         return await ProvideFinancialDetails(
             new ProvideExpectedContributionsCommand(
-                ApplicationId.From(applicationId),
+                AhpApplicationId.From(applicationId),
                 model.RentalIncomeBorrowing,
                 model.SaleOfHomesOnThisScheme,
                 model.SaleOfHomesOnOtherSchemes,
@@ -211,7 +201,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
     [WorkflowState(FinancialDetailsWorkflowState.Grants)]
     public async Task<IActionResult> Grants(Guid applicationId)
     {
-        var financialDetails = await _mediator.Send(new GetFinancialDetailsQuery(applicationId.ToString()));
+        var financialDetails = await _mediator.Send(new GetFinancialDetailsQuery(AhpApplicationId.From(applicationId)));
         return View(new FinancialDetailsGrantsModel(
             applicationId,
             financialDetails.ApplicationName,
@@ -233,7 +223,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
         {
             var (operationResult, calculationResult) = await _mediator.Send(
                 new CalculateGrantsQuery(
-                    applicationId,
+                    AhpApplicationId.From(applicationId),
                     model.CountyCouncilGrants,
                     model.DhscExtraCareGrants,
                     model.LocalAuthorityGrants,
@@ -252,7 +242,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
 
         return await ProvideFinancialDetails(
             new ProvideGrantsCommand(
-                ApplicationId.From(applicationId),
+                AhpApplicationId.From(applicationId),
                 model.CountyCouncilGrants,
                 model.DhscExtraCareGrants,
                 model.LocalAuthorityGrants,
@@ -270,7 +260,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
     {
         var isReadOnly = !await _accountAccessContext.CanEditApplication();
         var model = await _financialDetailsSummaryViewModelFactory.GetFinancialDetailsAndCreateSummary(
-            applicationId.ToString(),
+            AhpApplicationId.From(applicationId),
             Url,
             isReadOnly,
             cancellationToken);
@@ -282,13 +272,13 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
     [WorkflowState(FinancialDetailsWorkflowState.CheckAnswers)]
     public async Task<IActionResult> Complete(Guid applicationId, FinancialDetailsCheckAnswersModel model, string action, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new CompleteFinancialDetailsCommand(ApplicationId.From(applicationId), model.IsSectionCompleted), cancellationToken);
+        var result = await _mediator.Send(new CompleteFinancialDetailsCommand(AhpApplicationId.From(applicationId), model.IsSectionCompleted), cancellationToken);
 
         if (result.HasValidationErrors)
         {
             var isReadOnly = !await _accountAccessContext.CanEditApplication();
             var summary = await _financialDetailsSummaryViewModelFactory.GetFinancialDetailsAndCreateSummary(
-                applicationId.ToString(),
+                AhpApplicationId.From(applicationId),
                 Url,
                 isReadOnly,
                 cancellationToken);
@@ -331,7 +321,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
         }
 
         var isReadOnly = !await _accountAccessContext.CanEditApplication();
-        var financialDetails = await _mediator.Send(new GetFinancialDetailsQuery(applicationId));
+        var financialDetails = await _mediator.Send(new GetFinancialDetailsQuery(AhpApplicationId.From(applicationId)));
         return new FinancialDetailsWorkflow(currentState, financialDetails, isReadOnly);
     }
 

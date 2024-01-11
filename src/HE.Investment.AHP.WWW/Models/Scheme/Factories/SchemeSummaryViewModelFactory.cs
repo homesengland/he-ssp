@@ -1,4 +1,5 @@
 using System.Globalization;
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Common;
 using HE.Investment.AHP.WWW.Controllers;
 using HE.Investment.AHP.WWW.Models.Application;
@@ -62,17 +63,17 @@ public class SchemeSummaryViewModelFactory : ISchemeSummaryViewModelFactory
         });
     }
 
-    private static string CreateSchemeActionUrl(IUrlHelper urlHelper, string applicationId, string actionName, bool allowWcagDuplicate = false)
+    private static string CreateSchemeActionUrl(IUrlHelper urlHelper, AhpApplicationId applicationId, string actionName, bool allowWcagDuplicate = false)
     {
         var action = urlHelper.Action(
             actionName,
             new ControllerName(nameof(SchemeController)).WithoutPrefix(),
-            new { applicationId, redirect = nameof(SchemeController.CheckAnswers) });
+            new { applicationId = applicationId.Value, redirect = nameof(SchemeController.CheckAnswers) });
 
         return $"{action}{(allowWcagDuplicate ? "#" : string.Empty)}";
     }
 
-    private Dictionary<string, string>? ConvertFiles(IUrlHelper urlHelper, string applicationId, UploadedFile? uploadedFile)
+    private Dictionary<string, string>? ConvertFiles(IUrlHelper urlHelper, AhpApplicationId applicationId, UploadedFile? uploadedFile)
     {
         return uploadedFile == null
             ? null
@@ -82,7 +83,7 @@ public class SchemeSummaryViewModelFactory : ISchemeSummaryViewModelFactory
                     uploadedFile.FileName, urlHelper.Action(
                         "DownloadStakeholderDiscussionsFile",
                         "Scheme",
-                        new { applicationId, fileId = uploadedFile.FileId }) ?? string.Empty
+                        new { applicationId = applicationId.Value, fileId = uploadedFile.FileId }) ?? string.Empty
                 },
             };
     }

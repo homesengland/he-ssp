@@ -5,7 +5,7 @@ using UploadedFile = HE.Investment.AHP.Contract.Common.UploadedFile;
 namespace HE.Investment.AHP.Contract.Scheme;
 
 public record Scheme(
-    string ApplicationId,
+    AhpApplicationId ApplicationId,
     string ApplicationName,
     Tenure? ApplicationTenure,
     SectionStatus Status,

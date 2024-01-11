@@ -4,7 +4,6 @@
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investment.AHP.Contract.Delivery
-@using HE.Investments.Common.WWW.Components.WorkflowBackButton
 @model HE.Investment.AHP.Contract.Delivery.DeliveryPhaseDetails;
 @{
     var applicationId = this.GetApplicationIdFromRoute();
@@ -13,7 +12,7 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <vc:workflow-back-button current-page="@DeliveryPhaseWorkflowState.TypeOfHomes" param-name="deliveryPhaseId"/>
+    <vc:ahp-workflow-back-button current-page="@DeliveryPhaseWorkflowState.TypeOfHomes"/>
 
     <form asp-controller="DeliveryPhase" asp-action="Details" asp-method="post" novalidate>
         <vc:form-header caption="@($"{Model.ApplicationName} - {Model.Name}")" title="@title"/>

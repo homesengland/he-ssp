@@ -6,7 +6,6 @@
 
 @{
     var applicationId = this.GetApplicationIdFromRoute();
-    var homeTypeId = this.GetHomeTypeIdFromRoute();
 }
 
 <div class="govuk-grid-column-three-quarters">
@@ -14,8 +13,6 @@
         @Html.HiddenFor(m => Model.ApplicationName)
         @Html.HiddenFor(m => Model.HomeTypeName)
         <vc:home-type-form-header current-page="@HomeTypesWorkflowState.RemoveHomeType"
-                                  application-id="@applicationId"
-                                  home-type-id="@homeTypeId"
                                   caption="@Model.Header"/>
 
         <he-error-form-group asp-for="RemoveHomeTypeAnswer">

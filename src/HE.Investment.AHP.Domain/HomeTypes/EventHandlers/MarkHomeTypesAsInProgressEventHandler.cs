@@ -1,9 +1,9 @@
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.HomeTypes.Events;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Infrastructure.Events;
-using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.EventHandlers;
 
@@ -37,10 +37,10 @@ public class MarkHomeTypesAsInProgressEventHandler :
         await ChangeStatus(domainEvent.ApplicationId, cancellationToken);
     }
 
-    private async Task ChangeStatus(string applicationId, CancellationToken cancellationToken)
+    private async Task ChangeStatus(AhpApplicationId applicationId, CancellationToken cancellationToken)
     {
         var account = await _accountUserContext.GetSelectedAccount();
-        var homeTypes = await _repository.GetByApplicationId(new ApplicationId(applicationId), account, HomeTypeSegmentTypes.None, cancellationToken);
+        var homeTypes = await _repository.GetByApplicationId(applicationId, account, HomeTypeSegmentTypes.None, cancellationToken);
         homeTypes.MarkAsInProgress();
 
         await _repository.Save(homeTypes, account.SelectedOrganisationId(), cancellationToken);

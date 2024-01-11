@@ -26,7 +26,7 @@ public class GetApplicationsQueryHandler : IRequestHandler<GetApplicationsQuery,
 
         var applicationsBasicDetails = applicationsWithPagination.Items
             .Select(s => new ApplicationBasicDetails(
-                s.ApplicationId.Value,
+                s.ApplicationId,
                 s.ApplicationName,
                 s.Status,
                 null,
