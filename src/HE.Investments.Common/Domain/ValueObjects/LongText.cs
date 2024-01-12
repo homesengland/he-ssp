@@ -12,21 +12,23 @@ public class LongText : ValueObject
         string noValueProvidedErrorMessage = GenericValidationError.NoValueProvided,
         string textTooLongErrorMessage = GenericValidationError.TextTooLong)
     {
-        if (value.IsNotProvided())
+        var normalisedValue = value?.NormalizeLineEndings();
+
+        if (normalisedValue.IsNotProvided())
         {
             OperationResult.New()
                 .AddValidationError(fieldName, noValueProvidedErrorMessage)
                 .CheckErrors();
         }
 
-        if (value!.Length > MaximumInputLength.LongInput)
+        if (normalisedValue!.Length > MaximumInputLength.LongInput)
         {
             OperationResult.New()
                 .AddValidationError(fieldName, textTooLongErrorMessage)
                 .CheckErrors();
         }
 
-        Value = value;
+        Value = normalisedValue;
     }
 
     public LongText(string value, string fieldName, string fieldDisplayName)

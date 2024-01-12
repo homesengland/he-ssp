@@ -15,7 +15,7 @@ public class Validator
 
     private Validator(string? value, string fieldName, string fieldLabel, OperationResult operationResult)
     {
-        _value = value;
+        _value = value.NormalizeLineEndings();
         _fieldName = fieldName;
         _fieldLabel = fieldLabel;
         _operationResult = operationResult;
