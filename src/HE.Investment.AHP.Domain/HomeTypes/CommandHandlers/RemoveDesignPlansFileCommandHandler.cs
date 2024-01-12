@@ -1,5 +1,4 @@
 using HE.Investment.AHP.Contract.HomeTypes.Commands;
-using HE.Investment.AHP.Domain.Common.ValueObjects;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investments.Account.Shared;
@@ -21,6 +20,6 @@ public class RemoveDesignPlansFileCommandHandler : SaveHomeTypeSegmentCommandHan
 
     protected override IEnumerable<Action<RemoveDesignPlansFileCommand, IHomeTypeEntity>> SaveActions => new[]
     {
-        (RemoveDesignPlansFileCommand request, IHomeTypeEntity homeType) => homeType.DesignPlans.MarkFileToRemove(new FileId(request.FileId)),
+        (RemoveDesignPlansFileCommand request, IHomeTypeEntity homeType) => homeType.DesignPlans.MarkFileToRemove(request.FileId),
     };
 }

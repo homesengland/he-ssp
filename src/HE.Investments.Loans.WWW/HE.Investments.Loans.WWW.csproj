@@ -68,7 +68,6 @@
   <ItemGroup>
     <ProjectReference Include="..\He.AspNetCore.Mvc.Gds.Components\He.AspNetCore.Mvc.Gds.Components.csproj" />
     <ProjectReference Include="..\HE.Investments.Loans.BusinessLogic\HE.Investments.Loans.BusinessLogic.csproj" />
-    <ProjectReference Include="..\HE.Investments.Loans.Common.Contract\HE.Investments.Loans.Common.Contract.csproj" />
     <ProjectReference Include="..\HE.Investments.Loans.Common\HE.Investments.Loans.Common.csproj" />
     <ProjectReference Include="..\HE.Investments.Account.Contract\HE.Investments.Account.Contract.csproj" />
     <ProjectReference Include="..\HE.Investments.Common.WWW\HE.Investments.Common.WWW.csproj" />

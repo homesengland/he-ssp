@@ -1,7 +1,6 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Domain.Common;
-using HE.Investment.AHP.Domain.Common.ValueObjects;
 using HE.Investment.AHP.Domain.Documents.Services;
 using HE.Investment.AHP.Domain.HomeTypes.Attributes;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;

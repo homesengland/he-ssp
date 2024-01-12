@@ -13,6 +13,7 @@ using HE.Investment.AHP.WWW.Models.HomeTypes;
 using HE.Investment.AHP.WWW.Models.HomeTypes.Factories;
 using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
@@ -449,7 +450,9 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         [FromQuery] string fileId,
         CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new RemoveDesignPlansFileCommand(AhpApplicationId.From(applicationId), homeTypeId, fileId), cancellationToken);
+        var result = await _mediator.Send(
+            new RemoveDesignPlansFileCommand(AhpApplicationId.From(applicationId), homeTypeId, FileId.From(fileId)),
+            cancellationToken);
         if (result.HasValidationErrors)
         {
             throw new DomainValidationException(result);
@@ -466,7 +469,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         [FromQuery] string fileId,
         CancellationToken cancellationToken)
     {
-        var file = await _mediator.Send(new DownloadDesignFileQuery(AhpApplicationId.From(applicationId), homeTypeId, fileId), cancellationToken);
+        var file = await _mediator.Send(new DownloadDesignFileQuery(AhpApplicationId.From(applicationId), homeTypeId, FileId.From(fileId)), cancellationToken);
         return File(file.Content, "application/octet-stream", file.Name);
     }
 

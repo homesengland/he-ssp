@@ -1,7 +1,7 @@
 using HE.Investment.AHP.Contract.Application;
-using HE.Investment.AHP.Domain.Common.ValueObjects;
 using HE.Investment.AHP.Domain.Documents.Services;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Domain;
 
 namespace HE.Investment.AHP.Domain.Scheme.Entities;
