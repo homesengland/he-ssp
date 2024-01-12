@@ -8,6 +8,8 @@ using HE.Investment.AHP.WWW.Extensions;
 using HE.Investment.AHP.WWW.Models.Delivery;
 using HE.Investment.AHP.WWW.Utils;
 using HE.Investment.AHP.WWW.Workflows;
+using HE.Investments.Account.Contract.UserOrganisation.Queries;
+using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Validators;
@@ -24,11 +26,13 @@ namespace HE.Investment.AHP.WWW.Controllers;
 public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowState>
 {
     private readonly IMediator _mediator;
+    private readonly IAccountUserContext _userContext;
     private readonly IDeliveryPhaseProvider _deliveryPhaseProvider;
 
-    public DeliveryPhaseController(IMediator mediator, IDeliveryPhaseProvider deliveryPhaseProvider)
+    public DeliveryPhaseController(IMediator mediator, IAccountUserContext userContext, IDeliveryPhaseProvider deliveryPhaseProvider)
     {
         _mediator = mediator;
+        _userContext = userContext;
         _deliveryPhaseProvider = deliveryPhaseProvider;
     }
 
@@ -280,14 +284,14 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
 
     protected override async Task<IStateRouting<DeliveryPhaseWorkflowState>> Routing(DeliveryPhaseWorkflowState currentState, object? routeData = null)
     {
-        var isUnregisteredBody = false;
-        if (currentState != DeliveryPhaseWorkflowState.Create)
-        {
-            var deliveryPhase = await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(this.GetApplicationIdFromRoute(), this.GetDeliveryPhaseIdFromRoute()), CancellationToken.None);
-            isUnregisteredBody = deliveryPhase.IsUnregisteredBody;
-        }
+        var account = await _userContext.GetSelectedAccount();
+        var organisation = account.SelectedOrganisation();
 
-        return new DeliveryPhaseWorkflow(currentState, isUnregisteredBody);
+        // TODO: #66086 - we need to pass deliveryPhase to workflow logic
+        // var deliveryPhase = currentState != DeliveryPhaseWorkflowState.Create
+        //     ? await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(this.GetApplicationIdFromRoute(), this.GetDeliveryPhaseIdFromRoute()), CancellationToken.None)
+        //     : null;
+        return new DeliveryPhaseWorkflow(currentState, organisation.IsUnregisteredBody);
     }
 
     private MilestoneViewModel CreateMilestoneViewModel(

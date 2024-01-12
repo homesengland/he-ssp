@@ -1,5 +1,5 @@
-using HE.Investments.Account.Contract.Organisation.Queries;
 using HE.Investments.Account.Contract.UserOrganisation;
+using HE.Investments.Account.Contract.UserOrganisation.Queries;
 using HE.Investments.Account.Contract.Users;
 using HE.Investments.Account.Domain.Organisation.Repositories;
 using HE.Investments.Account.Domain.User.Repositories;
@@ -11,7 +11,7 @@ using Microsoft.FeatureManagement;
 
 namespace HE.Investments.Account.Domain.UserOrganisation.QueryHandlers;
 
-public class GetUserOrganisationInformationQueryHandler : IRequestHandler<GetUserOrganisationInformationQuery, GetUserOrganisationInformationQueryResponse>
+public class GetUserOrganisationWithProgrammesQueryHandler : IRequestHandler<GetUserOrganisationWithProgrammesQuery, GetUserOrganisationWithProgrammesQueryResponse>
 {
     private readonly IAccountUserContext _accountUserContext;
     private readonly IProgrammeApplicationsRepository _programmeApplicationsRepository;
@@ -19,7 +19,7 @@ public class GetUserOrganisationInformationQueryHandler : IRequestHandler<GetUse
     private readonly IProfileRepository _profileRepository;
     private readonly IFeatureManager _featureManager;
 
-    public GetUserOrganisationInformationQueryHandler(
+    public GetUserOrganisationWithProgrammesQueryHandler(
         IOrganizationRepository organizationRepository,
         IProfileRepository profileRepository,
         IAccountUserContext accountUserContext,
@@ -33,7 +33,7 @@ public class GetUserOrganisationInformationQueryHandler : IRequestHandler<GetUse
         _profileRepository = profileRepository;
     }
 
-    public async Task<GetUserOrganisationInformationQueryResponse> Handle(GetUserOrganisationInformationQuery request, CancellationToken cancellationToken)
+    public async Task<GetUserOrganisationWithProgrammesQueryResponse> Handle(GetUserOrganisationWithProgrammesQuery request, CancellationToken cancellationToken)
     {
         var account = await _accountUserContext.GetSelectedAccount();
         var organisationDetails = await _organizationRepository.GetBasicInformation(account.SelectedOrganisationId(), cancellationToken);
@@ -41,7 +41,7 @@ public class GetUserOrganisationInformationQueryHandler : IRequestHandler<GetUse
 
         if (await _featureManager.IsEnabledAsync(FeatureFlags.AhpProgram, account.SelectedOrganisationId().ToString()) is false)
         {
-            return new GetUserOrganisationInformationQueryResponse(
+            return new GetUserOrganisationWithProgrammesQueryResponse(
                 organisationDetails,
                 userDetails.FirstName?.Value,
                 account.Roles.All(r => r == UserRole.Limited),
@@ -49,7 +49,7 @@ public class GetUserOrganisationInformationQueryHandler : IRequestHandler<GetUse
                 new List<ProgrammeType> { ProgrammeType.Loans });
         }
 
-        return new GetUserOrganisationInformationQueryResponse(
+        return new GetUserOrganisationWithProgrammesQueryResponse(
             organisationDetails,
             userDetails.FirstName?.Value,
             account.Roles.All(r => r == UserRole.Limited),

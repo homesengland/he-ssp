@@ -7,6 +7,7 @@ using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
+using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
@@ -85,11 +86,8 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
         }
     }
 
-    public DeliveryPhaseEntity CreateDeliveryPhase(DeliveryPhaseName name)
+    public DeliveryPhaseEntity CreateDeliveryPhase(DeliveryPhaseName name, OrganisationBasicInfo organisationBasicInfo)
     {
-        // TODO: get proper organisation basic info
-        var orgBasicInfo = new OrganisationBasicInfo(false);
-
         var deliveryPhaseNameAlreadyUsed = _deliveryPhases.Any(x => x.Name == name);
         if (deliveryPhaseNameAlreadyUsed)
         {
@@ -101,12 +99,12 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
         var deliveryPhase = new DeliveryPhaseEntity(
             _application,
             name,
-            orgBasicInfo,
+            organisationBasicInfo,
             null,
             new BuildActivityType(),
             SectionStatus.InProgress,
             Array.Empty<HomesToDeliverInPhase>(),
-            new DeliveryPhaseMilestones(orgBasicInfo));
+            new DeliveryPhaseMilestones(organisationBasicInfo));
 
         _deliveryPhases.Add(deliveryPhase);
         return deliveryPhase;
