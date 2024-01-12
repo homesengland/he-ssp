@@ -3,20 +3,20 @@
 @using HE.Investment.AHP.WWW.Routing;
 @using HE.Investments.Common.WWW.Components.FormHeader;
 @using HE.Investment.AHP.WWW.Extensions;
+@using HE.Investment.AHP.WWW.Views.Application
 @using HE.Investment.AHP.WWW.Views.Site;
 @model SitesListModel
 @{
-    ViewData["Title"] = SitePageTitles.SiteSplashScreen;
+    var title = ApplicationPageTitles.Start;
+    ViewData["Title"] = title;
     ViewBag.Breadcrumbs = AhpBreadcrumbsBuilder
         .New()
         .WithSites()
         .Build();
-
-    var actionName = Model.Items.Length > 0 ? "Index" : "Details";
 }
 
 <div class="govuk-grid-column-three-quarters">
-    <vc:form-header title="@SitePageTitles.SiteSplashScreen" />
+    <vc:form-header title="@title" />
 
     <div class="govuk-!-padding-bottom-8">
         <gds-div-inset-text>
@@ -73,7 +73,7 @@
             truthful and accurate to the best of your knowledge.
         </gds-p>
     </div>
-    <a href="@Url.Action(actionName, "Site")">
+    <a href="@Url.Action("Name", "Application")" id="continue-button">
         <gds-button-start type="button">Start now</gds-button-start>
     </a>
 </div>

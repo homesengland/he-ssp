@@ -43,9 +43,9 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
         return View("Index", new ApplicationsListModel(applicationsQueryResult.OrganisationName, applicationsQueryResult.PaginationResult, isReadOnly));
     }
 
-    [HttpGet("splash")]
-    [WorkflowState(ApplicationWorkflowState.ApplicationSplashScreen)]
-    public async Task<IActionResult> Splash(CancellationToken cancellationToken)
+    [HttpGet("start")]
+    [WorkflowState(ApplicationWorkflowState.Start)]
+    public async Task<IActionResult> Start(CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new GetSiteListQuery(), cancellationToken);
         return View("Splash", response);
