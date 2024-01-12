@@ -7,5 +7,5 @@ public interface IProgrammes
 {
     Task<ProgrammeModel> GetProgramme(ProgrammeType programmeType);
 
-    string GetApplicationUrl(ProgrammeType programmeType, string applicationId);
+    string GetApplicationUrl(ProgrammeType programmeType, HeApplicationId applicationId);
 }

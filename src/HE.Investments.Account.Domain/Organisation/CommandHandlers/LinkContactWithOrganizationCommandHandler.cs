@@ -72,6 +72,6 @@ public class LinkContactWithOrganizationCommandHandler : IRequestHandler<LinkCon
             Guid.Parse(organisationId!),
             PortalConstants.CommonPortalType);
 
-        await _mediator.Publish(new UserAccountsChangedEvent(_userContext.UserGlobalId.ToString()), cancellationToken);
+        await _mediator.Publish(new UserAccountsChangedEvent(_userContext.UserGlobalId), cancellationToken);
     }
 }

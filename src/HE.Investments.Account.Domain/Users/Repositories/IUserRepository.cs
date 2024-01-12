@@ -1,6 +1,6 @@
 using HE.Investments.Account.Domain.Users.Entities;
-using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.ValueObjects;
+using HE.Investments.Common.Contract;
 
 namespace HE.Investments.Account.Domain.Users.Repositories;
 

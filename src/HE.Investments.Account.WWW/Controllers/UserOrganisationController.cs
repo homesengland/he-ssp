@@ -51,7 +51,7 @@ public class UserOrganisationController : Controller
                         programmeModels[p.Type],
                         p.Applications.Select(a =>
                                 new ApplicationBasicDetailsModel(
-                                        a.Id,
+                                        a.Id.Value,
                                         a.ApplicationName,
                                         a.Status,
                                         _programmes.GetApplicationUrl(p.Type, a.Id)))

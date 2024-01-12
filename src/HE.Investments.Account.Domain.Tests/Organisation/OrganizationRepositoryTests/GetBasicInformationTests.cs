@@ -9,6 +9,7 @@ using HE.Investments.Account.Domain.Tests.TestData;
 using HE.Investments.Account.Domain.Tests.User.TestData;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.ValueObjects;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.User;
 using HE.Investments.TestsUtils.TestFramework;

@@ -31,7 +31,7 @@ public class Programmes : IProgrammes
             : throw new InvalidEnumArgumentException($"Programme for {programmeType} does not exist.");
     }
 
-    public string GetApplicationUrl(ProgrammeType programmeType, string applicationId)
+    public string GetApplicationUrl(ProgrammeType programmeType, HeApplicationId applicationId)
     {
         if (programmeType == ProgrammeType.Ahp)
         {
