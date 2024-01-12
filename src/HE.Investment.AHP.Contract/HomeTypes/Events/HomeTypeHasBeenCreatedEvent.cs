@@ -3,4 +3,4 @@ using HE.Investments.Common.Contract.Infrastructure.Events;
 
 namespace HE.Investment.AHP.Contract.HomeTypes.Events;
 
-public record HomeTypeHasBeenCreatedEvent(AhpApplicationId ApplicationId, string HomeTypeId, string HomeTypeName) : DomainEvent;
+public record HomeTypeHasBeenCreatedEvent(AhpApplicationId ApplicationId, HomeTypeId HomeTypeId, string HomeTypeName) : DomainEvent;

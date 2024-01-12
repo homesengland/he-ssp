@@ -5,7 +5,7 @@ namespace HE.Investment.AHP.Contract.HomeTypes.Commands;
 
 public record SaveProspectiveRentCommand(
     AhpApplicationId ApplicationId,
-    string HomeTypeId,
+    HomeTypeId HomeTypeId,
     string? MarketValue,
     string? MarketRent,
     string? ProspectiveRent,

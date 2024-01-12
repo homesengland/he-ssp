@@ -1,4 +1,3 @@
-using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Commands;
 using HE.Investment.AHP.Domain.Delivery.Repositories;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
@@ -35,7 +34,7 @@ public class RemoveHomeTypeCommandHandler : HomeTypeCommandHandlerBase, IRequest
         var account = await _accountUserContext.GetSelectedAccount();
         var homeTypes = await _repository.GetByApplicationId(request.ApplicationId, account, HomeTypeSegmentTypes.None, cancellationToken);
         var deliveryPhases = await _deliveryRepository.GetByApplicationId(request.ApplicationId, account, cancellationToken);
-        var validationErrors = PerformWithValidation(() => homeTypes.Remove(new HomeTypeId(request.HomeTypeId), request.RemoveHomeTypeAnswer, deliveryPhases));
+        var validationErrors = PerformWithValidation(() => homeTypes.Remove(request.HomeTypeId, request.RemoveHomeTypeAnswer, deliveryPhases));
         if (validationErrors.Any())
         {
             return new OperationResult(validationErrors);

@@ -304,13 +304,13 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
 
     private SchemeViewModel CreateModel(string applicationId, Scheme scheme)
     {
-        string GetRemoveAction(string fileId) =>
-            Url.Action("RemoveStakeholderDiscussionsFile", "Scheme", new { applicationId, fileId }) ?? string.Empty;
+        string GetRemoveAction(FileId fileId) =>
+            Url.Action("RemoveStakeholderDiscussionsFile", "Scheme", new { applicationId, fileId = fileId.Value }) ?? string.Empty;
 
         IList<FileModel>? CreateFileModel(UploadedFile? x) =>
             x == null
                 ? null
-                : new List<FileModel> { new(x.FileId, x.FileName, x.UploadedOn, x.UploadedBy, x.CanBeRemoved, GetRemoveAction(x.FileId), string.Empty) };
+                : new List<FileModel> { new(x.FileId.Value, x.FileName, x.UploadedOn, x.UploadedBy, x.CanBeRemoved, GetRemoveAction(x.FileId), string.Empty) };
 
         return new SchemeViewModel(
             applicationId,

@@ -5,4 +5,4 @@ using MediatR;
 
 namespace HE.Investment.AHP.Contract.HomeTypes.Queries;
 
-public record DownloadDesignFileQuery(AhpApplicationId ApplicationId, string HomeTypeId, FileId FileId) : IRequest<DownloadedFile>;
+public record DownloadDesignFileQuery(AhpApplicationId ApplicationId, HomeTypeId HomeTypeId, FileId FileId) : IRequest<DownloadedFile>;

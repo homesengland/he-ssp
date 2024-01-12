@@ -6,5 +6,5 @@ using UploadedFile = HE.Investment.AHP.Contract.Common.UploadedFile;
 
 namespace HE.Investment.AHP.Contract.HomeTypes.Commands;
 
-public record UploadDesignPlansFileCommand(AhpApplicationId ApplicationId, string HomeTypeId, FileToUpload File)
+public record UploadDesignPlansFileCommand(AhpApplicationId ApplicationId, HomeTypeId HomeTypeId, FileToUpload File)
     : IRequest<OperationResult<UploadedFile?>>;

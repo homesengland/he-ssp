@@ -22,7 +22,7 @@ public class DesignFileLocationProvider : IAhpFileLocationProvider<DesignFilePar
     public async Task<FileLocation> GetFileLocation(DesignFileParams fileParams, CancellationToken cancellationToken)
     {
         var rootDirectory = await _documentsCrmContext.GetDocumentLocation(fileParams.ApplicationId, cancellationToken);
-        var folderPath = AhpFileFolders.DesignFilesFolder(rootDirectory, fileParams.HomeTypeId.Value);
+        var folderPath = AhpFileFolders.DesignFilesFolder(rootDirectory, fileParams.HomeTypeId);
 
         return new FileLocation(_documentSettings.ListTitle, _documentSettings.ListAlias, folderPath);
     }

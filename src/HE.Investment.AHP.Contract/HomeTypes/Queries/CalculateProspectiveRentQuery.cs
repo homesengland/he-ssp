@@ -5,7 +5,7 @@ namespace HE.Investment.AHP.Contract.HomeTypes.Queries;
 
 public record CalculateProspectiveRentQuery(
         AhpApplicationId ApplicationId,
-        string HomeTypeId,
+        HomeTypeId HomeTypeId,
         string? MarketValue,
         string? MarketRent,
         string? ProspectiveRent,

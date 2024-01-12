@@ -10,7 +10,7 @@ public record UploadedFileModel(string FileId, string FileName, string UploadDet
     public static UploadedFileModel FromUploadedFile(UploadedFile file)
     {
         return new UploadedFileModel(
-            file.FileId,
+            file.FileId.Value,
             file.FileName,
             $"uploaded {DateHelper.DisplayAsUkFormatDateTime(file.UploadedOn)} by {file.UploadedBy}",
             file.CanBeRemoved);

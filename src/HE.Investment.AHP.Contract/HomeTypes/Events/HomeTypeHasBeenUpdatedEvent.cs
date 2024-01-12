@@ -3,4 +3,4 @@ using HE.Investments.Common.Contract.Infrastructure.Events;
 
 namespace HE.Investment.AHP.Contract.HomeTypes.Events;
 
-public record HomeTypeHasBeenUpdatedEvent(AhpApplicationId ApplicationId, string HomeTypeId) : DomainEvent;
+public record HomeTypeHasBeenUpdatedEvent(AhpApplicationId ApplicationId, HomeTypeId HomeTypeId) : DomainEvent;

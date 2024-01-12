@@ -20,6 +20,6 @@ public class DesignPlansSegmentContractMapper : IHomeTypeSegmentContractMapper<D
 
     private static UploadedFile MapDesignFile(Common.UploadedFile file, bool canBeRemoved)
     {
-        return new UploadedFile(file.Id.Value, file.Name.Value, file.UploadedOn, file.UploadedBy, canBeRemoved);
+        return new UploadedFile(file.Id, file.Name.Value, file.UploadedOn, file.UploadedBy, canBeRemoved);
     }
 }

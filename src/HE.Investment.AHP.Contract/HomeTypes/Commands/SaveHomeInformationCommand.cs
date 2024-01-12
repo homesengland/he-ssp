@@ -4,7 +4,7 @@ namespace HE.Investment.AHP.Contract.HomeTypes.Commands;
 
 public record SaveHomeInformationCommand(
     AhpApplicationId ApplicationId,
-    string HomeTypeId,
+    HomeTypeId HomeTypeId,
     string? NumberOfHomes,
     string? NumberOfBedrooms,
     string? MaximumOccupancy,

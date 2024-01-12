@@ -20,7 +20,7 @@ public class DownloadDesignFileQueryHandler : IRequestHandler<DownloadDesignFile
     {
         var file = await _designFileService.DownloadFile(
             request.FileId,
-            new DesignFileParams(request.ApplicationId, new HomeTypeId(request.HomeTypeId)),
+            new DesignFileParams(request.ApplicationId, request.HomeTypeId),
             cancellationToken);
 
         return new DownloadedFile(file.Name, file.Content);

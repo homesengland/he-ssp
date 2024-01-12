@@ -4,6 +4,6 @@ namespace HE.Investment.AHP.Contract.HomeTypes.Commands;
 
 public record SaveMoveOnArrangementsCommand(
         AhpApplicationId ApplicationId,
-        string HomeTypeId,
+        HomeTypeId HomeTypeId,
         string? MoveOnArrangements)
     : ISaveHomeTypeSegmentCommand;

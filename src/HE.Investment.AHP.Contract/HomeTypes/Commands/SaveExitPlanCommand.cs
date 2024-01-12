@@ -4,6 +4,6 @@ namespace HE.Investment.AHP.Contract.HomeTypes.Commands;
 
 public record SaveExitPlanCommand(
         AhpApplicationId ApplicationId,
-        string HomeTypeId,
+        HomeTypeId HomeTypeId,
         string? ExitPlan)
     : ISaveHomeTypeSegmentCommand;

@@ -8,5 +8,5 @@ public interface ISaveHomeTypeSegmentCommand : IRequest<OperationResult>
 {
     public AhpApplicationId ApplicationId { get; }
 
-    public string HomeTypeId { get; }
+    public HomeTypeId HomeTypeId { get; }
 }

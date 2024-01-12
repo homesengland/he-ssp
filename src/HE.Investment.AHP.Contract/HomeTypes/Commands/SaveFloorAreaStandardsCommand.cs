@@ -3,5 +3,5 @@ using HE.Investment.AHP.Contract.HomeTypes.Enums;
 
 namespace HE.Investment.AHP.Contract.HomeTypes.Commands;
 
-public record SaveFloorAreaStandardsCommand(AhpApplicationId ApplicationId, string HomeTypeId, IReadOnlyCollection<NationallyDescribedSpaceStandardType> NationallyDescribedSpaceStandards)
+public record SaveFloorAreaStandardsCommand(AhpApplicationId ApplicationId, HomeTypeId HomeTypeId, IReadOnlyCollection<NationallyDescribedSpaceStandardType> NationallyDescribedSpaceStandards)
     : ISaveHomeTypeSegmentCommand;

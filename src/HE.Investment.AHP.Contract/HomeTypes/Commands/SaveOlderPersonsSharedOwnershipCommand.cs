@@ -4,7 +4,7 @@ namespace HE.Investment.AHP.Contract.HomeTypes.Commands;
 
 public record SaveOlderPersonsSharedOwnershipCommand(
         AhpApplicationId ApplicationId,
-        string HomeTypeId,
+        HomeTypeId HomeTypeId,
         string? MarketValue,
         string? InitialSale,
         string? ProspectiveRent)

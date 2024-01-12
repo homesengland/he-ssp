@@ -3,5 +3,5 @@ using HE.Investment.AHP.Contract.Common.Enums;
 
 namespace HE.Investment.AHP.Contract.HomeTypes.Commands;
 
-public record SaveMoveOnAccommodationCommand(AhpApplicationId ApplicationId, string HomeTypeId, YesNoType IntendedAsMoveOnAccommodation)
+public record SaveMoveOnAccommodationCommand(AhpApplicationId ApplicationId, HomeTypeId HomeTypeId, YesNoType IntendedAsMoveOnAccommodation)
     : ISaveHomeTypeSegmentCommand;
