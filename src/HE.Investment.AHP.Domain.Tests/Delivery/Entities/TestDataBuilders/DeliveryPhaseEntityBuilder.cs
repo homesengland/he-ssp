@@ -6,6 +6,8 @@ using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
+using HE.Investments.Account.Shared;
+using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.Contract;
 using HE.Investments.TestsUtils.TestData;
 
@@ -19,7 +21,7 @@ public class DeliveryPhaseEntityBuilder
 
     private SectionStatus _status = SectionStatus.InProgress;
 
-    private OrganisationBasicInfo _organisationBasicInfo = new(false);
+    private OrganisationBasicInfo _organisationBasicInfo = new OrganisationBasicInfoBuilder().Build();
 
     private DeliveryPhaseMilestones? _deliveryPhaseMilestones;
 
@@ -45,7 +47,7 @@ public class DeliveryPhaseEntityBuilder
 
     public DeliveryPhaseEntityBuilder WithUnregisteredBody()
     {
-        _organisationBasicInfo = new(true);
+        _organisationBasicInfo = new OrganisationBasicInfoBuilder().WithUnregisteredBody().Build();
         return this;
     }
 

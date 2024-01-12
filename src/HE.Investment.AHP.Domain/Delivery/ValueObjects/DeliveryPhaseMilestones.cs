@@ -1,4 +1,4 @@
-using HE.Investment.AHP.Domain.Common;
+using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;

@@ -4,7 +4,6 @@ using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Events;
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Domain.Application.Repositories;
-using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
@@ -105,8 +104,6 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
         var application =
             await _applicationRepository.GetApplicationBasicInfo(applicationId, userAccount, cancellationToken);
 
-        var organisationDetails = new OrganisationBasicInfo(false);
-
         var homesToDeliver = new[]
         {
             new HomesToDeliver(new HomeTypeId("ht-1"), new HomeTypeName("1 bed flat"), 3),
@@ -121,12 +118,12 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
                 new DeliveryPhaseEntity(
                     application,
                     new DeliveryPhaseName("Phase 1"),
-                    organisationDetails,
+                    userAccount.SelectedOrganisation(),
                     null,
                     new BuildActivityType(),
                     SectionStatus.InProgress,
                     new[] { new HomesToDeliverInPhase(new HomeTypeId("ht-1"), 3) },
-                    new DeliveryPhaseMilestones(organisationDetails, new AcquisitionMilestoneDetails(new AcquisitionDate("1", "2", "2023"), null)),
+                    new DeliveryPhaseMilestones(userAccount.SelectedOrganisation(), new AcquisitionMilestoneDetails(new AcquisitionDate("1", "2", "2023"), null)),
                     new DeliveryPhaseId("phase-1"),
                     new DateTime(2023, 12, 12)),
             },

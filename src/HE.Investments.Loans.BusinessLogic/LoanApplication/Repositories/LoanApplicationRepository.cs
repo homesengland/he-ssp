@@ -64,7 +64,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
         var req = new invln_checkifloanapplicationwithgivennameexistsRequest
         {
             invln_loanname = loanApplicationName.Value,
-            invln_organisationid = userAccount.OrganisationId?.ToString(),
+            invln_organisationid = userAccount.Organisation?.OrganisationId.ToString(),
         };
 
         var response = (invln_checkifloanapplicationwithgivennameexistsResponse)await _serviceClient.ExecuteAsync(req, cancellationToken);

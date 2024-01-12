@@ -1,18 +1,19 @@
-using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
+using HE.Investments.Account.Shared;
+using HE.Investments.Account.Shared.User.ValueObjects;
 
 namespace HE.Investment.AHP.Domain.Tests.Delivery.Entities.TestDataBuilders;
 
 public class DeliveryPhaseMilestonesBuilder
 {
-    private OrganisationBasicInfo _testOrganisation = new(false);
+    private OrganisationBasicInfo _testOrganisation = new OrganisationBasicInfoBuilder().Build();
     private AcquisitionMilestoneDetails? _acquisitionMilestoneDetails = new AcquisitionMilestoneDetailsBuilder().Build();
     private StartOnSiteMilestoneDetails? _startOnSiteMilestoneDetails = new StartOnSiteMilestoneDetailsBuilder().Build();
     private CompletionMilestoneDetails? _completionMilestoneDetails = new CompletionMilestoneDetailsBuilder().Build();
 
     public DeliveryPhaseMilestonesBuilder WithUnregisteredBody()
     {
-        _testOrganisation = new(true);
+        _testOrganisation = new OrganisationBasicInfoBuilder().WithUnregisteredBody().Build();
         return this;
     }
 
