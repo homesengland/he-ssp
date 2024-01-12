@@ -83,7 +83,7 @@ public class SchemeSummaryViewModelFactory : ISchemeSummaryViewModelFactory
                     uploadedFile.FileName, urlHelper.Action(
                         "DownloadStakeholderDiscussionsFile",
                         "Scheme",
-                        new { applicationId = applicationId.Value, fileId = uploadedFile.FileId }) ?? string.Empty
+                        new { applicationId = applicationId.Value, fileId = uploadedFile.FileId.Value }) ?? string.Empty
                 },
             };
     }

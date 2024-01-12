@@ -1,4 +1,3 @@
-using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Commands;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
@@ -32,7 +31,7 @@ public abstract class SaveHomeTypeSegmentCommandHandlerBase<TCommand> : HomeType
         var account = await _accountUserContext.GetSelectedAccount();
         var homeType = await _homeTypeRepository.GetById(
             request.ApplicationId,
-            new HomeTypeId(request.HomeTypeId),
+            request.HomeTypeId,
             account,
             SegmentTypes,
             cancellationToken);

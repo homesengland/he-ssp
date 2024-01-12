@@ -3,4 +3,4 @@ using MediatR;
 
 namespace HE.Investment.AHP.Contract.HomeTypes.Queries;
 
-public record GetHomeTypeQuery(AhpApplicationId ApplicationId, string HomeTypeId) : IRequest<HomeType>;
+public record GetHomeTypeQuery(AhpApplicationId ApplicationId, HomeTypeId HomeTypeId) : IRequest<HomeType>;

@@ -98,7 +98,7 @@ public class HomeTypeTestDataBuilder
     public HomeType Build()
     {
         return new HomeType(
-            "home-type-id",
+            HomeTypeId.From("home-type-id"),
             "My Home Type",
             _housingType,
             _tenure,

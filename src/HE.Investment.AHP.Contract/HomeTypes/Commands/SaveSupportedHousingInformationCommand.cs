@@ -6,7 +6,7 @@ namespace HE.Investment.AHP.Contract.HomeTypes.Commands;
 
 public record SaveSupportedHousingInformationCommand(
         AhpApplicationId ApplicationId,
-        string HomeTypeId,
+        HomeTypeId HomeTypeId,
         YesNoType LocalCommissioningBodiesConsulted,
         YesNoType ShortStayAccommodation,
         RevenueFundingType RevenueFundingType)

@@ -61,7 +61,7 @@ public class SaveHomeTypeDetailsCommandHandler : HomeTypeCommandHandlerBase, IRe
         SaveHomeTypeDetailsCommand request,
         CancellationToken cancellationToken)
     {
-        var homeType = homeTypes.GetEntityById(new HomeTypeId(request.HomeTypeId!));
+        var homeType = homeTypes.GetEntityById(request.HomeTypeId!);
         var validationErrors = PerformWithValidation(
             () => homeTypes.ChangeName(homeType, request.HomeTypeName),
             () => homeType.ChangeHousingType(request.HousingType));

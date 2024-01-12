@@ -5,5 +5,5 @@ namespace HE.Investment.AHP.Contract.HomeTypes.Commands;
 
 public record SavePeopleGroupForSpecificDesignFeaturesCommand(
     AhpApplicationId ApplicationId,
-    string HomeTypeId,
+    HomeTypeId HomeTypeId,
     PeopleGroupForSpecificDesignFeaturesType PeopleGroupForSpecificDesignFeatures) : ISaveHomeTypeSegmentCommand;

@@ -56,13 +56,13 @@ internal sealed class GetFullHomeTypeQueryHandler : IRequestHandler<GetFullHomeT
         var account = await _accountUserContext.GetSelectedAccount();
         var homeType = await _repository.GetById(
             request.ApplicationId,
-            new HomeTypeId(request.HomeTypeId),
+            request.HomeTypeId,
             account,
             HomeTypeSegmentTypes.All,
             cancellationToken);
 
         return new FullHomeType(
-            homeType.Id.Value,
+            homeType.Id,
             homeType.Name.Value,
             homeType.Application.Id,
             homeType.Application.Name.Name,

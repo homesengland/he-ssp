@@ -4,7 +4,7 @@ using HE.Investment.AHP.Contract.HomeTypes.Enums;
 namespace HE.Investment.AHP.Contract.HomeTypes;
 
 public record FullHomeType(
-    string Id,
+    HomeTypeId Id,
     string Name,
     AhpApplicationId ApplicationId,
     string ApplicationName,

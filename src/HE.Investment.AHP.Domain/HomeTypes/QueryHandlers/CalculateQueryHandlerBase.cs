@@ -35,7 +35,7 @@ public abstract class CalculateQueryHandlerBase<TQuery> : IRequestHandler<TQuery
         var account = await _accountUserContext.GetSelectedAccount();
         var homeType = await _homeTypeRepository.GetById(
             request.ApplicationId,
-            new HomeTypeId(request.HomeTypeId),
+            request.HomeTypeId,
             account,
             SegmentTypes,
             cancellationToken);

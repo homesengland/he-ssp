@@ -5,6 +5,6 @@ namespace HE.Investment.AHP.Contract.HomeTypes.Commands;
 
 public record SaveModernMethodsConstructionCategoriesCommand(
         AhpApplicationId ApplicationId,
-        string HomeTypeId,
+        HomeTypeId HomeTypeId,
         IReadOnlyCollection<ModernMethodsConstructionCategoriesType> ModernMethodsConstructionCategories)
     : ISaveHomeTypeSegmentCommand;

@@ -97,7 +97,7 @@ public class HomeTypeRepository : IHomeTypeRepository
                     _homeTypeCrmMapper.SaveCrmFields(entity, segments),
                     cancellationToken));
             await _eventDispatcher.Publish(
-                new HomeTypeHasBeenCreatedEvent(homeType.Application.Id, entity.Id.Value, entity.Name.Value),
+                new HomeTypeHasBeenCreatedEvent(homeType.Application.Id, entity.Id, entity.Name.Value),
                 cancellationToken);
         }
         else if (entity.IsModified)
@@ -107,7 +107,7 @@ public class HomeTypeRepository : IHomeTypeRepository
                 organisationId.Value,
                 _homeTypeCrmMapper.SaveCrmFields(entity, segments),
                 cancellationToken);
-            await _eventDispatcher.Publish(new HomeTypeHasBeenUpdatedEvent(homeType.Application.Id, entity.Id.Value), cancellationToken);
+            await _eventDispatcher.Publish(new HomeTypeHasBeenUpdatedEvent(homeType.Application.Id, entity.Id), cancellationToken);
         }
 
         if (segments.Contains(HomeTypeSegmentType.DesignPlans)
@@ -131,7 +131,7 @@ public class HomeTypeRepository : IHomeTypeRepository
         {
             await _homeTypeCrmContext.Remove(homeTypes.ApplicationId.Value, homeTypeToRemove.Id.Value, organisationId.Value, cancellationToken);
             await _eventDispatcher.Publish(
-                new HomeTypeHasBeenRemovedEvent(homeTypeToRemove.Application.Id, homeTypeToRemove.Id.Value),
+                new HomeTypeHasBeenRemovedEvent(homeTypeToRemove.Application.Id, homeTypeToRemove.Id),
                 cancellationToken);
         }
     }
