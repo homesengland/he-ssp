@@ -82,7 +82,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
             ("HomeTypeName", homeType.Name),
             ("HousingType", homeType.HousingType.ToString()));
 
-        GeneralHomeType.SetHomeTypeId(homeInformationPage.Url.GetHomeTypeGuidFromUrl());
+        GeneralHomeType.SetHomeTypeId(homeInformationPage.Url.GetNestedGuidFromUrl());
         homeInformationPage.UrlEndWith(BuildHomeTypePage(HomeTypePagesUrl.HomeInformation, GeneralHomeType));
 
         SaveCurrentPage();
