@@ -43,4 +43,28 @@ public class NewBuildAndWorksOnlyDeliveryPhase : INestedItemData
         BuildActivityType = new BuildActivityType(TypeOfHomes, BuildActivityTypeForNewBuild.WorksOnly);
         return this;
     }
+
+    public NewBuildAndWorksOnlyDeliveryPhase GenerateAcquisitionMilestone()
+    {
+        AcquisitionMilestone = new AcquisitionMilestoneDetails(
+            new AcquisitionDate("12", "12", "2021"),
+            new MilestonePaymentDate("13", "7", "2022"));
+        return this;
+    }
+
+    public NewBuildAndWorksOnlyDeliveryPhase GenerateStartOnSiteMilestone()
+    {
+        StartOnSiteMilestone = new StartOnSiteMilestoneDetails(
+            new StartOnSiteDate("7", "7", "2022"),
+            new MilestonePaymentDate("8", "8", "2022"));
+        return this;
+    }
+
+    public NewBuildAndWorksOnlyDeliveryPhase GenerateCompletionMilestone()
+    {
+        CompletionMilestone = new CompletionMilestoneDetails(
+            new CompletionDate("9", "12", "2026"),
+            new MilestonePaymentDate("20", "1", "2026"));
+        return this;
+    }
 }
