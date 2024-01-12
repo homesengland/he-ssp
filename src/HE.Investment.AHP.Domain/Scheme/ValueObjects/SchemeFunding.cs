@@ -38,7 +38,7 @@ public class SchemeFunding : ValueObject
             .IsProvided()
             .IsNumber()
             .IsWholeNumber()
-            .IsBetween(1, 99999999999);
+            .IsBetween(1, 999999999, "The total funding you require must be 9 digits or less");
 
         var housesToDeliverName = "number of homes this scheme will deliver";
         HousesToDeliver = NumericValidator
