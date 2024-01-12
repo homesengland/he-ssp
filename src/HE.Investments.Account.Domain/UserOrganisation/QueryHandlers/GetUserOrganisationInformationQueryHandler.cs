@@ -14,7 +14,7 @@ namespace HE.Investments.Account.Domain.UserOrganisation.QueryHandlers;
 public class GetUserOrganisationInformationQueryHandler : IRequestHandler<GetUserOrganisationInformationQuery, GetUserOrganisationInformationQueryResponse>
 {
     private readonly IAccountUserContext _accountUserContext;
-    private readonly IProgrammeRepository _programmeRepository;
+    private readonly IProgrammeApplicationsRepository _programmeApplicationsRepository;
     private readonly IOrganizationRepository _organizationRepository;
     private readonly IProfileRepository _profileRepository;
     private readonly IFeatureManager _featureManager;
@@ -23,11 +23,11 @@ public class GetUserOrganisationInformationQueryHandler : IRequestHandler<GetUse
         IOrganizationRepository organizationRepository,
         IProfileRepository profileRepository,
         IAccountUserContext accountUserContext,
-        IProgrammeRepository programmeRepository,
+        IProgrammeApplicationsRepository programmeApplicationsRepository,
         IFeatureManager featureManager)
     {
         _accountUserContext = accountUserContext;
-        _programmeRepository = programmeRepository;
+        _programmeApplicationsRepository = programmeApplicationsRepository;
         _featureManager = featureManager;
         _organizationRepository = organizationRepository;
         _profileRepository = profileRepository;
@@ -45,7 +45,7 @@ public class GetUserOrganisationInformationQueryHandler : IRequestHandler<GetUse
                 organisationDetails,
                 userDetails.FirstName?.Value,
                 account.Roles.All(r => r == UserRole.Limited),
-                await _programmeRepository.GetLoanProgrammes(account, cancellationToken),
+                await _programmeApplicationsRepository.GetLoanProgrammes(account, cancellationToken),
                 new List<ProgrammeType> { ProgrammeType.Loans });
         }
 
@@ -53,7 +53,7 @@ public class GetUserOrganisationInformationQueryHandler : IRequestHandler<GetUse
             organisationDetails,
             userDetails.FirstName?.Value,
             account.Roles.All(r => r == UserRole.Limited),
-            await _programmeRepository.GetAllProgrammes(account, cancellationToken),
+            await _programmeApplicationsRepository.GetAllProgrammes(account, cancellationToken),
             new List<ProgrammeType> { ProgrammeType.Loans, ProgrammeType.Ahp });
     }
 }

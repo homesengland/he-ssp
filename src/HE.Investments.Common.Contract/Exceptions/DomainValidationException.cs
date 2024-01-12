@@ -11,10 +11,15 @@ public class DomainValidationException : Exception
     }
 
     public DomainValidationException(string errorMessage)
-        : base(OperationResult.New().AddValidationError(string.Empty, errorMessage).GetAllErrors())
+        : this(string.Empty, errorMessage)
+    {
+    }
+
+    public DomainValidationException(string fieldName, string errorMessage)
+        : base(OperationResult.New().AddValidationError(fieldName, errorMessage).GetAllErrors())
     {
         OperationResult = OperationResult.New();
-        OperationResult.AddValidationError(string.Empty, errorMessage);
+        OperationResult.AddValidationError(fieldName, errorMessage);
     }
 
     public OperationResult OperationResult { get; }

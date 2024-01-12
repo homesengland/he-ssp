@@ -7,11 +7,11 @@ using HE.Investments.Common.CRM.Services;
 
 namespace HE.Investments.Account.Domain.UserOrganisation.Repositories;
 
-public class ProgrammeRepository : IProgrammeRepository
+public class ProgrammeApplicationsRepository : IProgrammeApplicationsRepository
 {
     private readonly ICrmService _crmService;
 
-    public ProgrammeRepository(ICrmService crmService)
+    public ProgrammeApplicationsRepository(ICrmService crmService)
     {
         _crmService = crmService;
     }

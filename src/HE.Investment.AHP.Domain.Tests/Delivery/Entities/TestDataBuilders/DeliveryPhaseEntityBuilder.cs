@@ -21,11 +21,7 @@ public class DeliveryPhaseEntityBuilder
 
     private OrganisationBasicInfo _organisationBasicInfo = new(false);
 
-    private AcquisitionMilestoneDetails? _acquisitionMilestoneDetails;
-
-    private StartOnSiteMilestoneDetails? _startOnSiteMilestoneDetails;
-
-    private CompletionMilestoneDetails? _completionMilestoneDetails;
+    private DeliveryPhaseMilestones? _deliveryPhaseMilestones;
 
     private IsAdditionalPaymentRequested? _isAdditionalPaymentRequested;
 
@@ -53,21 +49,9 @@ public class DeliveryPhaseEntityBuilder
         return this;
     }
 
-    public DeliveryPhaseEntityBuilder WithAcquisitionMilestoneDetails(AcquisitionMilestoneDetails milestoneDetails)
+    public DeliveryPhaseEntityBuilder WithDeliveryPhaseMilestones(DeliveryPhaseMilestones milestones)
     {
-        _acquisitionMilestoneDetails = milestoneDetails;
-        return this;
-    }
-
-    public DeliveryPhaseEntityBuilder WithStartOnSiteMilestoneDetails(StartOnSiteMilestoneDetails milestoneDetails)
-    {
-        _startOnSiteMilestoneDetails = milestoneDetails;
-        return this;
-    }
-
-    public DeliveryPhaseEntityBuilder WithCompletionMilestoneDetails(CompletionMilestoneDetails milestoneDetails)
-    {
-        _completionMilestoneDetails = milestoneDetails;
+        _deliveryPhaseMilestones = milestones;
         return this;
     }
 
@@ -91,11 +75,9 @@ public class DeliveryPhaseEntityBuilder
             new BuildActivityType(),
             _status,
             _homesToDeliver,
+            _deliveryPhaseMilestones ?? new DeliveryPhaseMilestonesBuilder().Build(),
             new DeliveryPhaseId(_id),
             DateTimeTestData.OctoberDay05Year2023At0858,
-            acquisitionMilestone: _acquisitionMilestoneDetails,
-            startOnSiteMilestone: _startOnSiteMilestoneDetails,
-            completionMilestone: _completionMilestoneDetails,
             isAdditionalPaymentRequested: _isAdditionalPaymentRequested);
     }
 }
