@@ -143,7 +143,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
             financialDetails.SubsidyFromSaleOnThisScheme.ToString(),
             financialDetails.SubsidyFromSaleOnOtherSchemes.ToString(),
             financialDetails.OwnResourcesContribution.ToString(),
-            financialDetails.RecycledCapitalGarntFundContribution.ToString(),
+            financialDetails.RecycledCapitalGrantFundContribution.ToString(),
             financialDetails.OtherCapitalContributions.ToString(),
             financialDetails.SharedOwnershipSalesContribution.ToString(),
             financialDetails.TransferValueOfHomes.ToString(),
@@ -206,13 +206,13 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
             applicationId,
             financialDetails.ApplicationName,
             financialDetails.CountyCouncilGrants.ToString(),
-            financialDetails.DHSCExtraCareGrants.ToString(),
+            financialDetails.DhscExtraCareGrants.ToString(),
             financialDetails.LocalAuthorityGrants.ToString(),
             financialDetails.SocialServicesGrants.ToString(),
             financialDetails.HealthRelatedGrants.ToString(),
             financialDetails.LotteryFunding.ToString(),
             financialDetails.OtherPublicGrants.ToString(),
-            financialDetails.TotalRecievedGrands.ToWholeNumberString()));
+            financialDetails.TotalReceivedGrants.ToWholeNumberString()));
     }
 
     [HttpPost("grants")]

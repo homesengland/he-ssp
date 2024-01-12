@@ -207,7 +207,9 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
         [FromQuery] string fileId,
         CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new RemoveStakeholderDiscussionsFileCommand(AhpApplicationId.From(applicationId), fileId), cancellationToken);
+        var result = await _mediator.Send(
+            new RemoveStakeholderDiscussionsFileCommand(AhpApplicationId.From(applicationId), FileId.From(fileId)),
+            cancellationToken);
         if (result.HasValidationErrors)
         {
             throw new DomainValidationException(result);
@@ -222,7 +224,9 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
         [FromQuery] string fileId,
         CancellationToken cancellationToken)
     {
-        var response = await _mediator.Send(new GetStakeholderDiscussionsFileQuery(AhpApplicationId.From(applicationId), fileId), cancellationToken);
+        var response = await _mediator.Send(
+            new GetStakeholderDiscussionsFileQuery(AhpApplicationId.From(applicationId), FileId.From(fileId)),
+            cancellationToken);
 
         return File(response.Content, "application/octet-stream", response.Name);
     }
