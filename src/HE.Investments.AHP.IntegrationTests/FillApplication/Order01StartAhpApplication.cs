@@ -38,11 +38,30 @@ public class Order01StartAhpApplication : AhpIntegrationTest
 
     [Fact(Skip = AhpConfig.SkipTest)]
     [Order(2)]
-    public async Task Order02_ShouldNavigateToApplicationNamePage()
+    public async Task Order02_ShouldNavigateToApplicationLandingPage()
     {
         // given
         var applicationListPage = await GetCurrentPage(MainPagesUrl.ApplicationList);
         applicationListPage.HasGdsLinkButton("start-application-link", out var startApplicationLink);
+
+        // when
+        var applicationNamePage = await TestClient.NavigateTo(startApplicationLink);
+
+        // then
+        applicationNamePage
+            .UrlEndWith(ApplicationPagesUrl.StartName)
+            .HasTitle(ApplicationPageTitles.Start);
+
+        SaveCurrentPage();
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(3)]
+    public async Task Order03_ShouldNavigateToApplicationNamePage()
+    {
+        // given
+        var applicationListPage = await GetCurrentPage(ApplicationPagesUrl.StartName);
+        applicationListPage.HasGdsLinkButton("continue-button", out var startApplicationLink);
 
         // when
         var applicationNamePage = await TestClient.NavigateTo(startApplicationLink);
@@ -56,8 +75,8 @@ public class Order01StartAhpApplication : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(3)]
-    public async Task Order03_ShouldProvideApplicationNameAndNavigateToTenurePage()
+    [Order(4)]
+    public async Task Order04_ShouldProvideApplicationNameAndNavigateToTenurePage()
     {
         // given
         var applicationNamePage = await GetCurrentPage(ApplicationPagesUrl.ApplicationName);
@@ -77,8 +96,8 @@ public class Order01StartAhpApplication : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(4)]
-    public async Task Order4_ShouldProvideTenureAndNavigateToApplicationTaskList()
+    [Order(5)]
+    public async Task Order5_ShouldProvideTenureAndNavigateToApplicationTaskList()
     {
         // given
         var tenurePage = await GetCurrentPage(ApplicationPagesUrl.Tenure);

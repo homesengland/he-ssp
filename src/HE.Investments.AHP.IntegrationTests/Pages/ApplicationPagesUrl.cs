@@ -4,6 +4,8 @@ public static class ApplicationPagesUrl
 {
     public const string TaskListSuffix = "/task-list";
 
+    public const string StartName = "ahp/application/start";
+
     public const string ApplicationName = "ahp/application/name";
 
     public const string Tenure = "ahp/application/tenure";
