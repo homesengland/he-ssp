@@ -28,7 +28,7 @@ public class NewBuildAndWorksOnlyDeliveryPhase : INestedItemData
 
     public NewBuildAndWorksOnlyDeliveryPhase GenerateDeliveryPhase()
     {
-        Name = new DeliveryPhaseName($"IT-General-{DateTime.UtcNow.ToString(CultureInfo.InvariantCulture)}");
+        Name = new DeliveryPhaseName($"IT-NewBuild-WorksOnly-{DateTime.UtcNow.ToString(CultureInfo.InvariantCulture)}");
         return this;
     }
 

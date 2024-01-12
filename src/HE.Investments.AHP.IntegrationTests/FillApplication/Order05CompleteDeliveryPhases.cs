@@ -47,7 +47,7 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
         landingPage
             .UrlEndWith(BuildDeliveryPhasesPage(DeliveryPhasesPagesUrl.LandingPage))
             .HasTitle(DeliveryPageTitles.LandingPage)
-            .HasGdsLinkButton("continue-button", out var continueButton);
+            .HasLinkButtonForTestId("continue-button", out var continueButton);
 
         (await TestClient.NavigateTo(continueButton)).UrlEndWith(BuildDeliveryPhasesPage(DeliveryPhasesPagesUrl.List));
         SaveCurrentPage();
@@ -75,7 +75,7 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
         var deliveryPhase = NewBuildAndWorksOnlyDeliveryPhase.GenerateDeliveryPhase();
         var deliveryPhaseNamePage = await TestClient.SubmitButton(continueButton, ("DeliveryPhaseName", deliveryPhase.Name.ToString()!));
 
-        NewBuildAndWorksOnlyDeliveryPhase.SetDeliveryPhaseId(deliveryPhaseNamePage.Url.GetHomeTypeGuidFromUrl());
+        NewBuildAndWorksOnlyDeliveryPhase.SetDeliveryPhaseId(deliveryPhaseNamePage.Url.GetNestedGuidFromUrl());
         deliveryPhaseNamePage.UrlEndWith(BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.Details, NewBuildAndWorksOnlyDeliveryPhase));
 
         SaveCurrentPage();

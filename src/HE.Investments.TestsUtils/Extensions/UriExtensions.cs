@@ -25,7 +25,7 @@ public static class UriExtensions
         return uri.Split("=").Last();
     }
 
-    public static string GetHomeTypeGuidFromUrl(this string uri)
+    public static string GetNestedGuidFromUrl(this string uri)
     {
         return new Uri(uri).Segments[^2].Trim(UrlPathSeparator);
     }
