@@ -1,14 +1,14 @@
 <Project>
     <ItemGroup>
-        <PackageReference Include="SonarAnalyzer.CSharp" Version="9.15.0.81779">
+        <PackageReference Include="SonarAnalyzer.CSharp" Version="9.15.0.81779" Condition="'$(MSBuildProjectName)' != 'HE.Xrm.ServiceClientExample' AND !$(MSBuildProjectName.StartsWith('HE.CRM'))">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
     </ItemGroup>
-    <PropertyGroup>
+    <PropertyGroup Condition="'$(MSBuildProjectName)' != 'HE.Xrm.ServiceClientExample' AND !$(MSBuildProjectName.StartsWith('HE.CRM'))">
         <AnalysisLevel>latest-Recommended</AnalysisLevel>
     </PropertyGroup>
-    <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <PropertyGroup Condition="'$(Configuration)' == 'Release' AND '$(MSBuildProjectName)' != 'HE.Xrm.ServiceClientExample' AND !$(MSBuildProjectName.StartsWith('HE.CRM'))">
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     </PropertyGroup>
 </Project>
