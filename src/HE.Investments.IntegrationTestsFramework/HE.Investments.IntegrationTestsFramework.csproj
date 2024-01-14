@@ -20,11 +20,6 @@
   </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="AngleSharp" Version="1.0.7" />
-      <PackageReference Include="FluentAssertions" Version="6.12.0" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\HE.Investments.Common.WWW\HE.Investments.Common.WWW.csproj" />
       <ProjectReference Include="..\HE.Investments.DocumentService\HE.Investments.DocumentService.csproj" />
       <ProjectReference Include="..\HE.Investments.TestsUtils\HE.Investments.TestsUtils.csproj" />
