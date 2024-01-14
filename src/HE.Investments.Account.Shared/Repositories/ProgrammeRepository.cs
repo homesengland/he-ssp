@@ -14,11 +14,7 @@ public class ProgrammeRepository : IProgrammeRepository
 
     public async Task<ProgrammeBasicInfo> GetCurrentProgramme(ProgrammeType programmeType)
     {
-        var programme = await _programmeService.Get();
-        if (programme == null)
-        {
-            throw new InvalidOperationException("Cannot find Programme.");
-        }
+        var programme = await _programmeService.Get() ?? throw new InvalidOperationException("Cannot find Programme.");
 
         if (programme.startOn == null || programme.endOn == null)
         {
