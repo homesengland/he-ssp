@@ -1,9 +1,9 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.HomeTypes.Crm.Segments;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
-using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.CRM.Model;
 

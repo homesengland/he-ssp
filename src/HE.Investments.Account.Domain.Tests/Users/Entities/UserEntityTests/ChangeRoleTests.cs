@@ -1,8 +1,8 @@
 using FluentAssertions;
 using HE.Investments.Account.Contract.Users;
 using HE.Investments.Account.Domain.Users.Entities;
-using HE.Investments.Account.Domain.Users.ValueObjects;
-using HE.Investments.Common.Exceptions;
+using HE.Investments.Common.Contract;
+using HE.Investments.Common.Contract.Exceptions;
 using Xunit;
 
 namespace HE.Investments.Account.Domain.Tests.Users.Entities.UserEntityTests;
@@ -63,6 +63,6 @@ public class ChangeRoleTests
 
     private static UserEntity CreateTestUser(UserRole? role = null)
     {
-        return new UserEntity(new UserId("U1"), null, null, null, null, role, null);
+        return new UserEntity(UserGlobalId.From("U1"), null, null, null, null, role, null);
     }
 }

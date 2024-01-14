@@ -1,10 +1,10 @@
-using HE.Investment.AHP.Domain.Scheme.Commands;
+using HE.Investment.AHP.Contract.Application;
+using HE.Investment.AHP.Contract.Scheme.Commands;
 using HE.Investment.AHP.Domain.Scheme.Entities;
 using HE.Investment.AHP.Domain.Scheme.Repositories;
 using HE.Investments.Account.Shared;
-using HE.Investments.Common.Validators;
+using HE.Investments.Common.Contract.Validators;
 using MediatR;
-using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.Scheme.CommandHandlers;
 
@@ -27,14 +27,13 @@ public abstract class UpdateSchemeCommandHandler<TCommand> : IRequestHandler<TCo
     public async Task<OperationResult> Handle(TCommand request, CancellationToken cancellationToken)
     {
         var account = await _accountUserContext.GetSelectedAccount();
-        var applicationId = new ApplicationId(request.ApplicationId);
-        var scheme = await _repository.GetByApplicationId(applicationId, account, _includeFiles, cancellationToken);
+        var scheme = await _repository.GetByApplicationId(request.ApplicationId, account, _includeFiles, cancellationToken);
 
         Update(scheme, request);
 
         await _repository.Save(scheme, account.SelectedOrganisationId(), cancellationToken);
 
-        return new OperationResult<ApplicationId?>(applicationId);
+        return new OperationResult<AhpApplicationId?>(request.ApplicationId);
     }
 
     protected abstract void Update(SchemeEntity scheme, TCommand request);

@@ -1,7 +1,7 @@
 using HE.Investments.Account.Contract.User;
 using HE.Investments.Account.Contract.User.Queries;
 using HE.Investments.Account.Domain.User.Repositories;
-using HE.Investments.Account.Shared.User;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.User;
 using MediatR;
 

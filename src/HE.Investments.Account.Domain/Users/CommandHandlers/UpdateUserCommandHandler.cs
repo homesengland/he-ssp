@@ -2,8 +2,7 @@ using HE.Investments.Account.Contract.Users.Commands;
 using HE.Investments.Account.Domain.Users.Entities;
 using HE.Investments.Account.Domain.Users.Repositories;
 using HE.Investments.Account.Shared;
-using HE.Investments.Account.Shared.User;
-using HE.Investments.Common.Validators;
+using HE.Investments.Common.Contract.Validators;
 using MediatR;
 
 namespace HE.Investments.Account.Domain.Users.CommandHandlers;
@@ -24,7 +23,7 @@ public abstract class UpdateUserCommandHandler<TCommand> : IRequestHandler<TComm
     public async Task<OperationResult> Handle(TCommand request, CancellationToken cancellationToken)
     {
         var userAccount = await _accountUserContext.GetSelectedAccount();
-        var entity = await _repository.GetUser(new UserGlobalId(request.UserId), userAccount.SelectedOrganisationId(), cancellationToken);
+        var entity = await _repository.GetUser(request.UserId, userAccount.SelectedOrganisationId(), cancellationToken);
 
         Update(entity, request);
 

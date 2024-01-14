@@ -28,7 +28,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HE.Investments.Common\HE.Investments.Common.csproj" />
+    <ProjectReference Include="..\HE.Investments.Common.Contract\HE.Investments.Common.Contract.csproj" />
   </ItemGroup>
+
 
 </Project>

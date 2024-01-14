@@ -1,5 +1,5 @@
 using FluentAssertions.Collections;
-using HE.Investments.Common.Validators;
+using HE.Investments.Common.Contract.Validators;
 
 namespace HE.Investments.Loans.BusinessLogic.Tests.Assertions;
 public static class OperationResultAssertions

@@ -1,5 +1,6 @@
-using HE.Investments.Common.Infrastructure.Events;
+using HE.Investments.Common.Contract;
+using HE.Investments.Common.Contract.Infrastructure.Events;
 
 namespace HE.Investments.Account.Contract.User.Events;
 
-public record UserAccountsChangedEvent(string UserGlobalId) : IDomainEvent;
+public record UserAccountsChangedEvent(UserGlobalId UserGlobalId) : DomainEvent;

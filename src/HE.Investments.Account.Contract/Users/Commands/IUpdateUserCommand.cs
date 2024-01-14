@@ -1,6 +1,8 @@
+using HE.Investments.Common.Contract;
+
 namespace HE.Investments.Account.Contract.Users.Commands;
 
 public interface IUpdateUserCommand
 {
-    public string UserId { get; init; }
+    public UserGlobalId UserId { get; }
 }

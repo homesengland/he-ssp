@@ -1,8 +1,8 @@
-using HE.Investments.Account.Domain.User.Commands;
+using HE.Investments.Account.Contract.User.Commands;
 using HE.Investments.Account.Domain.User.Repositories;
 using HE.Investments.Account.Shared;
-using HE.Investments.Common.Exceptions;
-using HE.Investments.Common.Validators;
+using HE.Investments.Common.Contract.Exceptions;
+using HE.Investments.Common.Contract.Validators;
 using MediatR;
 using Microsoft.Extensions.Logging;
 

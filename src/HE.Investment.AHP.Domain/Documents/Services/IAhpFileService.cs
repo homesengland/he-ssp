@@ -1,5 +1,6 @@
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Common.ValueObjects;
+using HE.Investments.Common.Contract;
 using HE.Investments.DocumentService.Models;
 
 namespace HE.Investment.AHP.Domain.Documents.Services;

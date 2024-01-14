@@ -1,6 +1,7 @@
-using HE.Investments.Common.Validators;
+using HE.Investment.AHP.Contract.Application;
+using HE.Investments.Common.Contract.Validators;
 using MediatR;
 
 namespace HE.Investment.AHP.Contract.FinancialDetails.Queries;
 
-public record CalculateQueryBase(Guid ApplicationId) : IRequest<(OperationResult OperationResult, CalculationResult CalculationResult)>;
+public record CalculateQueryBase(AhpApplicationId ApplicationId) : IRequest<(OperationResult OperationResult, CalculationResult CalculationResult)>;

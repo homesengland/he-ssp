@@ -78,8 +78,6 @@ public class IntegrationTestClient
         }
 
         var submit = form.GetSubmission(submitButton)!;
-        var reader = new StreamReader(submit.Body);
-        var text = reader.ReadToEnd();
         var target = (Uri)submit.Target;
         using var submission = new HttpRequestMessage(new HttpMethod(submit.Method.ToString()), target) { Content = new StreamContent(submit.Body), };
 
@@ -101,7 +99,7 @@ public class IntegrationTestClient
             .Where(x => x is not null && x.Type == "radio")
             .ToList();
 
-        var radioInputsWithFormName = radioInputs.Where(radio => radio!.Name.IsProvided() && radio.Name!.Contains(formValue.Key)).ToList();
+        var radioInputsWithFormName = radioInputs.Where(radio => radio!.Name.IsProvided() && radio.Name == formValue.Key).ToList();
 
         if (!radioInputsWithFormName.Any())
         {
@@ -122,7 +120,7 @@ public class IntegrationTestClient
                            throw new HtmlElementNotFoundException(
                                $"None of radio buttons for property {formValue.Key}, has value {formValue.Value}. Possible values: {string.Join(", ", radioInputsWithFormName.Select(x => x!.Value))}");
 
-        inputElement!.IsChecked = true;
+        inputElement.IsChecked = true;
 
         return true;
     }
@@ -154,7 +152,7 @@ public class IntegrationTestClient
         var inputElement = checkboxInputsWithFormName.SingleOrDefault(x => x!.Value == formValue.Value) ??
                            throw new HtmlElementNotFoundException($"None of checkboxes for property {formValue.Key}, has value {formValue.Value}");
 
-        inputElement!.IsChecked = true;
+        inputElement.IsChecked = true;
 
         return true;
     }
@@ -173,7 +171,7 @@ public class IntegrationTestClient
             return false;
         }
 
-        inputElement!.Value = formValue.Value;
+        inputElement.Value = formValue.Value;
 
         return true;
     }
@@ -192,7 +190,7 @@ public class IntegrationTestClient
             return false;
         }
 
-        inputElement!.Value = formValue.Value;
+        inputElement.Value = formValue.Value;
 
         return true;
     }

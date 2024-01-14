@@ -22,10 +22,10 @@ public class GetSchemeQueryHandler : IRequestHandler<GetApplicationSchemeQuery, 
     public async Task<Contract.Scheme.Scheme> Handle(GetApplicationSchemeQuery request, CancellationToken cancellationToken)
     {
         var account = await _accountUserContext.GetSelectedAccount();
-        var entity = await _repository.GetByApplicationId(new(request.ApplicationId), account, request.IncludeFiles, cancellationToken);
+        var entity = await _repository.GetByApplicationId(request.ApplicationId, account, request.IncludeFiles, cancellationToken);
 
         return new Contract.Scheme.Scheme(
-            entity.Application.Id.Value,
+            entity.Application.Id,
             entity.Application.Name.Name,
             entity.Application.Tenure?.Value,
             entity.Status,
@@ -46,6 +46,6 @@ public class GetSchemeQueryHandler : IRequestHandler<GetApplicationSchemeQuery, 
             return null;
         }
 
-        return new UploadedFile(fileContainer.File.Id.Value, fileContainer.File.Name.Value, fileContainer.File.UploadedOn, fileContainer.File.UploadedBy, true);
+        return new UploadedFile(fileContainer.File.Id, fileContainer.File.Name.Value, fileContainer.File.UploadedOn, fileContainer.File.UploadedBy, true);
     }
 }

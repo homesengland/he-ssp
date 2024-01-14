@@ -4,11 +4,10 @@ using HE.Investment.AHP.Domain.FinancialDetails.Entities;
 using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 using HE.Investments.Account.Shared;
+using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
-using HE.Investments.Common.Validators;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.QueryHandlers;
 
@@ -53,7 +52,7 @@ internal sealed class CalculateExpectedContributionsQueryHandler : CalculateQuer
 
                 return new CalculationResult(null, total);
             },
-            ApplicationId.From(request.ApplicationId),
+            request.ApplicationId,
             cancellationToken);
     }
 }

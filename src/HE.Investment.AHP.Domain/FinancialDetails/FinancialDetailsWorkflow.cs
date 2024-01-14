@@ -1,7 +1,6 @@
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Routing;
-using Microsoft.AspNetCore.Mvc;
 using Stateless;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails;
@@ -54,11 +53,11 @@ public class FinancialDetailsWorkflow : IStateRouting<FinancialDetailsWorkflowSt
             { SubsidyFromSaleOnThisScheme: var x } when x.IsNotProvided() => FinancialDetailsWorkflowState.Contributions,
             { SubsidyFromSaleOnOtherSchemes: var x } when x.IsNotProvided() => FinancialDetailsWorkflowState.Contributions,
             { OwnResourcesContribution: var x } when x.IsNotProvided() => FinancialDetailsWorkflowState.Contributions,
-            { RecycledCapitalGarntFundContribution: var x } when x.IsNotProvided() => FinancialDetailsWorkflowState.Contributions,
+            { RecycledCapitalGrantFundContribution: var x } when x.IsNotProvided() => FinancialDetailsWorkflowState.Contributions,
             { OtherCapitalContributions: var x } when x.IsNotProvided() => FinancialDetailsWorkflowState.Contributions,
             { TransferValueOfHomes: var x } when x.IsNotProvided() => FinancialDetailsWorkflowState.Contributions,
             { CountyCouncilGrants: var x } when x.IsNotProvided() => FinancialDetailsWorkflowState.Grants,
-            { DHSCExtraCareGrants: var x } when x.IsNotProvided() => FinancialDetailsWorkflowState.Grants,
+            { DhscExtraCareGrants: var x } when x.IsNotProvided() => FinancialDetailsWorkflowState.Grants,
             { LocalAuthorityGrants: var x } when x.IsNotProvided() => FinancialDetailsWorkflowState.Grants,
             { SocialServicesGrants: var x } when x.IsNotProvided() => FinancialDetailsWorkflowState.Grants,
             { HealthRelatedGrants: var x } when x.IsNotProvided() => FinancialDetailsWorkflowState.Grants,

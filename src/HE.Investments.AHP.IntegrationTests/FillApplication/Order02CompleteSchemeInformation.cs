@@ -60,7 +60,7 @@ public class Order02CompleteSchemeInformation : AhpIntegrationTest
         SchemeInformationData.GenerateFundingDetails();
 
         // when & then
-        await TestPage(
+        await TestQuestionPage(
             SchemeInformationPagesUrl.FundingDetails(ApplicationData.ApplicationId),
             SchemeInformationPageTitles.FundingDetails,
             SchemeInformationPagesUrl.AffordabilitySuffix,
@@ -76,7 +76,7 @@ public class Order02CompleteSchemeInformation : AhpIntegrationTest
         SchemeInformationData.GenerateAffordability();
 
         // when & then
-        await TestPage(
+        await TestQuestionPage(
             SchemeInformationPagesUrl.Affordability(ApplicationData.ApplicationId),
             SchemeInformationPageTitles.Affordability,
             SchemeInformationPagesUrl.SalesRiskSuffix,
@@ -91,7 +91,7 @@ public class Order02CompleteSchemeInformation : AhpIntegrationTest
         SchemeInformationData.GenerateSalesRisk();
 
         // when & then
-        await TestPage(
+        await TestQuestionPage(
             SchemeInformationPagesUrl.SalesRisk(ApplicationData.ApplicationId),
             SchemeInformationPageTitles.SalesRisk,
             SchemeInformationPagesUrl.HousingNeedsSuffix,
@@ -106,7 +106,7 @@ public class Order02CompleteSchemeInformation : AhpIntegrationTest
         SchemeInformationData.GenerateHousingNeeds();
 
         // when & then
-        await TestPage(
+        await TestQuestionPage(
             SchemeInformationPagesUrl.HousingNeeds(ApplicationData.ApplicationId),
             SchemeInformationPageTitles.HousingNeeds,
             SchemeInformationPagesUrl.StakeholderDiscussionsSuffix,
@@ -122,7 +122,7 @@ public class Order02CompleteSchemeInformation : AhpIntegrationTest
         SchemeInformationData.GenerateStakeholderDiscussions();
 
         // when & then
-        await TestPage(
+        await TestQuestionPage(
             SchemeInformationPagesUrl.StakeholderDiscussions(ApplicationData.ApplicationId),
             SchemeInformationPageTitles.StakeholderDiscussions,
             SchemeInformationPagesUrl.CheckAnswersSuffix,
@@ -156,7 +156,8 @@ public class Order02CompleteSchemeInformation : AhpIntegrationTest
             ("IsCompleted", true.ToString().ToLowerInvariant()));
 
         // then
-        taskListPage.UrlEndWith(ApplicationPagesUrl.TaskListSuffix);
+        taskListPage.UrlEndWith(ApplicationPagesUrl.TaskListSuffix)
+            .HasSectionWithStatus("enter-scheme-information-status", "Completed");
         SaveCurrentPage();
     }
 }

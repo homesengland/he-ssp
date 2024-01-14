@@ -1,9 +1,11 @@
+using HE.Investment.AHP.Contract.Application;
 using HE.Investments.Common.Contract;
 
 namespace HE.Investment.AHP.Contract.FinancialDetails;
+
 public class FinancialDetails
 {
-    public Guid ApplicationId { get; set; }
+    public AhpApplicationId ApplicationId { get; set; }
 
     public string ApplicationName { get; set; }
 
@@ -27,7 +29,7 @@ public class FinancialDetails
 
     public decimal? OwnResourcesContribution { get; set; }
 
-    public decimal? RecycledCapitalGarntFundContribution { get; set; }
+    public decimal? RecycledCapitalGrantFundContribution { get; set; }
 
     public decimal? OtherCapitalContributions { get; set; }
 
@@ -37,7 +39,7 @@ public class FinancialDetails
 
     public decimal? CountyCouncilGrants { get; set; }
 
-    public decimal? DHSCExtraCareGrants { get; set; }
+    public decimal? DhscExtraCareGrants { get; set; }
 
     public decimal? LocalAuthorityGrants { get; set; }
 
@@ -53,7 +55,7 @@ public class FinancialDetails
 
     public decimal TotalExpectedContributions { get; set; }
 
-    public decimal TotalRecievedGrands { get; set; }
+    public decimal TotalReceivedGrants { get; set; }
 
     public SectionStatus SectionStatus { get; set; }
 }

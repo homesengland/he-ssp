@@ -23,10 +23,10 @@ public class GetApplicationQueryHandler : IRequestHandler<GetApplicationQuery, C
     public async Task<ContractApplication> Handle(GetApplicationQuery request, CancellationToken cancellationToken)
     {
         var account = await _accountUserContext.GetSelectedAccount();
-        var application = await _repository.GetById(new(request.ApplicationId), account, cancellationToken);
+        var application = await _repository.GetById(request.ApplicationId, account, cancellationToken);
 
         return new ContractApplication(
-            application.Id.Value,
+            application.Id,
             application.Name.Name,
             application.Tenure?.Value ?? default,
             application.Status,

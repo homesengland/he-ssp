@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using HE.Investments.Common.Contract.Infrastructure.Events;
 using HE.Investments.Common.Infrastructure.Events;
 
 namespace HE.Investments.Common.Domain;

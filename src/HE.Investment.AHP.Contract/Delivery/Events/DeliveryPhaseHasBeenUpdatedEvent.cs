@@ -1,5 +1,6 @@
-using HE.Investments.Common.Infrastructure.Events;
+using HE.Investment.AHP.Contract.Application;
+using HE.Investments.Common.Contract.Infrastructure.Events;
 
 namespace HE.Investment.AHP.Contract.Delivery.Events;
 
-public record DeliveryPhaseHasBeenUpdatedEvent(string ApplicationId) : IDomainEvent;
+public record DeliveryPhaseHasBeenUpdatedEvent(AhpApplicationId ApplicationId) : DomainEvent;

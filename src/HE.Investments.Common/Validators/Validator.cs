@@ -1,4 +1,5 @@
 using System.Text.RegularExpressions;
+using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
 

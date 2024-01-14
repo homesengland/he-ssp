@@ -1,5 +1,6 @@
-﻿using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
+﻿using HE.Investment.AHP.Contract.Application;
+using HE.Investment.AHP.Contract.HomeTypes;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 
-public record DesignFileParams(ApplicationId ApplicationId, HomeTypeId HomeTypeId);
+public record DesignFileParams(AhpApplicationId ApplicationId, HomeTypeId HomeTypeId);

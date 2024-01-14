@@ -1,7 +1,7 @@
 using FluentAssertions;
 using HE.Investments.Account.Domain.User.Repositories;
 using HE.Investments.Account.Shared.Repositories;
-using HE.Investments.Account.Shared.User;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Tests.TestObjectBuilders;
 using HE.Investments.TestsUtils.TestFramework;
 using Xunit;

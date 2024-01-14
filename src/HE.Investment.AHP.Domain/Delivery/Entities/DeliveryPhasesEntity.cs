@@ -1,15 +1,17 @@
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Common.Enums;
+using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Enums;
+using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
-using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
+using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
+using HE.Investments.Common.Contract.Exceptions;
+using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
-using HE.Investments.Common.Exceptions;
-using HE.Investments.Common.Validators;
-using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.Delivery.Entities;
 
@@ -37,7 +39,7 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
         Status = status;
     }
 
-    public ApplicationId ApplicationId => _application.Id;
+    public AhpApplicationId ApplicationId => _application.Id;
 
     public ApplicationName ApplicationName => _application.Name;
 
@@ -84,6 +86,30 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
         }
     }
 
+    public DeliveryPhaseEntity CreateDeliveryPhase(DeliveryPhaseName name, OrganisationBasicInfo organisationBasicInfo)
+    {
+        var deliveryPhaseNameAlreadyUsed = _deliveryPhases.Any(x => x.Name == name);
+        if (deliveryPhaseNameAlreadyUsed)
+        {
+            OperationResult.New()
+                .AddValidationError(nameof(DeliveryPhaseName), "Provided delivery phase name is already in use. Delivery phase name should be unique.")
+                .CheckErrors();
+        }
+
+        var deliveryPhase = new DeliveryPhaseEntity(
+            _application,
+            name,
+            organisationBasicInfo,
+            null,
+            new BuildActivityType(),
+            SectionStatus.InProgress,
+            Array.Empty<HomesToDeliverInPhase>(),
+            new DeliveryPhaseMilestones(organisationBasicInfo));
+
+        _deliveryPhases.Add(deliveryPhase);
+        return deliveryPhase;
+    }
+
     public void Remove(DeliveryPhaseId deliveryPhaseId, RemoveDeliveryPhaseAnswer removeAnswer)
     {
         var deliveryPhase = GetEntityById(deliveryPhaseId);
@@ -121,7 +147,8 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
             if (notCompletedDeliveryPhases.Any())
             {
                 throw new DomainValidationException(new OperationResult().AddValidationErrors(
-                    notCompletedDeliveryPhases.Select(x => new ErrorItem($"DeliveryPhase-{x.Id}", $"Complete {x.Name.Value} to save and continue")).ToList()));
+                    notCompletedDeliveryPhases.Select(x => new ErrorItem($"DeliveryPhase-{x.Id}", $"Complete {x?.Name?.Value} to save and continue"))
+                        .ToList()));
             }
 
             if (!AreAllHomeTypesUsed())
@@ -148,8 +175,13 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
         Status = _statusModificationTracker.Change(Status, SectionStatus.InProgress);
     }
 
-    private DeliveryPhaseEntity GetEntityById(DeliveryPhaseId deliveryPhaseId) => _deliveryPhases.SingleOrDefault(x => x.Id == deliveryPhaseId)
-                                                                                  ?? throw new NotFoundException(nameof(DeliveryPhaseEntity), deliveryPhaseId);
+    public void Add(DeliveryPhaseEntity deliveryPhase)
+    {
+        _deliveryPhases.Add(deliveryPhase);
+    }
+
+    public DeliveryPhaseEntity GetEntityById(DeliveryPhaseId deliveryPhaseId) => _deliveryPhases.SingleOrDefault(x => x.Id == deliveryPhaseId)
+                                                                                 ?? throw new NotFoundException(nameof(DeliveryPhaseEntity), deliveryPhaseId);
 
     private bool AreAllHomeTypesUsed()
     {

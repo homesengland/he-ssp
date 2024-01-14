@@ -14,11 +14,11 @@ public static class DeliveryPhaseEntityMapper
         return new DeliveryPhaseBasicDetails(
             deliveryPhase.Application.Name.Name,
             deliveryPhase.Id.Value,
-            deliveryPhase.Name.Value,
+            deliveryPhase.Name?.Value,
             deliveryPhase.TotalHomesToBeDeliveredInThisPhase,
-            DateHelper.ToDateOnlyString(deliveryPhase.AcquisitionMilestone?.AcquisitionDate?.Value),
-            DateHelper.ToDateOnlyString(deliveryPhase.StartOnSiteMilestone?.StartOnSiteDate?.Value),
-            DateHelper.ToDateOnlyString(deliveryPhase.CompletionMilestone?.CompletionDate?.Value));
+            DateHelper.ToDateOnlyString(deliveryPhase.DeliveryPhaseMilestones.AcquisitionMilestone?.MilestoneDate?.Value),
+            DateHelper.ToDateOnlyString(deliveryPhase.DeliveryPhaseMilestones.StartOnSiteMilestone?.MilestoneDate?.Value),
+            DateHelper.ToDateOnlyString(deliveryPhase.DeliveryPhaseMilestones.CompletionMilestone?.MilestoneDate?.Value));
     }
 
     public static DeliveryPhaseDetails ToDeliveryPhaseDetails(IDeliveryPhaseEntity deliveryPhase)
@@ -26,14 +26,19 @@ public static class DeliveryPhaseEntityMapper
         return new DeliveryPhaseDetails(
             deliveryPhase.Application.Name.Name,
             deliveryPhase.Id.Value,
-            deliveryPhase.Name.Value,
+            deliveryPhase.Name?.Value ?? string.Empty,
+            deliveryPhase.TypeOfHomes,
+            deliveryPhase.BuildActivityType.NewBuild,
+            deliveryPhase.BuildActivityType.Rehab,
             deliveryPhase.TotalHomesToBeDeliveredInThisPhase,
-            MapDate(deliveryPhase.AcquisitionMilestone?.AcquisitionDate),
-            MapDate(deliveryPhase.AcquisitionMilestone?.PaymentDate),
-            MapDate(deliveryPhase.StartOnSiteMilestone?.StartOnSiteDate),
-            MapDate(deliveryPhase.StartOnSiteMilestone?.PaymentDate),
-            MapDate(deliveryPhase.CompletionMilestone?.CompletionDate),
-            MapDate(deliveryPhase.CompletionMilestone?.PaymentDate));
+            deliveryPhase.Organisation.IsUnregisteredBody,
+            MapDate(deliveryPhase.DeliveryPhaseMilestones.AcquisitionMilestone?.MilestoneDate),
+            MapDate(deliveryPhase.DeliveryPhaseMilestones.AcquisitionMilestone?.PaymentDate),
+            MapDate(deliveryPhase.DeliveryPhaseMilestones.StartOnSiteMilestone?.MilestoneDate),
+            MapDate(deliveryPhase.DeliveryPhaseMilestones.StartOnSiteMilestone?.PaymentDate),
+            MapDate(deliveryPhase.DeliveryPhaseMilestones.CompletionMilestone?.MilestoneDate),
+            MapDate(deliveryPhase.DeliveryPhaseMilestones.CompletionMilestone?.PaymentDate),
+            deliveryPhase.IsAdditionalPaymentRequested?.IsRequested);
     }
 
     private static DateDetails? MapDate(DateValueObject? date)

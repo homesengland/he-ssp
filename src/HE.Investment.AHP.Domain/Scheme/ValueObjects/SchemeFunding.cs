@@ -1,3 +1,4 @@
+using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
@@ -31,15 +32,15 @@ public class SchemeFunding : ValueObject
         var fundingOperationResult = OperationResult.New();
         var housesOperationResult = OperationResult.New();
 
-        var requiredFundingName = "the total of funding you are requesting";
+        var requiredFundingName = "total of funding you are requesting";
         RequiredFunding = NumericValidator
             .For(requiredFundingGbp, nameof(RequiredFunding), requiredFundingName, fundingOperationResult)
             .IsProvided()
             .IsNumber()
             .IsWholeNumber()
-            .IsBetween(1, 99999999999);
+            .IsBetween(1, 999999999, "The total funding you require must be 9 digits or less");
 
-        var housesToDeliverName = "the number of homes this scheme will deliver";
+        var housesToDeliverName = "number of homes this scheme will deliver";
         HousesToDeliver = NumericValidator
             .For(housesToDeliver, nameof(HousesToDeliver), housesToDeliverName, housesOperationResult)
             .IsProvided()

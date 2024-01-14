@@ -1,16 +1,16 @@
-using HE.Investment.AHP.Domain.Application.Commands;
+using HE.Investment.AHP.Contract.Application;
+using HE.Investment.AHP.Contract.Application.Commands;
 using HE.Investment.AHP.Domain.Application.Entities;
 using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investments.Account.Shared;
-using HE.Investments.Common.Exceptions;
-using HE.Investments.Common.Validators;
+using HE.Investments.Common.Contract.Exceptions;
+using HE.Investments.Common.Contract.Validators;
 using MediatR;
-using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.Application.CommandHandlers;
 
-public class CreateApplicationCommandHandler : IRequestHandler<CreateApplicationCommand, OperationResult<ApplicationId>>
+public class CreateApplicationCommandHandler : IRequestHandler<CreateApplicationCommand, OperationResult<AhpApplicationId>>
 {
     private readonly IApplicationRepository _repository;
     private readonly IAccountUserContext _accountUserContext;
@@ -21,7 +21,7 @@ public class CreateApplicationCommandHandler : IRequestHandler<CreateApplication
         _accountUserContext = accountUserContext;
     }
 
-    public async Task<OperationResult<ApplicationId>> Handle(CreateApplicationCommand request, CancellationToken cancellationToken)
+    public async Task<OperationResult<AhpApplicationId>> Handle(CreateApplicationCommand request, CancellationToken cancellationToken)
     {
         var name = new ApplicationName(request.Name);
         var account = await _accountUserContext.GetSelectedAccount();
@@ -33,6 +33,6 @@ public class CreateApplicationCommandHandler : IRequestHandler<CreateApplication
         var applicationToCreate = ApplicationEntity.New(name, new ApplicationTenure(request.Tenure));
         var application = await _repository.Save(applicationToCreate, account.SelectedOrganisationId(), cancellationToken);
 
-        return new OperationResult<ApplicationId>(application.Id);
+        return new OperationResult<AhpApplicationId>(application.Id);
     }
 }

@@ -1,12 +1,15 @@
 using HE.Investment.AHP.Contract.Application;
+using HE.Investment.AHP.Contract.Delivery;
+using HE.Investment.AHP.Contract.Delivery.Enums;
+using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
-using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
+using HE.Investments.Account.Shared;
+using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.Contract;
 using HE.Investments.TestsUtils.TestData;
-using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.Tests.Delivery.Entities.TestDataBuilders;
 
@@ -17,6 +20,12 @@ public class DeliveryPhaseEntityBuilder
     private string _id = "dp-1-12313";
 
     private SectionStatus _status = SectionStatus.InProgress;
+
+    private OrganisationBasicInfo _organisationBasicInfo = new OrganisationBasicInfoBuilder().Build();
+
+    private DeliveryPhaseMilestones? _deliveryPhaseMilestones;
+
+    private IsAdditionalPaymentRequested? _isAdditionalPaymentRequested;
 
     public DeliveryPhaseEntityBuilder WithId(string id)
     {
@@ -36,18 +45,41 @@ public class DeliveryPhaseEntityBuilder
         return this;
     }
 
+    public DeliveryPhaseEntityBuilder WithUnregisteredBody()
+    {
+        _organisationBasicInfo = new OrganisationBasicInfoBuilder().WithUnregisteredBody().Build();
+        return this;
+    }
+
+    public DeliveryPhaseEntityBuilder WithDeliveryPhaseMilestones(DeliveryPhaseMilestones milestones)
+    {
+        _deliveryPhaseMilestones = milestones;
+        return this;
+    }
+
+    public DeliveryPhaseEntityBuilder WithAdditionalPaymentRequested(IsAdditionalPaymentRequested isAdditionalPaymentRequested)
+    {
+        _isAdditionalPaymentRequested = isAdditionalPaymentRequested;
+        return this;
+    }
+
     public DeliveryPhaseEntity Build()
     {
         return new DeliveryPhaseEntity(
             new ApplicationBasicInfo(
-                new ApplicationId("test-app-42123"),
+                new AhpApplicationId("test-app-42123"),
                 new ApplicationName("Test Application"),
                 Tenure.AffordableRent,
                 ApplicationStatus.Draft),
-            "First Phase",
+            new DeliveryPhaseName("First Phase"),
+            _organisationBasicInfo,
+            TypeOfHomes.Rehab,
+            new BuildActivityType(),
             _status,
             _homesToDeliver,
+            _deliveryPhaseMilestones ?? new DeliveryPhaseMilestonesBuilder().Build(),
             new DeliveryPhaseId(_id),
-            DateTimeTestData.OctoberDay05Year2023At0858);
+            DateTimeTestData.OctoberDay05Year2023At0858,
+            isAdditionalPaymentRequested: _isAdditionalPaymentRequested);
     }
 }

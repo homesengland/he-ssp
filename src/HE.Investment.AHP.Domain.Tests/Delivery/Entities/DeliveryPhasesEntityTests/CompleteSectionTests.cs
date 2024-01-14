@@ -1,9 +1,10 @@
 using FluentAssertions;
 using HE.Investment.AHP.Contract.Common.Enums;
+using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investment.AHP.Domain.Tests.Delivery.Entities.TestDataBuilders;
 using HE.Investments.Common.Contract;
-using HE.Investments.Common.Exceptions;
+using HE.Investments.Common.Contract.Exceptions;
 
 namespace HE.Investment.AHP.Domain.Tests.Delivery.Entities.DeliveryPhasesEntityTests;
 

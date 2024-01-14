@@ -25,7 +25,7 @@ public class AhpIntegrationTest : IntegrationTestBase<Program>
 
     public ApplicationData ApplicationData { get; }
 
-    public async Task TestPage(
+    public async Task TestQuestionPage(
         string startPageUrl,
         string expectedPageTitle,
         string expectedPageUrlAfterContinue,
@@ -36,6 +36,7 @@ public class AhpIntegrationTest : IntegrationTestBase<Program>
         currentPage
             .UrlEndWith(startPageUrl)
             .HasTitle(expectedPageTitle)
+            .HasGdsBackButton()
             .HasGdsSubmitButton("continue-button", out var continueButton);
 
         // when

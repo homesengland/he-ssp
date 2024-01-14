@@ -57,16 +57,6 @@ app.UseMiddleware<HeaderSecurityMiddleware>();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-app.MapControllerRoute(
-    name: "section",
-    pattern: "application/{applicationId}/{controller}/{action}");
-app.MapControllerRoute(
-    name: "subSection",
-    pattern: "application/{applicationId}/{controller}/{id?}/{action}");
-
-app.MapControllerRoute(
-    name: "action",
-    pattern: "{controller}/{id}/{action}");
 
 app.Run();
 

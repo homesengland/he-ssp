@@ -1,5 +1,5 @@
-using HE.Investments.Common.Infrastructure.Events;
+using HE.Investments.Common.Contract.Infrastructure.Events;
 
 namespace HE.Investment.AHP.Contract.Application.Events;
 
-public record ApplicationHasBeenCreatedEvent(string ApplicationId) : IDomainEvent;
+public record ApplicationHasBeenCreatedEvent(AhpApplicationId ApplicationId) : DomainEvent;

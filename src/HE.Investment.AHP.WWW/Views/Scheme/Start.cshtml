@@ -1,7 +1,6 @@
 @using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.WWW.Views.Scheme.Const
 @using HE.Investments.Common.WWW.Components.FormHeader
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
 @model string
 @{
     ViewData["Title"] = SchemeInformationPageTitles.SchemeDetails;
@@ -18,7 +17,7 @@
             <gds-p>The funding required should be the minimum you need to deliver the homes, taking into account the costs and financial contributions.</gds-p>
             <gds-p>Funding decisions are made on each application separately. Although we will look at the deliverability of proposals across a whole development, each application must be able to stand alone.</gds-p>
         </div>
-    <a href="@Url.RouteUrl("section", new { controller = "Scheme", action = "Funding", applicationId })" id="continue-button">
+    <a href="@Url.Action("Funding", "Scheme", new { applicationId })" id="continue-button">
         <gds-button type="button">Continue</gds-button>
     </a>
 </gds-div-grid-column-two-thirds>

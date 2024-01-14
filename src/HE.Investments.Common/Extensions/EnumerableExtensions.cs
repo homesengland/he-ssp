@@ -1,4 +1,4 @@
-using HE.Investments.Common.Utils.Pagination;
+using HE.Investments.Common.Contract.Pagination;
 
 namespace HE.Investments.Common.Extensions;
 

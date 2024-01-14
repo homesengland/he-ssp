@@ -12,8 +12,6 @@
     <form asp-controller="HomeTypes" asp-action="DesignPlans" asp-method="post" enctype="multipart/form-data" asp-route-workflow="@workflow" novalidate>
         <vc:home-type-form-header title="Upload your design plans"
                                   current-page="@HomeTypesWorkflowState.DesignPlans"
-                                  application-id="@applicationId"
-                                  home-type-id="@homeTypeId"
                                   caption="@Model.Header"/>
 
         @Html.HiddenFor(m => Model.ApplicationName)
@@ -27,8 +25,8 @@
                         is-multiple="true"
                         max-file-size-in-mb="@Model.MaxFileSizeInMegabytes"
                         upload-one-file-url="@Url.Action("UploadDesignPlansFile", "HomeTypes", new { applicationId, homeTypeId })"
-                        remove-file-url-template="@Url.RouteUrl("subSection", new { controller = "HomeTypes", action = "RemoveDesignPlansFile", applicationId, id = homeTypeId, workflow, fileId = ":fileId" })"
-                        download-file-url-template="@Url.RouteUrl("subSection", new { controller = "HomeTypes", action = "DownloadDesignPlansFile", applicationId, id = homeTypeId, fileId = ":fileId" })"/>
+                        remove-file-url-template="@Url.Action("RemoveDesignPlansFile", "HomeTypes", new { applicationId, homeTypeId, workflow, fileId = ":fileId" })"
+                        download-file-url-template="@Url.Action("DownloadDesignPlansFile", "HomeTypes", new { applicationId, homeTypeId, fileId = ":fileId" })"/>
 
         <vc:files-table asp-for="@Model.UploadedFiles"/>
 

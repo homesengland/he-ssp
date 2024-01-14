@@ -4,4 +4,4 @@ using HE.Investments.Common.Contract;
 
 namespace HE.Investment.AHP.Domain.Common;
 
-public record ApplicationBasicInfo(Application.ValueObjects.ApplicationId Id, ApplicationName Name, Tenure Tenure, ApplicationStatus Status);
+public record ApplicationBasicInfo(AhpApplicationId Id, ApplicationName Name, Tenure Tenure, ApplicationStatus Status);

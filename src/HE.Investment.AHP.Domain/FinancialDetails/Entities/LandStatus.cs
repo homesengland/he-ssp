@@ -1,7 +1,7 @@
 using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
+using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Errors;
-using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.Entities;

@@ -1,16 +1,14 @@
 @using HE.Investment.AHP.Domain.HomeTypes
 @using HE.Investment.AHP.WWW.Extensions
+@using HE.Investment.AHP.WWW.Views.Shared.Components.HomeTypeFormHeader
 @model HE.Investment.AHP.WWW.Models.HomeTypes.HomeTypeBasicModel;
 @{
     var applicationId = this.GetApplicationIdFromRoute();
     var homeTypeId = this.GetHomeTypeIdFromRoute();
 }
-}
 
 <gds-div-grid-column-two-thirds>
     <vc:home-type-form-header current-page="@HomeTypesWorkflowState.ProspectiveRentIneligible"
-                              application-id="@applicationId"
-                              home-type-id="@homeTypeId"
                               caption="@Model.Header"
                               title="Contact your Growth Manager"/>
     <gds-p>

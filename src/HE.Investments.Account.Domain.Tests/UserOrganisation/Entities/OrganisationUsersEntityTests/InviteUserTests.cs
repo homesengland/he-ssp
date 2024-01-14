@@ -1,6 +1,6 @@
 using FluentAssertions;
 using HE.Investments.Account.Domain.Tests.UserOrganisation.TestDataBuilders;
-using HE.Investments.Common.Exceptions;
+using HE.Investments.Common.Contract.Exceptions;
 using Xunit;
 
 namespace HE.Investments.Account.Domain.Tests.UserOrganisation.Entities.OrganisationUsersEntityTests;

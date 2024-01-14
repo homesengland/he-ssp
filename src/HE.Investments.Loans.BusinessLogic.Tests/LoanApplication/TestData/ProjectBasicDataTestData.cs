@@ -1,5 +1,4 @@
 using HE.Investments.Common.Contract;
-using HE.Investments.Common.Domain;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.ValueObjects;
 using HE.Investments.Loans.BusinessLogic.Projects.ValueObjects;
 using HE.Investments.Loans.BusinessLogic.Tests.Projects.TestData;

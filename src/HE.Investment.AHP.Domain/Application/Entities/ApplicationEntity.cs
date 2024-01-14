@@ -1,10 +1,11 @@
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investments.Common.Contract;
+using HE.Investments.Common.Contract.Exceptions;
+using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Errors;
-using HE.Investments.Common.Exceptions;
-using HE.Investments.Common.Validators;
-using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
+using ApplicationSection = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationSection;
 
 namespace HE.Investment.AHP.Domain.Application.Entities;
 
@@ -13,7 +14,7 @@ public class ApplicationEntity
     private readonly ModificationTracker _modificationTracker = new();
 
     public ApplicationEntity(
-        ApplicationId id,
+        AhpApplicationId id,
         ApplicationName name,
         ApplicationStatus status,
         ApplicationReferenceNumber referenceNumber,
@@ -30,7 +31,7 @@ public class ApplicationEntity
         Sections = sections;
     }
 
-    public ApplicationId Id { get; private set; }
+    public AhpApplicationId Id { get; private set; }
 
     public ApplicationName Name { get; private set; }
 
@@ -46,10 +47,10 @@ public class ApplicationEntity
 
     public bool IsModified => _modificationTracker.IsModified;
 
-    public bool IsNew => Id.IsEmpty();
+    public bool IsNew => Id.IsNew;
 
     public static ApplicationEntity New(ApplicationName name, ApplicationTenure tenure) => new(
-        ApplicationId.Empty(),
+        AhpApplicationId.New(),
         name,
         ApplicationStatus.New,
         new ApplicationReferenceNumber(null),
@@ -57,9 +58,9 @@ public class ApplicationEntity
         null,
         new ApplicationSections(new List<ApplicationSection>()));
 
-    public void SetId(ApplicationId newId)
+    public void SetId(AhpApplicationId newId)
     {
-        if (!Id.IsEmpty())
+        if (!Id.IsNew)
         {
             throw new DomainException("Id cannot be modified", CommonErrorCodes.IdCannotBeModified);
         }

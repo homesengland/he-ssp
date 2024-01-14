@@ -1,8 +1,8 @@
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Contract;
+using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Errors;
-using HE.Investments.Common.Exceptions;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.ValueObjects;
 using HE.Investments.Loans.Contract.Application.Enums;

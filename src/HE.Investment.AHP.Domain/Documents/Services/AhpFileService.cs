@@ -1,7 +1,8 @@
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Common.ValueObjects;
 using HE.Investments.Account.Shared;
-using HE.Investments.Common.Exceptions;
+using HE.Investments.Common.Contract;
+using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Utils;
 using HE.Investments.DocumentService.Models;
@@ -39,7 +40,7 @@ public class AhpFileService<TFileParams> : IAhpFileService<TFileParams>
 
     public async Task<UploadedFile> UploadFile(FileName name, Stream content, TFileParams fileParams, CancellationToken cancellationToken)
     {
-        var fileId = FileId.New();
+        var fileId = FileId.GenerateNew();
         var profileDetails = await _userContext.GetProfileDetails();
         var createdBy = $"{profileDetails.FirstName} {profileDetails.LastName}";
         var fileData = new UploadFileData<AhpFileMetadata>(name.Value, new AhpFileMetadata(fileId.Value, createdBy), content);
@@ -78,7 +79,7 @@ public class AhpFileService<TFileParams> : IAhpFileService<TFileParams>
         }
 
         return new UploadedFile(
-            new FileId(file.Metadata!.FileId),
+            FileId.From(file.Metadata!.FileId),
             new FileName(file.FileName),
             file.Modified,
             file.Metadata!.CreatedBy);

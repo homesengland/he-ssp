@@ -1,6 +1,7 @@
 @using HE.Investments.Common.WWW.Components.Table
+@using HE.Investments.Common.WWW.TagHelpers.Pagination
 
-@model (IList<TableHeaderViewModel> Headers, HE.Investments.Common.Utils.Pagination.PaginationResult<TableRowViewModel> Rows, string NavigationUrl)
+@model (IList<TableHeaderViewModel> Headers, HE.Investments.Common.Contract.Pagination.PaginationResult<TableRowViewModel> Rows, string NavigationUrl)
 
 <div class="govuk-!-padding-bottom-8">
     <vc:table

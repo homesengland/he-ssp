@@ -4,13 +4,12 @@
 @using HE.Investment.AHP.WWW.Views.Shared.Components.HomeTypeFormHeader
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
 @using HE.Investments.Common.Extensions
-@using HE.Investments.Common.Messages
+@using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.Extensions
 @model HE.Investment.AHP.WWW.Models.HomeTypes.HomeOwnershipDisabilitiesModel;
 
 @{
     var applicationId = this.GetApplicationIdFromRoute();
-    var homeTypeId = this.GetHomeTypeIdFromRoute();
     var workflow = Context.Request.Query["workflow"];
 
     ViewBag.ValidationErrors = ViewData.ModelState.GetOrderedErrors(HomeTypesValidationFieldsOrder.HomeOwnershipDisabilities);
@@ -23,8 +22,6 @@
         @Html.HiddenFor(m => Model.ApplicationName)
         @Html.HiddenFor(m => Model.HomeTypeName)
         <vc:home-type-form-header current-page="@HomeTypesWorkflowState.HomeOwnershipDisabilities"
-                                  application-id="@applicationId"
-                                  home-type-id="@homeTypeId"
                                   caption="@Model.Header"
                                   title="Home Ownership for People with Long-term Disabilities (HOLD) details"/>
         <gds-field-set>
@@ -49,7 +46,7 @@
                     <gds-h2 class="govuk-!-margin-bottom-0">Enter the average assumed first tranche sale percentage</gds-h2>
                 </gds-legend>
                 <gds-span-hint>
-                    This is the average percentage share that you are assuming your purchasers will buy in their initial purchase (must be between 10% nad 75%).
+                    This is the average percentage share that you are assuming your purchasers will buy in their initial purchase (must be between 10% and 75%).
                 </gds-span-hint>
                 <gds-input
                     class="govuk-input--width-2"

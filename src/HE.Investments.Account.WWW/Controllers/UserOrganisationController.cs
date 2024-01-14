@@ -2,6 +2,7 @@ using HE.Investments.Account.Contract.Organisation;
 using HE.Investments.Account.Contract.Organisation.Queries;
 using HE.Investments.Account.Contract.UserOrganisation;
 using HE.Investments.Account.Contract.UserOrganisation.Commands;
+using HE.Investments.Account.Contract.UserOrganisation.Queries;
 using HE.Investments.Account.Contract.Users;
 using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
@@ -35,7 +36,7 @@ public class UserOrganisationController : Controller
     [HttpGet(UserOrganisationAccountEndpoints.DashboardSuffix)]
     public async Task<IActionResult> Index()
     {
-        var userOrganisationResult = await _mediator.Send(new GetUserOrganisationInformationQuery());
+        var userOrganisationResult = await _mediator.Send(new GetUserOrganisationWithProgrammesQuery());
         var canViewOrganisationDetails = await _accountAccessContext.CanAccessOrganisationView();
         var programmeModels = await GetProgrammes(
             userOrganisationResult.ProgrammesTypesToApply.Concat(userOrganisationResult.ProgrammesToAccess.Select(x => x.Type)).Distinct().ToList());
@@ -51,7 +52,7 @@ public class UserOrganisationController : Controller
                         programmeModels[p.Type],
                         p.Applications.Select(a =>
                                 new ApplicationBasicDetailsModel(
-                                        a.Id,
+                                        a.Id.Value,
                                         a.ApplicationName,
                                         a.Status,
                                         _programmes.GetApplicationUrl(p.Type, a.Id)))

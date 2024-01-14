@@ -2,6 +2,13 @@ namespace HE.Investments.AHP.IntegrationTests.FillApplication.Data;
 
 public class FinancialDetailsData
 {
+    private readonly int _dataSeed;
+
+    public FinancialDetailsData()
+    {
+        _dataSeed = new Random().Next(1, 100);
+    }
+
     public decimal LandStatus { get; private set; }
 
     public bool IsPublicLand { get; private set; }
@@ -58,26 +65,28 @@ public class FinancialDetailsData
 
     public decimal TotalContributions => TotalGrants + TotalExpectedContributions;
 
+    public decimal TotalCost => ExpectedWorksCosts + ExpectedOnCosts + PublicLandValue;
+
     public void GenerateLandStatus()
     {
-        LandStatus = DateTime.UtcNow.Millisecond;
+        LandStatus = GetDecimalValue(nameof(LandStatus));
     }
 
     public void GenerateLandValue()
     {
         IsPublicLand = true;
-        PublicLandValue = DateTime.UtcNow.Millisecond;
+        PublicLandValue = GetDecimalValue(nameof(PublicLandValue)) + 5_000_000;
     }
 
     public void GenerateOtherApplicationCosts()
     {
-        ExpectedWorksCosts = DateTime.UtcNow.Millisecond;
-        ExpectedOnCosts = DateTime.UtcNow.Second;
+        ExpectedWorksCosts = GetDecimalValue(nameof(ExpectedWorksCosts));
+        ExpectedOnCosts = GetDecimalValue(nameof(ExpectedOnCosts));
     }
 
     public void GenerateExpectedContributions()
     {
-        ExpectedContributionsRentalIncomeBorrowing = DateTime.UtcNow.Millisecond;
+        ExpectedContributionsRentalIncomeBorrowing = GetDecimalValue(nameof(ExpectedContributionsRentalIncomeBorrowing)) + 250_000;
         ExpectedContributionsSaleOfHomesOnThisScheme = ExpectedContributionsRentalIncomeBorrowing + 1;
         ExpectedContributionsSaleOfHomesOnOtherSchemes = ExpectedContributionsRentalIncomeBorrowing + 2;
         ExpectedContributionsOwnResources = ExpectedContributionsRentalIncomeBorrowing + 3;
@@ -88,12 +97,17 @@ public class FinancialDetailsData
 
     public void GenerateGrants()
     {
-        CountyCouncilGrants = DateTime.UtcNow.Millisecond;
+        CountyCouncilGrants = GetDecimalValue(nameof(CountyCouncilGrants));
         DhscExtraCareGrants = CountyCouncilGrants + 1;
         LocalAuthorityGrants = CountyCouncilGrants + 2;
         SocialServicesGrants = CountyCouncilGrants + 3;
         HealthRelatedGrants = CountyCouncilGrants + 4;
         LotteryGrants = CountyCouncilGrants + 5;
-        OtherPublicBodiesGrants = CountyCouncilGrants + 6;
+        OtherPublicBodiesGrants = TotalCost - TotalContributions;
+    }
+
+    private decimal GetDecimalValue(string fieldName)
+    {
+        return _dataSeed + 100_000 + (fieldName.Length * 1_000);
     }
 }

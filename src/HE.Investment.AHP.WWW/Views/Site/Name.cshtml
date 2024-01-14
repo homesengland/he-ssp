@@ -1,10 +1,7 @@
-@using HE.Investments.Common.WWW.Components.FormHeader
 @using HE.Investments.Common.WWW.Components.FormButton
-@using Microsoft.AspNetCore.Mvc.TagHelpers
 @using HE.Investment.AHP.Contract.Site
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Input
 @using HE.Investment.AHP.WWW.Views.Site
+@using HE.Investments.Common.WWW.Components.TextInput
 @model SiteModel
 @{
     ViewData["Title"] = SitePageTitles.SiteName;
@@ -13,17 +10,13 @@
     <gds-back-link href=@(Url.Action("Back", "Site", new { currentPage = SiteWorkflowState.Name, siteId = Model?.Id })!) class="govuk-!-margin-bottom-8"></gds-back-link>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <form asp-controller="Site" asp-action="Name" asp-method="post" novalidate>
-        <vc:form-header title="@SitePageTitles.SiteName"/>
-        <gds-field-set role="group">
-            <legend>
-                <gds-p>Each site needs a unique name.</gds-p>
-            </legend>
 
-            <vc:text-input
-                field-name="@(nameof(Model.Name))"
-                css-class="govuk-!-width-one-third"
-                value=@Model?.Name />
-        </gds-field-set>
+        <vc:text-input
+            header="@SitePageTitles.SiteName"
+            hint="Each site needs a unique name."
+            field-name="@(nameof(Model.Name))"
+            css-class="govuk-!-width-one-third"
+            value=@Model?.Name />
 
         @Html.HiddenFor(x => x.Id)
 

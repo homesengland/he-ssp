@@ -1,4 +1,4 @@
-using HE.Investment.AHP.Domain.Application.Commands;
+using HE.Investment.AHP.Contract.Application.Commands;
 using HE.Investment.AHP.Domain.Application.Entities;
 using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investments.Account.Shared;

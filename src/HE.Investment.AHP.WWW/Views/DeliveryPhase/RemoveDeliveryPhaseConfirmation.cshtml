@@ -1,8 +1,15 @@
 @using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.WWW.Models.Delivery
+@using HE.Investment.AHP.WWW.Views.Delivery.Const
+@using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
+@using HE.Investments.Common.WWW.Components.BackLinkWithCallback
+@using HE.Investments.Common.WWW.Components.FormHeader
+@using HE.Investments.Common.WWW.Components.FormButton
 @model HE.Investment.AHP.WWW.Models.Delivery.RemoveDeliveryPhaseModel;
 @{
     var applicationId = this.GetApplicationIdFromRoute();
+    var title = DeliveryPageTitles.Remove;
+    ViewData["Title"] = title;
 }
 
 <div class="govuk-grid-column-three-quarters">
@@ -16,7 +23,7 @@
 
         <vc:form-header caption="@Model.Header"/>
         <he-error-form-group asp-for="RemoveDeliveryPhaseAnswer">
-            <gds-h1>Are you sure you want to remove this delivery phase?</gds-h1>
+            <gds-h1>@title</gds-h1>
             <gds-span-hint>
                 By removing this delivery phase, any homes you have assigned to this phase will need to be added to another phase.
             </gds-span-hint>

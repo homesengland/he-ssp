@@ -4,9 +4,9 @@ using HE.Investments.Account.Domain.Organisation.Entities;
 using HE.Investments.Account.Domain.Organisation.Repositories;
 using HE.Investments.Account.Domain.Organisation.ValueObjects;
 using HE.Investments.Account.Shared;
+using HE.Investments.Common.Contract.Exceptions;
+using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Errors;
-using HE.Investments.Common.Exceptions;
-using HE.Investments.Common.Validators;
 using MediatR;
 using IContactRepository = HE.Investments.Account.Domain.Organisation.Repositories.IContactRepository;
 
@@ -53,7 +53,7 @@ public class CreateAndLinkOrganisationCommandHandler : IRequestHandler<CreateAnd
             var organisationId = await _repository.CreateOrganisation(organisation);
 
             await _contactRepository.LinkOrganisation(organisationId, PortalConstants.CommonPortalType);
-            await _mediator.Publish(new UserAccountsChangedEvent(_userContext.UserGlobalId.ToString()), cancellationToken);
+            await _mediator.Publish(new UserAccountsChangedEvent(_userContext.UserGlobalId), cancellationToken);
 
             return OperationResult.Success();
         }

@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.HomeTypes.Queries;
 using HE.Investment.AHP.Contract.Scheme.Queries;
 using HE.Investment.AHP.WWW.Models.FinancialDetails.Factories;
@@ -27,7 +28,7 @@ public class ApplicationSummaryViewModelFactory : IApplicationSummaryViewModelFa
         _financialDetailsSummaryViewModelFactory = financialDetailsSummaryViewModelFactory;
     }
 
-    public async Task<ApplicationSummaryViewModel> GetDataAndCreate(string applicationId, IUrlHelper urlHelper, bool isReadOnly, CancellationToken cancellationToken)
+    public async Task<ApplicationSummaryViewModel> GetDataAndCreate(AhpApplicationId applicationId, IUrlHelper urlHelper, bool isReadOnly, CancellationToken cancellationToken)
     {
         var scheme = await _mediator.Send(new GetApplicationSchemeQuery(applicationId), cancellationToken);
         var schemeSummary = _schemeSummaryViewModelFactory.GetSchemeAndCreateSummary("Scheme information", scheme, urlHelper, isReadOnly);
@@ -40,10 +41,10 @@ public class ApplicationSummaryViewModelFactory : IApplicationSummaryViewModelFa
         summaries.Add(financialDetailsSummary.CostsSummary);
         summaries.Add(financialDetailsSummary.ContributionsSummary);
 
-        return new ApplicationSummaryViewModel(applicationId, scheme.ApplicationName, summaries);
+        return new ApplicationSummaryViewModel(applicationId.Value, scheme.ApplicationName, summaries);
     }
 
-    private async Task<IList<SectionSummaryViewModel>> GetHomeTypesAndCreateSummary(string applicationId, IUrlHelper urlHelper, bool isReadOnly, CancellationToken cancellationToken)
+    private async Task<IList<SectionSummaryViewModel>> GetHomeTypesAndCreateSummary(AhpApplicationId applicationId, IUrlHelper urlHelper, bool isReadOnly, CancellationToken cancellationToken)
     {
         var sections = new List<SectionSummaryViewModel>();
         var homeTypes = await _mediator.Send(new GetHomeTypesQuery(applicationId), cancellationToken);

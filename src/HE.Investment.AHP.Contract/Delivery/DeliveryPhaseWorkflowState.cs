@@ -2,10 +2,15 @@ namespace HE.Investment.AHP.Contract.Delivery;
 
 public enum DeliveryPhaseWorkflowState
 {
-    New = 1,
+    Create = 1,
     Name,
+    Details,
+    TypeOfHomes,
+    BuildActivityType,
+    Summary,
     AcquisitionMilestone,
     StartOnSiteMilestone,
     PracticalCompletionMilestone,
-    UnregisteredProviderFollowUp,
+    UnregisteredBodyFollowUp,
+    CheckAnswers,
 }

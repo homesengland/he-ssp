@@ -1,4 +1,4 @@
-using HE.Investments.Common.Infrastructure.Events;
+using HE.Investments.Common.Contract.Infrastructure.Events;
 
 namespace HE.Investments.Loans.Contract.Application.Events;
 

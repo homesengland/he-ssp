@@ -1,6 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
 using HE.Investments.Common.Contract;
-using HE.Investments.Common.Domain;
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.Loans.BusinessLogic.ViewModel;
 using Stateless;

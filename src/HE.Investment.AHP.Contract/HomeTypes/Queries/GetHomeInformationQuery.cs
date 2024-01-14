@@ -1,3 +1,5 @@
+using HE.Investment.AHP.Contract.Application;
+
 namespace HE.Investment.AHP.Contract.HomeTypes.Queries;
 
-public record GetHomeInformationQuery(string ApplicationId, string HomeTypeId) : GetHomeTypeSegmentQueryBase<HomeInformation>(ApplicationId, HomeTypeId);
+public record GetHomeInformationQuery(AhpApplicationId ApplicationId, HomeTypeId HomeTypeId) : GetHomeTypeSegmentQueryBase<HomeInformation>(ApplicationId, HomeTypeId);

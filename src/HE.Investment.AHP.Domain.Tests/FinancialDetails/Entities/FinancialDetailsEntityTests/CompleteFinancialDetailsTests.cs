@@ -4,7 +4,7 @@ using HE.Investment.AHP.Domain.FinancialDetails.Constants;
 using HE.Investment.AHP.Domain.Tests.Application.TestData;
 using HE.Investment.AHP.Domain.Tests.FinancialDetails.TestObjectBuilders;
 using HE.Investments.Common.Contract;
-using HE.Investments.Common.Exceptions;
+using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.Tests.FluentAssertions;
 

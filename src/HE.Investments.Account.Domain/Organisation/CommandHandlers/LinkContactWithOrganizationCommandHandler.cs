@@ -2,8 +2,8 @@ using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Contract.Organisation.Commands;
 using HE.Investments.Account.Contract.User.Events;
 using HE.Investments.Account.Shared;
+using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Errors;
-using HE.Investments.Common.Exceptions;
 using HE.Investments.Organisation.Contract;
 using HE.Investments.Organisation.Services;
 using MediatR;
@@ -72,6 +72,6 @@ public class LinkContactWithOrganizationCommandHandler : IRequestHandler<LinkCon
             Guid.Parse(organisationId!),
             PortalConstants.CommonPortalType);
 
-        await _mediator.Publish(new UserAccountsChangedEvent(_userContext.UserGlobalId.ToString()), cancellationToken);
+        await _mediator.Publish(new UserAccountsChangedEvent(_userContext.UserGlobalId), cancellationToken);
     }
 }

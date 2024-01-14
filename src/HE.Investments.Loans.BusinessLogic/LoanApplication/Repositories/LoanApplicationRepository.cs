@@ -2,11 +2,11 @@ using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.Entities;
 using HE.Investments.Common.Contract;
+using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.CRM;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Serialization;
 using HE.Investments.Common.Domain;
-using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.Common.Utils;
@@ -64,7 +64,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
         var req = new invln_checkifloanapplicationwithgivennameexistsRequest
         {
             invln_loanname = loanApplicationName.Value,
-            invln_organisationid = userAccount.OrganisationId?.ToString(),
+            invln_organisationid = userAccount.Organisation?.OrganisationId.ToString(),
         };
 
         var response = (invln_checkifloanapplicationwithgivennameexistsResponse)await _serviceClient.ExecuteAsync(req, cancellationToken);

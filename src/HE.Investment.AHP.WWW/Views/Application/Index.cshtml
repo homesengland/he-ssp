@@ -1,6 +1,7 @@
 @using HE.Investment.AHP.WWW.Views.Application
 @using HE.Investments.Common.Extensions
 @using HE.Investments.Common.Messages
+@using HE.Investments.Common.WWW.Components.FormHeader
 @model HE.Investment.AHP.WWW.Models.Application.ApplicationsListModel
 @{
     ViewData["Title"] = ApplicationPageTitles.ApplicationList;
@@ -30,7 +31,7 @@
                     <td class="govuk-table__cell">
                         <span class="app-task-list__task-name">
                             <strong>
-                                <a href="@Url.Action("TaskList", "Application", new { applicationId = application.Id })"> @application.Name </a>
+                                <a href="@Url.Action("TaskList", "Application", new { applicationId = application.Id.Value })"> @application.Name </a>
                             </strong>
                         </span>
                     </td>
@@ -60,7 +61,7 @@
         </gds-h2>
         <p class="govuk-body govuk-!-margin-bottom-3">You can start a new Affordable Homes Programme application here. This will not affect any of your previous applications.</p>
 
-        <link-button action-url="@Url.Action("Name", "Application")" is-disabled="@Model.IsReadOnly" id="start-application-link">Start new application</link-button>
+        <link-button action-url="@Url.Action("Start", "Application")" is-disabled="@Model.IsReadOnly" id="start-application-link">Start new application</link-button>
     </div>
 
     <div class="govuk-!-padding-top-2">

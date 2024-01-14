@@ -10,7 +10,6 @@ using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.CRM;
 using HE.Investments.Common.Extensions;
-using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 
@@ -23,7 +22,7 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
         _applicationCrmContext = applicationCrmContext;
     }
 
-    public async Task<FinancialDetailsEntity> GetById(ApplicationId id, UserAccount userAccount, CancellationToken cancellationToken)
+    public async Task<FinancialDetailsEntity> GetById(AhpApplicationId id, UserAccount userAccount, CancellationToken cancellationToken)
     {
         var organisationId = userAccount.SelectedOrganisationId().Value;
         var application = userAccount.CanViewAllApplications()
@@ -59,7 +58,7 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
     private static FinancialDetailsEntity CreateEntity(AhpApplicationDto application)
     {
         var applicationBasicInfo = new ApplicationBasicInfo(
-            ApplicationId.From(application.id),
+            AhpApplicationId.From(application.id),
             new ApplicationName(application.name),
             ApplicationTenureMapper.ToDomain(application.tenure)!.Value,
             ApplicationStatusMapper.MapToPortalStatus(application.applicationStatus));

@@ -1,8 +1,8 @@
 using HE.Investments.Account.Contract.Users;
-using HE.Investments.Account.Domain.Users.ValueObjects;
+using HE.Investments.Common.Contract;
+using HE.Investments.Common.Contract.Exceptions;
+using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
-using HE.Investments.Common.Exceptions;
-using HE.Investments.Common.Validators;
 
 namespace HE.Investments.Account.Domain.Users.Entities;
 
@@ -10,7 +10,7 @@ public class UserEntity
 {
     private readonly ModificationTracker _roleModificationTracker = new();
 
-    public UserEntity(UserId id, string? firstName, string? lastName, string? email, string? jobTitle, UserRole? role, DateTime? lastActiveAt)
+    public UserEntity(UserGlobalId id, string? firstName, string? lastName, string? email, string? jobTitle, UserRole? role, DateTime? lastActiveAt)
     {
         Id = id;
         FirstName = firstName;
@@ -21,7 +21,7 @@ public class UserEntity
         LastActiveAt = lastActiveAt;
     }
 
-    public UserId Id { get; }
+    public UserGlobalId Id { get; }
 
     public string? FirstName { get; }
 

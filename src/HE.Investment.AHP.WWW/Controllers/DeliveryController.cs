@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.Delivery.Commands;
@@ -30,14 +31,14 @@ public class DeliveryController : Controller
     [HttpGet("start")]
     public async Task<IActionResult> Start(Guid applicationId, CancellationToken cancellationToken)
     {
-        var application = await _mediator.Send(new GetApplicationQuery(applicationId.ToString()), cancellationToken);
+        var application = await _mediator.Send(new GetApplicationQuery(AhpApplicationId.From(applicationId)), cancellationToken);
         return View("Index", application);
     }
 
     [HttpGet]
     public async Task<IActionResult> List([FromRoute] string applicationId, CancellationToken cancellationToken)
     {
-        var deliveryPhases = await _mediator.Send(new GetDeliveryPhasesQuery(applicationId), cancellationToken);
+        var deliveryPhases = await _mediator.Send(new GetDeliveryPhasesQuery(AhpApplicationId.From(applicationId)), cancellationToken);
 
         return View(new DeliveryListModel(deliveryPhases.ApplicationName)
         {
@@ -52,7 +53,7 @@ public class DeliveryController : Controller
     [HttpPost]
     public async Task<IActionResult> List(string applicationId, DeliveryListModel model, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new CompleteDeliverySectionCommand(applicationId, IsSectionCompleted.Yes, true), cancellationToken);
+        var result = await _mediator.Send(new CompleteDeliverySectionCommand(AhpApplicationId.From(applicationId), IsSectionCompleted.Yes, true), cancellationToken);
         if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
@@ -67,14 +68,14 @@ public class DeliveryController : Controller
     [HttpGet("complete")]
     public async Task<IActionResult> Complete(string applicationId, CancellationToken cancellationToken)
     {
-        var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
+        var application = await _mediator.Send(new GetApplicationQuery(AhpApplicationId.From(applicationId)), cancellationToken);
         return View(new CompleteDeliverySectionModel(application.Name));
     }
 
     [HttpPost("complete")]
     public async Task<IActionResult> Complete(string applicationId, CompleteDeliverySectionModel model, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new CompleteDeliverySectionCommand(applicationId, model.IsSectionCompleted), cancellationToken);
+        var result = await _mediator.Send(new CompleteDeliverySectionCommand(AhpApplicationId.From(applicationId), model.IsSectionCompleted), cancellationToken);
         if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);

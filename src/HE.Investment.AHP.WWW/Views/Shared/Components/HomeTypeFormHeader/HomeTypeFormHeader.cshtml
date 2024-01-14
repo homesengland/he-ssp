@@ -1,11 +1,7 @@
-@model (string Title, string Caption, string ApplicationId, string HomeTypeId, HE.Investment.AHP.Domain.HomeTypes.HomeTypesWorkflowState CurrentPage)
-@{
-    object redirectParameters = string.IsNullOrEmpty(Model.HomeTypeId)
-        ? new { applicationId = Model.ApplicationId, currentPage = Model.CurrentPage }
-        : new { applicationId = Model.ApplicationId, homeTypeId = Model.HomeTypeId, currentPage = Model.CurrentPage };
-}
+@using HE.Investments.Common.WWW.Components.FormHeader
+@model (string Title, string Caption, HE.Investment.AHP.Domain.HomeTypes.HomeTypesWorkflowState CurrentPage)
 
-<gds-back-link href="@Url.Action("Back", "HomeTypes", redirectParameters)" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
+<vc:ahp-workflow-back-button current-page="@Model.CurrentPage"/>
 
 @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 

@@ -1,6 +1,5 @@
 using HE.Investment.AHP.Contract.Common;
 using HE.Investment.AHP.Contract.Scheme.Queries;
-using HE.Investment.AHP.Domain.Common.ValueObjects;
 using HE.Investment.AHP.Domain.Documents.Services;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using MediatR;
@@ -19,8 +18,8 @@ public class GetStakeholderDiscussionsFileQueryHandler : IRequestHandler<GetStak
     public async Task<DownloadedFile> Handle(GetStakeholderDiscussionsFileQuery request, CancellationToken cancellationToken)
     {
         var file = await _fileService.DownloadFile(
-            new FileId(request.FileId),
-            new LocalAuthoritySupportFileParams(new(request.ApplicationId)),
+            request.FileId,
+            new LocalAuthoritySupportFileParams(request.ApplicationId),
             cancellationToken);
 
         return new DownloadedFile(file.Name, file.Content);

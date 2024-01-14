@@ -1,8 +1,8 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Serialization;
 using HE.Investments.Common.CRM.Services;
-using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.User;
 
 namespace HE.Investment.AHP.Domain.Data;

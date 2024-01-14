@@ -19,13 +19,13 @@ public class InvalidateUserProfileCacheEventHandler : IEventHandler<UserProfileC
 
     public async Task Handle(UserProfileChangedEvent notification, CancellationToken cancellationToken)
     {
-        if (_accountUserContext.UserGlobalId == UserGlobalId.From(notification.UserGlobalId))
+        if (_accountUserContext.UserGlobalId == notification.UserGlobalId)
         {
             await _accountUserContext.RefreshUserData();
         }
         else
         {
-            await _cacheService.DeleteAsync(CacheKeys.ProfileDetails(notification.UserGlobalId));
+            await _cacheService.DeleteAsync(CacheKeys.ProfileDetails(notification.UserGlobalId.Value));
         }
     }
 }

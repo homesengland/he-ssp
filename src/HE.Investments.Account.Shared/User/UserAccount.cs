@@ -1,13 +1,14 @@
 using HE.Investments.Account.Contract.Users;
 using HE.Investments.Account.Shared.User.ValueObjects;
-using HE.Investments.Common.Exceptions;
+using HE.Investments.Common.Contract;
+using HE.Investments.Common.Contract.Exceptions;
 
 namespace HE.Investments.Account.Shared.User;
 
 public record UserAccount(
     UserGlobalId UserGlobalId,
     string UserEmail,
-    OrganisationId? OrganisationId,
+    OrganisationBasicInfo? Organisation,
     string OrganisationName,
     IReadOnlyCollection<UserRole> Roles)
 {
@@ -15,7 +16,9 @@ public record UserAccount(
 
     public bool CanViewAllApplications() => Role() != UserRole.Limited;
 
-    public OrganisationId SelectedOrganisationId() => OrganisationId ?? throw new NotFoundException("User is not connected to any Organisation");
+    public OrganisationId SelectedOrganisationId() => Organisation == null ? throw new NotFoundException("User is not connected to any Organisation") : Organisation.OrganisationId;
+
+    public OrganisationBasicInfo SelectedOrganisation() => Organisation ?? throw new NotFoundException("User is not connected to any Organisation");
 
     public bool HasOneOfRole(UserRole[] roles)
     {

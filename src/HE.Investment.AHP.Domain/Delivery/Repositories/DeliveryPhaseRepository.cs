@@ -1,5 +1,8 @@
 using System.Collections.Concurrent;
+using HE.Investment.AHP.Contract.Application;
+using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Events;
+using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
@@ -7,32 +10,30 @@ using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.Contract;
-using HE.Investments.Common.Exceptions;
+using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Infrastructure.Events;
-using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.Delivery.Repositories;
 
 public class DeliveryPhaseRepository : IDeliveryPhaseRepository
 {
-    private static readonly IDictionary<ApplicationId, DeliveryPhasesEntity> DeliveryPhases = new ConcurrentDictionary<ApplicationId, DeliveryPhasesEntity>();
+    private static readonly IDictionary<AhpApplicationId, DeliveryPhasesEntity> DeliveryPhases = new ConcurrentDictionary<AhpApplicationId, DeliveryPhasesEntity>();
 
     private readonly IApplicationRepository _applicationRepository;
 
     private readonly IEventDispatcher _eventDispatcher;
 
-    public DeliveryPhaseRepository(IApplicationRepository applicationRepository, IEventDispatcher eventDispatcher)
+    public DeliveryPhaseRepository(
+        IApplicationRepository applicationRepository,
+        IEventDispatcher eventDispatcher)
     {
         _applicationRepository = applicationRepository;
         _eventDispatcher = eventDispatcher;
     }
 
-    public async Task<DeliveryPhasesEntity> GetByApplicationId(ApplicationId applicationId, UserAccount userAccount, CancellationToken cancellationToken)
+    public async Task<DeliveryPhasesEntity> GetByApplicationId(AhpApplicationId applicationId, UserAccount userAccount, CancellationToken cancellationToken)
     {
-        if (!DeliveryPhases.Any())
-        {
-            await InitMockedData(applicationId, userAccount, cancellationToken);
-        }
+        await InitMockedData(applicationId, userAccount, cancellationToken);
 
         if (!DeliveryPhases.TryGetValue(applicationId, out var deliveryPhases))
         {
@@ -42,31 +43,32 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
         return deliveryPhases;
     }
 
-    public async Task Save(IDeliveryPhaseEntity deliveryPhase, OrganisationId organisationId, CancellationToken cancellationToken)
+    public async Task<DeliveryPhaseId?> Save(IDeliveryPhaseEntity deliveryPhase, UserAccount userAccount, CancellationToken cancellationToken)
     {
         var entity = (DeliveryPhaseEntity)deliveryPhase;
+        await InitMockedData(entity.Application.Id, userAccount, cancellationToken);
         if (entity.IsNew)
         {
-            // TODO: AB#66083 Save Delivery Phase in CRM
             entity.Id = new DeliveryPhaseId(Guid.NewGuid().ToString());
             await _eventDispatcher.Publish(
-                new DeliveryPhaseHasBeenCreatedEvent(entity.Application.Id.Value, entity.Name.Value),
+                new DeliveryPhaseHasBeenCreatedEvent(entity.Application.Id, entity.Name.Value),
                 cancellationToken);
         }
         else if (entity.IsModified)
         {
-            // TODO: AB#66083 Save Delivery Phase in CRM
-            await _eventDispatcher.Publish(new DeliveryPhaseHasBeenUpdatedEvent(entity.Application.Id.Value), cancellationToken);
+            await _eventDispatcher.Publish(new DeliveryPhaseHasBeenUpdatedEvent(entity.Application.Id), cancellationToken);
         }
+
+        return entity.Id;
     }
 
-    public async Task<IDeliveryPhaseEntity> GetById(ApplicationId applicationId, DeliveryPhaseId deliveryPhaseId, UserAccount userAccount, CancellationToken cancellationToken)
+    public async Task<IDeliveryPhaseEntity> GetById(
+        AhpApplicationId applicationId,
+        DeliveryPhaseId deliveryPhaseId,
+        UserAccount userAccount,
+        CancellationToken cancellationToken)
     {
-        if (!DeliveryPhases.Any())
-        {
-            await InitMockedData(applicationId, userAccount, cancellationToken);
-        }
-
+        await InitMockedData(applicationId, userAccount, cancellationToken);
         if (!DeliveryPhases.TryGetValue(applicationId, out var deliveryPhases))
         {
             throw new NotFoundException(nameof(DeliveryPhaseEntity), deliveryPhaseId);
@@ -82,19 +84,26 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
             // TODO: AB#66083 Update Delivery section status to In Progress in CRM
         }
 
-        foreach (var deliveryPhaseToRemove in deliveryPhases.ToRemove)
+        var toRemove = deliveryPhases.ToRemove.ToList();
+        foreach (var deliveryPhaseToRemove in toRemove)
         {
             // TODO: AB#66083 remove delivery Phase in CRM
             await _eventDispatcher.Publish(
-                new DeliveryPhaseHasBeenRemovedEvent(deliveryPhaseToRemove.Application.Id.Value),
+                new DeliveryPhaseHasBeenRemovedEvent(deliveryPhaseToRemove.Application.Id),
                 cancellationToken);
         }
     }
 
-    private async Task InitMockedData(ApplicationId applicationId, UserAccount userAccount, CancellationToken cancellationToken)
+    private async Task InitMockedData(AhpApplicationId applicationId, UserAccount userAccount, CancellationToken cancellationToken)
     {
+        if (DeliveryPhases.Any())
+        {
+            return;
+        }
+
         var application =
             await _applicationRepository.GetApplicationBasicInfo(applicationId, userAccount, cancellationToken);
+
         var homesToDeliver = new[]
         {
             new HomesToDeliver(new HomeTypeId("ht-1"), new HomeTypeName("1 bed flat"), 3),
@@ -108,12 +117,15 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
             {
                 new DeliveryPhaseEntity(
                     application,
-                    "Phase 1",
+                    new DeliveryPhaseName("Phase 1"),
+                    userAccount.SelectedOrganisation(),
+                    null,
+                    new BuildActivityType(),
                     SectionStatus.InProgress,
                     new[] { new HomesToDeliverInPhase(new HomeTypeId("ht-1"), 3) },
+                    new DeliveryPhaseMilestones(userAccount.SelectedOrganisation(), new AcquisitionMilestoneDetails(new AcquisitionDate("1", "2", "2023"), null)),
                     new DeliveryPhaseId("phase-1"),
-                    new DateTime(2023, 12, 12),
-                    new AcquisitionMilestoneDetails(new AcquisitionDate("1", "2", "2023"), null)),
+                    new DateTime(2023, 12, 12)),
             },
             homesToDeliver,
             SectionStatus.InProgress);

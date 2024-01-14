@@ -1,3 +1,5 @@
+using HE.Investment.AHP.Contract.Application;
+using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Events;
 using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.Common;
@@ -7,9 +9,8 @@ using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.ValueObjects;
-using HE.Investments.Common.Exceptions;
+using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Infrastructure.Events;
-using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Repositories;
 
@@ -40,7 +41,7 @@ public class HomeTypeRepository : IHomeTypeRepository
     }
 
     public async Task<HomeTypesEntity> GetByApplicationId(
-        ApplicationId applicationId,
+        AhpApplicationId applicationId,
         UserAccount userAccount,
         IReadOnlyCollection<HomeTypeSegmentType> segments,
         CancellationToken cancellationToken)
@@ -59,7 +60,7 @@ public class HomeTypeRepository : IHomeTypeRepository
     }
 
     public async Task<IHomeTypeEntity> GetById(
-        ApplicationId applicationId,
+        AhpApplicationId applicationId,
         HomeTypeId homeTypeId,
         UserAccount userAccount,
         IReadOnlyCollection<HomeTypeSegmentType> segments,
@@ -96,7 +97,7 @@ public class HomeTypeRepository : IHomeTypeRepository
                     _homeTypeCrmMapper.SaveCrmFields(entity, segments),
                     cancellationToken));
             await _eventDispatcher.Publish(
-                new HomeTypeHasBeenCreatedEvent(homeType.Application.Id.Value, entity.Id.Value, entity.Name.Value),
+                new HomeTypeHasBeenCreatedEvent(homeType.Application.Id, entity.Id, entity.Name.Value),
                 cancellationToken);
         }
         else if (entity.IsModified)
@@ -106,7 +107,7 @@ public class HomeTypeRepository : IHomeTypeRepository
                 organisationId.Value,
                 _homeTypeCrmMapper.SaveCrmFields(entity, segments),
                 cancellationToken);
-            await _eventDispatcher.Publish(new HomeTypeHasBeenUpdatedEvent(homeType.Application.Id.Value, entity.Id.Value), cancellationToken);
+            await _eventDispatcher.Publish(new HomeTypeHasBeenUpdatedEvent(homeType.Application.Id, entity.Id), cancellationToken);
         }
 
         if (segments.Contains(HomeTypeSegmentType.DesignPlans)
@@ -130,13 +131,13 @@ public class HomeTypeRepository : IHomeTypeRepository
         {
             await _homeTypeCrmContext.Remove(homeTypes.ApplicationId.Value, homeTypeToRemove.Id.Value, organisationId.Value, cancellationToken);
             await _eventDispatcher.Publish(
-                new HomeTypeHasBeenRemovedEvent(homeTypeToRemove.Application.Id.Value, homeTypeToRemove.Id.Value),
+                new HomeTypeHasBeenRemovedEvent(homeTypeToRemove.Application.Id, homeTypeToRemove.Id),
                 cancellationToken);
         }
     }
 
     private async Task<IDictionary<HomeTypeSegmentType, IReadOnlyCollection<UploadedFile>>> GetUploadedFiles(
-        ApplicationId applicationId,
+        AhpApplicationId applicationId,
         HomeTypeId homeTypeId,
         IEnumerable<HomeTypeSegmentType> segments,
         CancellationToken cancellationToken)
