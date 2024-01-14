@@ -76,11 +76,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
     public async Task<IActionResult> LandValue(Guid applicationId)
     {
         var financialDetails = await _mediator.Send(new GetFinancialDetailsQuery(AhpApplicationId.From(applicationId)));
-
-        var isSchemeOnPublicLand =
-            financialDetails.IsSchemaOnPublicLand.HasValue
-                ? financialDetails.IsSchemaOnPublicLand.Value ? CommonResponse.Yes : CommonResponse.No
-                : string.Empty;
+        var isSchemeOnPublicLand = IsPublicLandScheme(financialDetails);
 
         return View(new FinancialDetailsLandValueModel(
             applicationId,
@@ -323,6 +319,21 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
         var isReadOnly = !await _accountAccessContext.CanEditApplication();
         var financialDetails = await _mediator.Send(new GetFinancialDetailsQuery(AhpApplicationId.From(applicationId)));
         return new FinancialDetailsWorkflow(currentState, financialDetails, isReadOnly);
+    }
+
+    private static string IsPublicLandScheme(Contract.FinancialDetails.FinancialDetails financialDetails)
+    {
+        if (financialDetails.IsSchemaOnPublicLand.HasValue)
+        {
+            if (financialDetails.IsSchemaOnPublicLand.Value)
+            {
+                return CommonResponse.Yes;
+            }
+
+            return CommonResponse.No;
+        }
+
+        return string.Empty;
     }
 
     private async Task<IActionResult> ProvideFinancialDetails<TModel, TCommand>(

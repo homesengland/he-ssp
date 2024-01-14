@@ -33,8 +33,12 @@ namespace He.AspNetCore.Mvc.Gds.Components.Validation
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             var instance = validationContext?.ObjectInstance;
-            var type = instance.GetType();
 
+            Type type = null;
+            if (instance != null)
+            {
+                type = instance.GetType();
+            }
             _ = bool.TryParse(type?.GetProperty(this.PropertyName)?.GetValue(instance)?.ToString(), out var propertyValue);
 
             if (propertyValue && string.IsNullOrEmpty(value?.ToString()))

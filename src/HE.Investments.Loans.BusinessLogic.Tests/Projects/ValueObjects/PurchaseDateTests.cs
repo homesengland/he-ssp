@@ -7,7 +7,7 @@ using Xunit;
 namespace HE.Investments.Loans.BusinessLogic.Tests.Projects.ValueObjects;
 public class PurchaseDateTests
 {
-    private readonly DateTime _now = new(2023, 10, 3);
+    private readonly DateTime _now = new(2023, 10, 3, 0, 0, 0, DateTimeKind.Unspecified);
 
     [Theory]
     [InlineData("", "9", "2023")]
@@ -36,7 +36,7 @@ public class PurchaseDateTests
     {
         var date = PurchaseDate.FromString("2023", "10", "2", _now);
 
-        date.AsDateTime().Should().Be(new DateTime(2023, 10, 2));
+        date.AsDateTime().Should().Be(new DateTime(2023, 10, 2, 0, 0, 0, DateTimeKind.Unspecified));
     }
 
     [Fact]
@@ -44,6 +44,6 @@ public class PurchaseDateTests
     {
         var date = PurchaseDate.FromString("2023", "10", "3", _now);
 
-        date.AsDateTime().Should().Be(new DateTime(2023, 10, 3));
+        date.AsDateTime().Should().Be(new DateTime(2023, 10, 3, 0, 0, 0, DateTimeKind.Unspecified));
     }
 }

@@ -6,16 +6,16 @@ namespace HE.Investments.Common.Domain;
 
 public class DomainEntity
 {
-    private readonly IList<IDomainEvent> _domainEvents = new List<IDomainEvent>();
+    private readonly IList<DomainEvent> _domainEvents = new List<DomainEvent>();
 
-    public void Publish(IDomainEvent domainEvent)
+    public void Publish(DomainEvent domainEvent)
     {
         _domainEvents.Add(domainEvent);
     }
 
-    public IReadOnlyList<IDomainEvent> GetDomainEventsAndRemove()
+    public IReadOnlyList<DomainEvent> GetDomainEventsAndRemove()
     {
-        var toReturn = new ReadOnlyCollection<IDomainEvent>(_domainEvents.ToArray());
+        var toReturn = new ReadOnlyCollection<DomainEvent>(_domainEvents.ToArray());
         _domainEvents.Clear();
         return toReturn;
     }

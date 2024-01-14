@@ -52,6 +52,6 @@ public class StartDateTests
         var startDate = StartDate.From(CommonResponse.Yes, "2023", "9", "24");
 
         startDate.Exists.Should().BeTrue();
-        startDate.Value.Should().Be(new DateTime(2023, 9, 24));
+        startDate.Value.Should().Be(new DateTime(2023, 9, 24, 0, 0, 0, DateTimeKind.Unspecified));
     }
 }

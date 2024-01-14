@@ -13,9 +13,7 @@ internal static class ProjectEntityMapper
 {
     public static Project Map(SiteDetailsDto siteDetailsDto, DateTime now)
     {
-        var startDateExists = siteDetailsDto.projectHasStartDate;
-        var startDate = startDateExists.IsNotProvided() ? null :
-            startDateExists!.Value ? new StartDate(true, new ProjectDate(siteDetailsDto.startDate!.Value)) : new StartDate(false, null);
+        var startDate = GetStartDate(siteDetailsDto);
 
         return new Project(
             ProjectId.From(siteDetailsDto.siteDetailsId),
@@ -37,5 +35,22 @@ internal static class ProjectEntityMapper
             ApplicationStatusMapper.MapToPortalStatus(siteDetailsDto.loanApplicationStatus),
             PlanningPermissionStatusMapper.Map(siteDetailsDto.planningPermissionStatus),
             LocalAuthorityMapper.MapToLocalAuthority(siteDetailsDto.localAuthority));
+    }
+
+    private static StartDate? GetStartDate(SiteDetailsDto siteDetailsDto)
+    {
+        var startDateExists = siteDetailsDto.projectHasStartDate;
+
+        if (startDateExists.IsNotProvided())
+        {
+            return null;
+        }
+
+        if (startDateExists.HasValue)
+        {
+            return new StartDate(true, new ProjectDate(siteDetailsDto.startDate!.Value));
+        }
+
+        return new StartDate(false, null);
     }
 }

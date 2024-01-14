@@ -22,7 +22,7 @@ public static class DateHelper
             && int.TryParse(month, out var monthValue)
             && int.TryParse(year, out var yearValue))
         {
-            var date = new DateTime(yearValue, monthValue, dayValue);
+            var date = new DateTime(yearValue, monthValue, dayValue, 0, 0, 0, DateTimeKind.Unspecified);
             return date.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
         }
 

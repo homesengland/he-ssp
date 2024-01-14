@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Text;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
@@ -95,7 +96,7 @@ public class ProvideMoreInformationAboutOrganizationCommandHandler : CompanyStru
                 true,
                 cancellationToken);
 
-            bld.Append($"{file.FileName}, ");
+            bld.Append(CultureInfo.InvariantCulture, $"{file.FileName}, ");
         }
 
         var filesUploaded = bld.ToString();

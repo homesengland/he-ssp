@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.WWW.Workflows;
@@ -7,6 +8,7 @@ namespace HE.Investment.AHP.WWW.Tests.Workflows.DeliveryPhaseWorkflowTests;
 public class StateCanBeAccessedTests
 {
     [Fact]
+    [SuppressMessage("Blocker Code Smell", "S2699:Tests should include assertions", Justification = "Error in the Sonarlint library when using AngleSharp when using AngleSharp")]
     public void ShouldNotThrowException_ForEachPossibleWorkflowState()
     {
         // given

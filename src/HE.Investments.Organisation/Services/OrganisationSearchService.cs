@@ -54,7 +54,7 @@ public class OrganisationSearchService : IOrganisationSearchService
         return await GetByCompaniesHouseNumber(companiesHouseNumberOrOrganisationId, cancellationToken);
     }
 
-    public async Task<OrganisationSearchResult> Search(string organisationName, PagingQueryParams pagingParams, CancellationToken cancellationToken)
+    public async Task<OrganisationSearchResult> Search(string organisationName, PagingQueryParams pagingParams, CancellationToken cancellationToken = default)
     {
         var companyHousesResult = await GetOrganizationFromCompanyHousesApi(organisationName, null, pagingParams, cancellationToken);
 

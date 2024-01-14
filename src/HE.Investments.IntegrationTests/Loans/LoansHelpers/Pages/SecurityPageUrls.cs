@@ -1,5 +1,5 @@
 namespace HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
-internal sealed class SecurityPageUrls
+internal static class SecurityPageUrls
 {
     public const string StartSuffix = "/security";
 

@@ -62,6 +62,29 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
         return entity.Id;
     }
 
+    public async Task Save(DeliveryPhasesEntity deliveryPhases, OrganisationId organisationId, CancellationToken cancellationToken)
+    {
+        if (deliveryPhases.IsStatusChanged)
+        {
+#pragma warning disable S1135 // Track uses of "TODO" tags
+
+            // TODO: AB#66083 Update Delivery section status to In Progress in CRM
+#pragma warning restore S1135 // Track uses of "TODO" tags
+        }
+
+        var toRemove = deliveryPhases.ToRemove.ToList();
+        foreach (var deliveryPhaseToRemove in toRemove)
+        {
+#pragma warning disable S1135 // Track uses of "TODO" tags
+            // TODO: AB#66083 remove delivery Phase in CRM
+            await _eventDispatcher.Publish(
+                new DeliveryPhaseHasBeenRemovedEvent(deliveryPhaseToRemove.Application.Id),
+                cancellationToken);
+#pragma warning restore S1135 // Track uses of "TODO" tags
+
+        }
+    }
+
     public async Task<IDeliveryPhaseEntity> GetById(
         AhpApplicationId applicationId,
         DeliveryPhaseId deliveryPhaseId,
@@ -75,23 +98,6 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
         }
 
         return deliveryPhases.GetById(deliveryPhaseId);
-    }
-
-    public async Task Save(DeliveryPhasesEntity deliveryPhases, OrganisationId organisationId, CancellationToken cancellationToken)
-    {
-        if (deliveryPhases.IsStatusChanged)
-        {
-            // TODO: AB#66083 Update Delivery section status to In Progress in CRM
-        }
-
-        var toRemove = deliveryPhases.ToRemove.ToList();
-        foreach (var deliveryPhaseToRemove in toRemove)
-        {
-            // TODO: AB#66083 remove delivery Phase in CRM
-            await _eventDispatcher.Publish(
-                new DeliveryPhaseHasBeenRemovedEvent(deliveryPhaseToRemove.Application.Id),
-                cancellationToken);
-        }
     }
 
     private async Task InitMockedData(AhpApplicationId applicationId, UserAccount userAccount, CancellationToken cancellationToken)
@@ -125,7 +131,7 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
                     new[] { new HomesToDeliverInPhase(new HomeTypeId("ht-1"), 3) },
                     new DeliveryPhaseMilestones(userAccount.SelectedOrganisation(), new AcquisitionMilestoneDetails(new AcquisitionDate("1", "2", "2023"), null)),
                     new DeliveryPhaseId("phase-1"),
-                    new DateTime(2023, 12, 12)),
+                    new DateTime(2023, 12, 12, 0, 0, 0, DateTimeKind.Unspecified)),
             },
             homesToDeliver,
             SectionStatus.InProgress);

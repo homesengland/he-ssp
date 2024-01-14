@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using He.AspNetCore.Mvc.Gds.Components.Constants;
 using He.AspNetCore.Mvc.Gds.Components.Models;
 using He.AspNetCore.Mvc.Gds.Components.TagConstructs;
@@ -28,10 +30,10 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Radios
             {
                 output.TagName = HtmlConstants.Div;
                 TagConstruct.ConstructClass(output, CssConstants.GovUkRadios);
-                var sb = string.Empty;
+                var sb = new StringBuilder();
                 foreach (var radioInputGroup in this.RadioInputGroup)
                 {
-                    sb += TagConstruct.ConstructRadioInputLabel(
+                    sb.Append(TagConstruct.ConstructRadioInputLabel(
                         radioInputGroup.Id,
                         radioInputGroup.Name,
                         radioInputGroup.Value,
@@ -40,10 +42,10 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Radios
                         radioInputGroup.Checked,
                         radioInputGroup.Divider,
                         radioInputGroup.DividerText,
-                        radioInputGroup.HintText);
+                        radioInputGroup.HintText));
                 }
 
-                output.Content.SetHtmlContent(sb);
+                output.Content.SetHtmlContent(sb.ToString());
             }
         }
     }

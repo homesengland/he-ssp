@@ -125,12 +125,6 @@ public class OperationResult : IOperationResult
         return this;
     }
 
-    public OperationResult AddValidationErrors(IList<ErrorItem> errorItem)
-    {
-        Errors.AddRange(errorItem);
-        return this;
-    }
-
     public OperationResult AddValidationErrors(IList<ErrorItem> errorItems)
     {
         foreach (var errorItem in errorItems)
@@ -138,6 +132,12 @@ public class OperationResult : IOperationResult
             Errors.Add(errorItem);
         }
 
+        return this;
+    }
+
+    public OperationResult AddValidationError(ErrorItem errorItem)
+    {
+        Errors.Add(errorItem);
         return this;
     }
 

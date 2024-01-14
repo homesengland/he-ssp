@@ -1,6 +1,8 @@
 using System.Globalization;
+using System.Text;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Organisation.CrmRepository;
+using Microsoft.Extensions.Primitives;
 using Microsoft.PowerPlatform.Dataverse.Client;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Messages;
@@ -74,7 +76,7 @@ public class ContactService : IContactService
                 Entity? permissionLevel = null;
                 if (contactRole.Contains("ae.invln_portalpermissionlevelid") && contactRole["ae.invln_portalpermissionlevelid"] != null && ((dynamic)contactRole["ae.invln_portalpermissionlevelid"]).Value != null)
                 {
-                    permissionLevel = portalPermissionLevels.Where(x => (dynamic)x["invln_portalpermissionlevelid"] == ((dynamic)contactRole["ae.invln_portalpermissionlevelid"]).Value.Id).ToList().FirstOrDefault();
+                    permissionLevel = portalPermissionLevels.Where(x => (dynamic)x["invln_portalpermissionlevelid"] == ((dynamic)contactRole["ae.invln_portalpermissionlevelid"]).Value.Id).AsEnumerable().FirstOrDefault();
                 }
 
                 var webroleReference = (EntityReference)contactRole["invln_webroleid"];
@@ -193,14 +195,14 @@ public class ContactService : IContactService
 
     public Task<List<ContactRolesDto>> GetContactRolesForOrganisationContacts(IOrganizationServiceAsync2 service, List<string> contactExternalId, Guid organisationGuid)
     {
-        var contactExternalFilter = "<condition attribute=\"invln_externalid\" operator=\"in\">";
+        var contactExternalFilter = new StringBuilder("<condition attribute=\"invln_externalid\" operator=\"in\">");
         foreach (var contactExternal in contactExternalId)
         {
-            contactExternalFilter += $"<value>{contactExternal}</value>";
+            contactExternalFilter.Append(CultureInfo.InvariantCulture, $"<value>{contactExternal}</value>");
         }
 
-        contactExternalFilter += "</condition>";
-        var contactWebroles = _webRoleRepository.GetWebrolesForPassedContacts(service, contactExternalFilter, organisationGuid);
+        _ = contactExternalFilter.Append("</condition>");
+        var contactWebroles = _webRoleRepository.GetWebrolesForPassedContacts(service, contactExternalFilter.ToString(), organisationGuid);
         return Task.FromResult(GenerateContactRolesList(contactWebroles));
     }
 

@@ -95,15 +95,15 @@ public class SectionSummaryItemTests : ViewComponentTestBase<SectionSummaryItemT
         if (isValueVisible)
         {
             document
-                .HasElementWithText("p", model.Values![0]!, isValueVisible && isVisible)
-                .HasElementWithText("p", model.Values![1]!, isValueVisible && isVisible);
+                .HasElementWithText("p", model.Values![0]!, isVisible)
+                .HasElementWithText("p", model.Values![1]!, isVisible);
         }
 
         if (isFileVisible)
         {
             document
-                .HasElementWithText("a", model.Files!.First().Key, isFileVisible && isVisible)
-                .HasElementWithText("a", model.Files!.Skip(1).First().Key, isFileVisible && isVisible);
+                .HasElementWithText("a", model.Files!.First().Key, isVisible)
+                .HasElementWithText("a", model.Files!.Skip(1).First().Key, isVisible);
         }
     }
 }

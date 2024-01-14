@@ -28,8 +28,8 @@ public class MockedDocumentService : IDocumentService
     public Task UploadAsync<TMetadata>(
         FileLocation location,
         UploadFileData<TMetadata> file,
-        bool overwrite = false,
-        CancellationToken cancellationToken = default)
+        bool overwrite,
+        CancellationToken cancellationToken)
     {
         var fileKey = GenerateFileKey(location, file.Name);
         if (!Files.ContainsKey(fileKey) || overwrite)
@@ -71,5 +71,5 @@ public class MockedDocumentService : IDocumentService
         return folderPaths.Select(x => $"{listTitle}/{x}/").ToList();
     }
 
-    private record MockedFile(string FileName, DateTime CreatedOn, string Metadata);
+    private sealed record MockedFile(string FileName, DateTime CreatedOn, string Metadata);
 }

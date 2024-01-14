@@ -1,3 +1,4 @@
+using System.Globalization;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Organisation.CrmFields;
 using Microsoft.PowerPlatform.Dataverse.Client;
@@ -28,7 +29,6 @@ public class ProgrammeService : IProgrammeService
 
         result = await _service.RetrieveMultipleAsync(query);
 
-        // TODO: 88198 fetch programme in valid way
         var programme = result.Entities.FirstOrDefault();
 
         if (programme == null)
@@ -49,8 +49,8 @@ public class ProgrammeService : IProgrammeService
         var programme = new Entity(ProgrammeFields.EntityName)
         {
             [ProgrammeFields.Name] = "AHP test",
-            [ProgrammeFields.StartDate] = new DateTime(2021, 1, 1),
-            [ProgrammeFields.EndDate] = new DateTime(2026, 1, 1),
+            [ProgrammeFields.StartDate] = new DateTime(2021, 1, 1, 0, 0, 0, DateTimeKind.Unspecified),
+            [ProgrammeFields.EndDate] = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Unspecified),
         };
 
         await _service.CreateAsync(programme);
@@ -63,7 +63,7 @@ public class ProgrammeService : IProgrammeService
 
     private DateTime? TryGetDateTimeValue(Entity entity, string fieldName)
     {
-        if (DateTime.TryParse(TryGetStringValue(entity, fieldName), out var date))
+        if (DateTime.TryParse(TryGetStringValue(entity, fieldName), CultureInfo.InvariantCulture, DateTimeStyles.None, out var date))
         {
             return date;
         }

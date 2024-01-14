@@ -60,6 +60,7 @@ public class ProjectWorkflow : IStateRouting<ProjectState>
             return targetState;
         }
 
+#pragma warning disable S2589 // Boolean expressions should not be gratuitous
         return _model switch
         {
             { ProjectName: var x } when x.IsNotProvided() => ProjectState.Name,
@@ -79,6 +80,7 @@ public class ProjectWorkflow : IStateRouting<ProjectState>
             { AffordableHomes: var x } when x.IsNotProvided() => ProjectState.AffordableHomes,
             _ => ProjectState.CheckAnswers,
         };
+#pragma warning restore S2589 // Boolean expressions should not be gratuitous
     }
 
     private void ConfigureTransitions()

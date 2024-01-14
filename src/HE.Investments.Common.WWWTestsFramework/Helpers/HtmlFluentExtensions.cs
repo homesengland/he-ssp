@@ -54,7 +54,9 @@ public static class HtmlFluentExtensions
         return htmlDocument;
     }
 
+#pragma warning disable S4144 // Methods should not have identical implementations
     public static IHtmlDocument HasCheckboxes(this IHtmlDocument htmlDocument, string fieldName, IList<string> options)
+#pragma warning restore S4144 // Methods should not have identical implementations
     {
         var inputs = htmlDocument.GetElementsByName(fieldName);
         inputs.Length.Should().Be(options.Count, $"{options.Count} inputs with name {fieldName} should exist");
@@ -68,7 +70,7 @@ public static class HtmlFluentExtensions
 
         foreach (var checkedValue in checkedValues)
         {
-            var element = inputs?.Where(x => x.OuterHtml.Contains(checkedValue)).FirstOrDefault();
+            var element = inputs?.FirstOrDefault(x => x.OuterHtml.Contains(checkedValue));
             var isChecked = element?.IsChecked();
             isChecked.Should().Be(true, $"{checkedValue} value should be checked");
         }

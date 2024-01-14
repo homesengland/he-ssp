@@ -370,6 +370,26 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     }
 
     [WorkflowState(HomeTypesWorkflowState.DesignPlans)]
+    [HttpPost("{homeTypeId}/upload-design-plans-file")]
+    public async Task<IActionResult> UploadDesignPlansFile(
+        [FromRoute] string applicationId,
+        string homeTypeId,
+        [FromForm(Name = "File")] IFormFile file,
+        CancellationToken cancellationToken)
+    {
+        var fileToUpload = new FileToUpload(file.FileName, file.Length, file.OpenReadStream());
+        try
+        {
+            var result = await _mediator.Send(new UploadDesignPlansFileCommand(AhpApplicationId.From(applicationId), HomeTypeId.From(homeTypeId), fileToUpload), cancellationToken);
+            return result.HasValidationErrors ? new BadRequestObjectResult(result.Errors) : Ok(UploadedFileModel.FromUploadedFile(result.ReturnedData!));
+        }
+        finally
+        {
+            await fileToUpload.Content.DisposeAsync();
+        }
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.DesignPlans)]
     [HttpGet("{homeTypeId}/design-plans")]
     public async Task<IActionResult> DesignPlans([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
     {
@@ -394,26 +414,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
             MaxFileSizeInMegabytes = _documentSettings.MaxFileSize.Megabytes,
             AllowedExtensions = string.Join(", ", _documentSettings.AllowedExtensions.Select(x => x.Value.ToUpperInvariant())),
         });
-    }
-
-    [WorkflowState(HomeTypesWorkflowState.DesignPlans)]
-    [HttpPost("{homeTypeId}/upload-design-plans-file")]
-    public async Task<IActionResult> UploadDesignPlansFile(
-        [FromRoute] string applicationId,
-        string homeTypeId,
-        [FromForm(Name = "File")] IFormFile file,
-        CancellationToken cancellationToken)
-    {
-        var fileToUpload = new FileToUpload(file.FileName, file.Length, file.OpenReadStream());
-        try
-        {
-            var result = await _mediator.Send(new UploadDesignPlansFileCommand(AhpApplicationId.From(applicationId), HomeTypeId.From(homeTypeId), fileToUpload), cancellationToken);
-            return result.HasValidationErrors ? new BadRequestObjectResult(result.Errors) : Ok(UploadedFileModel.FromUploadedFile(result.ReturnedData!));
-        }
-        finally
-        {
-            await fileToUpload.Content.DisposeAsync();
-        }
     }
 
     [WorkflowState(HomeTypesWorkflowState.DesignPlans)]
@@ -1084,9 +1084,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     [HttpGet("{homeTypeId}/rent-to-buy-ineligible")]
     public async Task<IActionResult> RentToBuyIneligible([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
     {
-        var tenureDetails = await _mediator.Send(new GetTenureDetailsQuery(AhpApplicationId.From(applicationId), HomeTypeId.From(homeTypeId)), cancellationToken);
-
-        return View(new HomeTypeBasicModel(tenureDetails.ApplicationName, tenureDetails.HomeTypeName));
+        return await AffordableRentIneligible(applicationId, homeTypeId, cancellationToken);
     }
 
     [WorkflowState(HomeTypesWorkflowState.HomeOwnershipDisabilities)]
@@ -1286,9 +1284,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     [HttpGet("{homeTypeId}/modern-methods-construction-categories")]
     public async Task<IActionResult> ModernMethodsConstructionCategories([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
     {
-        var modernMethodsConstruction = await _mediator.Send(new GetModernMethodsConstructionQuery(AhpApplicationId.From(applicationId), HomeTypeId.From(homeTypeId)), cancellationToken);
-
-        return View(new ModernMethodsConstructionModel(modernMethodsConstruction.ApplicationName, modernMethodsConstruction.HomeTypeName));
+        return await ModernMethodsConstruction(applicationId, homeTypeId, cancellationToken);
     }
 
     [WorkflowState(HomeTypesWorkflowState.ModernMethodsConstructionCategories)]
@@ -1311,9 +1307,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     [HttpGet("{homeTypeId}/modern-methods-construction-2d-subcategories")]
     public async Task<IActionResult> ModernMethodsConstruction2DSubcategories([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
     {
-        var modernMethodsConstruction = await _mediator.Send(new GetModernMethodsConstructionQuery(AhpApplicationId.From(applicationId), HomeTypeId.From(homeTypeId)), cancellationToken);
-
-        return View(new ModernMethodsConstructionModel(modernMethodsConstruction.ApplicationName, modernMethodsConstruction.HomeTypeName));
+        return await ModernMethodsConstruction(applicationId, homeTypeId, cancellationToken);
     }
 
     [WorkflowState(HomeTypesWorkflowState.ModernMethodsConstruction2DSubcategories)]
@@ -1336,9 +1330,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     [HttpGet("{homeTypeId}/modern-methods-construction-3d-subcategories")]
     public async Task<IActionResult> ModernMethodsConstruction3DSubcategories([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
     {
-        var modernMethodsConstruction = await _mediator.Send(new GetModernMethodsConstructionQuery(AhpApplicationId.From(applicationId), HomeTypeId.From(homeTypeId)), cancellationToken);
-
-        return View(new ModernMethodsConstructionModel(modernMethodsConstruction.ApplicationName, modernMethodsConstruction.HomeTypeName));
+        return await ModernMethodsConstruction(applicationId, homeTypeId, cancellationToken);
     }
 
     [WorkflowState(HomeTypesWorkflowState.ModernMethodsConstruction3DSubcategories)]

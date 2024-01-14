@@ -210,7 +210,10 @@ public class CheckAnswersTests
     }
 
     [Fact]
+#pragma warning disable S4144, S1135 // Methods should not have identical implementations
+    //// TODO: Rewrite this test
     public void ThrowValidationError_ChargesDebtIsNotProvided()
+#pragma warning restore S4144, S1135 // Methods should not have identical implementations
     {
         // given
         var project = ProjectTestData.ProjectReadyToBeCompleted();

@@ -170,7 +170,6 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
             deliveryPhaseDetails.Name,
             deliveryPhaseDetails.AcquisitionDate,
             deliveryPhaseDetails.AcquisitionPaymentDate));
->>>>>>> origin/main
     }
 
     [WorkflowState(DeliveryPhaseWorkflowState.AcquisitionMilestone)]
@@ -200,7 +199,6 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
             deliveryPhaseDetails.Name,
             deliveryPhaseDetails.StartOnSiteDate,
             deliveryPhaseDetails.StartOnSitePaymentDate));
->>>>>>> origin/main
     }
 
     [WorkflowState(DeliveryPhaseWorkflowState.StartOnSiteMilestone)]
@@ -230,7 +228,6 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
             deliveryPhaseDetails.Name,
             deliveryPhaseDetails.PracticalCompletionDate,
             deliveryPhaseDetails.PracticalCompletionPaymentDate));
->>>>>>> origin/main
     }
 
     [WorkflowState(DeliveryPhaseWorkflowState.PracticalCompletionMilestone)]
@@ -290,22 +287,21 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         var account = await _userContext.GetSelectedAccount();
         var organisation = account.SelectedOrganisation();
 
-        // TODO: #66086 - we need to pass deliveryPhase to workflow logic
-        // var deliveryPhase = currentState != DeliveryPhaseWorkflowState.Create
-        //     ? await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(this.GetApplicationIdFromRoute(), this.GetDeliveryPhaseIdFromRoute()), CancellationToken.None)
-        //     : null;
+#pragma warning disable S1135 // Track uses of "TODO" tags
+        //// TODO: #66086 - we need to pass deliveryPhase to workflow logic
+        //// var deliveryPhase = currentState != DeliveryPhaseWorkflowState.Create
+        ////     ? await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(this.GetApplicationIdFromRoute(), this.GetDeliveryPhaseIdFromRoute()), CancellationToken.None)
+        ////     : null;
+#pragma warning restore S1135 // Track uses of "TODO" tags
+
         return new DeliveryPhaseWorkflow(currentState, organisation.IsUnregisteredBody);
     }
 
-<<<<<<< HEAD
-    private MilestoneViewModel CreateMilestoneViewModel()
-=======
     private MilestoneViewModel CreateMilestoneViewModel(
-        string applicationName,
-        string? deliveryPhaseName,
-        DateDetails? milestoneDate,
-        DateDetails? milestonePaymentDate)
->>>>>>> origin/main
+            string applicationName,
+            string? deliveryPhaseName,
+            DateDetails? milestoneDate,
+            DateDetails? milestonePaymentDate)
     {
         return new MilestoneViewModel(
             this.GetApplicationIdFromRoute().Value,

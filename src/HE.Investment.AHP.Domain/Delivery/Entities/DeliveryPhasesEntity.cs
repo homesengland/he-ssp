@@ -147,7 +147,7 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
             if (notCompletedDeliveryPhases.Any())
             {
                 throw new DomainValidationException(new OperationResult().AddValidationErrors(
-                    notCompletedDeliveryPhases.Select(x => new ErrorItem($"DeliveryPhase-{x.Id}", $"Complete {x?.Name?.Value} to save and continue"))
+                    notCompletedDeliveryPhases.Select(x => new ErrorItem($"DeliveryPhase-{x.Id}", $"Complete {x.Name?.Value} to save and continue"))
                         .ToList()));
             }
 

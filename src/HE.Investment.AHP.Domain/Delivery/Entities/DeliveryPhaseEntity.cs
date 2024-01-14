@@ -138,8 +138,10 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
     {
         if (!IsAnswered())
         {
+#pragma warning disable S1135 // Track uses of "TODO" tags
             // TODO #67047: throw and handle exception
             throw new DomainValidationException("Cannot complete deliveryPhase.");
+#pragma warning restore S1135 // Track uses of "TODO" tags
         }
 
         Status = _modificationTracker.Change(Status, SectionStatus.Completed);

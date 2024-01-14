@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.WWW.Views.Delivery.Const;
@@ -17,6 +18,7 @@ public class BuildActivityTypeTests : ViewTestBase
     [Theory]
     [InlineData(null)]
     [InlineData(TypeOfHomes.NewBuild)]
+    [SuppressMessage("Blocker Code Smell", "S2699:Tests should include assertions", Justification = "Error in the Sonarlint library when using AngleSharp")]
     public async Task ShouldDisplayRadiosForNewBuild_WhenTypeOfHomesIsNotProvided(TypeOfHomes? typeOfHomes)
     {
         var model = new DeliveryPhaseDetails(
@@ -49,6 +51,7 @@ public class BuildActivityTypeTests : ViewTestBase
     }
 
     [Fact]
+    [SuppressMessage("Blocker Code Smell", "S2699:Tests should include assertions", Justification = "Error in the Sonarlint library when using AngleSharp")]
     public async Task ShouldDisplayRadiosForRehab_WhenTypeOfHomesIsRehab()
     {
         var model = new DeliveryPhaseDetails(

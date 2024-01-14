@@ -44,6 +44,7 @@ public class SchemeWorkflow : IStateRouting<SchemeWorkflowState>
             return targetState;
         }
 
+#pragma warning disable S2589 // Boolean expressions should not be gratuitous
         return _scheme switch
         {
             { RequiredFunding: var x } when x.IsNotProvided() => SchemeWorkflowState.Funding,
@@ -55,6 +56,7 @@ public class SchemeWorkflow : IStateRouting<SchemeWorkflowState>
             { StakeholderDiscussionsReport: var x } when x.IsNotProvided() => SchemeWorkflowState.StakeholderDiscussions,
             _ => SchemeWorkflowState.CheckAnswers,
         };
+#pragma warning restore S2589 // Boolean expressions should not be gratuitous
     }
 
     private void ConfigureTransitions()

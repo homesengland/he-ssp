@@ -16,6 +16,8 @@ internal static class ProjectMapper
 
         var startDate = project.StartDate?.Value;
 
+        var locationOption = DetermineLocationOption(project);
+
         return new ProjectViewModel
         {
             ProjectId = project.Id!.Value,
@@ -30,7 +32,7 @@ internal static class ProjectMapper
             ApplicationId = loanApplicationId.Value,
             PlanningReferenceNumberExists = project.PlanningReferenceNumber?.Exists.MapToCommonResponse(),
             PlanningReferenceNumber = project.PlanningReferenceNumber?.Value,
-            LocationOption = project.Coordinates is not null ? ProjectFormOption.Coordinates : project.LandRegistryTitleNumber is not null ? ProjectFormOption.LandRegistryTitleNumber : null,
+            LocationOption = locationOption,
             LocationCoordinates = project.Coordinates?.Value,
             LocationLandRegistry = project.LandRegistryTitleNumber?.Value,
             Ownership = project.LandOwnership?.ApplicantHasFullOwnership.MapToCommonResponse(),
@@ -57,5 +59,20 @@ internal static class ProjectMapper
             PlanningPermissionStatus = PlanningPermissionStatusMapper.MapToString(project.PlanningPermissionStatus),
             Status = project.Status,
         };
+    }
+
+    private static string? DetermineLocationOption(Project project)
+    {
+        string? locationOption = null;
+        if (project.Coordinates is not null)
+        {
+            locationOption = ProjectFormOption.Coordinates;
+        }
+        else if (project.LandRegistryTitleNumber is not null)
+        {
+            locationOption = ProjectFormOption.LandRegistryTitleNumber;
+        }
+
+        return locationOption;
     }
 }

@@ -5,9 +5,6 @@ namespace HE.Investments.Common.Workflow;
 public class EncodedWorkflow<TState>
     where TState : struct, Enum
 {
-    // ReSharper disable once StaticMemberInGenericType - Static value does not depend on generic constraint
-    private static readonly char[] WorkflowCodeChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".ToCharArray();
-
     private readonly IReadOnlyCollection<TState> _availableStates;
 
     public EncodedWorkflow(Predicate<TState> canBeAccessed)
@@ -45,12 +42,12 @@ public class EncodedWorkflow<TState>
 
     private static char Encode(TState state)
     {
-        return WorkflowCodeChars[Convert.ToInt32(state, CultureInfo.InvariantCulture)];
+        return EncodedWorkflowHelpers.WorkflowCodeChars[Convert.ToInt32(state, CultureInfo.InvariantCulture)];
     }
 
     private static TState Decode(char state)
     {
-        var enumValue = Array.IndexOf(WorkflowCodeChars, state);
+        var enumValue = Array.IndexOf(EncodedWorkflowHelpers.WorkflowCodeChars, state);
         if (enumValue < 0)
         {
             throw new InvalidOperationException($"Workflow cannot be decoded '{state}' is not valid.");

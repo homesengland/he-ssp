@@ -3,4 +3,12 @@ using HE.Investments.Loans.Contract.Application.ValueObjects;
 
 namespace HE.Investments.Loans.Contract.Application.Events;
 
-public record LoanApplicationSectionHasBeenCompletedAgainEvent(LoanApplicationId LoanApplicationId) : IDomainEvent;
+public class LoanApplicationSectionHasBeenCompletedAgainEvent : DomainEvent
+{
+    public LoanApplicationSectionHasBeenCompletedAgainEvent(LoanApplicationId loanApplicationId)
+    {
+        LoanApplicationId = loanApplicationId;
+    }
+
+    public LoanApplicationId LoanApplicationId { get; private set; }
+}

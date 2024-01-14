@@ -27,8 +27,6 @@ public class ApplicationProjects
 
     public IReadOnlyCollection<Project> Projects => _projects.AsReadOnly();
 
-    public IList<Project> ActiveProjects => Projects.Where(p => !p.IsSoftDeleted).ToList();
-
     public Project AddEmptyProject()
     {
         var project = new Project();
@@ -58,5 +56,10 @@ public class ApplicationProjects
         projectToRemove.Delete();
 
         return projectToRemove;
+    }
+
+    internal IList<Project> GetActiveProjects()
+    {
+        return Projects.Where(p => !p.IsSoftDeleted).ToList();
     }
 }

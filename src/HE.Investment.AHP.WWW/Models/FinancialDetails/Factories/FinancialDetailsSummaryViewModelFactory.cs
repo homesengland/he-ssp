@@ -1,4 +1,4 @@
-﻿using HE.Investment.AHP.Contract.Application;
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.FinancialDetails.Queries;
 using HE.Investment.AHP.WWW.Controllers;
@@ -82,13 +82,28 @@ public class FinancialDetailsSummaryViewModelFactory : IFinancialDetailsSummaryV
                 "Public land",
                 new List<string>
                 {
-                    landValueSummary.IsPublicLand.HasValue ? landValueSummary.IsPublicLand.Value ? CommonResponse.Yes : CommonResponse.No : "Not provided",
+                    IsPublicLand(landValueSummary),
                 },
                 CreateFinancialDetailsActionUrl(urlHelper, applicationId, nameof(FinancialDetailsController.LandValue)),
                 IsEditable: !isReadOnly),
         };
 
         return new SectionSummaryViewModel("Land value", landValueItems);
+    }
+
+    private static string IsPublicLand(LandValueSummary landValueSummary)
+    {
+        if (landValueSummary.IsPublicLand.HasValue)
+        {
+            if (landValueSummary.IsPublicLand.Value)
+            {
+                return CommonResponse.Yes;
+            }
+
+            return CommonResponse.No;
+        }
+
+        return "Not provided";
     }
 
     private static SectionSummaryViewModel GetCostsSectionSummary(TotalSchemeCost totalSchemeCost, AhpApplicationId applicationId, bool isReadOnly, IUrlHelper urlHelper)

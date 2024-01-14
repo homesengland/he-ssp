@@ -3,7 +3,7 @@ using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 
 namespace HE.Investment.AHP.Domain.Tests.Delivery.Entities.TestDataBuilders;
 
-public class MilestonePaymentDateFactory
+public static class MilestonePaymentDateFactory
 {
     public static MilestonePaymentDate GetDateDayAfter(MilestonePaymentDate? date)
     {

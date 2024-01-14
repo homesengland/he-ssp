@@ -4,4 +4,7 @@ namespace HE.Investments.Loans.BusinessLogic.LoanApplication.Notifications;
 
 public class SectionCompletedAgainNotification : Notification
 {
+    public SectionCompletedAgainNotification()
+    {
+    }
 }

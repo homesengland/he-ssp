@@ -17,8 +17,7 @@ internal static class ApplicationProjectsMapper
         var projectsFromCrm = loanApplicationDto.siteDetailsList.Select(
             projectFromCrm =>
             {
-                var startDateExists = projectFromCrm.projectHasStartDate;
-                var startDate = startDateExists.IsNotProvided() ? null : startDateExists!.Value ? new StartDate(true, new ProjectDate(projectFromCrm.startDate!.Value)) : new StartDate(false, null);
+                var startDate = DetermineStartDate(projectFromCrm);
 
                 return new Project(
                          ProjectId.From(projectFromCrm.siteDetailsId),
@@ -43,5 +42,22 @@ internal static class ApplicationProjectsMapper
             });
 
         return new ApplicationProjects(loanApplicationId, projectsFromCrm);
+    }
+
+    private static StartDate? DetermineStartDate(SiteDetailsDto projectFromCrm)
+    {
+        var startDateExists = projectFromCrm.projectHasStartDate;
+
+        if (startDateExists.IsNotProvided())
+        {
+            return null;
+        }
+
+        if (startDateExists.HasValue)
+        {
+            return new StartDate(true, new ProjectDate(projectFromCrm.startDate!.Value));
+        }
+
+        return new StartDate(false, null);
     }
 }

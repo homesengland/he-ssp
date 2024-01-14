@@ -22,7 +22,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HE.Investments.Loans.WWW.Controllers;
 
 [Route("application")]
-[AuthorizeWithCompletedProfileAttribute]
+[AuthorizeWithCompletedProfile]
 public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWorkflow.State>
 {
     private readonly IMediator _mediator;
@@ -180,7 +180,9 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
 
     [HttpPost("{id}/resubmit")]
     [WorkflowState(LoanApplicationWorkflow.State.ResubmitApplication)]
+#pragma warning disable S4144 // Methods should not have identical implementations
     public async Task<IActionResult> Resubmit(Guid id)
+#pragma warning restore S4144 // Methods should not have identical implementations
     {
         await _mediator.Send(new SubmitLoanApplicationCommand(LoanApplicationId.From(id)));
 

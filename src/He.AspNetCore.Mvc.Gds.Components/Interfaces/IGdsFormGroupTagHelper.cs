@@ -67,7 +67,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.Interfaces
 
             if (errorResult == true && entry != null)
             {
-                return (entry?.Errors.Count > 0, entry);
+                return (entry.Errors.Count > 0, entry);
             }
 
             return (false, null);
