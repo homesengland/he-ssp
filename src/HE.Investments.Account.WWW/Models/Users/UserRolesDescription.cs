@@ -1,4 +1,6 @@
 using HE.Investments.Account.Contract.Users;
+using HE.Investments.Common.WWW.Extensions;
+using HE.Investments.Common.WWW.Models;
 
 namespace HE.Investments.Account.WWW.Models.Users;
 
@@ -25,11 +27,13 @@ public static class UserRolesDescription
         { UserRole.Limited, "Users will be assigned this role when they are initially added. This is an interim role and cannot be selected." },
     };
 
-    public static IDictionary<UserRole, string> ToAssign => All
+    public static IEnumerable<ExtendedSelectListItem> ToAssign => All
         .Where(r => r.Key != UserRole.Limited)
-        .ToDictionary(r => r.Key, r => r.Value);
+        .ToDictionary(r => r.Key, r => r.Value)
+        .ToExtendedSelectList();
 
-    public static IDictionary<UserRole, string> ToInvite => All
+    public static IEnumerable<ExtendedSelectListItem> ToInvite => All
         .Where(r => r.Key is not UserRole.Limited and not UserRole.Admin)
-        .ToDictionary(r => r.Key, r => r.Value);
+        .ToDictionary(r => r.Key, r => r.Value)
+        .ToExtendedSelectList();
 }

@@ -1,37 +1,27 @@
 @using HE.Investment.AHP.WWW.Models.Application
 @using HE.Investment.AHP.WWW.Views.Application
-@using HE.Investments.Common.Extensions
 @using HE.Investments.Common.WWW.Components.BackLinkWithCallback
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.Components.FormHeader
 @using HE.Investments.Common.WWW.Components.RadioList
-@using HE.Investments.Common.WWW.Models
 @model HE.Investment.AHP.WWW.Models.Application.ApplicationBasicModel
 
 @{
     ViewData["Title"] = "Application tenure";
-    var tenures = Tenures.AvailableTenures
-        .Select(r => new ExtendedSelectListItem(
-            r.Key.GetDescription(),
-            r.Key.ToString(),
-            r.Key == Model.Tenure,
-            r.Value))
-        .ToList();
 }
 <gds-div-grid-column-two-thirds>
     <vc:back-link-with-callback url="@Url.Action("Name", "Application", new { applicationName = Model.Name })"/>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <form asp-controller="Application" asp-action="Tenure" asp-method="post" asp-route-applicationName="@Model.Name" novalidate>
         <vc:form-header caption="@Model.Name" title="@ApplicationPageTitles.Tenure"/>
-        <gds-field-set role="group">
-            @Html.HiddenFor(m => m.Name)
 
-            <vc:radio-list
-                hint="You cannot change the tenure once you have started this application. If you want to change the tenure, you will have to start a new application."
-                field-name="@(nameof(Model.Tenure))"
-                available-options="@tenures"/>
+        @Html.HiddenFor(m => m.Name)
 
-        </gds-field-set>
+        <vc:radio-list
+            hint="You cannot change the tenure once you have started this application. If you want to change the tenure, you will have to start a new application."
+            field-name="@(nameof(Model.Tenure))"
+            available-options="@Tenures.AvailableTenures"
+            value="@Model.Tenure"/>
 
         <gds-details>
             <gds-summary-details>What is tenure?</gds-summary-details>

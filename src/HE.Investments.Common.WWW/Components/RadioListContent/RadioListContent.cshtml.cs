@@ -8,8 +8,9 @@ public class RadioListContent : ViewComponent
 {
     public IViewComponentResult Invoke(
         string fieldName,
-        IList<ExtendedSelectListItem> availableOptions)
+        IEnumerable<ExtendedSelectListItem> availableOptions,
+        string? value = null)
     {
-        return View("RadioListContent", (fieldName, availableOptions));
+        return View("RadioListContent", (fieldName, availableOptions, value));
     }
 }

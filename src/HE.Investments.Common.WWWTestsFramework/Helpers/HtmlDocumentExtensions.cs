@@ -21,4 +21,11 @@ public static class HtmlDocumentExtensions
     {
         return htmlDocument.QuerySelectorAll($"a[href=\"#{href}\"]").ToList();
     }
+
+    public static IList<IElement> GetHintElements(this IHtmlDocument htmlDocument, string text)
+    {
+        return htmlDocument.QuerySelectorAll("div.govuk-hint")
+            .Where(e => e.ChildElementCount == 0 && e.TextContent.Contains(text))
+            .ToList();
+    }
 }

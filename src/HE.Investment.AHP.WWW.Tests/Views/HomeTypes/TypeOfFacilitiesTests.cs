@@ -27,8 +27,8 @@ public class TypeOfFacilitiesTests : HomeTypesTestBase
                     "Shared facilities",
                     "Mix of self-contained snd shared facilities",
                 })
-            .HasElementWithText("span", "Resident has use of their own facilities, such as bathroom and kitchen, within their own home.")
-            .HasElementWithText("span", "Residents have their own room or rooms but facilities, such as bathroom and kitchen, are shared with others.")
+            .HasInputHint("Resident has use of their own facilities, such as bathroom and kitchen, within their own home.")
+            .HasInputHint("Residents have their own room or rooms but facilities, such as bathroom and kitchen, are shared with others.")
             .HasElementWithText("button", "Save and continue");
     }
 }

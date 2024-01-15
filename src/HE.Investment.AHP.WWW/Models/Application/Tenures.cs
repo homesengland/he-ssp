@@ -1,10 +1,12 @@
 using HE.Investment.AHP.Contract.Application;
+using HE.Investments.Common.WWW.Extensions;
+using HE.Investments.Common.WWW.Models;
 
 namespace HE.Investment.AHP.WWW.Models.Application;
 
 public static class Tenures
 {
-    public static IDictionary<Tenure, string> AvailableTenures => new Dictionary<Tenure, string>
+    private static readonly Dictionary<Tenure, string> TenuresList = new()
     {
         {
             Tenure.AffordableRent, "Homes let to working households at a lower cost to give them the opportunity to save for a deposit to but their first home."
@@ -24,4 +26,6 @@ public static class Tenures
         },
         { Tenure.OlderPersonsSharedOwnership, "OPSO is a form of Shared Ownership for people aged 55 and over." },
     };
+
+    public static IList<ExtendedSelectListItem> AvailableTenures => TenuresList.ToExtendedSelectList();
 }

@@ -29,8 +29,6 @@ public static class HomeTypesFormOptions
 
     public static IEnumerable<SelectListItem> BuildingType => SelectListHelper.FromEnum<BuildingType>();
 
-    public static IEnumerable<SelectListItem> FacilityType => SelectListHelper.FromEnum<FacilityType>();
-
     public static IEnumerable<SelectListItem> AccessibilityCategoryType => SelectListHelper.FromEnum<AccessibilityCategoryType>();
 
     public static IEnumerable<SelectListItem> NationallyDescribedSpaceStandardsExceptNone => SelectListHelper.FromEnum<NationallyDescribedSpaceStandardType>()
