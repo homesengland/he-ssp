@@ -7,11 +7,12 @@ namespace HE.Investment.AHP.Domain.Site.Entities;
 
 public class SiteEntity
 {
-    public SiteEntity(SiteId id, SiteName name)
+    public SiteEntity(SiteId id, SiteName name, Section106Entity? section106 = null)
     {
         Id = id;
         Name = name;
         Status = SiteStatus.NotReady;
+        Section106 = section106;
     }
 
     public SiteEntity()
@@ -25,7 +26,7 @@ public class SiteEntity
 
     public SiteName Name { get; private set; }
 
-    public SiteSection106Agreement? SiteSection106Agreement { get; private set; }
+    public Section106Entity? Section106 { get; private set; }
 
     public string? LocalAuthority { get; }
 
@@ -43,10 +44,8 @@ public class SiteEntity
         Name = siteName;
     }
 
-    public async Task ProvideSection106Agreement(SiteSection106Agreement siteSection106Agreement, CancellationToken cancellationToken)
+    public void ProvideSection106(Section106Entity section106Entity)
     {
-        await Task.Run(
-            () => SiteSection106Agreement = siteSection106Agreement,
-            cancellationToken);
+        Section106 = section106Entity;
     }
 }

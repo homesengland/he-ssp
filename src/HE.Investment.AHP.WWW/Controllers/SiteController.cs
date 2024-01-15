@@ -1,11 +1,14 @@
 using System.Threading;
+using He.AspNetCore.Mvc.Gds.Components.Extensions;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Commands;
 using HE.Investment.AHP.Contract.Site.Queries;
 using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Account.Shared.Authorization.Attributes;
+using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
+using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Routing;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -82,24 +85,18 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     }
 
     [HttpGet("{siteId}/section-106-agreement")]
-    [WorkflowState(SiteWorkflowState.Section106Agreement)]
-    public async Task<IActionResult> Section106Agreement(string? siteId, CancellationToken cancellationToken)
+    [WorkflowState(SiteWorkflowState.Section106GeneralAgreement)]
+    public async Task<IActionResult> Section106Agreement([FromRoute] string siteId, CancellationToken cancellationToken)
     {
-        SiteModel siteModel = new();
-        if (siteId.IsProvided())
-        {
-            siteModel = await _mediator.Send(new GetSiteQuery(siteId!), cancellationToken);
-        }
-
+        var siteModel = await _mediator.Send(new GetSiteQuery(siteId), cancellationToken);
         return View("Section106Agreement", siteModel);
     }
 
-    [HttpPost("name")]
     [HttpPost("{siteId}/section-106-agreement")]
-    [WorkflowState(SiteWorkflowState.Section106Agreement)]
-    public async Task<IActionResult> Section106Agreement(string? siteId, SiteModel model, CancellationToken cancellationToken)
+    [WorkflowState(SiteWorkflowState.Section106GeneralAgreement)]
+    public async Task<IActionResult> Section106Agreement([FromRoute] string siteId, SiteModel model, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new ProvideNameCommand(siteId ?? model.Id, model.Name), cancellationToken);
+        var result = await _mediator.Send(new ProvideSection106AgreementCommand(siteId, model.Section106GeneralAgreement), cancellationToken);
         if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
@@ -109,8 +106,17 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         return await Continue();
     }
 
-    protected override Task<IStateRouting<SiteWorkflowState>> Routing(SiteWorkflowState currentState, object? routeData = null)
+    protected override async Task<IStateRouting<SiteWorkflowState>> Routing(SiteWorkflowState currentState, object? routeData = null)
     {
-        return Task.FromResult<IStateRouting<SiteWorkflowState>>(new SiteWorkflow(currentState));
+        SiteModel? siteModel = null;
+        var siteId = Request.GetRouteValue("siteId")
+                            ?? routeData?.GetPropertyValue<string>("siteId")
+                            ?? string.Empty;
+        if (siteId.IsNotNullOrEmpty())
+        {
+            siteModel = await _mediator.Send(new GetSiteQuery(siteId));
+        }
+
+        return await Task.FromResult<IStateRouting<SiteWorkflowState>>(new SiteWorkflow(currentState, siteModel));
     }
 }

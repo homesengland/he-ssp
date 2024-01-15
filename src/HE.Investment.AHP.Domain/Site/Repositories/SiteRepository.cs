@@ -64,7 +64,7 @@ public class SiteRepository : ISiteRepository
             new(new SiteId("5"), new SiteName("Mocked Site 5")),
             new(new SiteId("6"), new SiteName("Mocked Site Dawidex")),
             new(new SiteId("7"), new SiteName("Mocked Site 7")),
-            new(new SiteId("8"), new SiteName("Mocked Site Rafus")),
+            new(new SiteId("8"), new SiteName("Mocked Site Rafus"), new Section106Entity(true, false, null, null, null, null)),
             new(new SiteId("9"), new SiteName("Mocked Site 9")),
             new(new SiteId("10"), new SiteName("Mocked Site 10")),
         };

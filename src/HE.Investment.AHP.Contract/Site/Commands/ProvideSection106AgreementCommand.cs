@@ -3,4 +3,4 @@ using MediatR;
 
 namespace HE.Investment.AHP.Contract.Site.Commands;
 
-public record ProvideSection106AgreementCommand(string? SiteId, bool? Agreement) : IRequest<OperationResult>;
+public record ProvideSection106AgreementCommand(string SiteId, bool? Agreement) : IRequest<OperationResult>;

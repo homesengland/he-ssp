@@ -17,13 +17,15 @@ public class ProvideSection106AgreementCommandHandler : SiteBaseCommandHandler, 
     {
     }
 
-    public async Task<OperationResult> Handle(ProvideSection106AgreementCommand request, CancellationToken cancellationToken)
+    public Task<OperationResult> Handle(ProvideSection106AgreementCommand request, CancellationToken cancellationToken)
     {
-        return await Perform(
-            async site =>
+        return Perform(
+            site =>
             {
-                var agreement = new SiteSection106Agreement(request.Agreement);
-                await site.ProvideSection106Agreement(agreement, cancellationToken);
+                var section106 = site.Section106 ?? new Entities.Section106Entity();
+                section106.ProvideGeneralAgreement(request.Agreement);
+                site.ProvideSection106(section106);
+                return Task.FromResult(OperationResult.Success());
             },
             new SiteId(request.SiteId!),
             cancellationToken);

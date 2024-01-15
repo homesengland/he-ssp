@@ -7,7 +7,7 @@
     ViewData["Title"] = SitePageTitles.SiteSection106Agreement;
 }
 <gds-div-grid-column-two-thirds>
-    <gds-back-link href=@(Url.Action("Back", "Site", new { currentPage = SiteWorkflowState.Section106Agreement, siteId = Model?.Id })!) class="govuk-!-margin-bottom-8"></gds-back-link>
+    <gds-back-link href=@(Url.Action("Back", "Site", new { currentPage = SiteWorkflowState.Section106GeneralAgreement, siteId = Model?.Id })!) class="govuk-!-margin-bottom-8"></gds-back-link>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
     <form asp-controller="Site" asp-action="Section106Agreement" asp-method="post" novalidate>
@@ -30,9 +30,9 @@
             discuss funding eligibility with your Growth Manager.
         </gds-p>
 
-        <vc:radio-yes-no field-name="IsSection106AgreementInPlace"
+        <vc:radio-yes-no field-name="Section106GeneralAgreement"
             title="Is there a s106 agreement in place, or in discussion, for this site?"
-            value="@Model?.IsSection106AgreementInPlace"/>
+            value="@Model?.Section106GeneralAgreement"/>
 
         @Html.HiddenFor(x => x.Id)
 
