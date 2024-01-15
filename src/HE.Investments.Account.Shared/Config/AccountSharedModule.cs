@@ -15,6 +15,7 @@ public static class AccountSharedModule
         services.AddScoped<IAccountAccessContext, AccountAccessContext>();
         services.AddScoped<IAccountRepository, AccountCrmRepository>();
         services.AddScoped<IOrganizationRepository, OrganizationRepository>();
+        services.AddScoped<IProgrammeRepository, ProgrammeRepository>();
 
         if (useAccountService)
         {

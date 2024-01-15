@@ -7,6 +7,7 @@ using HE.Investments.Account.Domain.Tests.Organisation.TestData;
 using HE.Investments.Account.Domain.Tests.Organisation.TestObjectBuilder;
 using HE.Investments.Account.Domain.Tests.TestData;
 using HE.Investments.Account.Domain.Tests.User.TestData;
+using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.Contract;
@@ -54,7 +55,7 @@ public class GetBasicInformationTests : TestBase<OrganizationRepository>
         // given
         var organizationDetailsDto = OrganizationDetailsDtoTestData.OrganizationDetailsDto;
         var userAccount = UserAccountTestData.UserAccountOne;
-        var fakeUserAccount = new UserAccount(UserGlobalId.From("FakeId"), string.Empty, new OrganisationId(GuidTestData.GuidTwo), string.Empty, Array.Empty<UserRole>());
+        var fakeUserAccount = new UserAccount(UserGlobalId.From("FakeId"), string.Empty, new OrganisationBasicInfo(new OrganisationId(GuidTestData.GuidTwo), false), string.Empty, Array.Empty<UserRole>());
 
         OrganizationServiceMockTestBuilder
             .New()
@@ -67,7 +68,7 @@ public class GetBasicInformationTests : TestBase<OrganizationRepository>
         var action = () => TestCandidate.GetBasicInformation(fakeUserAccount.SelectedOrganisationId(), CancellationToken.None);
 
         // then
-        await action.Should().ThrowExactlyAsync<NotFoundException>().WithMessage($"*{fakeUserAccount.OrganisationId}*");
+        await action.Should().ThrowExactlyAsync<NotFoundException>().WithMessage($"*{fakeUserAccount.Organisation!.OrganisationId}*");
     }
 
     private void RegisterUserContext(string userGlobalId)

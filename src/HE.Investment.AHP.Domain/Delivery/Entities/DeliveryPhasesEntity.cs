@@ -7,6 +7,7 @@ using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
+using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
@@ -85,24 +86,25 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
         }
     }
 
-    public DeliveryPhaseEntity CreateDeliveryPhase(DeliveryPhaseName name)
+    public DeliveryPhaseEntity CreateDeliveryPhase(DeliveryPhaseName name, OrganisationBasicInfo organisationBasicInfo)
     {
-        // TODO: get proper organisation basic info
-        var orgBasicInfo = new OrganisationBasicInfo(false);
         var deliveryPhaseNameAlreadyUsed = _deliveryPhases.Any(x => x.Name == name);
         if (deliveryPhaseNameAlreadyUsed)
         {
-            OperationResult.New().AddValidationError(nameof(DeliveryPhaseName), "Provided delivery phase name is already in use. Delivery phase name should be unique.").CheckErrors();
+            OperationResult.New()
+                .AddValidationError(nameof(DeliveryPhaseName), "Provided delivery phase name is already in use. Delivery phase name should be unique.")
+                .CheckErrors();
         }
 
         var deliveryPhase = new DeliveryPhaseEntity(
             _application,
             name,
-            orgBasicInfo,
+            organisationBasicInfo,
             null,
             new BuildActivity(_application.Tenure),
             SectionStatus.InProgress,
-            new List<HomesToDeliverInPhase>());
+            Array.Empty<HomesToDeliverInPhase>(),
+            new DeliveryPhaseMilestones(organisationBasicInfo));
 
         _deliveryPhases.Add(deliveryPhase);
         return deliveryPhase;
@@ -145,7 +147,8 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
             if (notCompletedDeliveryPhases.Any())
             {
                 throw new DomainValidationException(new OperationResult().AddValidationErrors(
-                    notCompletedDeliveryPhases.Select(x => new ErrorItem($"DeliveryPhase-{x.Id}", $"Complete {x?.Name?.Value} to save and continue")).ToList()));
+                    notCompletedDeliveryPhases.Select(x => new ErrorItem($"DeliveryPhase-{x.Id}", $"Complete {x?.Name?.Value} to save and continue"))
+                        .ToList()));
             }
 
             if (!AreAllHomeTypesUsed())
@@ -178,7 +181,7 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
     }
 
     public DeliveryPhaseEntity GetEntityById(DeliveryPhaseId deliveryPhaseId) => _deliveryPhases.SingleOrDefault(x => x.Id == deliveryPhaseId)
-                                                                                  ?? throw new NotFoundException(nameof(DeliveryPhaseEntity), deliveryPhaseId);
+                                                                                 ?? throw new NotFoundException(nameof(DeliveryPhaseEntity), deliveryPhaseId);
 
     private bool AreAllHomeTypesUsed()
     {

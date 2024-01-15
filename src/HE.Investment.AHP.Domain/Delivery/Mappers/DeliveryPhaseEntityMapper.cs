@@ -16,11 +16,10 @@ public static class DeliveryPhaseEntityMapper
             deliveryPhase.Id.Value,
             deliveryPhase.Name?.Value,
             deliveryPhase.TotalHomesToBeDeliveredInThisPhase,
-            DateHelper.ToDateOnlyString(deliveryPhase.AcquisitionMilestone?.AcquisitionDate?.Value),
-            DateHelper.ToDateOnlyString(deliveryPhase.StartOnSiteMilestone?.StartOnSiteDate?.Value),
-            DateHelper.ToDateOnlyString(deliveryPhase.CompletionMilestone?.CompletionDate?.Value));
+            DateHelper.ToDateOnlyString(deliveryPhase.DeliveryPhaseMilestones.AcquisitionMilestone?.PaymentDate?.Value),
+            DateHelper.ToDateOnlyString(deliveryPhase.DeliveryPhaseMilestones?.StartOnSiteMilestone?.PaymentDate?.Value),
+            DateHelper.ToDateOnlyString(deliveryPhase.DeliveryPhaseMilestones?.CompletionMilestone?.PaymentDate?.Value));
     }
-
 
     public static DateDetails? MapDate(DateValueObject? date)
     {

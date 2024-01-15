@@ -46,6 +46,6 @@ public class GetSchemeQueryHandler : IRequestHandler<GetApplicationSchemeQuery, 
             return null;
         }
 
-        return new UploadedFile(fileContainer.File.Id.Value, fileContainer.File.Name.Value, fileContainer.File.UploadedOn, fileContainer.File.UploadedBy, true);
+        return new UploadedFile(fileContainer.File.Id, fileContainer.File.Name.Value, fileContainer.File.UploadedOn, fileContainer.File.UploadedBy, true);
     }
 }

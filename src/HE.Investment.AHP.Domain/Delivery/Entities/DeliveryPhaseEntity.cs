@@ -2,7 +2,9 @@ using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Domain.Common;
+using HE.Investment.AHP.Domain.Delivery.Policies;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
+using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Domain;
@@ -24,11 +26,9 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
         BuildActivity buildActivity,
         SectionStatus status,
         IEnumerable<HomesToDeliverInPhase> homesToDeliver,
+        DeliveryPhaseMilestones milestones,
         DeliveryPhaseId? id = null,
         DateTime? createdOn = null,
-        AcquisitionMilestoneDetails? acquisitionMilestone = null,
-        StartOnSiteMilestoneDetails? startOnSiteMilestone = null,
-        CompletionMilestoneDetails? completionMilestone = null,
         IsAdditionalPaymentRequested? isAdditionalPaymentRequested = null)
     {
         Application = application;
@@ -39,9 +39,7 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
         Status = status;
         Id = id ?? DeliveryPhaseId.New();
         CreatedOn = createdOn;
-        AcquisitionMilestone = acquisitionMilestone;
-        StartOnSiteMilestone = startOnSiteMilestone;
-        CompletionMilestone = completionMilestone;
+        DeliveryPhaseMilestones = milestones;
         IsAdditionalPaymentRequested = isAdditionalPaymentRequested;
         _homesToDeliver = homesToDeliver.ToList();
     }
@@ -70,11 +68,7 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
 
     public int TotalHomesToBeDeliveredInThisPhase => _homesToDeliver.Select(x => x.ToDeliver).Sum();
 
-    public AcquisitionMilestoneDetails? AcquisitionMilestone { get; private set; }
-
-    public StartOnSiteMilestoneDetails? StartOnSiteMilestone { get; private set; }
-
-    public CompletionMilestoneDetails? CompletionMilestone { get; private set; }
+    public DeliveryPhaseMilestones DeliveryPhaseMilestones { get; private set; }
 
     public IsAdditionalPaymentRequested? IsAdditionalPaymentRequested { get; private set; }
 
@@ -113,29 +107,11 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
         Name = _modificationTracker.Change(Name, deliveryPhaseName, MarkAsNotCompleted);
     }
 
-    public void ProvideAcquisitionMilestoneDetails(AcquisitionMilestoneDetails? details)
+    public async Task ProvideDeliveryPhaseMilestones(DeliveryPhaseMilestones milestones, IMilestoneDatesInProgrammeDateRangePolicy policy)
     {
-        if (Organisation.IsUnregisteredBody)
-        {
-            throw new DomainValidationException("Cannot provide Acquisition Milestone details for Unregistered Body Partner.");
-        }
+        await policy.Validate(milestones);
 
-        AcquisitionMilestone = _modificationTracker.Change(AcquisitionMilestone, details, MarkAsNotCompleted);
-    }
-
-    public void ProvideStartOnSiteMilestoneDetails(StartOnSiteMilestoneDetails? details)
-    {
-        if (Organisation.IsUnregisteredBody)
-        {
-            throw new DomainValidationException("Cannot provide Start On Site Milestone details for Unregistered Body Partner.");
-        }
-
-        StartOnSiteMilestone = _modificationTracker.Change(StartOnSiteMilestone, details, MarkAsNotCompleted);
-    }
-
-    public void ProvideCompletionMilestoneDetails(CompletionMilestoneDetails? details)
-    {
-        CompletionMilestone = _modificationTracker.Change(CompletionMilestone, details, MarkAsNotCompleted);
+        DeliveryPhaseMilestones = _modificationTracker.Change(DeliveryPhaseMilestones, milestones, MarkAsNotCompleted);
     }
 
     public void ProvideTypeOfHomes(TypeOfHomes typeOfHomes)
@@ -178,13 +154,11 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
     {
         if (Organisation.IsUnregisteredBody)
         {
-            return CompletionMilestone != null && CompletionMilestone.IsAnswered() &&
+            return DeliveryPhaseMilestones.IsAnswered() &&
                    IsAdditionalPaymentRequested != null && IsAdditionalPaymentRequested.IsAnswered();
         }
 
-        return AcquisitionMilestone != null && AcquisitionMilestone.IsAnswered() &&
-               StartOnSiteMilestone != null && StartOnSiteMilestone.IsAnswered() &&
-               CompletionMilestone != null && CompletionMilestone.IsAnswered();
+        return DeliveryPhaseMilestones.IsAnswered();
     }
 
     private void MarkAsNotCompleted()

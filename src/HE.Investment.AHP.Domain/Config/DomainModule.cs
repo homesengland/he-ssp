@@ -1,6 +1,7 @@
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.Data;
+using HE.Investment.AHP.Domain.Delivery.Policies;
 using HE.Investment.AHP.Domain.Delivery.Repositories;
 using HE.Investment.AHP.Domain.Documents.Config;
 using HE.Investment.AHP.Domain.Documents.Crm;
@@ -95,5 +96,6 @@ public static class DomainModule
     private static void AddDelivery(IServiceCollection services)
     {
         services.AddScoped<IDeliveryPhaseRepository, DeliveryPhaseRepository>();
+        services.AddScoped<IMilestoneDatesInProgrammeDateRangePolicy, MilestoneDatesInProgrammeDateRangePolicy>();
     }
 }

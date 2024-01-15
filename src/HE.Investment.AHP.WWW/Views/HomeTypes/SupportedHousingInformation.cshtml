@@ -2,6 +2,7 @@
 @using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.WWW.Models.Common
 @using HE.Investment.AHP.WWW.Models.HomeTypes
+@using HE.Investment.AHP.WWW.Views.HomeTypes.Const
 @using HE.Investment.AHP.WWW.Views.Shared.Components.HomeTypeFormHeader
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
 @model HE.Investment.AHP.WWW.Models.HomeTypes.SupportedHousingInformationModel;
@@ -9,13 +10,14 @@
 @{
     var applicationId = this.GetApplicationIdFromRoute();
     var workflow = Context.Request.Query["workflow"];
+    ViewData["Title"] = HomeTypesPageTitles.SupportedHousingInformation;
 }
 
 <gds-div-grid-column-two-thirds>
     <form asp-controller="HomeTypes" asp-action="SupportedHousingInformation" asp-method="post" asp-route-workflow="@workflow" novalidate>
         @Html.HiddenFor(m => Model.ApplicationName)
         @Html.HiddenFor(m => Model.HomeTypeName)
-        <vc:home-type-form-header title="Supported housing information"
+        <vc:home-type-form-header title="@HomeTypesPageTitles.SupportedHousingInformation"
                                   current-page="@HomeTypesWorkflowState.SupportedHousingInformation"
                                   caption="@Model.Header"/>
         <gds-field-set>

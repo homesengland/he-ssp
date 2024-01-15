@@ -1,9 +1,10 @@
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
+@using HE.Investments.Common.WWW.Extensions
 @model (string name, IList<string> values, string actionUrl, Dictionary<string, string> files, bool isEditable, bool isVisible)
 
 @if (Model.isVisible)
 {
-    <div class="govuk-summary-list__row">
+    <div class="govuk-summary-list__row" data-testId="@($"{Model.name}-summary".ToIdTag())">
         @if (Model.isEditable)
         {
             <dt class="govuk-summary-list__key">

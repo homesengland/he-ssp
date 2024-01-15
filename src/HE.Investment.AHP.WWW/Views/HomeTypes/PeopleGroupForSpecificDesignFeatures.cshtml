@@ -4,11 +4,13 @@
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
 @using HE.Investments.Common.WWW.Helpers
 @using HE.Investment.AHP.Contract.HomeTypes.Enums
+@using HE.Investment.AHP.WWW.Views.HomeTypes.Const
 @model HE.Investment.AHP.WWW.Models.HomeTypes.PeopleGroupForSpecificDesignFeaturesModel;
 
 @{
     var applicationId = this.GetApplicationIdFromRoute();
     var workflow = Context.Request.Query["workflow"];
+    ViewData["Title"] = HomeTypesPageTitles.PeopleGroupForSpecificDesignFeatures;
 
     var radioIndex = 1;
     var radioOptions = SelectListHelper.FromEnum<PeopleGroupForSpecificDesignFeaturesType>()
@@ -25,9 +27,7 @@
 
         <gds-field-set>
             <gds-legend>
-                <gds-h1 class="govuk-!-margin-bottom-0">
-                    Do these homes incorporate specific design features or management arrangements to meet the needs of any of these groups?
-                </gds-h1>
+                <gds-h1 class="govuk-!-margin-bottom-0">@HomeTypesPageTitles.PeopleGroupForSpecificDesignFeatures</gds-h1>
             </gds-legend>
 
             <gds-p>

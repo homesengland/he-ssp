@@ -14,7 +14,7 @@ public class UserAccountTestDataBuilder : TestObjectBuilder<UserAccount>
         Item = new UserAccount(
             UserGlobalId.From("user-1"),
             "test@email.com",
-            new OrganisationId("00000000-0000-0000-0000-000000000001"),
+            new OrganisationBasicInfo(new OrganisationId("00000000-0000-0000-0000-000000000001"), false),
             "Organisation 1",
             new List<UserRole>());
     }
@@ -27,7 +27,7 @@ public class UserAccountTestDataBuilder : TestObjectBuilder<UserAccount>
 
     public UserAccountTestDataBuilder WithOrganisationId(string organisationId)
     {
-        PrivatePropertySetter.SetPropertyWithNoSetter(Item, nameof(Item.OrganisationId), new OrganisationId(organisationId));
+        PrivatePropertySetter.SetPropertyWithNoSetter(Item, nameof(Item.Organisation), new OrganisationBasicInfo(new OrganisationId(organisationId), false));
         return this;
     }
 }

@@ -3,4 +3,4 @@ using HE.Investments.Common.Contract.Infrastructure.Events;
 
 namespace HE.Investment.AHP.Contract.HomeTypes.Events;
 
-public record HomeTypeHasBeenRemovedEvent(AhpApplicationId ApplicationId, string HomeTypeId) : DomainEvent;
+public record HomeTypeHasBeenRemovedEvent(AhpApplicationId ApplicationId, HomeTypeId HomeTypeId) : DomainEvent;

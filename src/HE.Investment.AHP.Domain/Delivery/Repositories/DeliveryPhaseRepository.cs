@@ -4,7 +4,6 @@ using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Events;
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Domain.Application.Repositories;
-using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
@@ -24,7 +23,9 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
 
     private readonly IEventDispatcher _eventDispatcher;
 
-    public DeliveryPhaseRepository(IApplicationRepository applicationRepository, IEventDispatcher eventDispatcher)
+    public DeliveryPhaseRepository(
+        IApplicationRepository applicationRepository,
+        IEventDispatcher eventDispatcher)
     {
         _applicationRepository = applicationRepository;
         _eventDispatcher = eventDispatcher;
@@ -102,6 +103,7 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
 
         var application =
             await _applicationRepository.GetApplicationBasicInfo(applicationId, userAccount, cancellationToken);
+
         var homesToDeliver = new[]
         {
             new HomesToDeliver(new HomeTypeId("ht-1"), new HomeTypeName("1 bed flat"), 3),
@@ -116,14 +118,14 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
                 new DeliveryPhaseEntity(
                     application,
                     new DeliveryPhaseName("Phase 1"),
-                    new OrganisationBasicInfo(true),
+                    userAccount.SelectedOrganisation(),
                     null,
                     new BuildActivity(application.Tenure),
                     SectionStatus.InProgress,
                     new[] { new HomesToDeliverInPhase(new HomeTypeId("ht-1"), 3) },
+                    new DeliveryPhaseMilestones(userAccount.SelectedOrganisation(), completionMilestone: new CompletionMilestoneDetails(new CompletionDate("1", "2", "2023"), null)),
                     new DeliveryPhaseId("phase-1"),
-                    new DateTime(2023, 12, 12),
-                    new AcquisitionMilestoneDetails(new AcquisitionDate("1", "2", "2023"), null)),
+                    new DateTime(2023, 12, 12)),
             },
             homesToDeliver,
             SectionStatus.InProgress);

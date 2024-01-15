@@ -9,7 +9,7 @@ public record DeliveryPhaseDetails(
     string Name,
     TypeOfHomes? TypeOfHomes,
     BuildActivityType? BuildActivityType,
-    IList<BuildActivityType> AvailableBuildActivityTypes,
+    IList<BuildActivityType>? AvailableBuildActivityTypes,
     int? NumberOfHomes,
     bool IsUnregisteredBody,
     DateDetails? AcquisitionDate,

@@ -1,8 +1,11 @@
 using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Commands;
+using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.Repositories;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
+using HE.Investments.Account.Contract.UserOrganisation;
 using HE.Investments.Account.Shared;
+using HE.Investments.Account.Shared.Repositories;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
 using MediatR;
@@ -31,9 +34,8 @@ public class CreateDeliveryPhaseCommandHandler : DeliveryCommandHandlerBase, IRe
         try
         {
             var account = await _accountUserContext.GetSelectedAccount();
-
             var deliveryPhases = await _deliveryPhaseRepository.GetByApplicationId(request.ApplicationId, account, cancellationToken);
-            var deliveryPhase = deliveryPhases.CreateDeliveryPhase(new DeliveryPhaseName(request.DeliveryPhaseName));
+            var deliveryPhase = deliveryPhases.CreateDeliveryPhase(new DeliveryPhaseName(request.DeliveryPhaseName), account.SelectedOrganisation());
             var result = await _deliveryPhaseRepository.Save(deliveryPhase, account, cancellationToken);
 
             return new OperationResult<DeliveryPhaseId?>(result != null ? new DeliveryPhaseId(result.Value) : null);

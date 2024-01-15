@@ -1,10 +1,12 @@
 @using HE.Investment.AHP.Domain.HomeTypes
 @using HE.Investment.AHP.WWW.Extensions
+@using HE.Investment.AHP.WWW.Views.HomeTypes.Const
 @model HE.Investment.AHP.WWW.Models.HomeTypes.MoreInformationModel;
 
 @{
     var applicationId = this.GetApplicationIdFromRoute();
     var workflow = Context.Request.Query["workflow"];
+    ViewData["Title"] = HomeTypesPageTitles.MoveOnArrangements;
 }
 
 <gds-div-grid-column-two-thirds>
@@ -17,7 +19,7 @@
         <vc:text-area-input-with-counter
             field-name="@nameof(Model.MoreInformation)"
             value="@Model.MoreInformation"
-            header="Tell us the move on arrangements that are in place for when these homes are used as short stay accommodation"/>
+            header="@HomeTypesPageTitles.MoveOnArrangements"/>
 
         <vc:form-button/>
         <br/>

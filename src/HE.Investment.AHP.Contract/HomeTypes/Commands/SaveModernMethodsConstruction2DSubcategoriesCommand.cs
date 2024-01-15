@@ -5,6 +5,6 @@ namespace HE.Investment.AHP.Contract.HomeTypes.Commands;
 
 public record SaveModernMethodsConstruction2DSubcategoriesCommand(
         AhpApplicationId ApplicationId,
-        string HomeTypeId,
+        HomeTypeId HomeTypeId,
         IReadOnlyCollection<ModernMethodsConstruction2DSubcategoriesType> ModernMethodsConstruction2DSubcategories)
     : ISaveHomeTypeSegmentCommand;

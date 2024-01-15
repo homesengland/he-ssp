@@ -42,7 +42,7 @@ public class PostcodeTests
         var result = () => new Postcode(value);
 
         // then
-        result.Should().Throw<DomainValidationException>().WithOnlyOneErrorMessage("Postcode must be 100 characters or less");
+        result.Should().Throw<DomainValidationException>().WithOnlyOneErrorMessage("The Postcode must be 100 characters or less");
     }
 
     [Theory]

@@ -3,6 +3,7 @@ using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.WWW.Controllers;
 using HE.Investment.AHP.WWW.Models.Application;
+using HE.Investments.Common.Contract;
 using Microsoft.AspNetCore.Mvc;
 using Controller = HE.Investment.AHP.WWW.Controllers.HomeTypesController;
 using Workflow = HE.Investment.AHP.Domain.HomeTypes.HomeTypesWorkflowState;
@@ -112,7 +113,7 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
     {
         var files = designPlans.UploadedFiles.ToDictionary(
             x => x.FileName,
-            x => DownloadDesignFileUrl(urlHelper, homeType.ApplicationId.Value, homeType.Id, x.FileId));
+            x => DownloadDesignFileUrl(urlHelper, homeType.ApplicationId, homeType.Id, x.FileId));
         return SectionSummaryViewModel.New(
             "Design plans",
             factory.FileQuestion("Design plans", nameof(Controller.DesignPlans), designPlans.MoreInformation, files));
@@ -278,9 +279,13 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
                 modernMethodsConstruction.ModernMethodsConstruction2DSubcategories.ToArray()));
     }
 
-    private static string DownloadDesignFileUrl(IUrlHelper urlHelper, string applicationId, string homeTypeId, string fileId)
+    private static string DownloadDesignFileUrl(IUrlHelper urlHelper, AhpApplicationId applicationId, HomeTypeId homeTypeId, FileId fileId)
     {
-        return urlHelper.Action("DownloadDesignPlansFile", "HomeTypes", new { applicationId, homeTypeId, fileId }) ?? string.Empty;
+        return urlHelper.Action(
+                   "DownloadDesignPlansFile",
+                   "HomeTypes",
+                   new { applicationId = applicationId.Value, homeTypeId = homeTypeId.Value, fileId = fileId.Value })
+               ?? string.Empty;
     }
 
     private static string? ToPounds(int? value) => value?.ToString("\u00a30", CultureInfo.InvariantCulture);

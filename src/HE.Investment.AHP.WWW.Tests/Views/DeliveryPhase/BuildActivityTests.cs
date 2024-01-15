@@ -1,6 +1,6 @@
 using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Enums;
-using HE.Investment.AHP.WWW.Views.Delivery.Consts;
+using HE.Investment.AHP.WWW.Views.Delivery.Const;
 using HE.Investments.Common.WWWTestsFramework;
 using HE.Investments.TestsUtils.Extensions;
 using Microsoft.AspNetCore.Routing;

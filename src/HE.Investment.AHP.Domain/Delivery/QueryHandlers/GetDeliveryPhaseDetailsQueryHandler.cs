@@ -38,12 +38,12 @@ public class GetDeliveryPhaseDetailsQueryHandler : IRequestHandler<GetDeliveryPh
             deliveryPhase.BuildActivity.GetAvailableTypes(),
             deliveryPhase.TotalHomesToBeDeliveredInThisPhase,
             deliveryPhase.Organisation.IsUnregisteredBody,
-            DeliveryPhaseEntityMapper.MapDate(deliveryPhase.AcquisitionMilestone?.AcquisitionDate),
-            DeliveryPhaseEntityMapper.MapDate(deliveryPhase.AcquisitionMilestone?.PaymentDate),
-            DeliveryPhaseEntityMapper.MapDate(deliveryPhase.StartOnSiteMilestone?.StartOnSiteDate),
-            DeliveryPhaseEntityMapper.MapDate(deliveryPhase.StartOnSiteMilestone?.PaymentDate),
-            DeliveryPhaseEntityMapper.MapDate(deliveryPhase.CompletionMilestone?.CompletionDate),
-            DeliveryPhaseEntityMapper.MapDate(deliveryPhase.CompletionMilestone?.PaymentDate),
+            DeliveryPhaseEntityMapper.MapDate(deliveryPhase.DeliveryPhaseMilestones.AcquisitionMilestone?.MilestoneDate),
+            DeliveryPhaseEntityMapper.MapDate(deliveryPhase.DeliveryPhaseMilestones.AcquisitionMilestone?.PaymentDate),
+            DeliveryPhaseEntityMapper.MapDate(deliveryPhase.DeliveryPhaseMilestones.StartOnSiteMilestone?.MilestoneDate),
+            DeliveryPhaseEntityMapper.MapDate(deliveryPhase.DeliveryPhaseMilestones.StartOnSiteMilestone?.PaymentDate),
+            DeliveryPhaseEntityMapper.MapDate(deliveryPhase.DeliveryPhaseMilestones.CompletionMilestone?.MilestoneDate),
+            DeliveryPhaseEntityMapper.MapDate(deliveryPhase.DeliveryPhaseMilestones.CompletionMilestone?.PaymentDate),
             deliveryPhase.IsAdditionalPaymentRequested?.IsRequested);
     }
 }

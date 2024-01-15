@@ -2,18 +2,11 @@ using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Models;
 
-namespace HE.Investment.AHP.WWW.Views.DeliveryPhase.Consts;
+namespace HE.Investment.AHP.WWW.Views.DeliveryPhase.Const;
 
 public static class BuildActivityTypeOptions
 {
-    public static IList<ExtendedSelectListItem> GetBuildActivityTypesOptions(
-        IList<BuildActivityType> buildActivityTypes,
-        BuildActivityType? selectedOption)
-    {
-        return buildActivityTypes.Select(x => x.ToSelectListItem(selectedOption, BuildActivityTypeDescriptions[x])).ToList();
-    }
-
-    public static IDictionary<BuildActivityType, string> BuildActivityTypeDescriptions = new Dictionary<BuildActivityType, string>()
+    private static readonly IDictionary<BuildActivityType, string> BuildActivityTypeDescriptions = new Dictionary<BuildActivityType, string>()
     {
         { BuildActivityType.AcquisitionAndWorksRehab, "Construction of new homes on land purchased by the provider without any public subsidy." },
         { BuildActivityType.AcquisitionAndWorks, "Construction of new homes on land purchased by the provider without any public subsidy." },
@@ -53,6 +46,13 @@ public static class BuildActivityTypeOptions
         { BuildActivityType.RegenerationRehab, "Rehabilitation of existing properties as part of an estate regeneration project." },
         { BuildActivityType.Regeneration, "Construction of additional new build homes as part of an estate regeneration project." },
     };
+
+    public static IList<ExtendedSelectListItem> GetBuildActivityTypesOptions(
+        IList<BuildActivityType> buildActivityTypes,
+        BuildActivityType? selectedOption)
+    {
+        return buildActivityTypes.Select(x => x.ToSelectListItem(selectedOption, BuildActivityTypeDescriptions[x])).ToList();
+    }
 
     private static ExtendedSelectListItem ToSelectListItem(
         this Enum buildActivityTypeForNewBuild,

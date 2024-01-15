@@ -1,4 +1,3 @@
-using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Commands;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Common.ValueObjects;
@@ -33,7 +32,7 @@ public class UploadDesignPlansFileCommandHandler : IRequestHandler<UploadDesignP
         var account = await _accountUserContext.GetSelectedAccount();
         var homeType = await _homeTypeRepository.GetById(
             request.ApplicationId,
-            new HomeTypeId(request.HomeTypeId),
+            request.HomeTypeId,
             account,
             new[] { HomeTypeSegmentType.DesignPlans },
             cancellationToken);
@@ -60,6 +59,6 @@ public class UploadDesignPlansFileCommandHandler : IRequestHandler<UploadDesignP
 
     private static UploadedFileContract Map(UploadedFile uploadedFile)
     {
-        return new UploadedFileContract(uploadedFile.Id.Value, uploadedFile.Name.Value, uploadedFile.UploadedOn, uploadedFile.UploadedBy, true);
+        return new UploadedFileContract(uploadedFile.Id, uploadedFile.Name.Value, uploadedFile.UploadedOn, uploadedFile.UploadedBy, true);
     }
 }

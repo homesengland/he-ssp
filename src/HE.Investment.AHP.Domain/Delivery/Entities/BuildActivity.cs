@@ -50,7 +50,6 @@ public class BuildActivity : ValueObject, IQuestion
             availableTypeForRehab.Remove(BuildActivityType.LeaseAndRepair);
         }
 
-
         return availableTypeForRehab.ToArray();
     }
 

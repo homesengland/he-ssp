@@ -4,6 +4,6 @@ namespace HE.Investment.AHP.Contract.HomeTypes.Commands;
 
 public record SaveSocialRentCommand(
     AhpApplicationId ApplicationId,
-    string HomeTypeId,
+    HomeTypeId HomeTypeId,
     string? MarketValue,
     string? ProspectiveRent) : ISaveHomeTypeSegmentCommand;

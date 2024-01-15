@@ -8,8 +8,6 @@ namespace HE.Investment.AHP.Domain.Tests.Delivery.Entities.DeliveryPhaseEntityTe
 
 public class CompleteTests
 {
-    private readonly MilestonePaymentDate _validPaymentDate = new("1", "5", "2000");
-
     [Fact]
     public void ShouldSetCompleted_WhenAllQuestionsAnsweredForUnregisteredBody()
     {
@@ -17,7 +15,11 @@ public class CompleteTests
         var testCandidate = new DeliveryPhaseEntityBuilder()
             .WithUnregisteredBody()
             .WithAdditionalPaymentRequested(new IsAdditionalPaymentRequested(true))
-            .WithCompletionMilestoneDetails(new CompletionMilestoneDetails(new CompletionDate("7", "3", "2023"), _validPaymentDate))
+            .WithDeliveryPhaseMilestones(new DeliveryPhaseMilestonesBuilder()
+                .WithUnregisteredBody()
+                .WithoutAcquisitionMilestoneDetails()
+                .WithoutStartOnSiteMilestoneDetails()
+                .Build())
             .Build();
 
         // when
@@ -34,24 +36,11 @@ public class CompleteTests
         // given
         var testCandidate = new DeliveryPhaseEntityBuilder()
             .WithUnregisteredBody()
-            .WithCompletionMilestoneDetails(new CompletionMilestoneDetails(new CompletionDate("7", "3", "2023"), _validPaymentDate))
-            .Build();
-
-        // when
-        var action = () => testCandidate.Complete();
-
-        // then
-        action.Should().Throw<DomainValidationException>();
-    }
-
-    [Fact]
-    public void ShouldThrowException_WhenCompletionDateIsMissing()
-    {
-        // given
-        var testCandidate = new DeliveryPhaseEntityBuilder()
-            .WithUnregisteredBody()
-            .WithAdditionalPaymentRequested(new IsAdditionalPaymentRequested(true))
-            .WithCompletionMilestoneDetails(new CompletionMilestoneDetails(null, _validPaymentDate))
+            .WithDeliveryPhaseMilestones(new DeliveryPhaseMilestonesBuilder()
+                .WithUnregisteredBody()
+                .WithoutAcquisitionMilestoneDetails()
+                .WithoutStartOnSiteMilestoneDetails()
+                .Build())
             .Build();
 
         // when
@@ -66,9 +55,7 @@ public class CompleteTests
     {
         // given
         var testCandidate = new DeliveryPhaseEntityBuilder()
-            .WithAcquisitionMilestoneDetails(new AcquisitionMilestoneDetails(new AcquisitionDate("4", "7", "2012"), _validPaymentDate))
-            .WithStartOnSiteMilestoneDetails(new StartOnSiteMilestoneDetails(new StartOnSiteDate("4", "7", "2012"), _validPaymentDate))
-            .WithCompletionMilestoneDetails(new CompletionMilestoneDetails(new CompletionDate("7", "3", "2023"), _validPaymentDate))
+            .WithDeliveryPhaseMilestones(new DeliveryPhaseMilestonesBuilder().Build())
             .Build();
 
         // when
@@ -80,12 +67,11 @@ public class CompleteTests
     }
 
     [Fact]
-    public void ShouldSetCompleted_WhenStartOnSiteMilestoneDetailsMissing()
+    public void ShouldThrowException_WhenDeliveryPhaseMilestonesNotAnswered()
     {
         // given
         var testCandidate = new DeliveryPhaseEntityBuilder()
-            .WithAcquisitionMilestoneDetails(new AcquisitionMilestoneDetails(new AcquisitionDate("4", "7", "2012"), _validPaymentDate))
-            .WithCompletionMilestoneDetails(new CompletionMilestoneDetails(new CompletionDate("7", "3", "2023"), _validPaymentDate))
+            .WithDeliveryPhaseMilestones(new DeliveryPhaseMilestonesBuilder().WithoutAcquisitionMilestoneDetails().Build())
             .Build();
 
         // when

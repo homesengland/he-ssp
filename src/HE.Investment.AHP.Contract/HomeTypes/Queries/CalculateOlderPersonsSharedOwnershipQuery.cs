@@ -4,7 +4,7 @@ namespace HE.Investment.AHP.Contract.HomeTypes.Queries;
 
 public record CalculateOlderPersonsSharedOwnershipQuery(
         AhpApplicationId ApplicationId,
-        string HomeTypeId,
+        HomeTypeId HomeTypeId,
         string? MarketValue,
         string? InitialSale,
         string? ProspectiveRent)

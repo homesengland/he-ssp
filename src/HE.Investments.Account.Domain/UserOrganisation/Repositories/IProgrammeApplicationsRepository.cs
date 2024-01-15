@@ -3,7 +3,7 @@ using HE.Investments.Account.Shared.User;
 
 namespace HE.Investments.Account.Domain.UserOrganisation.Repositories;
 
-public interface IProgrammeRepository
+public interface IProgrammeApplicationsRepository
 {
     Task<IList<Programme>> GetAllProgrammes(UserAccount userAccount, CancellationToken cancellationToken);
 

@@ -1,3 +1,5 @@
+using HE.Investments.Common.Contract;
+
 namespace HE.Investment.AHP.Contract.Common;
 
-public record UploadedFile(string FileId, string FileName, DateTime UploadedOn, string UploadedBy, bool CanBeRemoved);
+public record UploadedFile(FileId FileId, string FileName, DateTime UploadedOn, string UploadedBy, bool CanBeRemoved);

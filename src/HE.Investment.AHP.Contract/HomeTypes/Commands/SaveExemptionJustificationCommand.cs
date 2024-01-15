@@ -4,6 +4,6 @@ namespace HE.Investment.AHP.Contract.HomeTypes.Commands;
 
 public record SaveExemptionJustificationCommand(
         AhpApplicationId ApplicationId,
-        string HomeTypeId,
+        HomeTypeId HomeTypeId,
         string? ExemptionJustification)
     : ISaveHomeTypeSegmentCommand;

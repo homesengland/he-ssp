@@ -1,11 +1,13 @@
 @using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.WWW.Models.Common
+@using HE.Investment.AHP.WWW.Views.Delivery.Const
 @using HE.Investments.Common.WWW.Components.BackLinkWithCallback
 @using HE.Investments.Common.WWW.Components.FormHeader
 @using HE.Investments.Common.WWW.Components.FormButton
 @model HE.Investment.AHP.WWW.Models.Delivery.CompleteDeliverySectionModel;
 @{
     var applicationId = this.GetApplicationIdFromRoute();
+    var title = DeliveryPageTitles.Complete;
 }
 
 <div class="govuk-grid-column-three-quarters">
@@ -18,7 +20,7 @@
 
         <vc:form-header caption="@Model.ApplicationName"/>
         <he-error-form-group asp-for="IsSectionCompleted">
-            <gds-h1>Have you completed this section?</gds-h1>
+            <gds-h1>@title</gds-h1>
             <gds-radio class="govuk-!-margin-top-3"
                        govuk-formgroup-asp-for="IsSectionCompleted"
                        asp-hiddenlabeltext="Have you completed this section?"

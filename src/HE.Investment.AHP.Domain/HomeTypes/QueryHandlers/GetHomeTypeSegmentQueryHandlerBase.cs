@@ -33,7 +33,7 @@ internal abstract class GetHomeTypeSegmentQueryHandlerBase<TQuery, TSegment, TRe
         var account = await _accountUserContext.GetSelectedAccount();
         var homeType = await _repository.GetById(
             request.ApplicationId,
-            new HomeTypeId(request.HomeTypeId),
+            request.HomeTypeId,
             account,
             Segments,
             cancellationToken);

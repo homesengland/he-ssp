@@ -6,6 +6,8 @@ using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
+using HE.Investments.Account.Shared;
+using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.Contract;
 using HE.Investments.TestsUtils.TestData;
 
@@ -19,13 +21,9 @@ public class DeliveryPhaseEntityBuilder
 
     private SectionStatus _status = SectionStatus.InProgress;
 
-    private OrganisationBasicInfo _organisationBasicInfo = new(false);
+    private OrganisationBasicInfo _organisationBasicInfo = new OrganisationBasicInfoBuilder().Build();
 
-    private AcquisitionMilestoneDetails? _acquisitionMilestoneDetails;
-
-    private StartOnSiteMilestoneDetails? _startOnSiteMilestoneDetails;
-
-    private CompletionMilestoneDetails? _completionMilestoneDetails;
+    private DeliveryPhaseMilestones? _deliveryPhaseMilestones;
 
     private IsAdditionalPaymentRequested? _isAdditionalPaymentRequested;
 
@@ -49,25 +47,13 @@ public class DeliveryPhaseEntityBuilder
 
     public DeliveryPhaseEntityBuilder WithUnregisteredBody()
     {
-        _organisationBasicInfo = new(true);
+        _organisationBasicInfo = new OrganisationBasicInfoBuilder().WithUnregisteredBody().Build();
         return this;
     }
 
-    public DeliveryPhaseEntityBuilder WithAcquisitionMilestoneDetails(AcquisitionMilestoneDetails milestoneDetails)
+    public DeliveryPhaseEntityBuilder WithDeliveryPhaseMilestones(DeliveryPhaseMilestones milestones)
     {
-        _acquisitionMilestoneDetails = milestoneDetails;
-        return this;
-    }
-
-    public DeliveryPhaseEntityBuilder WithStartOnSiteMilestoneDetails(StartOnSiteMilestoneDetails milestoneDetails)
-    {
-        _startOnSiteMilestoneDetails = milestoneDetails;
-        return this;
-    }
-
-    public DeliveryPhaseEntityBuilder WithCompletionMilestoneDetails(CompletionMilestoneDetails milestoneDetails)
-    {
-        _completionMilestoneDetails = milestoneDetails;
+        _deliveryPhaseMilestones = milestones;
         return this;
     }
 
@@ -93,11 +79,9 @@ public class DeliveryPhaseEntityBuilder
             new BuildActivity(applicationBasicInfo.Tenure),
             _status,
             _homesToDeliver,
+            _deliveryPhaseMilestones ?? new DeliveryPhaseMilestonesBuilder().Build(),
             new DeliveryPhaseId(_id),
             DateTimeTestData.OctoberDay05Year2023At0858,
-            acquisitionMilestone: _acquisitionMilestoneDetails,
-            startOnSiteMilestone: _startOnSiteMilestoneDetails,
-            completionMilestone: _completionMilestoneDetails,
             isAdditionalPaymentRequested: _isAdditionalPaymentRequested);
     }
 }
