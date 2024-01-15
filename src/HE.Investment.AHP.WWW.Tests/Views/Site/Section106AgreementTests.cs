@@ -19,7 +19,7 @@ public class Section106AgreementTests : ViewTestBase
         // then
         document
             .HasTitle(SitePageTitles.SiteSection106Agreement)
-            .HasGdsRadioInputWithValues(nameof(SiteModel.IsSection106AgreementInPlace), new string[] { "True", "False" })
+            .HasGdsRadioInputWithValues(nameof(SiteModel.Section106Agreement), new string[] { "True", "False" })
             .HasGdsSaveAndContinueButton()
             .HasGdsBackButton();
     }
@@ -30,7 +30,7 @@ public class Section106AgreementTests : ViewTestBase
         // given
         var errorMessage = "some test error";
         var modelState = new ModelStateDictionary();
-        modelState.AddModelError(nameof(SiteModel.IsSection106AgreementInPlace), errorMessage);
+        modelState.AddModelError(nameof(SiteModel.Section106Agreement), errorMessage);
 
         // when
         var document = await Render<SiteModel>(_viewPath, modelStateDictionary: modelState);
@@ -38,7 +38,7 @@ public class Section106AgreementTests : ViewTestBase
         // then
         document
             .HasTitle(SitePageTitles.SiteSection106Agreement)
-            .HasGdsRadioInputWithValues(nameof(SiteModel.IsSection106AgreementInPlace), new string[] { "True", "False" })
+            .HasGdsRadioInputWithValues(nameof(SiteModel.Section106Agreement), new string[] { "True", "False" })
             .HasGdsSaveAndContinueButton()
             .HasGdsBackButton()
             .HasOneValidationMessages(errorMessage);

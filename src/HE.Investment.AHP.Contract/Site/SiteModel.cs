@@ -6,5 +6,5 @@ public class SiteModel
 
     public string? Name { get; set; }
 
-    public bool? IsSection106AgreementInPlace { get; set; }
+    public bool? Section106Agreement { get; set; }
 }
