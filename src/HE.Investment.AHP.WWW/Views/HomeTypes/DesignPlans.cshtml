@@ -1,16 +1,24 @@
 @using HE.Investment.AHP.Domain.HomeTypes
 @using HE.Investment.AHP.WWW.Extensions
+@using HE.Investment.AHP.WWW.Views.HomeTypes.Const
+@using HE.Investment.AHP.WWW.Views.Shared.Components.HomeTypeFormHeader
+@using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
+@using HE.Investments.Common.WWW.Components.FilesTable
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investments.Common.WWW.Components.TextAreaInputWithCounter
+@using HE.Investments.Common.WWW.Components.UploadFile
 @model HE.Investment.AHP.WWW.Models.HomeTypes.DesignPlansModel;
 
 @{
     var applicationId = this.GetApplicationIdFromRoute();
     var homeTypeId = this.GetHomeTypeIdFromRoute();
     var workflow = Context.Request.Query["workflow"];
+    ViewData["Title"] = HomeTypesPageTitles.DesignPlans;
 }
 
 <div class="govuk-grid-column-full">
     <form asp-controller="HomeTypes" asp-action="DesignPlans" asp-method="post" enctype="multipart/form-data" asp-route-workflow="@workflow" novalidate>
-        <vc:home-type-form-header title="Upload your design plans"
+        <vc:home-type-form-header title="@HomeTypesPageTitles.DesignPlans"
                                   current-page="@HomeTypesWorkflowState.DesignPlans"
                                   caption="@Model.Header"/>
 
