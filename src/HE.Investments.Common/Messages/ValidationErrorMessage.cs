@@ -77,15 +77,15 @@ public static class ValidationErrorMessage
 
     public static string EstimatedPoundInput(string name) => PoundInput($"The estimated {name}");
 
-    public static string PoundInput(string name) => new($"{name} must be entered as a number, in pounds and pence");
+    public static string PoundInput(string name) => new($"The {name} must be entered as a number, in pounds and pence");
 
-    public static string WholePoundInput(string name) => new($"{name} must be entered as a number, in pounds");
+    public static string WholePoundInput(string name) => new($"The {name} must be entered as a number, in pounds");
 
-    public static string ShortInputLengthExceeded(string fieldName) => new($"{fieldName.TitleCaseFirstLetterInString()} must be 100 characters or less");
+    public static string ShortInputLengthExceeded(string fieldName) => new($"The {fieldName} must be 100 characters or less");
 
-    public static string LongInputLengthExceeded(string fieldName) => new($"{fieldName.TitleCaseFirstLetterInString()} must be 1500 characters or less");
+    public static string LongInputLengthExceeded(string fieldName) => new($"The {fieldName} must be 1500 characters or less");
 
-    public static string MissingRequiredField(string displayName) => $"Enter {displayName}";
+    public static string MissingRequiredField(string displayName) => $"Enter the {displayName}";
 
     public static string MustBeNumberBetween(string displayName, int minValue, int maxValue) => $"The {displayName} must be between {minValue} and {maxValue}";
 
@@ -105,9 +105,9 @@ public static class ValidationErrorMessage
 
     public static string MustBeSelectedForCalculation(string displayName) => $"Select if {displayName} to calculate";
 
-    public static string StringLengthExceeded(string displayName, int maxLength) => new($"{displayName.TitleCaseFirstLetterInString()} must be {maxLength} characters or less");
+    public static string StringLengthExceeded(string displayName, int maxLength) => new($"The {displayName} must be {maxLength} characters or less");
 
-    public static string ExclusiveOptionSelected(string displayName, string optionName) => $"{optionName.TitleCaseFirstLetterInString()} {displayName} option is exclusive and cannot be selected with any other option.";
+    public static string ExclusiveOptionSelected(string displayName, string optionName) => $"The {optionName} {displayName} option is exclusive and cannot be selected with any other option.";
 
     public static string MustBeDate(string displayName) => $"The {displayName} must be a valid date";
 }
