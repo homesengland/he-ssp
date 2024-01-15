@@ -58,4 +58,11 @@ public static class StringExtensions
             .IsBetween(minValue, maxValue, errorMsg)
             .IsConditionallyRequired(!allowNull);
     }
+
+    public static string? NormalizeLineEndings(this string? value)
+    {
+        return value?
+            .Replace("\r\n", "\n")
+            .Replace("\r", "\n");
+    }
 }

@@ -38,6 +38,6 @@ public class OrganisationPhoneNumberTests
         var result = () => CreatePhoneNumber(organisationPhoneNumber);
 
         // then
-        result.Should().Throw<DomainValidationException>().WithOnlyOneErrorMessage("Phone number must be 100 characters or less");
+        result.Should().Throw<DomainValidationException>().WithOnlyOneErrorMessage("The Phone number must be 100 characters or less");
     }
 }
