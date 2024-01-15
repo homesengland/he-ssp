@@ -37,5 +37,9 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
         _machine.Configure(SiteWorkflowState.Name)
             .Permit(Trigger.Continue, SiteWorkflowState.Index)
             .Permit(Trigger.Back, SiteWorkflowState.Start);
+
+        _machine.Configure(SiteWorkflowState.Section106Agreement)
+            .Permit(Trigger.Continue, SiteWorkflowState.Name)
+            .Permit(Trigger.Back, SiteWorkflowState.Name);
     }
 }

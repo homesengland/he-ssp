@@ -25,6 +25,8 @@ public class SiteEntity
 
     public SiteName Name { get; private set; }
 
+    public SiteSection106Agreement? SiteSection106Agreement { get; private set; }
+
     public string? LocalAuthority { get; }
 
     public SiteStatus Status { get; }
@@ -39,5 +41,12 @@ public class SiteEntity
         }
 
         Name = siteName;
+    }
+
+    public async Task ProvideSection106Agreement(SiteSection106Agreement siteSection106Agreement, CancellationToken cancellationToken)
+    {
+        await Task.Run(
+            () => SiteSection106Agreement = siteSection106Agreement,
+            cancellationToken);
     }
 }

@@ -9,4 +9,6 @@ public static class SitePageTitles
     public const string SiteDetails = "Site details";
 
     public const string SiteName = "Name your site";
+
+    public const string SiteSection106Agreement = "Section 106 (s106) agreement";
 }

@@ -5,4 +5,5 @@ public enum SiteWorkflowState
     Index = 1,
     Start,
     Name,
+    Section106Agreement,
 }
