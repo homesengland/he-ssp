@@ -21,27 +21,8 @@ public static class DeliveryPhaseEntityMapper
             DateHelper.ToDateOnlyString(deliveryPhase.CompletionMilestone?.CompletionDate?.Value));
     }
 
-    public static DeliveryPhaseDetails ToDeliveryPhaseDetails(IDeliveryPhaseEntity deliveryPhase)
-    {
-        return new DeliveryPhaseDetails(
-            deliveryPhase.Application.Name.Name,
-            deliveryPhase.Id.Value,
-            deliveryPhase.Name?.Value ?? string.Empty,
-            deliveryPhase.TypeOfHomes,
-            deliveryPhase.BuildActivityType.NewBuild,
-            deliveryPhase.BuildActivityType.Rehab,
-            deliveryPhase.TotalHomesToBeDeliveredInThisPhase,
-            deliveryPhase.Organisation.IsUnregisteredBody,
-            MapDate(deliveryPhase.AcquisitionMilestone?.AcquisitionDate),
-            MapDate(deliveryPhase.AcquisitionMilestone?.PaymentDate),
-            MapDate(deliveryPhase.StartOnSiteMilestone?.StartOnSiteDate),
-            MapDate(deliveryPhase.StartOnSiteMilestone?.PaymentDate),
-            MapDate(deliveryPhase.CompletionMilestone?.CompletionDate),
-            MapDate(deliveryPhase.CompletionMilestone?.PaymentDate),
-            deliveryPhase.IsAdditionalPaymentRequested?.IsRequested);
-    }
 
-    private static DateDetails? MapDate(DateValueObject? date)
+    public static DateDetails? MapDate(DateValueObject? date)
     {
         return date != null
             ? new DateDetails(

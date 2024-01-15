@@ -79,16 +79,18 @@ public class DeliveryPhaseEntityBuilder
 
     public DeliveryPhaseEntity Build()
     {
+        var applicationBasicInfo = new ApplicationBasicInfo(
+            new AhpApplicationId("test-app-42123"),
+            new ApplicationName("Test Application"),
+            Tenure.AffordableRent,
+            ApplicationStatus.Draft);
+
         return new DeliveryPhaseEntity(
-            new ApplicationBasicInfo(
-                new AhpApplicationId("test-app-42123"),
-                new ApplicationName("Test Application"),
-                Tenure.AffordableRent,
-                ApplicationStatus.Draft),
+            applicationBasicInfo,
             new DeliveryPhaseName("First Phase"),
             _organisationBasicInfo,
             TypeOfHomes.Rehab,
-            new BuildActivityType(),
+            new BuildActivity(applicationBasicInfo.Tenure),
             _status,
             _homesToDeliver,
             new DeliveryPhaseId(_id),

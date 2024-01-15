@@ -1,5 +1,6 @@
 using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Queries;
+using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.Mappers;
 using HE.Investment.AHP.Domain.Delivery.Repositories;
 using HE.Investments.Account.Shared;
@@ -28,6 +29,21 @@ public class GetDeliveryPhaseDetailsQueryHandler : IRequestHandler<GetDeliveryPh
             userAccount,
             cancellationToken);
 
-        return DeliveryPhaseEntityMapper.ToDeliveryPhaseDetails(deliveryPhase);
+        return new DeliveryPhaseDetails(
+            deliveryPhase.Application.Name.Name,
+            deliveryPhase.Id.Value,
+            deliveryPhase.Name?.Value ?? string.Empty,
+            deliveryPhase.TypeOfHomes,
+            deliveryPhase.BuildActivity.Type,
+            deliveryPhase.BuildActivity.GetAvailableTypes(),
+            deliveryPhase.TotalHomesToBeDeliveredInThisPhase,
+            deliveryPhase.Organisation.IsUnregisteredBody,
+            DeliveryPhaseEntityMapper.MapDate(deliveryPhase.AcquisitionMilestone?.AcquisitionDate),
+            DeliveryPhaseEntityMapper.MapDate(deliveryPhase.AcquisitionMilestone?.PaymentDate),
+            DeliveryPhaseEntityMapper.MapDate(deliveryPhase.StartOnSiteMilestone?.StartOnSiteDate),
+            DeliveryPhaseEntityMapper.MapDate(deliveryPhase.StartOnSiteMilestone?.PaymentDate),
+            DeliveryPhaseEntityMapper.MapDate(deliveryPhase.CompletionMilestone?.CompletionDate),
+            DeliveryPhaseEntityMapper.MapDate(deliveryPhase.CompletionMilestone?.PaymentDate),
+            deliveryPhase.IsAdditionalPaymentRequested?.IsRequested);
     }
 }

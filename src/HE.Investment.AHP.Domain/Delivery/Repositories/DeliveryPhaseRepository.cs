@@ -118,7 +118,7 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
                     new DeliveryPhaseName("Phase 1"),
                     new OrganisationBasicInfo(true),
                     null,
-                    new BuildActivityType(),
+                    new BuildActivity(application.Tenure),
                     SectionStatus.InProgress,
                     new[] { new HomesToDeliverInPhase(new HomeTypeId("ht-1"), 3) },
                     new DeliveryPhaseId("phase-1"),
