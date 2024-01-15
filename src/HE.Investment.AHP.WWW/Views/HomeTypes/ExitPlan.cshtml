@@ -1,10 +1,12 @@
 @using HE.Investment.AHP.Domain.HomeTypes
 @using HE.Investment.AHP.WWW.Extensions
+@using HE.Investment.AHP.WWW.Views.HomeTypes.Const
 @model HE.Investment.AHP.WWW.Models.HomeTypes.MoreInformationModel;
 
 @{
     var applicationId = this.GetApplicationIdFromRoute();
     var workflow = Context.Request.Query["workflow"];
+    ViewData["Title"] = HomeTypesPageTitles.ExitPlan;
 }
 
 <gds-div-grid-column-two-thirds>
@@ -18,7 +20,7 @@
         <vc:text-area-input-with-counter
             field-name="@nameof(Model.MoreInformation)"
             value="@Model.MoreInformation"
-            header="Tell us the exit plan or alternative use for these homes should commissioning priorities change in the future"/>
+            header="@HomeTypesPageTitles.ExitPlan"/>
 
         <vc:form-button/>
         <br/>

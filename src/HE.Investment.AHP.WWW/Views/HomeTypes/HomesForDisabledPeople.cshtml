@@ -1,11 +1,13 @@
 @using HE.Investment.AHP.Domain.HomeTypes
 @using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.WWW.Models.HomeTypes
+@using HE.Investment.AHP.WWW.Views.HomeTypes.Const
 @model HE.Investment.AHP.WWW.Models.HomeTypes.HomesForDisabledPeopleModel;
 
 @{
     var applicationId = this.GetApplicationIdFromRoute();
     var workflow = Context.Request.Query["workflow"];
+    ViewData["Title"] = HomeTypesPageTitles.DisabledPeople;
 }
 
 <div class="govuk-grid-column-two-thirds">
@@ -18,7 +20,7 @@
         <gds-field-set>
             <he-error-form-group asp-for="HousingType">
                 <gds-legend>
-                    <gds-h1>What type of homes will you be providing for disabled and vulnerable people?</gds-h1>
+                    <gds-h1>@HomeTypesPageTitles.DisabledPeople</gds-h1>
                 </gds-legend>
 
                 <gds-radio govuk-formgroup-asp-for="HousingType"

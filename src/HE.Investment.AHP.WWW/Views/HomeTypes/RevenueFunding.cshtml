@@ -1,11 +1,13 @@
 @using HE.Investment.AHP.Domain.HomeTypes
 @using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.WWW.Models.HomeTypes
+@using HE.Investment.AHP.WWW.Views.HomeTypes.Const
 @model HE.Investment.AHP.WWW.Models.HomeTypes.RevenueFundingModel;
 
 @{
     var applicationId = this.GetApplicationIdFromRoute();
     var workflow = Context.Request.Query["workflow"];
+    ViewData["Title"] = HomeTypesPageTitles.RevenueFunding;
 }
 
 <gds-div-grid-column-two-thirds>
@@ -14,7 +16,7 @@
         @Html.HiddenFor(m => Model.HomeTypeName)
         <vc:home-type-form-header current-page="@HomeTypesWorkflowState.RevenueFunding"
                                   caption="@Model.Header"
-                                  title="Where are you receiving revenue funding from for these homes?"/>
+                                  title="@HomeTypesPageTitles.RevenueFunding"/>
 
         <gds-field-set class="govuk-!-margin-bottom-6">
             <span class="govuk-caption-m govuk-!-margin-bottom-6">Select all that apply.</span>

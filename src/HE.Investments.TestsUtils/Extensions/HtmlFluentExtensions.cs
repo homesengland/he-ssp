@@ -17,7 +17,7 @@ public static class HtmlFluentExtensions
     {
         var url = new Uri(htmlDocument.Url);
 
-        url.AbsolutePath.Should().EndWith(endsWith);
+        url.AbsolutePath.ToLowerInvariant().Should().EndWith(endsWith.ToLowerInvariant());
 
         return htmlDocument;
     }
@@ -149,6 +149,17 @@ public static class HtmlFluentExtensions
 
         var anchorElement = element as IHtmlAnchorElement;
         anchorElement.Should().NotBeNull($"Element with id {id} should be IHtmlAnchorElement");
+        htmlElement = anchorElement!;
+
+        return htmlDocument;
+    }
+
+    public static IHtmlDocument HasLinkWithTestId(this IHtmlDocument htmlDocument, string testId, out IHtmlAnchorElement htmlElement)
+    {
+        var element = htmlDocument.GetElementByTestId(testId);
+
+        var anchorElement = element as IHtmlAnchorElement;
+        anchorElement.Should().NotBeNull($"Element with testId {testId} should be IHtmlAnchorElement");
         htmlElement = anchorElement!;
 
         return htmlDocument;
