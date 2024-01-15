@@ -21,7 +21,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investment.AHP.WWW.Controllers;
 
-[AuthorizeWithCompletedProfileAttribute]
+[AuthorizeWithCompletedProfile]
 [Route("application/{applicationId}/financial-details")]
 public class FinancialDetailsController : WorkflowController<FinancialDetailsWorkflowState>
 {
