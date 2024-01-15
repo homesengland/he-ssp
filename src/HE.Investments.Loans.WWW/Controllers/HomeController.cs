@@ -53,7 +53,7 @@ public class HomeController : Controller
     }
 
     [HttpGet("/dashboard")]
-    [AuthorizeWithCompletedProfileAttribute]
+    [AuthorizeWithCompletedProfile]
     [WorkflowState(LoanApplicationWorkflow.State.UserDashboard)]
     public async Task<IActionResult> Dashboard()
     {

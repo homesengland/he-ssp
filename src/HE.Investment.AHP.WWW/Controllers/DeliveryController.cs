@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investment.AHP.WWW.Controllers;
 
-[AuthorizeWithCompletedProfileAttribute]
+[AuthorizeWithCompletedProfile]
 [Route("application/{applicationId}/delivery")]
 public class DeliveryController : Controller
 {

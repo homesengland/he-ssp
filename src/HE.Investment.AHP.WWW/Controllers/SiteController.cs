@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HE.Investment.AHP.WWW.Controllers;
 
 [Route("site")]
-[AuthorizeWithCompletedProfileAttribute]
+[AuthorizeWithCompletedProfile]
 public class SiteController : WorkflowController<SiteWorkflowState>
 {
     private readonly IMediator _mediator;

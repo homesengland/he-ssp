@@ -25,7 +25,7 @@ using ProjectId = HE.Investments.Loans.Contract.Application.ValueObjects.Project
 namespace HE.Investments.Loans.WWW.Controllers;
 
 [Route("application/{id}/project")]
-[AuthorizeWithCompletedProfileAttribute]
+[AuthorizeWithCompletedProfile]
 public class ProjectController : WorkflowController<ProjectState>
 {
     private readonly IMediator _mediator;

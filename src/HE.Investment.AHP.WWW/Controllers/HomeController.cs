@@ -7,7 +7,7 @@ namespace HE.Investment.AHP.WWW.Controllers;
 public class HomeController : Controller
 {
     [Route("/")]
-    [AuthorizeWithCompletedProfileAttribute]
+    [AuthorizeWithCompletedProfile]
     public IActionResult Index()
     {
         return RedirectToAction("Index", "Application");

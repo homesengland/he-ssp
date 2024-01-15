@@ -17,7 +17,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HE.Investments.Account.WWW.Controllers;
 
 [Route(UserOrganisationAccountEndpoints.Controller)]
-[AuthorizeWithCompletedProfileAttribute]
+[AuthorizeWithCompletedProfile]
 public class UserOrganisationController : Controller
 {
     private readonly IMediator _mediator;
@@ -76,7 +76,7 @@ public class UserOrganisationController : Controller
     }
 
     [HttpGet("request-details-change")]
-    [AuthorizeWithCompletedProfileAttribute(UserRole.Admin)]
+    [AuthorizeWithCompletedProfile(UserRole.Admin)]
     public async Task<IActionResult> ChangeOrganisationDetails()
     {
         var organisationResult = await _mediator.Send(new GetOrganisationDetailsQuery());
@@ -89,7 +89,7 @@ public class UserOrganisationController : Controller
     }
 
     [HttpPost("request-details-change")]
-    [AuthorizeWithCompletedProfileAttribute(UserRole.Admin)]
+    [AuthorizeWithCompletedProfile(UserRole.Admin)]
     public async Task<IActionResult> ChangeOrganisationDetails(OrganisationDetailsViewModel viewModel, CancellationToken cancellationToken)
     {
         var command = new ChangeOrganisationDetailsCommand(
