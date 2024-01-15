@@ -1,10 +1,12 @@
 @using HE.Investment.AHP.Domain.HomeTypes;
 @using HE.Investment.AHP.WWW.Extensions;
+@using HE.Investment.AHP.WWW.Views.HomeTypes.Const
 @model HE.Investment.AHP.WWW.Models.HomeTypes.MoreInformationModel;
 
 @{
     var applicationId = this.GetApplicationIdFromRoute();
     var workflow = Context.Request.Query["workflow"];
+    ViewData["Title"] = HomeTypesPageTitles.TypologyLocationAndDesign;
 }
 
 <gds-div-grid-column-two-thirds>
@@ -16,7 +18,7 @@
 
         <vc:text-area-input-with-counter
             field-name="@nameof(Model.MoreInformation)"
-            header="Tell us how the typology, location and design of these homes meet the needs of the intended residents"
+            header="@HomeTypesPageTitles.TypologyLocationAndDesign"
             hint="Typology is the classification and characteristics of the homes you are building."
             value="@Model.MoreInformation"/>
 

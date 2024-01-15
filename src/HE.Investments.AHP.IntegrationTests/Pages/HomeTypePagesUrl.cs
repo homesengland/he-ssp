@@ -2,6 +2,28 @@ namespace HE.Investments.AHP.IntegrationTests.Pages;
 
 internal static class HomeTypePagesUrl
 {
+    public static string HomeTypeDetails(string applicationId, string homeTypeId) => BuildHomeTypePage(applicationId, homeTypeId, "details");
+
+    public static string DisabledPeople(string applicationId, string homeTypeId) => BuildHomeTypePage(applicationId, homeTypeId, "homes-for-disabled-people");
+
+    public static string DisabledPeopleClientGroup(string applicationId, string homeTypeId) => BuildHomeTypePage(applicationId, homeTypeId, "disabled-people-client-group");
+
+    public static string HappiDesignPrinciples(string applicationId, string homeTypeId) => BuildHomeTypePage(applicationId, homeTypeId, "happi-design-principles");
+
+    public static string DesignPlans(string applicationId, string homeTypeId) => BuildHomeTypePage(applicationId, homeTypeId, "design-plans");
+
+    public static string SupportedHousingInformation(string applicationId, string homeTypeId) => BuildHomeTypePage(applicationId, homeTypeId, "supported-housing-information");
+
+    public static string RevenueFunding(string applicationId, string homeTypeId) => BuildHomeTypePage(applicationId, homeTypeId, "revenue-funding");
+
+    public static string MoveOnArrangements(string applicationId, string homeTypeId) => BuildHomeTypePage(applicationId, homeTypeId, "move-on-arrangements");
+
+    public static string ExitPlan(string applicationId, string homeTypeId) => BuildHomeTypePage(applicationId, homeTypeId, "exit-plan");
+
+    public static string TypologyLocationAndDesign(string applicationId, string homeTypeId) => BuildHomeTypePage(applicationId, homeTypeId, "typology-location-and-design");
+
+    public static string PeopleGroupForSpecificDesignFeatures(string applicationId, string homeTypeId) => BuildHomeTypePage(applicationId, homeTypeId, "people-group-for-specific-design-features");
+
     public static string HomeInformation(string applicationId, string homeTypeId) => BuildHomeTypePage(applicationId, homeTypeId, "home-information");
 
     public static string MoveOnAccommodation(string applicationId, string homeTypeId) => BuildHomeTypePage(applicationId, homeTypeId, "move-on-accommodation");

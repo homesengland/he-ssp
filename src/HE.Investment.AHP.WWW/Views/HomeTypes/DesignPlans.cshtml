@@ -1,16 +1,18 @@
 @using HE.Investment.AHP.Domain.HomeTypes
 @using HE.Investment.AHP.WWW.Extensions
+@using HE.Investment.AHP.WWW.Views.HomeTypes.Const
 @model HE.Investment.AHP.WWW.Models.HomeTypes.DesignPlansModel;
 
 @{
     var applicationId = this.GetApplicationIdFromRoute();
     var homeTypeId = this.GetHomeTypeIdFromRoute();
     var workflow = Context.Request.Query["workflow"];
+    ViewData["Title"] = HomeTypesPageTitles.DesignPlans;
 }
 
 <div class="govuk-grid-column-full">
     <form asp-controller="HomeTypes" asp-action="DesignPlans" asp-method="post" enctype="multipart/form-data" asp-route-workflow="@workflow" novalidate>
-        <vc:home-type-form-header title="Upload your design plans"
+        <vc:home-type-form-header title="@HomeTypesPageTitles.DesignPlans"
                                   current-page="@HomeTypesWorkflowState.DesignPlans"
                                   caption="@Model.Header"/>
 

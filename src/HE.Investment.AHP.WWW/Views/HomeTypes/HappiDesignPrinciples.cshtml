@@ -1,11 +1,13 @@
 @using HE.Investment.AHP.Domain.HomeTypes
 @using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.WWW.Models.HomeTypes
+@using HE.Investment.AHP.WWW.Views.HomeTypes.Const
 @model HE.Investment.AHP.WWW.Models.HomeTypes.HappiDesignPrinciplesModel;
 
 @{
     var applicationId = this.GetApplicationIdFromRoute();
     var workflow = Context.Request.Query["workflow"];
+    ViewData["Title"] = HomeTypesPageTitles.HappiDesignPrinciples;
 }
 
 <div class="govuk-grid-column-two-thirds">
@@ -18,7 +20,7 @@
         <gds-field-set class="govuk-!-margin-bottom-6">
             <he-error-form-group asp-for="DesignPrinciples">
                 <gds-legend>
-                    <gds-h1>Which Housing our Ageing Population Panel for Innovation (HAPPI) design principles do the homes meet?</gds-h1>
+                    <gds-h1>@HomeTypesPageTitles.HappiDesignPrinciples</gds-h1>
                 </gds-legend>
 
                 <gds-details>
