@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investments.Common.WWW.Models;
 
@@ -5,7 +6,7 @@ namespace HE.Investment.AHP.WWW.Models.Scheme;
 
 public class SchemeSummaryViewModel : IEditableViewModel
 {
-    public SchemeSummaryViewModel(string applicationId, string applicationName, bool? isCompleted, SectionSummaryViewModel section, bool isEditable)
+    public SchemeSummaryViewModel(string applicationId, string applicationName, IsSectionCompleted? isCompleted, SectionSummaryViewModel section, bool isEditable)
     {
         ApplicationId = applicationId;
         ApplicationName = applicationName;
@@ -18,7 +19,7 @@ public class SchemeSummaryViewModel : IEditableViewModel
 
     public string ApplicationName { get; }
 
-    public bool? IsCompleted { get; }
+    public IsSectionCompleted? IsCompleted { get; }
 
     public SectionSummaryViewModel Section { get; }
 

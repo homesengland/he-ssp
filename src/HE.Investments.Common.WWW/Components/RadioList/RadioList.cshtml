@@ -2,8 +2,8 @@
 @using HE.Investments.Common.WWW.Extensions
 @using HE.Investments.Common.WWW.Components.ErrorMessage
 @using HE.Investments.Common.WWW.Components.RadioListHeader
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
-@model (string fieldName, string title, string hint, IList<ExtendedSelectListItem> availableOptions)
+
+@model (string fieldName, string header, string title, string hint, IEnumerable<ExtendedSelectListItem> availableOptions, string value)
 
 @{
     var (hasError, radioErrors) = ViewData.ModelState.GetErrors(Model.fieldName);
@@ -11,14 +11,16 @@
 }
 
 <gds-div-form-group class="@groupClass">
+    <gds-field-set>
+        <vc:radio-list-header header="@Model.header" title="@Model.title" hint="@Model.hint"/>
 
-    <vc:radio-list-header title="@Model.title" hint="@Model.hint"/>
+        <vc:error-message field-name="@Model.fieldName"/>
 
-    <vc:error-message field-name="@Model.fieldName"/>
-
-    <div class="govuk-radios" data-module="govuk-radios">
-        <vc:radio-list-content
-            field-name="@Model.fieldName"
-            available-options="@Model.availableOptions"/>
-    </div>
+        <div class="govuk-radios" data-module="govuk-radios">
+            <vc:radio-list-content
+                field-name="@Model.fieldName"
+                available-options="@Model.availableOptions"
+                value="@Model.value"/>
+        </div>
+    </gds-field-set>
 </gds-div-form-group>

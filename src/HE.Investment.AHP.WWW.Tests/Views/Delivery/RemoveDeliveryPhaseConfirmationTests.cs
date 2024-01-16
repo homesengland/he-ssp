@@ -46,7 +46,7 @@ public class RemoveDeliveryPhaseConfirmationTests : ViewTestBase
         document
             .HasElementWithText("span", "My application - Phase one")
             .HasElementWithText("h1", "Are you sure you want to remove this delivery phase?")
-            .HasElementWithText("span", "By removing this delivery phase, any homes you have assigned to this phase will need to be added to another phase.")
+            .HasInputHint("By removing this delivery phase, any homes you have assigned to this phase will need to be added to another phase.")
             .HasRadio("RemoveDeliveryPhaseAnswer", new[] { "Yes", "No" })
             .HasElementWithText("button", "Save and continue")
             .HasElementWithText("button", "Save and return to application");

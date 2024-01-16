@@ -1,6 +1,7 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Contract.Common;
+using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.Scheme;
 using HE.Investment.AHP.Contract.Scheme.Commands;
 using HE.Investment.AHP.Contract.Scheme.Queries;
@@ -242,7 +243,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     [HttpPost("check-answers")]
     public async Task<IActionResult> Complete(
         [FromRoute] string applicationId,
-        [FromForm] bool? isCompleted,
+        [FromForm] IsSectionCompleted? isCompleted,
         string? action,
         CancellationToken cancellationToken)
     {
@@ -252,7 +253,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
             return View("CheckAnswers", await GetSchemeAndCreateSummary(Url, applicationId, cancellationToken));
         }
 
-        if (isCompleted.Value)
+        if (isCompleted == IsSectionCompleted.Yes)
         {
             var result = await _mediator.Send(new CompleteSchemeCommand(AhpApplicationId.From(applicationId)), cancellationToken);
             if (result.HasValidationErrors)
@@ -366,7 +367,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
         return new SchemeSummaryViewModel(
             scheme.ApplicationId.Value,
             scheme.ApplicationName,
-            scheme.Status == SectionStatus.Completed ? true : null,
+            scheme.Status == SectionStatus.Completed ? IsSectionCompleted.Yes : null,
             section,
             isEditable);
     }

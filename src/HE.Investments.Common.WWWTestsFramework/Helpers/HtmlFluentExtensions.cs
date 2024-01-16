@@ -10,14 +10,7 @@ public static class HtmlFluentExtensions
     {
         var filtered = htmlDocument.GetLastChildByTagAndText(tagName, text);
 
-        if (exist)
-        {
-            filtered.Count.Should().Be(1, $"Only one element '{tagName}' with innerText {text} should exist");
-        }
-        else
-        {
-            filtered.Count.Should().Be(0, $"Element '{tagName}' with innerText {text} should not exist");
-        }
+        ValidateExist(filtered, text, tagName, exist);
 
         return htmlDocument;
     }
@@ -131,6 +124,15 @@ public static class HtmlFluentExtensions
         return htmlDocument;
     }
 
+    public static IHtmlDocument HasInputHint(this IHtmlDocument htmlDocument, string text, bool exist = true)
+    {
+        var filtered = htmlDocument.GetHintElements(text);
+
+        ValidateExist(filtered, "govuk-hint", text, exist);
+
+        return htmlDocument;
+    }
+
     private static void AssertErrorMessage(string fieldName, string? text, bool exist, IList<IElement> filtered)
     {
         if (exist)
@@ -156,5 +158,17 @@ public static class HtmlFluentExtensions
         }
 
         return inputs.Cast<T>();
+    }
+
+    private static void ValidateExist(IList<IElement> elements, string elementType, string text, bool exist)
+    {
+        if (exist)
+        {
+            elements.Count.Should().Be(1, $"Only one element '{elementType}' with innerText {text} should exist");
+        }
+        else
+        {
+            elements.Count.Should().Be(0, $"Element '{elementType}' with innerText {text} should not exist");
+        }
     }
 }
