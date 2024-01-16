@@ -19,4 +19,3 @@ public class ApplicationStatusHasBeenChangedEventHandler : IEventHandler<Applica
         await _notificationService.Publish(new ApplicationStatusHasBeenChangedNotification(domainEvent.ApplicationStatus));
     }
 }
-
