@@ -7,6 +7,7 @@ public enum DeliveryPhaseWorkflowState
     Details,
     TypeOfHomes,
     BuildActivityType,
+    ReconfiguringExisting,
     Summary,
     AcquisitionMilestone,
     StartOnSiteMilestone,

@@ -77,6 +77,7 @@ public class DeliveryPhaseEntityBuilder
             _organisationBasicInfo,
             TypeOfHomes.Rehab,
             new BuildActivity(applicationBasicInfo.Tenure),
+            null,
             _status,
             _homesToDeliver,
             _deliveryPhaseMilestones ?? new DeliveryPhaseMilestonesBuilder().Build(),
