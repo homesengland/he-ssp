@@ -1,6 +1,5 @@
 using System.Globalization;
 using HE.Investment.AHP.Contract.Delivery.Enums;
-using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 
 namespace HE.Investments.AHP.IntegrationTests.FillApplication.Data;
@@ -21,7 +20,9 @@ public class NewBuildAndWorksOnlyDeliveryPhase : INestedItemData
 
     public CompletionMilestoneDetails CompletionMilestone { get; private set; }
 
-    public bool ReconfigurationExisting { get; private set; }
+    public bool ReconfiguringExisting { get; private set; }
+
+    public IDictionary<string, int> DeliveryPhaseHomes { get; private set; }
 
     public void SetDeliveryPhaseId(string deliveryPhaseId)
     {
@@ -46,9 +47,15 @@ public class NewBuildAndWorksOnlyDeliveryPhase : INestedItemData
         return this;
     }
 
-    public NewBuildAndWorksOnlyDeliveryPhase GenerateReconfigurationExisting()
+    public NewBuildAndWorksOnlyDeliveryPhase GenerateReconfiguringExisting()
     {
-        ReconfigurationExisting = true;
+        ReconfiguringExisting = true;
+        return this;
+    }
+
+    public NewBuildAndWorksOnlyDeliveryPhase GenerateHomes(IDictionary<string, int> deliveryPhaseHomes)
+    {
+        DeliveryPhaseHomes = deliveryPhaseHomes;
         return this;
     }
 

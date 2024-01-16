@@ -1,7 +1,5 @@
 using HE.Investment.AHP.WWW.Models.Delivery;
 using HE.Investment.AHP.WWW.Views.Delivery.Const;
-using HE.Investments.Common.WWWTestsFramework;
-using HE.Investments.TestsUtils.Extensions;
 using Microsoft.AspNetCore.Routing;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.DeliveryPhase;
@@ -30,9 +28,9 @@ public class AddHomesTests : ViewTestBase
 
         // then
         document.HasPageHeader("My application - Phase one", DeliveryPageTitles.AddHomes)
-            .HasElementWithText("p", "Enter the number of homes from each home type that will be delivered in this phase.", true)
-            .HasElementWithText("p", "If a home type is not being delivered in this phase, enter 0.", true)
-            .HasElementWithText("p", "Once a home type has been fully allocated to your delivery phases, it will no longer be listed.", true)
+            .HasParagraph("Enter the number of homes from each home type that will be delivered in this phase.")
+            .HasParagraph("If a home type is not being delivered in this phase, enter 0.")
+            .HasParagraph("Once a home type has been fully allocated to your delivery phases, it will no longer be listed.")
             .HasInput("HomesToDeliver[ht-1]", "First Home Type", "5")
             .HasInput("HomesToDeliver[ht-2]", "Second Home Type")
             .HasGdsSaveAndContinueButton()
