@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.Domain.Common;
@@ -12,7 +13,9 @@ public interface IDeliveryPhaseEntity
 {
     ApplicationBasicInfo Application { get; }
 
-    public OrganisationBasicInfo Organisation { get; }
+    Tenure Tenure => Application.Tenure;
+
+    OrganisationBasicInfo Organisation { get; }
 
     DeliveryPhaseId Id { get; }
 
@@ -20,7 +23,7 @@ public interface IDeliveryPhaseEntity
 
     TypeOfHomes? TypeOfHomes { get; }
 
-    BuildActivityType BuildActivityType { get; }
+    BuildActivity BuildActivity { get; }
 
     DateTime? CreatedOn { get; }
 
@@ -40,5 +43,5 @@ public interface IDeliveryPhaseEntity
 
     void ProvideTypeOfHomes(TypeOfHomes typeOfHomes);
 
-    void ProvideBuildActivityType(BuildActivityType buildActivityType);
+    void ProvideBuildActivity(BuildActivity buildActivity);
 }

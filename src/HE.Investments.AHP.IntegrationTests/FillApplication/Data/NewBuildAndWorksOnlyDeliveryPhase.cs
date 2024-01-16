@@ -40,7 +40,7 @@ public class NewBuildAndWorksOnlyDeliveryPhase : INestedItemData
 
     public NewBuildAndWorksOnlyDeliveryPhase GenerateBuildActivityType()
     {
-        BuildActivityType = new BuildActivityType(TypeOfHomes, BuildActivityTypeForNewBuild.WorksOnly);
+        BuildActivityType = BuildActivityType.AcquisitionAndWorks;
         return this;
     }
 

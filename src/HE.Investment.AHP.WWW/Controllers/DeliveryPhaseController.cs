@@ -122,14 +122,9 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     [WorkflowState(DeliveryPhaseWorkflowState.BuildActivityType)]
     public async Task<IActionResult> BuildActivityType([FromRoute] string applicationId, string deliveryPhaseId, DeliveryPhaseDetails deliveryPhaseDetails, CancellationToken cancellationToken)
     {
-        IRequest<OperationResult> Command(TypeOfHomes? typeOfHomes, AhpApplicationId ahpApplicationId) =>
-            typeOfHomes == TypeOfHomes.Rehab ?
-                new ProvideBuildActivityForRehabCommand(ahpApplicationId, deliveryPhaseId, deliveryPhaseDetails.BuildActivityTypeForRehab) :
-                new ProvideBuildActivityForNewBuildCommand(ahpApplicationId, deliveryPhaseId, deliveryPhaseDetails.BuildActivityTypeForNewBuild);
-
         return await ExecuteCommand(
             deliveryPhaseId,
-            Command(deliveryPhaseDetails.TypeOfHomes, AhpApplicationId.From(applicationId)),
+            new ProvideBuildActivityCommand(AhpApplicationId.From(applicationId), deliveryPhaseId, deliveryPhaseDetails.BuildActivityType),
             nameof(BuildActivityType),
             cancellationToken);
     }

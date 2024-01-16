@@ -120,7 +120,7 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
                     new DeliveryPhaseName("Phase 1"),
                     userAccount.SelectedOrganisation(),
                     null,
-                    new BuildActivityType(),
+                    new BuildActivity(application.Tenure),
                     SectionStatus.InProgress,
                     new[] { new HomesToDeliverInPhase(new HomeTypeId("ht-1"), 3) },
                     new DeliveryPhaseMilestones(userAccount.SelectedOrganisation(), completionMilestone: new CompletionMilestoneDetails(new CompletionDate("1", "2", "2023"), null)),

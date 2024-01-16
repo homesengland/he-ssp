@@ -109,7 +109,7 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
             BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.BuildActivityType, NewBuildAndWorksOnlyDeliveryPhase),
             DeliveryPageTitles.BuildActivityType,
             BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.AcquisitionMilestone, NewBuildAndWorksOnlyDeliveryPhase),
-            ("BuildActivityTypeForNewBuild", deliveryPhase.BuildActivityType.NewBuild.ToString()!));
+            ("BuildActivityType", deliveryPhase.BuildActivityType.ToString()!));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]

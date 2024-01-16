@@ -25,8 +25,13 @@ public static class EnumExtensions
         return enumValue.GetType().GetField(enumValue.ToString())?.GetCustomAttribute<DescriptionAttribute>()?.Description ?? enumValue.ToString();
     }
 
-    public static bool IsIn(this Enum value, params Enum[] values)
+    public static bool IsIn(this Enum? value, params Enum[] values)
     {
+        if (value is null)
+        {
+            return false;
+        }
+
         return values.Contains(value);
     }
 

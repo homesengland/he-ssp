@@ -16,32 +16,12 @@ public static class DeliveryPhaseEntityMapper
             deliveryPhase.Id.Value,
             deliveryPhase.Name?.Value,
             deliveryPhase.TotalHomesToBeDeliveredInThisPhase,
-            DateHelper.ToDateOnlyString(deliveryPhase.DeliveryPhaseMilestones.AcquisitionMilestone?.MilestoneDate?.Value),
-            DateHelper.ToDateOnlyString(deliveryPhase.DeliveryPhaseMilestones.StartOnSiteMilestone?.MilestoneDate?.Value),
-            DateHelper.ToDateOnlyString(deliveryPhase.DeliveryPhaseMilestones.CompletionMilestone?.MilestoneDate?.Value));
+            DateHelper.ToDateOnlyString(deliveryPhase.DeliveryPhaseMilestones.AcquisitionMilestone?.PaymentDate?.Value),
+            DateHelper.ToDateOnlyString(deliveryPhase.DeliveryPhaseMilestones?.StartOnSiteMilestone?.PaymentDate?.Value),
+            DateHelper.ToDateOnlyString(deliveryPhase.DeliveryPhaseMilestones?.CompletionMilestone?.PaymentDate?.Value));
     }
 
-    public static DeliveryPhaseDetails ToDeliveryPhaseDetails(IDeliveryPhaseEntity deliveryPhase)
-    {
-        return new DeliveryPhaseDetails(
-            deliveryPhase.Application.Name.Name,
-            deliveryPhase.Id.Value,
-            deliveryPhase.Name?.Value ?? string.Empty,
-            deliveryPhase.TypeOfHomes,
-            deliveryPhase.BuildActivityType.NewBuild,
-            deliveryPhase.BuildActivityType.Rehab,
-            deliveryPhase.TotalHomesToBeDeliveredInThisPhase,
-            deliveryPhase.Organisation.IsUnregisteredBody,
-            MapDate(deliveryPhase.DeliveryPhaseMilestones.AcquisitionMilestone?.MilestoneDate),
-            MapDate(deliveryPhase.DeliveryPhaseMilestones.AcquisitionMilestone?.PaymentDate),
-            MapDate(deliveryPhase.DeliveryPhaseMilestones.StartOnSiteMilestone?.MilestoneDate),
-            MapDate(deliveryPhase.DeliveryPhaseMilestones.StartOnSiteMilestone?.PaymentDate),
-            MapDate(deliveryPhase.DeliveryPhaseMilestones.CompletionMilestone?.MilestoneDate),
-            MapDate(deliveryPhase.DeliveryPhaseMilestones.CompletionMilestone?.PaymentDate),
-            deliveryPhase.IsAdditionalPaymentRequested?.IsRequested);
-    }
-
-    private static DateDetails? MapDate(DateValueObject? date)
+    public static DateDetails? MapDate(DateValueObject? date)
     {
         return date != null
             ? new DateDetails(
