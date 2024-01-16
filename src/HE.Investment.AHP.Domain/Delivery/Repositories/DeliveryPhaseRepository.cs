@@ -1,6 +1,7 @@
 using System.Collections.Concurrent;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Delivery;
+using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.Contract.Delivery.Events;
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Domain.Application.Repositories;
@@ -121,10 +122,23 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
                     userAccount.SelectedOrganisation(),
                     null,
                     new BuildActivity(application.Tenure),
+                    null,
                     SectionStatus.InProgress,
                     new[] { new HomesToDeliverInPhase(new HomeTypeId("ht-1"), 3) },
                     new DeliveryPhaseMilestones(userAccount.SelectedOrganisation(), completionMilestone: new CompletionMilestoneDetails(new CompletionDate("1", "2", "2023"), null)),
                     new DeliveryPhaseId("phase-1"),
+                    new DateTime(2023, 12, 12)),
+                new DeliveryPhaseEntity(
+                    application,
+                    new DeliveryPhaseName("Almost completed rehab"),
+                    userAccount.SelectedOrganisation(),
+                    TypeOfHomes.Rehab,
+                    new BuildActivity(application.Tenure, TypeOfHomes.Rehab, BuildActivityType.RegenerationRehab),
+                    true,
+                    SectionStatus.InProgress,
+                    new[] { new HomesToDeliverInPhase(new HomeTypeId("ht-2"), 2) },
+                    new DeliveryPhaseMilestones(userAccount.SelectedOrganisation(), completionMilestone: new CompletionMilestoneDetails(new CompletionDate("1", "2", "2023"), null)),
+                    new DeliveryPhaseId("phase-2"),
                     new DateTime(2023, 12, 12)),
             },
             homesToDeliver,

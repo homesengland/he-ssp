@@ -24,16 +24,7 @@ public class BuildActivityTests : ViewTestBase
             "DeliveryPhaseName",
             null,
             null,
-            availableTypes,
-            null,
-            false,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null);
+            availableTypes);
 
         // given & when
         var document = await Render(_viewPath, model, routeData: _routeData);

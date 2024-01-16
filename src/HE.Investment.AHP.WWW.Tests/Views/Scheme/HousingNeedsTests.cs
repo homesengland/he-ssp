@@ -1,7 +1,5 @@
 using AngleSharp.Html.Dom;
 using HE.Investment.AHP.WWW.Models.Scheme;
-using HE.Investments.Common.WWWTestsFramework;
-using HE.Investments.Common.WWWTestsFramework.Helpers;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Routing;
 
@@ -46,11 +44,9 @@ public class HousingNeedsTests : ViewTestBase
     {
         document
             .HasPageHeader(Model.ApplicationName, "Local housing needs")
-            .HasFormFieldLabel("Tell us how this type and tenure of home meets the identified priorities for the local housing market", "label")
-            .HasTextAreaInput("MeetingLocalPriorities", value: Model.MeetingLocalPriorities)
-            .HasFormFieldLabel("Tell us how this scheme and proposal contributes to a locally identified housing need", "label")
-            .HasTextAreaInput("MeetingLocalHousingNeed", value: Model.MeetingLocalHousingNeed)
-            .HasElementWithText("button", "Save and continue");
+            .HasTextAreaInput("MeetingLocalPriorities", "Tell us how this type and tenure of home meets the identified priorities for the local housing market", Model.MeetingLocalPriorities)
+            .HasTextAreaInput("MeetingLocalHousingNeed", "Tell us how this scheme and proposal contributes to a locally identified housing need", Model.MeetingLocalHousingNeed)
+            .HasGdsSaveAndContinueButton();
     }
 
     private void AssertErrors(IHtmlDocument document, bool exist)

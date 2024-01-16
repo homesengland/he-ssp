@@ -36,6 +36,8 @@ public class GetDeliveryPhaseDetailsQueryHandler : IRequestHandler<GetDeliveryPh
             deliveryPhase.TypeOfHomes,
             deliveryPhase.BuildActivity.Type,
             deliveryPhase.BuildActivity.GetAvailableTypes(),
+            deliveryPhase.IsReconfiguringExistingNeeded(),
+            deliveryPhase.ReconfiguringExisting,
             deliveryPhase.TotalHomesToBeDeliveredInThisPhase,
             deliveryPhase.Organisation.IsUnregisteredBody,
             DeliveryPhaseEntityMapper.MapDate(deliveryPhase.DeliveryPhaseMilestones.AcquisitionMilestone?.MilestoneDate),

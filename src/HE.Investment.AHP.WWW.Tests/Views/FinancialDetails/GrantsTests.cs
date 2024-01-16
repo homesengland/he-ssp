@@ -1,8 +1,6 @@
 using AngleSharp.Html.Dom;
 using HE.Investment.AHP.Contract.FinancialDetails.Constants;
 using HE.Investment.AHP.WWW.Models.FinancialDetails;
-using HE.Investments.Common.WWWTestsFramework;
-using HE.Investments.Common.WWWTestsFramework.Helpers;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.FinancialDetails;
@@ -65,7 +63,7 @@ public class GrantsTests : ViewTestBase
             .HasElementWithText("h1", "Grants received from other public bodies")
             .HasElementWithText("h2", "Enter how much you have received from the county council")
             .HasElementWithText("span", "Total grants from other public bodies")
-            .HasElementWithText("button", "Save and continue")
+            .HasGdsSaveAndContinueButton()
             .HasSummaryErrorMessage(FinancialDetailsValidationFieldNames.DhscExtraCareGrants, errorMessage, !string.IsNullOrEmpty(errorMessage))
             .HasErrorMessage(FinancialDetailsValidationFieldNames.DhscExtraCareGrants, errorMessage, !string.IsNullOrEmpty(errorMessage));
     }

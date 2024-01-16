@@ -19,7 +19,7 @@ public class Section106AgreementTests : ViewTestBase
         // then
         document
             .HasTitle(SitePageTitles.SiteSection106Agreement)
-            .HasGdsRadioInputWithValues(nameof(SiteModel.Section106GeneralAgreement), new string[] { "True", "False" })
+            .HasGdsRadioInputWithValues(nameof(SiteModel.Section106GeneralAgreement), "True", "False")
             .HasGdsSaveAndContinueButton()
             .HasGdsBackButton();
     }
@@ -38,7 +38,7 @@ public class Section106AgreementTests : ViewTestBase
         // then
         document
             .HasTitle(SitePageTitles.SiteSection106Agreement)
-            .HasGdsRadioInputWithValues(nameof(SiteModel.Section106GeneralAgreement), new string[] { "True", "False" })
+            .HasGdsRadioInputWithValues(nameof(SiteModel.Section106GeneralAgreement), "True", "False")
             .HasGdsSaveAndContinueButton()
             .HasGdsBackButton()
             .HasOneValidationMessages(errorMessage);

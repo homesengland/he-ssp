@@ -102,6 +102,7 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
             organisationBasicInfo,
             null,
             new BuildActivity(_application.Tenure),
+            null,
             SectionStatus.InProgress,
             Array.Empty<HomesToDeliverInPhase>(),
             new DeliveryPhaseMilestones(organisationBasicInfo));

@@ -1,7 +1,5 @@
 using AngleSharp.Html.Dom;
 using HE.Investment.AHP.WWW.Models.Application;
-using HE.Investments.Common.WWWTestsFramework;
-using HE.Investments.Common.WWWTestsFramework.Helpers;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.Application;
@@ -38,11 +36,11 @@ public class NameTests : ViewTestBase
     private static void AssertView(IHtmlDocument document, string? errorMessage = null)
     {
         document
-            .HasElementWithText("h1", "Name your application")
+            .HasPageHeader(header: "Name your application")
             .HasElementWithText("p", "Each application must be for a single tenure. If you are developing a multi-tenure site, each tenure must be applied for within a separate application.")
             .HasElementWithText("p", "Each application needs a unique name. You will not be able to edit this later.")
             .HasElementWithText("p", "You should include the tenure type within your application name. For example, Village Way – Affordable Rent or Village Way – Shared Ownership.")
-            .HasElementWithText("button", "Continue")
+            .HasGdsContinueButton()
             .HasSummaryErrorMessage(nameof(ApplicationBasicModel.Name), errorMessage, !string.IsNullOrEmpty(errorMessage))
             .HasErrorMessage(nameof(ApplicationBasicModel.Name), errorMessage, !string.IsNullOrEmpty(errorMessage));
     }
