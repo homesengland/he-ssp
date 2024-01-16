@@ -2,7 +2,7 @@ using AngleSharp.Html.Dom;
 using HE.Investments.Account.WWW.Models.UserOrganisation;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.WWWTestsFramework;
-using HE.Investments.Common.WWWTestsFramework.Helpers;
+using HE.Investments.TestsUtils.Extensions;
 using Xunit;
 
 namespace HE.Investments.Account.WWW.Tests.Views.UserOrganisation;

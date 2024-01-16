@@ -48,6 +48,7 @@
     <ItemGroup>
       <ProjectReference Include="..\HE.Investments.Loans.WWW\HE.Investments.Loans.WWW.csproj" />
       <ProjectReference Include="..\HE.Investments.Common.WWWTestsFramework\HE.Investments.Common.WWWTestsFramework.csproj" />
+      <ProjectReference Include="..\HE.Investments.TestsUtils\HE.Investments.TestsUtils.csproj" />
     </ItemGroup>
 
 

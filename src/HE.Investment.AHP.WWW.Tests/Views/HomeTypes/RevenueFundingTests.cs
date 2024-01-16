@@ -1,6 +1,5 @@
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
-using HE.Investments.Common.WWWTestsFramework.Helpers;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.HomeTypes;
 
@@ -19,8 +18,7 @@ public class RevenueFundingTests : HomeTypesTestBase
 
         // then
         document
-            .HasElementWithText("span", "My application - My homes")
-            .HasElementWithText("h1", "Where are you receiving revenue funding from for these homes?")
+            .HasPageHeader("My application - My homes", "Where are you receiving revenue funding from for these homes?")
             .HasElementWithText("span", "Select all that apply.")
             .HasCheckboxes(
                 "Sources",
@@ -47,7 +45,7 @@ public class RevenueFundingTests : HomeTypesTestBase
                     "YouthOffendingTeams",
                     "Other",
                 })
-            .HasElementWithText("button", "Save and continue");
+            .HasGdsSaveAndContinueButton();
     }
 
     [Fact]
@@ -80,6 +78,6 @@ public class RevenueFundingTests : HomeTypesTestBase
                     "NationalLottery",
                     "SocialServicesDepartment",
                 })
-            .HasElementWithText("button", "Save and continue");
+            .HasGdsSaveAndContinueButton();
     }
 }

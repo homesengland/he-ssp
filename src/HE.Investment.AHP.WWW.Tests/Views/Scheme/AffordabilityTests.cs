@@ -1,7 +1,7 @@
 using AngleSharp.Html.Dom;
 using HE.Investment.AHP.WWW.Models.Scheme;
 using HE.Investments.Common.WWWTestsFramework;
-using HE.Investments.Common.WWWTestsFramework.Helpers;
+
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Routing;
 
@@ -43,11 +43,9 @@ public class AffordabilityTests : ViewTestBase
     private static void AssertView(IHtmlDocument document)
     {
         document
-            .HasElementWithText("span", Model.ApplicationName)
-            .HasElementWithText("h1", "Affordability of Shared Ownership")
-            .HasElementWithText("label", "Tell us about any evidence and analysis you have that the homes will be affordable to the target market")
-            .HasTextAreaInput("AffordabilityEvidence", value: Model.AffordabilityEvidence)
-            .HasElementWithText("button", "Save and continue");
+            .HasPageHeader(Model.ApplicationName, "Affordability of Shared Ownership")
+            .HasTextAreaInput("AffordabilityEvidence", "Tell us about any evidence and analysis you have that the homes will be affordable to the target market", Model.AffordabilityEvidence)
+            .HasGdsSaveAndContinueButton();
     }
 
     private void AssertErrors(IHtmlDocument document, bool exist)

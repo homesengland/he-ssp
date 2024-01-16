@@ -2,7 +2,7 @@ using AngleSharp.Html.Dom;
 using HE.Investment.AHP.Contract.FinancialDetails.Constants;
 using HE.Investment.AHP.WWW.Models.FinancialDetails;
 using HE.Investments.Common.WWWTestsFramework;
-using HE.Investments.Common.WWWTestsFramework.Helpers;
+
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.FinancialDetails;
@@ -45,7 +45,7 @@ public class LandStatusTests : ViewTestBase
             .HasElementWithText("h1", "Land status")
             .HasElementWithText("h2", "Enter the purchase price of the land")
             .HasElementWithText("div", "The purchase price must be backed by a valuation report from a qualified independent valuer, valid at the date of exchange of purchase contracts.")
-            .HasElementWithText("button", "Save and continue")
+            .HasGdsSaveAndContinueButton()
             .HasSummaryErrorMessage(nameof(FinancialDetailsValidationFieldNames.PurchasePrice), errorMessage, !string.IsNullOrEmpty(errorMessage))
             .HasErrorMessage(nameof(FinancialDetailsValidationFieldNames.PurchasePrice), errorMessage, !string.IsNullOrEmpty(errorMessage));
     }
