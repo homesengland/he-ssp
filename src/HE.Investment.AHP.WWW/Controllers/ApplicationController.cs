@@ -178,7 +178,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     public async Task<IActionResult> OnHold(string applicationId, ChangeApplicationStatusModel model, CancellationToken cancellationToken)
     {
         return await ExecuteCommand(
-            new ProvideApplicationStatusCommand(AhpApplicationId.From(model.ApplicationId), ApplicationStatus.OnHold, model.ChangeStatusReason),
+            new HoldApplicationCommand(AhpApplicationId.From(model.ApplicationId), model.ChangeStatusReason),
             applicationId,
             nameof(OnHold),
             model,
@@ -205,7 +205,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     public async Task<IActionResult> Withdraw(string applicationId, ChangeApplicationStatusModel model, CancellationToken cancellationToken)
     {
         return await ExecuteCommand(
-            new ProvideApplicationStatusCommand(AhpApplicationId.From(model.ApplicationId), ApplicationStatus.Withdrawn, model.ChangeStatusReason),
+            new WithdrawApplicationCommand(AhpApplicationId.From(model.ApplicationId), model.ChangeStatusReason),
             applicationId,
             nameof(Withdraw),
             model,

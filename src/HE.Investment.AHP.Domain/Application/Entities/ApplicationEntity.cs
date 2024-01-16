@@ -81,9 +81,14 @@ public class ApplicationEntity
         Status = _modificationTracker.Change(Status, ApplicationStatus.ApplicationSubmitted);
     }
 
-    public void ProvideApplicationStatus(ApplicationStatus newStatus)
+    public void Hold()
     {
-        Status = _modificationTracker.Change(Status, newStatus);
+        Status = _modificationTracker.Change(Status, ApplicationStatus.OnHold);
+    }
+
+    public void Withdraw()
+    {
+        Status = _modificationTracker.Change(Status, ApplicationStatus.Withdrawn);
     }
 
     public void ProvideChangeStatusReason(ChangeStatusReason? newChangeStatusReason)
