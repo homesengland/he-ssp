@@ -25,7 +25,7 @@ public class GetDeliveryPhaseDetailsQueryHandler : IRequestHandler<GetDeliveryPh
         var userAccount = await _accountUserContext.GetSelectedAccount();
         var deliveryPhase = await _repository.GetById(
             request.ApplicationId,
-            new DeliveryPhaseId(request.DeliveryPhaseId),
+            request.DeliveryPhaseId,
             userAccount,
             cancellationToken);
 

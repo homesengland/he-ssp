@@ -5,6 +5,6 @@ namespace HE.Investment.AHP.Contract.Delivery.Commands;
 
 public record RemoveDeliveryPhaseCommand(
         AhpApplicationId ApplicationId,
-        string DeliveryPhaseId,
+        DeliveryPhaseId DeliveryPhaseId,
         RemoveDeliveryPhaseAnswer RemoveDeliveryPhaseAnswer)
     : IDeliveryCommand;
