@@ -5,4 +5,7 @@ public enum ApplicationWorkflowState
     Start = 1,
     ApplicationName,
     ApplicationTenure,
+    TaskList,
+    OnHold,
+    Withdraw,
 }

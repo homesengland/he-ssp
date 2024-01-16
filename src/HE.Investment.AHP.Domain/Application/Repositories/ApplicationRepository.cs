@@ -83,6 +83,7 @@ public class ApplicationRepository : IApplicationRepository
             name = application.Name.Name,
             tenure = ApplicationTenureMapper.ToDto(application.Tenure),
             organisationId = organisationId.Value.ToString(),
+            applicationStatus = ApplicationStatusMapper.MapToCrmStatus(application.Status),
         };
 
         var id = await _applicationCrmContext.Save(dto, organisationId.Value, CrmFields.ApplicationToUpdate, cancellationToken);
