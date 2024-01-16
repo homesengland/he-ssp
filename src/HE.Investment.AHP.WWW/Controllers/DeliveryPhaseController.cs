@@ -2,13 +2,12 @@ using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Commands;
-using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.Contract.Delivery.Queries;
 using HE.Investment.AHP.WWW.Extensions;
 using HE.Investment.AHP.WWW.Models.Delivery;
+using HE.Investment.AHP.WWW.Models.Delivery.Factories;
 using HE.Investment.AHP.WWW.Utils;
 using HE.Investment.AHP.WWW.Workflows;
-using HE.Investments.Account.Contract.UserOrganisation.Queries;
 using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Contract;
@@ -126,6 +125,25 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
             deliveryPhaseId,
             new ProvideBuildActivityCommand(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId), deliveryPhaseDetails.BuildActivityType),
             nameof(BuildActivityType),
+            cancellationToken);
+    }
+
+    [HttpGet("{deliveryPhaseId}/add-homes")]
+    [WorkflowState(DeliveryPhaseWorkflowState.AddHomes)]
+    public async Task<IActionResult> AddHomes([FromRoute] string applicationId, string deliveryPhaseId, CancellationToken cancellationToken)
+    {
+        return View("AddHomes", await new AddHomesModelFactory(_mediator).Create(applicationId, deliveryPhaseId, cancellationToken));
+    }
+
+    [HttpPost("{deliveryPhaseId}/add-homes")]
+    [WorkflowState(DeliveryPhaseWorkflowState.AddHomes)]
+    public async Task<IActionResult> AddHomes([FromRoute] string applicationId, string deliveryPhaseId, AddHomesModel model, CancellationToken cancellationToken)
+    {
+        return await this.ExecuteCommand(
+            _mediator,
+            new ProvideDeliveryPhaseHomesCommand(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId)),
+            () => ContinueWithRedirect(new { applicationId, deliveryPhaseId }),
+            async () => View("AddHomes", await new AddHomesModelFactory(_mediator).Create(applicationId, deliveryPhaseId, cancellationToken)),
             cancellationToken);
     }
 

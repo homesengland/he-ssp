@@ -14,10 +14,10 @@ public static class DeliveryPhaseEntityMapper
         return new DeliveryPhaseBasicDetails(
             deliveryPhase.Application.Name.Name,
             deliveryPhase.Id.Value,
-            deliveryPhase.Name?.Value,
+            deliveryPhase.Name.Value,
             deliveryPhase.TotalHomesToBeDeliveredInThisPhase,
             DateHelper.ToDateOnlyString(deliveryPhase.DeliveryPhaseMilestones.AcquisitionMilestone?.PaymentDate?.Value),
-            DateHelper.ToDateOnlyString(deliveryPhase.DeliveryPhaseMilestones?.StartOnSiteMilestone?.PaymentDate?.Value),
+            DateHelper.ToDateOnlyString(deliveryPhase.DeliveryPhaseMilestones.StartOnSiteMilestone?.PaymentDate?.Value),
             DateHelper.ToDateOnlyString(deliveryPhase.DeliveryPhaseMilestones?.CompletionMilestone?.PaymentDate?.Value));
     }
 
