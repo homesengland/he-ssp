@@ -3,11 +3,11 @@ using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.Contract.Delivery.Events;
-using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
-using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
+using HE.Investment.AHP.Domain.HomeTypes.Entities;
+using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.Contract;
@@ -22,13 +22,17 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
 
     private readonly IApplicationRepository _applicationRepository;
 
+    private readonly IHomeTypeRepository _homeTypeRepository;
+
     private readonly IEventDispatcher _eventDispatcher;
 
     public DeliveryPhaseRepository(
         IApplicationRepository applicationRepository,
+        IHomeTypeRepository homeTypeRepository,
         IEventDispatcher eventDispatcher)
     {
         _applicationRepository = applicationRepository;
+        _homeTypeRepository = homeTypeRepository;
         _eventDispatcher = eventDispatcher;
     }
 
@@ -102,16 +106,14 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
             return;
         }
 
-        var application =
-            await _applicationRepository.GetApplicationBasicInfo(applicationId, userAccount, cancellationToken);
+        var application = await _applicationRepository.GetApplicationBasicInfo(applicationId, userAccount, cancellationToken);
+        var homeTypes = await _homeTypeRepository.GetByApplicationId(
+            applicationId,
+            userAccount,
+            new[] { HomeTypeSegmentType.HomeInformation },
+            cancellationToken);
 
-        var homesToDeliver = new[]
-        {
-            new HomesToDeliver(new HomeTypeId("ht-1"), new HomeTypeName("1 bed flat"), 3),
-            new HomesToDeliver(new HomeTypeId("ht-2"), new HomeTypeName("2 bed flat"), 2),
-            new HomesToDeliver(new HomeTypeId("ht-3"), new HomeTypeName("3 bed flat"), 1),
-            new HomesToDeliver(new HomeTypeId("ht-4"), new HomeTypeName("2 bed house"), 4),
-        };
+        var homesToDeliver = homeTypes.HomeTypes.Select(x => new HomesToDeliver(x.Id, x.Name, x.HomeInformation.NumberOfHomes?.Value ?? 0)).ToList();
         var deliveryPhases = new DeliveryPhasesEntity(
             application,
             new[]
@@ -124,7 +126,7 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
                     new BuildActivity(application.Tenure),
                     null,
                     SectionStatus.InProgress,
-                    new[] { new HomesToDeliverInPhase(new HomeTypeId("ht-1"), 3) },
+                    homesToDeliver.Any() ? new[] { new HomesToDeliverInPhase(homesToDeliver[0].HomeTypeId, homesToDeliver[0].TotalHomes) } : new List<HomesToDeliverInPhase>(),
                     new DeliveryPhaseMilestones(userAccount.SelectedOrganisation(), completionMilestone: new CompletionMilestoneDetails(new CompletionDate("1", "2", "2023"), null)),
                     new DeliveryPhaseId("phase-1"),
                     new DateTime(2023, 12, 12)),
@@ -136,7 +138,7 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
                     new BuildActivity(application.Tenure, TypeOfHomes.Rehab, BuildActivityType.RegenerationRehab),
                     true,
                     SectionStatus.InProgress,
-                    new[] { new HomesToDeliverInPhase(new HomeTypeId("ht-2"), 2) },
+                    new List<HomesToDeliverInPhase>(),
                     new DeliveryPhaseMilestones(userAccount.SelectedOrganisation(), completionMilestone: new CompletionMilestoneDetails(new CompletionDate("1", "2", "2023"), null)),
                     new DeliveryPhaseId("phase-2"),
                     new DateTime(2023, 12, 12)),

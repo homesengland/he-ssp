@@ -19,7 +19,7 @@ public interface IDeliveryPhaseEntity
 
     DeliveryPhaseId Id { get; }
 
-    DeliveryPhaseName? Name { get; }
+    DeliveryPhaseName Name { get; }
 
     TypeOfHomes? TypeOfHomes { get; }
 

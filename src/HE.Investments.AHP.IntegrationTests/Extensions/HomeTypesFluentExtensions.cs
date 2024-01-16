@@ -39,4 +39,23 @@ public static class HomeTypesFluentExtensions
 
         return htmlDocument;
     }
+
+    public static IEnumerable<string> GetHomeTypeIds(this IHtmlDocument homeTypeListPage)
+    {
+        var index = 0;
+        while (true)
+        {
+            var homeTypeId = (homeTypeListPage.GetElementById($"HomeTypes_{index}__HomeTypeId") as IHtmlInputElement)?.Value;
+            if (!string.IsNullOrEmpty(homeTypeId))
+            {
+                yield return homeTypeId.Trim();
+            }
+            else
+            {
+                yield break;
+            }
+
+            index++;
+        }
+    }
 }

@@ -12,6 +12,8 @@ public static class DeliveryPageTitles
 
     public const string ReconfiguringExisting = "Are you reconfiguring existing residential properties to increase the number of homes?";
 
+    public const string AddHomes = "Add homes to this delivery phase";
+
     public const string List = "Delivery";
 
     public const string Complete = "Have you completed this section?";

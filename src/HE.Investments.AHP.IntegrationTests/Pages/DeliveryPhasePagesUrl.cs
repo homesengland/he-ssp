@@ -12,6 +12,9 @@ internal static class DeliveryPhasePagesUrl
     public static string ReconfiguringExisting(string applicationId, string deliveryPhaseId) =>
         BuildDeliveryPhasePage(applicationId, deliveryPhaseId, "reconfiguring-existing");
 
+    public static string AddHomes(string applicationId, string deliveryPhaseId) =>
+        BuildDeliveryPhasePage(applicationId, deliveryPhaseId, "add-homes");
+
     public static string AcquisitionMilestone(string applicationId, string deliveryPhaseId) =>
         BuildDeliveryPhasePage(applicationId, deliveryPhaseId, "acquisition-milestone");
 

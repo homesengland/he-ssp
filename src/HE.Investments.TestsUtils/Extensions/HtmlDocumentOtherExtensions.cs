@@ -32,6 +32,15 @@ public static class HtmlDocumentOtherExtensions
         return htmlDocument;
     }
 
+    public static IHtmlDocument HasParagraph(this IHtmlDocument htmlDocument, string text)
+    {
+        var filtered = htmlDocument.GetElements("p.govuk-body", text);
+
+        BasicHtmlDocumentExtensions.ValidateExist(filtered, "govuk-paragraph", text, true);
+
+        return htmlDocument;
+    }
+
     public static IHtmlDocument IsEmpty(this IHtmlDocument htmlDocument)
     {
         var body = htmlDocument.GetElementsByTagName("body").FirstOrDefault();
