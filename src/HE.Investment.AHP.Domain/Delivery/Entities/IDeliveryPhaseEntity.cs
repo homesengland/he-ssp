@@ -25,6 +25,8 @@ public interface IDeliveryPhaseEntity
 
     BuildActivity BuildActivity { get; }
 
+    bool? ReconfiguringExisting { get; }
+
     DateTime? CreatedOn { get; }
 
     SectionStatus Status { get; }
@@ -44,4 +46,8 @@ public interface IDeliveryPhaseEntity
     void ProvideTypeOfHomes(TypeOfHomes typeOfHomes);
 
     void ProvideBuildActivity(BuildActivity buildActivity);
+
+    void ProvideReconfiguringExisting(bool? reconfiguringExisting);
+
+    bool IsReconfiguringExistingNeeded();
 }

@@ -21,6 +21,8 @@ public class NewBuildAndWorksOnlyDeliveryPhase : INestedItemData
 
     public CompletionMilestoneDetails CompletionMilestone { get; private set; }
 
+    public bool ReconfigurationExisting { get; private set; }
+
     public void SetDeliveryPhaseId(string deliveryPhaseId)
     {
         Id = deliveryPhaseId;
@@ -34,13 +36,19 @@ public class NewBuildAndWorksOnlyDeliveryPhase : INestedItemData
 
     public NewBuildAndWorksOnlyDeliveryPhase GenerateDetails()
     {
-        TypeOfHomes = TypeOfHomes.NewBuild;
+        TypeOfHomes = TypeOfHomes.Rehab;
         return this;
     }
 
     public NewBuildAndWorksOnlyDeliveryPhase GenerateBuildActivityType()
     {
-        BuildActivityType = BuildActivityType.AcquisitionAndWorks;
+        BuildActivityType = BuildActivityType.WorksOnlyRehab;
+        return this;
+    }
+
+    public NewBuildAndWorksOnlyDeliveryPhase GenerateReconfigurationExisting()
+    {
+        ReconfigurationExisting = true;
         return this;
     }
 

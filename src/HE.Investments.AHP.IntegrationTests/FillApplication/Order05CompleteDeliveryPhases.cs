@@ -108,8 +108,23 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
         await TestQuestionPage(
             BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.BuildActivityType, NewBuildAndWorksOnlyDeliveryPhase),
             DeliveryPageTitles.BuildActivityType,
-            BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.AcquisitionMilestone, NewBuildAndWorksOnlyDeliveryPhase),
+            BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.ReconfiguringExisting, NewBuildAndWorksOnlyDeliveryPhase),
             ("BuildActivityType", deliveryPhase.BuildActivityType.ToString()!));
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(5)]
+    public async Task Order05_ProvideReconfiguringExisting()
+    {
+        // given
+        var deliveryPhase = NewBuildAndWorksOnlyDeliveryPhase.GenerateBuildActivityType();
+
+        // when & then
+        await TestQuestionPage(
+            BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.ReconfiguringExisting, NewBuildAndWorksOnlyDeliveryPhase),
+            DeliveryPageTitles.ReconfiguringExisting,
+            BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.AcquisitionMilestone, NewBuildAndWorksOnlyDeliveryPhase),
+            ("ReconfigurationExisting", deliveryPhase.ReconfigurationExisting.ToString().ToUpperInvariant()));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]

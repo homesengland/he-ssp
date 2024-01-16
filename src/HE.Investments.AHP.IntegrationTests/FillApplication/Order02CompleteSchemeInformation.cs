@@ -6,6 +6,7 @@ using HE.Investments.AHP.IntegrationTests.FillApplication.Data;
 using HE.Investments.AHP.IntegrationTests.Framework;
 using HE.Investments.AHP.IntegrationTests.Pages;
 using HE.Investments.IntegrationTestsFramework;
+using HE.Investments.Loans.Common.Extensions;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
 using Xunit.Extensions.Ordering;
@@ -153,7 +154,7 @@ public class Order02CompleteSchemeInformation : AhpIntegrationTest
 
         var taskListPage = await TestClient.SubmitButton(
             continueButton,
-            ("IsCompleted", true.ToString().ToLowerInvariant()));
+            ("IsCompleted", true.MapToCommonResponse()));
 
         // then
         taskListPage.UrlEndWith(ApplicationPagesUrl.TaskListSuffix)
