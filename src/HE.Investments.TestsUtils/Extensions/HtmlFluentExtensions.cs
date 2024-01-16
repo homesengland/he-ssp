@@ -40,84 +40,9 @@ public static class HtmlFluentExtensions
         return htmlDocument;
     }
 
-    public static IHtmlDocument HasGdsSubmitButton(this IHtmlDocument htmlDocument, string elementId, out IHtmlButtonElement htmlButtonElement)
-    {
-        htmlButtonElement = htmlDocument.GetGdsSubmitButtonById(elementId);
-        return htmlDocument;
-    }
-
-    public static IHtmlDocument HasGdsLinkButton(this IHtmlDocument htmlDocument, string elementId, out IHtmlAnchorElement htmlAnchorElement)
-    {
-        htmlAnchorElement = htmlDocument.GetGdsLinkButtonById(elementId);
-        return htmlDocument;
-    }
-
     public static IHtmlDocument HasAnchor(this IHtmlDocument htmlDocument, string elementId, out IHtmlAnchorElement htmlAnchorElement)
     {
         htmlAnchorElement = htmlDocument.GetAnchorElementById(elementId);
-        return htmlDocument;
-    }
-
-    public static IHtmlDocument HasGdsButton(this IHtmlDocument htmlDocument, string elementId, out IHtmlButtonElement htmlButtonElement)
-    {
-        var htmlElement = htmlDocument.GetElementById(elementId);
-        ElementExtensions.Should(htmlElement).BeGdsButton();
-        htmlButtonElement = (IHtmlButtonElement)htmlElement!;
-        return htmlDocument;
-    }
-
-    public static IHtmlDocument HasGdsContinueButton(this IHtmlDocument htmlDocument)
-    {
-        htmlDocument.HasGdsButton("continue-button", out var button);
-        button.Text().Trim().Should().Be("Continue");
-        return htmlDocument;
-    }
-
-    public static IHtmlDocument HasGdsSaveAndContinueButton(this IHtmlDocument htmlDocument)
-    {
-        htmlDocument.HasGdsButton("continue-button", out var button);
-        button.Text().Trim().Should().Be("Save and continue");
-        return htmlDocument;
-    }
-
-    public static IHtmlDocument HasGdsBackButton(this IHtmlDocument htmlDocument, bool validateLink = true)
-    {
-        var backButton = htmlDocument.GetElementsByClassName("govuk-back-link").SingleOrDefault();
-        backButton.Should().NotBeNull();
-        if (validateLink)
-        {
-            backButton!.IsLink().Should().BeTrue();
-        }
-
-        backButton!.Text().Trim().Should().Be("Back");
-        return htmlDocument;
-    }
-
-    public static IHtmlDocument HasGdsInput(this IHtmlDocument htmlDocument, string fieldName)
-    {
-        var gdsInput = htmlDocument.GetElementsByName(fieldName).SingleOrDefault();
-        gdsInput.Should().NotBeNull($"GDS input for field {fieldName} should exist");
-        gdsInput!.ClassName.Should().Contain("govuk-input");
-        return htmlDocument;
-    }
-
-    public static IHtmlDocument HasGdsRadioInputWithValues(this IHtmlDocument htmlDocument, string fieldName, params string[] values)
-    {
-        var gdsRadioInputs = htmlDocument.GetElementsByName(fieldName);
-        gdsRadioInputs.Should().NotBeEmpty($"GDS Radio input for field {fieldName} should exist");
-        foreach (var gdsRadioInput in gdsRadioInputs)
-        {
-            gdsRadioInput.ClassName.Should().Contain("govuk-radios__input");
-            var radioInput = (IHtmlInputElement)gdsRadioInput;
-            values.Should().Contain(radioInput.Value, $"Radio input value should have one of the expected values {string.Join(',', values)}");
-        }
-
-        return htmlDocument;
-    }
-
-    public static IHtmlDocument DoesNotHaveGdsButton(this IHtmlDocument htmlDocument, string elementId)
-    {
-        htmlDocument.GetElementById(elementId).Should().BeNull();
         return htmlDocument;
     }
 
@@ -132,13 +57,6 @@ public static class HtmlFluentExtensions
         {
             htmlDocument.ContainsValidationMessage(validationMessage);
         }
-
-        return htmlDocument;
-    }
-
-    public static IHtmlDocument HasLinkButtonForTestId(this IHtmlDocument htmlDocument, string dataTestId, out IHtmlAnchorElement htmlElement)
-    {
-        htmlElement = htmlDocument.GetLinkButtonByTestId(dataTestId);
 
         return htmlDocument;
     }
@@ -165,7 +83,7 @@ public static class HtmlFluentExtensions
         return htmlDocument;
     }
 
-    public static IHtmlDocument HasElementWithText(this IHtmlDocument htmlDocument, string id, string text)
+    public static IHtmlDocument HasElementWithTextById(this IHtmlDocument htmlDocument, string id, string text)
     {
         var element = htmlDocument.GetElementById(id);
 
@@ -196,6 +114,6 @@ public static class HtmlFluentExtensions
 
     public static IHtmlDocument HasSectionWithStatus(this IHtmlDocument htmlDocument, string sectionStatusId, string expectedStatus)
     {
-        return htmlDocument.HasElementWithText(sectionStatusId, expectedStatus);
+        return htmlDocument.HasElementWithTextById(sectionStatusId, expectedStatus);
     }
 }

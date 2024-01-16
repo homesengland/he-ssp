@@ -1,10 +1,11 @@
 using AngleSharp.Html.Dom;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWWTestsFramework;
-using HE.Investments.Common.WWWTestsFramework.Helpers;
+
 using HE.Investments.Loans.Contract.Projects.ValueObjects;
 using HE.Investments.Loans.Contract.Projects.ViewModels;
 using HE.Investments.Loans.WWW.Views.Project.Consts;
+using HE.Investments.TestsUtils.Extensions;
 using Xunit;
 
 namespace HE.Investments.Loans.WWW.Tests.Views.Project;

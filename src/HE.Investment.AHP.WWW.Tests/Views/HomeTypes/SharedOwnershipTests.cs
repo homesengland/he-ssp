@@ -1,6 +1,6 @@
 using AngleSharp.Html.Dom;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
-using HE.Investments.Common.WWWTestsFramework.Helpers;
+
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.HomeTypes;
@@ -46,8 +46,7 @@ public class SharedOwnershipTests : HomeTypesTestBase
     private static void AssertView(IHtmlDocument document)
     {
         document
-            .HasElementWithText("span", "My application - My homes")
-            .HasElementWithText("h1", "Shared Ownership details")
+            .HasPageHeader("My application - My homes", "Shared Ownership details")
             .HasElementWithText("h2", "Enter the market value of each home")
             .HasElementWithText("span", "Enter the market value in pounds only.")
             .HasInput("MarketValue")
@@ -59,7 +58,7 @@ public class SharedOwnershipTests : HomeTypesTestBase
             .HasElementWithText("span", "Enter the rent in pounds and pence. This is inclusive of all charges.")
             .HasInput("ProspectiveRent")
             .HasElementWithText("h2", "Shared Ownership rent as percentage of the unsold share")
-            .HasElementWithText("button", "Save and continue")
+            .HasGdsSaveAndContinueButton()
             .HasElementWithText("button", "Calculate");
     }
 }

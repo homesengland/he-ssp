@@ -1,6 +1,6 @@
 using AngleSharp.Html.Dom;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
-using HE.Investments.Common.WWWTestsFramework.Helpers;
+
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.HomeTypes;
@@ -49,8 +49,7 @@ public class AffordableRentTests : HomeTypesTestBase
     private static void AssertView(IHtmlDocument document)
     {
         document
-            .HasElementWithText("span", "My application - My homes")
-            .HasElementWithText("h1", "Affordable Rent details")
+            .HasPageHeader("My application - My homes", "Affordable Rent details")
             .HasElementWithText("h2", "Enter the market value of each home")
             .HasElementWithText("span", "Enter the market value in pounds only.")
             .HasInput("MarketValue")
@@ -71,7 +70,7 @@ public class AffordableRentTests : HomeTypesTestBase
                     "Yes",
                     "No",
                 })
-            .HasElementWithText("button", "Save and continue")
+            .HasGdsSaveAndContinueButton()
             .HasElementWithText("button", "Calculate");
     }
 }

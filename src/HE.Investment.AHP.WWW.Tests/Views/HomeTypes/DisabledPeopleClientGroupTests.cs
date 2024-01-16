@@ -1,5 +1,4 @@
 using HE.Investment.AHP.WWW.Models.HomeTypes;
-using HE.Investments.Common.WWWTestsFramework.Helpers;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.HomeTypes;
 
@@ -17,8 +16,7 @@ public class DisabledPeopleClientGroupTests : HomeTypesTestBase
 
         // then
         document
-            .HasElementWithText("span", "My application - My homes")
-            .HasElementWithText("h1", "What client group are the homes for?")
+            .HasPageHeader("My application - My homes", "What client group are the homes for?")
             .HasRadio(
                 "DisabledPeopleClientGroup",
                 new[]
@@ -41,6 +39,6 @@ public class DisabledPeopleClientGroupTests : HomeTypesTestBase
                     "YoungPeopleAtRisk",
                     "YoungPeopleLeavingCare",
                 })
-            .HasElementWithText("button", "Save and continue");
+            .HasGdsSaveAndContinueButton();
     }
 }

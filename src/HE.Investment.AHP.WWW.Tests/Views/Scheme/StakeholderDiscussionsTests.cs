@@ -1,7 +1,7 @@
 using AngleSharp.Html.Dom;
 using HE.Investment.AHP.WWW.Models.Scheme;
 using HE.Investments.Common.WWWTestsFramework;
-using HE.Investments.Common.WWWTestsFramework.Helpers;
+
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Routing;
 
@@ -46,9 +46,8 @@ public class StakeholderDiscussionsTests : ViewTestBase
             .HasPageHeader(Model.ApplicationName, "Local stakeholder discussions")
             .HasElementWithText("span", "Upload a file (PDF, DOCX, PNG)")
             .HasElementWithText("span", "Maximum file size 25 MB")
-            .HasFormFieldLabel("Tell us about discussions you have had with local stakeholders", "label")
-            .HasTextAreaInput("StakeholderDiscussionsReport", value: Model.StakeholderDiscussionsReport)
-            .HasElementWithText("button", "Save and continue");
+            .HasTextAreaInput("StakeholderDiscussionsReport", "Tell us about discussions you have had with local stakeholders", Model.StakeholderDiscussionsReport)
+            .HasGdsSaveAndContinueButton();
     }
 
     private void AssertErrors(IHtmlDocument document, bool exist)
