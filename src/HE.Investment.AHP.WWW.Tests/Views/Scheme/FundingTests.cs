@@ -1,7 +1,5 @@
 using AngleSharp.Html.Dom;
 using HE.Investment.AHP.WWW.Models.Scheme;
-using HE.Investments.Common.WWWTestsFramework;
-using HE.Investments.Common.WWWTestsFramework.Helpers;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Routing;
 
@@ -45,18 +43,21 @@ public class FundingTests : ViewTestBase
     private static void AssertView(IHtmlDocument document)
     {
         document
-            .HasElementWithText("span", Model.ApplicationName)
-            .HasElementWithText("h1", "Funding details")
-            .HasElementWithText("label", "Enter how much AHP CME 21-26 funding you require on this scheme")
-            .HasInput("RequiredFunding")
-            .HasElementWithText("label", "Enter how many homes you intend to deliver")
-            .HasInput("HousesToDeliver")
-            .HasElementWithText("button", "Save and continue");
+            .HasPageHeader(Model.ApplicationName, "Funding details")
+            .HasInput("RequiredFunding", "Enter how much AHP CME 21-26 funding you require on this scheme")
+            .HasInput("HousesToDeliver", "Enter how many homes you intend to deliver")
+            .HasGdsSaveAndContinueButton();
     }
 
     private void AssertErrors(IHtmlDocument document, bool exist)
     {
         AssertError(document, nameof(SchemeViewModel.RequiredFunding), FundingError, exist);
         AssertError(document, nameof(SchemeViewModel.HousesToDeliver), HousesError, exist);
+    }
+
+    private void AssertError(IHtmlDocument document, string fieldName, string errorMessage, bool hasError)
+    {
+        document.HasSummaryErrorMessage(fieldName, errorMessage, hasError)
+            .HasErrorMessage(fieldName, errorMessage, hasError);
     }
 }

@@ -1,5 +1,4 @@
 using HE.Investment.AHP.WWW.Models.HomeTypes;
-using HE.Investments.Common.WWWTestsFramework.Helpers;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.HomeTypes;
 
@@ -17,8 +16,7 @@ public class AccessibilityCategoryTests : HomeTypesTestBase
 
         // then
         document
-            .HasElementWithText("span", "My application - My homes")
-            .HasElementWithText("h1", "Which accessibility categories do the homes meet?")
+            .HasPageHeader("My application - My homes", "Which accessibility categories do the homes meet?")
             .HasElementWithText("span", "What are the accessibility categories?")
             .HasElementWithText("a", "Read the Building Regulations to find out more (opens in the new tab).")
             .HasRadio(
@@ -29,6 +27,6 @@ public class AccessibilityCategoryTests : HomeTypesTestBase
                     "M4(2) Category 2: Accessible and adaptable dwellings",
                     "M4(3) Category 3: Wheelchair user dwellings",
                 })
-            .HasElementWithText("button", "Save and continue");
+            .HasGdsSaveAndContinueButton();
     }
 }

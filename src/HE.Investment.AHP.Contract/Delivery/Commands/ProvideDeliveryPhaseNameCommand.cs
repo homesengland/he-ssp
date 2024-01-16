@@ -4,6 +4,6 @@ namespace HE.Investment.AHP.Contract.Delivery.Commands;
 
 public record ProvideDeliveryPhaseNameCommand(
         AhpApplicationId ApplicationId,
-        string DeliveryPhaseId,
+        DeliveryPhaseId DeliveryPhaseId,
         string? DeliveryPhaseName)
     : IDeliveryCommand;

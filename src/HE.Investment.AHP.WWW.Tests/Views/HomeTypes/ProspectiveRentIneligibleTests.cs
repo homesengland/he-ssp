@@ -1,5 +1,4 @@
 using HE.Investment.AHP.WWW.Models.HomeTypes;
-using HE.Investments.Common.WWWTestsFramework.Helpers;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.HomeTypes;
 
@@ -17,8 +16,7 @@ public class ProspectiveRentIneligibleTests : HomeTypesTestBase
 
         // then
         document
-            .HasElementWithText("span", "My application - My homes")
-            .HasElementWithText("h1", "Contact your Growth Manager")
+            .HasPageHeader("My application - My homes", "Contact your Growth Manager")
             .HasElementWithText("p", "Funding is not available for homes with greater than 3% of the proposed rent as a percent of unsold share.")
             .HasElementWithText("p", "Check the figures you have entered are correct. If the are, contact your Growth Manager to discuss this further.")
             .HasElementWithText("a", "Go back and try again")

@@ -23,7 +23,8 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
         DeliveryPhaseName name,
         OrganisationBasicInfo organisation,
         TypeOfHomes? typeOfHomes,
-        BuildActivityType buildActivityType,
+        BuildActivity buildActivity,
+        bool? reconfiguringExisting,
         SectionStatus status,
         IEnumerable<HomesToDeliverInPhase> homesToDeliver,
         DeliveryPhaseMilestones milestones,
@@ -35,7 +36,8 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
         Name = name;
         Organisation = organisation;
         TypeOfHomes = typeOfHomes;
-        BuildActivityType = buildActivityType;
+        BuildActivity = buildActivity;
+        ReconfiguringExisting = reconfiguringExisting;
         Status = status;
         Id = id ?? DeliveryPhaseId.New();
         CreatedOn = createdOn;
@@ -54,7 +56,9 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
 
     public TypeOfHomes? TypeOfHomes { get; private set; }
 
-    public BuildActivityType BuildActivityType { get; private set; }
+    public BuildActivity BuildActivity { get; private set; }
+
+    public bool? ReconfiguringExisting { get; private set; }
 
     public DateTime? CreatedOn { get; }
 
@@ -118,7 +122,8 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
     {
         if (typeOfHomes != TypeOfHomes)
         {
-            BuildActivityType.ClearAnswer();
+            BuildActivity.ClearAnswer(typeOfHomes);
+            ReconfiguringExisting = null;
         }
 
         TypeOfHomes = _modificationTracker.Change(TypeOfHomes, typeOfHomes.NotDefault(), MarkAsNotCompleted);
@@ -145,9 +150,24 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
         Status = _modificationTracker.Change(Status, SectionStatus.Completed);
     }
 
-    public void ProvideBuildActivityType(BuildActivityType buildActivityType)
+    public void ProvideBuildActivity(BuildActivity buildActivity)
     {
-        BuildActivityType = _modificationTracker.Change(BuildActivityType, buildActivityType, MarkAsNotCompleted);
+        BuildActivity = _modificationTracker.Change(BuildActivity, buildActivity, MarkAsNotCompleted);
+    }
+
+    public void ProvideReconfiguringExisting(bool? reconfiguringExisting)
+    {
+        if (IsReconfiguringExistingNeeded() is false)
+        {
+            throw new DomainValidationException("Reconfiguring Existing is not needed.");
+        }
+
+        ReconfiguringExisting = _modificationTracker.Change(ReconfiguringExisting, reconfiguringExisting, MarkAsNotCompleted);
+    }
+
+    public bool IsReconfiguringExistingNeeded()
+    {
+        return TypeOfHomes == Contract.Delivery.Enums.TypeOfHomes.Rehab;
     }
 
     private bool IsAnswered()

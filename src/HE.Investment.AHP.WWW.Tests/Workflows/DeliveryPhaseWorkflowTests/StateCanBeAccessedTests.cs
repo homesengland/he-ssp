@@ -37,6 +37,19 @@ public class StateCanBeAccessedTests
         result.Should().BeFalse();
     }
 
+    [Fact]
+    public void ShouldReturnFalseForPageReconfigureExisting_WhenTryReconfigureExistingIsNotNeeded()
+    {
+        // given
+        var workflow = BuildWorkflow(DeliveryPhaseWorkflowState.BuildActivityType, true);
+
+        // when
+        var result = workflow.CanBeAccessed(DeliveryPhaseWorkflowState.ReconfiguringExisting);
+
+        // then
+        result.Should().BeFalse();
+    }
+
     [Theory]
     [InlineData(DeliveryPhaseWorkflowState.UnregisteredBodyFollowUp)]
     public void ShouldReturnFalse_WhenTryToAccessPageAsRegisteredBody(DeliveryPhaseWorkflowState nextState)
@@ -78,6 +91,6 @@ public class StateCanBeAccessedTests
 
     private static DeliveryPhaseWorkflow BuildWorkflow(DeliveryPhaseWorkflowState currentSiteWorkflowState, bool isUnregisteredBody)
     {
-        return new DeliveryPhaseWorkflow(currentSiteWorkflowState, isUnregisteredBody);
+        return new DeliveryPhaseWorkflow(currentSiteWorkflowState, DeliveryPhaseDetailsTestData.WithNames with { IsUnregisteredBody = isUnregisteredBody });
     }
 }

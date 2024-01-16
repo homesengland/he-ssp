@@ -1,11 +1,11 @@
 using AngleSharp.Html.Dom;
 using HE.Investment.AHP.WWW.Models.Delivery;
 using HE.Investments.Common.WWWTestsFramework;
-using HE.Investments.Common.WWWTestsFramework.Helpers;
+
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Routing;
 
-namespace HE.Investment.AHP.WWW.Tests.Views.Delivery;
+namespace HE.Investment.AHP.WWW.Tests.Views.DeliveryPhase;
 
 public class RemoveDeliveryPhaseConfirmationTests : ViewTestBase
 {
@@ -44,12 +44,11 @@ public class RemoveDeliveryPhaseConfirmationTests : ViewTestBase
     private static void AssertView(IHtmlDocument document)
     {
         document
-            .HasElementWithText("span", "My application - Phase one")
-            .HasElementWithText("h1", "Are you sure you want to remove this delivery phase?")
-            .HasElementWithText("span", "By removing this delivery phase, any homes you have assigned to this phase will need to be added to another phase.")
+            .HasPageHeader("My application - Phase one", "Are you sure you want to remove this delivery phase?")
+            .HasHint("By removing this delivery phase, any homes you have assigned to this phase will need to be added to another phase.")
             .HasRadio("RemoveDeliveryPhaseAnswer", new[] { "Yes", "No" })
-            .HasElementWithText("button", "Save and continue")
-            .HasElementWithText("button", "Save and return to application");
+            .HasGdsSaveAndContinueButton()
+            .HasSaveAndReturnToApplicationLinkButton();
     }
 
     private async Task<IHtmlDocument> RenderView(RemoveDeliveryPhaseModel model, ModelStateDictionary? modelStateDictionary = null)

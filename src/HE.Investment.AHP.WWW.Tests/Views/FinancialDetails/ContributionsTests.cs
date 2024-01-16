@@ -2,7 +2,7 @@ using AngleSharp.Html.Dom;
 using HE.Investment.AHP.Contract.FinancialDetails.Constants;
 using HE.Investment.AHP.WWW.Models.FinancialDetails;
 using HE.Investments.Common.WWWTestsFramework;
-using HE.Investments.Common.WWWTestsFramework.Helpers;
+
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.FinancialDetails;
@@ -71,7 +71,7 @@ public class ContributionsTests : ViewTestBase
             .HasElementWithText("h1", "Your expected contributions to the scheme")
             .HasElementWithText("h2", "Enter how much you will contribute from borrowing against rental income for this scheme")
             .HasElementWithText("span", "Total expected contributions to the scheme")
-            .HasElementWithText("button", "Save and continue")
+            .HasGdsSaveAndContinueButton()
             .HasSummaryErrorMessage(nameof(FinancialDetailsValidationFieldNames.RentalIncomeBorrowing), errorMessage, !string.IsNullOrEmpty(errorMessage))
             .HasErrorMessage(nameof(FinancialDetailsValidationFieldNames.RentalIncomeBorrowing), errorMessage, !string.IsNullOrEmpty(errorMessage));
     }

@@ -35,7 +35,7 @@
 
         @if (Model.HomeTypes.Any())
         {
-            <table class="govuk-table govuk-!-margin-bottom-0">
+            <table class="govuk-table govuk-!-margin-bottom-0" data-testid="home-types-table">
                 <thead class="govuk-table__head">
                 <tr class="govuk-table__row">
                     <th scope="col" class="govuk-table__header">Home type name</th>
@@ -54,14 +54,15 @@
                     @Html.HiddenFor(model => Model.HomeTypes[index].HousingType)
                     @Html.HiddenFor(model => Model.HomeTypes[index].NumberOfHomes)
 
-                    <tr class="govuk-table__row" id="HomeType-@Model.HomeTypes[index].HomeTypeId">
+                    <tr class="govuk-table__row">
                         <td class="govuk-table__cell">
                             <gds-link class="govuk-link--no-visited-state"
+                                      data-testid="home-type-@Model.HomeTypes[index].HomeTypeId"
                                       href="@Url.Action("HomeTypeDetails","HomeTypes", new  { applicationId, homeTypeId = Model.HomeTypes[index].HomeTypeId, redirect = true })">
                                 @(Model.HomeTypes[index].HomeTypeName)
                             </gds-link>
                         </td>
-                        <td class="govuk-table__cell">
+                        <td class="govuk-table__cell" data-testid="number-of-homes-@Model.HomeTypes[index].HomeTypeId">
                             @(Model.HomeTypes[index].NumberOfHomes?.ToString() ?? "Not provided")
                         </td>
                         <td class="govuk-table__cell">
@@ -69,6 +70,7 @@
                         </td>
                         <td class="govuk-table__cell govuk-!-text-align-right" hidden="@Model.IsReadOnly">
                             <gds-link class="govuk-link--no-visited-state"
+                                      data-testid="duplicate-@Model.HomeTypes[index].HomeTypeId"
                                       href="@Url.Action("Duplicate","HomeTypes", new  { applicationId, homeTypeId = Model.HomeTypes[index].HomeTypeId })">
                                 Duplicate
                             </gds-link>

@@ -1,5 +1,4 @@
 using HE.Investment.AHP.WWW.Models.HomeTypes;
-using HE.Investments.Common.WWWTestsFramework.Helpers;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.HomeTypes;
 
@@ -17,8 +16,7 @@ public class CustomBuildPropertyTests : HomeTypesTestBase
 
         // then
         document
-            .HasElementWithText("span", "My application - My homes")
-            .HasElementWithText("h1", "Are the properties custom build?")
+            .HasPageHeader("My application - My homes", "Are the properties custom build?")
             .HasElementWithText("span", "What are custom build properties?")
             .HasElementWithText("a", "more information on custom build.")
             .HasRadio(
@@ -28,6 +26,6 @@ public class CustomBuildPropertyTests : HomeTypesTestBase
                     "Yes",
                     "No",
                 })
-            .HasElementWithText("button", "Save and continue");
+            .HasGdsSaveAndContinueButton();
     }
 }

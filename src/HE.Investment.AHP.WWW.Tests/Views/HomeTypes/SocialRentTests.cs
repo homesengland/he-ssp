@@ -1,6 +1,6 @@
 using AngleSharp.Html.Dom;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
-using HE.Investments.Common.WWWTestsFramework.Helpers;
+
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.HomeTypes;
@@ -43,14 +43,13 @@ public class SocialRentTests : HomeTypesTestBase
     private static void AssertView(IHtmlDocument document)
     {
         document
-            .HasElementWithText("span", "My application - My homes")
-            .HasElementWithText("h1", "Social Rent details")
+            .HasPageHeader("My application - My homes", "Social Rent details")
             .HasElementWithText("h2", "Enter the market value of each home")
             .HasElementWithText("span", "Enter the market value in pounds only.")
             .HasInput("MarketValue")
             .HasElementWithText("h2", "Enter the market rent per week")
             .HasElementWithText("span", "Enter the rent in pounds and pence. This is inclusive of all charges.")
             .HasInput("ProspectiveRent")
-            .HasElementWithText("button", "Save and continue");
+            .HasGdsSaveAndContinueButton();
     }
 }

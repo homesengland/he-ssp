@@ -23,7 +23,7 @@ public abstract class UpdateDeliveryPhaseCommandHandler<TCommand> : IRequestHand
     public async Task<OperationResult> Handle(TCommand request, CancellationToken cancellationToken)
     {
         var account = await _accountUserContext.GetSelectedAccount();
-        var deliveryPhase = await _repository.GetById(request.ApplicationId, new DeliveryPhaseId(request.DeliveryPhaseId), account, cancellationToken);
+        var deliveryPhase = await _repository.GetById(request.ApplicationId, request.DeliveryPhaseId, account, cancellationToken);
 
         var result = await Update(deliveryPhase, request);
 

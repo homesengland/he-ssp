@@ -5,4 +5,4 @@ using MediatR;
 
 namespace HE.Investment.AHP.Contract.Delivery.Commands;
 
-public record ProvideCompletionMilestoneDetailsCommand(AhpApplicationId ApplicationId, string DeliveryPhaseId, DateDetails CompletionDate, DateDetails PaymentDate) : IRequest<OperationResult>, IUpdateDeliveryPhaseCommand;
+public record ProvideCompletionMilestoneDetailsCommand(AhpApplicationId ApplicationId, DeliveryPhaseId DeliveryPhaseId, DateDetails CompletionDate, DateDetails PaymentDate) : IRequest<OperationResult>, IUpdateDeliveryPhaseCommand;

@@ -1,0 +1,29 @@
+@using HE.Investment.AHP.WWW.Extensions
+@using HE.Investment.AHP.WWW.Models.Delivery
+@using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investment.AHP.Contract.Delivery
+@using HE.Investment.AHP.WWW.Views.Delivery.Const
+@model HE.Investment.AHP.Contract.Delivery.DeliveryPhaseDetails;
+@{
+    var applicationId = this.GetApplicationIdFromRoute();
+    var title = DeliveryPageTitles.ReconfiguringExisting;
+    ViewData["Title"] = title;
+}
+
+<gds-div-grid-column-two-thirds>
+    <vc:ahp-workflow-back-button current-page="@DeliveryPhaseWorkflowState.ReconfiguringExisting"/>
+
+    <form asp-controller="DeliveryPhase" asp-action="ReconfiguringExisting" asp-method="post" novalidate>
+        <vc:form-header caption="@($"{Model.ApplicationName} - {Model.Name}")"/>
+
+            <vc:radio-yes-no
+                field-name="@nameof(Model.ReconfiguringExisting)"
+                header="@title"
+                value="Model.ReconfiguringExisting"/>
+
+            <vc:form-button/>
+
+        <vc:return-to-application-link application-id="@applicationId"/>
+    </form>
+</gds-div-grid-column-two-thirds>

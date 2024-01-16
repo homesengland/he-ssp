@@ -2,9 +2,7 @@
 @using HE.Investments.Common.WWW.Extensions
 @using HE.Investments.Common.WWW.Components.ErrorMessage
 @using HE.Investments.Common.WWW.Components.RadioListHeader
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
-@using HE.Investments.Common.WWW.TagHelpers
-@model (string fieldName, string title, string hint, IList<ExtendedSelectListItem> availableOptions, ExtendedSelectListItem alternativeOption)
+@model (string fieldName, string title, string hint, IEnumerable<ExtendedSelectListItem> availableOptions, ExtendedSelectListItem alternativeOption, string value)
 
 @{
     var (hasError, radioErrors) = ViewData.ModelState.GetErrors(Model.fieldName);
@@ -12,30 +10,31 @@
 }
 
 <gds-div-form-group class="@groupClass">
+    <gds-field-set>
+        <vc:radio-list-header
+            title="@Model.title"
+            hint="@Model.hint"/>
 
-    <vc:radio-list-header
-        title="@Model.title"
-        hint="@Model.hint"/>
+        <vc:error-message field-name="@Model.fieldName"/>
 
-    <vc:error-message field-name="@Model.fieldName"/>
+        <div class="govuk-radios govuk-!-margin-bottom-6" data-module="govuk-radios">
 
-    <div class="govuk-radios govuk-!-margin-bottom-6" data-module="govuk-radios">
+            <vc:radio-list-content
+                field-name="@Model.fieldName"
+                available-options="@Model.availableOptions"
+                value="@Model.value"/>
 
-        <vc:radio-list-content
-            field-name="@Model.fieldName"
-            available-options="@Model.availableOptions"/>
-
-        <p class="govuk-!-margin-top-4">Or</p>
-        <div class="govuk-radios__item">
-            @{
-                var orId = $"{Model.fieldName}-{Model.alternativeOption.Value}";
-            }
-            @Html.RadioButton(Model.fieldName, Model.alternativeOption.Value, new { id = orId, @class = "govuk-radios__input" })
-            <label class="govuk-label govuk-radios__label" for="@orId">@Model.alternativeOption.Text</label>
-            <he-div-hint class="govuk-!-padding-left-3">
-                @Model.alternativeOption.Hint
-            </he-div-hint>
+            <p class="govuk-!-margin-top-4">Or</p>
+            <div class="govuk-radios__item">
+                @{
+                    var orId = $"{Model.fieldName}-{Model.alternativeOption.Value}";
+                }
+                @Html.RadioButton(Model.fieldName, Model.alternativeOption.Value, new { id = orId, @class = "govuk-radios__input" })
+                <label class="govuk-label govuk-radios__label" for="@orId">@Model.alternativeOption.Text</label>
+                <he-div-hint class="govuk-!-padding-left-3">
+                    @Model.alternativeOption.Hint
+                </he-div-hint>
+            </div>
         </div>
-    </div>
-
+    </gds-field-set>
 </gds-div-form-group>

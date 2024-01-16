@@ -1,12 +1,11 @@
 using AngleSharp.Html.Dom;
-using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.WWW.Models.Delivery;
 using HE.Investments.Common.WWWTestsFramework;
-using HE.Investments.Common.WWWTestsFramework.Helpers;
+
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Routing;
 
-namespace HE.Investment.AHP.WWW.Tests.Views.Delivery;
+namespace HE.Investment.AHP.WWW.Tests.Views.DeliveryPhase;
 
 public class DeliveryPhaseNameTests : ViewTestBase
 {
@@ -47,7 +46,7 @@ public class DeliveryPhaseNameTests : ViewTestBase
         document
             .HasElementWithText("label", "Name your delivery phase")
             .HasElementWithText("div", "Each delivery phase needs a unique name.")
-            .HasElementWithText("button", "Save and continue")
+            .HasGdsSaveAndContinueButton()
             .HasSummaryErrorMessage(nameof(DeliveryPhaseNameViewModel.DeliveryPhaseName), errorMessage, !string.IsNullOrEmpty(errorMessage))
             .HasErrorMessage(nameof(DeliveryPhaseNameViewModel.DeliveryPhaseName), errorMessage, !string.IsNullOrEmpty(errorMessage));
     }

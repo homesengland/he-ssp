@@ -1,5 +1,6 @@
 using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Queries;
+using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.Mappers;
 using HE.Investment.AHP.Domain.Delivery.Repositories;
 using HE.Investments.Account.Shared;
@@ -24,10 +25,27 @@ public class GetDeliveryPhaseDetailsQueryHandler : IRequestHandler<GetDeliveryPh
         var userAccount = await _accountUserContext.GetSelectedAccount();
         var deliveryPhase = await _repository.GetById(
             request.ApplicationId,
-            new DeliveryPhaseId(request.DeliveryPhaseId),
+            request.DeliveryPhaseId,
             userAccount,
             cancellationToken);
 
-        return DeliveryPhaseEntityMapper.ToDeliveryPhaseDetails(deliveryPhase);
+        return new DeliveryPhaseDetails(
+            deliveryPhase.Application.Name.Name,
+            deliveryPhase.Id.Value,
+            deliveryPhase.Name?.Value ?? string.Empty,
+            deliveryPhase.TypeOfHomes,
+            deliveryPhase.BuildActivity.Type,
+            deliveryPhase.BuildActivity.GetAvailableTypes(),
+            deliveryPhase.IsReconfiguringExistingNeeded(),
+            deliveryPhase.ReconfiguringExisting,
+            deliveryPhase.TotalHomesToBeDeliveredInThisPhase,
+            deliveryPhase.Organisation.IsUnregisteredBody,
+            DeliveryPhaseEntityMapper.MapDate(deliveryPhase.DeliveryPhaseMilestones.AcquisitionMilestone?.MilestoneDate),
+            DeliveryPhaseEntityMapper.MapDate(deliveryPhase.DeliveryPhaseMilestones.AcquisitionMilestone?.PaymentDate),
+            DeliveryPhaseEntityMapper.MapDate(deliveryPhase.DeliveryPhaseMilestones.StartOnSiteMilestone?.MilestoneDate),
+            DeliveryPhaseEntityMapper.MapDate(deliveryPhase.DeliveryPhaseMilestones.StartOnSiteMilestone?.PaymentDate),
+            DeliveryPhaseEntityMapper.MapDate(deliveryPhase.DeliveryPhaseMilestones.CompletionMilestone?.MilestoneDate),
+            DeliveryPhaseEntityMapper.MapDate(deliveryPhase.DeliveryPhaseMilestones.CompletionMilestone?.PaymentDate),
+            deliveryPhase.IsAdditionalPaymentRequested?.IsRequested);
     }
 }

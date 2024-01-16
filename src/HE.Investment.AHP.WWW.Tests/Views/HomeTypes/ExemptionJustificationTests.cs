@@ -1,6 +1,6 @@
 using AngleSharp.Html.Dom;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
-using HE.Investments.Common.WWWTestsFramework.Helpers;
+
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.HomeTypes;
@@ -24,7 +24,7 @@ public class ExemptionJustificationTests : HomeTypesTestBase
             .HasElementWithText("div", "You can enter up to 1500 characters")
             .HasElementWithText("a", "Read about the Right to Shared Ownership and the types of property that are in scope (opens in the new tab).")
             .HasTextAreaInput("MoreInformation", value: "My new important information")
-            .HasElementWithText("button", "Save and continue");
+            .HasGdsSaveAndContinueButton();
     }
 
     [Fact]

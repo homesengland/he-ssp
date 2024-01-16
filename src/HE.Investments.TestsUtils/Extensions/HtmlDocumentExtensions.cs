@@ -159,10 +159,17 @@ public static class HtmlDocumentExtensions
         foreach (var summaryRow in summaryRows)
         {
             var key = summaryRow.GetElementsByClassName("govuk-summary-list__key").Single().InnerHtml.Trim();
-
             var value = GetValueFor(summaryRow);
 
-            dictionary[key] = value;
+            if (dictionary.ContainsKey(key))
+            {
+                var summaryHeader = summaryRow.Parent?.PreviousSibling?.PreviousSibling?.Text().Trim() ?? string.Empty;
+                dictionary[$"{summaryHeader} - {key}"] = value;
+            }
+            else
+            {
+                dictionary[key] = value;
+            }
         }
 
         return dictionary;

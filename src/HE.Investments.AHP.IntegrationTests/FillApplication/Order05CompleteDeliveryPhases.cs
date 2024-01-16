@@ -1,7 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using AngleSharp.Dom;
 using HE.Investment.AHP.WWW;
 using HE.Investment.AHP.WWW.Views.Delivery.Const;
+using HE.Investments.AHP.IntegrationTests.Extensions;
 using HE.Investments.AHP.IntegrationTests.FillApplication.Data;
 using HE.Investments.AHP.IntegrationTests.Framework;
 using HE.Investments.AHP.IntegrationTests.Pages;
@@ -108,13 +110,45 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
         await TestQuestionPage(
             BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.BuildActivityType, NewBuildAndWorksOnlyDeliveryPhase),
             DeliveryPageTitles.BuildActivityType,
-            BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.AcquisitionMilestone, NewBuildAndWorksOnlyDeliveryPhase),
-            ("BuildActivityTypeForNewBuild", deliveryPhase.BuildActivityType.NewBuild.ToString()!));
+            BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.ReconfiguringExisting, NewBuildAndWorksOnlyDeliveryPhase),
+            ("BuildActivityType", deliveryPhase.BuildActivityType.ToString()));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
     [Order(5)]
-    public async Task Order05_ProvideAcquisitionMilestone()
+    public async Task Order05_ProvideReconfiguringExisting()
+    {
+        // given
+        var deliveryPhase = NewBuildAndWorksOnlyDeliveryPhase.GenerateReconfiguringExisting();
+
+        // when & then
+        await TestQuestionPage(
+            BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.ReconfiguringExisting, NewBuildAndWorksOnlyDeliveryPhase),
+            DeliveryPageTitles.ReconfiguringExisting,
+            BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.AddHomes, NewBuildAndWorksOnlyDeliveryPhase),
+            ("ReconfiguringExisting", deliveryPhase.ReconfiguringExisting.ToString()));
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(6)]
+    public async Task Order06_ProvideHomes()
+    {
+        // given
+        var startPageUrl = BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.AddHomes, NewBuildAndWorksOnlyDeliveryPhase);
+        var deliveryPhase = NewBuildAndWorksOnlyDeliveryPhase.GenerateHomes(await GetHomeTypes(startPageUrl));
+        var inputs = deliveryPhase.DeliveryPhaseHomes.Select(x => ($"HomesToDeliver[{x.Key}]", x.Value.ToString(CultureInfo.InvariantCulture))).ToArray();
+
+        // when & then
+        await TestQuestionPage(
+            BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.AddHomes, NewBuildAndWorksOnlyDeliveryPhase),
+            DeliveryPageTitles.AddHomes,
+            BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.AcquisitionMilestone, NewBuildAndWorksOnlyDeliveryPhase),
+            inputs);
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(7)]
+    public async Task Order07_ProvideAcquisitionMilestone()
     {
         // given
         var deliveryPhase = NewBuildAndWorksOnlyDeliveryPhase.GenerateAcquisitionMilestone();
@@ -133,8 +167,8 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(6)]
-    public async Task Order06_ProvideStartOnSiteMilestone()
+    [Order(8)]
+    public async Task Order08_ProvideStartOnSiteMilestone()
     {
         // given
         var deliveryPhase = NewBuildAndWorksOnlyDeliveryPhase.GenerateStartOnSiteMilestone();
@@ -150,6 +184,26 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
             ("ClaimMilestonePaymentAt.Day", deliveryPhase.StartOnSiteMilestone.PaymentDate!.Value.Day.ToString(CultureInfo.InvariantCulture)),
             ("ClaimMilestonePaymentAt.Month", deliveryPhase.StartOnSiteMilestone.PaymentDate!.Value.Month.ToString(CultureInfo.InvariantCulture)),
             ("ClaimMilestonePaymentAt.Year", deliveryPhase.StartOnSiteMilestone.PaymentDate!.Value.Year.ToString(CultureInfo.InvariantCulture)));
+    }
+
+    private async Task<IDictionary<string, int>> GetHomeTypes(string currentPageUrl)
+    {
+        var homeTypeListPage = await TestClient.NavigateTo(HomeTypesPagesUrl.List(ApplicationData.ApplicationId));
+        var homeTypeIds = homeTypeListPage.GetHomeTypeIds().ToList();
+        var result = new Dictionary<string, int>();
+
+        foreach (var homeTypeId in homeTypeIds)
+        {
+            var numberOfHomes = homeTypeListPage.GetElementByTestId($"number-of-homes-{homeTypeId}").Text().Trim();
+            if (int.TryParse(numberOfHomes, out var number))
+            {
+                result.Add(homeTypeId, number);
+            }
+        }
+
+        await TestClient.NavigateTo(currentPageUrl);
+
+        return result;
     }
 
     private string BuildDeliveryPhasesPage(Func<string, string> deliveryPhasesPageUrlFactory)

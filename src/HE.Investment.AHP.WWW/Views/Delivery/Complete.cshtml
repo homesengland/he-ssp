@@ -19,17 +19,15 @@
         @Html.HiddenFor(m => Model.ApplicationName)
 
         <vc:form-header caption="@Model.ApplicationName"/>
-        <he-error-form-group asp-for="IsSectionCompleted">
-            <gds-h1>@title</gds-h1>
-            <gds-radio class="govuk-!-margin-top-3"
-                       govuk-formgroup-asp-for="IsSectionCompleted"
-                       asp-hiddenlabeltext="Have you completed this section?"
-                       value="@Model.IsSectionCompleted"
-                       asp-selectlistitems="@CommonFormOptions.IsSectionCompleted">
-            </gds-radio>
-        </he-error-form-group>
+
+        <vc:radio-list
+            header="@title"
+            field-name="@nameof(Model.IsSectionCompleted)"
+            available-options="@CommonFormOptions.IsSectionCompletedExtended"
+            value="@Model.IsSectionCompleted"/>
 
         <vc:form-button/>
+
         <vc:return-to-application-link application-id="@applicationId"/>
     </form>
 </div>

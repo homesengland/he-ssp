@@ -20,6 +20,6 @@ public class RemoveDeliveryPhaseCommandHandler : DeliveryCommandHandlerBase<Remo
 
     protected override IList<ErrorItem> Perform(DeliveryPhasesEntity deliveryPhases, RemoveDeliveryPhaseCommand request)
     {
-        return PerformWithValidation(() => deliveryPhases.Remove(new DeliveryPhaseId(request.DeliveryPhaseId), request.RemoveDeliveryPhaseAnswer));
+        return PerformWithValidation(() => deliveryPhases.Remove(request.DeliveryPhaseId, request.RemoveDeliveryPhaseAnswer));
     }
 }

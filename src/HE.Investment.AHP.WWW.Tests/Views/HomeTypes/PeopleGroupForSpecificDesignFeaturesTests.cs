@@ -1,5 +1,4 @@
 using HE.Investment.AHP.WWW.Models.HomeTypes;
-using HE.Investments.Common.WWWTestsFramework.Helpers;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.HomeTypes;
 
@@ -17,8 +16,7 @@ public class PeopleGroupForSpecificDesignFeaturesTests : HomeTypesTestBase
 
         // then
         document
-            .HasElementWithText("span", "My application - My homes")
-            .HasElementWithText("h1", "Do these homes incorporate specific design features or management arrangements to meet the needs of any of these groups?")
+            .HasPageHeader("My application - My homes", "Do these homes incorporate specific design features or management arrangements to meet the needs of any of these groups?")
             .HasElementWithText("p", "If these homes are designed specifically to meet the needs of more than one group, select the priority group. You can also create another home type for each group and enter them separately.")
             .HasRadio(
                 "PeopleGroupForSpecificDesignFeatures",
@@ -32,6 +30,6 @@ public class PeopleGroupForSpecificDesignFeaturesTests : HomeTypesTestBase
                     "Older people",
                     "None of these groups",
                 })
-            .HasElementWithText("button", "Save and continue");
+            .HasGdsSaveAndContinueButton();
     }
 }

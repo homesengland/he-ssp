@@ -1,5 +1,4 @@
 using HE.Investment.AHP.WWW.Models.HomeTypes;
-using HE.Investments.Common.WWWTestsFramework.Helpers;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.HomeTypes;
 
@@ -17,8 +16,7 @@ public class BuildingInformationIneligibleTests : HomeTypesTestBase
 
         // then
         document
-            .HasElementWithText("span", "My application - My homes")
-            .HasElementWithText("h1", "Contact your Growth Manager")
+            .HasPageHeader("My application - My homes", "Contact your Growth Manager")
             .HasElementWithText("a", "Go back and try again")
             .HasElementWithText("a", "Save and return to your account");
     }
