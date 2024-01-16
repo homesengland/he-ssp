@@ -37,6 +37,8 @@ public class ApplicationEntity
 
     public ApplicationStatus Status { get; private set; }
 
+    public ChangeStatusReason? ChangeStatusReason { get; private set; }
+
     public ApplicationReferenceNumber ReferenceNumber { get; }
 
     public ApplicationTenure? Tenure { get; private set; }
@@ -77,5 +79,20 @@ public class ApplicationEntity
         }
 
         Status = _modificationTracker.Change(Status, ApplicationStatus.ApplicationSubmitted);
+    }
+
+    public void Hold()
+    {
+        Status = _modificationTracker.Change(Status, ApplicationStatus.OnHold);
+    }
+
+    public void Withdraw()
+    {
+        Status = _modificationTracker.Change(Status, ApplicationStatus.Withdrawn);
+    }
+
+    public void ProvideChangeStatusReason(ChangeStatusReason? newChangeStatusReason)
+    {
+        ChangeStatusReason = _modificationTracker.Change(ChangeStatusReason, newChangeStatusReason);
     }
 }

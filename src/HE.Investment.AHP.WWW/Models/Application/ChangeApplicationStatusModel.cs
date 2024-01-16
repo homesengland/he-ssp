@@ -1,0 +1,20 @@
+namespace HE.Investment.AHP.WWW.Models.Application;
+
+public class ChangeApplicationStatusModel
+{
+    public ChangeApplicationStatusModel()
+    {
+    }
+
+    public ChangeApplicationStatusModel(Guid applicationId, string applicationName)
+    {
+        ApplicationId = applicationId;
+        ApplicationName = applicationName;
+    }
+
+    public Guid ApplicationId { get; set; }
+
+    public string ApplicationName { get; set; }
+
+    public string? ChangeStatusReason { get; set; }
+}
