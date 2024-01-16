@@ -38,7 +38,7 @@ public class WithdrawTests : ViewTestBase
     private static void AssertView(IHtmlDocument document, string? errorMessage = null)
     {
         document
-            .HasElementWithText("h1", ApplicationPageTitles.Withdraw)
+            .HasElementWithText("label", ApplicationPageTitles.Withdraw)
             .HasElementWithText("div", "You can enter up to 1500 characters")
             .HasElementWithText("button", "Withdraw application")
             .HasSummaryErrorMessage(nameof(ChangeApplicationStatusModel.ChangeStatusReason), errorMessage, !string.IsNullOrEmpty(errorMessage))
