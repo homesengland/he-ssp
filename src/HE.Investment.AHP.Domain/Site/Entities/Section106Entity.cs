@@ -4,11 +4,12 @@ using HE.Investment.AHP.Contract.Site.Constants;
 using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investment.AHP.Domain.Site.ValueObjects;
 using HE.Investments.Common.Contract.Validators;
+using HE.Investments.Common.Domain;
 using HE.Investments.Common.Messages;
 
 namespace HE.Investment.AHP.Domain.Site.Entities;
 
-public class Section106Entity
+public class Section106Entity : IQuestion
 {
     public Section106Entity(
         bool? agreement,
@@ -37,7 +38,7 @@ public class Section106Entity
     {
     }
 
-    public bool GeneralAgreement { get; private set; }
+    public bool? GeneralAgreement { get; private set; }
 
     public bool? AffordableHousing { get; private set; }
 
@@ -84,5 +85,15 @@ public class Section106Entity
     public void ProvideConfirmationFromLocalAuthority(string? confirmationFromLocalAuthority)
     {
         this.ConfirmationFromLocalAuthority = confirmationFromLocalAuthority;
+    }
+
+    public bool IsAnswered()
+    {
+        if (this.GeneralAgreement != null)
+        {
+            return true;
+        }
+
+        return false;
     }
 }

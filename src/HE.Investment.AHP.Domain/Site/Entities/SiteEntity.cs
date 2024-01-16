@@ -7,7 +7,7 @@ namespace HE.Investment.AHP.Domain.Site.Entities;
 
 public class SiteEntity
 {
-    public SiteEntity(SiteId id, SiteName name, Section106Entity? section106 = null)
+    public SiteEntity(SiteId id, SiteName name, Section106Entity section106)
     {
         Id = id;
         Name = name;
@@ -20,13 +20,14 @@ public class SiteEntity
         Id = SiteId.New();
         Name = new SiteName("New Site");
         Status = SiteStatus.NotReady;
+        Section106 = new Section106Entity();
     }
 
     public SiteId Id { get; set; }
 
     public SiteName Name { get; private set; }
 
-    public Section106Entity? Section106 { get; private set; }
+    public Section106Entity Section106 { get; private set; }
 
     public string? LocalAuthority { get; }
 
