@@ -5,5 +5,5 @@ using MediatR;
 
 namespace HE.Investment.AHP.Contract.Delivery.Commands;
 
-public record ProvideBuildActivityCommand(AhpApplicationId ApplicationId, string DeliveryPhaseId, BuildActivityType? BuildActivityType)
+public record ProvideBuildActivityCommand(AhpApplicationId ApplicationId, DeliveryPhaseId DeliveryPhaseId, BuildActivityType? BuildActivityType)
     : IRequest<OperationResult>, IUpdateDeliveryPhaseCommand;

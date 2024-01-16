@@ -5,4 +5,4 @@ using MediatR;
 
 namespace HE.Investment.AHP.Contract.Delivery.Commands;
 
-public record ProvideTypeOfHomesCommand(AhpApplicationId ApplicationId, string DeliveryPhaseId, TypeOfHomes? TypeOfHomes) : IRequest<OperationResult>, IUpdateDeliveryPhaseCommand;
+public record ProvideTypeOfHomesCommand(AhpApplicationId ApplicationId, DeliveryPhaseId DeliveryPhaseId, TypeOfHomes? TypeOfHomes) : IRequest<OperationResult>, IUpdateDeliveryPhaseCommand;

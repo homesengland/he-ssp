@@ -21,7 +21,7 @@ public class ProvideDeliveryPhaseNameCommandHandler : DeliveryCommandHandlerBase
 
     protected override IList<ErrorItem> Perform(DeliveryPhasesEntity deliveryPhases, ProvideDeliveryPhaseNameCommand request)
     {
-        var deliveryPhase = deliveryPhases.GetById(new DeliveryPhaseId(request.DeliveryPhaseId));
+        var deliveryPhase = deliveryPhases.GetById(request.DeliveryPhaseId);
 
         return PerformWithValidation(() => deliveryPhase.ProvideName(new DeliveryPhaseName(request.DeliveryPhaseName)));
     }

@@ -70,7 +70,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     [WorkflowState(DeliveryPhaseWorkflowState.Name)]
     public async Task<IActionResult> Name([FromRoute] string applicationId, [FromRoute] string deliveryPhaseId, CancellationToken cancellationToken)
     {
-        var deliveryPhase = await _mediator.Send(new GetDeliveryPhaseDetailsQuery(AhpApplicationId.From(applicationId), deliveryPhaseId), cancellationToken);
+        var deliveryPhase = await _mediator.Send(new GetDeliveryPhaseDetailsQuery(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId)), cancellationToken);
         var model = new DeliveryPhaseNameViewModel(applicationId, deliveryPhaseId, deliveryPhase.ApplicationName, deliveryPhase.Name, nameof(this.Name));
         return View("Name", model);
     }
@@ -79,7 +79,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     [HttpPost("{deliveryPhaseId}/name")]
     public async Task<IActionResult> Name([FromRoute] string applicationId, [FromRoute] string deliveryPhaseId, DeliveryPhaseNameViewModel model, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new ProvideDeliveryPhaseNameCommand(AhpApplicationId.From(applicationId), deliveryPhaseId, model.DeliveryPhaseName), cancellationToken);
+        var result = await _mediator.Send(new ProvideDeliveryPhaseNameCommand(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId), model.DeliveryPhaseName), cancellationToken);
         if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
@@ -93,7 +93,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     [WorkflowState(DeliveryPhaseWorkflowState.TypeOfHomes)]
     public async Task<IActionResult> Details([FromRoute] string applicationId, string deliveryPhaseId, CancellationToken cancellationToken)
     {
-        var deliveryPhaseDetails = await _mediator.Send(new GetDeliveryPhaseDetailsQuery(AhpApplicationId.From(applicationId), deliveryPhaseId), cancellationToken);
+        var deliveryPhaseDetails = await _mediator.Send(new GetDeliveryPhaseDetailsQuery(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId)), cancellationToken);
 
         return View("Details", deliveryPhaseDetails);
     }
@@ -104,7 +104,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     {
         return await ExecuteCommand(
             deliveryPhaseId,
-            new ProvideTypeOfHomesCommand(AhpApplicationId.From(applicationId), deliveryPhaseId, deliveryPhaseDetails.TypeOfHomes),
+            new ProvideTypeOfHomesCommand(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId), deliveryPhaseDetails.TypeOfHomes),
             nameof(Details),
             cancellationToken);
     }
@@ -113,7 +113,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     [WorkflowState(DeliveryPhaseWorkflowState.BuildActivityType)]
     public async Task<IActionResult> BuildActivityType([FromRoute] string applicationId, string deliveryPhaseId, CancellationToken cancellationToken)
     {
-        var deliveryPhaseDetails = await _mediator.Send(new GetDeliveryPhaseDetailsQuery(AhpApplicationId.From(applicationId), deliveryPhaseId), cancellationToken);
+        var deliveryPhaseDetails = await _mediator.Send(new GetDeliveryPhaseDetailsQuery(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId)), cancellationToken);
 
         return View("BuildActivityType", deliveryPhaseDetails);
     }
@@ -124,7 +124,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     {
         return await ExecuteCommand(
             deliveryPhaseId,
-            new ProvideBuildActivityCommand(AhpApplicationId.From(applicationId), deliveryPhaseId, deliveryPhaseDetails.BuildActivityType),
+            new ProvideBuildActivityCommand(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId), deliveryPhaseDetails.BuildActivityType),
             nameof(BuildActivityType),
             cancellationToken);
     }
@@ -132,7 +132,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     [HttpGet("{deliveryPhaseId}/remove")]
     public async Task<IActionResult> Remove([FromRoute] string applicationId, string deliveryPhaseId, CancellationToken cancellationToken)
     {
-        var deliveryPhaseDetails = await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(AhpApplicationId.From(applicationId), deliveryPhaseId), cancellationToken);
+        var deliveryPhaseDetails = await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId)), cancellationToken);
 
         return View("RemoveDeliveryPhaseConfirmation", new RemoveDeliveryPhaseModel(deliveryPhaseDetails.ApplicationName, deliveryPhaseDetails.Name));
     }
@@ -144,7 +144,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         RemoveDeliveryPhaseModel model,
         CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new RemoveDeliveryPhaseCommand(AhpApplicationId.From(applicationId), deliveryPhaseId, model.RemoveDeliveryPhaseAnswer), cancellationToken);
+        var result = await _mediator.Send(new RemoveDeliveryPhaseCommand(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId), model.RemoveDeliveryPhaseAnswer), cancellationToken);
         if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
@@ -158,7 +158,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     [HttpGet("{deliveryPhaseId}/acquisition-milestone")]
     public async Task<IActionResult> AcquisitionMilestone([FromRoute] string applicationId, string deliveryPhaseId, CancellationToken cancellationToken)
     {
-        var deliveryPhaseDetails = await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(AhpApplicationId.From(applicationId), deliveryPhaseId), cancellationToken);
+        var deliveryPhaseDetails = await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId)), cancellationToken);
 
         return View(CreateMilestoneViewModel(
             deliveryPhaseDetails.ApplicationName,
@@ -174,7 +174,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         return await ExecuteMilestoneCommand(
             new ProvideAcquisitionMilestoneDetailsCommand(
                 this.GetApplicationIdFromRoute(),
-                deliveryPhaseId,
+                new DeliveryPhaseId(deliveryPhaseId),
                 model.MilestoneStartAt,
                 model.ClaimMilestonePaymentAt),
             nameof(AcquisitionMilestone),
@@ -187,7 +187,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     [HttpGet("{deliveryPhaseId}/start-on-site-milestone")]
     public async Task<IActionResult> StartOnSiteMilestone([FromRoute] string applicationId, string deliveryPhaseId, CancellationToken cancellationToken)
     {
-        var deliveryPhaseDetails = await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(AhpApplicationId.From(applicationId), deliveryPhaseId), cancellationToken);
+        var deliveryPhaseDetails = await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId)), cancellationToken);
 
         return View(CreateMilestoneViewModel(
             deliveryPhaseDetails.ApplicationName,
@@ -203,7 +203,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         return await ExecuteMilestoneCommand(
             new ProvideStartOnSiteMilestoneDetailsCommand(
                 this.GetApplicationIdFromRoute(),
-                deliveryPhaseId,
+                new DeliveryPhaseId(deliveryPhaseId),
                 model.MilestoneStartAt,
                 model.ClaimMilestonePaymentAt),
             nameof(StartOnSiteMilestone),
@@ -216,7 +216,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     [HttpGet("{deliveryPhaseId}/practical-completion-milestone")]
     public async Task<IActionResult> PracticalCompletionMilestone([FromRoute] string applicationId, string deliveryPhaseId, CancellationToken cancellationToken)
     {
-        var deliveryPhaseDetails = await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(AhpApplicationId.From(applicationId), deliveryPhaseId), cancellationToken);
+        var deliveryPhaseDetails = await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId)), cancellationToken);
 
         return View(CreateMilestoneViewModel(
             deliveryPhaseDetails.ApplicationName,
@@ -232,7 +232,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         return await ExecuteMilestoneCommand(
             new ProvideCompletionMilestoneDetailsCommand(
                 this.GetApplicationIdFromRoute(),
-                deliveryPhaseId,
+                new DeliveryPhaseId(deliveryPhaseId),
                 model.MilestoneStartAt,
                 model.ClaimMilestonePaymentAt),
             nameof(PracticalCompletionMilestone),
@@ -245,7 +245,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     [HttpGet("{deliveryPhaseId}/unregistered-body-follow-up")]
     public async Task<IActionResult> UnregisteredBodyFollowUp([FromRoute] string applicationId, string deliveryPhaseId, CancellationToken cancellationToken)
     {
-        var deliveryPhaseDetails = await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(AhpApplicationId.From(applicationId), deliveryPhaseId), cancellationToken);
+        var deliveryPhaseDetails = await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId)), cancellationToken);
 
         return View(new DeliveryRequestAdditionalPaymentViewModel(
             applicationId,
@@ -266,7 +266,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
             deliveryPhaseId,
             new ProvideAdditionalPaymentRequestCommand(
                 this.GetApplicationIdFromRoute(),
-                deliveryPhaseId,
+                new DeliveryPhaseId(deliveryPhaseId),
                 isAdditionalPaymentRequested),
             nameof(UnregisteredBodyFollowUp),
             savedModel => new DeliveryRequestAdditionalPaymentViewModel(
@@ -337,7 +337,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
             () => ContinueWithRedirect(new { applicationId = applicationId.Value, deliveryPhaseId }),
             async () =>
             {
-                var deliveryPhaseDetails = await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(applicationId, deliveryPhaseId), cancellationToken);
+                var deliveryPhaseDetails = await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(applicationId, new DeliveryPhaseId(deliveryPhaseId)), cancellationToken);
                 var model = createViewModelForError(deliveryPhaseDetails);
 
                 return View(viewName, model);
@@ -359,7 +359,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
             () => ContinueWithRedirect(new { applicationId = applicationId.Value, deliveryPhaseId }),
             async () =>
             {
-                var deliveryPhaseDetails = await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(applicationId, deliveryPhaseId), cancellationToken);
+                var deliveryPhaseDetails = await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(applicationId, new DeliveryPhaseId(deliveryPhaseId)), cancellationToken);
                 return View(viewName, deliveryPhaseDetails);
             },
             cancellationToken);
