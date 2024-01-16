@@ -5,16 +5,12 @@ using HE.Investment.AHP.Contract.Site.Queries;
 using HE.Investment.AHP.Domain.Application.Workflows;
 using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investment.AHP.WWW.Models.Application.Factories;
-using HE.Investment.AHP.WWW.Models.FinancialDetails;
 using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
-using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Pagination;
-using HE.Investments.Common.Contract.Validators;
-using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
+using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Routing;
-using HE.Investments.Common.WWW.Utils;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -177,11 +173,11 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     [AuthorizeWithCompletedProfile]
     public async Task<IActionResult> OnHold(string applicationId, ChangeApplicationStatusModel model, CancellationToken cancellationToken)
     {
-        return await ExecuteCommand(
+        return await this.ExecuteCommand(
+            _mediator,
             new HoldApplicationCommand(AhpApplicationId.From(model.ApplicationId), model.ChangeStatusReason),
-            applicationId,
-            nameof(OnHold),
-            model,
+            () => ContinueWithRedirect(new { applicationId }),
+            async () => await Task.FromResult<IActionResult>(View("OnHold", model)),
             cancellationToken);
     }
 
@@ -204,11 +200,11 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     [AuthorizeWithCompletedProfile]
     public async Task<IActionResult> Withdraw(string applicationId, ChangeApplicationStatusModel model, CancellationToken cancellationToken)
     {
-        return await ExecuteCommand(
+        return await this.ExecuteCommand(
+            _mediator,
             new WithdrawApplicationCommand(AhpApplicationId.From(model.ApplicationId), model.ChangeStatusReason),
-            applicationId,
-            nameof(Withdraw),
-            model,
+            () => ContinueWithRedirect(new { applicationId }),
+            async () => await Task.FromResult<IActionResult>(View("Withdraw", model)),
             cancellationToken);
     }
 
@@ -216,23 +212,5 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     {
         var isReadOnly = !await _accountAccessContext.CanEditApplication();
         return new ApplicationWorkflow(currentState, isReadOnly);
-    }
-
-    private async Task<IActionResult> ExecuteCommand(
-        IRequest<OperationResult> command,
-        string applicationId,
-        string viewName,
-        object model,
-        CancellationToken cancellationToken)
-    {
-        var result = await _mediator.Send(command, cancellationToken);
-
-        if (result.HasValidationErrors)
-        {
-            ModelState.AddValidationErrors(result);
-            return View(viewName, model);
-        }
-
-        return await ContinueWithRedirect(new { applicationId });
     }
 }
