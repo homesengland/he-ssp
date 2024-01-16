@@ -83,7 +83,7 @@ public static class ValidationErrorMessage
 
     public static string LongInputLengthExceeded(string fieldName) => new($"The {fieldName} must be 1500 characters or less");
 
-    public static string MissingRequiredField(string displayName) => $"Enter the {displayName}";
+    public static string MissingRequiredField(string displayName) => $"Enter {displayName}";
 
     public static string MustBeNumberBetween(string displayName, int minValue, int maxValue) => $"The {displayName} must be between {minValue} and {maxValue}";
 
