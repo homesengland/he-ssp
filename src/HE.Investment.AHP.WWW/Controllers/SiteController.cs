@@ -106,6 +106,28 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         return await Continue();
     }
 
+    [HttpGet("{siteId}/section-106-affordable-housing")]
+    [WorkflowState(SiteWorkflowState.Section106AffordableHousing)]
+    public async Task<IActionResult> Section106AffordableHousing([FromRoute] string siteId, CancellationToken cancellationToken)
+    {
+        var siteModel = await _mediator.Send(new GetSiteQuery(siteId), cancellationToken);
+        return View("Section106AffordableHousing", siteModel);
+    }
+
+    [HttpPost("{siteId}/section-106-affordable-housing")]
+    [WorkflowState(SiteWorkflowState.Section106AffordableHousing)]
+    public async Task<IActionResult> Section106AffordableHousing([FromRoute] string siteId, SiteModel model, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new ProvideSection106AgreementCommand(siteId, model.Section106GeneralAgreement), cancellationToken);
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+            return View("Section106AffordableHousing", model);
+        }
+
+        return await Continue();
+    }
+
     protected override async Task<IStateRouting<SiteWorkflowState>> Routing(SiteWorkflowState currentState, object? routeData = null)
     {
         SiteModel? siteModel = null;
