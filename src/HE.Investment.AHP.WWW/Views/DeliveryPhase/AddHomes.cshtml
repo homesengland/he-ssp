@@ -2,7 +2,6 @@
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.Components.FormHeader
 @using HE.Investment.AHP.Contract.Delivery
-@using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.WWW.Views.Delivery.Const
 @model HE.Investment.AHP.WWW.Models.Delivery.AddHomesModel
 @{
@@ -16,7 +15,6 @@
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
     <form asp-controller="DeliveryPhase" asp-action="AddHomes" asp-method="post" novalidate>
-
         <vc:form-header caption="@($"{Model.ApplicationName} - {Model.DeliveryPhaseName}")" title="@title"/>
 
         <gds-p>Enter the number of homes from each home type that will be delivered in this phase.</gds-p>
@@ -32,7 +30,6 @@
         }
 
         <vc:form-button/>
-
-        <vc:return-to-application-link application-id="@this.GetApplicationIdFromRoute()"/>
+        <vc:return-to-application-link application-id="@Model.ApplicationId"/>
     </form>
 </gds-div-grid-column-two-thirds>

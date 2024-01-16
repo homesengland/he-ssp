@@ -18,7 +18,7 @@ public static class DeliveryPhaseEntityMapper
             deliveryPhase.TotalHomesToBeDeliveredInThisPhase,
             DateHelper.ToDateOnlyString(deliveryPhase.DeliveryPhaseMilestones.AcquisitionMilestone?.PaymentDate?.Value),
             DateHelper.ToDateOnlyString(deliveryPhase.DeliveryPhaseMilestones.StartOnSiteMilestone?.PaymentDate?.Value),
-            DateHelper.ToDateOnlyString(deliveryPhase.DeliveryPhaseMilestones?.CompletionMilestone?.PaymentDate?.Value));
+            DateHelper.ToDateOnlyString(deliveryPhase.DeliveryPhaseMilestones.CompletionMilestone?.PaymentDate?.Value));
     }
 
     public static DateDetails? MapDate(DateValueObject? date)

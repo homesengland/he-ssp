@@ -5,7 +5,7 @@ using HE.Investments.Common.WWWTestsFramework.Helpers;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Routing;
 
-namespace HE.Investment.AHP.WWW.Tests.Views.Delivery;
+namespace HE.Investment.AHP.WWW.Tests.Views.DeliveryPhase;
 
 public class RemoveDeliveryPhaseConfirmationTests : ViewTestBase
 {

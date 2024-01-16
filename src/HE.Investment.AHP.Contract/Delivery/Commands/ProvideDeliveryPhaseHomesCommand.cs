@@ -6,4 +6,3 @@ public record ProvideDeliveryPhaseHomesCommand(
     AhpApplicationId ApplicationId,
     DeliveryPhaseId DeliveryPhaseId)
     : IDeliveryCommand;
-
