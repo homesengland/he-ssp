@@ -24,7 +24,6 @@ public class GetDeliveryPhaseHomesQueryHandler : IRequestHandler<GetDeliveryPhas
         var deliveryPhases = await _repository.GetByApplicationId(request.ApplicationId, userAccount, cancellationToken);
         var deliveryPhase = deliveryPhases.GetById(request.DeliveryPhaseId);
 
-        // AB#66085 do not return those used fully in other phases. Return null, when used did not set to 0 explicitly.
         return new DeliveryPhaseHomes(
             request.DeliveryPhaseId,
             deliveryPhase.Name.Value,

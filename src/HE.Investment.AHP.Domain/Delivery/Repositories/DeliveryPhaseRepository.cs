@@ -48,7 +48,7 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
         return deliveryPhases;
     }
 
-    public async Task<DeliveryPhaseId?> Save(IDeliveryPhaseEntity deliveryPhase, UserAccount userAccount, CancellationToken cancellationToken)
+    public async Task<DeliveryPhaseId> Save(IDeliveryPhaseEntity deliveryPhase, UserAccount userAccount, CancellationToken cancellationToken)
     {
         var entity = (DeliveryPhaseEntity)deliveryPhase;
         await InitMockedData(entity.Application.Id, userAccount, cancellationToken);
@@ -89,19 +89,21 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
             // TODO: AB#66083 Update Delivery section status to In Progress in CRM
         }
 
-        var toRemove = deliveryPhases.ToRemove.ToList();
-        foreach (var deliveryPhaseToRemove in toRemove)
+        var deliveryPhaseToRemove = deliveryPhases.PopRemovedDeliveryPhase();
+        while (deliveryPhaseToRemove != null)
         {
             // TODO: AB#66083 remove delivery Phase in CRM
             await _eventDispatcher.Publish(
                 new DeliveryPhaseHasBeenRemovedEvent(deliveryPhaseToRemove.Application.Id),
                 cancellationToken);
+
+            deliveryPhaseToRemove = deliveryPhases.PopRemovedDeliveryPhase();
         }
     }
 
     private async Task InitMockedData(AhpApplicationId applicationId, UserAccount userAccount, CancellationToken cancellationToken)
     {
-        if (DeliveryPhases.Any())
+        if (DeliveryPhases.ContainsKey(applicationId))
         {
             return;
         }
@@ -122,10 +124,10 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
                     application,
                     new DeliveryPhaseName("Phase 1"),
                     userAccount.SelectedOrganisation(),
+                    SectionStatus.InProgress,
                     null,
                     new BuildActivity(application.Tenure),
                     null,
-                    SectionStatus.InProgress,
                     homesToDeliver.Any() ? new[] { new HomesToDeliverInPhase(homesToDeliver[0].HomeTypeId, homesToDeliver[0].TotalHomes) } : new List<HomesToDeliverInPhase>(),
                     new DeliveryPhaseMilestones(userAccount.SelectedOrganisation(), completionMilestone: new CompletionMilestoneDetails(new CompletionDate("1", "2", "2023"), null)),
                     new DeliveryPhaseId("phase-1"),
@@ -134,10 +136,10 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
                     application,
                     new DeliveryPhaseName("Almost completed rehab"),
                     userAccount.SelectedOrganisation(),
+                    SectionStatus.InProgress,
                     TypeOfHomes.Rehab,
                     new BuildActivity(application.Tenure, TypeOfHomes.Rehab, BuildActivityType.RegenerationRehab),
                     true,
-                    SectionStatus.InProgress,
                     new List<HomesToDeliverInPhase>(),
                     new DeliveryPhaseMilestones(userAccount.SelectedOrganisation(), completionMilestone: new CompletionMilestoneDetails(new CompletionDate("1", "2", "2023"), null)),
                     new DeliveryPhaseId("phase-2"),

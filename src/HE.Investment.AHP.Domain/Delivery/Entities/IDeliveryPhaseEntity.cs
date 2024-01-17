@@ -37,8 +37,6 @@ public interface IDeliveryPhaseEntity
 
     public IsAdditionalPaymentRequested? IsAdditionalPaymentRequested { get; }
 
-    void ProvideName(DeliveryPhaseName deliveryPhaseName);
-
     Task ProvideDeliveryPhaseMilestones(DeliveryPhaseMilestones milestones, IMilestoneDatesInProgrammeDateRangePolicy policy);
 
     void ProvideAdditionalPaymentRequest(IsAdditionalPaymentRequested? isAdditionalPaymentRequested);

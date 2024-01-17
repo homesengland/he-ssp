@@ -48,6 +48,18 @@ public class HomeTypesEntity
         return homeType;
     }
 
+    public IHomeTypeEntity? PopRemovedHomeType()
+    {
+        if (_toRemove.Any())
+        {
+            var result = _toRemove[0];
+            _toRemove.RemoveAt(0);
+            return result;
+        }
+
+        return null;
+    }
+
     public void Remove(HomeTypeId homeTypeId, RemoveHomeTypeAnswer removeAnswer, IHomeTypeConsumer homeTypeConsumer)
     {
         if (removeAnswer == RemoveHomeTypeAnswer.Undefined)
