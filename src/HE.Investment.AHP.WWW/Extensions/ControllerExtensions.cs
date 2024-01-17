@@ -1,4 +1,5 @@
 using HE.Investment.AHP.Contract.Application;
+using HE.Investment.AHP.Contract.Delivery;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.WWW.Extensions;
 using Microsoft.AspNetCore.Mvc;
@@ -13,8 +14,9 @@ public static class ControllerExtensions
         return AhpApplicationId.From(applicationId);
     }
 
-    public static string GetDeliveryPhaseIdFromRoute(this Controller controller)
+    public static DeliveryPhaseId GetDeliveryPhaseIdFromRoute(this Controller controller)
     {
-        return controller.Request.GetRouteValue("deliveryPhaseId") ?? throw new NotFoundException("Missing required deliveryPhaseId path parameter.");
+        var deliveryPhase = controller.Request.GetRouteValue("deliveryPhaseId") ?? throw new NotFoundException("Missing required deliveryPhaseId path parameter.");
+        return new DeliveryPhaseId(deliveryPhase);
     }
 }

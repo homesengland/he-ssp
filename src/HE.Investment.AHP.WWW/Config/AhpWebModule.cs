@@ -1,6 +1,7 @@
 using HE.Investment.AHP.Domain.Config;
 using HE.Investment.AHP.Domain.HomeTypes.CommandHandlers;
 using HE.Investment.AHP.WWW.Models.Application.Factories;
+using HE.Investment.AHP.WWW.Models.Delivery.Factories;
 using HE.Investment.AHP.WWW.Models.FinancialDetails.Factories;
 using HE.Investment.AHP.WWW.Models.HomeTypes.Factories;
 using HE.Investment.AHP.WWW.Models.Scheme.Factories;
@@ -53,5 +54,6 @@ public static class AhpWebModule
         services.AddScoped<ISchemeSummaryViewModelFactory, SchemeSummaryViewModelFactory>();
         services.AddScoped<IFinancialDetailsSummaryViewModelFactory, FinancialDetailsSummaryViewModelFactory>();
         services.AddScoped<IHomeTypeSummaryViewModelFactory, HomeTypeSummaryViewModelFactory>();
+        services.AddScoped<IDeliveryPhaseSummaryViewModelFactory, DeliveryPhaseSummaryViewModelFactory>();
     }
 }

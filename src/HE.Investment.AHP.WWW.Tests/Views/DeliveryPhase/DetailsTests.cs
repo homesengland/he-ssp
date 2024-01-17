@@ -1,6 +1,7 @@
 using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.WWW.Views.Delivery.Const;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.WWWTestsFramework;
 using HE.Investments.TestsUtils.Extensions;
 using Microsoft.AspNetCore.Routing;
@@ -19,7 +20,8 @@ public class DetailsTests : ViewTestBase
         var model = new DeliveryPhaseDetails(
             "AppName",
             "Id",
-            "DeliveryPhaseName");
+            "DeliveryPhaseName",
+            SectionStatus.InProgress);
 
         // given & when
         var document = await Render(_viewPath, model, routeData: _routeData);

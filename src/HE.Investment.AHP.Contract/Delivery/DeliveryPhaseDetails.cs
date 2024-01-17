@@ -7,6 +7,7 @@ public record DeliveryPhaseDetails(
     string ApplicationName,
     string Id,
     string Name,
+    SectionStatus Status,
     TypeOfHomes? TypeOfHomes = null,
     BuildActivityType? BuildActivityType = null,
     IList<BuildActivityType>? AvailableBuildActivityTypes = null,

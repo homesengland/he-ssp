@@ -48,4 +48,8 @@ public interface IDeliveryPhaseEntity
     void ProvideReconfiguringExisting(bool? reconfiguringExisting);
 
     bool IsReconfiguringExistingNeeded();
+
+    void Complete();
+
+    void UnComplete();
 }
