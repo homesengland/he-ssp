@@ -1,5 +1,6 @@
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investment.AHP.Contract.Site
+@using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
 @using HE.Investment.AHP.WWW.Views.Site
 @using HE.Investments.Common.WWW.Components.TextInput
 @model SiteModel
@@ -7,7 +8,7 @@
     ViewData["Title"] = SitePageTitles.SiteSection106Agreement;
 }
 <gds-div-grid-column-two-thirds>
-    <gds-back-link href=@(Url.Action("Back", "Site", new { currentPage = SiteWorkflowState.Section106GeneralAgreement, siteId = Model?.Id })!) class="govuk-!-margin-bottom-8"></gds-back-link>
+    <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.Section106GeneralAgreement" />
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
     <form asp-controller="Site" asp-action="Section106Agreement" asp-method="post" novalidate>

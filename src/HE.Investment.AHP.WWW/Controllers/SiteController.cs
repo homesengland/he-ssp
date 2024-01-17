@@ -1,5 +1,6 @@
 using System.Threading;
 using He.AspNetCore.Mvc.Gds.Components.Extensions;
+using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Commands;
 using HE.Investment.AHP.Contract.Site.Queries;
@@ -148,6 +149,12 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         }
 
         return await Continue(new { siteId });
+    }
+
+    [HttpGet("{siteId}/back")]
+    public async Task<IActionResult> Back([FromRoute] string siteId, SiteWorkflowState currentPage)
+    {
+        return await Back(currentPage, new { siteId });
     }
 
     protected override async Task<IStateRouting<SiteWorkflowState>> Routing(SiteWorkflowState currentState, object? routeData = null)

@@ -7,7 +7,7 @@
     ViewData["Title"] = SitePageTitles.SiteName;
 }
 <gds-div-grid-column-two-thirds>
-    <gds-back-link href=@(Url.Action("Back", "Site", new { currentPage = SiteWorkflowState.Name, siteId = Model?.Id })!) class="govuk-!-margin-bottom-8"></gds-back-link>
+    <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.Name" />
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <form asp-controller="Site" asp-action="Name" asp-method="post" novalidate>
 
