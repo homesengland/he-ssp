@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.WWW.Views.Delivery.Const;
@@ -13,7 +14,7 @@ public class BuildActivityTests : ViewTestBase
     private readonly RouteData _routeData = new(new RouteValueDictionary { { "applicationId", "123" }, { "deliveryPhaseId", "321" } });
 
     [Fact]
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Blocker Code Smell", "S2699:Tests should include assertions", Justification = "Assertion present")]
+    [SuppressMessage("Blocker Code Smell", "S2699:Tests should include assertions", Justification = "Assertion present")]
     public async Task ShouldDisplayRadiosForRehab_WhenTypeOfHomesIsRehab()
     {
         var availableTypes = new List<BuildActivityType>() { BuildActivityType.WorksOnly, BuildActivityType.RegenerationRehab };

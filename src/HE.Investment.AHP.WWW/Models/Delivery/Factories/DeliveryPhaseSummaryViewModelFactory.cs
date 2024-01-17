@@ -17,7 +17,7 @@ public class DeliveryPhaseSummaryViewModelFactory : IDeliveryPhaseSummaryViewMod
         return new List<SectionSummaryViewModel>
         {
             CreateDeliveryPhaseSummary(applicationId, deliveryPhase, urlHelper, isEditable),
-            CreateMilestonesSummary(applicationId, deliveryPhase),
+            CreateMilestonesSummary(deliveryPhase),
             CreateMilestonesDatesSummary(
                 applicationId,
                 deliveryPhase,
@@ -70,9 +70,7 @@ public class DeliveryPhaseSummaryViewModelFactory : IDeliveryPhaseSummaryViewMod
         return new SectionSummaryViewModel("Delivery phase", items);
     }
 
-    private static SectionSummaryViewModel CreateMilestonesSummary(
-        AhpApplicationId applicationId,
-        DeliveryPhaseDetails deliveryPhase)
+    private static SectionSummaryViewModel CreateMilestonesSummary(DeliveryPhaseDetails deliveryPhase)
     {
         var items = new List<SectionSummaryItemModel>
         {

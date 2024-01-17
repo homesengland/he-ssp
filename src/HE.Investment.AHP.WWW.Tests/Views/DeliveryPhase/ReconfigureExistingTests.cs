@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.WWW.Tests.Workflows.DeliveryPhaseWorkflowTests;
@@ -15,7 +16,7 @@ public class ReconfigureExistingTests : ViewTestBase
     private readonly RouteData _routeData = new(new RouteValueDictionary { { "applicationId", "123" }, { "deliveryPhaseId", "321" } });
 
     [Fact]
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Blocker Code Smell", "S2699:Tests should include assertions", Justification = "Assertion present")]
+    [SuppressMessage("Blocker Code Smell", "S2699:Tests should include assertions", Justification = "Assertion present")]
     public async Task ShouldDisplayView()
     {
         var model = DeliveryPhaseDetailsTestData.WithNames with { IsReconfiguringExistingNeeded = true };
