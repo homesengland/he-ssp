@@ -9,7 +9,7 @@ using HE.Investments.Common.Contract.Exceptions;
 
 namespace HE.Investment.AHP.Domain.Tests.Delivery.Entities.DeliveryPhasesEntityTests;
 
-public class SetHomesToBeDeliveredInPhaseTests
+public class ProvideHomesToBeDeliveredInPhaseTests
 {
     [Fact]
     public void ShouldThrowException_WhenPhaseWithGivenIdDoesNotExist()
@@ -23,10 +23,10 @@ public class SetHomesToBeDeliveredInPhaseTests
             .Build();
 
         // when
-        var setHomes = () => testCandidate.SetHomesToBeDeliveredInPhase(new DeliveryPhaseId("dp-2"), new[] { new HomesToDeliverInPhase(homeTypeId, 1) });
+        var provideHomes = () => testCandidate.ProvideHomesToBeDeliveredInPhase(new DeliveryPhaseId("dp-2"), new[] { new HomesToDeliverInPhase(homeTypeId, 1) });
 
         // then
-        setHomes.Should().Throw<NotFoundException>().Which.EntityName.Should().Be(nameof(DeliveryPhaseEntity));
+        provideHomes.Should().Throw<NotFoundException>().Which.EntityName.Should().Be(nameof(DeliveryPhaseEntity));
     }
 
     [Fact]
@@ -41,10 +41,60 @@ public class SetHomesToBeDeliveredInPhaseTests
             .Build();
 
         // when
-        var setHomes = () => testCandidate.SetHomesToBeDeliveredInPhase(deliveryPhase.Id, new[] { new HomesToDeliverInPhase(new HomeTypeId("2 bed flat"), 1) });
+        var provideHomes = () => testCandidate.ProvideHomesToBeDeliveredInPhase(deliveryPhase.Id, new[] { new HomesToDeliverInPhase(new HomeTypeId("2 bed flat"), 1) });
 
         // then
-        setHomes.Should().Throw<NotFoundException>().Which.EntityName.Should().Be(nameof(HomesToDeliver));
+        provideHomes.Should().Throw<NotFoundException>().Which.EntityName.Should().Be("HomesToDeliver");
+    }
+
+    [Fact]
+    public void ShouldThrowException_WhenHomeTypeIsFullyUsedInOtherPhases()
+    {
+        // given
+        var homeType1Id = new HomeTypeId("1 bed flat");
+        var homeType2Id = new HomeTypeId("2 bed flat");
+        var deliveryPhase = new DeliveryPhaseEntityBuilder().WithId("dp-1").Build();
+        var otherPhase = new DeliveryPhaseEntityBuilder().WithId("dp-2").WithHomesToBeDelivered(homeType2Id.Value, 10).Build();
+        var testCandidate = new DeliveryPhasesEntityBuilder()
+            .WithDeliveryPhase(deliveryPhase)
+            .WithDeliveryPhase(otherPhase)
+            .WithHomesToDeliver(new HomesToDeliverBuilder().WithHomeTypeId(homeType1Id.Value).WithTotalHomes(10).Build())
+            .WithHomesToDeliver(new HomesToDeliverBuilder().WithHomeTypeId(homeType2Id.Value).WithTotalHomes(10).Build())
+            .Build();
+
+        // when
+        var provideHomes = () => testCandidate.ProvideHomesToBeDeliveredInPhase(
+            deliveryPhase.Id,
+            new[] { new HomesToDeliverInPhase(homeType1Id, 1), new HomesToDeliverInPhase(homeType2Id, 1), });
+
+        // then
+        var errors = provideHomes.Should().Throw<DomainValidationException>().Which.OperationResult.Errors;
+        errors.Should().HaveCount(1);
+        errors.Select(x => x.AffectedField).Should().BeEquivalentTo("HomesToDeliver[2 bed flat]");
+    }
+
+    [Fact]
+    public void ShouldThrowException_WhenAllNumberOfHomesAreZero()
+    {
+        // given
+        var homeType1Id = new HomeTypeId("1 bed flat");
+        var homeType2Id = new HomeTypeId("2 bed flat");
+        var deliveryPhase = new DeliveryPhaseEntityBuilder().WithId("dp-1").Build();
+        var testCandidate = new DeliveryPhasesEntityBuilder()
+            .WithDeliveryPhase(deliveryPhase)
+            .WithHomesToDeliver(new HomesToDeliverBuilder().WithHomeTypeId(homeType1Id.Value).WithTotalHomes(10).Build())
+            .WithHomesToDeliver(new HomesToDeliverBuilder().WithHomeTypeId(homeType2Id.Value).WithTotalHomes(10).Build())
+            .Build();
+
+        // when
+        var provideHomes = () => testCandidate.ProvideHomesToBeDeliveredInPhase(
+            deliveryPhase.Id,
+            new[] { new HomesToDeliverInPhase(homeType1Id, 0), new HomesToDeliverInPhase(homeType2Id, 0) });
+
+        // then
+        var errors = provideHomes.Should().Throw<DomainValidationException>().Which.OperationResult.Errors;
+        errors.Should().HaveCount(1);
+        errors.Select(x => x.AffectedField).Should().BeEquivalentTo("HomesToDeliver");
     }
 
     [Fact]
@@ -64,7 +114,7 @@ public class SetHomesToBeDeliveredInPhaseTests
             .Build();
 
         // when
-        var setHomes = () => testCandidate.SetHomesToBeDeliveredInPhase(
+        var provideHomes = () => testCandidate.ProvideHomesToBeDeliveredInPhase(
             deliveryPhase.Id,
             new[]
             {
@@ -74,9 +124,9 @@ public class SetHomesToBeDeliveredInPhaseTests
             });
 
         // then
-        var errors = setHomes.Should().Throw<DomainValidationException>().Which.OperationResult.Errors;
+        var errors = provideHomes.Should().Throw<DomainValidationException>().Which.OperationResult.Errors;
         errors.Should().HaveCount(2);
-        errors.Select(x => x.AffectedField).Should().BeEquivalentTo("HomeType-1 bed flat", "HomeType-2 bed flat");
+        errors.Select(x => x.AffectedField).Should().BeEquivalentTo("HomesToDeliver[1 bed flat]", "HomesToDeliver[2 bed flat]");
     }
 
     [Fact]
@@ -94,12 +144,12 @@ public class SetHomesToBeDeliveredInPhaseTests
             .Build();
 
         // when
-        var setHomes = () => testCandidate.SetHomesToBeDeliveredInPhase(deliveryPhase2.Id, new[] { new HomesToDeliverInPhase(homeTypeId, 5) });
+        var provideHomes = () => testCandidate.ProvideHomesToBeDeliveredInPhase(deliveryPhase2.Id, new[] { new HomesToDeliverInPhase(homeTypeId, 5) });
 
         // then
-        var errors = setHomes.Should().Throw<DomainValidationException>().Which.OperationResult.Errors;
+        var errors = provideHomes.Should().Throw<DomainValidationException>().Which.OperationResult.Errors;
         errors.Should().HaveCount(1);
-        errors.Select(x => x.AffectedField).Should().BeEquivalentTo("HomeType-1 bed flat");
+        errors.Select(x => x.AffectedField).Should().BeEquivalentTo("HomesToDeliver[1 bed flat]");
     }
 
     [Fact]
@@ -122,7 +172,7 @@ public class SetHomesToBeDeliveredInPhaseTests
             .Build();
 
         // when
-        testCandidate.SetHomesToBeDeliveredInPhase(
+        testCandidate.ProvideHomesToBeDeliveredInPhase(
             deliveryPhase1.Id,
             new[]
             {
