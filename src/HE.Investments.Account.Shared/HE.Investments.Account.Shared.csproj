@@ -25,4 +25,8 @@
     <ProjectReference Include="..\HE.Investments.Organisation\HE.Investments.Organisation.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.FeatureManagement" Version="3.0.0" />
+  </ItemGroup>
+
 </Project>
