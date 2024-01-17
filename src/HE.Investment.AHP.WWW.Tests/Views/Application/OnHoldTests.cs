@@ -40,7 +40,7 @@ public class OnHoldTests : ViewTestBase
         document
             .HasElementWithText("label", ApplicationPageTitles.OnHold)
             .HasElementWithText("div", "You can enter up to 1500 characters")
-            .HasElementWithText("button", "Put on hold")
+            .HasElementWithText("button", "Hold")
             .HasSummaryErrorMessage(nameof(ChangeApplicationStatusModel.HoldReason), errorMessage, !string.IsNullOrEmpty(errorMessage))
             .HasErrorMessage(nameof(ChangeApplicationStatusModel.HoldReason), errorMessage, !string.IsNullOrEmpty(errorMessage));
     }

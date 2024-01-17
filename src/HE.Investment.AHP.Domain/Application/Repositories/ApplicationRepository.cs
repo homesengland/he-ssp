@@ -48,7 +48,10 @@ public class ApplicationRepository : IApplicationRepository
         return new ApplicationBasicInfo(application.Id, application.Name, application.Tenure?.Value ?? Tenure.Undefined, application.Status);
     }
 
-    public async Task<PaginationResult<ApplicationWithFundingDetails>> GetApplicationsWithFundingDetails(UserAccount userAccount, PaginationRequest paginationRequest, CancellationToken cancellationToken)
+    public async Task<PaginationResult<ApplicationWithFundingDetails>> GetApplicationsWithFundingDetails(
+        UserAccount userAccount,
+        PaginationRequest paginationRequest,
+        CancellationToken cancellationToken)
     {
         var organisationId = userAccount.SelectedOrganisationId().Value;
         var applications = userAccount.CanViewAllApplications()
@@ -96,6 +99,44 @@ public class ApplicationRepository : IApplicationRepository
         }
 
         return application;
+    }
+
+    public async Task Hold(ApplicationEntity application, OrganisationId organisationId, CancellationToken cancellationToken)
+    {
+        if (application is { IsModified: false })
+        {
+            return;
+        }
+
+        var applicationId = new Guid(application.Id.Value);
+
+        await _applicationCrmContext.ChangeApplicationStatus(
+            applicationId,
+            organisationId.Value,
+            application.Status,
+            application.HoldReason?.Value,
+            cancellationToken);
+
+        await _eventDispatcher.Publish(new ApplicationHasBeenPutOnHoldEvent(), cancellationToken);
+    }
+
+    public async Task Withdraw(ApplicationEntity application, OrganisationId organisationId, CancellationToken cancellationToken)
+    {
+        if (application is { IsModified: false })
+        {
+            return;
+        }
+
+        var applicationId = new Guid(application.Id.Value);
+
+        await _applicationCrmContext.ChangeApplicationStatus(
+            applicationId,
+            organisationId.Value,
+            application.Status,
+            application.WithdrawReason?.Value,
+            cancellationToken);
+
+        await _eventDispatcher.Publish(new ApplicationHasBeenWithdrawnEvent(), cancellationToken);
     }
 
     private static ApplicationEntity CreateEntity(AhpApplicationDto application)

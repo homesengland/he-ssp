@@ -22,4 +22,8 @@ public interface IApplicationRepository
         CancellationToken cancellationToken);
 
     Task<ApplicationEntity> Save(ApplicationEntity application, OrganisationId organisationId, CancellationToken cancellationToken);
+
+    Task Hold(ApplicationEntity application, OrganisationId organisationId, CancellationToken cancellationToken);
+
+    Task Withdraw(ApplicationEntity application, OrganisationId organisationId, CancellationToken cancellationToken);
 }
