@@ -4,7 +4,6 @@
 @using HE.Investment.AHP.Contract.Delivery
 @using HE.Investments.Common.WWW.Components.FormHeader
 @using HE.Investments.Common.WWW.Components.RadioList
-@using HE.Investments.Common.WWW.Models
 @using HE.Investment.AHP.Contract.Delivery.Enums
 @using HE.Investment.AHP.WWW.Views.Delivery.Const
 @using HE.Investment.AHP.WWW.Views.DeliveryPhase.Const
@@ -13,22 +12,7 @@
     var applicationId = this.GetApplicationIdFromRoute();
     var title = DeliveryPageTitles.BuildActivityType;
     ViewData["Title"] = title;
-
-    IList<ExtendedSelectListItem> availableOptions;
-    string fieldName;
-
-    if (Model.TypeOfHomes == TypeOfHomes.Rehab)
-    {
-        availableOptions = BuildActivityTypeOptions.BuildActivityTypeForRehabOptions(Model.BuildActivityTypeForRehab);
-        fieldName = nameof(Model.BuildActivityTypeForRehab);
-    }
-    else
-    {
-        availableOptions = BuildActivityTypeOptions.BuildActivityTypeForNewBuildOptions(Model.BuildActivityTypeForNewBuild);
-        fieldName = nameof(Model.BuildActivityTypeForNewBuild);
-    }
-
-    BuildActivityTypeOptions.BuildActivityTypeForNewBuildOptions(Model.BuildActivityTypeForNewBuild);
+    var availableOptions = BuildActivityTypeOptions.GetBuildActivityTypesOptions(Model.AvailableBuildActivityTypes ?? Array.Empty<BuildActivityType>(), Model.BuildActivityType);
 }
 
 <gds-div-grid-column-two-thirds>
@@ -39,7 +23,7 @@
         @Html.HiddenFor(m => m.TypeOfHomes)
         <vc:radio-list
             hint="Each delivery phase should contain only one build activity type."
-            field-name=@fieldName
+            field-name=@(nameof(Model.BuildActivityType))
             available-options=@availableOptions>
         </vc:radio-list>
 

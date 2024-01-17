@@ -9,6 +9,7 @@ using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Validators;
+using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Routing;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -95,6 +96,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
         return RedirectToAction(nameof(TaskList), new { applicationId = result.ReturnedData.Value });
     }
 
+    [WorkflowState(ApplicationWorkflowState.TaskList)]
     [HttpGet("{applicationId}/task-list")]
     [HttpGet("{applicationId}")]
     public async Task<IActionResult> TaskList(string applicationId, CancellationToken cancellationToken)
@@ -153,6 +155,60 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
         return View(
             "Submitted",
             new ApplicationSubmittedViewModel(applicationId, application.ReferenceNumber ?? string.Empty, "[job role]", "[INSERT CONTACT DETAILS]"));
+    }
+
+    [WorkflowState(ApplicationWorkflowState.OnHold)]
+    [HttpGet("{applicationId}/on-hold")]
+    [AuthorizeWithCompletedProfile]
+    public async Task<IActionResult> OnHold(Guid applicationId, CancellationToken cancellationToken)
+    {
+        var application = await _mediator.Send(new GetApplicationQuery(AhpApplicationId.From(applicationId)), cancellationToken);
+
+        var model = new ChangeApplicationStatusModel(
+            applicationId,
+            application.Name);
+
+        return View(model);
+    }
+
+    [WorkflowState(ApplicationWorkflowState.OnHold)]
+    [HttpPost("{applicationId}/on-hold")]
+    [AuthorizeWithCompletedProfile]
+    public async Task<IActionResult> OnHold(string applicationId, ChangeApplicationStatusModel model, CancellationToken cancellationToken)
+    {
+        return await this.ExecuteCommand(
+            _mediator,
+            new HoldApplicationCommand(AhpApplicationId.From(model.ApplicationId), model.ChangeStatusReason),
+            () => ContinueWithRedirect(new { applicationId }),
+            async () => await Task.FromResult<IActionResult>(View("OnHold", model)),
+            cancellationToken);
+    }
+
+    [WorkflowState(ApplicationWorkflowState.Withdraw)]
+    [HttpGet("{applicationId}/withdraw")]
+    [AuthorizeWithCompletedProfile]
+    public async Task<IActionResult> Withdraw(Guid applicationId, CancellationToken cancellationToken)
+    {
+        var application = await _mediator.Send(new GetApplicationQuery(AhpApplicationId.From(applicationId)), cancellationToken);
+
+        var model = new ChangeApplicationStatusModel(
+            applicationId,
+            application.Name);
+
+        return View(model);
+    }
+
+    [WorkflowState(ApplicationWorkflowState.Withdraw)]
+    [HttpPost("{applicationId}/withdraw")]
+    [AuthorizeWithCompletedProfile]
+    public async Task<IActionResult> Withdraw(string applicationId, ChangeApplicationStatusModel model, CancellationToken cancellationToken)
+    {
+        return await this.ExecuteCommand(
+            _mediator,
+            new WithdrawApplicationCommand(AhpApplicationId.From(model.ApplicationId), model.ChangeStatusReason),
+            () => ContinueWithRedirect(new { applicationId }),
+            async () => await Task.FromResult<IActionResult>(View("Withdraw", model)),
+            cancellationToken);
     }
 
     protected override async Task<IStateRouting<ApplicationWorkflowState>> Routing(ApplicationWorkflowState currentState, object? routeData = null)

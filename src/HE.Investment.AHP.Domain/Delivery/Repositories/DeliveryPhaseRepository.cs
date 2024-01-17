@@ -1,12 +1,14 @@
+using System;
 using System.Collections.Concurrent;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Delivery;
+using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.Contract.Delivery.Events;
-using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
-using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
+using HE.Investment.AHP.Domain.HomeTypes.Entities;
+using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.Contract;
@@ -21,13 +23,17 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
 
     private readonly IApplicationRepository _applicationRepository;
 
+    private readonly IHomeTypeRepository _homeTypeRepository;
+
     private readonly IEventDispatcher _eventDispatcher;
 
     public DeliveryPhaseRepository(
         IApplicationRepository applicationRepository,
+        IHomeTypeRepository homeTypeRepository,
         IEventDispatcher eventDispatcher)
     {
         _applicationRepository = applicationRepository;
+        _homeTypeRepository = homeTypeRepository;
         _eventDispatcher = eventDispatcher;
     }
 
@@ -43,7 +49,7 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
         return deliveryPhases;
     }
 
-    public async Task<DeliveryPhaseId?> Save(IDeliveryPhaseEntity deliveryPhase, UserAccount userAccount, CancellationToken cancellationToken)
+    public async Task<DeliveryPhaseId> Save(IDeliveryPhaseEntity deliveryPhase, UserAccount userAccount, CancellationToken cancellationToken)
     {
         var entity = (DeliveryPhaseEntity)deliveryPhase;
         await InitMockedData(entity.Application.Id, userAccount, cancellationToken);
@@ -72,29 +78,16 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
 #pragma warning restore S1135 // Track uses of "TODO" tags
         }
 
-        var toRemove = deliveryPhases.ToRemove.ToList();
-        foreach (var deliveryPhaseToRemove in toRemove)
+        var deliveryPhaseToRemove = deliveryPhases.PopRemovedDeliveryPhase();
+        while (deliveryPhaseToRemove != null)
         {
 #pragma warning disable S1135 // Track uses of "TODO" tags
             // TODO: AB#66083 remove delivery Phase in CRM
             await _eventDispatcher.Publish(
                 new DeliveryPhaseHasBeenRemovedEvent(deliveryPhaseToRemove.Application.Id),
                 cancellationToken);
-#pragma warning restore S1135 // Track uses of "TODO" tags
 
-        }
-    }
-
-    public async Task<IDeliveryPhaseEntity> GetById(
-        AhpApplicationId applicationId,
-        DeliveryPhaseId deliveryPhaseId,
-        UserAccount userAccount,
-        CancellationToken cancellationToken)
-    {
-        await InitMockedData(applicationId, userAccount, cancellationToken);
-        if (!DeliveryPhases.TryGetValue(applicationId, out var deliveryPhases))
-        {
-            throw new NotFoundException(nameof(DeliveryPhaseEntity), deliveryPhaseId);
+            deliveryPhaseToRemove = deliveryPhases.PopRemovedDeliveryPhase();
         }
 
         return deliveryPhases.GetById(deliveryPhaseId);
@@ -102,21 +95,19 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
 
     private async Task InitMockedData(AhpApplicationId applicationId, UserAccount userAccount, CancellationToken cancellationToken)
     {
-        if (DeliveryPhases.Any())
+        if (DeliveryPhases.ContainsKey(applicationId))
         {
             return;
         }
 
-        var application =
-            await _applicationRepository.GetApplicationBasicInfo(applicationId, userAccount, cancellationToken);
+        var application = await _applicationRepository.GetApplicationBasicInfo(applicationId, userAccount, cancellationToken);
+        var homeTypes = await _homeTypeRepository.GetByApplicationId(
+            applicationId,
+            userAccount,
+            new[] { HomeTypeSegmentType.HomeInformation },
+            cancellationToken);
 
-        var homesToDeliver = new[]
-        {
-            new HomesToDeliver(new HomeTypeId("ht-1"), new HomeTypeName("1 bed flat"), 3),
-            new HomesToDeliver(new HomeTypeId("ht-2"), new HomeTypeName("2 bed flat"), 2),
-            new HomesToDeliver(new HomeTypeId("ht-3"), new HomeTypeName("3 bed flat"), 1),
-            new HomesToDeliver(new HomeTypeId("ht-4"), new HomeTypeName("2 bed house"), 4),
-        };
+        var homesToDeliver = homeTypes.HomeTypes.Select(x => new HomesToDeliver(x.Id, x.Name, x.HomeInformation.NumberOfHomes?.Value ?? 0)).ToList();
         var deliveryPhases = new DeliveryPhasesEntity(
             application,
             new[]
@@ -125,13 +116,26 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
                     application,
                     new DeliveryPhaseName("Phase 1"),
                     userAccount.SelectedOrganisation(),
-                    null,
-                    new BuildActivityType(),
                     SectionStatus.InProgress,
-                    new[] { new HomesToDeliverInPhase(new HomeTypeId("ht-1"), 3) },
+                    null,
+                    new BuildActivity(application.Tenure),
+                    null,
+                    homesToDeliver.Any() ? new[] { new HomesToDeliverInPhase(homesToDeliver[0].HomeTypeId, homesToDeliver[0].TotalHomes) } : new List<HomesToDeliverInPhase>(),
                     new DeliveryPhaseMilestones(userAccount.SelectedOrganisation(), completionMilestone: new CompletionMilestoneDetails(new CompletionDate("1", "2", "2023"), null)),
                     new DeliveryPhaseId("phase-1"),
-                    new DateTime(2023, 12, 12, 0, 0, 0, DateTimeKind.Unspecified)),
+                    new DateTime(2023, 12, 12)),
+                new DeliveryPhaseEntity(
+                    application,
+                    new DeliveryPhaseName("Almost completed rehab"),
+                    userAccount.SelectedOrganisation(),
+                    SectionStatus.InProgress,
+                    TypeOfHomes.Rehab,
+                    new BuildActivity(application.Tenure, TypeOfHomes.Rehab, BuildActivityType.RegenerationRehab),
+                    true,
+                    new List<HomesToDeliverInPhase>(),
+                    new DeliveryPhaseMilestones(userAccount.SelectedOrganisation(), completionMilestone: new CompletionMilestoneDetails(new CompletionDate("1", "2", "2023"), null)),
+                    new DeliveryPhaseId("phase-2"),
+                    new DateTime(2023, 12, 12,, 0, 0, 0, DateTimeKind.Unspecified)),
             },
             homesToDeliver,
             SectionStatus.InProgress);

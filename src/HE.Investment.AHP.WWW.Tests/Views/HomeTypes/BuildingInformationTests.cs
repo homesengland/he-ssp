@@ -1,6 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
-using HE.Investments.Common.WWWTestsFramework.Helpers;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.HomeTypes;
 
@@ -19,8 +18,7 @@ public class BuildingInformationTests : HomeTypesTestBase
 
         // then
         document
-            .HasElementWithText("span", "My application - My homes")
-            .HasElementWithText("h1", "Building information")
+            .HasPageHeader("My application - My homes", "Building information")
             .HasRadio(
                 "BuildingType",
                 new[]
@@ -36,6 +34,6 @@ public class BuildingInformationTests : HomeTypesTestBase
             .HasElementWithText("span", "Single unit within a shared property.")
             .HasElementWithText("span", "A single self-contained residential dwelling that is only on one storey.")
             .HasElementWithText("span", "A single self-contained residential dwelling usually of two storeys with your own front door.")
-            .HasElementWithText("button", "Save and continue");
+            .HasGdsSaveAndContinueButton();
     }
 }

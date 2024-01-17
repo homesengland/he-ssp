@@ -15,7 +15,7 @@ public abstract class PoundsPenceValueObject : ValueObject
         Value = PoundsPencesValidator.Validate(value, UiFields.FieldName, DisplayName);
     }
 
-    protected PoundsPenceValueObject(string value, string? invalidValueValidationMessage = null)
+    protected PoundsPenceValueObject(string value, string? invalidValueValidationMessage = null, decimal? maxValue = null)
     {
         if (value.IsNotProvided())
         {
@@ -31,7 +31,7 @@ public abstract class PoundsPenceValueObject : ValueObject
                 .CheckErrors();
         }
 
-        Value = PoundsPencesValidator.Validate(parsedValue, UiFields.FieldName, DisplayName);
+        Value = PoundsPencesValidator.Validate(parsedValue, UiFields.FieldName, DisplayName, maxValue);
     }
 
     public abstract UiFields UiFields { get; }

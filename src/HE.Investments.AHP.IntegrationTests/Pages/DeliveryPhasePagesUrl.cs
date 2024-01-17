@@ -9,8 +9,17 @@ internal static class DeliveryPhasePagesUrl
     public static string BuildActivityType(string applicationId, string deliveryPhaseId) =>
         BuildDeliveryPhasePage(applicationId, deliveryPhaseId, "build-activity-type");
 
+    public static string ReconfiguringExisting(string applicationId, string deliveryPhaseId) =>
+        BuildDeliveryPhasePage(applicationId, deliveryPhaseId, "reconfiguring-existing");
+
+    public static string AddHomes(string applicationId, string deliveryPhaseId) =>
+        BuildDeliveryPhasePage(applicationId, deliveryPhaseId, "add-homes");
+
     public static string AcquisitionMilestone(string applicationId, string deliveryPhaseId) =>
         BuildDeliveryPhasePage(applicationId, deliveryPhaseId, "acquisition-milestone");
+
+    public static string SummaryOfDelivery(string applicationId, string deliveryPhaseId) =>
+        BuildDeliveryPhasePage(applicationId, deliveryPhaseId, "summary-of-delivery");
 
     public static string StartOnSiteMilestone(string applicationId, string deliveryPhaseId) =>
         BuildDeliveryPhasePage(applicationId, deliveryPhaseId, "start-on-site-milestone");

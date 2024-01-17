@@ -21,19 +21,7 @@ public class DetailsTests : ViewTestBase
         var model = new DeliveryPhaseDetails(
             "AppName",
             "Id",
-            "DeliveryPhaseName",
-            null,
-            null,
-            null,
-            null,
-            false,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null);
+            "DeliveryPhaseName");
 
         // given & when
         var document = await Render(_viewPath, model, routeData: _routeData);

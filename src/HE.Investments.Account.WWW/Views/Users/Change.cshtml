@@ -2,7 +2,6 @@
 @using HE.Investments.Common.WWW.Components.SummaryItem
 @using HE.Investments.Account.Contract.Users
 @using HE.Investments.Account.WWW.Models.Users
-@using HE.Investments.Common.Extensions
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.Components.RadioListWithOr
 @using HE.Investments.Common.WWW.Models
@@ -10,13 +9,6 @@
 @{
     ViewData["Title"] = "Manage users";
     var title = $"Manage {Model.UserDetails.FirstName} {Model.UserDetails.LastName}'s role";
-    var roles = UserRolesDescription.ToAssign
-        .Select(r => new ExtendedSelectListItem(
-            r.Key.GetDescription(),
-            r.Key.ToString(),
-            r.Key == Model.UserDetails.Role,
-            r.Value))
-        .ToList();
 
     var undefinedRole = new ExtendedSelectListItem(
         "Remove user",
@@ -37,14 +29,16 @@
     </gds-summary-list>
 
     <form asp-controller="Users" asp-action="ChangeRole" asp-route-id="@Model.UserDetails.Id.Value" asp-method="post" novalidate>
-        <gds-field-set>
-            <vc:radio-list-with-or
-                field-name="Role"
-                title="Which role do you want to grant the user?"
-                hint="This can be updated at any time."
-                available-options="@roles"
-                alternative-option=@undefinedRole/>
-            <vc:form-button/>
-        </gds-field-set>
+
+        <vc:radio-list-with-or
+            field-name="Role"
+            title="Which role do you want to grant the user?"
+            hint="This can be updated at any time."
+            available-options="@UserRolesDescription.ToAssign"
+            alternative-option=@undefinedRole
+            value="@Model.UserDetails.Role"/>
+
+        <vc:form-button/>
+
     </form>
 </gds-div-grid-column-two-thirds>

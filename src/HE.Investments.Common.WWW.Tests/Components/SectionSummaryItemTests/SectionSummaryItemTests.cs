@@ -1,9 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
 using HE.Investments.Common.WWW.Components.SectionSummary;
-using HE.Investments.Common.WWWTestsFramework;
-using HE.Investments.Common.WWWTestsFramework.Helpers;
-using Xunit;
 
 namespace HE.Investments.Common.WWW.Tests.Components.SectionSummaryItemTests;
 

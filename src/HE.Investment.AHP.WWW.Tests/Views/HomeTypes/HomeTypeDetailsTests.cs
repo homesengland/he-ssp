@@ -1,6 +1,6 @@
 using AngleSharp.Html.Dom;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
-using HE.Investments.Common.WWWTestsFramework.Helpers;
+
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.HomeTypes;
@@ -40,12 +40,11 @@ public class HomeTypeDetailsTests : HomeTypesTestBase
     private static void AssertView(IHtmlDocument document)
     {
         document
-            .HasElementWithText("span", Model.ApplicationName)
-            .HasElementWithText("h1", "Home type details")
+            .HasPageHeader(Model.ApplicationName, "Home type details")
             .HasElementWithText("h2", "Home type name")
             .HasInput("HomeTypeName")
             .HasElementWithText("h2", "What type of homes are you delivering?")
             .HasRadio("HousingType", new[] { "General", "HomesForOlderPeople", "HomesForDisabledAndVulnerablePeople" })
-            .HasElementWithText("button", "Save and continue");
+            .HasGdsSaveAndContinueButton();
     }
 }

@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
-using HE.Investments.Common.WWWTestsFramework.Helpers;
+
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.HomeTypes;
@@ -25,7 +25,7 @@ public class MoveOnArrangementsTests : HomeTypesTestBase
             .HasElementWithText("label", "Tell us the move on arrangements that are in place for when these homes are used as short stay accommodation")
             .HasElementWithText("div", "You can enter up to 1500 characters")
             .HasTextAreaInput("MoreInformation", value: "My new important information")
-            .HasElementWithText("button", "Save and continue");
+            .HasGdsSaveAndContinueButton();
     }
 
     [Fact]

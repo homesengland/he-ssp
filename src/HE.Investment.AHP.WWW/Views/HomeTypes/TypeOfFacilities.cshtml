@@ -10,33 +10,22 @@
 @{
     var applicationId = this.GetApplicationIdFromRoute();
     var workflow = Context.Request.Query["workflow"];
-    var hints = new[]
-    {
-        "Resident has use of their own facilities, such as bathroom and kitchen, within their own home.",
-        "Residents have their own room or rooms but facilities, such as bathroom and kitchen, are shared with others.",
-    };
     ViewData["Title"] = HomeTypesPageTitles.TypeOfFacilities;
 }
 
 <gds-div-grid-column-two-thirds>
     <form asp-controller="HomeTypes" asp-action="TypeOfFacilities" asp-method="post" asp-route-workflow="@workflow" novalidate>
-        <vc:home-type-form-header current-page="@HomeTypesWorkflowState.TypeOfFacilities"
-                                  caption="@Model.Header"/>
-        <gds-field-set role="group">
-            <gds-legend>
-                <gds-h1>@HomeTypesPageTitles.TypeOfFacilities</gds-h1>
-            </gds-legend>
+        <vc:home-type-form-header
+            current-page="@HomeTypesWorkflowState.TypeOfFacilities"
+            caption="@Model.Header"/>
 
-            <he-custom-radio
-                asp-for="FacilityType"
-                value="@Model.FacilityType"
-                radio-items="@HomeTypesFormOptions.FacilityType"
-                radio-hints="@hints"
-                class="govuk-!-margin-bottom-8">
-            </he-custom-radio>
+        <vc:radio-list
+            field-name="@nameof(Model.FacilityType)"
+            header="@HomeTypesPageTitles.TypeOfFacilities"
+            available-options="@FacilityTypeOptions.FacilityTypes"
+            value="@Model.FacilityType"/>
 
-            <vc:form-button/>
-        </gds-field-set>
+        <vc:form-button/>
 
         <vc:return-to-application-link application-id="@applicationId"/>
     </form>

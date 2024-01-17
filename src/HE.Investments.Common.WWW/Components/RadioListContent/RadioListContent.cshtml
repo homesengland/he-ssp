@@ -1,12 +1,13 @@
 @using HE.Investments.Common.WWW.Models
-@using HE.Investments.Common.WWW.TagHelpers
-@model (string fieldName, IList<ExtendedSelectListItem> availableOptions)
+@model (string fieldName, IEnumerable<ExtendedSelectListItem> availableOptions, string value)
 
 @foreach (var option in Model.availableOptions)
 {
-    var id = option == Model.availableOptions[0] ? Model.fieldName : $"{Model.fieldName}-{option.Value}";
+    var id = option == Model.availableOptions.First() ? Model.fieldName : $"{Model.fieldName}-{option.Value}";
+    var isSelected = option.Selected || Model.value == option.Value;
+
     <div class="govuk-radios__item">
-        @Html.RadioButton(Model.fieldName, option.Value, option.Selected, new { id, @class = "govuk-radios__input" })
+        @Html.RadioButton(Model.fieldName, option.Value, isSelected, new { id, @class = "govuk-radios__input" })
         <label class="govuk-label govuk-radios__label" for="@id">
             @option.Text
         </label>

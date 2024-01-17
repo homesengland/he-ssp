@@ -1,6 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
-using HE.Investments.Common.WWWTestsFramework.Helpers;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.HomeTypes;
 
@@ -19,8 +18,7 @@ public class FloorAreaStandardsTests : HomeTypesTestBase
 
         // then
         document
-            .HasElementWithText("span", "My application - My homes")
-            .HasElementWithText("h1", "Floor area")
+            .HasPageHeader("My application - My homes", "Floor area")
             .HasElementWithText("h2", "Which of these Nationally Described Space Standards do the homes meet?")
             .HasElementWithText("span", "What are the Nationally Described Space Standards?")
             .HasElementWithText("a", "Read more about the Nationally Described Space Standards (opens in a new tab).")
@@ -33,6 +31,6 @@ public class FloorAreaStandardsTests : HomeTypesTestBase
                     "BedroomWidth",
                 })
             .HasCheckboxes("OtherNationallyDescribedSpaceStandards", new[] { "NoneOfThese", })
-            .HasElementWithText("button", "Save and continue");
+            .HasGdsSaveAndContinueButton();
     }
 }

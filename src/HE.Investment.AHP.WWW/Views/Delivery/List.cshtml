@@ -75,6 +75,7 @@
                         </td>
                         <td class="govuk-table__cell govuk-!-text-align-right" hidden="@Model.IsReadOnly">
                             <gds-link class="govuk-link--no-visited-state govuk-!-margin-left-4"
+                                      data-testid="remove-@Model.DeliveryPhases[index].DeliveryPhaseId"
                                       href="@Url.Action("Remove", "DeliveryPhase", new { applicationId, deliveryPhaseId = Model.DeliveryPhases[index].DeliveryPhaseId })">
                                 Remove
                             </gds-link>
@@ -134,6 +135,7 @@
             </gds-div-inset-text>
 
             <link-button is-disabled="@Model.IsReadOnly"
+                         data-testid="add-delivery-phase"
                          href="@Url.Action("Create", "DeliveryPhase", new { applicationId })">
                 Add a delivery phase
             </link-button>

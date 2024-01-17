@@ -1,8 +1,6 @@
 using AngleSharp.Html.Dom;
 using HE.Investment.AHP.Contract.FinancialDetails.Constants;
 using HE.Investment.AHP.WWW.Models.FinancialDetails;
-using HE.Investments.Common.WWWTestsFramework;
-using HE.Investments.Common.WWWTestsFramework.Helpers;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.FinancialDetails;
@@ -44,7 +42,7 @@ public class LandValueTests : ViewTestBase
         document
             .HasElementWithText("h1", "Land value")
             .HasElementWithText("h2", "Enter the current value of the land")
-            .HasElementWithText("button", "Save and continue")
+            .HasGdsSaveAndContinueButton()
             .HasSummaryErrorMessage(nameof(FinancialDetailsValidationFieldNames.LandValue), errorMessage, !string.IsNullOrEmpty(errorMessage))
             .HasErrorMessage(nameof(FinancialDetailsValidationFieldNames.LandValue), errorMessage, !string.IsNullOrEmpty(errorMessage));
     }

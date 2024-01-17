@@ -20,6 +20,7 @@ public static class ControllerExtensions
 
         if (result.HasValidationErrors)
         {
+            controller.ModelState.Clear();
             controller.ModelState.AddValidationErrors(result);
             var validationErrors = new List<KeyValuePair<string, string>>();
             foreach (var validationResult in result.Errors)

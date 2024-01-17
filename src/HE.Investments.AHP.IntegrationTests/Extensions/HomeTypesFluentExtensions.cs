@@ -39,4 +39,16 @@ public static class HomeTypesFluentExtensions
 
         return htmlDocument;
     }
+
+    public static IList<string> GetHomeTypeIds(this IHtmlDocument homeTypeListPage)
+    {
+        return homeTypeListPage.GetHiddenListInput("HomeTypes", "HomeTypeId").ToList();
+    }
+
+    public static int GetHomeTypeNumberOfHomes(this IHtmlDocument homeTypeListPage, string homeTypeId)
+    {
+        var numberOfHomes = homeTypeListPage.GetElementByTestId($"number-of-homes-{homeTypeId}").Text().Trim();
+
+        return int.TryParse(numberOfHomes, out var number) ? number : 0;
+    }
 }

@@ -23,7 +23,10 @@
 
     var canSubmitApplication = await AccountAccessContext.CanSubmitApplication();
 }
-<div class="govuk-grid-column-full govuk-!-padding-top-8">
+<div class="govuk-grid-column-two-thirds govuk-!-padding-top-8">
+    <partial name="~/Partials/_Notification.cshtml"/>
+</div>
+<div class="govuk-grid-column-full">
     <vc:form-header caption="@Model.SiteName" title="@Model.Name"/>
 
     <vc:application-task-list-header

@@ -39,6 +39,19 @@ public class StateCanBeAccessedTests
         result.Should().BeFalse();
     }
 
+    [Fact]
+    public void ShouldReturnFalseForPageReconfigureExisting_WhenTryReconfigureExistingIsNotNeeded()
+    {
+        // given
+        var workflow = BuildWorkflow(DeliveryPhaseWorkflowState.BuildActivityType, true);
+
+        // when
+        var result = workflow.CanBeAccessed(DeliveryPhaseWorkflowState.ReconfiguringExisting);
+
+        // then
+        result.Should().BeFalse();
+    }
+
     [Theory]
     [InlineData(DeliveryPhaseWorkflowState.UnregisteredBodyFollowUp)]
     public void ShouldReturnFalse_WhenTryToAccessPageAsRegisteredBody(DeliveryPhaseWorkflowState nextState)
@@ -58,12 +71,12 @@ public class StateCanBeAccessedTests
     [InlineData(DeliveryPhaseWorkflowState.Name, true)]
     [InlineData(DeliveryPhaseWorkflowState.TypeOfHomes, true)]
     [InlineData(DeliveryPhaseWorkflowState.BuildActivityType, true)]
-    [InlineData(DeliveryPhaseWorkflowState.Summary, true)]
+    [InlineData(DeliveryPhaseWorkflowState.SummaryOfDelivery, true)]
     [InlineData(DeliveryPhaseWorkflowState.PracticalCompletionMilestone, true)]
     [InlineData(DeliveryPhaseWorkflowState.CheckAnswers, true)]
     [InlineData(DeliveryPhaseWorkflowState.Create, false)]
     [InlineData(DeliveryPhaseWorkflowState.Name, false)]
-    [InlineData(DeliveryPhaseWorkflowState.Summary, false)]
+    [InlineData(DeliveryPhaseWorkflowState.SummaryOfDelivery, false)]
     [InlineData(DeliveryPhaseWorkflowState.PracticalCompletionMilestone, false)]
     [InlineData(DeliveryPhaseWorkflowState.CheckAnswers, false)]
     public void ShouldReturnTrue_WhenTryToAccessPage(DeliveryPhaseWorkflowState nextState, bool isUnregisteredBody)
@@ -80,6 +93,6 @@ public class StateCanBeAccessedTests
 
     private static DeliveryPhaseWorkflow BuildWorkflow(DeliveryPhaseWorkflowState currentSiteWorkflowState, bool isUnregisteredBody)
     {
-        return new DeliveryPhaseWorkflow(currentSiteWorkflowState, isUnregisteredBody);
+        return new DeliveryPhaseWorkflow(currentSiteWorkflowState, DeliveryPhaseDetailsTestData.WithNames with { IsUnregisteredBody = isUnregisteredBody });
     }
 }

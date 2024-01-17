@@ -2,7 +2,6 @@ using FluentAssertions;
 using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.Domain.Delivery.Entities;
-using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investment.AHP.Domain.Tests.Delivery.Entities.TestDataBuilders;
 using HE.Investments.Common.Contract.Exceptions;
 
@@ -53,7 +52,7 @@ public class RemoveTests
         // then
         testCandidate.DeliveryPhases.Should().HaveCount(1);
         testCandidate.DeliveryPhases.Single().Should().Be(deliveryPhase);
-        testCandidate.ToRemove.Should().BeEmpty();
+        testCandidate.PopRemovedDeliveryPhase().Should().BeNull();
     }
 
     [Fact]
@@ -68,7 +67,7 @@ public class RemoveTests
 
         // then
         testCandidate.DeliveryPhases.Should().BeEmpty();
-        testCandidate.ToRemove.Should().HaveCount(1);
-        testCandidate.ToRemove.Single().Should().Be(deliveryPhase);
+        testCandidate.PopRemovedDeliveryPhase().Should().Be(deliveryPhase);
+        testCandidate.PopRemovedDeliveryPhase().Should().BeNull();
     }
 }

@@ -22,26 +22,28 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
         ApplicationBasicInfo application,
         DeliveryPhaseName name,
         OrganisationBasicInfo organisation,
-        TypeOfHomes? typeOfHomes,
-        BuildActivityType buildActivityType,
         SectionStatus status,
-        IEnumerable<HomesToDeliverInPhase> homesToDeliver,
-        DeliveryPhaseMilestones milestones,
+        TypeOfHomes? typeOfHomes = null,
+        BuildActivity? buildActivity = null,
+        bool? reconfiguringExisting = null,
+        IEnumerable<HomesToDeliverInPhase>? homesToDeliver = null,
+        DeliveryPhaseMilestones? milestones = null,
         DeliveryPhaseId? id = null,
         DateTime? createdOn = null,
         IsAdditionalPaymentRequested? isAdditionalPaymentRequested = null)
     {
+        Id = id ?? DeliveryPhaseId.New();
         Application = application;
         Name = name;
         Organisation = organisation;
         TypeOfHomes = typeOfHomes;
-        BuildActivityType = buildActivityType;
+        BuildActivity = buildActivity ?? new BuildActivity(application.Tenure);
+        ReconfiguringExisting = reconfiguringExisting;
         Status = status;
-        Id = id ?? DeliveryPhaseId.New();
         CreatedOn = createdOn;
-        DeliveryPhaseMilestones = milestones;
+        DeliveryPhaseMilestones = milestones ?? new DeliveryPhaseMilestones(organisation);
         IsAdditionalPaymentRequested = isAdditionalPaymentRequested;
-        _homesToDeliver = homesToDeliver.ToList();
+        _homesToDeliver = homesToDeliver?.ToList() ?? new List<HomesToDeliverInPhase>();
     }
 
     public ApplicationBasicInfo Application { get; }
@@ -54,7 +56,9 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
 
     public TypeOfHomes? TypeOfHomes { get; private set; }
 
-    public BuildActivityType BuildActivityType { get; private set; }
+    public BuildActivity BuildActivity { get; private set; }
+
+    public bool? ReconfiguringExisting { get; private set; }
 
     public DateTime? CreatedOn { get; }
 
@@ -77,12 +81,9 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
         return _homesToDeliver.Any(x => x.HomeTypeId == homeTypeId);
     }
 
-    public int GetHomesToBeDeliveredForHomeType(HomeTypeId homeTypeId)
+    public int? GetHomesToBeDeliveredForHomeType(HomeTypeId homeTypeId)
     {
-        return _homesToDeliver
-            .Where(x => x.HomeTypeId == homeTypeId)
-            .Select(x => x.ToDeliver)
-            .Sum();
+        return _homesToDeliver.SingleOrDefault(x => x.HomeTypeId == homeTypeId)?.ToDeliver;
     }
 
     public void SetHomesToBeDeliveredInThisPhase(IReadOnlyCollection<HomesToDeliverInPhase> homesToDeliver)
@@ -118,7 +119,8 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
     {
         if (typeOfHomes != TypeOfHomes)
         {
-            BuildActivityType.ClearAnswer();
+            BuildActivity.ClearAnswer(typeOfHomes);
+            ReconfiguringExisting = null;
         }
 
         TypeOfHomes = _modificationTracker.Change(TypeOfHomes, typeOfHomes.NotDefault(), MarkAsNotCompleted);
@@ -147,9 +149,24 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
         Status = _modificationTracker.Change(Status, SectionStatus.Completed);
     }
 
-    public void ProvideBuildActivityType(BuildActivityType buildActivityType)
+    public void ProvideBuildActivity(BuildActivity buildActivity)
     {
-        BuildActivityType = _modificationTracker.Change(BuildActivityType, buildActivityType, MarkAsNotCompleted);
+        BuildActivity = _modificationTracker.Change(BuildActivity, buildActivity, MarkAsNotCompleted);
+    }
+
+    public void ProvideReconfiguringExisting(bool? reconfiguringExisting)
+    {
+        if (IsReconfiguringExistingNeeded() is false)
+        {
+            throw new DomainValidationException("Reconfiguring Existing is not needed.");
+        }
+
+        ReconfiguringExisting = _modificationTracker.Change(ReconfiguringExisting, reconfiguringExisting, MarkAsNotCompleted);
+    }
+
+    public bool IsReconfiguringExistingNeeded()
+    {
+        return TypeOfHomes == Contract.Delivery.Enums.TypeOfHomes.Rehab;
     }
 
     private bool IsAnswered()

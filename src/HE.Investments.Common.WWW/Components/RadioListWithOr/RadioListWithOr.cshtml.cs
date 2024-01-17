@@ -10,9 +10,10 @@ public class RadioListWithOr : ViewComponent
         string fieldName,
         string title,
         string hint,
-        IList<ExtendedSelectListItem> availableOptions,
-        ExtendedSelectListItem alternativeOption)
+        IEnumerable<ExtendedSelectListItem> availableOptions,
+        ExtendedSelectListItem alternativeOption,
+        Enum? value = null)
     {
-        return View("RadioListWithOr", (fieldName, title, hint, availableOptions, alternativeOption));
+        return View("RadioListWithOr", (fieldName, title, hint, availableOptions, alternativeOption, value?.ToString()));
     }
 }

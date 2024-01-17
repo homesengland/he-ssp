@@ -27,6 +27,12 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
         {
             Id = site.Id.Value,
             Name = site.Name.Value,
+            Section106GeneralAgreement = site.Section106?.GeneralAgreement,
+            Section106AffordableHousing = site.Section106?.AffordableHousing,
+            Section106OnlyAffordableHousing = site.Section106?.OnlyAffordableHousing,
+            Section106AdditionalAffordableHousing = site.Section106?.AdditionalAffordableHousing,
+            Section106CapitalFundingEligibility = site.Section106?.CapitalFundingEligibility,
+            Section106ConfirmationFromLocalAuthority = site.Section106?.ConfirmationFromLocalAuthority,
         };
     }
 }

@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.Domain.Common;
@@ -12,15 +13,19 @@ public interface IDeliveryPhaseEntity
 {
     ApplicationBasicInfo Application { get; }
 
-    public OrganisationBasicInfo Organisation { get; }
+    Tenure Tenure => Application.Tenure;
+
+    OrganisationBasicInfo Organisation { get; }
 
     DeliveryPhaseId Id { get; }
 
-    DeliveryPhaseName? Name { get; }
+    DeliveryPhaseName Name { get; }
 
     TypeOfHomes? TypeOfHomes { get; }
 
-    BuildActivityType BuildActivityType { get; }
+    BuildActivity BuildActivity { get; }
+
+    bool? ReconfiguringExisting { get; }
 
     DateTime? CreatedOn { get; }
 
@@ -32,13 +37,15 @@ public interface IDeliveryPhaseEntity
 
     public IsAdditionalPaymentRequested? IsAdditionalPaymentRequested { get; }
 
-    void ProvideName(DeliveryPhaseName deliveryPhaseName);
-
     Task ProvideDeliveryPhaseMilestones(DeliveryPhaseMilestones milestones, IMilestoneDatesInProgrammeDateRangePolicy policy);
 
     void ProvideAdditionalPaymentRequest(IsAdditionalPaymentRequested? isAdditionalPaymentRequested);
 
     void ProvideTypeOfHomes(TypeOfHomes typeOfHomes);
 
-    void ProvideBuildActivityType(BuildActivityType buildActivityType);
+    void ProvideBuildActivity(BuildActivity buildActivity);
+
+    void ProvideReconfiguringExisting(bool? reconfiguringExisting);
+
+    bool IsReconfiguringExistingNeeded();
 }

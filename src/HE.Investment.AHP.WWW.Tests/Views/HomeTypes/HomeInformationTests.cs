@@ -1,6 +1,6 @@
 using AngleSharp.Html.Dom;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
-using HE.Investments.Common.WWWTestsFramework.Helpers;
+
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.HomeTypes;
@@ -49,8 +49,7 @@ public class HomeInformationTests : HomeTypesTestBase
     private static void AssertView(IHtmlDocument document)
     {
         document
-            .HasElementWithText("span", "My application - My homes")
-            .HasElementWithText("h1", "Home information")
+            .HasPageHeader("My application - My homes", "Home information")
             .HasElementWithText("h2", "Enter the number of homes you are delivering")
             .HasInput("NumberOfHomes")
             .HasElementWithText("h2", "Enter the number of bedrooms in each home")
@@ -61,6 +60,6 @@ public class HomeInformationTests : HomeTypesTestBase
             .HasElementWithText("h2", "Enter how many storeys each home has")
             .HasElementWithText("div", "If the homes are in a multi storey development, enter how many storeys are in each individual home.")
             .HasInput("NumberOfStoreys")
-            .HasElementWithText("button", "Save and continue");
+            .HasGdsSaveAndContinueButton();
     }
 }

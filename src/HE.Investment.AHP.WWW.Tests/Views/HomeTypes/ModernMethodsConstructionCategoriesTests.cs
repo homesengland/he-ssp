@@ -1,7 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
-using HE.Investments.Common.WWWTestsFramework.Helpers;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.HomeTypes;
 
@@ -21,8 +20,7 @@ public class ModernMethodsConstructionCategoriesTests : HomeTypesTestBase
 
         // then
         document
-            .HasElementWithText("span", "My application - My homes")
-            .HasElementWithText("h1", "Which Modern Methods of Construction (MMC) categories are you using?")
+            .HasPageHeader("My application - My homes", "Which Modern Methods of Construction (MMC) categories are you using?")
             .HasElementWithText("span", "Select all that apply.")
             .HasCheckboxes(
                 "ModernMethodsConstructionCategories",
@@ -36,7 +34,7 @@ public class ModernMethodsConstructionCategoriesTests : HomeTypesTestBase
                     "Category6TraditionalBuildingProductLedSiteLabourReductionOrProductivityImprovements",
                     "Category7SiteProcessLedLabourReductionOrProductivityOrAssuranceImprovements",
                 })
-            .HasElementWithText("button", "Save and continue");
+            .HasGdsSaveAndContinueButton();
     }
 
     [Fact]
@@ -72,6 +70,6 @@ public class ModernMethodsConstructionCategoriesTests : HomeTypesTestBase
                     "Category5PreManufacturingNonStructuralAssembliesAndSubAssemblies",
                     "Category6TraditionalBuildingProductLedSiteLabourReductionOrProductivityImprovements",
                 })
-            .HasElementWithText("button", "Save and continue");
+            .HasGdsSaveAndContinueButton();
     }
 }

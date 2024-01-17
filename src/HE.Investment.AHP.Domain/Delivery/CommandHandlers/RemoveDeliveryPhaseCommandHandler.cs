@@ -1,9 +1,7 @@
-using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Commands;
 using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.Repositories;
 using HE.Investments.Account.Shared;
-using HE.Investments.Common.Contract.Validators;
 using Microsoft.Extensions.Logging;
 
 namespace HE.Investment.AHP.Domain.Delivery.CommandHandlers;
@@ -18,8 +16,8 @@ public class RemoveDeliveryPhaseCommandHandler : DeliveryCommandHandlerBase<Remo
     {
     }
 
-    protected override IList<ErrorItem> Perform(DeliveryPhasesEntity deliveryPhases, RemoveDeliveryPhaseCommand request)
+    protected override void Perform(DeliveryPhasesEntity deliveryPhases, RemoveDeliveryPhaseCommand request)
     {
-        return PerformWithValidation(() => deliveryPhases.Remove(new DeliveryPhaseId(request.DeliveryPhaseId), request.RemoveDeliveryPhaseAnswer));
+        deliveryPhases.Remove(request.DeliveryPhaseId, request.RemoveDeliveryPhaseAnswer);
     }
 }

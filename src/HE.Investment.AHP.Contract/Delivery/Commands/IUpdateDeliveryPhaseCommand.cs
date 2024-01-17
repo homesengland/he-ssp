@@ -6,5 +6,5 @@ public interface IUpdateDeliveryPhaseCommand
 {
     AhpApplicationId ApplicationId { get; }
 
-    string DeliveryPhaseId { get; }
+    DeliveryPhaseId DeliveryPhaseId { get; }
 }
