@@ -9,6 +9,7 @@ using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Common.Messages;
 
 namespace HE.Investment.AHP.Domain.Delivery.Entities;
 
@@ -140,13 +141,15 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
     {
         if (!IsAnswered())
         {
-#pragma warning disable S1135 // Track uses of "TODO" tags
-            // TODO #67047: throw and handle exception
-            throw new DomainValidationException("Cannot complete deliveryPhase.");
-#pragma warning restore S1135 // Track uses of "TODO" tags
+            throw new DomainValidationException(ValidationErrorMessage.SectionIsNotCompleted);
         }
 
         Status = _modificationTracker.Change(Status, SectionStatus.Completed);
+    }
+
+    public void UnComplete()
+    {
+        Status = _modificationTracker.Change(Status, SectionStatus.InProgress);
     }
 
     public void ProvideBuildActivity(BuildActivity buildActivity)
@@ -171,13 +174,22 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
 
     private bool IsAnswered()
     {
+        var reconfigureExistingValid = !IsReconfiguringExistingNeeded() || ReconfiguringExisting.HasValue;
+
+        var isAnswered = Name.IsProvided() &&
+                TypeOfHomes.IsProvided() &&
+                BuildActivity.IsAnswered() &&
+                reconfigureExistingValid &&
+                _homesToDeliver.Any() &&
+                DeliveryPhaseMilestones.IsAnswered();
+
         if (Organisation.IsUnregisteredBody)
         {
-            return DeliveryPhaseMilestones.IsAnswered() &&
+            return isAnswered &&
                    IsAdditionalPaymentRequested != null && IsAdditionalPaymentRequested.IsAnswered();
         }
 
-        return DeliveryPhaseMilestones.IsAnswered();
+        return isAnswered;
     }
 
     private void MarkAsNotCompleted()

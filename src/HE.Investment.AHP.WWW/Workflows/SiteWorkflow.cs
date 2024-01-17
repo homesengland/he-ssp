@@ -50,5 +50,10 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             .PermitIf(Trigger.Continue, SiteWorkflowState.Section106OnlyAffordableHousing, () => _siteModel?.Section106AffordableHousing == true)
             .PermitIf(Trigger.Continue, SiteWorkflowState.Section106CapitalFundingEligibility, () => _siteModel?.Section106AffordableHousing == false)
             .Permit(Trigger.Back, SiteWorkflowState.Section106GeneralAgreement);
+
+        _machine.Configure(SiteWorkflowState.Section106OnlyAffordableHousing)
+            .PermitIf(Trigger.Continue, SiteWorkflowState.Section106CapitalFundingEligibility, () => _siteModel?.Section106OnlyAffordableHousing == true)
+            .PermitIf(Trigger.Continue, SiteWorkflowState.Section106AdditionalAffordableHousing, () => _siteModel?.Section106OnlyAffordableHousing == false)
+            .Permit(Trigger.Back, SiteWorkflowState.Section106AffordableHousing);
     }
 }

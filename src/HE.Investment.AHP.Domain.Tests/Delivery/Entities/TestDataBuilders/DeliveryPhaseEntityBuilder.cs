@@ -15,6 +15,12 @@ namespace HE.Investment.AHP.Domain.Tests.Delivery.Entities.TestDataBuilders;
 
 public class DeliveryPhaseEntityBuilder
 {
+    private static readonly ApplicationBasicInfo ApplicationBasicInfo = new(
+        new AhpApplicationId("test-app-42123"),
+        new ApplicationName("Test Application"),
+        Tenure.AffordableRent,
+        ApplicationStatus.Draft);
+
     private readonly IList<HomesToDeliverInPhase> _homesToDeliver = new List<HomesToDeliverInPhase>();
 
     private string _id = "dp-1-12313";
@@ -23,9 +29,15 @@ public class DeliveryPhaseEntityBuilder
 
     private OrganisationBasicInfo _organisationBasicInfo = new OrganisationBasicInfoBuilder().Build();
 
-    private DeliveryPhaseMilestones? _deliveryPhaseMilestones;
+    private DeliveryPhaseMilestones? _deliveryPhaseMilestones = new DeliveryPhaseMilestonesBuilder().Build();
 
     private IsAdditionalPaymentRequested? _isAdditionalPaymentRequested;
+
+    private TypeOfHomes? _typeOfHomes = TypeOfHomes.NewBuild;
+
+    private BuildActivity _buildActivity = new(ApplicationBasicInfo.Tenure, TypeOfHomes.NewBuild, BuildActivityType.Regeneration);
+
+    private bool? _reconfigureExisting;
 
     public DeliveryPhaseEntityBuilder WithId(string id)
     {
@@ -36,6 +48,12 @@ public class DeliveryPhaseEntityBuilder
     public DeliveryPhaseEntityBuilder WithHomesToBeDelivered(string homeTypeId, int numberOfHomes)
     {
         _homesToDeliver.Add(new HomesToDeliverInPhase(new HomeTypeId(homeTypeId), numberOfHomes));
+        return this;
+    }
+
+    public DeliveryPhaseEntityBuilder WithHomesToBeDelivered()
+    {
+        _homesToDeliver.Add(new HomesToDeliverInPhase(new HomeTypeId("ht-1"), 1));
         return this;
     }
 
@@ -63,22 +81,48 @@ public class DeliveryPhaseEntityBuilder
         return this;
     }
 
+    public DeliveryPhaseEntityBuilder WithoutBuildActivity()
+    {
+        _buildActivity = new BuildActivity(ApplicationBasicInfo.Tenure);
+        return this;
+    }
+
+    public DeliveryPhaseEntityBuilder WithoutTypeOfHomes()
+    {
+        _typeOfHomes = null;
+        return this;
+    }
+
+    public DeliveryPhaseEntityBuilder WithTypeOfHomes(TypeOfHomes typeOfHomes)
+    {
+        _typeOfHomes = typeOfHomes;
+        return this;
+    }
+
+    public DeliveryPhaseEntityBuilder WithoutHomesToDeliver()
+    {
+        _homesToDeliver.Clear();
+
+        return this;
+    }
+
+    public DeliveryPhaseEntityBuilder WithReconfiguringExisting()
+    {
+        _reconfigureExisting = true;
+
+        return this;
+    }
+
     public DeliveryPhaseEntity Build()
     {
-        var applicationBasicInfo = new ApplicationBasicInfo(
-            new AhpApplicationId("test-app-42123"),
-            new ApplicationName("Test Application"),
-            Tenure.AffordableRent,
-            ApplicationStatus.Draft);
-
         return new DeliveryPhaseEntity(
-            applicationBasicInfo,
+            ApplicationBasicInfo,
             new DeliveryPhaseName("First Phase"),
             _organisationBasicInfo,
             _status,
-            TypeOfHomes.Rehab,
-            new BuildActivity(applicationBasicInfo.Tenure),
-            null,
+            _typeOfHomes,
+            _buildActivity,
+            _reconfigureExisting,
             _homesToDeliver,
             _deliveryPhaseMilestones ?? new DeliveryPhaseMilestonesBuilder().Build(),
             new DeliveryPhaseId(_id),

@@ -15,14 +15,17 @@ public class Section106AffordableHousingTests : ViewTestBase
     public async Task ShouldDisplayView()
     {
         // given & when
-        var document = await Render<SiteModel>(_viewPath);
+        var siteName = "Test Site 33";
+        var site = new SiteModel() { Name = siteName };
+        var document = await Render(_viewPath, site);
 
         // then
         document
             .HasTitle(SitePageTitles.SiteSection106AffordableHousing)
+            .HasPageHeader(siteName, @SitePageTitles.SiteSection106AffordableHousing)
             .HasGdsRadioInputWithValues(nameof(SiteModel.Section106AffordableHousing), "True", "False")
             .HasGdsSaveAndContinueButton()
-            .HasGdsBackButton();
+            .HasGdsBackButton(false);
     }
 
     [Fact]
@@ -32,17 +35,20 @@ public class Section106AffordableHousingTests : ViewTestBase
         // given
         var errorMessage = "some test error";
         var modelState = new ModelStateDictionary();
+        var siteName = "Test Site 33";
+        var site = new SiteModel() { Name = siteName };
         modelState.AddModelError(nameof(SiteModel.Section106AffordableHousing), errorMessage);
 
         // when
-        var document = await Render<SiteModel>(_viewPath, modelStateDictionary: modelState);
+        var document = await Render(_viewPath, site, modelStateDictionary: modelState);
 
         // then
         document
             .HasTitle(SitePageTitles.SiteSection106AffordableHousing)
+            .HasPageHeader(siteName, @SitePageTitles.SiteSection106AffordableHousing)
             .HasGdsRadioInputWithValues(nameof(SiteModel.Section106AffordableHousing), "True", "False")
             .HasGdsSaveAndContinueButton()
-            .HasGdsBackButton()
+            .HasGdsBackButton(false)
             .HasOneValidationMessages(errorMessage);
     }
 }

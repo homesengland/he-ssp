@@ -6,12 +6,11 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.Site;
 
-public class Section106AgreementTests : ViewTestBase
+public class Section106OnlyAffordableHousingTests : ViewTestBase
 {
-    private readonly string _viewPath = "/Views/Site/Section106Agreement.cshtml";
+    private readonly string _viewPath = "/Views/Site/Section106OnlyAffordableHousing.cshtml";
 
     [Fact]
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Blocker Code Smell", "S2699:Tests should include assertions", Justification = "Assertion present")]
     public async Task ShouldDisplayView()
     {
         // given & when
@@ -21,15 +20,14 @@ public class Section106AgreementTests : ViewTestBase
 
         // then
         document
-            .HasTitle(SitePageTitles.SiteSection106Agreement)
-            .HasPageHeader(siteName, @SitePageTitles.SiteSection106Agreement)
-            .HasGdsRadioInputWithValues(nameof(SiteModel.Section106GeneralAgreement), "True", "False")
+            .HasTitle(SitePageTitles.SiteSection106OnlyAffordableHousing)
+            .HasPageHeader(siteName, @SitePageTitles.SiteSection106OnlyAffordableHousing)
+            .HasGdsRadioInputWithValues(nameof(SiteModel.Section106OnlyAffordableHousing), "True", "False")
             .HasGdsSaveAndContinueButton()
             .HasGdsBackButton(false);
     }
 
     [Fact]
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Blocker Code Smell", "S2699:Tests should include assertions", Justification = "Assertion present")]
     public async Task ShouldErrorSummary_ForInvalidName()
     {
         // given
@@ -37,16 +35,16 @@ public class Section106AgreementTests : ViewTestBase
         var modelState = new ModelStateDictionary();
         var siteName = "Test Site 33";
         var site = new SiteModel() { Name = siteName };
-        modelState.AddModelError(nameof(SiteModel.Section106GeneralAgreement), errorMessage);
+        modelState.AddModelError(nameof(SiteModel.Section106OnlyAffordableHousing), errorMessage);
 
         // when
         var document = await Render(_viewPath, site, modelStateDictionary: modelState);
 
         // then
         document
-            .HasTitle(SitePageTitles.SiteSection106Agreement)
-            .HasPageHeader(siteName, @SitePageTitles.SiteSection106Agreement)
-            .HasGdsRadioInputWithValues(nameof(SiteModel.Section106GeneralAgreement), "True", "False")
+            .HasTitle(SitePageTitles.SiteSection106OnlyAffordableHousing)
+            .HasPageHeader(siteName, @SitePageTitles.SiteSection106OnlyAffordableHousing)
+            .HasGdsRadioInputWithValues(nameof(SiteModel.Section106OnlyAffordableHousing), "True", "False")
             .HasGdsSaveAndContinueButton()
             .HasGdsBackButton(false)
             .HasOneValidationMessages(errorMessage);
