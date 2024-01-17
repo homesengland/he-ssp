@@ -3,11 +3,11 @@ public static class SiteValidationFieldNames
 {
     public const string Section106Agreement = nameof(Section106Agreement);
 
-    public const string Section106AffordableHomes = nameof(Section106AffordableHomes);
+    public const string Section106AffordableHousing = nameof(Section106AffordableHousing);
 
-    public const string Section106OnlyAffordableHomes = nameof(Section106OnlyAffordableHomes);
+    public const string Section106OnlyAffordableHousing = nameof(Section106OnlyAffordableHousing);
 
-    public const string Section106AdditionalAffordableHomes = nameof(Section106AdditionalAffordableHomes);
+    public const string Section106AdditionalAffordableHousing = nameof(Section106AdditionalAffordableHousing);
 
     public const string Section106CapitalFundingEligibility = nameof(Section106CapitalFundingEligibility);
 

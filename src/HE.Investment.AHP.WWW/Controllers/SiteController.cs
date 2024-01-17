@@ -96,11 +96,33 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     [WorkflowState(SiteWorkflowState.Section106GeneralAgreement)]
     public async Task<IActionResult> Section106Agreement([FromRoute] string siteId, SiteModel model, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new ProvideSection106AgreementCommand(siteId, model.Section106GeneralAgreement), cancellationToken);
+        var result = await _mediator.Send(new ProvideSection106AgreementCommand(new SiteId(siteId), model.Section106GeneralAgreement), cancellationToken);
         if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
             return View("Section106Agreement", model);
+        }
+
+        return await Continue();
+    }
+
+    [HttpGet("{siteId}/section-106-affordable-housing")]
+    [WorkflowState(SiteWorkflowState.Section106AffordableHousing)]
+    public async Task<IActionResult> Section106AffordableHousing([FromRoute] string siteId, CancellationToken cancellationToken)
+    {
+        var siteModel = await _mediator.Send(new GetSiteQuery(siteId), cancellationToken);
+        return View("Section106AffordableHousing", siteModel);
+    }
+
+    [HttpPost("{siteId}/section-106-affordable-housing")]
+    [WorkflowState(SiteWorkflowState.Section106AffordableHousing)]
+    public async Task<IActionResult> Section106AffordableHousing([FromRoute] string siteId, SiteModel model, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new ProvideSection106AgreementCommand(new SiteId(siteId), model.Section106GeneralAgreement), cancellationToken);
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+            return View("Section106AffordableHousing", model);
         }
 
         return await Continue();

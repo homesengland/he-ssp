@@ -8,11 +8,11 @@ public class SiteModel
 
     public bool? Section106GeneralAgreement { get; set; }
 
-    public bool? Section106AffordableHomes { get; set; }
+    public bool? Section106AffordableHousing { get; set; }
 
-    public bool? Section106OnlyAffordableHomes { get; set; }
+    public bool? Section106OnlyAffordableHousing { get; set; }
 
-    public bool? Section106AdditionalAffordableHomes { get; set; }
+    public bool? Section106AdditionalAffordableHousing { get; set; }
 
     public bool? Section106CapitalFundingEligibility { get; set; }
 
