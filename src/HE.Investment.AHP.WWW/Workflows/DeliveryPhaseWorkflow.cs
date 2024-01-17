@@ -38,7 +38,7 @@ public class DeliveryPhaseWorkflow : IStateRouting<DeliveryPhaseWorkflowState>
             DeliveryPhaseWorkflowState.BuildActivityType => true,
             DeliveryPhaseWorkflowState.ReconfiguringExisting => _model.IsReconfiguringExistingNeeded,
             DeliveryPhaseWorkflowState.AddHomes => true,
-            DeliveryPhaseWorkflowState.Summary => true,
+            DeliveryPhaseWorkflowState.SummaryOfDelivery => true,
             DeliveryPhaseWorkflowState.AcquisitionMilestone => !_model.IsUnregisteredBody,
             DeliveryPhaseWorkflowState.StartOnSiteMilestone => !_model.IsUnregisteredBody,
             DeliveryPhaseWorkflowState.PracticalCompletionMilestone => true,
@@ -52,10 +52,6 @@ public class DeliveryPhaseWorkflow : IStateRouting<DeliveryPhaseWorkflowState>
     {
         _machine.Configure(DeliveryPhaseWorkflowState.Create)
             .Permit(Trigger.Continue, DeliveryPhaseWorkflowState.TypeOfHomes);
-
-        _machine.Configure(DeliveryPhaseWorkflowState.Summary)
-            .PermitIf(Trigger.Continue, DeliveryPhaseWorkflowState.AcquisitionMilestone, () => !_model.IsUnregisteredBody)
-            .PermitIf(Trigger.Continue, DeliveryPhaseWorkflowState.PracticalCompletionMilestone, () => _model.IsUnregisteredBody);
 
         _machine.Configure(DeliveryPhaseWorkflowState.Name)
             .Permit(Trigger.Continue, DeliveryPhaseWorkflowState.TypeOfHomes);
@@ -74,14 +70,18 @@ public class DeliveryPhaseWorkflow : IStateRouting<DeliveryPhaseWorkflowState>
             .Permit(Trigger.Back, DeliveryPhaseWorkflowState.BuildActivityType);
 
         _machine.Configure(DeliveryPhaseWorkflowState.AddHomes)
-            .PermitIf(Trigger.Continue, DeliveryPhaseWorkflowState.AcquisitionMilestone, () => !_model.IsUnregisteredBody)
-            .PermitIf(Trigger.Continue, DeliveryPhaseWorkflowState.PracticalCompletionMilestone, () => _model.IsUnregisteredBody)
+            .Permit(Trigger.Continue, DeliveryPhaseWorkflowState.SummaryOfDelivery)
             .PermitIf(Trigger.Back, DeliveryPhaseWorkflowState.BuildActivityType, () => !_model.IsReconfiguringExistingNeeded)
             .PermitIf(Trigger.Back, DeliveryPhaseWorkflowState.ReconfiguringExisting, () => _model.IsReconfiguringExistingNeeded);
 
+        _machine.Configure(DeliveryPhaseWorkflowState.SummaryOfDelivery)
+            .PermitIf(Trigger.Continue, DeliveryPhaseWorkflowState.AcquisitionMilestone, () => !_model.IsUnregisteredBody)
+            .PermitIf(Trigger.Continue, DeliveryPhaseWorkflowState.PracticalCompletionMilestone, () => _model.IsUnregisteredBody)
+            .Permit(Trigger.Back, DeliveryPhaseWorkflowState.AddHomes);
+
         _machine.Configure(DeliveryPhaseWorkflowState.AcquisitionMilestone)
             .PermitIf(Trigger.Continue, DeliveryPhaseWorkflowState.StartOnSiteMilestone)
-            .Permit(Trigger.Back, DeliveryPhaseWorkflowState.AddHomes);
+            .Permit(Trigger.Back, DeliveryPhaseWorkflowState.SummaryOfDelivery);
 
         _machine.Configure(DeliveryPhaseWorkflowState.StartOnSiteMilestone)
             .Permit(Trigger.Continue, DeliveryPhaseWorkflowState.PracticalCompletionMilestone)

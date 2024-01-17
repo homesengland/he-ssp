@@ -194,6 +194,24 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
             cancellationToken);
     }
 
+    [HttpGet("{deliveryPhaseId}/summary-of-delivery")]
+    [WorkflowState(DeliveryPhaseWorkflowState.SummaryOfDelivery)]
+    public async Task<IActionResult> SummaryOfDelivery([FromRoute] string applicationId, string deliveryPhaseId, CancellationToken cancellationToken)
+    {
+        var deliveryPhaseDetails =
+            await _mediator.Send(
+                new GetDeliveryPhaseDetailsQuery(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId)), cancellationToken);
+
+        return View("SummaryOfDelivery", deliveryPhaseDetails);
+    }
+
+    [HttpPost("{deliveryPhaseId}/summary-of-delivery")]
+    [WorkflowState(DeliveryPhaseWorkflowState.SummaryOfDelivery)]
+    public async Task<IActionResult> SummaryOfDelivery([FromRoute] string applicationId, string deliveryPhaseId)
+    {
+        return await ContinueWithRedirect(new { applicationId, deliveryPhaseId });
+    }
+
     [HttpGet("{deliveryPhaseId}/remove")]
     public async Task<IActionResult> Remove([FromRoute] string applicationId, string deliveryPhaseId, CancellationToken cancellationToken)
     {
