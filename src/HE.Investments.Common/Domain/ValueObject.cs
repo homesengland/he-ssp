@@ -2,6 +2,23 @@ namespace HE.Investments.Common.Domain;
 
 public abstract class ValueObject
 {
+    public static bool operator ==(ValueObject? a, ValueObject? b)
+    {
+        if (a is null && b is null)
+        {
+            return true;
+        }
+
+        if (a is null || b is null)
+        {
+            return false;
+        }
+
+        return a.Equals(b);
+    }
+
+    public static bool operator !=(ValueObject? a, ValueObject? b) => !(a == b);
+
     public override bool Equals(object? obj)
     {
         if (obj == null)
