@@ -36,7 +36,7 @@
 <div class="govuk-grid-column-two-thirds">
     @await Html.PartialAsync("~/Partials/TaskList/_TaskList.cshtml", ApplicationSections.CreateSections(Model.ApplicationId, Url, Model.Sections))
 
-    @await Html.PartialAsync("Partials/_TaskListRequestChangeStatusSection", Model)
+    @await Html.PartialAsync("Partials/_TaskListRequestChangeStatusSection.cshtml", Model)
 
     <link-button action-url="@Url.Action("Index", "Application")" is-secondary="true">Return to applications</link-button>
 </div>

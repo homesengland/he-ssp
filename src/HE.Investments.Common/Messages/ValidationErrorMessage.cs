@@ -73,6 +73,8 @@ public static class ValidationErrorMessage
 
     public const string EnterDate = "Enter a date. The date must include a day, month and year";
 
+    public const string EnterWithdrawReason = "Enter why you are withdrawing this application";
+
     public static string EstimatedPoundInput(string name) => PoundInput($"The estimated {name}");
 
     public static string PoundInput(string name) => new($"The {name} must be entered as a number, in pounds and pence");

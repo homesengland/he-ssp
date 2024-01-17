@@ -31,10 +31,10 @@ public class HoldApplicationCommandHandler : IRequestHandler<HoldApplicationComm
         var account = await _accountUserContext.GetSelectedAccount();
         var application = await _applicationRepository.GetById(request.Id, account, cancellationToken);
 
-        var changeStatusReason = request.ChangeStatusReason.IsProvided()
-            ? new ChangeStatusReason(request.ChangeStatusReason!)
+        var holdReason = request.HoldReason.IsProvided()
+            ? new HoldReason(request.HoldReason!)
             : null;
-        application.ProvideChangeStatusReason(changeStatusReason);
+        application.ProvideHoldReason(holdReason);
 
         application.Hold();
 

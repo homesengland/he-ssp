@@ -4,7 +4,6 @@ using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
-using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Infrastructure.Events;
 using MediatR;
 
@@ -31,10 +30,8 @@ public class WithdrawApplicationCommandHandler : IRequestHandler<WithdrawApplica
         var account = await _accountUserContext.GetSelectedAccount();
         var application = await _applicationRepository.GetById(request.Id, account, cancellationToken);
 
-        var changeStatusReason = request.ChangeStatusReason.IsProvided()
-            ? new ChangeStatusReason(request.ChangeStatusReason!)
-            : null;
-        application.ProvideChangeStatusReason(changeStatusReason);
+        var withdrawReason = new WithdrawReason(request.WithdrawReason);
+        application.ProvideWithdrawReason(withdrawReason);
 
         application.Withdraw();
 
