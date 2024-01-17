@@ -1,10 +1,8 @@
 using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.WWW.Views.Delivery.Const;
-using HE.Investments.Common.WWWTestsFramework;
-using HE.Investments.TestsUtils.Extensions;
+using HE.Investments.Common.Contract;
 using Microsoft.AspNetCore.Routing;
-using EnumExtensions = HE.Investments.Common.Extensions.EnumExtensions;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.DeliveryPhase;
 
@@ -22,6 +20,7 @@ public class BuildActivityTests : ViewTestBase
             "AppName",
             "Id",
             "DeliveryPhaseName",
+            SectionStatus.InProgress,
             null,
             null,
             availableTypes);

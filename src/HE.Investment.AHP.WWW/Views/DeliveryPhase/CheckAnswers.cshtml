@@ -1,0 +1,48 @@
+@using HE.Investments.Common.WWW.Components.SectionSummary;
+@using HE.Investment.AHP.WWW.Models.Common
+@using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
+@using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
+@using HE.Investments.Common.WWW.Components.FormHeader
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investments.Common.WWW.Components.RadioList
+@using HE.Investment.AHP.Contract.Delivery
+
+@model HE.Investment.AHP.WWW.Models.Delivery.DeliveryPhaseSummaryViewModel
+
+@{
+    var title = "Check your answers before adding a delivery phase";
+    ViewData["Title"] = title;
+}
+
+<div class="govuk-grid-column-three-quarters">
+    @if (Model.IsReadOnly)
+    {
+        <gds-back-link href="@Url.Action("List", "Delivery", new { applicationId = Model.ApplicationId })" class="govuk-!-margin-bottom-8"></gds-back-link>
+    }
+    else
+    {
+        <vc:ahp-workflow-back-button current-page="@DeliveryPhaseWorkflowState.CheckAnswers"/>
+    }
+
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+
+    <vc:form-header caption="@($"{Model.ApplicationName} - {Model.DeliveryPhaseName}")" title="@title"/>
+
+    @foreach (var summarySection in Model.Sections)
+    {
+        <vc:section-summary title="@summarySection.Title" items="@summarySection.Items"/>
+    }
+
+    <form asp-controller="DeliveryPhase" asp-action="Complete" asp-route-applicationId="@Model.ApplicationId" asp-route-deliveryPhaseId="@Model.DeliveryPhaseId" asp-method="post" novalidate hidden="@Model.IsReadOnly">
+
+        <vc:radio-list
+            field-name="@(nameof(Model.IsCompleted))"
+            title="Have you completed this section?"
+            available-options="@CommonFormOptions.IsSectionCompletedExtended"
+            value="@Model.IsCompleted"/>
+
+        <vc:form-button/>
+    </form>
+
+    <vc:return-to-application-link application-id="@Model.ApplicationId" is-editable="@false"/>
+</div>
