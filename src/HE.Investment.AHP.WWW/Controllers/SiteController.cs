@@ -81,7 +81,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
             return View("Name", model);
         }
 
-        return await Continue();
+        return await Continue(new { siteId });
     }
 
     [HttpGet("{siteId}/section-106-agreement")]
@@ -103,7 +103,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
             return View("Section106Agreement", model);
         }
 
-        return await Continue();
+        return await Continue(new { siteId });
     }
 
     [HttpGet("{siteId}/section-106-affordable-housing")]
@@ -118,14 +118,36 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     [WorkflowState(SiteWorkflowState.Section106AffordableHousing)]
     public async Task<IActionResult> Section106AffordableHousing([FromRoute] string siteId, SiteModel model, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new ProvideSection106AgreementCommand(new SiteId(siteId), model.Section106GeneralAgreement), cancellationToken);
+        var result = await _mediator.Send(new ProvideSection106AffordableHousingCommand(new SiteId(siteId), model.Section106AffordableHousing), cancellationToken);
         if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
             return View("Section106AffordableHousing", model);
         }
 
-        return await Continue();
+        return await Continue(new { siteId });
+    }
+
+    [HttpGet("{siteId}/section-106-only-affordable-housing")]
+    [WorkflowState(SiteWorkflowState.Section106OnlyAffordableHousing)]
+    public async Task<IActionResult> Section106OnlyAffordableHousing([FromRoute] string siteId, CancellationToken cancellationToken)
+    {
+        var siteModel = await _mediator.Send(new GetSiteQuery(siteId), cancellationToken);
+        return View("Section106OnlyAffordableHousing", siteModel);
+    }
+
+    [HttpPost("{siteId}/section-106-only-affordable-housing")]
+    [WorkflowState(SiteWorkflowState.Section106OnlyAffordableHousing)]
+    public async Task<IActionResult> Section106OnlyAffordableHousing([FromRoute] string siteId, SiteModel model, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new ProvideSection106OnlyAffordableHousingCommand(new SiteId(siteId), model.Section106OnlyAffordableHousing), cancellationToken);
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+            return View("Section106OnlyAffordableHousing", model);
+        }
+
+        return await Continue(new { siteId });
     }
 
     protected override async Task<IStateRouting<SiteWorkflowState>> Routing(SiteWorkflowState currentState, object? routeData = null)
