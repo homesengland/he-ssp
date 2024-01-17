@@ -162,13 +162,24 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
         await TestQuestionPage(
             BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.AddHomes, NewBuildAndWorksOnlyDeliveryPhase),
             DeliveryPageTitles.AddHomes,
-            BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.AcquisitionMilestone, NewBuildAndWorksOnlyDeliveryPhase),
+            BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.SummaryOfDelivery, NewBuildAndWorksOnlyDeliveryPhase),
             inputs);
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
     [Order(7)]
-    public async Task Order07_ProvideAcquisitionMilestone()
+    public async Task Order07_ContinueOnSummaryOfDelivery()
+    {
+        // given & when & then
+        await TestQuestionPage(
+            BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.SummaryOfDelivery, NewBuildAndWorksOnlyDeliveryPhase),
+            DeliveryPageTitles.SummaryOfDelivery,
+            BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.AcquisitionMilestone, NewBuildAndWorksOnlyDeliveryPhase));
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(8)]
+    public async Task Order08_ProvideAcquisitionMilestone()
     {
         // given
         var deliveryPhase = NewBuildAndWorksOnlyDeliveryPhase.GenerateAcquisitionMilestone();
@@ -187,8 +198,8 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(8)]
-    public async Task Order08_ProvideStartOnSiteMilestone()
+    [Order(9)]
+    public async Task Order09_ProvideStartOnSiteMilestone()
     {
         // given
         var deliveryPhase = NewBuildAndWorksOnlyDeliveryPhase.GenerateStartOnSiteMilestone();
