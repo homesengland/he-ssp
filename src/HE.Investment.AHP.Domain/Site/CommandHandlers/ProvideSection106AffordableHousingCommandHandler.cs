@@ -1,4 +1,4 @@
-﻿using HE.Investment.AHP.Contract.Site;
+using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Commands;
 using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investment.AHP.Domain.Site.ValueObjects;
@@ -27,7 +27,7 @@ public class ProvideSection106AffordableHousingCommandHandler : SiteBaseCommandH
                 site.ProvideSection106(section106);
                 return Task.FromResult(OperationResult.Success());
             },
-            new SiteId(request.SiteId!),
+            request.SiteId,
             cancellationToken);
     }
 }

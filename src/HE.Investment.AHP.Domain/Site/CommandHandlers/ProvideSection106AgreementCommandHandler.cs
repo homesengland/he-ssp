@@ -27,7 +27,7 @@ public class ProvideSection106AgreementCommandHandler : SiteBaseCommandHandler, 
                 site.ProvideSection106(section106);
                 return Task.FromResult(OperationResult.Success());
             },
-            new SiteId(request.SiteId!),
+            request.SiteId,
             cancellationToken);
     }
 }
