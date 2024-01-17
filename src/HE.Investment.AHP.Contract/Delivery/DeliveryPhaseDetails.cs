@@ -15,6 +15,7 @@ public record DeliveryPhaseDetails(
     bool? ReconfiguringExisting = null,
     int? NumberOfHomes = null,
     bool IsUnregisteredBody = false,
+    bool IsOnlyCompletionMilestone = false,
     DateDetails? AcquisitionDate = null,
     DateDetails? AcquisitionPaymentDate = null,
     DateDetails? StartOnSiteDate = null,

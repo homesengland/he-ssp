@@ -3,12 +3,12 @@ using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investment.AHP.Domain.Tests.Delivery.Entities.TestDataBuilders;
 using HE.Investments.Common.Contract.Exceptions;
 
-namespace HE.Investment.AHP.Domain.Tests.Delivery.ValueObjects;
+namespace HE.Investment.AHP.Domain.Tests.Delivery.ValueObjects.DeliveryPhaseMilestonesTests;
 
-public class DeliveryPhaseMilestonesTests
+public class CreateTests
 {
     [Fact]
-    public void ShouldThrowException_WhenAcquisitionMilestoneDetailsCannotBeProvided()
+    public void ShouldThrowException_WhenAcquisitionMilestoneDetailsProvidedForUnregisteredBody()
     {
         // given && when
         var action = () => new DeliveryPhaseMilestonesBuilder()
@@ -16,11 +16,23 @@ public class DeliveryPhaseMilestonesTests
             .Build();
 
         // then
-        AssertException(action, "Cannot provide Acquisition Milestone details for Unregistered Body Partner.");
+        AssertException(action, "Cannot provide Acquisition Milestone details.");
     }
 
     [Fact]
-    public void ShouldThrowException_WhenStartOnSiteMilestoneDetailsCannotBeProvided()
+    public void ShouldThrowException_WhenAcquisitionMilestoneDetailsProvidedFor()
+    {
+        // given && when
+        var action = () => new DeliveryPhaseMilestonesBuilder()
+            .WithBuildActivityOnlyForCompletionMilestone()
+            .Build();
+
+        // then
+        AssertException(action, "Cannot provide Acquisition Milestone details.");
+    }
+
+    [Fact]
+    public void ShouldThrowException_WhenStartOnSiteMilestoneDetailsProvidedForUnregisteredBody()
     {
         // given && when
         var action = () => new DeliveryPhaseMilestonesBuilder()
@@ -29,7 +41,20 @@ public class DeliveryPhaseMilestonesTests
             .Build();
 
         // then
-        AssertException(action, "Cannot provide Start On Site Milestone details for Unregistered Body Partner.");
+        AssertException(action, "Cannot provide Start On Site Milestone details.");
+    }
+
+    [Fact]
+    public void ShouldThrowException_WhenStartOnSiteMilestoneDetailsProvidedFor()
+    {
+        // given && when
+        var action = () => new DeliveryPhaseMilestonesBuilder()
+            .WithoutAcquisitionMilestoneDetails()
+            .WithBuildActivityOnlyForCompletionMilestone()
+            .Build();
+
+        // then
+        AssertException(action, "Cannot provide Start On Site Milestone details.");
     }
 
     [Fact]
