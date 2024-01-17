@@ -30,14 +30,14 @@
     </PackageReference>
   </ItemGroup>
 
-    <ItemGroup>
-      <EmbeddedResource Include="Components\DateInputTests\DateInputTests.cshtml" />
-      <EmbeddedResource Include="_ViewImports.cshtml" />
-      <EmbeddedResource Include="Components\SectionSummaryItemTests\SectionSummaryItemTests.cshtml" />
-    </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Components\DateInputTests\DateInputTests.cshtml" />
+    <EmbeddedResource Include="_ViewImports.cshtml" />
+    <EmbeddedResource Include="Components\SectionSummaryItemTests\SectionSummaryItemTests.cshtml" />
+  </ItemGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\HE.Investments.Common.WWWTestsFramework\HE.Investments.Common.WWWTestsFramework.csproj" />
-      <ProjectReference Include="..\HE.Investments.TestsUtils\HE.Investments.TestsUtils.csproj" />
-    </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HE.Investments.Common.WWWTestsFramework\HE.Investments.Common.WWWTestsFramework.csproj" />
+    <ProjectReference Include="..\HE.Investments.TestsUtils\HE.Investments.TestsUtils.csproj" />
+  </ItemGroup>
 </Project>

@@ -47,9 +47,9 @@
     <ProjectReference Include="..\HE.Investments.DocumentService\HE.Investments.DocumentService.csproj" />
     <ProjectReference Include="..\HE.Investments.Organisation\HE.Investments.Organisation.csproj">
       <Aliases>Org</Aliases>
-  </ProjectReference>
+    </ProjectReference>
   </ItemGroup>
-  
+
   <ItemGroup>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
       <_Parameter1>HE.Investments.Loans.BusinessLogic.Tests</_Parameter1>

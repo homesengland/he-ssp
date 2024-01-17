@@ -24,7 +24,10 @@
     <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
     <PackageReference Include="He.AspNetCore.Mvc.Gds.Components" Version="1.0.164" />
     <PackageReference Include="He.AspNetCore.Mvc.GdsTagHelpers" Version="1.0.65" />
+    <PackageReference Include="MediatR" Version="12.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.24" />
     <PackageReference Include="Microsoft.FeatureManagement" Version="3.0.0" />
+    <PackageReference Include="Microsoft.FeatureManagement.AspNetCore" Version="3.0.0" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.435">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -32,8 +35,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="He.Cookies.Mvc" Version="1.0.36" />
+    <PackageReference Include="He.Identity" Version="1.0.61" />
+    <PackageReference Include="He.Identity.Auth0" Version="1.0.61" />
+    <PackageReference Include="He.Identity.Mvc" Version="1.0.61" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.15" />
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
+    <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
     <PackageReference Include="NuGet.Common" Version="6.7.0" />
+    <PackageReference Include="NuGet.Protocol" Version="6.7.0" />
+    <PackageReference Include="System.Security.Cryptography.Pkcs" Version="7.0.3" />
   </ItemGroup>
 
   <ItemGroup>
