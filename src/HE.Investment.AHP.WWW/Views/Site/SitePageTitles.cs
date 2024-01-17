@@ -13,4 +13,6 @@ public static class SitePageTitles
     public const string SiteSection106Agreement = "Section 106 (s106) agreement";
 
     public const string SiteSection106AffordableHousing = "Affordable housing through developer contributions";
+
+    public const string SiteSection106OnlyAffordableHousing = "Is the development delivering 100% affordable housing?";
 }
