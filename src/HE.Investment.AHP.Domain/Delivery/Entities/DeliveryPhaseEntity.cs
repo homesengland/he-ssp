@@ -22,28 +22,28 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
         ApplicationBasicInfo application,
         DeliveryPhaseName name,
         OrganisationBasicInfo organisation,
-        TypeOfHomes? typeOfHomes,
-        BuildActivity buildActivity,
-        bool? reconfiguringExisting,
         SectionStatus status,
-        IEnumerable<HomesToDeliverInPhase> homesToDeliver,
-        DeliveryPhaseMilestones milestones,
+        TypeOfHomes? typeOfHomes = null,
+        BuildActivity? buildActivity = null,
+        bool? reconfiguringExisting = null,
+        IEnumerable<HomesToDeliverInPhase>? homesToDeliver = null,
+        DeliveryPhaseMilestones? milestones = null,
         DeliveryPhaseId? id = null,
         DateTime? createdOn = null,
         IsAdditionalPaymentRequested? isAdditionalPaymentRequested = null)
     {
+        Id = id ?? DeliveryPhaseId.New();
         Application = application;
         Name = name;
         Organisation = organisation;
         TypeOfHomes = typeOfHomes;
-        BuildActivity = buildActivity;
+        BuildActivity = buildActivity ?? new BuildActivity(application.Tenure);
         ReconfiguringExisting = reconfiguringExisting;
         Status = status;
-        Id = id ?? DeliveryPhaseId.New();
         CreatedOn = createdOn;
-        DeliveryPhaseMilestones = milestones;
+        DeliveryPhaseMilestones = milestones ?? new DeliveryPhaseMilestones(organisation);
         IsAdditionalPaymentRequested = isAdditionalPaymentRequested;
-        _homesToDeliver = homesToDeliver.ToList();
+        _homesToDeliver = homesToDeliver?.ToList() ?? new List<HomesToDeliverInPhase>();
     }
 
     public ApplicationBasicInfo Application { get; }
@@ -81,12 +81,9 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
         return _homesToDeliver.Any(x => x.HomeTypeId == homeTypeId);
     }
 
-    public int GetHomesToBeDeliveredForHomeType(HomeTypeId homeTypeId)
+    public int? GetHomesToBeDeliveredForHomeType(HomeTypeId homeTypeId)
     {
-        return _homesToDeliver
-            .Where(x => x.HomeTypeId == homeTypeId)
-            .Select(x => x.ToDeliver)
-            .Sum();
+        return _homesToDeliver.SingleOrDefault(x => x.HomeTypeId == homeTypeId)?.ToDeliver;
     }
 
     public void SetHomesToBeDeliveredInThisPhase(IReadOnlyCollection<HomesToDeliverInPhase> homesToDeliver)

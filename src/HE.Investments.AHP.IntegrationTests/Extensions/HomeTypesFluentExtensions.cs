@@ -40,22 +40,15 @@ public static class HomeTypesFluentExtensions
         return htmlDocument;
     }
 
-    public static IEnumerable<string> GetHomeTypeIds(this IHtmlDocument homeTypeListPage)
+    public static IList<string> GetHomeTypeIds(this IHtmlDocument homeTypeListPage)
     {
-        var index = 0;
-        while (true)
-        {
-            var homeTypeId = (homeTypeListPage.GetElementById($"HomeTypes_{index}__HomeTypeId") as IHtmlInputElement)?.Value;
-            if (!string.IsNullOrEmpty(homeTypeId))
-            {
-                yield return homeTypeId.Trim();
-            }
-            else
-            {
-                yield break;
-            }
+        return homeTypeListPage.GetHiddenListInput("HomeTypes", "HomeTypeId").ToList();
+    }
 
-            index++;
-        }
+    public static int GetHomeTypeNumberOfHomes(this IHtmlDocument homeTypeListPage, string homeTypeId)
+    {
+        var numberOfHomes = homeTypeListPage.GetElementByTestId($"number-of-homes-{homeTypeId}").Text().Trim();
+
+        return int.TryParse(numberOfHomes, out var number) ? number : 0;
     }
 }

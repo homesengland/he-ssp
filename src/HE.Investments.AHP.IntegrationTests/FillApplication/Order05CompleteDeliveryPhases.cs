@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using AngleSharp.Dom;
+using AngleSharp.Html.Dom;
 using HE.Investment.AHP.WWW;
 using HE.Investment.AHP.WWW.Views.Delivery.Const;
 using HE.Investments.AHP.IntegrationTests.Extensions;
@@ -36,8 +36,8 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
     private NewBuildAndWorksOnlyDeliveryPhase NewBuildAndWorksOnlyDeliveryPhase => _deliveryPhasesData.NewBuildAndWorksOnlyDeliveryPhase;
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(1)]
-    public async Task Order01_DeliveryPhasesLandingPage()
+    [Order(0)]
+    public async Task Order00_DeliveryPhasesLandingPage()
     {
         // given
         var taskListPage = await TestClient.NavigateTo(ApplicationPagesUrl.TaskList(ApplicationData.ApplicationId));
@@ -53,6 +53,26 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
             .HasLinkButtonForTestId("continue-button", out var continueButton);
 
         (await TestClient.NavigateTo(continueButton)).UrlEndWith(BuildDeliveryPhasesPage(DeliveryPhasesPagesUrl.List));
+        SaveCurrentPage();
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(1)]
+    public async Task Order01_ClearAllDeliveryPhases()
+    {
+        // given
+        var deliveryPhasesListPage = await TestClient.NavigateTo(DeliveryPhasesPagesUrl.List(ApplicationData.ApplicationId));
+        var deliveryPhaseIds = deliveryPhasesListPage.GetDeliveryPhaseIds();
+
+        // when
+        foreach (var deliveryPhaseId in deliveryPhaseIds)
+        {
+            deliveryPhasesListPage = await RemoveDeliveryPhase(deliveryPhasesListPage, deliveryPhaseId);
+        }
+
+        // then
+        deliveryPhasesListPage.UrlEndWith(DeliveryPhasesPagesUrl.List(ApplicationData.ApplicationId))
+            .HasTitle(DeliveryPageTitles.List);
         SaveCurrentPage();
     }
 
@@ -186,20 +206,30 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
             ("ClaimMilestonePaymentAt.Year", deliveryPhase.StartOnSiteMilestone.PaymentDate!.Value.Year.ToString(CultureInfo.InvariantCulture)));
     }
 
+    private async Task<IHtmlDocument> RemoveDeliveryPhase(IHtmlDocument deliveryPhasesListPage, string deliveryPhaseId)
+    {
+        // given
+        deliveryPhasesListPage.UrlEndWith(DeliveryPhasesPagesUrl.List(ApplicationData.ApplicationId))
+            .HasTitle(DeliveryPageTitles.List)
+            .HasRemoveDeliveryPhaseLink(deliveryPhaseId, out var removeDeliveryPhaseLink);
+
+        // when
+        var removeDeliveryPhasePage = await TestClient.NavigateTo(removeDeliveryPhaseLink);
+
+        // then
+        removeDeliveryPhasePage.UrlEndWith(BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.Remove, deliveryPhaseId))
+            .HasTitle(DeliveryPageTitles.Remove)
+            .HasGdsSubmitButton("continue-button", out var continueButton);
+
+        return await TestClient.SubmitButton(continueButton, ("RemoveDeliveryPhaseAnswer", "Yes"));
+    }
+
     private async Task<IDictionary<string, int>> GetHomeTypes(string currentPageUrl)
     {
         var homeTypeListPage = await TestClient.NavigateTo(HomeTypesPagesUrl.List(ApplicationData.ApplicationId));
-        var homeTypeIds = homeTypeListPage.GetHomeTypeIds().ToList();
-        var result = new Dictionary<string, int>();
-
-        foreach (var homeTypeId in homeTypeIds)
-        {
-            var numberOfHomes = homeTypeListPage.GetElementByTestId($"number-of-homes-{homeTypeId}").Text().Trim();
-            if (int.TryParse(numberOfHomes, out var number))
-            {
-                result.Add(homeTypeId, number);
-            }
-        }
+        var result = homeTypeListPage.GetHomeTypeIds()
+            .Select(x => new { Id = x, NumberOfHomes = homeTypeListPage.GetHomeTypeNumberOfHomes(x) })
+            .ToDictionary(x => x.Id, x => x.NumberOfHomes);
 
         await TestClient.NavigateTo(currentPageUrl);
 
@@ -211,8 +241,13 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
         return deliveryPhasesPageUrlFactory(ApplicationData.ApplicationId);
     }
 
+    private string BuildDeliveryPhasesPage(Func<string, string, string> deliveryPhasesPageUrlFactory, string deliveryPhaseId)
+    {
+        return deliveryPhasesPageUrlFactory(ApplicationData.ApplicationId, deliveryPhaseId);
+    }
+
     private string BuildDeliveryPhasesPage(Func<string, string, string> deliveryPhasesPageUrlFactory, INestedItemData nestedItemData)
     {
-        return deliveryPhasesPageUrlFactory(ApplicationData.ApplicationId, nestedItemData.Id);
+        return BuildDeliveryPhasesPage(deliveryPhasesPageUrlFactory, nestedItemData.Id);
     }
 }

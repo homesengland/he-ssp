@@ -58,15 +58,11 @@ public abstract class DeliveryCommandHandlerBase<TCommand> : DeliveryCommandHand
     {
         var account = await _accountUserContext.GetSelectedAccount();
         var deliveryPhases = await _repository.GetByApplicationId(request.ApplicationId, account, cancellationToken);
-        var validationErrors = Perform(deliveryPhases, request);
-        if (validationErrors.Any())
-        {
-            return new OperationResult(validationErrors);
-        }
+        Perform(deliveryPhases, request);
 
         await _repository.Save(deliveryPhases, account.SelectedOrganisationId(), cancellationToken);
         return OperationResult.Success();
     }
 
-    protected abstract IList<ErrorItem> Perform(DeliveryPhasesEntity deliveryPhases, TCommand request);
+    protected abstract void Perform(DeliveryPhasesEntity deliveryPhases, TCommand request);
 }

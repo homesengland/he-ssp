@@ -127,12 +127,15 @@ public class HomeTypeRepository : IHomeTypeRepository
             await _homeTypeCrmContext.SaveHomeTypesStatus(homeTypes.ApplicationId.Value, organisationId.Value, SectionStatusMapper.ToDto(homeTypes.Status), cancellationToken);
         }
 
-        foreach (var homeTypeToRemove in homeTypes.ToRemove)
+        var homeTypeToRemove = homeTypes.PopRemovedHomeType();
+        while (homeTypeToRemove != null)
         {
             await _homeTypeCrmContext.Remove(homeTypes.ApplicationId.Value, homeTypeToRemove.Id.Value, organisationId.Value, cancellationToken);
             await _eventDispatcher.Publish(
                 new HomeTypeHasBeenRemovedEvent(homeTypeToRemove.Application.Id, homeTypeToRemove.Id),
                 cancellationToken);
+
+            homeTypeToRemove = homeTypes.PopRemovedHomeType();
         }
     }
 
