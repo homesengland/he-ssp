@@ -11,6 +11,7 @@ public class AddHomesTests : ViewTestBase
     private readonly RouteData _routeData = new(new RouteValueDictionary { { "applicationId", "123" }, { "deliveryPhaseId", "321" } });
 
     [Fact]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Blocker Code Smell", "S2699:Tests should include assertions", Justification = "Assertion present")]
     public async Task ShouldDisplayView()
     {
         // given

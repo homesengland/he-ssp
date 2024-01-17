@@ -11,6 +11,7 @@ public class Section106AgreementTests : ViewTestBase
     private readonly string _viewPath = "/Views/Site/Section106Agreement.cshtml";
 
     [Fact]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Blocker Code Smell", "S2699:Tests should include assertions", Justification = "Assertion present")]
     public async Task ShouldDisplayView()
     {
         // given & when
@@ -25,6 +26,7 @@ public class Section106AgreementTests : ViewTestBase
     }
 
     [Fact]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Blocker Code Smell", "S2699:Tests should include assertions", Justification = "Assertion present")]
     public async Task ShouldErrorSummary_ForInvalidName()
     {
         // given

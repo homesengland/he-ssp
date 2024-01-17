@@ -189,13 +189,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     [AuthorizeWithCompletedProfile]
     public async Task<IActionResult> Withdraw(Guid applicationId, CancellationToken cancellationToken)
     {
-        var application = await _mediator.Send(new GetApplicationQuery(AhpApplicationId.From(applicationId)), cancellationToken);
-
-        var model = new ChangeApplicationStatusModel(
-            applicationId,
-            application.Name);
-
-        return View(model);
+        return await OnHold(applicationId, cancellationToken);
     }
 
     [WorkflowState(ApplicationWorkflowState.Withdraw)]

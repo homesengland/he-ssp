@@ -4,7 +4,7 @@ using HE.Investments.Common.WWW.Models;
 
 namespace HE.Investment.AHP.WWW.Models.HomeTypes;
 
-public class FacilityTypeOptions
+public static class FacilityTypeOptions
 {
     private static readonly Dictionary<FacilityType, string> Types = new()
     {
