@@ -18,6 +18,9 @@ internal static class DeliveryPhasePagesUrl
     public static string AcquisitionMilestone(string applicationId, string deliveryPhaseId) =>
         BuildDeliveryPhasePage(applicationId, deliveryPhaseId, "acquisition-milestone");
 
+    public static string SummaryOfDelivery(string applicationId, string deliveryPhaseId) =>
+        BuildDeliveryPhasePage(applicationId, deliveryPhaseId, "summary-of-delivery");
+
     public static string StartOnSiteMilestone(string applicationId, string deliveryPhaseId) =>
         BuildDeliveryPhasePage(applicationId, deliveryPhaseId, "start-on-site-milestone");
 
