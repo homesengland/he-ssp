@@ -1,4 +1,4 @@
-﻿using HE.Investment.AHP.Contract.Site;
+using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.WWW.Views.Site;
 using HE.Investments.Common.WWWTestsFramework;
 using HE.Investments.TestsUtils.Extensions;
@@ -37,7 +37,7 @@ public class Section106OnlyAffordableHousingTests : ViewTestBase
 
         // then
         document
-            .HasTitle(SitePageTitles.SiteSection106AffordableHousing)
+            .HasTitle(SitePageTitles.SiteSection106OnlyAffordableHousing)
             .HasGdsRadioInputWithValues(nameof(SiteModel.Section106OnlyAffordableHousing), "True", "False")
             .HasGdsSaveAndContinueButton()
             .HasGdsBackButton()
