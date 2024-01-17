@@ -27,4 +27,23 @@ public static class AhpHtmlFluentExtensions
 
         return htmlDocument;
     }
+
+    public static IEnumerable<string> GetHiddenListInput(this IHtmlDocument htmlDocument, string collectionName, string propertyName)
+    {
+        var index = 0;
+        while (true)
+        {
+            var value = (htmlDocument.GetElementById($"{collectionName}_{index}__{propertyName}") as IHtmlInputElement)?.Value;
+            if (!string.IsNullOrEmpty(value))
+            {
+                yield return value.Trim();
+            }
+            else
+            {
+                yield break;
+            }
+
+            index++;
+        }
+    }
 }

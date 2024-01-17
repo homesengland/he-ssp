@@ -4,4 +4,5 @@ using MediatR;
 
 namespace HE.Investment.AHP.Contract.Delivery.Commands;
 
-public record CreateDeliveryPhaseCommand(AhpApplicationId ApplicationId, string DeliveryPhaseName) : IRequest<OperationResult<DeliveryPhaseId?>>;
+public record CreateDeliveryPhaseCommand(AhpApplicationId ApplicationId, string? DeliveryPhaseName)
+    : IRequest<OperationResult<DeliveryPhaseId?>>;

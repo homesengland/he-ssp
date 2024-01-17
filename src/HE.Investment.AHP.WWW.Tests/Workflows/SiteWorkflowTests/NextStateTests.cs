@@ -51,6 +51,34 @@ public class NextStateTests
         result.Should().Be(expectedNext);
     }
 
+    [Theory]
+    [InlineData(SiteWorkflowState.Section106AffordableHousing, SiteWorkflowState.Section106OnlyAffordableHousing)]
+    public async Task ShouldReturnNextState_WhenContinueTriggerExecutedWithSection106AffordableHousingTrue(SiteWorkflowState current, SiteWorkflowState expectedNext)
+    {
+        // given
+        var workflow = BuildWorkflow(current, true, true, null, null, null, null);
+
+        // when
+        var result = await workflow.NextState(Trigger.Continue);
+
+        // then
+        result.Should().Be(expectedNext);
+    }
+
+    [Theory]
+    [InlineData(SiteWorkflowState.Section106AffordableHousing, SiteWorkflowState.Section106CapitalFundingEligibility)]
+    public async Task ShouldReturnNextState_WhenContinueTriggerExecutedWithSection106AffordableHousingFalse(SiteWorkflowState current, SiteWorkflowState expectedNext)
+    {
+        // given
+        var workflow = BuildWorkflow(current, true, false, null, null, null, null);
+
+        // when
+        var result = await workflow.NextState(Trigger.Continue);
+
+        // then
+        result.Should().Be(expectedNext);
+    }
+
     private static SiteWorkflow BuildWorkflow(
         SiteWorkflowState currentSiteWorkflowState,
         bool? section106GeneralAgreement,
@@ -63,9 +91,9 @@ public class NextStateTests
         var site = new SiteModel()
         {
             Section106GeneralAgreement = section106GeneralAgreement,
-            Section106AffordableHomes = section106AffordableHousing,
-            Section106OnlyAffordableHomes = section106onlyAffordableHousing,
-            Section106AdditionalAffordableHomes = section106AdditionalAffordableHousing,
+            Section106AffordableHousing = section106AffordableHousing,
+            Section106OnlyAffordableHousing = section106onlyAffordableHousing,
+            Section106AdditionalAffordableHousing = section106AdditionalAffordableHousing,
             Section106CapitalFundingEligibility = section106CapitalFundingEligibility,
             Section106ConfirmationFromLocalAuthority = section106LocalAuthorityConfirmation,
         };

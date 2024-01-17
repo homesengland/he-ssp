@@ -2,13 +2,11 @@ using HE.Investment.AHP.Contract.Delivery.Commands;
 using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.Repositories;
 using HE.Investments.Account.Shared;
-using HE.Investments.Common.Contract.Validators;
-using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace HE.Investment.AHP.Domain.Delivery.CommandHandlers;
 
-public class ProvideDeliveryPhaseHomesCommandHandler : DeliveryCommandHandlerBase<ProvideDeliveryPhaseHomesCommand>, IRequestHandler<ProvideDeliveryPhaseHomesCommand, OperationResult>
+public class ProvideDeliveryPhaseHomesCommandHandler : DeliveryCommandHandlerBase<ProvideDeliveryPhaseHomesCommand>
 {
     public ProvideDeliveryPhaseHomesCommandHandler(
         IDeliveryPhaseRepository repository,
@@ -18,9 +16,11 @@ public class ProvideDeliveryPhaseHomesCommandHandler : DeliveryCommandHandlerBas
     {
     }
 
-    protected override IList<ErrorItem> Perform(DeliveryPhasesEntity deliveryPhases, ProvideDeliveryPhaseHomesCommand request)
+    protected override void Perform(DeliveryPhasesEntity deliveryPhases, ProvideDeliveryPhaseHomesCommand request)
     {
         // AB#66085 save Delivery Phase homes.
-        return Array.Empty<ErrorItem>();
+        deliveryPhases.SetHomesToBeDeliveredInPhase(
+            request.DeliveryPhaseId,
+            new List<HomesToDeliverInPhase>());
     }
 }
