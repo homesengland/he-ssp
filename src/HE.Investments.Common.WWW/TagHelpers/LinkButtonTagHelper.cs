@@ -15,6 +15,8 @@ public class LinkButtonTagHelper : TagHelper
 
     public bool IsDisabled { get; set; }
 
+    public bool IsWarning { get; set; }
+
     public override Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
         output.TagName = HtmlConstants.A;
@@ -23,6 +25,7 @@ public class LinkButtonTagHelper : TagHelper
         TagConstruct.ConstructClass(output, "govuk-button");
         TagConstructExtensions.ConstructClass(output, "govuk-button--secondary", IsSecondary);
         TagConstructExtensions.ConstructClass(output, "govuk-button--disabled", IsDisabled);
+        TagConstructExtensions.ConstructClass(output, "govuk-button--warning", IsWarning);
 
         if (IsDisabled)
         {
