@@ -53,7 +53,7 @@ internal static class ApplicationProjectsMapper
             return null;
         }
 
-        if (startDateExists.HasValue)
+        if (startDateExists!.Value)
         {
             return new StartDate(true, new ProjectDate(projectFromCrm.startDate!.Value));
         }
