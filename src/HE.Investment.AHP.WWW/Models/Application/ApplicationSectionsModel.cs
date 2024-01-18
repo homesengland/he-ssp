@@ -4,40 +4,15 @@ using HE.Investments.Common.Contract;
 
 namespace HE.Investment.AHP.WWW.Models.Application;
 
-public class ApplicationSectionsModel
+public record ApplicationSectionsModel(
+    string ApplicationId,
+    string SiteName,
+    string Name,
+    ApplicationStatus Status,
+    string? ReferenceNumber,
+    ModificationDetails? LastModificationDetails,
+    IList<ApplicationSection> Sections)
 {
-    public ApplicationSectionsModel(
-        string applicationId,
-        string siteName,
-        string name,
-        ApplicationStatus status,
-        string? referenceNumber,
-        ModificationDetails? lastModificationDetails,
-        IList<ApplicationSection> sections)
-    {
-        ApplicationId = applicationId;
-        SiteName = siteName;
-        Name = name;
-        Status = status;
-        ReferenceNumber = referenceNumber;
-        LastModificationDetails = lastModificationDetails;
-        Sections = sections;
-    }
-
-    public string ApplicationId { get; }
-
-    public string SiteName { get; }
-
-    public string Name { get; }
-
-    public ApplicationStatus Status { get; }
-
-    public string? ReferenceNumber { get; }
-
-    public ModificationDetails? LastModificationDetails { get; }
-
-    public IList<ApplicationSection> Sections { get; }
-
     public bool CanBePutOnHold()
     {
         var statusesAllowedForPutOnHold = ApplicationStatusDivision.GetAllStatusesAllowedForPutOnHold();

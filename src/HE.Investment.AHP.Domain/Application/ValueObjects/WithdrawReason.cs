@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Domain.Application.Constants;
 using HE.Investments.Common.Domain.ValueObjects;
 using HE.Investments.Common.Messages;
 
@@ -9,7 +10,7 @@ public class WithdrawReason : LongText
         : base(
             value,
             nameof(WithdrawReason),
-            ValidationErrorMessage.EnterWithdrawReason,
+            ApplicationValidationErrors.EnterWithdrawReason,
             ValidationErrorMessage.LongInputLengthExceeded("withdraw reason"))
     {
     }
