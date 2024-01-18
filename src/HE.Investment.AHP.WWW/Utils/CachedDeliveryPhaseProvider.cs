@@ -8,7 +8,10 @@ namespace HE.Investment.AHP.WWW.Utils;
 public class CachedDeliveryPhaseProvider : IDeliveryPhaseProvider
 {
     private readonly IMediator _mediator;
-    private AsyncLazy<DeliveryPhaseDetails>? _data;
+
+    private DeliveryPhaseDetails? _data;
+
+    private GetDeliveryPhaseDetailsQuery? _cachedQueryRequest;
 
     public CachedDeliveryPhaseProvider(IMediator mediator)
     {
@@ -17,8 +20,12 @@ public class CachedDeliveryPhaseProvider : IDeliveryPhaseProvider
 
     public async Task<DeliveryPhaseDetails> Get(GetDeliveryPhaseDetailsQuery query, CancellationToken cancellationToken)
     {
-        _data ??= new AsyncLazy<DeliveryPhaseDetails>(async () => await _mediator.Send(query, cancellationToken));
+        if (_cachedQueryRequest is null || _cachedQueryRequest != query)
+        {
+            _data = await _mediator.Send(query, cancellationToken);
+            _cachedQueryRequest = query;
+        }
 
-        return await _data;
+        return _data!;
     }
 }

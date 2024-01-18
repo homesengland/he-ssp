@@ -54,7 +54,7 @@ public class ProvideHomesToBeDeliveredInPhaseTests
         var homeType1Id = new HomeTypeId("1 bed flat");
         var homeType2Id = new HomeTypeId("2 bed flat");
         var deliveryPhase = new DeliveryPhaseEntityBuilder().WithId("dp-1").Build();
-        var otherPhase = new DeliveryPhaseEntityBuilder().WithId("dp-2").WithHomesToBeDelivered(homeType2Id.Value, 10).Build();
+        var otherPhase = new DeliveryPhaseEntityBuilder().WithId("dp-2").WithHomesToBeDelivered(10, homeType2Id.Value).Build();
         var testCandidate = new DeliveryPhasesEntityBuilder()
             .WithDeliveryPhase(deliveryPhase)
             .WithDeliveryPhase(otherPhase)
@@ -135,8 +135,8 @@ public class ProvideHomesToBeDeliveredInPhaseTests
         // given
         var homeTypeId = new HomeTypeId("1 bed flat");
 
-        var deliveryPhase1 = new DeliveryPhaseEntityBuilder().WithId("dp-1").WithHomesToBeDelivered(homeTypeId.Value, 6).Build();
-        var deliveryPhase2 = new DeliveryPhaseEntityBuilder().WithId("dp-2").WithHomesToBeDelivered(homeTypeId.Value, 4).Build();
+        var deliveryPhase1 = new DeliveryPhaseEntityBuilder().WithId("dp-1").WithHomesToBeDelivered(6, homeTypeId.Value).Build();
+        var deliveryPhase2 = new DeliveryPhaseEntityBuilder().WithId("dp-2").WithHomesToBeDelivered(4, homeTypeId.Value).Build();
         var testCandidate = new DeliveryPhasesEntityBuilder()
             .WithDeliveryPhase(deliveryPhase1)
             .WithDeliveryPhase(deliveryPhase2)
@@ -160,10 +160,10 @@ public class ProvideHomesToBeDeliveredInPhaseTests
         var homeType2Id = new HomeTypeId("2 bed flat");
 
         var deliveryPhase1 = new DeliveryPhaseEntityBuilder().WithId("dp-1")
-            .WithHomesToBeDelivered(homeType1Id.Value, 6)
-            .WithHomesToBeDelivered(homeType2Id.Value, 6)
+            .WithHomesToBeDelivered(6, homeType1Id.Value)
+            .WithHomesToBeDelivered(6, homeType2Id.Value)
             .Build();
-        var deliveryPhase2 = new DeliveryPhaseEntityBuilder().WithId("dp-2").WithHomesToBeDelivered(homeType1Id.Value, 4).Build();
+        var deliveryPhase2 = new DeliveryPhaseEntityBuilder().WithId("dp-2").WithHomesToBeDelivered(4, homeType1Id.Value).Build();
         var testCandidate = new DeliveryPhasesEntityBuilder()
             .WithDeliveryPhase(deliveryPhase1)
             .WithDeliveryPhase(deliveryPhase2)

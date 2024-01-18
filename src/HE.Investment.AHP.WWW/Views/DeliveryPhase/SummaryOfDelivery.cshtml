@@ -39,10 +39,16 @@
         </table>
 
         <dl class="govuk-summary-list ">
-            @await Html.PartialAsync("Partials/_SummaryOfDeliveryRow", new SummaryOfDeliveryRow("Grant apportioned to this phase", 0))
-            @await Html.PartialAsync("Partials/_SummaryOfDeliveryRow", new SummaryOfDeliveryRow("Acquisition milestone", 0))
-            @await Html.PartialAsync("Partials/_SummaryOfDeliveryRow", new SummaryOfDeliveryRow("Start on site milestone", 0))
-            @await Html.PartialAsync("Partials/_SummaryOfDeliveryRow", new SummaryOfDeliveryRow("Completion milestone", 0))
+            @await Html.PartialAsync("Partials/_SummaryOfDeliveryRow", new SummaryOfDeliveryRow("Grant apportioned to this phase", Model.SummaryOfDelivery?.GrantApportioned))
+            @{
+                if (Model is { IsUnregisteredBody: false, IsOnlyCompletionMilestone: false })
+                {
+                    @await Html.PartialAsync("Partials/_SummaryOfDeliveryRow", new SummaryOfDeliveryRow("Acquisition milestone", Model.SummaryOfDelivery?.AcquisitionMilestone))
+                    @await Html.PartialAsync("Partials/_SummaryOfDeliveryRow", new SummaryOfDeliveryRow("Start on site milestone", Model.SummaryOfDelivery?.StarOnSiteMilestone))
+                }
+            }
+
+            @await Html.PartialAsync("Partials/_SummaryOfDeliveryRow", new SummaryOfDeliveryRow("Completion milestone", Model.SummaryOfDelivery?.CompletionMilestone))
         </dl>
 
         <vc:form-button text="Continue"/>
