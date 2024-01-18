@@ -1,7 +1,7 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.Investment.AHP.Domain.Common.Mappers;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
-using HE.Investments.Common.CRM;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Serialization;
 using HE.Investments.Common.CRM.Services;
@@ -109,7 +109,7 @@ public class ApplicationCrmContext : IApplicationCrmContext
 
     public async Task ChangeApplicationStatus(Guid applicationId, Guid organisationId, ApplicationStatus applicationStatus, string? reason, CancellationToken cancellationToken)
     {
-        var crmStatus = ApplicationStatusMapper.MapToCrmStatus(applicationStatus);
+        var crmStatus = AhpApplicationStatusMapper.MapToCrmStatus(applicationStatus);
 
         var request = new invln_changeahpapplicationstatusRequest()
         {

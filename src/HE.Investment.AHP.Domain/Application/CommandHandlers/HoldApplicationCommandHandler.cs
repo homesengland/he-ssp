@@ -1,5 +1,5 @@
 using HE.Investment.AHP.Contract.Application.Commands;
-using HE.Investment.AHP.Domain.Application.Repositories;
+using HE.Investment.AHP.Domain.Application.Repositories.Interfaces;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
@@ -29,11 +29,9 @@ public class HoldApplicationCommandHandler : IRequestHandler<HoldApplicationComm
         var holdReason = request.HoldReason.IsProvided()
             ? new HoldReason(request.HoldReason!)
             : null;
-        application.ProvideHoldReason(holdReason);
 
-        application.Hold();
-
-        await _applicationRepository.Hold(application, account.SelectedOrganisationId(), cancellationToken);
+        application.Hold(_applicationRepository, holdReason, account.SelectedOrganisationId(), cancellationToken);
+        await _applicationRepository.DispatchEvents(application, cancellationToken);
 
         return OperationResult.Success();
     }

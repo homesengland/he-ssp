@@ -2,6 +2,7 @@ using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Events;
 using HE.Investment.AHP.Domain.Application.Entities;
+using HE.Investment.AHP.Domain.Application.Repositories.Interfaces;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Data;
@@ -9,6 +10,7 @@ using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.CRM;
+using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Infrastructure.Events;
 using ApplicationSection = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationSection;
@@ -116,8 +118,6 @@ public class ApplicationRepository : IApplicationRepository
             application.Status,
             application.HoldReason?.Value,
             cancellationToken);
-
-        await _eventDispatcher.Publish(new ApplicationHasBeenPutOnHoldEvent(), cancellationToken);
     }
 
     public async Task Withdraw(ApplicationEntity application, OrganisationId organisationId, CancellationToken cancellationToken)
@@ -135,8 +135,11 @@ public class ApplicationRepository : IApplicationRepository
             application.Status,
             application.WithdrawReason?.Value,
             cancellationToken);
+    }
 
-        await _eventDispatcher.Publish(new ApplicationHasBeenWithdrawnEvent(), cancellationToken);
+    public async Task DispatchEvents(DomainEntity domainEntity, CancellationToken cancellationToken)
+    {
+        await _eventDispatcher.Publish(domainEntity, cancellationToken);
     }
 
     private static ApplicationEntity CreateEntity(AhpApplicationDto application)

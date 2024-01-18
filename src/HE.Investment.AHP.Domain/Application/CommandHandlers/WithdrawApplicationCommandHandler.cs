@@ -1,5 +1,5 @@
 using HE.Investment.AHP.Contract.Application.Commands;
-using HE.Investment.AHP.Domain.Application.Repositories;
+using HE.Investment.AHP.Domain.Application.Repositories.Interfaces;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
@@ -26,11 +26,9 @@ public class WithdrawApplicationCommandHandler : IRequestHandler<WithdrawApplica
         var application = await _applicationRepository.GetById(request.Id, account, cancellationToken);
 
         var withdrawReason = new WithdrawReason(request.WithdrawReason);
-        application.ProvideWithdrawReason(withdrawReason);
 
-        application.Withdraw();
-
-        await _applicationRepository.Withdraw(application, account.SelectedOrganisationId(), cancellationToken);
+        application.Withdraw(_applicationRepository, withdrawReason, account.SelectedOrganisationId(), cancellationToken);
+        await _applicationRepository.DispatchEvents(application, cancellationToken);
 
         return OperationResult.Success();
     }
