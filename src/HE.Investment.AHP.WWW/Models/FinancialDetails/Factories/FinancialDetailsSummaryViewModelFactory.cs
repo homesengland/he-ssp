@@ -7,7 +7,6 @@ using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Components.SectionSummary;
 using HE.Investments.Common.WWW.Utils;
-using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -80,10 +79,7 @@ public class FinancialDetailsSummaryViewModelFactory : IFinancialDetailsSummaryV
                 IsEditable: !isReadOnly),
             new(
                 "Public land",
-                new List<string>
-                {
-                    landValueSummary.IsPublicLand.HasValue ? landValueSummary.IsPublicLand.Value ? CommonResponse.Yes : CommonResponse.No : "Not provided",
-                },
+                landValueSummary.IsPublicLand == YesNoType.Undefined ? null : landValueSummary.IsPublicLand.GetDescription().ToOneElementList(),
                 CreateFinancialDetailsActionUrl(urlHelper, applicationId, nameof(FinancialDetailsController.LandValue)),
                 IsEditable: !isReadOnly),
         };

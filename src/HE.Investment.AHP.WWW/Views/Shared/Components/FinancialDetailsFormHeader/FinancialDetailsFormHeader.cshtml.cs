@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Contract.FinancialDetails;
 using HE.Investment.AHP.Domain.FinancialDetails;
 using Microsoft.AspNetCore.Mvc;
 

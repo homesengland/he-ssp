@@ -1,4 +1,4 @@
-namespace HE.Investment.AHP.Domain.HomeTypes;
+namespace HE.Investment.AHP.Contract.HomeTypes;
 
 // States should be ordered the same as application screens. So state later in flow should have greater value.
 public enum HomeTypesWorkflowState
