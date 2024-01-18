@@ -22,7 +22,7 @@ public class ProvideSection106AffordableHousingCommandHandler : SiteBaseCommandH
         return Perform(
             site =>
             {
-                var section106 = site.Section106 ?? new Entities.Section106Entity();
+                var section106 = site.Section106 ?? new Section106();
                 section106.ProvideAffordableHousing(request.AffordableHousing);
                 site.ProvideSection106(section106);
                 return Task.FromResult(OperationResult.Success());

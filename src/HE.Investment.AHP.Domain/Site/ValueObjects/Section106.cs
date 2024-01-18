@@ -2,16 +2,15 @@ using System.Xml.Linq;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Constants;
 using HE.Investment.AHP.Domain.Site.Repositories;
-using HE.Investment.AHP.Domain.Site.ValueObjects;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Messages;
 
-namespace HE.Investment.AHP.Domain.Site.Entities;
+namespace HE.Investment.AHP.Domain.Site.ValueObjects;
 
-public class Section106Entity : IQuestion
+public class Section106 : ValueObject, IQuestion
 {
-    public Section106Entity(
+    public Section106(
         bool? agreement,
         bool? affordableHousing,
         bool? onlyAffordableHousing,
@@ -26,15 +25,15 @@ public class Section106Entity : IQuestion
                 .CheckErrors();
         }
 
-        this.GeneralAgreement = agreement!.Value;
-        this.AffordableHousing = affordableHousing;
-        this.OnlyAffordableHousing = onlyAffordableHousing;
-        this.AdditionalAffordableHousing = additionalAffordableHousing;
-        this.CapitalFundingEligibility = capitalFundingEligibility;
-        this.ConfirmationFromLocalAuthority = confirmationFromLocalAuthority;
+        GeneralAgreement = agreement!.Value;
+        AffordableHousing = affordableHousing;
+        OnlyAffordableHousing = onlyAffordableHousing;
+        AdditionalAffordableHousing = additionalAffordableHousing;
+        CapitalFundingEligibility = capitalFundingEligibility;
+        ConfirmationFromLocalAuthority = confirmationFromLocalAuthority;
     }
 
-    public Section106Entity()
+    public Section106()
     {
     }
 
@@ -59,41 +58,51 @@ public class Section106Entity : IQuestion
                 .CheckErrors();
         }
 
-        this.GeneralAgreement = generalAgreement!.Value;
+        GeneralAgreement = generalAgreement!.Value;
     }
 
     public void ProvideAffordableHousing(bool? affordableHousing)
     {
-        this.AffordableHousing = affordableHousing;
+        AffordableHousing = affordableHousing;
     }
 
     public void ProvideOnlyAffordableHousing(bool? onlyAffordableHousing)
     {
-        this.OnlyAffordableHousing = onlyAffordableHousing;
+        OnlyAffordableHousing = onlyAffordableHousing;
     }
 
-    public void ProvideAdditionalAffrdableHousing(bool? additionalAffordableHousing)
+    public void ProvideAdditionalAffordableHousing(bool? additionalAffordableHousing)
     {
-        this.AdditionalAffordableHousing = additionalAffordableHousing;
+        AdditionalAffordableHousing = additionalAffordableHousing;
     }
 
     public void ProvideCapitalFundingEligibility(bool? capitalFundingEligibility)
     {
-        this.CapitalFundingEligibility = capitalFundingEligibility;
+        CapitalFundingEligibility = capitalFundingEligibility;
     }
 
     public void ProvideConfirmationFromLocalAuthority(string? confirmationFromLocalAuthority)
     {
-        this.ConfirmationFromLocalAuthority = confirmationFromLocalAuthority;
+        ConfirmationFromLocalAuthority = confirmationFromLocalAuthority;
     }
 
     public bool IsAnswered()
     {
-        if (this.GeneralAgreement != null)
+        if (GeneralAgreement != null)
         {
             return true;
         }
 
         return false;
+    }
+
+    protected override IEnumerable<object?> GetAtomicValues()
+    {
+        yield return GeneralAgreement;
+        yield return AffordableHousing;
+        yield return OnlyAffordableHousing;
+        yield return AdditionalAffordableHousing;
+        yield return CapitalFundingEligibility;
+        yield return ConfirmationFromLocalAuthority;
     }
 }

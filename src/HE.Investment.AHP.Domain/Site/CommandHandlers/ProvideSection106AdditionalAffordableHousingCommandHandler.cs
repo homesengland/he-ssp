@@ -10,20 +10,20 @@ using Microsoft.Extensions.Logging;
 
 namespace HE.Investment.AHP.Domain.Site.CommandHandlers;
 
-public class ProvideSection106OnlyAffordableHousingCommandHandler : SiteBaseCommandHandler, IRequestHandler<ProvideSection106OnlyAffordableHousingCommand, OperationResult>
+public class ProvideSection106AdditionalAffordableHousingCommandHandler : SiteBaseCommandHandler, IRequestHandler<ProvideSection106AdditionalAffordableHousingCommand, OperationResult>
 {
-    public ProvideSection106OnlyAffordableHousingCommandHandler(ISiteRepository siteRepository, IAccountUserContext accountUserContext, ILogger<SiteBaseCommandHandler> logger)
+    public ProvideSection106AdditionalAffordableHousingCommandHandler(ISiteRepository siteRepository, IAccountUserContext accountUserContext, ILogger<SiteBaseCommandHandler> logger)
         : base(siteRepository, accountUserContext, logger)
     {
     }
 
-    public Task<OperationResult> Handle(ProvideSection106OnlyAffordableHousingCommand request, CancellationToken cancellationToken)
+    public Task<OperationResult> Handle(ProvideSection106AdditionalAffordableHousingCommand request, CancellationToken cancellationToken)
     {
         return Perform(
             site =>
             {
                 var section106 = site.Section106 ?? new Section106();
-                section106.ProvideOnlyAffordableHousing(request.OnlyAffordableHousing);
+                section106.ProvideAdditionalAffordableHousing(request.AdditionalAffordableHousing);
                 site.ProvideSection106(section106);
                 return Task.FromResult(OperationResult.Success());
             },
