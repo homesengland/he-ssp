@@ -1,3 +1,4 @@
+using System.Globalization;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.WWW.Controllers;
@@ -12,11 +13,16 @@ namespace HE.Investment.AHP.WWW.Models.Delivery.Factories;
 
 public class DeliveryPhaseSummaryViewModelFactory : IDeliveryPhaseSummaryViewModelFactory
 {
-    public IList<SectionSummaryViewModel> CreateSummary(AhpApplicationId applicationId, DeliveryPhaseDetails deliveryPhase, IUrlHelper urlHelper, bool isEditable)
+    public IList<SectionSummaryViewModel> CreateSummary(
+        AhpApplicationId applicationId,
+        DeliveryPhaseDetails deliveryPhase,
+        DeliveryPhaseHomes deliveryPhaseHomes,
+        IUrlHelper urlHelper,
+        bool isEditable)
     {
         return new List<SectionSummaryViewModel>
         {
-            CreateDeliveryPhaseSummary(applicationId, deliveryPhase, urlHelper, isEditable),
+            CreateDeliveryPhaseSummary(applicationId, deliveryPhase, deliveryPhaseHomes, urlHelper, isEditable),
             CreateMilestonesSummary(applicationId, deliveryPhase),
             CreateMilestonesDatesSummary(
                 applicationId,
@@ -29,6 +35,7 @@ public class DeliveryPhaseSummaryViewModelFactory : IDeliveryPhaseSummaryViewMod
     private static SectionSummaryViewModel CreateDeliveryPhaseSummary(
         AhpApplicationId applicationId,
         DeliveryPhaseDetails deliveryPhase,
+        DeliveryPhaseHomes deliveryPhaseHomes,
         IUrlHelper urlHelper,
         bool isEditable)
     {
@@ -65,6 +72,15 @@ public class DeliveryPhaseSummaryViewModelFactory : IDeliveryPhaseSummaryViewMod
                 deliveryPhase.ReconfiguringExisting?.ToString().ToOneElementList(),
                 IsEditable: isEditable,
                 ActionUrl: CreateAction(nameof(DeliveryPhaseController.BuildActivityType))));
+        }
+
+        foreach (var homeTypesToDeliver in deliveryPhaseHomes.HomeTypesToDeliver)
+        {
+            items.Add(new(
+                $"Number of homes {homeTypesToDeliver.HomeTypeName}",
+                homeTypesToDeliver.UsedHomes?.ToString(CultureInfo.InvariantCulture).ToOneElementList(),
+                IsEditable: isEditable,
+                ActionUrl: CreateAction(nameof(DeliveryPhaseController.AddHomes))));
         }
 
         return new SectionSummaryViewModel("Delivery phase", items);
