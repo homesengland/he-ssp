@@ -3,7 +3,7 @@ using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 
-namespace HE.Investment.AHP.Domain.Tests.HomeTypes.TestDataBuilders;
+namespace HE.Investment.AHP.WWW.Tests.TestDataBuilders;
 
 public class HomeTypeTestDataBuilder
 {

@@ -1,4 +1,4 @@
-namespace HE.Investment.AHP.Domain.Scheme.Workflows;
+namespace HE.Investment.AHP.Contract.Scheme;
 
 public enum SchemeWorkflowState
 {

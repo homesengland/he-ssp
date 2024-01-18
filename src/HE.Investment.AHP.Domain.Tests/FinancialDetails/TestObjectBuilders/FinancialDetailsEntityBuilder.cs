@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.FinancialDetails.Entities;
 using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
@@ -35,7 +36,7 @@ public class FinancialDetailsEntityBuilder
         PrivatePropertySetter.SetPropertyWithNoSetter(
             _item,
             nameof(_item.LandValue),
-            new LandValue(new CurrentLandValue(landValue), true));
+            new LandValue(new CurrentLandValue(landValue), YesNoType.Yes));
 
         return this;
     }

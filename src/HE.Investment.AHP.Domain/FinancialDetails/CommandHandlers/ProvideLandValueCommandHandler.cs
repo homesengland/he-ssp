@@ -5,7 +5,6 @@ using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
-using HE.Investments.Loans.Common.Extensions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -25,7 +24,7 @@ public class ProvideLandValueCommandHandler : FinancialDetailsCommandHandlerBase
             {
                 var landValue = new LandValue(
                     request.LandValue.IsProvided() ? new CurrentLandValue(request.LandValue!) : null,
-                    request.LandOwnership.MapToBool());
+                    request.LandOwnership);
 
                 financialDetails.ProvideLandValue(landValue);
             },
