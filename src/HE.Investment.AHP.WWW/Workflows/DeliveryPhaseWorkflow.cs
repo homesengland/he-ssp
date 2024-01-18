@@ -38,13 +38,13 @@ public class DeliveryPhaseWorkflow : IStateRouting<DeliveryPhaseWorkflowState>
             DeliveryPhaseWorkflowState.BuildActivityType => true,
             DeliveryPhaseWorkflowState.ReconfiguringExisting => _model.IsReconfiguringExistingNeeded,
             DeliveryPhaseWorkflowState.AddHomes => true,
-            DeliveryPhaseWorkflowState.SummaryOfDelivery => true,
-            DeliveryPhaseWorkflowState.AcquisitionMilestone => AllMilestonesAvailable(),
-            DeliveryPhaseWorkflowState.StartOnSiteMilestone => AllMilestonesAvailable(),
-            DeliveryPhaseWorkflowState.PracticalCompletionMilestone => true,
-            DeliveryPhaseWorkflowState.UnregisteredBodyFollowUp => IsUnregisteredBody(),
+            DeliveryPhaseWorkflowState.SummaryOfDelivery => _model.NumberOfHomes > 0,
+            DeliveryPhaseWorkflowState.AcquisitionMilestone => AllMilestonesAvailable() && _model.NumberOfHomes > 0,
+            DeliveryPhaseWorkflowState.StartOnSiteMilestone => AllMilestonesAvailable() && _model.NumberOfHomes > 0,
+            DeliveryPhaseWorkflowState.PracticalCompletionMilestone => _model.NumberOfHomes > 0,
+            DeliveryPhaseWorkflowState.UnregisteredBodyFollowUp => IsUnregisteredBody() && _model.NumberOfHomes > 0,
             DeliveryPhaseWorkflowState.CheckAnswers => true,
-            _ => false,
+            _ => throw new ArgumentOutOfRangeException(nameof(state), state, null),
         };
     }
 

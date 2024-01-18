@@ -4,5 +4,6 @@ namespace HE.Investment.AHP.Contract.Delivery.Commands;
 
 public record ProvideDeliveryPhaseHomesCommand(
         AhpApplicationId ApplicationId,
-        DeliveryPhaseId DeliveryPhaseId)
+        DeliveryPhaseId DeliveryPhaseId,
+        IDictionary<string, string?> HomesToDeliver)
     : IDeliveryCommand, IUpdateDeliveryPhaseCommand;

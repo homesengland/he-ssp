@@ -2,6 +2,7 @@ using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.Entities;
+using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investments.Common.Contract;
 
 namespace HE.Investment.AHP.Domain.Tests.Delivery.Entities.TestDataBuilders;

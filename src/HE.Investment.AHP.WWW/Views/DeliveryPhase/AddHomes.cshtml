@@ -21,12 +21,15 @@
         <gds-p>If a home type is not being delivered in this phase, enter 0.</gds-p>
         <gds-p>Once a home type has been fully allocated to your delivery phases, it will no longer be listed.</gds-p>
 
-        @foreach(var (homeTypeId, _) in Model.HomesToDeliver)
+        @if (Model.HomesToDeliver != null)
         {
-            <vc:numeric-text-input field-name="@($"HomesToDeliver[{homeTypeId}]")"
-                                   value="@Model.HomesToDeliver[homeTypeId]"
-                                   label="@Model.HomeTypes[homeTypeId]"
-                                   css-class="govuk-input--width-5"/>
+            @foreach (var (homeTypeId, _) in Model.HomesToDeliver)
+            {
+                <vc:numeric-text-input field-name="@($"HomesToDeliver[{homeTypeId}]")"
+                                       value="@Model.HomesToDeliver[homeTypeId]"
+                                       label="@Model.HomeTypes[homeTypeId]"
+                                       css-class="govuk-input--width-5"/>
+            }
         }
 
         <vc:form-button/>
