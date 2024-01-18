@@ -1,4 +1,4 @@
-namespace HE.Investment.AHP.Domain.FinancialDetails;
+namespace HE.Investment.AHP.Contract.FinancialDetails;
 
 public enum FinancialDetailsWorkflowState
 {

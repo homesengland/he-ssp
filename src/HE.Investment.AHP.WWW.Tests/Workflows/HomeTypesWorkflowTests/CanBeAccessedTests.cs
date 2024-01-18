@@ -2,10 +2,10 @@ using FluentAssertions;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
-using HE.Investment.AHP.Domain.HomeTypes;
-using HE.Investment.AHP.Domain.Tests.HomeTypes.TestDataBuilders;
+using HE.Investment.AHP.WWW.Tests.TestDataBuilders;
+using HE.Investment.AHP.WWW.Workflows;
 
-namespace HE.Investment.AHP.Domain.Tests.HomeTypes.HomeTypesWorkflowTests;
+namespace HE.Investment.AHP.WWW.Tests.Workflows.HomeTypesWorkflowTests;
 
 public class CanBeAccessedTests
 {

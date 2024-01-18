@@ -42,7 +42,7 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
         ReconfiguringExisting = reconfiguringExisting;
         Status = status;
         CreatedOn = createdOn;
-        DeliveryPhaseMilestones = milestones ?? new DeliveryPhaseMilestones(organisation);
+        DeliveryPhaseMilestones = milestones ?? new DeliveryPhaseMilestones(organisation, BuildActivity);
         IsAdditionalPaymentRequested = isAdditionalPaymentRequested;
         _homesToDeliver = homesToDeliver?.ToList() ?? new List<HomesToDeliverInPhase>();
     }
@@ -155,6 +155,9 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
     public void ProvideBuildActivity(BuildActivity buildActivity)
     {
         BuildActivity = _modificationTracker.Change(BuildActivity, buildActivity, MarkAsNotCompleted);
+
+        var milestones = new DeliveryPhaseMilestones(Organisation, BuildActivity, DeliveryPhaseMilestones);
+        DeliveryPhaseMilestones = _modificationTracker.Change(DeliveryPhaseMilestones, milestones, MarkAsNotCompleted);
     }
 
     public void ProvideReconfiguringExisting(bool? reconfiguringExisting)

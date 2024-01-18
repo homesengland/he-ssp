@@ -1,19 +1,20 @@
+using HE.Investment.AHP.Contract.Scheme;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Routing;
 using Stateless;
 
-namespace HE.Investment.AHP.Domain.Scheme.Workflows;
+namespace HE.Investment.AHP.WWW.Workflows;
 
 public class SchemeWorkflow : IStateRouting<SchemeWorkflowState>
 {
-    private readonly Contract.Scheme.Scheme _scheme;
+    private readonly Scheme _scheme;
 
     private readonly StateMachine<SchemeWorkflowState, Trigger> _machine;
 
     private readonly bool _isReadOnly;
 
-    public SchemeWorkflow(SchemeWorkflowState currentWorkflowState, Contract.Scheme.Scheme scheme, bool isReadOnly)
+    public SchemeWorkflow(SchemeWorkflowState currentWorkflowState, Scheme scheme, bool isReadOnly)
     {
         _scheme = scheme;
         _machine = new StateMachine<SchemeWorkflowState, Trigger>(currentWorkflowState);

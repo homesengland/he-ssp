@@ -3,6 +3,7 @@ using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
+using HE.Investment.AHP.Domain.Common.Mappers;
 using HE.Investment.AHP.Domain.Data;
 using HE.Investment.AHP.Domain.FinancialDetails.Entities;
 using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
@@ -40,7 +41,7 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
             name = financialDetails.ApplicationBasicInfo.Name.Name,
             actualAcquisitionCost = financialDetails.LandStatus.PurchasePrice?.Value,
             expectedAcquisitionCost = financialDetails.LandStatus.ExpectedPurchasePrice?.Value,
-            isPublicLand = financialDetails.LandValue.IsPublicLand,
+            isPublicLand = YesNoTypeMapper.Map(financialDetails.LandValue.IsPublicLand),
             currentLandValue = financialDetails.LandValue.CurrentLandValue?.Value,
             expectedOnWorks = financialDetails.OtherApplicationCosts.ExpectedWorksCosts?.Value,
             expectedOnCosts = financialDetails.OtherApplicationCosts.ExpectedOnCosts?.Value,
@@ -70,7 +71,7 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
                 application.expectedAcquisitionCost.IsProvided() ? new ExpectedPurchasePrice(application.expectedAcquisitionCost!.Value) : null),
             new LandValue(
                 application.currentLandValue.IsProvided() ? new CurrentLandValue(application.currentLandValue!.Value) : null,
-                application.isPublicLand),
+                YesNoTypeMapper.Map(application.isPublicLand)),
             MapToOtherApplicationCosts(application),
             MapToExpectedContributionsToScheme(application, applicationBasicInfo.Tenure),
             MapToPublicGrants(application),

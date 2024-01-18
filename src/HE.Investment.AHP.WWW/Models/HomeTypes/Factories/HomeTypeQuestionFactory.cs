@@ -1,8 +1,8 @@
 using System.Globalization;
 using System.Reflection;
 using HE.Investment.AHP.Contract.HomeTypes;
-using HE.Investment.AHP.Domain.HomeTypes;
 using HE.Investment.AHP.WWW.Controllers;
+using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Workflow;
 using HE.Investments.Common.WWW.Components.SectionSummary;

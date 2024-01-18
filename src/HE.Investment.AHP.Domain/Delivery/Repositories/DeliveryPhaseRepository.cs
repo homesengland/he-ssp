@@ -118,6 +118,8 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
             new[] { HomeTypeSegmentType.HomeInformation },
             cancellationToken);
 
+        var firstBuildActivity = new BuildActivity(application.Tenure);
+        var secondBuildActivity = new BuildActivity(application.Tenure, TypeOfHomes.Rehab, BuildActivityType.RegenerationRehab);
         var homesToDeliver = homeTypes.HomeTypes.Select(x => new HomesToDeliver(x.Id, x.Name, x.HomeInformation.NumberOfHomes?.Value ?? 0)).ToList();
         var deliveryPhases = new DeliveryPhasesEntity(
             application,
@@ -129,10 +131,10 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
                     userAccount.SelectedOrganisation(),
                     SectionStatus.InProgress,
                     null,
-                    new BuildActivity(application.Tenure),
+                    firstBuildActivity,
                     null,
                     homesToDeliver.Any() ? new[] { new HomesToDeliverInPhase(homesToDeliver[0].HomeTypeId, homesToDeliver[0].TotalHomes) } : new List<HomesToDeliverInPhase>(),
-                    new DeliveryPhaseMilestones(userAccount.SelectedOrganisation(), completionMilestone: new CompletionMilestoneDetails(new CompletionDate("1", "2", "2023"), null)),
+                    new DeliveryPhaseMilestones(userAccount.SelectedOrganisation(), firstBuildActivity, completionMilestone: new CompletionMilestoneDetails(new CompletionDate("1", "2", "2023"), null)),
                     new DeliveryPhaseId("phase-1"),
                     new DateTime(2023, 12, 12, 0, 0, 0, DateTimeKind.Unspecified)),
                 new DeliveryPhaseEntity(
@@ -141,10 +143,10 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
                     userAccount.SelectedOrganisation(),
                     SectionStatus.InProgress,
                     TypeOfHomes.Rehab,
-                    new BuildActivity(application.Tenure, TypeOfHomes.Rehab, BuildActivityType.RegenerationRehab),
+                    secondBuildActivity,
                     true,
                     new List<HomesToDeliverInPhase>(),
-                    new DeliveryPhaseMilestones(userAccount.SelectedOrganisation(), completionMilestone: new CompletionMilestoneDetails(new CompletionDate("1", "2", "2023"), null)),
+                    new DeliveryPhaseMilestones(userAccount.SelectedOrganisation(), secondBuildActivity, completionMilestone: new CompletionMilestoneDetails(new CompletionDate("1", "2", "2023"), null)),
                     new DeliveryPhaseId("phase-2"),
                     new DateTime(2023, 12, 12, 0, 0, 0, DateTimeKind.Unspecified)),
             },

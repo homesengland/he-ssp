@@ -1,8 +1,9 @@
+using HE.Investment.AHP.Contract.Application;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.WWW.Routing;
 using Stateless;
 
-namespace HE.Investment.AHP.Domain.Application.Workflows;
+namespace HE.Investment.AHP.WWW.Workflows;
 
 public class ApplicationWorkflow : IStateRouting<ApplicationWorkflowState>
 {

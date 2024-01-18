@@ -170,9 +170,9 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     {
         return await this.ExecuteCommand(
             _mediator,
-            new ProvideDeliveryPhaseHomesCommand(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId)),
+            new ProvideDeliveryPhaseHomesCommand(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId), model.HomesToDeliver ?? new Dictionary<string, string?>()),
             () => ContinueWithRedirect(new { applicationId, deliveryPhaseId }),
-            async () => View("AddHomes", await new AddHomesModelFactory(_mediator).Create(applicationId, deliveryPhaseId, cancellationToken)),
+            async () => View("AddHomes", await new AddHomesModelFactory(_mediator).Create(applicationId, deliveryPhaseId, model, cancellationToken)),
             cancellationToken);
     }
 

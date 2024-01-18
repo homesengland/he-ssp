@@ -24,7 +24,7 @@ public enum BuildActivityType
     [Description("Acquisition and Works Rehab")]
     AcquisitionAndWorksRehab,
 
-    [Description("Existing satisfactory ")]
+    [Description("Existing satisfactory")]
     ExistingSatisfactory,
 
     [Description("Purchase and repair")]

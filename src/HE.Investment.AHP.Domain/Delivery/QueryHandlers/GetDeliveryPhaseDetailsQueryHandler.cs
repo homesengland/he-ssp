@@ -41,6 +41,7 @@ public class GetDeliveryPhaseDetailsQueryHandler : IRequestHandler<GetDeliveryPh
             deliveryPhase.ReconfiguringExisting,
             deliveryPhase.TotalHomesToBeDeliveredInThisPhase,
             deliveryPhase.Organisation.IsUnregisteredBody,
+            deliveryPhase.DeliveryPhaseMilestones.IsOnlyCompletionMilestone,
             DeliveryPhaseEntityMapper.MapDate(deliveryPhase.DeliveryPhaseMilestones.AcquisitionMilestone?.MilestoneDate),
             DeliveryPhaseEntityMapper.MapDate(deliveryPhase.DeliveryPhaseMilestones.AcquisitionMilestone?.PaymentDate),
             DeliveryPhaseEntityMapper.MapDate(deliveryPhase.DeliveryPhaseMilestones.StartOnSiteMilestone?.MilestoneDate),
