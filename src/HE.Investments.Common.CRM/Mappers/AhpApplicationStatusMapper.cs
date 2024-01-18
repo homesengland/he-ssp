@@ -22,7 +22,7 @@ public static class AhpApplicationStatusMapper
             ApplicationStatus.ReferredBackToApplicant => (int)invln_externalstatusahp.ReferredBackToApplicant,
             ApplicationStatus.ApprovedSubjectToContract => (int)invln_externalstatusahp.ApprovedSubjectToContract,
             ApplicationStatus.Approved => (int)invln_externalstatusahp.Approved,
-            _ => throw new NotImplementedException(),
+            _ => throw new ArgumentOutOfRangeException(nameof(status), status, null),
         };
     }
 
