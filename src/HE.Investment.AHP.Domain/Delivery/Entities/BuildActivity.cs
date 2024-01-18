@@ -26,6 +26,8 @@ public class BuildActivity : ValueObject, IQuestion
 
     public BuildActivityType? Type { get; private set; }
 
+    public bool IsOffTheShelfOrExistingSatisfactory => Type is BuildActivityType.OffTheShelf or BuildActivityType.ExistingSatisfactory;
+
     public static BuildActivityType[] GetAvailableTypeForRehab(Tenure tenure)
     {
         if (tenure.IsIn(Tenure.HomeOwnershipLongTermDisabilities))

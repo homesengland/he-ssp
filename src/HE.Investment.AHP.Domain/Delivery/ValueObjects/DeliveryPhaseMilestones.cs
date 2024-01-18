@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Domain;
@@ -7,13 +8,18 @@ namespace HE.Investment.AHP.Domain.Delivery.ValueObjects;
 
 public class DeliveryPhaseMilestones : ValueObject, IQuestion
 {
+    private readonly OrganisationBasicInfo _organisation;
+    private readonly BuildActivity _buildActivity;
+
     public DeliveryPhaseMilestones(
         OrganisationBasicInfo organisation,
+        BuildActivity buildActivity,
         AcquisitionMilestoneDetails? acquisitionMilestone = null,
         StartOnSiteMilestoneDetails? startOnSiteMilestone = null,
         CompletionMilestoneDetails? completionMilestone = null)
     {
-        Organisation = organisation;
+        _organisation = organisation;
+        _buildActivity = buildActivity;
 
         ValidatePaymentDates(acquisitionMilestone, startOnSiteMilestone, completionMilestone);
         ValidateDatesForUnregisteredBody(acquisitionMilestone, startOnSiteMilestone);
@@ -23,7 +29,25 @@ public class DeliveryPhaseMilestones : ValueObject, IQuestion
         CompletionMilestone = completionMilestone;
     }
 
-    public OrganisationBasicInfo Organisation { get; }
+    public DeliveryPhaseMilestones(
+        OrganisationBasicInfo organisation,
+        BuildActivity buildActivity,
+        DeliveryPhaseMilestones milestones)
+    {
+        _organisation = organisation;
+        _buildActivity = buildActivity;
+
+        if (!buildActivity.IsOffTheShelfOrExistingSatisfactory)
+        {
+            AcquisitionMilestone = milestones.AcquisitionMilestone;
+            StartOnSiteMilestone = milestones.StartOnSiteMilestone;
+        }
+
+        CompletionMilestone = milestones.CompletionMilestone;
+
+        ValidatePaymentDates(AcquisitionMilestone, StartOnSiteMilestone, CompletionMilestone);
+        ValidateDatesForUnregisteredBody(AcquisitionMilestone, StartOnSiteMilestone);
+    }
 
     public AcquisitionMilestoneDetails? AcquisitionMilestone { get; }
 
@@ -31,9 +55,11 @@ public class DeliveryPhaseMilestones : ValueObject, IQuestion
 
     public CompletionMilestoneDetails? CompletionMilestone { get; }
 
+    public bool IsOnlyCompletionMilestone => _buildActivity.IsOffTheShelfOrExistingSatisfactory;
+
     public bool IsAnswered()
     {
-        if (Organisation.IsUnregisteredBody)
+        if (_organisation.IsUnregisteredBody || _buildActivity.IsOffTheShelfOrExistingSatisfactory)
         {
             return CompletionMilestone != null && CompletionMilestone.IsAnswered();
         }
@@ -45,6 +71,8 @@ public class DeliveryPhaseMilestones : ValueObject, IQuestion
 
     protected override IEnumerable<object?> GetAtomicValues()
     {
+        yield return _organisation;
+        yield return _buildActivity;
         yield return AcquisitionMilestone;
         yield return StartOnSiteMilestone;
         yield return CompletionMilestone;
@@ -55,7 +83,7 @@ public class DeliveryPhaseMilestones : ValueObject, IQuestion
         StartOnSiteMilestoneDetails? startOnSiteMilestoneDetails,
         CompletionMilestoneDetails? completionMilestoneDetails)
     {
-        if (!Organisation.IsUnregisteredBody)
+        if (!_organisation.IsUnregisteredBody && !_buildActivity.IsOffTheShelfOrExistingSatisfactory)
         {
             ValidateMilestonePaymentDate(
                 acquisitionMilestoneDetails?.PaymentDate,
@@ -91,16 +119,16 @@ public class DeliveryPhaseMilestones : ValueObject, IQuestion
         AcquisitionMilestoneDetails? acquisitionMilestone,
         StartOnSiteMilestoneDetails? startOnSiteMilestone)
     {
-        if (Organisation.IsUnregisteredBody && acquisitionMilestone.IsProvided())
+        if ((_organisation.IsUnregisteredBody || _buildActivity.IsOffTheShelfOrExistingSatisfactory) && acquisitionMilestone.IsProvided())
         {
             throw new DomainValidationException(
-                "Cannot provide Acquisition Milestone details for Unregistered Body Partner.");
+                "Cannot provide Acquisition Milestone details.");
         }
 
-        if (Organisation.IsUnregisteredBody && startOnSiteMilestone.IsProvided())
+        if ((_organisation.IsUnregisteredBody || _buildActivity.IsOffTheShelfOrExistingSatisfactory) && startOnSiteMilestone.IsProvided())
         {
             throw new DomainValidationException(
-                "Cannot provide Start On Site Milestone details for Unregistered Body Partner.");
+                "Cannot provide Start On Site Milestone details.");
         }
     }
 }
