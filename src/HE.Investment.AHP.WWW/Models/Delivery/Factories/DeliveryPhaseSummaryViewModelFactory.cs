@@ -71,7 +71,7 @@ public class DeliveryPhaseSummaryViewModelFactory : IDeliveryPhaseSummaryViewMod
                 "Reconfiguring existing residential properties",
                 deliveryPhase.ReconfiguringExisting?.ToString().ToOneElementList(),
                 IsEditable: isEditable,
-                ActionUrl: CreateAction(nameof(DeliveryPhaseController.BuildActivityType))));
+                ActionUrl: CreateAction(nameof(DeliveryPhaseController.ReconfiguringExisting))));
         }
 
         foreach (var homeTypesToDeliver in deliveryPhaseHomes.HomeTypesToDeliver)
