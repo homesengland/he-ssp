@@ -319,21 +319,6 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
         return new FinancialDetailsWorkflow(currentState, financialDetails, isReadOnly);
     }
 
-    private static string IsPublicLandScheme(Contract.FinancialDetails.FinancialDetails financialDetails)
-    {
-        if (financialDetails.IsSchemaOnPublicLand.HasValue)
-        {
-            if (financialDetails.IsSchemaOnPublicLand.Value)
-            {
-                return CommonResponse.Yes;
-            }
-
-            return CommonResponse.No;
-        }
-
-        return string.Empty;
-    }
-
     private async Task<IActionResult> ProvideFinancialDetails<TModel, TCommand>(
         TCommand command,
         TModel model,
