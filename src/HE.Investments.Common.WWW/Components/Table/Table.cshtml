@@ -19,10 +19,13 @@
     <tr class="govuk-table__row">
         @foreach (var header in Model.Headers)
         {
-            var headerClass = $"govuk-table__header";
-            headerClass += $" {GetWidthClass(header.Width)}";
-            headerClass += header.IsHidden ? " govuk-table__header--hidden" : string.Empty;
-            <th scope="col" class="@headerClass">@header.Title</th>
+            if (header.IsDisplayed)
+            {
+                var headerClass = $"govuk-table__header";
+                headerClass += $" {GetWidthClass(header.Width)}";
+                headerClass += header.IsHidden ? " govuk-table__header--hidden" : string.Empty;
+                <th scope="col" class="@headerClass">@header.Title</th>
+            }
         }
     </tr>
     </thead>
@@ -32,16 +35,19 @@
         <tr class="govuk-table__row">
             @foreach (var value in row.Values)
             {
-                <td class="govuk-table__cell">
-                    @if (value.Component != null)
-                    {
-                        @await Component.InvokeAsync(value.Component.Name, value.Component.Arguments)
-                    }
-                    else
-                    {
-                        @(value.Value ?? "-")
-                    }
-                </td>
+                @if (value.IsDisplayed)
+                {
+                    <td class="govuk-table__cell">
+                        @if (value.Component != null)
+                        {
+                            @await Component.InvokeAsync(value.Component.Name, value.Component.Arguments)
+                        }
+                        else
+                        {
+                            @(value.Value ?? "-")
+                        }
+                    </td>
+                }
             }
         </tr>
     }
