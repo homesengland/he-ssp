@@ -141,14 +141,11 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
         IsAdditionalPaymentRequested = _modificationTracker.Change(IsAdditionalPaymentRequested, isAdditionalPaymentRequested, MarkAsNotCompleted);
     }
 
-
-
     public void Complete()
     {
         if (!IsAnswered())
         {
-            // TODO #67047: throw and handle exception
-            throw new DomainValidationException("Cannot complete deliveryPhase.");
+            throw new DomainValidationException(ValidationErrorMessage.SectionIsNotCompleted);
         }
 
         Status = _modificationTracker.Change(Status, SectionStatus.Completed);
@@ -205,13 +202,22 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
 
     private bool IsAnswered()
     {
+        var reconfigureExistingValid = !IsReconfiguringExistingNeeded() || ReconfiguringExisting.HasValue;
+
+        var isAnswered = Name.IsProvided() &&
+                         TypeOfHomes.IsProvided() &&
+                         BuildActivity.IsAnswered() &&
+                         reconfigureExistingValid &&
+                         _homesToDeliver.Any() &&
+                         DeliveryPhaseMilestones.IsAnswered();
+
         if (Organisation.IsUnregisteredBody)
         {
             return DeliveryPhaseMilestones.IsAnswered() &&
                    IsAdditionalPaymentRequested != null && IsAdditionalPaymentRequested.IsAnswered();
         }
 
-        return DeliveryPhaseMilestones.IsAnswered();
+        return isAnswered;
     }
 
     private void MarkAsNotCompleted()

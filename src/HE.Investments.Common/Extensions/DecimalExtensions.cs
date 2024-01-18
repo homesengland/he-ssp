@@ -26,7 +26,7 @@ public static class DecimalExtensions
 
     public static string ToWholeNumberString(this decimal val)
     {
-        return val.ToString(CultureInfo.InvariantCulture);
+        return val.ToWholeNumber().ToString(CultureInfo.InvariantCulture);
     }
 
     public static string? ToPoundsPencesString(this decimal? val)
