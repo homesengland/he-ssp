@@ -270,7 +270,8 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                     invln_changefrom = retrievedLoanApplication.StatusCode,
                     invln_changesource = new OptionSetValue((int)invln_ChangesourceSet.External),
                     invln_changeto = loanWithNewStatusCodes.StatusCode,
-                    invln_Loanapplication = loanToUpdate.ToEntityReference()
+                    invln_Loanapplication = loanToUpdate.ToEntityReference(),
+                    invln_Comment = changeReason
                 };
 
                 if (!string.IsNullOrEmpty(changeReason))

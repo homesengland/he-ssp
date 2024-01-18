@@ -132,6 +132,7 @@ namespace DataverseModel
 			public const string ImportSequenceNumber = "importsequencenumber";
 			public const string InstanceTypeCode = "instancetypecode";
 			public const string invln_body = "invln_body";
+			public const string invln_consortium_invln_govnotifyemails = "invln_consortium_invln_govnotifyemails";
 			public const string invln_govnotifyemail_systemuser_createdby = "invln_govnotifyemail_systemuser_createdby";
 			public const string invln_govnotifyemail_systemuser_createdonbehalfby = "invln_govnotifyemail_systemuser_createdonbehalfby";
 			public const string invln_govnotifyemail_systemuser_modifiedby = "invln_govnotifyemail_systemuser_modifiedby";
@@ -1713,6 +1714,27 @@ namespace DataverseModel
 				this.OnPropertyChanging("contact_invln_govnotifyemails");
 				this.SetRelatedEntity<DataverseModel.Contact>("contact_invln_govnotifyemails", null, value);
 				this.OnPropertyChanged("contact_invln_govnotifyemails");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_consortium_invln_govnotifyemails
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_consortium_invln_govnotifyemails")]
+		public DataverseModel.invln_Consortium invln_consortium_invln_govnotifyemails
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.invln_Consortium>("invln_consortium_invln_govnotifyemails", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_consortium_invln_govnotifyemails");
+				this.SetRelatedEntity<DataverseModel.invln_Consortium>("invln_consortium_invln_govnotifyemails", null, value);
+				this.OnPropertyChanged("invln_consortium_invln_govnotifyemails");
 			}
 		}
 		

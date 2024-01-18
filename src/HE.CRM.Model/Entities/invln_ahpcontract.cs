@@ -57,9 +57,12 @@ namespace DataverseModel
 			public const string CreatedOnBehalfBy = "createdonbehalfby";
 			public const string CreatedOnBehalfByName = "createdonbehalfbyname";
 			public const string ImportSequenceNumber = "importsequencenumber";
+			public const string invln_ahpcontract_Partner_account = "invln_ahpcontract_Partner_account";
 			public const string invln_ahpcontractId = "invln_ahpcontractid";
 			public const string Id = "invln_ahpcontractid";
 			public const string invln_ahpcontractname = "invln_ahpcontractname";
+			public const string invln_Partner = "invln_partner";
+			public const string invln_PartnerName = "invln_partnername";
 			public const string lk_invln_ahpcontract_createdby = "lk_invln_ahpcontract_createdby";
 			public const string lk_invln_ahpcontract_createdonbehalfby = "lk_invln_ahpcontract_createdonbehalfby";
 			public const string lk_invln_ahpcontract_modifiedby = "lk_invln_ahpcontract_modifiedby";
@@ -253,6 +256,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_ahpcontractname");
 				this.SetAttributeValue("invln_ahpcontractname", value);
 				this.OnPropertyChanged("invln_ahpcontractname");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_partner")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_Partner
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_partner");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_Partner");
+				this.SetAttributeValue("invln_partner", value);
+				this.OnPropertyChanged("invln_Partner");
 			}
 		}
 		
@@ -478,6 +498,27 @@ namespace DataverseModel
 			get
 			{
 				return this.GetAttributeValue<System.Nullable<long>>("versionnumber");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_ahpcontract_Partner_account
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_partner")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_ahpcontract_Partner_account")]
+		public DataverseModel.Account invln_ahpcontract_Partner_account
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.Account>("invln_ahpcontract_Partner_account", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_ahpcontract_Partner_account");
+				this.SetRelatedEntity<DataverseModel.Account>("invln_ahpcontract_Partner_account", null, value);
+				this.OnPropertyChanged("invln_ahpcontract_Partner_account");
 			}
 		}
 		
