@@ -1,55 +1,10 @@
 @using HE.Investments.Common.WWW.Components.Table
-@using HE.Investments.Common.WWW.Helpers
-@using HE.Investments.Common.Extensions
-@using HE.Investments.Account.Shared
 @using HE.Investments.Common.Contract.Pagination
 @using HE.Investments.Common.WWW.Components.PagedTable
 
-@inject IAccountAccessContext AccountAccessContext
-@model HE.Investments.Common.Contract.Pagination.PaginationResult<HE.Investments.Account.Contract.Users.UserDetails>;
-@{
-    var canManageUsers = await AccountAccessContext.CanManageUsers();
-    var tableHeaders = new List<TableHeaderViewModel>
-    {
-        new("First name"),
-        new("Last name"),
-        new("Email"),
-        new("Job title"),
-        new("Role"),
-        new("Last active"),
-    };
-
-    if (canManageUsers)
-    {
-        tableHeaders.Add(new("Remove", IsHidden: true));
-        tableHeaders.Add(new("Manage", IsHidden: true));
-    }
-
-    var usersDetails = Model.Items.Select(u =>
-    {
-        var tableItems = new List<TableValueViewModel>
-        {
-            new(u.FirstName),
-            new(u.LastName),
-            new(u.Email),
-            new(u.JobTitle),
-            new(u.Role?.GetDescription()),
-            new(u.LastActiveAt == null ? "-" : DateHelper.DisplayAsUkFormatDateTime(u.LastActiveAt))
-        };
-
-        if (canManageUsers)
-        {
-            tableItems.Add(new(Component: new("Link", new { text = "Remove", action = "ConfirmUnlink", controller = "Users", values = new { id = u.Id.Value } })));
-            tableItems.Add(new(Component: new("Link", new { text = "Change", action = "Change", controller = "Users", values = new { id = u.Id.Value } })));
-        }
-
-        return new TableRowViewModel(tableItems);
-    }).ToList();
-
-    var rows = new PaginationResult<TableRowViewModel>(usersDetails, Model.CurrentPage, Model.ItemsPerPage, Model.TotalItems );
-}
+@model (List<TableHeaderViewModel> headers, PaginationResult<TableRowViewModel> rows);
 
 <vc:paged-table
-    headers="@tableHeaders"
-    rows="@rows"
+    headers="@Model.headers"
+    rows="@Model.rows"
     navigation-url="@Url.Action("Index", "Users")"/>
