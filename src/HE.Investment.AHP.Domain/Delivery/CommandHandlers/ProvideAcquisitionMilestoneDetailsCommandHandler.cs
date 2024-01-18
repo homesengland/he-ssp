@@ -21,8 +21,7 @@ public class ProvideAcquisitionMilestoneDetailsCommandHandler : UpdateDeliveryPh
         _programmeDateRangePolicy = programmeDateRangePolicy;
     }
 
-    protected override async Task<OperationResult> Update(IDeliveryPhaseEntity entity, ProvideAcquisitionMilestoneDetailsCommand request,
-        CancellationToken cancellationToken)
+    protected override async Task<OperationResult> Update(IDeliveryPhaseEntity entity, ProvideAcquisitionMilestoneDetailsCommand request, CancellationToken cancellationToken)
     {
         var operationResult = OperationResult.New();
 

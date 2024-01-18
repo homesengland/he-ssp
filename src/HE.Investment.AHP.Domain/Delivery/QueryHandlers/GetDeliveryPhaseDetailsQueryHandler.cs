@@ -50,7 +50,7 @@ public class GetDeliveryPhaseDetailsQueryHandler : IRequestHandler<GetDeliveryPh
             deliveryPhase.IsReconfiguringExistingNeeded(),
             deliveryPhase.ReconfiguringExisting,
             deliveryPhase.TotalHomesToBeDeliveredInThisPhase,
-            request.CalculateSummary ? await GetSummaryOfDelivery(deliveryPhase, userAccount, cancellationToken) : null,
+            request.IncludeSummary ? await GetSummaryOfDelivery(deliveryPhase, userAccount, cancellationToken) : null,
             deliveryPhase.Organisation.IsUnregisteredBody,
             deliveryPhase.DeliveryPhaseMilestones.IsOnlyCompletionMilestone,
             DeliveryPhaseEntityMapper.MapDate(deliveryPhase.DeliveryPhaseMilestones.AcquisitionMilestone?.MilestoneDate),

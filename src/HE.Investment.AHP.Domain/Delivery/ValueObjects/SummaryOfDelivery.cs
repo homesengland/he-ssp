@@ -14,6 +14,8 @@ public class SummaryOfDelivery : ValueObject
         ValidateValues();
     }
 
+    public static SummaryOfDelivery LackOfCalculation => new(null, null, null, null);
+
     public decimal? GrantApportioned { get; }
 
     public decimal? AcquisitionMilestone { get; }
@@ -21,8 +23,6 @@ public class SummaryOfDelivery : ValueObject
     public decimal? StarOnSiteMilestone { get; }
 
     public decimal? CompletionMilestone { get; }
-
-    public static SummaryOfDelivery LackOfCalculation => new(null, null, null, null);
 
     protected override IEnumerable<object?> GetAtomicValues()
     {

@@ -64,7 +64,7 @@ public class CalculateSummaryTests
         // given
         var requestedFunding = 1000;
         var deliveryPhase = new DeliveryPhaseEntityBuilder()
-            .WithBuildActivity(buildActivityType)
+            .WithRehabBuildActivity(buildActivityType)
             .WithHomesToBeDelivered(10)
             .Build();
 

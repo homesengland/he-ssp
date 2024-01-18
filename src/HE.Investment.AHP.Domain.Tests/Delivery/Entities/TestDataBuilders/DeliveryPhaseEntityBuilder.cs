@@ -112,7 +112,7 @@ public class DeliveryPhaseEntityBuilder
         return this;
     }
 
-    public DeliveryPhaseEntityBuilder WithBuildActivity(BuildActivityType buildActivityType)
+    public DeliveryPhaseEntityBuilder WithRehabBuildActivity(BuildActivityType buildActivityType)
     {
         _buildActivity = new BuildActivity(ApplicationBasicInfo.Tenure, TypeOfHomes.Rehab, buildActivityType);
 

@@ -13,8 +13,7 @@ public class ProvideReconfiguringExistingCommandHandler : UpdateDeliveryPhaseCom
     {
     }
 
-    protected override Task<OperationResult> Update(IDeliveryPhaseEntity entity, ProvideReconfiguringExistingCommand request,
-        CancellationToken cancellationToken)
+    protected override Task<OperationResult> Update(IDeliveryPhaseEntity entity, ProvideReconfiguringExistingCommand request, CancellationToken cancellationToken)
     {
         entity.ProvideReconfiguringExisting(request.ReconfiguringExisting);
         return Task.FromResult(OperationResult.Success());
