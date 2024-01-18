@@ -15,7 +15,7 @@ public class CompleteDeliveryPhaseCommandHandler : UpdateDeliveryPhaseCommandHan
     {
     }
 
-    protected override Task<OperationResult> Update(IDeliveryPhaseEntity entity, CompleteDeliveryPhaseCommand request)
+    protected override Task<OperationResult> Update(IDeliveryPhaseEntity entity, CompleteDeliveryPhaseCommand request, CancellationToken cancellationToken)
     {
         entity.Complete();
 

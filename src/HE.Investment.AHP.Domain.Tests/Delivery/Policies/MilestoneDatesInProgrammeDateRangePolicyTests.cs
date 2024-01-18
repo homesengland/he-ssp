@@ -18,7 +18,7 @@ public class MilestoneDatesInProgrammeDateRangePolicyTests
     public MilestoneDatesInProgrammeDateRangePolicyTests()
     {
         var mock = new Mock<IProgrammeRepository>();
-        mock.Setup(r => r.GetCurrentProgramme(ProgrammeType.Ahp))
+        mock.Setup(r => r.GetCurrentProgramme(ProgrammeType.Ahp, CancellationToken.None))
             .ReturnsAsync(_programmeBasicInfo);
 
         _testCandidate = new MilestoneDatesInProgrammeDateRangePolicy(mock.Object);
@@ -32,7 +32,7 @@ public class MilestoneDatesInProgrammeDateRangePolicyTests
             .Build();
 
         // when
-        var action = async () => await _testCandidate.Validate(milestones);
+        var action = async () => await _testCandidate.Validate(milestones, CancellationToken.None);
 
         // then
         action
@@ -100,7 +100,7 @@ public class MilestoneDatesInProgrammeDateRangePolicyTests
             .Build();
 
         // when
-        var action = async () => await _testCandidate.Validate(milestones);
+        var action = async () => await _testCandidate.Validate(milestones, CancellationToken.None);
 
         // then
         AssertException(action, errorMessage);

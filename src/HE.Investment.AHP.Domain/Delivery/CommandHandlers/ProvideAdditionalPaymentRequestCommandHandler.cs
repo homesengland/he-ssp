@@ -14,7 +14,7 @@ public class ProvideAdditionalPaymentRequestCommandHandler : UpdateDeliveryPhase
     {
     }
 
-    protected override Task<OperationResult> Update(IDeliveryPhaseEntity entity, ProvideAdditionalPaymentRequestCommand request)
+    protected override Task<OperationResult> Update(IDeliveryPhaseEntity entity, ProvideAdditionalPaymentRequestCommand request, CancellationToken cancellationToken)
     {
         entity.ProvideAdditionalPaymentRequest(request.IsAdditionalPaymentRequested.HasValue ? new IsAdditionalPaymentRequested(request.IsAdditionalPaymentRequested.Value) : null);
 

@@ -7,5 +7,10 @@ namespace HE.Investment.AHP.WWW.Models.Delivery.Factories;
 
 public interface IDeliveryPhaseSummaryViewModelFactory
 {
-    IList<SectionSummaryViewModel> CreateSummary(AhpApplicationId applicationId, DeliveryPhaseDetails deliveryPhase, IUrlHelper urlHelper, bool isEditable);
+    IList<SectionSummaryViewModel> CreateSummary(
+        AhpApplicationId applicationId,
+        DeliveryPhaseDetails deliveryPhase,
+        DeliveryPhaseHomes deliveryPhaseHomes,
+        IUrlHelper urlHelper,
+        bool isEditable);
 }

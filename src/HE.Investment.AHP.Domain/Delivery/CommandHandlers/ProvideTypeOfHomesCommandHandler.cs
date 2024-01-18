@@ -14,7 +14,7 @@ public class ProvideTypeOfHomesCommandHandler : UpdateDeliveryPhaseCommandHandle
     {
     }
 
-    protected override Task<OperationResult> Update(IDeliveryPhaseEntity entity, ProvideTypeOfHomesCommand request)
+    protected override Task<OperationResult> Update(IDeliveryPhaseEntity entity, ProvideTypeOfHomesCommand request, CancellationToken cancellationToken)
     {
         if (request.TypeOfHomes.IsProvided())
         {

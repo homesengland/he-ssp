@@ -25,7 +25,7 @@ public abstract class UpdateDeliveryPhaseCommandHandler<TCommand> : IRequestHand
         var account = await _accountUserContext.GetSelectedAccount();
         var deliveryPhase = await _repository.GetById(request.ApplicationId, request.DeliveryPhaseId, account, cancellationToken);
 
-        var result = await Update(deliveryPhase, request);
+        var result = await Update(deliveryPhase, request, cancellationToken);
 
         if (result.IsValid)
         {
@@ -35,5 +35,5 @@ public abstract class UpdateDeliveryPhaseCommandHandler<TCommand> : IRequestHand
         return result;
     }
 
-    protected abstract Task<OperationResult> Update(IDeliveryPhaseEntity entity, TCommand request);
+    protected abstract Task<OperationResult> Update(IDeliveryPhaseEntity entity, TCommand request, CancellationToken cancellationToken);
 }

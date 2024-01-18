@@ -1,46 +1,7 @@
 @using HE.Investments.Common.WWW.Components.Table
-@using HE.Investments.Common.Extensions
-@using HE.Investments.Account.Shared
-@inject IAccountAccessContext AccountAccessContext
-@model IList<HE.Investments.Account.Contract.Users.UserDetails>;
-@{
-    var canManageUsers = await AccountAccessContext.CanManageUsers();
-    var tableHeaders = new List<TableHeaderViewModel>
-    {
-        new("First name"),
-        new("Last name"),
-        new("Email"),
-        new("Job title"),
-        new("Role"),
-    };
 
-    if (canManageUsers)
-    {
-        tableHeaders.Add(new("Remove", IsHidden: true));
-        tableHeaders.Add(new("Manage", IsHidden: true));
-    }
-
-    var usersDetails = Model.Select(u =>
-        {
-            var tableItems = new List<TableValueViewModel>
-            {
-                new(u.FirstName),
-                new(u.LastName),
-                new(u.Email),
-                new(u.JobTitle),
-                new(u.Role?.GetDescription()),
-            };
-
-            if (canManageUsers)
-            {
-                tableItems.Add(new(Component: new("Link", new { text = "Remove", action = "ConfirmUnlink", controller = "Users", values = new { id = u.Id.Value } })));
-                tableItems.Add(new(Component: new("Link", new { text = "Change", action = "Change", controller = "Users", values = new { id = u.Id.Value } })));
-            }
-
-            return new TableRowViewModel(tableItems);
-        }).ToList();
-}
+@model (List<TableHeaderViewModel> headers, List<TableRowViewModel> rows);
 
 <vc:table
-    headers="@tableHeaders"
-    rows="@usersDetails"/>
+    headers="@Model.headers"
+    rows="@Model.rows"/>

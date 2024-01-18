@@ -14,6 +14,7 @@ using HE.Investment.AHP.Domain.HomeTypes.Mappers;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investment.AHP.Domain.HomeTypes.Services;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
+using HE.Investment.AHP.Domain.Programme;
 using HE.Investment.AHP.Domain.Scheme.Repositories;
 using HE.Investment.AHP.Domain.Scheme.Services;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
@@ -78,6 +79,7 @@ public static class DomainModule
     private static void AddApplication(IServiceCollection services)
     {
         services.AddScoped<IApplicationRepository, ApplicationRepository>();
+        services.AddScoped<IAhpProgrammeRepository, AhpProgrammeRepository>();
     }
 
     private static void AddScheme(IServiceCollection services)

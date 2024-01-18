@@ -44,9 +44,9 @@ public class DeliveryPhaseEntityBuilder
         return this;
     }
 
-    public DeliveryPhaseEntityBuilder WithHomesToBeDelivered(string homeTypeId, int numberOfHomes)
+    public DeliveryPhaseEntityBuilder WithHomesToBeDelivered(int numberOfHomes, string? homeTypeId = null)
     {
-        _homesToDeliver.Add(new HomesToDeliverInPhase(new HomeTypeId(homeTypeId), numberOfHomes));
+        _homesToDeliver.Add(new HomesToDeliverInPhase(new HomeTypeId(homeTypeId ?? $"ht-{_homesToDeliver.Count + 1}"), numberOfHomes));
         return this;
     }
 
@@ -108,6 +108,13 @@ public class DeliveryPhaseEntityBuilder
     public DeliveryPhaseEntityBuilder WithReconfiguringExisting()
     {
         _reconfigureExisting = true;
+
+        return this;
+    }
+
+    public DeliveryPhaseEntityBuilder WithRehabBuildActivity(BuildActivityType buildActivityType)
+    {
+        _buildActivity = new BuildActivity(ApplicationBasicInfo.Tenure, TypeOfHomes.Rehab, buildActivityType);
 
         return this;
     }
