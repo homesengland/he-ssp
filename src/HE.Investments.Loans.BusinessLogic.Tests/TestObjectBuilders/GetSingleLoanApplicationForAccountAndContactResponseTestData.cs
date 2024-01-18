@@ -1,9 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace HE.Investments.Loans.BusinessLogic.Tests.TestObjectBuilders;
 
 public static class GetSingleLoanApplicationForAccountAndContactResponseTestData
 {
+    [SuppressMessage("Style", "JSON002:Probable JSON string detected", Justification = "Causes formatting error")]
     public const string EmptyResponse =
-            /*lang=json,strict*/
             @"
             [
                 {
@@ -14,8 +16,8 @@ public static class GetSingleLoanApplicationForAccountAndContactResponseTestData
             ]
         ";
 
+    [SuppressMessage("Style", "JSON002:Probable JSON string detected", Justification = "Causes formatting error")]
     public const string ResponseWithCompanyStructureFields =
-        /*lang=json,strict*/
         @"
             [
                 {
@@ -30,8 +32,8 @@ public static class GetSingleLoanApplicationForAccountAndContactResponseTestData
             ]
         ";
 
+    [SuppressMessage("Style", "JSON002:Probable JSON string detected", Justification = "Causes formatting error")]
     public const string ResponseWithFundingFields =
-        /*lang=json,strict*/
         @"
             [
                 {
