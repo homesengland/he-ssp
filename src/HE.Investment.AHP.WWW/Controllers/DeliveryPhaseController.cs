@@ -424,9 +424,11 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     private async Task<DeliveryPhaseSummaryViewModel> GetDeliveryPhaseAndCreateSummary(CancellationToken cancellationToken)
     {
         var applicationId = this.GetApplicationIdFromRoute();
-        var deliveryPhaseDetails = await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(applicationId, this.GetDeliveryPhaseIdFromRoute()), cancellationToken);
+        var deliveryPhaseId = this.GetDeliveryPhaseIdFromRoute();
+        var deliveryPhaseDetails = await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(applicationId, deliveryPhaseId), cancellationToken);
+        var deliveryPhaseHomes = await _mediator.Send(new GetDeliveryPhaseHomesQuery(applicationId, deliveryPhaseId), cancellationToken);
         var isEditable = await _accountAccessContext.CanEditApplication();
-        var sections = _deliveryPhaseSummaryViewModelFactory.CreateSummary(applicationId, deliveryPhaseDetails, Url, isEditable);
+        var sections = _deliveryPhaseSummaryViewModelFactory.CreateSummary(applicationId, deliveryPhaseDetails, deliveryPhaseHomes, Url, isEditable);
 
         return new DeliveryPhaseSummaryViewModel(
             applicationId.Value,
