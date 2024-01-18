@@ -1,4 +1,5 @@
 using HE.Investment.AHP.Contract.Application;
+using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investments.Common.Contract;
 
 namespace HE.Investment.AHP.Contract.FinancialDetails;
@@ -13,7 +14,7 @@ public class FinancialDetails
 
     public bool? IsPurchasePriceFinal { get; set; }
 
-    public bool? IsSchemaOnPublicLand { get; set; }
+    public YesNoType IsSchemaOnPublicLand { get; set; }
 
     public decimal? LandValue { get; set; }
 

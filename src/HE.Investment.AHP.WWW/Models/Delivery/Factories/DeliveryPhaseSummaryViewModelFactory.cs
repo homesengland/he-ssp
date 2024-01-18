@@ -86,7 +86,7 @@ public class DeliveryPhaseSummaryViewModelFactory : IDeliveryPhaseSummaryViewMod
                 IsEditable: false),
         };
 
-        if (deliveryPhase is { IsUnregisteredBody: false, IsOnlyCompletionMilestone: false })
+        if (!deliveryPhase.IsUnregisteredBody && !deliveryPhase.IsOnlyCompletionMilestone)
         {
             items.Insert(
                 1,

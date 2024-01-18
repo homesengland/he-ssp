@@ -183,6 +183,9 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
     public void ProvideBuildActivity(BuildActivity buildActivity)
     {
         BuildActivity = _modificationTracker.Change(BuildActivity, buildActivity, MarkAsNotCompleted);
+
+        var milestones = new DeliveryPhaseMilestones(Organisation, BuildActivity, DeliveryPhaseMilestones);
+        DeliveryPhaseMilestones = _modificationTracker.Change(DeliveryPhaseMilestones, milestones, MarkAsNotCompleted);
     }
 
     public void ProvideReconfiguringExisting(bool? reconfiguringExisting)

@@ -1,10 +1,10 @@
-@using HE.Investment.AHP.Domain.FinancialDetails;
 @using HE.Investment.AHP.WWW.Models.FinancialDetails;
 @using HE.Investment.AHP.WWW.Views.FinancialDetails.Consts;
 @using HE.Investment.AHP.WWW.Views.Shared.Components.FinancialDetailsFormHeader
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.Extensions;
+@using HE.Investment.AHP.Contract.FinancialDetails
 @model FinancialDetailsContributionsModel;
 @{
     ViewData["Title"] = FinancialDetailsPageTitles.ExpectedContributions;
@@ -21,7 +21,7 @@
         <gds-p>
             For multi-tenure sites, ensure the costs and contributions are apportioned across the development and only those applicable to the homes on this application are recorded here.
             <br />You can add any grants you receive from other public bodies in the next section.
-            <br />Enter to the nerarest pound. If you have not contributed, enter 0.
+            <br />Enter to the nearest pound. If you have not contributed, enter 0.
         </gds-p>
 
         <gds-field-set>

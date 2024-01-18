@@ -6,7 +6,7 @@ using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investments.Common.Contract;
 using Microsoft.AspNetCore.Mvc;
 using Controller = HE.Investment.AHP.WWW.Controllers.HomeTypesController;
-using Workflow = HE.Investment.AHP.Domain.HomeTypes.HomeTypesWorkflowState;
+using Workflow = HE.Investment.AHP.Contract.HomeTypes.HomeTypesWorkflowState;
 
 namespace HE.Investment.AHP.WWW.Models.HomeTypes.Factories;
 

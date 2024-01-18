@@ -1,4 +1,4 @@
-namespace HE.Investment.AHP.Domain.Application.Workflows;
+namespace HE.Investment.AHP.Contract.Application;
 
 public enum ApplicationWorkflowState
 {

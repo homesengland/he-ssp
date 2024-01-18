@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
@@ -6,7 +7,7 @@ namespace HE.Investment.AHP.Domain.FinancialDetails.Entities;
 
 public class LandValue : ValueObject, IQuestion
 {
-    public LandValue(CurrentLandValue? currentLandValue, bool? isPublicLand)
+    public LandValue(CurrentLandValue? currentLandValue, YesNoType isPublicLand)
     {
         CurrentLandValue = currentLandValue;
         IsPublicLand = isPublicLand;
@@ -18,11 +19,11 @@ public class LandValue : ValueObject, IQuestion
 
     public CurrentLandValue? CurrentLandValue { get; }
 
-    public bool? IsPublicLand { get; }
+    public YesNoType IsPublicLand { get; }
 
     public bool IsAnswered()
     {
-        return CurrentLandValue.IsProvided() && IsPublicLand.IsProvided();
+        return CurrentLandValue.IsProvided() && IsPublicLand != YesNoType.Undefined;
     }
 
     protected override IEnumerable<object?> GetAtomicValues()

@@ -84,18 +84,32 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
         }
     }
 
-    public void SetHomesToBeDeliveredInPhase(DeliveryPhaseId deliveryPhaseId, IReadOnlyCollection<HomesToDeliverInPhase> homesToDeliver)
+    public void ProvideHomesToBeDeliveredInPhase(DeliveryPhaseId deliveryPhaseId, IReadOnlyCollection<HomesToDeliverInPhase> homesToDeliver)
     {
+        if (!_homesToDeliver.Any())
+        {
+            OperationResult.New()
+                .AddValidationError(nameof(HomesToDeliver), "Create at least one Home Type in home types section")
+                .CheckErrors();
+        }
+
+        if (homesToDeliver.All(x => x.ToDeliver == 0))
+        {
+            OperationResult.New()
+                .AddValidationError(nameof(HomesToDeliver), "Provide number of homes for at least one home type")
+                .CheckErrors();
+        }
+
         GetEntityById(deliveryPhaseId).SetHomesToBeDeliveredInThisPhase(homesToDeliver);
 
         var errors = new List<ErrorItem>();
-        foreach (var (homeTypeId, _) in homesToDeliver)
+        foreach (var homeTypeId in homesToDeliver.Select(x => x.HomeTypeId))
         {
             var homeToDeliver = _homesToDeliver.SingleOrDefault(x => x.HomeTypeId == homeTypeId)
                                 ?? throw new NotFoundException(nameof(HomesToDeliver), homeTypeId);
             if (GetHomesToBeDeliveredInAllPhases(homeTypeId) > homeToDeliver.TotalHomes)
             {
-                errors.Add(new ErrorItem($"HomeType-{homeTypeId}", "You have entered more homes to this home type than are in the application"));
+                errors.Add(new ErrorItem(HomesToDeliverInPhase.AffectedField(homeTypeId), "You have entered more homes to this home type than are in the application"));
             }
         }
 

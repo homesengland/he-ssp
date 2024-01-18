@@ -5,5 +5,5 @@ public record AddHomesModel(
         string ApplicationName,
         string DeliveryPhaseName,
         IDictionary<string, string> HomeTypes,
-        IDictionary<string, string?> HomesToDeliver)
+        IDictionary<string, string?>? HomesToDeliver)
     : DeliveryViewModelBase(ApplicationId, ApplicationName, DeliveryPhaseName);

@@ -1,4 +1,5 @@
 using AngleSharp.Html.Dom;
+using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.FinancialDetails.Constants;
 using HE.Investment.AHP.WWW.Models.FinancialDetails;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -12,7 +13,7 @@ public class LandValueTests : ViewTestBase
     [Fact]
     public async Task ShouldDisplayView()
     {
-        var model = new FinancialDetailsLandValueModel(Guid.NewGuid(), "TestApp", string.Empty, string.Empty);
+        var model = new FinancialDetailsLandValueModel(Guid.NewGuid(), "TestApp", string.Empty, YesNoType.Undefined);
 
         // given & when
         var document = await Render(_viewPath, model);
@@ -25,7 +26,7 @@ public class LandValueTests : ViewTestBase
     public async Task ShouldDisplayView_ForInvalid()
     {
         // given
-        var model = new FinancialDetailsLandValueModel(Guid.NewGuid(), "TestApp", "56000", string.Empty);
+        var model = new FinancialDetailsLandValueModel(Guid.NewGuid(), "TestApp", "56000", YesNoType.Undefined);
         var errorMessage = "some test error";
         var modelState = new ModelStateDictionary();
         modelState.AddModelError(nameof(FinancialDetailsLandValueModel.LandValue), errorMessage);

@@ -1,10 +1,11 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Queries;
+using HE.Investment.AHP.Contract.FinancialDetails;
 using HE.Investment.AHP.Contract.FinancialDetails.Commands;
 using HE.Investment.AHP.Contract.FinancialDetails.Queries;
-using HE.Investment.AHP.Domain.FinancialDetails;
 using HE.Investment.AHP.WWW.Models.FinancialDetails;
 using HE.Investment.AHP.WWW.Models.FinancialDetails.Factories;
+using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Contract.Exceptions;
@@ -15,7 +16,6 @@ using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.Common.WWW.Utils;
-using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -76,17 +76,11 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
     public async Task<IActionResult> LandValue(Guid applicationId)
     {
         var financialDetails = await _mediator.Send(new GetFinancialDetailsQuery(AhpApplicationId.From(applicationId)));
-
-        var isSchemeOnPublicLand =
-            financialDetails.IsSchemaOnPublicLand.HasValue
-                ? financialDetails.IsSchemaOnPublicLand.Value ? CommonResponse.Yes : CommonResponse.No
-                : string.Empty;
-
         return View(new FinancialDetailsLandValueModel(
             applicationId,
             financialDetails.ApplicationName,
             financialDetails.LandValue.ToPoundsPencesString(),
-            isSchemeOnPublicLand));
+            financialDetails.IsSchemaOnPublicLand));
     }
 
     [HttpPost("land-value")]

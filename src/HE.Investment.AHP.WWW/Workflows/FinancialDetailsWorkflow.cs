@@ -1,13 +1,14 @@
+using HE.Investment.AHP.Contract.FinancialDetails;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Routing;
 using Stateless;
 
-namespace HE.Investment.AHP.Domain.FinancialDetails;
+namespace HE.Investment.AHP.WWW.Workflows;
 
 public class FinancialDetailsWorkflow : IStateRouting<FinancialDetailsWorkflowState>
 {
-    private readonly Contract.FinancialDetails.FinancialDetails _model;
+    private readonly FinancialDetails _model;
 
     private readonly StateMachine<FinancialDetailsWorkflowState, Trigger> _machine;
 
@@ -15,7 +16,7 @@ public class FinancialDetailsWorkflow : IStateRouting<FinancialDetailsWorkflowSt
 
     public FinancialDetailsWorkflow(
         FinancialDetailsWorkflowState currentFinancialDetailsWorkflowState,
-        Contract.FinancialDetails.FinancialDetails model,
+        FinancialDetails model,
         bool isReadOnly)
     {
         _model = model;

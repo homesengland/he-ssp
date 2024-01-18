@@ -29,6 +29,26 @@ public class DeliveryPhaseMilestones : ValueObject, IQuestion
         CompletionMilestone = completionMilestone;
     }
 
+    public DeliveryPhaseMilestones(
+        OrganisationBasicInfo organisation,
+        BuildActivity buildActivity,
+        DeliveryPhaseMilestones milestones)
+    {
+        _organisation = organisation;
+        _buildActivity = buildActivity;
+
+        if (!buildActivity.IsOffTheShelfOrExistingSatisfactory)
+        {
+            AcquisitionMilestone = milestones.AcquisitionMilestone;
+            StartOnSiteMilestone = milestones.StartOnSiteMilestone;
+        }
+
+        CompletionMilestone = milestones.CompletionMilestone;
+
+        ValidatePaymentDates(AcquisitionMilestone, StartOnSiteMilestone, CompletionMilestone);
+        ValidateDatesForUnregisteredBody(AcquisitionMilestone, StartOnSiteMilestone);
+    }
+
     public AcquisitionMilestoneDetails? AcquisitionMilestone { get; }
 
     public StartOnSiteMilestoneDetails? StartOnSiteMilestone { get; }

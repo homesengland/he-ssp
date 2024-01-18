@@ -7,7 +7,7 @@ using HE.Investments.Common.Workflow;
 using HE.Investments.Common.WWW.Routing;
 using Stateless;
 
-namespace HE.Investment.AHP.Domain.HomeTypes;
+namespace HE.Investment.AHP.WWW.Workflows;
 
 public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
 {

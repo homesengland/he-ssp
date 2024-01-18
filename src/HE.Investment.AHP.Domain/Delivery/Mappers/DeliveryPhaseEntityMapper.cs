@@ -3,7 +3,6 @@ using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investments.Common.Contract;
-using HE.Investments.Common.WWW.Helpers;
 
 namespace HE.Investment.AHP.Domain.Delivery.Mappers;
 
@@ -16,9 +15,9 @@ public static class DeliveryPhaseEntityMapper
             deliveryPhase.Id.Value,
             deliveryPhase.Name.Value,
             deliveryPhase.TotalHomesToBeDeliveredInThisPhase,
-            DateHelper.ToDateOnlyString(deliveryPhase.DeliveryPhaseMilestones.AcquisitionMilestone?.PaymentDate?.Value),
-            DateHelper.ToDateOnlyString(deliveryPhase.DeliveryPhaseMilestones.StartOnSiteMilestone?.PaymentDate?.Value),
-            DateHelper.ToDateOnlyString(deliveryPhase.DeliveryPhaseMilestones.CompletionMilestone?.PaymentDate?.Value));
+            ToDateOnlyString(deliveryPhase.DeliveryPhaseMilestones.AcquisitionMilestone?.PaymentDate?.Value),
+            ToDateOnlyString(deliveryPhase.DeliveryPhaseMilestones.StartOnSiteMilestone?.PaymentDate?.Value),
+            ToDateOnlyString(deliveryPhase.DeliveryPhaseMilestones.CompletionMilestone?.PaymentDate?.Value));
     }
 
     public static DateDetails? MapDate(DateValueObject? date)
@@ -29,5 +28,10 @@ public static class DeliveryPhaseEntityMapper
                 date.Value.Month.ToString(CultureInfo.InvariantCulture),
                 date.Value.Year.ToString(CultureInfo.InvariantCulture))
             : null;
+    }
+
+    private static string? ToDateOnlyString(DateOnly? date)
+    {
+        return date?.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
     }
 }
