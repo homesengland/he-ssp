@@ -1,9 +1,9 @@
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.CRM.Model;
 
-namespace HE.Investments.Common.CRM;
+namespace HE.Investments.Common.CRM.Mappers;
 
-public class ApplicationStatusMapper
+public static class ApplicationStatusMapper
 {
     public static int MapToCrmStatus(ApplicationStatus status)
     {
@@ -37,10 +37,6 @@ public class ApplicationStatusMapper
     {
         return crmStatus switch
         {
-            // TODO: remove this line when AHP application status mapping will be finished
-            1  => ApplicationStatus.Draft,
-            2  => ApplicationStatus.Draft,
-
             (int)invln_externalstatus.Draft => ApplicationStatus.Draft,
             (int)invln_externalstatus.ApplicationSubmitted => ApplicationStatus.ApplicationSubmitted,
             (int)invln_externalstatus.InDueDiligence => ApplicationStatus.InDueDiligence,

@@ -1,7 +1,7 @@
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.CRM.Model;
 
-namespace HE.Investment.AHP.Domain.Common.Mappers;
+namespace HE.Investments.Common.CRM.Mappers;
 
 public static class AhpApplicationStatusMapper
 {

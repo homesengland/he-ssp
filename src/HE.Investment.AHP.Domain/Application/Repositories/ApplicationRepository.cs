@@ -9,7 +9,7 @@ using HE.Investment.AHP.Domain.Data;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.Contract.Pagination;
-using HE.Investments.Common.CRM;
+using HE.Investments.Common.CRM.Mappers;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Infrastructure.Events;
@@ -66,7 +66,7 @@ public class ApplicationRepository : IApplicationRepository
             .Select(x => new ApplicationWithFundingDetails(
                 new AhpApplicationId(x.id),
                 x.name,
-                ApplicationStatusMapper.MapToPortalStatus(x.applicationStatus),
+                AhpApplicationStatusMapper.MapToPortalStatus(x.applicationStatus),
                 ApplicationTenureMapper.ToDomain(x.tenure)!.Value,
                 x.noOfHomes,
                 x.fundingRequested))
@@ -147,7 +147,7 @@ public class ApplicationRepository : IApplicationRepository
         return new ApplicationEntity(
             new AhpApplicationId(application.id),
             new ApplicationName(application.name ?? "Unknown"),
-            ApplicationStatusMapper.MapToPortalStatus(application.applicationStatus),
+            AhpApplicationStatusMapper.MapToPortalStatus(application.applicationStatus),
             new ApplicationReferenceNumber(application.referenceNumber),
             ApplicationTenureMapper.ToDomain(application.tenure),
             new AuditEntry(
