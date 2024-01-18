@@ -14,9 +14,19 @@ public static class DecimalExtensions
         return val.Value.ToWholeNumberString();
     }
 
+    public static decimal ToWholeNumber(this decimal val)
+    {
+        return Convert.ToInt64(Math.Truncate(val), CultureInfo.InvariantCulture);
+    }
+
+    public static decimal ToWholeNumberRoundFloor(this decimal val)
+    {
+        return Convert.ToInt64(Math.Floor(val), CultureInfo.InvariantCulture);
+    }
+
     public static string ToWholeNumberString(this decimal val)
     {
-        return Convert.ToInt64(Math.Truncate(val), CultureInfo.InvariantCulture).ToString(CultureInfo.InvariantCulture);
+        return val.ToString(CultureInfo.InvariantCulture);
     }
 
     public static string? ToPoundsPencesString(this decimal? val)

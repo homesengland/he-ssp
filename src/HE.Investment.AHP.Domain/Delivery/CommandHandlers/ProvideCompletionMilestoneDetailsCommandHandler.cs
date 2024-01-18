@@ -23,7 +23,10 @@ public class ProvideCompletionMilestoneDetailsCommandHandler : UpdateDeliveryPha
         _programmeDateRangePolicy = programmeDateRangePolicy;
     }
 
-    protected override async Task<OperationResult> Update(IDeliveryPhaseEntity entity, ProvideCompletionMilestoneDetailsCommand request)
+    protected override async Task<OperationResult> Update(
+        IDeliveryPhaseEntity entity,
+        ProvideCompletionMilestoneDetailsCommand request,
+        CancellationToken cancellationToken)
     {
         var operationResult = OperationResult.New();
 
@@ -37,12 +40,13 @@ public class ProvideCompletionMilestoneDetailsCommandHandler : UpdateDeliveryPha
         operationResult.CheckErrors();
 
         var milestones = new DeliveryPhaseMilestones(
-            entity.DeliveryPhaseMilestones.Organisation,
+            entity.Organisation,
+            entity.BuildActivity,
             entity.DeliveryPhaseMilestones.AcquisitionMilestone,
             entity.DeliveryPhaseMilestones.StartOnSiteMilestone,
             milestone);
 
-        await entity.ProvideDeliveryPhaseMilestones(milestones, _programmeDateRangePolicy);
+        await entity.ProvideDeliveryPhaseMilestones(milestones, _programmeDateRangePolicy, cancellationToken);
 
         return operationResult;
     }

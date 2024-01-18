@@ -86,7 +86,7 @@ public class DeliveryPhaseSummaryViewModelFactory : IDeliveryPhaseSummaryViewMod
                 IsEditable: false),
         };
 
-        if (!deliveryPhase.IsUnregisteredBody)
+        if (deliveryPhase is { IsUnregisteredBody: false, IsOnlyCompletionMilestone: false })
         {
             items.Insert(
                 1,
@@ -118,7 +118,7 @@ public class DeliveryPhaseSummaryViewModelFactory : IDeliveryPhaseSummaryViewMod
                 new DeliveryPhaseId(deliveryPhase.Id),
                 actionName);
 
-        var items = deliveryPhase.IsUnregisteredBody
+        var items = deliveryPhase.IsUnregisteredBody || deliveryPhase.IsOnlyCompletionMilestone
             ? new List<SectionSummaryItemModel>()
             : new List<SectionSummaryItemModel>
             {

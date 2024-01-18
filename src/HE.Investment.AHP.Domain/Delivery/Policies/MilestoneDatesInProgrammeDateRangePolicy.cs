@@ -15,9 +15,9 @@ public class MilestoneDatesInProgrammeDateRangePolicy : IMilestoneDatesInProgram
         _programmeRepository = programmeRepository;
     }
 
-    public async Task Validate(DeliveryPhaseMilestones milestones)
+    public async Task Validate(DeliveryPhaseMilestones milestones, CancellationToken cancellationToken)
     {
-        var programme = await _programmeRepository.GetCurrentProgramme(ProgrammeType.Ahp);
+        var programme = await _programmeRepository.GetCurrentProgramme(ProgrammeType.Ahp, cancellationToken);
 
         ValidateMilestone(milestones.AcquisitionMilestone, programme);
         ValidateMilestone(milestones.StartOnSiteMilestone, programme);

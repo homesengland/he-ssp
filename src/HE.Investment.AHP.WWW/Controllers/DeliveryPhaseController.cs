@@ -208,8 +208,8 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     public async Task<IActionResult> SummaryOfDelivery([FromRoute] string applicationId, string deliveryPhaseId, CancellationToken cancellationToken)
     {
         var deliveryPhaseDetails =
-            await _mediator.Send(
-                new GetDeliveryPhaseDetailsQuery(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId)), cancellationToken);
+            await _deliveryPhaseProvider.Get(
+                new GetDeliveryPhaseDetailsQuery(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId), true), cancellationToken);
 
         return View("SummaryOfDelivery", deliveryPhaseDetails);
     }

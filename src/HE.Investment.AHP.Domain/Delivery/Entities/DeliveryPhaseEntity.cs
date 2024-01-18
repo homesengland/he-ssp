@@ -10,6 +10,7 @@ using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
+using SummaryOfDelivery = HE.Investment.AHP.Domain.Delivery.ValueObjects.SummaryOfDelivery;
 
 namespace HE.Investment.AHP.Domain.Delivery.Entities;
 
@@ -42,7 +43,7 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
         ReconfiguringExisting = reconfiguringExisting;
         Status = status;
         CreatedOn = createdOn;
-        DeliveryPhaseMilestones = milestones ?? new DeliveryPhaseMilestones(organisation);
+        DeliveryPhaseMilestones = milestones ?? new DeliveryPhaseMilestones(organisation, BuildActivity);
         IsAdditionalPaymentRequested = isAdditionalPaymentRequested;
         _homesToDeliver = homesToDeliver?.ToList() ?? new List<HomesToDeliverInPhase>();
     }
@@ -109,9 +110,12 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
         Name = _modificationTracker.Change(Name, deliveryPhaseName, MarkAsNotCompleted);
     }
 
-    public async Task ProvideDeliveryPhaseMilestones(DeliveryPhaseMilestones milestones, IMilestoneDatesInProgrammeDateRangePolicy policy)
+    public async Task ProvideDeliveryPhaseMilestones(
+        DeliveryPhaseMilestones milestones,
+        IMilestoneDatesInProgrammeDateRangePolicy policy,
+        CancellationToken cancellationToken)
     {
-        await policy.Validate(milestones);
+        await policy.Validate(milestones, cancellationToken);
 
         DeliveryPhaseMilestones = _modificationTracker.Change(DeliveryPhaseMilestones, milestones, MarkAsNotCompleted);
     }
@@ -137,11 +141,14 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
         IsAdditionalPaymentRequested = _modificationTracker.Change(IsAdditionalPaymentRequested, isAdditionalPaymentRequested, MarkAsNotCompleted);
     }
 
+
+
     public void Complete()
     {
         if (!IsAnswered())
         {
-            throw new DomainValidationException(ValidationErrorMessage.SectionIsNotCompleted);
+            // TODO #67047: throw and handle exception
+            throw new DomainValidationException("Cannot complete deliveryPhase.");
         }
 
         Status = _modificationTracker.Change(Status, SectionStatus.Completed);
@@ -150,6 +157,27 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
     public void UnComplete()
     {
         Status = _modificationTracker.Change(Status, SectionStatus.InProgress);
+    }
+
+    public SummaryOfDelivery CalculateSummary(decimal requiredFunding, int totalHousesToDeliver, MilestoneFramework milestoneFramework)
+    {
+        if (requiredFunding <= 0 || totalHousesToDeliver <= 0 || TotalHomesToBeDeliveredInThisPhase <= 0)
+        {
+            return SummaryOfDelivery.LackOfCalculation;
+        }
+
+        var grantApportioned = requiredFunding * TotalHomesToBeDeliveredInThisPhase / totalHousesToDeliver;
+
+        if (Organisation.IsUnregisteredBody || BuildActivity.IsOffTheShelfOrExistingSatisfactory)
+        {
+            return new SummaryOfDelivery(grantApportioned, null, null, grantApportioned);
+        }
+
+        var acquisitionMilestone = (grantApportioned * milestoneFramework.AcquisitionPercentage).ToWholeNumberRoundFloor();
+        var startOnSiteMilestone = (grantApportioned * milestoneFramework.StartOnSitePercentage).ToWholeNumberRoundFloor();
+        var completionMilestone = grantApportioned - acquisitionMilestone - startOnSiteMilestone;
+
+        return new SummaryOfDelivery(grantApportioned, acquisitionMilestone, startOnSiteMilestone, completionMilestone);
     }
 
     public void ProvideBuildActivity(BuildActivity buildActivity)
@@ -174,22 +202,13 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
 
     private bool IsAnswered()
     {
-        var reconfigureExistingValid = !IsReconfiguringExistingNeeded() || ReconfiguringExisting.HasValue;
-
-        var isAnswered = Name.IsProvided() &&
-                TypeOfHomes.IsProvided() &&
-                BuildActivity.IsAnswered() &&
-                reconfigureExistingValid &&
-                _homesToDeliver.Any() &&
-                DeliveryPhaseMilestones.IsAnswered();
-
         if (Organisation.IsUnregisteredBody)
         {
-            return isAnswered &&
+            return DeliveryPhaseMilestones.IsAnswered() &&
                    IsAdditionalPaymentRequested != null && IsAdditionalPaymentRequested.IsAnswered();
         }
 
-        return isAnswered;
+        return DeliveryPhaseMilestones.IsAnswered();
     }
 
     private void MarkAsNotCompleted()

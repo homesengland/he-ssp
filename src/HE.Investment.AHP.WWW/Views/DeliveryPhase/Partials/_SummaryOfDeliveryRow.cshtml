@@ -7,6 +7,6 @@
         <gds-h3 size="ControlSize.S">
             @Model.ValueName
         </gds-h3>
-        <p class="govuk-body govuk-!-margin-bottom-1"> @($"\u00a3{Model.Value.ToWholeNumberString()}") </p>
+        <p class="govuk-body govuk-!-margin-bottom-1"> @($"\u00a3{Model.Value.ToPoundsPencesString() ?? "-"}") </p>
     </dt>
 </div>

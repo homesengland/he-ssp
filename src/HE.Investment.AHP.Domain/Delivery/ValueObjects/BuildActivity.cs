@@ -1,10 +1,9 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Delivery.Enums;
-using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 
-namespace HE.Investment.AHP.Domain.Delivery.Entities;
+namespace HE.Investment.AHP.Domain.Delivery.ValueObjects;
 
 public class BuildActivity : ValueObject, IQuestion
 {
@@ -25,6 +24,8 @@ public class BuildActivity : ValueObject, IQuestion
     }
 
     public BuildActivityType? Type { get; private set; }
+
+    public bool IsOffTheShelfOrExistingSatisfactory => Type is BuildActivityType.OffTheShelf or BuildActivityType.ExistingSatisfactory;
 
     public static BuildActivityType[] GetAvailableTypeForRehab(Tenure tenure)
     {

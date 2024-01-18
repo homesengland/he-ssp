@@ -37,19 +37,6 @@ public class StateCanBeAccessedTests
         result.Should().BeFalse();
     }
 
-    [Fact]
-    public void ShouldReturnFalseForPageReconfigureExisting_WhenTryReconfigureExistingIsNotNeeded()
-    {
-        // given
-        var workflow = BuildWorkflow(DeliveryPhaseWorkflowState.BuildActivityType, true);
-
-        // when
-        var result = workflow.CanBeAccessed(DeliveryPhaseWorkflowState.ReconfiguringExisting);
-
-        // then
-        result.Should().BeFalse();
-    }
-
     [Theory]
     [InlineData(DeliveryPhaseWorkflowState.UnregisteredBodyFollowUp)]
     public void ShouldReturnFalse_WhenTryToAccessPageAsRegisteredBody(DeliveryPhaseWorkflowState nextState)
@@ -65,22 +52,17 @@ public class StateCanBeAccessedTests
     }
 
     [Theory]
-    [InlineData(DeliveryPhaseWorkflowState.Create, true)]
-    [InlineData(DeliveryPhaseWorkflowState.Name, true)]
-    [InlineData(DeliveryPhaseWorkflowState.TypeOfHomes, true)]
-    [InlineData(DeliveryPhaseWorkflowState.BuildActivityType, true)]
-    [InlineData(DeliveryPhaseWorkflowState.SummaryOfDelivery, true)]
-    [InlineData(DeliveryPhaseWorkflowState.PracticalCompletionMilestone, true)]
-    [InlineData(DeliveryPhaseWorkflowState.CheckAnswers, true)]
-    [InlineData(DeliveryPhaseWorkflowState.Create, false)]
-    [InlineData(DeliveryPhaseWorkflowState.Name, false)]
-    [InlineData(DeliveryPhaseWorkflowState.SummaryOfDelivery, false)]
-    [InlineData(DeliveryPhaseWorkflowState.PracticalCompletionMilestone, false)]
-    [InlineData(DeliveryPhaseWorkflowState.CheckAnswers, false)]
-    public void ShouldReturnTrue_WhenTryToAccessPage(DeliveryPhaseWorkflowState nextState, bool isUnregisteredBody)
+    [InlineData(DeliveryPhaseWorkflowState.Create)]
+    [InlineData(DeliveryPhaseWorkflowState.Name)]
+    [InlineData(DeliveryPhaseWorkflowState.TypeOfHomes)]
+    [InlineData(DeliveryPhaseWorkflowState.BuildActivityType)]
+    [InlineData(DeliveryPhaseWorkflowState.SummaryOfDelivery)]
+    [InlineData(DeliveryPhaseWorkflowState.PracticalCompletionMilestone)]
+    [InlineData(DeliveryPhaseWorkflowState.CheckAnswers)]
+    public void ShouldReturnTrue_WhenTryToAccessPageAsUnregisteredBody(DeliveryPhaseWorkflowState nextState)
     {
         // given
-        var workflow = BuildWorkflow(DeliveryPhaseWorkflowState.Create, isUnregisteredBody);
+        var workflow = BuildWorkflow(DeliveryPhaseWorkflowState.Create, true);
 
         // when
         var result = workflow.CanBeAccessed(nextState);
@@ -89,8 +71,81 @@ public class StateCanBeAccessedTests
         result.Should().BeTrue();
     }
 
-    private static DeliveryPhaseWorkflow BuildWorkflow(DeliveryPhaseWorkflowState currentSiteWorkflowState, bool isUnregisteredBody)
+    [Theory]
+    [InlineData(DeliveryPhaseWorkflowState.Create)]
+    [InlineData(DeliveryPhaseWorkflowState.Name)]
+    [InlineData(DeliveryPhaseWorkflowState.TypeOfHomes)]
+    [InlineData(DeliveryPhaseWorkflowState.BuildActivityType)]
+    [InlineData(DeliveryPhaseWorkflowState.SummaryOfDelivery)]
+    [InlineData(DeliveryPhaseWorkflowState.PracticalCompletionMilestone)]
+    [InlineData(DeliveryPhaseWorkflowState.CheckAnswers)]
+    public void ShouldReturnTrue_WhenTryToAccessPageAsRegisteredBody(DeliveryPhaseWorkflowState nextState)
     {
-        return new DeliveryPhaseWorkflow(currentSiteWorkflowState, DeliveryPhaseDetailsTestData.WithNames with { IsUnregisteredBody = isUnregisteredBody });
+        // given
+        var workflow = BuildWorkflow(DeliveryPhaseWorkflowState.Create, false);
+
+        // when
+        var result = workflow.CanBeAccessed(nextState);
+
+        // then
+        result.Should().BeTrue();
+    }
+
+    [Theory]
+    [InlineData(DeliveryPhaseWorkflowState.AcquisitionMilestone)]
+    [InlineData(DeliveryPhaseWorkflowState.StartOnSiteMilestone)]
+    public void ShouldReturnFalse_WhenTryToAccessPageNotAvailableForIsOnlyCompletionMilestone(DeliveryPhaseWorkflowState nextState)
+    {
+        // given
+        var workflow = BuildWorkflow(DeliveryPhaseWorkflowState.Create, false, true);
+
+        // when
+        var result = workflow.CanBeAccessed(nextState);
+
+        // then
+        result.Should().BeFalse();
+    }
+
+    [Theory]
+    [InlineData(DeliveryPhaseWorkflowState.Create)]
+    [InlineData(DeliveryPhaseWorkflowState.Name)]
+    [InlineData(DeliveryPhaseWorkflowState.TypeOfHomes)]
+    [InlineData(DeliveryPhaseWorkflowState.BuildActivityType)]
+    [InlineData(DeliveryPhaseWorkflowState.SummaryOfDelivery)]
+    [InlineData(DeliveryPhaseWorkflowState.PracticalCompletionMilestone)]
+    [InlineData(DeliveryPhaseWorkflowState.CheckAnswers)]
+    public void ShouldReturnTrue_WhenTryToAccessPageForIsOnlyCompletionMilestone(DeliveryPhaseWorkflowState nextState)
+    {
+        // given
+        var workflow = BuildWorkflow(DeliveryPhaseWorkflowState.Create, false, true);
+
+        // when
+        var result = workflow.CanBeAccessed(nextState);
+
+        // then
+        result.Should().BeTrue();
+    }
+
+    [Fact]
+    public void ShouldReturnFalseForPageReconfigureExisting_WhenTryReconfigureExistingIsNotNeeded()
+    {
+        // given
+        var workflow = BuildWorkflow(DeliveryPhaseWorkflowState.BuildActivityType, true);
+
+        // when
+        var result = workflow.CanBeAccessed(DeliveryPhaseWorkflowState.ReconfiguringExisting);
+
+        // then
+        result.Should().BeFalse();
+    }
+
+    private static DeliveryPhaseWorkflow BuildWorkflow(
+        DeliveryPhaseWorkflowState currentSiteWorkflowState,
+        bool isUnregisteredBody,
+        bool isOnlyCompletionMilestone = false)
+    {
+        return new DeliveryPhaseWorkflow(
+            currentSiteWorkflowState,
+            DeliveryPhaseDetailsTestData.WithNames with { IsUnregisteredBody = isUnregisteredBody, IsOnlyCompletionMilestone = isOnlyCompletionMilestone });
     }
 }

@@ -15,18 +15,18 @@ public class ProgrammeService : IProgrammeService
         _service = service;
     }
 
-    public async Task<ProgrammeDto?> Get()
+    public async Task<ProgrammeDto?> Get(CancellationToken cancellationToken)
     {
         var query = new QueryExpression(ProgrammeFields.EntityName) { ColumnSet = ProgrammeFields.Columns, };
 
-        var result = await _service.RetrieveMultipleAsync(query);
+        var result = await _service.RetrieveMultipleAsync(query, cancellationToken);
 
         if (!result.Entities.Any())
         {
             await CreateTest();
         }
 
-        result = await _service.RetrieveMultipleAsync(query);
+        result = await _service.RetrieveMultipleAsync(query, cancellationToken);
 
         // TODO: 88198 fetch programme in valid way
         var programme = result.Entities.FirstOrDefault();
