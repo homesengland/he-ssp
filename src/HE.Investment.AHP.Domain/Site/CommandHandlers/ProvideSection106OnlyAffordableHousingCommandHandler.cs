@@ -32,6 +32,7 @@ public class ProvideSection106OnlyAffordableHousingCommandHandler : SiteBaseComm
                                             currentSection106.ConfirmationFromLocalAuthority);
 
                 site.ProvideSection106(newSection106);
+
                 return Task.FromResult(OperationResult.Success());
             },
             request.SiteId,
