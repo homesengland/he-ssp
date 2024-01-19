@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using FluentAssertions;
 using HE.Investment.AHP.WWW;
 using HE.Investment.AHP.WWW.Views.Scheme.Const;
@@ -6,6 +7,7 @@ using HE.Investments.AHP.IntegrationTests.FillApplication.Data;
 using HE.Investments.AHP.IntegrationTests.Framework;
 using HE.Investments.AHP.IntegrationTests.Pages;
 using HE.Investments.IntegrationTestsFramework;
+using HE.Investments.Loans.Common.Extensions;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
 using Xunit.Extensions.Ordering;
@@ -60,12 +62,12 @@ public class Order02CompleteSchemeInformation : AhpIntegrationTest
         SchemeInformationData.GenerateFundingDetails();
 
         // when & then
-        await TestPage(
+        await TestQuestionPage(
             SchemeInformationPagesUrl.FundingDetails(ApplicationData.ApplicationId),
             SchemeInformationPageTitles.FundingDetails,
             SchemeInformationPagesUrl.AffordabilitySuffix,
-            ("RequiredFunding", SchemeInformationData.RequiredFunding.ToString()!),
-            ("HousesToDeliver", SchemeInformationData.HousesToDeliver.ToString()!));
+            ("RequiredFunding", SchemeInformationData.RequiredFunding.ToString(CultureInfo.InvariantCulture)),
+            ("HousesToDeliver", SchemeInformationData.HousesToDeliver.ToString(CultureInfo.InvariantCulture)));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
@@ -76,7 +78,7 @@ public class Order02CompleteSchemeInformation : AhpIntegrationTest
         SchemeInformationData.GenerateAffordability();
 
         // when & then
-        await TestPage(
+        await TestQuestionPage(
             SchemeInformationPagesUrl.Affordability(ApplicationData.ApplicationId),
             SchemeInformationPageTitles.Affordability,
             SchemeInformationPagesUrl.SalesRiskSuffix,
@@ -91,7 +93,7 @@ public class Order02CompleteSchemeInformation : AhpIntegrationTest
         SchemeInformationData.GenerateSalesRisk();
 
         // when & then
-        await TestPage(
+        await TestQuestionPage(
             SchemeInformationPagesUrl.SalesRisk(ApplicationData.ApplicationId),
             SchemeInformationPageTitles.SalesRisk,
             SchemeInformationPagesUrl.HousingNeedsSuffix,
@@ -106,7 +108,7 @@ public class Order02CompleteSchemeInformation : AhpIntegrationTest
         SchemeInformationData.GenerateHousingNeeds();
 
         // when & then
-        await TestPage(
+        await TestQuestionPage(
             SchemeInformationPagesUrl.HousingNeeds(ApplicationData.ApplicationId),
             SchemeInformationPageTitles.HousingNeeds,
             SchemeInformationPagesUrl.StakeholderDiscussionsSuffix,
@@ -122,7 +124,7 @@ public class Order02CompleteSchemeInformation : AhpIntegrationTest
         SchemeInformationData.GenerateStakeholderDiscussions();
 
         // when & then
-        await TestPage(
+        await TestQuestionPage(
             SchemeInformationPagesUrl.StakeholderDiscussions(ApplicationData.ApplicationId),
             SchemeInformationPageTitles.StakeholderDiscussions,
             SchemeInformationPagesUrl.CheckAnswersSuffix,
@@ -143,8 +145,8 @@ public class Order02CompleteSchemeInformation : AhpIntegrationTest
         // when
         var schemaInformationSummary = checkAnswersPage.GetSummaryListItems();
         schemaInformationSummary["Application name"].Should().Be(ApplicationData.ApplicationName);
-        schemaInformationSummary["Funding required"].Should().Be(SchemeInformationData.RequiredFunding.ToString());
-        schemaInformationSummary["Number of homes"].Should().Be(SchemeInformationData.HousesToDeliver.ToString());
+        schemaInformationSummary["Funding required"].Should().BePoundsOnly(SchemeInformationData.RequiredFunding);
+        schemaInformationSummary["Number of homes"].Should().Be(SchemeInformationData.HousesToDeliver.ToString(CultureInfo.InvariantCulture));
         schemaInformationSummary["Affordability of Shared Ownership"].Should().Be(SchemeInformationData.Affordability);
         schemaInformationSummary["Sales risk of Shared Ownership"].Should().Be(SchemeInformationData.SalesRisk);
         schemaInformationSummary["Type and tenure of homes"].Should().Be(SchemeInformationData.HousingNeedsMeetingLocalPriorities);
@@ -153,7 +155,7 @@ public class Order02CompleteSchemeInformation : AhpIntegrationTest
 
         var taskListPage = await TestClient.SubmitButton(
             continueButton,
-            ("IsCompleted", true.ToString().ToLowerInvariant()));
+            ("IsCompleted", true.MapToCommonResponse()));
 
         // then
         taskListPage.UrlEndWith(ApplicationPagesUrl.TaskListSuffix)

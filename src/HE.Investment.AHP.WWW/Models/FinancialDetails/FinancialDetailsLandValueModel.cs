@@ -1,3 +1,5 @@
+using HE.Investment.AHP.Contract.Common.Enums;
+
 namespace HE.Investment.AHP.WWW.Models.FinancialDetails;
 public class FinancialDetailsLandValueModel : FinancialDetailsBaseModel
 {
@@ -5,7 +7,7 @@ public class FinancialDetailsLandValueModel : FinancialDetailsBaseModel
     {
     }
 
-    public FinancialDetailsLandValueModel(Guid applicationId, string applicationName, string? landValue, string? isOnPublicLand)
+    public FinancialDetailsLandValueModel(Guid applicationId, string applicationName, string? landValue, YesNoType isOnPublicLand)
         : base(applicationId, applicationName)
     {
         LandValue = landValue;
@@ -14,5 +16,5 @@ public class FinancialDetailsLandValueModel : FinancialDetailsBaseModel
 
     public string? LandValue { get; set; }
 
-    public string? IsOnPublicLand { get; set; }
+    public YesNoType IsOnPublicLand { get; set; }
 }

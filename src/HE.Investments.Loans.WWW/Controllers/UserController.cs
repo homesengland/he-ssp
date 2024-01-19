@@ -1,7 +1,7 @@
 using HE.Investments.Account.Contract.Organisation.Queries;
 using HE.Investments.Account.Contract.User;
+using HE.Investments.Account.Contract.User.Commands;
 using HE.Investments.Account.Contract.User.Queries;
-using HE.Investments.Account.Domain.User.Commands;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Utils;
 using HE.Investments.Loans.Contract.Application.Queries;

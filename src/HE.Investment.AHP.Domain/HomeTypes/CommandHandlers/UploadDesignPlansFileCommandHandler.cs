@@ -1,17 +1,13 @@
-using HE.Investment.AHP.Contract.HomeTypes;
+using HE.Investment.AHP.Contract.HomeTypes.Commands;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Common.ValueObjects;
 using HE.Investment.AHP.Domain.Documents.Config;
-using HE.Investment.AHP.Domain.HomeTypes.Commands;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
-using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
-using HE.Investments.Common.Validators;
 using MediatR;
-using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 using UploadedFileContract = HE.Investment.AHP.Contract.Common.UploadedFile;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.CommandHandlers;
@@ -35,8 +31,8 @@ public class UploadDesignPlansFileCommandHandler : IRequestHandler<UploadDesignP
     {
         var account = await _accountUserContext.GetSelectedAccount();
         var homeType = await _homeTypeRepository.GetById(
-            new ApplicationId(request.ApplicationId),
-            new HomeTypeId(request.HomeTypeId),
+            request.ApplicationId,
+            request.HomeTypeId,
             account,
             new[] { HomeTypeSegmentType.DesignPlans },
             cancellationToken);
@@ -63,6 +59,6 @@ public class UploadDesignPlansFileCommandHandler : IRequestHandler<UploadDesignP
 
     private static UploadedFileContract Map(UploadedFile uploadedFile)
     {
-        return new UploadedFileContract(uploadedFile.Id.Value, uploadedFile.Name.Value, uploadedFile.UploadedOn, uploadedFile.UploadedBy, true);
+        return new UploadedFileContract(uploadedFile.Id, uploadedFile.Name.Value, uploadedFile.UploadedOn, uploadedFile.UploadedBy, true);
     }
 }

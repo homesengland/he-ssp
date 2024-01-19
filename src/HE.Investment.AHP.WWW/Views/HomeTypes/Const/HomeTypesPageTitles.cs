@@ -8,6 +8,26 @@ public static class HomeTypesPageTitles
 
     public const string HomeTypeDetails = "Home type details";
 
+    public const string DisabledPeople = "What type of homes will you be providing for disabled and vulnerable people?";
+
+    public const string DisabledPeopleClientGroup = "What client group are the homes for?";
+
+    public const string HappiDesignPrinciples = "Which Housing our Ageing Population Panel for Innovation (HAPPI) design principles do the homes meet?";
+
+    public const string DesignPlans = "Upload your design plans";
+
+    public const string SupportedHousingInformation = "Supported housing information";
+
+    public const string RevenueFunding = "Where are you receiving revenue funding from for these homes?";
+
+    public const string MoveOnArrangements = "Tell us the move on arrangements that are in place for when these homes are used as short stay accommodation";
+
+    public const string ExitPlan = "Tell us the exit plan or alternative use for these homes should commissioning priorities change in the future";
+
+    public const string TypologyLocationAndDesign = "Tell us how the typology, location and design of these homes meet the needs of the intended residents";
+
+    public const string PeopleGroupForSpecificDesignFeatures = "Do these homes incorporate specific design features or management arrangements to meet the needs of any of these groups?";
+
     public const string HomeInformation = "Home information";
 
     public const string MoveOnAccommodation = "Are these homes intended as move on accommodation?";

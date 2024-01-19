@@ -22,10 +22,10 @@ public static class UriExtensions
             return projectGuid;
         }
 
-        return uri.Split("=").Last();
+        return uri.Split("=")[^1];
     }
 
-    public static string GetHomeTypeGuidFromUrl(this string uri)
+    public static string GetNestedGuidFromUrl(this string uri)
     {
         return new Uri(uri).Segments[^2].Trim(UrlPathSeparator);
     }

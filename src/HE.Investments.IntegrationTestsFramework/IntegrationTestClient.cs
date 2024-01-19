@@ -1,6 +1,7 @@
 using AngleSharp.Html.Dom;
 using HE.Investments.Common.Extensions;
 using HE.Investments.IntegrationTestsFramework.Auth;
+using HE.Investments.IntegrationTestsFramework.Data;
 using HE.Investments.IntegrationTestsFramework.Exceptions;
 using HE.Investments.TestsUtils.Helpers;
 
@@ -60,7 +61,10 @@ public class IntegrationTestClient
         return SubmitButton(submitButton, inputs.Select(i => new KeyValuePair<string, string>(i.InputName, i.Value)));
     }
 
-    public async Task<IHtmlDocument> SubmitButton(IHtmlButtonElement submitButton, IEnumerable<KeyValuePair<string, string>> formValues)
+    public async Task<IHtmlDocument> SubmitButton(
+        IHtmlButtonElement submitButton,
+        IEnumerable<KeyValuePair<string, string>> formValues,
+        IEnumerable<(string InputName, FileEntry File)>? formFiles = null)
     {
         var form = submitButton.Form!;
 
@@ -74,6 +78,17 @@ public class IntegrationTestClient
             if (!radiosFound && !textAreaFound && !inputFound && !checkboxesFound)
             {
                 throw new HtmlElementNotFoundException($"Cannot found any input with name {formValue.Key}");
+            }
+        }
+
+        if (formFiles != null)
+        {
+            foreach (var formFile in formFiles)
+            {
+                if (!HandleFileInputs(form, formFile.InputName, formFile.File))
+                {
+                    throw new HtmlElementNotFoundException($"Cannot found any file input with name {formFile.InputName}");
+                }
             }
         }
 
@@ -191,6 +206,24 @@ public class IntegrationTestClient
         }
 
         inputElement.Value = formValue.Value;
+
+        return true;
+    }
+
+    private static bool HandleFileInputs(IHtmlFormElement form, string inputName, FileEntry file)
+    {
+        var fileInputs = form.Elements
+            .Select(x => x as IHtmlInputElement)
+            .Where(x => x is not null && x.Type == "file")
+            .ToList();
+
+        var inputElement = fileInputs.SingleOrDefault(x => x!.Name == inputName);
+        if (inputElement is null)
+        {
+            return false;
+        }
+
+        inputElement.Files!.Add(file);
 
         return true;
     }

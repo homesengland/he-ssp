@@ -1,0 +1,77 @@
+@using HE.Investment.AHP.Contract.Site;
+@using HE.Investment.AHP.WWW.Routing;
+@using HE.Investments.Common.WWW.Components.FormHeader;
+@using HE.Investment.AHP.WWW.Views.Site;
+@model SitesListModel
+@{
+    ViewData["Title"] = SitePageTitles.SiteSplashScreen;
+    ViewBag.Breadcrumbs = AhpBreadcrumbsBuilder
+        .New()
+        .WithSites()
+        .Build();
+
+    var actionName = Model.Items.Length > 0 ? "Index" : "Details";
+}
+
+<div class="govuk-grid-column-three-quarters">
+    <vc:form-header title="@SitePageTitles.SiteSplashScreen" />
+
+    <div class="govuk-!-padding-bottom-8">
+        <gds-div-inset-text>
+            If you intend to apply as part of consortium, you must create a
+            consortium and make sure the details are up to date.
+        </gds-div-inset-text>
+        <gds-p>
+            You are about to start an AHP 21-26 CME application. Before applying, you should
+            read and understand our
+            <a href="https://www.gov.uk/guidance/apply-for-affordable-housing-funding" target="_blank">
+                latest AHP 21-26 CME guidance (opens in a new tab).
+            </a>
+        </gds-p>
+        <gds-p>
+            If you intend to apply for a different funding route, you can find these on
+            <a href="https://www.gov.uk/guidance/apply-for-affordable-housing-funding#apply" target="_blank">
+                our how to apply for affordable housing funding (opens in a new tab).
+            </a>
+        </gds-p>
+        <gds-p>
+            The Continuous Market Engagement (CME) route provides access to grant funding
+            throughout the duration of the programme, while funding remains available. You can
+            apply for funding for individual schemes, but all schemes funded through CME must:
+            <ul class="govuk-list govuk-list govuk-list--bullet">
+                <li>start on site by 30 September 2025</li>
+                <li>be completed by 31 March 2026</li>
+            </ul>
+        </gds-p>
+        <gds-p>
+            You do not need to be an investment partner to apply for funding through CME.
+            However, you must have gained investment partner status before your application
+            can be approved and a funding allocation agreed.
+        </gds-p>
+        <gds-p>
+            As part of your application, you will need to provide details about your scheme. For
+            example:
+            <ul class="govuk-list govuk-list govuk-list--bullet">
+                <li>location</li>
+                <li>geography</li>
+                <li>planningn</li>
+                <li>costs</li>
+                <li>land</li>
+                <li>number of homes</li>
+                <li>delivery</li>
+                <li>grant required</li>
+            </ul>
+        </gds-p>
+        <gds-p>
+            You will be able to save and return to this application at any time. If you not have the
+            information to answer a question, you can continue but will have to answer it later.
+        </gds-p>
+        <gds-p>
+            By starting this application, you are confirming that any information you provide is
+            truthful and accurate to the best of your knowledge.
+        </gds-p>
+    </div>
+    <a href="@Url.Action(actionName, "Site")">
+        <gds-button type="button" class="govuk-!-margin-top-8">Start now</gds-button>
+    </a>
+</div>

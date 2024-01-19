@@ -2,21 +2,20 @@
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.Components.FormHeader
 @using HE.Investments.Common.WWW.Components.RadioYesNo
-@using HE.Investments.Common.WWW.Components.WorkflowBackButton
 @using HE.Investment.AHP.Contract.Delivery
-@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using HE.Investment.AHP.WWW.Views.Delivery.Const
 @model HE.Investment.AHP.WWW.Models.Delivery.DeliveryRequestAdditionalPaymentViewModel
 @{
-    var title = "Would you like to request additional payments for this phase?";
+    var title = DeliveryPageTitles.UnregisteredBodyFollowUp;
     ViewData["Title"] = title;
 }
 
 <gds-div-grid-column-two-thirds>
-    <vc:workflow-back-button current-page="@DeliveryPhaseWorkflowState.UnregisteredBodyFollowUp" param-name="deliveryPhaseId"/>
+    <vc:ahp-workflow-back-button current-page="@DeliveryPhaseWorkflowState.UnregisteredBodyFollowUp"/>
 
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
-    <form asp-controller="DeliveryPhase" asp-action="UnregisteredBodyFollowUp" asp-method="post" novalidate>
+    <form asp-controller="DeliveryPhase" asp-action="UnregisteredBodyFollowUp" asp-method="post" asp-route-redirect="@Context.Request.Query["redirect"]" novalidate>
         <vc:form-header caption="@($"{Model.ApplicationName} - {Model.DeliveryPhaseName}")"/>
 
         <vc:radio-yes-no

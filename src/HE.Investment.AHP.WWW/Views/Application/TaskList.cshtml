@@ -5,12 +5,9 @@
 @using Microsoft.Extensions.Options
 @using HE.Investment.AHP.WWW.Views.Application
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ApplicationTaskListHeader
-@using HE.Investments.Account.Shared
 @using HE.Investments.Common.Contract
-@using HE.Investments.Common.WWW.TagHelpers
 @model HE.Investment.AHP.WWW.Models.Application.ApplicationSectionsModel
 @inject IOptions<ContactInfoOptions> Options
-@inject IAccountAccessContext AccountAccessContext
 
 @{
     ViewData["Title"] = "Application details";
@@ -21,10 +18,11 @@
         .WithSites()
         .WithSchemes()
         .Build();
-
-    var canSubmitApplication = await AccountAccessContext.CanSubmitApplication();
 }
-<div class="govuk-grid-column-full govuk-!-padding-top-8">
+<div class="govuk-grid-column-two-thirds govuk-!-padding-top-8">
+    <partial name="~/Partials/_Notification.cshtml"/>
+</div>
+<div class="govuk-grid-column-full">
     <vc:form-header caption="@Model.SiteName" title="@Model.Name"/>
 
     <vc:application-task-list-header
@@ -38,16 +36,7 @@
 <div class="govuk-grid-column-two-thirds">
     @await Html.PartialAsync("~/Partials/TaskList/_TaskList.cshtml", ApplicationSections.CreateSections(Model.ApplicationId, Url, Model.Sections))
 
-    <gds-h2>Check and submit</gds-h2>
-    @if (incompleteSectionsCount > 0)
-    {
-        <gds-p>You must complete all sections before you can submit your application.</gds-p>
-    }
-    <link-button
-        action-url="@Url.Action("CheckAnswers", "Application", new { applicationId = Model.ApplicationId })"
-        is-disabled="@(incompleteSectionsCount > 0 || !canSubmitApplication)">
-        Check and submit application
-    </link-button>
+    @await Html.PartialAsync("Partials/_TaskListRequestChangeStatusSection.cshtml", Model)
 
     <link-button action-url="@Url.Action("Index", "Application")" is-secondary="true">Return to applications</link-button>
 </div>

@@ -1,20 +1,19 @@
-@using HE.Investment.AHP.Domain.HomeTypes
 @using HE.Investment.AHP.WWW.Extensions
-@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using HE.Investment.AHP.WWW.Views.HomeTypes.Const
+@using HE.Investment.AHP.Contract.HomeTypes
 @model HE.Investment.AHP.WWW.Models.HomeTypes.DesignPlansModel;
 
 @{
     var applicationId = this.GetApplicationIdFromRoute();
     var homeTypeId = this.GetHomeTypeIdFromRoute();
     var workflow = Context.Request.Query["workflow"];
+    ViewData["Title"] = HomeTypesPageTitles.DesignPlans;
 }
 
 <div class="govuk-grid-column-full">
     <form asp-controller="HomeTypes" asp-action="DesignPlans" asp-method="post" enctype="multipart/form-data" asp-route-workflow="@workflow" novalidate>
-        <vc:home-type-form-header title="Upload your design plans"
+        <vc:home-type-form-header title="@HomeTypesPageTitles.DesignPlans"
                                   current-page="@HomeTypesWorkflowState.DesignPlans"
-                                  application-id="@applicationId"
-                                  home-type-id="@homeTypeId"
                                   caption="@Model.Header"/>
 
         @Html.HiddenFor(m => Model.ApplicationName)
@@ -28,8 +27,8 @@
                         is-multiple="true"
                         max-file-size-in-mb="@Model.MaxFileSizeInMegabytes"
                         upload-one-file-url="@Url.Action("UploadDesignPlansFile", "HomeTypes", new { applicationId, homeTypeId })"
-                        remove-file-url-template="@Url.RouteUrl("subSection", new { controller = "HomeTypes", action = "RemoveDesignPlansFile", applicationId, id = homeTypeId, workflow, fileId = ":fileId" })"
-                        download-file-url-template="@Url.RouteUrl("subSection", new { controller = "HomeTypes", action = "DownloadDesignPlansFile", applicationId, id = homeTypeId, fileId = ":fileId" })"/>
+                        remove-file-url-template="@Url.Action("RemoveDesignPlansFile", "HomeTypes", new { applicationId, homeTypeId, workflow, fileId = ":fileId" })"
+                        download-file-url-template="@Url.Action("DownloadDesignPlansFile", "HomeTypes", new { applicationId, homeTypeId, fileId = ":fileId" })"/>
 
         <vc:files-table asp-for="@Model.UploadedFiles"/>
 

@@ -2,8 +2,8 @@ using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.Entities;
+using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investments.Common.Contract;
-using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.Tests.Delivery.Entities.TestDataBuilders;
 
@@ -37,7 +37,7 @@ public class DeliveryPhasesEntityBuilder
     {
         return new DeliveryPhasesEntity(
             new ApplicationBasicInfo(
-                new ApplicationId("test-app-42123"),
+                new AhpApplicationId("test-app-42123"),
                 new ApplicationName("Test Application"),
                 Tenure.AffordableRent,
                 ApplicationStatus.Draft),

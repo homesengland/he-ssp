@@ -1,14 +1,13 @@
-@using HE.Investment.AHP.Domain.HomeTypes
 @using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.WWW.Models.HomeTypes
-@using Microsoft.AspNetCore.Mvc.TagHelpers
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Checkboxes
+@using HE.Investment.AHP.WWW.Views.HomeTypes.Const
+@using HE.Investment.AHP.Contract.HomeTypes
 @model HE.Investment.AHP.WWW.Models.HomeTypes.HappiDesignPrinciplesModel;
 
 @{
     var applicationId = this.GetApplicationIdFromRoute();
-    var homeTypeId = this.GetHomeTypeIdFromRoute();
     var workflow = Context.Request.Query["workflow"];
+    ViewData["Title"] = HomeTypesPageTitles.HappiDesignPrinciples;
 }
 
 <div class="govuk-grid-column-two-thirds">
@@ -16,14 +15,12 @@
         @Html.HiddenFor(m => Model.ApplicationName)
         @Html.HiddenFor(m => Model.HomeTypeName)
         <vc:home-type-form-header current-page="@HomeTypesWorkflowState.HappiDesignPrinciples"
-                                  application-id="@applicationId"
-                                  home-type-id="@homeTypeId"
                                   caption="@Model.Header"/>
 
         <gds-field-set class="govuk-!-margin-bottom-6">
             <he-error-form-group asp-for="DesignPrinciples">
                 <gds-legend>
-                    <gds-h1>Which Housing our Ageing Population Panel for Innovation (HAPPI) design principles do the homes meet?</gds-h1>
+                    <gds-h1>@HomeTypesPageTitles.HappiDesignPrinciples</gds-h1>
                 </gds-legend>
 
                 <gds-details>

@@ -1,6 +1,7 @@
+using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
 using HE.Investments.Common.WWW.Models;
-using HE.Investments.Common.WWWTestsFramework.Helpers;
+
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.HomeTypes;
@@ -12,7 +13,7 @@ public class DesignPlansTests : HomeTypesTestBase
     private static readonly DesignPlansModel Model = new("My application", "My homes")
     {
         MoreInformation = "Some details about my Design Plans",
-        UploadedFiles = new[] { new FileModel("file-1", "My File", new DateTime(2022, 10, 11), "Test User", true, "#", "#") },
+        UploadedFiles = new[] { new FileModel("file-1", "My File", new DateTime(2022, 10, 11, 0, 0, 0, DateTimeKind.Unspecified), "Test User", true, "#", "#") },
         MaxFileSizeInMegabytes = 20,
         AllowedExtensions = "JPG, PDF",
     };
@@ -25,8 +26,7 @@ public class DesignPlansTests : HomeTypesTestBase
 
         // then
         document
-            .HasElementWithText("span", "My application - My homes")
-            .HasElementWithText("h1", "Upload your design plans")
+            .HasPageHeader("My application - My homes", "Upload your design plans")
             .HasElementWithText("span", "Upload a file (JPG, PDF)")
             .HasElementWithText("span", "Maximum file size 20 MB")
             .HasInput("File")
@@ -35,7 +35,7 @@ public class DesignPlansTests : HomeTypesTestBase
             .HasElementWithText("label", "Tell us more about your design plans (optional)")
             .HasElementWithText("div", "Tell us any important information about the plans, or any additional information not included.")
             .HasTextAreaInput("MoreInformation", value: "Some details about my Design Plans")
-            .HasElementWithText("button", "Save and continue");
+            .HasGdsSaveAndContinueButton();
     }
 
     [Fact]

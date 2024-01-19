@@ -3,14 +3,14 @@ using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
+using HE.Investment.AHP.Domain.Common.Mappers;
 using HE.Investment.AHP.Domain.Data;
 using HE.Investment.AHP.Domain.FinancialDetails.Entities;
 using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.ValueObjects;
-using HE.Investments.Common.CRM;
+using HE.Investments.Common.CRM.Mappers;
 using HE.Investments.Common.Extensions;
-using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 
@@ -23,12 +23,12 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
         _applicationCrmContext = applicationCrmContext;
     }
 
-    public async Task<FinancialDetailsEntity> GetById(ApplicationId id, UserAccount userAccount, CancellationToken cancellationToken)
+    public async Task<FinancialDetailsEntity> GetById(AhpApplicationId id, UserAccount userAccount, CancellationToken cancellationToken)
     {
         var organisationId = userAccount.SelectedOrganisationId().Value;
         var application = userAccount.CanViewAllApplications()
-            ? await _applicationCrmContext.GetOrganisationApplicationById(id.Value, organisationId, CrmFields.FinancialDetailsToRead, cancellationToken)
-            : await _applicationCrmContext.GetUserApplicationById(id.Value, organisationId, CrmFields.FinancialDetailsToRead, cancellationToken);
+            ? await _applicationCrmContext.GetOrganisationApplicationById(id.Value, organisationId, CrmFields.FinancialDetailsToRead.ToList(), cancellationToken)
+            : await _applicationCrmContext.GetUserApplicationById(id.Value, organisationId, CrmFields.FinancialDetailsToRead.ToList(), cancellationToken);
 
         return CreateEntity(application);
     }
@@ -41,7 +41,7 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
             name = financialDetails.ApplicationBasicInfo.Name.Name,
             actualAcquisitionCost = financialDetails.LandStatus.PurchasePrice?.Value,
             expectedAcquisitionCost = financialDetails.LandStatus.ExpectedPurchasePrice?.Value,
-            isPublicLand = financialDetails.LandValue.IsPublicLand,
+            isPublicLand = YesNoTypeMapper.Map(financialDetails.LandValue.IsPublicLand),
             currentLandValue = financialDetails.LandValue.CurrentLandValue?.Value,
             expectedOnWorks = financialDetails.OtherApplicationCosts.ExpectedWorksCosts?.Value,
             expectedOnCosts = financialDetails.OtherApplicationCosts.ExpectedOnCosts?.Value,
@@ -51,7 +51,7 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
         MapFromExpectedContributions(financialDetails.ExpectedContributions, dto);
         MapFromPublicGrants(financialDetails.PublicGrants, dto);
 
-        _ = await _applicationCrmContext.Save(dto, organisationId.Value, CrmFields.FinancialDetailsToUpdate, cancellationToken);
+        _ = await _applicationCrmContext.Save(dto, organisationId.Value, CrmFields.FinancialDetailsToUpdate.ToList(), cancellationToken);
 
         return financialDetails;
     }
@@ -59,10 +59,10 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
     private static FinancialDetailsEntity CreateEntity(AhpApplicationDto application)
     {
         var applicationBasicInfo = new ApplicationBasicInfo(
-            ApplicationId.From(application.id),
+            AhpApplicationId.From(application.id),
             new ApplicationName(application.name),
             ApplicationTenureMapper.ToDomain(application.tenure)!.Value,
-            ApplicationStatusMapper.MapToPortalStatus(application.applicationStatus));
+            AhpApplicationStatusMapper.MapToPortalStatus(application.applicationStatus));
 
         return new FinancialDetailsEntity(
             applicationBasicInfo,
@@ -71,7 +71,7 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
                 application.expectedAcquisitionCost.IsProvided() ? new ExpectedPurchasePrice(application.expectedAcquisitionCost!.Value) : null),
             new LandValue(
                 application.currentLandValue.IsProvided() ? new CurrentLandValue(application.currentLandValue!.Value) : null,
-                application.isPublicLand),
+                YesNoTypeMapper.Map(application.isPublicLand)),
             MapToOtherApplicationCosts(application),
             MapToExpectedContributionsToScheme(application, applicationBasicInfo.Tenure),
             MapToPublicGrants(application),

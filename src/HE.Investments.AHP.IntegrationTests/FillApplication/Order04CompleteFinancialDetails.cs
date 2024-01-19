@@ -62,7 +62,7 @@ public class Order04CompleteFinancialDetails : AhpIntegrationTest
         FinancialDetailsData.GenerateLandStatus();
 
         // when & then
-        await TestPage(
+        await TestQuestionPage(
             FinancialDetailsPagesUrl.LandStatus(ApplicationData.ApplicationId),
             FinancialDetailsPageTitles.LandStatusPage,
             FinancialDetailsPagesUrl.LandValueSuffix,
@@ -77,7 +77,7 @@ public class Order04CompleteFinancialDetails : AhpIntegrationTest
         FinancialDetailsData.GenerateLandValue();
 
         // when & then
-        await TestPage(
+        await TestQuestionPage(
             FinancialDetailsPagesUrl.LandValue(ApplicationData.ApplicationId),
             FinancialDetailsPageTitles.LandValuePage,
             FinancialDetailsPagesUrl.OtherApplicationCostsSuffix,
@@ -93,9 +93,9 @@ public class Order04CompleteFinancialDetails : AhpIntegrationTest
         FinancialDetailsData.GenerateOtherApplicationCosts();
 
         // when & then
-        await TestPage(
+        await TestQuestionPage(
             FinancialDetailsPagesUrl.OtherApplicationCosts(ApplicationData.ApplicationId),
-            FinancialDetailsPageTitles.OtherApplicationCosts,
+            FinancialDetailsPageTitles.OtherSchemeCosts,
             FinancialDetailsPagesUrl.ExpectedContributionsSuffix,
             ("ExpectedWorksCosts", FinancialDetailsData.ExpectedWorksCosts.ToString(CultureInfo.InvariantCulture)),
             ("ExpectedOnCosts", FinancialDetailsData.ExpectedOnCosts.ToString(CultureInfo.InvariantCulture)));
@@ -109,7 +109,7 @@ public class Order04CompleteFinancialDetails : AhpIntegrationTest
         FinancialDetailsData.GenerateExpectedContributions();
 
         // when & then
-        await TestPage(
+        await TestQuestionPage(
             FinancialDetailsPagesUrl.ExpectedContributions(ApplicationData.ApplicationId),
             FinancialDetailsPageTitles.ExpectedContributions,
             FinancialDetailsPagesUrl.GrantsSuffix,
@@ -130,7 +130,7 @@ public class Order04CompleteFinancialDetails : AhpIntegrationTest
         FinancialDetailsData.GenerateGrants();
 
         // when & then
-        await TestPage(
+        await TestQuestionPage(
             FinancialDetailsPagesUrl.Grants(ApplicationData.ApplicationId),
             FinancialDetailsPageTitles.ExpectedGrants,
             FinancialDetailsPagesUrl.CheckAnswersSuffix,
@@ -156,24 +156,25 @@ public class Order04CompleteFinancialDetails : AhpIntegrationTest
 
         // when
         var schemaInformationSummary = checkAnswersPage.GetSummaryListItems();
-        schemaInformationSummary["Purchase price"].Should().Be($"\u00a3{FinancialDetailsData.LandStatus.ToString(CultureInfo.InvariantCulture)}");
-        schemaInformationSummary["Current value"].Should().Be($"\u00a3{FinancialDetailsData.PublicLandValue.ToString(CultureInfo.InvariantCulture)}");
+        schemaInformationSummary["Purchase price"].Should().BePoundsOnly(FinancialDetailsData.LandStatus);
+        schemaInformationSummary["Current value"].Should().BePoundsOnly(FinancialDetailsData.PublicLandValue);
         schemaInformationSummary["Public land"].Should().Be("Yes");
-        schemaInformationSummary["Works costs"].Should().Be($"\u00a3{FinancialDetailsData.ExpectedWorksCosts.ToString(CultureInfo.InvariantCulture)}");
-        schemaInformationSummary["On costs"].Should().Be($"\u00a3{FinancialDetailsData.ExpectedOnCosts.ToString(CultureInfo.InvariantCulture)}");
+        schemaInformationSummary["Works costs"].Should().BePoundsOnly(FinancialDetailsData.ExpectedWorksCosts);
+        schemaInformationSummary["On costs"].Should().BePoundsOnly(FinancialDetailsData.ExpectedOnCosts);
         schemaInformationSummary["Total scheme costs"]
             .Should()
-            .Be(
-                $"\u00a3{(FinancialDetailsData.PublicLandValue + FinancialDetailsData.ExpectedWorksCosts + FinancialDetailsData.ExpectedOnCosts).ToString(CultureInfo.InvariantCulture)}");
-        schemaInformationSummary["Your contributions"].Should().Be($"\u00a3{FinancialDetailsData.TotalExpectedContributions.ToString(CultureInfo.InvariantCulture)}");
-        schemaInformationSummary["Grants from other public bodies"].Should().Be($"\u00a3{FinancialDetailsData.TotalGrants.ToString(CultureInfo.InvariantCulture)}");
-        schemaInformationSummary["Total contributions"].Should().Be($"\u00a3{FinancialDetailsData.TotalContributions.ToString(CultureInfo.InvariantCulture)}");
+            .BePoundsOnly(FinancialDetailsData.PublicLandValue + FinancialDetailsData.ExpectedWorksCosts + FinancialDetailsData.ExpectedOnCosts);
+        schemaInformationSummary["Your contributions"].Should().BePoundsOnly(FinancialDetailsData.TotalExpectedContributions);
+        schemaInformationSummary["Grants from other public bodies"].Should().BePoundsOnly(FinancialDetailsData.TotalGrants);
+        schemaInformationSummary["Total contributions"].Should().BePoundsOnly(FinancialDetailsData.TotalContributions);
 
-        await TestClient.SubmitButton(
+        var taskListPage = await TestClient.SubmitButton(
             continueButton,
             ("IsSectionCompleted", true.MapToCommonResponse()));
 
         // then
+        taskListPage.UrlEndWith(ApplicationPagesUrl.TaskListSuffix)
+            .HasSectionWithStatus("enter-financial-details-status", "Completed");
         SaveCurrentPage();
     }
 }

@@ -1,21 +1,30 @@
 using HE.Investment.AHP.Contract.Delivery.Commands;
 using HE.Investment.AHP.Domain.Delivery.Entities;
+using HE.Investment.AHP.Domain.Delivery.Policies;
 using HE.Investment.AHP.Domain.Delivery.Repositories;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
-using HE.Investments.Common.Validators;
 
 namespace HE.Investment.AHP.Domain.Delivery.CommandHandlers;
 
 public class ProvideStartOnSiteMilestoneDetailsCommandHandler : UpdateDeliveryPhaseCommandHandler<ProvideStartOnSiteMilestoneDetailsCommand>
 {
-    public ProvideStartOnSiteMilestoneDetailsCommandHandler(IDeliveryPhaseRepository repository, IAccountUserContext accountUserContext)
+    private readonly IMilestoneDatesInProgrammeDateRangePolicy _programmeDateRangePolicy;
+
+    public ProvideStartOnSiteMilestoneDetailsCommandHandler(
+        IDeliveryPhaseRepository repository,
+        IMilestoneDatesInProgrammeDateRangePolicy programmeDateRangePolicy,
+        IAccountUserContext accountUserContext)
         : base(repository, accountUserContext)
     {
+        _programmeDateRangePolicy = programmeDateRangePolicy;
     }
 
-    protected override Task<OperationResult> Update(IDeliveryPhaseEntity entity, ProvideStartOnSiteMilestoneDetailsCommand request)
+    protected override async Task<OperationResult> Update(
+        IDeliveryPhaseEntity entity,
+        ProvideStartOnSiteMilestoneDetailsCommand request,
+        CancellationToken cancellationToken)
     {
         var operationResult = OperationResult.New();
 
@@ -23,10 +32,20 @@ public class ProvideStartOnSiteMilestoneDetailsCommandHandler : UpdateDeliveryPh
             StartOnSiteDate.Create(request.StartOnSiteDate.Day, request.StartOnSiteDate.Month, request.StartOnSiteDate.Year));
         var milestonePaymentDate = operationResult.AggregateNullable(() =>
             MilestonePaymentDate.Create(request.PaymentDate.Day, request.PaymentDate.Month, request.PaymentDate.Year));
-        var details = operationResult.AggregateNullable(() => StartOnSiteMilestoneDetails.Create(startOnSiteDate, milestonePaymentDate));
+        var milestone = operationResult.AggregateNullable(() =>
+            StartOnSiteMilestoneDetails.Create(startOnSiteDate, milestonePaymentDate));
 
-        entity.ProvideStartOnSiteMilestoneDetails(details);
+        operationResult.CheckErrors();
 
-        return Task.FromResult(operationResult);
+        var milestones = new DeliveryPhaseMilestones(
+            entity.Organisation,
+            entity.BuildActivity,
+            entity.DeliveryPhaseMilestones.AcquisitionMilestone,
+            milestone,
+            entity.DeliveryPhaseMilestones.CompletionMilestone);
+
+        await entity.ProvideDeliveryPhaseMilestones(milestones, _programmeDateRangePolicy, cancellationToken);
+
+        return operationResult;
     }
 }

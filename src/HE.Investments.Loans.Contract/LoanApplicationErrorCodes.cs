@@ -1,5 +1,5 @@
 namespace HE.Investments.Loans.Contract;
-public class LoanApplicationErrorCodes
+public static class LoanApplicationErrorCodes
 {
     public const string DirectorLoansNotExist = nameof(DirectorLoansNotExist);
 

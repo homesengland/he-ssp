@@ -1,5 +1,5 @@
 using HE.Investments.Common.Contract;
-using HE.Investments.Common.CRM;
+using HE.Investments.Common.CRM.Mappers;
 
 namespace HE.Investments.Loans.BusinessLogic.Tests.Application.Mappers;
 

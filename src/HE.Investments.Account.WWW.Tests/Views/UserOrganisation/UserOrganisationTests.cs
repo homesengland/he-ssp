@@ -3,7 +3,6 @@ using HE.Investments.Account.WWW.Models.UserOrganisation;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWWTestsFramework;
-using HE.Investments.Common.WWWTestsFramework.Helpers;
 using Xunit;
 
 namespace HE.Investments.Account.WWW.Tests.Views.UserOrganisation;
@@ -113,7 +112,7 @@ public class UserOrganisationTests : ViewTestBase
 
         if (actionsExist)
         {
-            document.HasElementWithText("a", model.Actions.First().Label);
+            document.HasElementWithText("a", model.Actions[0].Label);
         }
     }
 

@@ -1,7 +1,9 @@
+using HE.Investment.AHP.Contract.Application;
+
 namespace HE.Investment.AHP.Contract.FinancialDetails.Queries;
 
 public record CalculateGrantsQuery(
-    Guid ApplicationId,
+    AhpApplicationId ApplicationId,
     string? CountyCouncilGrants,
     string? DhscExtraCareGrants,
     string? LocalAuthorityGrants,

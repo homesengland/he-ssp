@@ -1,13 +1,11 @@
-@using HE.Investment.AHP.Domain.HomeTypes
 @using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.WWW.Models.HomeTypes
 @using HE.Investment.AHP.WWW.Views.HomeTypes.Const
 @using HE.Investment.AHP.WWW.Views.Shared.Components.HomeTypeFormHeader
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
 @using HE.Investments.Common.WWW.Components.FormButton
-@using HE.Investments.Common.WWW.TagHelpers
-@using Microsoft.AspNetCore.Mvc.TagHelpers
 @using tes = He.AspNetCore.Mvc.Gds.Components.TagHelpers.Radios;
+@using HE.Investment.AHP.Contract.HomeTypes
 
 @model HE.Investment.AHP.WWW.Models.HomeTypes.FinishHomeTypeModel;
 
@@ -20,7 +18,6 @@
     <form asp-controller="HomeTypes" asp-action="FinishHomeTypes" asp-method="post" novalidate>
         @Html.HiddenFor(m => Model.ApplicationName)
         <vc:home-type-form-header current-page="@HomeTypesWorkflowState.FinishHomeTypes"
-                                  application-id="@applicationId"
                                   caption="@Model.ApplicationName - Home types" />
 
         <gds-field-set>

@@ -10,13 +10,17 @@ internal static class AdditionalDetailsMapper
 {
     public static AdditionalDetails? MapFromCrm(SiteDetailsDto projectFromCrm, DateTime now)
     {
-        return AdditionalDetailsExistsIn(projectFromCrm) ?
-            new AdditionalDetails(
-                projectFromCrm.dateOfPurchase.IsProvided() ? new PurchaseDate(new ProjectDate(projectFromCrm.dateOfPurchase!.Value), now) : null!,
-                projectFromCrm.siteCost.IsProvided() ? new Pounds(decimal.Parse(projectFromCrm.siteCost, CultureInfo.InvariantCulture)) : null!,
-                projectFromCrm.currentValue.IsProvided() ? new Pounds(decimal.Parse(projectFromCrm.currentValue, CultureInfo.InvariantCulture)) : null!,
-                SourceOfValuationMapper.FromString(projectFromCrm.valuationSource)!.Value) :
-                null;
+        if (!AdditionalDetailsExistsIn(projectFromCrm))
+        {
+            return null;
+        }
+
+        var dateOfPurchase = projectFromCrm.dateOfPurchase.IsProvided() ? new PurchaseDate(new ProjectDate(projectFromCrm.dateOfPurchase!.Value), now) : null!;
+        var siteCost = projectFromCrm.siteCost.IsProvided() ? new Pounds(decimal.Parse(projectFromCrm.siteCost, CultureInfo.InvariantCulture)) : null!;
+        var currentValue = projectFromCrm.currentValue.IsProvided() ? new Pounds(decimal.Parse(projectFromCrm.currentValue, CultureInfo.InvariantCulture)) : null!;
+        var valuationSource = SourceOfValuationMapper.FromString(projectFromCrm.valuationSource)!.Value;
+
+        return new AdditionalDetails(dateOfPurchase, siteCost, currentValue, valuationSource);
     }
 
     private static bool AdditionalDetailsExistsIn(SiteDetailsDto projectFromCrm)

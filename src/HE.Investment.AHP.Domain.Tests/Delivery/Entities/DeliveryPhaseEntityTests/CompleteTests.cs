@@ -1,4 +1,5 @@
 using FluentAssertions;
+using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investment.AHP.Domain.Tests.Delivery.Entities.TestDataBuilders;
 using HE.Investments.Common.Contract;
@@ -8,16 +9,50 @@ namespace HE.Investment.AHP.Domain.Tests.Delivery.Entities.DeliveryPhaseEntityTe
 
 public class CompleteTests
 {
-    private readonly MilestonePaymentDate _validPaymentDate = new("1", "5", "2000");
+    [Fact]
+    public void ShouldSetCompleted_WhenAllQuestionsAnsweredForRegisteredBody()
+    {
+        // given
+        var testCandidate = CreateValidBuilder()
+            .Build();
+
+        // when
+        testCandidate.Complete();
+
+        // then
+        testCandidate.Status.Should().Be(SectionStatus.Completed);
+        testCandidate.IsModified.Should().BeTrue();
+    }
 
     [Fact]
     public void ShouldSetCompleted_WhenAllQuestionsAnsweredForUnregisteredBody()
     {
         // given
-        var testCandidate = new DeliveryPhaseEntityBuilder()
+        var testCandidate = CreateValidBuilder()
             .WithUnregisteredBody()
             .WithAdditionalPaymentRequested(new IsAdditionalPaymentRequested(true))
-            .WithCompletionMilestoneDetails(new CompletionMilestoneDetails(new CompletionDate("7", "3", "2023"), _validPaymentDate))
+            .WithDeliveryPhaseMilestones(new DeliveryPhaseMilestonesBuilder()
+                .WithUnregisteredBody()
+                .WithoutAcquisitionMilestoneDetails()
+                .WithoutStartOnSiteMilestoneDetails()
+                .Build())
+            .Build();
+
+        // when
+        testCandidate.Complete();
+
+        // then
+        testCandidate.Status.Should().Be(SectionStatus.Completed);
+        testCandidate.IsModified.Should().BeTrue();
+    }
+
+    [Fact]
+    public void ShouldSetCompleted_WhenReconfiguringExisting()
+    {
+        // given
+        var testCandidate = CreateValidBuilder()
+            .WithTypeOfHomes(TypeOfHomes.Rehab)
+            .WithReconfiguringExisting()
             .Build();
 
         // when
@@ -32,9 +67,13 @@ public class CompleteTests
     public void ShouldThrowException_WhenIsAdditionalPaymentRequestedMissing()
     {
         // given
-        var testCandidate = new DeliveryPhaseEntityBuilder()
+        var testCandidate = CreateValidBuilder()
             .WithUnregisteredBody()
-            .WithCompletionMilestoneDetails(new CompletionMilestoneDetails(new CompletionDate("7", "3", "2023"), _validPaymentDate))
+            .WithDeliveryPhaseMilestones(new DeliveryPhaseMilestonesBuilder()
+                .WithUnregisteredBody()
+                .WithoutAcquisitionMilestoneDetails()
+                .WithoutStartOnSiteMilestoneDetails()
+                .Build())
             .Build();
 
         // when
@@ -45,13 +84,11 @@ public class CompleteTests
     }
 
     [Fact]
-    public void ShouldThrowException_WhenCompletionDateIsMissing()
+    public void ShouldThrowException_WhenDeliveryPhaseMilestonesNotAnswered()
     {
         // given
-        var testCandidate = new DeliveryPhaseEntityBuilder()
-            .WithUnregisteredBody()
-            .WithAdditionalPaymentRequested(new IsAdditionalPaymentRequested(true))
-            .WithCompletionMilestoneDetails(new CompletionMilestoneDetails(null, _validPaymentDate))
+        var testCandidate = CreateValidBuilder()
+            .WithDeliveryPhaseMilestones(new DeliveryPhaseMilestonesBuilder().WithoutAcquisitionMilestoneDetails().Build())
             .Build();
 
         // when
@@ -62,30 +99,11 @@ public class CompleteTests
     }
 
     [Fact]
-    public void ShouldSetCompleted_WhenAllQuestionsAnsweredForRegisteredBody()
+    public void ShouldThrowException_WhenBuildActivityNotAnswered()
     {
         // given
-        var testCandidate = new DeliveryPhaseEntityBuilder()
-            .WithAcquisitionMilestoneDetails(new AcquisitionMilestoneDetails(new AcquisitionDate("4", "7", "2012"), _validPaymentDate))
-            .WithStartOnSiteMilestoneDetails(new StartOnSiteMilestoneDetails(new StartOnSiteDate("4", "7", "2012"), _validPaymentDate))
-            .WithCompletionMilestoneDetails(new CompletionMilestoneDetails(new CompletionDate("7", "3", "2023"), _validPaymentDate))
-            .Build();
-
-        // when
-        testCandidate.Complete();
-
-        // then
-        testCandidate.Status.Should().Be(SectionStatus.Completed);
-        testCandidate.IsModified.Should().BeTrue();
-    }
-
-    [Fact]
-    public void ShouldSetCompleted_WhenStartOnSiteMilestoneDetailsMissing()
-    {
-        // given
-        var testCandidate = new DeliveryPhaseEntityBuilder()
-            .WithAcquisitionMilestoneDetails(new AcquisitionMilestoneDetails(new AcquisitionDate("4", "7", "2012"), _validPaymentDate))
-            .WithCompletionMilestoneDetails(new CompletionMilestoneDetails(new CompletionDate("7", "3", "2023"), _validPaymentDate))
+        var testCandidate = CreateValidBuilder()
+            .WithoutBuildActivity()
             .Build();
 
         // when
@@ -93,5 +111,55 @@ public class CompleteTests
 
         // then
         action.Should().Throw<DomainValidationException>();
+    }
+
+    [Fact]
+    public void ShouldThrowException_WhenTypeOfHomeNotAnswered()
+    {
+        // given
+        var testCandidate = CreateValidBuilder()
+            .WithoutTypeOfHomes()
+            .Build();
+
+        // when
+        var action = () => testCandidate.Complete();
+
+        // then
+        action.Should().Throw<DomainValidationException>();
+    }
+
+    [Fact]
+    public void ShouldThrowException_WhenReconfiguringExistingNotAnswered()
+    {
+        // given
+        var testCandidate = CreateValidBuilder()
+            .WithTypeOfHomes(TypeOfHomes.Rehab)
+            .Build();
+
+        // when
+        var action = () => testCandidate.Complete();
+
+        // then
+        action.Should().Throw<DomainValidationException>();
+    }
+
+    [Fact]
+    public void ShouldThrowException_WhenHomesToDeliverMissing()
+    {
+        // given
+        var testCandidate = CreateValidBuilder()
+            .WithoutHomesToDeliver()
+            .Build();
+
+        // when
+        var action = () => testCandidate.Complete();
+
+        // then
+        action.Should().Throw<DomainValidationException>();
+    }
+
+    private DeliveryPhaseEntityBuilder CreateValidBuilder()
+    {
+        return new DeliveryPhaseEntityBuilder().WithHomesToBeDelivered();
     }
 }

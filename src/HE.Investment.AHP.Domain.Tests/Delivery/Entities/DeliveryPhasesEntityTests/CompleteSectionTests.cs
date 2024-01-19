@@ -71,11 +71,11 @@ public class CompleteSectionTests
         var homeType1Id = new HomeTypeId("1 bed flat");
         var homeType2Id = new HomeTypeId("2 bed flat");
         var deliveryPhase1 = new DeliveryPhaseEntityBuilder()
-            .WithHomesToBeDelivered(homeType1Id.Value, 5)
-            .WithHomesToBeDelivered(homeType2Id.Value, 5)
+            .WithHomesToBeDelivered(5, homeType1Id.Value)
+            .WithHomesToBeDelivered(5, homeType2Id.Value)
             .WithStatus(SectionStatus.Completed).Build();
         var deliveryPhase2 = new DeliveryPhaseEntityBuilder()
-            .WithHomesToBeDelivered(homeType1Id.Value, 5)
+            .WithHomesToBeDelivered(5, homeType1Id.Value)
             .WithStatus(SectionStatus.Completed)
             .Build();
         var testCandidate = new DeliveryPhasesEntityBuilder()
@@ -103,7 +103,7 @@ public class CompleteSectionTests
         // given
         var homeTypeId = new HomeTypeId("1 bed flat");
         var deliveryPhase = new DeliveryPhaseEntityBuilder()
-            .WithHomesToBeDelivered(homeTypeId.Value, 11)
+            .WithHomesToBeDelivered(11, homeTypeId.Value)
             .WithStatus(SectionStatus.Completed)
             .Build();
         var testCandidate = new DeliveryPhasesEntityBuilder()
@@ -129,7 +129,7 @@ public class CompleteSectionTests
         // given
         var homeTypeId = new HomeTypeId("1 bed flat");
         var deliveryPhase = new DeliveryPhaseEntityBuilder()
-            .WithHomesToBeDelivered(homeTypeId.Value, 10)
+            .WithHomesToBeDelivered(10, homeTypeId.Value)
             .WithStatus(SectionStatus.Completed)
             .Build();
         var testCandidate = new DeliveryPhasesEntityBuilder()
@@ -151,7 +151,7 @@ public class CompleteSectionTests
         // given
         var homeTypeId = new HomeTypeId("1 bed flat");
         var deliveryPhase = new DeliveryPhaseEntityBuilder()
-            .WithHomesToBeDelivered(homeTypeId.Value, 10)
+            .WithHomesToBeDelivered(10, homeTypeId.Value)
             .WithStatus(SectionStatus.Completed)
             .Build();
         var testCandidate = new DeliveryPhasesEntityBuilder()

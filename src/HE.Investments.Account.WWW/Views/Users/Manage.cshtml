@@ -1,0 +1,44 @@
+@using HE.Investments.Common.WWW.Components.FormHeader
+@using HE.Investments.Common.WWW.Components.SummaryItem
+@using HE.Investments.Account.Contract.Users
+@using HE.Investments.Account.WWW.Models.Users
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investments.Common.WWW.Components.RadioListWithOr
+@using HE.Investments.Common.WWW.Models
+@model (string OrganisationName, HE.Investments.Account.Contract.Users.UserDetails UserDetails)
+@{
+    ViewData["Title"] = "Manage users";
+    var title = $"Manage {Model.UserDetails.FirstName} {Model.UserDetails.LastName}'s role";
+
+    var undefinedRole = new ExtendedSelectListItem(
+        "Remove user",
+        UserRole.Undefined.ToString(),
+        false,
+        $"The user will no longer be a member of {Model.OrganisationName} and will be unable to view any applications.");
+}
+
+<gds-div-grid-column-two-thirds>
+    <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("Index", "Users")"></gds-back-link>
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+    <vc:form-header title=@title caption="@Model.OrganisationName"/>
+    <gds-summary-list class="govuk-!-margin-bottom-9">
+        <vc:summary-item title="First name" value="@Model.UserDetails.FirstName"/>
+        <vc:summary-item title="Last name" value="@Model.UserDetails.LastName"/>
+        <vc:summary-item title="Job title" value="@Model.UserDetails.JobTitle"/>
+        <vc:summary-item title="Email" value="@Model.UserDetails.Email"/>
+    </gds-summary-list>
+
+    <form asp-controller="Users" asp-action="ChangeRole" asp-route-id="@Model.UserDetails.Id.Value" asp-method="post" novalidate>
+
+        <vc:radio-list-with-or
+            field-name="Role"
+            title="Which role do you want to grant the user?"
+            hint="This can be updated at any time."
+            available-options="@UserRolesDescription.ToAssign"
+            alternative-option=@undefinedRole
+            value="@Model.UserDetails.Role"/>
+
+        <vc:form-button/>
+
+    </form>
+</gds-div-grid-column-two-thirds>

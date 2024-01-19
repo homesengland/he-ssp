@@ -1,5 +1,7 @@
+using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.Contract.Delivery;
-using HE.Investment.AHP.Contract.Site;
+using HE.Investments.Common.Contract;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Routing;
 using Stateless;
 
@@ -7,12 +9,15 @@ namespace HE.Investment.AHP.WWW.Workflows;
 
 public class DeliveryPhaseWorkflow : IStateRouting<DeliveryPhaseWorkflowState>
 {
-    private readonly bool _isUnregisteredBody;
     private readonly StateMachine<DeliveryPhaseWorkflowState, Trigger> _machine;
 
-    public DeliveryPhaseWorkflow(DeliveryPhaseWorkflowState currentSiteWorkflowState, bool isUnregisteredBody)
+    private readonly DeliveryPhaseDetails _model;
+    private readonly bool _isReadOnly;
+
+    public DeliveryPhaseWorkflow(DeliveryPhaseWorkflowState currentSiteWorkflowState, DeliveryPhaseDetails model, bool isReadOnly)
     {
-        _isUnregisteredBody = isUnregisteredBody;
+        _model = model;
+        _isReadOnly = isReadOnly;
         _machine = new StateMachine<DeliveryPhaseWorkflowState, Trigger>(currentSiteWorkflowState);
         ConfigureTransitions();
     }
@@ -28,56 +33,114 @@ public class DeliveryPhaseWorkflow : IStateRouting<DeliveryPhaseWorkflowState>
         return Task.FromResult(CanBeAccessed(nextState));
     }
 
+    public DeliveryPhaseWorkflowState CurrentState(DeliveryPhaseWorkflowState targetState)
+    {
+        if (_isReadOnly)
+        {
+            return DeliveryPhaseWorkflowState.CheckAnswers;
+        }
+
+        if (targetState != DeliveryPhaseWorkflowState.Name || _model.Status == SectionStatus.NotStarted)
+        {
+            return targetState;
+        }
+
+#pragma warning disable S2589 // Boolean expressions should not be gratuitous
+        return _model switch
+        {
+            { TypeOfHomes: var x } when x.IsNotProvided() => DeliveryPhaseWorkflowState.TypeOfHomes,
+            { BuildActivityType: var x } when x.IsNotProvided() => DeliveryPhaseWorkflowState.BuildActivityType,
+            { } when _model.IsReconfiguringExistingNeeded && _model.ReconfiguringExisting.IsNotProvided() => DeliveryPhaseWorkflowState.ReconfiguringExisting,
+            { NumberOfHomes: var x } when x.IsNotProvided() => DeliveryPhaseWorkflowState.AddHomes,
+            { } when (_model.AcquisitionDate.IsNotProvided() || _model.AcquisitionPaymentDate.IsNotProvided()) && AllMilestonesAvailable() => DeliveryPhaseWorkflowState.AcquisitionMilestone,
+            { } when (_model.StartOnSiteDate.IsNotProvided() || _model.StartOnSitePaymentDate.IsNotProvided()) && AllMilestonesAvailable() => DeliveryPhaseWorkflowState.StartOnSiteMilestone,
+            { } when _model.PracticalCompletionDate.IsNotProvided() || _model.PracticalCompletionPaymentDate.IsNotProvided() => DeliveryPhaseWorkflowState.PracticalCompletionMilestone,
+            { } when _model.IsAdditionalPaymentRequested.IsNotProvided() && IsUnregisteredBody() => DeliveryPhaseWorkflowState.UnregisteredBodyFollowUp,
+            _ => DeliveryPhaseWorkflowState.CheckAnswers,
+        };
+#pragma warning restore S2589 // Boolean expressions should not be gratuitous
+    }
+
     public bool CanBeAccessed(DeliveryPhaseWorkflowState state)
     {
         return state switch
         {
-            DeliveryPhaseWorkflowState.New => true,
+            DeliveryPhaseWorkflowState.Create => true,
             DeliveryPhaseWorkflowState.Name => true,
             DeliveryPhaseWorkflowState.TypeOfHomes => true,
-            DeliveryPhaseWorkflowState.Summary => true,
-            DeliveryPhaseWorkflowState.AcquisitionMilestone => !_isUnregisteredBody,
-            DeliveryPhaseWorkflowState.StartOnSiteMilestone => !_isUnregisteredBody,
-            DeliveryPhaseWorkflowState.PracticalCompletionMilestone => true,
-            DeliveryPhaseWorkflowState.UnregisteredBodyFollowUp => _isUnregisteredBody,
+            DeliveryPhaseWorkflowState.BuildActivityType => true,
+            DeliveryPhaseWorkflowState.ReconfiguringExisting => _model.IsReconfiguringExistingNeeded,
+            DeliveryPhaseWorkflowState.AddHomes => true,
+            DeliveryPhaseWorkflowState.SummaryOfDelivery => _model.NumberOfHomes > 0,
+            DeliveryPhaseWorkflowState.AcquisitionMilestone => AllMilestonesAvailable() && _model.NumberOfHomes > 0,
+            DeliveryPhaseWorkflowState.StartOnSiteMilestone => AllMilestonesAvailable() && _model.NumberOfHomes > 0,
+            DeliveryPhaseWorkflowState.PracticalCompletionMilestone => _model.NumberOfHomes > 0,
+            DeliveryPhaseWorkflowState.UnregisteredBodyFollowUp => IsUnregisteredBody() && _model.NumberOfHomes > 0,
             DeliveryPhaseWorkflowState.CheckAnswers => true,
-            _ => false,
+            _ => throw new ArgumentOutOfRangeException(nameof(state), state, null),
         };
     }
 
     private void ConfigureTransitions()
     {
-        _machine.Configure(DeliveryPhaseWorkflowState.Summary)
-            .PermitIf(Trigger.Continue, DeliveryPhaseWorkflowState.AcquisitionMilestone, () => !_isUnregisteredBody)
-            .PermitIf(Trigger.Continue, DeliveryPhaseWorkflowState.PracticalCompletionMilestone, () => _isUnregisteredBody);
+        _machine.Configure(DeliveryPhaseWorkflowState.Create)
+            .Permit(Trigger.Continue, DeliveryPhaseWorkflowState.TypeOfHomes);
 
         _machine.Configure(DeliveryPhaseWorkflowState.Name)
             .Permit(Trigger.Continue, DeliveryPhaseWorkflowState.TypeOfHomes);
 
         _machine.Configure(DeliveryPhaseWorkflowState.TypeOfHomes)
-            .Permit(Trigger.Continue, DeliveryPhaseWorkflowState.AcquisitionMilestone)
+            .Permit(Trigger.Continue, DeliveryPhaseWorkflowState.BuildActivityType)
             .Permit(Trigger.Back, DeliveryPhaseWorkflowState.Name);
+
+        _machine.Configure(DeliveryPhaseWorkflowState.BuildActivityType)
+            .PermitIf(Trigger.Continue, DeliveryPhaseWorkflowState.ReconfiguringExisting, () => _model.IsReconfiguringExistingNeeded)
+            .PermitIf(Trigger.Continue, DeliveryPhaseWorkflowState.AddHomes, () => !_model.IsReconfiguringExistingNeeded)
+            .Permit(Trigger.Back, DeliveryPhaseWorkflowState.TypeOfHomes);
+
+        _machine.Configure(DeliveryPhaseWorkflowState.ReconfiguringExisting)
+            .Permit(Trigger.Continue, DeliveryPhaseWorkflowState.AddHomes)
+            .Permit(Trigger.Back, DeliveryPhaseWorkflowState.BuildActivityType);
+
+        _machine.Configure(DeliveryPhaseWorkflowState.AddHomes)
+            .Permit(Trigger.Continue, DeliveryPhaseWorkflowState.SummaryOfDelivery)
+            .PermitIf(Trigger.Back, DeliveryPhaseWorkflowState.BuildActivityType, () => !_model.IsReconfiguringExistingNeeded)
+            .PermitIf(Trigger.Back, DeliveryPhaseWorkflowState.ReconfiguringExisting, () => _model.IsReconfiguringExistingNeeded);
+
+        _machine.Configure(DeliveryPhaseWorkflowState.SummaryOfDelivery)
+            .PermitIf(Trigger.Continue, DeliveryPhaseWorkflowState.AcquisitionMilestone, AllMilestonesAvailable)
+            .PermitIf(Trigger.Continue, DeliveryPhaseWorkflowState.PracticalCompletionMilestone, OnlyCompletionMilestoneAvailable)
+            .Permit(Trigger.Back, DeliveryPhaseWorkflowState.AddHomes);
 
         _machine.Configure(DeliveryPhaseWorkflowState.AcquisitionMilestone)
             .PermitIf(Trigger.Continue, DeliveryPhaseWorkflowState.StartOnSiteMilestone)
-            .Permit(Trigger.Back, DeliveryPhaseWorkflowState.TypeOfHomes);
+            .Permit(Trigger.Back, DeliveryPhaseWorkflowState.SummaryOfDelivery);
 
         _machine.Configure(DeliveryPhaseWorkflowState.StartOnSiteMilestone)
             .Permit(Trigger.Continue, DeliveryPhaseWorkflowState.PracticalCompletionMilestone)
-            .Permit(Trigger.Back, DeliveryPhaseWorkflowState.AcquisitionMilestone);
+            .PermitIf(Trigger.Back, DeliveryPhaseWorkflowState.AddHomes, OnlyCompletionMilestoneAvailable)
+            .PermitIf(Trigger.Back, DeliveryPhaseWorkflowState.AcquisitionMilestone, AllMilestonesAvailable);
 
         _machine.Configure(DeliveryPhaseWorkflowState.PracticalCompletionMilestone)
-            .PermitIf(Trigger.Continue, DeliveryPhaseWorkflowState.CheckAnswers, () => !_isUnregisteredBody)
-            .PermitIf(Trigger.Continue, DeliveryPhaseWorkflowState.UnregisteredBodyFollowUp, () => _isUnregisteredBody)
-            .PermitIf(Trigger.Back, DeliveryPhaseWorkflowState.StartOnSiteMilestone, () => !_isUnregisteredBody)
-            .PermitIf(Trigger.Back, DeliveryPhaseWorkflowState.Summary, () => _isUnregisteredBody);
+            .PermitIf(Trigger.Continue, DeliveryPhaseWorkflowState.CheckAnswers, IsRegisteredBody)
+            .PermitIf(Trigger.Continue, DeliveryPhaseWorkflowState.UnregisteredBodyFollowUp, IsUnregisteredBody)
+            .PermitIf(Trigger.Back, DeliveryPhaseWorkflowState.StartOnSiteMilestone, AllMilestonesAvailable)
+            .PermitIf(Trigger.Back, DeliveryPhaseWorkflowState.AddHomes, OnlyCompletionMilestoneAvailable);
 
         _machine.Configure(DeliveryPhaseWorkflowState.UnregisteredBodyFollowUp)
             .PermitIf(Trigger.Continue, DeliveryPhaseWorkflowState.CheckAnswers)
             .PermitIf(Trigger.Back, DeliveryPhaseWorkflowState.PracticalCompletionMilestone);
 
         _machine.Configure(DeliveryPhaseWorkflowState.CheckAnswers)
-            .PermitIf(Trigger.Back, DeliveryPhaseWorkflowState.PracticalCompletionMilestone, () => !_isUnregisteredBody)
-            .PermitIf(Trigger.Back, DeliveryPhaseWorkflowState.UnregisteredBodyFollowUp, () => _isUnregisteredBody);
+            .PermitIf(Trigger.Back, DeliveryPhaseWorkflowState.PracticalCompletionMilestone, IsRegisteredBody)
+            .PermitIf(Trigger.Back, DeliveryPhaseWorkflowState.UnregisteredBodyFollowUp, IsUnregisteredBody);
     }
+
+    private bool AllMilestonesAvailable() => IsRegisteredBody() && !_model.IsOnlyCompletionMilestone;
+
+    private bool OnlyCompletionMilestoneAvailable() => !AllMilestonesAvailable();
+
+    private bool IsUnregisteredBody() => _model.IsUnregisteredBody;
+
+    private bool IsRegisteredBody() => !IsUnregisteredBody();
 }

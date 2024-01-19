@@ -1,7 +1,7 @@
 using AngleSharp.Html.Dom;
 using HE.Investment.AHP.WWW.Models.Delivery;
 using HE.Investments.Common.WWWTestsFramework;
-using HE.Investments.Common.WWWTestsFramework.Helpers;
+
 using Microsoft.AspNetCore.Routing;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.Delivery;
@@ -37,7 +37,7 @@ public class ListTests : ViewTestBase
             .HasElementWithText(
                 "div",
                 "All of your homes have been added to delivery phase. If you want to add another delivery phase, edit the homes in an existing phase or remove a phase.")
-            .HasElementWithText("button", "Save and continue");
+            .HasGdsSaveAndContinueButton();
     }
 
     [Fact]
@@ -88,8 +88,7 @@ public class ListTests : ViewTestBase
     private static void AssertView(IHtmlDocument document)
     {
         document
-            .HasElementWithText("span", ApplicationName)
-            .HasElementWithText("h1", "Delivery")
+            .HasPageHeader(ApplicationName, "Delivery")
             .HasElementWithText("p", "View and add the delivery phases for this application and add homes to phases.")
             .HasElementWithText("a", "Return to application");
     }

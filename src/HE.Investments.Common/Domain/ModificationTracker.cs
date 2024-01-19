@@ -19,15 +19,20 @@ public sealed class ModificationTracker
         _modifiedEventHandler?.Invoke();
     }
 
-    public T Change<T>(T currentValue, T newValue, Action? onChanged = null)
+    public T Change<T>(T currentValue, T newValue, Action? onChanged = null, params Action<T>[] onChangedWithParamList)
     {
-        if (!EqualityComparer<T>.Default.Equals(currentValue, newValue))
+        if (EqualityComparer<T>.Default.Equals(currentValue, newValue))
         {
-            MarkAsModified();
-            onChanged?.Invoke();
-            return newValue;
+            return currentValue;
         }
 
-        return currentValue;
+        MarkAsModified();
+        onChanged?.Invoke();
+        foreach (var onChangedWithParam in onChangedWithParamList)
+        {
+            onChangedWithParam.Invoke(newValue);
+        }
+
+        return newValue;
     }
 }

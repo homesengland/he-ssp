@@ -2,7 +2,7 @@ using AngleSharp.Html.Dom;
 using HE.Investment.AHP.Contract.FinancialDetails.Constants;
 using HE.Investment.AHP.WWW.Models.FinancialDetails;
 using HE.Investments.Common.WWWTestsFramework;
-using HE.Investments.Common.WWWTestsFramework.Helpers;
+
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.FinancialDetails;
@@ -42,10 +42,10 @@ public class OtherSchemeCostsTests : ViewTestBase
     private static void AssertView(IHtmlDocument document, string? errorMessage = null)
     {
         document
-            .HasElementWithText("h1", "Other application costs")
+            .HasElementWithText("h1", "Other scheme costs")
             .HasElementWithText("h2", "Enter your expected works costs")
             .HasElementWithText("button", "Save and return to application")
-            .HasElementWithText("button", "Save and continue")
+            .HasGdsSaveAndContinueButton()
             .HasSummaryErrorMessage(nameof(FinancialDetailsValidationFieldNames.ExpectedWorksCosts), errorMessage, !string.IsNullOrEmpty(errorMessage))
             .HasErrorMessage(nameof(FinancialDetailsValidationFieldNames.ExpectedWorksCosts), errorMessage, !string.IsNullOrEmpty(errorMessage));
     }

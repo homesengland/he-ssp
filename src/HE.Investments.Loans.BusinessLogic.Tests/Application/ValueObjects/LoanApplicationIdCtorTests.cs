@@ -1,4 +1,4 @@
-using HE.Investments.Loans.Common.Tests.TestData;
+using HE.Investments.Common.Tests.TestData;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
 
 namespace HE.Investments.Loans.BusinessLogic.Tests.Application.ValueObjects;

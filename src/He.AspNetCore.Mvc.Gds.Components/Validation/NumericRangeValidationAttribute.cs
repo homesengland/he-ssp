@@ -8,9 +8,9 @@ namespace He.AspNetCore.Mvc.Gds.Components.Validation
     /// </summary>
     public class NumericRangeValidationAttribute : NumericValidationAttribute
     {
-        private readonly bool allowEmpty;
-        private readonly int minValue;
-        private readonly int maxValue;
+        private readonly bool _allowEmpty;
+        private readonly int _minValue;
+        private readonly int _maxValue;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NumericRangeValidationAttribute"/> class.
@@ -20,17 +20,17 @@ namespace He.AspNetCore.Mvc.Gds.Components.Validation
         /// <param name="allowEmpty">Allowing empty value.</param>
         public NumericRangeValidationAttribute(int minValue, int maxValue, bool allowEmpty = false)
         {
-            this.minValue = minValue;
-            this.maxValue = maxValue;
-            this.allowEmpty = allowEmpty;
+            this._minValue = minValue;
+            this._maxValue = maxValue;
+            this._allowEmpty = allowEmpty;
         }
 
         /// <inheritdoc/>
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            ValidationResult validationResult = ValidationResult.Success;
+            var validationResult = ValidationResult.Success;
 
-            if (this.allowEmpty && string.IsNullOrEmpty(value?.ToString()))
+            if (this._allowEmpty && string.IsNullOrEmpty(value?.ToString()))
             {
                 return validationResult;
             }
@@ -39,8 +39,8 @@ namespace He.AspNetCore.Mvc.Gds.Components.Validation
 
             if (validationResult == ValidationResult.Success)
             {
-                var isInt = int.TryParse(value?.ToString(), out var res);
-                if (res < this.minValue || res > this.maxValue)
+                _ = int.TryParse(value?.ToString(), out var res);
+                if (res < this._minValue || res > this._maxValue)
                 {
                     validationResult = new ValidationResult(
                         this.ErrorMessage,

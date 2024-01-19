@@ -1,0 +1,24 @@
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investment.AHP.Contract.Site
+@using HE.Investment.AHP.WWW.Views.Site
+@model SiteModel
+@{
+    ViewData["Title"] = SitePageTitles.SiteSection106OnlyAffordableHousing;
+}
+<gds-div-grid-column-two-thirds>
+    <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.Section106OnlyAffordableHousing" />
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+
+    <form asp-controller="Site" asp-action="Section106OnlyAffordableHousing" asp-method="post" novalidate>
+        <vc:form-header title="@SitePageTitles.SiteSection106OnlyAffordableHousing" caption="@Model?.Name" additional-css-class="govuk-!-padding-top-8"></vc:form-header>
+
+        <vc:radio-yes-no field-name="@nameof(Model.Section106OnlyAffordableHousing)"
+                         hint="Consider all of the phases covered by the planning permission, even if those phases are not covered by this application."
+            value="@Model?.Section106OnlyAffordableHousing"/>
+
+        @Html.HiddenFor(x => x.Id)
+
+        <vc:form-button />
+    </form>
+
+</gds-div-grid-column-two-thirds>

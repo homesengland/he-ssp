@@ -12,7 +12,7 @@ public static class ProgrammesConsts
         nameof(LoanApplicationV2Controller.ApplicationDashboard),
         "LoanApplicationV2");
 
-    // TODO: fix params for AHP program
+    //// TODO: fix params for AHP program
     public static readonly ProgrammeModel AhpProgramme = new(
         "Affordable Homes Programme 2021-2026 Continuous Market Engagement",
         "You can start a new Affordable Homes Programme application here. This will not affect any of your previous applications.",

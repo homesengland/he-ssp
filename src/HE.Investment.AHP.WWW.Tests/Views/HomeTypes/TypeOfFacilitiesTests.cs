@@ -1,5 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
-using HE.Investments.Common.WWWTestsFramework.Helpers;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.HomeTypes;
 
@@ -17,8 +17,7 @@ public class TypeOfFacilitiesTests : HomeTypesTestBase
 
         // then
         document
-            .HasElementWithText("span", "My application - My homes")
-            .HasElementWithText("h1", "What type of facilities do the homes have?")
+            .HasPageHeader("My application - My homes", "What type of facilities do the homes have?")
             .HasRadio(
                 "FacilityType",
                 new[]
@@ -27,8 +26,8 @@ public class TypeOfFacilitiesTests : HomeTypesTestBase
                     "Shared facilities",
                     "Mix of self-contained snd shared facilities",
                 })
-            .HasElementWithText("span", "Resident has use of their own facilities, such as bathroom and kitchen, within their own home.")
-            .HasElementWithText("span", "Residents have their own room or rooms but facilities, such as bathroom and kitchen, are shared with others.")
-            .HasElementWithText("button", "Save and continue");
+            .HasHint("Resident has use of their own facilities, such as bathroom and kitchen, within their own home.")
+            .HasHint("Residents have their own room or rooms but facilities, such as bathroom and kitchen, are shared with others.")
+            .HasGdsSaveAndContinueButton();
     }
 }

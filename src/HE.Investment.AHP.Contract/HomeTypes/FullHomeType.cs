@@ -4,9 +4,9 @@ using HE.Investment.AHP.Contract.HomeTypes.Enums;
 namespace HE.Investment.AHP.Contract.HomeTypes;
 
 public record FullHomeType(
-    string Id,
+    HomeTypeId Id,
     string Name,
-    string ApplicationId,
+    AhpApplicationId ApplicationId,
     string ApplicationName,
     Tenure Tenure,
     HousingType HousingType,

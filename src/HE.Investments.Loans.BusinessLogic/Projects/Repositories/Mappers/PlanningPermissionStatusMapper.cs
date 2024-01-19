@@ -1,7 +1,7 @@
 using HE.Investments.Loans.BusinessLogic.Projects.Enums;
 
 namespace HE.Investments.Loans.BusinessLogic.Projects.Repositories.Mappers;
-internal class PlanningPermissionStatusMapper
+internal static class PlanningPermissionStatusMapper
 {
     public static PlanningPermissionStatus? Map(int? planningPermissionStatus)
     {

@@ -1,20 +1,23 @@
+using HE.Investment.AHP.Contract.Application;
+using HE.Investment.AHP.Contract.Application.Events;
+using HE.Investment.AHP.Domain.Application.Repositories.Interfaces;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
+using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Errors;
-using HE.Investments.Common.Validators;
-using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
+using ApplicationSection = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationSection;
 
 namespace HE.Investment.AHP.Domain.Application.Entities;
 
-public class ApplicationEntity
+public class ApplicationEntity : DomainEntity
 {
     private readonly ModificationTracker _modificationTracker = new();
 
     public ApplicationEntity(
-        ApplicationId id,
+        AhpApplicationId id,
         ApplicationName name,
         ApplicationStatus status,
         ApplicationReferenceNumber referenceNumber,
@@ -31,11 +34,15 @@ public class ApplicationEntity
         Sections = sections;
     }
 
-    public ApplicationId Id { get; private set; }
+    public AhpApplicationId Id { get; private set; }
 
     public ApplicationName Name { get; private set; }
 
     public ApplicationStatus Status { get; private set; }
+
+    public WithdrawReason? WithdrawReason { get; private set; }
+
+    public HoldReason? HoldReason { get; private set; }
 
     public ApplicationReferenceNumber ReferenceNumber { get; }
 
@@ -47,10 +54,10 @@ public class ApplicationEntity
 
     public bool IsModified => _modificationTracker.IsModified;
 
-    public bool IsNew => Id.IsEmpty();
+    public bool IsNew => Id.IsNew;
 
     public static ApplicationEntity New(ApplicationName name, ApplicationTenure tenure) => new(
-        ApplicationId.Empty(),
+        AhpApplicationId.New(),
         name,
         ApplicationStatus.New,
         new ApplicationReferenceNumber(null),
@@ -58,9 +65,9 @@ public class ApplicationEntity
         null,
         new ApplicationSections(new List<ApplicationSection>()));
 
-    public void SetId(ApplicationId newId)
+    public void SetId(AhpApplicationId newId)
     {
-        if (!Id.IsEmpty())
+        if (!Id.IsNew)
         {
             throw new DomainException("Id cannot be modified", CommonErrorCodes.IdCannotBeModified);
         }
@@ -77,5 +84,25 @@ public class ApplicationEntity
         }
 
         Status = _modificationTracker.Change(Status, ApplicationStatus.ApplicationSubmitted);
+    }
+
+    public async Task Hold(IApplicationHold applicationHold, HoldReason? newHoldReason, OrganisationId organisationId, CancellationToken cancellationToken)
+    {
+        Status = _modificationTracker.Change(Status, ApplicationStatus.OnHold);
+        HoldReason = _modificationTracker.Change(HoldReason, newHoldReason);
+
+        await applicationHold.Hold(this, organisationId, cancellationToken);
+
+        Publish(new ApplicationHasBeenPutOnHoldEvent());
+    }
+
+    public async Task Withdraw(IApplicationWithdraw applicationWithdraw, WithdrawReason? newWithdrawReason, OrganisationId organisationId, CancellationToken cancellationToken)
+    {
+        Status = _modificationTracker.Change(Status, ApplicationStatus.Withdrawn);
+        WithdrawReason = _modificationTracker.Change(WithdrawReason, newWithdrawReason);
+
+        await applicationWithdraw.Withdraw(this, organisationId, cancellationToken);
+
+        Publish(new ApplicationHasBeenWithdrawnEvent());
     }
 }

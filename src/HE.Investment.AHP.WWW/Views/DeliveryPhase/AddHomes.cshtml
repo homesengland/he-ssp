@@ -1,0 +1,38 @@
+@using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investments.Common.WWW.Components.FormHeader
+@using HE.Investment.AHP.Contract.Delivery
+@using HE.Investment.AHP.WWW.Views.Delivery.Const
+@model HE.Investment.AHP.WWW.Models.Delivery.AddHomesModel
+@{
+    var title = DeliveryPageTitles.AddHomes;
+    ViewData["Title"] = title;
+}
+
+<gds-div-grid-column-two-thirds>
+    <vc:ahp-workflow-back-button current-page="@DeliveryPhaseWorkflowState.AddHomes"/>
+
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+
+    <form asp-controller="DeliveryPhase" asp-action="AddHomes" asp-method="post" asp-route-redirect="@Context.Request.Query["redirect"]" novalidate>
+        <vc:form-header caption="@($"{Model.ApplicationName} - {Model.DeliveryPhaseName}")" title="@title"/>
+
+        <gds-p>Enter the number of homes from each home type that will be delivered in this phase.</gds-p>
+        <gds-p>If a home type is not being delivered in this phase, enter 0.</gds-p>
+        <gds-p>Once a home type has been fully allocated to your delivery phases, it will no longer be listed.</gds-p>
+
+        @if (Model.HomesToDeliver != null)
+        {
+            @foreach (var (homeTypeId, _) in Model.HomesToDeliver)
+            {
+                <vc:numeric-text-input field-name="@($"HomesToDeliver[{homeTypeId}]")"
+                                       value="@Model.HomesToDeliver[homeTypeId]"
+                                       label="@Model.HomeTypes[homeTypeId]"
+                                       css-class="govuk-input--width-5"/>
+            }
+        }
+
+        <vc:form-button/>
+        <vc:return-to-application-link application-id="@Model.ApplicationId"/>
+    </form>
+</gds-div-grid-column-two-thirds>

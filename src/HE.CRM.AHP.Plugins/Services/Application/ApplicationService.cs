@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Text.Json;
 using DataverseModel;
 using HE.Base.Services;
@@ -19,6 +20,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
         private readonly ISharepointDocumentLocationRepository _sharepointDocumentLocationRepository;
         private readonly ISharepointSiteRepository _sharepointSiteRepository;
         private readonly IAhpApplicationRepository _ahpApplicationRepositoryAdmin;
+        private readonly IAhpStatusChangeRepository _ahpStatusChangeRepository;
 
         private readonly IGovNotifyEmailService _govNotifyEmailService;
         public ApplicationService(CrmServiceArgs args) : base(args)
@@ -28,11 +30,12 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             _sharepointDocumentLocationRepository = CrmRepositoriesFactory.Get<ISharepointDocumentLocationRepository>();
             _sharepointSiteRepository = CrmRepositoriesFactory.Get<ISharepointSiteRepository>();
             _ahpApplicationRepositoryAdmin = CrmRepositoriesFactory.GetSystem<IAhpApplicationRepository>();
+            _ahpStatusChangeRepository = CrmRepositoriesFactory.Get<IAhpStatusChangeRepository>();
 
             _govNotifyEmailService = CrmServicesFactory.Get<IGovNotifyEmailService>();
         }
 
-        public void ChangeApplicationStatus(string organisationId, string contactId, string applicationId, int newStatus)
+        public void ChangeApplicationStatus(string organisationId, string contactId, string applicationId, int newStatus, string changeReason)
         {
             var additionalFilters = GetFetchXmlConditionForGivenField(applicationId, nameof(invln_scheme.invln_schemeId).ToLower());
             var contactExternalFilter = GetFetchXmlConditionForGivenField(contactId, nameof(Contact.invln_externalid).ToLower());
@@ -40,13 +43,28 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             var applications = _applicationRepository.GetApplicationsForOrganisationAndContact(organisationId, contactExternalFilter, null, additionalFilters);
             if (applications.Any())
             {
+
+                var ahpWithNewStatusCodes = MapAhpExternalStatusToInternal(new OptionSetValue(newStatus));
                 var application = applications.First();
                 var applicationToUpdate = new invln_scheme()
                 {
                     Id = application.Id,
-                    StatusCode = new OptionSetValue(newStatus),
+                    StatusCode = ahpWithNewStatusCodes.StatusCode,
+                    StateCode = ahpWithNewStatusCodes.StateCode,
+                    invln_ExternalStatus = new OptionSetValue(newStatus),
                 };
+
+                var ahpStatusChangeToCreate = new invln_AHPStatusChange()
+                {
+                    invln_Changefrom = application.StatusCode,
+                    invln_ChangeSource = new OptionSetValue((int)invln_ChangesourceSet.External),
+                    invln_Changeto = ahpWithNewStatusCodes.StatusCode,
+                    invln_AHPApplication = application.ToEntityReference(),
+                    invln_Comment = changeReason
+                };
+
                 _applicationRepository.Update(applicationToUpdate);
+                _ahpStatusChangeRepository.Create(ahpStatusChangeToCreate);
             }
         }
 
@@ -231,77 +249,115 @@ namespace HE.CRM.AHP.Plugins.Services.Application
         {
             if (target.StatusCode != null && preImage.StatusCode != null && target.StatusCode.Value != preImage.StatusCode.Value)
             {
-                switch (target.StatusCode.Value)
-                {
-                    case (int)invln_scheme_StatusCode.Draft:
-                        target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatusAHP.Draft);
-                        break;
-                    case (int)invln_scheme_StatusCode.ApplicationSubmitted:
-                        target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatusAHP.ApplicationSubmitted);
-                        break;
-                    case (int)invln_scheme_StatusCode.Deleted:
-                        target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatusAHP.Deleted);
-                        break;
-                    case (int)invln_scheme_StatusCode.OnHold:
-                        target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatusAHP.OnHold);
-                        break;
-                    case (int)invln_scheme_StatusCode.Withdrawn:
-                        target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatusAHP.Withdrawn);
-                        break;
-                    case (int)invln_scheme_StatusCode.UnderReviewPendingAssessment:
-                        target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatusAHP.UnderReview);
-                        break;
-                    case (int)invln_scheme_StatusCode.UnderReviewInAssessment:
-                        target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatusAHP.UnderReview);
-                        break;
-                    case (int)invln_scheme_StatusCode.UnderReviewGoingToSLT:
-                        target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatusAHP.UnderReview);
-                        break;
-                    case (int)invln_scheme_StatusCode.UnderReviewInternallyApproved:
-                        target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatusAHP.UnderReview);
-                        break;
-                    case (int)invln_scheme_StatusCode.InternallyApprovedSubjectToIPQ:
-                        target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatusAHP.UnderReview);
-                        break;
-                    case (int)invln_scheme_StatusCode.InternallyApprovedSubjectToRegulatorSignOff:
-                        target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatusAHP.UnderReview);
-                        break;
-                    case (int)invln_scheme_StatusCode.InternallyApprovedSubjectToIPQAndRegulatorySignOff:
-                        target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatusAHP.UnderReview);
-                        break;
-                    case (int)invln_scheme_StatusCode.InternallyRejected:
-                        target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatusAHP.UnderReview);
-                        break;
-                    case (int)invln_scheme_StatusCode.Rejected:
-                        target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatusAHP.Rejected);
-                        break;
-                    case (int)invln_scheme_StatusCode.RequestedEditing:
-                        target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatusAHP.RequestedEditing);
-                        break;
-                    case (int)invln_scheme_StatusCode.ReferredBackToApplicant:
-                        target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatusAHP.ReferredBackToApplicant);
-                        break;
-                    case (int)invln_scheme_StatusCode.ApprovedSubjecttoContract:
-                        target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatusAHP.ApprovedSubjectToContract);
-                        break;
-                    case (int)invln_scheme_StatusCode.ApprovedEngressmentIssued:
-                        target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatusAHP.ApprovedSubjectToContract);
-                        break;
-                    case (int)invln_scheme_StatusCode.ApprovedContractReceivedBackToHE:
-                        target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatusAHP.ApprovedSubjectToContract);
-                        break;
-                    case (int)invln_scheme_StatusCode.ApprovedContractPassedComplianceChecks:
-                        target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatusAHP.ApprovedSubjectToContract);
-                        break;
-                    case (int)invln_scheme_StatusCode.ApprovedContractExecuted:
-                        target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatusAHP.ApprovedSubjectToContract);
-                        break;
-                    case (int)invln_scheme_StatusCode.Approved:
-                        target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatusAHP.Approved);
-                        break;
-                    default:
-                        break;
-                }
+                target.invln_ExternalStatus = MapAhpInternalToExternalStatus(target.StatusCode.Value);
+            }
+        }
+
+        private invln_scheme MapAhpExternalStatusToInternal(OptionSetValue externalStatus)
+        {
+            var ahpApplication = new invln_scheme();
+            switch (externalStatus.Value)
+            {
+                case (int)invln_ExternalStatusAHP.Draft:
+                    ahpApplication.StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Draft);
+                    ahpApplication.StateCode = new OptionSetValue((int)invln_schemeState.Active);
+                    break;
+                case (int)invln_ExternalStatusAHP.ApplicationSubmitted:
+                    ahpApplication.StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.ApplicationSubmitted);
+                    ahpApplication.StateCode = new OptionSetValue((int)invln_schemeState.Active);
+                    break;
+                case (int)invln_ExternalStatusAHP.Approved:
+                    ahpApplication.StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Approved);
+                    ahpApplication.StateCode = new OptionSetValue((int)invln_schemeState.Active);
+                    break;
+                case (int)invln_ExternalStatusAHP.ApprovedSubjectToContract:
+                    ahpApplication.StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.ApprovedSubjecttoContract);
+                    ahpApplication.StateCode = new OptionSetValue((int)invln_schemeState.Active);
+                    break;
+                case (int)invln_ExternalStatusAHP.Deleted:
+                    ahpApplication.StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Deleted);
+                    ahpApplication.StateCode = new OptionSetValue((int)invln_schemeState.Inactive);
+                    break;
+                case (int)invln_ExternalStatusAHP.OnHold:
+                    ahpApplication.StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.OnHold);
+                    ahpApplication.StateCode = new OptionSetValue((int)invln_schemeState.Active);
+                    break;
+                case (int)invln_ExternalStatusAHP.ReferredBackToApplicant:
+                    ahpApplication.StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.ReferredBackToApplicant);
+                    ahpApplication.StateCode = new OptionSetValue((int)invln_schemeState.Active);
+                    break;
+                case (int)invln_ExternalStatusAHP.Rejected:
+                    ahpApplication.StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Rejected);
+                    ahpApplication.StateCode = new OptionSetValue((int)invln_schemeState.Active);
+                    break;
+                case (int)invln_ExternalStatusAHP.RequestedEditing:
+                    ahpApplication.StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.RequestedEditing);
+                    ahpApplication.StateCode = new OptionSetValue((int)invln_schemeState.Active);
+                    break;
+                case (int)invln_ExternalStatusAHP.UnderReview:
+                    ahpApplication.StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.UnderReviewPendingAssessment);
+                    ahpApplication.StateCode = new OptionSetValue((int)invln_schemeState.Active);
+                    break;
+                case (int)invln_ExternalStatusAHP.Withdrawn:
+                    ahpApplication.StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Withdrawn);
+                    ahpApplication.StateCode = new OptionSetValue((int)invln_schemeState.Inactive);
+                    break;
+                default:
+                    break;
+            }
+            return ahpApplication;
+        }
+
+        private OptionSetValue MapAhpInternalToExternalStatus(int internalStatus)
+        {
+            switch (internalStatus)
+            {
+                case (int)invln_scheme_StatusCode.Draft:
+                    return new OptionSetValue((int)invln_ExternalStatusAHP.Draft);
+                case (int)invln_scheme_StatusCode.ApplicationSubmitted:
+                    return new OptionSetValue((int)invln_ExternalStatusAHP.ApplicationSubmitted);
+                case (int)invln_scheme_StatusCode.Deleted:
+                    return new OptionSetValue((int)invln_ExternalStatusAHP.Deleted);
+                case (int)invln_scheme_StatusCode.OnHold:
+                    return new OptionSetValue((int)invln_ExternalStatusAHP.OnHold);
+                case (int)invln_scheme_StatusCode.Withdrawn:
+                    return new OptionSetValue((int)invln_ExternalStatusAHP.Withdrawn);
+                case (int)invln_scheme_StatusCode.UnderReviewPendingAssessment:
+                    return new OptionSetValue((int)invln_ExternalStatusAHP.UnderReview);
+                case (int)invln_scheme_StatusCode.UnderReviewInAssessment:
+                    return new OptionSetValue((int)invln_ExternalStatusAHP.UnderReview);
+                case (int)invln_scheme_StatusCode.UnderReviewGoingToSLT:
+                    return new OptionSetValue((int)invln_ExternalStatusAHP.UnderReview);
+                case (int)invln_scheme_StatusCode.UnderReviewInternallyApproved:
+                    return new OptionSetValue((int)invln_ExternalStatusAHP.UnderReview);
+                case (int)invln_scheme_StatusCode.InternallyApprovedSubjectToIPQ:
+                    return new OptionSetValue((int)invln_ExternalStatusAHP.UnderReview);
+                case (int)invln_scheme_StatusCode.InternallyApprovedSubjectToRegulatorSignOff:
+                    return new OptionSetValue((int)invln_ExternalStatusAHP.UnderReview);
+                case (int)invln_scheme_StatusCode.InternallyApprovedSubjectToIPQAndRegulatorySignOff:
+                    return new OptionSetValue((int)invln_ExternalStatusAHP.UnderReview);
+                case (int)invln_scheme_StatusCode.InternallyRejected:
+                    return new OptionSetValue((int)invln_ExternalStatusAHP.UnderReview);
+                case (int)invln_scheme_StatusCode.Rejected:
+                    return new OptionSetValue((int)invln_ExternalStatusAHP.Rejected);
+                case (int)invln_scheme_StatusCode.RequestedEditing:
+                    return new OptionSetValue((int)invln_ExternalStatusAHP.RequestedEditing);
+                case (int)invln_scheme_StatusCode.ReferredBackToApplicant:
+                    return new OptionSetValue((int)invln_ExternalStatusAHP.ReferredBackToApplicant);
+                case (int)invln_scheme_StatusCode.ApprovedSubjecttoContract:
+                    return new OptionSetValue((int)invln_ExternalStatusAHP.ApprovedSubjectToContract);
+                case (int)invln_scheme_StatusCode.ApprovedEngressmentIssued:
+                    return new OptionSetValue((int)invln_ExternalStatusAHP.ApprovedSubjectToContract);
+                case (int)invln_scheme_StatusCode.ApprovedContractReceivedBackToHE:
+                    return new OptionSetValue((int)invln_ExternalStatusAHP.ApprovedSubjectToContract);
+                case (int)invln_scheme_StatusCode.ApprovedContractPassedComplianceChecks:
+                    return new OptionSetValue((int)invln_ExternalStatusAHP.ApprovedSubjectToContract);
+                case (int)invln_scheme_StatusCode.ApprovedContractExecuted:
+                    return new OptionSetValue((int)invln_ExternalStatusAHP.ApprovedSubjectToContract);
+                case (int)invln_scheme_StatusCode.Approved:
+                    return new OptionSetValue((int)invln_ExternalStatusAHP.Approved);
+                default:
+                    return null;
             }
         }
 

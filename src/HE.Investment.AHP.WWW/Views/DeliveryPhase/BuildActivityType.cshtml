@@ -1,0 +1,34 @@
+@using HE.Investment.AHP.WWW.Extensions
+@using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investment.AHP.Contract.Delivery
+@using HE.Investments.Common.WWW.Components.FormHeader
+@using HE.Investments.Common.WWW.Components.RadioList
+@using HE.Investment.AHP.Contract.Delivery.Enums
+@using HE.Investment.AHP.WWW.Views.Delivery.Const
+@using HE.Investment.AHP.WWW.Views.DeliveryPhase.Const
+@model HE.Investment.AHP.Contract.Delivery.DeliveryPhaseDetails;
+@{
+    var applicationId = this.GetApplicationIdFromRoute();
+    var title = DeliveryPageTitles.BuildActivityType;
+    ViewData["Title"] = title;
+    var availableOptions = BuildActivityTypeOptions.GetBuildActivityTypesOptions(Model.AvailableBuildActivityTypes ?? Array.Empty<BuildActivityType>(), Model.BuildActivityType);
+}
+
+<gds-div-grid-column-two-thirds>
+    <vc:ahp-workflow-back-button current-page="@DeliveryPhaseWorkflowState.BuildActivityType"/>
+
+    <form asp-controller="DeliveryPhase" asp-action="BuildActivityType" asp-method="post" asp-route-redirect="@Context.Request.Query["redirect"]" novalidate>
+        <vc:form-header caption="@($"{Model.ApplicationName} - {Model.Name}")" title="@title"/>
+        @Html.HiddenFor(m => m.TypeOfHomes)
+        <vc:radio-list
+            hint="Each delivery phase should contain only one build activity type."
+            field-name=@(nameof(Model.BuildActivityType))
+            available-options=@availableOptions>
+        </vc:radio-list>
+
+        <vc:form-button/>
+
+        <vc:return-to-application-link application-id="@applicationId"/>
+    </form>
+</gds-div-grid-column-two-thirds>

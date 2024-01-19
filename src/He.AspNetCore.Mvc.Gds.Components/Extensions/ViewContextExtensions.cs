@@ -1,4 +1,4 @@
-﻿using He.AspNetCore.Mvc.Gds.Components.Interfaces;
+using He.AspNetCore.Mvc.Gds.Components.Interfaces;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using System.Linq;
@@ -10,12 +10,14 @@ namespace He.AspNetCore.Mvc.Gds.Components.Extensions
         public static (bool hasError, string errorMessage) GetErrorFrom(this ViewContext viewContext, ModelExpression forProperty)
         {
             var fullHtmlFieldName = IGdsFormGroupTagHelper.GetFullHtmlFieldName(viewContext, forProperty.Name);
-            var propertyInError = IGdsFormGroupTagHelper.IsPropertyInError(viewContext, fullHtmlFieldName);
+            var (isPropertyInError, entry) = IGdsFormGroupTagHelper.IsPropertyInError(viewContext, fullHtmlFieldName);
 
-            if (!propertyInError.isPropertyInError)
-                return (propertyInError.isPropertyInError, null);
+            if (!isPropertyInError)
+            {
+                return (isPropertyInError, null);
+            }
 
-            return (propertyInError.isPropertyInError, propertyInError.entry?.Errors.First().ErrorMessage);
+            return (isPropertyInError, entry?.Errors[0].ErrorMessage);
         }
     }
 }

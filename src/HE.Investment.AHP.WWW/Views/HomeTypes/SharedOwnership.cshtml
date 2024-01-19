@@ -1,4 +1,3 @@
-@using HE.Investment.AHP.Domain.HomeTypes
 @using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.WWW.Views.HomeTypes.Const
 @using HE.Investment.AHP.WWW.Views.Shared.Components.HomeTypeFormHeader
@@ -6,13 +5,11 @@
 @using HE.Investments.Common.Extensions
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.Extensions
-@using Microsoft.AspNetCore.Mvc.TagHelpers
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Input
+@using HE.Investment.AHP.Contract.HomeTypes
 @model HE.Investment.AHP.WWW.Models.HomeTypes.SharedOwnershipModel;
 
 @{
     var applicationId = this.GetApplicationIdFromRoute();
-    var homeTypeId = this.GetHomeTypeIdFromRoute();
     var workflow = Context.Request.Query["workflow"];
     ViewBag.ValidationErrors = ViewData.ModelState.GetOrderedErrors(HomeTypesValidationFieldsOrder.SharedOwnership);
     var (expectedFirstTrancheInvalid, expectedFirstTrancheError) = ViewData.ModelState.GetErrors(nameof(Model.ExpectedFirstTranche));
@@ -24,8 +21,6 @@
         @Html.HiddenFor(m => Model.ApplicationName)
         @Html.HiddenFor(m => Model.HomeTypeName)
         <vc:home-type-form-header current-page="@HomeTypesWorkflowState.SharedOwnership"
-                                  application-id="@applicationId"
-                                  home-type-id="@homeTypeId"
                                   caption="@Model.Header"
                                   title="Shared Ownership details"/>
         <gds-field-set>
@@ -50,7 +45,7 @@
                     <gds-h2 class="govuk-!-margin-bottom-0">Enter the average assumed first tranche sale percentage</gds-h2>
                 </gds-legend>
                 <gds-span-hint>
-                    This is the average percentage share that you are assuming your purchasers will buy in their initial purchase (must be between 10% nad 75%).
+                    This is the average percentage share that you are assuming your purchasers will buy in their initial purchase (must be between 10% and 75%).
                 </gds-span-hint>
                 <gds-input
                     class="govuk-input--width-2"
@@ -74,8 +69,7 @@
                 }
 
                 <gds-p class="govuk-!-margin-top-1">
-                    @(Model.ExpectedFirstTranche.IsProvided() ? $"£{Model.ExpectedFirstTranche}"
-                        : "To calculate the assumed first tranche sales receipt, enter the market value of each home and the average assumed first tranche sale. Then select the calculate button.")
+                    @(Model.ExpectedFirstTranche ?? "To calculate the assumed first tranche sales receipt, enter the market value of each home and the average assumed first tranche sale. Then select the calculate button.")
                 </gds-p>
             </he-error-form-group>
 

@@ -1,12 +1,13 @@
-﻿using HE.Investment.AHP.Contract.Common.Enums;
+using HE.Investment.AHP.Contract.Application;
+using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.FinancialDetails.Queries;
 using HE.Investment.AHP.WWW.Controllers;
 using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Components.SectionSummary;
+using HE.Investments.Common.WWW.Helpers;
 using HE.Investments.Common.WWW.Utils;
-using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,7 +23,7 @@ public class FinancialDetailsSummaryViewModelFactory : IFinancialDetailsSummaryV
     }
 
     public async Task<FinancialDetailsCheckAnswersModel> GetFinancialDetailsAndCreateSummary(
-        string applicationId,
+        AhpApplicationId applicationId,
         IUrlHelper urlHelper,
         bool isReadOnly,
         CancellationToken cancellationToken)
@@ -34,7 +35,7 @@ public class FinancialDetailsSummaryViewModelFactory : IFinancialDetailsSummaryV
         var contributionsSectionSummary = GetContributionsSectionSummary(result.TotalContributions, applicationId, isReadOnly, urlHelper);
 
         return new FinancialDetailsCheckAnswersModel(
-            Guid.Parse(applicationId),
+            Guid.Parse(applicationId.Value),
             result.ApplicationName,
             landValueSectionSummary,
             costsSectionSummary,
@@ -45,25 +46,20 @@ public class FinancialDetailsSummaryViewModelFactory : IFinancialDetailsSummaryV
 
     private static IList<string> GetCurrencyStringWithPrefix(decimal? value)
     {
-        if (value == null)
-        {
-            return Array.Empty<string>();
-        }
-
-        return new List<string> { "£" + value.ToWholeNumberString() };
+        return CurrencyHelper.DisplayPounds(value).ToOneElementList() ?? Array.Empty<string>();
     }
 
-    private static string CreateFinancialDetailsActionUrl(IUrlHelper urlHelper, string applicationId, string actionName, bool allowWcagDuplicate = false)
+    private static string CreateFinancialDetailsActionUrl(IUrlHelper urlHelper, AhpApplicationId applicationId, string actionName, bool allowWcagDuplicate = false)
     {
         var action = urlHelper.Action(
             actionName,
             new ControllerName(nameof(FinancialDetailsController)).WithoutPrefix(),
-            new { applicationId, redirect = nameof(FinancialDetailsController.CheckAnswers) });
+            new { applicationId = applicationId.Value, redirect = nameof(FinancialDetailsController.CheckAnswers) });
 
         return $"{action}{(allowWcagDuplicate ? "#" : string.Empty)}";
     }
 
-    private static SectionSummaryViewModel GetLandValueSectionSummary(LandValueSummary landValueSummary, string applicationId, bool isReadOnly, IUrlHelper urlHelper)
+    private static SectionSummaryViewModel GetLandValueSectionSummary(LandValueSummary landValueSummary, AhpApplicationId applicationId, bool isReadOnly, IUrlHelper urlHelper)
     {
         var landValueItems = new List<SectionSummaryItemModel>
         {
@@ -79,10 +75,7 @@ public class FinancialDetailsSummaryViewModelFactory : IFinancialDetailsSummaryV
                 IsEditable: !isReadOnly),
             new(
                 "Public land",
-                new List<string>
-                {
-                    landValueSummary.IsPublicLand.HasValue ? landValueSummary.IsPublicLand.Value ? CommonResponse.Yes : CommonResponse.No : "Not provided",
-                },
+                landValueSummary.IsPublicLand == YesNoType.Undefined ? null : landValueSummary.IsPublicLand.GetDescription().ToOneElementList(),
                 CreateFinancialDetailsActionUrl(urlHelper, applicationId, nameof(FinancialDetailsController.LandValue)),
                 IsEditable: !isReadOnly),
         };
@@ -90,7 +83,7 @@ public class FinancialDetailsSummaryViewModelFactory : IFinancialDetailsSummaryV
         return new SectionSummaryViewModel("Land value", landValueItems);
     }
 
-    private static SectionSummaryViewModel GetCostsSectionSummary(TotalSchemeCost totalSchemeCost, string applicationId, bool isReadOnly, IUrlHelper urlHelper)
+    private static SectionSummaryViewModel GetCostsSectionSummary(TotalSchemeCost totalSchemeCost, AhpApplicationId applicationId, bool isReadOnly, IUrlHelper urlHelper)
     {
         var costsItems = new List<SectionSummaryItemModel>
         {
@@ -119,7 +112,7 @@ public class FinancialDetailsSummaryViewModelFactory : IFinancialDetailsSummaryV
         return new SectionSummaryViewModel("Total scheme costs", costsItems);
     }
 
-    private static SectionSummaryViewModel GetContributionsSectionSummary(TotalContributions totalContributions, string applicationId, bool isReadOnly, IUrlHelper urlHelper)
+    private static SectionSummaryViewModel GetContributionsSectionSummary(TotalContributions totalContributions, AhpApplicationId applicationId, bool isReadOnly, IUrlHelper urlHelper)
     {
         var contributionsItems = new List<SectionSummaryItemModel>
         {

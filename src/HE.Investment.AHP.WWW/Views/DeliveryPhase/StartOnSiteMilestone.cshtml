@@ -4,21 +4,20 @@
 @using HE.Investments.Common.WWW.Components.Details
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.Components.FormHeader
-@using HE.Investments.Common.WWW.Components.WorkflowBackButton
 @using HE.Investment.AHP.Contract.Delivery
-@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using HE.Investment.AHP.WWW.Views.Delivery.Const
 @model HE.Investment.AHP.WWW.Models.Delivery.MilestoneViewModel
 @{
-    var title = "Start on site milestone";
+    var title = DeliveryPageTitles.StartOnSiteMilestone;
     ViewData["Title"] = title;
 }
 
 <gds-div-grid-column-two-thirds>
-    <vc:workflow-back-button current-page="@DeliveryPhaseWorkflowState.StartOnSiteMilestone" param-name="deliveryPhaseId"/>
+    <vc:ahp-workflow-back-button current-page="@DeliveryPhaseWorkflowState.StartOnSiteMilestone"/>
 
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
-    <form asp-controller="DeliveryPhase" asp-action="StartOnSiteMilestone" asp-method="post" novalidate>
+    <form asp-controller="DeliveryPhase" asp-action="StartOnSiteMilestone" asp-method="post" asp-route-redirect="@Context.Request.Query["redirect"]" novalidate>
         <vc:form-header caption="@($"{Model.ApplicationName} - {Model.DeliveryPhaseName}")" title="@title"/>
 
         <vc:details

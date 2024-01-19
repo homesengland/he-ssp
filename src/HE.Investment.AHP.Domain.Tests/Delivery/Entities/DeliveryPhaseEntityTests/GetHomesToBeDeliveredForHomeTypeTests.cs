@@ -1,6 +1,5 @@
 using FluentAssertions;
 using HE.Investment.AHP.Contract.HomeTypes;
-using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investment.AHP.Domain.Tests.Delivery.Entities.TestDataBuilders;
 
 namespace HE.Investment.AHP.Domain.Tests.Delivery.Entities.DeliveryPhaseEntityTests;
@@ -8,34 +7,36 @@ namespace HE.Investment.AHP.Domain.Tests.Delivery.Entities.DeliveryPhaseEntityTe
 public class GetHomesToBeDeliveredForHomeTypeTests
 {
     [Fact]
-    public void ShouldReturnZero_WhenHomeTypeIsNotUsedInDeliveryPhase()
+    public void ShouldReturnNull_WhenHomeTypeIsNotUsedInDeliveryPhase()
     {
         // given
         var testCandidate = new DeliveryPhaseEntityBuilder()
-            .WithHomesToBeDelivered("ht-1", 10)
-            .WithHomesToBeDelivered("ht-2", 5)
+            .WithHomesToBeDelivered(10, "ht-1")
+            .WithHomesToBeDelivered(5, "ht-2")
             .Build();
 
         // when
         var result = testCandidate.GetHomesToBeDeliveredForHomeType(new HomeTypeId("ht-3"));
 
         // then
-        result.Should().Be(0);
+        result.Should().BeNull();
     }
 
-    [Fact]
-    public void ShouldReturnValue_WhenHomeTypeIsUsedInDeliveryPhase()
+    [Theory]
+    [InlineData(0)]
+    [InlineData(10)]
+    public void ShouldReturnValue_WhenHomeTypeIsUsedInDeliveryPhase(int toDeliver)
     {
         // given
         var testCandidate = new DeliveryPhaseEntityBuilder()
-            .WithHomesToBeDelivered("ht-1", 10)
-            .WithHomesToBeDelivered("ht-2", 5)
+            .WithHomesToBeDelivered(toDeliver, "ht-1")
+            .WithHomesToBeDelivered(5, "ht-2")
             .Build();
 
         // when
         var result = testCandidate.GetHomesToBeDeliveredForHomeType(new HomeTypeId("ht-1"));
 
         // then
-        result.Should().Be(10);
+        result.Should().Be(toDeliver);
     }
 }

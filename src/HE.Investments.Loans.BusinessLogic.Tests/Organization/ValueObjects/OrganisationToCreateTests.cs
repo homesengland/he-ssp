@@ -23,7 +23,7 @@ public class OrganisationToCreateTests
 
     [Theory]
     [InlineData("", OrganisationErrorMessages.MissingOrganisationName)]
-    [InlineData(TestData.StringLenght101, "Organisation name must be 100 characters or less")]
+    [InlineData(TestData.StringLenght101, "The Organisation name must be 100 characters or less")]
     public void ShouldThrowException_WhenNameIsInvalid(string name, string expectedErrorMessage)
     {
         // given & when

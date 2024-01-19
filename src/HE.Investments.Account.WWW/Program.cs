@@ -25,7 +25,7 @@ builder.Services.AddCrmConnection();
 var mvcBuilder = builder.Services.AddControllersWithViews(options =>
 {
     options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
-    options.Filters.Add<ExceptionFilter>();
+    options.Filters.Add<ExceptionFilterAttribute>();
 });
 builder.AddIdentityProviderConfiguration(mvcBuilder);
 

@@ -4,7 +4,6 @@ using HE.Investment.AHP.Domain.Delivery.Repositories;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
-using HE.Investments.Common.Validators;
 
 namespace HE.Investment.AHP.Domain.Delivery.CommandHandlers;
 
@@ -15,7 +14,7 @@ public class ProvideAdditionalPaymentRequestCommandHandler : UpdateDeliveryPhase
     {
     }
 
-    protected override Task<OperationResult> Update(IDeliveryPhaseEntity entity, ProvideAdditionalPaymentRequestCommand request)
+    protected override Task<OperationResult> Update(IDeliveryPhaseEntity entity, ProvideAdditionalPaymentRequestCommand request, CancellationToken cancellationToken)
     {
         entity.ProvideAdditionalPaymentRequest(request.IsAdditionalPaymentRequested.HasValue ? new IsAdditionalPaymentRequested(request.IsAdditionalPaymentRequested.Value) : null);
 

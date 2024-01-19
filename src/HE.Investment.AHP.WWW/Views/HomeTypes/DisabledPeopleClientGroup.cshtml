@@ -1,24 +1,21 @@
-@using HE.Investment.AHP.Domain.HomeTypes
 @using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.WWW.Models.HomeTypes
-@using Microsoft.AspNetCore.Mvc.TagHelpers
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Radios
+@using HE.Investment.AHP.WWW.Views.HomeTypes.Const
+@using HE.Investment.AHP.Contract.HomeTypes
 @model HE.Investment.AHP.WWW.Models.HomeTypes.DisabledPeopleClientGroupModel;
 
 @{
     var applicationId = this.GetApplicationIdFromRoute();
-    var homeTypeId = this.GetHomeTypeIdFromRoute();
     var workflow = Context.Request.Query["workflow"];
+    ViewData["Title"] = HomeTypesPageTitles.DisabledPeopleClientGroup;
 }
 
 <div class="govuk-grid-column-two-thirds">
     <form asp-controller="HomeTypes" asp-action="DisabledPeopleClientGroup" asp-method="post" asp-route-workflow="@workflow" novalidate>
         @Html.HiddenFor(m => Model.ApplicationName)
         @Html.HiddenFor(m => Model.HomeTypeName)
-        <vc:home-type-form-header title="What client group are the homes for?"
+        <vc:home-type-form-header title="@HomeTypesPageTitles.DisabledPeopleClientGroup"
                                   current-page="@HomeTypesWorkflowState.DisabledPeopleClientGroup"
-                                  application-id="@applicationId"
-                                  home-type-id="@homeTypeId"
                                   caption="@Model.Header" />
 
         <gds-field-set>

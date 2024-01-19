@@ -1,10 +1,9 @@
 using HE.Investments.Account.Contract.User.Events;
 using HE.Investments.Account.Domain.Data;
 using HE.Investments.Account.Domain.Users.Entities;
-using HE.Investments.Account.Domain.Users.ValueObjects;
 using HE.Investments.Account.Shared.Repositories;
-using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.ValueObjects;
+using HE.Investments.Common.Contract;
 using MediatR;
 
 namespace HE.Investments.Account.Domain.Users.Repositories;
@@ -27,7 +26,7 @@ public class UserRepository : IUserRepository
         var role = await _usersCrmContext.GetUserRole(userGlobalId.Value, organisationId.Value);
 
         return new UserEntity(
-            new UserId(user.contactExternalId),
+            UserGlobalId.From(user.contactExternalId),
             user.firstName,
             user.lastName,
             user.email,
@@ -44,7 +43,7 @@ public class UserRepository : IUserRepository
             if (role != null)
             {
                 await _usersCrmContext.ChangeUserRole(entity.Id.Value, role.Value, organisationId.Value);
-                await _mediator.Publish(new UserAccountsChangedEvent(entity.Id.Value), cancellationToken);
+                await _mediator.Publish(new UserAccountsChangedEvent(entity.Id), cancellationToken);
             }
         }
     }

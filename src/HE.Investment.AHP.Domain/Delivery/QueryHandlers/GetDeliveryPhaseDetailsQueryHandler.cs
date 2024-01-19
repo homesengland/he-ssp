@@ -1,35 +1,72 @@
 using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Queries;
+using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.Mappers;
 using HE.Investment.AHP.Domain.Delivery.Repositories;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
+using HE.Investment.AHP.Domain.Scheme.Repositories;
 using HE.Investments.Account.Shared;
+using HE.Investments.Account.Shared.User;
 using MediatR;
-using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
+using SummaryOfDelivery = HE.Investment.AHP.Contract.Delivery.SummaryOfDelivery;
 
 namespace HE.Investment.AHP.Domain.Delivery.QueryHandlers;
 
 public class GetDeliveryPhaseDetailsQueryHandler : IRequestHandler<GetDeliveryPhaseDetailsQuery, DeliveryPhaseDetails>
 {
-    private readonly IDeliveryPhaseRepository _repository;
+    private readonly IDeliveryPhaseRepository _deliveryPhaseRepository;
+
+    private readonly ISchemeRepository _schemeRepository;
 
     private readonly IAccountUserContext _accountUserContext;
 
-    public GetDeliveryPhaseDetailsQueryHandler(IDeliveryPhaseRepository repository, IAccountUserContext accountUserContext)
+    public GetDeliveryPhaseDetailsQueryHandler(
+        IDeliveryPhaseRepository deliveryPhaseRepository,
+        ISchemeRepository schemeRepository,
+        IAccountUserContext accountUserContext)
     {
-        _repository = repository;
+        _deliveryPhaseRepository = deliveryPhaseRepository;
         _accountUserContext = accountUserContext;
+        _schemeRepository = schemeRepository;
     }
 
     public async Task<DeliveryPhaseDetails> Handle(GetDeliveryPhaseDetailsQuery request, CancellationToken cancellationToken)
     {
         var userAccount = await _accountUserContext.GetSelectedAccount();
-        var deliveryPhase = await _repository.GetById(
-            new ApplicationId(request.ApplicationId),
-            new DeliveryPhaseId(request.DeliveryPhaseId),
+        var deliveryPhase = await _deliveryPhaseRepository.GetById(
+            request.ApplicationId,
+            request.DeliveryPhaseId,
             userAccount,
             cancellationToken);
 
-        return DeliveryPhaseEntityMapper.ToDeliveryPhaseDetails(deliveryPhase);
+        return new DeliveryPhaseDetails(
+            deliveryPhase.Application.Name.Name,
+            deliveryPhase.Id.Value,
+            deliveryPhase.Name?.Value ?? string.Empty,
+            deliveryPhase.Status,
+            deliveryPhase.TypeOfHomes,
+            deliveryPhase.BuildActivity.Type,
+            deliveryPhase.BuildActivity.GetAvailableTypes(),
+            deliveryPhase.IsReconfiguringExistingNeeded(),
+            deliveryPhase.ReconfiguringExisting,
+            deliveryPhase.TotalHomesToBeDeliveredInThisPhase,
+            request.IncludeSummary ? await GetSummaryOfDelivery(deliveryPhase, userAccount, cancellationToken) : null,
+            deliveryPhase.Organisation.IsUnregisteredBody,
+            deliveryPhase.DeliveryPhaseMilestones.IsOnlyCompletionMilestone,
+            DeliveryPhaseEntityMapper.MapDate(deliveryPhase.DeliveryPhaseMilestones.AcquisitionMilestone?.MilestoneDate),
+            DeliveryPhaseEntityMapper.MapDate(deliveryPhase.DeliveryPhaseMilestones.AcquisitionMilestone?.PaymentDate),
+            DeliveryPhaseEntityMapper.MapDate(deliveryPhase.DeliveryPhaseMilestones.StartOnSiteMilestone?.MilestoneDate),
+            DeliveryPhaseEntityMapper.MapDate(deliveryPhase.DeliveryPhaseMilestones.StartOnSiteMilestone?.PaymentDate),
+            DeliveryPhaseEntityMapper.MapDate(deliveryPhase.DeliveryPhaseMilestones.CompletionMilestone?.MilestoneDate),
+            DeliveryPhaseEntityMapper.MapDate(deliveryPhase.DeliveryPhaseMilestones.CompletionMilestone?.PaymentDate),
+            deliveryPhase.IsAdditionalPaymentRequested?.IsRequested);
+    }
+
+    private async Task<SummaryOfDelivery> GetSummaryOfDelivery(IDeliveryPhaseEntity deliveryPhase, UserAccount userAccount, CancellationToken cancellationToken)
+    {
+        var schemaInformation = await _schemeRepository.GetByApplicationId(deliveryPhase.ApplicationId, userAccount, false, cancellationToken);
+
+        var result = deliveryPhase.CalculateSummary(schemaInformation.Funding.RequiredFunding ?? 0, schemaInformation.Funding.HousesToDeliver ?? 0, MilestoneFramework.Default);
+        return new SummaryOfDelivery(result.GrantApportioned, result.AcquisitionMilestone, result.StarOnSiteMilestone, result.CompletionMilestone);
     }
 }

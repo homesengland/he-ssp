@@ -1,5 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
-using HE.Investments.Common.WWWTestsFramework.Helpers;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.HomeTypes;
 
@@ -17,8 +17,7 @@ public class SupportedHousingInformationTests : HomeTypesTestBase
 
         // then
         document
-            .HasElementWithText("span", "My application - My homes")
-            .HasElementWithText("h1", "Supported housing information")
+            .HasPageHeader("My application - My homes", "Supported housing information")
             .HasRadio(
                 "LocalCommissioningBodiesConsulted",
                 new[]
@@ -41,6 +40,6 @@ public class SupportedHousingInformationTests : HomeTypesTestBase
                     "Revenue funding is needed but the source has not been identified",
                     "No, revenue funding is not needed",
                 })
-            .HasElementWithText("button", "Save and continue");
+            .HasGdsSaveAndContinueButton();
     }
 }

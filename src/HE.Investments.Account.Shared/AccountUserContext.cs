@@ -2,6 +2,7 @@ using HE.Investments.Account.Shared.Config;
 using HE.Investments.Account.Shared.Repositories;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.Entities;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Infrastructure.Cache.Interfaces;
 using HE.Investments.Common.User;
@@ -39,7 +40,7 @@ public class AccountUserContext : IAccountUserContext
     public async Task<UserAccount> GetSelectedAccount()
     {
         var accounts = await _userAccounts.GetAsync();
-        return accounts?.MinBy(x => x.OrganisationId?.Value) ?? throw new NotFoundException(nameof(UserAccount));
+        return accounts?.MinBy(x => x.Organisation?.OrganisationId?.Value) ?? throw new NotFoundException(nameof(UserAccount));
     }
 
     public async Task RefreshUserData()
@@ -67,7 +68,7 @@ public class AccountUserContext : IAccountUserContext
         return userProfile!;
     }
 
-    private class CachedEntity<TEntity>
+    private sealed class CachedEntity<TEntity>
         where TEntity : class
     {
         private readonly ICacheService _cacheService;

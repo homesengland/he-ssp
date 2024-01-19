@@ -1,13 +1,15 @@
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Queries;
+using HE.Investment.AHP.Contract.Common;
+using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.Scheme;
+using HE.Investment.AHP.Contract.Scheme.Commands;
 using HE.Investment.AHP.Contract.Scheme.Queries;
-using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Documents.Config;
-using HE.Investment.AHP.Domain.Scheme.Commands;
-using HE.Investment.AHP.Domain.Scheme.Workflows;
 using HE.Investment.AHP.WWW.Models.Scheme;
 using HE.Investment.AHP.WWW.Models.Scheme.Factories;
 using HE.Investment.AHP.WWW.Utils;
+using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Contract;
@@ -17,6 +19,7 @@ using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Extensions;
+using HE.Investments.Common.WWW.Helpers;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.Common.WWW.Utils;
@@ -54,7 +57,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     [HttpGet("start")]
     public async Task<IActionResult> Start([FromRoute] string applicationId, CancellationToken cancellationToken)
     {
-        var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
+        var application = await _mediator.Send(new GetApplicationQuery(AhpApplicationId.From(applicationId)), cancellationToken);
 
         return View("Start", application.Name);
     }
@@ -62,7 +65,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     [HttpGet("back")]
     public async Task<IActionResult> Back([FromRoute] string applicationId, SchemeWorkflowState currentPage)
     {
-        var scheme = await _schemeProvider.Get(new GetApplicationSchemeQuery(applicationId), CancellationToken.None);
+        var scheme = await _schemeProvider.Get(new GetApplicationSchemeQuery(AhpApplicationId.From(applicationId)), CancellationToken.None);
         if (currentPage == SchemeWorkflowState.Funding && scheme.Status == SectionStatus.InProgress)
         {
             return RedirectToAction("TaskList", "Application", new { applicationId });
@@ -75,7 +78,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     [HttpGet("funding")]
     public async Task<IActionResult> Funding([FromRoute] string applicationId, CancellationToken cancellationToken)
     {
-        var scheme = await _schemeProvider.Get(new GetApplicationSchemeQuery(applicationId), cancellationToken);
+        var scheme = await _schemeProvider.Get(new GetApplicationSchemeQuery(AhpApplicationId.From(applicationId)), cancellationToken);
 
         return View("Funding", CreateModel(applicationId, scheme));
     }
@@ -85,7 +88,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     public async Task<IActionResult> Funding(SchemeViewModel model, CancellationToken cancellationToken)
     {
         return await ExecuteCommand(
-            new ChangeSchemeFundingCommand(model.ApplicationId, model.RequiredFunding, model.HousesToDeliver),
+            new ChangeSchemeFundingCommand(AhpApplicationId.From(model.ApplicationId), model.RequiredFunding, model.HousesToDeliver),
             model.ApplicationId,
             nameof(Funding),
             model,
@@ -96,7 +99,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     [HttpGet("affordability")]
     public async Task<IActionResult> Affordability([FromRoute] string applicationId, CancellationToken cancellationToken)
     {
-        var scheme = await _schemeProvider.Get(new GetApplicationSchemeQuery(applicationId), cancellationToken);
+        var scheme = await _schemeProvider.Get(new GetApplicationSchemeQuery(AhpApplicationId.From(applicationId)), cancellationToken);
 
         return View("Affordability", CreateModel(applicationId, scheme));
     }
@@ -106,7 +109,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     public async Task<IActionResult> Affordability(SchemeViewModel model, CancellationToken cancellationToken)
     {
         return await ExecuteCommand(
-            new ChangeSchemeAffordabilityCommand(model.ApplicationId, model.AffordabilityEvidence),
+            new ChangeSchemeAffordabilityCommand(AhpApplicationId.From(model.ApplicationId), model.AffordabilityEvidence),
             model.ApplicationId,
             nameof(Affordability),
             model,
@@ -117,7 +120,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     [HttpGet("sales-risk")]
     public async Task<IActionResult> SalesRisk([FromRoute] string applicationId, CancellationToken cancellationToken)
     {
-        var scheme = await _schemeProvider.Get(new GetApplicationSchemeQuery(applicationId), cancellationToken);
+        var scheme = await _schemeProvider.Get(new GetApplicationSchemeQuery(AhpApplicationId.From(applicationId)), cancellationToken);
 
         return View("SalesRisk", CreateModel(applicationId, scheme));
     }
@@ -127,7 +130,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     public async Task<IActionResult> SalesRisk(SchemeViewModel model, CancellationToken cancellationToken)
     {
         return await ExecuteCommand(
-            new ChangeSchemeSalesRiskCommand(model.ApplicationId, model.SalesRisk),
+            new ChangeSchemeSalesRiskCommand(AhpApplicationId.From(model.ApplicationId), model.SalesRisk),
             model.ApplicationId,
             nameof(SalesRisk),
             model,
@@ -138,7 +141,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     [HttpGet("housing-needs")]
     public async Task<IActionResult> HousingNeeds([FromRoute] string applicationId, CancellationToken cancellationToken)
     {
-        var scheme = await _schemeProvider.Get(new GetApplicationSchemeQuery(applicationId), cancellationToken);
+        var scheme = await _schemeProvider.Get(new GetApplicationSchemeQuery(AhpApplicationId.From(applicationId)), cancellationToken);
 
         return View("HousingNeeds", CreateModel(applicationId, scheme));
     }
@@ -149,7 +152,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     {
         return await ExecuteCommand(
             new ChangeSchemeHousingNeedsCommand(
-                model.ApplicationId,
+                AhpApplicationId.From(model.ApplicationId),
                 model.MeetingLocalPriorities,
                 model.MeetingLocalHousingNeed),
             model.ApplicationId,
@@ -162,7 +165,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     [HttpGet("stakeholder-discussions")]
     public async Task<IActionResult> StakeholderDiscussions([FromRoute] string applicationId, CancellationToken cancellationToken)
     {
-        var scheme = await _schemeProvider.Get(new GetApplicationSchemeQuery(applicationId, true), cancellationToken);
+        var scheme = await _schemeProvider.Get(new GetApplicationSchemeQuery(AhpApplicationId.From(applicationId), true), cancellationToken);
 
         return View("StakeholderDiscussions", CreateModel(applicationId, scheme));
     }
@@ -182,7 +185,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
         {
             return await ExecuteCommand(
                 new ChangeSchemeStakeholderDiscussionsCommand(
-                    model.ApplicationId,
+                    AhpApplicationId.From(model.ApplicationId),
                     model.StakeholderDiscussionsReport,
                     fileToUpload),
                 model.ApplicationId,
@@ -206,7 +209,9 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
         [FromQuery] string fileId,
         CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new RemoveStakeholderDiscussionsFileCommand(applicationId, fileId), cancellationToken);
+        var result = await _mediator.Send(
+            new RemoveStakeholderDiscussionsFileCommand(AhpApplicationId.From(applicationId), FileId.From(fileId)),
+            cancellationToken);
         if (result.HasValidationErrors)
         {
             throw new DomainValidationException(result);
@@ -221,7 +226,9 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
         [FromQuery] string fileId,
         CancellationToken cancellationToken)
     {
-        var response = await _mediator.Send(new GetStakeholderDiscussionsFileQuery(applicationId, fileId), cancellationToken);
+        var response = await _mediator.Send(
+            new GetStakeholderDiscussionsFileQuery(AhpApplicationId.From(applicationId), FileId.From(fileId)),
+            cancellationToken);
 
         return File(response.Content, "application/octet-stream", response.Name);
     }
@@ -237,7 +244,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     [HttpPost("check-answers")]
     public async Task<IActionResult> Complete(
         [FromRoute] string applicationId,
-        [FromForm] bool? isCompleted,
+        [FromForm] IsSectionCompleted? isCompleted,
         string? action,
         CancellationToken cancellationToken)
     {
@@ -247,9 +254,9 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
             return View("CheckAnswers", await GetSchemeAndCreateSummary(Url, applicationId, cancellationToken));
         }
 
-        if (isCompleted.Value)
+        if (isCompleted == IsSectionCompleted.Yes)
         {
-            var result = await _mediator.Send(new CompleteSchemeCommand(applicationId), cancellationToken);
+            var result = await _mediator.Send(new CompleteSchemeCommand(AhpApplicationId.From(applicationId)), cancellationToken);
             if (result.HasValidationErrors)
             {
                 ModelState.AddModelError(
@@ -260,7 +267,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
         }
         else
         {
-            var result = await _mediator.Send(new UnCompleteSchemeCommand(applicationId), cancellationToken);
+            var result = await _mediator.Send(new UnCompleteSchemeCommand(AhpApplicationId.From(applicationId)), cancellationToken);
             if (result.HasValidationErrors)
             {
                 ModelState.AddModelError(
@@ -292,25 +299,25 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
             throw new InvalidOperationException("Cannot find applicationId.");
         }
 
-        var scheme = await _schemeProvider.Get(new GetApplicationSchemeQuery(applicationId), CancellationToken.None);
+        var scheme = await _schemeProvider.Get(new GetApplicationSchemeQuery(AhpApplicationId.From(applicationId)), CancellationToken.None);
         var isReadOnly = !await _accountAccessContext.CanEditApplication();
         return await Task.FromResult(new SchemeWorkflow(currentState, scheme, isReadOnly));
     }
 
     private SchemeViewModel CreateModel(string applicationId, Scheme scheme)
     {
-        string GetRemoveAction(string fileId) =>
-            Url.Action("RemoveStakeholderDiscussionsFile", "Scheme", new { applicationId, fileId }) ?? string.Empty;
+        string GetRemoveAction(FileId fileId) =>
+            Url.Action("RemoveStakeholderDiscussionsFile", "Scheme", new { applicationId, fileId = fileId.Value }) ?? string.Empty;
 
         IList<FileModel>? CreateFileModel(UploadedFile? x) =>
             x == null
                 ? null
-                : new List<FileModel> { new(x.FileId, x.FileName, x.UploadedOn, x.UploadedBy, x.CanBeRemoved, GetRemoveAction(x.FileId), string.Empty) };
+                : new List<FileModel> { new(x.FileId.Value, x.FileName, x.UploadedOn, x.UploadedBy, x.CanBeRemoved, GetRemoveAction(x.FileId), string.Empty) };
 
         return new SchemeViewModel(
             applicationId,
             scheme.ApplicationName,
-            scheme.RequiredFunding.ToWholeNumberString(),
+            CurrencyHelper.InputPounds(scheme.RequiredFunding),
             scheme.HousesToDeliver.ToString(),
             scheme.AffordabilityEvidence,
             scheme.SalesRisk,
@@ -354,14 +361,14 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
         string applicationId,
         CancellationToken cancellationToken)
     {
-        var scheme = await _schemeProvider.Get(new GetApplicationSchemeQuery(applicationId, true), cancellationToken);
+        var scheme = await _schemeProvider.Get(new GetApplicationSchemeQuery(AhpApplicationId.From(applicationId), true), cancellationToken);
         var isEditable = await _accountAccessContext.CanEditApplication();
         var section = _summaryViewModelFactory.GetSchemeAndCreateSummary("Scheme information", scheme, urlHelper, !isEditable);
 
         return new SchemeSummaryViewModel(
-            scheme.ApplicationId,
+            scheme.ApplicationId.Value,
             scheme.ApplicationName,
-            scheme.Status == SectionStatus.Completed ? true : null,
+            scheme.Status == SectionStatus.Completed ? IsSectionCompleted.Yes : null,
             section,
             isEditable);
     }

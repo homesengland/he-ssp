@@ -1,14 +1,15 @@
 @using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.WWW.Models.Delivery
+@using HE.Investment.AHP.WWW.Views.Delivery.Const
+@using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
 @using HE.Investments.Common.WWW.Components.BackLinkWithCallback
-@using Microsoft.AspNetCore.Mvc.TagHelpers
 @using HE.Investments.Common.WWW.Components.FormHeader
-@using HE.Investments.Common.WWW.TagHelpers
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Radios
 @using HE.Investments.Common.WWW.Components.FormButton
 @model HE.Investment.AHP.WWW.Models.Delivery.RemoveDeliveryPhaseModel;
 @{
     var applicationId = this.GetApplicationIdFromRoute();
+    var title = DeliveryPageTitles.Remove;
+    ViewData["Title"] = title;
 }
 
 <div class="govuk-grid-column-three-quarters">
@@ -21,20 +22,16 @@
         @Html.HiddenFor(m => Model.DeliveryPhaseName)
 
         <vc:form-header caption="@Model.Header"/>
-        <he-error-form-group asp-for="RemoveDeliveryPhaseAnswer">
-            <gds-h1>Are you sure you want to remove this delivery phase?</gds-h1>
-            <gds-span-hint>
-                By removing this delivery phase, any homes you have assigned to this phase will need to be added to another phase.
-            </gds-span-hint>
-            <gds-radio class="govuk-!-margin-top-3"
-                       govuk-formgroup-asp-for="RemoveDeliveryPhaseAnswer"
-                       asp-hiddenlabeltext="Are you sure you want to remove this delivery phase?"
-                       value="@Model.RemoveDeliveryPhaseAnswer"
-                       asp-selectlistitems="@DeliveryFormOptions.RemoveDeliveryPhase">
-            </gds-radio>
-        </he-error-form-group>
+
+        <vc:radio-list
+            header="@title"
+            field-name="@nameof(Model.RemoveDeliveryPhaseAnswer)"
+            available-options="@DeliveryFormOptions.RemoveDeliveryPhase"
+            hint="By removing this delivery phase, any homes you have assigned to this phase will need to be added to another phase."
+            value="@Model.RemoveDeliveryPhaseAnswer"/>
 
         <vc:form-button/>
+
         <vc:return-to-application-link application-id="@applicationId"/>
     </form>
 </div>

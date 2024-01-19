@@ -1,3 +1,5 @@
+using HE.Investment.AHP.Contract.HomeTypes;
+
 namespace HE.Investment.AHP.Domain.Documents;
 
 public static class AhpFileFolders
@@ -5,7 +7,7 @@ public static class AhpFileFolders
     public static readonly Func<string, string> LocalAuthoritySupportFilesFolder =
         rootDirectory => $"{rootDirectory}/external/Local Authority Support";
 
-    public static readonly Func<string, string, string> DesignFilesFolder =
+    public static readonly Func<string, HomeTypeId, string> DesignFilesFolder =
         (rootDirectory, homeTypeId) => $"{rootDirectory}/Home Types/{homeTypeId}/external/Design Files";
 
     public static readonly Func<string, IEnumerable<string>> ApplicationFolders = rootDirectory => new[]
@@ -15,7 +17,7 @@ public static class AhpFileFolders
         $"{rootDirectory}/Home Types",
     };
 
-    public static readonly Func<string, string, IEnumerable<string>> HomeTypeFolders = (rootDirectory, homeTypeId) => new[]
+    public static readonly Func<string, HomeTypeId, IEnumerable<string>> HomeTypeFolders = (rootDirectory, homeTypeId) => new[]
     {
         DesignFilesFolder(rootDirectory, homeTypeId),
         $"{rootDirectory}/Home Types/{homeTypeId}/internal/Design Files",

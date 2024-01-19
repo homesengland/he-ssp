@@ -35,5 +35,6 @@ public static class ServiceCollectionExtensions
         serviceCollections.AddScoped<IWebRoleRepository, WebRoleRepository>();
         serviceCollections.AddScoped<IPortalPermissionRepository, PortalPermissionRepository>();
         serviceCollections.AddScoped<IOrganizationService, OrganizationService>();
+        serviceCollections.AddScoped<IProgrammeService, ProgrammeService>();
     }
 }

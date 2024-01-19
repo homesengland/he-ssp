@@ -1,11 +1,8 @@
-﻿using HE.Investment.AHP.Contract.HomeTypes;
-using HE.Investment.AHP.Domain.HomeTypes.Commands;
+﻿using HE.Investment.AHP.Contract.HomeTypes.Commands;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
-using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
-using HE.Investments.Common.Validators;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -27,10 +24,9 @@ public class CompleteHomeTypeCommandHandler : HomeTypeCommandHandlerBase, IReque
     public async Task<OperationResult> Handle(CompleteHomeTypeCommand request, CancellationToken cancellationToken)
     {
         var account = await _accountUserContext.GetSelectedAccount();
-        var applicationId = new Domain.Application.ValueObjects.ApplicationId(request.ApplicationId);
         var homeType = await _homeTypeRepository.GetById(
-            applicationId,
-            new HomeTypeId(request.HomeTypeId),
+            request.ApplicationId,
+            request.HomeTypeId,
             account,
             HomeTypeSegmentTypes.All,
             cancellationToken);

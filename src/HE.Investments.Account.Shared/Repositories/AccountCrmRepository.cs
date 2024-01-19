@@ -3,6 +3,7 @@ using HE.Investments.Account.Contract.Users;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.Entities;
 using HE.Investments.Account.Shared.User.ValueObjects;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Organisation.Services;
@@ -31,13 +32,15 @@ public class AccountCrmRepository : IAccountRepository
             return Array.Empty<UserAccount>();
         }
 
+
+        // TODO: #88197 - Fetch IsUnregisteredBody
         return contactRoles
             .contactRoles
             .GroupBy(x => x.accountId)
             .Select(x => new UserAccount(
                 UserGlobalId.From(contactExternalId),
                 userEmail,
-                new OrganisationId(x.Key),
+                new OrganisationBasicInfo(new OrganisationId(x.Key), false),
                 x.FirstOrDefault(y => y.accountId == x.Key)?.accountName ?? string.Empty,
                 new ReadOnlyCollection<UserRole>(x.Where(y => y.permission.HasValue).Select(y => UserRoleMapper.ToDomain(y.permission)!.Value).ToList())))
             .ToList();

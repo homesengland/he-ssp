@@ -1,10 +1,10 @@
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.HomeTypes.Events;
 using HE.Investment.AHP.Domain.Documents;
 using HE.Investment.AHP.Domain.Documents.Config;
 using HE.Investment.AHP.Domain.Documents.Crm;
 using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.DocumentService.Services;
-using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.EventHandlers;
 
@@ -28,7 +28,7 @@ public class CreateHomeTypeDocumentFolderEventHandler : IEventHandler<HomeTypeHa
 
     public async Task Handle(HomeTypeHasBeenCreatedEvent domainEvent, CancellationToken cancellationToken)
     {
-        var rootDirectory = await _documentsCrmContext.GetDocumentLocation(new ApplicationId(domainEvent.ApplicationId), cancellationToken);
+        var rootDirectory = await _documentsCrmContext.GetDocumentLocation(domainEvent.ApplicationId, cancellationToken);
         var homeTypeFolders = AhpFileFolders.HomeTypeFolders(rootDirectory, domainEvent.HomeTypeId).ToList();
 
         await _documentService.CreateFoldersAsync(

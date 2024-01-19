@@ -1,22 +1,18 @@
-@using HE.Investment.AHP.Domain.HomeTypes
 @using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.WWW.Models.HomeTypes
 @using HE.Investment.AHP.WWW.Views.HomeTypes.Const
 @using HE.Investment.AHP.WWW.Views.Shared.Components.HomeTypeFormHeader
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
 @using HE.Investments.Common.WWW.Components.FormButton
-@using HE.Investments.Common.WWW.TagHelpers
-@using Microsoft.AspNetCore.Mvc.TagHelpers
 @using tes = He.AspNetCore.Mvc.Gds.Components.TagHelpers.Radios;
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Input
+@using HE.Investment.AHP.Contract.HomeTypes
 
 @model HE.Investment.AHP.WWW.Models.HomeTypes.HomeTypeDetailsModel;
 
 @{
     var applicationId = this.GetApplicationIdFromRoute();
-    var homeTypeId = this.GetOptionalHomeTypeIdFromRoute();
     var workflow = Context.Request.Query["workflow"];
-    var action = homeTypeId == null ? "NewHomeTypeDetails" : "HomeTypeDetails";
+    var action = this.GetOptionalHomeTypeIdFromRoute() == null ? "NewHomeTypeDetails" : "HomeTypeDetails";
     ViewData["Title"] = HomeTypesPageTitles.HomeTypeDetails;
 }
 
@@ -25,7 +21,6 @@
         @Html.HiddenFor(m => Model.ApplicationName)
         <vc:home-type-form-header title="@HomeTypesPageTitles.HomeTypeDetails"
                                   current-page="@HomeTypesWorkflowState.HomeTypeDetails"
-                                  application-id="@applicationId"
                                   caption="@Model.ApplicationName"/>
 
         <div class="govuk-caption-m govuk-!-margin-bottom-6">Create a home type for each identical type of property. If there are any differences, create a new home type.</div>

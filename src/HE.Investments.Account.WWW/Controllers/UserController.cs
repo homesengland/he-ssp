@@ -1,6 +1,6 @@
 using HE.Investments.Account.Contract.User;
+using HE.Investments.Account.Contract.User.Commands;
 using HE.Investments.Account.Contract.User.Queries;
-using HE.Investments.Account.Domain.User.Commands;
 using HE.Investments.Account.Shared.Routing;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;

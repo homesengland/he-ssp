@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Enums;
@@ -6,13 +7,12 @@ using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
-using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
+using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
-using HE.Investments.Common.Validators;
-using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
+using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.Domain.Delivery.Entities;
 
@@ -40,13 +40,11 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
         Status = status;
     }
 
-    public ApplicationId ApplicationId => _application.Id;
+    public AhpApplicationId ApplicationId => _application.Id;
 
     public ApplicationName ApplicationName => _application.Name;
 
     public IEnumerable<IDeliveryPhaseEntity> DeliveryPhases => _deliveryPhases;
-
-    public IEnumerable<IDeliveryPhaseEntity> ToRemove => _toRemove;
 
     public SectionStatus Status { get; private set; }
 
@@ -57,27 +55,61 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
 
     public string HomeTypeConsumerName => "Delivery Phase";
 
+    public IDeliveryPhaseEntity? PopRemovedDeliveryPhase()
+    {
+        if (_toRemove.Any())
+        {
+            var result = _toRemove[0];
+            _toRemove.RemoveAt(0);
+            return result;
+        }
+
+        return null;
+    }
+
     public bool IsHomeTypeUsed(HomeTypeId homeTypeId) => _deliveryPhases.Any(x => x.IsHomeTypeUsed(homeTypeId));
 
-    public IEnumerable<(HomesToDeliver HomesToDeliver, int ToDeliver)> GetHomesToDeliverInPhase(DeliveryPhaseId deliveryPhaseId)
+    public IEnumerable<(HomesToDeliver HomesToDeliver, int? ToDeliver)> GetHomesToDeliverInPhase(DeliveryPhaseId deliveryPhaseId)
     {
         var deliveryPhase = GetEntityById(deliveryPhaseId);
 
-        return _homesToDeliver.Select(x => (x, deliveryPhase.GetHomesToBeDeliveredForHomeType(x.HomeTypeId)));
+        foreach (var homesToDeliver in _homesToDeliver)
+        {
+            var toBeDeliveredInTotal = GetHomesToBeDeliveredInAllPhases(homesToDeliver.HomeTypeId);
+            var toBeDeliveredInPhase = deliveryPhase.GetHomesToBeDeliveredForHomeType(homesToDeliver.HomeTypeId);
+            if (toBeDeliveredInTotal < homesToDeliver.TotalHomes || toBeDeliveredInPhase.IsProvided())
+            {
+                yield return (homesToDeliver, toBeDeliveredInPhase);
+            }
+        }
     }
 
-    public void SetHomesToBeDeliveredInPhase(DeliveryPhaseId deliveryPhaseId, IReadOnlyCollection<HomesToDeliverInPhase> homesToDeliver)
+    public void ProvideHomesToBeDeliveredInPhase(DeliveryPhaseId deliveryPhaseId, IReadOnlyCollection<HomesToDeliverInPhase> homesToDeliver)
     {
+        if (!_homesToDeliver.Any())
+        {
+            OperationResult.New()
+                .AddValidationError(nameof(HomesToDeliver), "Create at least one Home Type in home types section")
+                .CheckErrors();
+        }
+
+        if (homesToDeliver.All(x => x.ToDeliver == 0))
+        {
+            OperationResult.New()
+                .AddValidationError(nameof(HomesToDeliver), "Provide number of homes for at least one home type")
+                .CheckErrors();
+        }
+
         GetEntityById(deliveryPhaseId).SetHomesToBeDeliveredInThisPhase(homesToDeliver);
 
         var errors = new List<ErrorItem>();
-        foreach (var (homeTypeId, _) in homesToDeliver)
+        foreach (var homeTypeId in homesToDeliver.Select(x => x.HomeTypeId))
         {
             var homeToDeliver = _homesToDeliver.SingleOrDefault(x => x.HomeTypeId == homeTypeId)
                                 ?? throw new NotFoundException(nameof(HomesToDeliver), homeTypeId);
             if (GetHomesToBeDeliveredInAllPhases(homeTypeId) > homeToDeliver.TotalHomes)
             {
-                errors.Add(new ErrorItem($"HomeType-{homeTypeId}", "You have entered more homes to this home type than are in the application"));
+                errors.Add(new ErrorItem(HomesToDeliverInPhase.AffectedField(homeTypeId), "You have entered more homes to this home type than are in the application"));
             }
         }
 
@@ -85,6 +117,24 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
         {
             OperationResult.New().AddValidationErrors(errors).CheckErrors();
         }
+    }
+
+    public DeliveryPhaseEntity CreateDeliveryPhase(DeliveryPhaseName name, OrganisationBasicInfo organisationBasicInfo)
+    {
+        var deliveryPhase = new DeliveryPhaseEntity(
+            _application,
+            ValidateNameUniqueness(name),
+            organisationBasicInfo,
+            SectionStatus.InProgress);
+
+        _deliveryPhases.Add(deliveryPhase);
+        return deliveryPhase;
+    }
+
+    public void ProvideDeliveryPhaseName(DeliveryPhaseId deliveryPhaseId, DeliveryPhaseName name)
+    {
+        var entity = GetEntityById(deliveryPhaseId);
+        entity.ProvideName(ValidateNameUniqueness(name, entity));
     }
 
     public void Remove(DeliveryPhaseId deliveryPhaseId, RemoveDeliveryPhaseAnswer removeAnswer)
@@ -124,7 +174,8 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
             if (notCompletedDeliveryPhases.Any())
             {
                 throw new DomainValidationException(new OperationResult().AddValidationErrors(
-                    notCompletedDeliveryPhases.Select(x => new ErrorItem($"DeliveryPhase-{x.Id}", $"Complete {x.Name.Value} to save and continue")).ToList()));
+                    notCompletedDeliveryPhases.Select(x => new ErrorItem($"DeliveryPhase-{x.Id}", $"Complete {x.Name.Value} to save and continue"))
+                        .ToList()));
             }
 
             if (!AreAllHomeTypesUsed())
@@ -151,12 +202,20 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
         Status = _statusModificationTracker.Change(Status, SectionStatus.InProgress);
     }
 
-    public void Add(DeliveryPhaseEntity deliveryPhase)
+    private DeliveryPhaseName ValidateNameUniqueness(DeliveryPhaseName name, DeliveryPhaseEntity? entity = null)
     {
-        _deliveryPhases.Add(deliveryPhase);
+        if ((entity == null && _deliveryPhases.Any(x => x.Name == name))
+            || (entity != null && _deliveryPhases.Except(new[] { entity }).Any(x => x.Name == name)))
+        {
+            OperationResult.New()
+                .AddValidationError(nameof(DeliveryPhaseName), "Provided delivery phase name is already in use. Delivery phase name should be unique.")
+                .CheckErrors();
+        }
+
+        return name;
     }
 
-    public DeliveryPhaseEntity GetEntityById(DeliveryPhaseId deliveryPhaseId) => _deliveryPhases.SingleOrDefault(x => x.Id == deliveryPhaseId)
+    private DeliveryPhaseEntity GetEntityById(DeliveryPhaseId deliveryPhaseId) => _deliveryPhases.SingleOrDefault(x => x.Id == deliveryPhaseId)
                                                                                   ?? throw new NotFoundException(nameof(DeliveryPhaseEntity), deliveryPhaseId);
 
     private bool AreAllHomeTypesUsed()

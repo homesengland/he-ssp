@@ -1,6 +1,6 @@
+using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
-using HE.Investments.Common.WWWTestsFramework.Helpers;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.HomeTypes;
 
@@ -19,8 +19,7 @@ public class ModernMethodsConstruction2DSubcategoriesTests : HomeTypesTestBase
 
         // then
         document
-            .HasElementWithText("span", "My application - My homes")
-            .HasElementWithText("h1", "Category 2")
+            .HasPageHeader("My application - My homes", "Category 2")
             .HasElementWithText("h2", "Which of these sub-categories of 2D primary structural systems are you using?")
             .HasElementWithText("span", "Select all that apply.")
             .HasCheckboxes(
@@ -31,7 +30,7 @@ public class ModernMethodsConstruction2DSubcategoriesTests : HomeTypesTestBase
                     "EnhancedConsolidation",
                     "FurtherEnhancedConsolidation",
                 })
-            .HasElementWithText("button", "Save and continue");
+            .HasGdsSaveAndContinueButton();
     }
 
     [Fact]
@@ -63,6 +62,6 @@ public class ModernMethodsConstruction2DSubcategoriesTests : HomeTypesTestBase
                     "BasicFramingOnly",
                     "EnhancedConsolidation",
                 })
-            .HasElementWithText("button", "Save and continue");
+            .HasGdsSaveAndContinueButton();
     }
 }

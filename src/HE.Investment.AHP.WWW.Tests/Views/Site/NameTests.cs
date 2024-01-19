@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.WWW.Views.Site;
 using HE.Investments.Common.WWWTestsFramework;
@@ -21,7 +22,7 @@ public class NameTests : ViewTestBase
             .HasTitle(SitePageTitles.SiteName)
             .HasGdsInput(nameof(SiteModel.Name))
             .HasGdsSaveAndContinueButton()
-            .HasGdsBackButton();
+            .HasGdsBackButton(false);
     }
 
     [Fact]
@@ -40,7 +41,7 @@ public class NameTests : ViewTestBase
             .HasTitle(SitePageTitles.SiteName)
             .HasGdsInput(nameof(SiteModel.Name))
             .HasGdsSaveAndContinueButton()
-            .HasGdsBackButton()
+            .HasGdsBackButton(false)
             .HasOneValidationMessages(errorMessage);
     }
 }

@@ -1,8 +1,7 @@
 using AngleSharp.Html.Dom;
 using HE.Investment.AHP.WWW.Models.Scheme;
-using HE.Investments.Common.WWWTestsFramework;
-using HE.Investments.Common.WWWTestsFramework.Helpers;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Routing;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.Scheme;
 
@@ -12,12 +11,13 @@ public class HousingNeedsTests : ViewTestBase
     private const string MeetingLocalPrioritiesError = "Test error";
     private const string MeetingLocalHousingNeedError = "Second error";
     private static readonly SchemeViewModel Model = TestSchemeViewModel.Test;
+    private readonly RouteData _routeData = new(new RouteValueDictionary { { "applicationId", "123" } });
 
     [Fact]
     public async Task ShouldDisplayView_WhenThereAreNoErrors()
     {
         // given & when
-        var document = await Render(ViewPath, Model);
+        var document = await Render(ViewPath, Model, routeData: _routeData);
 
         // then
         AssertView(document);
@@ -33,7 +33,7 @@ public class HousingNeedsTests : ViewTestBase
         modelState.AddModelError(nameof(SchemeViewModel.MeetingLocalHousingNeed), MeetingLocalHousingNeedError);
 
         // when
-        var document = await Render(ViewPath, Model, modelStateDictionary: modelState);
+        var document = await Render(ViewPath, Model, modelStateDictionary: modelState, routeData: _routeData);
 
         // then
         AssertView(document);
@@ -44,11 +44,9 @@ public class HousingNeedsTests : ViewTestBase
     {
         document
             .HasPageHeader(Model.ApplicationName, "Local housing needs")
-            .HasFormFieldLabel("Tell us how this type and tenure of home meets the identified priorities for the local housing market", "label")
-            .HasTextAreaInput("MeetingLocalPriorities", value: Model.MeetingLocalPriorities)
-            .HasFormFieldLabel("Tell us how this scheme and proposal contributes to a locally identified housing need", "label")
-            .HasTextAreaInput("MeetingLocalHousingNeed", value: Model.MeetingLocalHousingNeed)
-            .HasElementWithText("button", "Save and continue");
+            .HasTextAreaInput("MeetingLocalPriorities", "Tell us how this type and tenure of home meets the identified priorities for the local housing market", Model.MeetingLocalPriorities)
+            .HasTextAreaInput("MeetingLocalHousingNeed", "Tell us how this scheme and proposal contributes to a locally identified housing need", Model.MeetingLocalHousingNeed)
+            .HasGdsSaveAndContinueButton();
     }
 
     private void AssertErrors(IHtmlDocument document, bool exist)

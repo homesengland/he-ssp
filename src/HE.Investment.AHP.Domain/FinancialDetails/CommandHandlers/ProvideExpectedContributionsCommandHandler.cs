@@ -1,11 +1,10 @@
-using HE.Investment.AHP.Domain.FinancialDetails.Commands;
+using HE.Investment.AHP.Contract.FinancialDetails.Commands;
 using HE.Investment.AHP.Domain.FinancialDetails.Entities;
 using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
-using HE.Investments.Common.Validators;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -34,7 +33,7 @@ public class ProvideExpectedContributionsCommandHandler : FinancialDetailsComman
                     MapProvidedValues(request.SalesOfHomesOnThisScheme, ExpectedContributionFields.SaleOfHomesOnThisScheme),
                     MapProvidedValues(request.SalesOfHomesOnOtherSchemes, ExpectedContributionFields.SaleOfHomesOnOtherSchemes),
                     MapProvidedValues(request.OwnResources, ExpectedContributionFields.OwnResources),
-                    MapProvidedValues(request.RCGFContribution, ExpectedContributionFields.RcgfContribution),
+                    MapProvidedValues(request.RcgfContribution, ExpectedContributionFields.RcgfContribution),
                     MapProvidedValues(request.OtherCapitalSources, ExpectedContributionFields.OtherCapitalSources),
                     MapProvidedValues(request.SharedOwnershipSales, ExpectedContributionFields.SharedOwnershipSales),
                     MapProvidedValues(request.HomesTransferValue, ExpectedContributionFields.HomesTransferValue),

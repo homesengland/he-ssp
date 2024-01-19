@@ -5,8 +5,11 @@ namespace HE.Investments.Common.WWW.Components.WorkflowBackButton;
 
 public class WorkflowBackButton : ViewComponent
 {
-    public IViewComponentResult Invoke(Enum currentPage, string? paramName = null)
+    public IViewComponentResult Invoke(
+        Enum currentPage,
+        Func<Enum, object> redirectParametersFactory)
     {
-        return View("WorkflowBackButton", (currentPage.ToString(), paramName));
+        var redirectParameters = redirectParametersFactory(currentPage);
+        return View("WorkflowBackButton", redirectParameters);
     }
 }

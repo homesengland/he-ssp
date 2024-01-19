@@ -4,7 +4,6 @@
 @using HE.Investment.AHP.WWW.Views.HomeTypes.Const
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
 @using HE.Investments.Common.Extensions
-@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model HE.Investment.AHP.WWW.Models.HomeTypes.HomeTypeListModel
 
 @{
@@ -36,7 +35,7 @@
 
         @if (Model.HomeTypes.Any())
         {
-            <table class="govuk-table govuk-!-margin-bottom-0">
+            <table class="govuk-table govuk-!-margin-bottom-0" data-testid="home-types-table">
                 <thead class="govuk-table__head">
                 <tr class="govuk-table__row">
                     <th scope="col" class="govuk-table__header">Home type name</th>
@@ -55,14 +54,15 @@
                     @Html.HiddenFor(model => Model.HomeTypes[index].HousingType)
                     @Html.HiddenFor(model => Model.HomeTypes[index].NumberOfHomes)
 
-                    <tr class="govuk-table__row" id="HomeType-@Model.HomeTypes[index].HomeTypeId">
+                    <tr class="govuk-table__row">
                         <td class="govuk-table__cell">
                             <gds-link class="govuk-link--no-visited-state"
-                                      href="@Url.RouteUrl("subSection", new { controller = "HomeTypes", action = "HomeTypeDetails", applicationId, id = Model.HomeTypes[index].HomeTypeId, redirect = true })">
+                                      data-testid="home-type-@Model.HomeTypes[index].HomeTypeId"
+                                      href="@Url.Action("HomeTypeDetails","HomeTypes", new  { applicationId, homeTypeId = Model.HomeTypes[index].HomeTypeId, redirect = true })">
                                 @(Model.HomeTypes[index].HomeTypeName)
                             </gds-link>
                         </td>
-                        <td class="govuk-table__cell">
+                        <td class="govuk-table__cell" data-testid="number-of-homes-@Model.HomeTypes[index].HomeTypeId">
                             @(Model.HomeTypes[index].NumberOfHomes?.ToString() ?? "Not provided")
                         </td>
                         <td class="govuk-table__cell">
@@ -70,11 +70,12 @@
                         </td>
                         <td class="govuk-table__cell govuk-!-text-align-right" hidden="@Model.IsReadOnly">
                             <gds-link class="govuk-link--no-visited-state"
-                                      href="@Url.RouteUrl("subSection", new { controller = "HomeTypes", action = "Duplicate", applicationId, id = Model.HomeTypes[index].HomeTypeId })">
+                                      data-testid="duplicate-@Model.HomeTypes[index].HomeTypeId"
+                                      href="@Url.Action("Duplicate","HomeTypes", new  { applicationId, homeTypeId = Model.HomeTypes[index].HomeTypeId })">
                                 Duplicate
                             </gds-link>
                             <gds-link class="govuk-link--no-visited-state govuk-!-margin-left-4"
-                                      href="@Url.RouteUrl("subSection", new { controller = "HomeTypes", action = "Remove", applicationId, id = Model.HomeTypes[index].HomeTypeId })">
+                                      href="@Url.Action("Remove","HomeTypes", new  { applicationId, homeTypeId = Model.HomeTypes[index].HomeTypeId })">
                                 Remove
                             </gds-link>
                         </td>
@@ -86,7 +87,7 @@
                         <vc:form-button is-disabled="@Model.IsReadOnly"/>
                     </td>
                     <td class="govuk-!-padding-top-6" colspan="3">
-                        <link-button href="@Url.RouteUrl("section", new { controller = "HomeTypes", action = "HomeTypeDetails", applicationId })"
+                        <link-button href="@Url.Action("NewHomeTypeDetails","HomeTypes", new  { applicationId })"
                                      is-secondary="true"
                                      data-testid="add-home-type"
                                      is-disabled="@Model.IsReadOnly">
@@ -103,7 +104,7 @@
                 Your home type details will appear here once added.
             </gds-p>
 
-            <link-button href="@Url.RouteUrl("section", new { controller = "HomeTypes", action = "HomeTypeDetails", applicationId })"
+            <link-button href="@Url.Action("NewHomeTypeDetails","HomeTypes", new  { applicationId })"
                          data-testid="add-home-type"
                          is-disabled="@Model.IsReadOnly">
                 Add a home type

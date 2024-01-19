@@ -1,0 +1,29 @@
+@using HE.Investment.AHP.WWW.Views.Application
+@using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investments.Common.WWW.Components.FormHeader
+@using HE.Investments.Common.WWW.Components.TextAreaInputWithCounter
+@using HE.Investment.AHP.Contract.Application
+@model HE.Investment.AHP.WWW.Models.Application.ChangeApplicationStatusModel
+
+@{
+    ViewData["Title"] = ApplicationPageTitles.Withdraw;
+}
+
+<gds-div-grid-column-two-thirds>
+    <vc:ahp-workflow-back-button current-page="@ApplicationWorkflowState.Withdraw"/>
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+
+    <form asp-controller="Application" asp-action="Withdraw" asp-method="post" asp-route-applicationName="@Model.ApplicationName" novalidate>
+        <vc:form-header caption="@Model.ApplicationName"/>
+        @Html.HiddenFor(m => Model.ApplicationName)
+
+        <vc:text-area-input-with-counter
+            field-name="@nameof(Model.WithdrawReason)"
+            value="@Model.WithdrawReason"
+            header="@ApplicationPageTitles.Withdraw"
+            hint="This will notify Homes England that you no longer wish to proceed. Your application will be permanently deleted."/>
+
+        <vc:form-button text="Withdraw application"/>
+    </form>
+</gds-div-grid-column-two-thirds>

@@ -1,8 +1,8 @@
 using System.Globalization;
 using System.Reflection;
 using HE.Investment.AHP.Contract.HomeTypes;
-using HE.Investment.AHP.Domain.HomeTypes;
 using HE.Investment.AHP.WWW.Controllers;
+using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Workflow;
 using HE.Investments.Common.WWW.Components.SectionSummary;
@@ -100,7 +100,7 @@ internal class HomeTypeQuestionFactory
 
     private static HomeTypesWorkflowState GetWorkflowState(string controllerActionName)
     {
-        var method = typeof(HomeTypesController).GetMethods(BindingFlags.Public | BindingFlags.Instance).FirstOrDefault(x => x.Name == controllerActionName);
+        var method = Array.Find(typeof(HomeTypesController).GetMethods(BindingFlags.Public | BindingFlags.Instance), x => x.Name == controllerActionName);
         var workflowState = method?.GetCustomAttribute<WorkflowStateAttribute>();
 
         return workflowState?.StateAs<HomeTypesWorkflowState>() ??
@@ -109,28 +109,10 @@ internal class HomeTypeQuestionFactory
 
     private string CreateActionUrl(string controllerActionName)
     {
-        if (_encodedWorkflow != null)
-        {
-            return _urlHelper.RouteUrl(
-                "subSection",
-                new
-                {
-                    controller = "HomeTypes",
-                    action = controllerActionName,
-                    applicationId = _homeType.ApplicationId,
-                    id = _homeType.Id,
-                    workflow = _encodedWorkflow.Value,
-                }) ?? string.Empty;
-        }
+        object routeParameters = _encodedWorkflow != null
+            ? new { applicationId = _homeType.ApplicationId.Value, homeTypeId = _homeType.Id.Value, workflow = _encodedWorkflow.Value }
+            : new { applicationId = _homeType.ApplicationId.Value, homeTypeId = _homeType.Id.Value };
 
-        return _urlHelper.RouteUrl(
-            "subSection",
-            new
-            {
-                controller = "HomeTypes",
-                action = controllerActionName,
-                applicationId = _homeType.ApplicationId,
-                id = _homeType.Id,
-            }) ?? string.Empty;
+        return _urlHelper.Action(controllerActionName, "HomeTypes", routeParameters) ?? string.Empty;
     }
 }

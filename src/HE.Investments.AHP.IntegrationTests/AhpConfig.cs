@@ -1,6 +1,6 @@
 namespace HE.Investments.AHP.IntegrationTests;
 
-public class AhpConfig
+public static class AhpConfig
 {
     // Make it null when you want to run tests locally
 #if DEBUG

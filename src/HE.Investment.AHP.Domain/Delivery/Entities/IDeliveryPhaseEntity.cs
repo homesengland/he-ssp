@@ -1,8 +1,12 @@
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.Domain.Common;
+using HE.Investment.AHP.Domain.Delivery.Policies;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
+using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
+using SummaryOfDelivery = HE.Investment.AHP.Domain.Delivery.ValueObjects.SummaryOfDelivery;
 
 namespace HE.Investment.AHP.Domain.Delivery.Entities;
 
@@ -10,7 +14,11 @@ public interface IDeliveryPhaseEntity
 {
     ApplicationBasicInfo Application { get; }
 
-    public OrganisationBasicInfo Organisation { get; }
+    AhpApplicationId ApplicationId => Application.Id;
+
+    Tenure Tenure => Application.Tenure;
+
+    OrganisationBasicInfo Organisation { get; }
 
     DeliveryPhaseId Id { get; }
 
@@ -18,27 +26,35 @@ public interface IDeliveryPhaseEntity
 
     TypeOfHomes? TypeOfHomes { get; }
 
+    BuildActivity BuildActivity { get; }
+
+    bool? ReconfiguringExisting { get; }
+
     DateTime? CreatedOn { get; }
 
     SectionStatus Status { get; }
 
     int TotalHomesToBeDeliveredInThisPhase { get; }
 
-    AcquisitionMilestoneDetails? AcquisitionMilestone { get; }
-
-    StartOnSiteMilestoneDetails? StartOnSiteMilestone { get; }
-
-    CompletionMilestoneDetails? CompletionMilestone { get; }
+    DeliveryPhaseMilestones DeliveryPhaseMilestones { get; }
 
     public IsAdditionalPaymentRequested? IsAdditionalPaymentRequested { get; }
 
-    void ProvideAcquisitionMilestoneDetails(AcquisitionMilestoneDetails? details);
-
-    void ProvideStartOnSiteMilestoneDetails(StartOnSiteMilestoneDetails? details);
-
-    void ProvideCompletionMilestoneDetails(CompletionMilestoneDetails? details);
+    Task ProvideDeliveryPhaseMilestones(DeliveryPhaseMilestones milestones, IMilestoneDatesInProgrammeDateRangePolicy policy, CancellationToken cancellationToken);
 
     void ProvideAdditionalPaymentRequest(IsAdditionalPaymentRequested? isAdditionalPaymentRequested);
 
     void ProvideTypeOfHomes(TypeOfHomes typeOfHomes);
+
+    void ProvideBuildActivity(BuildActivity buildActivity);
+
+    void ProvideReconfiguringExisting(bool? reconfiguringExisting);
+
+    bool IsReconfiguringExistingNeeded();
+
+    void Complete();
+
+    void UnComplete();
+
+    SummaryOfDelivery CalculateSummary(decimal requiredFunding, int totalHousesToDeliver, MilestoneFramework milestoneFramework);
 }

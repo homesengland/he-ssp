@@ -3,7 +3,7 @@ using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.WWWTestsFramework;
-using HE.Investments.Common.WWWTestsFramework.Helpers;
+
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.Application;
@@ -41,10 +41,9 @@ public class TenureTests : ViewTestBase
     private static void AssertView(IHtmlDocument document, ApplicationBasicModel model, string? errorMessage = null)
     {
         document
-            .HasElementWithText("span", model.Name!)
-            .HasElementWithText("h1", "What is the tenure of the homes on this application?")
+            .HasPageHeader(model.Name!, "What is the tenure of the homes on this application?")
             .HasSummaryDetails("Tenure refers to the conditions around ownership or rental of the properties")
-            .HasElementWithText("button", "Save and continue")
+            .HasGdsSaveAndContinueButton()
             .HasSummaryErrorMessage(nameof(ApplicationBasicModel.Tenure), errorMessage, !string.IsNullOrEmpty(errorMessage))
             .HasErrorMessage(nameof(ApplicationBasicModel.Tenure), errorMessage, !string.IsNullOrEmpty(errorMessage));
     }

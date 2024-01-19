@@ -23,7 +23,7 @@ internal sealed class GetHomeTypesQueryHandler : IRequestHandler<GetHomeTypesQue
     {
         var account = await _accountUserContext.GetSelectedAccount();
         var homeTypes = await _repository.GetByApplicationId(
-            new Domain.Application.ValueObjects.ApplicationId(request.ApplicationId),
+            request.ApplicationId,
             account,
             new[] { HomeTypeSegmentType.HomeInformation },
             cancellationToken);
@@ -37,7 +37,7 @@ internal sealed class GetHomeTypesQueryHandler : IRequestHandler<GetHomeTypesQue
     {
         return new HomeTypeDetails(
             homeType.Application.Name.Name,
-            homeType.Id.Value,
+            homeType.Id,
             homeType.Name.Value,
             homeType.HomeInformation.NumberOfHomes?.Value,
             homeType.HousingType);

@@ -1,5 +1,14 @@
 using HE.Investments.Common.Contract.Infrastructure.Events;
+using HE.Investments.Loans.Contract.Application.ValueObjects;
 
 namespace HE.Investments.Loans.Contract.Application.Events;
 
-public record LoanApplicationHasBeenStartedEvent(Guid LoanApplicationId) : DomainEvent;
+public class LoanApplicationHasBeenStartedEvent : DomainEvent
+{
+    public LoanApplicationHasBeenStartedEvent(Guid loanApplicationId)
+    {
+        LoanApplicationId = loanApplicationId;
+    }
+
+    public Guid LoanApplicationId { get; private set; }
+}

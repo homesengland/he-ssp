@@ -408,7 +408,6 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagConstructs
         {
             var sb = new StringBuilder();
 
-            // sb.Append($"<div id=\"{id}\" class=\"{Constants.GovUkSummaryListRowCss}\">");
             sb.Append($"<dt class=\"{CssConstants.GovUkSummaryListKey}\">");
             sb.Append($"{key}");
             sb.Append("</dt>");
@@ -427,8 +426,6 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagConstructs
 
             sb.Append("</a>");
             sb.Append("</dd>");
-
-            // sb.Append("</div>");
             return sb.ToString();
         }
 

@@ -22,7 +22,7 @@ public static class DateHelper
             && int.TryParse(month, out var monthValue)
             && int.TryParse(year, out var yearValue))
         {
-            var date = new DateTime(yearValue, monthValue, dayValue);
+            var date = new DateTime(yearValue, monthValue, dayValue, 0, 0, 0, DateTimeKind.Unspecified);
             return date.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
         }
 
@@ -31,11 +31,6 @@ public static class DateHelper
 
     public static string? DisplayAsUkFormatDateTime(DateTime? utcDateTime)
     {
-        return utcDateTime?.ConvertUtcToUkLocalTime().ToString(CultureInfo.GetCultureInfo("en-GB"));
-    }
-
-    public static string? ToDateOnlyString(DateOnly? date)
-    {
-        return date?.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+        return utcDateTime?.ConvertUtcToUkLocalTime().ToString(Culture.Uk);
     }
 }

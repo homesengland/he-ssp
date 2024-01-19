@@ -4,14 +4,13 @@ using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.WWWTestsFramework;
-using HE.Investments.Common.WWWTestsFramework.Helpers;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.Application;
 
 public class TaskListTests : ViewTestBase
 {
     private readonly string _viewPath = "/Views/Application/TaskList.cshtml";
-    private readonly ModificationDetails _testModificationDetails = new("Jan", "Kowalski", new DateTime(2023, 11, 29));
+    private readonly ModificationDetails _testModificationDetails = new("Jan", "Kowalski", new DateTime(2023, 11, 29, 0, 0, 0, DateTimeKind.Unspecified));
 
     private readonly IList<ApplicationSection> _testSections = new List<ApplicationSection>
     {
@@ -113,8 +112,7 @@ public class TaskListTests : ViewTestBase
         bool modificationDetailsExist = true)
     {
         document
-            .HasElementWithText("span", sectionsModel.SiteName)
-            .HasElementWithText("h1", sectionsModel.Name)
+            .HasPageHeader(sectionsModel.SiteName, sectionsModel.Name)
             .HasElementWithText("p", incompleteText, incompleteSectionsExist)
             .HasElementWithText("p", "Last saved on 29/11/2023 00:00:00 by Jan Kowalski", modificationDetailsExist)
             .HasElementWithText("p", "You must complete all sections before you can submit your application.", incompleteSectionsExist)

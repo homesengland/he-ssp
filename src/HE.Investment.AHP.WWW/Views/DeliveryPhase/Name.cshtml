@@ -1,27 +1,29 @@
-@using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.WWW.Models.Delivery
-@using HE.Investment.AHP.WWW.Views.Delivery.Consts
-@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using HE.Investment.AHP.WWW.Views.Delivery.Const
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
 @using HE.Investments.Common.WWW.Components.FormButton
-@using HE.Investments.Common.WWW.Components.FormHeader
-@using HE.Investments.Common.WWW.TagHelpers
-@model HE.Investment.AHP.Contract.Delivery.DeliveryPhaseDetails;
+@model DeliveryPhaseNameViewModel;
 @{
-    var applicationId = this.GetApplicationIdFromRoute();
     var title = DeliveryPageTitles.Name;
     ViewData["Title"] = title;
 }
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="DeliveryPhase" asp-action="Name" asp-method="post" novalidate>
-        @Html.HiddenFor(x => x.Id)
-        <vc:form-header title="@title"/>
-        TODO: Delivery Phase name page
-        <gds-field-set role="group">
-            <vc:form-button/>
-        </gds-field-set>
+    <vc:back-link-with-callback url="@Url.Action("List", "Delivery", new { applicationId = Model.ApplicationId })"/>
 
-        <vc:return-to-application-link application-id="@applicationId"/>
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+
+    <form asp-controller="DeliveryPhase" asp-action="@Model.PostbackActionName" asp-method="post" asp-route-redirect="@Context.Request.Query["redirect"]" novalidate>
+        @Html.HiddenFor(x => x.DeliveryPhaseId)
+        @Html.HiddenFor(x => x.PostbackActionName)
+        <vc:text-input header="@title"
+                       css-class="govuk-!-width-one-third"
+                       hint="Each delivery phase needs a unique name."
+                       field-name="@nameof(Model.DeliveryPhaseName)"
+                       value="@Model.DeliveryPhaseName"/>
+
+        <vc:form-button/>
+
+        <vc:return-to-application-link application-id="@Model.ApplicationId"/>
     </form>
 </gds-div-grid-column-two-thirds>

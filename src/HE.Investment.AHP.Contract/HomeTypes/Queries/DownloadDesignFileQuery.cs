@@ -1,6 +1,8 @@
-﻿using HE.Investment.AHP.Contract.Common;
+﻿using HE.Investment.AHP.Contract.Application;
+using HE.Investment.AHP.Contract.Common;
+using HE.Investments.Common.Contract;
 using MediatR;
 
 namespace HE.Investment.AHP.Contract.HomeTypes.Queries;
 
-public record DownloadDesignFileQuery(string ApplicationId, string HomeTypeId, string FileId) : IRequest<DownloadedFile>;
+public record DownloadDesignFileQuery(AhpApplicationId ApplicationId, HomeTypeId HomeTypeId, FileId FileId) : IRequest<DownloadedFile>;

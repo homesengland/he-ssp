@@ -6,6 +6,7 @@ using HE.Investments.Account.Contract.Users.Queries;
 using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Account.WWW.Models.Users;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
@@ -33,23 +34,23 @@ public class UsersController : Controller
         return View("Index", (model, UserRolesDescription.All));
     }
 
-    [HttpGet("{id}/change")]
+    [HttpGet("{id}/manage")]
     [AuthorizeWithCompletedProfile(AccountAccessContext.ManageUsers)]
-    public async Task<IActionResult> Change([FromRoute] string id, CancellationToken cancellationToken)
+    public async Task<IActionResult> Manage([FromRoute] string id, CancellationToken cancellationToken)
     {
-        var model = await _mediator.Send(new GetUserDetailsQuery(id), cancellationToken);
+        var model = await _mediator.Send(new GetUserDetailsQuery(UserGlobalId.From(id)), cancellationToken);
 
-        return View("Change", model);
+        return View("Manage", model);
     }
 
-    [HttpPost("{id}/change")]
+    [HttpPost("{id}/manage")]
     [AuthorizeWithCompletedProfile(AccountAccessContext.ManageUsers)]
     public async Task<IActionResult> ChangeRole([FromRoute] string id, [FromForm] UserRole? role, CancellationToken cancellationToken)
     {
         if (role == null)
         {
             ModelState.AddModelError("Role", "You have to select role.");
-            return await Change(id, cancellationToken);
+            return await Manage(id, cancellationToken);
         }
 
         if (role == UserRole.Admin)
@@ -62,11 +63,11 @@ public class UsersController : Controller
             return RedirectToAction("ConfirmUnlink", "Users", new { id });
         }
 
-        var result = await _mediator.Send(new ChangeUserRoleCommand(id, role.Value), cancellationToken);
+        var result = await _mediator.Send(new ChangeUserRoleCommand(UserGlobalId.From(id), role.Value), cancellationToken);
         if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
-            return await Change(id, cancellationToken);
+            return await Manage(id, cancellationToken);
         }
 
         return RedirectToAction("Index");
@@ -85,7 +86,7 @@ public class UsersController : Controller
     [AuthorizeWithCompletedProfile(AccountAccessContext.ManageUsers)]
     public async Task<IActionResult> ConfirmUnlink([FromRoute] string id, CancellationToken cancellationToken)
     {
-        var model = await _mediator.Send(new GetUserDetailsQuery(id), cancellationToken);
+        var model = await _mediator.Send(new GetUserDetailsQuery(UserGlobalId.From(id)), cancellationToken);
 
         return View("ConfirmUnlink", (id, model.OrganisationName, $"{model.UserDetails.FirstName} {model.UserDetails.LastName}"));
     }
@@ -102,7 +103,7 @@ public class UsersController : Controller
 
         if (unlink.Value)
         {
-            var result = await _mediator.Send(new RemoveLinkBetweenUserAndOrganisationCommand(id), cancellationToken);
+            var result = await _mediator.Send(new RemoveLinkBetweenUserAndOrganisationCommand(UserGlobalId.From(id)), cancellationToken);
 
             if (result.HasValidationErrors)
             {

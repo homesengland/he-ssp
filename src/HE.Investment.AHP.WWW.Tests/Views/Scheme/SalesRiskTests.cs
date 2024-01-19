@@ -1,8 +1,9 @@
 using AngleSharp.Html.Dom;
 using HE.Investment.AHP.WWW.Models.Scheme;
 using HE.Investments.Common.WWWTestsFramework;
-using HE.Investments.Common.WWWTestsFramework.Helpers;
+
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Routing;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.Scheme;
 
@@ -11,12 +12,13 @@ public class SalesRiskTests : ViewTestBase
     private const string ViewPath = "/Views/Scheme/SalesRisk.cshtml";
     private const string SalesRiskError = "Test error";
     private static readonly SchemeViewModel Model = TestSchemeViewModel.Test;
+    private readonly RouteData _routeData = new(new RouteValueDictionary { { "applicationId", "123" } });
 
     [Fact]
     public async Task ShouldDisplayView_WhenThereAreNoErrors()
     {
         // given & when
-        var document = await Render(ViewPath, Model);
+        var document = await Render(ViewPath, Model, routeData: _routeData);
 
         // then
         AssertView(document);
@@ -31,7 +33,7 @@ public class SalesRiskTests : ViewTestBase
         modelState.AddModelError(nameof(SchemeViewModel.SalesRisk), SalesRiskError);
 
         // when
-        var document = await Render(ViewPath, Model, modelStateDictionary: modelState);
+        var document = await Render(ViewPath, Model, modelStateDictionary: modelState, routeData: _routeData);
 
         // then
         AssertView(document);
@@ -41,11 +43,9 @@ public class SalesRiskTests : ViewTestBase
     private static void AssertView(IHtmlDocument document)
     {
         document
-            .HasElementWithText("span", Model.ApplicationName)
-            .HasElementWithText("h1", "Sales risk of Shared Ownership")
-            .HasElementWithText("label", "Tell us your assessment of the sales risk and how you will mitigate this")
-            .HasTextAreaInput("SalesRisk", value: Model.SalesRisk)
-            .HasElementWithText("button", "Save and continue");
+            .HasPageHeader(Model.ApplicationName, "Sales risk of Shared Ownership")
+            .HasTextAreaInput("SalesRisk", "Tell us your assessment of the sales risk and how you will mitigate this", Model.SalesRisk)
+            .HasGdsSaveAndContinueButton();
     }
 
     private void AssertErrors(IHtmlDocument document, bool exist)

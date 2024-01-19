@@ -1,5 +1,6 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Common.CRM;
+using HE.Investments.Common.CRM.Mappers;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories.Mapper;
 using HE.Investments.Loans.BusinessLogic.Projects.Entities;
@@ -8,7 +9,7 @@ using HE.Investments.Loans.Common.Extensions;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
 
 namespace HE.Investments.Loans.BusinessLogic.Projects.Repositories.Mappers;
-internal class ApplicationProjectsMapper
+internal static class ApplicationProjectsMapper
 {
     public static ApplicationProjects Map(LoanApplicationDto loanApplicationDto, DateTime now)
     {
@@ -17,8 +18,7 @@ internal class ApplicationProjectsMapper
         var projectsFromCrm = loanApplicationDto.siteDetailsList.Select(
             projectFromCrm =>
             {
-                var startDateExists = projectFromCrm.projectHasStartDate;
-                var startDate = startDateExists.IsNotProvided() ? null : startDateExists!.Value ? new StartDate(true, new ProjectDate(projectFromCrm.startDate!.Value)) : new StartDate(false, null);
+                var startDate = DetermineStartDate(projectFromCrm);
 
                 return new Project(
                          ProjectId.From(projectFromCrm.siteDetailsId),
@@ -43,5 +43,22 @@ internal class ApplicationProjectsMapper
             });
 
         return new ApplicationProjects(loanApplicationId, projectsFromCrm);
+    }
+
+    private static StartDate? DetermineStartDate(SiteDetailsDto projectFromCrm)
+    {
+        var startDateExists = projectFromCrm.projectHasStartDate;
+
+        if (startDateExists.IsNotProvided())
+        {
+            return null;
+        }
+
+        if (startDateExists!.Value)
+        {
+            return new StartDate(true, new ProjectDate(projectFromCrm.startDate!.Value));
+        }
+
+        return new StartDate(false, null);
     }
 }

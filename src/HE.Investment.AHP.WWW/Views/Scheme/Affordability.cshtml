@@ -1,12 +1,10 @@
-@using HE.Investment.AHP.Domain.Scheme.Workflows
 @using HE.Investment.AHP.WWW.Views.Scheme.Const;
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.Components.FormHeader
 @using HE.Investments.Common.WWW.Components.TextAreaInputWithCounter
-@using HE.Investments.Common.WWW.Components.WorkflowBackButton
 @using HE.Investments.Common.WWW.Extensions;
-@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using HE.Investment.AHP.Contract.Scheme
 @model HE.Investment.AHP.WWW.Models.Scheme.SchemeViewModel
 @{
     var title = SchemeInformationPageTitles.Affordability;
@@ -15,7 +13,7 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <vc:workflow-back-button current-page="@SchemeWorkflowState.Affordability"/>
+    <vc:ahp-workflow-back-button current-page="@SchemeWorkflowState.Affordability"/>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <form asp-controller="Scheme" asp-action="Affordability" asp-method="post" asp-route-redirect="@Context.Request.Query["redirect"]" novalidate>
         <vc:form-header caption="@Model.ApplicationName" title="@title"/>

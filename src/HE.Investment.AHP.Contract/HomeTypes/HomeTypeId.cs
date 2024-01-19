@@ -13,6 +13,8 @@ public record HomeTypeId : StringIdValueObject
     {
     }
 
+    public static HomeTypeId From(string value) => new(value);
+
     public static HomeTypeId New() => new();
 
     public override string ToString()

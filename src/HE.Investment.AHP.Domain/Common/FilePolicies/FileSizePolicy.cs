@@ -1,7 +1,6 @@
 using HE.Investment.AHP.Domain.Common.ValueObjects;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Messages;
-using HE.Investments.Common.Validators;
 
 namespace HE.Investment.AHP.Domain.Common.FilePolicies;
 

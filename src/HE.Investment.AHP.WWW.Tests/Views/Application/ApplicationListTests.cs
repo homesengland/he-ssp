@@ -6,8 +6,6 @@ using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
-using HE.Investments.Common.WWWTestsFramework;
-using HE.Investments.Common.WWWTestsFramework.Helpers;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.Application;
 
@@ -32,8 +30,8 @@ public class ApplicationListTests : ViewTestBase
     public async Task ShouldDisplayView_WhenThereAreTwoApplications()
     {
         // given
-        var application1 = new ApplicationBasicDetails("1", "Application 1", ApplicationStatus.ApplicationSubmitted, "Local Authority 1", 10, 12);
-        var application2 = new ApplicationBasicDetails("2", "Application 2", ApplicationStatus.Draft, null, 20, null);
+        var application1 = new ApplicationBasicDetails(AhpApplicationId.From("1"), "Application 1", ApplicationStatus.ApplicationSubmitted, "Local Authority 1", 1564553, 12);
+        var application2 = new ApplicationBasicDetails(AhpApplicationId.From("2"), "Application 2", ApplicationStatus.Draft, null, 266468, null);
 
         var applicationListModel = new ApplicationsListModel("Organisation Name", PaginationResult(new List<ApplicationBasicDetails> { application1, application2, }), false);
 
@@ -42,15 +40,15 @@ public class ApplicationListTests : ViewTestBase
 
         // then
         ShouldDisplayPage(document);
-        ShouldDisplayApplicationInTableRow(document, application1);
-        ShouldDisplayApplicationInTableRow(document, application2);
+        ShouldDisplayApplicationInTableRow(document, application1, "£1,564,553");
+        ShouldDisplayApplicationInTableRow(document, application2, "£266,468");
     }
 
-    private static void ShouldDisplayApplicationInTableRow(IHtmlDocument document, ApplicationBasicDetails application)
+    private static void ShouldDisplayApplicationInTableRow(IHtmlDocument document, ApplicationBasicDetails application, string expectedGrant)
     {
         document.HasElementWithText("a", application.Name)
             .HasElementWithText("td", application.LocalAuthority ?? GenericMessages.NotProvided)
-            .HasElementWithText("td", application.Grant.IsProvided() ? $"\u00a3{application.Grant.ToWholeNumberString()}" : "-")
+            .HasElementWithText("td", expectedGrant)
             .HasElementWithText("td", application.Unit?.ToString(CultureInfo.InvariantCulture) ?? "-")
             .HasElementWithText("strong", application.Status.GetDescription());
     }

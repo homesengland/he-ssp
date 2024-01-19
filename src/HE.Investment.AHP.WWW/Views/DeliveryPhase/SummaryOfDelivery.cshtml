@@ -1,0 +1,60 @@
+@using HE.Investment.AHP.WWW.Views.Delivery.Const
+@using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
+@using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investment.AHP.Contract.Delivery
+@using HE.Investment.AHP.WWW.Extensions
+@using HE.Investment.AHP.WWW.Models.Delivery
+@using HE.Investments.Common.Messages
+@using HE.Investments.Common.WWW.Components.FormHeader
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model DeliveryPhaseDetails;
+@{
+    var applicationId = this.GetApplicationIdFromRoute();
+    var title = DeliveryPageTitles.SummaryOfDelivery;
+    ViewData["Title"] = title;
+}
+
+<gds-div-grid-column-two-thirds>
+    <vc:ahp-workflow-back-button current-page="@DeliveryPhaseWorkflowState.SummaryOfDelivery"/>
+
+    <form asp-controller="DeliveryPhase" asp-action="SummaryOfDelivery" asp-method="post" asp-route-redirect="@Context.Request.Query["redirect"]" novalidate>
+        <vc:form-header caption="@($"{Model.ApplicationName} - {Model.Name}")" title="@title"/>
+
+        <table class="govuk-table govuk-!-margin-bottom-8">
+            <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header govuk-!-width-one-half">Name</th>
+                <th scope="col" class="govuk-table__header govuk-!-width-one-half">Homes in this phase</th>
+            </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+                <td class="govuk-table__cell">
+                    @Model.Name
+                </td>
+                <td class="govuk-table__cell">
+                    @(Model.NumberOfHomes.ToString() ?? GenericMessages.NotProvided)
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <dl class="govuk-summary-list ">
+            @await Html.PartialAsync("Partials/_SummaryOfDeliveryRow", new SummaryOfDeliveryRow("Grant apportioned to this phase", Model.SummaryOfDelivery?.GrantApportioned))
+            @{
+                if (Model is { IsUnregisteredBody: false, IsOnlyCompletionMilestone: false })
+                {
+                    @await Html.PartialAsync("Partials/_SummaryOfDeliveryRow", new SummaryOfDeliveryRow("Acquisition milestone", Model.SummaryOfDelivery?.AcquisitionMilestone))
+                    @await Html.PartialAsync("Partials/_SummaryOfDeliveryRow", new SummaryOfDeliveryRow("Start on site milestone", Model.SummaryOfDelivery?.StarOnSiteMilestone))
+                }
+            }
+
+            @await Html.PartialAsync("Partials/_SummaryOfDeliveryRow", new SummaryOfDeliveryRow("Completion milestone", Model.SummaryOfDelivery?.CompletionMilestone))
+        </dl>
+
+        <vc:form-button text="Continue"/>
+
+        <vc:return-to-application-link application-id="@applicationId"/>
+    </form>
+</gds-div-grid-column-two-thirds>

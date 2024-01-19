@@ -2,6 +2,7 @@ using HE.Investments.Account.Contract.Organisation;
 using HE.Investments.Account.Contract.Organisation.Queries;
 using HE.Investments.Account.Contract.UserOrganisation;
 using HE.Investments.Account.Contract.UserOrganisation.Commands;
+using HE.Investments.Account.Contract.UserOrganisation.Queries;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Utils;
@@ -27,7 +28,7 @@ public class UserOrganisationController : BaseController
     [HttpGet("")]
     public async Task<IActionResult> Index()
     {
-        var userOrganisationResult = await _mediator.Send(new GetUserOrganisationInformationQuery());
+        var userOrganisationResult = await _mediator.Send(new GetUserOrganisationWithProgrammesQuery());
         var userApplications = userOrganisationResult.ProgrammesToAccess
             .FirstOrDefault(p => p.Type == ProgrammeType.Loans)
             ?.Applications ?? new List<UserApplication>();
@@ -43,7 +44,7 @@ public class UserOrganisationController : BaseController
                     new(
                         ProgrammesConsts.LoansProgramme,
                         userApplications.Select(a =>
-                                new ApplicationBasicDetailsModel(Guid.Parse(a.Id), a.ApplicationName, a.Status))
+                                new ApplicationBasicDetailsModel(Guid.Parse(a.Id.Value), a.ApplicationName, a.Status))
                             .ToList()),
                 },
                 new List<ProgrammeModel> { ProgrammesConsts.LoansProgramme },

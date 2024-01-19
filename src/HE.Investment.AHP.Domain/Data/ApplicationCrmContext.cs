@@ -1,5 +1,8 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.Investment.AHP.Domain.Common.Mappers;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
+using HE.Investments.Common.CRM.Mappers;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Serialization;
 using HE.Investments.Common.CRM.Services;
@@ -105,6 +108,24 @@ public class ApplicationCrmContext : IApplicationCrmContext
             cancellationToken);
     }
 
+    public async Task ChangeApplicationStatus(Guid applicationId, Guid organisationId, ApplicationStatus applicationStatus, string? reason, CancellationToken cancellationToken)
+    {
+        var crmStatus = AhpApplicationStatusMapper.MapToCrmStatus(applicationStatus);
+
+        var request = new invln_changeahpapplicationstatusRequest()
+        {
+            invln_applicationid = applicationId.ToString(),
+            invln_organisationid = organisationId.ToString(),
+            invln_userid = _userContext.UserGlobalId,
+            invln_newapplicationstatus = crmStatus,
+        };
+
+        await _service.ExecuteAsync<invln_changeahpapplicationstatusRequest, invln_changeahpapplicationstatusResponse>(
+            request,
+            r => r.ResponseName,
+            cancellationToken);
+    }
+
     private static string FormatFields(IList<string> fieldsToRetrieve)
     {
         return string.Join(",", fieldsToRetrieve.Select(f => f.ToLowerInvariant()));
@@ -122,7 +143,7 @@ public class ApplicationCrmContext : IApplicationCrmContext
             throw new NotFoundException("AhpApplication", request.invln_applicationid);
         }
 
-        return response.First();
+        return response[0];
     }
 
     private async Task<IList<AhpApplicationDto>> GetAll(invln_getmultipleahpapplicationsRequest request, CancellationToken cancellationToken)
