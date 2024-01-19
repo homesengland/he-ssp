@@ -11,7 +11,7 @@ public static class TaskListExtensions
         var lastSavedLabel = taskListPage.GetElementById("last-saved-label");
         lastSavedLabel.Should().NotBeNull("Last saved data should be visible");
 
-        var dateTimeAsString = lastSavedLabel!.TextContent.Replace("Last saved on ", string.Empty).Split("by").First().Trim();
+        var dateTimeAsString = lastSavedLabel!.TextContent.Replace("Last saved on ", string.Empty).Split("by")[0].Trim();
         dateTime = DateTime.Parse(dateTimeAsString, CultureInfo.GetCultureInfo("en-GB"));
         return taskListPage;
     }

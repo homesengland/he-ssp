@@ -17,7 +17,7 @@
 
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
-    <form asp-controller="DeliveryPhase" asp-action="AcquisitionMilestone" asp-method="post" novalidate>
+    <form asp-controller="DeliveryPhase" asp-action="AcquisitionMilestone" asp-method="post" asp-route-redirect="@Context.Request.Query["redirect"]" novalidate>
         <vc:form-header caption="@($"{Model.ApplicationName} - {Model.DeliveryPhaseName}")" title="@title"/>
 
         <vc:details

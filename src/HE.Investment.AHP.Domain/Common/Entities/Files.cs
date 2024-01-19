@@ -20,7 +20,7 @@ public class Files<TFileEntity>
 
     public IList<UploadedFile> UploadedFiles { get; }
 
-    public bool IsModified => _filesToUpload.Any() | _filesToRemove.Any();
+    public bool IsModified => _filesToUpload.Any() || _filesToRemove.Any();
 
     public void AddFilesToUpload(IList<TFileEntity> files)
     {

@@ -22,7 +22,7 @@ public class SearchLocalAuthoritiesQueryHandlerTests : TestBase<SearchLocalAutho
         var result = await TestCandidate.Handle(new SearchLocalAuthoritiesQuery(phrase, 1, 10), CancellationToken.None);
 
         // then
-        result.ReturnedData.Items!.First().Name.Should().Be("Liverpool");
+        result.ReturnedData.Items![0].Name.Should().Be("Liverpool");
     }
 
     [Fact]

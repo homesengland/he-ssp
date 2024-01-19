@@ -32,19 +32,19 @@ public class AcquisitionMilestoneDetailsBuilder
         return this;
     }
 
-    public AcquisitionMilestoneDetailsBuilder WithoutPaymentDate()
-    {
-        _paymentDate = null;
-
-        return this;
-    }
-
     public AcquisitionMilestoneDetailsBuilder WithPaymentDate(DateOnly date)
     {
         _paymentDate = new MilestonePaymentDate(
             date.Day.ToString(CultureInfo.InvariantCulture),
             date.Month.ToString(CultureInfo.InvariantCulture),
             date.Year.ToString(CultureInfo.InvariantCulture));
+
+        return this;
+    }
+
+    public AcquisitionMilestoneDetailsBuilder WithoutPaymentDate()
+    {
+        _paymentDate = null;
 
         return this;
     }
@@ -56,19 +56,19 @@ public class AcquisitionMilestoneDetailsBuilder
         return this;
     }
 
-    public AcquisitionMilestoneDetailsBuilder WithoutAcquisitionDate()
-    {
-        _acquisitionDate = null;
-
-        return this;
-    }
-
     public AcquisitionMilestoneDetailsBuilder WithAcquisitionDate(DateOnly date)
     {
         _acquisitionDate = new AcquisitionDate(
             date.Day.ToString(CultureInfo.InvariantCulture),
             date.Month.ToString(CultureInfo.InvariantCulture),
             date.Year.ToString(CultureInfo.InvariantCulture));
+
+        return this;
+    }
+
+    public AcquisitionMilestoneDetailsBuilder WithoutAcquisitionDate()
+    {
+        _acquisitionDate = null;
 
         return this;
     }

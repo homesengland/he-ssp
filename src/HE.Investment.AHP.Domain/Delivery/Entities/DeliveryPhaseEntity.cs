@@ -14,7 +14,7 @@ using SummaryOfDelivery = HE.Investment.AHP.Domain.Delivery.ValueObjects.Summary
 
 namespace HE.Investment.AHP.Domain.Delivery.Entities;
 
-public class DeliveryPhaseEntity : IDeliveryPhaseEntity
+public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
 {
     private readonly IList<HomesToDeliverInPhase> _homesToDeliver;
 
@@ -122,13 +122,7 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
 
     public void ProvideTypeOfHomes(TypeOfHomes typeOfHomes)
     {
-        if (typeOfHomes != TypeOfHomes)
-        {
-            BuildActivity.ClearAnswer(typeOfHomes);
-            ReconfiguringExisting = null;
-        }
-
-        TypeOfHomes = _modificationTracker.Change(TypeOfHomes, typeOfHomes.NotDefault(), MarkAsNotCompleted);
+        TypeOfHomes = _modificationTracker.Change(TypeOfHomes, typeOfHomes.NotDefault(), MarkAsNotCompleted, ResetTypeOfHomesDependencies);
     }
 
     public void ProvideAdditionalPaymentRequest(IsAdditionalPaymentRequested? isAdditionalPaymentRequested)
@@ -179,15 +173,12 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
 
     public void ProvideBuildActivity(BuildActivity buildActivity)
     {
-        BuildActivity = _modificationTracker.Change(BuildActivity, buildActivity, MarkAsNotCompleted);
-
-        var milestones = new DeliveryPhaseMilestones(Organisation, BuildActivity, DeliveryPhaseMilestones);
-        DeliveryPhaseMilestones = _modificationTracker.Change(DeliveryPhaseMilestones, milestones, MarkAsNotCompleted);
+        BuildActivity = _modificationTracker.Change(BuildActivity, buildActivity, MarkAsNotCompleted, ResetBuildActivityDependencies);
     }
 
     public void ProvideReconfiguringExisting(bool? reconfiguringExisting)
     {
-        if (IsReconfiguringExistingNeeded() is false)
+        if (!IsReconfiguringExistingNeeded())
         {
             throw new DomainValidationException("Reconfiguring Existing is not needed.");
         }
@@ -223,5 +214,17 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
     private void MarkAsNotCompleted()
     {
         Status = _modificationTracker.Change(Status, SectionStatus.InProgress);
+    }
+
+    private void ResetTypeOfHomesDependencies(TypeOfHomes? newTypeOfHomes)
+    {
+        ProvideBuildActivity(BuildActivity.WithClearedAnswer());
+        ReconfiguringExisting = null;
+    }
+
+    private void ResetBuildActivityDependencies(BuildActivity newBuildActivity)
+    {
+        var milestones = new DeliveryPhaseMilestones(Organisation, newBuildActivity, DeliveryPhaseMilestones);
+        DeliveryPhaseMilestones = _modificationTracker.Change(DeliveryPhaseMilestones, milestones, MarkAsNotCompleted);
     }
 }

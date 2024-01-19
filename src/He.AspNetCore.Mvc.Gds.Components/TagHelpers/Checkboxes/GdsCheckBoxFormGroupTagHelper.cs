@@ -213,7 +213,6 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Checkboxes
         /// <param name="currentValues">Currently selected values.</param>
         /// <param name="output">The TagHelperOutput.</param>
         /// <returns>String represent html to add.</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "Don't want to make static")]
         private async Task<string> GenerateContentForOption(
             string fullHtmlFieldName,
             int? idPostfix,

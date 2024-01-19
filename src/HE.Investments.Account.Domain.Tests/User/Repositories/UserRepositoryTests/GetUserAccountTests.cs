@@ -33,10 +33,10 @@ public class GetUserAccountTests : TestBase<AccountRepository>
         var result = await TestCandidate.GetUserAccounts(UserGlobalId.From(contactRolesDto.externalId), contactRolesDto.email);
 
         // then
-        var account = result.First();
+        var account = result[0];
         account.UserGlobalId.Value.Should().Be(contactRolesDto.externalId);
         account.UserEmail.Should().Be(contactRolesDto.email);
-        account.Roles.Should().ContainSingle(x => x == UserRoleMapper.ToDomain(contactRolesDto.contactRoles.First().permission));
+        account.Roles.Should().ContainSingle(x => x == UserRoleMapper.ToDomain(contactRolesDto.contactRoles[0].permission));
     }
 
     [Fact]

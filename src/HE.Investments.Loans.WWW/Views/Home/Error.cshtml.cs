@@ -8,5 +8,6 @@ public class Error : PageModel
 {
     public void OnGet()
     {
+        // Method intentionally left empty.
     }
 }

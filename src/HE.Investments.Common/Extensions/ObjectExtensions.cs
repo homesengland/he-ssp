@@ -9,6 +9,6 @@ public static class ObjectExtensions
 
     public static bool IsNotProvided(this object? value)
     {
-        return value.IsProvided() is false;
+        return !value.IsProvided();
     }
 }

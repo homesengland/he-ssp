@@ -44,6 +44,7 @@ public class SecurityWorkflow : IStateRouting<SecurityState>
             return targetState;
         }
 
+#pragma warning disable S2589 // Boolean expressions should not be gratuitous
         return _model switch
         {
             { ChargesDebtCompany: var x } when x.IsNotProvided() => SecurityState.ChargesDebtCompany,
@@ -51,6 +52,7 @@ public class SecurityWorkflow : IStateRouting<SecurityState>
             { DirLoans: CommonResponse.Yes, DirLoansSub: var dirLoansSub } when dirLoansSub.IsNotProvided() => SecurityState.DirLoansSub,
             _ => SecurityState.CheckAnswers,
         };
+#pragma warning restore S2589 // Boolean expressions should not be gratuitous
     }
 
     private void ConfigureTransitions()

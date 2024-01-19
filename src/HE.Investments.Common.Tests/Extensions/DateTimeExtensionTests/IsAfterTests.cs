@@ -10,7 +10,7 @@ public class IsAfterTests
     public void ReturnFalseWhenProvidedDateIsBeforeOtherDate()
     {
         // given
-        var date = new DateTime(2023, 7, 5);
+        var date = new DateTime(2023, 7, 5, 0, 0, 0, DateTimeKind.Unspecified);
         var otherDate = date.AddSeconds(1);
 
         // given & then
@@ -21,8 +21,8 @@ public class IsAfterTests
     public void ReturnFalseWhenProvidedDateIsEqualToOtherDate()
     {
         // given
-        var date = new DateTime(2023, 7, 5);
-        var otherDate = new DateTime(2023, 7, 5);
+        var date = new DateTime(2023, 7, 5, 0, 0, 0, DateTimeKind.Unspecified);
+        var otherDate = new DateTime(2023, 7, 5, 0, 0, 0, DateTimeKind.Unspecified);
 
         // given & then
         date.IsAfter(otherDate).Should().BeFalse();
@@ -32,7 +32,7 @@ public class IsAfterTests
     public void ReturnTrueWhenProvidedDateIsAfterOtherDate()
     {
         // given
-        var date = new DateTime(2023, 7, 5);
+        var date = new DateTime(2023, 7, 5, 0, 0, 0, DateTimeKind.Unspecified);
         var otherDate = date.AddSeconds(-1);
 
         // given & then

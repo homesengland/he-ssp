@@ -10,7 +10,7 @@ namespace HE.Investment.AHP.WWW.Tests.Views.Application;
 public class TaskListTests : ViewTestBase
 {
     private readonly string _viewPath = "/Views/Application/TaskList.cshtml";
-    private readonly ModificationDetails _testModificationDetails = new("Jan", "Kowalski", new DateTime(2023, 11, 29));
+    private readonly ModificationDetails _testModificationDetails = new("Jan", "Kowalski", new DateTime(2023, 11, 29, 0, 0, 0, DateTimeKind.Unspecified));
 
     private readonly IList<ApplicationSection> _testSections = new List<ApplicationSection>
     {

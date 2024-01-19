@@ -10,7 +10,7 @@ public class ValueTests
     public void ShouldEncodeWorkflow_WhenAllStatesCanBeAccessed()
     {
         // given
-        var workflow = new EncodedWorkflow<TestWorkflowEnum>(_ => true);
+        var workflow = new EncodedWorkflow<TestWorkflow>(_ => true);
 
         // when
         var result = workflow.Value;
@@ -23,7 +23,7 @@ public class ValueTests
     public void ShouldEncodeWorkflow_WhenNoStatesCanBeAccessed()
     {
         // given
-        var workflow = new EncodedWorkflow<TestWorkflowEnum>(_ => false);
+        var workflow = new EncodedWorkflow<TestWorkflow>(_ => false);
 
         // when
         var result = workflow.Value;
@@ -36,7 +36,7 @@ public class ValueTests
     public void ShouldEncodeWorkflow_WhenSomeStatesCanBeAccessed()
     {
         // given
-        var workflow = new EncodedWorkflow<TestWorkflowEnum>(x => x is TestWorkflowEnum.State2 or TestWorkflowEnum.State3);
+        var workflow = new EncodedWorkflow<TestWorkflow>(x => x is TestWorkflow.State2 or TestWorkflow.State3);
 
         // when
         var result = workflow.Value;
@@ -49,7 +49,7 @@ public class ValueTests
     public void ShouldBuildProperWorkflow_WhenItIsAlreadyEncoded()
     {
         // given
-        var workflow = new EncodedWorkflow<TestWorkflowEnum>("abcde");
+        var workflow = new EncodedWorkflow<TestWorkflow>("abcde");
 
         // when
         var getValue = () => workflow.Value;
@@ -65,7 +65,7 @@ public class ValueTests
         const string encodedWorkflow = "ef";
 
         // when
-        var create = () => new EncodedWorkflow<TestWorkflowEnum>(encodedWorkflow);
+        var create = () => new EncodedWorkflow<TestWorkflow>(encodedWorkflow);
 
         // then
         create.Should().Throw<InvalidOperationException>();
@@ -78,7 +78,7 @@ public class ValueTests
         const string encodedWorkflow = "ab#";
 
         // when
-        var create = () => new EncodedWorkflow<TestWorkflowEnum>(encodedWorkflow);
+        var create = () => new EncodedWorkflow<TestWorkflow>(encodedWorkflow);
 
         // then
         create.Should().Throw<InvalidOperationException>();

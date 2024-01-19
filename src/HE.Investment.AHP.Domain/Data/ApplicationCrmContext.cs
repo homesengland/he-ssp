@@ -143,7 +143,7 @@ public class ApplicationCrmContext : IApplicationCrmContext
             throw new NotFoundException("AhpApplication", request.invln_applicationid);
         }
 
-        return response.First();
+        return response[0];
     }
 
     private async Task<IList<AhpApplicationDto>> GetAll(invln_getmultipleahpapplicationsRequest request, CancellationToken cancellationToken)

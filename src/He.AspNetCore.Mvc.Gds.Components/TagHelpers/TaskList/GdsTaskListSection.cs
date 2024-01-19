@@ -6,10 +6,10 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.TaskList
 {
     public abstract class StyledTag : TagHelper
     {
-        private string _tagName;
-        private string _class;
+        private readonly string _tagName;
+        private readonly string _class;
 
-        public StyledTag(string tag, string @class)
+        protected StyledTag(string tag, string @class)
         {
             _tagName = tag;
             _class = @class;
@@ -18,7 +18,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.TaskList
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
-            if ((object)output != (object)null)
+            if (output != null)
             {
                 output.TagName = _tagName;
                 TagConstruct.ConstructClass(output, _class);

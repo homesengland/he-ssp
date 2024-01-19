@@ -14,30 +14,30 @@ public class GetNextChangedWorkflowStateTests
     public void ShouldReturnLastState_WhenThereAreNoNewStatesAfterState3(string lastEncodedWorkflow, string currentEncodedWorkflow)
     {
         // given
-        var lastWorkflow = new EncodedWorkflow<TestWorkflowEnum>(lastEncodedWorkflow);
-        var currentWorkflow = new EncodedWorkflow<TestWorkflowEnum>(currentEncodedWorkflow);
+        var lastWorkflow = new EncodedWorkflow<TestWorkflow>(lastEncodedWorkflow);
+        var currentWorkflow = new EncodedWorkflow<TestWorkflow>(currentEncodedWorkflow);
 
         // when
-        var result = currentWorkflow.GetNextChangedWorkflowState(TestWorkflowEnum.State3, lastWorkflow);
+        var result = currentWorkflow.GetNextChangedWorkflowState(TestWorkflow.State3, lastWorkflow);
 
         // then
-        result.Should().Be(TestWorkflowEnum.State5);
+        result.Should().Be(TestWorkflow.State5);
     }
 
     [Theory]
-    [InlineData("ade", "abc", TestWorkflowEnum.State2)]
-    [InlineData("ab", "d", TestWorkflowEnum.State4)]
+    [InlineData("ade", "abc", TestWorkflow.State2)]
+    [InlineData("ab", "d", TestWorkflow.State4)]
     public void ShouldReturnNextDifferentState_WhenThereAreSomeNewStatesAfterState1(
         string lastEncodedWorkflow,
         string currentEncodedWorkflow,
-        TestWorkflowEnum expectedResult)
+        TestWorkflow expectedResult)
     {
         // given
-        var lastWorkflow = new EncodedWorkflow<TestWorkflowEnum>(lastEncodedWorkflow);
-        var currentWorkflow = new EncodedWorkflow<TestWorkflowEnum>(currentEncodedWorkflow);
+        var lastWorkflow = new EncodedWorkflow<TestWorkflow>(lastEncodedWorkflow);
+        var currentWorkflow = new EncodedWorkflow<TestWorkflow>(currentEncodedWorkflow);
 
         // when
-        var result = currentWorkflow.GetNextChangedWorkflowState(TestWorkflowEnum.State1, lastWorkflow);
+        var result = currentWorkflow.GetNextChangedWorkflowState(TestWorkflow.State1, lastWorkflow);
 
         // then
         result.Should().Be(expectedResult);

@@ -4,7 +4,9 @@ using MediatR;
 
 namespace HE.Investments.Account.Contract.UserOrganisation.Queries;
 
-public record GetUserOrganisationWithProgrammesQuery : IRequest<GetUserOrganisationWithProgrammesQueryResponse>;
+public class GetUserOrganisationWithProgrammesQuery : IRequest<GetUserOrganisationWithProgrammesQueryResponse>
+{
+}
 
 public record GetUserOrganisationWithProgrammesQueryResponse(
     OrganizationBasicInformation OrganizationBasicInformation,

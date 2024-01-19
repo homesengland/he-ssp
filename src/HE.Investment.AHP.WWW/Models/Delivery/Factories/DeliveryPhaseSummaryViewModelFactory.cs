@@ -23,7 +23,7 @@ public class DeliveryPhaseSummaryViewModelFactory : IDeliveryPhaseSummaryViewMod
         return new List<SectionSummaryViewModel>
         {
             CreateDeliveryPhaseSummary(applicationId, deliveryPhase, deliveryPhaseHomes, urlHelper, isEditable),
-            CreateMilestonesSummary(applicationId, deliveryPhase),
+            CreateMilestonesSummary(deliveryPhase),
             CreateMilestonesDatesSummary(
                 applicationId,
                 deliveryPhase,
@@ -71,7 +71,7 @@ public class DeliveryPhaseSummaryViewModelFactory : IDeliveryPhaseSummaryViewMod
                 "Reconfiguring existing residential properties",
                 deliveryPhase.ReconfiguringExisting?.ToString().ToOneElementList(),
                 IsEditable: isEditable,
-                ActionUrl: CreateAction(nameof(DeliveryPhaseController.BuildActivityType))));
+                ActionUrl: CreateAction(nameof(DeliveryPhaseController.ReconfiguringExisting))));
         }
 
         foreach (var homeTypesToDeliver in deliveryPhaseHomes.HomeTypesToDeliver)
@@ -86,35 +86,34 @@ public class DeliveryPhaseSummaryViewModelFactory : IDeliveryPhaseSummaryViewMod
         return new SectionSummaryViewModel("Delivery phase", items);
     }
 
-    private static SectionSummaryViewModel CreateMilestonesSummary(
-        AhpApplicationId applicationId,
-        DeliveryPhaseDetails deliveryPhase)
+    private static SectionSummaryViewModel CreateMilestonesSummary(DeliveryPhaseDetails deliveryPhase)
     {
+        var summary = deliveryPhase.SummaryOfDelivery;
         var items = new List<SectionSummaryItemModel>
         {
             new(
                 "Grant apportioned to this phase",
-                "TODO".ToOneElementList(),
+                $"\u00a3{summary?.GrantApportioned.ToPoundsPencesString() ?? "-"}".ToOneElementList(),
                 IsEditable: false),
             new(
                 "Completion milestone",
-                "TODO".ToOneElementList(),
+                $"\u00a3{summary?.CompletionMilestone.ToPoundsPencesString() ?? "-"}".ToOneElementList(),
                 IsEditable: false),
         };
 
-        if (!deliveryPhase.IsUnregisteredBody && !deliveryPhase.IsOnlyCompletionMilestone)
+        if (deliveryPhase is { IsUnregisteredBody: false, IsOnlyCompletionMilestone: false })
         {
             items.Insert(
                 1,
                 new(
                     "Acquisition milestone",
-                    "TODO".ToOneElementList(),
+                    $"\u00a3{summary?.AcquisitionMilestone.ToPoundsPencesString() ?? "-"}".ToOneElementList(),
                     IsEditable: false));
             items.Insert(
                 2,
                 new(
                     "Start on site milestone",
-                    "TODO".ToOneElementList(),
+                    $"\u00a3{summary?.StarOnSiteMilestone.ToPoundsPencesString() ?? "-"}".ToOneElementList(),
                     IsEditable: false));
         }
 

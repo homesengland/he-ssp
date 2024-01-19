@@ -1,6 +1,6 @@
 namespace HE.Investments.TestsUtils.Extensions;
 
-public class CssConstants
+public static class CssConstants
 {
     public const string GovUkVisuallyHidden = "govuk-visually-hidden";
 

@@ -31,7 +31,7 @@ public static class LocalAuthorityMapper
 
     public static LocalAuthorityDto? MapToLocalAuthorityDto(LocalAuthority? localAuthority)
     {
-        if (localAuthority?.Id is null || localAuthority?.Name is null)
+        if (localAuthority?.Id is null || localAuthority.Name is null)
         {
             return null;
         }

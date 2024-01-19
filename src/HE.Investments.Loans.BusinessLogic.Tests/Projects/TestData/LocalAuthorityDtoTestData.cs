@@ -1,7 +1,7 @@
 using LocalAuthorityDto = HE.Common.IntegrationModel.PortalIntegrationModel.LocalAuthorityDto;
 
 namespace HE.Investments.Loans.BusinessLogic.Tests.Projects.TestData;
-internal sealed class LocalAuthorityDtoTestData
+internal static class LocalAuthorityDtoTestData
 {
     public static readonly LocalAuthorityDto LocalAuthorityOne = new() { onsCode = "1", name = "Liverpool" };
     public static readonly LocalAuthorityDto LocalAuthorityTwo = new() { onsCode = "2", name = "London" };

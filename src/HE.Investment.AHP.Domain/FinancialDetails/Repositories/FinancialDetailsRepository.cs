@@ -27,8 +27,8 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
     {
         var organisationId = userAccount.SelectedOrganisationId().Value;
         var application = userAccount.CanViewAllApplications()
-            ? await _applicationCrmContext.GetOrganisationApplicationById(id.Value, organisationId, CrmFields.FinancialDetailsToRead, cancellationToken)
-            : await _applicationCrmContext.GetUserApplicationById(id.Value, organisationId, CrmFields.FinancialDetailsToRead, cancellationToken);
+            ? await _applicationCrmContext.GetOrganisationApplicationById(id.Value, organisationId, CrmFields.FinancialDetailsToRead.ToList(), cancellationToken)
+            : await _applicationCrmContext.GetUserApplicationById(id.Value, organisationId, CrmFields.FinancialDetailsToRead.ToList(), cancellationToken);
 
         return CreateEntity(application);
     }
@@ -51,7 +51,7 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
         MapFromExpectedContributions(financialDetails.ExpectedContributions, dto);
         MapFromPublicGrants(financialDetails.PublicGrants, dto);
 
-        _ = await _applicationCrmContext.Save(dto, organisationId.Value, CrmFields.FinancialDetailsToUpdate, cancellationToken);
+        _ = await _applicationCrmContext.Save(dto, organisationId.Value, CrmFields.FinancialDetailsToUpdate.ToList(), cancellationToken);
 
         return financialDetails;
     }

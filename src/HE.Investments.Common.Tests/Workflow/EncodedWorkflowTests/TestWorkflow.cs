@@ -1,6 +1,6 @@
 namespace HE.Investments.Common.Tests.Workflow.EncodedWorkflowTests;
 
-public enum TestWorkflowEnum
+public enum TestWorkflow
 {
     State1,
     State2,

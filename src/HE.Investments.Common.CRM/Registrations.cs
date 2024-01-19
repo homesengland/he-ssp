@@ -12,7 +12,7 @@ namespace HE.Investments.Common.CRM;
 
 public static class Registrations
 {
-        public static void AddCrmConnection(this IServiceCollection services)
+    public static void AddCrmConnection(this IServiceCollection services)
     {
         services.AddScoped<IOrganizationServiceAsync2>(serviceProvider =>
         {

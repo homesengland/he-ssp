@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace He.AspNetCore.Mvc.Gds.Components.Constants
 {
-    public class CommonResponse
+    public static class CommonResponse
     {
         public const string Yes = "Yes";
         public const string No = "No";

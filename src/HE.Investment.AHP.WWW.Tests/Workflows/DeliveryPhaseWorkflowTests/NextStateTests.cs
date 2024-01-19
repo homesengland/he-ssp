@@ -157,6 +157,6 @@ public class NextStateTests
 
     private static DeliveryPhaseWorkflow BuildWorkflow(DeliveryPhaseWorkflowState currentSiteWorkflowState, DeliveryPhaseDetails deliveryPhaseDetails)
     {
-        return new DeliveryPhaseWorkflow(currentSiteWorkflowState, deliveryPhaseDetails);
+        return new DeliveryPhaseWorkflow(currentSiteWorkflowState, deliveryPhaseDetails, false);
     }
 }

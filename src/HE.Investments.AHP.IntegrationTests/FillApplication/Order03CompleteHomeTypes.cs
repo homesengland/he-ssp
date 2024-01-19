@@ -414,7 +414,10 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         // when
         await TestClient.NavigateTo(editHomeTypeButton);
 
-        // TODO: AB#8702 When MMC is stored in CRM, user should be redirected to Check Answers. Remove section code below
+#pragma warning disable S1135 // Track uses of "TODO" tags
+        //// TODO: AB#8702 When MMC is stored in CRM, user should be redirected to Check Answers. Remove section code below
+#pragma warning restore S1135 // Track uses of "TODO" tags
+
         SaveCurrentPage();
         await TestQuestionPage(
             BuildHomeTypePage(HomeTypePagesUrl.ModernMethodsConstructionCategories, DisabledHomeType),

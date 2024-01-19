@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Abstraction
 {
-    public abstract class TextTagHelper : TagHelper 
+    public abstract class TextTagHelper : TagHelper
     {
         private readonly string _tagName;
         private readonly string _class;
@@ -18,7 +18,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Abstraction
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
-            if ((object)output != (object)null)
+            if (output != null)
             {
                 output.TagName = _tagName;
                 TagConstruct.ConstructClass(output, _class);

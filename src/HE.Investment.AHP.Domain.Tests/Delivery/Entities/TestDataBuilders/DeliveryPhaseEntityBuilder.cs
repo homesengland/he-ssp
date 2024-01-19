@@ -68,9 +68,9 @@ public class DeliveryPhaseEntityBuilder
         return this;
     }
 
-    public DeliveryPhaseEntityBuilder WithDeliveryPhaseMilestones(DeliveryPhaseMilestones milestones)
+    public DeliveryPhaseEntityBuilder WithDeliveryPhaseMilestones(DeliveryPhaseMilestones? milestones = null)
     {
-        _deliveryPhaseMilestones = milestones;
+        _deliveryPhaseMilestones = milestones ?? new DeliveryPhaseMilestonesBuilder().Build();
         return this;
     }
 
@@ -112,7 +112,7 @@ public class DeliveryPhaseEntityBuilder
         return this;
     }
 
-    public DeliveryPhaseEntityBuilder WithRehabBuildActivity(BuildActivityType buildActivityType)
+    public DeliveryPhaseEntityBuilder WithRehabBuildActivity(BuildActivityType buildActivityType = BuildActivityType.ExistingSatisfactory)
     {
         _buildActivity = new BuildActivity(ApplicationBasicInfo.Tenure, TypeOfHomes.Rehab, buildActivityType);
 

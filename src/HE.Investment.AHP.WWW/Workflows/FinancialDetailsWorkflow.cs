@@ -43,6 +43,7 @@ public class FinancialDetailsWorkflow : IStateRouting<FinancialDetailsWorkflowSt
             return targetState;
         }
 
+#pragma warning disable S2589 // Boolean expressions should not be gratuitous
         return _model switch
         {
             { PurchasePrice: var x } when x.IsNotProvided() => FinancialDetailsWorkflowState.LandStatus,
@@ -66,6 +67,7 @@ public class FinancialDetailsWorkflow : IStateRouting<FinancialDetailsWorkflowSt
             { OtherPublicGrants: var x } when x.IsNotProvided() => FinancialDetailsWorkflowState.Grants,
             _ => FinancialDetailsWorkflowState.CheckAnswers,
         };
+#pragma warning restore S2589 // Boolean expressions should not be gratuitous
     }
 
     public Task<bool> StateCanBeAccessed(FinancialDetailsWorkflowState nextState)
