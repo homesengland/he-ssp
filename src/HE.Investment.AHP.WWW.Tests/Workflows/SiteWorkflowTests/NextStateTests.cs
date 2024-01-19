@@ -112,7 +112,7 @@ public class NextStateTests
     public async Task ShouldReturnNextState_WhenContinueTriggerExecutedWithSection106AdditionalAffordableHousing(SiteWorkflowState current, SiteWorkflowState expectedNext)
     {
         // given
-        var workflow = BuildWorkflow(current, true, true, false, null, null, null);
+        var workflow = BuildWorkflow(current, true, true, false, true, null, null);
 
         // when
         var result = await workflow.NextState(Trigger.Continue);
