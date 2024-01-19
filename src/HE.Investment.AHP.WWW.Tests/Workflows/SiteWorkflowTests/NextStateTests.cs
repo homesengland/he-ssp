@@ -107,6 +107,20 @@ public class NextStateTests
         result.Should().Be(expectedNext);
     }
 
+    [Theory]
+    [InlineData(SiteWorkflowState.Section106AdditionalAffordableHousing, SiteWorkflowState.Section106CapitalFundingEligibility)]
+    public async Task ShouldReturnNextState_WhenContinueTriggerExecutedWithSection106AdditionalAffordableHousing(SiteWorkflowState current, SiteWorkflowState expectedNext)
+    {
+        // given
+        var workflow = BuildWorkflow(current, true, true, false, true, null, null);
+
+        // when
+        var result = await workflow.NextState(Trigger.Continue);
+
+        // then
+        result.Should().Be(expectedNext);
+    }
+
     private static SiteWorkflow BuildWorkflow(
         SiteWorkflowState currentSiteWorkflowState,
         bool? section106GeneralAgreement,

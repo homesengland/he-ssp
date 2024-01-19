@@ -15,4 +15,6 @@ public static class SitePageTitles
     public const string SiteSection106AffordableHousing = "Affordable housing through developer contributions";
 
     public const string SiteSection106OnlyAffordableHousing = "Is the development delivering 100% affordable housing?";
+
+    public const string SiteSection106AdditionalAffordableHousing = "Additional affordable housing";
 }

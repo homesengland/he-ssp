@@ -12,7 +12,7 @@
     <form asp-controller="Site" asp-action="Section106OnlyAffordableHousing" asp-method="post" novalidate>
         <vc:form-header title="@SitePageTitles.SiteSection106OnlyAffordableHousing" caption="@Model?.Name" additional-css-class="govuk-!-padding-top-8"></vc:form-header>
 
-        <vc:radio-yes-no field-name="Section106OnlyAffordableHousing"
+        <vc:radio-yes-no field-name="@nameof(Model.Section106OnlyAffordableHousing)"
                          hint="Consider all of the phases covered by the planning permission, even if those phases are not covered by this application."
             value="@Model?.Section106OnlyAffordableHousing"/>
 

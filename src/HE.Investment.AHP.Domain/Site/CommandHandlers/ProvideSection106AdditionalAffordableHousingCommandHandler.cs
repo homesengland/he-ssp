@@ -10,14 +10,14 @@ using Microsoft.Extensions.Logging;
 
 namespace HE.Investment.AHP.Domain.Site.CommandHandlers;
 
-public class ProvideSection106AffordableHousingCommandHandler : SiteBaseCommandHandler, IRequestHandler<ProvideSection106AffordableHousingCommand, OperationResult>
+public class ProvideSection106AdditionalAffordableHousingCommandHandler : SiteBaseCommandHandler, IRequestHandler<ProvideSection106AdditionalAffordableHousingCommand, OperationResult>
 {
-    public ProvideSection106AffordableHousingCommandHandler(ISiteRepository siteRepository, IAccountUserContext accountUserContext, ILogger<SiteBaseCommandHandler> logger)
+    public ProvideSection106AdditionalAffordableHousingCommandHandler(ISiteRepository siteRepository, IAccountUserContext accountUserContext, ILogger<SiteBaseCommandHandler> logger)
         : base(siteRepository, accountUserContext, logger)
     {
     }
 
-    public Task<OperationResult> Handle(ProvideSection106AffordableHousingCommand request, CancellationToken cancellationToken)
+    public Task<OperationResult> Handle(ProvideSection106AdditionalAffordableHousingCommand request, CancellationToken cancellationToken)
     {
         return Perform(
             site =>
@@ -25,9 +25,9 @@ public class ProvideSection106AffordableHousingCommandHandler : SiteBaseCommandH
                 var currentSection106 = site.Section106 ?? new Section106();
                 var newSection106 = new Section106(
                                             currentSection106.GeneralAgreement,
-                                            request.AffordableHousing,
+                                            currentSection106.AffordableHousing,
                                             currentSection106.OnlyAffordableHousing,
-                                            currentSection106.AdditionalAffordableHousing,
+                                            request.AdditionalAffordableHousing,
                                             currentSection106.CapitalFundingEligibility,
                                             currentSection106.ConfirmationFromLocalAuthority);
 

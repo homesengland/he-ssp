@@ -148,6 +148,28 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         return await Continue(new { siteId });
     }
 
+    [HttpGet("{siteId}/section-106-additional-affordable-housing")]
+    [WorkflowState(SiteWorkflowState.Section106AdditionalAffordableHousing)]
+    public async Task<IActionResult> Section106AdditionalAffordableHousing([FromRoute] string siteId, CancellationToken cancellationToken)
+    {
+        var siteModel = await _mediator.Send(new GetSiteQuery(siteId), cancellationToken);
+        return View("Section106AdditionalAffordableHousing", siteModel);
+    }
+
+    [HttpPost("{siteId}/section-106-additional-affordable-housing")]
+    [WorkflowState(SiteWorkflowState.Section106AdditionalAffordableHousing)]
+    public async Task<IActionResult> Section106AdditionalAffordableHousing([FromRoute] string siteId, SiteModel model, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new ProvideSection106AdditionalAffordableHousingCommand(new SiteId(siteId), model.Section106AdditionalAffordableHousing), cancellationToken);
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+            return View("Section106OAdditionalAffordableHousing", model);
+        }
+
+        return await Continue(new { siteId });
+    }
+
     [HttpGet("{siteId}/back")]
     public async Task<IActionResult> Back([FromRoute] string siteId, SiteWorkflowState currentPage)
     {

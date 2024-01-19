@@ -22,9 +22,16 @@ public class ProvideSection106AgreementCommandHandler : SiteBaseCommandHandler, 
         return Perform(
             site =>
             {
-                var section106 = site.Section106 ?? new Entities.Section106Entity();
-                section106.ProvideGeneralAgreement(request.Agreement);
-                site.ProvideSection106(section106);
+                var currentSection106 = site.Section106 ?? new Section106();
+                var newSection106 = new Section106(
+                                            request.Agreement,
+                                            currentSection106.AffordableHousing,
+                                            currentSection106.OnlyAffordableHousing,
+                                            currentSection106.AdditionalAffordableHousing,
+                                            currentSection106.CapitalFundingEligibility,
+                                            currentSection106.ConfirmationFromLocalAuthority);
+
+                site.ProvideSection106(newSection106);
                 return Task.FromResult(OperationResult.Success());
             },
             request.SiteId,
