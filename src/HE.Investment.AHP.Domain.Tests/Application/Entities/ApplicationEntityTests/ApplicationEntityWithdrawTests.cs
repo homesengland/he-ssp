@@ -2,8 +2,8 @@ using FluentAssertions;
 using HE.Investment.AHP.Domain.Application.Entities;
 using HE.Investment.AHP.Domain.Tests.Application.TestData;
 using HE.Investment.AHP.Domain.Tests.Application.TestObjectBuilder;
-using HE.Investments.Account.Domain.Tests.User.TestObjectBuilder;
 using HE.Investments.Common.Contract;
+using HE.Investments.Common.Tests.TestObjectBuilders;
 using HE.Investments.TestsUtils.TestFramework;
 using Moq;
 
