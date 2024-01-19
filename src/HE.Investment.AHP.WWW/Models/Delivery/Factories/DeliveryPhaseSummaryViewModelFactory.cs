@@ -6,6 +6,7 @@ using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Components.SectionSummary;
+using HE.Investments.Common.WWW.Helpers;
 using HE.Investments.Common.WWW.Utils;
 using Microsoft.AspNetCore.Mvc;
 
@@ -93,11 +94,11 @@ public class DeliveryPhaseSummaryViewModelFactory : IDeliveryPhaseSummaryViewMod
         {
             new(
                 "Grant apportioned to this phase",
-                $"\u00a3{summary?.GrantApportioned.ToPoundsPencesString() ?? "-"}".ToOneElementList(),
+                (CurrencyHelper.DisplayPoundsPences(summary?.GrantApportioned) ?? "-").ToOneElementList(),
                 IsEditable: false),
             new(
                 "Completion milestone",
-                $"\u00a3{summary?.CompletionMilestone.ToPoundsPencesString() ?? "-"}".ToOneElementList(),
+                (CurrencyHelper.DisplayPoundsPences(summary?.CompletionMilestone) ?? "-").ToOneElementList(),
                 IsEditable: false),
         };
 
@@ -107,13 +108,13 @@ public class DeliveryPhaseSummaryViewModelFactory : IDeliveryPhaseSummaryViewMod
                 1,
                 new(
                     "Acquisition milestone",
-                    $"\u00a3{summary?.AcquisitionMilestone.ToPoundsPencesString() ?? "-"}".ToOneElementList(),
+                    (CurrencyHelper.DisplayPoundsPences(summary?.AcquisitionMilestone) ?? "-").ToOneElementList(),
                     IsEditable: false));
             items.Insert(
                 2,
                 new(
                     "Start on site milestone",
-                    $"\u00a3{summary?.StarOnSiteMilestone.ToPoundsPencesString() ?? "-"}".ToOneElementList(),
+                    (CurrencyHelper.DisplayPoundsPences(summary?.StarOnSiteMilestone) ?? "-").ToOneElementList(),
                     IsEditable: false));
         }
 
