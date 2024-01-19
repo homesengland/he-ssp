@@ -148,9 +148,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     {
         var application = await _mediator.Send(new GetApplicationQuery(AhpApplicationId.From(applicationId)), cancellationToken);
 
-#pragma warning disable S1135 // Track uses of "TODO" tags
         //// TODO: set job role and contact details
-#pragma warning restore S1135 // Track uses of "TODO" tags
 
         return View(
             "Submitted",
