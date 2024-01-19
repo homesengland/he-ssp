@@ -66,7 +66,7 @@ public class GetDeliveryPhaseDetailsQueryHandler : IRequestHandler<GetDeliveryPh
     {
         var schemaInformation = await _schemeRepository.GetByApplicationId(deliveryPhase.ApplicationId, userAccount, false, cancellationToken);
 
-        var result = deliveryPhase.CalculateSummary(schemaInformation.Funding.RequiredFunding!.Value, schemaInformation.Funding.HousesToDeliver!.Value, MilestoneFramework.Default);
+        var result = deliveryPhase.CalculateSummary(schemaInformation.Funding.RequiredFunding ?? 0, schemaInformation.Funding.HousesToDeliver ?? 0, MilestoneFramework.Default);
         return new SummaryOfDelivery(result.GrantApportioned, result.AcquisitionMilestone, result.StarOnSiteMilestone, result.CompletionMilestone);
     }
 }

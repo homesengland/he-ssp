@@ -5,7 +5,9 @@
 @using HE.Investment.AHP.Contract.Delivery
 @using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.WWW.Models.Delivery
+@using HE.Investments.Common.Messages
 @using HE.Investments.Common.WWW.Components.FormHeader
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model DeliveryPhaseDetails;
 @{
     var applicationId = this.GetApplicationIdFromRoute();
@@ -32,7 +34,7 @@
                     @Model.Name
                 </td>
                 <td class="govuk-table__cell">
-                    -
+                    @(Model.NumberOfHomes.ToString() ?? GenericMessages.NotProvided)
                 </td>
             </tr>
             </tbody>

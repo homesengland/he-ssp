@@ -9,7 +9,7 @@ public class BuildActivity : ValueObject, IQuestion
 {
     private readonly Tenure _tenure;
 
-    private TypeOfHomes _typeOfHomes;
+    private readonly TypeOfHomes _typeOfHomes;
 
     public BuildActivity(Tenure tenure, TypeOfHomes typeOfHomes, BuildActivityType type)
     {
@@ -23,7 +23,7 @@ public class BuildActivity : ValueObject, IQuestion
         _tenure = tenure;
     }
 
-    public BuildActivityType? Type { get; private set; }
+    public BuildActivityType? Type { get; }
 
     public bool IsOffTheShelfOrExistingSatisfactory => Type is BuildActivityType.OffTheShelf or BuildActivityType.ExistingSatisfactory;
 
@@ -81,10 +81,9 @@ public class BuildActivity : ValueObject, IQuestion
         return GetAvailableTypeForNewBuild(_tenure);
     }
 
-    public void ClearAnswer(TypeOfHomes newTypeOfHome)
+    public BuildActivity WithClearedAnswer()
     {
-        Type = null;
-        _typeOfHomes = newTypeOfHome;
+        return new BuildActivity(_tenure);
     }
 
     public bool IsAnswered()
