@@ -1,13 +1,19 @@
 using System.Globalization;
-using System.Security.Principal;
 
 namespace HE.Investments.AHP.IntegrationTests.FillApplication.Data;
 
 public class SchemeInformationData
 {
-    public decimal? RequiredFunding { get; private set; }
+    private readonly int _dataSeed;
 
-    public int? HousesToDeliver { get; private set; }
+    public SchemeInformationData()
+    {
+        _dataSeed = new Random().Next(1, 100);
+    }
+
+    public decimal RequiredFunding { get; private set; }
+
+    public int HousesToDeliver { get; private set; }
 
     public string Affordability { get; private set; }
 
@@ -21,8 +27,8 @@ public class SchemeInformationData
 
     public void GenerateFundingDetails()
     {
-        RequiredFunding = DateTime.UtcNow.Millisecond;
-        HousesToDeliver = DateTime.UtcNow.Second;
+        RequiredFunding = GetDecimalValue(nameof(RequiredFunding));
+        HousesToDeliver = _dataSeed;
     }
 
     public void GenerateAffordability()
@@ -44,5 +50,10 @@ public class SchemeInformationData
     public void GenerateStakeholderDiscussions()
     {
         StakeholderDiscussions = $"{nameof(StakeholderDiscussions)}_{DateTime.UtcNow.ToString(CultureInfo.InvariantCulture)}";
+    }
+
+    private decimal GetDecimalValue(string fieldName)
+    {
+        return _dataSeed + 100_000 + (fieldName.Length * 1_000);
     }
 }

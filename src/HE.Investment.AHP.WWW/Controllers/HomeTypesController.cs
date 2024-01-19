@@ -20,6 +20,7 @@ using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.Workflow;
 using HE.Investments.Common.WWW.Extensions;
+using HE.Investments.Common.WWW.Helpers;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.Common.WWW.Utils;
@@ -871,9 +872,9 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         var tenureDetails = await _mediator.Send(new GetTenureDetailsQuery(AhpApplicationId.From(applicationId), HomeTypeId.From(homeTypeId)), cancellationToken);
         var model = new AffordableRentModel(tenureDetails.ApplicationName, tenureDetails.HomeTypeName)
         {
-            MarketValue = tenureDetails.MarketValue?.ToString(CultureInfo.InvariantCulture),
-            MarketRent = tenureDetails.MarketRent?.ToString("0.##", CultureInfo.InvariantCulture),
-            ProspectiveRent = tenureDetails.ProspectiveRent?.ToString("0.##", CultureInfo.InvariantCulture),
+            MarketValue = CurrencyHelper.InputPounds(tenureDetails.MarketValue),
+            MarketRent = CurrencyHelper.InputPoundsPences(tenureDetails.MarketRent),
+            ProspectiveRent = CurrencyHelper.InputPoundsPences(tenureDetails.ProspectiveRent),
             ProspectiveRentAsPercentageOfMarketRent = tenureDetails.ProspectiveRentAsPercentageOfMarketRent?.ToString("0", CultureInfo.InvariantCulture),
             TargetRentExceedMarketRent = tenureDetails.TargetRentExceedMarketRent,
         };
@@ -934,8 +935,8 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         var tenureDetails = await _mediator.Send(new GetTenureDetailsQuery(AhpApplicationId.From(applicationId), HomeTypeId.From(homeTypeId)), cancellationToken);
         var model = new SocialRentModel(tenureDetails.ApplicationName, tenureDetails.HomeTypeName)
         {
-            MarketValue = tenureDetails.MarketValue?.ToString(CultureInfo.InvariantCulture),
-            ProspectiveRent = tenureDetails.ProspectiveRent?.ToString("0.##", CultureInfo.InvariantCulture),
+            MarketValue = CurrencyHelper.InputPounds(tenureDetails.MarketValue),
+            ProspectiveRent = CurrencyHelper.InputPoundsPences(tenureDetails.ProspectiveRent),
         };
 
         return View(model);
@@ -966,10 +967,10 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         var tenureDetails = await _mediator.Send(new GetTenureDetailsQuery(AhpApplicationId.From(applicationId), HomeTypeId.From(homeTypeId)), cancellationToken);
         var model = new SharedOwnershipModel(tenureDetails.ApplicationName, tenureDetails.HomeTypeName)
         {
-            MarketValue = tenureDetails.MarketValue?.ToString(CultureInfo.InvariantCulture),
+            MarketValue = CurrencyHelper.InputPounds(tenureDetails.MarketValue),
             InitialSale = tenureDetails.InitialSale?.ToString(CultureInfo.InvariantCulture),
-            ExpectedFirstTranche = tenureDetails.ExpectedFirstTranche?.ToString("0.##", CultureInfo.InvariantCulture),
-            ProspectiveRent = tenureDetails.ProspectiveRent?.ToString("0.##", CultureInfo.InvariantCulture),
+            ExpectedFirstTranche = CurrencyHelper.DisplayPoundsPences(tenureDetails.ExpectedFirstTranche),
+            ProspectiveRent = CurrencyHelper.InputPoundsPences(tenureDetails.ProspectiveRent),
             RentAsPercentageOfTheUnsoldShare =
                 tenureDetails.RentAsPercentageOfTheUnsoldShare?.ToString("0.##", CultureInfo.InvariantCulture),
         };
@@ -997,7 +998,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
                     model.ProspectiveRent),
                 cancellationToken);
 
-            model.ExpectedFirstTranche = calculationResult.ExpectedFirstTranche?.ToString("0.##", CultureInfo.InvariantCulture);
+            model.ExpectedFirstTranche = CurrencyHelper.DisplayPoundsPences(calculationResult.ExpectedFirstTranche);
             model.RentAsPercentageOfTheUnsoldShare = calculationResult.ProspectiveRentPercentage?.ToString("0.##", CultureInfo.InvariantCulture);
 
             ModelState.AddValidationErrors(operationResult);
@@ -1032,9 +1033,9 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         var tenureDetails = await _mediator.Send(new GetTenureDetailsQuery(AhpApplicationId.From(applicationId), HomeTypeId.From(homeTypeId)), cancellationToken);
         var model = new RentToBuyModel(tenureDetails.ApplicationName, tenureDetails.HomeTypeName)
         {
-            MarketValue = tenureDetails.MarketValue?.ToString(CultureInfo.InvariantCulture),
-            MarketRent = tenureDetails.MarketRent?.ToString("0.##", CultureInfo.InvariantCulture),
-            ProspectiveRent = tenureDetails.ProspectiveRent?.ToString("0.##", CultureInfo.InvariantCulture),
+            MarketValue = CurrencyHelper.InputPounds(tenureDetails.MarketValue),
+            MarketRent = CurrencyHelper.InputPoundsPences(tenureDetails.MarketRent),
+            ProspectiveRent = CurrencyHelper.InputPoundsPences(tenureDetails.ProspectiveRent),
             ProspectiveRentAsPercentageOfMarketRent = tenureDetails.ProspectiveRentAsPercentageOfMarketRent?.ToString("00.00", CultureInfo.InvariantCulture),
             TargetRentExceedMarketRent = tenureDetails.TargetRentExceedMarketRent,
         };
@@ -1094,10 +1095,10 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         var tenureDetails = await _mediator.Send(new GetTenureDetailsQuery(AhpApplicationId.From(applicationId), HomeTypeId.From(homeTypeId)), cancellationToken);
         var model = new HomeOwnershipDisabilitiesModel(tenureDetails.ApplicationName, tenureDetails.HomeTypeName)
         {
-            MarketValue = tenureDetails.MarketValue?.ToString(CultureInfo.InvariantCulture),
+            MarketValue = CurrencyHelper.InputPounds(tenureDetails.MarketValue),
             InitialSale = tenureDetails.InitialSale?.ToString(CultureInfo.InvariantCulture),
-            ExpectedFirstTranche = tenureDetails.ExpectedFirstTranche?.ToString("0.##", CultureInfo.InvariantCulture),
-            ProspectiveRent = tenureDetails.ProspectiveRent?.ToString("0.##", CultureInfo.InvariantCulture),
+            ExpectedFirstTranche = CurrencyHelper.DisplayPoundsPences(tenureDetails.ExpectedFirstTranche),
+            ProspectiveRent = CurrencyHelper.InputPoundsPences(tenureDetails.ProspectiveRent),
             RentAsPercentageOfTheUnsoldShare =
                 tenureDetails.RentAsPercentageOfTheUnsoldShare?.ToString("0.##", CultureInfo.InvariantCulture),
         };
@@ -1125,7 +1126,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
                     model.ProspectiveRent),
                 cancellationToken);
 
-            model.ExpectedFirstTranche = calculationResult.ExpectedFirstTranche?.ToString("0.##", CultureInfo.InvariantCulture);
+            model.ExpectedFirstTranche = CurrencyHelper.DisplayPoundsPences(calculationResult.ExpectedFirstTranche);
             model.RentAsPercentageOfTheUnsoldShare = calculationResult.ProspectiveRentPercentage?.ToString("0.##", CultureInfo.InvariantCulture);
 
             ModelState.AddValidationErrors(operationResult);
@@ -1151,10 +1152,10 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         var tenureDetails = await _mediator.Send(new GetTenureDetailsQuery(AhpApplicationId.From(applicationId), HomeTypeId.From(homeTypeId)), cancellationToken);
         var model = new OlderPersonsSharedOwnershipModel(tenureDetails.ApplicationName, tenureDetails.HomeTypeName)
         {
-            MarketValue = tenureDetails.MarketValue?.ToString(CultureInfo.InvariantCulture),
+            MarketValue = CurrencyHelper.InputPounds(tenureDetails.MarketValue),
             InitialSale = tenureDetails.InitialSale?.ToString(CultureInfo.InvariantCulture),
-            ExpectedFirstTranche = tenureDetails.ExpectedFirstTranche?.ToString("0.##", CultureInfo.InvariantCulture),
-            ProspectiveRent = tenureDetails.ProspectiveRent?.ToString("0.##", CultureInfo.InvariantCulture),
+            ExpectedFirstTranche = CurrencyHelper.DisplayPoundsPences(tenureDetails.ExpectedFirstTranche),
+            ProspectiveRent = CurrencyHelper.InputPoundsPences(tenureDetails.ProspectiveRent),
             RentAsPercentageOfTheUnsoldShare =
                 tenureDetails.RentAsPercentageOfTheUnsoldShare?.ToString("0.##", CultureInfo.InvariantCulture),
         };
@@ -1182,7 +1183,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
                     model.ProspectiveRent),
                 cancellationToken);
 
-            model.ExpectedFirstTranche = calculationResult.ExpectedFirstTranche?.ToString("0.##", CultureInfo.InvariantCulture);
+            model.ExpectedFirstTranche = CurrencyHelper.DisplayPoundsPences(calculationResult.ExpectedFirstTranche);
             model.RentAsPercentageOfTheUnsoldShare = calculationResult.ProspectiveRentPercentage?.ToString("0.##", CultureInfo.InvariantCulture);
 
             ModelState.AddValidationErrors(operationResult);

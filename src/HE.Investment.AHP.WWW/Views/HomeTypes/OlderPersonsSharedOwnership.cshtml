@@ -69,8 +69,7 @@
                 }
 
                 <gds-p class="govuk-!-margin-top-1">
-                    @(Model.ExpectedFirstTranche.IsProvided() ? $"£{Model.ExpectedFirstTranche}"
-                        : "To calculate the assumed first tranche sales receipt, enter the market value of each home and the average assumed first tranche sale. Then select the calculate button.")
+                    @(Model.ExpectedFirstTranche ?? "To calculate the assumed first tranche sales receipt, enter the market value of each home and the average assumed first tranche sale. Then select the calculate button.")
                 </gds-p>
             </he-error-form-group>
 
