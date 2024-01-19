@@ -12,7 +12,7 @@ namespace HE.Investment.AHP.Domain.Tests.Application.Entities.ApplicationEntityT
 public class ApplicationEntityWithdrawTests : TestBase<ApplicationEntity>
 {
     [Fact]
-    public void ShouldChangeApplicationStatusToWithdraw_WhenCurrentStatusIsApplicationSubmitted()
+    public async Task ShouldChangeApplicationStatusToWithdraw_WhenCurrentStatusIsApplicationSubmitted()
     {
         var withdrawReason = WithdrawReasonTestData.WithdrawReasonOne;
 
@@ -35,7 +35,7 @@ public class ApplicationEntityWithdrawTests : TestBase<ApplicationEntity>
             .BuildIApplicationWithdrawMockAndRegister(this);
 
         // when
-        application.Withdraw(applicationRepository.Object, withdrawReason, organisationId, CancellationToken.None);
+        await application.Withdraw(applicationRepository.Object, withdrawReason, organisationId, CancellationToken.None);
 
         // then
         applicationRepository.Verify(repo => repo.Withdraw(application, organisationId, CancellationToken.None), Times.Once);

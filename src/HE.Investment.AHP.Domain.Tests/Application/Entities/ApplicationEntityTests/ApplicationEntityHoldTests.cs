@@ -12,7 +12,7 @@ namespace HE.Investment.AHP.Domain.Tests.Application.Entities.ApplicationEntityT
 public class ApplicationEntityHoldTests : TestBase<ApplicationEntity>
 {
     [Fact]
-    public void ShouldChangeApplicationStatusToHold_WhenCurrentStatusIsDraft()
+    public async Task ShouldChangeApplicationStatusToHold_WhenCurrentStatusIsDraft()
     {
         var holdReason = HoldReasonTestData.HoldReasonOne;
 
@@ -35,7 +35,7 @@ public class ApplicationEntityHoldTests : TestBase<ApplicationEntity>
             .BuildIApplicationHoldMockAndRegister(this);
 
         // when
-        application.Hold(applicationRepository.Object, holdReason, organisationId, CancellationToken.None);
+        await application.Hold(applicationRepository.Object, holdReason, organisationId, CancellationToken.None);
 
         // then
         applicationRepository.Verify(repo => repo.Hold(application, organisationId, CancellationToken.None), Times.Once);
