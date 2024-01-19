@@ -1,4 +1,4 @@
-namespace HE.Investment.AHP.Domain.Tests.TestData;
+namespace HE.Investments.Common.Tests.TestData;
 
 public static class GuidTestData
 {

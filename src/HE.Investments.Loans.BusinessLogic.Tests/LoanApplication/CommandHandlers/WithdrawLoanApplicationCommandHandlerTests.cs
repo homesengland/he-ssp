@@ -1,4 +1,4 @@
-using HE.Investments.Account.Domain.Tests.User.TestObjectBuilder;
+using HE.Investments.Common.Tests.TestObjectBuilders;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.CommandHandlers;
 using HE.Investments.Loans.BusinessLogic.Tests.LoanApplication.TestObjectBuilders;
 using HE.Investments.Loans.BusinessLogic.Tests.TestData;

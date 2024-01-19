@@ -6,6 +6,7 @@ using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Components.SectionSummary;
+using HE.Investments.Common.WWW.Helpers;
 using HE.Investments.Common.WWW.Utils;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -45,12 +46,7 @@ public class FinancialDetailsSummaryViewModelFactory : IFinancialDetailsSummaryV
 
     private static IList<string> GetCurrencyStringWithPrefix(decimal? value)
     {
-        if (value == null)
-        {
-            return Array.Empty<string>();
-        }
-
-        return new List<string> { "£" + value.ToWholeNumberString() };
+        return CurrencyHelper.DisplayPounds(value).ToOneElementList() ?? Array.Empty<string>();
     }
 
     private static string CreateFinancialDetailsActionUrl(IUrlHelper urlHelper, AhpApplicationId applicationId, string actionName, bool allowWcagDuplicate = false)

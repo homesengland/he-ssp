@@ -19,6 +19,7 @@ using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Extensions;
+using HE.Investments.Common.WWW.Helpers;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.Common.WWW.Utils;
@@ -316,7 +317,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
         return new SchemeViewModel(
             applicationId,
             scheme.ApplicationName,
-            scheme.RequiredFunding.ToWholeNumberString(),
+            CurrencyHelper.InputPounds(scheme.RequiredFunding),
             scheme.HousesToDeliver.ToString(),
             scheme.AffordabilityEvidence,
             scheme.SalesRisk,

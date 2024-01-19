@@ -1,11 +1,10 @@
 using HE.Investments.Account.Contract.Users;
-using HE.Investments.Account.Domain.Tests.TestData;
 using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.Contract;
 
-namespace HE.Investments.Account.Domain.Tests.User.TestData;
+namespace HE.Investments.Common.Tests.TestData;
 
 public static class UserAccountTestData
 {

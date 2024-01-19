@@ -1,5 +1,5 @@
 using System.Globalization;
-using HE.Investments.Account.Domain.Tests.User.TestObjectBuilder;
+using HE.Investments.Common.Tests.TestObjectBuilders;
 using HE.Investments.Loans.BusinessLogic.CompanyStructure.QueryHandlers;
 using HE.Investments.Loans.BusinessLogic.Tests.CompanyStructure.TestObjectBuilders;
 using HE.Investments.Loans.BusinessLogic.Tests.TestData;

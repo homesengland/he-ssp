@@ -148,9 +148,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     {
         var application = await _mediator.Send(new GetApplicationQuery(AhpApplicationId.From(applicationId)), cancellationToken);
 
-#pragma warning disable S1135 // Track uses of "TODO" tags
         //// TODO: set job role and contact details
-#pragma warning restore S1135 // Track uses of "TODO" tags
 
         return View(
             "Submitted",
@@ -203,6 +201,12 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
             () => ContinueWithRedirect(new { applicationId }),
             async () => await Task.FromResult<IActionResult>(View("Withdraw", model)),
             cancellationToken);
+    }
+
+    [HttpGet("{applicationId}/back")]
+    public async Task<IActionResult> Back([FromRoute] string applicationId, ApplicationWorkflowState currentPage)
+    {
+        return await Back(currentPage, new { applicationId });
     }
 
     protected override async Task<IStateRouting<ApplicationWorkflowState>> Routing(ApplicationWorkflowState currentState, object? routeData = null)

@@ -2,8 +2,8 @@ using FluentAssertions;
 using HE.Investments.Account.Contract.Organisation.Queries;
 using HE.Investments.Account.Domain.Organisation.QueryHandlers;
 using HE.Investments.Account.Domain.Tests.Organisation.TestObjectBuilder;
-using HE.Investments.Account.Domain.Tests.TestData;
 using HE.Investments.Common.Contract.Exceptions;
+using HE.Investments.Common.Tests.TestData;
 using HE.Investments.TestsUtils.TestFramework;
 using Xunit;
 

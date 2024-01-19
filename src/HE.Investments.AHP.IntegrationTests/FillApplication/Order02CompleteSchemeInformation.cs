@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using FluentAssertions;
 using HE.Investment.AHP.WWW;
 using HE.Investment.AHP.WWW.Views.Scheme.Const;
@@ -65,8 +66,8 @@ public class Order02CompleteSchemeInformation : AhpIntegrationTest
             SchemeInformationPagesUrl.FundingDetails(ApplicationData.ApplicationId),
             SchemeInformationPageTitles.FundingDetails,
             SchemeInformationPagesUrl.AffordabilitySuffix,
-            ("RequiredFunding", SchemeInformationData.RequiredFunding.ToString()!),
-            ("HousesToDeliver", SchemeInformationData.HousesToDeliver.ToString()!));
+            ("RequiredFunding", SchemeInformationData.RequiredFunding.ToString(CultureInfo.InvariantCulture)),
+            ("HousesToDeliver", SchemeInformationData.HousesToDeliver.ToString(CultureInfo.InvariantCulture)));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
@@ -144,8 +145,8 @@ public class Order02CompleteSchemeInformation : AhpIntegrationTest
         // when
         var schemaInformationSummary = checkAnswersPage.GetSummaryListItems();
         schemaInformationSummary["Application name"].Should().Be(ApplicationData.ApplicationName);
-        schemaInformationSummary["Funding required"].Should().Be(SchemeInformationData.RequiredFunding.ToString());
-        schemaInformationSummary["Number of homes"].Should().Be(SchemeInformationData.HousesToDeliver.ToString());
+        schemaInformationSummary["Funding required"].Should().BePoundsOnly(SchemeInformationData.RequiredFunding);
+        schemaInformationSummary["Number of homes"].Should().Be(SchemeInformationData.HousesToDeliver.ToString(CultureInfo.InvariantCulture));
         schemaInformationSummary["Affordability of Shared Ownership"].Should().Be(SchemeInformationData.Affordability);
         schemaInformationSummary["Sales risk of Shared Ownership"].Should().Be(SchemeInformationData.SalesRisk);
         schemaInformationSummary["Type and tenure of homes"].Should().Be(SchemeInformationData.HousingNeedsMeetingLocalPriorities);

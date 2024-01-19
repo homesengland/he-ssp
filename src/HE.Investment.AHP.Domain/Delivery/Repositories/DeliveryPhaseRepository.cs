@@ -84,18 +84,13 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
     {
         if (deliveryPhases.IsStatusChanged)
         {
-#pragma warning disable S1135 // Track uses of "TODO" tags
             //// TODO: AB#66083 Update Delivery section status to In Progress in CRM
-#pragma warning restore S1135 // Track uses of "TODO" tags
-
         }
 
         var deliveryPhaseToRemove = deliveryPhases.PopRemovedDeliveryPhase();
         while (deliveryPhaseToRemove != null)
         {
-#pragma warning disable S1135 // Track uses of "TODO" tags
-            // TODO: AB#66083 remove delivery Phase in CRM
-#pragma warning restore S1135 // Track uses of "TODO" tags
+            //// TODO: AB#66083 remove delivery Phase in CRM
 
             await _eventDispatcher.Publish(
                 new DeliveryPhaseHasBeenRemovedEvent(deliveryPhaseToRemove.Application.Id),

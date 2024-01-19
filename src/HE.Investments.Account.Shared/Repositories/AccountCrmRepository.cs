@@ -33,9 +33,7 @@ public class AccountCrmRepository : IAccountRepository
         }
 
 
-#pragma warning disable S1135 // Track uses of "TODO" tags
         // TODO: #88197 - Fetch IsUnregisteredBody
-#pragma warning restore S1135 // Track uses of "TODO" tags
         return contactRoles
             .contactRoles
             .GroupBy(x => x.accountId)

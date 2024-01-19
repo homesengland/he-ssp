@@ -45,6 +45,7 @@ public class DeliveryPhaseWorkflow : IStateRouting<DeliveryPhaseWorkflowState>
             return targetState;
         }
 
+#pragma warning disable S2589 // Boolean expressions should not be gratuitous
         return _model switch
         {
             { TypeOfHomes: var x } when x.IsNotProvided() => DeliveryPhaseWorkflowState.TypeOfHomes,
@@ -57,6 +58,7 @@ public class DeliveryPhaseWorkflow : IStateRouting<DeliveryPhaseWorkflowState>
             { } when _model.IsAdditionalPaymentRequested.IsNotProvided() && IsUnregisteredBody() => DeliveryPhaseWorkflowState.UnregisteredBodyFollowUp,
             _ => DeliveryPhaseWorkflowState.CheckAnswers,
         };
+#pragma warning restore S2589 // Boolean expressions should not be gratuitous
     }
 
     public bool CanBeAccessed(DeliveryPhaseWorkflowState state)
