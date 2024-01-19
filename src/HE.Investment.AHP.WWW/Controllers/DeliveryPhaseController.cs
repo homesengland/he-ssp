@@ -425,7 +425,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     {
         var applicationId = this.GetApplicationIdFromRoute();
         var deliveryPhaseId = this.GetDeliveryPhaseIdFromRoute();
-        var deliveryPhaseDetails = await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(applicationId, deliveryPhaseId), cancellationToken);
+        var deliveryPhaseDetails = await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(applicationId, deliveryPhaseId, true), cancellationToken);
         var deliveryPhaseHomes = await _mediator.Send(new GetDeliveryPhaseHomesQuery(applicationId, deliveryPhaseId), cancellationToken);
         var isEditable = await _accountAccessContext.CanEditApplication();
         var sections = _deliveryPhaseSummaryViewModelFactory.CreateSummary(applicationId, deliveryPhaseDetails, deliveryPhaseHomes, Url, isEditable);
