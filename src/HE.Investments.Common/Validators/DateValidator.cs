@@ -58,7 +58,7 @@ public class DateValidator
         {
             try
             {
-                _parsedValue = new DateTime(year, month, day);
+                _parsedValue = new DateTime(year, month, day, 0, 0, 0, DateTimeKind.Unspecified);
             }
             catch (ArgumentOutOfRangeException)
             {

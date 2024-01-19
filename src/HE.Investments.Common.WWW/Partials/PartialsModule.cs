@@ -8,13 +8,10 @@ public static class PartialsModule
 {
     public static IServiceCollection AddCommonBuildingBlocks(this IServiceCollection services)
     {
-        var assembly = typeof(AssemblyMarkup).Assembly;
+        var assembly = typeof(PartialsModule).Assembly;
         services.AddControllersWithViews()
             .AddApplicationPart(assembly)
-            .AddRazorOptions(options =>
-            {
-                options.ViewLocationFormats.Add("/{0}.cshtml");
-            })
+            .AddRazorOptions(options => options.ViewLocationFormats.Add("/{0}.cshtml"))
             .AddRazorRuntimeCompilation();
 
         services.Configure<MvcRazorRuntimeCompilationOptions>(

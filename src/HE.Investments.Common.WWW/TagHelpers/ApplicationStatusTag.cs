@@ -32,7 +32,7 @@ public class ApplicationStatusTag : TextWithIdTagHelper
 
     private TagColour GetColorBaseOnStatus(ApplicationStatus applicationStatus)
     {
-        return ApplicationStatus switch
+        return applicationStatus switch
         {
             ApplicationStatus.New => TagColour.Blue,
             ApplicationStatus.Draft => TagColour.Blue,

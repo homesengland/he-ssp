@@ -35,7 +35,7 @@ public class IntegrationTestFixture<TProgram> : WebApplicationFactory<TProgram>
 
     public void CheckUserLoginData()
     {
-        if (LoginData.IsProvided() is false)
+        if (!LoginData.IsProvided())
         {
             throw new InvalidDataException("Please set IntegrationTestsConfig:UserConfig:UserGlobalId and IntegrationTestsConfig:UserConfig:Email in settings");
         }

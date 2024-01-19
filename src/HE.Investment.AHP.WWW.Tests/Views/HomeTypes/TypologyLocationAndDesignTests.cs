@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
 
@@ -12,6 +13,7 @@ public class TypologyLocationAndDesignTests : HomeTypesTestBase
     private static readonly MoreInformationModel Model = new("My application", "My homes") { MoreInformation = "My new important information" };
 
     [Fact]
+    [SuppressMessage("Blocker Code Smell", "S2699:Tests should include assertions", Justification = "Error in the Sonarlint library when using AngleSharp when using AngleSharp")]
     public async Task ShouldRenderViewWithTextArea()
     {
         // given & when

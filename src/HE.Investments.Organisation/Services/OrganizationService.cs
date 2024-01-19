@@ -59,11 +59,16 @@ public class OrganizationService : IOrganizationService
         var organizationDetailsDto = new OrganizationDetailsDto();
         if (Guid.TryParse(accountId, out var organizationId))
         {
-            var account = await _service.RetrieveAsync("account", organizationId, new ColumnSet(new string[]
-            {
-                    "name", "he_companieshousenumber", "address1_line1", "address1_line2", "address1_line3",
-                    "address1_city", "address1_postalcode", "address1_country", "primarycontactid",
-            }));
+            var account = await _service.RetrieveAsync("account", organizationId, new ColumnSet(
+                    "name",
+                    "he_companieshousenumber",
+                    "address1_line1",
+                    "address1_line2",
+                    "address1_line3",
+                    "address1_city",
+                    "address1_postalcode",
+                    "address1_country",
+                    "primarycontactid"));
 
             organizationDetailsDto.registeredCompanyName = account.Contains("name") ? account["name"].ToString() : null;
             organizationDetailsDto.companyRegistrationNumber = account.Contains("he_companieshousenumber") ? account["he_companieshousenumber"].ToString() : null;
@@ -77,12 +82,10 @@ public class OrganizationService : IOrganizationService
             if (account.Contains("primarycontactid") && account["primarycontactid"] != null)
             {
                 var primaryContactReference = (EntityReference)account.Attributes["primarycontactid"];
-                var contact = await _service.RetrieveAsync("contact", primaryContactReference.Id, new ColumnSet(new string[]
-                {
+                var contact = await _service.RetrieveAsync("contact", primaryContactReference.Id, new ColumnSet(
                         "fullname",
                         "emailaddress1",
-                        "telephone1",
-                }));
+                        "telephone1"));
 
                 organizationDetailsDto.compayAdminContactName = contact.Contains("fullname") ? contact.Attributes["fullname"].ToString() : null;
                 organizationDetailsDto.compayAdminContactEmail = contact.Contains("emailaddress1") ? contact.Attributes["emailaddress1"].ToString() : null;

@@ -57,7 +57,7 @@ public class HttpDocumentService : IDocumentService
             string.IsNullOrEmpty(x.Metadata) ? null : JsonSerializer.Deserialize<TMetadata>(x.Metadata, _jsonSerializerOptions)));
     }
 
-    public async Task UploadAsync<TMetadata>(FileLocation location, UploadFileData<TMetadata> file, bool overwrite = false, CancellationToken cancellationToken = default)
+    public async Task UploadAsync<TMetadata>(FileLocation location, UploadFileData<TMetadata> file, bool overwrite, CancellationToken cancellationToken)
     {
         var uri = new UriBuilder($"{_settings.Url}/SharepointFiles/Upload");
 

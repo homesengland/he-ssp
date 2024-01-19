@@ -12,9 +12,9 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Radios
 {
     /// <summary>
     /// Class GdsRadioYesNoTagHelper.
-    /// Implements the <see cref="Microsoft.AspNetCore.Razor.TagHelpers.TagHelper" />.
+    /// Implements the <see cref="TagHelper" />.
     /// </summary>
-    /// <seealso cref="Microsoft.AspNetCore.Razor.TagHelpers.TagHelper" />
+    /// <seealso cref="TagHelper" />
     public class GdsCustomRadioTagHelper : TagHelper
     {
         /// <summary>
@@ -58,7 +58,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Radios
         public string ConditionalInputError { get; set; }
 
         /// <summary>
-        /// Synchronously executes the <see cref="Microsoft.AspNetCore.Razor.TagHelpers.TagHelper" /> with the given <paramref name="context" /> and
+        /// Synchronously executes the <see cref="TagHelper" /> with the given <paramref name="context" /> and
         /// <paramref name="output" />.
         /// </summary>
         /// <param name="context">Contains information associated with the current HTML tag.</param>
@@ -77,7 +77,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Radios
 
                 TagConstruct.ConstructClass(output, css);
 
-                var radioItems = RadioItems.ToArray(); 
+                var radioItems = RadioItems.ToArray();
                 var conditionalInputIds = ConditionalInputIds?.ToArray() ?? new string[0];
                 var conditionalInputLabels = ConditionalInputLabels?.ToArray() ?? new string[0];
                 var conditionalInputNames = ConditionalInputNames?.ToArray() ?? new string[0];
@@ -85,7 +85,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Radios
                 var hints = RadioHints?.ToArray() ?? new string[0];
 
                 var sb = new StringBuilder();
-                for (int i = 0; i < RadioItems.Count(); i++)
+                for (var i = 0; i < RadioItems.Count(); i++)
                 {
                     var item = radioItems[i];
                     var selectRadio = item.Value == Value;
@@ -98,19 +98,28 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Radios
                             .WithLabel(text, id);
 
                     if (conditionalInputLabels.Length > i && conditionalInputValues.Length > i)
+                    {
                         builder.WithConditionalInput(conditionalInputIds[i], conditionalInputLabels[i], conditionalInputNames[i], conditionalInputValues[i]);
-
+                    }
                     else if (conditionalInputLabels.Length > i)
+                    {
                         builder.WithConditionalInput(conditionalInputIds[i], conditionalInputLabels[i], conditionalInputNames[i]);
+                    }
 
                     if (IsConditionalInputInvalid && selectRadio)
+                    {
                         builder.WithConditionalErrorMessage(ConditionalInputError);
+                    }
 
-                    if(hints.Length > i)
+                    if (hints.Length > i)
+                    {
                         builder.WithHint(hints[i]);
+                    }
 
                     if (selectRadio)
+                    {
                         builder.ThatIsChecked();
+                    }
 
                     sb.Append(builder.Build());
                 }

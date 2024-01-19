@@ -11,10 +11,12 @@ public class ModernMethodsConstructionCrmSegmentMapper : HomeTypeCrmSegmentMappe
     public ModernMethodsConstructionCrmSegmentMapper()
         : base(new[]
         {
+            #pragma warning disable S1135 // Track uses of "TODO" tags
             // todo field missing inc crm nameof(invln_HomeType.invln_mmcapplied),
             nameof(invln_HomeType.invln_mmccategories),
             nameof(invln_HomeType.invln_mmccategory1subcategories),
             nameof(invln_HomeType.invln_mmccategory2subcategories),
+            #pragma warning restore S1135 // Track uses of "TODO" tags
         })
     {
     }
@@ -25,27 +27,32 @@ public class ModernMethodsConstructionCrmSegmentMapper : HomeTypeCrmSegmentMappe
     {
         return new ModernMethodsConstructionSegmentEntity();
 
+#pragma warning disable S1135 // Track uses of "TODO" tags
+
         // TODO waiting for crm
-        // return new ModernMethodsConstructionEntity(
-        //     YesNoTypeMapper.Map(dto.mmcApplied),
-        //     dto.mmcCategories.Select(MapMmcCategories),
-        //     dto.mmcCategory1Subcategories.Select(MapMmcCategory1Subcategories),
-        //     dto.mmcCategory2Subcategories.Select(MapMmcCategory2Subcategories));
+        //// return new ModernMethodsConstructionEntity(
+        ////     YesNoTypeMapper.Map(dto.mmcApplied),
+        ////     dto.mmcCategories.Select(MapMmcCategories),
+        ////     dto.mmcCategory1Subcategories.Select(MapMmcCategory1Subcategories),
+        ////     dto.mmcCategory2Subcategories.Select(MapMmcCategory2Subcategories));
+#pragma warning restore S1135 // Track uses of "TODO" tags
     }
 
     protected override ModernMethodsConstructionSegmentEntity GetSegment(HomeTypeEntity entity) => entity.ModernMethodsConstruction;
 
     protected override void MapToDto(HomeTypeDto dto, ModernMethodsConstructionSegmentEntity segment)
     {
+#pragma warning disable S1135 // Track uses of "TODO" tags
+
         // TODO waiting for crm
-        // dto.mmcApplied = YesNoTypeMapper.Map(segment.ModernMethodsConstructionApplied);
-        // dto.mmcCategories = segment.ModernMethodsConstructionCategories.Select(MapMmcCategories).ToList();
-        // dto.mmcCategory1Subcategories = segment.ModernMethodsConstruction3DSubcategories.Select(MapMmcCategory1Subcategories).ToList();
-        // dto.mmcCategory2Subcategories = segment.ModernMethodsConstruction2DSubcategories.Select(MapMmcCategory2Subcategories).ToList();
+        //// dto.mmcApplied = YesNoTypeMapper.Map(segment.ModernMethodsConstructionApplied);
+        //// dto.mmcCategories = segment.ModernMethodsConstructionCategories.Select(MapMmcCategories).ToList();
+        //// dto.mmcCategory1Subcategories = segment.ModernMethodsConstruction3DSubcategories.Select(MapMmcCategory1Subcategories).ToList();
+        //// dto.mmcCategory2Subcategories = segment.ModernMethodsConstruction2DSubcategories.Select(MapMmcCategory2Subcategories).ToList();
     }
 
     // TODO temporary disable warning that methods are unused
-#pragma warning disable IDE0051
+#pragma warning disable IDE0051, S1144, S1135
     private static int MapMmcCategories(ModernMethodsConstructionCategoriesType value)
     {
         return value switch

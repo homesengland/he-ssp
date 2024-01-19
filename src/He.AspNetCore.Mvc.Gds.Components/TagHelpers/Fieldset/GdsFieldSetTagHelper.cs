@@ -6,16 +6,16 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Fieldset
 {
     /// <summary>
     /// Class GdsFieldSetTagHelper.
-    /// Implements the <see cref="Microsoft.AspNetCore.Razor.TagHelpers.TagHelper" />.
+    /// Implements the <see cref="TagHelper" />.
     /// </summary>
-    /// <seealso cref="Microsoft.AspNetCore.Razor.TagHelpers.TagHelper" />
+    /// <seealso cref="TagHelper" />
     public class GdsFieldSetTagHelper : TagHelper
     {
 
         public bool Invalid { get; set; }
 
         /// <summary>
-        /// Synchronously executes the <see cref="Microsoft.AspNetCore.Razor.TagHelpers.TagHelper" /> with the given <paramref name="context" /> and
+        /// Synchronously executes the <see cref="TagHelper" /> with the given <paramref name="context" /> and
         /// <paramref name="output" />.
         /// </summary>
         /// <param name="context">Contains information associated with the current HTML tag.</param>
@@ -26,7 +26,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Fieldset
             {
                 output.TagName = HtmlConstants.FieldSet;
 
-                if(Invalid)
+                if (Invalid)
                 {
                     TagConstruct.ConstructClass(output, $"{CssConstants.GovUkFieldSet} {CssConstants.GovUkFieldSetError}");
                 }

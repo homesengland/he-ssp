@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
 using HE.Investments.Common.WWW.Models;
 
@@ -12,12 +13,13 @@ public class DesignPlansTests : HomeTypesTestBase
     private static readonly DesignPlansModel Model = new("My application", "My homes")
     {
         MoreInformation = "Some details about my Design Plans",
-        UploadedFiles = new[] { new FileModel("file-1", "My File", new DateTime(2022, 10, 11), "Test User", true, "#", "#") },
+        UploadedFiles = new[] { new FileModel("file-1", "My File", new DateTime(2022, 10, 11, 0, 0, 0, DateTimeKind.Unspecified), "Test User", true, "#", "#") },
         MaxFileSizeInMegabytes = 20,
         AllowedExtensions = "JPG, PDF",
     };
 
     [Fact]
+    [SuppressMessage("Blocker Code Smell", "S2699:Tests should include assertions", Justification = "Error in the Sonarlint library when using AngleSharp when using AngleSharp")]
     public async Task ShouldRenderViewListOfUploadedFiles()
     {
         // given & when

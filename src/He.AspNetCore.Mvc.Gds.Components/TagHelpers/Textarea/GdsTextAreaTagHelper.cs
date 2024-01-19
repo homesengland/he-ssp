@@ -11,9 +11,9 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Textarea
 {
     /// <summary>
     /// Class GdsTextAreaTagHelper.
-    /// Implements the <see cref="Microsoft.AspNetCore.Razor.TagHelpers.TagHelper" />.
+    /// Implements the <see cref="TagHelper" />.
     /// </summary>
-    /// <seealso cref="Microsoft.AspNetCore.Razor.TagHelpers.TagHelper" />
+    /// <seealso cref="TagHelper" />
     public class GdsTextAreaTagHelper : InputTagHelper
     {
 
@@ -52,26 +52,25 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Textarea
                 output.TagName = HtmlConstants.Textarea;
                 TagConstruct.ConstructId(output, Id);
 
-                if(For != null)
+                if (For != null)
                 {
                     var contentBuilder = new StringBuilder();
 
                     var fullHtmlFieldName = IGdsFormGroupTagHelper.GetFullHtmlFieldName(ViewContext, For.Name);
-                    var propertyInError = IGdsFormGroupTagHelper.IsPropertyInError(ViewContext, fullHtmlFieldName);
+                    var (isPropertyInError, entry) = IGdsFormGroupTagHelper.IsPropertyInError(ViewContext, fullHtmlFieldName);
 
-                    if (propertyInError.isPropertyInError)
+                    if (isPropertyInError)
                     {
                         output.TagName = HtmlConstants.Div;
                         TagConstruct.ConstructClass(output, $"{CssConstants.GovUkFormGroup} {CssConstants.GovUkFormGroupError}");
 
                         contentBuilder.Append($"<p id=\"contact-by-email-error\" class=\"govuk-error-message\">  " +
-                                                $"<span class=\"govuk-visually-hidden\">Error:</span> {propertyInError.entry.Errors.First().ErrorMessage}" +
+                                                $"<span class=\"govuk-visually-hidden\">Error:</span> {entry.Errors[0].ErrorMessage}" +
                                             $"</p>");
 
                         contentBuilder.Append($"<textarea class=\"govuk-textarea govuk-textarea--error\" rows=\"{Rows ?? "5"}\" id=\"{For.Name}\" name=\"{For.Name}\">{For.Model}</textarea>");
 
                         output.Content.SetHtmlContent(contentBuilder.ToString());
-                        return;
                     }
                     else
                     {

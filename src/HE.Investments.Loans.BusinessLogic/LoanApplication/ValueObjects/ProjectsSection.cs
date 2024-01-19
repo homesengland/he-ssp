@@ -14,7 +14,7 @@ public class ProjectsSection
 
     public static ProjectsSection Empty() => new(Enumerable.Empty<ProjectBasicData>());
 
-    public bool IsCompleted() => _projects.Any() && _projects.All(project => project.IsCompleted());
+    public bool IsCompleted() => _projects.Any() && _projects.TrueForAll(project => project.IsCompleted());
 
     public int TotalHomesBuilt() => _projects.Aggregate(0, (sum, project) => sum += project?.HomesCount?.AsInt() ?? 0);
 }

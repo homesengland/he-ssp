@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace He.AspNetCore.Mvc.Gds.Components.Enums
 {
@@ -10,7 +10,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.Enums
         /// <summary>
         /// Pounds.
         /// </summary>
-        [Display(Name= "£")]
+        [Display(Name = "£")]
         Pounds = 1,
 
         /// <summary>

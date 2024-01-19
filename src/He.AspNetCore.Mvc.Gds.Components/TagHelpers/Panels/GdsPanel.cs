@@ -19,7 +19,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Panels
         {
             output.TagName = HtmlConstants.Div;
 
-            if(Confirmation)
+            if (Confirmation)
             {
                 TagConstruct.ConstructClass(output, $"{CssConstants.GovUkPanel} {CssConstants.GovUkConfirmationPanel}");
             }

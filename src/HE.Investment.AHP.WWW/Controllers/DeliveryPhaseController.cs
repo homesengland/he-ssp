@@ -441,10 +441,10 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     }
 
     private MilestoneViewModel CreateMilestoneViewModel(
-        string applicationName,
-        string? deliveryPhaseName,
-        DateDetails? milestoneDate,
-        DateDetails? milestonePaymentDate)
+            string applicationName,
+            string? deliveryPhaseName,
+            DateDetails? milestoneDate,
+            DateDetails? milestonePaymentDate)
     {
         return new MilestoneViewModel(
             this.GetApplicationIdFromRoute().Value,

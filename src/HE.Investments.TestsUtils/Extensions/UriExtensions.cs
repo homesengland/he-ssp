@@ -22,7 +22,7 @@ public static class UriExtensions
             return projectGuid;
         }
 
-        return uri.Split("=").Last();
+        return uri.Split("=")[^1];
     }
 
     public static string GetNestedGuidFromUrl(this string uri)

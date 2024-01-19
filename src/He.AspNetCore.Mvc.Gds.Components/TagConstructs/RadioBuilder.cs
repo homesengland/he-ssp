@@ -42,7 +42,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagConstructs
         {
             _id = id;
             _name = name;
-            _value = value; 
+            _value = value;
 
             return this;
         }
@@ -140,7 +140,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagConstructs
                             sb.Append($"<div id=\"sign-in-hint\" class=\"govuk-hint\">{_radioHint}</div>");
                         }
 
-                        sb.Append( 
+                        sb.Append(
                                 $"<textarea class=\"govuk-textarea govuk-textarea--error\" rows=\"5\" id=\"{_innerInputId}\" name=\"{_inputName ?? "conditional-input"}\" type=\"{(_hintText is null ? "text" : _hintText)}\" spellcheck=\"false\" autocomplete=\"email\">{_innerInputValue}</textarea>" +
                             "</div>"
                         );
@@ -159,7 +159,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagConstructs
                         }
 
                         sb.Append(
-                               $"<textarea class=\"govuk-textarea\" rows=\"5\" id=\"{_innerInputId}\" name=\"{_inputName ?? "conditional-input"}\" type=\"{(_hintText is null ? "text" : _hintText)}\" spellcheck=\"false\" autocomplete=\"email\">{_innerInputValue}</textarea>"  +
+                               $"<textarea class=\"govuk-textarea\" rows=\"5\" id=\"{_innerInputId}\" name=\"{_inputName ?? "conditional-input"}\" type=\"{(_hintText is null ? "text" : _hintText)}\" spellcheck=\"false\" autocomplete=\"email\">{_innerInputValue}</textarea>" +
                             "</div>"
                         );
                     }
@@ -201,9 +201,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagConstructs
             return "";
         }
 
-        public string TextArea()
-        {
-            return "";
-        }
+        public const string TextArea = "";
+
     }
 }

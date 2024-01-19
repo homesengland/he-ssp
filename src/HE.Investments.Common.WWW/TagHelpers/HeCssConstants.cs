@@ -1,6 +1,6 @@
 namespace HE.Investments.Common.WWW.TagHelpers;
 
-public class HeCssConstants
+public static class HeCssConstants
 {
     /// <summary>
     /// The gov uk panel.

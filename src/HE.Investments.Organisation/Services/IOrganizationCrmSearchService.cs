@@ -8,5 +8,5 @@ public interface IOrganizationCrmSearchService
 
     Task<IList<OrganizationDetailsDto>> SearchOrganizationInCrmByCompanyHouseNumber(IEnumerable<string> organisationNumbers);
 
-    Task<OrganizationDetailsDto?> SearchOrganizationInCrmByOrganizationId(string organizationIds);
+    Task<OrganizationDetailsDto?> SearchOrganizationInCrmByOrganizationId(string organizationId);
 }

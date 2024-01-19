@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
 
@@ -8,6 +9,7 @@ public class ModernMethodsConstruction2DSubcategoriesTests : HomeTypesTestBase
     private const string ViewPath = "/Views/HomeTypes/ModernMethodsConstruction2DSubcategories.cshtml";
 
     [Fact]
+    [SuppressMessage("Blocker Code Smell", "S2699:Tests should include assertions", Justification = "Error in the Sonarlint library when using AngleSharp when using AngleSharp")]
     public async Task ShouldRenderViewWithCheckboxes()
     {
         // given
@@ -33,6 +35,7 @@ public class ModernMethodsConstruction2DSubcategoriesTests : HomeTypesTestBase
     }
 
     [Fact]
+    [SuppressMessage("Blocker Code Smell", "S2699:Tests should include assertions", Justification = "Error in the Sonarlint library when using AngleSharp when using AngleSharp")]
     public async Task ShouldRenderViewWithCheckedCheckboxes()
     {
         // given

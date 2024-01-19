@@ -23,7 +23,7 @@ public class MediatorTestBase
         services.AddValidatorsFromAssemblyContaining<LoanApplicationViewModel>();
         services.AddTransient(x => _httpContextAccessor.Object);
 
-        _dateTimeProvider.Setup(d => d.Now).Returns(new DateTime(2023, 7, 12));
+        _dateTimeProvider.Setup(d => d.Now).Returns(new DateTime(2023, 7, 12, 0, 0, 0, DateTimeKind.Unspecified));
         services.AddSingleton(x => _dateTimeProvider.Object);
 
         AddAditionalServices(services);
@@ -85,12 +85,12 @@ public class MediatorTestBase
             _store.Clear();
         }
 
-        public Task CommitAsync(CancellationToken cancellationToken)
+        public Task CommitAsync(CancellationToken cancellationToken = default)
         {
             return Task.FromResult(0);
         }
 
-        public Task LoadAsync(CancellationToken cancellationToken)
+        public Task LoadAsync(CancellationToken cancellationToken = default)
         {
             return Task.FromResult(0);
         }

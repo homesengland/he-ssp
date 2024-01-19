@@ -187,7 +187,7 @@ public class DeliveryPhaseEntity : IDeliveryPhaseEntity
 
     public void ProvideReconfiguringExisting(bool? reconfiguringExisting)
     {
-        if (IsReconfiguringExistingNeeded() is false)
+        if (!IsReconfiguringExistingNeeded())
         {
             throw new DomainValidationException("Reconfiguring Existing is not needed.");
         }

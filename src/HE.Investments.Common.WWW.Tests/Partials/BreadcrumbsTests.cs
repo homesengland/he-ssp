@@ -9,7 +9,9 @@ public class BreadcrumbsTests : ViewTestBase
     private readonly string _viewPath = "~/Partials/_Breadcrumbs.cshtml";
 
     [Fact]
+#pragma warning disable S2699 // Tests should include assertions
     public async Task ShouldDisplayBreadcrumbs()
+#pragma warning restore S2699 // Tests should include assertions
     {
         // given
         var model = new List<Breadcrumb> { new("One", "A1", "C1"), new("Two"), new("Three", "A3", "C3") };
@@ -28,7 +30,9 @@ public class BreadcrumbsTests : ViewTestBase
     }
 
     [Fact]
+#pragma warning disable S2699 // Tests should include assertions
     public async Task ShouldNotDisplayBreadcrumbs_ForMissingBreadcrumbs()
+#pragma warning restore S2699 // Tests should include assertions
     {
         // given && when
         var document = await Render<object>(_viewPath);
@@ -38,7 +42,9 @@ public class BreadcrumbsTests : ViewTestBase
     }
 
     [Fact]
+#pragma warning disable S2699 // Tests should include assertions
     public async Task ShouldNotDisplayBreadcrumbs_ForEmptyBreadcrumbs()
+#pragma warning restore S2699 // Tests should include assertions
     {
         // given
         var viewBagOrViewData = new Dictionary<string, object> { { "Breadcrumbs", new List<Breadcrumb>() } };

@@ -6,5 +6,6 @@ public class PageNotFound : PageModel
 {
     public void OnGet()
     {
+        // Method intentionally left empty.
     }
 }

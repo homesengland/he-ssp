@@ -45,6 +45,6 @@ public class NotificationService : INotificationService
             return displayNotificationFactory.Create(notification);
         }
 
-        throw new ArgumentOutOfRangeException(nameof(notification.NotificationType), "Unsupported notification type");
+        throw new ArgumentOutOfRangeException(nameof(notification), $"Unsupported notification type: {notification.NotificationType}");
     }
 }
