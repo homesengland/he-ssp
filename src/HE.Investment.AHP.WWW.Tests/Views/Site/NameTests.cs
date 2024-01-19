@@ -12,7 +12,6 @@ public class NameTests : ViewTestBase
     private readonly string _viewPath = "/Views/Site/Name.cshtml";
 
     [Fact]
-    [SuppressMessage("Blocker Code Smell", "S2699:Tests should include assertions", Justification = "Error in the Sonarlint library when using AngleSharp when using AngleSharp")]
     public async Task ShouldDisplayView()
     {
         // given & when
@@ -27,7 +26,6 @@ public class NameTests : ViewTestBase
     }
 
     [Fact]
-    [SuppressMessage("Blocker Code Smell", "S2699:Tests should include assertions", Justification = "Error in the Sonarlint library when using AngleSharp when using AngleSharp")]
     public async Task ShouldErrorSummary_ForInvalidName()
     {
         // given

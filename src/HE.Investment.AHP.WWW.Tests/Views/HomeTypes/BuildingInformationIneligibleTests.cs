@@ -10,7 +10,6 @@ public class BuildingInformationIneligibleTests : HomeTypesTestBase
     private static readonly HomeTypeBasicModel Model = new("My application", "My homes");
 
     [Fact]
-    [SuppressMessage("Blocker Code Smell", "S2699:Tests should include assertions", Justification = "Error in the Sonarlint library when using AngleSharp")]
     public async Task ShouldRenderViewWithRadioButtons()
     {
         // given & when
