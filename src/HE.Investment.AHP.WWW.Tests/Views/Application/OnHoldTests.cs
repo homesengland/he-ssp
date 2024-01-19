@@ -26,7 +26,7 @@ public class OnHoldTests : ViewTestBase
         // given
         var errorMessage = "some test error";
         var modelState = new ModelStateDictionary();
-        modelState.AddModelError(nameof(ChangeApplicationStatusModel.ChangeStatusReason), errorMessage);
+        modelState.AddModelError(nameof(ChangeApplicationStatusModel.HoldReason), errorMessage);
 
         // when
         var document = await Render(_viewPath, _model, modelStateDictionary: modelState);
@@ -40,8 +40,8 @@ public class OnHoldTests : ViewTestBase
         document
             .HasElementWithText("label", ApplicationPageTitles.OnHold)
             .HasElementWithText("div", "You can enter up to 1500 characters")
-            .HasElementWithText("button", "Put on hold")
-            .HasSummaryErrorMessage(nameof(ChangeApplicationStatusModel.ChangeStatusReason), errorMessage, !string.IsNullOrEmpty(errorMessage))
-            .HasErrorMessage(nameof(ChangeApplicationStatusModel.ChangeStatusReason), errorMessage, !string.IsNullOrEmpty(errorMessage));
+            .HasElementWithText("button", "Hold")
+            .HasSummaryErrorMessage(nameof(ChangeApplicationStatusModel.HoldReason), errorMessage, !string.IsNullOrEmpty(errorMessage))
+            .HasErrorMessage(nameof(ChangeApplicationStatusModel.HoldReason), errorMessage, !string.IsNullOrEmpty(errorMessage));
     }
 }

@@ -44,4 +44,12 @@ public enum ApplicationStatus
     NotApproved,
     [Description("Sent for Pre-Complete Approval")]
     SentForPreCompleteApproval,
+    [Description("Deleted")]
+    Deleted,
+    [Description("Rejected")]
+    Rejected,
+    [Description("Requested Editing")]
+    RequestedEditing,
+    [Description("Approved")]
+    Approved,
 }

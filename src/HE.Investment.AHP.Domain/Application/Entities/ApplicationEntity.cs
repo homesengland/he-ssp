@@ -1,5 +1,8 @@
 using HE.Investment.AHP.Contract.Application;
+using HE.Investment.AHP.Contract.Application.Events;
+using HE.Investment.AHP.Domain.Application.Repositories.Interfaces;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
+using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
@@ -9,7 +12,7 @@ using ApplicationSection = HE.Investment.AHP.Domain.Application.ValueObjects.App
 
 namespace HE.Investment.AHP.Domain.Application.Entities;
 
-public class ApplicationEntity
+public class ApplicationEntity : DomainEntity
 {
     private readonly ModificationTracker _modificationTracker = new();
 
@@ -37,7 +40,9 @@ public class ApplicationEntity
 
     public ApplicationStatus Status { get; private set; }
 
-    public ChangeStatusReason? ChangeStatusReason { get; private set; }
+    public WithdrawReason? WithdrawReason { get; private set; }
+
+    public HoldReason? HoldReason { get; private set; }
 
     public ApplicationReferenceNumber ReferenceNumber { get; }
 
@@ -81,18 +86,23 @@ public class ApplicationEntity
         Status = _modificationTracker.Change(Status, ApplicationStatus.ApplicationSubmitted);
     }
 
-    public void Hold()
+    public void Hold(IApplicationHold applicationHold, HoldReason? newHoldReason, OrganisationId organisationId, CancellationToken cancellationToken)
     {
         Status = _modificationTracker.Change(Status, ApplicationStatus.OnHold);
+        HoldReason = _modificationTracker.Change(HoldReason, newHoldReason);
+
+        applicationHold.Hold(this, organisationId, cancellationToken);
+
+        Publish(new ApplicationHasBeenPutOnHoldEvent());
     }
 
-    public void Withdraw()
+    public void Withdraw(IApplicationWithdraw applicationWithdraw, WithdrawReason? newWithdrawReason, OrganisationId organisationId, CancellationToken cancellationToken)
     {
         Status = _modificationTracker.Change(Status, ApplicationStatus.Withdrawn);
-    }
+        WithdrawReason = _modificationTracker.Change(WithdrawReason, newWithdrawReason);
 
-    public void ProvideChangeStatusReason(ChangeStatusReason? newChangeStatusReason)
-    {
-        ChangeStatusReason = _modificationTracker.Change(ChangeStatusReason, newChangeStatusReason);
+        applicationWithdraw.Withdraw(this, organisationId, cancellationToken);
+
+        Publish(new ApplicationHasBeenWithdrawnEvent());
     }
 }

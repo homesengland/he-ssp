@@ -1,6 +1,6 @@
 using HE.Investment.AHP.Contract.Application.Commands;
 using HE.Investment.AHP.Domain.Application.Entities;
-using HE.Investment.AHP.Domain.Application.Repositories;
+using HE.Investment.AHP.Domain.Application.Repositories.Interfaces;
 using HE.Investments.Account.Shared;
 
 namespace HE.Investment.AHP.Domain.Application.CommandHandlers;

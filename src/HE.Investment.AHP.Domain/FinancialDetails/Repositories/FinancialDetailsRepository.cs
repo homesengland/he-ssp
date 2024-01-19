@@ -9,7 +9,7 @@ using HE.Investment.AHP.Domain.FinancialDetails.Entities;
 using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.ValueObjects;
-using HE.Investments.Common.CRM;
+using HE.Investments.Common.CRM.Mappers;
 using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.Repositories;
@@ -62,7 +62,7 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
             AhpApplicationId.From(application.id),
             new ApplicationName(application.name),
             ApplicationTenureMapper.ToDomain(application.tenure)!.Value,
-            ApplicationStatusMapper.MapToPortalStatus(application.applicationStatus));
+            AhpApplicationStatusMapper.MapToPortalStatus(application.applicationStatus));
 
         return new FinancialDetailsEntity(
             applicationBasicInfo,

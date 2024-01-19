@@ -16,5 +16,7 @@ public class ChangeApplicationStatusModel
 
     public string ApplicationName { get; set; }
 
-    public string? ChangeStatusReason { get; set; }
+    public string? WithdrawReason { get; set; }
+
+    public string? HoldReason { get; set; }
 }
