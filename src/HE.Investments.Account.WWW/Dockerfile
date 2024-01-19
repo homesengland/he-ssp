@@ -11,17 +11,18 @@ ENV VSS_NUGET_EXTERNAL_FEED_ENDPOINTS \
     "{\"endpointCredentials\": [{\"endpoint\":\"https://pkgs.dev.azure.com/homesengland/_packaging/homesengland/nuget/v3/index.json\", \"username\":\"docker\", \"password\":\"${INTERNAL_FEED_ACCESSTOKEN}\"}]}"
 
 WORKDIR /src
+COPY ["Directory.Build.props", "."]
 COPY ["nuget.config", "."]
 COPY ["HE.Investments.Account.WWW/HE.Investments.Account.WWW.csproj", "HE.Investments.Account.WWW/"]
 COPY ["HE.Investments.Loans.Common/HE.Investments.Loans.Common.csproj", "HE.Investments.Loans.Common/"]
 COPY ["HE.Investments.Common.CRM/HE.Investments.Common.CRM.csproj", "HE.Investments.Common.CRM/"]
+COPY ["HE.Investments.Common.Contract/HE.Investments.Common.Contract.csproj", "HE.Investments.Common.Contract/"]
 COPY ["HE.Investments.Common/HE.Investments.Common.csproj", "HE.Investments.Common/"]
 COPY ["HE.Investments.Account.Domain/HE.Investments.Account.Domain.csproj", "HE.Investments.Account.Domain/"]
 COPY ["HE.Investments.Account.Contract/HE.Investments.Account.Contract.csproj", "HE.Investments.Account.Contract/"]
 COPY ["HE.Investments.Account.Shared/HE.Investments.Account.Shared.csproj", "HE.Investments.Account.Shared/"]
 COPY ["HE.Investments.Organisation/HE.Investments.Organisation.csproj", "HE.Investments.Organisation/"]
 COPY ["HE.Investments.Common.WWW/HE.Investments.Common.WWW.csproj", "HE.Investments.Common.WWW/"]
-COPY ["HE.Investments.Common.Contract/HE.Investments.Common.Contract.csproj", "HE.Investments.Common.Contract/"]
 RUN dotnet restore "./HE.Investments.Account.WWW/./HE.Investments.Account.WWW.csproj"
 COPY . .
 WORKDIR "/src/HE.Investments.Account.WWW"
