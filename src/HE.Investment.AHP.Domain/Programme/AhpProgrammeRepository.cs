@@ -18,9 +18,7 @@ public class AhpProgrammeRepository : IAhpProgrammeRepository
     {
         var programme = await _programmeRepository.GetCurrentProgramme(ProgrammeType.Ahp, cancellationToken);
 
-#pragma warning disable S1135 // Track uses of "TODO" tags
         //// TODO: Task 88889: [Portal] Use Milestone framework from CRM
         return new AhpProgramme(programme.StartAt, programme.EndAt, MilestoneFramework.Default);
-#pragma warning restore S1135 // Track uses of "TODO" tags
     }
 }
