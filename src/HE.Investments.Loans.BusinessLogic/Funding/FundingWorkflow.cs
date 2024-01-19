@@ -44,7 +44,6 @@ public class FundingWorkflow : IStateRouting<FundingState>
             return targetState;
         }
 
-#pragma warning disable S2589 // Boolean expressions should not be gratuitous
         return _model switch
         {
             { GrossDevelopmentValue: var x } when x.IsNotProvided() => FundingState.GDV,
@@ -55,7 +54,6 @@ public class FundingWorkflow : IStateRouting<FundingState>
             { AdditionalProjects: var x } when x.IsNotProvided() => FundingState.AdditionalProjects,
             _ => FundingState.CheckAnswers,
         };
-#pragma warning restore S2589 // Boolean expressions should not be gratuitous
     }
 
     private void ConfigureTransitions()

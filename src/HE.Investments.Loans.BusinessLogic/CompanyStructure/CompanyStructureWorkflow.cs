@@ -42,7 +42,6 @@ public class CompanyStructureWorkflow : IStateRouting<CompanyStructureState>
             return targetState;
         }
 
-#pragma warning disable S2589 // Boolean expressions should not be gratuitous
         return _model switch
         {
             { Purpose: var x } when x.IsNotProvided() => CompanyStructureState.Purpose,
@@ -50,7 +49,6 @@ public class CompanyStructureWorkflow : IStateRouting<CompanyStructureState>
             { HomesBuilt: var x } when x.IsNotProvided() => CompanyStructureState.HomesBuilt,
             _ => CompanyStructureState.CheckAnswers,
         };
-#pragma warning restore S2589 // Boolean expressions should not be gratuitous
     }
 
     private void ConfigureTransitions()
