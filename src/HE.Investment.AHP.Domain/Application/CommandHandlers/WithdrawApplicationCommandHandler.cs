@@ -27,7 +27,7 @@ public class WithdrawApplicationCommandHandler : IRequestHandler<WithdrawApplica
 
         var withdrawReason = new WithdrawReason(request.WithdrawReason);
 
-        application.Withdraw(_applicationRepository, withdrawReason, account.SelectedOrganisationId(), cancellationToken);
+        await application.Withdraw(_applicationRepository, withdrawReason, account.SelectedOrganisationId(), cancellationToken);
         await _applicationRepository.DispatchEvents(application, cancellationToken);
 
         return OperationResult.Success();

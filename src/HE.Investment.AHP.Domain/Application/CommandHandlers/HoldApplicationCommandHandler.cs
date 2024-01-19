@@ -30,7 +30,7 @@ public class HoldApplicationCommandHandler : IRequestHandler<HoldApplicationComm
             ? new HoldReason(request.HoldReason!)
             : null;
 
-        application.Hold(_applicationRepository, holdReason, account.SelectedOrganisationId(), cancellationToken);
+        await application.Hold(_applicationRepository, holdReason, account.SelectedOrganisationId(), cancellationToken);
         await _applicationRepository.DispatchEvents(application, cancellationToken);
 
         return OperationResult.Success();
