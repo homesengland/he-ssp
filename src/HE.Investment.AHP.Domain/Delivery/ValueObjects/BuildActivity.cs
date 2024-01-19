@@ -23,6 +23,12 @@ public class BuildActivity : ValueObject, IQuestion
         _tenure = tenure;
     }
 
+    private BuildActivity(Tenure tenure, TypeOfHomes typeOfHomes)
+    {
+        _tenure = tenure;
+        _typeOfHomes = typeOfHomes;
+    }
+
     public BuildActivityType? Type { get; }
 
     public bool IsOffTheShelfOrExistingSatisfactory => Type is BuildActivityType.OffTheShelf or BuildActivityType.ExistingSatisfactory;
@@ -81,9 +87,9 @@ public class BuildActivity : ValueObject, IQuestion
         return GetAvailableTypeForNewBuild(_tenure);
     }
 
-    public BuildActivity WithClearedAnswer()
+    public BuildActivity WithClearedAnswer(TypeOfHomes typeOfHomes)
     {
-        return new BuildActivity(_tenure);
+        return new BuildActivity(_tenure, typeOfHomes);
     }
 
     public bool IsAnswered()
