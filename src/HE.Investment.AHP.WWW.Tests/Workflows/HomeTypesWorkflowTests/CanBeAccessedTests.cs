@@ -10,9 +10,7 @@ namespace HE.Investment.AHP.WWW.Tests.Workflows.HomeTypesWorkflowTests;
 public class CanBeAccessedTests
 {
     [Fact]
-#pragma warning disable S2699 // Tests should include assertions
     public void ShouldNotThrowException_ForEachPossibleWorkflowState()
-#pragma warning restore S2699 // Tests should include assertions
     {
         // given
         var homeType = new HomeTypeTestDataBuilder().Build();

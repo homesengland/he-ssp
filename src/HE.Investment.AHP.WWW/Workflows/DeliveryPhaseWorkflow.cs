@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.Contract.Delivery;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
@@ -32,6 +33,7 @@ public class DeliveryPhaseWorkflow : IStateRouting<DeliveryPhaseWorkflowState>
         return Task.FromResult(CanBeAccessed(nextState));
     }
 
+    [SuppressMessage("Code Smell", "S2589", Justification = "False positive")]
     public DeliveryPhaseWorkflowState CurrentState(DeliveryPhaseWorkflowState targetState)
     {
         if (_isReadOnly)

@@ -30,7 +30,6 @@ public class CompleteUserProfileIntegrationTests : IntegrationTest
 
     [SkippableFact(typeof(SkipException), Skip = LoansConfig.SkipTest)]
     [Order(1)]
-    [SuppressMessage("Blocker Code Smell", "S2699:Tests should include assertions", Justification = "Error in the Sonarlint library when using AngleSharp when using AngleSharp")]
     public async Task Order01_ShouldRedirectToCompleteUserProfile_WhenUserIsLoggedInButProfileIsNotCompleted()
     {
         // given & when
@@ -47,7 +46,6 @@ public class CompleteUserProfileIntegrationTests : IntegrationTest
 
     [SkippableFact(typeof(SkipException), Skip = LoansConfig.SkipTest)]
     [Order(2)]
-    [SuppressMessage("Blocker Code Smell", "S2699:Tests should include assertions", Justification = "Error in the Sonarlint library when using AngleSharp when using AngleSharp")]
     public async Task Order02_ShouldRedirectToDashboardPage_WhenUserIsLoggedInAndProfileIsCompleted()
     {
         // given
@@ -70,7 +68,6 @@ public class CompleteUserProfileIntegrationTests : IntegrationTest
 
     [SkippableFact(typeof(SkipException), Skip = LoansConfig.SkipTest)]
     [Order(3)]
-    [SuppressMessage("Blocker Code Smell", "S2699:Tests should include assertions", Justification = "Error in the Sonarlint library when using AngleSharp when using AngleSharp")]
     public async Task Order03_ShouldNavigateToOrganisationPage_WhenUserCompletedProfile()
     {
         // given
@@ -96,7 +93,6 @@ public class CompleteUserProfileIntegrationTests : IntegrationTest
 
     [SkippableFact(typeof(SkipException), Skip = LoansConfig.SkipTest)]
     [Order(4)]
-    [SuppressMessage("Blocker Code Smell", "S2699:Tests should include assertions", Justification = "Error in the Sonarlint library when using AngleSharp when using AngleSharp")]
     public async Task Order04_ShouldRedirectToOrganisationSearch_WhenUserCompletedProfileButNotOrganisationIsNotLinked()
     {
         // given & when
@@ -112,7 +108,6 @@ public class CompleteUserProfileIntegrationTests : IntegrationTest
 
     [SkippableFact(typeof(SkipException), Skip = LoansConfig.SkipTest)]
     [Order(5)]
-    [SuppressMessage("Blocker Code Smell", "S2699:Tests should include assertions", Justification = "Error in the Sonarlint library when using AngleSharp when using AngleSharp")]
     public async Task Order05_ShouldSearchOrganization()
     {
         // given
@@ -135,7 +130,6 @@ public class CompleteUserProfileIntegrationTests : IntegrationTest
 
     [SkippableFact(typeof(SkipException), Skip = LoansConfig.SkipTest)]
     [Order(6)]
-    [SuppressMessage("Blocker Code Smell", "S2699:Tests should include assertions", Justification = "Error in the Sonarlint library when using AngleSharp when using AngleSharp")]
     public async Task Order06_ShouldSelectOrganizationAndNavigateToConfirmPage()
     {
         // given
@@ -155,7 +149,6 @@ public class CompleteUserProfileIntegrationTests : IntegrationTest
 
     [SkippableFact(typeof(SkipException), Skip = LoansConfig.SkipTest)]
     [Order(7)]
-    [SuppressMessage("Blocker Code Smell", "S2699:Tests should include assertions", Justification = "Error in the Sonarlint library when using AngleSharp when using AngleSharp")]
     public async Task Order07_ShouldConfirmOrganizationAndNavigateToDashboardPage()
     {
         // given

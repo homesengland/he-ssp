@@ -12,7 +12,6 @@ public class Section106OnlyAffordableHousingTests : ViewTestBase
     private readonly string _viewPath = "/Views/Site/Section106OnlyAffordableHousing.cshtml";
 
     [Fact]
-    [SuppressMessage("Blocker Code Smell", "S2699:Tests should include assertions", Justification = "Assertion implemented, but not detected")]
     public async Task ShouldDisplayView()
     {
         // given & when
@@ -30,7 +29,6 @@ public class Section106OnlyAffordableHousingTests : ViewTestBase
     }
 
     [Fact]
-    [SuppressMessage("Blocker Code Smell", "S2699:Tests should include assertions", Justification = "Assertion implemented, but not detected")]
     public async Task ShouldErrorSummary_ForInvalidName()
     {
         // given

@@ -53,9 +53,7 @@ public class ApplicationsCardTests : ViewTestBase
     }
 
     [Fact]
-#pragma warning disable S2699 // Tests should include assertions
     public async Task ShouldNotDisplayApplicationsCard_ForMissingApplications()
-#pragma warning restore S2699 // Tests should include assertions
     {
         // given
         var model = CreateTestModel(new List<ApplicationBasicDetailsModel>());
