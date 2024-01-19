@@ -6,10 +6,10 @@ using HE.Investment.AHP.Contract.Scheme;
 using HE.Investment.AHP.Contract.Scheme.Commands;
 using HE.Investment.AHP.Contract.Scheme.Queries;
 using HE.Investment.AHP.Domain.Documents.Config;
-using HE.Investment.AHP.Domain.Scheme.Workflows;
 using HE.Investment.AHP.WWW.Models.Scheme;
 using HE.Investment.AHP.WWW.Models.Scheme.Factories;
 using HE.Investment.AHP.WWW.Utils;
+using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Contract;
@@ -19,6 +19,7 @@ using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Extensions;
+using HE.Investments.Common.WWW.Helpers;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.Common.WWW.Utils;
@@ -316,7 +317,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
         return new SchemeViewModel(
             applicationId,
             scheme.ApplicationName,
-            scheme.RequiredFunding.ToWholeNumberString(),
+            CurrencyHelper.InputPounds(scheme.RequiredFunding),
             scheme.HousesToDeliver.ToString(),
             scheme.AffordabilityEvidence,
             scheme.SalesRisk,

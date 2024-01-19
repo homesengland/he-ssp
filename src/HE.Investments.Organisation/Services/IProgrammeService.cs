@@ -4,5 +4,5 @@ namespace HE.Investments.Organisation.Services;
 
 public interface IProgrammeService
 {
-    Task<ProgrammeDto?> Get();
+    Task<ProgrammeDto?> Get(CancellationToken cancellationToken);
 }

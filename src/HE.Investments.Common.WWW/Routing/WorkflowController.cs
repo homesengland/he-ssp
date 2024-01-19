@@ -68,6 +68,11 @@ public abstract class WorkflowController<TState> : Controller
         return Continue(routeData);
     }
 
+    public Task<IActionResult> Continue(TState currentState, object? routeData)
+    {
+        return ChangeState(Trigger.Continue, currentState, routeData);
+    }
+
     public Task<IActionResult> ContinueWithRedirect(object routeData)
     {
         return Continue(Request.Query["redirect"].ToString(), routeData);
@@ -81,11 +86,6 @@ public abstract class WorkflowController<TState> : Controller
         }
 
         return ChangeState(nextState, routeData);
-    }
-
-    public Task<IActionResult> Continue(TState currentState, object? routeData)
-    {
-        return ChangeState(Trigger.Continue, currentState, routeData);
     }
 
     public Task<IActionResult> Back()

@@ -3,4 +3,4 @@ using MediatR;
 
 namespace HE.Investment.AHP.Contract.Application.Commands;
 
-public record HoldApplicationCommand(AhpApplicationId Id, string? ChangeStatusReason) : IRequest<OperationResult>, IUpdateApplicationCommand;
+public record HoldApplicationCommand(AhpApplicationId Id, string? HoldReason) : IRequest<OperationResult>, IUpdateApplicationCommand;

@@ -1,4 +1,4 @@
-﻿using HE.Investment.AHP.Contract.Application;
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.FinancialDetails.Queries;
 using HE.Investment.AHP.WWW.Controllers;
@@ -6,8 +6,8 @@ using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Components.SectionSummary;
+using HE.Investments.Common.WWW.Helpers;
 using HE.Investments.Common.WWW.Utils;
-using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -46,12 +46,7 @@ public class FinancialDetailsSummaryViewModelFactory : IFinancialDetailsSummaryV
 
     private static IList<string> GetCurrencyStringWithPrefix(decimal? value)
     {
-        if (value == null)
-        {
-            return Array.Empty<string>();
-        }
-
-        return new List<string> { "£" + value.ToWholeNumberString() };
+        return CurrencyHelper.DisplayPounds(value).ToOneElementList() ?? Array.Empty<string>();
     }
 
     private static string CreateFinancialDetailsActionUrl(IUrlHelper urlHelper, AhpApplicationId applicationId, string actionName, bool allowWcagDuplicate = false)
@@ -80,10 +75,7 @@ public class FinancialDetailsSummaryViewModelFactory : IFinancialDetailsSummaryV
                 IsEditable: !isReadOnly),
             new(
                 "Public land",
-                new List<string>
-                {
-                    landValueSummary.IsPublicLand.HasValue ? landValueSummary.IsPublicLand.Value ? CommonResponse.Yes : CommonResponse.No : "Not provided",
-                },
+                landValueSummary.IsPublicLand == YesNoType.Undefined ? null : landValueSummary.IsPublicLand.GetDescription().ToOneElementList(),
                 CreateFinancialDetailsActionUrl(urlHelper, applicationId, nameof(FinancialDetailsController.LandValue)),
                 IsEditable: !isReadOnly),
         };

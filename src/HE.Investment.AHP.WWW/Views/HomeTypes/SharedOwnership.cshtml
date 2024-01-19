@@ -1,4 +1,3 @@
-@using HE.Investment.AHP.Domain.HomeTypes
 @using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.WWW.Views.HomeTypes.Const
 @using HE.Investment.AHP.WWW.Views.Shared.Components.HomeTypeFormHeader
@@ -6,6 +5,7 @@
 @using HE.Investments.Common.Extensions
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.Extensions
+@using HE.Investment.AHP.Contract.HomeTypes
 @model HE.Investment.AHP.WWW.Models.HomeTypes.SharedOwnershipModel;
 
 @{
@@ -69,8 +69,7 @@
                 }
 
                 <gds-p class="govuk-!-margin-top-1">
-                    @(Model.ExpectedFirstTranche.IsProvided() ? $"£{Model.ExpectedFirstTranche}"
-                        : "To calculate the assumed first tranche sales receipt, enter the market value of each home and the average assumed first tranche sale. Then select the calculate button.")
+                    @(Model.ExpectedFirstTranche ?? "To calculate the assumed first tranche sales receipt, enter the market value of each home and the average assumed first tranche sale. Then select the calculate button.")
                 </gds-p>
             </he-error-form-group>
 

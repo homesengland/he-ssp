@@ -3,7 +3,7 @@ using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.Entities;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
-using HE.Investments.Common.CRM;
+using HE.Investments.Common.CRM.Mappers;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Serialization;
 using HE.Investments.Common.Domain;
@@ -23,14 +23,11 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
 {
     private readonly IOrganizationServiceAsync2 _serviceClient;
 
-    private readonly IDateTimeProvider _dateTime;
-
     private readonly IEventDispatcher _eventDispatcher;
 
-    public LoanApplicationRepository(IOrganizationServiceAsync2 serviceClient, IDateTimeProvider dateTime, IEventDispatcher eventDispatcher)
+    public LoanApplicationRepository(IOrganizationServiceAsync2 serviceClient, IEventDispatcher eventDispatcher)
     {
         _serviceClient = serviceClient;
-        _dateTime = dateTime;
         _eventDispatcher = eventDispatcher;
     }
 

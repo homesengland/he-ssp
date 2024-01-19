@@ -34,9 +34,13 @@ public class IntegrationTestBase<TProgram>
             return await TestClient.NavigateTo(pageUrl);
         }
 
-        if (!string.IsNullOrEmpty(pageUrl) && currentPage is not null && (!new Uri(currentPage.Url)?.AbsolutePath.EndsWith(pageUrl, StringComparison.InvariantCulture) ?? true))
+        if (!string.IsNullOrEmpty(pageUrl) && currentPage is not null)
         {
-            return await TestClient.NavigateTo(pageUrl);
+            var path = new Uri(currentPage.Url).AbsolutePath;
+            if (path == null || !path.EndsWith(pageUrl, StringComparison.InvariantCulture))
+            {
+                return await TestClient.NavigateTo(pageUrl);
+            }
         }
 
         if (currentPage is null)

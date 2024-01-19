@@ -7,7 +7,7 @@ public static class ProjectFormOption
     public const string EstimatedStartDay = "EstimatedStartDay";
     public const string PurchaseDate = "PurchaseDate";
 
-    public class PlanningPermissionStatusOptions
+    public static class PlanningPermissionStatusOptions
     {
         public const string NotSubmitted = "notSubmitted";
         public const string NotReceived = "notReceived";

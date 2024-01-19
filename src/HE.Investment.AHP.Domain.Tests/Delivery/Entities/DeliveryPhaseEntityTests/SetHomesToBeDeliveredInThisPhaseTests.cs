@@ -1,6 +1,7 @@
 using FluentAssertions;
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Domain.Delivery.Entities;
+using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investment.AHP.Domain.Tests.Delivery.Entities.TestDataBuilders;
 using HE.Investments.Common.Contract;
@@ -38,8 +39,8 @@ public class SetHomesToBeDeliveredInThisPhaseTests
             new HomesToDeliverInPhase(new HomeTypeId("ht-3"), 1),
         };
         var testCandidate = new DeliveryPhaseEntityBuilder()
-            .WithHomesToBeDelivered("ht-1", 10)
-            .WithHomesToBeDelivered("ht-2", 2)
+            .WithHomesToBeDelivered(10, "ht-1")
+            .WithHomesToBeDelivered(2, "ht-2")
             .WithStatus(SectionStatus.Completed)
             .Build();
 
@@ -61,8 +62,8 @@ public class SetHomesToBeDeliveredInThisPhaseTests
             new HomesToDeliverInPhase(new HomeTypeId("ht-2"), 2),
         };
         var testCandidate = new DeliveryPhaseEntityBuilder()
-            .WithHomesToBeDelivered("ht-1", 1)
-            .WithHomesToBeDelivered("ht-2", 2)
+            .WithHomesToBeDelivered(1, "ht-1")
+            .WithHomesToBeDelivered(2, "ht-2")
             .WithStatus(SectionStatus.Completed)
             .Build();
 

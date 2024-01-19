@@ -67,7 +67,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.Interfaces
 
             if (errorResult == true && entry != null)
             {
-                return (entry?.Errors.Count > 0, entry);
+                return (entry.Errors.Count > 0, entry);
             }
 
             return (false, null);
@@ -236,10 +236,6 @@ namespace He.AspNetCore.Mvc.Gds.Components.Interfaces
                 }
             }
 
-            if (isTextArea)
-            {
-            }
-
             if (hintText.IsNotNullOrEmpty())
             {
                 preElementStringBuilder.AppendLine($"<div class='{CssConstants.GovUkHint}' id='{fullHtmlFieldName}-hint'>{hintText}</div>");
@@ -250,7 +246,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.Interfaces
                 var errorMessage = string.Empty;
                 if (propertyInError.isPropertyInError)
                 {
-                    errorMessage = propertyInError.entry?.Errors.First().ErrorMessage;
+                    errorMessage = propertyInError.entry?.Errors[0].ErrorMessage;
                 }
 
                 if (propertyInError.isPropertyInError)

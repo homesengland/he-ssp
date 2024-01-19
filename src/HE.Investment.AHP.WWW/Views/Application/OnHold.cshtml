@@ -3,7 +3,7 @@
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.Components.FormHeader
 @using HE.Investments.Common.WWW.Components.TextAreaInputWithCounter
-@using HE.Investment.AHP.Domain.Application.Workflows
+@using HE.Investment.AHP.Contract.Application
 @model HE.Investment.AHP.WWW.Models.Application.ChangeApplicationStatusModel
 
 @{
@@ -19,12 +19,12 @@
         @Html.HiddenFor(m => Model.ApplicationName)
 
         <vc:text-area-input-with-counter
-            field-name="@nameof(Model.ChangeStatusReason)"
-            value="@Model.ChangeStatusReason"
+            field-name="@nameof(Model.HoldReason)"
+            value="@Model.HoldReason"
             header="@ApplicationPageTitles.OnHold"
             hint="This will notify Homes England that you no longer wish to proceed with this application at this time.
                   You can revisit this later on and submit once you’re ready."/>
 
-        <vc:form-button text="Put on hold"/>
+        <vc:form-button text="Hold"/>
     </form>
 </gds-div-grid-column-two-thirds>

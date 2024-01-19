@@ -9,7 +9,7 @@ public class OperationResult : IOperationResult
         Errors = new List<ErrorItem>();
     }
 
-    public OperationResult(IEnumerable<ErrorItem>? errors = null)
+    public OperationResult(IEnumerable<ErrorItem>? errors)
     {
         Errors = errors?.ToList() ?? new List<ErrorItem>();
     }
@@ -57,6 +57,23 @@ public class OperationResult : IOperationResult
         }
     }
 
+    public TReturnedData? AggregateNullable<TReturnedData>(Func<TReturnedData?> action)
+        where TReturnedData : class
+    {
+        try
+        {
+            return action();
+        }
+        catch (DomainValidationException ex)
+        {
+            var result = ex.OperationResult;
+
+            AddValidationErrors(result.Errors);
+
+            return null;
+        }
+    }
+
     // This is not true that method returns not nullable object in case of error.
     // But this is useful for validation errors aggregation for nested value objects.
     // Child can be nullable, but we still need aggregated errors for parent.
@@ -74,23 +91,6 @@ public class OperationResult : IOperationResult
             AddValidationErrors(result.Errors);
 
             return null!;
-        }
-    }
-
-    public TReturnedData? AggregateNullable<TReturnedData>(Func<TReturnedData?> action)
-        where TReturnedData : class
-    {
-        try
-        {
-            return action();
-        }
-        catch (DomainValidationException ex)
-        {
-            var result = ex.OperationResult;
-
-            AddValidationErrors(result.Errors);
-
-            return null;
         }
     }
 
@@ -125,12 +125,6 @@ public class OperationResult : IOperationResult
         return this;
     }
 
-    public OperationResult AddValidationError(ErrorItem errorItem)
-    {
-        Errors.Add(errorItem);
-        return this;
-    }
-
     public OperationResult AddValidationErrors(IList<ErrorItem> errorItems)
     {
         foreach (var errorItem in errorItems)
@@ -138,6 +132,12 @@ public class OperationResult : IOperationResult
             Errors.Add(errorItem);
         }
 
+        return this;
+    }
+
+    public OperationResult AddValidationError(ErrorItem errorItem)
+    {
+        Errors.Add(errorItem);
         return this;
     }
 

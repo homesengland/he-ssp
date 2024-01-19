@@ -1,6 +1,6 @@
+using System.Globalization;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
-using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
 
 namespace HE.Investment.AHP.Domain.Scheme.ValueObjects;
@@ -12,13 +12,18 @@ public class SchemeFunding : ValueObject
         Build(requiredFunding, housesToDeliver).CheckErrors();
     }
 
-    public decimal? RequiredFunding { get; private set; }
+    public SchemeFunding(int? requiredFunding, int? housesToDeliver)
+    {
+        Build(requiredFunding?.ToString(CultureInfo.InvariantCulture), housesToDeliver?.ToString(CultureInfo.InvariantCulture));
+    }
+
+    public int? RequiredFunding { get; private set; }
 
     public int? HousesToDeliver { get; private set; }
 
     public void CheckIsComplete()
     {
-        Build(RequiredFunding.ToWholeNumberString(), HousesToDeliver.ToString()).CheckErrors();
+        Build(RequiredFunding.ToString(), HousesToDeliver.ToString()).CheckErrors();
     }
 
     protected override IEnumerable<object?> GetAtomicValues()

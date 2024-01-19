@@ -8,10 +8,10 @@ using HE.Investment.AHP.Contract.HomeTypes.Commands;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Contract.HomeTypes.Queries;
 using HE.Investment.AHP.Domain.Documents.Config;
-using HE.Investment.AHP.Domain.HomeTypes;
 using HE.Investment.AHP.WWW.Models.Common;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
 using HE.Investment.AHP.WWW.Models.HomeTypes.Factories;
+using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Contract;
@@ -20,6 +20,7 @@ using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.Workflow;
 using HE.Investments.Common.WWW.Extensions;
+using HE.Investments.Common.WWW.Helpers;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.Common.WWW.Utils;
@@ -370,6 +371,26 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     }
 
     [WorkflowState(HomeTypesWorkflowState.DesignPlans)]
+    [HttpPost("{homeTypeId}/upload-design-plans-file")]
+    public async Task<IActionResult> UploadDesignPlansFile(
+        [FromRoute] string applicationId,
+        string homeTypeId,
+        [FromForm(Name = "File")] IFormFile file,
+        CancellationToken cancellationToken)
+    {
+        var fileToUpload = new FileToUpload(file.FileName, file.Length, file.OpenReadStream());
+        try
+        {
+            var result = await _mediator.Send(new UploadDesignPlansFileCommand(AhpApplicationId.From(applicationId), HomeTypeId.From(homeTypeId), fileToUpload), cancellationToken);
+            return result.HasValidationErrors ? new BadRequestObjectResult(result.Errors) : Ok(UploadedFileModel.FromUploadedFile(result.ReturnedData!));
+        }
+        finally
+        {
+            await fileToUpload.Content.DisposeAsync();
+        }
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.DesignPlans)]
     [HttpGet("{homeTypeId}/design-plans")]
     public async Task<IActionResult> DesignPlans([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
     {
@@ -394,26 +415,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
             MaxFileSizeInMegabytes = _documentSettings.MaxFileSize.Megabytes,
             AllowedExtensions = string.Join(", ", _documentSettings.AllowedExtensions.Select(x => x.Value.ToUpperInvariant())),
         });
-    }
-
-    [WorkflowState(HomeTypesWorkflowState.DesignPlans)]
-    [HttpPost("{homeTypeId}/upload-design-plans-file")]
-    public async Task<IActionResult> UploadDesignPlansFile(
-        [FromRoute] string applicationId,
-        string homeTypeId,
-        [FromForm(Name = "File")] IFormFile file,
-        CancellationToken cancellationToken)
-    {
-        var fileToUpload = new FileToUpload(file.FileName, file.Length, file.OpenReadStream());
-        try
-        {
-            var result = await _mediator.Send(new UploadDesignPlansFileCommand(AhpApplicationId.From(applicationId), HomeTypeId.From(homeTypeId), fileToUpload), cancellationToken);
-            return result.HasValidationErrors ? new BadRequestObjectResult(result.Errors) : Ok(UploadedFileModel.FromUploadedFile(result.ReturnedData!));
-        }
-        finally
-        {
-            await fileToUpload.Content.DisposeAsync();
-        }
     }
 
     [WorkflowState(HomeTypesWorkflowState.DesignPlans)]
@@ -871,9 +872,9 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         var tenureDetails = await _mediator.Send(new GetTenureDetailsQuery(AhpApplicationId.From(applicationId), HomeTypeId.From(homeTypeId)), cancellationToken);
         var model = new AffordableRentModel(tenureDetails.ApplicationName, tenureDetails.HomeTypeName)
         {
-            MarketValue = tenureDetails.MarketValue?.ToString(CultureInfo.InvariantCulture),
-            MarketRent = tenureDetails.MarketRent?.ToString("0.##", CultureInfo.InvariantCulture),
-            ProspectiveRent = tenureDetails.ProspectiveRent?.ToString("0.##", CultureInfo.InvariantCulture),
+            MarketValue = CurrencyHelper.InputPounds(tenureDetails.MarketValue),
+            MarketRent = CurrencyHelper.InputPoundsPences(tenureDetails.MarketRent),
+            ProspectiveRent = CurrencyHelper.InputPoundsPences(tenureDetails.ProspectiveRent),
             ProspectiveRentAsPercentageOfMarketRent = tenureDetails.ProspectiveRentAsPercentageOfMarketRent?.ToString("0", CultureInfo.InvariantCulture),
             TargetRentExceedMarketRent = tenureDetails.TargetRentExceedMarketRent,
         };
@@ -934,8 +935,8 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         var tenureDetails = await _mediator.Send(new GetTenureDetailsQuery(AhpApplicationId.From(applicationId), HomeTypeId.From(homeTypeId)), cancellationToken);
         var model = new SocialRentModel(tenureDetails.ApplicationName, tenureDetails.HomeTypeName)
         {
-            MarketValue = tenureDetails.MarketValue?.ToString(CultureInfo.InvariantCulture),
-            ProspectiveRent = tenureDetails.ProspectiveRent?.ToString("0.##", CultureInfo.InvariantCulture),
+            MarketValue = CurrencyHelper.InputPounds(tenureDetails.MarketValue),
+            ProspectiveRent = CurrencyHelper.InputPoundsPences(tenureDetails.ProspectiveRent),
         };
 
         return View(model);
@@ -966,10 +967,10 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         var tenureDetails = await _mediator.Send(new GetTenureDetailsQuery(AhpApplicationId.From(applicationId), HomeTypeId.From(homeTypeId)), cancellationToken);
         var model = new SharedOwnershipModel(tenureDetails.ApplicationName, tenureDetails.HomeTypeName)
         {
-            MarketValue = tenureDetails.MarketValue?.ToString(CultureInfo.InvariantCulture),
+            MarketValue = CurrencyHelper.InputPounds(tenureDetails.MarketValue),
             InitialSale = tenureDetails.InitialSale?.ToString(CultureInfo.InvariantCulture),
-            ExpectedFirstTranche = tenureDetails.ExpectedFirstTranche?.ToString("0.##", CultureInfo.InvariantCulture),
-            ProspectiveRent = tenureDetails.ProspectiveRent?.ToString("0.##", CultureInfo.InvariantCulture),
+            ExpectedFirstTranche = CurrencyHelper.DisplayPoundsPences(tenureDetails.ExpectedFirstTranche),
+            ProspectiveRent = CurrencyHelper.InputPoundsPences(tenureDetails.ProspectiveRent),
             RentAsPercentageOfTheUnsoldShare =
                 tenureDetails.RentAsPercentageOfTheUnsoldShare?.ToString("0.##", CultureInfo.InvariantCulture),
         };
@@ -997,7 +998,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
                     model.ProspectiveRent),
                 cancellationToken);
 
-            model.ExpectedFirstTranche = calculationResult.ExpectedFirstTranche?.ToString("0.##", CultureInfo.InvariantCulture);
+            model.ExpectedFirstTranche = CurrencyHelper.DisplayPoundsPences(calculationResult.ExpectedFirstTranche);
             model.RentAsPercentageOfTheUnsoldShare = calculationResult.ProspectiveRentPercentage?.ToString("0.##", CultureInfo.InvariantCulture);
 
             ModelState.AddValidationErrors(operationResult);
@@ -1032,9 +1033,9 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         var tenureDetails = await _mediator.Send(new GetTenureDetailsQuery(AhpApplicationId.From(applicationId), HomeTypeId.From(homeTypeId)), cancellationToken);
         var model = new RentToBuyModel(tenureDetails.ApplicationName, tenureDetails.HomeTypeName)
         {
-            MarketValue = tenureDetails.MarketValue?.ToString(CultureInfo.InvariantCulture),
-            MarketRent = tenureDetails.MarketRent?.ToString("0.##", CultureInfo.InvariantCulture),
-            ProspectiveRent = tenureDetails.ProspectiveRent?.ToString("0.##", CultureInfo.InvariantCulture),
+            MarketValue = CurrencyHelper.InputPounds(tenureDetails.MarketValue),
+            MarketRent = CurrencyHelper.InputPoundsPences(tenureDetails.MarketRent),
+            ProspectiveRent = CurrencyHelper.InputPoundsPences(tenureDetails.ProspectiveRent),
             ProspectiveRentAsPercentageOfMarketRent = tenureDetails.ProspectiveRentAsPercentageOfMarketRent?.ToString("00.00", CultureInfo.InvariantCulture),
             TargetRentExceedMarketRent = tenureDetails.TargetRentExceedMarketRent,
         };
@@ -1084,9 +1085,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     [HttpGet("{homeTypeId}/rent-to-buy-ineligible")]
     public async Task<IActionResult> RentToBuyIneligible([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
     {
-        var tenureDetails = await _mediator.Send(new GetTenureDetailsQuery(AhpApplicationId.From(applicationId), HomeTypeId.From(homeTypeId)), cancellationToken);
-
-        return View(new HomeTypeBasicModel(tenureDetails.ApplicationName, tenureDetails.HomeTypeName));
+        return await AffordableRentIneligible(applicationId, homeTypeId, cancellationToken);
     }
 
     [WorkflowState(HomeTypesWorkflowState.HomeOwnershipDisabilities)]
@@ -1096,10 +1095,10 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         var tenureDetails = await _mediator.Send(new GetTenureDetailsQuery(AhpApplicationId.From(applicationId), HomeTypeId.From(homeTypeId)), cancellationToken);
         var model = new HomeOwnershipDisabilitiesModel(tenureDetails.ApplicationName, tenureDetails.HomeTypeName)
         {
-            MarketValue = tenureDetails.MarketValue?.ToString(CultureInfo.InvariantCulture),
+            MarketValue = CurrencyHelper.InputPounds(tenureDetails.MarketValue),
             InitialSale = tenureDetails.InitialSale?.ToString(CultureInfo.InvariantCulture),
-            ExpectedFirstTranche = tenureDetails.ExpectedFirstTranche?.ToString("0.##", CultureInfo.InvariantCulture),
-            ProspectiveRent = tenureDetails.ProspectiveRent?.ToString("0.##", CultureInfo.InvariantCulture),
+            ExpectedFirstTranche = CurrencyHelper.DisplayPoundsPences(tenureDetails.ExpectedFirstTranche),
+            ProspectiveRent = CurrencyHelper.InputPoundsPences(tenureDetails.ProspectiveRent),
             RentAsPercentageOfTheUnsoldShare =
                 tenureDetails.RentAsPercentageOfTheUnsoldShare?.ToString("0.##", CultureInfo.InvariantCulture),
         };
@@ -1127,7 +1126,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
                     model.ProspectiveRent),
                 cancellationToken);
 
-            model.ExpectedFirstTranche = calculationResult.ExpectedFirstTranche?.ToString("0.##", CultureInfo.InvariantCulture);
+            model.ExpectedFirstTranche = CurrencyHelper.DisplayPoundsPences(calculationResult.ExpectedFirstTranche);
             model.RentAsPercentageOfTheUnsoldShare = calculationResult.ProspectiveRentPercentage?.ToString("0.##", CultureInfo.InvariantCulture);
 
             ModelState.AddValidationErrors(operationResult);
@@ -1153,10 +1152,10 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         var tenureDetails = await _mediator.Send(new GetTenureDetailsQuery(AhpApplicationId.From(applicationId), HomeTypeId.From(homeTypeId)), cancellationToken);
         var model = new OlderPersonsSharedOwnershipModel(tenureDetails.ApplicationName, tenureDetails.HomeTypeName)
         {
-            MarketValue = tenureDetails.MarketValue?.ToString(CultureInfo.InvariantCulture),
+            MarketValue = CurrencyHelper.InputPounds(tenureDetails.MarketValue),
             InitialSale = tenureDetails.InitialSale?.ToString(CultureInfo.InvariantCulture),
-            ExpectedFirstTranche = tenureDetails.ExpectedFirstTranche?.ToString("0.##", CultureInfo.InvariantCulture),
-            ProspectiveRent = tenureDetails.ProspectiveRent?.ToString("0.##", CultureInfo.InvariantCulture),
+            ExpectedFirstTranche = CurrencyHelper.DisplayPoundsPences(tenureDetails.ExpectedFirstTranche),
+            ProspectiveRent = CurrencyHelper.InputPoundsPences(tenureDetails.ProspectiveRent),
             RentAsPercentageOfTheUnsoldShare =
                 tenureDetails.RentAsPercentageOfTheUnsoldShare?.ToString("0.##", CultureInfo.InvariantCulture),
         };
@@ -1184,7 +1183,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
                     model.ProspectiveRent),
                 cancellationToken);
 
-            model.ExpectedFirstTranche = calculationResult.ExpectedFirstTranche?.ToString("0.##", CultureInfo.InvariantCulture);
+            model.ExpectedFirstTranche = CurrencyHelper.DisplayPoundsPences(calculationResult.ExpectedFirstTranche);
             model.RentAsPercentageOfTheUnsoldShare = calculationResult.ProspectiveRentPercentage?.ToString("0.##", CultureInfo.InvariantCulture);
 
             ModelState.AddValidationErrors(operationResult);
@@ -1286,9 +1285,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     [HttpGet("{homeTypeId}/modern-methods-construction-categories")]
     public async Task<IActionResult> ModernMethodsConstructionCategories([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
     {
-        var modernMethodsConstruction = await _mediator.Send(new GetModernMethodsConstructionQuery(AhpApplicationId.From(applicationId), HomeTypeId.From(homeTypeId)), cancellationToken);
-
-        return View(new ModernMethodsConstructionModel(modernMethodsConstruction.ApplicationName, modernMethodsConstruction.HomeTypeName));
+        return await ModernMethodsConstruction(applicationId, homeTypeId, cancellationToken);
     }
 
     [WorkflowState(HomeTypesWorkflowState.ModernMethodsConstructionCategories)]
@@ -1311,9 +1308,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     [HttpGet("{homeTypeId}/modern-methods-construction-2d-subcategories")]
     public async Task<IActionResult> ModernMethodsConstruction2DSubcategories([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
     {
-        var modernMethodsConstruction = await _mediator.Send(new GetModernMethodsConstructionQuery(AhpApplicationId.From(applicationId), HomeTypeId.From(homeTypeId)), cancellationToken);
-
-        return View(new ModernMethodsConstructionModel(modernMethodsConstruction.ApplicationName, modernMethodsConstruction.HomeTypeName));
+        return await ModernMethodsConstruction(applicationId, homeTypeId, cancellationToken);
     }
 
     [WorkflowState(HomeTypesWorkflowState.ModernMethodsConstruction2DSubcategories)]
@@ -1336,9 +1331,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     [HttpGet("{homeTypeId}/modern-methods-construction-3d-subcategories")]
     public async Task<IActionResult> ModernMethodsConstruction3DSubcategories([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
     {
-        var modernMethodsConstruction = await _mediator.Send(new GetModernMethodsConstructionQuery(AhpApplicationId.From(applicationId), HomeTypeId.From(homeTypeId)), cancellationToken);
-
-        return View(new ModernMethodsConstructionModel(modernMethodsConstruction.ApplicationName, modernMethodsConstruction.HomeTypeName));
+        return await ModernMethodsConstruction(applicationId, homeTypeId, cancellationToken);
     }
 
     [WorkflowState(HomeTypesWorkflowState.ModernMethodsConstruction3DSubcategories)]

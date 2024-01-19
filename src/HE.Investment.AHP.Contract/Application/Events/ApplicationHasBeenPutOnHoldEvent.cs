@@ -2,4 +2,9 @@ using HE.Investments.Common.Contract.Infrastructure.Events;
 
 namespace HE.Investment.AHP.Contract.Application.Events;
 
-public record ApplicationHasBeenPutOnHoldEvent() : DomainEvent;
+public class ApplicationHasBeenPutOnHoldEvent : DomainEvent
+{
+    public ApplicationHasBeenPutOnHoldEvent()
+    {
+    }
+}

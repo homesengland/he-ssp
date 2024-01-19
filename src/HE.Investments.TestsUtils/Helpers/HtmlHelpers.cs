@@ -5,7 +5,7 @@ using AngleSharp.Io;
 
 namespace HE.Investments.TestsUtils.Helpers;
 
-public class HtmlHelpers
+public static class HtmlHelpers
 {
     public static async Task<IHtmlDocument> GetDocumentAsync(HttpResponseMessage response)
     {

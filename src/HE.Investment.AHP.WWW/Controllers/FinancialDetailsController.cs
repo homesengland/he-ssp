@@ -1,21 +1,21 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Queries;
+using HE.Investment.AHP.Contract.FinancialDetails;
 using HE.Investment.AHP.Contract.FinancialDetails.Commands;
 using HE.Investment.AHP.Contract.FinancialDetails.Queries;
-using HE.Investment.AHP.Domain.FinancialDetails;
 using HE.Investment.AHP.WWW.Models.FinancialDetails;
 using HE.Investment.AHP.WWW.Models.FinancialDetails.Factories;
+using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
-using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Extensions;
+using HE.Investments.Common.WWW.Helpers;
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.Common.WWW.Utils;
-using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -57,7 +57,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
         return View(new FinancialDetailsLandStatusModel(
             applicationId,
             financialDetails.ApplicationName,
-            financialDetails.PurchasePrice.ToPoundsPencesString(),
+            CurrencyHelper.InputPoundsPences(financialDetails.PurchasePrice),
             financialDetails.IsPurchasePriceFinal ?? siteLandStatus));
     }
 
@@ -76,17 +76,11 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
     public async Task<IActionResult> LandValue(Guid applicationId)
     {
         var financialDetails = await _mediator.Send(new GetFinancialDetailsQuery(AhpApplicationId.From(applicationId)));
-
-        var isSchemeOnPublicLand =
-            financialDetails.IsSchemaOnPublicLand.HasValue
-                ? financialDetails.IsSchemaOnPublicLand.Value ? CommonResponse.Yes : CommonResponse.No
-                : string.Empty;
-
         return View(new FinancialDetailsLandValueModel(
             applicationId,
             financialDetails.ApplicationName,
-            financialDetails.LandValue.ToPoundsPencesString(),
-            isSchemeOnPublicLand));
+            CurrencyHelper.InputPoundsPences(financialDetails.LandValue),
+            financialDetails.IsSchemaOnPublicLand));
     }
 
     [HttpPost("land-value")]
@@ -107,8 +101,8 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
         return View(new FinancialDetailsOtherApplicationCostsModel(
             applicationId,
             financialDetails.ApplicationName,
-            financialDetails.ExpectedWorkCost.ToWholeNumberString(),
-            financialDetails.ExpectedOnCost.ToWholeNumberString()));
+            CurrencyHelper.InputPounds(financialDetails.ExpectedWorkCost),
+            CurrencyHelper.InputPounds(financialDetails.ExpectedOnCost)));
     }
 
     [HttpPost("other-application-costs")]
@@ -139,17 +133,17 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
         return View(new FinancialDetailsContributionsModel(
             applicationId,
             financialDetails.ApplicationName,
-            financialDetails.RentalIncomeContribution.ToString(),
-            financialDetails.SubsidyFromSaleOnThisScheme.ToString(),
-            financialDetails.SubsidyFromSaleOnOtherSchemes.ToString(),
-            financialDetails.OwnResourcesContribution.ToString(),
-            financialDetails.RecycledCapitalGrantFundContribution.ToString(),
-            financialDetails.OtherCapitalContributions.ToString(),
-            financialDetails.SharedOwnershipSalesContribution.ToString(),
-            financialDetails.TransferValueOfHomes.ToString(),
+            CurrencyHelper.InputPounds(financialDetails.RentalIncomeContribution),
+            CurrencyHelper.InputPounds(financialDetails.SubsidyFromSaleOnThisScheme),
+            CurrencyHelper.InputPounds(financialDetails.SubsidyFromSaleOnOtherSchemes),
+            CurrencyHelper.InputPounds(financialDetails.OwnResourcesContribution),
+            CurrencyHelper.InputPounds(financialDetails.RecycledCapitalGrantFundContribution),
+            CurrencyHelper.InputPounds(financialDetails.OtherCapitalContributions),
+            CurrencyHelper.InputPounds(financialDetails.SharedOwnershipSalesContribution),
+            CurrencyHelper.InputPounds(financialDetails.TransferValueOfHomes),
             isSharedOwnership,
             true,
-            financialDetails.TotalExpectedContributions.ToWholeNumberString()));
+            CurrencyHelper.DisplayPounds(financialDetails.TotalExpectedContributions)));
     }
 
     [HttpPost("expected-contributions")]
@@ -175,7 +169,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
                     model.HomesTransferValue),
                 cancellationToken);
 
-            model.TotalExpectedContributions = calculationResult.TotalExpectedContributions.ToPoundsPencesString();
+            model.TotalExpectedContributions = CurrencyHelper.DisplayPoundsPences(calculationResult.TotalExpectedContributions);
 
             ModelState.AddValidationErrors(operationResult);
 
@@ -205,14 +199,14 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
         return View(new FinancialDetailsGrantsModel(
             applicationId,
             financialDetails.ApplicationName,
-            financialDetails.CountyCouncilGrants.ToString(),
-            financialDetails.DhscExtraCareGrants.ToString(),
-            financialDetails.LocalAuthorityGrants.ToString(),
-            financialDetails.SocialServicesGrants.ToString(),
-            financialDetails.HealthRelatedGrants.ToString(),
-            financialDetails.LotteryFunding.ToString(),
-            financialDetails.OtherPublicGrants.ToString(),
-            financialDetails.TotalReceivedGrants.ToWholeNumberString()));
+            CurrencyHelper.InputPounds(financialDetails.CountyCouncilGrants),
+            CurrencyHelper.InputPounds(financialDetails.DhscExtraCareGrants),
+            CurrencyHelper.InputPounds(financialDetails.LocalAuthorityGrants),
+            CurrencyHelper.InputPounds(financialDetails.SocialServicesGrants),
+            CurrencyHelper.InputPounds(financialDetails.HealthRelatedGrants),
+            CurrencyHelper.InputPounds(financialDetails.LotteryFunding),
+            CurrencyHelper.InputPounds(financialDetails.OtherPublicGrants),
+            CurrencyHelper.DisplayPounds(financialDetails.TotalReceivedGrants)));
     }
 
     [HttpPost("grants")]
@@ -233,7 +227,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
                     model.OtherPublicBodiesGrants),
                 cancellationToken);
 
-            model.TotalGrants = calculationResult.TotalReceivedGrants.ToPoundsPencesString();
+            model.TotalGrants = CurrencyHelper.DisplayPoundsPences(calculationResult.TotalReceivedGrants);
 
             ModelState.AddValidationErrors(operationResult);
 

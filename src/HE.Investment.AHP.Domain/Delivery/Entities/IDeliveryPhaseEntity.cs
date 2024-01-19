@@ -6,12 +6,15 @@ using HE.Investment.AHP.Domain.Delivery.Policies;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
+using SummaryOfDelivery = HE.Investment.AHP.Domain.Delivery.ValueObjects.SummaryOfDelivery;
 
 namespace HE.Investment.AHP.Domain.Delivery.Entities;
 
 public interface IDeliveryPhaseEntity
 {
     ApplicationBasicInfo Application { get; }
+
+    AhpApplicationId ApplicationId => Application.Id;
 
     Tenure Tenure => Application.Tenure;
 
@@ -37,7 +40,7 @@ public interface IDeliveryPhaseEntity
 
     public IsAdditionalPaymentRequested? IsAdditionalPaymentRequested { get; }
 
-    Task ProvideDeliveryPhaseMilestones(DeliveryPhaseMilestones milestones, IMilestoneDatesInProgrammeDateRangePolicy policy);
+    Task ProvideDeliveryPhaseMilestones(DeliveryPhaseMilestones milestones, IMilestoneDatesInProgrammeDateRangePolicy policy, CancellationToken cancellationToken);
 
     void ProvideAdditionalPaymentRequest(IsAdditionalPaymentRequested? isAdditionalPaymentRequested);
 
@@ -52,4 +55,6 @@ public interface IDeliveryPhaseEntity
     void Complete();
 
     void UnComplete();
+
+    SummaryOfDelivery CalculateSummary(decimal requiredFunding, int totalHousesToDeliver, MilestoneFramework milestoneFramework);
 }

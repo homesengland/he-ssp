@@ -1,6 +1,6 @@
 using FluentAssertions;
 using HE.Investments.Account.Contract.Users;
-using HE.Investments.Account.Domain.Tests.User.TestData;
+using HE.Investments.Common.Tests.TestData;
 using Xunit;
 
 namespace HE.Investments.Account.Domain.Tests.User.UserAccountTests;

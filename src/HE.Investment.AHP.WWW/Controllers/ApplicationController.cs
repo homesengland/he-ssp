@@ -2,9 +2,9 @@ using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Commands;
 using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Contract.Site.Queries;
-using HE.Investment.AHP.Domain.Application.Workflows;
 using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investment.AHP.WWW.Models.Application.Factories;
+using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Contract.Pagination;
@@ -148,7 +148,10 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     {
         var application = await _mediator.Send(new GetApplicationQuery(AhpApplicationId.From(applicationId)), cancellationToken);
 
-        // TODO: set job role and contact details
+#pragma warning disable S1135 // Track uses of "TODO" tags
+        //// TODO: set job role and contact details
+#pragma warning restore S1135 // Track uses of "TODO" tags
+
         return View(
             "Submitted",
             new ApplicationSubmittedViewModel(applicationId, application.ReferenceNumber ?? string.Empty, "[job role]", "[INSERT CONTACT DETAILS]"));
@@ -175,7 +178,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     {
         return await this.ExecuteCommand(
             _mediator,
-            new HoldApplicationCommand(AhpApplicationId.From(model.ApplicationId), model.ChangeStatusReason),
+            new HoldApplicationCommand(AhpApplicationId.From(model.ApplicationId), model.HoldReason),
             () => ContinueWithRedirect(new { applicationId }),
             async () => await Task.FromResult<IActionResult>(View("OnHold", model)),
             cancellationToken);
@@ -186,13 +189,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     [AuthorizeWithCompletedProfile]
     public async Task<IActionResult> Withdraw(Guid applicationId, CancellationToken cancellationToken)
     {
-        var application = await _mediator.Send(new GetApplicationQuery(AhpApplicationId.From(applicationId)), cancellationToken);
-
-        var model = new ChangeApplicationStatusModel(
-            applicationId,
-            application.Name);
-
-        return View(model);
+        return await OnHold(applicationId, cancellationToken);
     }
 
     [WorkflowState(ApplicationWorkflowState.Withdraw)]
@@ -202,10 +199,16 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     {
         return await this.ExecuteCommand(
             _mediator,
-            new WithdrawApplicationCommand(AhpApplicationId.From(model.ApplicationId), model.ChangeStatusReason),
+            new WithdrawApplicationCommand(AhpApplicationId.From(model.ApplicationId), model.WithdrawReason),
             () => ContinueWithRedirect(new { applicationId }),
             async () => await Task.FromResult<IActionResult>(View("Withdraw", model)),
             cancellationToken);
+    }
+
+    [HttpGet("{applicationId}/back")]
+    public async Task<IActionResult> Back([FromRoute] string applicationId, ApplicationWorkflowState currentPage)
+    {
+        return await Back(currentPage, new { applicationId });
     }
 
     protected override async Task<IStateRouting<ApplicationWorkflowState>> Routing(ApplicationWorkflowState currentState, object? routeData = null)

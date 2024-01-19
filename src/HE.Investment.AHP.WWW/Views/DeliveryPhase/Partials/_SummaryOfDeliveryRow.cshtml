@@ -1,5 +1,4 @@
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Headings
-@using HE.Investments.Common.Extensions
+@using HE.Investments.Common.WWW.Helpers
 @model HE.Investment.AHP.WWW.Models.Delivery.SummaryOfDeliveryRow
 
 <div class="govuk-summary-list__row">
@@ -7,6 +6,6 @@
         <gds-h3 size="ControlSize.S">
             @Model.ValueName
         </gds-h3>
-        <p class="govuk-body govuk-!-margin-bottom-1"> @($"\u00a3{Model.Value.ToWholeNumberString()}") </p>
+        <p class="govuk-body govuk-!-margin-bottom-1">@(CurrencyHelper.DisplayPounds(Model.Value))</p>
     </dt>
 </div>

@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
 

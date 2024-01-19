@@ -43,7 +43,7 @@ internal class CompaniesHouseApi : ICompaniesHouseApi
         if (!response.IsSuccessStatusCode)
         {
             var errorResult = await response.Content.ReadFromJsonAsync<CompaniesHouseErrorsResult>(cancellationToken: cancellationToken);
-            if (errorResult?.Errors.Any(x => x.Error == CompaniesHouseErrors.CompanyProfileNotFound) is true)
+            if (errorResult?.Errors != null && Array.Exists(errorResult.Errors, x => x.Error == CompaniesHouseErrors.CompanyProfileNotFound))
             {
                 return null;
             }

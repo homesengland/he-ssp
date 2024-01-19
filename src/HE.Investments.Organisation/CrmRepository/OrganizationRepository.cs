@@ -128,6 +128,7 @@ public class OrganizationRepository : IOrganizationRepository
                 var condition1 = new ConditionExpression("name", ConditionOperator.Like, $"%{name}%");
                 filter1.Conditions.Add(condition1);
                 numberOfRequestsInQuery++;
+#pragma warning disable S2583 // Conditionally executed code should be reachable
                 if (numberOfRequestsInQuery >= 490)
                 {
                     numberOfRequestsInQuery = 0;
@@ -144,6 +145,7 @@ public class OrganizationRepository : IOrganizationRepository
                     filter1.Conditions.Clear();
                     query.Criteria.Filters.Clear();
                 }
+#pragma warning restore S2583 // Conditionally executed code should be reachable
             }
 
             query.Criteria.AddFilter(filter1);
@@ -186,6 +188,7 @@ public class OrganizationRepository : IOrganizationRepository
                 var condition1 = new ConditionExpression("he_companieshousenumber", ConditionOperator.Equal, organizationNumber);
                 filter1.Conditions.Add(condition1);
                 numberOfRequestsInQuery++;
+#pragma warning disable S2583 // Conditionally executed code should be reachable
                 if (numberOfRequestsInQuery >= 490)
                 {
                     numberOfRequestsInQuery = 0;
@@ -200,6 +203,7 @@ public class OrganizationRepository : IOrganizationRepository
                     filter1.Conditions.Clear();
                     query.Criteria.Filters.Clear();
                 }
+#pragma warning restore S2583 // Conditionally executed code should be reachable
             }
 
             query.Criteria.AddFilter(filter1);

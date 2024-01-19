@@ -2,13 +2,15 @@ using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Events;
 using HE.Investment.AHP.Domain.Application.Entities;
+using HE.Investment.AHP.Domain.Application.Repositories.Interfaces;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Data;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.Contract.Pagination;
-using HE.Investments.Common.CRM;
+using HE.Investments.Common.CRM.Mappers;
+using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Infrastructure.Events;
 using ApplicationSection = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationSection;
@@ -31,8 +33,8 @@ public class ApplicationRepository : IApplicationRepository
     {
         var organisationId = userAccount.SelectedOrganisationId().Value;
         var application = userAccount.CanViewAllApplications()
-            ? await _applicationCrmContext.GetOrganisationApplicationById(id.Value, organisationId, CrmFields.ApplicationToRead, cancellationToken)
-            : await _applicationCrmContext.GetUserApplicationById(id.Value, organisationId, CrmFields.ApplicationToRead, cancellationToken);
+            ? await _applicationCrmContext.GetOrganisationApplicationById(id.Value, organisationId, CrmFields.ApplicationToRead.ToList(), cancellationToken)
+            : await _applicationCrmContext.GetUserApplicationById(id.Value, organisationId, CrmFields.ApplicationToRead.ToList(), cancellationToken);
 
         return CreateEntity(application);
     }
@@ -48,12 +50,15 @@ public class ApplicationRepository : IApplicationRepository
         return new ApplicationBasicInfo(application.Id, application.Name, application.Tenure?.Value ?? Tenure.Undefined, application.Status);
     }
 
-    public async Task<PaginationResult<ApplicationWithFundingDetails>> GetApplicationsWithFundingDetails(UserAccount userAccount, PaginationRequest paginationRequest, CancellationToken cancellationToken)
+    public async Task<PaginationResult<ApplicationWithFundingDetails>> GetApplicationsWithFundingDetails(
+        UserAccount userAccount,
+        PaginationRequest paginationRequest,
+        CancellationToken cancellationToken)
     {
         var organisationId = userAccount.SelectedOrganisationId().Value;
         var applications = userAccount.CanViewAllApplications()
-            ? await _applicationCrmContext.GetOrganisationApplications(organisationId, CrmFields.ApplicationListToRead, cancellationToken)
-            : await _applicationCrmContext.GetUserApplications(organisationId, CrmFields.ApplicationListToRead, cancellationToken);
+            ? await _applicationCrmContext.GetOrganisationApplications(organisationId, CrmFields.ApplicationListToRead.ToList(), cancellationToken)
+            : await _applicationCrmContext.GetUserApplications(organisationId, CrmFields.ApplicationListToRead.ToList(), cancellationToken);
 
         var filtered = applications
             .OrderByDescending(x => x.lastExternalModificationOn)
@@ -61,7 +66,7 @@ public class ApplicationRepository : IApplicationRepository
             .Select(x => new ApplicationWithFundingDetails(
                 new AhpApplicationId(x.id),
                 x.name,
-                ApplicationStatusMapper.MapToPortalStatus(x.applicationStatus),
+                AhpApplicationStatusMapper.MapToPortalStatus(x.applicationStatus),
                 ApplicationTenureMapper.ToDomain(x.tenure)!.Value,
                 x.noOfHomes,
                 x.fundingRequested))
@@ -86,7 +91,7 @@ public class ApplicationRepository : IApplicationRepository
             applicationStatus = ApplicationStatusMapper.MapToCrmStatus(application.Status),
         };
 
-        var id = await _applicationCrmContext.Save(dto, organisationId.Value, CrmFields.ApplicationToUpdate, cancellationToken);
+        var id = await _applicationCrmContext.Save(dto, organisationId.Value, CrmFields.ApplicationToUpdate.ToList(), cancellationToken);
         if (application.Id.IsNew)
         {
             var applicationId = AhpApplicationId.From(id);
@@ -98,12 +103,51 @@ public class ApplicationRepository : IApplicationRepository
         return application;
     }
 
+    public async Task Hold(ApplicationEntity application, OrganisationId organisationId, CancellationToken cancellationToken)
+    {
+        if (application is { IsModified: false })
+        {
+            return;
+        }
+
+        var applicationId = new Guid(application.Id.Value);
+
+        await _applicationCrmContext.ChangeApplicationStatus(
+            applicationId,
+            organisationId.Value,
+            application.Status,
+            application.HoldReason?.Value,
+            cancellationToken);
+    }
+
+    public async Task Withdraw(ApplicationEntity application, OrganisationId organisationId, CancellationToken cancellationToken)
+    {
+        if (application is { IsModified: false })
+        {
+            return;
+        }
+
+        var applicationId = new Guid(application.Id.Value);
+
+        await _applicationCrmContext.ChangeApplicationStatus(
+            applicationId,
+            organisationId.Value,
+            application.Status,
+            application.WithdrawReason?.Value,
+            cancellationToken);
+    }
+
+    public async Task DispatchEvents(DomainEntity domainEntity, CancellationToken cancellationToken)
+    {
+        await _eventDispatcher.Publish(domainEntity, cancellationToken);
+    }
+
     private static ApplicationEntity CreateEntity(AhpApplicationDto application)
     {
         return new ApplicationEntity(
             new AhpApplicationId(application.id),
             new ApplicationName(application.name ?? "Unknown"),
-            ApplicationStatusMapper.MapToPortalStatus(application.applicationStatus),
+            AhpApplicationStatusMapper.MapToPortalStatus(application.applicationStatus),
             new ApplicationReferenceNumber(application.referenceNumber),
             ApplicationTenureMapper.ToDomain(application.tenure),
             new AuditEntry(

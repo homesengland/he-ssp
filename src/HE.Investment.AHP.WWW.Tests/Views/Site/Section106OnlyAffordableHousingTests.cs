@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.WWW.Views.Site;
 using HE.Investments.Common.WWWTestsFramework;

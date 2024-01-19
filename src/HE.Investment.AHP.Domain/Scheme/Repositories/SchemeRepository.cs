@@ -1,4 +1,3 @@
-using System.Runtime.Serialization;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Domain.Application.Repositories;
@@ -30,8 +29,8 @@ public class SchemeRepository : ISchemeRepository
     {
         var organisationId = userAccount.SelectedOrganisationId().Value;
         var application = userAccount.CanViewAllApplications()
-            ? await _repository.GetOrganisationApplicationById(id.Value, organisationId, CrmFields.SchemeToRead, cancellationToken)
-            : await _repository.GetUserApplicationById(id.Value, organisationId, CrmFields.SchemeToRead, cancellationToken);
+            ? await _repository.GetOrganisationApplicationById(id.Value, organisationId, CrmFields.SchemeToRead.ToList(), cancellationToken)
+            : await _repository.GetUserApplicationById(id.Value, organisationId, CrmFields.SchemeToRead.ToList(), cancellationToken);
 
         UploadedFile? file = null;
         if (includeFiles)
@@ -65,7 +64,7 @@ public class SchemeRepository : ISchemeRepository
             sharedOwnershipSalesRisk = entity.SalesRisk.Value,
         };
 
-        await _repository.Save(dto, organisationId.Value, CrmFields.SchemeToUpdate, cancellationToken);
+        await _repository.Save(dto, organisationId.Value, CrmFields.SchemeToUpdate.ToList(), cancellationToken);
 
         await entity.StakeholderDiscussions.SaveChanges(entity.Application.Id, _fileService, cancellationToken);
 
@@ -79,7 +78,7 @@ public class SchemeRepository : ISchemeRepository
                 new AhpApplicationId(application.id),
                 new ApplicationName(application.name),
                 ApplicationTenureMapper.ToDomain(application.tenure)),
-            CreateRequiredFunding(application.fundingRequested, application.noOfHomes),
+            new SchemeFunding((int?)application.fundingRequested, application.noOfHomes),
             SectionStatusMapper.ToDomain(application.schemeInformationSectionCompletionStatus),
             new AffordabilityEvidence(application.affordabilityEvidence),
             new SalesRisk(application.sharedOwnershipSalesRisk),
@@ -87,25 +86,5 @@ public class SchemeRepository : ISchemeRepository
             new StakeholderDiscussions(
                 new StakeholderDiscussionsDetails(application.discussionsWithLocalStakeholders),
                 new LocalAuthoritySupportFileContainer(stakeholderDiscussionsFile)));
-    }
-
-    private static SchemeFunding CreateRequiredFunding(decimal? fundingRequested, int? noOfHomes)
-    {
-        var funding = (SchemeFunding)FormatterServices.GetUninitializedObject(typeof(SchemeFunding));
-        SetPropertyValue(funding, nameof(SchemeFunding.RequiredFunding), fundingRequested);
-        SetPropertyValue(funding, nameof(SchemeFunding.HousesToDeliver), noOfHomes);
-
-        return funding;
-    }
-
-    private static void SetPropertyValue(SchemeFunding member, string propName, object? newValue)
-    {
-        var propertyInfo = typeof(SchemeFunding).GetProperty(propName);
-        if (propertyInfo == null)
-        {
-            return;
-        }
-
-        propertyInfo.SetValue(member, newValue);
     }
 }

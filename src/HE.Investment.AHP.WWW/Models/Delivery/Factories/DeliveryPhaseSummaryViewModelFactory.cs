@@ -1,3 +1,4 @@
+using System.Globalization;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.WWW.Controllers;
@@ -5,6 +6,7 @@ using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Components.SectionSummary;
+using HE.Investments.Common.WWW.Helpers;
 using HE.Investments.Common.WWW.Utils;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,12 +14,17 @@ namespace HE.Investment.AHP.WWW.Models.Delivery.Factories;
 
 public class DeliveryPhaseSummaryViewModelFactory : IDeliveryPhaseSummaryViewModelFactory
 {
-    public IList<SectionSummaryViewModel> CreateSummary(AhpApplicationId applicationId, DeliveryPhaseDetails deliveryPhase, IUrlHelper urlHelper, bool isEditable)
+    public IList<SectionSummaryViewModel> CreateSummary(
+        AhpApplicationId applicationId,
+        DeliveryPhaseDetails deliveryPhase,
+        DeliveryPhaseHomes deliveryPhaseHomes,
+        IUrlHelper urlHelper,
+        bool isEditable)
     {
         return new List<SectionSummaryViewModel>
         {
-            CreateDeliveryPhaseSummary(applicationId, deliveryPhase, urlHelper, isEditable),
-            CreateMilestonesSummary(applicationId, deliveryPhase),
+            CreateDeliveryPhaseSummary(applicationId, deliveryPhase, deliveryPhaseHomes, urlHelper, isEditable),
+            CreateMilestonesSummary(deliveryPhase),
             CreateMilestonesDatesSummary(
                 applicationId,
                 deliveryPhase,
@@ -29,6 +36,7 @@ public class DeliveryPhaseSummaryViewModelFactory : IDeliveryPhaseSummaryViewMod
     private static SectionSummaryViewModel CreateDeliveryPhaseSummary(
         AhpApplicationId applicationId,
         DeliveryPhaseDetails deliveryPhase,
+        DeliveryPhaseHomes deliveryPhaseHomes,
         IUrlHelper urlHelper,
         bool isEditable)
     {
@@ -64,41 +72,49 @@ public class DeliveryPhaseSummaryViewModelFactory : IDeliveryPhaseSummaryViewMod
                 "Reconfiguring existing residential properties",
                 deliveryPhase.ReconfiguringExisting?.ToString().ToOneElementList(),
                 IsEditable: isEditable,
-                ActionUrl: CreateAction(nameof(DeliveryPhaseController.BuildActivityType))));
+                ActionUrl: CreateAction(nameof(DeliveryPhaseController.ReconfiguringExisting))));
+        }
+
+        foreach (var homeTypesToDeliver in deliveryPhaseHomes.HomeTypesToDeliver)
+        {
+            items.Add(new(
+                $"Number of homes {homeTypesToDeliver.HomeTypeName}",
+                homeTypesToDeliver.UsedHomes?.ToString(CultureInfo.InvariantCulture).ToOneElementList(),
+                IsEditable: isEditable,
+                ActionUrl: CreateAction(nameof(DeliveryPhaseController.AddHomes))));
         }
 
         return new SectionSummaryViewModel("Delivery phase", items);
     }
 
-    private static SectionSummaryViewModel CreateMilestonesSummary(
-        AhpApplicationId applicationId,
-        DeliveryPhaseDetails deliveryPhase)
+    private static SectionSummaryViewModel CreateMilestonesSummary(DeliveryPhaseDetails deliveryPhase)
     {
+        var summary = deliveryPhase.SummaryOfDelivery;
         var items = new List<SectionSummaryItemModel>
         {
             new(
                 "Grant apportioned to this phase",
-                "TODO".ToOneElementList(),
+                (CurrencyHelper.DisplayPoundsPences(summary?.GrantApportioned) ?? "-").ToOneElementList(),
                 IsEditable: false),
             new(
                 "Completion milestone",
-                "TODO".ToOneElementList(),
+                (CurrencyHelper.DisplayPoundsPences(summary?.CompletionMilestone) ?? "-").ToOneElementList(),
                 IsEditable: false),
         };
 
-        if (!deliveryPhase.IsUnregisteredBody && !deliveryPhase.IsOnlyCompletionMilestone)
+        if (deliveryPhase is { IsUnregisteredBody: false, IsOnlyCompletionMilestone: false })
         {
             items.Insert(
                 1,
                 new(
                     "Acquisition milestone",
-                    "TODO".ToOneElementList(),
+                    (CurrencyHelper.DisplayPoundsPences(summary?.AcquisitionMilestone) ?? "-").ToOneElementList(),
                     IsEditable: false));
             items.Insert(
                 2,
                 new(
                     "Start on site milestone",
-                    "TODO".ToOneElementList(),
+                    (CurrencyHelper.DisplayPoundsPences(summary?.StarOnSiteMilestone) ?? "-").ToOneElementList(),
                     IsEditable: false));
         }
 

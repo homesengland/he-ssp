@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using He.AspNetCore.Mvc.Gds.Components.Constants;
 using He.AspNetCore.Mvc.Gds.Components.Models;
 using He.AspNetCore.Mvc.Gds.Components.TagConstructs;
@@ -17,36 +19,33 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Radios
         public List<GdsRadioInputGroup> RadioInputGroup { get; }
 
         /// <summary>
-        /// Synchronously executes the <see cref="Microsoft.AspNetCore.Razor.TagHelpers.TagHelper" /> with the given <paramref name="context" /> and
+        /// Synchronously executes the <see cref="TagHelper" /> with the given <paramref name="context" /> and
         /// <paramref name="output" />.
         /// </summary>
         /// <param name="context">Contains information associated with the current HTML tag.</param>
         /// <param name="output">A stateful HTML element used to generate an HTML tag.</param>
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
-            if (this.RadioInputGroup != null)
+            if (this.RadioInputGroup != null && output != null)
             {
-                if (output != null)
+                output.TagName = HtmlConstants.Div;
+                TagConstruct.ConstructClass(output, CssConstants.GovUkRadios);
+                var sb = new StringBuilder();
+                foreach (var radioInputGroup in this.RadioInputGroup)
                 {
-                    output.TagName = HtmlConstants.Div;
-                    TagConstruct.ConstructClass(output, CssConstants.GovUkRadios);
-                    var sb = string.Empty;
-                    foreach (var radioInputGroup in this.RadioInputGroup)
-                    {
-                        sb += TagConstruct.ConstructRadioInputLabel(
-                            radioInputGroup.Id,
-                            radioInputGroup.Name,
-                            radioInputGroup.Value,
-                            radioInputGroup.LabelText,
-                            radioInputGroup.For,
-                            radioInputGroup.Checked,
-                            radioInputGroup.Divider,
-                            radioInputGroup.DividerText,
-                            radioInputGroup.HintText);
-                    }
-
-                    output.Content.SetHtmlContent(sb);
+                    sb.Append(TagConstruct.ConstructRadioInputLabel(
+                        radioInputGroup.Id,
+                        radioInputGroup.Name,
+                        radioInputGroup.Value,
+                        radioInputGroup.LabelText,
+                        radioInputGroup.For,
+                        radioInputGroup.Checked,
+                        radioInputGroup.Divider,
+                        radioInputGroup.DividerText,
+                        radioInputGroup.HintText));
                 }
+
+                output.Content.SetHtmlContent(sb.ToString());
             }
         }
     }

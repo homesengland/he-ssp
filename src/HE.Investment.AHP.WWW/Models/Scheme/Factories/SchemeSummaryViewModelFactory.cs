@@ -5,6 +5,7 @@ using HE.Investment.AHP.WWW.Controllers;
 using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Components.SectionSummary;
+using HE.Investments.Common.WWW.Helpers;
 using HE.Investments.Common.WWW.Utils;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,7 +27,7 @@ public class SchemeSummaryViewModelFactory : ISchemeSummaryViewModelFactory
                 IsEditable: false),
             new(
                 "Funding required",
-                scheme.RequiredFunding.ToWholeNumberString().ToOneElementList(),
+                CurrencyHelper.DisplayPounds(scheme.RequiredFunding).ToOneElementList(),
                 IsEditable: !isReadOnly,
                 ActionUrl: CreateSchemeActionUrl(urlHelper, scheme.ApplicationId, nameof(SchemeController.Funding))),
             new(

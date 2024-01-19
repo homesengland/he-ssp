@@ -113,7 +113,7 @@ public class IntegrationUserData
 
     public void UseDataProvidedByDeveloper()
     {
-        if (IsDeveloperProvidedUserData is false)
+        if (!IsDeveloperProvidedUserData)
         {
             return;
         }

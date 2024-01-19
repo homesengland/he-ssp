@@ -1,0 +1,50 @@
+@using HE.Investments.Account.Shared
+@using HE.Investments.Common.Contract
+@inject IAccountAccessContext AccountAccessContext
+@model HE.Investment.AHP.WWW.Models.Application.ApplicationSectionsModel
+
+@{
+    var incompleteSectionsCount = Model.Sections.Count(s => s.SectionStatus == SectionStatus.NotStarted || s.SectionStatus == SectionStatus.InProgress);
+    var canSubmitApplication = await AccountAccessContext.CanSubmitApplication();
+}
+
+<gds-h2>Check and submit</gds-h2>
+@if (incompleteSectionsCount > 0)
+{
+    <gds-p>You must complete all sections before you can submit your application.</gds-p>
+}
+<link-button
+    action-url="@Url.Action("CheckAnswers", "Application", new { applicationId = Model.ApplicationId })"
+    is-disabled="@(incompleteSectionsCount > 0 || !canSubmitApplication)">
+    Check and submit application
+</link-button>
+
+@if (Model.CanBePutOnHold())
+{
+    <div class="govuk-!-margin-top-2">
+        <gds-h2 size="ControlSize.M">Put on hold</gds-h2>
+        <gds-p>
+            This will notify Homes England that you no longer wish to proceed with this application at this time. You can revisit this later on and submit once you’re ready.
+        </gds-p>
+        <link-button
+            is-secondary="true"
+            action-url="@Url.Action("OnHold", "Application", new { applicationId = Model.ApplicationId })">
+            Hold
+        </link-button>
+    </div>
+}
+
+@if (Model.CanBeWithdrawn())
+{
+    <div class="govuk-!-margin-top-2">
+        <gds-h2 size="ControlSize.M">Withdraw</gds-h2>
+        <gds-p>
+            This will notify Homes England that you no longer wish to proceed. Your application will be permanently deleted.
+        </gds-p>
+        <link-button
+            is-warning="true"
+            action-url="@Url.Action("Withdraw", "Application", new { applicationId = Model.ApplicationId })">
+            Withdraw
+        </link-button>
+    </div>
+}

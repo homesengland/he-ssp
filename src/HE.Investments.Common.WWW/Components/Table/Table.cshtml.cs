@@ -11,8 +11,8 @@ public class Table : ViewComponent
     }
 }
 
-public record TableHeaderViewModel(string Title, int? Width = null, bool IsHidden = false);
+public record TableHeaderViewModel(string Title, int? Width = null, bool IsHidden = false, bool IsDisplayed = true);
 
 public record TableRowViewModel(IList<TableValueViewModel> Values);
 
-public record TableValueViewModel(string? Value = null, ComponentViewModel? Component = null);
+public record TableValueViewModel(string? Value = null, ComponentViewModel? Component = null, bool IsDisplayed = true);

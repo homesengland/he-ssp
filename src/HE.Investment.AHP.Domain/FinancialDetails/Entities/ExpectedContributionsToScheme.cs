@@ -36,21 +36,21 @@ public class ExpectedContributionsToScheme : ValueObject, IQuestion
 
     public Tenure ApplicationTenure { get; }
 
-    public ExpectedContributionValue? RentalIncome { get; private set; }
+    public ExpectedContributionValue? RentalIncome { get; }
 
-    public ExpectedContributionValue? SalesOfHomesOnThisScheme { get; private set; }
+    public ExpectedContributionValue? SalesOfHomesOnThisScheme { get; }
 
-    public ExpectedContributionValue? SalesOfHomesOnOtherSchemes { get; private set; }
+    public ExpectedContributionValue? SalesOfHomesOnOtherSchemes { get; }
 
-    public ExpectedContributionValue? OwnResources { get; private set; }
+    public ExpectedContributionValue? OwnResources { get; }
 
-    public ExpectedContributionValue? RcgfContributions { get; private set; }
+    public ExpectedContributionValue? RcgfContributions { get; }
 
-    public ExpectedContributionValue? OtherCapitalSources { get; private set; }
+    public ExpectedContributionValue? OtherCapitalSources { get; }
 
-    public ExpectedContributionValue? SharedOwnershipSales { get; private set; }
+    public ExpectedContributionValue? SharedOwnershipSales { get; }
 
-    public ExpectedContributionValue? HomesTransferValue { get; private set; }
+    public ExpectedContributionValue? HomesTransferValue { get; }
 
     public bool IsAnswered()
     {

@@ -6,9 +6,9 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Buttons
 {
     /// <summary>
     /// Class GdsButtonTagHelper.
-    /// Implements the <see cref="Microsoft.AspNetCore.Razor.TagHelpers.TagHelper" />.
+    /// Implements the <see cref="TagHelper" />.
     /// </summary>
-    /// <seealso cref="Microsoft.AspNetCore.Razor.TagHelpers.TagHelper" />
+    /// <seealso cref="TagHelper" />
     public class GdsButtonTagHelper : TagHelper
     {
         /// <summary>
@@ -30,7 +30,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Buttons
         public bool Secondary { get; set; }
 
         /// <summary>
-        /// Synchronously executes the <see cref="Microsoft.AspNetCore.Razor.TagHelpers.TagHelper" /> with the given <paramref name="context" /> and
+        /// Synchronously executes the <see cref="TagHelper" /> with the given <paramref name="context" /> and
         /// <paramref name="output" />.
         /// </summary>
         /// <param name="context">Contains information associated with the current HTML tag.</param>
@@ -41,8 +41,8 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Buttons
             {
                 output.TagName = HtmlConstants.Button;
                 TagConstruct.ConstructId(output, this.Id);
-                
-                if(Secondary)
+
+                if (Secondary)
                 {
                     TagConstruct.ConstructClass(output, $"{CssConstants.GovUkButton} {CssConstants.GovUkSecondaryButton}");
                 }
@@ -50,7 +50,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Buttons
                 {
                     TagConstruct.ConstructClass(output, CssConstants.GovUkButton);
                 }
-                
+
                 output.Content.SetHtmlContent(TagConstruct.ConstructSetHtml(output, this.Text));
             }
         }

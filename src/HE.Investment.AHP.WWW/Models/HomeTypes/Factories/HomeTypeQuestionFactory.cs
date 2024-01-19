@@ -1,8 +1,8 @@
 using System.Globalization;
 using System.Reflection;
 using HE.Investment.AHP.Contract.HomeTypes;
-using HE.Investment.AHP.Domain.HomeTypes;
 using HE.Investment.AHP.WWW.Controllers;
+using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Workflow;
 using HE.Investments.Common.WWW.Components.SectionSummary;
@@ -100,7 +100,7 @@ internal class HomeTypeQuestionFactory
 
     private static HomeTypesWorkflowState GetWorkflowState(string controllerActionName)
     {
-        var method = typeof(HomeTypesController).GetMethods(BindingFlags.Public | BindingFlags.Instance).FirstOrDefault(x => x.Name == controllerActionName);
+        var method = Array.Find(typeof(HomeTypesController).GetMethods(BindingFlags.Public | BindingFlags.Instance), x => x.Name == controllerActionName);
         var workflowState = method?.GetCustomAttribute<WorkflowStateAttribute>();
 
         return workflowState?.StateAs<HomeTypesWorkflowState>() ??

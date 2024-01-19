@@ -13,7 +13,7 @@
 
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
-    <form asp-controller="DeliveryPhase" asp-action="@Model.PostbackActionName" asp-method="post" novalidate>
+    <form asp-controller="DeliveryPhase" asp-action="@Model.PostbackActionName" asp-method="post" asp-route-redirect="@Context.Request.Query["redirect"]" novalidate>
         @Html.HiddenFor(x => x.DeliveryPhaseId)
         @Html.HiddenFor(x => x.PostbackActionName)
         <vc:text-input header="@title"

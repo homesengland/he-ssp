@@ -1,6 +1,5 @@
 using DataverseModel;
 using HE.Base.Services;
-using DataverseModel;
 
 namespace HE.CRM.Plugins.Services.LoanApplication
 {

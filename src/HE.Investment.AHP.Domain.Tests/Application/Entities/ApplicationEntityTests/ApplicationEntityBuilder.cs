@@ -12,9 +12,9 @@ public class ApplicationEntityBuilder
 
     private readonly ApplicationName _name = new("zapytanko");
 
-    private readonly ApplicationStatus _status = ApplicationStatus.New;
-
     private readonly ApplicationReferenceNumber _reference = new("REF123");
+
+    private ApplicationStatus _status = ApplicationStatus.New;
 
     private IList<ApplicationSection>? _sections;
 
@@ -23,6 +23,12 @@ public class ApplicationEntityBuilder
     public ApplicationEntityBuilder WithSections(params ApplicationSection[] sections)
     {
         _sections = sections.ToList();
+        return this;
+    }
+
+    public ApplicationEntityBuilder WithApplicationStatus(ApplicationStatus status)
+    {
+        _status = status;
         return this;
     }
 

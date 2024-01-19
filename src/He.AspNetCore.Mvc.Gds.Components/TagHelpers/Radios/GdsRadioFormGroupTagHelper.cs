@@ -241,7 +241,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Radios
 
             elementInputBuilder.AppendLine($"<div class='{CssConstants.GovUkRadiosItem}'>");
 
-            var inputId = idPostfix == 0 ? fullHtmlFieldName : $"{fullHtmlFieldName}-{idPostfix}"; 
+            var inputId = idPostfix == 0 ? fullHtmlFieldName : $"{fullHtmlFieldName}-{idPostfix}";
             elementInputBuilder.AppendLine(
                 $"<input id='{inputId}' type='radio' class='{CssConstants.GovUkRadiosInput}' value='{option.Value}' name='{fullHtmlFieldName}' " +
                 $"{(currentValues?.Contains(option.Value) == true ? "checked" : string.Empty)} {(isConditionalRevealInputOption ? $"data-aria-controls='conditional-children-{idPostfix}'" : string.Empty)}></input>");

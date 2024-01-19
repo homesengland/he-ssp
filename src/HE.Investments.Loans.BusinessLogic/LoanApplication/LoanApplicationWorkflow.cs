@@ -9,7 +9,7 @@ namespace HE.Investments.Loans.BusinessLogic.LoanApplication;
 [SuppressMessage("Ordering Rules", "SA1201", Justification = "Need to refactored in the fure")]
 public class LoanApplicationWorkflow : IStateRouting<LoanApplicationWorkflow.State>
 {
-    public enum State : int
+    public enum State
     {
         Index = 1,
         ApplicationDashboard,
@@ -123,7 +123,7 @@ public class LoanApplicationWorkflow : IStateRouting<LoanApplicationWorkflow.Sta
 
         _machine.Configure(State.Withdraw)
             .PermitIf(Trigger.Continue, State.ApplicationDashboard, () => _isLoanApplicationExist().Result)
-            .PermitIf(Trigger.Continue, State.UserDashboard, () => _isLoanApplicationExist().Result is false)
+            .PermitIf(Trigger.Continue, State.UserDashboard, () => !_isLoanApplicationExist().Result)
             .Permit(Trigger.Back, State.ApplicationDashboard);
     }
 }

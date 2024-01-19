@@ -16,21 +16,21 @@ public class FloorArea : ValueObject
         if (!decimal.TryParse(value!, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var parsedValue))
         {
             OperationResult.New()
-                .AddValidationError(nameof(FloorArea), ValidationErrorMessage.SquareMetersMustBeNumber())
+                .AddValidationError(nameof(FloorArea), ValidationErrorMessage.SquareMetersMustBeNumber)
                 .CheckErrors();
         }
 
         if (decimal.Round(parsedValue, 2) != parsedValue)
         {
             OperationResult.New()
-                .AddValidationError(nameof(FloorArea), ValidationErrorMessage.SquareMetersMustBeNumber())
+                .AddValidationError(nameof(FloorArea), ValidationErrorMessage.SquareMetersMustBeNumber)
                 .CheckErrors();
         }
 
         if (parsedValue is < MinValue or > MaxValue)
         {
             OperationResult.New()
-                .AddValidationError(nameof(FloorArea), ValidationErrorMessage.SquareMetersMustBeNumber())
+                .AddValidationError(nameof(FloorArea), ValidationErrorMessage.SquareMetersMustBeNumber)
                 .CheckErrors();
         }
 
@@ -42,7 +42,7 @@ public class FloorArea : ValueObject
         if (value is < MinValue or > MaxValue)
         {
             OperationResult.New()
-                .AddValidationError(nameof(FloorArea), ValidationErrorMessage.SquareMetersMustBeNumber())
+                .AddValidationError(nameof(FloorArea), ValidationErrorMessage.SquareMetersMustBeNumber)
                 .CheckErrors();
         }
 

@@ -114,16 +114,19 @@ public class ModernMethodsConstructionSegmentEntity : IHomeTypeSegmentEntity
     {
         return true;
 
+#pragma warning disable S1135 // Track uses of "TODO" tags
+
         // TODO crm missing - returning true not to block section completion
-        // return ModernMethodsConstructionApplied != YesNoType.Undefined
-        //       && BuildConditionalRouteCompletionPredicates().All();
+        //// return ModernMethodsConstructionApplied != YesNoType.Undefined
+        ////       && BuildConditionalRouteCompletionPredicates().All();
+#pragma warning restore S1135 // Track uses of "TODO" tags
     }
 
     public void HousingTypeChanged(HousingType sourceHousingType, HousingType targetHousingType)
     {
     }
 
-#pragma warning disable IDE0051
+#pragma warning disable IDE0051, S1144
     private IEnumerable<Func<bool>> BuildConditionalRouteCompletionPredicates()
 #pragma warning restore IDE0051
     {

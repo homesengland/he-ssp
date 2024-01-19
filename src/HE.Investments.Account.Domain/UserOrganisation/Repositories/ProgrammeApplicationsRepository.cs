@@ -1,7 +1,7 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Contract.UserOrganisation;
 using HE.Investments.Account.Shared.User;
-using HE.Investments.Common.CRM;
+using HE.Investments.Common.CRM.Mappers;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Services;
 
@@ -72,7 +72,7 @@ public class ProgrammeApplicationsRepository : IProgrammeApplicationsRepository
         return applications.Select(a => new UserApplication(
                 HeApplicationId.From(a.id),
                 a.name,
-                ApplicationStatusMapper.MapToPortalStatus(a.applicationStatus)))
+                AhpApplicationStatusMapper.MapToPortalStatus(a.applicationStatus)))
             .ToList();
     }
 }

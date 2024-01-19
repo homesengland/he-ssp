@@ -48,7 +48,7 @@ public class GetHomesToBeDeliveredInPhaseTests
         // given
         var homeTypeId = new HomeTypeId("1 bed flat");
         var deliveryPhase = new DeliveryPhaseEntityBuilder().WithId("dp-1").Build();
-        var otherPhase = new DeliveryPhaseEntityBuilder().WithId("dp-2").WithHomesToBeDelivered(homeTypeId.Value, 10).Build();
+        var otherPhase = new DeliveryPhaseEntityBuilder().WithId("dp-2").WithHomesToBeDelivered(10, homeTypeId.Value).Build();
         var testCandidate = new DeliveryPhasesEntityBuilder()
             .WithDeliveryPhase(deliveryPhase)
             .WithDeliveryPhase(otherPhase)
@@ -70,7 +70,7 @@ public class GetHomesToBeDeliveredInPhaseTests
     {
         // given
         var homeTypeId = new HomeTypeId("1 bed flat");
-        var deliveryPhase = new DeliveryPhaseEntityBuilder().WithId("dp-1").WithHomesToBeDelivered(homeTypeId.Value, toDeliver).Build();
+        var deliveryPhase = new DeliveryPhaseEntityBuilder().WithId("dp-1").WithHomesToBeDelivered(toDeliver, homeTypeId.Value).Build();
         var otherPhase = new DeliveryPhaseEntityBuilder().WithId("dp-2").Build();
         var testCandidate = new DeliveryPhasesEntityBuilder()
             .WithDeliveryPhase(deliveryPhase)

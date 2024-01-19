@@ -24,7 +24,7 @@ public class LocalAuthorityResultTests : ViewTestBase
         var document = await Render(_viewPath, model);
 
         // then
-        AssertView(document, model.Items.First().Name);
+        AssertView(document, model.Items[0].Name);
     }
 
     private static void AssertView(IHtmlDocument document, string localAuthorityName)

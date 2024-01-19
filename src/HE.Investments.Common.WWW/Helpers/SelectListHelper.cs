@@ -1,4 +1,4 @@
-﻿using HE.Investments.Common.Extensions;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using EnumerableExtensions = HE.Investments.Common.WWW.Extensions.EnumerableExtensions;
@@ -7,17 +7,17 @@ namespace HE.Investments.Common.WWW.Helpers;
 
 public static class SelectListHelper
 {
-    public static IEnumerable<SelectListItem> FromEnum<TEnum>()
-        where TEnum : struct, Enum
-    {
-        return EnumExtensions.GetDefinedValues<TEnum>().Select(FromEnum);
-    }
-
     public static IEnumerable<ExtendedSelectListItem> FromEnumToExtendedList<TEnum>()
         where TEnum : struct, Enum
     {
         var values = EnumExtensions.GetDefinedValues<TEnum>();
         return EnumerableExtensions.ToSelectList(values);
+    }
+
+    public static IEnumerable<SelectListItem> FromEnum<TEnum>()
+    where TEnum : struct, Enum
+    {
+        return EnumExtensions.GetDefinedValues<TEnum>().Select(FromEnum);
     }
 
     public static SelectListItem FromEnum<TEnum>(TEnum value)

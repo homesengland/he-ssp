@@ -1,4 +1,7 @@
+using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.Contract.Delivery;
+using HE.Investments.Common.Contract;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Routing;
 using Stateless;
 
@@ -9,10 +12,12 @@ public class DeliveryPhaseWorkflow : IStateRouting<DeliveryPhaseWorkflowState>
     private readonly StateMachine<DeliveryPhaseWorkflowState, Trigger> _machine;
 
     private readonly DeliveryPhaseDetails _model;
+    private readonly bool _isReadOnly;
 
-    public DeliveryPhaseWorkflow(DeliveryPhaseWorkflowState currentSiteWorkflowState, DeliveryPhaseDetails model)
+    public DeliveryPhaseWorkflow(DeliveryPhaseWorkflowState currentSiteWorkflowState, DeliveryPhaseDetails model, bool isReadOnly)
     {
         _model = model;
+        _isReadOnly = isReadOnly;
         _machine = new StateMachine<DeliveryPhaseWorkflowState, Trigger>(currentSiteWorkflowState);
         ConfigureTransitions();
     }
@@ -28,6 +33,35 @@ public class DeliveryPhaseWorkflow : IStateRouting<DeliveryPhaseWorkflowState>
         return Task.FromResult(CanBeAccessed(nextState));
     }
 
+    [SuppressMessage("Code Smell", "S2589", Justification = "False positive")]
+    public DeliveryPhaseWorkflowState CurrentState(DeliveryPhaseWorkflowState targetState)
+    {
+        if (_isReadOnly)
+        {
+            return DeliveryPhaseWorkflowState.CheckAnswers;
+        }
+
+        if (targetState != DeliveryPhaseWorkflowState.Name || _model.Status == SectionStatus.NotStarted)
+        {
+            return targetState;
+        }
+
+#pragma warning disable S2589 // Boolean expressions should not be gratuitous
+        return _model switch
+        {
+            { TypeOfHomes: var x } when x.IsNotProvided() => DeliveryPhaseWorkflowState.TypeOfHomes,
+            { BuildActivityType: var x } when x.IsNotProvided() => DeliveryPhaseWorkflowState.BuildActivityType,
+            { } when _model.IsReconfiguringExistingNeeded && _model.ReconfiguringExisting.IsNotProvided() => DeliveryPhaseWorkflowState.ReconfiguringExisting,
+            { NumberOfHomes: var x } when x.IsNotProvided() => DeliveryPhaseWorkflowState.AddHomes,
+            { } when (_model.AcquisitionDate.IsNotProvided() || _model.AcquisitionPaymentDate.IsNotProvided()) && AllMilestonesAvailable() => DeliveryPhaseWorkflowState.AcquisitionMilestone,
+            { } when (_model.StartOnSiteDate.IsNotProvided() || _model.StartOnSitePaymentDate.IsNotProvided()) && AllMilestonesAvailable() => DeliveryPhaseWorkflowState.StartOnSiteMilestone,
+            { } when _model.PracticalCompletionDate.IsNotProvided() || _model.PracticalCompletionPaymentDate.IsNotProvided() => DeliveryPhaseWorkflowState.PracticalCompletionMilestone,
+            { } when _model.IsAdditionalPaymentRequested.IsNotProvided() && IsUnregisteredBody() => DeliveryPhaseWorkflowState.UnregisteredBodyFollowUp,
+            _ => DeliveryPhaseWorkflowState.CheckAnswers,
+        };
+#pragma warning restore S2589 // Boolean expressions should not be gratuitous
+    }
+
     public bool CanBeAccessed(DeliveryPhaseWorkflowState state)
     {
         return state switch
@@ -38,13 +72,13 @@ public class DeliveryPhaseWorkflow : IStateRouting<DeliveryPhaseWorkflowState>
             DeliveryPhaseWorkflowState.BuildActivityType => true,
             DeliveryPhaseWorkflowState.ReconfiguringExisting => _model.IsReconfiguringExistingNeeded,
             DeliveryPhaseWorkflowState.AddHomes => true,
-            DeliveryPhaseWorkflowState.SummaryOfDelivery => true,
-            DeliveryPhaseWorkflowState.AcquisitionMilestone => AllMilestonesAvailable(),
-            DeliveryPhaseWorkflowState.StartOnSiteMilestone => AllMilestonesAvailable(),
-            DeliveryPhaseWorkflowState.PracticalCompletionMilestone => true,
-            DeliveryPhaseWorkflowState.UnregisteredBodyFollowUp => IsUnregisteredBody(),
+            DeliveryPhaseWorkflowState.SummaryOfDelivery => _model.NumberOfHomes > 0,
+            DeliveryPhaseWorkflowState.AcquisitionMilestone => AllMilestonesAvailable() && _model.NumberOfHomes > 0,
+            DeliveryPhaseWorkflowState.StartOnSiteMilestone => AllMilestonesAvailable() && _model.NumberOfHomes > 0,
+            DeliveryPhaseWorkflowState.PracticalCompletionMilestone => _model.NumberOfHomes > 0,
+            DeliveryPhaseWorkflowState.UnregisteredBodyFollowUp => IsUnregisteredBody() && _model.NumberOfHomes > 0,
             DeliveryPhaseWorkflowState.CheckAnswers => true,
-            _ => false,
+            _ => throw new ArgumentOutOfRangeException(nameof(state), state, null),
         };
     }
 

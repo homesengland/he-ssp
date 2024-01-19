@@ -40,8 +40,8 @@ public class UnusedHomeTypesCountTests
     {
         // given
         var deliveryPhase = new DeliveryPhaseEntityBuilder()
-            .WithHomesToBeDelivered("ht-1", 1)
-            .WithHomesToBeDelivered("ht-2", 3)
+            .WithHomesToBeDelivered(1, "ht-1")
+            .WithHomesToBeDelivered(3, "ht-2")
             .Build();
         var testCandidate = new DeliveryPhasesEntityBuilder()
             .WithHomesToDeliver(new HomesToDeliverBuilder().WithHomeTypeId("ht-1").WithTotalHomes(2).Build())
