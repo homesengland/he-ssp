@@ -31,6 +31,6 @@ public static class DateHelper
 
     public static string? DisplayAsUkFormatDateTime(DateTime? utcDateTime)
     {
-        return utcDateTime?.ConvertUtcToUkLocalTime().ToString(CultureInfo.GetCultureInfo("en-GB"));
+        return utcDateTime?.ConvertUtcToUkLocalTime().ToString(Culture.Uk);
     }
 }

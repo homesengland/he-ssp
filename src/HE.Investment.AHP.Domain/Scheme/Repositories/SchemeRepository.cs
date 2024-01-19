@@ -1,4 +1,3 @@
-using System.Runtime.Serialization;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Domain.Application.Repositories;
@@ -79,7 +78,7 @@ public class SchemeRepository : ISchemeRepository
                 new AhpApplicationId(application.id),
                 new ApplicationName(application.name),
                 ApplicationTenureMapper.ToDomain(application.tenure)),
-            CreateRequiredFunding(application.fundingRequested, application.noOfHomes),
+            new SchemeFunding((int?)application.fundingRequested, application.noOfHomes),
             SectionStatusMapper.ToDomain(application.schemeInformationSectionCompletionStatus),
             new AffordabilityEvidence(application.affordabilityEvidence),
             new SalesRisk(application.sharedOwnershipSalesRisk),
@@ -87,25 +86,5 @@ public class SchemeRepository : ISchemeRepository
             new StakeholderDiscussions(
                 new StakeholderDiscussionsDetails(application.discussionsWithLocalStakeholders),
                 new LocalAuthoritySupportFileContainer(stakeholderDiscussionsFile)));
-    }
-
-    private static SchemeFunding CreateRequiredFunding(decimal? fundingRequested, int? noOfHomes)
-    {
-        var funding = (SchemeFunding)FormatterServices.GetUninitializedObject(typeof(SchemeFunding));
-        SetPropertyValue(funding, nameof(SchemeFunding.RequiredFunding), fundingRequested);
-        SetPropertyValue(funding, nameof(SchemeFunding.HousesToDeliver), noOfHomes);
-
-        return funding;
-    }
-
-    private static void SetPropertyValue(SchemeFunding member, string propName, object? newValue)
-    {
-        var propertyInfo = typeof(SchemeFunding).GetProperty(propName);
-        if (propertyInfo == null)
-        {
-            return;
-        }
-
-        propertyInfo.SetValue(member, newValue);
     }
 }

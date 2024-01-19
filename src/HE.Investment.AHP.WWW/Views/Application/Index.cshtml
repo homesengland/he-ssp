@@ -2,6 +2,7 @@
 @using HE.Investments.Common.Extensions
 @using HE.Investments.Common.Messages
 @using HE.Investments.Common.WWW.Components.FormHeader
+@using HE.Investments.Common.WWW.Helpers
 @model HE.Investment.AHP.WWW.Models.Application.ApplicationsListModel
 @{
     ViewData["Title"] = ApplicationPageTitles.ApplicationList;
@@ -40,7 +41,7 @@
                         @(application.Unit?.ToString() ?? "-")
                     </td>
                     <td class="govuk-table__cell">
-                        @(application.Grant.IsProvided() ? $"\u00a3{application.Grant.ToWholeNumberString()}" : "-")
+                        @(CurrencyHelper.DisplayPounds(application.Grant) ?? "-")
                     </td>
                     <td class="govuk-table__cell">
                         @(application.LocalAuthority ?? GenericMessages.NotProvided)
