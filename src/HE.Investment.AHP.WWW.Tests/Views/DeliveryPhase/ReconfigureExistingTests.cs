@@ -16,7 +16,6 @@ public class ReconfigureExistingTests : ViewTestBase
     private readonly RouteData _routeData = new(new RouteValueDictionary { { "applicationId", "123" }, { "deliveryPhaseId", "321" } });
 
     [Fact]
-    [SuppressMessage("Blocker Code Smell", "S2699:Tests should include assertions", Justification = "Assertion present")]
     public async Task ShouldDisplayView()
     {
         var model = DeliveryPhaseDetailsTestData.WithNames with { IsReconfiguringExistingNeeded = true };

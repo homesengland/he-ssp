@@ -51,7 +51,6 @@ public class ApplicationsCardTests : ViewTestBase
     }
 
     [Fact]
-    [SuppressMessage("Blocker Code Smell", "S2699:Tests should include assertions", Justification = "Error in the Sonarlint library when using AngleSharp when using AngleSharp")]
     public async Task ShouldNotDisplayApplicationsCard_ForMissingApplications()
     {
         // given

@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.WWW.Views.Delivery.Const;
@@ -7,9 +6,9 @@ using Microsoft.AspNetCore.Routing;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.DeliveryPhase;
 
-public class BuildActivityTests : ViewTestBase
+public class SummaryOfDeliveryTests : ViewTestBase
 {
-    private readonly string _viewPath = "/Views/DeliveryPhase/BuildActivityType.cshtml";
+    private readonly string _viewPath = "/Views/DeliveryPhase/SummaryOfDelivery.cshtml";
 
     private readonly RouteData _routeData = new(new RouteValueDictionary { { "applicationId", "123" }, { "deliveryPhaseId", "321" } });
 
