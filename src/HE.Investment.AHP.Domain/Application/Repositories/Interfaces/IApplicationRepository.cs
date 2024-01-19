@@ -5,10 +5,11 @@ using HE.Investment.AHP.Domain.Common;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.Contract.Pagination;
+using HE.Investments.Common.Domain;
 
-namespace HE.Investment.AHP.Domain.Application.Repositories;
+namespace HE.Investment.AHP.Domain.Application.Repositories.Interfaces;
 
-public interface IApplicationRepository
+public interface IApplicationRepository : IApplicationWithdraw, IApplicationHold
 {
     Task<ApplicationEntity> GetById(AhpApplicationId id, UserAccount userAccount, CancellationToken cancellationToken);
 
@@ -22,4 +23,6 @@ public interface IApplicationRepository
         CancellationToken cancellationToken);
 
     Task<ApplicationEntity> Save(ApplicationEntity application, OrganisationId organisationId, CancellationToken cancellationToken);
+
+    Task DispatchEvents(DomainEntity domainEntity, CancellationToken cancellationToken);
 }

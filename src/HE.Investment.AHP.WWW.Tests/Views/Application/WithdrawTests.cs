@@ -26,7 +26,7 @@ public class WithdrawTests : ViewTestBase
         // given
         var errorMessage = "some test error";
         var modelState = new ModelStateDictionary();
-        modelState.AddModelError(nameof(ChangeApplicationStatusModel.ChangeStatusReason), errorMessage);
+        modelState.AddModelError(nameof(ChangeApplicationStatusModel.WithdrawReason), errorMessage);
 
         // when
         var document = await Render(_viewPath, _model, modelStateDictionary: modelState);
@@ -41,7 +41,7 @@ public class WithdrawTests : ViewTestBase
             .HasElementWithText("label", ApplicationPageTitles.Withdraw)
             .HasElementWithText("div", "You can enter up to 1500 characters")
             .HasElementWithText("button", "Withdraw application")
-            .HasSummaryErrorMessage(nameof(ChangeApplicationStatusModel.ChangeStatusReason), errorMessage, !string.IsNullOrEmpty(errorMessage))
-            .HasErrorMessage(nameof(ChangeApplicationStatusModel.ChangeStatusReason), errorMessage, !string.IsNullOrEmpty(errorMessage));
+            .HasSummaryErrorMessage(nameof(ChangeApplicationStatusModel.WithdrawReason), errorMessage, !string.IsNullOrEmpty(errorMessage))
+            .HasErrorMessage(nameof(ChangeApplicationStatusModel.WithdrawReason), errorMessage, !string.IsNullOrEmpty(errorMessage));
     }
 }

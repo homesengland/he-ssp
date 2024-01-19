@@ -178,7 +178,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     {
         return await this.ExecuteCommand(
             _mediator,
-            new HoldApplicationCommand(AhpApplicationId.From(model.ApplicationId), model.ChangeStatusReason),
+            new HoldApplicationCommand(AhpApplicationId.From(model.ApplicationId), model.HoldReason),
             () => ContinueWithRedirect(new { applicationId }),
             async () => await Task.FromResult<IActionResult>(View("OnHold", model)),
             cancellationToken);
@@ -199,7 +199,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     {
         return await this.ExecuteCommand(
             _mediator,
-            new WithdrawApplicationCommand(AhpApplicationId.From(model.ApplicationId), model.ChangeStatusReason),
+            new WithdrawApplicationCommand(AhpApplicationId.From(model.ApplicationId), model.WithdrawReason),
             () => ContinueWithRedirect(new { applicationId }),
             async () => await Task.FromResult<IActionResult>(View("Withdraw", model)),
             cancellationToken);
