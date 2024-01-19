@@ -37,54 +37,17 @@ public class Section106 : ValueObject, IQuestion
     {
     }
 
-    public bool? GeneralAgreement { get; private set; }
+    public bool? GeneralAgreement { get; }
 
-    public bool? AffordableHousing { get; private set; }
+    public bool? AffordableHousing { get; }
 
-    public bool? OnlyAffordableHousing { get; private set; }
+    public bool? OnlyAffordableHousing { get; }
 
-    public bool? AdditionalAffordableHousing { get; private set; }
+    public bool? AdditionalAffordableHousing { get; }
 
-    public bool? CapitalFundingEligibility { get; private set; }
+    public bool? CapitalFundingEligibility { get; }
 
-    public string? ConfirmationFromLocalAuthority { get; private set; }
-
-    public void ProvideGeneralAgreement(bool? generalAgreement)
-    {
-        if (generalAgreement is null)
-        {
-            OperationResult.New()
-                .AddValidationError(SiteValidationFieldNames.Section106Agreement, ValidationErrorMessage.MissingRequiredField("Section 106 Agreement"))
-                .CheckErrors();
-        }
-
-        GeneralAgreement = generalAgreement!.Value;
-    }
-
-    public void ProvideAffordableHousing(bool? affordableHousing)
-    {
-        AffordableHousing = affordableHousing;
-    }
-
-    public void ProvideOnlyAffordableHousing(bool? onlyAffordableHousing)
-    {
-        OnlyAffordableHousing = onlyAffordableHousing;
-    }
-
-    public void ProvideAdditionalAffordableHousing(bool? additionalAffordableHousing)
-    {
-        AdditionalAffordableHousing = additionalAffordableHousing;
-    }
-
-    public void ProvideCapitalFundingEligibility(bool? capitalFundingEligibility)
-    {
-        CapitalFundingEligibility = capitalFundingEligibility;
-    }
-
-    public void ProvideConfirmationFromLocalAuthority(string? confirmationFromLocalAuthority)
-    {
-        ConfirmationFromLocalAuthority = confirmationFromLocalAuthority;
-    }
+    public string? ConfirmationFromLocalAuthority { get; }
 
     public bool IsAnswered()
     {
