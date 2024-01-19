@@ -107,7 +107,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Input
             set => this.For = value;
         }
 
-        public bool IsInvalid{ get; set; }
+        public bool IsInvalid { get; set; }
 
         /// <inheritdoc/>
         public override void Process(TagHelperContext context, TagHelperOutput output)
@@ -146,7 +146,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Input
 
             TagConstruct.ConstructId(output, name);
 
-            if(IsInvalid)
+            if (IsInvalid)
             {
                 TagConstruct.ConstructClass(output, $"{CssConstants.GovUkInput} {CssConstants.GovUkInput}--error");
             }

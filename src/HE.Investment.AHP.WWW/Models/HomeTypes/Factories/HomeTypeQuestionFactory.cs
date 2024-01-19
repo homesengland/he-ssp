@@ -100,7 +100,7 @@ internal class HomeTypeQuestionFactory
 
     private static HomeTypesWorkflowState GetWorkflowState(string controllerActionName)
     {
-        var method = typeof(HomeTypesController).GetMethods(BindingFlags.Public | BindingFlags.Instance).FirstOrDefault(x => x.Name == controllerActionName);
+        var method = Array.Find(typeof(HomeTypesController).GetMethods(BindingFlags.Public | BindingFlags.Instance), x => x.Name == controllerActionName);
         var workflowState = method?.GetCustomAttribute<WorkflowStateAttribute>();
 
         return workflowState?.StateAs<HomeTypesWorkflowState>() ??

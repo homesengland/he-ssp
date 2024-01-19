@@ -1,3 +1,5 @@
+using System.Globalization;
+using System.Text;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
@@ -77,7 +79,8 @@ public class ProvideMoreInformationAboutOrganizationCommandHandler : CompanyStru
         IEnumerable<IFormFile> files,
         CancellationToken cancellationToken)
     {
-        var filesUploaded = string.Empty;
+        var bld = new StringBuilder();
+
         var userDetails = await _loanUserContext.GetProfileDetails();
         var folderPath = $"{await _companyStructureRepository.GetFilesLocationAsync(loanApplicationId, cancellationToken)}{CompanyStructureConstants.MoreInformationAboutOrganizationExternal}";
         var fileMetadata = new LoansFileMetadata($"{userDetails.FirstName} {userDetails.LastName}");
@@ -93,8 +96,10 @@ public class ProvideMoreInformationAboutOrganizationCommandHandler : CompanyStru
                 true,
                 cancellationToken);
 
-            filesUploaded += $"{file.FileName}, ";
+            bld.Append(CultureInfo.InvariantCulture, $"{file.FileName}, ");
         }
+
+        var filesUploaded = bld.ToString();
 
         if (!string.IsNullOrEmpty(filesUploaded))
         {

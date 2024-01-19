@@ -26,9 +26,9 @@ public class ApplicationProjectsMapperTests
         var applicationProjects = ApplicationProjectsMapper.Map(dto, _now);
 
         // then
-        applicationProjects.ActiveProjects.Should().HaveCount(1);
+        applicationProjects.GetActiveProjects().Should().HaveCount(1);
 
-        var project = applicationProjects.ActiveProjects.Single();
+        var project = applicationProjects.GetActiveProjects().Single();
 
         project.StartDate.Should().BeNull();
     }
@@ -49,9 +49,9 @@ public class ApplicationProjectsMapperTests
         var applicationProjects = ApplicationProjectsMapper.Map(dto, _now);
 
         // then
-        applicationProjects.ActiveProjects.Should().HaveCount(1);
+        applicationProjects.GetActiveProjects().Should().HaveCount(1);
 
-        var project = applicationProjects.ActiveProjects.Single();
+        var project = applicationProjects.GetActiveProjects().Single();
 
         project.StartDate.Should().NotBeNull();
 
@@ -74,9 +74,9 @@ public class ApplicationProjectsMapperTests
         var applicationProjects = ApplicationProjectsMapper.Map(dto, _now);
 
         // then
-        applicationProjects.ActiveProjects.Should().HaveCount(1);
+        applicationProjects.GetActiveProjects().Should().HaveCount(1);
 
-        var project = applicationProjects.ActiveProjects.Single();
+        var project = applicationProjects.GetActiveProjects().Single();
 
         project.StartDate.Should().NotBeNull();
 

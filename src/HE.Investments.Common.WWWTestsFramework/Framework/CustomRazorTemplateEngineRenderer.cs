@@ -29,8 +29,7 @@ internal sealed class CustomRazorTemplateEngineRenderer : IRazorTemplateEngine
         return await renderer.RenderViewToStringAsync(viewName, viewModel, viewDataDictionary, null, isMainPage: true).ConfigureAwait(false);
     }
 
-    // ReSharper disable once MethodOverloadWithOptionalParameter
-    public async Task<string> RenderAsync(string viewName, object? viewModel = null, Dictionary<string, object>? viewBagOrViewData = null, ModelStateDictionary? modelStateDictionary = null)
+    public async Task<string> RenderWithModelStateDictionaryAsync(string viewName, object? viewModel = null, Dictionary<string, object>? viewBagOrViewData = null, ModelStateDictionary? modelStateDictionary = null)
     {
         if (string.IsNullOrWhiteSpace(viewName))
         {
@@ -59,7 +58,7 @@ internal sealed class CustomRazorTemplateEngineRenderer : IRazorTemplateEngine
     }
 
     // ReSharper disable once MethodOverloadWithOptionalParameter
-    public async Task<string> RenderPartialAsync(
+    public async Task<string> RenderPartialWithModelStateDictionaryAsync(
         string viewName,
         object? viewModel = null,
         Dictionary<string, object>? viewBagOrViewData = null,

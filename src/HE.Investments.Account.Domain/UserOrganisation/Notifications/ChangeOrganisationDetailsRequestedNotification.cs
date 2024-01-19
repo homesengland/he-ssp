@@ -4,4 +4,7 @@ namespace HE.Investments.Account.Domain.UserOrganisation.Notifications;
 
 public class ChangeOrganisationDetailsRequestedNotification : Notification
 {
+    public ChangeOrganisationDetailsRequestedNotification()
+    {
+    }
 }

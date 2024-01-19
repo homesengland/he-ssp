@@ -24,15 +24,12 @@ public class HomesBuilt : ValueObject
 
     public static HomesBuilt FromString(string homesBuildAsString)
     {
-        if (decimal.TryParse(homesBuildAsString, NumberStyles.Float, CultureInfo.InvariantCulture, out var decimalResult))
+        if (decimal.TryParse(homesBuildAsString, NumberStyles.Float, CultureInfo.InvariantCulture, out var decimalResult) && decimalResult % 1 != 0)
         {
-            if (decimalResult % 1 != 0)
-            {
-                OperationResult
+            OperationResult
                     .New()
                     .AddValidationError(nameof(HomesBuilt), ValidationErrorMessage.HomesBuiltDecimalNumber)
                     .CheckErrors();
-            }
         }
 
         if (!int.TryParse(homesBuildAsString, out var intValue))

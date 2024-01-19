@@ -1,6 +1,6 @@
 namespace HE.Investments.Common.WWW.Tests.Components;
 
-public class Constants
+public static class Constants
 {
 #if DEBUG
     public const string? SkipTest = null;

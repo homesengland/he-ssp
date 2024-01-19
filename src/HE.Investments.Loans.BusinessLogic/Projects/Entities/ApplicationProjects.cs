@@ -27,8 +27,6 @@ public class ApplicationProjects
 
     public IReadOnlyCollection<Project> Projects => _projects.AsReadOnly();
 
-    public IList<Project> ActiveProjects => Projects.Where(p => !p.IsSoftDeleted).ToList();
-
     public Project AddEmptyProject()
     {
         var project = new Project();
@@ -39,9 +37,7 @@ public class ApplicationProjects
 
     public void UpdateProject(Project project)
     {
-        var projectToUpdate = Projects.FirstOrDefault(p => p.Id == project.Id) ?? throw new NotFoundException(nameof(Project).ToString(), project.Id!);
-
-        projectToUpdate = project;
+        project = Projects.FirstOrDefault(p => p.Id == project.Id) ?? throw new NotFoundException(nameof(Project).ToString(), project.Id!);
     }
 
     public void DeleteProject(ProjectId projectId)
@@ -60,5 +56,10 @@ public class ApplicationProjects
         projectToRemove.Delete();
 
         return projectToRemove;
+    }
+
+    internal IList<Project> GetActiveProjects()
+    {
+        return Projects.Where(p => !p.IsSoftDeleted).ToList();
     }
 }

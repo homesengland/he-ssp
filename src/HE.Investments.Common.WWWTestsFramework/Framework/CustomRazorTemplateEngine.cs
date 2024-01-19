@@ -18,7 +18,7 @@ public static class CustomRazorTemplateEngine
         Dictionary<string, object>? viewBagOrViewData = null,
         ModelStateDictionary? modelStateDictionary = null)
     {
-        return await Instance.Value.RenderAsync(viewName, viewModel, viewBagOrViewData, modelStateDictionary).ConfigureAwait(false);
+        return await Instance.Value.RenderWithModelStateDictionaryAsync(viewName, viewModel, viewBagOrViewData, modelStateDictionary).ConfigureAwait(false);
     }
 
     public static async Task<string> RenderPartialAsync(
@@ -28,7 +28,7 @@ public static class CustomRazorTemplateEngine
         ModelStateDictionary? modelStateDictionary = null,
         RouteData? routeData = null)
     {
-        return await Instance.Value.RenderPartialAsync(viewName, viewModel, viewBagOrViewData, modelStateDictionary, routeData).ConfigureAwait(false);
+        return await Instance.Value.RenderPartialWithModelStateDictionaryAsync(viewName, viewModel, viewBagOrViewData, modelStateDictionary, routeData).ConfigureAwait(false);
     }
 
     private static CustomRazorTemplateEngineRenderer CreateInstance()

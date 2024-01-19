@@ -1,7 +1,7 @@
 using HE.Investments.Loans.Contract.Projects.ValueObjects;
 
 namespace HE.Investments.Loans.BusinessLogic.Tests.Projects.TestData;
-internal sealed class LocalAuthorityTestData
+internal static class LocalAuthorityTestData
 {
     public static readonly LocalAuthority LocalAuthorityOne = new(LocalAuthorityId.From("1"), "Liverpool");
     public static readonly LocalAuthority LocalAuthorityTwo = new(LocalAuthorityId.From("2"), "London");

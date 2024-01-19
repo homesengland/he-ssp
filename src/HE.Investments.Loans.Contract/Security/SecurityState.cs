@@ -1,6 +1,6 @@
 namespace HE.Investments.Loans.Contract.Security;
 
-public enum SecurityState : int
+public enum SecurityState
 {
     Index = 1,
     ChargesDebtCompany = 2,

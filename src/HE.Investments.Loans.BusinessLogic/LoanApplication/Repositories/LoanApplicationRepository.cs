@@ -23,14 +23,11 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
 {
     private readonly IOrganizationServiceAsync2 _serviceClient;
 
-    private readonly IDateTimeProvider _dateTime;
-
     private readonly IEventDispatcher _eventDispatcher;
 
-    public LoanApplicationRepository(IOrganizationServiceAsync2 serviceClient, IDateTimeProvider dateTime, IEventDispatcher eventDispatcher)
+    public LoanApplicationRepository(IOrganizationServiceAsync2 serviceClient, IEventDispatcher eventDispatcher)
     {
         _serviceClient = serviceClient;
-        _dateTime = dateTime;
         _eventDispatcher = eventDispatcher;
     }
 

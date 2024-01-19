@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Collections.Immutable;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.Extensions;
 
@@ -5,12 +7,12 @@ namespace HE.Investment.AHP.Domain.Data;
 
 public static class CrmFields
 {
-    public static readonly IList<string> ApplicationToUpdate = new List<string>
+    public static readonly IReadOnlyList<string> ApplicationToUpdate = new List<string>
     {
         nameof(invln_scheme.invln_schemename), nameof(invln_scheme.invln_Tenure), nameof(invln_scheme.statuscode), nameof(invln_scheme.invln_applicationid),
     };
 
-    public static readonly IList<string> ApplicationToRead = ApplicationToUpdate
+    public static readonly IReadOnlyList<string> ApplicationToRead = ApplicationToUpdate.ToList()
         .Append(new List<string>
         {
             nameof(invln_scheme.invln_schemeinformationsectioncompletionstatus),
@@ -21,9 +23,9 @@ public static class CrmFields
             nameof(invln_scheme.invln_lastexternalmodificationon),
             nameof(invln_scheme.statuscode),
             nameof(invln_scheme.invln_pplicationid),
-        });
+        }).ToImmutableList();
 
-    public static readonly IList<string> ApplicationListToRead = ApplicationToUpdate
+    public static readonly IReadOnlyList<string> ApplicationListToRead = ApplicationToUpdate.ToList()
         .Append(new List<string>
         {
             nameof(invln_scheme.invln_fundingrequired),
@@ -31,9 +33,9 @@ public static class CrmFields
             nameof(invln_scheme.invln_pplicationid),
             nameof(invln_scheme.invln_lastexternalmodificationby),
             nameof(invln_scheme.invln_lastexternalmodificationon),
-        });
+        }).ToImmutableList();
 
-    public static readonly IList<string> SchemeToUpdate = new List<string>
+    public static readonly IReadOnlyList<string> SchemeToUpdate = new List<string>
     {
         nameof(invln_scheme.invln_schemeinformationsectioncompletionstatus),
         nameof(invln_scheme.invln_fundingrequired),
@@ -45,10 +47,11 @@ public static class CrmFields
         nameof(invln_scheme.invln_discussionswithlocalstakeholders),
     };
 
-    public static readonly IList<string> SchemeToRead = SchemeToUpdate
-        .Append(new List<string> { nameof(invln_scheme.invln_schemename), nameof(invln_scheme.invln_Tenure), });
+    public static readonly IReadOnlyList<string> SchemeToRead = SchemeToUpdate.ToList()
+        .Append(new List<string> { nameof(invln_scheme.invln_schemename), nameof(invln_scheme.invln_Tenure), })
+        .ToImmutableList();
 
-    public static readonly IList<string> FinancialDetailsToUpdate = new List<string>
+    public static readonly IReadOnlyList<string> FinancialDetailsToUpdate = new List<string>
     {
         nameof(invln_scheme.invln_actualacquisitioncost),
         nameof(invln_scheme.invln_expectedacquisitioncost),
@@ -74,6 +77,7 @@ public static class CrmFields
         nameof(invln_scheme.invln_financialdetailssectioncompletionstatus),
     };
 
-    public static readonly IList<string> FinancialDetailsToRead = FinancialDetailsToUpdate
-        .Append(new List<string> { nameof(invln_scheme.invln_schemename), nameof(invln_scheme.invln_Tenure) });
+    public static readonly IReadOnlyList<string> FinancialDetailsToRead = FinancialDetailsToUpdate.ToList()
+        .Append(new List<string> { nameof(invln_scheme.invln_schemename), nameof(invln_scheme.invln_Tenure) })
+        .ToImmutableList();
 }

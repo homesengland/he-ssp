@@ -1,4 +1,4 @@
-﻿using HE.Investment.AHP.Contract.Application;
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.FinancialDetails.Queries;
 using HE.Investment.AHP.WWW.Controllers;

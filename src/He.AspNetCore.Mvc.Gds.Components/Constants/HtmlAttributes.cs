@@ -1,6 +1,6 @@
 namespace He.AspNetCore.Mvc.Gds.Components.Constants
 {
-    internal class HtmlAttributes
+    internal static class HtmlAttributes
     {
         public const string Id = "id";
         public const string Name = "name";

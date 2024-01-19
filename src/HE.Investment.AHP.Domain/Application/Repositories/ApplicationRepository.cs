@@ -33,8 +33,8 @@ public class ApplicationRepository : IApplicationRepository
     {
         var organisationId = userAccount.SelectedOrganisationId().Value;
         var application = userAccount.CanViewAllApplications()
-            ? await _applicationCrmContext.GetOrganisationApplicationById(id.Value, organisationId, CrmFields.ApplicationToRead, cancellationToken)
-            : await _applicationCrmContext.GetUserApplicationById(id.Value, organisationId, CrmFields.ApplicationToRead, cancellationToken);
+            ? await _applicationCrmContext.GetOrganisationApplicationById(id.Value, organisationId, CrmFields.ApplicationToRead.ToList(), cancellationToken)
+            : await _applicationCrmContext.GetUserApplicationById(id.Value, organisationId, CrmFields.ApplicationToRead.ToList(), cancellationToken);
 
         return CreateEntity(application);
     }
@@ -57,8 +57,8 @@ public class ApplicationRepository : IApplicationRepository
     {
         var organisationId = userAccount.SelectedOrganisationId().Value;
         var applications = userAccount.CanViewAllApplications()
-            ? await _applicationCrmContext.GetOrganisationApplications(organisationId, CrmFields.ApplicationListToRead, cancellationToken)
-            : await _applicationCrmContext.GetUserApplications(organisationId, CrmFields.ApplicationListToRead, cancellationToken);
+            ? await _applicationCrmContext.GetOrganisationApplications(organisationId, CrmFields.ApplicationListToRead.ToList(), cancellationToken)
+            : await _applicationCrmContext.GetUserApplications(organisationId, CrmFields.ApplicationListToRead.ToList(), cancellationToken);
 
         var filtered = applications
             .OrderByDescending(x => x.lastExternalModificationOn)
@@ -91,7 +91,7 @@ public class ApplicationRepository : IApplicationRepository
             applicationStatus = ApplicationStatusMapper.MapToCrmStatus(application.Status),
         };
 
-        var id = await _applicationCrmContext.Save(dto, organisationId.Value, CrmFields.ApplicationToUpdate, cancellationToken);
+        var id = await _applicationCrmContext.Save(dto, organisationId.Value, CrmFields.ApplicationToUpdate.ToList(), cancellationToken);
         if (application.Id.IsNew)
         {
             var applicationId = AhpApplicationId.From(id);

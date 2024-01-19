@@ -1,5 +1,5 @@
 namespace HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
-internal sealed class FundingPageUrls
+internal static class FundingPageUrls
 {
     public const string StartFundingSuffix = "/funding/start-funding";
 

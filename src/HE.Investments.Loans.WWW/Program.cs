@@ -36,7 +36,7 @@ builder.Services.AddFeatureManagement();
 builder.Services.AddDocumentServiceModule();
 builder.Services.AddCommonBuildingBlocks();
 
-var mvcBuilder = builder.Services.AddControllersWithViews(x => x.Filters.Add<ExceptionFilter>());
+var mvcBuilder = builder.Services.AddControllersWithViews(x => x.Filters.Add<ExceptionFilterAttribute>());
 builder.AddIdentityProviderConfiguration(mvcBuilder);
 
 var app = builder.Build();
@@ -59,8 +59,6 @@ if (!app.Environment.IsDevelopment())
         }
     });
 
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    // app.UseHsts();
     app.Use((context, next) =>
     {
         // assume all non-development requests are https

@@ -6,25 +6,25 @@ using Microsoft.Extensions.DependencyInjection;
 namespace HE.Investments.Account.Shared.Authorization.Attributes;
 
 [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class)]
-public class AuthorizeWithoutLinkedOrganisationOnly : AuthorizeAttribute, IAsyncActionFilter
+public class AuthorizeWithoutLinkedOrganisationOnlyAttribute : AuthorizeAttribute, IAsyncActionFilter
 {
     public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
     {
         var accountUserContext = context.HttpContext.RequestServices.GetRequiredService<IAccountUserContext>();
         var accountRoutes = context.HttpContext.RequestServices.GetRequiredService<IAccountRoutes>();
 
-        if (accountUserContext.IsLogged is false)
+        if (!accountUserContext.IsLogged)
         {
             context.Result = accountRoutes.LandingPageForNotLoggedUser();
         }
 
-        if (await accountUserContext.IsLinkedWithOrganisation() is false)
+        if (!await accountUserContext.IsLinkedWithOrganisation())
         {
             await next();
             return;
         }
 
-        if (await accountUserContext.IsProfileCompleted() is false)
+        if (!await accountUserContext.IsProfileCompleted())
         {
             context.Result = accountRoutes.NotCompleteProfile();
             return;

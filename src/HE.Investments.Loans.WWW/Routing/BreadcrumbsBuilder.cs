@@ -9,7 +9,9 @@ public class BreadcrumbsBuilder : BreadcrumbsBuilderBase
 
     public BreadcrumbsBuilder WithOrganisations()
     {
-        // TODO: Fix link for AHP when organisations list will be ready
+#pragma warning disable S1135 // Track uses of "TODO" tags
+        //// TODO: Fix link for AHP when organisations list will be ready
+#pragma warning restore S1135 // Track uses of "TODO" tags
         AddBreadcrumb("Your Organisations");
 
         return this;
@@ -17,7 +19,9 @@ public class BreadcrumbsBuilder : BreadcrumbsBuilderBase
 
     public BreadcrumbsBuilder WithOrganisation(string name)
     {
-        // TODO: Fix link - for AHP should point to organisation with specific Id
+#pragma warning disable S1135 // Track uses of "TODO" tags
+        //// TODO: Fix link - for AHP should point to organisation with specific Id
+#pragma warning restore S1135 // Track uses of "TODO" tags
         AddBreadcrumb(name, nameof(UserOrganisationController.Index), GetControllerName(nameof(UserOrganisationController)));
 
         return this;

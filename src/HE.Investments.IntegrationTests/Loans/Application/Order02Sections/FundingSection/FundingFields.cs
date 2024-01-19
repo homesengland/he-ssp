@@ -1,5 +1,5 @@
 namespace HE.Investments.Loans.IntegrationTests.Loans.Application.Order02Sections.FundingSection;
-public class FundingFields
+public static class FundingFields
 {
     public const string GrossDevelopmentValue = "Gross Development Value";
 

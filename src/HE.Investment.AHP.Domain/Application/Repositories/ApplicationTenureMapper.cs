@@ -4,7 +4,7 @@ using HE.Investments.Common.CRM.Model;
 
 namespace HE.Investment.AHP.Domain.Application.Repositories;
 
-public class ApplicationTenureMapper
+public static class ApplicationTenureMapper
 {
     private static readonly IDictionary<Tenure, invln_tenure> Tenures = new Dictionary<Tenure, invln_tenure>
     {

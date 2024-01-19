@@ -21,8 +21,6 @@ namespace HE.Investments.Loans.BusinessLogic.Projects.Repositories;
 
 public class ApplicationProjectsRepository : IApplicationProjectsRepository, ILocalAuthorityRepository
 {
-    private readonly IHttpContextAccessor _httpContextAccessor;
-
     private readonly IDateTimeProvider _timeProvider;
 
     private readonly IOrganizationServiceAsync2 _serviceClient;
@@ -30,12 +28,10 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository, ILo
     private readonly ICacheService _cacheService;
 
     public ApplicationProjectsRepository(
-        IHttpContextAccessor httpContextAccessor,
         IDateTimeProvider dateTime,
         IOrganizationServiceAsync2 serviceClient,
         ICacheService cacheService)
     {
-        _httpContextAccessor = httpContextAccessor;
         _timeProvider = dateTime;
         _serviceClient = serviceClient;
         _cacheService = cacheService;
@@ -168,9 +164,9 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository, ILo
             typeOfSite = projectToSave.ProjectType?.Value,
             existingLegalCharges = projectToSave.ChargesDebt?.Exist,
             existingLegalChargesInformation = projectToSave.ChargesDebt?.Info,
-            numberOfAffordableHomes = projectToSave?.AffordableHomes?.Value,
-            projectHasStartDate = projectToSave?.StartDate?.Exists,
-            startDate = projectToSave?.StartDate?.Value,
+            numberOfAffordableHomes = projectToSave.AffordableHomes?.Value,
+            projectHasStartDate = projectToSave.StartDate?.Exists,
+            startDate = projectToSave.StartDate?.Value,
             planningPermissionStatus = projectToSave!.Status.IsProvided() ? PlanningPermissionStatusMapper.Map(projectToSave.PlanningPermissionStatus) : null,
             affordableHousing = projectToSave.AffordableHomes?.Value?.MapToBool(),
             completionStatus = SectionStatusMapper.Map(projectToSave.Status),

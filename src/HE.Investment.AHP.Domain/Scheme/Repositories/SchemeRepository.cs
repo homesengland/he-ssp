@@ -29,8 +29,8 @@ public class SchemeRepository : ISchemeRepository
     {
         var organisationId = userAccount.SelectedOrganisationId().Value;
         var application = userAccount.CanViewAllApplications()
-            ? await _repository.GetOrganisationApplicationById(id.Value, organisationId, CrmFields.SchemeToRead, cancellationToken)
-            : await _repository.GetUserApplicationById(id.Value, organisationId, CrmFields.SchemeToRead, cancellationToken);
+            ? await _repository.GetOrganisationApplicationById(id.Value, organisationId, CrmFields.SchemeToRead.ToList(), cancellationToken)
+            : await _repository.GetUserApplicationById(id.Value, organisationId, CrmFields.SchemeToRead.ToList(), cancellationToken);
 
         UploadedFile? file = null;
         if (includeFiles)
@@ -64,7 +64,7 @@ public class SchemeRepository : ISchemeRepository
             sharedOwnershipSalesRisk = entity.SalesRisk.Value,
         };
 
-        await _repository.Save(dto, organisationId.Value, CrmFields.SchemeToUpdate, cancellationToken);
+        await _repository.Save(dto, organisationId.Value, CrmFields.SchemeToUpdate.ToList(), cancellationToken);
 
         await entity.StakeholderDiscussions.SaveChanges(entity.Application.Id, _fileService, cancellationToken);
 

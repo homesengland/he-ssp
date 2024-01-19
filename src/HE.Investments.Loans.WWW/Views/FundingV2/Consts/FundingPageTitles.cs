@@ -1,6 +1,6 @@
 namespace HE.Investments.Loans.WWW.Views.FundingV2.Consts;
 
-public class FundingPageTitles
+public static class FundingPageTitles
 {
     public const string AbnormalCosts = "Does this project have any abnormal costs?";
     public const string AdditionalProjects = "Are you currently working on any additional projects?";

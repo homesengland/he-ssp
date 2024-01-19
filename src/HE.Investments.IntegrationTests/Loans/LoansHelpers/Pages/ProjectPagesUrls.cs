@@ -1,5 +1,5 @@
 namespace HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
-internal sealed class ProjectPagesUrls
+internal static class ProjectPagesUrls
 {
     public const string StartSuffix = "/project/start";
 

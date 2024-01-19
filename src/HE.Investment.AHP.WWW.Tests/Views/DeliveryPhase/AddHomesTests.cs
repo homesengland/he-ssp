@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.WWW.Models.Delivery;
 using HE.Investment.AHP.WWW.Views.Delivery.Const;
 using Microsoft.AspNetCore.Routing;
@@ -11,6 +12,7 @@ public class AddHomesTests : ViewTestBase
     private readonly RouteData _routeData = new(new RouteValueDictionary { { "applicationId", "123" }, { "deliveryPhaseId", "321" } });
 
     [Fact]
+    [SuppressMessage("Blocker Code Smell", "S2699:Tests should include assertions", Justification = "Assertion present")]
     public async Task ShouldDisplayView()
     {
         // given

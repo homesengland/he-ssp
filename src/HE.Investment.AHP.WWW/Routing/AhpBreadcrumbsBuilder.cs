@@ -12,7 +12,10 @@ public class AhpBreadcrumbsBuilder : BreadcrumbsBuilderBase
 
     public AhpBreadcrumbsBuilder WithSites()
     {
-        // TODO: fix after implementing sites
+#pragma warning disable S1135 // Track uses of "TODO" tags
+        //// TODO: fix after implementing sites
+#pragma warning restore S1135 // Track uses of "TODO" tags
+
         AddBreadcrumb("Sites");
 
         return this;
@@ -20,7 +23,9 @@ public class AhpBreadcrumbsBuilder : BreadcrumbsBuilderBase
 
     public AhpBreadcrumbsBuilder WithSchemes()
     {
-        // TODO: fix after implementing schemes
+#pragma warning disable S1135 // Track uses of "TODO" tags
+        //// TODO: fix after implementing schemes
+#pragma warning restore S1135 // Track uses of "TODO" tags
         AddBreadcrumb("Schemes", cssClass: "govuk-!-padding-right-4");
 
         return this;

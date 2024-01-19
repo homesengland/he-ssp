@@ -95,7 +95,7 @@ public class Order04CompleteFinancialDetails : AhpIntegrationTest
         // when & then
         await TestQuestionPage(
             FinancialDetailsPagesUrl.OtherApplicationCosts(ApplicationData.ApplicationId),
-            FinancialDetailsPageTitles.OtherApplicationCosts,
+            FinancialDetailsPageTitles.OtherSchemeCosts,
             FinancialDetailsPagesUrl.ExpectedContributionsSuffix,
             ("ExpectedWorksCosts", FinancialDetailsData.ExpectedWorksCosts.ToString(CultureInfo.InvariantCulture)),
             ("ExpectedOnCosts", FinancialDetailsData.ExpectedOnCosts.ToString(CultureInfo.InvariantCulture)));

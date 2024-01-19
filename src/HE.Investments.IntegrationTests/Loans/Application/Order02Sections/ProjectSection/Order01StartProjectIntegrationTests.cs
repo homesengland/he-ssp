@@ -29,6 +29,7 @@ public class Order01StartProjectIntegrationTests : IntegrationTest
 
     [SkippableFact(typeof(SkipException), Skip = LoansConfig.SkipTest)]
     [Order(1)]
+    [SuppressMessage("Blocker Code Smell", "S2699:Tests should include assertions", Justification = "Error in the Sonarlint library when using AngleSharp when using AngleSharp")]
     public async Task Order01_ShouldOpenProjectStartingPage_WhenCompanyStructureLinkIsClickedOnTaskListPage()
     {
         // given

@@ -12,7 +12,9 @@ public static class ProgrammesConsts
         nameof(LoanApplicationV2Controller.ApplicationDashboard),
         "LoanApplicationV2");
 
-    // TODO: fix params for AHP program
+#pragma warning disable S1135 // Track uses of "TODO" tags
+    //// TODO: fix params for AHP program
+#pragma warning restore S1135 // Track uses of "TODO" tags
     public static readonly ProgrammeModel AhpProgramme = new(
         "Affordable Homes Programme 2021-2026 Continuous Market Engagement",
         "You can start a new Affordable Homes Programme application here. This will not affect any of your previous applications.",

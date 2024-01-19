@@ -14,7 +14,7 @@ public sealed class FileEntry : IFile
 
     public Stream Body { get; }
 
-    public bool IsClosed => Body.CanRead == false;
+    public bool IsClosed => Body.CanRead;
 
     public DateTime LastModified { get; }
 

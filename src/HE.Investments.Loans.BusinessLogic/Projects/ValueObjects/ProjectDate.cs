@@ -17,8 +17,6 @@ public class ProjectDate : ValueObject
 
     public static ProjectDate FromString(string year, string month, string day)
     {
-        var operationResult = OperationResult.New();
-
         if (day.IsNotProvided() || month.IsNotProvided() || year.IsNotProvided())
         {
             OperationResult.New()

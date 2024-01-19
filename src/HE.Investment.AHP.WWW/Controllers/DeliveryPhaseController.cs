@@ -13,9 +13,11 @@ using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Validators;
+using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Routing;
+using HE.Investments.Common.WWW.Utils;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -407,8 +409,11 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     {
         var deliveryPhase = currentState != DeliveryPhaseWorkflowState.Create
             ? await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(this.GetApplicationIdFromRoute(), this.GetDeliveryPhaseIdFromRoute()), CancellationToken.None)
-            : new DeliveryPhaseDetails(string.Empty, string.Empty, string.Empty, SectionStatus.Undefined);
-        return new DeliveryPhaseWorkflow(currentState, deliveryPhase);
+            : new DeliveryPhaseDetails(string.Empty, string.Empty, string.Empty, SectionStatus.NotStarted);
+
+        var isReadOnly = !await _accountAccessContext.CanEditApplication();
+
+        return new DeliveryPhaseWorkflow(currentState, deliveryPhase, isReadOnly);
     }
 
     private async Task<IActionResult> DisplayChecksAnswersPage(CancellationToken cancellationToken, IEnumerable<string>? errorMessages = null)
@@ -425,7 +430,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     {
         var applicationId = this.GetApplicationIdFromRoute();
         var deliveryPhaseId = this.GetDeliveryPhaseIdFromRoute();
-        var deliveryPhaseDetails = await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(applicationId, deliveryPhaseId), cancellationToken);
+        var deliveryPhaseDetails = await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(applicationId, deliveryPhaseId, true), cancellationToken);
         var deliveryPhaseHomes = await _mediator.Send(new GetDeliveryPhaseHomesQuery(applicationId, deliveryPhaseId), cancellationToken);
         var isEditable = await _accountAccessContext.CanEditApplication();
         var sections = _deliveryPhaseSummaryViewModelFactory.CreateSummary(applicationId, deliveryPhaseDetails, deliveryPhaseHomes, Url, isEditable);
@@ -441,10 +446,10 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     }
 
     private MilestoneViewModel CreateMilestoneViewModel(
-        string applicationName,
-        string? deliveryPhaseName,
-        DateDetails? milestoneDate,
-        DateDetails? milestonePaymentDate)
+            string applicationName,
+            string? deliveryPhaseName,
+            DateDetails? milestoneDate,
+            DateDetails? milestonePaymentDate)
     {
         return new MilestoneViewModel(
             this.GetApplicationIdFromRoute().Value,
@@ -483,7 +488,16 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         return await this.ExecuteCommand(
             _mediator,
             command,
-            () => ContinueWithRedirect(new { applicationId = applicationId.Value, deliveryPhaseId }),
+            async () =>
+            {
+                var action = HttpContext.Request.Form["action"];
+                if (action == GenericMessages.SaveAndReturn)
+                {
+                    return Url.RedirectToTaskList(applicationId.Value);
+                }
+
+                return await ContinueWithRedirect(new { applicationId = applicationId.Value, deliveryPhaseId });
+            },
             async () =>
             {
                 var deliveryPhaseDetails = await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(applicationId, deliveryPhaseId), cancellationToken);
