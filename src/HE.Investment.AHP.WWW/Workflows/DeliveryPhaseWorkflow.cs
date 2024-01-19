@@ -1,4 +1,6 @@
 using HE.Investment.AHP.Contract.Delivery;
+using HE.Investments.Common.Contract;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Routing;
 using Stateless;
 
@@ -9,10 +11,12 @@ public class DeliveryPhaseWorkflow : IStateRouting<DeliveryPhaseWorkflowState>
     private readonly StateMachine<DeliveryPhaseWorkflowState, Trigger> _machine;
 
     private readonly DeliveryPhaseDetails _model;
+    private readonly bool _isReadOnly;
 
-    public DeliveryPhaseWorkflow(DeliveryPhaseWorkflowState currentSiteWorkflowState, DeliveryPhaseDetails model)
+    public DeliveryPhaseWorkflow(DeliveryPhaseWorkflowState currentSiteWorkflowState, DeliveryPhaseDetails model, bool isReadOnly)
     {
         _model = model;
+        _isReadOnly = isReadOnly;
         _machine = new StateMachine<DeliveryPhaseWorkflowState, Trigger>(currentSiteWorkflowState);
         ConfigureTransitions();
     }
@@ -26,6 +30,32 @@ public class DeliveryPhaseWorkflow : IStateRouting<DeliveryPhaseWorkflowState>
     public Task<bool> StateCanBeAccessed(DeliveryPhaseWorkflowState nextState)
     {
         return Task.FromResult(CanBeAccessed(nextState));
+    }
+
+    public DeliveryPhaseWorkflowState CurrentState(DeliveryPhaseWorkflowState targetState)
+    {
+        if (_isReadOnly)
+        {
+            return DeliveryPhaseWorkflowState.CheckAnswers;
+        }
+
+        if (targetState != DeliveryPhaseWorkflowState.Name || _model.Status == SectionStatus.NotStarted)
+        {
+            return targetState;
+        }
+
+        return _model switch
+        {
+            { TypeOfHomes: var x } when x.IsNotProvided() => DeliveryPhaseWorkflowState.TypeOfHomes,
+            { BuildActivityType: var x } when x.IsNotProvided() => DeliveryPhaseWorkflowState.BuildActivityType,
+            { } when _model.IsReconfiguringExistingNeeded && _model.ReconfiguringExisting.IsNotProvided() => DeliveryPhaseWorkflowState.ReconfiguringExisting,
+            { NumberOfHomes: var x } when x.IsNotProvided() => DeliveryPhaseWorkflowState.AddHomes,
+            { } when (_model.AcquisitionDate.IsNotProvided() || _model.AcquisitionPaymentDate.IsNotProvided()) && AllMilestonesAvailable() => DeliveryPhaseWorkflowState.AcquisitionMilestone,
+            { } when (_model.StartOnSiteDate.IsNotProvided() || _model.StartOnSitePaymentDate.IsNotProvided()) && AllMilestonesAvailable() => DeliveryPhaseWorkflowState.StartOnSiteMilestone,
+            { } when _model.PracticalCompletionDate.IsNotProvided() || _model.PracticalCompletionPaymentDate.IsNotProvided() => DeliveryPhaseWorkflowState.PracticalCompletionMilestone,
+            { } when _model.IsAdditionalPaymentRequested.IsNotProvided() && IsUnregisteredBody() => DeliveryPhaseWorkflowState.UnregisteredBodyFollowUp,
+            _ => DeliveryPhaseWorkflowState.CheckAnswers,
+        };
     }
 
     public bool CanBeAccessed(DeliveryPhaseWorkflowState state)

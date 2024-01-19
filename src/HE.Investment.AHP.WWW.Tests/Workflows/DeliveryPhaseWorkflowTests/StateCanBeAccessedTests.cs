@@ -193,6 +193,7 @@ public class StateCanBeAccessedTests
                 IsUnregisteredBody = isUnregisteredBody,
                 IsOnlyCompletionMilestone = isOnlyCompletionMilestone,
                 IsReconfiguringExistingNeeded = isReconfiguringExistingNeeded,
-            });
+            },
+            false);
     }
 }
