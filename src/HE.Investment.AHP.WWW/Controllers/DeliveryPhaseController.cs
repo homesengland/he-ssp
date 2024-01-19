@@ -55,6 +55,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     public async Task<IActionResult> Create([FromRoute] string applicationId)
     {
         var application = await _mediator.Send(new GetApplicationQuery(AhpApplicationId.From(applicationId)));
+
         var model = new DeliveryPhaseNameViewModel(applicationId, null, application.Name, null, nameof(this.Create));
         return View("Name", model);
     }
@@ -72,7 +73,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
             return View("Name", model);
         }
 
-        return await Continue(new { applicationId, deliveryPhaseId = result.ReturnedData?.Value });
+        return await ContinueWithAllRedirects(new { applicationId, deliveryPhaseId = result.ReturnedData?.Value });
     }
 
     [HttpGet("{deliveryPhaseId}/name")]
@@ -102,7 +103,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
             return View("Name", model);
         }
 
-        return await Continue(new { applicationId, deliveryPhaseId });
+        return await ContinueWithAllRedirects(new { applicationId, deliveryPhaseId });
     }
 
     [HttpGet("{deliveryPhaseId}/details")]
@@ -123,7 +124,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         return await ExecuteCommand(
             new ProvideTypeOfHomesCommand(
                 AhpApplicationId.From(applicationId),
-                this.GetDeliveryPhaseIdFromRoute(),
+                new DeliveryPhaseId(deliveryPhaseId),
                 deliveryPhaseDetails.TypeOfHomes),
             nameof(Details),
             savedModel => savedModel with { TypeOfHomes = deliveryPhaseDetails.TypeOfHomes },
@@ -152,7 +153,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         return await ExecuteCommand(
             new ProvideBuildActivityCommand(
                 AhpApplicationId.From(applicationId),
-                this.GetDeliveryPhaseIdFromRoute(),
+                new DeliveryPhaseId(deliveryPhaseId),
                 deliveryPhaseDetails.BuildActivityType),
             nameof(BuildActivityType),
             savedModel => savedModel with { BuildActivityType = deliveryPhaseDetails.BuildActivityType },
@@ -173,7 +174,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         return await this.ExecuteCommand(
             _mediator,
             new ProvideDeliveryPhaseHomesCommand(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId), model.HomesToDeliver ?? new Dictionary<string, string?>()),
-            () => ContinueWithRedirect(new { applicationId, deliveryPhaseId }),
+            () => ContinueWithAllRedirects(new { applicationId, deliveryPhaseId }),
             async () => View("AddHomes", await new AddHomesModelFactory(_mediator).Create(applicationId, deliveryPhaseId, model, cancellationToken)),
             cancellationToken);
     }
@@ -220,7 +221,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     [WorkflowState(DeliveryPhaseWorkflowState.SummaryOfDelivery)]
     public async Task<IActionResult> SummaryOfDelivery([FromRoute] string applicationId, string deliveryPhaseId)
     {
-        return await ContinueWithRedirect(new { applicationId, deliveryPhaseId });
+        return await ContinueWithAllRedirects(new { applicationId, deliveryPhaseId });
     }
 
     [HttpGet("{deliveryPhaseId}/remove")]
@@ -488,16 +489,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         return await this.ExecuteCommand(
             _mediator,
             command,
-            async () =>
-            {
-                var action = HttpContext.Request.Form["action"];
-                if (action == GenericMessages.SaveAndReturn)
-                {
-                    return Url.RedirectToTaskList(applicationId.Value);
-                }
-
-                return await ContinueWithRedirect(new { applicationId = applicationId.Value, deliveryPhaseId });
-            },
+            async () => await ContinueWithAllRedirects(new { applicationId = applicationId.Value, deliveryPhaseId }),
             async () =>
             {
                 var deliveryPhaseDetails = await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(applicationId, deliveryPhaseId), cancellationToken);
@@ -506,5 +498,18 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
                 return View(viewName, model);
             },
             cancellationToken);
+    }
+
+    private async Task<IActionResult> ContinueWithAllRedirects(object routeData)
+    {
+        var action = HttpContext.Request.Form["action"];
+        var applicationId = this.GetApplicationIdFromRoute();
+
+        if (action == GenericMessages.SaveAndReturn)
+        {
+            return Url.RedirectToTaskList(applicationId.Value);
+        }
+
+        return await ContinueWithRedirect(routeData);
     }
 }

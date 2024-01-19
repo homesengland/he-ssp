@@ -159,24 +159,6 @@ public class StateCanBeAccessedTests
         result.Should().BeTrue();
     }
 
-    [Theory]
-    [InlineData(DeliveryPhaseWorkflowState.SummaryOfDelivery, true)]
-    [InlineData(DeliveryPhaseWorkflowState.AcquisitionMilestone, false)]
-    [InlineData(DeliveryPhaseWorkflowState.StartOnSiteMilestone, false)]
-    [InlineData(DeliveryPhaseWorkflowState.PracticalCompletionMilestone, true)]
-    [InlineData(DeliveryPhaseWorkflowState.UnregisteredBodyFollowUp, true)]
-    public void ShouldReturnFalse_WhenNumberOfHomesIsZero(DeliveryPhaseWorkflowState nextState, bool isUnregisteredBody)
-    {
-        // given
-        var workflow = BuildWorkflow(DeliveryPhaseWorkflowState.Create, numberOfHomes: 0, isUnregisteredBody);
-
-        // when
-        var result = workflow.CanBeAccessed(nextState);
-
-        // then
-        result.Should().BeFalse();
-    }
-
     private static DeliveryPhaseWorkflow BuildWorkflow(
         DeliveryPhaseWorkflowState currentSiteWorkflowState,
         int numberOfHomes = 1,

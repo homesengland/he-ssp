@@ -218,7 +218,7 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
 
     private void ResetTypeOfHomesDependencies(TypeOfHomes? newTypeOfHomes)
     {
-        ProvideBuildActivity(BuildActivity.WithClearedAnswer());
+        ProvideBuildActivity(BuildActivity.WithClearedAnswer(newTypeOfHomes.GetValueOfFirstValue()));
         ReconfiguringExisting = null;
     }
 

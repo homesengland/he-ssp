@@ -40,7 +40,7 @@ public class DeliveryPhaseWorkflow : IStateRouting<DeliveryPhaseWorkflowState>
             return DeliveryPhaseWorkflowState.CheckAnswers;
         }
 
-        if (targetState != DeliveryPhaseWorkflowState.Name || _model.Status == SectionStatus.NotStarted)
+        if (targetState != DeliveryPhaseWorkflowState.Create || _model.Status == SectionStatus.NotStarted)
         {
             return targetState;
         }
@@ -48,9 +48,10 @@ public class DeliveryPhaseWorkflow : IStateRouting<DeliveryPhaseWorkflowState>
 #pragma warning disable S2589 // Boolean expressions should not be gratuitous
         return _model switch
         {
+            { Name: var x } when x.IsNotProvided() => DeliveryPhaseWorkflowState.Name,
             { TypeOfHomes: var x } when x.IsNotProvided() => DeliveryPhaseWorkflowState.TypeOfHomes,
             { BuildActivityType: var x } when x.IsNotProvided() => DeliveryPhaseWorkflowState.BuildActivityType,
-            { } when _model.IsReconfiguringExistingNeeded && _model.ReconfiguringExisting.IsNotProvided() => DeliveryPhaseWorkflowState.ReconfiguringExisting,
+            { IsReconfiguringExistingNeeded: true } when _model.ReconfiguringExisting.IsNotProvided() => DeliveryPhaseWorkflowState.ReconfiguringExisting,
             { NumberOfHomes: var x } when x.IsNotProvided() => DeliveryPhaseWorkflowState.AddHomes,
             { } when (_model.AcquisitionDate.IsNotProvided() || _model.AcquisitionPaymentDate.IsNotProvided()) && AllMilestonesAvailable() => DeliveryPhaseWorkflowState.AcquisitionMilestone,
             { } when (_model.StartOnSiteDate.IsNotProvided() || _model.StartOnSitePaymentDate.IsNotProvided()) && AllMilestonesAvailable() => DeliveryPhaseWorkflowState.StartOnSiteMilestone,
@@ -71,9 +72,9 @@ public class DeliveryPhaseWorkflow : IStateRouting<DeliveryPhaseWorkflowState>
             DeliveryPhaseWorkflowState.BuildActivityType => true,
             DeliveryPhaseWorkflowState.ReconfiguringExisting => _model.IsReconfiguringExistingNeeded,
             DeliveryPhaseWorkflowState.AddHomes => true,
-            DeliveryPhaseWorkflowState.SummaryOfDelivery => _model.NumberOfHomes > 0,
-            DeliveryPhaseWorkflowState.AcquisitionMilestone => AllMilestonesAvailable() && _model.NumberOfHomes > 0,
-            DeliveryPhaseWorkflowState.StartOnSiteMilestone => AllMilestonesAvailable() && _model.NumberOfHomes > 0,
+            DeliveryPhaseWorkflowState.SummaryOfDelivery => true,
+            DeliveryPhaseWorkflowState.AcquisitionMilestone => AllMilestonesAvailable(),
+            DeliveryPhaseWorkflowState.StartOnSiteMilestone => AllMilestonesAvailable(),
             DeliveryPhaseWorkflowState.PracticalCompletionMilestone => _model.NumberOfHomes > 0,
             DeliveryPhaseWorkflowState.UnregisteredBodyFollowUp => IsUnregisteredBody() && _model.NumberOfHomes > 0,
             DeliveryPhaseWorkflowState.CheckAnswers => true,
