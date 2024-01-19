@@ -109,7 +109,7 @@ namespace HE.CRM.Common.DtoMapping
                 howMuchReceivedFromLotteryFunding = application.invln_grantsfromthelottery?.Value,
                 howMuchReceivedFromOtherPublicBodies = application.invln_grantsfromotherpublicbodies?.Value,
                 referenceNumber = application.invln_applicationid,
-                applicationStatus = application.StatusCode?.Value,
+                applicationStatus = application.invln_ExternalStatus?.Value,
                 contactExternalId = contactExternalId,
             };
             if (application.Id != null)
