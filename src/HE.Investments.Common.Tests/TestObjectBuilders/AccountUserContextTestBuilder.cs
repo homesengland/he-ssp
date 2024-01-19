@@ -1,11 +1,11 @@
-using HE.Investments.Account.Domain.Tests.User.TestData;
 using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.Entities;
+using HE.Investments.Common.Tests.TestData;
 using HE.Investments.TestsUtils.TestFramework;
 using Moq;
 
-namespace HE.Investments.Account.Domain.Tests.User.TestObjectBuilder;
+namespace HE.Investments.Common.Tests.TestObjectBuilders;
 
 public class AccountUserContextTestBuilder
 {

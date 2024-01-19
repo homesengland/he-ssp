@@ -86,22 +86,22 @@ public class ApplicationEntity : DomainEntity
         Status = _modificationTracker.Change(Status, ApplicationStatus.ApplicationSubmitted);
     }
 
-    public void Hold(IApplicationHold applicationHold, HoldReason? newHoldReason, OrganisationId organisationId, CancellationToken cancellationToken)
+    public async Task Hold(IApplicationHold applicationHold, HoldReason? newHoldReason, OrganisationId organisationId, CancellationToken cancellationToken)
     {
         Status = _modificationTracker.Change(Status, ApplicationStatus.OnHold);
         HoldReason = _modificationTracker.Change(HoldReason, newHoldReason);
 
-        applicationHold.Hold(this, organisationId, cancellationToken);
+        await applicationHold.Hold(this, organisationId, cancellationToken);
 
         Publish(new ApplicationHasBeenPutOnHoldEvent());
     }
 
-    public void Withdraw(IApplicationWithdraw applicationWithdraw, WithdrawReason? newWithdrawReason, OrganisationId organisationId, CancellationToken cancellationToken)
+    public async Task Withdraw(IApplicationWithdraw applicationWithdraw, WithdrawReason? newWithdrawReason, OrganisationId organisationId, CancellationToken cancellationToken)
     {
         Status = _modificationTracker.Change(Status, ApplicationStatus.Withdrawn);
         WithdrawReason = _modificationTracker.Change(WithdrawReason, newWithdrawReason);
 
-        applicationWithdraw.Withdraw(this, organisationId, cancellationToken);
+        await applicationWithdraw.Withdraw(this, organisationId, cancellationToken);
 
         Publish(new ApplicationHasBeenWithdrawnEvent());
     }

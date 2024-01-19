@@ -205,6 +205,12 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
             cancellationToken);
     }
 
+    [HttpGet("{applicationId}/back")]
+    public async Task<IActionResult> Back([FromRoute] string applicationId, ApplicationWorkflowState currentPage)
+    {
+        return await Back(currentPage, new { applicationId });
+    }
+
     protected override async Task<IStateRouting<ApplicationWorkflowState>> Routing(ApplicationWorkflowState currentState, object? routeData = null)
     {
         var isReadOnly = !await _accountAccessContext.CanEditApplication();
