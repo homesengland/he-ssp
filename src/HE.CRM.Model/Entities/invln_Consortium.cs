@@ -57,13 +57,18 @@ namespace DataverseModel
 			public const string CreatedOnBehalfBy = "createdonbehalfby";
 			public const string CreatedOnBehalfByName = "createdonbehalfbyname";
 			public const string ImportSequenceNumber = "importsequencenumber";
+			public const string invln_consortium_invln_Externalcommses = "invln_consortium_invln_Externalcommses";
+			public const string invln_consortium_invln_govnotifyemails = "invln_consortium_invln_govnotifyemails";
 			public const string invln_consortium_LeadPartner_account = "invln_consortium_LeadPartner_account";
+			public const string invln_consortium_Programme_invln_programme = "invln_consortium_Programme_invln_programme";
 			public const string invln_ConsortiumId = "invln_consortiumid";
 			public const string Id = "invln_consortiumid";
 			public const string invln_consortiummember_Consortium_invln_consort = "invln_consortiummember_Consortium_invln_consort";
 			public const string invln_LeadPartner = "invln_leadpartner";
 			public const string invln_LeadPartnerName = "invln_leadpartnername";
 			public const string invln_Name = "invln_name";
+			public const string invln_Programme = "invln_programme";
+			public const string invln_ProgrammeName = "invln_programmename";
 			public const string lk_invln_consortium_createdby = "lk_invln_consortium_createdby";
 			public const string lk_invln_consortium_createdonbehalfby = "lk_invln_consortium_createdonbehalfby";
 			public const string lk_invln_consortium_modifiedby = "lk_invln_consortium_modifiedby";
@@ -274,6 +279,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_Name");
 				this.SetAttributeValue("invln_name", value);
 				this.OnPropertyChanged("invln_Name");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_programme")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_Programme
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_programme");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_Programme");
+				this.SetAttributeValue("invln_programme", value);
+				this.OnPropertyChanged("invln_Programme");
 			}
 		}
 		
@@ -503,6 +525,46 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// 1:N invln_consortium_invln_Externalcommses
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_consortium_invln_Externalcommses")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_Externalcomms> invln_consortium_invln_Externalcommses
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_Externalcomms>("invln_consortium_invln_Externalcommses", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_consortium_invln_Externalcommses");
+				this.SetRelatedEntities<DataverseModel.invln_Externalcomms>("invln_consortium_invln_Externalcommses", null, value);
+				this.OnPropertyChanged("invln_consortium_invln_Externalcommses");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_consortium_invln_govnotifyemails
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_consortium_invln_govnotifyemails")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_govnotifyemail> invln_consortium_invln_govnotifyemails
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_govnotifyemail>("invln_consortium_invln_govnotifyemails", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_consortium_invln_govnotifyemails");
+				this.SetRelatedEntities<DataverseModel.invln_govnotifyemail>("invln_consortium_invln_govnotifyemails", null, value);
+				this.OnPropertyChanged("invln_consortium_invln_govnotifyemails");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N invln_consortiummember_Consortium_invln_consort
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_consortiummember_Consortium_invln_consort")]
@@ -540,6 +602,27 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_consortium_LeadPartner_account");
 				this.SetRelatedEntity<DataverseModel.Account>("invln_consortium_LeadPartner_account", null, value);
 				this.OnPropertyChanged("invln_consortium_LeadPartner_account");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_consortium_Programme_invln_programme
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_programme")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_consortium_Programme_invln_programme")]
+		public DataverseModel.invln_programme invln_consortium_Programme_invln_programme
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.invln_programme>("invln_consortium_Programme_invln_programme", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_consortium_Programme_invln_programme");
+				this.SetRelatedEntity<DataverseModel.invln_programme>("invln_consortium_Programme_invln_programme", null, value);
+				this.OnPropertyChanged("invln_consortium_Programme_invln_programme");
 			}
 		}
 		

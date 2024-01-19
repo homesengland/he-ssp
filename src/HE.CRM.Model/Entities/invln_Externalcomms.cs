@@ -131,6 +131,7 @@ namespace DataverseModel
 			public const string From = "from";
 			public const string ImportSequenceNumber = "importsequencenumber";
 			public const string InstanceTypeCode = "instancetypecode";
+			public const string invln_consortium_invln_Externalcommses = "invln_consortium_invln_Externalcommses";
 			public const string invln_externalcomms_systemuser_createdby = "invln_externalcomms_systemuser_createdby";
 			public const string invln_externalcomms_systemuser_createdonbehalfby = "invln_externalcomms_systemuser_createdonbehalfby";
 			public const string invln_externalcomms_systemuser_modifiedby = "invln_externalcomms_systemuser_modifiedby";
@@ -1693,6 +1694,27 @@ namespace DataverseModel
 				this.OnPropertyChanging("contact_invln_Externalcommses");
 				this.SetRelatedEntity<DataverseModel.Contact>("contact_invln_Externalcommses", null, value);
 				this.OnPropertyChanged("contact_invln_Externalcommses");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_consortium_invln_Externalcommses
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_consortium_invln_Externalcommses")]
+		public DataverseModel.invln_Consortium invln_consortium_invln_Externalcommses
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.invln_Consortium>("invln_consortium_invln_Externalcommses", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_consortium_invln_Externalcommses");
+				this.SetRelatedEntity<DataverseModel.invln_Consortium>("invln_consortium_invln_Externalcommses", null, value);
+				this.OnPropertyChanged("invln_consortium_invln_Externalcommses");
 			}
 		}
 		

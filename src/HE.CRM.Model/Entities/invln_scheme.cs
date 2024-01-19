@@ -164,6 +164,8 @@ namespace DataverseModel
 			public const string invln_gpuasapercentageoftheregionalbenchmark = "invln_gpuasapercentageoftheregionalbenchmark";
 			public const string invln_gpuaspercentageofareaaverage = "invln_gpuaspercentageofareaaverage";
 			public const string invln_gpuaspercentageofareaaveragescore = "invln_gpuaspercentageofareaaveragescore";
+			public const string invln_GrantAmountRequested = "invln_grantamountrequested";
+			public const string invln_grantamountrequested_Base = "invln_grantamountrequested_base";
 			public const string invln_grantasaoftotalschemecosts = "invln_grantasaoftotalschemecosts";
 			public const string invln_grantasapercentageoftotalschemecosts = "invln_grantasapercentageoftotalschemecosts";
 			public const string invln_grantasapercentageoftotalschemecostsScore = "invln_grantasapercentageoftotalschemecostsscore";
@@ -211,6 +213,7 @@ namespace DataverseModel
 			public const string invln_pplicationid = "invln_pplicationid";
 			public const string invln_programmelookup = "invln_programmelookup";
 			public const string invln_programmelookupName = "invln_programmelookupname";
+			public const string invln_ProviderName = "invln_providername";
 			public const string invln_publicland = "invln_publicland";
 			public const string invln_recycledcapitalgrantfund = "invln_recycledcapitalgrantfund";
 			public const string invln_recycledcapitalgrantfund_Base = "invln_recycledcapitalgrantfund_base";
@@ -903,6 +906,36 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_grantamountrequested")]
+		public Microsoft.Xrm.Sdk.Money invln_GrantAmountRequested
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_grantamountrequested");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_GrantAmountRequested");
+				this.SetAttributeValue("invln_grantamountrequested", value);
+				this.OnPropertyChanged("invln_GrantAmountRequested");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Grant Amount Requested in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_grantamountrequested_base")]
+		public Microsoft.Xrm.Sdk.Money invln_grantamountrequested_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_grantamountrequested_base");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_grantasaoftotalschemecosts")]
 		public System.Nullable<decimal> invln_grantasaoftotalschemecosts
 		{
@@ -1498,6 +1531,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_programmelookup");
 				this.SetAttributeValue("invln_programmelookup", value);
 				this.OnPropertyChanged("invln_programmelookup");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_providername")]
+		public string invln_ProviderName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("invln_providername");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_ProviderName");
+				this.SetAttributeValue("invln_providername", value);
+				this.OnPropertyChanged("invln_ProviderName");
 			}
 		}
 		

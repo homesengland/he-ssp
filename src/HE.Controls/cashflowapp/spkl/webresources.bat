@@ -1,5 +1,5 @@
 @echo off
-set package_root=..\..\packages\spkl.1.0.640\
+set package_root=..\..\..\packages\spkl.1.0.640\
 REM Find the spkl in the package folder (irrespective of version)
 For /R %package_root% %%G IN (spkl.exe) do (
 	IF EXIST "%%G" (set spkl_path=%%G

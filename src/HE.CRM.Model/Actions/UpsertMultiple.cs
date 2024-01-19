@@ -50,6 +50,5 @@ namespace DataverseModel
 			this.Targets = default(Microsoft.Xrm.Sdk.EntityCollection);
 		}
 	}
-
 }
 #pragma warning restore CS1591
