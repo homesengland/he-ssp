@@ -8,7 +8,7 @@ public static class FinancialDetailsPageTitles
 
     public const string LandValuePage = "Land value";
 
-    public const string OtherApplicationCosts = "Other application costs";
+    public const string OtherSchemeCosts = "Other scheme costs";
 
     public const string ExpectedContributions = "Your expected contributions to the scheme";
 
