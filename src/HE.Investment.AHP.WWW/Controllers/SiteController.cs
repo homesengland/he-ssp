@@ -164,7 +164,29 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
-            return View("Section106OAdditionalAffordableHousing", model);
+            return View("Section106AdditionalAffordableHousing", model);
+        }
+
+        return await Continue(new { siteId });
+    }
+
+    [HttpGet("{siteId}/section-106-capital-funding-eligibility")]
+    [WorkflowState(SiteWorkflowState.Section106CapitalFundingEligibility)]
+    public async Task<IActionResult> Section106CapitalFundingEligibility([FromRoute] string siteId, CancellationToken cancellationToken)
+    {
+        var siteModel = await _mediator.Send(new GetSiteQuery(siteId), cancellationToken);
+        return View("Section106CapitalFundingEligibility", siteModel);
+    }
+
+    [HttpPost("{siteId}/section-106-capital-funding-eligibility")]
+    [WorkflowState(SiteWorkflowState.Section106CapitalFundingEligibility)]
+    public async Task<IActionResult> Section106CapitalFundingEligibility([FromRoute] string siteId, SiteModel model, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new ProvideSection106CapitalFundingEligibilityCommand(new SiteId(siteId), model.Section106CapitalFundingEligibility), cancellationToken);
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+            return View("Section106CapitalFundingEligibility", model);
         }
 
         return await Continue(new { siteId });
