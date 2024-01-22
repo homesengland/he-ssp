@@ -2,6 +2,7 @@ using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Commands;
 using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Contract.Site;
+using HE.Investment.AHP.WWW.Extensions;
 using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investment.AHP.WWW.Models.Application.Factories;
 using HE.Investment.AHP.WWW.Workflows;
@@ -212,9 +213,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
 
     protected override async Task<IStateRouting<ApplicationWorkflowState>> Routing(ApplicationWorkflowState currentState, object? routeData = null)
     {
-        var id = Request.RouteValues.FirstOrDefault(x => x.Key == "applicationId").Value as string;
-
-        var applicationId = !string.IsNullOrEmpty(id) ? AhpApplicationId.From(id) : null;
+        var applicationId = this.TryGetApplicationIdFromRoute();
         var isReadOnly = !await _accountAccessContext.CanEditApplication();
 
         return new ApplicationWorkflow(
