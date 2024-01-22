@@ -4,4 +4,4 @@ using MediatR;
 
 namespace HE.Investment.AHP.Contract.Application.Commands;
 
-public record CreateApplicationCommand(SiteId siteId, string? Name, Tenure Tenure) : IRequest<OperationResult<AhpApplicationId>>;
+public record CreateApplicationCommand(SiteId SiteId, string? Name, Tenure Tenure) : IRequest<OperationResult<AhpApplicationId>>;
