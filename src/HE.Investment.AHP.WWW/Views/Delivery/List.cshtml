@@ -57,7 +57,7 @@
                     <tr class="govuk-table__row" id="delivery-phase-@Model.DeliveryPhases[index].DeliveryPhaseId">
                         <td class="govuk-table__cell">
                             <gds-link class="govuk-link--no-visited-state"
-                                      href="@Url.Action("Name", "DeliveryPhase", new { applicationId, deliveryPhaseId = Model.DeliveryPhases[index].DeliveryPhaseId })">
+                                      href="@Url.Action("Start", "DeliveryPhase", new { applicationId, deliveryPhaseId = Model.DeliveryPhases[index].DeliveryPhaseId })">
                                 @(Model.DeliveryPhases[index].DeliveryPhaseName)
                             </gds-link>
                         </td>
