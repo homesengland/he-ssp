@@ -122,7 +122,7 @@ public class NextStateTests
     }
 
     [Theory]
-    [InlineData(SiteWorkflowState.Section106CapitalFundingEligibility, SiteWorkflowState.Ineligable)]
+    [InlineData(SiteWorkflowState.Section106CapitalFundingEligibility, SiteWorkflowState.Section106Ineligible)]
     public async Task ShouldReturnNextState_WhenContinueTriggerExecutedWithSection106CapitalFundingEligibilityTrue(SiteWorkflowState current, SiteWorkflowState expectedNext)
     {
         // given
