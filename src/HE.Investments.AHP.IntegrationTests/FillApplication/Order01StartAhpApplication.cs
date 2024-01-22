@@ -41,11 +41,10 @@ public class Order01StartAhpApplication : AhpIntegrationTest
     public async Task Order02_ShouldNavigateToApplicationLandingPage()
     {
         // given
-        var applicationListPage = await GetCurrentPage(MainPagesUrl.ApplicationList);
-        applicationListPage.HasGdsLinkButton("start-application-link", out var startApplicationLink);
+        var startButton = (await GetCurrentPage(MainPagesUrl.ApplicationList)).GetLinkButton("Start new application");
 
         // when
-        var applicationNamePage = await TestClient.NavigateTo(startApplicationLink);
+        var applicationNamePage = await TestClient.NavigateTo(startButton);
 
         // then
         applicationNamePage
@@ -60,11 +59,10 @@ public class Order01StartAhpApplication : AhpIntegrationTest
     public async Task Order03_ShouldNavigateToSiteSelectPage()
     {
         // given
-        var applicationListPage = await GetCurrentPage(ApplicationPagesUrl.Start);
-        applicationListPage.HasGdsLinkButton("continue-button", out var startApplicationLink);
+        var startButton = (await GetCurrentPage(ApplicationPagesUrl.Start)).GetStartButton();
 
         // when
-        var siteSelectPage = await TestClient.NavigateTo(startApplicationLink);
+        var siteSelectPage = await TestClient.SubmitButton(startButton);
 
         // then
         siteSelectPage

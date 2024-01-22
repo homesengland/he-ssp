@@ -117,7 +117,7 @@ public class WithdrawSubmittedApplicationIntegrationTests : IntegrationTest
         var applicationDashboardPage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
 
         // then
-        applicationDashboardPage.DoesNotHaveGdsButton("withdraw-application");
+        applicationDashboardPage.HasNoButton("Withdraw");
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]

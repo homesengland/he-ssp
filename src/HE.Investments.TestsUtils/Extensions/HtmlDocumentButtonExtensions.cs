@@ -1,62 +1,103 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
-using ElementExtensions = HE.Investments.TestsUtils.Assertions.ElementExtensions;
 
 namespace HE.Investments.TestsUtils.Extensions;
 
 public static class HtmlDocumentButtonExtensions
 {
-    public static IHtmlDocument HasGdsSubmitButton(this IHtmlDocument htmlDocument, string elementId, out IHtmlButtonElement htmlButtonElement)
+    public static IHtmlDocument HasContinueButton(this IHtmlDocument htmlDocument)
     {
-        htmlButtonElement = htmlDocument.GetGdsSubmitButtonById(elementId);
+        GetContinueButton(htmlDocument);
         return htmlDocument;
     }
 
-    public static IHtmlDocument HasGdsLinkButton(this IHtmlDocument htmlDocument, string elementId, out IHtmlAnchorElement htmlAnchorElement)
+    public static IHtmlButtonElement GetContinueButton(this IHtmlDocument htmlDocument)
     {
-        htmlAnchorElement = htmlDocument.GetGdsLinkButtonById(elementId);
+        return GetSubmitButton(htmlDocument, "Continue");
+    }
+
+    public static IHtmlDocument HasSaveAndContinueButton(this IHtmlDocument htmlDocument)
+    {
+        GetSubmitButton(htmlDocument, "Save and continue");
         return htmlDocument;
     }
 
-    public static IHtmlDocument HasGdsButton(this IHtmlDocument htmlDocument, string elementId, out IHtmlButtonElement htmlButtonElement)
+    public static IHtmlDocument HasSubmitButton(
+        this IHtmlDocument htmlDocument,
+        string? text = null)
     {
-        var htmlElement = htmlDocument.GetElementById(elementId);
-        ElementExtensions.Should(htmlElement).BeGdsButton();
-        htmlButtonElement = (IHtmlButtonElement)htmlElement!;
+        GetSubmitButton(htmlDocument, text);
+
         return htmlDocument;
     }
 
-    public static IHtmlDocument HasGdsContinueButton(this IHtmlDocument htmlDocument)
+    public static IHtmlButtonElement GetSubmitButton(
+        this IHtmlDocument htmlDocument,
+        string? text = null)
     {
-        htmlDocument.HasGdsButton("continue-button", out var button);
-        button.Text().Trim().Should().Be("Continue");
+        var buttons = HasButton(htmlDocument, "button.govuk-button");
+
+        buttons = WithText(buttons, text);
+        buttons = WithAttribute(buttons, "type", "submit");
+
+        return IsSingleHtmlButtonElement(buttons);
+    }
+
+    public static IHtmlDocument HasStartButton(
+        this IHtmlDocument htmlDocument,
+        string? text = null)
+    {
+        GetStartButton(htmlDocument, text);
+
         return htmlDocument;
     }
 
-    public static IHtmlDocument HasGdsSaveAndContinueButton(this IHtmlDocument htmlDocument)
+    public static IHtmlButtonElement GetStartButton(
+        this IHtmlDocument htmlDocument,
+        string? text = null)
     {
-        htmlDocument.HasGdsButton("continue-button", out var button);
-        button.Text().Trim().Should().Be("Save and continue");
+        var buttons = HasButton(htmlDocument, "button.govuk-button");
+
+        buttons = WithText(buttons, text);
+        buttons = WithClass(buttons, "govuk-button--start");
+        buttons = WithAttribute(buttons, "type", "submit");
+
+        return IsSingleHtmlButtonElement(buttons);
+    }
+
+    public static IHtmlDocument HasLinkButton(
+        this IHtmlDocument htmlDocument,
+        string? text = null,
+        string? href = null)
+    {
+        GetLinkButton(htmlDocument, text, href);
+
         return htmlDocument;
     }
 
-    public static IHtmlDocument HasGdsBackButton(this IHtmlDocument htmlDocument, bool validateLink = true)
+    public static IHtmlAnchorElement GetLinkButton(
+        this IHtmlDocument htmlDocument,
+        string? text = null,
+        string? href = null)
     {
-        var backButton = htmlDocument.GetElementsByClassName("govuk-back-link").SingleOrDefault();
-        backButton.Should().NotBeNull();
-        if (validateLink)
-        {
-            backButton!.IsLink().Should().BeTrue();
-        }
+        var buttons = HasButton(htmlDocument, "a.govuk-button");
 
-        backButton!.Text().Trim().Should().Be("Back");
-        return htmlDocument;
+        buttons = WithText(buttons, text);
+        buttons = WithAttribute(buttons, "href", href);
+
+        return IsSingleHtmlAnchorElement(buttons);
     }
 
-    public static IHtmlDocument DoesNotHaveGdsButton(this IHtmlDocument htmlDocument, string elementId)
+    public static IHtmlDocument HasNoButton(this IHtmlDocument htmlDocument, string? text = null)
     {
-        htmlDocument.GetElementById(elementId).Should().BeNull();
+        var buttons = htmlDocument
+            .QuerySelectorAll(".govuk-button")
+            .Where(i => string.IsNullOrWhiteSpace(text) || i.TextContent.Contains(text))
+            .ToList();
+
+        buttons.Any().Should().BeFalse("Button should not exist");
+
         return htmlDocument;
     }
 
@@ -67,33 +108,82 @@ public static class HtmlDocumentButtonExtensions
         return htmlDocument;
     }
 
-    public static IHtmlDocument HasSaveAndReturnToApplicationLinkButton(this IHtmlDocument htmlDocument)
+    private static IList<IElement> HasButton(this IHtmlDocument htmlDocument, string selectors)
     {
-        htmlDocument
-            .HasElementWithText("button", "Save and return to application");
+        var buttons = htmlDocument
+            .QuerySelectorAll(selectors)
+            .Select(i => i)
+            .ToList();
 
-        return htmlDocument;
+        buttons.Any().Should().BeTrue("There is no Button on page");
+
+        return buttons;
     }
 
-    public static IHtmlDocument HasButton(this IHtmlDocument htmlDocument, string text, string href)
+    private static List<IElement> WithText(IList<IElement> elements, string? text = null)
     {
-        var exist = htmlDocument
-            .QuerySelectorAll(".govuk-button")
-            .Any(i => i.TextContent.Contains(text) && i.Attributes.Any(a => a.Name == "href" && a.Value.Contains(href)));
+        if (!string.IsNullOrEmpty(text))
+        {
+            elements = elements
+                .Where(i => i.TextContent.Contains(text))
+                .ToList();
 
-        exist.Should().BeTrue($"There is no Button with text: '{text}' and href: '{href}'");
+            elements
+                .Any()
+                .Should()
+                .BeTrue($"There is no Element with text: '{text}'");
+        }
 
-        return htmlDocument;
+        return elements.ToList();
     }
 
-    public static IHtmlDocument HasNoButton(this IHtmlDocument htmlDocument)
+    private static List<IElement> WithClass(IList<IElement> elements, string? className = null)
     {
-        var exist = htmlDocument
-            .QuerySelectorAll(".govuk-button")
-            .Any();
+        if (!string.IsNullOrEmpty(className))
+        {
+            elements = elements
+                .Where(i => i.ClassList.Contains(className))
+                .ToList();
 
-        exist.Should().BeFalse("Button should not exist");
+            elements
+                .Any()
+                .Should()
+                .BeTrue($"There is no Element with class: '{className}'");
+        }
 
-        return htmlDocument;
+        return elements.ToList();
+    }
+
+    private static List<IElement> WithAttribute(IList<IElement> elements, string? attributeName = null, string? value = null)
+    {
+        if (!string.IsNullOrEmpty(value))
+        {
+            elements = elements
+                .Where(i => i.Attributes.Any(a => a.Name == attributeName && a.Value.Contains(value)))
+                .ToList();
+
+            elements
+                .Any()
+                .Should()
+                .BeTrue($"There is no Element with attribute : '{attributeName}' value: '{value}'");
+        }
+
+        return elements.ToList();
+    }
+
+    private static IHtmlButtonElement IsSingleHtmlButtonElement(IList<IElement> elements)
+    {
+        var buttonElement = elements.SingleOrDefault() as IHtmlButtonElement;
+        buttonElement.Should().NotBeNull("There is no single HtmlButtonElement");
+
+        return buttonElement!;
+    }
+
+    private static IHtmlAnchorElement IsSingleHtmlAnchorElement(IList<IElement> elements)
+    {
+        var buttonElement = elements.SingleOrDefault() as IHtmlAnchorElement;
+        buttonElement.Should().NotBeNull("There is no single HtmlAnchorElement");
+
+        return buttonElement!;
     }
 }

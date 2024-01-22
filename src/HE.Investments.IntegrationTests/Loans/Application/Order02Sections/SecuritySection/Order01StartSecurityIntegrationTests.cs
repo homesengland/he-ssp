@@ -38,7 +38,7 @@ public class Order01StartSecurityIntegrationTests : IntegrationTest
         startSecurityPage
             .UrlEndWith(SecurityPageUrls.StartSuffix)
             .HasTitle(SecurityPageTitles.Index)
-            .HasGdsSubmitButton("start-now-button", out _);
+            .HasStartButton();
 
         SetSharedData(SharedKeys.CurrentPageKey, startSecurityPage);
     }
@@ -49,7 +49,7 @@ public class Order01StartSecurityIntegrationTests : IntegrationTest
     {
         // given
         var startSecurityPage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
-        var startNow = startSecurityPage.GetGdsSubmitButtonById("start-now-button");
+        var startNow = startSecurityPage.GetStartButton();
 
         // when
         var companyPurposePage = await TestClient.SubmitButton(startNow);
