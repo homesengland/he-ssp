@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.WWW;
-using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investment.AHP.WWW.Views.Application;
+using HE.Investment.AHP.WWW.Views.Site;
 using HE.Investments.AHP.IntegrationTests.Extensions;
 using HE.Investments.AHP.IntegrationTests.Framework;
 using HE.Investments.AHP.IntegrationTests.Pages;
@@ -49,7 +49,7 @@ public class Order01StartAhpApplication : AhpIntegrationTest
 
         // then
         applicationNamePage
-            .UrlEndWith(ApplicationPagesUrl.StartName)
+            .UrlEndWith(ApplicationPagesUrl.Start)
             .HasTitle(ApplicationPageTitles.Start);
 
         SaveCurrentPage();
@@ -57,65 +57,81 @@ public class Order01StartAhpApplication : AhpIntegrationTest
 
     [Fact(Skip = AhpConfig.SkipTest)]
     [Order(3)]
-    public async Task Order03_ShouldNavigateToApplicationNamePage()
+    public async Task Order03_ShouldNavigateToSiteSelectPage()
     {
         // given
-        var applicationListPage = await GetCurrentPage(ApplicationPagesUrl.StartName);
+        var applicationListPage = await GetCurrentPage(ApplicationPagesUrl.Start);
         applicationListPage.HasGdsLinkButton("continue-button", out var startApplicationLink);
 
         // when
-        var applicationNamePage = await TestClient.NavigateTo(startApplicationLink);
+        var siteSelectPage = await TestClient.NavigateTo(startApplicationLink);
 
         // then
-        applicationNamePage
-            .UrlEndWith(ApplicationPagesUrl.ApplicationName)
-            .HasTitle(ApplicationPageTitles.ApplicationName);
+        siteSelectPage
+            .UrlEndWith(SitePagesUrl.SiteSelect)
+            .HasTitle(SitePageTitles.SiteSelect);
 
         SaveCurrentPage();
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
     [Order(4)]
-    public async Task Order04_ShouldProvideApplicationNameAndNavigateToTenurePage()
+    public async Task Order04_ShouldNavigateToSiteConfirmPage()
     {
         // given
-        var applicationNamePage = await GetCurrentPage(ApplicationPagesUrl.ApplicationName);
-        applicationNamePage.HasGdsSubmitButton("continue-button", out var continueButton);
+        var siteSelectPage = await GetCurrentPage(SitePagesUrl.SiteSelect);
+        siteSelectPage.HasNavigationListItem("select-list", out var selectSiteLink);
 
         // when
-        var tenurePage = await TestClient.SubmitButton(
-            continueButton,
-            new Dictionary<string, string> { { nameof(ApplicationBasicModel.Name), ApplicationData.GenerateApplicationName() } });
+        var siteConfirmPage = await TestClient.NavigateTo(selectSiteLink);
 
         // then
-        tenurePage
-            .UrlWithoutQueryEndsWith(ApplicationPagesUrl.Tenure)
-            .HasTitle(ApplicationPageTitles.Tenure);
+        ApplicationData.SetSiteId(siteConfirmPage.Url.GetSiteGuidFromUrl());
+        siteConfirmPage
+            .UrlEndWith(SitePagesUrl.SiteConfirm(ApplicationData.SiteId))
+            .HasTitle(SitePageTitles.SiteConfirmSelect);
 
         SaveCurrentPage();
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
     [Order(5)]
-    public async Task Order5_ShouldProvideTenureAndNavigateToApplicationTaskList()
+    public async Task Order05_ShouldProvideSiteConfirmation()
     {
         // given
-        var tenurePage = await GetCurrentPage(ApplicationPagesUrl.Tenure);
-        tenurePage.HasGdsSubmitButton("continue-button", out var continueButton);
+        await TestQuestionPage(
+            SitePagesUrl.SiteConfirm(ApplicationData.SiteId),
+            SitePageTitles.SiteConfirmSelect,
+            ApplicationPagesUrl.ApplicationName(ApplicationData.SiteId),
+            ("IsConfirmed", "True"));
+    }
 
-        // when
-        var taskListPage = await TestClient.SubmitButton(
-            continueButton,
-            (nameof(ApplicationBasicModel.Tenure), "AffordableRent"));
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(6)]
+    public async Task Order06_ShouldProvideApplicationNameAndNavigateToTenurePage()
+    {
+        // given
+        var applicationData = ApplicationData.GenerateApplicationName();
 
-        // then
-        taskListPage
-            .UrlEndWith(ApplicationPagesUrl.TaskListSuffix)
-            .HasTitle(ApplicationData.ApplicationName)
-            .HasValidApplicationReferenceNumber();
+        // when & then
+        await TestQuestionPage(
+            ApplicationPagesUrl.ApplicationName(applicationData.SiteId),
+            ApplicationPageTitles.ApplicationName,
+            ApplicationPagesUrl.Tenure(applicationData.SiteId),
+            ("Name", applicationData.ApplicationName));
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(7)]
+    public async Task Order07_ShouldProvideTenureAndNavigateToApplicationTaskList()
+    {
+        // given & when & then
+        var taskListPage = await TestQuestionPage(
+            ApplicationPagesUrl.Tenure(ApplicationData.SiteId),
+            ApplicationPageTitles.Tenure,
+            ApplicationPagesUrl.TaskListSuffix,
+            ("Tenure", ApplicationData.Tenure.ToString()));
 
         ApplicationData.SetApplicationId(taskListPage.Url.GetApplicationGuidFromUrl());
-
-        SaveCurrentPage();
     }
 }

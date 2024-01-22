@@ -1,4 +1,5 @@
 using HE.Investment.AHP.Contract.Application;
+using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Domain.Application.Entities;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investments.Common.Contract;
@@ -8,6 +9,8 @@ namespace HE.Investment.AHP.Domain.Tests.Application.Entities.ApplicationEntityT
 
 public class ApplicationEntityBuilder
 {
+    private readonly SiteId _siteId = new("site-1");
+
     private readonly AhpApplicationId _id = new("1");
 
     private readonly ApplicationName _name = new("zapytanko");
@@ -34,6 +37,6 @@ public class ApplicationEntityBuilder
 
     public ApplicationEntity Build()
     {
-        return new ApplicationEntity(_id, _name, _status, _reference, null, null, new ApplicationSections(_sections ?? new List<ApplicationSection>()));
+        return new ApplicationEntity(_siteId, _id, _name, _status, _reference, null, null, new ApplicationSections(_sections ?? new List<ApplicationSection>()));
     }
 }

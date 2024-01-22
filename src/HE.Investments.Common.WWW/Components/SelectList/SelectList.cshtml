@@ -3,7 +3,7 @@
 
 @model (PaginationResult<SelectListItemViewModel> list, string pagingNavigationUrl, string addActionUrl, string addActionText)
 
-<ul class="govuk-list">
+<ul class="govuk-list" data-testId="select-list">
     @foreach (var item in Model.list.Items)
     {
         <li class="govuk-!-margin-bottom-8">

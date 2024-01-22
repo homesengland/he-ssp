@@ -5,6 +5,12 @@ namespace HE.Investment.AHP.WWW.Extensions;
 
 public static class RazorPageExtensions
 {
+    public static string GetSiteIdFromRoute(this IRazorPage razorPage)
+    {
+        return razorPage.GetOptionalFromRoute("siteId")
+               ?? throw new ArgumentException("Site Id is not present in Route data");
+    }
+
     public static string GetApplicationIdFromRoute(this IRazorPage razorPage)
     {
         return razorPage.GetOptionalFromRoute("applicationId")

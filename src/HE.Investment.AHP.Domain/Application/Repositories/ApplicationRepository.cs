@@ -1,6 +1,7 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Events;
+using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Domain.Application.Entities;
 using HE.Investment.AHP.Domain.Application.Repositories.Interfaces;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
@@ -84,6 +85,7 @@ public class ApplicationRepository : IApplicationRepository
 
         var dto = new AhpApplicationDto
         {
+            // TODO: AB#88650 Assign application to site
             id = application.Id.IsNew ? null : application.Id.Value,
             name = application.Name.Name,
             tenure = ApplicationTenureMapper.ToDto(application.Tenure),
@@ -145,6 +147,7 @@ public class ApplicationRepository : IApplicationRepository
     private static ApplicationEntity CreateEntity(AhpApplicationDto application)
     {
         return new ApplicationEntity(
+            new SiteId("1"), // TODO: AB#88650 Assign application to site
             new AhpApplicationId(application.id),
             new ApplicationName(application.name ?? "Unknown"),
             AhpApplicationStatusMapper.MapToPortalStatus(application.applicationStatus),

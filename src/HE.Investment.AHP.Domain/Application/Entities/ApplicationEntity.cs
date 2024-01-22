@@ -1,5 +1,6 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Events;
+using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Domain.Application.Repositories.Interfaces;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investments.Account.Shared.User.ValueObjects;
@@ -17,6 +18,7 @@ public class ApplicationEntity : DomainEntity
     private readonly ModificationTracker _modificationTracker = new();
 
     public ApplicationEntity(
+        SiteId siteId,
         AhpApplicationId id,
         ApplicationName name,
         ApplicationStatus status,
@@ -25,6 +27,7 @@ public class ApplicationEntity : DomainEntity
         AuditEntry? lastModified,
         ApplicationSections sections)
     {
+        SiteId = siteId;
         Id = id;
         Name = name;
         Status = status;
@@ -33,6 +36,8 @@ public class ApplicationEntity : DomainEntity
         LastModified = lastModified;
         Sections = sections;
     }
+
+    public SiteId SiteId { get; }
 
     public AhpApplicationId Id { get; private set; }
 
@@ -56,7 +61,8 @@ public class ApplicationEntity : DomainEntity
 
     public bool IsNew => Id.IsNew;
 
-    public static ApplicationEntity New(ApplicationName name, ApplicationTenure tenure) => new(
+    public static ApplicationEntity New(SiteId siteId, ApplicationName name, ApplicationTenure tenure) => new(
+        siteId,
         AhpApplicationId.New(),
         name,
         ApplicationStatus.New,

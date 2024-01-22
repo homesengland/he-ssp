@@ -1,7 +1,7 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Commands;
 using HE.Investment.AHP.Contract.Application.Queries;
-using HE.Investment.AHP.Contract.Site.Queries;
+using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investment.AHP.WWW.Models.Application.Factories;
 using HE.Investment.AHP.WWW.Workflows;
@@ -52,15 +52,15 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     }
 
     [WorkflowState(ApplicationWorkflowState.ApplicationName)]
-    [HttpGet("name")]
+    [HttpGet("/{siteId}/application/name")]
     public IActionResult Name([FromQuery] string? applicationName)
     {
         return View("Name", new ApplicationBasicModel(null, applicationName, Contract.Application.Tenure.Undefined));
     }
 
     [WorkflowState(ApplicationWorkflowState.ApplicationName)]
-    [HttpPost("name")]
-    public async Task<IActionResult> Name(ApplicationBasicModel model, CancellationToken cancellationToken)
+    [HttpPost("/{siteId}/application/name")]
+    public async Task<IActionResult> Name([FromRoute] string siteId, ApplicationBasicModel model, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new IsApplicationNameAvailableQuery(model.Name), cancellationToken);
 
@@ -70,21 +70,21 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
             return View(model);
         }
 
-        return await Continue(new { applicationName = model.Name });
+        return await Continue(new { applicationName = model.Name, siteId });
     }
 
     [WorkflowState(ApplicationWorkflowState.ApplicationTenure)]
-    [HttpGet("tenure")]
+    [HttpGet("/{siteId}/application/tenure")]
     public IActionResult Tenure([FromQuery] string applicationName)
     {
         return View("Tenure", new ApplicationBasicModel(null, applicationName, Contract.Application.Tenure.Undefined));
     }
 
     [WorkflowState(ApplicationWorkflowState.ApplicationTenure)]
-    [HttpPost("tenure")]
-    public async Task<IActionResult> Tenure(ApplicationBasicModel model, CancellationToken cancellationToken)
+    [HttpPost("/{siteId}/application/tenure")]
+    public async Task<IActionResult> Tenure([FromRoute] string siteId, ApplicationBasicModel model, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new CreateApplicationCommand(model.Name, model.Tenure), cancellationToken);
+        var result = await _mediator.Send(new CreateApplicationCommand(new SiteId(siteId), model.Name, model.Tenure), cancellationToken);
 
         if (result.HasValidationErrors)
         {
