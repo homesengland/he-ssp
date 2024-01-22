@@ -219,7 +219,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
 
         return new ApplicationWorkflow(
                 currentState,
-                async () => (await _mediator.Send(new GetApplicationQuery(applicationId!))),
+                async () => await _mediator.Send(new GetApplicationQuery(applicationId!)),
                 async () => applicationId.IsProvided() && await _mediator.Send(new IsApplicationExistQuery(applicationId!)),
                 isReadOnly);
     }
