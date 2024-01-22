@@ -50,6 +50,16 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         return await Back(currentPage, new { applicationId, deliveryPhaseId });
     }
 
+    [HttpGet("{deliveryPhaseId}/start")]
+    [WorkflowState(DeliveryPhaseWorkflowState.Start)]
+    public async Task<IActionResult> Start([FromRoute] string applicationId, [FromRoute] string deliveryPhaseId)
+    {
+        var application = await _mediator.Send(new GetApplicationQuery(AhpApplicationId.From(applicationId)));
+
+        var model = new DeliveryPhaseNameViewModel(applicationId, null, application.Name, null, nameof(this.Create));
+        return View("Name", model);
+    }
+
     [HttpGet("create")]
     [WorkflowState(DeliveryPhaseWorkflowState.Create)]
     public async Task<IActionResult> Create([FromRoute] string applicationId)

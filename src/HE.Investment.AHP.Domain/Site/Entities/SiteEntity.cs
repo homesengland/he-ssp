@@ -15,6 +15,15 @@ public class SiteEntity
         Section106 = section106;
     }
 
+    public SiteEntity(SiteId id, SiteName name, Section106 section106, string localAuthority)
+    {
+        Id = id;
+        Name = name;
+        Status = SiteStatus.NotReady;
+        Section106 = section106;
+        LocalAuthority = localAuthority;
+    }
+
     public SiteEntity()
     {
         Id = SiteId.New();
@@ -45,8 +54,8 @@ public class SiteEntity
         Name = siteName;
     }
 
-    public void ProvideSection106(Section106 section106Entity)
+    public void ProvideSection106(Section106 section106)
     {
-        Section106 = section106Entity;
+        Section106 = section106;
     }
 }

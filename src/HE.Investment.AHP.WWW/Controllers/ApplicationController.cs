@@ -46,10 +46,9 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
 
     [HttpGet("start")]
     [WorkflowState(ApplicationWorkflowState.Start)]
-    public async Task<IActionResult> Start(CancellationToken cancellationToken)
+    public IActionResult Start()
     {
-        var response = await _mediator.Send(new GetSiteListQuery(), cancellationToken);
-        return View("Splash", response);
+        return View("Splash");
     }
 
     [WorkflowState(ApplicationWorkflowState.ApplicationName)]

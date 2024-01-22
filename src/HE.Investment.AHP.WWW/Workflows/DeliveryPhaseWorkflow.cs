@@ -40,12 +40,11 @@ public class DeliveryPhaseWorkflow : IStateRouting<DeliveryPhaseWorkflowState>
             return DeliveryPhaseWorkflowState.CheckAnswers;
         }
 
-        if (targetState != DeliveryPhaseWorkflowState.Create || _model.Status == SectionStatus.NotStarted)
+        if (targetState != DeliveryPhaseWorkflowState.Start || _model.Status == SectionStatus.NotStarted)
         {
             return targetState;
         }
 
-#pragma warning disable S2589 // Boolean expressions should not be gratuitous
         return _model switch
         {
             { Name: var x } when x.IsNotProvided() => DeliveryPhaseWorkflowState.Name,
@@ -59,13 +58,13 @@ public class DeliveryPhaseWorkflow : IStateRouting<DeliveryPhaseWorkflowState>
             { } when _model.IsAdditionalPaymentRequested.IsNotProvided() && IsUnregisteredBody() => DeliveryPhaseWorkflowState.UnregisteredBodyFollowUp,
             _ => DeliveryPhaseWorkflowState.CheckAnswers,
         };
-#pragma warning restore S2589 // Boolean expressions should not be gratuitous
     }
 
     public bool CanBeAccessed(DeliveryPhaseWorkflowState state)
     {
         return state switch
         {
+            DeliveryPhaseWorkflowState.Start => true,
             DeliveryPhaseWorkflowState.Create => true,
             DeliveryPhaseWorkflowState.Name => true,
             DeliveryPhaseWorkflowState.TypeOfHomes => true,
@@ -75,8 +74,8 @@ public class DeliveryPhaseWorkflow : IStateRouting<DeliveryPhaseWorkflowState>
             DeliveryPhaseWorkflowState.SummaryOfDelivery => true,
             DeliveryPhaseWorkflowState.AcquisitionMilestone => AllMilestonesAvailable(),
             DeliveryPhaseWorkflowState.StartOnSiteMilestone => AllMilestonesAvailable(),
-            DeliveryPhaseWorkflowState.PracticalCompletionMilestone => _model.NumberOfHomes > 0,
-            DeliveryPhaseWorkflowState.UnregisteredBodyFollowUp => IsUnregisteredBody() && _model.NumberOfHomes > 0,
+            DeliveryPhaseWorkflowState.PracticalCompletionMilestone => true,
+            DeliveryPhaseWorkflowState.UnregisteredBodyFollowUp => IsUnregisteredBody(),
             DeliveryPhaseWorkflowState.CheckAnswers => true,
             _ => throw new ArgumentOutOfRangeException(nameof(state), state, null),
         };
@@ -119,14 +118,14 @@ public class DeliveryPhaseWorkflow : IStateRouting<DeliveryPhaseWorkflowState>
 
         _machine.Configure(DeliveryPhaseWorkflowState.StartOnSiteMilestone)
             .Permit(Trigger.Continue, DeliveryPhaseWorkflowState.PracticalCompletionMilestone)
-            .PermitIf(Trigger.Back, DeliveryPhaseWorkflowState.AddHomes, OnlyCompletionMilestoneAvailable)
+            .PermitIf(Trigger.Back, DeliveryPhaseWorkflowState.SummaryOfDelivery, OnlyCompletionMilestoneAvailable)
             .PermitIf(Trigger.Back, DeliveryPhaseWorkflowState.AcquisitionMilestone, AllMilestonesAvailable);
 
         _machine.Configure(DeliveryPhaseWorkflowState.PracticalCompletionMilestone)
             .PermitIf(Trigger.Continue, DeliveryPhaseWorkflowState.CheckAnswers, IsRegisteredBody)
             .PermitIf(Trigger.Continue, DeliveryPhaseWorkflowState.UnregisteredBodyFollowUp, IsUnregisteredBody)
             .PermitIf(Trigger.Back, DeliveryPhaseWorkflowState.StartOnSiteMilestone, AllMilestonesAvailable)
-            .PermitIf(Trigger.Back, DeliveryPhaseWorkflowState.AddHomes, OnlyCompletionMilestoneAvailable);
+            .PermitIf(Trigger.Back, DeliveryPhaseWorkflowState.SummaryOfDelivery, OnlyCompletionMilestoneAvailable);
 
         _machine.Configure(DeliveryPhaseWorkflowState.UnregisteredBodyFollowUp)
             .PermitIf(Trigger.Continue, DeliveryPhaseWorkflowState.CheckAnswers)

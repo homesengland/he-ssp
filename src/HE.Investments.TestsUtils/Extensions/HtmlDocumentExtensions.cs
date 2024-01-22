@@ -161,14 +161,10 @@ public static class HtmlDocumentExtensions
             var key = summaryRow.GetElementsByClassName("govuk-summary-list__key").Single().InnerHtml.Trim();
             var value = GetValueFor(summaryRow);
 
-            if (dictionary.ContainsKey(key))
+            if (!dictionary.TryAdd(key, value))
             {
                 var summaryHeader = summaryRow.Parent?.PreviousSibling?.PreviousSibling?.Text().Trim() ?? string.Empty;
                 dictionary[$"{summaryHeader} - {key}"] = value;
-            }
-            else
-            {
-                dictionary[key] = value;
             }
         }
 
@@ -265,17 +261,17 @@ public static class HtmlDocumentExtensions
 
     private static string GetValueFor(IElement summaryRow)
     {
-        var valueRow = summaryRow.GetElementsByClassName("govuk-summary-list__value").Single();
+        var valueRow = summaryRow.GetElementsByClassName("govuk-summary-list__value").SingleOrDefault();
 
         var valueBuilder = new StringBuilder();
-        if (valueRow.Children.Length > 1)
+        if (valueRow?.Children.Length > 1)
         {
             foreach (var child in valueRow.Children)
             {
                 valueBuilder.AppendLine(child.TextContent.Trim());
             }
         }
-        else if (valueRow.Children.Length == 1)
+        else if (valueRow?.Children.Length == 1)
         {
             valueBuilder.Append(valueRow.LastElementChild!.InnerHtml.Trim());
         }
