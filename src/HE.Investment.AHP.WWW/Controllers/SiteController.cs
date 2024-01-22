@@ -5,6 +5,7 @@ using HE.Investment.AHP.Contract.Site.Queries;
 using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Contract.Pagination;
+using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Extensions;
@@ -50,14 +51,15 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     [HttpPost("{siteId}/confirm-select")]
     public async Task<IActionResult> SelectConfirmed(string siteId, bool? isConfirmed, CancellationToken cancellationToken)
     {
-        ModelState.AddModelError("IsConfirmed", "wybierz");
+        if (isConfirmed.IsNotProvided())
+        {
+            ModelState.AddValidationErrors(OperationResult.New().AddValidationError("IsConfirmed", "Select whether this is the correct site"));
+            return View("ConfirmSelect", await _mediator.Send(new GetSiteQuery(siteId), cancellationToken));
+        }
 
-#pragma warning disable S1135
-
-        // TODO: AB#87744 assign site
-#pragma warning restore S1135
-        var site = await _mediator.Send(new GetSiteQuery(siteId), cancellationToken);
-        return View("ConfirmSelect", site);
+        return isConfirmed!.Value
+            ? RedirectToAction("Name", "Application", new { siteId })
+            : RedirectToAction("Select");
     }
 
     [HttpGet("{siteId}")]

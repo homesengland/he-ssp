@@ -4,13 +4,14 @@
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.Components.FormHeader
 @using HE.Investments.Common.WWW.Components.RadioList
+@using HE.Investment.AHP.WWW.Extensions
 @model HE.Investment.AHP.WWW.Models.Application.ApplicationBasicModel
 
 @{
     ViewData["Title"] = "Application tenure";
 }
 <gds-div-grid-column-two-thirds>
-    <vc:back-link-with-callback url="@Url.Action("Name", "Application", new { applicationName = Model.Name })"/>
+    <vc:back-link-with-callback url="@Url.Action("Name", "Application", new { applicationName = Model.Name, siteId = this.GetSiteIdFromRoute() })"/>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <form asp-controller="Application" asp-action="Tenure" asp-method="post" asp-route-applicationName="@Model.Name" novalidate>
         <vc:form-header caption="@Model.Name" title="@ApplicationPageTitles.Tenure"/>
