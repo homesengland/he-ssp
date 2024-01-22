@@ -74,4 +74,26 @@ public static class HtmlDocumentButtonExtensions
 
         return htmlDocument;
     }
+
+    public static IHtmlDocument HasButton(this IHtmlDocument htmlDocument, string text, string href)
+    {
+        var exist = htmlDocument
+            .QuerySelectorAll(".govuk-button")
+            .Any(i => i.TextContent.Contains(text) && i.Attributes.Any(a => a.Name == "href" && a.Value.Contains(href)));
+
+        exist.Should().BeTrue($"There is no Button with text: '{text}' and href: '{href}'");
+
+        return htmlDocument;
+    }
+
+    public static IHtmlDocument HasNoButton(this IHtmlDocument htmlDocument)
+    {
+        var exist = htmlDocument
+            .QuerySelectorAll(".govuk-button")
+            .Any();
+
+        exist.Should().BeFalse("Button should not exist");
+
+        return htmlDocument;
+    }
 }

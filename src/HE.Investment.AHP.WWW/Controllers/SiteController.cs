@@ -4,6 +4,7 @@ using HE.Investment.AHP.Contract.Site.Commands;
 using HE.Investment.AHP.Contract.Site.Queries;
 using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Account.Shared.Authorization.Attributes;
+using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Extensions;
@@ -28,8 +29,35 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     [WorkflowState(SiteWorkflowState.Index)]
     public async Task<IActionResult> Index(CancellationToken cancellationToken)
     {
-        var response = await _mediator.Send(new GetSiteListQuery(), cancellationToken);
+        var response = await _mediator.Send(new GetSiteListQuery(new PaginationRequest(1, int.MaxValue)), cancellationToken);
         return View("Index", response);
+    }
+
+    [HttpGet("select")]
+    public async Task<IActionResult> Select([FromQuery] int? page, CancellationToken cancellationToken)
+    {
+        var response = await _mediator.Send(new GetSiteListQuery(new PaginationRequest(page ?? 1)), cancellationToken);
+        return View("Select", response);
+    }
+
+    [HttpGet("{siteId}/confirm-select")]
+    public async Task<IActionResult> ConfirmSelect(string siteId, CancellationToken cancellationToken)
+    {
+        var site = await _mediator.Send(new GetSiteQuery(siteId), cancellationToken);
+        return View("ConfirmSelect", site);
+    }
+
+    [HttpPost("{siteId}/confirm-select")]
+    public async Task<IActionResult> SelectConfirmed(string siteId, bool? isConfirmed, CancellationToken cancellationToken)
+    {
+        ModelState.AddModelError("IsConfirmed", "wybierz");
+
+#pragma warning disable S1135
+
+        // TODO: AB#87744 assign site
+#pragma warning restore S1135
+        var site = await _mediator.Send(new GetSiteQuery(siteId), cancellationToken);
+        return View("ConfirmSelect", site);
     }
 
     [HttpGet("{siteId}")]
@@ -116,7 +144,8 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     [WorkflowState(SiteWorkflowState.Section106AffordableHousing)]
     public async Task<IActionResult> Section106AffordableHousing([FromRoute] string siteId, SiteModel model, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new ProvideSection106AffordableHousingCommand(new SiteId(siteId), model.Section106AffordableHousing), cancellationToken);
+        var result = await _mediator.Send(
+            new ProvideSection106AffordableHousingCommand(new SiteId(siteId), model.Section106AffordableHousing), cancellationToken);
         if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
@@ -138,7 +167,8 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     [WorkflowState(SiteWorkflowState.Section106OnlyAffordableHousing)]
     public async Task<IActionResult> Section106OnlyAffordableHousing([FromRoute] string siteId, SiteModel model, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new ProvideSection106OnlyAffordableHousingCommand(new SiteId(siteId), model.Section106OnlyAffordableHousing), cancellationToken);
+        var result = await _mediator.Send(
+            new ProvideSection106OnlyAffordableHousingCommand(new SiteId(siteId), model.Section106OnlyAffordableHousing), cancellationToken);
         if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
@@ -180,8 +210,8 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     {
         SiteModel? siteModel = null;
         var siteId = Request.GetRouteValue("siteId")
-                            ?? routeData?.GetPropertyValue<string>("siteId")
-                            ?? string.Empty;
+                     ?? routeData?.GetPropertyValue<string>("siteId")
+                     ?? string.Empty;
         if (siteId.IsNotNullOrEmpty())
         {
             siteModel = await _mediator.Send(new GetSiteQuery(siteId));

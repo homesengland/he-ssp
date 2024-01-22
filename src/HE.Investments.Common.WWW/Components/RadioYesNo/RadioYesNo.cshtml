@@ -3,9 +3,9 @@
 @using HE.Investments.Common.WWW.Components.RadioListHeader
 @using HE.Investments.Common.WWW.Components.ErrorMessage
 @using HE.Investments.Common.WWW.Components.RadioListContent
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Fieldset
-@model (string fieldName, string header, string title, string hint, bool? value)
+@using HE.Investments.Common.WWW.Components
+
+@model (string fieldName, DynamicComponentViewModel headerComponent, string header, string title, string hint, bool? value)
 @{
     var (hasError, radioErrors) = ViewData.ModelState.GetErrors(Model.fieldName);
     var groupClass = hasError ? "govuk-form-group--error" : string.Empty;
@@ -18,7 +18,7 @@
 
 <gds-div-form-group class="@groupClass">
     <gds-field-set>
-        <vc:radio-list-header header="@Model.header" title="@Model.title" hint="@Model.hint"/>
+        <vc:radio-list-header header-component="@Model.headerComponent" header="@Model.header" title="@Model.title" hint="@Model.hint"/>
 
         <vc:error-message field-name="@Model.fieldName"/>
 

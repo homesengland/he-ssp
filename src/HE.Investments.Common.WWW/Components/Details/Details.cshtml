@@ -1,4 +1,4 @@
-@model (string title, string contentText, HE.Investments.Common.WWW.Components.ComponentViewModel contentComponent)
+@model (string title, string contentText, HE.Investments.Common.WWW.Components.DynamicComponentViewModel contentComponent)
 
 <details class="govuk-details" data-module="govuk-details">
     <summary class="govuk-details__summary">
@@ -14,7 +14,8 @@
 
         @if(Model.contentComponent != null)
         {
-            @await Component.InvokeAsync(Model.contentComponent.Name, Model.contentComponent.Arguments);
+            <vc:dynamic-component
+                component="@Model.contentComponent"/>
         }
     </div>
 </details>

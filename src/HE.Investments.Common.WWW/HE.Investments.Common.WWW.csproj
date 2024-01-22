@@ -82,5 +82,7 @@
     <EmbeddedResource Include="Components\TextAreaInputWithCounter\TextAreaInputWithCounter.cshtml" />
     <EmbeddedResource Include="Components\DateInput\DateInput.cshtml" />
     <EmbeddedResource Include="Components\Details\Details.cshtml" />
+    <EmbeddedResource Include="Components\SelectList\SelectList.cshtml" />
+    <EmbeddedResource Include="Components\DynamicComponent\DynamicComponent.cshtml" />
   </ItemGroup>
 </Project>

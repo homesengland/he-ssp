@@ -6,6 +6,10 @@ public static class SitePageTitles
 
     public const string SiteList = "Sites";
 
+    public const string SiteSelect = "Select or add a site";
+
+    public const string SiteConfirmSelect = "Is this the correct site?";
+
     public const string SiteDetails = "Site details";
 
     public const string SiteName = "Name your site";

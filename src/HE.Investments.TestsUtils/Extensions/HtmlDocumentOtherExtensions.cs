@@ -79,6 +79,28 @@ public static class HtmlDocumentOtherExtensions
         return htmlDocument;
     }
 
+    public static IHtmlDocument HasSelectListItem(this IHtmlDocument htmlDocument, string text, string? description)
+    {
+        var exist = htmlDocument.GetElements(".govuk-list li")
+            .Any(item =>
+                item.QuerySelectorAll(".govuk-body a b").Any(t => t.TextContent.Contains(text)) &&
+                (string.IsNullOrWhiteSpace(description) || item.QuerySelectorAll(".govuk-body").Any(t => t.TextContent.Contains(description))));
+
+        exist.Should().BeTrue($"There is no SelectList item with text: '{text}' and description: '{description}'");
+
+        return htmlDocument;
+    }
+
+    public static IHtmlDocument HasPagination(this IHtmlDocument htmlDocument)
+    {
+        var exist = htmlDocument.GetElements(".govuk-pagination")
+            .Any();
+
+        exist.Should().BeTrue($"There is no Pagination element");
+
+        return htmlDocument;
+    }
+
     internal static void AssertErrorMessage(string fieldName, string? text, bool exist, IList<IElement> filtered)
     {
         if (exist)

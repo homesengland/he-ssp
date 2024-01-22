@@ -22,7 +22,7 @@
 
         <vc:details
             title="What are the acquisition milestones?"
-            content-component="@(new ComponentViewModel(nameof(AcquisitionMilestoneDetails)))"/>
+            content-component="@(new DynamicComponentViewModel(nameof(AcquisitionMilestoneDetails)))"/>
 
         <vc:date-input
             header="Enter your acquisition date"

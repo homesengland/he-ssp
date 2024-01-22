@@ -1,0 +1,32 @@
+@using HE.Investment.AHP.WWW.Views.Site
+@using HE.Investments.Common.Contract.Pagination
+@using HE.Investments.Common.WWW.Components.FormHeader
+@using HE.Investments.Common.WWW.Components.SelectList
+@using SelectList = Microsoft.AspNetCore.Mvc.Rendering.SelectList
+@model HE.Investment.AHP.Contract.Site.SitesListModel
+
+@{
+    ViewData["Title"] = SitePageTitles.SiteSelect;
+    var items = new PaginationResult<SelectListItemViewModel>(
+        Model.Page.Items.Select(i => new SelectListItemViewModel(
+            Url.Action("ConfirmSelect", "Site", new { siteId = i.Id }) ?? string.Empty,
+            i.Name,
+            i.LocalAuthority)).ToList(),
+        Model.Page.CurrentPage,
+        Model.Page.ItemsPerPage,
+        Model.Page.TotalItems);
+}
+ <div class="govuk-grid-column-full">
+    <vc:back-link-with-callback url="@Url.Action("Start", "Application")"/>
+
+    <vc:form-header title="@SitePageTitles.SiteSelect"/>
+
+    <gds-p>Select a site to start your application or create a new site.</gds-p>
+
+    <vc:select-list
+        items="@items"
+        paging-navigation-url="@Url.Action("Select")"
+        add-action-text="Add a new site"
+        add-action-url="@Url.Action("Start")"/>
+
+</div>

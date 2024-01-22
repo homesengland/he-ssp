@@ -21,6 +21,8 @@ public class HePaginationTagHelper : TagHelper
 
     public string BaseUrl { get; set; }
 
+    public string CssClass { get; set; }
+
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
         if (output == null)
@@ -31,6 +33,7 @@ public class HePaginationTagHelper : TagHelper
         output.TagName = "nav";
 
         TagConstruct.ConstructClass(output, "govuk-pagination");
+        TagConstruct.ConstructClass(output, CssClass);
         TagConstruct.ConstructGenericAttribute(output, "aria-label", "results");
 
         if (TotalItems <= 0)
