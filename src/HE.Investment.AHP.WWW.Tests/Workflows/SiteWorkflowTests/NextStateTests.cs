@@ -121,6 +121,51 @@ public class NextStateTests
         result.Should().Be(expectedNext);
     }
 
+    [Theory]
+    [InlineData(SiteWorkflowState.Section106CapitalFundingEligibility, SiteWorkflowState.Section106Ineligible)]
+    public async Task ShouldReturnNextState_WhenContinueTriggerExecutedWithSection106CapitalFundingEligibilityTrue(SiteWorkflowState current, SiteWorkflowState expectedNext)
+    {
+        // given
+        var workflow = BuildWorkflow(current, true, true, false, true, true, null);
+
+        // when
+        var result = await workflow.NextState(Trigger.Continue);
+
+        // then
+        result.Should().Be(expectedNext);
+    }
+
+    [Theory]
+    [InlineData(SiteWorkflowState.Section106CapitalFundingEligibility, SiteWorkflowState.Section106ConfirmationFromLocalAuthority, true)]
+    [InlineData(SiteWorkflowState.Section106CapitalFundingEligibility, SiteWorkflowState.LocalAuthority, false)]
+    public async Task ShouldReturnNextState_WhenContinueTriggerExecutedWithSection106CapitalFundingEligibilityFalse(SiteWorkflowState current, SiteWorkflowState expectedNext, bool additionalAffordableHousing)
+    {
+        // given
+        var workflow = BuildWorkflow(current, true, true, false, additionalAffordableHousing, false, null);
+
+        // when
+        var result = await workflow.NextState(Trigger.Continue);
+
+        // then
+        result.Should().Be(expectedNext);
+    }
+
+    [Theory]
+    [InlineData(SiteWorkflowState.Section106CapitalFundingEligibility, SiteWorkflowState.Section106OnlyAffordableHousing, true)]
+    [InlineData(SiteWorkflowState.Section106CapitalFundingEligibility, SiteWorkflowState.Section106AdditionalAffordableHousing, false)]
+    [InlineData(SiteWorkflowState.Section106CapitalFundingEligibility, SiteWorkflowState.Section106AffordableHousing, null)]
+    public async Task ShouldReturnNextState_WhenBackTriggerExecutedWithSection106CapitalFundingEligibility(SiteWorkflowState current, SiteWorkflowState expectedNext, bool? onlyAffordableHousing)
+    {
+        // given
+        var workflow = BuildWorkflow(current, true, true, onlyAffordableHousing, false, false, null);
+
+        // when
+        var result = await workflow.NextState(Trigger.Back);
+
+        // then
+        result.Should().Be(expectedNext);
+    }
+
     private static SiteWorkflow BuildWorkflow(
         SiteWorkflowState currentSiteWorkflowState,
         bool? section106GeneralAgreement,

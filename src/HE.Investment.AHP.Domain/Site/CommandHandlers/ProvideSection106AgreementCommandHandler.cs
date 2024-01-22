@@ -22,7 +22,7 @@ public class ProvideSection106AgreementCommandHandler : SiteBaseCommandHandler, 
         return Perform(
             site =>
             {
-                var currentSection106 = site.Section106 ?? new Section106();
+                var currentSection106 = site.Section106;
                 var newSection106 = new Section106(
                                             request.Agreement,
                                             currentSection106.AffordableHousing,

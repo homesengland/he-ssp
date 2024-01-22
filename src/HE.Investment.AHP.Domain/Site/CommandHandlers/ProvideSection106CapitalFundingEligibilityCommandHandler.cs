@@ -10,14 +10,14 @@ using Microsoft.Extensions.Logging;
 
 namespace HE.Investment.AHP.Domain.Site.CommandHandlers;
 
-public class ProvideSection106AffordableHousingCommandHandler : SiteBaseCommandHandler, IRequestHandler<ProvideSection106AffordableHousingCommand, OperationResult>
+public class ProvideSection106CapitalFundingEligibilityCommandHandler : SiteBaseCommandHandler, IRequestHandler<ProvideSection106CapitalFundingEligibilityCommand, OperationResult>
 {
-    public ProvideSection106AffordableHousingCommandHandler(ISiteRepository siteRepository, IAccountUserContext accountUserContext, ILogger<SiteBaseCommandHandler> logger)
+    public ProvideSection106CapitalFundingEligibilityCommandHandler(ISiteRepository siteRepository, IAccountUserContext accountUserContext, ILogger<SiteBaseCommandHandler> logger)
         : base(siteRepository, accountUserContext, logger)
     {
     }
 
-    public Task<OperationResult> Handle(ProvideSection106AffordableHousingCommand request, CancellationToken cancellationToken)
+    public Task<OperationResult> Handle(ProvideSection106CapitalFundingEligibilityCommand request, CancellationToken cancellationToken)
     {
         return Perform(
             site =>
@@ -25,10 +25,10 @@ public class ProvideSection106AffordableHousingCommandHandler : SiteBaseCommandH
                 var currentSection106 = site.Section106;
                 var newSection106 = new Section106(
                                             currentSection106.GeneralAgreement,
-                                            request.AffordableHousing,
+                                            currentSection106.AffordableHousing,
                                             currentSection106.OnlyAffordableHousing,
                                             currentSection106.AdditionalAffordableHousing,
-                                            currentSection106.CapitalFundingEligibility,
+                                            request.CapitalFundingEligibility,
                                             currentSection106.ConfirmationFromLocalAuthority);
 
                 site.ProvideSection106(newSection106);
