@@ -2,12 +2,14 @@ using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Commands;
 using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Contract.Site;
+using HE.Investment.AHP.WWW.Extensions;
 using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investment.AHP.WWW.Models.Application.Factories;
 using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Contract.Pagination;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Routing;
@@ -36,6 +38,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     }
 
     [HttpGet]
+    [WorkflowState(ApplicationWorkflowState.ApplicationsList)]
     public async Task<IActionResult> Index([FromQuery] int? page, CancellationToken cancellationToken)
     {
         var applicationsQueryResult = await _mediator.Send(new GetApplicationsQuery(new PaginationRequest(page ?? 1)), cancellationToken);
@@ -210,7 +213,13 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
 
     protected override async Task<IStateRouting<ApplicationWorkflowState>> Routing(ApplicationWorkflowState currentState, object? routeData = null)
     {
+        var applicationId = this.TryGetApplicationIdFromRoute();
         var isReadOnly = !await _accountAccessContext.CanEditApplication();
-        return new ApplicationWorkflow(currentState, isReadOnly);
+
+        return new ApplicationWorkflow(
+                currentState,
+                async () => await _mediator.Send(new GetApplicationQuery(applicationId!)),
+                async () => applicationId.IsProvided() && await _mediator.Send(new IsApplicationExistQuery(applicationId!)),
+                isReadOnly);
     }
 }

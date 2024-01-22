@@ -9,7 +9,7 @@ public interface IApplicationCrmContext
 
     Task<AhpApplicationDto> GetUserApplicationById(string id, Guid organisationId, IList<string> fieldsToRetrieve, CancellationToken cancellationToken);
 
-    Task<bool> IsExist(string applicationName, Guid organisationId, CancellationToken cancellationToken);
+    Task<bool> IsNameExist(string applicationName, Guid organisationId, CancellationToken cancellationToken);
 
     Task<IList<AhpApplicationDto>> GetOrganisationApplications(Guid organisationId, IList<string> fieldsToRetrieve, CancellationToken cancellationToken);
 

@@ -47,7 +47,7 @@ public class ApplicationCrmContext : IApplicationCrmContext
         return await Get(request, cancellationToken);
     }
 
-    public async Task<bool> IsExist(string applicationName, Guid organisationId, CancellationToken cancellationToken)
+    public async Task<bool> IsNameExist(string applicationName, Guid organisationId, CancellationToken cancellationToken)
     {
         var dto = new AhpApplicationDto
         {
