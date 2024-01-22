@@ -11,7 +11,6 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public string applicationId { get; set; }
         public string name { get; set; }
         public System.DateTime? createdOn { get; set; }
-        //public string createdByExternalUserName { get; set; }
         public string typeOfHomes { get; set; }
         public int? newBuildActivityType { get; set; }
         public int? rehabBuildActivityType { get; set; }
