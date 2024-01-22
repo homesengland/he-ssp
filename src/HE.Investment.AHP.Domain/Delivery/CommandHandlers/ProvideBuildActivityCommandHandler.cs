@@ -18,7 +18,7 @@ public class ProvideBuildActivityCommandHandler : UpdateDeliveryPhaseCommandHand
     protected override Task<OperationResult> Update(IDeliveryPhaseEntity entity, ProvideBuildActivityCommand request, CancellationToken cancellationToken)
     {
         var buildActivityType = request.BuildActivityType.IsProvided() ?
-            new BuildActivity(entity.Tenure, entity.TypeOfHomes.GetValueOfFirstValue(), request.BuildActivityType!.Value)
+            new BuildActivity(entity.Tenure, entity.TypeOfHomes.GetValueOrFirstValue(), request.BuildActivityType!.Value)
             : new BuildActivity(entity.Tenure);
 
         entity.ProvideBuildActivity(buildActivityType);
