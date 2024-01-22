@@ -52,6 +52,6 @@ public class JoinRequestsTable : ViewComponent
         return View("JoinRequestsTable", (tableHeaders, usersDetails));
     }
 
-    private ComponentViewModel CreateUsersLinkComponent(string id, string text, string action) =>
+    private DynamicComponentViewModel CreateUsersLinkComponent(string id, string text, string action) =>
         new(nameof(Link), new { text, action, controller = new ControllerName(nameof(UsersController)).WithoutPrefix(), values = new { id } });
 }

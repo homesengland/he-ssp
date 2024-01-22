@@ -1,0 +1,27 @@
+@using HE.Investment.AHP.WWW.Views.Site
+@using HE.Investments.Common.WWW.Components.BackLinkWithCallback
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investments.Common.WWW.Components.RadioYesNo
+@using HE.Investment.AHP.WWW.Views.Shared.Components.SiteConfirmSelectHeader
+
+@model HE.Investment.AHP.Contract.Site.SiteModel
+
+@{
+    ViewData["Title"] = SitePageTitles.SiteConfirmSelect;
+    var header = new DynamicComponentViewModel(nameof(SiteConfirmSelectHeader), new { header = SitePageTitles.SiteConfirmSelect, name = Model.Name, description = Model.Name });
+}
+<gds-div-grid-column-two-thirds>
+    <vc:back-link-with-callback url="@Url.Action("Select", "Site")"/>
+
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+
+    <form asp-controller="Site" asp-action="SelectConfirmed" asp-route-siteId="@Model.Id" asp-method="post" novalidate>
+
+        <vc:radio-yes-no
+            header-component="@header"
+            field-name="IsConfirmed"/>
+
+        <vc:form-button text="Continue"/>
+    </form>
+
+</gds-div-grid-column-two-thirds>

@@ -22,8 +22,13 @@ public static class BasicHtmlDocumentExtensions
         return FilterByText(elements, text);
     }
 
-    public static IList<IElement> GetElements(this IHtmlDocument htmlDocument, string selector, string text)
+    public static IList<IElement> GetElements(this IHtmlDocument htmlDocument, string selector, string? text = null)
     {
+        if (string.IsNullOrWhiteSpace(text))
+        {
+            return htmlDocument.QuerySelectorAll(selector).ToList();
+        }
+
         return FilterByText(htmlDocument.QuerySelectorAll(selector), text);
     }
 

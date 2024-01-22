@@ -24,7 +24,7 @@
         <vc:text-area-input-with-counter
             field-name="@nameof(Model.MoreInformation)"
             header="@HomeTypesPageTitles.ExemptionJustification"
-            description-component="@(new ComponentViewModel(nameof(SharedOwnershipRightSummary)))"
+            description-component="@(new DynamicComponentViewModel(nameof(SharedOwnershipRightSummary)))"
             value="@Model.MoreInformation"/>
 
         <vc:form-button/>

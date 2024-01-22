@@ -1,28 +1,36 @@
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Legend
-@using HE.Investments.Common.WWW.TagHelpers
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Headings
-@model (string header, string title, string hint)
+@using HE.Investments.Common.WWW.Components
+
+@model (DynamicComponentViewModel headerComponent, string header, string title, string hint)
 
 <gds-legend>
 
-    @if (!string.IsNullOrWhiteSpace(Model.header))
+    @* ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract *@
+    @if (Model.headerComponent != null)
     {
-        <gds-h1>
-            @Model.header
-        </gds-h1>
+        <vc:dynamic-component
+            component="@Model.headerComponent"/>
     }
-
-    @if (!string.IsNullOrWhiteSpace(Model.title))
+    else
     {
-        <gds-h2>
-            @Model.title
-        </gds-h2>
-    }
+        @if (!string.IsNullOrWhiteSpace(Model.header))
+        {
+            <gds-h1>
+                @Model.header
+            </gds-h1>
+        }
 
-    @if (!string.IsNullOrWhiteSpace(Model.hint))
-    {
-        <he-div-hint>
-            @Model.hint
-        </he-div-hint>
+        @if (!string.IsNullOrWhiteSpace(Model.title))
+        {
+            <gds-h2>
+                @Model.title
+            </gds-h2>
+        }
+
+        @if (!string.IsNullOrWhiteSpace(Model.hint))
+        {
+            <he-div-hint>
+                @Model.hint
+            </he-div-hint>
+        }
     }
 </gds-legend>

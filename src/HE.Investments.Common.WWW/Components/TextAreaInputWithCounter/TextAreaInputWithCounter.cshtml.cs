@@ -8,7 +8,7 @@ public class TextAreaInputWithCounter : ViewComponent
     public IViewComponentResult Invoke(
         string fieldName,
         string? header = null,
-        ComponentViewModel? descriptionComponent = null,
+        DynamicComponentViewModel? descriptionComponent = null,
         string? title = null,
         string? hint = null,
         string? value = null,

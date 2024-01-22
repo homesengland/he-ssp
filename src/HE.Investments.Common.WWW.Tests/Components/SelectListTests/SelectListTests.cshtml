@@ -1,0 +1,11 @@
+@using HE.Investments.Common.WWW.Components.SelectList
+
+@model HE.Investments.Common.WWW.Tests.Components.SelectListTests.SelectListTestModel
+
+<vc:select-list
+            items="@Model.Items"
+            paging-navigation-url="@Model.PagingNavigationUrl"
+            add-action-url="@Model.AddActionUrl"
+            add-action-text="@Model.AddActionText"/>
+
+
