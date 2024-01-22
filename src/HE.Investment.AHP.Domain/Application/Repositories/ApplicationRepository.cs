@@ -40,9 +40,16 @@ public class ApplicationRepository : IApplicationRepository
         return CreateEntity(application);
     }
 
-    public async Task<bool> IsExist(ApplicationName applicationName, OrganisationId organisationId, CancellationToken cancellationToken)
+    public async Task<bool> IsNameExist(ApplicationName applicationName, OrganisationId organisationId, CancellationToken cancellationToken)
     {
-        return await _applicationCrmContext.IsExist(applicationName.Name, organisationId.Value, cancellationToken);
+        return await _applicationCrmContext.IsNameExist(applicationName.Name, organisationId.Value, cancellationToken);
+    }
+
+    public async Task<bool> IsExist(AhpApplicationId applicationId, OrganisationId organisationId, CancellationToken cancellationToken)
+    {
+        var application = await _applicationCrmContext.GetUserApplicationById(applicationId.Value, organisationId.Value, CrmFields.ApplicationToRead.ToList(), cancellationToken);
+
+        return application.IsProvided();
     }
 
     public async Task<ApplicationBasicInfo> GetApplicationBasicInfo(AhpApplicationId id, UserAccount userAccount, CancellationToken cancellationToken)

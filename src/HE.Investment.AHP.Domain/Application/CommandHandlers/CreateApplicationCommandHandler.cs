@@ -26,7 +26,7 @@ public class CreateApplicationCommandHandler : IRequestHandler<CreateApplication
     {
         var name = new ApplicationName(request.Name);
         var account = await _accountUserContext.GetSelectedAccount();
-        if (await _repository.IsExist(name, account.SelectedOrganisationId(), cancellationToken))
+        if (await _repository.IsNameExist(name, account.SelectedOrganisationId(), cancellationToken))
         {
             throw new FoundException("Name", "There is already an application with this name. Enter a different name");
         }
