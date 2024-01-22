@@ -164,7 +164,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
-            return View("Section106OAdditionalAffordableHousing", model);
+            return View("Section106AdditionalAffordableHousing", model);
         }
 
         return await Continue(new { siteId });

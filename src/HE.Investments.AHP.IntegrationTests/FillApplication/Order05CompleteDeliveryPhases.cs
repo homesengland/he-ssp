@@ -217,6 +217,26 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
             ("ClaimMilestonePaymentAt.Year", deliveryPhase.StartOnSiteMilestone.PaymentDate!.Value.Year.ToString(CultureInfo.InvariantCulture)));
     }
 
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(10)]
+    public async Task Order10_ProvidePracticalCompletionMilestone()
+    {
+        // given
+        var deliveryPhase = NewBuildAndWorksOnlyDeliveryPhase.GenerateCompletionMilestone();
+
+        // when & then
+        await TestQuestionPage(
+            BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.PracticalCompletionMilestone, NewBuildAndWorksOnlyDeliveryPhase),
+            DeliveryPageTitles.PracticalCompletionMilestone,
+            BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.CheckAnswers, NewBuildAndWorksOnlyDeliveryPhase),
+            ("MilestoneStartAt.Day", deliveryPhase.CompletionMilestone.MilestoneDate!.Value.Day.ToString(CultureInfo.InvariantCulture)),
+            ("MilestoneStartAt.Month", deliveryPhase.CompletionMilestone.MilestoneDate!.Value.Month.ToString(CultureInfo.InvariantCulture)),
+            ("MilestoneStartAt.Year", deliveryPhase.CompletionMilestone.MilestoneDate!.Value.Year.ToString(CultureInfo.InvariantCulture)),
+            ("ClaimMilestonePaymentAt.Day", deliveryPhase.CompletionMilestone.PaymentDate!.Value.Day.ToString(CultureInfo.InvariantCulture)),
+            ("ClaimMilestonePaymentAt.Month", deliveryPhase.CompletionMilestone.PaymentDate!.Value.Month.ToString(CultureInfo.InvariantCulture)),
+            ("ClaimMilestonePaymentAt.Year", deliveryPhase.CompletionMilestone.PaymentDate!.Value.Year.ToString(CultureInfo.InvariantCulture)));
+    }
+
     private async Task<IHtmlDocument> RemoveDeliveryPhase(IHtmlDocument deliveryPhasesListPage, string deliveryPhaseId)
     {
         // given

@@ -78,8 +78,8 @@ public class NewBuildAndWorksOnlyDeliveryPhase : INestedItemData
     public NewBuildAndWorksOnlyDeliveryPhase GenerateCompletionMilestone()
     {
         CompletionMilestone = new CompletionMilestoneDetails(
-            new CompletionDate("9", "12", "2026"),
-            new MilestonePaymentDate("20", "1", "2026"));
+            new CompletionDate("9", "9", "2025"),
+            new MilestonePaymentDate("10", "10", "2025"));
         return this;
     }
 }
