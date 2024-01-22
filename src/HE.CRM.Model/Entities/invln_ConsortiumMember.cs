@@ -35,9 +35,6 @@ namespace DataverseModel
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Active = 1,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Additionapproved = 858110004,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
