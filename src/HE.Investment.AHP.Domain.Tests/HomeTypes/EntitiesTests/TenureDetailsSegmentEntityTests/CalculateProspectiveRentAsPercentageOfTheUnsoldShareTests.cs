@@ -1,19 +1,16 @@
 using FluentAssertions;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investment.AHP.Domain.Tests.HomeTypes.TestDataBuilders;
-using HE.Investments.Common.Contract.Exceptions;
 
 namespace HE.Investment.AHP.Domain.Tests.HomeTypes.EntitiesTests.TenureDetailsSegmentEntityTests;
 
 public class CalculateProspectiveRentAsPercentageOfTheUnsoldShareTests
 {
     [Theory]
-    [InlineData(1000, 800, 10, 46.22)]
-    [InlineData(2000, 20, 35, 0.8)]
-    [InlineData(511, 90, 12, 10.41)]
-    [InlineData(14500, 945, 60, 8.47)]
-    [InlineData(9800, 5000, 75, 106.12)]
-    public void ShouldReturnCalculatedResult_WhenProvidedInputsAreNumber(int marketValue, decimal prospectiveRent, int initialSale, decimal expectedResult)
+    [InlineData(1, 0, 10, 0)]
+    [InlineData(99_999_999, 9999.99, 75, 2.08)]
+    [InlineData(0, 1000, 50, 0)]
+    public void ShouldReturnCalculatedResult_WhenInputsAreProvided(int marketValue, decimal prospectiveRent, int initialSale, decimal expectedResult)
     {
         // given
         var marketValueVO = new MarketValue(marketValue);
@@ -35,22 +32,21 @@ public class CalculateProspectiveRentAsPercentageOfTheUnsoldShareTests
     }
 
     [Theory]
-    [InlineData("input", "8", "10")]
-    [InlineData("10", "input", "15")]
-    [InlineData("", "10", "")]
-    [InlineData("", "", "")]
-    public void ShouldReturnZero_WhenProvidedInputIsNotANumber(string marketValue, string prospectiveRent, string initialSale)
+    [InlineData("10", "10", null)]
+    [InlineData("10", null, "10")]
+    [InlineData(null, "10", "10")]
+    public void ShouldReturnNull_WhenAnyValueIsNotProvided(string? marketValue, string? prospectiveRent, string? initialSale)
     {
         // given
         var tenureDetails = new TenureDetailsTestDataBuilder().Build();
 
         // when
-        Action action = () => _ = tenureDetails.CalculateProspectiveRentAsPercentageOfTheUnsoldShare(
-            new MarketValue(marketValue, true),
-            new ProspectiveRent(prospectiveRent, true),
-            new InitialSale(initialSale, true));
+        var result = tenureDetails.CalculateProspectiveRentAsPercentageOfTheUnsoldShare(
+            marketValue == null ? null : new MarketValue(marketValue, true),
+            prospectiveRent == null ? null : new ProspectiveRent(prospectiveRent, true),
+            initialSale == null ? null : new InitialSale(initialSale, true));
 
         // then
-        action.Should().Throw<DomainValidationException>();
+        result.Should().BeNull();
     }
 }
