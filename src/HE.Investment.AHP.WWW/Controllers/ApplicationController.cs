@@ -2,6 +2,7 @@ using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Commands;
 using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Contract.Site;
+using HE.Investment.AHP.Contract.Site.Queries;
 using HE.Investment.AHP.WWW.Extensions;
 using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investment.AHP.WWW.Models.Application.Factories;
@@ -52,6 +53,19 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     public IActionResult Start()
     {
         return View("Splash");
+    }
+
+    [HttpPost("start")]
+    [WorkflowState(ApplicationWorkflowState.Start)]
+    public async Task<IActionResult> StartPost(CancellationToken cancellationToken)
+    {
+        var response = await _mediator.Send(new GetSiteListQuery(new PaginationRequest(1, 1)), cancellationToken);
+        if (response.Page.Items.Any())
+        {
+            return RedirectToAction("Select", "Site");
+        }
+
+        return RedirectToAction("Start", "Site");
     }
 
     [WorkflowState(ApplicationWorkflowState.ApplicationName)]

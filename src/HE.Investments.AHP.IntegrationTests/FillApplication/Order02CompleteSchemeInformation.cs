@@ -45,10 +45,10 @@ public class Order02CompleteSchemeInformation : AhpIntegrationTest
         var schemaDetailsPage = await TestClient.NavigateTo(enterSchemeInformationLink);
 
         // then
-        schemaDetailsPage
+        var continueButton = schemaDetailsPage
             .UrlEndWith(SchemeInformationPagesUrl.SchemeDetails)
             .HasTitle(SchemeInformationPageTitles.SchemeDetails)
-            .HasGdsLinkButton("continue-button", out var continueButton);
+            .GetLinkButton();
 
         await TestClient.NavigateTo(continueButton);
         SaveCurrentPage();

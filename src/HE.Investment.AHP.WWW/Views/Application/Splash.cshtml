@@ -11,7 +11,7 @@
 }
 
 <div class="govuk-grid-column-three-quarters">
-    <vc:form-header title="@title" />
+    <vc:form-header title="@title"/>
 
     <div class="govuk-!-padding-bottom-8">
         <gds-div-inset-text>
@@ -68,7 +68,8 @@
             truthful and accurate to the best of your knowledge.
         </gds-p>
     </div>
-    <a href="@Url.Action("Select", "Site")" id="continue-button">
-        <gds-button-start type="button">Start now</gds-button-start>
-    </a>
+
+    <form asp-controller="Application" asp-action="StartPost" asp-method="post" novalidate>
+        <gds-button-start type="submit">Start now</gds-button-start>
+    </form>
 </div>

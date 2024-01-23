@@ -28,7 +28,7 @@ public class SelectListTests : ViewComponentTestBase<SelectListTests>
         }
 
         document
-            .HasButton(model.AddActionText!, model.AddActionUrl!)
+            .HasLinkButton(model.AddActionText, model.AddActionUrl)
             .HasPagination();
     }
 
@@ -61,4 +61,4 @@ public class SelectListTests : ViewComponentTestBase<SelectListTests>
     }
 }
 
-public record SelectListTestModel(PaginationResult<SelectListItemViewModel> Items, string PagingNavigationUrl, string? AddActionUrl, string? AddActionText);
+public record SelectListTestModel(PaginationResult<SelectListItemViewModel> Items, string PagingNavigationUrl, string? AddActionUrl, string AddActionText);
