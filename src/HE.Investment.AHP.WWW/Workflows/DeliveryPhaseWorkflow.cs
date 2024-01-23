@@ -51,7 +51,7 @@ public class DeliveryPhaseWorkflow : IStateRouting<DeliveryPhaseWorkflowState>
             { TypeOfHomes: var x } when x.IsNotProvided() => DeliveryPhaseWorkflowState.TypeOfHomes,
             { BuildActivityType: var x } when x.IsNotProvided() => DeliveryPhaseWorkflowState.BuildActivityType,
             { IsReconfiguringExistingNeeded: true } when _model.ReconfiguringExisting.IsNotProvided() => DeliveryPhaseWorkflowState.ReconfiguringExisting,
-            { NumberOfHomes: var x } when x.IsNotProvided() => DeliveryPhaseWorkflowState.AddHomes,
+            { NumberOfHomes: var x } when x.IsNotProvided() || !IsNumberOfHomesCompleted() => DeliveryPhaseWorkflowState.AddHomes,
             { } when (_model.AcquisitionDate.IsNotProvided() || _model.AcquisitionPaymentDate.IsNotProvided()) && AllMilestonesAvailable() => DeliveryPhaseWorkflowState.AcquisitionMilestone,
             { } when (_model.StartOnSiteDate.IsNotProvided() || _model.StartOnSitePaymentDate.IsNotProvided()) && AllMilestonesAvailable() => DeliveryPhaseWorkflowState.StartOnSiteMilestone,
             { } when _model.PracticalCompletionDate.IsNotProvided() || _model.PracticalCompletionPaymentDate.IsNotProvided() => DeliveryPhaseWorkflowState.PracticalCompletionMilestone,
@@ -71,11 +71,11 @@ public class DeliveryPhaseWorkflow : IStateRouting<DeliveryPhaseWorkflowState>
             DeliveryPhaseWorkflowState.BuildActivityType => true,
             DeliveryPhaseWorkflowState.ReconfiguringExisting => _model.IsReconfiguringExistingNeeded,
             DeliveryPhaseWorkflowState.AddHomes => true,
-            DeliveryPhaseWorkflowState.SummaryOfDelivery => true,
-            DeliveryPhaseWorkflowState.AcquisitionMilestone => AllMilestonesAvailable(),
-            DeliveryPhaseWorkflowState.StartOnSiteMilestone => AllMilestonesAvailable(),
-            DeliveryPhaseWorkflowState.PracticalCompletionMilestone => true,
-            DeliveryPhaseWorkflowState.UnregisteredBodyFollowUp => IsUnregisteredBody(),
+            DeliveryPhaseWorkflowState.SummaryOfDelivery => IsNumberOfHomesCompleted(),
+            DeliveryPhaseWorkflowState.AcquisitionMilestone => AllMilestonesAvailable() && IsNumberOfHomesCompleted(),
+            DeliveryPhaseWorkflowState.StartOnSiteMilestone => AllMilestonesAvailable() && IsNumberOfHomesCompleted(),
+            DeliveryPhaseWorkflowState.PracticalCompletionMilestone => IsNumberOfHomesCompleted(),
+            DeliveryPhaseWorkflowState.UnregisteredBodyFollowUp => IsUnregisteredBody() && IsNumberOfHomesCompleted(),
             DeliveryPhaseWorkflowState.CheckAnswers => true,
             _ => throw new ArgumentOutOfRangeException(nameof(state), state, null),
         };
@@ -143,4 +143,6 @@ public class DeliveryPhaseWorkflow : IStateRouting<DeliveryPhaseWorkflowState>
     private bool IsUnregisteredBody() => _model.IsUnregisteredBody;
 
     private bool IsRegisteredBody() => !IsUnregisteredBody();
+
+    private bool IsNumberOfHomesCompleted() => _model.NumberOfHomes > 0;
 }
