@@ -751,6 +751,42 @@ namespace HE.Investments.Common.CRM.Model
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_internalstatusahporganisation
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		InvestmentPartnerFull = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		InvestmentPartnerRestricted = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		NotIPNotyetapplied = 858110002,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		NotIPIPQinassessment = 858110003,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		NotIPApplicationreferredtopartner = 858110004,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		NotIPIPinternallyapprovedpendingKYC = 858110005,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		NotIPApplicationrejected = 858110006,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		NotIPLapsed = 858110007,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		NotIPWithdrawn = 858110008,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		NotIPKYCinternallyapprovedpendingIPapproved = 858110009,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum invln_accessibilitycategoryset
 	{
 		
@@ -1071,6 +1107,27 @@ namespace HE.Investments.Common.CRM.Model
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		ECRefRate = 858110001,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_governance
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		G1 = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		G2 = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		G3 = 858110002,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		G4 = 858110003,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		NoRJ = 858110004,
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
@@ -1503,6 +1560,84 @@ namespace HE.Investments.Common.CRM.Model
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Low = 858110002,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_externalstatusahporganisation
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		InvestmentPartnerFull = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		InvestmentPartnerRestricted = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		NotAnInvestmentPartner = 858110002,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_viability
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		V1 = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		V2 = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		V3 = 858110002,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		V4 = 858110003,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		NoRJ = 858110004,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_securitytypeahppartneronboarding
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ParentCompanyGuarantee = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		PerformanceBond = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		FixedCharge = 858110002,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Other = 858110003,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_kycstatus
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		KYCFormReceived = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		QueriesWithProvider = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		UnderReview = 858110002,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		OnHold = 858110003,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Completed = 858110004,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Withdrawn = 858110005,
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
@@ -2815,6 +2950,18 @@ namespace HE.Investments.Common.CRM.Model
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum salesordercreationmethod
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Unknown = 776160000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		WinQuote = 776160001,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum repeatpattern_options
 	{
 		
@@ -3477,6 +3624,18 @@ namespace HE.Investments.Common.CRM.Model
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Custom = 1,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum quotecreationmethod
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Unknown = 776160000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Revision = 776160001,
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
@@ -4539,6 +4698,21 @@ namespace HE.Investments.Common.CRM.Model
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		EarliestTimeFirst = 690970001,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum msdyn_vivacopilottype
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		CopilotforSales = 10000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		CopilotforService = 10001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Shared = 11000,
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
@@ -7248,6 +7422,21 @@ namespace HE.Investments.Common.CRM.Model
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Effortbased = 192350002,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum organization_applicationbasedaccesscontrolmode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Disabled = 0,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Enabled = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		AuditMode = 2,
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
@@ -12008,6 +12197,42 @@ namespace HE.Investments.Common.CRM.Model
 		/// <summary>
 		/// 
 		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_acqsospaymentsapproved")]
+		public System.Nullable<bool> invln_AcqSOSpaymentsapproved
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_acqsospaymentsapproved");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_AcqSOSpaymentsapproved");
+				this.SetAttributeValue("invln_acqsospaymentsapproved", value);
+				this.OnPropertyChanged("invln_AcqSOSpaymentsapproved");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_acqsospaymentsrequested")]
+		public System.Nullable<bool> invln_AcqSOSpaymentsrequested
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_acqsospaymentsrequested");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_AcqSOSpaymentsrequested");
+				this.SetAttributeValue("invln_acqsospaymentsrequested", value);
+				this.OnPropertyChanged("invln_AcqSOSpaymentsrequested");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_addressverificationtype")]
 		public System.Nullable<HE.Investments.Common.CRM.Model.invln_addressverificationtype> invln_addressverificationtype
 		{
@@ -12035,6 +12260,24 @@ namespace HE.Investments.Common.CRM.Model
 					this.SetAttributeValue("invln_addressverificationtype", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
 				}
 				this.OnPropertyChanged("invln_addressverificationtype");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_comments")]
+		public string invln_Comments
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_comments");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Comments");
+				this.SetAttributeValue("invln_comments", value);
+				this.OnPropertyChanged("invln_Comments");
 			}
 		}
 		
@@ -12179,6 +12422,90 @@ namespace HE.Investments.Common.CRM.Model
 		/// <summary>
 		/// 
 		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_externalstatus")]
+		public System.Nullable<HE.Investments.Common.CRM.Model.invln_externalstatusahporganisation> invln_ExternalStatus
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_externalstatus");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.Common.CRM.Model.invln_externalstatusahporganisation)(System.Enum.ToObject(typeof(HE.Investments.Common.CRM.Model.invln_externalstatusahporganisation), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_ExternalStatus");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_externalstatus", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_externalstatus", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_ExternalStatus");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_governance")]
+		public System.Nullable<HE.Investments.Common.CRM.Model.invln_governance> invln_Governance
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_governance");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.Common.CRM.Model.invln_governance)(System.Enum.ToObject(typeof(HE.Investments.Common.CRM.Model.invln_governance), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Governance");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_governance", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_governance", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_Governance");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_gradingsunderreviewregulatorynotices")]
+		public string invln_GradingsunderreviewRegulatorynotices
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_gradingsunderreviewregulatorynotices");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_GradingsunderreviewRegulatorynotices");
+				this.SetAttributeValue("invln_gradingsunderreviewregulatorynotices", value);
+				this.OnPropertyChanged("invln_GradingsunderreviewRegulatorynotices");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_idverificationtype")]
 		public System.Nullable<HE.Investments.Common.CRM.Model.invln_idverificationtype> invln_idverificationtype
 		{
@@ -12206,6 +12533,180 @@ namespace HE.Investments.Common.CRM.Model
 					this.SetAttributeValue("invln_idverificationtype", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
 				}
 				this.OnPropertyChanged("invln_idverificationtype");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_internalstatus")]
+		public System.Nullable<HE.Investments.Common.CRM.Model.invln_internalstatusahporganisation> invln_InternalStatus
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_internalstatus");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.Common.CRM.Model.invln_internalstatusahporganisation)(System.Enum.ToObject(typeof(HE.Investments.Common.CRM.Model.invln_internalstatusahporganisation), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_InternalStatus");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_internalstatus", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_internalstatus", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_InternalStatus");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_iprestrictions")]
+		public string invln_IPRestrictions
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_iprestrictions");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_IPRestrictions");
+				this.SetAttributeValue("invln_iprestrictions", value);
+				this.OnPropertyChanged("invln_IPRestrictions");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_kycexpiry")]
+		public System.Nullable<System.DateTime> invln_KYCExpiry
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("invln_kycexpiry");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_KYCExpiry");
+				this.SetAttributeValue("invln_kycexpiry", value);
+				this.OnPropertyChanged("invln_KYCExpiry");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_kycreviewdate")]
+		public System.Nullable<System.DateTime> invln_KYCReviewDate
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("invln_kycreviewdate");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_KYCReviewDate");
+				this.SetAttributeValue("invln_kycreviewdate", value);
+				this.OnPropertyChanged("invln_KYCReviewDate");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_kycstatus")]
+		public System.Nullable<HE.Investments.Common.CRM.Model.invln_kycstatus> invln_KYCStatus
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_kycstatus");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.Common.CRM.Model.invln_kycstatus)(System.Enum.ToObject(typeof(HE.Investments.Common.CRM.Model.invln_kycstatus), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_KYCStatus");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_kycstatus", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_kycstatus", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_KYCStatus");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_lastcontinuousqualification")]
+		public System.Nullable<System.DateTime> invln_Lastcontinuousqualification
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("invln_lastcontinuousqualification");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Lastcontinuousqualification");
+				this.SetAttributeValue("invln_lastcontinuousqualification", value);
+				this.OnPropertyChanged("invln_Lastcontinuousqualification");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_nameofdirectors")]
+		public string invln_NameofDirectors
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_nameofdirectors");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_NameofDirectors");
+				this.SetAttributeValue("invln_nameofdirectors", value);
+				this.OnPropertyChanged("invln_NameofDirectors");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_nameofofficers")]
+		public string invln_NameofOfficers
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_nameofofficers");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_NameofOfficers");
+				this.SetAttributeValue("invln_nameofofficers", value);
+				this.OnPropertyChanged("invln_NameofOfficers");
 			}
 		}
 		
@@ -12281,6 +12782,24 @@ namespace HE.Investments.Common.CRM.Model
 		/// <summary>
 		/// 
 		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_powerofattorney")]
+		public System.Nullable<bool> invln_PowerofAttorney
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_powerofattorney");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_PowerofAttorney");
+				this.SetAttributeValue("invln_powerofattorney", value);
+				this.OnPropertyChanged("invln_PowerofAttorney");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_previouscrr")]
 		public System.Nullable<HE.Investments.Common.CRM.Model.invln_crrstatus> invln_PreviousCRR
 		{
@@ -12341,6 +12860,132 @@ namespace HE.Investments.Common.CRM.Model
 					this.SetAttributeValue("invln_rating", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
 				}
 				this.OnPropertyChanged("invln_rating");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_securitytype")]
+		public System.Nullable<HE.Investments.Common.CRM.Model.invln_securitytypeahppartneronboarding> invln_SecurityType
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_securitytype");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.Common.CRM.Model.invln_securitytypeahppartneronboarding)(System.Enum.ToObject(typeof(HE.Investments.Common.CRM.Model.invln_securitytypeahppartneronboarding), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_SecurityType");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_securitytype", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_securitytype", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_SecurityType");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_securityvalue")]
+		public Microsoft.Xrm.Sdk.Money invln_SecurityValue
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_securityvalue");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_SecurityValue");
+				this.SetAttributeValue("invln_securityvalue", value);
+				this.OnPropertyChanged("invln_SecurityValue");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Security Value in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_securityvalue_base")]
+		public Microsoft.Xrm.Sdk.Money invln_securityvalue_Base
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_securityvalue_base");
+			}
+		}
+		
+		/// <summary>
+		/// Sum of grant from all approved applications
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_totalofexistingallocations")]
+		public Microsoft.Xrm.Sdk.Money invln_Totalofexistingallocations
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_totalofexistingallocations");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Totalofexistingallocations");
+				this.SetAttributeValue("invln_totalofexistingallocations", value);
+				this.OnPropertyChanged("invln_Totalofexistingallocations");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Total of existing allocations in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_totalofexistingallocations_base")]
+		public Microsoft.Xrm.Sdk.Money invln_totalofexistingallocations_Base
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_totalofexistingallocations_base");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_viability")]
+		public System.Nullable<HE.Investments.Common.CRM.Model.invln_viability> invln_Viability
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_viability");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.Common.CRM.Model.invln_viability)(System.Enum.ToObject(typeof(HE.Investments.Common.CRM.Model.invln_viability), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Viability");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_viability", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_viability", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_Viability");
 			}
 		}
 		
@@ -17476,6 +18121,24 @@ namespace HE.Investments.Common.CRM.Model
 				this.OnPropertyChanging("invln_externalid");
 				this.SetAttributeValue("invln_externalid", value);
 				this.OnPropertyChanged("invln_externalid");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_note")]
+		public string invln_Note
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_note");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Note");
+				this.SetAttributeValue("invln_note", value);
+				this.OnPropertyChanged("invln_Note");
 			}
 		}
 		
@@ -23601,6 +24264,36 @@ namespace HE.Investments.Common.CRM.Model
 		/// <summary>
 		/// 
 		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_grantamountrequested")]
+		public Microsoft.Xrm.Sdk.Money invln_GrantAmountRequested
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_grantamountrequested");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_GrantAmountRequested");
+				this.SetAttributeValue("invln_grantamountrequested", value);
+				this.OnPropertyChanged("invln_GrantAmountRequested");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Grant Amount Requested in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_grantamountrequested_base")]
+		public Microsoft.Xrm.Sdk.Money invln_grantamountrequested_Base
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_grantamountrequested_base");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_grantasaoftotalschemecosts")]
 		public System.Nullable<decimal> invln_grantasaoftotalschemecosts
 		{
@@ -24222,6 +24915,24 @@ namespace HE.Investments.Common.CRM.Model
 				this.OnPropertyChanging("invln_programmelookup");
 				this.SetAttributeValue("invln_programmelookup", value);
 				this.OnPropertyChanged("invln_programmelookup");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_providername")]
+		public string invln_ProviderName
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_providername");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_ProviderName");
+				this.SetAttributeValue("invln_providername", value);
+				this.OnPropertyChanged("invln_ProviderName");
 			}
 		}
 		
@@ -28967,6 +29678,25 @@ namespace HE.Investments.Common.CRM.Model
 	public partial class invln_changeahpapplicationstatusRequest : Microsoft.Xrm.Sdk.OrganizationRequest
 	{
 		
+		public string invln_changereason
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_changereason"))
+				{
+					return ((string)(this.Parameters["invln_changereason"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_changereason"] = value;
+			}
+		}
+		
 		public string invln_applicationid
 		{
 			get
@@ -29171,6 +29901,497 @@ namespace HE.Investments.Common.CRM.Model
 				if (this.Results.Contains("invln_documentlocation"))
 				{
 					return ((string)(this.Results["invln_documentlocation"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_deletedeliveryphase")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_deletedeliveryphaseRequest : Microsoft.Xrm.Sdk.OrganizationRequest
+	{
+		
+		public string invln_userId
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_userId"))
+				{
+					return ((string)(this.Parameters["invln_userId"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_userId"] = value;
+			}
+		}
+		
+		public string invln_organisationId
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_organisationId"))
+				{
+					return ((string)(this.Parameters["invln_organisationId"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_organisationId"] = value;
+			}
+		}
+		
+		public string invln_applicationId
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_applicationId"))
+				{
+					return ((string)(this.Parameters["invln_applicationId"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_applicationId"] = value;
+			}
+		}
+		
+		public string invln_deliveryPhaseId
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_deliveryPhaseId"))
+				{
+					return ((string)(this.Parameters["invln_deliveryPhaseId"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_deliveryPhaseId"] = value;
+			}
+		}
+		
+		public invln_deletedeliveryphaseRequest()
+		{
+			this.RequestName = "invln_deletedeliveryphase";
+			this.invln_organisationId = default(string);
+			this.invln_applicationId = default(string);
+			this.invln_deliveryPhaseId = default(string);
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_deletedeliveryphase")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_deletedeliveryphaseResponse : Microsoft.Xrm.Sdk.OrganizationResponse
+	{
+		
+		public invln_deletedeliveryphaseResponse()
+		{
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_getmultipledeliveryphase")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_getmultipledeliveryphaseRequest : Microsoft.Xrm.Sdk.OrganizationRequest
+	{
+		
+		public string invln_fieldstoretrieve
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_fieldstoretrieve"))
+				{
+					return ((string)(this.Parameters["invln_fieldstoretrieve"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_fieldstoretrieve"] = value;
+			}
+		}
+		
+		public string invln_userId
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_userId"))
+				{
+					return ((string)(this.Parameters["invln_userId"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_userId"] = value;
+			}
+		}
+		
+		public string invln_organisationId
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_organisationId"))
+				{
+					return ((string)(this.Parameters["invln_organisationId"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_organisationId"] = value;
+			}
+		}
+		
+		public string invln_applicationId
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_applicationId"))
+				{
+					return ((string)(this.Parameters["invln_applicationId"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_applicationId"] = value;
+			}
+		}
+		
+		public invln_getmultipledeliveryphaseRequest()
+		{
+			this.RequestName = "invln_getmultipledeliveryphase";
+			this.invln_organisationId = default(string);
+			this.invln_applicationId = default(string);
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_getmultipledeliveryphase")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_getmultipledeliveryphaseResponse : Microsoft.Xrm.Sdk.OrganizationResponse
+	{
+		
+		public invln_getmultipledeliveryphaseResponse()
+		{
+		}
+		
+		public string invln_deliveryPhaseList
+		{
+			get
+			{
+				if (this.Results.Contains("invln_deliveryPhaseList"))
+				{
+					return ((string)(this.Results["invln_deliveryPhaseList"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_getsingledeliveryphase")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_getsingledeliveryphaseRequest : Microsoft.Xrm.Sdk.OrganizationRequest
+	{
+		
+		public string invln_fieldstoretrieve
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_fieldstoretrieve"))
+				{
+					return ((string)(this.Parameters["invln_fieldstoretrieve"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_fieldstoretrieve"] = value;
+			}
+		}
+		
+		public string invln_userid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_userid"))
+				{
+					return ((string)(this.Parameters["invln_userid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_userid"] = value;
+			}
+		}
+		
+		public string invln_organisationId
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_organisationId"))
+				{
+					return ((string)(this.Parameters["invln_organisationId"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_organisationId"] = value;
+			}
+		}
+		
+		public string invln_applicationId
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_applicationId"))
+				{
+					return ((string)(this.Parameters["invln_applicationId"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_applicationId"] = value;
+			}
+		}
+		
+		public string invln_deliveryPhaseId
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_deliveryPhaseId"))
+				{
+					return ((string)(this.Parameters["invln_deliveryPhaseId"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_deliveryPhaseId"] = value;
+			}
+		}
+		
+		public invln_getsingledeliveryphaseRequest()
+		{
+			this.RequestName = "invln_getsingledeliveryphase";
+			this.invln_organisationId = default(string);
+			this.invln_applicationId = default(string);
+			this.invln_deliveryPhaseId = default(string);
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_getsingledeliveryphase")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_getsingledeliveryphaseResponse : Microsoft.Xrm.Sdk.OrganizationResponse
+	{
+		
+		public invln_getsingledeliveryphaseResponse()
+		{
+		}
+		
+		public string invln_deliveryPhase
+		{
+			get
+			{
+				if (this.Results.Contains("invln_deliveryPhase"))
+				{
+					return ((string)(this.Results["invln_deliveryPhase"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_setdeliveryphase")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_setdeliveryphaseRequest : Microsoft.Xrm.Sdk.OrganizationRequest
+	{
+		
+		public string invln_fieldstoset
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_fieldstoset"))
+				{
+					return ((string)(this.Parameters["invln_fieldstoset"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_fieldstoset"] = value;
+			}
+		}
+		
+		public string invln_userId
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_userId"))
+				{
+					return ((string)(this.Parameters["invln_userId"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_userId"] = value;
+			}
+		}
+		
+		public string invln_organisationId
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_organisationId"))
+				{
+					return ((string)(this.Parameters["invln_organisationId"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_organisationId"] = value;
+			}
+		}
+		
+		public string invln_applicationId
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_applicationId"))
+				{
+					return ((string)(this.Parameters["invln_applicationId"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_applicationId"] = value;
+			}
+		}
+		
+		public string invln_deliveryPhase
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_deliveryPhase"))
+				{
+					return ((string)(this.Parameters["invln_deliveryPhase"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_deliveryPhase"] = value;
+			}
+		}
+		
+		public invln_setdeliveryphaseRequest()
+		{
+			this.RequestName = "invln_setdeliveryphase";
+			this.invln_userId = default(string);
+			this.invln_organisationId = default(string);
+			this.invln_applicationId = default(string);
+			this.invln_deliveryPhase = default(string);
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_setdeliveryphase")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_setdeliveryphaseResponse : Microsoft.Xrm.Sdk.OrganizationResponse
+	{
+		
+		public invln_setdeliveryphaseResponse()
+		{
+		}
+		
+		public string invln_deliveryphaseid
+		{
+			get
+			{
+				if (this.Results.Contains("invln_deliveryphaseid"))
+				{
+					return ((string)(this.Results["invln_deliveryphaseid"]));
 				}
 				else
 				{
