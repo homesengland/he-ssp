@@ -142,6 +142,7 @@ namespace DataverseModel
 			public const string invln_contactidName = "invln_contactidname";
 			public const string invln_currentlandvalue = "invln_currentlandvalue";
 			public const string invln_currentlandvalue_Base = "invln_currentlandvalue_base";
+			public const string invln_deliveryphase_Application_invln_scheme = "invln_deliveryphase_Application_invln_scheme";
 			public const string invln_deliveryphasessectioncompletionstatus = "invln_deliveryphasessectioncompletionstatus";
 			public const string invln_discussionswithlocalstakeholders = "invln_discussionswithlocalstakeholders";
 			public const string invln_expectedacquisitioncost = "invln_expectedacquisitioncost";
@@ -2327,6 +2328,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_ahpstatuschange_AHPApplication_invln_sche");
 				this.SetRelatedEntities<DataverseModel.invln_AHPStatusChange>("invln_ahpstatuschange_AHPApplication_invln_sche", null, value);
 				this.OnPropertyChanged("invln_ahpstatuschange_AHPApplication_invln_sche");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_deliveryphase_Application_invln_scheme
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_deliveryphase_Application_invln_scheme")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_DeliveryPhase> invln_deliveryphase_Application_invln_scheme
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_DeliveryPhase>("invln_deliveryphase_Application_invln_scheme", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_deliveryphase_Application_invln_scheme");
+				this.SetRelatedEntities<DataverseModel.invln_DeliveryPhase>("invln_deliveryphase_Application_invln_scheme", null, value);
+				this.OnPropertyChanged("invln_deliveryphase_Application_invln_scheme");
 			}
 		}
 		
