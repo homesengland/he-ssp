@@ -2,7 +2,7 @@ namespace HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 
 public class MarketValue : RequiredIntForCalculationValueObject
 {
-    private const string DisplayName = "market value of each property";
+    private const string DisplayName = "market value of each home";
 
     private const int MinValue = 0;
 
