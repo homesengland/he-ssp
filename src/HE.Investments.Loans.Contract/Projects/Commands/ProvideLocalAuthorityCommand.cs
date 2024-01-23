@@ -1,6 +1,6 @@
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
-using HE.Investments.Loans.Contract.Projects.ValueObjects;
+using HE.Investments.Organisation.LocalAuthorities.ValueObjects;
 using MediatR;
 
 namespace HE.Investments.Loans.Contract.Projects.Commands;

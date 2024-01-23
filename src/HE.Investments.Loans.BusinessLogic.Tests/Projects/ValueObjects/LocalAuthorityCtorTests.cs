@@ -1,4 +1,6 @@
-using HE.Investments.Loans.Contract.Projects.ValueObjects;
+extern alias Org;
+
+using Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects;
 using Xunit;
 
 namespace HE.Investments.Loans.BusinessLogic.Tests.Projects.ValueObjects;

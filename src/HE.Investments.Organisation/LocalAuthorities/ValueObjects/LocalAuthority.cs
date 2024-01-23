@@ -1,6 +1,6 @@
 using HE.Investments.Common.Domain;
 
-namespace HE.Investments.Loans.Contract.Projects.ValueObjects;
+namespace HE.Investments.Organisation.LocalAuthorities.ValueObjects;
 
 public class LocalAuthority : ValueObject
 {

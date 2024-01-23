@@ -1,3 +1,5 @@
+extern alias Org;
+
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
@@ -9,7 +11,7 @@ using HE.Investments.Loans.BusinessLogic.Projects.ValueObjects;
 using HE.Investments.Loans.Contract;
 using HE.Investments.Loans.Contract.Application.Enums;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
-using HE.Investments.Loans.Contract.Projects.ValueObjects;
+using Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects;
 
 namespace HE.Investments.Loans.BusinessLogic.Projects.Entities;
 
