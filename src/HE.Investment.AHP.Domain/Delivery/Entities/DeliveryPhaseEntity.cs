@@ -142,6 +142,8 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
             throw new DomainValidationException(ValidationErrorMessage.SectionIsNotCompleted);
         }
 
+        DeliveryPhaseMilestones.CheckComplete();
+
         Status = _modificationTracker.Change(Status, SectionStatus.Completed);
     }
 

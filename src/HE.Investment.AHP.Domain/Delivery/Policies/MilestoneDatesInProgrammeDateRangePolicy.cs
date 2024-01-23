@@ -27,8 +27,8 @@ public class MilestoneDatesInProgrammeDateRangePolicy : IMilestoneDatesInProgram
     private void ValidateMilestone<T>(MilestoneDetails<T>? milestone, ProgrammeBasicInfo programme)
         where T : DateValueObject
     {
-        ValidateDateInProgrammeRange(milestone?.MilestoneDate, programme, "MilestoneStartAt", "Milestone date");
-        ValidateDateInProgrammeRange(milestone?.PaymentDate, programme, "ClaimMilestonePaymentAt", "Milestone payment date");
+        ValidateDateInProgrammeRange(milestone?.MilestoneDate, programme, "MilestoneStartAt", "The milestone date");
+        ValidateDateInProgrammeRange(milestone?.PaymentDate, programme, "ClaimMilestonePaymentAt", "The milestone payment date");
     }
 
     private void ValidateDateInProgrammeRange(DateValueObject? date, ProgrammeBasicInfo programme, string fieldName, string fieldLabel)
@@ -36,7 +36,7 @@ public class MilestoneDatesInProgrammeDateRangePolicy : IMilestoneDatesInProgram
         if (date != null &&
             (date.Value < programme.StartAt || date.Value > programme.EndAt))
         {
-            throw new DomainValidationException(fieldName, $"{fieldLabel} have to be within programme dates.");
+            throw new DomainValidationException(fieldName, $"{fieldLabel} must be within the programme date");
         }
     }
 }

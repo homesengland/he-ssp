@@ -22,15 +22,8 @@ public class ProgrammeService : IProgrammeService
 
         var result = await _service.RetrieveMultipleAsync(query, cancellationToken);
 
-        if (!result.Entities.Any())
-        {
-            await CreateTest();
-        }
-
-        result = await _service.RetrieveMultipleAsync(query, cancellationToken);
-
+        // TODO #88198 - no idea how to fetch valid Programme
         var programme = result.Entities.FirstOrDefault();
-
         if (programme == null)
         {
             return null;
@@ -42,18 +35,6 @@ public class ProgrammeService : IProgrammeService
             startOn = TryGetDateTimeValue(programme, ProgrammeFields.StartDate),
             endOn = TryGetDateTimeValue(programme, ProgrammeFields.EndDate),
         };
-    }
-
-    private async Task CreateTest()
-    {
-        var programme = new Entity(ProgrammeFields.EntityName)
-        {
-            [ProgrammeFields.Name] = "AHP test",
-            [ProgrammeFields.StartDate] = new DateTime(2021, 1, 1, 0, 0, 0, DateTimeKind.Unspecified),
-            [ProgrammeFields.EndDate] = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Unspecified),
-        };
-
-        await _service.CreateAsync(programme);
     }
 
     private string TryGetStringValue(Entity entity, string fieldName)
