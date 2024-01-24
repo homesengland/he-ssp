@@ -10,6 +10,7 @@ using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories;
 using HE.Investments.Loans.BusinessLogic.Projects.Repositories;
 using HE.Investments.Loans.BusinessLogic.Security.Repositories;
 using Microsoft.Extensions.DependencyInjection;
+using Org::HE.Investments.Organisation.LocalAuthorities.Repositories;
 
 namespace HE.Investments.Loans.BusinessLogic.Config;
 
@@ -24,7 +25,7 @@ public static class BusinessLogicModule
         services.AddScoped<ILoanApplicationRepository, LoanApplicationRepository>();
         services.AddScoped<ICanSubmitLoanApplication, LoanApplicationRepository>();
         services.AddScoped<IApplicationProjectsRepository, ApplicationProjectsRepository>();
-        services.AddScoped<ILocalAuthorityRepository, ApplicationProjectsRepository>();
+        services.AddScoped<ILocalAuthorityRepository, LocalAuthorityRepository>();
         services.AddScoped<IDateTimeProvider, DateTimeProvider>();
         services.AddSingleton<ILoansDocumentSettings, LoansDocumentSettings>();
 

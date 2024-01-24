@@ -1,11 +1,9 @@
-using System.Globalization;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Serialization;
 using HE.Investments.Common.Extensions;
-using HE.Investments.Common.Infrastructure.Cache.Interfaces;
 using HE.Investments.Common.Utils;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories.Mapper;
 using HE.Investments.Loans.BusinessLogic.Projects.Entities;
@@ -13,28 +11,22 @@ using HE.Investments.Loans.BusinessLogic.Projects.Repositories.Mappers;
 using HE.Investments.Loans.Common.Extensions;
 using HE.Investments.Loans.Common.Utils.Enums;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
-using HE.Investments.Loans.Contract.Projects.ValueObjects;
-using Microsoft.AspNetCore.Http;
 using Microsoft.PowerPlatform.Dataverse.Client;
 
 namespace HE.Investments.Loans.BusinessLogic.Projects.Repositories;
 
-public class ApplicationProjectsRepository : IApplicationProjectsRepository, ILocalAuthorityRepository
+public class ApplicationProjectsRepository : IApplicationProjectsRepository
 {
     private readonly IDateTimeProvider _timeProvider;
 
     private readonly IOrganizationServiceAsync2 _serviceClient;
 
-    private readonly ICacheService _cacheService;
-
     public ApplicationProjectsRepository(
         IDateTimeProvider dateTime,
-        IOrganizationServiceAsync2 serviceClient,
-        ICacheService cacheService)
+        IOrganizationServiceAsync2 serviceClient)
     {
         _timeProvider = dateTime;
         _serviceClient = serviceClient;
-        _cacheService = cacheService;
     }
 
     public async Task<ApplicationProjects> GetAllAsync(LoanApplicationId loanApplicationId, UserAccount userAccount, CancellationToken cancellationToken)
@@ -104,30 +96,6 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository, ILo
         }
     }
 
-    public async Task<(IList<LocalAuthority> Items, int TotalItems)> Search(string phrase, int startPage, int pageSize, CancellationToken cancellationToken)
-    {
-        var localAuthorities = await _cacheService.GetValueAsync(
-                                   "local-authorities",
-                                   async () => await GetLocalAuthorities(cancellationToken))
-                               ?? throw new NotFoundException(nameof(LocalAuthority));
-
-        if (!string.IsNullOrEmpty(phrase))
-        {
-            localAuthorities = localAuthorities
-                .Where(c => c.Name.ToLower(CultureInfo.InvariantCulture).Contains(phrase.ToLower(CultureInfo.InvariantCulture)))
-                .ToList();
-        }
-
-        var totalItems = localAuthorities.Count;
-
-        var itemsAtPage = localAuthorities
-            .OrderBy(c => c.Name)
-            .Skip(startPage * pageSize)
-            .Take(pageSize);
-
-        return (itemsAtPage.ToList(), totalItems);
-    }
-
     private async Task DeleteProject(Project projectToDelete, CancellationToken cancellationToken)
     {
         var req = new invln_deletesitedetailsRequest { invln_sitedetailsid = projectToDelete.Id.Value.ToString(), };
@@ -145,7 +113,8 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository, ILo
             planningReferenceNumber = projectToSave.PlanningReferenceNumber?.Value,
             siteCoordinates = projectToSave.Coordinates?.Value,
             landRegistryTitleNumber = projectToSave.LandRegistryTitleNumber?.Value,
-            localAuthority = LocalAuthorityMapper.MapToLocalAuthorityDto(projectToSave.LocalAuthority),
+            localAuthority = projectToSave.LocalAuthority.IsProvided()
+                ? new LocalAuthorityDto() { onsCode = projectToSave.LocalAuthority!.Id.ToString(), name = projectToSave.LocalAuthority!.Name } : null,
             siteOwnership = projectToSave.LandOwnership?.ApplicantHasFullOwnership,
             dateOfPurchase = projectToSave.AdditionalDetails?.PurchaseDate.AsDateTime(),
             siteCost = projectToSave.AdditionalDetails?.Cost.ToString(),
@@ -167,7 +136,7 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository, ILo
             numberOfAffordableHomes = projectToSave.AffordableHomes?.Value,
             projectHasStartDate = projectToSave.StartDate?.Exists,
             startDate = projectToSave.StartDate?.Value,
-            planningPermissionStatus = projectToSave!.Status.IsProvided() ? PlanningPermissionStatusMapper.Map(projectToSave.PlanningPermissionStatus) : null,
+            planningPermissionStatus = projectToSave.Status.IsProvided() ? PlanningPermissionStatusMapper.Map(projectToSave.PlanningPermissionStatus) : null,
             affordableHousing = projectToSave.AffordableHomes?.Value?.MapToBool(),
             completionStatus = SectionStatusMapper.Map(projectToSave.Status),
         };
@@ -194,17 +163,5 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository, ILo
         };
 
         await _serviceClient.ExecuteAsync(req, cancellationToken);
-    }
-
-    private async Task<IList<LocalAuthority>> GetLocalAuthorities(CancellationToken cancellationToken)
-    {
-        var req = new invln_searchlocalauthorityRequest();
-        var response = await _serviceClient.ExecuteAsync(req, cancellationToken) as invln_searchlocalauthorityResponse
-                       ?? throw new NotFoundException(nameof(LocalAuthority));
-
-        var localAuthoritiesDto = CrmResponseSerializer.Deserialize<IList<LocalAuthorityDto>>(response.invln_localauthorities)
-                                  ?? throw new NotFoundException(nameof(LocalAuthority));
-
-        return LocalAuthorityMapper.MapToLocalAuthorityList(localAuthoritiesDto);
     }
 }

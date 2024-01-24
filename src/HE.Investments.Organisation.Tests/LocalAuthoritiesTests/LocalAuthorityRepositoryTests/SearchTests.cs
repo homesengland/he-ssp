@@ -1,12 +1,13 @@
-using HE.Investments.Loans.BusinessLogic.Projects.Repositories;
-using HE.Investments.Loans.BusinessLogic.Tests.Projects.TestData;
-using HE.Investments.Loans.BusinessLogic.Tests.TestObjectBuilders;
+using FluentAssertions;
+using HE.Investments.Organisation.LocalAuthorities.Repositories;
+using HE.Investments.Organisation.Tests.LocalAuthoritiesTests.TestData;
+using HE.Investments.Organisation.Tests.TestObjectBuilders;
 using HE.Investments.TestsUtils.TestFramework;
 using Xunit;
 
-namespace HE.Investments.Loans.BusinessLogic.Tests.Projects.ApplicationProjectsRepositoryTests;
+namespace HE.Investments.Organisation.Tests.LocalAuthoritiesTests.LocalAuthorityRepositoryTests;
 
-public class SearchTests : TestBase<ApplicationProjectsRepository>
+public class SearchTests : TestBase<LocalAuthorityRepository>
 {
     [Fact]
     public async Task ShouldReturnLocalAuthority()

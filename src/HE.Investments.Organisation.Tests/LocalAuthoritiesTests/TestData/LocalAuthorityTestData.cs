@@ -1,9 +1,6 @@
-extern alias Org;
+using HE.Investments.Organisation.LocalAuthorities.ValueObjects;
 
-using LocalAuthority = Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
-using LocalAuthorityId = Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthorityId;
-
-namespace HE.Investments.Loans.BusinessLogic.Tests.Projects.TestData;
+namespace HE.Investments.Organisation.Tests.LocalAuthoritiesTests.TestData;
 internal static class LocalAuthorityTestData
 {
     public static readonly LocalAuthority LocalAuthorityOne = new(LocalAuthorityId.From("1"), "Liverpool");

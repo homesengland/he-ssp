@@ -1,8 +1,10 @@
+extern alias Org;
+
 using HE.Investments.Loans.BusinessLogic.Projects.Entities;
 using HE.Investments.Loans.BusinessLogic.Projects.ValueObjects;
 using HE.Investments.Loans.Common.Tests.TestData;
 using HE.Investments.Loans.Common.Utils.Constants.FormOption;
-using HE.Investments.Loans.Contract.Projects.ValueObjects;
+using Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects;
 
 namespace HE.Investments.Loans.BusinessLogic.Tests.Projects.TestData;
 
@@ -18,7 +20,7 @@ internal static class ProjectTestData
 
         project.ProvideHomesCount(HomesCountTestData.ValidHomesCount);
 
-        project.ProvideHomesTypes(new HomesTypes(new string[] { "Home" }, string.Empty));
+        project.ProvideHomesTypes(new HomesTypes(new[] { "Home" }, string.Empty));
 
         project.ProvideProjectType(new ProjectType("Greenfield"));
 
@@ -59,7 +61,7 @@ internal static class ProjectTestData
 
         project.ProvideHomesCount(HomesCountTestData.ValidHomesCount);
 
-        project.ProvideHomesTypes(new HomesTypes(new string[] { "Home" }, string.Empty));
+        project.ProvideHomesTypes(new HomesTypes(new[] { "Home" }, string.Empty));
 
         project.ProvideProjectType(new ProjectType("Greenfield"));
 

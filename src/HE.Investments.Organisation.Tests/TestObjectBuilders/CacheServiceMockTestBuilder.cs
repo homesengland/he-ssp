@@ -1,9 +1,9 @@
 using HE.Investments.Common.Infrastructure.Cache.Interfaces;
-using HE.Investments.Loans.Contract.Projects.ValueObjects;
 using HE.Investments.TestsUtils.TestFramework;
 using Moq;
+using LocalAuthority = HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
 
-namespace HE.Investments.Loans.BusinessLogic.Tests.TestObjectBuilders;
+namespace HE.Investments.Organisation.Tests.TestObjectBuilders;
 
 public class CacheServiceMockTestBuilder
 {

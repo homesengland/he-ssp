@@ -1,5 +1,7 @@
-using HE.Investments.Loans.BusinessLogic.Projects.Repositories.Mappers;
+extern alias Org;
+
 using HE.Investments.Loans.BusinessLogic.Tests.Projects.TestData;
+using Org::HE.Investments.Organisation.LocalAuthorities.Mappers;
 using Xunit;
 
 namespace HE.Investments.Loans.BusinessLogic.Tests.Projects.Mappers.LocalAuthorityMapperTests;
@@ -18,7 +20,7 @@ public class MapToLocalAuthorityTests
         var localAuthorityDto = LocalAuthorityDtoTestData.LocalAuthoritiesDtoList[localAuthorityDtoIndex];
 
         // when
-        var result = LocalAuthorityMapper.MapToLocalAuthority(localAuthorityDto);
+        var result = LocalAuthorityMapper.MapToLocalAuthority(localAuthorityDto.onsCode, localAuthorityDto.name);
 
         // then
         result?.Id.ToString().Should().Be(localAuthorityDto.onsCode);

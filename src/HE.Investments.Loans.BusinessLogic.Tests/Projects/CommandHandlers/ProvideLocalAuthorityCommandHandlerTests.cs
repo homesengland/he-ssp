@@ -62,7 +62,7 @@ public class ProvideLocalAuthorityCommandHandlerTests : TestBase<ProvideLocalAut
         var localAuthority = LocalAuthorityTestData.LocalAuthorityOne;
 
         // when
-        var result = await TestCandidate.Handle(new ProvideLocalAuthorityCommand(loanApplicationId, projectId, localAuthority.Id, localAuthority.Name), CancellationToken.None);
+        var result = await TestCandidate.Handle(new ProvideLocalAuthorityCommand(loanApplicationId, projectId, localAuthority.Id.ToString(), localAuthority.Name), CancellationToken.None);
 
         // then
         result.IsValid.Should().BeTrue();
