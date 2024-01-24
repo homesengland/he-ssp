@@ -181,7 +181,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     [WorkflowState(DeliveryPhaseWorkflowState.AddHomes)]
     public async Task<IActionResult> AddHomes([FromRoute] string applicationId, string deliveryPhaseId, AddHomesModel model, CancellationToken cancellationToken)
     {
-        return await this.ExecuteCommand(
+        return await this.ExecuteCommand<AddHomesModel>(
             _mediator,
             new ProvideDeliveryPhaseHomesCommand(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId), model.HomesToDeliver ?? new Dictionary<string, string?>()),
             () => ContinueWithAllRedirects(new { applicationId, deliveryPhaseId }),
@@ -496,7 +496,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         var applicationId = this.GetApplicationIdFromRoute();
         var deliveryPhaseId = this.GetDeliveryPhaseIdFromRoute();
 
-        return await this.ExecuteCommand(
+        return await this.ExecuteCommand<TViewModel>(
             _mediator,
             command,
             async () => await ContinueWithAllRedirects(new { applicationId = applicationId.Value, deliveryPhaseId }),

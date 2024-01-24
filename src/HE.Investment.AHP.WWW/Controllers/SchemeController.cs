@@ -6,6 +6,7 @@ using HE.Investment.AHP.Contract.Scheme;
 using HE.Investment.AHP.Contract.Scheme.Commands;
 using HE.Investment.AHP.Contract.Scheme.Queries;
 using HE.Investment.AHP.Domain.Documents.Config;
+using HE.Investment.AHP.WWW.Extensions;
 using HE.Investment.AHP.WWW.Models.Scheme;
 using HE.Investment.AHP.WWW.Models.Scheme.Factories;
 using HE.Investment.AHP.WWW.Utils;
@@ -15,9 +16,8 @@ using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
-using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
-using HE.Investments.Common.Validators;
+using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Helpers;
 using HE.Investments.Common.WWW.Models;
@@ -333,27 +333,15 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
         IRequest<OperationResult> command,
         string applicationId,
         string viewName,
-        object model,
+        SchemeViewModel model,
         CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(command, cancellationToken);
-
-        if (result.HasValidationErrors)
-        {
-            ModelState.AddValidationErrors(result);
-            return View(viewName, model);
-        }
-
-        var action = HttpContext.Request.Form["action"];
-        if (action == GenericMessages.SaveAndReturn)
-        {
-            return RedirectToAction(
-                nameof(ApplicationController.TaskList),
-                new ControllerName(nameof(ApplicationController)).WithoutPrefix(),
-                new { applicationId });
-        }
-
-        return await ContinueWithRedirect(new { applicationId });
+        return await this.ExecuteCommand<SchemeViewModel>(
+            _mediator,
+            command,
+            async () => await ContinueWithAllRedirects(new { applicationId }),
+            async () => await Task.FromResult<IActionResult>(View(viewName, model)),
+            cancellationToken);
     }
 
     private async Task<SchemeSummaryViewModel> GetSchemeAndCreateSummary(
@@ -371,5 +359,17 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
             scheme.Status == SectionStatus.Completed ? IsSectionCompleted.Yes : null,
             section,
             isEditable);
+    }
+
+    private async Task<IActionResult> ContinueWithAllRedirects(object routeData)
+    {
+        var action = HttpContext.Request.Form["action"];
+        if (action == GenericMessages.SaveAndReturn)
+        {
+            var applicationId = this.GetApplicationIdFromRoute();
+            return Url.RedirectToTaskList(applicationId.Value);
+        }
+
+        return await ContinueWithRedirect(routeData);
     }
 }
