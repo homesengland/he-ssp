@@ -77,7 +77,7 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
             if (Guid.TryParse(applicationId, out var applicationGuid) && Guid.TryParse(organisationId, out var organisationGuid))
             {
                 var devlieryPhaseDto = JsonSerializer.Deserialize<DeliveryPhaseDto>(deliveryPhase);
-                var deliveryPhaseMapped = DeliveryPhaseMapper.MapDtoToRegularEntity(devlieryPhaseDto);
+                var deliveryPhaseMapped = DeliveryPhaseMapper.MapDtoToRegularEntity(devlieryPhaseDto, applicationId);
                 var contact = _contactRepository.GetContactViaExternalId(userId);
                 if (string.IsNullOrEmpty(devlieryPhaseDto.id) &&
                     _ahpApplicationRepository.ApplicationWithGivenIdExistsForOrganisation(applicationGuid, organisationGuid))
@@ -85,7 +85,7 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
                     UpdateApplicationModificationFields(applicationGuid, contact.Id);
                     return _deliveryPhaseRepository.Create(deliveryPhaseMapped);
                 }
-                else if (Guid.TryParse(devlieryPhaseDto.id, out var homeTypeGuid))// && _homeTypeRepository.CheckIfGivenHomeTypeIsAssignedToGivenOrganisationAndApplication(homeTypeGuid, organisationGuid, applicationGuid))
+                else if (Guid.TryParse(devlieryPhaseDto.id, out var deliveryPhaseGuid))// && _homeTypeRepository.CheckIfGivenHomeTypeIsAssignedToGivenOrganisationAndApplication(homeTypeGuid, organisationGuid, applicationGuid))
                 {
                     invln_DeliveryPhase deliveryPhaseToUpdateOrCreate;
                     if (!string.IsNullOrEmpty(fieldsToSet))
@@ -106,7 +106,7 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
                     {
                         deliveryPhaseToUpdateOrCreate = deliveryPhaseMapped;
                     }
-                    deliveryPhaseToUpdateOrCreate.Id = homeTypeGuid;
+                    deliveryPhaseToUpdateOrCreate.Id = deliveryPhaseGuid;
                     _deliveryPhaseRepository.Update(deliveryPhaseToUpdateOrCreate);
                     UpdateApplicationModificationFields(applicationGuid, contact.Id);
                     return deliveryPhaseToUpdateOrCreate.Id;
