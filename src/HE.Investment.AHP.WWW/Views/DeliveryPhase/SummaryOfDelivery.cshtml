@@ -46,7 +46,7 @@
                 if (Model is { IsUnregisteredBody: false, IsOnlyCompletionMilestone: false })
                 {
                     @await Html.PartialAsync("~/Views/DeliveryPhase/Partials/_SummaryOfDeliveryRow.cshtml", new SummaryOfDeliveryRow("Acquisition milestone", Model.SummaryOfDelivery?.AcquisitionMilestone))
-                    @await Html.PartialAsync("~/Views/DeliveryPhase/Partials/_SummaryOfDeliveryRow.cshtml", new SummaryOfDeliveryRow("Start on site milestone", Model.SummaryOfDelivery?.StarOnSiteMilestone))
+                    @await Html.PartialAsync("~/Views/DeliveryPhase/Partials/_SummaryOfDeliveryRow.cshtml", new SummaryOfDeliveryRow("Start on site milestone", Model.SummaryOfDelivery?.StartOnSiteMilestone))
                 }
             }
 

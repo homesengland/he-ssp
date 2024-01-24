@@ -234,6 +234,17 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         return await ContinueWithAllRedirects(new { applicationId, deliveryPhaseId });
     }
 
+    [HttpGet("{deliveryPhaseId}/summary-of-delivery-editable")]
+    [WorkflowState(DeliveryPhaseWorkflowState.SummaryOfDeliveryEditable)]
+    public async Task<IActionResult> SummaryOfDeliveryEditable([FromRoute] string applicationId, string deliveryPhaseId, CancellationToken cancellationToken)
+    {
+        var deliveryPhaseDetails =
+            await _deliveryPhaseProvider.Get(
+                new GetDeliveryPhaseDetailsQuery(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId), true), cancellationToken);
+
+        return View("SummaryOfDeliveryEditable", deliveryPhaseDetails);
+    }
+
     [HttpGet("{deliveryPhaseId}/remove")]
     public async Task<IActionResult> Remove([FromRoute] string applicationId, string deliveryPhaseId, CancellationToken cancellationToken)
     {
