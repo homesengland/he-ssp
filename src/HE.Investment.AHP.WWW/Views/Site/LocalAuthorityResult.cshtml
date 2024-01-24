@@ -6,6 +6,7 @@
 @using HE.Investment.AHP.Contract.Site
 @using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
 @using HE.Investment.AHP.WWW.Views.Site
+@using HE.Investments.Common.Extensions
 @model HE.Investment.AHP.Contract.Site.LocalAuthoritiesModel;
 @{
     ViewData["Title"] = "Organization Select";
@@ -20,11 +21,14 @@
         </gds-h1>
 
         <gds-ul non-bullet-list>
-            @foreach (var item in Model.Items)
+            @if (Model.Items.IsProvided())
             {
-                <li>
-                    <gds-p><gds-link href="@Url.Action("LocalAuthorityConfirm", "Site", new {siteId = Model.SiteId, localAuthorityId = item.Id, localAuthorityName = item.Name, phrase = Model.Phrase, redirect})" data-testid=@($"local-authority-link-{item.Id}")><b>@item.Name</b></gds-link></gds-p>
-                </li>
+                @foreach (var item in Model.Items!)
+                {
+                    <li>
+                        <gds-p><gds-link href="@Url.Action("LocalAuthorityConfirm", "Site", new {siteId = Model.SiteId, localAuthorityId = item.Id, localAuthorityName = item.Name, phrase = Model.Phrase, redirect})" data-testid=@($"local-authority-link-{item.Id}")><b>@item.Name</b></gds-link></gds-p>
+                    </li>
+                }
             }
         </gds-ul>
 
