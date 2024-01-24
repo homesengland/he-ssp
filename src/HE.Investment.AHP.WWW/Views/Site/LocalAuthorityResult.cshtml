@@ -1,0 +1,38 @@
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Headings
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Lists
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Paragraphs
+@using HE.Investment.AHP.Contract.Site
+@using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
+@using HE.Investment.AHP.WWW.Views.Site
+@model HE.Investment.AHP.Contract.Site.LocalAuthoritiesModel;
+@{
+    ViewData["Title"] = "Organization Select";
+    var redirect = Context.Request.Query["redirect"];
+}
+
+<gds-div-grid-column-two-thirds>
+    <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.LocalAuthoritySearch"/>
+
+        <gds-h1 size="ControlSize.L" class="govuk-!-margin-bottom-6">
+            @SitePageTitles.LocalAuthorityResult
+        </gds-h1>
+
+        <gds-ul non-bullet-list>
+            @foreach (var item in Model.Items)
+            {
+                <li>
+                    <gds-p><gds-link href="@Url.Action("LocalAuthorityConfirm", "Site", new {siteId = Model.SiteId, localAuthorityId = item.Id, localAuthorityName = item.Name, phrase = Model.Phrase, redirect})" data-testid=@($"local-authority-link-{item.Id}")><b>@item.Name</b></gds-link></gds-p>
+                </li>
+            }
+        </gds-ul>
+
+        <gds-p class ="govuk-!-margin-bottom-9">
+            If your local authority is not listed above, your <gds-link href="@Url.Action("LocalAuthorityReset", "Site", new { siteId = Model.SiteId, redirect })">Transaction Manager can add this for you later.</gds-link>
+        </gds-p>
+
+        @Html.HiddenFor(c => c.SiteId)
+
+        <HePaginationTagHelper class="govuk-!-margin-top-8 local-authority-pagination" base-url="@Url.Action("LocalAuthorityResult", "Site", new { siteId = Model.SiteId, localAuthorityId = Model.LocalAuthorityId, phrase = Model.Phrase })" page="@Model.Page" items-per-page="@Model.PageSize" total-items="@Model.TotalItems"></HePaginationTagHelper>
+</gds-div-grid-column-two-thirds>

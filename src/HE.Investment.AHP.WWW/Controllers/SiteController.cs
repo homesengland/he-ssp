@@ -1,4 +1,5 @@
 using He.AspNetCore.Mvc.Gds.Components.Extensions;
+using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Commands;
 using HE.Investment.AHP.Contract.Site.Queries;
@@ -9,6 +10,7 @@ using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Extensions;
+using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Routing;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -222,6 +224,104 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         }
 
         return await Continue(new { siteId });
+    }
+
+    [HttpGet("{siteId}/local-authority/search")]
+    [WorkflowState(SiteWorkflowState.LocalAuthoritySearch)]
+    public IActionResult LocalAuthoritySearch(string siteId)
+    {
+        return View(new LocalAuthoritiesModel { SiteId = siteId });
+    }
+
+    [HttpPost("{siteId}/local-authority/search")]
+    [WorkflowState(SiteWorkflowState.LocalAuthoritySearch)]
+    public async Task<IActionResult> LocalAuthoritySearch(string siteId, LocalAuthoritiesModel model, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(
+            new ProvideLocalAuthoritySearchPhraseCommand(model.Phrase),
+            cancellationToken);
+
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+
+            return View("LocalAuthoritySearch", model);
+        }
+
+        return await ContinueWithRedirect(new { siteId, phrase = model.Phrase });
+    }
+
+    [HttpGet("{siteId}/local-authority/search/result")]
+    [WorkflowState(SiteWorkflowState.LocalAuthorityResult)]
+    public async Task<IActionResult> LocalAuthorityResult(string siteId, string phrase, [FromQuery] string redirect, CancellationToken token, [FromQuery] int page = 0)
+    {
+        var result = await _mediator.Send(new SearchLocalAuthoritiesQuery(phrase, page - 1, DefaultPagination.PageSize), token);
+
+        if (result.ReturnedData.TotalItems == 0)
+        {
+            return RedirectToAction(nameof(LocalAuthorityNotFound), new { siteId, redirect });
+        }
+
+        var viewModel = result.ReturnedData;
+
+        viewModel.SiteId = siteId;
+        viewModel.Page = page;
+
+        return View(viewModel);
+    }
+
+    [HttpGet("{siteId}/local-authority/not-found")]
+    public IActionResult LocalAuthorityNotFound(string siteId)
+    {
+        return View(new LocalAuthoritiesModel { SiteId = siteId });
+    }
+
+    [HttpGet("{siteId}/local-authority/{localAuthorityId}/{localAuthorityName}/confirm")]
+    [WorkflowState(SiteWorkflowState.LocalAuthorityConfirm)]
+    public IActionResult LocalAuthorityConfirm(string siteId, string localAuthorityId, string localAuthorityName, string phrase)
+    {
+        var model = new LocalAuthoritiesModel
+        {
+            SiteId = siteId,
+            LocalAuthorityId = localAuthorityId,
+            LocalAuthorityName = localAuthorityName,
+            Phrase = phrase,
+        };
+
+        return View(new ConfirmModel<LocalAuthoritiesModel>(model));
+    }
+
+    [HttpPost("{siteId}/local-authority/{localAuthorityId}/{localAuthorityName}/confirm")]
+    [WorkflowState(SiteWorkflowState.LocalAuthorityConfirm)]
+    public async Task<IActionResult> LocalAuthorityConfirm(
+        string siteId,
+        string localAuthorityId,
+        string localAuthorityName,
+        ConfirmModel<LocalAuthoritiesModel> model,
+        [FromQuery] string redirect,
+        CancellationToken token)
+    {
+        if (model.Response == YesNoType.Yes.ToString())
+        {
+            await _mediator.Send(
+                new ProvideLocalAuthorityCommand(new SiteId(siteId), localAuthorityId, localAuthorityName),
+                token);
+
+            return await Continue(redirect, new { siteId });
+        }
+
+        return RedirectToAction(nameof(LocalAuthoritySearch), new { siteId, redirect });
+    }
+
+    [HttpGet("{siteId}/local-authority/reset")]
+    [WorkflowState(SiteWorkflowState.LocalAuthorityReset)]
+    public async Task<IActionResult> LocalAuthorityReset(string siteId, [FromQuery] string redirect, CancellationToken token)
+    {
+        await _mediator.Send(
+            new ProvideLocalAuthorityCommand(new SiteId(siteId), null, null),
+            token);
+
+        return await Continue(redirect, new { siteId });
     }
 
     [HttpGet("{siteId}/back")]
