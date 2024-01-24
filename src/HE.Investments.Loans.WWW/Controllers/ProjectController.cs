@@ -449,7 +449,7 @@ public class ProjectController : WorkflowController<ProjectState>
         if (model.Response == CommonResponse.Yes)
         {
             await _mediator.Send(
-                new ProvideLocalAuthorityCommand(LoanApplicationId.From(id), ProjectId.From(projectId), LocalAuthorityId.From(localAuthorityId), localAuthorityName),
+                new ProvideLocalAuthorityCommand(LoanApplicationId.From(id), ProjectId.From(projectId), localAuthorityId, localAuthorityName),
                 token);
 
             return await Continue(redirect, new { id, projectId });
