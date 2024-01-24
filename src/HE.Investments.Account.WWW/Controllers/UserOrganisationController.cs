@@ -101,7 +101,7 @@ public class UserOrganisationController : Controller
             viewModel.County,
             viewModel.Postcode);
 
-        return await this.ExecuteCommand(
+        return await this.ExecuteCommand<OrganisationDetailsViewModel>(
             _mediator,
             command,
             () => Task.FromResult<IActionResult>(RedirectToAction(
