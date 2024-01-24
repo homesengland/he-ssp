@@ -30,7 +30,7 @@ public class SubmitLoanApplicationCommandHandler : IRequestHandler<SubmitLoanApp
 
         if (applicationWasSubmittedPreviously)
         {
-            loanApplication.Publish(new LoanApplicationHasBeenResubmittedEvent());
+            loanApplication.Publish(new LoanApplicationHasBeenResubmittedEvent(loanApplication.Id));
             await _loanApplicationRepository.DispatchEvents(loanApplication, cancellationToken);
         }
     }

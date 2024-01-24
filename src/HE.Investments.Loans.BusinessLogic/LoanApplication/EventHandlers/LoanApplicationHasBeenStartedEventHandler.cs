@@ -28,7 +28,7 @@ public class LoanApplicationHasBeenStartedEventHandler : IEventHandler<LoanAppli
 
     public async Task Handle(LoanApplicationHasBeenStartedEvent domainEvent, CancellationToken cancellationToken)
     {
-        var filesLocation = await _companyStructureRepository.GetFilesLocationAsync(new LoanApplicationId(domainEvent.LoanApplicationId), cancellationToken);
+        var filesLocation = await _companyStructureRepository.GetFilesLocationAsync(domainEvent.LoanApplicationId, cancellationToken);
         await _documentService.CreateFoldersAsync(
             _documentSettings.ListTitle,
             new List<string>
