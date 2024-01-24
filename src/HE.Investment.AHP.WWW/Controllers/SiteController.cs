@@ -230,12 +230,12 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     [WorkflowState(SiteWorkflowState.LocalAuthoritySearch)]
     public IActionResult LocalAuthoritySearch(string siteId)
     {
-        return View(new LocalAuthoritiesModel { SiteId = siteId });
+        return View(new LocalAuthorities { SiteId = siteId });
     }
 
     [HttpPost("{siteId}/local-authority/search")]
     [WorkflowState(SiteWorkflowState.LocalAuthoritySearch)]
-    public async Task<IActionResult> LocalAuthoritySearch(string siteId, LocalAuthoritiesModel model, CancellationToken cancellationToken)
+    public async Task<IActionResult> LocalAuthoritySearch(string siteId, LocalAuthorities model, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(
             new ProvideLocalAuthoritySearchPhraseCommand(model.Phrase),
@@ -273,14 +273,14 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     [HttpGet("{siteId}/local-authority/not-found")]
     public IActionResult LocalAuthorityNotFound(string siteId)
     {
-        return View(new LocalAuthoritiesModel { SiteId = siteId });
+        return View(new LocalAuthorities { SiteId = siteId });
     }
 
     [HttpGet("{siteId}/local-authority/{localAuthorityId}/{localAuthorityName}/confirm")]
     [WorkflowState(SiteWorkflowState.LocalAuthorityConfirm)]
     public IActionResult LocalAuthorityConfirm(string siteId, string localAuthorityId, string localAuthorityName, string phrase)
     {
-        var model = new LocalAuthoritiesModel
+        var model = new LocalAuthorities
         {
             SiteId = siteId,
             LocalAuthorityId = localAuthorityId,
@@ -288,7 +288,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
             Phrase = phrase,
         };
 
-        return View(new ConfirmModel<LocalAuthoritiesModel>(model));
+        return View(new ConfirmModel<LocalAuthorities>(model));
     }
 
     [HttpPost("{siteId}/local-authority/{localAuthorityId}/{localAuthorityName}/confirm")]
@@ -297,7 +297,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         string siteId,
         string localAuthorityId,
         string localAuthorityName,
-        ConfirmModel<LocalAuthoritiesModel> model,
+        ConfirmModel<LocalAuthorities> model,
         [FromQuery] string redirect,
         CancellationToken token)
     {

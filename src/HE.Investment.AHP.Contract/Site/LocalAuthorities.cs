@@ -1,8 +1,8 @@
 namespace HE.Investment.AHP.Contract.Site;
 
-public class LocalAuthoritiesModel
+public class LocalAuthorities
 {
-    public IList<LocalAuthorityModel>? Items { get; set; }
+    public IList<LocalAuthority>? Items { get; set; }
 
     public string? Phrase { get; set; }
 
