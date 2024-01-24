@@ -38,6 +38,7 @@
                 <tr class="govuk-table__row">
                     <th scope="col" class="govuk-table__header govuk-!-width-one-half">Name</th>
                     <th scope="col" class="govuk-table__header govuk-!-width-one-half">Homes in this phase</th>
+                    <th scope="col" class="govuk-table__header govuk-!-width-one-fifth"></th>
                 </tr>
                 </thead>
                 <tbody class="govuk-table__body">
@@ -47,6 +48,13 @@
                     </td>
                     <td class="govuk-table__cell">
                         @(Model.NumberOfHomes.ToString() ?? GenericMessages.NotProvided)
+                    </td>
+                    <td>
+                        <gds-link
+                            data-testid="change-number-of-homes"
+                            href="@Url.Action("AddHomes", "DeliveryPhase", new { applicationId, deliveryPhaseId = Model.Id })">
+                            Change
+                        </gds-link>
                     </td>
                 </tr>
                 </tbody>
@@ -58,7 +66,7 @@
                         <gds-h3 size="ControlSize.S">
                             Grant apportioned to this phase
                         </gds-h3>
-                        <p class="govuk-body govuk-!-margin-bottom-1">@(CurrencyHelper.DisplayPoundsPences(Model.SummaryOfDelivery?.GrantApportioned))</p>
+                        <p class="govuk-body govuk-!-margin-bottom-1">@(CurrencyHelper.DisplayPoundsPences(Model.SummaryOfDelivery?.GrantApportioned) ?? "-")</p>
                     </dt>
                 </div>
             </dl>
@@ -83,10 +91,10 @@
                             <strong>Acquisition</strong>
                         </td>
                         <td class="govuk-table__cell">
-                            @(CurrencyHelper.DisplayPoundsPences(Model.SummaryOfDelivery?.AcquisitionMilestone))
+                            @(CurrencyHelper.DisplayPoundsPences(Model.SummaryOfDelivery?.AcquisitionMilestone) ?? "-")
                         </td>
                         <td class="govuk-table__cell">
-                            @(Model.SummaryOfDelivery?.AcquisitionPercentage.ToWholePercentage())
+                            @(Model.SummaryOfDelivery?.AcquisitionPercentage.ToWholePercentage() ?? "-")
                         </td>
                         <td class="govuk-table__cell">
                             <gds-link
@@ -101,10 +109,10 @@
                             <strong>Start on site</strong>
                         </td>
                         <td class="govuk-table__cell">
-                            @(CurrencyHelper.DisplayPoundsPences(Model.SummaryOfDelivery?.StartOnSiteMilestone))
+                            @(CurrencyHelper.DisplayPoundsPences(Model.SummaryOfDelivery?.StartOnSiteMilestone) ?? "-")
                         </td>
                         <td class="govuk-table__cell">
-                            @(Model.SummaryOfDelivery?.StartOnSitePercentage.ToWholePercentage())
+                            @(Model.SummaryOfDelivery?.StartOnSitePercentage.ToWholePercentage() ?? "-")
                         </td>
                         <td class="govuk-table__cell">
                             <gds-link
@@ -122,10 +130,10 @@
                     <strong>Completion</strong>
                 </td>
                 <td class="govuk-table__cell">
-                    @(CurrencyHelper.DisplayPoundsPences(Model.SummaryOfDelivery?.CompletionMilestone))
+                    @(CurrencyHelper.DisplayPoundsPences(Model.SummaryOfDelivery?.CompletionMilestone) ?? "-")
                 </td>
                 <td class="govuk-table__cell">
-                    @(Model.SummaryOfDelivery?.CompletionPercentage.ToWholePercentage())
+                    @(Model.SummaryOfDelivery?.CompletionPercentage.ToWholePercentage() ?? "-")
                 </td>
                 <td class="govuk-table__cell">
                     <gds-link

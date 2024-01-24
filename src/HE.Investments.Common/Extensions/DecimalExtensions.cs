@@ -12,4 +12,6 @@ public static class DecimalExtensions
     public static string? ToPercentage100(this decimal? value) => value?.ToString("0.##\\%", CultureInfo.InvariantCulture);
 
     public static string? ToWholePercentage(this decimal? value) => value?.ToString("0%", CultureInfo.InvariantCulture);
+
+    public static string? ToWholePercentage(this decimal value) => ((decimal?)value).ToWholePercentage();
 }
