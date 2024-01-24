@@ -107,7 +107,12 @@ public class ApplicationCrmContext : IApplicationCrmContext
             cancellationToken);
     }
 
-    public async Task ChangeApplicationStatus(string applicationId, Guid organisationId, ApplicationStatus applicationStatus, string? reason, CancellationToken cancellationToken)
+    public async Task ChangeApplicationStatus(
+        string applicationId,
+        Guid organisationId,
+        ApplicationStatus applicationStatus,
+        string? reason,
+        CancellationToken cancellationToken)
     {
         var crmStatus = AhpApplicationStatusMapper.MapToCrmStatus(applicationStatus);
 

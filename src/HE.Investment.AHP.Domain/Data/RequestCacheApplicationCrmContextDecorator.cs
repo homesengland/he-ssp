@@ -46,7 +46,12 @@ public class RequestCacheApplicationCrmContextDecorator : IApplicationCrmContext
         return await _decorated.Save(dto, organisationId, fieldsToUpdate, cancellationToken);
     }
 
-    public async Task ChangeApplicationStatus(string applicationId, Guid organisationId, ApplicationStatus applicationStatus, string? reason, CancellationToken cancellationToken)
+    public async Task ChangeApplicationStatus(
+        string applicationId,
+        Guid organisationId,
+        ApplicationStatus applicationStatus,
+        string? reason,
+        CancellationToken cancellationToken)
     {
         RemoveFromCache(applicationId, organisationId);
         await _decorated.ChangeApplicationStatus(applicationId, organisationId, applicationStatus, reason, cancellationToken);
