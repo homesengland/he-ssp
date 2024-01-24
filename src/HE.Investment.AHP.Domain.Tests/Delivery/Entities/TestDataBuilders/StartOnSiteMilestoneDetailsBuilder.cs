@@ -21,6 +21,17 @@ public class StartOnSiteMilestoneDetailsBuilder
         return this;
     }
 
+    public StartOnSiteMilestoneDetailsBuilder WithStartOnSiteDate(DateOnly milestoneDate)
+    {
+        _milestoneDate = StartOnSiteDate.Create(milestoneDate);
+        return this;
+    }
+
+    public StartOnSiteMilestoneDetailsBuilder WithPaymentDate(DateOnly paymentDate)
+    {
+        return WithPaymentDate(MilestonePaymentDate.Create(paymentDate));
+    }
+
     public StartOnSiteMilestoneDetailsBuilder WithPaymentDate(MilestonePaymentDate paymentDate)
     {
         _paymentDate = paymentDate;

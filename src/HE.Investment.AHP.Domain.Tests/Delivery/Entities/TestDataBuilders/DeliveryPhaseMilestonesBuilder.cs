@@ -32,9 +32,21 @@ public class DeliveryPhaseMilestonesBuilder
         return this;
     }
 
+    public DeliveryPhaseMilestonesBuilder WithStartOnSiteMilestoneDetails(StartOnSiteMilestoneDetails milestoneDetails)
+    {
+        _startOnSiteMilestoneDetails = milestoneDetails;
+        return this;
+    }
+
     public DeliveryPhaseMilestonesBuilder WithoutStartOnSiteMilestoneDetails()
     {
         _startOnSiteMilestoneDetails = null;
+        return this;
+    }
+
+    public DeliveryPhaseMilestonesBuilder WithCompletionMilestoneDetails(CompletionMilestoneDetails milestoneDetails)
+    {
+        _completionMilestoneDetails = milestoneDetails;
         return this;
     }
 

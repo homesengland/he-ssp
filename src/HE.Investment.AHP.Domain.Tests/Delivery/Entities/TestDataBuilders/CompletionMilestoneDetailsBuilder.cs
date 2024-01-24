@@ -14,6 +14,18 @@ public class CompletionMilestoneDetailsBuilder
         return this;
     }
 
+    public CompletionMilestoneDetailsBuilder WithCompletionDate(DateOnly completionDate)
+    {
+        _completionDate = CompletionDate.Create(completionDate);
+        return this;
+    }
+
+    public CompletionMilestoneDetailsBuilder WithPaymentDate(DateOnly paymentDate)
+    {
+        _paymentDate = MilestonePaymentDate.Create(paymentDate);
+        return this;
+    }
+
     public CompletionMilestoneDetailsBuilder WithMissingMilestoneDate()
     {
         _completionDate = null;

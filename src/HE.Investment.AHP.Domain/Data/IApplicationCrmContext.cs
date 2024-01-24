@@ -17,5 +17,6 @@ public interface IApplicationCrmContext
 
     Task<string> Save(AhpApplicationDto dto, Guid organisationId, IList<string> fieldsToUpdate, CancellationToken cancellationToken);
 
-    Task ChangeApplicationStatus(Guid applicationId, Guid organisationId, ApplicationStatus applicationStatus, string? reason, CancellationToken cancellationToken);
+    Task ChangeApplicationStatus(string applicationId, Guid organisationId, ApplicationStatus applicationStatus, string? reason,
+        CancellationToken cancellationToken);
 }

@@ -36,7 +36,8 @@ public static class DomainModule
         services.AddScoped<IDateTimeProvider, DateTimeProvider>();
         services.AddTransient(typeof(IRequestExceptionHandler<,,>), typeof(DomainValidationHandler<,,>));
 
-        services.AddScoped<IApplicationCrmContext, ApplicationCrmContext>();
+        services.AddScoped<ApplicationCrmContext>();
+        services.AddScoped<IApplicationCrmContext>(x => new RequestCacheApplicationCrmContextDecorator(x.GetRequiredService<ApplicationCrmContext>()));
         services.AddScoped<IDocumentsCrmContext, DocumentsCrmContext>();
         services.AddSingleton<IAhpDocumentSettings, AhpDocumentSettings>();
 
