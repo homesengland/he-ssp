@@ -1,0 +1,25 @@
+# Loans-CRM-Deploy-Update
+
+trigger:
+- none
+
+pool: 
+  vmImage: windows-latest
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+  branch: 'master'
+
+
+resources:
+  repositories:
+  - repository: he-invst-deployment
+    type: git
+    name: 'Investments Programme/he-invst-deployment'
+    ref: 'main'
+
+stages:
+- template: crm-deployment-pipelines/loans-crm-build-export.yml@he-invst-deployment
+- template: crm-deployment-pipelines/loans-crm-update.yml@he-invst-deployment
