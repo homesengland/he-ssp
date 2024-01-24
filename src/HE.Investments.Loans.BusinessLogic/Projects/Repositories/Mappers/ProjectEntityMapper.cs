@@ -49,7 +49,7 @@ internal static class ProjectEntityMapper
             return null;
         }
 
-        if (startDateExists.HasValue)
+        if (startDateExists!.Value)
         {
             return new StartDate(true, new ProjectDate(siteDetailsDto.startDate!.Value));
         }
