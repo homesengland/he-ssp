@@ -108,6 +108,11 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
                 cancellationToken);
         }
 
+        foreach (var deliveryPhase in deliveryPhases.DeliveryPhases.Where(x => x.IsModified))
+        {
+            await Save(deliveryPhase, organisationId, cancellationToken);
+        }
+
         var deliveryPhaseToRemove = deliveryPhases.PopRemovedDeliveryPhase();
         while (deliveryPhaseToRemove != null)
         {

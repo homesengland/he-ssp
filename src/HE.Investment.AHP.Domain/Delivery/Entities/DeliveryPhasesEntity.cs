@@ -117,6 +117,8 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
         {
             OperationResult.New().AddValidationErrors(errors).CheckErrors();
         }
+
+        MarkAsInProgress();
     }
 
     public DeliveryPhaseEntity CreateDeliveryPhase(DeliveryPhaseName name, OrganisationBasicInfo organisationBasicInfo)
