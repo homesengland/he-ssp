@@ -21,4 +21,5 @@ resources:
     ref: 'main'
 
 stages:
-- template: crm-deployment-pipelines/loans-crm-build.yml@he-invst-deployment
+- template: crm-deployment-pipelines/loans-crm-build-export.yml@he-invst-deployment
+- template: crm-deployment-pipelines/loans-crm-update.yml@he-invst-deployment
