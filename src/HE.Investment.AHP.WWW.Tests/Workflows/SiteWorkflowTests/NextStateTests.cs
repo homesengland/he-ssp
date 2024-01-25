@@ -38,7 +38,7 @@ public class NextStateTests
     }
 
     [Theory]
-    [InlineData(SiteWorkflowState.Section106GeneralAgreement, SiteWorkflowState.LocalAuthority)]
+    [InlineData(SiteWorkflowState.Section106GeneralAgreement, SiteWorkflowState.LocalAuthoritySearch)]
     public async Task ShouldReturnNextState_WhenContinueTriggerExecutedWithSection106AgreementFalse(SiteWorkflowState current, SiteWorkflowState expectedNext)
     {
         // given
@@ -137,7 +137,7 @@ public class NextStateTests
 
     [Theory]
     [InlineData(SiteWorkflowState.Section106CapitalFundingEligibility, SiteWorkflowState.Section106LocalAuthorityConfirmation, true)]
-    [InlineData(SiteWorkflowState.Section106CapitalFundingEligibility, SiteWorkflowState.LocalAuthority, false)]
+    [InlineData(SiteWorkflowState.Section106CapitalFundingEligibility, SiteWorkflowState.LocalAuthoritySearch, false)]
     public async Task ShouldReturnNextState_WhenContinueTriggerExecutedWithSection106CapitalFundingEligibilityFalse(SiteWorkflowState current, SiteWorkflowState expectedNext, bool additionalAffordableHousing)
     {
         // given

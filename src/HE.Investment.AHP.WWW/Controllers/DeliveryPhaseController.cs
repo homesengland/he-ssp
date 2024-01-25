@@ -17,7 +17,6 @@ using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Routing;
-using HE.Investments.Common.WWW.Utils;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -232,6 +231,17 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     public async Task<IActionResult> SummaryOfDelivery([FromRoute] string applicationId, string deliveryPhaseId)
     {
         return await ContinueWithAllRedirects(new { applicationId, deliveryPhaseId });
+    }
+
+    [HttpGet("{deliveryPhaseId}/summary-of-delivery-editable")]
+    [WorkflowState(DeliveryPhaseWorkflowState.SummaryOfDeliveryEditable)]
+    public async Task<IActionResult> SummaryOfDeliveryEditable([FromRoute] string applicationId, string deliveryPhaseId, CancellationToken cancellationToken)
+    {
+        var deliveryPhaseDetails =
+            await _deliveryPhaseProvider.Get(
+                new GetDeliveryPhaseDetailsQuery(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId), true), cancellationToken);
+
+        return View("SummaryOfDeliveryEditable", deliveryPhaseDetails);
     }
 
     [HttpGet("{deliveryPhaseId}/remove")]

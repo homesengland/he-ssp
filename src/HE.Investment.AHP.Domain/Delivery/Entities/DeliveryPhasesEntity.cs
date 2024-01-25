@@ -89,14 +89,14 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
         if (!_homesToDeliver.Any())
         {
             OperationResult.New()
-                .AddValidationError(nameof(HomesToDeliver), "Create at least one Home Type in home types section")
+                .AddValidationError(nameof(HomesToDeliver), "You must add at least 1 home type in home types section")
                 .CheckErrors();
         }
 
         if (homesToDeliver.All(x => x.ToDeliver == 0))
         {
             OperationResult.New()
-                .AddValidationError(nameof(HomesToDeliver), "Provide number of homes for at least one home type")
+                .AddValidationError(nameof(HomesToDeliver), "You must add at least 1 home to a home type for this delivery phase")
                 .CheckErrors();
         }
 
@@ -117,6 +117,8 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
         {
             OperationResult.New().AddValidationErrors(errors).CheckErrors();
         }
+
+        MarkAsInProgress();
     }
 
     public DeliveryPhaseEntity CreateDeliveryPhase(DeliveryPhaseName name, OrganisationBasicInfo organisationBasicInfo)

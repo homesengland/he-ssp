@@ -4,8 +4,8 @@ public class DeliveryPhasesData
 {
     public DeliveryPhasesData()
     {
-        NewBuildAndWorksOnlyDeliveryPhase = new NewBuildAndWorksOnlyDeliveryPhase();
+        RehabDeliveryPhase = new RehabDeliveryPhase();
     }
 
-    public NewBuildAndWorksOnlyDeliveryPhase NewBuildAndWorksOnlyDeliveryPhase { get; }
+    public RehabDeliveryPhase RehabDeliveryPhase { get; }
 }

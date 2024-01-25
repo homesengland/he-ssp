@@ -80,7 +80,7 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
 
     public bool IsHomeTypeUsed(HomeTypeId homeTypeId)
     {
-        return _homesToDeliver.Any(x => x.HomeTypeId == homeTypeId);
+        return _homesToDeliver.Any(x => x.HomeTypeId == homeTypeId && x.ToDeliver > 0);
     }
 
     public int? GetHomesToBeDeliveredForHomeType(HomeTypeId homeTypeId)

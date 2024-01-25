@@ -32,7 +32,7 @@ public class CalculateSummaryTests
         // then
         summary.GrantApportioned.Should().Be(expectedGrantApportioned);
         summary.AcquisitionMilestone.Should().Be(expectedAcquisitionMilestone);
-        summary.StarOnSiteMilestone.Should().Be(expectedStarOnSiteMilestone);
+        summary.StartOnSiteMilestone.Should().Be(expectedStarOnSiteMilestone);
         summary.CompletionMilestone.Should().Be(expectedCompletionMilestone);
     }
 
@@ -52,7 +52,7 @@ public class CalculateSummaryTests
         // then
         summary.GrantApportioned.Should().Be(requestedFunding);
         summary.AcquisitionMilestone.Should().BeNull();
-        summary.StarOnSiteMilestone.Should().BeNull();
+        summary.StartOnSiteMilestone.Should().BeNull();
         summary.CompletionMilestone.Should().Be(requestedFunding);
     }
 
@@ -74,7 +74,7 @@ public class CalculateSummaryTests
         // then
         summary.GrantApportioned.Should().Be(requestedFunding);
         summary.AcquisitionMilestone.Should().BeNull();
-        summary.StarOnSiteMilestone.Should().BeNull();
+        summary.StartOnSiteMilestone.Should().BeNull();
         summary.CompletionMilestone.Should().Be(requestedFunding);
     }
 
@@ -90,7 +90,7 @@ public class CalculateSummaryTests
         // then
         summary.GrantApportioned.Should().BeNull();
         summary.AcquisitionMilestone.Should().BeNull();
-        summary.StarOnSiteMilestone.Should().BeNull();
+        summary.StartOnSiteMilestone.Should().BeNull();
         summary.CompletionMilestone.Should().BeNull();
     }
 
@@ -106,7 +106,7 @@ public class CalculateSummaryTests
         // then
         summary.GrantApportioned.Should().BeNull();
         summary.AcquisitionMilestone.Should().BeNull();
-        summary.StarOnSiteMilestone.Should().BeNull();
+        summary.StartOnSiteMilestone.Should().BeNull();
         summary.CompletionMilestone.Should().BeNull();
     }
 
@@ -122,7 +122,7 @@ public class CalculateSummaryTests
         // then
         summary.GrantApportioned.Should().BeNull();
         summary.AcquisitionMilestone.Should().BeNull();
-        summary.StarOnSiteMilestone.Should().BeNull();
+        summary.StartOnSiteMilestone.Should().BeNull();
         summary.CompletionMilestone.Should().BeNull();
     }
 }

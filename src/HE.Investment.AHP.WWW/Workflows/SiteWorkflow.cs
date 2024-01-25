@@ -43,7 +43,7 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
 
         _machine.Configure(SiteWorkflowState.Section106GeneralAgreement)
             .PermitIf(Trigger.Continue, SiteWorkflowState.Section106AffordableHousing, () => _siteModel?.Section106GeneralAgreement == true)
-            .PermitIf(Trigger.Continue, SiteWorkflowState.LocalAuthority, () => _siteModel?.Section106GeneralAgreement == false)
+            .PermitIf(Trigger.Continue, SiteWorkflowState.LocalAuthoritySearch, () => _siteModel?.Section106GeneralAgreement == false)
             .Permit(Trigger.Back, SiteWorkflowState.Name);
 
         _machine.Configure(SiteWorkflowState.Section106AffordableHousing)
@@ -63,7 +63,7 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
         _machine.Configure(SiteWorkflowState.Section106CapitalFundingEligibility)
             .PermitIf(Trigger.Continue, SiteWorkflowState.Section106Ineligible, () => _siteModel?.IsIneligible == true)
             .PermitIf(Trigger.Continue, SiteWorkflowState.Section106LocalAuthorityConfirmation, () => _siteModel?.Section106CapitalFundingEligibility == false && _siteModel?.Section106AdditionalAffordableHousing == true)
-            .PermitIf(Trigger.Continue, SiteWorkflowState.LocalAuthority, () => _siteModel?.Section106CapitalFundingEligibility == false && _siteModel?.Section106AdditionalAffordableHousing == false)
+            .PermitIf(Trigger.Continue, SiteWorkflowState.LocalAuthoritySearch, () => _siteModel?.Section106CapitalFundingEligibility == false && _siteModel?.Section106AdditionalAffordableHousing == false)
             .PermitIf(Trigger.Back, SiteWorkflowState.Section106AdditionalAffordableHousing, () => _siteModel?.Section106OnlyAffordableHousing == false)
             .PermitIf(Trigger.Back, SiteWorkflowState.Section106OnlyAffordableHousing, () => _siteModel?.Section106OnlyAffordableHousing == true)
             .PermitIf(Trigger.Back, SiteWorkflowState.Section106AffordableHousing, () => _siteModel?.Section106OnlyAffordableHousing == null);

@@ -12,5 +12,8 @@ public enum SiteWorkflowState
     Section106CapitalFundingEligibility,
     Section106LocalAuthorityConfirmation,
     Section106Ineligible,
-    LocalAuthority,
+    LocalAuthoritySearch,
+    LocalAuthorityResult,
+    LocalAuthorityConfirm,
+    LocalAuthorityReset,
 }
