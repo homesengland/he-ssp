@@ -181,7 +181,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     [WorkflowState(DeliveryPhaseWorkflowState.AddHomes)]
     public async Task<IActionResult> AddHomes([FromRoute] string applicationId, string deliveryPhaseId, AddHomesModel model, CancellationToken cancellationToken)
     {
-        return await this.ExecuteCommand(
+        return await this.ExecuteCommand<AddHomesModel>(
             _mediator,
             new ProvideDeliveryPhaseHomesCommand(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId), model.HomesToDeliver ?? new Dictionary<string, string?>()),
             () => ContinueWithAllRedirects(new { applicationId, deliveryPhaseId }),
@@ -232,6 +232,17 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     public async Task<IActionResult> SummaryOfDelivery([FromRoute] string applicationId, string deliveryPhaseId)
     {
         return await ContinueWithAllRedirects(new { applicationId, deliveryPhaseId });
+    }
+
+    [HttpGet("{deliveryPhaseId}/summary-of-delivery-editable")]
+    [WorkflowState(DeliveryPhaseWorkflowState.SummaryOfDeliveryEditable)]
+    public async Task<IActionResult> SummaryOfDeliveryEditable([FromRoute] string applicationId, string deliveryPhaseId, CancellationToken cancellationToken)
+    {
+        var deliveryPhaseDetails =
+            await _deliveryPhaseProvider.Get(
+                new GetDeliveryPhaseDetailsQuery(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId), true), cancellationToken);
+
+        return View("SummaryOfDeliveryEditable", deliveryPhaseDetails);
     }
 
     [HttpGet("{deliveryPhaseId}/remove")]
@@ -496,7 +507,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         var applicationId = this.GetApplicationIdFromRoute();
         var deliveryPhaseId = this.GetDeliveryPhaseIdFromRoute();
 
-        return await this.ExecuteCommand(
+        return await this.ExecuteCommand<TViewModel>(
             _mediator,
             command,
             async () => await ContinueWithAllRedirects(new { applicationId = applicationId.Value, deliveryPhaseId }),

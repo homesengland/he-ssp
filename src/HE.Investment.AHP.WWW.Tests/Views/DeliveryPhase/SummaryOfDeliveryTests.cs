@@ -16,7 +16,7 @@ public class SummaryOfDeliveryTests : ViewTestBase
     public async Task ShouldDisplayAllValues()
     {
         // given
-        var model = DeliveryPhaseDetailsTestData.WithNames with { SummaryOfDelivery = new SummaryOfDelivery(9000.12m, 200, 300, 4000.12m) };
+        var model = DeliveryPhaseDetailsTestData.WithNames with { SummaryOfDelivery = new SummaryOfDelivery(9000.12m, 200, 0.1m, 300, 0.1m, 4000.12m, 0.1m) };
 
         // when
         var document = await Render(_viewPath, model, routeData: _routeData);
@@ -43,7 +43,7 @@ public class SummaryOfDeliveryTests : ViewTestBase
         // given
         var model = DeliveryPhaseDetailsTestData.WithNames with
         {
-            SummaryOfDelivery = new SummaryOfDelivery(9000.12m, 200, 300, 4000.12m),
+            SummaryOfDelivery = new SummaryOfDelivery(9000.12m, 200, 0.25m, 300, 0.25m, 4000.12m, 0.25m),
             IsUnregisteredBody = isUnregisteredBody,
             IsOnlyCompletionMilestone = isOnlyCompletionMilestone,
         };

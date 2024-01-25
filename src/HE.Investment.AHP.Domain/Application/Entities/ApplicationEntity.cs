@@ -99,7 +99,7 @@ public class ApplicationEntity : DomainEntity
 
         await applicationHold.Hold(this, organisationId, cancellationToken);
 
-        Publish(new ApplicationHasBeenPutOnHoldEvent());
+        Publish(new ApplicationHasBeenPutOnHoldEvent(Id));
     }
 
     public async Task Withdraw(IApplicationWithdraw applicationWithdraw, WithdrawReason? newWithdrawReason, OrganisationId organisationId, CancellationToken cancellationToken)
@@ -109,6 +109,6 @@ public class ApplicationEntity : DomainEntity
 
         await applicationWithdraw.Withdraw(this, organisationId, cancellationToken);
 
-        Publish(new ApplicationHasBeenWithdrawnEvent());
+        Publish(new ApplicationHasBeenWithdrawnEvent(Id));
     }
 }

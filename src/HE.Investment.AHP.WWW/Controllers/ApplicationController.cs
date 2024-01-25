@@ -190,7 +190,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     [AuthorizeWithCompletedProfile]
     public async Task<IActionResult> OnHold(string applicationId, ChangeApplicationStatusModel model, CancellationToken cancellationToken)
     {
-        return await this.ExecuteCommand(
+        return await this.ExecuteCommand<ChangeApplicationStatusModel>(
             _mediator,
             new HoldApplicationCommand(AhpApplicationId.From(model.ApplicationId), model.HoldReason),
             () => ContinueWithRedirect(new { applicationId }),
@@ -211,7 +211,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     [AuthorizeWithCompletedProfile]
     public async Task<IActionResult> Withdraw(string applicationId, ChangeApplicationStatusModel model, CancellationToken cancellationToken)
     {
-        return await this.ExecuteCommand(
+        return await this.ExecuteCommand<ChangeApplicationStatusModel>(
             _mediator,
             new WithdrawApplicationCommand(AhpApplicationId.From(model.ApplicationId), model.WithdrawReason),
             () => ContinueWithRedirect(new { applicationId }),

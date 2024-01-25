@@ -141,7 +141,7 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
                     TypeOfHomes.Rehab,
                     secondBuildActivity,
                     true,
-                    new List<HomesToDeliverInPhase>(),
+                    homesToDeliver.Any() ? new[] { new HomesToDeliverInPhase(homesToDeliver[1].HomeTypeId, homesToDeliver[1].TotalHomes) } : new List<HomesToDeliverInPhase>(),
                     new DeliveryPhaseMilestones(userAccount.SelectedOrganisation(), secondBuildActivity, completionMilestone: new CompletionMilestoneDetails(new CompletionDate("1", "2", "2023"), null)),
                     new DeliveryPhaseId("phase-2"),
                     new DateTime(2023, 12, 12, 0, 0, 0, DateTimeKind.Unspecified)),

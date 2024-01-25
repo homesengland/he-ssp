@@ -1,0 +1,153 @@
+@using HE.Investment.AHP.WWW.Views.Delivery.Const
+@using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
+@using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investment.AHP.Contract.Delivery
+@using HE.Investment.AHP.WWW.Extensions
+@using HE.Investment.AHP.WWW.Models.Delivery
+@using HE.Investments.Common.Extensions
+@using HE.Investments.Common.Messages
+@using HE.Investments.Common.WWW.Components.FormHeader
+@using HE.Investments.Common.WWW.Helpers
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model DeliveryPhaseDetails;
+@{
+    var applicationId = this.GetApplicationIdFromRoute();
+    var title = DeliveryPageTitles.SummaryOfDelivery;
+    ViewData["Title"] = title;
+}
+
+<div class="govuk-grid-column-full">
+    <vc:ahp-workflow-back-button current-page="@DeliveryPhaseWorkflowState.SummaryOfDelivery"/>
+
+    <form asp-controller="DeliveryPhase" asp-action="SummaryOfDelivery" asp-method="post" asp-route-redirect="@Context.Request.Query["redirect"]" novalidate>
+        <vc:form-header caption="@($"{Model.ApplicationName} - {Model.Name}")" title="@title"/>
+
+        <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0">
+            <p>
+                When you amend your milestone grant amounts, you must ensure that at least 5% remains on the completion milestone.
+            </p>
+            <p>
+                If you have incurred costs and made enough payments to cover it, you may put up to 95% of the grant on to the acquisition and start on site milestone. The total must not exceed the amount apportioned to this delivery phase.
+            </p>
+            <p>
+                You will not be able to complete delivery phases until these tranche proportions for this delivery phase add to 100%. You can save and return to this section later if you do not have the correct figures.
+            </p>
+            <table class="govuk-table govuk-!-margin-bottom-8">
+                <thead class="govuk-table__head">
+                <tr class="govuk-table__row">
+                    <th scope="col" class="govuk-table__header govuk-!-width-one-half">Name</th>
+                    <th scope="col" class="govuk-table__header govuk-!-width-one-half">Homes in this phase</th>
+                    <th scope="col" class="govuk-table__header govuk-!-width-one-fifth"></th>
+                </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                <tr class="govuk-table__row">
+                    <td class="govuk-table__cell">
+                        @Model.Name
+                    </td>
+                    <td class="govuk-table__cell">
+                        @(Model.NumberOfHomes.ToString() ?? GenericMessages.NotProvided)
+                    </td>
+                    <td>
+                        <gds-link
+                            data-testid="change-number-of-homes"
+                            href="@Url.Action("AddHomes", "DeliveryPhase", new { applicationId, deliveryPhaseId = Model.Id })">
+                            Change
+                        </gds-link>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <dl class="govuk-summary-list govuk-!-margin-bottom-8">
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        <gds-h3 size="ControlSize.S">
+                            Grant apportioned to this phase
+                        </gds-h3>
+                        <p class="govuk-body govuk-!-margin-bottom-1">@(CurrencyHelper.DisplayPoundsPences(Model.SummaryOfDelivery?.GrantApportioned) ?? "-")</p>
+                    </dt>
+                </div>
+            </dl>
+        </div>
+
+        <table class="govuk-table govuk-!-margin-bottom-8">
+            <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Tranche</th>
+                <th scope="col" class="govuk-table__header govuk-!-width-one-third">Amount of grant apportioned to this milestone</th>
+                <th scope="col" class="govuk-table__header govuk-!-width-one-third">Percentage of grant apportioned to this milestone</th>
+                <th scope="col" class="govuk-table__header govuk-!-width-one-sixth"></th>
+            </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+
+            @{
+                if (Model is { IsUnregisteredBody: false, IsOnlyCompletionMilestone: false })
+                {
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">
+                            <strong>Acquisition</strong>
+                        </td>
+                        <td class="govuk-table__cell">
+                            @(CurrencyHelper.DisplayPoundsPences(Model.SummaryOfDelivery?.AcquisitionMilestone) ?? "-")
+                        </td>
+                        <td class="govuk-table__cell">
+                            @(Model.SummaryOfDelivery?.AcquisitionPercentage.ToWholePercentage() ?? "-")
+                        </td>
+                        <td class="govuk-table__cell">
+                            <gds-link
+                                data-testid="change-acquisition"
+                                href="">
+                                Change
+                            </gds-link>
+                        </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">
+                            <strong>Start on site</strong>
+                        </td>
+                        <td class="govuk-table__cell">
+                            @(CurrencyHelper.DisplayPoundsPences(Model.SummaryOfDelivery?.StartOnSiteMilestone) ?? "-")
+                        </td>
+                        <td class="govuk-table__cell">
+                            @(Model.SummaryOfDelivery?.StartOnSitePercentage.ToWholePercentage() ?? "-")
+                        </td>
+                        <td class="govuk-table__cell">
+                            <gds-link
+                                data-testid="change-start-on-site"
+                                href="">
+                                Change
+                            </gds-link>
+                        </td>
+                    </tr>
+                }
+            }
+
+            <tr>
+                <td class="govuk-table__cell">
+                    <strong>Completion</strong>
+                </td>
+                <td class="govuk-table__cell">
+                    @(CurrencyHelper.DisplayPoundsPences(Model.SummaryOfDelivery?.CompletionMilestone) ?? "-")
+                </td>
+                <td class="govuk-table__cell">
+                    @(Model.SummaryOfDelivery?.CompletionPercentage.ToWholePercentage() ?? "-")
+                </td>
+                <td class="govuk-table__cell">
+                    <gds-link
+                        data-testid="change-completion"
+                        href="">
+                        Change
+                    </gds-link>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <vc:form-button/>
+
+        <vc:return-to-application-link is-editable="false" application-id="@applicationId"/>
+    </form>
+</div>
