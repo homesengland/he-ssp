@@ -9,7 +9,7 @@ namespace HE.CRM.Common.DtoMapping
 {
     public class DeliveryPhaseMapper
     {
-        public static DeliveryPhaseDto MapRegularEntityToDto(invln_DeliveryPhase deliveryPhase)
+        public static DeliveryPhaseDto MapRegularEntityToDto(invln_DeliveryPhase deliveryPhase, List<invln_homesindeliveryphase> homesInDeliveryPhase)
         {
             var deliveryPhaseDto = new DeliveryPhaseDto()
             {
@@ -39,11 +39,11 @@ namespace HE.CRM.Common.DtoMapping
                 deliveryPhaseDto.applicationId = deliveryPhase.invln_Application.Id.ToString();
             }
 
-            if (deliveryPhase.invln_invln_homesindeliveryphase_deliveryphasel != null && deliveryPhase.invln_invln_homesindeliveryphase_deliveryphasel.Count() > 0)
+            if (homesInDeliveryPhase != null)
             {
-                foreach (var homeInPhase in deliveryPhase.invln_invln_homesindeliveryphase_deliveryphasel)
+                foreach (var home in homesInDeliveryPhase.Where(x => x != null && x.invln_hometypelookup != null))
                 {
-                    deliveryPhaseDto.numberOfHomes.Add(homeInPhase.invln_hometypelookup?.Id.ToString(), homeInPhase.invln_numberofhomes);
+                    deliveryPhaseDto.numberOfHomes.Add(home.invln_hometypelookup.Id.ToString(), home?.invln_numberofhomes);
                 }
             }
 

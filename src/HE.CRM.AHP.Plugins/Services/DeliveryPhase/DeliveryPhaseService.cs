@@ -9,6 +9,7 @@ using HE.Base.Services;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.CRM.Common.DtoMapping;
 using HE.CRM.Common.Repositories.Interfaces;
+using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 
 namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
@@ -16,6 +17,7 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
     public class DeliveryPhaseService : CrmService, IDeliveryPhaseService
     {
         private readonly IDeliveryPhaseRepository _deliveryPhaseRepository;
+        private readonly IHomesInDeliveryPhaseRepository _homesInDeliveryPhaseRepository;
         private readonly IContactRepository _contactRepository;
         private readonly IAhpApplicationRepository _ahpApplicationRepository;
         public DeliveryPhaseService(CrmServiceArgs args) : base(args)
@@ -23,6 +25,7 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
             _deliveryPhaseRepository = CrmRepositoriesFactory.Get<IDeliveryPhaseRepository>();
             _contactRepository = CrmRepositoriesFactory.Get<IContactRepository>();
             _ahpApplicationRepository = CrmRepositoriesFactory.Get<IAhpApplicationRepository>();
+            _homesInDeliveryPhaseRepository = CrmRepositoriesFactory.Get<IHomesInDeliveryPhaseRepository>();
         }
 
         public void DeleteDeliveryPhase(string applicationId, string organisationId, string deliveryPhaseId, string externalUserId)
@@ -48,7 +51,8 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
             var deliveryPhase = _deliveryPhaseRepository.GetDeliveryPhaseForNullableUserAndOrganisationByIdAndApplicationId(deliveryPhaseId, applicationId, externalUserId, organizationId, attributes);
             if (deliveryPhase != null)
             {
-                deliveryPhaseDto = DeliveryPhaseMapper.MapRegularEntityToDto(deliveryPhase);
+                var homesInDeliveryPhase = _homesInDeliveryPhaseRepository.GetHomesInDeliveryPhase(Guid.Parse(deliveryPhaseId));
+                deliveryPhaseDto = DeliveryPhaseMapper.MapRegularEntityToDto(deliveryPhase, homesInDeliveryPhase);
             }
 
             return deliveryPhaseDto;
@@ -66,7 +70,8 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
             {
                 foreach (var deliveryPhase in deliveryPhases)
                 {
-                    deliveryPhasesDto.Add(DeliveryPhaseMapper.MapRegularEntityToDto(deliveryPhase));
+                    var homesInDeliveryPhase = _homesInDeliveryPhaseRepository.GetHomesInDeliveryPhase(deliveryPhase.Id);
+                    deliveryPhasesDto.Add(DeliveryPhaseMapper.MapRegularEntityToDto(deliveryPhase, homesInDeliveryPhase));
                 }
             }
             return deliveryPhasesDto;
@@ -83,7 +88,9 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
                     _ahpApplicationRepository.ApplicationWithGivenIdExistsForOrganisation(applicationGuid, organisationGuid))
                 {
                     UpdateApplicationModificationFields(applicationGuid, contact.Id);
-                    return _deliveryPhaseRepository.Create(deliveryPhaseMapped);
+                    var deliveryPhaseId = _deliveryPhaseRepository.Create(deliveryPhaseMapped);
+                    SetHomesinDeliveryPhase(devlieryPhaseDto.numberOfHomes, deliveryPhaseId);
+                    return deliveryPhaseId;
                 }
                 else if (Guid.TryParse(devlieryPhaseDto.id, out var deliveryPhaseGuid))// && _homeTypeRepository.CheckIfGivenHomeTypeIsAssignedToGivenOrganisationAndApplication(homeTypeGuid, organisationGuid, applicationGuid))
                 {
@@ -108,11 +115,38 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
                     }
                     deliveryPhaseToUpdateOrCreate.Id = deliveryPhaseGuid;
                     _deliveryPhaseRepository.Update(deliveryPhaseToUpdateOrCreate);
+                    DeleteHomesFromDeliveryPhase(deliveryPhaseGuid);
+                    SetHomesinDeliveryPhase(devlieryPhaseDto.numberOfHomes, deliveryPhaseGuid);
                     UpdateApplicationModificationFields(applicationGuid, contact.Id);
                     return deliveryPhaseToUpdateOrCreate.Id;
                 }
             }
             return Guid.Empty;
+        }
+
+        private void SetHomesinDeliveryPhase(Dictionary<string, int?> numberOfHomes, Guid deliveryPhaseId)
+        {
+            foreach (var numHome in numberOfHomes)
+            {
+                if (Guid.TryParse(numHome.Key, out var homeId))
+                {
+                    _homesInDeliveryPhaseRepository.Create(new invln_homesindeliveryphase()
+                    {
+                        invln_deliveryphaselookup = new EntityReference(invln_DeliveryPhase.EntityLogicalName, deliveryPhaseId),
+                        invln_hometypelookup = new EntityReference(invln_HomeType.EntityLogicalName, homeId),
+                        invln_numberofhomes = numHome.Value
+                    });
+                }
+            }
+        }
+
+        private void DeleteHomesFromDeliveryPhase(Guid deliveryPhaseId)
+        {
+            var homesInDeliveryPhase = _homesInDeliveryPhaseRepository.GetHomesInDeliveryPhase(deliveryPhaseId);
+            foreach (var home in homesInDeliveryPhase)
+            {
+                _homesInDeliveryPhaseRepository.Delete(home);
+            }
         }
 
         private void UpdateApplicationModificationFields(Guid applicationId, Guid contactId)
@@ -121,7 +155,7 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
             {
                 Id = applicationId,
                 invln_lastexternalmodificationon = DateTime.UtcNow,
-                invln_lastexternalmodificationby = new Microsoft.Xrm.Sdk.EntityReference(Contact.EntityLogicalName, contactId),
+                invln_lastexternalmodificationby = new EntityReference(Contact.EntityLogicalName, contactId),
             };
             _ahpApplicationRepository.Update(applicationToUpdate);
         }

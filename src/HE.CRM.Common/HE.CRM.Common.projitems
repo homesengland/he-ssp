@@ -28,6 +28,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\EnvironmentVariableRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\GovNotifyEmailRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\GlobalRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\implementations\HomesInDeliveryPhaseRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\HomeTypeRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\IspRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\LocalAuthorityRepository.cs" />
@@ -55,6 +56,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IEnvironmentVariableRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IGovNotifyEmailRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IGlobalRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IHomesInDeliveryPhaseRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IHomeTypeRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IIspRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\ILoanApplicationRepository.cs" />
