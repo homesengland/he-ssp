@@ -1,4 +1,6 @@
-using LocalAuthorityDto = HE.Common.IntegrationModel.PortalIntegrationModel.LocalAuthorityDto;
+extern alias Org;
+
+using Org::HE.Common.IntegrationModel.PortalIntegrationModel;
 
 namespace HE.Investments.Loans.BusinessLogic.Tests.Projects.TestData;
 internal static class LocalAuthorityDtoTestData

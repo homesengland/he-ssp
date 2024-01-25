@@ -1,5 +1,7 @@
-using HE.Investments.Loans.BusinessLogic.Projects.Repositories.Mappers;
+extern alias Org;
+
 using HE.Investments.Loans.BusinessLogic.Tests.Projects.TestData;
+using Org::HE.Investments.Organisation.LocalAuthorities.Mappers;
 using Xunit;
 
 namespace HE.Investments.Loans.BusinessLogic.Tests.Projects.Mappers.LocalAuthorityMapperTests;

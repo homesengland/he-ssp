@@ -15,9 +15,9 @@ using HE.Investments.Loans.Contract.Funding.Commands;
 using HE.Investments.Loans.Contract.Projects;
 using HE.Investments.Loans.Contract.Projects.Commands;
 using HE.Investments.Loans.Contract.Projects.Queries;
-using HE.Investments.Loans.Contract.Projects.ValueObjects;
 using HE.Investments.Loans.Contract.Projects.ViewModels;
 using HE.Investments.Loans.WWW.Models;
+using HE.Investments.Organisation.LocalAuthorities.ValueObjects;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using ProjectId = HE.Investments.Loans.Contract.Application.ValueObjects.ProjectId;
@@ -449,7 +449,7 @@ public class ProjectController : WorkflowController<ProjectState>
         if (model.Response == CommonResponse.Yes)
         {
             await _mediator.Send(
-                new ProvideLocalAuthorityCommand(LoanApplicationId.From(id), ProjectId.From(projectId), LocalAuthorityId.From(localAuthorityId), localAuthorityName),
+                new ProvideLocalAuthorityCommand(LoanApplicationId.From(id), ProjectId.From(projectId), localAuthorityId, localAuthorityName),
                 token);
 
             return await Continue(redirect, new { id, projectId });

@@ -2,9 +2,4 @@ using HE.Investments.Common.Contract.Infrastructure.Events;
 
 namespace HE.Investment.AHP.Contract.Application.Events;
 
-public class ApplicationHasBeenWithdrawnEvent : DomainEvent
-{
-    public ApplicationHasBeenWithdrawnEvent()
-    {
-    }
-}
+public record ApplicationHasBeenWithdrawnEvent(AhpApplicationId ApplicationId) : IDomainEvent;

@@ -19,6 +19,7 @@ using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.Workflow;
+using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Helpers;
 using HE.Investments.Common.WWW.Models;
@@ -1441,15 +1442,12 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         CancellationToken cancellationToken)
         where TSaveSegmentCommand : ISaveHomeTypeSegmentCommand
     {
-        var result = await _mediator.Send(command, cancellationToken);
-        if (result.HasValidationErrors)
-        {
-            ModelState.AddValidationErrors(result);
-            return View(model);
-        }
-
-        var action = HttpContext.Request.Form["action"];
-        return await ProcessAction(command.ApplicationId, command.HomeTypeId, action);
+        return await this.ExecuteCommand<TModel>(
+            _mediator,
+            command,
+            async () => await ProcessAction(command.ApplicationId, command.HomeTypeId, HttpContext.Request.Form["action"]),
+            async () => await Task.FromResult<IActionResult>(View(model)),
+            cancellationToken);
     }
 
     private string GetDesignFileAction(string actionName, string applicationId, string homeTypeId, FileId fileId)
