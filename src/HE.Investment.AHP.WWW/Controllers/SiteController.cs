@@ -222,6 +222,28 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         return await Continue(new { siteId });
     }
 
+    [HttpGet("{siteId}/section-106-local-authority-confirmation")]
+    [WorkflowState(SiteWorkflowState.Section106LocalAuthorityConfirmation)]
+    public async Task<IActionResult> Section106LocalAuthorityConfirmation([FromRoute] string siteId, CancellationToken cancellationToken)
+    {
+        var siteModel = await _mediator.Send(new GetSiteQuery(siteId), cancellationToken);
+        return View("Section106LocalAuthorityConfirmation", siteModel);
+    }
+
+    [HttpPost("{siteId}/section-106-local-authority-confirmation")]
+    [WorkflowState(SiteWorkflowState.Section106LocalAuthorityConfirmation)]
+    public async Task<IActionResult> Section106LocalAuthorityConfirmation([FromRoute] string siteId, SiteModel model, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new ProvideSection106LocalAuthorityConfirmationCommand(new SiteId(siteId), model.Section106LocalAuthorityConfirmation), cancellationToken);
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+            return View("Section106LocalAuthorityConfirmation", model);
+        }
+
+        return await Continue(new { siteId });
+    }
+
     [HttpGet("{siteId}/back")]
     public async Task<IActionResult> Back([FromRoute] string siteId, SiteWorkflowState currentPage)
     {

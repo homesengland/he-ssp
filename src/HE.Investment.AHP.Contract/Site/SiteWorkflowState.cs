@@ -10,7 +10,7 @@ public enum SiteWorkflowState
     Section106OnlyAffordableHousing,
     Section106AdditionalAffordableHousing,
     Section106CapitalFundingEligibility,
-    Section106ConfirmationFromLocalAuthority,
+    Section106LocalAuthorityConfirmation,
     Section106Ineligible,
     LocalAuthority,
 }

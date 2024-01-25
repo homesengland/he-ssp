@@ -23,4 +23,6 @@ public static class SitePageTitles
     public const string SiteSection106AdditionalAffordableHousing = "Additional affordable housing";
 
     public const string SiteSection106CapitalFundingEligibility = "Capital Funding Guide eligibility";
+
+    public const string SiteSection106LocalAuthorityConfirmation = "Tell us about any confirmation you have from the local authority that these homes are in addition to those secured through a planning condition or obligation";
 }

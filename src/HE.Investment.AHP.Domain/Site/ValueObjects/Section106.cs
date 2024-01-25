@@ -16,7 +16,7 @@ public class Section106 : ValueObject, IQuestion
         bool? onlyAffordableHousing,
         bool? additionalAffordableHousing,
         bool? capitalFundingEligibility,
-        string? confirmationFromLocalAuthority)
+        string? localAuthorityConfirmation)
     {
         if (agreement == null)
         {
@@ -30,7 +30,7 @@ public class Section106 : ValueObject, IQuestion
         OnlyAffordableHousing = onlyAffordableHousing;
         AdditionalAffordableHousing = additionalAffordableHousing;
         CapitalFundingEligibility = capitalFundingEligibility;
-        ConfirmationFromLocalAuthority = confirmationFromLocalAuthority;
+        LocalAuthorityConfirmation = localAuthorityConfirmation;
     }
 
     public Section106()
@@ -47,7 +47,7 @@ public class Section106 : ValueObject, IQuestion
 
     public bool? CapitalFundingEligibility { get; }
 
-    public string? ConfirmationFromLocalAuthority { get; }
+    public string? LocalAuthorityConfirmation { get; }
 
     public bool IsAnswered()
     {
@@ -59,6 +59,21 @@ public class Section106 : ValueObject, IQuestion
         return false;
     }
 
+    public bool IsIneligibleDueToAffordableHousing()
+    {
+        return AffordableHousing == true && OnlyAffordableHousing == false && AdditionalAffordableHousing == false;
+    }
+
+    public bool IsIneligibleDueToCapitalFundingGuide()
+    {
+        return CapitalFundingEligibility == true;
+    }
+
+    public bool IsIneligible()
+    {
+        return IsIneligibleDueToAffordableHousing() || IsIneligibleDueToCapitalFundingGuide();
+    }
+
     protected override IEnumerable<object?> GetAtomicValues()
     {
         yield return GeneralAgreement;
@@ -66,6 +81,6 @@ public class Section106 : ValueObject, IQuestion
         yield return OnlyAffordableHousing;
         yield return AdditionalAffordableHousing;
         yield return CapitalFundingEligibility;
-        yield return ConfirmationFromLocalAuthority;
+        yield return LocalAuthorityConfirmation;
     }
 }

@@ -5,4 +5,6 @@ public static class MainPagesUrl
     public const string MainPage = "/ahp";
 
     public const string ApplicationList = "/ahp/application";
+
+    public const string SiteList = "/ahp/site";
 }

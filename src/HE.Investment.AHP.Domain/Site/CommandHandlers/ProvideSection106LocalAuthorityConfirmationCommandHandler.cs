@@ -10,26 +10,26 @@ using Microsoft.Extensions.Logging;
 
 namespace HE.Investment.AHP.Domain.Site.CommandHandlers;
 
-public class ProvideSection106AgreementCommandHandler : SiteBaseCommandHandler, IRequestHandler<ProvideSection106AgreementCommand, OperationResult>
+public class ProvideSection106LocalAuthorityConfirmationCommandHandler : SiteBaseCommandHandler, IRequestHandler<ProvideSection106LocalAuthorityConfirmationCommand, OperationResult>
 {
-    public ProvideSection106AgreementCommandHandler(ISiteRepository siteRepository, IAccountUserContext accountUserContext, ILogger<SiteBaseCommandHandler> logger)
+    public ProvideSection106LocalAuthorityConfirmationCommandHandler(ISiteRepository siteRepository, IAccountUserContext accountUserContext, ILogger<SiteBaseCommandHandler> logger)
         : base(siteRepository, accountUserContext, logger)
     {
     }
 
-    public Task<OperationResult> Handle(ProvideSection106AgreementCommand request, CancellationToken cancellationToken)
+    public Task<OperationResult> Handle(ProvideSection106LocalAuthorityConfirmationCommand request, CancellationToken cancellationToken)
     {
         return Perform(
             site =>
             {
                 var currentSection106 = site.Section106;
                 var newSection106 = new Section106(
-                                            request.Agreement,
+                                            currentSection106.GeneralAgreement,
                                             currentSection106.AffordableHousing,
                                             currentSection106.OnlyAffordableHousing,
                                             currentSection106.AdditionalAffordableHousing,
                                             currentSection106.CapitalFundingEligibility,
-                                            currentSection106.LocalAuthorityConfirmation);
+                                            request.LocalAuthorityConfirmation);
 
                 site.ProvideSection106(newSection106);
                 return Task.FromResult(OperationResult.Success());

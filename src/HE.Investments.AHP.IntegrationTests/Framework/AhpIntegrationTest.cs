@@ -1,6 +1,7 @@
 using AngleSharp.Html.Dom;
 using HE.Investment.AHP.WWW;
 using HE.Investments.AHP.IntegrationTests.FillApplication.Data;
+using HE.Investments.AHP.IntegrationTests.FillSite.Data;
 using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
@@ -21,10 +22,21 @@ public class AhpIntegrationTest : IntegrationTestBase<Program>
         }
 
         ApplicationData = applicationData;
+
+        var siteData = GetSharedDataOrNull<SiteData>(nameof(SiteData));
+        if (siteData is null)
+        {
+            siteData = new SiteData();
+            SetSharedData(nameof(SiteData), siteData);
+        }
+
+        SiteData = siteData;
         fixture.CheckUserLoginData();
     }
 
     public ApplicationData ApplicationData { get; }
+
+    public SiteData SiteData { get; }
 
     public async Task TestQuestionPage(
         string startPageUrl,
