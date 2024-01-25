@@ -7,8 +7,18 @@ public class MilestonePaymentDate : DateValueObject
     {
     }
 
+    private MilestonePaymentDate(DateOnly value)
+        : base(value)
+    {
+    }
+
     public static MilestonePaymentDate? Create(string? day, string? month, string? year)
     {
         return ValuesProvided(day, month, year) ? new MilestonePaymentDate(day, month, year) : null;
+    }
+
+    public static MilestonePaymentDate Create(DateOnly value)
+    {
+        return new MilestonePaymentDate(value);
     }
 }

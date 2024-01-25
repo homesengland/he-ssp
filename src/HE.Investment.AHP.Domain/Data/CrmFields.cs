@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Collections.Immutable;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.Extensions;
