@@ -1,5 +1,4 @@
 @using HE.Investment.AHP.WWW.Extensions
-@using HE.Investment.AHP.WWW.Views.HomeTypes.Const
 @using HE.Investment.AHP.WWW.Views.Shared.Components.HomeTypeFormHeader
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
 @using HE.Investments.Common.Extensions
@@ -11,7 +10,6 @@
 @{
     var applicationId = this.GetApplicationIdFromRoute();
     var workflow = Context.Request.Query["workflow"];
-    ViewBag.ValidationErrors = ViewData.ModelState.GetOrderedErrors(HomeTypesValidationFieldsOrder.OlderPersonsSharedOwnership);
     var (expectedFirstTrancheInvalid, expectedFirstTrancheError) = ViewData.ModelState.GetErrors(nameof(Model.ExpectedFirstTranche));
     var (rentAsPercentageOfTheUnsoldShareInvalid, rentAsPercentageOfTheUnsoldShareError) = ViewData.ModelState.GetErrors(nameof(Model.RentAsPercentageOfTheUnsoldShare));
 }

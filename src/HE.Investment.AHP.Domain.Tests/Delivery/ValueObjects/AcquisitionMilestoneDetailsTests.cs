@@ -14,7 +14,7 @@ public class AcquisitionMilestoneDetailsTests
         var action = () => new AcquisitionMilestoneDetailsBuilder().WithPaymentDateBeforeMilestoneDate().Build();
 
         // then
-        AssertException(action, "Milestone payment date must be on or after milestone date.");
+        AssertException(action, "The milestone payment date must be on or after the milestone date");
     }
 
     [Fact]

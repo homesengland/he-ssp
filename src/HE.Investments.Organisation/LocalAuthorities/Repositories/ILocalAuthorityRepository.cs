@@ -1,6 +1,6 @@
-using HE.Investments.Loans.Contract.Projects.ValueObjects;
+using HE.Investments.Organisation.LocalAuthorities.ValueObjects;
 
-namespace HE.Investments.Loans.BusinessLogic.Projects.Repositories;
+namespace HE.Investments.Organisation.LocalAuthorities.Repositories;
 public interface ILocalAuthorityRepository
 {
     Task<(IList<LocalAuthority> Items, int TotalItems)> Search(string phrase, int startPage, int pageSize, CancellationToken cancellationToken);

@@ -1,5 +1,6 @@
+extern alias Org;
+
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.Investments.Common.CRM;
 using HE.Investments.Common.CRM.Mappers;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories.Mapper;
@@ -7,6 +8,7 @@ using HE.Investments.Loans.BusinessLogic.Projects.Entities;
 using HE.Investments.Loans.BusinessLogic.Projects.ValueObjects;
 using HE.Investments.Loans.Common.Extensions;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
+using LocalAuthorityMapper = Org::HE.Investments.Organisation.LocalAuthorities.Mappers.LocalAuthorityMapper;
 
 namespace HE.Investments.Loans.BusinessLogic.Projects.Repositories.Mappers;
 internal static class ApplicationProjectsMapper
@@ -39,7 +41,7 @@ internal static class ApplicationProjectsMapper
                          projectFromCrm.affordableHousing.IsProvided() ? new AffordableHomes(projectFromCrm.affordableHousing.MapToCommonResponse()) : null,
                          ApplicationStatusMapper.MapToPortalStatus(loanApplicationDto.loanApplicationExternalStatus),
                          PlanningPermissionStatusMapper.Map(projectFromCrm.planningPermissionStatus),
-                         LocalAuthorityMapper.MapToLocalAuthority(projectFromCrm.localAuthority));
+                         LocalAuthorityMapper.MapToLocalAuthority(projectFromCrm.localAuthority?.onsCode, projectFromCrm.localAuthority?.name));
             });
 
         return new ApplicationProjects(loanApplicationId, projectsFromCrm);

@@ -49,7 +49,7 @@ public class MilestoneDatesInProgrammeDateRangePolicyTests
             .Build();
 
         // when && then
-        ExecuteAndAssert(acquisitionMilestoneDetails, "Milestone date have to be within programme dates.");
+        ExecuteAndAssert(acquisitionMilestoneDetails, "The milestone date must be within the programme date");
     }
 
     [Fact]
@@ -62,7 +62,7 @@ public class MilestoneDatesInProgrammeDateRangePolicyTests
             .Build();
 
         // when && then
-        ExecuteAndAssert(acquisitionMilestoneDetails, "Milestone date have to be within programme dates.");
+        ExecuteAndAssert(acquisitionMilestoneDetails, "The milestone date must be within the programme date");
     }
 
     [Fact]
@@ -75,7 +75,7 @@ public class MilestoneDatesInProgrammeDateRangePolicyTests
             .Build();
 
         // when && then
-        ExecuteAndAssert(acquisitionMilestoneDetails, "Milestone payment date have to be within programme dates.");
+        ExecuteAndAssert(acquisitionMilestoneDetails, "The milestone payment date must be within the programme date");
     }
 
     [Fact]
@@ -88,7 +88,7 @@ public class MilestoneDatesInProgrammeDateRangePolicyTests
             .Build();
 
         // when && then
-        ExecuteAndAssert(acquisitionMilestoneDetails, "Milestone payment date have to be within programme dates.");
+        ExecuteAndAssert(acquisitionMilestoneDetails, "The milestone payment date must be within the programme date");
     }
 
     private void ExecuteAndAssert(AcquisitionMilestoneDetails acquisitionMilestoneDetails, string errorMessage)

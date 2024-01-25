@@ -21,7 +21,6 @@ public class DeliveryPhaseMilestones : ValueObject, IQuestion
         _organisation = organisation;
         _buildActivity = buildActivity;
 
-        ValidatePaymentDates(acquisitionMilestone, startOnSiteMilestone, completionMilestone);
         ValidateDatesForUnregisteredBody(acquisitionMilestone, startOnSiteMilestone);
 
         AcquisitionMilestone = acquisitionMilestone;
@@ -45,7 +44,6 @@ public class DeliveryPhaseMilestones : ValueObject, IQuestion
 
         CompletionMilestone = milestones.CompletionMilestone;
 
-        ValidatePaymentDates(AcquisitionMilestone, StartOnSiteMilestone, CompletionMilestone);
         ValidateDatesForUnregisteredBody(AcquisitionMilestone, StartOnSiteMilestone);
     }
 
@@ -67,6 +65,11 @@ public class DeliveryPhaseMilestones : ValueObject, IQuestion
         return AcquisitionMilestone != null && AcquisitionMilestone.IsAnswered() &&
                StartOnSiteMilestone != null && StartOnSiteMilestone.IsAnswered() &&
                CompletionMilestone != null && CompletionMilestone.IsAnswered();
+    }
+
+    public void CheckComplete()
+    {
+        ValidatePaymentDates(AcquisitionMilestone, StartOnSiteMilestone, CompletionMilestone);
     }
 
     protected override IEnumerable<object?> GetAtomicValues()

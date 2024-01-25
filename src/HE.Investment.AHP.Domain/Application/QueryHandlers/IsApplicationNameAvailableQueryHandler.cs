@@ -24,7 +24,7 @@ public class IsApplicationNameAvailableQueryHandler : IRequestHandler<IsApplicat
         var account = await _accountUserContext.GetSelectedAccount();
         var operationResult = OperationResult.New();
 
-        if (await _repository.IsExist(name, account.SelectedOrganisationId(), cancellationToken))
+        if (await _repository.IsNameExist(name, account.SelectedOrganisationId(), cancellationToken))
         {
             operationResult.AddValidationError(new("Name", "There is already an application with this name. Enter a different name"));
         }

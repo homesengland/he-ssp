@@ -13,7 +13,7 @@ public class MilestoneDetails<T> : ValueObject, IQuestion
             paymentDate != null &&
             paymentDate.Value < milestoneDate.Value)
         {
-            throw new DomainValidationException("ClaimMilestonePaymentAt", "Milestone payment date must be on or after milestone date.");
+            throw new DomainValidationException("ClaimMilestonePaymentAt", "The milestone payment date must be on or after the milestone date");
         }
 
         MilestoneDate = milestoneDate;

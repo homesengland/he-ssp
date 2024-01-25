@@ -38,7 +38,7 @@ public class AhpIntegrationTest : IntegrationTestBase<Program>
 
     public SiteData SiteData { get; }
 
-    public async Task TestQuestionPage(
+    public async Task<IHtmlDocument> TestQuestionPage(
         string startPageUrl,
         string expectedPageTitle,
         string expectedPageUrlAfterContinue,
@@ -54,6 +54,7 @@ public class AhpIntegrationTest : IntegrationTestBase<Program>
 
         // then
         ThenTestQuestionPage(nextPage, expectedPageUrlAfterContinue);
+        return nextPage;
     }
 
     protected async Task<IHtmlButtonElement> GivenTestQuestionPage(string startPageUrl, string expectedPageTitle)

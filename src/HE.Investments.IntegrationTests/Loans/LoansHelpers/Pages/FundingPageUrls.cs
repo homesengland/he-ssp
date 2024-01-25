@@ -9,7 +9,7 @@ internal static class FundingPageUrls
 
     public const string AbnormalCostsSuffix = "/funding/abnormal-costs";
 
-    public const string PrivateSectorFundingSuffix = "/funding/private-sector-funding";
+    public const string PrivateSectorFundingSuffix = "/funding/funding-private-sector";
 
     public const string RepaymentSystemSuffix = "/funding/repayment-system";
 

@@ -36,6 +36,9 @@ namespace DataverseModel
 		NotIPIPQinassessment = 858110003,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		NotIPKYCinternallyapprovedpendingIPapproved = 858110009,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		NotIPLapsed = 858110007,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]

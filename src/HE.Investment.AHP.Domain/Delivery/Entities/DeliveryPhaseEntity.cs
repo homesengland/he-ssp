@@ -142,6 +142,8 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
             throw new DomainValidationException(ValidationErrorMessage.SectionIsNotCompleted);
         }
 
+        DeliveryPhaseMilestones.CheckComplete();
+
         Status = _modificationTracker.Change(Status, SectionStatus.Completed);
     }
 
@@ -218,7 +220,7 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
 
     private void ResetTypeOfHomesDependencies(TypeOfHomes? newTypeOfHomes)
     {
-        ProvideBuildActivity(BuildActivity.WithClearedAnswer(newTypeOfHomes.GetValueOfFirstValue()));
+        ProvideBuildActivity(BuildActivity.WithClearedAnswer(newTypeOfHomes.GetValueOrFirstValue()));
         ReconfiguringExisting = null;
     }
 

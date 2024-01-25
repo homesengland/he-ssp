@@ -197,7 +197,7 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
         return SectionSummaryViewModel.New(
             "Social Rent details",
             factory.Question("Market value of each home", nameof(Controller.SocialRent), CurrencyHelper.DisplayPounds(tenure.MarketValue)),
-            factory.Question("Market rent per week", nameof(Controller.SocialRent), CurrencyHelper.DisplayPoundsPences(tenure.MarketRent)),
+            factory.Question("Market rent per week", nameof(Controller.SocialRent), CurrencyHelper.DisplayPoundsPences(tenure.ProspectiveRent)),
             factory.Question(
                 "Exempt from Right to Shared ownership",
                 nameof(Controller.ExemptFromTheRightToSharedOwnership),

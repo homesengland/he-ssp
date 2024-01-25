@@ -132,7 +132,7 @@ public class FundingV2Controller : WorkflowController<FundingState>
         return await Continue(redirect, new { Id = id });
     }
 
-    [HttpGet("private-sector-funding")]
+    [HttpGet("funding-private-sector")]
     [WorkflowState(FundingState.PrivateSectorFunding)]
     public async Task<IActionResult> PrivateSectorFunding(Guid id)
     {
@@ -140,7 +140,7 @@ public class FundingV2Controller : WorkflowController<FundingState>
         return View("PrivateSectorFunding", response.ViewModel);
     }
 
-    [HttpPost("private-sector-funding")]
+    [HttpPost("funding-private-sector")]
     [WorkflowState(FundingState.PrivateSectorFunding)]
     public async Task<IActionResult> PrivateSectorFundingPost(Guid id, FundingViewModel viewModel, [FromQuery] string redirect, CancellationToken cancellationToken)
     {

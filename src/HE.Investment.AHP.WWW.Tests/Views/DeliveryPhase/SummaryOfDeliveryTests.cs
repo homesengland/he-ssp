@@ -23,7 +23,7 @@ public class SummaryOfDeliveryTests : ViewTestBase
 
         // then
         document.HasTitle(DeliveryPageTitles.SummaryOfDelivery)
-            .HasGdsContinueButton()
+            .HasContinueButton()
             .HasGdsBackButton(false);
 
         var summary = document.GetSummaryListItems();
@@ -53,7 +53,7 @@ public class SummaryOfDeliveryTests : ViewTestBase
 
         // then
         document.HasTitle(DeliveryPageTitles.SummaryOfDelivery)
-            .HasGdsContinueButton()
+            .HasContinueButton()
             .HasGdsBackButton(false);
 
         var summary = document.GetSummaryListItems();

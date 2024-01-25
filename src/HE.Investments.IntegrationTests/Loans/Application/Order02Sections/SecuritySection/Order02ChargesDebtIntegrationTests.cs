@@ -30,7 +30,7 @@ public class Order02ChargesDebtIntegrationTests : IntegrationTest
     {
         // given
         var chargesDebtPage = await TestClient.NavigateTo(SecurityPageUrls.ChargesDebt(UserData.LoanApplicationIdInDraftState));
-        var continueButton = chargesDebtPage.GetGdsSubmitButtonById("continue-button");
+        var continueButton = chargesDebtPage.GetContinueButton();
 
         // when
         chargesDebtPage = await TestClient.SubmitButton(
@@ -50,9 +50,7 @@ public class Order02ChargesDebtIntegrationTests : IntegrationTest
     public async Task Order02_ShouldDisplayValidationError_WhenNoIsSelectedAndAdditionalInformationIsLongerThan1500Characters()
     {
         // given
-        var chargesDebtPage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
-
-        var continueButton = chargesDebtPage.GetGdsSubmitButtonById("continue-button");
+        var continueButton = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey).GetContinueButton();
 
         // when
         var directorLoansPage = await TestClient.SubmitButton(
@@ -70,8 +68,7 @@ public class Order02ChargesDebtIntegrationTests : IntegrationTest
     public async Task Order03_ShouldMoveToDirectorLoans_WhenNoIsSelected()
     {
         // given
-        var chargesDebtPage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
-        var continueButton = chargesDebtPage.GetGdsSubmitButtonById("continue-button");
+        var continueButton = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey).GetContinueButton();
 
         // when
         var directorLoansPage = await TestClient.SubmitButton(
@@ -88,8 +85,7 @@ public class Order02ChargesDebtIntegrationTests : IntegrationTest
     public async Task Order04_ShouldMoveToDirectorLoans_WhenYesIsSelectedAndAdditionalDataProvided()
     {
         // given
-        var chargesDebtPage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
-        var continueButton = chargesDebtPage.GetGdsSubmitButtonById("continue-button");
+        var continueButton = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey).GetContinueButton();
 
         // when
         var directorLoansPage = await TestClient.SubmitButton(

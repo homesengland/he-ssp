@@ -237,6 +237,28 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
             ("ClaimMilestonePaymentAt.Year", deliveryPhase.CompletionMilestone.PaymentDate!.Value.Year.ToString(CultureInfo.InvariantCulture)));
     }
 
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(11)]
+    public async Task Order11_CompleteDeliveryPhase()
+    {
+        // given
+        var deliveryPhase = NewBuildAndWorksOnlyDeliveryPhase.GenerateCompletionMilestone();
+        var continueButton =
+            await GivenTestQuestionPage(
+                BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.CheckAnswers, deliveryPhase),
+                DeliveryPageTitles.CheckAnswers);
+
+        // when
+        var deliveryPhasesListPage = await TestClient.SubmitButton(
+            continueButton,
+            ("IsCompleted", "Yes"));
+
+        // then
+        deliveryPhasesListPage
+            .UrlEndWith(DeliveryPhasesPagesUrl.List(ApplicationData.ApplicationId))
+            .HasTitle(DeliveryPageTitles.List);
+    }
+
     private async Task<IHtmlDocument> RemoveDeliveryPhase(IHtmlDocument deliveryPhasesListPage, string deliveryPhaseId)
     {
         // given

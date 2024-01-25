@@ -12,7 +12,6 @@
 @{
     var applicationId = this.GetApplicationIdFromRoute();
     var workflow = Context.Request.Query["workflow"];
-    ViewBag.ValidationErrors = ViewData.ModelState.GetOrderedErrors(HomeTypesValidationFieldsOrder.AffordableRent);
     var (prospectiveRentAsPercentageInvalid, prospectiveRentAsPercentageError) = @ViewData.ModelState.GetErrors("ProspectiveRentAsPercentageOfMarketRent");
     ViewData["Title"] = HomeTypesPageTitles.AffordableRent;
 }
