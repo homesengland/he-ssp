@@ -11,7 +11,7 @@ public class ToWholePercentageTests
     [InlineData(0.51, "51%")]
     [InlineData(0.51888, "52%")]
     [InlineData(0, "0%")]
-    [InlineData(1.337, "1337%")]
+    [InlineData(1.337, "134%")]
     public void ReturnTrue_WhenProvidedDateIsBeforeOtherDate(decimal value, string expectedString)
     {
         // given & when
