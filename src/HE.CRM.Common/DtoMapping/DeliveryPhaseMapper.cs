@@ -99,7 +99,7 @@ namespace HE.CRM.Common.DtoMapping
                 return homesInDeliveryPhase;
             }
 
-            return Array.Empty<invln_homesindeliveryphase>();
+            return null;
         }
 
         private static string MapTypeOfHome(Nullable<bool> value)
