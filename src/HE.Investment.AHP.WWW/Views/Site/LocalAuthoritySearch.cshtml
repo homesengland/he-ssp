@@ -1,0 +1,39 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Fieldset
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Paragraphs
+@using HE.Investment.AHP.Contract.Site
+@using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
+@using HE.Investment.AHP.WWW.Views.Site
+@using HE.Investments.Common.WWW.Components.FormButton
+@model HE.Investment.AHP.Contract.Site.LocalAuthorities;
+@{
+    ViewData["Title"] = SitePageTitles.SiteName;
+}
+
+<gds-div-grid-column-two-thirds>
+    <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.LocalAuthoritySearch"/>
+
+    <form asp-controller="Site" asp-action="LocalAuthoritySearch" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
+        <gds-field-set>
+            <he-error-form-group asp-for="Phrase">
+                <vc:form-header title="@SitePageTitles.LocalAuthoritySearch" additional-css-class="govuk-!-padding-top-8"></vc:form-header>
+
+                <gds-p class="govuk-!-margin-bottom-0">
+                    Search for your local authority. If your site is located in more than one local authority, search for the local authority where you have planning permission.
+                </gds-p>
+
+                <vc:text-input
+                    header="What is your local authority?"
+                    hint="Enter all or part of your local authority name."
+                    field-name="@(nameof(Model.Phrase))"
+                    css-class="govuk-!-width-one-third"
+                    value=@Model?.Phrase/>
+            </he-error-form-group>
+            <vc:form-button text="Search"/>
+            @Html.HiddenFor(c => c.SiteId)
+
+        </gds-field-set>
+
+    </form>
+</gds-div-grid-column-two-thirds>
