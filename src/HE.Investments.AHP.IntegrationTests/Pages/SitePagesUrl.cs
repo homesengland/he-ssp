@@ -6,6 +6,8 @@ public static class SitePagesUrl
 
     public const string SiteName = $"/ahp/site/name";
 
+    public const string SiteSelect = "ahp/site/select";
+
     public static string SiteSection106GeneralAgreement(string siteId) => $"ahp/site/{siteId}/section-106-general-agreement";
 
     public static string SiteSection106AffordableHousing(string siteId) => $"ahp/site/{siteId}/section-106-affordable-housing";
@@ -17,8 +19,6 @@ public static class SitePagesUrl
     public static string SiteSection106CapitalFundingEligibility(string siteId) => $"ahp/site/{siteId}/section-106-capital-funding-eligibility";
 
     public static string SiteSection106LocalAuthorityConfirmation(string siteId) => $"ahp/site/{siteId}/section-106-local-authority-confirmation";
-  
-    public const string SiteSelect = "ahp/site/select";
 
     public static string SiteConfirm(string siteId) => $"ahp/site/{siteId}/confirm-select";
 }
