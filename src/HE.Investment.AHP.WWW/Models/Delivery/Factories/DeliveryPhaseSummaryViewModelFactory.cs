@@ -114,7 +114,7 @@ public class DeliveryPhaseSummaryViewModelFactory : IDeliveryPhaseSummaryViewMod
                 2,
                 new(
                     "Start on site milestone",
-                    (CurrencyHelper.DisplayPoundsPences(summary?.StarOnSiteMilestone) ?? "-").ToOneElementList(),
+                    (CurrencyHelper.DisplayPoundsPences(summary?.StartOnSiteMilestone) ?? "-").ToOneElementList(),
                     IsEditable: false));
         }
 

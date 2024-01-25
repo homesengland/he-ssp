@@ -5,11 +5,15 @@ namespace HE.Investment.AHP.Domain.Delivery.ValueObjects;
 
 public class SummaryOfDelivery : ValueObject
 {
-    public SummaryOfDelivery(decimal? grantApportioned, decimal? acquisitionMilestone, decimal? starOnSiteMilestone, decimal? completionMilestone)
+    public SummaryOfDelivery(
+        decimal? grantApportioned,
+        decimal? acquisitionMilestone,
+        decimal? startOnSiteMilestone,
+        decimal? completionMilestone)
     {
         GrantApportioned = grantApportioned;
         AcquisitionMilestone = acquisitionMilestone;
-        StarOnSiteMilestone = starOnSiteMilestone;
+        StartOnSiteMilestone = startOnSiteMilestone;
         CompletionMilestone = completionMilestone;
         ValidateValues();
     }
@@ -20,21 +24,27 @@ public class SummaryOfDelivery : ValueObject
 
     public decimal? AcquisitionMilestone { get; }
 
-    public decimal? StarOnSiteMilestone { get; }
+    public decimal? StartOnSiteMilestone { get; }
 
     public decimal? CompletionMilestone { get; }
+
+    public SummaryOfDeliveryPercentage SummaryOfDeliveryPercentage => new(
+        AcquisitionMilestone / GrantApportioned,
+        StartOnSiteMilestone / GrantApportioned,
+        CompletionMilestone / GrantApportioned);
 
     protected override IEnumerable<object?> GetAtomicValues()
     {
         yield return GrantApportioned;
         yield return AcquisitionMilestone;
-        yield return StarOnSiteMilestone;
+        yield return StartOnSiteMilestone;
         yield return CompletionMilestone;
     }
 
     private void ValidateValues()
     {
-        if (GrantApportioned.GetValueOrDefault() == AcquisitionMilestone.GetValueOrDefault() + StarOnSiteMilestone.GetValueOrDefault() + CompletionMilestone.GetValueOrDefault())
+        if (GrantApportioned.GetValueOrDefault() ==
+            AcquisitionMilestone.GetValueOrDefault() + StartOnSiteMilestone.GetValueOrDefault() + CompletionMilestone.GetValueOrDefault())
         {
             return;
         }

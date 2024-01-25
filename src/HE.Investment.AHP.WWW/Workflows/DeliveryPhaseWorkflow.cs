@@ -72,6 +72,7 @@ public class DeliveryPhaseWorkflow : IStateRouting<DeliveryPhaseWorkflowState>
             DeliveryPhaseWorkflowState.ReconfiguringExisting => _model.IsReconfiguringExistingNeeded,
             DeliveryPhaseWorkflowState.AddHomes => true,
             DeliveryPhaseWorkflowState.SummaryOfDelivery => IsNumberOfHomesCompleted(),
+            DeliveryPhaseWorkflowState.SummaryOfDeliveryEditable => IsNumberOfHomesCompleted(),
             DeliveryPhaseWorkflowState.AcquisitionMilestone => AllMilestonesAvailable() && IsNumberOfHomesCompleted(),
             DeliveryPhaseWorkflowState.StartOnSiteMilestone => AllMilestonesAvailable() && IsNumberOfHomesCompleted(),
             DeliveryPhaseWorkflowState.PracticalCompletionMilestone => IsNumberOfHomesCompleted(),
