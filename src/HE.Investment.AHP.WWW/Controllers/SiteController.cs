@@ -246,7 +246,8 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         }
 
         return await Continue(new { siteId });
-    
+    }
+
     [HttpGet("{siteId}/local-authority/search")]
     [WorkflowState(SiteWorkflowState.LocalAuthoritySearch)]
     public IActionResult LocalAuthoritySearch(string siteId)

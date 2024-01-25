@@ -69,7 +69,7 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             .PermitIf(Trigger.Back, SiteWorkflowState.Section106AffordableHousing, () => _siteModel?.Section106OnlyAffordableHousing == null);
 
         _machine.Configure(SiteWorkflowState.Section106LocalAuthorityConfirmation)
-           .Permit(Trigger.Continue, SiteWorkflowState.LocalAuthority)
+           .Permit(Trigger.Continue, SiteWorkflowState.LocalAuthoritySearch)
            .Permit(Trigger.Back, SiteWorkflowState.Section106CapitalFundingEligibility);
     }
 }
