@@ -16,7 +16,6 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
 {
     public IReadOnlyCollection<string> CrmFields => new[]
     {
-        // TODO: typeOfHomes = MapTypeOfHomes(entity.TypeOfHomes),
         nameof(invln_DeliveryPhase.invln_phasename),
         nameof(invln_DeliveryPhase.CreatedOn),
         nameof(invln_DeliveryPhase.invln_buildactivitytype),
@@ -36,7 +35,7 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
     {
         var typeOfHomes = MapTypeOfHomes(dto.typeOfHomes);
         var buildActivityType = MapBuildActivityType(dto.newBuildActivityType, dto.rehabBuildActivityType);
-        var buildActivity = MapBuildActivity(application, typeOfHomes, buildActivityType);
+        var buildActivity = new BuildActivity(application.Tenure, typeOfHomes, buildActivityType);
 
         return new DeliveryPhaseEntity(
             application,
@@ -164,13 +163,6 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
         };
     }
 
-    private static BuildActivity MapBuildActivity(ApplicationBasicInfo application, TypeOfHomes? typeOfHomes, BuildActivityType? buildActivityType)
-    {
-        return buildActivityType.IsNotProvided()
-            ? new BuildActivity(application.Tenure)
-            : new BuildActivity(application.Tenure, typeOfHomes.GetValueOrFirstValue(), buildActivityType!.Value);
-    }
-
     private static IEnumerable<HomesToDeliverInPhase> MapHomesToDeliver(IDictionary<string, int?>? numberOfHomes)
     {
         return numberOfHomes?.Where(x => x.Value.IsProvided())
@@ -231,8 +223,8 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
     {
         return value switch
         {
-            "true" => new IsAdditionalPaymentRequested(true),
-            "false" => new IsAdditionalPaymentRequested(false),
+            "yes" => new IsAdditionalPaymentRequested(true),
+            "no" => new IsAdditionalPaymentRequested(false),
             _ => null,
         };
     }
@@ -241,12 +233,12 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
     {
         if (value?.IsRequested == true)
         {
-            return "true";
+            return "yes";
         }
 
         if (value?.IsRequested == false)
         {
-            return "false";
+            return "no";
         }
 
         return null;

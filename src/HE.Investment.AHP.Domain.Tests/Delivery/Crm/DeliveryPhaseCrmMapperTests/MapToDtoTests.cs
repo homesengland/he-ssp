@@ -156,8 +156,8 @@ public class MapToDtoTests : TestBase<DeliveryPhaseCrmMapper>
 
     [Theory]
     [InlineData(null, null)]
-    [InlineData(true, "true")]
-    [InlineData(false, "false")]
+    [InlineData(true, "yes")]
+    [InlineData(false, "no")]
     public void ShouldMapAdditionalPaymentRequested(bool? requiresAdditionalPayments, string? expectedResult)
     {
         // given

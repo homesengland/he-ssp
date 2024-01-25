@@ -199,8 +199,8 @@ public class MapToDomainTests : TestBase<DeliveryPhaseCrmMapper>
     }
 
     [Theory]
-    [InlineData("true", true)]
-    [InlineData("false", false)]
+    [InlineData("yes", true)]
+    [InlineData("no", false)]
     public void ShouldMapAdditionalPaymentRequested(string requiresAdditionalPayments, bool expectedResult)
     {
         // given
