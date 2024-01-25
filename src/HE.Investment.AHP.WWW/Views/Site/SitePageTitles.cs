@@ -23,4 +23,14 @@ public static class SitePageTitles
     public const string SiteSection106AdditionalAffordableHousing = "Additional affordable housing";
 
     public const string SiteSection106CapitalFundingEligibility = "Capital Funding Guide eligibility";
+
+    public const string LocalAuthoritySearch = "Your local authority";
+
+    public const string LocalAuthorityResult = "Select your local authority";
+
+    public const string LocalAuthorityNotFound = "Local Authority Not Found";
+
+    public const string LocalAuthorityNoMatch = "The details you entered did not match our records";
+
+    public const string LocalAuthorityConfirm = "Confirm your selection";
 }
