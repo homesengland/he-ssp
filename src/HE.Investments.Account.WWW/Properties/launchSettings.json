@@ -24,13 +24,5 @@
         "sslPort": 44341
       }
     }
-  },
-  "iisSettings": {
-    "windowsAuthentication": false,
-    "anonymousAuthentication": true,
-    "iisExpress": {
-      "applicationUrl": "http://localhost:61050/",
-      "sslPort": 44377
-    }
   }
 }

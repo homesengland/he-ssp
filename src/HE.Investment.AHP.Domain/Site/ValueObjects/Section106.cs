@@ -51,9 +51,30 @@ public class Section106 : ValueObject, IQuestion
 
     public bool IsAnswered()
     {
-        if (GeneralAgreement != null)
+        if (GeneralAgreement == false)
         {
             return true;
+        }
+
+        if (GeneralAgreement == true)
+        {
+            if (AffordableHousing == false)
+            {
+                return CapitalFundingEligibility != null;
+            }
+
+            if (AffordableHousing == true)
+            {
+                if (OnlyAffordableHousing == true)
+                {
+                    return CapitalFundingEligibility != null;
+                }
+
+                if (OnlyAffordableHousing == false)
+                {
+                    return AdditionalAffordableHousing != null && CapitalFundingEligibility != null;
+                }
+            }
         }
 
         return false;

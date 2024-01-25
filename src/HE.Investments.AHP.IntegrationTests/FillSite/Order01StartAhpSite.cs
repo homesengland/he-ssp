@@ -83,104 +83,55 @@ public class Order01StartAhpSite : AhpIntegrationTest
     [Order(4)]
     public async Task Order04_ShouldProvideSection106GeneralAgreementAndNavigateToSection106AffordableHousing()
     {
-        // given
-        var section106GeneralAgreementPage = await GetCurrentPage(SitePagesUrl.SiteSection106GeneralAgreement(SiteData.SiteId));
-        section106GeneralAgreementPage.HasGdsSubmitButton("continue-button", out var continueButton);
 
-        // when
-        var section106AffordableHousingPage = await TestClient.SubmitButton(
-            continueButton,
+        await TestQuestionPage(
+            SitePagesUrl.SiteSection106GeneralAgreement(SiteData.SiteId),
+            SitePageTitles.SiteSection106Agreement,
+            SitePagesUrl.SiteSection106AffordableHousing(SiteData.SiteId),
             (nameof(SiteModel.Section106GeneralAgreement), "true"));
-
-        // then
-        section106AffordableHousingPage
-            .UrlEndWith(SitePagesUrl.SiteSection106AffordableHousing(SiteData.SiteId))
-            .HasTitle(SitePageTitles.SiteSection106AffordableHousing);
-
-        SaveCurrentPage();
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
     [Order(5)]
     public async Task Order05_ShouldProvideSection106AffordableHousingAndNavigateToSection106OnlyAffordableHousing()
     {
-        // given
-        var section106AffordableHouaingPage = await GetCurrentPage(SitePagesUrl.SiteSection106AffordableHousing(SiteData.SiteId));
-        section106AffordableHouaingPage.HasGdsSubmitButton("continue-button", out var continueButton);
-
-        // when
-        var section106OnlyAffordableHousingPage = await TestClient.SubmitButton(
-            continueButton,
+        await TestQuestionPage(
+            SitePagesUrl.SiteSection106AffordableHousing(SiteData.SiteId),
+            SitePageTitles.SiteSection106AffordableHousing,
+            SitePagesUrl.SiteSection106OnlyAffordableHousing(SiteData.SiteId),
             (nameof(SiteModel.Section106AffordableHousing), "true"));
-
-        // then
-        section106OnlyAffordableHousingPage
-            .UrlEndWith(SitePagesUrl.SiteSection106OnlyAffordableHousing(SiteData.SiteId))
-            .HasTitle(SitePageTitles.SiteSection106OnlyAffordableHousing);
-
-        SaveCurrentPage();
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
     [Order(6)]
     public async Task Order06_ShouldProvideSection106OnlyAffordableHousingAndNavigateToSection106AdditionalAffordableHousing()
     {
-        // given
-        var section106OnlyAffordableHousingPage = await GetCurrentPage(SitePagesUrl.SiteSection106OnlyAffordableHousing(SiteData.SiteId));
-        section106OnlyAffordableHousingPage.HasGdsSubmitButton("continue-button", out var continueButton);
-
-        // when
-        var section106AdditionalAffordableHousingPage = await TestClient.SubmitButton(
-            continueButton,
+        await TestQuestionPage(
+            SitePagesUrl.SiteSection106OnlyAffordableHousing(SiteData.SiteId),
+            SitePageTitles.SiteSection106OnlyAffordableHousing,
+            SitePagesUrl.SiteSection106AdditionalAffordableHousing(SiteData.SiteId),
             (nameof(SiteModel.Section106OnlyAffordableHousing), "false"));
-
-        // then
-        section106AdditionalAffordableHousingPage
-            .UrlEndWith(SitePagesUrl.SiteSection106AdditionalAffordableHousing(SiteData.SiteId))
-            .HasTitle(SitePageTitles.SiteSection106AdditionalAffordableHousing);
-
-        SaveCurrentPage();
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
     [Order(7)]
     public async Task Order07_ShouldProvideSection106AdditionalAffordableHousingAndNavigateToSection106CapitalFundingEligibility()
     {
-        // given
-        var section106AdditionalAffordableHousingPage = await GetCurrentPage(SitePagesUrl.SiteSection106AdditionalAffordableHousing(SiteData.SiteId));
-        section106AdditionalAffordableHousingPage.HasGdsSubmitButton("continue-button", out var continueButton);
-
-        // when
-        var section106CapitalFundingEligibilityPage = await TestClient.SubmitButton(
-            continueButton,
+        await TestQuestionPage(
+            SitePagesUrl.SiteSection106AdditionalAffordableHousing(SiteData.SiteId),
+            SitePageTitles.SiteSection106AdditionalAffordableHousing,
+            SitePagesUrl.SiteSection106CapitalFundingEligibility(SiteData.SiteId),
             (nameof(SiteModel.Section106AdditionalAffordableHousing), "true"));
-
-        // then
-        section106CapitalFundingEligibilityPage
-            .UrlEndWith(SitePagesUrl.SiteSection106CapitalFundingEligibility(SiteData.SiteId))
-            .HasTitle(SitePageTitles.SiteSection106CapitalFundingEligibility);
-
-        SaveCurrentPage();
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
     [Order(8)]
     public async Task Order08_ShouldProvideSection106CapitalFundingEligibilityAndNavigateToSection106LocalAuthorityConfirmation()
     {
-        // given
-        var section106CapitalFundingEligibilityPage = await GetCurrentPage(SitePagesUrl.SiteSection106CapitalFundingEligibility(SiteData.SiteId));
-        section106CapitalFundingEligibilityPage.HasGdsSubmitButton("continue-button", out var continueButton);
-
-        // when
-        var section106LocalAuthorityConfirmationPage = await TestClient.SubmitButton(
-            continueButton,
+        await TestQuestionPage(
+            SitePagesUrl.SiteSection106CapitalFundingEligibility(SiteData.SiteId),
+            SitePageTitles.SiteSection106CapitalFundingEligibility,
+            SitePagesUrl.SiteSection106LocalAuthorityConfirmation(SiteData.SiteId),
             (nameof(SiteModel.Section106CapitalFundingEligibility), "false"));
-
-        // then
-        section106LocalAuthorityConfirmationPage
-            .UrlEndWith(SitePagesUrl.SiteSection106LocalAuthorityConfirmation(SiteData.SiteId))
-            .HasTitle(SitePageTitles.SiteSection106LocalAuthorityConfirmation);
-
-        SaveCurrentPage();
     }
 }
