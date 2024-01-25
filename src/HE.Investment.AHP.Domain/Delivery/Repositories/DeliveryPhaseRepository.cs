@@ -69,8 +69,8 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
         var organisationId = organisation.OrganisationId.Value;
         var application = await _applicationRepository.GetApplicationBasicInfo(applicationId, userAccount, cancellationToken);
         var deliveryPhase = userAccount.CanViewAllApplications()
-            ? await _crmContext.GetUserDeliveryPhaseById(applicationId.Value, deliveryPhaseId.Value, organisationId, _crmMapper.CrmFields, cancellationToken)
-            : await _crmContext.GetOrganisationDeliveryPhaseById(applicationId.Value, deliveryPhaseId.Value, organisationId, _crmMapper.CrmFields, cancellationToken);
+            ? await _crmContext.GetOrganisationDeliveryPhaseById(applicationId.Value, deliveryPhaseId.Value, organisationId, _crmMapper.CrmFields, cancellationToken)
+            : await _crmContext.GetUserDeliveryPhaseById(applicationId.Value, deliveryPhaseId.Value, organisationId, _crmMapper.CrmFields, cancellationToken);
 
         if (deliveryPhase != null)
         {
