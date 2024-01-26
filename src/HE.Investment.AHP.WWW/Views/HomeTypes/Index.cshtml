@@ -9,7 +9,7 @@
 }
 
 <div class="govuk-grid-column-full">
-    <gds-back-link href="@Url.Action("Index","Home")" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
+    <gds-back-link href="@Url.Action("TaskList", "Application", new { applicationId })" class="govuk-!-margin-bottom-8"></gds-back-link>
     <vc:form-header title="@HomeTypesPageTitles.LandingPage" caption="@Model.ApplicationName" />
 
     <gds-p>
