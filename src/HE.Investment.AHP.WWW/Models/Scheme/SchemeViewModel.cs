@@ -6,8 +6,8 @@ namespace HE.Investment.AHP.WWW.Models.Scheme;
 public record SchemeViewModel(
     string ApplicationId,
     string ApplicationName,
-    [ErrorSummaryOrder(2)] string? RequiredFunding,
-    [ErrorSummaryOrder(1)] string? HousesToDeliver,
+    string? RequiredFunding,
+    string? HousesToDeliver,
     string? AffordabilityEvidence,
     string? SalesRisk,
     string? MeetingLocalPriorities,

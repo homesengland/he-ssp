@@ -16,4 +16,5 @@ public enum SiteWorkflowState
     LocalAuthorityResult,
     LocalAuthorityConfirm,
     LocalAuthorityReset,
+    PlanningStatus,
 }

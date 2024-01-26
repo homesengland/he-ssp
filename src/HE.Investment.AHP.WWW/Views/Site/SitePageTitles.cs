@@ -33,4 +33,6 @@ public static class SitePageTitles
     public const string LocalAuthorityNoMatch = "The details you entered did not match our records";
 
     public const string LocalAuthorityConfirm = "Confirm your selection";
+
+    public const string PlanningStatus = "What is the planning status of this site?";
 }

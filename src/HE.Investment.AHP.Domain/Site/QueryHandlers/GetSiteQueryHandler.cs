@@ -33,6 +33,7 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
             Section106AdditionalAffordableHousing = site.Section106?.AdditionalAffordableHousing,
             Section106CapitalFundingEligibility = site.Section106?.CapitalFundingEligibility,
             Section106ConfirmationFromLocalAuthority = site.Section106?.ConfirmationFromLocalAuthority,
+            PlanningDetails = site.PlanningDetails != null ? new SitePlanningDetails(site.PlanningDetails.PlanningStatus) : null,
         };
     }
 }
