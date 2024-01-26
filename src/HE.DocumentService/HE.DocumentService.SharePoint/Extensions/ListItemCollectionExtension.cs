@@ -28,7 +28,6 @@ public static class ListItemCollectionExtension
                 {
                     if (obj.Value != null)
                     {
-                        var key = obj.Key;
                         var type = obj.Value.GetType().FullName;
 
                         if (type == "Microsoft.SharePoint.Client.FieldLookupValue")
@@ -49,17 +48,16 @@ public static class ListItemCollectionExtension
                         }
                         else if (type == "System.DateTime")
                         {
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
+#pragma warning disable CS8602
+#pragma warning disable S6580 // Dereference of a possibly null reference.
                             var val = obj.Value.ToString();
-                            if (val.Length > 0)
+                            if (val.Length > 0 && DateTime.TryParse(val, out var r))
                             {
-                                if (DateTime.TryParse(val, out var r))
-                                {
-                                    dr[obj.Key] = r;
-                                }
+                                dr[obj.Key] = r;
                             }
                             dr[obj.Key] = obj.Value;
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
+#pragma warning restore CS8602
+#pragma warning restore S6580 // Dereference of a possibly null reference.
                         }
                         else
                         {
