@@ -3,12 +3,14 @@ using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Commands;
 using HE.Investment.AHP.Contract.Site.Queries;
+using HE.Investment.AHP.WWW.Extensions;
 using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
+using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Routing;
@@ -149,7 +151,8 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     public async Task<IActionResult> Section106AffordableHousing([FromRoute] string siteId, SiteModel model, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(
-            new ProvideSection106AffordableHousingCommand(new SiteId(siteId), model.Section106AffordableHousing), cancellationToken);
+            new ProvideSection106AffordableHousingCommand(new SiteId(siteId), model.Section106AffordableHousing),
+            cancellationToken);
         if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
@@ -172,7 +175,8 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     public async Task<IActionResult> Section106OnlyAffordableHousing([FromRoute] string siteId, SiteModel model, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(
-            new ProvideSection106OnlyAffordableHousingCommand(new SiteId(siteId), model.Section106OnlyAffordableHousing), cancellationToken);
+            new ProvideSection106OnlyAffordableHousingCommand(new SiteId(siteId), model.Section106OnlyAffordableHousing),
+            cancellationToken);
         if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
@@ -194,7 +198,9 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     [WorkflowState(SiteWorkflowState.Section106AdditionalAffordableHousing)]
     public async Task<IActionResult> Section106AdditionalAffordableHousing([FromRoute] string siteId, SiteModel model, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new ProvideSection106AdditionalAffordableHousingCommand(new SiteId(siteId), model.Section106AdditionalAffordableHousing), cancellationToken);
+        var result = await _mediator.Send(
+            new ProvideSection106AdditionalAffordableHousingCommand(new SiteId(siteId), model.Section106AdditionalAffordableHousing),
+            cancellationToken);
         if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
@@ -216,7 +222,9 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     [WorkflowState(SiteWorkflowState.Section106CapitalFundingEligibility)]
     public async Task<IActionResult> Section106CapitalFundingEligibility([FromRoute] string siteId, SiteModel model, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new ProvideSection106CapitalFundingEligibilityCommand(new SiteId(siteId), model.Section106CapitalFundingEligibility), cancellationToken);
+        var result = await _mediator.Send(
+            new ProvideSection106CapitalFundingEligibilityCommand(new SiteId(siteId), model.Section106CapitalFundingEligibility),
+            cancellationToken);
         if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
@@ -275,7 +283,12 @@ public class SiteController : WorkflowController<SiteWorkflowState>
 
     [HttpGet("{siteId}/local-authority/search/result")]
     [WorkflowState(SiteWorkflowState.LocalAuthorityResult)]
-    public async Task<IActionResult> LocalAuthorityResult(string siteId, string phrase, [FromQuery] string redirect, CancellationToken token, [FromQuery] int page = 0)
+    public async Task<IActionResult> LocalAuthorityResult(
+        string siteId,
+        string phrase,
+        [FromQuery] string redirect,
+        CancellationToken token,
+        [FromQuery] int page = 0)
     {
         var result = await _mediator.Send(new SearchLocalAuthoritiesQuery(phrase, page - 1, DefaultPagination.PageSize), token);
 
@@ -352,6 +365,30 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         return await Back(currentPage, new { siteId });
     }
 
+    [HttpGet("{siteId}/planning-status")]
+    [WorkflowState(SiteWorkflowState.PlanningStatus)]
+    public async Task<IActionResult> PlanningStatus([FromRoute] string siteId, CancellationToken cancellationToken)
+    {
+        var siteModel = await _mediator.Send(new GetSiteQuery(siteId), cancellationToken);
+        ViewBag.SiteName = siteModel.Name!;
+        return View($"PlanningDetails/{nameof(PlanningStatus)}", siteModel.PlanningDetails);
+    }
+
+    [HttpPost("{siteId}/planning-status")]
+    [WorkflowState(SiteWorkflowState.PlanningStatus)]
+    public async Task<IActionResult> PlanningStatus(SitePlanningDetails model, CancellationToken cancellationToken)
+    {
+        return await ExecuteSiteCommand<SitePlanningDetails>(
+            new ProvideSitePlanningStatusCommand(this.GetSiteIdFromRoute(), model.PlanningStatus),
+            $"PlanningDetails/{nameof(PlanningStatus)}",
+            savedModel =>
+            {
+                ViewBag.SiteName = savedModel.Name!;
+                return model;
+            },
+            cancellationToken);
+    }
+
     protected override async Task<IStateRouting<SiteWorkflowState>> Routing(SiteWorkflowState currentState, object? routeData = null)
     {
         SiteModel? siteModel = null;
@@ -364,5 +401,27 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         }
 
         return await Task.FromResult<IStateRouting<SiteWorkflowState>>(new SiteWorkflow(currentState, siteModel));
+    }
+
+    private async Task<IActionResult> ExecuteSiteCommand<TViewModel>(
+        IRequest<OperationResult> command,
+        string viewName,
+        Func<SiteModel, TViewModel> createViewModelForError,
+        CancellationToken cancellationToken)
+    {
+        var siteId = this.GetSiteIdFromRoute();
+
+        return await this.ExecuteCommand<TViewModel>(
+            _mediator,
+            command,
+            async () => await ContinueWithRedirect(new { siteId }),
+            async () =>
+            {
+                var deliveryPhaseDetails = await _mediator.Send(new GetSiteQuery(siteId.Value), cancellationToken);
+                var model = createViewModelForError(deliveryPhaseDetails);
+
+                return View(viewName, model);
+            },
+            cancellationToken);
     }
 }

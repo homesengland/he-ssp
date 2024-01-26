@@ -2,26 +2,27 @@ using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investment.AHP.Domain.Site.ValueObjects;
 using HE.Investments.Common.Contract.Validators;
+using HE.Investments.Common.Domain;
 
 namespace HE.Investment.AHP.Domain.Site.Entities;
 
 public class SiteEntity
 {
-    public SiteEntity(SiteId id, SiteName name, Section106 section106)
-    {
-        Id = id;
-        Name = name;
-        Status = SiteStatus.NotReady;
-        Section106 = section106;
-    }
+    private readonly ModificationTracker _modificationTracker = new();
 
-    public SiteEntity(SiteId id, SiteName name, Section106 section106, string localAuthority)
+    public SiteEntity(
+        SiteId id,
+        SiteName name,
+        Section106 section106,
+        string? localAuthority = null,
+        PlanningDetails? planningDetails = null)
     {
         Id = id;
         Name = name;
         Status = SiteStatus.NotReady;
         Section106 = section106;
         LocalAuthority = localAuthority;
+        PlanningDetails = planningDetails;
     }
 
     public SiteEntity()
@@ -40,6 +41,8 @@ public class SiteEntity
 
     public string? LocalAuthority { get; }
 
+    public PlanningDetails? PlanningDetails { get; private set; }
+
     public SiteStatus Status { get; }
 
     public async Task ProvideName(SiteName siteName, ISiteNameExist siteNameExist, CancellationToken cancellationToken)
@@ -51,11 +54,16 @@ public class SiteEntity
                 .CheckErrors();
         }
 
-        Name = siteName;
+        Name = _modificationTracker.Change(Name, siteName);
     }
 
     public void ProvideSection106(Section106 section106)
     {
-        Section106 = section106;
+        Section106 = _modificationTracker.Change(Section106, section106);
+    }
+
+    public void ProvidePlanningDetails(PlanningDetails planningDetails)
+    {
+        PlanningDetails = _modificationTracker.Change(PlanningDetails, planningDetails);
     }
 }

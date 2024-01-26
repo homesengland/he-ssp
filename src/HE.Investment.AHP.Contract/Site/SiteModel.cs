@@ -23,4 +23,6 @@ public class SiteModel
     public bool? IsIneligibleDueToCapitalFundingGuide { get; set; }
 
     public bool? IsIneligibleDueToAffordableHousing { get; set; }
+
+    public SitePlanningDetails? PlanningDetails { get; set; }
 }

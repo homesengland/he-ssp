@@ -1,6 +1,9 @@
 using HE.Investment.AHP.Contract.Application;
+using HE.Investment.AHP.Contract.Delivery;
+using HE.Investment.AHP.Contract.Delivery.Queries;
 using HE.Investment.AHP.Contract.HomeTypes.Queries;
 using HE.Investment.AHP.Contract.Scheme.Queries;
+using HE.Investment.AHP.WWW.Models.Delivery.Factories;
 using HE.Investment.AHP.WWW.Models.FinancialDetails.Factories;
 using HE.Investment.AHP.WWW.Models.HomeTypes.Factories;
 using HE.Investment.AHP.WWW.Models.Scheme.Factories;
@@ -15,17 +18,20 @@ public class ApplicationSummaryViewModelFactory : IApplicationSummaryViewModelFa
     private readonly ISchemeSummaryViewModelFactory _schemeSummaryViewModelFactory;
     private readonly IHomeTypeSummaryViewModelFactory _homeTypeSummaryViewModelFactory;
     private readonly IFinancialDetailsSummaryViewModelFactory _financialDetailsSummaryViewModelFactory;
+    private readonly IDeliveryPhaseSummaryViewModelFactory _deliveryPhaseSummaryViewModelFactory;
 
     public ApplicationSummaryViewModelFactory(
         IMediator mediator,
         ISchemeSummaryViewModelFactory schemeSummaryViewModelFactory,
         IHomeTypeSummaryViewModelFactory homeTypeSummaryViewModelFactory,
-        IFinancialDetailsSummaryViewModelFactory financialDetailsSummaryViewModelFactory)
+        IFinancialDetailsSummaryViewModelFactory financialDetailsSummaryViewModelFactory,
+        IDeliveryPhaseSummaryViewModelFactory deliveryPhaseSummaryViewModelFactory)
     {
         _mediator = mediator;
         _schemeSummaryViewModelFactory = schemeSummaryViewModelFactory;
         _homeTypeSummaryViewModelFactory = homeTypeSummaryViewModelFactory;
         _financialDetailsSummaryViewModelFactory = financialDetailsSummaryViewModelFactory;
+        _deliveryPhaseSummaryViewModelFactory = deliveryPhaseSummaryViewModelFactory;
     }
 
     public async Task<ApplicationSummaryViewModel> GetDataAndCreate(AhpApplicationId applicationId, IUrlHelper urlHelper, bool isReadOnly, CancellationToken cancellationToken)
@@ -34,12 +40,14 @@ public class ApplicationSummaryViewModelFactory : IApplicationSummaryViewModelFa
         var schemeSummary = _schemeSummaryViewModelFactory.GetSchemeAndCreateSummary("Scheme information", scheme, urlHelper, isReadOnly);
         var homeTypesSummaries = await GetHomeTypesAndCreateSummary(applicationId, urlHelper, isReadOnly, cancellationToken);
         var financialDetailsSummary = await _financialDetailsSummaryViewModelFactory.GetFinancialDetailsAndCreateSummary(applicationId, urlHelper, isReadOnly, cancellationToken);
+        var deliveryPhasesSummaries = await GetDeliveryPhasesAndCreateSummary(applicationId, urlHelper, isReadOnly, cancellationToken);
 
         var summaries = new List<SectionSummaryViewModel> { schemeSummary };
         summaries.AddRange(homeTypesSummaries);
         summaries.Add(financialDetailsSummary.LandValueSummary);
         summaries.Add(financialDetailsSummary.CostsSummary);
         summaries.Add(financialDetailsSummary.ContributionsSummary);
+        summaries.AddRange(deliveryPhasesSummaries);
 
         return new ApplicationSummaryViewModel(applicationId.Value, scheme.ApplicationName, summaries);
     }
@@ -52,6 +60,21 @@ public class ApplicationSummaryViewModelFactory : IApplicationSummaryViewModelFa
         {
             var fullHomeType = await _mediator.Send(new GetFullHomeTypeQuery(applicationId, homeType.Id), cancellationToken);
             sections.AddRange(_homeTypeSummaryViewModelFactory.CreateSummaryModel(fullHomeType, urlHelper, isReadOnly));
+        }
+
+        return sections;
+    }
+
+    private async Task<IList<SectionSummaryViewModel>> GetDeliveryPhasesAndCreateSummary(AhpApplicationId applicationId, IUrlHelper urlHelper, bool isReadOnly, CancellationToken cancellationToken)
+    {
+        var sections = new List<SectionSummaryViewModel>();
+        var deliveryPhases = await _mediator.Send(new GetDeliveryPhasesQuery(applicationId), cancellationToken);
+        foreach (var deliveryPhaseId in deliveryPhases.DeliveryPhases.Select(x => new DeliveryPhaseId(x.Id)))
+        {
+            var deliveryPhaseDetails = await _mediator.Send(new GetDeliveryPhaseDetailsQuery(applicationId, deliveryPhaseId, true), cancellationToken);
+            var deliveryPhaseHomes = await _mediator.Send(new GetDeliveryPhaseHomesQuery(applicationId, deliveryPhaseId), cancellationToken);
+
+            sections.AddRange(_deliveryPhaseSummaryViewModelFactory.CreateSummary(applicationId, deliveryPhaseDetails, deliveryPhaseHomes, urlHelper, !isReadOnly));
         }
 
         return sections;
