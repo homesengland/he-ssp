@@ -24,7 +24,7 @@ public class GetProgrammeTests : TestBase<Programmes>
         result.Name.Should().Be("Affordable Homes Programme 2021-2026 Continuous Market Engagement");
         result.Description.Should()
             .Be("You can start a new Affordable Homes Programme application here. This will not affect any of your previous applications.");
-        result.CreateApplicationUrl.Should().Be("https://ahp.com/application/name");
+        result.CreateApplicationUrl.Should().Be("https://ahp.com/application/start");
         result.ViewAllApplicationsUrl.Should().Be("https://ahp.com/application");
     }
 

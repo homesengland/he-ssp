@@ -62,7 +62,7 @@ public class Programmes : IProgrammes
                 ProgrammeType.Ahp, new(
                     "Affordable Homes Programme 2021-2026 Continuous Market Engagement",
                     "You can start a new Affordable Homes Programme application here. This will not affect any of your previous applications.",
-                    $"{_programmeUrlConfig.Ahp}/application/name",
+                    $"{_programmeUrlConfig.Ahp}/application/start",
                     $"{_programmeUrlConfig.Ahp}/application",
                     canCreateApplication)
             },
