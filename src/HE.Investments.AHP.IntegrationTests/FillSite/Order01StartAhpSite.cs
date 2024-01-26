@@ -43,10 +43,10 @@ public class Order01StartAhpSite : AhpIntegrationTest
     {
         // given
         var siteStartPage = await GetCurrentPage(SitePagesUrl.SiteStart);
-        siteStartPage.HasGdsLinkButton("continue-button", out var siteNameLink);
+        siteStartPage.HasGdsSubmitButton("continue-button", out var siteNameButton);
 
         // when
-        var siteNamePage = await TestClient.NavigateTo(siteNameLink);
+        var siteNamePage = await TestClient.SubmitButton(siteNameButton);
 
         // then
         siteNamePage
