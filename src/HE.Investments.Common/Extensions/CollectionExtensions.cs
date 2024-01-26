@@ -26,4 +26,12 @@ public static class CollectionExtensions
         copy.AddRange(itemsToAdd);
         return copy;
     }
+
+    public static void AddWhen<T>(this IList<T> source, T itemToAdd, bool shouldAdd)
+    {
+        if (shouldAdd)
+        {
+            source.Add(itemToAdd);
+        }
+    }
 }
