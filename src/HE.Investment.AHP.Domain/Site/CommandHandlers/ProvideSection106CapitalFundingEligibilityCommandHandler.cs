@@ -29,7 +29,7 @@ public class ProvideSection106CapitalFundingEligibilityCommandHandler : SiteBase
                                             currentSection106.OnlyAffordableHousing,
                                             currentSection106.AdditionalAffordableHousing,
                                             request.CapitalFundingEligibility,
-                                            currentSection106.ConfirmationFromLocalAuthority);
+                                            currentSection106.LocalAuthorityConfirmation);
 
                 site.ProvideSection106(newSection106);
                 return Task.FromResult(OperationResult.Success());

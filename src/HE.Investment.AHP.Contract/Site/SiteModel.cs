@@ -16,7 +16,13 @@ public class SiteModel
 
     public bool? Section106CapitalFundingEligibility { get; set; }
 
-    public string? Section106ConfirmationFromLocalAuthority { get; set; }
+    public string? Section106LocalAuthorityConfirmation { get; set; }
+
+    public bool? IsIneligible { get; set; }
+
+    public bool? IsIneligibleDueToCapitalFundingGuide { get; set; }
+
+    public bool? IsIneligibleDueToAffordableHousing { get; set; }
 
     public SitePlanningDetails? PlanningDetails { get; set; }
 }
