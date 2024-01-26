@@ -268,7 +268,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     public async Task<IActionResult> LocalAuthoritySearch(string siteId, LocalAuthorities model, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(
-            new ProvideLocalAuthoritySearchPhraseCommand(model.Phrase),
+            new ProvideLocalAuthoritySearchPhraseCommand(new SiteId(siteId), model.Phrase),
             cancellationToken);
 
         if (result.HasValidationErrors)
