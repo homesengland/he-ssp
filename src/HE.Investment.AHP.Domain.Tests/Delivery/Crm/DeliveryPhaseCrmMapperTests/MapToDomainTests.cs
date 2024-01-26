@@ -204,7 +204,6 @@ public class MapToDomainTests : TestBase<DeliveryPhaseCrmMapper>
     public void ShouldMapAdditionalPaymentRequested(string requiresAdditionalPayments, bool expectedResult)
     {
         // given
-        // MapIsAdditionalPaymentRequested(dto.requiresAdditionalPayments)
         var dto = new DeliveryPhaseDto
         {
             id = "dp-id-1",
