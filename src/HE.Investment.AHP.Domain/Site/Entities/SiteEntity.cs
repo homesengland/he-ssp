@@ -1,8 +1,11 @@
+extern alias Org;
+
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investment.AHP.Domain.Site.ValueObjects;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
+using LocalAuthority = Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
 
 namespace HE.Investment.AHP.Domain.Site.Entities;
 
@@ -14,7 +17,7 @@ public class SiteEntity
         SiteId id,
         SiteName name,
         Section106 section106,
-        string? localAuthority = null,
+        LocalAuthority? localAuthority = null,
         PlanningDetails? planningDetails = null)
     {
         Id = id;
@@ -39,7 +42,7 @@ public class SiteEntity
 
     public Section106 Section106 { get; private set; }
 
-    public string? LocalAuthority { get; }
+    public LocalAuthority? LocalAuthority { get; private set; }
 
     public PlanningDetails? PlanningDetails { get; private set; }
 
@@ -65,5 +68,10 @@ public class SiteEntity
     public void ProvidePlanningDetails(PlanningDetails planningDetails)
     {
         PlanningDetails = _modificationTracker.Change(PlanningDetails, planningDetails);
+    }
+
+    public void ProvideLocalAuthority(LocalAuthority? localAuthority)
+    {
+        LocalAuthority = _modificationTracker.Change(LocalAuthority, localAuthority);
     }
 }

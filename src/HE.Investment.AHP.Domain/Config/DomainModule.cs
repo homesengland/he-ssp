@@ -1,3 +1,5 @@
+extern alias Org;
+
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.Application.Repositories.Interfaces;
@@ -25,6 +27,7 @@ using HE.Investments.Account.Shared.Config;
 using HE.Investments.Common.Utils;
 using MediatR.Pipeline;
 using Microsoft.Extensions.DependencyInjection;
+using Org::HE.Investments.Organisation.LocalAuthorities.Repositories;
 
 namespace HE.Investment.AHP.Domain.Config;
 
@@ -98,6 +101,7 @@ public static class DomainModule
     private static void AddSite(IServiceCollection services)
     {
         services.AddScoped<ISiteRepository, SiteRepository>();
+        services.AddScoped<ILocalAuthorityRepository, LocalAuthorityRepository>();
     }
 
     private static void AddDelivery(IServiceCollection services)

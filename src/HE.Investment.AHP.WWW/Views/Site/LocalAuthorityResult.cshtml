@@ -1,42 +1,36 @@
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Headings
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Lists
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Paragraphs
-@using HE.Investment.AHP.Contract.Site
-@using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
 @using HE.Investment.AHP.WWW.Views.Site
-@using HE.Investments.Common.Extensions
+@using HE.Investments.Common.Contract.Pagination
+@using HE.Investments.Common.WWW.Components.SelectList
+@using HE.Investments.Common.WWW.Models
+@using SelectList = Microsoft.AspNetCore.Mvc.Rendering.SelectList
 @model HE.Investment.AHP.Contract.Site.LocalAuthorities;
 @{
-    ViewData["Title"] = "Organization Select";
+    ViewData["Title"] = SitePageTitles.LocalAuthorityResult;
     var redirect = Context.Request.Query["redirect"];
+
+    var items = new PaginationResult<SelectListItemViewModel>(
+        Model.Page!.Items.Select(i => new SelectListItemViewModel(
+            Url.Action("LocalAuthorityConfirm", "Site", new { siteId = Model.SiteId, localAuthorityId = i.Id, localAuthorityName = i.Name, phrase = Model.Phrase, redirect }) ?? string.Empty,
+            i.Name,
+            null)).ToList(),
+        Model.Page.CurrentPage,
+        Model.Page.ItemsPerPage,
+        Model.Page.TotalItems);
 }
 
 <gds-div-grid-column-two-thirds>
-    <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.LocalAuthoritySearch"/>
+    <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("LocalAuthoritySearch", "Site", new { siteId = Model.SiteId, redirect })"></gds-back-link>
 
-        <gds-h1 size="ControlSize.L" class="govuk-!-margin-bottom-6">
-            @SitePageTitles.LocalAuthorityResult
-        </gds-h1>
+    <gds-h1 size="ControlSize.L" class="govuk-!-margin-bottom-6">
+        @SitePageTitles.LocalAuthorityResult
+    </gds-h1>
 
-        <gds-ul non-bullet-list>
-            @if (Model.Items.IsProvided())
-            {
-                @foreach (var item in Model.Items!)
-                {
-                    <li>
-                        <gds-p><gds-link href="@Url.Action("LocalAuthorityConfirm", "Site", new {siteId = Model.SiteId, localAuthorityId = item.Id, localAuthorityName = item.Name, phrase = Model.Phrase, redirect})" data-testid=@($"local-authority-link-{item.Id}")><b>@item.Name</b></gds-link></gds-p>
-                    </li>
-                }
-            }
-        </gds-ul>
+    <vc:select-list
+        items="@items"
+        paragraph-with-link="@(new ParagraphWithLinkModel("If your local authority is not listed above, your", new LinkModel("LocalAuthorityReset", "Site", new { siteId = Model.SiteId, redirect }), "Growth Manager can add this for you later."))"
+        paging-navigation-url="@Url.Action("LocalAuthorityResult", "Site", new { siteId = Model.SiteId, localAuthorityId = Model.LocalAuthorityId, phrase = Model.Phrase })"/>
 
-        <gds-p class ="govuk-!-margin-bottom-9">
-            If your local authority is not listed above, your <gds-link href="@Url.Action("LocalAuthorityReset", "Site", new { siteId = Model.SiteId, redirect })">Transaction Manager can add this for you later.</gds-link>
-        </gds-p>
-
-        @Html.HiddenFor(c => c.SiteId)
-
-        <HePaginationTagHelper class="govuk-!-margin-top-8 local-authority-pagination" base-url="@Url.Action("LocalAuthorityResult", "Site", new { siteId = Model.SiteId, localAuthorityId = Model.LocalAuthorityId, phrase = Model.Phrase })" page="@Model.Page" items-per-page="@Model.PageSize" total-items="@Model.TotalItems"></HePaginationTagHelper>
+    @Html.HiddenFor(c => c.SiteId)
 </gds-div-grid-column-two-thirds>

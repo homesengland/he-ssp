@@ -1,4 +1,5 @@
 using HE.Investment.AHP.Contract.Site;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Routing;
 using Stateless;
 
@@ -62,8 +63,8 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
 
         _machine.Configure(SiteWorkflowState.Section106CapitalFundingEligibility)
             .PermitIf(Trigger.Continue, SiteWorkflowState.Section106Ineligible, () => _siteModel?.IsIneligible == true)
-            .PermitIf(Trigger.Continue, SiteWorkflowState.Section106LocalAuthorityConfirmation, () => _siteModel?.Section106CapitalFundingEligibility == false && _siteModel?.Section106AdditionalAffordableHousing == true)
-            .PermitIf(Trigger.Continue, SiteWorkflowState.LocalAuthoritySearch, () => _siteModel?.Section106CapitalFundingEligibility == false && _siteModel?.Section106AdditionalAffordableHousing == false)
+            .PermitIf(Trigger.Continue, SiteWorkflowState.Section106LocalAuthorityConfirmation, () => _siteModel is { Section106CapitalFundingEligibility: false, Section106AdditionalAffordableHousing: true })
+            .PermitIf(Trigger.Continue, SiteWorkflowState.LocalAuthoritySearch, () => _siteModel is { Section106CapitalFundingEligibility: false, Section106AdditionalAffordableHousing: false })
             .PermitIf(Trigger.Back, SiteWorkflowState.Section106AdditionalAffordableHousing, () => _siteModel?.Section106OnlyAffordableHousing == false)
             .PermitIf(Trigger.Back, SiteWorkflowState.Section106OnlyAffordableHousing, () => _siteModel?.Section106OnlyAffordableHousing == true)
             .PermitIf(Trigger.Back, SiteWorkflowState.Section106AffordableHousing, () => _siteModel?.Section106OnlyAffordableHousing == null);
@@ -71,5 +72,28 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
         _machine.Configure(SiteWorkflowState.Section106LocalAuthorityConfirmation)
            .Permit(Trigger.Continue, SiteWorkflowState.LocalAuthoritySearch)
            .Permit(Trigger.Back, SiteWorkflowState.Section106CapitalFundingEligibility);
+
+        _machine.Configure(SiteWorkflowState.LocalAuthoritySearch)
+            .Permit(Trigger.Continue, SiteWorkflowState.LocalAuthorityResult)
+            .PermitIf(Trigger.Back, SiteWorkflowState.Section106LocalAuthorityConfirmation, () => _siteModel?.Section106AdditionalAffordableHousing != false)
+            .PermitIf(Trigger.Back, SiteWorkflowState.Section106CapitalFundingEligibility, () => _siteModel?.Section106AdditionalAffordableHousing == false);
+
+        _machine.Configure(SiteWorkflowState.LocalAuthorityResult)
+            .Permit(Trigger.Continue, SiteWorkflowState.LocalAuthorityConfirm)
+            .Permit(Trigger.Back, SiteWorkflowState.LocalAuthoritySearch);
+
+        _machine.Configure(SiteWorkflowState.LocalAuthorityConfirm)
+            .Permit(Trigger.Continue, SiteWorkflowState.PlanningStatus);
+
+        _machine.Configure(SiteWorkflowState.LocalAuthorityReset)
+            .Permit(Trigger.Continue, SiteWorkflowState.PlanningStatus)
+            .Permit(Trigger.Back, SiteWorkflowState.LocalAuthoritySearch);
+
+        _machine.Configure(SiteWorkflowState.PlanningStatus)
+            .Permit(Trigger.Continue, SiteWorkflowState.Index)
+            .PermitIf(Trigger.Back, SiteWorkflowState.LocalAuthorityConfirm, IsLocalAuthority)
+            .PermitIf(Trigger.Back, SiteWorkflowState.LocalAuthoritySearch, () => !IsLocalAuthority());
     }
+
+    private bool IsLocalAuthority() => _siteModel?.LocalAuthority?.Name.IsProvided() ?? false;
 }

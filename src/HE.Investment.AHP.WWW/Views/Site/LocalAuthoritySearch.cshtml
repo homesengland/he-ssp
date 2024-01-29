@@ -8,7 +8,7 @@
 @using HE.Investments.Common.WWW.Components.FormButton
 @model HE.Investment.AHP.Contract.Site.LocalAuthorities;
 @{
-    ViewData["Title"] = SitePageTitles.SiteName;
+    ViewData["Title"] = SitePageTitles.LocalAuthoritySearch;
 }
 
 <gds-div-grid-column-two-thirds>
@@ -16,24 +16,22 @@
 
     <form asp-controller="Site" asp-action="LocalAuthoritySearch" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
         <gds-field-set>
-            <he-error-form-group asp-for="Phrase">
-                <vc:form-header title="@SitePageTitles.LocalAuthoritySearch" additional-css-class="govuk-!-padding-top-8"></vc:form-header>
+            <gds-legend>
+                <gds-h1 class="govuk-!-margin-bottom-2">@SitePageTitles.LocalAuthoritySearch</gds-h1>
+            </gds-legend>
+            <gds-p>
+                Search for your local authority. If your site is located in more than one local authority, search for the local authority where you have planning permission.
+            </gds-p>
 
-                <gds-p class="govuk-!-margin-bottom-0">
-                    Search for your local authority. If your site is located in more than one local authority, search for the local authority where you have planning permission.
-                </gds-p>
+            <vc:text-input
+                title="What is your local authority?"
+                hint="Enter all or part of your local authority name."
+                field-name="@(nameof(Model.Phrase))"
+                value=@Model?.Phrase/>
 
-                <vc:text-input
-                    header="What is your local authority?"
-                    hint="Enter all or part of your local authority name."
-                    field-name="@(nameof(Model.Phrase))"
-                    css-class="govuk-!-width-one-third"
-                    value=@Model?.Phrase/>
-            </he-error-form-group>
             <vc:form-button text="Search"/>
             @Html.HiddenFor(c => c.SiteId)
 
         </gds-field-set>
-
     </form>
 </gds-div-grid-column-two-thirds>

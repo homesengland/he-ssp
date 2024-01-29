@@ -12,7 +12,7 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.LocalAuthoritySearch"/>
+    <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.LocalAuthorityReset"/>
 
     <gds-h1 size="ControlSize.L">
         @SitePageTitles.LocalAuthorityNoMatch
@@ -32,7 +32,7 @@
     <gds-p>
         If your local authority is not listed above, your
         <gds-link href="@Url.Action("LocalAuthorityReset", "Site", new { siteId = Model.SiteId, redirect })" data-testid="assign-empty-local-authority-link">
-            Transaction Manager can add this for you later.
+            Growth Manager can add this for you later.
         </gds-link>
     </gds-p>
 
