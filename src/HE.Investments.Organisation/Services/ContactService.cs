@@ -224,7 +224,6 @@ public class ContactService : IContactService
         var webrole = _webRoleRepository.GetWebroleByPermissionOptionSetValue(service, role, portalTypeFilter) ?? throw new InvalidPluginExecutionException("Given webrole does not exists");
         var organisationEntityReference = new EntityReference("account", organisationGuid);
 
-
         var contactWebroleToCreate = new Entity("invln_contactwebrole")
         {
             Attributes =
