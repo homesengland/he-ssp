@@ -19,7 +19,7 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.LocalAuthoritySearch"/>
+    <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.LocalAuthorityConfirm"/>
     <form asp-controller="Site" asp-action="LocalAuthorityConfirm" asp-route-localAuthorityId=@(Model.ViewModel.LocalAuthorityId) asp-route-redirect=@redirect asp-method="post" novalidate>
         <gds-field-set>
             <he-error-form-group asp-for="Response">

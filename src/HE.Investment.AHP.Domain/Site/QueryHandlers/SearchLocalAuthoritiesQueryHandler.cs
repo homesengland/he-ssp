@@ -2,6 +2,7 @@ extern alias Org;
 
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Queries;
+using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Contract.Validators;
 using MediatR;
 using Org::HE.Investments.Organisation.LocalAuthorities.Repositories;
@@ -20,14 +21,15 @@ public class SearchLocalAuthoritiesQueryHandler : IRequestHandler<SearchLocalAut
     public async Task<OperationResult<LocalAuthorities>> Handle(SearchLocalAuthoritiesQuery request, CancellationToken cancellationToken)
     {
         var (itemsFound, totalItems) =
-            await _localAuthorityRepository.Search(request.Phrase, request.StartPage, request.PageSize, cancellationToken);
+            await _localAuthorityRepository.Search(request.Phrase, request.PaginationRequest.Page, request.PaginationRequest.ItemsPerPage, cancellationToken);
 
         var result = new LocalAuthorities
         {
-            Items = itemsFound.Select(c => new LocalAuthority { Id = c.Id.ToString(), Name = c.Name }).ToList(),
-            TotalItems = totalItems,
-            Page = request.StartPage,
-            PageSize = request.PageSize,
+            Page = new PaginationResult<LocalAuthority>(
+                itemsFound.Select(c => new LocalAuthority { Id = c.Id.ToString(), Name = c.Name }).ToList(),
+                request.PaginationRequest.Page,
+                request.PaginationRequest.ItemsPerPage,
+                totalItems),
             Phrase = request.Phrase,
         };
 
