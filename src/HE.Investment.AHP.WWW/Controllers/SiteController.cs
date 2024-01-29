@@ -328,18 +328,14 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         string localAuthorityName,
         ConfirmModel<LocalAuthorities> model,
         [FromQuery] string redirect,
-        CancellationToken token)
+        CancellationToken cancellationToken)
     {
-        if (model.Response == YesNoType.Yes.ToString())
-        {
-            await _mediator.Send(
-                new ProvideLocalAuthorityCommand(new SiteId(siteId), localAuthorityId, localAuthorityName),
-                token);
-
-            return await Continue(redirect, new { siteId });
-        }
-
-        return RedirectToAction(nameof(LocalAuthoritySearch), new { siteId, redirect });
+        return await this.ExecuteCommand<ConfirmModel<LocalAuthorities>>(
+            _mediator,
+            new ProvideLocalAuthorityCommand(new SiteId(siteId), localAuthorityId, localAuthorityName, model.Response),
+            () => ContinueWithRedirect(new { siteId, redirect }),
+            async () => await Task.FromResult<IActionResult>(View(model)),
+            cancellationToken);
     }
 
     [HttpGet("{siteId}/local-authority/reset")]
@@ -347,7 +343,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     public async Task<IActionResult> LocalAuthorityReset(string siteId, [FromQuery] string redirect, CancellationToken token)
     {
         await _mediator.Send(
-            new ProvideLocalAuthorityCommand(new SiteId(siteId), null, null),
+            new ProvideLocalAuthorityCommand(new SiteId(siteId), null, null, null),
             token);
 
         return await Continue(redirect, new { siteId });

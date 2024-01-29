@@ -83,8 +83,7 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             .Permit(Trigger.Back, SiteWorkflowState.LocalAuthoritySearch);
 
         _machine.Configure(SiteWorkflowState.LocalAuthorityConfirm)
-            .Permit(Trigger.Continue, SiteWorkflowState.PlanningStatus)
-            .Permit(Trigger.Back, SiteWorkflowState.LocalAuthoritySearch);
+            .Permit(Trigger.Continue, SiteWorkflowState.PlanningStatus);
 
         _machine.Configure(SiteWorkflowState.LocalAuthorityReset)
             .Permit(Trigger.Continue, SiteWorkflowState.PlanningStatus)
@@ -96,5 +95,5 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             .PermitIf(Trigger.Back, SiteWorkflowState.LocalAuthoritySearch, () => !IsLocalAuthority());
     }
 
-    private bool IsLocalAuthority() => (_siteModel?.LocalAuthority?.Name.IsProvided() ?? false) && (_siteModel?.LocalAuthority.Id.IsProvided() ?? false);
+    private bool IsLocalAuthority() => _siteModel?.LocalAuthority?.Name.IsProvided() ?? false;
 }

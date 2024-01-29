@@ -26,6 +26,13 @@ public class ProvideLocalAuthorityCommandHandler : SiteBaseCommandHandler, IRequ
         return await Perform(
             site =>
             {
+                if (request.Response == null)
+                {
+                    OperationResult.New()
+                        .AddValidationError(nameof(request.Response), "Select if this is the correct local authority")
+                        .CheckErrors();
+                }
+
                 if (request.LocalAuthorityId.IsNotProvided() || request.LocalAuthorityName.IsNotProvided())
                 {
                     site.ProvideLocalAuthority(null);

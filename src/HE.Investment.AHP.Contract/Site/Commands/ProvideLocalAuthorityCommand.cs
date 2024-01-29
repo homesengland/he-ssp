@@ -6,4 +6,5 @@ namespace HE.Investment.AHP.Contract.Site.Commands;
 public record ProvideLocalAuthorityCommand(
     SiteId SiteId,
     string? LocalAuthorityId,
-    string? LocalAuthorityName) : IRequest<OperationResult>;
+    string? LocalAuthorityName,
+    string? Response) : IRequest<OperationResult>;
