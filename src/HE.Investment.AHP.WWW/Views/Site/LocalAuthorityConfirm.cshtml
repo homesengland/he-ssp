@@ -5,9 +5,7 @@
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Legend
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Paragraphs
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Radios
-@using HE.Investment.AHP.Contract.Site
 @using HE.Investment.AHP.WWW.Models.Common
-@using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
 @using HE.Investment.AHP.WWW.Views.Site
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.TagHelpers
@@ -19,7 +17,8 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.LocalAuthorityConfirm"/>
+    <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("LocalAuthorityResult", "Site", new { siteId = Model.ViewModel.SiteId, phrase = Model.ViewModel.Phrase, redirect })">Back</gds-back-link>
+
     <form asp-controller="Site" asp-action="LocalAuthorityConfirm" asp-route-localAuthorityId=@(Model.ViewModel.LocalAuthorityId) asp-route-redirect=@redirect asp-method="post" novalidate>
         <gds-field-set>
             <he-error-form-group asp-for="Response">

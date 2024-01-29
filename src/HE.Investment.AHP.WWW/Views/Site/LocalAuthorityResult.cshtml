@@ -1,7 +1,5 @@
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Headings
-@using HE.Investment.AHP.Contract.Site
-@using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
 @using HE.Investment.AHP.WWW.Views.Site
 @using HE.Investments.Common.Contract.Pagination
 @using HE.Investments.Common.WWW.Components.SelectList
@@ -23,7 +21,7 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.LocalAuthorityResult"/>
+    <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("LocalAuthoritySearch", "Site", new { siteId = Model.SiteId, redirect })">Back</gds-back-link>
 
     <gds-h1 size="ControlSize.L" class="govuk-!-margin-bottom-6">
         @SitePageTitles.LocalAuthorityResult
