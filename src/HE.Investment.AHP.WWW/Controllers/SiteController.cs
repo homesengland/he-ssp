@@ -330,6 +330,11 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         [FromQuery] string redirect,
         CancellationToken cancellationToken)
     {
+        if (model.Response == YesNoType.No.ToString())
+        {
+            return RedirectToAction(nameof(LocalAuthoritySearch), new { siteId, redirect });
+        }
+
         return await this.ExecuteCommand<ConfirmModel<LocalAuthorities>>(
             _mediator,
             new ProvideLocalAuthorityCommand(new SiteId(siteId), localAuthorityId, localAuthorityName, model.Response),
