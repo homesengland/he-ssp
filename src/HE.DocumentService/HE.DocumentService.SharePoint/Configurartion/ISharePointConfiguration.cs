@@ -15,5 +15,5 @@ public interface ISharePointConfiguration
     /// </summary>
     public int FileMaxSize { get; set; }
 
-    public List<string> AllowedFileExtensions { get; }
+    public List<string> AllowedFileExtensions();
 }

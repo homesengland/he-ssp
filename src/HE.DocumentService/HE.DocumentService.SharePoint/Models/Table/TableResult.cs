@@ -41,14 +41,11 @@ public class TableResult<T>
 
             foreach (var prop in item.GetType().GetProperties())
             {
-                if (prop.PropertyType == typeof(string))
+                if (prop.PropertyType == typeof(string) && prop.GetValue(item) is string val && val.Length > length)
                 {
-                    if (prop.GetValue(item) is string val && val.Length > length)
-                    {
-                        val = val[..length];
-                        var lastIndexOfWhiteSpace = val.LastIndexOf(" ", System.StringComparison.OrdinalIgnoreCase);
-                        prop.SetValue(item, $"{val[..lastIndexOfWhiteSpace]}...");
-                    }
+                    val = val[..length];
+                    var lastIndexOfWhiteSpace = val.LastIndexOf(" ", System.StringComparison.OrdinalIgnoreCase);
+                    prop.SetValue(item, $"{val[..lastIndexOfWhiteSpace]}...");
                 }
             }
         }

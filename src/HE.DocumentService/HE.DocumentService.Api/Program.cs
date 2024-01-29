@@ -13,7 +13,6 @@ builder.Configuration.AddEnvironmentVariables();
 builder.Services.Configure<AppConfig>(builder.Configuration.GetSection("AppConfiguration"));
 
 builder.Services.AddConfigs();
-builder.Services.AddServices();
 builder.Services.AddSharePointServices();
 builder.Services.AddAutoMapper(typeof(SpAutoMapperProfile));
 builder.Services.AddHttpContextAccessor();

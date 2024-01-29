@@ -1,4 +1,4 @@
-﻿using HE.DocumentService.Api.Configuration;
+using HE.DocumentService.Api.Configuration;
 using HE.DocumentService.SharePoint.Configurartion;
 using Microsoft.Extensions.Options;
 
@@ -10,9 +10,5 @@ public static class ServiceCollectionExtension
     {
         services.AddSingleton<IAppConfig>(x => x.GetRequiredService<IOptions<AppConfig>>().Value);
         services.AddSingleton<ISharePointConfiguration>(x => x.GetRequiredService<IAppConfig>().SharePoint);
-    }
-
-    public static void AddServices(this IServiceCollection services)
-    {
     }
 }
