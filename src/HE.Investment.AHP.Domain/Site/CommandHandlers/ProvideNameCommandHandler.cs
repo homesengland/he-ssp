@@ -10,16 +10,16 @@ using Microsoft.Extensions.Logging;
 
 namespace HE.Investment.AHP.Domain.Site.CommandHandlers;
 
-public class ProvideNameCommandHandler : SiteBaseCommandHandler, IRequestHandler<ProvideNameCommand, OperationResult>
+public class ProvideNameCommandHandler : SiteBaseCommandHandler, IRequestHandler<ProvideNameCommand, OperationResult<SiteId>>
 {
     public ProvideNameCommandHandler(ISiteRepository siteRepository, IAccountUserContext accountUserContext, ILogger<SiteBaseCommandHandler> logger)
         : base(siteRepository, accountUserContext, logger)
     {
     }
 
-    public async Task<OperationResult> Handle(ProvideNameCommand request, CancellationToken cancellationToken)
+    public async Task<OperationResult<SiteId>> Handle(ProvideNameCommand request, CancellationToken cancellationToken)
     {
-        return await Perform(
+        return await PerformWithResultReturn(
             async site =>
             {
                 var siteName = new SiteName(request.Name);
