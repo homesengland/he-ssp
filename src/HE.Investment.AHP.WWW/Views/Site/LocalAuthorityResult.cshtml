@@ -11,8 +11,8 @@
     var redirect = Context.Request.Query["redirect"];
 
     var items = new PaginationResult<SelectListItemViewModel>(
-        Model.Page.Items.Select(i => new SelectListItemViewModel(
-            Url.Action("LocalAuthorityConfirm", "Site", new { siteId = Model.SiteId, localAuthorityId = i.Id, localAuthorityName = i.Name, phrase = Model.Phrase, redirect }),
+        Model.Page!.Items.Select(i => new SelectListItemViewModel(
+            Url.Action("LocalAuthorityConfirm", "Site", new { siteId = Model.SiteId, localAuthorityId = i.Id, localAuthorityName = i.Name, phrase = Model.Phrase, redirect }) ?? string.Empty,
             i.Name,
             null)).ToList(),
         Model.Page.CurrentPage,
