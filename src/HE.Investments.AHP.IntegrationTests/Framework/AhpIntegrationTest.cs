@@ -17,6 +17,7 @@ public class AhpIntegrationTest : IntegrationTestBase<Program>
         SetApplicationData();
         SetSiteData();
         fixture.CheckUserLoginData();
+        fixture.SetupAccountHttpMockedService();
     }
 
     public ApplicationData ApplicationData { get; private set; }

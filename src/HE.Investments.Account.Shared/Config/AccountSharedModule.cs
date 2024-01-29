@@ -12,7 +12,7 @@ public static class AccountSharedModule
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(AccountSharedModule).Assembly));
         services.AddScoped<IAccountUserContext, AccountUserContext>();
         services.AddScoped<IAccountAccessContext, AccountAccessContext>();
-        services.AddHttpClient<AccountHttpRepository>().ConfigureHttpClient(SetupHttpClient);
+        services.AddHttpClient<AccountHttpRepository>("AccountRepository").ConfigureHttpClient(SetupHttpClient);
         services.AddScoped<Func<AccountHttpRepository>>(x => x.GetRequiredService<AccountHttpRepository>);
         services.AddScoped<AccountCrmRepository>();
         services.AddScoped<Func<AccountCrmRepository>>(x => x.GetRequiredService<AccountCrmRepository>);
