@@ -26,7 +26,7 @@ public class SaveExemptionJustificationCommandHandler : SaveHomeTypeSegmentComma
         {
             var exemptionJustification = request.ExemptionJustification.IsNotProvided()
                 ? null
-                : new MoreInformation(request.ExemptionJustification!, "The exemption justification");
+                : new MoreInformation(request.ExemptionJustification!, "exemption justification");
             homeType.TenureDetails.ChangeExemptionJustification(exemptionJustification);
         },
     };

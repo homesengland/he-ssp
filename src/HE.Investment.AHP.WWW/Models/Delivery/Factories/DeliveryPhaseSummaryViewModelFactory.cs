@@ -47,7 +47,7 @@ public class DeliveryPhaseSummaryViewModelFactory : IDeliveryPhaseSummaryViewMod
                 new DeliveryPhaseId(deliveryPhase.Id),
                 actionName);
 
-        var items = new List<SectionSummaryItemModel>
+        IList<SectionSummaryItemModel> items = new List<SectionSummaryItemModel>
         {
             new(
                 "Phase name",
@@ -66,14 +66,13 @@ public class DeliveryPhaseSummaryViewModelFactory : IDeliveryPhaseSummaryViewMod
                 ActionUrl: CreateAction(nameof(DeliveryPhaseController.BuildActivityType))),
         };
 
-        if (deliveryPhase.IsReconfiguringExistingNeeded)
-        {
-            items.Add(new(
+        items.AddWhen(
+            new(
                 "Reconfiguring existing residential properties",
                 deliveryPhase.ReconfiguringExisting?.ToString().ToOneElementList(),
                 IsEditable: isEditable,
-                ActionUrl: CreateAction(nameof(DeliveryPhaseController.ReconfiguringExisting))));
-        }
+                ActionUrl: CreateAction(nameof(DeliveryPhaseController.ReconfiguringExisting))),
+            deliveryPhase.IsReconfiguringExistingNeeded);
 
         foreach (var homeTypesToDeliver in deliveryPhaseHomes.HomeTypesToDeliver)
         {
@@ -96,27 +95,23 @@ public class DeliveryPhaseSummaryViewModelFactory : IDeliveryPhaseSummaryViewMod
                 "Grant apportioned to this phase",
                 (CurrencyHelper.DisplayPoundsPences(summary?.GrantApportioned) ?? "-").ToOneElementList(),
                 IsEditable: false),
-            new(
-                "Completion milestone",
-                (CurrencyHelper.DisplayPoundsPences(summary?.CompletionMilestone) ?? "-").ToOneElementList(),
-                IsEditable: false),
         };
-
-        if (deliveryPhase is { IsUnregisteredBody: false, IsOnlyCompletionMilestone: false })
-        {
-            items.Insert(
-                1,
-                new(
-                    "Acquisition milestone",
-                    (CurrencyHelper.DisplayPoundsPences(summary?.AcquisitionMilestone) ?? "-").ToOneElementList(),
-                    IsEditable: false));
-            items.Insert(
-                2,
-                new(
-                    "Start on site milestone",
-                    (CurrencyHelper.DisplayPoundsPences(summary?.StartOnSiteMilestone) ?? "-").ToOneElementList(),
-                    IsEditable: false));
-        }
+        items.AddWhen(
+            new(
+                "Acquisition milestone",
+                (CurrencyHelper.DisplayPoundsPences(summary?.AcquisitionMilestone) ?? "-").ToOneElementList(),
+                IsEditable: false),
+            deliveryPhase is { IsUnregisteredBody: false, IsOnlyCompletionMilestone: false });
+        items.AddWhen(
+            new(
+                "Start on site milestone",
+                (CurrencyHelper.DisplayPoundsPences(summary?.StartOnSiteMilestone) ?? "-").ToOneElementList(),
+                IsEditable: false),
+            deliveryPhase is { IsUnregisteredBody: false, IsOnlyCompletionMilestone: false });
+        items.Add(new(
+            "Completion milestone",
+            (CurrencyHelper.DisplayPoundsPences(summary?.CompletionMilestone) ?? "-").ToOneElementList(),
+            IsEditable: false));
 
         return new SectionSummaryViewModel("Milestone summary", items);
     }
@@ -134,45 +129,56 @@ public class DeliveryPhaseSummaryViewModelFactory : IDeliveryPhaseSummaryViewMod
                 new DeliveryPhaseId(deliveryPhase.Id),
                 actionName);
 
-        var items = deliveryPhase.IsUnregisteredBody || deliveryPhase.IsOnlyCompletionMilestone
-            ? new List<SectionSummaryItemModel>()
-            : new List<SectionSummaryItemModel>
-            {
-                new(
-                    "Acquisition date",
-                    FormatDate(deliveryPhase.AcquisitionDate),
-                    IsEditable: isEditable,
-                    ActionUrl: CreateAction(nameof(DeliveryPhaseController.AcquisitionMilestone))),
-                new(
-                    "Forecast acquisition claim date",
-                    FormatDate(deliveryPhase.AcquisitionPaymentDate),
-                    IsEditable: isEditable,
-                    ActionUrl: CreateAction(nameof(DeliveryPhaseController.AcquisitionMilestone))),
-                new(
-                    "Start on site date",
-                    FormatDate(deliveryPhase.StartOnSiteDate),
-                    IsEditable: isEditable,
-                    ActionUrl: CreateAction(nameof(DeliveryPhaseController.StartOnSiteMilestone))),
-                new(
-                    "Forecast start on site claim date",
-                    FormatDate(deliveryPhase.StartOnSitePaymentDate),
-                    IsEditable: isEditable,
-                    ActionUrl: CreateAction(nameof(DeliveryPhaseController.StartOnSiteMilestone))),
-            };
+        var showOnlyCompletionMilestone = deliveryPhase.IsUnregisteredBody || deliveryPhase.IsOnlyCompletionMilestone;
 
-        items.AddRange(new List<SectionSummaryItemModel>
-        {
+        var items = new List<SectionSummaryItemModel>();
+        items.AddWhen(
+            new(
+                "Acquisition date",
+                FormatDate(deliveryPhase.AcquisitionDate),
+                IsEditable: isEditable,
+                ActionUrl: CreateAction(nameof(DeliveryPhaseController.AcquisitionMilestone))),
+            !showOnlyCompletionMilestone);
+        items.AddWhen(
+            new(
+                "Forecast acquisition claim date",
+                FormatDate(deliveryPhase.AcquisitionPaymentDate),
+                IsEditable: isEditable,
+                ActionUrl: CreateAction(nameof(DeliveryPhaseController.AcquisitionMilestone))),
+            !showOnlyCompletionMilestone);
+        items.AddWhen(
+            new(
+                "Start on site date",
+                FormatDate(deliveryPhase.StartOnSiteDate),
+                IsEditable: isEditable,
+                ActionUrl: CreateAction(nameof(DeliveryPhaseController.StartOnSiteMilestone))),
+            !showOnlyCompletionMilestone);
+        items.AddWhen(
+            new(
+                "Forecast start on site claim date",
+                FormatDate(deliveryPhase.StartOnSitePaymentDate),
+                IsEditable: isEditable,
+                ActionUrl: CreateAction(nameof(DeliveryPhaseController.StartOnSiteMilestone))),
+            !showOnlyCompletionMilestone);
+        items.Add(
             new(
                 "Completion date",
                 FormatDate(deliveryPhase.PracticalCompletionDate),
                 IsEditable: isEditable,
-                ActionUrl: CreateAction(nameof(DeliveryPhaseController.PracticalCompletionMilestone))),
+                ActionUrl: CreateAction(nameof(DeliveryPhaseController.PracticalCompletionMilestone))));
+        items.Add(
             new(
                 "Forecast completion claim date",
                 FormatDate(deliveryPhase.PracticalCompletionPaymentDate),
                 IsEditable: isEditable,
+                ActionUrl: CreateAction(nameof(DeliveryPhaseController.PracticalCompletionMilestone))));
+        items.AddWhen(
+            new(
+                "Request additional payments",
+                deliveryPhase.IsAdditionalPaymentRequested?.ToString().ToOneElementList(),
+                IsEditable: isEditable,
                 ActionUrl: CreateAction(nameof(DeliveryPhaseController.PracticalCompletionMilestone))),
-        });
+            deliveryPhase.IsUnregisteredBody);
 
         return new SectionSummaryViewModel("Milestones", items);
     }

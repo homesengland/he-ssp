@@ -26,7 +26,7 @@ public class SaveTypologyLocationAndDesignCommandHandler : SaveHomeTypeSegmentCo
         {
             var typologyLocationAndDesign = request.TypologyLocationAndDesign.IsNotProvided()
                 ? null
-                : new MoreInformation(request.TypologyLocationAndDesign!, "The typology, location and design of these homes");
+                : new MoreInformation(request.TypologyLocationAndDesign!, "typology, location and design of these homes");
             homeType.SupportedHousingInformation.ChangeTypologyLocationAndDesign(typologyLocationAndDesign);
         },
     };

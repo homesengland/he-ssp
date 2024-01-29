@@ -26,7 +26,7 @@ public class SaveMoveOnArrangementsCommandHandler : SaveHomeTypeSegmentCommandHa
         {
             var moveOnArrangements = request.MoveOnArrangements.IsNotProvided()
                 ? null
-                : new MoreInformation(request.MoveOnArrangements!, "The move in arrangements");
+                : new MoreInformation(request.MoveOnArrangements!, "move in arrangements");
             homeType.SupportedHousingInformation.ChangeMoveOnArrangements(moveOnArrangements);
         },
     };

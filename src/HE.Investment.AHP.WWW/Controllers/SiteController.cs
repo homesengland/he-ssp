@@ -417,8 +417,8 @@ public class SiteController : WorkflowController<SiteWorkflowState>
             async () => await ContinueWithRedirect(new { siteId }),
             async () =>
             {
-                var deliveryPhaseDetails = await _mediator.Send(new GetSiteQuery(siteId.Value), cancellationToken);
-                var model = createViewModelForError(deliveryPhaseDetails);
+                var siteDetails = await _mediator.Send(new GetSiteQuery(siteId.Value), cancellationToken);
+                var model = createViewModelForError(siteDetails);
 
                 return View(viewName, model);
             },

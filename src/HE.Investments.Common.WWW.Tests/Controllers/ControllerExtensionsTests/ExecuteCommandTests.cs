@@ -100,7 +100,7 @@ public class ExecuteCommandTests
     {
         public int One { get; set; }
 
-        public int Two { get; set; }
+        public IDictionary<string, int> Two { get; set; }
     }
 
     private class TestModelClassWithCustomOrder
@@ -109,10 +109,10 @@ public class ExecuteCommandTests
         public int One { get; set; }
 
         [ErrorSummaryOrder(1)]
-        public int Two { get; set; }
+        public IDictionary<string, int> Two { get; set; }
     }
 
-    private record TestModelRecord(int One, int Two);
+    private record TestModelRecord(int One, IDictionary<string, int> Two);
 
-    private record TestModelRecordWithCustomOrder([ErrorSummaryOrder(2)] int One, [ErrorSummaryOrder(1)] int Two);
+    private record TestModelRecordWithCustomOrder([ErrorSummaryOrder(2)] int One, [ErrorSummaryOrder(1)] IDictionary<string, int> Two);
 }
