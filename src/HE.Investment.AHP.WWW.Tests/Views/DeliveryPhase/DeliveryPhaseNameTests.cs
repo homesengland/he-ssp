@@ -46,7 +46,7 @@ public class DeliveryPhaseNameTests : ViewTestBase
         document
             .HasElementWithText("label", "Name your delivery phase")
             .HasElementWithText("div", "Each delivery phase needs a unique name.")
-            .HasGdsSaveAndContinueButton()
+            .HasContinueButton()
             .HasSummaryErrorMessage(nameof(DeliveryPhaseNameViewModel.DeliveryPhaseName), errorMessage, !string.IsNullOrEmpty(errorMessage))
             .HasErrorMessage(nameof(DeliveryPhaseNameViewModel.DeliveryPhaseName), errorMessage, !string.IsNullOrEmpty(errorMessage));
     }
