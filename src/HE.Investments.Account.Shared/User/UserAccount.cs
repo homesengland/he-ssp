@@ -1,4 +1,5 @@
-using HE.Investments.Account.Contract.Users;
+using HE.Investments.Account.Api.Contract;
+using HE.Investments.Account.Api.Contract.User;
 using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;

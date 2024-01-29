@@ -1,6 +1,5 @@
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.Entities;
-using HE.Investments.Common.Contract;
 
 namespace HE.Investments.Account.Shared.Config;
 

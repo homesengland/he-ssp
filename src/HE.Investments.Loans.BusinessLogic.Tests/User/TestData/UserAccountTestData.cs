@@ -1,9 +1,10 @@
-using HE.Investments.Account.Contract.Users;
+using HE.Investments.Account.Api.Contract;
+using HE.Investments.Account.Api.Contract.User;
 using HE.Investments.Account.Shared;
-using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Tests.TestData;
+using UserAccount = HE.Investments.Account.Shared.User.UserAccount;
 
 namespace HE.Investments.Loans.BusinessLogic.Tests.User.TestData;
 

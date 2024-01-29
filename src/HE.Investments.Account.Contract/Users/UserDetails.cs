@@ -1,3 +1,4 @@
+using HE.Investments.Account.Api.Contract.User;
 using HE.Investments.Common.Contract;
 
 namespace HE.Investments.Account.Contract.Users;

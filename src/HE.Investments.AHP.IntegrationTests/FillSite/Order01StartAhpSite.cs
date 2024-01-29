@@ -2,8 +2,6 @@ using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.WWW;
 using HE.Investment.AHP.WWW.Views.Site;
-using HE.Investments.AHP.IntegrationTests.Extensions;
-using HE.Investments.AHP.IntegrationTests.FillSite.Data;
 using HE.Investments.AHP.IntegrationTests.Framework;
 using HE.Investments.AHP.IntegrationTests.Pages;
 using HE.Investments.IntegrationTestsFramework;

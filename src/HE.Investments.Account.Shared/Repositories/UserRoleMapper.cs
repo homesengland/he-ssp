@@ -1,4 +1,4 @@
-using HE.Investments.Account.Contract.Users;
+using HE.Investments.Account.Api.Contract.User;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.Extensions;
 
