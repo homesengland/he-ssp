@@ -126,4 +126,17 @@ public class ContactRepository : IContactRepository
             return result1.Entities.FirstOrDefault();
         }
     }
+
+    public Entity? GetContactWithGivenEmail(IOrganizationServiceAsync2 service, string contactEmail)
+    {
+        var cols = new ColumnSet("emailaddress1");
+        var query = new QueryExpression("contact")
+        {
+            ColumnSet = cols,
+        };
+        query.Criteria.AddCondition("emailaddress1", ConditionOperator.Equal, contactEmail);
+
+        var result1 = service.RetrieveMultiple(query);
+        return result1.Entities.FirstOrDefault();
+    }
 }
