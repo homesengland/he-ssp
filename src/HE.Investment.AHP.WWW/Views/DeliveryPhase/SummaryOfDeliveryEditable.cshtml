@@ -66,7 +66,7 @@
                         <gds-h3 size="ControlSize.S">
                             Grant apportioned to this phase
                         </gds-h3>
-                        <p class="govuk-body govuk-!-margin-bottom-1">@(CurrencyHelper.DisplayPoundsPences(Model.SummaryOfDelivery?.GrantApportioned) ?? "-")</p>
+                        <p class="govuk-body govuk-!-margin-bottom-1">@((Model.SummaryOfDelivery?.GrantApportioned).DisplayPoundsPences() ?? "-")</p>
                     </dt>
                 </div>
             </dl>
@@ -91,7 +91,7 @@
                             <strong>Acquisition</strong>
                         </td>
                         <td class="govuk-table__cell">
-                            @(CurrencyHelper.DisplayPoundsPences(Model.SummaryOfDelivery?.AcquisitionMilestone) ?? "-")
+                            @((Model.SummaryOfDelivery?.AcquisitionMilestone).DisplayPoundsPences() ?? "-")
                         </td>
                         <td class="govuk-table__cell">
                             @(Model.SummaryOfDelivery?.AcquisitionPercentage.ToWholePercentage() ?? "-")
@@ -99,7 +99,7 @@
                         <td class="govuk-table__cell">
                             <gds-link
                                 data-testid="change-acquisition"
-                                href="">
+                                href=@Url.Action("SummaryOfDeliveryAcquisitionTranche", "DeliveryPhase", new { applicationId, deliveryPhaseId = Model.Id, trancheType = SummaryOfDeliveryTrancheType.Acquisition })>
                                 Change
                             </gds-link>
                         </td>
@@ -109,7 +109,7 @@
                             <strong>Start on site</strong>
                         </td>
                         <td class="govuk-table__cell">
-                            @(CurrencyHelper.DisplayPoundsPences(Model.SummaryOfDelivery?.StartOnSiteMilestone) ?? "-")
+                            @((Model.SummaryOfDelivery?.StartOnSiteMilestone).DisplayPoundsPences() ?? "-")
                         </td>
                         <td class="govuk-table__cell">
                             @(Model.SummaryOfDelivery?.StartOnSitePercentage.ToWholePercentage() ?? "-")
@@ -117,7 +117,7 @@
                         <td class="govuk-table__cell">
                             <gds-link
                                 data-testid="change-start-on-site"
-                                href="">
+                                href=@Url.Action("SummaryOfDeliveryAcquisitionTranche", "DeliveryPhase", new { applicationId, deliveryPhaseId = Model.Id, trancheType = SummaryOfDeliveryTrancheType.StartOnSite })>
                                 Change
                             </gds-link>
                         </td>
@@ -130,7 +130,7 @@
                     <strong>Completion</strong>
                 </td>
                 <td class="govuk-table__cell">
-                    @(CurrencyHelper.DisplayPoundsPences(Model.SummaryOfDelivery?.CompletionMilestone) ?? "-")
+                    @((Model.SummaryOfDelivery?.CompletionMilestone).DisplayPoundsPences() ?? "-")
                 </td>
                 <td class="govuk-table__cell">
                     @(Model.SummaryOfDelivery?.CompletionPercentage.ToWholePercentage() ?? "-")
@@ -138,7 +138,7 @@
                 <td class="govuk-table__cell">
                     <gds-link
                         data-testid="change-completion"
-                        href="">
+                        href=@Url.Action("SummaryOfDeliveryAcquisitionTranche", "DeliveryPhase", new { applicationId, deliveryPhaseId = Model.Id, trancheType = SummaryOfDeliveryTrancheType.Completion })>
                         Change
                     </gds-link>
                 </td>
@@ -146,8 +146,17 @@
             </tbody>
         </table>
 
-        <vc:form-button/>
+        <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0">
+            <vc:radio-yes-no
+                field-name="@nameof(Model.SummaryOfDeliveryAmend.UnderstandClaimingMilestones)"
+                header="Claiming the milestones"
+                hint="Do you understand that you must have incurred costs and made payments to at least the level of the grant in these revised milestone amounts before claiming the milestones?"
+                value="@Model.SummaryOfDeliveryAmend?.UnderstandClaimingMilestones"/>
 
-        <vc:return-to-application-link is-editable="false" application-id="@applicationId"/>
+            <vc:form-button/>
+
+            <vc:return-to-application-link application-id="@applicationId"/>
+        </div>
+
     </form>
 </div>

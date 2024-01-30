@@ -1,10 +1,11 @@
-namespace HE.Investment.AHP.Contract.Delivery;
+namespace HE.Investment.AHP.Contract.Delivery.MilestonePayments;
 
-public record SummaryOfDelivery(
+public record SummaryOfDeliveryAmend(
     decimal? GrantApportioned,
     decimal? AcquisitionMilestone,
     decimal? AcquisitionPercentage,
     decimal? StartOnSiteMilestone,
     decimal? StartOnSitePercentage,
     decimal? CompletionMilestone,
-    decimal? CompletionPercentage);
+    decimal? CompletionPercentage,
+    bool? UnderstandClaimingMilestones = null);
