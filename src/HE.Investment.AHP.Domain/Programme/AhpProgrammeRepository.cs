@@ -23,12 +23,7 @@ public class AhpProgrammeRepository : IAhpProgrammeRepository
             throw new InvalidOperationException("Cannot find Programme.");
         }
 
-        if (programme.startOn == null || programme.endOn == null)
-        {
-            throw new InvalidOperationException("Programme must have StartDate and EndDate.");
-        }
-
         //// TODO: Task 88889: [Portal] Use Milestone framework from CRM
-        return new AhpProgramme(DateOnly.FromDateTime(programme.startOn.Value), DateOnly.FromDateTime(programme.endOn.Value), MilestoneFramework.Default);
+        return new AhpProgramme(programme.startOn, programme.endOn, MilestoneFramework.Default);
     }
 }

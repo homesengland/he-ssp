@@ -7,6 +7,9 @@ public class AhpProgrammeBuilder
 {
     public AhpProgramme Build()
     {
-        return new(new DateOnly(2023, 1, 1), new DateOnly(2027, 1, 1), MilestoneFramework.Default);
+        return new(
+            new DateTime(2023, 1, 1, 0, 0, 0, DateTimeKind.Unspecified),
+            new DateTime(2027, 1, 1, 0, 0, 0, DateTimeKind.Unspecified),
+            MilestoneFramework.Default);
     }
 }
