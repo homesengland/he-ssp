@@ -21,7 +21,7 @@ public class SearchLocalAuthoritiesQueryHandler : IRequestHandler<SearchLocalAut
     public async Task<OperationResult<LocalAuthorities>> Handle(SearchLocalAuthoritiesQuery request, CancellationToken cancellationToken)
     {
         var (itemsFound, totalItems) =
-            await _localAuthorityRepository.Search(request.Phrase, request.PaginationRequest.Page, request.PaginationRequest.ItemsPerPage, cancellationToken);
+            await _localAuthorityRepository.Search(request.Phrase, request.PaginationRequest.Page - 1, request.PaginationRequest.ItemsPerPage, cancellationToken);
 
         var result = new LocalAuthorities
         {

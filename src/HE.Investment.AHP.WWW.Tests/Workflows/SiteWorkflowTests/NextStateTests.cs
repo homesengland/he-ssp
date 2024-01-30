@@ -1,6 +1,5 @@
 using FluentAssertions;
 using HE.Investment.AHP.Contract.Site;
-using HE.Investment.AHP.Domain.Site.Entities;
 using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Common.WWW.Routing;
 
@@ -11,6 +10,10 @@ public class NextStateTests
     [Theory]
     [InlineData(SiteWorkflowState.Start, SiteWorkflowState.Name)]
     [InlineData(SiteWorkflowState.Name, SiteWorkflowState.Section106GeneralAgreement)]
+    [InlineData(SiteWorkflowState.LocalAuthoritySearch, SiteWorkflowState.LocalAuthorityResult)]
+    [InlineData(SiteWorkflowState.LocalAuthorityResult, SiteWorkflowState.LocalAuthorityConfirm)]
+    [InlineData(SiteWorkflowState.LocalAuthorityConfirm, SiteWorkflowState.PlanningStatus)]
+    [InlineData(SiteWorkflowState.LocalAuthorityReset, SiteWorkflowState.PlanningStatus)]
     public async Task ShouldReturnNextState_WhenContinueTriggerExecuted(SiteWorkflowState current, SiteWorkflowState expectedNext)
     {
         // given
@@ -18,6 +21,21 @@ public class NextStateTests
 
         // when
         var result = await workflow.NextState(Trigger.Continue);
+
+        // then
+        result.Should().Be(expectedNext);
+    }
+
+    [Theory]
+    [InlineData(SiteWorkflowState.LocalAuthorityResult, SiteWorkflowState.LocalAuthoritySearch)]
+    [InlineData(SiteWorkflowState.LocalAuthorityReset, SiteWorkflowState.LocalAuthoritySearch)]
+    public async Task ShouldReturnNextState_WhenBackTriggerExecuted(SiteWorkflowState current, SiteWorkflowState expectedNext)
+    {
+        // given
+        var workflow = BuildWorkflow(current, null, null, null, null, null, null, false);
+
+        // when
+        var result = await workflow.NextState(Trigger.Back);
 
         // then
         result.Should().Be(expectedNext);
@@ -180,25 +198,93 @@ public class NextStateTests
         result.Should().Be(expectedNext);
     }
 
+    [Fact]
+    public async Task ShouldReturnSection106CapitalFundingEligibility_WhenBackTriggerExecutedWithSection106AdditionalAffordableHousingSetToFalse()
+    {
+        // given
+        var workflow = BuildWorkflow(SiteWorkflowState.LocalAuthoritySearch, null, null, null, false, null, null, false);
+
+        // when
+        var result = await workflow.NextState(Trigger.Back);
+
+        // then
+        result.Should().Be(SiteWorkflowState.Section106CapitalFundingEligibility);
+    }
+
+    [Fact]
+    public async Task ShouldReturnSection106GeneralAgreement_WhenBackTriggerExecutedWithSection106GeneralAgreementSetToFalse()
+    {
+        // given
+        var workflow = BuildWorkflow(SiteWorkflowState.LocalAuthoritySearch, false, null, null, false, null, null, false);
+
+        // when
+        var result = await workflow.NextState(Trigger.Back);
+
+        // then
+        result.Should().Be(SiteWorkflowState.Section106GeneralAgreement);
+    }
+
+    [Fact]
+    public async Task ShouldReturnSection106LocalAuthorityConfirmation_WhenBackTriggerExecutedWithSection106AdditionalAffordableHousingSetToTrue()
+    {
+        // given
+        var workflow = BuildWorkflow(SiteWorkflowState.LocalAuthoritySearch, true, true, false, true, null, null, false);
+
+        // when
+        var result = await workflow.NextState(Trigger.Back);
+
+        // then
+        result.Should().Be(SiteWorkflowState.Section106LocalAuthorityConfirmation);
+    }
+
+    [Fact]
+    public async Task ShouldReturnLocalAuthoritySearch_WhenBackTriggerExecutedAndSiteDoesNotHaveAnyLocalAuthoritySelected()
+    {
+        // given
+        var workflow = BuildWorkflow(SiteWorkflowState.PlanningStatus, true, true, false, true, null, null, false);
+
+        // when
+        var result = await workflow.NextState(Trigger.Back);
+
+        // then
+        result.Should().Be(SiteWorkflowState.LocalAuthoritySearch);
+    }
+
+    [Fact]
+    public async Task ShouldReturnLocalAuthorityConfirm_WhenBackTriggerExecutedAndSiteHasLocalAuthoritySelected()
+    {
+        // given
+        var localAuthority = new LocalAuthority() { Id = "local authority id", Name = "local authority name" };
+        var workflow = BuildWorkflow(SiteWorkflowState.PlanningStatus, true, true, false, true, null, null, false, localAuthority);
+
+        // when
+        var result = await workflow.NextState(Trigger.Back);
+
+        // then
+        result.Should().Be(SiteWorkflowState.LocalAuthorityConfirm);
+    }
+
     private static SiteWorkflow BuildWorkflow(
         SiteWorkflowState currentSiteWorkflowState,
         bool? section106GeneralAgreement,
         bool? section106AffordableHousing,
-        bool? section106onlyAffordableHousing,
+        bool? section106OnlyAffordableHousing,
         bool? section106AdditionalAffordableHousing,
         bool? section106CapitalFundingEligibility,
         string? section106LocalAuthorityConfirmation,
-        bool? isIneligible)
+        bool? isIneligible,
+        LocalAuthority? localAuthority = null)
     {
         var site = new SiteModel()
         {
             Section106GeneralAgreement = section106GeneralAgreement,
             Section106AffordableHousing = section106AffordableHousing,
-            Section106OnlyAffordableHousing = section106onlyAffordableHousing,
+            Section106OnlyAffordableHousing = section106OnlyAffordableHousing,
             Section106AdditionalAffordableHousing = section106AdditionalAffordableHousing,
             Section106CapitalFundingEligibility = section106CapitalFundingEligibility,
             Section106LocalAuthorityConfirmation = section106LocalAuthorityConfirmation,
             IsIneligible = isIneligible,
+            LocalAuthority = localAuthority,
         };
 
         return new SiteWorkflow(currentSiteWorkflowState, site);

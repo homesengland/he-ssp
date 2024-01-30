@@ -1,7 +1,9 @@
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Queries;
+using HE.Investment.AHP.Domain.Common.Mappers;
 using HE.Investment.AHP.Domain.Site.Mappers;
 using HE.Investment.AHP.Domain.Site.Repositories;
+using HE.Investment.AHP.Domain.Site.ValueObjects.Planning;
 using HE.Investments.Account.Shared;
 using MediatR;
 
@@ -37,8 +39,24 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
             IsIneligibleDueToAffordableHousing = site.Section106?.IsIneligibleDueToAffordableHousing(),
             IsIneligibleDueToCapitalFundingGuide = site.Section106?.IsIneligibleDueToCapitalFundingGuide(),
             IsIneligible = site.Section106?.IsIneligible(),
-            PlanningDetails = new SitePlanningDetails(site.PlanningDetails.PlanningStatus),
             LocalAuthority = LocalAuthorityMapper.Map(site.LocalAuthority),
+            PlanningDetails = CreateSitePlanningDetails(site.PlanningDetails),
         };
+    }
+
+    private SitePlanningDetails CreateSitePlanningDetails(PlanningDetails planningDetails)
+    {
+        return new SitePlanningDetails(
+            planningDetails.PlanningStatus,
+            planningDetails.ReferenceNumber?.Value,
+            DateValueObjectMapper.ToContract(planningDetails.DetailedPlanningApprovalDate),
+            planningDetails.RequiredFurtherSteps?.Value,
+            DateValueObjectMapper.ToContract(planningDetails.ApplicationForDetailedPlanningSubmittedDate),
+            DateValueObjectMapper.ToContract(planningDetails.ExpectedPlanningApprovalDate),
+            DateValueObjectMapper.ToContract(planningDetails.OutlinePlanningApprovalDate),
+            planningDetails.IsGrantFundingForAllHomes,
+            DateValueObjectMapper.ToContract(planningDetails.PlanningSubmissionDate),
+            planningDetails.LandRegistryDetails?.IsLandRegistryTitleNumberRegistered,
+            planningDetails.LandRegistryDetails?.TitleNumber?.Value);
     }
 }

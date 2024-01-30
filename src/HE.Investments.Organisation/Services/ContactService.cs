@@ -209,23 +209,27 @@ public class ContactService : IContactService
     public async Task<Guid> CreateNotConnectedContact(IOrganizationServiceAsync2 service, ContactDto contact, Guid organisationGuid, int role, string inviterExternalId, int? portalType = null)
     {
         var inviter = _contactRepository.GetContactViaExternalId(service, inviterExternalId) ?? throw new InvalidPluginExecutionException("Inviter with given external ID does not exists");
-
-        var contactToCreate = MapContactDtoToEntity(contact);
-        var contactGuid = Guid.NewGuid();
-        contactToCreate.Id = contactGuid;
-        contactToCreate["invln_externalid"] = $"_{contactGuid}";
+        var invitedContact = _contactRepository.GetContactWithGivenEmail(service, contact.email);
+        if (invitedContact == null)
+        {
+            var contactToCreate = MapContactDtoToEntity(contact);
+            var contactGuid = Guid.NewGuid();
+            contactToCreate.Id = contactGuid;
+            contactToCreate["invln_externalid"] = $"_{contactGuid}";
+            _ = await service.CreateAsync(contactToCreate);
+            invitedContact = contactToCreate;
+        }
 
         var portalTypeFilter = GeneratePortalTypeFilter(portalType);
         var webrole = _webRoleRepository.GetWebroleByPermissionOptionSetValue(service, role, portalTypeFilter) ?? throw new InvalidPluginExecutionException("Given webrole does not exists");
         var organisationEntityReference = new EntityReference("account", organisationGuid);
 
-        _ = await service.CreateAsync(contactToCreate);
         var contactWebroleToCreate = new Entity("invln_contactwebrole")
         {
             Attributes =
             {
                 ["invln_accountid"] = organisationEntityReference,
-                ["invln_contactid"] = contactToCreate.ToEntityReference(),
+                ["invln_contactid"] = invitedContact.ToEntityReference(),
                 ["invln_webroleid"] = webrole.ToEntityReference(),
             },
         };
@@ -233,12 +237,12 @@ public class ContactService : IContactService
 
         var req = new OrganizationRequest("invln_invitecontacttojoinexistingorganisation")
         {
-            ["invln_invitedcontactid"] = contactToCreate.Id.ToString(),
+            ["invln_invitedcontactid"] = invitedContact.Id.ToString(),
             ["invln_organisationid"] = organisationGuid.ToString(),
             ["invln_invitercontactid"] = inviter.Id.ToString(),
         };
         service.Execute(req);
-        return contactToCreate.Id;
+        return invitedContact.Id;
     }
 
     private async Task ConnectingNotConnectedContactWithExternalId(IOrganizationServiceAsync2 service, Entity contact, string contactExternalId)

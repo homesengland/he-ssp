@@ -58,10 +58,5 @@
     <ProjectReference Include="..\HE.Investments.Common.WWW\HE.Investments.Common.WWW.csproj" />
     <ProjectReference Include="..\HE.Investments.Common\HE.Investments.Common.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\Components\AhpWorkflowBackButton\AhpWorkflowBackButton.cshtml" />
-    <EmbeddedResource Include="Views\Shared\Components\ApplicationTaskListHeader\ApplicationTaskListHeader.cshtml" />
-  </ItemGroup>
-
+  
 </Project>

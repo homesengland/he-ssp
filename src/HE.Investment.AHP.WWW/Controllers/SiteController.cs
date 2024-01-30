@@ -8,6 +8,7 @@ using HE.Investment.AHP.WWW.Extensions;
 using HE.Investment.AHP.WWW.Models.Site;
 using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Account.Shared.Authorization.Attributes;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
@@ -248,7 +249,9 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     [WorkflowState(SiteWorkflowState.Section106LocalAuthorityConfirmation)]
     public async Task<IActionResult> Section106LocalAuthorityConfirmation([FromRoute] string siteId, SiteModel model, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new ProvideSection106LocalAuthorityConfirmationCommand(new SiteId(siteId), model.Section106LocalAuthorityConfirmation), cancellationToken);
+        var result = await _mediator.Send(
+            new ProvideSection106LocalAuthorityConfirmationCommand(new SiteId(siteId), model.Section106LocalAuthorityConfirmation),
+            cancellationToken);
         if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
@@ -283,10 +286,10 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         string siteId,
         string phrase,
         [FromQuery] string redirect,
-        CancellationToken token,
-        [FromQuery] int page = 0)
+        [FromQuery] int? page,
+        CancellationToken token)
     {
-        var result = await _mediator.Send(new SearchLocalAuthoritiesQuery(phrase, new PaginationRequest(page - 1)), token);
+        var result = await _mediator.Send(new SearchLocalAuthoritiesQuery(phrase, new PaginationRequest(page ?? 1)), token);
 
         if (result.ReturnedData.Page?.TotalItems == 0)
         {
@@ -296,7 +299,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         var model = result.ReturnedData;
 
         model.SiteId = siteId;
-        model.Page = new PaginationResult<LocalAuthority>(model.Page!.Items, page, model.Page.ItemsPerPage, model.Page.TotalItems);
+        model.Page = new PaginationResult<LocalAuthority>(model.Page!.Items, page ?? 1, model.Page.ItemsPerPage, model.Page.TotalItems);
 
         return View(model);
     }
@@ -368,7 +371,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     {
         var siteModel = await _mediator.Send(new GetSiteQuery(siteId), cancellationToken);
         ViewBag.SiteName = siteModel.Name!;
-        return View($"PlanningDetails/{nameof(PlanningStatus)}", siteModel.PlanningDetails);
+        return View("PlanningStatus", siteModel.PlanningDetails);
     }
 
     [HttpPost("{siteId}/planning-status")]
@@ -377,7 +380,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     {
         return await ExecuteSiteCommand<SitePlanningDetails>(
             new ProvideSitePlanningStatusCommand(this.GetSiteIdFromRoute(), model.PlanningStatus),
-            $"PlanningDetails/{nameof(PlanningStatus)}",
+            nameof(PlanningStatus),
             savedModel =>
             {
                 ViewBag.SiteName = savedModel.Name!;
@@ -411,6 +414,37 @@ public class SiteController : WorkflowController<SiteWorkflowState>
             {
                 ViewBag.SiteName = savedModel.Name!;
                 return model;
+    
+    [HttpGet("{siteId}/planning-details")]
+    [WorkflowState(SiteWorkflowState.PlanningDetails)]
+    public async Task<IActionResult> PlanningDetails([FromRoute] string siteId, CancellationToken cancellationToken)
+    {
+        var siteModel = await _mediator.Send(new GetSiteQuery(siteId), cancellationToken);
+        ViewBag.SiteName = siteModel.Name!;
+        return View("PlanningDetails", siteModel.PlanningDetails);
+    }
+
+    [HttpPost("{siteId}/planning-details")]
+    [WorkflowState(SiteWorkflowState.PlanningDetails)]
+    public async Task<IActionResult> PlanningDetails(SitePlanningDetails model, CancellationToken cancellationToken)
+    {
+        return await ExecuteSiteCommand<SitePlanningDetails>(
+            new ProvidePlanningDetailsCommand(
+                this.GetSiteIdFromRoute(),
+                model.ReferenceNumber,
+                model.DetailedPlanningApprovalDate ?? DateDetails.Empty(),
+                model.RequiredFurtherSteps,
+                model.ApplicationForDetailedPlanningSubmittedDate ?? DateDetails.Empty(),
+                model.ExpectedPlanningApprovalDate ?? DateDetails.Empty(),
+                model.OutlinePlanningApprovalDate ?? DateDetails.Empty(),
+                model.IsGrantFundingForAllHomes,
+                model.PlanningSubmissionDate ?? DateDetails.Empty(),
+                model.IsLandRegistryTitleNumberRegistered),
+            nameof(PlanningDetails),
+            savedModel =>
+            {
+                ViewBag.SiteName = savedModel.Name!;
+                return model with { PlanningStatus = savedModel.PlanningDetails.PlanningStatus };
             },
             cancellationToken);
     }

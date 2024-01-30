@@ -720,6 +720,7 @@ namespace DataverseModel
 			public const string invln_PowerofAttorney = "invln_powerofattorney";
 			public const string invln_PreviousCRR = "invln_previouscrr";
 			public const string invln_rating = "invln_rating";
+			public const string invln_scheme_ProviderNameNew_account = "invln_scheme_ProviderNameNew_account";
 			public const string invln_SecurityType = "invln_securitytype";
 			public const string invln_SecurityValue = "invln_securityvalue";
 			public const string invln_securityvalue_Base = "invln_securityvalue_base";
@@ -5344,6 +5345,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_loanapplication_account");
 				this.SetRelatedEntities<DataverseModel.invln_Loanapplication>("invln_loanapplication_account", null, value);
 				this.OnPropertyChanged("invln_loanapplication_account");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_scheme_ProviderNameNew_account
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_scheme_ProviderNameNew_account")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_scheme> invln_scheme_ProviderNameNew_account
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_scheme>("invln_scheme_ProviderNameNew_account", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_scheme_ProviderNameNew_account");
+				this.SetRelatedEntities<DataverseModel.invln_scheme>("invln_scheme_ProviderNameNew_account", null, value);
+				this.OnPropertyChanged("invln_scheme_ProviderNameNew_account");
 			}
 		}
 		

@@ -37,6 +37,8 @@ public class BuildActivity : ValueObject, IQuestion
         return new BuildActivity(_tenure, typeOfHomes);
     }
 
+    public bool IsNotAnswered() => !IsAnswered();
+
     public bool IsAnswered()
     {
         return Type.IsProvided() && (

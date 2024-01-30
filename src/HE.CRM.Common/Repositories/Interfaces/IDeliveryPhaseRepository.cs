@@ -10,5 +10,6 @@ namespace HE.CRM.Common.Repositories.Interfaces
     {
         List<invln_DeliveryPhase> GetDeliveryPhasesForNullableUserAndOrganisationRelatedToApplication(string applicationId, string externaluserId, string organisationId, string attributes = null);
         invln_DeliveryPhase GetDeliveryPhaseForNullableUserAndOrganisationByIdAndApplicationId(string deliveryPhaseId, string applicationId, string externaluserId, string organisationId, string attributes = null);
+        bool CheckIfGivenDeliveryPhaseIsAssignedToGivenOrganisationAndApplication(Guid deliveryPhaseId, Guid organisationId, Guid applicationId);
     }
 }

@@ -736,6 +736,18 @@ namespace HE.Investments.Common.CRM.Model
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_compliantnoncompliant
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Compliant = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Noncompliant = 858110001,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum invln_changesourceset
 	{
 		
@@ -773,6 +785,9 @@ namespace HE.Investments.Common.CRM.Model
 		NotIPIPinternallyapprovedpendingKYC = 858110005,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		NotIPKYCinternallyapprovedpendingIPapproved = 858110009,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		NotIPApplicationrejected = 858110006,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
@@ -780,9 +795,6 @@ namespace HE.Investments.Common.CRM.Model
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		NotIPWithdrawn = 858110008,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		NotIPKYCinternallyapprovedpendingIPapproved = 858110009,
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
@@ -1084,6 +1096,18 @@ namespace HE.Investments.Common.CRM.Model
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_consortiumsingleentity
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Consortium = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		SingleEntity = 858110001,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum invln_fundrecoveryrate
 	{
 		
@@ -1164,6 +1188,54 @@ namespace HE.Investments.Common.CRM.Model
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		JLifespan = 858110009,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_contractversion
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		RP = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		LA = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ConsortiumRetained = 858110002,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		URBAgreedTransfer = 858110003,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		URBBespokeURB = 858110004,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		HGDeedofCovenant = 858110005,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DeedofCovenant = 858110006,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ConsDOA = 858110007,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DeedofVariation = 858110008,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DeedofNovation = 858110009,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		SideLetter = 858110010,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		TravellerPitch = 858110011,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		URBGuarantee = 858110012,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DeliveryPartnerDeed = 858110013,
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
@@ -5533,6 +5605,21 @@ namespace HE.Investments.Common.CRM.Model
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum msdyn_flow_approvalstage
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		NotSpecified = 192350000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Basic = 192350001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Complete = 192351000,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum msdyn_occallingoptions
 	{
 		
@@ -6015,6 +6102,21 @@ namespace HE.Investments.Common.CRM.Model
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Externalcomms = 11080,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum msdyn_flow_approvalresponseoptionstype
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		BasicApproveReject = 192350001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		CustomOptions = 192350002,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		NotSpecified = 192350000,
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
@@ -6922,6 +7024,24 @@ namespace HE.Investments.Common.CRM.Model
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum msdyn_flow_approval_requesttype
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Other = 192350000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Basic = 192350001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		eSign = 192350002,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Templates = 192350003,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum mobileofflineenabledentities
 	{
 		
@@ -7380,6 +7500,24 @@ namespace HE.Investments.Common.CRM.Model
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Year = 6,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum applicationbasedaccesslist_cloud
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Prod = 0,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Gallatin = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Arlington = 2,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		PPE = 3,
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
@@ -8070,6 +8208,24 @@ namespace HE.Investments.Common.CRM.Model
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		ICDRouteToQueue = 20,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum msdyn_flow_approval_priority
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Urgent = 192350000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Important = 192350001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Medium = 192350002,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Low = 192350003,
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
@@ -9297,6 +9453,30 @@ namespace HE.Investments.Common.CRM.Model
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Hidden = 100000002,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_fundingtype
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DrawdownRequest = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Recycling = 858110001,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_paymenttype
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		BACS = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		CHAPS = 858110001,
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
@@ -14419,6 +14599,24 @@ namespace HE.Investments.Common.CRM.Model
 				this.OnPropertyChanging("invln_loanapplication_account");
 				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_Loanapplication>("invln_loanapplication_account", null, value);
 				this.OnPropertyChanged("invln_loanapplication_account");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_scheme_ProviderNameNew_account
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_scheme_ProviderNameNew_account")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_scheme> invln_scheme_ProviderNameNew_account
+		{
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_scheme>("invln_scheme_ProviderNameNew_account", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_scheme_ProviderNameNew_account");
+				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_scheme>("invln_scheme_ProviderNameNew_account", null, value);
+				this.OnPropertyChanged("invln_scheme_ProviderNameNew_account");
 			}
 		}
 		
@@ -20259,6 +20457,24 @@ namespace HE.Investments.Common.CRM.Model
 		/// <summary>
 		/// 
 		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_iscompleted")]
+		public System.Nullable<bool> invln_iscompleted
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_iscompleted");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_iscompleted");
+				this.SetAttributeValue("invln_iscompleted", value);
+				this.OnPropertyChanged("invln_iscompleted");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_nbrh")]
 		public System.Nullable<bool> invln_nbrh
 		{
@@ -25619,6 +25835,24 @@ namespace HE.Investments.Common.CRM.Model
 		/// <summary>
 		/// 
 		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_providernamenew")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_ProviderNameNew
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_providernamenew");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_ProviderNameNew");
+				this.SetAttributeValue("invln_providernamenew", value);
+				this.OnPropertyChanged("invln_ProviderNameNew");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_publicland")]
 		public System.Nullable<bool> invln_publicland
 		{
@@ -26513,6 +26747,25 @@ namespace HE.Investments.Common.CRM.Model
 				this.OnPropertyChanging("invln_contact_invln_scheme_lastexternalmodificationby");
 				this.SetRelatedEntity<HE.Investments.Common.CRM.Model.Contact>("invln_contact_invln_scheme_lastexternalmodificationby", null, value);
 				this.OnPropertyChanged("invln_contact_invln_scheme_lastexternalmodificationby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_scheme_ProviderNameNew_account
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_providernamenew")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_scheme_ProviderNameNew_account")]
+		public HE.Investments.Common.CRM.Model.Account invln_scheme_ProviderNameNew_account
+		{
+			get
+			{
+				return this.GetRelatedEntity<HE.Investments.Common.CRM.Model.Account>("invln_scheme_ProviderNameNew_account", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_scheme_ProviderNameNew_account");
+				this.SetRelatedEntity<HE.Investments.Common.CRM.Model.Account>("invln_scheme_ProviderNameNew_account", null, value);
+				this.OnPropertyChanged("invln_scheme_ProviderNameNew_account");
 			}
 		}
 	}

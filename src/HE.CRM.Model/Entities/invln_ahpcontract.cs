@@ -57,12 +57,36 @@ namespace DataverseModel
 			public const string CreatedOnBehalfBy = "createdonbehalfby";
 			public const string CreatedOnBehalfByName = "createdonbehalfbyname";
 			public const string ImportSequenceNumber = "importsequencenumber";
+			public const string invln_Additionaldocuments = "invln_additionaldocuments";
+			public const string invln_AHPApplication = "invln_ahpapplication";
+			public const string invln_AHPApplicationName = "invln_ahpapplicationname";
+			public const string invln_ahpcontract_AHPApplication_invln_scheme = "invln_ahpcontract_AHPApplication_invln_scheme";
 			public const string invln_ahpcontract_Partner_account = "invln_ahpcontract_Partner_account";
+			public const string invln_ahpcontract_Programme_invln_programme = "invln_ahpcontract_Programme_invln_programme";
 			public const string invln_ahpcontractId = "invln_ahpcontractid";
 			public const string Id = "invln_ahpcontractid";
 			public const string invln_ahpcontractname = "invln_ahpcontractname";
+			public const string invln_Completionauthorities = "invln_completionauthorities";
+			public const string invln_CompliantNoncompliant = "invln_compliantnoncompliant";
+			public const string invln_ConsortiumSingleentity = "invln_consortiumsingleentity";
+			public const string invln_ContractReceivedBackatHE = "invln_contractreceivedbackathe";
+			public const string invln_ContractVersion = "invln_contractversion";
+			public const string invln_DateContractPassedComplianceChecks = "invln_datecontractpassedcompliancechecks";
+			public const string invln_DateEngrossmentIssued = "invln_dateengrossmentissued";
+			public const string invln_DateExecuted = "invln_dateexecuted";
+			public const string invln_DateLastChasedbyHE = "invln_datelastchasedbyhe";
+			public const string invln_DateLastHeardfromProvider = "invln_datelastheardfromprovider";
+			public const string invln_Dateoffirstapplication = "invln_dateoffirstapplication";
+			public const string invln_Legalopinions = "invln_legalopinions";
+			public const string invln_NoofCopiesReceived = "invln_noofcopiesreceived";
+			public const string invln_NoofSupportingDocumentsRequired = "invln_noofsupportingdocumentsrequired";
 			public const string invln_Partner = "invln_partner";
 			public const string invln_PartnerName = "invln_partnername";
+			public const string invln_PowerOfAttorneyPreviouslyUsed = "invln_powerofattorneypreviouslyused";
+			public const string invln_Programme = "invln_programme";
+			public const string invln_ProgrammeName = "invln_programmename";
+			public const string invln_ReasonsNoncompliant = "invln_reasonsnoncompliant";
+			public const string invln_TMSNumber = "invln_tmsnumber";
 			public const string lk_invln_ahpcontract_createdby = "lk_invln_ahpcontract_createdby";
 			public const string lk_invln_ahpcontract_createdonbehalfby = "lk_invln_ahpcontract_createdonbehalfby";
 			public const string lk_invln_ahpcontract_modifiedby = "lk_invln_ahpcontract_modifiedby";
@@ -199,6 +223,40 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_additionaldocuments")]
+		public System.Nullable<int> invln_Additionaldocuments
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("invln_additionaldocuments");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_Additionaldocuments");
+				this.SetAttributeValue("invln_additionaldocuments", value);
+				this.OnPropertyChanged("invln_Additionaldocuments");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_ahpapplication")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_AHPApplication
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_ahpapplication");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_AHPApplication");
+				this.SetAttributeValue("invln_ahpapplication", value);
+				this.OnPropertyChanged("invln_AHPApplication");
+			}
+		}
+		
 		/// <summary>
 		/// Unique identifier for entity instances
 		/// </summary>
@@ -259,6 +317,244 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_completionauthorities")]
+		public System.Nullable<int> invln_Completionauthorities
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("invln_completionauthorities");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_Completionauthorities");
+				this.SetAttributeValue("invln_completionauthorities", value);
+				this.OnPropertyChanged("invln_Completionauthorities");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_compliantnoncompliant")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_CompliantNoncompliant
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_compliantnoncompliant");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_CompliantNoncompliant");
+				this.SetAttributeValue("invln_compliantnoncompliant", value);
+				this.OnPropertyChanged("invln_CompliantNoncompliant");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_consortiumsingleentity")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_ConsortiumSingleentity
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_consortiumsingleentity");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_ConsortiumSingleentity");
+				this.SetAttributeValue("invln_consortiumsingleentity", value);
+				this.OnPropertyChanged("invln_ConsortiumSingleentity");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_contractreceivedbackathe")]
+		public System.Nullable<System.DateTime> invln_ContractReceivedBackatHE
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("invln_contractreceivedbackathe");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_ContractReceivedBackatHE");
+				this.SetAttributeValue("invln_contractreceivedbackathe", value);
+				this.OnPropertyChanged("invln_ContractReceivedBackatHE");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_contractversion")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_ContractVersion
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_contractversion");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_ContractVersion");
+				this.SetAttributeValue("invln_contractversion", value);
+				this.OnPropertyChanged("invln_ContractVersion");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_datecontractpassedcompliancechecks")]
+		public System.Nullable<System.DateTime> invln_DateContractPassedComplianceChecks
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("invln_datecontractpassedcompliancechecks");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_DateContractPassedComplianceChecks");
+				this.SetAttributeValue("invln_datecontractpassedcompliancechecks", value);
+				this.OnPropertyChanged("invln_DateContractPassedComplianceChecks");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_dateengrossmentissued")]
+		public System.Nullable<System.DateTime> invln_DateEngrossmentIssued
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("invln_dateengrossmentissued");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_DateEngrossmentIssued");
+				this.SetAttributeValue("invln_dateengrossmentissued", value);
+				this.OnPropertyChanged("invln_DateEngrossmentIssued");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_dateexecuted")]
+		public System.Nullable<System.DateTime> invln_DateExecuted
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("invln_dateexecuted");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_DateExecuted");
+				this.SetAttributeValue("invln_dateexecuted", value);
+				this.OnPropertyChanged("invln_DateExecuted");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_datelastchasedbyhe")]
+		public System.Nullable<System.DateTime> invln_DateLastChasedbyHE
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("invln_datelastchasedbyhe");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_DateLastChasedbyHE");
+				this.SetAttributeValue("invln_datelastchasedbyhe", value);
+				this.OnPropertyChanged("invln_DateLastChasedbyHE");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_datelastheardfromprovider")]
+		public System.Nullable<System.DateTime> invln_DateLastHeardfromProvider
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("invln_datelastheardfromprovider");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_DateLastHeardfromProvider");
+				this.SetAttributeValue("invln_datelastheardfromprovider", value);
+				this.OnPropertyChanged("invln_DateLastHeardfromProvider");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_dateoffirstapplication")]
+		public System.Nullable<System.DateTime> invln_Dateoffirstapplication
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("invln_dateoffirstapplication");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_Dateoffirstapplication");
+				this.SetAttributeValue("invln_dateoffirstapplication", value);
+				this.OnPropertyChanged("invln_Dateoffirstapplication");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_legalopinions")]
+		public System.Nullable<int> invln_Legalopinions
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("invln_legalopinions");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_Legalopinions");
+				this.SetAttributeValue("invln_legalopinions", value);
+				this.OnPropertyChanged("invln_Legalopinions");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_noofcopiesreceived")]
+		public System.Nullable<int> invln_NoofCopiesReceived
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("invln_noofcopiesreceived");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_NoofCopiesReceived");
+				this.SetAttributeValue("invln_noofcopiesreceived", value);
+				this.OnPropertyChanged("invln_NoofCopiesReceived");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_noofsupportingdocumentsrequired")]
+		public System.Nullable<int> invln_NoofSupportingDocumentsRequired
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("invln_noofsupportingdocumentsrequired");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_NoofSupportingDocumentsRequired");
+				this.SetAttributeValue("invln_noofsupportingdocumentsrequired", value);
+				this.OnPropertyChanged("invln_NoofSupportingDocumentsRequired");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_partner")]
 		public Microsoft.Xrm.Sdk.EntityReference invln_Partner
 		{
@@ -273,6 +569,74 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_Partner");
 				this.SetAttributeValue("invln_partner", value);
 				this.OnPropertyChanged("invln_Partner");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_powerofattorneypreviouslyused")]
+		public System.Nullable<bool> invln_PowerOfAttorneyPreviouslyUsed
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_powerofattorneypreviouslyused");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_PowerOfAttorneyPreviouslyUsed");
+				this.SetAttributeValue("invln_powerofattorneypreviouslyused", value);
+				this.OnPropertyChanged("invln_PowerOfAttorneyPreviouslyUsed");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_programme")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_Programme
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_programme");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_Programme");
+				this.SetAttributeValue("invln_programme", value);
+				this.OnPropertyChanged("invln_Programme");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_reasonsnoncompliant")]
+		public string invln_ReasonsNoncompliant
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("invln_reasonsnoncompliant");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_ReasonsNoncompliant");
+				this.SetAttributeValue("invln_reasonsnoncompliant", value);
+				this.OnPropertyChanged("invln_ReasonsNoncompliant");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_tmsnumber")]
+		public string invln_TMSNumber
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("invln_tmsnumber");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_TMSNumber");
+				this.SetAttributeValue("invln_tmsnumber", value);
+				this.OnPropertyChanged("invln_TMSNumber");
 			}
 		}
 		
@@ -502,6 +866,27 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// N:1 invln_ahpcontract_AHPApplication_invln_scheme
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_ahpapplication")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_ahpcontract_AHPApplication_invln_scheme")]
+		public DataverseModel.invln_scheme invln_ahpcontract_AHPApplication_invln_scheme
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.invln_scheme>("invln_ahpcontract_AHPApplication_invln_scheme", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_ahpcontract_AHPApplication_invln_scheme");
+				this.SetRelatedEntity<DataverseModel.invln_scheme>("invln_ahpcontract_AHPApplication_invln_scheme", null, value);
+				this.OnPropertyChanged("invln_ahpcontract_AHPApplication_invln_scheme");
+			}
+		}
+		
+		/// <summary>
 		/// N:1 invln_ahpcontract_Partner_account
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_partner")]
@@ -519,6 +904,27 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_ahpcontract_Partner_account");
 				this.SetRelatedEntity<DataverseModel.Account>("invln_ahpcontract_Partner_account", null, value);
 				this.OnPropertyChanged("invln_ahpcontract_Partner_account");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_ahpcontract_Programme_invln_programme
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_programme")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_ahpcontract_Programme_invln_programme")]
+		public DataverseModel.invln_programme invln_ahpcontract_Programme_invln_programme
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.invln_programme>("invln_ahpcontract_Programme_invln_programme", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_ahpcontract_Programme_invln_programme");
+				this.SetRelatedEntity<DataverseModel.invln_programme>("invln_ahpcontract_Programme_invln_programme", null, value);
+				this.OnPropertyChanged("invln_ahpcontract_Programme_invln_programme");
 			}
 		}
 		
