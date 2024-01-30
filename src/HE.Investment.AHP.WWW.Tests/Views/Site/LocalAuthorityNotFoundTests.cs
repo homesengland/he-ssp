@@ -18,8 +18,8 @@ public class LocalAuthorityNotFoundTests : ViewTestBase
         document
             .HasPageHeader(header: SitePageTitles.LocalAuthorityNoMatch)
             .HasParagraph("We could not find the details you entered in our records.")
-            .HasElementWithText("a", "try again using a different name.")
-            .HasElementWithText("a", "Growth Manager can add this for you later.")
+            .HasLinkWithTestId("local-authority-search-link", out _)
+            .HasLinkWithTestId("assign-empty-local-authority-link", out _)
             .HasGdsBackButton(false);
     }
 }

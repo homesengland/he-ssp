@@ -20,8 +20,8 @@ public class LocalAuthorityConfirmTests : ViewTestBase
         document
             .HasTitle(SitePageTitles.LocalAuthorityConfirm)
             .HasPageHeader(header: SitePageTitles.LocalAuthorityConfirm)
-            .HasElementWithText("b", "Liverpool")
-            .HasElementWithText("h2", "Is this the correct local authority?")
+            .HasBoldText("Liverpool")
+            .HasHeader2("Is this the correct local authority?")
             .HasRadio("Response", new[] { "Yes", "No" })
             .HasGdsBackButton(false);
     }
@@ -42,8 +42,8 @@ public class LocalAuthorityConfirmTests : ViewTestBase
         document
             .HasTitle(SitePageTitles.LocalAuthorityConfirm)
             .HasPageHeader(header: SitePageTitles.LocalAuthorityConfirm)
-            .HasElementWithText("b", "Liverpool")
-            .HasElementWithText("h2", "Is this the correct local authority?")
+            .HasBoldText("Liverpool")
+            .HasHeader2("Is this the correct local authority?")
             .HasRadio("Response", new[] { "Yes", "No" })
             .HasGdsBackButton(false)
             .HasOneValidationMessages(errorMessage);
