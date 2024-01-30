@@ -113,10 +113,10 @@ public class SiteController : WorkflowController<SiteWorkflowState>
             return View("Name", model);
         }
 
-        return await Continue(new { siteId });
+        return await Continue(new { siteId = result.ReturnedData?.Value });
     }
 
-    [HttpGet("{siteId}/section-106-agreement")]
+    [HttpGet("{siteId}/section-106-general-agreement")]
     [WorkflowState(SiteWorkflowState.Section106GeneralAgreement)]
     public async Task<IActionResult> Section106Agreement([FromRoute] string siteId, CancellationToken cancellationToken)
     {
@@ -124,7 +124,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         return View("Section106Agreement", siteModel);
     }
 
-    [HttpPost("{siteId}/section-106-agreement")]
+    [HttpPost("{siteId}/section-106-general-agreement")]
     [WorkflowState(SiteWorkflowState.Section106GeneralAgreement)]
     public async Task<IActionResult> Section106Agreement([FromRoute] string siteId, SiteModel model, CancellationToken cancellationToken)
     {
