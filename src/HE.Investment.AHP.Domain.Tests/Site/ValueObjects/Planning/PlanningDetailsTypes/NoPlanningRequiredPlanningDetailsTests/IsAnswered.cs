@@ -6,7 +6,7 @@ namespace HE.Investment.AHP.Domain.Tests.Site.ValueObjects.Planning.PlanningDeta
 
 public class IsAnswered
 {
-    private readonly LandRegistryDetails? _landRegistryDetails = new(true, new LandRegistryTitleNumber("title"));
+    private readonly LandRegistryDetails? _landRegistryDetails = new(true, new LandRegistryTitleNumber("title"), false);
 
     [Fact]
     public void ShouldIsAnsweredReturnTrue_WhenAllDataProvided()

@@ -54,9 +54,10 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
             DateValueObjectMapper.ToContract(planningDetails.ApplicationForDetailedPlanningSubmittedDate),
             DateValueObjectMapper.ToContract(planningDetails.ExpectedPlanningApprovalDate),
             DateValueObjectMapper.ToContract(planningDetails.OutlinePlanningApprovalDate),
-            planningDetails.IsGrantFundingForAllHomes,
+            planningDetails.IsGrantFundingForAllHomesCoveredByApplication,
             DateValueObjectMapper.ToContract(planningDetails.PlanningSubmissionDate),
             planningDetails.LandRegistryDetails?.IsLandRegistryTitleNumberRegistered,
-            planningDetails.LandRegistryDetails?.TitleNumber?.Value);
+            planningDetails.LandRegistryDetails?.TitleNumber?.Value,
+            planningDetails.LandRegistryDetails?.IsGrantFundingForAllHomesCoveredByTitleNumber);
     }
 }

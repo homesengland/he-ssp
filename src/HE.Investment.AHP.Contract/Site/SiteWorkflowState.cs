@@ -18,4 +18,5 @@ public enum SiteWorkflowState
     LocalAuthorityReset,
     PlanningStatus,
     PlanningDetails,
+    LandRegistry,
 }

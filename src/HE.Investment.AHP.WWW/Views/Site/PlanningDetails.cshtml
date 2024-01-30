@@ -67,8 +67,8 @@
 
         <vc:radio-yes-no
             title="Are you applying for grant funding for all of the homes covered by this planning application?"
-            field-name="@nameof(Model.IsGrantFundingForAllHomes)"
-            value="@Model.IsGrantFundingForAllHomes"
+            field-name="@nameof(Model.IsGrantFundingForAllHomesCoveredByApplication)"
+            value="@Model.IsGrantFundingForAllHomesCoveredByApplication"
             is-displayed="@(Model.PlanningStatus is SitePlanningStatus.DetailedPlanningApprovalGranted or
                               SitePlanningStatus.DetailedPlanningApprovalGrantedWithFurtherSteps or
                               SitePlanningStatus.DetailedPlanningApplicationSubmitted or
