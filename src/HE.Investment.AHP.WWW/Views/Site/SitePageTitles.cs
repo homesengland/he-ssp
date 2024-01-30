@@ -37,4 +37,6 @@ public static class SitePageTitles
     public const string LocalAuthorityConfirm = "Confirm your selection";
 
     public const string PlanningStatus = "What is the planning status of this site?";
+
+    public const string NationalDesignGuide = "Which of the design priorities from the National Design Guide does your site aim to meet?";
 }

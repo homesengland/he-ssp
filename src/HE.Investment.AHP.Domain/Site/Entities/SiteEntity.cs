@@ -20,6 +20,7 @@ public class SiteEntity : DomainEntity, IQuestion
         SiteName name,
         Section106 section106,
         PlanningDetails planningDetails,
+        NationalDesignGuidePriorities nationalDesignGuidePriorities,
         LocalAuthority? localAuthority = null)
     {
         Id = id;
@@ -28,6 +29,7 @@ public class SiteEntity : DomainEntity, IQuestion
         Section106 = section106;
         LocalAuthority = localAuthority;
         PlanningDetails = planningDetails;
+        NationalDesignGuidePriorities = nationalDesignGuidePriorities;
     }
 
     public SiteEntity()
@@ -37,6 +39,7 @@ public class SiteEntity : DomainEntity, IQuestion
         Status = SiteStatus.NotReady;
         Section106 = new Section106();
         PlanningDetails = PlanningDetailsFactory.CreateEmpty();
+        NationalDesignGuidePriorities = new NationalDesignGuidePriorities();
     }
 
     public SiteId Id { get; set; }
@@ -48,6 +51,8 @@ public class SiteEntity : DomainEntity, IQuestion
     public LocalAuthority? LocalAuthority { get; private set; }
 
     public PlanningDetails PlanningDetails { get; private set; }
+
+    public NationalDesignGuidePriorities NationalDesignGuidePriorities { get; private set; }
 
     public SiteStatus Status { get; }
 
@@ -76,6 +81,11 @@ public class SiteEntity : DomainEntity, IQuestion
     public void ProvideLocalAuthority(LocalAuthority? localAuthority)
     {
         LocalAuthority = _modificationTracker.Change(LocalAuthority, localAuthority);
+    }
+
+    public void ProvideNationalDesignGuidePriorities(NationalDesignGuidePriorities nationalDesignGuidePriorities)
+    {
+        NationalDesignGuidePriorities = _modificationTracker.Change(NationalDesignGuidePriorities, nationalDesignGuidePriorities);
     }
 
     public bool IsAnswered()

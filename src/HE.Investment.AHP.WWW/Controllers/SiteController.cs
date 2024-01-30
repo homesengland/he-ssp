@@ -5,6 +5,7 @@ using HE.Investment.AHP.Contract.Site.Commands;
 using HE.Investment.AHP.Contract.Site.Commands.PlanningDetails;
 using HE.Investment.AHP.Contract.Site.Queries;
 using HE.Investment.AHP.WWW.Extensions;
+using HE.Investment.AHP.WWW.Models.Site;
 using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Contract.Pagination;
@@ -377,6 +378,35 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         return await ExecuteSiteCommand<SitePlanningDetails>(
             new ProvideSitePlanningStatusCommand(this.GetSiteIdFromRoute(), model.PlanningStatus),
             $"PlanningDetails/{nameof(PlanningStatus)}",
+            savedModel =>
+            {
+                ViewBag.SiteName = savedModel.Name!;
+                return model;
+            },
+            cancellationToken);
+    }
+
+    [HttpGet("{siteId}/national-design-guide")]
+    [WorkflowState(SiteWorkflowState.NationalDesignGuide)]
+    public async Task<IActionResult> NationalDesignGuide([FromRoute] string siteId, CancellationToken cancellationToken)
+    {
+        var siteModel = await _mediator.Send(new GetSiteQuery(siteId), cancellationToken);
+        ViewBag.SiteName = siteModel.Name!;
+        var designGuideModel = new NationalDesignGuidePrioritiesModel()
+        {
+            SiteName = siteModel.Name,
+            DesignPriorities = siteModel.NationalDesignGuidePriorities,
+        };
+        return View("NationalDesignGuide", designGuideModel);
+    }
+
+    [HttpPost("{siteId}/national-design-guide")]
+    [WorkflowState(SiteWorkflowState.NationalDesignGuide)]
+    public async Task<IActionResult> NationalDesignGuide(NationalDesignGuidePrioritiesModel model, CancellationToken cancellationToken)
+    {
+        return await ExecuteSiteCommand(
+            new ProvideNationaDesignGuidePrioritiesCommand(this.GetSiteIdFromRoute(), model.DesignPriorities.Concat(model.OtherPriorities).ToList()),
+            $"NationalDesignGuide",
             savedModel =>
             {
                 ViewBag.SiteName = savedModel.Name!;

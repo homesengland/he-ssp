@@ -1,3 +1,5 @@
+using HE.Investment.AHP.Contract.Site.Enums;
+
 namespace HE.Investment.AHP.Contract.Site;
 
 public class SiteModel
@@ -27,4 +29,6 @@ public class SiteModel
     public SitePlanningDetails PlanningDetails { get; set; }
 
     public LocalAuthority? LocalAuthority { get; set; }
+
+    public IList<NationalDesignGuidePriority> NationalDesignGuidePriorities { get; set; }
 }
