@@ -24,7 +24,7 @@ public class SiteModel
 
     public bool? IsIneligibleDueToAffordableHousing { get; set; }
 
-    public SitePlanningDetails? PlanningDetails { get; set; }
+    public SitePlanningDetails PlanningDetails { get; set; }
 
     public LocalAuthority? LocalAuthority { get; set; }
 }
