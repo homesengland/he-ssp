@@ -126,6 +126,7 @@ public class DeliveryPhaseEntityBuilder
             new DeliveryPhaseName("First Phase"),
             _organisationBasicInfo,
             _status,
+            MilestoneTranches.NotProvided,
             _typeOfHomes,
             _buildActivity,
             _reconfigureExisting,

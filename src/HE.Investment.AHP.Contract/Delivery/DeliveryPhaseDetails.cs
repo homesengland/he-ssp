@@ -1,4 +1,5 @@
 using HE.Investment.AHP.Contract.Delivery.Enums;
+using HE.Investment.AHP.Contract.Delivery.MilestonePayments;
 using HE.Investments.Common.Contract;
 
 namespace HE.Investment.AHP.Contract.Delivery;
@@ -15,6 +16,7 @@ public record DeliveryPhaseDetails(
     bool? ReconfiguringExisting = null,
     int? NumberOfHomes = null,
     SummaryOfDelivery? SummaryOfDelivery = null,
+    SummaryOfDeliveryAmend? SummaryOfDeliveryAmend = null,
     bool IsUnregisteredBody = false,
     bool IsOnlyCompletionMilestone = false,
     DateDetails? AcquisitionDate = null,

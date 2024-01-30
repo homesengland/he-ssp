@@ -3,6 +3,7 @@ using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Commands;
+using HE.Investment.AHP.Contract.Delivery.MilestonePayments.Commands;
 using HE.Investment.AHP.Contract.Delivery.Queries;
 using HE.Investment.AHP.WWW.Extensions;
 using HE.Investment.AHP.WWW.Models.Delivery;
@@ -75,7 +76,8 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     public async Task<IActionResult> Create([FromRoute] string applicationId, DeliveryPhaseNameViewModel model, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(
-            new CreateDeliveryPhaseCommand(AhpApplicationId.From(applicationId), model.DeliveryPhaseName), cancellationToken);
+            new CreateDeliveryPhaseCommand(AhpApplicationId.From(applicationId), model.DeliveryPhaseName),
+            cancellationToken);
 
         if (result.HasValidationErrors)
         {
@@ -91,7 +93,8 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     public async Task<IActionResult> Name([FromRoute] string applicationId, [FromRoute] string deliveryPhaseId, CancellationToken cancellationToken)
     {
         var deliveryPhase = await _mediator.Send(
-                new GetDeliveryPhaseDetailsQuery(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId)), cancellationToken);
+            new GetDeliveryPhaseDetailsQuery(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId)),
+            cancellationToken);
         var model = new DeliveryPhaseNameViewModel(applicationId, deliveryPhaseId, deliveryPhase.ApplicationName, deliveryPhase.Name, nameof(this.Name));
         return View("Name", model);
     }
@@ -122,14 +125,16 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     {
         var deliveryPhaseDetails =
             await _mediator.Send(
-                new GetDeliveryPhaseDetailsQuery(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId)), cancellationToken);
+                new GetDeliveryPhaseDetailsQuery(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId)),
+                cancellationToken);
 
         return View("Details", deliveryPhaseDetails);
     }
 
     [HttpPost("{deliveryPhaseId}/details")]
     [WorkflowState(DeliveryPhaseWorkflowState.TypeOfHomes)]
-    public async Task<IActionResult> Details([FromRoute] string applicationId, string deliveryPhaseId, DeliveryPhaseDetails deliveryPhaseDetails, CancellationToken cancellationToken)
+    public async Task<IActionResult> Details([FromRoute] string applicationId, string deliveryPhaseId, DeliveryPhaseDetails deliveryPhaseDetails,
+        CancellationToken cancellationToken)
     {
         return await ExecuteCommand(
             new ProvideTypeOfHomesCommand(
@@ -147,7 +152,8 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     {
         var deliveryPhaseDetails =
             await _mediator.Send(
-                new GetDeliveryPhaseDetailsQuery(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId)), cancellationToken);
+                new GetDeliveryPhaseDetailsQuery(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId)),
+                cancellationToken);
 
         return View("BuildActivityType", deliveryPhaseDetails);
     }
@@ -179,11 +185,14 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
 
     [HttpPost("{deliveryPhaseId}/add-homes")]
     [WorkflowState(DeliveryPhaseWorkflowState.AddHomes)]
-    public async Task<IActionResult> AddHomes([FromRoute] string applicationId, string deliveryPhaseId, AddHomesModel model, CancellationToken cancellationToken)
+    public async Task<IActionResult> AddHomes([FromRoute] string applicationId, string deliveryPhaseId, AddHomesModel model,
+        CancellationToken cancellationToken)
     {
         return await this.ExecuteCommand<AddHomesModel>(
             _mediator,
-            new ProvideDeliveryPhaseHomesCommand(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId), model.HomesToDeliver ?? new Dictionary<string, string?>()),
+            new ProvideDeliveryPhaseHomesCommand(AhpApplicationId.From(applicationId),
+                new DeliveryPhaseId(deliveryPhaseId),
+                model.HomesToDeliver ?? new Dictionary<string, string?>()),
             () => ContinueWithAllRedirects(new { applicationId, deliveryPhaseId }),
             async () => View("AddHomes", await new AddHomesModelFactory(_mediator).Create(applicationId, deliveryPhaseId, model, cancellationToken)),
             cancellationToken);
@@ -210,7 +219,10 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         CancellationToken cancellationToken)
     {
         return await ExecuteCommand(
-            new ProvideReconfiguringExistingCommand(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId), deliveryPhaseDetails.ReconfiguringExisting),
+            new ProvideReconfiguringExistingCommand(
+                AhpApplicationId.From(applicationId),
+                new DeliveryPhaseId(deliveryPhaseId),
+                deliveryPhaseDetails.ReconfiguringExisting),
             nameof(ReconfiguringExisting),
             savedModel => savedModel with { ReconfiguringExisting = deliveryPhaseDetails.ReconfiguringExisting },
             cancellationToken);
@@ -222,7 +234,8 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     {
         var deliveryPhaseDetails =
             await _deliveryPhaseProvider.Get(
-                new GetDeliveryPhaseDetailsQuery(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId), true), cancellationToken);
+                new GetDeliveryPhaseDetailsQuery(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId), true),
+                cancellationToken);
 
         return View("SummaryOfDelivery", deliveryPhaseDetails);
     }
@@ -240,15 +253,81 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     {
         var deliveryPhaseDetails =
             await _deliveryPhaseProvider.Get(
-                new GetDeliveryPhaseDetailsQuery(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId), true), cancellationToken);
+                new GetDeliveryPhaseDetailsQuery(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId), true),
+                cancellationToken);
 
         return View("SummaryOfDeliveryEditable", deliveryPhaseDetails);
+    }
+
+    [HttpGet("{deliveryPhaseId}/summary-of-delivery/tranche/{trancheType}")]
+    [WorkflowState(DeliveryPhaseWorkflowState.SummaryOfDeliveryTranche)]
+    public async Task<IActionResult> SummaryOfDeliveryAcquisitionTranche(
+        [FromRoute] string applicationId,
+        [FromRoute] string deliveryPhaseId,
+        [FromRoute] SummaryOfDeliveryTrancheType trancheType,
+        CancellationToken cancellationToken)
+    {
+        var deliveryPhaseDetails =
+            await _deliveryPhaseProvider.Get(
+                new GetDeliveryPhaseDetailsQuery(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId), true),
+                cancellationToken);
+
+        var tranche = trancheType switch
+        {
+            SummaryOfDeliveryTrancheType.Acquisition => deliveryPhaseDetails.SummaryOfDeliveryAmend?.AcquisitionMilestone,
+            SummaryOfDeliveryTrancheType.Completion => deliveryPhaseDetails.SummaryOfDeliveryAmend?.CompletionMilestone,
+            SummaryOfDeliveryTrancheType.StartOnSite => deliveryPhaseDetails.SummaryOfDeliveryAmend?.StartOnSiteMilestone,
+            _ => throw new NotSupportedException(nameof(trancheType)),
+        };
+
+        return View(
+            "SummaryOfDeliveryTranche",
+            new SummaryOfDeliveryTrancheModel(
+                trancheType,
+                tranche,
+                deliveryPhaseDetails.Id,
+                deliveryPhaseDetails.Name,
+                deliveryPhaseDetails.ApplicationName));
+    }
+
+    [HttpPost("{deliveryPhaseId}/summary-of-delivery/tranche")]
+    [WorkflowState(DeliveryPhaseWorkflowState.SummaryOfDeliveryTranche)]
+    public async Task<IActionResult> SummaryOfDeliveryTranche(
+        [FromRoute] string applicationId,
+        string deliveryPhaseId,
+        SummaryOfDeliveryTrancheModel summaryOfDeliveryAmend,
+        CancellationToken cancellationToken)
+    {
+        var ahpApplicationId = AhpApplicationId.From(applicationId);
+        var deliveryId = new DeliveryPhaseId(deliveryPhaseId);
+
+        IRequest<OperationResult> command = summaryOfDeliveryAmend.TrancheType switch
+        {
+            SummaryOfDeliveryTrancheType.Acquisition => new ProvideAcquisitionTrancheCommand(
+                ahpApplicationId,
+                deliveryId,
+                summaryOfDeliveryAmend.Value),
+            SummaryOfDeliveryTrancheType.Completion => new ProvideCompletionTrancheCommand(
+                ahpApplicationId,
+                deliveryId,
+                summaryOfDeliveryAmend.Value),
+            SummaryOfDeliveryTrancheType.StartOnSite => new ProvideStartOnSiteTrancheCommand(
+                ahpApplicationId,
+                deliveryId,
+                summaryOfDeliveryAmend.Value),
+            _ => throw new NotSupportedException(nameof(summaryOfDeliveryAmend.TrancheType)),
+        };
+
+        return await ExecuteCommand(command, nameof(SummaryOfDeliveryTranche), _ => summaryOfDeliveryAmend, cancellationToken);
     }
 
     [HttpGet("{deliveryPhaseId}/remove")]
     public async Task<IActionResult> Remove([FromRoute] string applicationId, string deliveryPhaseId, CancellationToken cancellationToken)
     {
-        var deliveryPhaseDetails = await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId)), cancellationToken);
+        var deliveryPhaseDetails =
+            await _deliveryPhaseProvider.Get(
+                new GetDeliveryPhaseDetailsQuery(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId)),
+                cancellationToken);
 
         return View("RemoveDeliveryPhaseConfirmation", new RemoveDeliveryPhaseModel(deliveryPhaseDetails.ApplicationName, deliveryPhaseDetails.Name));
     }
@@ -278,7 +357,8 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     {
         var deliveryPhaseDetails =
             await _deliveryPhaseProvider.Get(
-                new GetDeliveryPhaseDetailsQuery(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId)), cancellationToken);
+                new GetDeliveryPhaseDetailsQuery(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId)),
+                cancellationToken);
 
         return View(CreateMilestoneViewModel(
             deliveryPhaseDetails.ApplicationName,
@@ -308,7 +388,8 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     {
         var deliveryPhaseDetails =
             await _deliveryPhaseProvider.Get(
-                new GetDeliveryPhaseDetailsQuery(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId)), cancellationToken);
+                new GetDeliveryPhaseDetailsQuery(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId)),
+                cancellationToken);
 
         return View(CreateMilestoneViewModel(
             deliveryPhaseDetails.ApplicationName,
@@ -338,7 +419,8 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     {
         var deliveryPhaseDetails =
             await _deliveryPhaseProvider.Get(
-                new GetDeliveryPhaseDetailsQuery(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId)), cancellationToken);
+                new GetDeliveryPhaseDetailsQuery(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId)),
+                cancellationToken);
 
         return View(CreateMilestoneViewModel(
             deliveryPhaseDetails.ApplicationName,
@@ -368,7 +450,8 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     {
         var deliveryPhaseDetails =
             await _deliveryPhaseProvider.Get(
-                new GetDeliveryPhaseDetailsQuery(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId)), cancellationToken);
+                new GetDeliveryPhaseDetailsQuery(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId)),
+                cancellationToken);
 
         return View(new DeliveryRequestAdditionalPaymentViewModel(
             applicationId,
@@ -408,7 +491,8 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
 
     [WorkflowState(DeliveryPhaseWorkflowState.CheckAnswers)]
     [HttpPost("{deliveryPhaseId}/check-answers")]
-    public async Task<IActionResult> Complete([FromRoute] string applicationId, string deliveryPhaseId, [FromForm] IsSectionCompleted? isCompleted, CancellationToken cancellationToken)
+    public async Task<IActionResult> Complete([FromRoute] string applicationId, string deliveryPhaseId, [FromForm] IsSectionCompleted? isCompleted,
+        CancellationToken cancellationToken)
     {
         if (isCompleted == null)
         {
@@ -416,8 +500,10 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         }
 
         var result = isCompleted == IsSectionCompleted.Yes
-            ? await _mediator.Send(new CompleteDeliveryPhaseCommand(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId)), cancellationToken)
-            : await _mediator.Send(new UnCompleteDeliveryPhaseCommand(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId)), cancellationToken);
+            ? await _mediator.Send(new CompleteDeliveryPhaseCommand(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId)),
+                cancellationToken)
+            : await _mediator.Send(new UnCompleteDeliveryPhaseCommand(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId)),
+                cancellationToken);
 
         if (result.HasValidationErrors)
         {
@@ -430,7 +516,8 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     protected override async Task<IStateRouting<DeliveryPhaseWorkflowState>> Routing(DeliveryPhaseWorkflowState currentState, object? routeData = null)
     {
         var deliveryPhase = currentState != DeliveryPhaseWorkflowState.Create
-            ? await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(this.GetApplicationIdFromRoute(), this.GetDeliveryPhaseIdFromRoute()), CancellationToken.None)
+            ? await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(this.GetApplicationIdFromRoute(), this.GetDeliveryPhaseIdFromRoute()),
+                CancellationToken.None)
             : new DeliveryPhaseDetails(string.Empty, string.Empty, string.Empty, SectionStatus.NotStarted);
 
         var isReadOnly = !await _accountAccessContext.CanEditApplication();
@@ -468,10 +555,10 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     }
 
     private MilestoneViewModel CreateMilestoneViewModel(
-            string applicationName,
-            string? deliveryPhaseName,
-            DateDetails? milestoneDate,
-            DateDetails? milestonePaymentDate)
+        string applicationName,
+        string? deliveryPhaseName,
+        DateDetails? milestoneDate,
+        DateDetails? milestonePaymentDate)
     {
         return new MilestoneViewModel(
             this.GetApplicationIdFromRoute().Value,
@@ -513,7 +600,8 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
             async () => await ContinueWithAllRedirects(new { applicationId = applicationId.Value, deliveryPhaseId }),
             async () =>
             {
-                var deliveryPhaseDetails = await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(applicationId, deliveryPhaseId), cancellationToken);
+                var deliveryPhaseDetails =
+                    await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(applicationId, deliveryPhaseId), cancellationToken);
                 var model = createViewModelForError(deliveryPhaseDetails);
 
                 return View(viewName, model);

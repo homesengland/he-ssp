@@ -11,6 +11,7 @@ public enum DeliveryPhaseWorkflowState
     AddHomes,
     SummaryOfDelivery,
     SummaryOfDeliveryEditable,
+    SummaryOfDeliveryTranche,
     AcquisitionMilestone,
     StartOnSiteMilestone,
     PracticalCompletionMilestone,

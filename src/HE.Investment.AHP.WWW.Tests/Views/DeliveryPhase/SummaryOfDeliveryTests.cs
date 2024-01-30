@@ -1,5 +1,6 @@
 using FluentAssertions;
 using HE.Investment.AHP.Contract.Delivery;
+using HE.Investment.AHP.Contract.Delivery.MilestonePayments;
 using HE.Investment.AHP.WWW.Tests.Workflows.DeliveryPhaseWorkflowTests;
 using HE.Investment.AHP.WWW.Views.Delivery.Const;
 using Microsoft.AspNetCore.Routing;

@@ -6,6 +6,7 @@ using HE.Investment.AHP.Contract.Delivery.Events;
 using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.Application.Repositories.Interfaces;
 using HE.Investment.AHP.Domain.Delivery.Entities;
+using HE.Investment.AHP.Domain.Delivery.MilestonePayments;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
@@ -126,6 +127,7 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
                     new DeliveryPhaseName("Phase 1"),
                     userAccount.SelectedOrganisation(),
                     SectionStatus.InProgress,
+                    MilestoneTranches.NotProvided,
                     null,
                     firstBuildActivity,
                     null,
@@ -138,6 +140,7 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
                     new DeliveryPhaseName("Almost completed rehab"),
                     userAccount.SelectedOrganisation(),
                     SectionStatus.InProgress,
+                    MilestoneTranches.NotProvided,
                     TypeOfHomes.Rehab,
                     secondBuildActivity,
                     true,

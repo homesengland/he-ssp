@@ -14,6 +14,12 @@ public static class DeliveryPageTitles
 
     public const string SummaryOfDelivery = "Summary of delivery";
 
+    public const string AcquisitionTranche = "Acquisition tranche";
+
+    public const string StartOnSiteTranche = "Start on site tranche";
+
+    public const string CompletionTranche = "Completion tranche";
+
     public const string AddHomes = "Add homes to this delivery phase";
 
     public const string List = "Delivery";
@@ -31,4 +37,5 @@ public static class DeliveryPageTitles
     public const string CheckAnswers = "Check your answers before adding a delivery phase";
 
     public const string Remove = "Are you sure you want to remove this delivery phase?";
+
 }

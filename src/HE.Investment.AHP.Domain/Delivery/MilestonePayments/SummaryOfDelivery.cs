@@ -1,7 +1,7 @@
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Domain;
 
-namespace HE.Investment.AHP.Domain.Delivery.ValueObjects;
+namespace HE.Investment.AHP.Domain.Delivery.MilestonePayments;
 
 public class SummaryOfDelivery : ValueObject
 {

@@ -35,7 +35,7 @@ public static class CurrencyHelper
         return Format(value, CurrencyDisplaySettings.WithoutPences);
     }
 
-    public static string? DisplayPoundsPences(decimal? value)
+    public static string? DisplayPoundsPences(this decimal? value)
     {
         return Format(value, CurrencyDisplaySettings.None);
     }

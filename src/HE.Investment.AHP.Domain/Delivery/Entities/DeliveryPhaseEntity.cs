@@ -2,6 +2,7 @@ using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Domain.Common;
+using HE.Investment.AHP.Domain.Delivery.MilestonePayments;
 using HE.Investment.AHP.Domain.Delivery.Policies;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investments.Account.Shared;
@@ -10,7 +11,7 @@ using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
-using SummaryOfDelivery = HE.Investment.AHP.Domain.Delivery.ValueObjects.SummaryOfDelivery;
+using SummaryOfDelivery = HE.Investment.AHP.Domain.Delivery.MilestonePayments.SummaryOfDelivery;
 
 namespace HE.Investment.AHP.Domain.Delivery.Entities;
 
@@ -25,6 +26,7 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
         DeliveryPhaseName name,
         OrganisationBasicInfo organisation,
         SectionStatus status,
+        MilestoneTranches milestoneTranches,
         TypeOfHomes? typeOfHomes = null,
         BuildActivity? buildActivity = null,
         bool? reconfiguringExisting = null,
@@ -46,6 +48,7 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
         DeliveryPhaseMilestones = milestones ?? new DeliveryPhaseMilestones(organisation, BuildActivity);
         IsAdditionalPaymentRequested = isAdditionalPaymentRequested;
         _homesToDeliver = homesToDeliver?.ToList() ?? new List<HomesToDeliverInPhase>();
+        MilestoneTranches = milestoneTranches;
     }
 
     public ApplicationBasicInfo Application { get; }
@@ -59,6 +62,8 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
     public TypeOfHomes? TypeOfHomes { get; private set; }
 
     public BuildActivity BuildActivity { get; private set; }
+
+    public MilestoneTranches MilestoneTranches { get; private set; }
 
     public bool? ReconfiguringExisting { get; private set; }
 
@@ -186,6 +191,11 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
         }
 
         ReconfiguringExisting = _modificationTracker.Change(ReconfiguringExisting, reconfiguringExisting, MarkAsNotCompleted);
+    }
+
+    public void ProvideMilestoneTranches(MilestoneTranches milestoneTranches)
+    {
+        MilestoneTranches = _modificationTracker.Change(MilestoneTranches, milestoneTranches, MarkAsNotCompleted);
     }
 
     public bool IsReconfiguringExistingNeeded()

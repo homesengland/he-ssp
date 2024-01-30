@@ -1,4 +1,5 @@
 using HE.Investment.AHP.Contract.Delivery;
+using HE.Investment.AHP.Contract.Delivery.MilestonePayments;
 using HE.Investment.AHP.Contract.Delivery.Queries;
 using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.Mappers;
@@ -8,7 +9,7 @@ using HE.Investment.AHP.Domain.Scheme.Repositories;
 using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.User;
 using MediatR;
-using SummaryOfDelivery = HE.Investment.AHP.Contract.Delivery.SummaryOfDelivery;
+using SummaryOfDelivery = HE.Investment.AHP.Contract.Delivery.MilestonePayments.SummaryOfDelivery;
 
 namespace HE.Investment.AHP.Domain.Delivery.QueryHandlers;
 
@@ -51,6 +52,7 @@ public class GetDeliveryPhaseDetailsQueryHandler : IRequestHandler<GetDeliveryPh
             deliveryPhase.ReconfiguringExisting,
             deliveryPhase.TotalHomesToBeDeliveredInThisPhase,
             request.IncludeSummary ? await GetSummaryOfDelivery(deliveryPhase, userAccount, cancellationToken) : null,
+            request.IncludeSummary ? await GetSummaryOfDeliveryAmend(deliveryPhase, userAccount, cancellationToken) : null,
             deliveryPhase.Organisation.IsUnregisteredBody,
             deliveryPhase.DeliveryPhaseMilestones.IsOnlyCompletionMilestone,
             DeliveryPhaseEntityMapper.MapDate(deliveryPhase.DeliveryPhaseMilestones.AcquisitionMilestone?.MilestoneDate),
@@ -79,5 +81,19 @@ public class GetDeliveryPhaseDetailsQueryHandler : IRequestHandler<GetDeliveryPh
             result.SummaryOfDeliveryPercentage.StartOnSitePercentage,
             result.CompletionMilestone,
             result.SummaryOfDeliveryPercentage.CompletionPercentage);
+    }
+
+    private async Task<SummaryOfDeliveryAmend> GetSummaryOfDeliveryAmend(IDeliveryPhaseEntity deliveryPhase, UserAccount userAccount, CancellationToken cancellationToken)
+    {
+        var result = await GetSummaryOfDelivery(deliveryPhase, userAccount, cancellationToken);
+
+        return new SummaryOfDeliveryAmend(
+            result.GrantApportioned,
+            result.AcquisitionMilestone,
+            result.AcquisitionPercentage,
+            result.StartOnSiteMilestone,
+            result.StartOnSitePercentage,
+            result.CompletionMilestone,
+            result.CompletionPercentage);
     }
 }
