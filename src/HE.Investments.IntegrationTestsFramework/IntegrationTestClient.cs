@@ -16,7 +16,7 @@ public class IntegrationTestClient
     public IntegrationTestClient(HttpClient client, ILoginData loginData)
     {
         _client = client;
-        _client.BaseAddress = new Uri("https://localhost/");
+        _client.BaseAddress = new Uri("https://localhost:7090/");
         _loginData = loginData;
         AsLoggedUser();
     }
