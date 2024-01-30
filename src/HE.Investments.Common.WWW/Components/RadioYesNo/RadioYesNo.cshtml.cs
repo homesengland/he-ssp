@@ -10,8 +10,9 @@ public class RadioYesNo : ViewComponent
         string? header = null,
         string? title = null,
         string? hint = null,
-        bool? value = null)
+        bool? value = null,
+        bool? isDisplayed = null)
     {
-        return View("RadioYesNo", (fieldName, headerComponent, header, title, hint, value));
+        return View("RadioYesNo", (fieldName, headerComponent, header, title, hint, value, isDisplayed ?? true));
     }
 }
