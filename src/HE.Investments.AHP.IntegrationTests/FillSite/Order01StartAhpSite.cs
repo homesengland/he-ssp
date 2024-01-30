@@ -3,6 +3,7 @@ using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.WWW;
 using HE.Investment.AHP.WWW.Views.HomeTypes.Const;
 using HE.Investment.AHP.WWW.Views.Site;
+using HE.Investments.AHP.IntegrationTests.Extensions;
 using HE.Investments.AHP.IntegrationTests.Framework;
 using HE.Investments.AHP.IntegrationTests.Pages;
 using HE.Investments.IntegrationTestsFramework;
@@ -131,5 +132,47 @@ public class Order01StartAhpSite : AhpIntegrationTest
             SitePageTitles.SiteSection106CapitalFundingEligibility,
             SitePagesUrl.SiteSection106LocalAuthorityConfirmation(SiteData.SiteId),
             (nameof(SiteModel.Section106CapitalFundingEligibility), "False"));
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(9)]
+    public async Task Order09_ShouldProvideSection106LocalAuthorityConfirmationAndNavigateToLocalAuthoritySearch()
+    {
+        await TestQuestionPage(
+            SitePagesUrl.SiteSection106LocalAuthorityConfirmation(SiteData.SiteId),
+            SitePageTitles.SiteSection106LocalAuthorityConfirmation,
+            SitePagesUrl.SiteLocalAuthoritySearch(SiteData.SiteId),
+            (nameof(SiteModel.Section106LocalAuthorityConfirmation), "Local authority confirmed"));
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(10)]
+    public async Task Order10_ShouldProvideLocalAuthoritySearchPhraseAndNavigateToLocalAuthorityResult()
+    {
+        await TestQuestionPage(
+            SitePagesUrl.SiteLocalAuthoritySearch(SiteData.SiteId),
+            SitePageTitles.LocalAuthoritySearch,
+            SitePagesUrl.SiteLocalAuthorityResult(SiteData.SiteId),
+            (nameof(LocalAuthorities.Phrase), SiteData.LocalAuthorityName));
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(11)]
+    public async Task Order11_ShouldSelectLocalAuthorityAndNavigateToLocalAuthorityConfirm()
+    {
+        // given
+        var localAuthorityResultPage = await GetCurrentPage(SitePagesUrl.SiteLocalAuthorityResult(SiteData.SiteId));
+        localAuthorityResultPage.HasNavigationListItem("select-list", out var selectLocalAuthorityLink);
+
+        // when
+        var localAuthorityConfirmPage = await TestClient.NavigateTo(selectLocalAuthorityLink);
+
+        // then
+        ApplicationData.SetSiteId(localAuthorityConfirmPage.Url.GetSiteGuidFromUrl());
+        localAuthorityConfirmPage
+            .UrlEndWith(SitePagesUrl.SiteLocalAuthorityConfirm(SiteData.SiteId, SiteData.LocalAuthorityId, SiteData.LocalAuthorityName, SiteData.LocalAuthorityName))
+            .HasTitle(SitePageTitles.LocalAuthorityConfirm);
+
+        SaveCurrentPage();
     }
 }
