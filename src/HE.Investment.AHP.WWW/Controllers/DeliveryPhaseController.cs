@@ -18,7 +18,6 @@ using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Routing;
-using HE.Investments.Common.WWW.Utils;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -133,8 +132,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
 
     [HttpPost("{deliveryPhaseId}/details")]
     [WorkflowState(DeliveryPhaseWorkflowState.TypeOfHomes)]
-    public async Task<IActionResult> Details([FromRoute] string applicationId, string deliveryPhaseId, DeliveryPhaseDetails deliveryPhaseDetails,
-        CancellationToken cancellationToken)
+    public async Task<IActionResult> Details([FromRoute] string applicationId, string deliveryPhaseId, DeliveryPhaseDetails deliveryPhaseDetails, CancellationToken cancellationToken)
     {
         return await ExecuteCommand(
             new ProvideTypeOfHomesCommand(
@@ -185,12 +183,12 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
 
     [HttpPost("{deliveryPhaseId}/add-homes")]
     [WorkflowState(DeliveryPhaseWorkflowState.AddHomes)]
-    public async Task<IActionResult> AddHomes([FromRoute] string applicationId, string deliveryPhaseId, AddHomesModel model,
-        CancellationToken cancellationToken)
+    public async Task<IActionResult> AddHomes([FromRoute] string applicationId, string deliveryPhaseId, AddHomesModel model, CancellationToken cancellationToken)
     {
         return await this.ExecuteCommand<AddHomesModel>(
             _mediator,
-            new ProvideDeliveryPhaseHomesCommand(AhpApplicationId.From(applicationId),
+            new ProvideDeliveryPhaseHomesCommand(
+                AhpApplicationId.From(applicationId),
                 new DeliveryPhaseId(deliveryPhaseId),
                 model.HomesToDeliver ?? new Dictionary<string, string?>()),
             () => ContinueWithAllRedirects(new { applicationId, deliveryPhaseId }),
@@ -491,8 +489,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
 
     [WorkflowState(DeliveryPhaseWorkflowState.CheckAnswers)]
     [HttpPost("{deliveryPhaseId}/check-answers")]
-    public async Task<IActionResult> Complete([FromRoute] string applicationId, string deliveryPhaseId, [FromForm] IsSectionCompleted? isCompleted,
-        CancellationToken cancellationToken)
+    public async Task<IActionResult> Complete([FromRoute] string applicationId, string deliveryPhaseId, [FromForm] IsSectionCompleted? isCompleted, CancellationToken cancellationToken)
     {
         if (isCompleted == null)
         {
@@ -500,10 +497,8 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         }
 
         var result = isCompleted == IsSectionCompleted.Yes
-            ? await _mediator.Send(new CompleteDeliveryPhaseCommand(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId)),
-                cancellationToken)
-            : await _mediator.Send(new UnCompleteDeliveryPhaseCommand(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId)),
-                cancellationToken);
+            ? await _mediator.Send(new CompleteDeliveryPhaseCommand(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId)), cancellationToken)
+            : await _mediator.Send(new UnCompleteDeliveryPhaseCommand(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId)), cancellationToken);
 
         if (result.HasValidationErrors)
         {
@@ -516,8 +511,8 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     protected override async Task<IStateRouting<DeliveryPhaseWorkflowState>> Routing(DeliveryPhaseWorkflowState currentState, object? routeData = null)
     {
         var deliveryPhase = currentState != DeliveryPhaseWorkflowState.Create
-            ? await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(this.GetApplicationIdFromRoute(), this.GetDeliveryPhaseIdFromRoute()),
-                CancellationToken.None)
+            ? await _deliveryPhaseProvider.Get(
+                new GetDeliveryPhaseDetailsQuery(this.GetApplicationIdFromRoute(), this.GetDeliveryPhaseIdFromRoute()), CancellationToken.None)
             : new DeliveryPhaseDetails(string.Empty, string.Empty, string.Empty, SectionStatus.NotStarted);
 
         var isReadOnly = !await _accountAccessContext.CanEditApplication();

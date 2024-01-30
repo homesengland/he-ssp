@@ -4,7 +4,7 @@ using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 
 namespace HE.Investments.AHP.IntegrationTests.FillApplication.Data;
 
-public class NewBuildAndWorksOnlyDeliveryPhase : INestedItemData
+public class RehabDeliveryPhase : INestedItemData
 {
     public string Id { get; private set; }
 
@@ -29,37 +29,37 @@ public class NewBuildAndWorksOnlyDeliveryPhase : INestedItemData
         Id = deliveryPhaseId;
     }
 
-    public NewBuildAndWorksOnlyDeliveryPhase GenerateDeliveryPhase()
+    public RehabDeliveryPhase GenerateDeliveryPhase()
     {
-        Name = new DeliveryPhaseName($"IT-NewBuild-WorksOnly-{DateTime.UtcNow.ToString(CultureInfo.InvariantCulture)}");
+        Name = new DeliveryPhaseName($"IT-Rehab-WorksOnly-{DateTime.UtcNow.ToString(CultureInfo.InvariantCulture)}");
         return this;
     }
 
-    public NewBuildAndWorksOnlyDeliveryPhase GenerateDetails()
+    public RehabDeliveryPhase GenerateDetails()
     {
         TypeOfHomes = TypeOfHomes.Rehab;
         return this;
     }
 
-    public NewBuildAndWorksOnlyDeliveryPhase GenerateBuildActivityType()
+    public RehabDeliveryPhase GenerateBuildActivityType()
     {
         BuildActivityType = BuildActivityType.WorksOnlyRehab;
         return this;
     }
 
-    public NewBuildAndWorksOnlyDeliveryPhase GenerateReconfiguringExisting()
+    public RehabDeliveryPhase GenerateReconfiguringExisting()
     {
         ReconfiguringExisting = true;
         return this;
     }
 
-    public NewBuildAndWorksOnlyDeliveryPhase GenerateHomes(IDictionary<string, int> deliveryPhaseHomes)
+    public RehabDeliveryPhase GenerateHomes(IDictionary<string, int> deliveryPhaseHomes)
     {
         DeliveryPhaseHomes = deliveryPhaseHomes;
         return this;
     }
 
-    public NewBuildAndWorksOnlyDeliveryPhase GenerateAcquisitionMilestone()
+    public RehabDeliveryPhase GenerateAcquisitionMilestone()
     {
         AcquisitionMilestone = new AcquisitionMilestoneDetails(
             new AcquisitionDate("12", "12", "2021"),
@@ -67,7 +67,7 @@ public class NewBuildAndWorksOnlyDeliveryPhase : INestedItemData
         return this;
     }
 
-    public NewBuildAndWorksOnlyDeliveryPhase GenerateStartOnSiteMilestone()
+    public RehabDeliveryPhase GenerateStartOnSiteMilestone()
     {
         StartOnSiteMilestone = new StartOnSiteMilestoneDetails(
             new StartOnSiteDate("7", "7", "2022"),
@@ -75,7 +75,7 @@ public class NewBuildAndWorksOnlyDeliveryPhase : INestedItemData
         return this;
     }
 
-    public NewBuildAndWorksOnlyDeliveryPhase GenerateCompletionMilestone()
+    public RehabDeliveryPhase GenerateCompletionMilestone()
     {
         CompletionMilestone = new CompletionMilestoneDetails(
             new CompletionDate("9", "9", "2025"),

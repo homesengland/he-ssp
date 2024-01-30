@@ -29,7 +29,7 @@ public class ProvideSection106AgreementCommandHandler : SiteBaseCommandHandler, 
                                             currentSection106.OnlyAffordableHousing,
                                             currentSection106.AdditionalAffordableHousing,
                                             currentSection106.CapitalFundingEligibility,
-                                            currentSection106.ConfirmationFromLocalAuthority);
+                                            currentSection106.LocalAuthorityConfirmation);
 
                 site.ProvideSection106(newSection106);
                 return Task.FromResult(OperationResult.Success());

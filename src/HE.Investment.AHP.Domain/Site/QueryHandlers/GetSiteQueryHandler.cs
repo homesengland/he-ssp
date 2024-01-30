@@ -1,5 +1,6 @@
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Queries;
+using HE.Investment.AHP.Domain.Site.Mappers;
 using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investments.Account.Shared;
 using MediatR;
@@ -32,7 +33,12 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
             Section106OnlyAffordableHousing = site.Section106?.OnlyAffordableHousing,
             Section106AdditionalAffordableHousing = site.Section106?.AdditionalAffordableHousing,
             Section106CapitalFundingEligibility = site.Section106?.CapitalFundingEligibility,
-            Section106ConfirmationFromLocalAuthority = site.Section106?.ConfirmationFromLocalAuthority,
+            Section106LocalAuthorityConfirmation = site.Section106?.LocalAuthorityConfirmation,
+            IsIneligibleDueToAffordableHousing = site.Section106?.IsIneligibleDueToAffordableHousing(),
+            IsIneligibleDueToCapitalFundingGuide = site.Section106?.IsIneligibleDueToCapitalFundingGuide(),
+            IsIneligible = site.Section106?.IsIneligible(),
+            PlanningDetails = site.PlanningDetails != null ? new SitePlanningDetails(site.PlanningDetails.PlanningStatus) : null,
+            LocalAuthority = LocalAuthorityMapper.Map(site.LocalAuthority),
         };
     }
 }

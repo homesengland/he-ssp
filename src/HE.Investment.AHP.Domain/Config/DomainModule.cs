@@ -1,7 +1,10 @@
+extern alias Org;
+
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.Application.Repositories.Interfaces;
 using HE.Investment.AHP.Domain.Data;
+using HE.Investment.AHP.Domain.Delivery.Crm;
 using HE.Investment.AHP.Domain.Delivery.Policies;
 using HE.Investment.AHP.Domain.Delivery.Repositories;
 using HE.Investment.AHP.Domain.Documents.Config;
@@ -24,6 +27,7 @@ using HE.Investments.Account.Shared.Config;
 using HE.Investments.Common.Utils;
 using MediatR.Pipeline;
 using Microsoft.Extensions.DependencyInjection;
+using Org::HE.Investments.Organisation.LocalAuthorities.Repositories;
 
 namespace HE.Investment.AHP.Domain.Config;
 
@@ -35,7 +39,8 @@ public static class DomainModule
         services.AddScoped<IDateTimeProvider, DateTimeProvider>();
         services.AddTransient(typeof(IRequestExceptionHandler<,,>), typeof(DomainValidationHandler<,,>));
 
-        services.AddScoped<IApplicationCrmContext, ApplicationCrmContext>();
+        services.AddScoped<ApplicationCrmContext>();
+        services.AddScoped<IApplicationCrmContext>(x => new RequestCacheApplicationCrmContextDecorator(x.GetRequiredService<ApplicationCrmContext>()));
         services.AddScoped<IDocumentsCrmContext, DocumentsCrmContext>();
         services.AddSingleton<IAhpDocumentSettings, AhpDocumentSettings>();
 
@@ -96,11 +101,14 @@ public static class DomainModule
     private static void AddSite(IServiceCollection services)
     {
         services.AddScoped<ISiteRepository, SiteRepository>();
+        services.AddScoped<ILocalAuthorityRepository, LocalAuthorityRepository>();
     }
 
     private static void AddDelivery(IServiceCollection services)
     {
         services.AddScoped<IDeliveryPhaseRepository, DeliveryPhaseRepository>();
+        services.AddScoped<IDeliveryPhaseCrmContext, DeliveryPhaseCrmContext>();
+        services.AddSingleton<IDeliveryPhaseCrmMapper, DeliveryPhaseCrmMapper>();
         services.AddScoped<IMilestoneDatesInProgrammeDateRangePolicy, MilestoneDatesInProgrammeDateRangePolicy>();
     }
 }

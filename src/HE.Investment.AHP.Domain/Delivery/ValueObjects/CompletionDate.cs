@@ -7,8 +7,18 @@ public class CompletionDate : DateValueObject
     {
     }
 
+    private CompletionDate(DateOnly value)
+        : base(value)
+    {
+    }
+
     public static CompletionDate? Create(string? day, string? month, string? year)
     {
         return ValuesProvided(day, month, year) ? new CompletionDate(day, month, year) : null;
+    }
+
+    public static CompletionDate Create(DateOnly value)
+    {
+        return new CompletionDate(value);
     }
 }

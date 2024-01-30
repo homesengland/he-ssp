@@ -1,4 +1,3 @@
-using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Commands;
 using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.Repositories;
@@ -29,7 +28,7 @@ public abstract class UpdateDeliveryPhaseCommandHandler<TCommand> : IRequestHand
 
         if (result.IsValid)
         {
-            await _repository.Save(deliveryPhase, account, cancellationToken);
+            await _repository.Save(deliveryPhase, account.SelectedOrganisationId(), cancellationToken);
         }
 
         return result;

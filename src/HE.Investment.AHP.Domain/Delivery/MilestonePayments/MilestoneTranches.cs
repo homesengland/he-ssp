@@ -40,6 +40,4 @@ public class MilestoneTranches : ValueObject
         yield return StartOnSite;
         yield return Completion;
     }
-
-
 }

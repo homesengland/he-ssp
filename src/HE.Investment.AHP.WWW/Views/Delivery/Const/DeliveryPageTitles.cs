@@ -37,5 +37,4 @@ public static class DeliveryPageTitles
     public const string CheckAnswers = "Check your answers before adding a delivery phase";
 
     public const string Remove = "Are you sure you want to remove this delivery phase?";
-
 }

@@ -119,10 +119,8 @@ public class ApplicationRepository : IApplicationRepository
             return;
         }
 
-        var applicationId = new Guid(application.Id.Value);
-
         await _applicationCrmContext.ChangeApplicationStatus(
-            applicationId,
+            application.Id.Value,
             organisationId.Value,
             application.Status,
             application.HoldReason?.Value,
@@ -136,10 +134,8 @@ public class ApplicationRepository : IApplicationRepository
             return;
         }
 
-        var applicationId = new Guid(application.Id.Value);
-
         await _applicationCrmContext.ChangeApplicationStatus(
-            applicationId,
+            application.Id.Value,
             organisationId.Value,
             application.Status,
             application.WithdrawReason?.Value,

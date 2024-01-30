@@ -1,7 +1,7 @@
 # Loans-CRM-Deploy-Update
 
-trigger:
-- none
+trigger: none
+pr: none
 
 pool: 
   vmImage: windows-latest

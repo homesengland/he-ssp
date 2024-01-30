@@ -259,7 +259,7 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
     private bool IsSocialRentTenureCompleted()
     {
         return MarketValue.IsProvided()
-            && MarketRent.IsProvided()
+            && ProspectiveRent.IsProvided()
             && ExemptFromTheRightToSharedOwnership != YesNoType.Undefined
             && IsExemptJustificationProvided();
     }

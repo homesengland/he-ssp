@@ -37,6 +37,8 @@ public interface IDeliveryPhaseEntity
 
     SectionStatus Status { get; }
 
+    bool IsModified { get; }
+
     int TotalHomesToBeDeliveredInThisPhase { get; }
 
     DeliveryPhaseMilestones DeliveryPhaseMilestones { get; }

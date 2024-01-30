@@ -7,8 +7,18 @@ public class AcquisitionDate : DateValueObject
     {
     }
 
+    private AcquisitionDate(DateOnly value)
+        : base(value)
+    {
+    }
+
     public static AcquisitionDate? Create(string? day, string? month, string? year)
     {
         return ValuesProvided(day, month, year) ? new AcquisitionDate(day, month, year) : null;
+    }
+
+    public static AcquisitionDate Create(DateOnly value)
+    {
+        return new AcquisitionDate(value);
     }
 }

@@ -29,7 +29,7 @@ public class ProvideSection106OnlyAffordableHousingCommandHandler : SiteBaseComm
                                             request.OnlyAffordableHousing,
                                             currentSection106.AdditionalAffordableHousing,
                                             currentSection106.CapitalFundingEligibility,
-                                            currentSection106.ConfirmationFromLocalAuthority);
+                                            currentSection106.LocalAuthorityConfirmation);
 
                 site.ProvideSection106(newSection106);
 

@@ -6,4 +6,3 @@ public enum SummaryOfDeliveryTrancheType
     StartOnSite,
     Completion,
 }
-

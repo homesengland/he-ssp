@@ -1,7 +1,12 @@
 @using HE.Investments.Common.WWW.Components.SelectList
 @using HE.Investments.Common.Contract.Pagination
+@using HE.Investments.Common.WWW.TagHelpers
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Paragraphs
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
+@using HE.Investments.Common.WWW.Models
+@using HE.Investments.Common.WWW.TagHelpers.Pagination
 
-@model (PaginationResult<SelectListItemViewModel> list, string pagingNavigationUrl, string addActionUrl, string addActionText)
+@model (PaginationResult<SelectListItemViewModel> list, string pagingNavigationUrl, string addActionUrl, string addActionText, ParagraphWithLinkModel? paragraphWithLink)
 
 <ul class="govuk-list" data-testId="select-list">
     @foreach (var item in Model.list.Items)
@@ -23,7 +28,14 @@
 @if (!string.IsNullOrWhiteSpace(Model.addActionUrl))
 {
     var text = string.IsNullOrWhiteSpace(Model.addActionText) ? "Add" : Model.addActionText;
-    <link-button action-url="@Model.addActionUrl" >@text</link-button>
+    <link-button action-url="@Model.addActionUrl">@text</link-button>
+}
+
+@if (Model.paragraphWithLink != null)
+{
+    <gds-p class="govuk-!-margin-bottom-9">
+        @Model.paragraphWithLink.Text <gds-link href="@(Url.Action(Model.paragraphWithLink.LinkUrl.Action, Model.paragraphWithLink.LinkUrl.Controller, Model.paragraphWithLink.LinkUrl.Values) ?? string.Empty)">@Model.paragraphWithLink.LinkText</gds-link>
+    </gds-p>
 }
 
 <he-pagination

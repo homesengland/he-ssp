@@ -26,7 +26,7 @@ public class SaveExitPlanCommandHandler : SaveHomeTypeSegmentCommandHandlerBase<
         {
             var exitPlan = request.ExitPlan.IsNotProvided()
                 ? null
-                : new MoreInformation(request.ExitPlan!, "The exit plan or alternative use");
+                : new MoreInformation(request.ExitPlan!, "exit plan or alternative use");
             homeType.SupportedHousingInformation.ChangeExitPlan(exitPlan);
         },
     };

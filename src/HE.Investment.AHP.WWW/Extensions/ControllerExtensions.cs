@@ -1,5 +1,6 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Delivery;
+using HE.Investment.AHP.Contract.Site;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.WWW.Extensions;
 using Microsoft.AspNetCore.Mvc;
@@ -26,5 +27,11 @@ public static class ControllerExtensions
     {
         var deliveryPhase = controller.Request.GetRouteValue("deliveryPhaseId") ?? throw new NotFoundException("Missing required deliveryPhaseId path parameter.");
         return new DeliveryPhaseId(deliveryPhase);
+    }
+
+    public static SiteId GetSiteIdFromRoute(this Controller controller)
+    {
+        var siteId = controller.Request.GetRouteValue("siteId") ?? throw new NotFoundException("Missing required siteId path parameter.");
+        return new SiteId(siteId);
     }
 }

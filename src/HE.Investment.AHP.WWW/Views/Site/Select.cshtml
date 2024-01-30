@@ -11,7 +11,7 @@
         Model.Page.Items.Select(i => new SelectListItemViewModel(
             Url.Action("ConfirmSelect", "Site", new { siteId = i.Id }) ?? string.Empty,
             i.Name,
-            i.LocalAuthority)).ToList(),
+            i.LocalAuthorityName)).ToList(),
         Model.Page.CurrentPage,
         Model.Page.ItemsPerPage,
         Model.Page.TotalItems);

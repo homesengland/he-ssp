@@ -11,6 +11,11 @@ public class DateValueObject : ValueObject
         Build(day, month, year, fieldName, fieldLabel).CheckErrors();
     }
 
+    protected DateValueObject(DateOnly value)
+    {
+        Value = value;
+    }
+
     public DateOnly Value { get; private set; }
 
     public static bool ValuesProvided(string? day, string? month, string? year)

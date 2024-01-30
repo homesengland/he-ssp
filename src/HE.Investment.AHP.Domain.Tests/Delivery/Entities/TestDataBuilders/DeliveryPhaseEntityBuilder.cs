@@ -5,6 +5,7 @@ using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.Entities;
+using HE.Investment.AHP.Domain.Delivery.MilestonePayments;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
@@ -24,6 +25,8 @@ public class DeliveryPhaseEntityBuilder
 
     private string _id = "dp-1-12313";
 
+    private DeliveryPhaseName _name = new("First Phase");
+
     private SectionStatus _status = SectionStatus.InProgress;
 
     private OrganisationBasicInfo _organisationBasicInfo = new OrganisationBasicInfoBuilder().Build();
@@ -41,6 +44,12 @@ public class DeliveryPhaseEntityBuilder
     public DeliveryPhaseEntityBuilder WithId(string id)
     {
         _id = id;
+        return this;
+    }
+
+    public DeliveryPhaseEntityBuilder WithName(string name)
+    {
+        _name = new DeliveryPhaseName(name);
         return this;
     }
 
@@ -92,7 +101,7 @@ public class DeliveryPhaseEntityBuilder
         return this;
     }
 
-    public DeliveryPhaseEntityBuilder WithTypeOfHomes(TypeOfHomes typeOfHomes)
+    public DeliveryPhaseEntityBuilder WithTypeOfHomes(TypeOfHomes? typeOfHomes)
     {
         _typeOfHomes = typeOfHomes;
         return this;
@@ -119,11 +128,18 @@ public class DeliveryPhaseEntityBuilder
         return this;
     }
 
+    public DeliveryPhaseEntityBuilder WithNewBuildActivity(BuildActivityType buildActivityType = BuildActivityType.AcquisitionAndWorks)
+    {
+        _buildActivity = new BuildActivity(ApplicationBasicInfo.Tenure, TypeOfHomes.NewBuild, buildActivityType);
+
+        return this;
+    }
+
     public DeliveryPhaseEntity Build()
     {
         return new DeliveryPhaseEntity(
             ApplicationBasicInfo,
-            new DeliveryPhaseName("First Phase"),
+            _name,
             _organisationBasicInfo,
             _status,
             MilestoneTranches.NotProvided,
