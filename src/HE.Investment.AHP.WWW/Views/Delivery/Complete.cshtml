@@ -1,9 +1,11 @@
 @using HE.Investment.AHP.WWW.Extensions
-@using HE.Investment.AHP.WWW.Models.Common
+@using HE.Investment.AHP.WWW.Models.Delivery
 @using HE.Investment.AHP.WWW.Views.Delivery.Const
+@using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
 @using HE.Investments.Common.WWW.Components.BackLinkWithCallback
 @using HE.Investments.Common.WWW.Components.FormHeader
 @using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investments.Common.WWW.Components.RadioList
 @model HE.Investment.AHP.WWW.Models.Delivery.CompleteDeliverySectionModel;
 @{
     var applicationId = this.GetApplicationIdFromRoute();
@@ -22,9 +24,9 @@
 
         <vc:radio-list
             header="@title"
-            field-name="@nameof(Model.IsSectionCompleted)"
-            available-options="@CommonFormOptions.IsSectionCompletedExtended"
-            value="@Model.IsSectionCompleted"/>
+            field-name="@nameof(Model.IsDeliveryCompleted)"
+            available-options="@DeliveryFormOptions.CompleteDelivery"
+            value="@Model.IsDeliveryCompleted"/>
 
         <vc:form-button/>
 

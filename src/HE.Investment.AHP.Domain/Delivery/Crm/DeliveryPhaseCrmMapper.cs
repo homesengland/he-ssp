@@ -41,7 +41,7 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
             application,
             new DeliveryPhaseName(dto.name),
             organisation,
-            SectionStatus.InProgress, // TODO: map when added to CRM
+            SectionStatus.Completed, // TODO: map when added to CRM
             typeOfHomes,
             buildActivity,
             dto.isReconfigurationOfExistingProperties,

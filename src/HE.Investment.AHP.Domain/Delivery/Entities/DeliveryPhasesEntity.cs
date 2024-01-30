@@ -1,5 +1,4 @@
 using HE.Investment.AHP.Contract.Application;
-using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.Contract.HomeTypes;
@@ -154,14 +153,14 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
         }
     }
 
-    public void CompleteSection(IsSectionCompleted isSectionCompleted)
+    public void CompleteSection(IsDeliveryCompleted isDeliveryCompleted)
     {
-        if (isSectionCompleted == IsSectionCompleted.Undefied)
+        if (isDeliveryCompleted == IsDeliveryCompleted.Undefied)
         {
-            OperationResult.New().AddValidationError(nameof(IsSectionCompleted), "Select whether you have completed this section").CheckErrors();
+            OperationResult.New().AddValidationError(nameof(IsDeliveryCompleted), "Select whether you have completed this section").CheckErrors();
         }
 
-        if (isSectionCompleted == IsSectionCompleted.Yes)
+        if (isDeliveryCompleted == IsDeliveryCompleted.Yes)
         {
             if (!_deliveryPhases.Any())
             {

@@ -66,7 +66,7 @@ public class MapToDomainTests : TestBase<DeliveryPhaseCrmMapper>
         var result = TestCandidate.MapToDomain(Application, Organisation, dto);
 
         // then
-        result.Status.Should().Be(SectionStatus.InProgress);
+        result.Status.Should().Be(SectionStatus.Completed);
     }
 
     [Theory]
