@@ -15,7 +15,7 @@ public class CurrentLandValue : PoundsPenceValueObject
     }
 
     public CurrentLandValue(string landValue)
-        : base(landValue, FinancialDetailsValidationErrors.InvalidLandValue, 999999999)
+        : base(landValue, FinancialDetailsValidationErrors.InvalidLandValue, 999999999, "The current land value must be 999,999,999 or fewer")
     {
     }
 
