@@ -51,7 +51,7 @@ public class IntegrationTestFixture<TProgram> : WebApplicationFactory<TProgram>
             new[] { new UserOrganisation(new OrganisationDetails(LoginData.OrganisationId, "IT", false), new[] { UserRole.Admin }) });
         var profileDetails = new ProfileDetails("IT", "IT", "IT", "IT", "IT", "IT", true);
 
-        MockedHttpClient.RegisterClient(
+        IntegrationTestsHttpClientFactory.RegisterMockedClient(
             "AccountRepository",
             (HttpMethod.Get, $"api/user/{LoginData.UserGlobalId}/accounts", accountDetails),
             (HttpMethod.Get, $"api/user/{LoginData.UserGlobalId}/profile", profileDetails));
@@ -70,7 +70,7 @@ public class IntegrationTestFixture<TProgram> : WebApplicationFactory<TProgram>
                 .AddScheme<AuthenticationSchemeOptions, TestAuthHandler>(TestAuthHandler.AuthenticationScheme, _ => { });
 
             x.AddSingleton<IDocumentServiceSettings, MockedDocumentServiceSettings>();
-            x.AddSingleton(MockedHttpClient.Factory);
+            x.Decorate<IHttpClientFactory, IntegrationTestsHttpClientFactory>();
         });
 
         base.ConfigureWebHost(builder);
