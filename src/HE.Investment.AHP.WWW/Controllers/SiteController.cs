@@ -282,7 +282,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         string phrase,
         [FromQuery] string redirect,
         CancellationToken token,
-        [FromQuery] int page = 0)
+        [FromQuery] int page = 1)
     {
         var result = await _mediator.Send(new SearchLocalAuthoritiesQuery(phrase, new PaginationRequest(page - 1)), token);
 
