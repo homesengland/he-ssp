@@ -32,7 +32,7 @@ namespace HE.CRM.AHP.Plugins.Plugins.CustomApi
         #region Base Methods Overrides
         public override void RegisterHandlers(CrmHandlerFactory<DataverseContext> handlerFactory, IList<ICrmHandler> registeredHandlers)
         {
-            registeredHandlers.Add(handlerFactory.GetHandler<DeleteHomeTypeHandler>());
+            registeredHandlers.Add(handlerFactory.GetHandler<DeleteDeliveryPhaseHandler>());
         }
         #endregion
     }
