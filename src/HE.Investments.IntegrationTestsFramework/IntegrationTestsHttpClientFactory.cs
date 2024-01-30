@@ -31,7 +31,7 @@ public class IntegrationTestsHttpClientFactory : IHttpClientFactory
         var httpClient = httpClientMock.ToHttpClient();
         httpClient.BaseAddress = new Uri(BaseUrl);
 
-        MockedClients.Add(httpClientName, httpClient);
+        MockedClients[httpClientName] = httpClient;
     }
 
     public HttpClient CreateClient(string name)
