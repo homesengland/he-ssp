@@ -81,12 +81,11 @@ public class SharePointFolderService : BaseService, ISharePointFolderService
         _spContext.Load(folders);
         _spContext.ExecuteQueryRetry(RETRY_COUNT);
 
-        foreach (var existingFolder in folders)
+        var existingFolder = folders.FirstOrDefault(x => x.Name.Equals(folderPointer, StringComparison.OrdinalIgnoreCase));
+
+        if (existingFolder != null)
         {
-            if (existingFolder.Name.Equals(folderPointer, StringComparison.OrdinalIgnoreCase))
-            {
-                return existingFolder;
-            }
+            return existingFolder;
         }
 
         return CreateFolder(list, currentFolder, folderPointer);
