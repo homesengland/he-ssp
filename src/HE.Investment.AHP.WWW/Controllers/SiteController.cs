@@ -282,10 +282,10 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         string siteId,
         string phrase,
         [FromQuery] string redirect,
-        CancellationToken token,
-        [FromQuery] int page = 0)
+        [FromQuery] int? page,
+        CancellationToken token)
     {
-        var result = await _mediator.Send(new SearchLocalAuthoritiesQuery(phrase, new PaginationRequest(page - 1)), token);
+        var result = await _mediator.Send(new SearchLocalAuthoritiesQuery(phrase, new PaginationRequest(page ?? 1)), token);
 
         if (result.ReturnedData.Page?.TotalItems == 0)
         {
@@ -295,7 +295,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         var model = result.ReturnedData;
 
         model.SiteId = siteId;
-        model.Page = new PaginationResult<LocalAuthority>(model.Page!.Items, page, model.Page.ItemsPerPage, model.Page.TotalItems);
+        model.Page = new PaginationResult<LocalAuthority>(model.Page!.Items, page ?? 1, model.Page.ItemsPerPage, model.Page.TotalItems);
 
         return View(model);
     }

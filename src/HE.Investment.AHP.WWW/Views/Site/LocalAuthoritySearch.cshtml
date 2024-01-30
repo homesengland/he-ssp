@@ -13,7 +13,7 @@
 
 <gds-div-grid-column-two-thirds>
     <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.LocalAuthoritySearch"/>
-
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <form asp-controller="Site" asp-action="LocalAuthoritySearch" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
         <gds-field-set>
             <gds-legend>

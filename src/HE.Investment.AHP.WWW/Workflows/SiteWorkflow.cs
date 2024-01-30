@@ -75,8 +75,9 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
 
         _machine.Configure(SiteWorkflowState.LocalAuthoritySearch)
             .Permit(Trigger.Continue, SiteWorkflowState.LocalAuthorityResult)
-            .PermitIf(Trigger.Back, SiteWorkflowState.Section106LocalAuthorityConfirmation, () => _siteModel?.Section106AdditionalAffordableHousing != false)
-            .PermitIf(Trigger.Back, SiteWorkflowState.Section106CapitalFundingEligibility, () => _siteModel?.Section106AdditionalAffordableHousing == false);
+            .PermitIf(Trigger.Back, SiteWorkflowState.Section106GeneralAgreement, () => _siteModel?.Section106GeneralAgreement == false)
+            .PermitIf(Trigger.Back, SiteWorkflowState.Section106LocalAuthorityConfirmation, () => _siteModel?.Section106AdditionalAffordableHousing != false && _siteModel?.Section106GeneralAgreement != false)
+            .PermitIf(Trigger.Back, SiteWorkflowState.Section106CapitalFundingEligibility, () => _siteModel?.Section106AdditionalAffordableHousing == false && _siteModel?.Section106GeneralAgreement != false);
 
         _machine.Configure(SiteWorkflowState.LocalAuthorityResult)
             .Permit(Trigger.Continue, SiteWorkflowState.LocalAuthorityConfirm)
