@@ -18,6 +18,8 @@
 <gds-div-grid-column-two-thirds>
     <vc:ahp-workflow-back-button current-page="@DeliveryPhaseWorkflowState.BuildActivityType"/>
 
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+
     <form asp-controller="DeliveryPhase" asp-action="BuildActivityType" asp-method="post" asp-route-redirect="@Context.Request.Query["redirect"]" novalidate>
         <vc:form-header caption="@($"{Model.ApplicationName} - {Model.Name}")" title="@title"/>
         @Html.HiddenFor(m => m.TypeOfHomes)

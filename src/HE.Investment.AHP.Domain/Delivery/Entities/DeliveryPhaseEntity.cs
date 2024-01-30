@@ -8,6 +8,7 @@ using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
+using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
@@ -180,6 +181,11 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
 
     public void ProvideBuildActivity(BuildActivity buildActivity)
     {
+        if (buildActivity.IsNotAnswered())
+        {
+            OperationResult.ThrowValidationError("BuildActivityType", "Select the build activity type");
+        }
+
         BuildActivity = _modificationTracker.Change(BuildActivity, buildActivity, MarkAsNotCompleted, ResetBuildActivityDependencies);
     }
 
@@ -230,7 +236,7 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
 
     private void ResetTypeOfHomesDependencies(TypeOfHomes? newTypeOfHomes)
     {
-        ProvideBuildActivity(BuildActivity.WithClearedAnswer(newTypeOfHomes.GetValueOrFirstValue()));
+        BuildActivity = BuildActivity.WithClearedAnswer(newTypeOfHomes.GetValueOrFirstValue());
         ReconfiguringExisting = null;
     }
 
