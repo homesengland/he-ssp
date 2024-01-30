@@ -34,7 +34,6 @@ public static class AccountModule
     private static void AddUserOrganisations(IServiceCollection services)
     {
         services.AddScoped<IProgrammeApplicationsRepository, ProgrammeApplicationsRepository>();
-        services.AddScoped<IProgrammeRepository, ProgrammeRepository>();
         services.AddScoped<IOrganisationUsersRepository, OrganisationUsersRepository>();
     }
 }

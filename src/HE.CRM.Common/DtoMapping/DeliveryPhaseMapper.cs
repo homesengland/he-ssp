@@ -27,6 +27,7 @@ namespace HE.CRM.Common.DtoMapping
                 completionPaymentDate = deliveryPhase.invln_completionmilestoneclaimdate,
                 typeOfHomes = MapTypeOfHome(deliveryPhase.invln_nbrh),
                 requiresAdditionalPayments = MapYesNo(deliveryPhase.invln_urbrequestingearlymilestonepayments),
+                isCompleted = deliveryPhase.invln_iscompleted,
             };
 
             if (deliveryPhase.Id != null)
@@ -67,6 +68,7 @@ namespace HE.CRM.Common.DtoMapping
                 invln_nbrh = MapTypeOfHome(deliveryPhaseDto.typeOfHomes),
                 invln_urbrequestingearlymilestonepayments = MapYesNo(deliveryPhaseDto.requiresAdditionalPayments),
                 invln_invln_homesindeliveryphase_deliveryphasel = MapHomesInDeliveryPhase(deliveryPhaseDto),
+                invln_iscompleted = deliveryPhaseDto.isCompleted,
             };
 
             if (deliveryPhaseDto.id != null)

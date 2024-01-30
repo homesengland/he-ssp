@@ -21,7 +21,8 @@ public class GetUserProfileInformationQueryHandler : IRequestHandler<GetUserProf
 
     public async Task<UserProfileDetailsModel> Handle(GetUserProfileDetailsQuery request, CancellationToken cancellationToken)
     {
-        var userProfileInformation = await _profileRepository.GetProfileDetails(UserGlobalId.From(_userContext.UserGlobalId));
+        var userGlobalId = request.UserGlobalId ?? UserGlobalId.From(_userContext.UserGlobalId);
+        var userProfileInformation = await _profileRepository.GetProfileDetails(userGlobalId);
 
         return new UserProfileDetailsModel
         {
@@ -31,6 +32,7 @@ public class GetUserProfileInformationQueryHandler : IRequestHandler<GetUserProf
             Email = userProfileInformation.Email,
             TelephoneNumber = userProfileInformation.TelephoneNumber?.ToString(),
             SecondaryTelephoneNumber = userProfileInformation.SecondaryTelephoneNumber?.ToString(),
+            IsTermsAndConditionsAccepted = userProfileInformation.IsTermsAndConditionsAccepted,
         };
     }
 }

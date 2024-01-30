@@ -60,6 +60,22 @@ public static class HtmlDocumentInputExtensions
         return htmlDocument;
     }
 
+    public static IHtmlDocument HasBoldText(this IHtmlDocument htmlDocument, string text)
+    {
+        var boldText = htmlDocument.GetElements("b", text);
+        boldText.Count.Should().Be(1, $"Only one bold text with innerText {text} should exist");
+
+        return htmlDocument;
+    }
+
+    public static IHtmlDocument HasHeader2(this IHtmlDocument htmlDocument, string text)
+    {
+        var headerText = htmlDocument.GetElements("h2", text);
+        headerText.Count.Should().Be(1, $"Only one bold text with innerText {text} should exist");
+
+        return htmlDocument;
+    }
+
 #pragma warning disable S4144 // Methods should not have identical implementations
     public static IHtmlDocument HasCheckboxes(this IHtmlDocument htmlDocument, string fieldName, IList<string> options)
 #pragma warning restore S4144 // Methods should not have identical implementations

@@ -4,6 +4,7 @@ using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
+using HE.Investment.AHP.Domain.Delivery.MilestonePayments;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investments.Account.Shared;
@@ -126,7 +127,8 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
             _application,
             ValidateNameUniqueness(name),
             organisationBasicInfo,
-            SectionStatus.InProgress);
+            SectionStatus.InProgress,
+            MilestoneTranches.NotProvided);
 
         _deliveryPhases.Add(deliveryPhase);
         return deliveryPhase;

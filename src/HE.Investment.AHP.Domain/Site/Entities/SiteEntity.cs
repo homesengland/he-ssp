@@ -3,13 +3,15 @@ extern alias Org;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investment.AHP.Domain.Site.ValueObjects;
+using HE.Investment.AHP.Domain.Site.ValueObjects.Factories;
+using HE.Investment.AHP.Domain.Site.ValueObjects.Planning;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using LocalAuthority = Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
 
 namespace HE.Investment.AHP.Domain.Site.Entities;
 
-public class SiteEntity
+public class SiteEntity : DomainEntity, IQuestion
 {
     private readonly ModificationTracker _modificationTracker = new();
 
@@ -17,8 +19,8 @@ public class SiteEntity
         SiteId id,
         SiteName name,
         Section106 section106,
-        LocalAuthority? localAuthority = null,
-        PlanningDetails? planningDetails = null)
+        PlanningDetails planningDetails,
+        LocalAuthority? localAuthority = null)
     {
         Id = id;
         Name = name;
@@ -34,6 +36,7 @@ public class SiteEntity
         Name = new SiteName("New Site");
         Status = SiteStatus.NotReady;
         Section106 = new Section106();
+        PlanningDetails = PlanningDetailsFactory.CreateEmpty();
     }
 
     public SiteId Id { get; set; }
@@ -44,7 +47,7 @@ public class SiteEntity
 
     public LocalAuthority? LocalAuthority { get; private set; }
 
-    public PlanningDetails? PlanningDetails { get; private set; }
+    public PlanningDetails PlanningDetails { get; private set; }
 
     public SiteStatus Status { get; }
 
@@ -73,5 +76,10 @@ public class SiteEntity
     public void ProvideLocalAuthority(LocalAuthority? localAuthority)
     {
         LocalAuthority = _modificationTracker.Change(LocalAuthority, localAuthority);
+    }
+
+    public bool IsAnswered()
+    {
+        return PlanningDetails.IsAnswered();
     }
 }

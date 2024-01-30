@@ -4,6 +4,7 @@ using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.Entities;
+using HE.Investment.AHP.Domain.Delivery.MilestonePayments;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
@@ -42,6 +43,7 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
             new DeliveryPhaseName(dto.name),
             organisation,
             SectionStatus.Completed, // TODO: map when added to CRM
+            MilestoneTranches.NotProvided, // TODO: Task 89103: [CRM] Save tranches (Milestone framework)
             typeOfHomes,
             buildActivity,
             dto.isReconfigurationOfExistingProperties,

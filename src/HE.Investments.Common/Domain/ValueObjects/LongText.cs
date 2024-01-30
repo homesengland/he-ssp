@@ -31,7 +31,7 @@ public class LongText : ValueObject
         Value = normalisedValue;
     }
 
-    public LongText(string value, string fieldName, string fieldDisplayName)
+    public LongText(string? value, string fieldName, string fieldDisplayName)
         : this(
             value,
             fieldName,

@@ -1,13 +1,11 @@
 extern alias Org;
 
 using FluentAssertions;
-using HE.Investments.Account.Contract.Users;
+using HE.Investments.Account.Api.Contract.User;
 using HE.Investments.Account.Domain.Organisation.Repositories;
 using HE.Investments.Account.Domain.Tests.Organisation.TestData;
 using HE.Investments.Account.Domain.Tests.Organisation.TestObjectBuilder;
-using HE.Investments.Account.Domain.Tests.User.TestData;
 using HE.Investments.Account.Shared;
-using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
@@ -16,6 +14,7 @@ using HE.Investments.Common.User;
 using HE.Investments.TestsUtils.TestFramework;
 using Moq;
 using Xunit;
+using UserAccount = HE.Investments.Account.Shared.User.UserAccount;
 
 namespace HE.Investments.Account.Domain.Tests.Organisation.OrganizationRepositoryTests;
 

@@ -37,7 +37,7 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
             IsIneligibleDueToAffordableHousing = site.Section106?.IsIneligibleDueToAffordableHousing(),
             IsIneligibleDueToCapitalFundingGuide = site.Section106?.IsIneligibleDueToCapitalFundingGuide(),
             IsIneligible = site.Section106?.IsIneligible(),
-            PlanningDetails = site.PlanningDetails != null ? new SitePlanningDetails(site.PlanningDetails.PlanningStatus) : null,
+            PlanningDetails = new SitePlanningDetails(site.PlanningDetails.PlanningStatus),
             LocalAuthority = LocalAuthorityMapper.Map(site.LocalAuthority),
         };
     }

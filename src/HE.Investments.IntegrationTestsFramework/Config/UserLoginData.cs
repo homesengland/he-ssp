@@ -8,14 +8,17 @@ public class UserLoginData : ILoginData
 
     public string Email { get; set; }
 
+    public string OrganisationId { get; set; }
+
     public void Change(ILoginData loginData)
     {
         UserGlobalId = loginData.UserGlobalId;
         Email = loginData.Email;
+        OrganisationId = loginData.OrganisationId;
     }
 
     public bool IsProvided()
     {
-        return !string.IsNullOrWhiteSpace(UserGlobalId) && !string.IsNullOrWhiteSpace(Email);
+        return !string.IsNullOrWhiteSpace(UserGlobalId) && !string.IsNullOrWhiteSpace(Email) && !string.IsNullOrWhiteSpace(OrganisationId);
     }
 }

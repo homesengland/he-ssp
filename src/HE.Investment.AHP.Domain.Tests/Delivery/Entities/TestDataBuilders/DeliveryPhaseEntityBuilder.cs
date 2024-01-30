@@ -5,6 +5,7 @@ using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.Entities;
+using HE.Investment.AHP.Domain.Delivery.MilestonePayments;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
@@ -141,6 +142,7 @@ public class DeliveryPhaseEntityBuilder
             _name,
             _organisationBasicInfo,
             _status,
+            MilestoneTranches.NotProvided,
             _typeOfHomes,
             _buildActivity,
             _reconfigureExisting,

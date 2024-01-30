@@ -13,4 +13,6 @@ public class UserProfileDetailsModel
     public string? TelephoneNumber { get; set; }
 
     public string? SecondaryTelephoneNumber { get; set; }
+
+    public bool? IsTermsAndConditionsAccepted { get; set; }
 }

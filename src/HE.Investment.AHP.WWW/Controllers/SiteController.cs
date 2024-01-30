@@ -2,6 +2,7 @@ using He.AspNetCore.Mvc.Gds.Components.Extensions;
 using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Commands;
+using HE.Investment.AHP.Contract.Site.Commands.PlanningDetails;
 using HE.Investment.AHP.Contract.Site.Queries;
 using HE.Investment.AHP.WWW.Extensions;
 using HE.Investment.AHP.WWW.Workflows;
@@ -113,10 +114,10 @@ public class SiteController : WorkflowController<SiteWorkflowState>
             return View("Name", model);
         }
 
-        return await Continue(new { siteId });
+        return await Continue(new { siteId = result.ReturnedData?.Value });
     }
 
-    [HttpGet("{siteId}/section-106-agreement")]
+    [HttpGet("{siteId}/section-106-general-agreement")]
     [WorkflowState(SiteWorkflowState.Section106GeneralAgreement)]
     public async Task<IActionResult> Section106Agreement([FromRoute] string siteId, CancellationToken cancellationToken)
     {
@@ -124,7 +125,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         return View("Section106Agreement", siteModel);
     }
 
-    [HttpPost("{siteId}/section-106-agreement")]
+    [HttpPost("{siteId}/section-106-general-agreement")]
     [WorkflowState(SiteWorkflowState.Section106GeneralAgreement)]
     public async Task<IActionResult> Section106Agreement([FromRoute] string siteId, SiteModel model, CancellationToken cancellationToken)
     {
@@ -281,10 +282,10 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         string siteId,
         string phrase,
         [FromQuery] string redirect,
-        CancellationToken token,
-        [FromQuery] int page = 0)
+        [FromQuery] int? page,
+        CancellationToken token)
     {
-        var result = await _mediator.Send(new SearchLocalAuthoritiesQuery(phrase, new PaginationRequest(page - 1)), token);
+        var result = await _mediator.Send(new SearchLocalAuthoritiesQuery(phrase, new PaginationRequest(page ?? 1)), token);
 
         if (result.ReturnedData.Page?.TotalItems == 0)
         {
@@ -294,7 +295,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         var model = result.ReturnedData;
 
         model.SiteId = siteId;
-        model.Page = new PaginationResult<LocalAuthority>(model.Page!.Items, page, model.Page.ItemsPerPage, model.Page.TotalItems);
+        model.Page = new PaginationResult<LocalAuthority>(model.Page!.Items, page ?? 1, model.Page.ItemsPerPage, model.Page.TotalItems);
 
         return View(model);
     }

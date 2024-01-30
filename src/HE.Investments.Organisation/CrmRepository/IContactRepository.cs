@@ -8,5 +8,7 @@ public interface IContactRepository
 
     Entity? GetContactWithGivenEmailOrExternalId(IOrganizationServiceAsync2 service, string contactEmail, string contactExternalId);
 
+    Entity? GetContactWithGivenEmail(IOrganizationServiceAsync2 service, string contactEmail);
+
     List<Entity> GetContactsForOrganisation(IOrganizationServiceAsync2 service, Guid organisationId, string? portalTypeFilter = null);
 }

@@ -1,3 +1,5 @@
+using HE.Investments.Account.Api.Contract.Organisation;
+using HE.Investments.Account.Api.Contract.User;
 using HE.Investments.DocumentService.Configs;
 using HE.Investments.IntegrationTestsFramework.Auth;
 using HE.Investments.IntegrationTestsFramework.Config;
@@ -37,8 +39,22 @@ public class IntegrationTestFixture<TProgram> : WebApplicationFactory<TProgram>
     {
         if (!LoginData.IsProvided())
         {
-            throw new InvalidDataException("Please set IntegrationTestsConfig:UserConfig:UserGlobalId and IntegrationTestsConfig:UserConfig:Email in settings");
+            throw new InvalidDataException("Please set IntegrationTestsConfig:UserConfig:UserGlobalId, IntegrationTestsConfig:UserConfig:Email and IntegrationTestsConfig:UserConfig:OrganisationId in settings");
         }
+    }
+
+    public void SetupAccountHttpMockedService()
+    {
+        var accountDetails = new AccountDetails(
+            LoginData.UserGlobalId,
+            LoginData.Email,
+            new[] { new UserOrganisation(new OrganisationDetails(LoginData.OrganisationId, "IT", false), new[] { UserRole.Admin }) });
+        var profileDetails = new ProfileDetails("IT", "IT", "IT", "IT", "IT", "IT", true);
+
+        IntegrationTestsHttpClientFactory.RegisterMockedClient(
+            "AccountRepository",
+            (HttpMethod.Get, $"api/user/{LoginData.UserGlobalId}/accounts", accountDetails),
+            (HttpMethod.Get, $"api/user/{LoginData.UserGlobalId}/profile", profileDetails));
     }
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
@@ -54,6 +70,7 @@ public class IntegrationTestFixture<TProgram> : WebApplicationFactory<TProgram>
                 .AddScheme<AuthenticationSchemeOptions, TestAuthHandler>(TestAuthHandler.AuthenticationScheme, _ => { });
 
             x.AddSingleton<IDocumentServiceSettings, MockedDocumentServiceSettings>();
+            x.Decorate<IHttpClientFactory, IntegrationTestsHttpClientFactory>();
         });
 
         base.ConfigureWebHost(builder);
