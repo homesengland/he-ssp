@@ -27,4 +27,13 @@ public class SiteBaseCommandHandler
         await SiteRepository.Save(site, userAccount, cancellationToken);
         return OperationResult.Success();
     }
+
+    protected async Task<OperationResult<SiteId>> PerformWithResultReturn(Func<SiteEntity, Task> action, SiteId siteId, CancellationToken cancellationToken)
+    {
+        var userAccount = await AccountUserContext.GetSelectedAccount();
+        var site = await SiteRepository.GetSite(siteId, userAccount, cancellationToken);
+        await action(site);
+        var newSiteId = await SiteRepository.Save(site, userAccount, cancellationToken);
+        return OperationResult.Success(newSiteId);
+    }
 }
