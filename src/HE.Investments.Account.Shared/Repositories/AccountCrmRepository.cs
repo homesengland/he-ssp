@@ -1,5 +1,5 @@
 using System.Collections.ObjectModel;
-using HE.Investments.Account.Contract.Users;
+using HE.Investments.Account.Api.Contract.User;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.Entities;
 using HE.Investments.Account.Shared.User.ValueObjects;
@@ -11,7 +11,7 @@ using Microsoft.PowerPlatform.Dataverse.Client;
 
 namespace HE.Investments.Account.Shared.Repositories;
 
-public class AccountCrmRepository : IAccountRepository
+internal class AccountCrmRepository : IAccountRepository
 {
     private readonly IContactService _contactService;
 
@@ -31,7 +31,6 @@ public class AccountCrmRepository : IAccountRepository
         {
             return Array.Empty<UserAccount>();
         }
-
 
         // TODO: #88197 - Fetch IsUnregisteredBody
         return contactRoles

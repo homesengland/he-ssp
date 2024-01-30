@@ -1,4 +1,5 @@
-using HE.Investments.Account.Contract.Users;
+using HE.Investments.Account.Api.Contract;
+using HE.Investments.Account.Api.Contract.User;
 
 namespace HE.Investments.Account.WWW.Models.Users;
 

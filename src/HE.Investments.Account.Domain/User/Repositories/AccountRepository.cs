@@ -1,10 +1,9 @@
 using System.Collections.ObjectModel;
+using HE.Investments.Account.Api.Contract.User;
 using HE.Investments.Account.Contract.User.Events;
-using HE.Investments.Account.Contract.Users;
 using HE.Investments.Account.Domain.User.Repositories.Mappers;
 using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Repositories;
-using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.Entities;
 using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.Contract;
@@ -12,6 +11,7 @@ using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Organisation.Services;
 using MediatR;
 using Microsoft.PowerPlatform.Dataverse.Client;
+using UserAccount = HE.Investments.Account.Shared.User.UserAccount;
 
 namespace HE.Investments.Account.Domain.User.Repositories;
 

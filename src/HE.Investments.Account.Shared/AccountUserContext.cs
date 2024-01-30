@@ -40,7 +40,7 @@ public class AccountUserContext : IAccountUserContext
     public async Task<UserAccount> GetSelectedAccount()
     {
         var accounts = await _userAccounts.GetAsync();
-        return accounts?.MinBy(x => x.Organisation?.OrganisationId?.Value) ?? throw new NotFoundException(nameof(UserAccount));
+        return accounts?.MinBy(x => x.Organisation?.OrganisationId.Value) ?? throw new NotFoundException(nameof(UserAccount));
     }
 
     public async Task RefreshUserData()

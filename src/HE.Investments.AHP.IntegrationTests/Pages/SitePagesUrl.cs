@@ -2,9 +2,9 @@ namespace HE.Investments.AHP.IntegrationTests.Pages;
 
 public static class SitePagesUrl
 {
-    public const string SiteStart = $"/ahp/site/start";
+    public const string SiteStart = "/ahp/site/start";
 
-    public const string SiteName = $"/ahp/site/name";
+    public const string SiteName = "/ahp/site/name";
 
     public const string SiteSelect = "ahp/site/select";
 

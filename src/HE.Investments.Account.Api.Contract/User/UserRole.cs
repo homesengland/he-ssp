@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-namespace HE.Investments.Account.Contract.Users;
+namespace HE.Investments.Account.Api.Contract.User;
 
 public enum UserRole
 {

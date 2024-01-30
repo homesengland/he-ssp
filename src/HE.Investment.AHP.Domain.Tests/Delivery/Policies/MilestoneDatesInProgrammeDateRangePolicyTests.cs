@@ -1,10 +1,9 @@
 using FluentAssertions;
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Domain.Delivery.Policies;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
+using HE.Investment.AHP.Domain.Programme;
 using HE.Investment.AHP.Domain.Tests.Delivery.Entities.TestDataBuilders;
-using HE.Investments.Account.Contract.UserOrganisation;
-using HE.Investments.Account.Shared;
-using HE.Investments.Account.Shared.Repositories;
 using HE.Investments.Common.Contract.Exceptions;
 using Moq;
 
@@ -12,14 +11,14 @@ namespace HE.Investment.AHP.Domain.Tests.Delivery.Policies;
 
 public class MilestoneDatesInProgrammeDateRangePolicyTests
 {
-    private readonly ProgrammeBasicInfo _programmeBasicInfo = new ProgrammeBasicInfoBuilder().Build();
+    private readonly AhpProgramme _programme = new AhpProgrammeBuilder().Build();
     private readonly MilestoneDatesInProgrammeDateRangePolicy _testCandidate;
 
     public MilestoneDatesInProgrammeDateRangePolicyTests()
     {
-        var mock = new Mock<IProgrammeRepository>();
-        mock.Setup(r => r.GetCurrentProgramme(ProgrammeType.Ahp, CancellationToken.None))
-            .ReturnsAsync(_programmeBasicInfo);
+        var mock = new Mock<IAhpProgrammeRepository>();
+        mock.Setup(r => r.GetProgramme(It.IsAny<AhpApplicationId>(), CancellationToken.None))
+            .ReturnsAsync(_programme);
 
         _testCandidate = new MilestoneDatesInProgrammeDateRangePolicy(mock.Object);
     }
@@ -32,7 +31,7 @@ public class MilestoneDatesInProgrammeDateRangePolicyTests
             .Build();
 
         // when
-        var action = async () => await _testCandidate.Validate(milestones, CancellationToken.None);
+        var action = async () => await _testCandidate.Validate(It.IsAny<AhpApplicationId>(), milestones, CancellationToken.None);
 
         // then
         action
@@ -44,7 +43,7 @@ public class MilestoneDatesInProgrammeDateRangePolicyTests
     public void ShouldThrowDomainValidationException_WhenAcquisitionDateBeforeProgrammeStartDate()
     {
         var acquisitionMilestoneDetails = new AcquisitionMilestoneDetailsBuilder()
-            .WithAcquisitionDate(_programmeBasicInfo.EndAt.AddDays(1))
+            .WithAcquisitionDate(_programme.EndAt.AddDays(1))
             .WithoutPaymentDate()
             .Build();
 
@@ -57,7 +56,7 @@ public class MilestoneDatesInProgrammeDateRangePolicyTests
     {
         // given
         var acquisitionMilestoneDetails = new AcquisitionMilestoneDetailsBuilder()
-            .WithAcquisitionDate(_programmeBasicInfo.StartAt.AddDays(-1))
+            .WithAcquisitionDate(_programme.StartAt.AddDays(-1))
             .WithoutPaymentDate()
             .Build();
 
@@ -71,7 +70,7 @@ public class MilestoneDatesInProgrammeDateRangePolicyTests
         // given
         var acquisitionMilestoneDetails = new AcquisitionMilestoneDetailsBuilder()
             .WithoutAcquisitionDate()
-            .WithPaymentDate(_programmeBasicInfo.StartAt.AddDays(-1))
+            .WithPaymentDate(_programme.StartAt.AddDays(-1))
             .Build();
 
         // when && then
@@ -84,7 +83,7 @@ public class MilestoneDatesInProgrammeDateRangePolicyTests
         // given
         var acquisitionMilestoneDetails = new AcquisitionMilestoneDetailsBuilder()
             .WithoutAcquisitionDate()
-            .WithPaymentDate(_programmeBasicInfo.EndAt.AddDays(1))
+            .WithPaymentDate(_programme.EndAt.AddDays(1))
             .Build();
 
         // when && then
@@ -100,7 +99,7 @@ public class MilestoneDatesInProgrammeDateRangePolicyTests
             .Build();
 
         // when
-        var action = async () => await _testCandidate.Validate(milestones, CancellationToken.None);
+        var action = async () => await _testCandidate.Validate(It.IsAny<AhpApplicationId>(), milestones, CancellationToken.None);
 
         // then
         AssertException(action, errorMessage);

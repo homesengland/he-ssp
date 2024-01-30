@@ -1,6 +1,5 @@
 using HE.Investments.Account.Shared.Repositories;
 using HE.Investments.Account.Shared.Routing;
-using HE.Investments.Organisation.CrmRepository;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -13,14 +12,22 @@ public static class AccountSharedModule
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(AccountSharedModule).Assembly));
         services.AddScoped<IAccountUserContext, AccountUserContext>();
         services.AddScoped<IAccountAccessContext, AccountAccessContext>();
-        services.AddScoped<IAccountRepository, AccountCrmRepository>();
-        services.AddScoped<IOrganizationRepository, OrganizationRepository>();
-        services.AddScoped<IProgrammeRepository, ProgrammeRepository>();
+        services.AddHttpClient<AccountHttpRepository>("AccountRepository").ConfigureHttpClient(SetupHttpClient);
+        services.AddScoped<Func<AccountHttpRepository>>(x => x.GetRequiredService<AccountHttpRepository>);
+        services.AddScoped<AccountCrmRepository>();
+        services.AddScoped<Func<AccountCrmRepository>>(x => x.GetRequiredService<AccountCrmRepository>);
+        services.AddScoped<IAccountRepository, AccountRepositoryDecorator>();
 
         if (useAccountService)
         {
-            services.AddScoped(x => x.GetRequiredService<IConfiguration>().GetSection("AppConfiguration:AccountService").Get<AccountConfig>());
+            services.AddSingleton(x => x.GetRequiredService<IConfiguration>().GetSection("AppConfiguration:AccountService").Get<AccountConfig>());
             services.AddScoped<IAccountRoutes, HttpAccountRoutes>();
         }
+    }
+
+    private static void SetupHttpClient(IServiceProvider services, HttpClient httpClient)
+    {
+        var config = services.GetRequiredService<IConfiguration>().GetSection("AppConfiguration:AccountService").Get<AccountConfig>();
+        httpClient.BaseAddress = new Uri(config.Url);
     }
 }
