@@ -62,6 +62,19 @@ namespace HE.CRM.Common.Repositories.implementations
             return result.Entities.Select(x => x.ToEntity<invln_DeliveryPhase>()).ToList();
         }
 
+        public bool CheckIfGivenDeliveryPhaseIsAssignedToGivenOrganisationAndApplication(Guid deliveryPhaseId, Guid organisationId, Guid applicationId)
+        {
+            using (DataverseContext ctx = new DataverseContext(service))
+            {
+                return (from ht in ctx.invln_DeliveryPhaseSet
+                        join app in ctx.invln_schemeSet on ht.invln_Application.Id equals app.invln_schemeId
+                        where ht.invln_DeliveryPhaseId == deliveryPhaseId && app.invln_organisationid.Id == organisationId
+                        && app.invln_schemeId == applicationId
+                        select ht).ToList().Any();
+
+            }
+        }
+
         private string GenerateContactFilter(string userId)
         {
             if (!string.IsNullOrEmpty(userId))

@@ -30,12 +30,18 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
 
         public void DeleteDeliveryPhase(string applicationId, string organisationId, string deliveryPhaseId, string externalUserId)
         {
-            if (Guid.TryParse(deliveryPhaseId, out var deliveryPhaseGuid))
+            if (Guid.TryParse(deliveryPhaseId, out var deliveryPhaseGuid) && Guid.TryParse(organisationId, out var organisationGuid) &&
+                Guid.TryParse(applicationId, out var applicationGuid))
             {
-                _deliveryPhaseRepository.Delete(new invln_DeliveryPhase()
+                if (_deliveryPhaseRepository.CheckIfGivenDeliveryPhaseIsAssignedToGivenOrganisationAndApplication(deliveryPhaseGuid, organisationGuid, applicationGuid))
                 {
-                    Id = deliveryPhaseGuid
-                });
+                    var contact = _contactRepository.GetContactViaExternalId(externalUserId);
+                    _deliveryPhaseRepository.Delete(new invln_DeliveryPhase()
+                    {
+                        Id = deliveryPhaseGuid
+                    });
+                    UpdateApplicationModificationFields(applicationGuid, contact.Id);
+                }
             }
         }
 
@@ -92,7 +98,7 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
                     SetHomesinDeliveryPhase(devlieryPhaseDto.numberOfHomes, deliveryPhaseId);
                     return deliveryPhaseId;
                 }
-                else if (Guid.TryParse(devlieryPhaseDto.id, out var deliveryPhaseGuid))// && _homeTypeRepository.CheckIfGivenHomeTypeIsAssignedToGivenOrganisationAndApplication(homeTypeGuid, organisationGuid, applicationGuid))
+                else if (Guid.TryParse(devlieryPhaseDto.id, out var deliveryPhaseGuid))
                 {
                     invln_DeliveryPhase deliveryPhaseToUpdateOrCreate;
                     if (!string.IsNullOrEmpty(fieldsToSet))

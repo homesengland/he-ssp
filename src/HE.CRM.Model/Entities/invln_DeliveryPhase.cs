@@ -74,6 +74,7 @@ namespace DataverseModel
 			public const string invln_DeliveryPhaseId = "invln_deliveryphaseid";
 			public const string Id = "invln_deliveryphaseid";
 			public const string invln_invln_homesindeliveryphase_deliveryphasel = "invln_invln_homesindeliveryphase_deliveryphasel";
+			public const string invln_iscompleted = "invln_iscompleted";
 			public const string invln_nbrh = "invln_nbrh";
 			public const string invln_phasename = "invln_phasename";
 			public const string invln_reconfiguringexistingproperties = "invln_reconfiguringexistingproperties";
@@ -359,6 +360,23 @@ namespace DataverseModel
 			set
 			{
 				this.invln_DeliveryPhaseId = value;
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_iscompleted")]
+		public System.Nullable<bool> invln_iscompleted
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_iscompleted");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_iscompleted");
+				this.SetAttributeValue("invln_iscompleted", value);
+				this.OnPropertyChanged("invln_iscompleted");
 			}
 		}
 		

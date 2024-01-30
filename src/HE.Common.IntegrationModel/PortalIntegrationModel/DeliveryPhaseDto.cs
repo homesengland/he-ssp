@@ -15,6 +15,7 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public int? newBuildActivityType { get; set; }
         public int? rehabBuildActivityType { get; set; }
         public bool? isReconfigurationOfExistingProperties { get; set; }
+        public bool? isCompleted { get; set; }
         public Dictionary<string, int?> numberOfHomes { get; set; } //Dictionary<HomeTypeId, NumberOfHomes>
         public DateTime? acquisitionDate { get; set; }
         public DateTime? acquisitionPaymentDate { get; set; }
