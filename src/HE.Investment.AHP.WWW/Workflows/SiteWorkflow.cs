@@ -26,7 +26,33 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
 
     public Task<bool> StateCanBeAccessed(SiteWorkflowState nextState)
     {
-        return Task.FromResult(true);
+        return Task.FromResult(CanBeAccessed(nextState));
+    }
+
+    public bool CanBeAccessed(SiteWorkflowState state)
+    {
+        return state switch
+        {
+            SiteWorkflowState.Start => true,
+            SiteWorkflowState.Name => true,
+            SiteWorkflowState.Section106GeneralAgreement => true,
+            SiteWorkflowState.Section106AffordableHousing => true,
+            SiteWorkflowState.Section106OnlyAffordableHousing => true,
+            SiteWorkflowState.Section106AdditionalAffordableHousing => true,
+            SiteWorkflowState.Section106CapitalFundingEligibility => true,
+            SiteWorkflowState.Section106LocalAuthorityConfirmation => true,
+            SiteWorkflowState.Section106Ineligible => true,
+            SiteWorkflowState.LocalAuthoritySearch => true,
+            SiteWorkflowState.LocalAuthorityResult => true,
+            SiteWorkflowState.LocalAuthorityConfirm => true,
+            SiteWorkflowState.LocalAuthorityReset => true,
+            SiteWorkflowState.PlanningStatus => true,
+            SiteWorkflowState.NationalDesignGuide => true,
+            SiteWorkflowState.PlanningDetails => true,
+            SiteWorkflowState.BuildingForHealthyLife => true,
+            SiteWorkflowState.LandRegistry => true,
+            _ => throw new ArgumentOutOfRangeException(nameof(state), state, null),
+        };
     }
 
     private void ConfigureTransitions()
