@@ -3,8 +3,10 @@ using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Commands;
 using HE.Investment.AHP.Contract.Site.Commands.PlanningDetails;
+using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investment.AHP.Contract.Site.Queries;
 using HE.Investment.AHP.WWW.Extensions;
+using HE.Investment.AHP.WWW.Models.Site;
 using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Contract;
@@ -385,6 +387,34 @@ public class SiteController : WorkflowController<SiteWorkflowState>
                 ViewBag.SiteName = savedModel.Name!;
                 return model;
             },
+            cancellationToken);
+    }
+
+    [HttpGet("{siteId}/national-design-guide")]
+    [WorkflowState(SiteWorkflowState.NationalDesignGuide)]
+    public async Task<IActionResult> NationalDesignGuide([FromRoute] string siteId, CancellationToken cancellationToken)
+    {
+        var siteModel = await _mediator.Send(new GetSiteQuery(siteId), cancellationToken);
+        var designGuideModel = new NationalDesignGuidePrioritiesModel()
+        {
+            SiteId = new SiteId(siteId),
+            SiteName = siteModel?.Name ?? string.Empty,
+            DesignPriorities = siteModel?.NationalDesignGuidePriorities?.Where(x => x != NationalDesignGuidePriority.NoneOfTheAbove).ToList(),
+            OtherPriorities = siteModel?.NationalDesignGuidePriorities?.Where(x => x == NationalDesignGuidePriority.NoneOfTheAbove).ToList(),
+        };
+        return View("NationalDesignGuide", designGuideModel);
+    }
+
+    [HttpPost("{siteId}/national-design-guide")]
+    [WorkflowState(SiteWorkflowState.NationalDesignGuide)]
+    public async Task<IActionResult> NationalDesignGuide([FromRoute] string siteId, NationalDesignGuidePrioritiesModel model, CancellationToken cancellationToken)
+    {
+        return await ExecuteSiteCommand(
+            new ProvideNationalDesignGuidePrioritiesCommand(
+                this.GetSiteIdFromRoute(),
+                (model.DesignPriorities ?? new List<NationalDesignGuidePriority>()).Concat(model.OtherPriorities ?? new List<NationalDesignGuidePriority>()).ToList()),
+            $"NationalDesignGuide",
+            savedModel => model,
             cancellationToken);
     }
 
