@@ -8,7 +8,7 @@ public static class DeliveryPageTitles
 
     public const string Details = "Delivery phase details";
 
-    public const string BuildActivityType = "Build activity type";
+    public const string BuildActivityType = "What is the build activity type?";
 
     public const string ReconfiguringExisting = "Are you reconfiguring existing residential properties to increase the number of homes?";
 
