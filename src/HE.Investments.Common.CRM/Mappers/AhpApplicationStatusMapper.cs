@@ -5,7 +5,6 @@ namespace HE.Investments.Common.CRM.Mappers;
 
 public static class AhpApplicationStatusMapper
 {
-
     public static int MapToCrmStatus(ApplicationStatus status)
     {
         return status switch
@@ -47,4 +46,3 @@ public static class AhpApplicationStatusMapper
         };
     }
 }
-

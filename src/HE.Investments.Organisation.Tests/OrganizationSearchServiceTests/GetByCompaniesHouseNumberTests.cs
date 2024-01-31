@@ -5,7 +5,6 @@ using HE.Investments.Organisation.Contract;
 using HE.Investments.Organisation.Services;
 using HE.Investments.Organisation.Tests.TestObjectBuilders;
 using HE.Investments.TestsUtils.TestFramework;
-using Moq;
 using Xunit;
 
 namespace HE.Investments.Organisation.Tests.OrganizationSearchServiceTests;
@@ -65,7 +64,6 @@ public class GetByCompaniesHouseNumberTests : TestBase<OrganisationSearchService
         foundOrganization.Street.Should().Be("Letsby Avenue");
         foundOrganization.PostalCode.Should().Be("PO16 7GZ");
     }
-
 
     [Fact]
     public async Task ReturnOrganizationDataFromCrm_WhenOrganzationExistsThereAndIsReturnedFormCompanyHousesApi()
@@ -143,7 +141,7 @@ public class GetByCompaniesHouseNumberTests : TestBase<OrganisationSearchService
                 PostalCode = postalcode,
                 AddressLine1 = street,
                 Locality = city,
-            }
+            },
         };
     }
 }
