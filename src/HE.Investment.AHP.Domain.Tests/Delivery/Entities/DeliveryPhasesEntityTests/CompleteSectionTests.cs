@@ -1,7 +1,6 @@
 using FluentAssertions;
-using HE.Investment.AHP.Contract.Common.Enums;
+using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.Contract.HomeTypes;
-using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investment.AHP.Domain.Tests.Delivery.Entities.TestDataBuilders;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
@@ -18,12 +17,12 @@ public class CompleteSectionTests
         var testCandidate = new DeliveryPhasesEntityBuilder().WithDeliveryPhase(deliveryPhase).Build();
 
         // when
-        var complete = () => testCandidate.CompleteSection(IsSectionCompleted.Undefied);
+        var complete = () => testCandidate.CompleteSection(IsDeliveryCompleted.Undefied);
 
         // then
         var errors = complete.Should().Throw<DomainValidationException>().Which.OperationResult.Errors;
         errors.Should().HaveCount(1);
-        errors.Single().AffectedField.Should().Be(nameof(IsSectionCompleted));
+        errors.Single().AffectedField.Should().Be(nameof(IsDeliveryCompleted));
     }
 
     [Fact]
@@ -33,7 +32,7 @@ public class CompleteSectionTests
         var testCandidate = new DeliveryPhasesEntityBuilder().Build();
 
         // when
-        var complete = () => testCandidate.CompleteSection(IsSectionCompleted.Yes);
+        var complete = () => testCandidate.CompleteSection(IsDeliveryCompleted.Yes);
 
         // then
         var errors = complete.Should().Throw<DomainValidationException>().Which.OperationResult.Errors;
@@ -54,7 +53,7 @@ public class CompleteSectionTests
             .Build();
 
         // when
-        var complete = () => testCandidate.CompleteSection(IsSectionCompleted.Yes);
+        var complete = () => testCandidate.CompleteSection(IsDeliveryCompleted.Yes);
 
         // then
         var errors = complete.Should().Throw<DomainValidationException>().Which.OperationResult.Errors;
@@ -87,7 +86,7 @@ public class CompleteSectionTests
             .Build();
 
         // when
-        var complete = () => testCandidate.CompleteSection(IsSectionCompleted.Yes);
+        var complete = () => testCandidate.CompleteSection(IsDeliveryCompleted.Yes);
 
         // then
         var errors = complete.Should().Throw<DomainValidationException>().Which.OperationResult.Errors;
@@ -113,7 +112,7 @@ public class CompleteSectionTests
             .Build();
 
         // when
-        var complete = () => testCandidate.CompleteSection(IsSectionCompleted.Yes);
+        var complete = () => testCandidate.CompleteSection(IsDeliveryCompleted.Yes);
 
         // then
         var errors = complete.Should().Throw<DomainValidationException>().Which.OperationResult.Errors;
@@ -139,7 +138,7 @@ public class CompleteSectionTests
             .Build();
 
         // when
-        testCandidate.CompleteSection(IsSectionCompleted.Yes);
+        testCandidate.CompleteSection(IsDeliveryCompleted.Yes);
 
         // then
         testCandidate.Status.Should().Be(SectionStatus.Completed);
@@ -161,7 +160,7 @@ public class CompleteSectionTests
             .Build();
 
         // when
-        testCandidate.CompleteSection(IsSectionCompleted.No);
+        testCandidate.CompleteSection(IsDeliveryCompleted.No);
 
         // then
         testCandidate.Status.Should().Be(SectionStatus.InProgress);

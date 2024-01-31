@@ -69,7 +69,7 @@ public class PlanningDetailsTests : ViewTestBase
                 year: model.ExpectedPlanningApprovalDate?.Year,
                 exist: expectedPlanningApprovalDateExist)
             .HasRadio(
-                nameof(SitePlanningDetails.IsGrantFundingForAllHomes),
+                nameof(SitePlanningDetails.IsGrantFundingForAllHomesCoveredByApplication),
                 new List<string> { "Yes", "No" },
                 value: "True",
                 exist: isGrantFundingForAllHomesExist)
@@ -96,6 +96,7 @@ public class PlanningDetailsTests : ViewTestBase
             true,
             new DateDetails("1", "2", "2023"),
             false,
+            null,
             null);
     }
 }

@@ -1,4 +1,4 @@
-using HE.Investment.AHP.Contract.Common.Enums;
+using HE.Investment.AHP.Contract.Delivery.Enums;
 
 namespace HE.Investment.AHP.WWW.Models.Delivery;
 
@@ -14,5 +14,5 @@ public class CompleteDeliverySectionModel : DeliveryModelBase
     {
     }
 
-    public IsSectionCompleted IsSectionCompleted { get; set; }
+    public IsDeliveryCompleted IsDeliveryCompleted { get; set; }
 }
