@@ -1,46 +1,78 @@
 using FluentAssertions;
 using HE.Investment.AHP.Contract.Application;
+using HE.Investment.AHP.Domain.Application.Entities;
+using HE.Investment.AHP.Domain.Tests.Application.TestData;
+using HE.Investment.AHP.Domain.Tests.Application.TestObjectBuilder;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
+using HE.Investments.Common.Tests.TestObjectBuilders;
+using HE.Investments.TestsUtils.TestFramework;
+using Moq;
 using ApplicationSection = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationSection;
 
 namespace HE.Investment.AHP.Domain.Tests.Application.Entities.ApplicationEntityTests;
 
-public class ApplicationEntitySubmitTests
+public class ApplicationEntitySubmitTests : TestBase<ApplicationEntity>
 {
     [Fact]
-    public void ShouldSubmitApplication()
+    public async Task ShouldSubmitApplication()
     {
         // given
-        var entity = ApplicationEntityBuilder
+        var application = ApplicationEntityBuilder
             .New()
             .WithSections(new ApplicationSection(SectionType.Scheme, SectionStatus.Completed), new ApplicationSection(SectionType.DeliveryPhases, SectionStatus.Completed))
             .Build();
 
+        var applicationId = AhpApplicationIdTestData.AhpApplicationIdOne;
+        var organisationId = OrganisationIdTestData.OrganisationIdOne;
+
+        var userAccount = AccountUserContextTestBuilder
+            .New()
+            .Register(this)
+            .UserAccountFromMock;
+
+        var applicationRepository = ApplicationRepositoryTestBuilder
+            .New()
+            .ReturnApplication(applicationId, userAccount, application)
+            .BuildIApplicationSubmitMockAndRegister(this);
+
         // when
-        var result = () => entity.Submit();
+        await application.Submit(applicationRepository.Object, organisationId, CancellationToken.None);
 
         // then
-        result.Should().NotThrow<DomainValidationException>();
-        entity.IsModified.Should().BeTrue();
-        entity.Status.Should().Be(ApplicationStatus.ApplicationSubmitted);
+        applicationRepository.Verify(repo => repo.Submit(application, organisationId, CancellationToken.None), Times.Once);
+        application.IsModified.Should().BeTrue();
+        application.Status.Should().Be(ApplicationStatus.ApplicationSubmitted);
     }
 
     [Fact]
-    public void ShouldThrowException_WhenSectionsNotCompleted()
+    public async Task ShouldThrowException_WhenSectionsNotCompleted()
     {
         // given
-        var entity = ApplicationEntityBuilder
+        var application = ApplicationEntityBuilder
             .New()
             .WithSections(new ApplicationSection(SectionType.Scheme, SectionStatus.InProgress), new ApplicationSection(SectionType.DeliveryPhases, SectionStatus.Completed))
             .Build();
 
+        var applicationId = AhpApplicationIdTestData.AhpApplicationIdOne;
+        var organisationId = OrganisationIdTestData.OrganisationIdOne;
+
+        var userAccount = AccountUserContextTestBuilder
+            .New()
+            .Register(this)
+            .UserAccountFromMock;
+
+        var applicationRepository = ApplicationRepositoryTestBuilder
+            .New()
+            .ReturnApplication(applicationId, userAccount, application)
+            .BuildIApplicationSubmitMockAndRegister(this);
+
         // when
-        var result = () => entity.Submit();
+        var result = async () => await application.Submit(applicationRepository.Object, organisationId, CancellationToken.None);
 
         // then
-        result.Should().Throw<DomainValidationException>();
-        entity.IsModified.Should().BeFalse();
-        entity.Status.Should().Be(ApplicationStatus.New);
+        await result.Should().ThrowAsync<DomainValidationException>();
+        application.IsModified.Should().BeFalse();
+        application.Status.Should().Be(ApplicationStatus.New);
     }
 }
