@@ -1,7 +1,7 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Queries;
-using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.Delivery.Commands;
+using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.Contract.Delivery.Queries;
 using HE.Investment.AHP.WWW.Extensions;
 using HE.Investment.AHP.WWW.Models.Delivery;
@@ -53,7 +53,7 @@ public class DeliveryController : Controller
     [HttpPost]
     public async Task<IActionResult> List(string applicationId, DeliveryListModel model, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new CompleteDeliverySectionCommand(AhpApplicationId.From(applicationId), IsSectionCompleted.Yes, true), cancellationToken);
+        var result = await _mediator.Send(new CompleteDeliverySectionCommand(AhpApplicationId.From(applicationId), IsDeliveryCompleted.Yes, true), cancellationToken);
         if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
@@ -75,14 +75,14 @@ public class DeliveryController : Controller
     [HttpPost("complete")]
     public async Task<IActionResult> Complete(string applicationId, CompleteDeliverySectionModel model, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new CompleteDeliverySectionCommand(AhpApplicationId.From(applicationId), model.IsSectionCompleted), cancellationToken);
+        var result = await _mediator.Send(new CompleteDeliverySectionCommand(AhpApplicationId.From(applicationId), model.IsDeliveryCompleted), cancellationToken);
         if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
             return View(model);
         }
 
-        return HttpContext.Request.IsSaveAndReturnAction() || model.IsSectionCompleted == IsSectionCompleted.Yes
+        return HttpContext.Request.IsSaveAndReturnAction() || model.IsDeliveryCompleted == IsDeliveryCompleted.Yes
             ? Url.RedirectToTaskList(applicationId)
             : RedirectToAction("List", new { applicationId });
     }
