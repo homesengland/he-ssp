@@ -159,7 +159,7 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
     {
         if (isDeliveryCompleted == IsDeliveryCompleted.Undefied)
         {
-            OperationResult.New().AddValidationError(nameof(IsDeliveryCompleted), "Select whether you have completed this section").CheckErrors();
+            OperationResult.ThrowValidationError((nameof(IsDeliveryCompleted), "Select whether you have completed this section");
         }
 
         if (isDeliveryCompleted == IsDeliveryCompleted.Yes)
