@@ -1,4 +1,4 @@
-﻿using HE.Investment.AHP.Contract.Site;
+using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Commands;
 using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investment.AHP.Domain.Site.ValueObjects;
@@ -10,14 +10,14 @@ using Microsoft.Extensions.Logging;
 
 namespace HE.Investment.AHP.Domain.Site.CommandHandlers;
 
-public class ProvideNationalDesignGuidePrioritiesCommandHandler : SiteBaseCommandHandler, IRequestHandler<ProvideNationaDesignGuidePrioritiesCommand, OperationResult>
+public class ProvideNationalDesignGuidePrioritiesCommandHandler : SiteBaseCommandHandler, IRequestHandler<ProvideNationalDesignGuidePrioritiesCommand, OperationResult>
 {
     public ProvideNationalDesignGuidePrioritiesCommandHandler(ISiteRepository siteRepository, IAccountUserContext accountUserContext, ILogger<SiteBaseCommandHandler> logger)
         : base(siteRepository, accountUserContext, logger)
     {
     }
 
-    public Task<OperationResult> Handle(ProvideNationaDesignGuidePrioritiesCommand request, CancellationToken cancellationToken)
+    public Task<OperationResult> Handle(ProvideNationalDesignGuidePrioritiesCommand request, CancellationToken cancellationToken)
     {
         return Perform(
             site =>

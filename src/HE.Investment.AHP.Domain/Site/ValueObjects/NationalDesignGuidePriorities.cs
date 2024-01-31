@@ -14,10 +14,17 @@ public class NationalDesignGuidePriorities : ValueObject, IQuestion
 {
     public NationalDesignGuidePriorities(IEnumerable<NationalDesignGuidePriority> priorities)
     {
-        if (priorities == null || !priorities.Any())
+        if (!priorities.Any())
         {
             OperationResult.New()
                 .AddValidationError(SiteValidationFieldNames.DesignPriorities, ValidationErrorMessage.MissingRequiredField("National Design Guide"))
+                .CheckErrors();
+        }
+
+        if (priorities.Any(x => x == NationalDesignGuidePriority.NoneOfTheAbove) && priorities.Count() > 1)
+        {
+            OperationResult.New()
+                .AddValidationError(SiteValidationFieldNames.DesignPriorities, "Incorrect values where provided for National Design Guide priorities")
                 .CheckErrors();
         }
 

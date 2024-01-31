@@ -9,10 +9,10 @@
 }
 
 <div class="govuk-grid-column-two-thirds">
-    <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.Section106AdditionalAffordableHousing" />
+    <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.NationalDesignGuide" />
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
-    <form asp-controller="Site" asp-action="NationaDesignGuide" asp-method="post" novalidate>
+    <form asp-controller="Site" asp-action="NationalDesignGuide" asp-method="post" novalidate>
         <vc:form-header title="@SitePageTitles.NationalDesignGuide" caption="@Model.SiteName" additional-css-class="govuk-!-padding-top-8"></vc:form-header>
 
         <gds-field-set class="govuk-!-margin-bottom-6">
@@ -45,9 +45,8 @@
                 </gds-checkbox>
             </he-error-form-group>
         </gds-field-set>
-
-        @Html.HiddenFor(x => x.SiteId)
         @Html.HiddenFor(x => x.SiteName)
         <vc:form-button/>
+        <vc:return-to-sites-link />
     </form>
 </div>

@@ -94,6 +94,11 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             .Permit(Trigger.Continue, SiteWorkflowState.Index)
             .PermitIf(Trigger.Back, SiteWorkflowState.LocalAuthorityConfirm, IsLocalAuthority)
             .PermitIf(Trigger.Back, SiteWorkflowState.LocalAuthoritySearch, () => !IsLocalAuthority());
+
+        _machine.Configure(SiteWorkflowState.NationalDesignGuide)
+            .Permit(Trigger.Continue, SiteWorkflowState.BuildingForHealthyLife)
+            .PermitIf(Trigger.Back, SiteWorkflowState.LocalAuthorityConfirm, IsLocalAuthority)
+            .PermitIf(Trigger.Back, SiteWorkflowState.LocalAuthoritySearch, () => !IsLocalAuthority());
     }
 
     private bool IsLocalAuthority() => _siteModel?.LocalAuthority?.Name.IsProvided() ?? false;

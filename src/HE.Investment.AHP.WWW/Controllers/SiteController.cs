@@ -395,29 +395,26 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     public async Task<IActionResult> NationalDesignGuide([FromRoute] string siteId, CancellationToken cancellationToken)
     {
         var siteModel = await _mediator.Send(new GetSiteQuery(siteId), cancellationToken);
-        ViewBag.SiteName = siteModel.Name!;
         var designGuideModel = new NationalDesignGuidePrioritiesModel()
         {
-            SiteName = siteModel.Name,
-            DesignPriorities = siteModel.NationalDesignGuidePriorities,
+            SiteId = siteId,
+            SiteName = siteModel?.Name ?? string.Empty,
+            DesignPriorities = siteModel?.NationalDesignGuidePriorities?.Where(x => x != NationalDesignGuidePriority.NoneOfTheAbove).ToList(),
+            OtherPriorities = siteModel?.NationalDesignGuidePriorities?.Where(x => x == NationalDesignGuidePriority.NoneOfTheAbove).ToList(),
         };
         return View("NationalDesignGuide", designGuideModel);
     }
 
     [HttpPost("{siteId}/national-design-guide")]
     [WorkflowState(SiteWorkflowState.NationalDesignGuide)]
-    public async Task<IActionResult> NationalDesignGuide(NationalDesignGuidePrioritiesModel model, CancellationToken cancellationToken)
+    public async Task<IActionResult> NationalDesignGuide([FromRoute] string siteId, NationalDesignGuidePrioritiesModel model, CancellationToken cancellationToken)
     {
         return await ExecuteSiteCommand(
-            new ProvideNationaDesignGuidePrioritiesCommand(
+            new ProvideNationalDesignGuidePrioritiesCommand(
                 this.GetSiteIdFromRoute(),
                 (model.DesignPriorities ?? new List<NationalDesignGuidePriority>()).Concat(model.OtherPriorities ?? new List<NationalDesignGuidePriority>()).ToList()),
             $"NationalDesignGuide",
-            savedModel =>
-            {
-                ViewBag.SiteName = savedModel.Name!;
-                return model;
-            },
+            savedModel => model,
             cancellationToken);
     }
 

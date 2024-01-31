@@ -19,4 +19,5 @@ public enum SiteWorkflowState
     PlanningStatus,
     NationalDesignGuide,
     PlanningDetails,
+    BuildingForHealthyLife,
 }
