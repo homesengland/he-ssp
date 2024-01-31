@@ -29,18 +29,23 @@ public class ProvidePlanningDetailsCommandHandler : ProvidePlanningDetailsBaseCo
 
         var operationResult = OperationResult.New();
         var referenceNumber = operationResult.AggregateNullable(() => ReferenceNumber.Create(request.ReferenceNumber));
-        var approvalDate = operationResult.AggregateNullable(() => DetailedPlanningApprovalDate.Create(approvalDateInput.Day, approvalDateInput.Month, approvalDateInput.Year));
+        var approvalDate = operationResult.AggregateNullable(() =>
+            DetailedPlanningApprovalDate.Create(approvalDateInput.Day, approvalDateInput.Month, approvalDateInput.Year));
         var requiredFurtherSteps = operationResult.AggregateNullable(() => RequiredFurtherSteps.Create(request.RequiredFurtherSteps));
-        var submittedDate = operationResult.AggregateNullable(() => ApplicationForDetailedPlanningSubmittedDate.Create(submittedDateInput.Day, submittedDateInput.Month, submittedDateInput.Year));
-        var expectedDate = operationResult.AggregateNullable(() => ExpectedPlanningApprovalDate.Create(expectedDateInput.Day, expectedDateInput.Month, expectedDateInput.Year));
-        var outlineDate = operationResult.AggregateNullable(() => OutlinePlanningApprovalDate.Create(outlineDateInput.Day, outlineDateInput.Month, outlineDateInput.Year));
-        var submissionDate = operationResult.AggregateNullable(() => PlanningSubmissionDate.Create(submissionDateInput.Day, submissionDateInput.Month, submissionDateInput.Year));
-        var isLandRegistryTitleNumberRegistered = operationResult.AggregateNullable(() =>
-            LandRegistryDetails.Create(request.IsLandRegistryTitleNumberRegistered, site.PlanningDetails.LandRegistryDetails?.TitleNumber));
+        var submittedDate = operationResult.AggregateNullable(() =>
+            ApplicationForDetailedPlanningSubmittedDate.Create(submittedDateInput.Day, submittedDateInput.Month, submittedDateInput.Year));
+        var expectedDate = operationResult.AggregateNullable(() =>
+            ExpectedPlanningApprovalDate.Create(expectedDateInput.Day, expectedDateInput.Month, expectedDateInput.Year));
+        var outlineDate = operationResult.AggregateNullable(() =>
+            OutlinePlanningApprovalDate.Create(outlineDateInput.Day, outlineDateInput.Month, outlineDateInput.Year));
+        var submissionDate = operationResult.AggregateNullable(() =>
+            PlanningSubmissionDate.Create(submissionDateInput.Day, submissionDateInput.Month, submissionDateInput.Year));
+        var landRegistryDetails = operationResult.AggregateNullable(() =>
+            LandRegistryDetails.WithIsRegistered(site.PlanningDetails.LandRegistryDetails, request.IsLandRegistryTitleNumberRegistered));
         operationResult.CheckErrors();
 
-        var planningDetails = PlanningDetailsFactory.Create(
-            site.PlanningDetails.PlanningStatus,
+        var planningDetails = PlanningDetailsFactory.WithDetails(
+            site.PlanningDetails,
             referenceNumber,
             approvalDate,
             requiredFurtherSteps,
@@ -48,8 +53,8 @@ public class ProvidePlanningDetailsCommandHandler : ProvidePlanningDetailsBaseCo
             expectedDate,
             outlineDate,
             submissionDate,
-            request.IsGrantFundingForAllHomes,
-            isLandRegistryTitleNumberRegistered);
+            request.IsGrantFundingForAllHomesCoveredByApplication,
+            landRegistryDetails);
 
         site.ProvidePlanningDetails(planningDetails);
     }
