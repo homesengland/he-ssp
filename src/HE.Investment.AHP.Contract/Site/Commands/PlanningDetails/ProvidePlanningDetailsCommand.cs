@@ -12,7 +12,7 @@ public record ProvidePlanningDetailsCommand(
         DateDetails ApplicationForDetailedPlanningSubmittedDate,
         DateDetails ExpectedPlanningApprovalDate,
         DateDetails OutlinePlanningApprovalDate,
-        bool? IsGrantFundingForAllHomes,
+        bool? IsGrantFundingForAllHomesCoveredByApplication,
         DateDetails PlanningSubmissionDate,
         bool? IsLandRegistryTitleNumberRegistered)
     : IRequest<OperationResult>, IProvideSitePlanningDetailsCommand;

@@ -19,6 +19,7 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
     {
         nameof(invln_DeliveryPhase.invln_phasename),
         nameof(invln_DeliveryPhase.CreatedOn),
+        nameof(invln_DeliveryPhase.invln_iscompleted),
         nameof(invln_DeliveryPhase.invln_buildactivitytype),
         nameof(invln_DeliveryPhase.invln_rehabactivitytype),
         nameof(invln_DeliveryPhase.invln_reconfiguringexistingproperties),
@@ -42,7 +43,7 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
             application,
             new DeliveryPhaseName(dto.name),
             organisation,
-            SectionStatus.InProgress, // TODO: map when added to CRM
+            dto.isCompleted == true ? SectionStatus.Completed : SectionStatus.InProgress,
             MilestoneTranches.NotProvided, // TODO: Task 89103: [CRM] Save tranches (Milestone framework)
             typeOfHomes,
             buildActivity,
@@ -61,6 +62,7 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
             id = entity.Id.IsNew ? null : entity.Id.Value,
             applicationId = entity.Application.Id.Value,
             name = entity.Name.Value,
+            isCompleted = entity.Status == SectionStatus.Completed,
             newBuildActivityType = MapNewBuildActivityType(entity.BuildActivity.Type),
             rehabBuildActivityType = MapRehabBuildActivityType(entity.BuildActivity.Type),
             isReconfigurationOfExistingProperties = entity.ReconfiguringExisting,

@@ -440,15 +440,34 @@ public class SiteController : WorkflowController<SiteWorkflowState>
                 model.ApplicationForDetailedPlanningSubmittedDate ?? DateDetails.Empty(),
                 model.ExpectedPlanningApprovalDate ?? DateDetails.Empty(),
                 model.OutlinePlanningApprovalDate ?? DateDetails.Empty(),
-                model.IsGrantFundingForAllHomes,
+                model.IsGrantFundingForAllHomesCoveredByApplication,
                 model.PlanningSubmissionDate ?? DateDetails.Empty(),
                 model.IsLandRegistryTitleNumberRegistered),
             nameof(PlanningDetails),
-            savedModel =>
-            {
-                ViewBag.SiteName = savedModel.Name!;
-                return model with { PlanningStatus = savedModel.PlanningDetails.PlanningStatus };
-            },
+            savedModel => model with { PlanningStatus = savedModel.PlanningDetails.PlanningStatus },
+            cancellationToken);
+    }
+
+    [HttpGet("{siteId}/land-registry")]
+    [WorkflowState(SiteWorkflowState.LandRegistry)]
+    public async Task<IActionResult> LandRegistry([FromRoute] string siteId, CancellationToken cancellationToken)
+    {
+        var siteModel = await _mediator.Send(new GetSiteQuery(siteId), cancellationToken);
+        ViewBag.SiteName = siteModel.Name!;
+        return View("LandRegistry", siteModel.PlanningDetails);
+    }
+
+    [HttpPost("{siteId}/land-registry")]
+    [WorkflowState(SiteWorkflowState.LandRegistry)]
+    public async Task<IActionResult> LandRegistry(SitePlanningDetails model, CancellationToken cancellationToken)
+    {
+        return await ExecuteSiteCommand<SitePlanningDetails>(
+            new ProvideLandRegistryDetailsCommand(
+                this.GetSiteIdFromRoute(),
+                model.LandRegistryTitleNumber,
+                model.IsGrantFundingForAllHomesCoveredByTitleNumber),
+            nameof(PlanningDetails),
+            savedModel => model,
             cancellationToken);
     }
 
@@ -481,6 +500,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
             async () =>
             {
                 var siteDetails = await _mediator.Send(new GetSiteQuery(siteId.Value), cancellationToken);
+                ViewBag.SiteName = siteDetails.Name!;
                 var model = createViewModelForError(siteDetails);
 
                 return View(viewName, model);

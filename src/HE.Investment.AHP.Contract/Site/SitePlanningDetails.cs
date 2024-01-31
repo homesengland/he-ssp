@@ -10,7 +10,8 @@ public record SitePlanningDetails(
     DateDetails? ApplicationForDetailedPlanningSubmittedDate,
     DateDetails? ExpectedPlanningApprovalDate,
     DateDetails? OutlinePlanningApprovalDate,
-    bool? IsGrantFundingForAllHomes,
+    bool? IsGrantFundingForAllHomesCoveredByApplication,
     DateDetails? PlanningSubmissionDate,
     bool? IsLandRegistryTitleNumberRegistered,
-    string? LandRegistryTitleNumber);
+    string? LandRegistryTitleNumber,
+    bool? IsGrantFundingForAllHomesCoveredByTitleNumber);

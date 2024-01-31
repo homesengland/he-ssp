@@ -1,0 +1,32 @@
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investment.AHP.Contract.Site
+@using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
+@using HE.Investment.AHP.WWW.Views.Site
+@model SitePlanningDetails
+@{
+    ViewData["Title"] = SitePageTitles.LandRegistry;
+}
+<gds-div-grid-column-two-thirds>
+    <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.LandRegistry"/>
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+    <vc:form-header caption="@ViewBag.SiteName"/>
+
+    <form asp-controller="Site" asp-action="LandRegistry" asp-method="post" novalidate>
+
+        <vc:text-input
+            field-name="@nameof(Model.LandRegistryTitleNumber)"
+            value="@Model.LandRegistryTitleNumber"
+            title="Enter your Land Registry title number"
+            hint="If you have multiple title numbers, separate these with a comma."
+            css-class="govuk-!-width-one-half"/>
+
+        <vc:radio-yes-no
+            field-name="@nameof(Model.IsGrantFundingForAllHomesCoveredByTitleNumber)"
+            value="Model.IsGrantFundingForAllHomesCoveredByTitleNumber"
+            title="Are you applying for grant funding for all of the homes covered by this title number?"/>
+
+        <vc:form-button/>
+        <vc:return-to-sites-link/>
+    </form>
+
+</gds-div-grid-column-two-thirds>

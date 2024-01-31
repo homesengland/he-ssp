@@ -13,7 +13,7 @@ public class DetailedPlanningApprovalGrantedPlanningDetails : PlanningDetails, I
         : base(
             referenceNumber,
             detailedPlanningApprovalDate,
-            isGrantFundingForAllHomes: isGrantFundingForAllHomes)
+            isGrantFundingForAllHomesCoveredByApplication: isGrantFundingForAllHomes)
     {
     }
 
@@ -23,6 +23,6 @@ public class DetailedPlanningApprovalGrantedPlanningDetails : PlanningDetails, I
     {
         return ReferenceNumber.IsProvided() &&
                DetailedPlanningApprovalDate.IsProvided() &&
-               IsGrantFundingForAllHomes.IsProvided();
+               IsGrantFundingForAllHomesCoveredByApplication.IsProvided();
     }
 }

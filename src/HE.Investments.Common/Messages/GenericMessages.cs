@@ -10,5 +10,5 @@ public static class GenericMessages
 
     public const string SaveAndReturn = "SaveAndReturn";
 
-    public const string PoundFieldDefaultName = "The amount";
+    public const string PoundFieldDefaultName = "amount";
 }

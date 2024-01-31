@@ -6,5 +6,5 @@ namespace HE.Investment.AHP.Contract.Site.Commands.PlanningDetails;
 public record ProvideLandRegistryDetailsCommand(
         SiteId SiteId,
         string? LandRegistryTitleNumber,
-        bool? IsGrantFundingForAllHomes)
+        bool? IsGrantFundingForAllHomesCoveredByTitleNumber)
     : IRequest<OperationResult>, IProvideSitePlanningDetailsCommand;
