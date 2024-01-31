@@ -158,6 +158,17 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
         Status = _modificationTracker.Change(Status, SectionStatus.InProgress);
     }
 
+    public MilestoneTranches GetMilestoneTranches(decimal requiredFunding, int totalHousesToDeliver, MilestoneFramework milestoneFramework)
+    {
+        if (MilestoneTranches.IsNotProvided())
+        {
+            var summaryOfDelivery = CalculateSummary(requiredFunding, totalHousesToDeliver, milestoneFramework);
+            return new MilestoneTranches(summaryOfDelivery.AcquisitionMilestone, summaryOfDelivery.StartOnSiteMilestone, summaryOfDelivery.CompletionMilestone);
+        }
+
+        return MilestoneTranches;
+    }
+
     public SummaryOfDelivery CalculateSummary(decimal requiredFunding, int totalHousesToDeliver, MilestoneFramework milestoneFramework)
     {
         if (requiredFunding <= 0 || totalHousesToDeliver <= 0 || TotalHomesToBeDeliveredInThisPhase <= 0)
@@ -201,6 +212,11 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
 
     public void ProvideMilestoneTranches(MilestoneTranches milestoneTranches)
     {
+        if (Application.Status.IsNotIn(ApplicationStatus.ReferredBackToApplicant))
+        {
+            throw new DomainValidationException($"Cannot provide Milestone Tranches for Application in {Application.Status} status.");
+        }
+
         MilestoneTranches = _modificationTracker.Change(MilestoneTranches, milestoneTranches, MarkAsNotCompleted);
     }
 
