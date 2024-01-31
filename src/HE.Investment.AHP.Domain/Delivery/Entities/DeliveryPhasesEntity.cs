@@ -88,16 +88,12 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
     {
         if (!_homesToDeliver.Any())
         {
-            OperationResult.New()
-                .AddValidationError(nameof(HomesToDeliver), "You must add at least 1 home type in home types section")
-                .CheckErrors();
+            OperationResult.ThrowValidationError(nameof(HomesToDeliver), "You must add at least 1 home type in home types section");
         }
 
         if (homesToDeliver.All(x => x.ToDeliver == 0))
         {
-            OperationResult.New()
-                .AddValidationError(nameof(HomesToDeliver), "You must add at least 1 home to a home type for this delivery phase")
-                .CheckErrors();
+            OperationResult.ThrowValidationError(nameof(HomesToDeliver), "You must add at least 1 home to a home type for this delivery phase");
         }
 
         GetEntityById(deliveryPhaseId).SetHomesToBeDeliveredInThisPhase(homesToDeliver);
@@ -145,7 +141,7 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
         var deliveryPhase = GetEntityById(deliveryPhaseId);
         if (removeAnswer == RemoveDeliveryPhaseAnswer.Undefined)
         {
-            OperationResult.New().AddValidationError(nameof(RemoveDeliveryPhaseAnswer), "Select whether you want to remove this delivery phase").CheckErrors();
+            OperationResult.ThrowValidationError(nameof(RemoveDeliveryPhaseAnswer), "Select whether you want to remove this delivery phase");
         }
 
         if (removeAnswer == RemoveDeliveryPhaseAnswer.Yes)
@@ -159,35 +155,31 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
     {
         if (isDeliveryCompleted == IsDeliveryCompleted.Undefied)
         {
-            OperationResult.ThrowValidationError((nameof(IsDeliveryCompleted), "Select whether you have completed this section");
+            OperationResult.ThrowValidationError(nameof(IsDeliveryCompleted), "Select whether you have completed this section");
         }
 
         if (isDeliveryCompleted == IsDeliveryCompleted.Yes)
         {
             if (!_deliveryPhases.Any())
             {
-                throw new DomainValidationException(
-                    new OperationResult().AddValidationErrors(new List<ErrorItem>
-                    {
-                        new("DeliveryPhases", "Delivery Section cannot be completed because at least one Delivery Phase needs to be added."),
-                    }));
+                OperationResult.ThrowValidationError(
+                    "DeliveryPhases",
+                    "Delivery Section cannot be completed because at least one Delivery Phase needs to be added.");
             }
 
             var notCompletedDeliveryPhases = _deliveryPhases.Where(x => x.Status != SectionStatus.Completed).ToList();
             if (notCompletedDeliveryPhases.Any())
             {
-                throw new DomainValidationException(new OperationResult().AddValidationErrors(
-                    notCompletedDeliveryPhases.Select(x => new ErrorItem($"DeliveryPhase-{x.Id}", $"Complete {x.Name.Value} to save and continue"))
-                        .ToList()));
+                OperationResult.New()
+                    .AddValidationErrors(notCompletedDeliveryPhases
+                        .Select(x => new ErrorItem($"DeliveryPhase-{x.Id}", $"Complete {x.Name.Value} to save and continue"))
+                        .ToList())
+                    .CheckErrors();
             }
 
             if (!AreAllHomeTypesUsed())
             {
-                throw new DomainValidationException(
-                    new OperationResult().AddValidationErrors(new List<ErrorItem>
-                    {
-                        new("DeliveryPhases", "Delivery Section cannot be completed because not all homes from Home Types are used."),
-                    }));
+                OperationResult.ThrowValidationError("DeliveryPhases", "Delivery Section cannot be completed because not all homes from Home Types are used.");
             }
 
             Status = _statusModificationTracker.Change(Status, SectionStatus.Completed);
@@ -210,9 +202,7 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
         if ((entity == null && _deliveryPhases.Any(x => x.Name == name))
             || (entity != null && _deliveryPhases.Except(new[] { entity }).Any(x => x.Name == name)))
         {
-            OperationResult.New()
-                .AddValidationError(nameof(DeliveryPhaseName), "Provided delivery phase name is already in use. Delivery phase name should be unique.")
-                .CheckErrors();
+            OperationResult.ThrowValidationError(nameof(DeliveryPhaseName), "Provided delivery phase name is already in use. Delivery phase name should be unique.");
         }
 
         return name;
