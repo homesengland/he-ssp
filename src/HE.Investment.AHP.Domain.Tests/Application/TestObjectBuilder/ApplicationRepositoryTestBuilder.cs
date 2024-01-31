@@ -12,12 +12,14 @@ public class ApplicationRepositoryTestBuilder
     private readonly Mock<IApplicationRepository> _mock;
     private readonly Mock<IApplicationWithdraw> _iApplicationWithdrawMock;
     private readonly Mock<IApplicationHold> _iApplicationHoldMock;
+    private readonly Mock<IApplicationSubmit> _iApplicationSubmitMock;
 
     private ApplicationRepositoryTestBuilder()
     {
         _mock = new Mock<IApplicationRepository>();
         _iApplicationWithdrawMock = new Mock<IApplicationWithdraw>();
         _iApplicationHoldMock = new Mock<IApplicationHold>();
+        _iApplicationSubmitMock = new Mock<IApplicationSubmit>();
     }
 
     public static ApplicationRepositoryTestBuilder New() => new();
@@ -46,6 +48,11 @@ public class ApplicationRepositoryTestBuilder
         return _iApplicationHoldMock.Object;
     }
 
+    public IApplicationSubmit BuildIApplicationSubmit()
+    {
+        return _iApplicationSubmitMock.Object;
+    }
+
     public Mock<IApplicationRepository> BuildMockAndRegister(IRegisterDependency registerDependency)
     {
         var mockedObject = Build();
@@ -65,5 +72,12 @@ public class ApplicationRepositoryTestBuilder
         var mockedObject = BuildIApplicationHold();
         registerDependency.RegisterDependency(mockedObject);
         return _iApplicationHoldMock;
+    }
+
+    public Mock<IApplicationSubmit> BuildIApplicationSubmitMockAndRegister(IRegisterDependency registerDependency)
+    {
+        var mockedObject = BuildIApplicationSubmit();
+        registerDependency.RegisterDependency(mockedObject);
+        return _iApplicationSubmitMock;
     }
 }

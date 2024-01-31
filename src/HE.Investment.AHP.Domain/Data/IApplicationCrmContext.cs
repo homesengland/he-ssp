@@ -21,6 +21,6 @@ public interface IApplicationCrmContext
         string applicationId,
         Guid organisationId,
         ApplicationStatus applicationStatus,
-        string? reason,
+        string? changeReason,
         CancellationToken cancellationToken);
 }
