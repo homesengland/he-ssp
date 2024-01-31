@@ -3,6 +3,7 @@ using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Commands;
 using HE.Investment.AHP.Contract.Site.Commands.PlanningDetails;
+using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investment.AHP.Contract.Site.Queries;
 using HE.Investment.AHP.WWW.Extensions;
 using HE.Investment.AHP.WWW.Models.Site;
@@ -408,13 +409,18 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     public async Task<IActionResult> NationalDesignGuide(NationalDesignGuidePrioritiesModel model, CancellationToken cancellationToken)
     {
         return await ExecuteSiteCommand(
-            new ProvideNationaDesignGuidePrioritiesCommand(this.GetSiteIdFromRoute(), model.DesignPriorities.Concat(model.OtherPriorities).ToList()),
+            new ProvideNationaDesignGuidePrioritiesCommand(
+                this.GetSiteIdFromRoute(),
+                (model.DesignPriorities ?? new List<NationalDesignGuidePriority>()).Concat(model.OtherPriorities ?? new List<NationalDesignGuidePriority>()).ToList()),
             $"NationalDesignGuide",
             savedModel =>
             {
                 ViewBag.SiteName = savedModel.Name!;
                 return model;
-    
+            },
+            cancellationToken);
+    }
+
     [HttpGet("{siteId}/planning-details")]
     [WorkflowState(SiteWorkflowState.PlanningDetails)]
     public async Task<IActionResult> PlanningDetails([FromRoute] string siteId, CancellationToken cancellationToken)

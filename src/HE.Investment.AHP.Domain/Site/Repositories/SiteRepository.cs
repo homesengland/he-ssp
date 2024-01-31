@@ -80,7 +80,7 @@ public class SiteRepository : ISiteRepository
             new(new SiteId("12"), new SiteName("Mocked Site 2 Carquinez"), new Section106(), PlanningDetailsFactory.CreateEmpty(), new NationalDesignGuidePriorities()),
             new(new SiteId("13"), new SiteName("Mocked Site 2 JJ"), new Section106(), PlanningDetailsFactory.CreateEmpty(), new NationalDesignGuidePriorities()),
             new(new SiteId("14"), new SiteName("Mocked Site 2 Antonios"), new Section106(), PlanningDetailsFactory.CreateEmpty(), new NationalDesignGuidePriorities(), new LocalAuthority(new LocalAuthorityId("14"), "local auth")),
-            new(new SiteId("15"), new SiteName("Mocked Site 2 5"), new Section106(), PlanningDetailsFactory.CreateEmpty(),new NationalDesignGuidePriorities()),
+            new(new SiteId("15"), new SiteName("Mocked Site 2 5"), new Section106(), PlanningDetailsFactory.CreateEmpty(), new NationalDesignGuidePriorities()),
             new(new SiteId("16"), new SiteName("Mocked Site 2 Dawidex"), new Section106(), PlanningDetailsFactory.CreateEmpty(), new NationalDesignGuidePriorities()),
             new(new SiteId("17"), new SiteName("Mocked Site 2 7"), new Section106(), PlanningDetailsFactory.CreateEmpty(), new NationalDesignGuidePriorities()),
             new(new SiteId("18"), new SiteName("Mocked Site 2 Rafus"), new Section106(true, false, null, null, null, null), PlanningDetailsFactory.CreateEmpty(), new NationalDesignGuidePriorities()),
