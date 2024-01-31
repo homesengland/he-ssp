@@ -9,7 +9,51 @@ public static class PlanningDetailsFactory
 {
     public static PlanningDetails CreateEmpty() => new EmptyPlanningDetails();
 
-    public static PlanningDetails Create(
+    public static PlanningDetails New(SitePlanningStatus? planningStatus) => Create(planningStatus);
+
+    public static PlanningDetails WithLandRegistryDetails(
+        PlanningDetails planningDetails,
+        LandRegistryDetails? landRegistryDetails = null)
+    {
+        return Create(
+            planningDetails.PlanningStatus,
+            planningDetails.ReferenceNumber,
+            planningDetails.DetailedPlanningApprovalDate,
+            planningDetails.RequiredFurtherSteps,
+            planningDetails.ApplicationForDetailedPlanningSubmittedDate,
+            planningDetails.ExpectedPlanningApprovalDate,
+            planningDetails.OutlinePlanningApprovalDate,
+            planningDetails.PlanningSubmissionDate,
+            planningDetails.IsGrantFundingForAllHomesCoveredByApplication,
+            landRegistryDetails);
+    }
+
+    public static PlanningDetails WithDetails(
+        PlanningDetails planningDetails,
+        ReferenceNumber? referenceNumber = null,
+        DetailedPlanningApprovalDate? detailedPlanningApprovalDate = null,
+        RequiredFurtherSteps? requiredFurtherSteps = null,
+        ApplicationForDetailedPlanningSubmittedDate? applicationForDetailedPlanningSubmittedDate = null,
+        ExpectedPlanningApprovalDate? expectedPlanningApprovalDate = null,
+        OutlinePlanningApprovalDate? outlinePlanningApprovalDate = null,
+        PlanningSubmissionDate? planningSubmissionDate = null,
+        bool? isGrantFundingForAllHomesCoveredByApplication = null,
+        LandRegistryDetails? landRegistryDetails = null)
+    {
+        return Create(
+            planningDetails.PlanningStatus,
+            referenceNumber,
+            detailedPlanningApprovalDate,
+            requiredFurtherSteps,
+            applicationForDetailedPlanningSubmittedDate,
+            expectedPlanningApprovalDate,
+            outlinePlanningApprovalDate,
+            planningSubmissionDate,
+            isGrantFundingForAllHomesCoveredByApplication,
+            landRegistryDetails);
+    }
+
+    private static PlanningDetails Create(
         SitePlanningStatus? planningStatus,
         ReferenceNumber? referenceNumber = null,
         DetailedPlanningApprovalDate? detailedPlanningApprovalDate = null,

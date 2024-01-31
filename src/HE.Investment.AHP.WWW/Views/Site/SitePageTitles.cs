@@ -39,4 +39,6 @@ public static class SitePageTitles
     public const string PlanningStatus = "What is the planning status of this site?";
 
     public const string PlanningDetails = "Planning details";
+
+    public const string LandRegistry = "Land Registry";
 }

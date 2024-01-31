@@ -16,7 +16,7 @@ public class ProvideSitePlanningStatusCommandHandler : ProvidePlanningDetailsBas
 
     protected override void Provide(ProvideSitePlanningStatusCommand request, SiteEntity site)
     {
-        var planningDetails = PlanningDetailsFactory.Create(request.SitePlanningStatus);
+        var planningDetails = PlanningDetailsFactory.New(request.SitePlanningStatus);
 
         site.ProvidePlanningDetails(planningDetails);
     }
