@@ -12,7 +12,7 @@ public abstract class PlanningDetails : ValueObject, IQuestion
         ApplicationForDetailedPlanningSubmittedDate? applicationForDetailedPlanningSubmittedDate = null,
         ExpectedPlanningApprovalDate? expectedPlanningApprovalDate = null,
         OutlinePlanningApprovalDate? outlinePlanningApprovalDate = null,
-        bool? isGrantFundingForAllHomes = null,
+        bool? isGrantFundingForAllHomesCoveredByApplication = null,
         PlanningSubmissionDate? planningSubmissionDate = null,
         LandRegistryDetails? landRegistryDetails = null)
     {
@@ -22,7 +22,7 @@ public abstract class PlanningDetails : ValueObject, IQuestion
         ApplicationForDetailedPlanningSubmittedDate = applicationForDetailedPlanningSubmittedDate;
         ExpectedPlanningApprovalDate = expectedPlanningApprovalDate;
         OutlinePlanningApprovalDate = outlinePlanningApprovalDate;
-        IsGrantFundingForAllHomes = isGrantFundingForAllHomes;
+        IsGrantFundingForAllHomesCoveredByApplication = isGrantFundingForAllHomesCoveredByApplication;
         PlanningSubmissionDate = planningSubmissionDate;
         LandRegistryDetails = landRegistryDetails;
     }
@@ -41,7 +41,7 @@ public abstract class PlanningDetails : ValueObject, IQuestion
 
     public OutlinePlanningApprovalDate? OutlinePlanningApprovalDate { get; }
 
-    public bool? IsGrantFundingForAllHomes { get; }
+    public bool? IsGrantFundingForAllHomesCoveredByApplication { get; }
 
     public PlanningSubmissionDate? PlanningSubmissionDate { get; }
 
@@ -58,7 +58,7 @@ public abstract class PlanningDetails : ValueObject, IQuestion
         yield return ApplicationForDetailedPlanningSubmittedDate;
         yield return ExpectedPlanningApprovalDate;
         yield return OutlinePlanningApprovalDate;
-        yield return IsGrantFundingForAllHomes;
+        yield return IsGrantFundingForAllHomesCoveredByApplication;
         yield return PlanningSubmissionDate;
         yield return LandRegistryDetails;
     }

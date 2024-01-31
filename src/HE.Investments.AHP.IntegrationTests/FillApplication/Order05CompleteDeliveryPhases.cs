@@ -255,8 +255,48 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
 
         // then
         deliveryPhasesListPage
-            .UrlEndWith(DeliveryPhasesPagesUrl.List(ApplicationData.ApplicationId))
+            .UrlEndWith(BuildDeliveryPhasesPage(DeliveryPhasesPagesUrl.List))
             .HasTitle(DeliveryPageTitles.List);
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(12)]
+    public async Task Order12_CompleteDeliveryPhasesSection()
+    {
+        // given
+        var deliveryPhaseListPage = await GetCurrentPage(BuildDeliveryPhasesPage(DeliveryPhasesPagesUrl.List));
+        deliveryPhaseListPage
+            .UrlEndWith(BuildDeliveryPhasesPage(DeliveryPhasesPagesUrl.List))
+            .HasTitle(DeliveryPageTitles.List)
+            .HasGdsSubmitButton("continue-button", out var continueButton);
+
+        // when
+        var completeDeliveryPhasesPage = await TestClient.SubmitButton(continueButton);
+
+        // then
+        completeDeliveryPhasesPage.UrlEndWith(BuildDeliveryPhasesPage(DeliveryPhasesPagesUrl.CompleteDeliveryPhases))
+            .HasTitle(DeliveryPageTitles.Complete);
+        SaveCurrentPage();
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(13)]
+    public async Task Order13_ConfirmCompleteDeliveryPhasesSection()
+    {
+        // given
+        var completeDeliveryPhasesPage = await GetCurrentPage(BuildDeliveryPhasesPage(DeliveryPhasesPagesUrl.CompleteDeliveryPhases));
+        completeDeliveryPhasesPage
+            .UrlEndWith(BuildDeliveryPhasesPage(DeliveryPhasesPagesUrl.CompleteDeliveryPhases))
+            .HasTitle(DeliveryPageTitles.Complete)
+            .HasGdsSubmitButton("continue-button", out var continueButton);
+
+        // when
+        var taskListPage = await TestClient.SubmitButton(continueButton, ("IsDeliveryCompleted", "Yes"));
+
+        // then
+        taskListPage.UrlEndWith(ApplicationPagesUrl.TaskList(ApplicationData.ApplicationId))
+            .HasSectionWithStatus("add-delivery-phases-status", "Completed");
+        SaveCurrentPage();
     }
 
     private async Task<IHtmlDocument> RemoveDeliveryPhase(IHtmlDocument deliveryPhasesListPage, string deliveryPhaseId)

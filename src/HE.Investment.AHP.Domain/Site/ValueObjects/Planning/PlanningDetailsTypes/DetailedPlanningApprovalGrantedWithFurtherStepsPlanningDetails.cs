@@ -15,7 +15,7 @@ public class DetailedPlanningApprovalGrantedWithFurtherStepsPlanningDetails : Pl
             referenceNumber,
             detailedPlanningApprovalDate,
             requiredFurtherSteps: requiredFurtherSteps,
-            isGrantFundingForAllHomes: isGrantFundingForAllHomes)
+            isGrantFundingForAllHomesCoveredByApplication: isGrantFundingForAllHomes)
     {
     }
 
@@ -26,6 +26,6 @@ public class DetailedPlanningApprovalGrantedWithFurtherStepsPlanningDetails : Pl
         return ReferenceNumber.IsProvided() &&
                DetailedPlanningApprovalDate.IsProvided() &&
                RequiredFurtherSteps.IsProvided() &&
-               IsGrantFundingForAllHomes.IsProvided();
+               IsGrantFundingForAllHomesCoveredByApplication.IsProvided();
     }
 }

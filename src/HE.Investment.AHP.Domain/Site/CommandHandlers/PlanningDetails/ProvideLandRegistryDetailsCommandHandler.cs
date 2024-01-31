@@ -24,19 +24,11 @@ public class ProvideLandRegistryDetailsCommandHandler : ProvidePlanningDetailsBa
         var operationResult = OperationResult.New();
         var titleNumber = operationResult.AggregateNullable(() => new LandRegistryTitleNumber(request.LandRegistryTitleNumber));
         var landRegistryDetails = operationResult.AggregateNullable(() =>
-            new LandRegistryDetails(site.PlanningDetails.LandRegistryDetails?.IsLandRegistryTitleNumberRegistered, titleNumber));
+            LandRegistryDetails.WithDetails(site.PlanningDetails.LandRegistryDetails, titleNumber, request.IsGrantFundingForAllHomesCoveredByTitleNumber));
         operationResult.CheckErrors();
 
-        var planningDetails = PlanningDetailsFactory.Create(
-            site.PlanningDetails.PlanningStatus,
-            site.PlanningDetails.ReferenceNumber,
-            site.PlanningDetails.DetailedPlanningApprovalDate,
-            site.PlanningDetails.RequiredFurtherSteps,
-            site.PlanningDetails.ApplicationForDetailedPlanningSubmittedDate,
-            site.PlanningDetails.ExpectedPlanningApprovalDate,
-            site.PlanningDetails.OutlinePlanningApprovalDate,
-            site.PlanningDetails.PlanningSubmissionDate,
-            request.IsGrantFundingForAllHomes,
+        var planningDetails = PlanningDetailsFactory.WithLandRegistryDetails(
+            site.PlanningDetails,
             landRegistryDetails);
 
         site.ProvidePlanningDetails(planningDetails);

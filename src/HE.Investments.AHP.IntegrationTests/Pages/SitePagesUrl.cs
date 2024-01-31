@@ -20,5 +20,14 @@ public static class SitePagesUrl
 
     public static string SiteSection106LocalAuthorityConfirmation(string siteId) => $"ahp/site/{siteId}/section-106-local-authority-confirmation";
 
+    public static string SiteLocalAuthoritySearch(string siteId) => $"ahp/site/{siteId}/local-authority/search";
+
+    public static string SiteLocalAuthorityResult(string siteId) => $"ahp/site/{siteId}/local-authority/search/result";
+
+    public static string SiteLocalAuthorityConfirm(string siteId, string localAuthorityId, string localAuthorityName, string phrase) =>
+        $"ahp/site/{siteId}/local-authority/{localAuthorityId}/{localAuthorityName}/confirm?phrase={phrase}";
+
+    public static string SitePlanningStatus(string siteId) => $"ahp/site/{siteId}/planning-status";
+
     public static string SiteConfirm(string siteId) => $"ahp/site/{siteId}/confirm-select";
 }

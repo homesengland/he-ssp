@@ -11,13 +11,13 @@ public class OutlinePlanningApprovalGrantedPlanningDetails : PlanningDetails, IQ
         RequiredFurtherSteps? requiredFurtherSteps = null,
         ExpectedPlanningApprovalDate? expectedPlanningApprovalDate = null,
         OutlinePlanningApprovalDate? outlinePlanningApprovalDate = null,
-        bool? isGrantFundingForAllHomes = null)
+        bool? isGrantFundingForAllHomesCoveredByApplication = null)
         : base(
             referenceNumber,
             requiredFurtherSteps: requiredFurtherSteps,
             expectedPlanningApprovalDate: expectedPlanningApprovalDate,
             outlinePlanningApprovalDate: outlinePlanningApprovalDate,
-            isGrantFundingForAllHomes: isGrantFundingForAllHomes)
+            isGrantFundingForAllHomesCoveredByApplication: isGrantFundingForAllHomesCoveredByApplication)
     {
     }
 
@@ -29,6 +29,6 @@ public class OutlinePlanningApprovalGrantedPlanningDetails : PlanningDetails, IQ
                RequiredFurtherSteps.IsProvided() &&
                ExpectedPlanningApprovalDate.IsProvided() &&
                OutlinePlanningApprovalDate.IsProvided() &&
-               IsGrantFundingForAllHomes.IsProvided();
+               IsGrantFundingForAllHomesCoveredByApplication.IsProvided();
     }
 }

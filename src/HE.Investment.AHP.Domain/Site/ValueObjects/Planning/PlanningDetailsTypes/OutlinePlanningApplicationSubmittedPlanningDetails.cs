@@ -16,7 +16,7 @@ public class OutlinePlanningApplicationSubmittedPlanningDetails : PlanningDetail
             referenceNumber,
             requiredFurtherSteps: requiredFurtherSteps,
             expectedPlanningApprovalDate: expectedPlanningApprovalDate,
-            isGrantFundingForAllHomes: isGrantFundingForAllHomes,
+            isGrantFundingForAllHomesCoveredByApplication: isGrantFundingForAllHomes,
             planningSubmissionDate: planningSubmissionDate)
     {
     }
@@ -28,7 +28,7 @@ public class OutlinePlanningApplicationSubmittedPlanningDetails : PlanningDetail
         return ReferenceNumber.IsProvided() &&
                RequiredFurtherSteps.IsProvided() &&
                ExpectedPlanningApprovalDate.IsProvided() &&
-               IsGrantFundingForAllHomes.IsProvided() &&
+               IsGrantFundingForAllHomesCoveredByApplication.IsProvided() &&
                PlanningSubmissionDate.IsProvided();
     }
 }

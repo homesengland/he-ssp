@@ -52,21 +52,25 @@ public class MapToDomainTests : TestBase<DeliveryPhaseCrmMapper>
         result.IsAdditionalPaymentRequested.Should().BeNull();
     }
 
-    [Fact]
-    public void ShouldMapDeliveryPhaseStatus()
+    [Theory]
+    [InlineData(true, SectionStatus.Completed)]
+    [InlineData(false, SectionStatus.InProgress)]
+    [InlineData(null, SectionStatus.InProgress)]
+    public void ShouldMapDeliveryPhaseStatus(bool? isCompleted, SectionStatus expectedStatus)
     {
         // given
         var dto = new DeliveryPhaseDto
         {
             id = "dp-id-1",
             name = "my name",
+            isCompleted = isCompleted,
         };
 
         // when
         var result = TestCandidate.MapToDomain(Application, Organisation, dto);
 
         // then
-        result.Status.Should().Be(SectionStatus.InProgress);
+        result.Status.Should().Be(expectedStatus);
     }
 
     [Theory]
