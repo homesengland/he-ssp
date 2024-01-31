@@ -88,6 +88,7 @@ public static class DomainModule
         services.AddScoped<IAhpProgrammeRepository, AhpProgrammeRepository>();
         services.AddScoped<IApplicationWithdraw, ApplicationRepository>();
         services.AddScoped<IApplicationHold, ApplicationRepository>();
+        services.AddScoped<IApplicationSubmit, ApplicationRepository>();
     }
 
     private static void AddScheme(IServiceCollection services)

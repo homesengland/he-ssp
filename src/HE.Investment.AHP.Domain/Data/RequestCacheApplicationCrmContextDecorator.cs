@@ -50,11 +50,11 @@ public class RequestCacheApplicationCrmContextDecorator : IApplicationCrmContext
         string applicationId,
         Guid organisationId,
         ApplicationStatus applicationStatus,
-        string? reason,
+        string? changeReason,
         CancellationToken cancellationToken)
     {
         RemoveFromCache(applicationId, organisationId);
-        await _decorated.ChangeApplicationStatus(applicationId, organisationId, applicationStatus, reason, cancellationToken);
+        await _decorated.ChangeApplicationStatus(applicationId, organisationId, applicationStatus, changeReason, cancellationToken);
     }
 
     private async Task<AhpApplicationDto> GetFromCache(

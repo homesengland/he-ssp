@@ -1,20 +1,26 @@
 using HE.Investment.AHP.Contract.Application.Commands;
-using HE.Investment.AHP.Domain.Application.Entities;
 using HE.Investment.AHP.Domain.Application.Repositories.Interfaces;
 using HE.Investments.Account.Shared;
+using HE.Investments.Common.Contract.Validators;
+using MediatR;
 
 namespace HE.Investment.AHP.Domain.Application.CommandHandlers;
 
-public class SubmitApplicationCommandHandler : UpdateApplicationCommandHandler<SubmitApplicationCommand>
+public class SubmitApplicationCommandHandler : ChangeApplicationStatusCommandHandler, IRequestHandler<SubmitApplicationCommand, OperationResult>
 {
-    public SubmitApplicationCommandHandler(IApplicationRepository repository, IAccountUserContext accountUserContext)
-        : base(repository, accountUserContext)
+    public SubmitApplicationCommandHandler(IApplicationRepository applicationRepository, IAccountUserContext accountUserContext)
+        : base(applicationRepository, accountUserContext)
     {
     }
 
-    protected override Task Update(SubmitApplicationCommand request, ApplicationEntity application, CancellationToken cancellationToken)
+    public async Task<OperationResult> Handle(SubmitApplicationCommand request, CancellationToken cancellationToken)
     {
-        application.Submit();
-        return Task.CompletedTask;
+        return await Perform(
+            async (applicationRepository, application, organisationId) =>
+            {
+                await application.Submit(applicationRepository, organisationId, cancellationToken);
+            },
+            request.Id,
+            cancellationToken);
     }
 }
