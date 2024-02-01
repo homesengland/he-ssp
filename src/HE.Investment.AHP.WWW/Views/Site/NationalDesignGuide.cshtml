@@ -18,20 +18,18 @@
 
         <gds-field-set class="govuk-!-margin-bottom-6">
 
-                <span class="govuk-caption-m govuk-!-margin-top-4 govuk-!-margin-bottom-4">Select all that apply.</span>
-
                 <gds-details>
                     <gds-summary-details>What is the National Design Guide?</gds-summary-details>
                     <gds-div-details-text>
                         The National Design Guide sets out the characteristics of well-designed places and demonstrates what good design means in practice. You can read more about the guide in the
-                        <a href="https://www.gov.uk/government/publications/national-design-guide">
+                        <a target="_blank" href="https://www.gov.uk/government/publications/national-design-guide">
                             National Design Guide publication (opens in a new tab).
                         </a>
                     </gds-div-details-text>
                 </gds-details>
 
-                <vc:checkbox-with-or
-                    field="@Model.DesignPriorities"
+                <vc:checkbox-list-with-or
+                    field-name="@nameof(Model.DesignPriorities)"
                     title="" hint=""
                     available-options="@SiteFormOptions.NationalDesignGuidePrioritiesExceptNone"
                     alternative-option="@SiteFormOptions.NationalDesignGuidePrioritiesOnlyNone"

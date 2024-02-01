@@ -35,4 +35,10 @@ public static class SelectListHelper
             Text = label,
         };
     }
+
+    public static ExtendedSelectListItem FromEnumToExtendedListItem<TEnum>(TEnum value)
+        where TEnum : struct, Enum
+    {
+        return new ExtendedSelectListItem(value.GetDescription(), value.ToString(), false);
+    }
 }

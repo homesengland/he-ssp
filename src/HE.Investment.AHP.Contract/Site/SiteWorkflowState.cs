@@ -17,11 +17,9 @@ public enum SiteWorkflowState
     LocalAuthorityConfirm,
     LocalAuthorityReset,
     PlanningStatus,
-    NationalDesignGuide,
     PlanningDetails,
+    NationalDesignGuide,
     BuildingForHealthyLife,
     LandRegistry,
-    NationalDesignGuide,
-    BuildingForHealthyLife,
     CheckAnswers,
 }

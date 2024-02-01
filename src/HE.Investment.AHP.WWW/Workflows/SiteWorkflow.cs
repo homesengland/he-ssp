@@ -45,6 +45,7 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             { PlanningDetails: var x } when x.PlanningStatus.IsNotProvided() => SiteWorkflowState.PlanningStatus,
             { PlanningDetails.ArePlanningDetailsProvided: false } => SiteWorkflowState.PlanningDetails,
             { PlanningDetails: var x } when !IsLandRegistryProvided(x) => SiteWorkflowState.LandRegistry,
+            { NationalDesignGuidePriorities: var x } when x.IsNotProvided() => SiteWorkflowState.NationalDesignGuide,
             _ => SiteWorkflowState.CheckAnswers,
         };
     }
@@ -61,6 +62,14 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             // TODO: #89873 add support for Local Authority pages
             SiteWorkflowState.PlanningStatus => true,
             SiteWorkflowState.PlanningDetails => true,
+            SiteWorkflowState.Section106GeneralAgreement => true,
+            SiteWorkflowState.Section106AffordableHousing => true,
+            SiteWorkflowState.Section106AdditionalAffordableHousing => true,
+            SiteWorkflowState.Section106OnlyAffordableHousing => true,
+            SiteWorkflowState.Section106CapitalFundingEligibility => true,
+            SiteWorkflowState.Section106LocalAuthorityConfirmation => true,
+            SiteWorkflowState.Section106Ineligible => true,
+            SiteWorkflowState.NationalDesignGuide => true,
             SiteWorkflowState.LandRegistry => IsLandTitleRegistered(),
             _ => false,
         };

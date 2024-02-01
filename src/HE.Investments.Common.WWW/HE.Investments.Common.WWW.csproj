@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Components\CheckboxWithOr\CheckboxWithOr.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Dawn.Guard" Version="1.12.0" />
     <PackageReference Include="Microsoft.AspNetCore.DataProtection.StackExchangeRedis" Version="7.0.13" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.24" />
@@ -21,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Components\CheckboxWithOr\CheckboxWithOr.cshtml" />
+    <EmbeddedResource Include="Components\CheckboxListWithOr\CheckboxListWithOr.cshtml" />
     <EmbeddedResource Include="_ViewImports.cshtml" />
     <EmbeddedResource Include="Partials\Errors\_ErrorSummaryPartial.cshtml" />
     <EmbeddedResource Include="Partials\Cookies\_AdditionalCookies.cshtml" />
@@ -53,7 +49,7 @@
     <EmbeddedResource Include="Components\TextInput\TextInput.cshtml" />
     <EmbeddedResource Include="Components\InputHeader\InputHeader.cshtml" />
     <EmbeddedResource Include="Components\TextAreaInput\TextAreaInput.cshtml" />
-    <EmbeddedResource Include="Components\RadioListHeader\RadioListHeader.cshtml" />
+    <EmbeddedResource Include="Components\InputListHeader\InputListHeader.cshtml" />
     <EmbeddedResource Include="Components\NumericTextInput\NumericTextInput.cshtml" />
     <EmbeddedResource Include="Components\PagedTable\PagedTable.cshtml" />
     <EmbeddedResource Include="Components\TextAreaInputWithCounter\TextAreaInputWithCounter.cshtml" />
