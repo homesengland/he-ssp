@@ -35,6 +35,6 @@ public class AddHomesTests : ViewTestBase
             .HasInput("HomesToDeliver[ht-1]", "First Home Type", "5")
             .HasInput("HomesToDeliver[ht-2]", "Second Home Type")
             .HasGdsSaveAndContinueButton()
-            .HasGdsBackButton(false);
+            .HasGdsBackLink(false);
     }
 }

@@ -25,7 +25,7 @@ public class SummaryOfDeliveryTests : ViewTestBase
         // then
         document.HasTitle(DeliveryPageTitles.SummaryOfDelivery)
             .HasContinueButton()
-            .HasGdsBackButton(false);
+            .HasGdsBackLink(false);
 
         var summary = document.GetSummaryListItems();
         summary.Should().HaveCount(4);
@@ -55,7 +55,7 @@ public class SummaryOfDeliveryTests : ViewTestBase
         // then
         document.HasTitle(DeliveryPageTitles.SummaryOfDelivery)
             .HasContinueButton()
-            .HasGdsBackButton(false);
+            .HasGdsBackLink(false);
 
         var summary = document.GetSummaryListItems();
         summary.Should().HaveCount(2);

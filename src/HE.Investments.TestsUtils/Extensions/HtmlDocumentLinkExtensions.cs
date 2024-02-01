@@ -6,7 +6,7 @@ namespace HE.Investments.TestsUtils.Extensions;
 
 public static class HtmlDocumentLinkExtensions
 {
-    public static IHtmlDocument HasGdsBackButton(this IHtmlDocument htmlDocument, bool validateLink = true)
+    public static IHtmlDocument HasGdsBackLink(this IHtmlDocument htmlDocument, bool validateLink = true)
     {
         var backButton = htmlDocument.GetElementsByClassName("govuk-back-link").SingleOrDefault();
         backButton.Should().NotBeNull();
@@ -19,11 +19,22 @@ public static class HtmlDocumentLinkExtensions
         return htmlDocument;
     }
 
-    public static IHtmlDocument HasSaveAndReturnToApplicationLinkButton(this IHtmlDocument htmlDocument)
+    public static IHtmlDocument HasSaveAndReturnToApplicationLink(this IHtmlDocument htmlDocument)
     {
-        htmlDocument
-            .HasElementWithText("button", "Save and return to application");
+        var links = GetLinkButtons(htmlDocument);
+
+        links = HtmlElementFilters.WithText(links, "Save and return to application");
+
+        links.SingleOrDefault().Should().NotBeNull("There is no single LinkButton element on page");
 
         return htmlDocument;
+    }
+
+    private static IList<IElement> GetLinkButtons(this IHtmlDocument htmlDocument)
+    {
+        return htmlDocument
+            .QuerySelectorAll("button.govuk-button-link")
+            .Select(i => i)
+            .ToList();
     }
 }

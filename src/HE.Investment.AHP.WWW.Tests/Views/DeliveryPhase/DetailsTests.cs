@@ -31,6 +31,6 @@ public class DetailsTests : ViewTestBase
         document.HasTitle(DeliveryPageTitles.Details)
             .HasGdsRadioInputWithValues(nameof(DeliveryPhaseDetails.TypeOfHomes), TypeOfHomes.NewBuild.ToString(), TypeOfHomes.Rehab.ToString())
             .HasGdsSaveAndContinueButton()
-            .HasGdsBackButton(false);
+            .HasGdsBackLink(false);
     }
 }

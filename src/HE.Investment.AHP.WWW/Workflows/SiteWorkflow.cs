@@ -31,7 +31,7 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
 
     public SiteWorkflowState CurrentState(SiteWorkflowState targetState)
     {
-        if (targetState != SiteWorkflowState.Start)
+        if (targetState != SiteWorkflowState.Start || _siteModel == null)
         {
             return targetState;
         }

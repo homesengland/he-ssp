@@ -27,6 +27,6 @@ public class LocalAuthorityResultTests : ViewTestBase
             .HasTitle(SitePageTitles.LocalAuthorityResult)
             .HasPageHeader(header: SitePageTitles.LocalAuthorityResult)
             .HasSelectListItem("Liverpool", null)
-            .HasGdsBackButton(false);
+            .HasGdsBackLink(false);
     }
 }

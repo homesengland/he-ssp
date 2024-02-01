@@ -22,7 +22,7 @@ public class LocalAuthoritySearchTests : ViewTestBase
             .HasParagraph(
                 "Search for your local authority. If your site is located in more than one local authority, search for the local authority where you have planning permission.")
             .HasInput(nameof(LocalAuthorities.Phrase))
-            .HasGdsBackButton(false);
+            .HasGdsBackLink(false);
     }
 
     [Fact]
@@ -44,7 +44,7 @@ public class LocalAuthoritySearchTests : ViewTestBase
             .HasParagraph(
                 "Search for your local authority. If your site is located in more than one local authority, search for the local authority where you have planning permission.")
             .HasInput(nameof(LocalAuthorities.Phrase))
-            .HasGdsBackButton(false)
+            .HasGdsBackLink(false)
             .HasOneValidationMessages(errorMessage);
     }
 }

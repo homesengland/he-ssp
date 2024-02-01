@@ -25,7 +25,7 @@ public class Section106AgreementTests : ViewTestBase
             .HasPageHeader(siteName, @SitePageTitles.SiteSection106Agreement)
             .HasGdsRadioInputWithValues(nameof(SiteModel.Section106GeneralAgreement), "True", "False")
             .HasGdsSaveAndContinueButton()
-            .HasGdsBackButton(false);
+            .HasGdsBackLink(false);
     }
 
     [Fact]
@@ -47,7 +47,7 @@ public class Section106AgreementTests : ViewTestBase
             .HasPageHeader(siteName, @SitePageTitles.SiteSection106Agreement)
             .HasGdsRadioInputWithValues(nameof(SiteModel.Section106GeneralAgreement), "True", "False")
             .HasGdsSaveAndContinueButton()
-            .HasGdsBackButton(false)
+            .HasGdsBackLink(false)
             .HasOneValidationMessages(errorMessage);
     }
 }
