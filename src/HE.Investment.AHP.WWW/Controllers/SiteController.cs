@@ -420,33 +420,6 @@ public class SiteController : WorkflowController<SiteWorkflowState>
             cancellationToken);
     }
 
-    [HttpGet("{siteId}/national-design-guide")]
-    [WorkflowState(SiteWorkflowState.NationalDesignGuide)]
-    public async Task<IActionResult> NationalDesignGuide([FromRoute] string siteId, CancellationToken cancellationToken)
-    {
-        var siteModel = await _mediator.Send(new GetSiteQuery(siteId), cancellationToken);
-        var designGuideModel = new NationalDesignGuidePrioritiesModel()
-        {
-            SiteId = new SiteId(siteId),
-            SiteName = siteModel?.Name ?? string.Empty,
-            DesignPriorities = siteModel?.NationalDesignGuidePriorities?.Where(x => x != NationalDesignGuidePriority.NoneOfTheAbove).ToList(),
-        };
-        return View("NationalDesignGuide", designGuideModel);
-    }
-
-    [HttpPost("{siteId}/national-design-guide")]
-    [WorkflowState(SiteWorkflowState.NationalDesignGuide)]
-    public async Task<IActionResult> NationalDesignGuide([FromRoute] string siteId, NationalDesignGuidePrioritiesModel model, CancellationToken cancellationToken)
-    {
-        return await ExecuteSiteCommand(
-            new ProvideNationalDesignGuidePrioritiesCommand(
-                this.GetSiteIdFromRoute(),
-                (IReadOnlyCollection<NationalDesignGuidePriority>)(model.DesignPriorities ?? new List<NationalDesignGuidePriority>())),
-            $"NationalDesignGuide",
-            savedModel => model,
-            cancellationToken);
-    }
-
     [HttpGet("{siteId}/land-registry")]
     [WorkflowState(SiteWorkflowState.LandRegistry)]
     public async Task<IActionResult> LandRegistry([FromRoute] string siteId, CancellationToken cancellationToken)
@@ -479,8 +452,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         {
             SiteId = new SiteId(siteId),
             SiteName = siteModel?.Name ?? string.Empty,
-            DesignPriorities = siteModel?.NationalDesignGuidePriorities?.Where(x => x != NationalDesignGuidePriority.NoneOfTheAbove).ToList(),
-            OtherPriorities = siteModel?.NationalDesignGuidePriorities?.Where(x => x == NationalDesignGuidePriority.NoneOfTheAbove).ToList(),
+            DesignPriorities = siteModel?.NationalDesignGuidePriorities.ToList(),
         };
         return View("NationalDesignGuide", designGuideModel);
     }
@@ -492,7 +464,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         return await ExecuteSiteCommand(
             new ProvideNationalDesignGuidePrioritiesCommand(
                 this.GetSiteIdFromRoute(),
-                (model.DesignPriorities ?? new List<NationalDesignGuidePriority>()).Concat(model.OtherPriorities ?? new List<NationalDesignGuidePriority>()).ToList()),
+                (IReadOnlyCollection<NationalDesignGuidePriority>)(model.DesignPriorities ?? new List<NationalDesignGuidePriority>())),
             $"NationalDesignGuide",
             savedModel => model,
             cancellationToken);
