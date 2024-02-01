@@ -69,7 +69,7 @@ public class ContributionsTests : ViewTestBase
     {
         document
             .HasElementWithText("h1", "Your expected contributions to the scheme")
-            .HasElementWithText("h2", "Enter how much you will contribute from borrowing against rental income for this scheme")
+            .HasElementWithText("h2", "Enter how much you will contribute from borrowing against the rental income for this scheme")
             .HasElementWithText("span", "Total expected contributions to the scheme")
             .HasGdsSaveAndContinueButton()
             .HasSummaryErrorMessage(nameof(FinancialDetailsValidationFieldNames.RentalIncomeBorrowing), errorMessage, !string.IsNullOrEmpty(errorMessage))
