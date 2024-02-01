@@ -142,6 +142,21 @@ public class ApplicationRepository : IApplicationRepository
             cancellationToken);
     }
 
+    public async Task Submit(ApplicationEntity application, OrganisationId organisationId, CancellationToken cancellationToken)
+    {
+        if (application is { IsModified: false })
+        {
+            return;
+        }
+
+        await _applicationCrmContext.ChangeApplicationStatus(
+            application.Id.Value,
+            organisationId.Value,
+            application.Status,
+            null,
+            cancellationToken);
+    }
+
     public async Task DispatchEvents(DomainEntity domainEntity, CancellationToken cancellationToken)
     {
         await _eventDispatcher.Publish(domainEntity, cancellationToken);

@@ -15,13 +15,6 @@ public static class BasicHtmlDocumentExtensions
         return htmlDocument;
     }
 
-    internal static IList<IElement> GetLastChildByTagAndText(this IHtmlDocument htmlDocument, string tagName, string text)
-    {
-        var elements = htmlDocument.GetElementsByTagName(tagName);
-
-        return FilterByText(elements, text);
-    }
-
     public static IList<IElement> GetElements(this IHtmlDocument htmlDocument, string selector, string? text = null)
     {
         if (string.IsNullOrWhiteSpace(text))
@@ -32,10 +25,11 @@ public static class BasicHtmlDocumentExtensions
         return FilterByText(htmlDocument.QuerySelectorAll(selector), text);
     }
 
-    private static IList<IElement> FilterByText(IEnumerable<IElement> elements, string text)
+    internal static IList<IElement> GetLastChildByTagAndText(this IHtmlDocument htmlDocument, string tagName, string text)
     {
-        return elements.Where(e => e.ChildElementCount == 0 && e.TextContent.Contains(text))
-            .ToList();
+        var elements = htmlDocument.GetElementsByTagName(tagName);
+
+        return FilterByText(elements, text);
     }
 
     internal static void ValidateExist(IList<IElement> elements, string elementType, string text, bool exist)
@@ -48,5 +42,11 @@ public static class BasicHtmlDocumentExtensions
         {
             elements.Count.Should().Be(0, $"Element '{elementType}' with innerText {text} should not exist");
         }
+    }
+
+    private static IList<IElement> FilterByText(IEnumerable<IElement> elements, string text)
+    {
+        return elements.Where(e => e.ChildElementCount == 0 && e.TextContent.Contains(text))
+            .ToList();
     }
 }

@@ -1,5 +1,4 @@
 using HE.Investments.Organisation.CompaniesHouse.Contract;
-using HE.Investments.Organisation.Contract;
 
 namespace HE.Investments.Organisation.Tests.TestObjectBuilders;
 
@@ -21,7 +20,7 @@ public class CompanyDetailsItemTestBuilder
                 Locality = "Locality",
                 PostalCode = "PostalCode",
                 Region = "Region",
-            }
+            },
         };
     }
 

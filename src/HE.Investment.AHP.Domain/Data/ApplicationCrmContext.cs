@@ -111,7 +111,7 @@ public class ApplicationCrmContext : IApplicationCrmContext
         string applicationId,
         Guid organisationId,
         ApplicationStatus applicationStatus,
-        string? reason,
+        string? changeReason,
         CancellationToken cancellationToken)
     {
         var crmStatus = AhpApplicationStatusMapper.MapToCrmStatus(applicationStatus);
@@ -122,6 +122,7 @@ public class ApplicationCrmContext : IApplicationCrmContext
             invln_organisationid = organisationId.ToString(),
             invln_userid = _userContext.UserGlobalId,
             invln_newapplicationstatus = crmStatus,
+            invln_changereason = changeReason,
         };
 
         await _service.ExecuteAsync<invln_changeahpapplicationstatusRequest, invln_changeahpapplicationstatusResponse>(

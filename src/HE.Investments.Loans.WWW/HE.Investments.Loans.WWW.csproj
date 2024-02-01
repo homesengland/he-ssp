@@ -2,35 +2,10 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>8b9cd221-46c5-4032-8de4-5f0560e83f09</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <EnableNETAnalyzers>true</EnableNETAnalyzers>
-    <AnalysisLevel>latest</AnalysisLevel>
-    <AnalysisMode>Default</AnalysisMode>
-    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <RootNamespace>HE.Investments.Loans.WWW</RootNamespace>
+    <Nullable>disable</Nullable>
   </PropertyGroup>
-
-  <PropertyGroup>
-    <NoWarn>1591</NoWarn>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)'!='DEBUG'">
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="Filters\**" />
-    <Compile Remove="Views\Shared\TaskList\**" />
-    <Content Remove="Filters\**" />
-    <Content Remove="Views\Shared\TaskList\**" />
-    <EmbeddedResource Remove="Filters\**" />
-    <EmbeddedResource Remove="Views\Shared\TaskList\**" />
-    <None Remove="Filters\**" />
-    <None Remove="Views\Shared\TaskList\**" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
@@ -40,13 +15,6 @@
     <PackageReference Include="NuGet.Common" Version="6.7.0" />
     <PackageReference Include="NuGet.Protocol" Version="6.7.0" />
     <PackageReference Include="StackExchange.Redis.Extensions.Core" Version="9.1.0" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.435">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
     <PackageReference Include="He.Cookies.Mvc" Version="1.0.36" />
     <PackageReference Include="He.Identity" Version="1.0.61" />

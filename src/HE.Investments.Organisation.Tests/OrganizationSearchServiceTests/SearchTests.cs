@@ -295,7 +295,7 @@ public class SearchTests : TestBase<OrganisationSearchService>
         {
             CompanyNumber = companyNumber,
             CompanyName = name,
-            OfficeAddress = new OfficeAddress { PostalCode = postalcode, AddressLine1 = street, Locality = city, }
+            OfficeAddress = new OfficeAddress { PostalCode = postalcode, AddressLine1 = street, Locality = city },
         };
     }
 }

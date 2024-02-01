@@ -7,29 +7,24 @@ using MediatR;
 
 namespace HE.Investment.AHP.Domain.Application.CommandHandlers;
 
-public class WithdrawApplicationCommandHandler : IRequestHandler<WithdrawApplicationCommand, OperationResult>
+public class WithdrawApplicationCommandHandler : ChangeApplicationStatusCommandHandler, IRequestHandler<WithdrawApplicationCommand, OperationResult>
 {
-    private readonly IAccountUserContext _accountUserContext;
-    private readonly IApplicationRepository _applicationRepository;
-
-    public WithdrawApplicationCommandHandler(
-        IApplicationRepository applicationRepository,
-        IAccountUserContext accountUserContext)
+    public WithdrawApplicationCommandHandler(IApplicationRepository applicationRepository, IAccountUserContext accountUserContext)
+        : base(applicationRepository, accountUserContext)
     {
-        _accountUserContext = accountUserContext;
-        _applicationRepository = applicationRepository;
     }
 
     public async Task<OperationResult> Handle(WithdrawApplicationCommand request, CancellationToken cancellationToken)
     {
-        var account = await _accountUserContext.GetSelectedAccount();
-        var application = await _applicationRepository.GetById(request.Id, account, cancellationToken);
+        return await Perform(
+            async (applicationRepository, application, organisationId) =>
+            {
+                var withdrawReason = new WithdrawReason(request.WithdrawReason);
 
-        var withdrawReason = new WithdrawReason(request.WithdrawReason);
-
-        await application.Withdraw(_applicationRepository, withdrawReason, account.SelectedOrganisationId(), cancellationToken);
-        await _applicationRepository.DispatchEvents(application, cancellationToken);
-
-        return OperationResult.Success();
+                await application.Withdraw(applicationRepository, withdrawReason, organisationId, cancellationToken);
+                await applicationRepository.DispatchEvents(application, cancellationToken);
+            },
+            request.Id,
+            cancellationToken);
     }
 }

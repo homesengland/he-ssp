@@ -21,4 +21,7 @@ public enum SiteWorkflowState
     PlanningDetails,
     BuildingForHealthyLife,
     LandRegistry,
+    NationalDesignGuide,
+    BuildingForHealthyLife,
+    CheckAnswers,
 }

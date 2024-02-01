@@ -6,7 +6,11 @@ namespace HE.Investments.TestsUtils.Extensions;
 
 public static class HtmlDocumentInputExtensions
 {
-    public static IHtmlDocument HasTextAreaInput(this IHtmlDocument htmlDocument, string fieldName, string? label = null, string? value = null,
+    public static IHtmlDocument HasTextAreaInput(
+        this IHtmlDocument htmlDocument,
+        string fieldName,
+        string? label = null,
+        string? value = null,
         bool exist = true)
     {
         var inputs = GetAndValidateSingleInput<IHtmlTextAreaElement>(htmlDocument, fieldName, label, exist);

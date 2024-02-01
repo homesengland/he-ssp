@@ -81,7 +81,7 @@ public class ApplicationEntity : DomainEntity
         Id = newId;
     }
 
-    public void Submit()
+    public async Task Submit(IApplicationSubmit applicationSubmit, OrganisationId organisationId, CancellationToken cancellationToken)
     {
         if (Sections.Sections.Any(s => s.Status != SectionStatus.Completed))
         {
@@ -90,6 +90,8 @@ public class ApplicationEntity : DomainEntity
         }
 
         Status = _modificationTracker.Change(Status, ApplicationStatus.ApplicationSubmitted);
+
+        await applicationSubmit.Submit(this, organisationId, cancellationToken);
     }
 
     public async Task Hold(IApplicationHold applicationHold, HoldReason? newHoldReason, OrganisationId organisationId, CancellationToken cancellationToken)

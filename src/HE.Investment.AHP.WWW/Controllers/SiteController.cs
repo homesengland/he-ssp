@@ -399,9 +399,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         {
             SiteId = new SiteId(siteId),
             SiteName = siteModel?.Name ?? string.Empty,
-            DesignPriorities = new[] { NationalDesignGuidePriority.NoneOfTheAbove },
-            // DesignPriorities = siteModel?.NationalDesignGuidePriorities?.Where(x => x != NationalDesignGuidePriority.NoneOfTheAbove).ToList(),
-            // OtherPriorities = siteModel?.NationalDesignGuidePriorities?.Where(x => x == NationalDesignGuidePriority.NoneOfTheAbove).ToList(),
+            DesignPriorities = siteModel?.NationalDesignGuidePriorities?.Where(x => x != NationalDesignGuidePriority.NoneOfTheAbove).ToList(),
         };
         return View("NationalDesignGuide", designGuideModel);
     }

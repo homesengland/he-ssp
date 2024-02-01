@@ -16,16 +16,16 @@ public class IntegrationUserData
             return;
         }
 
-        FirstName = new FirstName("Integration")!;
-        LastName = new LastName($"Test-{DateTime.UtcNow.ToString(CultureInfo.InvariantCulture)}")!;
+        FirstName = new FirstName("Integration");
+        LastName = new LastName($"Test-{DateTime.UtcNow.ToString(CultureInfo.InvariantCulture)}");
     }
 
     public IntegrationUserData(UserConfig userConfig)
     {
         if (userConfig.UseConfigData)
         {
-            FirstName = new FirstName(userConfig.FirstName)!;
-            LastName = new LastName(userConfig.LastName)!;
+            FirstName = new FirstName(userConfig.FirstName);
+            LastName = new LastName(userConfig.LastName);
             OrganizationName = userConfig.OrganizationName;
             OrganizationRegistrationNumber = userConfig.OrganizationRegistrationNumber;
             OrganizationAddress = userConfig.OrganizationAddress;
@@ -39,8 +39,8 @@ public class IntegrationUserData
             return;
         }
 
-        FirstName = new FirstName("Integration")!;
-        LastName = new LastName($"Test-{DateTime.UtcNow.ToString(CultureInfo.InvariantCulture)}")!;
+        FirstName = new FirstName("Integration");
+        LastName = new LastName($"Test-{DateTime.UtcNow.ToString(CultureInfo.InvariantCulture)}");
     }
 
     public string OrganizationName { get; private set; } = "HOMES OF ENGLAND LIMITED";
