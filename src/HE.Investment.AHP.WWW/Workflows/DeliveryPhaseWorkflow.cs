@@ -78,7 +78,7 @@ public class DeliveryPhaseWorkflow : IStateRouting<DeliveryPhaseWorkflowState>
             DeliveryPhaseWorkflowState.PracticalCompletionMilestone => IsNumberOfHomesCompleted(),
             DeliveryPhaseWorkflowState.UnregisteredBodyFollowUp => IsUnregisteredBody() && IsNumberOfHomesCompleted(),
             DeliveryPhaseWorkflowState.CheckAnswers => true,
-            _ => throw new ArgumentOutOfRangeException(nameof(state), state, null),
+            _ => false,
         };
     }
 

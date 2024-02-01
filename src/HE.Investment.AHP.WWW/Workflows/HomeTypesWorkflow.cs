@@ -133,7 +133,7 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
             HomeTypesWorkflowState.ModernMethodsConstruction3DSubcategories => IsModernMethodsConstructionCategory1(),
             HomeTypesWorkflowState.ModernMethodsConstruction2DSubcategories => IsModernMethodsConstructionCategory2(),
             HomeTypesWorkflowState.CheckAnswers => true,
-            _ => throw new ArgumentOutOfRangeException(nameof(state), state, null),
+            _ => false,
         };
     }
 
