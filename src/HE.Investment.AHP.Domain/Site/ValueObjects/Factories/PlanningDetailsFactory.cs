@@ -9,7 +9,17 @@ public static class PlanningDetailsFactory
 {
     public static PlanningDetails CreateEmpty() => new EmptyPlanningDetails();
 
-    public static PlanningDetails New(SitePlanningStatus? planningStatus) => Create(planningStatus);
+    public static PlanningDetails Create(PlanningDetails planningDetails, SitePlanningStatus? planningStatus) => Create(
+        planningStatus,
+        planningDetails.ReferenceNumber,
+        planningDetails.DetailedPlanningApprovalDate,
+        planningDetails.RequiredFurtherSteps,
+        planningDetails.ApplicationForDetailedPlanningSubmittedDate,
+        planningDetails.ExpectedPlanningApprovalDate,
+        planningDetails.OutlinePlanningApprovalDate,
+        planningDetails.PlanningSubmissionDate,
+        planningDetails.IsGrantFundingForAllHomesCoveredByApplication,
+        planningDetails.LandRegistryDetails);
 
     public static PlanningDetails WithLandRegistryDetails(
         PlanningDetails planningDetails,
