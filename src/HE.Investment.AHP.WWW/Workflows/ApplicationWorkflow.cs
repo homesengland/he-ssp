@@ -45,7 +45,7 @@ public class ApplicationWorkflow : IStateRouting<ApplicationWorkflowState>
             ApplicationWorkflowState.TaskList => true,
             ApplicationWorkflowState.OnHold => await CanBePutOnHold(),
             ApplicationWorkflowState.Withdraw => await CanBeWithdrawn(),
-            _ => throw new ArgumentOutOfRangeException(nameof(state), state, null),
+            _ => false,
         };
     }
 
