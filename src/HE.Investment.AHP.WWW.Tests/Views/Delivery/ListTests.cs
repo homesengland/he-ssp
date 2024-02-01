@@ -1,6 +1,5 @@
 using AngleSharp.Html.Dom;
 using HE.Investment.AHP.WWW.Models.Delivery;
-using HE.Investments.Common.WWWTestsFramework;
 
 using Microsoft.AspNetCore.Routing;
 
@@ -34,9 +33,8 @@ public class ListTests : ViewTestBase
         // then
         AssertView(document);
         document.HasElementWithText("a", "Phase 1")
-            .HasElementWithText(
-                "div",
-                "All of your homes have been added to delivery phase. If you want to add another delivery phase, edit the homes in an existing phase or remove a phase.")
+            .ContainsInsetText("All of your homes have been added to delivery phase. If you want to add another delivery phase, edit the homes in an existing phase or remove a phase.")
+            .ContainsInsetText("Select save and continue to complete this section.")
             .HasGdsSaveAndContinueButton();
     }
 
