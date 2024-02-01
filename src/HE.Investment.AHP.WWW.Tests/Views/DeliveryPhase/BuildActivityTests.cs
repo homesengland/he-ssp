@@ -35,6 +35,6 @@ public class BuildActivityTests : ViewTestBase
                 nameof(DeliveryPhaseDetails.BuildActivityType),
                 availableTypes.Select(x => x.ToString()).ToArray())
             .HasGdsSaveAndContinueButton()
-            .HasGdsBackButton(false);
+            .HasGdsBackLink(false);
     }
 }

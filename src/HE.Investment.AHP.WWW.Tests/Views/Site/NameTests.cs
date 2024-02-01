@@ -22,7 +22,7 @@ public class NameTests : ViewTestBase
             .HasTitle(SitePageTitles.SiteName)
             .HasInput(nameof(SiteModel.Name))
             .HasGdsSaveAndContinueButton()
-            .HasGdsBackButton(false);
+            .HasGdsBackLink(false);
     }
 
     [Fact]
@@ -41,7 +41,7 @@ public class NameTests : ViewTestBase
             .HasTitle(SitePageTitles.SiteName)
             .HasInput(nameof(SiteModel.Name))
             .HasGdsSaveAndContinueButton()
-            .HasGdsBackButton(false)
+            .HasGdsBackLink(false)
             .HasOneValidationMessages(errorMessage);
     }
 }

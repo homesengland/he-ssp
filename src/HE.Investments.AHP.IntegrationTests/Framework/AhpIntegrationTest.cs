@@ -49,7 +49,7 @@ public class AhpIntegrationTest : IntegrationTestBase<Program>
         currentPage
             .UrlWithoutQueryEndsWith(startPageUrl)
             .HasTitle(expectedPageTitle)
-            .HasGdsBackButton()
+            .HasGdsBackLink()
             .HasGdsSubmitButton("continue-button", out var continueButton);
 
         return continueButton;
