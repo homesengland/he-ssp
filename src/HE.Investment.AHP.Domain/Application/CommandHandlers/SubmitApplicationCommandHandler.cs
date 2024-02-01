@@ -6,7 +6,7 @@ using MediatR;
 
 namespace HE.Investment.AHP.Domain.Application.CommandHandlers;
 
-public class SubmitApplicationCommandHandler : ChangeApplicationStatusCommandHandler, IRequestHandler<SubmitApplicationCommand, OperationResult>
+public class SubmitApplicationCommandHandler : ChangeApplicationStatusBaseCommandHandler, IRequestHandler<SubmitApplicationCommand, OperationResult>
 {
     public SubmitApplicationCommandHandler(IApplicationRepository applicationRepository, IAccountUserContext accountUserContext)
         : base(applicationRepository, accountUserContext)

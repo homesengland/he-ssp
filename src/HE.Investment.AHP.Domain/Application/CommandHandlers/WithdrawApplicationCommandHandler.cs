@@ -7,7 +7,7 @@ using MediatR;
 
 namespace HE.Investment.AHP.Domain.Application.CommandHandlers;
 
-public class WithdrawApplicationCommandHandler : ChangeApplicationStatusCommandHandler, IRequestHandler<WithdrawApplicationCommand, OperationResult>
+public class WithdrawApplicationCommandHandler : ChangeApplicationStatusBaseCommandHandler, IRequestHandler<WithdrawApplicationCommand, OperationResult>
 {
     public WithdrawApplicationCommandHandler(IApplicationRepository applicationRepository, IAccountUserContext accountUserContext)
         : base(applicationRepository, accountUserContext)

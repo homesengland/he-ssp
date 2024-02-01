@@ -10,16 +10,12 @@ namespace HE.Investment.AHP.Domain.Tests.Application.TestObjectBuilder;
 public class ApplicationRepositoryTestBuilder
 {
     private readonly Mock<IApplicationRepository> _mock;
-    private readonly Mock<IApplicationWithdraw> _iApplicationWithdrawMock;
-    private readonly Mock<IApplicationHold> _iApplicationHoldMock;
-    private readonly Mock<IApplicationSubmit> _iApplicationSubmitMock;
+    private readonly Mock<IChangeApplicationStatus> _iChangeApplicationStatus;
 
     private ApplicationRepositoryTestBuilder()
     {
         _mock = new Mock<IApplicationRepository>();
-        _iApplicationWithdrawMock = new Mock<IApplicationWithdraw>();
-        _iApplicationHoldMock = new Mock<IApplicationHold>();
-        _iApplicationSubmitMock = new Mock<IApplicationSubmit>();
+        _iChangeApplicationStatus = new Mock<IChangeApplicationStatus>();
     }
 
     public static ApplicationRepositoryTestBuilder New() => new();
@@ -38,19 +34,9 @@ public class ApplicationRepositoryTestBuilder
         return _mock.Object;
     }
 
-    public IApplicationWithdraw BuildIApplicationWithdraw()
+    public IChangeApplicationStatus BuildIChangeApplicationStatus()
     {
-        return _iApplicationWithdrawMock.Object;
-    }
-
-    public IApplicationHold BuildIApplicationHold()
-    {
-        return _iApplicationHoldMock.Object;
-    }
-
-    public IApplicationSubmit BuildIApplicationSubmit()
-    {
-        return _iApplicationSubmitMock.Object;
+        return _iChangeApplicationStatus.Object;
     }
 
     public Mock<IApplicationRepository> BuildMockAndRegister(IRegisterDependency registerDependency)
@@ -60,24 +46,10 @@ public class ApplicationRepositoryTestBuilder
         return _mock;
     }
 
-    public Mock<IApplicationWithdraw> BuildIApplicationWithdrawMockAndRegister(IRegisterDependency registerDependency)
+    public Mock<IChangeApplicationStatus> BuildIChangeApplicationStatusMockAndRegister(IRegisterDependency registerDependency)
     {
-        var mockedObject = BuildIApplicationWithdraw();
+        var mockedObject = BuildIChangeApplicationStatus();
         registerDependency.RegisterDependency(mockedObject);
-        return _iApplicationWithdrawMock;
-    }
-
-    public Mock<IApplicationHold> BuildIApplicationHoldMockAndRegister(IRegisterDependency registerDependency)
-    {
-        var mockedObject = BuildIApplicationHold();
-        registerDependency.RegisterDependency(mockedObject);
-        return _iApplicationHoldMock;
-    }
-
-    public Mock<IApplicationSubmit> BuildIApplicationSubmitMockAndRegister(IRegisterDependency registerDependency)
-    {
-        var mockedObject = BuildIApplicationSubmit();
-        registerDependency.RegisterDependency(mockedObject);
-        return _iApplicationSubmitMock;
+        return _iChangeApplicationStatus;
     }
 }

@@ -9,7 +9,7 @@ using HE.Investments.Common.Domain;
 
 namespace HE.Investment.AHP.Domain.Application.Repositories.Interfaces;
 
-public interface IApplicationRepository : IApplicationWithdraw, IApplicationHold, IApplicationSubmit
+public interface IApplicationRepository : IChangeApplicationStatus
 {
     Task<ApplicationEntity> GetById(AhpApplicationId id, UserAccount userAccount, CancellationToken cancellationToken);
 
@@ -27,4 +27,6 @@ public interface IApplicationRepository : IApplicationWithdraw, IApplicationHold
     Task<ApplicationEntity> Save(ApplicationEntity application, OrganisationId organisationId, CancellationToken cancellationToken);
 
     Task DispatchEvents(DomainEntity domainEntity, CancellationToken cancellationToken);
+
+    Task ChangeApplicationStatus(ApplicationEntity application, OrganisationId organisationId, string? changeReason, CancellationToken cancellationToken);
 }
