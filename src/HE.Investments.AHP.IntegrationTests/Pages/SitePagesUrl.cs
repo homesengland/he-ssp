@@ -30,4 +30,6 @@ public static class SitePagesUrl
     public static string SitePlanningStatus(string siteId) => $"ahp/site/{siteId}/planning-status";
 
     public static string SiteConfirm(string siteId) => $"ahp/site/{siteId}/confirm-select";
+
+    public static string SiteNationaDesignGuide(string siteId) => $"ahp/site/{siteId}/national-design-guide";
 }

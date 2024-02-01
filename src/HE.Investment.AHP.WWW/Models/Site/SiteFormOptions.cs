@@ -9,5 +9,5 @@ public static class SiteFormOptions
     public static IEnumerable<SelectListItem> NationalDesignGuidePrioritiesExceptNone => SelectListHelper.FromEnum<NationalDesignGuidePriority>()
         .Where(x => x.Value != NationalDesignGuidePriority.NoneOfTheAbove.ToString());
 
-    public static IEnumerable<SelectListItem> NationalDesignGuidePrioritiesOnlyNone => new[] { SelectListHelper.FromEnum(NationalDesignGuidePriority.NoneOfTheAbove) };
+    public static SelectListItem NationalDesignGuidePrioritiesOnlyNone => SelectListHelper.FromEnum(NationalDesignGuidePriority.NoneOfTheAbove);
 }

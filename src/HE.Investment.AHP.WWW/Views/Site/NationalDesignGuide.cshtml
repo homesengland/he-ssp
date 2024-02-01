@@ -6,6 +6,8 @@
 
 @{
     ViewData["Title"] = SitePageTitles.NationalDesignGuide;
+    var selectedValues = Model.DesignPriorities?.Select(x=>x.ToString());
+
 }
 
 <div class="govuk-grid-column-two-thirds">
@@ -16,7 +18,6 @@
         <vc:form-header title="@SitePageTitles.NationalDesignGuide" caption="@Model.SiteName" additional-css-class="govuk-!-padding-top-8"></vc:form-header>
 
         <gds-field-set class="govuk-!-margin-bottom-6">
-            <he-error-form-group asp-for="DesignPriorities">
 
                 <span class="govuk-caption-m govuk-!-margin-top-4 govuk-!-margin-bottom-4">Select all that apply.</span>
 
@@ -30,20 +31,13 @@
                     </gds-div-details-text>
                 </gds-details>
 
-                <gds-checkbox class="exclusive-checkbox-group"
-                              govuk-formgroup-asp-for="@Model.DesignPriorities"
-                              asp-selectlistitems="SiteFormOptions.NationalDesignGuidePrioritiesExceptNone"
-                              asp-for="@Model.DesignPriorities"
-                              asp-excludelabel="true">
-                </gds-checkbox>
-                <p>Or</p>
-                <gds-checkbox class="exclusive-checkbox-group--exclusive-option"
-                              govuk-formgroup-asp-for="@Model.OtherPriorities"
-                              asp-selectlistitems="SiteFormOptions.NationalDesignGuidePrioritiesOnlyNone"
-                              asp-for="@Model.OtherPriorities"
-                              asp-excludelabel="true">
-                </gds-checkbox>
-            </he-error-form-group>
+                <vc:checkbox-with-or
+                    field="@Model.DesignPriorities"
+                    title="" hint=""
+                    available-options="@SiteFormOptions.NationalDesignGuidePrioritiesExceptNone"
+                    alternative-option="@SiteFormOptions.NationalDesignGuidePrioritiesOnlyNone"
+                    selected-values="@selectedValues"/>
+                
         </gds-field-set>
         @Html.HiddenFor(x => x.SiteName)
         <vc:form-button/>
