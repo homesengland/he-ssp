@@ -27,6 +27,4 @@ public interface IApplicationRepository : IChangeApplicationStatus
     Task<ApplicationEntity> Save(ApplicationEntity application, OrganisationId organisationId, CancellationToken cancellationToken);
 
     Task DispatchEvents(DomainEntity domainEntity, CancellationToken cancellationToken);
-
-    Task ChangeApplicationStatus(ApplicationEntity application, OrganisationId organisationId, string? changeReason, CancellationToken cancellationToken);
 }
