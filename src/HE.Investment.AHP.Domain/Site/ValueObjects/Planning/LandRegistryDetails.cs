@@ -29,7 +29,10 @@ public class LandRegistryDetails : ValueObject, IQuestion
     public bool? IsGrantFundingForAllHomesCoveredByTitleNumber { get; }
 
     public static LandRegistryDetails WithIsRegistered(LandRegistryDetails? landRegistry, bool? isLandRegistryTitleNumberRegistered) =>
-        new(isLandRegistryTitleNumberRegistered, landRegistry?.TitleNumber, landRegistry?.IsGrantFundingForAllHomesCoveredByTitleNumber);
+        new(
+            isLandRegistryTitleNumberRegistered,
+            isLandRegistryTitleNumberRegistered ?? false ? landRegistry?.TitleNumber : null,
+            isLandRegistryTitleNumberRegistered ?? false ? landRegistry?.IsGrantFundingForAllHomesCoveredByTitleNumber : null);
 
     public static LandRegistryDetails WithDetails(
         LandRegistryDetails? landRegistry,
