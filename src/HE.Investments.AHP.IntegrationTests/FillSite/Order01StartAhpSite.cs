@@ -174,4 +174,41 @@ public class Order01StartAhpSite : AhpIntegrationTest
 
         SaveCurrentPage();
     }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(12)]
+    public async Task Order12_ShouldProvidePlanningStatus()
+    {
+        await TestQuestionPage(
+            SitePagesUrl.SitePlanningStatus(SiteData.SiteId),
+            SitePageTitles.PlanningStatus,
+            SitePagesUrl.SitePlanningDetails(SiteData.SiteId),
+            (nameof(SitePlanningDetails.PlanningStatus), SitePlanningStatus.PlanningDiscussionsUnderwayWithThePlanningOffice.ToString()));
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(13)]
+    public async Task Order13_ShouldProvidePlanningDetails()
+    {
+        await TestQuestionPage(
+            SitePagesUrl.SitePlanningDetails(SiteData.SiteId),
+            "Enter when you expect to get detailed planning approval",
+            SitePagesUrl.SiteLandRegistry(SiteData.SiteId),
+            ("ExpectedPlanningApprovalDate.Day", "1"),
+            ("ExpectedPlanningApprovalDate.Month", "12"),
+            ("ExpectedPlanningApprovalDate.Year", "2024"),
+            (nameof(SitePlanningDetails.IsLandRegistryTitleNumberRegistered), "True"));
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(14)]
+    public async Task Order14_ShouldProvideLandRegistry()
+    {
+        await TestQuestionPage(
+            SitePagesUrl.SiteLandRegistry(SiteData.SiteId),
+            SitePageTitles.LandRegistry,
+            SitePagesUrl.SiteNationalDesignGuide(SiteData.SiteId),
+            (nameof(SitePlanningDetails.LandRegistryTitleNumber), "some title"),
+            (nameof(SitePlanningDetails.IsGrantFundingForAllHomesCoveredByTitleNumber), "True"));
+    }
 }

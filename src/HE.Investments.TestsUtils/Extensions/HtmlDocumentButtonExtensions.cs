@@ -38,8 +38,8 @@ public static class HtmlDocumentButtonExtensions
     {
         var buttons = HasButton(htmlDocument, "button.govuk-button");
 
-        buttons = WithText(buttons, text);
-        buttons = WithAttribute(buttons, "type", "submit");
+        buttons = HtmlElementFilters.WithText(buttons, text);
+        buttons = HtmlElementFilters.WithAttribute(buttons, "type", "submit");
 
         return IsSingleHtmlButtonElement(buttons);
     }
@@ -59,9 +59,9 @@ public static class HtmlDocumentButtonExtensions
     {
         var buttons = HasButton(htmlDocument, "button.govuk-button");
 
-        buttons = WithText(buttons, text);
-        buttons = WithClass(buttons, "govuk-button--start");
-        buttons = WithAttribute(buttons, "type", "submit");
+        buttons = HtmlElementFilters.WithText(buttons, text);
+        buttons = HtmlElementFilters.WithClass(buttons, "govuk-button--start");
+        buttons = HtmlElementFilters.WithAttribute(buttons, "type", "submit");
 
         return IsSingleHtmlButtonElement(buttons);
     }
@@ -83,8 +83,8 @@ public static class HtmlDocumentButtonExtensions
     {
         var buttons = HasButton(htmlDocument, "a.govuk-button");
 
-        buttons = WithText(buttons, text);
-        buttons = WithAttribute(buttons, "href", href);
+        buttons = HtmlElementFilters.WithText(buttons, text);
+        buttons = HtmlElementFilters.WithAttribute(buttons, "href", href);
 
         return IsSingleHtmlAnchorElement(buttons);
     }
@@ -118,57 +118,6 @@ public static class HtmlDocumentButtonExtensions
         buttons.Any().Should().BeTrue("There is no Button on page");
 
         return buttons;
-    }
-
-    private static List<IElement> WithText(IList<IElement> elements, string? text = null)
-    {
-        if (!string.IsNullOrEmpty(text))
-        {
-            elements = elements
-                .Where(i => i.TextContent.Contains(text))
-                .ToList();
-
-            elements
-                .Any()
-                .Should()
-                .BeTrue($"There is no Element with text: '{text}'");
-        }
-
-        return elements.ToList();
-    }
-
-    private static List<IElement> WithClass(IList<IElement> elements, string? className = null)
-    {
-        if (!string.IsNullOrEmpty(className))
-        {
-            elements = elements
-                .Where(i => i.ClassList.Contains(className))
-                .ToList();
-
-            elements
-                .Any()
-                .Should()
-                .BeTrue($"There is no Element with class: '{className}'");
-        }
-
-        return elements.ToList();
-    }
-
-    private static List<IElement> WithAttribute(IList<IElement> elements, string? attributeName = null, string? value = null)
-    {
-        if (!string.IsNullOrEmpty(value))
-        {
-            elements = elements
-                .Where(i => i.Attributes.Any(a => a.Name == attributeName && a.Value.Contains(value)))
-                .ToList();
-
-            elements
-                .Any()
-                .Should()
-                .BeTrue($"There is no Element with attribute : '{attributeName}' value: '{value}'");
-        }
-
-        return elements.ToList();
     }
 
     private static IHtmlButtonElement IsSingleHtmlButtonElement(IList<IElement> elements)

@@ -31,7 +31,7 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
 
     public SiteWorkflowState CurrentState(SiteWorkflowState targetState)
     {
-        if (targetState != SiteWorkflowState.Start)
+        if (targetState != SiteWorkflowState.Start || _siteModel == null)
         {
             return targetState;
         }
@@ -41,7 +41,7 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             { Name: var x } when x.IsNotProvided() => SiteWorkflowState.Name,
 
             // TODO: #89874  add support for Section106 pages
-            // TODO #89873: add support for Local Authority pages
+            { LocalAuthority: var x } when x.IsNotProvided() => SiteWorkflowState.LocalAuthoritySearch,
             { PlanningDetails: var x } when x.PlanningStatus.IsNotProvided() => SiteWorkflowState.PlanningStatus,
             { PlanningDetails.ArePlanningDetailsProvided: false } => SiteWorkflowState.PlanningDetails,
             { PlanningDetails: var x } when !IsLandRegistryProvided(x) => SiteWorkflowState.LandRegistry,
@@ -59,7 +59,10 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             SiteWorkflowState.Name => true,
 
             // TODO: #89874  add support for Section106 pages
-            // TODO: #89873 add support for Local Authority pages
+            SiteWorkflowState.LocalAuthoritySearch => true,
+            SiteWorkflowState.LocalAuthorityResult => true,
+            SiteWorkflowState.LocalAuthorityConfirm => true,
+            SiteWorkflowState.LocalAuthorityReset => true,
             SiteWorkflowState.PlanningStatus => true,
             SiteWorkflowState.PlanningDetails => true,
             SiteWorkflowState.Section106GeneralAgreement => true,
@@ -150,8 +153,8 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
 
         _machine.Configure(SiteWorkflowState.PlanningStatus)
             .Permit(Trigger.Continue, SiteWorkflowState.PlanningDetails)
-            .PermitIf(Trigger.Back, SiteWorkflowState.LocalAuthorityConfirm, IsLocalAuthority)
-            .PermitIf(Trigger.Back, SiteWorkflowState.LocalAuthoritySearch, () => !IsLocalAuthority());
+            .PermitIf(Trigger.Back, SiteWorkflowState.LocalAuthorityConfirm, IsLocalAuthorityProvided)
+            .PermitIf(Trigger.Back, SiteWorkflowState.LocalAuthoritySearch, () => !IsLocalAuthorityProvided());
 
         _machine.Configure(SiteWorkflowState.PlanningDetails)
             .PermitIf(Trigger.Continue, SiteWorkflowState.LandRegistry, IsLandTitleRegistered)
@@ -171,7 +174,7 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             .Permit(Trigger.Back, SiteWorkflowState.NationalDesignGuide);
     }
 
-    private bool IsLocalAuthority() => _siteModel?.LocalAuthority?.Name.IsProvided() ?? false;
+    private bool IsLocalAuthorityProvided() => _siteModel?.LocalAuthority?.Name.IsProvided() ?? false;
 
     private bool IsLandTitleRegistered() => _siteModel?.PlanningDetails.IsLandRegistryTitleNumberRegistered ?? false;
 
