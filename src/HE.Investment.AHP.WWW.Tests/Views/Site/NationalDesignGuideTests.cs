@@ -23,7 +23,6 @@ public class NationalDesignGuideTests : ViewTestBase
             SiteId = new SiteId("8"),
             SiteName = siteName,
             DesignPriorities = new List<NationalDesignGuidePriority>(),
-            OtherPriorities = new List<NationalDesignGuidePriority>(),
         };
         var document = await Render(_viewPath, site);
 
@@ -47,7 +46,6 @@ public class NationalDesignGuideTests : ViewTestBase
             SiteId = new SiteId("8"),
             SiteName = siteName,
             DesignPriorities = new List<NationalDesignGuidePriority>(),
-            OtherPriorities = new List<NationalDesignGuidePriority>(),
         };
         modelState.AddModelError(nameof(NationalDesignGuidePrioritiesModel.DesignPriorities), errorMessage);
 

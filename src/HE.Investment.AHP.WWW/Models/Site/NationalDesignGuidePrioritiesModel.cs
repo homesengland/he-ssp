@@ -10,6 +10,4 @@ public class NationalDesignGuidePrioritiesModel
     public string SiteName { get; set; }
 
     public IList<NationalDesignGuidePriority>? DesignPriorities { get; set; }
-
-    public IList<NationalDesignGuidePriority>? OtherPriorities { get; set; }
 }
