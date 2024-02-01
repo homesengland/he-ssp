@@ -97,7 +97,9 @@ public class UsersController : Controller
     {
         if (unlink == null)
         {
-            ModelState.AddModelError("Unlink", ValidationErrorMessage.ChooseYourAnswer);
+            var (_, userDetails) = await _mediator.Send(new GetUserDetailsQuery(UserGlobalId.From(id)), cancellationToken);
+            var userName = $"{userDetails.FirstName} {userDetails.LastName}".Trim();
+            ModelState.AddModelError("Unlink", $"Select if you want to remove {userName} from the organisation");
             return await ConfirmUnlink(id, cancellationToken);
         }
 
