@@ -18,8 +18,8 @@ public enum SiteWorkflowState
     LocalAuthorityReset,
     PlanningStatus,
     PlanningDetails,
+    LandRegistry,
     NationalDesignGuide,
     BuildingForHealthyLife,
-    LandRegistry,
     CheckAnswers,
 }
