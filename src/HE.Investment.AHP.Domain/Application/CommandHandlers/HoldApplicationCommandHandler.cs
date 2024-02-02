@@ -8,7 +8,7 @@ using MediatR;
 
 namespace HE.Investment.AHP.Domain.Application.CommandHandlers;
 
-public class HoldApplicationCommandHandler : ChangeApplicationStatusCommandHandler, IRequestHandler<HoldApplicationCommand, OperationResult>
+public class HoldApplicationCommandHandler : ChangeApplicationStatusBaseCommandHandler, IRequestHandler<HoldApplicationCommand, OperationResult>
 {
     public HoldApplicationCommandHandler(IApplicationRepository applicationRepository, IAccountUserContext accountUserContext)
         : base(applicationRepository, accountUserContext)

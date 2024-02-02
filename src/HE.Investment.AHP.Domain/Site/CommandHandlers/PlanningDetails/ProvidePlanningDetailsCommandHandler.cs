@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace HE.Investment.AHP.Domain.Site.CommandHandlers.PlanningDetails;
 
-public class ProvidePlanningDetailsCommandHandler : ProvidePlanningDetailsBaseCommandHandler<ProvidePlanningDetailsCommand>
+public class ProvidePlanningDetailsCommandHandler : ProvideSiteDetailsBaseCommandHandler<ProvidePlanningDetailsCommand>
 {
     public ProvidePlanningDetailsCommandHandler(
         ISiteRepository siteRepository,
