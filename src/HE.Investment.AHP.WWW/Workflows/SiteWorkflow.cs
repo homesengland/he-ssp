@@ -45,7 +45,6 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             { PlanningDetails: var x } when x.PlanningStatus.IsNotProvided() => SiteWorkflowState.PlanningStatus,
             { PlanningDetails.ArePlanningDetailsProvided: false } => SiteWorkflowState.PlanningDetails,
             { PlanningDetails: var x } when !IsLandRegistryProvided(x) => SiteWorkflowState.LandRegistry,
-            { NationalDesignGuidePriorities: var x } when x.IsNotProvided() => SiteWorkflowState.NationalDesignGuide,
             _ => SiteWorkflowState.CheckAnswers,
         };
     }
