@@ -166,7 +166,8 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
 
         _machine.Configure(SiteWorkflowState.NationalDesignGuide)
             .Permit(Trigger.Continue, SiteWorkflowState.BuildingForHealthyLife)
-            .Permit(Trigger.Back, SiteWorkflowState.PlanningDetails);
+            .PermitIf(Trigger.Back, SiteWorkflowState.LandRegistry, IsLandTitleRegistered)
+            .PermitIf(Trigger.Back, SiteWorkflowState.PlanningDetails, () => !IsLandTitleRegistered());
 
         _machine.Configure(SiteWorkflowState.BuildingForHealthyLife)
             .Permit(Trigger.Continue, SiteWorkflowState.CheckAnswers)
