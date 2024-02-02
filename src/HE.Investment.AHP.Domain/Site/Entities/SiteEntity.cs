@@ -21,6 +21,7 @@ public class SiteEntity : DomainEntity, IQuestion
         Section106 section106,
         PlanningDetails planningDetails,
         NationalDesignGuidePriorities nationalDesignGuidePriorities,
+        TenderingStatusDetails tenderingStatusDetails,
         LocalAuthority? localAuthority = null)
     {
         Id = id;
@@ -30,6 +31,7 @@ public class SiteEntity : DomainEntity, IQuestion
         LocalAuthority = localAuthority;
         PlanningDetails = planningDetails;
         NationalDesignGuidePriorities = nationalDesignGuidePriorities;
+        TenderingStatusDetails = tenderingStatusDetails;
     }
 
     public SiteEntity()
@@ -40,11 +42,14 @@ public class SiteEntity : DomainEntity, IQuestion
         Section106 = new Section106();
         PlanningDetails = PlanningDetailsFactory.CreateEmpty();
         NationalDesignGuidePriorities = new NationalDesignGuidePriorities();
+        TenderingStatusDetails = new TenderingStatusDetails();
     }
 
     public SiteId Id { get; set; }
 
     public SiteName Name { get; private set; }
+
+    public SiteStatus Status { get; }
 
     public Section106 Section106 { get; private set; }
 
@@ -54,7 +59,7 @@ public class SiteEntity : DomainEntity, IQuestion
 
     public NationalDesignGuidePriorities NationalDesignGuidePriorities { get; private set; }
 
-    public SiteStatus Status { get; }
+    public TenderingStatusDetails TenderingStatusDetails { get; set; }
 
     public async Task ProvideName(SiteName siteName, ISiteNameExist siteNameExist, CancellationToken cancellationToken)
     {
@@ -86,6 +91,11 @@ public class SiteEntity : DomainEntity, IQuestion
     public void ProvideNationalDesignGuidePriorities(NationalDesignGuidePriorities nationalDesignGuidePriorities)
     {
         NationalDesignGuidePriorities = _modificationTracker.Change(NationalDesignGuidePriorities, nationalDesignGuidePriorities);
+    }
+
+    public void ProvideTenderingStatusDetails(TenderingStatusDetails tenderingStatusDetails)
+    {
+        TenderingStatusDetails = _modificationTracker.Change(TenderingStatusDetails, tenderingStatusDetails);
     }
 
     public bool IsAnswered()

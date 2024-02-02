@@ -7,4 +7,4 @@ public record ProvideLandRegistryDetailsCommand(
         SiteId SiteId,
         string? LandRegistryTitleNumber,
         bool? IsGrantFundingForAllHomesCoveredByTitleNumber)
-    : IRequest<OperationResult>, IProvideSitePlanningDetailsCommand;
+    : IRequest<OperationResult>, IProvideSiteDetailsCommand;

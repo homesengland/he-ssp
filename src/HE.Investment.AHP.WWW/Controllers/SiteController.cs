@@ -3,6 +3,7 @@ using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Commands;
 using HE.Investment.AHP.Contract.Site.Commands.PlanningDetails;
+using HE.Investment.AHP.Contract.Site.Commands.TenderingStatus;
 using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investment.AHP.Contract.Site.Queries;
 using HE.Investment.AHP.WWW.Extensions;
@@ -394,8 +395,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     [WorkflowState(SiteWorkflowState.PlanningDetails)]
     public async Task<IActionResult> PlanningDetails([FromRoute] string siteId, CancellationToken cancellationToken)
     {
-        var siteModel = await _mediator.Send(new GetSiteQuery(siteId), cancellationToken);
-        ViewBag.SiteName = siteModel.Name!;
+        var siteModel = await GetSiteDetails(siteId, cancellationToken);
         return View("PlanningDetails", siteModel.PlanningDetails);
     }
 
@@ -424,8 +424,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     [WorkflowState(SiteWorkflowState.LandRegistry)]
     public async Task<IActionResult> LandRegistry([FromRoute] string siteId, CancellationToken cancellationToken)
     {
-        var siteModel = await _mediator.Send(new GetSiteQuery(siteId), cancellationToken);
-        ViewBag.SiteName = siteModel.Name!;
+        var siteModel = await GetSiteDetails(siteId, cancellationToken);
         return View("LandRegistry", siteModel.PlanningDetails);
     }
 
@@ -438,7 +437,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
                 this.GetSiteIdFromRoute(),
                 model.LandRegistryTitleNumber,
                 model.IsGrantFundingForAllHomesCoveredByTitleNumber),
-            nameof(PlanningDetails),
+            nameof(LandRegistry),
             savedModel => model,
             cancellationToken);
     }
@@ -466,7 +465,28 @@ public class SiteController : WorkflowController<SiteWorkflowState>
             new ProvideNationalDesignGuidePrioritiesCommand(
                 this.GetSiteIdFromRoute(),
                 (IReadOnlyCollection<NationalDesignGuidePriority>)(model.DesignPriorities ?? new List<NationalDesignGuidePriority>())),
-            $"NationalDesignGuide",
+            nameof(NationalDesignGuide),
+            savedModel => model,
+            cancellationToken);
+    }
+
+    [HttpGet("{siteId}/tendering-status")]
+    [WorkflowState(SiteWorkflowState.TenderingStatus)]
+    public async Task<IActionResult> TenderingStatus([FromRoute] string siteId, CancellationToken cancellationToken)
+    {
+        var siteModel = await GetSiteDetails(siteId, cancellationToken);
+        return View("TenderingStatus", siteModel.TenderingStatusDetails);
+    }
+
+    [HttpPost("{siteId}/tendering-status")]
+    [WorkflowState(SiteWorkflowState.TenderingStatus)]
+    public async Task<IActionResult> TenderingStatus(SiteTenderingStatusDetails model, CancellationToken cancellationToken)
+    {
+        return await ExecuteSiteCommand<SiteTenderingStatusDetails>(
+            new ProvideTenderingStatusCommand(
+                this.GetSiteIdFromRoute(),
+                model.TenderingStatus),
+            nameof(TenderingStatus),
             savedModel => model,
             cancellationToken);
     }
@@ -499,12 +519,18 @@ public class SiteController : WorkflowController<SiteWorkflowState>
             async () => await ContinueWithRedirect(new { siteId }),
             async () =>
             {
-                var siteDetails = await _mediator.Send(new GetSiteQuery(siteId.Value), cancellationToken);
-                ViewBag.SiteName = siteDetails.Name!;
+                var siteDetails = await GetSiteDetails(siteId.Value, cancellationToken);
                 var model = createViewModelForError(siteDetails);
 
                 return View(viewName, model);
             },
             cancellationToken);
+    }
+
+    private async Task<SiteModel> GetSiteDetails(string siteId, CancellationToken cancellationToken)
+    {
+        var siteModel = await _mediator.Send(new GetSiteQuery(siteId), cancellationToken);
+        ViewBag.SiteName = siteModel.Name!;
+        return siteModel;
     }
 }

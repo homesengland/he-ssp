@@ -32,13 +32,19 @@ public class ApplicationEntityWithdrawTests : TestBase<ApplicationEntity>
         var applicationRepository = ApplicationRepositoryTestBuilder
             .New()
             .ReturnApplication(applicationId, userAccount, application)
-            .BuildIApplicationWithdrawMockAndRegister(this);
+            .BuildIChangeApplicationStatusMockAndRegister(this);
 
         // when
         await application.Withdraw(applicationRepository.Object, withdrawReason, organisationId, CancellationToken.None);
 
         // then
-        applicationRepository.Verify(repo => repo.Withdraw(application, organisationId, CancellationToken.None), Times.Once);
+        applicationRepository.Verify(
+            repo => repo.ChangeApplicationStatus(
+                    application,
+                    organisationId,
+                    withdrawReason.Value,
+                    CancellationToken.None),
+            Times.Once);
         application.IsModified.Should().BeTrue();
         application.Status.Should().Be(ApplicationStatus.Withdrawn);
     }

@@ -7,12 +7,12 @@ using HE.Investments.Common.Contract.Validators;
 
 namespace HE.Investment.AHP.Domain.Application.CommandHandlers;
 
-public class ChangeApplicationStatusCommandHandler
+public class ChangeApplicationStatusBaseCommandHandler
 {
     private readonly IAccountUserContext _accountUserContext;
     private readonly IApplicationRepository _applicationRepository;
 
-    public ChangeApplicationStatusCommandHandler(
+    public ChangeApplicationStatusBaseCommandHandler(
         IApplicationRepository applicationRepository,
         IAccountUserContext accountUserContext)
     {

@@ -73,6 +73,7 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             SiteWorkflowState.Section106Ineligible => true,
             SiteWorkflowState.NationalDesignGuide => true,
             SiteWorkflowState.LandRegistry => IsLandTitleRegistered(),
+            SiteWorkflowState.TenderingStatus => true,
             _ => false,
         };
     }

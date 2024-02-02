@@ -112,7 +112,7 @@ public class ApplicationRepository : IApplicationRepository
         return application;
     }
 
-    public async Task Hold(ApplicationEntity application, OrganisationId organisationId, CancellationToken cancellationToken)
+    public async Task ChangeApplicationStatus(ApplicationEntity application, OrganisationId organisationId, string? changeReason, CancellationToken cancellationToken)
     {
         if (application is { IsModified: false })
         {
@@ -123,37 +123,7 @@ public class ApplicationRepository : IApplicationRepository
             application.Id.Value,
             organisationId.Value,
             application.Status,
-            application.HoldReason?.Value,
-            cancellationToken);
-    }
-
-    public async Task Withdraw(ApplicationEntity application, OrganisationId organisationId, CancellationToken cancellationToken)
-    {
-        if (application is { IsModified: false })
-        {
-            return;
-        }
-
-        await _applicationCrmContext.ChangeApplicationStatus(
-            application.Id.Value,
-            organisationId.Value,
-            application.Status,
-            application.WithdrawReason?.Value,
-            cancellationToken);
-    }
-
-    public async Task Submit(ApplicationEntity application, OrganisationId organisationId, CancellationToken cancellationToken)
-    {
-        if (application is { IsModified: false })
-        {
-            return;
-        }
-
-        await _applicationCrmContext.ChangeApplicationStatus(
-            application.Id.Value,
-            organisationId.Value,
-            application.Status,
-            null,
+            changeReason,
             cancellationToken);
     }
 
