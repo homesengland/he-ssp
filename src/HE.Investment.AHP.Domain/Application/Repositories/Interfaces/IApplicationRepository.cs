@@ -9,7 +9,7 @@ using HE.Investments.Common.Domain;
 
 namespace HE.Investment.AHP.Domain.Application.Repositories.Interfaces;
 
-public interface IApplicationRepository : IApplicationWithdraw, IApplicationHold, IApplicationSubmit
+public interface IApplicationRepository : IChangeApplicationStatus
 {
     Task<ApplicationEntity> GetById(AhpApplicationId id, UserAccount userAccount, CancellationToken cancellationToken);
 
