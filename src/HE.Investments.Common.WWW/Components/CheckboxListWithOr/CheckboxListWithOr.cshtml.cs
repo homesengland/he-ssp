@@ -14,11 +14,13 @@ public class CheckboxListWithOr : ViewComponent
         IEnumerable<ExtendedSelectListItem> availableOptions,
         ExtendedSelectListItem alternativeOption,
         DynamicComponentViewModel? headerComponent = null,
+        DynamicComponentViewModel? contentComponent = null,
         string? header = null,
         string? title = null,
         string? hint = null,
         IEnumerable<string>? selectedValues = null)
     {
+
         var availableOptionsList = availableOptions.ToList();
 
         foreach (var value in selectedValues ?? new List<string>())

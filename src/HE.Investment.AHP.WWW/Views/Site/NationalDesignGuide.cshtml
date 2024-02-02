@@ -1,7 +1,9 @@
 @using HE.Investment.AHP.Contract.Site;
 @using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.WWW.Models.Site;
+@using HE.Investment.AHP.WWW.Views.Shared.Components.CheckboxListHeader;
 @using HE.Investment.AHP.WWW.Views.Site;
+@using HE.Investments.Common.WWW.Components.Details;
 @using HE.Investments.Common.WWW.Components.InputListHeader;
 @model HE.Investment.AHP.WWW.Models.Site.NationalDesignGuidePrioritiesModel;
 
@@ -9,25 +11,17 @@
     ViewData["Title"] = SitePageTitles.NationalDesignGuide;
     var selectedValues = Model.DesignPriorities?.Select(x => x.ToString());
     var header = new DynamicComponentViewModel(nameof(InputListHeader), new { header = SitePageTitles.NationalDesignGuide, name = Model.SiteName, description = Model.SiteName });
+    var details = new DynamicComponentViewModel(nameof(Details), new { title = "What is the National Design Guide?", contentText = "The National Design Guide sets out the characteristics of well-designed places and demonstrates what good design means in practice. You can read more about the guide in the <a target=\"_blank\" href=\"https://www.gov.uk/government/publications/national-design-guide\">National Design Guide publication (opens in a new tab).</a>" });
+    var checkboxListHeader = new DynamicComponentViewModel(nameof(CheckboxListHeader), new { headerComponent = header, detailsComponent = details });
 }
 
 <div class="govuk-grid-column-two-thirds">
     <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.NationalDesignGuide" />
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <form asp-controller="Site" asp-action="NationalDesignGuide" asp-method="post" novalidate>
-        <vc:form-header title="@SitePageTitles.NationalDesignGuide" caption="@Model.SiteName" additional-css-class="govuk-!-padding-top-8"></vc:form-header>
-
-        <gds-details>
-            <gds-summary-details>What is the National Design Guide?</gds-summary-details>
-            <gds-div-details-text>
-                The National Design Guide sets out the characteristics of well-designed places and demonstrates what good design means in practice. You can read more about the guide in the
-                <a target="_blank" href="https://www.gov.uk/government/publications/national-design-guide">
-                    National Design Guide publication (opens in a new tab).
-                </a>
-            </gds-div-details-text>
-        </gds-details>
 
         <vc:checkbox-list-with-or field-name="@nameof(Model.DesignPriorities)"
+                                  header-component="@checkboxListHeader"
                                   available-options="@SiteFormOptions.NationalDesignGuidePrioritiesExceptNone"
                                   alternative-option="@SiteFormOptions.NationalDesignGuidePrioritiesOnlyNone"
                                   selected-values="@selectedValues" />

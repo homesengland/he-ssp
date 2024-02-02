@@ -9,7 +9,7 @@
     <div class="govuk-details__text">
         @if (!string.IsNullOrWhiteSpace(Model.contentText))
         {
-            @Model.title
+            @Html.Raw(@Model.contentText)
         }
 
         @if(Model.contentComponent != null)

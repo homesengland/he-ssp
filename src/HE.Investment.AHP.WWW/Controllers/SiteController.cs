@@ -448,11 +448,12 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     public async Task<IActionResult> NationalDesignGuide([FromRoute] string siteId, CancellationToken cancellationToken)
     {
         var siteModel = await _mediator.Send(new GetSiteQuery(siteId), cancellationToken);
+
         var designGuideModel = new NationalDesignGuidePrioritiesModel()
         {
             SiteId = new SiteId(siteId),
             SiteName = siteModel?.Name ?? string.Empty,
-            DesignPriorities = siteModel?.NationalDesignGuidePriorities.ToList(),
+            DesignPriorities = siteModel?.NationalDesignGuidePriorities?.ToList(),
         };
         return View("NationalDesignGuide", designGuideModel);
     }

@@ -12,7 +12,7 @@
 
 <gds-div-form-group class="@groupClass">
     <gds-field-set>
-        <vc:input-list-header header-component="@Model.headerComponent" header="@Model.header" title="@Model.title" hint="@Model.hint" />
+        <vc:dynamic-component component="@Model.headerComponent" />
 
         <vc:error-message field-name="@Model.fieldName" />
 

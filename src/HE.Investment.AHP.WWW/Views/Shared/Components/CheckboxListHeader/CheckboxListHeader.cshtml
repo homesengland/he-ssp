@@ -1,0 +1,22 @@
+@using HE.Investments.Common.WWW.Components.DynamicComponent;
+@using HE.Investments.Common.WWW.Helpers;
+@using HE.Investments.Common.Contract;
+@model (DynamicComponentViewModel headerComponent, DynamicComponentViewModel? detailsComponent, string? hint)
+@{
+#nullable enable
+    // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
+}
+@if (Model.headerComponent != null)
+{
+    <vc:dynamic-component component="@Model.headerComponent" />
+}
+@if (Model.detailsComponent != null)
+{
+    <vc:dynamic-component component="@Model.detailsComponent" />
+}
+@if (!string.IsNullOrWhiteSpace(Model.hint))
+{
+    <he-div-hint>
+        @Model.hint
+    </he-div-hint>
+}
