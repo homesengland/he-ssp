@@ -43,4 +43,6 @@ public static class SitePageTitles
     public const string LandRegistry = "Enter your Land Registry title number";
 
     public const string NationalDesignGuide = "Which of the design priorities from the National Design Guide does your site aim to meet?";
+
+    public const string TenderingStatus = "What progress have you made in the tendering for your main works contract?";
 }

@@ -81,7 +81,8 @@ public static class HtmlDocumentExtensions
     {
         var header = htmlDocument.GetElementsByClassName(CssConstants.GovUkHxl).FirstOrDefault()
                      ?? htmlDocument.GetElementsByClassName(CssConstants.GovUkHl).FirstOrDefault()
-                     ?? htmlDocument.GetElementsByClassName(CssConstants.GovUkFieldSetHeading).FirstOrDefault();
+                     ?? htmlDocument.GetElementsByClassName(CssConstants.GovUkFieldSetHeading).FirstOrDefault()
+                     ?? htmlDocument.GetElementsByTagName("title").FirstOrDefault();
 
         header.Should().NotBeNull("Page Header does not exist");
         return header!.InnerHtml.Trim();

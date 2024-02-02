@@ -73,6 +73,7 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             SiteWorkflowState.Section106Ineligible => true,
             SiteWorkflowState.NationalDesignGuide => true,
             SiteWorkflowState.LandRegistry => IsLandTitleRegistered(),
+            SiteWorkflowState.TenderingStatus => true,
             _ => false,
         };
     }
@@ -91,7 +92,7 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             .Permit(Trigger.Back, SiteWorkflowState.Start);
 
         _machine.Configure(SiteWorkflowState.Section106GeneralAgreement)
-            .PermitIf(Trigger.Continue, SiteWorkflowState.Section106AffordableHousing, () => _siteModel.Section106GeneralAgreement == true)
+            .PermitIf(Trigger.Continue, SiteWorkflowState.Section106AffordableHousing, () => _siteModel?.Section106GeneralAgreement == true)
             .PermitIf(Trigger.Continue, SiteWorkflowState.LocalAuthoritySearch, () => _siteModel?.Section106GeneralAgreement == false)
             .Permit(Trigger.Back, SiteWorkflowState.Name);
 

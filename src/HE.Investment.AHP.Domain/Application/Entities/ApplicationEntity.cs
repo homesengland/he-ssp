@@ -81,7 +81,7 @@ public class ApplicationEntity : DomainEntity
         Id = newId;
     }
 
-    public async Task Submit(IApplicationSubmit applicationSubmit, OrganisationId organisationId, CancellationToken cancellationToken)
+    public async Task Submit(IChangeApplicationStatus applicationSubmit, OrganisationId organisationId, CancellationToken cancellationToken)
     {
         if (Sections.Sections.Any(s => s.Status != SectionStatus.Completed))
         {
@@ -91,25 +91,25 @@ public class ApplicationEntity : DomainEntity
 
         Status = _modificationTracker.Change(Status, ApplicationStatus.ApplicationSubmitted);
 
-        await applicationSubmit.Submit(this, organisationId, cancellationToken);
+        await applicationSubmit.ChangeApplicationStatus(this, organisationId, null, cancellationToken);
     }
 
-    public async Task Hold(IApplicationHold applicationHold, HoldReason? newHoldReason, OrganisationId organisationId, CancellationToken cancellationToken)
+    public async Task Hold(IChangeApplicationStatus applicationHold, HoldReason? newHoldReason, OrganisationId organisationId, CancellationToken cancellationToken)
     {
         Status = _modificationTracker.Change(Status, ApplicationStatus.OnHold);
         HoldReason = _modificationTracker.Change(HoldReason, newHoldReason);
 
-        await applicationHold.Hold(this, organisationId, cancellationToken);
+        await applicationHold.ChangeApplicationStatus(this, organisationId, HoldReason?.Value, cancellationToken);
 
         Publish(new ApplicationHasBeenPutOnHoldEvent(Id));
     }
 
-    public async Task Withdraw(IApplicationWithdraw applicationWithdraw, WithdrawReason? newWithdrawReason, OrganisationId organisationId, CancellationToken cancellationToken)
+    public async Task Withdraw(IChangeApplicationStatus applicationWithdraw, WithdrawReason? newWithdrawReason, OrganisationId organisationId, CancellationToken cancellationToken)
     {
         Status = _modificationTracker.Change(Status, ApplicationStatus.Withdrawn);
         WithdrawReason = _modificationTracker.Change(WithdrawReason, newWithdrawReason);
 
-        await applicationWithdraw.Withdraw(this, organisationId, cancellationToken);
+        await applicationWithdraw.ChangeApplicationStatus(this, organisationId, WithdrawReason?.Value, cancellationToken);
 
         Publish(new ApplicationHasBeenWithdrawnEvent(Id));
     }

@@ -41,6 +41,7 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
             IsIneligible = site.Section106?.IsIneligible(),
             LocalAuthority = LocalAuthorityMapper.Map(site.LocalAuthority),
             PlanningDetails = CreateSitePlanningDetails(site.PlanningDetails),
+            TenderingStatusDetails = CreateSiteTenderingStatusDetails(site.TenderingStatusDetails),
         };
     }
 
@@ -60,5 +61,10 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
             planningDetails.LandRegistryDetails?.TitleNumber?.Value,
             planningDetails.LandRegistryDetails?.IsGrantFundingForAllHomesCoveredByTitleNumber,
             planningDetails.IsAnswered());
+    }
+
+    private SiteTenderingStatusDetails CreateSiteTenderingStatusDetails(TenderingStatusDetails tenderingStatusDetails)
+    {
+        return new SiteTenderingStatusDetails(tenderingStatusDetails.TenderingStatus);
     }
 }

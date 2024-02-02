@@ -34,13 +34,13 @@ public class ApplicationEntitySubmitTests : TestBase<ApplicationEntity>
         var applicationRepository = ApplicationRepositoryTestBuilder
             .New()
             .ReturnApplication(applicationId, userAccount, application)
-            .BuildIApplicationSubmitMockAndRegister(this);
+            .BuildIChangeApplicationStatusMockAndRegister(this);
 
         // when
         await application.Submit(applicationRepository.Object, organisationId, CancellationToken.None);
 
         // then
-        applicationRepository.Verify(repo => repo.Submit(application, organisationId, CancellationToken.None), Times.Once);
+        applicationRepository.Verify(repo => repo.ChangeApplicationStatus(application, organisationId, null, CancellationToken.None), Times.Once);
         application.IsModified.Should().BeTrue();
         application.Status.Should().Be(ApplicationStatus.ApplicationSubmitted);
     }
@@ -65,7 +65,7 @@ public class ApplicationEntitySubmitTests : TestBase<ApplicationEntity>
         var applicationRepository = ApplicationRepositoryTestBuilder
             .New()
             .ReturnApplication(applicationId, userAccount, application)
-            .BuildIApplicationSubmitMockAndRegister(this);
+            .BuildIChangeApplicationStatusMockAndRegister(this);
 
         // when
         var result = async () => await application.Submit(applicationRepository.Object, organisationId, CancellationToken.None);

@@ -57,7 +57,7 @@ public class ExpectedContributionsToScheme : ValueObject, IQuestion
         var isAnswered = RentalIncome.IsProvided() && SalesOfHomesOnThisScheme.IsProvided() && SalesOfHomesOnOtherSchemes.IsProvided() &&
                          OwnResources.IsProvided() && RcgfContributions.IsProvided() && OtherCapitalSources.IsProvided() && HomesTransferValue.IsProvided();
 
-        return isAnswered && IsAnsweredForTenureSharedOwnership();
+        return isAnswered && IsAnsweredForSharedOwnershipHomes();
     }
 
     public decimal CalculateTotal()
@@ -66,7 +66,7 @@ public class ExpectedContributionsToScheme : ValueObject, IQuestion
                                          SalesOfHomesOnOtherSchemes.GetValueOrZero() + OwnResources.GetValueOrZero() + RcgfContributions.GetValueOrZero() +
                                          OtherCapitalSources.GetValueOrZero() + HomesTransferValue.GetValueOrZero();
 
-        if (ApplicationTenure == Tenure.SharedOwnership)
+        if (SharedOwnershipHomes().Contains(ApplicationTenure))
         {
             return totalExpectedContributions + SharedOwnershipSales.GetValueOrZero();
         }
@@ -86,13 +86,20 @@ public class ExpectedContributionsToScheme : ValueObject, IQuestion
         yield return HomesTransferValue;
     }
 
-    private bool IsAnsweredForTenureSharedOwnership()
+    private bool IsAnsweredForSharedOwnershipHomes()
     {
-        if (ApplicationTenure != Tenure.SharedOwnership)
+        if (SharedOwnershipHomes().Contains(ApplicationTenure))
         {
-            return true;
+            return SharedOwnershipSales.IsProvided();
         }
 
-        return SharedOwnershipSales.IsProvided();
+        return true;
+    }
+
+    private IEnumerable<Tenure> SharedOwnershipHomes()
+    {
+        yield return Tenure.SharedOwnership;
+        yield return Tenure.HomeOwnershipLongTermDisabilities;
+        yield return Tenure.OlderPersonsSharedOwnership;
     }
 }
