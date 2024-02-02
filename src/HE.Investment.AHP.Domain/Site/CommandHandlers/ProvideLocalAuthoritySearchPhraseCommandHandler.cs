@@ -6,7 +6,6 @@ using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
 using MediatR;
-using Microsoft.Extensions.Logging;
 
 namespace HE.Investment.AHP.Domain.Site.CommandHandlers;
 
@@ -14,9 +13,8 @@ public class ProvideLocalAuthoritySearchPhraseCommandHandler : SiteBaseCommandHa
 {
     public ProvideLocalAuthoritySearchPhraseCommandHandler(
         ISiteRepository siteRepository,
-        IAccountUserContext accountUserContext,
-        ILogger<SiteBaseCommandHandler> logger)
-        : base(siteRepository, accountUserContext, logger)
+        IAccountUserContext accountUserContext)
+        : base(siteRepository, accountUserContext)
     {
     }
 

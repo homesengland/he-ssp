@@ -3,13 +3,12 @@ using HE.Investment.AHP.Domain.Site.Entities;
 using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
-using Microsoft.Extensions.Logging;
 
 namespace HE.Investment.AHP.Domain.Site.CommandHandlers;
 
 public class SiteBaseCommandHandler
 {
-    public SiteBaseCommandHandler(ISiteRepository siteRepository, IAccountUserContext accountUserContext, ILogger<SiteBaseCommandHandler> logger)
+    public SiteBaseCommandHandler(ISiteRepository siteRepository, IAccountUserContext accountUserContext)
     {
         SiteRepository = siteRepository;
         AccountUserContext = accountUserContext;

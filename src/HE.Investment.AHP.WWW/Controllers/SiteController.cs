@@ -491,6 +491,28 @@ public class SiteController : WorkflowController<SiteWorkflowState>
             cancellationToken);
     }
 
+    [HttpGet("{siteId}/contractor-details")]
+    [WorkflowState(SiteWorkflowState.ContractorDetails)]
+    public async Task<IActionResult> ContractorDetails([FromRoute] string siteId, CancellationToken cancellationToken)
+    {
+        var siteModel = await GetSiteDetails(siteId, cancellationToken);
+        return View("ContractorDetails", siteModel.TenderingStatusDetails);
+    }
+
+    [HttpPost("{siteId}/contractor-details")]
+    [WorkflowState(SiteWorkflowState.ContractorDetails)]
+    public async Task<IActionResult> ContractorDetails(SiteTenderingStatusDetails model, CancellationToken cancellationToken)
+    {
+        return await ExecuteSiteCommand<SiteTenderingStatusDetails>(
+            new ProvideContractorDetailsCommand(
+                this.GetSiteIdFromRoute(),
+                model.ContractorName,
+                model.IsSmeContractor),
+            nameof(ContractorDetails),
+            savedModel => model with { TenderingStatus = savedModel.TenderingStatusDetails.TenderingStatus },
+            cancellationToken);
+    }
+
     protected override async Task<IStateRouting<SiteWorkflowState>> Routing(SiteWorkflowState currentState, object? routeData = null)
     {
         SiteModel? siteModel = null;

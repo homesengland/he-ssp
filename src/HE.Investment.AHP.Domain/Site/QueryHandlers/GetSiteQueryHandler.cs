@@ -4,6 +4,7 @@ using HE.Investment.AHP.Domain.Common.Mappers;
 using HE.Investment.AHP.Domain.Site.Mappers;
 using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investment.AHP.Domain.Site.ValueObjects.Planning;
+using HE.Investment.AHP.Domain.Site.ValueObjects.TenderingStatus;
 using HE.Investments.Account.Shared;
 using MediatR;
 
@@ -65,6 +66,9 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
 
     private SiteTenderingStatusDetails CreateSiteTenderingStatusDetails(TenderingStatusDetails tenderingStatusDetails)
     {
-        return new SiteTenderingStatusDetails(tenderingStatusDetails.TenderingStatus);
+        return new SiteTenderingStatusDetails(
+            tenderingStatusDetails.TenderingStatus,
+            tenderingStatusDetails.ContractorName?.Value,
+            tenderingStatusDetails.IsSmeContractor);
     }
 }
