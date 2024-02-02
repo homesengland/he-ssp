@@ -31,4 +31,6 @@ public class SiteModel
     public LocalAuthority? LocalAuthority { get; set; }
 
     public IList<NationalDesignGuidePriority> NationalDesignGuidePriorities { get; set; }
+
+    public SiteTenderingStatusDetails TenderingStatusDetails { get; set; }
 }
