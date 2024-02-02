@@ -69,6 +69,7 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
         return new SiteTenderingStatusDetails(
             tenderingStatusDetails.TenderingStatus,
             tenderingStatusDetails.ContractorName?.Value,
-            tenderingStatusDetails.IsSmeContractor);
+            tenderingStatusDetails.IsSmeContractor,
+            tenderingStatusDetails.IsIntentionToWorkWithSme);
     }
 }

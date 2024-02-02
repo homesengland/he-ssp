@@ -68,7 +68,37 @@ public class IsAnsweredTests
     public void ShouldReturnFalse_WhenIsSmeNotProvided(SiteTenderingStatus status)
     {
         // given
-        var details = new TenderingStatusDetails(status, new ContractorName("szwagier"));
+        var details = new TenderingStatusDetails(status, new ContractorName("szwagier"), null);
+
+        // when
+        var result = details.IsAnswered();
+
+        // then
+        result.Should().BeFalse();
+    }
+
+    [Theory]
+    [InlineData(SiteTenderingStatus.TenderForWorksContract)]
+    [InlineData(SiteTenderingStatus.ContractingHasNotYetBegun)]
+    public void ShouldReturnTrue_WhenTenderingStatusTenderForWorksContractOrContractingHasNotYetBegun(SiteTenderingStatus status)
+    {
+        // given
+        var details = new TenderingStatusDetails(status, true);
+
+        // when
+        var result = details.IsAnswered();
+
+        // then
+        result.Should().BeTrue();
+    }
+
+    [Theory]
+    [InlineData(SiteTenderingStatus.TenderForWorksContract)]
+    [InlineData(SiteTenderingStatus.ContractingHasNotYetBegun)]
+    public void ShouldReturnFalse_WhenIsIntentionToWorkWithSmeNotProvided(SiteTenderingStatus status)
+    {
+        // given
+        var details = new TenderingStatusDetails(status, null);
 
         // when
         var result = details.IsAnswered();

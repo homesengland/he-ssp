@@ -47,4 +47,6 @@ public static class SitePageTitles
     public const string TenderingStatus = "What progress have you made in the tendering for your main works contract?";
 
     public const string ContractorDetails = "Contractor details";
+
+    public const string IntentionToWorkWithSme = "Are you intending to work with a small to medium-sized enterprise (SME) contractor?";
 }

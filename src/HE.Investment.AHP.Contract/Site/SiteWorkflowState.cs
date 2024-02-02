@@ -23,5 +23,6 @@ public enum SiteWorkflowState
     BuildingForHealthyLife,
     TenderingStatus,
     ContractorDetails,
+    IntentionToWorkWithSme,
     CheckAnswers,
 }
