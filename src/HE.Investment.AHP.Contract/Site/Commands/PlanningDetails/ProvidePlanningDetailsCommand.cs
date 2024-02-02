@@ -15,4 +15,4 @@ public record ProvidePlanningDetailsCommand(
         bool? IsGrantFundingForAllHomesCoveredByApplication,
         DateDetails PlanningSubmissionDate,
         bool? IsLandRegistryTitleNumberRegistered)
-    : IRequest<OperationResult>, IProvideSitePlanningDetailsCommand;
+    : IRequest<OperationResult>, IProvideSiteDetailsCommand;

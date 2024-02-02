@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace HE.Investment.AHP.Domain.Site.CommandHandlers.PlanningDetails;
 
-public class ProvideSitePlanningStatusCommandHandler : ProvidePlanningDetailsBaseCommandHandler<ProvideSitePlanningStatusCommand>
+public class ProvideSitePlanningStatusCommandHandler : ProvideSiteDetailsBaseCommandHandler<ProvideSitePlanningStatusCommand>
 {
     public ProvideSitePlanningStatusCommandHandler(ISiteRepository siteRepository, IAccountUserContext accountUserContext, ILogger<SiteBaseCommandHandler> logger)
         : base(siteRepository, accountUserContext, logger)
