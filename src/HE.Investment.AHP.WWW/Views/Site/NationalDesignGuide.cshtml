@@ -2,42 +2,38 @@
 @using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.WWW.Models.Site;
 @using HE.Investment.AHP.WWW.Views.Site;
+@using HE.Investments.Common.WWW.Components.InputListHeader;
 @model HE.Investment.AHP.WWW.Models.Site.NationalDesignGuidePrioritiesModel;
 
 @{
     ViewData["Title"] = SitePageTitles.NationalDesignGuide;
-    var selectedValues = Model.DesignPriorities?.Select(x=>x.ToString());
+    var selectedValues = Model.DesignPriorities?.Select(x => x.ToString());
+    var header = new DynamicComponentViewModel(nameof(InputListHeader), new { header = SitePageTitles.NationalDesignGuide, name = Model.SiteName, description = Model.SiteName });
 }
 
 <div class="govuk-grid-column-two-thirds">
     <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.NationalDesignGuide" />
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
-
     <form asp-controller="Site" asp-action="NationalDesignGuide" asp-method="post" novalidate>
         <vc:form-header title="@SitePageTitles.NationalDesignGuide" caption="@Model.SiteName" additional-css-class="govuk-!-padding-top-8"></vc:form-header>
 
-        <gds-field-set class="govuk-!-margin-bottom-6">
+        <gds-details>
+            <gds-summary-details>What is the National Design Guide?</gds-summary-details>
+            <gds-div-details-text>
+                The National Design Guide sets out the characteristics of well-designed places and demonstrates what good design means in practice. You can read more about the guide in the
+                <a target="_blank" href="https://www.gov.uk/government/publications/national-design-guide">
+                    National Design Guide publication (opens in a new tab).
+                </a>
+            </gds-div-details-text>
+        </gds-details>
 
-                <gds-details>
-                    <gds-summary-details>What is the National Design Guide?</gds-summary-details>
-                    <gds-div-details-text>
-                        The National Design Guide sets out the characteristics of well-designed places and demonstrates what good design means in practice. You can read more about the guide in the
-                        <a target="_blank" href="https://www.gov.uk/government/publications/national-design-guide">
-                            National Design Guide publication (opens in a new tab).
-                        </a>
-                    </gds-div-details-text>
-                </gds-details>
+        <vc:checkbox-list-with-or field-name="@nameof(Model.DesignPriorities)"
+                                  available-options="@SiteFormOptions.NationalDesignGuidePrioritiesExceptNone"
+                                  alternative-option="@SiteFormOptions.NationalDesignGuidePrioritiesOnlyNone"
+                                  selected-values="@selectedValues" />
 
-                <vc:checkbox-list-with-or
-                    field-name="@nameof(Model.DesignPriorities)"
-                    title="" hint=""
-                    available-options="@SiteFormOptions.NationalDesignGuidePrioritiesExceptNone"
-                    alternative-option="@SiteFormOptions.NationalDesignGuidePrioritiesOnlyNone"
-                    selected-values="@selectedValues"/>
-                
-        </gds-field-set>
         @Html.HiddenFor(x => x.SiteName)
-        <vc:form-button/>
+        <vc:form-button />
         <vc:return-to-sites-link />
     </form>
 </div>

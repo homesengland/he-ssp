@@ -10,12 +10,14 @@ namespace HE.Investments.Common.WWW.Components.CheckboxListWithOr;
 public class CheckboxListWithOr : ViewComponent
 {
     public IViewComponentResult Invoke(
-        string title,
-        string hint,
         string fieldName,
         IEnumerable<ExtendedSelectListItem> availableOptions,
         ExtendedSelectListItem alternativeOption,
-        IEnumerable<string>? selectedValues)
+        DynamicComponentViewModel? headerComponent = null,
+        string? header = null,
+        string? title = null,
+        string? hint = null,
+        IEnumerable<string>? selectedValues = null)
     {
         var availableOptionsList = availableOptions.ToList();
 
@@ -33,6 +35,6 @@ public class CheckboxListWithOr : ViewComponent
             }
         }
 
-        return View("CheckboxListWithOr", (title, hint, fieldName, availableOptionsList.AsEnumerable(), alternativeOption));
+        return View("CheckboxListWithOr", (fieldName, headerComponent, header, title, hint, availableOptionsList.AsEnumerable(), alternativeOption));
     }
 }

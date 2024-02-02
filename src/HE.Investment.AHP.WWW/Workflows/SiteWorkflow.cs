@@ -91,18 +91,18 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             .Permit(Trigger.Back, SiteWorkflowState.Start);
 
         _machine.Configure(SiteWorkflowState.Section106GeneralAgreement)
-            .PermitIf(Trigger.Continue, SiteWorkflowState.Section106AffordableHousing, () => _siteModel?.Section106GeneralAgreement == true)
-            .PermitIf(Trigger.Continue, SiteWorkflowState.LocalAuthoritySearch, () => _siteModel?.Section106GeneralAgreement == false)
+            .PermitIf(Trigger.Continue, SiteWorkflowState.Section106AffordableHousing, () => _siteModel?.Section106?.GeneralAgreement == true)
+            .PermitIf(Trigger.Continue, SiteWorkflowState.LocalAuthoritySearch, () => _siteModel?.Section106?.GeneralAgreement == false)
             .Permit(Trigger.Back, SiteWorkflowState.Name);
 
         _machine.Configure(SiteWorkflowState.Section106AffordableHousing)
-            .PermitIf(Trigger.Continue, SiteWorkflowState.Section106OnlyAffordableHousing, () => _siteModel?.Section106AffordableHousing == true)
-            .PermitIf(Trigger.Continue, SiteWorkflowState.Section106CapitalFundingEligibility, () => _siteModel?.Section106AffordableHousing == false)
+            .PermitIf(Trigger.Continue, SiteWorkflowState.Section106OnlyAffordableHousing, () => _siteModel?.Section106?.AffordableHousing == true)
+            .PermitIf(Trigger.Continue, SiteWorkflowState.Section106CapitalFundingEligibility, () => _siteModel?.Section106?.AffordableHousing == false)
             .Permit(Trigger.Back, SiteWorkflowState.Section106GeneralAgreement);
 
         _machine.Configure(SiteWorkflowState.Section106OnlyAffordableHousing)
-            .PermitIf(Trigger.Continue, SiteWorkflowState.Section106CapitalFundingEligibility, () => _siteModel?.Section106OnlyAffordableHousing == true)
-            .PermitIf(Trigger.Continue, SiteWorkflowState.Section106AdditionalAffordableHousing, () => _siteModel?.Section106OnlyAffordableHousing == false)
+            .PermitIf(Trigger.Continue, SiteWorkflowState.Section106CapitalFundingEligibility, () => _siteModel?.Section106?.OnlyAffordableHousing == true)
+            .PermitIf(Trigger.Continue, SiteWorkflowState.Section106AdditionalAffordableHousing, () => _siteModel?.Section106?.OnlyAffordableHousing == false)
             .Permit(Trigger.Back, SiteWorkflowState.Section106AffordableHousing);
 
         _machine.Configure(SiteWorkflowState.Section106AdditionalAffordableHousing)
@@ -110,18 +110,18 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             .Permit(Trigger.Back, SiteWorkflowState.Section106AffordableHousing);
 
         _machine.Configure(SiteWorkflowState.Section106CapitalFundingEligibility)
-            .PermitIf(Trigger.Continue, SiteWorkflowState.Section106Ineligible, () => _siteModel?.IsIneligible == true)
+            .PermitIf(Trigger.Continue, SiteWorkflowState.Section106Ineligible, () => _siteModel?.Section106?.IsIneligible == true)
             .PermitIf(
                 Trigger.Continue,
                 SiteWorkflowState.Section106LocalAuthorityConfirmation,
-                () => _siteModel is { Section106CapitalFundingEligibility: false, Section106AdditionalAffordableHousing: true })
+                () => _siteModel?.Section106?.CapitalFundingEligibility == false && _siteModel?.Section106?.AdditionalAffordableHousing == true)
             .PermitIf(
                 Trigger.Continue,
                 SiteWorkflowState.LocalAuthoritySearch,
-                () => _siteModel is { Section106CapitalFundingEligibility: false, Section106AdditionalAffordableHousing: false })
-            .PermitIf(Trigger.Back, SiteWorkflowState.Section106AdditionalAffordableHousing, () => _siteModel?.Section106OnlyAffordableHousing == false)
-            .PermitIf(Trigger.Back, SiteWorkflowState.Section106OnlyAffordableHousing, () => _siteModel?.Section106OnlyAffordableHousing == true)
-            .PermitIf(Trigger.Back, SiteWorkflowState.Section106AffordableHousing, () => _siteModel?.Section106OnlyAffordableHousing == null);
+                () => _siteModel?.Section106?.CapitalFundingEligibility == false && _siteModel?.Section106?.AdditionalAffordableHousing == false)
+            .PermitIf(Trigger.Back, SiteWorkflowState.Section106AdditionalAffordableHousing, () => _siteModel?.Section106?.OnlyAffordableHousing == false)
+            .PermitIf(Trigger.Back, SiteWorkflowState.Section106OnlyAffordableHousing, () => _siteModel?.Section106?.OnlyAffordableHousing == true)
+            .PermitIf(Trigger.Back, SiteWorkflowState.Section106AffordableHousing, () => _siteModel?.Section106?.OnlyAffordableHousing == null);
 
         _machine.Configure(SiteWorkflowState.Section106LocalAuthorityConfirmation)
             .Permit(Trigger.Continue, SiteWorkflowState.LocalAuthoritySearch)
@@ -129,15 +129,15 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
 
         _machine.Configure(SiteWorkflowState.LocalAuthoritySearch)
             .Permit(Trigger.Continue, SiteWorkflowState.LocalAuthorityResult)
-            .PermitIf(Trigger.Back, SiteWorkflowState.Section106GeneralAgreement, () => _siteModel?.Section106GeneralAgreement == false)
+            .PermitIf(Trigger.Back, SiteWorkflowState.Section106GeneralAgreement, () => _siteModel?.Section106?.GeneralAgreement == false)
             .PermitIf(
                 Trigger.Back,
                 SiteWorkflowState.Section106LocalAuthorityConfirmation,
-                () => _siteModel?.Section106AdditionalAffordableHousing != false && _siteModel?.Section106GeneralAgreement != false)
+                () => _siteModel?.Section106?.AdditionalAffordableHousing != false && _siteModel?.Section106?.GeneralAgreement != false)
             .PermitIf(
                 Trigger.Back,
                 SiteWorkflowState.Section106CapitalFundingEligibility,
-                () => _siteModel?.Section106AdditionalAffordableHousing == false && _siteModel?.Section106GeneralAgreement != false);
+                () => _siteModel?.Section106?.AdditionalAffordableHousing == false && _siteModel?.Section106?.GeneralAgreement != false);
 
         _machine.Configure(SiteWorkflowState.LocalAuthorityResult)
             .Permit(Trigger.Continue, SiteWorkflowState.LocalAuthorityConfirm)
