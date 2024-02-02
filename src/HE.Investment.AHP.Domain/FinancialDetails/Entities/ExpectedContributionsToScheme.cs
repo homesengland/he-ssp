@@ -90,10 +90,10 @@ public class ExpectedContributionsToScheme : ValueObject, IQuestion
     {
         if (SharedOwnershipHomes().Contains(ApplicationTenure))
         {
-            return true;
+            return SharedOwnershipSales.IsProvided();
         }
 
-        return SharedOwnershipSales.IsProvided();
+        return true;
     }
 
     private IEnumerable<Tenure> SharedOwnershipHomes()
