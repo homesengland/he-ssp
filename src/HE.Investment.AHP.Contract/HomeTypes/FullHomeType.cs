@@ -11,6 +11,7 @@ public record FullHomeType(
     Tenure Tenure,
     HousingType HousingType,
     bool IsCompleted,
+    bool IsReadOnly,
     OlderPeopleHomeTypeDetails? OlderPeople,
     DisabledPeopleHomeTypeDetails? DisabledPeople,
     DesignPlans? DesignPlans,

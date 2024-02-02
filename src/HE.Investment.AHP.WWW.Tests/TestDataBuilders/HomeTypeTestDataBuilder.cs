@@ -27,6 +27,8 @@ public class HomeTypeTestDataBuilder
 
     private YesNoType _modernMethodsConstructionApplied = YesNoType.Yes;
 
+    private bool _isReadOnly = false;
+
     private IList<ModernMethodsConstructionCategoriesType> _modernMethodsConstructionCategories = new List<ModernMethodsConstructionCategoriesType>();
 
     public HomeTypeTestDataBuilder WithTenure(Tenure tenure)
@@ -95,6 +97,12 @@ public class HomeTypeTestDataBuilder
         return this;
     }
 
+    public HomeTypeTestDataBuilder WithReadOnlyMode(bool isReadOnly)
+    {
+        _isReadOnly = isReadOnly;
+        return this;
+    }
+
     public HomeType Build()
     {
         return new HomeType(
@@ -111,6 +119,7 @@ public class HomeTypeTestDataBuilder
                 _exemptFromTheRightToSharedOwnership,
                 _isProspectiveRentIneligible,
                 _modernMethodsConstructionApplied,
-                _modernMethodsConstructionCategories));
+                _modernMethodsConstructionCategories),
+            _isReadOnly);
     }
 }

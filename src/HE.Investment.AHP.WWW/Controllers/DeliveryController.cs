@@ -39,10 +39,11 @@ public class DeliveryController : Controller
     public async Task<IActionResult> List([FromRoute] string applicationId, CancellationToken cancellationToken)
     {
         var deliveryPhases = await _mediator.Send(new GetDeliveryPhasesQuery(AhpApplicationId.From(applicationId)), cancellationToken);
+        var isEditable = await _accountAccessContext.CanEditApplication() && !deliveryPhases.IsReadOnly;
 
         return View(new DeliveryListModel(deliveryPhases.ApplicationName)
         {
-            IsEditable = await _accountAccessContext.CanEditApplication(),
+            IsEditable = isEditable,
             UnusedHomeTypesCount = deliveryPhases.UnusedHomeTypesCount,
             DeliveryPhases = deliveryPhases.DeliveryPhases
                 .Select(x => new DeliveryPhaseItemModel(x.Id, x.Name, x.NumberOfHomes, x.Acquisition, x.StartOnSite, x.PracticalCompletion))

@@ -1,5 +1,4 @@
-using HE.Investment.AHP.Contract.Application.Helpers;
-using HE.Investment.AHP.Domain.Application.ValueObjects;
+using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Validators;
@@ -12,7 +11,7 @@ public class SchemeEntity
     private readonly ModificationTracker _modificationTracker = new();
 
     public SchemeEntity(
-        ApplicationBasicDetails application,
+        ApplicationBasicInfo application,
         SchemeFunding funding,
         SectionStatus status,
         AffordabilityEvidence affordabilityEvidence,
@@ -29,7 +28,7 @@ public class SchemeEntity
         StakeholderDiscussions = stakeholderDiscussions;
     }
 
-    public ApplicationBasicDetails Application { get; }
+    public ApplicationBasicInfo Application { get; }
 
     public SchemeFunding Funding { get; private set; }
 
@@ -44,6 +43,8 @@ public class SchemeEntity
     public SectionStatus Status { get; private set; }
 
     public bool IsModified => _modificationTracker.IsModified || StakeholderDiscussions.IsModified;
+
+    public bool IsReadOnly => Application.IsReadOnly();
 
     public void ChangeFunding(SchemeFunding funding)
     {
@@ -102,12 +103,6 @@ public class SchemeEntity
     public void UnComplete()
     {
         Status = _modificationTracker.Change(Status, SectionStatus.InProgress);
-    }
-
-    public bool IsReadOnly()
-    {
-        var readonlyStatuses = ApplicationStatusDivision.GetAllStatusesForReadonlyMode();
-        return readonlyStatuses.Contains(Application.Status);
     }
 
     private void SetInProgress()

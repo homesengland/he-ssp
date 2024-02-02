@@ -1,4 +1,5 @@
 using HE.Investment.AHP.Contract.Application;
+using HE.Investment.AHP.Contract.Application.Helpers;
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
@@ -39,6 +40,8 @@ public class HomeTypesEntity
     public SectionStatus Status { get; private set; }
 
     public bool IsStatusChanged => _statusModificationTracker.IsModified;
+
+    public bool IsReadOnly => _application.IsReadOnly();
 
     public IHomeTypeEntity CreateHomeType(string? name, HousingType housingType)
     {

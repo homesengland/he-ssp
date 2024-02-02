@@ -316,8 +316,8 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
             throw new InvalidOperationException("Cannot find applicationId.");
         }
 
-        var isReadOnly = !await _accountAccessContext.CanEditApplication();
         var financialDetails = await _mediator.Send(new GetFinancialDetailsQuery(AhpApplicationId.From(applicationId)));
+        var isReadOnly = !await _accountAccessContext.CanEditApplication() || financialDetails.IsReadOnly;
         return new FinancialDetailsWorkflow(currentState, financialDetails, isReadOnly);
     }
 

@@ -50,6 +50,8 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
 
     public bool IsStatusChanged => _statusModificationTracker.IsModified;
 
+    public bool IsReadOnly => _application.IsReadOnly();
+
     public int UnusedHomeTypesCount => _homesToDeliver.Select(x => x.TotalHomes).Sum() -
                                        _homesToDeliver.Select(x => GetHomesToBeDeliveredInAllPhases(x.HomeTypeId)).Sum();
 

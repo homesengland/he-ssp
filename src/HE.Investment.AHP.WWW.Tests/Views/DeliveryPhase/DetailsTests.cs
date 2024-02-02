@@ -22,7 +22,8 @@ public class DetailsTests : ViewTestBase
             "AppName",
             "Id",
             "DeliveryPhaseName",
-            SectionStatus.InProgress);
+            SectionStatus.InProgress,
+            false);
 
         // given & when
         var document = await Render(_viewPath, model, routeData: _routeData);

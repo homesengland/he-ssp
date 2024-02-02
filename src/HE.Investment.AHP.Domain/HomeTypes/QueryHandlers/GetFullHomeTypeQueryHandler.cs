@@ -69,6 +69,7 @@ internal sealed class GetFullHomeTypeQueryHandler : IRequestHandler<GetFullHomeT
             homeType.Application.Tenure,
             homeType.HousingType,
             homeType.Status == SectionStatus.Completed,
+            homeType.IsReadOnly,
             MapOptionalSegment(homeType, homeType.OlderPeopleHomeTypeDetails, _olderPeopleSegmentMapper),
             MapOptionalSegment(homeType, homeType.DisabledPeopleHomeTypeDetails, _disabledPeopleSegmentMapper),
             MapOptionalSegment(homeType, homeType.DesignPlans, _designPlansSegmentMapper),

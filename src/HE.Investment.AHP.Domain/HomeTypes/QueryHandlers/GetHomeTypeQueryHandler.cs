@@ -35,6 +35,7 @@ internal sealed class GetHomeTypeQueryHandler : IRequestHandler<GetHomeTypeQuery
             homeType.Name.Value,
             homeType.HousingType,
             homeType.Application.Tenure,
-            HomeTypeConditionalsMapper.Map(homeType));
+            HomeTypeConditionalsMapper.Map(homeType),
+            homeType.IsReadOnly);
     }
 }
