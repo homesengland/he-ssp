@@ -33,7 +33,7 @@ public class FinancialDetailsWorkflow : IStateRouting<FinancialDetailsWorkflowSt
 
     public FinancialDetailsWorkflowState CurrentState(FinancialDetailsWorkflowState targetState)
     {
-        if (_isReadOnly)
+        if (_isReadOnly || _model.IsReadOnly)
         {
             return FinancialDetailsWorkflowState.CheckAnswers;
         }

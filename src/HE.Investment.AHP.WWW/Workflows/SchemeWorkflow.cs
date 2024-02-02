@@ -35,7 +35,7 @@ public class SchemeWorkflow : IStateRouting<SchemeWorkflowState>
 
     public SchemeWorkflowState CurrentState(SchemeWorkflowState targetState)
     {
-        if (_isReadOnly)
+        if (_isReadOnly || _scheme.IsReadOnly)
         {
             return SchemeWorkflowState.CheckAnswers;
         }

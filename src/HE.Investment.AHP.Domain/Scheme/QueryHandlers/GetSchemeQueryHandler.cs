@@ -36,7 +36,8 @@ public class GetSchemeQueryHandler : IRequestHandler<GetApplicationSchemeQuery, 
             entity.HousingNeeds.MeetingLocalPriorities,
             entity.HousingNeeds.MeetingLocalHousingNeed,
             entity.StakeholderDiscussions.StakeholderDiscussionsDetails.Report,
-            CreateFile(entity.StakeholderDiscussions.LocalAuthoritySupportFileContainer));
+            CreateFile(entity.StakeholderDiscussions.LocalAuthoritySupportFileContainer),
+            entity.IsReadOnly());
     }
 
     private static UploadedFile? CreateFile(LocalAuthoritySupportFileContainer fileContainer)

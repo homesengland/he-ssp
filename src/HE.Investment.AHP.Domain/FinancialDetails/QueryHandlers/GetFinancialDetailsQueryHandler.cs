@@ -33,6 +33,7 @@ public class GetFinancialDetailsQueryHandler : IRequestHandler<GetFinancialDetai
             ExpectedOnCost = financialDetails.OtherApplicationCosts.ExpectedOnCosts?.Value,
             TotalExpectedCosts = financialDetails.ExpectedTotalCosts(),
             SectionStatus = financialDetails.SectionStatus,
+            IsReadOnly = financialDetails.IsReadOnly(),
         };
 
         MapPublicGrants(financialDetailsDto, financialDetails.PublicGrants);

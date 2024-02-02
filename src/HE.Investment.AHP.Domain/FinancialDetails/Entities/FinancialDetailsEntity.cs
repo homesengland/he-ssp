@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Contract.Application.Helpers;
 using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.FinancialDetails.Constants;
 using HE.Investment.AHP.Domain.Common;
@@ -127,6 +128,12 @@ public class FinancialDetailsEntity : IQuestion
     public decimal ExpectedTotalCosts() => OtherApplicationCosts.ExpectedTotalCosts() + (LandValue.CurrentLandValue?.Value ?? 0);
 
     public decimal ExpectedTotalContributions() => ExpectedContributions.CalculateTotal() + PublicGrants.CalculateTotal();
+
+    public bool IsReadOnly()
+    {
+        var readonlyStatuses = ApplicationStatusDivision.GetAllStatusesForReadonlyMode();
+        return readonlyStatuses.Contains(ApplicationBasicInfo.Status);
+    }
 
     private void ChangeStatus(bool isChanged)
     {

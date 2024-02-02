@@ -300,7 +300,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
         }
 
         var scheme = await _schemeProvider.Get(new GetApplicationSchemeQuery(AhpApplicationId.From(applicationId)), CancellationToken.None);
-        var isReadOnly = !await _accountAccessContext.CanEditApplication();
+        var isReadOnly = !await _accountAccessContext.CanEditApplication() || scheme.IsReadOnly;
         return await Task.FromResult(new SchemeWorkflow(currentState, scheme, isReadOnly));
     }
 
@@ -350,7 +350,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
         CancellationToken cancellationToken)
     {
         var scheme = await _schemeProvider.Get(new GetApplicationSchemeQuery(AhpApplicationId.From(applicationId), true), cancellationToken);
-        var isEditable = await _accountAccessContext.CanEditApplication();
+        var isEditable = await _accountAccessContext.CanEditApplication() && !scheme.IsReadOnly;
         var section = _summaryViewModelFactory.GetSchemeAndCreateSummary("Scheme information", scheme, urlHelper, !isEditable);
 
         return new SchemeSummaryViewModel(

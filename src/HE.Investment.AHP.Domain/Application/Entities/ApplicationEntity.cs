@@ -1,5 +1,6 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Events;
+using HE.Investment.AHP.Contract.Application.Helpers;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Domain.Application.Repositories.Interfaces;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
@@ -106,10 +107,23 @@ public class ApplicationEntity : DomainEntity
 
     public async Task Withdraw(IChangeApplicationStatus applicationWithdraw, WithdrawReason? newWithdrawReason, OrganisationId organisationId, CancellationToken cancellationToken)
     {
-        Status = _modificationTracker.Change(Status, ApplicationStatus.Withdrawn);
+        var statusesAfterSubmit = ApplicationStatusDivision.GetAllStatusesAllowedToChangeApplicationStatusToWithdrawn();
         WithdrawReason = _modificationTracker.Change(WithdrawReason, newWithdrawReason);
 
-        await applicationWithdraw.ChangeApplicationStatus(this, organisationId, WithdrawReason?.Value, cancellationToken);
+        if (Status == ApplicationStatus.Draft)
+        {
+            Status = _modificationTracker.Change(Status, ApplicationStatus.Deleted);
+            await applicationWithdraw.ChangeApplicationStatus(this, organisationId, WithdrawReason?.Value, cancellationToken);
+        }
+        else if (statusesAfterSubmit.Contains(Status))
+        {
+            Status = _modificationTracker.Change(Status, ApplicationStatus.Withdrawn);
+            await applicationWithdraw.ChangeApplicationStatus(this, organisationId, WithdrawReason?.Value, cancellationToken);
+        }
+        else
+        {
+            throw new DomainException("The application cannot be withdrawn", CommonErrorCodes.ApplicationCannotBeWithdrawn);
+        }
 
         Publish(new ApplicationHasBeenWithdrawnEvent(Id));
     }

@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Contract.Application.Helpers;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investments.Common.Contract;
@@ -101,6 +102,12 @@ public class SchemeEntity
     public void UnComplete()
     {
         Status = _modificationTracker.Change(Status, SectionStatus.InProgress);
+    }
+
+    public bool IsReadOnly()
+    {
+        var readonlyStatuses = ApplicationStatusDivision.GetAllStatusesForReadonlyMode();
+        return readonlyStatuses.Contains(Application.Status);
     }
 
     private void SetInProgress()
