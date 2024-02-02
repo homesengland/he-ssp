@@ -27,7 +27,7 @@ public class HomeTypeTestDataBuilder
 
     private YesNoType _modernMethodsConstructionApplied = YesNoType.Yes;
 
-    private bool _isReadOnly = false;
+    private bool _isReadOnly;
 
     private IList<ModernMethodsConstructionCategoriesType> _modernMethodsConstructionCategories = new List<ModernMethodsConstructionCategoriesType>();
 
