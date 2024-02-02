@@ -85,7 +85,8 @@
                               SitePlanningStatus.OutlinePlanningApplicationSubmitted)"/>
 
         <vc:radio-yes-no
-            title="Do you have the registered title to the land?"
+            header="@(Model.PlanningStatus == SitePlanningStatus.NoPlanningRequired ? "Do you have the registered title to the land?" : null)"
+            title="@(Model.PlanningStatus != SitePlanningStatus.NoPlanningRequired ? "Do you have the registered title to the land?" : null)"
             hint="You can find the title number on HM Land Registry documents, or correspondence with your solicitor when you purchased the land."
             field-name="@nameof(Model.IsLandRegistryTitleNumberRegistered)"
             value="@Model.IsLandRegistryTitleNumberRegistered"
