@@ -13,6 +13,12 @@ public record ApplicationSectionsModel(
     ModificationDetails? LastModificationDetails,
     IList<ApplicationSection> Sections)
 {
+    public bool CanBeSubmitted()
+    {
+        var statusesAllowedForSubmit = ApplicationStatusDivision.GetAllStatusesAllowedForSubmit();
+        return statusesAllowedForSubmit.Contains(Status);
+    }
+
     public bool CanBePutOnHold()
     {
         var statusesAllowedForPutOnHold = ApplicationStatusDivision.GetAllStatusesAllowedForPutOnHold();

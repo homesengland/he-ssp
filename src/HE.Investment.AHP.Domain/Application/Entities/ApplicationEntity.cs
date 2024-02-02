@@ -127,4 +127,10 @@ public class ApplicationEntity : DomainEntity
 
         Publish(new ApplicationHasBeenWithdrawnEvent(Id));
     }
+
+    public bool IsReadOnly()
+    {
+        var readonlyStatuses = ApplicationStatusDivision.GetAllStatusesForReadonlyMode();
+        return readonlyStatuses.Contains(Status);
+    }
 }

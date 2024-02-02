@@ -26,6 +26,12 @@ public static class ApplicationStatusDivision
         yield return ApplicationStatus.ReferredBackToApplicant;
     }
 
+    public static IEnumerable<ApplicationStatus> GetAllStatusesAllowedForSubmit()
+    {
+        yield return ApplicationStatus.Draft;
+        yield return ApplicationStatus.ReferredBackToApplicant;
+    }
+
     public static IEnumerable<ApplicationStatus> GetAllStatusesAllowedToChangeApplicationStatusToWithdrawn()
     {
         yield return ApplicationStatus.ApplicationSubmitted;

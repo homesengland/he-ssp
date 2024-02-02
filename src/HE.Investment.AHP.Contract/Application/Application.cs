@@ -9,4 +9,5 @@ public record Application(
     ApplicationStatus Status,
     string? ReferenceNumber,
     ModificationDetails? LastModificationDetails,
-    IList<ApplicationSection> Sections);
+    IList<ApplicationSection> Sections,
+    bool IsReadOnly);
