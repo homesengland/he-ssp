@@ -9,8 +9,8 @@ namespace HE.Investment.AHP.Domain.Site.CommandHandlers.PlanningDetails;
 
 public class ProvideSitePlanningStatusCommandHandler : ProvideSiteDetailsBaseCommandHandler<ProvideSitePlanningStatusCommand>
 {
-    public ProvideSitePlanningStatusCommandHandler(ISiteRepository siteRepository, IAccountUserContext accountUserContext, ILogger<SiteBaseCommandHandler> logger)
-        : base(siteRepository, accountUserContext, logger)
+    public ProvideSitePlanningStatusCommandHandler(ISiteRepository siteRepository, IAccountUserContext accountUserContext)
+        : base(siteRepository, accountUserContext)
     {
     }
 

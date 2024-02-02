@@ -4,15 +4,14 @@ using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
 using MediatR;
-using Microsoft.Extensions.Logging;
 
 namespace HE.Investment.AHP.Domain.Site.CommandHandlers;
 
 public abstract class ProvideSiteDetailsBaseCommandHandler<TCommand> : SiteBaseCommandHandler, IRequestHandler<TCommand, OperationResult>
     where TCommand : IProvideSiteDetailsCommand, IRequest<OperationResult>
 {
-    protected ProvideSiteDetailsBaseCommandHandler(ISiteRepository siteRepository, IAccountUserContext accountUserContext, ILogger<SiteBaseCommandHandler> logger)
-        : base(siteRepository, accountUserContext, logger)
+    protected ProvideSiteDetailsBaseCommandHandler(ISiteRepository siteRepository, IAccountUserContext accountUserContext)
+        : base(siteRepository, accountUserContext)
     {
     }
 

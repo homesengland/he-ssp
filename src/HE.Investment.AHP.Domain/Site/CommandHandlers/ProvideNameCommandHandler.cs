@@ -7,14 +7,13 @@ using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
 using MediatR;
-using Microsoft.Extensions.Logging;
 
 namespace HE.Investment.AHP.Domain.Site.CommandHandlers;
 
 public class ProvideNameCommandHandler : SiteBaseCommandHandler, IRequestHandler<ProvideNameCommand, OperationResult<SiteId>>
 {
-    public ProvideNameCommandHandler(ISiteRepository siteRepository, IAccountUserContext accountUserContext, ILogger<SiteBaseCommandHandler> logger)
-        : base(siteRepository, accountUserContext, logger)
+    public ProvideNameCommandHandler(ISiteRepository siteRepository, IAccountUserContext accountUserContext)
+        : base(siteRepository, accountUserContext)
     {
     }
 

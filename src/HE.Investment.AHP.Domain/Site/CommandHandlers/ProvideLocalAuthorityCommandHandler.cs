@@ -6,7 +6,6 @@ using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
 using MediatR;
-using Microsoft.Extensions.Logging;
 using Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects;
 
 namespace HE.Investment.AHP.Domain.Site.CommandHandlers;
@@ -15,9 +14,8 @@ public class ProvideLocalAuthorityCommandHandler : SiteBaseCommandHandler, IRequ
 {
     public ProvideLocalAuthorityCommandHandler(
         ISiteRepository siteRepository,
-        IAccountUserContext accountUserContext,
-        ILogger<SiteBaseCommandHandler> logger)
-        : base(siteRepository, accountUserContext, logger)
+        IAccountUserContext accountUserContext)
+        : base(siteRepository, accountUserContext)
     {
     }
 

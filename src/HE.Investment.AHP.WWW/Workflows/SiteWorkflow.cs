@@ -66,6 +66,7 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             SiteWorkflowState.PlanningDetails => true,
             SiteWorkflowState.LandRegistry => IsLandTitleRegistered(),
             SiteWorkflowState.TenderingStatus => true,
+            SiteWorkflowState.ContractorDetails => true,
             _ => false,
         };
     }

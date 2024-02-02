@@ -5,7 +5,6 @@ using HE.Investment.AHP.Domain.Site.ValueObjects.Factories;
 using HE.Investment.AHP.Domain.Site.ValueObjects.Planning;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
-using Microsoft.Extensions.Logging;
 
 namespace HE.Investment.AHP.Domain.Site.CommandHandlers.PlanningDetails;
 
@@ -13,9 +12,8 @@ public class ProvideLandRegistryDetailsCommandHandler : ProvideSiteDetailsBaseCo
 {
     public ProvideLandRegistryDetailsCommandHandler(
         ISiteRepository siteRepository,
-        IAccountUserContext accountUserContext,
-        ILogger<SiteBaseCommandHandler> logger)
-        : base(siteRepository, accountUserContext, logger)
+        IAccountUserContext accountUserContext)
+        : base(siteRepository, accountUserContext)
     {
     }
 
