@@ -20,7 +20,6 @@ public class CheckboxListWithOr : ViewComponent
         string? hint = null,
         IEnumerable<string>? selectedValues = null)
     {
-
         var availableOptionsList = availableOptions.ToList();
 
         foreach (var value in selectedValues ?? new List<string>())
