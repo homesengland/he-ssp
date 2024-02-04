@@ -65,18 +65,14 @@ public static class AuthorizationExtensions
 
     public static IServiceCollection ConfigureCookiePolicyForHeIdentity(this IServiceCollection services)
     {
-        services.Configure(delegate (CookiePolicyOptions options)
+#pragma warning disable format
+        services.Configure(delegate(CookiePolicyOptions options)
         {
             options.MinimumSameSitePolicy = SameSiteMode.Unspecified;
-            options.OnAppendCookie = delegate (AppendCookieContext cookieContext)
-            {
-                CheckSameSite(cookieContext.CookieOptions);
-            };
-            options.OnDeleteCookie = delegate (DeleteCookieContext cookieContext)
-            {
-                CheckSameSite(cookieContext.CookieOptions);
-            };
+            options.OnAppendCookie = cookieContext => CheckSameSite(cookieContext.CookieOptions);
+            options.OnDeleteCookie = cookieContext => CheckSameSite(cookieContext.CookieOptions);
         });
+#pragma warning restore format
         return services;
     }
 
@@ -88,7 +84,9 @@ public static class AuthorizationExtensions
         }
     }
 
-    private static IMvcBuilder AddHeIdentityCookieAuth(this IMvcBuilder builder, HeIdentityCookieConfiguration heIdentityConfig, IWebHostEnvironment env, IEnumerable<string> additionalScopes = null)
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1008:Opening parenthesis should be spaced correctly", Justification = "Temp")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1310:Specify StringComparison for correctness", Justification = "Temp")]
+    private static IMvcBuilder AddHeIdentityCookieAuth(this IMvcBuilder builder, HeIdentityCookieConfiguration heIdentityConfig, IWebHostEnvironment env, IEnumerable<string>? additionalScopes = null)
     {
         if (string.IsNullOrWhiteSpace(heIdentityConfig.Domain))
         {
@@ -119,12 +117,12 @@ public static class AuthorizationExtensions
             options.AccessDeniedPath = new PathString("/access-denied");
             options.LoginPath = new PathString("/signin");
             options.ReturnUrlParameter = "redirectUri";
-            options.Events.OnSigningOut = async delegate (CookieSigningOutContext context)
+            options.Events.OnSigningOut = async context =>
             {
                 var revokeRefreshTokenHandler = context.HttpContext.RequestServices.GetRequiredService<RevokeRefreshTokenHandler>();
                 await revokeRefreshTokenHandler.RevokeRefreshTokenAsync(await context.HttpContext.GetTokenAsync("refresh_token"));
             };
-            options.Events.OnValidatePrincipal = delegate (CookieValidatePrincipalContext context)
+            options.Events.OnValidatePrincipal = context =>
             {
                 var requiredService = context.HttpContext.RequestServices.GetRequiredService<TokenRefreshHandler>();
                 return requiredService.EnsureTokenRefreshAsync(new CookieValidatePrincipalContextFacade(context), DateTimeOffset.UtcNow);
@@ -143,7 +141,7 @@ public static class AuthorizationExtensions
             options.Scope.Add("offline_access");
             if (additionalScopes != null)
             {
-                foreach (string additionalScope in additionalScopes)
+                foreach (var additionalScope in additionalScopes)
                 {
                     options.Scope.Add(additionalScope);
                 }
@@ -167,7 +165,7 @@ public static class AuthorizationExtensions
             };
             options.Events = new OpenIdConnectEvents
             {
-                OnRedirectToIdentityProvider = delegate (RedirectContext context)
+                OnRedirectToIdentityProvider = context =>
                 {
                     if (context.Properties.Items.ContainsKey("screen_hint"))
                     {
@@ -181,13 +179,13 @@ public static class AuthorizationExtensions
 
                     return Task.CompletedTask;
                 },
-                OnRedirectToIdentityProviderForSignOut = delegate (RedirectContext context)
+                OnRedirectToIdentityProviderForSignOut = context =>
                 {
                     var text2 = "https://" + heIdentityConfig.Domain + "/v2/logout?client_id=" + heIdentityConfig.ClientId;
                     var text3 = context.Properties.RedirectUri;
                     if (!string.IsNullOrEmpty(text3))
                     {
-                        if (text3.StartsWith("/"))
+                        if (text3.StartsWith('/'))
                         {
                             var request = context.Request;
                             text3 = request.Scheme + "://" + request.Host + request.PathBase + text3;
@@ -211,7 +209,10 @@ public static class AuthorizationExtensions
 
                     if (context.HttpContext.Request.Query.ContainsKey("error") && context.HttpContext.Request.Query["error"] == "unauthorized")
                     {
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
                         string text = context.HttpContext.Request.Query["error_description"];
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                         if (text.StartsWith("VERIFY_EMAIL:"))
                         {
                             var value2 = text.Replace("VERIFY_EMAIL:", string.Empty).Trim();
@@ -225,6 +226,7 @@ public static class AuthorizationExtensions
                             context.Response.Redirect("/verify-email");
                             context.HandleResponse();
                         }
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
                     }
 
                     return Task.CompletedTask;
@@ -232,18 +234,22 @@ public static class AuthorizationExtensions
             };
             if (env.IsDevelopment())
             {
+#pragma warning disable S4830 // Server certificates should be verified during SSL/TLS connections
                 options.BackchannelHttpHandler = new HttpClientHandler
                 {
                     ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator,
                 };
+#pragma warning restore S4830 // Server certificates should be verified during SSL/TLS connections
             }
         });
+#pragma warning disable SA1130 // Use lambda syntax
         builder.Services.AddSingleton((Func<IServiceProvider, IAuthenticationApiClient>)delegate (IServiceProvider provider)
         {
             var value = provider.GetRequiredService<IOptions<OpenIdConnectOptions>>().Value;
             var connection = new HttpClientAuthenticationConnection(value.Backchannel);
             return new AuthenticationApiClient(heIdentityConfig.Domain, connection);
         });
+#pragma warning restore SA1130 // Use lambda syntax
         builder.Services.AddTransient<IClientCredentialHelper, ClientCredentialHelper>();
         builder.Services.AddSingleton(heIdentityConfig);
         builder.Services.AddSingleton<TokenRefreshHandler>();
@@ -258,5 +264,4 @@ public static class AuthorizationExtensions
         builder.AddRazorRuntimeCompilation();
         return builder;
     }
-
 }
