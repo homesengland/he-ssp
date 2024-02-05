@@ -69,6 +69,14 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             SiteWorkflowState.LocalAuthorityReset => true,
             SiteWorkflowState.PlanningStatus => true,
             SiteWorkflowState.PlanningDetails => true,
+            SiteWorkflowState.Section106GeneralAgreement => true,
+            SiteWorkflowState.Section106AffordableHousing => true,
+            SiteWorkflowState.Section106AdditionalAffordableHousing => true,
+            SiteWorkflowState.Section106OnlyAffordableHousing => true,
+            SiteWorkflowState.Section106CapitalFundingEligibility => true,
+            SiteWorkflowState.Section106LocalAuthorityConfirmation => true,
+            SiteWorkflowState.Section106Ineligible => true,
+            SiteWorkflowState.NationalDesignGuide => true,
             SiteWorkflowState.LandRegistry => IsLandTitleRegistered(),
             SiteWorkflowState.TenderingStatus => true,
             SiteWorkflowState.ContractorDetails => IsConditionalOrUnconditionalWorksContract(),
@@ -114,11 +122,11 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             .PermitIf(
                 Trigger.Continue,
                 SiteWorkflowState.Section106LocalAuthorityConfirmation,
-                () => _siteModel is { Section106CapitalFundingEligibility: false, Section106AdditionalAffordableHousing: true })
+                () => _siteModel?.Section106CapitalFundingEligibility == false && _siteModel?.Section106AdditionalAffordableHousing == true)
             .PermitIf(
                 Trigger.Continue,
                 SiteWorkflowState.LocalAuthoritySearch,
-                () => _siteModel is { Section106CapitalFundingEligibility: false, Section106AdditionalAffordableHousing: false })
+                () => _siteModel?.Section106CapitalFundingEligibility == false && _siteModel?.Section106AdditionalAffordableHousing == false)
             .PermitIf(Trigger.Back, SiteWorkflowState.Section106AdditionalAffordableHousing, () => _siteModel?.Section106OnlyAffordableHousing == false)
             .PermitIf(Trigger.Back, SiteWorkflowState.Section106OnlyAffordableHousing, () => _siteModel?.Section106OnlyAffordableHousing == true)
             .PermitIf(Trigger.Back, SiteWorkflowState.Section106AffordableHousing, () => _siteModel?.Section106OnlyAffordableHousing == null);

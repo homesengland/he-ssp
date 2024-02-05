@@ -1,10 +1,10 @@
-using HE.Investments.Common.WWW.Models;
+﻿using HE.Investments.Common.WWW.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace HE.Investments.Common.WWW.Components.RadioListHeader;
+namespace HE.Investments.Common.WWW.Components.InputListHeader;
 
-public class RadioListHeader : ViewComponent
+public class InputListHeader : ViewComponent
 {
     public IViewComponentResult Invoke(
         DynamicComponentViewModel? headerComponent = null,
@@ -15,9 +15,9 @@ public class RadioListHeader : ViewComponent
         if (headerComponent != null &&
         (!string.IsNullOrWhiteSpace(header) || !string.IsNullOrWhiteSpace(title) || !string.IsNullOrWhiteSpace(hint)))
         {
-            throw new ArgumentException("RadioListHeader requires headerComponent or header string or combination of title and hint.");
+            throw new ArgumentException("InputListHeader requires headerComponent or header string or combination of title and hint.");
         }
 
-        return View("RadioListHeader", (headerComponent, header, title, hint));
+        return View("InputListHeader", (headerComponent, header, title, hint));
     }
 }

@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Components\CheckboxListWithOr\CheckboxListWithOr.cshtml" />
     <EmbeddedResource Include="_ViewImports.cshtml" />
     <EmbeddedResource Include="Partials\Errors\_ErrorSummaryPartial.cshtml" />
     <EmbeddedResource Include="Partials\Cookies\_AdditionalCookies.cshtml" />
@@ -48,7 +49,7 @@
     <EmbeddedResource Include="Components\TextInput\TextInput.cshtml" />
     <EmbeddedResource Include="Components\InputHeader\InputHeader.cshtml" />
     <EmbeddedResource Include="Components\TextAreaInput\TextAreaInput.cshtml" />
-    <EmbeddedResource Include="Components\RadioListHeader\RadioListHeader.cshtml" />
+    <EmbeddedResource Include="Components\InputListHeader\InputListHeader.cshtml" />
     <EmbeddedResource Include="Components\NumericTextInput\NumericTextInput.cshtml" />
     <EmbeddedResource Include="Components\PagedTable\PagedTable.cshtml" />
     <EmbeddedResource Include="Components\TextAreaInputWithCounter\TextAreaInputWithCounter.cshtml" />

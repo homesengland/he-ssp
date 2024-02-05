@@ -1,4 +1,4 @@
-@model (string title, string contentText, HE.Investments.Common.WWW.Components.DynamicComponentViewModel contentComponent)
+@model (string title, string contentText, string linkText, string linkUrl, HE.Investments.Common.WWW.Components.DynamicComponentViewModel contentComponent)
 
 <details class="govuk-details" data-module="govuk-details">
     <summary class="govuk-details__summary">
@@ -9,7 +9,11 @@
     <div class="govuk-details__text">
         @if (!string.IsNullOrWhiteSpace(Model.contentText))
         {
-            @Model.title
+            @Model.contentText
+            if (!string.IsNullOrWhiteSpace(Model.linkText) && !string.IsNullOrWhiteSpace(Model.linkUrl))
+            {
+                <a target="_blank" href="@Model.linkUrl">@Model.linkText</a> 
+            }
         }
 
         @if(Model.contentComponent != null)
