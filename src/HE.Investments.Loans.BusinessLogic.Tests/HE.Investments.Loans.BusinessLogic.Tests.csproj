@@ -11,9 +11,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\HE.Investments.Common.Tests\HE.Investments.Common.Tests.csproj" />
     <ProjectReference Include="..\HE.Investments.Loans.BusinessLogic\HE.Investments.Loans.BusinessLogic.csproj" />
     <ProjectReference Include="..\HE.Investments.Loans.Common.Tests\HE.Investments.Loans.Common.Tests.csproj" />
-    <ProjectReference Include="..\HE.Investments.Account.Domain.Tests\HE.Investments.Account.Domain.Tests.csproj" />
     <ProjectReference Include="..\HE.Investments.Organisation\HE.Investments.Organisation.csproj">
       <Aliases>Org</Aliases>
     </ProjectReference>

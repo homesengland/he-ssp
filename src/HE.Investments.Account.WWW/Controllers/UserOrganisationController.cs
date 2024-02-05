@@ -1,4 +1,3 @@
-using HE.Investments.Account.Api.Contract;
 using HE.Investments.Account.Api.Contract.User;
 using HE.Investments.Account.Contract.Organisation;
 using HE.Investments.Account.Contract.Organisation.Queries;

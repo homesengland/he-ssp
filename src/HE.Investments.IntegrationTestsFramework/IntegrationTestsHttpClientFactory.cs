@@ -19,7 +19,7 @@ public class IntegrationTestsHttpClientFactory : IHttpClientFactory
     }
 
     [SuppressMessage("Reliability", "CA2000", Justification = "Http client ownership goes to DI container.")]
-    public static void RegisterMockedClient(string httpClientName, params (HttpMethod HttpMethod, string Url, object Response)[] httpClientSetups)
+    public static void RegisterMockedClient(string httpClientName, params (HttpMethod HttpMethod, string Url, object? Response)[] httpClientSetups)
     {
         var httpClientMock = new MockHttpMessageHandler();
         foreach (var (httpMethod, url, response) in httpClientSetups)

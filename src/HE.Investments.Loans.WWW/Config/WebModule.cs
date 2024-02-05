@@ -1,5 +1,4 @@
 using FluentValidation;
-using HE.Investments.Account.Shared.Routing;
 using HE.Investments.Common.Config;
 using HE.Investments.Common.CRM;
 using HE.Investments.Common.Infrastructure.Events;
@@ -24,12 +23,10 @@ public static class WebModule
         serviceCollections.AddCrmConnection();
         serviceCollections.AddBusinessLogic();
         serviceCollections.AddValidatorsFromAssemblyContaining<LoanPurposeModel>();
-
         serviceCollections.AddNotifications(typeof(LoanApplicationHasBeenResubmittedDisplayNotificationFactory).Assembly);
         serviceCollections.AddOrganizationsModule();
         serviceCollections.AddEventInfrastructure();
         serviceCollections.AddHttpUserContext();
-        serviceCollections.AddScoped<IAccountRoutes, LoansAccountRoutes>();
         serviceCollections.AddSingleton<IErrorViewPaths, LoansErrorViewPaths>();
     }
 }

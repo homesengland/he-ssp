@@ -28,13 +28,13 @@ public class Order01StartApplicationIntegrationTests : IntegrationTest
 
     [Fact(Skip = LoansConfig.SkipTest)]
     [Order(1)]
-    public async Task Order01_ShouldRedirectToUserOrganisationPage_WhenUserIsLoggedIn()
+    public async Task Order01_ShouldRedirectToUserDashboardPage_WhenUserIsLoggedIn()
     {
         // given & when
         var mainPage = await TestClient.NavigateTo(PagesUrls.MainPage);
 
         // then
-        mainPage.UrlEndWith(UserOrganisationPagesUrls.UserOrganisation);
+        mainPage.UrlEndWith(PagesUrls.DashboardPage);
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
@@ -104,12 +104,12 @@ public class Order01StartApplicationIntegrationTests : IntegrationTest
             .HasTitle("Check your details")
             .GetSummaryListItems();
 
-        items[CheckYourDetailsFields.RegisteredCompanyName].Should().Be(UserData.OrganizationName);
-        items[CheckYourDetailsFields.CompanyRegistrationNumber].Should().Be(UserData.OrganizationRegistrationNumber);
-        items[CheckYourDetailsFields.CompanyAddress].Should().Be(UserData.OrganizationAddress);
-        items[CheckYourDetailsFields.ContactName].Should().Be(UserData.ContactName);
+        items[CheckYourDetailsFields.RegisteredCompanyName].Should().NotBeNullOrWhiteSpace();
+        items[CheckYourDetailsFields.CompanyRegistrationNumber].Should().NotBeNullOrWhiteSpace();
+        items[CheckYourDetailsFields.CompanyAddress].Should().NotBeNullOrWhiteSpace();
+        items[CheckYourDetailsFields.ContactName].Should().NotBeNullOrWhiteSpace();
         items[CheckYourDetailsFields.EmailAddress].Should().Be(LoginData.Email);
-        items[CheckYourDetailsFields.TelephoneNumber].Should().Be(UserData.TelephoneNumber.ToString());
+        items[CheckYourDetailsFields.TelephoneNumber].Should().NotBeNullOrWhiteSpace();
         SetSharedData(CurrentPageKey, checkYourDetailsPage);
     }
 

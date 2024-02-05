@@ -17,6 +17,6 @@ public class OrganisationBasicInfoBuilder
 
     public OrganisationBasicInfo Build()
     {
-        return new OrganisationBasicInfo(_organisationId, _isUnregisteredBody);
+        return new OrganisationBasicInfo(_organisationId, "AccountOne", "1234", "London", _isUnregisteredBody);
     }
 }

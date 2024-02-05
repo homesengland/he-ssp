@@ -4,7 +4,6 @@ using HE.Investments.Loans.BusinessLogic.LoanApplication.Entities;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.ValueObjects;
 using HE.Investments.Loans.BusinessLogic.Tests.LoanApplication.TestData;
 using HE.Investments.Loans.BusinessLogic.Tests.TestData;
-using HE.Investments.Loans.BusinessLogic.Tests.User.TestData;
 using HE.Investments.Loans.Common.Tests;
 using HE.Investments.Loans.Common.Tests.TestData;
 using HE.Investments.Loans.Contract.Application.Enums;

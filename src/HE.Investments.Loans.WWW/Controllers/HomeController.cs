@@ -1,6 +1,6 @@
-using HE.Investments.Account.Contract.User.Commands;
-using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
+using HE.Investments.Common.Contract.Validators;
+using HE.Investments.Common.Messages;
 using HE.Investments.Common.User;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Routing;
@@ -17,34 +17,22 @@ namespace HE.Investments.Loans.WWW.Controllers;
 public class HomeController : Controller
 {
     private readonly IMediator _mediator;
-    private readonly IAccountUserContext _loanUserContext;
     private readonly IUserContext _userContext;
 
-    public HomeController(IMediator mediator, IUserContext userContext, IAccountUserContext loanUserContext)
+    public HomeController(IMediator mediator, IUserContext userContext)
     {
         _mediator = mediator;
         _userContext = userContext;
-        _loanUserContext = loanUserContext;
     }
 
-    public async Task<IActionResult> Index()
+    public IActionResult Index()
     {
         if (!_userContext.IsAuthenticated)
         {
             return RedirectToAction(nameof(GuidanceController.WhatTheHomeBuildingFundIs), new ControllerName(nameof(GuidanceController)).WithoutPrefix());
         }
 
-        if (!await _loanUserContext.IsProfileCompleted())
-        {
-            return RedirectToAction(nameof(UserController.ProfileDetails), new ControllerName(nameof(UserController)).WithoutPrefix());
-        }
-
-        if (!await _loanUserContext.IsLinkedWithOrganisation())
-        {
-            return RedirectToAction(nameof(OrganizationController.SearchOrganization), new ControllerName(nameof(OrganizationController)).WithoutPrefix());
-        }
-
-        return RedirectToAction(nameof(UserOrganisationController.Index), new ControllerName(nameof(UserOrganisationController)).WithoutPrefix());
+        return RedirectToAction("Dashboard");
     }
 
     public IActionResult Privacy()
@@ -67,18 +55,12 @@ public class HomeController : Controller
     }
 
     [HttpPost("/accept-he-terms-and-conditions")]
-    public async Task<IActionResult> AcceptHeTermsAndConditionsPost(
-        AcceptHeTermsAndConditionsModel model,
-        RedirectOption redirect,
-        CancellationToken cancellationToken)
+    public IActionResult AcceptHeTermsAndConditionsPost(AcceptHeTermsAndConditionsModel model, RedirectOption redirect)
     {
-        var result = await _mediator.Send(
-            new ProvideAcceptHeTermsAndConditionsCommand(model.AcceptHeTermsAndConditions),
-            cancellationToken);
-
-        if (result.HasValidationErrors)
+        if (model.AcceptHeTermsAndConditions != "checked")
         {
-            ModelState.AddValidationErrors(result);
+            ModelState.AddValidationErrors(OperationResult.New()
+                .AddValidationError(nameof(model.AcceptHeTermsAndConditions), ValidationErrorMessage.AcceptTermsAndConditions));
             return View("AcceptHeTermsAndConditions", model);
         }
 

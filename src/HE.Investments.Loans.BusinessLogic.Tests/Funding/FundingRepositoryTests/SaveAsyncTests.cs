@@ -1,8 +1,8 @@
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Loans.BusinessLogic.Funding.Repositories;
 using HE.Investments.Loans.BusinessLogic.Tests.Funding.TestObjectBuilders;
+using HE.Investments.Loans.BusinessLogic.Tests.TestData;
 using HE.Investments.Loans.BusinessLogic.Tests.TestObjectBuilders;
-using HE.Investments.Loans.BusinessLogic.Tests.User.TestData;
 using HE.Investments.TestsUtils.TestFramework;
 using Moq;
 using Xunit;

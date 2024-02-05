@@ -1,12 +1,5 @@
 @using HE.Investments.Common.Gds
 @using HE.Investments.Loans.BusinessLogic.LoanApplication
-@using HE.Investments.Loans.WWW.Controllers
-@using Microsoft.AspNetCore.Mvc.TagHelpers
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Headings
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Summary
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Buttons
 @model HE.Investments.Loans.WWW.Models.CheckYourDetailsModel
 
 <gds-div-grid-column-two-thirds>
@@ -23,54 +16,54 @@
             @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
             {
             { "Title", "Registered company name" },
-            { "Value", Model.OrganizationBasicInformation.RegisteredCompanyName },
+            { "Value", Model.CompanyRegisteredName },
             })
 
             @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
             {
             { "Title", "Company Registration Number" },
-            { "Value", Model.OrganizationBasicInformation.CompanyRegistrationNumber },
+            { "Value", Model.CompanyRegistrationNumber },
             })
 
             @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
             {
             { "Title", "Company address" },
-            { "Value", Model.OrganizationBasicInformation.Address.Line1 },
+            { "Value", Model.CompanyAddress },
             })
 
             @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
-            {
-            { "Title", "Contact name" },
-            { "Value", Model.LoanApplicationContactName },
-            { "Link", Url.RouteUrl(new {
-                    controller = "user",
-                    action = "ProfileDetails",
-                    callback = nameof(LoanApplicationV2Controller.CheckYourDetails)
-                }) }
-            })
+                   {
+                       { "Title", "Contact name" },
+                       { "Value", Model.LoanApplicationContactName },
+                       { "Link", Url.RouteUrl(new {
+                           controller = "Accounts",
+                           action = "UserProfile",
+                           callback = Url.Action("CheckYourDetails", "LoanApplicationV2")
+                       }) }
+                   })
 
             @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
-            {
-            { "Title", "Email address" },
-            { "Value", Model.LoanApplicationContactEmail },
-            { "Link", Url.RouteUrl(new {
-                    controller = "user",
-                    action = "ProfileDetails",
-                    callback = nameof(LoanApplicationV2Controller.CheckYourDetails)
-                }) }
-            })
+                   {
+                       { "Title", "Email address" },
+                       { "Value", Model.LoanApplicationContactEmail },
+                       { "Link", Url.RouteUrl(new {
+                           controller = "Accounts",
+                           action = "UserProfile",
+                           callback = Url.Action("CheckYourDetails", "LoanApplicationV2")
+                       }) }
+                   })
 
             @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
-            {
-            { "Title", "Preferred telephone number" },
-            { "Value", Model.LoanApplicationContactTelephoneNumber},
-            { "Link", Url.RouteUrl(new {
-                    controller = "user",
-                    action = "ProfileDetails",
-                    callback = nameof(LoanApplicationV2Controller.CheckYourDetails)
-                }) }
-            })
-    </gds-summary-list>
+                   {
+                       { "Title", "Preferred telephone number" },
+                       { "Value", Model.LoanApplicationContactTelephoneNumber},
+                       { "Link", Url.RouteUrl(new {
+                           controller = "Accounts",
+                           action = "UserProfile",
+                           callback = Url.Action("CheckYourDetails", "LoanApplicationV2")
+                       }) }
+                   })
+        </gds-summary-list>
     <gds-button name="action" type="submit" value="Continue" id="continue-button">
         Continue
     </gds-button>

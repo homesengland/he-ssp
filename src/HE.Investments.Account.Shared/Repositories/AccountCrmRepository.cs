@@ -11,16 +11,19 @@ using Microsoft.PowerPlatform.Dataverse.Client;
 
 namespace HE.Investments.Account.Shared.Repositories;
 
-internal class AccountCrmRepository : IAccountRepository
+public class AccountCrmRepository : IAccountRepository
 {
     private readonly IContactService _contactService;
 
+    private readonly IOrganizationService _organizationService;
+
     private readonly IOrganizationServiceAsync2 _serviceClient;
 
-    public AccountCrmRepository(IContactService contactService, IOrganizationServiceAsync2 serviceClient)
+    public AccountCrmRepository(IContactService contactService, IOrganizationService organizationService, IOrganizationServiceAsync2 serviceClient)
     {
         _contactService = contactService;
         _serviceClient = serviceClient;
+        _organizationService = organizationService;
     }
 
     public async Task<IList<UserAccount>> GetUserAccounts(UserGlobalId userGlobalId, string userEmail)
@@ -32,17 +35,25 @@ internal class AccountCrmRepository : IAccountRepository
             return Array.Empty<UserAccount>();
         }
 
-        // TODO: #88197 - Fetch IsUnregisteredBody
-        return contactRoles
-            .contactRoles
-            .GroupBy(x => x.accountId)
-            .Select(x => new UserAccount(
+        var result = new List<UserAccount>();
+        foreach (var contactRole in contactRoles.contactRoles.GroupBy(x => x.accountId))
+        {
+            var organisationId = new OrganisationId(contactRole.Key);
+
+            // TODO: replace loop with single request when user will be assigned to multiple organisations
+            var organisation = await GetOrganisationBasicInfo(organisationId, userGlobalId);
+            var userAccount = new UserAccount(
                 UserGlobalId.From(contactExternalId),
                 userEmail,
-                new OrganisationBasicInfo(new OrganisationId(x.Key), false),
-                x.FirstOrDefault(y => y.accountId == x.Key)?.accountName ?? string.Empty,
-                new ReadOnlyCollection<UserRole>(x.Where(y => y.permission.HasValue).Select(y => UserRoleMapper.ToDomain(y.permission)!.Value).ToList())))
-            .ToList();
+                organisation,
+                new ReadOnlyCollection<UserRole>(contactRole.Where(y => y.permission.HasValue)
+                    .Select(y => UserRoleMapper.ToDomain(y.permission)!.Value)
+                    .ToList()));
+
+            result.Add(userAccount);
+        }
+
+        return result;
     }
 
     public async Task<UserProfileDetails> GetProfileDetails(UserGlobalId userGlobalId)
@@ -58,5 +69,17 @@ internal class AccountCrmRepository : IAccountRepository
             contactDto.phoneNumber.IsProvided() ? new TelephoneNumber(contactDto.phoneNumber) : null,
             contactDto.secondaryPhoneNumber.IsProvided() ? new SecondaryTelephoneNumber(contactDto.secondaryPhoneNumber) : null,
             contactDto.isTermsAndConditionsAccepted);
+    }
+
+    private async Task<OrganisationBasicInfo> GetOrganisationBasicInfo(OrganisationId organisationId, UserGlobalId userGlobalId)
+    {
+        // TODO: #88197 - Fetch IsUnregisteredBody
+        var organisation = await _organizationService.GetOrganizationDetails(organisationId.Value.ToString(), userGlobalId.Value);
+        return new OrganisationBasicInfo(
+            organisationId,
+            organisation.registeredCompanyName,
+            organisation.companyRegistrationNumber,
+            organisation.addressLine1,
+            false);
     }
 }

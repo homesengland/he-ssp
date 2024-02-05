@@ -35,7 +35,7 @@ public static class DomainModule
 {
     public static void AddDomainModule(this IServiceCollection services)
     {
-        services.AddAccountSharedModule(true);
+        services.AddAccountSharedModule();
         services.AddScoped<IDateTimeProvider, DateTimeProvider>();
         services.AddTransient(typeof(IRequestExceptionHandler<,,>), typeof(DomainValidationHandler<,,>));
 

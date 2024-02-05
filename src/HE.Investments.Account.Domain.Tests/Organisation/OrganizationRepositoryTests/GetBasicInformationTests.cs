@@ -54,7 +54,7 @@ public class GetBasicInformationTests : TestBase<OrganizationRepository>
         // given
         var organizationDetailsDto = OrganizationDetailsDtoTestData.OrganizationDetailsDto;
         var userAccount = UserAccountTestData.UserAccountOne;
-        var fakeUserAccount = new UserAccount(UserGlobalId.From("FakeId"), string.Empty, new OrganisationBasicInfo(new OrganisationId(GuidTestData.GuidTwo), false), string.Empty, Array.Empty<UserRole>());
+        var fakeUserAccount = new UserAccount(UserGlobalId.From("FakeId"), string.Empty, new OrganisationBasicInfo(new OrganisationId(GuidTestData.GuidTwo), "AccountTwo", "4321", "London", false), Array.Empty<UserRole>());
 
         OrganizationServiceMockTestBuilder
             .New()

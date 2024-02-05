@@ -1,10 +1,12 @@
-using HE.Investments.Account.Contract.Organisation.Queries;
-
 namespace HE.Investments.Loans.WWW.Models;
 
 public class CheckYourDetailsModel
 {
-    public OrganizationBasicInformation OrganizationBasicInformation { get; set; }
+    public string CompanyRegisteredName { get; set; }
+
+    public string CompanyRegistrationNumber { get; set; }
+
+    public string CompanyAddress { get; set; }
 
     public string LoanApplicationContactEmail { get; set; }
 

@@ -33,7 +33,9 @@ public class GetUserAccountsQueryHandler : IRequestHandler<GetUserAccountsQuery,
             return new Api.Contract.User.UserOrganisation(
                 new OrganisationDetails(
                     userAccount.Organisation!.OrganisationId.ToString(),
-                    userAccount.OrganisationName,
+                    userAccount.Organisation.RegisteredCompanyName,
+                    userAccount.Organisation.CompanyRegistrationNumber,
+                    userAccount.Organisation.AddressLine1,
                     userAccount.Organisation.IsUnregisteredBody),
                 userAccount.Roles);
         }
