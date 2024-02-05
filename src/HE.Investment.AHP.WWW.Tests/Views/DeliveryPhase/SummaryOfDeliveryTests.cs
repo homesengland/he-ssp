@@ -17,7 +17,7 @@ public class SummaryOfDeliveryTests : ViewTestBase
     public async Task ShouldDisplayAllValues()
     {
         // given
-        var model = DeliveryPhaseDetailsTestData.WithNames with { SummaryOfDelivery = new SummaryOfDelivery(9000.12m, 200, 0.1m, 300, 0.1m, 4000.12m, 0.1m) };
+        var model = DeliveryPhaseDetailsTestData.WithNames with { Tranches = new DeliveryPhaseTranchesDto(false, new SummaryOfDelivery(9000.12m, 200, 0.1m, 300, 0.1m, 4000.12m, 0.1m), null) };
 
         // when
         var document = await Render(_viewPath, model, routeData: _routeData);
@@ -27,12 +27,10 @@ public class SummaryOfDeliveryTests : ViewTestBase
             .HasContinueButton()
             .HasGdsBackLink(false);
 
-        var summary = document.GetSummaryListItems();
-        summary.Should().HaveCount(4);
-        summary.Keys.ElementAt(0).Should().Contain("\u00a39,000.12");
-        summary.Keys.ElementAt(1).Should().Contain("\u00a3200");
-        summary.Keys.ElementAt(2).Should().Contain("\u00a3300");
-        summary.Keys.ElementAt(3).Should().Contain("\u00a34,000.12");
+        document.GetElementByTestId("grant-apportioned-value").TextContent.Should().Contain("\u00a39,000.12");
+        document.GetElementByTestId("acquisition-value").TextContent.Should().Contain("\u00a3200");
+        document.GetElementByTestId("start-on-site-value").TextContent.Should().Contain("\u00a3300");
+        document.GetElementByTestId("completion-value").TextContent.Should().Contain("\u00a34,000.12");
     }
 
     [Theory]
@@ -44,7 +42,7 @@ public class SummaryOfDeliveryTests : ViewTestBase
         // given
         var model = DeliveryPhaseDetailsTestData.WithNames with
         {
-            SummaryOfDelivery = new SummaryOfDelivery(9000.12m, 200, 0.25m, 300, 0.25m, 4000.12m, 0.25m),
+            Tranches = new DeliveryPhaseTranchesDto(false, new SummaryOfDelivery(9000.12m, 200, 0.25m, 300, 0.25m, 4000.12m, 0.25m), null),
             IsUnregisteredBody = isUnregisteredBody,
             IsOnlyCompletionMilestone = isOnlyCompletionMilestone,
         };
@@ -57,9 +55,7 @@ public class SummaryOfDeliveryTests : ViewTestBase
             .HasContinueButton()
             .HasGdsBackLink(false);
 
-        var summary = document.GetSummaryListItems();
-        summary.Should().HaveCount(2);
-        summary.Keys.ElementAt(0).Should().Contain("\u00a39,000.12");
-        summary.Keys.ElementAt(1).Should().Contain("\u00a34,000.12");
+        document.GetElementByTestId("grant-apportioned-value").TextContent.Should().Contain("\u00a39,000.12");
+        document.GetElementByTestId("completion-value").TextContent.Should().Contain("\u00a34,000.12");
     }
 }

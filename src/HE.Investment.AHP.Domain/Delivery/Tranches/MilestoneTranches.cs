@@ -2,9 +2,9 @@ using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
 
-namespace HE.Investment.AHP.Domain.Delivery.MilestonePayments;
+namespace HE.Investment.AHP.Domain.Delivery.Tranches;
 
-public class MilestoneTranches : ValueObject
+public class MilestoneTranches : ValueObject, IQuestion
 {
     public MilestoneTranches(decimal? acquisition, decimal? startOnSite, decimal? completion)
     {
@@ -21,7 +21,7 @@ public class MilestoneTranches : ValueObject
 
     public decimal? Completion { get; }
 
-    public bool IsNotProvided => Acquisition.IsNotProvided() && StartOnSite.IsNotProvided() && Completion.IsNotProvided();
+    public bool IsAmended => Acquisition.IsProvided() || StartOnSite.IsProvided() || Completion.IsProvided();
 
     public MilestoneTranches WithAcquisition(decimal? acquisition)
     {
@@ -37,6 +37,8 @@ public class MilestoneTranches : ValueObject
     {
         return new MilestoneTranches(Acquisition, startOnSite, Completion);
     }
+
+    public bool IsAnswered() => Acquisition.IsProvided() && StartOnSite.IsProvided() && Completion.IsProvided();
 
     protected override IEnumerable<object?> GetAtomicValues()
     {

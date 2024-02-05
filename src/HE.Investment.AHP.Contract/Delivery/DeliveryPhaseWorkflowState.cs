@@ -10,7 +10,6 @@ public enum DeliveryPhaseWorkflowState
     ReconfiguringExisting,
     AddHomes,
     SummaryOfDelivery,
-    SummaryOfDeliveryEditable,
     SummaryOfDeliveryTranche,
     AcquisitionMilestone,
     StartOnSiteMilestone,

@@ -1,13 +1,11 @@
-using System.Runtime.InteropServices;
 using FluentAssertions;
 using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investment.AHP.Domain.Tests.Delivery.Entities.TestDataBuilders;
-using HE.Investments.Common.Contract;
 
 namespace HE.Investment.AHP.Domain.Tests.Delivery.Entities.DeliveryPhaseEntityTests;
 
-public class CalculateSummaryTests
+public class GetSummaryOfDeliveryTests
 {
     [Theory]
     [InlineData(5_000_333, 3_000_199.8, 1_050_069, 750049, 1_200_081.8)]
@@ -27,7 +25,7 @@ public class CalculateSummaryTests
             .Build();
 
         // when
-        var summary = deliveryPhase.CalculateSummary(requiredFunding, 50, new MilestoneFramework(0.35m, 0.25m, 0.4m));
+        var summary = deliveryPhase.GetSummaryOfDelivery(requiredFunding, 50, new MilestoneFramework(0.35m, 0.25m, 0.4m));
 
         // then
         summary.GrantApportioned.Should().Be(expectedGrantApportioned);
@@ -47,7 +45,7 @@ public class CalculateSummaryTests
             .Build();
 
         // when
-        var summary = deliveryPhase.CalculateSummary(requestedFunding, 10, new MilestoneFramework(0.35m, 0.25m, 0.4m));
+        var summary = deliveryPhase.GetSummaryOfDelivery(requestedFunding, 10, new MilestoneFramework(0.35m, 0.25m, 0.4m));
 
         // then
         summary.GrantApportioned.Should().Be(requestedFunding);
@@ -69,7 +67,7 @@ public class CalculateSummaryTests
             .Build();
 
         // when
-        var summary = deliveryPhase.CalculateSummary(requestedFunding, 10, new MilestoneFramework(0.35m, 0.25m, 0.4m));
+        var summary = deliveryPhase.GetSummaryOfDelivery(requestedFunding, 10, new MilestoneFramework(0.35m, 0.25m, 0.4m));
 
         // then
         summary.GrantApportioned.Should().Be(requestedFunding);
@@ -85,7 +83,7 @@ public class CalculateSummaryTests
         var deliveryPhase = new DeliveryPhaseEntityBuilder().WithoutHomesToDeliver().Build();
 
         // when
-        var summary = deliveryPhase.CalculateSummary(1000, 50, new MilestoneFramework(0.35m, 0.25m, 0.4m));
+        var summary = deliveryPhase.GetSummaryOfDelivery(1000, 50, new MilestoneFramework(0.35m, 0.25m, 0.4m));
 
         // then
         summary.GrantApportioned.Should().BeNull();
@@ -101,7 +99,7 @@ public class CalculateSummaryTests
         var deliveryPhase = new DeliveryPhaseEntityBuilder().Build();
 
         // when
-        var summary = deliveryPhase.CalculateSummary(0, 50, new MilestoneFramework(0.35m, 0.25m, 0.4m));
+        var summary = deliveryPhase.GetSummaryOfDelivery(0, 50, new MilestoneFramework(0.35m, 0.25m, 0.4m));
 
         // then
         summary.GrantApportioned.Should().BeNull();
@@ -117,7 +115,7 @@ public class CalculateSummaryTests
         var deliveryPhase = new DeliveryPhaseEntityBuilder().Build();
 
         // when
-        var summary = deliveryPhase.CalculateSummary(1000, 0, new MilestoneFramework(0.35m, 0.25m, 0.4m));
+        var summary = deliveryPhase.GetSummaryOfDelivery(1000, 0, new MilestoneFramework(0.35m, 0.25m, 0.4m));
 
         // then
         summary.GrantApportioned.Should().BeNull();

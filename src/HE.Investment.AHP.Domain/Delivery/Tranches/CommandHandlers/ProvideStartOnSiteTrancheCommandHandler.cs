@@ -5,7 +5,7 @@ using HE.Investment.AHP.Domain.Delivery.Repositories;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
 
-namespace HE.Investment.AHP.Domain.Delivery.MilestonePayments.CommandHandlers;
+namespace HE.Investment.AHP.Domain.Delivery.Tranches.CommandHandlers;
 
 public class ProvideStartOnSiteTrancheCommandHandler : UpdateDeliveryPhaseCommandHandler<ProvideStartOnSiteTrancheCommand>
 {
@@ -16,8 +16,8 @@ public class ProvideStartOnSiteTrancheCommandHandler : UpdateDeliveryPhaseComman
 
     protected override Task<OperationResult> Update(IDeliveryPhaseEntity entity, ProvideStartOnSiteTrancheCommand request, CancellationToken cancellationToken)
     {
-        var milestoneTranches = entity.MilestoneTranches.WithStartOnSite(request.StartOnSiteTranche);
-        entity.ProvideMilestoneTranches(milestoneTranches);
+        var deliveryPhaseTranches = entity.GetTranches();
+        deliveryPhaseTranches.ProvideStartOnSiteTranche(request.StartOnSiteTranche);
         return Task.FromResult(OperationResult.Success());
     }
 }
