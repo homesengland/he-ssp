@@ -1,5 +1,6 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Helpers;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.WWW.Routing;
 using Stateless;
@@ -110,6 +111,7 @@ public class ApplicationWorkflow : IStateRouting<ApplicationWorkflowState>
     {
         var statusesAllowedForSubmit = ApplicationStatusDivision.GetAllStatusesAllowedForSubmit();
         var model = await _modelFactory();
-        return statusesAllowedForSubmit.Contains(model.Status);
+        var allSectionsCompleted = model.Sections.All(x => x.SectionStatus == SectionStatus.Completed);
+        return statusesAllowedForSubmit.Contains(model.Status) && allSectionsCompleted;
     }
 }
