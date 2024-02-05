@@ -44,6 +44,7 @@ public class ApplicationWorkflow : IStateRouting<ApplicationWorkflowState>
             ApplicationWorkflowState.ApplicationTenure => true,
             ApplicationWorkflowState.TaskList => true,
             ApplicationWorkflowState.OnHold => await CanBePutOnHold(),
+            ApplicationWorkflowState.Reactivate => await CanBeReactivate(),
             ApplicationWorkflowState.Withdraw => await CanBeWithdrawn(),
             ApplicationWorkflowState.CheckAnswers => await CanBeSubmitted(),
             _ => false,
@@ -72,6 +73,9 @@ public class ApplicationWorkflow : IStateRouting<ApplicationWorkflowState>
             .Permit(Trigger.Continue, ApplicationWorkflowState.TaskList)
             .Permit(Trigger.Back, ApplicationWorkflowState.TaskList);
 
+        _machine.Configure(ApplicationWorkflowState.Reactivate)
+            .Permit(Trigger.Continue, ApplicationWorkflowState.TaskList);
+
         _machine.Configure(ApplicationWorkflowState.Withdraw)
             .PermitIf(Trigger.Continue, ApplicationWorkflowState.TaskList, () => _isApplicationExist().Result)
             .PermitIf(Trigger.Continue, ApplicationWorkflowState.ApplicationsList, () => !_isApplicationExist().Result)
@@ -86,6 +90,13 @@ public class ApplicationWorkflow : IStateRouting<ApplicationWorkflowState>
         var statusesAllowedForPutOnHold = ApplicationStatusDivision.GetAllStatusesAllowedForPutOnHold();
         var model = await _modelFactory();
         return statusesAllowedForPutOnHold.Contains(model.Status);
+    }
+
+    private async Task<bool> CanBeReactivate()
+    {
+        var statusesAllowedForReactivate = ApplicationStatusDivision.GetAllStatusesForReactivate();
+        var model = await _modelFactory();
+        return statusesAllowedForReactivate.Contains(model.Status);
     }
 
     private async Task<bool> CanBeWithdrawn()
