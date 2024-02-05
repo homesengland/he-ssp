@@ -21,6 +21,11 @@ public static class SectionStatusMapper
             return SectionStatus.Withdrawn;
         }
 
+        if (applicationStatus == ApplicationStatus.OnHold)
+        {
+            return SectionStatus.OnHold;
+        }
+
         if (value == null)
         {
             return SectionStatus.NotStarted;

@@ -26,11 +26,13 @@ public class ToDomainTests
         result.Should().Be(SectionStatus.NotStarted);
     }
 
-    [Fact]
-    public void ShouldReturnSectionStatusWithdrawn_WhenApplicationStatusIsWithdrawn()
+    [Theory]
+    [InlineData(ApplicationStatus.Withdrawn, SectionStatus.Withdrawn)]
+    [InlineData(ApplicationStatus.OnHold, SectionStatus.OnHold)]
+    public void ShouldReturnSectionStatusWithdrawn_WhenApplicationStatusIsWithdrawn(ApplicationStatus applicationStatus, SectionStatus expectedSectionStatus)
     {
-        var result = SectionStatusMapper.ToDomain(null, ApplicationStatus.Withdrawn);
+        var result = SectionStatusMapper.ToDomain(null, applicationStatus);
 
-        result.Should().Be(SectionStatus.Withdrawn);
+        result.Should().Be(expectedSectionStatus);
     }
 }

@@ -24,6 +24,7 @@ public static class ApplicationStatusDivision
         yield return ApplicationStatus.ApplicationUnderReview;
         yield return ApplicationStatus.CashflowUnderReview;
         yield return ApplicationStatus.ReferredBackToApplicant;
+        yield return ApplicationStatus.RequestedEditing;
     }
 
     public static IEnumerable<ApplicationStatus> GetAllStatusesAllowedForSubmit()
@@ -53,5 +54,10 @@ public static class ApplicationStatusDivision
         yield return ApplicationStatus.RequestedEditing;
         yield return ApplicationStatus.ApprovedSubjectToContract;
         yield return ApplicationStatus.Approved;
+    }
+
+    public static IEnumerable<ApplicationStatus> GetAllStatusesForReactivate()
+    {
+        yield return ApplicationStatus.OnHold;
     }
 }
