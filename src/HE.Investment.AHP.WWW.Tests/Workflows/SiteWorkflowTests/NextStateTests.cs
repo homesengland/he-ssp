@@ -16,7 +16,9 @@ public class NextStateTests
     [InlineData(SiteWorkflowState.PlanningStatus, SiteWorkflowState.PlanningDetails)]
     [InlineData(SiteWorkflowState.LandRegistry, SiteWorkflowState.NationalDesignGuide)]
     [InlineData(SiteWorkflowState.NationalDesignGuide, SiteWorkflowState.BuildingForHealthyLife)]
-    [InlineData(SiteWorkflowState.BuildingForHealthyLife, SiteWorkflowState.CheckAnswers)]
+    [InlineData(SiteWorkflowState.BuildingForHealthyLife, SiteWorkflowState.TenderingStatus)]
+    [InlineData(SiteWorkflowState.ContractorDetails, SiteWorkflowState.CheckAnswers)]
+    [InlineData(SiteWorkflowState.IntentionToWorkWithSme, SiteWorkflowState.CheckAnswers)]
     public async Task ShouldReturnNextState_WhenContinueTriggerExecuted(SiteWorkflowState current, SiteWorkflowState expectedNext)
     {
         // given
@@ -47,11 +49,34 @@ public class NextStateTests
     }
 
     [Theory]
+    [InlineData(null, SiteWorkflowState.CheckAnswers)]
+    [InlineData(SiteTenderingStatus.NotApplicable, SiteWorkflowState.CheckAnswers)]
+    [InlineData(SiteTenderingStatus.UnconditionalWorksContract, SiteWorkflowState.ContractorDetails)]
+    [InlineData(SiteTenderingStatus.ConditionalWorksContract, SiteWorkflowState.ContractorDetails)]
+    [InlineData(SiteTenderingStatus.TenderForWorksContract, SiteWorkflowState.IntentionToWorkWithSme)]
+    [InlineData(SiteTenderingStatus.ContractingHasNotYetBegun, SiteWorkflowState.IntentionToWorkWithSme)]
+    public async Task ShouldReturnNextState_WhenContinueTriggerExecutedForTenderingStatus(SiteTenderingStatus? tenderingStatus, SiteWorkflowState expectedState)
+    {
+        // given
+        var details = new SiteTenderingStatusDetails(tenderingStatus, null, null, null);
+        var workflow = SiteWorkflowFactory.BuildWorkflow(SiteWorkflowState.TenderingStatus, tenderingStatusDetails: details);
+
+        // when
+        var result = await workflow.NextState(Trigger.Continue);
+
+        // then
+        result.Should().Be(expectedState);
+    }
+
+    [Theory]
     [InlineData(SiteWorkflowState.LocalAuthorityResult, SiteWorkflowState.LocalAuthoritySearch)]
     [InlineData(SiteWorkflowState.LocalAuthorityReset, SiteWorkflowState.LocalAuthoritySearch)]
     [InlineData(SiteWorkflowState.PlanningDetails, SiteWorkflowState.PlanningStatus)]
     [InlineData(SiteWorkflowState.LandRegistry, SiteWorkflowState.PlanningDetails)]
     [InlineData(SiteWorkflowState.BuildingForHealthyLife, SiteWorkflowState.NationalDesignGuide)]
+    [InlineData(SiteWorkflowState.TenderingStatus, SiteWorkflowState.BuildingForHealthyLife)]
+    [InlineData(SiteWorkflowState.ContractorDetails, SiteWorkflowState.TenderingStatus)]
+    [InlineData(SiteWorkflowState.IntentionToWorkWithSme, SiteWorkflowState.TenderingStatus)]
     public async Task ShouldReturnNextState_WhenBackTriggerExecuted(SiteWorkflowState current, SiteWorkflowState expectedNext)
     {
         // given

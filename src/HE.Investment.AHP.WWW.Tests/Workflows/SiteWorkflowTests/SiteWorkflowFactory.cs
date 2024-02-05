@@ -16,7 +16,8 @@ public static class SiteWorkflowFactory
         bool? isIneligible = null,
         LocalAuthority? localAuthority = null,
         string? name = null,
-        SitePlanningDetails? planningDetails = null)
+        SitePlanningDetails? planningDetails = null,
+        SiteTenderingStatusDetails? tenderingStatusDetails = null)
     {
         var site = new SiteModel
         {
@@ -30,6 +31,7 @@ public static class SiteWorkflowFactory
             IsIneligible = isIneligible,
             LocalAuthority = localAuthority,
             PlanningDetails = planningDetails ?? new SitePlanningDetails(SitePlanningStatus.Undefined),
+            TenderingStatusDetails = tenderingStatusDetails ?? new SiteTenderingStatusDetails(null, null, null, null),
         };
 
         return new SiteWorkflow(currentSiteWorkflowState, site);
