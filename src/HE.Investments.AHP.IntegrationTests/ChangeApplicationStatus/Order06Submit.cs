@@ -54,7 +54,7 @@ public class Order06Submit : AhpIntegrationTest
         var applicationSubmittedPage = await GetCurrentPage();
         applicationSubmittedPage
             .UrlEndWith(ApplicationPagesUrl.SubmittedSuffix)
-            .HasTitle(ApplicationPageTitles.Submitted)
+            .HasTitle("Application submitted")
             .HasLinkWithTestId("return-to-task-list", out var returnToTaskListLink);
 
         // when
