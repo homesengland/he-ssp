@@ -57,7 +57,7 @@ public class HomeTypeRepository : IHomeTypeRepository
         return new HomeTypesEntity(
             application,
             homeTypes.Select(x => _homeTypeCrmMapper.MapToDomain(application, x, segments, new Dictionary<HomeTypeSegmentType, IReadOnlyCollection<UploadedFile>>())),
-            SectionStatusMapper.ToDomain(sectionStatus));
+            SectionStatusMapper.ToDomain(sectionStatus, application.Status));
     }
 
     public async Task<IHomeTypeEntity> GetById(

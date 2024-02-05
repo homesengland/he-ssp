@@ -73,14 +73,16 @@ public class SchemeRepository : ISchemeRepository
 
     private static SchemeEntity CreateEntity(AhpApplicationDto application, UploadedFile? stakeholderDiscussionsFile)
     {
+        var applicationBasicInfo = new ApplicationBasicInfo(
+            AhpApplicationId.From(application.id),
+            new ApplicationName(application.name),
+            ApplicationTenureMapper.ToDomain(application.tenure)!.Value,
+            AhpApplicationStatusMapper.MapToPortalStatus(application.applicationStatus));
+
         return new SchemeEntity(
-            new ApplicationBasicInfo(
-                new AhpApplicationId(application.id),
-                new ApplicationName(application.name),
-                ApplicationTenureMapper.ToDomain(application.tenure)!.Value,
-                AhpApplicationStatusMapper.MapToPortalStatus(application.applicationStatus)),
+            applicationBasicInfo,
             new SchemeFunding((int?)application.fundingRequested, application.noOfHomes),
-            SectionStatusMapper.ToDomain(application.schemeInformationSectionCompletionStatus),
+            SectionStatusMapper.ToDomain(application.schemeInformationSectionCompletionStatus, applicationBasicInfo.Status),
             new AffordabilityEvidence(application.affordabilityEvidence),
             new SalesRisk(application.sharedOwnershipSalesRisk),
             new HousingNeeds(application.meetingLocalProrities, application.meetingLocalHousingNeed),
