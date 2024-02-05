@@ -16,7 +16,8 @@
     }
     <link-button
         action-url="@Url.Action("CheckAnswers", "Application", new { applicationId = Model.ApplicationId })"
-        is-disabled="@(incompleteSectionsCount > 0 || !canSubmitApplication || !Model.CanBeSubmitted())">
+        is-disabled="@(incompleteSectionsCount > 0 || !canSubmitApplication || !Model.CanBeSubmitted())"
+        data-testid="check-and-submit-application">
         Check and submit application
     </link-button>
 </div>

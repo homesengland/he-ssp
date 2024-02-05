@@ -88,6 +88,14 @@ public static class HtmlDocumentExtensions
         return header!.InnerHtml.Trim();
     }
 
+    public static string GetApplicationStatus(this IHtmlDocument htmlDocument)
+    {
+        var applicationStatus = htmlDocument.GetElementsByClassName("govuk-tag").FirstOrDefault();
+
+        applicationStatus.Should().NotBeNull("Application status tag does not exist");
+        return applicationStatus!.InnerHtml.Trim();
+    }
+
     public static string GetLabel(this IHtmlDocument htmlDocument)
     {
         var label = htmlDocument.GetElementsByClassName(CssConstants.GovUkLabel).FirstOrDefault();

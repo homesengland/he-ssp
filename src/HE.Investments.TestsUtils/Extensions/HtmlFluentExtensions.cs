@@ -1,7 +1,6 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
-using ElementExtensions = HE.Investments.TestsUtils.Assertions.ElementExtensions;
 
 namespace HE.Investments.TestsUtils.Extensions;
 
@@ -25,6 +24,12 @@ public static class HtmlFluentExtensions
     public static IHtmlDocument HasTitle(this IHtmlDocument htmlDocument, string title)
     {
         htmlDocument.GetPageTitle().Should().Be(title);
+        return htmlDocument;
+    }
+
+    public static IHtmlDocument HasApplicationStatus(this IHtmlDocument htmlDocument, string status)
+    {
+        htmlDocument.GetApplicationStatus().Should().Be(status);
         return htmlDocument;
     }
 
