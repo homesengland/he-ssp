@@ -76,6 +76,8 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
 
     public bool IsModified => _modificationTracker.IsModified;
 
+    public bool IsReadOnly => Application.IsReadOnly();
+
     public IEnumerable<HomesToDeliverInPhase> HomesToDeliver => _homesToDeliver;
 
     public int TotalHomesToBeDeliveredInThisPhase => _homesToDeliver.Select(x => x.ToDeliver).Sum();

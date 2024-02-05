@@ -5,6 +5,7 @@
 @model HE.Investment.AHP.WWW.Models.Application.ApplicationSummaryViewModel
 @{
     ViewData["Title"] = "Submit application";
+    var isEditable = Model.Sections.FirstOrDefault()?.Items?.Any(x => !x.IsEditable) ?? false;
 }
 <gds-div-grid-column-two-thirds>
 
@@ -20,7 +21,7 @@
     }
 
     <form asp-controller="Application" asp-action="Submit" asp-route-applicationId="@Model.ApplicationId" asp-method="post" novalidate>
-        <vc:form-button text="Submit"/>
+        <vc:form-button text="Submit" is-disabled="@isEditable"/>
     </form>
 
 </gds-div-grid-column-two-thirds>

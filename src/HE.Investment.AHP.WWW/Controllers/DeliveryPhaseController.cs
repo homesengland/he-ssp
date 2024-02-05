@@ -513,9 +513,9 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         var deliveryPhase = currentState != DeliveryPhaseWorkflowState.Create
             ? await _deliveryPhaseProvider.Get(
                 new GetDeliveryPhaseDetailsQuery(this.GetApplicationIdFromRoute(), this.GetDeliveryPhaseIdFromRoute()), CancellationToken.None)
-            : new DeliveryPhaseDetails(string.Empty, string.Empty, string.Empty, SectionStatus.NotStarted);
+            : new DeliveryPhaseDetails(string.Empty, string.Empty, string.Empty, SectionStatus.NotStarted, false);
 
-        var isReadOnly = !await _accountAccessContext.CanEditApplication();
+        var isReadOnly = !await _accountAccessContext.CanEditApplication() || deliveryPhase.IsReadOnly;
 
         return new DeliveryPhaseWorkflow(currentState, deliveryPhase, isReadOnly);
     }
@@ -536,7 +536,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         var deliveryPhaseId = this.GetDeliveryPhaseIdFromRoute();
         var deliveryPhaseDetails = await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(applicationId, deliveryPhaseId, true), cancellationToken);
         var deliveryPhaseHomes = await _mediator.Send(new GetDeliveryPhaseHomesQuery(applicationId, deliveryPhaseId), cancellationToken);
-        var isEditable = await _accountAccessContext.CanEditApplication();
+        var isEditable = await _accountAccessContext.CanEditApplication() && !deliveryPhaseDetails.IsReadOnly;
         var sections = _deliveryPhaseSummaryViewModelFactory.CreateSummary(applicationId, deliveryPhaseDetails, deliveryPhaseHomes, Url, isEditable);
 
         return new DeliveryPhaseSummaryViewModel(

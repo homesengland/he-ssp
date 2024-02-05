@@ -9,7 +9,7 @@ using HE.Investment.AHP.Domain.Scheme.Entities;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.ValueObjects;
-using ApplicationBasicDetails = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationBasicDetails;
+using HE.Investments.Common.CRM.Mappers;
 
 namespace HE.Investment.AHP.Domain.Scheme.Repositories;
 
@@ -74,10 +74,11 @@ public class SchemeRepository : ISchemeRepository
     private static SchemeEntity CreateEntity(AhpApplicationDto application, UploadedFile? stakeholderDiscussionsFile)
     {
         return new SchemeEntity(
-            new ApplicationBasicDetails(
+            new ApplicationBasicInfo(
                 new AhpApplicationId(application.id),
                 new ApplicationName(application.name),
-                ApplicationTenureMapper.ToDomain(application.tenure)),
+                ApplicationTenureMapper.ToDomain(application.tenure)!.Value,
+                AhpApplicationStatusMapper.MapToPortalStatus(application.applicationStatus)),
             new SchemeFunding((int?)application.fundingRequested, application.noOfHomes),
             SectionStatusMapper.ToDomain(application.schemeInformationSectionCompletionStatus),
             new AffordabilityEvidence(application.affordabilityEvidence),

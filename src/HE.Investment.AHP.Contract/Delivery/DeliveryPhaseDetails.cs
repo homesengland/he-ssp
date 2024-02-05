@@ -9,6 +9,7 @@ public record DeliveryPhaseDetails(
     string Id,
     string Name,
     SectionStatus Status,
+    bool IsReadOnly,
     TypeOfHomes? TypeOfHomes = null,
     BuildActivityType? BuildActivityType = null,
     IList<BuildActivityType>? AvailableBuildActivityTypes = null,

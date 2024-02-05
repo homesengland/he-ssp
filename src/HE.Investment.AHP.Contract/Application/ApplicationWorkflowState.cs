@@ -9,4 +9,5 @@ public enum ApplicationWorkflowState
     TaskList,
     OnHold,
     Withdraw,
+    CheckAnswers,
 }

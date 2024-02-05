@@ -131,10 +131,12 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
         return View("TaskList", model);
     }
 
+    [WorkflowState(ApplicationWorkflowState.CheckAnswers)]
     [HttpGet("{applicationId}/check-answers")]
     public async Task<IActionResult> CheckAnswers(string applicationId, CancellationToken cancellationToken)
     {
-        var isReadOnly = !await _accountAccessContext.CanEditApplication();
+        var application = await _mediator.Send(new GetApplicationQuery(AhpApplicationId.From(applicationId)), cancellationToken);
+        var isReadOnly = !await _accountAccessContext.CanEditApplication() || application.IsReadOnly;
         var applicationSummary = await _applicationSummaryViewModelFactory.GetDataAndCreate(AhpApplicationId.From(applicationId), Url, isReadOnly, cancellationToken);
 
         return View("CheckAnswers", applicationSummary);

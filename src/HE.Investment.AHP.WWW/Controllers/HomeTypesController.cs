@@ -74,11 +74,12 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     public async Task<IActionResult> List([FromRoute] string applicationId, CancellationToken cancellationToken)
     {
         var homeTypes = await _mediator.Send(new GetHomeTypesQuery(AhpApplicationId.From(applicationId)), cancellationToken);
+        var isEditable = await _accountAccessContext.CanEditApplication() && !homeTypes.IsReadOnly;
 
         return View(new HomeTypeListModel(homeTypes.ApplicationName)
         {
             HomeTypes = homeTypes.HomeTypes.Select(x => new HomeTypeItemModel(x.Id.Value, x.Name, x.HousingType, x.NumberOfHomes)).ToList(),
-            IsEditable = await _accountAccessContext.CanEditApplication(),
+            IsEditable = isEditable,
         });
     }
 
@@ -197,7 +198,8 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         [FromQuery] bool redirect,
         CancellationToken cancellationToken)
     {
-        var isReadOnly = !await _accountAccessContext.CanEditApplication();
+        var homeType = await _mediator.Send(new GetFullHomeTypeQuery(AhpApplicationId.From(applicationId), HomeTypeId.From(homeTypeId)), cancellationToken);
+        var isReadOnly = !await _accountAccessContext.CanEditApplication() || homeType.IsReadOnly;
         if (isReadOnly)
         {
             return RedirectToAction("CheckAnswers", new { applicationId, homeTypeId });
@@ -205,7 +207,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
 
         if (redirect)
         {
-            var homeType = await _mediator.Send(new GetFullHomeTypeQuery(AhpApplicationId.From(applicationId), HomeTypeId.From(homeTypeId)), cancellationToken);
             var firstNotAnsweredQuestion = _summaryViewModelFactory
                 .CreateSummaryModel(homeType, Url, isReadOnly)
                 .Where(x => x.Items != null)
@@ -1394,6 +1395,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         }
 
         var homeType = await _mediator.Send(new GetHomeTypeQuery(AhpApplicationId.From(applicationId), HomeTypeId.From(homeTypeId)));
+        isReadOnly = isReadOnly || homeType.IsReadOnly;
         var workflow = new HomeTypesWorkflow(currentState, homeType, isReadOnly);
         if (TryGetWorkflowQueryParameter(out var lastEncodedWorkflow))
         {
@@ -1489,8 +1491,8 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         string homeTypeId,
         CancellationToken cancellationToken)
     {
-        var isEditable = await _accountAccessContext.CanEditApplication();
         var homeType = await _mediator.Send(new GetFullHomeTypeQuery(AhpApplicationId.From(applicationId), HomeTypeId.From(homeTypeId)), cancellationToken);
+        var isEditable = await _accountAccessContext.CanEditApplication() && !homeType.IsReadOnly;
         var sections = _summaryViewModelFactory.CreateSummaryModel(homeType, urlHelper, !isEditable, true);
 
         return new HomeTypeSummaryModel(homeType.ApplicationName, homeType.Name)

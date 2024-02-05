@@ -45,7 +45,8 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
                 homeType.TenureDetails.ExemptFromTheRightToSharedOwnership,
                 homeType.TenureDetails.IsProspectiveRentIneligible,
                 homeType.ModernMethodsConstruction.ModernMethodsConstructionApplied,
-                homeType.ModernMethodsConstruction.ModernMethodsConstructionCategories));
+                homeType.ModernMethodsConstruction.ModernMethodsConstructionCategories),
+            isReadOnly);
         _machine = new StateMachine<HomeTypesWorkflowState, Trigger>(HomeTypesWorkflowState.Index);
         ConfigureTransitions();
     }
