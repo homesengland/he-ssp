@@ -27,12 +27,10 @@ public class SummaryOfDeliveryTests : ViewTestBase
             .HasContinueButton()
             .HasGdsBackLink(false);
 
-        var summary = document.GetSummaryListItems();
-        summary.Should().HaveCount(4);
-        summary.Keys.ElementAt(0).Should().Contain("\u00a39,000.12");
-        summary.Keys.ElementAt(1).Should().Contain("\u00a3200");
-        summary.Keys.ElementAt(2).Should().Contain("\u00a3300");
-        summary.Keys.ElementAt(3).Should().Contain("\u00a34,000.12");
+        document.GetElementByTestId("grant-apportioned-value").TextContent.Should().Contain("\u00a39,000.12");
+        document.GetElementByTestId("acquisition-value").TextContent.Should().Contain("\u00a3200");
+        document.GetElementByTestId("start-on-site-value").TextContent.Should().Contain("\u00a3300");
+        document.GetElementByTestId("completion-value").TextContent.Should().Contain("\u00a34,000.12");
     }
 
     [Theory]
@@ -57,9 +55,7 @@ public class SummaryOfDeliveryTests : ViewTestBase
             .HasContinueButton()
             .HasGdsBackLink(false);
 
-        var summary = document.GetSummaryListItems();
-        summary.Should().HaveCount(2);
-        summary.Keys.ElementAt(0).Should().Contain("\u00a39,000.12");
-        summary.Keys.ElementAt(1).Should().Contain("\u00a34,000.12");
+        document.GetElementByTestId("grant-apportioned-value").TextContent.Should().Contain("\u00a39,000.12");
+        document.GetElementByTestId("completion-value").TextContent.Should().Contain("\u00a34,000.12");
     }
 }

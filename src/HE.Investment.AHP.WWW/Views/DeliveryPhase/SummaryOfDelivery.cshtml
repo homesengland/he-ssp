@@ -60,7 +60,7 @@
                         <gds-h3 size="ControlSize.S">
                             Grant apportioned to this phase
                         </gds-h3>
-                        <p class="govuk-body govuk-!-margin-bottom-1">@((summaryOfDelivery?.GrantApportioned).DisplayPoundsPences() ?? "-")</p>
+                        <p class="govuk-body govuk-!-margin-bottom-1" data-testid="grant-apportioned-value">@((summaryOfDelivery?.GrantApportioned).DisplayPoundsPences() ?? "-")</p>
                     </dt>
                 </div>
             </dl>
@@ -105,8 +105,8 @@
                     "~/Views/DeliveryPhase/Partials/_SummaryOfDeliveryRow.cshtml",
                     new SummaryOfDeliveryRow(
                         "Completion",
-                        summaryOfDelivery?.StartOnSiteMilestone,
-                        summaryOfDelivery?.StartOnSitePercentage,
+                        summaryOfDelivery?.CompletionMilestone,
+                        summaryOfDelivery?.CompletionPercentage,
                         Model.Id,
                         applicationId,
                         isAmendable))
