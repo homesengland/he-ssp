@@ -3,26 +3,15 @@ using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.CRM.Model;
 
-namespace HE.Investment.AHP.Domain.Tests.Application.Mappers;
+namespace HE.Investment.AHP.Domain.Tests.Application.Mappers.SectionStatusMapperTests;
 
-public class SectionStatusMapperTests
+public class ToDomainTests
 {
-    [Theory]
-    [InlineData(SectionStatus.NotStarted, (int)invln_ahpsectioncompletionstatusset.Notstarted)]
-    [InlineData(SectionStatus.InProgress, (int)invln_ahpsectioncompletionstatusset.InProgress)]
-    [InlineData(SectionStatus.Completed, (int)invln_ahpsectioncompletionstatusset.Completed)]
-    public void ToDto_GivenSectionStatus_ReturnsExpectedValue(SectionStatus status, int expectedValue)
-    {
-        var result = SectionStatusMapper.ToDto(status);
-
-        result.Should().Be(expectedValue);
-    }
-
     [Theory]
     [InlineData((int)invln_ahpsectioncompletionstatusset.Notstarted, SectionStatus.NotStarted)]
     [InlineData((int)invln_ahpsectioncompletionstatusset.InProgress, SectionStatus.InProgress)]
     [InlineData((int)invln_ahpsectioncompletionstatusset.Completed, SectionStatus.Completed)]
-    public void ToDomain_GivenValue_ReturnsExpectedSectionStatus(int value, SectionStatus expectedStatus)
+    public void ShouldReturnExpectedSectionStatus_WhenValueIsProvided(int value, SectionStatus expectedStatus)
     {
         var result = SectionStatusMapper.ToDomain(value);
 
@@ -30,7 +19,7 @@ public class SectionStatusMapperTests
     }
 
     [Fact]
-    public void ToDomain_GivenNullValue_ReturnsNotStarted()
+    public void ShouldReturnStatusNotStarted_WhenValueIsNull()
     {
         var result = SectionStatusMapper.ToDomain(null);
 
@@ -38,7 +27,7 @@ public class SectionStatusMapperTests
     }
 
     [Fact]
-    public void ToDomain_GivenApplicationStatusWithdrawn_ReturnsWithdrawn()
+    public void ShouldReturnSectionStatusWithdrawn_WhenApplicationStatusIsWithdrawn()
     {
         var result = SectionStatusMapper.ToDomain(null, ApplicationStatus.Withdrawn);
 
