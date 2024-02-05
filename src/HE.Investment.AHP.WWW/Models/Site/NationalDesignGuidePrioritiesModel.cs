@@ -5,7 +5,7 @@ namespace HE.Investment.AHP.WWW.Models.Site;
 
 public class NationalDesignGuidePrioritiesModel
 {
-    public SiteId SiteId { get; set; }
+    public string SiteId { get; set; }
 
     public string SiteName { get; set; }
 

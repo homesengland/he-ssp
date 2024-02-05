@@ -20,7 +20,7 @@ public class NationalDesignGuideTests : ViewTestBase
         var siteName = "Test Site 33";
         var site = new NationalDesignGuidePrioritiesModel()
         {
-            SiteId = new SiteId("8"),
+            SiteId = "8",
             SiteName = siteName,
             DesignPriorities = new List<NationalDesignGuidePriority>(),
         };
@@ -43,7 +43,7 @@ public class NationalDesignGuideTests : ViewTestBase
         var siteName = "Test Site 33";
         var site = new NationalDesignGuidePrioritiesModel()
         {
-            SiteId = new SiteId("8"),
+            SiteId = "8",
             SiteName = siteName,
             DesignPriorities = new List<NationalDesignGuidePriority>(),
         };

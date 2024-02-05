@@ -450,7 +450,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
 
         var designGuideModel = new NationalDesignGuidePrioritiesModel()
         {
-            SiteId = new SiteId(siteId),
+            SiteId = siteId,
             SiteName = siteModel?.Name ?? string.Empty,
             DesignPriorities = siteModel?.NationalDesignGuidePriorities?.ToList(),
         };

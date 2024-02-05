@@ -2,10 +2,6 @@
 @using HE.Investments.Common.WWW.Helpers;
 @using HE.Investments.Common.Contract;
 @model (DynamicComponentViewModel headerComponent, DynamicComponentViewModel? detailsComponent, string? hint)
-@{
-#nullable enable
-    // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
-}
 @if (Model.headerComponent != null)
 {
     <vc:dynamic-component component="@Model.headerComponent" />
