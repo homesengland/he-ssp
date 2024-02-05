@@ -14,22 +14,22 @@
         </gds-div-inset-text>
         <gds-summary-list class="govuk-!-margin-bottom-9">
             @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
-            {
-            { "Title", "Registered company name" },
-            { "Value", Model.CompanyRegisteredName },
-            })
+                   {
+                       { "Title", "Registered company name" },
+                       { "Value", Model.CompanyRegisteredName },
+                   })
 
             @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
-            {
-            { "Title", "Company Registration Number" },
-            { "Value", Model.CompanyRegistrationNumber },
-            })
+                   {
+                       { "Title", "Company Registration Number" },
+                       { "Value", Model.CompanyRegistrationNumber },
+                   })
 
             @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
-            {
-            { "Title", "Company address" },
-            { "Value", Model.CompanyAddress },
-            })
+                   {
+                       { "Title", "Company address" },
+                       { "Value", Model.CompanyAddress },
+                   })
 
             @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
                    {

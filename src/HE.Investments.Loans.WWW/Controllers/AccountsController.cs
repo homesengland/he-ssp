@@ -18,7 +18,6 @@ public class AccountsController : Controller
     [Route("/user-profile")]
     public IActionResult UserProfile(string callback)
     {
-        // TODO: verify
         return _accountRoutes.NotCompleteProfile("Loans", callback);
     }
 
