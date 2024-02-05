@@ -71,8 +71,7 @@ public class DeliveryPhaseWorkflow : IStateRouting<DeliveryPhaseWorkflowState>
             DeliveryPhaseWorkflowState.ReconfiguringExisting => _model.IsReconfiguringExistingNeeded,
             DeliveryPhaseWorkflowState.AddHomes => true,
             DeliveryPhaseWorkflowState.SummaryOfDelivery => IsNumberOfHomesCompleted(),
-            DeliveryPhaseWorkflowState.SummaryOfDeliveryEditable => IsNumberOfHomesCompleted(),
-            DeliveryPhaseWorkflowState.SummaryOfDeliveryTranche => IsNumberOfHomesCompleted(),
+            DeliveryPhaseWorkflowState.SummaryOfDeliveryTranche => IsNumberOfHomesCompleted() && (_model.Tranches?.IsAmendable ?? false),
             DeliveryPhaseWorkflowState.AcquisitionMilestone => AllMilestonesAvailable() && IsNumberOfHomesCompleted(),
             DeliveryPhaseWorkflowState.StartOnSiteMilestone => AllMilestonesAvailable() && IsNumberOfHomesCompleted(),
             DeliveryPhaseWorkflowState.PracticalCompletionMilestone => IsNumberOfHomesCompleted(),
@@ -114,8 +113,8 @@ public class DeliveryPhaseWorkflow : IStateRouting<DeliveryPhaseWorkflowState>
             .Permit(Trigger.Back, DeliveryPhaseWorkflowState.AddHomes);
 
         _machine.Configure(DeliveryPhaseWorkflowState.SummaryOfDeliveryTranche)
-            .Permit(Trigger.Continue, DeliveryPhaseWorkflowState.SummaryOfDeliveryEditable)
-            .Permit(Trigger.Back, DeliveryPhaseWorkflowState.SummaryOfDeliveryEditable);
+            .Permit(Trigger.Continue, DeliveryPhaseWorkflowState.SummaryOfDelivery)
+            .Permit(Trigger.Back, DeliveryPhaseWorkflowState.SummaryOfDelivery);
 
         _machine.Configure(DeliveryPhaseWorkflowState.AcquisitionMilestone)
             .PermitIf(Trigger.Continue, DeliveryPhaseWorkflowState.StartOnSiteMilestone)

@@ -29,18 +29,18 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
 {
     private readonly IMediator _mediator;
     private readonly IDeliveryPhaseProvider _deliveryPhaseProvider;
-    private readonly IDeliveryPhaseSummaryViewModelFactory _deliveryPhaseSummaryViewModelFactory;
+    private readonly IDeliveryPhaseCheckAnswersViewModelFactory _deliveryPhaseCheckAnswersViewModelFactory;
     private readonly IAccountAccessContext _accountAccessContext;
 
     public DeliveryPhaseController(
         IMediator mediator,
         IDeliveryPhaseProvider deliveryPhaseProvider,
-        IDeliveryPhaseSummaryViewModelFactory deliveryPhaseSummaryViewModelFactory,
+        IDeliveryPhaseCheckAnswersViewModelFactory deliveryPhaseCheckAnswersViewModelFactory,
         IAccountAccessContext accountAccessContext)
     {
         _mediator = mediator;
         _deliveryPhaseProvider = deliveryPhaseProvider;
-        _deliveryPhaseSummaryViewModelFactory = deliveryPhaseSummaryViewModelFactory;
+        _deliveryPhaseCheckAnswersViewModelFactory = deliveryPhaseCheckAnswersViewModelFactory;
         _accountAccessContext = accountAccessContext;
     }
 
@@ -245,18 +245,6 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         return await ContinueWithAllRedirects(new { applicationId, deliveryPhaseId });
     }
 
-    [HttpGet("{deliveryPhaseId}/summary-of-delivery-editable")]
-    [WorkflowState(DeliveryPhaseWorkflowState.SummaryOfDeliveryEditable)]
-    public async Task<IActionResult> SummaryOfDeliveryEditable([FromRoute] string applicationId, string deliveryPhaseId, CancellationToken cancellationToken)
-    {
-        var deliveryPhaseDetails =
-            await _deliveryPhaseProvider.Get(
-                new GetDeliveryPhaseDetailsQuery(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId), true),
-                cancellationToken);
-
-        return View("SummaryOfDeliveryEditable", deliveryPhaseDetails);
-    }
-
     [HttpGet("{deliveryPhaseId}/summary-of-delivery/tranche/{trancheType}")]
     [WorkflowState(DeliveryPhaseWorkflowState.SummaryOfDeliveryTranche)]
     public async Task<IActionResult> SummaryOfDeliveryAcquisitionTranche(
@@ -272,9 +260,9 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
 
         var tranche = trancheType switch
         {
-            SummaryOfDeliveryTrancheType.Acquisition => deliveryPhaseDetails.SummaryOfDeliveryAmend?.AcquisitionMilestone,
-            SummaryOfDeliveryTrancheType.Completion => deliveryPhaseDetails.SummaryOfDeliveryAmend?.CompletionMilestone,
-            SummaryOfDeliveryTrancheType.StartOnSite => deliveryPhaseDetails.SummaryOfDeliveryAmend?.StartOnSiteMilestone,
+            SummaryOfDeliveryTrancheType.Acquisition => deliveryPhaseDetails.Tranches?.SummaryOfDeliveryAmend?.AcquisitionMilestone,
+            SummaryOfDeliveryTrancheType.Completion => deliveryPhaseDetails.Tranches?.SummaryOfDeliveryAmend?.CompletionMilestone,
+            SummaryOfDeliveryTrancheType.StartOnSite => deliveryPhaseDetails.Tranches?.SummaryOfDeliveryAmend?.StartOnSiteMilestone,
             _ => throw new NotSupportedException(nameof(trancheType)),
         };
 
@@ -537,7 +525,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         var deliveryPhaseDetails = await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(applicationId, deliveryPhaseId, true), cancellationToken);
         var deliveryPhaseHomes = await _mediator.Send(new GetDeliveryPhaseHomesQuery(applicationId, deliveryPhaseId), cancellationToken);
         var isEditable = await _accountAccessContext.CanEditApplication();
-        var sections = _deliveryPhaseSummaryViewModelFactory.CreateSummary(applicationId, deliveryPhaseDetails, deliveryPhaseHomes, Url, isEditable);
+        var sections = _deliveryPhaseCheckAnswersViewModelFactory.CreateSummary(applicationId, deliveryPhaseDetails, deliveryPhaseHomes, Url, isEditable);
 
         return new DeliveryPhaseSummaryViewModel(
             applicationId.Value,

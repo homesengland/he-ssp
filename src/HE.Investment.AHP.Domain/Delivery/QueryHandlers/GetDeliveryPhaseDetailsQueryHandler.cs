@@ -51,8 +51,10 @@ public class GetDeliveryPhaseDetailsQueryHandler : IRequestHandler<GetDeliveryPh
             deliveryPhase.IsReconfiguringExistingNeeded(),
             deliveryPhase.ReconfiguringExisting,
             deliveryPhase.TotalHomesToBeDeliveredInThisPhase,
-            request.IncludeSummary ? await GetSummaryOfDelivery(deliveryPhase, userAccount, cancellationToken) : null,
-            request.IncludeSummary ? await GetSummaryOfDeliveryAmend(deliveryPhase, userAccount, cancellationToken) : null,
+            new DeliveryPhaseTranchesDto(
+                false,
+                request.IncludeSummary ? await GetSummaryOfDelivery(deliveryPhase, userAccount, cancellationToken) : null,
+                request.IncludeSummary ? await GetSummaryOfDeliveryAmend(deliveryPhase, userAccount, cancellationToken) : null),
             deliveryPhase.Organisation.IsUnregisteredBody,
             deliveryPhase.DeliveryPhaseMilestones.IsOnlyCompletionMilestone,
             DateValueObjectMapper.ToContract(deliveryPhase.DeliveryPhaseMilestones.AcquisitionMilestone?.MilestoneDate),
@@ -68,7 +70,7 @@ public class GetDeliveryPhaseDetailsQueryHandler : IRequestHandler<GetDeliveryPh
     {
         var schemaInformation = await _schemeRepository.GetByApplicationId(deliveryPhase.ApplicationId, userAccount, false, cancellationToken);
 
-        var result = deliveryPhase.CalculateSummary(
+        var result = deliveryPhase.GetSummaryOfDelivery(
             schemaInformation.Funding.RequiredFunding ?? 0,
             schemaInformation.Funding.HousesToDeliver ?? 0,
             MilestoneFramework.Default);

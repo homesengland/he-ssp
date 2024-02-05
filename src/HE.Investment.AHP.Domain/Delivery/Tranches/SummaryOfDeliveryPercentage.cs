@@ -1,7 +1,7 @@
 using Dawn;
 using HE.Investments.Common.Domain;
 
-namespace HE.Investment.AHP.Domain.Delivery.MilestonePayments;
+namespace HE.Investment.AHP.Domain.Delivery.Tranches;
 
 public class SummaryOfDeliveryPercentage : ValueObject
 {

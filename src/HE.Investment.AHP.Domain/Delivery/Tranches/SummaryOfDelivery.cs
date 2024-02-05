@@ -1,7 +1,7 @@
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Domain;
 
-namespace HE.Investment.AHP.Domain.Delivery.MilestonePayments;
+namespace HE.Investment.AHP.Domain.Delivery.Tranches;
 
 public class SummaryOfDelivery : ValueObject
 {
@@ -9,13 +9,17 @@ public class SummaryOfDelivery : ValueObject
         decimal? grantApportioned,
         decimal? acquisitionMilestone,
         decimal? startOnSiteMilestone,
-        decimal? completionMilestone)
+        decimal? completionMilestone,
+        bool validateValues = true)
     {
         GrantApportioned = grantApportioned;
         AcquisitionMilestone = acquisitionMilestone;
         StartOnSiteMilestone = startOnSiteMilestone;
         CompletionMilestone = completionMilestone;
-        ValidateValues();
+        if (validateValues)
+        {
+            ValidateValues();
+        }
     }
 
     public static SummaryOfDelivery LackOfCalculation => new(null, null, null, null);

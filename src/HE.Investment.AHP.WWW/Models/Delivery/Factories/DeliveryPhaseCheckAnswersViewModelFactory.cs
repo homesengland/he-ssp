@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investment.AHP.WWW.Models.Delivery.Factories;
 
-public class DeliveryPhaseSummaryViewModelFactory : IDeliveryPhaseSummaryViewModelFactory
+public class DeliveryPhaseCheckAnswersViewModelFactory : IDeliveryPhaseCheckAnswersViewModelFactory
 {
     public IList<SectionSummaryViewModel> CreateSummary(
         AhpApplicationId applicationId,
@@ -88,29 +88,29 @@ public class DeliveryPhaseSummaryViewModelFactory : IDeliveryPhaseSummaryViewMod
 
     private static SectionSummaryViewModel CreateMilestonesSummary(DeliveryPhaseDetails deliveryPhase)
     {
-        var summary = deliveryPhase.SummaryOfDelivery;
+        var summary = deliveryPhase.Tranches?.SummaryOfDelivery;
         var items = new List<SectionSummaryItemModel>
         {
             new(
                 "Grant apportioned to this phase",
-                (CurrencyHelper.DisplayPoundsPences(summary?.GrantApportioned) ?? "-").ToOneElementList(),
+                ((summary?.GrantApportioned).DisplayPoundsPences() ?? "-").ToOneElementList(),
                 IsEditable: false),
         };
         items.AddWhen(
             new(
                 "Acquisition milestone",
-                (CurrencyHelper.DisplayPoundsPences(summary?.AcquisitionMilestone) ?? "-").ToOneElementList(),
+                ((summary?.AcquisitionMilestone).DisplayPoundsPences() ?? "-").ToOneElementList(),
                 IsEditable: false),
             deliveryPhase is { IsUnregisteredBody: false, IsOnlyCompletionMilestone: false });
         items.AddWhen(
             new(
                 "Start on site milestone",
-                (CurrencyHelper.DisplayPoundsPences(summary?.StartOnSiteMilestone) ?? "-").ToOneElementList(),
+                ((summary?.StartOnSiteMilestone).DisplayPoundsPences() ?? "-").ToOneElementList(),
                 IsEditable: false),
             deliveryPhase is { IsUnregisteredBody: false, IsOnlyCompletionMilestone: false });
         items.Add(new(
             "Completion milestone",
-            (CurrencyHelper.DisplayPoundsPences(summary?.CompletionMilestone) ?? "-").ToOneElementList(),
+            ((summary?.CompletionMilestone).DisplayPoundsPences() ?? "-").ToOneElementList(),
             IsEditable: false));
 
         return new SectionSummaryViewModel("Milestone summary", items);

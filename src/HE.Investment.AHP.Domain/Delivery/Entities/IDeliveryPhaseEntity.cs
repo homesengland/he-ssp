@@ -2,12 +2,11 @@ using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.Domain.Common;
-using HE.Investment.AHP.Domain.Delivery.MilestonePayments;
 using HE.Investment.AHP.Domain.Delivery.Policies;
+using HE.Investment.AHP.Domain.Delivery.Tranches;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
-using SummaryOfDelivery = HE.Investment.AHP.Domain.Delivery.MilestonePayments.SummaryOfDelivery;
 
 namespace HE.Investment.AHP.Domain.Delivery.Entities;
 
@@ -28,8 +27,6 @@ public interface IDeliveryPhaseEntity
     TypeOfHomes? TypeOfHomes { get; }
 
     BuildActivity BuildActivity { get; }
-
-    MilestoneTranches MilestoneTranches { get; }
 
     bool? ReconfiguringExisting { get; }
 
@@ -55,13 +52,13 @@ public interface IDeliveryPhaseEntity
 
     void ProvideReconfiguringExisting(bool? reconfiguringExisting);
 
-    void ProvideMilestoneTranches(MilestoneTranches milestoneTranches);
-
     bool IsReconfiguringExistingNeeded();
 
     void Complete();
 
     void UnComplete();
 
-    SummaryOfDelivery CalculateSummary(decimal requiredFunding, int totalHousesToDeliver, MilestoneFramework milestoneFramework);
+    SummaryOfDelivery GetSummaryOfDelivery(decimal requiredFunding, int totalHousesToDeliver, MilestoneFramework milestoneFramework);
+
+    DeliveryPhaseTranches GetTranches();
 }

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investment.AHP.WWW.Models.Delivery.Factories;
 
-public interface IDeliveryPhaseSummaryViewModelFactory
+public interface IDeliveryPhaseCheckAnswersViewModelFactory
 {
     IList<SectionSummaryViewModel> CreateSummary(
         AhpApplicationId applicationId,
