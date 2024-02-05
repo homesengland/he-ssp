@@ -10,20 +10,21 @@ namespace HE.Investment.AHP.WWW.Tests.Views.Site;
 public class Section106OnlyAffordableHousingTests : ViewTestBase
 {
     private readonly string _viewPath = "/Views/Site/Section106OnlyAffordableHousing.cshtml";
+    private readonly string _siteId = Guid.NewGuid().ToString();
+    private readonly string _siteName = "Test Site 33";
 
     [Fact]
     public async Task ShouldDisplayView()
     {
         // given & when
-        var siteName = "Test Site 33";
-        var site = new SiteModel() { Name = siteName };
-        var document = await Render(_viewPath, site);
+        var section106 = new Section106(_siteId, _siteName, null);
+        var document = await Render(_viewPath, section106);
 
         // then
         document
             .HasTitle(SitePageTitles.SiteSection106OnlyAffordableHousing)
-            .HasPageHeader(siteName, @SitePageTitles.SiteSection106OnlyAffordableHousing)
-            .HasGdsRadioInputWithValues(nameof(SiteModel.Section106OnlyAffordableHousing), "True", "False")
+            .HasPageHeader(_siteName, @SitePageTitles.SiteSection106OnlyAffordableHousing)
+            .HasGdsRadioInputWithValues(nameof(Section106.OnlyAffordableHousing), "True", "False")
             .HasGdsSaveAndContinueButton()
             .HasGdsBackLink(false);
     }
@@ -34,18 +35,17 @@ public class Section106OnlyAffordableHousingTests : ViewTestBase
         // given
         var errorMessage = "some test error";
         var modelState = new ModelStateDictionary();
-        var siteName = "Test Site 33";
-        var site = new SiteModel() { Name = siteName };
-        modelState.AddModelError(nameof(SiteModel.Section106OnlyAffordableHousing), errorMessage);
+        var section106 = new Section106(_siteId, _siteName, null);
+        modelState.AddModelError(nameof(Section106.OnlyAffordableHousing), errorMessage);
 
         // when
-        var document = await Render(_viewPath, site, modelStateDictionary: modelState);
+        var document = await Render(_viewPath, section106, modelStateDictionary: modelState);
 
         // then
         document
             .HasTitle(SitePageTitles.SiteSection106OnlyAffordableHousing)
-            .HasPageHeader(siteName, @SitePageTitles.SiteSection106OnlyAffordableHousing)
-            .HasGdsRadioInputWithValues(nameof(SiteModel.Section106OnlyAffordableHousing), "True", "False")
+            .HasPageHeader(_siteName, @SitePageTitles.SiteSection106OnlyAffordableHousing)
+            .HasGdsRadioInputWithValues(nameof(Section106.OnlyAffordableHousing), "True", "False")
             .HasGdsSaveAndContinueButton()
             .HasGdsBackLink(false)
             .HasOneValidationMessages(errorMessage);

@@ -4,6 +4,8 @@ using HE.Investment.AHP.Domain.Site.ValueObjects;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
 using MediatR;
+using Microsoft.Extensions.Logging;
+using Section106 = HE.Investment.AHP.Domain.Site.ValueObjects.Section106;
 
 namespace HE.Investment.AHP.Domain.Site.CommandHandlers;
 

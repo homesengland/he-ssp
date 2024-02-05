@@ -12,6 +12,7 @@ using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Extensions;
 using LocalAuthority = Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
 using LocalAuthorityId = Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthorityId;
+using Section106 = HE.Investment.AHP.Domain.Site.ValueObjects.Section106;
 
 namespace HE.Investment.AHP.Domain.Site.Repositories;
 
