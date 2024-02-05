@@ -6,14 +6,27 @@ namespace HE.Investment.AHP.Domain.Site.ValueObjects.TenderingStatus;
 
 public class TenderingStatusDetails : ValueObject, IQuestion
 {
+    public TenderingStatusDetails(SiteTenderingStatus? tenderingStatus = null)
+    {
+        TenderingStatus = tenderingStatus;
+    }
+
     public TenderingStatusDetails(
-        SiteTenderingStatus? tenderingStatus = null,
-        ContractorName? contractorName = null,
-        bool? isSmeContractor = null)
+        SiteTenderingStatus? tenderingStatus,
+        ContractorName? contractorName,
+        bool? isSmeContractor)
     {
         TenderingStatus = tenderingStatus;
         ContractorName = contractorName;
         IsSmeContractor = isSmeContractor;
+    }
+
+    public TenderingStatusDetails(
+        SiteTenderingStatus? tenderingStatus,
+        bool? isIntentionToWorkWithSme)
+    {
+        TenderingStatus = tenderingStatus;
+        IsIntentionToWorkWithSme = isIntentionToWorkWithSme;
     }
 
     public SiteTenderingStatus? TenderingStatus { get; }
@@ -22,6 +35,8 @@ public class TenderingStatusDetails : ValueObject, IQuestion
 
     public bool? IsSmeContractor { get; }
 
+    public bool? IsIntentionToWorkWithSme { get; }
+
     public bool IsAnswered()
     {
         return TenderingStatus switch
@@ -29,6 +44,8 @@ public class TenderingStatusDetails : ValueObject, IQuestion
             SiteTenderingStatus.NotApplicable => true,
             SiteTenderingStatus.ConditionalWorksContract => ContractorName.IsProvided() && IsSmeContractor.IsProvided(),
             SiteTenderingStatus.UnconditionalWorksContract => ContractorName.IsProvided() && IsSmeContractor.IsProvided(),
+            SiteTenderingStatus.TenderForWorksContract => IsIntentionToWorkWithSme.IsProvided(),
+            SiteTenderingStatus.ContractingHasNotYetBegun => IsIntentionToWorkWithSme.IsProvided(),
             _ => false,
         };
     }
@@ -38,5 +55,6 @@ public class TenderingStatusDetails : ValueObject, IQuestion
         yield return TenderingStatus;
         yield return ContractorName;
         yield return IsSmeContractor;
+        yield return IsIntentionToWorkWithSme;
     }
 }
