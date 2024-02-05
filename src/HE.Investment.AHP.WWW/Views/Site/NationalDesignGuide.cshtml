@@ -10,15 +10,24 @@
 @{
     ViewData["Title"] = SitePageTitles.NationalDesignGuide;
     var selectedValues = Model.DesignPriorities?.Select(x => x.ToString());
-    var header = new DynamicComponentViewModel(nameof(InputListHeader), new { header = SitePageTitles.NationalDesignGuide, name = Model.SiteName, description = Model.SiteName });
-    var details = new DynamicComponentViewModel(nameof(Details), new { title = "What is the National Design Guide?", contentText = "The National Design Guide sets out the characteristics of well-designed places and demonstrates what good design means in practice. You can read more about the guide in the <a target=\"_blank\" href=\"https://www.gov.uk/government/publications/national-design-guide\">National Design Guide publication (opens in a new tab).</a>" });
-    var checkboxListHeader = new DynamicComponentViewModel(nameof(CheckboxListHeader), new { headerComponent = header, detailsComponent = details });
+    var details = new DynamicComponentViewModel(nameof(Details),
+    new
+        {
+            title = "What is the National Design Guide?",
+            contentText = "The National Design Guide sets out the characteristics of well-designed places and demonstrates what good design means in practice. You can read more about the guide in the",
+            linkUrl = "https://www.gov.uk/government/publications/national-design-guide",
+            linkText = "National Design Guide publication (opens in a new tab)"
+        });
+    var checkboxListHeader = new DynamicComponentViewModel(
+        nameof(CheckboxListHeader),
+        new { header = SitePageTitles.NationalDesignGuide, hint="Select all that apply", detailsComponent = details}
+    );
 }
 
 <div class="govuk-grid-column-two-thirds">
     <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.NationalDesignGuide" />
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
-    <span class="govuk-caption-l">@Model.SiteName</span>
+    <vc:form-header caption="@Model.SiteName" />
     <form asp-controller="Site" asp-action="NationalDesignGuide" asp-method="post" novalidate>
 
         <vc:checkbox-list-with-or field-name="@nameof(Model.DesignPriorities)"

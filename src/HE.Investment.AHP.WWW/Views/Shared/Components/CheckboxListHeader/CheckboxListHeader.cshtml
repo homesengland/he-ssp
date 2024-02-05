@@ -1,18 +1,14 @@
-@using HE.Investments.Common.WWW.Components.DynamicComponent;
+@using HE.Investments.Common.WWW.Components.InputListHeader;
 @using HE.Investments.Common.WWW.Helpers;
 @using HE.Investments.Common.Contract;
-@model (DynamicComponentViewModel headerComponent, DynamicComponentViewModel? detailsComponent, string? hint)
-@if (Model.headerComponent != null)
-{
-    <vc:dynamic-component component="@Model.headerComponent" />
-}
+@model (DynamicComponentViewModel headerComponent, string header, string title, string hint, DynamicComponentViewModel detailsComponent)
+
+    <vc:input-list-header
+    header-component="@Model.headerComponent"
+    header="@Model.header"
+    title="@Model.title"
+    hint="@Model.hint"/>
 @if (Model.detailsComponent != null)
 {
     <vc:dynamic-component component="@Model.detailsComponent" />
-}
-@if (!string.IsNullOrWhiteSpace(Model.hint))
-{
-    <he-div-hint>
-        @Model.hint
-    </he-div-hint>
 }
