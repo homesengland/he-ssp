@@ -49,7 +49,7 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
         DeliveryPhaseMilestones = milestones ?? new DeliveryPhaseMilestones(organisation, BuildActivity);
         IsAdditionalPaymentRequested = isAdditionalPaymentRequested;
         _homesToDeliver = homesToDeliver?.ToList() ?? new List<HomesToDeliverInPhase>();
-        Tranches = new DeliveryPhaseTranches(Id, Application, milestoneTranches, false);
+        Tranches = new DeliveryPhaseTranches(Id, Application, milestoneTranches, true);
     }
 
     public ApplicationBasicInfo Application { get; }
@@ -74,7 +74,7 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
 
     public bool IsNew => Id.IsNew;
 
-    public bool IsModified => _modificationTracker.IsModified;
+    public bool IsModified => _modificationTracker.IsModified || Tranches.IsModified;
 
     public IEnumerable<HomesToDeliverInPhase> HomesToDeliver => _homesToDeliver;
 

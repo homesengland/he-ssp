@@ -52,7 +52,7 @@ public class GetDeliveryPhaseDetailsQueryHandler : IRequestHandler<GetDeliveryPh
             deliveryPhase.ReconfiguringExisting,
             deliveryPhase.TotalHomesToBeDeliveredInThisPhase,
             new DeliveryPhaseTranchesDto(
-                false,
+                deliveryPhase.GetTranches().AllowAmendments,
                 request.IncludeSummary ? await GetSummaryOfDelivery(deliveryPhase, userAccount, cancellationToken) : null,
                 request.IncludeSummary ? await GetSummaryOfDeliveryAmend(deliveryPhase, userAccount, cancellationToken) : null),
             deliveryPhase.Organisation.IsUnregisteredBody,

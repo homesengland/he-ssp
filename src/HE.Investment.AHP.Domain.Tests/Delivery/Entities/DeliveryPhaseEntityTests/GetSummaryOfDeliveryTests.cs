@@ -1,13 +1,11 @@
-using System.Runtime.InteropServices;
 using FluentAssertions;
 using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investment.AHP.Domain.Tests.Delivery.Entities.TestDataBuilders;
-using HE.Investments.Common.Contract;
 
 namespace HE.Investment.AHP.Domain.Tests.Delivery.Entities.DeliveryPhaseEntityTests;
 
-public class CalculateSummaryTests
+public class GetSummaryOfDeliveryTests
 {
     [Theory]
     [InlineData(5_000_333, 3_000_199.8, 1_050_069, 750049, 1_200_081.8)]

@@ -10,6 +10,8 @@ namespace HE.Investment.AHP.Domain.Delivery.Tranches;
 
 public class DeliveryPhaseTranches : IQuestion
 {
+    private readonly ModificationTracker _modificationTracker = new();
+
     public DeliveryPhaseTranches(DeliveryPhaseId id, ApplicationBasicInfo applicationBasicInfo, MilestoneTranches milestoneTranches, bool allowAmendments)
     {
         Id = id;
@@ -26,22 +28,24 @@ public class DeliveryPhaseTranches : IQuestion
 
     public bool AllowAmendments { get; }
 
+    public bool IsModified => _modificationTracker.IsModified;
+
     public void ProvideAcquisitionTranche(decimal? acquisition)
     {
         CheckIfTranchesCanBeAmended();
-        MilestoneTranches = MilestoneTranches.WithAcquisition(acquisition);
+        MilestoneTranches = _modificationTracker.Change(MilestoneTranches, MilestoneTranches.WithAcquisition(acquisition));
     }
 
     public void ProvideStartOnSiteTranche(decimal? acquisition)
     {
         CheckIfTranchesCanBeAmended();
-        MilestoneTranches = MilestoneTranches.WithStartOnSite(acquisition);
+        MilestoneTranches = _modificationTracker.Change(MilestoneTranches, MilestoneTranches.WithStartOnSite(acquisition));
     }
 
     public void ProvideCompletionTranche(decimal? acquisition)
     {
         CheckIfTranchesCanBeAmended();
-        MilestoneTranches = MilestoneTranches.WithCompletion(acquisition);
+        MilestoneTranches = _modificationTracker.Change(MilestoneTranches, MilestoneTranches.WithCompletion(acquisition));
     }
 
     public SummaryOfDelivery CalculateSummary(
