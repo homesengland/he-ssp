@@ -45,6 +45,11 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             { PlanningDetails: var x } when x.PlanningStatus.IsNotProvided() => SiteWorkflowState.PlanningStatus,
             { PlanningDetails.ArePlanningDetailsProvided: false } => SiteWorkflowState.PlanningDetails,
             { PlanningDetails: var x } when !IsLandRegistryProvided(x) => SiteWorkflowState.LandRegistry,
+            { TenderingStatusDetails: var x } when x.TenderingStatus.IsNotProvided() => SiteWorkflowState.TenderingStatus,
+            { TenderingStatusDetails: var x } when IsConditionalOrUnconditionalWorksContract() &&
+                                                   (x.ContractorName.IsNotProvided() || x.IsSmeContractor.IsNotProvided()) => SiteWorkflowState.ContractorDetails,
+            { TenderingStatusDetails: var x } when IsTenderForWorksContractOrContractingHasNotYetBegun() &&
+                                                   x.IsIntentionToWorkWithSme.IsNotProvided() => SiteWorkflowState.IntentionToWorkWithSme,
             _ => SiteWorkflowState.CheckAnswers,
         };
     }
@@ -66,8 +71,8 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             SiteWorkflowState.PlanningDetails => true,
             SiteWorkflowState.LandRegistry => IsLandTitleRegistered(),
             SiteWorkflowState.TenderingStatus => true,
-            SiteWorkflowState.ContractorDetails => true,
-            SiteWorkflowState.IntentionToWorkWithSme => true,
+            SiteWorkflowState.ContractorDetails => IsConditionalOrUnconditionalWorksContract(),
+            SiteWorkflowState.IntentionToWorkWithSme => IsTenderForWorksContractOrContractingHasNotYetBegun(),
             _ => false,
         };
     }
@@ -165,8 +170,22 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             .PermitIf(Trigger.Back, SiteWorkflowState.PlanningDetails, () => !IsLandTitleRegistered());
 
         _machine.Configure(SiteWorkflowState.BuildingForHealthyLife)
-            .Permit(Trigger.Continue, SiteWorkflowState.CheckAnswers)
+            .Permit(Trigger.Continue, SiteWorkflowState.TenderingStatus)
             .Permit(Trigger.Back, SiteWorkflowState.NationalDesignGuide);
+
+        _machine.Configure(SiteWorkflowState.TenderingStatus)
+            .PermitIf(Trigger.Continue, SiteWorkflowState.ContractorDetails, IsConditionalOrUnconditionalWorksContract)
+            .PermitIf(Trigger.Continue, SiteWorkflowState.IntentionToWorkWithSme, IsTenderForWorksContractOrContractingHasNotYetBegun)
+            .PermitIf(Trigger.Continue, SiteWorkflowState.CheckAnswers, IsNotApplicableOnMissing)
+            .Permit(Trigger.Back, SiteWorkflowState.BuildingForHealthyLife);
+
+        _machine.Configure(SiteWorkflowState.ContractorDetails)
+            .Permit(Trigger.Continue, SiteWorkflowState.CheckAnswers)
+            .Permit(Trigger.Back, SiteWorkflowState.TenderingStatus);
+
+        _machine.Configure(SiteWorkflowState.IntentionToWorkWithSme)
+            .Permit(Trigger.Continue, SiteWorkflowState.CheckAnswers)
+            .Permit(Trigger.Back, SiteWorkflowState.TenderingStatus);
     }
 
     private bool IsLocalAuthorityProvided() => _siteModel?.LocalAuthority?.Name.IsProvided() ?? false;
@@ -176,4 +195,12 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
     private bool IsLandRegistryProvided(SitePlanningDetails planningDetails) => IsLandTitleRegistered() &&
                                                                                 planningDetails.LandRegistryTitleNumber.IsProvided() &&
                                                                                 planningDetails.IsGrantFundingForAllHomesCoveredByTitleNumber.IsProvided();
+
+    private bool IsConditionalOrUnconditionalWorksContract() => _siteModel?.TenderingStatusDetails.TenderingStatus is SiteTenderingStatus.UnconditionalWorksContract or
+        SiteTenderingStatus.ConditionalWorksContract;
+
+    private bool IsTenderForWorksContractOrContractingHasNotYetBegun() => _siteModel?.TenderingStatusDetails.TenderingStatus is SiteTenderingStatus.TenderForWorksContract or
+        SiteTenderingStatus.ContractingHasNotYetBegun;
+
+    private bool IsNotApplicableOnMissing() => _siteModel?.TenderingStatusDetails.TenderingStatus is SiteTenderingStatus.NotApplicable or null;
 }

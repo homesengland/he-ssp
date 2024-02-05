@@ -16,6 +16,9 @@ public class StateCanBeAccessedTests
     [InlineData(SiteWorkflowState.PlanningStatus, true)]
     [InlineData(SiteWorkflowState.PlanningDetails, true)]
     [InlineData(SiteWorkflowState.LandRegistry, false)]
+    [InlineData(SiteWorkflowState.TenderingStatus, true)]
+    [InlineData(SiteWorkflowState.ContractorDetails, false)]
+    [InlineData(SiteWorkflowState.IntentionToWorkWithSme, false)]
     public async Task ShouldReturnValue_WhenMethodCalledForDefaults(SiteWorkflowState state, bool expectedResult)
     {
         // given
@@ -37,6 +40,38 @@ public class StateCanBeAccessedTests
 
         // when
         var result = await workflow.StateCanBeAccessed(SiteWorkflowState.LandRegistry);
+
+        // then
+        result.Should().BeTrue();
+    }
+
+    [Theory]
+    [InlineData(SiteTenderingStatus.ConditionalWorksContract)]
+    [InlineData(SiteTenderingStatus.UnconditionalWorksContract)]
+    public async Task ShouldReturnTrue_WhenMethodCalledForContractorDetails(SiteTenderingStatus status)
+    {
+        // given
+        var details = new SiteTenderingStatusDetails(status, null, null, null);
+        var workflow = SiteWorkflowFactory.BuildWorkflow(SiteWorkflowState.Start, tenderingStatusDetails: details);
+
+        // when
+        var result = await workflow.StateCanBeAccessed(SiteWorkflowState.ContractorDetails);
+
+        // then
+        result.Should().BeTrue();
+    }
+
+    [Theory]
+    [InlineData(SiteTenderingStatus.TenderForWorksContract)]
+    [InlineData(SiteTenderingStatus.ContractingHasNotYetBegun)]
+    public async Task ShouldReturnTrue_WhenMethodCalledForIntentionToWorkWithSme(SiteTenderingStatus status)
+    {
+        // given
+        var details = new SiteTenderingStatusDetails(status, null, null, null);
+        var workflow = SiteWorkflowFactory.BuildWorkflow(SiteWorkflowState.Start, tenderingStatusDetails: details);
+
+        // when
+        var result = await workflow.StateCanBeAccessed(SiteWorkflowState.IntentionToWorkWithSme);
 
         // then
         result.Should().BeTrue();
