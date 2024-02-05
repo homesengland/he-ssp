@@ -11,9 +11,10 @@ public class HttpAccountRoutes : IAccountRoutes
         _config = config;
     }
 
-    public IActionResult NotCompleteProfile()
+    public IActionResult NotCompleteProfile(string? callbackProgramme = null, string? callbackRoute = null)
     {
-        return new RedirectResult($"{_config.Url}/{UserAccountEndpoints.ProfileDetails}");
+        var query = BuildCallbackQuery(callbackProgramme, callbackRoute);
+        return new RedirectResult($"{_config.Url}/{UserAccountEndpoints.ProfileDetails}{query}");
     }
 
     public IActionResult NotLinkedOrganisation()
@@ -29,5 +30,20 @@ public class HttpAccountRoutes : IAccountRoutes
     public IActionResult LandingPageForLoggedUser()
     {
         return new RedirectResult($"{_config.Url}/{UserOrganisationAccountEndpoints.Dashboard}");
+    }
+
+    private static string? BuildCallbackQuery(string? callbackProgramme = null, string? callbackRoute = null)
+    {
+        if (string.IsNullOrEmpty(callbackRoute))
+        {
+            return null;
+        }
+
+        if (string.IsNullOrEmpty(callbackProgramme))
+        {
+            return $"?callback={callbackRoute}";
+        }
+
+        return $"?programme={callbackProgramme}&callback={callbackRoute}";
     }
 }

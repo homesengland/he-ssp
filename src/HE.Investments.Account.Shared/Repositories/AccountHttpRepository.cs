@@ -30,8 +30,12 @@ internal class AccountHttpRepository : IAccountRepository
         return accounts.Organisations.Select(x => new UserAccount(
                 userGlobalId,
                 userEmail,
-                new OrganisationBasicInfo(new OrganisationId(x.Organisation.OrganisationId), x.Organisation.IsUnregisteredBody),
-                x.Organisation.OrganisationName,
+                new OrganisationBasicInfo(
+                    new OrganisationId(x.Organisation.OrganisationId),
+                    x.Organisation.CompanyRegisteredName,
+                    x.Organisation.CompanyRegistrationNumber,
+                    x.Organisation.CompanyAddressLine1,
+                    x.Organisation.IsUnregisteredBody),
                 x.Roles))
             .ToList();
     }

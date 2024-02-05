@@ -18,9 +18,9 @@ public static class AccountModule
         services.AddOrganizationsModule();
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(AccountModule).Assembly));
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(AccountSharedModule).Assembly));
-        services.AddScoped<IProfileRepository, AccountRepository>();
+        services.AddScoped<IProfileRepository, ProfileRepository>();
         services.AddScoped<IContactRepository, ContactRepository>();
-        services.AddScoped<IAccountRepository, AccountRepository>();
+        services.AddScoped<IAccountRepository, AccountCrmRepository>();
         services.AddScoped<IAccountUserContext, AccountUserContext>();
         services.AddScoped<IAccountAccessContext, AccountAccessContext>();
         services.AddScoped<IOrganizationRepository, OrganizationRepository>();

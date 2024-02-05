@@ -17,14 +17,14 @@ public class AhpIntegrationTest : IntegrationTestBase<Program>
         SetApplicationData();
         SetSiteData();
         fixture.CheckUserLoginData();
-        fixture.SetupAccountHttpMockedService();
+        fixture.MockUserAccount();
     }
 
     public ApplicationData ApplicationData { get; private set; }
 
     public SiteData SiteData { get; private set; }
 
-    public async Task<IHtmlDocument> TestQuestionPage(
+    protected async Task<IHtmlDocument> TestQuestionPage(
         string startPageUrl,
         string expectedPageTitle,
         string expectedPageUrlAfterContinue,

@@ -1,4 +1,3 @@
-using HE.Investments.Account.Api.Contract;
 using HE.Investments.Account.Api.Contract.User;
 using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.User.ValueObjects;
@@ -12,14 +11,12 @@ public static class UserAccountTestData
     public static readonly UserAccount UserAccountOne = new(
         UserGlobalId.From("UserOne"),
         "User@one.com",
-        new OrganisationBasicInfo(new OrganisationId(GuidTestData.GuidTwo), false),
-        "AccountOne",
+        new OrganisationBasicInfo(new OrganisationId(GuidTestData.GuidTwo), "AccountOne", "1234", "London", false),
         new[] { UserRole.Limited });
 
     public static readonly UserAccount AdminUserAccountOne = new(
         UserGlobalId.From("UserOne"),
         "User@one.com",
-        new OrganisationBasicInfo(new OrganisationId(GuidTestData.GuidTwo), false),
-        "AccountOne",
+        new OrganisationBasicInfo(new OrganisationId(GuidTestData.GuidTwo), "AccountOne", "1234", "London", false),
         new[] { UserRole.Admin, UserRole.Limited });
 }

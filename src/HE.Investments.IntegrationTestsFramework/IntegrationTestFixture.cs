@@ -1,8 +1,8 @@
-using HE.Investments.Account.Api.Contract.Organisation;
 using HE.Investments.Account.Api.Contract.User;
 using HE.Investments.DocumentService.Configs;
 using HE.Investments.IntegrationTestsFramework.Auth;
 using HE.Investments.IntegrationTestsFramework.Config;
+using HE.Investments.TestsUtils.TestData;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -30,11 +30,6 @@ public class IntegrationTestFixture<TProgram> : WebApplicationFactory<TProgram>
 
     public IConfiguration Configuration { get; }
 
-    public void ProvideLoginData(ILoginData loginData)
-    {
-        LoginData.Change(loginData);
-    }
-
     public void CheckUserLoginData()
     {
         if (!LoginData.IsProvided())
@@ -43,17 +38,14 @@ public class IntegrationTestFixture<TProgram> : WebApplicationFactory<TProgram>
         }
     }
 
-    public void SetupAccountHttpMockedService()
+    public void MockUserAccount()
     {
-        var accountDetails = new AccountDetails(
-            LoginData.UserGlobalId,
-            LoginData.Email,
-            new[] { new UserOrganisation(new OrganisationDetails(LoginData.OrganisationId, "IT", false), new[] { UserRole.Admin }) });
-        var profileDetails = new ProfileDetails("IT", "IT", "IT", "IT", "IT", "IT", true);
+        var profileDetails = AccountTestData.PaulSmith(LoginData.Email);
+        var userOrganisations = new[] { AccountTestData.PwCAdmin(LoginData.OrganisationId) };
 
         IntegrationTestsHttpClientFactory.RegisterMockedClient(
             "AccountRepository",
-            (HttpMethod.Get, $"api/user/{LoginData.UserGlobalId}/accounts", accountDetails),
+            (HttpMethod.Get, $"api/user/{LoginData.UserGlobalId}/accounts", new AccountDetails(LoginData.UserGlobalId, LoginData.Email, userOrganisations)),
             (HttpMethod.Get, $"api/user/{LoginData.UserGlobalId}/profile", profileDetails));
     }
 

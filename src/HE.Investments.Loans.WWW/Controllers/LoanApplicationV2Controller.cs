@@ -1,6 +1,5 @@
 using FluentValidation;
-using HE.Investments.Account.Contract.Organisation.Queries;
-using HE.Investments.Account.Contract.User.Queries;
+using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
@@ -27,11 +26,13 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
 {
     private readonly IMediator _mediator;
     private readonly IValidator<LoanPurposeModel> _validator;
+    private readonly IAccountUserContext _accountUserContext;
 
-    public LoanApplicationV2Controller(IMediator mediator, IValidator<LoanPurposeModel> validator)
+    public LoanApplicationV2Controller(IMediator mediator, IValidator<LoanPurposeModel> validator, IAccountUserContext accountUserContext)
     {
         _mediator = mediator;
         _validator = validator;
+        _accountUserContext = accountUserContext;
     }
 
     [HttpGet("")]
@@ -66,16 +67,18 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
     [WorkflowState(LoanApplicationWorkflow.State.CheckYourDetails)]
     public async Task<IActionResult> CheckYourDetails(CancellationToken cancellationToken)
     {
-        var organizationBasicInformationResponse = await _mediator.Send(new GetOrganizationBasicInformationQuery(), cancellationToken);
-        var userDetails = await _mediator.Send(new GetUserProfileDetailsQuery(), cancellationToken);
+        var selectedAccount = await _accountUserContext.GetSelectedAccount();
+        var profileDetails = await _accountUserContext.GetProfileDetails();
         return View(
             "CheckYourDetails",
             new CheckYourDetailsModel
             {
-                OrganizationBasicInformation = organizationBasicInformationResponse.OrganizationBasicInformation,
-                LoanApplicationContactEmail = userDetails.Email,
-                LoanApplicationContactName = $"{userDetails.FirstName} {userDetails.LastName}",
-                LoanApplicationContactTelephoneNumber = userDetails.TelephoneNumber,
+                CompanyRegisteredName = selectedAccount.Organisation?.RegisteredCompanyName,
+                CompanyRegistrationNumber = selectedAccount.Organisation?.CompanyRegistrationNumber,
+                CompanyAddress = selectedAccount.Organisation?.AddressLine1,
+                LoanApplicationContactEmail = profileDetails.Email,
+                LoanApplicationContactName = $"{profileDetails.FirstName} {profileDetails.LastName}",
+                LoanApplicationContactTelephoneNumber = profileDetails.TelephoneNumber?.Value,
             });
     }
 

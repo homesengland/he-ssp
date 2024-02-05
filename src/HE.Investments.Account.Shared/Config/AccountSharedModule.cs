@@ -7,9 +7,8 @@ namespace HE.Investments.Account.Shared.Config;
 
 public static class AccountSharedModule
 {
-    public static void AddAccountSharedModule(this IServiceCollection services, bool useAccountService = false)
+    public static void AddAccountSharedModule(this IServiceCollection services)
     {
-        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(AccountSharedModule).Assembly));
         services.AddScoped<IAccountUserContext, AccountUserContext>();
         services.AddScoped<IAccountAccessContext, AccountAccessContext>();
         services.AddHttpClient<AccountHttpRepository>("AccountRepository").ConfigureHttpClient(SetupHttpClient);
@@ -17,17 +16,13 @@ public static class AccountSharedModule
         services.AddScoped<AccountCrmRepository>();
         services.AddScoped<Func<AccountCrmRepository>>(x => x.GetRequiredService<AccountCrmRepository>);
         services.AddScoped<IAccountRepository, AccountRepositoryDecorator>();
-
-        if (useAccountService)
-        {
-            services.AddSingleton(x => x.GetRequiredService<IConfiguration>().GetSection("AppConfiguration:AccountService").Get<AccountConfig>());
-            services.AddScoped<IAccountRoutes, HttpAccountRoutes>();
-        }
+        services.AddSingleton(x => x.GetRequiredService<IConfiguration>().GetSection("AppConfiguration:AccountService").Get<AccountConfig>());
+        services.AddScoped<IAccountRoutes, HttpAccountRoutes>();
     }
 
     private static void SetupHttpClient(IServiceProvider services, HttpClient httpClient)
     {
-        var config = services.GetRequiredService<IConfiguration>().GetSection("AppConfiguration:AccountService").Get<AccountConfig>();
+        var config = services.GetRequiredService<AccountConfig>();
         httpClient.BaseAddress = new Uri(config.Url);
     }
 }

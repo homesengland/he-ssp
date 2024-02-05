@@ -4,7 +4,6 @@ using HE.Investments.Account.Contract.UserOrganisation;
 using HE.Investments.Account.WWW.Routing;
 using HE.Investments.Account.WWW.Utils;
 using HE.Investments.TestsUtils.TestFramework;
-using Xunit;
 
 namespace HE.Investments.Account.WWW.Tests.Utils.ProgrammesTests;
 
@@ -14,8 +13,7 @@ public class GetProgrammeTests : TestBase<Programmes>
     public async Task ShouldReturnAhpProgramme()
     {
         // given
-        var programmeConfig = new ProgrammeUrlConfig { Loans = "https://loans.com", Ahp = "https://ahp.com" };
-        RegisterDependency(programmeConfig);
+        RegisterDependency(BuildProgrammeConfig("https://loans.com", "https://ahp.com"));
 
         // when
         var result = await TestCandidate.GetProgramme(ProgrammeType.Ahp);
@@ -32,8 +30,7 @@ public class GetProgrammeTests : TestBase<Programmes>
     public async Task ShouldReturnLoansProgramme()
     {
         // given
-        var programmeConfig = new ProgrammeUrlConfig { Loans = "https://loans.com", Ahp = "https://ahp.com" };
-        RegisterDependency(programmeConfig);
+        RegisterDependency(BuildProgrammeConfig("https://loans.com", "https://ahp.com"));
 
         // when
         var result = await TestCandidate.GetProgramme(ProgrammeType.Loans);
@@ -54,5 +51,10 @@ public class GetProgrammeTests : TestBase<Programmes>
 
         // then
         await action.Should().ThrowAsync<InvalidEnumArgumentException>().WithMessage("Programme for 3 does not exist.");
+    }
+
+    private static ProgrammeUrlConfig BuildProgrammeConfig(string loansUrl, string ahpUrl)
+    {
+        return new ProgrammeUrlConfig { ProgrammeUrl = new Dictionary<string, string> { { "Loans", loansUrl }, { "Ahp", ahpUrl } } };
     }
 }

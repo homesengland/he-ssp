@@ -25,6 +25,6 @@ public class GetDashboardDataQueryHandler : IRequestHandler<GetDashboardDataQuer
             .ThenByDescending(x => x.LastModificationDate)
             .ToList();
 
-        return new GetDashboardDataQueryResponse(userLoanApplications, selectedAccount?.OrganisationName);
+        return new GetDashboardDataQueryResponse(userLoanApplications, selectedAccount.Organisation?.RegisteredCompanyName ?? string.Empty);
     }
 }
