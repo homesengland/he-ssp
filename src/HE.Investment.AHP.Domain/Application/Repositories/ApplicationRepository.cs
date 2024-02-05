@@ -134,11 +134,13 @@ public class ApplicationRepository : IApplicationRepository
 
     private static ApplicationEntity CreateEntity(AhpApplicationDto application)
     {
+        var applicationStatus = AhpApplicationStatusMapper.MapToPortalStatus(application.applicationStatus);
+
         return new ApplicationEntity(
             new SiteId("1"), // TODO: AB#88650 Assign application to site
             new AhpApplicationId(application.id),
             new ApplicationName(application.name ?? "Unknown"),
-            AhpApplicationStatusMapper.MapToPortalStatus(application.applicationStatus),
+            applicationStatus,
             new ApplicationReferenceNumber(application.referenceNumber),
             ApplicationTenureMapper.ToDomain(application.tenure),
             new AuditEntry(
@@ -148,10 +150,10 @@ public class ApplicationRepository : IApplicationRepository
             new ApplicationSections(
                 new List<ApplicationSection>
                 {
-                    new(SectionType.Scheme, SectionStatusMapper.ToDomain(application.schemeInformationSectionCompletionStatus)),
-                    new(SectionType.HomeTypes, SectionStatusMapper.ToDomain(application.homeTypesSectionCompletionStatus)),
-                    new(SectionType.FinancialDetails, SectionStatusMapper.ToDomain(application.financialDetailsSectionCompletionStatus)),
-                    new(SectionType.DeliveryPhases, SectionStatusMapper.ToDomain(application.deliveryPhasesSectionCompletionStatus)),
+                    new(SectionType.Scheme, SectionStatusMapper.ToDomain(application.schemeInformationSectionCompletionStatus, applicationStatus)),
+                    new(SectionType.HomeTypes, SectionStatusMapper.ToDomain(application.homeTypesSectionCompletionStatus, applicationStatus)),
+                    new(SectionType.FinancialDetails, SectionStatusMapper.ToDomain(application.financialDetailsSectionCompletionStatus, applicationStatus)),
+                    new(SectionType.DeliveryPhases, SectionStatusMapper.ToDomain(application.deliveryPhasesSectionCompletionStatus, applicationStatus)),
                 }));
     }
 }

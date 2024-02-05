@@ -56,7 +56,7 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
             application,
             deliveryPhases.Select(x => _crmMapper.MapToDomain(application, organisation, x)).ToList(),
             homesToDeliver,
-            SectionStatusMapper.ToDomain(sectionStatus));
+            SectionStatusMapper.ToDomain(sectionStatus, application.Status));
     }
 
     public async Task<IDeliveryPhaseEntity> GetById(
