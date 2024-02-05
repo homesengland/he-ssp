@@ -35,5 +35,7 @@ public interface IHomeTypeEntity
 
     ModernMethodsConstructionSegmentEntity ModernMethodsConstruction { get; }
 
+    bool IsReadOnly { get; }
+
     void CompleteHomeType(IsSectionCompleted isSectionCompleted);
 }

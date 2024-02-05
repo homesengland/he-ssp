@@ -30,7 +30,8 @@ internal sealed class GetHomeTypesQueryHandler : IRequestHandler<GetHomeTypesQue
 
         return new ApplicationHomeTypes(
             homeTypes.ApplicationName.Name,
-            homeTypes.HomeTypes.OrderByDescending(x => x.CreatedOn).Select(Map).ToList());
+            homeTypes.HomeTypes.OrderByDescending(x => x.CreatedOn).Select(Map).ToList(),
+            homeTypes.IsReadOnly);
     }
 
     private static HomeTypeDetails Map(IHomeTypeEntity homeType)

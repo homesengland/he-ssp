@@ -27,7 +27,7 @@ public class GetSchemeQueryHandler : IRequestHandler<GetApplicationSchemeQuery, 
         return new Contract.Scheme.Scheme(
             entity.Application.Id,
             entity.Application.Name.Name,
-            entity.Application.Tenure?.Value,
+            entity.Application.Tenure,
             entity.Status,
             entity.Funding.RequiredFunding,
             entity.Funding.HousesToDeliver,
@@ -36,7 +36,8 @@ public class GetSchemeQueryHandler : IRequestHandler<GetApplicationSchemeQuery, 
             entity.HousingNeeds.MeetingLocalPriorities,
             entity.HousingNeeds.MeetingLocalHousingNeed,
             entity.StakeholderDiscussions.StakeholderDiscussionsDetails.Report,
-            CreateFile(entity.StakeholderDiscussions.LocalAuthoritySupportFileContainer));
+            CreateFile(entity.StakeholderDiscussions.LocalAuthoritySupportFileContainer),
+            entity.IsReadOnly);
     }
 
     private static UploadedFile? CreateFile(LocalAuthoritySupportFileContainer fileContainer)

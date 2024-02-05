@@ -40,6 +40,7 @@ public class GetFinancialCheckAnswersQueryHandler : IRequestHandler<GetFinancial
 
         return new GetFinancialCheckAnswersResult(
             financialDetails.ApplicationBasicInfo.Name.Name,
+            financialDetails.ApplicationBasicInfo.Status,
             financialDetails.SectionStatus,
             landValueSummary,
             totalSchemeCost,

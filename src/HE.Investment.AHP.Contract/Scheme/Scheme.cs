@@ -16,4 +16,5 @@ public record Scheme(
     string? MeetingLocalPriorities,
     string? MeetingLocalHousingNeed,
     string? StakeholderDiscussionsReport,
-    UploadedFile? LocalAuthoritySupportFile);
+    UploadedFile? LocalAuthoritySupportFile,
+    bool IsReadOnly);

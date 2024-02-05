@@ -10,13 +10,13 @@
 
 <div>
     <gds-h2>Check and submit</gds-h2>
-    @if (incompleteSectionsCount > 0)
+    @if (incompleteSectionsCount > 0 && Model.CanBeSubmitted())
     {
         <gds-p>You must complete all sections before you can submit your application.</gds-p>
     }
     <link-button
         action-url="@Url.Action("CheckAnswers", "Application", new { applicationId = Model.ApplicationId })"
-        is-disabled="@(incompleteSectionsCount > 0 || !canSubmitApplication)">
+        is-disabled="@(incompleteSectionsCount > 0 || !canSubmitApplication || !Model.CanBeSubmitted())">
         Check and submit application
     </link-button>
 </div>

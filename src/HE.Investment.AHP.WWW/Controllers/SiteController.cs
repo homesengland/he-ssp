@@ -513,6 +513,27 @@ public class SiteController : WorkflowController<SiteWorkflowState>
             cancellationToken);
     }
 
+    [HttpGet("{siteId}/intention-to-work-with-sme")]
+    [WorkflowState(SiteWorkflowState.IntentionToWorkWithSme)]
+    public async Task<IActionResult> IntentionToWorkWithSme([FromRoute] string siteId, CancellationToken cancellationToken)
+    {
+        var siteModel = await GetSiteDetails(siteId, cancellationToken);
+        return View("IntentionToWorkWithSme", siteModel.TenderingStatusDetails);
+    }
+
+    [HttpPost("{siteId}/intention-to-work-with-sme")]
+    [WorkflowState(SiteWorkflowState.IntentionToWorkWithSme)]
+    public async Task<IActionResult> IntentionToWorkWithSme(SiteTenderingStatusDetails model, CancellationToken cancellationToken)
+    {
+        return await ExecuteSiteCommand<SiteTenderingStatusDetails>(
+            new ProvideIsIntentionToWorkWithSmeCommand(
+                this.GetSiteIdFromRoute(),
+                model.IsIntentionToWorkWithSme),
+            nameof(ContractorDetails),
+            savedModel => model with { TenderingStatus = savedModel.TenderingStatusDetails.TenderingStatus },
+            cancellationToken);
+    }
+
     protected override async Task<IStateRouting<SiteWorkflowState>> Routing(SiteWorkflowState currentState, object? routeData = null)
     {
         SiteModel? siteModel = null;

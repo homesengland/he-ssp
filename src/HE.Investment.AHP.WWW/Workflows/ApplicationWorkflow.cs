@@ -45,6 +45,7 @@ public class ApplicationWorkflow : IStateRouting<ApplicationWorkflowState>
             ApplicationWorkflowState.TaskList => true,
             ApplicationWorkflowState.OnHold => await CanBePutOnHold(),
             ApplicationWorkflowState.Withdraw => await CanBeWithdrawn(),
+            ApplicationWorkflowState.CheckAnswers => await CanBeSubmitted(),
             _ => false,
         };
     }
@@ -75,6 +76,9 @@ public class ApplicationWorkflow : IStateRouting<ApplicationWorkflowState>
             .PermitIf(Trigger.Continue, ApplicationWorkflowState.TaskList, () => _isApplicationExist().Result)
             .PermitIf(Trigger.Continue, ApplicationWorkflowState.ApplicationsList, () => !_isApplicationExist().Result)
             .Permit(Trigger.Back, ApplicationWorkflowState.TaskList);
+
+        _machine.Configure(ApplicationWorkflowState.CheckAnswers)
+            .Permit(Trigger.Back, ApplicationWorkflowState.TaskList);
     }
 
     private async Task<bool> CanBePutOnHold()
@@ -89,5 +93,12 @@ public class ApplicationWorkflow : IStateRouting<ApplicationWorkflowState>
         var statusesAllowedForWithdraw = ApplicationStatusDivision.GetAllStatusesAllowedForWithdraw();
         var model = await _modelFactory();
         return statusesAllowedForWithdraw.Contains(model.Status);
+    }
+
+    private async Task<bool> CanBeSubmitted()
+    {
+        var statusesAllowedForSubmit = ApplicationStatusDivision.GetAllStatusesAllowedForSubmit();
+        var model = await _modelFactory();
+        return statusesAllowedForSubmit.Contains(model.Status);
     }
 }

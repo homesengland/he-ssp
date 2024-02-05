@@ -1,4 +1,5 @@
 using HE.Investment.AHP.Contract.Application;
+using HE.Investment.AHP.Contract.Application.Helpers;
 using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.FinancialDetails.Queries;
 using HE.Investment.AHP.WWW.Controllers;
@@ -29,7 +30,7 @@ public class FinancialDetailsSummaryViewModelFactory : IFinancialDetailsSummaryV
         CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new GetFinancialCheckAnswersQuery(applicationId), cancellationToken);
-
+        isReadOnly = isReadOnly || ApplicationStatusDivision.GetAllStatusesForReadonlyMode().Contains(result.ApplicationStatus);
         var landValueSectionSummary = GetLandValueSectionSummary(result.LandValue, applicationId, isReadOnly, urlHelper);
         var costsSectionSummary = GetCostsSectionSummary(result.TotalSchemeCost, applicationId, isReadOnly, urlHelper);
         var contributionsSectionSummary = GetContributionsSectionSummary(result.TotalContributions, applicationId, isReadOnly, urlHelper);
