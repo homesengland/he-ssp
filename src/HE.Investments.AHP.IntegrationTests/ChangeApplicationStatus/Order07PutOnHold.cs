@@ -12,59 +12,58 @@ using Xunit.Extensions.Ordering;
 
 namespace HE.Investments.AHP.IntegrationTests.ChangeApplicationStatus;
 
-[Order(6)]
+[Order(7)]
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
-public class Order06SubmitApplication : AhpIntegrationTest
+public class Order07PutOnHold : AhpIntegrationTest
 {
-    public Order06SubmitApplication(IntegrationTestFixture<Program> fixture)
+    public Order07PutOnHold(IntegrationTestFixture<Program> fixture)
         : base(fixture)
     {
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
     [Order(1)]
-    public async Task Order01_ShouldSubmitApplication_WhenApplicationIsCompletelyFilled()
+    public async Task Order01_ShouldNavigateToOnHoldPage_WhenApplicationIsSubmitted()
     {
         // given
         var taskListPage = await TestClient.NavigateTo(ApplicationPagesUrl.TaskList(ApplicationData.ApplicationId));
         taskListPage
             .UrlEndWith(ApplicationPagesUrl.TaskListSuffix)
             .HasTitle(ApplicationData.ApplicationName)
-            .HasApplicationStatus(ApplicationStatus.Draft.GetDescription())
-            .HasLinkWithTestId("check-and-submit-application", out var checkAndSubmitLink);
+            .HasApplicationStatus(ApplicationStatus.ApplicationSubmitted.GetDescription())
+            .HasLinkWithTestId("put-application-on-hold", out var onHoldLink);
 
         // when
-        var applicationCheckAnswersPage = await TestClient.NavigateTo(checkAndSubmitLink);
+        var onHoldPage = await TestClient.NavigateTo(onHoldLink);
 
         // then
-        var submitButton = applicationCheckAnswersPage
-            .UrlEndWith(ApplicationPagesUrl.CheckAnswersSuffix)
-            .HasTitle(ApplicationPageTitles.CheckAnswers)
-            .GetSubmitButton("Submit");
+        onHoldPage
+            .UrlEndWith(ApplicationPagesUrl.OnHoldSuffix)
+            .HasTitle(ApplicationPageTitles.OnHold)
+            .HasTextAreaInput("HoldReason")
+            .HasSubmitButton("Hold");
 
-        await TestClient.SubmitButton(submitButton);
         SaveCurrentPage();
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
     [Order(2)]
-    public async Task Order02_ShouldDisplayApplicationSubmittedAndNavigateBackToTaskList()
+    public async Task Order02_ShouldPutApplicationOnHold_WhenHoldReasonIsProvided()
     {
         // given
-        var applicationSubmittedPage = await GetCurrentPage();
-        applicationSubmittedPage
-            .UrlEndWith(ApplicationPagesUrl.SubmittedSuffix)
-            .HasTitle(ApplicationPageTitles.Submitted)
-            .HasLinkWithTestId("return-to-task-list", out var returnToTaskListLink);
+        var holdPage = await GetCurrentPage();
+        var holdButton = holdPage
+            .GetSubmitButton("Hold");
 
         // when
-        var taskListPage = await TestClient.NavigateTo(returnToTaskListLink);
+        var taskListPage = await TestClient.SubmitButton(holdButton, ("HoldReason", "very important reason"));
 
         // then
         taskListPage
             .UrlEndWith(ApplicationPagesUrl.TaskListSuffix)
             .HasTitle(ApplicationData.ApplicationName)
-            .HasApplicationStatus(ApplicationStatus.ApplicationSubmitted.GetDescription());
+            .HasSuccessNotificationBanner("You’ll be able to reactivate and submit this application at any time.")
+            .HasApplicationStatus(ApplicationStatus.OnHold.GetDescription());
 
         SaveCurrentPage();
     }

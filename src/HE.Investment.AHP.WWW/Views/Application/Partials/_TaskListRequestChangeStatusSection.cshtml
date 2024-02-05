@@ -31,7 +31,8 @@
         </gds-p>
         <link-button
             is-secondary="true"
-            action-url="@Url.Action("OnHold", "Application", new { applicationId = Model.ApplicationId })">
+            action-url="@Url.Action("OnHold", "Application", new { applicationId = Model.ApplicationId })"
+            data-testid="put-application-on-hold">
             Hold
         </link-button>
     </div>
@@ -46,7 +47,8 @@
         </gds-p>
         <link-button
             is-warning="true"
-            action-url="@Url.Action("Withdraw", "Application", new { applicationId = Model.ApplicationId })">
+            action-url="@Url.Action("Withdraw", "Application", new { applicationId = Model.ApplicationId })"
+            data-testid="withdraw-application">
             Withdraw
         </link-button>
     </div>
