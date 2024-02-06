@@ -1,6 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.Contract.Site;
+using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investment.AHP.WWW;
+using HE.Investment.AHP.WWW.Models.Site;
 using HE.Investment.AHP.WWW.Views.Site.Const;
 using HE.Investments.AHP.IntegrationTests.Extensions;
 using HE.Investments.AHP.IntegrationTests.Framework;
@@ -82,11 +84,12 @@ public class Order01StartAhpSite : AhpIntegrationTest
     [Order(4)]
     public async Task Order04_ShouldProvideSection106GeneralAgreementAndNavigateToSection106AffordableHousing()
     {
+        SiteData.SetSiteId("20");
         await TestQuestionPage(
             SitePagesUrl.SiteSection106GeneralAgreement(SiteData.SiteId),
             SitePageTitles.SiteSection106Agreement,
             SitePagesUrl.SiteSection106AffordableHousing(SiteData.SiteId),
-            (nameof(SiteModel.Section106GeneralAgreement), "True"));
+            (nameof(SiteModel.Section106.GeneralAgreement), "True"));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
@@ -97,7 +100,7 @@ public class Order01StartAhpSite : AhpIntegrationTest
             SitePagesUrl.SiteSection106AffordableHousing(SiteData.SiteId),
             SitePageTitles.SiteSection106AffordableHousing,
             SitePagesUrl.SiteSection106OnlyAffordableHousing(SiteData.SiteId),
-            (nameof(SiteModel.Section106AffordableHousing), "True"));
+            (nameof(SiteModel.Section106.AffordableHousing), "True"));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
@@ -108,7 +111,7 @@ public class Order01StartAhpSite : AhpIntegrationTest
             SitePagesUrl.SiteSection106OnlyAffordableHousing(SiteData.SiteId),
             SitePageTitles.SiteSection106OnlyAffordableHousing,
             SitePagesUrl.SiteSection106AdditionalAffordableHousing(SiteData.SiteId),
-            (nameof(SiteModel.Section106OnlyAffordableHousing), "False"));
+            (nameof(SiteModel.Section106.OnlyAffordableHousing), "False"));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
@@ -119,7 +122,7 @@ public class Order01StartAhpSite : AhpIntegrationTest
             SitePagesUrl.SiteSection106AdditionalAffordableHousing(SiteData.SiteId),
             SitePageTitles.SiteSection106AdditionalAffordableHousing,
             SitePagesUrl.SiteSection106CapitalFundingEligibility(SiteData.SiteId),
-            (nameof(SiteModel.Section106AdditionalAffordableHousing), "True"));
+            (nameof(SiteModel.Section106.AdditionalAffordableHousing), "True"));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
@@ -130,7 +133,7 @@ public class Order01StartAhpSite : AhpIntegrationTest
             SitePagesUrl.SiteSection106CapitalFundingEligibility(SiteData.SiteId),
             SitePageTitles.SiteSection106CapitalFundingEligibility,
             SitePagesUrl.SiteSection106LocalAuthorityConfirmation(SiteData.SiteId),
-            (nameof(SiteModel.Section106CapitalFundingEligibility), "False"));
+            (nameof(SiteModel.Section106.CapitalFundingEligibility), "False"));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
@@ -141,7 +144,7 @@ public class Order01StartAhpSite : AhpIntegrationTest
             SitePagesUrl.SiteSection106LocalAuthorityConfirmation(SiteData.SiteId),
             SitePageTitles.SiteSection106LocalAuthorityConfirmation,
             SitePagesUrl.SiteLocalAuthoritySearch(SiteData.SiteId),
-            (nameof(SiteModel.Section106LocalAuthorityConfirmation), "Local authority confirmed"));
+            (nameof(SiteModel.Section106.LocalAuthorityConfirmation), "Local authority confirmed"));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
@@ -214,7 +217,18 @@ public class Order01StartAhpSite : AhpIntegrationTest
 
     [Fact(Skip = AhpConfig.SkipTest)]
     [Order(15)]
-    public async Task Order15_ShouldProvideTenderingStatus()
+    public async Task Order15_ShouldProvideNationalDesignGuidePriorities()
+    {
+        await TestQuestionPage(
+            SitePagesUrl.SiteNationalDesignGuide(SiteData.SiteId),
+            SitePageTitles.NationalDesignGuide,
+            SitePagesUrl.SiteNationalDesignGuide(SiteData.SiteId),
+            (nameof(NationalDesignGuidePrioritiesModel.DesignPriorities), NationalDesignGuidePriority.Nature.ToString()));
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(16)]
+    public async Task Order16_ShouldProvideTenderingStatus()
     {
         await TestQuestionPage(
             SitePagesUrl.SiteTenderingStatus(SiteData.SiteId),
@@ -224,8 +238,8 @@ public class Order01StartAhpSite : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(16)]
-    public async Task Order16_ShouldProvideContractorDetails()
+    [Order(17)]
+    public async Task Order17_ShouldProvideContractorDetails()
     {
         await TestQuestionPage(
             SitePagesUrl.SiteContractorDetails(SiteData.SiteId),

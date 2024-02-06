@@ -42,6 +42,4 @@ public static class SitePagesUrl
     public static string SiteContractorDetails(string siteId) => $"ahp/site/{siteId}/contractor-details";
 
     public static string SiteCheckAnswers(string siteId) => $"ahp/site/{siteId}/check-answers";
-
-    public static string SiteNationaDesignGuide(string siteId) => $"ahp/site/{siteId}/national-design-guide";
 }

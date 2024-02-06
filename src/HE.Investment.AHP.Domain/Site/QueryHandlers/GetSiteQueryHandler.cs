@@ -4,6 +4,7 @@ using HE.Investment.AHP.Domain.Common.Mappers;
 using HE.Investment.AHP.Domain.Site.Mappers;
 using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investment.AHP.Domain.Site.ValueObjects.Planning;
+using HE.Investment.AHP.Domain.Site.ValueObjects.StrategicSite;
 using HE.Investment.AHP.Domain.Site.ValueObjects.TenderingStatus;
 using HE.Investments.Account.Shared;
 using MediatR;
@@ -31,18 +32,22 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
         {
             Id = site.Id.Value,
             Name = site.Name.Value,
-            Section106GeneralAgreement = site.Section106?.GeneralAgreement,
-            Section106AffordableHousing = site.Section106?.AffordableHousing,
-            Section106OnlyAffordableHousing = site.Section106?.OnlyAffordableHousing,
-            Section106AdditionalAffordableHousing = site.Section106?.AdditionalAffordableHousing,
-            Section106CapitalFundingEligibility = site.Section106?.CapitalFundingEligibility,
-            Section106LocalAuthorityConfirmation = site.Section106?.LocalAuthorityConfirmation,
-            IsIneligibleDueToAffordableHousing = site.Section106?.IsIneligibleDueToAffordableHousing(),
-            IsIneligibleDueToCapitalFundingGuide = site.Section106?.IsIneligibleDueToCapitalFundingGuide(),
-            IsIneligible = site.Section106?.IsIneligible(),
+            Section106 = new Section106Dto(
+                site.Id.ToString(),
+                site.Name.Value,
+                site.Section106?.GeneralAgreement,
+                site.Section106?.AffordableHousing,
+                site.Section106?.OnlyAffordableHousing,
+                site.Section106?.AdditionalAffordableHousing,
+                site.Section106?.CapitalFundingEligibility,
+                site.Section106?.LocalAuthorityConfirmation,
+                site.Section106?.IsIneligible(),
+                site.Section106?.IsIneligibleDueToAffordableHousing(),
+                site.Section106?.IsIneligibleDueToCapitalFundingGuide()),
             LocalAuthority = LocalAuthorityMapper.Map(site.LocalAuthority),
             PlanningDetails = CreateSitePlanningDetails(site.PlanningDetails),
             TenderingStatusDetails = CreateSiteTenderingStatusDetails(site.TenderingStatusDetails),
+            StrategicSiteDetails = CreateStrategicSiteDetails(site.StrategicSiteDetails),
         };
     }
 
@@ -71,5 +76,12 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
             tenderingStatusDetails.ContractorName?.Value,
             tenderingStatusDetails.IsSmeContractor,
             tenderingStatusDetails.IsIntentionToWorkWithSme);
+    }
+
+    private StrategicSite CreateStrategicSiteDetails(StrategicSiteDetails details)
+    {
+        return new StrategicSite(
+            details.IsStrategicSite,
+            details.SiteName?.Value);
     }
 }

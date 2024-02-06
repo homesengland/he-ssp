@@ -1,7 +1,7 @@
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investment.AHP.Contract.Site
 @using HE.Investment.AHP.WWW.Views.Site.Const
-@model SiteModel
+@model Section106Dto
 @{
     ViewData["Title"] = SitePageTitles.SiteSection106AdditionalAffordableHousing;
 }
@@ -10,13 +10,13 @@
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
     <form asp-controller="Site" asp-action="Section106AdditionalAffordableHousing" asp-method="post" novalidate>
-        <vc:form-header title="@SitePageTitles.SiteSection106AdditionalAffordableHousing" caption="@Model?.Name" additional-css-class="govuk-!-padding-top-8"></vc:form-header>
+        <vc:form-header title="@SitePageTitles.SiteSection106AdditionalAffordableHousing" caption="@Model.SiteName" additional-css-class="govuk-!-padding-top-8"></vc:form-header>
 
-        <vc:radio-yes-no field-name="@nameof(Model.Section106AdditionalAffordableHousing)"
+        <vc:radio-yes-no field-name="@nameof(Model.AdditionalAffordableHousing)"
                          title="Are the homes contained within this application additional to the affordable housing secured through the developer contributions?"
-            value="@Model?.Section106AdditionalAffordableHousing"/>
+            value="@Model.AdditionalAffordableHousing"/>
 
-        @Html.HiddenFor(x => x.Id)
+        @Html.HiddenFor(x => x.SiteId)
 
         <vc:form-button />
     </form>

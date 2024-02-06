@@ -1,7 +1,7 @@
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investment.AHP.Contract.Site
 @using HE.Investment.AHP.WWW.Views.Site.Const
-@model SiteModel
+@model Section106Dto
 @{
     ViewData["Title"] = SitePageTitles.SiteSection106AffordableHousing;
 }
@@ -10,7 +10,7 @@
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
     <form asp-controller="Site" asp-action="Section106AffordableHousing" asp-method="post" novalidate>
-        <vc:form-header title="@SitePageTitles.SiteSection106AffordableHousing" caption="@Model?.Name" additional-css-class="govuk-!-padding-top-8"></vc:form-header>
+        <vc:form-header title="@SitePageTitles.SiteSection106AffordableHousing" caption="@Model.SiteName" additional-css-class="govuk-!-padding-top-8"></vc:form-header>
         <gds-p>
             Developer contributions are planning tools that can be used to secure
             financial and non-financial contributions. This can include affordable
@@ -23,11 +23,11 @@
             phases if they are covered by the same planning permission.
         </gds-p>
 
-        <vc:radio-yes-no field-name="@nameof(Model.Section106AffordableHousing)"
+        <vc:radio-yes-no field-name="@nameof(Model.AffordableHousing)"
                          title="Is there a section 106 (s106), or other planning condition, in place or in discussion to secure the delivery of affordable housing through developer contributions?"
-            value="@Model?.Section106AffordableHousing"/>
+            value="@Model.AffordableHousing"/>
 
-        @Html.HiddenFor(x => x.Id)
+        @Html.HiddenFor(x => x.SiteId)
 
         <vc:form-button />
     </form>

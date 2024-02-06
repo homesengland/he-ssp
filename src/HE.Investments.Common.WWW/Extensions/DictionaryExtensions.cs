@@ -15,4 +15,12 @@ public static class DictionaryExtensions
                 r.Value))
             .ToList();
     }
+
+    public static void AddWhen(this Dictionary<string, object> values, string key, object value, bool condition = true)
+    {
+        if (condition)
+        {
+            values.Add(key, value);
+        }
+    }
 }
