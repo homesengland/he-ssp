@@ -6,6 +6,7 @@ using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.Tranches;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
+using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.CRM.Model;
@@ -33,7 +34,7 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
         nameof(invln_DeliveryPhase.invln_nbrh),
     };
 
-    public DeliveryPhaseEntity MapToDomain(ApplicationBasicInfo application, OrganisationBasicInfo organisation, DeliveryPhaseDto dto)
+    public DeliveryPhaseEntity MapToDomain(ApplicationBasicInfo application, OrganisationBasicInfo organisation, DeliveryPhaseDto dto, SchemeFunding schemeFunding)
     {
         var typeOfHomes = MapTypeOfHomes(dto.typeOfHomes);
         var buildActivityType = MapBuildActivityType(dto.newBuildActivityType, dto.rehabBuildActivityType);
@@ -45,6 +46,7 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
             organisation,
             dto.isCompleted == true ? SectionStatus.Completed : SectionStatus.InProgress,
             MilestoneTranches.NotProvided, // TODO: Task 89103: [CRM] Save tranches (Milestone framework)
+            schemeFunding,
             typeOfHomes,
             buildActivity,
             dto.isReconfigurationOfExistingProperties,

@@ -28,6 +28,8 @@ public interface IDeliveryPhaseEntity
 
     BuildActivity BuildActivity { get; }
 
+    DeliveryPhaseTranches Tranches { get; }
+
     bool? ReconfiguringExisting { get; }
 
     DateTime? CreatedOn { get; }
@@ -60,7 +62,5 @@ public interface IDeliveryPhaseEntity
 
     void UnComplete();
 
-    SummaryOfDelivery GetSummaryOfDelivery(decimal requiredFunding, int totalHousesToDeliver, MilestoneFramework milestoneFramework);
-
-    DeliveryPhaseTranches GetTranches();
+    SummaryOfDelivery GetSummaryOfDelivery(MilestoneFramework milestoneFramework);
 }

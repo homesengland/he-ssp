@@ -32,6 +32,9 @@ public class SummaryOfDelivery : ValueObject
 
     public decimal? CompletionMilestone { get; }
 
+    public bool IsSumUpTo => GrantApportioned.GetValueOrDefault() ==
+                             AcquisitionMilestone.GetValueOrDefault() + StartOnSiteMilestone.GetValueOrDefault() + CompletionMilestone.GetValueOrDefault();
+
     public SummaryOfDeliveryPercentage SummaryOfDeliveryPercentage => new(
         AcquisitionMilestone / GrantApportioned,
         StartOnSiteMilestone / GrantApportioned,
@@ -47,8 +50,7 @@ public class SummaryOfDelivery : ValueObject
 
     private void ValidateValues()
     {
-        if (GrantApportioned.GetValueOrDefault() ==
-            AcquisitionMilestone.GetValueOrDefault() + StartOnSiteMilestone.GetValueOrDefault() + CompletionMilestone.GetValueOrDefault())
+        if (IsSumUpTo)
         {
             return;
         }

@@ -240,8 +240,17 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
 
     [HttpPost("{deliveryPhaseId}/summary-of-delivery")]
     [WorkflowState(DeliveryPhaseWorkflowState.SummaryOfDelivery)]
-    public async Task<IActionResult> SummaryOfDelivery([FromRoute] string applicationId, string deliveryPhaseId)
+    public async Task<IActionResult> SummaryOfDelivery(
+        [FromRoute] string applicationId,
+        string deliveryPhaseId,
+        DeliveryPhaseDetails model,
+        CancellationToken cancellationToken)
     {
+        if (model.Tranches?.IsAmendable ?? false)
+        {
+            return await ExecuteCommand(new ClaimMilestonesCommand(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId), YesNoType.Yes), nameof(SummaryOfDelivery), deliveryPhaseDetails => deliveryPhaseDetails, cancellationToken, true);
+        }
+
         return await ContinueWithAllRedirects(new { applicationId, deliveryPhaseId });
     }
 
@@ -572,7 +581,8 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         IRequest<OperationResult> command,
         string viewName,
         Func<DeliveryPhaseDetails, TViewModel> createViewModelForError,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        bool includeSummary = false)
     {
         var applicationId = this.GetApplicationIdFromRoute();
         var deliveryPhaseId = this.GetDeliveryPhaseIdFromRoute();
@@ -584,7 +594,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
             async () =>
             {
                 var deliveryPhaseDetails =
-                    await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(applicationId, deliveryPhaseId), cancellationToken);
+                    await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(applicationId, deliveryPhaseId, includeSummary), cancellationToken);
                 var model = createViewModelForError(deliveryPhaseDetails);
 
                 return View(viewName, model);

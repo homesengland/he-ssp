@@ -9,7 +9,7 @@ public class GetSummaryOfDeliveryTests
 {
     [Theory]
     [InlineData(5_000_333, 3_000_199.8, 1_050_069, 750049, 1_200_081.8)]
-    [InlineData(300_000, 180000, 63000, 45000, 72000)]
+    [InlineData(300_000, 180_000, 63_000, 45_000, 72_000)]
     [InlineData(1, 0.6, 0, 0, 0.6)]
     public void ShouldCalculateSummaryBaseOnMilestoneFramework(
         decimal requiredFunding,
@@ -22,10 +22,11 @@ public class GetSummaryOfDeliveryTests
         var deliveryPhase = new DeliveryPhaseEntityBuilder()
             .WithHomesToBeDelivered(10)
             .WithHomesToBeDelivered(20)
+            .WithSchemeFunding((int)requiredFunding, 50)
             .Build();
 
         // when
-        var summary = deliveryPhase.GetSummaryOfDelivery(requiredFunding, 50, new MilestoneFramework(0.35m, 0.25m, 0.4m));
+        var summary = deliveryPhase.GetSummaryOfDelivery(new MilestoneFramework(0.35m, 0.25m, 0.4m));
 
         // then
         summary.GrantApportioned.Should().Be(expectedGrantApportioned);
@@ -42,10 +43,11 @@ public class GetSummaryOfDeliveryTests
         var deliveryPhase = new DeliveryPhaseEntityBuilder()
             .WithUnregisteredBody()
             .WithHomesToBeDelivered(10)
+            .WithSchemeFunding(requestedFunding, 10)
             .Build();
 
         // when
-        var summary = deliveryPhase.GetSummaryOfDelivery(requestedFunding, 10, new MilestoneFramework(0.35m, 0.25m, 0.4m));
+        var summary = deliveryPhase.GetSummaryOfDelivery(new MilestoneFramework(0.35m, 0.25m, 0.4m));
 
         // then
         summary.GrantApportioned.Should().Be(requestedFunding);
@@ -64,10 +66,11 @@ public class GetSummaryOfDeliveryTests
         var deliveryPhase = new DeliveryPhaseEntityBuilder()
             .WithRehabBuildActivity(buildActivityType)
             .WithHomesToBeDelivered(10)
+            .WithSchemeFunding(requestedFunding, 10)
             .Build();
 
         // when
-        var summary = deliveryPhase.GetSummaryOfDelivery(requestedFunding, 10, new MilestoneFramework(0.35m, 0.25m, 0.4m));
+        var summary = deliveryPhase.GetSummaryOfDelivery(new MilestoneFramework(0.35m, 0.25m, 0.4m));
 
         // then
         summary.GrantApportioned.Should().Be(requestedFunding);
@@ -80,10 +83,10 @@ public class GetSummaryOfDeliveryTests
     public void ShouldNotCalculateValue_WhenNoHomesToBeDelivered()
     {
         // given
-        var deliveryPhase = new DeliveryPhaseEntityBuilder().WithoutHomesToDeliver().Build();
+        var deliveryPhase = new DeliveryPhaseEntityBuilder().WithoutHomesToDeliver().WithSchemeFunding(1000, 50).Build();
 
         // when
-        var summary = deliveryPhase.GetSummaryOfDelivery(1000, 50, new MilestoneFramework(0.35m, 0.25m, 0.4m));
+        var summary = deliveryPhase.GetSummaryOfDelivery(new MilestoneFramework(0.35m, 0.25m, 0.4m));
 
         // then
         summary.GrantApportioned.Should().BeNull();
@@ -96,10 +99,10 @@ public class GetSummaryOfDeliveryTests
     public void ShouldNotCalculateValue_WhenNoRequiredFunding()
     {
         // given
-        var deliveryPhase = new DeliveryPhaseEntityBuilder().Build();
+        var deliveryPhase = new DeliveryPhaseEntityBuilder().WithSchemeFunding(null, 10).Build();
 
         // when
-        var summary = deliveryPhase.GetSummaryOfDelivery(0, 50, new MilestoneFramework(0.35m, 0.25m, 0.4m));
+        var summary = deliveryPhase.GetSummaryOfDelivery(new MilestoneFramework(0.35m, 0.25m, 0.4m));
 
         // then
         summary.GrantApportioned.Should().BeNull();
@@ -112,10 +115,10 @@ public class GetSummaryOfDeliveryTests
     public void ShouldNotCalculateValue_WhenNoTotalHousesToDeliver()
     {
         // given
-        var deliveryPhase = new DeliveryPhaseEntityBuilder().Build();
+        var deliveryPhase = new DeliveryPhaseEntityBuilder().WithSchemeFunding(1000, 0).Build();
 
         // when
-        var summary = deliveryPhase.GetSummaryOfDelivery(1000, 0, new MilestoneFramework(0.35m, 0.25m, 0.4m));
+        var summary = deliveryPhase.GetSummaryOfDelivery(new MilestoneFramework(0.35m, 0.25m, 0.4m));
 
         // then
         summary.GrantApportioned.Should().BeNull();

@@ -16,7 +16,7 @@ public class ProvideStartOnSiteTrancheCommandHandler : UpdateDeliveryPhaseComman
 
     protected override Task<OperationResult> Update(IDeliveryPhaseEntity entity, ProvideStartOnSiteTrancheCommand request, CancellationToken cancellationToken)
     {
-        var deliveryPhaseTranches = entity.GetTranches();
+        var deliveryPhaseTranches = entity.Tranches;
         deliveryPhaseTranches.ProvideStartOnSiteTranche(request.StartOnSiteTranche);
         return Task.FromResult(OperationResult.Success());
     }

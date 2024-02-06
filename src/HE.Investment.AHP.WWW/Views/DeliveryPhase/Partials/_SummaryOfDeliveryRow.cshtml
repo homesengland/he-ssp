@@ -24,7 +24,7 @@
             <td class="govuk-table__cell">
                 <gds-link
                     data-testid=@($"{key}-change")
-                    href=@Url.Action("SummaryOfDeliveryAcquisitionTranche", "DeliveryPhase", new { Model.ApplicationId, deliveryPhaseId = Model.Id, trancheType = SummaryOfDeliveryTrancheType.StartOnSite })>
+                    href=@Url.Action("SummaryOfDeliveryAcquisitionTranche", "DeliveryPhase", new { Model.ApplicationId, deliveryPhaseId = Model.Id, trancheType = Model.TrancheType })>
                     Change
                 </gds-link>
             </td>

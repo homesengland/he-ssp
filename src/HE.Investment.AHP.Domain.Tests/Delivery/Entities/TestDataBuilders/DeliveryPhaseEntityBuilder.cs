@@ -7,6 +7,7 @@ using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.Tranches;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
+using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
 using HE.Investments.TestsUtils.TestData;
@@ -40,6 +41,8 @@ public class DeliveryPhaseEntityBuilder
     private BuildActivity _buildActivity = new(ApplicationBasicInfo.Tenure, TypeOfHomes.NewBuild, BuildActivityType.Regeneration);
 
     private bool? _reconfigureExisting;
+
+    private SchemeFunding _schemeFunding = new(1_000_000, 15);
 
     public DeliveryPhaseEntityBuilder WithId(string id)
     {
@@ -135,6 +138,12 @@ public class DeliveryPhaseEntityBuilder
         return this;
     }
 
+    public DeliveryPhaseEntityBuilder WithSchemeFunding(int? requiredFunding, int? homesToDeliver)
+    {
+        _schemeFunding = new SchemeFunding(requiredFunding, homesToDeliver);
+        return this;
+    }
+
     public DeliveryPhaseEntity Build()
     {
         return new DeliveryPhaseEntity(
@@ -143,6 +152,7 @@ public class DeliveryPhaseEntityBuilder
             _organisationBasicInfo,
             _status,
             MilestoneTranches.NotProvided,
+            _schemeFunding,
             _typeOfHomes,
             _buildActivity,
             _reconfigureExisting,
