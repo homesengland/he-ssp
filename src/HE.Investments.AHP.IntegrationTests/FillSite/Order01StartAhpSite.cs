@@ -211,4 +211,27 @@ public class Order01StartAhpSite : AhpIntegrationTest
             (nameof(SitePlanningDetails.LandRegistryTitleNumber), "some title"),
             (nameof(SitePlanningDetails.IsGrantFundingForAllHomesCoveredByTitleNumber), "True"));
     }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(15)]
+    public async Task Order15_ShouldProvideTenderingStatus()
+    {
+        await TestQuestionPage(
+            SitePagesUrl.SiteTenderingStatus(SiteData.SiteId),
+            SitePageTitles.TenderingStatus,
+            SitePagesUrl.SiteContractorDetails(SiteData.SiteId),
+            (nameof(SiteTenderingStatusDetails.TenderingStatus), SiteTenderingStatus.ConditionalWorksContract.ToString()));
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(16)]
+    public async Task Order16_ShouldProvideContractorDetails()
+    {
+        await TestQuestionPage(
+            SitePagesUrl.SiteContractorDetails(SiteData.SiteId),
+            SitePageTitles.ContractorDetails,
+            SitePagesUrl.SiteCheckAnswers(SiteData.SiteId),
+            (nameof(SiteTenderingStatusDetails.ContractorName), "traktor john deere"),
+            (nameof(SiteTenderingStatusDetails.IsSmeContractor), "False"));
+    }
 }

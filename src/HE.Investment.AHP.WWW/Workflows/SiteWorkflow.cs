@@ -184,7 +184,7 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
         _machine.Configure(SiteWorkflowState.TenderingStatus)
             .PermitIf(Trigger.Continue, SiteWorkflowState.ContractorDetails, IsConditionalOrUnconditionalWorksContract)
             .PermitIf(Trigger.Continue, SiteWorkflowState.IntentionToWorkWithSme, IsTenderForWorksContractOrContractingHasNotYetBegun)
-            .PermitIf(Trigger.Continue, SiteWorkflowState.CheckAnswers, IsNotApplicableOnMissing)
+            .PermitIf(Trigger.Continue, SiteWorkflowState.CheckAnswers, IsNotApplicableOrMissing)
             .Permit(Trigger.Back, SiteWorkflowState.BuildingForHealthyLife);
 
         _machine.Configure(SiteWorkflowState.ContractorDetails)
@@ -210,5 +210,5 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
     private bool IsTenderForWorksContractOrContractingHasNotYetBegun() => _siteModel?.TenderingStatusDetails.TenderingStatus is SiteTenderingStatus.TenderForWorksContract or
         SiteTenderingStatus.ContractingHasNotYetBegun;
 
-    private bool IsNotApplicableOnMissing() => _siteModel?.TenderingStatusDetails.TenderingStatus is SiteTenderingStatus.NotApplicable or null;
+    private bool IsNotApplicableOrMissing() => _siteModel?.TenderingStatusDetails.TenderingStatus is SiteTenderingStatus.NotApplicable or null;
 }
