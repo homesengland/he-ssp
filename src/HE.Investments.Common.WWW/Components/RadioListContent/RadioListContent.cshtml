@@ -1,4 +1,5 @@
 @using HE.Investments.Common.WWW.Models
+@using HE.Investments.Common.WWW.Extensions
 @model (string fieldName, IEnumerable<ExtendedSelectListItem> availableOptions, string value)
 
 @foreach (var option in Model.availableOptions)
@@ -6,8 +7,15 @@
     var id = option == Model.availableOptions.First() ? Model.fieldName : $"{Model.fieldName}-{option.Value}";
     var isSelected = option.Selected || Model.value == option.Value;
 
+    var attributes = new Dictionary<string, object>
+    {
+        { "id", id },
+        { "class", "govuk-radios__input" },
+    };
+    attributes.AddWhen("aria-controls", $"conditional-{id}", option.ExpandableChild != null);
+
     <div class="govuk-radios__item">
-        @Html.RadioButton(Model.fieldName, option.Value, isSelected, new { id, @class = "govuk-radios__input" })
+        @Html.RadioButton(Model.fieldName, option.Value, isSelected, attributes)
         <label class="govuk-label govuk-radios__label" for="@id">
             @option.Text
         </label>
@@ -18,4 +26,10 @@
             </he-div-hint>
         }
     </div>
+    @if (option.ExpandableChild != null)
+    {
+        <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="@($"conditional-{id}")">
+            <vc:dynamic-component component="@option.ExpandableChild"/>
+        </div>
+    }
 }

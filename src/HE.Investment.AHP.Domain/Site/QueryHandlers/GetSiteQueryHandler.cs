@@ -4,6 +4,7 @@ using HE.Investment.AHP.Domain.Common.Mappers;
 using HE.Investment.AHP.Domain.Site.Mappers;
 using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investment.AHP.Domain.Site.ValueObjects.Planning;
+using HE.Investment.AHP.Domain.Site.ValueObjects.StrategicSite;
 using HE.Investment.AHP.Domain.Site.ValueObjects.TenderingStatus;
 using HE.Investments.Account.Shared;
 using MediatR;
@@ -43,6 +44,7 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
             LocalAuthority = LocalAuthorityMapper.Map(site.LocalAuthority),
             PlanningDetails = CreateSitePlanningDetails(site.PlanningDetails),
             TenderingStatusDetails = CreateSiteTenderingStatusDetails(site.TenderingStatusDetails),
+            StrategicSiteDetails = CreateStrategicSiteDetails(site.StrategicSiteDetails),
         };
     }
 
@@ -71,5 +73,12 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
             tenderingStatusDetails.ContractorName?.Value,
             tenderingStatusDetails.IsSmeContractor,
             tenderingStatusDetails.IsIntentionToWorkWithSme);
+    }
+
+    private StrategicSite CreateStrategicSiteDetails(StrategicSiteDetails details)
+    {
+        return new StrategicSite(
+            details.IsStrategicSite,
+            details.SiteName?.Value);
     }
 }

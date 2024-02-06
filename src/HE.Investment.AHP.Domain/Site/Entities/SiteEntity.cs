@@ -5,6 +5,7 @@ using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investment.AHP.Domain.Site.ValueObjects;
 using HE.Investment.AHP.Domain.Site.ValueObjects.Factories;
 using HE.Investment.AHP.Domain.Site.ValueObjects.Planning;
+using HE.Investment.AHP.Domain.Site.ValueObjects.StrategicSite;
 using HE.Investment.AHP.Domain.Site.ValueObjects.TenderingStatus;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
@@ -23,6 +24,7 @@ public class SiteEntity : DomainEntity, IQuestion
         PlanningDetails planningDetails,
         NationalDesignGuidePriorities nationalDesignGuidePriorities,
         TenderingStatusDetails tenderingStatusDetails,
+        StrategicSiteDetails strategicSiteDetails,
         LocalAuthority? localAuthority = null)
     {
         Id = id;
@@ -33,6 +35,7 @@ public class SiteEntity : DomainEntity, IQuestion
         PlanningDetails = planningDetails;
         NationalDesignGuidePriorities = nationalDesignGuidePriorities;
         TenderingStatusDetails = tenderingStatusDetails;
+        StrategicSiteDetails = strategicSiteDetails;
     }
 
     public SiteEntity()
@@ -44,6 +47,7 @@ public class SiteEntity : DomainEntity, IQuestion
         PlanningDetails = PlanningDetailsFactory.CreateEmpty();
         NationalDesignGuidePriorities = new NationalDesignGuidePriorities();
         TenderingStatusDetails = new TenderingStatusDetails();
+        StrategicSiteDetails = new StrategicSiteDetails();
     }
 
     public SiteId Id { get; set; }
@@ -60,7 +64,9 @@ public class SiteEntity : DomainEntity, IQuestion
 
     public NationalDesignGuidePriorities NationalDesignGuidePriorities { get; private set; }
 
-    public TenderingStatusDetails TenderingStatusDetails { get; set; }
+    public TenderingStatusDetails TenderingStatusDetails { get; private set; }
+
+    public StrategicSiteDetails StrategicSiteDetails { get; private set; }
 
     public async Task ProvideName(SiteName siteName, ISiteNameExist siteNameExist, CancellationToken cancellationToken)
     {
@@ -99,8 +105,15 @@ public class SiteEntity : DomainEntity, IQuestion
         TenderingStatusDetails = _modificationTracker.Change(TenderingStatusDetails, tenderingStatusDetails);
     }
 
+    public void ProvideStrategicSiteDetails(StrategicSiteDetails details)
+    {
+        StrategicSiteDetails = _modificationTracker.Change(StrategicSiteDetails, details);
+    }
+
     public bool IsAnswered()
     {
-        return PlanningDetails.IsAnswered();
+        return PlanningDetails.IsAnswered() &&
+               TenderingStatusDetails.IsAnswered() &&
+               StrategicSiteDetails.IsAnswered();
     }
 }

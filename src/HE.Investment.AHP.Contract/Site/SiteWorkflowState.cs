@@ -24,5 +24,6 @@ public enum SiteWorkflowState
     TenderingStatus,
     ContractorDetails,
     IntentionToWorkWithSme,
+    StrategicSite,
     CheckAnswers,
 }
