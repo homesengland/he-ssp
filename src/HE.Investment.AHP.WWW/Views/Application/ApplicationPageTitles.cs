@@ -13,4 +13,8 @@ public static class ApplicationPageTitles
     public const string OnHold = "Tell us why you are putting your application on hold";
 
     public const string Withdraw = "Tell us why you are withdrawing this application";
+
+    public const string CheckAnswers = "Check your answers before submitting your application";
+
+    public const string Submitted = "Application complete";
 }

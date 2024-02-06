@@ -18,7 +18,8 @@
         }
         <link-button
             action-url="@Url.Action("CheckAnswers", "Application", new { applicationId = Model.ApplicationId })"
-            is-disabled="@(incompleteSectionsCount > 0 || !canSubmitApplication)">
+            is-disabled="@(incompleteSectionsCount > 0 || !canSubmitApplication)"
+            data-testid="check-and-submit-application">
             Check and submit application
         </link-button>
     </div>
@@ -33,7 +34,8 @@
         </gds-p>
         <link-button
             is-secondary="true"
-            action-url="@Url.Action("OnHold", "Application", new { applicationId = Model.ApplicationId })">
+            action-url="@Url.Action("OnHold", "Application", new { applicationId = Model.ApplicationId })"
+            data-testid="put-application-on-hold">
             Hold
         </link-button>
     </div>
@@ -48,7 +50,8 @@
         </gds-p>
         <link-button
             is-secondary="true"
-            action-url="@Url.Action("Reactivate", "Application", new { applicationId = Model.ApplicationId })">
+            action-url="@Url.Action("Reactivate", "Application", new { applicationId = Model.ApplicationId })"
+            data-testid="reactivate-application">
             Reactivate
         </link-button>
     </div>
@@ -63,7 +66,8 @@
         </gds-p>
         <link-button
             is-warning="true"
-            action-url="@Url.Action("Withdraw", "Application", new { applicationId = Model.ApplicationId })">
+            action-url="@Url.Action("Withdraw", "Application", new { applicationId = Model.ApplicationId })"
+            data-testid="withdraw-application">
             Withdraw
         </link-button>
     </div>
