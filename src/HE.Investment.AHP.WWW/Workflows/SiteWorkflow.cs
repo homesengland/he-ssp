@@ -40,11 +40,12 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
         {
             { Name: var x } when x.IsNotProvided() => SiteWorkflowState.Name,
 
-            // TODO: #89874  add support for Section106 pages
+            // TODO: #89874  add support for Section106 pages and National design guidelines
             { LocalAuthority: var x } when x.IsNotProvided() => SiteWorkflowState.LocalAuthoritySearch,
             { PlanningDetails: var x } when x.PlanningStatus.IsNotProvided() => SiteWorkflowState.PlanningStatus,
             { PlanningDetails.ArePlanningDetailsProvided: false } => SiteWorkflowState.PlanningDetails,
             { PlanningDetails: var x } when !IsLandRegistryProvided(x) => SiteWorkflowState.LandRegistry,
+            { BuildingForHealthyLife: var x } when x.IsNotProvided() => SiteWorkflowState.BuildingForHealthyLife,
             { TenderingStatusDetails: var x } when x.TenderingStatus.IsNotProvided() => SiteWorkflowState.TenderingStatus,
             { TenderingStatusDetails: var x } when IsConditionalOrUnconditionalWorksContract() &&
                                                    (x.ContractorName.IsNotProvided() || x.IsSmeContractor.IsNotProvided()) => SiteWorkflowState.ContractorDetails,
@@ -77,6 +78,7 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             SiteWorkflowState.Section106LocalAuthorityConfirmation => true,
             SiteWorkflowState.Section106Ineligible => true,
             SiteWorkflowState.NationalDesignGuide => true,
+            SiteWorkflowState.BuildingForHealthyLife => true,
             SiteWorkflowState.LandRegistry => IsLandTitleRegistered(),
             SiteWorkflowState.TenderingStatus => true,
             SiteWorkflowState.ContractorDetails => IsConditionalOrUnconditionalWorksContract(),

@@ -1,5 +1,5 @@
 using HE.Investment.AHP.Contract.Site;
-using HE.Investment.AHP.WWW.Views.Site;
+using HE.Investment.AHP.WWW.Views.Site.Const;
 using HE.Investments.Common.WWW.Models;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 

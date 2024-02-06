@@ -470,6 +470,28 @@ public class SiteController : WorkflowController<SiteWorkflowState>
             cancellationToken);
     }
 
+    [HttpGet("{siteId}/building-for-a-healthy-life")]
+    [WorkflowState(SiteWorkflowState.BuildingForHealthyLife)]
+    public async Task<IActionResult> BuildingForHealthyLife([FromRoute] string siteId, CancellationToken cancellationToken)
+    {
+        var siteModel = await _mediator.Send(new GetSiteQuery(siteId), cancellationToken);
+
+        return View("BuildingForHealthyLife", siteModel);
+    }
+
+    [HttpPost("{siteId}/building-for-a-healthy-life")]
+    [WorkflowState(SiteWorkflowState.BuildingForHealthyLife)]
+    public async Task<IActionResult> BuildingForHealthyLife(SiteModel model, CancellationToken cancellationToken)
+    {
+        return await ExecuteSiteCommand<SiteModel>(
+            new ProvideBuildingForHealthyLifeCommand(
+                this.GetSiteIdFromRoute(),
+                model.BuildingForHealthyLife),
+            nameof(BuildingForHealthyLife),
+            savedModel => model,
+            cancellationToken);
+    }
+
     [HttpGet("{siteId}/tendering-status")]
     [WorkflowState(SiteWorkflowState.TenderingStatus)]
     public async Task<IActionResult> TenderingStatus([FromRoute] string siteId, CancellationToken cancellationToken)

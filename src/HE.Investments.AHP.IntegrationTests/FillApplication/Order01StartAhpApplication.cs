@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.WWW;
 using HE.Investment.AHP.WWW.Views.Application;
-using HE.Investment.AHP.WWW.Views.Site;
+using HE.Investment.AHP.WWW.Views.Site.Const;
 using HE.Investments.AHP.IntegrationTests.Extensions;
 using HE.Investments.AHP.IntegrationTests.Framework;
 using HE.Investments.AHP.IntegrationTests.Pages;
