@@ -1,6 +1,5 @@
 @using HE.Investments.Common.WWW.Components.SectionSummary;
 @using HE.Investment.AHP.WWW.Models.Common
-@using HE.Investments.Common.WWW.Components.FormHeader
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.Components.RadioList
 @using HE.Investment.AHP.WWW.Views.Scheme.Const
@@ -23,7 +22,7 @@
     }
 
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
-    <vc:form-header caption="@Model.ApplicationName" title="@title"/>
+    <vc:page-header caption="@Model.ApplicationName" title="@title"/>
 
     <gds-p>
         You cannot change the tenure from this page. If you want to change the tenure, you will have to start a new application.

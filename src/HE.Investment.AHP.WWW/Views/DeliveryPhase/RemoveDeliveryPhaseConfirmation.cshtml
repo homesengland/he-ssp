@@ -3,7 +3,6 @@
 @using HE.Investment.AHP.WWW.Views.Delivery.Const
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
 @using HE.Investments.Common.WWW.Components.BackLinkWithCallback
-@using HE.Investments.Common.WWW.Components.FormHeader
 @using HE.Investments.Common.WWW.Components.FormButton
 @model HE.Investment.AHP.WWW.Models.Delivery.RemoveDeliveryPhaseModel;
 @{
@@ -21,7 +20,7 @@
         @Html.HiddenFor(m => Model.ApplicationName)
         @Html.HiddenFor(m => Model.DeliveryPhaseName)
 
-        <vc:form-header caption="@Model.Header"/>
+        <vc:page-header caption="@Model.Header"/>
 
         <vc:radio-list
             header="@title"

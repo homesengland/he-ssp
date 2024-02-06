@@ -1,6 +1,5 @@
 @using HE.Investment.AHP.WWW.Models.FinancialDetails;
 @using HE.Investment.AHP.WWW.Views.FinancialDetails.Consts;
-@using HE.Investments.Common.WWW.Components.FormHeader
 @using HE.Investment.AHP.WWW.Extensions
 @model FinancialDetailsBaseModel
 @{
@@ -11,7 +10,7 @@
 <gds-div-grid-column-two-thirds>
     <gds-back-link href="@Url.Action("TaskList", "Application", new { applicationId })" text="Back" class="govuk-!-margin-bottom-8">
     </gds-back-link>
-    <vc:form-header title="@title" caption="@Model.ApplicationName"/>
+    <vc:page-header title="@title" caption="@Model.ApplicationName"/>
 
     <div class="govuk-!-padding-bottom-8">
         <gds-p>In this section you'll need to provide financial information related to your application. This includes:</gds-p>

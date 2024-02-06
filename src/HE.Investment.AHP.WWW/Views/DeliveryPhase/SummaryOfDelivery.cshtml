@@ -6,9 +6,7 @@
 @using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.WWW.Models.Delivery
 @using HE.Investments.Common.Messages
-@using HE.Investments.Common.WWW.Components.FormHeader
 @using HE.Investments.Common.WWW.Helpers
-@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model DeliveryPhaseDetails;
 @{
     var applicationId = this.GetApplicationIdFromRoute();
@@ -22,7 +20,7 @@
     <vc:ahp-workflow-back-button current-page="@DeliveryPhaseWorkflowState.SummaryOfDelivery"/>
 
     <form asp-controller="DeliveryPhase" asp-action="SummaryOfDelivery" asp-method="post" asp-route-redirect="@Context.Request.Query["redirect"]" novalidate>
-        <vc:form-header caption="@($"{Model.ApplicationName} - {Model.Name}")" title="@title"/>
+        <vc:page-header caption="@($"{Model.ApplicationName} - {Model.Name}")" title="@title"/>
 
         <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0">
             @(isAmendable ? await Html.PartialAsync("Partials/_SummaryOfDeliveryAmendDescription") : null)

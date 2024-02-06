@@ -1,4 +1,3 @@
-@using HE.Investments.Common.WWW.Components.FormHeader
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.Components.BackLinkWithCallback
 @using HE.Investments.Common.WWW.Components.SectionSummary
@@ -13,7 +12,7 @@
 
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
-    <vc:form-header title="@ApplicationPageTitles.CheckAnswers"/>
+    <vc:page-header title="@ApplicationPageTitles.CheckAnswers"/>
 
     @foreach (var item in Model.Sections)
     {

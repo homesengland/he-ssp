@@ -1,4 +1,3 @@
-@using HE.Investments.Common.WWW.Components.FormHeader
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investment.AHP.WWW.Views.Application
 @using HE.Investments.Common.WWW.Components.BackLinkWithCallback
@@ -11,7 +10,7 @@
     <vc:back-link-with-callback url="@Url.Action("Select", "Site")"/>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <form asp-controller="Application" asp-action="Name" asp-method="post" novalidate>
-        <vc:form-header title="@ApplicationPageTitles.ApplicationName"/>
+        <vc:page-header title="@ApplicationPageTitles.ApplicationName"/>
         <gds-field-set role="group">
             <legend>
                 <gds-p >Each application must be for a single tenure. If you are developing a multi-tenure site, each tenure must be applied for within a separate application.</gds-p>

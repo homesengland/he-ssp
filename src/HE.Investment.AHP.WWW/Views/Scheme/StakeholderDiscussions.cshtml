@@ -2,7 +2,6 @@
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
 @using HE.Investments.Common.WWW.Components.FilesTable
 @using HE.Investments.Common.WWW.Components.FormButton
-@using HE.Investments.Common.WWW.Components.FormHeader
 @using HE.Investments.Common.WWW.Components.TextAreaInputWithCounter
 @using HE.Investments.Common.WWW.Components.UploadFile
 @using HE.Investment.AHP.Contract.Scheme
@@ -23,7 +22,7 @@
         @Html.HiddenFor(x => x.AllowedExtensions)
         @Html.HiddenFor(x => x.MaxFileSizeInMegabytes)
         <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0">
-            <vc:form-header caption="@Model.ApplicationName" title="@title"/>
+            <vc:page-header caption="@Model.ApplicationName" title="@title"/>
             <vc:text-area-input-with-counter
                 field-name="@nameof(Model.StakeholderDiscussionsReport)"
                 title="Tell us about discussions you have had with local stakeholders"

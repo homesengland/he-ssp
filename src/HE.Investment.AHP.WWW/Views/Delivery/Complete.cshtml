@@ -3,7 +3,6 @@
 @using HE.Investment.AHP.WWW.Views.Delivery.Const
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
 @using HE.Investments.Common.WWW.Components.BackLinkWithCallback
-@using HE.Investments.Common.WWW.Components.FormHeader
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.Components.RadioList
 @model HE.Investment.AHP.WWW.Models.Delivery.CompleteDeliverySectionModel;
@@ -20,7 +19,7 @@
     <form asp-controller="Delivery" asp-action="Complete" asp-method="post" novalidate>
         @Html.HiddenFor(m => Model.ApplicationName)
 
-        <vc:form-header caption="@Model.ApplicationName"/>
+        <vc:page-header caption="@Model.ApplicationName"/>
 
         <vc:radio-list
             header="@title"
