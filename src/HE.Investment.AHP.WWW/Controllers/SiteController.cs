@@ -112,10 +112,15 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     public async Task<IActionResult> NamePost(string? siteId, SiteModel model, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new ProvideNameCommand(siteId ?? model.Id, model.Name), cancellationToken);
+
         if (result.HasValidationErrors)
         {
+            ModelState.Clear();
             ModelState.AddValidationErrors(result);
-            return View("Name", model);
+
+            var orderedProperties = new List<string>() { nameof(SiteModel.Name) };
+            ViewBag.validationErrors = ViewData.ModelState.GetOrderedErrors(orderedProperties.ToList());
+            return View(nameof(Name), model);
         }
 
         return await Continue(new { siteId = result.ReturnedData?.Value });

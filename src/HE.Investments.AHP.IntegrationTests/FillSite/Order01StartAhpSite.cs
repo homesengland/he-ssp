@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.Contract.Site;
+using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investment.AHP.WWW;
 using HE.Investment.AHP.WWW.Models.Site;
 using HE.Investment.AHP.WWW.Views.Site;
@@ -223,8 +224,9 @@ public class Order01StartAhpSite : AhpIntegrationTest
             SitePagesUrl.SiteNationalDesignGuide(SiteData.SiteId),
             SitePageTitles.NationalDesignGuide,
             SitePagesUrl.SiteNationalDesignGuide(SiteData.SiteId),
-            (nameof(NationalDesignGuidePrioritiesModel.DesignPriorities), "Nature"));
-    
+            (nameof(NationalDesignGuidePrioritiesModel.DesignPriorities), NationalDesignGuidePriority.Nature.ToString()));
+    }
+
     [Fact(Skip = AhpConfig.SkipTest)]
     [Order(16)]
     public async Task Order16_ShouldProvideTenderingStatus()
