@@ -29,11 +29,11 @@ public class GetOrganizationBasicInformationQueryHandlerTests : TestBase<GetOrga
             .BuildMockAndRegister(this);
 
         // when
-        var result = await TestCandidate.Handle(new GetOrganizationBasicInformationQuery(), CancellationToken.None);
+        var result = await TestCandidate.Handle(new GetOrganisationBasicInformationQuery(), CancellationToken.None);
 
         // then
-        result.OrganizationBasicInformation.RegisteredCompanyName.Should().Be(organizationBasicInformation.RegisteredCompanyName);
-        result.OrganizationBasicInformation.CompanyRegistrationNumber.Should().Be(organizationBasicInformation.CompanyRegistrationNumber);
-        result.OrganizationBasicInformation.Address.Should().Be(organizationBasicInformation.Address);
+        result.OrganisationBasicInformation.RegisteredCompanyName.Should().Be(organizationBasicInformation.RegisteredCompanyName);
+        result.OrganisationBasicInformation.CompanyRegistrationNumber.Should().Be(organizationBasicInformation.CompanyRegistrationNumber);
+        result.OrganisationBasicInformation.Address.Should().Be(organizationBasicInformation.Address);
     }
 }

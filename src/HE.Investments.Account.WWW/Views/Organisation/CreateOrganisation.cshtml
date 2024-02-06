@@ -1,10 +1,11 @@
+@using HE.Investments.Account.WWW.Views.Organisation
 @model HE.Investments.Account.Contract.Organisation.OrganisationDetailsViewModel
 @{
-    ViewData["Title"] = "Organisation Details";
+    ViewData["Title"] = OrganisationPageTitles.CreateOrganisation;
 }
 
 <gds-div-grid-column-two-thirds>
-    <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("SearchOrganization", "Organisation")"></gds-back-link>
+    <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("SearchOrganisation", "Organisation")"></gds-back-link>
 
      @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
@@ -12,7 +13,7 @@
         <gds-field-set role="group">
             <gds-legend size="ControlSize.L">
                 <h1 class="govuk-fieldset__heading">
-                    Organisation Details
+                    @OrganisationPageTitles.CreateOrganisation
                 </h1>
             </gds-legend>
 
@@ -22,7 +23,7 @@
 
             <gds-input asp-hiddenlabeltext="Name"
                        govuk-formgroup-asp-for="Name"
-                       value="@Model?.Name"/>
+                       value="@Model.Name"/>
         </gds-field-set>
 
 
@@ -41,32 +42,32 @@
                 govuk-formgroup-asp-for="AddressLine1"
                 name="AddressLine1"
                 asp-labeltext="Address line 1"
-                value=@Model?.AddressLine1/>
+                value=@Model.AddressLine1/>
 
             <gds-input
                 govuk-formgroup-asp-for="AddressLine2"
                 name="AddressLine2"
                 asp-labeltext="Address line 2 (optional)"
-                value=@Model?.AddressLine2/>
+                value=@Model.AddressLine2/>
 
             <gds-input
                 govuk-formgroup-asp-for="TownOrCity"
                 name="TownOrCity"
                 asp-labeltext="Town or city"
-                value=@Model?.TownOrCity/>
+                value=@Model.TownOrCity/>
 
             <gds-input
                 govuk-formgroup-asp-for="County"
                 name="County"
                 asp-labeltext="County (optional)"
-                value=@Model?.County/>
+                value=@Model.County/>
 
             <gds-input
                 govuk-formgroup-asp-for="Postcode"
                 name="Postcode"
                 class="govuk-!-width-one-half"
                 asp-labeltext="Postcode"
-                value=@Model?.Postcode/>
+                value=@Model.Postcode/>
 
         </gds-field-set>
 

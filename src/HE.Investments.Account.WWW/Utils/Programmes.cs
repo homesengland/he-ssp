@@ -52,6 +52,7 @@ public class Programmes : IProgrammes
         {
             {
                 ProgrammeType.Loans, new(
+                    ProgrammeType.Loans,
                     "Levelling up Home Building Fund",
                     "You can start a new Levelling Up Home Building Fund application here. This will not affect any of your previous applications.",
                     $"{_programmeUrlConfig.Loans}/application",
@@ -60,6 +61,7 @@ public class Programmes : IProgrammes
             },
             {
                 ProgrammeType.Ahp, new(
+                    ProgrammeType.Ahp,
                     "Affordable Homes Programme 2021-2026 Continuous Market Engagement",
                     "You can start a new Affordable Homes Programme application here. This will not affect any of your previous applications.",
                     $"{_programmeUrlConfig.Ahp}/application/start",

@@ -18,7 +18,7 @@ public class AccountRoutes : IAccountRoutes
     public IActionResult NotLinkedOrganisation()
     {
         return new RedirectToActionResult(
-            nameof(OrganisationController.SearchOrganization),
+            nameof(OrganisationController.SearchOrganisation),
             new ControllerName(nameof(OrganisationController)).WithoutPrefix(),
             null);
     }

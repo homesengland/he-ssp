@@ -1,0 +1,54 @@
+@using HE.Investments.Account.WWW.Views.Organisation
+@using HE.Investments.Common.Extensions
+@using HE.Investments.Common.WWW.Extensions
+@model HE.Investments.Account.Contract.Organisation.Queries.OrganisationSearchModel;
+@{
+    ViewData["Title"] = OrganisationPageTitles.SelectYourOrganisation;
+}
+
+<gds-div-grid-column-two-thirds>
+    <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("SearchOrganisation", "Organisation")"></gds-back-link>
+
+    <gds-h1 size="ControlSize.Xl" class="govuk-!-margin-bottom-6">
+        @OrganisationPageTitles.SelectYourOrganisation
+    </gds-h1>
+
+    <ul class="govuk-list">
+        @foreach (var organisation in Model.Organisations)
+        {
+            var organisationNumberOrId = organisation.OrganisationId ?? organisation.CompaniesHouseNumber;
+            <li data-testId="organisation-@organisation.Name.ToIdTag()">
+                <gds-link href="@Url.Action("ConfirmOrganisation", "Organisation", new { organisationNumberOrId })"
+                          data-testId="confirm-organisation-@organisationNumberOrId">
+                    <b>@organisation.Name</b>
+                </gds-link>
+                <br/>
+                @if (organisation.Street.IsProvided())
+                {
+                    <span class="govuk-body">@organisation.Street</span>
+                    <br/>
+                }
+                @if (organisation.Street.IsProvided())
+                {
+                    <span class="govuk-body">@organisation.City</span>
+                    <br/>
+                }
+                @if (organisation.Street.IsProvided())
+                {
+                    <span class="govuk-body">@organisation.PostalCode</span>
+                    <br/>
+                }
+                <p class="govuk-body govuk-!-margin-bottom-6">Companies house number: @organisation.CompaniesHouseNumber</p>
+            </li>
+        }
+    </ul>
+
+    <gds-p class="govuk-!-margin-bottom-9">
+        <gds-link href="@Url.Action("CreateOrganisation", "Organisation")">
+            The organisation is not listed above, enter details manually
+        </gds-link>
+    </gds-p>
+
+    <he-pagination base-url="/organisation/search/result?searchPhrase=@Model.Name" page="@Model.Page" items-per-page="@Model.ItemsPerPage" total-items="@Model.TotalOrganisations"></he-pagination>
+
+</gds-div-grid-column-two-thirds>

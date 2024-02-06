@@ -8,7 +8,7 @@ public class GetUserOrganisationWithProgrammesQuery : IRequest<GetUserOrganisati
 }
 
 public record GetUserOrganisationWithProgrammesQueryResponse(
-    OrganizationBasicInformation OrganizationBasicInformation,
+    OrganizationBasicInformation OrganisationBasicInformation,
     string? UserFirstName,
     bool IsLimitedUser,
     IList<Programme> ProgrammesToAccess,

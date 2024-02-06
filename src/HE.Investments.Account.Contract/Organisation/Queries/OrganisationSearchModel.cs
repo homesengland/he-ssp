@@ -4,21 +4,21 @@ public class OrganisationSearchModel
 {
     public OrganisationSearchModel()
     {
-        Organizations = new List<OrganizationBasicDetails>();
+        Organisations = new List<OrganisationBasicDetails>();
     }
 
-    public OrganisationSearchModel(IEnumerable<OrganizationBasicDetails> organizations)
+    public OrganisationSearchModel(IEnumerable<OrganisationBasicDetails> organisations)
     {
-        Organizations = organizations.ToList();
+        Organisations = organisations.ToList();
     }
 
     public string Name { get; set; }
 
-    public string SelectedOrganization { get; set; }
+    public string SelectedOrganisation { get; set; }
 
-    public IList<OrganizationBasicDetails> Organizations { get; set; }
+    public IList<OrganisationBasicDetails> Organisations { get; set; }
 
-    public int TotalOrganizations { get; set; }
+    public int TotalOrganisations { get; set; }
 
     public int Page { get; set; }
 

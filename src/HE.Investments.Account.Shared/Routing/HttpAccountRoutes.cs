@@ -19,7 +19,7 @@ public class HttpAccountRoutes : IAccountRoutes
 
     public IActionResult NotLinkedOrganisation()
     {
-        return new RedirectResult($"{_config.Url}/{OrganisationAccountEndpoints.SearchOrganization}");
+        return new RedirectResult($"{_config.Url}/{OrganisationAccountEndpoints.SearchOrganisation}");
     }
 
     public IActionResult LandingPageForNotLoggedUser()

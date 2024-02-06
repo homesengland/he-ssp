@@ -1,5 +1,6 @@
 using HE.Investments.Account.Contract.User.Commands;
 using HE.Investments.Account.Contract.User.Queries;
+using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Account.Shared.Routing;
 using HE.Investments.Account.WWW.Models.User;
 using HE.Investments.Account.WWW.Routing;
@@ -7,12 +8,11 @@ using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Utils;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investments.Account.WWW.Controllers;
 
-[Authorize]
+[AuthorizeLoggedIn]
 [Route(UserAccountEndpoints.Controller)]
 public class UserController : Controller
 {
@@ -64,7 +64,7 @@ public class UserController : Controller
         if (viewModel.CallbackUrl.IsNotProvided())
         {
             return RedirectToAction(
-                nameof(OrganisationController.SearchOrganization),
+                nameof(OrganisationController.SearchOrganisation),
                 new ControllerName(nameof(OrganisationController)).WithoutPrefix());
         }
 
@@ -80,7 +80,7 @@ public class UserController : Controller
 
         if (programme.IsProvided() && _programmeUrlConfig.ProgrammeUrl.TryGetValue(programme!, out var programmeUrl))
         {
-            return $"{programmeUrl}{callback}";
+            return $"{programmeUrl.TrimEnd('/')}/{callback!.TrimStart('/')}";
         }
 
         return callback;

@@ -65,7 +65,7 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
 
     [HttpGet("check-your-details")]
     [WorkflowState(LoanApplicationWorkflow.State.CheckYourDetails)]
-    public async Task<IActionResult> CheckYourDetails(CancellationToken cancellationToken)
+    public async Task<IActionResult> CheckYourDetails()
     {
         var selectedAccount = await _accountUserContext.GetSelectedAccount();
         var profileDetails = await _accountUserContext.GetProfileDetails();

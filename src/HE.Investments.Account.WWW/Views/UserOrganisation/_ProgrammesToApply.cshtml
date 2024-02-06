@@ -1,5 +1,3 @@
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Headings
-@using HE.Investments.Common.WWW.TagHelpers
 @model IList<HE.Investments.Account.WWW.Models.UserOrganisation.ProgrammeModel>
 @if (Model.Any())
 {
@@ -24,7 +22,7 @@
 
                     <link-button action-url="@programme.CreateApplicationUrl"
                                  id="start-application-link"
-                                 data-testid=@($"user-organisation-start-new-application-{programme.Name.ToLowerInvariant().Replace(' ', '-')}")
+                                 data-testid=@($"user-organisation-start-new-application-{programme.Type.ToString().ToLowerInvariant().Replace(' ', '-')}")
                                  is-disabled="@(!programme.CanCreateApplication)">
                         Start new application
                     </link-button>

@@ -39,10 +39,10 @@
     <AdditionalFiles Include="Views\Organisation\ConfirmYourSelection.cshtml" />
     <AdditionalFiles Include="Views\Organisation\CreateOrganisation.cshtml" />
     <AdditionalFiles Include="Views\Organisation\NoMatchFound.cshtml" />
-    <AdditionalFiles Include="Views\Organisation\SearchOrganization.cshtml" />
-    <AdditionalFiles Include="Views\Organisation\SearchOrganizationResult.cshtml" />
+    <AdditionalFiles Include="Views\Organisation\SearchOrganisation.cshtml" />
+    <AdditionalFiles Include="Views\Organisation\SearchOrganisationResult.cshtml" />
     <AdditionalFiles Include="Views\UserOrganisation\ChangeOrganisationDetails.cshtml" />
-    <AdditionalFiles Include="Views\UserOrganisation\OrganizationDetails.cshtml" />
+    <AdditionalFiles Include="Views\UserOrganisation\OrganisationDetails.cshtml" />
     <AdditionalFiles Include="Views\UserOrganisation\UserOrganisation.cshtml" />
     <AdditionalFiles Include="Views\UserOrganisation\_ApplicationsCard.cshtml" />
     <AdditionalFiles Include="Views\UserOrganisation\_ProgrammesToApply.cshtml" />

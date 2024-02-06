@@ -5,7 +5,7 @@ using MediatR;
 
 namespace HE.Investments.Account.Domain.Organisation.QueryHandlers;
 
-public class GetOrganizationBasicInformationQueryHandler : IRequestHandler<GetOrganizationBasicInformationQuery, GetOrganizationBasicInformationQueryResponse>
+public class GetOrganizationBasicInformationQueryHandler : IRequestHandler<GetOrganisationBasicInformationQuery, GetOrganizationBasicInformationQueryResponse>
 {
     private readonly IOrganizationRepository _organizationRepository;
 
@@ -17,7 +17,7 @@ public class GetOrganizationBasicInformationQueryHandler : IRequestHandler<GetOr
         _accountUserContext = accountUserContext;
     }
 
-    public async Task<GetOrganizationBasicInformationQueryResponse> Handle(GetOrganizationBasicInformationQuery request, CancellationToken cancellationToken)
+    public async Task<GetOrganizationBasicInformationQueryResponse> Handle(GetOrganisationBasicInformationQuery request, CancellationToken cancellationToken)
     {
         var account = await _accountUserContext.GetSelectedAccount();
         var result = await _organizationRepository.GetBasicInformation(account.SelectedOrganisationId(), cancellationToken);

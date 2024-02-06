@@ -1,9 +1,7 @@
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
-@using Microsoft.AspNetCore.Mvc.TagHelpers
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Input
+@using HE.Investments.Account.WWW.Views.UserOrganisation
 @model HE.Investments.Account.Contract.Organisation.OrganisationDetailsViewModel
 @{
-    ViewData["Title"] = "Request to change organisation details";
+    ViewData["Title"] = UserOrganisationPageTitles.ChangeOrganisationDetails;
 }
 
 <gds-div-grid-column-two-thirds>
@@ -14,22 +12,22 @@
     <form asp-controller="UserOrganisation" asp-action="ChangeOrganisationDetails" asp-method="post" novalidate>
         <gds-field-set role="group">
             <gds-legend size="ControlSize.L" class="govuk-!-margin-bottom-6">
-                <gds-fieldset-heading>
-                    Request to change organisation details
-                </gds-fieldset-heading>
+                <h1 class="govuk-fieldset__heading">
+                    @UserOrganisationPageTitles.ChangeOrganisationDetails
+                </h1>
             </gds-legend>
 
             <gds-input
                 govuk-formgroup-asp-for="Name"
                 name="Name"
                 asp-labeltext="Registered company name"
-                value=@Model?.Name/>
+                value=@Model.Name/>
 
             <gds-input
                 govuk-formgroup-asp-for="PhoneNumber"
                 name="PhoneNumber"
                 asp-labeltext="Organisation phone number"
-                value=@Model?.PhoneNumber/>
+                value=@Model.PhoneNumber/>
 
             <gds-input
                 govuk-formgroup-asp-for="AddressLine1"
@@ -59,9 +57,7 @@
 
         </gds-field-set>
 
-        <button class="govuk-button" data-module="govuk-button" name="action" type="submit" id="save-and-continue-button">
-            Send request
-        </button>
+        <vc:form-button text="Send request"/>
     </form>
 
 </gds-div-grid-column-two-thirds>

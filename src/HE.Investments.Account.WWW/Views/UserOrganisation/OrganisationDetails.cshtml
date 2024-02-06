@@ -1,8 +1,10 @@
 @using HE.Investments.Account.Contract.Organisation
+@using HE.Investments.Account.WWW.Views.UserOrganisation
 @using HE.Investments.Loans.Common.Utils.Constants.ViewName
-@using Microsoft.AspNetCore.Mvc.TagHelpers
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
 @model HE.Investments.Account.Contract.Organisation.OrganisationDetailsViewModel
+@{
+    ViewData["Title"] = UserOrganisationPageTitles.Details(Model.Name);
+}
 
 <div class="govuk-grid-column-full">
     <form asp-controller="UserOrganisation" asp-action="Details" asp-method="post" novalidate>
@@ -13,10 +15,10 @@
         <partial name="~/Partials/_Notification.cshtml" />
 
         <h1 class="govuk-heading-l govuk-!-margin-bottom-9">
-            Manage @Model.Name details
+            @UserOrganisationPageTitles.Details(Model.Name)
         </h1>
 
-        <h3 class="govuk-heading-m" data-testid="user-organisation-details">
+        <h3 class="govuk-heading-m">
             Organisation details
         </h3>
 
@@ -24,26 +26,26 @@
 
             @await Html.PartialAsync("_TitleValueRow", new ViewDataDictionary(ViewData)
                    {
-                       { "Title", OrganisationDetailsView.Name },
-                       { "Value", Model.Name },
+                       { "RowTitle", OrganisationDetailsView.Name },
+                       { "RowValue", Model.Name },
                    })
 
             @await Html.PartialAsync("_TitleValueRow", new ViewDataDictionary(ViewData)
                    {
-                       { "Title", OrganisationDetailsView.PhoneNumber },
-                       { "Value", Model.PhoneNumber },
+                       { "RowTitle", OrganisationDetailsView.PhoneNumber },
+                       { "RowValue", Model.PhoneNumber },
                    })
 
             @await Html.PartialAsync("_TitleValueRow", new ViewDataDictionary(ViewData)
                    {
-                       { "Title", OrganisationDetailsView.Address },
-                       { "Value", Model.AddressLines },
+                       { "RowTitle", OrganisationDetailsView.Address },
+                       { "RowValue", Model.AddressLines },
                    })
 
             @await Html.PartialAsync("_TitleValueRow", new ViewDataDictionary(ViewData)
                    {
-                       { "Title", OrganisationDetailsView.HouseNumber },
-                       { "Value", Model.HouseNumber },
+                       { "RowTitle", OrganisationDetailsView.HouseNumber },
+                       { "RowValue", Model.HouseNumber },
                    })
 
         </gds-summary-list>
@@ -58,7 +60,7 @@
         @if (Model.ChangeRequestState == OrganisationChangeRequestState.NoPendingRequest)
         {
             <gds-p>
-                <gds-link href=@Url.Action("ChangeOrganisationDetails", "UserOrganisation") id="request-details-change-link">
+                <gds-link href=@Url.Action("ChangeOrganisationDetails", "UserOrganisation") data-testId="request-details-change-link">
                     @OrganisationDetailsView.NoPendingRequest
                 </gds-link>
             </gds-p>
