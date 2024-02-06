@@ -2,7 +2,7 @@
 @using HE.Investment.AHP.Contract.Site
 @using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
 @using HE.Investment.AHP.WWW.Views.Site
-@model SiteModel
+@model Section106Dto
 @{
     ViewData["Title"] = SitePageTitles.SiteSection106Agreement;
 }
@@ -11,7 +11,7 @@
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
     <form asp-controller="Site" asp-action="Section106Agreement" asp-method="post" novalidate>
-        <vc:form-header title="@SitePageTitles.SiteSection106Agreement" caption="@Model?.Name" additional-css-class="govuk-!-padding-top-8"></vc:form-header>
+        <vc:form-header title="@SitePageTitles.SiteSection106Agreement" caption="@Model.SiteName" additional-css-class="govuk-!-padding-top-8"></vc:form-header>
         <gds-p>
             You'll need to provide details of any section 106 agreements (or planning conditions
             performing the same purpose) that are in place or under discussion for your site.
@@ -30,11 +30,11 @@
             discuss funding eligibility with your Growth Manager.
         </gds-p>
 
-        <vc:radio-yes-no field-name="@nameof(Model.Section106GeneralAgreement)"
+        <vc:radio-yes-no field-name="@nameof(Model.GeneralAgreement)"
             title="Is there a s106 agreement in place, or in discussion, for this site?"
-            value="@Model?.Section106GeneralAgreement"/>
+            value="@Model.GeneralAgreement"/>
 
-        @Html.HiddenFor(x => x.Id)
+        @Html.HiddenFor(x => x.SiteId)
 
         <vc:form-button />
     </form>

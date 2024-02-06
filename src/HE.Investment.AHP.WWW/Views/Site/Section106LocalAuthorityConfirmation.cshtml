@@ -1,7 +1,7 @@
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investment.AHP.Contract.Site
 @using HE.Investment.AHP.WWW.Views.Site
-@model SiteModel
+@model Section106Dto
 @{
     ViewData["Title"] = SitePageTitles.SiteSection106LocalAuthorityConfirmation;
 }
@@ -10,13 +10,13 @@
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
     <form asp-controller="Site" asp-action="Section106LocalAuthorityConfirmation" asp-method="post" novalidate>
-        <vc:form-header title="@SitePageTitles.SiteSection106LocalAuthorityConfirmation" caption="@Model?.Name" additional-css-class="govuk-!-padding-top-8"></vc:form-header>
+        <vc:form-header title="@SitePageTitles.SiteSection106LocalAuthorityConfirmation" caption="@Model.SiteName" additional-css-class="govuk-!-padding-top-8"></vc:form-header>
 
-        <vc:text-area-input-with-counter field-name="@nameof(Model.Section106LocalAuthorityConfirmation)"
-                                         value="@Model?.Section106LocalAuthorityConfirmation"
+        <vc:text-area-input-with-counter field-name="@nameof(Model.LocalAuthorityConfirmation)"
+                                         value="@Model.LocalAuthorityConfirmation"
                                          hint="For example, any written confirmation or email." />
 
-        @Html.HiddenFor(x => x.Id)
+        @Html.HiddenFor(x => x.SiteId)
 
         <vc:form-button />
     </form>

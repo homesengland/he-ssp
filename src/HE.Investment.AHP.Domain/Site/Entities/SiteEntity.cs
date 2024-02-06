@@ -9,6 +9,7 @@ using HE.Investment.AHP.Domain.Site.ValueObjects.TenderingStatus;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using LocalAuthority = Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
+using Section106 = HE.Investment.AHP.Domain.Site.ValueObjects.Section106;
 
 namespace HE.Investment.AHP.Domain.Site.Entities;
 
