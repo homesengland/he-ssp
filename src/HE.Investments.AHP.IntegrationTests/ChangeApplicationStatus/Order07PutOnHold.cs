@@ -30,7 +30,7 @@ public class Order07PutOnHold : AhpIntegrationTest
         taskListPage
             .UrlEndWith(ApplicationPagesUrl.TaskListSuffix)
             .HasTitle(ApplicationData.ApplicationName)
-            .HasApplicationStatus(ApplicationStatus.ApplicationSubmitted.GetDescription())
+            .HasStatusTagByTestId(ApplicationStatus.ApplicationSubmitted.GetDescription(), "application-status")
             .HasLinkWithTestId("put-application-on-hold", out var onHoldLink);
 
         // when
@@ -63,7 +63,7 @@ public class Order07PutOnHold : AhpIntegrationTest
             .UrlEndWith(ApplicationPagesUrl.TaskListSuffix)
             .HasTitle(ApplicationData.ApplicationName)
             .HasSuccessNotificationBanner("You’ll be able to reactivate and submit this application at any time.")
-            .HasApplicationStatus(ApplicationStatus.OnHold.GetDescription());
+            .HasStatusTagByTestId(ApplicationStatus.OnHold.GetDescription(), "application-status");
 
         SaveCurrentPage();
     }

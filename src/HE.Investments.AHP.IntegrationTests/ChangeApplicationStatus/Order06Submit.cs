@@ -30,7 +30,7 @@ public class Order06Submit : AhpIntegrationTest
         taskListPage
             .UrlEndWith(ApplicationPagesUrl.TaskListSuffix)
             .HasTitle(ApplicationData.ApplicationName)
-            .HasApplicationStatus(ApplicationStatus.Draft.GetDescription())
+            .HasStatusTagByTestId(ApplicationStatus.Draft.GetDescription(), "application-status")
             .HasLinkWithTestId("check-and-submit-application", out var checkAndSubmitLink);
 
         // when
@@ -64,7 +64,7 @@ public class Order06Submit : AhpIntegrationTest
         taskListPage
             .UrlEndWith(ApplicationPagesUrl.TaskListSuffix)
             .HasTitle(ApplicationData.ApplicationName)
-            .HasApplicationStatus(ApplicationStatus.ApplicationSubmitted.GetDescription());
+            .HasStatusTagByTestId(ApplicationStatus.ApplicationSubmitted.GetDescription(), "application-status");
 
         SaveCurrentPage();
     }

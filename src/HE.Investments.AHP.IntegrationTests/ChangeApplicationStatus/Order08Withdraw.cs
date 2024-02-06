@@ -30,7 +30,7 @@ public class Order08Withdraw : AhpIntegrationTest
         taskListPage
             .UrlEndWith(ApplicationPagesUrl.TaskListSuffix)
             .HasTitle(ApplicationData.ApplicationName)
-            .HasApplicationStatus(ApplicationStatus.OnHold.GetDescription())
+            .HasStatusTagByTestId(ApplicationStatus.OnHold.GetDescription(), "application-status")
             .HasLinkWithTestId("withdraw-application", out var withdrawLink);
 
         // when
@@ -63,7 +63,7 @@ public class Order08Withdraw : AhpIntegrationTest
             .UrlEndWith(ApplicationPagesUrl.TaskListSuffix)
             .HasTitle(ApplicationData.ApplicationName)
             .HasSuccessNotificationBanner("You will no longer be able proceed with this application.")
-            .HasApplicationStatus(ApplicationStatus.Withdrawn.GetDescription());
+            .HasStatusTagByTestId(ApplicationStatus.Withdrawn.GetDescription(), "application-status");
 
         SaveCurrentPage();
     }

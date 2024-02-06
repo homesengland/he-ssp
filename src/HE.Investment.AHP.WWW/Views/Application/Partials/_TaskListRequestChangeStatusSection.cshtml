@@ -50,7 +50,8 @@
         </gds-p>
         <link-button
             is-secondary="true"
-            action-url="@Url.Action("Reactivate", "Application", new { applicationId = Model.ApplicationId })">
+            action-url="@Url.Action("Reactivate", "Application", new { applicationId = Model.ApplicationId })"
+            data-testid="reactivate-application">
             Reactivate
         </link-button>
     </div>

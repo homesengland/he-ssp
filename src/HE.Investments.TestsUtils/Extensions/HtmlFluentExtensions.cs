@@ -27,9 +27,9 @@ public static class HtmlFluentExtensions
         return htmlDocument;
     }
 
-    public static IHtmlDocument HasApplicationStatus(this IHtmlDocument htmlDocument, string status)
+    public static IHtmlDocument HasStatusTagByTestId(this IHtmlDocument htmlDocument, string status, string testId)
     {
-        htmlDocument.GetApplicationStatus().Should().Be(status);
+        htmlDocument.GetStatusTagByTestId(testId).Should().Be(status);
         return htmlDocument;
     }
 
