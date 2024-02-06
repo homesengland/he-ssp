@@ -14,6 +14,7 @@ using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Extensions;
@@ -583,11 +584,17 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         CancellationToken cancellationToken)
     {
         var siteId = this.GetSiteIdFromRoute();
+        var redirect = ContinueWithRedirect(new { siteId });
+        var action = HttpContext.Request.Form["action"];
+        if (action == GenericMessages.SaveAndReturn)
+        {
+            redirect = Index(cancellationToken);
+        }
 
         return await this.ExecuteCommand<TViewModel>(
             _mediator,
             command,
-            async () => await ContinueWithRedirect(new { siteId }),
+            async () => await redirect,
             async () =>
             {
                 var siteDetails = await GetSiteDetails(siteId.Value, cancellationToken);
