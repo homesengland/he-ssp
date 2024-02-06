@@ -8,7 +8,7 @@ public class SiteModel
 
     public string? Name { get; set; }
 
-    public Section106? Section106 { get; set; }
+    public Section106Dto? Section106 { get; set; }
 
     public SitePlanningDetails PlanningDetails { get; set; }
 

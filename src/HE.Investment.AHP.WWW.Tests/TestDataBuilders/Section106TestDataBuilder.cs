@@ -79,9 +79,9 @@ public class Section106TestDataBuilder
         return this;
     }
 
-    public Section106 Build()
+    public Section106Dto Build()
     {
-        return new Section106(
+        return new Section106Dto(
             SiteId: _siteId,
             SiteName: _siteName,
             GeneralAgreement: _generalAgreement,

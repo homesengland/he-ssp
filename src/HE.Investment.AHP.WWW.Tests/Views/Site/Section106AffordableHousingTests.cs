@@ -17,14 +17,14 @@ public class Section106AffordableHousingTests : ViewTestBase
     public async Task ShouldDisplayView()
     {
         // given & when
-        var section106 = new Section106(_siteId, _siteName, null);
+        var section106 = new Section106Dto(_siteId, _siteName, null);
         var document = await Render(_viewPath, section106);
 
         // then
         document
             .HasTitle(SitePageTitles.SiteSection106AffordableHousing)
             .HasPageHeader(_siteName, @SitePageTitles.SiteSection106AffordableHousing)
-            .HasGdsRadioInputWithValues(nameof(Section106.AffordableHousing), "True", "False")
+            .HasGdsRadioInputWithValues(nameof(Section106Dto.AffordableHousing), "True", "False")
             .HasGdsSaveAndContinueButton()
             .HasGdsBackLink(false);
     }
@@ -35,8 +35,8 @@ public class Section106AffordableHousingTests : ViewTestBase
         // given
         var errorMessage = "some test error";
         var modelState = new ModelStateDictionary();
-        var section106 = new Section106(_siteId, _siteName, null);
-        modelState.AddModelError(nameof(Section106.AffordableHousing), errorMessage);
+        var section106 = new Section106Dto(_siteId, _siteName, null);
+        modelState.AddModelError(nameof(Section106Dto.AffordableHousing), errorMessage);
 
         // when
         var document = await Render(_viewPath, section106, modelStateDictionary: modelState);
@@ -45,7 +45,7 @@ public class Section106AffordableHousingTests : ViewTestBase
         document
             .HasTitle(SitePageTitles.SiteSection106AffordableHousing)
             .HasPageHeader(_siteName, @SitePageTitles.SiteSection106AffordableHousing)
-            .HasGdsRadioInputWithValues(nameof(Section106.AffordableHousing), "True", "False")
+            .HasGdsRadioInputWithValues(nameof(Section106Dto.AffordableHousing), "True", "False")
             .HasGdsSaveAndContinueButton()
             .HasGdsBackLink(false)
             .HasOneValidationMessages(errorMessage);

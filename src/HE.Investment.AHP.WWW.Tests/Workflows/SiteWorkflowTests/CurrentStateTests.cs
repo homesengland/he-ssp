@@ -18,7 +18,7 @@ public class CurrentStateTests
 
     private readonly LocalAuthority _localAuthority = new() { Id = "1", Name = "Liverpool" };
 
-    private readonly Section106 _section106 = new("3", "TestSite", false);
+    private readonly Section106Dto _section106 = new("3", "TestSite", false);
 
     [Fact]
     public void ShouldReturnCheckAnswers_WhenAllDateProvided()
@@ -57,7 +57,7 @@ public class CurrentStateTests
     public void ShouldReturnSection106GeneralAgreement_WhenGeneralAgreementNotProvided()
     {
         // given
-        var section106 = new Section106("3", "TestSite", null);
+        var section106 = new Section106Dto("3", "TestSite", null);
 
         var workflow = SiteWorkflowFactory.BuildWorkflow(SiteWorkflowState.Start, section106: section106);
 
@@ -72,7 +72,7 @@ public class CurrentStateTests
     public void ShouldReturnSection106AffordableHousing_WhenAffordableHousingNotProvided()
     {
         // given
-        var section106 = new Section106("3", "TestSite", true, null);
+        var section106 = new Section106Dto("3", "TestSite", true, null);
 
         var workflow = SiteWorkflowFactory.BuildWorkflow(SiteWorkflowState.Start, section106: section106);
 
@@ -87,7 +87,7 @@ public class CurrentStateTests
     public void ShouldReturnSection106OnlyAffordableHousing_WhenOnlyAffordableHousingNotProvided()
     {
         // given
-        var section106 = new Section106("3", "TestSite", true, true, null);
+        var section106 = new Section106Dto("3", "TestSite", true, true, null);
 
         var workflow = SiteWorkflowFactory.BuildWorkflow(SiteWorkflowState.Start, section106: section106);
 
@@ -102,7 +102,7 @@ public class CurrentStateTests
     public void ShouldReturnSection106AdditionalAffordableHousing_WhenAdditionalAffordableHousingNotProvided()
     {
         // given
-        var section106 = new Section106("3", "TestSite", true, true, false);
+        var section106 = new Section106Dto("3", "TestSite", true, true, false);
 
         var workflow = SiteWorkflowFactory.BuildWorkflow(SiteWorkflowState.Start, section106: section106);
 
@@ -117,7 +117,7 @@ public class CurrentStateTests
     public void ShouldReturnSection106CapitalFundingEligibility_WhenCapitalFundingEligibilityNotProvided()
     {
         // given
-        var section106 = new Section106("3", "TestSite", true, true, false, true);
+        var section106 = new Section106Dto("3", "TestSite", true, true, false, true);
 
         var workflow = SiteWorkflowFactory.BuildWorkflow(SiteWorkflowState.Start, section106: section106);
 
@@ -132,7 +132,7 @@ public class CurrentStateTests
     public void ShouldReturnSection106LocalAuthorityConfirmation_WhenLocalAuthorityConfirmationNotProvided()
     {
         // given
-        var section106 = new Section106("3", "TestSite", true, true, false, true, false);
+        var section106 = new Section106Dto("3", "TestSite", true, true, false, true, false);
 
         var workflow = SiteWorkflowFactory.BuildWorkflow(SiteWorkflowState.Start, section106: section106);
 

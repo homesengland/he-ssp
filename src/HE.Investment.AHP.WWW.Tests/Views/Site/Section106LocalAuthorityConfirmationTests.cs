@@ -17,14 +17,14 @@ public class Section106LocalAuthorityConfirmationTests : ViewTestBase
     public async Task ShouldDisplayView()
     {
         // given & when
-        var section106 = new Section106(_siteId, _siteName, null);
+        var section106 = new Section106Dto(_siteId, _siteName, null);
         var document = await Render(_viewPath, section106);
 
         // then
         document
             .HasTitle(SitePageTitles.SiteSection106LocalAuthorityConfirmation)
             .HasPageHeader(_siteName, @SitePageTitles.SiteSection106LocalAuthorityConfirmation)
-            .HasTextAreaInput(nameof(Section106.LocalAuthorityConfirmation))
+            .HasTextAreaInput(nameof(Section106Dto.LocalAuthorityConfirmation))
             .HasGdsSaveAndContinueButton()
             .HasGdsBackLink(false);
     }
@@ -35,7 +35,7 @@ public class Section106LocalAuthorityConfirmationTests : ViewTestBase
         // given
         var errorMessage = "some test error";
         var modelState = new ModelStateDictionary();
-        var section106 = new Section106(_siteId, _siteName, null);
+        var section106 = new Section106Dto(_siteId, _siteName, null);
         modelState.AddModelError(nameof(SiteModel.Section106.LocalAuthorityConfirmation), errorMessage);
 
         // when
@@ -45,7 +45,7 @@ public class Section106LocalAuthorityConfirmationTests : ViewTestBase
         document
             .HasTitle(SitePageTitles.SiteSection106LocalAuthorityConfirmation)
             .HasPageHeader(_siteName, @SitePageTitles.SiteSection106LocalAuthorityConfirmation)
-            .HasTextAreaInput(nameof(Section106.LocalAuthorityConfirmation))
+            .HasTextAreaInput(nameof(Section106Dto.LocalAuthorityConfirmation))
             .HasGdsSaveAndContinueButton()
             .HasGdsBackLink(false)
             .HasOneValidationMessages(errorMessage);

@@ -31,7 +31,7 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
         {
             Id = site.Id.Value,
             Name = site.Name.Value,
-            Section106 = new Section106(
+            Section106 = new Section106Dto(
                 site.Id.ToString(),
                 site.Name.Value,
                 site.Section106?.GeneralAgreement,

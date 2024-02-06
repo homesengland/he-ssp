@@ -1,8 +1,8 @@
-using HE.Investments.Common.Contract;
+﻿using HE.Investments.Common.Contract;
 
 namespace HE.Investment.AHP.Contract.Site;
 
-public record Section106(
+public record Section106Dto(
     string SiteId,
     string SiteName,
     bool? GeneralAgreement,

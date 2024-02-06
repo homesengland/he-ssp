@@ -8,7 +8,7 @@ public static class SiteWorkflowFactory
 {
     public static SiteWorkflow BuildWorkflow(
         SiteWorkflowState currentSiteWorkflowState,
-        Section106? section106 = null,
+        Section106Dto? section106 = null,
         LocalAuthority? localAuthority = null,
         string? name = null,
         SitePlanningDetails? planningDetails = null,
