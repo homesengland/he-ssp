@@ -209,8 +209,6 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
     private bool IsTenderForWorksContractOrContractingHasNotYetBegun() => _siteModel?.TenderingStatusDetails.TenderingStatus is SiteTenderingStatus.TenderForWorksContract or
         SiteTenderingStatus.ContractingHasNotYetBegun;
 
-    private bool IsNotApplicableOnMissing() => _siteModel?.TenderingStatusDetails.TenderingStatus is SiteTenderingStatus.NotApplicable or null;
-
     private bool IsSection106EligibleWithAdditionalAffordableHousing() => _siteModel?.Section106?.CapitalFundingEligibility == false && _siteModel?.Section106?.AdditionalAffordableHousing == true;
 
     private bool IsSection106EligibleWithoutAdditionalAffordableHousing() => _siteModel?.Section106?.CapitalFundingEligibility == false && _siteModel?.Section106?.AdditionalAffordableHousing == false;
