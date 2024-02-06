@@ -506,6 +506,13 @@ public class SiteController : WorkflowController<SiteWorkflowState>
             cancellationToken);
     }
 
+    [HttpGet("{siteId}/check-answers")]
+    [WorkflowState(SiteWorkflowState.CheckAnswers)]
+    public IActionResult CheckAnswers()
+    {
+        return View();
+    }
+
     protected override async Task<IStateRouting<SiteWorkflowState>> Routing(SiteWorkflowState currentState, object? routeData = null)
     {
         SiteModel? siteModel = null;

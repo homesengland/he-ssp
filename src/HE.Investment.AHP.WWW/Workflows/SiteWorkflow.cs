@@ -183,7 +183,7 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
         _machine.Configure(SiteWorkflowState.TenderingStatus)
             .PermitIf(Trigger.Continue, SiteWorkflowState.ContractorDetails, IsConditionalOrUnconditionalWorksContract)
             .PermitIf(Trigger.Continue, SiteWorkflowState.IntentionToWorkWithSme, IsTenderForWorksContractOrContractingHasNotYetBegun)
-            .PermitIf(Trigger.Continue, SiteWorkflowState.CheckAnswers, IsNotApplicableOnMissing)
+            .PermitIf(Trigger.Continue, SiteWorkflowState.CheckAnswers, IsNotApplicableOrMissing)
             .Permit(Trigger.Back, SiteWorkflowState.BuildingForHealthyLife);
 
         _machine.Configure(SiteWorkflowState.ContractorDetails)
@@ -214,4 +214,6 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
     private bool IsSection106EligibleWithAdditionalAffordableHousing() => _siteModel?.Section106?.CapitalFundingEligibility == false && _siteModel?.Section106?.AdditionalAffordableHousing == true;
 
     private bool IsSection106EligibleWithoutAdditionalAffordableHousing() => _siteModel?.Section106?.CapitalFundingEligibility == false && _siteModel?.Section106?.AdditionalAffordableHousing == false;
+
+    private bool IsNotApplicableOrMissing() => _siteModel?.TenderingStatusDetails.TenderingStatus is SiteTenderingStatus.NotApplicable or null;
 }

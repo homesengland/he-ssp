@@ -2,10 +2,10 @@
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.Components.BackLinkWithCallback
 @using HE.Investments.Common.WWW.Components.SectionSummary
+@using HE.Investment.AHP.WWW.Views.Application
 @model HE.Investment.AHP.WWW.Models.Application.ApplicationSummaryViewModel
 @{
     ViewData["Title"] = "Submit application";
-    var isEditable = Model.Sections.FirstOrDefault()?.Items?.Any(x => !x.IsEditable) ?? false;
 }
 <gds-div-grid-column-two-thirds>
 
@@ -13,7 +13,7 @@
 
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
-    <vc:form-header title="Check your answers before submitting your application"/>
+    <vc:form-header title="@ApplicationPageTitles.CheckAnswers"/>
 
     @foreach (var item in Model.Sections)
     {
@@ -21,7 +21,7 @@
     }
 
     <form asp-controller="Application" asp-action="Submit" asp-route-applicationId="@Model.ApplicationId" asp-method="post" novalidate>
-        <vc:form-button text="Submit" is-disabled="@isEditable"/>
+        <vc:form-button text="Submit"/>
     </form>
 
 </gds-div-grid-column-two-thirds>

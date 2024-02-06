@@ -36,4 +36,10 @@ public static class SitePagesUrl
     public static string SiteNationalDesignGuide(string siteId) => $"ahp/site/{siteId}/national-design-guide";
 
     public static string SiteConfirm(string siteId) => $"ahp/site/{siteId}/confirm-select";
+
+    public static string SiteTenderingStatus(string siteId) => $"ahp/site/{siteId}/tendering-status";
+
+    public static string SiteContractorDetails(string siteId) => $"ahp/site/{siteId}/contractor-details";
+
+    public static string SiteCheckAnswers(string siteId) => $"ahp/site/{siteId}/check-answers";
 }
