@@ -1,5 +1,5 @@
 @using HE.Investments.Common.WWW.TagHelpers
-@model (string fieldName, string header, string title, string hint)
+@model (string fieldName, string header, string title, string description, string hint)
 
 <h1 class="govuk-label-wrapper">
     @if (!string.IsNullOrWhiteSpace(Model.header))
@@ -13,6 +13,13 @@
     {
         <label class="govuk-label govuk-label--m" for="@Model.fieldName">
             @Model.title
+        </label>
+    }
+
+    @if (!string.IsNullOrWhiteSpace(Model.description))
+    {
+        <label class="govuk-label" for="@Model.fieldName">
+            @Model.description
         </label>
     }
 </h1>

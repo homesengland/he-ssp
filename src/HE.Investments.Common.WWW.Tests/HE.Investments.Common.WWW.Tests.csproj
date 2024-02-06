@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Components\DateInputTests\DateInputTests.cshtml" />
+    <EmbeddedResource Include="Components\RadioListContentTests\RadioListContentTests.cshtml" />
     <EmbeddedResource Include="Components\SelectListTests\SelectListTests.cshtml" />
     <EmbeddedResource Include="_ViewImports.cshtml" />
     <EmbeddedResource Include="Components\SectionSummaryItemTests\SectionSummaryItemTests.cshtml" />

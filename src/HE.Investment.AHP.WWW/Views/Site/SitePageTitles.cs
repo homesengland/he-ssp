@@ -49,4 +49,6 @@ public static class SitePageTitles
     public const string ContractorDetails = "Contractor details";
 
     public const string IntentionToWorkWithSme = "Are you intending to work with a small to medium-sized enterprise (SME) contractor?";
+
+    public const string StrategicSite = "Is this a strategic site?";
 }

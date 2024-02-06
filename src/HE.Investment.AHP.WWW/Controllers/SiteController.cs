@@ -511,6 +511,28 @@ public class SiteController : WorkflowController<SiteWorkflowState>
             cancellationToken);
     }
 
+    [HttpGet("{siteId}/strategic-site")]
+    [WorkflowState(SiteWorkflowState.StrategicSite)]
+    public async Task<IActionResult> StrategicSite([FromRoute] string siteId, CancellationToken cancellationToken)
+    {
+        var siteModel = await GetSiteDetails(siteId, cancellationToken);
+        return View("StrategicSite", siteModel.StrategicSiteDetails);
+    }
+
+    [HttpPost("{siteId}/strategic-site")]
+    [WorkflowState(SiteWorkflowState.StrategicSite)]
+    public async Task<IActionResult> StrategicSite(StrategicSite model, CancellationToken cancellationToken)
+    {
+        return await ExecuteSiteCommand<StrategicSite>(
+            new ProvideStrategicSiteDetailsCommand(
+                this.GetSiteIdFromRoute(),
+                model.IsStrategicSite,
+                model.StrategicSiteName),
+            nameof(StrategicSite),
+            savedModel => model,
+            cancellationToken);
+    }
+
     [HttpGet("{siteId}/check-answers")]
     [WorkflowState(SiteWorkflowState.CheckAnswers)]
     public IActionResult CheckAnswers()
