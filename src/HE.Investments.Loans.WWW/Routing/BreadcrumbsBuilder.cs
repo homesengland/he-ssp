@@ -9,16 +9,15 @@ public class BreadcrumbsBuilder : BreadcrumbsBuilderBase
 
     public BreadcrumbsBuilder WithOrganisations()
     {
-        //// TODO: Fix link for AHP when organisations list will be ready
-        AddBreadcrumb("Your Organisations");
+        AddBreadcrumb("Your Organisations", nameof(AccountsController.OrganisationDashboard), GetControllerName(nameof(AccountsController)));
 
         return this;
     }
 
     public BreadcrumbsBuilder WithOrganisation(string name)
     {
-        //// TODO: Fix link - for AHP should point to organisation with specific Id
-        AddBreadcrumb(name, nameof(UserOrganisationController.Index), GetControllerName(nameof(UserOrganisationController)));
+        //// TODO: Fix link - should point to organisation with specific Id
+        AddBreadcrumb(name, nameof(AccountsController.OrganisationDashboard), GetControllerName(nameof(AccountsController)));
 
         return this;
     }

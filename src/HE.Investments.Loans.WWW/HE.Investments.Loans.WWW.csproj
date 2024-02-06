@@ -25,29 +25,21 @@
     <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="7.0.13" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
     <PackageReference Include="StackExchange.Redis" Version="2.6.122" />
-	  <PackageReference Include="Stateless" Version="5.13.0" />
-	  <PackageReference Include="He.AspNetCore.Mvc.Gds.Components" Version="1.0.154" />
-	  <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.15" />
-	  <PackageReference Include="System.Net.Http" Version="4.3.4" />
-	  <PackageReference Include="System.Security.Cryptography.Pkcs" Version="7.0.3" />
-	  <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
+    <PackageReference Include="Stateless" Version="5.13.0" />
+    <PackageReference Include="He.AspNetCore.Mvc.Gds.Components" Version="1.0.154" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.15" />
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
+    <PackageReference Include="System.Security.Cryptography.Pkcs" Version="7.0.3" />
+    <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\He.AspNetCore.Mvc.Gds.Components\He.AspNetCore.Mvc.Gds.Components.csproj" />
     <ProjectReference Include="..\HE.Investments.Loans.BusinessLogic\HE.Investments.Loans.BusinessLogic.csproj" />
     <ProjectReference Include="..\HE.Investments.Loans.Common\HE.Investments.Loans.Common.csproj" />
-    <ProjectReference Include="..\HE.Investments.Account.Contract\HE.Investments.Account.Contract.csproj" />
     <ProjectReference Include="..\HE.Investments.Common.WWW\HE.Investments.Common.WWW.csproj" />
     <ProjectReference Include="..\HE.Investments.DocumentService\HE.Investments.DocumentService.csproj" />
     <ProjectReference Include="..\HE.Investments.Organisation\HE.Investments.Organisation.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Update="Views\Project\ManyHomes.cshtml">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
   </ItemGroup>
 
 </Project>

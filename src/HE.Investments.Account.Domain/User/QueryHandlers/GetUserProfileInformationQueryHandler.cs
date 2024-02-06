@@ -7,7 +7,7 @@ using MediatR;
 
 namespace HE.Investments.Account.Domain.User.QueryHandlers;
 
-public class GetUserProfileInformationQueryHandler : IRequestHandler<GetUserProfileDetailsQuery, UserProfileDetailsModel>
+public class GetUserProfileInformationQueryHandler : IRequestHandler<GetUserProfileDetailsQuery, UserProfileDetails>
 {
     private readonly IProfileRepository _profileRepository;
 
@@ -19,12 +19,12 @@ public class GetUserProfileInformationQueryHandler : IRequestHandler<GetUserProf
         _userContext = userContext;
     }
 
-    public async Task<UserProfileDetailsModel> Handle(GetUserProfileDetailsQuery request, CancellationToken cancellationToken)
+    public async Task<UserProfileDetails> Handle(GetUserProfileDetailsQuery request, CancellationToken cancellationToken)
     {
         var userGlobalId = request.UserGlobalId ?? UserGlobalId.From(_userContext.UserGlobalId);
         var userProfileInformation = await _profileRepository.GetProfileDetails(userGlobalId);
 
-        return new UserProfileDetailsModel
+        return new UserProfileDetails
         {
             FirstName = userProfileInformation.FirstName?.ToString(),
             LastName = userProfileInformation.LastName?.ToString(),

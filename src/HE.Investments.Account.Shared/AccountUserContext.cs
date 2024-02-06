@@ -22,12 +22,12 @@ public class AccountUserContext : IAccountUserContext
         _userContext = userContext;
         _userProfile = new CachedEntity<UserProfileDetails>(
             cacheService,
-            CacheKeys.ProfileDetails(_userContext.UserGlobalId),
+            AccountCacheKeys.ProfileDetails(_userContext.UserGlobalId),
             async () => await accountRepository.GetProfileDetails(UserGlobalId) ??
                         throw new NotFoundException(nameof(UserProfileDetails), UserGlobalId.ToString()));
         _userAccounts = new CachedEntity<IList<UserAccount>>(
             cacheService,
-            CacheKeys.UserAccounts(_userContext.UserGlobalId),
+            AccountCacheKeys.UserAccounts(_userContext.UserGlobalId),
             async () => await accountRepository.GetUserAccounts(UserGlobalId, _userContext.Email));
     }
 

@@ -3,4 +3,4 @@ using MediatR;
 
 namespace HE.Investments.Account.Contract.User.Queries;
 
-public record GetUserProfileDetailsQuery(UserGlobalId? UserGlobalId = null) : IRequest<UserProfileDetailsModel>;
+public record GetUserProfileDetailsQuery(UserGlobalId? UserGlobalId = null) : IRequest<UserProfileDetails>;

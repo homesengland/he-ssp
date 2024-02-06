@@ -3,9 +3,7 @@ using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.Policies;
 using HE.Investment.AHP.Domain.Delivery.Repositories;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
-using HE.Investments.Account.Contract.UserOrganisation;
 using HE.Investments.Account.Shared;
-using HE.Investments.Account.Shared.Repositories;
 using HE.Investments.Common.Contract.Validators;
 
 namespace HE.Investment.AHP.Domain.Delivery.CommandHandlers;

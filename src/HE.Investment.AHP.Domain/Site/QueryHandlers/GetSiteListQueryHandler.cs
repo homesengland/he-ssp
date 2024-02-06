@@ -25,7 +25,7 @@ public class GetSiteListQueryHandler : IRequestHandler<GetSiteListQuery, SitesLi
         var sitesPage = await _siteRepository.GetSites(selectedAccount, request.PaginationRequest, cancellationToken);
 
         return new SitesListModel(
-            selectedAccount.OrganisationName,
+            selectedAccount.Organisation?.RegisteredCompanyName ?? string.Empty,
             new PaginationResult<SiteBasicModel>(
                 sitesPage.Items.Select(x => new SiteBasicModel(x.Id.Value, x.Name.Value, x.LocalAuthority?.Name, x.Status)).ToList(),
                 sitesPage.CurrentPage,

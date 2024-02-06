@@ -1,6 +1,6 @@
 @using HE.Investments.Common.WWW.Extensions
 @using HE.Investments.Common.WWW.Models
-@using HE.Investments.Common.WWW.Components.RadioListHeader
+@using HE.Investments.Common.WWW.Components.InputListHeader
 @using HE.Investments.Common.WWW.Components.ErrorMessage
 @using HE.Investments.Common.WWW.Components.RadioListContent
 @using HE.Investments.Common.WWW.Components
@@ -20,7 +20,7 @@
 {
     <gds-div-form-group class="@groupClass">
         <gds-field-set>
-            <vc:radio-list-header header-component="@Model.headerComponent" header="@Model.header" title="@Model.title" hint="@Model.hint"/>
+            <vc:input-list-header header-component="@Model.headerComponent" header="@Model.header" title="@Model.title" hint="@Model.hint"/>
 
             <vc:error-message field-name="@Model.fieldName"/>
 

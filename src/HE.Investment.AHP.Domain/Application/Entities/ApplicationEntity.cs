@@ -105,6 +105,13 @@ public class ApplicationEntity : DomainEntity
         Publish(new ApplicationHasBeenPutOnHoldEvent(Id));
     }
 
+    public async Task Reactivate(IChangeApplicationStatus applicationReactivate, ApplicationStatus newApplicationStatus, OrganisationId organisationId, CancellationToken cancellationToken)
+    {
+        Status = _modificationTracker.Change(Status, newApplicationStatus);
+
+        await applicationReactivate.ChangeApplicationStatus(this, organisationId, null, cancellationToken);
+    }
+
     public async Task Withdraw(IChangeApplicationStatus applicationWithdraw, WithdrawReason? newWithdrawReason, OrganisationId organisationId, CancellationToken cancellationToken)
     {
         var statusesAfterSubmit = ApplicationStatusDivision.GetAllStatusesAllowedToChangeApplicationStatusToWithdrawn();

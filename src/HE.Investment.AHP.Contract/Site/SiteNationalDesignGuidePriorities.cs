@@ -4,7 +4,7 @@ namespace HE.Investment.AHP.Contract.Site;
 
 public class SiteNationalDesignGuidePriorities
 {
-    public string? Id { get; set; }
+    public SiteId? Id { get; set; }
 
     public string? Name { get; set; }
 

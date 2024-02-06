@@ -8,19 +8,22 @@
     var canSubmitApplication = await AccountAccessContext.CanSubmitApplication();
 }
 
-<div>
-    <gds-h2>Check and submit</gds-h2>
-    @if (incompleteSectionsCount > 0 && Model.CanBeSubmitted())
-    {
-        <gds-p>You must complete all sections before you can submit your application.</gds-p>
-    }
-    <link-button
-        action-url="@Url.Action("CheckAnswers", "Application", new { applicationId = Model.ApplicationId })"
-        is-disabled="@(incompleteSectionsCount > 0 || !canSubmitApplication || !Model.CanBeSubmitted())"
-        data-testid="check-and-submit-application">
-        Check and submit application
-    </link-button>
-</div>
+@if (Model.CanBeSubmitted())
+{
+    <div>
+        <gds-h2>Check and submit</gds-h2>
+        @if (incompleteSectionsCount > 0)
+        {
+            <gds-p>You must complete all sections before you can submit your application.</gds-p>
+        }
+        <link-button
+            action-url="@Url.Action("CheckAnswers", "Application", new { applicationId = Model.ApplicationId })"
+            is-disabled="@(incompleteSectionsCount > 0 || !canSubmitApplication)"
+            data-testid="check-and-submit-application">
+            Check and submit application
+        </link-button>
+    </div>
+}
 
 @if (Model.CanBePutOnHold())
 {
@@ -34,6 +37,21 @@
             action-url="@Url.Action("OnHold", "Application", new { applicationId = Model.ApplicationId })"
             data-testid="put-application-on-hold">
             Hold
+        </link-button>
+    </div>
+}
+
+@if (Model.CanReactivate())
+{
+    <div class="govuk-!-margin-top-2">
+        <gds-h2 size="ControlSize.M">Reactivate application</gds-h2>
+        <gds-p>
+            Your application is currently on hold. Reactivating means you will be able to work on or submit this application.
+        </gds-p>
+        <link-button
+            is-secondary="true"
+            action-url="@Url.Action("Reactivate", "Application", new { applicationId = Model.ApplicationId })">
+            Reactivate
         </link-button>
     </div>
 }

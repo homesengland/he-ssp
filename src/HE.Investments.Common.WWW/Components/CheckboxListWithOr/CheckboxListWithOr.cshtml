@@ -1,0 +1,52 @@
+@using HE.Investments.Common.WWW.Components;
+@using HE.Investments.Common.WWW.Models;
+@using HE.Investments.Common.WWW.Extensions;
+@using HE.Investments.Common.WWW.Components.ErrorMessage;
+@using HE.Investments.Common.WWW.Components.InputListHeader;
+@model (string fieldName, DynamicComponentViewModel headerComponent, string header, string title, string hint, IEnumerable<ExtendedSelectListItem> availableOptions, ExtendedSelectListItem alternativeOption)
+
+@{
+    var (hasError, checkboxErrors) = ViewData.ModelState.GetErrors(Model.fieldName);
+    var groupClass = hasError ? "govuk-form-group--error" : string.Empty;
+}
+
+<gds-div-form-group class="@groupClass">
+    <gds-field-set>
+        @if (@Model.headerComponent != null)
+        {
+            <vc:dynamic-component component="@Model.headerComponent" />
+        }
+
+        <vc:error-message field-name="@Model.fieldName" />
+
+        <gds-field-set class="govuk-!-margin-bottom-6">
+
+            <span class="govuk-caption-m govuk-!-margin-top-4 govuk-!-margin-bottom-4">Select all that apply.</span>
+            <div id='available-option-form-group' class='govuk-form-group '>
+                <div class="exclusive-checkbox-group">
+
+                    @foreach (var option in Model.availableOptions)
+                    {
+                        var id = option == Model.availableOptions.First() ? Model.fieldName : $"{Model.fieldName}-{option.Value}";
+
+                        <div class="govuk-checkboxes__item">
+                            <input id="@id" type="checkbox" checked="@option.Selected" class="govuk-checkboxes__input" value="@option.Value" name="@Model.fieldName" />
+                            <label class="govuk-label govuk-checkboxes__label" for="@id">@option.Text</label>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <p>Or</p>
+
+            <div id='alternative-option-form-group' class='govuk-form-group '>
+                <div class="exclusive-checkbox-group--exclusive-option">
+                    <div class="govuk-checkboxes__item">
+                        <input id="@Model.fieldName-@Model.alternativeOption.Value" type="checkbox" checked="@Model.alternativeOption.Selected" class="govuk-checkboxes__input" value="NoneOfTheAbove" name="@Model.fieldName" />
+                        <label class="govuk-label govuk-checkboxes__label" for="@Model.fieldName-@Model.alternativeOption.Value">@Model.alternativeOption.Text</label>
+                    </div>
+                </div>
+            </div>
+        </gds-field-set>
+    </gds-field-set>
+</gds-div-form-group>

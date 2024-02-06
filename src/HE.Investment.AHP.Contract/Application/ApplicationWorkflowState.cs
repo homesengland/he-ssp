@@ -8,6 +8,7 @@ public enum ApplicationWorkflowState
     ApplicationTenure,
     TaskList,
     OnHold,
+    Reactivate,
     Withdraw,
     CheckAnswers,
 }

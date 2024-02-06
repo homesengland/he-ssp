@@ -2,7 +2,6 @@ extern alias Org;
 
 using HE.Investments.Account.Domain.Organisation.Entities;
 using HE.Investments.Account.Domain.Tests.Organisation.TestData;
-using HE.Investments.Account.Domain.Tests.User.TestData;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Tests.TestData;
 using HE.Investments.TestsUtils.TestFramework;
