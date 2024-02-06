@@ -1,6 +1,7 @@
 extern alias Org;
 
 using HE.Investment.AHP.Contract.Site;
+using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investment.AHP.Domain.Site.ValueObjects;
 using HE.Investment.AHP.Domain.Site.ValueObjects.Factories;
@@ -26,7 +27,8 @@ public class SiteEntity : DomainEntity, IQuestion
         NationalDesignGuidePriorities nationalDesignGuidePriorities,
         TenderingStatusDetails tenderingStatusDetails,
         StrategicSiteDetails strategicSiteDetails,
-        LocalAuthority? localAuthority = null)
+        LocalAuthority? localAuthority = null,
+        BuildingForHealthyLifeType buildingForHealthyLife = BuildingForHealthyLifeType.Undefined)
     {
         Id = id;
         Name = name;
@@ -35,6 +37,7 @@ public class SiteEntity : DomainEntity, IQuestion
         LocalAuthority = localAuthority;
         PlanningDetails = planningDetails;
         NationalDesignGuidePriorities = nationalDesignGuidePriorities;
+        BuildingForHealthyLife = buildingForHealthyLife;
         TenderingStatusDetails = tenderingStatusDetails;
         StrategicSiteDetails = strategicSiteDetails;
     }
@@ -64,6 +67,8 @@ public class SiteEntity : DomainEntity, IQuestion
     public PlanningDetails PlanningDetails { get; private set; }
 
     public NationalDesignGuidePriorities NationalDesignGuidePriorities { get; private set; }
+
+    public BuildingForHealthyLifeType BuildingForHealthyLife { get; private set; }
 
     public TenderingStatusDetails TenderingStatusDetails { get; private set; }
 
@@ -99,6 +104,11 @@ public class SiteEntity : DomainEntity, IQuestion
     public void ProvideNationalDesignGuidePriorities(NationalDesignGuidePriorities nationalDesignGuidePriorities)
     {
         NationalDesignGuidePriorities = _modificationTracker.Change(NationalDesignGuidePriorities, nationalDesignGuidePriorities);
+    }
+
+    public void ProvideBuildingForHealthyLifeCommand(BuildingForHealthyLifeType buildingForHealthyLife)
+    {
+        BuildingForHealthyLife = _modificationTracker.Change(BuildingForHealthyLife, buildingForHealthyLife);
     }
 
     public void ProvideTenderingStatusDetails(TenderingStatusDetails tenderingStatusDetails)

@@ -50,6 +50,7 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             { PlanningDetails.ArePlanningDetailsProvided: false } => SiteWorkflowState.PlanningDetails,
             { PlanningDetails: var x } when !IsLandRegistryProvided(x) => SiteWorkflowState.LandRegistry,
             { NationalDesignGuidePriorities: var x } when x.IsNotProvided() || x.Count == 0 => SiteWorkflowState.NationalDesignGuide,
+            { BuildingForHealthyLife: var x } when x.IsNotProvided() => SiteWorkflowState.BuildingForHealthyLife,
             { TenderingStatusDetails: var x } when x.TenderingStatus.IsNotProvided() => SiteWorkflowState.TenderingStatus,
             { TenderingStatusDetails: var x } when IsConditionalOrUnconditionalWorksContract() &&
                                                    (x.ContractorName.IsNotProvided() || x.IsSmeContractor.IsNotProvided()) => SiteWorkflowState.ContractorDetails,
@@ -82,6 +83,7 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             SiteWorkflowState.Section106LocalAuthorityConfirmation => true,
             SiteWorkflowState.Section106Ineligible => true,
             SiteWorkflowState.NationalDesignGuide => true,
+            SiteWorkflowState.BuildingForHealthyLife => true,
             SiteWorkflowState.LandRegistry => IsLandTitleRegistered(),
             SiteWorkflowState.TenderingStatus => true,
             SiteWorkflowState.ContractorDetails => IsConditionalOrUnconditionalWorksContract(),

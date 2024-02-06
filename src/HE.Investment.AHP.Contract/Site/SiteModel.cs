@@ -16,6 +16,8 @@ public class SiteModel
 
     public IList<NationalDesignGuidePriority> NationalDesignGuidePriorities { get; set; }
 
+    public BuildingForHealthyLifeType BuildingForHealthyLife { get; set; }
+
     public SiteTenderingStatusDetails TenderingStatusDetails { get; set; }
 
     public StrategicSite StrategicSiteDetails { get; set; }
