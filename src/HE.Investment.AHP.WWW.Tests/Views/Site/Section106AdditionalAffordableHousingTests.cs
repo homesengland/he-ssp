@@ -24,7 +24,7 @@ public class Section106AdditionalAffordableHousingTests : ViewTestBase
             .HasPageHeader(siteName, @SitePageTitles.SiteSection106AdditionalAffordableHousing)
             .HasGdsRadioInputWithValues(nameof(SiteModel.Section106AdditionalAffordableHousing), "True", "False")
             .HasGdsSaveAndContinueButton()
-            .HasGdsBackButton(false);
+            .HasGdsBackLink(false);
     }
 
     [Fact]
@@ -46,7 +46,7 @@ public class Section106AdditionalAffordableHousingTests : ViewTestBase
             .HasPageHeader(siteName, @SitePageTitles.SiteSection106AdditionalAffordableHousing)
             .HasGdsRadioInputWithValues(nameof(SiteModel.Section106AdditionalAffordableHousing), "True", "False")
             .HasGdsSaveAndContinueButton()
-            .HasGdsBackButton(false)
+            .HasGdsBackLink(false)
             .HasOneValidationMessages(errorMessage);
     }
 }

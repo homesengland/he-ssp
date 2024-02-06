@@ -1,4 +1,5 @@
 using HE.Investment.AHP.Contract.Site;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Routing;
 using Stateless;
 
@@ -25,7 +26,63 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
 
     public Task<bool> StateCanBeAccessed(SiteWorkflowState nextState)
     {
-        return Task.FromResult(true);
+        return Task.FromResult(CanBeAccessed(nextState));
+    }
+
+    public SiteWorkflowState CurrentState(SiteWorkflowState targetState)
+    {
+        if (targetState != SiteWorkflowState.Start || _siteModel == null)
+        {
+            return targetState;
+        }
+
+        return _siteModel switch
+        {
+            { Name: var x } when x.IsNotProvided() => SiteWorkflowState.Name,
+
+            // TODO: #89874  add support for Section106 pages
+            { LocalAuthority: var x } when x.IsNotProvided() => SiteWorkflowState.LocalAuthoritySearch,
+            { PlanningDetails: var x } when x.PlanningStatus.IsNotProvided() => SiteWorkflowState.PlanningStatus,
+            { PlanningDetails.ArePlanningDetailsProvided: false } => SiteWorkflowState.PlanningDetails,
+            { PlanningDetails: var x } when !IsLandRegistryProvided(x) => SiteWorkflowState.LandRegistry,
+            { TenderingStatusDetails: var x } when x.TenderingStatus.IsNotProvided() => SiteWorkflowState.TenderingStatus,
+            { TenderingStatusDetails: var x } when IsConditionalOrUnconditionalWorksContract() &&
+                                                   (x.ContractorName.IsNotProvided() || x.IsSmeContractor.IsNotProvided()) => SiteWorkflowState.ContractorDetails,
+            { TenderingStatusDetails: var x } when IsTenderForWorksContractOrContractingHasNotYetBegun() &&
+                                                   x.IsIntentionToWorkWithSme.IsNotProvided() => SiteWorkflowState.IntentionToWorkWithSme,
+            _ => SiteWorkflowState.CheckAnswers,
+        };
+    }
+
+    private bool CanBeAccessed(SiteWorkflowState state)
+    {
+        return state switch
+        {
+            SiteWorkflowState.Index => true,
+            SiteWorkflowState.Start => true,
+            SiteWorkflowState.Name => true,
+
+            // TODO: #89874  add support for Section106 pages
+            SiteWorkflowState.LocalAuthoritySearch => true,
+            SiteWorkflowState.LocalAuthorityResult => true,
+            SiteWorkflowState.LocalAuthorityConfirm => true,
+            SiteWorkflowState.LocalAuthorityReset => true,
+            SiteWorkflowState.PlanningStatus => true,
+            SiteWorkflowState.PlanningDetails => true,
+            SiteWorkflowState.Section106GeneralAgreement => true,
+            SiteWorkflowState.Section106AffordableHousing => true,
+            SiteWorkflowState.Section106AdditionalAffordableHousing => true,
+            SiteWorkflowState.Section106OnlyAffordableHousing => true,
+            SiteWorkflowState.Section106CapitalFundingEligibility => true,
+            SiteWorkflowState.Section106LocalAuthorityConfirmation => true,
+            SiteWorkflowState.Section106Ineligible => true,
+            SiteWorkflowState.NationalDesignGuide => true,
+            SiteWorkflowState.LandRegistry => IsLandTitleRegistered(),
+            SiteWorkflowState.TenderingStatus => true,
+            SiteWorkflowState.ContractorDetails => IsConditionalOrUnconditionalWorksContract(),
+            SiteWorkflowState.IntentionToWorkWithSme => IsTenderForWorksContractOrContractingHasNotYetBegun(),
+            _ => false,
+        };
     }
 
     private void ConfigureTransitions()
@@ -43,7 +100,7 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
 
         _machine.Configure(SiteWorkflowState.Section106GeneralAgreement)
             .PermitIf(Trigger.Continue, SiteWorkflowState.Section106AffordableHousing, () => _siteModel?.Section106GeneralAgreement == true)
-            .PermitIf(Trigger.Continue, SiteWorkflowState.LocalAuthority, () => _siteModel?.Section106GeneralAgreement == false)
+            .PermitIf(Trigger.Continue, SiteWorkflowState.LocalAuthoritySearch, () => _siteModel?.Section106GeneralAgreement == false)
             .Permit(Trigger.Back, SiteWorkflowState.Name);
 
         _machine.Configure(SiteWorkflowState.Section106AffordableHousing)
@@ -59,5 +116,99 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
         _machine.Configure(SiteWorkflowState.Section106AdditionalAffordableHousing)
             .Permit(Trigger.Continue, SiteWorkflowState.Section106CapitalFundingEligibility)
             .Permit(Trigger.Back, SiteWorkflowState.Section106AffordableHousing);
+
+        _machine.Configure(SiteWorkflowState.Section106CapitalFundingEligibility)
+            .PermitIf(Trigger.Continue, SiteWorkflowState.Section106Ineligible, () => _siteModel?.IsIneligible == true)
+            .PermitIf(
+                Trigger.Continue,
+                SiteWorkflowState.Section106LocalAuthorityConfirmation,
+                () => _siteModel?.Section106CapitalFundingEligibility == false && _siteModel?.Section106AdditionalAffordableHousing == true)
+            .PermitIf(
+                Trigger.Continue,
+                SiteWorkflowState.LocalAuthoritySearch,
+                () => _siteModel?.Section106CapitalFundingEligibility == false && _siteModel?.Section106AdditionalAffordableHousing == false)
+            .PermitIf(Trigger.Back, SiteWorkflowState.Section106AdditionalAffordableHousing, () => _siteModel?.Section106OnlyAffordableHousing == false)
+            .PermitIf(Trigger.Back, SiteWorkflowState.Section106OnlyAffordableHousing, () => _siteModel?.Section106OnlyAffordableHousing == true)
+            .PermitIf(Trigger.Back, SiteWorkflowState.Section106AffordableHousing, () => _siteModel?.Section106OnlyAffordableHousing == null);
+
+        _machine.Configure(SiteWorkflowState.Section106LocalAuthorityConfirmation)
+            .Permit(Trigger.Continue, SiteWorkflowState.LocalAuthoritySearch)
+            .Permit(Trigger.Back, SiteWorkflowState.Section106CapitalFundingEligibility);
+
+        _machine.Configure(SiteWorkflowState.LocalAuthoritySearch)
+            .Permit(Trigger.Continue, SiteWorkflowState.LocalAuthorityResult)
+            .PermitIf(Trigger.Back, SiteWorkflowState.Section106GeneralAgreement, () => _siteModel?.Section106GeneralAgreement == false)
+            .PermitIf(
+                Trigger.Back,
+                SiteWorkflowState.Section106LocalAuthorityConfirmation,
+                () => _siteModel?.Section106AdditionalAffordableHousing != false && _siteModel?.Section106GeneralAgreement != false)
+            .PermitIf(
+                Trigger.Back,
+                SiteWorkflowState.Section106CapitalFundingEligibility,
+                () => _siteModel?.Section106AdditionalAffordableHousing == false && _siteModel?.Section106GeneralAgreement != false);
+
+        _machine.Configure(SiteWorkflowState.LocalAuthorityResult)
+            .Permit(Trigger.Continue, SiteWorkflowState.LocalAuthorityConfirm)
+            .Permit(Trigger.Back, SiteWorkflowState.LocalAuthoritySearch);
+
+        _machine.Configure(SiteWorkflowState.LocalAuthorityConfirm)
+            .Permit(Trigger.Continue, SiteWorkflowState.PlanningStatus);
+
+        _machine.Configure(SiteWorkflowState.LocalAuthorityReset)
+            .Permit(Trigger.Continue, SiteWorkflowState.PlanningStatus)
+            .Permit(Trigger.Back, SiteWorkflowState.LocalAuthoritySearch);
+
+        _machine.Configure(SiteWorkflowState.PlanningStatus)
+            .Permit(Trigger.Continue, SiteWorkflowState.PlanningDetails)
+            .PermitIf(Trigger.Back, SiteWorkflowState.LocalAuthorityConfirm, IsLocalAuthorityProvided)
+            .PermitIf(Trigger.Back, SiteWorkflowState.LocalAuthoritySearch, () => !IsLocalAuthorityProvided());
+
+        _machine.Configure(SiteWorkflowState.PlanningDetails)
+            .PermitIf(Trigger.Continue, SiteWorkflowState.LandRegistry, IsLandTitleRegistered)
+            .PermitIf(Trigger.Continue, SiteWorkflowState.NationalDesignGuide, () => !IsLandTitleRegistered())
+            .Permit(Trigger.Back, SiteWorkflowState.PlanningStatus);
+
+        _machine.Configure(SiteWorkflowState.LandRegistry)
+            .Permit(Trigger.Continue, SiteWorkflowState.NationalDesignGuide)
+            .Permit(Trigger.Back, SiteWorkflowState.PlanningDetails);
+
+        _machine.Configure(SiteWorkflowState.NationalDesignGuide)
+            .Permit(Trigger.Continue, SiteWorkflowState.BuildingForHealthyLife)
+            .PermitIf(Trigger.Back, SiteWorkflowState.LandRegistry, IsLandTitleRegistered)
+            .PermitIf(Trigger.Back, SiteWorkflowState.PlanningDetails, () => !IsLandTitleRegistered());
+
+        _machine.Configure(SiteWorkflowState.BuildingForHealthyLife)
+            .Permit(Trigger.Continue, SiteWorkflowState.TenderingStatus)
+            .Permit(Trigger.Back, SiteWorkflowState.NationalDesignGuide);
+
+        _machine.Configure(SiteWorkflowState.TenderingStatus)
+            .PermitIf(Trigger.Continue, SiteWorkflowState.ContractorDetails, IsConditionalOrUnconditionalWorksContract)
+            .PermitIf(Trigger.Continue, SiteWorkflowState.IntentionToWorkWithSme, IsTenderForWorksContractOrContractingHasNotYetBegun)
+            .PermitIf(Trigger.Continue, SiteWorkflowState.CheckAnswers, IsNotApplicableOnMissing)
+            .Permit(Trigger.Back, SiteWorkflowState.BuildingForHealthyLife);
+
+        _machine.Configure(SiteWorkflowState.ContractorDetails)
+            .Permit(Trigger.Continue, SiteWorkflowState.CheckAnswers)
+            .Permit(Trigger.Back, SiteWorkflowState.TenderingStatus);
+
+        _machine.Configure(SiteWorkflowState.IntentionToWorkWithSme)
+            .Permit(Trigger.Continue, SiteWorkflowState.CheckAnswers)
+            .Permit(Trigger.Back, SiteWorkflowState.TenderingStatus);
     }
+
+    private bool IsLocalAuthorityProvided() => _siteModel?.LocalAuthority?.Name.IsProvided() ?? false;
+
+    private bool IsLandTitleRegistered() => _siteModel?.PlanningDetails.IsLandRegistryTitleNumberRegistered ?? false;
+
+    private bool IsLandRegistryProvided(SitePlanningDetails planningDetails) => IsLandTitleRegistered() &&
+                                                                                planningDetails.LandRegistryTitleNumber.IsProvided() &&
+                                                                                planningDetails.IsGrantFundingForAllHomesCoveredByTitleNumber.IsProvided();
+
+    private bool IsConditionalOrUnconditionalWorksContract() => _siteModel?.TenderingStatusDetails.TenderingStatus is SiteTenderingStatus.UnconditionalWorksContract or
+        SiteTenderingStatus.ConditionalWorksContract;
+
+    private bool IsTenderForWorksContractOrContractingHasNotYetBegun() => _siteModel?.TenderingStatusDetails.TenderingStatus is SiteTenderingStatus.TenderForWorksContract or
+        SiteTenderingStatus.ContractingHasNotYetBegun;
+
+    private bool IsNotApplicableOnMissing() => _siteModel?.TenderingStatusDetails.TenderingStatus is SiteTenderingStatus.NotApplicable or null;
 }

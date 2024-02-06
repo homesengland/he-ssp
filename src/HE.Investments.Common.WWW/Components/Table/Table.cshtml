@@ -40,7 +40,8 @@
                     <td class="govuk-table__cell">
                         @if (value.Component != null)
                         {
-                            @await Component.InvokeAsync(value.Component.Name, value.Component.Arguments)
+                            <vc:dynamic-component
+                                component="@value.Component"/>
                         }
                         else
                         {

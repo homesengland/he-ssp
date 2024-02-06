@@ -17,6 +17,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_checkifapplicationwithgivennameexists.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_checkifloanapplicationwithgivennameexists.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_createsinglesitedetail.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_deletedeliveryphase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_deletehometype.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_deleteloanapplication.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_deletesitedetails.cs" />
@@ -28,8 +29,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getfilelocationforapplicationloan.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getloanapplicationsforaccountandcontact.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getmultipleahpapplications.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getmultipledeliveryphase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getorganisationchangedetails.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getorganizationdetails.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getsingledeliveryphase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getsinglehometype.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getsingleloanapplicationforaccountandcontact.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getsinglesitedetails.cs" />
@@ -49,6 +52,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_sendremindertofinalisadraftapplication.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_sendrequesttoassigncontacttoexistingorganisation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_setahpapplication.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_setdeliveryphase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_sethometype.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_updatesingleloanapplication.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_updatesinglesitedetails.cs" />
@@ -137,6 +141,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\AIOperationOverrideType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\AIPluginType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\AllocationType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\applicationbasedaccesslist_cloud.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\BookableResourceCharacteristicType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\botcomponentreusepolicy.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\botsharingroletypes.cs" />
@@ -198,10 +203,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Buildingtype.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ChangesourceSet.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Clientgroup.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_compliantnoncompliant.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ConditionSource.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ConditionStatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ConditionType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_consortiumsingleentity.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ConstructionMethod.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ContractVersion.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_CreditRatingAgency.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_CRRStatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_DefineTenure.cs" />
@@ -382,6 +390,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_FieldServiceProductType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_FindWorkEventType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_flaggedstatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_flow_approvalResponseOptionsType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_flow_ApprovalStage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_flow_approval_Priority.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_flow_approval_RequestType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_Frequency.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_GenericType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_iermlModelstatus.cs" />
@@ -538,6 +550,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_UserAuthenticationMode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_VisitorJourneyType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_visualizationconfigtype.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_vivacopilottype.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_wbsnodelevel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_Weekday.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_WidgetLanguage.cs" />

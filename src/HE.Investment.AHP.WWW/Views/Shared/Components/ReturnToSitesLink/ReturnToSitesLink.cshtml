@@ -1,0 +1,18 @@
+@using HE.Investments.Common.Messages
+@using HE.Investment.AHP.WWW.Views.Shared.Components.LinkWorkingAsButton
+
+@model bool
+
+<div>
+    @if (Model)
+    {
+        <vc:link-working-as-button text="Save and return to sites" name="action" value="@GenericMessages.SaveAndReturn"/>
+    }
+    else
+    {
+        <gds-link class="govuk-link--no-visited-state"
+                  href="@Url.Action("Index", "Site")">
+            Return to site
+        </gds-link>
+    }
+</div>

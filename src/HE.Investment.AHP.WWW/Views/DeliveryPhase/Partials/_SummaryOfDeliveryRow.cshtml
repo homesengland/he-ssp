@@ -1,11 +1,33 @@
 @using HE.Investments.Common.WWW.Helpers
+@using HE.Investments.Common.Extensions
+@using HE.Investment.AHP.WWW.Models.Delivery
+@using HE.Investments.Common.WWW.Extensions
 @model HE.Investment.AHP.WWW.Models.Delivery.SummaryOfDeliveryRow
+@{
+    var key = Model.ValueName.ToIdTag();
+}
 
-<div class="govuk-summary-list__row">
-    <dt class="govuk-summary-list__key">
-        <gds-h3 size="ControlSize.S">
-            @Model.ValueName
-        </gds-h3>
-        <p class="govuk-body govuk-!-margin-bottom-1">@(CurrencyHelper.DisplayPounds(Model.Value))</p>
-    </dt>
-</div>
+<tr class="govuk-table__row">
+    <td class="govuk-table__cell">
+        <strong>@Model.ValueName</strong>
+    </td>
+    <td class="govuk-table__cell" data-testid=@($"{key}-value")>
+        @(Model.Value.DisplayPoundsPences() ?? "-")
+    </td>
+    <td class="govuk-table__cell" data-testid=@($"{key}-percentage")>
+        @(Model.Percentage.ToWholePercentage() ?? "-")
+    </td>
+
+    @{
+        if (Model.IsAmendable)
+        {
+            <td class="govuk-table__cell">
+                <gds-link
+                    data-testid=@($"{key}-change")
+                    href=@Url.Action("SummaryOfDeliveryAcquisitionTranche", "DeliveryPhase", new { Model.ApplicationId, deliveryPhaseId = Model.Id, trancheType = SummaryOfDeliveryTrancheType.StartOnSite })>
+                    Change
+                </gds-link>
+            </td>
+        }
+    }
+</tr>

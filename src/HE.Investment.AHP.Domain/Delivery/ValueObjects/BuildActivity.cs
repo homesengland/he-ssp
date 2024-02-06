@@ -11,23 +11,49 @@ public class BuildActivity : ValueObject, IQuestion
 
     private readonly TypeOfHomes _typeOfHomes;
 
-    public BuildActivity(Tenure tenure, TypeOfHomes typeOfHomes, BuildActivityType type)
+    public BuildActivity(Tenure tenure, TypeOfHomes? typeOfHomes = null, BuildActivityType? type = null)
     {
         _tenure = tenure;
-        _typeOfHomes = typeOfHomes;
+        _typeOfHomes = typeOfHomes.GetValueOrFirstValue();
         Type = type;
-    }
-
-    public BuildActivity(Tenure tenure)
-    {
-        _tenure = tenure;
     }
 
     public BuildActivityType? Type { get; }
 
     public bool IsOffTheShelfOrExistingSatisfactory => Type is BuildActivityType.OffTheShelf or BuildActivityType.ExistingSatisfactory;
 
-    public static BuildActivityType[] GetAvailableTypeForRehab(Tenure tenure)
+    public BuildActivityType[] GetAvailableTypes()
+    {
+        if (_typeOfHomes == TypeOfHomes.Rehab)
+        {
+            return GetAvailableTypeForRehab(_tenure);
+        }
+
+        return GetAvailableTypeForNewBuild(_tenure);
+    }
+
+    public BuildActivity WithClearedAnswer(TypeOfHomes typeOfHomes)
+    {
+        return new BuildActivity(_tenure, typeOfHomes);
+    }
+
+    public bool IsNotAnswered() => !IsAnswered();
+
+    public bool IsAnswered()
+    {
+        return Type.IsProvided() && (
+            (_typeOfHomes == TypeOfHomes.Rehab && GetAvailableTypeForRehab(_tenure).Contains(Type!.Value))
+            || (_typeOfHomes == TypeOfHomes.NewBuild && GetAvailableTypeForNewBuild(_tenure).Contains(Type!.Value)));
+    }
+
+    protected override IEnumerable<object?> GetAtomicValues()
+    {
+        yield return Type;
+        yield return _tenure;
+        yield return _typeOfHomes;
+    }
+
+    private static BuildActivityType[] GetAvailableTypeForRehab(Tenure tenure)
     {
         if (tenure.IsIn(Tenure.HomeOwnershipLongTermDisabilities))
         {
@@ -54,7 +80,7 @@ public class BuildActivity : ValueObject, IQuestion
         return availableTypeForRehab.ToArray();
     }
 
-    public static BuildActivityType[] GetAvailableTypeForNewBuild(Tenure tenure)
+    private static BuildActivityType[] GetAvailableTypeForNewBuild(Tenure tenure)
     {
         if (tenure.IsIn(Tenure.HomeOwnershipLongTermDisabilities))
         {
@@ -69,34 +95,5 @@ public class BuildActivity : ValueObject, IQuestion
             BuildActivityType.LandInclusivePackage,
             BuildActivityType.Regeneration,
         };
-    }
-
-    public BuildActivityType[] GetAvailableTypes()
-    {
-        if (_typeOfHomes == TypeOfHomes.Rehab)
-        {
-            return GetAvailableTypeForRehab(_tenure);
-        }
-
-        return GetAvailableTypeForNewBuild(_tenure);
-    }
-
-    public BuildActivity WithClearedAnswer()
-    {
-        return new BuildActivity(_tenure);
-    }
-
-    public bool IsAnswered()
-    {
-        return Type.IsProvided() && (
-                (_typeOfHomes == TypeOfHomes.Rehab && GetAvailableTypeForRehab(_tenure).Contains(Type!.Value))
-               || (_typeOfHomes == TypeOfHomes.NewBuild && GetAvailableTypeForNewBuild(_tenure).Contains(Type!.Value)));
-    }
-
-    protected override IEnumerable<object?> GetAtomicValues()
-    {
-        yield return Type;
-        yield return _tenure;
-        yield return _typeOfHomes;
     }
 }

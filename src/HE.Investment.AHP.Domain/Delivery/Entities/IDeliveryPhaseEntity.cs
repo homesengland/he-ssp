@@ -3,10 +3,10 @@ using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.Policies;
+using HE.Investment.AHP.Domain.Delivery.Tranches;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
-using SummaryOfDelivery = HE.Investment.AHP.Domain.Delivery.ValueObjects.SummaryOfDelivery;
 
 namespace HE.Investment.AHP.Domain.Delivery.Entities;
 
@@ -34,6 +34,10 @@ public interface IDeliveryPhaseEntity
 
     SectionStatus Status { get; }
 
+    bool IsModified { get; }
+
+    bool IsReadOnly { get; }
+
     int TotalHomesToBeDeliveredInThisPhase { get; }
 
     DeliveryPhaseMilestones DeliveryPhaseMilestones { get; }
@@ -56,5 +60,7 @@ public interface IDeliveryPhaseEntity
 
     void UnComplete();
 
-    SummaryOfDelivery CalculateSummary(decimal requiredFunding, int totalHousesToDeliver, MilestoneFramework milestoneFramework);
+    SummaryOfDelivery GetSummaryOfDelivery(decimal requiredFunding, int totalHousesToDeliver, MilestoneFramework milestoneFramework);
+
+    DeliveryPhaseTranches GetTranches();
 }

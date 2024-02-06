@@ -1,6 +1,7 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Events;
+using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Domain.Application.Entities;
 using HE.Investment.AHP.Domain.Application.Repositories.Interfaces;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
@@ -39,9 +40,16 @@ public class ApplicationRepository : IApplicationRepository
         return CreateEntity(application);
     }
 
-    public async Task<bool> IsExist(ApplicationName applicationName, OrganisationId organisationId, CancellationToken cancellationToken)
+    public async Task<bool> IsNameExist(ApplicationName applicationName, OrganisationId organisationId, CancellationToken cancellationToken)
     {
-        return await _applicationCrmContext.IsExist(applicationName.Name, organisationId.Value, cancellationToken);
+        return await _applicationCrmContext.IsNameExist(applicationName.Name, organisationId.Value, cancellationToken);
+    }
+
+    public async Task<bool> IsExist(AhpApplicationId applicationId, OrganisationId organisationId, CancellationToken cancellationToken)
+    {
+        var application = await _applicationCrmContext.GetUserApplicationById(applicationId.Value, organisationId.Value, CrmFields.ApplicationToRead.ToList(), cancellationToken);
+
+        return application.IsProvided();
     }
 
     public async Task<ApplicationBasicInfo> GetApplicationBasicInfo(AhpApplicationId id, UserAccount userAccount, CancellationToken cancellationToken)
@@ -84,11 +92,12 @@ public class ApplicationRepository : IApplicationRepository
 
         var dto = new AhpApplicationDto
         {
+            // TODO: AB#88650 Assign application to site
             id = application.Id.IsNew ? null : application.Id.Value,
             name = application.Name.Name,
             tenure = ApplicationTenureMapper.ToDto(application.Tenure),
             organisationId = organisationId.Value.ToString(),
-            applicationStatus = ApplicationStatusMapper.MapToCrmStatus(application.Status),
+            applicationStatus = AhpApplicationStatusMapper.MapToCrmStatus(application.Status),
         };
 
         var id = await _applicationCrmContext.Save(dto, organisationId.Value, CrmFields.ApplicationToUpdate.ToList(), cancellationToken);
@@ -103,37 +112,18 @@ public class ApplicationRepository : IApplicationRepository
         return application;
     }
 
-    public async Task Hold(ApplicationEntity application, OrganisationId organisationId, CancellationToken cancellationToken)
+    public async Task ChangeApplicationStatus(ApplicationEntity application, OrganisationId organisationId, string? changeReason, CancellationToken cancellationToken)
     {
         if (application is { IsModified: false })
         {
             return;
         }
 
-        var applicationId = new Guid(application.Id.Value);
-
         await _applicationCrmContext.ChangeApplicationStatus(
-            applicationId,
+            application.Id.Value,
             organisationId.Value,
             application.Status,
-            application.HoldReason?.Value,
-            cancellationToken);
-    }
-
-    public async Task Withdraw(ApplicationEntity application, OrganisationId organisationId, CancellationToken cancellationToken)
-    {
-        if (application is { IsModified: false })
-        {
-            return;
-        }
-
-        var applicationId = new Guid(application.Id.Value);
-
-        await _applicationCrmContext.ChangeApplicationStatus(
-            applicationId,
-            organisationId.Value,
-            application.Status,
-            application.WithdrawReason?.Value,
+            changeReason,
             cancellationToken);
     }
 
@@ -144,10 +134,13 @@ public class ApplicationRepository : IApplicationRepository
 
     private static ApplicationEntity CreateEntity(AhpApplicationDto application)
     {
+        var applicationStatus = AhpApplicationStatusMapper.MapToPortalStatus(application.applicationStatus);
+
         return new ApplicationEntity(
+            new SiteId("1"), // TODO: AB#88650 Assign application to site
             new AhpApplicationId(application.id),
             new ApplicationName(application.name ?? "Unknown"),
-            AhpApplicationStatusMapper.MapToPortalStatus(application.applicationStatus),
+            applicationStatus,
             new ApplicationReferenceNumber(application.referenceNumber),
             ApplicationTenureMapper.ToDomain(application.tenure),
             new AuditEntry(
@@ -157,10 +150,10 @@ public class ApplicationRepository : IApplicationRepository
             new ApplicationSections(
                 new List<ApplicationSection>
                 {
-                    new(SectionType.Scheme, SectionStatusMapper.ToDomain(application.schemeInformationSectionCompletionStatus)),
-                    new(SectionType.HomeTypes, SectionStatusMapper.ToDomain(application.homeTypesSectionCompletionStatus)),
-                    new(SectionType.FinancialDetails, SectionStatusMapper.ToDomain(application.financialDetailsSectionCompletionStatus)),
-                    new(SectionType.DeliveryPhases, SectionStatusMapper.ToDomain(application.deliveryPhasesSectionCompletionStatus)),
+                    new(SectionType.Scheme, SectionStatusMapper.ToDomain(application.schemeInformationSectionCompletionStatus, applicationStatus)),
+                    new(SectionType.HomeTypes, SectionStatusMapper.ToDomain(application.homeTypesSectionCompletionStatus, applicationStatus)),
+                    new(SectionType.FinancialDetails, SectionStatusMapper.ToDomain(application.financialDetailsSectionCompletionStatus, applicationStatus)),
+                    new(SectionType.DeliveryPhases, SectionStatusMapper.ToDomain(application.deliveryPhasesSectionCompletionStatus, applicationStatus)),
                 }));
     }
 }

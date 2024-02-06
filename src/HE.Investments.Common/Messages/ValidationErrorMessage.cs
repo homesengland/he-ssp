@@ -87,6 +87,8 @@ public static class ValidationErrorMessage
 
     public static string MissingRequiredField(string displayName) => $"Enter {displayName}";
 
+    public static string MustProvideRequiredField(string displayName) => $"Enter the {displayName}";
+
     public static string MustBeNumberBetween(string displayName, int minValue, int maxValue) => $"The {displayName} must be between {minValue} and {maxValue}";
 
     public static string MustBeWholeNumberBetween(string displayName, int minValue, int maxValue) => $"The {displayName} must be a whole number between {minValue} and {maxValue}";
@@ -110,4 +112,6 @@ public static class ValidationErrorMessage
     public static string ExclusiveOptionSelected(string displayName, string optionName) => $"The {optionName} {displayName} option is exclusive and cannot be selected with any other option.";
 
     public static string MustBeDate(string displayName) => $"The {displayName} must be a valid date";
+
+    public static string MustBeSelected(string displayName) => $"Select the {displayName}";
 }

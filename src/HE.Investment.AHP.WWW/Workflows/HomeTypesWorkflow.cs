@@ -45,7 +45,8 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
                 homeType.TenureDetails.ExemptFromTheRightToSharedOwnership,
                 homeType.TenureDetails.IsProspectiveRentIneligible,
                 homeType.ModernMethodsConstruction.ModernMethodsConstructionApplied,
-                homeType.ModernMethodsConstruction.ModernMethodsConstructionCategories));
+                homeType.ModernMethodsConstruction.ModernMethodsConstructionCategories),
+            isReadOnly);
         _machine = new StateMachine<HomeTypesWorkflowState, Trigger>(HomeTypesWorkflowState.Index);
         ConfigureTransitions();
     }
@@ -133,7 +134,7 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
             HomeTypesWorkflowState.ModernMethodsConstruction3DSubcategories => IsModernMethodsConstructionCategory1(),
             HomeTypesWorkflowState.ModernMethodsConstruction2DSubcategories => IsModernMethodsConstructionCategory2(),
             HomeTypesWorkflowState.CheckAnswers => true,
-            _ => throw new ArgumentOutOfRangeException(nameof(state), state, null),
+            _ => false,
         };
     }
 

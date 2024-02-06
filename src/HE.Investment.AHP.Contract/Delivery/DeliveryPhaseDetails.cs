@@ -1,4 +1,5 @@
 using HE.Investment.AHP.Contract.Delivery.Enums;
+using HE.Investment.AHP.Contract.Delivery.MilestonePayments;
 using HE.Investments.Common.Contract;
 
 namespace HE.Investment.AHP.Contract.Delivery;
@@ -8,13 +9,14 @@ public record DeliveryPhaseDetails(
     string Id,
     string Name,
     SectionStatus Status,
+    bool IsReadOnly,
     TypeOfHomes? TypeOfHomes = null,
     BuildActivityType? BuildActivityType = null,
     IList<BuildActivityType>? AvailableBuildActivityTypes = null,
     bool IsReconfiguringExistingNeeded = false,
     bool? ReconfiguringExisting = null,
     int? NumberOfHomes = null,
-    SummaryOfDelivery? SummaryOfDelivery = null,
+    DeliveryPhaseTranchesDto? Tranches = null,
     bool IsUnregisteredBody = false,
     bool IsOnlyCompletionMilestone = false,
     DateDetails? AcquisitionDate = null,

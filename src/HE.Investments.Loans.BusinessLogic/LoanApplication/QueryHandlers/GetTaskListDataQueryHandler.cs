@@ -26,7 +26,7 @@ public class GetTaskListDataQueryHandler : IRequestHandler<GetTaskListDataQuery,
         return new GetTaskListDataQueryResponse(
             loanApplication.Id,
             loanApplication.Name,
-            userAccount.OrganisationName,
+            userAccount.Organisation?.RegisteredCompanyName ?? string.Empty,
             loanApplication.ExternalStatus,
             loanApplication.CanBeSubmitted(),
             loanApplication.WasSubmitted(),

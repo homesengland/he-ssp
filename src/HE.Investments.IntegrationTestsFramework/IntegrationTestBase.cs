@@ -71,7 +71,7 @@ public class IntegrationTestBase<TProgram>
     {
         if (_fixture.DataBag.TryGetValue(nameof(TestClient), out var testClient))
         {
-            return (IntegrationTestClient)testClient;
+            return ((IntegrationTestClient)testClient).AsLoggedUser();
         }
 
         var newTestClient = new IntegrationTestClient(fixture.CreateClient(), _fixture.LoginData);

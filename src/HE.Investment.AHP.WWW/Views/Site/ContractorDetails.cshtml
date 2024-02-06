@@ -1,0 +1,32 @@
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investment.AHP.Contract.Site
+@using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
+@using HE.Investment.AHP.WWW.Views.Site
+@model SiteTenderingStatusDetails
+@{
+    ViewData["Title"] = SitePageTitles.ContractorDetails;
+}
+<gds-div-grid-column-two-thirds>
+    <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.ContractorDetails"/>
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+    <vc:form-header title="@SitePageTitles.ContractorDetails" caption="@ViewBag.SiteName"/>
+
+    <form asp-controller="Site" asp-action="ContractorDetails" asp-method="post" novalidate>
+
+        <vc:text-input
+            title="Enter the name of the contractor you intend to work with on this development"
+            hint="If you're using your own in house team, enter 'In house team'."
+            field-name="@nameof(Model.ContractorName)"
+            value="@Model.ContractorName"
+            css-class="govuk-!-width-one-half"/>
+
+        <vc:radio-yes-no
+            title="Is this contractor a small to medium-sized enterprise (SME)?"
+            field-name="@nameof(Model.IsSmeContractor)"
+            value="@Model.IsSmeContractor"/>
+
+        <vc:form-button/>
+        <vc:return-to-sites-link/>
+    </form>
+
+</gds-div-grid-column-two-thirds>

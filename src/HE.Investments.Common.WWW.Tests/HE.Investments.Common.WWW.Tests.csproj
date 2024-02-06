@@ -2,48 +2,24 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <EnableNETAnalyzers>true</EnableNETAnalyzers>
-    <AnalysisLevel>latest</AnalysisLevel>
-    <AnalysisMode>Default</AnalysisMode>
-    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.435">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="xunit" Version="2.5.3" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.5.3">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+    <PackageReference Include="AngleSharp" Version="1.0.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+    <PackageReference Include="Moq" Version="4.20.69" />
+    <PackageReference Include="Razor.Templating.Core" Version="1.9.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AngleSharp" Version="1.0.7" />
-    <PackageReference Include="FluentAssertions" Version="6.12.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.2" />
-    <PackageReference Include="Moq" Version="4.20.69" />
-    <PackageReference Include="Razor.Templating.Core" Version="1.9.0" />
-    <PackageReference Include="coverlet.collector" Version="6.0.0">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
+    <EmbeddedResource Include="Components\DateInputTests\DateInputTests.cshtml" />
+    <EmbeddedResource Include="Components\SelectListTests\SelectListTests.cshtml" />
+    <EmbeddedResource Include="_ViewImports.cshtml" />
+    <EmbeddedResource Include="Components\SectionSummaryItemTests\SectionSummaryItemTests.cshtml" />
   </ItemGroup>
 
-    <ItemGroup>
-      <EmbeddedResource Include="Components\DateInputTests\DateInputTests.cshtml" />
-      <EmbeddedResource Include="_ViewImports.cshtml" />
-      <EmbeddedResource Include="Components\SectionSummaryItemTests\SectionSummaryItemTests.cshtml" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\HE.Investments.Common.WWWTestsFramework\HE.Investments.Common.WWWTestsFramework.csproj" />
-      <ProjectReference Include="..\HE.Investments.TestsUtils\HE.Investments.TestsUtils.csproj" />
-    </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HE.Investments.Common.WWWTestsFramework\HE.Investments.Common.WWWTestsFramework.csproj" />
+    <ProjectReference Include="..\HE.Investments.TestsUtils\HE.Investments.TestsUtils.csproj" />
+  </ItemGroup>
 </Project>

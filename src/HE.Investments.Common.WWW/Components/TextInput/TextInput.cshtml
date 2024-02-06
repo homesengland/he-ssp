@@ -1,20 +1,23 @@
 @using HE.Investments.Common.WWW.Extensions
 @using HE.Investments.Common.WWW.Components.ErrorMessage
-@model (string fieldName, string value, string header, string title, string hint, string cssClass)
+@model (string fieldName, string value, string header, string title, string hint, string cssClass, bool isDisplayed)
 @{
     var (hasError, errors) = ViewData.ModelState.GetErrors(Model.fieldName);
     var groupClass = hasError ? "govuk-form-group--error" : string.Empty;
     var inputClass = $"govuk-input {Model.cssClass}";
     inputClass += hasError ? " govuk-input--error" : string.Empty;
 }
-<gds-div-form-group class="@groupClass">
-    <vc:input-header
-        field-name="@Model.fieldName"
-        header="@Model.header"
-        title="@Model.title"
-        hint="@Model.hint"/>
+@if (Model.isDisplayed)
+{
+    <gds-div-form-group class="@groupClass">
+        <vc:input-header
+            field-name="@Model.fieldName"
+            header="@Model.header"
+            title="@Model.title"
+            hint="@Model.hint"/>
 
-    <vc:error-message field-name="@Model.fieldName"/>
+        <vc:error-message field-name="@Model.fieldName"/>
 
-    <input class="@inputClass" id="@Model.fieldName" name="@Model.fieldName" type="text" value="@Model.value">
-</gds-div-form-group>
+        <input class="@inputClass" id="@Model.fieldName" name="@Model.fieldName" type="text" value="@Model.value">
+    </gds-div-form-group>
+}

@@ -1,14 +1,21 @@
+using Dawn;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
+using HE.Investments.Common.Contract.Exceptions;
 
 namespace HE.Investment.AHP.Domain.Programme;
 
 public class AhpProgramme
 {
-    public AhpProgramme(DateOnly startAt, DateOnly endAt, MilestoneFramework milestoneFramework)
+    public AhpProgramme(DateTime? startAt, DateTime? endAt, MilestoneFramework milestoneFramework)
     {
-        StartAt = startAt;
-        EndAt = endAt;
+        StartAt = DateOnly.FromDateTime(Guard.Argument(startAt, nameof(startAt)).NotNull().Value);
+        EndAt = DateOnly.FromDateTime(Guard.Argument(endAt, nameof(endAt)).NotNull().Value);
         MilestoneFramework = milestoneFramework;
+
+        if (StartAt > EndAt)
+        {
+            throw new DomainValidationException(nameof(StartAt), "AHP programme end date should be after start date.");
+        }
     }
 
     public DateOnly StartAt { get; }

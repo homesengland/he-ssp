@@ -46,4 +46,15 @@ public static class AhpHtmlFluentExtensions
             index++;
         }
     }
+
+    public static IHtmlDocument HasNavigationListItem(this IHtmlDocument htmlDocument, string listTestId, out IHtmlAnchorElement firstNavigationButton)
+    {
+        var list = htmlDocument.GetElementByTestId(listTestId);
+        var link = list.FindDescendant<IHtmlAnchorElement>();
+        link.Should().NotBeNull();
+
+        firstNavigationButton = link!;
+
+        return htmlDocument;
+    }
 }

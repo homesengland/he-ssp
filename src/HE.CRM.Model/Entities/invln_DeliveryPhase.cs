@@ -65,12 +65,16 @@ namespace DataverseModel
 			public const string ImportSequenceNumber = "importsequencenumber";
 			public const string invln_acquisitiondate = "invln_acquisitiondate";
 			public const string invln_acquisitionmilestoneclaimdate = "invln_acquisitionmilestoneclaimdate";
+			public const string invln_Application = "invln_application";
+			public const string invln_ApplicationName = "invln_applicationname";
 			public const string invln_buildactivitytype = "invln_buildactivitytype";
 			public const string invln_completiondate = "invln_completiondate";
 			public const string invln_completionmilestoneclaimdate = "invln_completionmilestoneclaimdate";
+			public const string invln_deliveryphase_Application_invln_scheme = "invln_deliveryphase_Application_invln_scheme";
 			public const string invln_DeliveryPhaseId = "invln_deliveryphaseid";
 			public const string Id = "invln_deliveryphaseid";
 			public const string invln_invln_homesindeliveryphase_deliveryphasel = "invln_invln_homesindeliveryphase_deliveryphasel";
+			public const string invln_iscompleted = "invln_iscompleted";
 			public const string invln_nbrh = "invln_nbrh";
 			public const string invln_phasename = "invln_phasename";
 			public const string invln_reconfiguringexistingproperties = "invln_reconfiguringexistingproperties";
@@ -248,6 +252,23 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_application")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_Application
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_application");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_Application");
+				this.SetAttributeValue("invln_application", value);
+				this.OnPropertyChanged("invln_Application");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_buildactivitytype")]
 		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_buildactivitytype
 		{
@@ -339,6 +360,23 @@ namespace DataverseModel
 			set
 			{
 				this.invln_DeliveryPhaseId = value;
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_iscompleted")]
+		public System.Nullable<bool> invln_iscompleted
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_iscompleted");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_iscompleted");
+				this.SetAttributeValue("invln_iscompleted", value);
+				this.OnPropertyChanged("invln_iscompleted");
 			}
 		}
 		
@@ -706,6 +744,27 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_invln_homesindeliveryphase_deliveryphasel");
 				this.SetRelatedEntities<DataverseModel.invln_homesindeliveryphase>("invln_invln_homesindeliveryphase_deliveryphasel", null, value);
 				this.OnPropertyChanged("invln_invln_homesindeliveryphase_deliveryphasel");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_deliveryphase_Application_invln_scheme
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_application")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_deliveryphase_Application_invln_scheme")]
+		public DataverseModel.invln_scheme invln_deliveryphase_Application_invln_scheme
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.invln_scheme>("invln_deliveryphase_Application_invln_scheme", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_deliveryphase_Application_invln_scheme");
+				this.SetRelatedEntity<DataverseModel.invln_scheme>("invln_deliveryphase_Application_invln_scheme", null, value);
+				this.OnPropertyChanged("invln_deliveryphase_Application_invln_scheme");
 			}
 		}
 		

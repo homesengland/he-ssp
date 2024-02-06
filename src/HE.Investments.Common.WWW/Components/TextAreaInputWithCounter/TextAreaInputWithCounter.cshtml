@@ -2,7 +2,7 @@
 @using HE.Investments.Common.WWW.Components.InputHeader
 @using HE.Investments.Common.WWW.Components.ErrorMessage
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
-@model (string fieldName, string header, string title, HE.Investments.Common.WWW.Components.ComponentViewModel descriptionComponent, string hint, string value, string inputCssClass, int rows, int maxLength)
+@model (string fieldName, string header, string title, HE.Investments.Common.WWW.Components.DynamicComponentViewModel descriptionComponent, string hint, string value, string inputCssClass, int rows, int maxLength, bool isDisplayed)
 
 @{
     #nullable enable
@@ -11,26 +11,30 @@
     var inputClass = $"govuk-textarea govuk-js-character-count {Model.inputCssClass}";
     inputClass += hasError ? " govuk-textarea--error" : string.Empty;
 }
+@if (Model.isDisplayed)
+{
+    <div class="govuk-character-count" data-module="govuk-character-count" data-maxlength="@Model.maxLength">
+        <gds-div-form-group class="@groupClass">
+            <vc:input-header
+                field-name="@Model.fieldName"
+                header="@Model.header"
+                title="@Model.title"
+                hint="@Model.hint"/>
 
-<div class="govuk-character-count" data-module="govuk-character-count" data-maxlength="@Model.maxLength">
-    <gds-div-form-group class="@groupClass">
-        <vc:input-header
-            field-name="@Model.fieldName"
-            header="@Model.header"
-            title="@Model.title"
-            hint="@Model.hint" />
+            @* ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract *@
+            @if (Model.descriptionComponent != null)
+            {
+                <vc:dynamic-component
+                    component="@Model.descriptionComponent"/>
+            }
 
-        @if (Model.descriptionComponent != null)
-        {
-            @await Component.InvokeAsync(Model.descriptionComponent.Name, Model.descriptionComponent.Arguments)
-        }
+            <vc:error-message field-name="@Model.fieldName"/>
 
-        <vc:error-message field-name="@Model.fieldName"/>
+            <textarea class="@inputClass" id="@Model.fieldName" name="@Model.fieldName" rows="@Model.rows">@Model.value</textarea>
 
-        <textarea class="@inputClass" id="@Model.fieldName" name="@Model.fieldName" rows="@Model.rows">@Model.value</textarea>
-
-        <div id="@($"{Model.fieldName}-info")" class="govuk-hint govuk-character-count__message">
-            You can enter up to @Model.maxLength characters
-        </div>
-    </gds-div-form-group>
-</div>
+            <div id="@($"{Model.fieldName}-info")" class="govuk-hint govuk-character-count__message">
+                You can enter up to @Model.maxLength characters
+            </div>
+        </gds-div-form-group>
+    </div>
+}

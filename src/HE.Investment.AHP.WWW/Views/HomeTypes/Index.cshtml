@@ -9,7 +9,7 @@
 }
 
 <div class="govuk-grid-column-full">
-    <gds-back-link href="@Url.Action("Index","Home")" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
+    <gds-back-link href="@Url.Action("TaskList", "Application", new { applicationId })" class="govuk-!-margin-bottom-8"></gds-back-link>
     <vc:form-header title="@HomeTypesPageTitles.LandingPage" caption="@Model.ApplicationName" />
 
     <gds-p>
@@ -35,7 +35,7 @@
         Once you have created one home type, you will be able to duplicate this and amend any necessary details to create another.
     </gds-p>
 
-    <a href="@Url.Action("List", "HomeTypes", new { applicationId })" id="continue-button">
-        <gds-button type="button" class="govuk-!-margin-top-8">Continue</gds-button>
-    </a>
+    <link-button action-url="@Url.Action("List", "HomeTypes", new { applicationId })">
+        Continue
+    </link-button>
 </div>

@@ -24,7 +24,7 @@
         <gds-p>For multi-tenure sites, ensure the costs and contributions are apportioned across the development and only those applicable to the homes on this application are recorded here.</gds-p>
         <gds-p>If your application concerns existing properties rather than land-led development, this section is still relevant to you. Where we say 'site' or 'land', read 'properties'.</gds-p>
     </div>
-    <a href="@Url.Action("LandStatus", "FinancialDetails", new { applicationId = Model.ApplicationId })" id="continue-button">
-        <gds-button type="button" class="govuk-!-margin-top-8">Start now</gds-button>
-    </a>
+    <link-button action-url="@Url.Action("LandStatus", "FinancialDetails", new { applicationId = Model.ApplicationId })">
+        Continue
+    </link-button>
 </gds-div-grid-column-two-thirds>

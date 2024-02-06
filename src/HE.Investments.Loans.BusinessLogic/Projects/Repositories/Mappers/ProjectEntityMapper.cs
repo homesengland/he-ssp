@@ -1,3 +1,5 @@
+extern alias Org;
+
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Common.CRM.Mappers;
 using HE.Investments.Common.Extensions;
@@ -6,6 +8,7 @@ using HE.Investments.Loans.BusinessLogic.Projects.Entities;
 using HE.Investments.Loans.BusinessLogic.Projects.ValueObjects;
 using HE.Investments.Loans.Common.Extensions;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
+using LocalAuthorityMapper = Org::HE.Investments.Organisation.LocalAuthorities.Mappers.LocalAuthorityMapper;
 
 namespace HE.Investments.Loans.BusinessLogic.Projects.Repositories.Mappers;
 
@@ -34,7 +37,7 @@ internal static class ProjectEntityMapper
             siteDetailsDto.affordableHousing.IsProvided() ? new AffordableHomes(siteDetailsDto.affordableHousing.MapToCommonResponse()) : null,
             ApplicationStatusMapper.MapToPortalStatus(siteDetailsDto.loanApplicationStatus),
             PlanningPermissionStatusMapper.Map(siteDetailsDto.planningPermissionStatus),
-            LocalAuthorityMapper.MapToLocalAuthority(siteDetailsDto.localAuthority));
+            LocalAuthorityMapper.MapToLocalAuthority(siteDetailsDto.localAuthority?.onsCode, siteDetailsDto.localAuthority?.name));
     }
 
     private static StartDate? GetStartDate(SiteDetailsDto siteDetailsDto)
@@ -46,7 +49,7 @@ internal static class ProjectEntityMapper
             return null;
         }
 
-        if (startDateExists.HasValue)
+        if (startDateExists!.Value)
         {
             return new StartDate(true, new ProjectDate(siteDetailsDto.startDate!.Value));
         }

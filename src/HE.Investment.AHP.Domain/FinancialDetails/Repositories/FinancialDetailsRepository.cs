@@ -75,7 +75,7 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
             MapToOtherApplicationCosts(application),
             MapToExpectedContributionsToScheme(application, applicationBasicInfo.Tenure),
             MapToPublicGrants(application),
-            SectionStatusMapper.ToDomain(application.financialDetailsSectionCompletionStatus));
+            SectionStatusMapper.ToDomain(application.financialDetailsSectionCompletionStatus, applicationBasicInfo.Status));
     }
 
     private static void MapFromPublicGrants(PublicGrants publicGrants, AhpApplicationDto dto)

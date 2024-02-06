@@ -55,7 +55,7 @@ public class CurrentStateTests
     }
 
     [Theory]
-    [InlineData(DeliveryPhaseWorkflowState.Create)]
+    [InlineData(DeliveryPhaseWorkflowState.Name)]
     [InlineData(DeliveryPhaseWorkflowState.TypeOfHomes)]
     [InlineData(DeliveryPhaseWorkflowState.BuildActivityType)]
     [InlineData(DeliveryPhaseWorkflowState.AddHomes)]
@@ -64,7 +64,7 @@ public class CurrentStateTests
     [InlineData(DeliveryPhaseWorkflowState.StartOnSiteMilestone)]
     [InlineData(DeliveryPhaseWorkflowState.PracticalCompletionMilestone)]
     [InlineData(DeliveryPhaseWorkflowState.UnregisteredBodyFollowUp)]
-    public void ShouldReturnCurrentState_WhenStateIsNotName(DeliveryPhaseWorkflowState current)
+    public void ShouldReturnCurrentState_WhenStateIsNotCreate(DeliveryPhaseWorkflowState current)
     {
         // given
         var workflow = BuildWorkflow(current, DeliveryPhaseDetailsTestData.WithNames);
@@ -80,7 +80,7 @@ public class CurrentStateTests
     public void ShouldReturnTypeOfHomes_WhenTypeOfHomesNotProvided()
     {
         // given
-        var state = DeliveryPhaseWorkflowState.Name;
+        var state = DeliveryPhaseWorkflowState.Start;
         var workflow = BuildWorkflow(state, DeliveryPhaseDetailsTestData.WithNames with { TypeOfHomes = null });
 
         // when
@@ -94,7 +94,7 @@ public class CurrentStateTests
     public void ShouldReturnBuildActivityType_WhenBuildActivityTypeNotProvided()
     {
         // given
-        var state = DeliveryPhaseWorkflowState.Name;
+        var state = DeliveryPhaseWorkflowState.Start;
         var workflow = BuildWorkflow(state, DeliveryPhaseDetailsTestData.WithNames with { TypeOfHomes = TypeOfHomes.NewBuild, BuildActivityType = null });
 
         // when
@@ -108,7 +108,7 @@ public class CurrentStateTests
     public void ShouldReturnReconfiguringExistingNeeded_WhenReconfiguringExistingNeededNotProvided()
     {
         // given
-        var state = DeliveryPhaseWorkflowState.Name;
+        var state = DeliveryPhaseWorkflowState.Start;
         var workflow = BuildWorkflow(
             state,
             DeliveryPhaseDetailsTestData.WithNames with
@@ -129,7 +129,7 @@ public class CurrentStateTests
     public void ShouldReturnAddHomes_WhenHomesNotProvided()
     {
         // given
-        var state = DeliveryPhaseWorkflowState.Name;
+        var state = DeliveryPhaseWorkflowState.Start;
         var workflow = BuildWorkflow(
             state,
             DeliveryPhaseDetailsTestData.WithNames with
@@ -150,7 +150,7 @@ public class CurrentStateTests
     public void ShouldReturnAcquisitionMilestone_WhenAcquisitionPaymentDateNotProvided()
     {
         // given
-        var state = DeliveryPhaseWorkflowState.Name;
+        var state = DeliveryPhaseWorkflowState.Start;
         var workflow = BuildWorkflow(
             state,
             DeliveryPhaseDetailsTestData.WithNames with
@@ -172,7 +172,7 @@ public class CurrentStateTests
     public void ShouldReturnAcquisitionMilestone_WhenAcquisitionDateNotProvided()
     {
         // given
-        var state = DeliveryPhaseWorkflowState.Name;
+        var state = DeliveryPhaseWorkflowState.Start;
         var workflow = BuildWorkflow(
             state,
             DeliveryPhaseDetailsTestData.WithNames with
@@ -194,7 +194,7 @@ public class CurrentStateTests
     public void ShouldReturnPracticalCompletionMilestone_WhenAcquisitionNotAvailable()
     {
         // given
-        var state = DeliveryPhaseWorkflowState.Name;
+        var state = DeliveryPhaseWorkflowState.Start;
         var workflow = BuildWorkflow(
             state,
             DeliveryPhaseDetailsTestData.WithNames with
@@ -216,7 +216,7 @@ public class CurrentStateTests
     public void ShouldReturnUnregisteredBodyFollowUp_WhenUnregisteredBodyFollowUpNotProvided()
     {
         // given
-        var state = DeliveryPhaseWorkflowState.Name;
+        var state = DeliveryPhaseWorkflowState.Start;
         var workflow = BuildWorkflow(
             state,
             DeliveryPhaseDetailsTestData.WithNames with

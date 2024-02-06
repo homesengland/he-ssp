@@ -22,17 +22,17 @@
 
         <vc:details
             title="What are the acquisition milestones?"
-            content-component="@(new ComponentViewModel(nameof(AcquisitionMilestoneDetails)))"/>
+            content-component="@(new DynamicComponentViewModel(nameof(AcquisitionMilestoneDetails)))"/>
 
         <vc:date-input
-            header="Enter your acquisition date"
+            title="Enter your acquisition date"
             description="This can be a date in the past. For future dates, include a reasonable level of risk adjustment in your forecasts."
             hint="Enter a date, for example 24 03 2024."
             field-name="@nameof(Model.MilestoneStartAt)"
             value="@Model.MilestoneStartAt"/>
 
         <vc:date-input
-            header="Enter when you expect to claim this milestone payment"
+            title="Enter when you expect to claim this milestone payment"
             description="This date must be in the future, and must be on or after the date when you expect to have achieved all of the requirements of the milestone, as set out in the Capital Funding Guide."
             hint="Enter a date, for example 24 03 2024."
             field-name="@nameof(Model.ClaimMilestonePaymentAt)"

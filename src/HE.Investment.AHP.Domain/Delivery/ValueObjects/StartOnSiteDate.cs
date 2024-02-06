@@ -7,8 +7,18 @@ public class StartOnSiteDate : DateValueObject
     {
     }
 
+    private StartOnSiteDate(DateOnly value)
+        : base(value)
+    {
+    }
+
     public static StartOnSiteDate? Create(string? day, string? month, string? year)
     {
         return ValuesProvided(day, month, year) ? new StartOnSiteDate(day, month, year) : null;
+    }
+
+    public static StartOnSiteDate Create(DateOnly value)
+    {
+        return new StartOnSiteDate(value);
     }
 }

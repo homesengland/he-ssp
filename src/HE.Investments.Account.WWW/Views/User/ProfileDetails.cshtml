@@ -1,19 +1,16 @@
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
 @using HE.Investments.Common.WWW.Components.FormHeader
 @using HE.Investments.Common.WWW.Components.TextInput
-@using Microsoft.AspNetCore.Mvc.TagHelpers
 @using HE.Investments.Common.WWW.Components.FormButton
-@model HE.Investments.Account.Contract.User.UserProfileDetailsModel;
+@model HE.Investments.Account.WWW.Models.User.UserProfileDetailsModel;
 @{
     ViewData["Title"] = "Profile details";
-    var callback = Context.Request.Query["callback"].ToString();
-    var marginClass = !string.IsNullOrWhiteSpace(callback) ? string.Empty : "govuk-!-margin-top-9";
+    var marginClass = !string.IsNullOrWhiteSpace(Model.CallbackUrl) ? string.Empty : "govuk-!-margin-top-9";
 }
 
 <gds-div-grid-column-two-thirds>
-    @if (!string.IsNullOrWhiteSpace(callback))
+    @if (!string.IsNullOrWhiteSpace(Model.CallbackUrl))
     {
-        <gds-back-link class="govuk-!-margin-bottom-8" href="@callback"></gds-back-link>
+        <gds-back-link class="govuk-!-margin-bottom-8" href="@Model.CallbackUrl"></gds-back-link>
     }
 
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
@@ -24,7 +21,7 @@
         additional-css-class="@marginClass"/>
 
     <form asp-controller="User" asp-action="SaveProfileDetails" asp-method="post" novalidate>
-            @Html.Hidden("callback", callback)
+            @Html.HiddenFor(x => x.CallbackUrl)
             <vc:text-input
                 field-name="@(nameof(Model.FirstName))"
                 value="@Model.FirstName"

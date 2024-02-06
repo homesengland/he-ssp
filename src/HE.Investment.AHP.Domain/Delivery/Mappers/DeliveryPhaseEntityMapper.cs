@@ -20,16 +20,6 @@ public static class DeliveryPhaseEntityMapper
             ToDateOnlyString(deliveryPhase.DeliveryPhaseMilestones.CompletionMilestone?.PaymentDate?.Value));
     }
 
-    public static DateDetails? MapDate(DateValueObject? date)
-    {
-        return date != null
-            ? new DateDetails(
-                date.Value.Day.ToString(CultureInfo.InvariantCulture),
-                date.Value.Month.ToString(CultureInfo.InvariantCulture),
-                date.Value.Year.ToString(CultureInfo.InvariantCulture))
-            : null;
-    }
-
     private static string? ToDateOnlyString(DateOnly? date)
     {
         return date?.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);

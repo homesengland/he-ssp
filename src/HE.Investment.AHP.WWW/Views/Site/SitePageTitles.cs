@@ -6,6 +6,10 @@ public static class SitePageTitles
 
     public const string SiteList = "Sites";
 
+    public const string SiteSelect = "Select or add a site";
+
+    public const string SiteConfirmSelect = "Is this the correct site?";
+
     public const string SiteDetails = "Site details";
 
     public const string SiteName = "Name your site";
@@ -17,4 +21,32 @@ public static class SitePageTitles
     public const string SiteSection106OnlyAffordableHousing = "Is the development delivering 100% affordable housing?";
 
     public const string SiteSection106AdditionalAffordableHousing = "Additional affordable housing";
+
+    public const string SiteSection106CapitalFundingEligibility = "Capital Funding Guide eligibility";
+
+    public const string SiteSection106LocalAuthorityConfirmation = "Tell us about any confirmation you have from the local authority that these homes are in addition to those secured through a planning condition or obligation";
+
+    public const string LocalAuthoritySearch = "Your local authority";
+
+    public const string LocalAuthorityResult = "Select your local authority";
+
+    public const string LocalAuthorityNotFound = "Local Authority Not Found";
+
+    public const string LocalAuthorityNoMatch = "The details you entered did not match our records";
+
+    public const string LocalAuthorityConfirm = "Confirm your selection";
+
+    public const string PlanningStatus = "What is the planning status of this site?";
+
+    public const string PlanningDetails = "Planning details";
+
+    public const string LandRegistry = "Enter your Land Registry title number";
+
+    public const string NationalDesignGuide = "Which of the design priorities from the National Design Guide does your site aim to meet?";
+
+    public const string TenderingStatus = "What progress have you made in the tendering for your main works contract?";
+
+    public const string ContractorDetails = "Contractor details";
+
+    public const string IntentionToWorkWithSme = "Are you intending to work with a small to medium-sized enterprise (SME) contractor?";
 }

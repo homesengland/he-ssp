@@ -1,20 +1,16 @@
 using FluentAssertions;
-using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investment.AHP.Domain.Tests.HomeTypes.TestDataBuilders;
-using HE.Investments.Common.Contract.Exceptions;
 
 namespace HE.Investment.AHP.Domain.Tests.HomeTypes.EntitiesTests.TenureDetailsSegmentEntityTests;
 
 public class CalculateExpectedFirstTrancheTests
 {
     [Theory]
-    [InlineData(1000, 10, 100)]
-    [InlineData(200, 23, 46)]
-    [InlineData(511, 46, 235.06)]
-    [InlineData(14500, 60, 8700)]
-    [InlineData(9800, 75, 7350)]
-    public void ShouldReturnCalculatedResult_WhenMarketValueAndInitialSaleAreNumbers(int marketValue, int initialSale, decimal expectedResult)
+    [InlineData(0, 10, 0)]
+    [InlineData(1, 10, 0.1)]
+    [InlineData(99_999_999, 75, 74_999_999.25)]
+    public void ShouldReturnCalculatedResult_WhenInputsAreProvided(int marketValue, int initialSale, decimal expectedResult)
     {
         // given
         var marketValueVO = new MarketValue(marketValue);
@@ -34,22 +30,19 @@ public class CalculateExpectedFirstTrancheTests
     }
 
     [Theory]
-    [InlineData("input", "8")]
-    [InlineData("10", "input")]
-    [InlineData("10", "")]
-    [InlineData("", "10")]
-    [InlineData("", "")]
-    public void ShouldReturnZero_WhenMarketValueOrInitialSaleIsNotANumber(string marketValue, string initialSale)
+    [InlineData(null, "10")]
+    [InlineData("10", null)]
+    public void ShouldReturnNull_WhenAnyValueIsNotProvided(string? marketValue, string? initialSale)
     {
         // given
         var tenureDetails = new TenureDetailsTestDataBuilder().Build();
 
         // when
-        Action action = () => _ = tenureDetails.CalculateExpectedFirstTranche(
-            new MarketValue(marketValue, true),
-            new InitialSale(initialSale, true));
+        var result = tenureDetails.CalculateExpectedFirstTranche(
+            marketValue == null ? null : new MarketValue(marketValue, true),
+            initialSale == null ? null : new InitialSale(initialSale, true));
 
         // then
-        action.Should().Throw<DomainValidationException>();
+        result.Should().BeNull();
     }
 }

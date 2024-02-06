@@ -15,5 +15,5 @@ public class SharePointConfiguration : ISharePointConfiguration
     /// </summary>
     public int FileMaxSize { get; set; }
 
-    public List<string> AllowedFileExtensions => WhiteListOfFileExtensions.Split(',').ToList();
+    public List<string> AllowedFileExtensions() => WhiteListOfFileExtensions.Split(',').ToList();
 }

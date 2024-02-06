@@ -1,19 +1,16 @@
-using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Commands;
 using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investment.AHP.Domain.Site.ValueObjects;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
-using HE.Investments.Common.Extensions;
 using MediatR;
-using Microsoft.Extensions.Logging;
 
 namespace HE.Investment.AHP.Domain.Site.CommandHandlers;
 
 public class ProvideSection106OnlyAffordableHousingCommandHandler : SiteBaseCommandHandler, IRequestHandler<ProvideSection106OnlyAffordableHousingCommand, OperationResult>
 {
-    public ProvideSection106OnlyAffordableHousingCommandHandler(ISiteRepository siteRepository, IAccountUserContext accountUserContext, ILogger<SiteBaseCommandHandler> logger)
-        : base(siteRepository, accountUserContext, logger)
+    public ProvideSection106OnlyAffordableHousingCommandHandler(ISiteRepository siteRepository, IAccountUserContext accountUserContext)
+        : base(siteRepository, accountUserContext)
     {
     }
 
@@ -22,14 +19,14 @@ public class ProvideSection106OnlyAffordableHousingCommandHandler : SiteBaseComm
         return Perform(
             site =>
             {
-                var currentSection106 = site.Section106 ?? new Section106();
+                var currentSection106 = site.Section106;
                 var newSection106 = new Section106(
                                             currentSection106.GeneralAgreement,
                                             currentSection106.AffordableHousing,
                                             request.OnlyAffordableHousing,
                                             currentSection106.AdditionalAffordableHousing,
                                             currentSection106.CapitalFundingEligibility,
-                                            currentSection106.ConfirmationFromLocalAuthority);
+                                            currentSection106.LocalAuthorityConfirmation);
 
                 site.ProvideSection106(newSection106);
 

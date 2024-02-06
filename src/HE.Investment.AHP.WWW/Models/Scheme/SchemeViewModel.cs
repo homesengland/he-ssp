@@ -1,3 +1,4 @@
+using HE.Investments.Common.WWW.Attributes;
 using HE.Investments.Common.WWW.Models;
 
 namespace HE.Investment.AHP.WWW.Models.Scheme;

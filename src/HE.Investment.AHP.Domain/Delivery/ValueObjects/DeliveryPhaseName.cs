@@ -8,4 +8,9 @@ public class DeliveryPhaseName : ShortText
         : base(value, nameof(DeliveryPhaseName), "delivery phase name")
     {
     }
+
+    public override string ToString()
+    {
+        return Value;
+    }
 }

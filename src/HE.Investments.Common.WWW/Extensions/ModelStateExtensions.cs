@@ -21,26 +21,16 @@ public static class ModelStateExtensions
         return (true, modelState[key]!.GetErrorMessage());
     }
 
-    public static Dictionary<string, string> GetOrderedErrors(this ModelStateDictionary? modelState, List<string> orderedKeys)
+    public static Dictionary<string, string> GetOrderedErrors(this ModelStateDictionary modelState, List<string> orderedKeys)
     {
-        var result = new Dictionary<string, string>();
-
-        if (modelState is null)
-        {
-            return result;
-        }
-
-        foreach (var key in orderedKeys)
-        {
-            var (hasError, errorMsg) = GetErrors(modelState, key);
-
-            if (hasError)
+        return modelState
+            .ToDictionary(i => i.Key, i => GetErrorMessage(i.Value))
+            .OrderBy(i =>
             {
-                result.TryAdd(key, errorMsg);
-            }
-        }
-
-        return result;
+                var index = i.Key.IndexOf("[", StringComparison.InvariantCulture);
+                return orderedKeys.IndexOf(i.Key.Remove(index < 0 ? i.Key.Length : index));
+            })
+            .ToDictionary(x => x.Key, x => x.Value);
     }
 
     public static string GetErrorMessage(this ModelStateEntry? modelStateEntry)

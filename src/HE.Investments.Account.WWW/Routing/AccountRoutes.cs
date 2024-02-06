@@ -7,12 +7,12 @@ namespace HE.Investments.Account.WWW.Routing;
 
 public class AccountRoutes : IAccountRoutes
 {
-    public IActionResult NotCompleteProfile()
+    public IActionResult NotCompleteProfile(string? callbackProgramme = null, string? callbackRoute = null)
     {
         return new RedirectToActionResult(
             nameof(UserController.GetProfileDetails),
             new ControllerName(nameof(UserController)).WithoutPrefix(),
-            null);
+            new { callbackApplication = callbackProgramme, callbackRoute });
     }
 
     public IActionResult NotLinkedOrganisation()

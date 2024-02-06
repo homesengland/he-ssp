@@ -27,7 +27,7 @@ public class CompleteDeliverySectionCommandHandler : DeliveryCommandHandlerBase,
     {
         var account = await _accountUserContext.GetSelectedAccount();
         var deliveryPhases = await _repository.GetByApplicationId(request.ApplicationId, account, cancellationToken);
-        var validationErrors = PerformWithValidation(() => deliveryPhases.CompleteSection(request.IsSectionCompleted));
+        var validationErrors = PerformWithValidation(() => deliveryPhases.CompleteSection(request.IsDeliveryCompleted));
         if (validationErrors.Any())
         {
             return new OperationResult(validationErrors);

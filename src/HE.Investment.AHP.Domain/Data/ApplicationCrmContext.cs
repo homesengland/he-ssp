@@ -1,5 +1,4 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.Investment.AHP.Domain.Common.Mappers;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.CRM.Mappers;
@@ -47,7 +46,7 @@ public class ApplicationCrmContext : IApplicationCrmContext
         return await Get(request, cancellationToken);
     }
 
-    public async Task<bool> IsExist(string applicationName, Guid organisationId, CancellationToken cancellationToken)
+    public async Task<bool> IsNameExist(string applicationName, Guid organisationId, CancellationToken cancellationToken)
     {
         var dto = new AhpApplicationDto
         {
@@ -108,16 +107,22 @@ public class ApplicationCrmContext : IApplicationCrmContext
             cancellationToken);
     }
 
-    public async Task ChangeApplicationStatus(Guid applicationId, Guid organisationId, ApplicationStatus applicationStatus, string? reason, CancellationToken cancellationToken)
+    public async Task ChangeApplicationStatus(
+        string applicationId,
+        Guid organisationId,
+        ApplicationStatus applicationStatus,
+        string? changeReason,
+        CancellationToken cancellationToken)
     {
         var crmStatus = AhpApplicationStatusMapper.MapToCrmStatus(applicationStatus);
 
-        var request = new invln_changeahpapplicationstatusRequest()
+        var request = new invln_changeahpapplicationstatusRequest
         {
-            invln_applicationid = applicationId.ToString(),
+            invln_applicationid = applicationId,
             invln_organisationid = organisationId.ToString(),
             invln_userid = _userContext.UserGlobalId,
             invln_newapplicationstatus = crmStatus,
+            invln_changereason = changeReason,
         };
 
         await _service.ExecuteAsync<invln_changeahpapplicationstatusRequest, invln_changeahpapplicationstatusResponse>(

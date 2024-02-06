@@ -8,14 +8,15 @@ public class TextAreaInputWithCounter : ViewComponent
     public IViewComponentResult Invoke(
         string fieldName,
         string? header = null,
-        ComponentViewModel? descriptionComponent = null,
+        DynamicComponentViewModel? descriptionComponent = null,
         string? title = null,
         string? hint = null,
         string? value = null,
         string? inputCssClass = null,
         int? rows = null,
-        int? maxLength = null)
+        int? maxLength = null,
+        bool? isDisplayed = null)
     {
-        return View("TextAreaInputWithCounter", (fieldName, header, title, descriptionComponent, hint, value, inputCssClass, rows ?? 7, maxLength ?? 1500));
+        return View("TextAreaInputWithCounter", (fieldName, header, title, descriptionComponent, hint, value, inputCssClass, rows ?? 7, maxLength ?? 1500, isDisplayed ?? true));
     }
 }

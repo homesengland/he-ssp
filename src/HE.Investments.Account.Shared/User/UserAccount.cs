@@ -1,4 +1,4 @@
-using HE.Investments.Account.Contract.Users;
+using HE.Investments.Account.Api.Contract.User;
 using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
@@ -9,7 +9,6 @@ public record UserAccount(
     UserGlobalId UserGlobalId,
     string UserEmail,
     OrganisationBasicInfo? Organisation,
-    string OrganisationName,
     IReadOnlyCollection<UserRole> Roles)
 {
     public UserRole Role() => Roles.Count > 0 ? Roles.Max() : throw new UnauthorizedAccessException();

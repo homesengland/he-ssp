@@ -1,10 +1,10 @@
 @using HE.Investments.Common.Extensions
 @using HE.Investments.Common.WWW.Components.FormHeader
 @using HE.Investments.Account.Shared
-@using Microsoft.AspNetCore.Mvc.TagHelpers
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
+@using HE.Investments.Account.WWW.Views.Shared.Components.JoinRequestsTable
+@using HE.Investments.Account.WWW.Views.Shared.Components.UsersTable
 @inject IAccountAccessContext AccountAccessContext
-@model (HE.Investments.Account.Contract.Users.UsersAndJoinRequests usersAndJoinRequests, IDictionary<HE.Investments.Account.Contract.Users.UserRole, string> roles);
+@model (HE.Investments.Account.Contract.Users.UsersAndJoinRequests usersAndJoinRequests, IDictionary<HE.Investments.Account.Api.Contract.User.UserRole, string> roles);
 @{
     ViewData["Title"] = "Manage users";
     var title = $"Manage users at {Model.usersAndJoinRequests.OrganisationName}";

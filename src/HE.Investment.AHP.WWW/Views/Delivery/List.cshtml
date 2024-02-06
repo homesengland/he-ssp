@@ -57,7 +57,7 @@
                     <tr class="govuk-table__row" id="delivery-phase-@Model.DeliveryPhases[index].DeliveryPhaseId">
                         <td class="govuk-table__cell">
                             <gds-link class="govuk-link--no-visited-state"
-                                      href="@Url.Action("Name", "DeliveryPhase", new { applicationId, deliveryPhaseId = Model.DeliveryPhases[index].DeliveryPhaseId })">
+                                      href="@Url.Action("Start", "DeliveryPhase", new { applicationId, deliveryPhaseId = Model.DeliveryPhases[index].DeliveryPhaseId })">
                                 @(Model.DeliveryPhases[index].DeliveryPhaseName)
                             </gds-link>
                         </td>
@@ -109,6 +109,9 @@
                         <td colspan="6">
                             <gds-div-inset-text>
                                 All of your homes have been added to delivery phase. If you want to add another delivery phase, edit the homes in an existing phase or remove a phase.
+                                <br/>
+                                <br/>
+                                Select save and continue to complete this section.
                             </gds-div-inset-text>
                         </td>
                     </tr>

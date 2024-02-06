@@ -1,5 +1,7 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Events;
+using HE.Investment.AHP.Contract.Application.Helpers;
+using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Domain.Application.Repositories.Interfaces;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investments.Account.Shared.User.ValueObjects;
@@ -17,6 +19,7 @@ public class ApplicationEntity : DomainEntity
     private readonly ModificationTracker _modificationTracker = new();
 
     public ApplicationEntity(
+        SiteId siteId,
         AhpApplicationId id,
         ApplicationName name,
         ApplicationStatus status,
@@ -25,6 +28,7 @@ public class ApplicationEntity : DomainEntity
         AuditEntry? lastModified,
         ApplicationSections sections)
     {
+        SiteId = siteId;
         Id = id;
         Name = name;
         Status = status;
@@ -33,6 +37,8 @@ public class ApplicationEntity : DomainEntity
         LastModified = lastModified;
         Sections = sections;
     }
+
+    public SiteId SiteId { get; }
 
     public AhpApplicationId Id { get; private set; }
 
@@ -56,7 +62,8 @@ public class ApplicationEntity : DomainEntity
 
     public bool IsNew => Id.IsNew;
 
-    public static ApplicationEntity New(ApplicationName name, ApplicationTenure tenure) => new(
+    public static ApplicationEntity New(SiteId siteId, ApplicationName name, ApplicationTenure tenure) => new(
+        siteId,
         AhpApplicationId.New(),
         name,
         ApplicationStatus.New,
@@ -75,7 +82,7 @@ public class ApplicationEntity : DomainEntity
         Id = newId;
     }
 
-    public void Submit()
+    public async Task Submit(IChangeApplicationStatus applicationSubmit, OrganisationId organisationId, CancellationToken cancellationToken)
     {
         if (Sections.Sections.Any(s => s.Status != SectionStatus.Completed))
         {
@@ -84,25 +91,53 @@ public class ApplicationEntity : DomainEntity
         }
 
         Status = _modificationTracker.Change(Status, ApplicationStatus.ApplicationSubmitted);
+
+        await applicationSubmit.ChangeApplicationStatus(this, organisationId, null, cancellationToken);
     }
 
-    public async Task Hold(IApplicationHold applicationHold, HoldReason? newHoldReason, OrganisationId organisationId, CancellationToken cancellationToken)
+    public async Task Hold(IChangeApplicationStatus applicationHold, HoldReason? newHoldReason, OrganisationId organisationId, CancellationToken cancellationToken)
     {
         Status = _modificationTracker.Change(Status, ApplicationStatus.OnHold);
         HoldReason = _modificationTracker.Change(HoldReason, newHoldReason);
 
-        await applicationHold.Hold(this, organisationId, cancellationToken);
+        await applicationHold.ChangeApplicationStatus(this, organisationId, HoldReason?.Value, cancellationToken);
 
-        Publish(new ApplicationHasBeenPutOnHoldEvent());
+        Publish(new ApplicationHasBeenPutOnHoldEvent(Id));
     }
 
-    public async Task Withdraw(IApplicationWithdraw applicationWithdraw, WithdrawReason? newWithdrawReason, OrganisationId organisationId, CancellationToken cancellationToken)
+    public async Task Reactivate(IChangeApplicationStatus applicationReactivate, ApplicationStatus newApplicationStatus, OrganisationId organisationId, CancellationToken cancellationToken)
     {
-        Status = _modificationTracker.Change(Status, ApplicationStatus.Withdrawn);
+        Status = _modificationTracker.Change(Status, newApplicationStatus);
+
+        await applicationReactivate.ChangeApplicationStatus(this, organisationId, null, cancellationToken);
+    }
+
+    public async Task Withdraw(IChangeApplicationStatus applicationWithdraw, WithdrawReason? newWithdrawReason, OrganisationId organisationId, CancellationToken cancellationToken)
+    {
+        var statusesAfterSubmit = ApplicationStatusDivision.GetAllStatusesAllowedToChangeApplicationStatusToWithdrawn();
         WithdrawReason = _modificationTracker.Change(WithdrawReason, newWithdrawReason);
 
-        await applicationWithdraw.Withdraw(this, organisationId, cancellationToken);
+        if (Status == ApplicationStatus.Draft)
+        {
+            Status = _modificationTracker.Change(Status, ApplicationStatus.Deleted);
+            await applicationWithdraw.ChangeApplicationStatus(this, organisationId, WithdrawReason?.Value, cancellationToken);
+        }
+        else if (statusesAfterSubmit.Contains(Status))
+        {
+            Status = _modificationTracker.Change(Status, ApplicationStatus.Withdrawn);
+            await applicationWithdraw.ChangeApplicationStatus(this, organisationId, WithdrawReason?.Value, cancellationToken);
+        }
+        else
+        {
+            throw new DomainException("The application cannot be withdrawn", CommonErrorCodes.ApplicationCannotBeWithdrawn);
+        }
 
-        Publish(new ApplicationHasBeenWithdrawnEvent());
+        Publish(new ApplicationHasBeenWithdrawnEvent(Id));
+    }
+
+    public bool IsReadOnly()
+    {
+        var readonlyStatuses = ApplicationStatusDivision.GetAllStatusesForReadonlyMode();
+        return readonlyStatuses.Contains(Status);
     }
 }

@@ -1,7 +1,6 @@
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories;
 using HE.Investments.Loans.BusinessLogic.Tests.TestData;
-using HE.Investments.Loans.BusinessLogic.Tests.User.TestData;
 using HE.Investments.TestsUtils.TestFramework;
 using Microsoft.PowerPlatform.Dataverse.Client;
 using Microsoft.Xrm.Sdk;

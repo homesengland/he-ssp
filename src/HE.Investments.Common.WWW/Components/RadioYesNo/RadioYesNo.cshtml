@@ -1,11 +1,11 @@
 @using HE.Investments.Common.WWW.Extensions
 @using HE.Investments.Common.WWW.Models
-@using HE.Investments.Common.WWW.Components.RadioListHeader
+@using HE.Investments.Common.WWW.Components.InputListHeader
 @using HE.Investments.Common.WWW.Components.ErrorMessage
 @using HE.Investments.Common.WWW.Components.RadioListContent
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Fieldset
-@model (string fieldName, string header, string title, string hint, bool? value)
+@using HE.Investments.Common.WWW.Components
+
+@model (string fieldName, DynamicComponentViewModel headerComponent, string header, string title, string hint, bool? value, bool isDisplayed)
 @{
     var (hasError, radioErrors) = ViewData.ModelState.GetErrors(Model.fieldName);
     var groupClass = hasError ? "govuk-form-group--error" : string.Empty;
@@ -16,15 +16,18 @@
     };
 }
 
-<gds-div-form-group class="@groupClass">
-    <gds-field-set>
-        <vc:radio-list-header header="@Model.header" title="@Model.title" hint="@Model.hint"/>
+@if (Model.isDisplayed)
+{
+    <gds-div-form-group class="@groupClass">
+        <gds-field-set>
+            <vc:input-list-header header-component="@Model.headerComponent" header="@Model.header" title="@Model.title" hint="@Model.hint"/>
 
-        <vc:error-message field-name="@Model.fieldName"/>
+            <vc:error-message field-name="@Model.fieldName"/>
 
-        <vc:radio-list-content
-            field-name="@Model.fieldName"
-            available-options="@values"/>
+            <vc:radio-list-content
+                field-name="@Model.fieldName"
+                available-options="@values"/>
 
-    </gds-field-set>
-</gds-div-form-group>
+        </gds-field-set>
+    </gds-div-form-group>
+}

@@ -52,10 +52,10 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         var landingPage = await TestClient.NavigateTo(enterHomeTypesSection);
 
         // then
-        landingPage
+        var continueButton = landingPage
             .UrlEndWith(BuildHomeTypesPage(HomeTypesPagesUrl.LandingPage))
             .HasTitle(HomeTypesPageTitles.LandingPage)
-            .HasGdsLinkButton("continue-button", out var continueButton);
+            .GetLinkButton();
 
         (await TestClient.NavigateTo(continueButton)).UrlEndWith(BuildHomeTypesPage(HomeTypesPagesUrl.List));
         SaveCurrentPage();

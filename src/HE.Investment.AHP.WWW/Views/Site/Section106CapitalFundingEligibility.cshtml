@@ -1,0 +1,37 @@
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investment.AHP.Contract.Site
+@using HE.Investment.AHP.WWW.Views.Site
+@model SiteModel
+@{
+    ViewData["Title"] = SitePageTitles.SiteSection106CapitalFundingEligibility;
+}
+<gds-div-grid-column-two-thirds>
+    <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.Section106CapitalFundingEligibility" />
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+
+    <form asp-controller="Site" asp-action="Section106CapitalFundingEligibility" asp-method="post" novalidate>
+        <vc:form-header title="@SitePageTitles.SiteSection106CapitalFundingEligibility" caption="@Model?.Name" additional-css-class="govuk-!-padding-top-8"></vc:form-header>
+        <gds-p>
+            All homes funded through the Affordable Homes Programme must meet the requirements of the
+            Capital Funding Guide. You should ensure that none of the provisions in your section (s106)
+            agreement, or other planning conditions covering the homes in this application, contradict those
+            requirements.
+        </gds-p>
+        <gds-p>
+            For guidance on the requirements for funding eligibility, read more about affordable housing
+            funding (opens in a new tab). It also includes links to additional information in the Capital
+            Funding Guide.
+        </gds-p>
+
+        <vc:radio-yes-no field-name="@nameof(Model.Section106CapitalFundingEligibility)"
+                         title="Are there any restrictions or obligations within your
+                                section 106 (s106) agreement that may contradict the
+                                eligibility set out in the Capital Funding Guide?"
+            value="@Model?.Section106CapitalFundingEligibility"/>
+
+        @Html.HiddenFor(x => x.Id)
+
+        <vc:form-button />
+    </form>
+
+</gds-div-grid-column-two-thirds>

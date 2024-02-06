@@ -11,6 +11,7 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)dtomapping\AhpApplicationMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)dtomapping\ContactDtoMapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DtoMapping\DeliveryPhaseMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)dtomapping\HomeTypeMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)dtomapping\LoanApplicationDtoMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)dtomapping\SiteDetailsDtoMapper.cs" />
@@ -23,9 +24,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\ConditionRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\ContactRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\ContactWebroleRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\implementations\DeliveryPhaseRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\EnvironmentVariableRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\GovNotifyEmailRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\GlobalRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\implementations\HomesInDeliveryPhaseRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\HomeTypeRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\IspRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\LocalAuthorityRepository.cs" />
@@ -49,9 +52,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IConditionRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IContactRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IContactWebroleRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IDeliveryPhaseRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IEnvironmentVariableRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IGovNotifyEmailRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IGlobalRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IHomesInDeliveryPhaseRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IHomeTypeRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IIspRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\ILoanApplicationRepository.cs" />
@@ -69,6 +74,5 @@
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\ITeamRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IWebRoleRepository.cs" />
     <Folder Include="$(MSBuildThisFileDirectory)Helpers\" />
-    <Folder Include="$(MSBuildThisFileDirectory)DtoMapping\" />
   </ItemGroup>
 </Project>

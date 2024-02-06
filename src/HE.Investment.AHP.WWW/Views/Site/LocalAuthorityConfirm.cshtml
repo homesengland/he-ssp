@@ -1,0 +1,48 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Fieldset
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Headings
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Paragraphs
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Radios
+@using HE.Investment.AHP.WWW.Models.Common
+@using HE.Investment.AHP.WWW.Views.Site
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investments.Common.WWW.TagHelpers
+@model HE.Investments.Common.WWW.Models.ConfirmModel<HE.Investment.AHP.Contract.Site.LocalAuthorities>;
+
+@{
+    ViewData["Title"] = "Confirm Your Local Authority";
+    var redirect = Context.Request.Query["redirect"];
+}
+
+<gds-div-grid-column-two-thirds>
+    <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("LocalAuthorityResult", "Site", new { siteId = Model.ViewModel.SiteId, phrase = Model.ViewModel.Phrase, redirect })"></gds-back-link>
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+    <form asp-controller="Site" asp-action="LocalAuthorityConfirm" asp-route-localAuthorityId=@(Model.ViewModel.LocalAuthorityId) asp-route-redirect=@redirect asp-method="post" novalidate>
+        <gds-field-set>
+                <gds-h1 size="ControlSize.Xl" class="govuk-!-margin-bottom-6">
+                    @SitePageTitles.LocalAuthorityConfirm
+                </gds-h1>
+                <gds-p>
+                    <b>@Model.ViewModel.LocalAuthorityName</b>
+                </gds-p>
+            <he-error-form-group asp-for="Response">
+
+                <gds-h2 class="govuk-fieldset__legend--m">
+                    Is this the correct local authority?
+                </gds-h2>
+                <gds-radio govuk-formgroup-asp-for="Response"
+                           asp-hiddenlabeltext="Confirm Local Authority"
+                           value="@Model.Response"
+                           asp-selectlistitems="@CommonFormOptions.YesNo"
+                           class="govuk-!-margin-bottom-2">
+                </gds-radio>
+            </he-error-form-group>
+            <vc:form-button text="Continue"/>
+        </gds-field-set>
+        @Html.HiddenFor(c => c.ViewModel.SiteId)
+        @Html.HiddenFor(c => c.ViewModel.LocalAuthorityId)
+        @Html.HiddenFor(c => c.ViewModel.LocalAuthorityName)
+        @Html.HiddenFor(c => c.ViewModel.Phrase)
+    </form>
+</gds-div-grid-column-two-thirds>

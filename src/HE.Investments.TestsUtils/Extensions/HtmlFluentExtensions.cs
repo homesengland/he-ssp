@@ -112,6 +112,12 @@ public static class HtmlFluentExtensions
         return htmlDocument;
     }
 
+    public static IHtmlDocument ContainsInsetText(this IHtmlDocument htmlDocument, string title)
+    {
+        htmlDocument.GetInsetText().Should().Contain(title);
+        return htmlDocument;
+    }
+
     public static IHtmlDocument HasSectionWithStatus(this IHtmlDocument htmlDocument, string sectionStatusId, string expectedStatus)
     {
         return htmlDocument.HasElementWithTextById(sectionStatusId, expectedStatus);

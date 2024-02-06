@@ -1,0 +1,28 @@
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investment.AHP.Contract.Site
+@using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
+@using HE.Investment.AHP.WWW.Views.Site
+@using HE.Investments.Common.WWW.Components.RadioList
+@using HE.Investments.Common.WWW.Helpers
+@model SitePlanningDetails
+@{
+    ViewData["Title"] = SitePageTitles.PlanningStatus;
+}
+<gds-div-grid-column-two-thirds>
+    <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.PlanningStatus"/>
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+    <vc:form-header caption="@ViewBag.SiteName"/>
+
+    <form asp-controller="Site" asp-action="PlanningStatus" asp-method="post" novalidate>
+
+        <vc:radio-list
+            header="@SitePageTitles.PlanningStatus"
+            field-name="@nameof(Model.PlanningStatus)"
+            available-options="@SelectListHelper.FromEnumToExtendedList<SitePlanningStatus>()"
+            value=@Model?.PlanningStatus/>
+
+        <vc:form-button/>
+        <vc:return-to-sites-link/>
+    </form>
+
+</gds-div-grid-column-two-thirds>

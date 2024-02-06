@@ -19,10 +19,10 @@ public class CrmService : ICrmService
         where TResponse : OrganizationResponse
     {
         var response = await _serviceClient.ExecuteAsync(request, cancellationToken) as TResponse
-                       ?? throw new NotFoundException($"Cannot find {nameof(TDto)} resource for {nameof(TRequest)} request");
+                       ?? throw new NotFoundException($"Cannot find {typeof(TDto).Name} resource for {typeof(TRequest).Name} request");
 
         return CrmResponseSerializer.Deserialize<TDto>(getResponse(response))
-               ?? throw new NotFoundException($"Cannot find {nameof(TDto)} resource for {nameof(TRequest)} request");
+               ?? throw new NotFoundException($"Cannot find {typeof(TDto).Name} resource for {typeof(TRequest).Name} request");
     }
 
     public async Task<string> ExecuteAsync<TRequest, TResponse>(TRequest request, Func<TResponse, string> getResponse, CancellationToken cancellationToken)
@@ -30,7 +30,7 @@ public class CrmService : ICrmService
         where TResponse : OrganizationResponse
     {
         var response = await _serviceClient.ExecuteAsync(request, cancellationToken) as TResponse
-                       ?? throw new NotFoundException($"Cannot find resource for {nameof(TRequest)} request");
+                       ?? throw new NotFoundException($"Cannot find resource for {typeof(TRequest).Name} request");
 
         return getResponse(response);
     }

@@ -1,19 +1,18 @@
 using FluentAssertions;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investment.AHP.Domain.Tests.HomeTypes.TestDataBuilders;
-using HE.Investments.Common.Contract.Exceptions;
 
 namespace HE.Investment.AHP.Domain.Tests.HomeTypes.EntitiesTests.TenureDetailsSegmentEntityTests;
 
 public class CalculateProspectiveRentTests
 {
     [Theory]
-    [InlineData(10, 8, 80)]
-    [InlineData(20, 5, 25)]
-    [InlineData(5, 20, 400)]
-    [InlineData(1450, 1200, 83)]
-    [InlineData(980, 1250, 128)]
-    public void ShouldReturnCalculatedResult_WhenMarketRentAndProspectiveRentAreNumbers(decimal marketRent, decimal prospectiveRent, decimal expectedResult)
+    [InlineData(0, 0, 0)]
+    [InlineData(1000, 500, 50)]
+    [InlineData(9999.99, 0, 0)]
+    [InlineData(0, 9999.99, 0)]
+    [InlineData(9999.99, 9999.99, 100)]
+    public void ShouldReturnCalculatedResult_WhenInputsAreProvided(decimal marketRent, decimal prospectiveRent, decimal expectedResult)
     {
         // given
         var marketRentVO = new MarketRent(marketRent);
@@ -33,22 +32,19 @@ public class CalculateProspectiveRentTests
     }
 
     [Theory]
-    [InlineData("input", "8")]
-    [InlineData("10", "input")]
-    [InlineData("10", "")]
-    [InlineData("", "10")]
-    [InlineData("", "")]
-    public void ShouldReturnZero_WhenMarketRentOrProspectiveRentIsNotANumber(string marketRent, string prospectiveRent)
+    [InlineData("10", null)]
+    [InlineData(null, "10")]
+    public void ShouldReturnNull_WhenAnyValueIsNotProvided(string? marketRent, string? prospectiveRent)
     {
         // given
         var tenureDetails = new TenureDetailsTestDataBuilder().Build();
 
         // when
-        Action action = () => _ = tenureDetails.CalculateProspectiveRent(
-            new MarketRent(marketRent, true),
-            new ProspectiveRent(prospectiveRent, true));
+        var result = tenureDetails.CalculateProspectiveRent(
+            marketRent == null ? null : new MarketRent(marketRent, true),
+            prospectiveRent == null ? null : new ProspectiveRent(prospectiveRent, true));
 
         // then
-        action.Should().Throw<DomainValidationException>();
+        result.Should().BeNull();
     }
 }

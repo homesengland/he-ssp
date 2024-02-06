@@ -19,6 +19,7 @@ using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.Workflow;
+using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Helpers;
 using HE.Investments.Common.WWW.Models;
@@ -73,11 +74,12 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     public async Task<IActionResult> List([FromRoute] string applicationId, CancellationToken cancellationToken)
     {
         var homeTypes = await _mediator.Send(new GetHomeTypesQuery(AhpApplicationId.From(applicationId)), cancellationToken);
+        var isEditable = await _accountAccessContext.CanEditApplication() && !homeTypes.IsReadOnly;
 
         return View(new HomeTypeListModel(homeTypes.ApplicationName)
         {
             HomeTypes = homeTypes.HomeTypes.Select(x => new HomeTypeItemModel(x.Id.Value, x.Name, x.HousingType, x.NumberOfHomes)).ToList(),
-            IsEditable = await _accountAccessContext.CanEditApplication(),
+            IsEditable = isEditable,
         });
     }
 
@@ -196,7 +198,8 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         [FromQuery] bool redirect,
         CancellationToken cancellationToken)
     {
-        var isReadOnly = !await _accountAccessContext.CanEditApplication();
+        var homeType = await _mediator.Send(new GetFullHomeTypeQuery(AhpApplicationId.From(applicationId), HomeTypeId.From(homeTypeId)), cancellationToken);
+        var isReadOnly = !await _accountAccessContext.CanEditApplication() || homeType.IsReadOnly;
         if (isReadOnly)
         {
             return RedirectToAction("CheckAnswers", new { applicationId, homeTypeId });
@@ -204,7 +207,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
 
         if (redirect)
         {
-            var homeType = await _mediator.Send(new GetFullHomeTypeQuery(AhpApplicationId.From(applicationId), HomeTypeId.From(homeTypeId)), cancellationToken);
             var firstNotAnsweredQuestion = _summaryViewModelFactory
                 .CreateSummaryModel(homeType, Url, isReadOnly)
                 .Where(x => x.Items != null)
@@ -1393,6 +1395,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         }
 
         var homeType = await _mediator.Send(new GetHomeTypeQuery(AhpApplicationId.From(applicationId), HomeTypeId.From(homeTypeId)));
+        isReadOnly = isReadOnly || homeType.IsReadOnly;
         var workflow = new HomeTypesWorkflow(currentState, homeType, isReadOnly);
         if (TryGetWorkflowQueryParameter(out var lastEncodedWorkflow))
         {
@@ -1441,15 +1444,12 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         CancellationToken cancellationToken)
         where TSaveSegmentCommand : ISaveHomeTypeSegmentCommand
     {
-        var result = await _mediator.Send(command, cancellationToken);
-        if (result.HasValidationErrors)
-        {
-            ModelState.AddValidationErrors(result);
-            return View(model);
-        }
-
-        var action = HttpContext.Request.Form["action"];
-        return await ProcessAction(command.ApplicationId, command.HomeTypeId, action);
+        return await this.ExecuteCommand<TModel>(
+            _mediator,
+            command,
+            async () => await ProcessAction(command.ApplicationId, command.HomeTypeId, HttpContext.Request.Form["action"]),
+            async () => await Task.FromResult<IActionResult>(View(model)),
+            cancellationToken);
     }
 
     private string GetDesignFileAction(string actionName, string applicationId, string homeTypeId, FileId fileId)
@@ -1491,8 +1491,8 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         string homeTypeId,
         CancellationToken cancellationToken)
     {
-        var isEditable = await _accountAccessContext.CanEditApplication();
         var homeType = await _mediator.Send(new GetFullHomeTypeQuery(AhpApplicationId.From(applicationId), HomeTypeId.From(homeTypeId)), cancellationToken);
+        var isEditable = await _accountAccessContext.CanEditApplication() && !homeType.IsReadOnly;
         var sections = _summaryViewModelFactory.CreateSummaryModel(homeType, urlHelper, !isEditable, true);
 
         return new HomeTypeSummaryModel(homeType.ApplicationName, homeType.Name)

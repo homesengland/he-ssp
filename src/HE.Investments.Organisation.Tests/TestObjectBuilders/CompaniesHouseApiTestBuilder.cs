@@ -33,7 +33,7 @@ public class CompaniesHouseApiTestBuilder : TestServiceBuilder<ICompaniesHouseAp
             {
                 CompanyName = organizationToReturn.CompanyName,
                 CompanyNumber = organizationToReturn.CompanyNumber,
-                OfficeAddress = organizationToReturn.OfficeAddress
+                OfficeAddress = organizationToReturn.OfficeAddress,
             });
 
         return this;

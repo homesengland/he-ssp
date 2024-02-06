@@ -51,7 +51,7 @@ public static class EnumExtensions
         return enumValue;
     }
 
-    public static TEnum GetValueOfFirstValue<TEnum>(this TEnum? enumValue)
+    public static TEnum GetValueOrFirstValue<TEnum>(this TEnum? enumValue)
         where TEnum : struct, Enum
     {
         return enumValue ?? GetDefinedValues<TEnum>().First();

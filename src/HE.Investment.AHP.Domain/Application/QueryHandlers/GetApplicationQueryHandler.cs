@@ -1,6 +1,5 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Queries;
-using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.Application.Repositories.Interfaces;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
@@ -33,6 +32,7 @@ public class GetApplicationQueryHandler : IRequestHandler<GetApplicationQuery, C
             application.Status,
             application.ReferenceNumber.Value,
             application.LastModified != null ? new ModificationDetails(application.LastModified.FirstName, application.LastModified.LastName, application.LastModified.ChangedOn) : null,
-            application.Sections.Sections.Select(s => new ApplicationSection(s.Type, s.Status)).ToList());
+            application.Sections.Sections.Select(s => new ApplicationSection(s.Type, s.Status)).ToList(),
+            application.IsReadOnly());
     }
 }

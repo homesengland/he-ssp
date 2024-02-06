@@ -21,6 +21,10 @@
   cursor: pointer;
 }
 
+.govuk-\!-align-center{
+  justify-content: center;
+}
+
 .loader-line {
   width: 66px;
   height: 3px;

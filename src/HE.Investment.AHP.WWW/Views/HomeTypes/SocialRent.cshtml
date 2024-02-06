@@ -1,16 +1,13 @@
 @using HE.Investment.AHP.WWW.Extensions
-@using HE.Investment.AHP.WWW.Views.HomeTypes.Const
 @using HE.Investment.AHP.WWW.Views.Shared.Components.HomeTypeFormHeader
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
 @using HE.Investments.Common.WWW.Components.FormButton
-@using HE.Investments.Common.WWW.Extensions
 @using HE.Investment.AHP.Contract.HomeTypes
 @model HE.Investment.AHP.WWW.Models.HomeTypes.SocialRentModel;
 
 @{
     var applicationId = this.GetApplicationIdFromRoute();
     var workflow = Context.Request.Query["workflow"];
-    ViewBag.ValidationErrors = ViewData.ModelState.GetOrderedErrors(HomeTypesValidationFieldsOrder.SocialRent);
 }
 
 <gds-div-grid-column-two-thirds>

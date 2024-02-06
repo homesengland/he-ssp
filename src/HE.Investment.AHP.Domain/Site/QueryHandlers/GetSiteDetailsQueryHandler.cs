@@ -1,6 +1,5 @@
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Queries;
-using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.Application.Repositories.Interfaces;
 using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investments.Account.Shared;
@@ -33,7 +32,7 @@ public class GetSiteDetailsQueryHandler : IRequestHandler<GetSiteDetailsQuery, S
         return new SiteDetailsModel(
             site.Id.Value,
             site.Name.Value,
-            userAccount.OrganisationName,
+            userAccount.Organisation?.RegisteredCompanyName ?? string.Empty,
             applications.Items.Select(x => new ApplicationSiteModel(x.ApplicationId.Value, x.ApplicationName, x.Tenure, x.Status)).ToArray());
     }
 }

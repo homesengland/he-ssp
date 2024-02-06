@@ -5,7 +5,7 @@ namespace HE.Investments.Common.Validators;
 
 public static class PoundsPencesValidator
 {
-    public static decimal ValidateDeffer(decimal pounds, string fieldName, string displayName, decimal? maxValue, OperationResult operationResult)
+    public static decimal ValidateDeffer(decimal pounds, string fieldName, string displayName, decimal? maxValue, string? maxValueExceededError, OperationResult operationResult)
     {
         pounds = Math.Round(pounds, 2);
         if (pounds < 0)
@@ -15,16 +15,16 @@ public static class PoundsPencesValidator
 
         if (maxValue != null && pounds > maxValue)
         {
-            operationResult.AddValidationError(fieldName, ValidationErrorMessage.PoundInput(displayName));
+            operationResult.AddValidationError(fieldName, maxValueExceededError ?? ValidationErrorMessage.PoundInput(displayName));
         }
 
         return pounds;
     }
 
-    public static decimal Validate(decimal pounds, string fieldName, string displayName, decimal? maxValue = null)
+    public static decimal Validate(decimal pounds, string fieldName, string displayName, decimal? maxValue = null, string? maxValueExceededError = null)
     {
         var operationResult = OperationResult.New();
-        var value = ValidateDeffer(pounds, fieldName, displayName, maxValue, operationResult);
+        var value = ValidateDeffer(pounds, fieldName, displayName, maxValue, maxValueExceededError, operationResult);
 
         operationResult.CheckErrors();
         return value;

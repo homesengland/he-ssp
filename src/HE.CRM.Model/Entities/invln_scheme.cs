@@ -131,6 +131,7 @@ namespace DataverseModel
 			public const string invln_actualacquisitioncost = "invln_actualacquisitioncost";
 			public const string invln_actualacquisitioncost_Base = "invln_actualacquisitioncost_base";
 			public const string invln_affordabilityevidence = "invln_affordabilityevidence";
+			public const string invln_ahpcontract_AHPApplication_invln_scheme = "invln_ahpcontract_AHPApplication_invln_scheme";
 			public const string invln_ahpstatuschange_AHPApplication_invln_sche = "invln_ahpstatuschange_AHPApplication_invln_sche";
 			public const string invln_applicationid = "invln_applicationid";
 			public const string invln_areaaveragedividedbytwo = "invln_areaaveragedividedbytwo";
@@ -142,6 +143,7 @@ namespace DataverseModel
 			public const string invln_contactidName = "invln_contactidname";
 			public const string invln_currentlandvalue = "invln_currentlandvalue";
 			public const string invln_currentlandvalue_Base = "invln_currentlandvalue_base";
+			public const string invln_deliveryphase_Application_invln_scheme = "invln_deliveryphase_Application_invln_scheme";
 			public const string invln_deliveryphasessectioncompletionstatus = "invln_deliveryphasessectioncompletionstatus";
 			public const string invln_discussionswithlocalstakeholders = "invln_discussionswithlocalstakeholders";
 			public const string invln_expectedacquisitioncost = "invln_expectedacquisitioncost";
@@ -214,6 +216,8 @@ namespace DataverseModel
 			public const string invln_programmelookup = "invln_programmelookup";
 			public const string invln_programmelookupName = "invln_programmelookupname";
 			public const string invln_ProviderName = "invln_providername";
+			public const string invln_ProviderNameNew = "invln_providernamenew";
+			public const string invln_ProviderNameNewName = "invln_providernamenewname";
 			public const string invln_publicland = "invln_publicland";
 			public const string invln_recycledcapitalgrantfund = "invln_recycledcapitalgrantfund";
 			public const string invln_recycledcapitalgrantfund_Base = "invln_recycledcapitalgrantfund_base";
@@ -222,6 +226,7 @@ namespace DataverseModel
 			public const string invln_ruralbonusgrantperunitaspercentageofareaa = "invln_ruralbonusgrantperunitaspercentageofareaa";
 			public const string invln_scheme_invln_Externalcommses = "invln_scheme_invln_Externalcommses";
 			public const string invln_scheme_invln_govnotifyemails = "invln_scheme_invln_govnotifyemails";
+			public const string invln_scheme_ProviderNameNew_account = "invln_scheme_ProviderNameNew_account";
 			public const string invln_scheme_SharePointDocumentLocations = "invln_scheme_SharePointDocumentLocations";
 			public const string invln_schemeId = "invln_schemeid";
 			public const string Id = "invln_schemeid";
@@ -1551,6 +1556,23 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_providernamenew")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_ProviderNameNew
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_providernamenew");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_ProviderNameNew");
+				this.SetAttributeValue("invln_providernamenew", value);
+				this.OnPropertyChanged("invln_ProviderNameNew");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_publicland")]
 		public System.Nullable<bool> invln_publicland
 		{
@@ -2311,6 +2333,26 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// 1:N invln_ahpcontract_AHPApplication_invln_scheme
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_ahpcontract_AHPApplication_invln_scheme")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_ahpcontract> invln_ahpcontract_AHPApplication_invln_scheme
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_ahpcontract>("invln_ahpcontract_AHPApplication_invln_scheme", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_ahpcontract_AHPApplication_invln_scheme");
+				this.SetRelatedEntities<DataverseModel.invln_ahpcontract>("invln_ahpcontract_AHPApplication_invln_scheme", null, value);
+				this.OnPropertyChanged("invln_ahpcontract_AHPApplication_invln_scheme");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N invln_ahpstatuschange_AHPApplication_invln_sche
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_ahpstatuschange_AHPApplication_invln_sche")]
@@ -2327,6 +2369,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_ahpstatuschange_AHPApplication_invln_sche");
 				this.SetRelatedEntities<DataverseModel.invln_AHPStatusChange>("invln_ahpstatuschange_AHPApplication_invln_sche", null, value);
 				this.OnPropertyChanged("invln_ahpstatuschange_AHPApplication_invln_sche");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_deliveryphase_Application_invln_scheme
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_deliveryphase_Application_invln_scheme")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_DeliveryPhase> invln_deliveryphase_Application_invln_scheme
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_DeliveryPhase>("invln_deliveryphase_Application_invln_scheme", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_deliveryphase_Application_invln_scheme");
+				this.SetRelatedEntities<DataverseModel.invln_DeliveryPhase>("invln_deliveryphase_Application_invln_scheme", null, value);
+				this.OnPropertyChanged("invln_deliveryphase_Application_invln_scheme");
 			}
 		}
 		
@@ -2553,6 +2615,27 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_invln_scheme_Site_invln_sites");
 				this.SetRelatedEntity<DataverseModel.invln_Sites>("invln_invln_scheme_Site_invln_sites", null, value);
 				this.OnPropertyChanged("invln_invln_scheme_Site_invln_sites");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_scheme_ProviderNameNew_account
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_providernamenew")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_scheme_ProviderNameNew_account")]
+		public DataverseModel.Account invln_scheme_ProviderNameNew_account
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.Account>("invln_scheme_ProviderNameNew_account", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_scheme_ProviderNameNew_account");
+				this.SetRelatedEntity<DataverseModel.Account>("invln_scheme_ProviderNameNew_account", null, value);
+				this.OnPropertyChanged("invln_scheme_ProviderNameNew_account");
 			}
 		}
 		

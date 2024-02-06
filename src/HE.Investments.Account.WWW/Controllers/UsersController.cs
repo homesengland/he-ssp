@@ -1,6 +1,6 @@
+using HE.Investments.Account.Api.Contract.User;
 using HE.Investments.Account.Contract.Organisation.Queries;
 using HE.Investments.Account.Contract.UserOrganisation.Commands;
-using HE.Investments.Account.Contract.Users;
 using HE.Investments.Account.Contract.Users.Commands;
 using HE.Investments.Account.Contract.Users.Queries;
 using HE.Investments.Account.Shared;
@@ -86,9 +86,9 @@ public class UsersController : Controller
     [AuthorizeWithCompletedProfile(AccountAccessContext.ManageUsers)]
     public async Task<IActionResult> ConfirmUnlink([FromRoute] string id, CancellationToken cancellationToken)
     {
-        var model = await _mediator.Send(new GetUserDetailsQuery(UserGlobalId.From(id)), cancellationToken);
+        var (organisationName, userDetails) = await _mediator.Send(new GetUserDetailsQuery(UserGlobalId.From(id)), cancellationToken);
 
-        return View("ConfirmUnlink", (id, model.OrganisationName, $"{model.UserDetails.FirstName} {model.UserDetails.LastName}"));
+        return View("ConfirmUnlink", (id, organisationName, $"{userDetails.FirstName} {userDetails.LastName}"));
     }
 
     [HttpPost("{id}/confirm-unlink")]
@@ -97,7 +97,9 @@ public class UsersController : Controller
     {
         if (unlink == null)
         {
-            ModelState.AddModelError("Unlink", ValidationErrorMessage.ChooseYourAnswer);
+            var (_, userDetails) = await _mediator.Send(new GetUserDetailsQuery(UserGlobalId.From(id)), cancellationToken);
+            var userName = $"{userDetails.FirstName} {userDetails.LastName}".Trim();
+            ModelState.AddModelError("Unlink", $"Select if you want to remove {userName} from the organisation");
             return await ConfirmUnlink(id, cancellationToken);
         }
 

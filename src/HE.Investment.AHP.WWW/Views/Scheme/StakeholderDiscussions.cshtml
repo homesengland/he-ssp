@@ -5,14 +5,12 @@
 @using HE.Investments.Common.WWW.Components.FormHeader
 @using HE.Investments.Common.WWW.Components.TextAreaInputWithCounter
 @using HE.Investments.Common.WWW.Components.UploadFile
-@using HE.Investments.Common.WWW.Extensions;
 @using HE.Investment.AHP.Contract.Scheme
 @model HE.Investment.AHP.WWW.Models.Scheme.SchemeViewModel
 
 @{
     var title = SchemeInformationPageTitles.StakeholderDiscussions;
     ViewData["Title"] = title;
-    ViewBag.validationErrors = ViewData.ModelState.GetOrderedErrors(SchemeValidationFieldsOrder.StakeholderDiscussions);
 }
 
 <div class="govuk-grid-column-full">

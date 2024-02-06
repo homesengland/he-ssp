@@ -9,6 +9,11 @@ public static class UriExtensions
         return new Uri(uri).Segments[^2].Trim(UrlPathSeparator);
     }
 
+    public static string GetSiteGuidFromUrl(this string uri)
+    {
+        return new Uri(uri).Segments[^2].Trim(UrlPathSeparator);
+    }
+
     public static string GetProjectGuidFromUrl(this string uri)
     {
         return new Uri(uri).Segments[^2].Trim(UrlPathSeparator);

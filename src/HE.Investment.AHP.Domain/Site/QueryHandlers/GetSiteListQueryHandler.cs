@@ -2,6 +2,7 @@ using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Queries;
 using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investments.Account.Shared;
+using HE.Investments.Common.Contract.Pagination;
 using MediatR;
 
 namespace HE.Investment.AHP.Domain.Site.QueryHandlers;
@@ -21,10 +22,14 @@ public class GetSiteListQueryHandler : IRequestHandler<GetSiteListQuery, SitesLi
     public async Task<SitesListModel> Handle(GetSiteListQuery request, CancellationToken cancellationToken)
     {
         var selectedAccount = await _accountUserContext.GetSelectedAccount();
-        var sites = await _siteRepository.GetSites(selectedAccount, cancellationToken);
+        var sitesPage = await _siteRepository.GetSites(selectedAccount, request.PaginationRequest, cancellationToken);
 
         return new SitesListModel(
-            selectedAccount.OrganisationName,
-            sites.Select(x => new SiteBasicModel(x.Id.Value, x.Name.Value, x.LocalAuthority, x.Status)).ToArray());
+            selectedAccount.Organisation?.RegisteredCompanyName ?? string.Empty,
+            new PaginationResult<SiteBasicModel>(
+                sitesPage.Items.Select(x => new SiteBasicModel(x.Id.Value, x.Name.Value, x.LocalAuthority?.Name, x.Status)).ToList(),
+                sitesPage.CurrentPage,
+                sitesPage.ItemsPerPage,
+                sitesPage.TotalItems));
     }
 }

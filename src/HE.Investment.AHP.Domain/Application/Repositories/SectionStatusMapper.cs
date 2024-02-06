@@ -14,8 +14,18 @@ public static class SectionStatusMapper
             { SectionStatus.Completed, invln_ahpsectioncompletionstatusset.Completed },
         };
 
-    public static SectionStatus ToDomain(int? value)
+    public static SectionStatus ToDomain(int? value, ApplicationStatus? applicationStatus = null)
     {
+        if (applicationStatus == ApplicationStatus.Withdrawn)
+        {
+            return SectionStatus.Withdrawn;
+        }
+
+        if (applicationStatus == ApplicationStatus.OnHold)
+        {
+            return SectionStatus.OnHold;
+        }
+
         if (value == null)
         {
             return SectionStatus.NotStarted;

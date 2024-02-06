@@ -84,7 +84,7 @@ public class LoanApplicationEntity : DomainEntity
         }
 
         Id = newId;
-        Publish(new LoanApplicationHasBeenStartedEvent(Id.Value));
+        Publish(new LoanApplicationHasBeenStartedEvent(Id));
     }
 
     public bool IsReadOnly()
@@ -137,7 +137,7 @@ public class LoanApplicationEntity : DomainEntity
         }
         else
         {
-            throw new DomainException("Loan application cannot be withdrawn", CommonErrorCodes.LoanApplicationCannotBeWithdrawn);
+            throw new DomainException("Loan application cannot be withdrawn", CommonErrorCodes.ApplicationCannotBeWithdrawn);
         }
 
         Publish(new LoanApplicationHasBeenWithdrawnEvent(Id, Name));

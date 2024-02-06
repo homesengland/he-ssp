@@ -27,6 +27,6 @@ public class ReconfigureExistingTests : ViewTestBase
         document.HasTitle(DeliveryPageTitles.ReconfiguringExisting)
             .HasGdsRadioInputWithValues(nameof(DeliveryPhaseDetails.ReconfiguringExisting), "True", "False")
             .HasGdsSaveAndContinueButton()
-            .HasGdsBackButton(false);
+            .HasGdsBackLink(false);
     }
 }

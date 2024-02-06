@@ -4,11 +4,11 @@ public static class ApplicationPagesUrl
 {
     public const string TaskListSuffix = "/task-list";
 
-    public const string StartName = "ahp/application/start";
+    public const string Start = "ahp/application/start";
 
-    public const string ApplicationName = "ahp/application/name";
+    public static string ApplicationName(string siteId) => $"ahp/{siteId}/application/name";
 
-    public const string Tenure = "ahp/application/tenure";
+    public static string Tenure(string siteId) => $"ahp/{siteId}/application/tenure";
 
     public static string TaskList(string applicationId) => $"ahp/application/{applicationId}{TaskListSuffix}";
 }

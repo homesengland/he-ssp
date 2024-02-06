@@ -9,7 +9,7 @@ public interface IApplicationCrmContext
 
     Task<AhpApplicationDto> GetUserApplicationById(string id, Guid organisationId, IList<string> fieldsToRetrieve, CancellationToken cancellationToken);
 
-    Task<bool> IsExist(string applicationName, Guid organisationId, CancellationToken cancellationToken);
+    Task<bool> IsNameExist(string applicationName, Guid organisationId, CancellationToken cancellationToken);
 
     Task<IList<AhpApplicationDto>> GetOrganisationApplications(Guid organisationId, IList<string> fieldsToRetrieve, CancellationToken cancellationToken);
 
@@ -17,5 +17,10 @@ public interface IApplicationCrmContext
 
     Task<string> Save(AhpApplicationDto dto, Guid organisationId, IList<string> fieldsToUpdate, CancellationToken cancellationToken);
 
-    Task ChangeApplicationStatus(Guid applicationId, Guid organisationId, ApplicationStatus applicationStatus, string? reason, CancellationToken cancellationToken);
+    Task ChangeApplicationStatus(
+        string applicationId,
+        Guid organisationId,
+        ApplicationStatus applicationStatus,
+        string? changeReason,
+        CancellationToken cancellationToken);
 }

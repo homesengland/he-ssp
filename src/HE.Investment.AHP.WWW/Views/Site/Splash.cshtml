@@ -10,7 +10,7 @@
         .WithSites()
         .Build();
 
-    var actionName = Model.Items.Length > 0 ? "Index" : "Details";
+    var actionName = Model.Page.Items.Any() ? "Index" : "Details";
 }
 
 <div class="govuk-grid-column-three-quarters">
@@ -54,7 +54,7 @@
             <ul class="govuk-list govuk-list govuk-list--bullet">
                 <li>location</li>
                 <li>geography</li>
-                <li>planningn</li>
+                <li>planning</li>
                 <li>costs</li>
                 <li>land</li>
                 <li>number of homes</li>

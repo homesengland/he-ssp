@@ -1,6 +1,6 @@
+using HE.Investments.Account.Api.Contract.User;
 using HE.Investments.Account.Contract.UserOrganisation;
 using HE.Investments.Account.Contract.UserOrganisation.Queries;
-using HE.Investments.Account.Contract.Users;
 using HE.Investments.Account.Domain.Organisation.Repositories;
 using HE.Investments.Account.Domain.User.Repositories;
 using HE.Investments.Account.Domain.UserOrganisation.Repositories;

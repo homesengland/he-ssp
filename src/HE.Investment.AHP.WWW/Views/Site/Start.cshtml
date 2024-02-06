@@ -22,9 +22,7 @@
         <gds-p>If your application concerns existing properties rather than land-led development, this section is still relevant to you. Complete this section in relation to the properties and where we use 'site' or 'land', substitute in 'properties'.</gds-p>
         <gds-p>We will also ask you to tell us if you’re using Modern Methods of Construction (MMC). If your site includes a mix of MMC and traditional build homes, you can indicate that here. We will ask for more details when you tell us about the homes on your site.</gds-p>
     </div>
-
-    <a href="@Url.Action("Name", "Site")" id="continue-button">
-        <gds-button type="button">Continue</gds-button>
-    </a>
-
+    <link-button action-url="@Url.Action("Name", "Site")" data-testid="site-start-continue">
+        Continue
+    </link-button>
 </gds-div-grid-column-two-thirds>

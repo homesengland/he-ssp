@@ -1,0 +1,101 @@
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investment.AHP.Contract.Site
+@using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
+@using HE.Investment.AHP.WWW.Views.Site
+@model SitePlanningDetails
+@{
+    ViewData["Title"] = SitePageTitles.PlanningDetails;
+}
+<gds-div-grid-column-two-thirds>
+    <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.PlanningDetails"/>
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+    <vc:form-header caption="@ViewBag.SiteName"/>
+
+    <form asp-controller="Site" asp-action="PlanningDetails" asp-method="post" novalidate>
+
+        <vc:text-input
+            title="Enter your planning reference number"
+            hint="This can be found on any correspondence from your local authority regarding your planning permission."
+            field-name="@nameof(Model.ReferenceNumber)"
+            value="@Model.ReferenceNumber"
+            is-displayed="@(Model.PlanningStatus is SitePlanningStatus.DetailedPlanningApprovalGranted or
+                              SitePlanningStatus.DetailedPlanningApprovalGrantedWithFurtherSteps or
+                              SitePlanningStatus.DetailedPlanningApplicationSubmitted or
+                              SitePlanningStatus.OutlinePlanningApprovalGranted or
+                              SitePlanningStatus.OutlinePlanningApplicationSubmitted)"
+            css-class="govuk-!-width-one-half"/>
+
+        <vc:date-input
+            title="Enter when detailed planning approval was granted"
+            hint="For example, 27 03 2023"
+            field-name="@nameof(Model.DetailedPlanningApprovalDate)"
+            value="@Model.DetailedPlanningApprovalDate"
+            is-displayed="@(Model.PlanningStatus is SitePlanningStatus.DetailedPlanningApprovalGranted or
+                              SitePlanningStatus.DetailedPlanningApprovalGrantedWithFurtherSteps)"/>
+
+        <vc:date-input
+            title="Enter when your application for detailed planning permission was submitted"
+            hint="For example, 27 03 2023"
+            field-name="@nameof(Model.ApplicationForDetailedPlanningSubmittedDate)"
+            value="@Model.ApplicationForDetailedPlanningSubmittedDate"
+            is-displayed="@(Model.PlanningStatus is SitePlanningStatus.DetailedPlanningApplicationSubmitted)"/>
+
+        <vc:date-input
+            title="Enter when your application for outline planning permission was submitted"
+            hint="For example, 27 03 2023"
+            field-name="@nameof(Model.OutlinePlanningApprovalDate)"
+            value="@Model.OutlinePlanningApprovalDate"
+            is-displayed="@(Model.PlanningStatus is SitePlanningStatus.OutlinePlanningApprovalGranted)"/>
+
+        <vc:date-input
+            title="Enter when outline planning approval was granted"
+            hint="For example, 27 03 2023"
+            field-name="@nameof(Model.PlanningSubmissionDate)"
+            value="@Model.PlanningSubmissionDate"
+            is-displayed="@(Model.PlanningStatus is SitePlanningStatus.OutlinePlanningApplicationSubmitted)"/>
+
+        <vc:date-input
+            title="Enter when you expect to get detailed planning approval"
+            hint="For example, 27 03 2023"
+            field-name="@nameof(Model.ExpectedPlanningApprovalDate)"
+            value="@Model.ExpectedPlanningApprovalDate"
+            is-displayed="@(Model.PlanningStatus is SitePlanningStatus.DetailedPlanningApplicationSubmitted or
+                              SitePlanningStatus.OutlinePlanningApprovalGranted or
+                              SitePlanningStatus.OutlinePlanningApplicationSubmitted or
+                              SitePlanningStatus.PlanningDiscussionsUnderwayWithThePlanningOffice or
+                              SitePlanningStatus.NoProgressOnPlanningApplication)"/>
+
+        <vc:radio-yes-no
+            title="Are you applying for grant funding for all of the homes covered by this planning application?"
+            field-name="@nameof(Model.IsGrantFundingForAllHomesCoveredByApplication)"
+            value="@Model.IsGrantFundingForAllHomesCoveredByApplication"
+            is-displayed="@(Model.PlanningStatus is SitePlanningStatus.DetailedPlanningApprovalGranted or
+                              SitePlanningStatus.DetailedPlanningApprovalGrantedWithFurtherSteps or
+                              SitePlanningStatus.DetailedPlanningApplicationSubmitted or
+                              SitePlanningStatus.OutlinePlanningApprovalGranted or
+                              SitePlanningStatus.OutlinePlanningApplicationSubmitted)"/>
+
+        <vc:text-area-input-with-counter
+            title="Tell us the further steps required before start on site can occur"
+            field-name="@nameof(Model.RequiredFurtherSteps)"
+            value="@Model.RequiredFurtherSteps"
+            is-displayed="@(Model.PlanningStatus is SitePlanningStatus.DetailedPlanningApprovalGrantedWithFurtherSteps or
+                              SitePlanningStatus.DetailedPlanningApplicationSubmitted or
+                              SitePlanningStatus.OutlinePlanningApprovalGranted or
+                              SitePlanningStatus.OutlinePlanningApplicationSubmitted)"/>
+
+        <vc:radio-yes-no
+            header="@(Model.PlanningStatus == SitePlanningStatus.NoPlanningRequired ? "Do you have the registered title to the land?" : null)"
+            title="@(Model.PlanningStatus != SitePlanningStatus.NoPlanningRequired ? "Do you have the registered title to the land?" : null)"
+            hint="You can find the title number on HM Land Registry documents, or correspondence with your solicitor when you purchased the land."
+            field-name="@nameof(Model.IsLandRegistryTitleNumberRegistered)"
+            value="@Model.IsLandRegistryTitleNumberRegistered"
+            is-displayed="@(Model.PlanningStatus is SitePlanningStatus.PlanningDiscussionsUnderwayWithThePlanningOffice or
+                              SitePlanningStatus.NoProgressOnPlanningApplication or
+                              SitePlanningStatus.NoPlanningRequired)"/>
+
+        <vc:form-button/>
+        <vc:return-to-sites-link/>
+    </form>
+
+</gds-div-grid-column-two-thirds>

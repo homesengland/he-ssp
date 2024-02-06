@@ -1,7 +1,7 @@
 @using HE.Investments.Common.WWW.Models
 @using HE.Investments.Common.WWW.Extensions
 @using HE.Investments.Common.WWW.Components.ErrorMessage
-@using HE.Investments.Common.WWW.Components.RadioListHeader
+@using HE.Investments.Common.WWW.Components.InputListHeader
 
 @model (string fieldName, string header, string title, string hint, IEnumerable<ExtendedSelectListItem> availableOptions, string value)
 
@@ -12,7 +12,7 @@
 
 <gds-div-form-group class="@groupClass">
     <gds-field-set>
-        <vc:radio-list-header header="@Model.header" title="@Model.title" hint="@Model.hint"/>
+        <vc:input-list-header header="@Model.header" title="@Model.title" hint="@Model.hint"/>
 
         <vc:error-message field-name="@Model.fieldName"/>
 

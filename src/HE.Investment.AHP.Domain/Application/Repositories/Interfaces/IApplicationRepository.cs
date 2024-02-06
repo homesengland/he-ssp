@@ -9,11 +9,13 @@ using HE.Investments.Common.Domain;
 
 namespace HE.Investment.AHP.Domain.Application.Repositories.Interfaces;
 
-public interface IApplicationRepository : IApplicationWithdraw, IApplicationHold
+public interface IApplicationRepository : IChangeApplicationStatus
 {
     Task<ApplicationEntity> GetById(AhpApplicationId id, UserAccount userAccount, CancellationToken cancellationToken);
 
-    Task<bool> IsExist(ApplicationName applicationName, OrganisationId organisationId, CancellationToken cancellationToken);
+    Task<bool> IsNameExist(ApplicationName applicationName, OrganisationId organisationId, CancellationToken cancellationToken);
+
+    Task<bool> IsExist(AhpApplicationId applicationId, OrganisationId organisationId, CancellationToken cancellationToken);
 
     Task<ApplicationBasicInfo> GetApplicationBasicInfo(AhpApplicationId id, UserAccount userAccount, CancellationToken cancellationToken);
 

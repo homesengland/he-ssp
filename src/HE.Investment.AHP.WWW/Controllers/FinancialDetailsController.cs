@@ -3,6 +3,7 @@ using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Contract.FinancialDetails;
 using HE.Investment.AHP.Contract.FinancialDetails.Commands;
 using HE.Investment.AHP.Contract.FinancialDetails.Queries;
+using HE.Investment.AHP.WWW.Extensions;
 using HE.Investment.AHP.WWW.Models.FinancialDetails;
 using HE.Investment.AHP.WWW.Models.FinancialDetails.Factories;
 using HE.Investment.AHP.WWW.Workflows;
@@ -12,6 +13,7 @@ using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
+using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Helpers;
 using HE.Investments.Common.WWW.Routing;
@@ -314,8 +316,8 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
             throw new InvalidOperationException("Cannot find applicationId.");
         }
 
-        var isReadOnly = !await _accountAccessContext.CanEditApplication();
         var financialDetails = await _mediator.Send(new GetFinancialDetailsQuery(AhpApplicationId.From(applicationId)));
+        var isReadOnly = !await _accountAccessContext.CanEditApplication() || financialDetails.IsReadOnly;
         return new FinancialDetailsWorkflow(currentState, financialDetails, isReadOnly);
     }
 
@@ -326,22 +328,24 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
         where TCommand : IRequest<OperationResult>
         where TModel : FinancialDetailsBaseModel
     {
-        var result = await _mediator.Send(command, cancellationToken);
-        if (result.HasValidationErrors)
-        {
-            ModelState.AddValidationErrors(result);
-            return View(model);
-        }
+        var applicationId = this.GetApplicationIdFromRoute();
+        return await this.ExecuteCommand<TModel>(
+            _mediator,
+            command,
+            async () => await ContinueWithAllRedirects(new { applicationId }),
+            async () => await Task.FromResult<IActionResult>(View(model)),
+            cancellationToken);
+    }
 
+    private async Task<IActionResult> ContinueWithAllRedirects(object routeData)
+    {
         var action = HttpContext.Request.Form["action"];
         if (action == GenericMessages.SaveAndReturn)
         {
-            return RedirectToAction(
-                nameof(ApplicationController.TaskList),
-                new ControllerName(nameof(ApplicationController)).WithoutPrefix(),
-                new { model.ApplicationId });
+            var applicationId = this.GetApplicationIdFromRoute();
+            return Url.RedirectToTaskList(applicationId.Value);
         }
 
-        return await ContinueWithRedirect(new { model.ApplicationId });
+        return await ContinueWithRedirect(routeData);
     }
 }

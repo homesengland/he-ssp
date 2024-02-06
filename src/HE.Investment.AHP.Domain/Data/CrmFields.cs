@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Collections.Immutable;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.Extensions;
@@ -48,7 +47,7 @@ public static class CrmFields
     };
 
     public static readonly IReadOnlyList<string> SchemeToRead = SchemeToUpdate.ToList()
-        .Append(new List<string> { nameof(invln_scheme.invln_schemename), nameof(invln_scheme.invln_Tenure), })
+        .Append(new List<string> { nameof(invln_scheme.invln_schemename), nameof(invln_scheme.invln_Tenure), nameof(invln_externalstatus), })
         .ToImmutableList();
 
     public static readonly IReadOnlyList<string> FinancialDetailsToUpdate = new List<string>
@@ -78,6 +77,6 @@ public static class CrmFields
     };
 
     public static readonly IReadOnlyList<string> FinancialDetailsToRead = FinancialDetailsToUpdate.ToList()
-        .Append(new List<string> { nameof(invln_scheme.invln_schemename), nameof(invln_scheme.invln_Tenure) })
+        .Append(new List<string> { nameof(invln_scheme.invln_schemename), nameof(invln_scheme.invln_Tenure), nameof(invln_externalstatus), })
         .ToImmutableList();
 }

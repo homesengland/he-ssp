@@ -1,4 +1,7 @@
-using HE.Investments.Loans.Contract.Projects.ValueObjects;
+extern alias Org;
+
+using LocalAuthority = Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
+using LocalAuthorityId = Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthorityId;
 
 namespace HE.Investments.Loans.BusinessLogic.Tests.Projects.TestData;
 internal static class LocalAuthorityTestData

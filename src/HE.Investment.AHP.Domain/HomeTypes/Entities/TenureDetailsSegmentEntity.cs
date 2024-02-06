@@ -141,7 +141,12 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
             return null;
         }
 
-        var result = prospectiveRent!.Value / marketRent!.Value * 100;
+        if (marketRent!.Value == 0)
+        {
+            return 0;
+        }
+
+        var result = prospectiveRent!.Value / marketRent.Value * 100;
         result = Math.Round(result, 0);
 
         return result;
@@ -168,9 +173,14 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
             return null;
         }
 
+        if (marketValue!.Value == 0)
+        {
+            return 0;
+        }
+
         var expectedFirstTranche = CalculateExpectedFirstTranche(marketValue, initialSale);
 
-        var result = prospectiveRent!.Value * weeksAYear / (marketValue!.Value - expectedFirstTranche!.Value);
+        var result = prospectiveRent!.Value * weeksAYear / (marketValue.Value - expectedFirstTranche!.Value) * 100m;
         result = Math.Round(result, 2);
 
         return result;
@@ -249,7 +259,7 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
     private bool IsSocialRentTenureCompleted()
     {
         return MarketValue.IsProvided()
-            && MarketRent.IsProvided()
+            && ProspectiveRent.IsProvided()
             && ExemptFromTheRightToSharedOwnership != YesNoType.Undefined
             && IsExemptJustificationProvided();
     }

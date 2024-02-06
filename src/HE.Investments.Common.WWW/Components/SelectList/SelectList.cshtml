@@ -1,0 +1,44 @@
+@using HE.Investments.Common.WWW.Components.SelectList
+@using HE.Investments.Common.Contract.Pagination
+@using HE.Investments.Common.WWW.Models
+
+@model (PaginationResult<SelectListItemViewModel> list, string pagingNavigationUrl, string addActionUrl, string addActionText, ParagraphWithLinkModel paragraphWithLink)
+
+<ul class="govuk-list" data-testId="select-list">
+    @foreach (var item in Model.list.Items)
+    {
+        <li class="govuk-!-margin-bottom-8">
+            <gds-p class="govuk-!-margin-bottom-0">
+                <gds-link href="@item.Url">
+                    <b>@item.Text</b>
+                </gds-link>
+                @if (!string.IsNullOrWhiteSpace(item.Description))
+                {
+                    <gds-p>@item.Description</gds-p>
+                }
+            </gds-p>
+        </li>
+    }
+</ul>
+
+@if (!string.IsNullOrWhiteSpace(Model.addActionUrl))
+{
+    var text = string.IsNullOrWhiteSpace(Model.addActionText) ? "Add" : Model.addActionText;
+    <link-button action-url="@Model.addActionUrl">@text</link-button>
+}
+
+@* ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract *@
+@if (Model.paragraphWithLink != null)
+{
+    <gds-p class="govuk-!-margin-bottom-9">
+        @Model.paragraphWithLink.Text <gds-link href="@(Url.Action(Model.paragraphWithLink.LinkUrl.Action, Model.paragraphWithLink.LinkUrl.Controller, Model.paragraphWithLink.LinkUrl.Values) ?? string.Empty)">@Model.paragraphWithLink.LinkText</gds-link>
+    </gds-p>
+}
+
+<he-pagination
+    css-class="govuk-!-align-center"
+    base-url="@Model.pagingNavigationUrl"
+    page="@Model.list.CurrentPage"
+    items-per-page="@Model.list.ItemsPerPage"
+    total-items="@Model.list.TotalItems">
+</he-pagination>

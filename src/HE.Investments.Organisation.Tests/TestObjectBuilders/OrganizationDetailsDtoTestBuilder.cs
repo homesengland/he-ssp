@@ -19,7 +19,7 @@ public class OrganizationDetailsDtoTestBuilder
         {
             registeredCompanyName = "SPV Company" + organisationId,
             companyRegistrationNumber = null,
-            organisationId = organisationId
+            organisationId = organisationId,
         });
     }
 

@@ -14,4 +14,6 @@ public enum SectionStatus
     [Description("Not Submitted")]
     NotSubmitted,
     Withdrawn,
+    [Description("On Hold")]
+    OnHold,
 }

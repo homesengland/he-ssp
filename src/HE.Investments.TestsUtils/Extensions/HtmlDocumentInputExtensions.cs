@@ -6,35 +6,77 @@ namespace HE.Investments.TestsUtils.Extensions;
 
 public static class HtmlDocumentInputExtensions
 {
-    public static IHtmlDocument HasTextAreaInput(this IHtmlDocument htmlDocument, string fieldName, string? label = null, string? value = null)
+    public static IHtmlDocument HasTextAreaInput(
+        this IHtmlDocument htmlDocument,
+        string fieldName,
+        string? label = null,
+        string? value = null,
+        bool exist = true)
     {
-        var inputs = GetAndValidateInput<IHtmlTextAreaElement>(htmlDocument, fieldName, label);
+        var inputs = GetAndValidateSingleInput<IHtmlTextAreaElement>(htmlDocument, fieldName, label, exist);
+
+        if (!exist)
+        {
+            return htmlDocument;
+        }
 
         if (!string.IsNullOrEmpty(value))
         {
-            inputs.First().InnerHtml.Should().Contain(value);
+            inputs!.InnerHtml.Should().Contain(value);
         }
 
         return htmlDocument;
     }
 
-    public static IHtmlDocument HasInput(this IHtmlDocument htmlDocument, string fieldName, string? label = null, string? value = null)
+    public static IHtmlDocument HasInput(this IHtmlDocument htmlDocument, string fieldName, string? label = null, string? value = null, bool exist = true)
     {
-        var inputs = GetAndValidateInput<IHtmlInputElement>(htmlDocument, fieldName, label);
+        var inputs = GetAndValidateSingleInput<IHtmlInputElement>(htmlDocument, fieldName, label, exist);
+
+        if (!exist)
+        {
+            return htmlDocument;
+        }
 
         if (!string.IsNullOrEmpty(value))
         {
-            inputs.First().Value.Should().Contain(value);
+            inputs!.Value.Should().Contain(value);
         }
 
         return htmlDocument;
     }
 
-    public static IHtmlDocument HasGdsInput(this IHtmlDocument htmlDocument, string fieldName)
+    public static IHtmlDocument HasDateInput(
+        this IHtmlDocument htmlDocument,
+        string fieldName,
+        string? day = null,
+        string? month = null,
+        string? year = null,
+        bool exist = true)
     {
-        var gdsInput = htmlDocument.GetElementsByName(fieldName).SingleOrDefault();
-        gdsInput.Should().NotBeNull($"GDS input for field {fieldName} should exist");
-        gdsInput!.ClassName.Should().Contain("govuk-input");
+        var dayInput = GetAndValidateSingleInput<IHtmlInputElement>(htmlDocument, $"{fieldName}.Day", exist: exist);
+        var monthInput = GetAndValidateSingleInput<IHtmlInputElement>(htmlDocument, $"{fieldName}.Month", exist: exist);
+        var yearInput = GetAndValidateSingleInput<IHtmlInputElement>(htmlDocument, $"{fieldName}.Year", exist: exist);
+
+        if (!exist)
+        {
+            return htmlDocument;
+        }
+
+        if (!string.IsNullOrEmpty(day))
+        {
+            dayInput!.Value.Should().Contain(day);
+        }
+
+        if (!string.IsNullOrEmpty(month))
+        {
+            monthInput!.Value.Should().Contain(month);
+        }
+
+        if (!string.IsNullOrEmpty(year))
+        {
+            yearInput!.Value.Should().Contain(year);
+        }
+
         return htmlDocument;
     }
 
@@ -52,10 +94,41 @@ public static class HtmlDocumentInputExtensions
         return htmlDocument;
     }
 
-    public static IHtmlDocument HasRadio(this IHtmlDocument htmlDocument, string fieldName, IList<string> options)
+    public static IHtmlDocument HasRadio(this IHtmlDocument htmlDocument, string fieldName, IList<string> options, string? value = null, bool exist = true)
     {
-        var inputs = htmlDocument.GetElementsByName(fieldName);
-        inputs.Length.Should().Be(options.Count, $"{options.Count} inputs with name {fieldName} should exist");
+        var inputs = GetAndValidateInputs<IElement>(htmlDocument, fieldName, exist: exist);
+
+        if (!exist)
+        {
+            return htmlDocument;
+        }
+
+        inputs.Count.Should().Be(options.Count, $"{options.Count} inputs with name {fieldName} should exist");
+
+        if (!string.IsNullOrWhiteSpace(value))
+        {
+            var selected = inputs
+                .FirstOrDefault(i => i.Attributes.Any(a => a.Name == "checked" && a.Value.Contains("checked")));
+
+            selected.Should().NotBeNull($"Radio input with name {fieldName} should have selected value.");
+            selected!.Attributes.FirstOrDefault(a => a.Name == "value")!.Value.Should().Be(value, $"Radio input with name {fieldName} should have value {value}.");
+        }
+
+        return htmlDocument;
+    }
+
+    public static IHtmlDocument HasBoldText(this IHtmlDocument htmlDocument, string text)
+    {
+        var boldText = htmlDocument.GetElements("b", text);
+        boldText.Count.Should().Be(1, $"Only one bold text with innerText {text} should exist");
+
+        return htmlDocument;
+    }
+
+    public static IHtmlDocument HasHeader2(this IHtmlDocument htmlDocument, string text)
+    {
+        var headerText = htmlDocument.GetElements("h2", text);
+        headerText.Count.Should().Be(1, $"Only one bold text with innerText {text} should exist");
 
         return htmlDocument;
     }
@@ -84,18 +157,47 @@ public static class HtmlDocumentInputExtensions
         return htmlDocument;
     }
 
-
-    private static IEnumerable<T> GetAndValidateInput<T>(IHtmlDocument htmlDocument, string fieldName, string? label)
+    private static T? GetAndValidateSingleInput<T>(IHtmlDocument htmlDocument, string fieldName, string? label = null, bool exist = true)
     {
         var inputs = htmlDocument.GetElementsByName(fieldName);
-        inputs.Length.Should().Be(1, $"Only one element input with name {fieldName} should exist");
 
-        if (!string.IsNullOrEmpty(label))
+        if (exist)
         {
-            var labels = htmlDocument.GetLastChildByTagAndText("label", label);
-            labels.Count.Should().Be(1, $"Only one element input with label with innerText {label} should exist");
+            inputs.Length.Should().Be(1, $"Only one element input with name {fieldName} should exist");
+
+            if (!string.IsNullOrEmpty(label))
+            {
+                var labels = htmlDocument.GetLastChildByTagAndText("label", label);
+                labels.Count.Should().Be(1, $"Only one element input with label with innerText {label} should exist");
+            }
+
+            return inputs.Cast<T>().First();
         }
 
-        return inputs.Cast<T>();
+        inputs.Length.Should().Be(0, $"Element input with name {fieldName} should not exist");
+
+        return default;
+    }
+
+    private static IList<T> GetAndValidateInputs<T>(IHtmlDocument htmlDocument, string fieldName, string? label = null, bool exist = true)
+    {
+        var inputs = htmlDocument.GetElementsByName(fieldName);
+
+        if (exist)
+        {
+            inputs.Length.Should().BePositive($"At least one element input with name {fieldName} should exist");
+
+            if (!string.IsNullOrEmpty(label))
+            {
+                var labels = htmlDocument.GetLastChildByTagAndText("label", label);
+                labels.Count.Should().Be(1, $"Only one element input with label with innerText {label} should exist");
+            }
+        }
+        else
+        {
+            inputs.Length.Should().Be(0, $"Element input with name {fieldName} should not exist");
+        }
+
+        return inputs.Cast<T>().ToList();
     }
 }

@@ -22,6 +22,7 @@ public class BuildActivityTests : ViewTestBase
             "Id",
             "DeliveryPhaseName",
             SectionStatus.InProgress,
+            false,
             null,
             null,
             availableTypes);
@@ -35,6 +36,6 @@ public class BuildActivityTests : ViewTestBase
                 nameof(DeliveryPhaseDetails.BuildActivityType),
                 availableTypes.Select(x => x.ToString()).ToArray())
             .HasGdsSaveAndContinueButton()
-            .HasGdsBackButton(false);
+            .HasGdsBackLink(false);
     }
 }
