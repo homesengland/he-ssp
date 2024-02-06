@@ -1,6 +1,7 @@
 @using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.WWW.Views.HomeTypes.Const
 @using HE.Investment.AHP.Contract.HomeTypes
+@using HE.Investments.Common.WWW.Components.InputHeader
 @model HE.Investment.AHP.WWW.Models.HomeTypes.MoreInformationModel;
 
 @{
@@ -19,7 +20,8 @@
         <vc:text-area-input-with-counter
             field-name="@nameof(Model.MoreInformation)"
             value="@Model.MoreInformation"
-            header="@HomeTypesPageTitles.MoveOnArrangements"/>
+            title="@HomeTypesPageTitles.MoveOnArrangements"
+            title-type="InputTitleType.PageHeader"/>
 
         <vc:form-button/>
         <br/>

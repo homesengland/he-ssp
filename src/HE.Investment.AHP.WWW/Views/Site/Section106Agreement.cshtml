@@ -11,7 +11,7 @@
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
     <form asp-controller="Site" asp-action="Section106Agreement" asp-method="post" novalidate>
-        <vc:form-header title="@SitePageTitles.SiteSection106Agreement" caption="@Model.SiteName" additional-css-class="govuk-!-padding-top-8"></vc:form-header>
+        <vc:page-header title="@SitePageTitles.SiteSection106Agreement" caption="@Model.SiteName" additional-css-class="govuk-!-padding-top-8"/>
         <gds-p>
             You'll need to provide details of any section 106 agreements (or planning conditions
             performing the same purpose) that are in place or under discussion for your site.

@@ -2,7 +2,6 @@
 @using HE.Investment.AHP.WWW.Models.Common
 @using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
-@using HE.Investments.Common.WWW.Components.FormHeader
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.Components.RadioList
 @using HE.Investment.AHP.Contract.Delivery
@@ -27,7 +26,7 @@
 
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
-    <vc:form-header caption="@($"{Model.ApplicationName} - {Model.DeliveryPhaseName}")" title="@title"/>
+    <vc:page-header caption="@($"{Model.ApplicationName} - {Model.DeliveryPhaseName}")" title="@title"/>
 
     @foreach (var summarySection in Model.Sections)
     {

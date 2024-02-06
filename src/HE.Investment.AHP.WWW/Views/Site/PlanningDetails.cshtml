@@ -9,7 +9,7 @@
 <gds-div-grid-column-two-thirds>
     <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.PlanningDetails"/>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
-    <vc:form-header caption="@ViewBag.SiteName"/>
+    <vc:page-header caption="@ViewBag.SiteName"/>
 
     <form asp-controller="Site" asp-action="PlanningDetails" asp-method="post" novalidate>
 

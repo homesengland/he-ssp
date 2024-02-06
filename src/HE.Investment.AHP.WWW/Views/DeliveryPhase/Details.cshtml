@@ -15,7 +15,7 @@
     <vc:ahp-workflow-back-button current-page="@DeliveryPhaseWorkflowState.TypeOfHomes"/>
 
     <form asp-controller="DeliveryPhase" asp-action="Details" asp-method="post" asp-route-redirect="@Context.Request.Query["redirect"]" novalidate>
-        <vc:form-header caption="@($"{Model.ApplicationName} - {Model.Name}")" title="@title"/>
+        <vc:page-header caption="@($"{Model.ApplicationName} - {Model.Name}")" title="@title"/>
         <gds-field-set role="group">
             <gds-legend>
                 <gds-h1 class="govuk-fieldset__legend--m">What type of homes will be delivered in this phase?</gds-h1>

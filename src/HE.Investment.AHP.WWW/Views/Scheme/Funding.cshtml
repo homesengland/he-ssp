@@ -1,6 +1,5 @@
 @using HE.Investment.AHP.WWW.Views.Scheme.Const;
 @using HE.Investments.Common.WWW.Components.FormButton
-@using HE.Investments.Common.WWW.Components.FormHeader
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
 @using HE.Investments.Common.WWW.Components.NumericTextInput
 @using HE.Investment.AHP.Contract.Scheme
@@ -13,7 +12,7 @@
     <vc:ahp-workflow-back-button current-page="@SchemeWorkflowState.Funding"/>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <form asp-controller="Scheme" asp-action="Funding" asp-method="post" asp-route-redirect="@Context.Request.Query["redirect"]" novalidate>
-        <vc:form-header caption="@Model.ApplicationName" title="@title"/>
+        <vc:page-header caption="@Model.ApplicationName" title="@title"/>
         @Html.HiddenFor(m => Model.ApplicationName)
         <vc:numeric-text-input field-name="@nameof(Model.RequiredFunding)"
                                value="@Model.RequiredFunding"

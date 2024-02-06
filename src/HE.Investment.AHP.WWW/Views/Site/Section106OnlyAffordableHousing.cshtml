@@ -10,7 +10,7 @@
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
     <form asp-controller="Site" asp-action="Section106OnlyAffordableHousing" asp-method="post" novalidate>
-        <vc:form-header title="@SitePageTitles.SiteSection106OnlyAffordableHousing" caption="@Model.SiteName" additional-css-class="govuk-!-padding-top-8"></vc:form-header>
+        <vc:page-header title="@SitePageTitles.SiteSection106OnlyAffordableHousing" caption="@Model.SiteName" additional-css-class="govuk-!-padding-top-8"/>
 
         <vc:radio-yes-no field-name="@nameof(Model.OnlyAffordableHousing)"
                          hint="Consider all of the phases covered by the planning permission, even if those phases are not covered by this application."

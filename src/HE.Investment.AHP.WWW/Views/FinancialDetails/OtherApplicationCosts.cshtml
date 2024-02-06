@@ -2,7 +2,6 @@
 @using HE.Investment.AHP.WWW.Views.FinancialDetails.Consts;
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
 @using HE.Investments.Common.WWW.Components.FormButton
-@using HE.Investments.Common.WWW.Components.FormHeader
 @using HE.Investment.AHP.Contract.FinancialDetails
 @model FinancialDetailsOtherApplicationCostsModel;
 @{
@@ -17,7 +16,7 @@
         @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
         <gds-field-set role="group">
             <gds-div-form-group>
-                <vc:form-header title="@FinancialDetailsPageTitles.OtherSchemeCosts" caption="@Model.ApplicationName - Finance details" />
+                <vc:page-header title="@FinancialDetailsPageTitles.OtherSchemeCosts" caption="@Model.ApplicationName - Finance details" />
                 <gds-field-set role="group">
                     <he-div-hint class="govuk-!-margin-bottom-6">
                         For multi-tenure sites, ensure the costs and contributions are apportioned across the development and only those applicable to the homes on this application are recorded here.

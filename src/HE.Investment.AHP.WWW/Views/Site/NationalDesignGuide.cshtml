@@ -25,7 +25,7 @@
 <div class="govuk-grid-column-two-thirds">
     <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.NationalDesignGuide" />
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
-    <vc:form-header caption="@Model.SiteName" />
+    <vc:page-header caption="@Model.SiteName" />
     <form asp-controller="Site" asp-action="NationalDesignGuide" asp-method="post" novalidate>
 
         <vc:checkbox-list-with-or field-name="@nameof(Model.DesignPriorities)"

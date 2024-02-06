@@ -10,7 +10,7 @@
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
     <form asp-controller="Site" asp-action="Section106CapitalFundingEligibility" asp-method="post" novalidate>
-        <vc:form-header title="@SitePageTitles.SiteSection106CapitalFundingEligibility" caption="@Model.SiteName" additional-css-class="govuk-!-padding-top-8"></vc:form-header>
+        <vc:page-header title="@SitePageTitles.SiteSection106CapitalFundingEligibility" caption="@Model.SiteName" additional-css-class="govuk-!-padding-top-8"/>
         <gds-p>
             All homes funded through the Affordable Homes Programme must meet the requirements of the
             Capital Funding Guide. You should ensure that none of the provisions in your section (s106)

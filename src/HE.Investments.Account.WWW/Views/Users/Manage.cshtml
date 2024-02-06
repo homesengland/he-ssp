@@ -1,10 +1,8 @@
-@using HE.Investments.Common.WWW.Components.FormHeader
 @using HE.Investments.Common.WWW.Components.SummaryItem
 @using HE.Investments.Account.WWW.Models.Users
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.Components.RadioListWithOr
 @using HE.Investments.Common.WWW.Models
-@using HE.Investments.Account.Api.Contract
 @using HE.Investments.Account.Api.Contract.User
 @model (string OrganisationName, HE.Investments.Account.Contract.Users.UserDetails UserDetails)
 @{
@@ -21,7 +19,7 @@
 <gds-div-grid-column-two-thirds>
     <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("Index", "Users")"></gds-back-link>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
-    <vc:form-header title=@title caption="@Model.OrganisationName"/>
+    <vc:page-header title=@title caption="@Model.OrganisationName"/>
     <gds-summary-list class="govuk-!-margin-bottom-9">
         <vc:summary-item title="First name" value="@Model.UserDetails.FirstName"/>
         <vc:summary-item title="Last name" value="@Model.UserDetails.LastName"/>

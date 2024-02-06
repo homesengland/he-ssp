@@ -1,5 +1,4 @@
 @using HE.Investment.AHP.Contract.Application;
-@using HE.Investments.Common.WWW.Components.FormHeader;
 @using HE.Investment.AHP.WWW.Extensions;
 @using HE.Investment.AHP.WWW.Views.Delivery.Const
 @model Application;
@@ -11,7 +10,7 @@
 <gds-div-grid-column-two-thirds>
     <gds-back-link href="@Url.Action("TaskList", "Application", new { applicationId })" class="govuk-!-margin-bottom-8">
     </gds-back-link>
-    <vc:form-header title="@DeliveryPageTitles.LandingPage" caption="@Model.Name"/>
+    <vc:page-header title="@DeliveryPageTitles.LandingPage" caption="@Model.Name"/>
 
     <div class="govuk-!-padding-bottom-8">
         <gds-p>In this section, you'll need to provide information about your delivery. Each delivery phase should contain only one build activity type, for example acquisition and works or purchase and repair.</gds-p>

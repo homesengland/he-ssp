@@ -3,7 +3,6 @@
 @using HE.Investment.AHP.Contract.Delivery
 @using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.WWW.Models.Delivery
-@using HE.Investments.Common.WWW.Components.FormHeader
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @model SummaryOfDeliveryTrancheModel;
 @{
@@ -42,7 +41,7 @@
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
     <form asp-controller="DeliveryPhase" asp-action="SummaryOfDeliveryTranche" asp-method="post" asp-route-applicationId="@applicationId" asp-route-deliveryPhaseId="@Model.DeliveryPhaseId" asp-route-redirect="@Context.Request.Query["redirect"]" novalidate>
-        <vc:form-header caption="@($"{Model.ApplicationName} - {Model.DeliveryPhaseName}")" title="@title" hint="@description"/>
+        <vc:page-header caption="@($"{Model.ApplicationName} - {Model.DeliveryPhaseName}")" title="@title" hint="@description"/>
 
         @Html.HiddenFor(x => x.TrancheType)
         <vc:numeric-text-input field-name="@nameof(Model.Value)"

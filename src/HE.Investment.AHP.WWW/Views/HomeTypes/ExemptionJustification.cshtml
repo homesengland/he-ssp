@@ -6,6 +6,7 @@
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.Components.TextAreaInputWithCounter
 @using HE.Investment.AHP.Contract.HomeTypes
+@using HE.Investments.Common.WWW.Components.InputHeader
 @model HE.Investment.AHP.WWW.Models.HomeTypes.MoreInformationModel;
 
 @{
@@ -23,7 +24,8 @@
 
         <vc:text-area-input-with-counter
             field-name="@nameof(Model.MoreInformation)"
-            header="@HomeTypesPageTitles.ExemptionJustification"
+            title="@HomeTypesPageTitles.ExemptionJustification"
+            title-type="InputTitleType.PageHeader"
             description-component="@(new DynamicComponentViewModel(nameof(SharedOwnershipRightSummary)))"
             value="@Model.MoreInformation"/>
 

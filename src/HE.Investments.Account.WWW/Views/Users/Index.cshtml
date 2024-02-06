@@ -1,5 +1,4 @@
 @using HE.Investments.Common.Extensions
-@using HE.Investments.Common.WWW.Components.FormHeader
 @using HE.Investments.Account.Shared
 @using HE.Investments.Account.WWW.Views.Shared.Components.JoinRequestsTable
 @using HE.Investments.Account.WWW.Views.Shared.Components.UsersTable
@@ -13,7 +12,7 @@
 
 <div class="govuk-grid-column-full">
     <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("Index", "Home")"></gds-back-link>
-    <vc:form-header title=@title/>
+    <vc:page-header title=@title/>
     <partial name="~/Partials/_Notification.cshtml" />
 
     @if (Model.usersAndJoinRequests.Users.Any())
