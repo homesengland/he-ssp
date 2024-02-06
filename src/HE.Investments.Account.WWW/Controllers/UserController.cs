@@ -1,6 +1,5 @@
 using HE.Investments.Account.Contract.User.Commands;
 using HE.Investments.Account.Contract.User.Queries;
-using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Account.Shared.Routing;
 using HE.Investments.Account.WWW.Models.User;
 using HE.Investments.Account.WWW.Routing;
@@ -8,11 +7,12 @@ using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Utils;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investments.Account.WWW.Controllers;
 
-[AuthorizeLoggedIn]
+[Authorize]
 [Route(UserAccountEndpoints.Controller)]
 public class UserController : Controller
 {
