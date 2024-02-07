@@ -1,5 +1,6 @@
 using FluentAssertions;
 using HE.Investment.AHP.Contract.Site;
+using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investment.AHP.WWW.Tests.TestDataBuilders;
 using HE.Investments.Common.WWW.Routing;
 
@@ -18,6 +19,7 @@ public class NextStateTests
     [InlineData(SiteWorkflowState.LandRegistry, SiteWorkflowState.NationalDesignGuide)]
     [InlineData(SiteWorkflowState.NationalDesignGuide, SiteWorkflowState.BuildingForHealthyLife)]
     [InlineData(SiteWorkflowState.BuildingForHealthyLife, SiteWorkflowState.TenderingStatus)]
+    [InlineData(SiteWorkflowState.NumberOfGreenLights, SiteWorkflowState.TenderingStatus)]
     [InlineData(SiteWorkflowState.ContractorDetails, SiteWorkflowState.CheckAnswers)]
     [InlineData(SiteWorkflowState.IntentionToWorkWithSme, SiteWorkflowState.CheckAnswers)]
     public async Task ShouldReturnNextState_WhenContinueTriggerExecuted(SiteWorkflowState current, SiteWorkflowState expectedNext)
@@ -393,5 +395,38 @@ public class NextStateTests
 
         // then
         result.Should().Be(SiteWorkflowState.LocalAuthorityConfirm);
+    }
+
+    [Theory]
+    [InlineData(SiteWorkflowState.BuildingForHealthyLife, BuildingForHealthyLifeType.NotApplicable, SiteWorkflowState.TenderingStatus)]
+    [InlineData(SiteWorkflowState.BuildingForHealthyLife, BuildingForHealthyLifeType.No, SiteWorkflowState.TenderingStatus)]
+    [InlineData(SiteWorkflowState.BuildingForHealthyLife, BuildingForHealthyLifeType.Yes, SiteWorkflowState.NumberOfGreenLights)]
+    public async Task ShouldReturnNextState_WhenContinueTriggerExecutedWithDifferentBuildingForHealthyLife(SiteWorkflowState current, BuildingForHealthyLifeType buildingForHealthyLifeType, SiteWorkflowState expectedNext)
+    {
+        // given
+        var workflow = SiteWorkflowFactory.BuildWorkflow(current, buildingForHealthyLife: buildingForHealthyLifeType);
+
+        // when
+        var result = await workflow.NextState(Trigger.Continue);
+
+        // then
+        result.Should().Be(expectedNext);
+    }
+
+    [Theory]
+    [InlineData(SiteWorkflowState.NumberOfGreenLights, BuildingForHealthyLifeType.Yes, SiteWorkflowState.BuildingForHealthyLife)]
+    [InlineData(SiteWorkflowState.TenderingStatus, BuildingForHealthyLifeType.No, SiteWorkflowState.BuildingForHealthyLife)]
+    [InlineData(SiteWorkflowState.TenderingStatus, BuildingForHealthyLifeType.NotApplicable, SiteWorkflowState.BuildingForHealthyLife)]
+    [InlineData(SiteWorkflowState.TenderingStatus, BuildingForHealthyLifeType.Yes, SiteWorkflowState.NumberOfGreenLights)]
+    public async Task ShouldReturnNextState_WhenBackTriggerExecutedWithDifferentBuildingForHealthyLife(SiteWorkflowState current, BuildingForHealthyLifeType buildingForHealthyLifeType, SiteWorkflowState expectedNext)
+    {
+        // given
+        var workflow = SiteWorkflowFactory.BuildWorkflow(current, buildingForHealthyLife: buildingForHealthyLifeType);
+
+        // when
+        var result = await workflow.NextState(Trigger.Back);
+
+        // then
+        result.Should().Be(expectedNext);
     }
 }

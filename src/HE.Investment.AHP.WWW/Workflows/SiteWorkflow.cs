@@ -1,4 +1,5 @@
 using HE.Investment.AHP.Contract.Site;
+using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Routing;
 using Stateless;
@@ -50,7 +51,8 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             { PlanningDetails.ArePlanningDetailsProvided: false } => SiteWorkflowState.PlanningDetails,
             { PlanningDetails: var x } when !IsLandRegistryProvided(x) => SiteWorkflowState.LandRegistry,
             { NationalDesignGuidePriorities: var x } when x.IsNotProvided() || x.Count == 0 => SiteWorkflowState.NationalDesignGuide,
-            { BuildingForHealthyLife: var x } when x.IsNotProvided() => SiteWorkflowState.BuildingForHealthyLife,
+            { BuildingForHealthyLife: BuildingForHealthyLifeType.Undefined } => SiteWorkflowState.BuildingForHealthyLife,
+            { NumberOfGreenLights: var x } when x.IsNotProvided() && IsBuildingForHealthyLife() => SiteWorkflowState.NumberOfGreenLights,
             { TenderingStatusDetails: var x } when x.TenderingStatus.IsNotProvided() => SiteWorkflowState.TenderingStatus,
             { TenderingStatusDetails: var x } when IsConditionalOrUnconditionalWorksContract() &&
                                                    (x.ContractorName.IsNotProvided() || x.IsSmeContractor.IsNotProvided()) => SiteWorkflowState.ContractorDetails,
@@ -84,6 +86,7 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             SiteWorkflowState.Section106Ineligible => true,
             SiteWorkflowState.NationalDesignGuide => true,
             SiteWorkflowState.BuildingForHealthyLife => true,
+            SiteWorkflowState.NumberOfGreenLights => IsBuildingForHealthyLife(),
             SiteWorkflowState.LandRegistry => IsLandTitleRegistered(),
             SiteWorkflowState.TenderingStatus => true,
             SiteWorkflowState.ContractorDetails => IsConditionalOrUnconditionalWorksContract(),
@@ -180,14 +183,20 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             .PermitIf(Trigger.Back, SiteWorkflowState.PlanningDetails, () => !IsLandTitleRegistered());
 
         _machine.Configure(SiteWorkflowState.BuildingForHealthyLife)
-            .Permit(Trigger.Continue, SiteWorkflowState.TenderingStatus)
+            .PermitIf(Trigger.Continue, SiteWorkflowState.NumberOfGreenLights, IsBuildingForHealthyLife)
+            .PermitIf(Trigger.Continue, SiteWorkflowState.TenderingStatus, () => !IsBuildingForHealthyLife())
             .Permit(Trigger.Back, SiteWorkflowState.NationalDesignGuide);
+
+        _machine.Configure(SiteWorkflowState.NumberOfGreenLights)
+            .Permit(Trigger.Continue, SiteWorkflowState.TenderingStatus)
+            .Permit(Trigger.Back, SiteWorkflowState.BuildingForHealthyLife);
 
         _machine.Configure(SiteWorkflowState.TenderingStatus)
             .PermitIf(Trigger.Continue, SiteWorkflowState.ContractorDetails, IsConditionalOrUnconditionalWorksContract)
             .PermitIf(Trigger.Continue, SiteWorkflowState.IntentionToWorkWithSme, IsTenderForWorksContractOrContractingHasNotYetBegun)
             .PermitIf(Trigger.Continue, SiteWorkflowState.CheckAnswers, IsNotApplicableOrMissing)
-            .Permit(Trigger.Back, SiteWorkflowState.BuildingForHealthyLife);
+            .PermitIf(Trigger.Back, SiteWorkflowState.BuildingForHealthyLife, () => !IsBuildingForHealthyLife())
+            .PermitIf(Trigger.Back, SiteWorkflowState.NumberOfGreenLights, IsBuildingForHealthyLife);
 
         _machine.Configure(SiteWorkflowState.ContractorDetails)
             .Permit(Trigger.Continue, SiteWorkflowState.CheckAnswers)
@@ -217,4 +226,6 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
     private bool IsSection106EligibleWithoutAdditionalAffordableHousing() => _siteModel?.Section106?.CapitalFundingEligibility == false && _siteModel?.Section106?.AdditionalAffordableHousing == false;
 
     private bool IsNotApplicableOrMissing() => _siteModel?.TenderingStatusDetails.TenderingStatus is SiteTenderingStatus.NotApplicable or null;
+
+    private bool IsBuildingForHealthyLife() => _siteModel?.BuildingForHealthyLife is BuildingForHealthyLifeType.Yes;
 }
