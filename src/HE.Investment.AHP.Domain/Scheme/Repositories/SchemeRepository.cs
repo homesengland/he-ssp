@@ -5,6 +5,7 @@ using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Data;
 using HE.Investment.AHP.Domain.Documents.Services;
+using HE.Investment.AHP.Domain.Programme;
 using HE.Investment.AHP.Domain.Scheme.Entities;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investments.Account.Shared.User;
@@ -17,12 +18,18 @@ public class SchemeRepository : ISchemeRepository
 {
     private readonly IApplicationCrmContext _repository;
 
+    private readonly IAhpProgrammeRepository _programmeRepository;
+
     private readonly IAhpFileService<LocalAuthoritySupportFileParams> _fileService;
 
-    public SchemeRepository(IApplicationCrmContext repository, IAhpFileService<LocalAuthoritySupportFileParams> fileService)
+    public SchemeRepository(
+        IApplicationCrmContext repository,
+        IAhpProgrammeRepository programmeRepository,
+        IAhpFileService<LocalAuthoritySupportFileParams> fileService)
     {
         _repository = repository;
         _fileService = fileService;
+        _programmeRepository = programmeRepository;
     }
 
     public async Task<SchemeEntity> GetByApplicationId(AhpApplicationId id, UserAccount userAccount, bool includeFiles, CancellationToken cancellationToken)
@@ -40,7 +47,7 @@ public class SchemeRepository : ISchemeRepository
             file = stakeholderDiscussionsFiles.Any() ? stakeholderDiscussionsFiles.First() : null;
         }
 
-        return CreateEntity(application, file);
+        return await CreateEntity(application, file, cancellationToken);
     }
 
     public async Task<SchemeEntity> Save(SchemeEntity entity, OrganisationId organisationId, CancellationToken cancellationToken)
@@ -71,13 +78,15 @@ public class SchemeRepository : ISchemeRepository
         return entity;
     }
 
-    private static SchemeEntity CreateEntity(AhpApplicationDto application, UploadedFile? stakeholderDiscussionsFile)
+    private async Task<SchemeEntity> CreateEntity(AhpApplicationDto application, UploadedFile? stakeholderDiscussionsFile, CancellationToken cancellationToken)
     {
+        var applicationId = AhpApplicationId.From(application.id);
         var applicationBasicInfo = new ApplicationBasicInfo(
-            AhpApplicationId.From(application.id),
+            applicationId,
             new ApplicationName(application.name),
             ApplicationTenureMapper.ToDomain(application.tenure)!.Value,
-            AhpApplicationStatusMapper.MapToPortalStatus(application.applicationStatus));
+            AhpApplicationStatusMapper.MapToPortalStatus(application.applicationStatus),
+            await _programmeRepository.GetProgramme(applicationId, cancellationToken));
 
         return new SchemeEntity(
             applicationBasicInfo,

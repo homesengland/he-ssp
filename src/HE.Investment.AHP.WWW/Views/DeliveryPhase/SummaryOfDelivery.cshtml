@@ -6,7 +6,9 @@
 @using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.WWW.Models.Delivery
 @using HE.Investments.Common.Messages
+@using HE.Investments.Common.WWW.Extensions
 @using HE.Investments.Common.WWW.Helpers
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model DeliveryPhaseDetails;
 @{
     var applicationId = this.GetApplicationIdFromRoute();
@@ -14,6 +16,9 @@
     ViewData["Title"] = title;
     var isAmendable = Model.Tranches?.IsAmendable ?? false;
     var summaryOfDelivery = Model.Tranches?.SummaryOfDelivery;
+    var postAction = isAmendable ? "SummaryOfDeliveryClaimMilestone" : "SummaryOfDelivery";
+    var (hasError, _) = ViewData.ModelState.GetErrors("Tranche");
+    var groupClass = hasError ? "govuk-form-group--error" : string.Empty;
 }
 
 <div class="govuk-grid-column-full">
@@ -22,7 +27,9 @@
     <form asp-controller="DeliveryPhase" asp-action="SummaryOfDelivery" asp-method="post" asp-route-redirect="@Context.Request.Query["redirect"]" novalidate>
         <vc:page-header caption="@($"{Model.ApplicationName} - {Model.Name}")" title="@title"/>
 
+        @Html.HiddenFor(x => x.Tranches!.IsAmendable)
         <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0">
+            @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
             @(isAmendable ? await Html.PartialAsync("Partials/_SummaryOfDeliveryAmendDescription") : null)
 
             <table class="govuk-table govuk-!-margin-bottom-8">
@@ -64,52 +71,60 @@
             </dl>
         </div>
         <div class="@(isAmendable ? "govuk-grid-column-full" : "govuk-grid-column-three-quarters") govuk-!-padding-left-0">
-            <table class="govuk-table govuk-!-margin-bottom-8">
-                <thead class="govuk-table__head">
-                <tr class="govuk-table__row">
-                    <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"> Tranche </th >
-                    <th scope="col" class="govuk-table__header govuk-!-width-one-third"> Amount of grant apportioned to this milestone </th >
-                    <th scope="col" class="govuk-table__header govuk-!-width-one-third"> Percentage of grant apportioned to this milestone </th >
-                    @(isAmendable ? Html.Raw("<th scope=\"col\" class=\"govuk-table__header govuk-!-width-one-sixth\"></th>") : null)
-                </tr >
-                </thead >
-                <tbody class="govuk-table__body">
-                @{
-                    if (Model is { IsUnregisteredBody: false, IsOnlyCompletionMilestone: false })
-                    {
-                        @await Html.PartialAsync(
-                            "~/Views/DeliveryPhase/Partials/_SummaryOfDeliveryRow.cshtml",
-                            new SummaryOfDeliveryRow(
-                                "Acquisition",
-                                summaryOfDelivery?.AcquisitionMilestone,
-                                summaryOfDelivery?.AcquisitionPercentage,
-                                Model.Id,
-                                applicationId,
-                                isAmendable))
+            <gds-div-form-group class=@groupClass>
+                <gds-field-set>
+
+                    <table class="govuk-table govuk-!-margin-bottom-8">
+                        <thead class="govuk-table__head">
+                        <tr class="govuk-table__row">
+                            <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"> Tranche </th >
+                            <th scope="col" class="govuk-table__header govuk-!-width-one-third"> Amount of grant apportioned to this milestone </th >
+                            <th scope="col" class="govuk-table__header govuk-!-width-one-third"> Percentage of grant apportioned to this milestone </th >
+                            @(isAmendable ? Html.Raw("<th scope=\"col\" class=\"govuk-table__header govuk-!-width-one-sixth\"></th>") : null)
+                        </tr >
+                        </thead >
+                        <tbody class="govuk-table__body">
+                        @{
+                            if (Model is { IsUnregisteredBody: false, IsOnlyCompletionMilestone: false })
+                            {
+                                @await Html.PartialAsync(
+                                    "~/Views/DeliveryPhase/Partials/_SummaryOfDeliveryRow.cshtml",
+                                    new SummaryOfDeliveryRow(
+                                        "Acquisition",
+                                        summaryOfDelivery?.AcquisitionMilestone,
+                                        summaryOfDelivery?.AcquisitionPercentage,
+                                        SummaryOfDeliveryTrancheType.Acquisition,
+                                        Model.Id,
+                                        applicationId,
+                                        isAmendable))
+
+                                @await Html.PartialAsync(
+                                    "~/Views/DeliveryPhase/Partials/_SummaryOfDeliveryRow.cshtml",
+                                    new SummaryOfDeliveryRow(
+                                        "Start on site",
+                                        summaryOfDelivery?.StartOnSiteMilestone,
+                                        summaryOfDelivery?.StartOnSitePercentage,
+                                        SummaryOfDeliveryTrancheType.StartOnSite,
+                                        Model.Id,
+                                        applicationId,
+                                        isAmendable))
+                            }
+                        }
 
                         @await Html.PartialAsync(
                             "~/Views/DeliveryPhase/Partials/_SummaryOfDeliveryRow.cshtml",
                             new SummaryOfDeliveryRow(
-                                "Start on site",
-                                summaryOfDelivery?.StartOnSiteMilestone,
-                                summaryOfDelivery?.StartOnSitePercentage,
+                                "Completion",
+                                summaryOfDelivery?.CompletionMilestone,
+                                summaryOfDelivery?.CompletionPercentage,
+                                SummaryOfDeliveryTrancheType.Completion,
                                 Model.Id,
                                 applicationId,
                                 isAmendable))
-                    }
-                }
-
-                @await Html.PartialAsync(
-                    "~/Views/DeliveryPhase/Partials/_SummaryOfDeliveryRow.cshtml",
-                    new SummaryOfDeliveryRow(
-                        "Completion",
-                        summaryOfDelivery?.CompletionMilestone,
-                        summaryOfDelivery?.CompletionPercentage,
-                        Model.Id,
-                        applicationId,
-                        isAmendable))
-                </tbody>
-            </table>
+                        </tbody>
+                    </table>
+                </gds-field-set>
+            </gds-div-form-group>
         </div>
         <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0">
 

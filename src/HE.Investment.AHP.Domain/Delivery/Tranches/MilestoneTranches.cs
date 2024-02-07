@@ -1,3 +1,4 @@
+using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
@@ -6,14 +7,19 @@ namespace HE.Investment.AHP.Domain.Delivery.Tranches;
 
 public class MilestoneTranches : ValueObject, IQuestion
 {
-    public MilestoneTranches(decimal? acquisition, decimal? startOnSite, decimal? completion)
+    private const string UiFieldName = "Value";
+
+    private MilestoneTranches(decimal? acquisition, decimal? startOnSite, decimal? completion, decimal grantApportioned)
     {
+        GrantApportioned = grantApportioned;
+        MinimalCompletionTranche = GrantApportioned * 0.05m;
+        MaxTranche = GrantApportioned - MinimalCompletionTranche;
         Acquisition = Validate(acquisition, "Acquisition tranche");
         StartOnSite = Validate(startOnSite, "Start on site tranche");
         Completion = Validate(completion, "Completion tranche");
     }
 
-    public static MilestoneTranches NotProvided => new(null, null, null);
+    public static MilestoneTranches NotProvided => new(null, null, null, 0);
 
     public decimal? Acquisition { get; }
 
@@ -21,21 +27,49 @@ public class MilestoneTranches : ValueObject, IQuestion
 
     public decimal? Completion { get; }
 
-    public bool IsAmended => Acquisition.IsProvided() || StartOnSite.IsProvided() || Completion.IsProvided();
+    public decimal GrantApportioned { get; }
+
+    public bool IsAmendRequested => Acquisition.IsProvided() || StartOnSite.IsProvided() || Completion.IsProvided();
+
+    public bool IsNotProvided => Acquisition.IsNotProvided() && StartOnSite.IsNotProvided() && Completion.IsNotProvided();
+
+    public decimal MinimalCompletionTranche { get; }
+
+    public decimal MaxTranche { get; }
+
+    public MilestoneTranches WithGrantApportioned(decimal grantApportioned)
+    {
+        return new MilestoneTranches(Acquisition, StartOnSite, Completion, grantApportioned);
+    }
 
     public MilestoneTranches WithAcquisition(decimal? acquisition)
     {
-        return new MilestoneTranches(acquisition, StartOnSite, Completion);
+        if (Validate(acquisition, "Acquisition tranche", true) > MaxTranche)
+        {
+            OperationResult.ThrowValidationError(UiFieldName, "Acquisition tranche must be at max 95% or less of the grant apportioned");
+        }
+
+        return new MilestoneTranches(acquisition, StartOnSite, Completion, GrantApportioned);
     }
 
     public MilestoneTranches WithCompletion(decimal? completion)
     {
-        return new MilestoneTranches(Acquisition, StartOnSite, completion);
+        if (Validate(completion, "Completion tranche", true) < MinimalCompletionTranche)
+        {
+            OperationResult.ThrowValidationError(UiFieldName, "Completion tranche must be at least 5% or more of the grant apportioned");
+        }
+
+        return new MilestoneTranches(Acquisition, StartOnSite, completion, GrantApportioned);
     }
 
     public MilestoneTranches WithStartOnSite(decimal? startOnSite)
     {
-        return new MilestoneTranches(Acquisition, startOnSite, Completion);
+        if (Validate(startOnSite, "Start on site tranche", true) > MaxTranche)
+        {
+            OperationResult.ThrowValidationError(UiFieldName, "Start on Site tranche must be at max 95% or less of the grant apportioned");
+        }
+
+        return new MilestoneTranches(Acquisition, startOnSite, Completion, GrantApportioned);
     }
 
     public bool IsAnswered() => Acquisition.IsProvided() && StartOnSite.IsProvided() && Completion.IsProvided();
@@ -47,8 +81,8 @@ public class MilestoneTranches : ValueObject, IQuestion
         yield return Completion;
     }
 
-    private static decimal? Validate(decimal? value, string displayName)
+    private static decimal? Validate(decimal? value, string displayName, bool validateNull = false)
     {
-        return value is null ? null : PoundsPencesValidator.Validate(value.Value, "Value", displayName);
+        return value is null && !validateNull ? null : PoundsPencesValidator.Validate(value, UiFieldName, displayName);
     }
 }

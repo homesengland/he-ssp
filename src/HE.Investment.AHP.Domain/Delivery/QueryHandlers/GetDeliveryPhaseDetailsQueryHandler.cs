@@ -17,18 +17,14 @@ public class GetDeliveryPhaseDetailsQueryHandler : IRequestHandler<GetDeliveryPh
 {
     private readonly IDeliveryPhaseRepository _deliveryPhaseRepository;
 
-    private readonly ISchemeRepository _schemeRepository;
-
     private readonly IAccountUserContext _accountUserContext;
 
     public GetDeliveryPhaseDetailsQueryHandler(
         IDeliveryPhaseRepository deliveryPhaseRepository,
-        ISchemeRepository schemeRepository,
         IAccountUserContext accountUserContext)
     {
         _deliveryPhaseRepository = deliveryPhaseRepository;
         _accountUserContext = accountUserContext;
-        _schemeRepository = schemeRepository;
     }
 
     public async Task<DeliveryPhaseDetails> Handle(GetDeliveryPhaseDetailsQuery request, CancellationToken cancellationToken)
@@ -53,9 +49,9 @@ public class GetDeliveryPhaseDetailsQueryHandler : IRequestHandler<GetDeliveryPh
             deliveryPhase.ReconfiguringExisting,
             deliveryPhase.TotalHomesToBeDeliveredInThisPhase,
             new DeliveryPhaseTranchesDto(
-                deliveryPhase.GetTranches().AllowAmendments,
-                request.IncludeSummary ? await GetSummaryOfDelivery(deliveryPhase, userAccount, cancellationToken) : null,
-                request.IncludeSummary ? await GetSummaryOfDeliveryAmend(deliveryPhase, userAccount, cancellationToken) : null),
+                deliveryPhase.Tranches.AmendmentsRequested,
+                request.IncludeSummary ? GetSummaryOfDelivery(deliveryPhase) : null,
+                request.IncludeSummary ? GetSummaryOfDeliveryAmend(deliveryPhase) : null),
             deliveryPhase.Organisation.IsUnregisteredBody,
             deliveryPhase.DeliveryPhaseMilestones.IsOnlyCompletionMilestone,
             DateValueObjectMapper.ToContract(deliveryPhase.DeliveryPhaseMilestones.AcquisitionMilestone?.MilestoneDate),
@@ -67,14 +63,9 @@ public class GetDeliveryPhaseDetailsQueryHandler : IRequestHandler<GetDeliveryPh
             deliveryPhase.IsAdditionalPaymentRequested?.IsRequested);
     }
 
-    private async Task<SummaryOfDelivery> GetSummaryOfDelivery(IDeliveryPhaseEntity deliveryPhase, UserAccount userAccount, CancellationToken cancellationToken)
+    private SummaryOfDelivery GetSummaryOfDelivery(IDeliveryPhaseEntity deliveryPhase)
     {
-        var schemaInformation = await _schemeRepository.GetByApplicationId(deliveryPhase.ApplicationId, userAccount, false, cancellationToken);
-
-        var result = deliveryPhase.GetSummaryOfDelivery(
-            schemaInformation.Funding.RequiredFunding ?? 0,
-            schemaInformation.Funding.HousesToDeliver ?? 0,
-            MilestoneFramework.Default);
+        var result = deliveryPhase.GetSummaryOfDelivery();
 
         return new SummaryOfDelivery(
             result.GrantApportioned,
@@ -86,9 +77,9 @@ public class GetDeliveryPhaseDetailsQueryHandler : IRequestHandler<GetDeliveryPh
             result.SummaryOfDeliveryPercentage.CompletionPercentage);
     }
 
-    private async Task<SummaryOfDeliveryAmend> GetSummaryOfDeliveryAmend(IDeliveryPhaseEntity deliveryPhase, UserAccount userAccount, CancellationToken cancellationToken)
+    private SummaryOfDeliveryAmend GetSummaryOfDeliveryAmend(IDeliveryPhaseEntity deliveryPhase)
     {
-        var result = await GetSummaryOfDelivery(deliveryPhase, userAccount, cancellationToken);
+        var result = GetSummaryOfDelivery(deliveryPhase);
 
         return new SummaryOfDeliveryAmend(
             result.GrantApportioned,

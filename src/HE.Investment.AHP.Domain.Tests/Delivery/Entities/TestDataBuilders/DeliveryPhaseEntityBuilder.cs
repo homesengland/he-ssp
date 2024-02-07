@@ -7,6 +7,8 @@ using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.Tranches;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
+using HE.Investment.AHP.Domain.Programme;
+using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
 using HE.Investments.TestsUtils.TestData;
@@ -15,15 +17,16 @@ namespace HE.Investment.AHP.Domain.Tests.Delivery.Entities.TestDataBuilders;
 
 public class DeliveryPhaseEntityBuilder
 {
-    private static readonly ApplicationBasicInfo ApplicationBasicInfo = new(
-        new AhpApplicationId("test-app-42123"),
-        new ApplicationName("Test Application"),
-        Tenure.AffordableRent,
-        ApplicationStatus.Draft);
-
     private readonly IList<HomesToDeliverInPhase> _homesToDeliver = new List<HomesToDeliverInPhase>();
 
     private string _id = "dp-1-12313";
+
+    private ApplicationBasicInfo _applicationBasicInfo = new(
+        new AhpApplicationId("test-app-42123"),
+        new ApplicationName("Test Application"),
+        Tenure.AffordableRent,
+        ApplicationStatus.Draft,
+        new AhpProgramme(DateTimeTestData.OctoberDay05Year2023At0858, DateTimeTestData.OctoberDay05Year2023At0858.AddMonths(6), MilestoneFramework.Default));
 
     private DeliveryPhaseName _name = new("First Phase");
 
@@ -37,9 +40,11 @@ public class DeliveryPhaseEntityBuilder
 
     private TypeOfHomes? _typeOfHomes = TypeOfHomes.NewBuild;
 
-    private BuildActivity _buildActivity = new(ApplicationBasicInfo.Tenure, TypeOfHomes.NewBuild, BuildActivityType.Regeneration);
+    private BuildActivity _buildActivity = new(Tenure.AffordableRent, TypeOfHomes.NewBuild, BuildActivityType.Regeneration);
 
     private bool? _reconfigureExisting;
+
+    private SchemeFunding _schemeFunding = new(1_000_000, 15);
 
     public DeliveryPhaseEntityBuilder WithId(string id)
     {
@@ -91,7 +96,7 @@ public class DeliveryPhaseEntityBuilder
 
     public DeliveryPhaseEntityBuilder WithoutBuildActivity()
     {
-        _buildActivity = new BuildActivity(ApplicationBasicInfo.Tenure);
+        _buildActivity = new BuildActivity(_applicationBasicInfo.Tenure);
         return this;
     }
 
@@ -123,14 +128,33 @@ public class DeliveryPhaseEntityBuilder
 
     public DeliveryPhaseEntityBuilder WithRehabBuildActivity(BuildActivityType buildActivityType = BuildActivityType.ExistingSatisfactory)
     {
-        _buildActivity = new BuildActivity(ApplicationBasicInfo.Tenure, TypeOfHomes.Rehab, buildActivityType);
+        _buildActivity = new BuildActivity(_applicationBasicInfo.Tenure, TypeOfHomes.Rehab, buildActivityType);
 
         return this;
     }
 
     public DeliveryPhaseEntityBuilder WithNewBuildActivity(BuildActivityType buildActivityType = BuildActivityType.AcquisitionAndWorks)
     {
-        _buildActivity = new BuildActivity(ApplicationBasicInfo.Tenure, TypeOfHomes.NewBuild, buildActivityType);
+        _buildActivity = new BuildActivity(_applicationBasicInfo.Tenure, TypeOfHomes.NewBuild, buildActivityType);
+
+        return this;
+    }
+
+    public DeliveryPhaseEntityBuilder WithSchemeFunding(int? requiredFunding, int? homesToDeliver)
+    {
+        _schemeFunding = new SchemeFunding(requiredFunding, homesToDeliver);
+        return this;
+    }
+
+    public DeliveryPhaseEntityBuilder WithMilestoneFramework(MilestoneFramework milestoneFramework)
+    {
+        _applicationBasicInfo = _applicationBasicInfo with
+        {
+            Programme = new AhpProgramme(
+                DateTimeTestData.OctoberDay05Year2023At0858,
+                DateTimeTestData.OctoberDay05Year2023At0858.AddMonths(6),
+                milestoneFramework),
+        };
 
         return this;
     }
@@ -138,11 +162,12 @@ public class DeliveryPhaseEntityBuilder
     public DeliveryPhaseEntity Build()
     {
         return new DeliveryPhaseEntity(
-            ApplicationBasicInfo,
+            _applicationBasicInfo,
             _name,
             _organisationBasicInfo,
             _status,
             MilestoneTranches.NotProvided,
+            _schemeFunding,
             _typeOfHomes,
             _buildActivity,
             _reconfigureExisting,

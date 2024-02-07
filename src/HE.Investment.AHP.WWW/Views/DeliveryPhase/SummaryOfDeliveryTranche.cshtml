@@ -44,7 +44,9 @@
         <vc:page-header caption="@($"{Model.ApplicationName} - {Model.DeliveryPhaseName}")" title="@title" hint="@description"/>
 
         @Html.HiddenFor(x => x.TrancheType)
-        <vc:numeric-text-input field-name="@nameof(Model.Value)"
+        @Html.HiddenFor(x => x.ApplicationName)
+        @Html.HiddenFor(x => x.DeliveryPhaseName)
+        <vc:numeric-text-input field-name=@nameof(Model.Value)
                                value="@Model.Value.ToString()"
                                hint="Amount of grant apportioned to this phase"
                                prefix="£"

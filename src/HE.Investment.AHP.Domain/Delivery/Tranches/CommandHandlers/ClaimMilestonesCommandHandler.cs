@@ -7,17 +7,17 @@ using HE.Investments.Common.Contract.Validators;
 
 namespace HE.Investment.AHP.Domain.Delivery.Tranches.CommandHandlers;
 
-public class ProvideAcquisitionTrancheCommandHandler : UpdateDeliveryPhaseCommandHandler<ProvideAcquisitionTrancheCommand>
+public class ClaimMilestonesCommandHandler : UpdateDeliveryPhaseCommandHandler<ClaimMilestonesCommand>
 {
-    public ProvideAcquisitionTrancheCommandHandler(IDeliveryPhaseRepository repository, IAccountUserContext accountUserContext)
+    public ClaimMilestonesCommandHandler(IDeliveryPhaseRepository repository, IAccountUserContext accountUserContext)
         : base(repository, accountUserContext)
     {
     }
 
-    protected override Task<OperationResult> Update(IDeliveryPhaseEntity entity, ProvideAcquisitionTrancheCommand request, CancellationToken cancellationToken)
+    protected override Task<OperationResult> Update(IDeliveryPhaseEntity entity, ClaimMilestonesCommand request, CancellationToken cancellationToken)
     {
         var deliveryPhaseTranches = entity.Tranches;
-        deliveryPhaseTranches.ProvideAcquisitionTranche(request.AcquisitionTranche);
+        deliveryPhaseTranches.ClaimMilestones(request.YesNo);
         return Task.FromResult(OperationResult.Success());
     }
 }

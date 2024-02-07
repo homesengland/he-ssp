@@ -7,6 +7,8 @@ using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.Tranches;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
+using HE.Investment.AHP.Domain.Programme;
+using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
@@ -126,7 +128,8 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
             ValidateNameUniqueness(name),
             organisationBasicInfo,
             SectionStatus.InProgress,
-            MilestoneTranches.NotProvided);
+            MilestoneTranches.NotProvided,
+            new SchemeFunding((int?)null, null));
 
         _deliveryPhases.Add(deliveryPhase);
         return deliveryPhase;

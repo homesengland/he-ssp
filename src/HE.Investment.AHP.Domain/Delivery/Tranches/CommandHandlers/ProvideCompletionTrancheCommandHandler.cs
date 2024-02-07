@@ -16,7 +16,7 @@ public class ProvideCompletionTrancheCommandHandler : UpdateDeliveryPhaseCommand
 
     protected override Task<OperationResult> Update(IDeliveryPhaseEntity entity, ProvideCompletionTrancheCommand request, CancellationToken cancellationToken)
     {
-        var deliveryPhaseTranches = entity.GetTranches();
+        var deliveryPhaseTranches = entity.Tranches;
         deliveryPhaseTranches.ProvideCompletionTranche(request.CompletionTranche);
         return Task.FromResult(OperationResult.Success());
     }
