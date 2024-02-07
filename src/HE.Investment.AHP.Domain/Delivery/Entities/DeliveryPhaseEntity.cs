@@ -57,7 +57,7 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
             Application,
             milestoneTranches,
             CalculateGrantApportioned(schemaFunding),
-            true,
+            false,
             IsOnlyCompletionMilestone);
     }
 

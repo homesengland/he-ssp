@@ -1,8 +1,7 @@
 using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Domain.Common;
-using HE.Investment.AHP.Domain.Delivery.ValueObjects;
-using HE.Investment.AHP.Domain.Programme;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
@@ -110,13 +109,12 @@ public class DeliveryPhaseTranches : IQuestion
             return true;
         }
 
-        return MilestoneTranches.IsAnswered() && ClaimMilestone.IsProvided();
+        return MilestoneTranches.IsAnswered() && ClaimMilestone.GetValueOrDefault();
     }
 
     private void CheckIfTranchesCanBeAmended()
     {
-        // if (!AmendmentsRequested || ApplicationBasicInfo.Status.IsNotIn(ApplicationStatus.ReferredBackToApplicant))
-        if (!AmendmentsRequested)
+        if (!AmendmentsRequested || ApplicationBasicInfo.Status.IsNotIn(ApplicationStatus.ReferredBackToApplicant))
         {
             throw new DomainValidationException("Delivery Phase Tranches cannot be amendment");
         }
