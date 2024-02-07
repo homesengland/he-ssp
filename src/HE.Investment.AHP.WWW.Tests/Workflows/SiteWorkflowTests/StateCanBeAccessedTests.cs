@@ -22,6 +22,8 @@ public class StateCanBeAccessedTests
     [InlineData(SiteWorkflowState.TenderingStatus, true)]
     [InlineData(SiteWorkflowState.ContractorDetails, false)]
     [InlineData(SiteWorkflowState.IntentionToWorkWithSme, false)]
+    [InlineData(SiteWorkflowState.StrategicSite, true)]
+    [InlineData(SiteWorkflowState.CheckAnswers, true)]
     public async Task ShouldReturnValue_WhenMethodCalledForDefaults(SiteWorkflowState state, bool expectedResult)
     {
         // given

@@ -234,12 +234,19 @@ public class CurrentStateTests
         Test(SiteWorkflowState.NumberOfGreenLights, buildingForHealthyLifeType: BuildingForHealthyLifeType.Yes);
     }
 
+    [Fact]
+    public void ShouldReturnStrategicSite_WhenStrategicSiteNotProvided()
+    {
+        Test(SiteWorkflowState.StrategicSite, strategicSite: new StrategicSite(null, null));
+    }
+
     private void Test(
         SiteWorkflowState expected,
         SitePlanningDetails? planningDetails = null,
         SiteTenderingStatusDetails? tenderingStatusDetails = null,
         BuildingForHealthyLifeType buildingForHealthyLifeType = BuildingForHealthyLifeType.NotApplicable,
-        NumberOfGreenLights? numberOfGreenLights = null)
+        NumberOfGreenLights? numberOfGreenLights = null,
+        StrategicSite? strategicSite = null)
     {
         // given
         var workflow = SiteWorkflowFactory.BuildWorkflow(
@@ -251,7 +258,8 @@ public class CurrentStateTests
             section106: _section106,
             nationalDesignGuidePriorities: new List<NationalDesignGuidePriority>() { NationalDesignGuidePriority.NoneOfTheAbove },
             buildingForHealthyLife: buildingForHealthyLifeType,
-            numberOfGreenLights: numberOfGreenLights);
+            numberOfGreenLights: numberOfGreenLights,
+            strategicSite: strategicSite);
 
         // when
         var result = workflow.CurrentState(SiteWorkflowState.Start);

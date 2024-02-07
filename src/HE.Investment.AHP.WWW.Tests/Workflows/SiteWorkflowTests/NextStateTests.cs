@@ -20,8 +20,9 @@ public class NextStateTests
     [InlineData(SiteWorkflowState.NationalDesignGuide, SiteWorkflowState.BuildingForHealthyLife)]
     [InlineData(SiteWorkflowState.BuildingForHealthyLife, SiteWorkflowState.TenderingStatus)]
     [InlineData(SiteWorkflowState.NumberOfGreenLights, SiteWorkflowState.TenderingStatus)]
-    [InlineData(SiteWorkflowState.ContractorDetails, SiteWorkflowState.CheckAnswers)]
-    [InlineData(SiteWorkflowState.IntentionToWorkWithSme, SiteWorkflowState.CheckAnswers)]
+    [InlineData(SiteWorkflowState.ContractorDetails, SiteWorkflowState.StrategicSite)]
+    [InlineData(SiteWorkflowState.IntentionToWorkWithSme, SiteWorkflowState.StrategicSite)]
+    [InlineData(SiteWorkflowState.StrategicSite, SiteWorkflowState.CheckAnswers)]
     public async Task ShouldReturnNextState_WhenContinueTriggerExecuted(SiteWorkflowState current, SiteWorkflowState expectedNext)
     {
         // given
@@ -53,8 +54,8 @@ public class NextStateTests
     }
 
     [Theory]
-    [InlineData(null, SiteWorkflowState.CheckAnswers)]
-    [InlineData(SiteTenderingStatus.NotApplicable, SiteWorkflowState.CheckAnswers)]
+    [InlineData(null, SiteWorkflowState.StrategicSite)]
+    [InlineData(SiteTenderingStatus.NotApplicable, SiteWorkflowState.StrategicSite)]
     [InlineData(SiteTenderingStatus.UnconditionalWorksContract, SiteWorkflowState.ContractorDetails)]
     [InlineData(SiteTenderingStatus.ConditionalWorksContract, SiteWorkflowState.ContractorDetails)]
     [InlineData(SiteTenderingStatus.TenderForWorksContract, SiteWorkflowState.IntentionToWorkWithSme)]
@@ -86,6 +87,25 @@ public class NextStateTests
         // given
         var section106 = new Section106TestDataBuilder().Build();
         var workflow = SiteWorkflowFactory.BuildWorkflow(current, section106);
+
+        // when
+        var result = await workflow.NextState(Trigger.Back);
+
+        // then
+        result.Should().Be(expectedNext);
+    }
+
+    [Theory]
+    [InlineData(null, SiteWorkflowState.TenderingStatus)]
+    [InlineData(SiteTenderingStatus.NotApplicable, SiteWorkflowState.TenderingStatus)]
+    [InlineData(SiteTenderingStatus.UnconditionalWorksContract, SiteWorkflowState.ContractorDetails)]
+    [InlineData(SiteTenderingStatus.ConditionalWorksContract, SiteWorkflowState.ContractorDetails)]
+    [InlineData(SiteTenderingStatus.TenderForWorksContract, SiteWorkflowState.IntentionToWorkWithSme)]
+    [InlineData(SiteTenderingStatus.ContractingHasNotYetBegun, SiteWorkflowState.IntentionToWorkWithSme)]
+    public async Task ShouldReturnNextState_WhenBackTriggerExecutedForStrategicSite(SiteTenderingStatus? tenderingStatus, SiteWorkflowState expectedNext)
+    {
+        // given
+        var workflow = SiteWorkflowFactory.BuildWorkflow(SiteWorkflowState.StrategicSite, tenderingStatusDetails: new SiteTenderingStatusDetails(tenderingStatus, null, null, null));
 
         // when
         var result = await workflow.NextState(Trigger.Back);
