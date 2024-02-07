@@ -54,7 +54,8 @@ public class MilestoneTranches : ValueObject, IQuestion
 
     public MilestoneTranches WithCompletion(decimal? completion)
     {
-        if (Validate(completion, "Completion tranche", true) < MinimalCompletionTranche)
+        var completionValidate = Validate(completion, "Completion tranche", true);
+        if (completionValidate < MinimalCompletionTranche)
         {
             OperationResult.ThrowValidationError(UiFieldName, "Completion tranche must be at least 5% or more of the grant apportioned");
         }

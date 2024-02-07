@@ -6,7 +6,6 @@
 @using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.WWW.Models.Delivery
 @using HE.Investments.Common.Messages
-@using HE.Investments.Common.WWW.Extensions
 @using HE.Investments.Common.WWW.Helpers
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @model DeliveryPhaseDetails;
@@ -16,9 +15,6 @@
     ViewData["Title"] = title;
     var isAmendable = Model.Tranches?.IsAmendable ?? false;
     var summaryOfDelivery = Model.Tranches?.SummaryOfDelivery;
-    var postAction = isAmendable ? "SummaryOfDeliveryClaimMilestone" : "SummaryOfDelivery";
-    var (hasError, _) = ViewData.ModelState.GetErrors("Tranche");
-    var groupClass = hasError ? "govuk-form-group--error" : string.Empty;
 }
 
 <div class="govuk-grid-column-full">
@@ -28,6 +24,7 @@
         <vc:page-header caption="@($"{Model.ApplicationName} - {Model.Name}")" title="@title"/>
 
         @Html.HiddenFor(x => x.Tranches!.IsAmendable)
+        @Html.HiddenFor(x => x.Tranches!.SummaryOfDeliveryAmend)
         <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0">
             @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
             @(isAmendable ? await Html.PartialAsync("Partials/_SummaryOfDeliveryAmendDescription") : null)
@@ -71,60 +68,56 @@
             </dl>
         </div>
         <div class="@(isAmendable ? "govuk-grid-column-full" : "govuk-grid-column-three-quarters") govuk-!-padding-left-0">
-            <gds-div-form-group class=@groupClass>
-                <gds-field-set>
 
-                    <table class="govuk-table govuk-!-margin-bottom-8">
-                        <thead class="govuk-table__head">
-                        <tr class="govuk-table__row">
-                            <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"> Tranche </th >
-                            <th scope="col" class="govuk-table__header govuk-!-width-one-third"> Amount of grant apportioned to this milestone </th >
-                            <th scope="col" class="govuk-table__header govuk-!-width-one-third"> Percentage of grant apportioned to this milestone </th >
-                            @(isAmendable ? Html.Raw("<th scope=\"col\" class=\"govuk-table__header govuk-!-width-one-sixth\"></th>") : null)
-                        </tr >
-                        </thead >
-                        <tbody class="govuk-table__body">
-                        @{
-                            if (Model is { IsUnregisteredBody: false, IsOnlyCompletionMilestone: false })
-                            {
-                                @await Html.PartialAsync(
-                                    "~/Views/DeliveryPhase/Partials/_SummaryOfDeliveryRow.cshtml",
-                                    new SummaryOfDeliveryRow(
-                                        "Acquisition",
-                                        summaryOfDelivery?.AcquisitionMilestone,
-                                        summaryOfDelivery?.AcquisitionPercentage,
-                                        SummaryOfDeliveryTrancheType.Acquisition,
-                                        Model.Id,
-                                        applicationId,
-                                        isAmendable))
-
-                                @await Html.PartialAsync(
-                                    "~/Views/DeliveryPhase/Partials/_SummaryOfDeliveryRow.cshtml",
-                                    new SummaryOfDeliveryRow(
-                                        "Start on site",
-                                        summaryOfDelivery?.StartOnSiteMilestone,
-                                        summaryOfDelivery?.StartOnSitePercentage,
-                                        SummaryOfDeliveryTrancheType.StartOnSite,
-                                        Model.Id,
-                                        applicationId,
-                                        isAmendable))
-                            }
-                        }
+            <table class="govuk-table govuk-!-margin-bottom-8">
+                <thead class="govuk-table__head">
+                <tr class="govuk-table__row">
+                    <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"> Tranche </th >
+                    <th scope="col" class="govuk-table__header govuk-!-width-one-third"> Amount of grant apportioned to this milestone </th >
+                    <th scope="col" class="govuk-table__header govuk-!-width-one-third"> Percentage of grant apportioned to this milestone </th >
+                    @(isAmendable ? Html.Raw("<th scope=\"col\" class=\"govuk-table__header govuk-!-width-one-sixth\"></th>") : null)
+                </tr >
+                </thead >
+                <tbody class="govuk-table__body">
+                @{
+                    if (Model is { IsUnregisteredBody: false, IsOnlyCompletionMilestone: false })
+                    {
+                        @await Html.PartialAsync(
+                            "~/Views/DeliveryPhase/Partials/_SummaryOfDeliveryRow.cshtml",
+                            new SummaryOfDeliveryRow(
+                                "Acquisition",
+                                summaryOfDelivery?.AcquisitionMilestone,
+                                summaryOfDelivery?.AcquisitionPercentage,
+                                SummaryOfDeliveryTrancheType.Acquisition,
+                                Model.Id,
+                                applicationId,
+                                isAmendable))
 
                         @await Html.PartialAsync(
                             "~/Views/DeliveryPhase/Partials/_SummaryOfDeliveryRow.cshtml",
                             new SummaryOfDeliveryRow(
-                                "Completion",
-                                summaryOfDelivery?.CompletionMilestone,
-                                summaryOfDelivery?.CompletionPercentage,
-                                SummaryOfDeliveryTrancheType.Completion,
+                                "Start on site",
+                                summaryOfDelivery?.StartOnSiteMilestone,
+                                summaryOfDelivery?.StartOnSitePercentage,
+                                SummaryOfDeliveryTrancheType.StartOnSite,
                                 Model.Id,
                                 applicationId,
                                 isAmendable))
-                        </tbody>
-                    </table>
-                </gds-field-set>
-            </gds-div-form-group>
+                    }
+                }
+
+                @await Html.PartialAsync(
+                    "~/Views/DeliveryPhase/Partials/_SummaryOfDeliveryRow.cshtml",
+                    new SummaryOfDeliveryRow(
+                        "Completion",
+                        summaryOfDelivery?.CompletionMilestone,
+                        summaryOfDelivery?.CompletionPercentage,
+                        SummaryOfDeliveryTrancheType.Completion,
+                        Model.Id,
+                        applicationId,
+                        isAmendable))
+                </tbody>
+            </table>
         </div>
         <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0">
 
@@ -132,10 +125,10 @@
                 if (isAmendable)
                 {
                     <vc:radio-yes-no
-                        field-name="@nameof(Model.Tranches.SummaryOfDeliveryAmend.UnderstandClaimingMilestones)"
+                        field-name="Tranches.SummaryOfDeliveryAmend.UnderstandClaimingMilestones"
                         header="Claiming the milestones"
                         hint="Do you understand that you must have incurred costs and made payments to at least the level of the grant in these revised milestone amounts before claiming the milestones?"
-                        value="@Model.Tranches?.SummaryOfDeliveryAmend?.UnderstandClaimingMilestones"/>
+                        value=@Model.Tranches?.SummaryOfDeliveryAmend?.UnderstandClaimingMilestones />
 
                     <vc:form-button/>
 

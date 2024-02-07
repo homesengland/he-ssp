@@ -7,9 +7,9 @@ public class SummaryOfDeliveryPercentage : ValueObject
 {
     public SummaryOfDeliveryPercentage(decimal? acquisitionPercentage, decimal? startOnSitePercentage, decimal? completionPercentage)
     {
-        AcquisitionPercentage = Guard.Argument(acquisitionPercentage, nameof(acquisitionPercentage)).InRange(0, 1);
-        StartOnSitePercentage = Guard.Argument(startOnSitePercentage, nameof(startOnSitePercentage)).InRange(0, 1);
-        CompletionPercentage = Guard.Argument(completionPercentage, nameof(completionPercentage)).InRange(0, 1);
+        AcquisitionPercentage = acquisitionPercentage;
+        StartOnSitePercentage = startOnSitePercentage;
+        CompletionPercentage = completionPercentage;
     }
 
     public static SummaryOfDeliveryPercentage LackOfCalculation => new(null, null, null);

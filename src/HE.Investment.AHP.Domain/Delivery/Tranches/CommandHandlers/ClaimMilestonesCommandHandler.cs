@@ -17,7 +17,7 @@ public class ClaimMilestonesCommandHandler : UpdateDeliveryPhaseCommandHandler<C
     protected override Task<OperationResult> Update(IDeliveryPhaseEntity entity, ClaimMilestonesCommand request, CancellationToken cancellationToken)
     {
         var deliveryPhaseTranches = entity.Tranches;
-        deliveryPhaseTranches.ClaimMilestones(request.YesNo);
+        deliveryPhaseTranches.ClaimMilestones(request.UnderstandClaimingMilestones);
         return Task.FromResult(OperationResult.Success());
     }
 }
