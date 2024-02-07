@@ -1,7 +1,6 @@
 @using HE.Investment.AHP.Contract.Site;
 @using HE.Investment.AHP.WWW.Routing;
-@using HE.Investments.Common.WWW.Components.FormHeader;
-@using HE.Investment.AHP.WWW.Views.Site;
+@using HE.Investment.AHP.WWW.Views.Site.Const
 @model SitesListModel
 @{
     ViewData["Title"] = SitePageTitles.SiteSplashScreen;
@@ -14,7 +13,7 @@
 }
 
 <div class="govuk-grid-column-three-quarters">
-    <vc:form-header title="@SitePageTitles.SiteSplashScreen" />
+    <vc:page-header title="@SitePageTitles.SiteSplashScreen" />
 
     <div class="govuk-!-padding-bottom-8">
         <gds-div-inset-text>

@@ -1,21 +1,25 @@
-@using HE.Investments.Common.WWW.TagHelpers
-@model (string fieldName, string header, string title, string hint)
+@using HE.Investments.Common.WWW.Components.InputHeader
 
-<h1 class="govuk-label-wrapper">
-    @if (!string.IsNullOrWhiteSpace(Model.header))
-    {
-        <label class="govuk-heading-l" for="@Model.fieldName">
-            @Model.header
-        </label>
-    }
+@model (string fieldName, string title, InputTitleType titleType, string hint)
 
-    @if (!string.IsNullOrWhiteSpace(Model.title))
+@{
+    var cssClass = Model.titleType switch
     {
-        <label class="govuk-label govuk-label--m" for="@Model.fieldName">
+        InputTitleType.PageHeader => "govuk-heading-l",
+        InputTitleType.InputTitle => "govuk-label govuk-label--m",
+        InputTitleType.InputDescription => "govuk-label",
+        _ => string.Empty,
+        };
+}
+
+@if (!string.IsNullOrWhiteSpace(Model.title))
+{
+    <h1 class="govuk-label-wrapper">
+        <label class="@cssClass" for="@Model.fieldName">
             @Model.title
         </label>
-    }
-</h1>
+    </h1>
+}
 
 @if (!string.IsNullOrWhiteSpace(Model.hint))
 {

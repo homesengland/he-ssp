@@ -1,14 +1,12 @@
 @using HE.Investment.AHP.WWW.Views.Application
-@using HE.Investments.Common.Extensions
 @using HE.Investments.Common.Messages
-@using HE.Investments.Common.WWW.Components.FormHeader
 @using HE.Investments.Common.WWW.Helpers
 @model HE.Investment.AHP.WWW.Models.Application.ApplicationsListModel
 @{
     ViewData["Title"] = ApplicationPageTitles.ApplicationList;
 }
 <div class="govuk-grid-column-full">
-    <vc:form-header title="@ApplicationPageTitles.ApplicationList" caption="@Model.OrganisationName" additional-css-class="govuk-!-padding-top-8"></vc:form-header>
+    <vc:page-header title="@ApplicationPageTitles.ApplicationList" caption="@Model.OrganisationName" additional-css-class="govuk-!-padding-top-8"/>
 
     <gds-h2 class="govuk-!-padding-top-8">
         Your applications

@@ -1,4 +1,4 @@
-namespace HE.Investment.AHP.WWW.Views.Site;
+namespace HE.Investment.AHP.WWW.Views.Site.Const;
 
 public static class SitePageTitles
 {
@@ -44,9 +44,13 @@ public static class SitePageTitles
 
     public const string NationalDesignGuide = "Which of the design priorities from the National Design Guide does your site aim to meet?";
 
+    public const string BuildingForHealthyLife = "Have you assessed your site against the Building for a Healthy Life criteria?";
+
     public const string TenderingStatus = "What progress have you made in the tendering for your main works contract?";
 
     public const string ContractorDetails = "Contractor details";
 
     public const string IntentionToWorkWithSme = "Are you intending to work with a small to medium-sized enterprise (SME) contractor?";
+
+    public const string StrategicSite = "Is this a strategic site?";
 }

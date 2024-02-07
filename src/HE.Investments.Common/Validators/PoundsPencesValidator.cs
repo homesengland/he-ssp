@@ -21,10 +21,15 @@ public static class PoundsPencesValidator
         return pounds;
     }
 
-    public static decimal Validate(decimal pounds, string fieldName, string displayName, decimal? maxValue = null, string? maxValueExceededError = null)
+    public static decimal Validate(decimal? pounds, string fieldName, string displayName, decimal? maxValue = null, string? maxValueExceededError = null)
     {
+        if (pounds is null)
+        {
+            OperationResult.ThrowValidationError(fieldName, ValidationErrorMessage.PoundInput(displayName));
+        }
+
         var operationResult = OperationResult.New();
-        var value = ValidateDeffer(pounds, fieldName, displayName, maxValue, maxValueExceededError, operationResult);
+        var value = ValidateDeffer(pounds!.Value, fieldName, displayName, maxValue, maxValueExceededError, operationResult);
 
         operationResult.CheckErrors();
         return value;

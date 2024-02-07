@@ -62,5 +62,5 @@ public interface IDeliveryPhaseEntity
 
     void UnComplete();
 
-    SummaryOfDelivery GetSummaryOfDelivery(MilestoneFramework milestoneFramework);
+    SummaryOfDelivery GetSummaryOfDelivery();
 }

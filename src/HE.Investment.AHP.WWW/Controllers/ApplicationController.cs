@@ -200,6 +200,19 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
             cancellationToken);
     }
 
+    [WorkflowState(ApplicationWorkflowState.Reactivate)]
+    [HttpGet("{applicationId}/reactivate")]
+    [AuthorizeWithCompletedProfile]
+    public async Task<IActionResult> Reactivate(string applicationId, ChangeApplicationStatusModel model, CancellationToken cancellationToken)
+    {
+        return await this.ExecuteCommand<ChangeApplicationStatusModel>(
+            _mediator,
+            new ReactivateApplicationCommand(AhpApplicationId.From(model.ApplicationId)),
+            () => Continue(new { applicationId }),
+            async () => await Task.FromResult<IActionResult>(View("TaskList")),
+            cancellationToken);
+    }
+
     [WorkflowState(ApplicationWorkflowState.Withdraw)]
     [HttpGet("{applicationId}/withdraw")]
     [AuthorizeWithCompletedProfile]

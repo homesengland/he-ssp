@@ -2,7 +2,7 @@ using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
-using HE.Investments.Common.Contract;
+using HE.Investment.AHP.Domain.Programme;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
@@ -25,8 +25,7 @@ public class DeliveryPhaseTranches : IQuestion
         Id = id;
         ApplicationBasicInfo = applicationBasicInfo;
         AmendmentsRequested = amendmentsRequested;
-        GrantApportioned = grantApportioned;
-        MilestoneTranches = milestoneTranches.WithGrantApportioned(GrantApportioned);
+        MilestoneTranches = milestoneTranches.WithGrantApportioned(grantApportioned);
         IsOneTranche = isOneTranche;
     }
 
@@ -43,8 +42,6 @@ public class DeliveryPhaseTranches : IQuestion
     public bool AmendmentsRequested { get; }
 
     public bool IsModified => _modificationTracker.IsModified;
-
-    public decimal GrantApportioned { get; }
 
     public void ProvideAcquisitionTranche(decimal? acquisition)
     {
@@ -64,7 +61,7 @@ public class DeliveryPhaseTranches : IQuestion
         MilestoneTranches = _modificationTracker.Change(MilestoneTranches, MilestoneTranches.WithCompletion(completion));
     }
 
-    public void ClaimMilestones(MilestoneFramework milestoneFramework, YesNoType yesNo)
+    public void ClaimMilestones(YesNoType yesNo)
     {
         CheckIfTranchesCanBeAmended();
 
@@ -73,7 +70,7 @@ public class DeliveryPhaseTranches : IQuestion
             OperationResult.ThrowValidationError("UnderstandClaimingMilestones", "You must understand the claiming of milestones to proceed.");
         }
 
-        var summary = CalculateSummary(milestoneFramework);
+        var summary = CalculateSummary();
         if (!summary.IsSumUpTo)
         {
             OperationResult.ThrowValidationError("Tranche", "Tranche proportions for this delivery phase must add to 100%");
@@ -82,28 +79,28 @@ public class DeliveryPhaseTranches : IQuestion
         ClaimMilestone = true;
     }
 
-    public SummaryOfDelivery CalculateSummary(MilestoneFramework milestoneFramework)
+    public SummaryOfDelivery CalculateSummary()
     {
-        if (GrantApportioned <= 0)
+        if (MilestoneTranches.GrantApportioned <= 0)
         {
             return SummaryOfDelivery.LackOfCalculation;
         }
 
         if (MilestoneTranches.IsAmendRequested)
         {
-            return new SummaryOfDelivery(GrantApportioned, MilestoneTranches.Acquisition, MilestoneTranches.StartOnSite, MilestoneTranches.Completion, false);
+            return new SummaryOfDelivery(MilestoneTranches.GrantApportioned, MilestoneTranches.Acquisition, MilestoneTranches.StartOnSite, MilestoneTranches.Completion, false);
         }
 
         if (IsOneTranche)
         {
-            return new SummaryOfDelivery(GrantApportioned, null, null, GrantApportioned);
+            return new SummaryOfDelivery(MilestoneTranches.GrantApportioned, null, null, MilestoneTranches.GrantApportioned);
         }
 
-        var acquisitionMilestone = (GrantApportioned * milestoneFramework.AcquisitionPercentage).ToWholeNumberRoundFloor();
-        var startOnSiteMilestone = (GrantApportioned * milestoneFramework.StartOnSitePercentage).ToWholeNumberRoundFloor();
-        var completionMilestone = GrantApportioned - acquisitionMilestone - startOnSiteMilestone;
+        var acquisitionMilestone = (MilestoneTranches.GrantApportioned * ApplicationBasicInfo.Programme.MilestoneFramework.AcquisitionPercentage).ToWholeNumberRoundFloor();
+        var startOnSiteMilestone = (MilestoneTranches.GrantApportioned * ApplicationBasicInfo.Programme.MilestoneFramework.StartOnSitePercentage).ToWholeNumberRoundFloor();
+        var completionMilestone = MilestoneTranches.GrantApportioned - acquisitionMilestone - startOnSiteMilestone;
 
-        return new SummaryOfDelivery(GrantApportioned, acquisitionMilestone, startOnSiteMilestone, completionMilestone);
+        return new SummaryOfDelivery(MilestoneTranches.GrantApportioned, acquisitionMilestone, startOnSiteMilestone, completionMilestone);
     }
 
     public bool IsAnswered()
@@ -118,7 +115,8 @@ public class DeliveryPhaseTranches : IQuestion
 
     private void CheckIfTranchesCanBeAmended()
     {
-        if (!AmendmentsRequested || ApplicationBasicInfo.Status.IsNotIn(ApplicationStatus.ReferredBackToApplicant))
+        // if (!AmendmentsRequested || ApplicationBasicInfo.Status.IsNotIn(ApplicationStatus.ReferredBackToApplicant))
+        if (!AmendmentsRequested)
         {
             throw new DomainValidationException("Delivery Phase Tranches cannot be amendment");
         }

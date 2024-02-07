@@ -1,5 +1,6 @@
 using FluentAssertions;
 using HE.Investment.AHP.Contract.Site;
+using HE.Investment.AHP.WWW.Tests.TestDataBuilders;
 using HE.Investments.Common.WWW.Routing;
 
 namespace HE.Investment.AHP.WWW.Tests.Workflows.SiteWorkflowTests;
@@ -22,7 +23,8 @@ public class NextStateTests
     public async Task ShouldReturnNextState_WhenContinueTriggerExecuted(SiteWorkflowState current, SiteWorkflowState expectedNext)
     {
         // given
-        var workflow = SiteWorkflowFactory.BuildWorkflow(current, null, null, null, null, null, null, false);
+        var section106 = new Section106TestDataBuilder().Build();
+        var workflow = SiteWorkflowFactory.BuildWorkflow(current, section106);
 
         // when
         var result = await workflow.NextState(Trigger.Continue);
@@ -80,7 +82,8 @@ public class NextStateTests
     public async Task ShouldReturnNextState_WhenBackTriggerExecuted(SiteWorkflowState current, SiteWorkflowState expectedNext)
     {
         // given
-        var workflow = SiteWorkflowFactory.BuildWorkflow(current, null, null, null, null, null, null, false);
+        var section106 = new Section106TestDataBuilder().Build();
+        var workflow = SiteWorkflowFactory.BuildWorkflow(current, section106);
 
         // when
         var result = await workflow.NextState(Trigger.Back);
@@ -94,7 +97,8 @@ public class NextStateTests
     public async Task ShouldReturnNextState_WhenContinueTriggerExecutedWithSection106AgreementTrue(SiteWorkflowState current, SiteWorkflowState expectedNext)
     {
         // given
-        var workflow = SiteWorkflowFactory.BuildWorkflow(current, true, null, null, null, null, null, false);
+        var section106 = new Section106TestDataBuilder().WithGeneralAgreement(true).Build();
+        var workflow = SiteWorkflowFactory.BuildWorkflow(current, section106);
 
         // when
         var result = await workflow.NextState(Trigger.Continue);
@@ -108,7 +112,8 @@ public class NextStateTests
     public async Task ShouldReturnNextState_WhenContinueTriggerExecutedWithSection106AgreementFalse(SiteWorkflowState current, SiteWorkflowState expectedNext)
     {
         // given
-        var workflow = SiteWorkflowFactory.BuildWorkflow(current, false, null, null, null, null, null, false);
+        var section106 = new Section106TestDataBuilder().WithGeneralAgreement(false).Build();
+        var workflow = SiteWorkflowFactory.BuildWorkflow(current, section106);
 
         // when
         var result = await workflow.NextState(Trigger.Continue);
@@ -122,7 +127,11 @@ public class NextStateTests
     public async Task ShouldReturnNextState_WhenContinueTriggerExecutedWithSection106AffordableHousingTrue(SiteWorkflowState current, SiteWorkflowState expectedNext)
     {
         // given
-        var workflow = SiteWorkflowFactory.BuildWorkflow(current, true, true, null, null, null, null, false);
+        var section106 = new Section106TestDataBuilder()
+            .WithGeneralAgreement(true)
+            .WithAffordableHousing(true)
+            .Build();
+        var workflow = SiteWorkflowFactory.BuildWorkflow(current, section106);
 
         // when
         var result = await workflow.NextState(Trigger.Continue);
@@ -136,7 +145,11 @@ public class NextStateTests
     public async Task ShouldReturnNextState_WhenContinueTriggerExecutedWithSection106AffordableHousingFalse(SiteWorkflowState current, SiteWorkflowState expectedNext)
     {
         // given
-        var workflow = SiteWorkflowFactory.BuildWorkflow(current, true, false, null, null, null, null, false);
+        var section106 = new Section106TestDataBuilder()
+           .WithGeneralAgreement(true)
+           .WithAffordableHousing(false)
+           .Build();
+        var workflow = SiteWorkflowFactory.BuildWorkflow(current, section106);
 
         // when
         var result = await workflow.NextState(Trigger.Continue);
@@ -150,7 +163,12 @@ public class NextStateTests
     public async Task ShouldReturnNextState_WhenContinueTriggerExecutedWithSection106OnlyAffordableHousingTrue(SiteWorkflowState current, SiteWorkflowState expectedNext)
     {
         // given
-        var workflow = SiteWorkflowFactory.BuildWorkflow(current, true, true, true, null, null, null, false);
+        var section106 = new Section106TestDataBuilder()
+           .WithGeneralAgreement(true)
+           .WithAffordableHousing(true)
+           .WithOnlyAffordableHousing(true)
+           .Build();
+        var workflow = SiteWorkflowFactory.BuildWorkflow(current, section106);
 
         // when
         var result = await workflow.NextState(Trigger.Continue);
@@ -164,7 +182,12 @@ public class NextStateTests
     public async Task ShouldReturnNextState_WhenContinueTriggerExecutedWithSection106OnlyAffordableHousingFalse(SiteWorkflowState current, SiteWorkflowState expectedNext)
     {
         // given
-        var workflow = SiteWorkflowFactory.BuildWorkflow(current, true, true, false, null, null, null, false);
+        var section106 = new Section106TestDataBuilder()
+           .WithGeneralAgreement(true)
+           .WithAffordableHousing(true)
+           .WithOnlyAffordableHousing(false)
+           .Build();
+        var workflow = SiteWorkflowFactory.BuildWorkflow(current, section106);
 
         // when
         var result = await workflow.NextState(Trigger.Continue);
@@ -178,7 +201,13 @@ public class NextStateTests
     public async Task ShouldReturnNextState_WhenContinueTriggerExecutedWithSection106AdditionalAffordableHousing(SiteWorkflowState current, SiteWorkflowState expectedNext)
     {
         // given
-        var workflow = SiteWorkflowFactory.BuildWorkflow(current, true, true, false, true, null, null, false);
+        var section106 = new Section106TestDataBuilder()
+           .WithGeneralAgreement(true)
+           .WithAffordableHousing(true)
+           .WithOnlyAffordableHousing(false)
+           .WithAdditionalAffordableHousing(true)
+           .Build();
+        var workflow = SiteWorkflowFactory.BuildWorkflow(current, section106);
 
         // when
         var result = await workflow.NextState(Trigger.Continue);
@@ -192,7 +221,14 @@ public class NextStateTests
     public async Task ShouldReturnNextState_WhenContinueTriggerExecutedWithSection106CapitalFundingEligibilityTrue(SiteWorkflowState current, SiteWorkflowState expectedNext)
     {
         // given
-        var workflow = SiteWorkflowFactory.BuildWorkflow(current, true, true, false, true, true, null, true);
+        var section106 = new Section106TestDataBuilder()
+           .WithGeneralAgreement(true)
+           .WithAffordableHousing(true)
+           .WithOnlyAffordableHousing(false)
+           .WithAdditionalAffordableHousing(true)
+           .WithCapitalFundingEligibility(true)
+           .Build();
+        var workflow = SiteWorkflowFactory.BuildWorkflow(current, section106);
 
         // when
         var result = await workflow.NextState(Trigger.Continue);
@@ -207,7 +243,14 @@ public class NextStateTests
     public async Task ShouldReturnNextState_WhenContinueTriggerExecutedWithSection106CapitalFundingEligibilityFalse(SiteWorkflowState current, SiteWorkflowState expectedNext, bool additionalAffordableHousing)
     {
         // given
-        var workflow = SiteWorkflowFactory.BuildWorkflow(current, true, true, false, additionalAffordableHousing, false, null, false);
+        var section106 = new Section106TestDataBuilder()
+           .WithGeneralAgreement(true)
+           .WithAffordableHousing(true)
+           .WithOnlyAffordableHousing(!additionalAffordableHousing)
+           .WithAdditionalAffordableHousing(additionalAffordableHousing)
+           .WithCapitalFundingEligibility(false)
+           .Build();
+        var workflow = SiteWorkflowFactory.BuildWorkflow(current, section106);
 
         // when
         var result = await workflow.NextState(Trigger.Continue);
@@ -223,7 +266,14 @@ public class NextStateTests
     public async Task ShouldReturnNextState_WhenBackTriggerExecutedWithSection106CapitalFundingEligibility(SiteWorkflowState current, SiteWorkflowState expectedNext, bool? onlyAffordableHousing)
     {
         // given
-        var workflow = SiteWorkflowFactory.BuildWorkflow(current, true, true, onlyAffordableHousing, false, false, null, false);
+        var section106 = new Section106TestDataBuilder()
+           .WithGeneralAgreement(true)
+           .WithAffordableHousing(true)
+           .WithOnlyAffordableHousing(onlyAffordableHousing)
+           .WithAdditionalAffordableHousing(false)
+           .WithCapitalFundingEligibility(false)
+           .Build();
+        var workflow = SiteWorkflowFactory.BuildWorkflow(current, section106);
 
         // when
         var result = await workflow.NextState(Trigger.Back);
@@ -237,7 +287,14 @@ public class NextStateTests
     public async Task ShouldReturnNextState_WhenBackTriggerExecutedWithSection106LocalAuthorityConfirmation(SiteWorkflowState current, SiteWorkflowState expectedNext)
     {
         // given
-        var workflow = SiteWorkflowFactory.BuildWorkflow(current, true, true, true, false, false, null, false);
+        var section106 = new Section106TestDataBuilder()
+           .WithGeneralAgreement(true)
+           .WithAffordableHousing(true)
+           .WithOnlyAffordableHousing(true)
+           .WithAdditionalAffordableHousing(false)
+           .WithCapitalFundingEligibility(false)
+           .Build();
+        var workflow = SiteWorkflowFactory.BuildWorkflow(current, section106);
 
         // when
         var result = await workflow.NextState(Trigger.Continue);
@@ -250,7 +307,14 @@ public class NextStateTests
     public async Task ShouldReturnSection106CapitalFundingEligibility_WhenBackTriggerExecutedWithSection106AdditionalAffordableHousingSetToFalse()
     {
         // given
-        var workflow = SiteWorkflowFactory.BuildWorkflow(SiteWorkflowState.LocalAuthoritySearch, null, null, null, false, null, null, false);
+        var section106 = new Section106TestDataBuilder()
+           .WithGeneralAgreement(true)
+           .WithAffordableHousing(false)
+           .WithOnlyAffordableHousing(true)
+           .WithAdditionalAffordableHousing(false)
+           .WithCapitalFundingEligibility(false)
+           .Build();
+        var workflow = SiteWorkflowFactory.BuildWorkflow(SiteWorkflowState.LocalAuthoritySearch, section106);
 
         // when
         var result = await workflow.NextState(Trigger.Back);
@@ -263,7 +327,11 @@ public class NextStateTests
     public async Task ShouldReturnSection106GeneralAgreement_WhenBackTriggerExecutedWithSection106GeneralAgreementSetToFalse()
     {
         // given
-        var workflow = SiteWorkflowFactory.BuildWorkflow(SiteWorkflowState.LocalAuthoritySearch, false, null, null, false, null, null, false);
+        var section106 = new Section106TestDataBuilder()
+           .WithGeneralAgreement(false)
+           .WithCapitalFundingEligibility(false)
+           .Build();
+        var workflow = SiteWorkflowFactory.BuildWorkflow(SiteWorkflowState.LocalAuthoritySearch, section106);
 
         // when
         var result = await workflow.NextState(Trigger.Back);
@@ -276,7 +344,14 @@ public class NextStateTests
     public async Task ShouldReturnSection106LocalAuthorityConfirmation_WhenBackTriggerExecutedWithSection106AdditionalAffordableHousingSetToTrue()
     {
         // given
-        var workflow = SiteWorkflowFactory.BuildWorkflow(SiteWorkflowState.LocalAuthoritySearch, true, true, false, true, null, null, false);
+        var section106 = new Section106TestDataBuilder()
+           .WithGeneralAgreement(true)
+           .WithAffordableHousing(true)
+           .WithOnlyAffordableHousing(false)
+           .WithAdditionalAffordableHousing(true)
+           .WithCapitalFundingEligibility(false)
+           .Build();
+        var workflow = SiteWorkflowFactory.BuildWorkflow(SiteWorkflowState.LocalAuthoritySearch, section106);
 
         // when
         var result = await workflow.NextState(Trigger.Back);
@@ -289,7 +364,11 @@ public class NextStateTests
     public async Task ShouldReturnLocalAuthoritySearch_WhenBackTriggerExecutedAndSiteDoesNotHaveAnyLocalAuthoritySelected()
     {
         // given
-        var workflow = SiteWorkflowFactory.BuildWorkflow(SiteWorkflowState.PlanningStatus, true, true, false, true, null, null, false);
+        var section106 = new Section106TestDataBuilder()
+           .WithGeneralAgreement(false)
+           .WithCapitalFundingEligibility(false)
+           .Build();
+        var workflow = SiteWorkflowFactory.BuildWorkflow(SiteWorkflowState.PlanningStatus, section106);
 
         // when
         var result = await workflow.NextState(Trigger.Back);
@@ -303,7 +382,11 @@ public class NextStateTests
     {
         // given
         var localAuthority = new LocalAuthority() { Id = "local authority id", Name = "local authority name" };
-        var workflow = SiteWorkflowFactory.BuildWorkflow(SiteWorkflowState.PlanningStatus, true, true, false, true, null, null, false, localAuthority);
+        var section106 = new Section106TestDataBuilder()
+           .WithGeneralAgreement(false)
+           .WithCapitalFundingEligibility(false)
+           .Build();
+        var workflow = SiteWorkflowFactory.BuildWorkflow(SiteWorkflowState.PlanningStatus, section106, localAuthority);
 
         // when
         var result = await workflow.NextState(Trigger.Back);

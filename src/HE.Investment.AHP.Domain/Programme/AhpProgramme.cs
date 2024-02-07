@@ -4,7 +4,7 @@ using HE.Investments.Common.Contract.Exceptions;
 
 namespace HE.Investment.AHP.Domain.Programme;
 
-public class AhpProgramme
+public record AhpProgramme
 {
     public AhpProgramme(DateTime? startAt, DateTime? endAt, MilestoneFramework milestoneFramework)
     {

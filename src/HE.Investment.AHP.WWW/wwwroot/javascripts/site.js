@@ -344,6 +344,7 @@
         components.forEach(item => new Module(item).init())
     }
 
-    initModule(window.GOVUKFrontend.CharacterCount, "govuk-character-count");
+  initModule(window.GOVUKFrontend.CharacterCount, "govuk-character-count");
+  initModule(window.GOVUKFrontend.Radios, "govuk-radios");
 
 })();

@@ -1,11 +1,11 @@
 @using HE.Investments.Common.WWW.Extensions
 @using HE.Investments.Common.WWW.Components.InputHeader
 @using HE.Investments.Common.WWW.Components.ErrorMessage
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
-@model (string fieldName, string header, string title, HE.Investments.Common.WWW.Components.DynamicComponentViewModel descriptionComponent, string hint, string value, string inputCssClass, int rows, int maxLength, bool isDisplayed)
+@using HE.Investments.Common.WWW.Components
+
+@model (string fieldName, string title, InputTitleType? titleType, DynamicComponentViewModel descriptionComponent, string hint, string value, string inputCssClass, int rows, int maxLength, bool isDisplayed)
 
 @{
-    #nullable enable
     var (hasError, errors) = ViewData.ModelState.GetErrors(Model.fieldName);
     var groupClass = hasError ? "govuk-form-group--error" : string.Empty;
     var inputClass = $"govuk-textarea govuk-js-character-count {Model.inputCssClass}";
@@ -17,8 +17,8 @@
         <gds-div-form-group class="@groupClass">
             <vc:input-header
                 field-name="@Model.fieldName"
-                header="@Model.header"
                 title="@Model.title"
+                title-type="@Model.titleType"
                 hint="@Model.hint"/>
 
             @* ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract *@

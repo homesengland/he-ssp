@@ -1,6 +1,5 @@
 @using HE.Investment.AHP.WWW.Routing
 @using HE.Investment.AHP.WWW.Config
-@using HE.Investments.Common.WWW.Components.FormHeader
 @using HE.Investments.Common.WWW.Components.HelpPanel
 @using Microsoft.Extensions.Options
 @using HE.Investment.AHP.WWW.Views.Application
@@ -23,7 +22,7 @@
     <partial name="~/Partials/_Notification.cshtml"/>
 </div>
 <div class="govuk-grid-column-full">
-    <vc:form-header caption="@Model.SiteName" title="@Model.Name"/>
+    <vc:page-header caption="@Model.SiteName" title="@Model.Name"/>
 
     <vc:application-task-list-header
         incomplete-sections-count="@incompleteSectionsCount"

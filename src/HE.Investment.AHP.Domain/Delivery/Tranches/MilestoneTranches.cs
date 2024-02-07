@@ -9,17 +9,17 @@ public class MilestoneTranches : ValueObject, IQuestion
 {
     private const string UiFieldName = "Value";
 
-    private MilestoneTranches(decimal? acquisition, decimal? startOnSite, decimal? completion, decimal? grantApportioned)
+    private MilestoneTranches(decimal? acquisition, decimal? startOnSite, decimal? completion, decimal grantApportioned)
     {
-        GrantApportioned = Validate(grantApportioned, "Grant apportioned");
-        MinimalCompletionTranche = GrantApportioned.GetValueOrDefault() * 0.05m;
-        MaxTranche = GrantApportioned.GetValueOrDefault() - MinimalCompletionTranche;
+        GrantApportioned = grantApportioned;
+        MinimalCompletionTranche = GrantApportioned * 0.05m;
+        MaxTranche = GrantApportioned - MinimalCompletionTranche;
         Acquisition = Validate(acquisition, "Acquisition tranche");
         StartOnSite = Validate(startOnSite, "Start on site tranche");
         Completion = Validate(completion, "Completion tranche");
     }
 
-    public static MilestoneTranches NotProvided => new(null, null, null, null);
+    public static MilestoneTranches NotProvided => new(null, null, null, 0);
 
     public decimal? Acquisition { get; }
 
@@ -27,22 +27,24 @@ public class MilestoneTranches : ValueObject, IQuestion
 
     public decimal? Completion { get; }
 
-    public decimal? GrantApportioned { get; }
+    public decimal GrantApportioned { get; }
 
     public bool IsAmendRequested => Acquisition.IsProvided() || StartOnSite.IsProvided() || Completion.IsProvided();
+
+    public bool IsNotProvided => Acquisition.IsNotProvided() && StartOnSite.IsNotProvided() && Completion.IsNotProvided();
 
     public decimal MinimalCompletionTranche { get; }
 
     public decimal MaxTranche { get; }
 
-    public MilestoneTranches WithGrantApportioned(decimal? grantApportioned)
+    public MilestoneTranches WithGrantApportioned(decimal grantApportioned)
     {
         return new MilestoneTranches(Acquisition, StartOnSite, Completion, grantApportioned);
     }
 
     public MilestoneTranches WithAcquisition(decimal? acquisition)
     {
-        if (acquisition > MaxTranche)
+        if (Validate(acquisition, "Acquisition tranche", true) > MaxTranche)
         {
             OperationResult.ThrowValidationError(UiFieldName, "Acquisition tranche must be at max 95% or less of the grant apportioned");
         }
@@ -52,7 +54,7 @@ public class MilestoneTranches : ValueObject, IQuestion
 
     public MilestoneTranches WithCompletion(decimal? completion)
     {
-        if (completion < MinimalCompletionTranche)
+        if (Validate(completion, "Completion tranche", true) < MinimalCompletionTranche)
         {
             OperationResult.ThrowValidationError(UiFieldName, "Completion tranche must be at least 5% or more of the grant apportioned");
         }
@@ -62,7 +64,7 @@ public class MilestoneTranches : ValueObject, IQuestion
 
     public MilestoneTranches WithStartOnSite(decimal? startOnSite)
     {
-        if (startOnSite > MaxTranche)
+        if (Validate(startOnSite, "Start on site tranche", true) > MaxTranche)
         {
             OperationResult.ThrowValidationError(UiFieldName, "Start on Site tranche must be at max 95% or less of the grant apportioned");
         }
@@ -79,8 +81,8 @@ public class MilestoneTranches : ValueObject, IQuestion
         yield return Completion;
     }
 
-    private static decimal? Validate(decimal? value, string displayName)
+    private static decimal? Validate(decimal? value, string displayName, bool validateNull = false)
     {
-        return value is null ? null : PoundsPencesValidator.Validate(value.Value, UiFieldName, displayName);
+        return value is null && !validateNull ? null : PoundsPencesValidator.Validate(value, UiFieldName, displayName);
     }
 }

@@ -3,6 +3,7 @@ using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Domain.Site.ValueObjects;
 using HE.Investment.AHP.Domain.Tests.Site.TestDataBuilders;
 using HE.Investments.Common.Contract.Exceptions;
+using Section106 = HE.Investment.AHP.Domain.Site.ValueObjects.Section106;
 
 namespace HE.Investment.AHP.Domain.Tests.Site.ValueObjects;
 

@@ -25,6 +25,12 @@ public record ApplicationSectionsModel(
         return statusesAllowedForPutOnHold.Contains(Status);
     }
 
+    public bool CanReactivate()
+    {
+        var statusesAllowedForReactivate = ApplicationStatusDivision.GetAllStatusesForReactivate();
+        return statusesAllowedForReactivate.Contains(Status);
+    }
+
     public bool CanBeWithdrawn()
     {
         var statusesAllowedForWithdraw = ApplicationStatusDivision.GetAllStatusesAllowedForWithdraw();

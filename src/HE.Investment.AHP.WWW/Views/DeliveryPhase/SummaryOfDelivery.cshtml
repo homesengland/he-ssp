@@ -6,13 +6,9 @@
 @using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.WWW.Models.Delivery
 @using HE.Investments.Common.Messages
-@using HE.Investments.Common.WWW.Components.ErrorMessage
-@using HE.Investments.Common.WWW.Components.FormHeader
-@using HE.Investments.Common.WWW.Components.RadioYesNo
 @using HE.Investments.Common.WWW.Extensions
 @using HE.Investments.Common.WWW.Helpers
 @using Microsoft.AspNetCore.Mvc.TagHelpers
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Headings
 @model DeliveryPhaseDetails;
 @{
     var applicationId = this.GetApplicationIdFromRoute();
@@ -29,7 +25,7 @@
     <vc:ahp-workflow-back-button current-page="@DeliveryPhaseWorkflowState.SummaryOfDelivery"/>
 
     <form asp-controller="DeliveryPhase" asp-action="SummaryOfDelivery" asp-method="post" asp-route-redirect="@Context.Request.Query["redirect"]" novalidate>
-        <vc:form-header caption="@($"{Model.ApplicationName} - {Model.Name}")" title="@title"/>
+        <vc:page-header caption="@($"{Model.ApplicationName} - {Model.Name}")" title="@title"/>
 
         @Html.HiddenFor(x => x.Tranches!.IsAmendable)
         <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0">
@@ -127,8 +123,6 @@
                                 isAmendable))
                         </tbody>
                     </table>
-                    <vc:error-message field-name="Tranche"/>
-
                 </gds-field-set>
             </gds-div-form-group>
         </div>

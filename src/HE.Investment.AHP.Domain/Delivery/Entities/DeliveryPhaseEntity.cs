@@ -5,6 +5,7 @@ using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.Policies;
 using HE.Investment.AHP.Domain.Delivery.Tranches;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
+using HE.Investment.AHP.Domain.Programme;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
@@ -56,7 +57,7 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
             Application,
             milestoneTranches,
             CalculateGrantApportioned(schemaFunding),
-            false,
+            true,
             IsOnlyCompletionMilestone);
     }
 
@@ -170,9 +171,9 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
         Status = _modificationTracker.Change(Status, SectionStatus.InProgress);
     }
 
-    public SummaryOfDelivery GetSummaryOfDelivery(MilestoneFramework milestoneFramework)
+    public SummaryOfDelivery GetSummaryOfDelivery()
     {
-        return Tranches.CalculateSummary(milestoneFramework);
+        return Tranches.CalculateSummary();
     }
 
     public void ProvideBuildActivity(BuildActivity buildActivity)

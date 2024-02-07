@@ -23,10 +23,11 @@ public class GetSummaryOfDeliveryTests
             .WithHomesToBeDelivered(10)
             .WithHomesToBeDelivered(20)
             .WithSchemeFunding((int)requiredFunding, 50)
+            .WithMilestoneFramework(new MilestoneFramework(0.35m, 0.25m, 0.4m))
             .Build();
 
         // when
-        var summary = deliveryPhase.GetSummaryOfDelivery(new MilestoneFramework(0.35m, 0.25m, 0.4m));
+        var summary = deliveryPhase.GetSummaryOfDelivery();
 
         // then
         summary.GrantApportioned.Should().Be(expectedGrantApportioned);
@@ -44,10 +45,11 @@ public class GetSummaryOfDeliveryTests
             .WithUnregisteredBody()
             .WithHomesToBeDelivered(10)
             .WithSchemeFunding(requestedFunding, 10)
+            .WithMilestoneFramework(new MilestoneFramework(0.35m, 0.25m, 0.4m))
             .Build();
 
         // when
-        var summary = deliveryPhase.GetSummaryOfDelivery(new MilestoneFramework(0.35m, 0.25m, 0.4m));
+        var summary = deliveryPhase.GetSummaryOfDelivery();
 
         // then
         summary.GrantApportioned.Should().Be(requestedFunding);
@@ -67,10 +69,11 @@ public class GetSummaryOfDeliveryTests
             .WithRehabBuildActivity(buildActivityType)
             .WithHomesToBeDelivered(10)
             .WithSchemeFunding(requestedFunding, 10)
+            .WithMilestoneFramework(new MilestoneFramework(0.35m, 0.25m, 0.4m))
             .Build();
 
         // when
-        var summary = deliveryPhase.GetSummaryOfDelivery(new MilestoneFramework(0.35m, 0.25m, 0.4m));
+        var summary = deliveryPhase.GetSummaryOfDelivery();
 
         // then
         summary.GrantApportioned.Should().Be(requestedFunding);
@@ -83,10 +86,14 @@ public class GetSummaryOfDeliveryTests
     public void ShouldNotCalculateValue_WhenNoHomesToBeDelivered()
     {
         // given
-        var deliveryPhase = new DeliveryPhaseEntityBuilder().WithoutHomesToDeliver().WithSchemeFunding(1000, 50).Build();
+        var deliveryPhase = new DeliveryPhaseEntityBuilder()
+            .WithoutHomesToDeliver()
+            .WithSchemeFunding(1000, 50)
+            .WithMilestoneFramework(new MilestoneFramework(0.35m, 0.25m, 0.4m))
+            .Build();
 
         // when
-        var summary = deliveryPhase.GetSummaryOfDelivery(new MilestoneFramework(0.35m, 0.25m, 0.4m));
+        var summary = deliveryPhase.GetSummaryOfDelivery();
 
         // then
         summary.GrantApportioned.Should().BeNull();
@@ -99,10 +106,13 @@ public class GetSummaryOfDeliveryTests
     public void ShouldNotCalculateValue_WhenNoRequiredFunding()
     {
         // given
-        var deliveryPhase = new DeliveryPhaseEntityBuilder().WithSchemeFunding(null, 10).Build();
+        var deliveryPhase = new DeliveryPhaseEntityBuilder()
+            .WithSchemeFunding(null, 10)
+            .WithMilestoneFramework(new MilestoneFramework(0.35m, 0.25m, 0.4m))
+            .Build();
 
         // when
-        var summary = deliveryPhase.GetSummaryOfDelivery(new MilestoneFramework(0.35m, 0.25m, 0.4m));
+        var summary = deliveryPhase.GetSummaryOfDelivery();
 
         // then
         summary.GrantApportioned.Should().BeNull();
@@ -115,10 +125,13 @@ public class GetSummaryOfDeliveryTests
     public void ShouldNotCalculateValue_WhenNoTotalHousesToDeliver()
     {
         // given
-        var deliveryPhase = new DeliveryPhaseEntityBuilder().WithSchemeFunding(1000, 0).Build();
+        var deliveryPhase = new DeliveryPhaseEntityBuilder()
+            .WithSchemeFunding(1000, 0)
+            .WithMilestoneFramework(new MilestoneFramework(0.35m, 0.25m, 0.4m))
+            .Build();
 
         // when
-        var summary = deliveryPhase.GetSummaryOfDelivery(new MilestoneFramework(0.35m, 0.25m, 0.4m));
+        var summary = deliveryPhase.GetSummaryOfDelivery();
 
         // then
         summary.GrantApportioned.Should().BeNull();

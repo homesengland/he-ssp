@@ -88,6 +88,14 @@ public static class HtmlDocumentExtensions
         return header!.InnerHtml.Trim();
     }
 
+    public static string GetStatusTagByTestId(this IHtmlDocument htmlDocument, string testId)
+    {
+        var applicationStatus = htmlDocument.GetElementByTestId(testId);
+
+        applicationStatus.Should().NotBeNull("Application status tag does not exist");
+        return applicationStatus.InnerHtml.Trim();
+    }
+
     public static string GetLabel(this IHtmlDocument htmlDocument)
     {
         var label = htmlDocument.GetElementsByClassName(CssConstants.GovUkLabel).FirstOrDefault();
@@ -111,7 +119,7 @@ public static class HtmlDocumentExtensions
             .GetElementsByClassName(CssConstants.GovUkFormGroupError)
             .SelectMany(e => e.GetElementsByClassName(CssConstants.GovUkErrorMessage));
 
-        var fieldValidationErrors = fieldValidationElements!
+        var fieldValidationErrors = fieldValidationElements
             .Select(x => x.TextContent.Replace("Error:", string.Empty).Trim())
             .Where(x => !string.IsNullOrEmpty(x))
             .ToArray();

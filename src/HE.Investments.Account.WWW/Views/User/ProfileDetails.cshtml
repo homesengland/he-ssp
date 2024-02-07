@@ -1,4 +1,3 @@
-@using HE.Investments.Common.WWW.Components.FormHeader
 @using HE.Investments.Common.WWW.Components.TextInput
 @using HE.Investments.Common.WWW.Components.FormButton
 @model HE.Investments.Account.WWW.Models.User.UserProfileDetailsModel;
@@ -15,7 +14,7 @@
 
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
-    <vc:form-header
+    <vc:page-header
         title="Complete your details"
         hint="Register as an individual, we will ask you for your organisation details later."
         additional-css-class="@marginClass"/>

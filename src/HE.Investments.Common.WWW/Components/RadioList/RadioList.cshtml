@@ -2,8 +2,12 @@
 @using HE.Investments.Common.WWW.Extensions
 @using HE.Investments.Common.WWW.Components.ErrorMessage
 @using HE.Investments.Common.WWW.Components.InputListHeader
+@using HE.Investments.Common.WWW.Components.RadioListContent
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Fieldset
+@using HE.Investments.Common.WWW.Components;
 
-@model (string fieldName, string header, string title, string hint, IEnumerable<ExtendedSelectListItem> availableOptions, string value)
+@model (string fieldName, DynamicComponentViewModel headerComponent, string header, string title, string hint, IEnumerable<ExtendedSelectListItem> availableOptions, string value)
 
 @{
     var (hasError, radioErrors) = ViewData.ModelState.GetErrors(Model.fieldName);
@@ -12,7 +16,7 @@
 
 <gds-div-form-group class="@groupClass">
     <gds-field-set>
-        <vc:input-list-header header="@Model.header" title="@Model.title" hint="@Model.hint"/>
+        <vc:input-list-header header-component="@Model.headerComponent" header="@Model.header" title="@Model.title" hint="@Model.hint"/>
 
         <vc:error-message field-name="@Model.fieldName"/>
 

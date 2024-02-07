@@ -8,13 +8,10 @@ public class InputHeader : ViewComponent
 {
     public IViewComponentResult Invoke(
         string fieldName,
-        string? header = null,
         string? title = null,
+        InputTitleType? titleType = null,
         string? hint = null)
     {
-        // We may need to display field title as a page heading when there is only one input on the page.
-        // Is important to display vertical red line next to header in case of error.
-        // Please use header param when you need to display field title as a page header otherwise use title param.
-        return View("InputHeader", (fieldName, header, title, hint));
+        return View("InputHeader", (fieldName, title, titleType ?? InputTitleType.InputTitle, hint));
     }
 }

@@ -1,6 +1,5 @@
-@using HE.Investment.AHP.WWW.Views.Site
+@using HE.Investment.AHP.WWW.Views.Site.Const
 @using HE.Investments.Common.Contract.Pagination
-@using HE.Investments.Common.WWW.Components.FormHeader
 @using HE.Investments.Common.WWW.Components.SelectList
 @using SelectList = Microsoft.AspNetCore.Mvc.Rendering.SelectList
 @model HE.Investment.AHP.Contract.Site.SitesListModel
@@ -19,7 +18,7 @@
  <div class="govuk-grid-column-full">
     <vc:back-link-with-callback url="@Url.Action("Start", "Application")"/>
 
-    <vc:form-header title="@SitePageTitles.SiteSelect"/>
+    <vc:page-header title="@SitePageTitles.SiteSelect"/>
 
     <gds-p>Select a site to start your application or create a new site.</gds-p>
 

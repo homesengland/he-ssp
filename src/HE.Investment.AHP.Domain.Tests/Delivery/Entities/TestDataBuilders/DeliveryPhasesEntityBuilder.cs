@@ -3,6 +3,7 @@ using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
+using HE.Investment.AHP.Domain.Programme;
 using HE.Investments.Common.Contract;
 
 namespace HE.Investment.AHP.Domain.Tests.Delivery.Entities.TestDataBuilders;
@@ -40,7 +41,8 @@ public class DeliveryPhasesEntityBuilder
                 new AhpApplicationId("test-app-42123"),
                 new ApplicationName("Test Application"),
                 Tenure.AffordableRent,
-                ApplicationStatus.Draft),
+                ApplicationStatus.Draft,
+                new AhpProgramme(null, null, MilestoneFramework.Default)),
             _deliveryPhases,
             _homesToDelivers,
             _status);

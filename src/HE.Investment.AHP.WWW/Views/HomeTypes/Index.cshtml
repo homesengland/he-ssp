@@ -1,6 +1,5 @@
 @using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.WWW.Views.HomeTypes.Const
-@using HE.Investments.Common.WWW.Components.FormHeader
 @model HE.Investment.AHP.WWW.Models.HomeTypes.HomeTypeModelBase;
 
 @{
@@ -10,7 +9,7 @@
 
 <div class="govuk-grid-column-full">
     <gds-back-link href="@Url.Action("TaskList", "Application", new { applicationId })" class="govuk-!-margin-bottom-8"></gds-back-link>
-    <vc:form-header title="@HomeTypesPageTitles.LandingPage" caption="@Model.ApplicationName" />
+    <vc:page-header title="@HomeTypesPageTitles.LandingPage" caption="@Model.ApplicationName" />
 
     <gds-p>
         In this section, you’ll need to provide information about the homes on this application. This includes:

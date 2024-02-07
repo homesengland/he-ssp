@@ -7,6 +7,7 @@ using HE.Investment.AHP.Domain.Application.Repositories.Interfaces;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Data;
+using HE.Investment.AHP.Domain.Programme;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.Contract.Pagination;
@@ -22,12 +23,15 @@ public class ApplicationRepository : IApplicationRepository
 {
     private readonly IApplicationCrmContext _applicationCrmContext;
 
+    private readonly IAhpProgrammeRepository _programmeRepository;
+
     private readonly IEventDispatcher _eventDispatcher;
 
-    public ApplicationRepository(IApplicationCrmContext applicationCrmContext, IEventDispatcher eventDispatcher)
+    public ApplicationRepository(IApplicationCrmContext applicationCrmContext, IEventDispatcher eventDispatcher, IAhpProgrammeRepository programmeRepository)
     {
         _applicationCrmContext = applicationCrmContext;
         _eventDispatcher = eventDispatcher;
+        _programmeRepository = programmeRepository;
     }
 
     public async Task<ApplicationEntity> GetById(AhpApplicationId id, UserAccount userAccount, CancellationToken cancellationToken)
@@ -55,7 +59,12 @@ public class ApplicationRepository : IApplicationRepository
     public async Task<ApplicationBasicInfo> GetApplicationBasicInfo(AhpApplicationId id, UserAccount userAccount, CancellationToken cancellationToken)
     {
         var application = await GetById(id, userAccount, cancellationToken);
-        return new ApplicationBasicInfo(application.Id, application.Name, application.Tenure?.Value ?? Tenure.Undefined, application.Status);
+        return new ApplicationBasicInfo(
+            application.Id,
+            application.Name,
+            application.Tenure?.Value ?? Tenure.Undefined,
+            application.Status,
+            await _programmeRepository.GetProgramme(id, cancellationToken));
     }
 
     public async Task<PaginationResult<ApplicationWithFundingDetails>> GetApplicationsWithFundingDetails(

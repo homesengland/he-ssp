@@ -65,7 +65,7 @@ public class GetDeliveryPhaseDetailsQueryHandler : IRequestHandler<GetDeliveryPh
 
     private SummaryOfDelivery GetSummaryOfDelivery(IDeliveryPhaseEntity deliveryPhase)
     {
-        var result = deliveryPhase.GetSummaryOfDelivery(MilestoneFramework.Default);
+        var result = deliveryPhase.GetSummaryOfDelivery();
 
         return new SummaryOfDelivery(
             result.GrantApportioned,

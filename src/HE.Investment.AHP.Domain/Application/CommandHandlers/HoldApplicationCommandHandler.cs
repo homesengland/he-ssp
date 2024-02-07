@@ -3,7 +3,6 @@ using HE.Investment.AHP.Domain.Application.Repositories.Interfaces;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
-using HE.Investments.Common.Extensions;
 using MediatR;
 
 namespace HE.Investment.AHP.Domain.Application.CommandHandlers;
@@ -20,9 +19,7 @@ public class HoldApplicationCommandHandler : ChangeApplicationStatusBaseCommandH
         return await Perform(
             async (applicationRepository, application, organisationId) =>
             {
-                var holdReason = request.HoldReason.IsProvided()
-                    ? new HoldReason(request.HoldReason!)
-                    : null;
+                var holdReason = new HoldReason(request.HoldReason);
 
                 await application.Hold(applicationRepository, holdReason, organisationId, cancellationToken);
                 await applicationRepository.DispatchEvents(application, cancellationToken);

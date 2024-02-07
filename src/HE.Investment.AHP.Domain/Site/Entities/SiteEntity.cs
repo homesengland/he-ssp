@@ -1,14 +1,17 @@
 extern alias Org;
 
 using HE.Investment.AHP.Contract.Site;
+using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investment.AHP.Domain.Site.ValueObjects;
 using HE.Investment.AHP.Domain.Site.ValueObjects.Factories;
 using HE.Investment.AHP.Domain.Site.ValueObjects.Planning;
+using HE.Investment.AHP.Domain.Site.ValueObjects.StrategicSite;
 using HE.Investment.AHP.Domain.Site.ValueObjects.TenderingStatus;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using LocalAuthority = Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
+using Section106 = HE.Investment.AHP.Domain.Site.ValueObjects.Section106;
 
 namespace HE.Investment.AHP.Domain.Site.Entities;
 
@@ -23,7 +26,9 @@ public class SiteEntity : DomainEntity, IQuestion
         PlanningDetails planningDetails,
         NationalDesignGuidePriorities nationalDesignGuidePriorities,
         TenderingStatusDetails tenderingStatusDetails,
-        LocalAuthority? localAuthority = null)
+        StrategicSiteDetails strategicSiteDetails,
+        LocalAuthority? localAuthority = null,
+        BuildingForHealthyLifeType buildingForHealthyLife = BuildingForHealthyLifeType.Undefined)
     {
         Id = id;
         Name = name;
@@ -32,7 +37,9 @@ public class SiteEntity : DomainEntity, IQuestion
         LocalAuthority = localAuthority;
         PlanningDetails = planningDetails;
         NationalDesignGuidePriorities = nationalDesignGuidePriorities;
+        BuildingForHealthyLife = buildingForHealthyLife;
         TenderingStatusDetails = tenderingStatusDetails;
+        StrategicSiteDetails = strategicSiteDetails;
     }
 
     public SiteEntity()
@@ -44,6 +51,7 @@ public class SiteEntity : DomainEntity, IQuestion
         PlanningDetails = PlanningDetailsFactory.CreateEmpty();
         NationalDesignGuidePriorities = new NationalDesignGuidePriorities();
         TenderingStatusDetails = new TenderingStatusDetails();
+        StrategicSiteDetails = new StrategicSiteDetails();
     }
 
     public SiteId Id { get; set; }
@@ -60,7 +68,11 @@ public class SiteEntity : DomainEntity, IQuestion
 
     public NationalDesignGuidePriorities NationalDesignGuidePriorities { get; private set; }
 
-    public TenderingStatusDetails TenderingStatusDetails { get; set; }
+    public BuildingForHealthyLifeType BuildingForHealthyLife { get; private set; }
+
+    public TenderingStatusDetails TenderingStatusDetails { get; private set; }
+
+    public StrategicSiteDetails StrategicSiteDetails { get; private set; }
 
     public async Task ProvideName(SiteName siteName, ISiteNameExist siteNameExist, CancellationToken cancellationToken)
     {
@@ -94,13 +106,25 @@ public class SiteEntity : DomainEntity, IQuestion
         NationalDesignGuidePriorities = _modificationTracker.Change(NationalDesignGuidePriorities, nationalDesignGuidePriorities);
     }
 
+    public void ProvideBuildingForHealthyLifeCommand(BuildingForHealthyLifeType buildingForHealthyLife)
+    {
+        BuildingForHealthyLife = _modificationTracker.Change(BuildingForHealthyLife, buildingForHealthyLife);
+    }
+
     public void ProvideTenderingStatusDetails(TenderingStatusDetails tenderingStatusDetails)
     {
         TenderingStatusDetails = _modificationTracker.Change(TenderingStatusDetails, tenderingStatusDetails);
     }
 
+    public void ProvideStrategicSiteDetails(StrategicSiteDetails details)
+    {
+        StrategicSiteDetails = _modificationTracker.Change(StrategicSiteDetails, details);
+    }
+
     public bool IsAnswered()
     {
-        return PlanningDetails.IsAnswered();
+        return PlanningDetails.IsAnswered() &&
+               TenderingStatusDetails.IsAnswered() &&
+               StrategicSiteDetails.IsAnswered();
     }
 }
