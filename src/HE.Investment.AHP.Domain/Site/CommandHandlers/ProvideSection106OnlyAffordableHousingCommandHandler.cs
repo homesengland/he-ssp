@@ -19,17 +19,7 @@ public class ProvideSection106OnlyAffordableHousingCommandHandler : SiteBaseComm
         return Perform(
             site =>
             {
-                var currentSection106 = site.Section106;
-                var newSection106 = new Section106(
-                                            currentSection106.GeneralAgreement,
-                                            currentSection106.AffordableHousing,
-                                            request.OnlyAffordableHousing,
-                                            currentSection106.AdditionalAffordableHousing,
-                                            currentSection106.CapitalFundingEligibility,
-                                            currentSection106.LocalAuthorityConfirmation);
-
-                site.ProvideSection106(newSection106);
-
+                site.ProvideSection106(site.Section106.WithOnlyAffordableHousing(request.OnlyAffordableHousing));
                 return Task.FromResult(OperationResult.Success());
             },
             request.SiteId,

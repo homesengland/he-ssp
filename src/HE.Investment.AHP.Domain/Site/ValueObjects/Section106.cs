@@ -12,11 +12,11 @@ public class Section106 : ValueObject, IQuestion
 {
     public Section106(
         bool? agreement,
-        bool? affordableHousing,
-        bool? onlyAffordableHousing,
-        bool? additionalAffordableHousing,
-        bool? capitalFundingEligibility,
-        string? localAuthorityConfirmation)
+        bool? affordableHousing = null,
+        bool? onlyAffordableHousing = null,
+        bool? additionalAffordableHousing = null,
+        bool? capitalFundingEligibility = null,
+        string? localAuthorityConfirmation = null)
     {
         if (agreement == null)
         {
@@ -93,6 +93,62 @@ public class Section106 : ValueObject, IQuestion
     public bool IsIneligible()
     {
         return IsIneligibleDueToAffordableHousing() || IsIneligibleDueToCapitalFundingGuide();
+    }
+
+    public Section106 WithGeneralAgreement(bool? generalAgreement)
+    {
+        var result = this;
+        if (GeneralAgreement != generalAgreement || generalAgreement == null)
+        {
+            result = new Section106(generalAgreement);
+        }
+
+        return result;
+    }
+
+    public Section106 WithAffordableHousing(bool? affordableHousing)
+    {
+        if (affordableHousing != AffordableHousing)
+        {
+            return new Section106(GeneralAgreement, affordableHousing);
+        }
+
+        return this;
+    }
+
+    public Section106 WithOnlyAffordableHousing(bool? onlyAffordableHousing)
+    {
+        if (onlyAffordableHousing != OnlyAffordableHousing)
+        {
+            return new Section106(GeneralAgreement, AffordableHousing, onlyAffordableHousing);
+        }
+
+        return this;
+    }
+
+    public Section106 WithAdditionalAffordableHousing(bool? additionalAffordableHousing)
+    {
+        if (AdditionalAffordableHousing != additionalAffordableHousing)
+        {
+            return new Section106(GeneralAgreement, AffordableHousing, OnlyAffordableHousing, additionalAffordableHousing);
+        }
+
+        return this;
+    }
+
+    public Section106 WithCapitalFundingEligibility(bool? capitalFundingEligibility)
+    {
+        if (CapitalFundingEligibility != capitalFundingEligibility)
+        {
+            return new Section106(GeneralAgreement, AffordableHousing, OnlyAffordableHousing, AdditionalAffordableHousing, capitalFundingEligibility);
+        }
+
+        return this;
+    }
+
+    public Section106 WithLocalAuthorityConfirmation(string localAuthorityConfirmation)
+    {
+        return new Section106(GeneralAgreement, AffordableHousing, OnlyAffordableHousing, AdditionalAffordableHousing, CapitalFundingEligibility, localAuthorityConfirmation);
     }
 
     protected override IEnumerable<object?> GetAtomicValues()

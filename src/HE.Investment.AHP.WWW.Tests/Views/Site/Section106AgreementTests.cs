@@ -6,7 +6,7 @@ namespace HE.Investment.AHP.WWW.Tests.Views.Site;
 
 public class Section106AgreementTests : ViewTestBase
 {
-    private readonly string _viewPath = "/Views/Site/Section106Agreement.cshtml";
+    private readonly string _viewPath = "/Views/Site/Section106GeneralAgreement.cshtml";
     private readonly string _siteId = Guid.NewGuid().ToString();
     private readonly string _siteName = "Test Site 33";
 

@@ -10,7 +10,7 @@
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
     <form asp-controller="Site" asp-action="Section106AdditionalAffordableHousing" asp-method="post" novalidate>
-        <vc:page-header title="@SitePageTitles.SiteSection106AdditionalAffordableHousing" caption="@Model.SiteName" additional-css-class="govuk-!-padding-top-8"/>
+        <vc:page-header title="@SitePageTitles.SiteSection106AdditionalAffordableHousing" caption="@Model.SiteName"/>
 
         <vc:radio-yes-no field-name="@nameof(Model.AdditionalAffordableHousing)"
                          title="Are the homes contained within this application additional to the affordable housing secured through the developer contributions?"

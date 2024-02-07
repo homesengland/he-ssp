@@ -129,19 +129,19 @@ public class SiteController : WorkflowController<SiteWorkflowState>
 
     [HttpGet("{siteId}/section-106-general-agreement")]
     [WorkflowState(SiteWorkflowState.Section106GeneralAgreement)]
-    public async Task<IActionResult> Section106Agreement([FromRoute] string siteId, CancellationToken cancellationToken)
+    public async Task<IActionResult> Section106GeneralAgreement([FromRoute] string siteId, CancellationToken cancellationToken)
     {
         var siteModel = await _mediator.Send(new GetSiteQuery(siteId), cancellationToken);
-        return View("Section106Agreement", siteModel.Section106 ?? new Section106Dto(siteId, siteModel?.Name ?? string.Empty, null));
+        return View("Section106GeneralAgreement", siteModel.Section106 ?? new Section106Dto(siteId, siteModel?.Name ?? string.Empty, null));
     }
 
     [HttpPost("{siteId}/section-106-general-agreement")]
     [WorkflowState(SiteWorkflowState.Section106GeneralAgreement)]
-    public async Task<IActionResult> Section106Agreement([FromRoute] string siteId, Section106Dto model, CancellationToken cancellationToken)
+    public async Task<IActionResult> Section106GeneralAgreement([FromRoute] string siteId, Section106Dto model, CancellationToken cancellationToken)
     {
         return await ExecuteSiteCommand(
             new ProvideSection106AgreementCommand(new SiteId(siteId), model.GeneralAgreement),
-            nameof(Section106Agreement),
+            nameof(Section106GeneralAgreement),
             savedModel => model,
             cancellationToken);
     }
@@ -239,6 +239,14 @@ public class SiteController : WorkflowController<SiteWorkflowState>
             nameof(Section106LocalAuthorityConfirmation),
             savedModel => model,
             cancellationToken);
+    }
+
+    [HttpGet("{siteId}/section-106-ineligible")]
+    [WorkflowState(SiteWorkflowState.Section106Ineligible)]
+    public async Task<IActionResult> Section106Ineligible([FromRoute] string siteId, CancellationToken cancellationToken)
+    {
+        var siteModel = await _mediator.Send(new GetSiteQuery(siteId), cancellationToken);
+        return View("Section106Ineligible", siteModel.Section106);
     }
 
     [HttpGet("{siteId}/local-authority/search")]
@@ -604,6 +612,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         CancellationToken cancellationToken)
     {
         var siteId = this.GetSiteIdFromRoute();
+
         return await this.ExecuteCommand<TViewModel>(
             _mediator,
             command,

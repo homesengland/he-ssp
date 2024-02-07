@@ -19,16 +19,7 @@ public class ProvideSection106CapitalFundingEligibilityCommandHandler : SiteBase
         return Perform(
             site =>
             {
-                var currentSection106 = site.Section106;
-                var newSection106 = new Section106(
-                                            currentSection106.GeneralAgreement,
-                                            currentSection106.AffordableHousing,
-                                            currentSection106.OnlyAffordableHousing,
-                                            currentSection106.AdditionalAffordableHousing,
-                                            request.CapitalFundingEligibility,
-                                            currentSection106.LocalAuthorityConfirmation);
-
-                site.ProvideSection106(newSection106);
+                site.ProvideSection106(site.Section106.WithCapitalFundingEligibility(request.CapitalFundingEligibility));
                 return Task.FromResult(OperationResult.Success());
             },
             request.SiteId,

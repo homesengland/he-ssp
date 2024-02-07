@@ -46,6 +46,7 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
                 site.Section106?.IsIneligibleDueToCapitalFundingGuide()),
             LocalAuthority = LocalAuthorityMapper.Map(site.LocalAuthority),
             PlanningDetails = CreateSitePlanningDetails(site.PlanningDetails),
+            NationalDesignGuidePriorities = site.NationalDesignGuidePriorities?.Values?.ToList() ?? new List<Contract.Site.Enums.NationalDesignGuidePriority>(),
             BuildingForHealthyLife = site.BuildingForHealthyLife,
             NumberOfGreenLights = site.NumberOfGreenLights?.ToString(),
             TenderingStatusDetails = CreateSiteTenderingStatusDetails(site.TenderingStatusDetails),
