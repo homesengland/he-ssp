@@ -452,8 +452,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     [WorkflowState(SiteWorkflowState.BuildingForHealthyLife)]
     public async Task<IActionResult> BuildingForHealthyLife([FromRoute] string siteId, CancellationToken cancellationToken)
     {
-        var siteModel = await _mediator.Send(new GetSiteQuery(siteId), cancellationToken);
-
+        var siteModel = await GetSiteDetails(siteId, cancellationToken);
         return View("BuildingForHealthyLife", siteModel);
     }
 
@@ -466,6 +465,27 @@ public class SiteController : WorkflowController<SiteWorkflowState>
                 this.GetSiteIdFromRoute(),
                 model.BuildingForHealthyLife),
             nameof(BuildingForHealthyLife),
+            savedModel => model,
+            cancellationToken);
+    }
+
+    [HttpGet("{siteId}/number-of-green-lights")]
+    [WorkflowState(SiteWorkflowState.NumberOfGreenLights)]
+    public async Task<IActionResult> NumberOfGreenLights([FromRoute] string siteId, CancellationToken cancellationToken)
+    {
+        var siteModel = await GetSiteDetails(siteId, cancellationToken);
+        return View("NumberOfGreenLights", siteModel);
+    }
+
+    [HttpPost("{siteId}/number-of-green-lights")]
+    [WorkflowState(SiteWorkflowState.NumberOfGreenLights)]
+    public async Task<IActionResult> NumberOfGreenLights(SiteModel model, CancellationToken cancellationToken)
+    {
+        return await ExecuteSiteCommand<SiteModel>(
+            new ProvideNumberOfGreenLightsCommand(
+                this.GetSiteIdFromRoute(),
+                model.NumberOfGreenLights),
+            nameof(NumberOfGreenLights),
             savedModel => model,
             cancellationToken);
     }
@@ -584,17 +604,10 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         CancellationToken cancellationToken)
     {
         var siteId = this.GetSiteIdFromRoute();
-        var redirect = ContinueWithRedirect(new { siteId });
-        var action = HttpContext.Request.Form["action"];
-        if (action == GenericMessages.SaveAndReturn)
-        {
-            redirect = Index(cancellationToken);
-        }
-
         return await this.ExecuteCommand<TViewModel>(
             _mediator,
             command,
-            async () => await redirect,
+            async () => await ContinueWithRedirect(new { siteId }),
             async () =>
             {
                 var siteDetails = await GetSiteDetails(siteId.Value, cancellationToken);

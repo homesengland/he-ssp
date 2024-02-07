@@ -21,6 +21,7 @@ public enum SiteWorkflowState
     LandRegistry,
     NationalDesignGuide,
     BuildingForHealthyLife,
+    NumberOfGreenLights,
     TenderingStatus,
     ContractorDetails,
     IntentionToWorkWithSme,

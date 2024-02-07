@@ -25,6 +25,7 @@ public class SiteEntity : DomainEntity, IQuestion
         Section106 section106,
         PlanningDetails planningDetails,
         NationalDesignGuidePriorities nationalDesignGuidePriorities,
+        NumberOfGreenLights? numberOfGreenLights,
         TenderingStatusDetails tenderingStatusDetails,
         StrategicSiteDetails strategicSiteDetails,
         LocalAuthority? localAuthority = null,
@@ -38,6 +39,7 @@ public class SiteEntity : DomainEntity, IQuestion
         PlanningDetails = planningDetails;
         NationalDesignGuidePriorities = nationalDesignGuidePriorities;
         BuildingForHealthyLife = buildingForHealthyLife;
+        NumberOfGreenLights = numberOfGreenLights;
         TenderingStatusDetails = tenderingStatusDetails;
         StrategicSiteDetails = strategicSiteDetails;
     }
@@ -69,6 +71,8 @@ public class SiteEntity : DomainEntity, IQuestion
     public NationalDesignGuidePriorities NationalDesignGuidePriorities { get; private set; }
 
     public BuildingForHealthyLifeType BuildingForHealthyLife { get; private set; }
+
+    public NumberOfGreenLights? NumberOfGreenLights { get; private set; }
 
     public TenderingStatusDetails TenderingStatusDetails { get; private set; }
 
@@ -106,9 +110,14 @@ public class SiteEntity : DomainEntity, IQuestion
         NationalDesignGuidePriorities = _modificationTracker.Change(NationalDesignGuidePriorities, nationalDesignGuidePriorities);
     }
 
-    public void ProvideBuildingForHealthyLifeCommand(BuildingForHealthyLifeType buildingForHealthyLife)
+    public void ProvideBuildingForHealthyLife(BuildingForHealthyLifeType buildingForHealthyLife)
     {
         BuildingForHealthyLife = _modificationTracker.Change(BuildingForHealthyLife, buildingForHealthyLife);
+    }
+
+    public void ProvideNumberOfGreenLights(NumberOfGreenLights? numberOfGreenLights)
+    {
+        NumberOfGreenLights = _modificationTracker.Change(NumberOfGreenLights, numberOfGreenLights);
     }
 
     public void ProvideTenderingStatusDetails(TenderingStatusDetails tenderingStatusDetails)

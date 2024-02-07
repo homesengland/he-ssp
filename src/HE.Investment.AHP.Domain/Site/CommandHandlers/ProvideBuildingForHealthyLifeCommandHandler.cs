@@ -14,6 +14,6 @@ public class ProvideBuildingForHealthyLifeCommandHandler : ProvideSiteDetailsBas
 
     protected override void Provide(ProvideBuildingForHealthyLifeCommand request, SiteEntity site)
     {
-        site.ProvideBuildingForHealthyLifeCommand(request.BuildingForHealthyLife);
+        site.ProvideBuildingForHealthyLife(request.BuildingForHealthyLife);
     }
 }

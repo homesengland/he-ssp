@@ -1,7 +1,7 @@
 using FluentAssertions;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Enums;
-using HE.Investment.AHP.WWW.Tests.TestDataBuilders;
+using HE.Investment.AHP.Domain.Site.ValueObjects;
 
 namespace HE.Investment.AHP.WWW.Tests.Workflows.SiteWorkflowTests;
 
@@ -20,6 +20,10 @@ public class CurrentStateTests
 
     private readonly Section106Dto _section106 = new("3", "TestSite", false);
 
+    private readonly BuildingForHealthyLifeType _buildingForHealthyLife = BuildingForHealthyLifeType.Yes;
+
+    private readonly NumberOfGreenLights? _numberOfGreenLights = new("5");
+
     [Fact]
     public void ShouldReturnCheckAnswers_WhenAllDateProvided()
     {
@@ -31,7 +35,9 @@ public class CurrentStateTests
             planningDetails: _planningDetails,
             tenderingStatusDetails: _tenderingStatusDetails,
             section106: _section106,
-            nationalDesignGuidePriorities: new List<NationalDesignGuidePriority>() { NationalDesignGuidePriority.Nature });
+            nationalDesignGuidePriorities: new List<NationalDesignGuidePriority>() { NationalDesignGuidePriority.Nature },
+            buildingForHealthyLife: _buildingForHealthyLife,
+            numberOfGreenLights: _numberOfGreenLights);
 
         // when
         var result = workflow.CurrentState(SiteWorkflowState.Start);
@@ -216,10 +222,24 @@ public class CurrentStateTests
         Test(SiteWorkflowState.IntentionToWorkWithSme, tenderingStatusDetails: _tenderingStatusDetails with { TenderingStatus = SiteTenderingStatus.TenderForWorksContract, IsIntentionToWorkWithSme = null });
     }
 
+    [Fact]
+    public void ShouldReturnBuildingForHealthyLife_WhenBuildingForHealthyLifeNotProvided()
+    {
+        Test(SiteWorkflowState.BuildingForHealthyLife, buildingForHealthyLifeType: BuildingForHealthyLifeType.Undefined);
+    }
+
+    [Fact]
+    public void ShouldReturnNumberOfGreenLights_WhenBuildingForHealthyLifeIsYesAndNumberOfGreenLightsIsNotProvided()
+    {
+        Test(SiteWorkflowState.NumberOfGreenLights, buildingForHealthyLifeType: BuildingForHealthyLifeType.Yes);
+    }
+
     private void Test(
         SiteWorkflowState expected,
         SitePlanningDetails? planningDetails = null,
-        SiteTenderingStatusDetails? tenderingStatusDetails = null)
+        SiteTenderingStatusDetails? tenderingStatusDetails = null,
+        BuildingForHealthyLifeType buildingForHealthyLifeType = BuildingForHealthyLifeType.NotApplicable,
+        NumberOfGreenLights? numberOfGreenLights = null)
     {
         // given
         var workflow = SiteWorkflowFactory.BuildWorkflow(
@@ -229,7 +249,9 @@ public class CurrentStateTests
             planningDetails: planningDetails ?? _planningDetails,
             tenderingStatusDetails: tenderingStatusDetails ?? _tenderingStatusDetails,
             section106: _section106,
-            nationalDesignGuidePriorities: new List<NationalDesignGuidePriority>() { NationalDesignGuidePriority.NoneOfTheAbove });
+            nationalDesignGuidePriorities: new List<NationalDesignGuidePriority>() { NationalDesignGuidePriority.NoneOfTheAbove },
+            buildingForHealthyLife: buildingForHealthyLifeType,
+            numberOfGreenLights: numberOfGreenLights);
 
         // when
         var result = workflow.CurrentState(SiteWorkflowState.Start);

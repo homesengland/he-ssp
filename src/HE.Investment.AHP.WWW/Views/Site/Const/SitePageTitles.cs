@@ -46,6 +46,8 @@ public static class SitePageTitles
 
     public const string BuildingForHealthyLife = "Have you assessed your site against the Building for a Healthy Life criteria?";
 
+    public const string NumberOfGreenLights = "Enter the number of green lights the design of your site scored";
+
     public const string TenderingStatus = "What progress have you made in the tendering for your main works contract?";
 
     public const string ContractorDetails = "Contractor details";
