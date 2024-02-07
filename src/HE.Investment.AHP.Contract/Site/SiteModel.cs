@@ -18,6 +18,8 @@ public class SiteModel
 
     public BuildingForHealthyLifeType BuildingForHealthyLife { get; set; }
 
+    public string? NumberOfGreenLights { get; set; }
+
     public SiteTenderingStatusDetails TenderingStatusDetails { get; set; }
 
     public StrategicSite StrategicSiteDetails { get; set; }
