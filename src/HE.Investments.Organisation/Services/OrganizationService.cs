@@ -1,11 +1,13 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.Investments.Organisation.CrmFields;
 using HE.Investments.Organisation.CrmRepository;
-using Microsoft.Crm.Sdk.Messages;
+using HE.Investments.Organisation.Extensions;
 using Microsoft.PowerPlatform.Dataverse.Client;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 
 namespace HE.Investments.Organisation.Services;
+
 public class OrganizationService : IOrganizationService
 {
     private readonly IOrganizationServiceAsync2 _service;
@@ -59,64 +61,56 @@ public class OrganizationService : IOrganizationService
         var organizationDetailsDto = new OrganizationDetailsDto();
         if (Guid.TryParse(accountId, out var organizationId))
         {
-            var account = await _service.RetrieveAsync("account", organizationId, new ColumnSet(
-                    "name",
-                    "he_companieshousenumber",
-                    "address1_line1",
-                    "address1_line2",
-                    "address1_line3",
-                    "address1_city",
-                    "address1_postalcode",
-                    "address1_country",
-                    "primarycontactid"));
+            var account = await _service.RetrieveAsync(AccountEntity.Name, organizationId, AccountEntity.AllColumns());
 
-            organizationDetailsDto.registeredCompanyName = account.Contains("name") ? account["name"].ToString() : null;
-            organizationDetailsDto.companyRegistrationNumber = account.Contains("he_companieshousenumber") ? account["he_companieshousenumber"].ToString() : null;
-            organizationDetailsDto.addressLine1 = account.Contains("address1_line1") ? account["address1_line1"].ToString() : null;
-            organizationDetailsDto.addressLine2 = account.Contains("address1_line2") ? account["address1_line2"].ToString() : null;
-            organizationDetailsDto.addressLine3 = account.Contains("address1_line3") ? account["address1_line3"].ToString() : null;
-            organizationDetailsDto.city = account.Contains("address1_city") ? account["address1_city"].ToString() : null;
-            organizationDetailsDto.postalcode = account.Contains("address1_postalcode") ? account["address1_postalcode"].ToString() : null;
-            organizationDetailsDto.country = account.Contains("address1_country") ? account["address1_country"].ToString() : null;
+            organizationDetailsDto.registeredCompanyName = account.GetStringAttribute(AccountEntity.Properties.CompanyName);
+            organizationDetailsDto.companyRegistrationNumber = account.GetStringAttribute(AccountEntity.Properties.CompanyNumber);
+            organizationDetailsDto.addressLine1 = account.GetStringAttribute(AccountEntity.Properties.AddressLine1);
+            organizationDetailsDto.addressLine2 = account.GetStringAttribute(AccountEntity.Properties.AddressLine2);
+            organizationDetailsDto.addressLine3 = account.GetStringAttribute(AccountEntity.Properties.AddressLine3);
+            organizationDetailsDto.city = account.GetStringAttribute(AccountEntity.Properties.City);
+            organizationDetailsDto.postalcode = account.GetStringAttribute(AccountEntity.Properties.PostalCode);
+            organizationDetailsDto.country = account.GetStringAttribute(AccountEntity.Properties.Country);
+            organizationDetailsDto.isUnregisteredBody = account.GetBooleanAttribute(AccountEntity.Properties.UnregisteredBody) ?? false;
 
-            if (account.Contains("primarycontactid") && account["primarycontactid"] != null)
+            var primaryContactReference = account.GetEntityReference(AccountEntity.Properties.PrimaryContactId);
+            if (primaryContactReference != null)
             {
-                var primaryContactReference = (EntityReference)account.Attributes["primarycontactid"];
-                var contact = await _service.RetrieveAsync("contact", primaryContactReference.Id, new ColumnSet(
-                        "fullname",
-                        "emailaddress1",
-                        "telephone1"));
+                var contact = await _service.RetrieveAsync(
+                    ContactEntity.Name,
+                    primaryContactReference.Id,
+                    new ColumnSet(ContactEntity.Properties.FullName, ContactEntity.Properties.EmailAddress, ContactEntity.Properties.TelephoneNumber));
 
-                organizationDetailsDto.compayAdminContactName = contact.Contains("fullname") ? contact.Attributes["fullname"].ToString() : null;
-                organizationDetailsDto.compayAdminContactEmail = contact.Contains("emailaddress1") ? contact.Attributes["emailaddress1"].ToString() : null;
-                organizationDetailsDto.compayAdminContactTelephone = contact.Contains("telephone1") ? contact.Attributes["telephone1"].ToString() : null;
+                organizationDetailsDto.compayAdminContactName = contact.GetStringAttribute(ContactEntity.Properties.FullName);
+                organizationDetailsDto.compayAdminContactEmail = contact.GetStringAttribute(ContactEntity.Properties.EmailAddress);
+                organizationDetailsDto.compayAdminContactTelephone = contact.GetStringAttribute(ContactEntity.Properties.TelephoneNumber);
             }
         }
 
         return organizationDetailsDto;
     }
 
-    private Entity MapOrganizationDtoToEntity(OrganizationDetailsDto organizationDetailsDto)
+    private static Entity MapOrganizationDtoToEntity(OrganizationDetailsDto organizationDetailsDto)
     {
-        var organizationEntity = new Entity("account")
+        var organizationEntity = new Entity(AccountEntity.Name)
         {
-            Attributes = new AttributeCollection()
+            Attributes = new AttributeCollection
             {
-                { "name", organizationDetailsDto.registeredCompanyName },
-                { "he_companieshousenumber", organizationDetailsDto.companyRegistrationNumber },
-                { "address1_line1", organizationDetailsDto.addressLine1 },
-                { "address1_line2", organizationDetailsDto.addressLine2 },
-                { "address1_line3", organizationDetailsDto.addressLine3 },
-                { "address1_city", organizationDetailsDto.city },
-                { "address1_postalcode", organizationDetailsDto.postalcode },
-                { "address1_country", organizationDetailsDto.country },
-                { "address1_county", organizationDetailsDto.county },
+                { AccountEntity.Properties.CompanyName, organizationDetailsDto.registeredCompanyName },
+                { AccountEntity.Properties.CompanyNumber, organizationDetailsDto.companyRegistrationNumber },
+                { AccountEntity.Properties.AddressLine1, organizationDetailsDto.addressLine1 },
+                { AccountEntity.Properties.AddressLine2, organizationDetailsDto.addressLine2 },
+                { AccountEntity.Properties.AddressLine3, organizationDetailsDto.addressLine3 },
+                { AccountEntity.Properties.City, organizationDetailsDto.city },
+                { AccountEntity.Properties.PostalCode, organizationDetailsDto.postalcode },
+                { AccountEntity.Properties.Country, organizationDetailsDto.country },
+                { AccountEntity.Properties.County, organizationDetailsDto.county },
             },
         };
         return organizationEntity;
     }
 
-    private Entity MapOrganizationDtoToOrganizationChangeRequestEntity(OrganizationDetailsDto organizationDetailsDto)
+    private static Entity MapOrganizationDtoToOrganizationChangeRequestEntity(OrganizationDetailsDto organizationDetailsDto)
     {
         var organisationChangeRequestEntity = new Entity("invln_organisationchangerequest")
         {
@@ -129,7 +123,7 @@ public class OrganizationService : IOrganizationService
                 { "invln_townorcity", organizationDetailsDto.city },
                 { "invln_county", organizationDetailsDto.county },
                 { "invln_postcode", organizationDetailsDto.postalcode },
-                { "invln_organisationid", new EntityReference("account", new Guid(organizationDetailsDto.organisationId)) },
+                { "invln_organisationid", new EntityReference(AccountEntity.Name, new Guid(organizationDetailsDto.organisationId)) },
             },
         };
         return organisationChangeRequestEntity;
