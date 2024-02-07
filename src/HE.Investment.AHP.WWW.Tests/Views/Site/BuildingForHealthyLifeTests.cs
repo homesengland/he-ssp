@@ -19,7 +19,7 @@ public class BuildingForHealthyLifeTests : ViewTestBase
         // then
         document
             .HasTitle(SitePageTitles.BuildingForHealthyLife)
-            .HasPageHeader(siteName, @SitePageTitles.BuildingForHealthyLife)
+            .HasPageHeader(siteName, SitePageTitles.BuildingForHealthyLife)
             .HasSummaryDetails("What are the Building for a Healthy Life criteria?")
             .HasRadio(
                 "BuildingForHealthyLife",
@@ -49,7 +49,7 @@ public class BuildingForHealthyLifeTests : ViewTestBase
         // then
         document
             .HasTitle(SitePageTitles.BuildingForHealthyLife)
-            .HasPageHeader(siteName, @SitePageTitles.BuildingForHealthyLife)
+            .HasPageHeader(siteName, SitePageTitles.BuildingForHealthyLife)
             .HasSummaryDetails("What are the Building for a Healthy Life criteria?")
             .HasRadio(
                 "BuildingForHealthyLife",
