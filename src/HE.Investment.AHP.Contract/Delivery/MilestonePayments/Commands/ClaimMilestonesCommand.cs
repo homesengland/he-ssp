@@ -6,5 +6,5 @@ using MediatR;
 
 namespace HE.Investment.AHP.Contract.Delivery.MilestonePayments.Commands;
 
-public record ClaimMilestonesCommand(AhpApplicationId ApplicationId, DeliveryPhaseId DeliveryPhaseId, YesNoType YesNo)
+public record ClaimMilestonesCommand(AhpApplicationId ApplicationId, DeliveryPhaseId DeliveryPhaseId, bool? UnderstandClaimingMilestones)
     : IRequest<OperationResult>, IUpdateDeliveryPhaseCommand;

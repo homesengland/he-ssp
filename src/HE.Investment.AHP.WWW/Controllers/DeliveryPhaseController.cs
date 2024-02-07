@@ -18,6 +18,7 @@ using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Routing;
+using HE.Investments.Loans.Common.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -248,7 +249,15 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     {
         if (model.Tranches?.IsAmendable ?? false)
         {
-            return await ExecuteCommand(new ClaimMilestonesCommand(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId), YesNoType.Yes), nameof(SummaryOfDelivery), deliveryPhaseDetails => deliveryPhaseDetails, cancellationToken, true);
+            return await ExecuteCommand(
+                new ClaimMilestonesCommand(
+                    AhpApplicationId.From(applicationId),
+                    new DeliveryPhaseId(deliveryPhaseId),
+                    model.Tranches?.SummaryOfDeliveryAmend?.UnderstandClaimingMilestones),
+                nameof(SummaryOfDelivery),
+                deliveryPhaseDetails => deliveryPhaseDetails,
+                cancellationToken,
+                true);
         }
 
         return await ContinueWithAllRedirects(new { applicationId, deliveryPhaseId });

@@ -60,13 +60,13 @@ public class DeliveryPhaseTranches : IQuestion
         MilestoneTranches = _modificationTracker.Change(MilestoneTranches, MilestoneTranches.WithCompletion(completion));
     }
 
-    public void ClaimMilestones(YesNoType yesNo)
+    public void ClaimMilestones(bool? understandClaimingMilestones)
     {
         CheckIfTranchesCanBeAmended();
 
-        if (yesNo != YesNoType.Yes)
+        if (!understandClaimingMilestones.GetValueOrDefault())
         {
-            OperationResult.ThrowValidationError("UnderstandClaimingMilestones", "You must understand the claiming of milestones to proceed.");
+            OperationResult.ThrowValidationError("Tranches.SummaryOfDeliveryAmend.UnderstandClaimingMilestones", "You must confirm you understand this to continue");
         }
 
         var summary = CalculateSummary();
