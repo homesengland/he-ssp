@@ -604,17 +604,10 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         CancellationToken cancellationToken)
     {
         var siteId = this.GetSiteIdFromRoute();
-        var redirect = ContinueWithRedirect(new { siteId });
-        var action = HttpContext.Request.Form["action"];
-        if (action == GenericMessages.SaveAndReturn)
-        {
-            redirect = Index(cancellationToken);
-        }
-
         return await this.ExecuteCommand<TViewModel>(
             _mediator,
             command,
-            async () => await redirect,
+            async () => await ContinueWithRedirect(new { siteId }),
             async () =>
             {
                 var siteDetails = await GetSiteDetails(siteId.Value, cancellationToken);
