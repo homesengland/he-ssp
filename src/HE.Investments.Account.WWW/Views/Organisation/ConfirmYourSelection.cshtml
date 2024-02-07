@@ -1,21 +1,18 @@
 @using HE.Investments.Account.WWW.Views.Organisation
 @using HE.Investments.Common.Extensions
 @using HE.Investments.Common.WWW.Models
-@using Microsoft.AspNetCore.Mvc.TagHelpers
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Radios
-@model HE.Investments.Common.WWW.Models.ConfirmModel<HE.Investments.Account.Contract.Organisation.Queries.OrganizationBasicDetails>
+@model HE.Investments.Common.WWW.Models.ConfirmModel<HE.Investments.Account.Contract.Organisation.Queries.OrganisationBasicDetails>
 @{
-    ViewData["Title"] = "Organization Select";
+    ViewData["Title"] = OrganisationPageTitles.ConfirmYourSelection;
 }
 
 <gds-div-grid-column-two-thirds>
-    <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("SearchOrganization", "Organisation")"></gds-back-link>
+    <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("SearchOrganisation", "Organisation")"></gds-back-link>
 
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
     <gds-h1 size="ControlSize.Xl" class="govuk-!-margin-bottom-6">
-        @OrganizationPageTitles.ConfirmYourSelection
+        @OrganisationPageTitles.ConfirmYourSelection
     </gds-h1>
 
     <ul class="govuk-list">
@@ -42,7 +39,7 @@
             <p class="govuk-body govuk-!-margin-bottom-6">Companies house number: @Model.ViewModel.CompaniesHouseNumber</p>
         </li>
     </ul>
-    <form asp-controller="Organisation" asp-action="ConfirmOrganizationPost" asp-route-organizationNumberOrId=@(Model.ViewModel.OrganisationId ?? Model.ViewModel.CompaniesHouseNumber) asp-method="post" novalidate>
+    <form asp-controller="Organisation" asp-action="ConfirmOrganisationPost" asp-route-organisationNumberOrId=@(Model.ViewModel.OrganisationId ?? Model.ViewModel.CompaniesHouseNumber) asp-method="post" novalidate>
         <gds-div-form-group>
             <gds-field-set>
                 <gds-legend class="govuk-fieldset__legend--m">

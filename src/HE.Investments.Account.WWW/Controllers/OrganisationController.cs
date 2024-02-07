@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HE.Investments.Account.WWW.Controllers;
 
 [Route(OrganisationAccountEndpoints.Controller)]
-[AuthorizeWithoutLinkedOrganisationOnlyAttribute]
+[AuthorizeWithoutLinkedOrganisationOnly]
 public class OrganisationController : Controller
 {
     private readonly IMediator _mediator;
@@ -25,24 +25,24 @@ public class OrganisationController : Controller
         _mediator = mediator;
     }
 
-    [HttpGet(OrganisationAccountEndpoints.SearchOrganizationSuffix)]
-    public IActionResult SearchOrganization()
+    [HttpGet(OrganisationAccountEndpoints.SearchOrganisationSuffix)]
+    public IActionResult SearchOrganisation()
     {
         return View();
     }
 
-    [HttpPost(OrganisationAccountEndpoints.SearchOrganizationSuffix)]
-    public IActionResult SearchOrganization(OrganisationSearchModel organisation)
+    [HttpPost(OrganisationAccountEndpoints.SearchOrganisationSuffix)]
+    public IActionResult SearchOrganisation(OrganisationSearchModel organisation)
     {
-        return RedirectToAction(nameof(SearchOrganizationResult), new { searchPhrase = organisation.Name });
+        return RedirectToAction(nameof(SearchOrganisationResult), new { searchPhrase = organisation.Name });
     }
 
     [HttpGet("search/result")]
-    public async Task<IActionResult> SearchOrganizationResult([FromQuery] string searchPhrase, [FromQuery] int page)
+    public async Task<IActionResult> SearchOrganisationResult([FromQuery] string searchPhrase, [FromQuery] int page)
     {
-        var response = await _mediator.Send(new SearchOrganizationsQuery(searchPhrase, page, DefaultPagination.PageSize));
+        var response = await _mediator.Send(new SearchOrganisationsQuery(searchPhrase, page, DefaultPagination.PageSize));
 
-        if (response.Result.TotalOrganizations == 0)
+        if (response.Result.TotalOrganisations == 0)
         {
             return RedirectToAction(nameof(NoMatchFound));
         }
@@ -50,31 +50,31 @@ public class OrganisationController : Controller
         return View(response.Result);
     }
 
-    [HttpGet("{organizationNumberOrId}/confirm")]
-    public async Task<IActionResult> ConfirmOrganization(string organizationNumberOrId)
+    [HttpGet("{organisationNumberOrId}/confirm")]
+    public async Task<IActionResult> ConfirmOrganisation(string organisationNumberOrId)
     {
-        var response = await _mediator.Send(new GetOrganizationQuery(organizationNumberOrId));
+        var response = await _mediator.Send(new GetOrganisationQuery(organisationNumberOrId));
 
-        return View("ConfirmYourSelection", new ConfirmModel<OrganizationBasicDetails> { ViewModel = response });
+        return View("ConfirmYourSelection", new ConfirmModel<OrganisationBasicDetails> { ViewModel = response });
     }
 
-    [HttpPost("{organizationNumberOrId}/confirm")]
-    public async Task<IActionResult> ConfirmOrganizationPost(string organizationNumberOrId, ConfirmModel<OrganizationBasicDetails> model)
+    [HttpPost("{organisationNumberOrId}/confirm")]
+    public async Task<IActionResult> ConfirmOrganisationPost(string organisationNumberOrId, ConfirmModel<OrganisationBasicDetails> model)
     {
         if (string.IsNullOrEmpty(model.Response))
         {
             ModelState.AddModelError(nameof(model.Response), ValidationErrorMessage.ChooseYourAnswer);
-            model.ViewModel = await _mediator.Send(new GetOrganizationQuery(organizationNumberOrId));
+            model.ViewModel = await _mediator.Send(new GetOrganisationQuery(organisationNumberOrId));
             return View("ConfirmYourSelection", model);
         }
 
         if (model.Response == CommonResponse.Yes)
         {
-            await _mediator.Send(new LinkContactWithOrganizationCommand(organizationNumberOrId));
+            await _mediator.Send(new LinkContactWithOrganisationCommand(organisationNumberOrId));
             return RedirectToAction(null);
         }
 
-        return RedirectToAction(nameof(SearchOrganization));
+        return RedirectToAction(nameof(SearchOrganisation));
     }
 
     [HttpGet("no-match-found")]

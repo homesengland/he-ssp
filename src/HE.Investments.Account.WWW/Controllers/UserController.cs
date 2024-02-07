@@ -64,7 +64,7 @@ public class UserController : Controller
         if (viewModel.CallbackUrl.IsNotProvided())
         {
             return RedirectToAction(
-                nameof(OrganisationController.SearchOrganization),
+                nameof(OrganisationController.SearchOrganisation),
                 new ControllerName(nameof(OrganisationController)).WithoutPrefix());
         }
 
@@ -80,7 +80,7 @@ public class UserController : Controller
 
         if (programme.IsProvided() && _programmeUrlConfig.ProgrammeUrl.TryGetValue(programme!, out var programmeUrl))
         {
-            return $"{programmeUrl}{callback}";
+            return $"{programmeUrl.TrimEnd('/')}/{callback!.TrimStart('/')}";
         }
 
         return callback;

@@ -11,7 +11,7 @@ using Microsoft.PowerPlatform.Dataverse.Client;
 
 namespace HE.Investments.Account.Domain.Organisation.CommandHandlers;
 
-public class LinkContactWithOrganizationCommandHandler : IRequestHandler<LinkContactWithOrganizationCommand>
+public class LinkContactWithOrganizationCommandHandler : IRequestHandler<LinkContactWithOrganisationCommand>
 {
     private readonly IAccountUserContext _userContext;
     private readonly IOrganizationService _organizationService;
@@ -36,7 +36,7 @@ public class LinkContactWithOrganizationCommandHandler : IRequestHandler<LinkCon
         _mediator = mediator;
     }
 
-    public async Task Handle(LinkContactWithOrganizationCommand request, CancellationToken cancellationToken)
+    public async Task Handle(LinkContactWithOrganisationCommand request, CancellationToken cancellationToken)
     {
         if (await _userContext.IsLinkedWithOrganisation())
         {

@@ -6,7 +6,7 @@ using MediatR;
 
 namespace HE.Investments.Account.Domain.Organisation.QueryHandlers;
 
-public class GetOrganizationQueryHandler : IRequestHandler<GetOrganizationQuery, OrganizationBasicDetails>
+public class GetOrganizationQueryHandler : IRequestHandler<GetOrganisationQuery, OrganisationBasicDetails>
 {
     private readonly IOrganisationSearchService _searchService;
 
@@ -15,7 +15,7 @@ public class GetOrganizationQueryHandler : IRequestHandler<GetOrganizationQuery,
         _searchService = searchService;
     }
 
-    public async Task<OrganizationBasicDetails> Handle(GetOrganizationQuery request, CancellationToken cancellationToken)
+    public async Task<OrganisationBasicDetails> Handle(GetOrganisationQuery request, CancellationToken cancellationToken)
     {
         var response = await _searchService.GetByOrganisation(request.CompanyHouseNumberOrOrganisationId, cancellationToken);
         if (response.Item.IsNotProvided())
@@ -25,7 +25,7 @@ public class GetOrganizationQueryHandler : IRequestHandler<GetOrganizationQuery,
 
         var organization = response.Item!;
 
-        return new OrganizationBasicDetails(
+        return new OrganisationBasicDetails(
             organization.Name,
             organization.Street,
             organization.City,

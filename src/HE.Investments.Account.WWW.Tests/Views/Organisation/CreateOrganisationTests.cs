@@ -11,7 +11,7 @@ public class CreateOrganisationTests : ViewTestBase
     public async Task ShouldDisplayView()
     {
         // given & when
-        var document = await Render<OrganisationDetailsViewModel>(_viewPath);
+        var document = await Render(_viewPath, new OrganisationDetailsViewModel());
 
         // then
         AssertView(document);

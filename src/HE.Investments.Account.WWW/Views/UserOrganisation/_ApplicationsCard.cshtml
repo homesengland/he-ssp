@@ -1,5 +1,3 @@
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Headings
-@using HE.Investments.Common.WWW.TagHelpers
 @model HE.Investments.Account.WWW.Models.UserOrganisation.UserApplicationsModel
 @{
     int itemsToDisplayCount = 5;
@@ -8,7 +6,7 @@
 }
 @if (itemsToDisplay.Any())
 {
-    <div class="govuk-summary-card" data-testid=@($"user-organisation-programme-card-{Model.Header}")>
+    <div class="govuk-summary-card">
         <div class="govuk-summary-card__title-wrapper">
             <h2 class="govuk-summary-card__title">@Model.Header</h2>
         </div>

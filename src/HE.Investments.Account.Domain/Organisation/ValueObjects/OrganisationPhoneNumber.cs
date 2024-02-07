@@ -7,9 +7,9 @@ namespace HE.Investments.Account.Domain.Organisation.ValueObjects;
 
 public class OrganisationPhoneNumber : ValueObject
 {
-    public OrganisationPhoneNumber(string? phoneNumber, string? fieldName = null)
+    public OrganisationPhoneNumber(string? phoneNumber)
     {
-        Build(phoneNumber, fieldName).CheckErrors();
+        Build(phoneNumber).CheckErrors();
     }
 
     public string PhoneNumber { get; private set; }
@@ -24,15 +24,14 @@ public class OrganisationPhoneNumber : ValueObject
         yield return PhoneNumber;
     }
 
-    private OperationResult Build(string? phoneNumber, string? fieldName)
+    private OperationResult Build(string? phoneNumber)
     {
         var operationResult = OperationResult.New();
-        var errorMessage = fieldName != null ? ValidationErrorMessage.ShortInputLengthExceeded(fieldName) : null;
 
         PhoneNumber = Validator
             .For(phoneNumber, nameof(PhoneNumber), "Phone number", operationResult)
             .IsProvided(OrganisationErrorMessages.MissingPhoneNumber)
-            .IsShortInput(errorMessage);
+            .IsShortInput();
 
         return operationResult;
     }

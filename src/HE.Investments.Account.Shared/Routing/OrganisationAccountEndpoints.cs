@@ -4,7 +4,7 @@ public static class OrganisationAccountEndpoints
 {
     public const string Controller = "organisation";
 
-    public const string SearchOrganization = $"{Controller}/{SearchOrganizationSuffix}";
+    public const string SearchOrganisation = $"{Controller}/{SearchOrganisationSuffix}";
 
-    public const string SearchOrganizationSuffix = "search";
+    public const string SearchOrganisationSuffix = "search";
 }

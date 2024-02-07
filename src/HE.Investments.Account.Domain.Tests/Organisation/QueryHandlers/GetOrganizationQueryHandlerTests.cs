@@ -23,7 +23,7 @@ public class GetOrganizationQueryHandlerTests : TestBase<GetOrganizationQueryHan
             .Register(this);
 
         // when
-        var result = await TestCandidate.Handle(new GetOrganizationQuery(companyHouseNumber), CancellationToken.None);
+        var result = await TestCandidate.Handle(new GetOrganisationQuery(companyHouseNumber), CancellationToken.None);
 
         // then
         result.CompaniesHouseNumber.Should().Be(companyHouseNumber);
@@ -46,7 +46,7 @@ public class GetOrganizationQueryHandlerTests : TestBase<GetOrganizationQueryHan
             .Register(this);
 
         // when
-        var result = await TestCandidate.Handle(new GetOrganizationQuery(organisationId), CancellationToken.None);
+        var result = await TestCandidate.Handle(new GetOrganisationQuery(organisationId), CancellationToken.None);
 
         // then
         result.OrganisationId.Should().Be(organisationId);
@@ -70,7 +70,7 @@ public class GetOrganizationQueryHandlerTests : TestBase<GetOrganizationQueryHan
 
         // when
         var action = async () =>
-            await TestCandidate.Handle(new GetOrganizationQuery(notExistingCompanyHouseNumber), CancellationToken.None);
+            await TestCandidate.Handle(new GetOrganisationQuery(notExistingCompanyHouseNumber), CancellationToken.None);
 
         // then
         await action.Should().ThrowExactlyAsync<NotFoundException>().WithMessage($"Organization with id {notExistingCompanyHouseNumber} not found");

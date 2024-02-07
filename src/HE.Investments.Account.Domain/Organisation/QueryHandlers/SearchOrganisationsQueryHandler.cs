@@ -6,7 +6,7 @@ using MediatR;
 
 namespace HE.Investments.Account.Domain.Organisation.QueryHandlers;
 
-internal class SearchOrganisationsQueryHandler : IRequestHandler<SearchOrganizationsQuery, SearchOrganisationsQueryResponse>
+internal class SearchOrganisationsQueryHandler : IRequestHandler<SearchOrganisationsQuery, SearchOrganisationsQueryResponse>
 {
     private readonly IOrganisationSearchService _searchService;
 
@@ -15,7 +15,7 @@ internal class SearchOrganisationsQueryHandler : IRequestHandler<SearchOrganizat
         _searchService = searchService;
     }
 
-    public async Task<SearchOrganisationsQueryResponse> Handle(SearchOrganizationsQuery request, CancellationToken cancellationToken)
+    public async Task<SearchOrganisationsQueryResponse> Handle(SearchOrganisationsQuery request, CancellationToken cancellationToken)
     {
         var companyHousesResult = await _searchService.Search(request.SearchPhrase, new PagingQueryParams(request.PageSize, (request.Page - 1) * request.PageSize), cancellationToken);
 
@@ -26,10 +26,11 @@ internal class SearchOrganisationsQueryHandler : IRequestHandler<SearchOrganizat
 
         var viewmodel = new OrganisationSearchModel
         {
-            Organizations = companyHousesResult.Items
-            .Select(c => new OrganizationBasicDetails(c.Name, c.Street, c.City, c.PostalCode, c.CompanyNumber, c.OrganisationId)).ToList(),
+            Organisations = companyHousesResult.Items
+                .Select(c => new OrganisationBasicDetails(c.Name, c.Street, c.City, c.PostalCode, c.CompanyNumber, c.OrganisationId))
+                .ToList(),
             Name = request.SearchPhrase,
-            TotalOrganizations = companyHousesResult.TotalItems,
+            TotalOrganisations = companyHousesResult.TotalItems,
             Page = request.Page,
             ItemsPerPage = request.PageSize,
         };

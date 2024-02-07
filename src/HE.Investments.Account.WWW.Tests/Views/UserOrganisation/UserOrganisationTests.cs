@@ -1,9 +1,8 @@
 using AngleSharp.Html.Dom;
+using HE.Investments.Account.Contract.UserOrganisation;
 using HE.Investments.Account.WWW.Models.UserOrganisation;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.WWW.Models;
-using HE.Investments.Common.WWWTestsFramework;
-using Xunit;
 
 namespace HE.Investments.Account.WWW.Tests.Views.UserOrganisation;
 
@@ -58,7 +57,7 @@ public class UserOrganisationTests : ViewTestBase
             programmesToAccess: new List<ProgrammeToAccessModel>
             {
                 new(
-                    new ProgrammeModel("P1", "Desc1", "C", "V", true),
+                    new ProgrammeModel(ProgrammeType.Ahp, "P1", "Desc1", "C", "V", true),
                     new List<ApplicationBasicDetailsModel>()),
             });
 
@@ -121,7 +120,7 @@ public class UserOrganisationTests : ViewTestBase
         return new List<ProgrammeToAccessModel>
         {
             new(
-                new ProgrammeModel("P1", "Desc1", "C", "V", false),
+                new ProgrammeModel(ProgrammeType.Ahp, "P1", "Desc1", "C", "V", false),
                 new List<ApplicationBasicDetailsModel> { new("1", "AP1", ApplicationStatus.Withdrawn, "http://localhost/app/") }),
         };
     }
@@ -139,7 +138,7 @@ public class UserOrganisationTests : ViewTestBase
             userName ?? "Jan Muzykant",
             isLimitedUser,
             programmesToAccess ?? ProgrammesToToAccess(),
-            programmesToApply ?? new List<ProgrammeModel> { new("P2", "D2", "C", "V", true) },
+            programmesToApply ?? new List<ProgrammeModel> { new(ProgrammeType.Ahp, "P2", "D2", "C", "V", true) },
             actions ?? new List<ActionModel> { new("ViewAllApplicationsUrl Name", "A", "C", true) });
     }
 }

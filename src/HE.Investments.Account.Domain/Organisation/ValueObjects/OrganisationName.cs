@@ -9,10 +9,9 @@ public class OrganisationName : ValueObject
 {
     public OrganisationName(
         string? name,
-        string notProvidedErrorMessage = OrganisationErrorMessages.MissingOrganisationName,
-        string? fieldName = null)
+        string notProvidedErrorMessage = OrganisationErrorMessages.MissingOrganisationName)
     {
-        Build(name, notProvidedErrorMessage, fieldName).CheckErrors();
+        Build(name, notProvidedErrorMessage).CheckErrors();
     }
 
     public string Name { get; private set; }
@@ -27,15 +26,13 @@ public class OrganisationName : ValueObject
         yield return Name;
     }
 
-    private OperationResult Build(string? name, string? notProvidedErrorMessage, string? fieldName)
+    private OperationResult Build(string? name, string? notProvidedErrorMessage)
     {
         var operationResult = OperationResult.New();
-        var errorMessage = fieldName != null ? ValidationErrorMessage.ShortInputLengthExceeded(fieldName) : null;
-
         Name = Validator
             .For(name, nameof(Name), "Organisation name", operationResult)
             .IsProvided(notProvidedErrorMessage)
-            .IsShortInput(errorMessage);
+            .IsShortInput();
 
         return operationResult;
     }

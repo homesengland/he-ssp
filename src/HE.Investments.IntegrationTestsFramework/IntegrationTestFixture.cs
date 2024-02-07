@@ -30,6 +30,11 @@ public class IntegrationTestFixture<TProgram> : WebApplicationFactory<TProgram>
 
     public IConfiguration Configuration { get; }
 
+    public void ProvideLoginData(ILoginData loginData)
+    {
+        LoginData.Change(loginData);
+    }
+
     public void CheckUserLoginData()
     {
         if (!LoginData.IsProvided())
