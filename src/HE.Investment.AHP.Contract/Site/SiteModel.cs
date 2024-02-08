@@ -23,4 +23,6 @@ public class SiteModel
     public SiteTenderingStatusDetails TenderingStatusDetails { get; set; }
 
     public StrategicSite StrategicSiteDetails { get; set; }
+
+    public SiteTypeDetails SiteTypeDetails { get; set; }
 }
