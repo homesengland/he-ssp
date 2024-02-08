@@ -222,13 +222,35 @@ public class Order01StartAhpSite : AhpIntegrationTest
         await TestQuestionPage(
             SitePagesUrl.SiteNationalDesignGuide(SiteData.SiteId),
             SitePageTitles.NationalDesignGuide,
-            SitePagesUrl.SiteNationalDesignGuide(SiteData.SiteId),
+            SitePagesUrl.SiteBuildingForHealthyLife(SiteData.SiteId),
             (nameof(NationalDesignGuidePrioritiesModel.DesignPriorities), NationalDesignGuidePriority.Nature.ToString()));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
     [Order(16)]
-    public async Task Order16_ShouldProvideTenderingStatus()
+    public async Task Order16_ShouldProvideBuildingForHealthyLife()
+    {
+        await TestQuestionPage(
+            SitePagesUrl.SiteBuildingForHealthyLife(SiteData.SiteId),
+            SitePageTitles.BuildingForHealthyLife,
+            SitePagesUrl.SiteProvideNumberOfGreenLights(SiteData.SiteId),
+            (nameof(SiteModel.BuildingForHealthyLife), BuildingForHealthyLifeType.Yes.ToString()));
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(17)]
+    public async Task Order17_ShouldProvideNumberOfGreenLights()
+    {
+        await TestQuestionPage(
+            SitePagesUrl.SiteProvideNumberOfGreenLights(SiteData.SiteId),
+            SitePageTitles.NumberOfGreenLights,
+            SitePagesUrl.SiteTenderingStatus(SiteData.SiteId),
+            (nameof(SiteModel.NumberOfGreenLights), "5"));
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(18)]
+    public async Task Order18_ShouldProvideTenderingStatus()
     {
         await TestQuestionPage(
             SitePagesUrl.SiteTenderingStatus(SiteData.SiteId),
@@ -238,8 +260,8 @@ public class Order01StartAhpSite : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(17)]
-    public async Task Order17_ShouldProvideContractorDetails()
+    [Order(19)]
+    public async Task Order19_ShouldProvideContractorDetails()
     {
         await TestQuestionPage(
             SitePagesUrl.SiteContractorDetails(SiteData.SiteId),

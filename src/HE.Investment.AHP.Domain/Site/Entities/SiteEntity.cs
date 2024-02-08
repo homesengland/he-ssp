@@ -10,6 +10,7 @@ using HE.Investment.AHP.Domain.Site.ValueObjects.StrategicSite;
 using HE.Investment.AHP.Domain.Site.ValueObjects.TenderingStatus;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
+using HE.Investments.Common.Extensions;
 using LocalAuthority = Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
 using Section106 = HE.Investment.AHP.Domain.Site.ValueObjects.Section106;
 
@@ -134,6 +135,16 @@ public class SiteEntity : DomainEntity, IQuestion
     {
         return PlanningDetails.IsAnswered() &&
                TenderingStatusDetails.IsAnswered() &&
-               StrategicSiteDetails.IsAnswered();
+               StrategicSiteDetails.IsAnswered()
+               && BuildingForHealthyLife != BuildingForHealthyLifeType.Undefined
+               && BuildConditionalRouteCompletionPredicates().All(isCompleted => isCompleted());
+    }
+
+    private IEnumerable<Func<bool>> BuildConditionalRouteCompletionPredicates()
+    {
+        if (BuildingForHealthyLife == BuildingForHealthyLifeType.Yes)
+        {
+            yield return () => NumberOfGreenLights.IsProvided();
+        }
     }
 }
