@@ -109,7 +109,7 @@ public class DeliveryPhaseTranches : IQuestion
             return true;
         }
 
-        return MilestoneTranches.IsAnswered() && ClaimMilestone.GetValueOrDefault();
+        return MilestoneTranches.IsSumUpTo && ClaimMilestone.GetValueOrDefault();
     }
 
     private void CheckIfTranchesCanBeAmended()
