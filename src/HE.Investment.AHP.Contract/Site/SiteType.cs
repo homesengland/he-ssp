@@ -4,8 +4,9 @@ namespace HE.Investment.AHP.Contract.Site;
 
 public enum SiteType
 {
+    Undefined,
     Brownfield,
     Greenfield,
-    [Description("No, my site is not a Brownfield or Greenfield site")]
+    [Description("Not applicable")]
     NotApplicable,
 }

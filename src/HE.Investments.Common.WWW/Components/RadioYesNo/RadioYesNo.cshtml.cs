@@ -6,13 +6,13 @@ public class RadioYesNo : ViewComponent
 {
     public IViewComponentResult Invoke(
         string fieldName,
-        DynamicComponentViewModel? headerComponent = null,
-        string? header = null,
         string? title = null,
+        InputTitleType? titleType = null,
+        DynamicComponentViewModel? additionalContent = null,
         string? hint = null,
         bool? value = null,
         bool? isDisplayed = null)
     {
-        return View("RadioYesNo", (fieldName, headerComponent, header, title, hint, value, isDisplayed ?? true));
+        return View("RadioYesNo", (fieldName, title, titleType ?? InputTitleType.InputTitle, additionalContent, hint, value, isDisplayed ?? true));
     }
 }

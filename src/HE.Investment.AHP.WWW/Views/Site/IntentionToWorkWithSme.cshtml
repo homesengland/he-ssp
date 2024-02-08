@@ -14,7 +14,8 @@
     <form asp-controller="Site" asp-action="IntentionToWorkWithSme" asp-method="post" novalidate>
 
         <vc:radio-yes-no
-            header="@SitePageTitles.IntentionToWorkWithSme"
+            title="@SitePageTitles.IntentionToWorkWithSme"
+            title-type="InputTitleType.PageHeader"
             field-name="@nameof(Model.IsIntentionToWorkWithSme)"
             value="@Model.IsIntentionToWorkWithSme"/>
 

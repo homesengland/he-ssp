@@ -16,7 +16,8 @@
     <form asp-controller="Site" asp-action="PlanningStatus" asp-method="post" novalidate>
 
         <vc:radio-list
-            header="@SitePageTitles.PlanningStatus"
+            title="@SitePageTitles.PlanningStatus"
+            title-type="InputTitleType.PageHeader"
             field-name="@nameof(Model.PlanningStatus)"
             available-options="@SelectListHelper.FromEnumToExtendedList<SitePlanningStatus>()"
             value=@Model?.PlanningStatus/>

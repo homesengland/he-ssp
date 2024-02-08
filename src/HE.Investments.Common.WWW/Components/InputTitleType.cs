@@ -1,4 +1,4 @@
-namespace HE.Investments.Common.WWW.Components.InputHeader;
+namespace HE.Investments.Common.WWW.Components;
 
 public enum InputTitleType
 {

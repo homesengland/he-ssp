@@ -3,7 +3,7 @@
 @using HE.Investments.Common.WWW.Extensions;
 @using HE.Investments.Common.WWW.Components.ErrorMessage;
 @using HE.Investments.Common.WWW.Components.InputListHeader;
-@model (string fieldName, DynamicComponentViewModel headerComponent, string header, string title, string hint, IEnumerable<ExtendedSelectListItem> availableOptions, ExtendedSelectListItem alternativeOption)
+@model (string fieldName, string title,  InputTitleType titleType, DynamicComponentViewModel headerComponent, string hint, IEnumerable<ExtendedSelectListItem> availableOptions, ExtendedSelectListItem alternativeOption)
 
 @{
     var (hasError, checkboxErrors) = ViewData.ModelState.GetErrors(Model.fieldName);
@@ -12,10 +12,12 @@
 
 <gds-div-form-group class="@groupClass">
     <gds-field-set>
-        @if (@Model.headerComponent != null)
-        {
-            <vc:dynamic-component component="@Model.headerComponent" />
-        }
+
+        <vc:input-list-header
+            additional-content="@Model.headerComponent"
+            title="@Model.title"
+            title-type="@Model.titleType"
+            hint="@Model.hint"/>
 
         <vc:error-message field-name="@Model.fieldName" />
 

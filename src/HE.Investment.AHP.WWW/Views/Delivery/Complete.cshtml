@@ -22,7 +22,8 @@
         <vc:page-header caption="@Model.ApplicationName"/>
 
         <vc:radio-list
-            header="@title"
+            title="@title"
+            title-type="InputTitleType.PageHeader"
             field-name="@nameof(Model.IsDeliveryCompleted)"
             available-options="@DeliveryFormOptions.CompleteDelivery"
             value="@Model.IsDeliveryCompleted"/>

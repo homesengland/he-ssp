@@ -2,7 +2,7 @@
 @using HE.Investments.Common.WWW.Components.ErrorMessage
 @using HE.Investments.Common.WWW.Components.InputHeader
 
-@model (string fieldName, string value, string title, InputTitleType? titleType, string hint, string cssClass, bool isDisplayed)
+@model (string fieldName, string value, string title, HE.Investments.Common.WWW.Components.InputTitleType? titleType, string hint, string cssClass, bool isDisplayed)
 @{
     var (hasError, errors) = ViewData.ModelState.GetErrors(Model.fieldName);
     var groupClass = hasError ? "govuk-form-group--error" : string.Empty;

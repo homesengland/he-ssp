@@ -18,7 +18,7 @@
     <form asp-controller="Site" asp-action="SelectConfirmed" asp-route-siteId="@Model.Id" asp-method="post" novalidate>
 
         <vc:radio-yes-no
-            header-component="@header"
+            additional-content="@header"
             field-name="IsConfirmed"/>
 
         <vc:form-button text="Continue"/>
