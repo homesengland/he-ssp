@@ -139,9 +139,14 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
         DeliveryPhaseMilestones = _modificationTracker.Change(DeliveryPhaseMilestones, milestones, MarkAsNotCompleted);
     }
 
-    public void ProvideTypeOfHomes(TypeOfHomes typeOfHomes)
+    public void ProvideTypeOfHomes(TypeOfHomes? typeOfHomes)
     {
-        TypeOfHomes = _modificationTracker.Change(TypeOfHomes, typeOfHomes.NotDefault(), MarkAsNotCompleted, ResetTypeOfHomesDependencies);
+        if (typeOfHomes.IsNotProvided())
+        {
+            OperationResult.ThrowValidationError("TypeOfHomes", "Select the type of homes you are delivering in this phase");
+        }
+
+        TypeOfHomes = _modificationTracker.Change(TypeOfHomes, typeOfHomes!.Value.NotDefault(), MarkAsNotCompleted, ResetTypeOfHomesDependencies);
     }
 
     public void ProvideAdditionalPaymentRequest(IsAdditionalPaymentRequested? isAdditionalPaymentRequested)

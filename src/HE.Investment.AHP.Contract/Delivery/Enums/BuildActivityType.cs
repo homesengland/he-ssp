@@ -6,22 +6,22 @@ public enum BuildActivityType
 {
     Undefined = 0,
 
-    [Description("Acquisition and Works")]
+    [Description("Acquisition and works")]
     AcquisitionAndWorks,
 
-    [Description("Off The Shelf")]
+    [Description("Off the shelf")]
     OffTheShelf,
 
-    [Description("Works Only")]
+    [Description("Works only")]
     WorksOnly,
 
-    [Description("Works Only")]
+    [Description("Works only")]
     WorksOnlyRehab,
 
-    [Description("Land Inclusive Package (package deal)")]
+    [Description("Land inclusive package (package deal)")]
     LandInclusivePackage,
 
-    [Description("Acquisition and Works Rehab")]
+    [Description("Acquisition and works rehab")]
     AcquisitionAndWorksRehab,
 
     [Description("Existing satisfactory")]
