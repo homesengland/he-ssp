@@ -13,6 +13,7 @@ using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using LocalAuthority = Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
 using Section106 = HE.Investment.AHP.Domain.Site.ValueObjects.Section106;
+using SiteTypeDetails = HE.Investment.AHP.Domain.Site.ValueObjects.SiteTypeDetails;
 
 namespace HE.Investment.AHP.Domain.Site.Entities;
 
@@ -29,6 +30,7 @@ public class SiteEntity : DomainEntity, IQuestion
         NumberOfGreenLights? numberOfGreenLights,
         TenderingStatusDetails tenderingStatusDetails,
         StrategicSiteDetails strategicSiteDetails,
+        SiteTypeDetails siteTypeDetails,
         LocalAuthority? localAuthority = null,
         BuildingForHealthyLifeType buildingForHealthyLife = BuildingForHealthyLifeType.Undefined)
     {
@@ -43,6 +45,7 @@ public class SiteEntity : DomainEntity, IQuestion
         NumberOfGreenLights = numberOfGreenLights;
         TenderingStatusDetails = tenderingStatusDetails;
         StrategicSiteDetails = strategicSiteDetails;
+        SiteTypeDetails = siteTypeDetails;
     }
 
     public SiteEntity()
@@ -55,6 +58,7 @@ public class SiteEntity : DomainEntity, IQuestion
         NationalDesignGuidePriorities = new NationalDesignGuidePriorities();
         TenderingStatusDetails = new TenderingStatusDetails();
         StrategicSiteDetails = new StrategicSiteDetails();
+        SiteTypeDetails = new SiteTypeDetails();
     }
 
     public SiteId Id { get; set; }
@@ -78,6 +82,8 @@ public class SiteEntity : DomainEntity, IQuestion
     public TenderingStatusDetails TenderingStatusDetails { get; private set; }
 
     public StrategicSiteDetails StrategicSiteDetails { get; private set; }
+
+    public SiteTypeDetails SiteTypeDetails { get; private set; }
 
     public async Task ProvideName(SiteName siteName, ISiteNameExist siteNameExist, CancellationToken cancellationToken)
     {
@@ -131,13 +137,19 @@ public class SiteEntity : DomainEntity, IQuestion
         StrategicSiteDetails = _modificationTracker.Change(StrategicSiteDetails, details);
     }
 
+    public void ProvideSiteTypeDetails(SiteTypeDetails details)
+    {
+        SiteTypeDetails = _modificationTracker.Change(SiteTypeDetails, details);
+    }
+
     public bool IsAnswered()
     {
         return PlanningDetails.IsAnswered() &&
                TenderingStatusDetails.IsAnswered() &&
-               StrategicSiteDetails.IsAnswered()
-               && BuildingForHealthyLife != BuildingForHealthyLifeType.Undefined
-               && BuildConditionalRouteCompletionPredicates().All(isCompleted => isCompleted());
+               StrategicSiteDetails.IsAnswered() &&
+               SiteTypeDetails.IsAnswered() &&
+               BuildingForHealthyLife != BuildingForHealthyLifeType.Undefined &&
+               BuildConditionalRouteCompletionPredicates().All(isCompleted => isCompleted());
     }
 
     private IEnumerable<Func<bool>> BuildConditionalRouteCompletionPredicates()

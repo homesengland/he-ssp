@@ -273,7 +273,7 @@ public class Order01StartAhpSite : AhpIntegrationTest
 
     [Fact(Skip = AhpConfig.SkipTest)]
     [Order(18)]
-    public async Task Order18_ShouldProvideSiteStrategicSite()
+    public async Task Order18_ShouldProvideStrategicSite()
     {
         await TestQuestionPage(
             SitePagesUrl.SiteStrategicSite(SiteData.SiteId),

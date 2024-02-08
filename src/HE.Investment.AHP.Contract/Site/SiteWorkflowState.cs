@@ -26,5 +26,6 @@ public enum SiteWorkflowState
     ContractorDetails,
     IntentionToWorkWithSme,
     StrategicSite,
+    SiteType,
     CheckAnswers,
 }

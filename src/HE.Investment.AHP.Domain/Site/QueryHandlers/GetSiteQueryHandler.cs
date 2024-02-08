@@ -8,6 +8,7 @@ using HE.Investment.AHP.Domain.Site.ValueObjects.StrategicSite;
 using HE.Investment.AHP.Domain.Site.ValueObjects.TenderingStatus;
 using HE.Investments.Account.Shared;
 using MediatR;
+using SiteTypeDetails = HE.Investment.AHP.Contract.Site.SiteTypeDetails;
 
 namespace HE.Investment.AHP.Domain.Site.QueryHandlers;
 
@@ -51,6 +52,7 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
             NumberOfGreenLights = site.NumberOfGreenLights?.ToString(),
             TenderingStatusDetails = CreateSiteTenderingStatusDetails(site.TenderingStatusDetails),
             StrategicSiteDetails = CreateStrategicSiteDetails(site.StrategicSiteDetails),
+            SiteTypeDetails = CreateSiteTypeDetails(site.SiteTypeDetails),
         };
     }
 
@@ -86,5 +88,13 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
         return new StrategicSite(
             details.IsStrategicSite,
             details.SiteName?.Value);
+    }
+
+    private SiteTypeDetails CreateSiteTypeDetails(ValueObjects.SiteTypeDetails details)
+    {
+        return new SiteTypeDetails(
+            details.SiteType,
+            details.IsOnGreenBelt,
+            details.IsRegenerationSite);
     }
 }
