@@ -5,7 +5,7 @@ using HE.Investments.Common.Validators;
 
 namespace HE.Investment.AHP.Domain.Delivery.Tranches;
 
-public class MilestoneTranches : ValueObject, IQuestion
+public class MilestoneTranches : ValueObject
 {
     private const string UiFieldName = "Value";
 
@@ -31,11 +31,12 @@ public class MilestoneTranches : ValueObject, IQuestion
 
     public bool IsAmendRequested => Acquisition.IsProvided() || StartOnSite.IsProvided() || Completion.IsProvided();
 
-    public bool IsNotProvided => Acquisition.IsNotProvided() && StartOnSite.IsNotProvided() && Completion.IsNotProvided();
-
     public decimal MinimalCompletionTranche { get; }
 
     public decimal MaxTranche { get; }
+
+    public bool IsSumUpTo => GrantApportioned ==
+                             Acquisition.GetValueOrDefault() + StartOnSite.GetValueOrDefault() + Completion.GetValueOrDefault();
 
     public MilestoneTranches WithGrantApportioned(decimal grantApportioned)
     {
@@ -72,10 +73,9 @@ public class MilestoneTranches : ValueObject, IQuestion
         return new MilestoneTranches(Acquisition, startOnSite, Completion, GrantApportioned);
     }
 
-    public bool IsAnswered() => Acquisition.IsProvided() && StartOnSite.IsProvided() && Completion.IsProvided();
-
     protected override IEnumerable<object?> GetAtomicValues()
     {
+        yield return GrantApportioned;
         yield return Acquisition;
         yield return StartOnSite;
         yield return Completion;
