@@ -1,22 +1,17 @@
-using HE.Investment.AHP.Contract.Application;
-using HE.Investment.AHP.Contract.Delivery.Enums;
-using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
-using HE.Investments.Account.Shared;
 
 namespace HE.Investment.AHP.Domain.Tests.Delivery.Entities.TestDataBuilders;
 
 public class DeliveryPhaseMilestonesBuilder
 {
-    private OrganisationBasicInfo _testOrganisation = new OrganisationBasicInfoBuilder().Build();
-    private BuildActivity _buildActivity = new(Tenure.OlderPersonsSharedOwnership);
+    private bool _isOnlyCompletionMilestone;
     private AcquisitionMilestoneDetails? _acquisitionMilestoneDetails = new AcquisitionMilestoneDetailsBuilder().Build();
     private StartOnSiteMilestoneDetails? _startOnSiteMilestoneDetails = new StartOnSiteMilestoneDetailsBuilder().Build();
     private CompletionMilestoneDetails? _completionMilestoneDetails = new CompletionMilestoneDetailsBuilder().Build();
 
-    public DeliveryPhaseMilestonesBuilder WithUnregisteredBody()
+    public DeliveryPhaseMilestonesBuilder WithIsOnlyCompletionMilestone(bool isOnlyCompletionMilestone = true)
     {
-        _testOrganisation = new OrganisationBasicInfoBuilder().WithUnregisteredBody().Build();
+        _isOnlyCompletionMilestone = isOnlyCompletionMilestone;
         return this;
     }
 
@@ -32,21 +27,9 @@ public class DeliveryPhaseMilestonesBuilder
         return this;
     }
 
-    public DeliveryPhaseMilestonesBuilder WithStartOnSiteMilestoneDetails(StartOnSiteMilestoneDetails milestoneDetails)
-    {
-        _startOnSiteMilestoneDetails = milestoneDetails;
-        return this;
-    }
-
     public DeliveryPhaseMilestonesBuilder WithoutStartOnSiteMilestoneDetails()
     {
         _startOnSiteMilestoneDetails = null;
-        return this;
-    }
-
-    public DeliveryPhaseMilestonesBuilder WithCompletionMilestoneDetails(CompletionMilestoneDetails milestoneDetails)
-    {
-        _completionMilestoneDetails = milestoneDetails;
         return this;
     }
 
@@ -81,17 +64,10 @@ public class DeliveryPhaseMilestonesBuilder
         return this;
     }
 
-    public DeliveryPhaseMilestonesBuilder WithBuildActivityOnlyForCompletionMilestone()
-    {
-        _buildActivity = new BuildActivity(Tenure.AffordableRent, TypeOfHomes.Rehab, BuildActivityType.ExistingSatisfactory);
-        return this;
-    }
-
     public DeliveryPhaseMilestones Build()
     {
         return new DeliveryPhaseMilestones(
-            _testOrganisation,
-            _buildActivity,
+            _isOnlyCompletionMilestone,
             _acquisitionMilestoneDetails,
             _startOnSiteMilestoneDetails,
             _completionMilestoneDetails);

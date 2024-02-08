@@ -18,7 +18,6 @@ using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Routing;
-using HE.Investments.Loans.Common.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -247,7 +246,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         DeliveryPhaseDetails model,
         CancellationToken cancellationToken)
     {
-        if (model.Tranches?.IsAmendable ?? false)
+        if (model.Tranches?.ShouldBeAmended ?? false)
         {
             return await ExecuteCommand(
                 new ClaimMilestonesCommand(

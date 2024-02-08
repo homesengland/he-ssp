@@ -13,7 +13,7 @@
     var applicationId = this.GetApplicationIdFromRoute();
     var title = DeliveryPageTitles.SummaryOfDelivery;
     ViewData["Title"] = title;
-    var isAmendable = Model.Tranches?.IsAmendable ?? false;
+    var isAmendable = Model.Tranches?.ShouldBeAmended ?? false;
     var summaryOfDelivery = Model.Tranches?.SummaryOfDelivery;
 }
 
@@ -23,7 +23,7 @@
     <form asp-controller="DeliveryPhase" asp-action="SummaryOfDelivery" asp-method="post" asp-route-redirect="@Context.Request.Query["redirect"]" novalidate>
         <vc:page-header caption="@($"{Model.ApplicationName} - {Model.Name}")" title="@title"/>
 
-        @Html.HiddenFor(x => x.Tranches!.IsAmendable)
+        @Html.HiddenFor(x => x.Tranches!.ShouldBeAmended)
         @Html.HiddenFor(x => x.Tranches!.SummaryOfDeliveryAmend)
         <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0">
             @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
@@ -80,7 +80,7 @@
                 </thead >
                 <tbody class="govuk-table__body">
                 @{
-                    if (Model is { IsUnregisteredBody: false, IsOnlyCompletionMilestone: false })
+                    if (Model is { IsOnlyCompletionMilestone: false })
                     {
                         @await Html.PartialAsync(
                             "~/Views/DeliveryPhase/Partials/_SummaryOfDeliveryRow.cshtml",

@@ -30,7 +30,11 @@ public class ProvideAdditionalPaymentRequestTests
     {
         // given
         var isPaymentRequested = new IsAdditionalPaymentRequested(isAdditionalPaymentRequested);
-        var testCandidate = new DeliveryPhaseEntityBuilder().WithUnregisteredBody().Build();
+        var testCandidate = new DeliveryPhaseEntityBuilder()
+            .WithUnregisteredBody()
+            .WithoutAcquisitionMilestone()
+            .WithoutStartOnSiteMilestone()
+            .Build();
 
         // when
         testCandidate.ProvideAdditionalPaymentRequest(isPaymentRequested);
@@ -47,7 +51,12 @@ public class ProvideAdditionalPaymentRequestTests
     {
         // given
         var isPaymentRequested = new IsAdditionalPaymentRequested(isAdditionalPaymentRequested);
-        var testCandidate = new DeliveryPhaseEntityBuilder().WithUnregisteredBody().WithAdditionalPaymentRequested(isPaymentRequested).Build();
+        var testCandidate = new DeliveryPhaseEntityBuilder()
+            .WithUnregisteredBody()
+            .WithAdditionalPaymentRequested(isPaymentRequested)
+            .WithoutAcquisitionMilestone()
+            .WithoutStartOnSiteMilestone()
+            .Build();
 
         // when
         testCandidate.ProvideAdditionalPaymentRequest(isPaymentRequested);

@@ -8,11 +8,11 @@ namespace HE.Investment.AHP.Domain.Tests.Delivery.ValueObjects.DeliveryPhaseMile
 public class CreateTests
 {
     [Fact]
-    public void ShouldThrowException_WhenAcquisitionMilestoneDetailsProvidedForUnregisteredBody()
+    public void ShouldThrowException_WhenAcquisitionMilestoneDetailsProvidedAndIsOnlyCompletionMilestone()
     {
         // given && when
         var action = () => new DeliveryPhaseMilestonesBuilder()
-            .WithUnregisteredBody()
+            .WithIsOnlyCompletionMilestone()
             .Build();
 
         // then
@@ -20,37 +20,12 @@ public class CreateTests
     }
 
     [Fact]
-    public void ShouldThrowException_WhenAcquisitionMilestoneDetailsProvidedFor()
+    public void ShouldThrowException_WhenStartOnSiteMilestoneDetailsProvidedAndIsOnlyCompletionMilestone()
     {
         // given && when
         var action = () => new DeliveryPhaseMilestonesBuilder()
-            .WithBuildActivityOnlyForCompletionMilestone()
-            .Build();
-
-        // then
-        AssertException(action, "Cannot provide Acquisition Milestone details.");
-    }
-
-    [Fact]
-    public void ShouldThrowException_WhenStartOnSiteMilestoneDetailsProvidedForUnregisteredBody()
-    {
-        // given && when
-        var action = () => new DeliveryPhaseMilestonesBuilder()
-            .WithUnregisteredBody()
+            .WithIsOnlyCompletionMilestone()
             .WithoutAcquisitionMilestoneDetails()
-            .Build();
-
-        // then
-        AssertException(action, "Cannot provide Start On Site Milestone details.");
-    }
-
-    [Fact]
-    public void ShouldThrowException_WhenStartOnSiteMilestoneDetailsProvidedFor()
-    {
-        // given && when
-        var action = () => new DeliveryPhaseMilestonesBuilder()
-            .WithoutAcquisitionMilestoneDetails()
-            .WithBuildActivityOnlyForCompletionMilestone()
             .Build();
 
         // then

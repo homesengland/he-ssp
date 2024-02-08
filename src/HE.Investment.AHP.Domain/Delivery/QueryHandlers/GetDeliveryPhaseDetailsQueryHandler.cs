@@ -4,10 +4,7 @@ using HE.Investment.AHP.Contract.Delivery.Queries;
 using HE.Investment.AHP.Domain.Common.Mappers;
 using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.Repositories;
-using HE.Investment.AHP.Domain.Delivery.ValueObjects;
-using HE.Investment.AHP.Domain.Scheme.Repositories;
 using HE.Investments.Account.Shared;
-using HE.Investments.Account.Shared.User;
 using MediatR;
 using SummaryOfDelivery = HE.Investment.AHP.Contract.Delivery.MilestonePayments.SummaryOfDelivery;
 
@@ -49,7 +46,7 @@ public class GetDeliveryPhaseDetailsQueryHandler : IRequestHandler<GetDeliveryPh
             deliveryPhase.ReconfiguringExisting,
             deliveryPhase.TotalHomesToBeDeliveredInThisPhase,
             new DeliveryPhaseTranchesDto(
-                deliveryPhase.Tranches.AmendmentsRequested,
+                deliveryPhase.Tranches.ShouldBeAmended,
                 request.IncludeSummary ? GetSummaryOfDelivery(deliveryPhase) : null,
                 request.IncludeSummary ? GetSummaryOfDeliveryAmend(deliveryPhase) : null),
             deliveryPhase.Organisation.IsUnregisteredBody,

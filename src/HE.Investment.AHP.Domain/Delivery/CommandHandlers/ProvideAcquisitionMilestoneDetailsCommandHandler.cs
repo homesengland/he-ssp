@@ -34,8 +34,7 @@ public class ProvideAcquisitionMilestoneDetailsCommandHandler : UpdateDeliveryPh
         operationResult.CheckErrors();
 
         var milestones = new DeliveryPhaseMilestones(
-            entity.Organisation,
-            entity.BuildActivity,
+            entity.IsOnlyCompletionMilestone,
             milestone,
             entity.DeliveryPhaseMilestones.StartOnSiteMilestone,
             entity.DeliveryPhaseMilestones.CompletionMilestone);

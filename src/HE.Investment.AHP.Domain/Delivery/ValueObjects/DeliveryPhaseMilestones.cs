@@ -1,4 +1,3 @@
-using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
@@ -7,43 +6,34 @@ namespace HE.Investment.AHP.Domain.Delivery.ValueObjects;
 
 public class DeliveryPhaseMilestones : ValueObject, IQuestion
 {
-    private readonly OrganisationBasicInfo _organisation;
-    private readonly BuildActivity _buildActivity;
-
     public DeliveryPhaseMilestones(
-        OrganisationBasicInfo organisation,
-        BuildActivity buildActivity,
+        bool isOnlyCompletionMilestone,
         AcquisitionMilestoneDetails? acquisitionMilestone = null,
         StartOnSiteMilestoneDetails? startOnSiteMilestone = null,
         CompletionMilestoneDetails? completionMilestone = null)
     {
-        _organisation = organisation;
-        _buildActivity = buildActivity;
-
-        ValidateDatesForUnregisteredBody(acquisitionMilestone, startOnSiteMilestone);
-
+        IsOnlyCompletionMilestone = isOnlyCompletionMilestone;
         AcquisitionMilestone = acquisitionMilestone;
         StartOnSiteMilestone = startOnSiteMilestone;
         CompletionMilestone = completionMilestone;
+
+        ValidateDatesForOnlyCompletionMilestone(acquisitionMilestone, startOnSiteMilestone);
     }
 
     public DeliveryPhaseMilestones(
-        OrganisationBasicInfo organisation,
-        BuildActivity buildActivity,
+        bool isOnlyCompletionMilestone,
         DeliveryPhaseMilestones milestones)
     {
-        _organisation = organisation;
-        _buildActivity = buildActivity;
-
-        if (!buildActivity.IsOffTheShelfOrExistingSatisfactory)
+        if (!isOnlyCompletionMilestone)
         {
             AcquisitionMilestone = milestones.AcquisitionMilestone;
             StartOnSiteMilestone = milestones.StartOnSiteMilestone;
         }
 
+        IsOnlyCompletionMilestone = isOnlyCompletionMilestone;
         CompletionMilestone = milestones.CompletionMilestone;
 
-        ValidateDatesForUnregisteredBody(AcquisitionMilestone, StartOnSiteMilestone);
+        ValidateDatesForOnlyCompletionMilestone(AcquisitionMilestone, StartOnSiteMilestone);
     }
 
     public AcquisitionMilestoneDetails? AcquisitionMilestone { get; }
@@ -52,11 +42,11 @@ public class DeliveryPhaseMilestones : ValueObject, IQuestion
 
     public CompletionMilestoneDetails? CompletionMilestone { get; }
 
-    public bool IsOnlyCompletionMilestone => _buildActivity.IsOffTheShelfOrExistingSatisfactory;
+    public bool IsOnlyCompletionMilestone { get; }
 
     public bool IsAnswered()
     {
-        if (_organisation.IsUnregisteredBody || _buildActivity.IsOffTheShelfOrExistingSatisfactory)
+        if (IsOnlyCompletionMilestone)
         {
             return CompletionMilestone != null && CompletionMilestone.IsAnswered();
         }
@@ -73,8 +63,7 @@ public class DeliveryPhaseMilestones : ValueObject, IQuestion
 
     protected override IEnumerable<object?> GetAtomicValues()
     {
-        yield return _organisation;
-        yield return _buildActivity;
+        yield return IsOnlyCompletionMilestone;
         yield return AcquisitionMilestone;
         yield return StartOnSiteMilestone;
         yield return CompletionMilestone;
@@ -85,7 +74,7 @@ public class DeliveryPhaseMilestones : ValueObject, IQuestion
         StartOnSiteMilestoneDetails? startOnSiteMilestoneDetails,
         CompletionMilestoneDetails? completionMilestoneDetails)
     {
-        if (!_organisation.IsUnregisteredBody && !_buildActivity.IsOffTheShelfOrExistingSatisfactory)
+        if (!IsOnlyCompletionMilestone)
         {
             ValidateMilestonePaymentDate(
                 acquisitionMilestoneDetails?.PaymentDate,
@@ -117,17 +106,17 @@ public class DeliveryPhaseMilestones : ValueObject, IQuestion
         }
     }
 
-    private void ValidateDatesForUnregisteredBody(
+    private void ValidateDatesForOnlyCompletionMilestone(
         AcquisitionMilestoneDetails? acquisitionMilestone,
         StartOnSiteMilestoneDetails? startOnSiteMilestone)
     {
-        if ((_organisation.IsUnregisteredBody || _buildActivity.IsOffTheShelfOrExistingSatisfactory) && acquisitionMilestone.IsProvided())
+        if (IsOnlyCompletionMilestone && acquisitionMilestone.IsProvided())
         {
             throw new DomainValidationException(
                 "Cannot provide Acquisition Milestone details.");
         }
 
-        if ((_organisation.IsUnregisteredBody || _buildActivity.IsOffTheShelfOrExistingSatisfactory) && startOnSiteMilestone.IsProvided())
+        if (IsOnlyCompletionMilestone && startOnSiteMilestone.IsProvided())
         {
             throw new DomainValidationException(
                 "Cannot provide Start On Site Milestone details.");

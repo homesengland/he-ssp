@@ -1,4 +1,3 @@
-using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investments.Common.Contract;
@@ -13,6 +12,8 @@ public class DeliveryPhaseTranches : IQuestion
 {
     private readonly ModificationTracker _modificationTracker = new();
 
+    private readonly bool _amendmentsRequested;
+
     public DeliveryPhaseTranches(
         DeliveryPhaseId id,
         ApplicationBasicInfo applicationBasicInfo,
@@ -23,7 +24,7 @@ public class DeliveryPhaseTranches : IQuestion
     {
         Id = id;
         ApplicationBasicInfo = applicationBasicInfo;
-        AmendmentsRequested = amendmentsRequested;
+        _amendmentsRequested = amendmentsRequested;
         MilestoneTranches = milestoneTranches.WithGrantApportioned(grantApportioned);
         IsOneTranche = isOneTranche;
     }
@@ -38,7 +39,7 @@ public class DeliveryPhaseTranches : IQuestion
 
     public bool? ClaimMilestone { get; private set; }
 
-    public bool AmendmentsRequested { get; }
+    public bool ShouldBeAmended => _amendmentsRequested && ApplicationBasicInfo.Status.IsIn(ApplicationStatus.ReferredBackToApplicant);
 
     public bool IsModified => _modificationTracker.IsModified;
 
@@ -104,7 +105,7 @@ public class DeliveryPhaseTranches : IQuestion
 
     public bool IsAnswered()
     {
-        if (!AmendmentsRequested)
+        if (!ShouldBeAmended)
         {
             return true;
         }
@@ -114,9 +115,9 @@ public class DeliveryPhaseTranches : IQuestion
 
     private void CheckIfTranchesCanBeAmended()
     {
-        if (!AmendmentsRequested || ApplicationBasicInfo.Status.IsNotIn(ApplicationStatus.ReferredBackToApplicant))
+        if (!ShouldBeAmended)
         {
-            throw new DomainValidationException("Delivery Phase Tranches cannot be amendment");
+            throw new DomainValidationException("Delivery Phase Tranches cannot be amended");
         }
     }
 }

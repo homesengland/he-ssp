@@ -17,12 +17,9 @@ public class MapToDtoTests : TestBase<DeliveryPhaseCrmMapper>
             .WithId("123123")
             .WithName("my phase")
             .WithReconfiguringExisting()
-            .WithDeliveryPhaseMilestones(
-                new DeliveryPhaseMilestonesBuilder()
-                    .WithoutAcquisitionMilestoneDetails()
-                    .WithoutStartOnSiteMilestoneDetails()
-                    .WithoutCompletionMilestoneDetails()
-                    .Build())
+            .WithoutAcquisitionMilestone()
+            .WithoutStartOnSiteMilestone()
+            .WithoutCompletionMilestone()
             .Build();
 
         // when
@@ -74,6 +71,8 @@ public class MapToDtoTests : TestBase<DeliveryPhaseCrmMapper>
         // given
         var entity = new DeliveryPhaseEntityBuilder()
             .WithRehabBuildActivity(buildActivityType)
+            .WithoutStartOnSiteMilestone()
+            .WithoutAcquisitionMilestone()
             .Build();
 
         // when
@@ -94,6 +93,8 @@ public class MapToDtoTests : TestBase<DeliveryPhaseCrmMapper>
         // given
         var entity = new DeliveryPhaseEntityBuilder()
             .WithNewBuildActivity(buildActivityType)
+            .WithoutAcquisitionMilestone()
+            .WithoutStartOnSiteMilestone()
             .Build();
 
         // when
@@ -128,18 +129,15 @@ public class MapToDtoTests : TestBase<DeliveryPhaseCrmMapper>
         // given
         var today = new DateOnly(2024, 01, 28);
         var entity = new DeliveryPhaseEntityBuilder()
-            .WithDeliveryPhaseMilestones(
-                new DeliveryPhaseMilestonesBuilder()
-                    .WithAcquisitionMilestoneDetails(new AcquisitionMilestoneDetailsBuilder().WithAcquisitionDate(today)
-                        .WithPaymentDate(today.AddDays(1))
-                        .Build())
-                    .WithStartOnSiteMilestoneDetails(new StartOnSiteMilestoneDetailsBuilder().WithStartOnSiteDate(today.AddDays(2))
-                        .WithPaymentDate(today.AddDays(3))
-                        .Build())
-                    .WithCompletionMilestoneDetails(new CompletionMilestoneDetailsBuilder().WithCompletionDate(today.AddDays(4))
-                        .WithPaymentDate(today.AddDays(5))
-                        .Build())
-                    .Build())
+            .WithAcquisitionMilestone(new AcquisitionMilestoneDetailsBuilder().WithAcquisitionDate(today)
+                .WithPaymentDate(today.AddDays(1))
+                .Build())
+            .WithStartOnSiteMilestone(new StartOnSiteMilestoneDetailsBuilder().WithStartOnSiteDate(today.AddDays(2))
+                .WithPaymentDate(today.AddDays(3))
+                .Build())
+            .WithCompletionMilestone(new CompletionMilestoneDetailsBuilder().WithCompletionDate(today.AddDays(4))
+                .WithPaymentDate(today.AddDays(5))
+                .Build())
             .Build();
 
         // when

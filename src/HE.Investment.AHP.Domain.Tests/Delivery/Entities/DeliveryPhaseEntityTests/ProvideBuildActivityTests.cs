@@ -14,7 +14,8 @@ public class ProvideBuildActivityTests
         var testCandidate = new DeliveryPhaseEntityBuilder()
             .WithTypeOfHomes(TypeOfHomes.Rehab)
             .WithRehabBuildActivity(BuildActivityType.Reimprovement)
-            .WithDeliveryPhaseMilestones()
+            .WithAcquisitionMilestone(new AcquisitionMilestoneDetailsBuilder().Build())
+            .WithStartOnSiteMilestone(new StartOnSiteMilestoneDetailsBuilder().Build())
             .Build();
 
         var newBuildActivity = new BuildActivity(testCandidate.Application.Tenure, TypeOfHomes.Rehab, BuildActivityType.ExistingSatisfactory);
@@ -36,7 +37,8 @@ public class ProvideBuildActivityTests
         var testCandidate = new DeliveryPhaseEntityBuilder()
             .WithTypeOfHomes(TypeOfHomes.Rehab)
             .WithRehabBuildActivity(BuildActivityType.Reimprovement)
-            .WithDeliveryPhaseMilestones()
+            .WithAcquisitionMilestone(new AcquisitionMilestoneDetailsBuilder().Build())
+            .WithStartOnSiteMilestone(new StartOnSiteMilestoneDetailsBuilder().Build())
             .Build();
 
         // when

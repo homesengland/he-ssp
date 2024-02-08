@@ -46,6 +46,8 @@ public class GetSummaryOfDeliveryTests
             .WithHomesToBeDelivered(10)
             .WithSchemeFunding(requestedFunding, 10)
             .WithMilestoneFramework(new MilestoneFramework(0.35m, 0.25m, 0.4m))
+            .WithoutAcquisitionMilestone()
+            .WithoutStartOnSiteMilestone()
             .Build();
 
         // when
@@ -70,6 +72,8 @@ public class GetSummaryOfDeliveryTests
             .WithHomesToBeDelivered(10)
             .WithSchemeFunding(requestedFunding, 10)
             .WithMilestoneFramework(new MilestoneFramework(0.35m, 0.25m, 0.4m))
+            .WithoutAcquisitionMilestone()
+            .WithoutStartOnSiteMilestone()
             .Build();
 
         // when

@@ -34,8 +34,6 @@ public class DeliveryPhaseEntityBuilder
 
     private OrganisationBasicInfo _organisationBasicInfo = new OrganisationBasicInfoBuilder().Build();
 
-    private DeliveryPhaseMilestones? _deliveryPhaseMilestones = new DeliveryPhaseMilestonesBuilder().Build();
-
     private IsAdditionalPaymentRequested? _isAdditionalPaymentRequested;
 
     private TypeOfHomes? _typeOfHomes = TypeOfHomes.NewBuild;
@@ -45,6 +43,12 @@ public class DeliveryPhaseEntityBuilder
     private bool? _reconfigureExisting;
 
     private SchemeFunding _schemeFunding = new(1_000_000, 15);
+
+    private AcquisitionMilestoneDetails? _acquisitionMilestone = new AcquisitionMilestoneDetailsBuilder().Build();
+
+    private StartOnSiteMilestoneDetails? _startOnSiteMilestone = new StartOnSiteMilestoneDetailsBuilder().Build();
+
+    private CompletionMilestoneDetails? _completionMilestone = new CompletionMilestoneDetailsBuilder().Build();
 
     public DeliveryPhaseEntityBuilder WithId(string id)
     {
@@ -79,12 +83,6 @@ public class DeliveryPhaseEntityBuilder
     public DeliveryPhaseEntityBuilder WithUnregisteredBody()
     {
         _organisationBasicInfo = new OrganisationBasicInfoBuilder().WithUnregisteredBody().Build();
-        return this;
-    }
-
-    public DeliveryPhaseEntityBuilder WithDeliveryPhaseMilestones(DeliveryPhaseMilestones? milestones = null)
-    {
-        _deliveryPhaseMilestones = milestones ?? new DeliveryPhaseMilestonesBuilder().Build();
         return this;
     }
 
@@ -146,6 +144,42 @@ public class DeliveryPhaseEntityBuilder
         return this;
     }
 
+    public DeliveryPhaseEntityBuilder WithAcquisitionMilestone(AcquisitionMilestoneDetails acquisitionMilestone)
+    {
+        _acquisitionMilestone = acquisitionMilestone;
+        return this;
+    }
+
+    public DeliveryPhaseEntityBuilder WithoutAcquisitionMilestone()
+    {
+        _acquisitionMilestone = null;
+        return this;
+    }
+
+    public DeliveryPhaseEntityBuilder WithStartOnSiteMilestone(StartOnSiteMilestoneDetails startOnSiteMilestone)
+    {
+        _startOnSiteMilestone = startOnSiteMilestone;
+        return this;
+    }
+
+    public DeliveryPhaseEntityBuilder WithoutStartOnSiteMilestone()
+    {
+        _startOnSiteMilestone = null;
+        return this;
+    }
+
+    public DeliveryPhaseEntityBuilder WithCompletionMilestone(CompletionMilestoneDetails completionMilestone)
+    {
+        _completionMilestone = completionMilestone;
+        return this;
+    }
+
+    public DeliveryPhaseEntityBuilder WithoutCompletionMilestone()
+    {
+        _completionMilestone = null;
+        return this;
+    }
+
     public DeliveryPhaseEntityBuilder WithMilestoneFramework(MilestoneFramework milestoneFramework)
     {
         _applicationBasicInfo = _applicationBasicInfo with
@@ -172,7 +206,9 @@ public class DeliveryPhaseEntityBuilder
             _buildActivity,
             _reconfigureExisting,
             _homesToDeliver,
-            _deliveryPhaseMilestones ?? new DeliveryPhaseMilestonesBuilder().Build(),
+            _acquisitionMilestone,
+            _startOnSiteMilestone,
+            _completionMilestone,
             new DeliveryPhaseId(_id),
             DateTimeTestData.OctoberDay05Year2023At0858,
             isAdditionalPaymentRequested: _isAdditionalPaymentRequested);

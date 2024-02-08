@@ -1,7 +1,6 @@
 using FluentAssertions;
 using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.Domain.Tests.Delivery.Entities.TestDataBuilders;
-using HE.Investments.Common.Contract.Exceptions;
 
 namespace HE.Investment.AHP.Domain.Tests.Delivery.Entities.DeliveryPhaseEntityTests;
 
@@ -14,8 +13,9 @@ public class ProvideTypeOfHomesTests
         var testCandidate = new DeliveryPhaseEntityBuilder()
             .WithTypeOfHomes(TypeOfHomes.Rehab)
             .WithRehabBuildActivity()
-            .WithDeliveryPhaseMilestones()
             .WithReconfiguringExisting()
+            .WithoutAcquisitionMilestone()
+            .WithoutStartOnSiteMilestone()
             .Build();
 
         // when
@@ -34,8 +34,9 @@ public class ProvideTypeOfHomesTests
         var testCandidate = new DeliveryPhaseEntityBuilder()
                     .WithTypeOfHomes(TypeOfHomes.Rehab)
                     .WithRehabBuildActivity()
-                    .WithDeliveryPhaseMilestones()
                     .WithReconfiguringExisting()
+                    .WithoutAcquisitionMilestone()
+                    .WithoutStartOnSiteMilestone()
                     .Build();
 
         // when
