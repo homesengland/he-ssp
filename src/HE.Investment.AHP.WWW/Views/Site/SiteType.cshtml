@@ -1,0 +1,57 @@
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investment.AHP.Contract.Site
+@using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
+@using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToSitesLink
+@using HE.Investment.AHP.WWW.Views.Site.Const
+@using HE.Investments.Common.WWW.Components.Details
+@using HE.Investments.Common.WWW.Components.RadioList
+@using HE.Investments.Common.WWW.Components.PageHeader
+@using HE.Investments.Common.WWW.Helpers
+@model SiteTypeDetails
+@{
+    ViewData["Title"] = SitePageTitles.SiteType;
+    var details = new DynamicComponentViewModel(
+        nameof(Details),
+        new
+        {
+            title = "What regeneration sites are covered by this funding?",
+            contentText = "Visit our article to find out more information about",
+            linkText = " regeneration funding within 21-26 AHP (opens in a new tab).",
+            linkUrl = "https://www.gov.uk/government/news/turbo-boost-for-estate-regeneration-with-major-change-to-the-affordable-homes-programme"
+        });
+}
+
+<gds-div-grid-column-two-thirds>
+    <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.SiteType"/>
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+    <vc:page-header
+        title="@SitePageTitles.SiteType"
+        caption="@ViewBag.SiteName"
+        hint="If your application concerns existing properties rather than land-led development, this section is still relevant to you. Where we say 'site' or 'land', read 'properties'."/>
+
+    <form asp-controller="Site" asp-action="SiteType" asp-method="post" novalidate>
+
+        <vc:radio-list
+            title="What type of site is this?"
+            hint="Brownfield land is previously developed land. Greenfield land is land that has not been previously been developed."
+            field-name="@nameof(Model.SiteType)"
+            available-options="@SelectListHelper.FromEnumToExtendedList<SiteType>()"
+            value="@Model.SiteType"/>
+
+        <vc:radio-yes-no
+            title="Is this site on a green belt?"
+            hint="Green belts are areas around towns and cities defined in local planning policy, where new development is restricted."
+            field-name="@nameof(Model.IsOnGreenBelt)"
+            value="@Model.IsOnGreenBelt"/>
+
+        <vc:radio-yes-no
+            title="Is this a regeneration site?"
+            additional-content="@details"
+            field-name="@nameof(Model.IsRegenerationSite)"
+            value="@Model.IsRegenerationSite"/>
+
+        <vc:form-button/>
+        <vc:return-to-sites-link/>
+    </form>
+
+</gds-div-grid-column-two-thirds>

@@ -1,6 +1,5 @@
 @using HE.Investment.AHP.Contract.Site;
 @using HE.Investment.AHP.WWW.Models.Site;
-@using HE.Investment.AHP.WWW.Views.Shared.Components.CheckboxListHeader;
 @using HE.Investment.AHP.WWW.Views.Site.Const
 @using HE.Investments.Common.WWW.Components.Details;
 @model HE.Investment.AHP.WWW.Models.Site.NationalDesignGuidePrioritiesModel;
@@ -9,33 +8,32 @@
     ViewData["Title"] = SitePageTitles.NationalDesignGuide;
     var selectedValues = Model.DesignPriorities?.Select(x => x.ToString());
     var details = new DynamicComponentViewModel(nameof(Details),
-    new
+        new
         {
             title = "What is the National Design Guide?",
             contentText = "The National Design Guide sets out the characteristics of well-designed places and demonstrates what good design means in practice. You can read more about the guide in the",
             linkUrl = "https://www.gov.uk/government/publications/national-design-guide",
             linkText = "National Design Guide publication (opens in a new tab)"
         });
-    var checkboxListHeader = new DynamicComponentViewModel(
-        nameof(CheckboxListHeader),
-        new { header = SitePageTitles.NationalDesignGuide, hint="Select all that apply", detailsComponent = details}
-    );
 }
 
 <div class="govuk-grid-column-two-thirds">
-    <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.NationalDesignGuide" />
+    <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.NationalDesignGuide"/>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
-    <vc:page-header caption="@Model.SiteName" />
+    <vc:page-header caption="@Model.SiteName"/>
     <form asp-controller="Site" asp-action="NationalDesignGuide" asp-method="post" novalidate>
 
-        <vc:checkbox-list-with-or field-name="@nameof(Model.DesignPriorities)"
-                                  header-component="@checkboxListHeader"
-                                  available-options="@SiteFormOptions.NationalDesignGuidePrioritiesExceptNone"
-                                  alternative-option="@SiteFormOptions.NationalDesignGuidePrioritiesOnlyNone"
-                                  selected-values="@selectedValues" />
+        <vc:checkbox-list-with-or
+            title="@SitePageTitles.NationalDesignGuide"
+            title-type="InputTitleType.PageHeader"
+            field-name="@nameof(Model.DesignPriorities)"
+            header-component="@details"
+            available-options="@SiteFormOptions.NationalDesignGuidePrioritiesExceptNone"
+            alternative-option="@SiteFormOptions.NationalDesignGuidePrioritiesOnlyNone"
+            selected-values="@selectedValues"/>
 
         @Html.HiddenFor(x => x.SiteName)
-        <vc:form-button />
-        <vc:return-to-sites-link />
+        <vc:form-button/>
+        <vc:return-to-sites-link/>
     </form>
 </div>

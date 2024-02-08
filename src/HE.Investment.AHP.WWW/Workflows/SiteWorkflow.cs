@@ -93,6 +93,7 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             SiteWorkflowState.ContractorDetails => IsConditionalOrUnconditionalWorksContract(),
             SiteWorkflowState.IntentionToWorkWithSme => IsTenderForWorksContractOrContractingHasNotYetBegun(),
             SiteWorkflowState.StrategicSite => true,
+            SiteWorkflowState.SiteType => true,
             SiteWorkflowState.CheckAnswers => true,
             _ => false,
         };

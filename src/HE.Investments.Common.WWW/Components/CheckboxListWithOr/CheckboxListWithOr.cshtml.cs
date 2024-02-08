@@ -14,9 +14,8 @@ public class CheckboxListWithOr : ViewComponent
         IEnumerable<ExtendedSelectListItem> availableOptions,
         ExtendedSelectListItem alternativeOption,
         DynamicComponentViewModel? headerComponent = null,
-        DynamicComponentViewModel? contentComponent = null,
-        string? header = null,
         string? title = null,
+        InputTitleType? titleType = null,
         string? hint = null,
         IEnumerable<string>? selectedValues = null)
     {
@@ -36,6 +35,6 @@ public class CheckboxListWithOr : ViewComponent
             }
         }
 
-        return View("CheckboxListWithOr", (fieldName, headerComponent, header, title, hint, availableOptionsList.AsEnumerable(), alternativeOption));
+        return View("CheckboxListWithOr", (fieldName, title, titleType ?? InputTitleType.InputTitle, headerComponent, hint, availableOptionsList.AsEnumerable(), alternativeOption));
     }
 }

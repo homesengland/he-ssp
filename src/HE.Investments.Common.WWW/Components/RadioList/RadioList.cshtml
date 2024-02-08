@@ -7,7 +7,7 @@
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Fieldset
 @using HE.Investments.Common.WWW.Components;
 
-@model (string fieldName, DynamicComponentViewModel headerComponent, string header, string title, string hint, IEnumerable<ExtendedSelectListItem> availableOptions, string value)
+@model (string fieldName, string title, InputTitleType titleType, DynamicComponentViewModel additionalContent, string hint, IEnumerable<ExtendedSelectListItem> availableOptions, string value)
 
 @{
     var (hasError, radioErrors) = ViewData.ModelState.GetErrors(Model.fieldName);
@@ -16,7 +16,7 @@
 
 <gds-div-form-group class="@groupClass">
     <gds-field-set>
-        <vc:input-list-header header-component="@Model.headerComponent" header="@Model.header" title="@Model.title" hint="@Model.hint"/>
+        <vc:input-list-header title="@Model.title" title-type="@Model.titleType" additional-content="@Model.additionalContent" hint="@Model.hint"/>
 
         <vc:error-message field-name="@Model.fieldName"/>
 

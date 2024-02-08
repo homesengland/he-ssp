@@ -1,36 +1,40 @@
 @using HE.Investments.Common.WWW.Components
 
-@model (DynamicComponentViewModel headerComponent, string header, string title, string hint)
+@model (string title, InputTitleType titleType, DynamicComponentViewModel additionalContent,  string hint)
 
 <gds-legend>
 
-    @* ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract *@
-    @if (Model.headerComponent != null)
+    @if (!string.IsNullOrWhiteSpace(Model.title))
     {
-        <vc:dynamic-component
-            component="@Model.headerComponent"/>
-    }
-    else
-    {
-        @if (!string.IsNullOrWhiteSpace(Model.header))
+        @if (Model.titleType == InputTitleType.PageHeader)
         {
             <gds-h1>
-                @Model.header
+                @Model.title
             </gds-h1>
         }
-
-        @if (!string.IsNullOrWhiteSpace(Model.title))
+        else if (Model.titleType == InputTitleType.InputTitle)
         {
             <gds-h2>
                 @Model.title
             </gds-h2>
         }
-
-        @if (!string.IsNullOrWhiteSpace(Model.hint))
+        else
         {
-            <he-div-hint>
-                @Model.hint
-            </he-div-hint>
+            <gds-p>@Model.title</gds-p>
         }
+    }
+
+    @* ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract *@
+    @if (Model.additionalContent != null)
+    {
+        <vc:dynamic-component
+            component="@Model.additionalContent"/>
+    }
+
+    @if (!string.IsNullOrWhiteSpace(Model.hint))
+    {
+        <he-div-hint>
+            @Model.hint
+        </he-div-hint>
     }
 </gds-legend>

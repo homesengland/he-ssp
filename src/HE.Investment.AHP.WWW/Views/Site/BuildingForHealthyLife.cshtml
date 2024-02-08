@@ -28,7 +28,7 @@
 
     <form asp-controller="Site" asp-action="BuildingForHealthyLife" asp-method="post" novalidate>
         <vc:radio-list
-            header-component="@details"
+            additional-content="@details"
             field-name="@nameof(Model.BuildingForHealthyLife)"
             available-options="@SelectListHelper.FromEnumToExtendedList<BuildingForHealthyLifeType>()"
             value=@Model.BuildingForHealthyLife/>
