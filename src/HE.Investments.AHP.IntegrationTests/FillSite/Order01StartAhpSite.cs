@@ -244,8 +244,20 @@ public class Order01StartAhpSite : AhpIntegrationTest
         await TestQuestionPage(
             SitePagesUrl.SiteContractorDetails(SiteData.SiteId),
             SitePageTitles.ContractorDetails,
-            SitePagesUrl.SiteCheckAnswers(SiteData.SiteId),
+            SitePagesUrl.SiteStrategicSite(SiteData.SiteId),
             (nameof(SiteTenderingStatusDetails.ContractorName), "traktor john deere"),
             (nameof(SiteTenderingStatusDetails.IsSmeContractor), "False"));
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(18)]
+    public async Task Order18_ShouldProvideSiteStrategicSite()
+    {
+        await TestQuestionPage(
+            SitePagesUrl.SiteStrategicSite(SiteData.SiteId),
+            SitePageTitles.StrategicSite,
+            SitePagesUrl.SiteCheckAnswers(SiteData.SiteId),
+            (nameof(StrategicSite.IsStrategicSite), "True"),
+            (nameof(StrategicSite.StrategicSiteName), "super-duper ważna strona"));
     }
 }

@@ -16,7 +16,8 @@ public static class SiteWorkflowFactory
         BuildingForHealthyLifeType buildingForHealthyLife = BuildingForHealthyLifeType.Undefined,
         NumberOfGreenLights? numberOfGreenLights = null,
         IList<NationalDesignGuidePriority>? nationalDesignGuidePriorities = null,
-        SiteTenderingStatusDetails? tenderingStatusDetails = null)
+        SiteTenderingStatusDetails? tenderingStatusDetails = null,
+        StrategicSite? strategicSite = null)
     {
         var site = new SiteModel
         {
@@ -28,6 +29,7 @@ public static class SiteWorkflowFactory
             NationalDesignGuidePriorities = nationalDesignGuidePriorities ?? new List<NationalDesignGuidePriority>(),
             BuildingForHealthyLife = buildingForHealthyLife,
             NumberOfGreenLights = numberOfGreenLights?.ToString(),
+            StrategicSiteDetails = strategicSite ?? new StrategicSite(false, null),
         };
 
         return new SiteWorkflow(currentSiteWorkflowState, site);
