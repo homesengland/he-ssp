@@ -1,6 +1,7 @@
 using System.Globalization;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Delivery;
+using HE.Investment.AHP.Contract.Delivery.MilestonePayments;
 using HE.Investment.AHP.WWW.Controllers;
 using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investments.Common.Contract;
@@ -14,26 +15,9 @@ namespace HE.Investment.AHP.WWW.Models.Delivery.Factories;
 
 public class DeliveryPhaseCheckAnswersViewModelFactory : IDeliveryPhaseCheckAnswersViewModelFactory
 {
-    public IList<SectionSummaryViewModel> CreateSummary(
-        AhpApplicationId applicationId,
-        DeliveryPhaseDetails deliveryPhase,
-        DeliveryPhaseHomes deliveryPhaseHomes,
-        IUrlHelper urlHelper,
-        bool isEditable)
-    {
-        return new List<SectionSummaryViewModel>
-        {
-            CreateDeliveryPhaseSummary(applicationId, deliveryPhase, deliveryPhaseHomes, urlHelper, isEditable),
-            CreateMilestonesSummary(deliveryPhase),
-            CreateMilestonesDatesSummary(
-                applicationId,
-                deliveryPhase,
-                urlHelper,
-                isEditable),
-        };
-    }
+    private delegate string CreateAction(string actionName);
 
-    private static SectionSummaryViewModel CreateDeliveryPhaseSummary(
+    public IList<SectionSummaryViewModel> CreateSummary(
         AhpApplicationId applicationId,
         DeliveryPhaseDetails deliveryPhase,
         DeliveryPhaseHomes deliveryPhaseHomes,
@@ -47,23 +31,41 @@ public class DeliveryPhaseCheckAnswersViewModelFactory : IDeliveryPhaseCheckAnsw
                 new DeliveryPhaseId(deliveryPhase.Id),
                 actionName);
 
+        return new List<SectionSummaryViewModel>
+        {
+            CreateDeliveryPhaseSummary(deliveryPhase, deliveryPhaseHomes, CreateAction, isEditable),
+            CreateMilestonesSummary(deliveryPhase, CreateAction, isEditable),
+            CreateMilestonesDatesSummary(
+                applicationId,
+                deliveryPhase,
+                urlHelper,
+                isEditable),
+        };
+    }
+
+    private static SectionSummaryViewModel CreateDeliveryPhaseSummary(
+        DeliveryPhaseDetails deliveryPhase,
+        DeliveryPhaseHomes deliveryPhaseHomes,
+        CreateAction createAction,
+        bool isEditable)
+    {
         IList<SectionSummaryItemModel> items = new List<SectionSummaryItemModel>
         {
             new(
                 "Phase name",
                 deliveryPhase.Name.ToOneElementList(),
                 IsEditable: isEditable,
-                ActionUrl: CreateAction(nameof(DeliveryPhaseController.Name))),
+                ActionUrl: createAction(nameof(DeliveryPhaseController.Name))),
             new(
                 "Type of homes",
                 deliveryPhase.TypeOfHomes?.GetDescription().ToOneElementList(),
                 IsEditable: isEditable,
-                ActionUrl: CreateAction(nameof(DeliveryPhaseController.Details))),
+                ActionUrl: createAction(nameof(DeliveryPhaseController.Details))),
             new(
                 "Build activity type",
                 deliveryPhase.BuildActivityType?.GetDescription().ToOneElementList(),
                 IsEditable: isEditable,
-                ActionUrl: CreateAction(nameof(DeliveryPhaseController.BuildActivityType))),
+                ActionUrl: createAction(nameof(DeliveryPhaseController.BuildActivityType))),
         };
 
         items.AddWhen(
@@ -71,7 +73,7 @@ public class DeliveryPhaseCheckAnswersViewModelFactory : IDeliveryPhaseCheckAnsw
                 "Reconfiguring existing residential properties",
                 deliveryPhase.ReconfiguringExisting?.ToString().ToOneElementList(),
                 IsEditable: isEditable,
-                ActionUrl: CreateAction(nameof(DeliveryPhaseController.ReconfiguringExisting))),
+                ActionUrl: createAction(nameof(DeliveryPhaseController.ReconfiguringExisting))),
             deliveryPhase.IsReconfiguringExistingNeeded);
 
         foreach (var homeTypesToDeliver in deliveryPhaseHomes.HomeTypesToDeliver)
@@ -80,40 +82,69 @@ public class DeliveryPhaseCheckAnswersViewModelFactory : IDeliveryPhaseCheckAnsw
                 $"Number of homes {homeTypesToDeliver.HomeTypeName}",
                 homeTypesToDeliver.UsedHomes?.ToString(CultureInfo.InvariantCulture).ToOneElementList(),
                 IsEditable: isEditable,
-                ActionUrl: CreateAction(nameof(DeliveryPhaseController.AddHomes))));
+                ActionUrl: createAction(nameof(DeliveryPhaseController.AddHomes))));
         }
 
         return new SectionSummaryViewModel("Delivery phase", items);
     }
 
-    private static SectionSummaryViewModel CreateMilestonesSummary(DeliveryPhaseDetails deliveryPhase)
+    private static SectionSummaryViewModel CreateMilestonesSummary(DeliveryPhaseDetails deliveryPhase, CreateAction createAction, bool isEditable)
     {
-        var summary = deliveryPhase.Tranches?.SummaryOfDelivery;
-        var items = new List<SectionSummaryItemModel>
-        {
-            new(
-                "Grant apportioned to this phase",
-                ((summary?.GrantApportioned).DisplayPoundsPences() ?? "-").ToOneElementList(),
-                IsEditable: false),
-        };
-        items.AddWhen(
-            new(
-                "Acquisition milestone",
-                ((summary?.AcquisitionMilestone).DisplayPoundsPences() ?? "-").ToOneElementList(),
-                IsEditable: false),
-            deliveryPhase is { IsUnregisteredBody: false, IsOnlyCompletionMilestone: false });
-        items.AddWhen(
-            new(
-                "Start on site milestone",
-                ((summary?.StartOnSiteMilestone).DisplayPoundsPences() ?? "-").ToOneElementList(),
-                IsEditable: false),
-            deliveryPhase is { IsUnregisteredBody: false, IsOnlyCompletionMilestone: false });
-        items.Add(new(
-            "Completion milestone",
-            ((summary?.CompletionMilestone).DisplayPoundsPences() ?? "-").ToOneElementList(),
-            IsEditable: false));
+        var summaryItems = deliveryPhase.Tranches?.ShouldBeAmended == true
+            ? CreateMilestoneWithAmendmentSummary(deliveryPhase, deliveryPhase.Tranches?.SummaryOfDeliveryAmend, createAction, isEditable)
+            : CreateMilestone(deliveryPhase, deliveryPhase.Tranches?.SummaryOfDelivery);
 
-        return new SectionSummaryViewModel("Milestone summary", items);
+        return new SectionSummaryViewModel("Milestone summary", summaryItems.ToList());
+    }
+
+    private static IEnumerable<SectionSummaryItemModel> CreateMilestone(DeliveryPhaseDetails deliveryPhase, SummaryOfDelivery? summary)
+    {
+        yield return new("Grant apportioned to this phase", ((summary?.GrantApportioned).DisplayPoundsPences() ?? "-").ToOneElementList(), IsEditable: false);
+
+        if (deliveryPhase is { IsOnlyCompletionMilestone: false })
+        {
+            yield return new("Acquisition milestone", ((summary?.AcquisitionMilestone).DisplayPoundsPences() ?? "-").ToOneElementList(), IsEditable: false);
+        }
+
+        if (deliveryPhase is { IsOnlyCompletionMilestone: false })
+        {
+            yield return new("Start on site milestone", ((summary?.StartOnSiteMilestone).DisplayPoundsPences() ?? "-").ToOneElementList(), IsEditable: false);
+        }
+
+        yield return new("Completion milestone", ((summary?.CompletionMilestone).DisplayPoundsPences() ?? "-").ToOneElementList(), IsEditable: false);
+    }
+
+    private static IEnumerable<SectionSummaryItemModel> CreateMilestoneWithAmendmentSummary(
+        DeliveryPhaseDetails deliveryPhase,
+        SummaryOfDeliveryAmend? summary,
+        CreateAction createAction,
+        bool isEditable)
+    {
+        yield return new("Grant apportioned to this phase", summary?.GrantApportioned.DisplayPoundsPences().ToOneElementList(), IsEditable: false);
+
+        if (deliveryPhase is { IsOnlyCompletionMilestone: false })
+        {
+            yield return new(
+                "Acquisition milestone",
+                summary?.AcquisitionMilestone.DisplayPoundsPences().ToOneElementList(),
+                IsEditable: isEditable,
+                ActionUrl: createAction(nameof(DeliveryPhaseController.SummaryOfDelivery)));
+        }
+
+        if (deliveryPhase is { IsOnlyCompletionMilestone: false })
+        {
+            yield return new(
+                "Start on site milestone",
+                summary?.StartOnSiteMilestone.DisplayPoundsPences().ToOneElementList(),
+                IsEditable: isEditable,
+                ActionUrl: createAction(nameof(DeliveryPhaseController.SummaryOfDelivery)));
+        }
+
+        yield return new(
+            "Completion milestone",
+            summary?.CompletionMilestone.DisplayPoundsPences().ToOneElementList(),
+            IsEditable: isEditable,
+            ActionUrl: createAction(nameof(DeliveryPhaseController.SummaryOfDelivery)));
     }
 
     private static SectionSummaryViewModel CreateMilestonesDatesSummary(
@@ -129,8 +160,6 @@ public class DeliveryPhaseCheckAnswersViewModelFactory : IDeliveryPhaseCheckAnsw
                 new DeliveryPhaseId(deliveryPhase.Id),
                 actionName);
 
-        var showOnlyCompletionMilestone = deliveryPhase.IsUnregisteredBody || deliveryPhase.IsOnlyCompletionMilestone;
-
         var items = new List<SectionSummaryItemModel>();
         items.AddWhen(
             new(
@@ -138,28 +167,28 @@ public class DeliveryPhaseCheckAnswersViewModelFactory : IDeliveryPhaseCheckAnsw
                 FormatDate(deliveryPhase.AcquisitionDate),
                 IsEditable: isEditable,
                 ActionUrl: CreateAction(nameof(DeliveryPhaseController.AcquisitionMilestone))),
-            !showOnlyCompletionMilestone);
+            !deliveryPhase.IsOnlyCompletionMilestone);
         items.AddWhen(
             new(
                 "Forecast acquisition claim date",
                 FormatDate(deliveryPhase.AcquisitionPaymentDate),
                 IsEditable: isEditable,
                 ActionUrl: CreateAction(nameof(DeliveryPhaseController.AcquisitionMilestone))),
-            !showOnlyCompletionMilestone);
+            !deliveryPhase.IsOnlyCompletionMilestone);
         items.AddWhen(
             new(
                 "Start on site date",
                 FormatDate(deliveryPhase.StartOnSiteDate),
                 IsEditable: isEditable,
                 ActionUrl: CreateAction(nameof(DeliveryPhaseController.StartOnSiteMilestone))),
-            !showOnlyCompletionMilestone);
+            !deliveryPhase.IsOnlyCompletionMilestone);
         items.AddWhen(
             new(
                 "Forecast start on site claim date",
                 FormatDate(deliveryPhase.StartOnSitePaymentDate),
                 IsEditable: isEditable,
                 ActionUrl: CreateAction(nameof(DeliveryPhaseController.StartOnSiteMilestone))),
-            !showOnlyCompletionMilestone);
+            !deliveryPhase.IsOnlyCompletionMilestone);
         items.Add(
             new(
                 "Completion date",
@@ -177,7 +206,7 @@ public class DeliveryPhaseCheckAnswersViewModelFactory : IDeliveryPhaseCheckAnsw
                 "Request additional payments",
                 deliveryPhase.IsAdditionalPaymentRequested?.ToString().ToOneElementList(),
                 IsEditable: isEditable,
-                ActionUrl: CreateAction(nameof(DeliveryPhaseController.PracticalCompletionMilestone))),
+                ActionUrl: CreateAction(nameof(DeliveryPhaseController.UnregisteredBodyFollowUp))),
             deliveryPhase.IsUnregisteredBody);
 
         return new SectionSummaryViewModel("Milestones", items);

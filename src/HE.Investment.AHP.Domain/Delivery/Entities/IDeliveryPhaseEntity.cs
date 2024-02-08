@@ -46,6 +46,8 @@ public interface IDeliveryPhaseEntity
 
     public IsAdditionalPaymentRequested? IsAdditionalPaymentRequested { get; }
 
+    bool IsOnlyCompletionMilestone { get; }
+
     Task ProvideDeliveryPhaseMilestones(DeliveryPhaseMilestones milestones, IMilestoneDatesInProgrammeDateRangePolicy policy, CancellationToken cancellationToken);
 
     void ProvideAdditionalPaymentRequest(IsAdditionalPaymentRequested? isAdditionalPaymentRequested);

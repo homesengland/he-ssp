@@ -6,7 +6,6 @@ using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.Tranches;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
-using HE.Investment.AHP.Domain.Programme;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
@@ -54,7 +53,15 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
             buildActivity,
             dto.isReconfigurationOfExistingProperties,
             MapHomesToDeliver(dto.numberOfHomes),
-            MapDeliveryPhaseMilestones(organisation, buildActivity, dto),
+            AcquisitionMilestoneDetails.Create(
+                MapDate(dto.acquisitionDate, AcquisitionDate.Create),
+                MapDate(dto.acquisitionPaymentDate, MilestonePaymentDate.Create)),
+            StartOnSiteMilestoneDetails.Create(
+                MapDate(dto.startOnSiteDate, StartOnSiteDate.Create),
+                MapDate(dto.startOnSitePaymentDate, MilestonePaymentDate.Create)),
+            CompletionMilestoneDetails.Create(
+                MapDate(dto.completionDate, CompletionDate.Create),
+                MapDate(dto.completionPaymentDate, MilestonePaymentDate.Create)),
             new DeliveryPhaseId(dto.id),
             dto.createdOn,
             MapIsAdditionalPaymentRequested(dto.requiresAdditionalPayments));
@@ -204,29 +211,6 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
         }
 
         return dateFactory(new DateOnly(date.Value.Year, date.Value.Month, date.Value.Day));
-    }
-
-    private static DeliveryPhaseMilestones MapDeliveryPhaseMilestones(
-        OrganisationBasicInfo organisation,
-        BuildActivity buildActivity,
-        DeliveryPhaseDto dto)
-    {
-        var acquisitionDetails = AcquisitionMilestoneDetails.Create(
-            MapDate(dto.acquisitionDate, AcquisitionDate.Create),
-            MapDate(dto.acquisitionPaymentDate, MilestonePaymentDate.Create));
-        var startOnSiteDetails = StartOnSiteMilestoneDetails.Create(
-            MapDate(dto.startOnSiteDate, StartOnSiteDate.Create),
-            MapDate(dto.startOnSitePaymentDate, MilestonePaymentDate.Create));
-        var completionDetails = CompletionMilestoneDetails.Create(
-            MapDate(dto.completionDate, CompletionDate.Create),
-            MapDate(dto.completionPaymentDate, MilestonePaymentDate.Create));
-
-        return new DeliveryPhaseMilestones(
-            organisation,
-            buildActivity,
-            acquisitionDetails,
-            startOnSiteDetails,
-            completionDetails);
     }
 
     private static IsAdditionalPaymentRequested? MapIsAdditionalPaymentRequested(string? value)

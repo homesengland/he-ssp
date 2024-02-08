@@ -5,7 +5,6 @@ using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.Policies;
 using HE.Investment.AHP.Domain.Delivery.Tranches;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
-using HE.Investment.AHP.Domain.Programme;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
@@ -35,7 +34,9 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
         BuildActivity? buildActivity = null,
         bool? reconfiguringExisting = null,
         IEnumerable<HomesToDeliverInPhase>? homesToDeliver = null,
-        DeliveryPhaseMilestones? milestones = null,
+        AcquisitionMilestoneDetails? acquisitionMilestone = null,
+        StartOnSiteMilestoneDetails? startOnSiteMilestone = null,
+        CompletionMilestoneDetails? completionMilestone = null,
         DeliveryPhaseId? id = null,
         DateTime? createdOn = null,
         IsAdditionalPaymentRequested? isAdditionalPaymentRequested = null)
@@ -49,7 +50,7 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
         ReconfiguringExisting = reconfiguringExisting;
         Status = status;
         CreatedOn = createdOn;
-        DeliveryPhaseMilestones = milestones ?? new DeliveryPhaseMilestones(organisation, BuildActivity);
+        DeliveryPhaseMilestones = new DeliveryPhaseMilestones(IsOnlyCompletionMilestone, acquisitionMilestone, startOnSiteMilestone, completionMilestone);
         IsAdditionalPaymentRequested = isAdditionalPaymentRequested;
         _homesToDeliver = homesToDeliver?.ToList() ?? new List<HomesToDeliverInPhase>();
         Tranches = new DeliveryPhaseTranches(
@@ -87,7 +88,7 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
 
     public bool IsReadOnly => Application.IsReadOnly();
 
-    public bool IsOnlyCompletionMilestone => Organisation.IsUnregisteredBody || BuildActivity.IsOffTheShelfOrExistingSatisfactory;
+    public bool IsOnlyCompletionMilestone => OnlyCompletionMilestone(Organisation, BuildActivity);
 
     public IEnumerable<HomesToDeliverInPhase> HomesToDeliver => _homesToDeliver;
 
@@ -206,6 +207,8 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
         return TypeOfHomes == Contract.Delivery.Enums.TypeOfHomes.Rehab;
     }
 
+    private static bool OnlyCompletionMilestone(OrganisationBasicInfo organisation, BuildActivity buildActivity) => organisation.IsUnregisteredBody || buildActivity.IsOffTheShelfOrExistingSatisfactory;
+
     private decimal CalculateGrantApportioned(SchemeFunding schemeFunding)
     {
         if (schemeFunding.HousesToDeliver <= 0)
@@ -251,7 +254,7 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
 
     private void ResetBuildActivityDependencies(BuildActivity newBuildActivity)
     {
-        var milestones = new DeliveryPhaseMilestones(Organisation, newBuildActivity, DeliveryPhaseMilestones);
+        var milestones = new DeliveryPhaseMilestones(OnlyCompletionMilestone(Organisation, newBuildActivity), DeliveryPhaseMilestones);
         DeliveryPhaseMilestones = _modificationTracker.Change(DeliveryPhaseMilestones, milestones, MarkAsNotCompleted);
     }
 }

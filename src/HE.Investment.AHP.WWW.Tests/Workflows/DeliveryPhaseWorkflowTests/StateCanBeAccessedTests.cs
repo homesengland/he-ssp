@@ -26,10 +26,10 @@ public class StateCanBeAccessedTests
     [Theory]
     [InlineData(DeliveryPhaseWorkflowState.AcquisitionMilestone)]
     [InlineData(DeliveryPhaseWorkflowState.StartOnSiteMilestone)]
-    public void ShouldReturnFalse_WhenTryToAccessPageAsUnregisteredBody(DeliveryPhaseWorkflowState nextState)
+    public void ShouldReturnFalse_WhenTryToAccessPageAndIsOnlyCompletionMilestone(DeliveryPhaseWorkflowState nextState)
     {
         // given
-        var workflow = BuildWorkflow(DeliveryPhaseWorkflowState.Create, isUnregisteredBody: true);
+        var workflow = BuildWorkflow(DeliveryPhaseWorkflowState.Create, isOnlyCompletionMilestone: true);
 
         // when
         var result = workflow.CanBeAccessed(nextState);

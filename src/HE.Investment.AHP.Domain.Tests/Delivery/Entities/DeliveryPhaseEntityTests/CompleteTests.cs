@@ -31,11 +31,9 @@ public class CompleteTests
         var testCandidate = CreateValidBuilder()
             .WithUnregisteredBody()
             .WithAdditionalPaymentRequested(new IsAdditionalPaymentRequested(true))
-            .WithDeliveryPhaseMilestones(new DeliveryPhaseMilestonesBuilder()
-                .WithUnregisteredBody()
-                .WithoutAcquisitionMilestoneDetails()
-                .WithoutStartOnSiteMilestoneDetails()
-                .Build())
+            .WithCompletionMilestone(new CompletionMilestoneDetailsBuilder().Build())
+            .WithoutAcquisitionMilestone()
+            .WithoutStartOnSiteMilestone()
             .Build();
 
         // when
@@ -69,11 +67,9 @@ public class CompleteTests
         // given
         var testCandidate = CreateValidBuilder()
             .WithUnregisteredBody()
-            .WithDeliveryPhaseMilestones(new DeliveryPhaseMilestonesBuilder()
-                .WithUnregisteredBody()
-                .WithoutAcquisitionMilestoneDetails()
-                .WithoutStartOnSiteMilestoneDetails()
-                .Build())
+            .WithCompletionMilestone(new CompletionMilestoneDetailsBuilder().Build())
+            .WithoutStartOnSiteMilestone()
+            .WithoutAcquisitionMilestone()
             .Build();
 
         // when
@@ -88,7 +84,7 @@ public class CompleteTests
     {
         // given
         var testCandidate = CreateValidBuilder()
-            .WithDeliveryPhaseMilestones(new DeliveryPhaseMilestonesBuilder().WithoutAcquisitionMilestoneDetails().Build())
+            .WithoutAcquisitionMilestone()
             .Build();
 
         // when
