@@ -59,6 +59,7 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             { TenderingStatusDetails: var x } when IsTenderForWorksContractOrContractingHasNotYetBegun() &&
                                                    x.IsIntentionToWorkWithSme.IsNotProvided() => SiteWorkflowState.IntentionToWorkWithSme,
             { StrategicSiteDetails: var x } when x.IsStrategicSite.IsNotProvided() => SiteWorkflowState.StrategicSite,
+            { SiteTypeDetails.IsAnswered: false } => SiteWorkflowState.SiteType,
             _ => SiteWorkflowState.CheckAnswers,
         };
     }
@@ -213,10 +214,14 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             .Permit(Trigger.Back, SiteWorkflowState.TenderingStatus);
 
         _machine.Configure(SiteWorkflowState.StrategicSite)
-            .Permit(Trigger.Continue, SiteWorkflowState.CheckAnswers)
+            .Permit(Trigger.Continue, SiteWorkflowState.SiteType)
             .PermitIf(Trigger.Back, SiteWorkflowState.TenderingStatus, IsNotApplicableOrMissing)
             .PermitIf(Trigger.Back, SiteWorkflowState.IntentionToWorkWithSme, IsTenderForWorksContractOrContractingHasNotYetBegun)
             .PermitIf(Trigger.Back, SiteWorkflowState.ContractorDetails, IsConditionalOrUnconditionalWorksContract);
+
+        _machine.Configure(SiteWorkflowState.SiteType)
+            .Permit(Trigger.Continue, SiteWorkflowState.CheckAnswers)
+            .Permit(Trigger.Back, SiteWorkflowState.StrategicSite);
     }
 
     private bool IsLocalAuthorityProvided() => _siteModel?.LocalAuthority?.Name.IsProvided() ?? false;

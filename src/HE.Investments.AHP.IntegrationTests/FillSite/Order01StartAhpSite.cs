@@ -11,6 +11,7 @@ using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
 using Xunit.Extensions.Ordering;
+using SiteTypeDetails = HE.Investment.AHP.Domain.Site.ValueObjects.SiteTypeDetails;
 
 namespace HE.Investments.AHP.IntegrationTests.FillSite;
 
@@ -272,14 +273,27 @@ public class Order01StartAhpSite : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(18)]
-    public async Task Order18_ShouldProvideStrategicSite()
+    [Order(20)]
+    public async Task Order20_ShouldProvideStrategicSite()
     {
         await TestQuestionPage(
             SitePagesUrl.SiteStrategicSite(SiteData.SiteId),
             SitePageTitles.StrategicSite,
-            SitePagesUrl.SiteCheckAnswers(SiteData.SiteId),
+            SitePagesUrl.SiteType(SiteData.SiteId),
             (nameof(StrategicSite.IsStrategicSite), "True"),
             (nameof(StrategicSite.StrategicSiteName), "super-duper ważna strona"));
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(21)]
+    public async Task Order21_ShouldProvideSiteType()
+    {
+        await TestQuestionPage(
+            SitePagesUrl.SiteType(SiteData.SiteId),
+            SitePageTitles.SiteType,
+            SitePagesUrl.SiteCheckAnswers(SiteData.SiteId),
+            (nameof(SiteTypeDetails.SiteType), SiteType.Brownfield.ToString()),
+            (nameof(SiteTypeDetails.IsOnGreenBelt), "True"),
+            (nameof(SiteTypeDetails.IsRegenerationSite), "False"));
     }
 }

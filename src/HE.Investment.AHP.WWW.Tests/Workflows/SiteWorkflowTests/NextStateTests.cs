@@ -22,7 +22,8 @@ public class NextStateTests
     [InlineData(SiteWorkflowState.NumberOfGreenLights, SiteWorkflowState.TenderingStatus)]
     [InlineData(SiteWorkflowState.ContractorDetails, SiteWorkflowState.StrategicSite)]
     [InlineData(SiteWorkflowState.IntentionToWorkWithSme, SiteWorkflowState.StrategicSite)]
-    [InlineData(SiteWorkflowState.StrategicSite, SiteWorkflowState.CheckAnswers)]
+    [InlineData(SiteWorkflowState.StrategicSite, SiteWorkflowState.SiteType)]
+    [InlineData(SiteWorkflowState.SiteType, SiteWorkflowState.CheckAnswers)]
     public async Task ShouldReturnNextState_WhenContinueTriggerExecuted(SiteWorkflowState current, SiteWorkflowState expectedNext)
     {
         // given
@@ -82,6 +83,7 @@ public class NextStateTests
     [InlineData(SiteWorkflowState.TenderingStatus, SiteWorkflowState.BuildingForHealthyLife)]
     [InlineData(SiteWorkflowState.ContractorDetails, SiteWorkflowState.TenderingStatus)]
     [InlineData(SiteWorkflowState.IntentionToWorkWithSme, SiteWorkflowState.TenderingStatus)]
+    [InlineData(SiteWorkflowState.SiteType, SiteWorkflowState.StrategicSite)]
     public async Task ShouldReturnNextState_WhenBackTriggerExecuted(SiteWorkflowState current, SiteWorkflowState expectedNext)
     {
         // given
