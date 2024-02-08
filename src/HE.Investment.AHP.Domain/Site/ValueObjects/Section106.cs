@@ -146,7 +146,7 @@ public class Section106 : ValueObject, IQuestion
         return this;
     }
 
-    public Section106 WithLocalAuthorityConfirmation(string localAuthorityConfirmation)
+    public Section106 WithLocalAuthorityConfirmation(string? localAuthorityConfirmation)
     {
         return new Section106(GeneralAgreement, AffordableHousing, OnlyAffordableHousing, AdditionalAffordableHousing, CapitalFundingEligibility, localAuthorityConfirmation);
     }

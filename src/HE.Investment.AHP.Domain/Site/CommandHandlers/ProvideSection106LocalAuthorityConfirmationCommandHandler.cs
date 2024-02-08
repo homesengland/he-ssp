@@ -20,7 +20,7 @@ public class ProvideSection106LocalAuthorityConfirmationCommandHandler : SiteBas
         return Perform(
             site =>
             {
-                site.ProvideSection106(site.Section106.WithLocalAuthorityConfirmation(request.LocalAuthorityConfirmation!));
+                site.ProvideSection106(site.Section106.WithLocalAuthorityConfirmation(request.LocalAuthorityConfirmation));
                 return Task.FromResult(OperationResult.Success());
             },
             request.SiteId,
