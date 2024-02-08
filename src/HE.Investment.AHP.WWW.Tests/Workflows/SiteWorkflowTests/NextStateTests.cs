@@ -304,6 +304,26 @@ public class NextStateTests
         result.Should().Be(expectedNext);
     }
 
+    [Fact]
+    public async Task ShouldReturnNextState_WhenBackTriggerExecutedWithSection106Ineligibile()
+    {
+        // given
+        var section106 = new Section106TestDataBuilder()
+           .WithGeneralAgreement(true)
+           .WithAffordableHousing(true)
+           .WithOnlyAffordableHousing(false)
+           .WithAdditionalAffordableHousing(false)
+           .WithCapitalFundingEligibility(true)
+           .Build();
+        var workflow = SiteWorkflowFactory.BuildWorkflow(SiteWorkflowState.Section106Ineligible, section106);
+
+        // when
+        var result = await workflow.NextState(Trigger.Back);
+
+        // then
+        result.Should().Be(SiteWorkflowState.Section106CapitalFundingEligibility);
+    }
+
     [Theory]
     [InlineData(SiteWorkflowState.Section106LocalAuthorityConfirmation, SiteWorkflowState.LocalAuthoritySearch)]
     public async Task ShouldReturnNextState_WhenBackTriggerExecutedWithSection106LocalAuthorityConfirmation(SiteWorkflowState current, SiteWorkflowState expectedNext)

@@ -19,16 +19,7 @@ public class ProvideSection106AdditionalAffordableHousingCommandHandler : SiteBa
         return Perform(
             site =>
             {
-                var currentSection106 = site.Section106;
-                var newSection106 = new Section106(
-                                            currentSection106.GeneralAgreement,
-                                            currentSection106.AffordableHousing,
-                                            currentSection106.OnlyAffordableHousing,
-                                            request.AdditionalAffordableHousing,
-                                            currentSection106.CapitalFundingEligibility,
-                                            currentSection106.LocalAuthorityConfirmation);
-
-                site.ProvideSection106(newSection106);
+                site.ProvideSection106(site.Section106.WithAdditionalAffordableHousing(request.AdditionalAffordableHousing));
                 return Task.FromResult(OperationResult.Success());
             },
             request.SiteId,

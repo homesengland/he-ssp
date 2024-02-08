@@ -3,6 +3,7 @@ using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investment.AHP.Domain.Site.ValueObjects;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
+using HE.Investments.Common.Extensions;
 using MediatR;
 
 namespace HE.Investment.AHP.Domain.Site.CommandHandlers;
@@ -19,16 +20,7 @@ public class ProvideSection106LocalAuthorityConfirmationCommandHandler : SiteBas
         return Perform(
             site =>
             {
-                var currentSection106 = site.Section106;
-                var newSection106 = new Section106(
-                                            currentSection106.GeneralAgreement,
-                                            currentSection106.AffordableHousing,
-                                            currentSection106.OnlyAffordableHousing,
-                                            currentSection106.AdditionalAffordableHousing,
-                                            currentSection106.CapitalFundingEligibility,
-                                            request.LocalAuthorityConfirmation);
-
-                site.ProvideSection106(newSection106);
+                site.ProvideSection106(site.Section106.WithLocalAuthorityConfirmation(request.LocalAuthorityConfirmation));
                 return Task.FromResult(OperationResult.Success());
             },
             request.SiteId,

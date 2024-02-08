@@ -26,6 +26,8 @@ public static class SitePageTitles
 
     public const string SiteSection106LocalAuthorityConfirmation = "Tell us about any confirmation you have from the local authority that these homes are in addition to those secured through a planning condition or obligation";
 
+    public const string Section106Ineligible = "Contact your Growth Manager";
+
     public const string LocalAuthoritySearch = "Your local authority";
 
     public const string LocalAuthorityResult = "Select your local authority";

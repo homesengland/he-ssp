@@ -1,0 +1,59 @@
+@using HE.Investment.AHP.Contract.Site;
+@using HE.Investment.AHP.WWW.Routing;
+@using HE.Investments.Common.WWW.Components.PageHeader;
+@using HE.Investment.AHP.WWW.Views.Site;
+@using HE.Investment.AHP.WWW.Views.Site.Const;
+@model Section106Dto
+@{
+    ViewData["Title"] = SitePageTitles.Section106Ineligible;
+}
+
+<div class="govuk-grid-column-three-quarters">
+    <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.Section106Ineligible" />
+    <vc:page-header title="@SitePageTitles.Section106Ineligible" />
+
+    <div class="govuk-!-padding-bottom-8">
+        @if (Model.IsIneligibleDueToAffordableHousing == true)
+        {
+            <gds-p>
+                Currently, the Affordable Homes Programme does not fund homes that are covered by
+                or funded through developer contributions. The only exception to this is if they are on
+                sites delivering 100% affordable homes.
+            </gds-p>
+        }
+        @if (Model.IsIneligibleDueToCapitalFunding == true)
+        {
+            @if (Model.IsIneligibleDueToAffordableHousing == true)
+            {
+                <gds-p>
+                    We are also unable to fund homes that do not meet the requirements of the
+                    Capital Funding Guide.
+                </gds-p>
+            }
+            else
+            {
+                <gds-p>
+                    Homes England are unable to fund homes that do not meet the requirements of the
+                    Capital Funding Guide.
+                </gds-p>
+            }
+        }
+        @if (Model.IsIneligibleDueToAffordableHousing == true && Model.IsIneligibleDueToCapitalFunding == true)
+        {
+            <gds-p>
+                If you have answered previous qustions incorrectly, go back and try again. If you have answered this
+                correctly, contact your Growth Manager to discuss this further.
+            </gds-p>
+        }
+        else
+        {
+            <gds-p>
+                If you have answered this incorrectly, go back and try again. If you have answered this
+                correctly, contact your Growth Manager to discuss this further.
+            </gds-p>
+        }
+        
+    </div>
+    <link-button action-url="@Url.Action("Section106GeneralAgreement", "Site", new { SiteId = Model.SiteId })">Go back and try again</link-button>
+    <link-button action-url="@Url.Action("Index", "Site")" class="govuk-button--secondary">Save and return to your account</link-button>
+</div>

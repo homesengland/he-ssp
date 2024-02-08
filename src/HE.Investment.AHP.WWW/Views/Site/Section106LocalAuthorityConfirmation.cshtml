@@ -10,7 +10,7 @@
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
     <form asp-controller="Site" asp-action="Section106LocalAuthorityConfirmation" asp-method="post" novalidate>
-        <vc:page-header title="@SitePageTitles.SiteSection106LocalAuthorityConfirmation" caption="@Model.SiteName" additional-css-class="govuk-!-padding-top-8"/>
+        <vc:page-header title="@SitePageTitles.SiteSection106LocalAuthorityConfirmation" caption="@Model.SiteName" />
 
         <vc:text-area-input-with-counter field-name="@nameof(Model.LocalAuthorityConfirmation)"
                                          value="@Model.LocalAuthorityConfirmation"
