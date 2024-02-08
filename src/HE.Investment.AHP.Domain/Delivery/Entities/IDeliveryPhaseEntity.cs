@@ -50,7 +50,7 @@ public interface IDeliveryPhaseEntity
 
     void ProvideAdditionalPaymentRequest(IsAdditionalPaymentRequested? isAdditionalPaymentRequested);
 
-    void ProvideTypeOfHomes(TypeOfHomes typeOfHomes);
+    void ProvideTypeOfHomes(TypeOfHomes? typeOfHomes);
 
     void ProvideBuildActivity(BuildActivity buildActivity);
 
