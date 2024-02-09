@@ -61,4 +61,8 @@ public static class SitePageTitles
     public const string SiteType = "Site type";
 
     public const string SiteUse = "Site use";
+
+    public const string TravellerPitchType = "Which type of traveller pitch site are you developing?";
+
+    public const string CheckAnswers = "Check your answers before creating your site";
 }

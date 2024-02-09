@@ -299,7 +299,7 @@ public class Order01StartAhpSite : AhpIntegrationTest
         await TestQuestionPage(
             SitePagesUrl.SiteType(SiteData.SiteId),
             SitePageTitles.SiteType,
-            SitePagesUrl.SiteCheckAnswers(SiteData.SiteId),
+            SitePagesUrl.SiteUse(SiteData.SiteId),
             (nameof(SiteTypeDetails.SiteType), SiteType.Brownfield.ToString()),
             (nameof(SiteTypeDetails.IsOnGreenBelt), "True"),
             (nameof(SiteTypeDetails.IsRegenerationSite), "False"));

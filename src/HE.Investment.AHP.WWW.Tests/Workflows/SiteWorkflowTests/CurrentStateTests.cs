@@ -3,6 +3,7 @@ using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investment.AHP.Domain.Site.ValueObjects;
 using SiteTypeDetails = HE.Investment.AHP.Contract.Site.SiteTypeDetails;
+using SiteUseDetails = HE.Investment.AHP.Contract.Site.SiteUseDetails;
 
 namespace HE.Investment.AHP.WWW.Tests.Workflows.SiteWorkflowTests;
 
@@ -25,6 +26,8 @@ public class CurrentStateTests
 
     private readonly NumberOfGreenLights? _numberOfGreenLights = new("5");
 
+    private readonly SiteUseDetails _siteUseDetails = new(true, true, TravellerPitchSiteType.Permanent);
+
     [Fact]
     public void ShouldReturnCheckAnswers_WhenAllDateProvided()
     {
@@ -38,7 +41,8 @@ public class CurrentStateTests
             section106: _section106,
             nationalDesignGuidePriorities: new List<NationalDesignGuidePriority>() { NationalDesignGuidePriority.Nature },
             buildingForHealthyLife: _buildingForHealthyLife,
-            numberOfGreenLights: _numberOfGreenLights);
+            numberOfGreenLights: _numberOfGreenLights,
+            siteUseDetails: _siteUseDetails);
 
         // when
         var result = workflow.CurrentState(SiteWorkflowState.Start);
@@ -79,7 +83,7 @@ public class CurrentStateTests
     public void ShouldReturnSection106AffordableHousing_WhenAffordableHousingNotProvided()
     {
         // given
-        var section106 = new Section106Dto("3", "TestSite", true, null);
+        var section106 = new Section106Dto("3", "TestSite", true);
 
         var workflow = SiteWorkflowFactory.BuildWorkflow(SiteWorkflowState.Start, section106: section106);
 
@@ -94,7 +98,7 @@ public class CurrentStateTests
     public void ShouldReturnSection106OnlyAffordableHousing_WhenOnlyAffordableHousingNotProvided()
     {
         // given
-        var section106 = new Section106Dto("3", "TestSite", true, true, null);
+        var section106 = new Section106Dto("3", "TestSite", true, true);
 
         var workflow = SiteWorkflowFactory.BuildWorkflow(SiteWorkflowState.Start, section106: section106);
 
@@ -182,7 +186,7 @@ public class CurrentStateTests
     }
 
     [Fact]
-    public void ShouldReturnNationalDesignGuide_WhenNationaDesignGuideNotProvided()
+    public void ShouldReturnNationalDesignGuide_WhenNationalDesignGuideNotProvided()
     {
         var workflow = SiteWorkflowFactory.BuildWorkflow(
             SiteWorkflowState.NationalDesignGuide,

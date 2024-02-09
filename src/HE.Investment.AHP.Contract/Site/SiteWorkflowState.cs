@@ -28,5 +28,6 @@ public enum SiteWorkflowState
     StrategicSite,
     SiteType,
     SiteUse,
+    TravellerPitchType,
     CheckAnswers,
 }
