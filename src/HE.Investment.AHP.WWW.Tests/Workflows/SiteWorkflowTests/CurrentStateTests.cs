@@ -2,6 +2,7 @@ using FluentAssertions;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investment.AHP.Domain.Site.ValueObjects;
+using SiteTypeDetails = HE.Investment.AHP.Contract.Site.SiteTypeDetails;
 
 namespace HE.Investment.AHP.WWW.Tests.Workflows.SiteWorkflowTests;
 
@@ -240,13 +241,20 @@ public class CurrentStateTests
         Test(SiteWorkflowState.StrategicSite, strategicSite: new StrategicSite(null, null));
     }
 
+    [Fact]
+    public void ShouldReturnSiteType_WhenSiteTypeNotProvided()
+    {
+        Test(SiteWorkflowState.SiteType, siteTypeDetails: new SiteTypeDetails(null, null, null, false));
+    }
+
     private void Test(
         SiteWorkflowState expected,
         SitePlanningDetails? planningDetails = null,
         SiteTenderingStatusDetails? tenderingStatusDetails = null,
         BuildingForHealthyLifeType buildingForHealthyLifeType = BuildingForHealthyLifeType.NotApplicable,
         NumberOfGreenLights? numberOfGreenLights = null,
-        StrategicSite? strategicSite = null)
+        StrategicSite? strategicSite = null,
+        SiteTypeDetails? siteTypeDetails = null)
     {
         // given
         var workflow = SiteWorkflowFactory.BuildWorkflow(
@@ -256,10 +264,11 @@ public class CurrentStateTests
             planningDetails: planningDetails ?? _planningDetails,
             tenderingStatusDetails: tenderingStatusDetails ?? _tenderingStatusDetails,
             section106: _section106,
-            nationalDesignGuidePriorities: new List<NationalDesignGuidePriority>() { NationalDesignGuidePriority.NoneOfTheAbove },
+            nationalDesignGuidePriorities: new List<NationalDesignGuidePriority> { NationalDesignGuidePriority.NoneOfTheAbove },
             buildingForHealthyLife: buildingForHealthyLifeType,
             numberOfGreenLights: numberOfGreenLights,
-            strategicSite: strategicSite);
+            strategicSite: strategicSite,
+            siteTypeDetails: siteTypeDetails);
 
         // when
         var result = workflow.CurrentState(SiteWorkflowState.Start);

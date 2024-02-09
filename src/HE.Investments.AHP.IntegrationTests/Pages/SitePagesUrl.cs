@@ -47,5 +47,7 @@ public static class SitePagesUrl
 
     public static string SiteStrategicSite(string siteId) => $"ahp/site/{siteId}/strategic-site";
 
+    public static string SiteType(string siteId) => $"ahp/site/{siteId}/site-type";
+
     public static string SiteCheckAnswers(string siteId) => $"ahp/site/{siteId}/check-answers";
 }

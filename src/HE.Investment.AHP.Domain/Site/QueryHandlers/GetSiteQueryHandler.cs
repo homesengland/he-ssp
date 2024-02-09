@@ -95,6 +95,7 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
         return new SiteTypeDetails(
             details.SiteType,
             details.IsOnGreenBelt,
-            details.IsRegenerationSite);
+            details.IsRegenerationSite,
+            details.IsAnswered());
     }
 }

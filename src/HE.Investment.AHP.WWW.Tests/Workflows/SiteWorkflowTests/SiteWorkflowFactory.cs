@@ -2,6 +2,7 @@ using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investment.AHP.Domain.Site.ValueObjects;
 using HE.Investment.AHP.WWW.Workflows;
+using ContractSiteTypeDetails = HE.Investment.AHP.Contract.Site.SiteTypeDetails;
 
 namespace HE.Investment.AHP.WWW.Tests.Workflows.SiteWorkflowTests;
 
@@ -17,7 +18,8 @@ public static class SiteWorkflowFactory
         NumberOfGreenLights? numberOfGreenLights = null,
         IList<NationalDesignGuidePriority>? nationalDesignGuidePriorities = null,
         SiteTenderingStatusDetails? tenderingStatusDetails = null,
-        StrategicSite? strategicSite = null)
+        StrategicSite? strategicSite = null,
+        ContractSiteTypeDetails? siteTypeDetails = null)
     {
         var site = new SiteModel
         {
@@ -30,6 +32,7 @@ public static class SiteWorkflowFactory
             BuildingForHealthyLife = buildingForHealthyLife,
             NumberOfGreenLights = numberOfGreenLights?.ToString(),
             StrategicSiteDetails = strategicSite ?? new StrategicSite(false, null),
+            SiteTypeDetails = siteTypeDetails ?? new ContractSiteTypeDetails(null, null, null, true),
         };
 
         return new SiteWorkflow(currentSiteWorkflowState, site);
