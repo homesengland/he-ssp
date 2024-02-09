@@ -24,5 +24,10 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public DateTime? completionDate { get; set; }
         public DateTime? completionPaymentDate { get; set; }
         public string requiresAdditionalPayments { get; set; }
+        public decimal? acquisitionValue { get; set; }
+        public decimal? startOnSiteValue { get; set; }
+        public decimal? completionValue { get; set; }
+        public bool? claimingtheMilestoneConfirmed { get; set; }
+        public bool? allowAmendmentstoMilestoneProportions { get; set; }
     }
 }
