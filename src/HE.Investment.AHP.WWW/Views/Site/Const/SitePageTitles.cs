@@ -59,4 +59,6 @@ public static class SitePageTitles
     public const string StrategicSite = "Is this a strategic site?";
 
     public const string SiteType = "Site type";
+
+    public const string SiteUse = "Site use";
 }

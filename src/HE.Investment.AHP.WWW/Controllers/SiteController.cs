@@ -118,7 +118,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
             ModelState.Clear();
             ModelState.AddValidationErrors(result);
 
-            var orderedProperties = new List<string>() { nameof(SiteModel.Name) };
+            var orderedProperties = new List<string> { nameof(SiteModel.Name) };
             ViewBag.validationErrors = ViewData.ModelState.GetOrderedErrors(orderedProperties.ToList());
             return View(nameof(Name), model);
         }
@@ -433,7 +433,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     {
         var siteModel = await _mediator.Send(new GetSiteQuery(siteId), cancellationToken);
 
-        var designGuideModel = new NationalDesignGuidePrioritiesModel()
+        var designGuideModel = new NationalDesignGuidePrioritiesModel
         {
             SiteId = siteId,
             SiteName = siteModel.Name ?? string.Empty,
@@ -601,7 +601,29 @@ public class SiteController : WorkflowController<SiteWorkflowState>
                 model.SiteType,
                 model.IsOnGreenBelt,
                 model.IsRegenerationSite),
-            nameof(StrategicSite),
+            nameof(SiteType),
+            _ => model,
+            cancellationToken);
+    }
+
+    [HttpGet("{siteId}/site-use")]
+    [WorkflowState(SiteWorkflowState.SiteUse)]
+    public async Task<IActionResult> SiteUse([FromRoute] string siteId, CancellationToken cancellationToken)
+    {
+        var siteModel = await GetSiteDetails(siteId, cancellationToken);
+        return View("SiteUse", siteModel.SiteUseDetails);
+    }
+
+    [HttpPost("{siteId}/site-use")]
+    [WorkflowState(SiteWorkflowState.SiteUse)]
+    public async Task<IActionResult> SiteUse(SiteUseDetails model, CancellationToken cancellationToken)
+    {
+        return await ExecuteSiteCommand<SiteUseDetails>(
+            new ProvideSiteUseDetailsCommand(
+                this.GetSiteIdFromRoute(),
+                model.IsPartOfStreetFrontInfill,
+                model.IsForTravellerPitchSite),
+            nameof(SiteUse),
             _ => model,
             cancellationToken);
     }

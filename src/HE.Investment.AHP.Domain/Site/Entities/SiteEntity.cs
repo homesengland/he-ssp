@@ -14,6 +14,7 @@ using HE.Investments.Common.Extensions;
 using LocalAuthority = Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
 using Section106 = HE.Investment.AHP.Domain.Site.ValueObjects.Section106;
 using SiteTypeDetails = HE.Investment.AHP.Domain.Site.ValueObjects.SiteTypeDetails;
+using SiteUseDetails = HE.Investment.AHP.Domain.Site.ValueObjects.SiteUseDetails;
 
 namespace HE.Investment.AHP.Domain.Site.Entities;
 
@@ -32,7 +33,8 @@ public class SiteEntity : DomainEntity, IQuestion
         StrategicSiteDetails strategicSiteDetails,
         SiteTypeDetails siteTypeDetails,
         LocalAuthority? localAuthority = null,
-        BuildingForHealthyLifeType buildingForHealthyLife = BuildingForHealthyLifeType.Undefined)
+        BuildingForHealthyLifeType buildingForHealthyLife = BuildingForHealthyLifeType.Undefined,
+        SiteUseDetails? siteUseDetails = null)
     {
         Id = id;
         Name = name;
@@ -46,6 +48,7 @@ public class SiteEntity : DomainEntity, IQuestion
         TenderingStatusDetails = tenderingStatusDetails;
         StrategicSiteDetails = strategicSiteDetails;
         SiteTypeDetails = siteTypeDetails;
+        SiteUseDetails = siteUseDetails ?? new SiteUseDetails();
     }
 
     public SiteEntity()
@@ -59,6 +62,7 @@ public class SiteEntity : DomainEntity, IQuestion
         TenderingStatusDetails = new TenderingStatusDetails();
         StrategicSiteDetails = new StrategicSiteDetails();
         SiteTypeDetails = new SiteTypeDetails();
+        SiteUseDetails = new SiteUseDetails();
     }
 
     public SiteId Id { get; set; }
@@ -84,6 +88,8 @@ public class SiteEntity : DomainEntity, IQuestion
     public StrategicSiteDetails StrategicSiteDetails { get; private set; }
 
     public SiteTypeDetails SiteTypeDetails { get; private set; }
+
+    public SiteUseDetails SiteUseDetails { get; private set; }
 
     public async Task ProvideName(SiteName siteName, ISiteNameExist siteNameExist, CancellationToken cancellationToken)
     {
@@ -142,12 +148,18 @@ public class SiteEntity : DomainEntity, IQuestion
         SiteTypeDetails = _modificationTracker.Change(SiteTypeDetails, details);
     }
 
+    public void ProvideSiteUseDetails(SiteUseDetails details)
+    {
+        SiteUseDetails = _modificationTracker.Change(SiteUseDetails, details);
+    }
+
     public bool IsAnswered()
     {
         return PlanningDetails.IsAnswered() &&
                TenderingStatusDetails.IsAnswered() &&
                StrategicSiteDetails.IsAnswered() &&
                SiteTypeDetails.IsAnswered() &&
+               SiteUseDetails.IsAnswered() &&
                BuildingForHealthyLife != BuildingForHealthyLifeType.Undefined &&
                BuildConditionalRouteCompletionPredicates().All(isCompleted => isCompleted());
     }

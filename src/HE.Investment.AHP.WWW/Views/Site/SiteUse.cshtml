@@ -1,0 +1,35 @@
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investment.AHP.Contract.Site
+@using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
+@using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToSitesLink
+@using HE.Investment.AHP.WWW.Views.Site.Const
+@using HE.Investments.Common.WWW.Components.PageHeader
+@model SiteUseDetails
+@{
+    ViewData["Title"] = SitePageTitles.SiteUse;
+}
+
+<gds-div-grid-column-two-thirds>
+    <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.SiteUse"/>
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+    <vc:page-header
+        title="@SitePageTitles.SiteUse"
+        caption="@ViewBag.SiteName"/>
+
+    <form asp-controller="Site" asp-action="SiteUse" asp-method="post" novalidate>
+        <vc:radio-yes-no
+            title="Are the homes part of street front infill?"
+            hint="Street front infill sites are commonly known as the development of gaps between existing developments or the replacement of existing properties. This can include commercial and other non-residential."
+            field-name="@nameof(Model.IsPartOfStreetFrontInfill)"
+            value="@Model.IsPartOfStreetFrontInfill"/>
+
+        <vc:radio-yes-no
+            title="Is this application for a traveller pitch site?"
+            field-name="@nameof(Model.IsForTravellerPitchSite)"
+            value="@Model.IsForTravellerPitchSite"/>
+
+        <vc:form-button/>
+        <vc:return-to-sites-link/>
+    </form>
+
+</gds-div-grid-column-two-thirds>
