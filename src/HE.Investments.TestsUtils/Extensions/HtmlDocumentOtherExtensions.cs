@@ -32,11 +32,11 @@ public static class HtmlDocumentOtherExtensions
         return htmlDocument;
     }
 
-    public static IHtmlDocument HasParagraph(this IHtmlDocument htmlDocument, string text)
+    public static IHtmlDocument HasParagraph(this IHtmlDocument htmlDocument, string text, bool exist = true)
     {
         var filtered = htmlDocument.GetElements("p.govuk-body", text);
 
-        BasicHtmlDocumentExtensions.ValidateExist(filtered, "govuk-paragraph", text, true);
+        BasicHtmlDocumentExtensions.ValidateExist(filtered, "govuk-paragraph", text, exist);
 
         return htmlDocument;
     }

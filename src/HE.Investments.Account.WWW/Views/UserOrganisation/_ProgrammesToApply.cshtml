@@ -4,27 +4,19 @@
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">
-                <gds-h3 size="ControlSize.M">
+                <gds-h2 size="ControlSize.M">
                     Programmes you can apply for
-                </gds-h3>
+                </gds-h2>
             </dt>
         </div>
         @foreach (var programme in Model)
         {
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
-                    <gds-h3 size="ControlSize.M">
-                        @programme.Name
-                    </gds-h3>
-                    <gds-p>
+                    <a href="@programme.CreateApplicationUrl" data-testid=@($"user-organisation-start-new-application-{programme.Type.ToString().ToLowerInvariant().Replace(' ', '-')}")>@programme.Name</a>
+                    <gds-p class="govuk-!-margin-top-4">
                         @programme.Description
                     </gds-p>
-
-                    <link-button action-url="@programme.CreateApplicationUrl"
-                                 data-testid=@($"user-organisation-start-new-application-{programme.Type.ToString().ToLowerInvariant().Replace(' ', '-')}")
-                                 is-disabled="@(!programme.CanCreateApplication)">
-                        Start new application
-                    </link-button>
                 </dt>
             </div>
         }

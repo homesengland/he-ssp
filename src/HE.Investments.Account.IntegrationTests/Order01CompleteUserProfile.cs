@@ -162,8 +162,8 @@ public class Order01CompleteUserProfile : AccountIntegrationTest
         dashboardPage
             .HasTitle(OrganisationPageTitles.OrganisationDashboard(FreshProfileData.OrganisationName))
             .HasOrganisationJoinRequestConfirmation()
-            .HasStartNewApplicationButton(ProgrammeType.Ahp)
-            .HasStartNewApplicationButton(ProgrammeType.Loans);
+            .HasStartNewApplicationLink(ProgrammeType.Ahp)
+            .HasStartNewApplicationLink(ProgrammeType.Loans);
         SaveCurrentPage();
     }
 }
