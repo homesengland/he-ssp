@@ -26,8 +26,8 @@ public class NationalDesignGuideTests : ViewTestBase
         document
             .HasTitle(SitePageTitles.NationalDesignGuide)
             .HasPageHeader(siteName, @SitePageTitles.NationalDesignGuide)
-            .HasGdsSaveAndContinueButton()
-            .HasGdsBackLink(false);
+            .HasSaveAndContinueButton()
+            .HasBackLink(false);
     }
 
     [Fact]
@@ -52,8 +52,8 @@ public class NationalDesignGuideTests : ViewTestBase
         document
             .HasTitle(SitePageTitles.NationalDesignGuide)
             .HasPageHeader(siteName, @SitePageTitles.NationalDesignGuide)
-            .HasGdsSaveAndContinueButton()
-            .HasGdsBackLink(false)
+            .HasSaveAndContinueButton()
+            .HasBackLink(false)
             .HasOneValidationMessages(errorMessage);
     }
 }

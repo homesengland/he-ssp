@@ -24,7 +24,7 @@ public class MoveOnArrangementsTests : HomeTypesTestBase
             .HasElementWithText("label", "Tell us the move on arrangements that are in place for when these homes are used as short stay accommodation")
             .HasElementWithText("div", "You can enter up to 1500 characters")
             .HasTextAreaInput("MoreInformation", value: "My new important information")
-            .HasGdsSaveAndContinueButton();
+            .HasSaveAndContinueButton();
     }
 
     [Fact]

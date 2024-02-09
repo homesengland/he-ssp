@@ -19,6 +19,6 @@ public class HomesForDisabledPeopleTests : HomeTypesTestBase
         document
             .HasPageHeader("My application - My homes", "What type of homes will you be providing for disabled and vulnerable people?")
             .HasRadio("HousingType", new[] { "DesignatedHomes", "DesignatedSupportedHomes", "PurposeDesignedHomes", "PurposeDesignedSupportedHomes", })
-            .HasGdsSaveAndContinueButton();
+            .HasSaveAndContinueButton();
     }
 }

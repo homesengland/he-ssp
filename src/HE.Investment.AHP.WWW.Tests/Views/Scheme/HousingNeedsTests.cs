@@ -46,7 +46,7 @@ public class HousingNeedsTests : ViewTestBase
             .HasPageHeader(Model.ApplicationName, "Local housing needs")
             .HasTextAreaInput("MeetingLocalPriorities", "Tell us how this type and tenure of home meets the identified priorities for the local housing market", Model.MeetingLocalPriorities)
             .HasTextAreaInput("MeetingLocalHousingNeed", "Tell us how this scheme and proposal contributes to a locally identified housing need", Model.MeetingLocalHousingNeed)
-            .HasGdsSaveAndContinueButton();
+            .HasSaveAndContinueButton();
     }
 
     private void AssertErrors(IHtmlDocument document, bool exist)

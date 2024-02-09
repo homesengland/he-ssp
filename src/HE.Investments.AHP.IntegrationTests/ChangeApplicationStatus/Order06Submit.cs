@@ -40,7 +40,7 @@ public class Order06Submit : AhpIntegrationTest
         var submitButton = applicationCheckAnswersPage
             .UrlEndWith(ApplicationPagesUrl.CheckAnswersSuffix)
             .HasTitle(ApplicationPageTitles.CheckAnswers)
-            .GetGdsSubmitButton("Submit");
+            .GetSubmitButton("Submit");
 
         await TestClient.SubmitButton(submitButton);
         SaveCurrentPage();

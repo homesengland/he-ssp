@@ -58,7 +58,7 @@ public class HomeOwnershipDisabilitiesTests : HomeTypesTestBase
             .HasElementWithText("span", "Enter the rent in pounds and pence. This is inclusive of all charges.")
             .HasInput("ProspectiveRent")
             .HasElementWithText("h2", "Rent as percentage of the unsold share")
-            .HasGdsSaveAndContinueButton()
+            .HasSaveAndContinueButton()
             .HasElementWithText("button", "Calculate");
     }
 }

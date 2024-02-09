@@ -6,38 +6,38 @@ namespace HE.Investments.TestsUtils.Extensions;
 
 public static class HtmlDocumentButtonExtensions
 {
-    public static IHtmlDocument HasGdsContinueButton(this IHtmlDocument htmlDocument) => htmlDocument.HasGdsContinueButton(out _);
+    public static IHtmlDocument HasContinueButton(this IHtmlDocument htmlDocument) => htmlDocument.HasContinueButton(out _);
 
-    public static IHtmlDocument HasGdsContinueButton(this IHtmlDocument htmlDocument, out IHtmlButtonElement button)
+    public static IHtmlDocument HasContinueButton(this IHtmlDocument htmlDocument, out IHtmlButtonElement button)
     {
-        button = GetGdsContinueButton(htmlDocument);
+        button = GetContinueButton(htmlDocument);
         return htmlDocument;
     }
 
-    public static IHtmlButtonElement GetGdsContinueButton(this IHtmlDocument htmlDocument)
+    public static IHtmlButtonElement GetContinueButton(this IHtmlDocument htmlDocument)
     {
-        return GetGdsSubmitButton(htmlDocument, "Continue");
+        return GetSubmitButton(htmlDocument, "Continue");
     }
 
-    public static IHtmlDocument HasGdsSaveAndContinueButton(this IHtmlDocument htmlDocument) => htmlDocument.HasGdsSaveAndContinueButton(out _);
+    public static IHtmlDocument HasSaveAndContinueButton(this IHtmlDocument htmlDocument) => htmlDocument.HasSaveAndContinueButton(out _);
 
-    public static IHtmlDocument HasGdsSaveAndContinueButton(this IHtmlDocument htmlDocument, out IHtmlButtonElement button)
+    public static IHtmlDocument HasSaveAndContinueButton(this IHtmlDocument htmlDocument, out IHtmlButtonElement button)
     {
-        button = GetGdsSubmitButton(htmlDocument, "Save and continue");
+        button = GetSubmitButton(htmlDocument, "Save and continue");
         return htmlDocument;
     }
 
-    public static IHtmlDocument HasGdsSubmitButton(
+    public static IHtmlDocument HasSubmitButton(
         this IHtmlDocument htmlDocument,
         out IHtmlButtonElement button,
         string? text = null)
     {
-        button = GetGdsSubmitButton(htmlDocument, text);
+        button = GetSubmitButton(htmlDocument, text);
 
         return htmlDocument;
     }
 
-    public static IHtmlButtonElement GetGdsSubmitButton(
+    public static IHtmlButtonElement GetSubmitButton(
         this IHtmlDocument htmlDocument,
         string? text = null)
     {

@@ -33,7 +33,7 @@ public class ModernMethodsConstructionCategoriesTests : HomeTypesTestBase
                     "Category6TraditionalBuildingProductLedSiteLabourReductionOrProductivityImprovements",
                     "Category7SiteProcessLedLabourReductionOrProductivityOrAssuranceImprovements",
                 })
-            .HasGdsSaveAndContinueButton();
+            .HasSaveAndContinueButton();
     }
 
     [Fact]
@@ -68,6 +68,6 @@ public class ModernMethodsConstructionCategoriesTests : HomeTypesTestBase
                     "Category5PreManufacturingNonStructuralAssembliesAndSubAssemblies",
                     "Category6TraditionalBuildingProductLedSiteLabourReductionOrProductivityImprovements",
                 })
-            .HasGdsSaveAndContinueButton();
+            .HasSaveAndContinueButton();
     }
 }

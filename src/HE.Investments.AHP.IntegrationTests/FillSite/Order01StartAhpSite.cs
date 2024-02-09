@@ -64,7 +64,7 @@ public class Order01StartAhpSite : AhpIntegrationTest
     {
         // given
         var siteNamePage = await GetCurrentPage(SitePagesUrl.SiteName);
-        siteNamePage.HasGdsSaveAndContinueButton(out var continueButton);
+        siteNamePage.HasSaveAndContinueButton(out var continueButton);
 
         // when
         var section106GeneralAgreementPage = await TestClient.SubmitButton(
@@ -157,8 +157,8 @@ public class Order01StartAhpSite : AhpIntegrationTest
         currentPage
             .UrlWithoutQueryEndsWith(SitePagesUrl.SiteLocalAuthoritySearch(SiteData.SiteId))
             .HasTitle(SitePageTitles.LocalAuthoritySearch)
-            .HasGdsBackLink()
-            .HasGdsSubmitButton(out var searchButton, "Search");
+            .HasBackLink()
+            .HasSubmitButton(out var searchButton, "Search");
 
         // when
         var searchResultPage = await TestClient.SubmitButton(searchButton, (nameof(LocalAuthorities.Phrase), SiteData.LocalAuthorityName));

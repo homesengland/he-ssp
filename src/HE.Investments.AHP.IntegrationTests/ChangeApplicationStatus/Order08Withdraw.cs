@@ -41,7 +41,7 @@ public class Order08Withdraw : AhpIntegrationTest
             .UrlEndWith(ApplicationPagesUrl.WithdrawSuffix)
             .HasTitle(ApplicationPageTitles.Withdraw)
             .HasTextAreaInput("WithdrawReason")
-            .HasGdsSubmitButton(out _, "Withdraw application");
+            .HasSubmitButton(out _, "Withdraw application");
 
         SaveCurrentPage();
     }
@@ -53,7 +53,7 @@ public class Order08Withdraw : AhpIntegrationTest
         // given
         var withdrawPage = await GetCurrentPage();
         var withdrawApplicationButton = withdrawPage
-            .GetGdsSubmitButton("Withdraw application");
+            .GetSubmitButton("Withdraw application");
 
         // when
         var taskListPage = await TestClient.SubmitButton(withdrawApplicationButton, ("WithdrawReason", "even more important reason"));

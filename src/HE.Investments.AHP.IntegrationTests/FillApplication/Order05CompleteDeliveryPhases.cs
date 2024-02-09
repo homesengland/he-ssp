@@ -93,7 +93,7 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
         newDeliveryPhasePage
             .UrlEndWith(BuildDeliveryPhasesPage(DeliveryPhasesPagesUrl.NewDeliveryPhase))
             .HasTitle(DeliveryPageTitles.Name)
-            .HasGdsContinueButton(out var continueButton);
+            .HasContinueButton(out var continueButton);
 
         var deliveryPhase = RehabDeliveryPhase.GenerateDeliveryPhase();
         var deliveryPhaseNamePage = await TestClient.SubmitButton(continueButton, ("DeliveryPhaseName", deliveryPhase.Name.ToString()));
@@ -175,8 +175,8 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
         summaryOfDeliveryPhase
             .UrlEndWith(BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.SummaryOfDelivery, RehabDeliveryPhase))
             .HasTitle(DeliveryPageTitles.SummaryOfDelivery)
-            .HasGdsBackLink()
-            .HasGdsContinueButton(out var continueButton);
+            .HasBackLink()
+            .HasContinueButton(out var continueButton);
 
         // when
         var acquisitionMilestonePage = await TestClient.SubmitButton(continueButton);
@@ -279,7 +279,7 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
         deliveryPhaseListPage
             .UrlEndWith(BuildDeliveryPhasesPage(DeliveryPhasesPagesUrl.List))
             .HasTitle(DeliveryPageTitles.List)
-            .HasGdsSaveAndContinueButton(out var continueButton);
+            .HasSaveAndContinueButton(out var continueButton);
 
         // when
         var completeDeliveryPhasesPage = await TestClient.SubmitButton(continueButton);
@@ -299,7 +299,7 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
         completeDeliveryPhasesPage
             .UrlEndWith(BuildDeliveryPhasesPage(DeliveryPhasesPagesUrl.CompleteDeliveryPhases))
             .HasTitle(DeliveryPageTitles.Complete)
-            .HasGdsSaveAndContinueButton(out var continueButton);
+            .HasSaveAndContinueButton(out var continueButton);
 
         // when
         var taskListPage = await TestClient.SubmitButton(continueButton, ("IsDeliveryCompleted", "Yes"));
@@ -323,7 +323,7 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
         // then
         removeDeliveryPhasePage.UrlEndWith(BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.Remove, deliveryPhaseId))
             .HasTitle(DeliveryPageTitles.Remove)
-            .HasGdsSaveAndContinueButton(out var continueButton);
+            .HasSaveAndContinueButton(out var continueButton);
 
         return await TestClient.SubmitButton(continueButton, ("RemoveDeliveryPhaseAnswer", "Yes"));
     }

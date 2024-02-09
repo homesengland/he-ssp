@@ -140,7 +140,7 @@ public class Order02CompleteSchemeInformation : AhpIntegrationTest
         checkAnswersPage
             .UrlEndWith(SchemeInformationPagesUrl.CheckAnswersSuffix)
             .HasTitle(SchemeInformationPageTitles.CheckAnswers)
-            .HasGdsSaveAndContinueButton(out var continueButton);
+            .HasSaveAndContinueButton(out var continueButton);
 
         // when
         var schemaInformationSummary = checkAnswersPage.GetSummaryListItems();

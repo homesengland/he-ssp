@@ -60,17 +60,6 @@ public static class HtmlFluentExtensions
         return htmlDocument;
     }
 
-    public static IHtmlDocument HasLinkWithTestId(this IHtmlDocument htmlDocument, string testId, out IHtmlAnchorElement htmlElement)
-    {
-        var element = htmlDocument.GetElementByTestId(testId);
-
-        var anchorElement = element as IHtmlAnchorElement;
-        anchorElement.Should().NotBeNull($"Element with data-testId {testId} should be IHtmlAnchorElement");
-        htmlElement = anchorElement!;
-
-        return htmlDocument;
-    }
-
     public static IHtmlDocument HasElementWithTextByTestId(this IHtmlDocument htmlDocument, string testId, string text)
     {
         var element = htmlDocument.GetElementByTestId(testId);

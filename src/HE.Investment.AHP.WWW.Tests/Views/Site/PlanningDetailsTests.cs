@@ -79,8 +79,8 @@ public class PlanningDetailsTests : ViewTestBase
                 new List<string> { "Yes", "No" },
                 value: "False",
                 exist: isLandRegistryTitleNumberRegisteredExist)
-            .HasGdsSaveAndContinueButton()
-            .HasGdsBackLink(false);
+            .HasSaveAndContinueButton()
+            .HasBackLink(false);
     }
 
     private static SitePlanningDetails CreateTestModel(SitePlanningStatus status)

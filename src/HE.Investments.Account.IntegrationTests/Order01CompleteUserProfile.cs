@@ -45,7 +45,7 @@ public class Order01CompleteUserProfile : AccountIntegrationTest
         currentPage
             .UrlWithoutQueryEndsWith(MainPagesUrl.ProfileDetails)
             .HasTitle("Complete your details")
-            .HasGdsSaveAndContinueButton(out var continueButton);
+            .HasSaveAndContinueButton(out var continueButton);
 
         // when
         var profileDetailsPage = await TestClient.SubmitButton(continueButton);
@@ -66,7 +66,7 @@ public class Order01CompleteUserProfile : AccountIntegrationTest
         var profileDetailsPage = await GetCurrentPage(MainPagesUrl.ProfileDetails);
         profileDetailsPage.UrlEndWith(MainPagesUrl.ProfileDetails)
             .HasTitle("Complete your details")
-            .HasGdsSaveAndContinueButton(out var continueButton);
+            .HasSaveAndContinueButton(out var continueButton);
         var profileData = FreshProfileData.GenerateProfileData();
 
         // when
@@ -107,8 +107,8 @@ public class Order01CompleteUserProfile : AccountIntegrationTest
         organisationSearchPage
             .UrlEndWith(OrganisationPagesUrls.Search)
             .HasTitle(OrganisationPageTitles.SearchForYourOrganisation)
-            .HasGdsBackLink()
-            .HasGdsSubmitButton(out var searchButton, "Search");
+            .HasBackLink()
+            .HasSubmitButton(out var searchButton, "Search");
 
         // when
         var organisationSearchResultPage = await TestClient.SubmitButton(searchButton, ("Name", profileData.OrganisationName));
@@ -152,8 +152,8 @@ public class Order01CompleteUserProfile : AccountIntegrationTest
         confirmationPage
             .UrlWithoutQueryEndsWith(OrganisationPagesUrls.Confirm(FreshProfileData.SelectedOrganisationId))
             .HasTitle(OrganisationPageTitles.ConfirmYourSelection)
-            .HasGdsBackLink()
-            .HasGdsContinueButton(out var continueButton);
+            .HasBackLink()
+            .HasContinueButton(out var continueButton);
 
         // then
         var dashboardPage = await TestClient.SubmitButton(continueButton, ("Response", "Yes"));

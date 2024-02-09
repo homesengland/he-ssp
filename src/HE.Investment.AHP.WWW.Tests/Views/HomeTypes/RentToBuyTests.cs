@@ -70,7 +70,7 @@ public class RentToBuyTests : HomeTypesTestBase
                     "Yes",
                     "No",
                 })
-            .HasGdsSaveAndContinueButton()
+            .HasSaveAndContinueButton()
             .HasElementWithText("button", "Calculate");
     }
 }

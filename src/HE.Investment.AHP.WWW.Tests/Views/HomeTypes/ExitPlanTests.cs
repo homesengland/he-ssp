@@ -23,7 +23,7 @@ public class ExitPlanTests : HomeTypesTestBase
             .HasElementWithText("label", "Tell us the exit plan or alternative use for these homes should commissioning priorities change in the future")
             .HasElementWithText("div", "You can enter up to 1500 characters")
             .HasTextAreaInput("MoreInformation", value: "My new important information")
-            .HasGdsSaveAndContinueButton();
+            .HasSaveAndContinueButton();
     }
 
     [Fact]

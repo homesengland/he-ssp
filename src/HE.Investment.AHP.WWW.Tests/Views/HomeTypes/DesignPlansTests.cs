@@ -35,7 +35,7 @@ public class DesignPlansTests : HomeTypesTestBase
             .HasElementWithText("label", "Tell us more about your design plans (optional)")
             .HasElementWithText("div", "Tell us any important information about the plans, or any additional information not included.")
             .HasTextAreaInput("MoreInformation", value: "Some details about my Design Plans")
-            .HasGdsSaveAndContinueButton();
+            .HasSaveAndContinueButton();
     }
 
     [Fact]

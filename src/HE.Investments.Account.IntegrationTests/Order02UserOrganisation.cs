@@ -97,8 +97,8 @@ public class Order02UserOrganisation : AccountIntegrationTest
         currentPage
             .UrlWithoutQueryEndsWith(MainPagesUrl.ChangeOrganisationDetails)
             .HasTitle(UserOrganisationPageTitles.ChangeOrganisationDetails)
-            .HasGdsBackLink()
-            .HasGdsSubmitButton(out var sendRequestButton, "Send request");
+            .HasBackLink()
+            .HasSubmitButton(out var sendRequestButton, "Send request");
 
         // when
         var changeOrganisationDetailsPage = await TestClient.SubmitButton(

@@ -152,7 +152,7 @@ public class Order04CompleteFinancialDetails : AhpIntegrationTest
         checkAnswersPage
             .UrlEndWith(FinancialDetailsPagesUrl.CheckAnswersSuffix)
             .HasTitle(FinancialDetailsPageTitles.CheckAnswers)
-            .HasGdsSaveAndContinueButton(out var continueButton);
+            .HasSaveAndContinueButton(out var continueButton);
 
         // when
         var schemaInformationSummary = checkAnswersPage.GetSummaryListItems();

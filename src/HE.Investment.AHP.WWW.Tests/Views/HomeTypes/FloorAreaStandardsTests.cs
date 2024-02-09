@@ -30,6 +30,6 @@ public class FloorAreaStandardsTests : HomeTypesTestBase
                     "BedroomWidth",
                 })
             .HasCheckboxes("OtherNationallyDescribedSpaceStandards", new[] { "NoneOfThese", })
-            .HasGdsSaveAndContinueButton();
+            .HasSaveAndContinueButton();
     }
 }

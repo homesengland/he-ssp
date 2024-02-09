@@ -60,6 +60,6 @@ public class HomeInformationTests : HomeTypesTestBase
             .HasElementWithText("h2", "Enter how many storeys each home has")
             .HasElementWithText("div", "If the homes are in a multi storey development, enter how many storeys are in each individual home.")
             .HasInput("NumberOfStoreys")
-            .HasGdsSaveAndContinueButton();
+            .HasSaveAndContinueButton();
     }
 }

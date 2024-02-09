@@ -45,7 +45,7 @@ public class SalesRiskTests : ViewTestBase
         document
             .HasPageHeader(Model.ApplicationName, "Sales risk of Shared Ownership")
             .HasTextAreaInput("SalesRisk", "Tell us your assessment of the sales risk and how you will mitigate this", Model.SalesRisk)
-            .HasGdsSaveAndContinueButton();
+            .HasSaveAndContinueButton();
     }
 
     private void AssertErrors(IHtmlDocument document, bool exist)

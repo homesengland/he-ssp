@@ -101,8 +101,8 @@ public class Order01StartAhpApplication : AhpIntegrationTest
         siteConfirmPage
             .UrlEndWith(SitePagesUrl.SiteConfirm(ApplicationData.SiteId))
             .HasTitle(SitePageTitles.SiteConfirmSelect)
-            .HasGdsBackLink()
-            .HasGdsContinueButton(out var continueButton);
+            .HasBackLink()
+            .HasContinueButton(out var continueButton);
 
         // when
         var applicationNamePage = await TestClient.SubmitButton(continueButton, ("IsConfirmed", "True"));
@@ -124,8 +124,8 @@ public class Order01StartAhpApplication : AhpIntegrationTest
         applicationNamePage
             .UrlEndWith(ApplicationPagesUrl.ApplicationName(ApplicationData.SiteId))
             .HasTitle(ApplicationPageTitles.ApplicationName)
-            .HasGdsBackLink()
-            .HasGdsContinueButton(out var continueButton);
+            .HasBackLink()
+            .HasContinueButton(out var continueButton);
 
         // when
         var applicationTenurePage = await TestClient.SubmitButton(continueButton, ("Name", applicationData.ApplicationName));

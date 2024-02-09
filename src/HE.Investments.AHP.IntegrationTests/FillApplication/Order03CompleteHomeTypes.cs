@@ -78,7 +78,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         newHomeTypePage
             .UrlEndWith(BuildHomeTypesPage(HomeTypesPagesUrl.NewHomeType))
             .HasTitle(HomeTypesPageTitles.HomeTypeDetails)
-            .HasGdsSaveAndContinueButton(out var continueButton);
+            .HasSaveAndContinueButton(out var continueButton);
 
         var homeType = GeneralHomeType.GenerateHomeTypeDetails();
         var homeInformationPage = await TestClient.SubmitButton(
@@ -318,7 +318,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         checkAnswersPage
             .UrlEndWith(BuildHomeTypePage(HomeTypePagesUrl.CheckAnswers, GeneralHomeType))
             .HasTitle(HomeTypesPageTitles.CheckAnswers)
-            .HasGdsSaveAndContinueButton();
+            .HasSaveAndContinueButton();
 
         // when
         var summary = checkAnswersPage.GetSummaryListItems();
@@ -357,7 +357,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         checkAnswersPage
             .UrlEndWith(BuildHomeTypePage(HomeTypePagesUrl.CheckAnswers, GeneralHomeType))
             .HasTitle(HomeTypesPageTitles.CheckAnswers)
-            .HasGdsSaveAndContinueButton(out var continueButton);
+            .HasSaveAndContinueButton(out var continueButton);
 
         // when
         var homeTypeListPage = await TestClient.SubmitButton(
@@ -432,7 +432,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         homeTypeDetailsPage
             .UrlWithoutQueryEndsWith(BuildHomeTypePage(HomeTypePagesUrl.HomeTypeDetails, DisabledHomeType))
             .HasTitle(HomeTypesPageTitles.HomeTypeDetails)
-            .HasGdsSaveAndContinueButton();
+            .HasSaveAndContinueButton();
 
         SaveCurrentPage();
     }
@@ -617,7 +617,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         checkAnswersPage
             .UrlWithoutQueryEndsWith(BuildHomeTypePage(HomeTypePagesUrl.CheckAnswers, DisabledHomeType))
             .HasTitle(HomeTypesPageTitles.CheckAnswers)
-            .HasGdsSaveAndContinueButton();
+            .HasSaveAndContinueButton();
 
         // when
         var summary = checkAnswersPage.GetSummaryListItems();
@@ -667,7 +667,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         checkAnswersPage
             .UrlWithoutQueryEndsWith(BuildHomeTypePage(HomeTypePagesUrl.CheckAnswers, DisabledHomeType))
             .HasTitle(HomeTypesPageTitles.CheckAnswers)
-            .HasGdsSaveAndContinueButton(out var continueButton);
+            .HasSaveAndContinueButton(out var continueButton);
 
         // when
         var homeTypeListPage = await TestClient.SubmitButton(
@@ -692,7 +692,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         homeTypeListPage
             .UrlEndWith(BuildHomeTypesPage(HomeTypesPagesUrl.List))
             .HasTitle(HomeTypesPageTitles.HomeTypes)
-            .HasGdsSaveAndContinueButton(out var continueButton);
+            .HasSaveAndContinueButton(out var continueButton);
 
         // when
         var finishHomeTypesPage = await TestClient.SubmitButton(continueButton);
@@ -712,7 +712,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         finishHomeTypesPage
             .UrlEndWith(BuildHomeTypesPage(HomeTypesPagesUrl.FinishHomeTypes))
             .HasTitle(HomeTypesPageTitles.FinishHomeTypes)
-            .HasGdsSaveAndContinueButton(out var continueButton);
+            .HasSaveAndContinueButton(out var continueButton);
 
         // when
         var taskListPage = await TestClient.SubmitButton(continueButton, ("FinishAnswer", "Yes"));

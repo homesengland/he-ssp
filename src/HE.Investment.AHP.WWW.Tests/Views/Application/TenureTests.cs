@@ -43,7 +43,7 @@ public class TenureTests : ViewTestBase
         document
             .HasPageHeader(model.Name!, "What is the tenure of the homes on this application?")
             .HasSummaryDetails("Tenure refers to the conditions around ownership or rental of the properties")
-            .HasGdsSaveAndContinueButton()
+            .HasSaveAndContinueButton()
             .HasSummaryErrorMessage(nameof(ApplicationBasicModel.Tenure), errorMessage, !string.IsNullOrEmpty(errorMessage))
             .HasErrorMessage(nameof(ApplicationBasicModel.Tenure), errorMessage, !string.IsNullOrEmpty(errorMessage));
     }
