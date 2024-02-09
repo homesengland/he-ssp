@@ -121,6 +121,7 @@
     <Compile Include="Handlers\CustomApi\SetApplicationHandler.cs" />
     <Compile Include="Handlers\CustomApi\SetDeliveryPhaseHandler.cs" />
     <Compile Include="Handlers\CustomApi\SetHomeTypeHandler.cs" />
+    <Compile Include="Handlers\DeliveryPhase\SendNotificationUrbWantsAdditionalPaymentsForPhaseHandler.cs" />
     <Compile Include="Handlers\HomeType\CreateDocumentLocationOnCreateHandler.cs" />
     <Compile Include="Handlers\HomeType\SetHappiPrinciplesValueHandler.cs" />
     <Compile Include="Handlers\HomeType\SetWhichNdssStandardsHaveBeenMetValueHandler.cs" />
@@ -210,6 +211,7 @@
     <Compile Include="Plugins\CustomApi\SetApplicationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\SetDeliveryPhasePlugin.cs" />
     <Compile Include="Plugins\CustomApi\SetHomeTypePlugin.cs" />
+    <Compile Include="Plugins\DeliveryPhase\SendNotificationUrbWantsAdditionalPaymentsForPhasePlugin.cs" />
     <Compile Include="Plugins\HomeType\CreateDocumentLocationOnCreatePlugin.cs" />
     <Compile Include="Plugins\HomeType\SetHappiPrinciplesValuePlugin.cs" />
     <Compile Include="Plugins\HomeType\SetWhichNdssStandardsHaveBeenMetValuePlugin.cs" />

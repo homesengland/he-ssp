@@ -14,7 +14,6 @@ using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
-using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Extensions;
@@ -119,12 +118,12 @@ public class SiteController : WorkflowController<SiteWorkflowState>
             ModelState.Clear();
             ModelState.AddValidationErrors(result);
 
-            var orderedProperties = new List<string>() { nameof(SiteModel.Name) };
+            var orderedProperties = new List<string> { nameof(SiteModel.Name) };
             ViewBag.validationErrors = ViewData.ModelState.GetOrderedErrors(orderedProperties.ToList());
             return View(nameof(Name), model);
         }
 
-        return await Continue(new { siteId = result.ReturnedData?.Value });
+        return await Continue(new { siteId = result.ReturnedData.Value });
     }
 
     [HttpGet("{siteId}/section-106-general-agreement")]
@@ -132,7 +131,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     public async Task<IActionResult> Section106GeneralAgreement([FromRoute] string siteId, CancellationToken cancellationToken)
     {
         var siteModel = await _mediator.Send(new GetSiteQuery(siteId), cancellationToken);
-        return View("Section106GeneralAgreement", siteModel.Section106 ?? new Section106Dto(siteId, siteModel?.Name ?? string.Empty, null));
+        return View("Section106GeneralAgreement", siteModel.Section106 ?? new Section106Dto(siteId, siteModel.Name ?? string.Empty, null));
     }
 
     [HttpPost("{siteId}/section-106-general-agreement")]
@@ -142,7 +141,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         return await ExecuteSiteCommand(
             new ProvideSection106AgreementCommand(new SiteId(siteId), model.GeneralAgreement),
             nameof(Section106GeneralAgreement),
-            savedModel => model,
+            _ => model,
             cancellationToken);
     }
 
@@ -161,7 +160,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         return await ExecuteSiteCommand(
             new ProvideSection106AffordableHousingCommand(new SiteId(siteId), model.AffordableHousing),
             nameof(Section106AffordableHousing),
-            savedModel => model,
+            _ => model,
             cancellationToken);
     }
 
@@ -180,7 +179,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         return await ExecuteSiteCommand(
             new ProvideSection106OnlyAffordableHousingCommand(new SiteId(siteId), model.OnlyAffordableHousing),
             nameof(Section106OnlyAffordableHousing),
-            savedModel => model,
+            _ => model,
             cancellationToken);
     }
 
@@ -199,7 +198,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         return await ExecuteSiteCommand(
             new ProvideSection106AdditionalAffordableHousingCommand(new SiteId(siteId), model.AdditionalAffordableHousing),
             nameof(Section106AdditionalAffordableHousing),
-            savedModel => model,
+            _ => model,
             cancellationToken);
     }
 
@@ -218,7 +217,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         return await ExecuteSiteCommand(
             new ProvideSection106CapitalFundingEligibilityCommand(new SiteId(siteId), model.CapitalFundingEligibility),
             nameof(Section106CapitalFundingEligibility),
-            savedModel => model,
+            _ => model,
             cancellationToken);
     }
 
@@ -237,7 +236,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         return await ExecuteSiteCommand(
             new ProvideSection106LocalAuthorityConfirmationCommand(new SiteId(siteId), model.LocalAuthorityConfirmation),
             nameof(Section106LocalAuthorityConfirmation),
-            savedModel => model,
+            _ => model,
             cancellationToken);
     }
 
@@ -424,7 +423,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
                 model.LandRegistryTitleNumber,
                 model.IsGrantFundingForAllHomesCoveredByTitleNumber),
             nameof(LandRegistry),
-            savedModel => model,
+            _ => model,
             cancellationToken);
     }
 
@@ -434,11 +433,11 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     {
         var siteModel = await _mediator.Send(new GetSiteQuery(siteId), cancellationToken);
 
-        var designGuideModel = new NationalDesignGuidePrioritiesModel()
+        var designGuideModel = new NationalDesignGuidePrioritiesModel
         {
             SiteId = siteId,
-            SiteName = siteModel?.Name ?? string.Empty,
-            DesignPriorities = siteModel?.NationalDesignGuidePriorities?.ToList(),
+            SiteName = siteModel.Name ?? string.Empty,
+            DesignPriorities = siteModel.NationalDesignGuidePriorities.ToList(),
         };
         return View("NationalDesignGuide", designGuideModel);
     }
@@ -452,7 +451,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
                 this.GetSiteIdFromRoute(),
                 (IReadOnlyCollection<NationalDesignGuidePriority>)(model.DesignPriorities ?? new List<NationalDesignGuidePriority>())),
             nameof(NationalDesignGuide),
-            savedModel => model,
+            _ => model,
             cancellationToken);
     }
 
@@ -473,7 +472,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
                 this.GetSiteIdFromRoute(),
                 model.BuildingForHealthyLife),
             nameof(BuildingForHealthyLife),
-            savedModel => model,
+            _ => model,
             cancellationToken);
     }
 
@@ -494,7 +493,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
                 this.GetSiteIdFromRoute(),
                 model.NumberOfGreenLights),
             nameof(NumberOfGreenLights),
-            savedModel => model,
+            _ => model,
             cancellationToken);
     }
 
@@ -515,7 +514,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
                 this.GetSiteIdFromRoute(),
                 model.TenderingStatus),
             nameof(TenderingStatus),
-            savedModel => model,
+            _ => model,
             cancellationToken);
     }
 
@@ -580,7 +579,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
                 model.IsStrategicSite,
                 model.StrategicSiteName),
             nameof(StrategicSite),
-            savedModel => model,
+            _ => model,
             cancellationToken);
     }
 
@@ -602,8 +601,30 @@ public class SiteController : WorkflowController<SiteWorkflowState>
                 model.SiteType,
                 model.IsOnGreenBelt,
                 model.IsRegenerationSite),
-            nameof(StrategicSite),
-            savedModel => model,
+            nameof(SiteType),
+            _ => model,
+            cancellationToken);
+    }
+
+    [HttpGet("{siteId}/site-use")]
+    [WorkflowState(SiteWorkflowState.SiteUse)]
+    public async Task<IActionResult> SiteUse([FromRoute] string siteId, CancellationToken cancellationToken)
+    {
+        var siteModel = await GetSiteDetails(siteId, cancellationToken);
+        return View("SiteUse", siteModel.SiteUseDetails);
+    }
+
+    [HttpPost("{siteId}/site-use")]
+    [WorkflowState(SiteWorkflowState.SiteUse)]
+    public async Task<IActionResult> SiteUse(SiteUseDetails model, CancellationToken cancellationToken)
+    {
+        return await ExecuteSiteCommand<SiteUseDetails>(
+            new ProvideSiteUseDetailsCommand(
+                this.GetSiteIdFromRoute(),
+                model.IsPartOfStreetFrontInfill,
+                model.IsForTravellerPitchSite),
+            nameof(SiteUse),
+            _ => model,
             cancellationToken);
     }
 
@@ -639,7 +660,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         return await this.ExecuteCommand<TViewModel>(
             _mediator,
             command,
-            async () => await ContinueWithRedirect(new { siteId }),
+            async () => await this.ReturnToSitesListOrContinue(async () => await ContinueWithRedirect(new { siteId })),
             async () =>
             {
                 var siteDetails = await GetSiteDetails(siteId.Value, cancellationToken);
