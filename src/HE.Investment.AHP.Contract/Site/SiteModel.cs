@@ -25,4 +25,6 @@ public class SiteModel
     public StrategicSite StrategicSiteDetails { get; set; }
 
     public SiteTypeDetails SiteTypeDetails { get; set; }
+
+    public SiteUseDetails SiteUseDetails { get; set; }
 }
