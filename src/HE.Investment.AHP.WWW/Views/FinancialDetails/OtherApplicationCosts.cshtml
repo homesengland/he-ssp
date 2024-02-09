@@ -9,7 +9,7 @@
 }
 <gds-div-grid-column-two-thirds>
     <form asp-controller="FinancialDetails" asp-action="OtherApplicationCosts" asp-route-applicationId="@Model.ApplicationId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
-        <div id="backButton" role="navigation">
+        <div role="navigation">
             <gds-back-link href="@Url.Action("Back", "FinancialDetails", new { currentPage = FinancialDetailsWorkflowState.OtherApplicationCosts, applicationId = @Model.ApplicationId })" text="Back" class="govuk-!-margin-bottom-8">
             </gds-back-link>
         </div>
@@ -31,7 +31,7 @@
                         </gds-legend>
                         <gds-input govuk-formgroup-asp-for="@Model.ExpectedWorksCosts" type="text"
                                    asp-hiddenlabeltext="Enter your expected works costs"
-                                   asp-prefixtext=@(GdsInputPrefixText.Pounds) class="govuk-!-width-one-quarter" value=@Model?.ExpectedWorksCosts />
+                                   asp-prefixtext=@(GdsInputPrefixText.Pounds) class="govuk-!-width-one-quarter" value=@Model.ExpectedWorksCosts />
                     </he-error-form-group>
                     <he-error-form-group asp-for="ExpectedOnCosts">
                         <gds-legend>
@@ -42,7 +42,7 @@
 
                         <gds-input govuk-formgroup-asp-for="@Model.ExpectedOnCosts" type="text"
                                    asp-hiddenlabeltext="Enter your expected on costs"
-                                   asp-prefixtext=@(GdsInputPrefixText.Pounds) class="govuk-!-width-one-quarter" value=@Model?.ExpectedOnCosts />
+                                   asp-prefixtext=@(GdsInputPrefixText.Pounds) class="govuk-!-width-one-quarter" value=@Model.ExpectedOnCosts />
                     </he-error-form-group>
                 </gds-field-set>
                 <gds-details>

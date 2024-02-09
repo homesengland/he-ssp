@@ -40,6 +40,6 @@ public class DisabledPeopleClientGroupTests : HomeTypesTestBase
                     "YoungPeopleAtRisk",
                     "YoungPeopleLeavingCare",
                 })
-            .HasGdsSaveAndContinueButton();
+            .HasSaveAndContinueButton();
     }
 }

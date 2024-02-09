@@ -6,9 +6,11 @@ namespace HE.Investments.TestsUtils.Extensions;
 
 public static class HtmlDocumentButtonExtensions
 {
-    public static IHtmlDocument HasContinueButton(this IHtmlDocument htmlDocument)
+    public static IHtmlDocument HasContinueButton(this IHtmlDocument htmlDocument) => htmlDocument.HasContinueButton(out _);
+
+    public static IHtmlDocument HasContinueButton(this IHtmlDocument htmlDocument, out IHtmlButtonElement button)
     {
-        GetContinueButton(htmlDocument);
+        button = GetContinueButton(htmlDocument);
         return htmlDocument;
     }
 
@@ -17,17 +19,20 @@ public static class HtmlDocumentButtonExtensions
         return GetSubmitButton(htmlDocument, "Continue");
     }
 
-    public static IHtmlDocument HasSaveAndContinueButton(this IHtmlDocument htmlDocument)
+    public static IHtmlDocument HasSaveAndContinueButton(this IHtmlDocument htmlDocument) => htmlDocument.HasSaveAndContinueButton(out _);
+
+    public static IHtmlDocument HasSaveAndContinueButton(this IHtmlDocument htmlDocument, out IHtmlButtonElement button)
     {
-        GetSubmitButton(htmlDocument, "Save and continue");
+        button = GetSubmitButton(htmlDocument, "Save and continue");
         return htmlDocument;
     }
 
     public static IHtmlDocument HasSubmitButton(
         this IHtmlDocument htmlDocument,
+        out IHtmlButtonElement button,
         string? text = null)
     {
-        GetSubmitButton(htmlDocument, text);
+        button = GetSubmitButton(htmlDocument, text);
 
         return htmlDocument;
     }

@@ -93,8 +93,8 @@ public class IntegrationTestBase<TProgram>
         currentPage
             .UrlWithoutQueryEndsWith(startPageUrl)
             .HasTitle(expectedPageTitle)
-            .HasGdsBackLink()
-            .HasGdsSubmitButton("continue-button", out var continueButton);
+            .HasBackLink()
+            .HasSaveAndContinueButton(out var continueButton);
 
         return continueButton;
     }

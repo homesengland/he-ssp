@@ -35,7 +35,7 @@ public class ListTests : ViewTestBase
         document.HasElementWithText("a", "Phase 1")
             .ContainsInsetText("All of your homes have been added to delivery phase. If you want to add another delivery phase, edit the homes in an existing phase or remove a phase.")
             .ContainsInsetText("Select save and continue to complete this section.")
-            .HasGdsSaveAndContinueButton();
+            .HasSaveAndContinueButton();
     }
 
     [Fact]

@@ -58,7 +58,7 @@ public class SharedOwnershipTests : HomeTypesTestBase
             .HasElementWithText("span", "Enter the rent in pounds and pence. This is inclusive of all charges.")
             .HasInput("ProspectiveRent")
             .HasElementWithText("h2", "Shared Ownership rent as percentage of the unsold share")
-            .HasGdsSaveAndContinueButton()
+            .HasSaveAndContinueButton()
             .HasElementWithText("button", "Calculate");
     }
 }

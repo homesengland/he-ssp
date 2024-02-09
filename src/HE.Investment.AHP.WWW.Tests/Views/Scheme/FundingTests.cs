@@ -46,7 +46,7 @@ public class FundingTests : ViewTestBase
             .HasPageHeader(Model.ApplicationName, "Funding details")
             .HasInput("RequiredFunding", "Enter how much AHP CME 21-26 funding you require on this scheme")
             .HasInput("HousesToDeliver", "Enter how many homes you intend to deliver")
-            .HasGdsSaveAndContinueButton();
+            .HasSaveAndContinueButton();
     }
 
     private void AssertErrors(IHtmlDocument document, bool exist)

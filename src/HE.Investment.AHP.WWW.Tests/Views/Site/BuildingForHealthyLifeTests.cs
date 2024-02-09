@@ -29,8 +29,8 @@ public class BuildingForHealthyLifeTests : ViewTestBase
                     "No",
                     "Not applicable, this site does not contain more than 10 homes",
                 })
-            .HasGdsSaveAndContinueButton()
-            .HasGdsBackLink(false);
+            .HasSaveAndContinueButton()
+            .HasBackLink(false);
     }
 
     [Fact]
@@ -59,8 +59,8 @@ public class BuildingForHealthyLifeTests : ViewTestBase
                     "No",
                     "Not applicable, this site does not contain more than 10 homes",
                 })
-            .HasGdsSaveAndContinueButton()
-            .HasGdsBackLink(false)
+            .HasSaveAndContinueButton()
+            .HasBackLink(false)
             .HasOneValidationMessages(errorMessage);
     }
 }

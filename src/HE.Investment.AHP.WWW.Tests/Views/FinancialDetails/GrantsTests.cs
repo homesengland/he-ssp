@@ -63,7 +63,7 @@ public class GrantsTests : ViewTestBase
             .HasElementWithText("h1", "Grants received from other public bodies")
             .HasElementWithText("h2", "Enter how much you have received from the county council")
             .HasElementWithText("span", "Total grants from other public bodies")
-            .HasGdsSaveAndContinueButton()
+            .HasSaveAndContinueButton()
             .HasSummaryErrorMessage(FinancialDetailsValidationFieldNames.DhscExtraCareGrants, errorMessage, !string.IsNullOrEmpty(errorMessage))
             .HasErrorMessage(FinancialDetailsValidationFieldNames.DhscExtraCareGrants, errorMessage, !string.IsNullOrEmpty(errorMessage));
     }

@@ -36,6 +36,6 @@ public class HappiDesignPrinciplesTests : HomeTypesTestBase
                     "StorageForBelongingsAndBicycles",
                 })
             .HasCheckboxes("OtherPrinciples", new[] { "NoneOfThese", })
-            .HasGdsSaveAndContinueButton();
+            .HasSaveAndContinueButton();
     }
 }

@@ -23,7 +23,7 @@ public class LocalAuthorityConfirmTests : ViewTestBase
             .HasBoldText("Liverpool")
             .HasHeader2("Is this the correct local authority?")
             .HasRadio("Response", new[] { "Yes", "No" })
-            .HasGdsBackLink(false);
+            .HasBackLink(false);
     }
 
     [Fact]
@@ -45,7 +45,7 @@ public class LocalAuthorityConfirmTests : ViewTestBase
             .HasBoldText("Liverpool")
             .HasHeader2("Is this the correct local authority?")
             .HasRadio("Response", new[] { "Yes", "No" })
-            .HasGdsBackLink(false)
+            .HasBackLink(false)
             .HasOneValidationMessages(errorMessage);
     }
 

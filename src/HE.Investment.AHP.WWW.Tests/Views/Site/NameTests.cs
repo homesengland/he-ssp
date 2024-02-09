@@ -18,8 +18,8 @@ public class NameTests : ViewTestBase
         document
             .HasTitle(SitePageTitles.SiteName)
             .HasInput(nameof(SiteModel.Name))
-            .HasGdsSaveAndContinueButton()
-            .HasGdsBackLink(false);
+            .HasSaveAndContinueButton()
+            .HasBackLink(false);
     }
 
     [Fact]
@@ -37,8 +37,8 @@ public class NameTests : ViewTestBase
         document
             .HasTitle(SitePageTitles.SiteName)
             .HasInput(nameof(SiteModel.Name))
-            .HasGdsSaveAndContinueButton()
-            .HasGdsBackLink(false)
+            .HasSaveAndContinueButton()
+            .HasBackLink(false)
             .HasOneValidationMessages(errorMessage);
     }
 }

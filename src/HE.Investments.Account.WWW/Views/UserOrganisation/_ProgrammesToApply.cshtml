@@ -21,7 +21,6 @@
                     </gds-p>
 
                     <link-button action-url="@programme.CreateApplicationUrl"
-                                 id="start-application-link"
                                  data-testid=@($"user-organisation-start-new-application-{programme.Type.ToString().ToLowerInvariant().Replace(' ', '-')}")
                                  is-disabled="@(!programme.CanCreateApplication)">
                         Start new application

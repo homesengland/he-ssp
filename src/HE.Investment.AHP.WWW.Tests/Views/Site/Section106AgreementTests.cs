@@ -22,8 +22,8 @@ public class Section106AgreementTests : ViewTestBase
             .HasTitle(SitePageTitles.SiteSection106Agreement)
             .HasPageHeader(_siteName, @SitePageTitles.SiteSection106Agreement)
             .HasGdsRadioInputWithValues(nameof(Section106Dto.GeneralAgreement), "True", "False")
-            .HasGdsSaveAndContinueButton()
-            .HasGdsBackLink(false);
+            .HasSaveAndContinueButton()
+            .HasBackLink(false);
     }
 
     [Fact]
@@ -43,8 +43,8 @@ public class Section106AgreementTests : ViewTestBase
             .HasTitle(SitePageTitles.SiteSection106Agreement)
             .HasPageHeader(_siteName, @SitePageTitles.SiteSection106Agreement)
             .HasGdsRadioInputWithValues(nameof(Section106Dto.GeneralAgreement), "True", "False")
-            .HasGdsSaveAndContinueButton()
-            .HasGdsBackLink(false)
+            .HasSaveAndContinueButton()
+            .HasBackLink(false)
             .HasOneValidationMessages(errorMessage);
     }
 }

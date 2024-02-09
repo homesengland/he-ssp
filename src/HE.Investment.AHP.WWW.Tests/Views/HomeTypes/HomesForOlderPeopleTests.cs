@@ -21,6 +21,6 @@ public class HomesForOlderPeopleTests : HomeTypesTestBase
             .HasRadio(
                 "HousingType",
                 new[] { "DesignatedSupportedHomes", "HomesWithAccessToSupport", "HomesWithSomeSpecialDesignFeatures", "HomesWithAllSpecialDesignFeatures", })
-            .HasGdsSaveAndContinueButton();
+            .HasSaveAndContinueButton();
     }
 }

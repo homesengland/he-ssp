@@ -54,7 +54,7 @@
                     @Html.HiddenFor(model => Model.DeliveryPhases[index].StartOnSite)
                     @Html.HiddenFor(model => Model.DeliveryPhases[index].PracticalCompletion)
 
-                    <tr class="govuk-table__row" id="delivery-phase-@Model.DeliveryPhases[index].DeliveryPhaseId">
+                    <tr class="govuk-table__row">
                         <td class="govuk-table__cell">
                             <gds-link class="govuk-link--no-visited-state"
                                       href="@Url.Action("Start", "DeliveryPhase", new { applicationId, deliveryPhaseId = Model.DeliveryPhases[index].DeliveryPhaseId })">
@@ -117,9 +117,7 @@
                     </tr>
                     <tr>
                         <td colspan="6">
-                            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="continue-button" disabled="@Model.IsReadOnly">
-                                Save and continue
-                            </button>
+                            <vc:form-button is-disabled="@Model.IsReadOnly"/>
                         </td>
                     </tr>
                 }

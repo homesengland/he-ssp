@@ -27,6 +27,6 @@ public class ModernMethodsConstructionTests : HomeTypesTestBase
                     "Yes",
                     "No",
                 })
-            .HasGdsSaveAndContinueButton();
+            .HasSaveAndContinueButton();
     }
 }

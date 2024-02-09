@@ -4,6 +4,7 @@ using HE.Investments.Common.Messages;
 using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
+using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Extensions;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
 using HE.Investments.Loans.WWW;
 using HE.Investments.Loans.WWW.Views.Project.Consts;
@@ -131,7 +132,7 @@ public class Order11LocalAuthorityTests : IntegrationTest
         var localAuthorityResultPage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
 
         // when
-        localAuthorityResultPage.HasAnchor($"local-authority-link-{UserData.LocalAuthorityId}", out var liverpoolAuthorityLink);
+        localAuthorityResultPage.HasAnchorElementById($"local-authority-link-{UserData.LocalAuthorityId}", out var liverpoolAuthorityLink);
         var localAuthorityConfirmPage = await TestClient.NavigateTo(liverpoolAuthorityLink);
 
         // then

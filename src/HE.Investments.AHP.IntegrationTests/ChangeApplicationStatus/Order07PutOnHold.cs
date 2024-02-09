@@ -41,7 +41,7 @@ public class Order07PutOnHold : AhpIntegrationTest
             .UrlEndWith(ApplicationPagesUrl.OnHoldSuffix)
             .HasTitle(ApplicationPageTitles.OnHold)
             .HasTextAreaInput("HoldReason")
-            .HasSubmitButton("Hold");
+            .HasSubmitButton(out _, "Hold");
 
         SaveCurrentPage();
     }
