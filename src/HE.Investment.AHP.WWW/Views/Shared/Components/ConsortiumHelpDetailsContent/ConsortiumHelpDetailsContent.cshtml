@@ -1,0 +1,19 @@
+@{
+    var items = new List<string>
+    {
+        "A consortium is a group of providers led by a Lead Partner. They manage applying for and delivering homes funded through an affordable housing grant on behalf of the consortium.",
+        "Consortia can take a number of forms. In some, the Lead Partner completes the housing development with consortium members taking ownership of the homes after completion.",
+        "In others, different developing partners may work together within a consortium, developing and owning their own homes; or it may be a mix of both.",
+        "Only the Lead Partner of a consortium needs to qualify as an Investment Partner. However, all members of the consortium must submit sections 1 and 2 of the Investment Partner Qualification questionnaire, including the statement of good standing. This does not need to be completed before the consortium is set up or before you apply for grant.",
+        "Once you've added the partners to your consortium, they'll show on the Consortium Summary page as 'Pending'. They will stay as 'Pending' until the IP checks are completed and they are included in the contract.",
+        "You can add consortium members to schemes in an application while they are still 'Pending', but no grant can be drawn down on their behalf until they are fully contracted members of the consortium.",
+        "You must have the providers added here, before you can include them within an application. Pending status is accepted also."
+    };
+}
+
+@foreach (var item in @items)
+{
+    <gds-p >
+        @item
+    </gds-p>
+}
