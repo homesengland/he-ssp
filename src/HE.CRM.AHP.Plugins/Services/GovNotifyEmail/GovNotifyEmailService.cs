@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using DataverseModel;
 using HE.Base.Services;
 using HE.CRM.Common.Repositories.interfaces;
@@ -28,6 +29,7 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
         private readonly IPortalPermissionRepository _portalPermissionRepositoryAdmin;
         private readonly IAhpApplicationRepository _ahpApplicationRepositoryAdmin;
         private readonly IAccountRepository _accountRepositoryAdmin;
+        private readonly IDeliveryPhaseRepository _deliveryPhaseRepositoryAdmin;
 
         public GovNotifyEmailService(CrmServiceArgs args) : base(args)
         {
@@ -42,6 +44,7 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
             _portalPermissionRepositoryAdmin = CrmRepositoriesFactory.GetSystem<IPortalPermissionRepository>();
             _ahpApplicationRepositoryAdmin = CrmRepositoriesFactory.GetSystem<IAhpApplicationRepository>();
             _accountRepositoryAdmin = CrmRepositoriesFactory.GetSystem<IAccountRepository>();
+            _deliveryPhaseRepositoryAdmin = CrmRepositoriesFactory.GetSystem<IDeliveryPhaseRepository>();
         }
 
         //public void SendNotifications_EXTERNAL_APPLICATION_ACTION_REQUIRED(invln_AHPStatusChange statusChange, invln_scheme ahpApplication, string actionRequired)
@@ -283,6 +286,42 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
 
                 var parameters = JsonSerializer.Serialize(govNotParams, options);
                 this.SendGovNotifyEmail(ahpApplication.OwnerId, ahpApplicationId, emailTemplate.invln_subject, parameters, emailTemplate);
+            }
+        }
+
+        public void SendNotifications_AHP_INTERNAL_EXTERNAL_WANTS_ADDITIONAL_PAYMENTS_FOR_PHASE(EntityReference deliveryPhaseId)
+        {
+            var deliveryPhase = _deliveryPhaseRepositoryAdmin.GetById(deliveryPhaseId.Id, nameof(invln_DeliveryPhase.invln_Application).ToLower());
+            var ahpApplicationId = deliveryPhase.invln_Application;
+            var ahpApplication = _ahpApplicationRepositoryAdmin.GetById(ahpApplicationId.Id, nameof(Contact.OwnerId).ToLower(), nameof(invln_scheme.invln_organisationid).ToLower());
+
+            if (ahpApplication.OwnerId.LogicalName == SystemUser.EntityLogicalName)
+            {
+                this.TracingService.Trace("AHP_DELIVERY_PHASE_NOTIFICATION_OF_ADDITIONAL_PAYMENTS_FOR_PHASE");
+                var emailTemplate = _notificationSettingRepositoryAdmin.GetTemplateViaTypeName("AHP_DELIVERY_PHASE_NOTIFICATION_OF_ADDITIONAL_PAYMENTS_FOR_PHASE");
+                var ownerData = _systemUserRepositoryAdmin.GetById(ahpApplication.OwnerId.Id, nameof(SystemUser.InternalEMailAddress).ToLower(), nameof(SystemUser.FullName).ToLower());
+                var account = _accountRepositoryAdmin.GetById(ahpApplication.invln_organisationid.Id, nameof(Account.Name).ToLower());
+                var subject = (account.Name ?? "NO NAME") + " " + emailTemplate.invln_subject;
+                var govNotParams = new AHP_DELIVERY_PHASE_NOTIFICATION_OF_ADDITIONAL_PAYMENTS_FOR_PHASE()
+                {
+                    templateId = emailTemplate?.invln_templateid,
+                    personalisation = new parameters_AHP_DELIVERY_PHASE_NOTIFICATION_OF_ADDITIONAL_PAYMENTS_FOR_PHASE()
+                    {
+                        recipientEmail = ownerData.InternalEMailAddress,
+                        subject = subject,
+                        username = ownerData.FullName ?? "NO NAME",
+                        organisationname = account.Name ?? "NO NAME",
+                    }
+                };
+
+                var options = new JsonSerializerOptions
+                {
+                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                    WriteIndented = true
+                };
+
+                var parameters = JsonSerializer.Serialize(govNotParams, options);
+                this.SendGovNotifyEmail(ahpApplication.OwnerId, ahpApplication.ToEntityReference(), subject, parameters, emailTemplate);
             }
         }
 
