@@ -23,7 +23,7 @@ public class NextStateTests
     [InlineData(SiteWorkflowState.ContractorDetails, SiteWorkflowState.StrategicSite)]
     [InlineData(SiteWorkflowState.IntentionToWorkWithSme, SiteWorkflowState.StrategicSite)]
     [InlineData(SiteWorkflowState.StrategicSite, SiteWorkflowState.SiteType)]
-    [InlineData(SiteWorkflowState.SiteType, SiteWorkflowState.CheckAnswers)]
+    [InlineData(SiteWorkflowState.SiteType, SiteWorkflowState.SiteUse)]
     public async Task ShouldReturnNextState_WhenContinueTriggerExecuted(SiteWorkflowState current, SiteWorkflowState expectedNext)
     {
         // given

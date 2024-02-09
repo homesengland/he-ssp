@@ -628,6 +628,25 @@ public class SiteController : WorkflowController<SiteWorkflowState>
             cancellationToken);
     }
 
+    [HttpGet("{siteId}/traveller-pitch-type")]
+    [WorkflowState(SiteWorkflowState.TravellerPitchType)]
+    public async Task<IActionResult> TravellerPitchType([FromRoute] string siteId, CancellationToken cancellationToken)
+    {
+        var siteModel = await GetSiteDetails(siteId, cancellationToken);
+        return View("TravellerPitchType", siteModel.SiteUseDetails);
+    }
+
+    [HttpPost("{siteId}/traveller-pitch-type")]
+    [WorkflowState(SiteWorkflowState.TravellerPitchType)]
+    public async Task<IActionResult> TravellerPitchType(SiteUseDetails model, CancellationToken cancellationToken)
+    {
+        return await ExecuteSiteCommand<SiteUseDetails>(
+            new ProvideTravellerPitchSiteTypeCommand(this.GetSiteIdFromRoute(), model.TravellerPitchSiteType),
+            nameof(TravellerPitchType),
+            _ => model,
+            cancellationToken);
+    }
+
     [HttpGet("{siteId}/check-answers")]
     [WorkflowState(SiteWorkflowState.CheckAnswers)]
     public IActionResult CheckAnswers()

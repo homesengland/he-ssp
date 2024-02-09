@@ -60,6 +60,8 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
                                                    x.IsIntentionToWorkWithSme.IsNotProvided() => SiteWorkflowState.IntentionToWorkWithSme,
             { StrategicSiteDetails: var x } when x.IsStrategicSite.IsNotProvided() => SiteWorkflowState.StrategicSite,
             { SiteTypeDetails.IsAnswered: false } => SiteWorkflowState.SiteType,
+            { SiteUseDetails: var x } when x.IsForTravellerPitchSite.IsNotProvided() || x.IsPartOfStreetFrontInfill.IsNotProvided() => SiteWorkflowState.SiteUse,
+            { SiteUseDetails: { IsForTravellerPitchSite: true, TravellerPitchSiteType: TravellerPitchSiteType.Undefined } } => SiteWorkflowState.TravellerPitchType,
             _ => SiteWorkflowState.CheckAnswers,
         };
     }
@@ -95,6 +97,8 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             SiteWorkflowState.IntentionToWorkWithSme => IsTenderForWorksContractOrContractingHasNotYetBegun(),
             SiteWorkflowState.StrategicSite => true,
             SiteWorkflowState.SiteType => true,
+            SiteWorkflowState.SiteUse => true,
+            SiteWorkflowState.TravellerPitchType => IsForTravellerPitchSite(),
             SiteWorkflowState.CheckAnswers => true,
             _ => false,
         };
@@ -220,8 +224,21 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             .PermitIf(Trigger.Back, SiteWorkflowState.ContractorDetails, IsConditionalOrUnconditionalWorksContract);
 
         _machine.Configure(SiteWorkflowState.SiteType)
-            .Permit(Trigger.Continue, SiteWorkflowState.CheckAnswers)
+            .Permit(Trigger.Continue, SiteWorkflowState.SiteUse)
             .Permit(Trigger.Back, SiteWorkflowState.StrategicSite);
+
+        _machine.Configure(SiteWorkflowState.SiteUse)
+            .PermitIf(Trigger.Continue, SiteWorkflowState.TravellerPitchType, IsForTravellerPitchSite)
+            .PermitIf(Trigger.Continue, SiteWorkflowState.CheckAnswers, () => !IsForTravellerPitchSite())
+            .Permit(Trigger.Back, SiteWorkflowState.SiteType);
+
+        _machine.Configure(SiteWorkflowState.TravellerPitchType)
+            .Permit(Trigger.Continue, SiteWorkflowState.CheckAnswers)
+            .PermitIf(Trigger.Back, SiteWorkflowState.SiteUse);
+
+        _machine.Configure(SiteWorkflowState.CheckAnswers)
+            .PermitIf(Trigger.Back, SiteWorkflowState.SiteUse, () => !IsForTravellerPitchSite())
+            .PermitIf(Trigger.Back, SiteWorkflowState.TravellerPitchType, IsForTravellerPitchSite);
     }
 
     private bool IsLocalAuthorityProvided() => _siteModel?.LocalAuthority?.Name.IsProvided() ?? false;
@@ -245,4 +262,6 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
     private bool IsNotApplicableOrMissing() => _siteModel?.TenderingStatusDetails.TenderingStatus is SiteTenderingStatus.NotApplicable or null;
 
     private bool IsBuildingForHealthyLife() => _siteModel?.BuildingForHealthyLife is BuildingForHealthyLifeType.Yes;
+
+    private bool IsForTravellerPitchSite() => _siteModel?.SiteUseDetails.IsForTravellerPitchSite == true;
 }
