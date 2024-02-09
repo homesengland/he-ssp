@@ -79,7 +79,7 @@ public class PlanningDetailsTests : ViewTestBase
                 new List<string> { "Yes", "No" },
                 value: "False",
                 exist: isLandRegistryTitleNumberRegisteredExist)
-            .HasSaveAndContinueButton()
+            .HasGdsSaveAndContinueButton()
             .HasGdsBackLink(false);
     }
 

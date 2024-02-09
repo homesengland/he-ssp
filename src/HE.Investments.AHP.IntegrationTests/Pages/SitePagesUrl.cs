@@ -24,6 +24,8 @@ public static class SitePagesUrl
 
     public static string SiteLocalAuthorityResult(string siteId) => $"ahp/site/{siteId}/local-authority/search/result";
 
+    public static string SiteLocalAuthorityResult(string siteId, string phrase) => $"{SiteLocalAuthorityResult(siteId)}?phrase={phrase}";
+
     public static string SiteLocalAuthorityConfirm(string siteId, string localAuthorityId, string localAuthorityName, string phrase) =>
         $"ahp/site/{siteId}/local-authority/{localAuthorityId}/{localAuthorityName}/confirm?phrase={phrase}";
 

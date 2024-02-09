@@ -24,7 +24,7 @@ public class SummaryOfDeliveryTests : ViewTestBase
 
         // then
         document.HasTitle(DeliveryPageTitles.SummaryOfDelivery)
-            .HasContinueButton()
+            .HasGdsContinueButton()
             .HasGdsBackLink(false);
 
         document.GetElementByTestId("grant-apportioned-value").TextContent.Should().Contain("\u00a39,000.12");
@@ -52,7 +52,7 @@ public class SummaryOfDeliveryTests : ViewTestBase
 
         // then
         document.HasTitle(DeliveryPageTitles.SummaryOfDelivery)
-            .HasContinueButton()
+            .HasGdsContinueButton()
             .HasGdsBackLink(false);
 
         document.GetElementByTestId("grant-apportioned-value").TextContent.Should().Contain("\u00a39,000.12");

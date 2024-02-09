@@ -39,7 +39,7 @@ public class Order02CompleteSchemeInformation : AhpIntegrationTest
     {
         // given
         var taskListPage = await TestClient.NavigateTo(ApplicationPagesUrl.TaskList(ApplicationData.ApplicationId));
-        taskListPage.HasLinkWithId("enter-scheme-information", out var enterSchemeInformationLink);
+        taskListPage.HasLinkWithTestId("enter-scheme-information", out var enterSchemeInformationLink);
 
         // when
         var schemaDetailsPage = await TestClient.NavigateTo(enterSchemeInformationLink);
@@ -140,7 +140,7 @@ public class Order02CompleteSchemeInformation : AhpIntegrationTest
         checkAnswersPage
             .UrlEndWith(SchemeInformationPagesUrl.CheckAnswersSuffix)
             .HasTitle(SchemeInformationPageTitles.CheckAnswers)
-            .HasGdsSubmitButton("continue-button", out var continueButton);
+            .HasGdsSaveAndContinueButton(out var continueButton);
 
         // when
         var schemaInformationSummary = checkAnswersPage.GetSummaryListItems();

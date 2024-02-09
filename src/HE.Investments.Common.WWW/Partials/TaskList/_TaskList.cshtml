@@ -19,7 +19,7 @@
                         }
                         else
                         {
-                            <a href=@item.ActionUrl id="@item.Action.ToIdTag()">
+                            <a href=@item.ActionUrl data-testId="@item.Action.ToIdTag()">
                                 @item.Action
                             </a>
                         }
@@ -30,7 +30,7 @@
                     }
                     else
                     {
-                        <section-status-tag id="@(item.Action.ToIdTag())-status" status=@item.Status additional-classes="app-task-list__tag"></section-status-tag>
+                        <section-status-tag data-testId="@(item.Action.ToIdTag())-status" status=@item.Status additional-classes="app-task-list__tag"></section-status-tag>
                     }
                 </li>
             </ul>

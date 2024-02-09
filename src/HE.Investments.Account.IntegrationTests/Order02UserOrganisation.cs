@@ -93,12 +93,16 @@ public class Order02UserOrganisation : AccountIntegrationTest
     {
         // given
         var tooLongShortString = new string(Enumerable.Repeat('a', 120).ToArray());
+        var currentPage = await GetCurrentPage(MainPagesUrl.ChangeOrganisationDetails);
+        currentPage
+            .UrlWithoutQueryEndsWith(MainPagesUrl.ChangeOrganisationDetails)
+            .HasTitle(UserOrganisationPageTitles.ChangeOrganisationDetails)
+            .HasGdsBackLink()
+            .HasGdsSubmitButton(out var sendRequestButton, "Send request");
 
         // when
-        var changeOrganisationDetailsPage = await TestQuestionPage(
-            MainPagesUrl.ChangeOrganisationDetails,
-            UserOrganisationPageTitles.ChangeOrganisationDetails,
-            MainPagesUrl.ChangeOrganisationDetails,
+        var changeOrganisationDetailsPage = await TestClient.SubmitButton(
+            sendRequestButton,
             ("Name", UserOrganisationData.OrganisationName),
             ("PhoneNumber", tooLongShortString),
             ("AddressLine1", tooLongShortString),

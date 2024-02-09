@@ -41,7 +41,7 @@ public class Order07PutOnHold : AhpIntegrationTest
             .UrlEndWith(ApplicationPagesUrl.OnHoldSuffix)
             .HasTitle(ApplicationPageTitles.OnHold)
             .HasTextAreaInput("HoldReason")
-            .HasSubmitButton("Hold");
+            .HasGdsSubmitButton(out _, "Hold");
 
         SaveCurrentPage();
     }
@@ -53,7 +53,7 @@ public class Order07PutOnHold : AhpIntegrationTest
         // given
         var holdPage = await GetCurrentPage();
         var holdButton = holdPage
-            .GetSubmitButton("Hold");
+            .GetGdsSubmitButton("Hold");
 
         // when
         var taskListPage = await TestClient.SubmitButton(holdButton, ("HoldReason", "very important reason"));

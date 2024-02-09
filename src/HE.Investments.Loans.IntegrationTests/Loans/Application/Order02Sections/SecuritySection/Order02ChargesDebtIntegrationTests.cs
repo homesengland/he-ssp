@@ -30,7 +30,7 @@ public class Order02ChargesDebtIntegrationTests : IntegrationTest
     {
         // given
         var chargesDebtPage = await TestClient.NavigateTo(SecurityPageUrls.ChargesDebt(UserData.LoanApplicationIdInDraftState));
-        var continueButton = chargesDebtPage.GetContinueButton();
+        var continueButton = chargesDebtPage.GetGdsContinueButton();
 
         // when
         chargesDebtPage = await TestClient.SubmitButton(
@@ -50,7 +50,7 @@ public class Order02ChargesDebtIntegrationTests : IntegrationTest
     public async Task Order02_ShouldDisplayValidationError_WhenNoIsSelectedAndAdditionalInformationIsLongerThan1500Characters()
     {
         // given
-        var continueButton = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey).GetContinueButton();
+        var continueButton = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey).GetGdsContinueButton();
 
         // when
         var directorLoansPage = await TestClient.SubmitButton(
@@ -68,7 +68,7 @@ public class Order02ChargesDebtIntegrationTests : IntegrationTest
     public async Task Order03_ShouldMoveToDirectorLoans_WhenNoIsSelected()
     {
         // given
-        var continueButton = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey).GetContinueButton();
+        var continueButton = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey).GetGdsContinueButton();
 
         // when
         var directorLoansPage = await TestClient.SubmitButton(
@@ -85,7 +85,7 @@ public class Order02ChargesDebtIntegrationTests : IntegrationTest
     public async Task Order04_ShouldMoveToDirectorLoans_WhenYesIsSelectedAndAdditionalDataProvided()
     {
         // given
-        var continueButton = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey).GetContinueButton();
+        var continueButton = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey).GetGdsContinueButton();
 
         // when
         var directorLoansPage = await TestClient.SubmitButton(

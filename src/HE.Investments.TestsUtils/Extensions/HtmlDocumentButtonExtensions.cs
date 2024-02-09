@@ -6,33 +6,38 @@ namespace HE.Investments.TestsUtils.Extensions;
 
 public static class HtmlDocumentButtonExtensions
 {
-    public static IHtmlDocument HasContinueButton(this IHtmlDocument htmlDocument)
+    public static IHtmlDocument HasGdsContinueButton(this IHtmlDocument htmlDocument) => htmlDocument.HasGdsContinueButton(out _);
+
+    public static IHtmlDocument HasGdsContinueButton(this IHtmlDocument htmlDocument, out IHtmlButtonElement button)
     {
-        GetContinueButton(htmlDocument);
+        button = GetGdsContinueButton(htmlDocument);
         return htmlDocument;
     }
 
-    public static IHtmlButtonElement GetContinueButton(this IHtmlDocument htmlDocument)
+    public static IHtmlButtonElement GetGdsContinueButton(this IHtmlDocument htmlDocument)
     {
-        return GetSubmitButton(htmlDocument, "Continue");
+        return GetGdsSubmitButton(htmlDocument, "Continue");
     }
 
-    public static IHtmlDocument HasSaveAndContinueButton(this IHtmlDocument htmlDocument)
+    public static IHtmlDocument HasGdsSaveAndContinueButton(this IHtmlDocument htmlDocument) => htmlDocument.HasGdsSaveAndContinueButton(out _);
+
+    public static IHtmlDocument HasGdsSaveAndContinueButton(this IHtmlDocument htmlDocument, out IHtmlButtonElement button)
     {
-        GetSubmitButton(htmlDocument, "Save and continue");
+        button = GetGdsSubmitButton(htmlDocument, "Save and continue");
         return htmlDocument;
     }
 
-    public static IHtmlDocument HasSubmitButton(
+    public static IHtmlDocument HasGdsSubmitButton(
         this IHtmlDocument htmlDocument,
+        out IHtmlButtonElement button,
         string? text = null)
     {
-        GetSubmitButton(htmlDocument, text);
+        button = GetGdsSubmitButton(htmlDocument, text);
 
         return htmlDocument;
     }
 
-    public static IHtmlButtonElement GetSubmitButton(
+    public static IHtmlButtonElement GetGdsSubmitButton(
         this IHtmlDocument htmlDocument,
         string? text = null)
     {

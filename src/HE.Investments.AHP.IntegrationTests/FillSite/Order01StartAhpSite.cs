@@ -64,7 +64,7 @@ public class Order01StartAhpSite : AhpIntegrationTest
     {
         // given
         var siteNamePage = await GetCurrentPage(SitePagesUrl.SiteName);
-        siteNamePage.HasGdsSubmitButton("continue-button", out var continueButton);
+        siteNamePage.HasGdsSaveAndContinueButton(out var continueButton);
 
         // when
         var section106GeneralAgreementPage = await TestClient.SubmitButton(
@@ -152,11 +152,21 @@ public class Order01StartAhpSite : AhpIntegrationTest
     [Order(10)]
     public async Task Order10_ShouldProvideLocalAuthoritySearchPhraseAndNavigateToLocalAuthorityResult()
     {
-        await TestQuestionPage(
-            SitePagesUrl.SiteLocalAuthoritySearch(SiteData.SiteId),
-            SitePageTitles.LocalAuthoritySearch,
-            SitePagesUrl.SiteLocalAuthorityResult(SiteData.SiteId),
-            (nameof(LocalAuthorities.Phrase), SiteData.LocalAuthorityName));
+        // given
+        var currentPage = await GetCurrentPage(SitePagesUrl.SiteLocalAuthoritySearch(SiteData.SiteId));
+        currentPage
+            .UrlWithoutQueryEndsWith(SitePagesUrl.SiteLocalAuthoritySearch(SiteData.SiteId))
+            .HasTitle(SitePageTitles.LocalAuthoritySearch)
+            .HasGdsBackLink()
+            .HasGdsSubmitButton(out var searchButton, "Search");
+
+        // when
+        var searchResultPage = await TestClient.SubmitButton(searchButton, (nameof(LocalAuthorities.Phrase), SiteData.LocalAuthorityName));
+
+        // then
+        searchResultPage.UrlWithoutQueryEndsWith(SitePagesUrl.SiteLocalAuthorityResult(SiteData.SiteId))
+            .HasTitle(SitePageTitles.LocalAuthorityResult);
+        SaveCurrentPage();
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
@@ -164,18 +174,16 @@ public class Order01StartAhpSite : AhpIntegrationTest
     public async Task Order11_ShouldSelectLocalAuthorityAndNavigateToLocalAuthorityConfirm()
     {
         // given
-        var localAuthorityResultPage = await GetCurrentPage(SitePagesUrl.SiteLocalAuthorityResult(SiteData.SiteId));
+        var localAuthorityResultPage = await GetCurrentPage(SitePagesUrl.SiteLocalAuthorityResult(SiteData.SiteId, SiteData.LocalAuthorityName));
         localAuthorityResultPage.HasNavigationListItem("select-list", out var selectLocalAuthorityLink);
 
         // when
         var localAuthorityConfirmPage = await TestClient.NavigateTo(selectLocalAuthorityLink);
 
         // then
-        ApplicationData.SetSiteId(localAuthorityConfirmPage.Url.GetSiteGuidFromUrl());
         localAuthorityConfirmPage
             .UrlEndWith(SitePagesUrl.SiteLocalAuthorityConfirm(SiteData.SiteId, SiteData.LocalAuthorityId, SiteData.LocalAuthorityName, SiteData.LocalAuthorityName))
             .HasTitle(SitePageTitles.LocalAuthorityConfirm);
-
         SaveCurrentPage();
     }
 

@@ -45,12 +45,6 @@ public static class HtmlFluentExtensions
         return htmlDocument;
     }
 
-    public static IHtmlDocument HasAnchor(this IHtmlDocument htmlDocument, string elementId, out IHtmlAnchorElement htmlAnchorElement)
-    {
-        htmlAnchorElement = htmlDocument.GetAnchorElementById(elementId);
-        return htmlDocument;
-    }
-
     public static IHtmlDocument HasOneValidationMessages(this IHtmlDocument htmlDocument, string validationMessage)
     {
         return htmlDocument.ContainsOnlyOneValidationMessage(validationMessage);
@@ -66,41 +60,30 @@ public static class HtmlFluentExtensions
         return htmlDocument;
     }
 
-    public static IHtmlDocument HasLinkWithId(this IHtmlDocument htmlDocument, string id, out IHtmlAnchorElement htmlElement)
-    {
-        var element = htmlDocument.GetElementById(id);
-
-        var anchorElement = element as IHtmlAnchorElement;
-        anchorElement.Should().NotBeNull($"Element with id {id} should be IHtmlAnchorElement");
-        htmlElement = anchorElement!;
-
-        return htmlDocument;
-    }
-
     public static IHtmlDocument HasLinkWithTestId(this IHtmlDocument htmlDocument, string testId, out IHtmlAnchorElement htmlElement)
     {
         var element = htmlDocument.GetElementByTestId(testId);
 
         var anchorElement = element as IHtmlAnchorElement;
-        anchorElement.Should().NotBeNull($"Element with testId {testId} should be IHtmlAnchorElement");
+        anchorElement.Should().NotBeNull($"Element with data-testId {testId} should be IHtmlAnchorElement");
         htmlElement = anchorElement!;
 
         return htmlDocument;
     }
 
-    public static IHtmlDocument HasElementWithTextById(this IHtmlDocument htmlDocument, string id, string text)
+    public static IHtmlDocument HasElementWithTextByTestId(this IHtmlDocument htmlDocument, string testId, string text)
     {
-        var element = htmlDocument.GetElementById(id);
+        var element = htmlDocument.GetElementByTestId(testId);
 
-        element.Should().NotBeNull($"Element with id {id} does not exist");
-        element!.TextContent.Should().Contain(text, $"Element with id {id} is missing text \"{text}\"");
+        element.Should().NotBeNull($"Element with data-testId {testId} does not exist");
+        element!.TextContent.Should().Contain(text, $"Element with data-testId {testId} is missing text \"{text}\"");
 
         return htmlDocument;
     }
 
-    public static IHtmlDocument HasElementForTestId(this IHtmlDocument htmlDocument, string dataTestId, out IElement htmlElement)
+    public static IHtmlDocument HasElementForTestId(this IHtmlDocument htmlDocument, string testId, out IElement htmlElement)
     {
-        htmlElement = htmlDocument.GetElementByTestId(dataTestId);
+        htmlElement = htmlDocument.GetElementByTestId(testId);
 
         return htmlDocument;
     }
@@ -125,6 +108,6 @@ public static class HtmlFluentExtensions
 
     public static IHtmlDocument HasSectionWithStatus(this IHtmlDocument htmlDocument, string sectionStatusId, string expectedStatus)
     {
-        return htmlDocument.HasElementWithTextById(sectionStatusId, expectedStatus);
+        return htmlDocument.HasElementWithTextByTestId(sectionStatusId, expectedStatus);
     }
 }
