@@ -14,7 +14,7 @@
 <div class="govuk-grid-column-full">
     <div class="govuk-grid-column-full govuk-!-padding-0">
 
-        <partial name="~/Partials/_Notification.cshtml" />
+        <partial name="~/Partials/_Notification.cshtml"/>
 
         @if (!string.IsNullOrWhiteSpace(Model.UserName))
         {
@@ -31,7 +31,7 @@
         @if (Model.IsLimitedUser)
         {
             <div class="govuk-inset-text" data-testid="user-organisation-limited-user">
-                Your request to be part of @Model.OrganisationName has been received. It will be reviewed and approved. In the meantime you can start a new application. You will not be able to see all of @Model.OrganisationName applications until you have been approved.
+                Your request to join @Model.OrganisationName will be reviewed and approved. While you wait, you can start a new application. You will not be able to see all of @Model.OrganisationName applications until you have been approved.
             </div>
         }
     </gds-div-grid-column-two-thirds>
@@ -41,7 +41,7 @@
         @if (!Model.ProgrammesToToAccess.Any() || Model.ProgrammesToToAccess.All(p => !p.Applications.Any()))
         {
             <gds-p>
-                You have not yet applied for a service. To apply, select a funding programme below.
+                You have not applied for any funding. To apply, select a funding programme below.
             </gds-p>
         }
 

@@ -61,8 +61,8 @@ public class UserOrganisationController : Controller
                 userOrganisationResult.ProgrammesTypesToApply.Select(t => programmeModels[t]).ToList(),
                 new List<Common.WWW.Models.ActionModel>
                 {
-                    new($"Manage {userOrganisationResult.OrganisationBasicInformation.RegisteredCompanyName} details", "Details", "UserOrganisation", HasAccess: canViewOrganisationDetails),
                     new("Add or manage users at this Organisation", "Index", "Users", HasAccess: canViewOrganisationDetails),
+                    new($"Manage {userOrganisationResult.OrganisationBasicInformation.RegisteredCompanyName} details", "Details", "UserOrganisation", HasAccess: canViewOrganisationDetails),
                     new("Manage your account", "GetProfileDetails", "User", new { callback = Url.Action("Index") }, true),
                 }));
     }
