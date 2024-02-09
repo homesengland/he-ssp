@@ -27,6 +27,9 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public decimal? acquisitionValue { get; set; }
         public decimal? startOnSiteValue { get; set; }
         public decimal? completionValue { get; set; }
+        public decimal? acquisitionPercentageValue { get; set; }
+        public decimal? startOnSitePercentageValue { get; set; }
+        public decimal? completionPercentageValue { get; set; }
         public bool? claimingtheMilestoneConfirmed { get; set; }
         public bool? allowAmendmentstoMilestoneProportions { get; set; }
     }

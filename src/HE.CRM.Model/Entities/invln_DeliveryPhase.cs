@@ -70,6 +70,7 @@ namespace DataverseModel
 			public const string ImportSequenceNumber = "importsequencenumber";
 			public const string invln_acquisitiondate = "invln_acquisitiondate";
 			public const string invln_acquisitionmilestoneclaimdate = "invln_acquisitionmilestoneclaimdate";
+			public const string invln_AcquisitionPercentageValue = "invln_acquisitionpercentagevalue";
 			public const string invln_AcquisitionValue = "invln_acquisitionvalue";
 			public const string invln_acquisitionvalue_Base = "invln_acquisitionvalue_base";
 			public const string invln_AllowAmendmentstoMilestoneProportions = "invln_allowamendmentstomilestoneproportions";
@@ -82,6 +83,7 @@ namespace DataverseModel
 			public const string invln_claimingthemilestoneconfirmedName = "invln_claimingthemilestoneconfirmedname";
 			public const string invln_completiondate = "invln_completiondate";
 			public const string invln_completionmilestoneclaimdate = "invln_completionmilestoneclaimdate";
+			public const string invln_CompletionPercentageValue = "invln_completionpercentagevalue";
 			public const string invln_CompletionValue = "invln_completionvalue";
 			public const string invln_completionvalue_Base = "invln_completionvalue_base";
 			public const string invln_deliveryphase_Application_invln_scheme = "invln_deliveryphase_Application_invln_scheme";
@@ -100,6 +102,7 @@ namespace DataverseModel
 			public const string invln_rehabactivitytypeName = "invln_rehabactivitytypename";
 			public const string invln_startonsitedate = "invln_startonsitedate";
 			public const string invln_startonsitemilestoneclaimdate = "invln_startonsitemilestoneclaimdate";
+			public const string invln_StartOnSitePercentageValue = "invln_startonsitepercentagevalue";
 			public const string invln_StartOnSiteValue = "invln_startonsitevalue";
 			public const string invln_startonsitevalue_Base = "invln_startonsitevalue_base";
 			public const string invln_StatusReason = "invln_statusreason";
@@ -362,6 +365,23 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_acquisitionpercentagevalue")]
+		public System.Nullable<decimal> invln_AcquisitionPercentageValue
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_acquisitionpercentagevalue");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_AcquisitionPercentageValue");
+				this.SetAttributeValue("invln_acquisitionpercentagevalue", value);
+				this.OnPropertyChanged("invln_AcquisitionPercentageValue");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_acquisitionvalue")]
 		public Microsoft.Xrm.Sdk.Money invln_AcquisitionValue
 		{
@@ -559,6 +579,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_completionmilestoneclaimdate");
 				this.SetAttributeValue("invln_completionmilestoneclaimdate", value);
 				this.OnPropertyChanged("invln_completionmilestoneclaimdate");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_completionpercentagevalue")]
+		public System.Nullable<decimal> invln_CompletionPercentageValue
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_completionpercentagevalue");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_CompletionPercentageValue");
+				this.SetAttributeValue("invln_completionpercentagevalue", value);
+				this.OnPropertyChanged("invln_CompletionPercentageValue");
 			}
 		}
 		
@@ -839,6 +876,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_startonsitemilestoneclaimdate");
 				this.SetAttributeValue("invln_startonsitemilestoneclaimdate", value);
 				this.OnPropertyChanged("invln_startonsitemilestoneclaimdate");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_startonsitepercentagevalue")]
+		public System.Nullable<decimal> invln_StartOnSitePercentageValue
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_startonsitepercentagevalue");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_StartOnSitePercentageValue");
+				this.SetAttributeValue("invln_startonsitepercentagevalue", value);
+				this.OnPropertyChanged("invln_StartOnSitePercentageValue");
 			}
 		}
 		

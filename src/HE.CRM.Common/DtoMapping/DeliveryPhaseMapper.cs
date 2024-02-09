@@ -29,8 +29,11 @@ namespace HE.CRM.Common.DtoMapping
                 requiresAdditionalPayments = MapYesNo(deliveryPhase.invln_urbrequestingearlymilestonepayments),
                 isCompleted = deliveryPhase.invln_iscompleted,
                 acquisitionValue = deliveryPhase.invln_AcquisitionValue?.Value,
+                acquisitionPercentageValue = deliveryPhase.invln_AcquisitionPercentageValue,
                 startOnSiteValue = deliveryPhase.invln_StartOnSiteValue?.Value,
+                startOnSitePercentageValue = deliveryPhase.invln_StartOnSitePercentageValue,
                 completionValue = deliveryPhase.invln_CompletionValue?.Value,
+                completionPercentageValue = deliveryPhase.invln_CompletionPercentageValue,
                 claimingtheMilestoneConfirmed = deliveryPhase.invln_ClaimingtheMilestoneConfirmed,
                 allowAmendmentstoMilestoneProportions = deliveryPhase.invln_AllowAmendmentstoMilestoneProportions,
             };
@@ -75,8 +78,11 @@ namespace HE.CRM.Common.DtoMapping
                 invln_invln_homesindeliveryphase_deliveryphasel = MapHomesInDeliveryPhase(deliveryPhaseDto),
                 invln_iscompleted = deliveryPhaseDto.isCompleted,
                 invln_AcquisitionValue = MapNullableDecimalToMoney(deliveryPhaseDto.acquisitionValue),
+                invln_AcquisitionPercentageValue = deliveryPhaseDto.acquisitionPercentageValue,
                 invln_StartOnSiteValue = MapNullableDecimalToMoney(deliveryPhaseDto.startOnSiteValue),
+                invln_StartOnSitePercentageValue = deliveryPhaseDto.startOnSitePercentageValue,
                 invln_CompletionValue = MapNullableDecimalToMoney(deliveryPhaseDto.completionValue),
+                invln_CompletionPercentageValue = deliveryPhaseDto.completionPercentageValue,
                 invln_ClaimingtheMilestoneConfirmed = deliveryPhaseDto.claimingtheMilestoneConfirmed,
                 invln_AllowAmendmentstoMilestoneProportions = deliveryPhaseDto.allowAmendmentstoMilestoneProportions,
             };
