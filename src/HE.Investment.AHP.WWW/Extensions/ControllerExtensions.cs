@@ -34,4 +34,39 @@ public static class ControllerExtensions
         var siteId = controller.Request.GetRouteValue("siteId") ?? throw new NotFoundException("Missing required siteId path parameter.");
         return new SiteId(siteId);
     }
+
+    public static async Task<IActionResult> ReturnToTaskListOrContinue(
+        this Controller controller,
+        Func<Task<IActionResult>> onContinue)
+    {
+        var applicationId = controller.GetApplicationIdFromRoute();
+
+        return await ReturnToListOrContinue(
+            controller,
+            async () => await Task.FromResult(controller.Url.RedirectToTaskList(applicationId.Value)),
+            async () => await onContinue());
+    }
+
+    public static async Task<IActionResult> ReturnToSitesListOrContinue(
+        this Controller controller,
+        Func<Task<IActionResult>> onContinue)
+    {
+        return await ReturnToListOrContinue(
+            controller,
+            async () => await Task.FromResult(controller.Url.RedirectToSitesList()),
+            async () => await onContinue());
+    }
+
+    private static async Task<IActionResult> ReturnToListOrContinue(
+        this Controller controller,
+        Func<Task<IActionResult>> onRedirectToList,
+        Func<Task<IActionResult>> onContinue)
+    {
+        if (controller.Request.IsSaveAndReturnAction())
+        {
+            return await onRedirectToList();
+        }
+
+        return await onContinue();
+    }
 }
