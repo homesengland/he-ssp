@@ -120,6 +120,10 @@ public class SiteEntity : DomainEntity, IQuestion
     public void ProvideBuildingForHealthyLife(BuildingForHealthyLifeType buildingForHealthyLife)
     {
         BuildingForHealthyLife = _modificationTracker.Change(BuildingForHealthyLife, buildingForHealthyLife);
+        if (BuildingForHealthyLife != BuildingForHealthyLifeType.Yes)
+        {
+            ProvideNumberOfGreenLights(null);
+        }
     }
 
     public void ProvideNumberOfGreenLights(NumberOfGreenLights? numberOfGreenLights)
