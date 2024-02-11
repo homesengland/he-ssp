@@ -14,10 +14,11 @@ public class FinancialDetailsFormHeader : ViewComponent
         string? homeTypeId = null,
         string? title = null,
         string? caption = null,
-        string? customBackLinkUrl = null)
+        string? customBackLinkUrl = null,
+        bool isReadOnly = false)
     {
         return View(
             "FinancialDetailsFormHeader",
-            (Title: title, Caption: caption, ApplicationId: applicationId, CurrentPage: currentPage, CustomBackLinkUrl: customBackLinkUrl));
+            (Title: title, Caption: caption, ApplicationId: applicationId, CurrentPage: currentPage, CustomBackLinkUrl: customBackLinkUrl, isReadOnly));
     }
 }

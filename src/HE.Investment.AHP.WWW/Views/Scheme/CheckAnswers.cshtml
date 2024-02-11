@@ -15,6 +15,10 @@
     @if (Model.IsReadOnly)
     {
         <gds-back-link href="@Url.Action("TaskList", "Application", new { applicationId = Model.ApplicationId })" class="govuk-!-margin-bottom-8"></gds-back-link>
+
+        <gds-div-inset-text>
+            Your application is now locked. Make a request to your Growth Manager if you need to make any changes.
+        </gds-div-inset-text>
     }
     else
     {
@@ -28,7 +32,7 @@
         You cannot change the tenure from this page. If you want to change the tenure, you will have to start a new application.
     </gds-p>
 
-    <vc:section-summary title="@Model.Section.Title" items="@Model.Section.Items" />
+    <vc:section-summary title="@Model.Section.Title" items="@Model.Section.Items"/>
 
     <form asp-controller="Scheme" asp-action="Complete" asp-route-applicationId="@Model.ApplicationId" asp-method="post" novalidate hidden="@Model.IsReadOnly">
         @Html.HiddenFor(m => Model.ApplicationName)

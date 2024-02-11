@@ -18,6 +18,10 @@
     @if (Model.IsReadOnly)
     {
         <gds-back-link href="@Url.Action("List", "Delivery", new { applicationId = Model.ApplicationId })" class="govuk-!-margin-bottom-8"></gds-back-link>
+
+        <gds-div-inset-text>
+            Your application is now locked. Make a request to your Growth Manager if you need to make any changes.
+        </gds-div-inset-text>
     }
     else
     {
