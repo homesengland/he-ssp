@@ -33,11 +33,23 @@
         last-modification-details="@Model.LastModificationDetails"/>
 </div>
 <div class="govuk-grid-column-two-thirds">
+    @if (Model.CanBeRequestedToEdit())
+    {
+        <div class="govuk-!-margin-top-8">
+            <vc:change-status-section
+                title="Request to edit"
+                paragraph="Send a request to your Growth Manager if you want to edit your application. They will review your request and will allow you to edit your application."
+                action-url="@Url.Action("RequestToEdit", "Application", new { applicationId = Model.ApplicationId })"
+                link-button-name="Request to edit"
+                button-type="Standard"
+                test-id="request-to-edit-application"/>
+            </div>
+    }
     @await Html.PartialAsync("~/Partials/TaskList/_TaskList.cshtml", ApplicationSections.CreateSections(Model.ApplicationId, Url, Model.Sections))
 
     @await Html.PartialAsync("Partials/_TaskListRequestChangeStatusSection.cshtml", Model)
 
-    <link-button action-url="@Url.Action("Index", "Application")" is-secondary="true">Return to applications</link-button>
+    <link-button action-url="@Url.Action("Index", "Application")" button-type="Secondary">Return to applications</link-button>
 </div>
 <div class="govuk-grid-column-one-third">
     <vc:help-panel email-address="@Options.Value.Email" phone-number="@Options.Value.Phone"/>

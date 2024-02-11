@@ -10,7 +10,7 @@ public class HoldReason : LongText
         : base(
             value,
             nameof(HoldReason),
-            ApplicationValidationErrors.EnterHoldReason,
+            ApplicationValidationErrors.EnterChangeStatusReason("want to put on hold"),
             ValidationErrorMessage.LongInputLengthExceeded("hold reason"))
     {
     }

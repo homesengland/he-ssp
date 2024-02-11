@@ -16,4 +16,6 @@ public enum SectionStatus
     Withdrawn,
     [Description("On Hold")]
     OnHold,
+    [Description("Requested Editing")]
+    RequestedEditing,
 }

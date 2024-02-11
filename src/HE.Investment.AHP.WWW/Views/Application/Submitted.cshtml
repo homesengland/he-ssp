@@ -15,7 +15,7 @@
     <gds-p>We will contact you either to confirm your registration, or to ask for more information.</gds-p>
     <gds-p>If a @Model.JobRole has not contacted you within 10 working days, you should contact @Model.ContactDetails.</gds-p>
 
-    <link-button is-secondary="true" action-url="@Url.Action("TaskList", "Application", new { applicationId = Model.ApplicationId })" data-testid="return-to-task-list">
+    <link-button button-type="Secondary" action-url="@Url.Action("TaskList", "Application", new { applicationId = Model.ApplicationId })" data-testid="return-to-task-list">
         Save and view application
     </link-button>
 </gds-div-grid-column-two-thirds>

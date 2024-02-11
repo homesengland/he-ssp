@@ -31,6 +31,12 @@ public record ApplicationSectionsModel(
         return statusesAllowedForReactivate.Contains(Status);
     }
 
+    public bool CanBeRequestedToEdit()
+    {
+        var statusesAllowedForRequestToEdit = ApplicationStatusDivision.GetAllStatusesAllowedForRequestToEdit();
+        return statusesAllowedForRequestToEdit.Contains(Status);
+    }
+
     public bool CanBeWithdrawn()
     {
         var statusesAllowedForWithdraw = ApplicationStatusDivision.GetAllStatusesAllowedForWithdraw();

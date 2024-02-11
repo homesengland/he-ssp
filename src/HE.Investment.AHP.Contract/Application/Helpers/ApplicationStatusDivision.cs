@@ -33,6 +33,14 @@ public static class ApplicationStatusDivision
         yield return ApplicationStatus.ReferredBackToApplicant;
     }
 
+    public static IEnumerable<ApplicationStatus> GetAllStatusesAllowedForRequestToEdit()
+    {
+        yield return ApplicationStatus.ApplicationSubmitted;
+        yield return ApplicationStatus.UnderReview;
+        yield return ApplicationStatus.ApplicationUnderReview;
+        yield return ApplicationStatus.CashflowUnderReview;
+    }
+
     public static IEnumerable<ApplicationStatus> GetAllStatusesAllowedToChangeApplicationStatusToWithdrawn()
     {
         yield return ApplicationStatus.ApplicationSubmitted;

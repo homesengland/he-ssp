@@ -44,9 +44,10 @@ public class ApplicationWorkflow : IStateRouting<ApplicationWorkflowState>
             ApplicationWorkflowState.ApplicationName => true,
             ApplicationWorkflowState.ApplicationTenure => true,
             ApplicationWorkflowState.TaskList => true,
-            ApplicationWorkflowState.OnHold => await CanBePutOnHold(),
-            ApplicationWorkflowState.Reactivate => await CanBeReactivate(),
-            ApplicationWorkflowState.Withdraw => await CanBeWithdrawn(),
+            ApplicationWorkflowState.OnHold => await CanApplicationStatusBeChanged(ApplicationStatusDivision.GetAllStatusesAllowedForPutOnHold()),
+            ApplicationWorkflowState.Reactivate => await CanApplicationStatusBeChanged(ApplicationStatusDivision.GetAllStatusesForReactivate()),
+            ApplicationWorkflowState.RequestToEdit => await CanApplicationStatusBeChanged(ApplicationStatusDivision.GetAllStatusesAllowedForRequestToEdit()),
+            ApplicationWorkflowState.Withdraw => await CanApplicationStatusBeChanged(ApplicationStatusDivision.GetAllStatusesAllowedForWithdraw()),
             ApplicationWorkflowState.CheckAnswers => await CanBeSubmitted(),
             _ => false,
         };
@@ -77,6 +78,10 @@ public class ApplicationWorkflow : IStateRouting<ApplicationWorkflowState>
         _machine.Configure(ApplicationWorkflowState.Reactivate)
             .Permit(Trigger.Continue, ApplicationWorkflowState.TaskList);
 
+        _machine.Configure(ApplicationWorkflowState.RequestToEdit)
+            .Permit(Trigger.Continue, ApplicationWorkflowState.TaskList)
+            .Permit(Trigger.Back, ApplicationWorkflowState.TaskList);
+
         _machine.Configure(ApplicationWorkflowState.Withdraw)
             .PermitIf(Trigger.Continue, ApplicationWorkflowState.TaskList, () => _isApplicationExist().Result)
             .PermitIf(Trigger.Continue, ApplicationWorkflowState.ApplicationsList, () => !_isApplicationExist().Result)
@@ -86,25 +91,10 @@ public class ApplicationWorkflow : IStateRouting<ApplicationWorkflowState>
             .Permit(Trigger.Back, ApplicationWorkflowState.TaskList);
     }
 
-    private async Task<bool> CanBePutOnHold()
+    private async Task<bool> CanApplicationStatusBeChanged(IEnumerable<ApplicationStatus> statusesAllowedForStatusChange)
     {
-        var statusesAllowedForPutOnHold = ApplicationStatusDivision.GetAllStatusesAllowedForPutOnHold();
         var model = await _modelFactory();
-        return statusesAllowedForPutOnHold.Contains(model.Status);
-    }
-
-    private async Task<bool> CanBeReactivate()
-    {
-        var statusesAllowedForReactivate = ApplicationStatusDivision.GetAllStatusesForReactivate();
-        var model = await _modelFactory();
-        return statusesAllowedForReactivate.Contains(model.Status);
-    }
-
-    private async Task<bool> CanBeWithdrawn()
-    {
-        var statusesAllowedForWithdraw = ApplicationStatusDivision.GetAllStatusesAllowedForWithdraw();
-        var model = await _modelFactory();
-        return statusesAllowedForWithdraw.Contains(model.Status);
+        return statusesAllowedForStatusChange.Contains(model.Status);
     }
 
     private async Task<bool> CanBeSubmitted()
