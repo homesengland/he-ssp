@@ -15,7 +15,7 @@ public enum SiteLandAcquisitionStatus
     LandGifted,
 
     [Description("Conditional acquisition, land option or heads of terms")]
-    [Hint("")]
+    [Hint("For sites being acquired through golden brick arrangements, select this option.")]
     ConditionalAcquisition,
 
     [Description("Land purchase negotiations underway")]
