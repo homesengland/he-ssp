@@ -304,4 +304,27 @@ public class Order01StartAhpSite : AhpIntegrationTest
             (nameof(SiteTypeDetails.IsOnGreenBelt), "True"),
             (nameof(SiteTypeDetails.IsRegenerationSite), "False"));
     }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(22)]
+    public async Task Order22_ShouldProvideSiteUse()
+    {
+        await TestQuestionPage(
+            SitePagesUrl.SiteUse(SiteData.SiteId),
+            SitePageTitles.SiteUse,
+            SitePagesUrl.SiteTravellerPitchType(SiteData.SiteId),
+            (nameof(SiteUseDetails.IsPartOfStreetFrontInfill), "True"),
+            (nameof(SiteUseDetails.IsForTravellerPitchSite), "True"));
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(23)]
+    public async Task Order23_ShouldProvideTravellerPitchType()
+    {
+        await TestQuestionPage(
+            SitePagesUrl.SiteTravellerPitchType(SiteData.SiteId),
+            SitePageTitles.TravellerPitchType,
+            SitePagesUrl.SiteCheckAnswers(SiteData.SiteId),
+            (nameof(SiteUseDetails.TravellerPitchSiteType), TravellerPitchSiteType.Permanent.ToString()));
+    }
 }

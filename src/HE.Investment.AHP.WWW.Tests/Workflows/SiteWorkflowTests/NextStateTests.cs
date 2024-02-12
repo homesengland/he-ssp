@@ -24,6 +24,7 @@ public class NextStateTests
     [InlineData(SiteWorkflowState.IntentionToWorkWithSme, SiteWorkflowState.StrategicSite)]
     [InlineData(SiteWorkflowState.StrategicSite, SiteWorkflowState.SiteType)]
     [InlineData(SiteWorkflowState.SiteType, SiteWorkflowState.SiteUse)]
+    [InlineData(SiteWorkflowState.SiteUse, SiteWorkflowState.CheckAnswers)]
     public async Task ShouldReturnNextState_WhenContinueTriggerExecuted(SiteWorkflowState current, SiteWorkflowState expectedNext)
     {
         // given
@@ -84,6 +85,8 @@ public class NextStateTests
     [InlineData(SiteWorkflowState.ContractorDetails, SiteWorkflowState.TenderingStatus)]
     [InlineData(SiteWorkflowState.IntentionToWorkWithSme, SiteWorkflowState.TenderingStatus)]
     [InlineData(SiteWorkflowState.SiteType, SiteWorkflowState.StrategicSite)]
+    [InlineData(SiteWorkflowState.SiteUse, SiteWorkflowState.SiteType)]
+    [InlineData(SiteWorkflowState.CheckAnswers, SiteWorkflowState.SiteUse)]
     public async Task ShouldReturnNextState_WhenBackTriggerExecuted(SiteWorkflowState current, SiteWorkflowState expectedNext)
     {
         // given
@@ -467,6 +470,24 @@ public class NextStateTests
 
         // when
         var result = await workflow.NextState(Trigger.Back);
+
+        // then
+        result.Should().Be(expectedNext);
+    }
+
+    [Theory]
+    [InlineData(true, SiteWorkflowState.TravellerPitchType)]
+    [InlineData(false, SiteWorkflowState.CheckAnswers)]
+    [InlineData(null, SiteWorkflowState.CheckAnswers)]
+    public async Task ShouldReturnNextState_WhenContinueTriggerExecutedWithDifferentSiteUse(bool? isForTravellerPitchSite, SiteWorkflowState expectedNext)
+    {
+        // given
+        var workflow = SiteWorkflowFactory.BuildWorkflow(
+            SiteWorkflowState.SiteUse,
+            siteUseDetails: new SiteUseDetails(true, isForTravellerPitchSite, TravellerPitchSiteType.Undefined));
+
+        // when
+        var result = await workflow.NextState(Trigger.Continue);
 
         // then
         result.Should().Be(expectedNext);
