@@ -15,10 +15,10 @@ public class FinancialDetailsFormHeader : ViewComponent
         string? title = null,
         string? caption = null,
         string? customBackLinkUrl = null,
-        bool isReadOnly = false)
+        bool isApplicationLocked = false)
     {
         return View(
             "FinancialDetailsFormHeader",
-            (Title: title, Caption: caption, ApplicationId: applicationId, CurrentPage: currentPage, CustomBackLinkUrl: customBackLinkUrl, isReadOnly));
+            (Title: title, Caption: caption, ApplicationId: applicationId, CurrentPage: currentPage, CustomBackLinkUrl: customBackLinkUrl, isApplicationLocked));
     }
 }

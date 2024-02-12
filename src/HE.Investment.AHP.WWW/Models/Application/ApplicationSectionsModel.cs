@@ -43,9 +43,9 @@ public record ApplicationSectionsModel(
         return statusesAllowedForWithdraw.Contains(Status);
     }
 
-    public bool IsReadOnly()
+    public bool IsLocked()
     {
-        var statusesAllowedForLockedMode = ApplicationStatusDivision.GetAllStatusesForReadonlyMode();
+        var statusesAllowedForLockedMode = ApplicationStatusDivision.GetAllStatusesForLockedMode();
         return statusesAllowedForLockedMode.Contains(Status);
     }
 }

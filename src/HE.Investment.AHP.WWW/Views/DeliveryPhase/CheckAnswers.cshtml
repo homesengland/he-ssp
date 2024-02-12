@@ -14,19 +14,17 @@
     ViewData["Title"] = title;
 }
 
-<div class="govuk-grid-column-three-quarters">
+<gds-div-grid-column-two-thirds>
     @if (Model.IsReadOnly)
     {
         <gds-back-link href="@Url.Action("List", "Delivery", new { applicationId = Model.ApplicationId })" class="govuk-!-margin-bottom-8"></gds-back-link>
-
-        <gds-div-inset-text>
-            Your application is now locked. Make a request to your Growth Manager if you need to make any changes.
-        </gds-div-inset-text>
     }
     else
     {
         <vc:ahp-workflow-back-button current-page="@DeliveryPhaseWorkflowState.CheckAnswers"/>
     }
+
+    <partial name="_LockedApplicationInformation" model="@Model.IsApplicationLocked"/>
 
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
@@ -49,4 +47,4 @@
     </form>
 
     <vc:return-to-application-link application-id="@Model.ApplicationId" is-editable="@false"/>
-</div>
+</gds-div-grid-column-two-thirds>

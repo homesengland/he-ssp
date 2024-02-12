@@ -39,6 +39,7 @@ public class GetDeliveryPhaseDetailsQueryHandler : IRequestHandler<GetDeliveryPh
             deliveryPhase.Name.Value,
             deliveryPhase.Status,
             deliveryPhase.IsReadOnly,
+            deliveryPhase.IsApplicationLocked,
             deliveryPhase.TypeOfHomes,
             deliveryPhase.BuildActivity.Type,
             deliveryPhase.BuildActivity.GetAvailableTypes(),

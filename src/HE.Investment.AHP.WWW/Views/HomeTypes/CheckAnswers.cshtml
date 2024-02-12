@@ -13,45 +13,39 @@
     ViewData["Title"] = HomeTypesPageTitles.CheckAnswers;
 }
 
-<div>
-    <gds-div-grid-column-two-thirds>
-        <vc:home-type-form-header title="@HomeTypesPageTitles.CheckAnswers"
-                                  current-page="@HomeTypesWorkflowState.CheckAnswers"
-                                  caption="@Model.Header"
-                                  is-read-only="@Model.IsReadOnly"/>
+<gds-div-grid-column-two-thirds>
+    <vc:home-type-form-header title="@HomeTypesPageTitles.CheckAnswers"
+                              current-page="@HomeTypesWorkflowState.CheckAnswers"
+                              caption="@Model.Header"
+                              is-application-locked="@Model.IsApplicationLocked"/>
 
-    </gds-div-grid-column-two-thirds>
-    <div class="govuk-grid-column-full">
-        @if (Model.Sections != null)
+    @if (Model.Sections != null)
+    {
+        @foreach (var sectionSummary in Model.Sections)
         {
-            @foreach (var sectionSummary in Model.Sections)
-            {
-                <vc:section-summary title="@sectionSummary.Title" items="@sectionSummary.Items"/>
-            }
+            <vc:section-summary title="@sectionSummary.Title" items="@sectionSummary.Items"/>
         }
-    </div>
+    }
 
-    <gds-div-grid-column-two-thirds>
-        <form asp-controller="HomeTypes" asp-action="CheckAnswers" asp-method="post" novalidate hidden="@Model.IsReadOnly">
-            @Html.HiddenFor(m => Model.ApplicationName)
-            @Html.HiddenFor(m => Model.HomeTypeName)
-            @Html.HiddenFor(m => Model.IsEditable)
+    <form asp-controller="HomeTypes" asp-action="CheckAnswers" asp-method="post" novalidate hidden="@Model.IsReadOnly">
+        @Html.HiddenFor(m => Model.ApplicationName)
+        @Html.HiddenFor(m => Model.HomeTypeName)
+        @Html.HiddenFor(m => Model.IsEditable)
 
-            <gds-field-set role="group">
-                <he-error-form-group asp-for="IsSectionCompleted">
-                    <gds-legend>
-                        <gds-h2>Have you completed this section?</gds-h2>
-                    </gds-legend>
-                    <gds-radio govuk-formgroup-asp-for="IsSectionCompleted"
-                               asp-hiddenlabeltext="Have you completed this section?"
-                               value="@Model.IsSectionCompleted"
-                               asp-selectlistitems="@CommonFormOptions.IsSectionCompleted">
-                    </gds-radio>
-                </he-error-form-group>
-            </gds-field-set>
-            <vc:form-button/>
-        </form>
+        <gds-field-set role="group">
+            <he-error-form-group asp-for="IsSectionCompleted">
+                <gds-legend>
+                    <gds-h2>Have you completed this section?</gds-h2>
+                </gds-legend>
+                <gds-radio govuk-formgroup-asp-for="IsSectionCompleted"
+                           asp-hiddenlabeltext="Have you completed this section?"
+                           value="@Model.IsSectionCompleted"
+                           asp-selectlistitems="@CommonFormOptions.IsSectionCompleted">
+                </gds-radio>
+            </he-error-form-group>
+        </gds-field-set>
+        <vc:form-button/>
+    </form>
 
-        <vc:return-to-application-link application-id="@applicationId" is-editable="@false" />
-    </gds-div-grid-column-two-thirds>
-</div>
+    <vc:return-to-application-link application-id="@applicationId" is-editable="@false"/>
+</gds-div-grid-column-two-thirds>

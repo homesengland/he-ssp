@@ -67,6 +67,7 @@ internal sealed class GetFullHomeTypeQueryHandler : IRequestHandler<GetFullHomeT
             homeType.Application.Id,
             homeType.Application.Name.Name,
             homeType.Application.Tenure,
+            homeType.Application.IsLocked(),
             homeType.HousingType,
             homeType.Status == SectionStatus.Completed,
             homeType.IsReadOnly,

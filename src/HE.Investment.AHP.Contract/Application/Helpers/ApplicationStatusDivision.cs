@@ -64,6 +64,11 @@ public static class ApplicationStatusDivision
         yield return ApplicationStatus.Approved;
     }
 
+    public static IEnumerable<ApplicationStatus> GetAllStatusesForLockedMode()
+    {
+        yield return ApplicationStatus.ApplicationSubmitted;
+    }
+
     public static IEnumerable<ApplicationStatus> GetAllStatusesForReactivate()
     {
         yield return ApplicationStatus.OnHold;

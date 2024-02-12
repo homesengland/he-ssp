@@ -22,7 +22,7 @@
                                           application-id="@Model.ApplicationId.ToString()"
                                           caption="@Model.ApplicationName - Finance details"
                                           custom-back-link-url="@customBackLinkUrl"
-                                          is-read-only="@Model.IsReadOnly"/>
+                                          is-application-locked="@Model.IsApplicationLocked"/>
 
         <gds-p hidden="@Model.IsReadOnly">
             Total scheme costs and total contributions must match for you to continue.

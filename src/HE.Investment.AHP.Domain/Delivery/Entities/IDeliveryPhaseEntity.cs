@@ -40,6 +40,8 @@ public interface IDeliveryPhaseEntity
 
     bool IsReadOnly { get; }
 
+    bool IsApplicationLocked { get; }
+
     int TotalHomesToBeDeliveredInThisPhase { get; }
 
     DeliveryPhaseMilestones DeliveryPhaseMilestones { get; }

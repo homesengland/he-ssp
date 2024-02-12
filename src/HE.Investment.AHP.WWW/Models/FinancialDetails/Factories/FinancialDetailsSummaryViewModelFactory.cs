@@ -31,6 +31,7 @@ public class FinancialDetailsSummaryViewModelFactory : IFinancialDetailsSummaryV
     {
         var result = await _mediator.Send(new GetFinancialCheckAnswersQuery(applicationId), cancellationToken);
         isReadOnly = isReadOnly || ApplicationStatusDivision.GetAllStatusesForReadonlyMode().Contains(result.ApplicationStatus);
+        var isApplicationLocked = ApplicationStatusDivision.GetAllStatusesForLockedMode().Contains(result.ApplicationStatus);
         var landValueSectionSummary = GetLandValueSectionSummary(result.LandValue, applicationId, isReadOnly, urlHelper);
         var costsSectionSummary = GetCostsSectionSummary(result.TotalSchemeCost, applicationId, isReadOnly, urlHelper);
         var contributionsSectionSummary = GetContributionsSectionSummary(result.TotalContributions, applicationId, isReadOnly, urlHelper);
@@ -42,7 +43,8 @@ public class FinancialDetailsSummaryViewModelFactory : IFinancialDetailsSummaryV
             costsSectionSummary,
             contributionsSectionSummary,
             result.SectionStatus == SectionStatus.Completed ? IsSectionCompleted.Yes : IsSectionCompleted.Undefied,
-            !isReadOnly);
+            !isReadOnly,
+            isApplicationLocked);
     }
 
     private static IList<string> GetCurrencyStringWithPrefix(decimal? value)

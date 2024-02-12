@@ -1500,6 +1500,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
             IsSectionCompleted = homeType.IsCompleted ? IsSectionCompleted.Yes : IsSectionCompleted.Undefied,
             Sections = sections.ToList(),
             IsEditable = isEditable,
+            IsApplicationLocked = homeType.IsApplicationLocked,
         };
     }
 }

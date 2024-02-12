@@ -34,12 +34,9 @@
         last-modification-details="@Model.LastModificationDetails"/>
 </div>
 <div class="govuk-grid-column-two-thirds">
-    @if (Model.IsReadOnly())
-    {
-        <gds-div-inset-text class="govuk-!-margin-top-8">
-            Your application is now locked. Make a request to your Growth Manager if you need to make any changes.
-        </gds-div-inset-text>
-    }
+    <div class="govuk-!-margin-top-8">
+        <partial name="_LockedApplicationInformation" model="@Model.IsLocked()"/>
+    </div>
 
     @if (Model.CanBeRequestedToEdit())
     {

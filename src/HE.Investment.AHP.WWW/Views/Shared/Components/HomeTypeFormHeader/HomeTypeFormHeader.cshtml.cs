@@ -12,8 +12,8 @@ public class HomeTypeFormHeader : ViewComponent
         HomeTypesWorkflowState currentPage,
         string? title = null,
         string? caption = null,
-        bool isReadOnly = false)
+        bool isApplicationLocked = false)
     {
-        return View("HomeTypeFormHeader", (Title: title, Caption: caption, CurrentPage: currentPage, isReadOnly));
+        return View("HomeTypeFormHeader", (Title: title, Caption: caption, CurrentPage: currentPage, isApplicationLocked));
     }
 }
