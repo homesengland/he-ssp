@@ -18,14 +18,13 @@ public class LandAcquisitionStatusTests : ViewTestBase
         var site = new SiteModel()
         {
             Id = "8",
-            Name = "Test Site 8",
             LandAcquisitionStatus = Contract.Site.Enums.SiteLandAcquisitionStatus.FullOwnership,
         };
         var document = await Render(ViewPath, site);
 
         // then
         document
-            .HasPageHeader(site.Name, SitePageTitles.LandAcquisitionStatus)
+            .HasPageHeader(null, SitePageTitles.LandAcquisitionStatus)
             .HasRadio(
                 nameof(site.LandAcquisitionStatus),
                 SiteFormOptions.LandAcquisitionStatuses.Select(x => x.Text).ToList())
