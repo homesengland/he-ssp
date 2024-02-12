@@ -53,5 +53,7 @@ public static class SitePagesUrl
 
     public static string SiteUse(string siteId) => $"ahp/site/{siteId}/site-use";
 
+    public static string SiteTravellerPitchType(string siteId) => $"ahp/site/{siteId}/traveller-pitch-type";
+
     public static string SiteCheckAnswers(string siteId) => $"ahp/site/{siteId}/check-answers";
 }

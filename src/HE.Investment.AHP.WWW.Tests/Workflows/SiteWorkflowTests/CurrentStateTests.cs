@@ -29,7 +29,7 @@ public class CurrentStateTests
     private readonly SiteUseDetails _siteUseDetails = new(true, true, TravellerPitchSiteType.Permanent);
 
     [Fact]
-    public void ShouldReturnCheckAnswers_WhenAllDateProvided()
+    public void ShouldReturnCheckAnswers_WhenAllDataProvided()
     {
         // given
         var workflow = SiteWorkflowFactory.BuildWorkflow(
@@ -271,6 +271,18 @@ public class CurrentStateTests
         Test(SiteWorkflowState.SiteType, siteTypeDetails: new SiteTypeDetails(null, null, null, false));
     }
 
+    [Fact]
+    public void ShouldReturnSiteUse_WhenSiteUseNotProvided()
+    {
+        Test(SiteWorkflowState.SiteUse, siteUseDetails: new SiteUseDetails(true, null, TravellerPitchSiteType.Undefined));
+    }
+
+    [Fact]
+    public void ShouldReturnTravellerPitchType_WhenTravellerPitchTypeNotProvidedAndItIsUsed()
+    {
+        Test(SiteWorkflowState.TravellerPitchType, siteUseDetails: new SiteUseDetails(false, true, TravellerPitchSiteType.Undefined));
+    }
+
     private void Test(
         SiteWorkflowState expected,
         SitePlanningDetails? planningDetails = null,
@@ -278,7 +290,8 @@ public class CurrentStateTests
         BuildingForHealthyLifeType buildingForHealthyLifeType = BuildingForHealthyLifeType.NotApplicable,
         NumberOfGreenLights? numberOfGreenLights = null,
         StrategicSite? strategicSite = null,
-        SiteTypeDetails? siteTypeDetails = null)
+        SiteTypeDetails? siteTypeDetails = null,
+        SiteUseDetails? siteUseDetails = null)
     {
         // given
         var workflow = SiteWorkflowFactory.BuildWorkflow(
@@ -293,7 +306,8 @@ public class CurrentStateTests
             numberOfGreenLights: numberOfGreenLights,
             landAcquisitionStatus: SiteLandAcquisitionStatus.FullOwnership,
             strategicSite: strategicSite,
-            siteTypeDetails: siteTypeDetails);
+            siteTypeDetails: siteTypeDetails,
+            siteUseDetails: siteUseDetails);
 
         // when
         var result = workflow.CurrentState(SiteWorkflowState.Start);
