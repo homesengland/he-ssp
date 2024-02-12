@@ -20,7 +20,7 @@ public class SiteModel
 
     public string? NumberOfGreenLights { get; set; }
 
-    public SitelandAcquisitionStatus? LandAcquisitionStatus { get; set; }
+    public SiteLandAcquisitionStatus? LandAcquisitionStatus { get; set; }
 
     public SiteTenderingStatusDetails TenderingStatusDetails { get; set; }
 
