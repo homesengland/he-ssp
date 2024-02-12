@@ -22,6 +22,7 @@ public enum SiteWorkflowState
     NationalDesignGuide,
     BuildingForHealthyLife,
     NumberOfGreenLights,
+    LandAcquisitionStatus,
     TenderingStatus,
     ContractorDetails,
     IntentionToWorkWithSme,

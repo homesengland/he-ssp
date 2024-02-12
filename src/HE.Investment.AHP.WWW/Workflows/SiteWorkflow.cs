@@ -53,6 +53,7 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             { NationalDesignGuidePriorities: var x } when x.IsNotProvided() || x.Count == 0 => SiteWorkflowState.NationalDesignGuide,
             { BuildingForHealthyLife: BuildingForHealthyLifeType.Undefined } => SiteWorkflowState.BuildingForHealthyLife,
             { NumberOfGreenLights: var x } when x.IsNotProvided() && IsBuildingForHealthyLife() => SiteWorkflowState.NumberOfGreenLights,
+            { LandAcquisitionStatus: var x } when x.IsNotProvided() => SiteWorkflowState.LandAcquisitionStatus,
             { TenderingStatusDetails: var x } when x.TenderingStatus.IsNotProvided() => SiteWorkflowState.TenderingStatus,
             { TenderingStatusDetails: var x } when IsConditionalOrUnconditionalWorksContract() &&
                                                    (x.ContractorName.IsNotProvided() || x.IsSmeContractor.IsNotProvided()) => SiteWorkflowState.ContractorDetails,
@@ -73,8 +74,6 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             SiteWorkflowState.Index => true,
             SiteWorkflowState.Start => true,
             SiteWorkflowState.Name => true,
-
-            // TODO: #89874  add support for Section106 pages
             SiteWorkflowState.LocalAuthoritySearch => true,
             SiteWorkflowState.LocalAuthorityResult => true,
             SiteWorkflowState.LocalAuthorityConfirm => true,
@@ -92,6 +91,7 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             SiteWorkflowState.BuildingForHealthyLife => true,
             SiteWorkflowState.NumberOfGreenLights => IsBuildingForHealthyLife(),
             SiteWorkflowState.LandRegistry => IsLandTitleRegistered(),
+            SiteWorkflowState.LandAcquisitionStatus => true,
             SiteWorkflowState.TenderingStatus => true,
             SiteWorkflowState.ContractorDetails => IsConditionalOrUnconditionalWorksContract(),
             SiteWorkflowState.IntentionToWorkWithSme => IsTenderForWorksContractOrContractingHasNotYetBegun(),
@@ -195,19 +195,23 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
 
         _machine.Configure(SiteWorkflowState.BuildingForHealthyLife)
             .PermitIf(Trigger.Continue, SiteWorkflowState.NumberOfGreenLights, IsBuildingForHealthyLife)
-            .PermitIf(Trigger.Continue, SiteWorkflowState.TenderingStatus, () => !IsBuildingForHealthyLife())
+            .PermitIf(Trigger.Continue, SiteWorkflowState.LandAcquisitionStatus, () => !IsBuildingForHealthyLife())
             .Permit(Trigger.Back, SiteWorkflowState.NationalDesignGuide);
 
         _machine.Configure(SiteWorkflowState.NumberOfGreenLights)
-            .Permit(Trigger.Continue, SiteWorkflowState.TenderingStatus)
+            .Permit(Trigger.Continue, SiteWorkflowState.LandAcquisitionStatus)
             .Permit(Trigger.Back, SiteWorkflowState.BuildingForHealthyLife);
+
+        _machine.Configure(SiteWorkflowState.LandAcquisitionStatus)
+            .Permit(Trigger.Continue, SiteWorkflowState.TenderingStatus)
+            .PermitIf(Trigger.Back, SiteWorkflowState.NumberOfGreenLights, () => IsBuildingForHealthyLife())
+            .PermitIf(Trigger.Back, SiteWorkflowState.BuildingForHealthyLife, () => !IsBuildingForHealthyLife());
 
         _machine.Configure(SiteWorkflowState.TenderingStatus)
             .PermitIf(Trigger.Continue, SiteWorkflowState.ContractorDetails, IsConditionalOrUnconditionalWorksContract)
             .PermitIf(Trigger.Continue, SiteWorkflowState.IntentionToWorkWithSme, IsTenderForWorksContractOrContractingHasNotYetBegun)
             .PermitIf(Trigger.Continue, SiteWorkflowState.StrategicSite, IsNotApplicableOrMissing)
-            .PermitIf(Trigger.Back, SiteWorkflowState.BuildingForHealthyLife, () => !IsBuildingForHealthyLife())
-            .PermitIf(Trigger.Back, SiteWorkflowState.NumberOfGreenLights, IsBuildingForHealthyLife);
+            .Permit(Trigger.Back, SiteWorkflowState.LandAcquisitionStatus);
 
         _machine.Configure(SiteWorkflowState.ContractorDetails)
             .Permit(Trigger.Continue, SiteWorkflowState.StrategicSite)

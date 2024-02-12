@@ -18,8 +18,9 @@ public class NextStateTests
     [InlineData(SiteWorkflowState.PlanningStatus, SiteWorkflowState.PlanningDetails)]
     [InlineData(SiteWorkflowState.LandRegistry, SiteWorkflowState.NationalDesignGuide)]
     [InlineData(SiteWorkflowState.NationalDesignGuide, SiteWorkflowState.BuildingForHealthyLife)]
-    [InlineData(SiteWorkflowState.BuildingForHealthyLife, SiteWorkflowState.TenderingStatus)]
-    [InlineData(SiteWorkflowState.NumberOfGreenLights, SiteWorkflowState.TenderingStatus)]
+    [InlineData(SiteWorkflowState.BuildingForHealthyLife, SiteWorkflowState.LandAcquisitionStatus)]
+    [InlineData(SiteWorkflowState.NumberOfGreenLights, SiteWorkflowState.LandAcquisitionStatus)]
+    [InlineData(SiteWorkflowState.LandAcquisitionStatus, SiteWorkflowState.TenderingStatus)]
     [InlineData(SiteWorkflowState.ContractorDetails, SiteWorkflowState.StrategicSite)]
     [InlineData(SiteWorkflowState.IntentionToWorkWithSme, SiteWorkflowState.StrategicSite)]
     [InlineData(SiteWorkflowState.StrategicSite, SiteWorkflowState.SiteType)]
@@ -80,7 +81,8 @@ public class NextStateTests
     [InlineData(SiteWorkflowState.PlanningDetails, SiteWorkflowState.PlanningStatus)]
     [InlineData(SiteWorkflowState.LandRegistry, SiteWorkflowState.PlanningDetails)]
     [InlineData(SiteWorkflowState.BuildingForHealthyLife, SiteWorkflowState.NationalDesignGuide)]
-    [InlineData(SiteWorkflowState.TenderingStatus, SiteWorkflowState.BuildingForHealthyLife)]
+    [InlineData(SiteWorkflowState.LandAcquisitionStatus, SiteWorkflowState.BuildingForHealthyLife)]
+    [InlineData(SiteWorkflowState.TenderingStatus, SiteWorkflowState.LandAcquisitionStatus)]
     [InlineData(SiteWorkflowState.ContractorDetails, SiteWorkflowState.TenderingStatus)]
     [InlineData(SiteWorkflowState.IntentionToWorkWithSme, SiteWorkflowState.TenderingStatus)]
     [InlineData(SiteWorkflowState.SiteType, SiteWorkflowState.StrategicSite)]
@@ -440,8 +442,8 @@ public class NextStateTests
     }
 
     [Theory]
-    [InlineData(SiteWorkflowState.BuildingForHealthyLife, BuildingForHealthyLifeType.NotApplicable, SiteWorkflowState.TenderingStatus)]
-    [InlineData(SiteWorkflowState.BuildingForHealthyLife, BuildingForHealthyLifeType.No, SiteWorkflowState.TenderingStatus)]
+    [InlineData(SiteWorkflowState.BuildingForHealthyLife, BuildingForHealthyLifeType.NotApplicable, SiteWorkflowState.LandAcquisitionStatus)]
+    [InlineData(SiteWorkflowState.BuildingForHealthyLife, BuildingForHealthyLifeType.No, SiteWorkflowState.LandAcquisitionStatus)]
     [InlineData(SiteWorkflowState.BuildingForHealthyLife, BuildingForHealthyLifeType.Yes, SiteWorkflowState.NumberOfGreenLights)]
     public async Task ShouldReturnNextState_WhenContinueTriggerExecutedWithDifferentBuildingForHealthyLife(SiteWorkflowState current, BuildingForHealthyLifeType buildingForHealthyLifeType, SiteWorkflowState expectedNext)
     {
@@ -457,9 +459,9 @@ public class NextStateTests
 
     [Theory]
     [InlineData(SiteWorkflowState.NumberOfGreenLights, BuildingForHealthyLifeType.Yes, SiteWorkflowState.BuildingForHealthyLife)]
-    [InlineData(SiteWorkflowState.TenderingStatus, BuildingForHealthyLifeType.No, SiteWorkflowState.BuildingForHealthyLife)]
-    [InlineData(SiteWorkflowState.TenderingStatus, BuildingForHealthyLifeType.NotApplicable, SiteWorkflowState.BuildingForHealthyLife)]
-    [InlineData(SiteWorkflowState.TenderingStatus, BuildingForHealthyLifeType.Yes, SiteWorkflowState.NumberOfGreenLights)]
+    [InlineData(SiteWorkflowState.LandAcquisitionStatus, BuildingForHealthyLifeType.No, SiteWorkflowState.BuildingForHealthyLife)]
+    [InlineData(SiteWorkflowState.LandAcquisitionStatus, BuildingForHealthyLifeType.NotApplicable, SiteWorkflowState.BuildingForHealthyLife)]
+    [InlineData(SiteWorkflowState.LandAcquisitionStatus, BuildingForHealthyLifeType.Yes, SiteWorkflowState.NumberOfGreenLights)]
     public async Task ShouldReturnNextState_WhenBackTriggerExecutedWithDifferentBuildingForHealthyLife(SiteWorkflowState current, BuildingForHealthyLifeType buildingForHealthyLifeType, SiteWorkflowState expectedNext)
     {
         // given
