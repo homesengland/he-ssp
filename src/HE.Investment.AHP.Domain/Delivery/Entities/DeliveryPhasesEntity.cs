@@ -181,12 +181,7 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
                     .CheckErrors();
             }
 
-            if (UnusedHomeTypesCount > 0)
-            {
-                OperationResult.ThrowValidationError("DeliveryPhases", "Delivery Section cannot be completed because not all homes from Home Types are used.");
-            }
-
-            if (UnusedHomeTypesCount < 0)
+            if (!AreAllHomeTypesUsed())
             {
                 OperationResult.ThrowValidationError("DeliveryPhases", "The number of homes assigned to delivery phases does not match the number of homes added in scheme information.");
             }
@@ -219,6 +214,20 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
 
     private DeliveryPhaseEntity GetEntityById(DeliveryPhaseId deliveryPhaseId) => _deliveryPhases.SingleOrDefault(x => x.Id == deliveryPhaseId)
                                                                                   ?? throw new NotFoundException(nameof(DeliveryPhaseEntity), deliveryPhaseId);
+
+    private bool AreAllHomeTypesUsed()
+    {
+        foreach (var (homeTypeId, _, totalToDeliver) in _homesToDeliver)
+        {
+            var toBeDelivered = GetHomesToBeDeliveredInAllPhases(homeTypeId);
+            if (toBeDelivered != totalToDeliver)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
 
     private int GetHomesToBeDeliveredInAllPhases(HomeTypeId homeTypeId)
     {
