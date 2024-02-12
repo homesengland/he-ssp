@@ -14,16 +14,16 @@ namespace HE.Investments.AHP.IntegrationTests.ChangeApplicationStatus;
 
 [Order(7)]
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
-public class Order07PutOnHold : AhpIntegrationTest
+public class Order07RequestToEdit : AhpIntegrationTest
 {
-    public Order07PutOnHold(IntegrationTestFixture<Program> fixture)
+    public Order07RequestToEdit(IntegrationTestFixture<Program> fixture)
         : base(fixture)
     {
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
     [Order(1)]
-    public async Task Order01_ShouldNavigateToOnHoldPage_WhenApplicationIsSubmitted()
+    public async Task Order01_ShouldNavigateToRequestToEditPage_WhenApplicationIsSubmitted()
     {
         // given
         var taskListPage = await TestClient.NavigateTo(ApplicationPagesUrl.TaskList(ApplicationData.ApplicationId));
@@ -31,39 +31,39 @@ public class Order07PutOnHold : AhpIntegrationTest
             .UrlEndWith(ApplicationPagesUrl.TaskListSuffix)
             .HasTitle(ApplicationData.ApplicationName)
             .HasStatusTagByTestId(ApplicationStatus.ApplicationSubmitted.GetDescription(), "application-status")
-            .HasLinkWithTestId("put-application-on-hold", out var onHoldLink);
+            .HasLinkWithTestId("request-to-edit-application", out var requestToEditLink);
 
         // when
-        var onHoldPage = await TestClient.NavigateTo(onHoldLink);
+        var requestToEditPage = await TestClient.NavigateTo(requestToEditLink);
 
         // then
-        onHoldPage
-            .UrlEndWith(ApplicationPagesUrl.OnHoldSuffix)
-            .HasTitle(ApplicationPageTitles.OnHold)
-            .HasTextAreaInput("HoldReason")
-            .HasSubmitButton(out _, "Hold");
+        requestToEditPage
+            .UrlEndWith(ApplicationPagesUrl.RequestToEditSuffix)
+            .HasTitle(ApplicationPageTitles.RequestToEdit)
+            .HasTextAreaInput("RequestToEditReason")
+            .HasSubmitButton(out _, "Request to edit");
 
         SaveCurrentPage();
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
     [Order(2)]
-    public async Task Order02_ShouldPutApplicationOnHold_WhenHoldReasonIsProvided()
+    public async Task Order02_ShouldChangeApplicationStatusToRequestedEditing_WhenRequestToEditReasonIsProvided()
     {
         // given
-        var holdPage = await GetCurrentPage();
-        var holdButton = holdPage
-            .GetSubmitButton("Hold");
+        var requestToEditPage = await GetCurrentPage();
+        var requestToEditButton = requestToEditPage
+            .GetSubmitButton("Request to edit");
 
         // when
-        var taskListPage = await TestClient.SubmitButton(holdButton, ("HoldReason", "very important reason"));
+        var taskListPage = await TestClient.SubmitButton(requestToEditButton, ("RequestToEditReason", "very important reason"));
 
         // then
         taskListPage
             .UrlEndWith(ApplicationPagesUrl.TaskListSuffix)
             .HasTitle(ApplicationData.ApplicationName)
-            .HasSuccessNotificationBanner("You’ll be able to reactivate and submit this application at any time.")
-            .HasStatusTagByTestId(ApplicationStatus.OnHold.GetDescription(), "application-status");
+            .HasSuccessNotificationBanner("You’ll be notified once your Growth Manager has referred your application back to you.")
+            .HasStatusTagByTestId(ApplicationStatus.RequestedEditing.GetDescription(), "application-status");
 
         SaveCurrentPage();
     }
