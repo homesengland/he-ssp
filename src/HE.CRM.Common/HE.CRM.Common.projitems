@@ -14,6 +14,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)DtoMapping\DeliveryPhaseMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)dtomapping\HomeTypeMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)dtomapping\LoanApplicationDtoMapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)dtomapping\MilestoneFrameWorkItemMapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)dtomapping\ProgrammeMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)dtomapping\SiteDetailsDtoMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\DateTimeExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\Entities\EntityExtensions.cs" />
@@ -32,6 +34,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\HomeTypeRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\IspRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\LocalAuthorityRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\MilestoneFrameworkItemRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\ProgrammeRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\ProjectSpecificConditionRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\ReviewApprovalRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\SharepointDocumentLocationRepository.cs" />
@@ -62,8 +66,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\ILoanApplicationRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\ILoanStatusChangeRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\ILocalAuthorityRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IMilestoneFrameworkItemRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\INotificationSettingRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IPortalPermissionRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IProgrammeRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IProjectSpecificConditionsRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IReviewApprovalRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\ISharepointDocumentLocationRepository.cs" />
