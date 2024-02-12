@@ -1,5 +1,3 @@
-extern alias Org;
-
 using System.Linq.Expressions;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Enums;

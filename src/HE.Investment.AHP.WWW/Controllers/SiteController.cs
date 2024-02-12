@@ -503,6 +503,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     public async Task<IActionResult> LandAcquisitionStatus([FromRoute] string siteId, CancellationToken cancellationToken)
     {
         var siteModel = await GetSiteDetails(siteId, cancellationToken);
+        ViewBag.SiteName = siteModel.Name;
         return View("LandAcquisitionStatus", siteModel);
     }
 
@@ -511,9 +512,9 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     public async Task<IActionResult> LandAcquisitionStatus(SiteModel model, CancellationToken cancellationToken)
     {
         return await ExecuteSiteCommand<SiteModel>(
-            new ProvideNumberOfGreenLightsCommand(
+            new ProvideLandAcquisitionStatusCommand(
                 this.GetSiteIdFromRoute(),
-                model.NumberOfGreenLights),
+                model.LandAcquisitionStatus),
             nameof(LandAcquisitionStatus),
             savedModel => model,
             cancellationToken);

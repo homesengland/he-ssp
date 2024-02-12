@@ -259,7 +259,7 @@ public class Order01StartAhpSite : AhpIntegrationTest
 
     [Fact(Skip = AhpConfig.SkipTest)]
     [Order(18)]
-    public async Task Order18_ShouldProvideLandAcauisitionStatus()
+    public async Task Order18_ShouldProvideLandAcquisitionStatus()
     {
         await TestQuestionPage(
             SitePagesUrl.SiteLandAcquisitionStatus(SiteData.SiteId),
