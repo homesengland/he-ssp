@@ -5,4 +5,5 @@ public enum ButtonType
     Standard,
     Secondary,
     Warning,
+    Start,
 }
