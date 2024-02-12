@@ -7,7 +7,6 @@ using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.Tranches;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
-using HE.Investment.AHP.Domain.Programme;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
@@ -182,9 +181,14 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
                     .CheckErrors();
             }
 
-            if (!AreAllHomeTypesUsed())
+            if (UnusedHomeTypesCount > 0)
             {
                 OperationResult.ThrowValidationError("DeliveryPhases", "Delivery Section cannot be completed because not all homes from Home Types are used.");
+            }
+
+            if (UnusedHomeTypesCount < 0)
+            {
+                OperationResult.ThrowValidationError("DeliveryPhases", "The number of homes assigned to delivery phases does not match the number of homes added in scheme information.");
             }
 
             Status = _statusModificationTracker.Change(Status, SectionStatus.Completed);
@@ -215,20 +219,6 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
 
     private DeliveryPhaseEntity GetEntityById(DeliveryPhaseId deliveryPhaseId) => _deliveryPhases.SingleOrDefault(x => x.Id == deliveryPhaseId)
                                                                                   ?? throw new NotFoundException(nameof(DeliveryPhaseEntity), deliveryPhaseId);
-
-    private bool AreAllHomeTypesUsed()
-    {
-        foreach (var (homeTypeId, _, totalToDeliver) in _homesToDeliver)
-        {
-            var toBeDelivered = GetHomesToBeDeliveredInAllPhases(homeTypeId);
-            if (toBeDelivered != totalToDeliver)
-            {
-                return false;
-            }
-        }
-
-        return true;
-    }
 
     private int GetHomesToBeDeliveredInAllPhases(HomeTypeId homeTypeId)
     {

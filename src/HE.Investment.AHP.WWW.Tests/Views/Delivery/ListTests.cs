@@ -39,6 +39,31 @@ public class ListTests : ViewTestBase
     }
 
     [Fact]
+    public async Task ShouldDisplaySaveAndContinueButtonWithWarning_WhenTooManyDeliveryPhasesAreAdded()
+    {
+        // given
+        var model = new DeliveryListModel(ApplicationName)
+        {
+            IsEditable = true,
+            UnusedHomeTypesCount = -1,
+            DeliveryPhases = new[]
+            {
+                new DeliveryPhaseItemModel("1", "Phase 1", 2, null, null, null),
+            },
+        };
+
+        // when
+        var document = await RenderView(model);
+
+        // then
+        AssertView(document);
+        document.HasElementWithText("a", "Phase 1")
+            .ContainsInsetText("You have changed the number of homes you are delivering in this application and have now assigned too many homes to delivery phases.")
+            .ContainsInsetText("Remove homes from delivery phases to equal the number of homes you told us you are delivering in scheme information.")
+            .HasSaveAndContinueButton();
+    }
+
+    [Fact]
     public async Task ShouldDisplayAddButton_WhenThereAreNoDeliveryPhases()
     {
         // given
@@ -54,9 +79,9 @@ public class ListTests : ViewTestBase
 
         // then
         AssertView(document);
-        document.HasElementWithText("p", "Your delivery phases will appear here once added.")
-            .HasElementWithText("div", "You have 2 homes that you need to add to your delivery phases.")
-            .HasElementWithText("a", "Add a delivery phase");
+        document.HasParagraph("Your delivery phases will appear here once added.")
+            .ContainsInsetText("You have 2 homes that you need to add to your delivery phases.")
+            .HasLinkButton("Add a delivery phase");
     }
 
     [Fact]
@@ -79,15 +104,15 @@ public class ListTests : ViewTestBase
         // then
         AssertView(document);
         document.HasElementWithText("a", "Phase 1")
-            .HasElementWithText("div", "You have 1 homes that you need to add to your delivery phases.")
-            .HasElementWithText("a", "Add another delivery phase");
+            .ContainsInsetText("You have 1 homes that you need to add to your delivery phases.")
+            .HasLinkButton("Add another delivery phase");
     }
 
     private static void AssertView(IHtmlDocument document)
     {
         document
             .HasPageHeader(ApplicationName, "Delivery")
-            .HasElementWithText("p", "View and add the delivery phases for this application and add homes to phases.")
+            .HasParagraph("View and add the delivery phases for this application and add homes to phases.")
             .HasElementWithText("a", "Return to application");
     }
 
