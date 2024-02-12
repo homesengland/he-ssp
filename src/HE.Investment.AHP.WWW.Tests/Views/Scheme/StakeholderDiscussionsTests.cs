@@ -47,7 +47,7 @@ public class StakeholderDiscussionsTests : ViewTestBase
             .HasElementWithText("span", "Upload a file (PDF, DOCX, PNG)")
             .HasElementWithText("span", "Maximum file size 25 MB")
             .HasTextAreaInput("StakeholderDiscussionsReport", "Tell us about discussions you have had with local stakeholders", Model.StakeholderDiscussionsReport)
-            .HasGdsSaveAndContinueButton();
+            .HasSaveAndContinueButton();
     }
 
     private void AssertErrors(IHtmlDocument document, bool exist)

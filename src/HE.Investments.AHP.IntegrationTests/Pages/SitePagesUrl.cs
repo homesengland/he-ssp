@@ -24,6 +24,8 @@ public static class SitePagesUrl
 
     public static string SiteLocalAuthorityResult(string siteId) => $"ahp/site/{siteId}/local-authority/search/result";
 
+    public static string SiteLocalAuthorityResult(string siteId, string phrase) => $"{SiteLocalAuthorityResult(siteId)}?phrase={phrase}";
+
     public static string SiteLocalAuthorityConfirm(string siteId, string localAuthorityId, string localAuthorityName, string phrase) =>
         $"ahp/site/{siteId}/local-authority/{localAuthorityId}/{localAuthorityName}/confirm?phrase={phrase}";
 
@@ -39,6 +41,8 @@ public static class SitePagesUrl
 
     public static string SiteProvideNumberOfGreenLights(string siteId) => $"ahp/site/{siteId}/number-of-green-lights";
 
+    public static string SiteLandAcquisitionStatus(string siteId) => $"ahp/site/{siteId}/land-acquisition-status";
+
     public static string SiteConfirm(string siteId) => $"ahp/site/{siteId}/confirm-select";
 
     public static string SiteTenderingStatus(string siteId) => $"ahp/site/{siteId}/tendering-status";
@@ -48,6 +52,10 @@ public static class SitePagesUrl
     public static string SiteStrategicSite(string siteId) => $"ahp/site/{siteId}/strategic-site";
 
     public static string SiteType(string siteId) => $"ahp/site/{siteId}/site-type";
+
+    public static string SiteUse(string siteId) => $"ahp/site/{siteId}/site-use";
+
+    public static string SiteTravellerPitchType(string siteId) => $"ahp/site/{siteId}/traveller-pitch-type";
 
     public static string SiteCheckAnswers(string siteId) => $"ahp/site/{siteId}/check-answers";
 }

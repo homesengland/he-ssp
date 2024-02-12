@@ -103,11 +103,11 @@ public class UserOrganisationTests : ViewTestBase
         bool actionsExist = true)
     {
         document
-            .HasElementWithText("p", $"Welcome {model.UserName}")
+            .HasParagraph($"Welcome {model.UserName}")
             .HasElementWithText("h1", $"{model.OrganisationName}'s Homes England account")
-            .HasElementWithText("div", "Your request to be part of", isLimitedUser)
-            .HasElementWithText("p", "You have not yet applied for a service. To apply, select a funding programme below.", !programmesToAccessExist)
-            .HasElementWithText("h3", "Programmes you can apply for", programmesToApplyExist);
+            .HasElementWithText("div", "Your request to join", isLimitedUser)
+            .HasParagraph("You have not applied for any funding. To apply, select a funding programme below.", !programmesToAccessExist)
+            .HasElementWithText("h2", "Programmes you can apply for", programmesToApplyExist);
 
         if (actionsExist)
         {

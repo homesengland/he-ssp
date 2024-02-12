@@ -1,6 +1,7 @@
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Queries;
 using HE.Investment.AHP.Domain.Common.Mappers;
+using HE.Investment.AHP.Domain.Site.Entities;
 using HE.Investment.AHP.Domain.Site.Mappers;
 using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investment.AHP.Domain.Site.ValueObjects.Planning;
@@ -33,30 +34,37 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
         {
             Id = site.Id.Value,
             Name = site.Name.Value,
-            Section106 = new Section106Dto(
-                site.Id.ToString(),
-                site.Name.Value,
-                site.Section106?.GeneralAgreement,
-                site.Section106?.AffordableHousing,
-                site.Section106?.OnlyAffordableHousing,
-                site.Section106?.AdditionalAffordableHousing,
-                site.Section106?.CapitalFundingEligibility,
-                site.Section106?.LocalAuthorityConfirmation,
-                site.Section106?.IsIneligible(),
-                site.Section106?.IsIneligibleDueToAffordableHousing(),
-                site.Section106?.IsIneligibleDueToCapitalFundingGuide()),
+            Section106 = CreateSection106(site),
             LocalAuthority = LocalAuthorityMapper.Map(site.LocalAuthority),
             PlanningDetails = CreateSitePlanningDetails(site.PlanningDetails),
-            NationalDesignGuidePriorities = site.NationalDesignGuidePriorities?.Values?.ToList() ?? new List<Contract.Site.Enums.NationalDesignGuidePriority>(),
+            NationalDesignGuidePriorities = site.NationalDesignGuidePriorities.Values.ToList(),
             BuildingForHealthyLife = site.BuildingForHealthyLife,
             NumberOfGreenLights = site.NumberOfGreenLights?.ToString(),
+            LandAcquisitionStatus = site.LandAcquisitionStatus.Value,
             TenderingStatusDetails = CreateSiteTenderingStatusDetails(site.TenderingStatusDetails),
             StrategicSiteDetails = CreateStrategicSiteDetails(site.StrategicSiteDetails),
             SiteTypeDetails = CreateSiteTypeDetails(site.SiteTypeDetails),
+            SiteUseDetails = CreateSiteUseDetails(site.SiteUseDetails),
         };
     }
 
-    private SitePlanningDetails CreateSitePlanningDetails(PlanningDetails planningDetails)
+    private static Section106Dto CreateSection106(SiteEntity site)
+    {
+        return new Section106Dto(
+            site.Id.ToString(),
+            site.Name.Value,
+            site.Section106.GeneralAgreement,
+            site.Section106.AffordableHousing,
+            site.Section106.OnlyAffordableHousing,
+            site.Section106.AdditionalAffordableHousing,
+            site.Section106.CapitalFundingEligibility,
+            site.Section106.LocalAuthorityConfirmation,
+            site.Section106.IsIneligible(),
+            site.Section106.IsIneligibleDueToAffordableHousing(),
+            site.Section106.IsIneligibleDueToCapitalFundingGuide());
+    }
+
+    private static SitePlanningDetails CreateSitePlanningDetails(PlanningDetails planningDetails)
     {
         return new SitePlanningDetails(
             planningDetails.PlanningStatus,
@@ -74,7 +82,7 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
             planningDetails.IsAnswered());
     }
 
-    private SiteTenderingStatusDetails CreateSiteTenderingStatusDetails(TenderingStatusDetails tenderingStatusDetails)
+    private static SiteTenderingStatusDetails CreateSiteTenderingStatusDetails(TenderingStatusDetails tenderingStatusDetails)
     {
         return new SiteTenderingStatusDetails(
             tenderingStatusDetails.TenderingStatus,
@@ -83,19 +91,24 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
             tenderingStatusDetails.IsIntentionToWorkWithSme);
     }
 
-    private StrategicSite CreateStrategicSiteDetails(StrategicSiteDetails details)
+    private static StrategicSite CreateStrategicSiteDetails(StrategicSiteDetails details)
     {
         return new StrategicSite(
             details.IsStrategicSite,
             details.SiteName?.Value);
     }
 
-    private SiteTypeDetails CreateSiteTypeDetails(ValueObjects.SiteTypeDetails details)
+    private static SiteTypeDetails CreateSiteTypeDetails(ValueObjects.SiteTypeDetails details)
     {
         return new SiteTypeDetails(
             details.SiteType,
             details.IsOnGreenBelt,
             details.IsRegenerationSite,
             details.IsAnswered());
+    }
+
+    private static SiteUseDetails CreateSiteUseDetails(ValueObjects.SiteUseDetails details)
+    {
+        return new SiteUseDetails(details.IsPartOfStreetFrontInfill, details.IsForTravellerPitchSite, details.TravellerPitchSiteType);
     }
 }

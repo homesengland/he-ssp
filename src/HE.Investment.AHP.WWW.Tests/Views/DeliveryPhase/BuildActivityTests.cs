@@ -36,7 +36,7 @@ public class BuildActivityTests : ViewTestBase
             .HasGdsRadioInputWithValues(
                 nameof(DeliveryPhaseDetails.BuildActivityType),
                 availableTypes.Select(x => x.ToString()).ToArray())
-            .HasGdsSaveAndContinueButton()
-            .HasGdsBackLink(false);
+            .HasSaveAndContinueButton()
+            .HasBackLink(false);
     }
 }

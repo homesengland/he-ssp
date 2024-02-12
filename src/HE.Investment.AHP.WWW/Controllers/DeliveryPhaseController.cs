@@ -14,7 +14,6 @@ using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Validators;
-using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Routing;
@@ -84,7 +83,8 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
             return View("Name", model);
         }
 
-        return await ContinueWithAllRedirects(new { applicationId, deliveryPhaseId = result.ReturnedData?.Value });
+        return await this.ReturnToTaskListOrContinue(
+            async () => await ContinueWithRedirect(new { applicationId, deliveryPhaseId = result.ReturnedData?.Value }));
     }
 
     [HttpGet("{deliveryPhaseId}/name")]
@@ -115,7 +115,8 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
             return View("Name", model);
         }
 
-        return await ContinueWithAllRedirects(new { applicationId, deliveryPhaseId });
+        return await this.ReturnToTaskListOrContinue(
+            async () => await ContinueWithRedirect(new { applicationId, deliveryPhaseId }));
     }
 
     [HttpGet("{deliveryPhaseId}/details")]
@@ -191,7 +192,8 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
                 AhpApplicationId.From(applicationId),
                 new DeliveryPhaseId(deliveryPhaseId),
                 model.HomesToDeliver ?? new Dictionary<string, string?>()),
-            () => ContinueWithAllRedirects(new { applicationId, deliveryPhaseId }),
+            async () => await this.ReturnToTaskListOrContinue(
+                async () => await ContinueWithRedirect(new { applicationId, deliveryPhaseId })),
             async () => View("AddHomes", await new AddHomesModelFactory(_mediator).Create(applicationId, deliveryPhaseId, model, cancellationToken)),
             cancellationToken);
     }
@@ -259,7 +261,8 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
                 true);
         }
 
-        return await ContinueWithAllRedirects(new { applicationId, deliveryPhaseId });
+        return await this.ReturnToTaskListOrContinue(
+            async () => await ContinueWithRedirect(new { applicationId, deliveryPhaseId }));
     }
 
     [HttpGet("{deliveryPhaseId}/summary-of-delivery/tranche/{trancheType}")]
@@ -599,7 +602,8 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         return await this.ExecuteCommand<TViewModel>(
             _mediator,
             command,
-            async () => await ContinueWithAllRedirects(new { applicationId = applicationId.Value, deliveryPhaseId }),
+            async () => await this.ReturnToTaskListOrContinue(
+                async () => await ContinueWithRedirect(new { applicationId = applicationId.Value, deliveryPhaseId })),
             async () =>
             {
                 var deliveryPhaseDetails =
@@ -609,18 +613,5 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
                 return View(viewName, model);
             },
             cancellationToken);
-    }
-
-    private async Task<IActionResult> ContinueWithAllRedirects(object routeData)
-    {
-        var action = HttpContext.Request.Form["action"];
-        var applicationId = this.GetApplicationIdFromRoute();
-
-        if (action == GenericMessages.SaveAndReturn)
-        {
-            return Url.RedirectToTaskList(applicationId.Value);
-        }
-
-        return await ContinueWithRedirect(routeData);
     }
 }

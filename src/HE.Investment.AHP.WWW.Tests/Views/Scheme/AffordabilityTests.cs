@@ -45,7 +45,7 @@ public class AffordabilityTests : ViewTestBase
         document
             .HasPageHeader(Model.ApplicationName, "Affordability of Shared Ownership")
             .HasTextAreaInput("AffordabilityEvidence", "Tell us about any evidence and analysis you have that the homes will be affordable to the target market", Model.AffordabilityEvidence)
-            .HasGdsSaveAndContinueButton();
+            .HasSaveAndContinueButton();
     }
 
     private void AssertErrors(IHtmlDocument document, bool exist)

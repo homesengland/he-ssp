@@ -43,7 +43,7 @@ public class LandValueTests : ViewTestBase
         document
             .HasElementWithText("h1", "Land value")
             .HasElementWithText("h2", "Enter the current value of the land")
-            .HasGdsSaveAndContinueButton()
+            .HasSaveAndContinueButton()
             .HasSummaryErrorMessage(nameof(FinancialDetailsValidationFieldNames.LandValue), errorMessage, !string.IsNullOrEmpty(errorMessage))
             .HasErrorMessage(nameof(FinancialDetailsValidationFieldNames.LandValue), errorMessage, !string.IsNullOrEmpty(errorMessage));
     }

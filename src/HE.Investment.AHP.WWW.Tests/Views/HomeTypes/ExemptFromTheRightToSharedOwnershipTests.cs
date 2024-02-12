@@ -27,6 +27,6 @@ public class ExemptFromTheRightToSharedOwnershipTests : HomeTypesTestBase
                     "Yes",
                     "No",
                 })
-            .HasGdsSaveAndContinueButton();
+            .HasSaveAndContinueButton();
     }
 }

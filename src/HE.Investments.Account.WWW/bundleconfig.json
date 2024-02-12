@@ -28,7 +28,6 @@
       "wwwroot/javascripts/*.js",
       "!wwwroot/javascripts/*.min.js",
       "!wwwroot/javascripts/site.js",
-      "!wwwroot/javascripts/checkboxes-with-conditional-input.js",
       "!wwwroot/javascripts/enable-js.js",
       "!wwwroot/javascripts/ExistingCompany.file-validation.js",
       "!wwwroot/javascripts/govuk-frontend-all.min.js",
@@ -36,7 +35,6 @@
       "!wwwroot/javascripts/land-cost-radio.js",
       "!wwwroot/javascripts/manual.js",
       "!wwwroot/javascripts/mortgage-term-radio.js",
-      "!wwwroot/javascripts/radios-with-conditional-input.js",
       "!wwwroot/javascripts/service-charge-radio.js",
       "!wwwroot/javascripts/tmp.js"
     ]
@@ -46,7 +44,6 @@
     "inputFiles": [
       "wwwroot/javascripts/*.js",
       "!wwwroot/javascripts/*.min.js",
-      "!wwwroot/javascripts/checkboxes-with-conditional-input.js",
       "!wwwroot/javascripts/enable-js.js",
       "!wwwroot/javascripts/ExistingCompany.file-validation.js",
       "!wwwroot/javascripts/govuk-frontend-all.min.js",
@@ -54,7 +51,6 @@
       "!wwwroot/javascripts/land-cost-radio.js",
       "!wwwroot/javascripts/manual.js",
       "!wwwroot/javascripts/mortgage-term-radio.js",
-      "!wwwroot/javascripts/radios-with-conditional-input.js",
       "!wwwroot/javascripts/service-charge-radio.js",
       "!wwwroot/javascripts/tmp.js"
     ],

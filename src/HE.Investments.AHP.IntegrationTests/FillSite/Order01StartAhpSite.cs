@@ -64,7 +64,7 @@ public class Order01StartAhpSite : AhpIntegrationTest
     {
         // given
         var siteNamePage = await GetCurrentPage(SitePagesUrl.SiteName);
-        siteNamePage.HasGdsSubmitButton("continue-button", out var continueButton);
+        siteNamePage.HasSaveAndContinueButton(out var continueButton);
 
         // when
         var section106GeneralAgreementPage = await TestClient.SubmitButton(
@@ -152,11 +152,21 @@ public class Order01StartAhpSite : AhpIntegrationTest
     [Order(10)]
     public async Task Order10_ShouldProvideLocalAuthoritySearchPhraseAndNavigateToLocalAuthorityResult()
     {
-        await TestQuestionPage(
-            SitePagesUrl.SiteLocalAuthoritySearch(SiteData.SiteId),
-            SitePageTitles.LocalAuthoritySearch,
-            SitePagesUrl.SiteLocalAuthorityResult(SiteData.SiteId),
-            (nameof(LocalAuthorities.Phrase), SiteData.LocalAuthorityName));
+        // given
+        var currentPage = await GetCurrentPage(SitePagesUrl.SiteLocalAuthoritySearch(SiteData.SiteId));
+        currentPage
+            .UrlWithoutQueryEndsWith(SitePagesUrl.SiteLocalAuthoritySearch(SiteData.SiteId))
+            .HasTitle(SitePageTitles.LocalAuthoritySearch)
+            .HasBackLink()
+            .HasSubmitButton(out var searchButton, "Search");
+
+        // when
+        var searchResultPage = await TestClient.SubmitButton(searchButton, (nameof(LocalAuthorities.Phrase), SiteData.LocalAuthorityName));
+
+        // then
+        searchResultPage.UrlWithoutQueryEndsWith(SitePagesUrl.SiteLocalAuthorityResult(SiteData.SiteId))
+            .HasTitle(SitePageTitles.LocalAuthorityResult);
+        SaveCurrentPage();
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
@@ -164,18 +174,16 @@ public class Order01StartAhpSite : AhpIntegrationTest
     public async Task Order11_ShouldSelectLocalAuthorityAndNavigateToLocalAuthorityConfirm()
     {
         // given
-        var localAuthorityResultPage = await GetCurrentPage(SitePagesUrl.SiteLocalAuthorityResult(SiteData.SiteId));
+        var localAuthorityResultPage = await GetCurrentPage(SitePagesUrl.SiteLocalAuthorityResult(SiteData.SiteId, SiteData.LocalAuthorityName));
         localAuthorityResultPage.HasNavigationListItem("select-list", out var selectLocalAuthorityLink);
 
         // when
         var localAuthorityConfirmPage = await TestClient.NavigateTo(selectLocalAuthorityLink);
 
         // then
-        ApplicationData.SetSiteId(localAuthorityConfirmPage.Url.GetSiteGuidFromUrl());
         localAuthorityConfirmPage
             .UrlEndWith(SitePagesUrl.SiteLocalAuthorityConfirm(SiteData.SiteId, SiteData.LocalAuthorityId, SiteData.LocalAuthorityName, SiteData.LocalAuthorityName))
             .HasTitle(SitePageTitles.LocalAuthorityConfirm);
-
         SaveCurrentPage();
     }
 
@@ -245,13 +253,24 @@ public class Order01StartAhpSite : AhpIntegrationTest
         await TestQuestionPage(
             SitePagesUrl.SiteProvideNumberOfGreenLights(SiteData.SiteId),
             SitePageTitles.NumberOfGreenLights,
-            SitePagesUrl.SiteTenderingStatus(SiteData.SiteId),
+            SitePagesUrl.SiteLandAcquisitionStatus(SiteData.SiteId),
             (nameof(SiteModel.NumberOfGreenLights), "5"));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
     [Order(18)]
-    public async Task Order18_ShouldProvideTenderingStatus()
+    public async Task Order18_ShouldProvideLandAcquisitionStatus()
+    {
+        await TestQuestionPage(
+            SitePagesUrl.SiteLandAcquisitionStatus(SiteData.SiteId),
+            SitePageTitles.LandAcquisitionStatus,
+            SitePagesUrl.SiteTenderingStatus(SiteData.SiteId),
+            (nameof(SiteModel.LandAcquisitionStatus), nameof(SiteLandAcquisitionStatus.FullOwnership)));
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(19)]
+    public async Task Order19_ShouldProvideTenderingStatus()
     {
         await TestQuestionPage(
             SitePagesUrl.SiteTenderingStatus(SiteData.SiteId),
@@ -261,8 +280,8 @@ public class Order01StartAhpSite : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(19)]
-    public async Task Order19_ShouldProvideContractorDetails()
+    [Order(20)]
+    public async Task Order20_ShouldProvideContractorDetails()
     {
         await TestQuestionPage(
             SitePagesUrl.SiteContractorDetails(SiteData.SiteId),
@@ -273,8 +292,8 @@ public class Order01StartAhpSite : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(20)]
-    public async Task Order20_ShouldProvideStrategicSite()
+    [Order(21)]
+    public async Task Order21_ShouldProvideStrategicSite()
     {
         await TestQuestionPage(
             SitePagesUrl.SiteStrategicSite(SiteData.SiteId),
@@ -285,15 +304,38 @@ public class Order01StartAhpSite : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(21)]
-    public async Task Order21_ShouldProvideSiteType()
+    [Order(22)]
+    public async Task Order22_ShouldProvideSiteType()
     {
         await TestQuestionPage(
             SitePagesUrl.SiteType(SiteData.SiteId),
             SitePageTitles.SiteType,
-            SitePagesUrl.SiteCheckAnswers(SiteData.SiteId),
+            SitePagesUrl.SiteUse(SiteData.SiteId),
             (nameof(SiteTypeDetails.SiteType), SiteType.Brownfield.ToString()),
             (nameof(SiteTypeDetails.IsOnGreenBelt), "True"),
             (nameof(SiteTypeDetails.IsRegenerationSite), "False"));
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(22)]
+    public async Task Order22_ShouldProvideSiteUse()
+    {
+        await TestQuestionPage(
+            SitePagesUrl.SiteUse(SiteData.SiteId),
+            SitePageTitles.SiteUse,
+            SitePagesUrl.SiteTravellerPitchType(SiteData.SiteId),
+            (nameof(SiteUseDetails.IsPartOfStreetFrontInfill), "True"),
+            (nameof(SiteUseDetails.IsForTravellerPitchSite), "True"));
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(23)]
+    public async Task Order23_ShouldProvideTravellerPitchType()
+    {
+        await TestQuestionPage(
+            SitePagesUrl.SiteTravellerPitchType(SiteData.SiteId),
+            SitePageTitles.TravellerPitchType,
+            SitePagesUrl.SiteCheckAnswers(SiteData.SiteId),
+            (nameof(SiteUseDetails.TravellerPitchSiteType), TravellerPitchSiteType.Permanent.ToString()));
     }
 }

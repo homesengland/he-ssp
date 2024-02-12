@@ -30,6 +30,6 @@ public class FloorAreaTests : HomeTypesTestBase
                 })
             .HasElementWithText("span", "What are the Nationally Described Space Standards?")
             .HasElementWithText("a", "Read more about the Nationally Described Space Standards (opens in a new tab).")
-            .HasGdsSaveAndContinueButton();
+            .HasSaveAndContinueButton();
     }
 }

@@ -22,8 +22,8 @@ public class Section106LocalAuthorityConfirmationTests : ViewTestBase
             .HasTitle(SitePageTitles.SiteSection106LocalAuthorityConfirmation)
             .HasPageHeader(_siteName, @SitePageTitles.SiteSection106LocalAuthorityConfirmation)
             .HasTextAreaInput(nameof(Section106Dto.LocalAuthorityConfirmation))
-            .HasGdsSaveAndContinueButton()
-            .HasGdsBackLink(false);
+            .HasSaveAndContinueButton()
+            .HasBackLink(false);
     }
 
     [Fact]
@@ -43,8 +43,8 @@ public class Section106LocalAuthorityConfirmationTests : ViewTestBase
             .HasTitle(SitePageTitles.SiteSection106LocalAuthorityConfirmation)
             .HasPageHeader(_siteName, @SitePageTitles.SiteSection106LocalAuthorityConfirmation)
             .HasTextAreaInput(nameof(Section106Dto.LocalAuthorityConfirmation))
-            .HasGdsSaveAndContinueButton()
-            .HasGdsBackLink(false)
+            .HasSaveAndContinueButton()
+            .HasBackLink(false)
             .HasOneValidationMessages(errorMessage);
     }
 }

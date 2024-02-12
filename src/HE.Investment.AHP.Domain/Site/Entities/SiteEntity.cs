@@ -1,5 +1,6 @@
 extern alias Org;
 
+using System.Linq.Expressions;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investment.AHP.Domain.Site.Repositories;
@@ -14,6 +15,7 @@ using HE.Investments.Common.Extensions;
 using LocalAuthority = Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
 using Section106 = HE.Investment.AHP.Domain.Site.ValueObjects.Section106;
 using SiteTypeDetails = HE.Investment.AHP.Domain.Site.ValueObjects.SiteTypeDetails;
+using SiteUseDetails = HE.Investment.AHP.Domain.Site.ValueObjects.SiteUseDetails;
 
 namespace HE.Investment.AHP.Domain.Site.Entities;
 
@@ -28,11 +30,13 @@ public class SiteEntity : DomainEntity, IQuestion
         PlanningDetails planningDetails,
         NationalDesignGuidePriorities nationalDesignGuidePriorities,
         NumberOfGreenLights? numberOfGreenLights,
+        LandAcquisitionStatus landAcquisitionStatus,
         TenderingStatusDetails tenderingStatusDetails,
         StrategicSiteDetails strategicSiteDetails,
         SiteTypeDetails siteTypeDetails,
         LocalAuthority? localAuthority = null,
-        BuildingForHealthyLifeType buildingForHealthyLife = BuildingForHealthyLifeType.Undefined)
+        BuildingForHealthyLifeType buildingForHealthyLife = BuildingForHealthyLifeType.Undefined,
+        SiteUseDetails? siteUseDetails = null)
     {
         Id = id;
         Name = name;
@@ -43,9 +47,11 @@ public class SiteEntity : DomainEntity, IQuestion
         NationalDesignGuidePriorities = nationalDesignGuidePriorities;
         BuildingForHealthyLife = buildingForHealthyLife;
         NumberOfGreenLights = numberOfGreenLights;
+        LandAcquisitionStatus = landAcquisitionStatus;
         TenderingStatusDetails = tenderingStatusDetails;
         StrategicSiteDetails = strategicSiteDetails;
         SiteTypeDetails = siteTypeDetails;
+        SiteUseDetails = siteUseDetails ?? new SiteUseDetails();
     }
 
     public SiteEntity()
@@ -56,9 +62,11 @@ public class SiteEntity : DomainEntity, IQuestion
         Section106 = new Section106();
         PlanningDetails = PlanningDetailsFactory.CreateEmpty();
         NationalDesignGuidePriorities = new NationalDesignGuidePriorities();
+        LandAcquisitionStatus = new LandAcquisitionStatus(null);
         TenderingStatusDetails = new TenderingStatusDetails();
         StrategicSiteDetails = new StrategicSiteDetails();
         SiteTypeDetails = new SiteTypeDetails();
+        SiteUseDetails = new SiteUseDetails();
     }
 
     public SiteId Id { get; set; }
@@ -79,11 +87,15 @@ public class SiteEntity : DomainEntity, IQuestion
 
     public NumberOfGreenLights? NumberOfGreenLights { get; private set; }
 
+    public LandAcquisitionStatus LandAcquisitionStatus { get; private set; }
+
     public TenderingStatusDetails TenderingStatusDetails { get; private set; }
 
     public StrategicSiteDetails StrategicSiteDetails { get; private set; }
 
     public SiteTypeDetails SiteTypeDetails { get; private set; }
+
+    public SiteUseDetails SiteUseDetails { get; private set; }
 
     public async Task ProvideName(SiteName siteName, ISiteNameExist siteNameExist, CancellationToken cancellationToken)
     {
@@ -120,11 +132,20 @@ public class SiteEntity : DomainEntity, IQuestion
     public void ProvideBuildingForHealthyLife(BuildingForHealthyLifeType buildingForHealthyLife)
     {
         BuildingForHealthyLife = _modificationTracker.Change(BuildingForHealthyLife, buildingForHealthyLife);
+        if (BuildingForHealthyLife != BuildingForHealthyLifeType.Yes)
+        {
+            ProvideNumberOfGreenLights(null);
+        }
     }
 
     public void ProvideNumberOfGreenLights(NumberOfGreenLights? numberOfGreenLights)
     {
         NumberOfGreenLights = _modificationTracker.Change(NumberOfGreenLights, numberOfGreenLights);
+    }
+
+    public void ProvideLandAcquisitionStatus(LandAcquisitionStatus landAcquisitionStatus)
+    {
+        LandAcquisitionStatus = _modificationTracker.Change(LandAcquisitionStatus, landAcquisitionStatus);
     }
 
     public void ProvideTenderingStatusDetails(TenderingStatusDetails tenderingStatusDetails)
@@ -142,12 +163,18 @@ public class SiteEntity : DomainEntity, IQuestion
         SiteTypeDetails = _modificationTracker.Change(SiteTypeDetails, details);
     }
 
+    public void ProvideSiteUseDetails(SiteUseDetails details)
+    {
+        SiteUseDetails = _modificationTracker.Change(SiteUseDetails, details);
+    }
+
     public bool IsAnswered()
     {
         return PlanningDetails.IsAnswered() &&
                TenderingStatusDetails.IsAnswered() &&
                StrategicSiteDetails.IsAnswered() &&
                SiteTypeDetails.IsAnswered() &&
+               SiteUseDetails.IsAnswered() &&
                BuildingForHealthyLife != BuildingForHealthyLifeType.Undefined &&
                BuildConditionalRouteCompletionPredicates().All(isCompleted => isCompleted());
     }

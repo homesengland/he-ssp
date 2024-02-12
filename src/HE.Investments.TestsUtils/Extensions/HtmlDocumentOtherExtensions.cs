@@ -15,6 +15,26 @@ public static class HtmlDocumentOtherExtensions
         return htmlDocument;
     }
 
+    public static IHtmlDocument HasWarning(this IHtmlDocument htmlDocument, string text, bool exist = true)
+    {
+        var filtered = htmlDocument.GetElements("div.govuk-warning-text").Where(x => x.TextContent.Contains(text)).ToList();
+
+        BasicHtmlDocumentExtensions.ValidateExist(filtered, "govuk-warning", text, exist);
+
+        if (exist)
+        {
+            var warning = filtered.Single();
+            warning.QuerySelectorAll("span.govuk-warning-text__assistive").Should().ContainSingle();
+
+            var textNodes = warning.QuerySelectorAll("strong.govuk-warning-text__text");
+
+            textNodes.Should().ContainSingle();
+            textNodes.Single().TextContent.Should().Be($"Warning{text}");
+        }
+
+        return htmlDocument;
+    }
+
     public static IHtmlDocument HasPageHeader(this IHtmlDocument htmlDocument, string? caption = null, string? header = null)
     {
         if (!string.IsNullOrWhiteSpace(caption))
@@ -32,11 +52,11 @@ public static class HtmlDocumentOtherExtensions
         return htmlDocument;
     }
 
-    public static IHtmlDocument HasParagraph(this IHtmlDocument htmlDocument, string text)
+    public static IHtmlDocument HasParagraph(this IHtmlDocument htmlDocument, string text, bool exist = true)
     {
         var filtered = htmlDocument.GetElements("p.govuk-body", text);
 
-        BasicHtmlDocumentExtensions.ValidateExist(filtered, "govuk-paragraph", text, true);
+        BasicHtmlDocumentExtensions.ValidateExist(filtered, "govuk-paragraph", text, exist);
 
         return htmlDocument;
     }

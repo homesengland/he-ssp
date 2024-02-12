@@ -22,8 +22,8 @@ public class NumberOfGreenLightsTests : ViewTestBase
             .HasPageHeader(siteName)
             .HasHint("The score is out of 12. You can also include the wider site in this score.")
             .HasInput(nameof(SiteModel.NumberOfGreenLights))
-            .HasGdsSaveAndContinueButton()
-            .HasGdsBackLink(false);
+            .HasSaveAndContinueButton()
+            .HasBackLink(false);
     }
 
     [Fact]
@@ -45,8 +45,8 @@ public class NumberOfGreenLightsTests : ViewTestBase
             .HasPageHeader(siteName)
             .HasHint("The score is out of 12. You can also include the wider site in this score.")
             .HasInput(nameof(SiteModel.NumberOfGreenLights))
-            .HasGdsSaveAndContinueButton()
-            .HasGdsBackLink(false)
+            .HasSaveAndContinueButton()
+            .HasBackLink(false)
             .HasOneValidationMessages(errorMessage);
     }
 }

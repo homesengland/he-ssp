@@ -1,0 +1,34 @@
+@using HE.Investment.AHP.WWW.Views.Consortium
+@using HE.Investment.AHP.WWW.Views.Shared.Components.ConsortiumHelpDetailsContent
+@using HE.Investments.Common.WWW.Components.Details
+@using HE.Investments.Common.WWW.Components.PageHeader
+
+@{
+    ViewData["Title"] = ConsortiumPageTitles.Start;
+}
+
+<gds-div-grid-column-two-thirds>
+    <gds-back-link href="@Url.Action("Index", "Consortium")"></gds-back-link>
+    <vc:page-header title="@ConsortiumPageTitles.Start"/>
+
+    <div class="govuk-!-padding-bottom-8">
+        <gds-p>A consortium is a group of organisations or separate legal entities acting together to deliver homes under the Affordable Homes Programme.</gds-p>
+        <gds-p>Not creating a consortium before you begin your application may impact parts of the application.</gds-p>
+        <gds-p>You can add more than one consortium.</gds-p>
+
+        <gds-p>
+            You will need to tell us:
+            <ul class="govuk-list govuk-list govuk-list--bullet">
+                <li>the programme the consortium applies to</li>
+                <li>the name of the organisation or organisations you want to add to the consortium</li>
+            </ul>
+        </gds-p>
+
+    </div>
+
+    <gds-button-start text="Start"></gds-button-start>
+
+    <vc:details
+        title="Help with consortiums"
+        content-component="@(new DynamicComponentViewModel(nameof(ConsortiumHelpDetailsContent)))"/>
+</gds-div-grid-column-two-thirds>

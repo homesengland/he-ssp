@@ -3,6 +3,7 @@ using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investment.AHP.Domain.Site.ValueObjects;
 using HE.Investment.AHP.WWW.Workflows;
 using ContractSiteTypeDetails = HE.Investment.AHP.Contract.Site.SiteTypeDetails;
+using SiteUseDetails = HE.Investment.AHP.Contract.Site.SiteUseDetails;
 
 namespace HE.Investment.AHP.WWW.Tests.Workflows.SiteWorkflowTests;
 
@@ -17,9 +18,11 @@ public static class SiteWorkflowFactory
         BuildingForHealthyLifeType buildingForHealthyLife = BuildingForHealthyLifeType.Undefined,
         NumberOfGreenLights? numberOfGreenLights = null,
         IList<NationalDesignGuidePriority>? nationalDesignGuidePriorities = null,
+        Contract.Site.Enums.SiteLandAcquisitionStatus? landAcquisitionStatus = null,
         SiteTenderingStatusDetails? tenderingStatusDetails = null,
         StrategicSite? strategicSite = null,
-        ContractSiteTypeDetails? siteTypeDetails = null)
+        ContractSiteTypeDetails? siteTypeDetails = null,
+        SiteUseDetails? siteUseDetails = null)
     {
         var site = new SiteModel
         {
@@ -31,8 +34,10 @@ public static class SiteWorkflowFactory
             NationalDesignGuidePriorities = nationalDesignGuidePriorities ?? new List<NationalDesignGuidePriority>(),
             BuildingForHealthyLife = buildingForHealthyLife,
             NumberOfGreenLights = numberOfGreenLights?.ToString(),
+            LandAcquisitionStatus = landAcquisitionStatus,
             StrategicSiteDetails = strategicSite ?? new StrategicSite(false, null),
             SiteTypeDetails = siteTypeDetails ?? new ContractSiteTypeDetails(null, null, null, true),
+            SiteUseDetails = siteUseDetails ?? new SiteUseDetails(null, null, TravellerPitchSiteType.Undefined),
         };
 
         return new SiteWorkflow(currentSiteWorkflowState, site);

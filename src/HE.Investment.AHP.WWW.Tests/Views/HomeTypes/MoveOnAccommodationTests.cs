@@ -20,6 +20,6 @@ public class MoveOnAccommodationTests : HomeTypesTestBase
             .HasPageHeader("My application - My homes", "Are these homes intended as move on accommodation?")
             .HasElementWithText("div", "Move on accommodation is temporary accommodation to help people living in hostels make the transition to independent living.")
             .HasRadio("IntendedAsMoveOnAccommodation", new[] { "Yes", "No", })
-            .HasGdsSaveAndContinueButton();
+            .HasSaveAndContinueButton();
     }
 }

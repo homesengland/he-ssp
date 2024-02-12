@@ -28,6 +28,6 @@ public class TypeOfFacilitiesTests : HomeTypesTestBase
                 })
             .HasHint("Resident has use of their own facilities, such as bathroom and kitchen, within their own home.")
             .HasHint("Residents have their own room or rooms but facilities, such as bathroom and kitchen, are shared with others.")
-            .HasGdsSaveAndContinueButton();
+            .HasSaveAndContinueButton();
     }
 }

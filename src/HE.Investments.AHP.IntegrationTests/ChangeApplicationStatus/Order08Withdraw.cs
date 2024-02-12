@@ -41,7 +41,7 @@ public class Order08Withdraw : AhpIntegrationTest
             .UrlEndWith(ApplicationPagesUrl.WithdrawSuffix)
             .HasTitle(ApplicationPageTitles.Withdraw)
             .HasTextAreaInput("WithdrawReason")
-            .HasSubmitButton("Withdraw application");
+            .HasSubmitButton(out _, "Withdraw application");
 
         SaveCurrentPage();
     }

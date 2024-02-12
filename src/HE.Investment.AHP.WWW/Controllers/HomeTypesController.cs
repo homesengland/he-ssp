@@ -8,6 +8,7 @@ using HE.Investment.AHP.Contract.HomeTypes.Commands;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Contract.HomeTypes.Queries;
 using HE.Investment.AHP.Domain.Documents.Config;
+using HE.Investment.AHP.WWW.Extensions;
 using HE.Investment.AHP.WWW.Models.Common;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
 using HE.Investment.AHP.WWW.Models.HomeTypes.Factories;
@@ -24,7 +25,6 @@ using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Helpers;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Routing;
-using HE.Investments.Common.WWW.Utils;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
@@ -94,15 +94,8 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
             return View(model);
         }
 
-        if (action == GenericMessages.SaveAndReturn)
-        {
-            return RedirectToAction(
-                nameof(ApplicationController.TaskList),
-                new ControllerName(nameof(ApplicationController)).WithoutPrefix(),
-                new { applicationId });
-        }
-
-        return await Continue(new { applicationId });
+        return await this.ReturnToTaskListOrContinue(
+            async () => await Continue(new { applicationId }));
     }
 
     [WorkflowState(HomeTypesWorkflowState.FinishHomeTypes)]
@@ -129,17 +122,10 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
             return View(model);
         }
 
-        if (action == GenericMessages.SaveAndReturn)
-        {
-            return RedirectToAction(
-                nameof(ApplicationController.TaskList),
-                new ControllerName(nameof(ApplicationController)).WithoutPrefix(),
-                new { applicationId });
-        }
-
-        return model.FinishAnswer == FinishHomeTypesAnswer.Yes
-            ? RedirectToAction("TaskList", "Application", new { applicationId })
-            : await Back(new { applicationId });
+        return await this.ReturnToTaskListOrContinue(
+            async () => model.FinishAnswer == FinishHomeTypesAnswer.Yes
+                ? RedirectToAction("TaskList", "Application", new { applicationId })
+                : await Back(new { applicationId }));
     }
 
     [HttpGet("{homeTypeId}/duplicate")]
@@ -1434,8 +1420,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
             return View("HomeTypeDetails", model);
         }
 
-        var action = HttpContext.Request.Form["action"];
-        return await ProcessAction(applicationId, HomeTypeId.From(result.ReturnedData!.Value), action);
+        return await ProcessAction(applicationId, HomeTypeId.From(result.ReturnedData!.Value));
     }
 
     private async Task<IActionResult> SaveHomeTypeSegment<TModel, TSaveSegmentCommand>(
@@ -1447,7 +1432,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         return await this.ExecuteCommand<TModel>(
             _mediator,
             command,
-            async () => await ProcessAction(command.ApplicationId, command.HomeTypeId, HttpContext.Request.Form["action"]),
+            async () => await ProcessAction(command.ApplicationId, command.HomeTypeId),
             async () => await Task.FromResult<IActionResult>(View(model)),
             cancellationToken);
     }
@@ -1458,19 +1443,12 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         return Url.Action($"{actionName}DesignPlansFile", "HomeTypes", new { applicationId, homeTypeId, fileId = fileId.Value, workflow }) ?? string.Empty;
     }
 
-    private async Task<IActionResult> ProcessAction(AhpApplicationId applicationId, HomeTypeId homeTypeId, string? action)
+    private async Task<IActionResult> ProcessAction(AhpApplicationId applicationId, HomeTypeId homeTypeId)
     {
-        if (action == GenericMessages.SaveAndReturn)
-        {
-            return RedirectToAction(
-                nameof(ApplicationController.TaskList),
-                new ControllerName(nameof(ApplicationController)).WithoutPrefix(),
-                new { applicationId });
-        }
-
-        return TryGetWorkflowQueryParameter(out var workflow)
-            ? await Continue(new { applicationId = applicationId.Value, homeTypeId = homeTypeId.Value, workflow })
-            : await Continue(new { applicationId = applicationId.Value, homeTypeId = homeTypeId.Value });
+        return await this.ReturnToTaskListOrContinue(
+            async () => TryGetWorkflowQueryParameter(out var workflow)
+                ? await Continue(new { applicationId = applicationId.Value, homeTypeId = homeTypeId.Value, workflow })
+                : await Continue(new { applicationId = applicationId.Value, homeTypeId = homeTypeId.Value }));
     }
 
     private bool TryGetWorkflowQueryParameter(out string workflow)

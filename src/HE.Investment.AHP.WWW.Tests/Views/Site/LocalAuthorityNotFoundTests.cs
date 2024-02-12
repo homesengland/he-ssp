@@ -20,6 +20,6 @@ public class LocalAuthorityNotFoundTests : ViewTestBase
             .HasParagraph("We could not find the details you entered in our records.")
             .HasLinkWithTestId("local-authority-search-link", out _)
             .HasLinkWithTestId("assign-empty-local-authority-link", out _)
-            .HasGdsBackLink(false);
+            .HasBackLink(false);
     }
 }

@@ -45,7 +45,7 @@ public class Order01CompleteUserProfile : AccountIntegrationTest
         currentPage
             .UrlWithoutQueryEndsWith(MainPagesUrl.ProfileDetails)
             .HasTitle("Complete your details")
-            .HasGdsSubmitButton("continue-button", out var continueButton);
+            .HasSaveAndContinueButton(out var continueButton);
 
         // when
         var profileDetailsPage = await TestClient.SubmitButton(continueButton);
@@ -66,7 +66,7 @@ public class Order01CompleteUserProfile : AccountIntegrationTest
         var profileDetailsPage = await GetCurrentPage(MainPagesUrl.ProfileDetails);
         profileDetailsPage.UrlEndWith(MainPagesUrl.ProfileDetails)
             .HasTitle("Complete your details")
-            .HasGdsSubmitButton("continue-button", out var continueButton);
+            .HasSaveAndContinueButton(out var continueButton);
         var profileData = FreshProfileData.GenerateProfileData();
 
         // when
@@ -107,11 +107,11 @@ public class Order01CompleteUserProfile : AccountIntegrationTest
         organisationSearchPage
             .UrlEndWith(OrganisationPagesUrls.Search)
             .HasTitle(OrganisationPageTitles.SearchForYourOrganisation)
-            .HasGdsBackLink()
-            .HasGdsSubmitButton("continue-button", out var continueButton);
+            .HasBackLink()
+            .HasSubmitButton(out var searchButton, "Search");
 
         // when
-        var organisationSearchResultPage = await TestClient.SubmitButton(continueButton, ("Name", profileData.OrganisationName));
+        var organisationSearchResultPage = await TestClient.SubmitButton(searchButton, ("Name", profileData.OrganisationName));
 
         // then
         organisationSearchResultPage
@@ -147,18 +147,23 @@ public class Order01CompleteUserProfile : AccountIntegrationTest
     [Order(7)]
     public async Task Order07_ShouldConfirmOrganisationAndNavigateToDashboardPage()
     {
-        // given & when
-        var dashboardPage = await TestQuestionPage(
-            OrganisationPagesUrls.Confirm(FreshProfileData.SelectedOrganisationId),
-            OrganisationPageTitles.ConfirmYourSelection,
-            MainPagesUrl.Dashboard,
-            ("Response", "Yes"));
+        // given
+        var confirmationPage = await GetCurrentPage(OrganisationPagesUrls.Confirm(FreshProfileData.SelectedOrganisationId));
+        confirmationPage
+            .UrlWithoutQueryEndsWith(OrganisationPagesUrls.Confirm(FreshProfileData.SelectedOrganisationId))
+            .HasTitle(OrganisationPageTitles.ConfirmYourSelection)
+            .HasBackLink()
+            .HasContinueButton(out var continueButton);
+
+        // then
+        var dashboardPage = await TestClient.SubmitButton(continueButton, ("Response", "Yes"));
 
         // then
         dashboardPage
             .HasTitle(OrganisationPageTitles.OrganisationDashboard(FreshProfileData.OrganisationName))
             .HasOrganisationJoinRequestConfirmation()
-            .HasStartNewApplicationButton(ProgrammeType.Ahp)
-            .HasStartNewApplicationButton(ProgrammeType.Loans);
+            .HasStartNewApplicationLink(ProgrammeType.Ahp)
+            .HasStartNewApplicationLink(ProgrammeType.Loans);
+        SaveCurrentPage();
     }
 }

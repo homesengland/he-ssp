@@ -25,7 +25,7 @@ public class TypologyLocationAndDesignTests : HomeTypesTestBase
             .HasElementWithText("div", "Typology is the classification and characteristics of the homes you are building.")
             .HasElementWithText("div", "You can enter up to 1500 characters")
             .HasTextAreaInput("MoreInformation", value: "My new important information")
-            .HasGdsSaveAndContinueButton();
+            .HasSaveAndContinueButton();
     }
 
     [Fact]

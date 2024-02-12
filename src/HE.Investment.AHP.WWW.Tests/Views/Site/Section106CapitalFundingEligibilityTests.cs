@@ -22,8 +22,8 @@ public class Section106CapitalFundingEligibilityTests : ViewTestBase
             .HasTitle(SitePageTitles.SiteSection106CapitalFundingEligibility)
             .HasPageHeader(_siteName, @SitePageTitles.SiteSection106CapitalFundingEligibility)
             .HasGdsRadioInputWithValues(nameof(Section106Dto.CapitalFundingEligibility), "True", "False")
-            .HasGdsSaveAndContinueButton()
-            .HasGdsBackLink(false);
+            .HasSaveAndContinueButton()
+            .HasBackLink(false);
     }
 
     [Fact]
@@ -43,8 +43,8 @@ public class Section106CapitalFundingEligibilityTests : ViewTestBase
             .HasTitle(SitePageTitles.SiteSection106CapitalFundingEligibility)
             .HasPageHeader(_siteName, @SitePageTitles.SiteSection106CapitalFundingEligibility)
             .HasGdsRadioInputWithValues(nameof(Section106Dto.CapitalFundingEligibility), "True", "False")
-            .HasGdsSaveAndContinueButton()
-            .HasGdsBackLink(false)
+            .HasSaveAndContinueButton()
+            .HasBackLink(false)
             .HasOneValidationMessages(errorMessage);
     }
 }
