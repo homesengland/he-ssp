@@ -34,6 +34,7 @@ public class SiteEntity : DomainEntity, IQuestion
         TenderingStatusDetails tenderingStatusDetails,
         StrategicSiteDetails strategicSiteDetails,
         SiteTypeDetails siteTypeDetails,
+        SiteProcurements siteProcurements,
         LocalAuthority? localAuthority = null,
         BuildingForHealthyLifeType buildingForHealthyLife = BuildingForHealthyLifeType.Undefined,
         SiteUseDetails? siteUseDetails = null)
@@ -46,6 +47,7 @@ public class SiteEntity : DomainEntity, IQuestion
         PlanningDetails = planningDetails;
         NationalDesignGuidePriorities = nationalDesignGuidePriorities;
         BuildingForHealthyLife = buildingForHealthyLife;
+        Procurements = siteProcurements;
         NumberOfGreenLights = numberOfGreenLights;
         LandAcquisitionStatus = landAcquisitionStatus;
         TenderingStatusDetails = tenderingStatusDetails;
@@ -67,6 +69,7 @@ public class SiteEntity : DomainEntity, IQuestion
         StrategicSiteDetails = new StrategicSiteDetails();
         SiteTypeDetails = new SiteTypeDetails();
         SiteUseDetails = new SiteUseDetails();
+        Procurements = new SiteProcurements();
     }
 
     public SiteId Id { get; set; }
@@ -96,6 +99,8 @@ public class SiteEntity : DomainEntity, IQuestion
     public SiteTypeDetails SiteTypeDetails { get; private set; }
 
     public SiteUseDetails SiteUseDetails { get; private set; }
+
+    public SiteProcurements Procurements { get; private set; }
 
     public async Task ProvideName(SiteName siteName, ISiteNameExist siteNameExist, CancellationToken cancellationToken)
     {
@@ -168,6 +173,11 @@ public class SiteEntity : DomainEntity, IQuestion
         SiteUseDetails = _modificationTracker.Change(SiteUseDetails, details);
     }
 
+    public void ProvideProcurement(SiteProcurements procurements)
+    {
+        Procurements = _modificationTracker.Change(Procurements, procurements);
+    }
+
     public bool IsAnswered()
     {
         return PlanningDetails.IsAnswered() &&
@@ -176,7 +186,8 @@ public class SiteEntity : DomainEntity, IQuestion
                SiteTypeDetails.IsAnswered() &&
                SiteUseDetails.IsAnswered() &&
                BuildingForHealthyLife != BuildingForHealthyLifeType.Undefined &&
-               BuildConditionalRouteCompletionPredicates().All(isCompleted => isCompleted());
+               BuildConditionalRouteCompletionPredicates().All(isCompleted => isCompleted()) &&
+               Procurements.IsAnswered();
     }
 
     private IEnumerable<Func<bool>> BuildConditionalRouteCompletionPredicates()

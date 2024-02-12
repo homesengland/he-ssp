@@ -29,4 +29,6 @@ public class SiteModel
     public SiteTypeDetails SiteTypeDetails { get; set; }
 
     public SiteUseDetails SiteUseDetails { get; set; }
+
+    public IList<SiteProcurement> SiteProcurements { get; set; }
 }

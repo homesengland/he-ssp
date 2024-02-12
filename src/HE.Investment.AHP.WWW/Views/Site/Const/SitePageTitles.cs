@@ -66,5 +66,7 @@ public static class SitePageTitles
 
     public const string TravellerPitchType = "Which type of traveller pitch site are you developing?";
 
+    public const string Procurement = "Which of these efficient procurement mechanisms are you using?";
+
     public const string CheckAnswers = "Check your answers before creating your site";
 }

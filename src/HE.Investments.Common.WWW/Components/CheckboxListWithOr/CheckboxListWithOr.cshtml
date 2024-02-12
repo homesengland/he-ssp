@@ -19,11 +19,9 @@
             title-type="@Model.titleType"
             hint="@Model.hint"/>
 
-        <vc:error-message field-name="@Model.fieldName" />
+        <vc:error-message field-name="@Model.fieldName"/>
 
         <gds-field-set class="govuk-!-margin-bottom-6">
-
-            <span class="govuk-caption-m govuk-!-margin-top-4 govuk-!-margin-bottom-4">Select all that apply.</span>
             <div id='available-option-form-group' class='govuk-form-group '>
                 <div class="exclusive-checkbox-group">
 
@@ -32,7 +30,7 @@
                         var id = option == Model.availableOptions.First() ? Model.fieldName : $"{Model.fieldName}-{option.Value}";
 
                         <div class="govuk-checkboxes__item">
-                            <input id="@id" type="checkbox" checked="@option.Selected" class="govuk-checkboxes__input" value="@option.Value" name="@Model.fieldName" />
+                            <input id="@id" type="checkbox" checked="@option.Selected" class="govuk-checkboxes__input" value="@option.Value" name="@Model.fieldName"/>
                             <label class="govuk-label govuk-checkboxes__label" for="@id">@option.Text</label>
                         </div>
                     }
@@ -44,7 +42,7 @@
             <div id='alternative-option-form-group' class='govuk-form-group '>
                 <div class="exclusive-checkbox-group--exclusive-option">
                     <div class="govuk-checkboxes__item">
-                        <input id="@Model.fieldName-@Model.alternativeOption.Value" type="checkbox" checked="@Model.alternativeOption.Selected" class="govuk-checkboxes__input" value="NoneOfTheAbove" name="@Model.fieldName" />
+                        <input id="@Model.fieldName-@Model.alternativeOption.Value" type="checkbox" checked="@Model.alternativeOption.Selected" class="govuk-checkboxes__input" value="NoneOfTheAbove" name="@Model.fieldName"/>
                         <label class="govuk-label govuk-checkboxes__label" for="@Model.fieldName-@Model.alternativeOption.Value">@Model.alternativeOption.Text</label>
                     </div>
                 </div>

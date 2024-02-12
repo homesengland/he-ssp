@@ -1,0 +1,37 @@
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investment.AHP.Contract.Site
+@using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
+@using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToSitesLink
+@using HE.Investment.AHP.WWW.Views.Site.Const
+@using HE.Investments.Common.WWW.Components.CheckboxListWithOr
+@using HE.Investments.Common.WWW.Components.PageHeader
+@using HE.Investments.Common.WWW.Helpers
+@model SiteModel
+@{
+    ViewData["Title"] = SitePageTitles.Procurement;
+    var allOptions = SelectListHelper.FromEnumToExtendedList<SiteProcurement>().ToList();
+    var availableOptions = allOptions.Where(o => o.Value != SiteProcurement.None.ToString());
+    var alternativeOption = allOptions.Single(o => o.Value == SiteProcurement.None.ToString());
+}
+
+<gds-div-grid-column-two-thirds>
+    <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.Procurement"/>
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+    <vc:page-header caption="@ViewBag.SiteName"/>
+
+    <form asp-controller="Site" asp-action="Procurement" asp-method="post" novalidate>
+
+        <vc:checkbox-list-with-or
+            title="@SitePageTitles.Procurement"
+            title-type="InputTitleType.PageHeader"
+            hint="Select all that apply. It will not negatively affect your application if you do not make the procurement efficient."
+            field-name="@nameof(Model.SiteProcurements)"
+            available-options="@availableOptions"
+            alternative-option="@alternativeOption"
+            selected-values="@Model.SiteProcurements.Cast<Enum>()"/>
+
+        <vc:form-button/>
+        <vc:return-to-sites-link/>
+    </form>
+
+</gds-div-grid-column-two-thirds>

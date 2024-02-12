@@ -670,6 +670,25 @@ public class SiteController : WorkflowController<SiteWorkflowState>
             cancellationToken);
     }
 
+    [HttpGet("{siteId}/procurement")]
+    [WorkflowState(SiteWorkflowState.Procurement)]
+    public async Task<IActionResult> Procurement([FromRoute] string siteId, CancellationToken cancellationToken)
+    {
+        var siteModel = await GetSiteDetails(siteId, cancellationToken);
+        return View("Procurement", siteModel);
+    }
+
+    [HttpPost("{siteId}/procurement")]
+    [WorkflowState(SiteWorkflowState.Procurement)]
+    public async Task<IActionResult> Procurement(SiteModel model, CancellationToken cancellationToken)
+    {
+        return await ExecuteSiteCommand<SiteModel>(
+            new ProvideSiteProcurementsCommand(this.GetSiteIdFromRoute(), model.SiteProcurements),
+            nameof(Procurement),
+            _ => model,
+            cancellationToken);
+    }
+
     [HttpGet("{siteId}/check-answers")]
     [WorkflowState(SiteWorkflowState.CheckAnswers)]
     public IActionResult CheckAnswers()

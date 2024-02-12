@@ -6,7 +6,6 @@
 
 @{
     ViewData["Title"] = SitePageTitles.NationalDesignGuide;
-    var selectedValues = Model.DesignPriorities?.Select(x => x.ToString());
     var details = new DynamicComponentViewModel(nameof(Details),
         new
         {
@@ -26,11 +25,12 @@
         <vc:checkbox-list-with-or
             title="@SitePageTitles.NationalDesignGuide"
             title-type="InputTitleType.PageHeader"
+            hint="Select all that apply."
             field-name="@nameof(Model.DesignPriorities)"
             header-component="@details"
             available-options="@SiteFormOptions.NationalDesignGuidePrioritiesExceptNone"
             alternative-option="@SiteFormOptions.NationalDesignGuidePrioritiesOnlyNone"
-            selected-values="@selectedValues"/>
+            selected-values="@Model.DesignPriorities?.Cast<Enum>()"/>
 
         @Html.HiddenFor(x => x.SiteName)
         <vc:form-button/>
