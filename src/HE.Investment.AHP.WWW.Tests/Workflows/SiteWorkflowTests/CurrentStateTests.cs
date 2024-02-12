@@ -42,6 +42,7 @@ public class CurrentStateTests
             nationalDesignGuidePriorities: new List<NationalDesignGuidePriority>() { NationalDesignGuidePriority.Nature },
             buildingForHealthyLife: _buildingForHealthyLife,
             numberOfGreenLights: _numberOfGreenLights,
+            landAcquisitionStatus: SiteLandAcquisitionStatus.FullOwnership,
             siteUseDetails: _siteUseDetails);
 
         // when
@@ -204,6 +205,25 @@ public class CurrentStateTests
     }
 
     [Fact]
+    public void ShouldReturnLandAcquisitionStatus_WhenLandAcquisitionStatusNotProvided()
+    {
+        var workflow = SiteWorkflowFactory.BuildWorkflow(
+            SiteWorkflowState.NationalDesignGuide,
+            name: "some name",
+            planningDetails: _planningDetails,
+            section106: _section106,
+            localAuthority: _localAuthority,
+            nationalDesignGuidePriorities: new List<NationalDesignGuidePriority>() { NationalDesignGuidePriority.Nature },
+            buildingForHealthyLife: BuildingForHealthyLifeType.No);
+
+        // when
+        var result = workflow.CurrentState(SiteWorkflowState.Start);
+
+        // then
+        result.Should().Be(SiteWorkflowState.LandAcquisitionStatus);
+    }
+
+    [Fact]
     public void ShouldReturnTenderingStatus_WhenTenderingStatusNotProvided()
     {
         Test(SiteWorkflowState.TenderingStatus, tenderingStatusDetails: _tenderingStatusDetails with { TenderingStatus = null });
@@ -271,6 +291,7 @@ public class CurrentStateTests
             nationalDesignGuidePriorities: new List<NationalDesignGuidePriority> { NationalDesignGuidePriority.NoneOfTheAbove },
             buildingForHealthyLife: buildingForHealthyLifeType,
             numberOfGreenLights: numberOfGreenLights,
+            landAcquisitionStatus: SiteLandAcquisitionStatus.FullOwnership,
             strategicSite: strategicSite,
             siteTypeDetails: siteTypeDetails);
 
