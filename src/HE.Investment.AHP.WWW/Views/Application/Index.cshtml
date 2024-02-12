@@ -1,5 +1,7 @@
 @using HE.Investment.AHP.WWW.Views.Application
+@using HE.Investments.Common.Gds
 @using HE.Investments.Common.Messages
+@using HE.Investments.Common.WWW.Components.PageHeader
 @using HE.Investments.Common.WWW.Helpers
 @model HE.Investment.AHP.WWW.Models.Application.ApplicationsListModel
 @{
@@ -8,11 +10,11 @@
 <div class="govuk-grid-column-full">
     <vc:page-header title="@ApplicationPageTitles.ApplicationList" caption="@Model.OrganisationName" additional-css-class="govuk-!-padding-top-8"/>
 
-    <gds-h2 class="govuk-!-padding-top-8">
+    <gds-h2>
         Your applications
     </gds-h2>
 
-    <div class="govuk-!-padding-bottom-8">
+    <div class="govuk-!-padding-bottom-6">
         <table class="govuk-table">
             <thead class="govuk-table__head">
             <tr class="govuk-table__row">
@@ -52,23 +54,27 @@
             </tbody>
         </table>
 
-        <he-pagination base-url="application" page="@Model.Result.CurrentPage" items-per-page=@Model.Result.ItemsPerPage total-items="@Model.Result.TotalItems"></he-pagination>
+        <he-pagination css-class="govuk-!-align-center" base-url="application" page="@Model.Result.CurrentPage" items-per-page=@Model.Result.ItemsPerPage total-items="@Model.Result.TotalItems"></he-pagination>
     </div>
     <div>
         <gds-h2>
-            Affordable Homes Programme 2021-2026 CME
+            Affordable Homes Programme Continuous Market Engagement 2021-2026
         </gds-h2>
-        <p class="govuk-body govuk-!-margin-bottom-3">You can start a new Affordable Homes Programme application here. This will not affect any of your previous applications.</p>
+        <p class="govuk-body govuk-!-margin-bottom-3 govuk-!-width-two-thirds">You can start a new Affordable Homes Programme application. This will not affect any of your previous applications.</p>
 
-        <link-button action-url="@Url.Action("Start", "Application")" is-disabled="@Model.IsReadOnly" id="start-application-link">Start new application</link-button>
+        <link-button button-type="@ButtonType.Start"
+                     action-url="@Url.Action("Start", "Application")"
+                     is-disabled="@Model.IsReadOnly">
+            Start
+        </link-button>
     </div>
 
     <div class="govuk-!-padding-top-2">
             <gds-h2>
                 View sites
             </gds-h2>
-            <p class="govuk-body govuk-!-margin-bottom-3">View a list of your existing sites. New sites can be created as part of a new application.</p>
+            <p class="govuk-body govuk-!-margin-bottom-3 govuk-!-width-two-thirds">View a list of your existing sites. New sites can be created as part of a new application.</p>
 
-            <link-button button-type="Secondary" action-url="@Url.Action("Index", "Site")">View sites</link-button>
+            <link-button button-type="@ButtonType.Secondary" action-url="@Url.Action("Index", "Site")">View sites</link-button>
         </div>
 </div>

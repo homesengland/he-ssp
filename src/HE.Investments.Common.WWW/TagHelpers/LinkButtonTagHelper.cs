@@ -31,7 +31,15 @@ public class LinkButtonTagHelper : TagHelper
             TagConstruct.ConstructGenericAttribute(output, "aria-disabled", "true");
         }
 
-        output.Content.SetHtmlContent(TagConstruct.ConstructSetHtml(output));
+        if (ButtonType == ButtonType.Start)
+        {
+            output.Content.SetHtmlContent(TagConstruct.ConstructButtonStart(TagConstruct.ConstructSetHtml(output, string.Empty)));
+        }
+        else
+        {
+            output.Content.SetHtmlContent(TagConstruct.ConstructSetHtml(output));
+        }
+
         return Task.CompletedTask;
     }
 
@@ -39,6 +47,7 @@ public class LinkButtonTagHelper : TagHelper
     {
         ButtonType.Secondary => "govuk-button--secondary",
         ButtonType.Warning => "govuk-button--warning",
+        ButtonType.Start => "govuk-button--start",
         _ => string.Empty,
     };
 }
