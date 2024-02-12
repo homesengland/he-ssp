@@ -1,7 +1,4 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using HE.Investments.Common.Contract.Enum;
-
+using System.ComponentModel;
 namespace HE.Investment.AHP.Contract.Site.Enums;
 
 public enum SiteLandAcquisitionStatus
@@ -15,7 +12,6 @@ public enum SiteLandAcquisitionStatus
     LandGifted,
 
     [Description("Conditional acquisition, land option or heads of terms")]
-    [Hint("For sites being acquired through golden brick arrangements, select this option.")]
     ConditionalAcquisition,
 
     [Description("Land purchase negotiations underway")]
