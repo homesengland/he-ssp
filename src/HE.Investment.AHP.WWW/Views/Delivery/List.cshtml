@@ -28,6 +28,7 @@
     <form asp-controller="Delivery" asp-action="List" asp-method="post" novalidate>
         @Html.HiddenFor(m => Model.ApplicationName)
         @Html.HiddenFor(m => Model.IsEditable)
+        @Html.HiddenFor(m => Model.UnusedHomeTypesCount)
 
         @if (Model.DeliveryPhases.Any())
         {
@@ -94,12 +95,29 @@
                     </tr>
                     <tr>
                         <td colspan="6">
-                            <link-button is-secondary="true"
-                                         href="@Url.Action("Create", "DeliveryPhase", new { applicationId })"
+                            <link-button href="@Url.Action("Create", "DeliveryPhase", new { applicationId })"
                                          data-testid="add-delivery-phase"
                                          is-disabled="@Model.IsReadOnly">
                                 Add another delivery phase
                             </link-button>
+                        </td>
+                    </tr>
+                }
+                else if (Model.UnusedHomeTypesCount < 0)
+                {
+                    <tr>
+                        <td colspan="6">
+                            <gds-div-inset-text>
+                                You have changed the number of homes you are delivering in this application and have now assigned too many homes to delivery phases.
+                                <br/>
+                                <br/>
+                                Remove homes from delivery phases to equal the number of homes you told us you are delivering in scheme information.
+                            </gds-div-inset-text>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="6">
+                            <vc:form-button is-disabled="@Model.IsReadOnly"/>
                         </td>
                     </tr>
                 }
