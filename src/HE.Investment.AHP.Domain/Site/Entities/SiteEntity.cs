@@ -1,5 +1,6 @@
 extern alias Org;
 
+using System.Linq.Expressions;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investment.AHP.Domain.Site.Repositories;
@@ -29,6 +30,7 @@ public class SiteEntity : DomainEntity, IQuestion
         PlanningDetails planningDetails,
         NationalDesignGuidePriorities nationalDesignGuidePriorities,
         NumberOfGreenLights? numberOfGreenLights,
+        LandAcquisitionStatus landAcquisitionStatus,
         TenderingStatusDetails tenderingStatusDetails,
         StrategicSiteDetails strategicSiteDetails,
         SiteTypeDetails siteTypeDetails,
@@ -45,6 +47,7 @@ public class SiteEntity : DomainEntity, IQuestion
         NationalDesignGuidePriorities = nationalDesignGuidePriorities;
         BuildingForHealthyLife = buildingForHealthyLife;
         NumberOfGreenLights = numberOfGreenLights;
+        LandAcquisitionStatus = landAcquisitionStatus;
         TenderingStatusDetails = tenderingStatusDetails;
         StrategicSiteDetails = strategicSiteDetails;
         SiteTypeDetails = siteTypeDetails;
@@ -59,6 +62,7 @@ public class SiteEntity : DomainEntity, IQuestion
         Section106 = new Section106();
         PlanningDetails = PlanningDetailsFactory.CreateEmpty();
         NationalDesignGuidePriorities = new NationalDesignGuidePriorities();
+        LandAcquisitionStatus = new LandAcquisitionStatus(null);
         TenderingStatusDetails = new TenderingStatusDetails();
         StrategicSiteDetails = new StrategicSiteDetails();
         SiteTypeDetails = new SiteTypeDetails();
@@ -82,6 +86,8 @@ public class SiteEntity : DomainEntity, IQuestion
     public BuildingForHealthyLifeType BuildingForHealthyLife { get; private set; }
 
     public NumberOfGreenLights? NumberOfGreenLights { get; private set; }
+
+    public LandAcquisitionStatus LandAcquisitionStatus { get; private set; }
 
     public TenderingStatusDetails TenderingStatusDetails { get; private set; }
 
@@ -135,6 +141,11 @@ public class SiteEntity : DomainEntity, IQuestion
     public void ProvideNumberOfGreenLights(NumberOfGreenLights? numberOfGreenLights)
     {
         NumberOfGreenLights = _modificationTracker.Change(NumberOfGreenLights, numberOfGreenLights);
+    }
+
+    public void ProvideLandAcquisitionStatus(LandAcquisitionStatus landAcquisitionStatus)
+    {
+        LandAcquisitionStatus = _modificationTracker.Change(LandAcquisitionStatus, landAcquisitionStatus);
     }
 
     public void ProvideTenderingStatusDetails(TenderingStatusDetails tenderingStatusDetails)

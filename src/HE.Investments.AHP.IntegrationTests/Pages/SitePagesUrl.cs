@@ -41,6 +41,8 @@ public static class SitePagesUrl
 
     public static string SiteProvideNumberOfGreenLights(string siteId) => $"ahp/site/{siteId}/number-of-green-lights";
 
+    public static string SiteLandAcquisitionStatus(string siteId) => $"ahp/site/{siteId}/land-acquisition-status";
+
     public static string SiteConfirm(string siteId) => $"ahp/site/{siteId}/confirm-select";
 
     public static string SiteTenderingStatus(string siteId) => $"ahp/site/{siteId}/tendering-status";

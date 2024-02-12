@@ -40,6 +40,7 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
             NationalDesignGuidePriorities = site.NationalDesignGuidePriorities.Values.ToList(),
             BuildingForHealthyLife = site.BuildingForHealthyLife,
             NumberOfGreenLights = site.NumberOfGreenLights?.ToString(),
+            LandAcquisitionStatus = site.LandAcquisitionStatus.Value,
             TenderingStatusDetails = CreateSiteTenderingStatusDetails(site.TenderingStatusDetails),
             StrategicSiteDetails = CreateStrategicSiteDetails(site.StrategicSiteDetails),
             SiteTypeDetails = CreateSiteTypeDetails(site.SiteTypeDetails),
