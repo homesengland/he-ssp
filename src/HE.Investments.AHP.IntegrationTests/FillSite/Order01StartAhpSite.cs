@@ -253,13 +253,24 @@ public class Order01StartAhpSite : AhpIntegrationTest
         await TestQuestionPage(
             SitePagesUrl.SiteProvideNumberOfGreenLights(SiteData.SiteId),
             SitePageTitles.NumberOfGreenLights,
-            SitePagesUrl.SiteTenderingStatus(SiteData.SiteId),
+            SitePagesUrl.SiteLandAcquisitionStatus(SiteData.SiteId),
             (nameof(SiteModel.NumberOfGreenLights), "5"));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
     [Order(18)]
-    public async Task Order18_ShouldProvideTenderingStatus()
+    public async Task Order18_ShouldProvideLandAcquisitionStatus()
+    {
+        await TestQuestionPage(
+            SitePagesUrl.SiteLandAcquisitionStatus(SiteData.SiteId),
+            SitePageTitles.LandAcquisitionStatus,
+            SitePagesUrl.SiteTenderingStatus(SiteData.SiteId),
+            (nameof(SiteModel.LandAcquisitionStatus), nameof(SiteLandAcquisitionStatus.FullOwnership)));
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(19)]
+    public async Task Order19_ShouldProvideTenderingStatus()
     {
         await TestQuestionPage(
             SitePagesUrl.SiteTenderingStatus(SiteData.SiteId),
@@ -269,8 +280,8 @@ public class Order01StartAhpSite : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(19)]
-    public async Task Order19_ShouldProvideContractorDetails()
+    [Order(20)]
+    public async Task Order20_ShouldProvideContractorDetails()
     {
         await TestQuestionPage(
             SitePagesUrl.SiteContractorDetails(SiteData.SiteId),
@@ -281,8 +292,8 @@ public class Order01StartAhpSite : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(20)]
-    public async Task Order20_ShouldProvideStrategicSite()
+    [Order(21)]
+    public async Task Order21_ShouldProvideStrategicSite()
     {
         await TestQuestionPage(
             SitePagesUrl.SiteStrategicSite(SiteData.SiteId),
@@ -293,8 +304,8 @@ public class Order01StartAhpSite : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(21)]
-    public async Task Order21_ShouldProvideSiteType()
+    [Order(22)]
+    public async Task Order22_ShouldProvideSiteType()
     {
         await TestQuestionPage(
             SitePagesUrl.SiteType(SiteData.SiteId),

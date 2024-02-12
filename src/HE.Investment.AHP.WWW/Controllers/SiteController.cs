@@ -3,6 +3,7 @@ using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Commands;
 using HE.Investment.AHP.Contract.Site.Commands.PlanningDetails;
+using HE.Investment.AHP.Contract.Site.Commands.Section106;
 using HE.Investment.AHP.Contract.Site.Commands.TenderingStatus;
 using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investment.AHP.Contract.Site.Queries;
@@ -494,6 +495,28 @@ public class SiteController : WorkflowController<SiteWorkflowState>
                 model.NumberOfGreenLights),
             nameof(NumberOfGreenLights),
             _ => model,
+            cancellationToken);
+    }
+
+    [HttpGet("{siteId}/land-acquisition-status")]
+    [WorkflowState(SiteWorkflowState.LandAcquisitionStatus)]
+    public async Task<IActionResult> LandAcquisitionStatus([FromRoute] string siteId, CancellationToken cancellationToken)
+    {
+        var siteModel = await GetSiteDetails(siteId, cancellationToken);
+        ViewBag.SiteName = siteModel.Name;
+        return View("LandAcquisitionStatus", siteModel);
+    }
+
+    [HttpPost("{siteId}/land-acquisition-status")]
+    [WorkflowState(SiteWorkflowState.LandAcquisitionStatus)]
+    public async Task<IActionResult> LandAcquisitionStatus(SiteModel model, CancellationToken cancellationToken)
+    {
+        return await ExecuteSiteCommand<SiteModel>(
+            new ProvideLandAcquisitionStatusCommand(
+                this.GetSiteIdFromRoute(),
+                model.LandAcquisitionStatus),
+            nameof(LandAcquisitionStatus),
+            savedModel => model,
             cancellationToken);
     }
 
