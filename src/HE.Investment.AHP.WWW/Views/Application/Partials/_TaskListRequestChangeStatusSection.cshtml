@@ -1,5 +1,6 @@
 @using HE.Investments.Account.Shared
 @using HE.Investments.Common.Contract
+@using HE.Investments.Common.Gds
 @inject IAccountAccessContext AccountAccessContext
 @model HE.Investment.AHP.WWW.Models.Application.ApplicationSectionsModel
 
@@ -15,7 +16,7 @@
         paragraph="@(incompleteSectionsCount > 0 ? "You must complete all sections before you can submit your application." : string.Empty)"
         action-url="@Url.Action("CheckAnswers", "Application", new { applicationId = Model.ApplicationId })"
         link-button-name="Check and submit application"
-        button-type="Standard"
+        button-type="@ButtonType.Standard"
         is-disabled="@(incompleteSectionsCount > 0 || !canSubmitApplication)"
         test-id="check-and-submit-application"/>
 }
@@ -27,7 +28,7 @@
         paragraph="This will notify Homes England that you no longer wish to proceed with this application at this time. You can revisit this later on and submit once you’re ready."
         action-url="@Url.Action("OnHold", "Application", new { applicationId = Model.ApplicationId })"
         link-button-name="Hold"
-        button-type="Secondary"
+        button-type="@ButtonType.Secondary"
         test-id="put-application-on-hold"/>
 }
 
@@ -38,7 +39,7 @@
         paragraph="Your application is currently on hold. Reactivating means you will be able to work on or submit this application."
         action-url="@Url.Action("Reactivate", "Application", new { applicationId = Model.ApplicationId })"
         link-button-name="Reactivate"
-        button-type="Secondary"
+        button-type="@ButtonType.Secondary"
         test-id="reactivate-application"/>
 }
 
@@ -49,6 +50,6 @@
         paragraph="This will notify Homes England that you no longer wish to proceed. Your application will be permanently deleted."
         action-url="@Url.Action("Withdraw", "Application", new { applicationId = Model.ApplicationId })"
         link-button-name="Withdraw"
-        button-type="Warning"
+        button-type="@ButtonType.Warning"
         test-id="withdraw-application"/>
 }

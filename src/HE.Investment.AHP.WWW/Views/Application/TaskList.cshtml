@@ -5,6 +5,7 @@
 @using HE.Investment.AHP.WWW.Views.Application
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ApplicationTaskListHeader
 @using HE.Investments.Common.Contract
+@using HE.Investments.Common.Gds
 @model HE.Investment.AHP.WWW.Models.Application.ApplicationSectionsModel
 @inject IOptions<ContactInfoOptions> Options
 
@@ -47,14 +48,14 @@
             paragraph="Send a request to your Growth Manager if you want to edit your application. They will review your request and will allow you to edit your application."
             action-url="@Url.Action("RequestToEdit", "Application", new { applicationId = Model.ApplicationId })"
             link-button-name="Request to edit"
-            button-type="Standard"
+            button-type="@ButtonType.Standard"
             test-id="request-to-edit-application"/>
     }
     @await Html.PartialAsync("~/Partials/TaskList/_TaskList.cshtml", ApplicationSections.CreateSections(Model.ApplicationId, Url, Model.Sections))
 
     @await Html.PartialAsync("Partials/_TaskListRequestChangeStatusSection.cshtml", Model)
 
-    <link-button action-url="@Url.Action("Index", "Application")" button-type="Secondary">Return to applications</link-button>
+    <link-button action-url="@Url.Action("Index", "Application")" button-type="@ButtonType.Secondary">Return to applications</link-button>
 </div>
 <div class="govuk-grid-column-one-third">
     <vc:help-panel email-address="@Options.Value.Email" phone-number="@Options.Value.Phone"/>
