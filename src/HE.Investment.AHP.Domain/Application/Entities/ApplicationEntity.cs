@@ -50,6 +50,8 @@ public class ApplicationEntity : DomainEntity
 
     public HoldReason? HoldReason { get; private set; }
 
+    public RequestToEditReason? RequestToEditReason { get; private set; }
+
     public ApplicationReferenceNumber ReferenceNumber { get; }
 
     public ApplicationTenure? Tenure { get; private set; }
@@ -110,6 +112,16 @@ public class ApplicationEntity : DomainEntity
         Status = _modificationTracker.Change(Status, newApplicationStatus);
 
         await applicationReactivate.ChangeApplicationStatus(this, organisationId, null, cancellationToken);
+    }
+
+    public async Task RequestToEdit(IChangeApplicationStatus applicationRequestToEdit, RequestToEditReason? newRequestToEditReason, OrganisationId organisationId, CancellationToken cancellationToken)
+    {
+        Status = _modificationTracker.Change(Status, ApplicationStatus.RequestedEditing);
+        RequestToEditReason = _modificationTracker.Change(RequestToEditReason, newRequestToEditReason);
+
+        await applicationRequestToEdit.ChangeApplicationStatus(this, organisationId, RequestToEditReason?.Value, cancellationToken);
+
+        Publish(new ApplicationHasBeenRequestedToEditEvent(Id));
     }
 
     public async Task Withdraw(IChangeApplicationStatus applicationWithdraw, WithdrawReason? newWithdrawReason, OrganisationId organisationId, CancellationToken cancellationToken)

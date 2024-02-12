@@ -1,6 +1,7 @@
 @using HE.Investment.AHP.WWW.Routing
 @using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.WWW.Views.Delivery.Const
+@using HE.Investments.Common.Gds
 @model HE.Investment.AHP.WWW.Models.Delivery.DeliveryListModel
 @{
     var applicationId = this.GetApplicationIdFromRoute();
@@ -95,7 +96,8 @@
                     </tr>
                     <tr>
                         <td colspan="6">
-                            <link-button href="@Url.Action("Create", "DeliveryPhase", new { applicationId })"
+                            <link-button button-type="@ButtonType.Standard"
+                                         href="@Url.Action("Create", "DeliveryPhase", new { applicationId })"
                                          data-testid="add-delivery-phase"
                                          is-disabled="@Model.IsReadOnly">
                                 Add another delivery phase

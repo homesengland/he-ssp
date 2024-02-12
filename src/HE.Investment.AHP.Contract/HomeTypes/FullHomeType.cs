@@ -9,6 +9,7 @@ public record FullHomeType(
     AhpApplicationId ApplicationId,
     string ApplicationName,
     Tenure Tenure,
+    bool IsApplicationLocked,
     HousingType HousingType,
     bool IsCompleted,
     bool IsReadOnly,

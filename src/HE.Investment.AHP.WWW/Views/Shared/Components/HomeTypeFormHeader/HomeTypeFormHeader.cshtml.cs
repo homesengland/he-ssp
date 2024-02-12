@@ -11,8 +11,9 @@ public class HomeTypeFormHeader : ViewComponent
     public IViewComponentResult Invoke(
         HomeTypesWorkflowState currentPage,
         string? title = null,
-        string? caption = null)
+        string? caption = null,
+        bool isApplicationLocked = false)
     {
-        return View("HomeTypeFormHeader", (Title: title, Caption: caption, CurrentPage: currentPage));
+        return View("HomeTypeFormHeader", (Title: title, Caption: caption, CurrentPage: currentPage, isApplicationLocked));
     }
 }

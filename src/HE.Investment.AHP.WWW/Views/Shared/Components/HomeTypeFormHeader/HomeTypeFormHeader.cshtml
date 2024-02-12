@@ -1,6 +1,8 @@
-@model (string Title, string Caption, HE.Investment.AHP.Contract.HomeTypes.HomeTypesWorkflowState CurrentPage)
+@model (string Title, string Caption, HE.Investment.AHP.Contract.HomeTypes.HomeTypesWorkflowState CurrentPage, bool IsApplicationLocked)
 
 <vc:ahp-workflow-back-button current-page="@Model.CurrentPage"/>
+
+<partial name="_LockedApplicationInformation" model="@Model.IsApplicationLocked"/>
 
 @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 

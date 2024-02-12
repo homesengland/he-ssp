@@ -2,6 +2,7 @@ using System.Globalization;
 using System.Text;
 using He.AspNetCore.Mvc.Gds.Components.Constants;
 using He.AspNetCore.Mvc.Gds.Components.TagConstructs;
+using HE.Investments.Common.Gds;
 using HE.Investments.Common.WWW.Extensions;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
@@ -11,11 +12,9 @@ public class LinkButtonTagHelper : TagHelper
 {
     public string ActionUrl { get; set; }
 
-    public bool IsSecondary { get; set; }
-
     public bool IsDisabled { get; set; }
 
-    public bool IsWarning { get; set; }
+    public ButtonType ButtonType { get; set; }
 
     public override Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
@@ -23,17 +22,32 @@ public class LinkButtonTagHelper : TagHelper
         output.Attributes.Add("href", ActionUrl);
 
         TagConstruct.ConstructClass(output, "govuk-button");
-        TagConstructExtensions.ConstructClass(output, "govuk-button--secondary", IsSecondary);
-        TagConstructExtensions.ConstructClass(output, "govuk-button--disabled", IsDisabled);
-        TagConstructExtensions.ConstructClass(output, "govuk-button--warning", IsWarning);
+        TagConstructExtensions.ConstructClass(output, AssignButtonType());
 
         if (IsDisabled)
         {
+            TagConstructExtensions.ConstructClass(output, "govuk-button--disabled", IsDisabled);
             TagConstruct.ConstructGenericAttribute(output, "disabled", "disabled");
             TagConstruct.ConstructGenericAttribute(output, "aria-disabled", "true");
         }
 
-        output.Content.SetHtmlContent(TagConstruct.ConstructSetHtml(output));
+        if (ButtonType == ButtonType.Start)
+        {
+            output.Content.SetHtmlContent(TagConstruct.ConstructButtonStart(TagConstruct.ConstructSetHtml(output, string.Empty)));
+        }
+        else
+        {
+            output.Content.SetHtmlContent(TagConstruct.ConstructSetHtml(output));
+        }
+
         return Task.CompletedTask;
     }
+
+    private string AssignButtonType() => ButtonType switch
+    {
+        ButtonType.Secondary => "govuk-button--secondary",
+        ButtonType.Warning => "govuk-button--warning",
+        ButtonType.Start => "govuk-button--start",
+        _ => string.Empty,
+    };
 }

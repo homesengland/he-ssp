@@ -178,13 +178,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     [AuthorizeWithCompletedProfile]
     public async Task<IActionResult> OnHold(Guid applicationId, CancellationToken cancellationToken)
     {
-        var application = await _mediator.Send(new GetApplicationQuery(AhpApplicationId.From(applicationId)), cancellationToken);
-
-        var model = new ChangeApplicationStatusModel(
-            applicationId,
-            application.Name);
-
-        return View(model);
+        return await ReturnViewToChangeApplicationStatus(applicationId, cancellationToken);
     }
 
     [WorkflowState(ApplicationWorkflowState.OnHold)]
@@ -213,12 +207,33 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
             cancellationToken);
     }
 
+    [WorkflowState(ApplicationWorkflowState.RequestToEdit)]
+    [HttpGet("{applicationId}/request-to-edit")]
+    [AuthorizeWithCompletedProfile]
+    public async Task<IActionResult> RequestToEdit(Guid applicationId, CancellationToken cancellationToken)
+    {
+        return await ReturnViewToChangeApplicationStatus(applicationId, cancellationToken);
+    }
+
+    [WorkflowState(ApplicationWorkflowState.RequestToEdit)]
+    [HttpPost("{applicationId}/request-to-edit")]
+    [AuthorizeWithCompletedProfile]
+    public async Task<IActionResult> RequestToEdit(string applicationId, ChangeApplicationStatusModel model, CancellationToken cancellationToken)
+    {
+        return await this.ExecuteCommand<ChangeApplicationStatusModel>(
+            _mediator,
+            new RequestToEditApplicationCommand(AhpApplicationId.From(model.ApplicationId), model.RequestToEditReason),
+            () => ContinueWithRedirect(new { applicationId }),
+            async () => await Task.FromResult<IActionResult>(View("RequestToEdit", model)),
+            cancellationToken);
+    }
+
     [WorkflowState(ApplicationWorkflowState.Withdraw)]
     [HttpGet("{applicationId}/withdraw")]
     [AuthorizeWithCompletedProfile]
     public async Task<IActionResult> Withdraw(Guid applicationId, CancellationToken cancellationToken)
     {
-        return await OnHold(applicationId, cancellationToken);
+        return await ReturnViewToChangeApplicationStatus(applicationId, cancellationToken);
     }
 
     [WorkflowState(ApplicationWorkflowState.Withdraw)]
@@ -250,5 +265,16 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
                 async () => await _mediator.Send(new GetApplicationQuery(applicationId!)),
                 async () => applicationId.IsProvided() && await _mediator.Send(new IsApplicationExistQuery(applicationId!)),
                 isReadOnly);
+    }
+
+    private async Task<IActionResult> ReturnViewToChangeApplicationStatus(Guid applicationId, CancellationToken cancellationToken)
+    {
+        var application = await _mediator.Send(new GetApplicationQuery(AhpApplicationId.From(applicationId)), cancellationToken);
+
+        var model = new ChangeApplicationStatusModel(
+            applicationId,
+            application.Name);
+
+        return View(model);
     }
 }

@@ -19,4 +19,6 @@ public class ChangeApplicationStatusModel
     public string? WithdrawReason { get; set; }
 
     public string? HoldReason { get; set; }
+
+    public string? RequestToEditReason { get; set; }
 }

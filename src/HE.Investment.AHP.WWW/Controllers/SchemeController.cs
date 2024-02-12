@@ -348,6 +348,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
             scheme.ApplicationName,
             scheme.Status == SectionStatus.Completed ? IsSectionCompleted.Yes : null,
             section,
-            isEditable);
+            isEditable,
+            scheme.IsApplicationLocked);
     }
 }

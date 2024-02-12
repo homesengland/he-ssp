@@ -6,13 +6,20 @@ namespace HE.Investment.AHP.WWW.Models.Scheme;
 
 public class SchemeSummaryViewModel : IEditableViewModel
 {
-    public SchemeSummaryViewModel(string applicationId, string applicationName, IsSectionCompleted? isCompleted, SectionSummaryViewModel section, bool isEditable)
+    public SchemeSummaryViewModel(
+        string applicationId,
+        string applicationName,
+        IsSectionCompleted? isCompleted,
+        SectionSummaryViewModel section,
+        bool isEditable,
+        bool isApplicationLocked)
     {
         ApplicationId = applicationId;
         ApplicationName = applicationName;
         IsCompleted = isCompleted;
         Section = section;
         IsEditable = isEditable;
+        IsApplicationLocked = isApplicationLocked;
     }
 
     public string ApplicationId { get; }
@@ -26,4 +33,6 @@ public class SchemeSummaryViewModel : IEditableViewModel
     public bool IsEditable { get; }
 
     public bool IsReadOnly => !IsEditable;
+
+    public bool IsApplicationLocked { get; }
 }

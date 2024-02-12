@@ -23,6 +23,7 @@ public class BuildActivityTests : ViewTestBase
             "DeliveryPhaseName",
             SectionStatus.InProgress,
             false,
+            false,
             null,
             null,
             availableTypes);

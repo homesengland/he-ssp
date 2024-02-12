@@ -56,13 +56,13 @@ public class ApplicationListTests : ViewTestBase
     private static void ShouldDisplayPage(IHtmlDocument document)
     {
         document
-            .HasElementWithText("h1", "AHP 21-26 CME applications")
+            .HasElementWithText("h1", "Affordable Homes Programme Continuous Market Engagement 2021-2026 applications")
             .HasElementWithText("h2", "Your applications")
-            .HasElementWithText("h2", "Affordable Homes Programme 2021-2026 CME")
+            .HasElementWithText("h2", "Affordable Homes Programme Continuous Market Engagement 2021-2026")
             .HasElementWithText(
                 "p",
-                "You can start a new Affordable Homes Programme application here. This will not affect any of your previous applications.")
-            .HasElementWithText("a", "Start new application");
+                "You can start a new Affordable Homes Programme application. This will not affect any of your previous applications.")
+            .HasLinkButton("Start");
     }
 
     private PaginationResult<ApplicationBasicDetails> PaginationResult(IList<ApplicationBasicDetails> items) => new(items, 1, 10, 100);

@@ -23,6 +23,7 @@ public class DetailsTests : ViewTestBase
             "Id",
             "DeliveryPhaseName",
             SectionStatus.InProgress,
+            false,
             false);
 
         // given & when

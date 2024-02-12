@@ -41,7 +41,7 @@ public class Order01StartAhpApplication : AhpIntegrationTest
     public async Task Order02_ShouldNavigateToApplicationLandingPage()
     {
         // given
-        var startButton = (await GetCurrentPage(MainPagesUrl.ApplicationList)).GetLinkButton("Start new application");
+        var startButton = (await GetCurrentPage(MainPagesUrl.ApplicationList)).GetLinkButton("Start");
 
         // when
         var applicationNamePage = await TestClient.NavigateTo(startButton);

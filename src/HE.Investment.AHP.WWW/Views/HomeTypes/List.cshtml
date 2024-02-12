@@ -4,6 +4,7 @@
 @using HE.Investment.AHP.WWW.Views.HomeTypes.Const
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
 @using HE.Investments.Common.Extensions
+@using HE.Investments.Common.Gds
 @model HE.Investment.AHP.WWW.Models.HomeTypes.HomeTypeListModel
 
 @{
@@ -88,7 +89,7 @@
                     </td>
                     <td class="govuk-!-padding-top-6" colspan="3">
                         <link-button href="@Url.Action("NewHomeTypeDetails","HomeTypes", new  { applicationId })"
-                                     is-secondary="true"
+                                     button-type="@ButtonType.Secondary"
                                      data-testid="add-home-type"
                                      is-disabled="@Model.IsReadOnly">
                             Add another home type

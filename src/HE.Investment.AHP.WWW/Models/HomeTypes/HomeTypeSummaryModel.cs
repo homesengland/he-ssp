@@ -23,4 +23,6 @@ public class HomeTypeSummaryModel : HomeTypeBasicModel, IEditableViewModel
     public bool IsEditable { get; set; }
 
     public bool IsReadOnly => !IsEditable;
+
+    public bool IsApplicationLocked { get; set; }
 }

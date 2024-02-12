@@ -31,9 +31,21 @@ public record ApplicationSectionsModel(
         return statusesAllowedForReactivate.Contains(Status);
     }
 
+    public bool CanBeRequestedToEdit()
+    {
+        var statusesAllowedForRequestToEdit = ApplicationStatusDivision.GetAllStatusesAllowedForRequestToEdit();
+        return statusesAllowedForRequestToEdit.Contains(Status);
+    }
+
     public bool CanBeWithdrawn()
     {
         var statusesAllowedForWithdraw = ApplicationStatusDivision.GetAllStatusesAllowedForWithdraw();
         return statusesAllowedForWithdraw.Contains(Status);
+    }
+
+    public bool IsLocked()
+    {
+        var statusesAllowedForLockedMode = ApplicationStatusDivision.GetAllStatusesForLockedMode();
+        return statusesAllowedForLockedMode.Contains(Status);
     }
 }

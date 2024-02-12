@@ -8,6 +8,7 @@ public record Scheme(
     AhpApplicationId ApplicationId,
     string ApplicationName,
     Tenure? ApplicationTenure,
+    bool IsApplicationLocked,
     SectionStatus Status,
     decimal? RequiredFunding,
     int? HousesToDeliver,

@@ -521,7 +521,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         var deliveryPhase = currentState != DeliveryPhaseWorkflowState.Create
             ? await _deliveryPhaseProvider.Get(
                 new GetDeliveryPhaseDetailsQuery(this.GetApplicationIdFromRoute(), this.GetDeliveryPhaseIdFromRoute()), CancellationToken.None)
-            : new DeliveryPhaseDetails(string.Empty, string.Empty, string.Empty, SectionStatus.NotStarted, false);
+            : new DeliveryPhaseDetails(string.Empty, string.Empty, string.Empty, SectionStatus.NotStarted, false, false);
 
         var isReadOnly = !await _accountAccessContext.CanEditApplication() || deliveryPhase.IsReadOnly;
 
@@ -554,7 +554,8 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
             deliveryPhaseDetails.Name,
             deliveryPhaseDetails.Status == SectionStatus.Completed ? IsSectionCompleted.Yes : null,
             sections,
-            isEditable);
+            isEditable,
+            deliveryPhaseDetails.IsApplicationLocked);
     }
 
     private MilestoneViewModel CreateMilestoneViewModel(

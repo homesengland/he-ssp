@@ -1,5 +1,6 @@
 @using HE.Investments.Account.Shared
 @using HE.Investments.Common.Contract
+@using HE.Investments.Common.Gds
 @inject IAccountAccessContext AccountAccessContext
 @model HE.Investment.AHP.WWW.Models.Application.ApplicationSectionsModel
 
@@ -10,65 +11,45 @@
 
 @if (Model.CanBeSubmitted())
 {
-    <div>
-        <gds-h2>Check and submit</gds-h2>
-        @if (incompleteSectionsCount > 0)
-        {
-            <gds-p>You must complete all sections before you can submit your application.</gds-p>
-        }
-        <link-button
-            action-url="@Url.Action("CheckAnswers", "Application", new { applicationId = Model.ApplicationId })"
-            is-disabled="@(incompleteSectionsCount > 0 || !canSubmitApplication)"
-            data-testid="check-and-submit-application">
-            Check and submit application
-        </link-button>
-    </div>
+    <vc:change-status-section
+        title="Check and submit"
+        paragraph="@(incompleteSectionsCount > 0 ? "You must complete all sections before you can submit your application." : string.Empty)"
+        action-url="@Url.Action("CheckAnswers", "Application", new { applicationId = Model.ApplicationId })"
+        link-button-name="Check and submit application"
+        button-type="@ButtonType.Standard"
+        is-disabled="@(incompleteSectionsCount > 0 || !canSubmitApplication)"
+        test-id="check-and-submit-application"/>
 }
 
 @if (Model.CanBePutOnHold())
 {
-    <div class="govuk-!-margin-top-2">
-        <gds-h2 size="ControlSize.M">Put on hold</gds-h2>
-        <gds-p>
-            This will notify Homes England that you no longer wish to proceed with this application at this time. You can revisit this later on and submit once you’re ready.
-        </gds-p>
-        <link-button
-            is-secondary="true"
-            action-url="@Url.Action("OnHold", "Application", new { applicationId = Model.ApplicationId })"
-            data-testid="put-application-on-hold">
-            Hold
-        </link-button>
-    </div>
+    <vc:change-status-section
+        title="Put on hold"
+        paragraph="This will notify Homes England that you no longer wish to proceed with this application at this time. You can revisit this later on and submit once you’re ready."
+        action-url="@Url.Action("OnHold", "Application", new { applicationId = Model.ApplicationId })"
+        link-button-name="Hold"
+        button-type="@ButtonType.Secondary"
+        test-id="put-application-on-hold"/>
 }
 
 @if (Model.CanReactivate())
 {
-    <div class="govuk-!-margin-top-2">
-        <gds-h2 size="ControlSize.M">Reactivate application</gds-h2>
-        <gds-p>
-            Your application is currently on hold. Reactivating means you will be able to work on or submit this application.
-        </gds-p>
-        <link-button
-            is-secondary="true"
-            action-url="@Url.Action("Reactivate", "Application", new { applicationId = Model.ApplicationId })"
-            data-testid="reactivate-application">
-            Reactivate
-        </link-button>
-    </div>
+    <vc:change-status-section
+        title="Reactivate application"
+        paragraph="Your application is currently on hold. Reactivating means you will be able to work on or submit this application."
+        action-url="@Url.Action("Reactivate", "Application", new { applicationId = Model.ApplicationId })"
+        link-button-name="Reactivate"
+        button-type="@ButtonType.Secondary"
+        test-id="reactivate-application"/>
 }
 
 @if (Model.CanBeWithdrawn())
 {
-    <div class="govuk-!-margin-top-2">
-        <gds-h2 size="ControlSize.M">Withdraw</gds-h2>
-        <gds-p>
-            This will notify Homes England that you no longer wish to proceed. Your application will be permanently deleted.
-        </gds-p>
-        <link-button
-            is-warning="true"
-            action-url="@Url.Action("Withdraw", "Application", new { applicationId = Model.ApplicationId })"
-            data-testid="withdraw-application">
-            Withdraw
-        </link-button>
-    </div>
+    <vc:change-status-section
+        title="Withdraw"
+        paragraph="This will notify Homes England that you no longer wish to proceed. Your application will be permanently deleted."
+        action-url="@Url.Action("Withdraw", "Application", new { applicationId = Model.ApplicationId })"
+        link-button-name="Withdraw"
+        button-type="@ButtonType.Warning"
+        test-id="withdraw-application"/>
 }

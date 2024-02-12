@@ -13,4 +13,10 @@ public record ApplicationBasicInfo(AhpApplicationId Id, ApplicationName Name, Te
         var readonlyStatuses = ApplicationStatusDivision.GetAllStatusesForReadonlyMode();
         return readonlyStatuses.Contains(Status);
     }
+
+    public bool IsLocked()
+    {
+        var lockedStatuses = ApplicationStatusDivision.GetAllStatusesForLockedMode();
+        return lockedStatuses.Contains(Status);
+    }
 }
