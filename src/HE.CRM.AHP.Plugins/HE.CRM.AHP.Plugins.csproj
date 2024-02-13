@@ -110,8 +110,10 @@
     <Compile Include="Handlers\CustomApi\GetApplicationHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetMultipleApplicationsHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetMultipleDeliveryPhaseHandler.cs" />
+    <Compile Include="Handlers\CustomApi\GetMultipleProgrammeHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetSingleDeliveryPhaseHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetSingleHomeTypeHandler.cs" />
+    <Compile Include="Handlers\CustomApi\GetSingleProgrammeHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetTypeOfHomesListHandler.cs" />
     <Compile Include="Handlers\CustomApi\InviteContactToJoinExistingOrganisationHandler.cs" />
     <Compile Include="Handlers\CustomApi\SendReminderEmailForFinaliseDraftApplicationHandler.cs" />
@@ -196,7 +198,9 @@
     <Compile Include="Plugins\CustomApi\DeleteDeliveryPhasePlugin.cs" />
     <Compile Include="Plugins\CustomApi\DeleteHomeTypePlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetMultipleDeliveryPhasePlugin.cs" />
+    <Compile Include="Plugins\CustomApi\GetMultipleProgrammePlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetSingleDeliveryPhasePlugin.cs" />
+    <Compile Include="Plugins\CustomApi\GetSingleProgrammePlugin.cs" />
     <Compile Include="Plugins\CustomApi\InviteContactToJoinExistingOrganisationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\SendReminderEmailForFinaliseDraftApplicationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetAbsoluteAhpApplicationFileLocationPlugin.cs" />
@@ -228,6 +232,8 @@
     <Compile Include="Services\GovNotifyEmail\IGovNotifyEmailService.cs" />
     <Compile Include="Services\HomeType\HomeTypeService.cs" />
     <Compile Include="Services\HomeType\IHomeTypeService.cs" />
+    <Compile Include="Services\Programme\IProgrammeService.cs" />
+    <Compile Include="Services\Programme\ProgrammeService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ahp-build-export.yml" />
