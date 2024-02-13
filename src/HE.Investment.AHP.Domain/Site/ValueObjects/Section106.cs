@@ -20,7 +20,7 @@ public class Section106 : ValueObject, IQuestion
         if (agreement == null)
         {
             OperationResult.New()
-                .AddValidationError(nameof(Section106Dto.GeneralAgreement), ValidationErrorMessage.MissingRequiredField(" the General Agreement"))
+                .AddValidationError(nameof(Section106Dto.GeneralAgreement), ValidationErrorMessage.MustProvideRequiredField("General Agreement"))
                 .CheckErrors();
         }
 
@@ -110,7 +110,7 @@ public class Section106 : ValueObject, IQuestion
         if (affordableHousing == null)
         {
             OperationResult.New()
-                .AddValidationError(nameof(Section106Dto.AffordableHousing), ValidationErrorMessage.MissingRequiredField(" the Affordable Housing answer."))
+                .AddValidationError(nameof(Section106Dto.AffordableHousing), ValidationErrorMessage.MustProvideRequiredField("Affordable Housing answer."))
                 .CheckErrors();
         }
 
@@ -127,7 +127,7 @@ public class Section106 : ValueObject, IQuestion
         if (onlyAffordableHousing == null)
         {
             OperationResult.New()
-                .AddValidationError(nameof(Section106Dto.OnlyAffordableHousing), ValidationErrorMessage.MissingRequiredField(" the 100% Affordable Housing answer."))
+                .AddValidationError(nameof(Section106Dto.OnlyAffordableHousing), ValidationErrorMessage.MustProvideRequiredField("100% Affordable Housing answer."))
                 .CheckErrors();
         }
 
@@ -144,7 +144,7 @@ public class Section106 : ValueObject, IQuestion
         if (additionalAffordableHousing == null)
         {
             OperationResult.New()
-                .AddValidationError(nameof(Section106Dto.AdditionalAffordableHousing), ValidationErrorMessage.MissingRequiredField(" the Additional Affordable Housing answer."))
+                .AddValidationError(nameof(Section106Dto.AdditionalAffordableHousing), ValidationErrorMessage.MustProvideRequiredField("Additional Affordable Housing answer."))
                 .CheckErrors();
         }
 
@@ -161,7 +161,7 @@ public class Section106 : ValueObject, IQuestion
         if (capitalFundingEligibility == null)
         {
             OperationResult.New()
-                .AddValidationError(nameof(Section106Dto.CapitalFundingEligibility), ValidationErrorMessage.MissingRequiredField(" the Capital fundign Eligibility answer."))
+                .AddValidationError(nameof(Section106Dto.CapitalFundingEligibility), ValidationErrorMessage.MustProvideRequiredField("Capital fundign Eligibility answer."))
                 .CheckErrors();
         }
 

@@ -13,7 +13,7 @@ public class NationalDesignGuidePriorities : ValueObject, IQuestion
         if (!priorities.Any())
         {
             OperationResult.New()
-                .AddValidationError("DesignPriorities", ValidationErrorMessage.MissingRequiredField(" the National Design Guide"))
+                .AddValidationError("DesignPriorities", ValidationErrorMessage.MustProvideRequiredField("National Design Guide"))
                 .CheckErrors();
         }
 
