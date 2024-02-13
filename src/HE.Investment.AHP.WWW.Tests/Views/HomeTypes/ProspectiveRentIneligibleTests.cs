@@ -18,7 +18,7 @@ public class ProspectiveRentIneligibleTests : HomeTypesTestBase
         document
             .HasPageHeader("My application - My homes", "Contact your Growth Manager")
             .HasElementWithText("p", "Funding is not available for homes with greater than 3% of the proposed rent as a percent of unsold share.")
-            .HasElementWithText("p", "Check the figures you have entered are correct. If the are, contact your Growth Manager to discuss this further.")
+            .HasElementWithText("p", "Check the figures you have entered are correct. If they are, contact your Growth Manager to discuss this further.")
             .HasElementWithText("a", "Go back and try again")
             .HasElementWithText("a", "Save and return to your account");
     }
