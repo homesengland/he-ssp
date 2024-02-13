@@ -8,21 +8,21 @@
 @using HE.Investments.Common.WWW.Helpers
 @model SiteModel
 @{
-    ViewData["Title"] = SitePageTitles.Procurement;
+    ViewData["Title"] = SitePageTitles.Procurements;
     var allOptions = SelectListHelper.FromEnumToExtendedList<SiteProcurement>().ToList();
     var availableOptions = allOptions.Where(o => o.Value != SiteProcurement.None.ToString());
     var alternativeOption = allOptions.Single(o => o.Value == SiteProcurement.None.ToString());
 }
 
 <gds-div-grid-column-two-thirds>
-    <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.Procurement"/>
+    <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.Procurements"/>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <vc:page-header caption="@ViewBag.SiteName"/>
 
-    <form asp-controller="Site" asp-action="Procurement" asp-method="post" novalidate>
+    <form asp-controller="Site" asp-action="Procurements" asp-method="post" novalidate>
 
         <vc:checkbox-list-with-or
-            title="@SitePageTitles.Procurement"
+            title="@SitePageTitles.Procurements"
             title-type="InputTitleType.PageHeader"
             hint="Select all that apply. It will not negatively affect your application if you do not make the procurement efficient."
             field-name="@nameof(Model.SiteProcurements)"

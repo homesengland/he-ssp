@@ -30,6 +30,6 @@ public enum SiteWorkflowState
     SiteType,
     SiteUse,
     TravellerPitchType,
-    Procurement,
+    Procurements,
     CheckAnswers,
 }
