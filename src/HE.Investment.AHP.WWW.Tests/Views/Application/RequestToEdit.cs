@@ -38,9 +38,9 @@ public class RequestToEdit : ViewTestBase
     private static void AssertView(IHtmlDocument document, string? errorMessage = null)
     {
         document
-            .HasElementWithText("label", ApplicationPageTitles.RequestToEdit)
+            .HasTitle(ApplicationPageTitles.RequestToEdit)
             .HasElementWithText("div", "You can enter up to 1500 characters")
-            .HasElementWithText("button", "Request to edit")
+            .HasSubmitButton(out _, "Request to edit")
             .HasSummaryErrorMessage(nameof(ChangeApplicationStatusModel.RequestToEditReason), errorMessage, !string.IsNullOrEmpty(errorMessage))
             .HasErrorMessage(nameof(ChangeApplicationStatusModel.RequestToEditReason), errorMessage, !string.IsNullOrEmpty(errorMessage));
     }
