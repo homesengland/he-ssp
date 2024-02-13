@@ -138,7 +138,6 @@ public static class HtmlDocumentInputExtensions
             headerText.Should().BeEmpty($"No bold text with innerText {text} should exist");
         }
 
-
         return htmlDocument;
     }
 
