@@ -17,24 +17,26 @@ public class CheckboxListWithOr : ViewComponent
         string? title = null,
         InputTitleType? titleType = null,
         string? hint = null,
-        IEnumerable<string>? selectedValues = null)
+        IEnumerable<Enum>? selectedValues = null)
     {
         var availableOptionsList = availableOptions.ToList();
 
-        foreach (var value in selectedValues ?? new List<string>())
+        foreach (var value in selectedValues ?? new List<Enum>())
         {
-            var option = availableOptionsList.Find(x => x.Value == value);
+            var option = availableOptionsList.Find(x => x.Value == value.ToString());
             if (option != null)
             {
                 option.Selected = true;
             }
 
-            if (alternativeOption.Value == value)
+            if (alternativeOption.Value == value.ToString())
             {
                 alternativeOption.Selected = true;
             }
         }
 
-        return View("CheckboxListWithOr", (fieldName, title, titleType ?? InputTitleType.InputTitle, headerComponent, hint, availableOptionsList.AsEnumerable(), alternativeOption));
+        return View(
+            "CheckboxListWithOr",
+            (fieldName, title, titleType ?? InputTitleType.InputTitle, headerComponent, hint, availableOptionsList.AsEnumerable(), alternativeOption));
     }
 }

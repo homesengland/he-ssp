@@ -45,6 +45,7 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
             StrategicSiteDetails = CreateStrategicSiteDetails(site.StrategicSiteDetails),
             SiteTypeDetails = CreateSiteTypeDetails(site.SiteTypeDetails),
             SiteUseDetails = CreateSiteUseDetails(site.SiteUseDetails),
+            SiteProcurements = site.Procurements.Procurements.ToList(),
         };
     }
 
