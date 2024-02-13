@@ -267,7 +267,7 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
 
     private bool IsSection106EligibleWithAdditionalAffordableHousing() => _siteModel?.Section106?.IsIneligible == false && _siteModel?.Section106?.AdditionalAffordableHousing == true;
 
-    private bool IsSection106EligibleWithoutAdditionalAffordableHousing() => _siteModel?.Section106?.IsIneligible == false && _siteModel?.Section106?.AdditionalAffordableHousing == false;
+    private bool IsSection106EligibleWithoutAdditionalAffordableHousing() => _siteModel?.Section106?.IsIneligible == false && _siteModel?.Section106?.AdditionalAffordableHousing != true;
 
     private bool IsNotApplicableOrMissing() => _siteModel?.TenderingStatusDetails.TenderingStatus is SiteTenderingStatus.NotApplicable or null;
 
