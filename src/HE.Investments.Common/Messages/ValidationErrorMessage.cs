@@ -77,6 +77,8 @@ public static class ValidationErrorMessage
 
     public static string EstimatedPoundInput(string name) => PoundInput($"The estimated {name}");
 
+    public static string PercentageInput(string name) => new($"The {name.ToLowerInvariant()} must be entered as a whole percentage value, like 30");
+
     public static string PoundInput(string name) => new($"The {name} must be entered as a number, in pounds and pence");
 
     public static string WholePoundInput(string name) => new($"The {name} must be entered as a number, in pounds");

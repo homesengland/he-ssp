@@ -47,10 +47,10 @@
         @Html.HiddenFor(x => x.ApplicationName)
         @Html.HiddenFor(x => x.DeliveryPhaseName)
         <vc:numeric-text-input field-name=@nameof(Model.Value)
-                               value="@Model.Value.ToString()"
-                               hint="Amount of grant apportioned to this phase"
-                               prefix="£"
-                               css-class="govuk-input--width-10"/>
+                               value="@Model.Value"
+                               hint="Percentage of grant apportioned to this phase"
+                               suffix="%"
+                               css-class="govuk-input--width-4"/>
 
         <vc:form-button/>
 

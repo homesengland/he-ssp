@@ -5,6 +5,7 @@ using HE.Investment.AHP.Domain.Common.Mappers;
 using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.Repositories;
 using HE.Investments.Account.Shared;
+using HE.Investments.Common.Extensions;
 using MediatR;
 using SummaryOfDelivery = HE.Investment.AHP.Contract.Delivery.MilestonePayments.SummaryOfDelivery;
 
@@ -46,7 +47,7 @@ public class GetDeliveryPhaseDetailsQueryHandler : IRequestHandler<GetDeliveryPh
             deliveryPhase.ReconfiguringExisting,
             deliveryPhase.TotalHomesToBeDeliveredInThisPhase,
             new DeliveryPhaseTranchesDto(
-                deliveryPhase.Tranches.ShouldBeAmended,
+                deliveryPhase.Tranches.CanBeAmended,
                 request.IncludeSummary ? GetSummaryOfDelivery(deliveryPhase) : null,
                 request.IncludeSummary ? GetSummaryOfDeliveryAmend(deliveryPhase) : null),
             deliveryPhase.Organisation.IsUnregisteredBody,
@@ -81,10 +82,10 @@ public class GetDeliveryPhaseDetailsQueryHandler : IRequestHandler<GetDeliveryPh
         return new SummaryOfDeliveryAmend(
             result.GrantApportioned,
             result.AcquisitionMilestone,
-            result.AcquisitionPercentage,
+            result.AcquisitionPercentage.ToWholePercentage().WithoutPercentageChar(),
             result.StartOnSiteMilestone,
-            result.StartOnSitePercentage,
+            result.StartOnSitePercentage.ToWholePercentage().WithoutPercentageChar(),
             result.CompletionMilestone,
-            result.CompletionPercentage);
+            result.CompletionPercentage.ToWholePercentage().WithoutPercentageChar());
     }
 }
