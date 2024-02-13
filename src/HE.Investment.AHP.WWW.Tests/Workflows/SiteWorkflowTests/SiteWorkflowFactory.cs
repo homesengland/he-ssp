@@ -18,11 +18,12 @@ public static class SiteWorkflowFactory
         BuildingForHealthyLifeType buildingForHealthyLife = BuildingForHealthyLifeType.Undefined,
         NumberOfGreenLights? numberOfGreenLights = null,
         IList<NationalDesignGuidePriority>? nationalDesignGuidePriorities = null,
-        Contract.Site.Enums.SiteLandAcquisitionStatus? landAcquisitionStatus = null,
+        SiteLandAcquisitionStatus? landAcquisitionStatus = null,
         SiteTenderingStatusDetails? tenderingStatusDetails = null,
         StrategicSite? strategicSite = null,
         ContractSiteTypeDetails? siteTypeDetails = null,
-        SiteUseDetails? siteUseDetails = null)
+        SiteUseDetails? siteUseDetails = null,
+        IList<SiteProcurement>? procurements = null)
     {
         var site = new SiteModel
         {
@@ -38,6 +39,7 @@ public static class SiteWorkflowFactory
             StrategicSiteDetails = strategicSite ?? new StrategicSite(false, null),
             SiteTypeDetails = siteTypeDetails ?? new ContractSiteTypeDetails(null, null, null, true),
             SiteUseDetails = siteUseDetails ?? new SiteUseDetails(null, null, TravellerPitchSiteType.Undefined),
+            SiteProcurements = procurements ?? new List<SiteProcurement>(),
         };
 
         return new SiteWorkflow(currentSiteWorkflowState, site);

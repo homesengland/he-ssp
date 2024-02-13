@@ -22,34 +22,10 @@ public class CurrentStateTests
 
     private readonly Section106Dto _section106 = new("3", "TestSite", false);
 
-    private readonly BuildingForHealthyLifeType _buildingForHealthyLife = BuildingForHealthyLifeType.Yes;
-
-    private readonly NumberOfGreenLights? _numberOfGreenLights = new("5");
-
-    private readonly SiteUseDetails _siteUseDetails = new(true, true, TravellerPitchSiteType.Permanent);
-
     [Fact]
     public void ShouldReturnCheckAnswers_WhenAllDataProvided()
     {
-        // given
-        var workflow = SiteWorkflowFactory.BuildWorkflow(
-            SiteWorkflowState.Start,
-            name: "site name",
-            localAuthority: _localAuthority,
-            planningDetails: _planningDetails,
-            tenderingStatusDetails: _tenderingStatusDetails,
-            section106: _section106,
-            nationalDesignGuidePriorities: new List<NationalDesignGuidePriority>() { NationalDesignGuidePriority.Nature },
-            buildingForHealthyLife: _buildingForHealthyLife,
-            numberOfGreenLights: _numberOfGreenLights,
-            landAcquisitionStatus: SiteLandAcquisitionStatus.FullOwnership,
-            siteUseDetails: _siteUseDetails);
-
-        // when
-        var result = workflow.CurrentState(SiteWorkflowState.Start);
-
-        // then
-        result.Should().Be(SiteWorkflowState.CheckAnswers);
+        Test(SiteWorkflowState.CheckAnswers);
     }
 
     [Fact]
@@ -283,6 +259,12 @@ public class CurrentStateTests
         Test(SiteWorkflowState.TravellerPitchType, siteUseDetails: new SiteUseDetails(false, true, TravellerPitchSiteType.Undefined));
     }
 
+    [Fact]
+    public void ShouldReturnProcurement_WhenProcurementNotProvided()
+    {
+        Test(SiteWorkflowState.Procurements, procurements: new List<SiteProcurement>());
+    }
+
     private void Test(
         SiteWorkflowState expected,
         SitePlanningDetails? planningDetails = null,
@@ -291,7 +273,8 @@ public class CurrentStateTests
         NumberOfGreenLights? numberOfGreenLights = null,
         StrategicSite? strategicSite = null,
         SiteTypeDetails? siteTypeDetails = null,
-        SiteUseDetails? siteUseDetails = null)
+        SiteUseDetails? siteUseDetails = null,
+        IList<SiteProcurement>? procurements = null)
     {
         // given
         var workflow = SiteWorkflowFactory.BuildWorkflow(
@@ -307,7 +290,8 @@ public class CurrentStateTests
             landAcquisitionStatus: SiteLandAcquisitionStatus.FullOwnership,
             strategicSite: strategicSite,
             siteTypeDetails: siteTypeDetails,
-            siteUseDetails: siteUseDetails);
+            siteUseDetails: siteUseDetails ?? new SiteUseDetails(false, true, TravellerPitchSiteType.Permanent),
+            procurements: procurements ?? new List<SiteProcurement> { SiteProcurement.PartneringArrangementsWithContractor, SiteProcurement.LargeScaleContractProcurementThroughConsortium });
 
         // when
         var result = workflow.CurrentState(SiteWorkflowState.Start);

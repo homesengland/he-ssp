@@ -335,7 +335,18 @@ public class Order01StartAhpSite : AhpIntegrationTest
         await TestQuestionPage(
             SitePagesUrl.SiteTravellerPitchType(SiteData.SiteId),
             SitePageTitles.TravellerPitchType,
-            SitePagesUrl.SiteCheckAnswers(SiteData.SiteId),
+            SitePagesUrl.SiteProcurements(SiteData.SiteId),
             (nameof(SiteUseDetails.TravellerPitchSiteType), TravellerPitchSiteType.Permanent.ToString()));
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(24)]
+    public async Task Order24_ShouldProvideProcurements()
+    {
+        await TestQuestionPage(
+            SitePagesUrl.SiteProcurements(SiteData.SiteId),
+            SitePageTitles.Procurements,
+            SitePagesUrl.SiteCheckAnswers(SiteData.SiteId),
+            (nameof(SiteModel.SiteProcurements), SiteProcurement.PartneringSupplyChain.ToString()));
     }
 }

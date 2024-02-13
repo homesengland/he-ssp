@@ -63,6 +63,7 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             { SiteTypeDetails.IsAnswered: false } => SiteWorkflowState.SiteType,
             { SiteUseDetails: var x } when x.IsForTravellerPitchSite.IsNotProvided() || x.IsPartOfStreetFrontInfill.IsNotProvided() => SiteWorkflowState.SiteUse,
             { SiteUseDetails: { IsForTravellerPitchSite: true, TravellerPitchSiteType: TravellerPitchSiteType.Undefined } } => SiteWorkflowState.TravellerPitchType,
+            { SiteProcurements: var x } when !x.Any() => SiteWorkflowState.Procurements,
             _ => SiteWorkflowState.CheckAnswers,
         };
     }
@@ -99,7 +100,7 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             SiteWorkflowState.SiteType => true,
             SiteWorkflowState.SiteUse => true,
             SiteWorkflowState.TravellerPitchType => IsForTravellerPitchSite(),
-            SiteWorkflowState.Procurement => true,
+            SiteWorkflowState.Procurements => true,
             SiteWorkflowState.CheckAnswers => true,
             _ => false,
         };
@@ -234,16 +235,20 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
 
         _machine.Configure(SiteWorkflowState.SiteUse)
             .PermitIf(Trigger.Continue, SiteWorkflowState.TravellerPitchType, IsForTravellerPitchSite)
-            .PermitIf(Trigger.Continue, SiteWorkflowState.CheckAnswers, () => !IsForTravellerPitchSite())
+            .PermitIf(Trigger.Continue, SiteWorkflowState.Procurements, () => !IsForTravellerPitchSite())
             .Permit(Trigger.Back, SiteWorkflowState.SiteType);
 
         _machine.Configure(SiteWorkflowState.TravellerPitchType)
-            .Permit(Trigger.Continue, SiteWorkflowState.CheckAnswers)
+            .Permit(Trigger.Continue, SiteWorkflowState.Procurements)
             .PermitIf(Trigger.Back, SiteWorkflowState.SiteUse);
 
-        _machine.Configure(SiteWorkflowState.CheckAnswers)
+        _machine.Configure(SiteWorkflowState.Procurements)
+            .Permit(Trigger.Continue, SiteWorkflowState.CheckAnswers)
             .PermitIf(Trigger.Back, SiteWorkflowState.SiteUse, () => !IsForTravellerPitchSite())
             .PermitIf(Trigger.Back, SiteWorkflowState.TravellerPitchType, IsForTravellerPitchSite);
+
+        _machine.Configure(SiteWorkflowState.CheckAnswers)
+            .Permit(Trigger.Back, SiteWorkflowState.Procurements);
     }
 
     private bool IsLocalAuthorityProvided() => _siteModel?.LocalAuthority?.Name.IsProvided() ?? false;
