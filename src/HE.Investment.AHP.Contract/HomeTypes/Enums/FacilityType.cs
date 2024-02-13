@@ -12,6 +12,6 @@ public enum FacilityType
     [Description("Shared facilities")]
     SharedFacilities,
 
-    [Description("Mix of self-contained snd shared facilities")]
+    [Description("Mix of self-contained and shared facilities")]
     MixOfSelfContainedAndSharedFacilities,
 }
