@@ -310,6 +310,11 @@ public class SiteController : WorkflowController<SiteWorkflowState>
             Phrase = phrase,
         };
 
+        if (TempData["LocalAuthoritiesErrors"] is IDictionary<string, string> validationErrors)
+        {
+            ModelState.Merge(validationErrors);
+        }
+
         return View(new ConfirmModel<LocalAuthorities>(model));
     }
 
@@ -332,7 +337,21 @@ public class SiteController : WorkflowController<SiteWorkflowState>
             _mediator,
             new ProvideLocalAuthorityCommand(new SiteId(siteId), localAuthorityId, localAuthorityName, model.Response),
             () => ContinueWithRedirect(new { siteId, redirect }),
-            async () => await Task.FromResult<IActionResult>(View(model)),
+            async () =>
+            {
+                TempData["LocalAuthoritiesErrors"] = ViewBag.validationErrors;
+
+                return await Task.FromResult(RedirectToAction(
+                    "LocalAuthorityConfirm",
+                    new
+                    {
+                        siteId,
+                        localAuthorityId,
+                        localAuthorityName,
+                        redirect,
+                        phrase = model.ViewModel.Phrase,
+                    }));
+            },
             cancellationToken);
     }
 
@@ -445,7 +464,10 @@ public class SiteController : WorkflowController<SiteWorkflowState>
 
     [HttpPost("{siteId}/national-design-guide")]
     [WorkflowState(SiteWorkflowState.NationalDesignGuide)]
-    public async Task<IActionResult> NationalDesignGuide([FromRoute] string siteId, NationalDesignGuidePrioritiesModel model, CancellationToken cancellationToken)
+    public async Task<IActionResult> NationalDesignGuide(
+        [FromRoute] string siteId,
+        NationalDesignGuidePrioritiesModel model,
+        CancellationToken cancellationToken)
     {
         return await ExecuteSiteCommand(
             new ProvideNationalDesignGuidePrioritiesCommand(

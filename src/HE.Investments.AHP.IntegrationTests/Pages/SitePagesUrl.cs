@@ -29,6 +29,9 @@ public static class SitePagesUrl
     public static string SiteLocalAuthorityConfirm(string siteId, string localAuthorityId, string localAuthorityName, string phrase) =>
         $"ahp/site/{siteId}/local-authority/{localAuthorityId}/{localAuthorityName}/confirm?phrase={phrase}";
 
+    public static string SiteLocalAuthorityConfirmWithoutQuery(string siteId, string localAuthorityId, string localAuthorityName) =>
+        $"ahp/site/{siteId}/local-authority/{localAuthorityId}/{localAuthorityName}/confirm";
+
     public static string SitePlanningStatus(string siteId) => $"ahp/site/{siteId}/planning-status";
 
     public static string SitePlanningDetails(string siteId) => $"ahp/site/{siteId}/planning-details";

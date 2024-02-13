@@ -59,4 +59,12 @@ public static class ModelStateExtensions
 
         return modelState.GetFieldValidationState(key) == ModelValidationState.Invalid;
     }
+
+    public static void Merge(this ModelStateDictionary modelState, IDictionary<string, string> errors)
+    {
+        foreach (var error in errors)
+        {
+            modelState.AddModelError(error.Key, error.Value);
+        }
+    }
 }
