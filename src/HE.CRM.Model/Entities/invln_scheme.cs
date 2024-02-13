@@ -145,6 +145,7 @@ namespace DataverseModel
 			public const string invln_contactidYomiName = "invln_contactidyominame";
 			public const string invln_currentlandvalue = "invln_currentlandvalue";
 			public const string invln_currentlandvalue_Base = "invln_currentlandvalue_base";
+			public const string invln_DateSubmitted = "invln_datesubmitted";
 			public const string invln_deliveryphase_Application_invln_scheme = "invln_deliveryphase_Application_invln_scheme";
 			public const string invln_deliveryphasessectioncompletionstatus = "invln_deliveryphasessectioncompletionstatus";
 			public const string invln_deliveryphasessectioncompletionstatusName = "invln_deliveryphasessectioncompletionstatusname";
@@ -249,8 +250,6 @@ namespace DataverseModel
 			public const string invln_SiteName = "invln_sitename";
 			public const string invln_stopreminderemail = "invln_stopreminderemail";
 			public const string invln_stopreminderemailName = "invln_stopreminderemailname";
-			public const string invln_Submitted = "invln_submitted";
-			public const string invln_submittedName = "invln_submittedname";
 			public const string invln_supportedgpuaspercentageofareaaverage = "invln_supportedgpuaspercentageofareaaverage";
 			public const string invln_Tenure = "invln_tenure";
 			public const string invln_tenureName = "invln_tenurename";
@@ -683,6 +682,23 @@ namespace DataverseModel
 			get
 			{
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_currentlandvalue_base");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_datesubmitted")]
+		public System.Nullable<System.DateTime> invln_DateSubmitted
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("invln_datesubmitted");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_DateSubmitted");
+				this.SetAttributeValue("invln_datesubmitted", value);
+				this.OnPropertyChanged("invln_DateSubmitted");
 			}
 		}
 		
@@ -2201,40 +2217,6 @@ namespace DataverseModel
 				if (this.FormattedValues.Contains("invln_stopreminderemail"))
 				{
 					return this.FormattedValues["invln_stopreminderemail"];
-				}
-				else
-				{
-					return default(string);
-				}
-			}
-		}
-		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_submitted")]
-		public System.Nullable<bool> invln_Submitted
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<System.Nullable<bool>>("invln_submitted");
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("invln_Submitted");
-				this.SetAttributeValue("invln_submitted", value);
-				this.OnPropertyChanged("invln_Submitted");
-			}
-		}
-		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_submittedname")]
-		public string invln_submittedName
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				if (this.FormattedValues.Contains("invln_submitted"))
-				{
-					return this.FormattedValues["invln_submitted"];
 				}
 				else
 				{
