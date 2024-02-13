@@ -280,9 +280,9 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
 
         var tranche = trancheType switch
         {
-            SummaryOfDeliveryTrancheType.Acquisition => deliveryPhaseDetails.Tranches?.SummaryOfDeliveryAmend?.AcquisitionMilestone,
-            SummaryOfDeliveryTrancheType.Completion => deliveryPhaseDetails.Tranches?.SummaryOfDeliveryAmend?.CompletionMilestone,
-            SummaryOfDeliveryTrancheType.StartOnSite => deliveryPhaseDetails.Tranches?.SummaryOfDeliveryAmend?.StartOnSiteMilestone,
+            SummaryOfDeliveryTrancheType.Acquisition => deliveryPhaseDetails.Tranches?.SummaryOfDeliveryAmend?.AcquisitionPercentage,
+            SummaryOfDeliveryTrancheType.Completion => deliveryPhaseDetails.Tranches?.SummaryOfDeliveryAmend?.CompletionPercentage,
+            SummaryOfDeliveryTrancheType.StartOnSite => deliveryPhaseDetails.Tranches?.SummaryOfDeliveryAmend?.StartOnSitePercentage,
             _ => throw new NotSupportedException(nameof(trancheType)),
         };
 

@@ -2,7 +2,7 @@
 @using HE.Investments.Common.WWW.Components.ErrorMessage
 @using HE.Investments.Common.WWW.Components.InputHeader
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
-@model (string fieldName, string value, string label, string hint, string prefix, string cssClass)
+@model (string fieldName, string value, string label, string hint, string prefix, string suffix, string cssClass)
 @{
     var (hasError, errors) = ViewData.ModelState.GetErrors(Model.fieldName);
     var groupClass = hasError ? "govuk-form-group--error" : string.Empty;
@@ -23,6 +23,10 @@
             <div class="govuk-input__prefix" aria-hidden="true">@Model.prefix</div>
         }
         <input class="@inputClass" id="@Model.fieldName" name="@Model.fieldName" type="text" spellcheck="false" value="@Model.value">
+        @if (!string.IsNullOrWhiteSpace(Model.suffix))
+        {
+            <div class="govuk-input__suffix" aria-hidden="true">@Model.suffix</div>
+        }
     </div>
 
 </gds-div-form-group>

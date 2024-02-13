@@ -3,9 +3,9 @@ namespace HE.Investment.AHP.Contract.Delivery.MilestonePayments;
 public record SummaryOfDeliveryAmend(
     decimal? GrantApportioned,
     decimal? AcquisitionMilestone,
-    decimal? AcquisitionPercentage,
+    string? AcquisitionPercentage,
     decimal? StartOnSiteMilestone,
-    decimal? StartOnSitePercentage,
+    string? StartOnSitePercentage,
     decimal? CompletionMilestone,
-    decimal? CompletionPercentage,
+    string? CompletionPercentage,
     bool? UnderstandClaimingMilestones = null);
