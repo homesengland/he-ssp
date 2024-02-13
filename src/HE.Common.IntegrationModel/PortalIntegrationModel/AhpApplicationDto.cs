@@ -16,6 +16,7 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public int? homeTypesSectionCompletionStatus { get; set; }
         public int? financialDetailsSectionCompletionStatus { get; set; }
         public int? deliveryPhasesSectionCompletionStatus { get; set; }
+        public bool? wasSubmitted { get; set; }
 
         //financial
         public decimal? borrowingAgainstRentalIncomeFromThisScheme { get; set; }
