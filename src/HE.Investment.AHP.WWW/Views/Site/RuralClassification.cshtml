@@ -1,0 +1,45 @@
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investment.AHP.Contract.Site
+@using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
+@using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToSitesLink
+@using HE.Investment.AHP.WWW.Views.Site.Const
+@using HE.Investments.Common.WWW.Components.CheckboxListWithOr
+@using HE.Investments.Common.WWW.Components.Details
+@using HE.Investments.Common.WWW.Components.PageHeader
+@using HE.Investments.Common.WWW.Helpers
+@model SiteRuralClassification
+@{
+    ViewData["Title"] = SitePageTitles.RuralClassification;
+    var details = new DynamicComponentViewModel(
+        nameof(Details),
+        new
+        {
+            title = "What are rural exception sites?",
+            contentText = "Rural exception sites are small sites on the edge of existing rural settlements, given planning permission for affordable housing only. Exception sites are exempt from some planning requirements and Homes England’s requirement that there are no local restrictions on Shared Ownership."
+        });
+}
+
+<gds-div-grid-column-two-thirds>
+    <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.RuralClassification"/>
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+    <vc:page-header caption="@ViewBag.SiteName" title="@SitePageTitles.RuralClassification"/>
+
+    <form asp-controller="Site" asp-action="RuralClassification" asp-method="post" novalidate>
+
+        <vc:radio-yes-no
+            title="Is this site within a rural settlement?"
+            hint="A rural settlement has a population of 3000 or less."
+            field-name="@nameof(Model.IsWithinRuralSettlement)"
+            value="@Model.IsWithinRuralSettlement"/>
+
+        <vc:radio-yes-no
+            title="Is this a rural exception site?"
+            additional-content="@details"
+            field-name="@nameof(Model.IsRuralExceptionSite)"
+            value="@Model.IsRuralExceptionSite"/>
+
+        <vc:form-button/>
+        <vc:return-to-sites-link/>
+    </form>
+
+</gds-div-grid-column-two-thirds>

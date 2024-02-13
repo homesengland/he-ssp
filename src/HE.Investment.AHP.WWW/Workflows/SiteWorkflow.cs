@@ -100,6 +100,7 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             SiteWorkflowState.SiteType => true,
             SiteWorkflowState.SiteUse => true,
             SiteWorkflowState.TravellerPitchType => IsForTravellerPitchSite(),
+            SiteWorkflowState.RuralClassification => true,
             SiteWorkflowState.Procurements => true,
             SiteWorkflowState.CheckAnswers => true,
             _ => false,
