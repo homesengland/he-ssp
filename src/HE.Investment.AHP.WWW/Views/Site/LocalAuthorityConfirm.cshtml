@@ -18,14 +18,13 @@
 <gds-div-grid-column-two-thirds>
     <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("LocalAuthorityResult", "Site", new { siteId = Model.ViewModel.SiteId, phrase = Model.ViewModel.Phrase, redirect })"></gds-back-link>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
-    <form asp-controller="Site" asp-action="LocalAuthorityConfirm" asp-route-localAuthorityId=@(Model.ViewModel.LocalAuthorityId) asp-route-redirect=@redirect asp-method="post" novalidate>
+    <form asp-controller="Site" asp-action="LocalAuthorityConfirm" asp-route-localAuthorityId=@(Model.ViewModel.LocalAuthorityId) asp-route-phrase=@(Model.ViewModel.Phrase) asp-route-redirect=@redirect asp-method="post" novalidate>
         <gds-field-set>
-                <gds-h1 size="ControlSize.Xl" class="govuk-!-margin-bottom-6">
-                    @SitePageTitles.LocalAuthorityConfirm
-                </gds-h1>
-                <gds-p>
-                    <b>@Model.ViewModel.LocalAuthorityName</b>
-                </gds-p>
+            <vc:page-header title="@SitePageTitles.LocalAuthorityConfirm"/>
+
+            <gds-p>
+                <b>@Model.ViewModel.LocalAuthorityName</b>
+            </gds-p>
             <he-error-form-group asp-for="Response">
 
                 <gds-h2 class="govuk-fieldset__legend--m">

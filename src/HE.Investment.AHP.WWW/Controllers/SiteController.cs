@@ -332,7 +332,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
             _mediator,
             new ProvideLocalAuthorityCommand(new SiteId(siteId), localAuthorityId, localAuthorityName, model.Response),
             () => ContinueWithRedirect(new { siteId, redirect }),
-            async () => await Task.FromResult<IActionResult>(View(model)),
+            async () => await Task.FromResult(View(model)),
             cancellationToken);
     }
 
@@ -445,7 +445,10 @@ public class SiteController : WorkflowController<SiteWorkflowState>
 
     [HttpPost("{siteId}/national-design-guide")]
     [WorkflowState(SiteWorkflowState.NationalDesignGuide)]
-    public async Task<IActionResult> NationalDesignGuide([FromRoute] string siteId, NationalDesignGuidePrioritiesModel model, CancellationToken cancellationToken)
+    public async Task<IActionResult> NationalDesignGuide(
+        [FromRoute] string siteId,
+        NationalDesignGuidePrioritiesModel model,
+        CancellationToken cancellationToken)
     {
         return await ExecuteSiteCommand(
             new ProvideNationalDesignGuidePrioritiesCommand(
