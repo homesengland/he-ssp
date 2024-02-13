@@ -12,11 +12,11 @@ using Xunit.Extensions.Ordering;
 
 namespace HE.Investments.AHP.IntegrationTests.ChangeApplicationStatus;
 
-[Order(7)]
+[Order(9)]
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
-public class Order08Withdraw : AhpIntegrationTest
+public class Order09Withdraw : AhpIntegrationTest
 {
-    public Order08Withdraw(IntegrationTestFixture<Program> fixture)
+    public Order09Withdraw(IntegrationTestFixture<Program> fixture)
         : base(fixture)
     {
     }

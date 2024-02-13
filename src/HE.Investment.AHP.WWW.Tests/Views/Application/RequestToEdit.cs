@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.Application;
 
-public class OnHoldTests : ViewTestBase
+public class RequestToEdit : ViewTestBase
 {
-    private readonly string _viewPath = "/Views/Application/OnHold.cshtml";
+    private readonly string _viewPath = "/Views/Application/RequestToEdit.cshtml";
     private readonly ChangeApplicationStatusModel _model = new(Guid.NewGuid(), "my application");
 
     [Fact]
@@ -26,7 +26,7 @@ public class OnHoldTests : ViewTestBase
         // given
         var errorMessage = "some test error";
         var modelState = new ModelStateDictionary();
-        modelState.AddModelError(nameof(ChangeApplicationStatusModel.HoldReason), errorMessage);
+        modelState.AddModelError(nameof(ChangeApplicationStatusModel.RequestToEditReason), errorMessage);
 
         // when
         var document = await Render(_viewPath, _model, modelStateDictionary: modelState);
@@ -38,10 +38,10 @@ public class OnHoldTests : ViewTestBase
     private static void AssertView(IHtmlDocument document, string? errorMessage = null)
     {
         document
-            .HasTitle(ApplicationPageTitles.OnHold)
+            .HasTitle(ApplicationPageTitles.RequestToEdit)
             .HasElementWithText("div", "You can enter up to 1500 characters")
-            .HasSubmitButton(out _, "Hold")
-            .HasSummaryErrorMessage(nameof(ChangeApplicationStatusModel.HoldReason), errorMessage, !string.IsNullOrEmpty(errorMessage))
-            .HasErrorMessage(nameof(ChangeApplicationStatusModel.HoldReason), errorMessage, !string.IsNullOrEmpty(errorMessage));
+            .HasSubmitButton(out _, "Request to edit")
+            .HasSummaryErrorMessage(nameof(ChangeApplicationStatusModel.RequestToEditReason), errorMessage, !string.IsNullOrEmpty(errorMessage))
+            .HasErrorMessage(nameof(ChangeApplicationStatusModel.RequestToEditReason), errorMessage, !string.IsNullOrEmpty(errorMessage));
     }
 }
