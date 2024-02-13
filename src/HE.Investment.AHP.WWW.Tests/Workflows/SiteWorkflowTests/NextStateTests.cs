@@ -25,7 +25,8 @@ public class NextStateTests
     [InlineData(SiteWorkflowState.IntentionToWorkWithSme, SiteWorkflowState.StrategicSite)]
     [InlineData(SiteWorkflowState.StrategicSite, SiteWorkflowState.SiteType)]
     [InlineData(SiteWorkflowState.SiteType, SiteWorkflowState.SiteUse)]
-    [InlineData(SiteWorkflowState.SiteUse, SiteWorkflowState.Procurements)]
+    [InlineData(SiteWorkflowState.SiteUse, SiteWorkflowState.RuralClassification)]
+    [InlineData(SiteWorkflowState.RuralClassification, SiteWorkflowState.Procurements)]
     [InlineData(SiteWorkflowState.Procurements, SiteWorkflowState.CheckAnswers)]
     public async Task ShouldReturnNextState_WhenContinueTriggerExecuted(SiteWorkflowState current, SiteWorkflowState expectedNext)
     {
@@ -89,7 +90,8 @@ public class NextStateTests
     [InlineData(SiteWorkflowState.IntentionToWorkWithSme, SiteWorkflowState.TenderingStatus)]
     [InlineData(SiteWorkflowState.SiteType, SiteWorkflowState.StrategicSite)]
     [InlineData(SiteWorkflowState.SiteUse, SiteWorkflowState.SiteType)]
-    [InlineData(SiteWorkflowState.Procurements, SiteWorkflowState.SiteUse)]
+    [InlineData(SiteWorkflowState.RuralClassification, SiteWorkflowState.SiteUse)]
+    [InlineData(SiteWorkflowState.Procurements, SiteWorkflowState.RuralClassification)]
     [InlineData(SiteWorkflowState.CheckAnswers, SiteWorkflowState.Procurements)]
     public async Task ShouldReturnNextState_WhenBackTriggerExecuted(SiteWorkflowState current, SiteWorkflowState expectedNext)
     {
@@ -481,8 +483,8 @@ public class NextStateTests
 
     [Theory]
     [InlineData(true, SiteWorkflowState.TravellerPitchType)]
-    [InlineData(false, SiteWorkflowState.Procurements)]
-    [InlineData(null, SiteWorkflowState.Procurements)]
+    [InlineData(false, SiteWorkflowState.RuralClassification)]
+    [InlineData(null, SiteWorkflowState.RuralClassification)]
     public async Task ShouldReturnNextState_WhenContinueTriggerExecutedWithDifferentSiteUse(bool? isForTravellerPitchSite, SiteWorkflowState expectedNext)
     {
         // given

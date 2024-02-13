@@ -3,6 +3,7 @@ using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investment.AHP.Domain.Site.ValueObjects;
 using HE.Investment.AHP.WWW.Workflows;
 using ContractSiteTypeDetails = HE.Investment.AHP.Contract.Site.SiteTypeDetails;
+using SiteRuralClassification = HE.Investment.AHP.Contract.Site.SiteRuralClassification;
 using SiteUseDetails = HE.Investment.AHP.Contract.Site.SiteUseDetails;
 
 namespace HE.Investment.AHP.WWW.Tests.Workflows.SiteWorkflowTests;
@@ -23,7 +24,8 @@ public static class SiteWorkflowFactory
         StrategicSite? strategicSite = null,
         ContractSiteTypeDetails? siteTypeDetails = null,
         SiteUseDetails? siteUseDetails = null,
-        IList<SiteProcurement>? procurements = null)
+        IList<SiteProcurement>? procurements = null,
+        SiteRuralClassification? ruralClassification = null)
     {
         var site = new SiteModel
         {
@@ -40,6 +42,7 @@ public static class SiteWorkflowFactory
             SiteTypeDetails = siteTypeDetails ?? new ContractSiteTypeDetails(null, null, null, true),
             SiteUseDetails = siteUseDetails ?? new SiteUseDetails(null, null, TravellerPitchSiteType.Undefined),
             SiteProcurements = procurements ?? new List<SiteProcurement>(),
+            RuralClassification = ruralClassification ?? new SiteRuralClassification(null, null),
         };
 
         return new SiteWorkflow(currentSiteWorkflowState, site);
