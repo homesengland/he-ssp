@@ -670,6 +670,25 @@ public class SiteController : WorkflowController<SiteWorkflowState>
             cancellationToken);
     }
 
+    [HttpGet("{siteId}/rural-classification")]
+    [WorkflowState(SiteWorkflowState.RuralClassification)]
+    public async Task<IActionResult> RuralClassification([FromRoute] string siteId, CancellationToken cancellationToken)
+    {
+        var siteModel = await GetSiteDetails(siteId, cancellationToken);
+        return View("RuralClassification", siteModel.RuralClassification);
+    }
+
+    [HttpPost("{siteId}/rural-classification")]
+    [WorkflowState(SiteWorkflowState.RuralClassification)]
+    public async Task<IActionResult> RuralClassification(SiteRuralClassification model, CancellationToken cancellationToken)
+    {
+        return await ExecuteSiteCommand<SiteRuralClassification>(
+            new ProvideSiteRuralClassificationCommand(this.GetSiteIdFromRoute(), model.IsWithinRuralSettlement, model.IsRuralExceptionSite),
+            nameof(RuralClassification),
+            _ => model,
+            cancellationToken);
+    }
+
     [HttpGet("{siteId}/procurements")]
     [WorkflowState(SiteWorkflowState.Procurements)]
     public async Task<IActionResult> Procurements([FromRoute] string siteId, CancellationToken cancellationToken)

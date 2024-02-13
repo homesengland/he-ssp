@@ -1,6 +1,5 @@
 extern alias Org;
 
-using System.Linq.Expressions;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investment.AHP.Domain.Site.Repositories;
@@ -14,6 +13,7 @@ using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using LocalAuthority = Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
 using Section106 = HE.Investment.AHP.Domain.Site.ValueObjects.Section106;
+using SiteRuralClassification = HE.Investment.AHP.Domain.Site.ValueObjects.SiteRuralClassification;
 using SiteTypeDetails = HE.Investment.AHP.Domain.Site.ValueObjects.SiteTypeDetails;
 using SiteUseDetails = HE.Investment.AHP.Domain.Site.ValueObjects.SiteUseDetails;
 
@@ -37,7 +37,8 @@ public class SiteEntity : DomainEntity, IQuestion
         SiteProcurements siteProcurements,
         LocalAuthority? localAuthority = null,
         BuildingForHealthyLifeType buildingForHealthyLife = BuildingForHealthyLifeType.Undefined,
-        SiteUseDetails? siteUseDetails = null)
+        SiteUseDetails? siteUseDetails = null,
+        SiteRuralClassification? ruralClassification = null)
     {
         Id = id;
         Name = name;
@@ -54,6 +55,7 @@ public class SiteEntity : DomainEntity, IQuestion
         StrategicSiteDetails = strategicSiteDetails;
         SiteTypeDetails = siteTypeDetails;
         SiteUseDetails = siteUseDetails ?? new SiteUseDetails();
+        RuralClassification = ruralClassification ?? new SiteRuralClassification();
     }
 
     public SiteEntity()
@@ -70,6 +72,7 @@ public class SiteEntity : DomainEntity, IQuestion
         SiteTypeDetails = new SiteTypeDetails();
         SiteUseDetails = new SiteUseDetails();
         Procurements = new SiteProcurements();
+        RuralClassification = new SiteRuralClassification();
     }
 
     public SiteId Id { get; set; }
@@ -101,6 +104,8 @@ public class SiteEntity : DomainEntity, IQuestion
     public SiteUseDetails SiteUseDetails { get; private set; }
 
     public SiteProcurements Procurements { get; private set; }
+
+    public SiteRuralClassification RuralClassification { get; private set; }
 
     public async Task ProvideName(SiteName siteName, ISiteNameExist siteNameExist, CancellationToken cancellationToken)
     {
@@ -178,6 +183,11 @@ public class SiteEntity : DomainEntity, IQuestion
         Procurements = _modificationTracker.Change(Procurements, procurements);
     }
 
+    public void ProvideRuralClassification(SiteRuralClassification ruralClassification)
+    {
+        RuralClassification = _modificationTracker.Change(RuralClassification, ruralClassification);
+    }
+
     public bool IsAnswered()
     {
         return PlanningDetails.IsAnswered() &&
@@ -187,7 +197,8 @@ public class SiteEntity : DomainEntity, IQuestion
                SiteUseDetails.IsAnswered() &&
                BuildingForHealthyLife != BuildingForHealthyLifeType.Undefined &&
                BuildConditionalRouteCompletionPredicates().All(isCompleted => isCompleted()) &&
-               Procurements.IsAnswered();
+               Procurements.IsAnswered() &&
+               RuralClassification.IsAnswered();
     }
 
     private IEnumerable<Func<bool>> BuildConditionalRouteCompletionPredicates()

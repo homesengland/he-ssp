@@ -30,5 +30,7 @@ public class SiteModel
 
     public SiteUseDetails SiteUseDetails { get; set; }
 
+    public SiteRuralClassification RuralClassification { get; set; }
+
     public IList<SiteProcurement> SiteProcurements { get; set; }
 }

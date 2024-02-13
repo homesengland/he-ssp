@@ -45,6 +45,7 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
             StrategicSiteDetails = CreateStrategicSiteDetails(site.StrategicSiteDetails),
             SiteTypeDetails = CreateSiteTypeDetails(site.SiteTypeDetails),
             SiteUseDetails = CreateSiteUseDetails(site.SiteUseDetails),
+            RuralClassification = CreateSiteRuralClassification(site.RuralClassification),
             SiteProcurements = site.Procurements.Procurements.ToList(),
         };
     }
@@ -111,5 +112,10 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
     private static SiteUseDetails CreateSiteUseDetails(ValueObjects.SiteUseDetails details)
     {
         return new SiteUseDetails(details.IsPartOfStreetFrontInfill, details.IsForTravellerPitchSite, details.TravellerPitchSiteType);
+    }
+
+    private static SiteRuralClassification CreateSiteRuralClassification(ValueObjects.SiteRuralClassification details)
+    {
+        return new SiteRuralClassification(details.IsWithinRuralSettlement, details.IsRuralExceptionSite);
     }
 }
