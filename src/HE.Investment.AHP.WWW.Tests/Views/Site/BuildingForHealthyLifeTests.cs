@@ -20,7 +20,7 @@ public class BuildingForHealthyLifeTests : ViewTestBase
         document
             .HasTitle(SitePageTitles.BuildingForHealthyLife)
             .HasPageHeader(siteName, SitePageTitles.BuildingForHealthyLife)
-            .HasSummaryDetails("What are the Building for a Healthy Life criteria?")
+            .HasSummaryDetails("Building for a Healthy Life is a design code to help people improve the design of new and growing neighbourhoods. You can read more in the")
             .HasRadio(
                 "BuildingForHealthyLife",
                 new[]
@@ -50,7 +50,7 @@ public class BuildingForHealthyLifeTests : ViewTestBase
         document
             .HasTitle(SitePageTitles.BuildingForHealthyLife)
             .HasPageHeader(siteName, SitePageTitles.BuildingForHealthyLife)
-            .HasSummaryDetails("What are the Building for a Healthy Life criteria?")
+            .HasSummaryDetails("Building for a Healthy Life is a design code to help people improve the design of new and growing neighbourhoods. You can read more in the")
             .HasRadio(
                 "BuildingForHealthyLife",
                 new[]

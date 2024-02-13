@@ -72,24 +72,13 @@ public class ApplicationRepository : IApplicationRepository
         PaginationRequest paginationRequest,
         CancellationToken cancellationToken)
     {
-        var organisationId = userAccount.SelectedOrganisationId().Value;
-        var applications = userAccount.CanViewAllApplications()
-            ? await _applicationCrmContext.GetOrganisationApplications(organisationId, CrmFields.ApplicationListToRead.ToList(), cancellationToken)
-            : await _applicationCrmContext.GetUserApplications(organisationId, CrmFields.ApplicationListToRead.ToList(), cancellationToken);
+        return await GetApplications(userAccount, paginationRequest, null, cancellationToken);
+    }
 
-        var filtered = applications
-            .OrderByDescending(x => x.lastExternalModificationOn)
-            .TakePage(paginationRequest)
-            .Select(x => new ApplicationWithFundingDetails(
-                new AhpApplicationId(x.id),
-                x.name,
-                AhpApplicationStatusMapper.MapToPortalStatus(x.applicationStatus),
-                ApplicationTenureMapper.ToDomain(x.tenure)!.Value,
-                x.noOfHomes,
-                x.fundingRequested))
-            .ToList();
-
-        return new PaginationResult<ApplicationWithFundingDetails>(filtered, paginationRequest.Page, paginationRequest.ItemsPerPage, applications.Count);
+    public async Task<PaginationResult<ApplicationWithFundingDetails>> GetSiteApplications(SiteId siteId, UserAccount userAccount, PaginationRequest paginationRequest, CancellationToken cancellationToken)
+    {
+        // TODO: AB#88650 filter by site: x => x.siteId == siteId.Value
+        return await GetApplications(userAccount, paginationRequest, null, cancellationToken);
     }
 
     public async Task<ApplicationEntity> Save(ApplicationEntity application, OrganisationId organisationId, CancellationToken cancellationToken)
@@ -164,5 +153,32 @@ public class ApplicationRepository : IApplicationRepository
                     new(SectionType.FinancialDetails, SectionStatusMapper.ToDomain(application.financialDetailsSectionCompletionStatus, applicationStatus)),
                     new(SectionType.DeliveryPhases, SectionStatusMapper.ToDomain(application.deliveryPhasesSectionCompletionStatus, applicationStatus)),
                 }));
+    }
+
+    private async Task<PaginationResult<ApplicationWithFundingDetails>> GetApplications(
+        UserAccount userAccount,
+        PaginationRequest paginationRequest,
+        Predicate<AhpApplicationDto>? filter,
+        CancellationToken cancellationToken)
+    {
+        var organisationId = userAccount.SelectedOrganisationId().Value;
+        var applications = userAccount.CanViewAllApplications()
+            ? await _applicationCrmContext.GetOrganisationApplications(organisationId, CrmFields.ApplicationListToRead.ToList(), cancellationToken)
+            : await _applicationCrmContext.GetUserApplications(organisationId, CrmFields.ApplicationListToRead.ToList(), cancellationToken);
+
+        var filtered = applications
+            .Where(x => filter == null || filter(x))
+            .OrderByDescending(x => x.lastExternalModificationOn)
+            .TakePage(paginationRequest)
+            .Select(x => new ApplicationWithFundingDetails(
+                new AhpApplicationId(x.id),
+                x.name,
+                AhpApplicationStatusMapper.MapToPortalStatus(x.applicationStatus),
+                ApplicationTenureMapper.ToDomain(x.tenure)!.Value,
+                x.noOfHomes,
+                x.fundingRequested))
+            .ToList();
+
+        return new PaginationResult<ApplicationWithFundingDetails>(filtered, paginationRequest.Page, paginationRequest.ItemsPerPage, applications.Count);
     }
 }

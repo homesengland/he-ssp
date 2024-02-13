@@ -1,4 +1,5 @@
 using HE.Investment.AHP.Contract.Application;
+using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Domain.Application.Entities;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
@@ -20,6 +21,12 @@ public interface IApplicationRepository : IChangeApplicationStatus
     Task<ApplicationBasicInfo> GetApplicationBasicInfo(AhpApplicationId id, UserAccount userAccount, CancellationToken cancellationToken);
 
     Task<PaginationResult<ApplicationWithFundingDetails>> GetApplicationsWithFundingDetails(
+        UserAccount userAccount,
+        PaginationRequest paginationRequest,
+        CancellationToken cancellationToken);
+
+    Task<PaginationResult<ApplicationWithFundingDetails>> GetSiteApplications(
+        SiteId siteId,
         UserAccount userAccount,
         PaginationRequest paginationRequest,
         CancellationToken cancellationToken);

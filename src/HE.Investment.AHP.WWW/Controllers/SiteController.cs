@@ -73,10 +73,17 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     }
 
     [HttpGet("{siteId}")]
-    public async Task<IActionResult> Details(string siteId, CancellationToken cancellationToken)
+    public async Task<IActionResult> Details(string siteId, [FromQuery] int? page, CancellationToken cancellationToken)
     {
-        var response = await _mediator.Send(new GetSiteDetailsQuery(siteId), cancellationToken);
+        var response = await _mediator.Send(new GetSiteDetailsQuery(new SiteId(siteId), new PaginationRequest(page ?? 1)), cancellationToken);
         return View("Details", response);
+    }
+
+    [HttpGet("{siteId}/start")]
+    [WorkflowState(SiteWorkflowState.Start)]
+    public IActionResult StartSite(string siteId)
+    {
+        return View("Start");
     }
 
     [HttpGet("start")]
