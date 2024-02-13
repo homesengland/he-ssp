@@ -3,9 +3,15 @@
 @using HE.Investments.Common.Messages
 @using HE.Investments.Common.WWW.Components.PageHeader
 @using HE.Investments.Common.WWW.Helpers
+@using HE.Investment.AHP.WWW.Routing
 @model HE.Investment.AHP.WWW.Models.Application.ApplicationsListModel
 @{
     ViewData["Title"] = ApplicationPageTitles.ApplicationList;
+    ViewBag.Breadcrumbs = AhpBreadcrumbsBuilder
+        .Empty()
+        .WithOrganisation(Model.OrganisationName)
+        .WithApplicationsList()
+        .Build();
 }
 <div class="govuk-grid-column-full">
     <vc:page-header title="@ApplicationPageTitles.ApplicationList" caption="@Model.OrganisationName" additional-css-class="govuk-!-padding-top-8"/>

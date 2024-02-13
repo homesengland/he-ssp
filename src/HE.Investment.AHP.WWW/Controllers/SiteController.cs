@@ -38,9 +38,9 @@ public class SiteController : WorkflowController<SiteWorkflowState>
 
     [HttpGet]
     [WorkflowState(SiteWorkflowState.Index)]
-    public async Task<IActionResult> Index(CancellationToken cancellationToken)
+    public async Task<IActionResult> Index([FromQuery] int? page, CancellationToken cancellationToken)
     {
-        var response = await _mediator.Send(new GetSiteListQuery(new PaginationRequest(1, int.MaxValue)), cancellationToken);
+        var response = await _mediator.Send(new GetSiteListQuery(new PaginationRequest(page ?? 1)), cancellationToken);
         return View("Index", response);
     }
 

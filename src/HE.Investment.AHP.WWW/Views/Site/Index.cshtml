@@ -1,60 +1,44 @@
-@using HE.Investments.Account.Shared
-@using HE.Investments.Common.Extensions
 @using HE.Investments.Common.Messages
 @using HE.Investment.AHP.WWW.Views.Site.Const
 @model HE.Investment.AHP.Contract.Site.SitesListModel
-@inject IAccountAccessContext AccountAccessContext
 @{
     ViewData["Title"] = SitePageTitles.SiteList;
-    var canStartApplication = await AccountAccessContext.CanEditApplication();
 }
 <div class="govuk-grid-column-full">
-    <vc:form-header title="@SitePageTitles.SiteList" caption="@Model.OrganisationName" hint="To view site details or applications connected to a site, click on the site name." additional-css-class="govuk-!-padding-top-8"></vc:form-header>
+    <gds-back-link href="@Url.Action("Index", "Application")" class="govuk-!-margin-bottom-8"></gds-back-link>
+    <vc:page-header title="@SitePageTitles.SiteList"
+                    caption="@Model.OrganisationName"
+                    hint="Select a site to view site details or applications within the site."/>
+    <gds-h2 class="govuk-!-margin-top-6">Your sites</gds-h2>
 
-    <gds-h2 class="govuk-!-padding-top-8">
-        Your sites
-    </gds-h2>
-
-    <div class="govuk-!-padding-bottom-8">
-        <table class="govuk-table">
-            <thead class="govuk-table__head">
+    <table class="govuk-table">
+        <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header govuk-!-width-one-third">Name</th>
+            <th scope="col" class="govuk-table__header govuk-!-width-one-third">Local authority</th>
+            <th scope="col" class="govuk-table__header govuk-!-width-one-third">Status</th>
+        </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+        @foreach (var site in Model.Page.Items)
+        {
             <tr class="govuk-table__row">
-                <th scope="col" class="govuk-table__header govuk-!-width-one-third">Name</th>
-                <th scope="col" class="govuk-table__header govuk-!-width-one-third">Local Authority</th>
-                <th scope="col" class="govuk-table__header govuk-!-width-one-third">Status</th>
-            </tr>
-            </thead>
-            <tbody class="govuk-table__body">
-            @foreach (var site in Model.Page.Items)
-            {
-                <tr class="govuk-table__row">
-                    <td class="govuk-table__cell">
-                        <span class="app-task-list__task-name">
-                            <strong>
-                                <a href="@Url.Action("Details", "Site", new { siteId = site.Id })"> @site.Name </a>
-                            </strong>
-                        </span>
-                    </td>
-                    <td class="govuk-table__cell">
-                        @(site.LocalAuthorityName ?? GenericMessages.NotProvided)
-                    </td>
-                    <td class="govuk-table__cell">
-                        <strong class="govuk-tag govuk-tag--grey">
-                            @site.Status.GetDescription()
+                <td class="govuk-table__cell">
+                    <span class="app-task-list__task-name">
+                        <strong>
+                            <a href="@Url.Action("Details", "Site", new { siteId = site.Id })"> @site.Name </a>
                         </strong>
-                    </td>
-                </tr>
-            }
-            </tbody>
-        </table>
-    </div>
-    <link-button action-url="@Url.Action("Start", "Site")" is-disabled=@(!canStartApplication)>Start new site</link-button>
-    <div>
-        <gds-h2>
-            Affordable Homes Programme 2021-2026 CME
-        </gds-h2>
-        <p class="govuk-body govuk-!-margin-bottom-3">You can start a new Affordable Homes Programme application here. This will not affect any of your previous applications.</p>
-
-        <link-button action-url="@Url.Action("Name", "Application")" is-disabled=@(!canStartApplication)>Start new application</link-button>
-    </div>
+                    </span>
+                </td>
+                <td class="govuk-table__cell">
+                    @(site.LocalAuthorityName ?? GenericMessages.NotProvided)
+                </td>
+                <td class="govuk-table__cell">
+                    <vc:site-status-tag site-status="@site.Status"/>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    <he-pagination base-url="site" page="@Model.Page.CurrentPage" items-per-page=@Model.Page.ItemsPerPage total-items="@Model.Page.TotalItems"></he-pagination>
 </div>
