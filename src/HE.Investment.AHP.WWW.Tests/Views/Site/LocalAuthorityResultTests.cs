@@ -20,12 +20,13 @@ public class LocalAuthorityResultTests : ViewTestBase
                 10,
                 1),
         };
-        var document = await Render(_viewPath, localAuthorities);
+        var viewBag = new Dictionary<string, object> { { "SiteName", " some site name" } };
+        var document = await Render(_viewPath, localAuthorities, viewBag);
 
         // then
         document
             .HasTitle(SitePageTitles.LocalAuthorityResult)
-            .HasPageHeader(header: SitePageTitles.LocalAuthorityResult)
+            .HasPageHeader(viewBag["SiteName"].ToString(), SitePageTitles.LocalAuthorityResult)
             .HasSelectListItem("Liverpool", null)
             .HasBackLink(false);
     }
