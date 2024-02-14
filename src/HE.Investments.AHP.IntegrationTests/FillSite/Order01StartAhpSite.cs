@@ -359,13 +359,24 @@ public class Order01StartAhpSite : AhpIntegrationTest
         await TestQuestionPage(
             SitePagesUrl.SiteTravellerPitchType(SiteData.SiteId),
             SitePageTitles.TravellerPitchType,
-            SitePagesUrl.SiteProcurements(SiteData.SiteId),
+            SitePagesUrl.SiteRuralClassification(SiteData.SiteId),
             (nameof(SiteUseDetails.TravellerPitchSiteType), TravellerPitchSiteType.Permanent.ToString()));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(24)]
-    public async Task Order24_ShouldProvideProcurements()
+    [Order(26)]
+    public async Task Order26_ShouldProvideRuralClassification()
+    {
+        await TestQuestionPage(
+            SitePagesUrl.SiteRuralClassification(SiteData.SiteId),
+            SitePageTitles.RuralClassification,
+            SitePagesUrl.SiteProcurements(SiteData.SiteId),
+            (nameof(SiteRuralClassification.IsWithinRuralSettlement), "True"));
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(27)]
+    public async Task Order27_ShouldProvideProcurements()
     {
         await TestQuestionPage(
             SitePagesUrl.SiteProcurements(SiteData.SiteId),

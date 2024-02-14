@@ -78,7 +78,7 @@ public static class PlanningDetailsFactory
         return planningStatus switch
         {
             SitePlanningStatus.DetailedPlanningApprovalGranted =>
-                new DetailedPlanningApprovalGrantedPlanningDetails(referenceNumber, detailedPlanningApprovalDate),
+                new DetailedPlanningApprovalGrantedPlanningDetails(referenceNumber, detailedPlanningApprovalDate, isGrantFundingForAllHomes),
             SitePlanningStatus.DetailedPlanningApprovalGrantedWithFurtherSteps =>
                 new DetailedPlanningApprovalGrantedWithFurtherStepsPlanningDetails(
                     referenceNumber,

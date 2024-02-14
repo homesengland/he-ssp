@@ -2,6 +2,7 @@ using FluentAssertions;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investment.AHP.Domain.Site.ValueObjects;
+using SiteRuralClassification = HE.Investment.AHP.Contract.Site.SiteRuralClassification;
 using SiteTypeDetails = HE.Investment.AHP.Contract.Site.SiteTypeDetails;
 using SiteUseDetails = HE.Investment.AHP.Contract.Site.SiteUseDetails;
 
@@ -147,19 +148,19 @@ public class CurrentStateTests
     [Fact]
     public void ShouldReturnPlanningStatus_WhenPlanningStatusNotProvided()
     {
-        Test(SiteWorkflowState.PlanningStatus, _planningDetails with { PlanningStatus = null });
+        Test(SiteWorkflowState.PlanningStatus, planningDetails: _planningDetails with { PlanningStatus = null });
     }
 
     [Fact]
     public void ShouldReturnPlanningDetails_WhenPlanningDetailsNotProvided()
     {
-        Test(SiteWorkflowState.PlanningDetails, _planningDetails with { ArePlanningDetailsProvided = false });
+        Test(SiteWorkflowState.PlanningDetails, planningDetails: _planningDetails with { ArePlanningDetailsProvided = false });
     }
 
     [Fact]
     public void ShouldReturnLandRegistry_WhenLandRegistryNotProvided()
     {
-        Test(SiteWorkflowState.LandRegistry, _planningDetails with { LandRegistryTitleNumber = null });
+        Test(SiteWorkflowState.LandRegistry, planningDetails: _planningDetails with { LandRegistryTitleNumber = null });
     }
 
     [Fact]
@@ -259,6 +260,15 @@ public class CurrentStateTests
         Test(SiteWorkflowState.TravellerPitchType, siteUseDetails: new SiteUseDetails(false, true, TravellerPitchSiteType.Undefined));
     }
 
+    [Theory]
+    [InlineData(null, null)]
+    [InlineData(null, true)]
+    [InlineData(false, null)]
+    public void ShouldReturnRuralClassification_WhenRuralClassificationNotProvided(bool? isWithinRuralSettlement, bool? isRuralExceptionSite)
+    {
+        Test(SiteWorkflowState.RuralClassification, ruralClassification: new SiteRuralClassification(isWithinRuralSettlement, isRuralExceptionSite));
+    }
+
     [Fact]
     public void ShouldReturnProcurement_WhenProcurementNotProvided()
     {
@@ -274,7 +284,8 @@ public class CurrentStateTests
         StrategicSite? strategicSite = null,
         SiteTypeDetails? siteTypeDetails = null,
         SiteUseDetails? siteUseDetails = null,
-        IList<SiteProcurement>? procurements = null)
+        IList<SiteProcurement>? procurements = null,
+        SiteRuralClassification? ruralClassification = null)
     {
         // given
         var workflow = SiteWorkflowFactory.BuildWorkflow(
@@ -291,7 +302,8 @@ public class CurrentStateTests
             strategicSite: strategicSite,
             siteTypeDetails: siteTypeDetails,
             siteUseDetails: siteUseDetails ?? new SiteUseDetails(false, true, TravellerPitchSiteType.Permanent),
-            procurements: procurements ?? new List<SiteProcurement> { SiteProcurement.PartneringArrangementsWithContractor, SiteProcurement.LargeScaleContractProcurementThroughConsortium });
+            procurements: procurements ?? new List<SiteProcurement> { SiteProcurement.PartneringArrangementsWithContractor, SiteProcurement.LargeScaleContractProcurementThroughConsortium },
+            ruralClassification: ruralClassification ?? new SiteRuralClassification(true, false));
 
         // when
         var result = workflow.CurrentState(SiteWorkflowState.Start);
