@@ -12,7 +12,6 @@ public class GetSiteBasicDetailsQueryHandler : IRequestHandler<GetSiteBasicDetai
 
     private readonly ISiteRepository _siteRepository;
 
-
     public GetSiteBasicDetailsQueryHandler(IAccountUserContext accountUserContext, ISiteRepository siteRepository)
     {
         _accountUserContext = accountUserContext;
