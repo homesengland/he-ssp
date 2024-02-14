@@ -28,7 +28,7 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
         DeliveryPhaseName name,
         OrganisationBasicInfo organisation,
         SectionStatus status,
-        MilestoneTranches milestoneTranches,
+        MilestonesPercentageTranches milestones,
         SchemeFunding schemaFunding,
         TypeOfHomes? typeOfHomes = null,
         BuildActivity? buildActivity = null,
@@ -56,9 +56,9 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
         Tranches = new DeliveryPhaseTranches(
             Id,
             Application,
-            milestoneTranches,
+            milestones,
             CalculateGrantApportioned(schemaFunding),
-            false,
+            true,
             IsOnlyCompletionMilestone);
     }
 
@@ -177,11 +177,6 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
     public void UnComplete()
     {
         Status = _modificationTracker.Change(Status, SectionStatus.InProgress);
-    }
-
-    public SummaryOfDelivery GetSummaryOfDelivery()
-    {
-        return Tranches.CalculateSummary();
     }
 
     public void ProvideBuildActivity(BuildActivity buildActivity)

@@ -16,7 +16,7 @@ namespace HE.Investment.AHP.Domain.Delivery.Crm;
 
 public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
 {
-    private static readonly IDictionary<DeliveryPhaseId, MilestoneTranches> Tranches = new Dictionary<DeliveryPhaseId, MilestoneTranches>();
+    private static readonly IDictionary<DeliveryPhaseId, MilestonesPercentageTranches> Tranches = new Dictionary<DeliveryPhaseId, MilestonesPercentageTranches>();
 
     public IReadOnlyCollection<string> CrmFields => new[]
     {
@@ -47,7 +47,7 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
             new DeliveryPhaseName(dto.name),
             organisation,
             dto.isCompleted == true ? SectionStatus.Completed : SectionStatus.InProgress,
-            Tranches.TryGetValue(new DeliveryPhaseId(dto.id), out var milestoneTranches) ? milestoneTranches : MilestoneTranches.NotProvided, // TODO: Task 89103: [CRM] Save tranches (Milestone framework)
+            Tranches.TryGetValue(new DeliveryPhaseId(dto.id), out var milestoneTranches) ? milestoneTranches : MilestonesPercentageTranches.LackOfCalculation, // TODO: Task 89103: [CRM] Save tranches (Milestone framework)
             schemeFunding,
             typeOfHomes,
             buildActivity,
@@ -69,7 +69,7 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
 
     public DeliveryPhaseDto MapToDto(DeliveryPhaseEntity entity)
     {
-        Tranches[entity.Id] = entity.Tranches.MilestoneTranches;
+        Tranches[entity.Id] = entity.Tranches.GetPercentageTranches();
         return new DeliveryPhaseDto
         {
             id = entity.Id.IsNew ? null : entity.Id.Value,

@@ -7,8 +7,9 @@ namespace HE.Investments.Common.Domain.ValueObjects;
 
 public class WholePercentage : ValueObject
 {
-    public WholePercentage(decimal value, UiFields uiFields)
+    public WholePercentage(decimal value, UiFields? uiFields = null)
     {
+        uiFields ??= new UiFields("Value", "Value");
         if (value < 0)
         {
             OperationResult.ThrowValidationError(uiFields.FieldName, ValidationErrorMessage.PercentageInput(uiFields.DisplayName ?? "Value"));
@@ -16,6 +17,8 @@ public class WholePercentage : ValueObject
 
         Value = value;
     }
+
+    public static WholePercentage Hundered => new(1m);
 
     public decimal Value { get; }
 

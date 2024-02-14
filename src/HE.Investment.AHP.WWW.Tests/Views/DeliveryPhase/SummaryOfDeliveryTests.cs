@@ -23,7 +23,7 @@ public class SummaryOfDeliveryTests : ViewTestBase
         var document = await Render(_viewPath, model, routeData: _routeData);
 
         // then
-        document.HasTitle(DeliveryPageTitles.SummaryOfDelivery)
+        document.HasTitle(DeliveryPageTitles.SummaryOfDelivery("PhaseName"))
             .HasContinueButton()
             .HasBackLink(false);
 
@@ -51,7 +51,7 @@ public class SummaryOfDeliveryTests : ViewTestBase
         var document = await Render(_viewPath, model, routeData: _routeData);
 
         // then
-        document.HasTitle(DeliveryPageTitles.SummaryOfDelivery)
+        document.HasTitle(DeliveryPageTitles.SummaryOfDelivery("PhaseName"))
             .HasContinueButton()
             .HasBackLink(false);
 

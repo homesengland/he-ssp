@@ -174,7 +174,7 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
         var summaryOfDeliveryPhase = await GetCurrentPage(BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.SummaryOfDelivery, RehabDeliveryPhase));
         summaryOfDeliveryPhase
             .UrlEndWith(BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.SummaryOfDelivery, RehabDeliveryPhase))
-            .HasTitle(DeliveryPageTitles.SummaryOfDelivery)
+            .HasTitle(DeliveryPageTitles.SummaryOfDelivery(RehabDeliveryPhase.Name.Value))
             .HasBackLink()
             .HasContinueButton(out var continueButton);
 

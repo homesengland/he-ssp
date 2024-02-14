@@ -65,6 +65,4 @@ public interface IDeliveryPhaseEntity
     void Complete();
 
     void UnComplete();
-
-    SummaryOfDelivery GetSummaryOfDelivery();
 }

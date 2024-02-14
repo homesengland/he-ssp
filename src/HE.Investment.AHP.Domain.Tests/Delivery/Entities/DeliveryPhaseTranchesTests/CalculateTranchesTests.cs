@@ -3,15 +3,15 @@ using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investment.AHP.Domain.Tests.Delivery.Entities.TestDataBuilders;
 
-namespace HE.Investment.AHP.Domain.Tests.Delivery.Entities.DeliveryPhaseEntityTests;
+namespace HE.Investment.AHP.Domain.Tests.Delivery.Entities.DeliveryPhaseTranchesTests;
 
-public class GetSummaryOfDeliveryTests
+public class CalculateTranchesTests
 {
     [Theory]
     [InlineData(5_000_333, 3_000_199.8, 1_050_069, 750049, 1_200_081.8)]
     [InlineData(300_000, 180_000, 63_000, 45_000, 72_000)]
     [InlineData(1, 0.6, 0, 0, 0.6)]
-    public void ShouldCalculateSummaryBaseOnMilestoneFramework(
+    public void ShouldCalculateTranchesBaseOnMilestoneFramework(
         decimal requiredFunding,
         decimal expectedGrantApportioned,
         decimal expectedAcquisitionMilestone,
@@ -19,21 +19,22 @@ public class GetSummaryOfDeliveryTests
         decimal expectedCompletionMilestone)
     {
         // given
-        var deliveryPhase = new DeliveryPhaseEntityBuilder()
+        var tranches = new DeliveryPhaseEntityBuilder()
             .WithHomesToBeDelivered(10)
             .WithHomesToBeDelivered(20)
             .WithSchemeFunding((int)requiredFunding, 50)
             .WithMilestoneFramework(new MilestoneFramework(0.35m, 0.25m, 0.4m))
-            .Build();
+            .Build()
+            .Tranches;
 
         // when
-        var summary = deliveryPhase.GetSummaryOfDelivery();
+        var milestonesTranches = tranches.CalculateTranches();
 
         // then
-        summary.GrantApportioned.Should().Be(expectedGrantApportioned);
-        summary.AcquisitionMilestone.Should().Be(expectedAcquisitionMilestone);
-        summary.StartOnSiteMilestone.Should().Be(expectedStarOnSiteMilestone);
-        summary.CompletionMilestone.Should().Be(expectedCompletionMilestone);
+        tranches.GrantApportioned.Should().Be(expectedGrantApportioned);
+        milestonesTranches.AcquisitionMilestone.Should().Be(expectedAcquisitionMilestone);
+        milestonesTranches.StartOnSiteMilestone.Should().Be(expectedStarOnSiteMilestone);
+        milestonesTranches.CompletionMilestone.Should().Be(expectedCompletionMilestone);
     }
 
     [Fact]
@@ -41,23 +42,24 @@ public class GetSummaryOfDeliveryTests
     {
         // given
         var requestedFunding = 1000;
-        var deliveryPhase = new DeliveryPhaseEntityBuilder()
+        var tranches = new DeliveryPhaseEntityBuilder()
             .WithUnregisteredBody()
             .WithHomesToBeDelivered(10)
             .WithSchemeFunding(requestedFunding, 10)
             .WithMilestoneFramework(new MilestoneFramework(0.35m, 0.25m, 0.4m))
             .WithoutAcquisitionMilestone()
             .WithoutStartOnSiteMilestone()
-            .Build();
+            .Build()
+            .Tranches;
 
         // when
-        var summary = deliveryPhase.GetSummaryOfDelivery();
+        var milestonesTranches = tranches.CalculateTranches();
 
         // then
-        summary.GrantApportioned.Should().Be(requestedFunding);
-        summary.AcquisitionMilestone.Should().BeNull();
-        summary.StartOnSiteMilestone.Should().BeNull();
-        summary.CompletionMilestone.Should().Be(requestedFunding);
+        tranches.GrantApportioned.Should().Be(requestedFunding);
+        milestonesTranches.AcquisitionMilestone.Should().BeNull();
+        milestonesTranches.StartOnSiteMilestone.Should().BeNull();
+        milestonesTranches.CompletionMilestone.Should().Be(requestedFunding);
     }
 
     [Theory]
@@ -67,80 +69,81 @@ public class GetSummaryOfDeliveryTests
     {
         // given
         var requestedFunding = 1000;
-        var deliveryPhase = new DeliveryPhaseEntityBuilder()
+        var tranches = new DeliveryPhaseEntityBuilder()
             .WithRehabBuildActivity(buildActivityType)
             .WithHomesToBeDelivered(10)
             .WithSchemeFunding(requestedFunding, 10)
             .WithMilestoneFramework(new MilestoneFramework(0.35m, 0.25m, 0.4m))
             .WithoutAcquisitionMilestone()
             .WithoutStartOnSiteMilestone()
-            .Build();
+            .Build()
+            .Tranches;
 
         // when
-        var summary = deliveryPhase.GetSummaryOfDelivery();
+        var milestonesTranches = tranches.CalculateTranches();
 
         // then
-        summary.GrantApportioned.Should().Be(requestedFunding);
-        summary.AcquisitionMilestone.Should().BeNull();
-        summary.StartOnSiteMilestone.Should().BeNull();
-        summary.CompletionMilestone.Should().Be(requestedFunding);
+        tranches.GrantApportioned.Should().Be(requestedFunding);
+        milestonesTranches.AcquisitionMilestone.Should().BeNull();
+        milestonesTranches.StartOnSiteMilestone.Should().BeNull();
+        milestonesTranches.CompletionMilestone.Should().Be(requestedFunding);
     }
 
     [Fact]
     public void ShouldNotCalculateValue_WhenNoHomesToBeDelivered()
     {
         // given
-        var deliveryPhase = new DeliveryPhaseEntityBuilder()
+        var tranches = new DeliveryPhaseEntityBuilder()
             .WithoutHomesToDeliver()
             .WithSchemeFunding(1000, 50)
             .WithMilestoneFramework(new MilestoneFramework(0.35m, 0.25m, 0.4m))
-            .Build();
+            .Build()
+            .Tranches;
 
         // when
-        var summary = deliveryPhase.GetSummaryOfDelivery();
+        var milestonesTranches = tranches.CalculateTranches();
 
         // then
-        summary.GrantApportioned.Should().BeNull();
-        summary.AcquisitionMilestone.Should().BeNull();
-        summary.StartOnSiteMilestone.Should().BeNull();
-        summary.CompletionMilestone.Should().BeNull();
+        milestonesTranches.AcquisitionMilestone.Should().BeNull();
+        milestonesTranches.StartOnSiteMilestone.Should().BeNull();
+        milestonesTranches.CompletionMilestone.Should().BeNull();
     }
 
     [Fact]
     public void ShouldNotCalculateValue_WhenNoRequiredFunding()
     {
         // given
-        var deliveryPhase = new DeliveryPhaseEntityBuilder()
+        var tranches = new DeliveryPhaseEntityBuilder()
             .WithSchemeFunding(null, 10)
             .WithMilestoneFramework(new MilestoneFramework(0.35m, 0.25m, 0.4m))
-            .Build();
+            .Build()
+            .Tranches;
 
         // when
-        var summary = deliveryPhase.GetSummaryOfDelivery();
+        var milestonesTranches = tranches.CalculateTranches();
 
         // then
-        summary.GrantApportioned.Should().BeNull();
-        summary.AcquisitionMilestone.Should().BeNull();
-        summary.StartOnSiteMilestone.Should().BeNull();
-        summary.CompletionMilestone.Should().BeNull();
+        milestonesTranches.AcquisitionMilestone.Should().BeNull();
+        milestonesTranches.StartOnSiteMilestone.Should().BeNull();
+        milestonesTranches.CompletionMilestone.Should().BeNull();
     }
 
     [Fact]
     public void ShouldNotCalculateValue_WhenNoTotalHousesToDeliver()
     {
         // given
-        var deliveryPhase = new DeliveryPhaseEntityBuilder()
+        var tranches = new DeliveryPhaseEntityBuilder()
             .WithSchemeFunding(1000, 0)
             .WithMilestoneFramework(new MilestoneFramework(0.35m, 0.25m, 0.4m))
-            .Build();
+            .Build()
+            .Tranches;
 
         // when
-        var summary = deliveryPhase.GetSummaryOfDelivery();
+        var milestonesTranches = tranches.CalculateTranches();
 
         // then
-        summary.GrantApportioned.Should().BeNull();
-        summary.AcquisitionMilestone.Should().BeNull();
-        summary.StartOnSiteMilestone.Should().BeNull();
-        summary.CompletionMilestone.Should().BeNull();
+        milestonesTranches.AcquisitionMilestone.Should().BeNull();
+        milestonesTranches.StartOnSiteMilestone.Should().BeNull();
+        milestonesTranches.CompletionMilestone.Should().BeNull();
     }
 }
