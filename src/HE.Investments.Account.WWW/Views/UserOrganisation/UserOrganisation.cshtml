@@ -48,6 +48,10 @@
         <gds-div-grid-column-two-thirds class="govuk-!-padding-left-0 govuk-!-padding-right-6">
             @if (Model.ProgrammesToToAccess.Any(p => p.Applications.Any()))
             {
+                <gds-h2 size="ControlSize.M">
+                    Programmes you can access in @Model.OrganisationName
+                </gds-h2>
+
                 @foreach (var programmeToAccess in Model.ProgrammesToToAccess)
                 {
                     @await Html.PartialAsync(
