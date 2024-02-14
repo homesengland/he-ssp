@@ -161,7 +161,7 @@ public class Section106 : ValueObject, IQuestion
         if (capitalFundingEligibility == null)
         {
             OperationResult.New()
-                .AddValidationError(nameof(Section106Dto.CapitalFundingEligibility), ValidationErrorMessage.MustProvideRequiredField("Capital fundign Eligibility answer."))
+                .AddValidationError(nameof(Section106Dto.CapitalFundingEligibility), ValidationErrorMessage.MustProvideRequiredField("Capital funding Eligibility answer."))
                 .CheckErrors();
         }
 
