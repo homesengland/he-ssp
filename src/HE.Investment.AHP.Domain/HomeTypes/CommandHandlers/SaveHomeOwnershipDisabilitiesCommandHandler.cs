@@ -20,7 +20,8 @@ public class SaveHomeOwnershipDisabilitiesCommandHandler : SaveHomeTypeSegmentCo
 
     protected override IEnumerable<Action<SaveHomeOwnershipDisabilitiesCommand, IHomeTypeEntity>> SaveActions => new[]
     {
-        (SaveHomeOwnershipDisabilitiesCommand request, IHomeTypeEntity homeType) => homeType.TenureDetails.ChangeMarketValue(request.MarketValue),
+        (SaveHomeOwnershipDisabilitiesCommand _, IHomeTypeEntity homeType) => homeType.TenureDetails.ClearValuesForNewCalculation(),
+        (request, homeType) => homeType.TenureDetails.ChangeMarketValue(request.MarketValue),
         (request, homeType) => homeType.TenureDetails.ChangeInitialSale(request.InitialSale),
         (_, homeType) => homeType.TenureDetails.ChangeExpectedFirstTranche(),
         (request, homeType) => homeType.TenureDetails.ChangeProspectiveRent(request.ProspectiveRent),
