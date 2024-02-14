@@ -11,7 +11,7 @@ public class RequestToEditReason : LongText
             value,
             nameof(RequestToEditReason),
             ApplicationValidationErrors.EnterChangeStatusReason("want to request to edit"),
-            ValidationErrorMessage.LongInputLengthExceeded("request to edit"))
+            ValidationErrorMessage.LongInputLengthExceeded("request to edit reason"))
     {
     }
 }
