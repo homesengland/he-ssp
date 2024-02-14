@@ -14,9 +14,7 @@
 <gds-div-grid-column-two-thirds>
     <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.LocalAuthorityReset"/>
 
-    <gds-h1 size="ControlSize.L">
-        @SitePageTitles.LocalAuthorityNoMatch
-    </gds-h1>
+    <vc:page-header title="@SitePageTitles.LocalAuthorityNoMatch" caption="@ViewBag.SiteName"/>
 
     <gds-p>
         We could not find the details you entered in our records.
@@ -36,5 +34,6 @@
         </gds-link>
     </gds-p>
 
+    <vc:return-to-sites-link is-link-inside-form="false"/>
     @Html.HiddenFor(c => c.SiteId)
 </gds-div-grid-column-two-thirds>

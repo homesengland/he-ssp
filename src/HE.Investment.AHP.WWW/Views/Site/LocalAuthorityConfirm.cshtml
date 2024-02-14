@@ -20,7 +20,7 @@
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <form asp-controller="Site" asp-action="LocalAuthorityConfirm" asp-route-localAuthorityId=@(Model.ViewModel.LocalAuthorityId) asp-route-phrase=@(Model.ViewModel.Phrase) asp-route-redirect=@redirect asp-method="post" novalidate>
         <gds-field-set>
-            <vc:page-header title="@SitePageTitles.LocalAuthorityConfirm"/>
+            <vc:page-header title="@SitePageTitles.LocalAuthorityConfirm"  caption="@ViewBag.SiteName"/>
 
             <gds-p>
                 <b>@Model.ViewModel.LocalAuthorityName</b>
@@ -39,6 +39,8 @@
             </he-error-form-group>
             <vc:form-button text="Continue"/>
         </gds-field-set>
+
+        <vc:return-to-sites-link/>
         @Html.HiddenFor(c => c.ViewModel.SiteId)
         @Html.HiddenFor(c => c.ViewModel.LocalAuthorityId)
         @Html.HiddenFor(c => c.ViewModel.LocalAuthorityName)
