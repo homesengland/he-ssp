@@ -308,28 +308,28 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         return View(nameof(LocalAuthorityNotFound), new LocalAuthorities { SiteId = siteId });
     }
 
-    [HttpGet("{siteId}/local-authority/{localAuthorityId}/{localAuthorityName}/confirm")]
+    [HttpGet("{siteId}/local-authority/{localAuthorityId}/confirm")]
     [WorkflowState(SiteWorkflowState.LocalAuthorityConfirm)]
-    public async Task<IActionResult> LocalAuthorityConfirm(string siteId, string localAuthorityId, string localAuthorityName, string phrase, CancellationToken cancellationToken)
+    public async Task<IActionResult> LocalAuthorityConfirm(string siteId, string localAuthorityId, string? phrase, CancellationToken cancellationToken)
     {
         await GetSiteBasicDetails(siteId, cancellationToken);
+        var localAuthority = await _mediator.Send(new GetLocalAuthorityQuery(localAuthorityId), cancellationToken);
+
         var model = new LocalAuthorities
         {
             SiteId = siteId,
             LocalAuthorityId = localAuthorityId,
-            LocalAuthorityName = localAuthorityName,
+            LocalAuthorityName = localAuthority.Name,
             Phrase = phrase,
         };
 
         return View(new ConfirmModel<LocalAuthorities>(model));
     }
 
-    [HttpPost("{siteId}/local-authority/{localAuthorityId}/{localAuthorityName}/confirm")]
+    [HttpPost("{siteId}/local-authority/{localAuthorityId}/confirm")]
     [WorkflowState(SiteWorkflowState.LocalAuthorityConfirm)]
     public async Task<IActionResult> LocalAuthorityConfirm(
         string siteId,
-        string localAuthorityId,
-        string localAuthorityName,
         ConfirmModel<LocalAuthorities> model,
         [FromQuery] string redirect,
         CancellationToken cancellationToken)
@@ -340,7 +340,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         }
 
         return await ExecuteSiteCommand<ConfirmModel<LocalAuthorities>>(
-            new ProvideLocalAuthorityCommand(new SiteId(siteId), localAuthorityId, localAuthorityName, model.Response),
+            new ProvideLocalAuthorityCommand(new SiteId(siteId), model.ViewModel.LocalAuthorityId, model.ViewModel.LocalAuthorityName, model.Response),
             nameof(LocalAuthorityConfirm),
             _ => model,
             cancellationToken);

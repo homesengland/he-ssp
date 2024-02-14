@@ -46,6 +46,19 @@ public class LocalAuthorityRepository : ILocalAuthorityRepository
         return (itemsAtPage.ToList(), totalItems);
     }
 
+    public async Task<LocalAuthority> GetById(string localAuthorityId, CancellationToken cancellationToken)
+    {
+        var localAuthorities = await _cacheService.GetValueAsync(
+                                   "local-authorities",
+                                   async () => await GetLocalAuthorities(cancellationToken))
+                               ?? throw new NotFoundException(nameof(LocalAuthority));
+
+        var localAuthority = localAuthorities.FirstOrDefault(x => x.Id.ToString() == localAuthorityId) ??
+                             throw new NotFoundException($"Local authority with id {localAuthorityId} cannot be found");
+
+        return localAuthority;
+    }
+
     private async Task<IList<LocalAuthority>> GetLocalAuthorities(CancellationToken cancellationToken)
     {
         var req = new invln_searchlocalauthorityRequest();

@@ -1,3 +1,5 @@
+extern alias Org;
+
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Queries;
 using HE.Investment.AHP.Domain.Common.Mappers;
@@ -29,14 +31,15 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
     {
         var userAccount = await _accountUserContext.GetSelectedAccount();
         var site = await _siteRepository.GetSite(new SiteId(request.SiteId), userAccount, cancellationToken);
+        var localAuthority = LocalAuthorityMapper.Map(site.LocalAuthority);
 
         return new SiteModel
         {
             Id = site.Id.Value,
             Name = site.Name.Value,
             Section106 = CreateSection106(site),
-            LocalAuthority = LocalAuthorityMapper.Map(site.LocalAuthority),
-            PlanningDetails = CreateSitePlanningDetails(site.PlanningDetails),
+            LocalAuthority = localAuthority,
+            PlanningDetails = CreateSitePlanningDetails(site.PlanningDetails, localAuthority?.Id),
             NationalDesignGuidePriorities = site.NationalDesignGuidePriorities.Values.ToList(),
             BuildingForHealthyLife = site.BuildingForHealthyLife,
             NumberOfGreenLights = site.NumberOfGreenLights?.ToString(),
@@ -66,7 +69,7 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
             site.Section106.IsIneligibleDueToCapitalFundingGuide());
     }
 
-    private static SitePlanningDetails CreateSitePlanningDetails(PlanningDetails planningDetails)
+    private static SitePlanningDetails CreateSitePlanningDetails(PlanningDetails planningDetails, string? localAuthorityId)
     {
         return new SitePlanningDetails(
             planningDetails.PlanningStatus,
@@ -81,7 +84,8 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
             planningDetails.LandRegistryDetails?.IsLandRegistryTitleNumberRegistered,
             planningDetails.LandRegistryDetails?.TitleNumber?.Value,
             planningDetails.LandRegistryDetails?.IsGrantFundingForAllHomesCoveredByTitleNumber,
-            planningDetails.IsAnswered());
+            planningDetails.IsAnswered(),
+            localAuthorityId);
     }
 
     private static SiteTenderingStatusDetails CreateSiteTenderingStatusDetails(TenderingStatusDetails tenderingStatusDetails)
