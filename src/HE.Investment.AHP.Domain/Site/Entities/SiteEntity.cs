@@ -5,6 +5,7 @@ using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investment.AHP.Domain.Site.ValueObjects;
 using HE.Investment.AHP.Domain.Site.ValueObjects.Factories;
+using HE.Investment.AHP.Domain.Site.ValueObjects.Mmc;
 using HE.Investment.AHP.Domain.Site.ValueObjects.Planning;
 using HE.Investment.AHP.Domain.Site.ValueObjects.StrategicSite;
 using HE.Investment.AHP.Domain.Site.ValueObjects.TenderingStatus;
@@ -38,7 +39,8 @@ public class SiteEntity : DomainEntity, IQuestion
         LocalAuthority? localAuthority = null,
         BuildingForHealthyLifeType buildingForHealthyLife = BuildingForHealthyLifeType.Undefined,
         SiteUseDetails? siteUseDetails = null,
-        SiteRuralClassification? ruralClassification = null)
+        SiteRuralClassification? ruralClassification = null,
+        SiteModernMethodsOfConstruction? modernMethodsOfConstruction = null)
     {
         Id = id;
         Name = name;
@@ -56,6 +58,7 @@ public class SiteEntity : DomainEntity, IQuestion
         SiteTypeDetails = siteTypeDetails;
         SiteUseDetails = siteUseDetails ?? new SiteUseDetails();
         RuralClassification = ruralClassification ?? new SiteRuralClassification();
+        ModernMethodsOfConstruction = modernMethodsOfConstruction ?? new SiteModernMethodsOfConstruction();
     }
 
     public SiteEntity()
@@ -73,6 +76,7 @@ public class SiteEntity : DomainEntity, IQuestion
         SiteUseDetails = new SiteUseDetails();
         Procurements = new SiteProcurements();
         RuralClassification = new SiteRuralClassification();
+        ModernMethodsOfConstruction = new SiteModernMethodsOfConstruction();
     }
 
     public SiteId Id { get; set; }
@@ -106,6 +110,8 @@ public class SiteEntity : DomainEntity, IQuestion
     public SiteProcurements Procurements { get; private set; }
 
     public SiteRuralClassification RuralClassification { get; private set; }
+
+    public SiteModernMethodsOfConstruction ModernMethodsOfConstruction { get; private set; }
 
     public async Task ProvideName(SiteName siteName, ISiteNameExist siteNameExist, CancellationToken cancellationToken)
     {
@@ -188,6 +194,11 @@ public class SiteEntity : DomainEntity, IQuestion
         RuralClassification = _modificationTracker.Change(RuralClassification, ruralClassification);
     }
 
+    public void ProvideModernMethodsOfConstruction(SiteModernMethodsOfConstruction modernMethodsOfConstruction)
+    {
+        ModernMethodsOfConstruction = _modificationTracker.Change(ModernMethodsOfConstruction, modernMethodsOfConstruction);
+    }
+
     public bool IsAnswered()
     {
         return PlanningDetails.IsAnswered() &&
@@ -198,7 +209,8 @@ public class SiteEntity : DomainEntity, IQuestion
                BuildingForHealthyLife != BuildingForHealthyLifeType.Undefined &&
                BuildConditionalRouteCompletionPredicates().All(isCompleted => isCompleted()) &&
                Procurements.IsAnswered() &&
-               RuralClassification.IsAnswered();
+               RuralClassification.IsAnswered() &&
+               ModernMethodsOfConstruction.IsAnswered();
     }
 
     private IEnumerable<Func<bool>> BuildConditionalRouteCompletionPredicates()
