@@ -6,7 +6,7 @@ namespace HE.Investment.AHP.Domain.Tests.Site.ValueObjects.SiteRuralClassificati
 public class IsAnsweredTests
 {
     [Fact]
-    public void ShouldReturnTrue_WhenAllDateProvided()
+    public void ShouldReturnTrue_WhenAllDataProvided()
     {
         // given
         var details = new SiteRuralClassification(true, false);
