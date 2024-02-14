@@ -4,6 +4,7 @@ using HE.Investment.AHP.Contract.Delivery.Queries;
 using HE.Investment.AHP.Domain.Common.Mappers;
 using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.Repositories;
+using HE.Investment.AHP.Domain.Delivery.Tranches;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Extensions;
 using MediatR;
@@ -64,16 +65,18 @@ public class GetDeliveryPhaseDetailsQueryHandler : IRequestHandler<GetDeliveryPh
 
     private SummaryOfDelivery GetSummaryOfDelivery(IDeliveryPhaseEntity deliveryPhase)
     {
-        var result = deliveryPhase.GetSummaryOfDelivery();
+        var tranches = deliveryPhase.Tranches;
+        var milestonesPercentageTranches = tranches.GetPercentageTranches();
+        var milestonesTranches = tranches.CalculateTranches();
 
         return new SummaryOfDelivery(
-            result.GrantApportioned,
-            result.AcquisitionMilestone,
-            result.SummaryOfDeliveryPercentage.AcquisitionPercentage,
-            result.StartOnSiteMilestone,
-            result.SummaryOfDeliveryPercentage.StartOnSitePercentage,
-            result.CompletionMilestone,
-            result.SummaryOfDeliveryPercentage.CompletionPercentage);
+            tranches.GrantApportioned,
+            milestonesTranches.AcquisitionMilestone,
+            milestonesPercentageTranches.Acquisition?.Value,
+            milestonesTranches.StartOnSiteMilestone,
+            milestonesPercentageTranches.StartOnSite?.Value,
+            milestonesTranches.CompletionMilestone,
+            milestonesPercentageTranches.Completion?.Value);
     }
 
     private SummaryOfDeliveryAmend GetSummaryOfDeliveryAmend(IDeliveryPhaseEntity deliveryPhase)

@@ -65,4 +65,6 @@ public static class StringExtensions
             .Replace("\r\n", "\n")
             .Replace("\r", "\n");
     }
+
+    public static string? WithoutPercentageChar(this string? value) => value?.Replace("%", string.Empty, StringComparison.InvariantCulture);
 }

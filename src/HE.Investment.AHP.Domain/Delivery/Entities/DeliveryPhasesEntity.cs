@@ -127,7 +127,7 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
             ValidateNameUniqueness(name),
             organisationBasicInfo,
             SectionStatus.InProgress,
-            MilestoneTranches.NotProvided,
+            MilestonesPercentageTranches.NotProvided,
             new SchemeFunding((int?)null, null));
 
         _deliveryPhases.Add(deliveryPhase);

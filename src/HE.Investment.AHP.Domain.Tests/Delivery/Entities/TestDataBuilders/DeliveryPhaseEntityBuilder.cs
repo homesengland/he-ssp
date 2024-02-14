@@ -200,7 +200,7 @@ public class DeliveryPhaseEntityBuilder
             _name,
             _organisationBasicInfo,
             _status,
-            MilestoneTranches.NotProvided,
+            MilestonesPercentageTranches.LackOfCalculation,
             _schemeFunding,
             _typeOfHomes,
             _buildActivity,

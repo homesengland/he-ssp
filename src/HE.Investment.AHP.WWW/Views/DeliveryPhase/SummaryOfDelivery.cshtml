@@ -11,7 +11,7 @@
 @model DeliveryPhaseDetails;
 @{
     var applicationId = this.GetApplicationIdFromRoute();
-    var title = DeliveryPageTitles.SummaryOfDelivery;
+    var title = DeliveryPageTitles.SummaryOfDelivery(Model.Name);
     ViewData["Title"] = title;
     var isAmendable = Model.Tranches?.ShouldBeAmended ?? false;
     var summaryOfDelivery = Model.Tranches?.SummaryOfDelivery;
