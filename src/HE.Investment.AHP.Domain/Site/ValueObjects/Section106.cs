@@ -1,6 +1,5 @@
 using System.Xml.Linq;
 using HE.Investment.AHP.Contract.Site;
-using HE.Investment.AHP.Contract.Site.Constants;
 using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
@@ -21,7 +20,7 @@ public class Section106 : ValueObject, IQuestion
         if (agreement == null)
         {
             OperationResult.New()
-                .AddValidationError(SiteValidationFieldNames.Section106Agreement, ValidationErrorMessage.MissingRequiredField(SiteValidationFieldNames.Section106Agreement))
+                .AddValidationError(nameof(Section106Dto.GeneralAgreement), ValidationErrorMessage.MustProvideRequiredField("General Agreement"))
                 .CheckErrors();
         }
 
@@ -108,6 +107,13 @@ public class Section106 : ValueObject, IQuestion
 
     public Section106 WithAffordableHousing(bool? affordableHousing)
     {
+        if (affordableHousing == null)
+        {
+            OperationResult.New()
+                .AddValidationError(nameof(Section106Dto.AffordableHousing), ValidationErrorMessage.MustProvideRequiredField("Affordable Housing answer."))
+                .CheckErrors();
+        }
+
         if (affordableHousing != AffordableHousing)
         {
             return new Section106(GeneralAgreement, affordableHousing);
@@ -118,6 +124,13 @@ public class Section106 : ValueObject, IQuestion
 
     public Section106 WithOnlyAffordableHousing(bool? onlyAffordableHousing)
     {
+        if (onlyAffordableHousing == null)
+        {
+            OperationResult.New()
+                .AddValidationError(nameof(Section106Dto.OnlyAffordableHousing), ValidationErrorMessage.MustProvideRequiredField("100% Affordable Housing answer."))
+                .CheckErrors();
+        }
+
         if (onlyAffordableHousing != OnlyAffordableHousing)
         {
             return new Section106(GeneralAgreement, AffordableHousing, onlyAffordableHousing);
@@ -128,6 +141,13 @@ public class Section106 : ValueObject, IQuestion
 
     public Section106 WithAdditionalAffordableHousing(bool? additionalAffordableHousing)
     {
+        if (additionalAffordableHousing == null)
+        {
+            OperationResult.New()
+                .AddValidationError(nameof(Section106Dto.AdditionalAffordableHousing), ValidationErrorMessage.MustProvideRequiredField("Additional Affordable Housing answer."))
+                .CheckErrors();
+        }
+
         if (AdditionalAffordableHousing != additionalAffordableHousing)
         {
             return new Section106(GeneralAgreement, AffordableHousing, OnlyAffordableHousing, additionalAffordableHousing);
@@ -138,6 +158,13 @@ public class Section106 : ValueObject, IQuestion
 
     public Section106 WithCapitalFundingEligibility(bool? capitalFundingEligibility)
     {
+        if (capitalFundingEligibility == null)
+        {
+            OperationResult.New()
+                .AddValidationError(nameof(Section106Dto.CapitalFundingEligibility), ValidationErrorMessage.MustProvideRequiredField("Capital funding Eligibility answer."))
+                .CheckErrors();
+        }
+
         if (CapitalFundingEligibility != capitalFundingEligibility)
         {
             return new Section106(GeneralAgreement, AffordableHousing, OnlyAffordableHousing, AdditionalAffordableHousing, capitalFundingEligibility);

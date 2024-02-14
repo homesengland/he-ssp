@@ -211,6 +211,25 @@ public class NextStateTests
     }
 
     [Theory]
+    [InlineData(SiteWorkflowState.Section106CapitalFundingEligibility, SiteWorkflowState.LocalAuthoritySearch)]
+    public async Task ShouldReturnNextState_WhenContinueTriggerExecutedWithSection106AllAffordableHousingQuestionsFalse(SiteWorkflowState current, SiteWorkflowState expectedNext)
+    {
+        // given
+        var section106 = new Section106TestDataBuilder()
+           .WithGeneralAgreement(true)
+           .WithAffordableHousing(false)
+           .WithCapitalFundingEligibility(false)
+           .Build();
+        var workflow = SiteWorkflowFactory.BuildWorkflow(current, section106);
+
+        // when
+        var result = await workflow.NextState(Trigger.Continue);
+
+        // then
+        result.Should().Be(expectedNext);
+    }
+
+    [Theory]
     [InlineData(SiteWorkflowState.Section106OnlyAffordableHousing, SiteWorkflowState.Section106AdditionalAffordableHousing)]
     public async Task ShouldReturnNextState_WhenContinueTriggerExecutedWithSection106OnlyAffordableHousingFalse(SiteWorkflowState current, SiteWorkflowState expectedNext)
     {

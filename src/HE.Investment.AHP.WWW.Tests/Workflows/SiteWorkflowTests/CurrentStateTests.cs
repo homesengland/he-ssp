@@ -48,13 +48,13 @@ public class CurrentStateTests
         // given
         var section106 = new Section106Dto("3", "TestSite", null);
 
-        var workflow = SiteWorkflowFactory.BuildWorkflow(SiteWorkflowState.Start, section106: section106);
+        var workflow = SiteWorkflowFactory.BuildWorkflow(SiteWorkflowState.Start, name: "Site name", section106: section106);
 
         // when
         var result = workflow.CurrentState(SiteWorkflowState.Start);
 
         // then
-        result.Should().Be(SiteWorkflowState.Name);
+        result.Should().Be(SiteWorkflowState.Section106GeneralAgreement);
     }
 
     [Fact]

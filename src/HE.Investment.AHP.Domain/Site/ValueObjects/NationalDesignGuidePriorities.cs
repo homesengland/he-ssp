@@ -1,7 +1,8 @@
-using HE.Investment.AHP.Contract.Site.Constants;
+using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
+using HE.Investments.Common.Messages;
 
 namespace HE.Investment.AHP.Domain.Site.ValueObjects;
 
@@ -12,14 +13,14 @@ public class NationalDesignGuidePriorities : ValueObject, IQuestion
         if (!priorities.Any())
         {
             OperationResult.New()
-                .AddValidationError(SiteValidationFieldNames.DesignPriorities, "You need to choose at least one option from National Design Guide")
+                .AddValidationError("DesignPriorities", ValidationErrorMessage.MustProvideRequiredField("National Design Guide"))
                 .CheckErrors();
         }
 
         if (priorities.Any(x => x == NationalDesignGuidePriority.NoneOfTheAbove) && priorities.Count > 1)
         {
             OperationResult.New()
-                .AddValidationError(SiteValidationFieldNames.DesignPriorities, "Invalid values where provided for National Design Guide priorities")
+                .AddValidationError("DesignPriorities", ValidationErrorMessage.InvalidValue)
                 .CheckErrors();
         }
 
