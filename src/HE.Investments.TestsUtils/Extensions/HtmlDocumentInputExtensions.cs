@@ -125,10 +125,18 @@ public static class HtmlDocumentInputExtensions
         return htmlDocument;
     }
 
-    public static IHtmlDocument HasHeader2(this IHtmlDocument htmlDocument, string text)
+    public static IHtmlDocument HasHeader2(this IHtmlDocument htmlDocument, string text, bool exists = true)
     {
         var headerText = htmlDocument.GetElements("h2", text);
-        headerText.Count.Should().Be(1, $"Only one bold text with innerText {text} should exist");
+
+        if (exists)
+        {
+            headerText.Should().ContainSingle($"Only one bold text with innerText {text} should exist");
+        }
+        else
+        {
+            headerText.Should().BeEmpty($"No bold text with innerText {text} should exist");
+        }
 
         return htmlDocument;
     }

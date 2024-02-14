@@ -71,12 +71,29 @@ public static class HtmlDocumentOtherExtensions
         return htmlDocument;
     }
 
+    public static IHtmlDocument HasSummaryItem(this IHtmlDocument htmlDocument, string label, string? text = null, bool exists = true)
+    {
+        var summaryRow = htmlDocument.QuerySelectorAll($"[data-testId='{label.ToLowerInvariant().Replace(' ', '-')}-summary']");
+        if (!exists)
+        {
+            summaryRow.Should().BeEmpty($"There should be no summary item with label {label}");
+            return htmlDocument;
+        }
+
+        summaryRow.Should().ContainSingle($"There should be one summary item with label {label}");
+        var paragraphs = summaryRow.Single().Descendants<IHtmlParagraphElement>().Where(x => text == null || x.TextContent == text).ToList();
+
+        paragraphs.Should().ContainSingle($"There should be one summary item with text {text}");
+
+        return htmlDocument;
+    }
+
     public static IHtmlDocument HasSummaryDetails(this IHtmlDocument htmlDocument, string text)
     {
         var details = htmlDocument.GetElementsByClassName("govuk-details")
             .Where(d => d.Children.Any(c => c.TextContent.Contains(text) && c.ClassName == "govuk-details__text"));
 
-        details.Should().NotBeNull($"Only one element with class 'govuk-details' should exist");
+        details.Should().ContainSingle("Only one element with class 'govuk-details' should exist");
 
         return htmlDocument;
     }
