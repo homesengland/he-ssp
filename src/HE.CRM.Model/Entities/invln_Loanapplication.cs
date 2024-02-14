@@ -90,8 +90,8 @@ namespace DataverseModel
 	/// Status of the Loan application
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum invln_LoanapplicationState
-	{
+	public enum invln_loanapplicationState
+    {
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Active = 0,
