@@ -20,6 +20,7 @@ using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Routing;
+using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -312,10 +313,10 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     [WorkflowState(SiteWorkflowState.LocalAuthorityConfirm)]
     public async Task<IActionResult> LocalAuthorityConfirm(string siteId, string localAuthorityId, string? phrase, CancellationToken cancellationToken)
     {
-        await GetSiteBasicDetails(siteId, cancellationToken);
+        var siteBasicDetails = await GetSiteBasicDetails(siteId, cancellationToken);
         var localAuthority = await _mediator.Send(new GetLocalAuthorityQuery(new StringIdValueObject(localAuthorityId)), cancellationToken);
 
-        var model = new LocalAuthorities
+        var localAuthorities = new LocalAuthorities
         {
             SiteId = siteId,
             LocalAuthorityId = localAuthorityId,
@@ -323,7 +324,12 @@ public class SiteController : WorkflowController<SiteWorkflowState>
             Phrase = phrase,
         };
 
-        return View(new ConfirmModel<LocalAuthorities>(model));
+        var model = new ConfirmModel<LocalAuthorities>(localAuthorities)
+        {
+            Response = siteBasicDetails.LocalAuthorityName == localAuthority.Name ? CommonResponse.Yes : string.Empty,
+        };
+
+        return View(model);
     }
 
     [HttpPost("{siteId}/local-authority/{localAuthorityId}/confirm")]
@@ -771,9 +777,10 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         return siteModel;
     }
 
-    private async Task GetSiteBasicDetails(string siteId, CancellationToken cancellationToken)
+    private async Task<SiteBasicModel> GetSiteBasicDetails(string siteId, CancellationToken cancellationToken)
     {
         var siteBasicModel = await _mediator.Send(new GetSiteBasicDetailsQuery(siteId), cancellationToken);
         ViewBag.SiteName = siteBasicModel.Name;
+        return siteBasicModel;
     }
 }
