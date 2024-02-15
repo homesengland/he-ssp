@@ -49,6 +49,7 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
             SiteTypeDetails = CreateSiteTypeDetails(site.SiteTypeDetails),
             SiteUseDetails = CreateSiteUseDetails(site.SiteUseDetails),
             RuralClassification = CreateSiteRuralClassification(site.RuralClassification),
+            EnvironmentalImpact = site.EnvironmentalImpact?.Value,
             SiteProcurements = site.Procurements.Procurements.ToList(),
         };
     }

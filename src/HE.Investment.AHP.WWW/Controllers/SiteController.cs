@@ -707,6 +707,25 @@ public class SiteController : WorkflowController<SiteWorkflowState>
             cancellationToken);
     }
 
+    [HttpGet("{siteId}/environmental-impact")]
+    [WorkflowState(SiteWorkflowState.EnvironmentalImpact)]
+    public async Task<IActionResult> EnvironmentalImpact([FromRoute] string siteId, CancellationToken cancellationToken)
+    {
+        var siteModel = await GetSiteDetails(siteId, cancellationToken);
+        return View("EnvironmentalImpact", siteModel);
+    }
+
+    [HttpPost("{siteId}/environmental-impact")]
+    [WorkflowState(SiteWorkflowState.EnvironmentalImpact)]
+    public async Task<IActionResult> EnvironmentalImpact(SiteModel model, CancellationToken cancellationToken)
+    {
+        return await ExecuteSiteCommand<SiteModel>(
+            new ProvideSiteEnvironmentalImpactCommand(this.GetSiteIdFromRoute(), model.EnvironmentalImpact),
+            nameof(EnvironmentalImpact),
+            _ => model,
+            cancellationToken);
+    }
+
     [HttpGet("{siteId}/procurements")]
     [WorkflowState(SiteWorkflowState.Procurements)]
     public async Task<IActionResult> Procurements([FromRoute] string siteId, CancellationToken cancellationToken)

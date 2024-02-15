@@ -1,0 +1,24 @@
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investment.AHP.Contract.Site
+@using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
+@using HE.Investment.AHP.WWW.Views.Site.Const
+@model SiteModel
+@{
+    ViewData["Title"] = "Reducing environmental impact";
+}
+<gds-div-grid-column-two-thirds>
+    <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.EnvironmentalImpact"/>
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+    <vc:page-header caption="@ViewBag.SiteName" title="@SitePageTitles.EnvironmentalImpact"/>
+
+    <form asp-controller="Site" asp-action="EnvironmentalImpact" asp-method="post" novalidate>
+        <vc:text-area-input-with-counter
+            hint="For example, improving energy efficiency, reducing environmental impact and working towards net zero carbon."
+            field-name="@nameof(Model.EnvironmentalImpact)"
+            value="@Model.EnvironmentalImpact"/>
+
+        <vc:form-button/>
+        <vc:return-to-sites-link/>
+    </form>
+
+</gds-div-grid-column-two-thirds>

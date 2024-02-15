@@ -31,6 +31,7 @@ public enum SiteWorkflowState
     SiteUse,
     TravellerPitchType,
     RuralClassification,
+    EnvironmentalImpact,
     Procurements,
     CheckAnswers,
 }

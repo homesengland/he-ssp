@@ -68,6 +68,8 @@ public static class SitePageTitles
 
     public const string RuralClassification = "Rural details";
 
+    public const string EnvironmentalImpact = "During design and build, how will you reduce the environmental impact of this development?";
+
     public const string Procurements = "Which of these efficient procurement mechanisms are you using?";
 
     public const string CheckAnswers = "Check your answers before creating your site";
