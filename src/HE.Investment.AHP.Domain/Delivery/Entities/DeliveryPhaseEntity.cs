@@ -29,6 +29,7 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
         OrganisationBasicInfo organisation,
         SectionStatus status,
         MilestonesPercentageTranches milestones,
+        bool milestoneTranchesAmendRequested,
         SchemeFunding schemaFunding,
         TypeOfHomes? typeOfHomes = null,
         BuildActivity? buildActivity = null,
@@ -39,7 +40,8 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
         CompletionMilestoneDetails? completionMilestone = null,
         DeliveryPhaseId? id = null,
         DateTime? createdOn = null,
-        IsAdditionalPaymentRequested? isAdditionalPaymentRequested = null)
+        IsAdditionalPaymentRequested? isAdditionalPaymentRequested = null,
+        bool? claimMilestone = null)
     {
         Id = id ?? DeliveryPhaseId.New();
         Application = application;
@@ -58,7 +60,8 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
             Application,
             milestones,
             CalculateGrantApportioned(schemaFunding),
-            true,
+            milestoneTranchesAmendRequested,
+            claimMilestone,
             IsOnlyCompletionMilestone);
     }
 

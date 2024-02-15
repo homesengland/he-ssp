@@ -90,6 +90,7 @@ public class GetDeliveryPhaseDetailsQueryHandler : IRequestHandler<GetDeliveryPh
             result.StartOnSiteMilestone,
             result.StartOnSitePercentage.ToWholePercentage().WithoutPercentageChar(),
             result.CompletionMilestone,
-            result.CompletionPercentage.ToWholePercentage().WithoutPercentageChar());
+            result.CompletionPercentage.ToWholePercentage().WithoutPercentageChar(),
+            deliveryPhase.Tranches.ClaimMilestone);
     }
 }

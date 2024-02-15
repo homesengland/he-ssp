@@ -10,14 +10,13 @@ using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.CRM.Model;
+using HE.Investments.Common.Domain.ValueObjects;
 using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.Domain.Delivery.Crm;
 
 public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
 {
-    private static readonly IDictionary<DeliveryPhaseId, MilestonesPercentageTranches> Tranches = new Dictionary<DeliveryPhaseId, MilestonesPercentageTranches>();
-
     public IReadOnlyCollection<string> CrmFields => new[]
     {
         nameof(invln_DeliveryPhase.invln_phasename),
@@ -34,6 +33,11 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
         nameof(invln_DeliveryPhase.invln_completionmilestoneclaimdate),
         nameof(invln_DeliveryPhase.invln_urbrequestingearlymilestonepayments),
         nameof(invln_DeliveryPhase.invln_nbrh),
+        "invln_AcquisitionPercentageValue",
+        "invln_StartOnSitePercentageValue",
+        "invln_CompletionPercentageValue",
+        "invln_ClaimingtheMilestoneConfirmed",
+        "invln_AllowAmendmentstoMilestoneProportions",
     };
 
     public DeliveryPhaseEntity MapToDomain(ApplicationBasicInfo application, OrganisationBasicInfo organisation, DeliveryPhaseDto dto, SchemeFunding schemeFunding)
@@ -47,7 +51,11 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
             new DeliveryPhaseName(dto.name),
             organisation,
             dto.isCompleted == true ? SectionStatus.Completed : SectionStatus.InProgress,
-            Tranches.TryGetValue(new DeliveryPhaseId(dto.id), out var milestoneTranches) ? milestoneTranches : MilestonesPercentageTranches.LackOfCalculation, // TODO: Task 89103: [CRM] Save tranches (Milestone framework)
+            new MilestonesPercentageTranches(
+                dto.acquisitionPercentageValue != null ? new WholePercentage(dto.acquisitionPercentageValue.Value) : null,
+                dto.startOnSitePercentageValue != null ? new WholePercentage(dto.startOnSitePercentageValue.Value) : null,
+                dto.completionPercentageValue != null ? new WholePercentage(dto.completionPercentageValue.Value) : null),
+            dto.allowAmendmentstoMilestoneProportions == true,
             schemeFunding,
             typeOfHomes,
             buildActivity,
@@ -64,12 +72,12 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
                 MapDate(dto.completionPaymentDate, MilestonePaymentDate.Create)),
             new DeliveryPhaseId(dto.id),
             dto.createdOn,
-            MapIsAdditionalPaymentRequested(dto.requiresAdditionalPayments));
+            MapIsAdditionalPaymentRequested(dto.requiresAdditionalPayments),
+            dto.claimingtheMilestoneConfirmed);
     }
 
     public DeliveryPhaseDto MapToDto(DeliveryPhaseEntity entity)
     {
-        Tranches[entity.Id] = entity.Tranches.GetPercentageTranches();
         return new DeliveryPhaseDto
         {
             id = entity.Id.IsNew ? null : entity.Id.Value,
@@ -79,6 +87,10 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
             newBuildActivityType = MapNewBuildActivityType(entity.BuildActivity.Type),
             rehabBuildActivityType = MapRehabBuildActivityType(entity.BuildActivity.Type),
             isReconfigurationOfExistingProperties = entity.ReconfiguringExisting,
+            acquisitionPercentageValue = entity.Tranches.PercentagesAmended.Acquisition?.Value,
+            startOnSitePercentageValue = entity.Tranches.PercentagesAmended.StartOnSite?.Value,
+            completionPercentageValue = entity.Tranches.PercentagesAmended.Completion?.Value,
+            claimingtheMilestoneConfirmed = entity.Tranches.ClaimMilestone,
             acquisitionDate = MapMilestoneDate(entity.DeliveryPhaseMilestones.AcquisitionMilestone),
             acquisitionPaymentDate = MapPaymentDate(entity.DeliveryPhaseMilestones.AcquisitionMilestone),
             startOnSiteDate = MapMilestoneDate(entity.DeliveryPhaseMilestones.StartOnSiteMilestone),
