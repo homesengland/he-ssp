@@ -517,4 +517,18 @@ public class NextStateTests
         // then
         result.Should().Be(expectedNext);
     }
+
+    [Fact]
+    public async Task ShouldReturnLocalAuthorityConfirmPage_WhenBackTriggeredForPlanningStatusAndLocalAuthorityIsProvided()
+    {
+        // given
+        var localAuthority = new LocalAuthority() { Id = "local authority id", Name = "local authority name" };
+        var workflow = SiteWorkflowFactory.BuildWorkflow(SiteWorkflowState.PlanningStatus, localAuthority: localAuthority);
+
+        // when
+        var result = await workflow.NextState(Trigger.Back);
+
+        // then
+        result.Should().Be(SiteWorkflowState.LocalAuthorityConfirm);
+    }
 }

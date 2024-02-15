@@ -20,6 +20,7 @@ using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Routing;
+using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -308,28 +309,33 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         return View(nameof(LocalAuthorityNotFound), new LocalAuthorities { SiteId = siteId });
     }
 
-    [HttpGet("{siteId}/local-authority/{localAuthorityId}/{localAuthorityName}/confirm")]
+    [HttpGet("{siteId}/local-authority/{localAuthorityId}/confirm")]
     [WorkflowState(SiteWorkflowState.LocalAuthorityConfirm)]
-    public async Task<IActionResult> LocalAuthorityConfirm(string siteId, string localAuthorityId, string localAuthorityName, string phrase, CancellationToken cancellationToken)
+    public async Task<IActionResult> LocalAuthorityConfirm(string siteId, string localAuthorityId, string? phrase, CancellationToken cancellationToken)
     {
-        await GetSiteBasicDetails(siteId, cancellationToken);
-        var model = new LocalAuthorities
+        var siteBasicDetails = await GetSiteBasicDetails(siteId, cancellationToken);
+        var localAuthority = await _mediator.Send(new GetLocalAuthorityQuery(new StringIdValueObject(localAuthorityId)), cancellationToken);
+
+        var localAuthorities = new LocalAuthorities
         {
             SiteId = siteId,
             LocalAuthorityId = localAuthorityId,
-            LocalAuthorityName = localAuthorityName,
+            LocalAuthorityName = localAuthority.Name,
             Phrase = phrase,
         };
 
-        return View(new ConfirmModel<LocalAuthorities>(model));
+        var model = new ConfirmModel<LocalAuthorities>(localAuthorities)
+        {
+            Response = siteBasicDetails.LocalAuthorityName == localAuthority.Name ? CommonResponse.Yes : string.Empty,
+        };
+
+        return View(model);
     }
 
-    [HttpPost("{siteId}/local-authority/{localAuthorityId}/{localAuthorityName}/confirm")]
+    [HttpPost("{siteId}/local-authority/{localAuthorityId}/confirm")]
     [WorkflowState(SiteWorkflowState.LocalAuthorityConfirm)]
     public async Task<IActionResult> LocalAuthorityConfirm(
         string siteId,
-        string localAuthorityId,
-        string localAuthorityName,
         ConfirmModel<LocalAuthorities> model,
         [FromQuery] string redirect,
         CancellationToken cancellationToken)
@@ -340,7 +346,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         }
 
         return await ExecuteSiteCommand<ConfirmModel<LocalAuthorities>>(
-            new ProvideLocalAuthorityCommand(new SiteId(siteId), localAuthorityId, localAuthorityName, model.Response),
+            new ProvideLocalAuthorityCommand(new SiteId(siteId), model.ViewModel.LocalAuthorityId, model.ViewModel.LocalAuthorityName, model.Response),
             nameof(LocalAuthorityConfirm),
             _ => model,
             cancellationToken);
@@ -771,9 +777,10 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         return siteModel;
     }
 
-    private async Task GetSiteBasicDetails(string siteId, CancellationToken cancellationToken)
+    private async Task<SiteBasicModel> GetSiteBasicDetails(string siteId, CancellationToken cancellationToken)
     {
         var siteBasicModel = await _mediator.Send(new GetSiteBasicDetailsQuery(siteId), cancellationToken);
         ViewBag.SiteName = siteBasicModel.Name;
+        return siteBasicModel;
     }
 }
