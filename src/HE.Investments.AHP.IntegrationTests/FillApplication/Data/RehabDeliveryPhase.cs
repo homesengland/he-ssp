@@ -78,8 +78,8 @@ public class RehabDeliveryPhase : INestedItemData
     public RehabDeliveryPhase GenerateCompletionMilestone()
     {
         CompletionMilestone = new CompletionMilestoneDetails(
-            new CompletionDate("9", "9", "2025"),
-            new MilestonePaymentDate("10", "10", "2025"));
+            new CompletionDate("9", "9", "2023"),
+            new MilestonePaymentDate("10", "10", "2023"));
         return this;
     }
 }
