@@ -1,0 +1,35 @@
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investment.AHP.Contract.Site
+@using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
+@using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToSitesLink
+@using HE.Investment.AHP.WWW.Views.Site.Const
+@using HE.Investments.Common.WWW.Components.PageHeader
+@model SiteModernMethodsOfConstruction
+@{
+    ViewData["Title"] = SitePageTitles.MmcFutureAdoption;
+}
+
+<gds-div-grid-column-two-thirds>
+    <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.MmcFutureAdoption"/>
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+    <vc:page-header caption="@ViewBag.SiteName" title="@SitePageTitles.MmcFutureAdoption"/>
+
+    <form asp-controller="Site" asp-action="MmcFutureAdoption" asp-method="post" novalidate>
+
+        <vc:text-area-input-with-counter
+            title="Tell us your plans for adopting MMC in the future"
+            hint="If you have experience of using MMC on another site, include this here."
+            field-name="@nameof(Model.FutureAdoptionPlans)"
+            value="@Model.FutureAdoptionPlans"/>
+
+        <vc:text-area-input-with-counter
+            title="Tell us the impact you think this would have on your development programme"
+            hint="For example, impact on costs, construction, time or quality."
+            field-name="@nameof(Model.FutureAdoptionExpectedImpact)"
+            value="@Model.FutureAdoptionExpectedImpact"/>
+
+        <vc:form-button/>
+        <vc:return-to-sites-link/>
+    </form>
+
+</gds-div-grid-column-two-thirds>

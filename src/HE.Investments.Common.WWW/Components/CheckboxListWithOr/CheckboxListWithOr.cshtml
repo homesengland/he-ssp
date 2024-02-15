@@ -25,15 +25,10 @@
             <div id='available-option-form-group' class='govuk-form-group '>
                 <div class="exclusive-checkbox-group">
 
-                    @foreach (var option in Model.availableOptions)
-                    {
-                        var id = option == Model.availableOptions.First() ? Model.fieldName : $"{Model.fieldName}-{option.Value}";
+                    <vc:checkbox-list-content
+                        field-name="@Model.fieldName"
+                        available-options="@Model.availableOptions"/>
 
-                        <div class="govuk-checkboxes__item">
-                            <input id="@id" type="checkbox" checked="@option.Selected" class="govuk-checkboxes__input" value="@option.Value" name="@Model.fieldName"/>
-                            <label class="govuk-label govuk-checkboxes__label" for="@id">@option.Text</label>
-                        </div>
-                    }
                 </div>
             </div>
 

@@ -36,17 +36,22 @@ public class SiteModernMethodsOfConstruction : ValueObject, IQuestion
         return new SiteModernMethodsOfConstruction(siteUsingModernMethodsOfConstruction, null, old.FutureAdoption, null);
     }
 
-    public static SiteModernMethodsOfConstruction Create(SiteModernMethodsOfConstruction old, IList<ModernMethodsConstructionCategoriesType> modernMethodsConstructionCategories)
+    public static SiteModernMethodsOfConstruction Create(SiteModernMethodsOfConstruction old, IList<ModernMethodsConstructionCategoriesType>? modernMethodsConstructionCategories)
     {
+        if (modernMethodsConstructionCategories == null)
+        {
+            return new SiteModernMethodsOfConstruction(old.SiteUsingModernMethodsOfConstruction, old.Information, old.FutureAdoption);
+        }
+
         var modernMethodsConstruction = new ModernMethodsOfConstruction(
             modernMethodsConstructionCategories,
-            modernMethodsConstructionCategories.Contains(ModernMethodsConstructionCategoriesType.Category2PreManufacturing2DPrimaryStructuralSystems) ? old.ModernMethodsOfConstruction?.ModernMethodsConstruction2DSubcategories : Enumerable.Empty<ModernMethodsConstruction2DSubcategoriesType>(),
-            modernMethodsConstructionCategories.Contains(ModernMethodsConstructionCategoriesType.Category1PreManufacturing3DPrimaryStructuralSystems) ? old.ModernMethodsOfConstruction?.ModernMethodsConstruction3DSubcategories : Enumerable.Empty<ModernMethodsConstruction3DSubcategoriesType>());
+            modernMethodsConstructionCategories.Contains(ModernMethodsConstructionCategoriesType.Category2PreManufacturing2DPrimaryStructuralSystems) ? old.ModernMethodsOfConstruction?.ModernMethodsConstruction2DSubcategories : null,
+            modernMethodsConstructionCategories.Contains(ModernMethodsConstructionCategoriesType.Category1PreManufacturing3DPrimaryStructuralSystems) ? old.ModernMethodsOfConstruction?.ModernMethodsConstruction3DSubcategories : null);
 
         return new SiteModernMethodsOfConstruction(old.SiteUsingModernMethodsOfConstruction, old.Information, old.FutureAdoption, modernMethodsConstruction);
     }
 
-    public static SiteModernMethodsOfConstruction Create(SiteModernMethodsOfConstruction old, IList<ModernMethodsConstruction2DSubcategoriesType> modernMethodsConstruction2DSubcategories)
+    public static SiteModernMethodsOfConstruction Create(SiteModernMethodsOfConstruction old, IList<ModernMethodsConstruction2DSubcategoriesType>? modernMethodsConstruction2DSubcategories)
     {
         var modernMethodsConstruction = new ModernMethodsOfConstruction(
             old.ModernMethodsOfConstruction?.ModernMethodsConstructionCategories,
@@ -56,7 +61,7 @@ public class SiteModernMethodsOfConstruction : ValueObject, IQuestion
         return new SiteModernMethodsOfConstruction(old.SiteUsingModernMethodsOfConstruction, old.Information, old.FutureAdoption, modernMethodsConstruction);
     }
 
-    public static SiteModernMethodsOfConstruction Create(SiteModernMethodsOfConstruction old, IList<ModernMethodsConstruction3DSubcategoriesType> modernMethodsConstruction3DSubcategories)
+    public static SiteModernMethodsOfConstruction Create(SiteModernMethodsOfConstruction old, IList<ModernMethodsConstruction3DSubcategoriesType>? modernMethodsConstruction3DSubcategories)
     {
         var modernMethodsConstruction = new ModernMethodsOfConstruction(
             old.ModernMethodsOfConstruction?.ModernMethodsConstructionCategories,

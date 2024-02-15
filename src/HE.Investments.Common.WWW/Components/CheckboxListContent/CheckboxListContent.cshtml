@@ -1,0 +1,12 @@
+@using HE.Investments.Common.WWW.Models;
+@model (string fieldName,  IEnumerable<ExtendedSelectListItem> availableOptions)
+
+@foreach (var option in Model.availableOptions)
+{
+    var id = option == Model.availableOptions.First() ? Model.fieldName : $"{Model.fieldName}-{option.Value}";
+
+    <div class="govuk-checkboxes__item">
+        <input id="@id" type="checkbox" checked="@option.Selected" class="govuk-checkboxes__input" value="@option.Value" name="@Model.fieldName"/>
+        <label class="govuk-label govuk-checkboxes__label" for="@id">@option.Text</label>
+    </div>
+}

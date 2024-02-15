@@ -17,7 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Components\CheckboxListContent\CheckboxListContent.cshtml" />
     <EmbeddedResource Include="Components\CheckboxListWithOr\CheckboxListWithOr.cshtml" />
+    <EmbeddedResource Include="Components\CheckboxList\CheckboxList.cshtml" />
     <EmbeddedResource Include="_ViewImports.cshtml" />
     <EmbeddedResource Include="Partials\Errors\_ErrorSummaryPartial.cshtml" />
     <EmbeddedResource Include="Partials\Cookies\_AdditionalCookies.cshtml" />

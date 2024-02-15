@@ -70,6 +70,18 @@ public static class SitePageTitles
 
     public const string EnvironmentalImpact = "During design and build, how will you reduce the environmental impact of this development?";
 
+    public const string MmcUsing = "Are you using Modern Methods of Construction (MMC)?";
+
+    public const string MmcFutureAdoption = "Future adoption of Modern Methods of Construction (MMC)";
+
+    public const string MmcInformation = "Modern Methods of Construction (MMC) information";
+
+    public const string MmcCategories = "Which Modern Methods of Construction (MMC) categories are you using?";
+
+    public const string Mmc3DCategory = "Category 1";
+
+    public const string Mmc2DCategory = "Category 2";
+
     public const string Procurements = "Which of these efficient procurement mechanisms are you using?";
 
     public const string CheckAnswers = "Check your answers before creating your site";

@@ -1,0 +1,42 @@
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investment.AHP.Contract.Site
+@using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
+@using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToSitesLink
+@using HE.Investment.AHP.WWW.Views.Shared.Components.SiteUsingMmcDetails
+@using HE.Investment.AHP.WWW.Views.Site.Const
+@using HE.Investments.Common.WWW.Components.Details
+@using HE.Investments.Common.WWW.Components.PageHeader
+@using HE.Investments.Common.WWW.Components.RadioList
+@using HE.Investments.Common.WWW.Helpers
+@model SiteModernMethodsOfConstruction
+@{
+    ViewData["Title"] = SitePageTitles.MmcUsing;
+    var details = new DynamicComponentViewModel(
+        nameof(Details),
+        new
+        {
+            title = "Help with Modern Methods of Construction (MMC)",
+            contentComponent = new DynamicComponentViewModel(nameof(SiteUsingMmcDetails))
+        });
+}
+
+<gds-div-grid-column-two-thirds>
+    <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.MmcUsing"/>
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+    <vc:page-header caption="@ViewBag.SiteName"/>
+
+    <form asp-controller="Site" asp-action="MmcUsing" asp-method="post" novalidate>
+
+        <vc:radio-list
+            title="@SitePageTitles.MmcUsing"
+            title-type="InputTitleType.PageHeader"
+            additional-content="@details"
+            field-name="@nameof(Model.UsingModernMethodsOfConstruction)"
+            available-options="@SelectListHelper.FromEnumToExtendedList<SiteUsingModernMethodsOfConstruction>()"
+            value="@Model.UsingModernMethodsOfConstruction"/>
+
+        <vc:form-button/>
+        <vc:return-to-sites-link/>
+    </form>
+
+</gds-div-grid-column-two-thirds>
