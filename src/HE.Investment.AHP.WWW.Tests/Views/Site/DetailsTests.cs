@@ -54,7 +54,7 @@ public class DetailsTests : ViewTestBase
             .HasLinkButton("View details")
             .HasHeader2("Applications on this site")
             .HasParagraph("View or manage existing applications for this site.")
-            .HasLinkWithTestId("application-321", out _)
+            .HasLinkWithHref("/Application/TaskList?applicationId=321", out _)
             .HasLinkWithTestId("application-list", out _)
             .HasBackLink(false);
     }

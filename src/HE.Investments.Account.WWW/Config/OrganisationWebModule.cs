@@ -27,7 +27,7 @@ public static class OrganisationWebModule
         services.AddAccountModule();
         services.AddEventInfrastructure();
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetUserProfileInformationQueryHandler).Assembly));
-        services.AddNotifications(typeof(ChangeOrganisationDetailsRequestedDisplayNotificationFactory).Assembly);
+        services.AddNotifications("Account", typeof(ChangeOrganisationDetailsRequestedDisplayNotificationFactory).Assembly);
         services.AddScoped<IAccountRoutes, AccountRoutes>();
         services.AddSingleton<IErrorViewPaths, AccountErrorViewPaths>();
     }

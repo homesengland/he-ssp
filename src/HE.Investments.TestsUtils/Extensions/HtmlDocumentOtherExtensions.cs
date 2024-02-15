@@ -128,12 +128,17 @@ public static class HtmlDocumentOtherExtensions
         return htmlDocument;
     }
 
-    public static IHtmlDocument HasPagination(this IHtmlDocument htmlDocument)
+    public static IHtmlDocument HasPagination(this IHtmlDocument htmlDocument, bool exists = true)
     {
-        var exist = htmlDocument.GetElements(".govuk-pagination")
-            .Any();
-
-        exist.Should().BeTrue($"There is no Pagination element");
+        var exist = htmlDocument.GetElements(".govuk-pagination").Any();
+        if (exists)
+        {
+            exist.Should().BeTrue("There is no Pagination element");
+        }
+        else
+        {
+            exist.Should().BeFalse("There is Pagination element but should not exist");
+        }
 
         return htmlDocument;
     }

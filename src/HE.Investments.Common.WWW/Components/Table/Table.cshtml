@@ -2,16 +2,17 @@
 @model (IList<TableHeaderViewModel> Headers, IList<TableRowViewModel> Rows)
 
 @{
-    #nullable enable
-    string GetWidthClass(int? width) => width switch
+    string GetWidthClass(CellWidth width) => width switch
     {
-        50 => "govuk-!-width-one-half",
-        33 => "govuk-!-width-one-third",
-        25 => "govuk-!-width-one-quarter",
-        16 => "govuk-!-width-one-sixth",
-        12 => "govuk-!-width-one-eighth",
-        _ => string.Empty
-        };
+        CellWidth.OneHalf => "govuk-!-width-one-half",
+        CellWidth.OneThird => "govuk-!-width-one-third",
+        CellWidth.OneQuarter => "govuk-!-width-one-quarter",
+        CellWidth.OneFifth => "govuk-!-width-one-fifth",
+        CellWidth.OneSixth => "govuk-!-width-one-sixth",
+        CellWidth.OneEighth => "govuk-!-width-one-eighth",
+        CellWidth.Undefined => string.Empty,
+        _ => throw new ArgumentOutOfRangeException(nameof(width), width, null),
+    };
 }
 
 <table class="govuk-table">

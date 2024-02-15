@@ -12,7 +12,7 @@ public class NameTests : ViewTestBase
     public async Task ShouldDisplayView()
     {
         // given & when
-        var document = await Render<SiteModel>(_viewPath);
+        var document = await Render(_viewPath, new SiteModel());
 
         // then
         document
@@ -31,7 +31,7 @@ public class NameTests : ViewTestBase
         modelState.AddModelError(nameof(SiteModel.Name), errorMessage);
 
         // when
-        var document = await Render<SiteModel>(_viewPath, modelStateDictionary: modelState);
+        var document = await Render(_viewPath, new SiteModel(), modelStateDictionary: modelState);
 
         // then
         document

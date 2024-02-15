@@ -3,6 +3,17 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investments.Common.WWW.Components.Table;
 
+public enum CellWidth
+{
+    Undefined,
+    OneHalf,
+    OneThird,
+    OneQuarter,
+    OneFifth,
+    OneSixth,
+    OneEighth,
+}
+
 public class Table : ViewComponent
 {
     public IViewComponentResult Invoke(IList<TableHeaderViewModel> headers, IList<TableRowViewModel> rows)
@@ -11,7 +22,7 @@ public class Table : ViewComponent
     }
 }
 
-public record TableHeaderViewModel(string Title, int? Width = null, bool IsHidden = false, bool IsDisplayed = true);
+public record TableHeaderViewModel(string Title, CellWidth Width = CellWidth.Undefined, bool IsHidden = false, bool IsDisplayed = true);
 
 public record TableRowViewModel(IList<TableValueViewModel> Values);
 

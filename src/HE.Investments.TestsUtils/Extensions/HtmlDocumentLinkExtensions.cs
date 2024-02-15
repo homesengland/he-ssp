@@ -30,6 +30,17 @@ public static class HtmlDocumentLinkExtensions
         return htmlDocument;
     }
 
+    public static IHtmlDocument HasLinkWithHref(this IHtmlDocument htmlDocument, string href, out IHtmlAnchorElement htmlElement)
+    {
+        var allLinks = htmlDocument.GetElementsByTagName("a").OfType<IHtmlAnchorElement>();
+        var matchingLinks = allLinks.Where(x => x.Href.EndsWith(href, StringComparison.CurrentCultureIgnoreCase)).ToList();
+
+        matchingLinks.Should().ContainSingle($"There should be single link with href {href}");
+        htmlElement = matchingLinks.Single();
+
+        return htmlDocument;
+    }
+
     public static IHtmlDocument HasLinkWithTestId(this IHtmlDocument htmlDocument, string testId, out IHtmlAnchorElement htmlElement)
     {
         var element = htmlDocument.GetElementByTestId(testId);

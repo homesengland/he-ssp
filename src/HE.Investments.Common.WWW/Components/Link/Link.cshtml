@@ -1,3 +1,12 @@
-@model (string text, string action, string controller, object values)
+@model (string text, string action, string controller, object values, bool isStrong)
 
-<a href="@(Url.Action(Model.action, Model.controller, Model.values) ?? string.Empty)"> @Model.text </a>
+@if (Model.isStrong)
+{
+    <strong>
+        <a href="@(Url.Action(Model.action, Model.controller, Model.values) ?? string.Empty)"> @Model.text </a>
+    </strong>
+}
+else
+{
+    <a href="@(Url.Action(Model.action, Model.controller, Model.values) ?? string.Empty)"> @Model.text </a>
+}

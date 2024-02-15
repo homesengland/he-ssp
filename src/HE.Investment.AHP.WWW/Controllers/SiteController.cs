@@ -39,7 +39,6 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     }
 
     [HttpGet]
-    [WorkflowState(SiteWorkflowState.Index)]
     public async Task<IActionResult> Index([FromQuery] int? page, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new GetSiteListQuery(new PaginationRequest(page ?? 1)), cancellationToken);
@@ -85,21 +84,17 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     [WorkflowState(SiteWorkflowState.Start)]
     public IActionResult StartSite(string siteId)
     {
-        return View("Start");
+        return View("Start", new StartSiteModel(Url.Action("Details", new { siteId })));
     }
 
     [HttpGet("start")]
     [WorkflowState(SiteWorkflowState.Start)]
-    public IActionResult Start()
+    public async Task<IActionResult> Start(CancellationToken cancellationToken)
     {
-        return View("Start");
-    }
+        var response = await _mediator.Send(new GetSiteListQuery(new PaginationRequest(1, 1)), cancellationToken);
+        var backUrl = response.Page.TotalItems > 0 ? Url.Action("Select") : Url.Action("Start", "Application");
 
-    [HttpPost("start")]
-    [WorkflowState(SiteWorkflowState.Start)]
-    public async Task<IActionResult> StartPost()
-    {
-        return await Continue();
+        return View("Start", new StartSiteModel(backUrl));
     }
 
     [HttpGet("name")]

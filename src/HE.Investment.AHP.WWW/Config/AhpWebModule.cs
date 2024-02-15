@@ -31,7 +31,7 @@ public static class AhpWebModule
         service.AddHttpUserContext();
         service.AddDomainModule();
         service.AddEventInfrastructure();
-        service.AddNotifications(typeof(HomeTypeHasBeenCreatedDisplayNotificationFactory).Assembly);
+        service.AddNotifications("AHP", typeof(HomeTypeHasBeenCreatedDisplayNotificationFactory).Assembly);
         service.AddDocumentServiceModule();
         AddViewModelFactories(service);
 

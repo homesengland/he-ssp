@@ -86,7 +86,6 @@ public class Order01StartAhpSite : AhpIntegrationTest
     [Order(4)]
     public async Task Order04_ShouldProvideSection106GeneralAgreementAndNavigateToSection106AffordableHousing()
     {
-        SiteData.SetSiteId("20");
         await TestQuestionPage(
             SitePagesUrl.SiteSection106GeneralAgreement(SiteData.SiteId),
             SitePageTitles.SiteSection106Agreement,

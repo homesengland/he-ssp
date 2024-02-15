@@ -21,6 +21,13 @@
     }
 </ul>
 
+<he-pagination
+    base-url="@Model.pagingNavigationUrl"
+    page="@Model.list.CurrentPage"
+    items-per-page="@Model.list.ItemsPerPage"
+    total-items="@Model.list.TotalItems">
+</he-pagination>
+
 @if (!string.IsNullOrWhiteSpace(Model.addActionUrl))
 {
     var text = string.IsNullOrWhiteSpace(Model.addActionText) ? "Add" : Model.addActionText;
@@ -34,11 +41,3 @@
         @Model.paragraphWithLink.Text <gds-link href="@(Url.Action(Model.paragraphWithLink.LinkUrl.Action, Model.paragraphWithLink.LinkUrl.Controller, Model.paragraphWithLink.LinkUrl.Values) ?? string.Empty)">@Model.paragraphWithLink.LinkText</gds-link>
     </gds-p>
 }
-
-<he-pagination
-    css-class="govuk-!-align-center"
-    base-url="@Model.pagingNavigationUrl"
-    page="@Model.list.CurrentPage"
-    items-per-page="@Model.list.ItemsPerPage"
-    total-items="@Model.list.TotalItems">
-</he-pagination>

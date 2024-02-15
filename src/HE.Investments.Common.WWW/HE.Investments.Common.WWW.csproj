@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Components\CheckboxListContent\CheckboxListContent.cshtml" />
+    <EmbeddedResource Include="Components\ApplicationStatusTagComponent\ApplicationStatusTagComponent.cshtml" />
     <EmbeddedResource Include="Components\CheckboxListWithOr\CheckboxListWithOr.cshtml" />
     <EmbeddedResource Include="Components\CheckboxList\CheckboxList.cshtml" />
     <EmbeddedResource Include="_ViewImports.cshtml" />
