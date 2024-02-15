@@ -3,18 +3,12 @@
 @using HE.Investments.Loans.Contract.Security
 @using HE.Investments.Loans.WWW.Extensions
 @using HE.Investments.Loans.WWW.Views.Security.Consts
-@using Microsoft.AspNetCore.Mvc.TagHelpers
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Fieldset
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Legend
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Radios
 @model HE.Investments.Loans.Contract.Security.SecurityViewModel;
 
-@inject ModelExpressionProvider modelProvider
+@inject ModelExpressionProvider ModelProvider
 @{
-    var (conditionalInputInvalid, inputErrors) = @ViewData.ModelState.GetErrors(modelProvider.GetExpressionText((SecurityViewModel x) => x.ChargesDebtCompanyInfo));
-    var (radioInvalid, radioErrors) = @ViewData.ModelState.GetErrors(modelProvider.GetExpressionText((SecurityViewModel x) => x.ChargesDebtCompany));
+    var (radioInvalid, radioErrors) = ViewData.ModelState.GetErrors(ModelProvider.GetExpressionText((SecurityViewModel x) => x.ChargesDebtCompany));
+    var (conditionalInputInvalid, inputErrors) = ViewData.ModelState.GetErrors(ModelProvider.GetExpressionText((SecurityViewModel x) => x.ChargesDebtCompanyInfo));
 }
 
 <gds-div-grid-column-two-thirds>
@@ -60,4 +54,4 @@
     <partial name="_HomeAndCheckAnswersLinks" />
 </gds-div-grid-column-two-thirds>
 
-@await Html.YesNoConditionalInputScript(modelProvider.GetExpressionText((SecurityViewModel x) => x.ChargesDebtCompany))
+@await Html.YesNoConditionalInputScript(ModelProvider.GetExpressionText((SecurityViewModel x) => x.ChargesDebtCompany))
