@@ -26,7 +26,8 @@ public class NextStateTests
     [InlineData(SiteWorkflowState.StrategicSite, SiteWorkflowState.SiteType)]
     [InlineData(SiteWorkflowState.SiteType, SiteWorkflowState.SiteUse)]
     [InlineData(SiteWorkflowState.SiteUse, SiteWorkflowState.RuralClassification)]
-    [InlineData(SiteWorkflowState.RuralClassification, SiteWorkflowState.Procurements)]
+    [InlineData(SiteWorkflowState.RuralClassification, SiteWorkflowState.EnvironmentalImpact)]
+    [InlineData(SiteWorkflowState.EnvironmentalImpact, SiteWorkflowState.Procurements)]
     [InlineData(SiteWorkflowState.Procurements, SiteWorkflowState.CheckAnswers)]
     public async Task ShouldReturnNextState_WhenContinueTriggerExecuted(SiteWorkflowState current, SiteWorkflowState expectedNext)
     {
@@ -91,7 +92,8 @@ public class NextStateTests
     [InlineData(SiteWorkflowState.SiteType, SiteWorkflowState.StrategicSite)]
     [InlineData(SiteWorkflowState.SiteUse, SiteWorkflowState.SiteType)]
     [InlineData(SiteWorkflowState.RuralClassification, SiteWorkflowState.SiteUse)]
-    [InlineData(SiteWorkflowState.Procurements, SiteWorkflowState.RuralClassification)]
+    [InlineData(SiteWorkflowState.EnvironmentalImpact, SiteWorkflowState.RuralClassification)]
+    [InlineData(SiteWorkflowState.Procurements, SiteWorkflowState.EnvironmentalImpact)]
     [InlineData(SiteWorkflowState.CheckAnswers, SiteWorkflowState.Procurements)]
     public async Task ShouldReturnNextState_WhenBackTriggerExecuted(SiteWorkflowState current, SiteWorkflowState expectedNext)
     {

@@ -27,6 +27,7 @@ public class StateCanBeAccessedTests
     [InlineData(SiteWorkflowState.StrategicSite, true)]
     [InlineData(SiteWorkflowState.SiteType, true)]
     [InlineData(SiteWorkflowState.RuralClassification, true)]
+    [InlineData(SiteWorkflowState.EnvironmentalImpact, true)]
     [InlineData(SiteWorkflowState.Procurements, true)]
     [InlineData(SiteWorkflowState.CheckAnswers, true)]
     public async Task ShouldReturnValue_WhenMethodCalledForDefaults(SiteWorkflowState state, bool expectedResult)

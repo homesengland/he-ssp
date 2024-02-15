@@ -64,6 +64,7 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             { SiteUseDetails: var x } when x.IsForTravellerPitchSite.IsNotProvided() || x.IsPartOfStreetFrontInfill.IsNotProvided() => SiteWorkflowState.SiteUse,
             { SiteUseDetails: { IsForTravellerPitchSite: true, TravellerPitchSiteType: TravellerPitchSiteType.Undefined } } => SiteWorkflowState.TravellerPitchType,
             { RuralClassification: var x } when x.IsRuralExceptionSite.IsNotProvided() || x.IsWithinRuralSettlement.IsNotProvided() => SiteWorkflowState.RuralClassification,
+            { EnvironmentalImpact: var x } when x.IsNotProvided() => SiteWorkflowState.EnvironmentalImpact,
             { SiteProcurements: var x } when !x.Any() => SiteWorkflowState.Procurements,
             _ => SiteWorkflowState.CheckAnswers,
         };
@@ -252,13 +253,17 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             .PermitIf(Trigger.Back, SiteWorkflowState.SiteUse);
 
         _machine.Configure(SiteWorkflowState.RuralClassification)
-            .Permit(Trigger.Continue, SiteWorkflowState.Procurements)
+            .Permit(Trigger.Continue, SiteWorkflowState.EnvironmentalImpact)
             .PermitIf(Trigger.Back, SiteWorkflowState.SiteUse, () => !IsForTravellerPitchSite())
             .PermitIf(Trigger.Back, SiteWorkflowState.TravellerPitchType, IsForTravellerPitchSite);
 
+        _machine.Configure(SiteWorkflowState.EnvironmentalImpact)
+            .Permit(Trigger.Continue, SiteWorkflowState.Procurements)
+            .Permit(Trigger.Back, SiteWorkflowState.RuralClassification);
+
         _machine.Configure(SiteWorkflowState.Procurements)
             .Permit(Trigger.Continue, SiteWorkflowState.CheckAnswers)
-            .Permit(Trigger.Back, SiteWorkflowState.RuralClassification);
+            .Permit(Trigger.Back, SiteWorkflowState.EnvironmentalImpact);
 
         _machine.Configure(SiteWorkflowState.CheckAnswers)
             .Permit(Trigger.Back, SiteWorkflowState.Procurements);

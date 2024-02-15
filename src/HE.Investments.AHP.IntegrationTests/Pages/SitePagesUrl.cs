@@ -62,6 +62,8 @@ public static class SitePagesUrl
 
     public static string SiteRuralClassification(string siteId) => $"ahp/site/{siteId}/rural-classification";
 
+    public static string SiteEnvironmentalImpact(string siteId) => $"ahp/site/{siteId}/environmental-impact";
+
     public static string SiteProcurements(string siteId) => $"ahp/site/{siteId}/procurements";
 
     public static string SiteCheckAnswers(string siteId) => $"ahp/site/{siteId}/check-answers";
