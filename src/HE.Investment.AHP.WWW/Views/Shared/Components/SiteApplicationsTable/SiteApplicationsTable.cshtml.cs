@@ -46,7 +46,6 @@ public class SiteApplicationsTable : ViewComponent
 
     private static DynamicComponentViewModel CreateLinkComponent(ApplicationSiteModel application)
     {
-        // TODO: data-testId: "application-@application.Id.Value"
         return new DynamicComponentViewModel(
             nameof(Link),
             new

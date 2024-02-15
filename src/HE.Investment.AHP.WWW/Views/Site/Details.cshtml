@@ -1,6 +1,5 @@
 @using HE.Investments.Common.Extensions
 @using HE.Investments.Common.Gds
-@using HE.Investments.Common.Messages
 @using HE.Investments.Common.WWW.Components.PageHeader
 @using HE.Investments.Common.WWW.Components.SectionSummaryItem
 @model HE.Investment.AHP.Contract.Site.SiteDetailsModel
@@ -34,7 +33,6 @@
 
     @if (Model.Applications.TotalItems > 0)
     {
-        @* <div class="govuk-!-margin-top-6"> *@
         <gds-h2>Applications on this site</gds-h2>
         <gds-p>View or manage existing applications for this site.</gds-p>
         <vc:site-applications-table site-id="@Model.SiteId" applications="@Model.Applications"/>
