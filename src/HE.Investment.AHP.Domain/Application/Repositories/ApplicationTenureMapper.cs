@@ -6,14 +6,14 @@ namespace HE.Investment.AHP.Domain.Application.Repositories;
 
 public static class ApplicationTenureMapper
 {
-    private static readonly IDictionary<Tenure, invln_tenure> Tenures = new Dictionary<Tenure, invln_tenure>
+    private static readonly IDictionary<Tenure, invln_Tenure> Tenures = new Dictionary<Tenure, invln_Tenure>
     {
-        { Tenure.AffordableRent, invln_tenure.Affordablerent },
-        { Tenure.SocialRent, invln_tenure.Socialrent },
-        { Tenure.SharedOwnership, invln_tenure.Sharedownership },
-        { Tenure.RentToBuy, invln_tenure.Renttobuy },
-        { Tenure.HomeOwnershipLongTermDisabilities, invln_tenure.HOLD },
-        { Tenure.OlderPersonsSharedOwnership, invln_tenure.OPSO },
+        { Tenure.AffordableRent, invln_Tenure.Affordablerent },
+        { Tenure.SocialRent, invln_Tenure.Socialrent },
+        { Tenure.SharedOwnership, invln_Tenure.Sharedownership },
+        { Tenure.RentToBuy, invln_Tenure.Renttobuy },
+        { Tenure.HomeOwnershipLongTermDisabilities, invln_Tenure.HOLD },
+        { Tenure.OlderPersonsSharedOwnership, invln_Tenure.OPSO },
     };
 
     public static int? ToDto(ApplicationTenure? value)
@@ -38,7 +38,7 @@ public static class ApplicationTenureMapper
             return null;
         }
 
-        var contract = (invln_tenure?)value;
+        var contract = (invln_Tenure?)value;
 
         var tenure = Tenures.Where(t => t.Value == contract).Select(t => (Tenure?)t.Key).FirstOrDefault() ?? throw new ArgumentException($"Not supported Tenure value {value}");
 

@@ -6,12 +6,12 @@ namespace HE.Investment.AHP.Domain.Application.Repositories;
 
 public static class SectionStatusMapper
 {
-    private static readonly IDictionary<SectionStatus, invln_ahpsectioncompletionstatusset> SectionStatuses =
-        new Dictionary<SectionStatus, invln_ahpsectioncompletionstatusset>
+    private static readonly IDictionary<SectionStatus, invln_AHPSectioncompletionstatusSet> SectionStatuses =
+        new Dictionary<SectionStatus, invln_AHPSectioncompletionstatusSet>
         {
-            { SectionStatus.NotStarted, invln_ahpsectioncompletionstatusset.Notstarted },
-            { SectionStatus.InProgress, invln_ahpsectioncompletionstatusset.InProgress },
-            { SectionStatus.Completed, invln_ahpsectioncompletionstatusset.Completed },
+            { SectionStatus.NotStarted, invln_AHPSectioncompletionstatusSet.Notstarted },
+            { SectionStatus.InProgress, invln_AHPSectioncompletionstatusSet.InProgress },
+            { SectionStatus.Completed, invln_AHPSectioncompletionstatusSet.Completed },
         };
 
     public static SectionStatus ToDomain(int? value, ApplicationStatus? applicationStatus = null)
@@ -33,7 +33,7 @@ public static class SectionStatusMapper
             return SectionStatus.NotStarted;
         }
 
-        var contract = (invln_ahpsectioncompletionstatusset)value;
+        var contract = (invln_AHPSectioncompletionstatusSet)value;
         if (!SectionStatuses.TryGetKeyByValue(contract, out var status))
         {
             throw new ArgumentException($"Not supported Section Status value {value}");

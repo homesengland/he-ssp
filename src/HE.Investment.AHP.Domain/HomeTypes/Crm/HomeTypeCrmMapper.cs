@@ -76,9 +76,9 @@ public class HomeTypeCrmMapper : IHomeTypeCrmMapper
     {
         return value switch
         {
-            HousingType.General => (int)invln_typeofhousing.General,
-            HousingType.HomesForOlderPeople => (int)invln_typeofhousing.Housingforolderpeople,
-            HousingType.HomesForDisabledAndVulnerablePeople => (int)invln_typeofhousing.Housingfordisabledandvulnerablepeople,
+            HousingType.General => (int)invln_Typeofhousing.General,
+            HousingType.HomesForOlderPeople => (int)invln_Typeofhousing.Housingforolderpeople,
+            HousingType.HomesForDisabledAndVulnerablePeople => (int)invln_Typeofhousing.Housingfordisabledandvulnerablepeople,
             _ => null,
         };
     }
@@ -87,9 +87,9 @@ public class HomeTypeCrmMapper : IHomeTypeCrmMapper
     {
         return value switch
         {
-            (int)invln_typeofhousing.General => HousingType.General,
-            (int)invln_typeofhousing.Housingforolderpeople => HousingType.HomesForOlderPeople,
-            (int)invln_typeofhousing.Housingfordisabledandvulnerablepeople => HousingType.HomesForDisabledAndVulnerablePeople,
+            (int)invln_Typeofhousing.General => HousingType.General,
+            (int)invln_Typeofhousing.Housingforolderpeople => HousingType.HomesForOlderPeople,
+            (int)invln_Typeofhousing.Housingfordisabledandvulnerablepeople => HousingType.HomesForDisabledAndVulnerablePeople,
             _ => HousingType.Undefined,
         };
     }
