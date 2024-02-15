@@ -2,6 +2,7 @@ using He.AspNetCore.Mvc.Gds.Components.Extensions;
 using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Commands;
+using HE.Investment.AHP.Contract.Site.Commands.Mmc;
 using HE.Investment.AHP.Contract.Site.Commands.PlanningDetails;
 using HE.Investment.AHP.Contract.Site.Commands.Section106;
 using HE.Investment.AHP.Contract.Site.Commands.TenderingStatus;
@@ -703,6 +704,120 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         return await ExecuteSiteCommand<SiteRuralClassification>(
             new ProvideSiteRuralClassificationCommand(this.GetSiteIdFromRoute(), model.IsWithinRuralSettlement, model.IsRuralExceptionSite),
             nameof(RuralClassification),
+            _ => model,
+            cancellationToken);
+    }
+
+    [HttpGet("{siteId}/mmc-using")]
+    [WorkflowState(SiteWorkflowState.MmcUsing)]
+    public async Task<IActionResult> MmcUsing([FromRoute] string siteId, CancellationToken cancellationToken)
+    {
+        var siteModel = await GetSiteDetails(siteId, cancellationToken);
+        return View("MmcUsing", siteModel.ModernMethodsOfConstruction);
+    }
+
+    [HttpPost("{siteId}/mmc-using")]
+    [WorkflowState(SiteWorkflowState.MmcUsing)]
+    public async Task<IActionResult> MmcUsing(SiteModernMethodsOfConstruction model, CancellationToken cancellationToken)
+    {
+        return await ExecuteSiteCommand<SiteModernMethodsOfConstruction>(
+            new ProvideSiteUsingModernMethodsOfConstructionCommand(this.GetSiteIdFromRoute(), model.UsingModernMethodsOfConstruction),
+            nameof(MmcUsing),
+            _ => model,
+            cancellationToken);
+    }
+
+    [HttpGet("{siteId}/mmc-future-adoption")]
+    [WorkflowState(SiteWorkflowState.MmcFutureAdoption)]
+    public async Task<IActionResult> MmcFutureAdoption([FromRoute] string siteId, CancellationToken cancellationToken)
+    {
+        var siteModel = await GetSiteDetails(siteId, cancellationToken);
+        return View("MmcFutureAdoption", siteModel.ModernMethodsOfConstruction);
+    }
+
+    [HttpPost("{siteId}/mmc-future-adoption")]
+    [WorkflowState(SiteWorkflowState.MmcFutureAdoption)]
+    public async Task<IActionResult> MmcFutureAdoption(SiteModernMethodsOfConstruction model, CancellationToken cancellationToken)
+    {
+        return await ExecuteSiteCommand<SiteModernMethodsOfConstruction>(
+            new ProvideModernMethodsConstructionFutureAdoptionCommand(this.GetSiteIdFromRoute(), model.FutureAdoptionPlans, model.FutureAdoptionExpectedImpact),
+            nameof(MmcFutureAdoption),
+            _ => model,
+            cancellationToken);
+    }
+
+    [HttpGet("{siteId}/mmc-information")]
+    [WorkflowState(SiteWorkflowState.MmcInformation)]
+    public async Task<IActionResult> MmcInformation([FromRoute] string siteId, CancellationToken cancellationToken)
+    {
+        var siteModel = await GetSiteDetails(siteId, cancellationToken);
+        return View("MmcInformation", siteModel.ModernMethodsOfConstruction);
+    }
+
+    [HttpPost("{siteId}/mmc-information")]
+    [WorkflowState(SiteWorkflowState.MmcInformation)]
+    public async Task<IActionResult> MmcInformation(SiteModernMethodsOfConstruction model, CancellationToken cancellationToken)
+    {
+        return await ExecuteSiteCommand<SiteModernMethodsOfConstruction>(
+            new ProvideModernMethodsConstructionInformationCommand(this.GetSiteIdFromRoute(), model.InformationBarriers, model.InformationImpact),
+            nameof(MmcInformation),
+            _ => model,
+            cancellationToken);
+    }
+
+    [HttpGet("{siteId}/mmc-categories")]
+    [WorkflowState(SiteWorkflowState.MmcCategories)]
+    public async Task<IActionResult> MmcCategories([FromRoute] string siteId, CancellationToken cancellationToken)
+    {
+        var siteModel = await GetSiteDetails(siteId, cancellationToken);
+        return View("MmcCategories", siteModel.ModernMethodsOfConstruction);
+    }
+
+    [HttpPost("{siteId}/mmc-categories")]
+    [WorkflowState(SiteWorkflowState.MmcCategories)]
+    public async Task<IActionResult> MmcCategories(SiteModernMethodsOfConstruction model, CancellationToken cancellationToken)
+    {
+        return await ExecuteSiteCommand<SiteModernMethodsOfConstruction>(
+            new ProvideModernMethodsConstructionCategoriesCommand(this.GetSiteIdFromRoute(), model.ModernMethodsConstructionCategories),
+            nameof(MmcCategories),
+            _ => model,
+            cancellationToken);
+    }
+
+    [HttpGet("{siteId}/mmc-3d-category")]
+    [WorkflowState(SiteWorkflowState.Mmc3DCategory)]
+    public async Task<IActionResult> Mmc3DCategory([FromRoute] string siteId, CancellationToken cancellationToken)
+    {
+        var siteModel = await GetSiteDetails(siteId, cancellationToken);
+        return View("Mmc3DCategory", siteModel.ModernMethodsOfConstruction);
+    }
+
+    [HttpPost("{siteId}/mmc-3d-category")]
+    [WorkflowState(SiteWorkflowState.Mmc3DCategory)]
+    public async Task<IActionResult> Mmc3DCategory(SiteModernMethodsOfConstruction model, CancellationToken cancellationToken)
+    {
+        return await ExecuteSiteCommand<SiteModernMethodsOfConstruction>(
+            new ProvideModernMethodsConstruction3DSubcategoriesCommand(this.GetSiteIdFromRoute(), model.ModernMethodsConstruction3DSubcategories),
+            nameof(Mmc3DCategory),
+            _ => model,
+            cancellationToken);
+    }
+
+    [HttpGet("{siteId}/mmc-2d-category")]
+    [WorkflowState(SiteWorkflowState.Mmc2DCategory)]
+    public async Task<IActionResult> Mmc2DCategory([FromRoute] string siteId, CancellationToken cancellationToken)
+    {
+        var siteModel = await GetSiteDetails(siteId, cancellationToken);
+        return View("Mmc2DCategory", siteModel.ModernMethodsOfConstruction);
+    }
+
+    [HttpPost("{siteId}/mmc-2d-category")]
+    [WorkflowState(SiteWorkflowState.Mmc3DCategory)]
+    public async Task<IActionResult> Mmc2DCategory(SiteModernMethodsOfConstruction model, CancellationToken cancellationToken)
+    {
+        return await ExecuteSiteCommand<SiteModernMethodsOfConstruction>(
+            new ProvideModernMethodsConstruction2DSubcategoriesCommand(this.GetSiteIdFromRoute(), model.ModernMethodsConstruction2DSubcategories),
+            nameof(Mmc2DCategory),
             _ => model,
             cancellationToken);
     }

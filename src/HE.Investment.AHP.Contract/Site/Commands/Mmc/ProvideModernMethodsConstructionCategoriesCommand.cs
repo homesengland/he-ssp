@@ -6,5 +6,5 @@ namespace HE.Investment.AHP.Contract.Site.Commands.Mmc;
 
 public record ProvideModernMethodsConstructionCategoriesCommand(
         SiteId SiteId,
-        IList<ModernMethodsConstructionCategoriesType> ModernMethodsConstructionCategories)
+        IList<ModernMethodsConstructionCategoriesType>? ModernMethodsConstructionCategories)
     : IRequest<OperationResult>, IProvideSiteDetailsCommand;

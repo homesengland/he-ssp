@@ -51,6 +51,7 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
             RuralClassification = CreateSiteRuralClassification(site.RuralClassification),
             EnvironmentalImpact = site.EnvironmentalImpact?.Value,
             SiteProcurements = site.Procurements.Procurements.ToList(),
+            ModernMethodsOfConstruction = CreateSiteModernMethodsOfConstruction(site.ModernMethodsOfConstruction),
         };
     }
 
@@ -122,5 +123,18 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
     private static SiteRuralClassification CreateSiteRuralClassification(ValueObjects.SiteRuralClassification details)
     {
         return new SiteRuralClassification(details.IsWithinRuralSettlement, details.IsRuralExceptionSite);
+    }
+
+    private static SiteModernMethodsOfConstruction CreateSiteModernMethodsOfConstruction(ValueObjects.Mmc.SiteModernMethodsOfConstruction mmc)
+    {
+        return new SiteModernMethodsOfConstruction(
+            mmc.SiteUsingModernMethodsOfConstruction,
+            mmc.ModernMethodsOfConstruction?.ModernMethodsConstructionCategories.ToList(),
+            mmc.ModernMethodsOfConstruction?.ModernMethodsConstruction2DSubcategories.ToList(),
+            mmc.ModernMethodsOfConstruction?.ModernMethodsConstruction3DSubcategories.ToList(),
+            mmc.FutureAdoption?.Plans.Value,
+            mmc.FutureAdoption?.ExpectedImpact.Value,
+            mmc.Information?.Barriers.Value,
+            mmc.Information?.Impact.Value);
     }
 }

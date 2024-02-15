@@ -2,6 +2,7 @@ using FluentAssertions;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Domain.Site.ValueObjects.Mmc;
 using HE.Investment.AHP.Domain.Tests.Site.TestDataBuilders;
+using SiteModernMethodsOfConstruction = HE.Investment.AHP.Domain.Site.ValueObjects.Mmc.SiteModernMethodsOfConstruction;
 
 namespace HE.Investment.AHP.Domain.Tests.Site.ValueObjects.Mmc.SiteModernMethodsOfConstructionTests;
 

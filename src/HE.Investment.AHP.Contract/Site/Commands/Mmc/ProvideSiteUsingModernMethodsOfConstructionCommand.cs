@@ -5,5 +5,5 @@ namespace HE.Investment.AHP.Contract.Site.Commands.Mmc;
 
 public record ProvideSiteUsingModernMethodsOfConstructionCommand(
         SiteId SiteId,
-        SiteUsingModernMethodsOfConstruction UsingModernMethodsOfConstruction)
+        SiteUsingModernMethodsOfConstruction? UsingModernMethodsOfConstruction)
     : IRequest<OperationResult>, IProvideSiteDetailsCommand;

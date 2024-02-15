@@ -1,0 +1,34 @@
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investment.AHP.Contract.Site
+@using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
+@using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToSitesLink
+@using HE.Investment.AHP.WWW.Views.Site.Const
+@using HE.Investments.Common.WWW.Components.PageHeader
+@model SiteModernMethodsOfConstruction
+@{
+    ViewData["Title"] = SitePageTitles.MmcInformation;
+}
+
+<gds-div-grid-column-two-thirds>
+    <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.MmcInformation"/>
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+    <vc:page-header caption="@ViewBag.SiteName" title="@SitePageTitles.MmcInformation"/>
+
+    <form asp-controller="Site" asp-action="MmcInformation" asp-method="post" novalidate>
+
+        <vc:text-area-input-with-counter
+            title="What barriers have you experienced or expect in introducing greater levels of MMC into your development programme? How could Homes England help?"
+            field-name="@nameof(Model.InformationBarriers)"
+            value="@Model.InformationBarriers"/>
+
+        <vc:text-area-input-with-counter
+            title="Tell us the impact the use of MMC has had on your developments to date"
+            hint="For example, how has it affected costs, construction, time and quality."
+            field-name="@nameof(Model.InformationImpact)"
+            value="@Model.InformationImpact"/>
+
+        <vc:form-button/>
+        <vc:return-to-sites-link/>
+    </form>
+
+</gds-div-grid-column-two-thirds>

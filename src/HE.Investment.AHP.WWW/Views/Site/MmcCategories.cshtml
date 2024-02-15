@@ -1,0 +1,34 @@
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investment.AHP.Contract.Site
+@using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
+@using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToSitesLink
+@using HE.Investment.AHP.WWW.Views.Site.Const
+@using HE.Investments.Common.WWW.Components.CheckboxList
+@using HE.Investments.Common.WWW.Components.PageHeader
+@using HE.Investments.Common.WWW.Helpers
+@using HE.Investment.AHP.Contract.HomeTypes.Enums
+@model SiteModernMethodsOfConstruction
+@{
+    ViewData["Title"] = SitePageTitles.MmcCategories;
+}
+
+<gds-div-grid-column-two-thirds>
+    <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.MmcCategories"/>
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+    <vc:page-header caption="@ViewBag.SiteName"/>
+
+    <form asp-controller="Site" asp-action="MmcCategories" asp-method="post" novalidate>
+
+        <vc:checkbox-list
+            title="@SitePageTitles.MmcCategories"
+            title-type="InputTitleType.PageHeader"
+            hint="Select all that apply. "
+            field-name="@nameof(Model.ModernMethodsConstructionCategories)"
+            available-options="@SelectListHelper.FromEnumToExtendedList<ModernMethodsConstructionCategoriesType>()"
+            selected-values="@Model.ModernMethodsConstructionCategories?.Cast<Enum>()"/>
+
+        <vc:form-button/>
+        <vc:return-to-sites-link/>
+    </form>
+
+</gds-div-grid-column-two-thirds>
