@@ -128,6 +128,7 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
             organisationBasicInfo,
             SectionStatus.InProgress,
             MilestonesPercentageTranches.NotProvided,
+            false,
             new SchemeFunding((int?)null, null));
 
         _deliveryPhases.Add(deliveryPhase);

@@ -62,7 +62,7 @@ public class MilestonesPercentageTranches : ValueObject
         return new MilestonesPercentageTranches(Acquisition, startOnSite, Completion);
     }
 
-    public bool IsSumUpTo100Percentage() => (Acquisition?.Value ?? 0m + StartOnSite?.Value ?? 0m + Completion?.Value ?? 0m) == 1m;
+    public bool IsSumUpTo100Percentage() => (Acquisition?.Value ?? 0m) + (StartOnSite?.Value ?? 0m) + (Completion?.Value ?? 0m) == 1m;
 
     public bool IsAnyPercentageProvided() => Acquisition.IsProvided() || StartOnSite.IsProvided() || Completion.IsProvided();
 
