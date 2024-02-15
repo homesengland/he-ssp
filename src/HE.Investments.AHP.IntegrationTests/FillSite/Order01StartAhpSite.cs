@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Enums;
+using HE.Investment.AHP.Domain.Site.ValueObjects;
 using HE.Investment.AHP.WWW;
 using HE.Investment.AHP.WWW.Models.Site;
 using HE.Investment.AHP.WWW.Views.Site.Const;
@@ -12,7 +13,9 @@ using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
 using Xunit.Extensions.Ordering;
+using SiteRuralClassification = HE.Investment.AHP.Contract.Site.SiteRuralClassification;
 using SiteTypeDetails = HE.Investment.AHP.Domain.Site.ValueObjects.SiteTypeDetails;
+using SiteUseDetails = HE.Investment.AHP.Contract.Site.SiteUseDetails;
 
 namespace HE.Investments.AHP.IntegrationTests.FillSite;
 
@@ -370,13 +373,24 @@ public class Order01StartAhpSite : AhpIntegrationTest
         await TestQuestionPage(
             SitePagesUrl.SiteRuralClassification(SiteData.SiteId),
             SitePageTitles.RuralClassification,
-            SitePagesUrl.SiteProcurements(SiteData.SiteId),
+            SitePagesUrl.SiteEnvironmentalImpact(SiteData.SiteId),
             (nameof(SiteRuralClassification.IsWithinRuralSettlement), "True"));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
     [Order(27)]
-    public async Task Order27_ShouldProvideProcurements()
+    public async Task Order27_ShouldProvideEnvironmentalImpact()
+    {
+        await TestQuestionPage(
+            SitePagesUrl.SiteEnvironmentalImpact(SiteData.SiteId),
+            SitePageTitles.EnvironmentalImpact,
+            SitePagesUrl.SiteProcurements(SiteData.SiteId),
+            (nameof(EnvironmentalImpact), "reducing environmental impact"));
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(28)]
+    public async Task Order28_ShouldProvideProcurements()
     {
         await TestQuestionPage(
             SitePagesUrl.SiteProcurements(SiteData.SiteId),
