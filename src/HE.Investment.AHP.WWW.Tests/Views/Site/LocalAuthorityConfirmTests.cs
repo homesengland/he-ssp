@@ -14,12 +14,13 @@ public class LocalAuthorityConfirmTests : ViewTestBase
     {
         // given & when
         var confirmModel = GetConfirmModel();
-        var document = await Render(_viewPath, confirmModel);
+        var viewBag = new Dictionary<string, object> { { "SiteName", " some site name" } };
+        var document = await Render(_viewPath, confirmModel, viewBag);
 
         // then
         document
             .HasTitle(SitePageTitles.LocalAuthorityConfirm)
-            .HasPageHeader(header: SitePageTitles.LocalAuthorityConfirm)
+            .HasPageHeader(viewBag["SiteName"].ToString(), SitePageTitles.LocalAuthorityConfirm)
             .HasBoldText("Liverpool")
             .HasHeader2("Is this the correct local authority?")
             .HasRadio("Response", new[] { "Yes", "No" })
@@ -33,15 +34,16 @@ public class LocalAuthorityConfirmTests : ViewTestBase
         var errorMessage = "some test error";
         var modelState = new ModelStateDictionary();
         var confirmModel = GetConfirmModel();
+        var viewBag = new Dictionary<string, object> { { "SiteName", " some site name" } };
         modelState.AddModelError(nameof(ConfirmModel<LocalAuthorities>.Response), errorMessage);
 
         // when
-        var document = await Render(_viewPath, confirmModel, modelStateDictionary: modelState);
+        var document = await Render(_viewPath, confirmModel, viewBag, modelState);
 
         // then
         document
             .HasTitle(SitePageTitles.LocalAuthorityConfirm)
-            .HasPageHeader(header: SitePageTitles.LocalAuthorityConfirm)
+            .HasPageHeader(viewBag["SiteName"].ToString(), SitePageTitles.LocalAuthorityConfirm)
             .HasBoldText("Liverpool")
             .HasHeader2("Is this the correct local authority?")
             .HasRadio("Response", new[] { "Yes", "No" })

@@ -14,7 +14,7 @@ public class Debenture : ValueObject
         if (exists && holderName.IsNotProvided())
         {
             OperationResult.New()
-                .AddValidationError("ChargesDebtCompany", ValidationErrorMessage.EnterMoreDetails)
+                .AddValidationError("ChargesDebtCompanyInfo", ValidationErrorMessage.EnterMoreDetails)
                 .CheckErrors();
         }
 

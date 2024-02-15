@@ -1,5 +1,6 @@
 using System.Globalization;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Serialization;
@@ -24,10 +25,7 @@ public class LocalAuthorityRepository : ILocalAuthorityRepository
 
     public async Task<(IList<LocalAuthority> Items, int TotalItems)> Search(string phrase, int startPage, int pageSize, CancellationToken cancellationToken)
     {
-        var localAuthorities = await _cacheService.GetValueAsync(
-                                   "local-authorities",
-                                   async () => await GetLocalAuthorities(cancellationToken))
-                               ?? throw new NotFoundException(nameof(LocalAuthority));
+        var localAuthorities = await GetLocalAuthorities(cancellationToken);
 
         if (!string.IsNullOrEmpty(phrase))
         {
@@ -46,7 +44,25 @@ public class LocalAuthorityRepository : ILocalAuthorityRepository
         return (itemsAtPage.ToList(), totalItems);
     }
 
+    public async Task<LocalAuthority> GetById(StringIdValueObject localAuthorityId, CancellationToken cancellationToken)
+    {
+        var localAuthorities = await GetLocalAuthorities(cancellationToken);
+
+        var localAuthority = localAuthorities.FirstOrDefault(x => x.Id.ToString() == localAuthorityId.ToString()) ??
+                             throw new NotFoundException($"Local authority with id {localAuthorityId} cannot be found");
+
+        return localAuthority;
+    }
+
     private async Task<IList<LocalAuthority>> GetLocalAuthorities(CancellationToken cancellationToken)
+    {
+        return await _cacheService.GetValueAsync(
+                   "local-authorities",
+                   async () => await GetLocalAuthoritiesFromCrm(cancellationToken))
+               ?? throw new NotFoundException(nameof(LocalAuthority));
+    }
+
+    private async Task<IList<LocalAuthority>> GetLocalAuthoritiesFromCrm(CancellationToken cancellationToken)
     {
         var req = new invln_searchlocalauthorityRequest();
         var response = await _serviceClient.ExecuteAsync(req, cancellationToken) as invln_searchlocalauthorityResponse

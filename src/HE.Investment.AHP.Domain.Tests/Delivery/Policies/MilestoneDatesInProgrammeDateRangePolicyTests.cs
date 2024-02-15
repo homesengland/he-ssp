@@ -43,7 +43,7 @@ public class MilestoneDatesInProgrammeDateRangePolicyTests
     public void ShouldThrowDomainValidationException_WhenAcquisitionDateBeforeProgrammeStartDate()
     {
         var acquisitionMilestoneDetails = new AcquisitionMilestoneDetailsBuilder()
-            .WithAcquisitionDate(_programme.EndAt.AddDays(1))
+            .WithAcquisitionDate(_programme.ProgrammeDates.ProgrammeEndDate.AddDays(1))
             .WithoutPaymentDate()
             .Build();
 
@@ -56,7 +56,7 @@ public class MilestoneDatesInProgrammeDateRangePolicyTests
     {
         // given
         var acquisitionMilestoneDetails = new AcquisitionMilestoneDetailsBuilder()
-            .WithAcquisitionDate(_programme.StartAt.AddDays(-1))
+            .WithAcquisitionDate(_programme.ProgrammeDates.ProgrammeStartDate.AddDays(-1))
             .WithoutPaymentDate()
             .Build();
 
@@ -70,7 +70,7 @@ public class MilestoneDatesInProgrammeDateRangePolicyTests
         // given
         var acquisitionMilestoneDetails = new AcquisitionMilestoneDetailsBuilder()
             .WithoutAcquisitionDate()
-            .WithPaymentDate(_programme.StartAt.AddDays(-1))
+            .WithPaymentDate(_programme.ProgrammeDates.ProgrammeStartDate.AddDays(-1))
             .Build();
 
         // when && then
@@ -83,7 +83,7 @@ public class MilestoneDatesInProgrammeDateRangePolicyTests
         // given
         var acquisitionMilestoneDetails = new AcquisitionMilestoneDetailsBuilder()
             .WithoutAcquisitionDate()
-            .WithPaymentDate(_programme.EndAt.AddDays(1))
+            .WithPaymentDate(_programme.ProgrammeDates.ProgrammeEndDate.AddDays(1))
             .Build();
 
         // when && then

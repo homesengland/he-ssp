@@ -31,6 +31,13 @@ public enum SiteWorkflowState
     SiteUse,
     TravellerPitchType,
     RuralClassification,
+    EnvironmentalImpact,
+    MmcUsing,
+    MmcFutureAdoption,
+    MmcInformation,
+    MmcCategories,
+    Mmc3DCategory,
+    Mmc2DCategory,
     Procurements,
     CheckAnswers,
 }

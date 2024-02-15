@@ -12,11 +12,12 @@ public class LocalAuthorityNotFoundTests : ViewTestBase
     {
         // given & when
         var localAuthorities = new LocalAuthorities();
-        var document = await Render(_viewPath, localAuthorities);
+        var viewBag = new Dictionary<string, object> { { "SiteName", " some site name" } };
+        var document = await Render(_viewPath, localAuthorities, viewBag);
 
         // then
         document
-            .HasPageHeader(header: SitePageTitles.LocalAuthorityNoMatch)
+            .HasPageHeader(viewBag["SiteName"].ToString(), SitePageTitles.LocalAuthorityNoMatch)
             .HasParagraph("We could not find the details you entered in our records.")
             .HasLinkWithTestId("local-authority-search-link", out _)
             .HasLinkWithTestId("assign-empty-local-authority-link", out _)

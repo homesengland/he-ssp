@@ -13,12 +13,13 @@ public class LocalAuthoritySearchTests : ViewTestBase
     {
         // given & when
         var localAuthorities = new LocalAuthorities();
-        var document = await Render(_viewPath, localAuthorities);
+        var viewBag = new Dictionary<string, object> { { "SiteName", " some site name" } };
+        var document = await Render(_viewPath, localAuthorities, viewBag);
 
         // then
         document
             .HasTitle(SitePageTitles.LocalAuthoritySearch)
-            .HasPageHeader(header: SitePageTitles.LocalAuthoritySearch)
+            .HasPageHeader(viewBag["SiteName"].ToString(), SitePageTitles.LocalAuthoritySearch)
             .HasParagraph(
                 "Search for your local authority. If your site is located in more than one local authority, search for the local authority where you have planning permission.")
             .HasInput(nameof(LocalAuthorities.Phrase))
@@ -32,15 +33,16 @@ public class LocalAuthoritySearchTests : ViewTestBase
         var errorMessage = "some test error";
         var modelState = new ModelStateDictionary();
         var localAuthorities = new LocalAuthorities();
+        var viewBag = new Dictionary<string, object> { { "SiteName", " some site name" } };
         modelState.AddModelError(nameof(LocalAuthorities.Phrase), errorMessage);
 
         // when
-        var document = await Render(_viewPath, localAuthorities, modelStateDictionary: modelState);
+        var document = await Render(_viewPath, localAuthorities, viewBag, modelState);
 
         // then
         document
             .HasTitle(SitePageTitles.LocalAuthoritySearch)
-            .HasPageHeader(header: SitePageTitles.LocalAuthoritySearch)
+            .HasPageHeader(viewBag["SiteName"].ToString(), SitePageTitles.LocalAuthoritySearch)
             .HasParagraph(
                 "Search for your local authority. If your site is located in more than one local authority, search for the local authority where you have planning permission.")
             .HasInput(nameof(LocalAuthorities.Phrase))

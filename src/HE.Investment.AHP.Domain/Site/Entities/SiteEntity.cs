@@ -13,6 +13,7 @@ using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using LocalAuthority = Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
 using Section106 = HE.Investment.AHP.Domain.Site.ValueObjects.Section106;
+using SiteModernMethodsOfConstruction = HE.Investment.AHP.Domain.Site.ValueObjects.Mmc.SiteModernMethodsOfConstruction;
 using SiteRuralClassification = HE.Investment.AHP.Domain.Site.ValueObjects.SiteRuralClassification;
 using SiteTypeDetails = HE.Investment.AHP.Domain.Site.ValueObjects.SiteTypeDetails;
 using SiteUseDetails = HE.Investment.AHP.Domain.Site.ValueObjects.SiteUseDetails;
@@ -38,7 +39,9 @@ public class SiteEntity : DomainEntity, IQuestion
         LocalAuthority? localAuthority = null,
         BuildingForHealthyLifeType buildingForHealthyLife = BuildingForHealthyLifeType.Undefined,
         SiteUseDetails? siteUseDetails = null,
-        SiteRuralClassification? ruralClassification = null)
+        SiteRuralClassification? ruralClassification = null,
+        EnvironmentalImpact? environmentalImpact = null,
+        SiteModernMethodsOfConstruction? modernMethodsOfConstruction = null)
     {
         Id = id;
         Name = name;
@@ -56,6 +59,8 @@ public class SiteEntity : DomainEntity, IQuestion
         SiteTypeDetails = siteTypeDetails;
         SiteUseDetails = siteUseDetails ?? new SiteUseDetails();
         RuralClassification = ruralClassification ?? new SiteRuralClassification();
+        EnvironmentalImpact = environmentalImpact;
+        ModernMethodsOfConstruction = modernMethodsOfConstruction ?? new SiteModernMethodsOfConstruction();
     }
 
     public SiteEntity()
@@ -73,6 +78,8 @@ public class SiteEntity : DomainEntity, IQuestion
         SiteUseDetails = new SiteUseDetails();
         Procurements = new SiteProcurements();
         RuralClassification = new SiteRuralClassification();
+        EnvironmentalImpact = null;
+        ModernMethodsOfConstruction = new SiteModernMethodsOfConstruction();
     }
 
     public SiteId Id { get; set; }
@@ -106,6 +113,10 @@ public class SiteEntity : DomainEntity, IQuestion
     public SiteProcurements Procurements { get; private set; }
 
     public SiteRuralClassification RuralClassification { get; private set; }
+
+    public EnvironmentalImpact? EnvironmentalImpact { get; private set; }
+
+    public SiteModernMethodsOfConstruction ModernMethodsOfConstruction { get; private set; }
 
     public async Task ProvideName(SiteName siteName, ISiteNameExist siteNameExist, CancellationToken cancellationToken)
     {
@@ -188,6 +199,16 @@ public class SiteEntity : DomainEntity, IQuestion
         RuralClassification = _modificationTracker.Change(RuralClassification, ruralClassification);
     }
 
+    public void ProvideEnvironmentalImpact(EnvironmentalImpact? environmentalImpact)
+    {
+        EnvironmentalImpact = _modificationTracker.Change(EnvironmentalImpact, environmentalImpact);
+    }
+
+    public void ProvideModernMethodsOfConstruction(SiteModernMethodsOfConstruction modernMethodsOfConstruction)
+    {
+        ModernMethodsOfConstruction = _modificationTracker.Change(ModernMethodsOfConstruction, modernMethodsOfConstruction);
+    }
+
     public bool IsAnswered()
     {
         return PlanningDetails.IsAnswered() &&
@@ -198,7 +219,9 @@ public class SiteEntity : DomainEntity, IQuestion
                BuildingForHealthyLife != BuildingForHealthyLifeType.Undefined &&
                BuildConditionalRouteCompletionPredicates().All(isCompleted => isCompleted()) &&
                Procurements.IsAnswered() &&
-               RuralClassification.IsAnswered();
+               RuralClassification.IsAnswered() &&
+               EnvironmentalImpact.IsProvided() &&
+               ModernMethodsOfConstruction.IsAnswered();
     }
 
     private IEnumerable<Func<bool>> BuildConditionalRouteCompletionPredicates()

@@ -25,7 +25,8 @@ public static class SiteWorkflowFactory
         ContractSiteTypeDetails? siteTypeDetails = null,
         SiteUseDetails? siteUseDetails = null,
         IList<SiteProcurement>? procurements = null,
-        SiteRuralClassification? ruralClassification = null)
+        SiteRuralClassification? ruralClassification = null,
+        EnvironmentalImpact? environmentalImpact = null)
     {
         var site = new SiteModel
         {
@@ -43,6 +44,7 @@ public static class SiteWorkflowFactory
             SiteUseDetails = siteUseDetails ?? new SiteUseDetails(null, null, TravellerPitchSiteType.Undefined),
             SiteProcurements = procurements ?? new List<SiteProcurement>(),
             RuralClassification = ruralClassification ?? new SiteRuralClassification(null, null),
+            EnvironmentalImpact = environmentalImpact?.Value,
         };
 
         return new SiteWorkflow(currentSiteWorkflowState, site);

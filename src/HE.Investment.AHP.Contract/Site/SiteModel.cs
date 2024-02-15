@@ -32,5 +32,9 @@ public class SiteModel
 
     public SiteRuralClassification RuralClassification { get; set; }
 
+    public string? EnvironmentalImpact { get; set; }
+
     public IList<SiteProcurement> SiteProcurements { get; set; }
+
+    public SiteModernMethodsOfConstruction ModernMethodsOfConstruction { get; set; }
 }

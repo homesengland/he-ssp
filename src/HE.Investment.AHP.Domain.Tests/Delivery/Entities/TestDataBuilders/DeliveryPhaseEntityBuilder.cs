@@ -9,6 +9,7 @@ using HE.Investment.AHP.Domain.Delivery.Tranches;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investment.AHP.Domain.Programme;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
+using HE.Investment.AHP.Domain.Tests.Programme.TestData;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
 using HE.Investments.TestsUtils.TestData;
@@ -26,7 +27,7 @@ public class DeliveryPhaseEntityBuilder
         new ApplicationName("Test Application"),
         Tenure.AffordableRent,
         ApplicationStatus.Draft,
-        new AhpProgramme(DateTimeTestData.OctoberDay05Year2023At0858, DateTimeTestData.OctoberDay05Year2023At0858.AddMonths(6), MilestoneFramework.Default));
+        new AhpProgramme(ProgrammeDatesTestData.ProgrammeDates, MilestoneFramework.Default));
 
     private DeliveryPhaseName _name = new("First Phase");
 
@@ -185,8 +186,7 @@ public class DeliveryPhaseEntityBuilder
         _applicationBasicInfo = _applicationBasicInfo with
         {
             Programme = new AhpProgramme(
-                DateTimeTestData.OctoberDay05Year2023At0858,
-                DateTimeTestData.OctoberDay05Year2023At0858.AddMonths(6),
+                ProgrammeDatesTestData.ProgrammeDates,
                 milestoneFramework),
         };
 
@@ -201,6 +201,7 @@ public class DeliveryPhaseEntityBuilder
             _organisationBasicInfo,
             _status,
             MilestonesPercentageTranches.LackOfCalculation,
+            false,
             _schemeFunding,
             _typeOfHomes,
             _buildActivity,

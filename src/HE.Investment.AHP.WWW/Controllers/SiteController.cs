@@ -2,6 +2,7 @@ using He.AspNetCore.Mvc.Gds.Components.Extensions;
 using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Commands;
+using HE.Investment.AHP.Contract.Site.Commands.Mmc;
 using HE.Investment.AHP.Contract.Site.Commands.PlanningDetails;
 using HE.Investment.AHP.Contract.Site.Commands.Section106;
 using HE.Investment.AHP.Contract.Site.Commands.TenderingStatus;
@@ -20,6 +21,7 @@ using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Routing;
+using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -258,21 +260,22 @@ public class SiteController : WorkflowController<SiteWorkflowState>
 
     [HttpGet("{siteId}/local-authority/search")]
     [WorkflowState(SiteWorkflowState.LocalAuthoritySearch)]
-    public IActionResult LocalAuthoritySearch(string siteId)
+    public async Task<IActionResult> LocalAuthoritySearch(string siteId, CancellationToken cancellationToken)
     {
-        return View(new LocalAuthorities { SiteId = siteId });
+        await GetSiteBasicDetails(siteId, cancellationToken);
+        return View(nameof(LocalAuthoritySearch), new LocalAuthorities { SiteId = siteId });
     }
 
     [HttpPost("{siteId}/local-authority/search")]
     [WorkflowState(SiteWorkflowState.LocalAuthoritySearch)]
     public async Task<IActionResult> LocalAuthoritySearch(string siteId, LocalAuthorities model, CancellationToken cancellationToken)
     {
-        return await this.ExecuteCommand<LocalAuthorities>(
-            _mediator,
+        return await ExecuteSiteCommand<LocalAuthorities>(
             new ProvideLocalAuthoritySearchPhraseCommand(new SiteId(siteId), model.Phrase),
-            () => ContinueWithRedirect(new { siteId, phrase = model.Phrase }),
-            async () => await Task.FromResult<IActionResult>(View("LocalAuthoritySearch", model)),
-            cancellationToken);
+            nameof(LocalAuthoritySearch),
+            _ => model,
+            cancellationToken,
+            new { siteId, phrase = model.Phrase });
     }
 
     [HttpGet("{siteId}/local-authority/search/result")]
@@ -282,9 +285,10 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         string phrase,
         [FromQuery] string redirect,
         [FromQuery] int? page,
-        CancellationToken token)
+        CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new SearchLocalAuthoritiesQuery(phrase, new PaginationRequest(page ?? 1)), token);
+        await GetSiteBasicDetails(siteId, cancellationToken);
+        var result = await _mediator.Send(new SearchLocalAuthoritiesQuery(phrase, new PaginationRequest(page ?? 1)), cancellationToken);
 
         if (result.ReturnedData.Page?.TotalItems == 0)
         {
@@ -300,46 +304,52 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     }
 
     [HttpGet("{siteId}/local-authority/not-found")]
-    public IActionResult LocalAuthorityNotFound(string siteId)
+    public async Task<IActionResult> LocalAuthorityNotFound(string siteId, CancellationToken cancellationToken)
     {
-        return View(new LocalAuthorities { SiteId = siteId });
+        await GetSiteBasicDetails(siteId, cancellationToken);
+        return View(nameof(LocalAuthorityNotFound), new LocalAuthorities { SiteId = siteId });
     }
 
-    [HttpGet("{siteId}/local-authority/{localAuthorityId}/{localAuthorityName}/confirm")]
+    [HttpGet("{siteId}/local-authority/{localAuthorityId}/confirm")]
     [WorkflowState(SiteWorkflowState.LocalAuthorityConfirm)]
-    public IActionResult LocalAuthorityConfirm(string siteId, string localAuthorityId, string localAuthorityName, string phrase)
+    public async Task<IActionResult> LocalAuthorityConfirm(string siteId, string localAuthorityId, string? phrase, CancellationToken cancellationToken)
     {
-        var model = new LocalAuthorities
+        var siteBasicDetails = await GetSiteBasicDetails(siteId, cancellationToken);
+        var localAuthority = await _mediator.Send(new GetLocalAuthorityQuery(new StringIdValueObject(localAuthorityId)), cancellationToken);
+
+        var localAuthorities = new LocalAuthorities
         {
             SiteId = siteId,
             LocalAuthorityId = localAuthorityId,
-            LocalAuthorityName = localAuthorityName,
+            LocalAuthorityName = localAuthority.Name,
             Phrase = phrase,
         };
 
-        return View(new ConfirmModel<LocalAuthorities>(model));
+        var model = new ConfirmModel<LocalAuthorities>(localAuthorities)
+        {
+            Response = siteBasicDetails.LocalAuthorityName == localAuthority.Name ? CommonResponse.Yes : string.Empty,
+        };
+
+        return View(model);
     }
 
-    [HttpPost("{siteId}/local-authority/{localAuthorityId}/{localAuthorityName}/confirm")]
+    [HttpPost("{siteId}/local-authority/{localAuthorityId}/confirm")]
     [WorkflowState(SiteWorkflowState.LocalAuthorityConfirm)]
     public async Task<IActionResult> LocalAuthorityConfirm(
         string siteId,
-        string localAuthorityId,
-        string localAuthorityName,
         ConfirmModel<LocalAuthorities> model,
         [FromQuery] string redirect,
         CancellationToken cancellationToken)
     {
-        if (model.Response == YesNoType.No.ToString())
+        if (model.Response == YesNoType.No.ToString() && !Request.IsSaveAndReturnAction())
         {
             return RedirectToAction(nameof(LocalAuthoritySearch), new { siteId, redirect });
         }
 
-        return await this.ExecuteCommand<ConfirmModel<LocalAuthorities>>(
-            _mediator,
-            new ProvideLocalAuthorityCommand(new SiteId(siteId), localAuthorityId, localAuthorityName, model.Response),
-            () => ContinueWithRedirect(new { siteId, redirect }),
-            async () => await Task.FromResult(View(model)),
+        return await ExecuteSiteCommand<ConfirmModel<LocalAuthorities>>(
+            new ProvideLocalAuthorityCommand(new SiteId(siteId), model.ViewModel.LocalAuthorityId, model.ViewModel.LocalAuthorityName, model.Response),
+            nameof(LocalAuthorityConfirm),
+            _ => model,
             cancellationToken);
     }
 
@@ -513,7 +523,6 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     public async Task<IActionResult> LandAcquisitionStatus([FromRoute] string siteId, CancellationToken cancellationToken)
     {
         var siteModel = await GetSiteDetails(siteId, cancellationToken);
-        ViewBag.SiteName = siteModel.Name;
         return View("LandAcquisitionStatus", siteModel);
     }
 
@@ -526,7 +535,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
                 this.GetSiteIdFromRoute(),
                 model.LandAcquisitionStatus),
             nameof(LandAcquisitionStatus),
-            savedModel => model,
+            _ => model,
             cancellationToken);
     }
 
@@ -699,6 +708,139 @@ public class SiteController : WorkflowController<SiteWorkflowState>
             cancellationToken);
     }
 
+    [HttpGet("{siteId}/mmc-using")]
+    [WorkflowState(SiteWorkflowState.MmcUsing)]
+    public async Task<IActionResult> MmcUsing([FromRoute] string siteId, CancellationToken cancellationToken)
+    {
+        var siteModel = await GetSiteDetails(siteId, cancellationToken);
+        return View("MmcUsing", siteModel.ModernMethodsOfConstruction);
+    }
+
+    [HttpPost("{siteId}/mmc-using")]
+    [WorkflowState(SiteWorkflowState.MmcUsing)]
+    public async Task<IActionResult> MmcUsing(SiteModernMethodsOfConstruction model, CancellationToken cancellationToken)
+    {
+        return await ExecuteSiteCommand<SiteModernMethodsOfConstruction>(
+            new ProvideSiteUsingModernMethodsOfConstructionCommand(this.GetSiteIdFromRoute(), model.UsingModernMethodsOfConstruction),
+            nameof(MmcUsing),
+            _ => model,
+            cancellationToken);
+    }
+
+    [HttpGet("{siteId}/mmc-future-adoption")]
+    [WorkflowState(SiteWorkflowState.MmcFutureAdoption)]
+    public async Task<IActionResult> MmcFutureAdoption([FromRoute] string siteId, CancellationToken cancellationToken)
+    {
+        var siteModel = await GetSiteDetails(siteId, cancellationToken);
+        return View("MmcFutureAdoption", siteModel.ModernMethodsOfConstruction);
+    }
+
+    [HttpPost("{siteId}/mmc-future-adoption")]
+    [WorkflowState(SiteWorkflowState.MmcFutureAdoption)]
+    public async Task<IActionResult> MmcFutureAdoption(SiteModernMethodsOfConstruction model, CancellationToken cancellationToken)
+    {
+        return await ExecuteSiteCommand<SiteModernMethodsOfConstruction>(
+            new ProvideModernMethodsConstructionFutureAdoptionCommand(this.GetSiteIdFromRoute(), model.FutureAdoptionPlans, model.FutureAdoptionExpectedImpact),
+            nameof(MmcFutureAdoption),
+            _ => model,
+            cancellationToken);
+    }
+
+    [HttpGet("{siteId}/mmc-information")]
+    [WorkflowState(SiteWorkflowState.MmcInformation)]
+    public async Task<IActionResult> MmcInformation([FromRoute] string siteId, CancellationToken cancellationToken)
+    {
+        var siteModel = await GetSiteDetails(siteId, cancellationToken);
+        return View("MmcInformation", siteModel.ModernMethodsOfConstruction);
+    }
+
+    [HttpPost("{siteId}/mmc-information")]
+    [WorkflowState(SiteWorkflowState.MmcInformation)]
+    public async Task<IActionResult> MmcInformation(SiteModernMethodsOfConstruction model, CancellationToken cancellationToken)
+    {
+        return await ExecuteSiteCommand<SiteModernMethodsOfConstruction>(
+            new ProvideModernMethodsConstructionInformationCommand(this.GetSiteIdFromRoute(), model.InformationBarriers, model.InformationImpact),
+            nameof(MmcInformation),
+            _ => model,
+            cancellationToken);
+    }
+
+    [HttpGet("{siteId}/mmc-categories")]
+    [WorkflowState(SiteWorkflowState.MmcCategories)]
+    public async Task<IActionResult> MmcCategories([FromRoute] string siteId, CancellationToken cancellationToken)
+    {
+        var siteModel = await GetSiteDetails(siteId, cancellationToken);
+        return View("MmcCategories", siteModel.ModernMethodsOfConstruction);
+    }
+
+    [HttpPost("{siteId}/mmc-categories")]
+    [WorkflowState(SiteWorkflowState.MmcCategories)]
+    public async Task<IActionResult> MmcCategories(SiteModernMethodsOfConstruction model, CancellationToken cancellationToken)
+    {
+        return await ExecuteSiteCommand<SiteModernMethodsOfConstruction>(
+            new ProvideModernMethodsConstructionCategoriesCommand(this.GetSiteIdFromRoute(), model.ModernMethodsConstructionCategories),
+            nameof(MmcCategories),
+            _ => model,
+            cancellationToken);
+    }
+
+    [HttpGet("{siteId}/mmc-3d-category")]
+    [WorkflowState(SiteWorkflowState.Mmc3DCategory)]
+    public async Task<IActionResult> Mmc3DCategory([FromRoute] string siteId, CancellationToken cancellationToken)
+    {
+        var siteModel = await GetSiteDetails(siteId, cancellationToken);
+        return View("Mmc3DCategory", siteModel.ModernMethodsOfConstruction);
+    }
+
+    [HttpPost("{siteId}/mmc-3d-category")]
+    [WorkflowState(SiteWorkflowState.Mmc3DCategory)]
+    public async Task<IActionResult> Mmc3DCategory(SiteModernMethodsOfConstruction model, CancellationToken cancellationToken)
+    {
+        return await ExecuteSiteCommand<SiteModernMethodsOfConstruction>(
+            new ProvideModernMethodsConstruction3DSubcategoriesCommand(this.GetSiteIdFromRoute(), model.ModernMethodsConstruction3DSubcategories),
+            nameof(Mmc3DCategory),
+            _ => model,
+            cancellationToken);
+    }
+
+    [HttpGet("{siteId}/mmc-2d-category")]
+    [WorkflowState(SiteWorkflowState.Mmc2DCategory)]
+    public async Task<IActionResult> Mmc2DCategory([FromRoute] string siteId, CancellationToken cancellationToken)
+    {
+        var siteModel = await GetSiteDetails(siteId, cancellationToken);
+        return View("Mmc2DCategory", siteModel.ModernMethodsOfConstruction);
+    }
+
+    [HttpPost("{siteId}/mmc-2d-category")]
+    [WorkflowState(SiteWorkflowState.Mmc3DCategory)]
+    public async Task<IActionResult> Mmc2DCategory(SiteModernMethodsOfConstruction model, CancellationToken cancellationToken)
+    {
+        return await ExecuteSiteCommand<SiteModernMethodsOfConstruction>(
+            new ProvideModernMethodsConstruction2DSubcategoriesCommand(this.GetSiteIdFromRoute(), model.ModernMethodsConstruction2DSubcategories),
+            nameof(Mmc2DCategory),
+            _ => model,
+            cancellationToken);
+    }
+
+    [HttpGet("{siteId}/environmental-impact")]
+    [WorkflowState(SiteWorkflowState.EnvironmentalImpact)]
+    public async Task<IActionResult> EnvironmentalImpact([FromRoute] string siteId, CancellationToken cancellationToken)
+    {
+        var siteModel = await GetSiteDetails(siteId, cancellationToken);
+        return View("EnvironmentalImpact", siteModel);
+    }
+
+    [HttpPost("{siteId}/environmental-impact")]
+    [WorkflowState(SiteWorkflowState.EnvironmentalImpact)]
+    public async Task<IActionResult> EnvironmentalImpact(SiteModel model, CancellationToken cancellationToken)
+    {
+        return await ExecuteSiteCommand<SiteModel>(
+            new ProvideSiteEnvironmentalImpactCommand(this.GetSiteIdFromRoute(), model.EnvironmentalImpact),
+            nameof(EnvironmentalImpact),
+            _ => model,
+            cancellationToken);
+    }
+
     [HttpGet("{siteId}/procurements")]
     [WorkflowState(SiteWorkflowState.Procurements)]
     public async Task<IActionResult> Procurements([FromRoute] string siteId, CancellationToken cancellationToken)
@@ -743,14 +885,15 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         IRequest<OperationResult> command,
         string viewName,
         Func<SiteModel, TViewModel> createViewModelForError,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        object? routeData = null)
     {
         var siteId = this.GetSiteIdFromRoute();
 
         return await this.ExecuteCommand<TViewModel>(
             _mediator,
             command,
-            async () => await this.ReturnToSitesListOrContinue(async () => await ContinueWithRedirect(new { siteId })),
+            async () => await this.ReturnToSitesListOrContinue(async () => await ContinueWithRedirect(routeData ?? new { siteId })),
             async () =>
             {
                 var siteDetails = await GetSiteDetails(siteId.Value, cancellationToken);
@@ -766,5 +909,12 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         var siteModel = await _mediator.Send(new GetSiteQuery(siteId), cancellationToken);
         ViewBag.SiteName = siteModel.Name!;
         return siteModel;
+    }
+
+    private async Task<SiteBasicModel> GetSiteBasicDetails(string siteId, CancellationToken cancellationToken)
+    {
+        var siteBasicModel = await _mediator.Send(new GetSiteBasicDetailsQuery(siteId), cancellationToken);
+        ViewBag.SiteName = siteBasicModel.Name;
+        return siteBasicModel;
     }
 }

@@ -26,11 +26,11 @@ public static class SitePagesUrl
 
     public static string SiteLocalAuthorityResult(string siteId, string phrase) => $"{SiteLocalAuthorityResult(siteId)}?phrase={phrase}";
 
-    public static string SiteLocalAuthorityConfirm(string siteId, string localAuthorityId, string localAuthorityName, string phrase) =>
-        $"ahp/site/{siteId}/local-authority/{localAuthorityId}/{localAuthorityName}/confirm?phrase={phrase}";
+    public static string SiteLocalAuthorityConfirm(string siteId, string localAuthorityId, string phrase) =>
+        $"ahp/site/{siteId}/local-authority/{localAuthorityId}/confirm?phrase={phrase}";
 
-    public static string SiteLocalAuthorityConfirmWithoutQuery(string siteId, string localAuthorityId, string localAuthorityName) =>
-        $"ahp/site/{siteId}/local-authority/{localAuthorityId}/{localAuthorityName}/confirm";
+    public static string SiteLocalAuthorityConfirmWithoutQuery(string siteId, string localAuthorityId) =>
+        $"ahp/site/{siteId}/local-authority/{localAuthorityId}/confirm";
 
     public static string SitePlanningStatus(string siteId) => $"ahp/site/{siteId}/planning-status";
 
@@ -61,6 +61,8 @@ public static class SitePagesUrl
     public static string SiteTravellerPitchType(string siteId) => $"ahp/site/{siteId}/traveller-pitch-type";
 
     public static string SiteRuralClassification(string siteId) => $"ahp/site/{siteId}/rural-classification";
+
+    public static string SiteEnvironmentalImpact(string siteId) => $"ahp/site/{siteId}/environmental-impact";
 
     public static string SiteProcurements(string siteId) => $"ahp/site/{siteId}/procurements";
 

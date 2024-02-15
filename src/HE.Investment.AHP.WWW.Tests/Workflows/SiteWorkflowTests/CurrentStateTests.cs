@@ -23,6 +23,8 @@ public class CurrentStateTests
 
     private readonly Section106Dto _section106 = new("3", "TestSite", false);
 
+    private EnvironmentalImpact? _environmentalImpact = new("reducing environmental impact");
+
     [Fact]
     public void ShouldReturnCheckAnswers_WhenAllDataProvided()
     {
@@ -270,6 +272,13 @@ public class CurrentStateTests
     }
 
     [Fact]
+    public void ShouldReturnEnvironmentalImpact_WhenEnvironmentalImpactIsNotProvided()
+    {
+        _environmentalImpact = null;
+        Test(SiteWorkflowState.EnvironmentalImpact);
+    }
+
+    [Fact]
     public void ShouldReturnProcurement_WhenProcurementNotProvided()
     {
         Test(SiteWorkflowState.Procurements, procurements: new List<SiteProcurement>());
@@ -285,7 +294,8 @@ public class CurrentStateTests
         SiteTypeDetails? siteTypeDetails = null,
         SiteUseDetails? siteUseDetails = null,
         IList<SiteProcurement>? procurements = null,
-        SiteRuralClassification? ruralClassification = null)
+        SiteRuralClassification? ruralClassification = null,
+        EnvironmentalImpact? environmentalImpact = null)
     {
         // given
         var workflow = SiteWorkflowFactory.BuildWorkflow(
@@ -303,7 +313,8 @@ public class CurrentStateTests
             siteTypeDetails: siteTypeDetails,
             siteUseDetails: siteUseDetails ?? new SiteUseDetails(false, true, TravellerPitchSiteType.Permanent),
             procurements: procurements ?? new List<SiteProcurement> { SiteProcurement.PartneringArrangementsWithContractor, SiteProcurement.LargeScaleContractProcurementThroughConsortium },
-            ruralClassification: ruralClassification ?? new SiteRuralClassification(true, false));
+            ruralClassification: ruralClassification ?? new SiteRuralClassification(true, false),
+            environmentalImpact: environmentalImpact ?? _environmentalImpact);
 
         // when
         var result = workflow.CurrentState(SiteWorkflowState.Start);
