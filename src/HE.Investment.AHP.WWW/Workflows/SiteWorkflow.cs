@@ -102,6 +102,7 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             SiteWorkflowState.SiteUse => true,
             SiteWorkflowState.TravellerPitchType => IsForTravellerPitchSite(),
             SiteWorkflowState.RuralClassification => true,
+            SiteWorkflowState.EnvironmentalImpact => true,
             SiteWorkflowState.Procurements => true,
             SiteWorkflowState.CheckAnswers => true,
             _ => false,

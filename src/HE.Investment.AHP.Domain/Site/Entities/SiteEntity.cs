@@ -40,6 +40,7 @@ public class SiteEntity : DomainEntity, IQuestion
         BuildingForHealthyLifeType buildingForHealthyLife = BuildingForHealthyLifeType.Undefined,
         SiteUseDetails? siteUseDetails = null,
         SiteRuralClassification? ruralClassification = null,
+        EnvironmentalImpact? environmentalImpact = null,
         SiteModernMethodsOfConstruction? modernMethodsOfConstruction = null)
     {
         Id = id;
@@ -58,6 +59,7 @@ public class SiteEntity : DomainEntity, IQuestion
         SiteTypeDetails = siteTypeDetails;
         SiteUseDetails = siteUseDetails ?? new SiteUseDetails();
         RuralClassification = ruralClassification ?? new SiteRuralClassification();
+        EnvironmentalImpact = environmentalImpact;
         ModernMethodsOfConstruction = modernMethodsOfConstruction ?? new SiteModernMethodsOfConstruction();
     }
 
@@ -76,6 +78,7 @@ public class SiteEntity : DomainEntity, IQuestion
         SiteUseDetails = new SiteUseDetails();
         Procurements = new SiteProcurements();
         RuralClassification = new SiteRuralClassification();
+        EnvironmentalImpact = null;
         ModernMethodsOfConstruction = new SiteModernMethodsOfConstruction();
     }
 
@@ -110,6 +113,8 @@ public class SiteEntity : DomainEntity, IQuestion
     public SiteProcurements Procurements { get; private set; }
 
     public SiteRuralClassification RuralClassification { get; private set; }
+
+    public EnvironmentalImpact? EnvironmentalImpact { get; private set; }
 
     public SiteModernMethodsOfConstruction ModernMethodsOfConstruction { get; private set; }
 
@@ -194,6 +199,11 @@ public class SiteEntity : DomainEntity, IQuestion
         RuralClassification = _modificationTracker.Change(RuralClassification, ruralClassification);
     }
 
+    public void ProvideEnvironmentalImpact(EnvironmentalImpact? environmentalImpact)
+    {
+        EnvironmentalImpact = _modificationTracker.Change(EnvironmentalImpact, environmentalImpact);
+    }
+
     public void ProvideModernMethodsOfConstruction(SiteModernMethodsOfConstruction modernMethodsOfConstruction)
     {
         ModernMethodsOfConstruction = _modificationTracker.Change(ModernMethodsOfConstruction, modernMethodsOfConstruction);
@@ -210,6 +220,7 @@ public class SiteEntity : DomainEntity, IQuestion
                BuildConditionalRouteCompletionPredicates().All(isCompleted => isCompleted()) &&
                Procurements.IsAnswered() &&
                RuralClassification.IsAnswered() &&
+               EnvironmentalImpact.IsProvided() &&
                ModernMethodsOfConstruction.IsAnswered();
     }
 
