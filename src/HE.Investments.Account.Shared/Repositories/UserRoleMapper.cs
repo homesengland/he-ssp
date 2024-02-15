@@ -6,13 +6,13 @@ namespace HE.Investments.Account.Shared.Repositories;
 
 public static class UserRoleMapper
 {
-    private static readonly Dictionary<UserRole, invln_permission> Roles = new()
+    private static readonly Dictionary<UserRole, invln_Permission> Roles = new()
     {
-        { UserRole.Admin, invln_permission.Admin },
-        { UserRole.Enhanced, invln_permission.Enhanced },
-        { UserRole.Input, invln_permission.Inputonly },
-        { UserRole.ViewOnly, invln_permission.Viewonly },
-        { UserRole.Limited, invln_permission.Limiteduser },
+        { UserRole.Admin, invln_Permission.Admin },
+        { UserRole.Enhanced, invln_Permission.Enhanced },
+        { UserRole.Input, invln_Permission.Inputonly },
+        { UserRole.ViewOnly, invln_Permission.Viewonly },
+        { UserRole.Limited, invln_Permission.Limiteduser },
     };
 
     public static UserRole? ToDomain(int? value)
@@ -22,7 +22,7 @@ public static class UserRoleMapper
             return null;
         }
 
-        var contract = (invln_permission)value;
+        var contract = (invln_Permission)value;
         if (!Roles.TryGetKeyByValue(contract, out var result))
         {
             throw new ArgumentException($"Not supported User Role value {value}");
