@@ -103,6 +103,7 @@
     <Compile Include="Handlers\ContactWebrole\SendNotificationOnRoleModificationHandler.cs" />
     <Compile Include="Handlers\CustomApi\ChangeAhpApplicationHandler.cs" />
     <Compile Include="Handlers\CustomApi\CheckIfApplicationWithGivenNameExistsHandler.cs" />
+    <Compile Include="Handlers\CustomApi\DeleteDeliveryPhaseHandler.cs" />
     <Compile Include="Handlers\CustomApi\DeleteHomeTypeHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetAbsoluteAhpApplicationFileLocationHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetAhpApplicationFileLocationHandler.cs" />
@@ -120,6 +121,7 @@
     <Compile Include="Handlers\CustomApi\SendRequestToAssignContactToExistingOrganisationHandler.cs" />
     <Compile Include="Handlers\CustomApi\SentInviteContactToJoinOrganisationHandler.cs" />
     <Compile Include="Handlers\CustomApi\SetApplicationHandler.cs" />
+    <Compile Include="Handlers\CustomApi\SetDeliveryPhaseHandler.cs" />
     <Compile Include="Handlers\CustomApi\SetHomeTypeHandler.cs" />
     <Compile Include="Handlers\DeliveryPhase\SendNotificationUrbWantsAdditionalPaymentsForPhaseHandler.cs" />
     <Compile Include="Handlers\HomeType\CreateDocumentLocationOnCreateHandler.cs" />
@@ -193,6 +195,7 @@
     <Compile Include="Plugins\ContactWebrole\SendNotificationOnRoleModificationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\ChangeAhpApplicationStatusPlugin.cs" />
     <Compile Include="Plugins\CustomApi\CheckIfApplicationWithGivenNameExistsPlugin.cs" />
+    <Compile Include="Plugins\CustomApi\DeleteDeliveryPhasePlugin.cs" />
     <Compile Include="Plugins\CustomApi\DeleteHomeTypePlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetMultipleDeliveryPhasePlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetMultipleProgrammePlugin.cs" />
@@ -210,6 +213,7 @@
     <Compile Include="Plugins\CustomApi\SendRequestToAssignContactToExistingOrganisationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\SentInviteContactToJoinOrganisationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\SetApplicationPlugin.cs" />
+    <Compile Include="Plugins\CustomApi\SetDeliveryPhasePlugin.cs" />
     <Compile Include="Plugins\CustomApi\SetHomeTypePlugin.cs" />
     <Compile Include="Plugins\DeliveryPhase\SendNotificationUrbWantsAdditionalPaymentsForPhasePlugin.cs" />
     <Compile Include="Plugins\HomeType\CreateDocumentLocationOnCreatePlugin.cs" />
@@ -222,6 +226,8 @@
     <Compile Include="Services\Application\IApplicationService.cs" />
     <Compile Include="Services\Contacts\ContactService.cs" />
     <Compile Include="Services\Contacts\IContactService.cs" />
+    <Compile Include="Services\DeliveryPhase\DeliveryPhaseService.cs" />
+    <Compile Include="Services\DeliveryPhase\IDeliveryPhaseService.cs" />
     <Compile Include="Services\GovNotifyEmail\GovNotifyEmailService.cs" />
     <Compile Include="Services\GovNotifyEmail\IGovNotifyEmailService.cs" />
     <Compile Include="Services\HomeType\HomeTypeService.cs" />
