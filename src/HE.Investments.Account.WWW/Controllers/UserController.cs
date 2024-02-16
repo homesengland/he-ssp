@@ -5,6 +5,7 @@ using HE.Investments.Account.WWW.Models.User;
 using HE.Investments.Account.WWW.Routing;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
+using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Utils;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -46,29 +47,27 @@ public class UserController : Controller
     [HttpPost(UserAccountEndpoints.ProfileDetailsSuffix)]
     public async Task<IActionResult> SaveProfileDetails(UserProfileDetailsModel viewModel, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(
+        return await this.ExecuteCommand<UserProfileDetailsModel>(
+            _mediator,
             new SaveUserProfileDetailsCommand(
                 viewModel.FirstName,
                 viewModel.LastName,
                 viewModel.JobTitle,
                 viewModel.TelephoneNumber,
                 viewModel.SecondaryTelephoneNumber),
+            async () =>
+            {
+                if (viewModel.CallbackUrl.IsNotProvided())
+                {
+                    return await Task.FromResult(RedirectToAction(
+                        nameof(OrganisationController.SearchOrganisation),
+                        new ControllerName(nameof(OrganisationController)).WithoutPrefix()));
+                }
+
+                return await Task.FromResult(Redirect(viewModel.CallbackUrl!));
+            },
+            async () => await Task.FromResult<IActionResult>(View("ProfileDetails", viewModel)),
             cancellationToken);
-
-        if (result.HasValidationErrors)
-        {
-            ModelState.AddValidationErrors(result);
-            return View("ProfileDetails", viewModel);
-        }
-
-        if (viewModel.CallbackUrl.IsNotProvided())
-        {
-            return RedirectToAction(
-                nameof(OrganisationController.SearchOrganisation),
-                new ControllerName(nameof(OrganisationController)).WithoutPrefix());
-        }
-
-        return Redirect(viewModel.CallbackUrl!);
     }
 
     private string? BuildCallbackUrl(string? programme, string? callback)
