@@ -86,7 +86,7 @@ public class OrganisationController : Controller
     [HttpGet("create")]
     public IActionResult CreateOrganisation()
     {
-        return View();
+        return View(new OrganisationDetailsViewModel());
     }
 
     [HttpPost("create")]
