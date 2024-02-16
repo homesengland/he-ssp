@@ -1,24 +1,9 @@
-using System.Reflection;
-using Auth0.AuthenticationApi;
 using He.Identity.Auth0;
 using He.Identity.Mvc;
-using He.Identity.Mvc.ClientCredentials;
-using He.Identity.Mvc.Extensions;
-using He.Identity.Mvc.Handlers;
 using HE.Investments.Common.User;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.CookiePolicy;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.FileProviders;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
 
 namespace HE.Investments.Common.WWW.Infrastructure.Authorization;
 
