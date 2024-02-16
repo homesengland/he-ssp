@@ -1,5 +1,6 @@
 using AngleSharp.Html.Dom;
 using HE.Investments.IntegrationTestsFramework.Config;
+using HE.Investments.TestsUtils.Extensions;
 
 namespace HE.Investments.IntegrationTestsFramework;
 
@@ -65,6 +66,43 @@ public class IntegrationTestBase<TProgram>
     protected T? GetSharedDataOrNull<T>(string key)
     {
         return _fixture.DataBag.TryGetValue(key, out var data) ? (T)data : default;
+    }
+
+    protected async Task<IHtmlDocument> TestQuestionPage(
+        string startPageUrl,
+        string expectedPageTitle,
+        string expectedPageUrlAfterContinue,
+        params (string InputName, string Value)[] inputs)
+    {
+        // given
+        var continueButton = await GivenTestQuestionPage(startPageUrl, expectedPageTitle);
+
+        // when
+        var nextPage = await TestClient.SubmitButton(
+            continueButton,
+            inputs);
+
+        // then
+        ThenTestQuestionPage(nextPage, expectedPageUrlAfterContinue);
+        return nextPage;
+    }
+
+    protected async Task<IHtmlButtonElement> GivenTestQuestionPage(string startPageUrl, string expectedPageTitle)
+    {
+        var currentPage = await GetCurrentPage(startPageUrl);
+        currentPage
+            .UrlWithoutQueryEndsWith(startPageUrl)
+            .HasTitle(expectedPageTitle)
+            .HasBackLink()
+            .HasSaveAndContinueButton(out var continueButton);
+
+        return continueButton;
+    }
+
+    protected void ThenTestQuestionPage(IHtmlDocument nextPage, string expectedPageUrlAfterContinue)
+    {
+        nextPage.UrlWithoutQueryEndsWith(expectedPageUrlAfterContinue);
+        SaveCurrentPage();
     }
 
     private IntegrationTestClient InitializeTestClient(IntegrationTestFixture<TProgram> fixture)

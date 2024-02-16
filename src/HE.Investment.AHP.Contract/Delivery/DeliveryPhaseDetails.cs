@@ -10,6 +10,7 @@ public record DeliveryPhaseDetails(
     string Name,
     SectionStatus Status,
     bool IsReadOnly,
+    bool IsApplicationLocked,
     TypeOfHomes? TypeOfHomes = null,
     BuildActivityType? BuildActivityType = null,
     IList<BuildActivityType>? AvailableBuildActivityTypes = null,

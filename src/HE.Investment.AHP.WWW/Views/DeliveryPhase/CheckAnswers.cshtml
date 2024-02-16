@@ -2,7 +2,6 @@
 @using HE.Investment.AHP.WWW.Models.Common
 @using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
-@using HE.Investments.Common.WWW.Components.FormHeader
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.Components.RadioList
 @using HE.Investment.AHP.Contract.Delivery
@@ -15,7 +14,7 @@
     ViewData["Title"] = title;
 }
 
-<div class="govuk-grid-column-three-quarters">
+<gds-div-grid-column-two-thirds>
     @if (Model.IsReadOnly)
     {
         <gds-back-link href="@Url.Action("List", "Delivery", new { applicationId = Model.ApplicationId })" class="govuk-!-margin-bottom-8"></gds-back-link>
@@ -25,9 +24,11 @@
         <vc:ahp-workflow-back-button current-page="@DeliveryPhaseWorkflowState.CheckAnswers"/>
     }
 
+    <partial name="_LockedApplicationInformation" model="@Model.IsApplicationLocked"/>
+
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
-    <vc:form-header caption="@($"{Model.ApplicationName} - {Model.DeliveryPhaseName}")" title="@title"/>
+    <vc:page-header caption="@($"{Model.ApplicationName} - {Model.DeliveryPhaseName}")" title="@title"/>
 
     @foreach (var summarySection in Model.Sections)
     {
@@ -46,4 +47,4 @@
     </form>
 
     <vc:return-to-application-link application-id="@Model.ApplicationId" is-editable="@false"/>
-</div>
+</gds-div-grid-column-two-thirds>

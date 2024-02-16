@@ -1,9 +1,10 @@
 using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Domain.Common;
-using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
+using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
+using HE.Investments.Common.Domain.ValueObjects;
 using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.Domain.Delivery.Tranches;
@@ -12,87 +13,154 @@ public class DeliveryPhaseTranches : IQuestion
 {
     private readonly ModificationTracker _modificationTracker = new();
 
-    public DeliveryPhaseTranches(DeliveryPhaseId id, ApplicationBasicInfo applicationBasicInfo, MilestoneTranches milestoneTranches, bool allowAmendments)
+    private readonly bool _amendmentsRequested;
+
+    public DeliveryPhaseTranches(
+        DeliveryPhaseId id,
+        ApplicationBasicInfo applicationBasicInfo,
+        MilestonesPercentageTranches percentages,
+        decimal grantApportioned,
+        bool amendmentsRequested,
+        bool? claimMilestone,
+        bool isOneTranche)
     {
         Id = id;
-        MilestoneTranches = milestoneTranches;
-        AllowAmendments = allowAmendments;
         ApplicationBasicInfo = applicationBasicInfo;
+        _amendmentsRequested = amendmentsRequested;
+        GrantApportioned = grantApportioned;
+        PercentagesAmended = percentages;
+        ClaimMilestone = claimMilestone;
+        IsOneTranche = isOneTranche;
     }
 
     public DeliveryPhaseId Id { get; }
 
     public ApplicationBasicInfo ApplicationBasicInfo { get; }
 
-    public MilestoneTranches MilestoneTranches { get; private set; }
+    public MilestonesPercentageTranches PercentagesAmended { get; private set; }
 
-    public bool AllowAmendments { get; }
+    public bool IsOneTranche { get; }
+
+    public decimal GrantApportioned { get; }
+
+    public bool? ClaimMilestone { get; private set; }
+
+    public bool CanBeAmended => _amendmentsRequested && !IsOneTranche && ApplicationBasicInfo.Status.IsIn(ApplicationStatus.ReferredBackToApplicant);
 
     public bool IsModified => _modificationTracker.IsModified;
 
-    public void ProvideAcquisitionTranche(decimal? acquisition)
+    public void ProvideAcquisitionTranche(string? acquisition)
     {
         CheckIfTranchesCanBeAmended();
-        MilestoneTranches = _modificationTracker.Change(MilestoneTranches, MilestoneTranches.WithAcquisition(acquisition));
+        var percentages = UseMilestonesPercentageTranches();
+        PercentagesAmended =
+            _modificationTracker.Change(PercentagesAmended, percentages.WithAcquisition(WholePercentage.FromString(acquisition)), UnClaimMilestone);
     }
 
-    public void ProvideStartOnSiteTranche(decimal? acquisition)
+    public void ProvideStartOnSiteTranche(string? startOnSite)
     {
         CheckIfTranchesCanBeAmended();
-        MilestoneTranches = _modificationTracker.Change(MilestoneTranches, MilestoneTranches.WithStartOnSite(acquisition));
+        var percentages = UseMilestonesPercentageTranches();
+        PercentagesAmended =
+            _modificationTracker.Change(PercentagesAmended, percentages.WithStartOnSite(WholePercentage.FromString(startOnSite)), UnClaimMilestone);
     }
 
-    public void ProvideCompletionTranche(decimal? acquisition)
+    public void ProvideCompletionTranche(string? completion)
     {
         CheckIfTranchesCanBeAmended();
-        MilestoneTranches = _modificationTracker.Change(MilestoneTranches, MilestoneTranches.WithCompletion(acquisition));
+        var percentages = UseMilestonesPercentageTranches();
+        PercentagesAmended =
+            _modificationTracker.Change(PercentagesAmended, percentages.WithCompletion(WholePercentage.FromString(completion)), UnClaimMilestone);
     }
 
-    public SummaryOfDelivery CalculateSummary(
-        decimal requiredFunding,
-        int totalHousesToDeliver,
-        int totalHomesToBeDeliveredInThisPhase,
-        bool isOneTranche,
-        MilestoneFramework milestoneFramework)
+    public void ClaimMilestones(bool? understandClaimingMilestones)
     {
-        if (requiredFunding <= 0 || totalHousesToDeliver <= 0 || totalHomesToBeDeliveredInThisPhase <= 0)
+        CheckIfTranchesCanBeAmended();
+
+        if (!understandClaimingMilestones.GetValueOrDefault())
         {
-            return SummaryOfDelivery.LackOfCalculation;
+            OperationResult.ThrowValidationError(
+                "Tranches.SummaryOfDeliveryAmend.UnderstandClaimingMilestones",
+                "You must confirm you understand this to continue");
         }
 
-        var grantApportioned = requiredFunding * totalHomesToBeDeliveredInThisPhase / totalHousesToDeliver;
-        if (MilestoneTranches.IsAmended)
+        if (!PercentagesAmended.IsSumUpTo100Percentage())
         {
-            return new SummaryOfDelivery(grantApportioned, MilestoneTranches.Acquisition, MilestoneTranches.StartOnSite, MilestoneTranches.Completion, false);
+            OperationResult.ThrowValidationError("Tranche", "Tranche proportions for this delivery phase must add to 100%");
         }
 
-        if (isOneTranche)
+        ClaimMilestone = _modificationTracker.Change(ClaimMilestone, true);
+    }
+
+    public MilestonesPercentageTranches GetPercentageTranches()
+    {
+        if (IsOneTranche)
         {
-            return new SummaryOfDelivery(grantApportioned, null, null, grantApportioned);
+            return MilestonesPercentageTranches.OnlyCompletion;
         }
 
-        var acquisitionMilestone = (grantApportioned * milestoneFramework.AcquisitionPercentage).ToWholeNumberRoundFloor();
-        var startOnSiteMilestone = (grantApportioned * milestoneFramework.StartOnSitePercentage).ToWholeNumberRoundFloor();
-        var completionMilestone = grantApportioned - acquisitionMilestone - startOnSiteMilestone;
+        if (CanBeAmended && PercentagesAmended.IsAnyPercentageProvided())
+        {
+            return PercentagesAmended;
+        }
 
-        return new SummaryOfDelivery(grantApportioned, acquisitionMilestone, startOnSiteMilestone, completionMilestone);
+        return UseMilestonesPercentageTranches();
+    }
+
+    public MilestonesTranches CalculateTranches()
+    {
+        if (GrantApportioned <= 0)
+        {
+            return MilestonesTranches.LackOfCalculation;
+        }
+
+        var percentages = GetPercentageTranches();
+        var acquisition = (GrantApportioned * percentages.Acquisition?.Value).ToWholeNumberRoundFloor();
+        var startOnSite = (GrantApportioned * percentages.StartOnSite?.Value).ToWholeNumberRoundFloor();
+        var completion = (GrantApportioned * percentages.Completion?.Value).RoundToTwoDecimalPlaces();
+
+        var leftOver = (GrantApportioned - (acquisition + startOnSite + completion)).RoundToTwoDecimalPlaces();
+        if (leftOver > 0 && (leftOver < GrantApportioned * 0.01m || leftOver < 1))
+        {
+            completion += leftOver;
+        }
+
+        return new MilestonesTranches(acquisition, startOnSite, completion);
     }
 
     public bool IsAnswered()
     {
-        if (!AllowAmendments)
+        if (!CanBeAmended)
         {
             return true;
         }
 
-        return MilestoneTranches.IsAnswered();
+        return PercentagesAmended.IsSumUpTo100Percentage() && ClaimMilestone.GetValueOrDefault();
+    }
+
+    private MilestonesPercentageTranches UseMilestonesPercentageTranches()
+    {
+        if (!PercentagesAmended.IsAnyPercentageProvided())
+        {
+            return new MilestonesPercentageTranches(
+                new WholePercentage(ApplicationBasicInfo.Programme.MilestoneFramework.AcquisitionPercentage),
+                new WholePercentage(ApplicationBasicInfo.Programme.MilestoneFramework.StartOnSitePercentage),
+                new WholePercentage(ApplicationBasicInfo.Programme.MilestoneFramework.CompletionPercentage));
+        }
+
+        return PercentagesAmended;
+    }
+
+    private void UnClaimMilestone()
+    {
+        ClaimMilestone = _modificationTracker.Change(ClaimMilestone, null);
     }
 
     private void CheckIfTranchesCanBeAmended()
     {
-        if (!AllowAmendments || ApplicationBasicInfo.Status.IsNotIn(ApplicationStatus.ReferredBackToApplicant))
+        if (!CanBeAmended)
         {
-            throw new DomainValidationException("Delivery Phase Tranches cannot be amendment");
+            throw new DomainValidationException("Delivery Phase Tranches cannot be amended");
         }
     }
 }

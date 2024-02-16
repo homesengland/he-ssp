@@ -23,6 +23,7 @@ public class DetailsTests : ViewTestBase
             "Id",
             "DeliveryPhaseName",
             SectionStatus.InProgress,
+            false,
             false);
 
         // given & when
@@ -31,7 +32,7 @@ public class DetailsTests : ViewTestBase
         // then
         document.HasTitle(DeliveryPageTitles.Details)
             .HasGdsRadioInputWithValues(nameof(DeliveryPhaseDetails.TypeOfHomes), TypeOfHomes.NewBuild.ToString(), TypeOfHomes.Rehab.ToString())
-            .HasGdsSaveAndContinueButton()
-            .HasGdsBackLink(false);
+            .HasSaveAndContinueButton()
+            .HasBackLink(false);
     }
 }

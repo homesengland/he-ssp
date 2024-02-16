@@ -17,7 +17,8 @@ public class FinancialDetailsCheckAnswersModel : FinancialDetailsBaseModel, IEdi
         SectionSummaryViewModel costsSummary,
         SectionSummaryViewModel contributionsSummary,
         IsSectionCompleted isSectionCompleted,
-        bool isEditable)
+        bool isEditable,
+        bool isApplicationLocked)
         : base(applicationId, applicationName)
     {
         LandValueSummary = landValueSummary;
@@ -25,6 +26,7 @@ public class FinancialDetailsCheckAnswersModel : FinancialDetailsBaseModel, IEdi
         ContributionsSummary = contributionsSummary;
         IsSectionCompleted = isSectionCompleted;
         IsEditable = isEditable;
+        IsApplicationLocked = isApplicationLocked;
     }
 
     [ValidateNever]
@@ -42,6 +44,8 @@ public class FinancialDetailsCheckAnswersModel : FinancialDetailsBaseModel, IEdi
     public bool IsEditable { get; set; }
 
     public bool IsReadOnly => !IsEditable;
+
+    public bool IsApplicationLocked { get; set; }
 
     public IsSectionCompleted IsSectionCompleted { get; set; }
 }

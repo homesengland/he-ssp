@@ -8,7 +8,7 @@
 }
 
 @section AdditionalMeta
-    {
+{
 }
 
 @{
@@ -16,12 +16,16 @@
 }
 
 @section HeadCss
-    {
-    <partial name="_LoadStylesheetPartial" />
+{
+    <partial name="_LoadStylesheetPartial"/>
 }
 
 @section HeadScripts {
 
+}
+
+@section BeforeContent{
+    <partial name="~/Partials/_Breadcrumbs.cshtml"/>
 }
 
 <gds-div-grid-row>
@@ -29,6 +33,6 @@
 </gds-div-grid-row>
 
 @section BodyEnd
-    {
-    <partial name="_LoadJavascriptPartial" />
+{
+    <partial name="_LoadJavascriptPartial"/>
 }

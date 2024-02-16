@@ -31,7 +31,7 @@ public class ModernMethodsConstruction3DSubcategoriesTests : HomeTypesTestBase
                     "StructuralChassisInternallyFittedOutAndExternalCladdingOrRoofingCompleted",
                     "StructuralChassisInternallyFittedOutAndPoddedRoomAssembled",
                 })
-            .HasGdsSaveAndContinueButton();
+            .HasSaveAndContinueButton();
     }
 
     [Fact]
@@ -63,6 +63,6 @@ public class ModernMethodsConstruction3DSubcategoriesTests : HomeTypesTestBase
                     "StructuralChassisAndInternallyFittedOut",
                     "StructuralChassisInternallyFittedOutAndPoddedRoomAssembled",
                 })
-            .HasGdsSaveAndContinueButton();
+            .HasSaveAndContinueButton();
     }
 }

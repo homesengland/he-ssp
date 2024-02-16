@@ -5,7 +5,7 @@
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Paragraphs
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Radios
 @using HE.Investment.AHP.WWW.Models.Common
-@using HE.Investment.AHP.WWW.Views.Site
+@using HE.Investment.AHP.WWW.Views.Site.Const
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.TagHelpers
 @model HE.Investments.Common.WWW.Models.ConfirmModel<HE.Investment.AHP.Contract.Site.LocalAuthorities>;
@@ -18,14 +18,13 @@
 <gds-div-grid-column-two-thirds>
     <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("LocalAuthorityResult", "Site", new { siteId = Model.ViewModel.SiteId, phrase = Model.ViewModel.Phrase, redirect })"></gds-back-link>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
-    <form asp-controller="Site" asp-action="LocalAuthorityConfirm" asp-route-localAuthorityId=@(Model.ViewModel.LocalAuthorityId) asp-route-redirect=@redirect asp-method="post" novalidate>
+    <form asp-controller="Site" asp-action="LocalAuthorityConfirm" asp-route-localAuthorityId=@(Model.ViewModel.LocalAuthorityId) asp-route-phrase=@(Model.ViewModel.Phrase) asp-route-redirect=@redirect asp-method="post" novalidate>
         <gds-field-set>
-                <gds-h1 size="ControlSize.Xl" class="govuk-!-margin-bottom-6">
-                    @SitePageTitles.LocalAuthorityConfirm
-                </gds-h1>
-                <gds-p>
-                    <b>@Model.ViewModel.LocalAuthorityName</b>
-                </gds-p>
+            <vc:page-header title="@SitePageTitles.LocalAuthorityConfirm"  caption="@ViewBag.SiteName"/>
+
+            <gds-p>
+                <b>@Model.ViewModel.LocalAuthorityName</b>
+            </gds-p>
             <he-error-form-group asp-for="Response">
 
                 <gds-h2 class="govuk-fieldset__legend--m">
@@ -40,6 +39,8 @@
             </he-error-form-group>
             <vc:form-button text="Continue"/>
         </gds-field-set>
+
+        <vc:return-to-sites-link/>
         @Html.HiddenFor(c => c.ViewModel.SiteId)
         @Html.HiddenFor(c => c.ViewModel.LocalAuthorityId)
         @Html.HiddenFor(c => c.ViewModel.LocalAuthorityName)

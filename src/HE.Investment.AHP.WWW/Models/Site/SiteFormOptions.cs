@@ -11,4 +11,6 @@ public static class SiteFormOptions
         .Where(x => x.Value != NationalDesignGuidePriority.NoneOfTheAbove.ToString());
 
     public static ExtendedSelectListItem NationalDesignGuidePrioritiesOnlyNone => SelectListHelper.FromEnumToExtendedListItem(NationalDesignGuidePriority.NoneOfTheAbove);
+
+    public static IEnumerable<ExtendedSelectListItem> LandAcquisitionStatuses => SelectListHelper.FromEnumToExtendedList<SiteLandAcquisitionStatus>();
 }

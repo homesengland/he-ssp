@@ -50,6 +50,6 @@ public class SocialRentTests : HomeTypesTestBase
             .HasElementWithText("h2", "Enter the market rent per week")
             .HasElementWithText("span", "Enter the rent in pounds and pence. This is inclusive of all charges.")
             .HasInput("ProspectiveRent")
-            .HasGdsSaveAndContinueButton();
+            .HasSaveAndContinueButton();
     }
 }

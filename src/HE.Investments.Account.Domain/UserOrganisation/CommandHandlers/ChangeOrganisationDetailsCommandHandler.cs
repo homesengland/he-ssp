@@ -42,14 +42,9 @@ public class ChangeOrganisationDetailsCommandHandler : IRequestHandler<ChangeOrg
                     CommonErrorCodes.ContactIsNotLinkedWithRequestedOrganization);
             }
 
-            const string fieldName = "Request to change organisation details";
             var operationResult = OperationResult.New();
-            var name = operationResult.Aggregate(() => new OrganisationName(
-                request.Name,
-                OrganisationErrorMessages.MissingRegisteredOrganisationName,
-                fieldName));
-            var phoneNumber = operationResult.Aggregate(() =>
-                new OrganisationPhoneNumber(request.PhoneNumber, fieldName));
+            var name = operationResult.Aggregate(() => new OrganisationName(request.Name, OrganisationErrorMessages.MissingRegisteredOrganisationName));
+            var phoneNumber = operationResult.Aggregate(() => new OrganisationPhoneNumber(request.PhoneNumber));
             var address = operationResult.Aggregate(() =>
                 new OrganisationAddress(
                     request.AddressLine1,
@@ -58,8 +53,7 @@ public class ChangeOrganisationDetailsCommandHandler : IRequestHandler<ChangeOrg
                     request.TownOrCity,
                     request.Postcode,
                     request.County,
-                    null,
-                    fieldName));
+                    null));
 
             operationResult.CheckErrors();
 

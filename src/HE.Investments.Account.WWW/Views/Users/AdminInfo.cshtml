@@ -1,4 +1,3 @@
-@using HE.Investments.Common.WWW.Components.FormHeader
 @using HE.Investments.Account.WWW.Controllers
 @using HE.Investments.Common.WWW.Utils
 
@@ -20,7 +19,7 @@
 
 <gds-div-grid-column-two-thirds>
     <gds-back-link class="govuk-!-margin-bottom-8" href="@action"></gds-back-link>
-    <vc:form-header title=@title/>
+    <vc:page-header title=@title/>
     <gds-p class="govuk-!-margin-bottom-8">To confirm a user as an admin, you must:</gds-p>
     <he-ol class="govuk-!-margin-bottom-8" items="@items"></he-ol>
     <link-button action-url="@action#">Continue</link-button>

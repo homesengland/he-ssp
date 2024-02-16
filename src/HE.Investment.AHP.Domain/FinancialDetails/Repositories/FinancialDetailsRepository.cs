@@ -7,6 +7,7 @@ using HE.Investment.AHP.Domain.Common.Mappers;
 using HE.Investment.AHP.Domain.Data;
 using HE.Investment.AHP.Domain.FinancialDetails.Entities;
 using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
+using HE.Investment.AHP.Domain.Programme;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.CRM.Mappers;
@@ -18,9 +19,12 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
 {
     private readonly IApplicationCrmContext _applicationCrmContext;
 
-    public FinancialDetailsRepository(IApplicationCrmContext applicationCrmContext)
+    private readonly IAhpProgrammeRepository _programmeRepository;
+
+    public FinancialDetailsRepository(IApplicationCrmContext applicationCrmContext, IAhpProgrammeRepository programmeRepository)
     {
         _applicationCrmContext = applicationCrmContext;
+        _programmeRepository = programmeRepository;
     }
 
     public async Task<FinancialDetailsEntity> GetById(AhpApplicationId id, UserAccount userAccount, CancellationToken cancellationToken)
@@ -30,7 +34,7 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
             ? await _applicationCrmContext.GetOrganisationApplicationById(id.Value, organisationId, CrmFields.FinancialDetailsToRead.ToList(), cancellationToken)
             : await _applicationCrmContext.GetUserApplicationById(id.Value, organisationId, CrmFields.FinancialDetailsToRead.ToList(), cancellationToken);
 
-        return CreateEntity(application);
+        return await CreateEntity(application, cancellationToken);
     }
 
     public async Task<FinancialDetailsEntity> Save(FinancialDetailsEntity financialDetails, OrganisationId organisationId, CancellationToken cancellationToken)
@@ -54,28 +58,6 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
         _ = await _applicationCrmContext.Save(dto, organisationId.Value, CrmFields.FinancialDetailsToUpdate.ToList(), cancellationToken);
 
         return financialDetails;
-    }
-
-    private static FinancialDetailsEntity CreateEntity(AhpApplicationDto application)
-    {
-        var applicationBasicInfo = new ApplicationBasicInfo(
-            AhpApplicationId.From(application.id),
-            new ApplicationName(application.name),
-            ApplicationTenureMapper.ToDomain(application.tenure)!.Value,
-            AhpApplicationStatusMapper.MapToPortalStatus(application.applicationStatus));
-
-        return new FinancialDetailsEntity(
-            applicationBasicInfo,
-            new LandStatus(
-                application.actualAcquisitionCost.IsProvided() ? new PurchasePrice(application.actualAcquisitionCost!.Value) : null,
-                application.expectedAcquisitionCost.IsProvided() ? new ExpectedPurchasePrice(application.expectedAcquisitionCost!.Value) : null),
-            new LandValue(
-                application.currentLandValue.IsProvided() ? new CurrentLandValue(application.currentLandValue!.Value) : null,
-                YesNoTypeMapper.Map(application.isPublicLand)),
-            MapToOtherApplicationCosts(application),
-            MapToExpectedContributionsToScheme(application, applicationBasicInfo.Tenure),
-            MapToPublicGrants(application),
-            SectionStatusMapper.ToDomain(application.financialDetailsSectionCompletionStatus, applicationBasicInfo.Status));
     }
 
     private static void MapFromPublicGrants(PublicGrants publicGrants, AhpApplicationDto dto)
@@ -140,5 +122,29 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
             MapProvidedValues(application.howMuchReceivedFromDepartmentOfHealth, PublicGrantFields.HealthRelatedGrants),
             MapProvidedValues(application.howMuchReceivedFromLotteryFunding, PublicGrantFields.LotteryGrants),
             MapProvidedValues(application.howMuchReceivedFromOtherPublicBodies, PublicGrantFields.OtherPublicBodiesGrants));
+    }
+
+    private async Task<FinancialDetailsEntity> CreateEntity(AhpApplicationDto application, CancellationToken cancellationToken)
+    {
+        var applicationId = AhpApplicationId.From(application.id);
+        var applicationBasicInfo = new ApplicationBasicInfo(
+            applicationId,
+            new ApplicationName(application.name),
+            ApplicationTenureMapper.ToDomain(application.tenure)!.Value,
+            AhpApplicationStatusMapper.MapToPortalStatus(application.applicationStatus),
+            await _programmeRepository.GetProgramme(applicationId, cancellationToken));
+
+        return new FinancialDetailsEntity(
+            applicationBasicInfo,
+            new LandStatus(
+                application.actualAcquisitionCost.IsProvided() ? new PurchasePrice(application.actualAcquisitionCost!.Value) : null,
+                application.expectedAcquisitionCost.IsProvided() ? new ExpectedPurchasePrice(application.expectedAcquisitionCost!.Value) : null),
+            new LandValue(
+                application.currentLandValue.IsProvided() ? new CurrentLandValue(application.currentLandValue!.Value) : null,
+                YesNoTypeMapper.Map(application.isPublicLand)),
+            MapToOtherApplicationCosts(application),
+            MapToExpectedContributionsToScheme(application, applicationBasicInfo.Tenure),
+            MapToPublicGrants(application),
+            SectionStatusMapper.ToDomain(application.financialDetailsSectionCompletionStatus, applicationBasicInfo.Status));
     }
 }

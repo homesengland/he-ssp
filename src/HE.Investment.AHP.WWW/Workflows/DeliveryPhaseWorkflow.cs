@@ -71,7 +71,7 @@ public class DeliveryPhaseWorkflow : IStateRouting<DeliveryPhaseWorkflowState>
             DeliveryPhaseWorkflowState.ReconfiguringExisting => _model.IsReconfiguringExistingNeeded,
             DeliveryPhaseWorkflowState.AddHomes => true,
             DeliveryPhaseWorkflowState.SummaryOfDelivery => IsNumberOfHomesCompleted(),
-            DeliveryPhaseWorkflowState.SummaryOfDeliveryTranche => IsNumberOfHomesCompleted() && (_model.Tranches?.IsAmendable ?? false),
+            DeliveryPhaseWorkflowState.SummaryOfDeliveryTranche => IsNumberOfHomesCompleted() && (_model.Tranches?.ShouldBeAmended ?? false),
             DeliveryPhaseWorkflowState.AcquisitionMilestone => AllMilestonesAvailable() && IsNumberOfHomesCompleted(),
             DeliveryPhaseWorkflowState.StartOnSiteMilestone => AllMilestonesAvailable() && IsNumberOfHomesCompleted(),
             DeliveryPhaseWorkflowState.PracticalCompletionMilestone => IsNumberOfHomesCompleted(),
@@ -140,9 +140,9 @@ public class DeliveryPhaseWorkflow : IStateRouting<DeliveryPhaseWorkflowState>
             .PermitIf(Trigger.Back, DeliveryPhaseWorkflowState.UnregisteredBodyFollowUp, IsUnregisteredBody);
     }
 
-    private bool AllMilestonesAvailable() => IsRegisteredBody() && !_model.IsOnlyCompletionMilestone;
+    private bool AllMilestonesAvailable() => !_model.IsOnlyCompletionMilestone;
 
-    private bool OnlyCompletionMilestoneAvailable() => !AllMilestonesAvailable();
+    private bool OnlyCompletionMilestoneAvailable() => _model.IsOnlyCompletionMilestone;
 
     private bool IsUnregisteredBody() => _model.IsUnregisteredBody;
 

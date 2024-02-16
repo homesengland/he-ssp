@@ -16,13 +16,11 @@ using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
-using HE.Investments.Common.Messages;
 using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Helpers;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Routing;
-using HE.Investments.Common.WWW.Utils;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using UploadedFile = HE.Investment.AHP.Contract.Common.UploadedFile;
@@ -277,15 +275,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
             }
         }
 
-        if (action == GenericMessages.SaveAndReturn)
-        {
-            return RedirectToAction(
-                nameof(ApplicationController.TaskList),
-                new ControllerName(nameof(ApplicationController)).WithoutPrefix(),
-                new { applicationId });
-        }
-
-        return RedirectToAction("TaskList", "Application", new { applicationId });
+        return Url.RedirectToTaskList(applicationId);
     }
 
     protected override async Task<IStateRouting<SchemeWorkflowState>> Routing(SchemeWorkflowState currentState, object? routeData = null)
@@ -339,7 +329,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
         return await this.ExecuteCommand<SchemeViewModel>(
             _mediator,
             command,
-            async () => await ContinueWithAllRedirects(new { applicationId }),
+            async () => await this.ReturnToTaskListOrContinue(async () => await ContinueWithRedirect(new { applicationId })),
             async () => await Task.FromResult<IActionResult>(View(viewName, model)),
             cancellationToken);
     }
@@ -358,18 +348,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
             scheme.ApplicationName,
             scheme.Status == SectionStatus.Completed ? IsSectionCompleted.Yes : null,
             section,
-            isEditable);
-    }
-
-    private async Task<IActionResult> ContinueWithAllRedirects(object routeData)
-    {
-        var action = HttpContext.Request.Form["action"];
-        if (action == GenericMessages.SaveAndReturn)
-        {
-            var applicationId = this.GetApplicationIdFromRoute();
-            return Url.RedirectToTaskList(applicationId.Value);
-        }
-
-        return await ContinueWithRedirect(routeData);
+            isEditable,
+            scheme.IsApplicationLocked);
     }
 }

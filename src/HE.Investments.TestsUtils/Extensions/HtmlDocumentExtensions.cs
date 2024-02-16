@@ -7,50 +7,6 @@ namespace HE.Investments.TestsUtils.Extensions;
 
 public static class HtmlDocumentExtensions
 {
-    public static IHtmlAnchorElement GetAnchorElementById(this IHtmlDocument htmlDocument, string id)
-    {
-        var elementById = htmlDocument.GetElementById(id);
-        elementById.Should().NotBeNull($"Element with Id {id} should exist");
-
-        var anchorElement = elementById as IHtmlAnchorElement;
-        anchorElement.Should().NotBeNull($"Element with Id {id} should be HtmlAnchorElement");
-
-        return anchorElement!;
-    }
-
-    public static IHtmlButtonElement GetGdsSubmitButtonById(this IHtmlDocument htmlDocument, string id)
-    {
-        var elementById = htmlDocument.GetElementById(id);
-        elementById.Should().NotBeNull($"Element with Id {id} should exist");
-
-        var buttonElement = elementById as IHtmlButtonElement;
-        buttonElement.Should().NotBeNull($"Element with Id {id} should be HtmlButtonElement");
-
-        buttonElement!.ClassName.Should().Contain("govuk-button", $"Element with Id {id} should be HtmlButtonElement with govuk-button class name");
-        buttonElement.Form.Should().NotBeNull("Form is required to perform submit");
-
-        return buttonElement;
-    }
-
-    public static IHtmlAnchorElement GetGdsLinkButtonById(this IHtmlDocument htmlDocument, string id)
-    {
-        var elementById = htmlDocument.GetElementById(id);
-        elementById.Should().NotBeNull($"Element with Id {id} should exist");
-
-        var anchorElement = elementById as IHtmlAnchorElement;
-        anchorElement.Should().NotBeNull($"Element with Id {id} should be HtmlAnchorElement which contains GdsButton");
-
-        if (!anchorElement!.ClassList.Contains("govuk-button"))
-        {
-            anchorElement.GetElementsByClassName("govuk-button")
-                .SingleOrDefault()
-                .Should()
-                .NotBeNull($"Element with Id {id} should be HtmlAnchorElement with GdsButton as child");
-        }
-
-        return anchorElement;
-    }
-
     public static IElement GetElementByTestId(this IHtmlDocument htmlDocument, string testId)
     {
         var elements = htmlDocument.QuerySelectorAll($"[data-testid='{testId}']");
@@ -88,6 +44,14 @@ public static class HtmlDocumentExtensions
         return header!.InnerHtml.Trim();
     }
 
+    public static string GetStatusTagByTestId(this IHtmlDocument htmlDocument, string testId)
+    {
+        var applicationStatus = htmlDocument.GetElementByTestId(testId);
+
+        applicationStatus.Should().NotBeNull("Application status tag does not exist");
+        return applicationStatus.InnerHtml.Trim();
+    }
+
     public static string GetLabel(this IHtmlDocument htmlDocument)
     {
         var label = htmlDocument.GetElementsByClassName(CssConstants.GovUkLabel).FirstOrDefault();
@@ -111,7 +75,7 @@ public static class HtmlDocumentExtensions
             .GetElementsByClassName(CssConstants.GovUkFormGroupError)
             .SelectMany(e => e.GetElementsByClassName(CssConstants.GovUkErrorMessage));
 
-        var fieldValidationErrors = fieldValidationElements!
+        var fieldValidationErrors = fieldValidationElements
             .Select(x => x.TextContent.Replace("Error:", string.Empty).Trim())
             .Where(x => !string.IsNullOrEmpty(x))
             .ToArray();

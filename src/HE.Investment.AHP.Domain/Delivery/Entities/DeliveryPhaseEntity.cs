@@ -5,6 +5,7 @@ using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.Policies;
 using HE.Investment.AHP.Domain.Delivery.Tranches;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
+using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
@@ -27,15 +28,20 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
         DeliveryPhaseName name,
         OrganisationBasicInfo organisation,
         SectionStatus status,
-        MilestoneTranches milestoneTranches,
+        MilestonesPercentageTranches milestones,
+        bool milestoneTranchesAmendRequested,
+        SchemeFunding schemaFunding,
         TypeOfHomes? typeOfHomes = null,
         BuildActivity? buildActivity = null,
         bool? reconfiguringExisting = null,
         IEnumerable<HomesToDeliverInPhase>? homesToDeliver = null,
-        DeliveryPhaseMilestones? milestones = null,
+        AcquisitionMilestoneDetails? acquisitionMilestone = null,
+        StartOnSiteMilestoneDetails? startOnSiteMilestone = null,
+        CompletionMilestoneDetails? completionMilestone = null,
         DeliveryPhaseId? id = null,
         DateTime? createdOn = null,
-        IsAdditionalPaymentRequested? isAdditionalPaymentRequested = null)
+        IsAdditionalPaymentRequested? isAdditionalPaymentRequested = null,
+        bool? claimMilestone = null)
     {
         Id = id ?? DeliveryPhaseId.New();
         Application = application;
@@ -46,10 +52,17 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
         ReconfiguringExisting = reconfiguringExisting;
         Status = status;
         CreatedOn = createdOn;
-        DeliveryPhaseMilestones = milestones ?? new DeliveryPhaseMilestones(organisation, BuildActivity);
+        DeliveryPhaseMilestones = new DeliveryPhaseMilestones(IsOnlyCompletionMilestone, acquisitionMilestone, startOnSiteMilestone, completionMilestone);
         IsAdditionalPaymentRequested = isAdditionalPaymentRequested;
         _homesToDeliver = homesToDeliver?.ToList() ?? new List<HomesToDeliverInPhase>();
-        Tranches = new DeliveryPhaseTranches(Id, Application, milestoneTranches, false);
+        Tranches = new DeliveryPhaseTranches(
+            Id,
+            Application,
+            milestones,
+            CalculateGrantApportioned(schemaFunding),
+            milestoneTranchesAmendRequested,
+            claimMilestone,
+            IsOnlyCompletionMilestone);
     }
 
     public ApplicationBasicInfo Application { get; }
@@ -77,6 +90,10 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
     public bool IsModified => _modificationTracker.IsModified || Tranches.IsModified;
 
     public bool IsReadOnly => Application.IsReadOnly();
+
+    public bool IsApplicationLocked => Application.IsLocked();
+
+    public bool IsOnlyCompletionMilestone => OnlyCompletionMilestone(Organisation, BuildActivity);
 
     public IEnumerable<HomesToDeliverInPhase> HomesToDeliver => _homesToDeliver;
 
@@ -128,9 +145,14 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
         DeliveryPhaseMilestones = _modificationTracker.Change(DeliveryPhaseMilestones, milestones, MarkAsNotCompleted);
     }
 
-    public void ProvideTypeOfHomes(TypeOfHomes typeOfHomes)
+    public void ProvideTypeOfHomes(TypeOfHomes? typeOfHomes)
     {
-        TypeOfHomes = _modificationTracker.Change(TypeOfHomes, typeOfHomes.NotDefault(), MarkAsNotCompleted, ResetTypeOfHomesDependencies);
+        if (typeOfHomes.IsNotProvided())
+        {
+            OperationResult.ThrowValidationError("TypeOfHomes", "Select the type of homes you are delivering in this phase");
+        }
+
+        TypeOfHomes = _modificationTracker.Change(TypeOfHomes, typeOfHomes!.Value.NotDefault(), MarkAsNotCompleted, ResetTypeOfHomesDependencies);
     }
 
     public void ProvideAdditionalPaymentRequest(IsAdditionalPaymentRequested? isAdditionalPaymentRequested)
@@ -160,14 +182,6 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
         Status = _modificationTracker.Change(Status, SectionStatus.InProgress);
     }
 
-    public SummaryOfDelivery GetSummaryOfDelivery(decimal requiredFunding, int totalHousesToDeliver, MilestoneFramework milestoneFramework)
-    {
-        var isOneTranche = Organisation.IsUnregisteredBody || BuildActivity.IsOffTheShelfOrExistingSatisfactory;
-        return Tranches.CalculateSummary(requiredFunding, totalHousesToDeliver, TotalHomesToBeDeliveredInThisPhase, isOneTranche, milestoneFramework);
-    }
-
-    public DeliveryPhaseTranches GetTranches() => Tranches;
-
     public void ProvideBuildActivity(BuildActivity buildActivity)
     {
         if (buildActivity.IsNotAnswered())
@@ -191,6 +205,19 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
     public bool IsReconfiguringExistingNeeded()
     {
         return TypeOfHomes == Contract.Delivery.Enums.TypeOfHomes.Rehab;
+    }
+
+    private static bool OnlyCompletionMilestone(OrganisationBasicInfo organisation, BuildActivity buildActivity) => organisation.IsUnregisteredBody || buildActivity.IsOffTheShelfOrExistingSatisfactory;
+
+    private decimal CalculateGrantApportioned(SchemeFunding schemeFunding)
+    {
+        if (schemeFunding.HousesToDeliver <= 0)
+        {
+            return 0;
+        }
+
+        return ((schemeFunding.RequiredFunding ?? 0m) * TotalHomesToBeDeliveredInThisPhase /
+            schemeFunding.HousesToDeliver ?? 0m).RoundToTwoDecimalPlaces();
     }
 
     private bool IsAnswered()
@@ -227,7 +254,7 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
 
     private void ResetBuildActivityDependencies(BuildActivity newBuildActivity)
     {
-        var milestones = new DeliveryPhaseMilestones(Organisation, newBuildActivity, DeliveryPhaseMilestones);
+        var milestones = new DeliveryPhaseMilestones(OnlyCompletionMilestone(Organisation, newBuildActivity), DeliveryPhaseMilestones);
         DeliveryPhaseMilestones = _modificationTracker.Change(DeliveryPhaseMilestones, milestones, MarkAsNotCompleted);
     }
 }

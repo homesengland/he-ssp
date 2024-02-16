@@ -7,6 +7,9 @@ using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.Tranches;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
+using HE.Investment.AHP.Domain.Programme;
+using HE.Investment.AHP.Domain.Scheme.ValueObjects;
+using HE.Investment.AHP.Domain.Tests.Programme.TestData;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
 using HE.Investments.TestsUtils.TestData;
@@ -15,15 +18,16 @@ namespace HE.Investment.AHP.Domain.Tests.Delivery.Entities.TestDataBuilders;
 
 public class DeliveryPhaseEntityBuilder
 {
-    private static readonly ApplicationBasicInfo ApplicationBasicInfo = new(
-        new AhpApplicationId("test-app-42123"),
-        new ApplicationName("Test Application"),
-        Tenure.AffordableRent,
-        ApplicationStatus.Draft);
-
     private readonly IList<HomesToDeliverInPhase> _homesToDeliver = new List<HomesToDeliverInPhase>();
 
     private string _id = "dp-1-12313";
+
+    private ApplicationBasicInfo _applicationBasicInfo = new(
+        new AhpApplicationId("test-app-42123"),
+        new ApplicationName("Test Application"),
+        Tenure.AffordableRent,
+        ApplicationStatus.Draft,
+        new AhpProgramme(ProgrammeDatesTestData.ProgrammeDates, MilestoneFramework.Default));
 
     private DeliveryPhaseName _name = new("First Phase");
 
@@ -31,15 +35,21 @@ public class DeliveryPhaseEntityBuilder
 
     private OrganisationBasicInfo _organisationBasicInfo = new OrganisationBasicInfoBuilder().Build();
 
-    private DeliveryPhaseMilestones? _deliveryPhaseMilestones = new DeliveryPhaseMilestonesBuilder().Build();
-
     private IsAdditionalPaymentRequested? _isAdditionalPaymentRequested;
 
     private TypeOfHomes? _typeOfHomes = TypeOfHomes.NewBuild;
 
-    private BuildActivity _buildActivity = new(ApplicationBasicInfo.Tenure, TypeOfHomes.NewBuild, BuildActivityType.Regeneration);
+    private BuildActivity _buildActivity = new(Tenure.AffordableRent, TypeOfHomes.NewBuild, BuildActivityType.Regeneration);
 
     private bool? _reconfigureExisting;
+
+    private SchemeFunding _schemeFunding = new(1_000_000, 15);
+
+    private AcquisitionMilestoneDetails? _acquisitionMilestone = new AcquisitionMilestoneDetailsBuilder().Build();
+
+    private StartOnSiteMilestoneDetails? _startOnSiteMilestone = new StartOnSiteMilestoneDetailsBuilder().Build();
+
+    private CompletionMilestoneDetails? _completionMilestone = new CompletionMilestoneDetailsBuilder().Build();
 
     public DeliveryPhaseEntityBuilder WithId(string id)
     {
@@ -77,12 +87,6 @@ public class DeliveryPhaseEntityBuilder
         return this;
     }
 
-    public DeliveryPhaseEntityBuilder WithDeliveryPhaseMilestones(DeliveryPhaseMilestones? milestones = null)
-    {
-        _deliveryPhaseMilestones = milestones ?? new DeliveryPhaseMilestonesBuilder().Build();
-        return this;
-    }
-
     public DeliveryPhaseEntityBuilder WithAdditionalPaymentRequested(IsAdditionalPaymentRequested isAdditionalPaymentRequested)
     {
         _isAdditionalPaymentRequested = isAdditionalPaymentRequested;
@@ -91,7 +95,7 @@ public class DeliveryPhaseEntityBuilder
 
     public DeliveryPhaseEntityBuilder WithoutBuildActivity()
     {
-        _buildActivity = new BuildActivity(ApplicationBasicInfo.Tenure);
+        _buildActivity = new BuildActivity(_applicationBasicInfo.Tenure);
         return this;
     }
 
@@ -123,14 +127,68 @@ public class DeliveryPhaseEntityBuilder
 
     public DeliveryPhaseEntityBuilder WithRehabBuildActivity(BuildActivityType buildActivityType = BuildActivityType.ExistingSatisfactory)
     {
-        _buildActivity = new BuildActivity(ApplicationBasicInfo.Tenure, TypeOfHomes.Rehab, buildActivityType);
+        _buildActivity = new BuildActivity(_applicationBasicInfo.Tenure, TypeOfHomes.Rehab, buildActivityType);
 
         return this;
     }
 
     public DeliveryPhaseEntityBuilder WithNewBuildActivity(BuildActivityType buildActivityType = BuildActivityType.AcquisitionAndWorks)
     {
-        _buildActivity = new BuildActivity(ApplicationBasicInfo.Tenure, TypeOfHomes.NewBuild, buildActivityType);
+        _buildActivity = new BuildActivity(_applicationBasicInfo.Tenure, TypeOfHomes.NewBuild, buildActivityType);
+
+        return this;
+    }
+
+    public DeliveryPhaseEntityBuilder WithSchemeFunding(int? requiredFunding, int? homesToDeliver)
+    {
+        _schemeFunding = new SchemeFunding(requiredFunding, homesToDeliver);
+        return this;
+    }
+
+    public DeliveryPhaseEntityBuilder WithAcquisitionMilestone(AcquisitionMilestoneDetails acquisitionMilestone)
+    {
+        _acquisitionMilestone = acquisitionMilestone;
+        return this;
+    }
+
+    public DeliveryPhaseEntityBuilder WithoutAcquisitionMilestone()
+    {
+        _acquisitionMilestone = null;
+        return this;
+    }
+
+    public DeliveryPhaseEntityBuilder WithStartOnSiteMilestone(StartOnSiteMilestoneDetails startOnSiteMilestone)
+    {
+        _startOnSiteMilestone = startOnSiteMilestone;
+        return this;
+    }
+
+    public DeliveryPhaseEntityBuilder WithoutStartOnSiteMilestone()
+    {
+        _startOnSiteMilestone = null;
+        return this;
+    }
+
+    public DeliveryPhaseEntityBuilder WithCompletionMilestone(CompletionMilestoneDetails completionMilestone)
+    {
+        _completionMilestone = completionMilestone;
+        return this;
+    }
+
+    public DeliveryPhaseEntityBuilder WithoutCompletionMilestone()
+    {
+        _completionMilestone = null;
+        return this;
+    }
+
+    public DeliveryPhaseEntityBuilder WithMilestoneFramework(MilestoneFramework milestoneFramework)
+    {
+        _applicationBasicInfo = _applicationBasicInfo with
+        {
+            Programme = new AhpProgramme(
+                ProgrammeDatesTestData.ProgrammeDates,
+                milestoneFramework),
+        };
 
         return this;
     }
@@ -138,16 +196,20 @@ public class DeliveryPhaseEntityBuilder
     public DeliveryPhaseEntity Build()
     {
         return new DeliveryPhaseEntity(
-            ApplicationBasicInfo,
+            _applicationBasicInfo,
             _name,
             _organisationBasicInfo,
             _status,
-            MilestoneTranches.NotProvided,
+            MilestonesPercentageTranches.LackOfCalculation,
+            false,
+            _schemeFunding,
             _typeOfHomes,
             _buildActivity,
             _reconfigureExisting,
             _homesToDeliver,
-            _deliveryPhaseMilestones ?? new DeliveryPhaseMilestonesBuilder().Build(),
+            _acquisitionMilestone,
+            _startOnSiteMilestone,
+            _completionMilestone,
             new DeliveryPhaseId(_id),
             DateTimeTestData.OctoberDay05Year2023At0858,
             isAdditionalPaymentRequested: _isAdditionalPaymentRequested);

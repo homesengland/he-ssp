@@ -40,6 +40,6 @@ public class SupportedHousingInformationTests : HomeTypesTestBase
                     "Revenue funding is needed but the source has not been identified",
                     "No, revenue funding is not needed",
                 })
-            .HasGdsSaveAndContinueButton();
+            .HasSaveAndContinueButton();
     }
 }

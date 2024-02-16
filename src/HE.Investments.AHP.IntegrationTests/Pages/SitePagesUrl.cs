@@ -24,8 +24,13 @@ public static class SitePagesUrl
 
     public static string SiteLocalAuthorityResult(string siteId) => $"ahp/site/{siteId}/local-authority/search/result";
 
-    public static string SiteLocalAuthorityConfirm(string siteId, string localAuthorityId, string localAuthorityName, string phrase) =>
-        $"ahp/site/{siteId}/local-authority/{localAuthorityId}/{localAuthorityName}/confirm?phrase={phrase}";
+    public static string SiteLocalAuthorityResult(string siteId, string phrase) => $"{SiteLocalAuthorityResult(siteId)}?phrase={phrase}";
+
+    public static string SiteLocalAuthorityConfirm(string siteId, string localAuthorityId, string phrase) =>
+        $"ahp/site/{siteId}/local-authority/{localAuthorityId}/confirm?phrase={phrase}";
+
+    public static string SiteLocalAuthorityConfirmWithoutQuery(string siteId, string localAuthorityId) =>
+        $"ahp/site/{siteId}/local-authority/{localAuthorityId}/confirm";
 
     public static string SitePlanningStatus(string siteId) => $"ahp/site/{siteId}/planning-status";
 
@@ -35,7 +40,31 @@ public static class SitePagesUrl
 
     public static string SiteNationalDesignGuide(string siteId) => $"ahp/site/{siteId}/national-design-guide";
 
+    public static string SiteBuildingForHealthyLife(string siteId) => $"ahp/site/{siteId}/building-for-a-healthy-life";
+
+    public static string SiteProvideNumberOfGreenLights(string siteId) => $"ahp/site/{siteId}/number-of-green-lights";
+
+    public static string SiteLandAcquisitionStatus(string siteId) => $"ahp/site/{siteId}/land-acquisition-status";
+
     public static string SiteConfirm(string siteId) => $"ahp/site/{siteId}/confirm-select";
 
-    public static string SiteNationaDesignGuide(string siteId) => $"ahp/site/{siteId}/national-design-guide";
+    public static string SiteTenderingStatus(string siteId) => $"ahp/site/{siteId}/tendering-status";
+
+    public static string SiteContractorDetails(string siteId) => $"ahp/site/{siteId}/contractor-details";
+
+    public static string SiteStrategicSite(string siteId) => $"ahp/site/{siteId}/strategic-site";
+
+    public static string SiteType(string siteId) => $"ahp/site/{siteId}/site-type";
+
+    public static string SiteUse(string siteId) => $"ahp/site/{siteId}/site-use";
+
+    public static string SiteTravellerPitchType(string siteId) => $"ahp/site/{siteId}/traveller-pitch-type";
+
+    public static string SiteRuralClassification(string siteId) => $"ahp/site/{siteId}/rural-classification";
+
+    public static string SiteEnvironmentalImpact(string siteId) => $"ahp/site/{siteId}/environmental-impact";
+
+    public static string SiteProcurements(string siteId) => $"ahp/site/{siteId}/procurements";
+
+    public static string SiteCheckAnswers(string siteId) => $"ahp/site/{siteId}/check-answers";
 }

@@ -4,7 +4,7 @@
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Paragraphs
 @using HE.Investment.AHP.Contract.Site
 @using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
-@using HE.Investment.AHP.WWW.Views.Site
+@using HE.Investment.AHP.WWW.Views.Site.Const
 @using HE.Investments.Common.WWW.Components.FormButton
 @model HE.Investment.AHP.Contract.Site.LocalAuthorities;
 @{
@@ -16,9 +16,7 @@
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <form asp-controller="Site" asp-action="LocalAuthoritySearch" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
         <gds-field-set>
-            <gds-legend>
-                <gds-h1 class="govuk-!-margin-bottom-2">@SitePageTitles.LocalAuthoritySearch</gds-h1>
-            </gds-legend>
+            <vc:page-header title="@SitePageTitles.LocalAuthoritySearch" caption="@ViewBag.SiteName"/>
             <gds-p>
                 Search for your local authority. If your site is located in more than one local authority, search for the local authority where you have planning permission.
             </gds-p>
@@ -30,8 +28,9 @@
                 value=@Model?.Phrase/>
 
             <vc:form-button text="Search"/>
-            @Html.HiddenFor(c => c.SiteId)
-
         </gds-field-set>
+
+        <vc:return-to-sites-link/>
+        @Html.HiddenFor(c => c.SiteId)
     </form>
 </gds-div-grid-column-two-thirds>

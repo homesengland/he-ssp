@@ -20,7 +20,8 @@ public class SaveProspectiveRentCommandHandler : SaveHomeTypeSegmentCommandHandl
 
     protected override IEnumerable<Action<SaveProspectiveRentCommand, IHomeTypeEntity>> SaveActions => new[]
     {
-        (SaveProspectiveRentCommand request, IHomeTypeEntity homeType) => homeType.TenureDetails.ChangeMarketValue(request.MarketValue),
+        (SaveProspectiveRentCommand _, IHomeTypeEntity homeType) => homeType.TenureDetails.ClearValuesForNewCalculation(),
+        (request, homeType) => homeType.TenureDetails.ChangeMarketValue(request.MarketValue),
         (request, homeType) => homeType.TenureDetails.ChangeMarketRent(request.MarketRent),
         (request, homeType) => homeType.TenureDetails.ChangeProspectiveRent(request.ProspectiveRent),
         (request, homeType) => homeType.TenureDetails.ChangeTargetRentExceedMarketRent(request.TargetRentExceedMarketRent),

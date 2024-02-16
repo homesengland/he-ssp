@@ -2,7 +2,7 @@ namespace HE.Investments.Common.Contract;
 
 public record StringIdValueObject
 {
-    protected StringIdValueObject(string id)
+    public StringIdValueObject(string id)
     {
         if (string.IsNullOrWhiteSpace(id))
         {
@@ -12,7 +12,7 @@ public record StringIdValueObject
         Value = id;
     }
 
-    protected StringIdValueObject()
+    public StringIdValueObject()
     {
         Value = string.Empty;
     }

@@ -1,64 +1,44 @@
-@using HE.Investments.Account.Shared
 @using HE.Investments.Common.Extensions
-@using HE.Investments.Common.WWW.Components.FormHeader
+@using HE.Investments.Common.Gds
+@using HE.Investments.Common.WWW.Components.PageHeader
+@using HE.Investments.Common.WWW.Components.SectionSummaryItem
 @model HE.Investment.AHP.Contract.Site.SiteDetailsModel
-@inject IAccountAccessContext AccountAccessContext
 @{
     ViewData["Title"] = Model.SiteName;
-    var canStartApplication = await AccountAccessContext.CanEditApplication();
 }
 <div class="govuk-grid-column-full">
-    <vc:form-header title="@Model.SiteName" caption="@Model.OrganisationName" hint="View and add your applications and submit them for review. The applications you add will sit within this site." additional-css-class="govuk-!-padding-top-8"></vc:form-header>
+    <gds-back-link href="@Url.Action("Index", "Site")" class="govuk-!-margin-bottom-8"></gds-back-link>
+    <vc:page-header title="@Model.SiteName" caption="@Model.OrganisationName"/>
 
-    <gds-h2 class="govuk-!-padding-top-8">
-        Your applications
-    </gds-h2>
+    @if (!string.IsNullOrWhiteSpace(Model.LocalAuthorityName))
+    {
+        <div class="govuk-!-width-two-thirds govuk-!-margin-bottom-8">
+            <gds-summary-list>
+                <vc:section-summary-item
+                    name="Local authority"
+                    values="@Model.LocalAuthorityName.ToOneElementList()"
+                    action-url="@string.Empty"
+                    is-editable="@false"/>
+            </gds-summary-list>
+        </div>
+    }
 
-    <div class="govuk-!-padding-bottom-8">
-        <table class="govuk-table">
-            <thead class="govuk-table__head">
-            <tr class="govuk-table__row">
-                <th scope="col" class="govuk-table__header govuk-!-width-one-third">Name</th>
-                <th scope="col" class="govuk-table__header govuk-!-width-one-third">Tenure</th>
-                <th scope="col" class="govuk-table__header govuk-!-width-one-third">Status</th>
-            </tr>
-            </thead>
-            <tbody class="govuk-table__body">
-            @foreach (var application in Model.Applications)
-            {
-                <tr class="govuk-table__row">
-                    <td class="govuk-table__cell">
-                        <span class="app-task-list__task-name">
-                            <strong>
-                                <a href="@Url.Action("TaskList", "Application", new { applicationId = application.Id })"> @application.Name </a>
-                            </strong>
-                        </span>
-                    </td>
-                    <td class="govuk-table__cell">
-                        @application.Tenure.GetDescription()
-                    </td>
-                    <td class="govuk-table__cell">
-                        <application-status-tag application-status="@application.Status"></application-status-tag>
-                    </td>
-                </tr>
-            }
-            </tbody>
-        </table>
+    <div class="govuk-!-width-two-thirds">
+        <gds-h2>View details of this site</gds-h2>
+        <gds-p>View or edit this site's details. You cannot edit the details for a site if an application connected to it has already been submitted.</gds-p>
+        <link-button action-url="@Url.Action("StartSite", "Site", new { siteId = Model.SiteId.Value })" button-type="@ButtonType.Secondary">
+            View details
+        </link-button>
     </div>
-    <div>
-        <gds-h2>
-            Affordable Homes Programme 2021-2026 CME
-        </gds-h2>
-        <p class="govuk-body govuk-!-margin-bottom-3">You can start a new Affordable Homes Programme application here. This will not affect any of your previous applications.</p>
 
-        <link-button action-url="@Url.Action("Name", "Application")" is-disabled=@(!canStartApplication) id="start-application-link">Start new application</link-button>
-    </div>
-    <div class="govuk-!-padding-top-2">
-        <gds-h2>
-            View sites
-        </gds-h2>
-        <p class="govuk-body govuk-!-margin-bottom-3">View a list of your existing sites. New sites can be created as part of a new application.</p>
+    @if (Model.Applications.TotalItems > 0)
+    {
+        <gds-h2>Applications on this site</gds-h2>
+        <gds-p>View or manage existing applications for this site.</gds-p>
+        <vc:site-applications-table site-id="@Model.SiteId" applications="@Model.Applications"/>
+    }
 
-        <link-button is-secondary="true" action-url="@Url.Action("Index", "Site")">View sites</link-button>
-    </div>
+    <gds-p>
+        To begin a new application, return to <gds-link data-testId="application-list" href="@Url.Action("Index", "Application")">your list of applications</gds-link>.
+    </gds-p>
 </div>

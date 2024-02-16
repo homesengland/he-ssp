@@ -19,6 +19,8 @@ using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investment.AHP.Domain.HomeTypes.Services;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investment.AHP.Domain.Programme;
+using HE.Investment.AHP.Domain.Programme.Config;
+using HE.Investment.AHP.Domain.Programme.Crm;
 using HE.Investment.AHP.Domain.Scheme.Repositories;
 using HE.Investment.AHP.Domain.Scheme.Services;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
@@ -50,6 +52,7 @@ public static class DomainModule
         AddScheme(services);
         AddSite(services);
         AddDelivery(services);
+        AddProgramme(services);
     }
 
     private static void AddHomeTypes(IServiceCollection services)
@@ -84,7 +87,6 @@ public static class DomainModule
 
     private static void AddApplication(IServiceCollection services)
     {
-        services.AddScoped<IAhpProgrammeRepository, AhpProgrammeRepository>();
         services.AddScoped<IApplicationRepository, ApplicationRepository>();
         services.AddScoped<IChangeApplicationStatus>(x => x.GetRequiredService<IApplicationRepository>());
     }
@@ -109,5 +111,12 @@ public static class DomainModule
         services.AddScoped<IDeliveryPhaseCrmContext, DeliveryPhaseCrmContext>();
         services.AddSingleton<IDeliveryPhaseCrmMapper, DeliveryPhaseCrmMapper>();
         services.AddScoped<IMilestoneDatesInProgrammeDateRangePolicy, MilestoneDatesInProgrammeDateRangePolicy>();
+    }
+
+    private static void AddProgramme(IServiceCollection services)
+    {
+        services.AddScoped<IAhpProgrammeRepository, AhpProgrammeRepository>();
+        services.AddScoped<IProgrammeCrmContext, ProgrammeCrmContext>();
+        services.AddSingleton<IProgrammeSettings, ProgrammeSettings>();
     }
 }

@@ -20,29 +20,11 @@ public class IsAnsweredTests
     }
 
     [Fact]
-    public void ShouldReturnFalse_WhenCompletionMilestoneMissingForUnregisteredBody()
+    public void ShouldReturnFalse_WhenCompletionMilestoneMissingAndIsOnlyCompletionMilestone()
     {
         // given
         var milestones = new DeliveryPhaseMilestonesBuilder()
-            .WithUnregisteredBody()
-            .WithoutAcquisitionMilestoneDetails()
-            .WithoutStartOnSiteMilestoneDetails()
-            .WithoutCompletionMilestoneDetails()
-            .Build();
-
-        // when
-        var result = milestones.IsAnswered();
-
-        // then
-        result.Should().BeFalse();
-    }
-
-    [Fact]
-    public void ShouldReturnFalse_WhenCompletionMilestoneMissingForExistingSatisfactory()
-    {
-        // given
-        var milestones = new DeliveryPhaseMilestonesBuilder()
-            .WithBuildActivityOnlyForCompletionMilestone()
+            .WithIsOnlyCompletionMilestone()
             .WithoutAcquisitionMilestoneDetails()
             .WithoutStartOnSiteMilestoneDetails()
             .WithoutCompletionMilestoneDetails()

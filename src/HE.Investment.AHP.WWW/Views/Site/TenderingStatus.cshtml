@@ -1,7 +1,7 @@
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investment.AHP.Contract.Site
 @using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
-@using HE.Investment.AHP.WWW.Views.Site
+@using HE.Investment.AHP.WWW.Views.Site.Const
 @using HE.Investments.Common.WWW.Components.RadioList
 @using HE.Investments.Common.WWW.Helpers
 @model SiteTenderingStatusDetails
@@ -11,12 +11,13 @@
 <gds-div-grid-column-two-thirds>
     <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.TenderingStatus"/>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
-    <vc:form-header caption="@ViewBag.SiteName"/>
+    <vc:page-header caption="@ViewBag.SiteName"/>
 
     <form asp-controller="Site" asp-action="TenderingStatus" asp-method="post" novalidate>
 
         <vc:radio-list
-            header="@SitePageTitles.TenderingStatus"
+            title="@SitePageTitles.TenderingStatus"
+            title-type="InputTitleType.PageHeader"
             field-name="@nameof(Model.TenderingStatus)"
             available-options="@SelectListHelper.FromEnumToExtendedList<SiteTenderingStatus>()"
             value=@Model.TenderingStatus/>

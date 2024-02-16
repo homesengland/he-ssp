@@ -77,9 +77,9 @@ public class UsersController : Controller
     [AuthorizeWithCompletedProfile(AccountAccessContext.ManageUsers)]
     public async Task<IActionResult> AdminInfo([FromRoute] string id, CancellationToken cancellationToken)
     {
-        var model = await _mediator.Send(new GetOrganizationBasicInformationQuery(), cancellationToken);
+        var model = await _mediator.Send(new GetOrganisationBasicInformationQuery(), cancellationToken);
 
-        return View("AdminInfo", (OrganisationName: model.OrganizationBasicInformation.RegisteredCompanyName, UserId: id));
+        return View("AdminInfo", (OrganisationName: model.OrganisationBasicInformation.RegisteredCompanyName, UserId: id));
     }
 
     [HttpGet("{id}/confirm-unlink")]
@@ -121,9 +121,9 @@ public class UsersController : Controller
     [AuthorizeWithCompletedProfile(AccountAccessContext.ManageUsers)]
     public async Task<IActionResult> Invite(CancellationToken cancellationToken)
     {
-        var organisation = await _mediator.Send(new GetOrganizationBasicInformationQuery(), cancellationToken);
+        var organisation = await _mediator.Send(new GetOrganisationBasicInformationQuery(), cancellationToken);
 
-        return View("Invite", new InviteUserViewModel(organisation.OrganizationBasicInformation.RegisteredCompanyName));
+        return View("Invite", new InviteUserViewModel(organisation.OrganisationBasicInformation.RegisteredCompanyName));
     }
 
     [HttpPost("invite")]

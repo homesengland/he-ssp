@@ -1,6 +1,5 @@
 using System.Xml.Linq;
 using HE.Investment.AHP.Contract.Site;
-using HE.Investment.AHP.Contract.Site.Constants;
 using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
@@ -12,16 +11,16 @@ public class Section106 : ValueObject, IQuestion
 {
     public Section106(
         bool? agreement,
-        bool? affordableHousing,
-        bool? onlyAffordableHousing,
-        bool? additionalAffordableHousing,
-        bool? capitalFundingEligibility,
-        string? localAuthorityConfirmation)
+        bool? affordableHousing = null,
+        bool? onlyAffordableHousing = null,
+        bool? additionalAffordableHousing = null,
+        bool? capitalFundingEligibility = null,
+        string? localAuthorityConfirmation = null)
     {
         if (agreement == null)
         {
             OperationResult.New()
-                .AddValidationError(SiteValidationFieldNames.Section106Agreement, ValidationErrorMessage.MissingRequiredField(SiteValidationFieldNames.Section106Agreement))
+                .AddValidationError(nameof(Section106Dto.GeneralAgreement), ValidationErrorMessage.MustProvideRequiredField("General Agreement"))
                 .CheckErrors();
         }
 
@@ -93,6 +92,90 @@ public class Section106 : ValueObject, IQuestion
     public bool IsIneligible()
     {
         return IsIneligibleDueToAffordableHousing() || IsIneligibleDueToCapitalFundingGuide();
+    }
+
+    public Section106 WithGeneralAgreement(bool? generalAgreement)
+    {
+        var result = this;
+        if (GeneralAgreement != generalAgreement || generalAgreement == null)
+        {
+            result = new Section106(generalAgreement);
+        }
+
+        return result;
+    }
+
+    public Section106 WithAffordableHousing(bool? affordableHousing)
+    {
+        if (affordableHousing == null)
+        {
+            OperationResult.New()
+                .AddValidationError(nameof(Section106Dto.AffordableHousing), ValidationErrorMessage.MustProvideRequiredField("Affordable Housing answer."))
+                .CheckErrors();
+        }
+
+        if (affordableHousing != AffordableHousing)
+        {
+            return new Section106(GeneralAgreement, affordableHousing);
+        }
+
+        return this;
+    }
+
+    public Section106 WithOnlyAffordableHousing(bool? onlyAffordableHousing)
+    {
+        if (onlyAffordableHousing == null)
+        {
+            OperationResult.New()
+                .AddValidationError(nameof(Section106Dto.OnlyAffordableHousing), ValidationErrorMessage.MustProvideRequiredField("100% Affordable Housing answer."))
+                .CheckErrors();
+        }
+
+        if (onlyAffordableHousing != OnlyAffordableHousing)
+        {
+            return new Section106(GeneralAgreement, AffordableHousing, onlyAffordableHousing);
+        }
+
+        return this;
+    }
+
+    public Section106 WithAdditionalAffordableHousing(bool? additionalAffordableHousing)
+    {
+        if (additionalAffordableHousing == null)
+        {
+            OperationResult.New()
+                .AddValidationError(nameof(Section106Dto.AdditionalAffordableHousing), ValidationErrorMessage.MustProvideRequiredField("Additional Affordable Housing answer."))
+                .CheckErrors();
+        }
+
+        if (AdditionalAffordableHousing != additionalAffordableHousing)
+        {
+            return new Section106(GeneralAgreement, AffordableHousing, OnlyAffordableHousing, additionalAffordableHousing);
+        }
+
+        return this;
+    }
+
+    public Section106 WithCapitalFundingEligibility(bool? capitalFundingEligibility)
+    {
+        if (capitalFundingEligibility == null)
+        {
+            OperationResult.New()
+                .AddValidationError(nameof(Section106Dto.CapitalFundingEligibility), ValidationErrorMessage.MustProvideRequiredField("Capital funding Eligibility answer."))
+                .CheckErrors();
+        }
+
+        if (CapitalFundingEligibility != capitalFundingEligibility)
+        {
+            return new Section106(GeneralAgreement, AffordableHousing, OnlyAffordableHousing, AdditionalAffordableHousing, capitalFundingEligibility);
+        }
+
+        return this;
+    }
+
+    public Section106 WithLocalAuthorityConfirmation(string? localAuthorityConfirmation)
+    {
+        return new Section106(GeneralAgreement, AffordableHousing, OnlyAffordableHousing, AdditionalAffordableHousing, CapitalFundingEligibility, localAuthorityConfirmation);
     }
 
     protected override IEnumerable<object?> GetAtomicValues()

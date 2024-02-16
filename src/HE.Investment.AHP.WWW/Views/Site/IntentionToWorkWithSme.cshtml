@@ -1,7 +1,7 @@
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investment.AHP.Contract.Site
 @using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
-@using HE.Investment.AHP.WWW.Views.Site
+@using HE.Investment.AHP.WWW.Views.Site.Const
 @model SiteTenderingStatusDetails
 @{
     ViewData["Title"] = SitePageTitles.IntentionToWorkWithSme;
@@ -9,12 +9,13 @@
 <gds-div-grid-column-two-thirds>
     <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.IntentionToWorkWithSme"/>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
-    <vc:form-header caption="@ViewBag.SiteName"/>
+    <vc:page-header caption="@ViewBag.SiteName"/>
 
     <form asp-controller="Site" asp-action="IntentionToWorkWithSme" asp-method="post" novalidate>
 
         <vc:radio-yes-no
-            header="@SitePageTitles.IntentionToWorkWithSme"
+            title="@SitePageTitles.IntentionToWorkWithSme"
+            title-type="InputTitleType.PageHeader"
             field-name="@nameof(Model.IsIntentionToWorkWithSme)"
             value="@Model.IsIntentionToWorkWithSme"/>
 

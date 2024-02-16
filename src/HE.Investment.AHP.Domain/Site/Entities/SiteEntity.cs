@@ -1,14 +1,22 @@
 extern alias Org;
 
 using HE.Investment.AHP.Contract.Site;
+using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investment.AHP.Domain.Site.ValueObjects;
 using HE.Investment.AHP.Domain.Site.ValueObjects.Factories;
 using HE.Investment.AHP.Domain.Site.ValueObjects.Planning;
+using HE.Investment.AHP.Domain.Site.ValueObjects.StrategicSite;
 using HE.Investment.AHP.Domain.Site.ValueObjects.TenderingStatus;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
+using HE.Investments.Common.Extensions;
 using LocalAuthority = Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
+using Section106 = HE.Investment.AHP.Domain.Site.ValueObjects.Section106;
+using SiteModernMethodsOfConstruction = HE.Investment.AHP.Domain.Site.ValueObjects.Mmc.SiteModernMethodsOfConstruction;
+using SiteRuralClassification = HE.Investment.AHP.Domain.Site.ValueObjects.SiteRuralClassification;
+using SiteTypeDetails = HE.Investment.AHP.Domain.Site.ValueObjects.SiteTypeDetails;
+using SiteUseDetails = HE.Investment.AHP.Domain.Site.ValueObjects.SiteUseDetails;
 
 namespace HE.Investment.AHP.Domain.Site.Entities;
 
@@ -22,8 +30,18 @@ public class SiteEntity : DomainEntity, IQuestion
         Section106 section106,
         PlanningDetails planningDetails,
         NationalDesignGuidePriorities nationalDesignGuidePriorities,
+        NumberOfGreenLights? numberOfGreenLights,
+        LandAcquisitionStatus landAcquisitionStatus,
         TenderingStatusDetails tenderingStatusDetails,
-        LocalAuthority? localAuthority = null)
+        StrategicSiteDetails strategicSiteDetails,
+        SiteTypeDetails siteTypeDetails,
+        SiteProcurements siteProcurements,
+        LocalAuthority? localAuthority = null,
+        BuildingForHealthyLifeType buildingForHealthyLife = BuildingForHealthyLifeType.Undefined,
+        SiteUseDetails? siteUseDetails = null,
+        SiteRuralClassification? ruralClassification = null,
+        EnvironmentalImpact? environmentalImpact = null,
+        SiteModernMethodsOfConstruction? modernMethodsOfConstruction = null)
     {
         Id = id;
         Name = name;
@@ -32,7 +50,17 @@ public class SiteEntity : DomainEntity, IQuestion
         LocalAuthority = localAuthority;
         PlanningDetails = planningDetails;
         NationalDesignGuidePriorities = nationalDesignGuidePriorities;
+        BuildingForHealthyLife = buildingForHealthyLife;
+        Procurements = siteProcurements;
+        NumberOfGreenLights = numberOfGreenLights;
+        LandAcquisitionStatus = landAcquisitionStatus;
         TenderingStatusDetails = tenderingStatusDetails;
+        StrategicSiteDetails = strategicSiteDetails;
+        SiteTypeDetails = siteTypeDetails;
+        SiteUseDetails = siteUseDetails ?? new SiteUseDetails();
+        RuralClassification = ruralClassification ?? new SiteRuralClassification();
+        EnvironmentalImpact = environmentalImpact;
+        ModernMethodsOfConstruction = modernMethodsOfConstruction ?? new SiteModernMethodsOfConstruction();
     }
 
     public SiteEntity()
@@ -43,7 +71,15 @@ public class SiteEntity : DomainEntity, IQuestion
         Section106 = new Section106();
         PlanningDetails = PlanningDetailsFactory.CreateEmpty();
         NationalDesignGuidePriorities = new NationalDesignGuidePriorities();
+        LandAcquisitionStatus = new LandAcquisitionStatus(null);
         TenderingStatusDetails = new TenderingStatusDetails();
+        StrategicSiteDetails = new StrategicSiteDetails();
+        SiteTypeDetails = new SiteTypeDetails();
+        SiteUseDetails = new SiteUseDetails();
+        Procurements = new SiteProcurements();
+        RuralClassification = new SiteRuralClassification();
+        EnvironmentalImpact = null;
+        ModernMethodsOfConstruction = new SiteModernMethodsOfConstruction();
     }
 
     public SiteId Id { get; set; }
@@ -60,7 +96,27 @@ public class SiteEntity : DomainEntity, IQuestion
 
     public NationalDesignGuidePriorities NationalDesignGuidePriorities { get; private set; }
 
-    public TenderingStatusDetails TenderingStatusDetails { get; set; }
+    public BuildingForHealthyLifeType BuildingForHealthyLife { get; private set; }
+
+    public NumberOfGreenLights? NumberOfGreenLights { get; private set; }
+
+    public LandAcquisitionStatus LandAcquisitionStatus { get; private set; }
+
+    public TenderingStatusDetails TenderingStatusDetails { get; private set; }
+
+    public StrategicSiteDetails StrategicSiteDetails { get; private set; }
+
+    public SiteTypeDetails SiteTypeDetails { get; private set; }
+
+    public SiteUseDetails SiteUseDetails { get; private set; }
+
+    public SiteProcurements Procurements { get; private set; }
+
+    public SiteRuralClassification RuralClassification { get; private set; }
+
+    public EnvironmentalImpact? EnvironmentalImpact { get; private set; }
+
+    public SiteModernMethodsOfConstruction ModernMethodsOfConstruction { get; private set; }
 
     public async Task ProvideName(SiteName siteName, ISiteNameExist siteNameExist, CancellationToken cancellationToken)
     {
@@ -94,13 +150,85 @@ public class SiteEntity : DomainEntity, IQuestion
         NationalDesignGuidePriorities = _modificationTracker.Change(NationalDesignGuidePriorities, nationalDesignGuidePriorities);
     }
 
+    public void ProvideBuildingForHealthyLife(BuildingForHealthyLifeType buildingForHealthyLife)
+    {
+        BuildingForHealthyLife = _modificationTracker.Change(BuildingForHealthyLife, buildingForHealthyLife);
+        if (BuildingForHealthyLife != BuildingForHealthyLifeType.Yes)
+        {
+            ProvideNumberOfGreenLights(null);
+        }
+    }
+
+    public void ProvideNumberOfGreenLights(NumberOfGreenLights? numberOfGreenLights)
+    {
+        NumberOfGreenLights = _modificationTracker.Change(NumberOfGreenLights, numberOfGreenLights);
+    }
+
+    public void ProvideLandAcquisitionStatus(LandAcquisitionStatus landAcquisitionStatus)
+    {
+        LandAcquisitionStatus = _modificationTracker.Change(LandAcquisitionStatus, landAcquisitionStatus);
+    }
+
     public void ProvideTenderingStatusDetails(TenderingStatusDetails tenderingStatusDetails)
     {
         TenderingStatusDetails = _modificationTracker.Change(TenderingStatusDetails, tenderingStatusDetails);
     }
 
+    public void ProvideStrategicSiteDetails(StrategicSiteDetails details)
+    {
+        StrategicSiteDetails = _modificationTracker.Change(StrategicSiteDetails, details);
+    }
+
+    public void ProvideSiteTypeDetails(SiteTypeDetails details)
+    {
+        SiteTypeDetails = _modificationTracker.Change(SiteTypeDetails, details);
+    }
+
+    public void ProvideSiteUseDetails(SiteUseDetails details)
+    {
+        SiteUseDetails = _modificationTracker.Change(SiteUseDetails, details);
+    }
+
+    public void ProvideProcurement(SiteProcurements procurements)
+    {
+        Procurements = _modificationTracker.Change(Procurements, procurements);
+    }
+
+    public void ProvideRuralClassification(SiteRuralClassification ruralClassification)
+    {
+        RuralClassification = _modificationTracker.Change(RuralClassification, ruralClassification);
+    }
+
+    public void ProvideEnvironmentalImpact(EnvironmentalImpact? environmentalImpact)
+    {
+        EnvironmentalImpact = _modificationTracker.Change(EnvironmentalImpact, environmentalImpact);
+    }
+
+    public void ProvideModernMethodsOfConstruction(SiteModernMethodsOfConstruction modernMethodsOfConstruction)
+    {
+        ModernMethodsOfConstruction = _modificationTracker.Change(ModernMethodsOfConstruction, modernMethodsOfConstruction);
+    }
+
     public bool IsAnswered()
     {
-        return PlanningDetails.IsAnswered();
+        return PlanningDetails.IsAnswered() &&
+               TenderingStatusDetails.IsAnswered() &&
+               StrategicSiteDetails.IsAnswered() &&
+               SiteTypeDetails.IsAnswered() &&
+               SiteUseDetails.IsAnswered() &&
+               BuildingForHealthyLife != BuildingForHealthyLifeType.Undefined &&
+               BuildConditionalRouteCompletionPredicates().All(isCompleted => isCompleted()) &&
+               Procurements.IsAnswered() &&
+               RuralClassification.IsAnswered() &&
+               EnvironmentalImpact.IsProvided() &&
+               ModernMethodsOfConstruction.IsAnswered();
+    }
+
+    private IEnumerable<Func<bool>> BuildConditionalRouteCompletionPredicates()
+    {
+        if (BuildingForHealthyLife == BuildingForHealthyLifeType.Yes)
+        {
+            yield return () => NumberOfGreenLights.IsProvided();
+        }
     }
 }

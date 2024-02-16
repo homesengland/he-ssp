@@ -20,11 +20,11 @@ namespace HE.Investments.Account.Domain.Tests.Organisation.CommandHandlers;
 
 public class LinkContactWithAccountTests : TestBase<LinkContactWithOrganizationCommandHandler>
 {
-    private readonly LinkContactWithOrganizationCommand _command;
+    private readonly LinkContactWithOrganisationCommand _command;
 
     public LinkContactWithAccountTests()
     {
-        _command = new LinkContactWithOrganizationCommand("12345");
+        _command = new LinkContactWithOrganisationCommand("12345");
 
         RegisterDependency(new Mock<IContactService>());
     }

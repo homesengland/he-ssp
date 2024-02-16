@@ -46,7 +46,7 @@ public class RevenueFundingTests : HomeTypesTestBase
                     "YouthOffendingTeams",
                     "Other",
                 })
-            .HasGdsSaveAndContinueButton();
+            .HasSaveAndContinueButton();
     }
 
     [Fact]
@@ -79,6 +79,6 @@ public class RevenueFundingTests : HomeTypesTestBase
                     "NationalLottery",
                     "SocialServicesDepartment",
                 })
-            .HasGdsSaveAndContinueButton();
+            .HasSaveAndContinueButton();
     }
 }

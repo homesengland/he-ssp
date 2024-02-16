@@ -1,9 +1,9 @@
 @using HE.Investment.AHP.WWW.Views.Application
 @using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
 @using HE.Investments.Common.WWW.Components.FormButton
-@using HE.Investments.Common.WWW.Components.FormHeader
 @using HE.Investments.Common.WWW.Components.TextAreaInputWithCounter
 @using HE.Investment.AHP.Contract.Application
+
 @model HE.Investment.AHP.WWW.Models.Application.ChangeApplicationStatusModel
 
 @{
@@ -15,13 +15,14 @@
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
     <form asp-controller="Application" asp-action="OnHold" asp-method="post" asp-route-applicationName="@Model.ApplicationName" novalidate>
-        <vc:form-header caption="@Model.ApplicationName"/>
+        <vc:page-header caption="@Model.ApplicationName"/>
         @Html.HiddenFor(m => Model.ApplicationName)
 
         <vc:text-area-input-with-counter
             field-name="@nameof(Model.HoldReason)"
             value="@Model.HoldReason"
-            header="@ApplicationPageTitles.OnHold"
+            title="@ApplicationPageTitles.OnHold"
+            title-type="InputTitleType.PageHeader"
             hint="This will notify Homes England that you no longer wish to proceed with this application at this time.
                   You can revisit this later on and submit once you’re ready."/>
 

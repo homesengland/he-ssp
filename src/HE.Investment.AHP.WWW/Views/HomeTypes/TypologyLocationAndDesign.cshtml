@@ -1,6 +1,7 @@
 @using HE.Investment.AHP.WWW.Extensions;
 @using HE.Investment.AHP.WWW.Views.HomeTypes.Const
 @using HE.Investment.AHP.Contract.HomeTypes
+@using HE.Investments.Common.WWW.Components.InputHeader
 @model HE.Investment.AHP.WWW.Models.HomeTypes.MoreInformationModel;
 
 @{
@@ -18,7 +19,8 @@
 
         <vc:text-area-input-with-counter
             field-name="@nameof(Model.MoreInformation)"
-            header="@HomeTypesPageTitles.TypologyLocationAndDesign"
+            title="@HomeTypesPageTitles.TypologyLocationAndDesign"
+            title-type="InputTitleType.PageHeader"
             hint="Typology is the classification and characteristics of the homes you are building."
             value="@Model.MoreInformation"/>
 

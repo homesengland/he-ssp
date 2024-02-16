@@ -1,6 +1,5 @@
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
 @using HE.Investments.Common.WWW.Components.FormButton
-@using HE.Investments.Common.WWW.Components.FormHeader
 @using HE.Investments.Common.WWW.Components.RadioYesNo
 @using HE.Investment.AHP.Contract.Delivery
 @using HE.Investment.AHP.WWW.Views.Delivery.Const
@@ -16,11 +15,12 @@
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
     <form asp-controller="DeliveryPhase" asp-action="UnregisteredBodyFollowUp" asp-method="post" asp-route-redirect="@Context.Request.Query["redirect"]" novalidate>
-        <vc:form-header caption="@($"{Model.ApplicationName} - {Model.DeliveryPhaseName}")"/>
+        <vc:page-header caption="@($"{Model.ApplicationName} - {Model.DeliveryPhaseName}")"/>
 
         <vc:radio-yes-no
             field-name="@nameof(Model.IsAdditionalPaymentRequested)"
-            header="@title"
+            title="@title"
+            title-type="InputTitleType.PageHeader"
             value="Model.IsAdditionalPaymentRequested"
             hint="Our Provider Services team will review your request and contact you for further details. Any payments disbursed ahead of completion must be backed by an appropriate form of security."/>
 

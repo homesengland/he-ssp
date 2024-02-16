@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.WWW.Models.Delivery;
 using HE.Investment.AHP.WWW.Views.Delivery.Const;
 using Microsoft.AspNetCore.Routing;
@@ -34,7 +33,7 @@ public class AddHomesTests : ViewTestBase
             .HasParagraph("Once a home type has been fully allocated to your delivery phases, it will no longer be listed.")
             .HasInput("HomesToDeliver[ht-1]", "First Home Type", "5")
             .HasInput("HomesToDeliver[ht-2]", "Second Home Type")
-            .HasGdsSaveAndContinueButton()
-            .HasGdsBackLink(false);
+            .HasSaveAndContinueButton()
+            .HasBackLink(false);
     }
 }

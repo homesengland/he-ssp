@@ -1,12 +1,12 @@
 using FluentAssertions;
 using HE.Investment.AHP.Contract.Site;
+using HE.Investment.AHP.Contract.Site.Enums;
 
 namespace HE.Investment.AHP.WWW.Tests.Workflows.SiteWorkflowTests;
 
 public class StateCanBeAccessedTests
 {
     [Theory]
-    [InlineData(SiteWorkflowState.Index, true)]
     [InlineData(SiteWorkflowState.Start, true)]
     [InlineData(SiteWorkflowState.Name, true)]
     [InlineData(SiteWorkflowState.LocalAuthoritySearch, true)]
@@ -16,9 +16,19 @@ public class StateCanBeAccessedTests
     [InlineData(SiteWorkflowState.PlanningStatus, true)]
     [InlineData(SiteWorkflowState.PlanningDetails, true)]
     [InlineData(SiteWorkflowState.LandRegistry, false)]
+    [InlineData(SiteWorkflowState.NationalDesignGuide, true)]
+    [InlineData(SiteWorkflowState.BuildingForHealthyLife, true)]
+    [InlineData(SiteWorkflowState.NumberOfGreenLights, false)]
+    [InlineData(SiteWorkflowState.LandAcquisitionStatus, true)]
     [InlineData(SiteWorkflowState.TenderingStatus, true)]
     [InlineData(SiteWorkflowState.ContractorDetails, false)]
     [InlineData(SiteWorkflowState.IntentionToWorkWithSme, false)]
+    [InlineData(SiteWorkflowState.StrategicSite, true)]
+    [InlineData(SiteWorkflowState.SiteType, true)]
+    [InlineData(SiteWorkflowState.RuralClassification, true)]
+    [InlineData(SiteWorkflowState.EnvironmentalImpact, true)]
+    [InlineData(SiteWorkflowState.Procurements, true)]
+    [InlineData(SiteWorkflowState.CheckAnswers, true)]
     public async Task ShouldReturnValue_WhenMethodCalledForDefaults(SiteWorkflowState state, bool expectedResult)
     {
         // given
@@ -72,6 +82,19 @@ public class StateCanBeAccessedTests
 
         // when
         var result = await workflow.StateCanBeAccessed(SiteWorkflowState.IntentionToWorkWithSme);
+
+        // then
+        result.Should().BeTrue();
+    }
+
+    [Fact]
+    public async Task ShouldReturnTrue_WhenMethodCalledForNumberOfGreenLightsAndBuildingForHealthyLifeIsYes()
+    {
+        // given
+        var workflow = SiteWorkflowFactory.BuildWorkflow(SiteWorkflowState.Start, buildingForHealthyLife: BuildingForHealthyLifeType.Yes);
+
+        // when
+        var result = await workflow.StateCanBeAccessed(SiteWorkflowState.NumberOfGreenLights);
 
         // then
         result.Should().BeTrue();

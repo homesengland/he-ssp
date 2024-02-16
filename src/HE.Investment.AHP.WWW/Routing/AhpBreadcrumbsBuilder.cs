@@ -1,4 +1,5 @@
 using HE.Investment.AHP.WWW.Controllers;
+using HE.Investments.Account.Shared;
 using HE.Investments.Common.WWW.Routing;
 
 namespace HE.Investment.AHP.WWW.Routing;
@@ -10,11 +11,21 @@ public class AhpBreadcrumbsBuilder : BreadcrumbsBuilderBase
         return new AhpBreadcrumbsBuilder().WithHome();
     }
 
+    public static AhpBreadcrumbsBuilder Empty()
+    {
+        return new AhpBreadcrumbsBuilder();
+    }
+
+    public AhpBreadcrumbsBuilder WithOrganisation(string organisationName)
+    {
+        AddBreadcrumb(organisationName, nameof(AccountController.Index), GetControllerName(nameof(AccountController)));
+
+        return this;
+    }
+
     public AhpBreadcrumbsBuilder WithSites()
     {
-        //// TODO: fix after implementing sites
-
-        AddBreadcrumb("Sites");
+        AddBreadcrumb("Sites", nameof(SiteController.Index), GetControllerName(nameof(SiteController)));
 
         return this;
     }
@@ -23,6 +34,13 @@ public class AhpBreadcrumbsBuilder : BreadcrumbsBuilderBase
     {
         //// TODO: fix after implementing schemes
         AddBreadcrumb("Schemes", cssClass: "govuk-!-padding-right-4");
+
+        return this;
+    }
+
+    public AhpBreadcrumbsBuilder WithApplicationsList()
+    {
+        AddBreadcrumb("AHP 21-26 CME", nameof(ApplicationController.Index), GetControllerName(nameof(ApplicationController)));
 
         return this;
     }

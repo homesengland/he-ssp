@@ -2,7 +2,6 @@ namespace HE.Investment.AHP.Contract.Site;
 
 public enum SiteWorkflowState
 {
-    Index = 1,
     Start,
     Name,
     Section106GeneralAgreement,
@@ -21,8 +20,23 @@ public enum SiteWorkflowState
     LandRegistry,
     NationalDesignGuide,
     BuildingForHealthyLife,
+    NumberOfGreenLights,
+    LandAcquisitionStatus,
     TenderingStatus,
     ContractorDetails,
     IntentionToWorkWithSme,
+    StrategicSite,
+    SiteType,
+    SiteUse,
+    TravellerPitchType,
+    RuralClassification,
+    EnvironmentalImpact,
+    MmcUsing,
+    MmcFutureAdoption,
+    MmcInformation,
+    MmcCategories,
+    Mmc3DCategory,
+    Mmc2DCategory,
+    Procurements,
     CheckAnswers,
 }

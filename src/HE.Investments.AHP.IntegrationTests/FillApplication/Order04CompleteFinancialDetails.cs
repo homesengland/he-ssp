@@ -39,7 +39,7 @@ public class Order04CompleteFinancialDetails : AhpIntegrationTest
     {
         // given
         var taskListPage = await TestClient.NavigateTo(ApplicationPagesUrl.TaskList(ApplicationData.ApplicationId));
-        taskListPage.HasLinkWithId("enter-financial-details", out var enterSchemeInformationLink);
+        taskListPage.HasLinkWithTestId("enter-financial-details", out var enterSchemeInformationLink);
 
         // when
         var schemaDetailsPage = await TestClient.NavigateTo(enterSchemeInformationLink);
@@ -152,7 +152,7 @@ public class Order04CompleteFinancialDetails : AhpIntegrationTest
         checkAnswersPage
             .UrlEndWith(FinancialDetailsPagesUrl.CheckAnswersSuffix)
             .HasTitle(FinancialDetailsPageTitles.CheckAnswers)
-            .HasGdsSubmitButton("continue-button", out var continueButton);
+            .HasSaveAndContinueButton(out var continueButton);
 
         // when
         var schemaInformationSummary = checkAnswersPage.GetSummaryListItems();

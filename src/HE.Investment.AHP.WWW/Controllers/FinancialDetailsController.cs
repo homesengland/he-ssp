@@ -332,20 +332,8 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
         return await this.ExecuteCommand<TModel>(
             _mediator,
             command,
-            async () => await ContinueWithAllRedirects(new { applicationId }),
+            async () => await this.ReturnToTaskListOrContinue(async () => await ContinueWithRedirect(new { applicationId })),
             async () => await Task.FromResult<IActionResult>(View(model)),
             cancellationToken);
-    }
-
-    private async Task<IActionResult> ContinueWithAllRedirects(object routeData)
-    {
-        var action = HttpContext.Request.Form["action"];
-        if (action == GenericMessages.SaveAndReturn)
-        {
-            var applicationId = this.GetApplicationIdFromRoute();
-            return Url.RedirectToTaskList(applicationId.Value);
-        }
-
-        return await ContinueWithRedirect(routeData);
     }
 }

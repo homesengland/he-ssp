@@ -28,6 +28,14 @@ namespace HE.CRM.Common.DtoMapping
                 typeOfHomes = MapTypeOfHome(deliveryPhase.invln_nbrh),
                 requiresAdditionalPayments = MapYesNo(deliveryPhase.invln_urbrequestingearlymilestonepayments),
                 isCompleted = deliveryPhase.invln_iscompleted,
+                acquisitionValue = deliveryPhase.invln_AcquisitionValue?.Value,
+                acquisitionPercentageValue = deliveryPhase.invln_AcquisitionPercentageValue,
+                startOnSiteValue = deliveryPhase.invln_StartOnSiteValue?.Value,
+                startOnSitePercentageValue = deliveryPhase.invln_StartOnSitePercentageValue,
+                completionValue = deliveryPhase.invln_CompletionValue?.Value,
+                completionPercentageValue = deliveryPhase.invln_CompletionPercentageValue,
+                claimingtheMilestoneConfirmed = deliveryPhase.invln_ClaimingtheMilestoneConfirmed,
+                allowAmendmentstoMilestoneProportions = deliveryPhase.invln_AllowAmendmentstoMilestoneProportions,
             };
 
             if (deliveryPhase.Id != null)
@@ -69,6 +77,14 @@ namespace HE.CRM.Common.DtoMapping
                 invln_urbrequestingearlymilestonepayments = MapYesNo(deliveryPhaseDto.requiresAdditionalPayments),
                 invln_invln_homesindeliveryphase_deliveryphasel = MapHomesInDeliveryPhase(deliveryPhaseDto),
                 invln_iscompleted = deliveryPhaseDto.isCompleted,
+                invln_AcquisitionValue = MapNullableDecimalToMoney(deliveryPhaseDto.acquisitionValue),
+                invln_AcquisitionPercentageValue = deliveryPhaseDto.acquisitionPercentageValue,
+                invln_StartOnSiteValue = MapNullableDecimalToMoney(deliveryPhaseDto.startOnSiteValue),
+                invln_StartOnSitePercentageValue = deliveryPhaseDto.startOnSitePercentageValue,
+                invln_CompletionValue = MapNullableDecimalToMoney(deliveryPhaseDto.completionValue),
+                invln_CompletionPercentageValue = deliveryPhaseDto.completionPercentageValue,
+                invln_ClaimingtheMilestoneConfirmed = deliveryPhaseDto.claimingtheMilestoneConfirmed,
+                invln_AllowAmendmentstoMilestoneProportions = deliveryPhaseDto.allowAmendmentstoMilestoneProportions,
             };
 
             if (deliveryPhaseDto.id != null)
@@ -149,6 +165,15 @@ namespace HE.CRM.Common.DtoMapping
             if (valueToMap.HasValue)
             {
                 return new OptionSetValue(valueToMap.Value);
+            }
+            return null;
+        }
+
+        private static Money MapNullableDecimalToMoney(decimal? valueToMap)
+        {
+            if (valueToMap.HasValue)
+            {
+                return new Money(valueToMap.Value);
             }
             return null;
         }

@@ -1,12 +1,17 @@
+extern alias Org;
+
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Queries;
 using HE.Investment.AHP.Domain.Common.Mappers;
+using HE.Investment.AHP.Domain.Site.Entities;
 using HE.Investment.AHP.Domain.Site.Mappers;
 using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investment.AHP.Domain.Site.ValueObjects.Planning;
+using HE.Investment.AHP.Domain.Site.ValueObjects.StrategicSite;
 using HE.Investment.AHP.Domain.Site.ValueObjects.TenderingStatus;
 using HE.Investments.Account.Shared;
 using MediatR;
+using SiteTypeDetails = HE.Investment.AHP.Contract.Site.SiteTypeDetails;
 
 namespace HE.Investment.AHP.Domain.Site.QueryHandlers;
 
@@ -26,27 +31,47 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
     {
         var userAccount = await _accountUserContext.GetSelectedAccount();
         var site = await _siteRepository.GetSite(new SiteId(request.SiteId), userAccount, cancellationToken);
+        var localAuthority = LocalAuthorityMapper.Map(site.LocalAuthority);
 
         return new SiteModel
         {
             Id = site.Id.Value,
             Name = site.Name.Value,
-            Section106GeneralAgreement = site.Section106?.GeneralAgreement,
-            Section106AffordableHousing = site.Section106?.AffordableHousing,
-            Section106OnlyAffordableHousing = site.Section106?.OnlyAffordableHousing,
-            Section106AdditionalAffordableHousing = site.Section106?.AdditionalAffordableHousing,
-            Section106CapitalFundingEligibility = site.Section106?.CapitalFundingEligibility,
-            Section106LocalAuthorityConfirmation = site.Section106?.LocalAuthorityConfirmation,
-            IsIneligibleDueToAffordableHousing = site.Section106?.IsIneligibleDueToAffordableHousing(),
-            IsIneligibleDueToCapitalFundingGuide = site.Section106?.IsIneligibleDueToCapitalFundingGuide(),
-            IsIneligible = site.Section106?.IsIneligible(),
-            LocalAuthority = LocalAuthorityMapper.Map(site.LocalAuthority),
-            PlanningDetails = CreateSitePlanningDetails(site.PlanningDetails),
+            Section106 = CreateSection106(site),
+            LocalAuthority = localAuthority,
+            PlanningDetails = CreateSitePlanningDetails(site.PlanningDetails, localAuthority?.Id),
+            NationalDesignGuidePriorities = site.NationalDesignGuidePriorities.Values.ToList(),
+            BuildingForHealthyLife = site.BuildingForHealthyLife,
+            NumberOfGreenLights = site.NumberOfGreenLights?.ToString(),
+            LandAcquisitionStatus = site.LandAcquisitionStatus.Value,
             TenderingStatusDetails = CreateSiteTenderingStatusDetails(site.TenderingStatusDetails),
+            StrategicSiteDetails = CreateStrategicSiteDetails(site.StrategicSiteDetails),
+            SiteTypeDetails = CreateSiteTypeDetails(site.SiteTypeDetails),
+            SiteUseDetails = CreateSiteUseDetails(site.SiteUseDetails),
+            RuralClassification = CreateSiteRuralClassification(site.RuralClassification),
+            EnvironmentalImpact = site.EnvironmentalImpact?.Value,
+            SiteProcurements = site.Procurements.Procurements.ToList(),
+            ModernMethodsOfConstruction = CreateSiteModernMethodsOfConstruction(site.ModernMethodsOfConstruction),
         };
     }
 
-    private SitePlanningDetails CreateSitePlanningDetails(PlanningDetails planningDetails)
+    private static Section106Dto CreateSection106(SiteEntity site)
+    {
+        return new Section106Dto(
+            site.Id.ToString(),
+            site.Name.Value,
+            site.Section106.GeneralAgreement,
+            site.Section106.AffordableHousing,
+            site.Section106.OnlyAffordableHousing,
+            site.Section106.AdditionalAffordableHousing,
+            site.Section106.CapitalFundingEligibility,
+            site.Section106.LocalAuthorityConfirmation,
+            site.Section106.IsIneligible(),
+            site.Section106.IsIneligibleDueToAffordableHousing(),
+            site.Section106.IsIneligibleDueToCapitalFundingGuide());
+    }
+
+    private static SitePlanningDetails CreateSitePlanningDetails(PlanningDetails planningDetails, string? localAuthorityId)
     {
         return new SitePlanningDetails(
             planningDetails.PlanningStatus,
@@ -61,15 +86,55 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
             planningDetails.LandRegistryDetails?.IsLandRegistryTitleNumberRegistered,
             planningDetails.LandRegistryDetails?.TitleNumber?.Value,
             planningDetails.LandRegistryDetails?.IsGrantFundingForAllHomesCoveredByTitleNumber,
-            planningDetails.IsAnswered());
+            planningDetails.IsAnswered(),
+            localAuthorityId);
     }
 
-    private SiteTenderingStatusDetails CreateSiteTenderingStatusDetails(TenderingStatusDetails tenderingStatusDetails)
+    private static SiteTenderingStatusDetails CreateSiteTenderingStatusDetails(TenderingStatusDetails tenderingStatusDetails)
     {
         return new SiteTenderingStatusDetails(
             tenderingStatusDetails.TenderingStatus,
             tenderingStatusDetails.ContractorName?.Value,
             tenderingStatusDetails.IsSmeContractor,
             tenderingStatusDetails.IsIntentionToWorkWithSme);
+    }
+
+    private static StrategicSite CreateStrategicSiteDetails(StrategicSiteDetails details)
+    {
+        return new StrategicSite(
+            details.IsStrategicSite,
+            details.SiteName?.Value);
+    }
+
+    private static SiteTypeDetails CreateSiteTypeDetails(ValueObjects.SiteTypeDetails details)
+    {
+        return new SiteTypeDetails(
+            details.SiteType,
+            details.IsOnGreenBelt,
+            details.IsRegenerationSite,
+            details.IsAnswered());
+    }
+
+    private static SiteUseDetails CreateSiteUseDetails(ValueObjects.SiteUseDetails details)
+    {
+        return new SiteUseDetails(details.IsPartOfStreetFrontInfill, details.IsForTravellerPitchSite, details.TravellerPitchSiteType);
+    }
+
+    private static SiteRuralClassification CreateSiteRuralClassification(ValueObjects.SiteRuralClassification details)
+    {
+        return new SiteRuralClassification(details.IsWithinRuralSettlement, details.IsRuralExceptionSite);
+    }
+
+    private static SiteModernMethodsOfConstruction CreateSiteModernMethodsOfConstruction(ValueObjects.Mmc.SiteModernMethodsOfConstruction mmc)
+    {
+        return new SiteModernMethodsOfConstruction(
+            mmc.SiteUsingModernMethodsOfConstruction,
+            mmc.ModernMethodsOfConstruction?.ModernMethodsConstructionCategories.ToList(),
+            mmc.ModernMethodsOfConstruction?.ModernMethodsConstruction2DSubcategories.ToList(),
+            mmc.ModernMethodsOfConstruction?.ModernMethodsConstruction3DSubcategories.ToList(),
+            mmc.FutureAdoption?.Plans.Value,
+            mmc.FutureAdoption?.ExpectedImpact.Value,
+            mmc.Information?.Barriers.Value,
+            mmc.Information?.Impact.Value);
     }
 }

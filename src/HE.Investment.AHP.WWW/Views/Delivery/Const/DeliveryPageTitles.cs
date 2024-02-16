@@ -12,8 +12,6 @@ public static class DeliveryPageTitles
 
     public const string ReconfiguringExisting = "Are you reconfiguring existing residential properties to increase the number of homes?";
 
-    public const string SummaryOfDelivery = "Summary of delivery";
-
     public const string AcquisitionTranche = "Acquisition tranche";
 
     public const string StartOnSiteTranche = "Start on site tranche";
@@ -37,4 +35,6 @@ public static class DeliveryPageTitles
     public const string CheckAnswers = "Check your answers before adding a delivery phase";
 
     public const string Remove = "Are you sure you want to remove this delivery phase?";
+
+    public static string SummaryOfDelivery(string deliveryPhaseName) => $"Summary of {deliveryPhaseName} delivery and milestones";
 }

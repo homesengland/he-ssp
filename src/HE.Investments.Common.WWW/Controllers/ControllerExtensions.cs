@@ -34,6 +34,13 @@ public static class ControllerExtensions
         return await onSuccess();
     }
 
+    public static void AddOrderedErrors<T>(this Controller controller, OperationResult operationResult)
+    {
+        controller.ModelState.AddValidationErrors(operationResult);
+        var orderedProperties = GetOrderedPropertiesNames<T>();
+        controller.ViewBag.validationErrors = controller.ViewData.ModelState.GetOrderedErrors(orderedProperties.ToList());
+    }
+
     private static IList<string> GetOrderedPropertiesNames<T>()
     {
         var type = typeof(T);

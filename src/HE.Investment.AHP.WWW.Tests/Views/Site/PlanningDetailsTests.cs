@@ -80,7 +80,7 @@ public class PlanningDetailsTests : ViewTestBase
                 value: "False",
                 exist: isLandRegistryTitleNumberRegisteredExist)
             .HasSaveAndContinueButton()
-            .HasGdsBackLink(false);
+            .HasBackLink(false);
     }
 
     private static SitePlanningDetails CreateTestModel(SitePlanningStatus status)

@@ -9,11 +9,12 @@ public class RadioList : ViewComponent
     public IViewComponentResult Invoke(
         string fieldName,
         IEnumerable<ExtendedSelectListItem> availableOptions,
-        string? header = null,
         string? title = null,
+        InputTitleType? titleType = null,
+        DynamicComponentViewModel? additionalContent = null,
         string? hint = null,
         Enum? value = null)
     {
-        return View("RadioList", (fieldName, header, title, hint, availableOptions, value?.ToString()));
+        return View("RadioList", (fieldName, title, titleType ?? InputTitleType.InputTitle, additionalContent, hint, availableOptions, value?.ToString()));
     }
 }

@@ -1,3 +1,4 @@
+using HE.Investments.Common.WWW.Components.InputHeader;
 using HE.Investments.Common.WWW.Components.Table;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,9 +8,9 @@ public class TextAreaInputWithCounter : ViewComponent
 {
     public IViewComponentResult Invoke(
         string fieldName,
-        string? header = null,
         DynamicComponentViewModel? descriptionComponent = null,
         string? title = null,
+        InputTitleType? titleType = null,
         string? hint = null,
         string? value = null,
         string? inputCssClass = null,
@@ -17,6 +18,6 @@ public class TextAreaInputWithCounter : ViewComponent
         int? maxLength = null,
         bool? isDisplayed = null)
     {
-        return View("TextAreaInputWithCounter", (fieldName, header, title, descriptionComponent, hint, value, inputCssClass, rows ?? 7, maxLength ?? 1500, isDisplayed ?? true));
+        return View("TextAreaInputWithCounter", (fieldName, title, titleType, descriptionComponent, hint, value, inputCssClass, rows ?? 7, maxLength ?? 1500, isDisplayed ?? true));
     }
 }

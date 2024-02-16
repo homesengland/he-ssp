@@ -21,7 +21,8 @@
 
         <vc:radio-list
             field-name="@nameof(Model.FacilityType)"
-            header="@HomeTypesPageTitles.TypeOfFacilities"
+            title="@HomeTypesPageTitles.TypeOfFacilities"
+            title-type="InputTitleType.PageHeader"
             available-options="@FacilityTypeOptions.FacilityTypes"
             value="@Model.FacilityType"/>
 

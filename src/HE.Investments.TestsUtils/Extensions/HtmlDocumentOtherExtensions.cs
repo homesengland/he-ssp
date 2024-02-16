@@ -15,6 +15,26 @@ public static class HtmlDocumentOtherExtensions
         return htmlDocument;
     }
 
+    public static IHtmlDocument HasWarning(this IHtmlDocument htmlDocument, string text, bool exist = true)
+    {
+        var filtered = htmlDocument.GetElements("div.govuk-warning-text").Where(x => x.TextContent.Contains(text)).ToList();
+
+        BasicHtmlDocumentExtensions.ValidateExist(filtered, "govuk-warning", text, exist);
+
+        if (exist)
+        {
+            var warning = filtered.Single();
+            warning.QuerySelectorAll("span.govuk-warning-text__assistive").Should().ContainSingle();
+
+            var textNodes = warning.QuerySelectorAll("strong.govuk-warning-text__text");
+
+            textNodes.Should().ContainSingle();
+            textNodes.Single().TextContent.Should().Be($"Warning{text}");
+        }
+
+        return htmlDocument;
+    }
+
     public static IHtmlDocument HasPageHeader(this IHtmlDocument htmlDocument, string? caption = null, string? header = null)
     {
         if (!string.IsNullOrWhiteSpace(caption))
@@ -32,11 +52,11 @@ public static class HtmlDocumentOtherExtensions
         return htmlDocument;
     }
 
-    public static IHtmlDocument HasParagraph(this IHtmlDocument htmlDocument, string text)
+    public static IHtmlDocument HasParagraph(this IHtmlDocument htmlDocument, string text, bool exist = true)
     {
         var filtered = htmlDocument.GetElements("p.govuk-body", text);
 
-        BasicHtmlDocumentExtensions.ValidateExist(filtered, "govuk-paragraph", text, true);
+        BasicHtmlDocumentExtensions.ValidateExist(filtered, "govuk-paragraph", text, exist);
 
         return htmlDocument;
     }
@@ -51,12 +71,29 @@ public static class HtmlDocumentOtherExtensions
         return htmlDocument;
     }
 
+    public static IHtmlDocument HasSummaryItem(this IHtmlDocument htmlDocument, string label, string? text = null, bool exists = true)
+    {
+        var summaryRow = htmlDocument.QuerySelectorAll($"[data-testId='{label.ToLowerInvariant().Replace(' ', '-')}-summary']");
+        if (!exists)
+        {
+            summaryRow.Should().BeEmpty($"There should be no summary item with label {label}");
+            return htmlDocument;
+        }
+
+        summaryRow.Should().ContainSingle($"There should be one summary item with label {label}");
+        var paragraphs = summaryRow.Single().Descendants<IHtmlParagraphElement>().Where(x => text == null || x.TextContent == text).ToList();
+
+        paragraphs.Should().ContainSingle($"There should be one summary item with text {text}");
+
+        return htmlDocument;
+    }
+
     public static IHtmlDocument HasSummaryDetails(this IHtmlDocument htmlDocument, string text)
     {
         var details = htmlDocument.GetElementsByClassName("govuk-details")
             .Where(d => d.Children.Any(c => c.TextContent.Contains(text) && c.ClassName == "govuk-details__text"));
 
-        details.Should().NotBeNull($"Only one element with class 'govuk-details' should exist");
+        details.Should().ContainSingle("Only one element with class 'govuk-details' should exist");
 
         return htmlDocument;
     }
@@ -91,12 +128,17 @@ public static class HtmlDocumentOtherExtensions
         return htmlDocument;
     }
 
-    public static IHtmlDocument HasPagination(this IHtmlDocument htmlDocument)
+    public static IHtmlDocument HasPagination(this IHtmlDocument htmlDocument, bool exists = true)
     {
-        var exist = htmlDocument.GetElements(".govuk-pagination")
-            .Any();
-
-        exist.Should().BeTrue($"There is no Pagination element");
+        var exist = htmlDocument.GetElements(".govuk-pagination").Any();
+        if (exists)
+        {
+            exist.Should().BeTrue("There is no Pagination element");
+        }
+        else
+        {
+            exist.Should().BeFalse("There is Pagination element but should not exist");
+        }
 
         return htmlDocument;
     }

@@ -28,6 +28,8 @@ public interface IDeliveryPhaseEntity
 
     BuildActivity BuildActivity { get; }
 
+    DeliveryPhaseTranches Tranches { get; }
+
     bool? ReconfiguringExisting { get; }
 
     DateTime? CreatedOn { get; }
@@ -38,17 +40,21 @@ public interface IDeliveryPhaseEntity
 
     bool IsReadOnly { get; }
 
+    bool IsApplicationLocked { get; }
+
     int TotalHomesToBeDeliveredInThisPhase { get; }
 
     DeliveryPhaseMilestones DeliveryPhaseMilestones { get; }
 
     public IsAdditionalPaymentRequested? IsAdditionalPaymentRequested { get; }
 
+    bool IsOnlyCompletionMilestone { get; }
+
     Task ProvideDeliveryPhaseMilestones(DeliveryPhaseMilestones milestones, IMilestoneDatesInProgrammeDateRangePolicy policy, CancellationToken cancellationToken);
 
     void ProvideAdditionalPaymentRequest(IsAdditionalPaymentRequested? isAdditionalPaymentRequested);
 
-    void ProvideTypeOfHomes(TypeOfHomes typeOfHomes);
+    void ProvideTypeOfHomes(TypeOfHomes? typeOfHomes);
 
     void ProvideBuildActivity(BuildActivity buildActivity);
 
@@ -59,8 +65,4 @@ public interface IDeliveryPhaseEntity
     void Complete();
 
     void UnComplete();
-
-    SummaryOfDelivery GetSummaryOfDelivery(decimal requiredFunding, int totalHousesToDeliver, MilestoneFramework milestoneFramework);
-
-    DeliveryPhaseTranches GetTranches();
 }

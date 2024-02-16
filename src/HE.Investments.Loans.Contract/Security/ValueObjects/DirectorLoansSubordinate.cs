@@ -22,7 +22,7 @@ public class DirectorLoansSubordinate : ValueObject
         {
             OperationResult
                 .New()
-                .AddValidationError("DirLoansSub", ValidationErrorMessage.EnterMoreDetails)
+                .AddValidationError("DirLoansSubMore", ValidationErrorMessage.EnterMoreDetails)
                 .CheckErrors();
         }
 

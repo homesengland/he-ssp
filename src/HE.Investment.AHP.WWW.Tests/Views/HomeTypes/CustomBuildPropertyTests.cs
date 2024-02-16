@@ -27,6 +27,6 @@ public class CustomBuildPropertyTests : HomeTypesTestBase
                     "Yes",
                     "No",
                 })
-            .HasGdsSaveAndContinueButton();
+            .HasSaveAndContinueButton();
     }
 }

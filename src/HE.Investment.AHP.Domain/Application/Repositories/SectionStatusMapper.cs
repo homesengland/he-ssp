@@ -16,14 +16,16 @@ public static class SectionStatusMapper
 
     public static SectionStatus ToDomain(int? value, ApplicationStatus? applicationStatus = null)
     {
-        if (applicationStatus == ApplicationStatus.Withdrawn)
+        var statusMapping = new Dictionary<ApplicationStatus, SectionStatus>
         {
-            return SectionStatus.Withdrawn;
-        }
+            { ApplicationStatus.Withdrawn, SectionStatus.Withdrawn },
+            { ApplicationStatus.OnHold, SectionStatus.OnHold },
+            { ApplicationStatus.RequestedEditing, SectionStatus.RequestedEditing },
+        };
 
-        if (applicationStatus == ApplicationStatus.OnHold)
+        if (applicationStatus.HasValue && statusMapping.TryGetValue(applicationStatus.Value, out var mappedStatus))
         {
-            return SectionStatus.OnHold;
+            return mappedStatus;
         }
 
         if (value == null)

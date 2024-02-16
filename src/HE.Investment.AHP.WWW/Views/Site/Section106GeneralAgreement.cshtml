@@ -1,0 +1,43 @@
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investment.AHP.Contract.Site
+@using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
+@using HE.Investment.AHP.WWW.Views.Site;
+@using HE.Investment.AHP.WWW.Views.Site.Const
+@model Section106Dto
+@{
+    ViewData["Title"] = SitePageTitles.SiteSection106Agreement;
+}
+<gds-div-grid-column-two-thirds>
+    <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.Section106GeneralAgreement" />
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+
+    <form asp-controller="Site" asp-action="Section106GeneralAgreement" asp-method="post" novalidate>
+        <vc:page-header title="@SitePageTitles.SiteSection106Agreement" caption="@Model.SiteName"/>
+        <gds-p>
+            You'll need to provide details of any section 106 agreements (or planning conditions
+            performing the same purpose) that are in place or under discussion for your site.
+        </gds-p>
+        <gds-p>
+            Section 106 (s106) agreements are legally-binding agreements or planning obligations with a
+            landowner agreed as part of the granting of planning permission.
+        </gds-p>
+        <gds-p>
+            If there is an s106 agreement in place or in discussion, answer yes.
+            You should still answer yes even if your s106 does not include a provision to secure the delivery
+            of affordable housing through developer contributions.
+        </gds-p>
+        <gds-p>
+            If you expect there to be a s106 with developer contributions securing the affordable housing.
+            discuss funding eligibility with your Growth Manager.
+        </gds-p>
+
+        <vc:radio-yes-no field-name="@nameof(Model.GeneralAgreement)"
+            title="Is there a s106 agreement in place, or in discussion, for this site?"
+            value="@Model.GeneralAgreement"/>
+
+        @Html.HiddenFor(x => x.SiteId)
+
+        <vc:form-button />
+    </form>
+
+</gds-div-grid-column-two-thirds>

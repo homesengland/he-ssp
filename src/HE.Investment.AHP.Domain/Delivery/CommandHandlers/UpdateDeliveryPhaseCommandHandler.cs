@@ -11,17 +11,18 @@ public abstract class UpdateDeliveryPhaseCommandHandler<TCommand> : IRequestHand
     where TCommand : IUpdateDeliveryPhaseCommand, IRequest<OperationResult>
 {
     private readonly IDeliveryPhaseRepository _repository;
-    private readonly IAccountUserContext _accountUserContext;
 
     protected UpdateDeliveryPhaseCommandHandler(IDeliveryPhaseRepository repository, IAccountUserContext accountUserContext)
     {
         _repository = repository;
-        _accountUserContext = accountUserContext;
+        AccountUserContext = accountUserContext;
     }
+
+    protected IAccountUserContext AccountUserContext { get; }
 
     public async Task<OperationResult> Handle(TCommand request, CancellationToken cancellationToken)
     {
-        var account = await _accountUserContext.GetSelectedAccount();
+        var account = await AccountUserContext.GetSelectedAccount();
         var deliveryPhase = await _repository.GetById(request.ApplicationId, request.DeliveryPhaseId, account, cancellationToken);
 
         var result = await Update(deliveryPhase, request, cancellationToken);

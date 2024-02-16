@@ -41,7 +41,7 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
     {
         // given
         var taskListPage = await TestClient.NavigateTo(ApplicationPagesUrl.TaskList(ApplicationData.ApplicationId));
-        taskListPage.HasLinkWithId("add-delivery-phases", out var enterDeliveryPhasesSection);
+        taskListPage.HasLinkWithTestId("add-delivery-phases", out var enterDeliveryPhasesSection);
 
         // when
         var landingPage = await TestClient.NavigateTo(enterDeliveryPhasesSection);
@@ -93,7 +93,7 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
         newDeliveryPhasePage
             .UrlEndWith(BuildDeliveryPhasesPage(DeliveryPhasesPagesUrl.NewDeliveryPhase))
             .HasTitle(DeliveryPageTitles.Name)
-            .HasGdsSubmitButton("continue-button", out var continueButton);
+            .HasContinueButton(out var continueButton);
 
         var deliveryPhase = RehabDeliveryPhase.GenerateDeliveryPhase();
         var deliveryPhaseNamePage = await TestClient.SubmitButton(continueButton, ("DeliveryPhaseName", deliveryPhase.Name.ToString()));
@@ -170,11 +170,22 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
     [Order(7)]
     public async Task Order07_ContinueOnSummaryOfDelivery()
     {
-        // given & when & then
-        await TestQuestionPage(
-            BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.SummaryOfDelivery, RehabDeliveryPhase),
-            DeliveryPageTitles.SummaryOfDelivery,
-            BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.AcquisitionMilestone, RehabDeliveryPhase));
+        // given
+        var summaryOfDeliveryPhase = await GetCurrentPage(BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.SummaryOfDelivery, RehabDeliveryPhase));
+        summaryOfDeliveryPhase
+            .UrlEndWith(BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.SummaryOfDelivery, RehabDeliveryPhase))
+            .HasTitle(DeliveryPageTitles.SummaryOfDelivery(RehabDeliveryPhase.Name.Value))
+            .HasBackLink()
+            .HasContinueButton(out var continueButton);
+
+        // when
+        var acquisitionMilestonePage = await TestClient.SubmitButton(continueButton);
+
+        // then
+        acquisitionMilestonePage
+            .UrlEndWith(BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.AcquisitionMilestone, RehabDeliveryPhase))
+            .HasTitle(DeliveryPageTitles.AcquisitionMilestone);
+        SaveCurrentPage();
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
@@ -268,7 +279,7 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
         deliveryPhaseListPage
             .UrlEndWith(BuildDeliveryPhasesPage(DeliveryPhasesPagesUrl.List))
             .HasTitle(DeliveryPageTitles.List)
-            .HasGdsSubmitButton("continue-button", out var continueButton);
+            .HasSaveAndContinueButton(out var continueButton);
 
         // when
         var completeDeliveryPhasesPage = await TestClient.SubmitButton(continueButton);
@@ -288,7 +299,7 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
         completeDeliveryPhasesPage
             .UrlEndWith(BuildDeliveryPhasesPage(DeliveryPhasesPagesUrl.CompleteDeliveryPhases))
             .HasTitle(DeliveryPageTitles.Complete)
-            .HasGdsSubmitButton("continue-button", out var continueButton);
+            .HasSaveAndContinueButton(out var continueButton);
 
         // when
         var taskListPage = await TestClient.SubmitButton(continueButton, ("IsDeliveryCompleted", "Yes"));
@@ -312,7 +323,7 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
         // then
         removeDeliveryPhasePage.UrlEndWith(BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.Remove, deliveryPhaseId))
             .HasTitle(DeliveryPageTitles.Remove)
-            .HasGdsSubmitButton("continue-button", out var continueButton);
+            .HasSaveAndContinueButton(out var continueButton);
 
         return await TestClient.SubmitButton(continueButton, ("RemoveDeliveryPhaseAnswer", "Yes"));
     }

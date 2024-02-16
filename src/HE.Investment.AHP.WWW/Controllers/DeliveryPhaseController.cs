@@ -14,7 +14,6 @@ using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Validators;
-using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Routing;
@@ -84,7 +83,8 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
             return View("Name", model);
         }
 
-        return await ContinueWithAllRedirects(new { applicationId, deliveryPhaseId = result.ReturnedData?.Value });
+        return await this.ReturnToTaskListOrContinue(
+            async () => await ContinueWithRedirect(new { applicationId, deliveryPhaseId = result.ReturnedData?.Value }));
     }
 
     [HttpGet("{deliveryPhaseId}/name")]
@@ -115,7 +115,8 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
             return View("Name", model);
         }
 
-        return await ContinueWithAllRedirects(new { applicationId, deliveryPhaseId });
+        return await this.ReturnToTaskListOrContinue(
+            async () => await ContinueWithRedirect(new { applicationId, deliveryPhaseId }));
     }
 
     [HttpGet("{deliveryPhaseId}/details")]
@@ -191,7 +192,8 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
                 AhpApplicationId.From(applicationId),
                 new DeliveryPhaseId(deliveryPhaseId),
                 model.HomesToDeliver ?? new Dictionary<string, string?>()),
-            () => ContinueWithAllRedirects(new { applicationId, deliveryPhaseId }),
+            async () => await this.ReturnToTaskListOrContinue(
+                async () => await ContinueWithRedirect(new { applicationId, deliveryPhaseId })),
             async () => View("AddHomes", await new AddHomesModelFactory(_mediator).Create(applicationId, deliveryPhaseId, model, cancellationToken)),
             cancellationToken);
     }
@@ -240,9 +242,27 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
 
     [HttpPost("{deliveryPhaseId}/summary-of-delivery")]
     [WorkflowState(DeliveryPhaseWorkflowState.SummaryOfDelivery)]
-    public async Task<IActionResult> SummaryOfDelivery([FromRoute] string applicationId, string deliveryPhaseId)
+    public async Task<IActionResult> SummaryOfDelivery(
+        [FromRoute] string applicationId,
+        string deliveryPhaseId,
+        DeliveryPhaseDetails model,
+        CancellationToken cancellationToken)
     {
-        return await ContinueWithAllRedirects(new { applicationId, deliveryPhaseId });
+        if (model.Tranches?.ShouldBeAmended ?? false)
+        {
+            return await ExecuteCommand(
+                new ClaimMilestonesCommand(
+                    AhpApplicationId.From(applicationId),
+                    new DeliveryPhaseId(deliveryPhaseId),
+                    model.Tranches?.SummaryOfDeliveryAmend?.UnderstandClaimingMilestones),
+                nameof(SummaryOfDelivery),
+                deliveryPhaseDetails => deliveryPhaseDetails,
+                cancellationToken,
+                true);
+        }
+
+        return await this.ReturnToTaskListOrContinue(
+            async () => await ContinueWithRedirect(new { applicationId, deliveryPhaseId }));
     }
 
     [HttpGet("{deliveryPhaseId}/summary-of-delivery/tranche/{trancheType}")]
@@ -260,9 +280,9 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
 
         var tranche = trancheType switch
         {
-            SummaryOfDeliveryTrancheType.Acquisition => deliveryPhaseDetails.Tranches?.SummaryOfDeliveryAmend?.AcquisitionMilestone,
-            SummaryOfDeliveryTrancheType.Completion => deliveryPhaseDetails.Tranches?.SummaryOfDeliveryAmend?.CompletionMilestone,
-            SummaryOfDeliveryTrancheType.StartOnSite => deliveryPhaseDetails.Tranches?.SummaryOfDeliveryAmend?.StartOnSiteMilestone,
+            SummaryOfDeliveryTrancheType.Acquisition => deliveryPhaseDetails.Tranches?.SummaryOfDeliveryAmend?.AcquisitionPercentage,
+            SummaryOfDeliveryTrancheType.Completion => deliveryPhaseDetails.Tranches?.SummaryOfDeliveryAmend?.CompletionPercentage,
+            SummaryOfDeliveryTrancheType.StartOnSite => deliveryPhaseDetails.Tranches?.SummaryOfDeliveryAmend?.StartOnSitePercentage,
             _ => throw new NotSupportedException(nameof(trancheType)),
         };
 
@@ -501,7 +521,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         var deliveryPhase = currentState != DeliveryPhaseWorkflowState.Create
             ? await _deliveryPhaseProvider.Get(
                 new GetDeliveryPhaseDetailsQuery(this.GetApplicationIdFromRoute(), this.GetDeliveryPhaseIdFromRoute()), CancellationToken.None)
-            : new DeliveryPhaseDetails(string.Empty, string.Empty, string.Empty, SectionStatus.NotStarted, false);
+            : new DeliveryPhaseDetails(string.Empty, string.Empty, string.Empty, SectionStatus.NotStarted, false, false);
 
         var isReadOnly = !await _accountAccessContext.CanEditApplication() || deliveryPhase.IsReadOnly;
 
@@ -534,7 +554,8 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
             deliveryPhaseDetails.Name,
             deliveryPhaseDetails.Status == SectionStatus.Completed ? IsSectionCompleted.Yes : null,
             sections,
-            isEditable);
+            isEditable,
+            deliveryPhaseDetails.IsApplicationLocked);
     }
 
     private MilestoneViewModel CreateMilestoneViewModel(
@@ -572,7 +593,8 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         IRequest<OperationResult> command,
         string viewName,
         Func<DeliveryPhaseDetails, TViewModel> createViewModelForError,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        bool includeSummary = false)
     {
         var applicationId = this.GetApplicationIdFromRoute();
         var deliveryPhaseId = this.GetDeliveryPhaseIdFromRoute();
@@ -580,28 +602,16 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         return await this.ExecuteCommand<TViewModel>(
             _mediator,
             command,
-            async () => await ContinueWithAllRedirects(new { applicationId = applicationId.Value, deliveryPhaseId }),
+            async () => await this.ReturnToTaskListOrContinue(
+                async () => await ContinueWithRedirect(new { applicationId = applicationId.Value, deliveryPhaseId })),
             async () =>
             {
                 var deliveryPhaseDetails =
-                    await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(applicationId, deliveryPhaseId), cancellationToken);
+                    await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(applicationId, deliveryPhaseId, includeSummary), cancellationToken);
                 var model = createViewModelForError(deliveryPhaseDetails);
 
                 return View(viewName, model);
             },
             cancellationToken);
-    }
-
-    private async Task<IActionResult> ContinueWithAllRedirects(object routeData)
-    {
-        var action = HttpContext.Request.Form["action"];
-        var applicationId = this.GetApplicationIdFromRoute();
-
-        if (action == GenericMessages.SaveAndReturn)
-        {
-            return Url.RedirectToTaskList(applicationId.Value);
-        }
-
-        return await ContinueWithRedirect(routeData);
     }
 }

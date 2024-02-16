@@ -2,6 +2,7 @@
 @using HE.Investment.AHP.WWW.Views.Delivery.Const
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
 @using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investments.Common.WWW.Components.InputHeader
 @model DeliveryPhaseNameViewModel;
 @{
     var title = DeliveryPageTitles.Name;
@@ -16,7 +17,8 @@
     <form asp-controller="DeliveryPhase" asp-action="@Model.PostbackActionName" asp-method="post" asp-route-redirect="@Context.Request.Query["redirect"]" novalidate>
         @Html.HiddenFor(x => x.DeliveryPhaseId)
         @Html.HiddenFor(x => x.PostbackActionName)
-        <vc:text-input header="@title"
+        <vc:text-input title="@title"
+                       title-type="InputTitleType.PageHeader"
                        css-class="govuk-!-width-one-third"
                        hint="Each delivery phase needs a unique name."
                        field-name="@nameof(Model.DeliveryPhaseName)"

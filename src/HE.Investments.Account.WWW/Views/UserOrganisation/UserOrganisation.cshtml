@@ -1,9 +1,9 @@
 @using HE.Investments.Account.WWW.Models.UserOrganisation
 @using HE.Investments.Account.WWW.Utils
-@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using HE.Investments.Account.WWW.Views.Organisation
 @model HE.Investments.Account.WWW.Models.UserOrganisation.UserOrganisationModel;
 @{
-    ViewData["Title"] = "Organization";
+    ViewData["Title"] = OrganisationPageTitles.OrganisationDashboard(Model.OrganisationName);
     ViewBag.Breadcrumbs = BreadcrumbsBuilder
         .New()
         .WithOrganisations()
@@ -14,16 +14,16 @@
 <div class="govuk-grid-column-full">
     <div class="govuk-grid-column-full govuk-!-padding-0">
 
-        <partial name="~/Partials/_Notification.cshtml" />
+        <partial name="~/Partials/_Notification.cshtml"/>
 
         @if (!string.IsNullOrWhiteSpace(Model.UserName))
         {
             <gds-p class="govuk-!-margin-top-4 govuk-!-margin-bottom-0">
-                Welcome @Model?.UserName
+                Welcome @Model.UserName
             </gds-p>
         }
         <gds-h1 size="ControlSize.L" class="govuk-!-padding-top-0 govuk-!-margin-bottom-4">
-            @Model.OrganisationName's Homes England account
+            @OrganisationPageTitles.OrganisationDashboard(Model.OrganisationName)
         </gds-h1>
     </div>
 
@@ -31,7 +31,7 @@
         @if (Model.IsLimitedUser)
         {
             <div class="govuk-inset-text" data-testid="user-organisation-limited-user">
-                Your request to be part of @Model.OrganisationName has been received. It will be reviewed and approved. In the meantime you can start a new application. You will not be able to see all of @Model.OrganisationName applications until you have been approved.
+                Your request to join @Model.OrganisationName will be reviewed and approved. While you wait, you can start a new application. You will not be able to see all of @Model.OrganisationName applications until you have been approved.
             </div>
         }
     </gds-div-grid-column-two-thirds>
@@ -41,13 +41,17 @@
         @if (!Model.ProgrammesToToAccess.Any() || Model.ProgrammesToToAccess.All(p => !p.Applications.Any()))
         {
             <gds-p>
-                You have not yet applied for a service. To apply, select a funding programme below.
+                You have not applied for any funding. To apply, select a funding programme below.
             </gds-p>
         }
 
         <gds-div-grid-column-two-thirds class="govuk-!-padding-left-0 govuk-!-padding-right-6">
             @if (Model.ProgrammesToToAccess.Any(p => p.Applications.Any()))
             {
+                <gds-h2 size="ControlSize.M">
+                    Programmes you can access in @Model.OrganisationName
+                </gds-h2>
+
                 @foreach (var programmeToAccess in Model.ProgrammesToToAccess)
                 {
                     @await Html.PartialAsync(

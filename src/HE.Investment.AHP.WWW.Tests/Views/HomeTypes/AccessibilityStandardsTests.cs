@@ -27,6 +27,6 @@ public class AccessibilityStandardsTests : HomeTypesTestBase
                     "Yes",
                     "No",
                 })
-            .HasGdsSaveAndContinueButton();
+            .HasSaveAndContinueButton();
     }
 }

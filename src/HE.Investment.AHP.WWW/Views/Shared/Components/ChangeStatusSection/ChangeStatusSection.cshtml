@@ -1,0 +1,17 @@
+@using HE.Investments.Common.Gds
+
+@model (string Title, string Paragraph, string ActionUrl, string LinkButtonName, ButtonType ButtonType, bool IsDisabled, string TestId)
+
+<div class="govuk-!-margin-top-2">
+    <gds-h2 size="ControlSize.M">@Model.Title</gds-h2>
+    <gds-p>
+        @Model.Paragraph
+    </gds-p>
+    <link-button
+        button-type="@Model.ButtonType"
+        action-url="@Model.ActionUrl"
+        is-disabled="@Model.IsDisabled"
+        data-testid="@Model.TestId">
+        @Model.LinkButtonName
+    </link-button>
+</div>

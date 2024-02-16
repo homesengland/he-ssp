@@ -5,5 +5,5 @@ using MediatR;
 
 namespace HE.Investment.AHP.Contract.Delivery.MilestonePayments.Commands;
 
-public record ProvideCompletionTrancheCommand(AhpApplicationId ApplicationId, DeliveryPhaseId DeliveryPhaseId, decimal? CompletionTranche)
+public record ProvideCompletionTrancheCommand(AhpApplicationId ApplicationId, DeliveryPhaseId DeliveryPhaseId, string? CompletionTranche)
     : IRequest<OperationResult>, IUpdateDeliveryPhaseCommand;

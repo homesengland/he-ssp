@@ -28,6 +28,6 @@ public class AccessibilityCategoryTests : HomeTypesTestBase
                     "M4(2) Category 2: Accessible and adaptable dwellings",
                     "M4(3) Category 3: Wheelchair user dwellings",
                 })
-            .HasGdsSaveAndContinueButton();
+            .HasSaveAndContinueButton();
     }
 }

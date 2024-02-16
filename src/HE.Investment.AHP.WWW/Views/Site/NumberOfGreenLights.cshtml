@@ -1,0 +1,27 @@
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investment.AHP.Contract.Site
+@using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
+@using HE.Investment.AHP.WWW.Views.Site.Const
+@using HE.Investments.Common.WWW.Components.InputHeader
+@model SiteModel
+@{
+    ViewData["Title"] = SitePageTitles.NumberOfGreenLights;
+}
+<gds-div-grid-column-two-thirds>
+    <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.NumberOfGreenLights"/>
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+    <vc:page-header caption="@Model.Name"/>
+
+    <form asp-controller="Site" asp-action="NumberOfGreenLights" asp-method="post" novalidate>
+        <vc:text-input
+            title="@SitePageTitles.NumberOfGreenLights"
+            title-type="InputTitleType.PageHeader"
+            hint="The score is out of 12. You can also include the wider site in this score."
+            field-name="@nameof(Model.NumberOfGreenLights)"
+            value="@Model.NumberOfGreenLights"
+            css-class="govuk-input--width-2"/>
+
+        <vc:form-button/>
+        <vc:return-to-sites-link/>
+    </form>
+</gds-div-grid-column-two-thirds>

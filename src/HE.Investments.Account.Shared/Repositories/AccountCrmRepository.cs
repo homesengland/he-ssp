@@ -73,13 +73,12 @@ public class AccountCrmRepository : IAccountRepository
 
     private async Task<OrganisationBasicInfo> GetOrganisationBasicInfo(OrganisationId organisationId, UserGlobalId userGlobalId)
     {
-        // TODO: #88197 - Fetch IsUnregisteredBody
         var organisation = await _organizationService.GetOrganizationDetails(organisationId.Value.ToString(), userGlobalId.Value);
         return new OrganisationBasicInfo(
             organisationId,
             organisation.registeredCompanyName,
             organisation.companyRegistrationNumber,
             organisation.addressLine1,
-            false);
+            organisation.isUnregisteredBody);
     }
 }

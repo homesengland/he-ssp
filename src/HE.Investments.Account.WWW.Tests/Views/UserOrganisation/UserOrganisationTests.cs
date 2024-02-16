@@ -1,9 +1,8 @@
 using AngleSharp.Html.Dom;
+using HE.Investments.Account.Contract.UserOrganisation;
 using HE.Investments.Account.WWW.Models.UserOrganisation;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.WWW.Models;
-using HE.Investments.Common.WWWTestsFramework;
-using Xunit;
 
 namespace HE.Investments.Account.WWW.Tests.Views.UserOrganisation;
 
@@ -58,7 +57,7 @@ public class UserOrganisationTests : ViewTestBase
             programmesToAccess: new List<ProgrammeToAccessModel>
             {
                 new(
-                    new ProgrammeModel("P1", "Desc1", "C", "V", true),
+                    new ProgrammeModel(ProgrammeType.Ahp, "P1", "Desc1", "C", "V", true),
                     new List<ApplicationBasicDetailsModel>()),
             });
 
@@ -104,11 +103,11 @@ public class UserOrganisationTests : ViewTestBase
         bool actionsExist = true)
     {
         document
-            .HasElementWithText("p", $"Welcome {model.UserName}")
+            .HasParagraph($"Welcome {model.UserName}")
             .HasElementWithText("h1", $"{model.OrganisationName}'s Homes England account")
-            .HasElementWithText("div", "Your request to be part of", isLimitedUser)
-            .HasElementWithText("p", "You have not yet applied for a service. To apply, select a funding programme below.", !programmesToAccessExist)
-            .HasElementWithText("h3", "Programmes you can apply for", programmesToApplyExist);
+            .HasElementWithText("div", "Your request to join", isLimitedUser)
+            .HasParagraph("You have not applied for any funding. To apply, select a funding programme below.", !programmesToAccessExist)
+            .HasElementWithText("h2", "Programmes you can apply for", programmesToApplyExist);
 
         if (actionsExist)
         {
@@ -121,7 +120,7 @@ public class UserOrganisationTests : ViewTestBase
         return new List<ProgrammeToAccessModel>
         {
             new(
-                new ProgrammeModel("P1", "Desc1", "C", "V", false),
+                new ProgrammeModel(ProgrammeType.Ahp, "P1", "Desc1", "C", "V", false),
                 new List<ApplicationBasicDetailsModel> { new("1", "AP1", ApplicationStatus.Withdrawn, "http://localhost/app/") }),
         };
     }
@@ -139,7 +138,7 @@ public class UserOrganisationTests : ViewTestBase
             userName ?? "Jan Muzykant",
             isLimitedUser,
             programmesToAccess ?? ProgrammesToToAccess(),
-            programmesToApply ?? new List<ProgrammeModel> { new("P2", "D2", "C", "V", true) },
+            programmesToApply ?? new List<ProgrammeModel> { new(ProgrammeType.Ahp, "P2", "D2", "C", "V", true) },
             actions ?? new List<ActionModel> { new("ViewAllApplicationsUrl Name", "A", "C", true) });
     }
 }

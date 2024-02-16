@@ -6,9 +6,11 @@ using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.Tranches;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
+using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.CRM.Model;
+using HE.Investments.Common.Domain.ValueObjects;
 using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.Domain.Delivery.Crm;
@@ -31,9 +33,14 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
         nameof(invln_DeliveryPhase.invln_completionmilestoneclaimdate),
         nameof(invln_DeliveryPhase.invln_urbrequestingearlymilestonepayments),
         nameof(invln_DeliveryPhase.invln_nbrh),
+        "invln_AcquisitionPercentageValue",
+        "invln_StartOnSitePercentageValue",
+        "invln_CompletionPercentageValue",
+        "invln_ClaimingtheMilestoneConfirmed",
+        "invln_AllowAmendmentstoMilestoneProportions",
     };
 
-    public DeliveryPhaseEntity MapToDomain(ApplicationBasicInfo application, OrganisationBasicInfo organisation, DeliveryPhaseDto dto)
+    public DeliveryPhaseEntity MapToDomain(ApplicationBasicInfo application, OrganisationBasicInfo organisation, DeliveryPhaseDto dto, SchemeFunding schemeFunding)
     {
         var typeOfHomes = MapTypeOfHomes(dto.typeOfHomes);
         var buildActivityType = MapBuildActivityType(dto.newBuildActivityType, dto.rehabBuildActivityType);
@@ -44,15 +51,29 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
             new DeliveryPhaseName(dto.name),
             organisation,
             dto.isCompleted == true ? SectionStatus.Completed : SectionStatus.InProgress,
-            MilestoneTranches.NotProvided, // TODO: Task 89103: [CRM] Save tranches (Milestone framework)
+            new MilestonesPercentageTranches(
+                dto.acquisitionPercentageValue != null ? new WholePercentage(dto.acquisitionPercentageValue.Value) : null,
+                dto.startOnSitePercentageValue != null ? new WholePercentage(dto.startOnSitePercentageValue.Value) : null,
+                dto.completionPercentageValue != null ? new WholePercentage(dto.completionPercentageValue.Value) : null),
+            dto.allowAmendmentstoMilestoneProportions == true,
+            schemeFunding,
             typeOfHomes,
             buildActivity,
             dto.isReconfigurationOfExistingProperties,
             MapHomesToDeliver(dto.numberOfHomes),
-            MapDeliveryPhaseMilestones(organisation, buildActivity, dto),
+            AcquisitionMilestoneDetails.Create(
+                MapDate(dto.acquisitionDate, AcquisitionDate.Create),
+                MapDate(dto.acquisitionPaymentDate, MilestonePaymentDate.Create)),
+            StartOnSiteMilestoneDetails.Create(
+                MapDate(dto.startOnSiteDate, StartOnSiteDate.Create),
+                MapDate(dto.startOnSitePaymentDate, MilestonePaymentDate.Create)),
+            CompletionMilestoneDetails.Create(
+                MapDate(dto.completionDate, CompletionDate.Create),
+                MapDate(dto.completionPaymentDate, MilestonePaymentDate.Create)),
             new DeliveryPhaseId(dto.id),
             dto.createdOn,
-            MapIsAdditionalPaymentRequested(dto.requiresAdditionalPayments));
+            MapIsAdditionalPaymentRequested(dto.requiresAdditionalPayments),
+            dto.claimingtheMilestoneConfirmed);
     }
 
     public DeliveryPhaseDto MapToDto(DeliveryPhaseEntity entity)
@@ -66,6 +87,10 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
             newBuildActivityType = MapNewBuildActivityType(entity.BuildActivity.Type),
             rehabBuildActivityType = MapRehabBuildActivityType(entity.BuildActivity.Type),
             isReconfigurationOfExistingProperties = entity.ReconfiguringExisting,
+            acquisitionPercentageValue = entity.Tranches.PercentagesAmended.Acquisition?.Value,
+            startOnSitePercentageValue = entity.Tranches.PercentagesAmended.StartOnSite?.Value,
+            completionPercentageValue = entity.Tranches.PercentagesAmended.Completion?.Value,
+            claimingtheMilestoneConfirmed = entity.Tranches.ClaimMilestone,
             acquisitionDate = MapMilestoneDate(entity.DeliveryPhaseMilestones.AcquisitionMilestone),
             acquisitionPaymentDate = MapPaymentDate(entity.DeliveryPhaseMilestones.AcquisitionMilestone),
             startOnSiteDate = MapMilestoneDate(entity.DeliveryPhaseMilestones.StartOnSiteMilestone),
@@ -198,29 +223,6 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
         }
 
         return dateFactory(new DateOnly(date.Value.Year, date.Value.Month, date.Value.Day));
-    }
-
-    private static DeliveryPhaseMilestones MapDeliveryPhaseMilestones(
-        OrganisationBasicInfo organisation,
-        BuildActivity buildActivity,
-        DeliveryPhaseDto dto)
-    {
-        var acquisitionDetails = AcquisitionMilestoneDetails.Create(
-            MapDate(dto.acquisitionDate, AcquisitionDate.Create),
-            MapDate(dto.acquisitionPaymentDate, MilestonePaymentDate.Create));
-        var startOnSiteDetails = StartOnSiteMilestoneDetails.Create(
-            MapDate(dto.startOnSiteDate, StartOnSiteDate.Create),
-            MapDate(dto.startOnSitePaymentDate, MilestonePaymentDate.Create));
-        var completionDetails = CompletionMilestoneDetails.Create(
-            MapDate(dto.completionDate, CompletionDate.Create),
-            MapDate(dto.completionPaymentDate, MilestonePaymentDate.Create));
-
-        return new DeliveryPhaseMilestones(
-            organisation,
-            buildActivity,
-            acquisitionDetails,
-            startOnSiteDetails,
-            completionDetails);
     }
 
     private static IsAdditionalPaymentRequested? MapIsAdditionalPaymentRequested(string? value)

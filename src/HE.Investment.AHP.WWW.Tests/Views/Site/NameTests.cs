@@ -1,8 +1,5 @@
-using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.Contract.Site;
-using HE.Investment.AHP.WWW.Views.Site;
-using HE.Investments.Common.WWWTestsFramework;
-using HE.Investments.TestsUtils.Extensions;
+using HE.Investment.AHP.WWW.Views.Site.Const;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.Site;
@@ -15,14 +12,14 @@ public class NameTests : ViewTestBase
     public async Task ShouldDisplayView()
     {
         // given & when
-        var document = await Render<SiteModel>(_viewPath);
+        var document = await Render(_viewPath, new SiteModel());
 
         // then
         document
             .HasTitle(SitePageTitles.SiteName)
             .HasInput(nameof(SiteModel.Name))
-            .HasGdsSaveAndContinueButton()
-            .HasGdsBackLink(false);
+            .HasSaveAndContinueButton()
+            .HasBackLink(false);
     }
 
     [Fact]
@@ -34,14 +31,14 @@ public class NameTests : ViewTestBase
         modelState.AddModelError(nameof(SiteModel.Name), errorMessage);
 
         // when
-        var document = await Render<SiteModel>(_viewPath, modelStateDictionary: modelState);
+        var document = await Render(_viewPath, new SiteModel(), modelStateDictionary: modelState);
 
         // then
         document
             .HasTitle(SitePageTitles.SiteName)
             .HasInput(nameof(SiteModel.Name))
-            .HasGdsSaveAndContinueButton()
-            .HasGdsBackLink(false)
+            .HasSaveAndContinueButton()
+            .HasBackLink(false)
             .HasOneValidationMessages(errorMessage);
     }
 }

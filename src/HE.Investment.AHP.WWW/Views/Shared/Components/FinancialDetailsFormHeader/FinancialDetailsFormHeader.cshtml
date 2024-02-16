@@ -1,5 +1,4 @@
-@using HE.Investments.Common.WWW.Components.FormHeader
-@model (string Title, string Caption, string ApplicationId, HE.Investment.AHP.Contract.FinancialDetails.FinancialDetailsWorkflowState CurrentPage, string CustomBackLinkUrl)
+@model (string Title, string Caption, string ApplicationId, HE.Investment.AHP.Contract.FinancialDetails.FinancialDetailsWorkflowState CurrentPage, string CustomBackLinkUrl, bool IsApplicationLocked)
 @{
     var redirectParameters = new { applicationId = Model.ApplicationId, currentPage = Model.CurrentPage };
 }
@@ -13,6 +12,8 @@ else
     <gds-back-link href="@Model.CustomBackLinkUrl" class="govuk-!-margin-bottom-8"></gds-back-link>
 }
 
+<partial name="_LockedApplicationInformation" model="@Model.IsApplicationLocked"/>
+
 @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
-<vc:form-header title="@Model.Title" caption="@Model.Caption"/>
+<vc:page-header title="@Model.Title" caption="@Model.Caption"/>

@@ -1,0 +1,30 @@
+@using HE.Investment.AHP.WWW.Views.Application
+@using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investments.Common.WWW.Components.TextAreaInputWithCounter
+@using HE.Investment.AHP.Contract.Application
+
+@model HE.Investment.AHP.WWW.Models.Application.ChangeApplicationStatusModel
+
+@{
+    ViewData["Title"] = ApplicationPageTitles.RequestToEdit;
+}
+
+<gds-div-grid-column-two-thirds>
+    <vc:ahp-workflow-back-button current-page="@ApplicationWorkflowState.RequestToEdit"/>
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+
+    <form asp-controller="Application" asp-action="RequestToEdit" asp-method="post" asp-route-applicationName="@Model.ApplicationName" novalidate>
+        <vc:page-header caption="@Model.ApplicationName"/>
+        @Html.HiddenFor(m => Model.ApplicationName)
+
+        <vc:text-area-input-with-counter
+            field-name="@nameof(Model.RequestToEditReason)"
+            value="@Model.RequestToEditReason"
+            title="@ApplicationPageTitles.RequestToEdit"
+            title-type="InputTitleType.PageHeader"
+            hint="You’ll be notified once your Growth Manager has referred your application back to you."/>
+
+        <vc:form-button text="Request to edit"/>
+    </form>
+</gds-div-grid-column-two-thirds>

@@ -31,6 +31,6 @@ public class PeopleGroupForSpecificDesignFeaturesTests : HomeTypesTestBase
                     "Older people",
                     "None of these groups",
                 })
-            .HasGdsSaveAndContinueButton();
+            .HasSaveAndContinueButton();
     }
 }

@@ -44,7 +44,7 @@ public class UserOrganisationController : Controller
         return View(
             "UserOrganisation",
             new UserOrganisationModel(
-                userOrganisationResult.OrganizationBasicInformation.RegisteredCompanyName,
+                userOrganisationResult.OrganisationBasicInformation.RegisteredCompanyName,
                 userOrganisationResult.UserFirstName,
                 userOrganisationResult.IsLimitedUser,
                 userOrganisationResult.ProgrammesToAccess.Select(
@@ -61,8 +61,8 @@ public class UserOrganisationController : Controller
                 userOrganisationResult.ProgrammesTypesToApply.Select(t => programmeModels[t]).ToList(),
                 new List<Common.WWW.Models.ActionModel>
                 {
-                    new($"Manage {userOrganisationResult.OrganizationBasicInformation.RegisteredCompanyName} details", "Details", "UserOrganisation", HasAccess: canViewOrganisationDetails),
                     new("Add or manage users at this Organisation", "Index", "Users", HasAccess: canViewOrganisationDetails),
+                    new($"Manage {userOrganisationResult.OrganisationBasicInformation.RegisteredCompanyName} details", "Details", "UserOrganisation", HasAccess: canViewOrganisationDetails),
                     new("Manage your account", "GetProfileDetails", "User", new { callback = Url.Action("Index") }, true),
                 }));
     }
@@ -72,7 +72,7 @@ public class UserOrganisationController : Controller
     {
         var organisationResult = await _mediator.Send(new GetOrganisationDetailsQuery());
 
-        return View("OrganizationDetails", organisationResult.OrganisationDetailsViewModel);
+        return View("OrganisationDetails", organisationResult.OrganisationDetailsViewModel);
     }
 
     [HttpGet("request-details-change")]
@@ -85,7 +85,7 @@ public class UserOrganisationController : Controller
             return View(organisationResult.OrganisationDetailsViewModel);
         }
 
-        return View("OrganizationDetails", organisationResult.OrganisationDetailsViewModel);
+        return View("OrganisationDetails", organisationResult.OrganisationDetailsViewModel);
     }
 
     [HttpPost("request-details-change")]

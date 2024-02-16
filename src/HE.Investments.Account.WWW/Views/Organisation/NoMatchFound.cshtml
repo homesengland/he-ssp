@@ -1,14 +1,13 @@
 @using HE.Investments.Account.WWW.Views.Organisation
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
 @{
-    ViewData["Title"] = "Organization Not Found";
+    ViewData["Title"] = OrganisationPageTitles.NoMatch;
 }
 
 <gds-div-grid-column-two-thirds>
-    <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("SearchOrganization","Organisation")"></gds-back-link>
+    <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("SearchOrganisation","Organisation")"></gds-back-link>
 
     <gds-h1 size="ControlSize.L">
-        @OrganizationPageTitles.NoMatch
+        @OrganisationPageTitles.NoMatch
 
     </gds-h1>
 
@@ -18,7 +17,7 @@
 
     <gds-p>
         If you think you have entered the wrong details, you can
-        <gds-link href="@Url.Action("SearchOrganization","Organisation")">
+        <gds-link href="@Url.Action("SearchOrganisation","Organisation")">
             try again using a different name.
         </gds-link>
     </gds-p>

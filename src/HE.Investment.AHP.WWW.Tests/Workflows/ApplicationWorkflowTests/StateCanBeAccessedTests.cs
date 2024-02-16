@@ -27,6 +27,13 @@ public class StateCanBeAccessedTests
     [InlineData(ApplicationStatus.Withdrawn, ApplicationWorkflowState.Withdraw, false)]
     [InlineData(ApplicationStatus.Withdrawn, ApplicationWorkflowState.Reactivate, false)]
     [InlineData(ApplicationStatus.Withdrawn, ApplicationWorkflowState.CheckAnswers, false)]
+    [InlineData(ApplicationStatus.Draft, ApplicationWorkflowState.RequestToEdit, false)]
+    [InlineData(ApplicationStatus.ApplicationSubmitted, ApplicationWorkflowState.RequestToEdit, true)]
+    [InlineData(ApplicationStatus.OnHold, ApplicationWorkflowState.RequestToEdit, false)]
+    [InlineData(ApplicationStatus.Withdrawn, ApplicationWorkflowState.RequestToEdit, false)]
+    [InlineData(ApplicationStatus.UnderReview, ApplicationWorkflowState.RequestToEdit, true)]
+    [InlineData(ApplicationStatus.ApplicationUnderReview, ApplicationWorkflowState.RequestToEdit, true)]
+    [InlineData(ApplicationStatus.CashflowUnderReview, ApplicationWorkflowState.RequestToEdit, true)]
     public async Task ShouldReturnValue_WhenMethodCalledForDefaultsWithCertainApplicationStatus(ApplicationStatus applicationStatus, ApplicationWorkflowState state, bool expectedResult)
     {
         // given
@@ -46,6 +53,7 @@ public class StateCanBeAccessedTests
     [InlineData(ApplicationWorkflowState.TaskList, true)]
     [InlineData(ApplicationWorkflowState.OnHold, true)]
     [InlineData(ApplicationWorkflowState.Reactivate, false)]
+    [InlineData(ApplicationWorkflowState.RequestToEdit, false)]
     [InlineData(ApplicationWorkflowState.Withdraw, true)]
     [InlineData(ApplicationWorkflowState.CheckAnswers, true)]
     public async Task ShouldReturnValue_WhenApplicationIsCompletelyFilled(ApplicationWorkflowState state, bool expectedResult)

@@ -45,7 +45,7 @@ public class NextStateTests
         DeliveryPhaseWorkflowState expectedNext)
     {
         // given
-        var workflow = BuildWorkflow(current, DeliveryPhaseDetailsTestData.WithNames with { IsUnregisteredBody = true });
+        var workflow = BuildWorkflow(current, DeliveryPhaseDetailsTestData.WithNames with { IsUnregisteredBody = true, IsOnlyCompletionMilestone = true });
 
         // when
         var result = await workflow.NextState(Trigger.Continue);
@@ -68,7 +68,7 @@ public class NextStateTests
         DeliveryPhaseWorkflowState expectedNext)
     {
         // given
-        var workflow = BuildWorkflow(current, DeliveryPhaseDetailsTestData.WithNames with { IsUnregisteredBody = false });
+        var workflow = BuildWorkflow(current, DeliveryPhaseDetailsTestData.WithNames with { IsUnregisteredBody = false, IsOnlyCompletionMilestone = false });
 
         // when
         var result = await workflow.NextState(Trigger.Back);
@@ -88,7 +88,7 @@ public class NextStateTests
     public async Task ShouldReturnNextState_WhenBackTriggerExecutedAsUnregisteredBody(DeliveryPhaseWorkflowState current, DeliveryPhaseWorkflowState expectedNext)
     {
         // given
-        var workflow = BuildWorkflow(current, DeliveryPhaseDetailsTestData.WithNames with { IsUnregisteredBody = true });
+        var workflow = BuildWorkflow(current, DeliveryPhaseDetailsTestData.WithNames with { IsUnregisteredBody = true, IsOnlyCompletionMilestone = true });
 
         // when
         var result = await workflow.NextState(Trigger.Back);

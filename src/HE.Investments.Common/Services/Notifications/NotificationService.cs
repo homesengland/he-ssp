@@ -14,10 +14,11 @@ public class NotificationService : INotificationService
     public NotificationService(
         ICacheService cacheService,
         IUserContext userContext,
-        IEnumerable<IDisplayNotificationFactory> displayNotificationFactories)
+        IEnumerable<IDisplayNotificationFactory> displayNotificationFactories,
+        string applicationName)
     {
         _cacheService = cacheService;
-        _userNotificationKey = $"notification-{userContext.UserGlobalId}";
+        _userNotificationKey = $"notification-{applicationName.ToLowerInvariant()}-{userContext.UserGlobalId}";
         _displayNotificationFactories = displayNotificationFactories.ToDictionary(x => x.HandledNotificationType.Name, x => x);
     }
 

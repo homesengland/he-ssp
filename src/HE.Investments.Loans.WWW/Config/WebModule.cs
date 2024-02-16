@@ -23,7 +23,7 @@ public static class WebModule
         serviceCollections.AddCrmConnection();
         serviceCollections.AddBusinessLogic();
         serviceCollections.AddValidatorsFromAssemblyContaining<LoanPurposeModel>();
-        serviceCollections.AddNotifications(typeof(LoanApplicationHasBeenResubmittedDisplayNotificationFactory).Assembly);
+        serviceCollections.AddNotifications("Loans", typeof(LoanApplicationHasBeenResubmittedDisplayNotificationFactory).Assembly);
         serviceCollections.AddOrganizationsModule();
         serviceCollections.AddEventInfrastructure();
         serviceCollections.AddHttpUserContext();

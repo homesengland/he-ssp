@@ -1,0 +1,53 @@
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investment.AHP.Contract.Site
+@using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
+@using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToSitesLink
+@using HE.Investment.AHP.WWW.Views.Site.Const
+@using HE.Investments.Common.WWW.Components.RadioList
+@using HE.Investments.Common.WWW.Components.TextInput
+@using HE.Investments.Common.WWW.Models
+@using HE.Investment.AHP.Contract.Common.Enums
+@using HE.Investments.Common.Extensions
+@using HE.Investments.Common.WWW.Components.InputHeader
+@model StrategicSite
+@{
+    ViewData["Title"] = SitePageTitles.StrategicSite;
+
+    var values = new List<ExtendedSelectListItem>
+    {
+        new(
+            YesNoType.Yes.GetDescription(),
+            bool.TrueString,
+            Model.IsStrategicSite is true,
+            expandableChild: new DynamicComponentViewModel(
+                nameof(TextInput),
+                new
+                {
+                    fieldName = nameof(Model.StrategicSiteName),
+                    value = Model.StrategicSiteName,
+                    title = "Enter the name of the strategic site",
+                    titleType = InputTitleType.InputDescription,
+                    cssClass = "govuk-!-width-one-half",
+                })),
+        new(YesNoType.No.GetDescription(), bool.FalseString, Model.IsStrategicSite is false),
+    };
+}
+
+<gds-div-grid-column-two-thirds>
+    <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.StrategicSite"/>
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+    <vc:page-header caption="@ViewBag.SiteName"/>
+
+    <form asp-controller="Site" asp-action="StrategicSite" asp-method="post" novalidate>
+
+        <vc:radio-list
+            title="@SitePageTitles.StrategicSite"
+            title-type="InputTitleType.PageHeader"
+            field-name="@nameof(Model.IsStrategicSite)"
+            available-options="@values"/>
+
+        <vc:form-button/>
+        <vc:return-to-sites-link/>
+    </form>
+
+</gds-div-grid-column-two-thirds>

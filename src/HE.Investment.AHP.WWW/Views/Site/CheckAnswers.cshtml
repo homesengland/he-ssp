@@ -1,0 +1,14 @@
+@using HE.Investment.AHP.Contract.Site
+@using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
+@using HE.Investment.AHP.WWW.Views.Site.Const
+@using HE.Investments.Common.WWW.Components.PageHeader
+@{
+    ViewData["Title"] = SitePageTitles.CheckAnswers;
+}
+
+<gds-div-grid-column-two-thirds>
+    <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.CheckAnswers"/>
+    <vc:page-header title="@SitePageTitles.CheckAnswers" caption="@ViewBag.SiteName"/>
+
+    TODO: AB#59226 Site Information - check answers
+</gds-div-grid-column-two-thirds>

@@ -6,15 +6,14 @@
 @using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.WWW.Models.Delivery
 @using HE.Investments.Common.Messages
-@using HE.Investments.Common.WWW.Components.FormHeader
 @using HE.Investments.Common.WWW.Helpers
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @model DeliveryPhaseDetails;
 @{
     var applicationId = this.GetApplicationIdFromRoute();
-    var title = DeliveryPageTitles.SummaryOfDelivery;
+    var title = DeliveryPageTitles.SummaryOfDelivery(Model.Name);
     ViewData["Title"] = title;
-    var isAmendable = Model.Tranches?.IsAmendable ?? false;
+    var isAmendable = Model.Tranches?.ShouldBeAmended ?? false;
     var summaryOfDelivery = Model.Tranches?.SummaryOfDelivery;
 }
 
@@ -22,9 +21,12 @@
     <vc:ahp-workflow-back-button current-page="@DeliveryPhaseWorkflowState.SummaryOfDelivery"/>
 
     <form asp-controller="DeliveryPhase" asp-action="SummaryOfDelivery" asp-method="post" asp-route-redirect="@Context.Request.Query["redirect"]" novalidate>
-        <vc:form-header caption="@($"{Model.ApplicationName} - {Model.Name}")" title="@title"/>
+        <vc:page-header caption="@($"{Model.ApplicationName} - {Model.Name}")" title="@title"/>
 
+        @Html.HiddenFor(x => x.Tranches!.ShouldBeAmended)
+        @Html.HiddenFor(x => x.Tranches!.SummaryOfDeliveryAmend)
         <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0">
+            @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
             @(isAmendable ? await Html.PartialAsync("Partials/_SummaryOfDeliveryAmendDescription") : null)
 
             <table class="govuk-table govuk-!-margin-bottom-8">
@@ -66,6 +68,7 @@
             </dl>
         </div>
         <div class="@(isAmendable ? "govuk-grid-column-full" : "govuk-grid-column-three-quarters") govuk-!-padding-left-0">
+
             <table class="govuk-table govuk-!-margin-bottom-8">
                 <thead class="govuk-table__head">
                 <tr class="govuk-table__row">
@@ -77,7 +80,7 @@
                 </thead >
                 <tbody class="govuk-table__body">
                 @{
-                    if (Model is { IsUnregisteredBody: false, IsOnlyCompletionMilestone: false })
+                    if (Model is { IsOnlyCompletionMilestone: false })
                     {
                         @await Html.PartialAsync(
                             "~/Views/DeliveryPhase/Partials/_SummaryOfDeliveryRow.cshtml",
@@ -85,6 +88,7 @@
                                 "Acquisition",
                                 summaryOfDelivery?.AcquisitionMilestone,
                                 summaryOfDelivery?.AcquisitionPercentage,
+                                SummaryOfDeliveryTrancheType.Acquisition,
                                 Model.Id,
                                 applicationId,
                                 isAmendable))
@@ -95,6 +99,7 @@
                                 "Start on site",
                                 summaryOfDelivery?.StartOnSiteMilestone,
                                 summaryOfDelivery?.StartOnSitePercentage,
+                                SummaryOfDeliveryTrancheType.StartOnSite,
                                 Model.Id,
                                 applicationId,
                                 isAmendable))
@@ -107,6 +112,7 @@
                         "Completion",
                         summaryOfDelivery?.CompletionMilestone,
                         summaryOfDelivery?.CompletionPercentage,
+                        SummaryOfDeliveryTrancheType.Completion,
                         Model.Id,
                         applicationId,
                         isAmendable))
@@ -119,10 +125,11 @@
                 if (isAmendable)
                 {
                     <vc:radio-yes-no
-                        field-name="@nameof(Model.Tranches.SummaryOfDeliveryAmend.UnderstandClaimingMilestones)"
-                        header="Claiming the milestones"
+                        field-name="Tranches.SummaryOfDeliveryAmend.UnderstandClaimingMilestones"
+                        title="Claiming the milestones"
+                        title-type="InputTitleType.PageHeader"
                         hint="Do you understand that you must have incurred costs and made payments to at least the level of the grant in these revised milestone amounts before claiming the milestones?"
-                        value="@Model.Tranches?.SummaryOfDeliveryAmend?.UnderstandClaimingMilestones"/>
+                        value=@Model.Tranches?.SummaryOfDeliveryAmend?.UnderstandClaimingMilestones />
 
                     <vc:form-button/>
 

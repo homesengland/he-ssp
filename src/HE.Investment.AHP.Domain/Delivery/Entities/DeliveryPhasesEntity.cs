@@ -7,6 +7,7 @@ using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.Tranches;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
+using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
@@ -126,7 +127,9 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
             ValidateNameUniqueness(name),
             organisationBasicInfo,
             SectionStatus.InProgress,
-            MilestoneTranches.NotProvided);
+            MilestonesPercentageTranches.NotProvided,
+            false,
+            new SchemeFunding((int?)null, null));
 
         _deliveryPhases.Add(deliveryPhase);
         return deliveryPhase;
@@ -181,7 +184,7 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
 
             if (!AreAllHomeTypesUsed())
             {
-                OperationResult.ThrowValidationError("DeliveryPhases", "Delivery Section cannot be completed because not all homes from Home Types are used.");
+                OperationResult.ThrowValidationError("DeliveryPhases", "The number of homes assigned to delivery phases does not match the number of homes added in scheme information.");
             }
 
             Status = _statusModificationTracker.Change(Status, SectionStatus.Completed);

@@ -1,12 +1,19 @@
 @using HE.Investments.Common.Messages
 @using HE.Investment.AHP.WWW.Views.Shared.Components.LinkWorkingAsButton
 
-@model bool
+@model (bool isEditable, bool isLinkInsideForm)
 
 <div>
-    @if (Model)
+    @if (Model.isEditable && Model.isLinkInsideForm)
     {
         <vc:link-working-as-button text="Save and return to sites" name="action" value="@GenericMessages.SaveAndReturn"/>
+    }
+    else if (!Model.isLinkInsideForm)
+    {
+        <gds-link class="govuk-link--no-visited-state"
+                  href="@Url.Action("Index", "Site")">
+            Save and return to sites
+        </gds-link>
     }
     else
     {

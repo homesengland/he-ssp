@@ -30,7 +30,7 @@ public class ModernMethodsConstruction2DSubcategoriesTests : HomeTypesTestBase
                     "EnhancedConsolidation",
                     "FurtherEnhancedConsolidation",
                 })
-            .HasGdsSaveAndContinueButton();
+            .HasSaveAndContinueButton();
     }
 
     [Fact]
@@ -62,6 +62,6 @@ public class ModernMethodsConstruction2DSubcategoriesTests : HomeTypesTestBase
                     "BasicFramingOnly",
                     "EnhancedConsolidation",
                 })
-            .HasGdsSaveAndContinueButton();
+            .HasSaveAndContinueButton();
     }
 }

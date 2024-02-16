@@ -1,0 +1,75 @@
+@using HE.Investments.Account.Contract.Organisation
+@using HE.Investments.Account.WWW.Views.UserOrganisation
+@using HE.Investments.Loans.Common.Utils.Constants.ViewName
+@model HE.Investments.Account.Contract.Organisation.OrganisationDetailsViewModel
+@{
+    ViewData["Title"] = UserOrganisationPageTitles.Details(Model.Name);
+}
+
+<div class="govuk-grid-column-full">
+    <form asp-controller="UserOrganisation" asp-action="Details" asp-method="post" novalidate>
+
+        <gds-back-link href="@Url.Action("Index", "UserOrganisation", new { })" class="govuk-!-margin-bottom-8">
+        </gds-back-link>
+
+        <partial name="~/Partials/_Notification.cshtml" />
+
+        <h1 class="govuk-heading-l govuk-!-margin-bottom-9">
+            @UserOrganisationPageTitles.Details(Model.Name)
+        </h1>
+
+        <h3 class="govuk-heading-m">
+            Organisation details
+        </h3>
+
+        <gds-summary-list class="govuk-!-margin-bottom-9">
+
+            @await Html.PartialAsync("_TitleValueRow", new ViewDataDictionary(ViewData)
+                   {
+                       { "RowTitle", OrganisationDetailsView.Name },
+                       { "RowValue", Model.Name },
+                   })
+
+            @await Html.PartialAsync("_TitleValueRow", new ViewDataDictionary(ViewData)
+                   {
+                       { "RowTitle", OrganisationDetailsView.PhoneNumber },
+                       { "RowValue", Model.PhoneNumber },
+                   })
+
+            @await Html.PartialAsync("_TitleValueRow", new ViewDataDictionary(ViewData)
+                   {
+                       { "RowTitle", OrganisationDetailsView.Address },
+                       { "RowValue", Model.AddressLines },
+                   })
+
+            @await Html.PartialAsync("_TitleValueRow", new ViewDataDictionary(ViewData)
+                   {
+                       { "RowTitle", OrganisationDetailsView.HouseNumber },
+                       { "RowValue", Model.HouseNumber },
+                   })
+
+        </gds-summary-list>
+        @if (Model.ChangeRequestState == OrganisationChangeRequestState.PendingRequestByYou)
+        {
+            <gds-div-grid-column-two-thirds class="govuk-!-padding-0">
+                <div class="govuk-inset-text">
+                    @OrganisationDetailsView.PendingRequestByYou
+                </div>
+            </gds-div-grid-column-two-thirds>
+        }
+        @if (Model.ChangeRequestState == OrganisationChangeRequestState.NoPendingRequest)
+        {
+            <gds-p>
+                <gds-link href=@Url.Action("ChangeOrganisationDetails", "UserOrganisation") data-testId="request-details-change-link">
+                    @OrganisationDetailsView.NoPendingRequest
+                </gds-link>
+            </gds-p>
+        }
+        @if (Model.ChangeRequestState == OrganisationChangeRequestState.PendingRequestByOthers)
+        {
+            <gds-p>
+                @OrganisationDetailsView.PendingRequestByOthers
+            </gds-p>
+        }
+    </form>
+</div>

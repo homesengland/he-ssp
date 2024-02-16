@@ -3,6 +3,7 @@ using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Domain.Site.ValueObjects;
 using HE.Investment.AHP.Domain.Tests.Site.TestDataBuilders;
 using HE.Investments.Common.Contract.Exceptions;
+using Section106 = HE.Investment.AHP.Domain.Site.ValueObjects.Section106;
 
 namespace HE.Investment.AHP.Domain.Tests.Site.ValueObjects;
 
@@ -65,5 +66,31 @@ public class Section106Tests
 
         // then
         section106.IsAnswered().Should().Be(false);
+    }
+
+    [Theory]
+    [InlineData(true, false, null, null, true)]
+    [InlineData(true, true, false, true, true)]
+    [InlineData(true, true, true, null, true)]
+    [InlineData(true, true, false, false, false)]
+    [InlineData(true, true, false, false, true)]
+    public void ShouldIsIneligible_ReturnTrue(
+        bool? generalAgreement,
+        bool? affordableHousing,
+        bool? onlyAffordableHousing,
+        bool? additionalAffordableHousing,
+        bool? capitalFundingEligibility)
+    {
+        // given
+        var section106 = new Section106(
+            generalAgreement,
+            affordableHousing,
+            onlyAffordableHousing,
+            additionalAffordableHousing,
+            capitalFundingEligibility,
+            null);
+
+        // then
+        section106.IsIneligible().Should().Be(true);
     }
 }

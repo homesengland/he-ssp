@@ -1,7 +1,7 @@
-@using HE.Investments.Common.WWW.Components.FormHeader
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.Components.BackLinkWithCallback
 @using HE.Investments.Common.WWW.Components.SectionSummary
+@using HE.Investment.AHP.WWW.Views.Application
 @model HE.Investment.AHP.WWW.Models.Application.ApplicationSummaryViewModel
 @{
     ViewData["Title"] = "Submit application";
@@ -12,7 +12,7 @@
 
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
-    <vc:form-header title="Check your answers before submitting your application"/>
+    <vc:page-header title="@ApplicationPageTitles.CheckAnswers"/>
 
     @foreach (var item in Model.Sections)
     {

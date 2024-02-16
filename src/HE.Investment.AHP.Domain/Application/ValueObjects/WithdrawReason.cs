@@ -10,7 +10,7 @@ public class WithdrawReason : LongText
         : base(
             value,
             nameof(WithdrawReason),
-            ApplicationValidationErrors.EnterWithdrawReason,
+            ApplicationValidationErrors.EnterChangeStatusReason("are withdrawing"),
             ValidationErrorMessage.LongInputLengthExceeded("withdraw reason"))
     {
     }

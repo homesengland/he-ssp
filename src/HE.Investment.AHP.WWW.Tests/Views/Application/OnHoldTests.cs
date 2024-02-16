@@ -38,9 +38,9 @@ public class OnHoldTests : ViewTestBase
     private static void AssertView(IHtmlDocument document, string? errorMessage = null)
     {
         document
-            .HasElementWithText("label", ApplicationPageTitles.OnHold)
+            .HasTitle(ApplicationPageTitles.OnHold)
             .HasElementWithText("div", "You can enter up to 1500 characters")
-            .HasElementWithText("button", "Hold")
+            .HasSubmitButton(out _, "Hold")
             .HasSummaryErrorMessage(nameof(ChangeApplicationStatusModel.HoldReason), errorMessage, !string.IsNullOrEmpty(errorMessage))
             .HasErrorMessage(nameof(ChangeApplicationStatusModel.HoldReason), errorMessage, !string.IsNullOrEmpty(errorMessage));
     }
