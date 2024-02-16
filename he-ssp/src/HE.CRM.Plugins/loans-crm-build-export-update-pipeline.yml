@@ -1,0 +1,24 @@
+# Loans-CRM-Deploy-Update-2024-02-16
+
+trigger: none
+pr: none
+
+pool: 
+  vmImage: windows-latest
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+  branch: 'master'
+
+
+resources:
+  repositories:
+  - repository: he-invst-deployment
+    type: git
+    name: 'Investments Programme/he-invst-deployment'
+    ref: 'main'
+
+stages:
+- template: crm-deployment-pipelines/loans-crm-build-export-update.yml@he-invst-deployment
