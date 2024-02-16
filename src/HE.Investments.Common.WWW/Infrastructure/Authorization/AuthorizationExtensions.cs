@@ -24,6 +24,7 @@ public static class AuthorizationExtensions
             ClientId = auth0Config.ClientId,
             ClientSecret = auth0Config.ClientSecret,
             SupportEmail = supportEmail,
+            CookiePath = "/",
         };
 
         builder.Services.ConfigureHeCookieSettings(
