@@ -1,14 +1,13 @@
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investment.AHP.Contract.Site
 @using HE.Investment.AHP.WWW.Views.Site.Const
-@using HE.Investments.Common.WWW.Components.InputHeader
 @using HE.Investments.Common.WWW.Components.TextInput
 @model SiteModel
 @{
     ViewData["Title"] = SitePageTitles.SiteName;
 }
 <gds-div-grid-column-two-thirds>
-    <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.Name" />
+    <gds-back-link href="@Url.Action("Index", "Application")" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <form asp-controller="Site" asp-action="Name" asp-method="post" novalidate>
 
@@ -18,11 +17,11 @@
             hint="Each site needs a unique name."
             field-name="@(nameof(Model.Name))"
             css-class="govuk-!-width-one-third"
-            value=@Model?.Name />
+            value=@Model.Name/>
 
         @Html.HiddenFor(x => x.Id)
 
-        <vc:form-button />
+        <vc:form-button/>
     </form>
 
 </gds-div-grid-column-two-thirds>

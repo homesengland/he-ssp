@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Text;
 using He.AspNetCore.Mvc.Gds.Components.TagConstructs;
+using HE.Investments.Common.Extensions;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace HE.Investments.Common.WWW.TagHelpers.Pagination;
@@ -25,7 +26,12 @@ public class HePaginationTagHelper : TagHelper
 
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
-        if (output == null)
+        if (output.IsNotProvided())
+        {
+            return;
+        }
+
+        if (TotalItems <= ItemsPerPage)
         {
             return;
         }

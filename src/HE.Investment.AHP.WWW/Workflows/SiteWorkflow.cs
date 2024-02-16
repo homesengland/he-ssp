@@ -74,7 +74,6 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
     {
         return state switch
         {
-            SiteWorkflowState.Index => true,
             SiteWorkflowState.Start => true,
             SiteWorkflowState.Name => true,
             SiteWorkflowState.LocalAuthoritySearch => true,
@@ -118,13 +117,6 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
 
     private void ConfigureTransitions()
     {
-        _machine.Configure(SiteWorkflowState.Index)
-            .Permit(Trigger.Continue, SiteWorkflowState.Start);
-
-        _machine.Configure(SiteWorkflowState.Start)
-            .Permit(Trigger.Continue, SiteWorkflowState.Name)
-            .Permit(Trigger.Back, SiteWorkflowState.Index);
-
         _machine.Configure(SiteWorkflowState.Name)
             .Permit(Trigger.Continue, SiteWorkflowState.Section106GeneralAgreement)
             .Permit(Trigger.Back, SiteWorkflowState.Start);

@@ -1,6 +1,5 @@
 @using HE.Investments.Common.Extensions
 @using HE.Investments.Common.Gds
-@using HE.Investments.Common.Messages
 @using HE.Investments.Common.WWW.Components.PageHeader
 @using HE.Investments.Common.WWW.Components.SectionSummaryItem
 @model HE.Investment.AHP.Contract.Site.SiteDetailsModel
@@ -34,45 +33,9 @@
 
     @if (Model.Applications.TotalItems > 0)
     {
-        <div class="govuk-!-margin-top-6">
-            <gds-h2>Applications on this site</gds-h2>
-            <gds-p>View or manage existing applications for this site.</gds-p>
-
-            <table class="govuk-table">
-                <thead class="govuk-table__head">
-                <tr class="govuk-table__row">
-                    <th scope="col" class="govuk-table__header govuk-!-width-one-third">Application name</th>
-                    <th scope="col" class="govuk-table__header">Application tenure</th>
-                    <th scope="col" class="govuk-table__header">No of homes</th>
-                    <th scope="col" class="govuk-table__header">Status</th>
-                </tr>
-                </thead>
-                <tbody class="govuk-table__body">
-                @foreach (var application in Model.Applications.Items)
-                {
-                    <tr class="govuk-table__row">
-                        <td class="govuk-table__cell">
-                            <span class="app-task-list__task-name">
-                                <strong>
-                                    <a data-testId="application-@application.Id.Value" href="@Url.Action("TaskList", "Application", new { applicationId = application.Id.Value })">@application.Name</a>
-                                </strong>
-                            </span>
-                        </td>
-                        <td class="govuk-table__cell">
-                            @application.Tenure.GetDescription()
-                        </td>
-                        <td class="govuk-table__cell">
-                            @(application.NumberOfHomes?.ToString() ?? GenericMessages.NotProvided)
-                        </td>
-                        <td class="govuk-table__cell">
-                            <application-status-tag application-status="@application.Status"></application-status-tag>
-                        </td>
-                    </tr>
-                }
-                </tbody>
-            </table>
-            <he-pagination base-url="@Model.SiteId.Value" page="@Model.Applications.CurrentPage" items-per-page=@Model.Applications.ItemsPerPage total-items="@Model.Applications.TotalItems"></he-pagination>
-        </div>
+        <gds-h2>Applications on this site</gds-h2>
+        <gds-p>View or manage existing applications for this site.</gds-p>
+        <vc:site-applications-table site-id="@Model.SiteId" applications="@Model.Applications"/>
     }
 
     <gds-p>

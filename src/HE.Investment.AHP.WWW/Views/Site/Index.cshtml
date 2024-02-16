@@ -1,4 +1,3 @@
-@using HE.Investments.Common.Messages
 @using HE.Investment.AHP.WWW.Views.Site.Const
 @model HE.Investment.AHP.Contract.Site.SitesListModel
 @{
@@ -10,35 +9,5 @@
                     caption="@Model.OrganisationName"
                     hint="Select a site to view site details or applications within the site."/>
     <gds-h2 class="govuk-!-margin-top-6">Your sites</gds-h2>
-
-    <table class="govuk-table">
-        <thead class="govuk-table__head">
-        <tr class="govuk-table__row">
-            <th scope="col" class="govuk-table__header govuk-!-width-one-third">Name</th>
-            <th scope="col" class="govuk-table__header govuk-!-width-one-third">Local authority</th>
-            <th scope="col" class="govuk-table__header govuk-!-width-one-third">Status</th>
-        </tr>
-        </thead>
-        <tbody class="govuk-table__body">
-        @foreach (var site in Model.Page.Items)
-        {
-            <tr class="govuk-table__row">
-                <td class="govuk-table__cell">
-                    <span class="app-task-list__task-name">
-                        <strong>
-                            <a href="@Url.Action("Details", "Site", new { siteId = site.Id })"> @site.Name </a>
-                        </strong>
-                    </span>
-                </td>
-                <td class="govuk-table__cell">
-                    @(site.LocalAuthorityName ?? GenericMessages.NotProvided)
-                </td>
-                <td class="govuk-table__cell">
-                    <vc:site-status-tag site-status="@site.Status"/>
-                </td>
-            </tr>
-        }
-        </tbody>
-    </table>
-    <he-pagination base-url="site" page="@Model.Page.CurrentPage" items-per-page=@Model.Page.ItemsPerPage total-items="@Model.Page.TotalItems"></he-pagination>
+    <vc:sites-table sites="@Model.Page"/>
 </div>

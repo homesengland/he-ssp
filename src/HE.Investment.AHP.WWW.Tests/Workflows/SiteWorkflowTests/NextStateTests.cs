@@ -9,7 +9,6 @@ namespace HE.Investment.AHP.WWW.Tests.Workflows.SiteWorkflowTests;
 public class NextStateTests
 {
     [Theory]
-    [InlineData(SiteWorkflowState.Start, SiteWorkflowState.Name)]
     [InlineData(SiteWorkflowState.Name, SiteWorkflowState.Section106GeneralAgreement)]
     [InlineData(SiteWorkflowState.LocalAuthoritySearch, SiteWorkflowState.LocalAuthorityResult)]
     [InlineData(SiteWorkflowState.LocalAuthorityResult, SiteWorkflowState.LocalAuthorityConfirm)]

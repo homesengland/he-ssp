@@ -7,7 +7,6 @@ namespace HE.Investment.AHP.WWW.Tests.Workflows.SiteWorkflowTests;
 public class StateCanBeAccessedTests
 {
     [Theory]
-    [InlineData(SiteWorkflowState.Index, true)]
     [InlineData(SiteWorkflowState.Start, true)]
     [InlineData(SiteWorkflowState.Name, true)]
     [InlineData(SiteWorkflowState.LocalAuthoritySearch, true)]

@@ -1,8 +1,6 @@
 @using HE.Investment.AHP.WWW.Views.Application
 @using HE.Investments.Common.Gds
-@using HE.Investments.Common.Messages
 @using HE.Investments.Common.WWW.Components.PageHeader
-@using HE.Investments.Common.WWW.Helpers
 @using HE.Investment.AHP.WWW.Routing
 @model HE.Investment.AHP.WWW.Models.Application.ApplicationsListModel
 @{
@@ -16,52 +14,12 @@
 <div class="govuk-grid-column-full">
     <vc:page-header title="@ApplicationPageTitles.ApplicationList" caption="@Model.OrganisationName" additional-css-class="govuk-!-padding-top-8"/>
 
-    <gds-h2>
-        Your applications
-    </gds-h2>
+    @if (Model.Result.TotalItems > 0)
+    {
+        <gds-h2>Your applications</gds-h2>
+        <vc:applications-table applications="@Model.Result"/>
+    }
 
-    <div class="govuk-!-padding-bottom-6">
-        <table class="govuk-table">
-            <thead class="govuk-table__head">
-            <tr class="govuk-table__row">
-                <th scope="col" class="govuk-table__header govuk-!-width-one-third">Name</th>
-                <th scope="col" class="govuk-table__header govuk-!-width-one-eighth">Units</th>
-                <th scope="col" class="govuk-table__header govuk-!-width-one-eighth">Grant</th>
-                <th scope="col" class="govuk-table__header govuk-!-width-one-fifth">Local Authority</th>
-                <th scope="col" class="govuk-table__header govuk-!-width-one-fifth">Status</th>
-            </tr>
-            </thead>
-            <tbody class="govuk-table__body">
-            @foreach (var application in Model.Result.Items)
-            {
-                <tr class="govuk-table__row">
-                    <td class="govuk-table__cell">
-                        <span class="app-task-list__task-name">
-                            <strong>
-                                <a href="@Url.Action("TaskList", "Application", new { applicationId = application.Id.Value })"> @application.Name </a>
-                            </strong>
-                        </span>
-                    </td>
-
-                    <td class="govuk-table__cell">
-                        @(application.Unit?.ToString() ?? "-")
-                    </td>
-                    <td class="govuk-table__cell">
-                        @(CurrencyHelper.DisplayPounds(application.Grant) ?? "-")
-                    </td>
-                    <td class="govuk-table__cell">
-                        @(application.LocalAuthority ?? GenericMessages.NotProvided)
-                    </td>
-                    <td class="govuk-table__cell">
-                        <application-status-tag application-status="@application.Status"></application-status-tag>
-                    </td>
-                </tr>
-            }
-            </tbody>
-        </table>
-
-        <he-pagination base-url="application" page="@Model.Result.CurrentPage" items-per-page=@Model.Result.ItemsPerPage total-items="@Model.Result.TotalItems"></he-pagination>
-    </div>
     <div>
         <gds-h2>
             Affordable Homes Programme Continuous Market Engagement 2021-2026
