@@ -18,9 +18,9 @@ public class ProvideModernMethodsConstructionInformationCommandHandler : Provide
     protected override void Provide(ProvideModernMethodsConstructionInformationCommand request, SiteEntity site)
     {
         var operationResult = OperationResult.New();
-        var barriers = operationResult.AggregateNullable(() => new ModernMethodsOfConstructionBarriers(request.Barriers));
-        var impact = operationResult.AggregateNullable(() => new ModernMethodsOfConstructionImpact(request.Impact));
-        var information = operationResult.AggregateNullable(() => ModernMethodsOfConstructionInformation.Create(barriers!, impact!));
+        var barriers = operationResult.AggregateNullable(() => ModernMethodsOfConstructionBarriers.Create(request.Barriers));
+        var impact = operationResult.AggregateNullable(() => ModernMethodsOfConstructionImpact.Create(request.Impact));
+        var information = operationResult.AggregateNullable(() => ModernMethodsOfConstructionInformation.Create(barriers, impact));
 
         operationResult.CheckErrors();
 

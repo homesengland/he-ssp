@@ -807,7 +807,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     }
 
     [HttpPost("{siteId}/mmc-2d-category")]
-    [WorkflowState(SiteWorkflowState.Mmc3DCategory)]
+    [WorkflowState(SiteWorkflowState.Mmc2DCategory)]
     public async Task<IActionResult> Mmc2DCategory(SiteModernMethodsOfConstruction model, CancellationToken cancellationToken)
     {
         return await ExecuteSiteCommand<SiteModernMethodsOfConstruction>(

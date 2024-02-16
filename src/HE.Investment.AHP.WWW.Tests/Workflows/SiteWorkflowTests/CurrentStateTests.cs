@@ -1,4 +1,5 @@
 using FluentAssertions;
+using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investment.AHP.Domain.Site.ValueObjects;
@@ -23,6 +24,21 @@ public class CurrentStateTests
 
     private readonly Section106Dto _section106 = new("3", "TestSite", false);
 
+    private readonly SiteModernMethodsOfConstruction _modernMethodsOfConstruction = new(
+        SiteUsingModernMethodsOfConstruction.Yes,
+        new List<ModernMethodsConstructionCategoriesType>
+        {
+            ModernMethodsConstructionCategoriesType.Category1PreManufacturing3DPrimaryStructuralSystems,
+            ModernMethodsConstructionCategoriesType.Category2PreManufacturing2DPrimaryStructuralSystems,
+            ModernMethodsConstructionCategoriesType.Category5PreManufacturingNonStructuralAssembliesAndSubAssemblies,
+        },
+        new List<ModernMethodsConstruction2DSubcategoriesType> { ModernMethodsConstruction2DSubcategoriesType.EnhancedConsolidation, },
+        new List<ModernMethodsConstruction3DSubcategoriesType> { ModernMethodsConstruction3DSubcategoriesType.StructuralChassisAndInternallyFittedOut, },
+        null,
+        null,
+        "barriers",
+        "impact");
+
     private EnvironmentalImpact? _environmentalImpact = new("reducing environmental impact");
 
     [Fact]
@@ -35,7 +51,11 @@ public class CurrentStateTests
     public void ShouldReturnName_WhenNameNotProvided()
     {
         // given
-        var workflow = SiteWorkflowFactory.BuildWorkflow(SiteWorkflowState.Start, localAuthority: _localAuthority, planningDetails: _planningDetails, section106: _section106);
+        var workflow = SiteWorkflowFactory.BuildWorkflow(
+            SiteWorkflowState.Start,
+            localAuthority: _localAuthority,
+            planningDetails: _planningDetails,
+            section106: _section106);
 
         // when
         var result = workflow.CurrentState(SiteWorkflowState.Start);
@@ -138,7 +158,11 @@ public class CurrentStateTests
     public void ShouldReturnLocalAuthoritySearch_WhenLocalAuthorityNotProvided()
     {
         // given
-        var workflow = SiteWorkflowFactory.BuildWorkflow(SiteWorkflowState.Start, name: "some name", planningDetails: _planningDetails, section106: _section106);
+        var workflow = SiteWorkflowFactory.BuildWorkflow(
+            SiteWorkflowState.Start,
+            name: "some name",
+            planningDetails: _planningDetails,
+            section106: _section106);
 
         // when
         var result = workflow.CurrentState(SiteWorkflowState.Start);
@@ -223,7 +247,13 @@ public class CurrentStateTests
     [Fact]
     public void ShouldReturnIntentionToWorkWithSme_WhenIsIntentionToWorkWithSmeNotProvided()
     {
-        Test(SiteWorkflowState.IntentionToWorkWithSme, tenderingStatusDetails: _tenderingStatusDetails with { TenderingStatus = SiteTenderingStatus.TenderForWorksContract, IsIntentionToWorkWithSme = null });
+        Test(
+            SiteWorkflowState.IntentionToWorkWithSme,
+            tenderingStatusDetails: _tenderingStatusDetails with
+            {
+                TenderingStatus = SiteTenderingStatus.TenderForWorksContract,
+                IsIntentionToWorkWithSme = null,
+            });
     }
 
     [Fact]
@@ -279,6 +309,60 @@ public class CurrentStateTests
     }
 
     [Fact]
+    public void ShouldReturnMmcUsing_WhenUsingModernMethodsOfConstructionNotProvided()
+    {
+        Test(SiteWorkflowState.MmcUsing, modernMethodsOfConstruction: _modernMethodsOfConstruction with { UsingModernMethodsOfConstruction = null });
+    }
+
+    [Fact]
+    public void ShouldReturnMmcInformation_WhenInformationImpactNotProvided()
+    {
+        Test(SiteWorkflowState.MmcInformation, modernMethodsOfConstruction: _modernMethodsOfConstruction with { InformationImpact = null });
+    }
+
+    [Fact]
+    public void ShouldReturnMmcInformation_WhenInformationBarriersNotProvided()
+    {
+        Test(SiteWorkflowState.MmcInformation, modernMethodsOfConstruction: _modernMethodsOfConstruction with { InformationBarriers = null });
+    }
+
+    [Fact]
+    public void ShouldReturnMmcCategories_WhenModernMethodsConstructionCategoriesNotProvided()
+    {
+        Test(SiteWorkflowState.MmcCategories, modernMethodsOfConstruction: _modernMethodsOfConstruction with { ModernMethodsConstructionCategories = null });
+    }
+
+    [Fact]
+    public void ShouldReturnMmcCategories_WhenModernMethodsConstructionCategoriesEmpty()
+    {
+        Test(SiteWorkflowState.MmcCategories, modernMethodsOfConstruction: _modernMethodsOfConstruction with { ModernMethodsConstructionCategories = new List<ModernMethodsConstructionCategoriesType>() });
+    }
+
+    [Fact]
+    public void ShouldReturnMmc3DCategory_WhenModernMethodsConstruction3DSubcategoriesNotProvided()
+    {
+        Test(SiteWorkflowState.Mmc3DCategory, modernMethodsOfConstruction: _modernMethodsOfConstruction with { ModernMethodsConstruction3DSubcategories = null });
+    }
+
+    [Fact]
+    public void ShouldReturnMmc3DCategory_WhenModernMethodsConstruction3DSubcategoriesEmpty()
+    {
+        Test(SiteWorkflowState.Mmc3DCategory, modernMethodsOfConstruction: _modernMethodsOfConstruction with { ModernMethodsConstruction3DSubcategories = new List<ModernMethodsConstruction3DSubcategoriesType>() });
+    }
+
+    [Fact]
+    public void ShouldReturnMmcMmc2DCategory_WhenModernMethodsConstruction2DSubcategoriesNotProvided()
+    {
+        Test(SiteWorkflowState.Mmc2DCategory, modernMethodsOfConstruction: _modernMethodsOfConstruction with { ModernMethodsConstruction2DSubcategories = null });
+    }
+
+    [Fact]
+    public void ShouldReturnMmcMmc2DCategory_WhenModernMethodsConstruction2DSubcategoriesEmpty()
+    {
+        Test(SiteWorkflowState.Mmc2DCategory, modernMethodsOfConstruction: _modernMethodsOfConstruction with { ModernMethodsConstruction2DSubcategories = new List<ModernMethodsConstruction2DSubcategoriesType>() });
+    }
+
+    [Fact]
     public void ShouldReturnProcurement_WhenProcurementNotProvided()
     {
         Test(SiteWorkflowState.Procurements, procurements: new List<SiteProcurement>());
@@ -295,7 +379,8 @@ public class CurrentStateTests
         SiteUseDetails? siteUseDetails = null,
         IList<SiteProcurement>? procurements = null,
         SiteRuralClassification? ruralClassification = null,
-        EnvironmentalImpact? environmentalImpact = null)
+        EnvironmentalImpact? environmentalImpact = null,
+        SiteModernMethodsOfConstruction? modernMethodsOfConstruction = null)
     {
         // given
         var workflow = SiteWorkflowFactory.BuildWorkflow(
@@ -312,9 +397,10 @@ public class CurrentStateTests
             strategicSite: strategicSite,
             siteTypeDetails: siteTypeDetails,
             siteUseDetails: siteUseDetails ?? new SiteUseDetails(false, true, TravellerPitchSiteType.Permanent),
-            procurements: procurements ?? new List<SiteProcurement> { SiteProcurement.PartneringArrangementsWithContractor, SiteProcurement.LargeScaleContractProcurementThroughConsortium },
+            procurements: procurements ?? new List<SiteProcurement> { SiteProcurement.PartneringArrangementsWithContractor, SiteProcurement.LargeScaleContractProcurementThroughConsortium, },
             ruralClassification: ruralClassification ?? new SiteRuralClassification(true, false),
-            environmentalImpact: environmentalImpact ?? _environmentalImpact);
+            environmentalImpact: environmentalImpact ?? _environmentalImpact,
+            modernMethodsOfConstruction: modernMethodsOfConstruction ?? _modernMethodsOfConstruction);
 
         // when
         var result = workflow.CurrentState(SiteWorkflowState.Start);

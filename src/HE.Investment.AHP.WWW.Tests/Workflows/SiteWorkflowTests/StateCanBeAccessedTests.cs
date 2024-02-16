@@ -1,4 +1,5 @@
 using FluentAssertions;
+using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Enums;
 
@@ -27,6 +28,12 @@ public class StateCanBeAccessedTests
     [InlineData(SiteWorkflowState.SiteType, true)]
     [InlineData(SiteWorkflowState.RuralClassification, true)]
     [InlineData(SiteWorkflowState.EnvironmentalImpact, true)]
+    [InlineData(SiteWorkflowState.MmcUsing, true)]
+    [InlineData(SiteWorkflowState.MmcFutureAdoption, false)]
+    [InlineData(SiteWorkflowState.MmcInformation, false)]
+    [InlineData(SiteWorkflowState.MmcCategories, false)]
+    [InlineData(SiteWorkflowState.Mmc3DCategory, false)]
+    [InlineData(SiteWorkflowState.Mmc2DCategory, false)]
     [InlineData(SiteWorkflowState.Procurements, true)]
     [InlineData(SiteWorkflowState.CheckAnswers, true)]
     public async Task ShouldReturnValue_WhenMethodCalledForDefaults(SiteWorkflowState state, bool expectedResult)
@@ -95,6 +102,69 @@ public class StateCanBeAccessedTests
 
         // when
         var result = await workflow.StateCanBeAccessed(SiteWorkflowState.NumberOfGreenLights);
+
+        // then
+        result.Should().BeTrue();
+    }
+
+    [Fact]
+    public async Task ShouldReturnTrue_WhenMethodCalledForMmcFutureAdoptionForNoSiteUsingModernMethodsOfConstruction()
+    {
+        var modernMethodsOfConstruction = new SiteModernMethodsOfConstruction(SiteUsingModernMethodsOfConstruction.No);
+        await Test(SiteWorkflowState.MmcFutureAdoption, modernMethodsOfConstruction);
+    }
+
+    [Theory]
+    [InlineData(SiteUsingModernMethodsOfConstruction.Yes)]
+    [InlineData(SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes)]
+    public async Task ShouldReturnTrue_WhenMethodCalledForMmcInformationForSomeSiteUsingModernMethodsOfConstruction(SiteUsingModernMethodsOfConstruction usingModernMethodsOfConstruction)
+    {
+        var modernMethodsOfConstruction = new SiteModernMethodsOfConstruction(usingModernMethodsOfConstruction);
+        await Test(SiteWorkflowState.MmcInformation, modernMethodsOfConstruction);
+    }
+
+    [Theory]
+    [InlineData(SiteUsingModernMethodsOfConstruction.Yes)]
+    [InlineData(SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes)]
+    public async Task ShouldReturnTrue_WhenMethodCalledForMmcCategoriesForSomeSiteUsingModernMethodsOfConstruction(SiteUsingModernMethodsOfConstruction usingModernMethodsOfConstruction)
+    {
+        var modernMethodsOfConstruction = new SiteModernMethodsOfConstruction(usingModernMethodsOfConstruction);
+        await Test(SiteWorkflowState.MmcCategories, modernMethodsOfConstruction);
+    }
+
+    [Fact]
+    public async Task ShouldReturnTrue_WhenMethodCalledForMmc3DCategoryForSelected3DCategory()
+    {
+        var modernMethodsOfConstruction = new SiteModernMethodsOfConstruction(SiteUsingModernMethodsOfConstruction.Yes, new List<ModernMethodsConstructionCategoriesType>
+        {
+            ModernMethodsConstructionCategoriesType.Category1PreManufacturing3DPrimaryStructuralSystems,
+        });
+        await Test(SiteWorkflowState.Mmc3DCategory, modernMethodsOfConstruction);
+    }
+
+    [Fact]
+    public async Task ShouldReturnTrue_WhenMethodCalledForMmc2DCategoryForSelected2DCategory()
+    {
+        var modernMethodsOfConstruction = new SiteModernMethodsOfConstruction(
+            SiteUsingModernMethodsOfConstruction.Yes,
+            new List<ModernMethodsConstructionCategoriesType>
+            {
+                ModernMethodsConstructionCategoriesType.Category2PreManufacturing2DPrimaryStructuralSystems,
+            });
+        await Test(SiteWorkflowState.Mmc2DCategory, modernMethodsOfConstruction);
+    }
+
+    private static async Task Test(
+        SiteWorkflowState state,
+        SiteModernMethodsOfConstruction? modernMethodsOfConstruction = null)
+    {
+        // given
+        var workflow = SiteWorkflowFactory.BuildWorkflow(
+            SiteWorkflowState.Start,
+            modernMethodsOfConstruction: modernMethodsOfConstruction);
+
+        // when
+        var result = await workflow.StateCanBeAccessed(state);
 
         // then
         result.Should().BeTrue();

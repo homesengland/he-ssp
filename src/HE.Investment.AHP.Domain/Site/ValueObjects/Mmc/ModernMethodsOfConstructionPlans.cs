@@ -8,4 +8,9 @@ public class ModernMethodsOfConstructionPlans : LongText
         : base(value, "ModernMethodsOfConstructionPlans", "plans for adopting Modern Methods of Construction in the future")
     {
     }
+
+    public static ModernMethodsOfConstructionPlans? Create(string? value)
+    {
+        return string.IsNullOrWhiteSpace(value) ? null : new ModernMethodsOfConstructionPlans(value);
+    }
 }
