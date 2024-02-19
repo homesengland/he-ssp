@@ -1,6 +1,7 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Site;
+using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.WWW.Extensions;
 using Microsoft.AspNetCore.Mvc;
@@ -55,6 +56,26 @@ public static class ControllerExtensions
             controller,
             async () => await Task.FromResult(controller.Url.RedirectToSitesList()),
             async () => await onContinue());
+    }
+
+    public static IActionResult ContinueSectionAnswering(
+        this Controller controller,
+        ISummaryViewModel summaryViewModel,
+        Func<RedirectToActionResult> checkAnswersRedirectFactory)
+    {
+        if (summaryViewModel.IsReadOnly)
+        {
+            return checkAnswersRedirectFactory();
+        }
+
+        var firstNotAnsweredQuestion = summaryViewModel.Sections
+            .Where(x => x.Items != null)
+            .SelectMany(x => x.Items!)
+            .FirstOrDefault(x => x is { HasAnswer: false, HasRedirectAction: true });
+
+        return firstNotAnsweredQuestion != null
+            ? controller.Redirect(firstNotAnsweredQuestion.ActionUrl!)
+            : checkAnswersRedirectFactory();
     }
 
     private static async Task<IActionResult> ReturnToListOrContinue(

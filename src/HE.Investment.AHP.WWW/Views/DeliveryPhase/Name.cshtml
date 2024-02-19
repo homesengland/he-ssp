@@ -2,7 +2,6 @@
 @using HE.Investment.AHP.WWW.Views.Delivery.Const
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
 @using HE.Investments.Common.WWW.Components.FormButton
-@using HE.Investments.Common.WWW.Components.InputHeader
 @model DeliveryPhaseNameViewModel;
 @{
     var title = DeliveryPageTitles.Name;
@@ -14,7 +13,7 @@
 
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
-    <form asp-controller="DeliveryPhase" asp-action="@Model.PostbackActionName" asp-method="post" asp-route-redirect="@Context.Request.Query["redirect"]" novalidate>
+    <form asp-controller="DeliveryPhase" asp-action="@Model.PostbackActionName" asp-method="post" asp-route-workflow="@Context.Request.Query["workflow"]" novalidate>
         @Html.HiddenFor(x => x.DeliveryPhaseId)
         @Html.HiddenFor(x => x.PostbackActionName)
         <vc:text-input title="@title"

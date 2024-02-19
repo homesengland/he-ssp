@@ -74,7 +74,7 @@ public class ApplicationSummaryViewModelFactory : IApplicationSummaryViewModelFa
             var deliveryPhaseDetails = await _mediator.Send(new GetDeliveryPhaseDetailsQuery(applicationId, deliveryPhaseId, true), cancellationToken);
             var deliveryPhaseHomes = await _mediator.Send(new GetDeliveryPhaseHomesQuery(applicationId, deliveryPhaseId), cancellationToken);
 
-            sections.AddRange(_deliveryPhaseCheckAnswersViewModelFactory.CreateSummary(applicationId, deliveryPhaseDetails, deliveryPhaseHomes, urlHelper, !isReadOnly));
+            sections.AddRange(_deliveryPhaseCheckAnswersViewModelFactory.CreateSummary(applicationId, deliveryPhaseDetails, deliveryPhaseHomes, urlHelper, !isReadOnly, false));
         }
 
         return sections;

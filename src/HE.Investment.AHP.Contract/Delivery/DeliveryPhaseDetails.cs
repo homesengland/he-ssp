@@ -1,5 +1,4 @@
 using HE.Investment.AHP.Contract.Delivery.Enums;
-using HE.Investment.AHP.Contract.Delivery.MilestonePayments;
 using HE.Investments.Common.Contract;
 
 namespace HE.Investment.AHP.Contract.Delivery;

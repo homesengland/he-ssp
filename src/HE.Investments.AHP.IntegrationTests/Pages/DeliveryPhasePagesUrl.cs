@@ -6,8 +6,8 @@ internal static class DeliveryPhasePagesUrl
 
     public static string Details(string applicationId, string deliveryPhaseId) => BuildDeliveryPhasePage(applicationId, deliveryPhaseId, "details");
 
-    public static string BuildActivityType(string applicationId, string deliveryPhaseId) =>
-        BuildDeliveryPhasePage(applicationId, deliveryPhaseId, "build-activity-type");
+    public static string RehabBuildActivityType(string applicationId, string deliveryPhaseId) =>
+        BuildDeliveryPhasePage(applicationId, deliveryPhaseId, "rehab-build-activity-type");
 
     public static string ReconfiguringExisting(string applicationId, string deliveryPhaseId) =>
         BuildDeliveryPhasePage(applicationId, deliveryPhaseId, "reconfiguring-existing");

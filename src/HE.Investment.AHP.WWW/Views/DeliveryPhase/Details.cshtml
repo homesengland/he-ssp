@@ -16,7 +16,7 @@
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <vc:page-header caption="@($"{Model.ApplicationName} - {Model.Name}")" title="@title"/>
 
-    <form asp-controller="DeliveryPhase" asp-action="Details" asp-method="post" asp-route-redirect="@Context.Request.Query["redirect"]" novalidate>
+    <form asp-controller="DeliveryPhase" asp-action="Details" asp-method="post" asp-route-workflow="@Context.Request.Query["workflow"]" novalidate>
 
         <vc:radio-list
             title="What type of homes will be delivered in this phase?"
