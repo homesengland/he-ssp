@@ -8,9 +8,9 @@ namespace HE.Investment.AHP.Domain.Tests.Application.Mappers.SectionStatusMapper
 public class ToDomainTests
 {
     [Theory]
-    [InlineData((int)invln_ahpsectioncompletionstatusset.Notstarted, SectionStatus.NotStarted)]
-    [InlineData((int)invln_ahpsectioncompletionstatusset.InProgress, SectionStatus.InProgress)]
-    [InlineData((int)invln_ahpsectioncompletionstatusset.Completed, SectionStatus.Completed)]
+    [InlineData((int)invln_AHPSectioncompletionstatusSet.Notstarted, SectionStatus.NotStarted)]
+    [InlineData((int)invln_AHPSectioncompletionstatusSet.InProgress, SectionStatus.InProgress)]
+    [InlineData((int)invln_AHPSectioncompletionstatusSet.Completed, SectionStatus.Completed)]
     public void ShouldReturnExpectedSectionStatus_WhenValueIsProvided(int value, SectionStatus expectedStatus)
     {
         var result = SectionStatusMapper.ToDomain(value);

@@ -77,13 +77,13 @@ public class HomeInformationCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Home
     {
         return peopleGroupForSpecificDesignFeatures switch
         {
-            PeopleGroupForSpecificDesignFeaturesType.EthnicMinority => (int)invln_homesdesignedforuseofparticulargrou.Peoplefromethnicminoritybackground,
-            PeopleGroupForSpecificDesignFeaturesType.DisabledPeople => (int)invln_homesdesignedforuseofparticulargrou.Disabledpeople,
-            PeopleGroupForSpecificDesignFeaturesType.FaithGroups => (int)invln_homesdesignedforuseofparticulargrou.Faithgroups,
-            PeopleGroupForSpecificDesignFeaturesType.PeopleAtRiskOfDomesticViolence => (int)invln_homesdesignedforuseofparticulargrou.Peopleatriskofdomesticviolence,
-            PeopleGroupForSpecificDesignFeaturesType.YoungPeople => (int)invln_homesdesignedforuseofparticulargrou.Youngpeople,
-            PeopleGroupForSpecificDesignFeaturesType.OlderPeople => (int)invln_homesdesignedforuseofparticulargrou.Olderpeople,
-            PeopleGroupForSpecificDesignFeaturesType.NoneOfThese => (int)invln_homesdesignedforuseofparticulargrou.Noneoftheabove,
+            PeopleGroupForSpecificDesignFeaturesType.EthnicMinority => (int)invln_Homesdesignedforuseofparticulargrou.Peoplefromethnicminoritybackground,
+            PeopleGroupForSpecificDesignFeaturesType.DisabledPeople => (int)invln_Homesdesignedforuseofparticulargrou.Disabledpeople,
+            PeopleGroupForSpecificDesignFeaturesType.FaithGroups => (int)invln_Homesdesignedforuseofparticulargrou.Faithgroups,
+            PeopleGroupForSpecificDesignFeaturesType.PeopleAtRiskOfDomesticViolence => (int)invln_Homesdesignedforuseofparticulargrou.Peopleatriskofdomesticviolence,
+            PeopleGroupForSpecificDesignFeaturesType.YoungPeople => (int)invln_Homesdesignedforuseofparticulargrou.Youngpeople,
+            PeopleGroupForSpecificDesignFeaturesType.OlderPeople => (int)invln_Homesdesignedforuseofparticulargrou.Olderpeople,
+            PeopleGroupForSpecificDesignFeaturesType.NoneOfThese => (int)invln_Homesdesignedforuseofparticulargrou.Noneoftheabove,
             _ => null,
         };
     }
@@ -92,13 +92,13 @@ public class HomeInformationCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Home
     {
         return peopleGroupForSpecificDesignFeatures switch
         {
-            (int)invln_homesdesignedforuseofparticulargrou.Peoplefromethnicminoritybackground => PeopleGroupForSpecificDesignFeaturesType.EthnicMinority,
-            (int)invln_homesdesignedforuseofparticulargrou.Disabledpeople => PeopleGroupForSpecificDesignFeaturesType.DisabledPeople,
-            (int)invln_homesdesignedforuseofparticulargrou.Faithgroups => PeopleGroupForSpecificDesignFeaturesType.FaithGroups,
-            (int)invln_homesdesignedforuseofparticulargrou.Peopleatriskofdomesticviolence => PeopleGroupForSpecificDesignFeaturesType.PeopleAtRiskOfDomesticViolence,
-            (int)invln_homesdesignedforuseofparticulargrou.Youngpeople => PeopleGroupForSpecificDesignFeaturesType.YoungPeople,
-            (int)invln_homesdesignedforuseofparticulargrou.Olderpeople => PeopleGroupForSpecificDesignFeaturesType.OlderPeople,
-            (int)invln_homesdesignedforuseofparticulargrou.Noneoftheabove => PeopleGroupForSpecificDesignFeaturesType.NoneOfThese,
+            (int)invln_Homesdesignedforuseofparticulargrou.Peoplefromethnicminoritybackground => PeopleGroupForSpecificDesignFeaturesType.EthnicMinority,
+            (int)invln_Homesdesignedforuseofparticulargrou.Disabledpeople => PeopleGroupForSpecificDesignFeaturesType.DisabledPeople,
+            (int)invln_Homesdesignedforuseofparticulargrou.Faithgroups => PeopleGroupForSpecificDesignFeaturesType.FaithGroups,
+            (int)invln_Homesdesignedforuseofparticulargrou.Peopleatriskofdomesticviolence => PeopleGroupForSpecificDesignFeaturesType.PeopleAtRiskOfDomesticViolence,
+            (int)invln_Homesdesignedforuseofparticulargrou.Youngpeople => PeopleGroupForSpecificDesignFeaturesType.YoungPeople,
+            (int)invln_Homesdesignedforuseofparticulargrou.Olderpeople => PeopleGroupForSpecificDesignFeaturesType.OlderPeople,
+            (int)invln_Homesdesignedforuseofparticulargrou.Noneoftheabove => PeopleGroupForSpecificDesignFeaturesType.NoneOfThese,
             _ => PeopleGroupForSpecificDesignFeaturesType.Undefined,
         };
     }
@@ -107,11 +107,11 @@ public class HomeInformationCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Home
     {
         return buildingType switch
         {
-            BuildingType.House => (int)invln_buildingtype.House,
-            BuildingType.Flat => (int)invln_buildingtype.Flat,
-            BuildingType.Bedsit => (int)invln_buildingtype.Bedsit,
-            BuildingType.Bungalow => (int)invln_buildingtype.Bungalow,
-            BuildingType.Maisonette => (int)invln_buildingtype.Maisonette,
+            BuildingType.House => (int)invln_Buildingtype.House,
+            BuildingType.Flat => (int)invln_Buildingtype.Flat,
+            BuildingType.Bedsit => (int)invln_Buildingtype.Bedsit,
+            BuildingType.Bungalow => (int)invln_Buildingtype.Bungalow,
+            BuildingType.Maisonette => (int)invln_Buildingtype.Maisonette,
             _ => null,
 
         };
@@ -121,11 +121,11 @@ public class HomeInformationCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Home
     {
         return buildingType switch
         {
-            (int)invln_buildingtype.House => BuildingType.House,
-            (int)invln_buildingtype.Flat => BuildingType.Flat,
-            (int)invln_buildingtype.Bedsit => BuildingType.Bedsit,
-            (int)invln_buildingtype.Bungalow => BuildingType.Bungalow,
-            (int)invln_buildingtype.Maisonette => BuildingType.Maisonette,
+            (int)invln_Buildingtype.House => BuildingType.House,
+            (int)invln_Buildingtype.Flat => BuildingType.Flat,
+            (int)invln_Buildingtype.Bedsit => BuildingType.Bedsit,
+            (int)invln_Buildingtype.Bungalow => BuildingType.Bungalow,
+            (int)invln_Buildingtype.Maisonette => BuildingType.Maisonette,
             _ => BuildingType.Undefined,
         };
     }
@@ -134,9 +134,9 @@ public class HomeInformationCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Home
     {
         return facilityType switch
         {
-            FacilityType.SelfContainedFacilities => (int)invln_facilities.Selfcontainedfacilities,
-            FacilityType.SharedFacilities => (int)invln_facilities.Sharedfacilities,
-            FacilityType.MixOfSelfContainedAndSharedFacilities => (int)invln_facilities.Mixofselfcontainedandsharedfacilities,
+            FacilityType.SelfContainedFacilities => (int)invln_Facilities.Selfcontainedfacilities,
+            FacilityType.SharedFacilities => (int)invln_Facilities.Sharedfacilities,
+            FacilityType.MixOfSelfContainedAndSharedFacilities => (int)invln_Facilities.Mixofselfcontainedandsharedfacilities,
             _ => null,
 
         };
@@ -146,9 +146,9 @@ public class HomeInformationCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Home
     {
         return facilityType switch
         {
-            (int)invln_facilities.Selfcontainedfacilities => FacilityType.SelfContainedFacilities,
-            (int)invln_facilities.Sharedfacilities => FacilityType.SharedFacilities,
-            (int)invln_facilities.Mixofselfcontainedandsharedfacilities => FacilityType.MixOfSelfContainedAndSharedFacilities,
+            (int)invln_Facilities.Selfcontainedfacilities => FacilityType.SelfContainedFacilities,
+            (int)invln_Facilities.Sharedfacilities => FacilityType.SharedFacilities,
+            (int)invln_Facilities.Mixofselfcontainedandsharedfacilities => FacilityType.MixOfSelfContainedAndSharedFacilities,
             _ => FacilityType.Undefined,
         };
     }
@@ -157,9 +157,9 @@ public class HomeInformationCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Home
     {
         return accessibilityCategory switch
         {
-            AccessibilityCategoryType.VisitableDwellings => (int)invln_accessibilitycategoryset.Category1VisitableDwelling,
-            AccessibilityCategoryType.AccessibleAndAdaptableDwellings => (int)invln_accessibilitycategoryset.Category2Accessibleandacceptabledwelling,
-            AccessibilityCategoryType.WheelchairUserDwellings => (int)invln_accessibilitycategoryset.Category3Wheelchairuserdwellings,
+            AccessibilityCategoryType.VisitableDwellings => (int)invln_AccessibilitycategorySet.Category1VisitableDwelling,
+            AccessibilityCategoryType.AccessibleAndAdaptableDwellings => (int)invln_AccessibilitycategorySet.Category2Accessibleandacceptabledwelling,
+            AccessibilityCategoryType.WheelchairUserDwellings => (int)invln_AccessibilitycategorySet.Category3Wheelchairuserdwellings,
             _ => null,
         };
     }
@@ -168,9 +168,9 @@ public class HomeInformationCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Home
     {
         return accessibilityCategory switch
         {
-            (int)invln_accessibilitycategoryset.Category1VisitableDwelling => AccessibilityCategoryType.VisitableDwellings,
-            (int)invln_accessibilitycategoryset.Category2Accessibleandacceptabledwelling => AccessibilityCategoryType.AccessibleAndAdaptableDwellings,
-            (int)invln_accessibilitycategoryset.Category3Wheelchairuserdwellings => AccessibilityCategoryType.WheelchairUserDwellings,
+            (int)invln_AccessibilitycategorySet.Category1VisitableDwelling => AccessibilityCategoryType.VisitableDwellings,
+            (int)invln_AccessibilitycategorySet.Category2Accessibleandacceptabledwelling => AccessibilityCategoryType.AccessibleAndAdaptableDwellings,
+            (int)invln_AccessibilitycategorySet.Category3Wheelchairuserdwellings => AccessibilityCategoryType.WheelchairUserDwellings,
             _ => AccessibilityCategoryType.Undefined,
         };
     }
@@ -179,10 +179,10 @@ public class HomeInformationCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Home
     {
         return value switch
         {
-            NationallyDescribedSpaceStandardType.BuiltInStorageSpaceSize => (int)invln_whichndssstandardshavebeenmet.Builtinstoragespacesize,
-            NationallyDescribedSpaceStandardType.BedroomAreas => (int)invln_whichndssstandardshavebeenmet.Bedroomareas,
-            NationallyDescribedSpaceStandardType.BedroomWidth => (int)invln_whichndssstandardshavebeenmet.Bedroomwidths,
-            NationallyDescribedSpaceStandardType.NoneOfThese => (int)invln_whichndssstandardshavebeenmet.Noneofthese,
+            NationallyDescribedSpaceStandardType.BuiltInStorageSpaceSize => (int)invln_WhichNDSSstandardshavebeenmet.Builtinstoragespacesize,
+            NationallyDescribedSpaceStandardType.BedroomAreas => (int)invln_WhichNDSSstandardshavebeenmet.Bedroomareas,
+            NationallyDescribedSpaceStandardType.BedroomWidth => (int)invln_WhichNDSSstandardshavebeenmet.Bedroomwidths,
+            NationallyDescribedSpaceStandardType.NoneOfThese => (int)invln_WhichNDSSstandardshavebeenmet.Noneofthese,
             _ => throw new ArgumentOutOfRangeException(nameof(value), $"Value {value} is not supported by CRM mapping."),
         };
     }
@@ -191,10 +191,10 @@ public class HomeInformationCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Home
     {
         return value switch
         {
-            (int)invln_whichndssstandardshavebeenmet.Builtinstoragespacesize => NationallyDescribedSpaceStandardType.BuiltInStorageSpaceSize,
-            (int)invln_whichndssstandardshavebeenmet.Bedroomareas => NationallyDescribedSpaceStandardType.BedroomAreas,
-            (int)invln_whichndssstandardshavebeenmet.Bedroomwidths => NationallyDescribedSpaceStandardType.BedroomWidth,
-            (int)invln_whichndssstandardshavebeenmet.Noneofthese => NationallyDescribedSpaceStandardType.NoneOfThese,
+            (int)invln_WhichNDSSstandardshavebeenmet.Builtinstoragespacesize => NationallyDescribedSpaceStandardType.BuiltInStorageSpaceSize,
+            (int)invln_WhichNDSSstandardshavebeenmet.Bedroomareas => NationallyDescribedSpaceStandardType.BedroomAreas,
+            (int)invln_WhichNDSSstandardshavebeenmet.Bedroomwidths => NationallyDescribedSpaceStandardType.BedroomWidth,
+            (int)invln_WhichNDSSstandardshavebeenmet.Noneofthese => NationallyDescribedSpaceStandardType.NoneOfThese,
             _ => throw new ArgumentOutOfRangeException(nameof(value), $"Value {value} is not supported by CRM mapping."),
         };
     }

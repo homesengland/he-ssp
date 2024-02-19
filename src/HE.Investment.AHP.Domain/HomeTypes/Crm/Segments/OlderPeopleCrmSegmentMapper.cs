@@ -31,10 +31,10 @@ public class OlderPeopleCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<OlderPeo
     {
         return value switch
         {
-            OlderPeopleHousingType.DesignatedSupportedHomes => (int)invln_olderpeoplehousingtypeset.Designatedsupportedhousing,
-            OlderPeopleHousingType.HomesWithAccessToSupport => (int)invln_olderpeoplehousingtypeset.Housingforolderpeoplewithaccesstosupportasrequired,
-            OlderPeopleHousingType.HomesWithSomeSpecialDesignFeatures => (int)invln_olderpeoplehousingtypeset.Housingforolderpeoplewithsomespecialdesignfeatures,
-            OlderPeopleHousingType.HomesWithAllSpecialDesignFeatures => (int)invln_olderpeoplehousingtypeset.Housingforolderpeoplewithallspecialdesignfeatures,
+            OlderPeopleHousingType.DesignatedSupportedHomes => (int)invln_OlderpeoplehousingtypeSet.Designatedsupportedhousing,
+            OlderPeopleHousingType.HomesWithAccessToSupport => (int)invln_OlderpeoplehousingtypeSet.Housingforolderpeoplewithaccesstosupportasrequired,
+            OlderPeopleHousingType.HomesWithSomeSpecialDesignFeatures => (int)invln_OlderpeoplehousingtypeSet.Housingforolderpeoplewithsomespecialdesignfeatures,
+            OlderPeopleHousingType.HomesWithAllSpecialDesignFeatures => (int)invln_OlderpeoplehousingtypeSet.Housingforolderpeoplewithallspecialdesignfeatures,
             _ => null,
         };
     }
@@ -43,10 +43,10 @@ public class OlderPeopleCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<OlderPeo
     {
         return value switch
         {
-            (int)invln_olderpeoplehousingtypeset.Designatedsupportedhousing => OlderPeopleHousingType.DesignatedSupportedHomes,
-            (int)invln_olderpeoplehousingtypeset.Housingforolderpeoplewithaccesstosupportasrequired => OlderPeopleHousingType.HomesWithAccessToSupport,
-            (int)invln_olderpeoplehousingtypeset.Housingforolderpeoplewithsomespecialdesignfeatures => OlderPeopleHousingType.HomesWithSomeSpecialDesignFeatures,
-            (int)invln_olderpeoplehousingtypeset.Housingforolderpeoplewithallspecialdesignfeatures => OlderPeopleHousingType.HomesWithAllSpecialDesignFeatures,
+            (int)invln_OlderpeoplehousingtypeSet.Designatedsupportedhousing => OlderPeopleHousingType.DesignatedSupportedHomes,
+            (int)invln_OlderpeoplehousingtypeSet.Housingforolderpeoplewithaccesstosupportasrequired => OlderPeopleHousingType.HomesWithAccessToSupport,
+            (int)invln_OlderpeoplehousingtypeSet.Housingforolderpeoplewithsomespecialdesignfeatures => OlderPeopleHousingType.HomesWithSomeSpecialDesignFeatures,
+            (int)invln_OlderpeoplehousingtypeSet.Housingforolderpeoplewithallspecialdesignfeatures => OlderPeopleHousingType.HomesWithAllSpecialDesignFeatures,
             _ => OlderPeopleHousingType.Undefined,
         };
     }
