@@ -17,6 +17,7 @@ using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.Workflow;
@@ -956,7 +957,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         var model = new SharedOwnershipModel(tenureDetails.ApplicationName, tenureDetails.HomeTypeName)
         {
             MarketValue = CurrencyHelper.InputPounds(tenureDetails.MarketValue),
-            InitialSale = tenureDetails.InitialSale?.ToString(CultureInfo.InvariantCulture),
+            InitialSale = tenureDetails.InitialSale.ToWholePercentage(),
             ExpectedFirstTranche = tenureDetails.ExpectedFirstTranche.DisplayPoundsPences(),
             ProspectiveRent = CurrencyHelper.InputPoundsPences(tenureDetails.ProspectiveRent),
             RentAsPercentageOfTheUnsoldShare =
@@ -1084,7 +1085,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         var model = new HomeOwnershipDisabilitiesModel(tenureDetails.ApplicationName, tenureDetails.HomeTypeName)
         {
             MarketValue = CurrencyHelper.InputPounds(tenureDetails.MarketValue),
-            InitialSale = tenureDetails.InitialSale?.ToString(CultureInfo.InvariantCulture),
+            InitialSale = tenureDetails.InitialSale.ToWholePercentage(),
             ExpectedFirstTranche = tenureDetails.ExpectedFirstTranche.DisplayPoundsPences(),
             ProspectiveRent = CurrencyHelper.InputPoundsPences(tenureDetails.ProspectiveRent),
             RentAsPercentageOfTheUnsoldShare =
@@ -1140,7 +1141,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         var model = new OlderPersonsSharedOwnershipModel(tenureDetails.ApplicationName, tenureDetails.HomeTypeName)
         {
             MarketValue = CurrencyHelper.InputPounds(tenureDetails.MarketValue),
-            InitialSale = tenureDetails.InitialSale?.ToString(CultureInfo.InvariantCulture),
+            InitialSale = tenureDetails.InitialSale.ToWholePercentage(),
             ExpectedFirstTranche = tenureDetails.ExpectedFirstTranche.DisplayPoundsPences(),
             ProspectiveRent = CurrencyHelper.InputPoundsPences(tenureDetails.ProspectiveRent),
             RentAsPercentageOfTheUnsoldShare =
