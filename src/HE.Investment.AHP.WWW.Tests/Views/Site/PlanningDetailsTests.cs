@@ -37,33 +37,42 @@ public class PlanningDetailsTests : ViewTestBase
         // then
         document
             .HasPageHeader(viewBag["SiteName"].ToString())
-            .HasInput(nameof(SiteModel.PlanningDetails.ReferenceNumber), value: model.ReferenceNumber, exist: referenceNumberExist)
+            .HasInput(
+                nameof(SiteModel.PlanningDetails.ReferenceNumber),
+                "Enter your planning reference number",
+                model.ReferenceNumber,
+                exist: referenceNumberExist)
             .HasDateInput(
                 nameof(SitePlanningDetails.DetailedPlanningApprovalDate),
+                "Enter when detailed planning approval was granted",
                 day: model.DetailedPlanningApprovalDate?.Day,
                 month: model.DetailedPlanningApprovalDate?.Month,
                 year: model.DetailedPlanningApprovalDate?.Year,
                 exist: detailedPlanningApprovalDateExist)
             .HasDateInput(
                 nameof(SitePlanningDetails.ApplicationForDetailedPlanningSubmittedDate),
+                "Enter when your application for detailed planning permission was submitted",
                 day: model.ApplicationForDetailedPlanningSubmittedDate?.Day,
                 month: model.ApplicationForDetailedPlanningSubmittedDate?.Month,
                 year: model.ApplicationForDetailedPlanningSubmittedDate?.Year,
                 exist: applicationForDetailedPlanningSubmittedDateExist)
             .HasDateInput(
                 nameof(SitePlanningDetails.OutlinePlanningApprovalDate),
+                "Enter when outline planning approval was granted",
                 day: model.OutlinePlanningApprovalDate?.Day,
                 month: model.OutlinePlanningApprovalDate?.Month,
                 year: model.OutlinePlanningApprovalDate?.Year,
                 exist: outlinePlanningApprovalDateExist)
             .HasDateInput(
                 nameof(SitePlanningDetails.PlanningSubmissionDate),
+                "Enter when your application for outline planning permission was submitted",
                 day: model.PlanningSubmissionDate?.Day,
                 month: model.PlanningSubmissionDate?.Month,
                 year: model.PlanningSubmissionDate?.Year,
                 exist: planningSubmissionDateExist)
             .HasDateInput(
                 nameof(SitePlanningDetails.ExpectedPlanningApprovalDate),
+                "Enter when you expect to get detailed planning approval",
                 day: model.ExpectedPlanningApprovalDate?.Day,
                 month: model.ExpectedPlanningApprovalDate?.Month,
                 year: model.ExpectedPlanningApprovalDate?.Year,
@@ -73,7 +82,11 @@ public class PlanningDetailsTests : ViewTestBase
                 new List<string> { "Yes", "No" },
                 value: "True",
                 exist: isGrantFundingForAllHomesExist)
-            .HasTextAreaInput(nameof(SitePlanningDetails.RequiredFurtherSteps), value: model.RequiredFurtherSteps, exist: requiredFurtherStepsExist)
+            .HasTextAreaInput(
+                nameof(SitePlanningDetails.RequiredFurtherSteps),
+                "Tell us the further steps required before start on site can occur",
+                model.RequiredFurtherSteps,
+                requiredFurtherStepsExist)
             .HasRadio(
                 nameof(SitePlanningDetails.IsLandRegistryTitleNumberRegistered),
                 new List<string> { "Yes", "No" },
