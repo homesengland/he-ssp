@@ -36,6 +36,8 @@ public static class DecimalExtensions
         return tmp / step;
     }
 
+    public static int ToPercentage100(this decimal value) => (int)(value * 100);
+
     public static string? ToPercentage100(this decimal? value) => value?.ToString("0.##\\%", CultureInfo.InvariantCulture);
 
     public static string? ToWholePercentage(this decimal? value) => value?.ToString("0%", CultureInfo.InvariantCulture);
