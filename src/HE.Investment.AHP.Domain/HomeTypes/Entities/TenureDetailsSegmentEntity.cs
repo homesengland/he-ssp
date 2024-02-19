@@ -159,10 +159,7 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
             return null;
         }
 
-        var result = (decimal)marketValue!.Value * initialSale!.Value / 100;
-        result = Math.Round(result, 2);
-
-        return result;
+        return (marketValue!.Value * initialSale!.Value).RoundToTwoDecimalPlaces();
     }
 
     public decimal? CalculateProspectiveRentAsPercentageOfTheUnsoldShare(MarketValue? marketValue, ProspectiveRent? prospectiveRent, InitialSale? initialSale)

@@ -13,15 +13,15 @@ public class TenureDetailsCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Tenure
     public TenureDetailsCrmSegmentMapper()
         : base(new[]
         {
-            nameof(invln_HomeType.invln_marketvalue),
-            nameof(invln_HomeType.invln_marketrent),
-            nameof(invln_HomeType.invln_prospectiverent),
+            nameof(invln_HomeType.invln_MarketValueofEachProperty),
+            nameof(invln_HomeType.invln_MarketRentperWeek),
+            nameof(invln_HomeType.invln_ProspectiveRentperWeek),
             nameof(invln_HomeType.invln_prospectiverentasofmarketrent),
             nameof(invln_HomeType.invln_targetrentover80ofmarketrent),
             nameof(invln_HomeType.invln_rtsoexempt),
             nameof(invln_HomeType.invln_reasonsforrtsoexemption),
-            nameof(invln_HomeType.invln_initialsale),
-            nameof(invln_HomeType.invln_expectedfirsttranchesalereceipt),
+            nameof(invln_HomeType.invln_SharedOwnershipInitialSale),
+            nameof(invln_HomeType.invln_FirstTrancheSalesReceipt),
             nameof(invln_HomeType.invln_proposedrentasaofunsoldshare),
         })
     {
@@ -32,7 +32,7 @@ public class TenureDetailsCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Tenure
     public override IHomeTypeSegmentEntity MapToEntity(ApplicationBasicInfo application, HomeTypeDto dto, IReadOnlyCollection<UploadedFile> uploadedFiles)
     {
         return new TenureDetailsSegmentEntity(
-            dto.marketValue.IsProvided() ? new MarketValue(dto.marketValue!.Value) : null,
+            dto.marketValue.IsProvided() ? new MarketValue((int)dto.marketValue!.Value.ToWholeNumberRoundFloor()) : null,
             dto.marketRent.IsProvided() ? new MarketRent(dto.marketRent!.Value) : null,
             dto.prospectiveRent.IsProvided() ? new ProspectiveRent(dto.prospectiveRent!.Value) : null,
             dto.prospectiveRentAsPercentOfMarketRent.IsProvided() ? new ProspectiveRentPercentage(dto.prospectiveRentAsPercentOfMarketRent!.Value) : null,
