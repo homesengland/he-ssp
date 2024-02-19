@@ -38,13 +38,13 @@ namespace HE.CRM.Common.DtoMapping
                 homesDesignedForUseOfParticularGroup = homeType.invln_homesdesignedforuseofparticular?.Value,
                 areHomesCustomBuild = homeType.invln_custombuild,
                 accessibilityCategory = homeType.invln_accessibilitycategory?.Value,
-                marketValue = homeType.invln_marketvalue,
-                marketRent = homeType.invln_marketrent,
-                prospectiveRent = homeType.invln_prospectiverent,
+                marketValue = homeType.invln_MarketValueofEachProperty.Value, //before invln_marketvalue
+                marketRent = homeType.invln_MarketRentperWeek.Value, //before invln_marketrent
+                prospectiveRent = homeType.invln_ProspectiveRentperWeek.Value, //before invln_prospectiverent
                 isWheelchairStandardMet = homeType.invln_iswheelchairstandardmet,
                 designPlansMoreInformation = homeType.invln_designplancomments,
                 RtSOExemption = homeType.invln_rtsoexempt,
-                initialSalePercent = homeType.invln_initialsale,
+                initialSalePercent = homeType.invln_SharedOwnershipInitialSale, //before invln_initialsale
                 prospectiveRentAsPercentOfMarketRent = homeType.invln_prospectiverentasofmarketrent,
                 isCompleted = homeType.invln_ishometypecompleted,
                 exemptionJustification = homeType.invln_reasonsforrtsoexemption,
@@ -53,7 +53,7 @@ namespace HE.CRM.Common.DtoMapping
                 whichNDSSStandardsHaveBeenMet = new List<int>(),
                 targetRentOver80PercentOfMarketRent = homeType.invln_targetrentover80ofmarketrent,
                 proposedRentAsPercentOfUnsoldShare = homeType.invln_proposedrentasaofunsoldshare,
-                expectedFirstTrancheSaleReceipt = homeType.invln_expectedfirsttranchesalereceipt,
+                expectedFirstTrancheSaleReceipt = homeType.invln_FirstTrancheSalesReceipt.Value, //before invln_expectedfirsttranchesalereceipt
             };
             if (homeType.Id != null)
             {
@@ -119,13 +119,13 @@ namespace HE.CRM.Common.DtoMapping
                 invln_homesdesignedforuseofparticular = MapNullableIntToOptionSetValue(homeTypeDto.homesDesignedForUseOfParticularGroup),
                 invln_custombuild = homeTypeDto.areHomesCustomBuild,
                 invln_accessibilitycategory = MapNullableIntToOptionSetValue(homeTypeDto.accessibilityCategory),
-                invln_marketvalue = homeTypeDto.marketValue,
-                invln_marketrent = homeTypeDto.marketRent,
-                invln_prospectiverent = homeTypeDto.prospectiveRent,
+                invln_MarketValueofEachProperty = MapNullableDecimalToMoney(homeTypeDto.marketValue),
+                invln_MarketRentperWeek = MapNullableDecimalToMoney(homeTypeDto.marketRent),
+                invln_ProspectiveRentperWeek = MapNullableDecimalToMoney(homeTypeDto.prospectiveRent),
                 invln_iswheelchairstandardmet = homeTypeDto.isWheelchairStandardMet,
                 invln_designplancomments = homeTypeDto.designPlansMoreInformation,
                 invln_rtsoexempt = homeTypeDto.RtSOExemption,
-                invln_initialsale = homeTypeDto.initialSalePercent,
+                invln_SharedOwnershipInitialSale = homeTypeDto.initialSalePercent,
                 invln_prospectiverentasofmarketrent = homeTypeDto.prospectiveRentAsPercentOfMarketRent,
                 invln_ishometypecompleted = homeTypeDto.isCompleted,
                 invln_reasonsforrtsoexemption = homeTypeDto.exemptionJustification,
@@ -133,7 +133,7 @@ namespace HE.CRM.Common.DtoMapping
                 invln_doallhomesmeetNDSS = homeTypeDto.doAllHomesMeetNDSS,
                 invln_whichndssstandardshavebeenmet = new OptionSetValueCollection(),
                 invln_targetrentover80ofmarketrent = homeTypeDto.targetRentOver80PercentOfMarketRent,
-                invln_expectedfirsttranchesalereceipt = homeTypeDto.expectedFirstTrancheSaleReceipt,
+                invln_FirstTrancheSalesReceipt = MapNullableDecimalToMoney(homeTypeDto.expectedFirstTrancheSaleReceipt),
                 invln_proposedrentasaofunsoldshare = homeTypeDto.proposedRentAsPercentOfUnsoldShare,
             };
             if (homeTypeDto.id != null)
@@ -178,6 +178,14 @@ namespace HE.CRM.Common.DtoMapping
             if (valueToMap.HasValue)
             {
                 return new OptionSetValue(valueToMap.Value);
+            }
+            return null;
+        }
+        private static Money MapNullableDecimalToMoney(decimal? valueToMap)
+        {
+            if (valueToMap.HasValue)
+            {
+                return new Money(valueToMap.Value);
             }
             return null;
         }
