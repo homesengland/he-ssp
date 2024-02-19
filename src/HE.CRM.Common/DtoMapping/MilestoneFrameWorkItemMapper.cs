@@ -15,10 +15,10 @@ namespace HE.CRM.Common.DtoMapping
             {
                 name = milestoneframeworkitem.invln_milestoneframeworkitemname,
                 programme = milestoneframeworkitem.invln_programmeId.Id.ToString(),
-                milestone = milestoneframeworkitem.invln_milestone.Value,
+                milestone = milestoneframeworkitem.invln_milestone?.Value,
                 isMilestonePayable =  milestoneframeworkitem.invln_ismilestonepayable,
                 percentPaid = milestoneframeworkitem.invln_percentagepaidonmilestone,
-                minimumValue = milestoneframeworkitem.invln_MinimumValue.Value, 
+                minimumValue = milestoneframeworkitem.invln_MinimumValue?.Value,
             };
             return milestoneframeworkitemDto;
         }

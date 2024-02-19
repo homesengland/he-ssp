@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Services;
 using DataverseModel;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using Microsoft.Xrm.Sdk;
@@ -38,9 +39,9 @@ namespace HE.CRM.Common.DtoMapping
                 homesDesignedForUseOfParticularGroup = homeType.invln_homesdesignedforuseofparticular?.Value,
                 areHomesCustomBuild = homeType.invln_custombuild,
                 accessibilityCategory = homeType.invln_accessibilitycategory?.Value,
-                marketValue = homeType.invln_MarketValueofEachProperty.Value, //before invln_marketvalue
-                marketRent = homeType.invln_MarketRentperWeek.Value, //before invln_marketrent
-                prospectiveRent = homeType.invln_ProspectiveRentperWeek.Value, //before invln_prospectiverent
+                marketValue = homeType.invln_MarketValueofEachProperty?.Value, //before invln_marketvalue
+                marketRent = homeType.invln_MarketRentperWeek?.Value, //before invln_marketrent
+                prospectiveRent = homeType.invln_ProspectiveRentperWeek?.Value, //before invln_prospectiverent
                 isWheelchairStandardMet = homeType.invln_iswheelchairstandardmet,
                 designPlansMoreInformation = homeType.invln_designplancomments,
                 RtSOExemption = homeType.invln_rtsoexempt,
@@ -53,7 +54,7 @@ namespace HE.CRM.Common.DtoMapping
                 whichNDSSStandardsHaveBeenMet = new List<int>(),
                 targetRentOver80PercentOfMarketRent = homeType.invln_targetrentover80ofmarketrent,
                 proposedRentAsPercentOfUnsoldShare = homeType.invln_proposedrentasaofunsoldshare,
-                expectedFirstTrancheSaleReceipt = homeType.invln_FirstTrancheSalesReceipt.Value, //before invln_expectedfirsttranchesalereceipt
+                expectedFirstTrancheSaleReceipt = homeType.invln_FirstTrancheSalesReceipt?.Value, //before invln_expectedfirsttranchesalereceipt
             };
             if (homeType.Id != null)
             {
