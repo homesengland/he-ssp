@@ -132,9 +132,9 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
             mmc.ModernMethodsOfConstruction?.ModernMethodsConstructionCategories.ToList(),
             mmc.ModernMethodsOfConstruction?.ModernMethodsConstruction2DSubcategories.ToList(),
             mmc.ModernMethodsOfConstruction?.ModernMethodsConstruction3DSubcategories.ToList(),
-            mmc.FutureAdoption?.Plans.Value,
-            mmc.FutureAdoption?.ExpectedImpact.Value,
-            mmc.Information?.Barriers.Value,
-            mmc.Information?.Impact.Value);
+            mmc.FutureAdoption?.Plans?.Value,
+            mmc.FutureAdoption?.ExpectedImpact?.Value,
+            mmc.Information?.Barriers?.Value,
+            mmc.Information?.Impact?.Value);
     }
 }

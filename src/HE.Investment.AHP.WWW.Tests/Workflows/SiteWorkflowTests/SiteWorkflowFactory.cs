@@ -26,7 +26,8 @@ public static class SiteWorkflowFactory
         SiteUseDetails? siteUseDetails = null,
         IList<SiteProcurement>? procurements = null,
         SiteRuralClassification? ruralClassification = null,
-        EnvironmentalImpact? environmentalImpact = null)
+        EnvironmentalImpact? environmentalImpact = null,
+        SiteModernMethodsOfConstruction? modernMethodsOfConstruction = null)
     {
         var site = new SiteModel
         {
@@ -45,6 +46,7 @@ public static class SiteWorkflowFactory
             SiteProcurements = procurements ?? new List<SiteProcurement>(),
             RuralClassification = ruralClassification ?? new SiteRuralClassification(null, null),
             EnvironmentalImpact = environmentalImpact?.Value,
+            ModernMethodsOfConstruction = modernMethodsOfConstruction ?? new SiteModernMethodsOfConstruction(),
         };
 
         return new SiteWorkflow(currentSiteWorkflowState, site);
