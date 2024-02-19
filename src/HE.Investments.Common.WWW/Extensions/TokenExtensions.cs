@@ -1,6 +1,6 @@
 using System.Security.Claims;
 
-namespace HE.Investments.Loans.Common.Extensions;
+namespace HE.Investments.Common.WWW.Extensions;
 
 public static class TokenExtensions
 {

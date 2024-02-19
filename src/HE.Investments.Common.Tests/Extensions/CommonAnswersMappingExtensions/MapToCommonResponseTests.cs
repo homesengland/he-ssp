@@ -1,9 +1,9 @@
 using FluentAssertions;
-using HE.Investments.Loans.Common.Extensions;
-using HE.Investments.Loans.Common.Utils.Constants.FormOption;
+using HE.Investments.Common.Contract.Constants;
+using HE.Investments.Common.WWW.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace HE.Investments.Loans.Common.Tests.Extensions.CommonAnswersMappingExtensions;
+namespace HE.Investments.Common.Tests.Extensions.CommonAnswersMappingExtensions;
 
 [TestClass]
 public class MapToCommonResponseTests

@@ -5,6 +5,7 @@ using HE.Investments.Common.WWW.TagConstructs;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
+using RadioBuilder = HE.Investments.Common.WWW.TagConstructs.RadioBuilder;
 
 namespace HE.Investments.Common.WWW.TagHelpers;
 

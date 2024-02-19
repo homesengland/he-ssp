@@ -1,10 +1,10 @@
+using HE.Investments.Common.Models.App;
 using HE.Investments.Common.WWW.Infrastructure.Authorization;
 using HE.Investments.Common.WWW.Infrastructure.Cache;
 using HE.Investments.Common.WWW.Infrastructure.ErrorHandling;
+using HE.Investments.Common.WWW.Infrastructure.Middlewares;
 using HE.Investments.Common.WWW.Partials;
 using HE.Investments.DocumentService.Extensions;
-using HE.Investments.Loans.Common.Infrastructure.Middlewares;
-using HE.Investments.Loans.Common.Models.App;
 using HE.Investments.Loans.WWW.Config;
 using HE.Investments.Loans.WWW.Extensions;
 using HE.Investments.Loans.WWW.Middlewares;

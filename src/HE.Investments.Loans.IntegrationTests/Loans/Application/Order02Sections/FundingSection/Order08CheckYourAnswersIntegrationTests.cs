@@ -14,7 +14,7 @@ using HE.Investments.Loans.WWW.Views.FundingV2.Consts;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
 using Xunit.Extensions.Ordering;
-using CommonResponse = HE.Investments.Loans.Common.Utils.Constants.FormOption.CommonResponse;
+using CommonResponse = HE.Investments.Common.Contract.Constants.CommonResponse;
 
 namespace HE.Investments.Loans.IntegrationTests.Loans.Application.Order02Sections.FundingSection;
 

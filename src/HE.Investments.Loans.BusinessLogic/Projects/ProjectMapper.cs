@@ -1,8 +1,8 @@
 using System.Globalization;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Loans.BusinessLogic.Projects.Entities;
 using HE.Investments.Loans.BusinessLogic.Projects.Repositories.Mappers;
-using HE.Investments.Loans.Common.Extensions;
 using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
 using HE.Investments.Loans.Contract.Projects.ViewModels;

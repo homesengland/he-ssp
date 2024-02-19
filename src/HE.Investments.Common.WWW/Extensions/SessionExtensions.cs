@@ -1,7 +1,7 @@
 using System.Text.Json;
 using Microsoft.AspNetCore.Http;
 
-namespace HE.Investments.Loans.Common.Extensions;
+namespace HE.Investments.Common.WWW.Extensions;
 
 public static class SessionExtensions
 {

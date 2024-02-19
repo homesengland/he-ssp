@@ -1,4 +1,4 @@
-namespace HE.Investments.Loans.Common.Models.App;
+namespace HE.Investments.Common.Models.App;
 
 /// <summary>
 /// FeedBackUrl Configurations.

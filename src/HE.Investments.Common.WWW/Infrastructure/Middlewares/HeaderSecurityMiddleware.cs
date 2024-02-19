@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Http;
 
-namespace HE.Investments.Loans.Common.Infrastructure.Middlewares;
+namespace HE.Investments.Common.WWW.Infrastructure.Middlewares;
 
 public class HeaderSecurityMiddleware
 {

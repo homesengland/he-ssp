@@ -15,7 +15,7 @@ public static class PartialsModule
             .AddRazorRuntimeCompilation();
 
         services.Configure<MvcRazorRuntimeCompilationOptions>(
-            options => options.FileProviders.Add(new EmbeddedFileProvider(assembly)));
+             options => options.FileProviders.Add(new EmbeddedFileProvider(assembly)));
 
         return services;
     }
