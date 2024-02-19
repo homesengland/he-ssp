@@ -28,12 +28,22 @@ public class SiteModernMethodsOfConstruction : ValueObject, IQuestion
 
     public static SiteModernMethodsOfConstruction Create(SiteModernMethodsOfConstruction old, SiteUsingModernMethodsOfConstruction? siteUsingModernMethodsOfConstruction)
     {
-        if (siteUsingModernMethodsOfConstruction is not null and not Contract.Site.SiteUsingModernMethodsOfConstruction.No)
+        if (siteUsingModernMethodsOfConstruction == Contract.Site.SiteUsingModernMethodsOfConstruction.No)
+        {
+            return new SiteModernMethodsOfConstruction(siteUsingModernMethodsOfConstruction, null, old.FutureAdoption);
+        }
+
+        if (siteUsingModernMethodsOfConstruction == Contract.Site.SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes)
+        {
+            return new SiteModernMethodsOfConstruction(siteUsingModernMethodsOfConstruction);
+        }
+
+        if (siteUsingModernMethodsOfConstruction == Contract.Site.SiteUsingModernMethodsOfConstruction.Yes)
         {
             return new SiteModernMethodsOfConstruction(siteUsingModernMethodsOfConstruction, old.Information, null, old.ModernMethodsOfConstruction);
         }
 
-        return new SiteModernMethodsOfConstruction(siteUsingModernMethodsOfConstruction, null, old.FutureAdoption, null);
+        return new SiteModernMethodsOfConstruction(siteUsingModernMethodsOfConstruction);
     }
 
     public static SiteModernMethodsOfConstruction Create(SiteModernMethodsOfConstruction old, IList<ModernMethodsConstructionCategoriesType>? modernMethodsConstructionCategories)
@@ -88,9 +98,14 @@ public class SiteModernMethodsOfConstruction : ValueObject, IQuestion
             return FutureAdoption != null && FutureAdoption.IsAnswered();
         }
 
-        if (SiteUsingModernMethodsOfConstruction is Contract.Site.SiteUsingModernMethodsOfConstruction.Yes or Contract.Site.SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes)
+        if (SiteUsingModernMethodsOfConstruction is Contract.Site.SiteUsingModernMethodsOfConstruction.Yes)
         {
             return Information != null && Information.IsAnswered() && ModernMethodsOfConstruction != null && ModernMethodsOfConstruction.IsAnswered();
+        }
+
+        if (SiteUsingModernMethodsOfConstruction is Contract.Site.SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes)
+        {
+            return true;
         }
 
         return false;
