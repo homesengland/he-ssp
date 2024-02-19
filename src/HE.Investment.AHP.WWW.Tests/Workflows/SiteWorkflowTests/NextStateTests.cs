@@ -94,7 +94,7 @@ public class NextStateTests
     [InlineData(SiteWorkflowState.RuralClassification, SiteWorkflowState.SiteUse)]
     [InlineData(SiteWorkflowState.EnvironmentalImpact, SiteWorkflowState.RuralClassification)]
     [InlineData(SiteWorkflowState.MmcUsing, SiteWorkflowState.EnvironmentalImpact)]
-    [InlineData(SiteWorkflowState.Procurements, SiteWorkflowState.MmcCategories)]
+    [InlineData(SiteWorkflowState.Procurements, SiteWorkflowState.MmcUsing)]
     [InlineData(SiteWorkflowState.CheckAnswers, SiteWorkflowState.Procurements)]
     public async Task ShouldReturnNextState_WhenBackTriggerExecuted(SiteWorkflowState current, SiteWorkflowState expectedNext)
     {

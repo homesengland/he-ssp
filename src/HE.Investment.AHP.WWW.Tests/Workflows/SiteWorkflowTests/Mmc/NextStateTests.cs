@@ -21,7 +21,7 @@ public class NextStateTests
     }
 
     [Theory]
-    [InlineData(SiteWorkflowState.Procurements, SiteWorkflowState.MmcCategories)]
+    [InlineData(SiteWorkflowState.Procurements, SiteWorkflowState.MmcUsing)]
     [InlineData(SiteWorkflowState.Mmc3DCategory, SiteWorkflowState.MmcCategories)]
     [InlineData(SiteWorkflowState.MmcCategories, SiteWorkflowState.MmcInformation)]
     [InlineData(SiteWorkflowState.MmcInformation, SiteWorkflowState.MmcUsing)]
@@ -41,14 +41,15 @@ public class NextStateTests
     }
 
     [Theory]
-    [InlineData(SiteUsingModernMethodsOfConstruction.Yes)]
-    [InlineData(SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes)]
+    [InlineData(SiteUsingModernMethodsOfConstruction.Yes, SiteWorkflowState.MmcInformation)]
+    [InlineData(SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes, SiteWorkflowState.Procurements)]
     public async Task ShouldReturnNextState_WhenContinueTriggerExecutedWithModernMethodsOfConstruction(
-        SiteUsingModernMethodsOfConstruction usingModernMethodsOfConstruction)
+        SiteUsingModernMethodsOfConstruction usingModernMethodsOfConstruction,
+        SiteWorkflowState expectedState)
     {
         var modernMethodsOfConstruction = new SiteModernMethodsOfConstruction(usingModernMethodsOfConstruction);
 
-        await TestContinue(SiteWorkflowState.MmcUsing, SiteWorkflowState.MmcInformation, modernMethodsOfConstruction);
+        await TestContinue(SiteWorkflowState.MmcUsing, expectedState, modernMethodsOfConstruction);
     }
 
     [Fact]
@@ -158,6 +159,14 @@ public class NextStateTests
             });
 
         await TestBack(SiteWorkflowState.Mmc2DCategory, SiteWorkflowState.MmcCategories, modernMethodsOfConstruction);
+    }
+
+    [Fact]
+    public async Task ShouldReturnMmcUsing_WhenBackTriggerExecutedForOnlyForSomeHomesModernMethodsOfConstruction()
+    {
+        var modernMethodsOfConstruction = new SiteModernMethodsOfConstruction(SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes);
+
+        await TestBack(SiteWorkflowState.Procurements, SiteWorkflowState.MmcUsing, modernMethodsOfConstruction);
     }
 
     private static async Task TestBack(

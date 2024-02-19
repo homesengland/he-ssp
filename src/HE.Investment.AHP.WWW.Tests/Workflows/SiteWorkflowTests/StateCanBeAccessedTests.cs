@@ -115,21 +115,21 @@ public class StateCanBeAccessedTests
     }
 
     [Theory]
-    [InlineData(SiteUsingModernMethodsOfConstruction.Yes)]
-    [InlineData(SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes)]
-    public async Task ShouldReturnTrue_WhenMethodCalledForMmcInformationForSomeSiteUsingModernMethodsOfConstruction(SiteUsingModernMethodsOfConstruction usingModernMethodsOfConstruction)
+    [InlineData(SiteUsingModernMethodsOfConstruction.Yes, true)]
+    [InlineData(SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes, false)]
+    public async Task ShouldReturnTrue_WhenMethodCalledForMmcInformationForSomeSiteUsingModernMethodsOfConstruction(SiteUsingModernMethodsOfConstruction usingModernMethodsOfConstruction, bool expectedCanBeAccessed)
     {
         var modernMethodsOfConstruction = new SiteModernMethodsOfConstruction(usingModernMethodsOfConstruction);
-        await Test(SiteWorkflowState.MmcInformation, modernMethodsOfConstruction);
+        await Test(SiteWorkflowState.MmcInformation, modernMethodsOfConstruction, expectedCanBeAccessed);
     }
 
     [Theory]
-    [InlineData(SiteUsingModernMethodsOfConstruction.Yes)]
-    [InlineData(SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes)]
-    public async Task ShouldReturnTrue_WhenMethodCalledForMmcCategoriesForSomeSiteUsingModernMethodsOfConstruction(SiteUsingModernMethodsOfConstruction usingModernMethodsOfConstruction)
+    [InlineData(SiteUsingModernMethodsOfConstruction.Yes, true)]
+    [InlineData(SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes, false)]
+    public async Task ShouldReturnTrue_WhenMethodCalledForMmcCategoriesForSomeSiteUsingModernMethodsOfConstruction(SiteUsingModernMethodsOfConstruction usingModernMethodsOfConstruction, bool expectedCanBeAccessed)
     {
         var modernMethodsOfConstruction = new SiteModernMethodsOfConstruction(usingModernMethodsOfConstruction);
-        await Test(SiteWorkflowState.MmcCategories, modernMethodsOfConstruction);
+        await Test(SiteWorkflowState.MmcCategories, modernMethodsOfConstruction, expectedCanBeAccessed);
     }
 
     [Fact]
@@ -156,7 +156,8 @@ public class StateCanBeAccessedTests
 
     private static async Task Test(
         SiteWorkflowState state,
-        SiteModernMethodsOfConstruction? modernMethodsOfConstruction = null)
+        SiteModernMethodsOfConstruction? modernMethodsOfConstruction = null,
+        bool expectedCanBeAccessed = true)
     {
         // given
         var workflow = SiteWorkflowFactory.BuildWorkflow(
@@ -167,6 +168,6 @@ public class StateCanBeAccessedTests
         var result = await workflow.StateCanBeAccessed(state);
 
         // then
-        result.Should().BeTrue();
+        result.Should().Be(expectedCanBeAccessed);
     }
 }

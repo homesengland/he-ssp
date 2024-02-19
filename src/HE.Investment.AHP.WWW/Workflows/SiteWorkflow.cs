@@ -271,7 +271,7 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
         _machine.Configure(SiteWorkflowState.MmcUsing)
             .PermitIf(Trigger.Continue, SiteWorkflowState.MmcFutureAdoption, IsNotUsingModernMethodsOfConstruction)
             .PermitIf(Trigger.Continue, SiteWorkflowState.MmcInformation, IsUsingModernMethodsOfConstruction)
-            .PermitIf(Trigger.Continue, SiteWorkflowState.Procurements, IsUsingModernMethodsOfConstructionNotSelected)
+            .PermitIf(Trigger.Continue, SiteWorkflowState.Procurements, IsUsingModernMethodsOfConstructionNotSelectedOrOnlyForSomeHomes)
             .Permit(Trigger.Back, SiteWorkflowState.EnvironmentalImpact);
 
         _machine.Configure(SiteWorkflowState.MmcFutureAdoption)
@@ -302,7 +302,8 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             .Permit(Trigger.Continue, SiteWorkflowState.CheckAnswers)
             .PermitIf(Trigger.Back, SiteWorkflowState.Mmc2DCategory, Is2DCategorySelected)
             .PermitIf(Trigger.Back, SiteWorkflowState.Mmc3DCategory, () => Is3DCategorySelected() && !Is2DCategorySelected())
-            .PermitIf(Trigger.Back, SiteWorkflowState.MmcCategories, () => !IsNotUsingModernMethodsOfConstruction() && !Is3DOr2DCategorySelected())
+            .PermitIf(Trigger.Back, SiteWorkflowState.MmcCategories, () => IsUsingModernMethodsOfConstruction() && !Is3DOr2DCategorySelected())
+            .PermitIf(Trigger.Back, SiteWorkflowState.MmcUsing, IsUsingModernMethodsOfConstructionNotSelectedOrOnlyForSomeHomes)
             .PermitIf(Trigger.Back, SiteWorkflowState.MmcFutureAdoption, IsNotUsingModernMethodsOfConstruction);
 
         _machine.Configure(SiteWorkflowState.CheckAnswers)
@@ -338,14 +339,13 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
     private bool IsForTravellerPitchSite() => _siteModel?.SiteUseDetails.IsForTravellerPitchSite == true;
 
     private bool IsUsingModernMethodsOfConstruction() =>
-        _siteModel?.ModernMethodsOfConstruction.UsingModernMethodsOfConstruction is SiteUsingModernMethodsOfConstruction.Yes
-            or SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes;
+        _siteModel?.ModernMethodsOfConstruction.UsingModernMethodsOfConstruction is SiteUsingModernMethodsOfConstruction.Yes;
 
     private bool IsNotUsingModernMethodsOfConstruction() =>
         _siteModel?.ModernMethodsOfConstruction.UsingModernMethodsOfConstruction is SiteUsingModernMethodsOfConstruction.No;
 
-    private bool IsUsingModernMethodsOfConstructionNotSelected() =>
-        _siteModel?.ModernMethodsOfConstruction.UsingModernMethodsOfConstruction == null;
+    private bool IsUsingModernMethodsOfConstructionNotSelectedOrOnlyForSomeHomes() =>
+        _siteModel?.ModernMethodsOfConstruction.UsingModernMethodsOfConstruction is null or SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes;
 
     private bool Is3DCategorySelected()
     {
