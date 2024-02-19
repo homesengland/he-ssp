@@ -19,7 +19,7 @@ public class IsReadOnlyTests : TestBase<LoanApplicationEntity>
     [InlineData(ApplicationStatus.InDueDiligence)]
     [InlineData(ApplicationStatus.ApprovedSubjectToContract)]
     [InlineData(ApplicationStatus.AwaitingCpSatisfaction)]
-    [InlineData(ApplicationStatus.CpsSatisfied)]
+    [InlineData(ApplicationStatus.ConditionsSatisfied)]
     [InlineData(ApplicationStatus.LoanAvailable)]
     [InlineData(ApplicationStatus.HoldRequested)]
     [InlineData(ApplicationStatus.OnHold)]
