@@ -44,21 +44,26 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             if (applications.Any())
             {
 
-                var ahpWithNewStatusCodes = MapAhpExternalStatusToInternal(new OptionSetValue(newStatus));
+                var ahpWithNewStatusCodesAndOtherChanges = MapAhpExternalStatusToInternalAndSetOtherValues(new OptionSetValue(newStatus));
                 var application = applications.First();
                 var applicationToUpdate = new invln_scheme()
                 {
                     Id = application.Id,
-                    StatusCode = ahpWithNewStatusCodes.StatusCode,
-                    StateCode = ahpWithNewStatusCodes.StateCode,
+                    StatusCode = ahpWithNewStatusCodesAndOtherChanges.StatusCode,
+                    StateCode = ahpWithNewStatusCodesAndOtherChanges.StateCode,
                     invln_ExternalStatus = new OptionSetValue(newStatus),
                 };
+
+                if (ahpWithNewStatusCodesAndOtherChanges.invln_DateSubmitted != null)
+                {
+                    applicationToUpdate.invln_DateSubmitted = ahpWithNewStatusCodesAndOtherChanges.invln_DateSubmitted;
+                }
 
                 var ahpStatusChangeToCreate = new invln_AHPStatusChange()
                 {
                     invln_Changefrom = application.StatusCode,
                     invln_ChangeSource = new OptionSetValue((int)invln_ChangesourceSet.External),
-                    invln_Changeto = ahpWithNewStatusCodes.StatusCode,
+                    invln_Changeto = ahpWithNewStatusCodesAndOtherChanges.StatusCode,
                     invln_AHPApplication = application.ToEntityReference(),
                     invln_Comment = changeReason
                 };
@@ -253,7 +258,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             }
         }
 
-        private invln_scheme MapAhpExternalStatusToInternal(OptionSetValue externalStatus)
+        private invln_scheme MapAhpExternalStatusToInternalAndSetOtherValues(OptionSetValue externalStatus)
         {
             var ahpApplication = new invln_scheme();
             switch (externalStatus.Value)
@@ -265,6 +270,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                 case (int)invln_ExternalStatusAHP.ApplicationSubmitted:
                     ahpApplication.StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.ApplicationSubmitted);
                     ahpApplication.StateCode = new OptionSetValue((int)invln_schemeState.Active);
+                    ahpApplication.invln_DateSubmitted = DateTime.Today;
                     break;
                 case (int)invln_ExternalStatusAHP.Approved:
                     ahpApplication.StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Approved);
