@@ -217,7 +217,7 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
             factory.Question(
                 "Shared Ownership rent as percentage of the unsold share",
                 nameof(Controller.SharedOwnership),
-                tenure.RentAsPercentageOfTheUnsoldShare.ToWholePercentage()),
+                tenure.RentAsPercentageOfTheUnsoldShare.ToPercentageWithTwoDecimal()),
             factory.DeadEnd(nameof(Controller.ProspectiveRentIneligible)));
     }
 
@@ -228,7 +228,7 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
             factory.Question("Market value of each home", nameof(Controller.RentToBuy), CurrencyHelper.DisplayPounds(tenure.MarketValue)),
             factory.Question("Market rent per week", nameof(Controller.RentToBuy), CurrencyHelper.DisplayPoundsPences(tenure.MarketRent)),
             factory.Question("Rent per week", nameof(Controller.RentToBuy), CurrencyHelper.DisplayPoundsPences(tenure.ProspectiveRent)),
-            factory.Question("Rent as percentage of market rent", nameof(Controller.RentToBuy), tenure.ProspectiveRentAsPercentageOfMarketRent.ToWholePercentage()),
+            factory.Question("Rent as percentage of market rent", nameof(Controller.RentToBuy), tenure.ProspectiveRentAsPercentageOfMarketRent.ToPercentageWithTwoDecimal()),
             factory.Question("Target rent exceed 80% of market rent", nameof(Controller.RentToBuy), tenure.TargetRentExceedMarketRent),
             factory.DeadEnd(nameof(Controller.RentToBuyIneligible)));
     }
@@ -244,7 +244,7 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
             factory.Question(
                 "Rent as percentage of the unsold share",
                 nameof(Controller.HomeOwnershipDisabilities),
-                tenure.RentAsPercentageOfTheUnsoldShare.ToWholePercentage()),
+                tenure.RentAsPercentageOfTheUnsoldShare.ToPercentageWithTwoDecimal()),
             factory.DeadEnd(nameof(Controller.ProspectiveRentIneligible)));
     }
 
@@ -259,7 +259,7 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
             factory.Question(
                 "Rent as percentage of the unsold share",
                 nameof(Controller.OlderPersonsSharedOwnership),
-                tenure.RentAsPercentageOfTheUnsoldShare.ToWholePercentage()),
+                tenure.RentAsPercentageOfTheUnsoldShare.ToPercentageWithTwoDecimal()),
             factory.DeadEnd(nameof(Controller.ProspectiveRentIneligible)));
     }
 

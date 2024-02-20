@@ -864,7 +864,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
             MarketValue = CurrencyHelper.InputPounds(tenureDetails.MarketValue),
             MarketRent = CurrencyHelper.InputPoundsPences(tenureDetails.MarketRent),
             ProspectiveRent = CurrencyHelper.InputPoundsPences(tenureDetails.ProspectiveRent),
-            ProspectiveRentAsPercentageOfMarketRent = tenureDetails.ProspectiveRentAsPercentageOfMarketRent?.ToString("0", CultureInfo.InvariantCulture),
+            ProspectiveRentAsPercentageOfMarketRent = tenureDetails.ProspectiveRentAsPercentageOfMarketRent.ToWholePercentage(),
             TargetRentExceedMarketRent = tenureDetails.TargetRentExceedMarketRent,
         };
 
@@ -892,7 +892,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
                     model.TargetRentExceedMarketRent),
                 cancellationToken);
             this.AddOrderedErrors<AffordableRentModel>(operationResult);
-            model.ProspectiveRentAsPercentageOfMarketRent = calculationResult.ProspectiveRentPercentage?.ToString("0", CultureInfo.InvariantCulture);
+            model.ProspectiveRentAsPercentageOfMarketRent = calculationResult.ProspectiveRentPercentage.ToWholePercentage();
             return View(model);
         }
 
@@ -961,7 +961,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
             ExpectedFirstTranche = tenureDetails.ExpectedFirstTranche.DisplayPoundsPences(),
             ProspectiveRent = CurrencyHelper.InputPoundsPences(tenureDetails.ProspectiveRent),
             RentAsPercentageOfTheUnsoldShare =
-                tenureDetails.RentAsPercentageOfTheUnsoldShare?.ToString("0.##", CultureInfo.InvariantCulture),
+                tenureDetails.RentAsPercentageOfTheUnsoldShare.ToPercentageWithTwoDecimal().WithoutPercentageChar(),
         };
 
         return View(model);
@@ -988,7 +988,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
                 cancellationToken);
 
             model.ExpectedFirstTranche = calculationResult.ExpectedFirstTranche.DisplayPoundsPences();
-            model.RentAsPercentageOfTheUnsoldShare = calculationResult.ProspectiveRentPercentage?.ToString("0.##", CultureInfo.InvariantCulture);
+            model.RentAsPercentageOfTheUnsoldShare = calculationResult.ProspectiveRentPercentage.ToPercentageWithTwoDecimal();
 
             this.AddOrderedErrors<SharedOwnershipModel>(operationResult);
 
@@ -1025,7 +1025,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
             MarketValue = CurrencyHelper.InputPounds(tenureDetails.MarketValue),
             MarketRent = CurrencyHelper.InputPoundsPences(tenureDetails.MarketRent),
             ProspectiveRent = CurrencyHelper.InputPoundsPences(tenureDetails.ProspectiveRent),
-            ProspectiveRentAsPercentageOfMarketRent = tenureDetails.ProspectiveRentAsPercentageOfMarketRent?.ToString("00.00", CultureInfo.InvariantCulture),
+            ProspectiveRentAsPercentageOfMarketRent = tenureDetails.ProspectiveRentAsPercentageOfMarketRent.ToPercentageWithTwoDecimal(),
             TargetRentExceedMarketRent = tenureDetails.TargetRentExceedMarketRent,
         };
 
@@ -1053,7 +1053,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
                     model.TargetRentExceedMarketRent),
                 cancellationToken);
             this.AddOrderedErrors<RentToBuyModel>(operationResult);
-            model.ProspectiveRentAsPercentageOfMarketRent = calculationResult.ProspectiveRentPercentage?.ToString("0", CultureInfo.InvariantCulture);
+            model.ProspectiveRentAsPercentageOfMarketRent = calculationResult.ProspectiveRentPercentage?.ToWholePercentage();
 
             return View(model);
         }
@@ -1085,11 +1085,10 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         var model = new HomeOwnershipDisabilitiesModel(tenureDetails.ApplicationName, tenureDetails.HomeTypeName)
         {
             MarketValue = CurrencyHelper.InputPounds(tenureDetails.MarketValue),
-            InitialSale = tenureDetails.InitialSale.ToWholePercentage(),
+            InitialSale = tenureDetails.InitialSale.ToWholePercentage().WithoutPercentageChar(),
             ExpectedFirstTranche = tenureDetails.ExpectedFirstTranche.DisplayPoundsPences(),
             ProspectiveRent = CurrencyHelper.InputPoundsPences(tenureDetails.ProspectiveRent),
-            RentAsPercentageOfTheUnsoldShare =
-                tenureDetails.RentAsPercentageOfTheUnsoldShare?.ToString("0.##", CultureInfo.InvariantCulture),
+            RentAsPercentageOfTheUnsoldShare = tenureDetails.RentAsPercentageOfTheUnsoldShare.ToPercentageWithTwoDecimal(),
         };
 
         return View(model);
@@ -1116,7 +1115,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
                 cancellationToken);
 
             model.ExpectedFirstTranche = calculationResult.ExpectedFirstTranche.DisplayPoundsPences();
-            model.RentAsPercentageOfTheUnsoldShare = calculationResult.ProspectiveRentPercentage?.ToString("0.##", CultureInfo.InvariantCulture);
+            model.RentAsPercentageOfTheUnsoldShare = calculationResult.ProspectiveRentPercentage.ToPercentageWithTwoDecimal();
 
             this.AddOrderedErrors<HomeOwnershipDisabilitiesModel>(operationResult);
             return View(model);
@@ -1141,11 +1140,11 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         var model = new OlderPersonsSharedOwnershipModel(tenureDetails.ApplicationName, tenureDetails.HomeTypeName)
         {
             MarketValue = CurrencyHelper.InputPounds(tenureDetails.MarketValue),
-            InitialSale = tenureDetails.InitialSale.ToWholePercentage(),
+            InitialSale = tenureDetails.InitialSale.ToWholePercentage().WithoutPercentageChar(),
             ExpectedFirstTranche = tenureDetails.ExpectedFirstTranche.DisplayPoundsPences(),
             ProspectiveRent = CurrencyHelper.InputPoundsPences(tenureDetails.ProspectiveRent),
             RentAsPercentageOfTheUnsoldShare =
-                tenureDetails.RentAsPercentageOfTheUnsoldShare?.ToString("0.##", CultureInfo.InvariantCulture),
+                tenureDetails.RentAsPercentageOfTheUnsoldShare.ToPercentageWithTwoDecimal().WithoutPercentageChar(),
         };
 
         return View(model);
@@ -1172,7 +1171,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
                 cancellationToken);
 
             model.ExpectedFirstTranche = calculationResult.ExpectedFirstTranche.DisplayPoundsPences();
-            model.RentAsPercentageOfTheUnsoldShare = calculationResult.ProspectiveRentPercentage?.ToString("0.##", CultureInfo.InvariantCulture);
+            model.RentAsPercentageOfTheUnsoldShare = calculationResult.ProspectiveRentPercentage.ToPercentageWithTwoDecimal();
 
             this.AddOrderedErrors<OlderPersonsSharedOwnershipModel>(operationResult);
             return View(model);
