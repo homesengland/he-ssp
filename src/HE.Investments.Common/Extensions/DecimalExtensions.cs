@@ -21,17 +21,32 @@ public static class DecimalExtensions
 
     public static decimal RoundToTwoDecimalPlaces(this decimal value)
     {
-        return ((decimal?)value).RoundToTwoDecimalPlaces()!.Value;
+        return ((decimal?)value).RoundToDecimalPlaces()!.Value;
     }
 
     public static decimal? RoundToTwoDecimalPlaces(this decimal? value)
+    {
+        return value.RoundToDecimalPlaces();
+    }
+
+    public static decimal RoundToFourDecimalPlaces(this decimal value)
+    {
+        return ((decimal?)value).RoundToDecimalPlaces(4)!.Value;
+    }
+
+    public static decimal? RoundToFourDecimalPlaces(this decimal? value)
+    {
+        return value.RoundToDecimalPlaces(4);
+    }
+
+    public static decimal? RoundToDecimalPlaces(this decimal? value, int precision = 2)
     {
         if (value == null)
         {
             return null;
         }
 
-        var step = (decimal)Math.Pow(10, 2);
+        var step = (decimal)Math.Pow(10, precision);
         var tmp = Math.Truncate(step * value.Value);
         return tmp / step;
     }
@@ -43,4 +58,6 @@ public static class DecimalExtensions
     public static string? ToWholePercentage(this decimal? value) => value?.ToString("0%", CultureInfo.InvariantCulture);
 
     public static string? ToWholePercentage(this decimal value) => ((decimal?)value).ToWholePercentage();
+
+    public static string? ToPercentageWithTwoDecimal(this decimal? value) => (value * 100m)?.ToString("0.00\\%", CultureInfo.InvariantCulture);
 }

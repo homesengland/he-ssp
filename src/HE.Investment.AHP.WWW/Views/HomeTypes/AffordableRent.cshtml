@@ -90,7 +90,7 @@
                 }
 
                 <gds-p class="govuk-!-margin-top-1">
-                    @(Model.ProspectiveRentAsPercentageOfMarketRent.IsProvided() ? $"{Model.ProspectiveRentAsPercentageOfMarketRent}%"
+                    @(Model.ProspectiveRentAsPercentageOfMarketRent.IsProvided() ? $"{Model.ProspectiveRentAsPercentageOfMarketRent}"
                         : "To calculate the Affordable Rent as percentage of market rent, enter the market rent per week and Affordable Rent per week. Then select the calculate button.")
                 </gds-p>
             </he-error-form-group>

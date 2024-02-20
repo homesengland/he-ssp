@@ -8,7 +8,7 @@ public class CalculateProspectiveRentAsPercentageOfTheUnsoldShareTests
 {
     [Theory]
     [InlineData(1, 0, 0.1, 0)]
-    [InlineData(99_999_999, 9999.99, 0.75, 2.08)]
+    [InlineData(99_999_999, 9999.99, 0.75, 0.0207)]
     [InlineData(0, 1000, 0.50, 0)]
     public void ShouldReturnCalculatedResult_WhenInputsAreProvided(int marketValue, decimal prospectiveRent, decimal initialSale, decimal expectedResult)
     {
