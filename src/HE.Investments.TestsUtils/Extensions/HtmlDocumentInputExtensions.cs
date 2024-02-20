@@ -48,6 +48,7 @@ public static class HtmlDocumentInputExtensions
     public static IHtmlDocument HasDateInput(
         this IHtmlDocument htmlDocument,
         string fieldName,
+        string title,
         string? day = null,
         string? month = null,
         string? year = null,
@@ -61,6 +62,9 @@ public static class HtmlDocumentInputExtensions
         {
             return htmlDocument;
         }
+
+        var header = htmlDocument.GetElements(".govuk-fieldset__heading", title).FirstOrDefault();
+        header.Should().NotBeNull($"Cannot find title for {fieldName}");
 
         if (!string.IsNullOrEmpty(day))
         {
@@ -111,7 +115,8 @@ public static class HtmlDocumentInputExtensions
                 .FirstOrDefault(i => i.Attributes.Any(a => a.Name == "checked" && a.Value.Contains("checked")));
 
             selected.Should().NotBeNull($"Radio input with name {fieldName} should have selected value.");
-            selected!.Attributes.FirstOrDefault(a => a.Name == "value")!.Value.Should().Be(value, $"Radio input with name {fieldName} should have value {value}.");
+            selected!.Attributes.FirstOrDefault(a => a.Name == "value")!.Value.Should()
+                .Be(value, $"Radio input with name {fieldName} should have value {value}.");
         }
 
         return htmlDocument;
