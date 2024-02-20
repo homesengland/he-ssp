@@ -78,7 +78,7 @@ namespace HE.CRM.Common.Repositories.Implementations
             using (var ctx = new OrganizationServiceContext(service))
             {
                 return ctx.CreateQuery<invln_Loanapplication>()
-                    .Where(x => x.invln_Account.Id == accountId && x.StatusCode.Value != (int)invln_Loanapplication_StatusCode.Inactive && x.StateCode.Value != (int)invln_loanapplicationState.Inactive).ToList();
+                    .Where(x => x.invln_Account.Id == accountId && x.StatusCode.Value != (int)invln_Loanapplication_StatusCode.Inactive && x.StateCode.Value != (int)invln_LoanapplicationState.Inactive).ToList();
             }
         }
 

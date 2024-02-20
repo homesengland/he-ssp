@@ -10,9 +10,9 @@ public class InitialSale : ValueObject
 {
     private const string DisplayName = "assumed average first tranche sale";
 
-    private const int MinValue = 10;
+    private const decimal MinValue = 0.1m;
 
-    private const int MaxValue = 75;
+    private const decimal MaxValue = 0.75m;
 
     public InitialSale(string? value, bool isCalculation = false)
     {
@@ -33,33 +33,44 @@ public class InitialSale : ValueObject
         if (!int.TryParse(value!, NumberStyles.Integer, CultureInfo.InvariantCulture, out var parsedValue))
         {
             OperationResult.New()
-                .AddValidationError(nameof(InitialSale), ValidationErrorMessage.MustBeWholeNumberBetween(DisplayName, MinValue, MaxValue))
+                .AddValidationError(nameof(InitialSale), ValidationErrorMessage.MustBeWholeNumberBetween(
+                    DisplayName,
+                    MinValue.ToPercentage100(),
+                    MaxValue.ToPercentage100()))
                 .CheckErrors();
         }
 
-        if (parsedValue is < MinValue or > MaxValue)
+        var percentage = parsedValue / 100m;
+
+        if (percentage is < MinValue or > MaxValue)
         {
             OperationResult.New()
-                .AddValidationError(nameof(InitialSale), ValidationErrorMessage.MustBeWholeNumberBetween(DisplayName, MinValue, MaxValue))
+                .AddValidationError(nameof(InitialSale), ValidationErrorMessage.MustBeWholeNumberBetween(
+                    DisplayName,
+                    MinValue.ToPercentage100(),
+                    MaxValue.ToPercentage100()))
                 .CheckErrors();
         }
 
-        Value = parsedValue;
+        Value = percentage;
     }
 
-    public InitialSale(int value)
+    public InitialSale(decimal value)
     {
         if (value is < MinValue or > MaxValue)
         {
             OperationResult.New()
-                .AddValidationError(nameof(InitialSale), ValidationErrorMessage.MustBeWholeNumberBetween(DisplayName, MinValue, MaxValue))
+                .AddValidationError(nameof(InitialSale), ValidationErrorMessage.MustBeWholeNumberBetween(
+                    DisplayName,
+                    MinValue.ToPercentage100(),
+                    MaxValue.ToPercentage100()))
                 .CheckErrors();
         }
 
         Value = value;
     }
 
-    public int Value { get; }
+    public decimal Value { get; }
 
     public override string ToString()
     {
