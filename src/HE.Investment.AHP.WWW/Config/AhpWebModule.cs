@@ -5,6 +5,7 @@ using HE.Investment.AHP.WWW.Models.Delivery.Factories;
 using HE.Investment.AHP.WWW.Models.FinancialDetails.Factories;
 using HE.Investment.AHP.WWW.Models.HomeTypes.Factories;
 using HE.Investment.AHP.WWW.Models.Scheme.Factories;
+using HE.Investment.AHP.WWW.Models.Site.Factories;
 using HE.Investment.AHP.WWW.Notifications;
 using HE.Investment.AHP.WWW.Routing;
 using HE.Investment.AHP.WWW.Utils;
@@ -50,6 +51,7 @@ public static class AhpWebModule
 
     private static void AddViewModelFactories(IServiceCollection services)
     {
+        services.AddScoped<ISiteSummaryViewModelFactory, SiteSummaryViewModelFactory>();
         services.AddScoped<IApplicationSummaryViewModelFactory, ApplicationSummaryViewModelFactory>();
         services.AddScoped<ISchemeSummaryViewModelFactory, SchemeSummaryViewModelFactory>();
         services.AddScoped<IFinancialDetailsSummaryViewModelFactory, FinancialDetailsSummaryViewModelFactory>();

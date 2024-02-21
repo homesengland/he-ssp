@@ -1,14 +1,45 @@
 @using HE.Investment.AHP.Contract.Site
+@using HE.Investment.AHP.WWW.Models.Common
 @using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
+@using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
 @using HE.Investment.AHP.WWW.Views.Site.Const
+@using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.Components.PageHeader
+@using HE.Investments.Common.WWW.Components.RadioList
+@using HE.Investments.Common.WWW.Components.SectionSummary
+@model HE.Investment.AHP.WWW.Models.Site.SiteSummaryViewModel
 @{
     ViewData["Title"] = SitePageTitles.CheckAnswers;
 }
 
 <gds-div-grid-column-two-thirds>
-    <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.CheckAnswers"/>
-    <vc:page-header title="@SitePageTitles.CheckAnswers" caption="@ViewBag.SiteName"/>
+    @if (Model.IsReadOnly)
+    {
+        <gds-back-link href="@Url.Action("Details", "Site", new { siteId = Model.SiteId })" class="govuk-!-margin-bottom-8"></gds-back-link>
+    }
+    else
+    {
+        <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.CheckAnswers"/>
+    }
 
-    TODO: AB#59226 Site Information - check answers
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+
+    <vc:page-header caption="@ViewBag.SiteName" title="@SitePageTitles.CheckAnswers"/>
+
+    @foreach (var summarySection in Model.Sections)
+    {
+        <vc:section-summary title="@summarySection.Title" items="@summarySection.Items"/>
+    }
+
+    <form asp-controller="Site" asp-action="Complete" asp-route-siteId="@Model.SiteId" asp-method="post" novalidate hidden="@Model.IsReadOnly">
+        <vc:radio-list
+            field-name="@(nameof(Model.IsSectionCompleted))"
+            title="Have you completed this section?"
+            available-options="@CommonFormOptions.IsSectionCompletedExtended"
+            value="@Model.IsSectionCompleted"/>
+
+        <vc:form-button/>
+    </form>
+
+    <vc:return-to-sites-link is-editable="@false" is-link-inside-form="@false"/>
 </gds-div-grid-column-two-thirds>

@@ -29,7 +29,7 @@
         caption="@ViewBag.SiteName"
         hint="If your application concerns existing properties rather than land-led development, this section is still relevant to you. Where we say 'site' or 'land', read 'properties'."/>
 
-    <form asp-controller="Site" asp-action="SiteType" asp-method="post" novalidate>
+    <form asp-controller="Site" asp-action="SiteType" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
 
         <vc:radio-list
             title="What type of site is this?"

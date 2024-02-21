@@ -38,7 +38,7 @@
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <vc:page-header caption="@ViewBag.SiteName"/>
 
-    <form asp-controller="Site" asp-action="StrategicSite" asp-method="post" novalidate>
+    <form asp-controller="Site" asp-action="StrategicSite" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
 
         <vc:radio-list
             title="@SitePageTitles.StrategicSite"

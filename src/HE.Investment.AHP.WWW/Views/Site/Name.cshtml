@@ -9,7 +9,7 @@
 <gds-div-grid-column-two-thirds>
     <gds-back-link href="@Url.Action("Index", "Application")" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
-    <form asp-controller="Site" asp-action="Name" asp-method="post" novalidate>
+    <form asp-controller="Site" asp-action="Name" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
 
         <vc:text-input
             title="@SitePageTitles.SiteName"

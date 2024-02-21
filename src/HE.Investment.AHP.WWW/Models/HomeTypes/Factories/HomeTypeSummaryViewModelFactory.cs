@@ -131,7 +131,7 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
                 supportedHousing.LocalCommissioningBodiesConsulted),
             factory.Question("Short stay", nameof(Controller.SupportedHousingInformation), supportedHousing.ShortStayAccommodation),
             factory.Question("Revenue funding", nameof(Controller.SupportedHousingInformation), supportedHousing.RevenueFundingType),
-            factory.Question("Sources of revenue funding", nameof(HomeTypesController.RevenueFunding), supportedHousing.RevenueFundingSources.ToArray()),
+            factory.Question("Sources of revenue funding", nameof(Controller.RevenueFunding), supportedHousing.RevenueFundingSources.ToArray()),
             factory.Question("Move on arrangements in place", nameof(Controller.MoveOnArrangements), supportedHousing.MoveOnArrangements),
             factory.Question("Exit plan or alternative use", nameof(Controller.ExitPlan), supportedHousing.ExitPlan),
             factory.Question("Typology, location and design", nameof(Controller.TypologyLocationAndDesign), supportedHousing.TypologyLocationAndDesign));

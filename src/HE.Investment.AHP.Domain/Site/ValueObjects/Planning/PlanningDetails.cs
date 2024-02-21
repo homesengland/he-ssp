@@ -1,5 +1,6 @@
 using HE.Investment.AHP.Contract.Site;
 using HE.Investments.Common.Domain;
+using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.Domain.Site.ValueObjects.Planning;
 
@@ -47,7 +48,26 @@ public abstract class PlanningDetails : ValueObject, IQuestion
 
     public LandRegistryDetails? LandRegistryDetails { get; }
 
-    public abstract bool IsAnswered();
+    protected abstract IReadOnlyCollection<string> ActiveFields { get; }
+
+    public bool IsAnswered()
+    {
+        return ActiveFields.Any()
+               && (!IsQuestionActive(nameof(ReferenceNumber)) || ReferenceNumber.IsProvided())
+               && (!IsQuestionActive(nameof(DetailedPlanningApprovalDate)) || DetailedPlanningApprovalDate.IsProvided())
+               && (!IsQuestionActive(nameof(RequiredFurtherSteps)) || RequiredFurtherSteps.IsProvided())
+               && (!IsQuestionActive(nameof(ApplicationForDetailedPlanningSubmittedDate)) || ApplicationForDetailedPlanningSubmittedDate.IsProvided())
+               && (!IsQuestionActive(nameof(ExpectedPlanningApprovalDate)) || ExpectedPlanningApprovalDate.IsProvided())
+               && (!IsQuestionActive(nameof(OutlinePlanningApprovalDate)) || OutlinePlanningApprovalDate.IsProvided())
+               && (!IsQuestionActive(nameof(IsGrantFundingForAllHomesCoveredByApplication)) || IsGrantFundingForAllHomesCoveredByApplication.IsProvided())
+               && (!IsQuestionActive(nameof(PlanningSubmissionDate)) || PlanningSubmissionDate.IsProvided())
+               && (!IsQuestionActive(nameof(LandRegistryDetails)) || (LandRegistryDetails.IsProvided() && LandRegistryDetails!.IsAnswered()));
+    }
+
+    public bool IsQuestionActive(string fieldName)
+    {
+        return ActiveFields.Contains(fieldName);
+    }
 
     protected override IEnumerable<object?> GetAtomicValues()
     {

@@ -6,7 +6,9 @@ public class SiteModel
 {
     public string? Id { get; set; }
 
-    public string? Name { get; set; }
+    public string Name { get; set; }
+
+    public SiteStatus Status { get; set; }
 
     public Section106Dto? Section106 { get; set; }
 

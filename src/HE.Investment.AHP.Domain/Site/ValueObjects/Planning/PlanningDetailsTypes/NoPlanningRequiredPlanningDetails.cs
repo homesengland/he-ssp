@@ -1,9 +1,8 @@
 using HE.Investment.AHP.Contract.Site;
-using HE.Investments.Common.Domain;
 
 namespace HE.Investment.AHP.Domain.Site.ValueObjects.Planning.PlanningDetailsTypes;
 
-public class NoPlanningRequiredPlanningDetails : PlanningDetails, IQuestion
+public class NoPlanningRequiredPlanningDetails : PlanningDetails
 {
     public NoPlanningRequiredPlanningDetails(LandRegistryDetails? landRegistryDetails = null)
         : base(landRegistryDetails: landRegistryDetails)
@@ -12,8 +11,8 @@ public class NoPlanningRequiredPlanningDetails : PlanningDetails, IQuestion
 
     public override SitePlanningStatus? PlanningStatus => SitePlanningStatus.NoPlanningRequired;
 
-    public override bool IsAnswered()
+    protected override IReadOnlyCollection<string> ActiveFields => new[]
     {
-        return LandRegistryDetails != null && LandRegistryDetails.IsAnswered();
-    }
+        nameof(LandRegistryDetails),
+    };
 }
