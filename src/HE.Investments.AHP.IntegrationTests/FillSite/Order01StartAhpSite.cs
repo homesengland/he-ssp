@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investment.AHP.Domain.Site.ValueObjects;
@@ -383,13 +384,70 @@ public class Order01StartAhpSite : AhpIntegrationTest
         await TestQuestionPage(
             SitePagesUrl.SiteEnvironmentalImpact(SiteData.SiteId),
             SitePageTitles.EnvironmentalImpact,
-            SitePagesUrl.SiteProcurements(SiteData.SiteId),
+            SitePagesUrl.SiteMmcUsing(SiteData.SiteId),
             (nameof(EnvironmentalImpact), "reducing environmental impact"));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
     [Order(28)]
-    public async Task Order28_ShouldProvideProcurements()
+    public async Task Order28_ShouldProvideSiteMmcUsing()
+    {
+        await TestQuestionPage(
+            SitePagesUrl.SiteMmcUsing(SiteData.SiteId),
+            SitePageTitles.MmcUsing,
+            SitePagesUrl.SiteMmcInformation(SiteData.SiteId),
+            (nameof(SiteModernMethodsOfConstruction.UsingModernMethodsOfConstruction), SiteUsingModernMethodsOfConstruction.Yes.ToString()));
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(29)]
+    public async Task Order29_ShouldProvideSiteMmcInformation()
+    {
+        await TestQuestionPage(
+            SitePagesUrl.SiteMmcInformation(SiteData.SiteId),
+            SitePageTitles.MmcInformation,
+            SitePagesUrl.SiteMmcCategories(SiteData.SiteId),
+            (nameof(SiteModernMethodsOfConstruction.InformationBarriers), "za wysokie progi"),
+            (nameof(SiteModernMethodsOfConstruction.InformationImpact), "fest importante"));
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(30)]
+    public async Task Order30_ShouldProvideSiteMmcCategories()
+    {
+        await TestQuestionPage(
+            SitePagesUrl.SiteMmcCategories(SiteData.SiteId),
+            SitePageTitles.MmcCategories,
+            SitePagesUrl.SiteMmcCategory3D(SiteData.SiteId),
+            (nameof(SiteModernMethodsOfConstruction.ModernMethodsConstructionCategories), ModernMethodsConstructionCategoriesType.Category1PreManufacturing3DPrimaryStructuralSystems.ToString()),
+            (nameof(SiteModernMethodsOfConstruction.ModernMethodsConstructionCategories), ModernMethodsConstructionCategoriesType.Category2PreManufacturing2DPrimaryStructuralSystems.ToString()));
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(31)]
+    public async Task Order31_ShouldProvideSiteMmcCategory3D()
+    {
+        await TestQuestionPage(
+            SitePagesUrl.SiteMmcCategory3D(SiteData.SiteId),
+            SitePageTitles.Mmc3DCategory,
+            SitePagesUrl.SiteMmcCategory2D(SiteData.SiteId),
+            (nameof(SiteModernMethodsOfConstruction.ModernMethodsConstruction3DSubcategories), ModernMethodsConstruction3DSubcategoriesType.StructuralChassisAndInternallyFittedOut.ToString()));
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(32)]
+    public async Task Order32_ShouldProvideSiteMmcCategory2D()
+    {
+        await TestQuestionPage(
+            SitePagesUrl.SiteMmcCategory2D(SiteData.SiteId),
+            SitePageTitles.Mmc2DCategory,
+            SitePagesUrl.SiteProcurements(SiteData.SiteId),
+            (nameof(SiteModernMethodsOfConstruction.ModernMethodsConstruction2DSubcategories), ModernMethodsConstruction2DSubcategoriesType.BasicFramingOnly.ToString()));
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(33)]
+    public async Task Order33_ShouldProvideProcurements()
     {
         await TestQuestionPage(
             SitePagesUrl.SiteProcurements(SiteData.SiteId),

@@ -19,7 +19,7 @@ public class GetProgrammeTests : TestBase<Programmes>
         var result = await TestCandidate.GetProgramme(ProgrammeType.Ahp);
 
         // then
-        result.Name.Should().Be("Affordable Homes Programme 21-26 Continuous Market Engagement");
+        result.Name.Should().Be("Affordable Homes Programme 2021-2026 Continuous Market Engagement");
         result.Description.Should()
             .Be("Start a new Affordable Homes Programme application. This will not affect any of your previous applications.");
         result.CreateApplicationUrl.Should().Be("https://ahp.com/application/start");

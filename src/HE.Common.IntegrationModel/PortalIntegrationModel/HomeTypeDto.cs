@@ -31,13 +31,13 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public int? homesDesignedForUseOfParticularGroup { get; set; }
         public bool? areHomesCustomBuild { get; set; }
         public int? accessibilityCategory { get; set; }
-        public int? marketValue { get; set; }
+        public decimal? marketValue { get; set; }
         public decimal? marketRent { get; set; }
         public decimal? prospectiveRent { get; set; }
         public bool? isWheelchairStandardMet { get; set; }
         public string designPlansMoreInformation { get; set; }
         public bool? RtSOExemption { get; set; }
-        public int? initialSalePercent { get; set; }
+        public decimal? initialSalePercent { get; set; }
         public decimal? prospectiveRentAsPercentOfMarketRent { get; set; }
         public bool? isCompleted { get; set; }
         public string exemptionJustification { get; set; }

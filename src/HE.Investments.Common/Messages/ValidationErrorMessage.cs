@@ -75,7 +75,7 @@ public static class ValidationErrorMessage
 
     public const string SquareMetersMustBeNumber = "The square meterage in the internal floor each of each home must be a number, like 75.50";
 
-    public static string EstimatedPoundInput(string name) => PoundInput($"The estimated {name}");
+    public static string EstimatedPoundInput(string name) => PoundInput($"estimated {name}");
 
     public static string PercentageInput(string name) => new($"The {name.ToLowerInvariant()} must be entered as a whole percentage value, like 30");
 

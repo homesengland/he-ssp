@@ -36,8 +36,8 @@ public enum ApplicationStatus
     ApprovedSubjectToContract,
     [Description("Contract Signed Subject to CP")]
     AwaitingCpSatisfaction,
-    [Description("CPs Satisfied")]
-    CpsSatisfied,
+    [Description("Conditions Satisfied")]
+    ConditionsSatisfied,
     [Description("Loan Available")]
     LoanAvailable,
     [Description("Not Approved")]

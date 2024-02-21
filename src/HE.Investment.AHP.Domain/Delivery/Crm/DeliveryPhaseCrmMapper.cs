@@ -142,10 +142,10 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
     {
         return newBuildActivityType switch
         {
-            (int)invln_newbuildactivitytype.AcquisitionandWorks => BuildActivityType.AcquisitionAndWorks,
-            (int)invln_newbuildactivitytype.LandInclusivePackage_packagedeal => BuildActivityType.LandInclusivePackage,
-            (int)invln_newbuildactivitytype.OffTheShelf => BuildActivityType.OffTheShelf,
-            (int)invln_newbuildactivitytype.WorksOnly => BuildActivityType.WorksOnly,
+            (int)invln_NewBuildActivityType.AcquisitionandWorks => BuildActivityType.AcquisitionAndWorks,
+            (int)invln_NewBuildActivityType.LandInclusivePackagepackagedeal => BuildActivityType.LandInclusivePackage,
+            (int)invln_NewBuildActivityType.OffTheShelf => BuildActivityType.OffTheShelf,
+            (int)invln_NewBuildActivityType.WorksOnly => BuildActivityType.WorksOnly,
             _ => null,
         };
     }
@@ -154,10 +154,10 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
     {
         return buildActivityType switch
         {
-            BuildActivityType.AcquisitionAndWorks => (int)invln_newbuildactivitytype.AcquisitionandWorks,
-            BuildActivityType.LandInclusivePackage => (int)invln_newbuildactivitytype.LandInclusivePackage_packagedeal,
-            BuildActivityType.OffTheShelf => (int)invln_newbuildactivitytype.OffTheShelf,
-            BuildActivityType.WorksOnly => (int)invln_newbuildactivitytype.WorksOnly,
+            BuildActivityType.AcquisitionAndWorks => (int)invln_NewBuildActivityType.AcquisitionandWorks,
+            BuildActivityType.LandInclusivePackage => (int)invln_NewBuildActivityType.LandInclusivePackagepackagedeal,
+            BuildActivityType.OffTheShelf => (int)invln_NewBuildActivityType.OffTheShelf,
+            BuildActivityType.WorksOnly => (int)invln_NewBuildActivityType.WorksOnly,
             _ => null,
         };
     }
@@ -166,13 +166,13 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
     {
         return rehabBuildActivityType switch
         {
-            (int)invln_rehabactivitytype.AcquisitionandWorks_rehab => BuildActivityType.AcquisitionAndWorksRehab,
-            (int)invln_rehabactivitytype.Conversion => BuildActivityType.Conversion,
-            (int)invln_rehabactivitytype.ExistingSatisfactory => BuildActivityType.ExistingSatisfactory,
-            (int)invln_rehabactivitytype.LeaseandRepair => BuildActivityType.LeaseAndRepair,
-            (int)invln_rehabactivitytype.PurchaseandRepair => BuildActivityType.PurchaseAndRepair,
-            (int)invln_rehabactivitytype.Reimprovement => BuildActivityType.Reimprovement,
-            (int)invln_rehabactivitytype.WorksOnly => BuildActivityType.WorksOnlyRehab,
+            (int)invln_RehabActivityType.AcquisitionandWorksrehab => BuildActivityType.AcquisitionAndWorksRehab,
+            (int)invln_RehabActivityType.Conversion => BuildActivityType.Conversion,
+            (int)invln_RehabActivityType.ExistingSatisfactory => BuildActivityType.ExistingSatisfactory,
+            (int)invln_RehabActivityType.LeaseandRepair => BuildActivityType.LeaseAndRepair,
+            (int)invln_RehabActivityType.PurchaseandRepair => BuildActivityType.PurchaseAndRepair,
+            (int)invln_RehabActivityType.Reimprovement => BuildActivityType.Reimprovement,
+            (int)invln_RehabActivityType.WorksOnly => BuildActivityType.WorksOnlyRehab,
             _ => null,
         };
     }
@@ -181,13 +181,13 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
     {
         return buildActivityType switch
         {
-            BuildActivityType.AcquisitionAndWorksRehab => (int)invln_rehabactivitytype.AcquisitionandWorks_rehab,
-            BuildActivityType.Conversion => (int)invln_rehabactivitytype.Conversion,
-            BuildActivityType.ExistingSatisfactory => (int)invln_rehabactivitytype.ExistingSatisfactory,
-            BuildActivityType.LeaseAndRepair => (int)invln_rehabactivitytype.LeaseandRepair,
-            BuildActivityType.PurchaseAndRepair => (int)invln_rehabactivitytype.PurchaseandRepair,
-            BuildActivityType.Reimprovement => (int)invln_rehabactivitytype.Reimprovement,
-            BuildActivityType.WorksOnlyRehab => (int)invln_rehabactivitytype.WorksOnly,
+            BuildActivityType.AcquisitionAndWorksRehab => (int)invln_RehabActivityType.AcquisitionandWorksrehab,
+            BuildActivityType.Conversion => (int)invln_RehabActivityType.Conversion,
+            BuildActivityType.ExistingSatisfactory => (int)invln_RehabActivityType.ExistingSatisfactory,
+            BuildActivityType.LeaseAndRepair => (int)invln_RehabActivityType.LeaseandRepair,
+            BuildActivityType.PurchaseAndRepair => (int)invln_RehabActivityType.PurchaseandRepair,
+            BuildActivityType.Reimprovement => (int)invln_RehabActivityType.Reimprovement,
+            BuildActivityType.WorksOnlyRehab => (int)invln_RehabActivityType.WorksOnly,
             _ => null,
         };
     }

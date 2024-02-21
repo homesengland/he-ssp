@@ -17,9 +17,9 @@ public class ProvideModernMethodsConstructionFutureAdoptionCommandHandler : Prov
     protected override void Provide(ProvideModernMethodsConstructionFutureAdoptionCommand request, SiteEntity site)
     {
         var operationResult = OperationResult.New();
-        var plans = operationResult.AggregateNullable(() => new ModernMethodsOfConstructionPlans(request.Plans));
-        var impact = operationResult.AggregateNullable(() => new ModernMethodsOfConstructionExpectedImpact(request.ExpectedImpact));
-        var futureAdoption = operationResult.AggregateNullable(() => ModernMethodsOfConstructionFutureAdoption.Create(plans!, impact!));
+        var plans = operationResult.AggregateNullable(() => ModernMethodsOfConstructionPlans.Create(request.Plans));
+        var impact = operationResult.AggregateNullable(() => ModernMethodsOfConstructionExpectedImpact.Create(request.ExpectedImpact));
+        var futureAdoption = operationResult.AggregateNullable(() => ModernMethodsOfConstructionFutureAdoption.Create(plans, impact));
 
         operationResult.CheckErrors();
 

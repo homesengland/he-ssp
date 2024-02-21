@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investments.Common.Extensions;
@@ -42,10 +43,14 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             { Name: var x } when x.IsNotProvided() => SiteWorkflowState.Name,
             { Section106: var x } when x == null || x.GeneralAgreement.IsNotProvided() => SiteWorkflowState.Section106GeneralAgreement,
             { Section106: var x } when x!.AffordableHousing.IsNotProvided() && x.GeneralAgreement == true => SiteWorkflowState.Section106AffordableHousing,
-            { Section106: var x } when x!.OnlyAffordableHousing.IsNotProvided() && x.GeneralAgreement == true => SiteWorkflowState.Section106OnlyAffordableHousing,
-            { Section106: var x } when x!.AdditionalAffordableHousing.IsNotProvided() && x.OnlyAffordableHousing == false => SiteWorkflowState.Section106AdditionalAffordableHousing,
-            { Section106: var x } when x!.CapitalFundingEligibility.IsNotProvided() && x.GeneralAgreement == true => SiteWorkflowState.Section106CapitalFundingEligibility,
-            { Section106: var x } when x!.LocalAuthorityConfirmation.IsNotProvided() && x.AdditionalAffordableHousing == true => SiteWorkflowState.Section106LocalAuthorityConfirmation,
+            { Section106: var x } when x!.OnlyAffordableHousing.IsNotProvided() && x.GeneralAgreement == true => SiteWorkflowState
+                .Section106OnlyAffordableHousing,
+            { Section106: var x } when x!.AdditionalAffordableHousing.IsNotProvided() && x.OnlyAffordableHousing == false => SiteWorkflowState
+                .Section106AdditionalAffordableHousing,
+            { Section106: var x } when x!.CapitalFundingEligibility.IsNotProvided() && x.GeneralAgreement == true => SiteWorkflowState
+                .Section106CapitalFundingEligibility,
+            { Section106: var x } when x!.LocalAuthorityConfirmation.IsNotProvided() && x.AdditionalAffordableHousing == true => SiteWorkflowState
+                .Section106LocalAuthorityConfirmation,
             { LocalAuthority: var x } when x.IsNotProvided() => SiteWorkflowState.LocalAuthoritySearch,
             { PlanningDetails: var x } when x.PlanningStatus.IsNotProvided() => SiteWorkflowState.PlanningStatus,
             { PlanningDetails.ArePlanningDetailsProvided: false } => SiteWorkflowState.PlanningDetails,
@@ -56,15 +61,25 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             { LandAcquisitionStatus: var x } when x.IsNotProvided() => SiteWorkflowState.LandAcquisitionStatus,
             { TenderingStatusDetails: var x } when x.TenderingStatus.IsNotProvided() => SiteWorkflowState.TenderingStatus,
             { TenderingStatusDetails: var x } when IsConditionalOrUnconditionalWorksContract() &&
-                                                   (x.ContractorName.IsNotProvided() || x.IsSmeContractor.IsNotProvided()) => SiteWorkflowState.ContractorDetails,
+                                                   (x.ContractorName.IsNotProvided() || x.IsSmeContractor.IsNotProvided()) => SiteWorkflowState
+                .ContractorDetails,
             { TenderingStatusDetails: var x } when IsTenderForWorksContractOrContractingHasNotYetBegun() &&
                                                    x.IsIntentionToWorkWithSme.IsNotProvided() => SiteWorkflowState.IntentionToWorkWithSme,
             { StrategicSiteDetails: var x } when x.IsStrategicSite.IsNotProvided() => SiteWorkflowState.StrategicSite,
             { SiteTypeDetails.IsAnswered: false } => SiteWorkflowState.SiteType,
-            { SiteUseDetails: var x } when x.IsForTravellerPitchSite.IsNotProvided() || x.IsPartOfStreetFrontInfill.IsNotProvided() => SiteWorkflowState.SiteUse,
-            { SiteUseDetails: { IsForTravellerPitchSite: true, TravellerPitchSiteType: TravellerPitchSiteType.Undefined } } => SiteWorkflowState.TravellerPitchType,
-            { RuralClassification: var x } when x.IsRuralExceptionSite.IsNotProvided() || x.IsWithinRuralSettlement.IsNotProvided() => SiteWorkflowState.RuralClassification,
+            { SiteUseDetails: var x } when x.IsForTravellerPitchSite.IsNotProvided() || x.IsPartOfStreetFrontInfill.IsNotProvided() =>
+                SiteWorkflowState.SiteUse,
+            { SiteUseDetails: { IsForTravellerPitchSite: true, TravellerPitchSiteType: TravellerPitchSiteType.Undefined } } => SiteWorkflowState
+                .TravellerPitchType,
+            { RuralClassification: var x } when x.IsRuralExceptionSite.IsNotProvided() || x.IsWithinRuralSettlement.IsNotProvided() => SiteWorkflowState
+                .RuralClassification,
             { EnvironmentalImpact: var x } when x.IsNotProvided() => SiteWorkflowState.EnvironmentalImpact,
+            { ModernMethodsOfConstruction.UsingModernMethodsOfConstruction: var x } when x.IsNotProvided() => SiteWorkflowState.MmcUsing,
+            { ModernMethodsOfConstruction: var x } when x.InformationBarriers.IsNotProvided() || x.InformationImpact.IsNotProvided() => SiteWorkflowState
+                .MmcInformation,
+            { ModernMethodsOfConstruction.ModernMethodsConstructionCategories: var x } when x == null || !x.Any() => SiteWorkflowState.MmcCategories,
+            { ModernMethodsOfConstruction.ModernMethodsConstruction3DSubcategories: var x } when x == null || !x.Any() => SiteWorkflowState.Mmc3DCategory,
+            { ModernMethodsOfConstruction.ModernMethodsConstruction2DSubcategories: var x } when x == null || !x.Any() => SiteWorkflowState.Mmc2DCategory,
             { SiteProcurements: var x } when !x.Any() => SiteWorkflowState.Procurements,
             _ => SiteWorkflowState.CheckAnswers,
         };
@@ -104,11 +119,11 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             SiteWorkflowState.RuralClassification => true,
             SiteWorkflowState.EnvironmentalImpact => true,
             SiteWorkflowState.MmcUsing => true,
-            SiteWorkflowState.MmcFutureAdoption => true,
-            SiteWorkflowState.MmcInformation => true,
-            SiteWorkflowState.MmcCategories => true,
-            SiteWorkflowState.Mmc2DCategory => true,
-            SiteWorkflowState.Mmc3DCategory => true,
+            SiteWorkflowState.MmcFutureAdoption => IsNotUsingModernMethodsOfConstruction(),
+            SiteWorkflowState.MmcInformation => IsUsingModernMethodsOfConstruction(),
+            SiteWorkflowState.MmcCategories => IsUsingModernMethodsOfConstruction(),
+            SiteWorkflowState.Mmc3DCategory => Is3DCategorySelected(),
+            SiteWorkflowState.Mmc2DCategory => Is2DCategorySelected(),
             SiteWorkflowState.Procurements => true,
             SiteWorkflowState.CheckAnswers => true,
             _ => false,
@@ -250,12 +265,46 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             .PermitIf(Trigger.Back, SiteWorkflowState.TravellerPitchType, IsForTravellerPitchSite);
 
         _machine.Configure(SiteWorkflowState.EnvironmentalImpact)
-            .Permit(Trigger.Continue, SiteWorkflowState.Procurements)
+            .Permit(Trigger.Continue, SiteWorkflowState.MmcUsing)
             .Permit(Trigger.Back, SiteWorkflowState.RuralClassification);
+
+        _machine.Configure(SiteWorkflowState.MmcUsing)
+            .PermitIf(Trigger.Continue, SiteWorkflowState.MmcFutureAdoption, IsNotUsingModernMethodsOfConstruction)
+            .PermitIf(Trigger.Continue, SiteWorkflowState.MmcInformation, IsUsingModernMethodsOfConstruction)
+            .PermitIf(Trigger.Continue, SiteWorkflowState.Procurements, IsUsingModernMethodsOfConstructionNotSelectedOrOnlyForSomeHomes)
+            .Permit(Trigger.Back, SiteWorkflowState.EnvironmentalImpact);
+
+        _machine.Configure(SiteWorkflowState.MmcFutureAdoption)
+            .Permit(Trigger.Continue, SiteWorkflowState.Procurements)
+            .Permit(Trigger.Back, SiteWorkflowState.MmcUsing);
+
+        _machine.Configure(SiteWorkflowState.MmcInformation)
+            .Permit(Trigger.Continue, SiteWorkflowState.MmcCategories)
+            .Permit(Trigger.Back, SiteWorkflowState.MmcUsing);
+
+        _machine.Configure(SiteWorkflowState.MmcCategories)
+            .PermitIf(Trigger.Continue, SiteWorkflowState.Mmc3DCategory, Is3DCategorySelected)
+            .PermitIf(Trigger.Continue, SiteWorkflowState.Mmc2DCategory, () => Is2DCategorySelected() && !Is3DCategorySelected())
+            .PermitIf(Trigger.Continue, SiteWorkflowState.Procurements, () => !Is3DOr2DCategorySelected())
+            .Permit(Trigger.Back, SiteWorkflowState.MmcInformation);
+
+        _machine.Configure(SiteWorkflowState.Mmc3DCategory)
+            .PermitIf(Trigger.Continue, SiteWorkflowState.Mmc2DCategory, Is2DCategorySelected)
+            .PermitIf(Trigger.Continue, SiteWorkflowState.Procurements, () => !Is2DCategorySelected())
+            .Permit(Trigger.Back, SiteWorkflowState.MmcCategories);
+
+        _machine.Configure(SiteWorkflowState.Mmc2DCategory)
+            .Permit(Trigger.Continue, SiteWorkflowState.Procurements)
+            .PermitIf(Trigger.Back, SiteWorkflowState.Mmc3DCategory, Is3DCategorySelected)
+            .PermitIf(Trigger.Back, SiteWorkflowState.MmcCategories, () => !Is3DCategorySelected());
 
         _machine.Configure(SiteWorkflowState.Procurements)
             .Permit(Trigger.Continue, SiteWorkflowState.CheckAnswers)
-            .Permit(Trigger.Back, SiteWorkflowState.EnvironmentalImpact);
+            .PermitIf(Trigger.Back, SiteWorkflowState.Mmc2DCategory, Is2DCategorySelected)
+            .PermitIf(Trigger.Back, SiteWorkflowState.Mmc3DCategory, () => Is3DCategorySelected() && !Is2DCategorySelected())
+            .PermitIf(Trigger.Back, SiteWorkflowState.MmcCategories, () => IsUsingModernMethodsOfConstruction() && !Is3DOr2DCategorySelected())
+            .PermitIf(Trigger.Back, SiteWorkflowState.MmcUsing, IsUsingModernMethodsOfConstructionNotSelectedOrOnlyForSomeHomes)
+            .PermitIf(Trigger.Back, SiteWorkflowState.MmcFutureAdoption, IsNotUsingModernMethodsOfConstruction);
 
         _machine.Configure(SiteWorkflowState.CheckAnswers)
             .Permit(Trigger.Back, SiteWorkflowState.Procurements);
@@ -269,19 +318,66 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
                                                                                 planningDetails.LandRegistryTitleNumber.IsProvided() &&
                                                                                 planningDetails.IsGrantFundingForAllHomesCoveredByTitleNumber.IsProvided();
 
-    private bool IsConditionalOrUnconditionalWorksContract() => _siteModel?.TenderingStatusDetails.TenderingStatus is SiteTenderingStatus.UnconditionalWorksContract or
-        SiteTenderingStatus.ConditionalWorksContract;
+    private bool IsConditionalOrUnconditionalWorksContract() =>
+        _siteModel?.TenderingStatusDetails.TenderingStatus is SiteTenderingStatus.UnconditionalWorksContract or
+            SiteTenderingStatus.ConditionalWorksContract;
 
-    private bool IsTenderForWorksContractOrContractingHasNotYetBegun() => _siteModel?.TenderingStatusDetails.TenderingStatus is SiteTenderingStatus.TenderForWorksContract or
-        SiteTenderingStatus.ContractingHasNotYetBegun;
+    private bool IsTenderForWorksContractOrContractingHasNotYetBegun() =>
+        _siteModel?.TenderingStatusDetails.TenderingStatus is SiteTenderingStatus.TenderForWorksContract or
+            SiteTenderingStatus.ContractingHasNotYetBegun;
 
-    private bool IsSection106EligibleWithAdditionalAffordableHousing() => _siteModel?.Section106?.IsIneligible == false && _siteModel?.Section106?.AdditionalAffordableHousing == true;
+    private bool IsSection106EligibleWithAdditionalAffordableHousing() =>
+        _siteModel?.Section106?.IsIneligible == false && _siteModel?.Section106?.AdditionalAffordableHousing == true;
 
-    private bool IsSection106EligibleWithoutAdditionalAffordableHousing() => _siteModel?.Section106?.IsIneligible == false && _siteModel?.Section106?.AdditionalAffordableHousing != true;
+    private bool IsSection106EligibleWithoutAdditionalAffordableHousing() =>
+        _siteModel?.Section106?.IsIneligible == false && _siteModel?.Section106?.AdditionalAffordableHousing != true;
 
     private bool IsNotApplicableOrMissing() => _siteModel?.TenderingStatusDetails.TenderingStatus is SiteTenderingStatus.NotApplicable or null;
 
     private bool IsBuildingForHealthyLife() => _siteModel?.BuildingForHealthyLife is BuildingForHealthyLifeType.Yes;
 
     private bool IsForTravellerPitchSite() => _siteModel?.SiteUseDetails.IsForTravellerPitchSite == true;
+
+    private bool IsUsingModernMethodsOfConstruction() =>
+        _siteModel?.ModernMethodsOfConstruction.UsingModernMethodsOfConstruction is SiteUsingModernMethodsOfConstruction.Yes;
+
+    private bool IsNotUsingModernMethodsOfConstruction() =>
+        _siteModel?.ModernMethodsOfConstruction.UsingModernMethodsOfConstruction is SiteUsingModernMethodsOfConstruction.No;
+
+    private bool IsUsingModernMethodsOfConstructionNotSelectedOrOnlyForSomeHomes() =>
+        _siteModel?.ModernMethodsOfConstruction.UsingModernMethodsOfConstruction is null or SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes;
+
+    private bool Is3DCategorySelected()
+    {
+        var methods = _siteModel?.ModernMethodsOfConstruction.ModernMethodsConstructionCategories;
+        if (methods == null)
+        {
+            return false;
+        }
+
+        return methods.Contains(ModernMethodsConstructionCategoriesType.Category1PreManufacturing3DPrimaryStructuralSystems);
+    }
+
+    private bool Is2DCategorySelected()
+    {
+        var methods = _siteModel?.ModernMethodsOfConstruction.ModernMethodsConstructionCategories;
+        if (methods == null)
+        {
+            return false;
+        }
+
+        return methods.Contains(ModernMethodsConstructionCategoriesType.Category2PreManufacturing2DPrimaryStructuralSystems);
+    }
+
+    private bool Is3DOr2DCategorySelected()
+    {
+        var methods = _siteModel?.ModernMethodsOfConstruction.ModernMethodsConstructionCategories;
+        if (methods == null)
+        {
+            return false;
+        }
+
+        return methods.Contains(ModernMethodsConstructionCategoriesType.Category1PreManufacturing3DPrimaryStructuralSystems) ||
+               methods.Contains(ModernMethodsConstructionCategoriesType.Category2PreManufacturing2DPrimaryStructuralSystems);
+    }
 }

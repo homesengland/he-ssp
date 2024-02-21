@@ -38,17 +38,17 @@ public class DesignPlansCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<DesignPl
     {
         return value switch
         {
-            HappiDesignPrincipleType.AdaptabilityAndCareReadyDesign => (int)invln_happiprinciples.AAdaptabilityandcarereadydesign,
-            HappiDesignPrincipleType.BalconiesAndOutdoorSpace => (int)invln_happiprinciples.BBalconiesandoutdoorspace,
-            HappiDesignPrincipleType.DaylightInTheHomeAndInSharedSpaces => (int)invln_happiprinciples.CDaylightinthehomeandinsharedspaces,
-            HappiDesignPrincipleType.EnergyEfficiencyAndSustainableDesign => (int)invln_happiprinciples.DEnergyefficiencyandsustainabledesign,
-            HappiDesignPrincipleType.ExternalSharedSurfacedAndHomeZones => (int)invln_happiprinciples.EExternalsharedsurfacesandhomezones,
-            HappiDesignPrincipleType.PlantsTreesAndTheNaturalEnvironment => (int)invln_happiprinciples.FPlantstreesandthenaturalenvironment,
-            HappiDesignPrincipleType.PositiveUseOfCirculationSpace => (int)invln_happiprinciples.GPositiveuseofcirculationspace,
-            HappiDesignPrincipleType.SharedFacilitiesAndHubs => (int)invln_happiprinciples.HSharedfacilitiesandhubs,
-            HappiDesignPrincipleType.SpaceAndFlexibility => (int)invln_happiprinciples.ISpaceandflexibility,
-            HappiDesignPrincipleType.StorageForBelongingsAndBicycles => (int)invln_happiprinciples.JStorageforbelongingsandbicycles,
-            HappiDesignPrincipleType.NoneOfThese => (int)invln_happiprinciples.KNone,
+            HappiDesignPrincipleType.AdaptabilityAndCareReadyDesign => (int)invln_HAPPIprinciples.AAdaptabilityandcarereadydesign,
+            HappiDesignPrincipleType.BalconiesAndOutdoorSpace => (int)invln_HAPPIprinciples.BBalconiesandoutdoorspace,
+            HappiDesignPrincipleType.DaylightInTheHomeAndInSharedSpaces => (int)invln_HAPPIprinciples.CDaylightinthehomeandinsharedspaces,
+            HappiDesignPrincipleType.EnergyEfficiencyAndSustainableDesign => (int)invln_HAPPIprinciples.DEnergyefficiencyandsustainabledesign,
+            HappiDesignPrincipleType.ExternalSharedSurfacedAndHomeZones => (int)invln_HAPPIprinciples.EExternalsharedsurfacesandhomezones,
+            HappiDesignPrincipleType.PlantsTreesAndTheNaturalEnvironment => (int)invln_HAPPIprinciples.FPlantstreesandthenaturalenvironment,
+            HappiDesignPrincipleType.PositiveUseOfCirculationSpace => (int)invln_HAPPIprinciples.GPositiveuseofcirculationspace,
+            HappiDesignPrincipleType.SharedFacilitiesAndHubs => (int)invln_HAPPIprinciples.HSharedfacilitiesandhubs,
+            HappiDesignPrincipleType.SpaceAndFlexibility => (int)invln_HAPPIprinciples.ISpaceandflexibility,
+            HappiDesignPrincipleType.StorageForBelongingsAndBicycles => (int)invln_HAPPIprinciples.JStorageforbelongingsandbicycles,
+            HappiDesignPrincipleType.NoneOfThese => (int)invln_HAPPIprinciples.KNone,
             _ => throw new ArgumentOutOfRangeException(nameof(value), $"Value {value} is not supported by CRM mapping."),
         };
     }
@@ -57,17 +57,17 @@ public class DesignPlansCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<DesignPl
     {
         return value switch
         {
-            (int)invln_happiprinciples.AAdaptabilityandcarereadydesign => HappiDesignPrincipleType.AdaptabilityAndCareReadyDesign,
-            (int)invln_happiprinciples.BBalconiesandoutdoorspace => HappiDesignPrincipleType.BalconiesAndOutdoorSpace,
-            (int)invln_happiprinciples.CDaylightinthehomeandinsharedspaces => HappiDesignPrincipleType.DaylightInTheHomeAndInSharedSpaces,
-            (int)invln_happiprinciples.DEnergyefficiencyandsustainabledesign => HappiDesignPrincipleType.EnergyEfficiencyAndSustainableDesign,
-            (int)invln_happiprinciples.EExternalsharedsurfacesandhomezones => HappiDesignPrincipleType.ExternalSharedSurfacedAndHomeZones,
-            (int)invln_happiprinciples.FPlantstreesandthenaturalenvironment => HappiDesignPrincipleType.PlantsTreesAndTheNaturalEnvironment,
-            (int)invln_happiprinciples.GPositiveuseofcirculationspace => HappiDesignPrincipleType.PositiveUseOfCirculationSpace,
-            (int)invln_happiprinciples.HSharedfacilitiesandhubs => HappiDesignPrincipleType.SharedFacilitiesAndHubs,
-            (int)invln_happiprinciples.ISpaceandflexibility => HappiDesignPrincipleType.SpaceAndFlexibility,
-            (int)invln_happiprinciples.JStorageforbelongingsandbicycles => HappiDesignPrincipleType.StorageForBelongingsAndBicycles,
-            (int)invln_happiprinciples.KNone => HappiDesignPrincipleType.NoneOfThese,
+            (int)invln_HAPPIprinciples.AAdaptabilityandcarereadydesign => HappiDesignPrincipleType.AdaptabilityAndCareReadyDesign,
+            (int)invln_HAPPIprinciples.BBalconiesandoutdoorspace => HappiDesignPrincipleType.BalconiesAndOutdoorSpace,
+            (int)invln_HAPPIprinciples.CDaylightinthehomeandinsharedspaces => HappiDesignPrincipleType.DaylightInTheHomeAndInSharedSpaces,
+            (int)invln_HAPPIprinciples.DEnergyefficiencyandsustainabledesign => HappiDesignPrincipleType.EnergyEfficiencyAndSustainableDesign,
+            (int)invln_HAPPIprinciples.EExternalsharedsurfacesandhomezones => HappiDesignPrincipleType.ExternalSharedSurfacedAndHomeZones,
+            (int)invln_HAPPIprinciples.FPlantstreesandthenaturalenvironment => HappiDesignPrincipleType.PlantsTreesAndTheNaturalEnvironment,
+            (int)invln_HAPPIprinciples.GPositiveuseofcirculationspace => HappiDesignPrincipleType.PositiveUseOfCirculationSpace,
+            (int)invln_HAPPIprinciples.HSharedfacilitiesandhubs => HappiDesignPrincipleType.SharedFacilitiesAndHubs,
+            (int)invln_HAPPIprinciples.ISpaceandflexibility => HappiDesignPrincipleType.SpaceAndFlexibility,
+            (int)invln_HAPPIprinciples.JStorageforbelongingsandbicycles => HappiDesignPrincipleType.StorageForBelongingsAndBicycles,
+            (int)invln_HAPPIprinciples.KNone => HappiDesignPrincipleType.NoneOfThese,
             _ => throw new ArgumentOutOfRangeException(nameof(value), $"Value {value} is not supported by CRM mapping."),
         };
     }

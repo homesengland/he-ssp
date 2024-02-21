@@ -146,10 +146,7 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
             return 0;
         }
 
-        var result = prospectiveRent!.Value / marketRent.Value * 100;
-        result = Math.Round(result, 0);
-
-        return result;
+        return (prospectiveRent!.Value / marketRent.Value).RoundToTwoDecimalPlaces();
     }
 
     public decimal? CalculateExpectedFirstTranche(MarketValue? marketValue, InitialSale? initialSale)
@@ -159,10 +156,7 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
             return null;
         }
 
-        var result = (decimal)marketValue!.Value * initialSale!.Value / 100;
-        result = Math.Round(result, 2);
-
-        return result;
+        return (marketValue!.Value * initialSale!.Value).RoundToTwoDecimalPlaces();
     }
 
     public decimal? CalculateProspectiveRentAsPercentageOfTheUnsoldShare(MarketValue? marketValue, ProspectiveRent? prospectiveRent, InitialSale? initialSale)
@@ -179,11 +173,7 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
         }
 
         var expectedFirstTranche = CalculateExpectedFirstTranche(marketValue, initialSale);
-
-        var result = prospectiveRent!.Value * weeksAYear / (marketValue.Value - expectedFirstTranche!.Value) * 100m;
-        result = Math.Round(result, 2);
-
-        return result;
+        return (prospectiveRent!.Value * weeksAYear / (marketValue.Value - expectedFirstTranche!.Value)).RoundToFourDecimalPlaces();
     }
 
     public IHomeTypeSegmentEntity Duplicate()

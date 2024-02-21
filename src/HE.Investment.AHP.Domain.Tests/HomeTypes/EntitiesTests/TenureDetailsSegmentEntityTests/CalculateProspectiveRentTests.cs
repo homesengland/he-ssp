@@ -8,10 +8,10 @@ public class CalculateProspectiveRentTests
 {
     [Theory]
     [InlineData(0, 0, 0)]
-    [InlineData(1000, 500, 50)]
+    [InlineData(1000, 500, 0.5)]
     [InlineData(9999.99, 0, 0)]
     [InlineData(0, 9999.99, 0)]
-    [InlineData(9999.99, 9999.99, 100)]
+    [InlineData(9999.99, 9999.99, 1)]
     public void ShouldReturnCalculatedResult_WhenInputsAreProvided(decimal marketRent, decimal prospectiveRent, decimal expectedResult)
     {
         // given

@@ -8,9 +8,9 @@ namespace HE.Investment.AHP.Domain.Tests.Application.Mappers.SectionStatusMapper
 public class ToDtoTests
 {
     [Theory]
-    [InlineData(SectionStatus.NotStarted, (int)invln_ahpsectioncompletionstatusset.Notstarted)]
-    [InlineData(SectionStatus.InProgress, (int)invln_ahpsectioncompletionstatusset.InProgress)]
-    [InlineData(SectionStatus.Completed, (int)invln_ahpsectioncompletionstatusset.Completed)]
+    [InlineData(SectionStatus.NotStarted, (int)invln_AHPSectioncompletionstatusSet.Notstarted)]
+    [InlineData(SectionStatus.InProgress, (int)invln_AHPSectioncompletionstatusSet.InProgress)]
+    [InlineData(SectionStatus.Completed, (int)invln_AHPSectioncompletionstatusSet.Completed)]
     public void ShouldReturnExpectedValue_WhenSectionStatusIsProvided(SectionStatus status, int expectedValue)
     {
         var result = SectionStatusMapper.ToDto(status);
