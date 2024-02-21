@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace HE.Investment.AHP.WWW.Views.Application.Components.RepresentationsAndWarrantiesText;
+namespace HE.Investment.AHP.WWW.Views.Shared.Components.RepresentationsAndWarrantiesText;
 
 public class RepresentationsAndWarrantiesText : ViewComponent
 {
