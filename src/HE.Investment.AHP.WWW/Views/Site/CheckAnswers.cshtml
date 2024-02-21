@@ -1,7 +1,6 @@
 @using HE.Investment.AHP.Contract.Site
 @using HE.Investment.AHP.WWW.Models.Common
 @using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
-@using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
 @using HE.Investment.AHP.WWW.Views.Site.Const
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.Components.PageHeader
@@ -39,7 +38,6 @@
             value="@Model.IsSectionCompleted"/>
 
         <vc:form-button/>
+        <vc:return-to-sites-link is-editable="@false" />
     </form>
-
-    <vc:return-to-sites-link is-editable="@false" is-link-inside-form="@false"/>
 </gds-div-grid-column-two-thirds>

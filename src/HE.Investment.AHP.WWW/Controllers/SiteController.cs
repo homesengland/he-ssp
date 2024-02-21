@@ -307,7 +307,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     }
 
     [HttpGet("{siteId}/local-authority/not-found")]
-    public async Task<IActionResult> LocalAuthorityNotFound(string siteId, [FromQuery] string redirect, CancellationToken cancellationToken)
+    public async Task<IActionResult> LocalAuthorityNotFound(string siteId, CancellationToken cancellationToken)
     {
         await GetSiteBasicDetails(siteId, cancellationToken);
         return View(nameof(LocalAuthorityNotFound), new LocalAuthorities { SiteId = siteId });
