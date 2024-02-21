@@ -108,7 +108,7 @@
                 }
 
                 <gds-p class="govuk-!-margin-top-1">
-                    @(Model.RentAsPercentageOfTheUnsoldShare.IsProvided() ? $"{Model.RentAsPercentageOfTheUnsoldShare}%"
+                    @(Model.RentAsPercentageOfTheUnsoldShare.IsProvided() ? $"{Model.RentAsPercentageOfTheUnsoldShare}"
                         : "To calculate the rent as percentage of the unsold share, enter the rent per week once you have found the assumed first tranche sales receipt. Then select the calculate button.")
                 </gds-p>
             </he-error-form-group>

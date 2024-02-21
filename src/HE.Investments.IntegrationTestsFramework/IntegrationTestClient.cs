@@ -154,13 +154,13 @@ public class IntegrationTestClient
             return false;
         }
 
-        foreach (var checkbox in checkboxInputsWithFormName)
-        {
-            checkbox!.IsChecked = false;
-        }
-
         if (formValue.Value == string.Empty)
         {
+            foreach (var checkbox in checkboxInputsWithFormName)
+            {
+                checkbox!.IsChecked = false;
+            }
+
             return true;
         }
 

@@ -7,10 +7,10 @@ namespace HE.Investment.AHP.Domain.Tests.HomeTypes.EntitiesTests.TenureDetailsSe
 public class CalculateProspectiveRentAsPercentageOfTheUnsoldShareTests
 {
     [Theory]
-    [InlineData(1, 0, 10, 0)]
-    [InlineData(99_999_999, 9999.99, 75, 2.08)]
-    [InlineData(0, 1000, 50, 0)]
-    public void ShouldReturnCalculatedResult_WhenInputsAreProvided(int marketValue, decimal prospectiveRent, int initialSale, decimal expectedResult)
+    [InlineData(1, 0, 0.1, 0)]
+    [InlineData(99_999_999, 9999.99, 0.75, 0.0207)]
+    [InlineData(0, 1000, 0.50, 0)]
+    public void ShouldReturnCalculatedResult_WhenInputsAreProvided(int marketValue, decimal prospectiveRent, decimal initialSale, decimal expectedResult)
     {
         // given
         var marketValueVO = new MarketValue(marketValue);

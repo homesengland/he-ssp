@@ -30,7 +30,7 @@ namespace DataverseModel
 	/// Status of the Site Details
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum invln_sitedetailsState
+	public enum invln_SiteDetailsState
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]

@@ -41,14 +41,14 @@
             is-displayed="@(Model.PlanningStatus is SitePlanningStatus.DetailedPlanningApplicationSubmitted)"/>
 
         <vc:date-input
-            title="Enter when your application for outline planning permission was submitted"
+            title="Enter when outline planning approval was granted"
             hint="For example, 27 03 2023"
             field-name="@nameof(Model.OutlinePlanningApprovalDate)"
             value="@Model.OutlinePlanningApprovalDate"
             is-displayed="@(Model.PlanningStatus is SitePlanningStatus.OutlinePlanningApprovalGranted)"/>
 
         <vc:date-input
-            title="Enter when outline planning approval was granted"
+            title="Enter when your application for outline planning permission was submitted"
             hint="For example, 27 03 2023"
             field-name="@nameof(Model.PlanningSubmissionDate)"
             value="@Model.PlanningSubmissionDate"
@@ -85,8 +85,8 @@
                               SitePlanningStatus.OutlinePlanningApplicationSubmitted)"/>
 
         <vc:radio-yes-no
-            header="@(Model.PlanningStatus == SitePlanningStatus.NoPlanningRequired ? "Do you have the registered title to the land?" : null)"
-            title="@(Model.PlanningStatus != SitePlanningStatus.NoPlanningRequired ? "Do you have the registered title to the land?" : null)"
+            title="Do you have the registered title to the land?"
+            title-type="@(Model.PlanningStatus == SitePlanningStatus.NoPlanningRequired ? InputTitleType.PageHeader : InputTitleType.InputTitle)"
             hint="You can find the title number on HM Land Registry documents, or correspondence with your solicitor when you purchased the land."
             field-name="@nameof(Model.IsLandRegistryTitleNumberRegistered)"
             value="@Model.IsLandRegistryTitleNumberRegistered"

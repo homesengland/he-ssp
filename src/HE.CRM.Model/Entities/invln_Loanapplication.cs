@@ -90,8 +90,8 @@ namespace DataverseModel
 	/// Status of the Loan application
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum invln_loanapplicationState
-    {
+	public enum invln_LoanapplicationState
+	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Active = 0,
@@ -129,6 +129,9 @@ namespace DataverseModel
 			public const string invln_applicationname = "invln_applicationname";
 			public const string invln_AssessedasSPPI = "invln_assessedassppi";
 			public const string invln_assessedassppiName = "invln_assessedassppiname";
+			public const string invln_CashflowReceived = "invln_cashflowreceived";
+			public const string invln_cashflowreceivedName = "invln_cashflowreceivedname";
+			public const string invln_CashflowRequested = "invln_cashflowrequested";
 			public const string invln_CommerciallySensitive = "invln_commerciallysensitive";
 			public const string invln_commerciallysensitiveName = "invln_commerciallysensitivename";
 			public const string invln_CompanyExperience = "invln_companyexperience";
@@ -149,7 +152,9 @@ namespace DataverseModel
 			public const string invln_costguaranteeName = "invln_costguaranteename";
 			public const string invln_CustomSecurity = "invln_customsecurity";
 			public const string invln_Dateapproved = "invln_dateapproved";
+			public const string invln_DateCashflowRequested = "invln_datecashflowrequested";
 			public const string invln_Datesubmitted = "invln_datesubmitted";
+			public const string invln_DaysSinceCashflowRequested = "invln_dayssincecashflowrequested";
 			public const string invln_DebentureHolder = "invln_debentureholder";
 			public const string invln_Developmenttype = "invln_developmenttype";
 			public const string invln_developmenttypeName = "invln_developmenttypename";
@@ -639,6 +644,57 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_cashflowreceived")]
+		public System.Nullable<bool> invln_CashflowReceived
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_cashflowreceived");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_CashflowReceived");
+				this.SetAttributeValue("invln_cashflowreceived", value);
+				this.OnPropertyChanged("invln_CashflowReceived");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_cashflowreceivedname")]
+		public string invln_cashflowreceivedName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_cashflowreceived"))
+				{
+					return this.FormattedValues["invln_cashflowreceived"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_cashflowrequested")]
+		public string invln_CashflowRequested
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("invln_cashflowrequested");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_CashflowRequested");
+				this.SetAttributeValue("invln_cashflowrequested", value);
+				this.OnPropertyChanged("invln_CashflowRequested");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_commerciallysensitive")]
 		public System.Nullable<bool> invln_CommerciallySensitive
 		{
@@ -928,6 +984,16 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_datecashflowrequested")]
+		public System.Nullable<System.DateTime> invln_DateCashflowRequested
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("invln_datecashflowrequested");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_datesubmitted")]
 		public System.Nullable<System.DateTime> invln_Datesubmitted
 		{
@@ -942,6 +1008,19 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_Datesubmitted");
 				this.SetAttributeValue("invln_datesubmitted", value);
 				this.OnPropertyChanged("invln_Datesubmitted");
+			}
+		}
+		
+		/// <summary>
+		/// A calculated column counting the number of days since a Borrower received their automated cashflow required email.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_dayssincecashflowrequested")]
+		public System.Nullable<decimal> invln_DaysSinceCashflowRequested
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_dayssincecashflowrequested");
 			}
 		}
 		

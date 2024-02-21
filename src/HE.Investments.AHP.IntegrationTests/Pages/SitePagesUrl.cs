@@ -64,6 +64,16 @@ public static class SitePagesUrl
 
     public static string SiteEnvironmentalImpact(string siteId) => $"ahp/site/{siteId}/environmental-impact";
 
+    public static string SiteMmcUsing(string siteId) => $"ahp/site/{siteId}/mmc-using";
+
+    public static string SiteMmcInformation(string siteId) => $"ahp/site/{siteId}/mmc-information";
+
+    public static string SiteMmcCategories(string siteId) => $"ahp/site/{siteId}/mmc-categories";
+
+    public static string SiteMmcCategory3D(string siteId) => $"ahp/site/{siteId}/mmc-3d-category";
+
+    public static string SiteMmcCategory2D(string siteId) => $"ahp/site/{siteId}/mmc-2d-category";
+
     public static string SiteProcurements(string siteId) => $"ahp/site/{siteId}/procurements";
 
     public static string SiteCheckAnswers(string siteId) => $"ahp/site/{siteId}/check-answers";
