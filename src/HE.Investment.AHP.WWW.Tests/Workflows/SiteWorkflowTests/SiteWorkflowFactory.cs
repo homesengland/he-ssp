@@ -31,7 +31,7 @@ public static class SiteWorkflowFactory
     {
         var site = new SiteModel
         {
-            Name = name,
+            Name = name ?? "some site",
             Section106 = section106,
             LocalAuthority = localAuthority,
             PlanningDetails = planningDetails ?? new SitePlanningDetails(SitePlanningStatus.Undefined),
