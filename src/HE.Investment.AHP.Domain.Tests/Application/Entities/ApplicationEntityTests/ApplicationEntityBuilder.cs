@@ -21,8 +21,6 @@ public class ApplicationEntityBuilder
 
     private IList<ApplicationSection>? _sections;
 
-    private RepresentationsAndWarranties _representationsAndWarranties = new("checked");
-
     public static ApplicationEntityBuilder New() => new();
 
     public ApplicationEntityBuilder WithSections(params ApplicationSection[] sections)
@@ -34,12 +32,6 @@ public class ApplicationEntityBuilder
     public ApplicationEntityBuilder WithApplicationStatus(ApplicationStatus status)
     {
         _status = status;
-        return this;
-    }
-
-    public ApplicationEntityBuilder WithRepresentationsAndWarranties(RepresentationsAndWarranties representationsAndWarranties)
-    {
-        _representationsAndWarranties = representationsAndWarranties;
         return this;
     }
 
