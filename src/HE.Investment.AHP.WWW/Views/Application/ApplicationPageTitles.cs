@@ -18,5 +18,9 @@ public static class ApplicationPageTitles
 
     public const string CheckAnswers = "Check your answers before submitting your application";
 
-    public const string Submitted = "Application complete";
+    public const string Submit = "Submit application";
+
+    public const string Completed = "Application complete";
+
+    public const string SubmitConfirm = "Confirm the following";
 }

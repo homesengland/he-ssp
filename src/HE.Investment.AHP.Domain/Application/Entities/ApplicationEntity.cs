@@ -60,6 +60,8 @@ public class ApplicationEntity : DomainEntity
 
     public ApplicationSections Sections { get; }
 
+    public RepresentationsAndWarranties RepresentationsAndWarranties { get; private set; }
+
     public bool IsModified => _modificationTracker.IsModified;
 
     public bool IsNew => Id.IsNew;
@@ -84,17 +86,23 @@ public class ApplicationEntity : DomainEntity
         Id = newId;
     }
 
-    public async Task Submit(IChangeApplicationStatus applicationSubmit, OrganisationId organisationId, CancellationToken cancellationToken)
+    public void AreAllSectionsCompleted()
     {
         if (Sections.Sections.Any(s => s.Status != SectionStatus.Completed))
         {
             var operationResult = OperationResult.New().AddValidationError("Status", "Cannot submit application with at least one not completed section.");
             throw new DomainValidationException(operationResult);
         }
+    }
+
+    public async Task Submit(IChangeApplicationStatus applicationSubmit, OrganisationId organisationId, RepresentationsAndWarranties representationsAndWarranties, CancellationToken cancellationToken)
+    {
+        AreAllSectionsCompleted();
 
         Status = _modificationTracker.Change(Status, ApplicationStatus.ApplicationSubmitted);
+        RepresentationsAndWarranties = _modificationTracker.Change(RepresentationsAndWarranties, representationsAndWarranties);
 
-        await applicationSubmit.ChangeApplicationStatus(this, organisationId, null, cancellationToken);
+        await applicationSubmit.ChangeApplicationStatus(this, organisationId, null, cancellationToken); // todo this will be change to pass representationsAndWarranties when it will be added to crm
     }
 
     public async Task Hold(IChangeApplicationStatus applicationHold, HoldReason? newHoldReason, OrganisationId organisationId, CancellationToken cancellationToken)
