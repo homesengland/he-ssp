@@ -25,8 +25,7 @@
 
             <vc:form-button text="Search"/>
         </gds-field-set>
-
-        <vc:return-to-sites-link/>
         @Html.HiddenFor(c => c.SiteId)
     </form>
+    <vc:return-to-sites-link is-link-inside-form="false"/>
 </gds-div-grid-column-two-thirds>
