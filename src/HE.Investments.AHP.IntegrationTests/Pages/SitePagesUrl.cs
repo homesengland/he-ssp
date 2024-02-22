@@ -2,11 +2,15 @@ namespace HE.Investments.AHP.IntegrationTests.Pages;
 
 public static class SitePagesUrl
 {
+    public const string SiteList = "/ahp/site";
+
     public const string SiteStart = "/ahp/site/start";
 
     public const string SiteName = "/ahp/site/name";
 
     public const string SiteSelect = "ahp/site/select";
+
+    public static string SiteDetails(string siteId) => $"ahp/site/{siteId}";
 
     public static string SiteSection106GeneralAgreement(string siteId) => $"ahp/site/{siteId}/section-106-general-agreement";
 

@@ -4,6 +4,5 @@ using MediatR;
 
 namespace HE.Investment.AHP.Contract.Site.Commands;
 
-public record ProvideNationalDesignGuidePrioritiesCommand(
-    SiteId SiteId,
-    IReadOnlyCollection<NationalDesignGuidePriority> NationalDesignGuidePriorities) : IRequest<OperationResult>;
+public record ProvideNationalDesignGuidePrioritiesCommand(SiteId SiteId, IReadOnlyCollection<NationalDesignGuidePriority> NationalDesignGuidePriorities)
+    : IRequest<OperationResult>, IProvideSiteDetailsCommand;

@@ -1,6 +1,5 @@
-using System.Globalization;
 using HE.Investments.Common.Errors;
-using HE.Investments.Common.Extensions;
+using HE.Investments.Common.WWW.Helpers;
 using HE.Investments.Common.WWW.Infrastructure.ErrorHandling;
 
 namespace HE.Investments.Loans.WWW.Utils.Errors;
@@ -20,8 +19,6 @@ public static class ErrorContentProvider
     {
         var utcDate = (DateTime)errorModel.AdditionalData["Date"];
 
-        var ukDate = utcDate.ConvertUtcToUkLocalTime();
-
-        return ("This application has already been submitted", $"Application submitted at {ukDate.ToString("hh:mm tt", CultureInfo.InvariantCulture)} on {ukDate.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture)}");
+        return ("This application has already been submitted", $"Application submitted at {DateHelper.DisplayAsUkFormatDateTime(utcDate)}");
     }
 }
