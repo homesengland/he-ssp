@@ -1,5 +1,6 @@
 using FluentAssertions;
 using HE.Investment.AHP.Contract.Delivery;
+using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Common.WWW.Routing;
 
@@ -10,8 +11,8 @@ public class NextStateTests
     [Theory]
     [InlineData(DeliveryPhaseWorkflowState.Create, DeliveryPhaseWorkflowState.TypeOfHomes)]
     [InlineData(DeliveryPhaseWorkflowState.Name, DeliveryPhaseWorkflowState.TypeOfHomes)]
-    [InlineData(DeliveryPhaseWorkflowState.TypeOfHomes, DeliveryPhaseWorkflowState.BuildActivityType)]
-    [InlineData(DeliveryPhaseWorkflowState.BuildActivityType, DeliveryPhaseWorkflowState.AddHomes)]
+    [InlineData(DeliveryPhaseWorkflowState.TypeOfHomes, DeliveryPhaseWorkflowState.NewBuildActivityType)]
+    [InlineData(DeliveryPhaseWorkflowState.NewBuildActivityType, DeliveryPhaseWorkflowState.AddHomes)]
     [InlineData(DeliveryPhaseWorkflowState.AddHomes, DeliveryPhaseWorkflowState.SummaryOfDelivery)]
     [InlineData(DeliveryPhaseWorkflowState.SummaryOfDelivery, DeliveryPhaseWorkflowState.AcquisitionMilestone)]
     [InlineData(DeliveryPhaseWorkflowState.AcquisitionMilestone, DeliveryPhaseWorkflowState.StartOnSiteMilestone)]
@@ -34,8 +35,8 @@ public class NextStateTests
     [Theory]
     [InlineData(DeliveryPhaseWorkflowState.Create, DeliveryPhaseWorkflowState.TypeOfHomes)]
     [InlineData(DeliveryPhaseWorkflowState.Name, DeliveryPhaseWorkflowState.TypeOfHomes)]
-    [InlineData(DeliveryPhaseWorkflowState.TypeOfHomes, DeliveryPhaseWorkflowState.BuildActivityType)]
-    [InlineData(DeliveryPhaseWorkflowState.BuildActivityType, DeliveryPhaseWorkflowState.AddHomes)]
+    [InlineData(DeliveryPhaseWorkflowState.TypeOfHomes, DeliveryPhaseWorkflowState.NewBuildActivityType)]
+    [InlineData(DeliveryPhaseWorkflowState.NewBuildActivityType, DeliveryPhaseWorkflowState.AddHomes)]
     [InlineData(DeliveryPhaseWorkflowState.AddHomes, DeliveryPhaseWorkflowState.SummaryOfDelivery)]
     [InlineData(DeliveryPhaseWorkflowState.SummaryOfDelivery, DeliveryPhaseWorkflowState.PracticalCompletionMilestone)]
     [InlineData(DeliveryPhaseWorkflowState.PracticalCompletionMilestone, DeliveryPhaseWorkflowState.UnregisteredBodyFollowUp)]
@@ -60,8 +61,8 @@ public class NextStateTests
     [InlineData(DeliveryPhaseWorkflowState.StartOnSiteMilestone, DeliveryPhaseWorkflowState.AcquisitionMilestone)]
     [InlineData(DeliveryPhaseWorkflowState.AcquisitionMilestone, DeliveryPhaseWorkflowState.SummaryOfDelivery)]
     [InlineData(DeliveryPhaseWorkflowState.SummaryOfDelivery, DeliveryPhaseWorkflowState.AddHomes)]
-    [InlineData(DeliveryPhaseWorkflowState.AddHomes, DeliveryPhaseWorkflowState.BuildActivityType)]
-    [InlineData(DeliveryPhaseWorkflowState.BuildActivityType, DeliveryPhaseWorkflowState.TypeOfHomes)]
+    [InlineData(DeliveryPhaseWorkflowState.AddHomes, DeliveryPhaseWorkflowState.NewBuildActivityType)]
+    [InlineData(DeliveryPhaseWorkflowState.NewBuildActivityType, DeliveryPhaseWorkflowState.TypeOfHomes)]
     [InlineData(DeliveryPhaseWorkflowState.TypeOfHomes, DeliveryPhaseWorkflowState.Name)]
     public async Task ShouldReturnNextState_WhenBackTriggerExecutedAsRegisteredBody(
         DeliveryPhaseWorkflowState current,
@@ -82,8 +83,8 @@ public class NextStateTests
     [InlineData(DeliveryPhaseWorkflowState.UnregisteredBodyFollowUp, DeliveryPhaseWorkflowState.PracticalCompletionMilestone)]
     [InlineData(DeliveryPhaseWorkflowState.PracticalCompletionMilestone, DeliveryPhaseWorkflowState.SummaryOfDelivery)]
     [InlineData(DeliveryPhaseWorkflowState.SummaryOfDelivery, DeliveryPhaseWorkflowState.AddHomes)]
-    [InlineData(DeliveryPhaseWorkflowState.AddHomes, DeliveryPhaseWorkflowState.BuildActivityType)]
-    [InlineData(DeliveryPhaseWorkflowState.BuildActivityType, DeliveryPhaseWorkflowState.TypeOfHomes)]
+    [InlineData(DeliveryPhaseWorkflowState.AddHomes, DeliveryPhaseWorkflowState.NewBuildActivityType)]
+    [InlineData(DeliveryPhaseWorkflowState.NewBuildActivityType, DeliveryPhaseWorkflowState.TypeOfHomes)]
     [InlineData(DeliveryPhaseWorkflowState.TypeOfHomes, DeliveryPhaseWorkflowState.Name)]
     public async Task ShouldReturnNextState_WhenBackTriggerExecutedAsUnregisteredBody(DeliveryPhaseWorkflowState current, DeliveryPhaseWorkflowState expectedNext)
     {
@@ -98,17 +99,17 @@ public class NextStateTests
     }
 
     [Theory]
-    [InlineData(DeliveryPhaseWorkflowState.BuildActivityType, DeliveryPhaseWorkflowState.ReconfiguringExisting, true)]
-    [InlineData(DeliveryPhaseWorkflowState.BuildActivityType, DeliveryPhaseWorkflowState.AddHomes, false)]
-    public async Task ShouldReturnNextState_WhenBackTriggerExecutedForReconfiguringExisting(
+    [InlineData(DeliveryPhaseWorkflowState.TypeOfHomes, DeliveryPhaseWorkflowState.RehabBuildActivityType)]
+    [InlineData(DeliveryPhaseWorkflowState.RehabBuildActivityType, DeliveryPhaseWorkflowState.ReconfiguringExisting)]
+    [InlineData(DeliveryPhaseWorkflowState.ReconfiguringExisting, DeliveryPhaseWorkflowState.AddHomes)]
+    public async Task ShouldReturnNextState_WhenContinueTriggerExecutedForReconfiguringExisting(
         DeliveryPhaseWorkflowState current,
-        DeliveryPhaseWorkflowState expectedNext,
-        bool isReconfiguringExistingNeeded)
+        DeliveryPhaseWorkflowState expectedNext)
     {
         // given
         var workflow = BuildWorkflow(
             current,
-            DeliveryPhaseDetailsTestData.WithNames with { IsReconfiguringExistingNeeded = isReconfiguringExistingNeeded });
+            DeliveryPhaseDetailsTestData.WithNames with { TypeOfHomes = TypeOfHomes.Rehab, IsReconfiguringExistingNeeded = true });
 
         // when
         var result = await workflow.NextState(Trigger.Continue);
@@ -118,10 +119,30 @@ public class NextStateTests
     }
 
     [Theory]
+    [InlineData(DeliveryPhaseWorkflowState.AddHomes, DeliveryPhaseWorkflowState.ReconfiguringExisting)]
+    [InlineData(DeliveryPhaseWorkflowState.ReconfiguringExisting, DeliveryPhaseWorkflowState.RehabBuildActivityType)]
+    [InlineData(DeliveryPhaseWorkflowState.RehabBuildActivityType, DeliveryPhaseWorkflowState.TypeOfHomes)]
+    public async Task ShouldReturnNextState_WhenBackTriggerExecutedForReconfiguringExisting(
+        DeliveryPhaseWorkflowState current,
+        DeliveryPhaseWorkflowState expectedNext)
+    {
+        // given
+        var workflow = BuildWorkflow(
+            current,
+            DeliveryPhaseDetailsTestData.WithNames with { TypeOfHomes = TypeOfHomes.Rehab, IsReconfiguringExistingNeeded = true });
+
+        // when
+        var result = await workflow.NextState(Trigger.Back);
+
+        // then
+        result.Should().Be(expectedNext);
+    }
+
+    [Theory]
     [InlineData(DeliveryPhaseWorkflowState.Create, DeliveryPhaseWorkflowState.TypeOfHomes)]
     [InlineData(DeliveryPhaseWorkflowState.Name, DeliveryPhaseWorkflowState.TypeOfHomes)]
-    [InlineData(DeliveryPhaseWorkflowState.TypeOfHomes, DeliveryPhaseWorkflowState.BuildActivityType)]
-    [InlineData(DeliveryPhaseWorkflowState.BuildActivityType, DeliveryPhaseWorkflowState.AddHomes)]
+    [InlineData(DeliveryPhaseWorkflowState.TypeOfHomes, DeliveryPhaseWorkflowState.NewBuildActivityType)]
+    [InlineData(DeliveryPhaseWorkflowState.NewBuildActivityType, DeliveryPhaseWorkflowState.AddHomes)]
     [InlineData(DeliveryPhaseWorkflowState.AddHomes, DeliveryPhaseWorkflowState.SummaryOfDelivery)]
     [InlineData(DeliveryPhaseWorkflowState.SummaryOfDelivery, DeliveryPhaseWorkflowState.PracticalCompletionMilestone)]
     public async Task ShouldReturnNextState_WhenContinueTriggerExecutedForIsOnlyCompletionMilestone(
@@ -142,8 +163,8 @@ public class NextStateTests
     [InlineData(DeliveryPhaseWorkflowState.CheckAnswers, DeliveryPhaseWorkflowState.PracticalCompletionMilestone)]
     [InlineData(DeliveryPhaseWorkflowState.PracticalCompletionMilestone, DeliveryPhaseWorkflowState.SummaryOfDelivery)]
     [InlineData(DeliveryPhaseWorkflowState.SummaryOfDelivery, DeliveryPhaseWorkflowState.AddHomes)]
-    [InlineData(DeliveryPhaseWorkflowState.AddHomes, DeliveryPhaseWorkflowState.BuildActivityType)]
-    [InlineData(DeliveryPhaseWorkflowState.BuildActivityType, DeliveryPhaseWorkflowState.TypeOfHomes)]
+    [InlineData(DeliveryPhaseWorkflowState.AddHomes, DeliveryPhaseWorkflowState.NewBuildActivityType)]
+    [InlineData(DeliveryPhaseWorkflowState.NewBuildActivityType, DeliveryPhaseWorkflowState.TypeOfHomes)]
     [InlineData(DeliveryPhaseWorkflowState.TypeOfHomes, DeliveryPhaseWorkflowState.Name)]
     public async Task ShouldReturnNextState_WhenBackTriggerExecutedForIsOnlyCompletionMilestone(DeliveryPhaseWorkflowState current, DeliveryPhaseWorkflowState expectedNext)
     {

@@ -1,10 +1,9 @@
 using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.WWW.Models.Application;
-using HE.Investments.Common.WWW.Models;
 
 namespace HE.Investment.AHP.WWW.Models.Delivery;
 
-public class DeliveryPhaseSummaryViewModel : IEditableViewModel
+public class DeliveryPhaseSummaryViewModel : ISummaryViewModel
 {
     public DeliveryPhaseSummaryViewModel(
         string applicationId,

@@ -15,6 +15,7 @@ using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Validators;
+using HE.Investments.Common.Workflow;
 using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Routing;
 using MediatR;
@@ -50,13 +51,10 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     }
 
     [HttpGet("{deliveryPhaseId}/start")]
-    [WorkflowState(DeliveryPhaseWorkflowState.Start)]
-    public async Task<IActionResult> Start([FromRoute] string applicationId, [FromRoute] string deliveryPhaseId)
+    public async Task<IActionResult> Start([FromRoute] string applicationId, [FromRoute] string deliveryPhaseId, CancellationToken cancellationToken)
     {
-        var application = await _mediator.Send(new GetApplicationQuery(AhpApplicationId.From(applicationId)));
-
-        var model = new DeliveryPhaseNameViewModel(applicationId, null, application.Name, null, nameof(this.Create));
-        return View("Name", model);
+        var deliveryPhaseSummary = await GetDeliveryPhaseAndCreateSummary(false, cancellationToken);
+        return this.ContinueSectionAnswering(deliveryPhaseSummary, () => RedirectToAction("CheckAnswers", new { applicationId, deliveryPhaseId }));
     }
 
     [HttpGet("create")]
@@ -145,34 +143,40 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
             cancellationToken);
     }
 
-    [HttpGet("{deliveryPhaseId}/build-activity-type")]
-    [WorkflowState(DeliveryPhaseWorkflowState.BuildActivityType)]
-    public async Task<IActionResult> BuildActivityType([FromRoute] string applicationId, string deliveryPhaseId, CancellationToken cancellationToken)
+    [HttpGet("{deliveryPhaseId}/new-build-activity-type")]
+    [WorkflowState(DeliveryPhaseWorkflowState.NewBuildActivityType)]
+    public async Task<IActionResult> NewBuildActivityType([FromRoute] string applicationId, string deliveryPhaseId, CancellationToken cancellationToken)
     {
-        var deliveryPhaseDetails =
-            await _mediator.Send(
-                new GetDeliveryPhaseDetailsQuery(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId)),
-                cancellationToken);
-
-        return View("BuildActivityType", deliveryPhaseDetails);
+        return await GetBuildActivityType(applicationId, deliveryPhaseId, cancellationToken);
     }
 
-    [HttpPost("{deliveryPhaseId}/build-activity-type")]
-    [WorkflowState(DeliveryPhaseWorkflowState.BuildActivityType)]
-    public async Task<IActionResult> BuildActivityType(
+    [HttpPost("{deliveryPhaseId}/new-build-activity-type")]
+    [WorkflowState(DeliveryPhaseWorkflowState.NewBuildActivityType)]
+    public async Task<IActionResult> NewBuildActivityType(
         [FromRoute] string applicationId,
         string deliveryPhaseId,
         DeliveryPhaseDetails deliveryPhaseDetails,
         CancellationToken cancellationToken)
     {
-        return await ExecuteCommand(
-            new ProvideBuildActivityCommand(
-                AhpApplicationId.From(applicationId),
-                new DeliveryPhaseId(deliveryPhaseId),
-                deliveryPhaseDetails.BuildActivityType),
-            nameof(BuildActivityType),
-            savedModel => savedModel with { BuildActivityType = deliveryPhaseDetails.BuildActivityType },
-            cancellationToken);
+        return await SaveBuildActivityType(applicationId, deliveryPhaseId, deliveryPhaseDetails, cancellationToken);
+    }
+
+    [HttpGet("{deliveryPhaseId}/rehab-build-activity-type")]
+    [WorkflowState(DeliveryPhaseWorkflowState.RehabBuildActivityType)]
+    public async Task<IActionResult> RehabBuildActivityType([FromRoute] string applicationId, string deliveryPhaseId, CancellationToken cancellationToken)
+    {
+        return await GetBuildActivityType(applicationId, deliveryPhaseId, cancellationToken);
+    }
+
+    [HttpPost("{deliveryPhaseId}/rehab-build-activity-type")]
+    [WorkflowState(DeliveryPhaseWorkflowState.RehabBuildActivityType)]
+    public async Task<IActionResult> RehabBuildActivityType(
+        [FromRoute] string applicationId,
+        string deliveryPhaseId,
+        DeliveryPhaseDetails deliveryPhaseDetails,
+        CancellationToken cancellationToken)
+    {
+        return await SaveBuildActivityType(applicationId, deliveryPhaseId, deliveryPhaseDetails, cancellationToken);
     }
 
     [HttpGet("{deliveryPhaseId}/add-homes")]
@@ -524,8 +528,45 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
             : new DeliveryPhaseDetails(string.Empty, string.Empty, string.Empty, SectionStatus.NotStarted, false, false);
 
         var isReadOnly = !await _accountAccessContext.CanEditApplication() || deliveryPhase.IsReadOnly;
+        var workflow = new DeliveryPhaseWorkflow(currentState, deliveryPhase, isReadOnly);
+        if (Request.TryGetWorkflowQueryParameter(out var lastEncodedWorkflow))
+        {
+            var lastWorkflow = new EncodedWorkflow<DeliveryPhaseWorkflowState>(lastEncodedWorkflow);
+            var currentWorkflow = workflow.GetEncodedWorkflow();
+            var changedState = currentWorkflow.GetNextChangedWorkflowState(currentState, lastWorkflow);
 
-        return new DeliveryPhaseWorkflow(currentState, deliveryPhase, isReadOnly);
+            return new DeliveryPhaseWorkflow(changedState, deliveryPhase, isReadOnly, true);
+        }
+
+        return workflow;
+    }
+
+    private async Task<IActionResult> GetBuildActivityType(
+        string applicationId,
+        string deliveryPhaseId,
+        CancellationToken cancellationToken)
+    {
+        var deliveryPhaseDetails = await _mediator.Send(
+            new GetDeliveryPhaseDetailsQuery(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId)),
+            cancellationToken);
+
+        return View("BuildActivityType", deliveryPhaseDetails);
+    }
+
+    private async Task<IActionResult> SaveBuildActivityType(
+        string applicationId,
+        string deliveryPhaseId,
+        DeliveryPhaseDetails deliveryPhaseDetails,
+        CancellationToken cancellationToken)
+    {
+        return await ExecuteCommand(
+            new ProvideBuildActivityCommand(
+                AhpApplicationId.From(applicationId),
+                new DeliveryPhaseId(deliveryPhaseId),
+                deliveryPhaseDetails.BuildActivityType),
+            "BuildActivityType",
+            savedModel => savedModel with { BuildActivityType = deliveryPhaseDetails.BuildActivityType },
+            cancellationToken);
     }
 
     private async Task<IActionResult> DisplayChecksAnswersPage(CancellationToken cancellationToken, IEnumerable<string>? errorMessages = null)
@@ -535,17 +576,23 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
             ModelState.AddModelError(nameof(DeliveryPhaseSummaryViewModel.IsCompleted), errorMessage);
         }
 
-        return View("CheckAnswers", await GetDeliveryPhaseAndCreateSummary(cancellationToken));
+        return View("CheckAnswers", await GetDeliveryPhaseAndCreateSummary(true, cancellationToken));
     }
 
-    private async Task<DeliveryPhaseSummaryViewModel> GetDeliveryPhaseAndCreateSummary(CancellationToken cancellationToken)
+    private async Task<DeliveryPhaseSummaryViewModel> GetDeliveryPhaseAndCreateSummary(bool useWorkflowRedirection, CancellationToken cancellationToken)
     {
         var applicationId = this.GetApplicationIdFromRoute();
         var deliveryPhaseId = this.GetDeliveryPhaseIdFromRoute();
         var deliveryPhaseDetails = await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(applicationId, deliveryPhaseId, true), cancellationToken);
         var deliveryPhaseHomes = await _mediator.Send(new GetDeliveryPhaseHomesQuery(applicationId, deliveryPhaseId), cancellationToken);
         var isEditable = await _accountAccessContext.CanEditApplication() && !deliveryPhaseDetails.IsReadOnly;
-        var sections = _deliveryPhaseCheckAnswersViewModelFactory.CreateSummary(applicationId, deliveryPhaseDetails, deliveryPhaseHomes, Url, isEditable);
+        var sections = _deliveryPhaseCheckAnswersViewModelFactory.CreateSummary(
+            applicationId,
+            deliveryPhaseDetails,
+            deliveryPhaseHomes,
+            Url,
+            isEditable,
+            useWorkflowRedirection);
 
         return new DeliveryPhaseSummaryViewModel(
             applicationId.Value,
@@ -598,12 +645,17 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     {
         var applicationId = this.GetApplicationIdFromRoute();
         var deliveryPhaseId = this.GetDeliveryPhaseIdFromRoute();
+        Request.TryGetWorkflowQueryParameter(out var workflow);
 
         return await this.ExecuteCommand<TViewModel>(
             _mediator,
             command,
-            async () => await this.ReturnToTaskListOrContinue(
-                async () => await ContinueWithRedirect(new { applicationId = applicationId.Value, deliveryPhaseId })),
+            async () =>
+            {
+                _deliveryPhaseProvider.Invalidate();
+                return await this.ReturnToTaskListOrContinue(
+                    async () => await Continue(new { applicationId = applicationId.Value, deliveryPhaseId, workflow }));
+            },
             async () =>
             {
                 var deliveryPhaseDetails =

@@ -1,7 +1,6 @@
 using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Queries;
 using MediatR;
-using NuGet.Common;
 
 namespace HE.Investment.AHP.WWW.Utils;
 
@@ -27,5 +26,11 @@ public class CachedDeliveryPhaseProvider : IDeliveryPhaseProvider
         }
 
         return _data!;
+    }
+
+    public void Invalidate()
+    {
+        _cachedQueryRequest = null;
+        _data = null;
     }
 }

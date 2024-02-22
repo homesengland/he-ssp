@@ -1,6 +1,7 @@
 using System.Reflection;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Common.WWW.Components.SectionSummary;
 using HE.Investments.Common.WWW.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;

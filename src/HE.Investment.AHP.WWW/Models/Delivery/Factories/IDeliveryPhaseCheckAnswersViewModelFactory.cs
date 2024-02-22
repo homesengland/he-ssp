@@ -12,5 +12,6 @@ public interface IDeliveryPhaseCheckAnswersViewModelFactory
         DeliveryPhaseDetails deliveryPhase,
         DeliveryPhaseHomes deliveryPhaseHomes,
         IUrlHelper urlHelper,
-        bool isEditable);
+        bool isEditable,
+        bool useWorkflowRedirection = true);
 }

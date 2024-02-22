@@ -59,7 +59,7 @@
                         <td class="govuk-table__cell">
                             <gds-link class="govuk-link--no-visited-state"
                                       data-testid="home-type-@Model.HomeTypes[index].HomeTypeId"
-                                      href="@Url.Action("HomeTypeDetails","HomeTypes", new  { applicationId, homeTypeId = Model.HomeTypes[index].HomeTypeId, redirect = true })">
+                                      href="@Url.Action("Start","HomeTypes", new  { applicationId, homeTypeId = Model.HomeTypes[index].HomeTypeId, redirect = true })">
                                 @(Model.HomeTypes[index].HomeTypeName)
                             </gds-link>
                         </td>

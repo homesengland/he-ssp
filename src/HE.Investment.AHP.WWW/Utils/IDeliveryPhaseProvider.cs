@@ -6,4 +6,6 @@ namespace HE.Investment.AHP.WWW.Utils;
 public interface IDeliveryPhaseProvider
 {
     Task<DeliveryPhaseDetails> Get(GetDeliveryPhaseDetailsQuery query, CancellationToken cancellationToken);
+
+    void Invalidate();
 }
