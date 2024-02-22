@@ -17,7 +17,7 @@ public class SaveFinishHomeTypesAnswerCommandHandler : HomeTypeCommandHandlerBas
 
     private readonly ISchemeRepository _schemeRepository;
 
-    public SaveFinishHomeTypesAnswerCommandHandler(IHomeTypeRepository repository,ISchemeRepository schemeRepository, IAccountUserContext accountUserContext, ILogger<SaveFinishHomeTypesAnswerCommandHandler> logger)
+    public SaveFinishHomeTypesAnswerCommandHandler(IHomeTypeRepository repository, ISchemeRepository schemeRepository, IAccountUserContext accountUserContext, ILogger<SaveFinishHomeTypesAnswerCommandHandler> logger)
         : base(logger)
     {
         _repository = repository;
