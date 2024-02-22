@@ -1,10 +1,8 @@
 using HE.Investment.AHP.Contract.Site;
-using HE.Investments.Common.Domain;
-using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.Domain.Site.ValueObjects.Planning.PlanningDetailsTypes;
 
-public class DetailedPlanningApprovalGrantedWithFurtherStepsPlanningDetails : PlanningDetails, IQuestion
+public class DetailedPlanningApprovalGrantedWithFurtherStepsPlanningDetails : PlanningDetails
 {
     public DetailedPlanningApprovalGrantedWithFurtherStepsPlanningDetails(
         ReferenceNumber? referenceNumber = null,
@@ -21,11 +19,11 @@ public class DetailedPlanningApprovalGrantedWithFurtherStepsPlanningDetails : Pl
 
     public override SitePlanningStatus? PlanningStatus => SitePlanningStatus.DetailedPlanningApprovalGrantedWithFurtherSteps;
 
-    public override bool IsAnswered()
+    protected override IReadOnlyCollection<string> ActiveFields => new[]
     {
-        return ReferenceNumber.IsProvided() &&
-               DetailedPlanningApprovalDate.IsProvided() &&
-               RequiredFurtherSteps.IsProvided() &&
-               IsGrantFundingForAllHomesCoveredByApplication.IsProvided();
-    }
+        nameof(ReferenceNumber),
+        nameof(DetailedPlanningApprovalDate),
+        nameof(RequiredFurtherSteps),
+        nameof(IsGrantFundingForAllHomesCoveredByApplication),
+    };
 }

@@ -8,16 +8,15 @@ public class PlanningDetailsTests : ViewTestBase
     private readonly string _viewPath = "/Views/Site/PlanningDetails.cshtml";
 
     [Theory]
-    [InlineData(SitePlanningStatus.DetailedPlanningApprovalGranted, true, true, false, false, false, false, true, false, false)]
-    [InlineData(SitePlanningStatus.DetailedPlanningApprovalGrantedWithFurtherSteps, true, true, false, false, false, false, true, true, false)]
-    [InlineData(SitePlanningStatus.DetailedPlanningApplicationSubmitted, true, false, true, false, false, true, true, true, false)]
-    [InlineData(SitePlanningStatus.OutlinePlanningApprovalGranted, true, false, false, true, false, true, true, true, false)]
-    [InlineData(SitePlanningStatus.OutlinePlanningApplicationSubmitted, true, false, false, false, true, true, true, true, false)]
-    [InlineData(SitePlanningStatus.PlanningDiscussionsUnderwayWithThePlanningOffice, false, false, false, false, false, true, false, false, true)]
-    [InlineData(SitePlanningStatus.NoProgressOnPlanningApplication, false, false, false, false, false, true, false, false, true)]
-    [InlineData(SitePlanningStatus.NoPlanningRequired, false, false, false, false, false, false, false, false, true)]
+    [InlineData(true, false, false, false, false, false, false, false, false)]
+    [InlineData(false, true, false, false, false, false, false, false, false)]
+    [InlineData(false, false, true, false, false, false, false, false, false)]
+    [InlineData(false, false, false, true, false, false, false, false, false)]
+    [InlineData(false, false, false, false, true, false, false, false, false)]
+    [InlineData(false, false, false, false, false, true, false, false, false)]
+    [InlineData(false, false, false, false, false, false, true, false, false)]
+    [InlineData(false, false, false, false, false, false, false, false, true)]
     public async Task ShouldDisplayView(
-        SitePlanningStatus status,
         bool referenceNumberExist,
         bool detailedPlanningApprovalDateExist,
         bool applicationForDetailedPlanningSubmittedDateExist,
@@ -28,7 +27,16 @@ public class PlanningDetailsTests : ViewTestBase
         bool requiredFurtherStepsExist,
         bool isLandRegistryTitleNumberRegisteredExist)
     {
-        var model = CreateTestModel(status);
+        var model = CreateTestModel(
+            referenceNumberExist,
+            detailedPlanningApprovalDateExist,
+            applicationForDetailedPlanningSubmittedDateExist,
+            outlinePlanningApprovalDateExist,
+            planningSubmissionDateExist,
+            expectedPlanningApprovalDateExist,
+            isGrantFundingForAllHomesExist,
+            requiredFurtherStepsExist,
+            isLandRegistryTitleNumberRegisteredExist);
         var viewBag = new Dictionary<string, object> { { "SiteName", " some site name" } };
 
         // given & when
@@ -96,20 +104,38 @@ public class PlanningDetailsTests : ViewTestBase
             .HasBackLink(false);
     }
 
-    private static SitePlanningDetails CreateTestModel(SitePlanningStatus status)
+    private static SitePlanningDetails CreateTestModel(
+        bool referenceNumberExist,
+        bool detailedPlanningApprovalDateExist,
+        bool applicationForDetailedPlanningSubmittedDateExist,
+        bool outlinePlanningApprovalDateExist,
+        bool planningSubmissionDateExist,
+        bool expectedPlanningApprovalDateExist,
+        bool isGrantFundingForAllHomesExist,
+        bool requiredFurtherStepsExist,
+        bool isLandRegistryTitleNumberRegisteredExist)
     {
         return new SitePlanningDetails(
-            status,
+            SitePlanningStatus.Undefined,
             "ref123",
+            referenceNumberExist,
             new DateDetails("1", "2", "2023"),
+            detailedPlanningApprovalDateExist,
             "steps required",
+            requiredFurtherStepsExist,
             new DateDetails("1", "2", "2023"),
+            applicationForDetailedPlanningSubmittedDateExist,
             new DateDetails("1", "2", "2023"),
+            expectedPlanningApprovalDateExist,
             new DateDetails("1", "2", "2023"),
+            outlinePlanningApprovalDateExist,
             true,
+            isGrantFundingForAllHomesExist,
             new DateDetails("1", "2", "2023"),
+            planningSubmissionDateExist,
             false,
             null,
-            null);
+            null,
+            isLandRegistryTitleNumberRegisteredExist);
     }
 }

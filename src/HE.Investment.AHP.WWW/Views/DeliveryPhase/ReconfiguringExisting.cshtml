@@ -13,7 +13,7 @@
 <gds-div-grid-column-two-thirds>
     <vc:ahp-workflow-back-button current-page="@DeliveryPhaseWorkflowState.ReconfiguringExisting"/>
 
-    <form asp-controller="DeliveryPhase" asp-action="ReconfiguringExisting" asp-method="post" asp-route-redirect="@Context.Request.Query["redirect"]" novalidate>
+    <form asp-controller="DeliveryPhase" asp-action="ReconfiguringExisting" asp-method="post" asp-route-workflow="@Context.Request.Query["workflow"]" novalidate>
         <vc:page-header caption="@($"{Model.ApplicationName} - {Model.Name}")"/>
 
             <vc:radio-yes-no

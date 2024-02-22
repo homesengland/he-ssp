@@ -1,0 +1,22 @@
+@using HE.Investment.AHP.WWW.Views.Application
+@using HE.Investments.Common.Gds
+@using HE.Investments.Common.WWW.TagHelpers
+@model HE.Investment.AHP.WWW.Models.Application.ApplicationSubmitModel
+@{
+    ViewData["Title"] = "Application submitted";
+}
+
+<div class="govuk-grid-column-full">
+<he-panel class="govuk-!-margin-top-5 govuk-!-margin-bottom-8" title="@ApplicationPageTitles.Completed" sub-title="Your reference number" reference="@Model.ReferenceNumber" confirmation/>
+
+    <h2 class="govuk-heading-l">@ApplicationPageTitles.CompletedSecondTitle</h2>
+    <vc:application-submit-table model="@Model"/>
+
+    <h3 class="govuk-heading-l">What happens next</h3>
+
+    <gds-p>We have sent you a confirmation email. You can log back in to your account to see the progress of your application at any time.</gds-p>
+    <gds-p>We will contact you either to confirm your registration, or to ask for more information.</gds-p>
+    <gds-p>If you have not been contacted within 10 working days, you should contact [INSERT CONTACT DETAILS]</gds-p>
+
+    <link-button action-url="@Url.Action("Index", "Application")" button-type="@ButtonType.Secondary">Return to applications</link-button>
+</div>

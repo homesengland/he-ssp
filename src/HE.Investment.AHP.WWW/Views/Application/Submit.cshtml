@@ -1,0 +1,32 @@
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
+@using HE.Investments.Common.WWW.Components.PageHeader
+@using HE.Investment.AHP.WWW.Views.Application
+@using HE.Investment.AHP.Contract.Application
+@using HE.Investment.AHP.WWW.Views.Shared.Components.ConfirmationCheckbox
+@using HE.Investment.AHP.WWW.Views.Shared.Components.RepresentationsAndWarrantiesText
+@using HE.Investments.Common.Gds
+@using HE.Investments.Common.WWW.Models
+@model HE.Investment.AHP.WWW.Models.Application.ApplicationSubmitModel
+@{
+    ViewData["Title"] = ApplicationPageTitles.Submit;
+}
+
+<div class="govuk-grid-column-full">
+    <vc:ahp-workflow-back-button current-page="@ApplicationWorkflowState.Submit"/>
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+    <vc:page-header caption="@Model.SiteName" title="@ApplicationPageTitles.Submit"/>
+
+    <vc:application-submit-table model="@Model"/>
+    <form asp-controller="Application" asp-action="Submit" asp-method="post" novalidate>
+        <vc:confirmation-checkbox
+            content-component="@(new DynamicComponentViewModel(nameof(RepresentationsAndWarrantiesText)))"
+            field-name="@nameof(Model.RepresentationsAndWarranties)"
+            value="@Model.RepresentationsAndWarranties"
+            checkbox="@(new ExtendedSelectListItem("By submitting this application for funding, I confirm the statement above.", "checked", false))"/>
+
+        <vc:form-button text="Accept and submit"/>
+        <link-button class="govuk-!-margin-left-6" action-url="@Url.Action("Index", "Application")" button-type="@ButtonType.Secondary">Return to applications</link-button>
+    </form>
+
+</div>

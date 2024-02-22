@@ -1,5 +1,6 @@
 using HE.Investment.AHP.Contract.Application.Commands;
 using HE.Investment.AHP.Domain.Application.Repositories.Interfaces;
+using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
 using MediatR;
@@ -15,10 +16,12 @@ public class SubmitApplicationCommandHandler : ChangeApplicationStatusBaseComman
 
     public async Task<OperationResult> Handle(SubmitApplicationCommand request, CancellationToken cancellationToken)
     {
+        var representationsAndWarranties = new RepresentationsAndWarranties(request.RepresentationsAndWarranties);
+
         return await Perform(
             async (applicationRepository, application, organisationId) =>
             {
-                await application.Submit(applicationRepository, organisationId, cancellationToken);
+                await application.Submit(applicationRepository, organisationId, representationsAndWarranties, cancellationToken);
             },
             request.Id,
             cancellationToken);

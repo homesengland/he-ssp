@@ -14,7 +14,7 @@
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <vc:page-header caption="@ViewBag.SiteName" title="@SitePageTitles.MmcInformation"/>
 
-    <form asp-controller="Site" asp-action="MmcInformation" asp-method="post" novalidate>
+    <form asp-controller="Site" asp-action="MmcInformation" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
 
         <vc:text-area-input-with-counter
             title="What barriers have you experienced or expect in introducing greater levels of MMC into your development programme? How could Homes England help?"

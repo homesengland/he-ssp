@@ -115,20 +115,20 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
         await TestQuestionPage(
             BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.Details, RehabDeliveryPhase),
             DeliveryPageTitles.Details,
-            BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.BuildActivityType, RehabDeliveryPhase),
+            BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.RehabBuildActivityType, RehabDeliveryPhase),
             ("TypeOfHomes", deliveryPhase.TypeOfHomes.ToString()));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
     [Order(4)]
-    public async Task Order04_ProvideBuildActivityType()
+    public async Task Order04_ProvideRehabBuildActivityType()
     {
         // given
         var deliveryPhase = RehabDeliveryPhase.GenerateBuildActivityType();
 
         // when & then
         await TestQuestionPage(
-            BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.BuildActivityType, RehabDeliveryPhase),
+            BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.RehabBuildActivityType, RehabDeliveryPhase),
             DeliveryPageTitles.BuildActivityType,
             BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.ReconfiguringExisting, RehabDeliveryPhase),
             ("BuildActivityType", deliveryPhase.BuildActivityType.ToString()));

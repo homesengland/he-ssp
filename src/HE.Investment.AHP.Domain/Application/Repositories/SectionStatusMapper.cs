@@ -21,6 +21,7 @@ public static class SectionStatusMapper
             { ApplicationStatus.Withdrawn, SectionStatus.Withdrawn },
             { ApplicationStatus.OnHold, SectionStatus.OnHold },
             { ApplicationStatus.RequestedEditing, SectionStatus.RequestedEditing },
+            { ApplicationStatus.ApplicationSubmitted, SectionStatus.Submitted },
         };
 
         if (applicationStatus.HasValue && statusMapping.TryGetValue(applicationStatus.Value, out var mappedStatus))

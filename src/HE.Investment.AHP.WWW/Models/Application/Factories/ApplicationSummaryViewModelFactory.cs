@@ -59,7 +59,7 @@ public class ApplicationSummaryViewModelFactory : IApplicationSummaryViewModelFa
         foreach (var homeType in homeTypes.HomeTypes)
         {
             var fullHomeType = await _mediator.Send(new GetFullHomeTypeQuery(applicationId, homeType.Id), cancellationToken);
-            sections.AddRange(_homeTypeSummaryViewModelFactory.CreateSummaryModel(fullHomeType, urlHelper, isReadOnly));
+            sections.AddRange(_homeTypeSummaryViewModelFactory.CreateSummaryModel(fullHomeType, urlHelper, isReadOnly, true));
         }
 
         return sections;

@@ -1,6 +1,6 @@
-using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using HE.Investment.AHP.Contract.Delivery;
+using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.WWW.Workflows;
 
 namespace HE.Investment.AHP.WWW.Tests.Workflows.DeliveryPhaseWorkflowTests;
@@ -56,7 +56,7 @@ public class StateCanBeAccessedTests
     [InlineData(DeliveryPhaseWorkflowState.Create)]
     [InlineData(DeliveryPhaseWorkflowState.Name)]
     [InlineData(DeliveryPhaseWorkflowState.TypeOfHomes)]
-    [InlineData(DeliveryPhaseWorkflowState.BuildActivityType)]
+    [InlineData(DeliveryPhaseWorkflowState.NewBuildActivityType)]
     [InlineData(DeliveryPhaseWorkflowState.SummaryOfDelivery)]
     [InlineData(DeliveryPhaseWorkflowState.PracticalCompletionMilestone)]
     [InlineData(DeliveryPhaseWorkflowState.CheckAnswers)]
@@ -76,7 +76,7 @@ public class StateCanBeAccessedTests
     [InlineData(DeliveryPhaseWorkflowState.Create)]
     [InlineData(DeliveryPhaseWorkflowState.Name)]
     [InlineData(DeliveryPhaseWorkflowState.TypeOfHomes)]
-    [InlineData(DeliveryPhaseWorkflowState.BuildActivityType)]
+    [InlineData(DeliveryPhaseWorkflowState.NewBuildActivityType)]
     [InlineData(DeliveryPhaseWorkflowState.SummaryOfDelivery)]
     [InlineData(DeliveryPhaseWorkflowState.PracticalCompletionMilestone)]
     [InlineData(DeliveryPhaseWorkflowState.CheckAnswers)]
@@ -111,7 +111,7 @@ public class StateCanBeAccessedTests
     [InlineData(DeliveryPhaseWorkflowState.Create)]
     [InlineData(DeliveryPhaseWorkflowState.Name)]
     [InlineData(DeliveryPhaseWorkflowState.TypeOfHomes)]
-    [InlineData(DeliveryPhaseWorkflowState.BuildActivityType)]
+    [InlineData(DeliveryPhaseWorkflowState.NewBuildActivityType)]
     [InlineData(DeliveryPhaseWorkflowState.SummaryOfDelivery)]
     [InlineData(DeliveryPhaseWorkflowState.PracticalCompletionMilestone)]
     [InlineData(DeliveryPhaseWorkflowState.CheckAnswers)]
@@ -127,14 +127,16 @@ public class StateCanBeAccessedTests
         result.Should().BeTrue();
     }
 
-    [Fact]
-    public void ShouldReturnFalseForPageReconfigureExisting_WhenTryReconfigureExistingIsNotNeeded()
+    [Theory]
+    [InlineData(DeliveryPhaseWorkflowState.RehabBuildActivityType)]
+    [InlineData(DeliveryPhaseWorkflowState.ReconfiguringExisting)]
+    public void ShouldReturnFalse_WhenReconfigureExistingIsNotNeeded(DeliveryPhaseWorkflowState nextState)
     {
         // given
-        var workflow = BuildWorkflow(DeliveryPhaseWorkflowState.BuildActivityType, isUnregisteredBody: true, isReconfiguringExistingNeeded: false);
+        var workflow = BuildWorkflow(DeliveryPhaseWorkflowState.Create, isUnregisteredBody: true, isReconfiguringExistingNeeded: false);
 
         // when
-        var result = workflow.CanBeAccessed(DeliveryPhaseWorkflowState.ReconfiguringExisting);
+        var result = workflow.CanBeAccessed(nextState);
 
         // then
         result.Should().BeFalse();
@@ -149,7 +151,7 @@ public class StateCanBeAccessedTests
     public void ShouldReturnFalse_WhenNumberOfHomesIsZero(DeliveryPhaseWorkflowState nextState, bool isUnregisteredBody)
     {
         // given
-        var workflow = BuildWorkflow(DeliveryPhaseWorkflowState.Create, numberOfHomes: 0, isUnregisteredBody);
+        var workflow = BuildWorkflow(DeliveryPhaseWorkflowState.Create, numberOfHomes: 0, isUnregisteredBody: isUnregisteredBody);
 
         // when
         var result = workflow.CanBeAccessed(nextState);
@@ -161,14 +163,19 @@ public class StateCanBeAccessedTests
     [Theory]
     [InlineData(DeliveryPhaseWorkflowState.Name)]
     [InlineData(DeliveryPhaseWorkflowState.TypeOfHomes)]
-    [InlineData(DeliveryPhaseWorkflowState.BuildActivityType)]
+    [InlineData(DeliveryPhaseWorkflowState.RehabBuildActivityType)]
     [InlineData(DeliveryPhaseWorkflowState.ReconfiguringExisting)]
     [InlineData(DeliveryPhaseWorkflowState.AddHomes)]
     [InlineData(DeliveryPhaseWorkflowState.CheckAnswers)]
     public void ShouldReturnTrue_WhenNumberOfHomesIsZero(DeliveryPhaseWorkflowState nextState)
     {
         // given
-        var workflow = BuildWorkflow(DeliveryPhaseWorkflowState.Create, isUnregisteredBody: true, numberOfHomes: 0, isReconfiguringExistingNeeded: true);
+        var workflow = BuildWorkflow(
+            DeliveryPhaseWorkflowState.Create,
+            isUnregisteredBody: true,
+            numberOfHomes: 0,
+            isReconfiguringExistingNeeded: true,
+            typeOfHomes: TypeOfHomes.Rehab);
 
         // when
         var result = workflow.CanBeAccessed(nextState);
@@ -180,6 +187,7 @@ public class StateCanBeAccessedTests
     private static DeliveryPhaseWorkflow BuildWorkflow(
         DeliveryPhaseWorkflowState currentSiteWorkflowState,
         int numberOfHomes = 1,
+        TypeOfHomes typeOfHomes = TypeOfHomes.NewBuild,
         bool isUnregisteredBody = false,
         bool isOnlyCompletionMilestone = false,
         bool isReconfiguringExistingNeeded = false)
@@ -188,6 +196,7 @@ public class StateCanBeAccessedTests
             currentSiteWorkflowState,
             DeliveryPhaseDetailsTestData.WithNames with
             {
+                TypeOfHomes = typeOfHomes,
                 NumberOfHomes = numberOfHomes,
                 IsUnregisteredBody = isUnregisteredBody,
                 IsOnlyCompletionMilestone = isOnlyCompletionMilestone,

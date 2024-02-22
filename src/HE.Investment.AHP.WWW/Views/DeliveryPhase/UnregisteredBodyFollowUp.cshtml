@@ -14,7 +14,7 @@
 
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
-    <form asp-controller="DeliveryPhase" asp-action="UnregisteredBodyFollowUp" asp-method="post" asp-route-redirect="@Context.Request.Query["redirect"]" novalidate>
+    <form asp-controller="DeliveryPhase" asp-action="UnregisteredBodyFollowUp" asp-method="post" asp-route-workflow="@Context.Request.Query["workflow"]" novalidate>
         <vc:page-header caption="@($"{Model.ApplicationName} - {Model.DeliveryPhaseName}")"/>
 
         <vc:radio-yes-no

@@ -34,6 +34,17 @@ public static class CrmFields
             nameof(invln_scheme.invln_lastexternalmodificationon),
         }).ToImmutableList();
 
+    public static readonly IReadOnlyList<string> ApplicationWithFundingDetailsToRead = ApplicationToUpdate.ToList()
+        .Append(new List<string>
+        {
+            nameof(invln_scheme.invln_pplicationid),
+            nameof(invln_scheme.invln_fundingrequired),
+            nameof(invln_scheme.invln_noofhomes),
+            nameof(invln_scheme.invln_currentlandvalue),
+            nameof(invln_scheme.invln_expectedoncosts),
+            nameof(invln_scheme.invln_expectedonworks),
+        }).ToImmutableList();
+
     public static readonly IReadOnlyList<string> SchemeToUpdate = new List<string>
     {
         nameof(invln_scheme.invln_schemeinformationsectioncompletionstatus),

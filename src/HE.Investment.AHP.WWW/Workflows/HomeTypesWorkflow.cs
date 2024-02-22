@@ -3,32 +3,26 @@ using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investments.Common.Extensions;
-using HE.Investments.Common.Workflow;
 using HE.Investments.Common.WWW.Routing;
-using Stateless;
 
 namespace HE.Investment.AHP.WWW.Workflows;
 
-public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
+public class HomeTypesWorkflow : EncodedStateRouting<HomeTypesWorkflowState>
 {
     private readonly HomeType? _homeTypeModel;
-
-    private readonly StateMachine<HomeTypesWorkflowState, Trigger> _machine;
-
-    private readonly bool _isLocked;
 
     private readonly bool _isReadOnly;
 
     public HomeTypesWorkflow(HomeTypesWorkflowState currentHomeTypesWorkflowState, HomeType? homeTypeModel, bool isReadOnly, bool isLocked = false)
+        : base(currentHomeTypesWorkflowState, isLocked)
     {
         _homeTypeModel = homeTypeModel;
-        _machine = new StateMachine<HomeTypesWorkflowState, Trigger>(currentHomeTypesWorkflowState);
-        _isLocked = isLocked;
         _isReadOnly = isReadOnly;
         ConfigureTransitions();
     }
 
     public HomeTypesWorkflow(FullHomeType homeType, bool isReadOnly)
+        : base(HomeTypesWorkflowState.Index, false)
     {
         _isReadOnly = isReadOnly;
         _homeTypeModel = new HomeType(
@@ -47,7 +41,6 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
                 homeType.ModernMethodsConstruction.ModernMethodsConstructionApplied,
                 homeType.ModernMethodsConstruction.ModernMethodsConstructionCategories),
             isReadOnly);
-        _machine = new StateMachine<HomeTypesWorkflowState, Trigger>(HomeTypesWorkflowState.Index);
         ConfigureTransitions();
     }
 
@@ -56,23 +49,7 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
     {
     }
 
-    public async Task<HomeTypesWorkflowState> NextState(Trigger trigger)
-    {
-        if (_isLocked)
-        {
-            return _machine.State;
-        }
-
-        await _machine.FireAsync(trigger);
-        return _machine.State;
-    }
-
-    public Task<bool> StateCanBeAccessed(HomeTypesWorkflowState nextState)
-    {
-        return Task.FromResult(CanBeAccessed(nextState));
-    }
-
-    public bool CanBeAccessed(HomeTypesWorkflowState state, bool? isReadOnlyMode = null)
+    public override bool CanBeAccessed(HomeTypesWorkflowState state, bool? isReadOnlyMode = null)
     {
         if (isReadOnlyMode ?? _isReadOnly)
         {
@@ -138,126 +115,121 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
         };
     }
 
-    public EncodedWorkflow<HomeTypesWorkflowState> GetEncodedWorkflow()
-    {
-        return new EncodedWorkflow<HomeTypesWorkflowState>(x => CanBeAccessed(x));
-    }
-
     private void ConfigureTransitions()
     {
-        _machine.Configure(HomeTypesWorkflowState.Index)
+        Machine.Configure(HomeTypesWorkflowState.Index)
             .Permit(Trigger.Continue, HomeTypesWorkflowState.List);
 
-        _machine.Configure(HomeTypesWorkflowState.FinishHomeTypes)
+        Machine.Configure(HomeTypesWorkflowState.FinishHomeTypes)
             .Permit(Trigger.Back, HomeTypesWorkflowState.List);
 
-        _machine.Configure(HomeTypesWorkflowState.List)
+        Machine.Configure(HomeTypesWorkflowState.List)
             .Permit(Trigger.Continue, HomeTypesWorkflowState.FinishHomeTypes)
             .Permit(Trigger.Back, HomeTypesWorkflowState.Index);
 
-        _machine.Configure(HomeTypesWorkflowState.RemoveHomeType)
+        Machine.Configure(HomeTypesWorkflowState.RemoveHomeType)
             .Permit(Trigger.Back, HomeTypesWorkflowState.List);
 
-        _machine.Configure(HomeTypesWorkflowState.NewHomeTypeDetails)
+        Machine.Configure(HomeTypesWorkflowState.NewHomeTypeDetails)
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.HomeInformation, IsGeneralHomeType)
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.HomesForDisabledPeople, IsDisabledHomeType)
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.HomesForOlderPeople, IsOlderHomeType)
             .Permit(Trigger.Back, HomeTypesWorkflowState.List);
 
-        _machine.Configure(HomeTypesWorkflowState.HomeTypeDetails)
+        Machine.Configure(HomeTypesWorkflowState.HomeTypeDetails)
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.HomeInformation, IsGeneralHomeType)
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.HomesForDisabledPeople, IsDisabledHomeType)
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.HomesForOlderPeople, IsOlderHomeType)
             .Permit(Trigger.Back, HomeTypesWorkflowState.List);
 
-        _machine.Configure(HomeTypesWorkflowState.HomeInformation)
+        Machine.Configure(HomeTypesWorkflowState.HomeInformation)
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.MoveOnAccommodation, IsGeneralHomeType)
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.PeopleGroupForSpecificDesignFeatures, IsNotGeneralHomeType)
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.HomeTypeDetails, IsGeneralHomeType)
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.TypologyLocationAndDesign, IsNotGeneralHomeType);
 
-        _machine.Configure(HomeTypesWorkflowState.HomesForDisabledPeople)
+        Machine.Configure(HomeTypesWorkflowState.HomesForDisabledPeople)
             .Permit(Trigger.Continue, HomeTypesWorkflowState.DisabledPeopleClientGroup)
             .Permit(Trigger.Back, HomeTypesWorkflowState.HomeTypeDetails);
 
-        _machine.Configure(HomeTypesWorkflowState.DisabledPeopleClientGroup)
+        Machine.Configure(HomeTypesWorkflowState.DisabledPeopleClientGroup)
             .Permit(Trigger.Continue, HomeTypesWorkflowState.HappiDesignPrinciples)
             .Permit(Trigger.Back, HomeTypesWorkflowState.HomesForDisabledPeople);
 
-        _machine.Configure(HomeTypesWorkflowState.HomesForOlderPeople)
+        Machine.Configure(HomeTypesWorkflowState.HomesForOlderPeople)
             .Permit(Trigger.Continue, HomeTypesWorkflowState.HappiDesignPrinciples)
             .Permit(Trigger.Back, HomeTypesWorkflowState.HomeTypeDetails);
 
-        _machine.Configure(HomeTypesWorkflowState.HappiDesignPrinciples)
+        Machine.Configure(HomeTypesWorkflowState.HappiDesignPrinciples)
             .Permit(Trigger.Continue, HomeTypesWorkflowState.DesignPlans)
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.HomesForOlderPeople, IsOlderHomeType)
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.DisabledPeopleClientGroup, IsDisabledHomeType);
 
-        _machine.Configure(HomeTypesWorkflowState.DesignPlans)
+        Machine.Configure(HomeTypesWorkflowState.DesignPlans)
             .Permit(Trigger.Continue, HomeTypesWorkflowState.SupportedHousingInformation)
             .Permit(Trigger.Back, HomeTypesWorkflowState.HappiDesignPrinciples);
 
-        _machine.Configure(HomeTypesWorkflowState.SupportedHousingInformation)
+        Machine.Configure(HomeTypesWorkflowState.SupportedHousingInformation)
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.ExitPlan, () => !IsRevenueFundingIdentified() && !IsShortStay())
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.MoveOnArrangements, () => !IsRevenueFundingIdentified() && IsShortStay())
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.RevenueFunding, IsRevenueFundingIdentified)
             .Permit(Trigger.Back, HomeTypesWorkflowState.DesignPlans);
 
-        _machine.Configure(HomeTypesWorkflowState.RevenueFunding)
+        Machine.Configure(HomeTypesWorkflowState.RevenueFunding)
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.ExitPlan, () => !IsShortStay())
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.MoveOnArrangements, IsShortStay)
             .Permit(Trigger.Back, HomeTypesWorkflowState.SupportedHousingInformation);
 
-        _machine.Configure(HomeTypesWorkflowState.MoveOnArrangements)
+        Machine.Configure(HomeTypesWorkflowState.MoveOnArrangements)
             .Permit(Trigger.Continue, HomeTypesWorkflowState.ExitPlan)
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.SupportedHousingInformation, () => !IsRevenueFundingIdentified())
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.RevenueFunding, IsRevenueFundingIdentified);
 
-        _machine.Configure(HomeTypesWorkflowState.ExitPlan)
+        Machine.Configure(HomeTypesWorkflowState.ExitPlan)
             .Permit(Trigger.Continue, HomeTypesWorkflowState.TypologyLocationAndDesign)
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.SupportedHousingInformation, () => !IsRevenueFundingIdentified() && !IsShortStay())
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.MoveOnArrangements, IsShortStay)
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.RevenueFunding, () => IsRevenueFundingIdentified() && !IsShortStay());
 
-        _machine.Configure(HomeTypesWorkflowState.TypologyLocationAndDesign)
+        Machine.Configure(HomeTypesWorkflowState.TypologyLocationAndDesign)
             .Permit(Trigger.Continue, HomeTypesWorkflowState.HomeInformation)
             .Permit(Trigger.Back, HomeTypesWorkflowState.ExitPlan);
 
-        _machine.Configure(HomeTypesWorkflowState.MoveOnAccommodation)
+        Machine.Configure(HomeTypesWorkflowState.MoveOnAccommodation)
             .Permit(Trigger.Continue, HomeTypesWorkflowState.BuildingInformation)
             .Permit(Trigger.Back, HomeTypesWorkflowState.HomeInformation);
 
-        _machine.Configure(HomeTypesWorkflowState.PeopleGroupForSpecificDesignFeatures)
+        Machine.Configure(HomeTypesWorkflowState.PeopleGroupForSpecificDesignFeatures)
             .Permit(Trigger.Continue, HomeTypesWorkflowState.BuildingInformation)
             .Permit(Trigger.Back, HomeTypesWorkflowState.HomeInformation);
 
-        _machine.Configure(HomeTypesWorkflowState.BuildingInformation)
+        Machine.Configure(HomeTypesWorkflowState.BuildingInformation)
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.CustomBuildProperty, IsBuildingInformationEligible)
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.BuildingInformationIneligible, () => !IsBuildingInformationEligible())
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.PeopleGroupForSpecificDesignFeatures, IsNotGeneralHomeType)
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.MoveOnAccommodation, IsGeneralHomeType);
 
-        _machine.Configure(HomeTypesWorkflowState.BuildingInformationIneligible)
+        Machine.Configure(HomeTypesWorkflowState.BuildingInformationIneligible)
             .Permit(Trigger.Back, HomeTypesWorkflowState.BuildingInformation);
 
-        _machine.Configure(HomeTypesWorkflowState.CustomBuildProperty)
+        Machine.Configure(HomeTypesWorkflowState.CustomBuildProperty)
             .Permit(Trigger.Continue, HomeTypesWorkflowState.TypeOfFacilities)
             .Permit(Trigger.Back, HomeTypesWorkflowState.BuildingInformation);
 
-        _machine.Configure(HomeTypesWorkflowState.TypeOfFacilities)
+        Machine.Configure(HomeTypesWorkflowState.TypeOfFacilities)
             .Permit(Trigger.Continue, HomeTypesWorkflowState.AccessibilityStandards)
             .Permit(Trigger.Back, HomeTypesWorkflowState.CustomBuildProperty);
 
-        _machine.Configure(HomeTypesWorkflowState.AccessibilityStandards)
+        Machine.Configure(HomeTypesWorkflowState.AccessibilityStandards)
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.FloorArea, () => !IsAccessibleStandards())
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.AccessibilityCategory, IsAccessibleStandards)
             .Permit(Trigger.Back, HomeTypesWorkflowState.TypeOfFacilities);
 
-        _machine.Configure(HomeTypesWorkflowState.AccessibilityCategory)
+        Machine.Configure(HomeTypesWorkflowState.AccessibilityCategory)
             .Permit(Trigger.Continue, HomeTypesWorkflowState.FloorArea)
             .Permit(Trigger.Back, HomeTypesWorkflowState.AccessibilityStandards);
 
-        _machine.Configure(HomeTypesWorkflowState.FloorArea)
+        Machine.Configure(HomeTypesWorkflowState.FloorArea)
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.FloorAreaStandards, IsNotMeetNationallyDescribedSpaceStandards)
             .PermitIf(
                 Trigger.Continue,
@@ -280,7 +252,7 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.AccessibilityStandards, () => !IsAccessibleStandards())
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.AccessibilityCategory, IsAccessibleStandards);
 
-        _machine.Configure(HomeTypesWorkflowState.FloorAreaStandards)
+        Machine.Configure(HomeTypesWorkflowState.FloorAreaStandards)
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.AffordableRent, () => IsTenure(Tenure.AffordableRent))
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.SocialRent, () => IsTenure(Tenure.SocialRent))
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.SharedOwnership, () => IsTenure(Tenure.SharedOwnership))
@@ -289,63 +261,63 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.OlderPersonsSharedOwnership, () => IsTenure(Tenure.OlderPersonsSharedOwnership))
             .Permit(Trigger.Back, HomeTypesWorkflowState.FloorArea);
 
-        _machine.Configure(HomeTypesWorkflowState.AffordableRent)
+        Machine.Configure(HomeTypesWorkflowState.AffordableRent)
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.AffordableRentIneligible, () => !IsAffordableRentEligible())
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.ExemptFromTheRightToSharedOwnership, IsAffordableRentEligible)
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.FloorArea, () => !IsNotMeetNationallyDescribedSpaceStandards())
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.FloorAreaStandards, IsNotMeetNationallyDescribedSpaceStandards);
 
-        _machine.Configure(HomeTypesWorkflowState.AffordableRentIneligible)
+        Machine.Configure(HomeTypesWorkflowState.AffordableRentIneligible)
             .Permit(Trigger.Back, HomeTypesWorkflowState.AffordableRent);
 
-        _machine.Configure(HomeTypesWorkflowState.SocialRent)
+        Machine.Configure(HomeTypesWorkflowState.SocialRent)
             .Permit(Trigger.Continue, HomeTypesWorkflowState.ExemptFromTheRightToSharedOwnership)
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.FloorArea, () => !IsNotMeetNationallyDescribedSpaceStandards())
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.FloorAreaStandards, IsNotMeetNationallyDescribedSpaceStandards);
 
-        _machine.Configure(HomeTypesWorkflowState.SharedOwnership)
+        Machine.Configure(HomeTypesWorkflowState.SharedOwnership)
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.ProspectiveRentIneligible, () => !IsSharedOwnershipEligible())
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.ModernMethodsConstruction, IsSharedOwnershipEligible)
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.FloorArea, () => !IsNotMeetNationallyDescribedSpaceStandards())
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.FloorAreaStandards, IsNotMeetNationallyDescribedSpaceStandards);
 
-        _machine.Configure(HomeTypesWorkflowState.RentToBuy)
+        Machine.Configure(HomeTypesWorkflowState.RentToBuy)
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.RentToBuyIneligible, () => !IsRentToBuyEligible())
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.ModernMethodsConstruction, IsRentToBuyEligible)
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.FloorArea, () => !IsNotMeetNationallyDescribedSpaceStandards())
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.FloorAreaStandards, IsNotMeetNationallyDescribedSpaceStandards);
 
-        _machine.Configure(HomeTypesWorkflowState.RentToBuyIneligible)
+        Machine.Configure(HomeTypesWorkflowState.RentToBuyIneligible)
             .Permit(Trigger.Back, HomeTypesWorkflowState.RentToBuy);
 
-        _machine.Configure(HomeTypesWorkflowState.HomeOwnershipDisabilities)
+        Machine.Configure(HomeTypesWorkflowState.HomeOwnershipDisabilities)
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.ProspectiveRentIneligible, () => !IsHomeOwnershipEligible())
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.ModernMethodsConstruction, IsHomeOwnershipEligible)
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.FloorArea, () => !IsNotMeetNationallyDescribedSpaceStandards())
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.FloorAreaStandards, IsNotMeetNationallyDescribedSpaceStandards);
 
-        _machine.Configure(HomeTypesWorkflowState.OlderPersonsSharedOwnership)
+        Machine.Configure(HomeTypesWorkflowState.OlderPersonsSharedOwnership)
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.ProspectiveRentIneligible, () => !IsOlderPersonsSharedOwnershipEligible())
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.ModernMethodsConstruction, IsOlderPersonsSharedOwnershipEligible)
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.FloorArea, () => !IsNotMeetNationallyDescribedSpaceStandards())
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.FloorAreaStandards, IsNotMeetNationallyDescribedSpaceStandards);
 
-        _machine.Configure(HomeTypesWorkflowState.ProspectiveRentIneligible)
+        Machine.Configure(HomeTypesWorkflowState.ProspectiveRentIneligible)
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.SharedOwnership, () => IsTenure(Tenure.SharedOwnership))
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.HomeOwnershipDisabilities, () => IsTenure(Tenure.HomeOwnershipLongTermDisabilities))
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.OlderPersonsSharedOwnership, () => IsTenure(Tenure.OlderPersonsSharedOwnership));
 
-        _machine.Configure(HomeTypesWorkflowState.ExemptFromTheRightToSharedOwnership)
+        Machine.Configure(HomeTypesWorkflowState.ExemptFromTheRightToSharedOwnership)
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.ExemptionJustification, IsExemptFromTheRightToSharedOwnership)
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.ModernMethodsConstruction, () => !IsExemptFromTheRightToSharedOwnership())
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.AffordableRent, () => IsTenure(Tenure.AffordableRent))
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.SocialRent, () => IsTenure(Tenure.SocialRent));
 
-        _machine.Configure(HomeTypesWorkflowState.ExemptionJustification)
+        Machine.Configure(HomeTypesWorkflowState.ExemptionJustification)
             .Permit(Trigger.Continue, HomeTypesWorkflowState.ModernMethodsConstruction)
             .Permit(Trigger.Back, HomeTypesWorkflowState.ExemptFromTheRightToSharedOwnership);
 
-        _machine.Configure(HomeTypesWorkflowState.ModernMethodsConstruction)
+        Machine.Configure(HomeTypesWorkflowState.ModernMethodsConstruction)
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.CheckAnswers, IsNotModernMethodsConstruction)
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.ModernMethodsConstructionCategories, () => !IsNotModernMethodsConstruction())
             .PermitIf(
@@ -361,7 +333,7 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.HomeOwnershipDisabilities, () => !_isReadOnly && IsTenure(Tenure.HomeOwnershipLongTermDisabilities))
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.OlderPersonsSharedOwnership, () => !_isReadOnly && IsTenure(Tenure.OlderPersonsSharedOwnership));
 
-        _machine.Configure(HomeTypesWorkflowState.ModernMethodsConstructionCategories)
+        Machine.Configure(HomeTypesWorkflowState.ModernMethodsConstructionCategories)
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.ModernMethodsConstruction3DSubcategories, IsModernMethodsConstructionCategory1)
             .PermitIf(
                 Trigger.Continue,
@@ -373,17 +345,17 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
                 () => !IsModernMethodsConstructionCategory1() && !IsModernMethodsConstructionCategory2())
             .Permit(Trigger.Back, HomeTypesWorkflowState.ModernMethodsConstruction);
 
-        _machine.Configure(HomeTypesWorkflowState.ModernMethodsConstruction3DSubcategories)
+        Machine.Configure(HomeTypesWorkflowState.ModernMethodsConstruction3DSubcategories)
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.ModernMethodsConstruction2DSubcategories, IsModernMethodsConstructionCategory2)
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.CheckAnswers, () => !IsModernMethodsConstructionCategory2())
             .Permit(Trigger.Back, HomeTypesWorkflowState.ModernMethodsConstructionCategories);
 
-        _machine.Configure(HomeTypesWorkflowState.ModernMethodsConstruction2DSubcategories)
+        Machine.Configure(HomeTypesWorkflowState.ModernMethodsConstruction2DSubcategories)
             .Permit(Trigger.Continue, HomeTypesWorkflowState.CheckAnswers)
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.ModernMethodsConstructionCategories, () => !IsModernMethodsConstructionCategory1())
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.ModernMethodsConstruction3DSubcategories, IsModernMethodsConstructionCategory1);
 
-        _machine.Configure(HomeTypesWorkflowState.CheckAnswers)
+        Machine.Configure(HomeTypesWorkflowState.CheckAnswers)
             .Permit(Trigger.Continue, HomeTypesWorkflowState.List)
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.List, () => _isReadOnly)
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.ModernMethodsConstruction, () => !_isReadOnly && IsNotModernMethodsConstruction())

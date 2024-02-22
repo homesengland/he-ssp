@@ -37,6 +37,7 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
         {
             Id = site.Id.Value,
             Name = site.Name.Value,
+            Status = site.Status,
             Section106 = CreateSection106(site),
             LocalAuthority = localAuthority,
             PlanningDetails = CreateSitePlanningDetails(site.PlanningDetails, localAuthority?.Id),
@@ -76,16 +77,25 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
         return new SitePlanningDetails(
             planningDetails.PlanningStatus,
             planningDetails.ReferenceNumber?.Value,
+            planningDetails.IsQuestionActive(nameof(planningDetails.ReferenceNumber)),
             DateValueObjectMapper.ToContract(planningDetails.DetailedPlanningApprovalDate),
+            planningDetails.IsQuestionActive(nameof(planningDetails.DetailedPlanningApprovalDate)),
             planningDetails.RequiredFurtherSteps?.Value,
+            planningDetails.IsQuestionActive(nameof(planningDetails.RequiredFurtherSteps)),
             DateValueObjectMapper.ToContract(planningDetails.ApplicationForDetailedPlanningSubmittedDate),
+            planningDetails.IsQuestionActive(nameof(planningDetails.ApplicationForDetailedPlanningSubmittedDate)),
             DateValueObjectMapper.ToContract(planningDetails.ExpectedPlanningApprovalDate),
+            planningDetails.IsQuestionActive(nameof(planningDetails.ExpectedPlanningApprovalDate)),
             DateValueObjectMapper.ToContract(planningDetails.OutlinePlanningApprovalDate),
+            planningDetails.IsQuestionActive(nameof(planningDetails.OutlinePlanningApprovalDate)),
             planningDetails.IsGrantFundingForAllHomesCoveredByApplication,
+            planningDetails.IsQuestionActive(nameof(planningDetails.IsGrantFundingForAllHomesCoveredByApplication)),
             DateValueObjectMapper.ToContract(planningDetails.PlanningSubmissionDate),
+            planningDetails.IsQuestionActive(nameof(planningDetails.PlanningSubmissionDate)),
             planningDetails.LandRegistryDetails?.IsLandRegistryTitleNumberRegistered,
             planningDetails.LandRegistryDetails?.TitleNumber?.Value,
             planningDetails.LandRegistryDetails?.IsGrantFundingForAllHomesCoveredByTitleNumber,
+            planningDetails.IsQuestionActive(nameof(planningDetails.LandRegistryDetails)),
             planningDetails.IsAnswered(),
             localAuthorityId);
     }

@@ -1,5 +1,6 @@
 extern alias Org;
 
+using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investment.AHP.Domain.Site.Repositories;
@@ -11,6 +12,7 @@ using HE.Investment.AHP.Domain.Site.ValueObjects.TenderingStatus;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Common.Messages;
 using LocalAuthority = Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
 using Section106 = HE.Investment.AHP.Domain.Site.ValueObjects.Section106;
 using SiteModernMethodsOfConstruction = HE.Investment.AHP.Domain.Site.ValueObjects.Mmc.SiteModernMethodsOfConstruction;
@@ -45,7 +47,7 @@ public class SiteEntity : DomainEntity, IQuestion
     {
         Id = id;
         Name = name;
-        Status = SiteStatus.NotReady;
+        Status = SiteStatus.InProgress;
         Section106 = section106;
         LocalAuthority = localAuthority;
         PlanningDetails = planningDetails;
@@ -67,11 +69,11 @@ public class SiteEntity : DomainEntity, IQuestion
     {
         Id = SiteId.New();
         Name = new SiteName("New Site");
-        Status = SiteStatus.NotReady;
+        Status = SiteStatus.InProgress;
         Section106 = new Section106();
         PlanningDetails = PlanningDetailsFactory.CreateEmpty();
         NationalDesignGuidePriorities = new NationalDesignGuidePriorities();
-        LandAcquisitionStatus = new LandAcquisitionStatus(null);
+        LandAcquisitionStatus = new LandAcquisitionStatus();
         TenderingStatusDetails = new TenderingStatusDetails();
         StrategicSiteDetails = new StrategicSiteDetails();
         SiteTypeDetails = new SiteTypeDetails();
@@ -86,7 +88,7 @@ public class SiteEntity : DomainEntity, IQuestion
 
     public SiteName Name { get; private set; }
 
-    public SiteStatus Status { get; }
+    public SiteStatus Status { get; private set; }
 
     public Section106 Section106 { get; private set; }
 
@@ -207,6 +209,29 @@ public class SiteEntity : DomainEntity, IQuestion
     public void ProvideModernMethodsOfConstruction(SiteModernMethodsOfConstruction modernMethodsOfConstruction)
     {
         ModernMethodsOfConstruction = _modificationTracker.Change(ModernMethodsOfConstruction, modernMethodsOfConstruction);
+    }
+
+    public void Complete(IsSectionCompleted isSectionCompleted)
+    {
+        if (isSectionCompleted == IsSectionCompleted.Undefied)
+        {
+            OperationResult.New().AddValidationError(nameof(IsSectionCompleted), "Select whether you have completed this section").CheckErrors();
+        }
+
+        if (isSectionCompleted == IsSectionCompleted.No)
+        {
+            Status = _modificationTracker.Change(Status, SiteStatus.InProgress);
+            return;
+        }
+
+        if (!IsAnswered())
+        {
+            OperationResult.New()
+                .AddValidationError(nameof(IsSectionCompleted), ValidationErrorMessage.SectionIsNotCompleted)
+                .CheckErrors();
+        }
+
+        Status = _modificationTracker.Change(Status, SiteStatus.Completed);
     }
 
     public bool IsAnswered()

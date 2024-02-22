@@ -1,0 +1,7 @@
+@using HE.Investments.Common.WWW.Components.Table
+
+@model (List<TableHeaderViewModel> headers, List<TableRowViewModel> row);
+
+<vc:table
+        headers="@Model.headers"
+        rows="@Model.row"/>

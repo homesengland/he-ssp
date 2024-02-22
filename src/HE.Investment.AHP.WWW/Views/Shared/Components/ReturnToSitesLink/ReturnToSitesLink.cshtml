@@ -4,11 +4,11 @@
 @model (bool isEditable, bool isLinkInsideForm)
 
 <div>
-    @if (Model.isEditable && Model.isLinkInsideForm)
+    @if (Model is { isEditable: true, isLinkInsideForm: true })
     {
         <vc:link-working-as-button text="Save and return to sites" name="action" value="@GenericMessages.SaveAndReturn"/>
     }
-    else if (!Model.isLinkInsideForm)
+    else if (Model is {  isEditable: true, isLinkInsideForm: false })
     {
         <gds-link class="govuk-link--no-visited-state"
                   href="@Url.Action("Index", "Site")">
@@ -19,7 +19,7 @@
     {
         <gds-link class="govuk-link--no-visited-state"
                   href="@Url.Action("Index", "Site")">
-            Return to site
+            Return to sites
         </gds-link>
     }
 </div>

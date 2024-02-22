@@ -11,7 +11,7 @@
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <vc:page-header title="@SitePageTitles.ContractorDetails" caption="@ViewBag.SiteName"/>
 
-    <form asp-controller="Site" asp-action="ContractorDetails" asp-method="post" novalidate>
+    <form asp-controller="Site" asp-action="ContractorDetails" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
 
         <vc:text-input
             title="Enter the name of the contractor you intend to work with on this development"

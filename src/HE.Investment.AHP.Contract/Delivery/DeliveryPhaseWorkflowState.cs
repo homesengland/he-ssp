@@ -2,11 +2,11 @@ namespace HE.Investment.AHP.Contract.Delivery;
 
 public enum DeliveryPhaseWorkflowState
 {
-    Start = 0,
     Create = 1,
     Name,
     TypeOfHomes,
-    BuildActivityType,
+    NewBuildActivityType,
+    RehabBuildActivityType,
     ReconfiguringExisting,
     AddHomes,
     SummaryOfDelivery,

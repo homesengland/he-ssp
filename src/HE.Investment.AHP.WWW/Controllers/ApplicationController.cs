@@ -13,6 +13,7 @@ using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Controllers;
+using HE.Investments.Common.WWW.Helpers;
 using HE.Investments.Common.WWW.Routing;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -142,11 +143,12 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
         return View("CheckAnswers", applicationSummary);
     }
 
-    [HttpPost("{applicationId}/submit")]
+    [WorkflowState(ApplicationWorkflowState.CheckAnswers)]
+    [HttpPost("{applicationId}/check-answers")]
     [AuthorizeWithCompletedProfile(AccountAccessContext.SubmitApplication)]
-    public async Task<IActionResult> Submit(string applicationId, CancellationToken cancellationToken)
+    public async Task<IActionResult> CheckAnswersPost(string applicationId, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new SubmitApplicationCommand(AhpApplicationId.From(applicationId)), cancellationToken);
+        var result = await _mediator.Send(new CheckAnswersCommand(AhpApplicationId.From(applicationId)), cancellationToken);
 
         if (result.HasValidationErrors)
         {
@@ -157,20 +159,44 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
             return View("CheckAnswers", applicationSummary);
         }
 
-        return RedirectToAction(nameof(Submitted), new { applicationId });
+        return await Continue(new { applicationId });
     }
 
-    [HttpGet("{applicationId}/submitted")]
-    [AuthorizeWithCompletedProfile(AccountAccessContext.SubmitApplication)]
-    public async Task<IActionResult> Submitted(string applicationId, CancellationToken cancellationToken)
+    [WorkflowState(ApplicationWorkflowState.Submit)]
+    [HttpGet("{applicationId}/submit")]
+    public async Task<IActionResult> Submit(string applicationId, CancellationToken cancellationToken)
     {
-        var application = await _mediator.Send(new GetApplicationQuery(AhpApplicationId.From(applicationId)), cancellationToken);
+        var model = await GetApplicationSubmitModel(applicationId, cancellationToken);
 
-        //// TODO: set job role and contact details
+        return View(nameof(Submit), model);
+    }
 
-        return View(
-            "Submitted",
-            new ApplicationSubmittedViewModel(applicationId, application.ReferenceNumber ?? string.Empty, "[job role]", "[INSERT CONTACT DETAILS]"));
+    [WorkflowState(ApplicationWorkflowState.Submit)]
+    [HttpPost("{applicationId}/submit")]
+    [AuthorizeWithCompletedProfile(AccountAccessContext.SubmitApplication)]
+    public async Task<IActionResult> Submit(string applicationId, ApplicationSubmitModel model, CancellationToken cancellationToken)
+    {
+        return await this.ExecuteCommand<ApplicationSubmitModel>(
+            _mediator,
+            new SubmitApplicationCommand(AhpApplicationId.From(model.ApplicationId), model.RepresentationsAndWarranties),
+            () => ContinueWithRedirect(new { model.ApplicationId }),
+            async () =>
+            {
+                model = await GetApplicationSubmitModel(applicationId, cancellationToken);
+
+                return View(nameof(Submit), model);
+            },
+            cancellationToken);
+    }
+
+    [WorkflowState(ApplicationWorkflowState.Completed)]
+    [HttpGet("{applicationId}/completed")]
+    [AuthorizeWithCompletedProfile(AccountAccessContext.SubmitApplication)]
+    public async Task<IActionResult> Completed(string applicationId, CancellationToken cancellationToken)
+    {
+        var model = await GetApplicationSubmitModel(applicationId, cancellationToken);
+
+        return View(nameof(Completed), model);
     }
 
     [WorkflowState(ApplicationWorkflowState.OnHold)]
@@ -276,5 +302,22 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
             application.Name);
 
         return View(model);
+    }
+
+    private async Task<ApplicationSubmitModel> GetApplicationSubmitModel(string applicationId, CancellationToken cancellationToken)
+    {
+        var application = await _mediator.Send(new GetApplicationDetailsQuery(AhpApplicationId.From(applicationId)), cancellationToken);
+        var siteBasicModel = await _mediator.Send(new GetSiteBasicDetailsQuery(application.SiteId.Value), cancellationToken);
+
+        return new ApplicationSubmitModel(
+            application.ApplicationId.Value,
+            application.ApplicationName,
+            application.ReferenceNumber,
+            siteBasicModel.Name,
+            application.Tenure,
+            application.NumberOfHomes.ToString()!,
+            CurrencyHelper.DisplayPounds(application.FundingRequested)!,
+            CurrencyHelper.DisplayPounds(application.TotalSchemeCost)!,
+            application.RepresentationsAndWarranties);
     }
 }
