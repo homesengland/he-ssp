@@ -59,7 +59,7 @@ public class ApplicationSummaryViewModelFactory : IApplicationSummaryViewModelFa
         foreach (var homeType in homeTypes.HomeTypes)
         {
             var fullHomeType = await _mediator.Send(new GetFullHomeTypeQuery(applicationId, homeType.Id), cancellationToken);
-            sections.AddRange(_homeTypeSummaryViewModelFactory.CreateSummaryModel(fullHomeType, urlHelper, isReadOnly));
+            sections.AddRange(_homeTypeSummaryViewModelFactory.CreateSummaryModel(fullHomeType, urlHelper, isReadOnly, true));
         }
 
         return sections;
@@ -74,7 +74,7 @@ public class ApplicationSummaryViewModelFactory : IApplicationSummaryViewModelFa
             var deliveryPhaseDetails = await _mediator.Send(new GetDeliveryPhaseDetailsQuery(applicationId, deliveryPhaseId, true), cancellationToken);
             var deliveryPhaseHomes = await _mediator.Send(new GetDeliveryPhaseHomesQuery(applicationId, deliveryPhaseId), cancellationToken);
 
-            sections.AddRange(_deliveryPhaseCheckAnswersViewModelFactory.CreateSummary(applicationId, deliveryPhaseDetails, deliveryPhaseHomes, urlHelper, !isReadOnly, false));
+            sections.AddRange(_deliveryPhaseCheckAnswersViewModelFactory.CreateSummary(applicationId, deliveryPhaseDetails, deliveryPhaseHomes, urlHelper, !isReadOnly));
         }
 
         return sections;

@@ -115,7 +115,7 @@ public class ApplicationWorkflow : IStateRouting<ApplicationWorkflowState>
     private async Task<bool> IsSubmitted()
     {
         var model = await _modelFactory();
-        var allSectionsCompleted = model.Sections.All(x => x.SectionStatus == SectionStatus.Completed);
+        var allSectionsCompleted = model.Sections.All(x => x.SectionStatus == SectionStatus.Submitted);
         return model.Status == ApplicationStatus.ApplicationSubmitted && allSectionsCompleted;
     }
 }
