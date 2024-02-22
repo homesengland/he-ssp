@@ -5,6 +5,7 @@
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investment.AHP.Contract.HomeTypes
+@using HE.Investment.AHP.WWW.Common
 @model HE.Investment.AHP.WWW.Models.HomeTypes.ExemptFromTheRightToSharedOwnershipModel;
 
 @{
@@ -33,7 +34,7 @@
                     <div class="govuk-details__text">
                         The Right to Shared Ownership applies to all new rented homes delivered through the Affordable Homes Programme 2021-26, with limited exceptions.
                         <a class="govuk-link" target="_blank"
-                           href="https://www.gov.uk/government/publications/right-to-shared-ownership-initial-guidance-for-registered-providers/right-to-shared-ownership-initial-guidance-for-registered-providers">
+                           href="@ExternalLinks.Get(nameof(ExternalLinks.RightToSharedOwnershipInitialGuidanceForRegisteredProviders))">
                             Read about the Right to Shared Ownership and the types of property that are in scope (opens in the new tab).
                         </a>
                     </div>

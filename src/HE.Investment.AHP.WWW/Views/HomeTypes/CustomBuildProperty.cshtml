@@ -5,6 +5,7 @@
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investment.AHP.Contract.HomeTypes
+@using HE.Investment.AHP.WWW.Common
 @model HE.Investment.AHP.WWW.Models.HomeTypes.CustomBuildPropertyModel;
 
 @{
@@ -32,7 +33,7 @@
                     </summary>
                     <div class="govuk-details__text">
                         Custom build includes projects where individuals commission and are involved in building or managing the construction of their home.
-                        Visit our website for <gds-link href="https://www.gov.uk/guidance/self-build-and-custom-housebuilding">more information on custom build.</gds-link>
+                        Visit our website for <gds-link href="@ExternalLinks.Get(nameof(ExternalLinks.SelfBuildAndCustomHousebuilding))">more information on custom build.</gds-link>
                     </div>
                 </details>
                 <gds-radio govuk-formgroup-asp-for="CustomBuild"

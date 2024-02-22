@@ -5,6 +5,7 @@
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investment.AHP.Contract.HomeTypes
+@using HE.Investment.AHP.WWW.Common
 @model HE.Investment.AHP.WWW.Models.HomeTypes.FloorAreaModel;
 
 @{
@@ -56,7 +57,7 @@
                 <div class="govuk-details__text">
                     The government's Nationally Described Space Standards relate to the internal space in new homes.
                     <a class="govuk-link" target="_blank"
-                       href="https://www.gov.uk/government/publications/technical-housing-standards-nationally-described-space-standard/technical-housing-standards-nationally-described-space-standard">
+                       href="@ExternalLinks.Get(nameof(ExternalLinks.NationallyDescribedSpaceStandard))">
                         Read more about the Nationally Described Space Standards (opens in a new tab).
                     </a>
                 </div>
