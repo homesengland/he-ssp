@@ -96,15 +96,9 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     }
 
     [HttpGet("start")]
-    [HttpGet("{siteId}/start")]
     [WorkflowState(SiteWorkflowState.Start)]
-    public async Task<IActionResult> Start(string? siteId, CancellationToken cancellationToken)
+    public async Task<IActionResult> Start(CancellationToken cancellationToken)
     {
-        if (string.IsNullOrEmpty(siteId))
-        {
-            return View("Start", new StartSiteModel(Url.Action("Details", new { siteId })));
-        }
-
         var response = await _mediator.Send(new GetSiteListQuery(new PaginationRequest(1, 1)), cancellationToken);
         var backUrl = response.Page.TotalItems > 0 ? Url.Action("Select") : Url.Action("Start", "Application");
 
