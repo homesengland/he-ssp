@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.WWW;
+using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investment.AHP.WWW.Views.Application;
 using HE.Investments.AHP.IntegrationTests.Framework;
 using HE.Investments.AHP.IntegrationTests.Pages;
@@ -23,7 +24,7 @@ public class Order06Submit : AhpIntegrationTest
 
     [Fact(Skip = AhpConfig.SkipTest)]
     [Order(1)]
-    public async Task Order01_ShouldSubmitApplication_WhenApplicationIsCompletelyFilled()
+    public async Task Order01_ShouldNavigateToSubmitApplication_WhenApplicationIsCompletelyFilled()
     {
         // given
         var taskListPage = await TestClient.NavigateTo(ApplicationPagesUrl.TaskList(ApplicationData.ApplicationId));
@@ -40,7 +41,7 @@ public class Order06Submit : AhpIntegrationTest
         var submitButton = applicationCheckAnswersPage
             .UrlEndWith(ApplicationPagesUrl.CheckAnswersSuffix)
             .HasTitle(ApplicationPageTitles.CheckAnswers)
-            .GetSubmitButton("Submit");
+            .GetSubmitButton("Accept and submit");
 
         await TestClient.SubmitButton(submitButton);
         SaveCurrentPage();
@@ -48,24 +49,44 @@ public class Order06Submit : AhpIntegrationTest
 
     [Fact(Skip = AhpConfig.SkipTest)]
     [Order(2)]
-    public async Task Order02_ShouldNavigateBackToTaskList_WhenApplicationWasSubmitted()
+    public async Task Order02_ShouldNavigateToCompleted_WhenApplicationWasSubmitted()
     {
         // given
-        var applicationSubmittedPage = await GetCurrentPage();
-        applicationSubmittedPage
-            .UrlEndWith(ApplicationPagesUrl.SubmittedSuffix)
-            .HasTitle("Application submitted")
-            .HasLinkWithTestId("return-to-task-list", out var returnToTaskListLink);
+        var currentPage = await GetCurrentPage(ApplicationPagesUrl.Submit(ApplicationData.ApplicationId));
+        currentPage
+            .UrlWithoutQueryEndsWith(ApplicationPagesUrl.SubmitSuffix)
+            .HasTitle(ApplicationPageTitles.Submit)
+            .HasBackLink()
+            .HasSubmitButton(out var submitButton, "Accept and submit");
 
         // when
-        var taskListPage = await TestClient.NavigateTo(returnToTaskListLink);
+        var completedPage = await TestClient.SubmitButton(
+            submitButton,
+            (nameof(ApplicationSubmitModel.RepresentationsAndWarranties), "checked"));
 
         // then
-        taskListPage
-            .UrlEndWith(ApplicationPagesUrl.TaskListSuffix)
-            .HasTitle(ApplicationData.ApplicationName)
-            .HasStatusTagByTestId(ApplicationStatus.ApplicationSubmitted.GetDescription(), "application-status");
-
+        completedPage.UrlWithoutQueryEndsWith(ApplicationPagesUrl.CompletedSuffix)
+            .HasTitle(ApplicationPageTitles.CompletedSecondTitle);
         SaveCurrentPage();
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(3)]
+    public async Task Order03_ShouldNavigateBackToTaskList_WhenApplicationWasSubmitted()
+    {
+        // given
+        var applicationCompletedPage = await GetCurrentPage();
+        applicationCompletedPage
+            .UrlEndWith(ApplicationPagesUrl.CompletedSuffix)
+            .HasTitle(ApplicationPageTitles.CompletedSecondTitle)
+            .HasLinkButton("Return to applications");
+
+        // when
+        var mainPage = await TestClient.NavigateTo(applicationCompletedPage.GetLinkButton("Return to applications"));
+
+        // then
+        mainPage
+            .UrlEndWith(MainPagesUrl.ApplicationList)
+            .HasTitle(ApplicationPageTitles.ApplicationList);
     }
 }

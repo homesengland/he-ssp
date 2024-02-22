@@ -19,8 +19,8 @@
         <vc:section-summary title="@item.Title" items="@item.Items"/>
     }
 
-    <form asp-controller="Application" asp-action="Submit" asp-route-applicationId="@Model.ApplicationId" asp-method="post" novalidate>
-        <vc:form-button text="Submit"/>
+    <form asp-controller="Application" asp-action="CheckAnswersPost" asp-route-applicationId="@Model.ApplicationId" asp-method="post" novalidate>
+        <vc:form-button text="Accept and submit"/>
     </form>
-
+    <vc:return-to-application-link is-editable="false"/>
 </gds-div-grid-column-two-thirds>

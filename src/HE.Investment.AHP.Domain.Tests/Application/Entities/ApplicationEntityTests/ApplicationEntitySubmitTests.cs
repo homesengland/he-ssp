@@ -1,6 +1,7 @@
 using FluentAssertions;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Domain.Application.Entities;
+using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Tests.Application.TestData;
 using HE.Investment.AHP.Domain.Tests.Application.TestObjectBuilder;
 using HE.Investments.Common.Contract;
@@ -37,7 +38,7 @@ public class ApplicationEntitySubmitTests : TestBase<ApplicationEntity>
             .BuildIChangeApplicationStatusMockAndRegister(this);
 
         // when
-        await application.Submit(applicationRepository.Object, organisationId, CancellationToken.None);
+        await application.Submit(applicationRepository.Object, organisationId, new RepresentationsAndWarranties("checked"), CancellationToken.None);
 
         // then
         applicationRepository.Verify(repo => repo.ChangeApplicationStatus(application, organisationId, null, CancellationToken.None), Times.Once);
@@ -68,7 +69,7 @@ public class ApplicationEntitySubmitTests : TestBase<ApplicationEntity>
             .BuildIChangeApplicationStatusMockAndRegister(this);
 
         // when
-        var result = async () => await application.Submit(applicationRepository.Object, organisationId, CancellationToken.None);
+        var result = async () => await application.Submit(applicationRepository.Object, organisationId, new RepresentationsAndWarranties("checked"), CancellationToken.None);
 
         // then
         await result.Should().ThrowAsync<DomainValidationException>();

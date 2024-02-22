@@ -61,6 +61,66 @@ public static class HtmlDocumentOtherExtensions
         return htmlDocument;
     }
 
+    public static IHtmlDocument HasOrderedList(this IHtmlDocument htmlDocument, List<string> items)
+    {
+        foreach (var listedItem in items)
+        {
+            var exist = htmlDocument.GetElements(".govuk-list--number")
+                .Any(item =>
+                    item.QuerySelectorAll("li").Any(li => li.TextContent.Contains(listedItem)));
+
+            exist.Should().BeTrue($"There is no ordered list item with text: '{listedItem}'");
+        }
+
+        return htmlDocument;
+    }
+
+    public static IHtmlDocument HasUnorderedList(this IHtmlDocument htmlDocument, List<string> items)
+    {
+        foreach (var listedItem in items)
+        {
+            var exist = htmlDocument.GetElements(".govuk-list--bullet")
+                .Any(item =>
+                    item.QuerySelectorAll("li").Any(li => li.TextContent.Contains(listedItem)));
+
+            exist.Should().BeTrue($"There is no unordered list item with text: '{listedItem}'");
+        }
+
+        return htmlDocument;
+    }
+
+    public static IHtmlDocument HasTableRowsHeaders(this IHtmlDocument htmlDocument, List<string> items)
+    {
+        foreach (var header in items)
+        {
+            var exist = htmlDocument.GetElements(".govuk-table__header")
+                .Any(th => th.TextContent.Contains(header));
+
+            exist.Should().BeTrue($"There is table header with text: '{header}'");
+        }
+
+        return htmlDocument;
+    }
+
+    public static IHtmlDocument HasPanel(this IHtmlDocument htmlDocument, string title, string subTitle, string reference, bool confirmation = false)
+    {
+        var panel = htmlDocument.GetElements(".govuk-panel").Single();
+        panel.ClassName.Should().Contain("govuk-panel");
+
+        if (confirmation)
+        {
+            panel.ClassName.Should().Contain("govuk-panel--confirmation");
+        }
+
+        var header = panel.QuerySelectorAll("h1.govuk-panel__title").Single();
+        header.TextContent.Should().Be(title);
+
+        var body = panel.QuerySelectorAll("div.govuk-panel__body").Single();
+        body.TextContent.Should().Be(subTitle + reference);
+
+        return htmlDocument;
+    }
+
     public static IHtmlDocument IsEmpty(this IHtmlDocument htmlDocument)
     {
         var body = htmlDocument.GetElementsByTagName("body").FirstOrDefault();

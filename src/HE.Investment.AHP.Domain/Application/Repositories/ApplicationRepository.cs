@@ -7,6 +7,7 @@ using HE.Investment.AHP.Domain.Application.Repositories.Interfaces;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Data;
+using HE.Investment.AHP.Domain.FinancialDetails.Mappers;
 using HE.Investment.AHP.Domain.Programme;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.ValueObjects;
@@ -36,10 +37,7 @@ public class ApplicationRepository : IApplicationRepository
 
     public async Task<ApplicationEntity> GetById(AhpApplicationId id, UserAccount userAccount, CancellationToken cancellationToken)
     {
-        var organisationId = userAccount.SelectedOrganisationId().Value;
-        var application = userAccount.CanViewAllApplications()
-            ? await _applicationCrmContext.GetOrganisationApplicationById(id.Value, organisationId, CrmFields.ApplicationToRead.ToList(), cancellationToken)
-            : await _applicationCrmContext.GetUserApplicationById(id.Value, organisationId, CrmFields.ApplicationToRead.ToList(), cancellationToken);
+        var application = await GetAhpApplicationDto(id, userAccount, CrmFields.ApplicationToRead.ToList(), cancellationToken);
 
         return CreateEntity(application);
     }
@@ -73,6 +71,16 @@ public class ApplicationRepository : IApplicationRepository
         CancellationToken cancellationToken)
     {
         return await GetApplications(userAccount, paginationRequest, null, cancellationToken);
+    }
+
+    public async Task<ApplicationWithFundingDetails> GetApplicationWithFundingDetailsById(
+        AhpApplicationId id,
+        UserAccount userAccount,
+        CancellationToken cancellationToken)
+    {
+        var application = await GetAhpApplicationDto(id, userAccount, CrmFields.ApplicationWithFundingDetailsToRead.ToList(), cancellationToken);
+
+        return CreateApplicationWithFundingDetails(application);
     }
 
     public async Task<PaginationResult<ApplicationWithFundingDetails>> GetSiteApplications(SiteId siteId, UserAccount userAccount, PaginationRequest paginationRequest, CancellationToken cancellationToken)
@@ -170,15 +178,35 @@ public class ApplicationRepository : IApplicationRepository
             .Where(x => filter == null || filter(x))
             .OrderByDescending(x => x.lastExternalModificationOn)
             .TakePage(paginationRequest)
-            .Select(x => new ApplicationWithFundingDetails(
-                new AhpApplicationId(x.id),
-                x.name,
-                AhpApplicationStatusMapper.MapToPortalStatus(x.applicationStatus),
-                ApplicationTenureMapper.ToDomain(x.tenure)!.Value,
-                x.noOfHomes,
-                x.fundingRequested))
+            .Select(CreateApplicationWithFundingDetails)
             .ToList();
 
         return new PaginationResult<ApplicationWithFundingDetails>(filtered, paginationRequest.Page, paginationRequest.ItemsPerPage, applications.Count);
+    }
+
+    private ApplicationWithFundingDetails CreateApplicationWithFundingDetails(AhpApplicationDto ahpApplicationDto)
+    {
+        var otherApplicationCosts = OtherApplicationCostsMapper.MapToOtherApplicationCosts(ahpApplicationDto);
+
+        return new ApplicationWithFundingDetails(
+            new SiteId("1"), // TODO: AB#88650 Assign application to site
+            new AhpApplicationId(ahpApplicationDto.id),
+            ahpApplicationDto.name,
+            ahpApplicationDto.referenceNumber,
+            AhpApplicationStatusMapper.MapToPortalStatus(ahpApplicationDto.applicationStatus),
+            ApplicationTenureMapper.ToDomain(ahpApplicationDto.tenure)!.Value,
+            ahpApplicationDto.noOfHomes,
+            ahpApplicationDto.fundingRequested,
+            otherApplicationCosts.ExpectedTotalCosts(),
+            ahpApplicationDto.currentLandValue,
+            null); // TODO: task AB#91399 fetch value from crm
+    }
+
+    private async Task<AhpApplicationDto> GetAhpApplicationDto(AhpApplicationId id, UserAccount userAccount, IList<string> crmFields, CancellationToken cancellationToken)
+    {
+        var organisationId = userAccount.SelectedOrganisationId().Value;
+        return userAccount.CanViewAllApplications()
+            ? await _applicationCrmContext.GetOrganisationApplicationById(id.Value, organisationId, crmFields, cancellationToken)
+            : await _applicationCrmContext.GetUserApplicationById(id.Value, organisationId, crmFields, cancellationToken);
     }
 }
