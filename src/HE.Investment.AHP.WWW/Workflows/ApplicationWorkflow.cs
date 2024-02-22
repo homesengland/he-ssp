@@ -50,7 +50,7 @@ public class ApplicationWorkflow : IStateRouting<ApplicationWorkflowState>
             ApplicationWorkflowState.Withdraw => await CanApplicationStatusBeChanged(ApplicationStatusDivision.GetAllStatusesAllowedForWithdraw()),
             ApplicationWorkflowState.CheckAnswers => await CanBeSubmitted(),
             ApplicationWorkflowState.Submit => await CanBeSubmitted(),
-            ApplicationWorkflowState.Completed => await CanBeSubmitted(),
+            ApplicationWorkflowState.Completed => await IsSubmitted(),
             _ => false,
         };
     }
@@ -110,5 +110,12 @@ public class ApplicationWorkflow : IStateRouting<ApplicationWorkflowState>
         var model = await _modelFactory();
         var allSectionsCompleted = model.Sections.All(x => x.SectionStatus == SectionStatus.Completed);
         return statusesAllowedForSubmit.Contains(model.Status) && allSectionsCompleted;
+    }
+
+    private async Task<bool> IsSubmitted()
+    {
+        var model = await _modelFactory();
+        var allSectionsCompleted = model.Sections.All(x => x.SectionStatus == SectionStatus.Completed);
+        return model.Status == ApplicationStatus.ApplicationSubmitted && allSectionsCompleted;
     }
 }

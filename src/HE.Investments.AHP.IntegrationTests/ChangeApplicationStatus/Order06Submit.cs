@@ -51,11 +51,23 @@ public class Order06Submit : AhpIntegrationTest
     [Order(2)]
     public async Task Order02_ShouldNavigateToCompleted_WhenApplicationWasSubmitted()
     {
-        await TestQuestionPage(
-            ApplicationPagesUrl.Submit(ApplicationData.ApplicationId),
-            ApplicationPagesUrl.SubmitSuffix,
-            ApplicationPagesUrl.Completed(ApplicationData.ApplicationId),
+        // given
+        var currentPage = await GetCurrentPage(ApplicationPagesUrl.Submit(ApplicationData.ApplicationId));
+        currentPage
+            .UrlWithoutQueryEndsWith(ApplicationPagesUrl.SubmitSuffix)
+            .HasTitle(ApplicationPageTitles.Submit)
+            .HasBackLink()
+            .HasSubmitButton(out var submitButton, "Accept and submit");
+
+        // when
+        var completedPage = await TestClient.SubmitButton(
+            submitButton,
             (nameof(ApplicationSubmitModel.RepresentationsAndWarranties), "checked"));
+
+        // then
+        completedPage.UrlWithoutQueryEndsWith(ApplicationPagesUrl.CompletedSuffix)
+            .HasTitle(ApplicationPageTitles.CompletedSecondTitle);
+        SaveCurrentPage();
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
@@ -66,7 +78,7 @@ public class Order06Submit : AhpIntegrationTest
         var applicationCompletedPage = await GetCurrentPage();
         applicationCompletedPage
             .UrlEndWith(ApplicationPagesUrl.CompletedSuffix)
-            .HasTitle(ApplicationPageTitles.Completed)
+            .HasTitle(ApplicationPageTitles.CompletedSecondTitle)
             .HasLinkButton("Return to applications");
 
         // given & when

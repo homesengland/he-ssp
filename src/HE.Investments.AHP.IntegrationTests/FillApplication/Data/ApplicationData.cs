@@ -7,6 +7,8 @@ public class ApplicationData
 {
     public ApplicationData()
     {
+        ApplicationId = "9fe480d4-42d1-ee11-9079-0022480041cf";
+        ApplicationName = "IT_02/22/2024 05:25:50";
     }
 
     public string SiteId { get; private set; }

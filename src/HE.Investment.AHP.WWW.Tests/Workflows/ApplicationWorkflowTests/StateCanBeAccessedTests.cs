@@ -17,7 +17,6 @@ public class StateCanBeAccessedTests
     [InlineData(ApplicationStatus.Draft, ApplicationWorkflowState.CheckAnswers, false)]
     [InlineData(ApplicationStatus.ApplicationSubmitted, ApplicationWorkflowState.CheckAnswers, false)]
     [InlineData(ApplicationStatus.ApplicationSubmitted, ApplicationWorkflowState.Submit, false)]
-    [InlineData(ApplicationStatus.ApplicationSubmitted, ApplicationWorkflowState.Completed, false)]
     [InlineData(ApplicationStatus.ApplicationSubmitted, ApplicationWorkflowState.Withdraw, true)]
     [InlineData(ApplicationStatus.ApplicationSubmitted, ApplicationWorkflowState.OnHold, true)]
     [InlineData(ApplicationStatus.ApplicationSubmitted, ApplicationWorkflowState.Reactivate, false)]
@@ -59,7 +58,7 @@ public class StateCanBeAccessedTests
     [InlineData(ApplicationWorkflowState.Withdraw, true)]
     [InlineData(ApplicationWorkflowState.CheckAnswers, true)]
     [InlineData(ApplicationWorkflowState.Submit, true)]
-    [InlineData(ApplicationWorkflowState.Completed, true)]
+    [InlineData(ApplicationWorkflowState.Completed, false)]
     public async Task ShouldReturnValue_WhenApplicationIsCompletelyFilled(ApplicationWorkflowState state, bool expectedResult)
     {
         // given

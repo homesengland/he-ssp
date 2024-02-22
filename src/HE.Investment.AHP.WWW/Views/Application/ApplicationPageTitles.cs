@@ -22,5 +22,7 @@ public static class ApplicationPageTitles
 
     public const string Completed = "Application complete";
 
+    public const string CompletedSecondTitle = "Application submitted";
+
     public const string SubmitConfirm = "Confirm the following";
 }
