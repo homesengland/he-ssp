@@ -1,2 +1,3 @@
-@using HE.Investment.AHP.WWW.Common
-<gds-p class="govuk-!-margin-bottom-0">Practical completion is when the last dwelling has been handed over, with all homes approved as fit for occupation in accordance with the relevant certifications and requirements. For full details of the requirements for claiming this milestone, read the <gds-link target="_blank" href="@ExternalLinks.Get(nameof(ExternalLinks.CapitalFundingGuide))">Capital Funding Guide, under 4.1 onwards (opens in a new tab).</gds-link></gds-p>
+@using HE.Investment.AHP.WWW.Config
+@inject IExternalLinks ExternalLinks
+<gds-p class="govuk-!-margin-bottom-0">Practical completion is when the last dwelling has been handed over, with all homes approved as fit for occupation in accordance with the relevant certifications and requirements. For full details of the requirements for claiming this milestone, read the <gds-link target="_blank" href="@ExternalLinks.CapitalFundingGuide">Capital Funding Guide, under 4.1 onwards (opens in a new tab).</gds-link></gds-p>

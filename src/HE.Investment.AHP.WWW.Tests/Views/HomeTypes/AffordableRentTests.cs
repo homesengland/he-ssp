@@ -1,7 +1,10 @@
 using AngleSharp.Html.Dom;
+using HE.Investment.AHP.WWW.Config;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
 
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Extensions.DependencyInjection;
+using Moq;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.HomeTypes;
 
@@ -36,7 +39,10 @@ public class AffordableRentTests : HomeTypesTestBase
         modelState.AddModelError(nameof(AffordableRentModel.TargetRentExceedMarketRent), ErrorMessage);
 
         // when
-        var document = await RenderHomeTypePage(ViewPath, Model, modelStateDictionary: modelState);
+        var document = await RenderHomeTypePage(ViewPath, Model, modelStateDictionary: modelState, mockDependencies: services =>
+        {
+            services.AddTransient(_ => new Mock<IExternalLinks>().Object);
+        });
 
         // then
         AssertView(document);

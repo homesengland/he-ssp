@@ -1,9 +1,12 @@
 using AngleSharp.Html.Dom;
 using HE.Investment.AHP.Contract.FinancialDetails.Constants;
+using HE.Investment.AHP.WWW.Config;
 using HE.Investment.AHP.WWW.Models.FinancialDetails;
 using HE.Investments.Common.WWWTestsFramework;
-
+using HE.Investments.Common.WWWTestsFramework.Framework;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Extensions.DependencyInjection;
+using Moq;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.FinancialDetails;
 
@@ -17,7 +20,10 @@ public class OtherSchemeCostsTests : ViewTestBase
         var model = new FinancialDetailsOtherApplicationCostsModel(Guid.NewGuid(), "TestApp", string.Empty, string.Empty);
 
         // given & when
-        var document = await Render(_viewPath, model);
+        var document = await Render(_viewPath, model, mockDependencies: services =>
+        {
+            services.AddTransient(_ => new Mock<IExternalLinks>().Object);
+        });
 
         // then
         AssertView(document);
@@ -33,7 +39,10 @@ public class OtherSchemeCostsTests : ViewTestBase
         modelState.AddModelError(nameof(FinancialDetailsOtherApplicationCostsModel.ExpectedWorksCosts), errorMessage);
 
         // when
-        var document = await Render(_viewPath, model, modelStateDictionary: modelState);
+        var document = await Render(_viewPath, model, modelStateDictionary: modelState, mockDependencies: services =>
+        {
+            services.AddTransient(_ => new Mock<IExternalLinks>().Object);
+        });
 
         // then
         AssertView(document, errorMessage);

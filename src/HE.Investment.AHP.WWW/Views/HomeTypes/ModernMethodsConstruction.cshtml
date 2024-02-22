@@ -5,7 +5,8 @@
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investment.AHP.Contract.HomeTypes
-@using HE.Investment.AHP.WWW.Common
+@using HE.Investment.AHP.WWW.Config
+@inject IExternalLinks ExternalLinks
 @model HE.Investment.AHP.WWW.Models.HomeTypes.ModernMethodsConstructionModel;
 
 @{
@@ -35,7 +36,7 @@
                         The MMC definition framework is a new seven category framework that enables a full and future-proofed range of 'Modern Methods of Construction' used in home building.<br/><br/>
                         The framework spans all types of pre-manufacturing, site based materials and process innovation.<br/><br/>
                         <a class="govuk-link" target="_blank"
-                           href="@ExternalLinks.Get(nameof(ExternalLinks.MmcIntroduction))">
+                           href="@ExternalLinks.MmcIntroduction">
                             Read further information on the MMC categories (opens in a new tab).
                         </a>
                     </div>

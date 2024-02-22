@@ -4,7 +4,8 @@
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.Components.RadioList
 @using HE.Investment.AHP.WWW.Extensions
-@using HE.Investment.AHP.WWW.Common
+@using HE.Investment.AHP.WWW.Config
+@inject IExternalLinks ExternalLinks
 @model HE.Investment.AHP.WWW.Models.Application.ApplicationBasicModel
 
 @{
@@ -27,7 +28,7 @@
         <gds-details>
             <gds-summary-details>What is tenure?</gds-summary-details>
             <gds-div-details-text>
-                Tenure refers to the conditions around ownership or rental of the properties. For example, Shared Ownership or Social Rent. We provide more information on <a href="@ExternalLinks.Get(nameof(ExternalLinks.ApplyForAffordableHousingFunding))" target="_blank">eligible tenure for affordable housing on our website (opens in a new tab).</a>
+                Tenure refers to the conditions around ownership or rental of the properties. For example, Shared Ownership or Social Rent. We provide more information on <a href="@ExternalLinks.ApplyForAffordableHousingFunding" target="_blank">eligible tenure for affordable housing on our website (opens in a new tab).</a>
             </gds-div-details-text>
         </gds-details>
 

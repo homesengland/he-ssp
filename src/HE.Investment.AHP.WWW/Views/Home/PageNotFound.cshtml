@@ -1,4 +1,5 @@
-@using HE.Investment.AHP.WWW.Common
+@using HE.Investment.AHP.WWW.Config
+@inject IExternalLinks ExternalLinks
 @model HE.Investments.Common.WWW.Infrastructure.ErrorHandling.ErrorModel;
 @{
     ViewData["Title"] = "Page not found";
@@ -15,7 +16,7 @@
                 <li>try again later</li>
                 <li>
                     contact the Help to Build team:<br/>
-                    <a href="@ExternalLinks.Get(nameof(ExternalLinks.MailToHelpToBuildTechSupport))">helptobuildtechsupport@homesengland.gov.uk</a>
+                    <a href="@ExternalLinks.MailToHelpToBuildTechSupport">helptobuildtechsupport@homesengland.gov.uk</a>
                 </li>
             </ul>
         </p>

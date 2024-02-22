@@ -1,6 +1,7 @@
 @using HE.Investment.AHP.WWW.Routing;
 @using HE.Investment.AHP.WWW.Views.Application
-@using HE.Investment.AHP.WWW.Common
+@using HE.Investment.AHP.WWW.Config
+@inject IExternalLinks ExternalLinks
 @{
     var title = ApplicationPageTitles.Start;
     ViewData["Title"] = title;
@@ -21,13 +22,13 @@
         <gds-p>
             You are about to start an AHP 21-26 CME application. Before applying, you should
             read and understand our
-            <a href="@ExternalLinks.Get(nameof(ExternalLinks.ApplyForAffordableHousingFunding))" target="_blank">
+            <a href="@ExternalLinks.ApplyForAffordableHousingFunding" target="_blank">
                 latest AHP 21-26 CME guidance (opens in a new tab).
             </a>
         </gds-p>
         <gds-p>
             If you intend to apply for a different funding route, you can find these on
-            <a href="@ExternalLinks.Get(nameof(ExternalLinks.ApplyForAffordableHousingFundingApplySection))" target="_blank">
+            <a href="@ExternalLinks.ApplyForAffordableHousingFundingApplySection" target="_blank">
                 our how to apply for affordable housing funding (opens in a new tab).
             </a>
         </gds-p>

@@ -3,7 +3,8 @@
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investment.AHP.Contract.FinancialDetails
-@using HE.Investment.AHP.WWW.Common
+@using HE.Investment.AHP.WWW.Config
+@inject IExternalLinks ExternalLinks
 @model FinancialDetailsOtherApplicationCostsModel;
 @{
     ViewData["Title"] = FinancialDetailsPageTitles.OtherSchemeCosts;
@@ -50,7 +51,7 @@
                     <gds-summary-details>What are works and on costs?</gds-summary-details>
                     <gds-div-details-text>
                         Details of eligible work and on costs can be found in the
-                        <a href="@ExternalLinks.Get(nameof(ExternalLinks.GrantAgreementForAhp21To26))" target="_blank">
+                        <a href="@ExternalLinks.GrantAgreementForAhp21To26" target="_blank">
                             published examples of the 21-26 AHP grant agreement (opens in a new tab)
                         </a>
                     </gds-div-details-text>

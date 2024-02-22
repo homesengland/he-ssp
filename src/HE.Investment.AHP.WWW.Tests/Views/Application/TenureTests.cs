@@ -1,9 +1,12 @@
 using AngleSharp.Html.Dom;
 using HE.Investment.AHP.Contract.Application;
+using HE.Investment.AHP.WWW.Config;
 using HE.Investment.AHP.WWW.Models.Application;
 
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.DependencyInjection;
+using Moq;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.Application;
 
@@ -17,7 +20,10 @@ public class TenureTests : ViewTestBase
     public async Task ShouldDisplayView()
     {
         // given & when
-        var document = await Render(_viewPath, _model, routeData: _routeData);
+        var document = await Render(_viewPath, _model, routeData: _routeData, mockDependencies: services =>
+        {
+            services.AddTransient(_ => new Mock<IExternalLinks>().Object);
+        });
 
         // then
         AssertView(document, _model);
@@ -32,7 +38,10 @@ public class TenureTests : ViewTestBase
         modelState.AddModelError(nameof(ApplicationBasicModel.Tenure), errorMessage);
 
         // when
-        var document = await Render(_viewPath, _model, modelStateDictionary: modelState, routeData: _routeData);
+        var document = await Render(_viewPath, _model, modelStateDictionary: modelState, routeData: _routeData, mockDependencies: services =>
+        {
+            services.AddTransient(_ => new Mock<IExternalLinks>().Object);
+        });
 
         // then
         AssertView(document, _model, errorMessage);

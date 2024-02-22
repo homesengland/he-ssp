@@ -2,7 +2,8 @@
 @using HE.Investment.AHP.WWW.Models.HomeTypes
 @using HE.Investment.AHP.WWW.Views.HomeTypes.Const
 @using HE.Investment.AHP.Contract.HomeTypes
-@using HE.Investment.AHP.WWW.Common
+@using HE.Investment.AHP.WWW.Config
+@inject IExternalLinks ExternalLinks
 @model HE.Investment.AHP.WWW.Models.HomeTypes.HappiDesignPrinciplesModel;
 
 @{
@@ -28,7 +29,7 @@
                     <gds-summary-details>What are the HAPPI design principles?</gds-summary-details>
                     <gds-div-details-text>
                         They are 10 key design principles that support the provision of older people's housing to offer an alternative to the family home. They can be adapted over time. We also seek this information for disabled and vulnerable people.
-                        <a href="@ExternalLinks.Get(nameof(ExternalLinks.TheHousingOurAgeingPopulationPanelForInnovation))">View the HAPPI principles for more information.</a>
+                        <a href="@ExternalLinks.TheHousingOurAgeingPopulationPanelForInnovation">View the HAPPI principles for more information.</a>
                     </gds-div-details-text>
                 </gds-details>
 

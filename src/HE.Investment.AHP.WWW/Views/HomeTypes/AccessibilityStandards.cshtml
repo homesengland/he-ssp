@@ -5,7 +5,8 @@
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investment.AHP.Contract.HomeTypes
-@using HE.Investment.AHP.WWW.Common
+@using HE.Investment.AHP.WWW.Config
+@inject IExternalLinks ExternalLinks
 @model HE.Investment.AHP.WWW.Models.HomeTypes.AccessibilityModel;
 
 @{
@@ -34,7 +35,7 @@
                     <div class="govuk-details__text">
                         The Building Regulations Part M cover the accessibility of homes.
                         <a class="govuk-link" target="_blank"
-                           href="@ExternalLinks.Get(nameof(ExternalLinks.BuildingRegulations))">
+                           href="@ExternalLinks.BuildingRegulations">
                             Read the Building Regulations to find out more (opens in the new tab).
                         </a>
                     </div>

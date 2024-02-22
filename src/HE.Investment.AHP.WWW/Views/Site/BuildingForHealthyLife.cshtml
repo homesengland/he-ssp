@@ -1,13 +1,14 @@
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investment.AHP.Contract.Site
 @using HE.Investment.AHP.Contract.Site.Enums
-@using HE.Investment.AHP.WWW.Common
 @using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToSitesLink
 @using HE.Investment.AHP.WWW.Views.Site.Const
 @using HE.Investments.Common.WWW.Components.Details
 @using HE.Investments.Common.WWW.Components.RadioList
 @using HE.Investments.Common.WWW.Helpers
+@using HE.Investment.AHP.WWW.Config
+@inject IExternalLinks ExternalLinks
 
 @model SiteModel
 @{
@@ -17,7 +18,7 @@
         {
             title = "What are the Building for a Healthy Life criteria?",
             contentText = "Building for a Healthy Life is a design code to help people improve the design of new and growing neighbourhoods. You can read more in the",
-            linkUrl = ExternalLinks.Get(nameof(ExternalLinks.BuildingForHealthyLifeBrochure)),
+            linkUrl = ExternalLinks.BuildingForHealthyLifeBrochure,
             linkText = "Building for a Healthy life toolkit (opens in a new tab).",
             header = SitePageTitles.BuildingForHealthyLife
         });

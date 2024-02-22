@@ -1,6 +1,5 @@
 using HE.Investment.AHP.Domain.Config;
 using HE.Investment.AHP.Domain.HomeTypes.CommandHandlers;
-using HE.Investment.AHP.WWW.Common;
 using HE.Investment.AHP.WWW.Models.Application.Factories;
 using HE.Investment.AHP.WWW.Models.Delivery.Factories;
 using HE.Investment.AHP.WWW.Models.FinancialDetails.Factories;
@@ -39,7 +38,7 @@ public static class AhpWebModule
 
         service.AddScoped<ISchemeProvider, CachedSchemeProvider>();
         service.AddScoped<IDeliveryPhaseProvider, CachedDeliveryPhaseProvider>();
-        ExternalLinks.SetConfiguration(configuration);
+        service.AddSingleton<IExternalLinks, ExternalLinks>();
     }
 
     private static void AddConfiguration(IServiceCollection services, IConfiguration configuration)

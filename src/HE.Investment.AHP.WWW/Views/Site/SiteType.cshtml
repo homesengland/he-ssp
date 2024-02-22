@@ -1,6 +1,5 @@
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investment.AHP.Contract.Site
-@using HE.Investment.AHP.WWW.Common
 @using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToSitesLink
 @using HE.Investment.AHP.WWW.Views.Site.Const
@@ -8,6 +7,8 @@
 @using HE.Investments.Common.WWW.Components.RadioList
 @using HE.Investments.Common.WWW.Components.PageHeader
 @using HE.Investments.Common.WWW.Helpers
+@using HE.Investment.AHP.WWW.Config
+@inject IExternalLinks ExternalLinks
 @model SiteTypeDetails
 @{
     ViewData["Title"] = SitePageTitles.SiteType;
@@ -18,7 +19,7 @@
             title = "What regeneration sites are covered by this funding?",
             contentText = "Visit our article to find out more information about",
             linkText = " regeneration funding within 21-26 AHP (opens in a new tab).",
-            linkUrl = ExternalLinks.Get(nameof(ExternalLinks.RegenerationFundingWithin21To26Ahp))
+            linkUrl = ExternalLinks.RegenerationFundingWithin21To26Ahp
         });
 }
 
