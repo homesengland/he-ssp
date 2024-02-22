@@ -1,6 +1,7 @@
 using HE.Investment.AHP.Contract.HomeTypes.Commands;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
+using HE.Investment.AHP.Domain.Scheme.Repositories;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
 using MediatR;
@@ -14,10 +15,13 @@ public class SaveFinishHomeTypesAnswerCommandHandler : HomeTypeCommandHandlerBas
 
     private readonly IAccountUserContext _accountUserContext;
 
-    public SaveFinishHomeTypesAnswerCommandHandler(IHomeTypeRepository repository, IAccountUserContext accountUserContext, ILogger<SaveFinishHomeTypesAnswerCommandHandler> logger)
+    private readonly ISchemeRepository _schemeRepository;
+
+    public SaveFinishHomeTypesAnswerCommandHandler(IHomeTypeRepository repository,ISchemeRepository schemeRepository, IAccountUserContext accountUserContext, ILogger<SaveFinishHomeTypesAnswerCommandHandler> logger)
         : base(logger)
     {
         _repository = repository;
+        _schemeRepository = schemeRepository;
         _accountUserContext = accountUserContext;
     }
 
@@ -25,6 +29,15 @@ public class SaveFinishHomeTypesAnswerCommandHandler : HomeTypeCommandHandlerBas
     {
         var account = await _accountUserContext.GetSelectedAccount();
         var homeTypes = await _repository.GetByApplicationId(request.ApplicationId, account, HomeTypeSegmentTypes.None, cancellationToken);
+        var scheme = await _schemeRepository.GetByApplicationId(request.ApplicationId, account, false, cancellationToken);
+
+        if (request.FinishHomeTypesAnswer == Contract.HomeTypes.Enums.FinishHomeTypesAnswer.Yes
+            && !request.IsCheckOnly
+            && scheme?.Funding?.HousesToDeliver != homeTypes.HomeTypes.Sum(x => x.HomeInformation?.NumberOfHomes?.Value))
+        {
+            return OperationResult.New().AddValidationError("HomeTypes", "You have not assigned all of the homes you are delivering to a home type");
+        }
+
         var validationErrors = PerformWithValidation(() => homeTypes.CompleteSection(request.FinishHomeTypesAnswer));
         if (validationErrors.Any())
         {

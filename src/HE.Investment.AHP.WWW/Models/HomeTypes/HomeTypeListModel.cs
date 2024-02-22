@@ -18,5 +18,7 @@ public class HomeTypeListModel : HomeTypeModelBase, IEditableViewModel
 
     public bool IsReadOnly => !IsEditable;
 
+    public int TotalExpectedNumberOfHomes { get; set; }
+
     public IList<HomeTypeItemModel> HomeTypes { get; set; }
 }
