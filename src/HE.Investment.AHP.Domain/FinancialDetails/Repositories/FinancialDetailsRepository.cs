@@ -53,8 +53,8 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
             financialDetailsSectionCompletionStatus = SectionStatusMapper.ToDto(financialDetails.SectionStatus),
         };
 
-        ExpectedContributionsToSchemeMappers.MapFromExpectedContributions(financialDetails.ExpectedContributions, dto);
-        PublicGrantsMappers.MapFromPublicGrants(financialDetails.PublicGrants, dto);
+        ExpectedContributionsToSchemeMapper.MapFromExpectedContributions(financialDetails.ExpectedContributions, dto);
+        PublicGrantsMapper.MapFromPublicGrants(financialDetails.PublicGrants, dto);
 
         _ = await _applicationCrmContext.Save(dto, organisationId.Value, CrmFields.FinancialDetailsToUpdate.ToList(), cancellationToken);
 
@@ -79,9 +79,9 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
             new LandValue(
                 application.currentLandValue.IsProvided() ? new CurrentLandValue(application.currentLandValue!.Value) : null,
                 YesNoTypeMapper.Map(application.isPublicLand)),
-            OtherApplicationCostsMappers.MapToOtherApplicationCosts(application),
-            ExpectedContributionsToSchemeMappers.MapToExpectedContributionsToScheme(application, applicationBasicInfo.Tenure),
-            PublicGrantsMappers.MapToPublicGrants(application),
+            OtherApplicationCostsMapper.MapToOtherApplicationCosts(application),
+            ExpectedContributionsToSchemeMapper.MapToExpectedContributionsToScheme(application, applicationBasicInfo.Tenure),
+            PublicGrantsMapper.MapToPublicGrants(application),
             SectionStatusMapper.ToDomain(application.financialDetailsSectionCompletionStatus, applicationBasicInfo.Status));
     }
 }

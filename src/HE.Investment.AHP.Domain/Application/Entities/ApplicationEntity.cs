@@ -102,7 +102,7 @@ public class ApplicationEntity : DomainEntity
         Status = _modificationTracker.Change(Status, ApplicationStatus.ApplicationSubmitted);
         RepresentationsAndWarranties = _modificationTracker.Change(RepresentationsAndWarranties, representationsAndWarranties);
 
-        await applicationSubmit.ChangeApplicationStatus(this, organisationId, null, cancellationToken); // todo this will be change to pass representationsAndWarranties when it will be added to crm
+        await applicationSubmit.ChangeApplicationStatus(this, organisationId, null, cancellationToken); // TODO: task AB#91399 this will be change to pass representationsAndWarranties when it will be added to crm
     }
 
     public async Task Hold(IChangeApplicationStatus applicationHold, HoldReason? newHoldReason, OrganisationId organisationId, CancellationToken cancellationToken)

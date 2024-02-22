@@ -166,7 +166,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     [HttpGet("{applicationId}/submit")]
     public async Task<IActionResult> Submit(string applicationId, CancellationToken cancellationToken)
     {
-        var model = await GetAplicationSubmitModel(applicationId, cancellationToken);
+        var model = await GetApplicationSubmitModel(applicationId, cancellationToken);
 
         return View(nameof(Submit), model);
     }
@@ -182,7 +182,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
             () => ContinueWithRedirect(new { model.ApplicationId }),
             async () =>
             {
-                model = await GetAplicationSubmitModel(applicationId, cancellationToken);
+                model = await GetApplicationSubmitModel(applicationId, cancellationToken);
 
                 return View(nameof(Submit), model);
             },
@@ -194,7 +194,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     [AuthorizeWithCompletedProfile(AccountAccessContext.SubmitApplication)]
     public async Task<IActionResult> Completed(string applicationId, CancellationToken cancellationToken)
     {
-        var model = await GetAplicationSubmitModel(applicationId, cancellationToken);
+        var model = await GetApplicationSubmitModel(applicationId, cancellationToken);
 
         return View(nameof(Completed), model);
     }
@@ -304,7 +304,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
         return View(model);
     }
 
-    private async Task<ApplicationSubmitModel> GetAplicationSubmitModel(string applicationId, CancellationToken cancellationToken)
+    private async Task<ApplicationSubmitModel> GetApplicationSubmitModel(string applicationId, CancellationToken cancellationToken)
     {
         var application = await _mediator.Send(new GetApplicationDetailsQuery(AhpApplicationId.From(applicationId)), cancellationToken);
         var siteBasicModel = await _mediator.Send(new GetSiteBasicDetailsQuery(application.SiteId.Value), cancellationToken);

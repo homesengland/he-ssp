@@ -81,7 +81,7 @@ public class Order06Submit : AhpIntegrationTest
             .HasTitle(ApplicationPageTitles.CompletedSecondTitle)
             .HasLinkButton("Return to applications");
 
-        // given & when
+        // when
         var mainPage = await TestClient.NavigateTo(applicationCompletedPage.GetLinkButton("Return to applications"));
 
         // then

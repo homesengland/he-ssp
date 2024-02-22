@@ -80,7 +80,7 @@ public class ApplicationRepository : IApplicationRepository
     {
         var application = await GetAhpApplicationDto(id, userAccount, CrmFields.ApplicationWithFundingDetailsToRead.ToList(), cancellationToken);
 
-        return GetApplicationWithFundingDetails(application);
+        return CreateApplicationWithFundingDetails(application);
     }
 
     public async Task<PaginationResult<ApplicationWithFundingDetails>> GetSiteApplications(SiteId siteId, UserAccount userAccount, PaginationRequest paginationRequest, CancellationToken cancellationToken)
@@ -178,15 +178,15 @@ public class ApplicationRepository : IApplicationRepository
             .Where(x => filter == null || filter(x))
             .OrderByDescending(x => x.lastExternalModificationOn)
             .TakePage(paginationRequest)
-            .Select(GetApplicationWithFundingDetails)
+            .Select(CreateApplicationWithFundingDetails)
             .ToList();
 
         return new PaginationResult<ApplicationWithFundingDetails>(filtered, paginationRequest.Page, paginationRequest.ItemsPerPage, applications.Count);
     }
 
-    private ApplicationWithFundingDetails GetApplicationWithFundingDetails(AhpApplicationDto ahpApplicationDto)
+    private ApplicationWithFundingDetails CreateApplicationWithFundingDetails(AhpApplicationDto ahpApplicationDto)
     {
-        var otherApplicationCosts = OtherApplicationCostsMappers.MapToOtherApplicationCosts(ahpApplicationDto);
+        var otherApplicationCosts = OtherApplicationCostsMapper.MapToOtherApplicationCosts(ahpApplicationDto);
 
         return new ApplicationWithFundingDetails(
             new SiteId("1"), // TODO: AB#88650 Assign application to site
@@ -199,7 +199,7 @@ public class ApplicationRepository : IApplicationRepository
             ahpApplicationDto.fundingRequested,
             otherApplicationCosts.ExpectedTotalCosts(),
             ahpApplicationDto.currentLandValue,
-            null); // todo fetch value from crm
+            null); // TODO: task AB#91399 fetch value from crm
     }
 
     private async Task<AhpApplicationDto> GetAhpApplicationDto(AhpApplicationId id, UserAccount userAccount, IList<string> crmFields, CancellationToken cancellationToken)

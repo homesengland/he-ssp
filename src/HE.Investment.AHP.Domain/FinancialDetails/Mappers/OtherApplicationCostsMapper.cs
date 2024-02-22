@@ -5,7 +5,7 @@ using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.Mappers;
 
-public static class OtherApplicationCostsMappers
+public static class OtherApplicationCostsMapper
 {
     public static OtherApplicationCosts MapToOtherApplicationCosts(AhpApplicationDto application)
     {

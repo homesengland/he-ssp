@@ -6,7 +6,7 @@ using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.Mappers;
 
-public static class ExpectedContributionsToSchemeMappers
+public static class ExpectedContributionsToSchemeMapper
 {
     public static void MapFromExpectedContributions(ExpectedContributionsToScheme expectedContributionsToScheme, AhpApplicationDto dto)
     {

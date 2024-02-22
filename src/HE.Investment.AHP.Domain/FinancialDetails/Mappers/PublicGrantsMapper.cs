@@ -5,7 +5,7 @@ using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.Mappers;
 
-public static class PublicGrantsMappers
+public static class PublicGrantsMapper
 {
     public static PublicGrants MapToPublicGrants(AhpApplicationDto application)
     {
