@@ -10,7 +10,9 @@ using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investment.AHP.Contract.Site.Queries;
 using HE.Investment.AHP.WWW.Extensions;
 using HE.Investment.AHP.WWW.Models.Site;
+using HE.Investment.AHP.WWW.Models.Site.Factories;
 using HE.Investment.AHP.WWW.Workflows;
+using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Pagination;
@@ -33,9 +35,15 @@ public class SiteController : WorkflowController<SiteWorkflowState>
 {
     private readonly IMediator _mediator;
 
-    public SiteController(IMediator mediator)
+    private readonly IAccountAccessContext _accountAccessContext;
+
+    private readonly ISiteSummaryViewModelFactory _siteSummaryViewModelFactory;
+
+    public SiteController(IMediator mediator, IAccountAccessContext accountAccessContext, ISiteSummaryViewModelFactory siteSummaryViewModelFactory)
     {
         _mediator = mediator;
+        _accountAccessContext = accountAccessContext;
+        _siteSummaryViewModelFactory = siteSummaryViewModelFactory;
     }
 
     [HttpGet]
@@ -136,7 +144,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     public async Task<IActionResult> Section106GeneralAgreement([FromRoute] string siteId, CancellationToken cancellationToken)
     {
         var siteModel = await _mediator.Send(new GetSiteQuery(siteId), cancellationToken);
-        return View("Section106GeneralAgreement", siteModel.Section106 ?? new Section106Dto(siteId, siteModel.Name ?? string.Empty, null));
+        return View("Section106GeneralAgreement", siteModel.Section106 ?? new Section106Dto(siteId, siteModel.Name, null));
     }
 
     [HttpPost("{siteId}/section-106-general-agreement")]
@@ -263,14 +271,14 @@ public class SiteController : WorkflowController<SiteWorkflowState>
 
     [HttpPost("{siteId}/local-authority/search")]
     [WorkflowState(SiteWorkflowState.LocalAuthoritySearch)]
-    public async Task<IActionResult> LocalAuthoritySearch(string siteId, LocalAuthorities model, CancellationToken cancellationToken)
+    public async Task<IActionResult> LocalAuthoritySearch(string siteId, [FromQuery] string? redirect, LocalAuthorities model, CancellationToken cancellationToken)
     {
-        return await ExecuteSiteCommand<LocalAuthorities>(
+        return await this.ExecuteCommand<LocalAuthorities>(
+            _mediator,
             new ProvideLocalAuthoritySearchPhraseCommand(new SiteId(siteId), model.Phrase),
-            nameof(LocalAuthoritySearch),
-            _ => model,
-            cancellationToken,
-            new { siteId, phrase = model.Phrase });
+            async () => await this.ReturnToSitesListOrContinue(async () => await Continue(new { siteId, phrase = model.Phrase, redirect })),
+            () => Task.FromResult<IActionResult>(View("LocalAuthoritySearch", model)),
+            cancellationToken);
     }
 
     [HttpGet("{siteId}/local-authority/search/result")]
@@ -370,7 +378,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     public async Task<IActionResult> PlanningStatus([FromRoute] string siteId, CancellationToken cancellationToken)
     {
         var siteModel = await _mediator.Send(new GetSiteQuery(siteId), cancellationToken);
-        ViewBag.SiteName = siteModel.Name!;
+        ViewBag.SiteName = siteModel.Name;
         return View("PlanningStatus", siteModel.PlanningDetails);
     }
 
@@ -383,7 +391,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
             nameof(PlanningStatus),
             savedModel =>
             {
-                ViewBag.SiteName = savedModel.Name!;
+                ViewBag.SiteName = savedModel.Name;
                 return model;
             },
             cancellationToken);
@@ -449,7 +457,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         var designGuideModel = new NationalDesignGuidePrioritiesModel
         {
             SiteId = siteId,
-            SiteName = siteModel.Name ?? string.Empty,
+            SiteName = siteModel.Name,
             DesignPriorities = siteModel.NationalDesignGuidePriorities.ToList(),
         };
         return View("NationalDesignGuide", designGuideModel);
@@ -857,9 +865,21 @@ public class SiteController : WorkflowController<SiteWorkflowState>
 
     [HttpGet("{siteId}/check-answers")]
     [WorkflowState(SiteWorkflowState.CheckAnswers)]
-    public IActionResult CheckAnswers()
+    public async Task<IActionResult> CheckAnswers(CancellationToken cancellationToken)
     {
-        return View();
+        return View("CheckAnswers", await CreateSiteSummary(null, cancellationToken));
+    }
+
+    [HttpPost("{siteId}/check-answers")]
+    [WorkflowState(SiteWorkflowState.CheckAnswers)]
+    public async Task<IActionResult> Complete([FromRoute] string siteId, [FromForm] IsSectionCompleted isSectionCompleted, CancellationToken cancellationToken)
+    {
+        return await this.ExecuteCommand<SiteSummaryViewModel>(
+            _mediator,
+            new CompleteSiteCommand(new SiteId(siteId), isSectionCompleted),
+            () => Task.FromResult<IActionResult>(RedirectToAction("Index")),
+            async () => View("CheckAnswers", await CreateSiteSummary(isSectionCompleted, cancellationToken)),
+            cancellationToken);
     }
 
     protected override async Task<IStateRouting<SiteWorkflowState>> Routing(SiteWorkflowState currentState, object? routeData = null)
@@ -902,7 +922,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     private async Task<SiteModel> GetSiteDetails(string siteId, CancellationToken cancellationToken)
     {
         var siteModel = await _mediator.Send(new GetSiteQuery(siteId), cancellationToken);
-        ViewBag.SiteName = siteModel.Name!;
+        ViewBag.SiteName = siteModel.Name;
         return siteModel;
     }
 
@@ -911,5 +931,19 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         var siteBasicModel = await _mediator.Send(new GetSiteBasicDetailsQuery(siteId), cancellationToken);
         ViewBag.SiteName = siteBasicModel.Name;
         return siteBasicModel;
+    }
+
+    private async Task<SiteSummaryViewModel> CreateSiteSummary(IsSectionCompleted? isSectionCompleted, CancellationToken cancellationToken)
+    {
+        var siteId = this.GetSiteIdFromRoute();
+        var siteDetails = await GetSiteDetails(siteId.Value, cancellationToken);
+        var isEditable = await _accountAccessContext.CanEditApplication();
+        var sections = _siteSummaryViewModelFactory.CreateSiteSummary(siteDetails, Url, isEditable);
+
+        return new SiteSummaryViewModel(
+            siteId.Value,
+            isSectionCompleted ?? (siteDetails.Status == SiteStatus.Completed ? IsSectionCompleted.Yes : IsSectionCompleted.Undefied),
+            sections.ToList(),
+            isEditable);
     }
 }

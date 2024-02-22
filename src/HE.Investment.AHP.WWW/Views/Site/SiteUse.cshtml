@@ -16,7 +16,7 @@
         title="@SitePageTitles.SiteUse"
         caption="@ViewBag.SiteName"/>
 
-    <form asp-controller="Site" asp-action="SiteUse" asp-method="post" novalidate>
+    <form asp-controller="Site" asp-action="SiteUse" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
         <vc:radio-yes-no
             title="Are the homes part of street front infill?"
             hint="Street front infill sites are commonly known as the development of gaps between existing developments or the replacement of existing properties. This can include commercial and other non-residential."

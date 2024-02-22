@@ -9,7 +9,7 @@
     <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.Section106CapitalFundingEligibility" />
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
-    <form asp-controller="Site" asp-action="Section106CapitalFundingEligibility" asp-method="post" novalidate>
+    <form asp-controller="Site" asp-action="Section106CapitalFundingEligibility" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
         <vc:page-header title="@SitePageTitles.SiteSection106CapitalFundingEligibility" caption="@Model.SiteName"/>
         <gds-p>
             All homes funded through the Affordable Homes Programme must meet the requirements of the

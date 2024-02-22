@@ -513,7 +513,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
             return await DisplayChecksAnswersPage(cancellationToken, result.Errors.Select(e => e.ErrorMessage));
         }
 
-        return await Task.FromResult(RedirectToAction("List", "Delivery", new { applicationId }));
+        return RedirectToAction("List", "Delivery", new { applicationId });
     }
 
     protected override async Task<IStateRouting<DeliveryPhaseWorkflowState>> Routing(DeliveryPhaseWorkflowState currentState, object? routeData = null)

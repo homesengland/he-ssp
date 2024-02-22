@@ -24,7 +24,7 @@
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <vc:page-header caption="@ViewBag.SiteName" title="@SitePageTitles.RuralClassification"/>
 
-    <form asp-controller="Site" asp-action="RuralClassification" asp-method="post" novalidate>
+    <form asp-controller="Site" asp-action="RuralClassification" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
 
         <vc:radio-yes-no
             title="Is this site within a rural settlement?"

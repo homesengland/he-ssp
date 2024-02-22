@@ -9,7 +9,7 @@
     <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.Section106LocalAuthorityConfirmation" />
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
-    <form asp-controller="Site" asp-action="Section106LocalAuthorityConfirmation" asp-method="post" novalidate>
+    <form asp-controller="Site" asp-action="Section106LocalAuthorityConfirmation" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
         <vc:page-header title="@SitePageTitles.SiteSection106LocalAuthorityConfirmation" caption="@Model.SiteName" />
 
         <vc:text-area-input-with-counter field-name="@nameof(Model.LocalAuthorityConfirmation)"

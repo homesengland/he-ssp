@@ -3,6 +3,7 @@ using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investment.AHP.Domain.Site.ValueObjects;
+using HE.Investment.AHP.WWW.Workflows;
 using SiteRuralClassification = HE.Investment.AHP.Contract.Site.SiteRuralClassification;
 using SiteTypeDetails = HE.Investment.AHP.Contract.Site.SiteTypeDetails;
 using SiteUseDetails = HE.Investment.AHP.Contract.Site.SiteUseDetails;
@@ -48,20 +49,16 @@ public class CurrentStateTests
     }
 
     [Fact]
-    public void ShouldReturnName_WhenNameNotProvided()
+    public void ShouldReturnStart_WhenSiteDoesNotExist()
     {
         // given
-        var workflow = SiteWorkflowFactory.BuildWorkflow(
-            SiteWorkflowState.Start,
-            localAuthority: _localAuthority,
-            planningDetails: _planningDetails,
-            section106: _section106);
+        var workflow = new SiteWorkflow(SiteWorkflowState.Start, null);
 
         // when
         var result = workflow.CurrentState(SiteWorkflowState.Start);
 
         // then
-        result.Should().Be(SiteWorkflowState.Name);
+        result.Should().Be(SiteWorkflowState.Start);
     }
 
     [Fact]
@@ -70,7 +67,7 @@ public class CurrentStateTests
         // given
         var section106 = new Section106Dto("3", "TestSite", null);
 
-        var workflow = SiteWorkflowFactory.BuildWorkflow(SiteWorkflowState.Start, name: "Site name", section106: section106);
+        var workflow = SiteWorkflowFactory.BuildWorkflow(SiteWorkflowState.Start, section106: section106);
 
         // when
         var result = workflow.CurrentState(SiteWorkflowState.Start);
@@ -80,87 +77,11 @@ public class CurrentStateTests
     }
 
     [Fact]
-    public void ShouldReturnSection106AffordableHousing_WhenAffordableHousingNotProvided()
-    {
-        // given
-        var section106 = new Section106Dto("3", "TestSite", true);
-
-        var workflow = SiteWorkflowFactory.BuildWorkflow(SiteWorkflowState.Start, section106: section106);
-
-        // when
-        var result = workflow.CurrentState(SiteWorkflowState.Start);
-
-        // then
-        result.Should().Be(SiteWorkflowState.Name);
-    }
-
-    [Fact]
-    public void ShouldReturnSection106OnlyAffordableHousing_WhenOnlyAffordableHousingNotProvided()
-    {
-        // given
-        var section106 = new Section106Dto("3", "TestSite", true, true);
-
-        var workflow = SiteWorkflowFactory.BuildWorkflow(SiteWorkflowState.Start, section106: section106);
-
-        // when
-        var result = workflow.CurrentState(SiteWorkflowState.Start);
-
-        // then
-        result.Should().Be(SiteWorkflowState.Name);
-    }
-
-    [Fact]
-    public void ShouldReturnSection106AdditionalAffordableHousing_WhenAdditionalAffordableHousingNotProvided()
-    {
-        // given
-        var section106 = new Section106Dto("3", "TestSite", true, true, false);
-
-        var workflow = SiteWorkflowFactory.BuildWorkflow(SiteWorkflowState.Start, section106: section106);
-
-        // when
-        var result = workflow.CurrentState(SiteWorkflowState.Start);
-
-        // then
-        result.Should().Be(SiteWorkflowState.Name);
-    }
-
-    [Fact]
-    public void ShouldReturnSection106CapitalFundingEligibility_WhenCapitalFundingEligibilityNotProvided()
-    {
-        // given
-        var section106 = new Section106Dto("3", "TestSite", true, true, false, true);
-
-        var workflow = SiteWorkflowFactory.BuildWorkflow(SiteWorkflowState.Start, section106: section106);
-
-        // when
-        var result = workflow.CurrentState(SiteWorkflowState.Start);
-
-        // then
-        result.Should().Be(SiteWorkflowState.Name);
-    }
-
-    [Fact]
-    public void ShouldReturnSection106LocalAuthorityConfirmation_WhenLocalAuthorityConfirmationNotProvided()
-    {
-        // given
-        var section106 = new Section106Dto("3", "TestSite", true, true, false, true, false);
-
-        var workflow = SiteWorkflowFactory.BuildWorkflow(SiteWorkflowState.Start, section106: section106);
-
-        // when
-        var result = workflow.CurrentState(SiteWorkflowState.Start);
-
-        // then
-        result.Should().Be(SiteWorkflowState.Name);
-    }
-
-    [Fact]
     public void ShouldReturnLocalAuthoritySearch_WhenLocalAuthorityNotProvided()
     {
         // given
         var workflow = SiteWorkflowFactory.BuildWorkflow(
             SiteWorkflowState.Start,
-            name: "some name",
             planningDetails: _planningDetails,
             section106: _section106);
 
@@ -194,7 +115,6 @@ public class CurrentStateTests
     {
         var workflow = SiteWorkflowFactory.BuildWorkflow(
             SiteWorkflowState.NationalDesignGuide,
-            name: "some name",
             planningDetails: _planningDetails,
             section106: _section106,
             localAuthority: _localAuthority,
@@ -212,7 +132,6 @@ public class CurrentStateTests
     {
         var workflow = SiteWorkflowFactory.BuildWorkflow(
             SiteWorkflowState.NationalDesignGuide,
-            name: "some name",
             planningDetails: _planningDetails,
             section106: _section106,
             localAuthority: _localAuthority,
@@ -385,7 +304,6 @@ public class CurrentStateTests
         // given
         var workflow = SiteWorkflowFactory.BuildWorkflow(
             SiteWorkflowState.Start,
-            name: "some name",
             localAuthority: _localAuthority,
             planningDetails: planningDetails ?? _planningDetails,
             tenderingStatusDetails: tenderingStatusDetails ?? _tenderingStatusDetails,

@@ -19,7 +19,7 @@
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <vc:page-header caption="@ViewBag.SiteName"/>
 
-    <form asp-controller="Site" asp-action="Procurements" asp-method="post" novalidate>
+    <form asp-controller="Site" asp-action="Procurements" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
 
         <vc:checkbox-list-with-or
             title="@SitePageTitles.Procurements"

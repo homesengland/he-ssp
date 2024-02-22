@@ -17,7 +17,7 @@
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <vc:page-header caption="@ViewBag.SiteName" title="@SitePageTitles.Mmc2DCategory"/>
 
-    <form asp-controller="Site" asp-action="Mmc2DCategory" asp-method="post" novalidate>
+    <form asp-controller="Site" asp-action="Mmc2DCategory" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
 
         <vc:checkbox-list
             title="Which of these sub-categories of 2D primary structural systems are you using?"

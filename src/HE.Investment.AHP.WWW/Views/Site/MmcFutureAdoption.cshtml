@@ -14,7 +14,7 @@
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <vc:page-header caption="@ViewBag.SiteName" title="@SitePageTitles.MmcFutureAdoption"/>
 
-    <form asp-controller="Site" asp-action="MmcFutureAdoption" asp-method="post" novalidate>
+    <form asp-controller="Site" asp-action="MmcFutureAdoption" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
 
         <vc:text-area-input-with-counter
             title="Tell us your plans for adopting MMC in the future"
