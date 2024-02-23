@@ -4,61 +4,61 @@ public class ExternalLinks : IExternalLinks
 {
     public ExternalLinks(IConfiguration configuration)
     {
-        BuildingRegulations = configuration.GetValue<string>("AppConfiguration:ExternalLinks") ??
+        BuildingRegulations = ConfigurationRetriever.TryGetValue(configuration, ConfigurationKey(nameof(BuildingRegulations))) ??
                               "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/540330/BR_PDF_AD_M1_2015_with_2016_amendments_V3.pdf";
 
-        ApplyForAffordableHousingFunding = configuration.GetValue<string>("AppConfiguration:ExternalLinks") ??
+        ApplyForAffordableHousingFunding = ConfigurationRetriever.TryGetValue(configuration, ConfigurationKey(nameof(ApplyForAffordableHousingFunding))) ??
                                            "https://www.gov.uk/guidance/apply-for-affordable-housing-funding";
 
-        ApplyForAffordableHousingFundingApplySection = configuration.GetValue<string>("AppConfiguration:ExternalLinks") ??
+        ApplyForAffordableHousingFundingApplySection = ConfigurationRetriever.TryGetValue(configuration, ConfigurationKey(nameof(ApplyForAffordableHousingFundingApplySection))) ??
                                                        "https://www.gov.uk/guidance/apply-for-affordable-housing-funding#apply";
 
-        GrantAgreementForAhp21To26 = configuration.GetValue<string>("AppConfiguration:ExternalLinks") ??
+        GrantAgreementForAhp21To26 = ConfigurationRetriever.TryGetValue(configuration, ConfigurationKey(nameof(GrantAgreementForAhp21To26))) ??
                                      "https://www.gov.uk/government/publications/grant-agreement-examples-for-the-affordable-homes-programme-2021-to-2026";
 
-        MailToHelpToBuildTechSupport = configuration.GetValue<string>("AppConfiguration:ExternalLinks") ??
+        MailToHelpToBuildTechSupport = ConfigurationRetriever.TryGetValue(configuration, ConfigurationKey(nameof(MailToHelpToBuildTechSupport))) ??
                                        "mailto:helptobuildtechsupport@homesengland.gov.uk";
 
-        CapitalFundingGuide = configuration.GetValue<string>("AppConfiguration:ExternalLinks") ??
+        CapitalFundingGuide = ConfigurationRetriever.TryGetValue(configuration, ConfigurationKey(nameof(CapitalFundingGuide))) ??
                               "https://www.gov.uk/guidance/capital-funding-guide/6-programme-management";
 
-        RightToSharedOwnershipInitialGuidanceForRegisteredProviders = configuration.GetValue<string>("AppConfiguration:ExternalLinks") ??
+        RightToSharedOwnershipInitialGuidanceForRegisteredProviders = ConfigurationRetriever.TryGetValue(configuration, ConfigurationKey(nameof(RightToSharedOwnershipInitialGuidanceForRegisteredProviders))) ??
                                                                       "https://www.gov.uk/government/publications/right-to-shared-ownership-initial-guidance-for-registered-providers/right-to-shared-ownership-initial-guidance-for-registered-providers";
 
-        MmcIntroduction = configuration.GetValue<string>("AppConfiguration:ExternalLinks") ??
+        MmcIntroduction = ConfigurationRetriever.TryGetValue(configuration, ConfigurationKey(nameof(MmcIntroduction))) ??
                           "https://www.buildoffsite.com/content/uploads/2019/04/MMC-I-Pad-base_GOVUK-FINAL_SECURE-1.pdf";
 
-        HomesEnglandPrivacyNotice = configuration.GetValue<string>("AppConfiguration:ExternalLinks") ??
+        HomesEnglandPrivacyNotice = ConfigurationRetriever.TryGetValue(configuration, ConfigurationKey(nameof(HomesEnglandPrivacyNotice))) ??
                                     "https://www.gov.uk/government/publications/homes-england-privacy-notice/homes-england-privacy-notice#help-to-build-equity-loan";
 
-        OpenGovernmentLicence = configuration.GetValue<string>("AppConfiguration:ExternalLinks") ??
+        OpenGovernmentLicence = ConfigurationRetriever.TryGetValue(configuration, ConfigurationKey(nameof(OpenGovernmentLicence))) ??
                                 "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/";
 
-        UkGovernmentLicensingFramework = configuration.GetValue<string>("AppConfiguration:ExternalLinks") ??
+        UkGovernmentLicensingFramework = ConfigurationRetriever.TryGetValue(configuration, ConfigurationKey(nameof(UkGovernmentLicensingFramework))) ??
                                          "https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/";
 
-        BuildingForHealthyLifeBrochure = configuration.GetValue<string>("AppConfiguration:ExternalLinks") ??
+        BuildingForHealthyLifeBrochure = ConfigurationRetriever.TryGetValue(configuration, ConfigurationKey(nameof(BuildingForHealthyLifeBrochure))) ??
                                          "https://www.designforhomes.org/wp-content/uploads/2020/11/BFL-2020-Brochure.pdf";
 
-        NationalDesignGuide = configuration.GetValue<string>("AppConfiguration:ExternalLinks") ??
+        NationalDesignGuide = ConfigurationRetriever.TryGetValue(configuration, ConfigurationKey(nameof(NationalDesignGuide))) ??
                               "https://www.gov.uk/government/publications/national-design-guide";
 
-        RegenerationFundingWithin21To26Ahp = configuration.GetValue<string>("AppConfiguration:ExternalLinks") ??
+        RegenerationFundingWithin21To26Ahp = ConfigurationRetriever.TryGetValue(configuration, ConfigurationKey(nameof(RegenerationFundingWithin21To26Ahp))) ??
                                              "https://www.gov.uk/government/news/turbo-boost-for-estate-regeneration-with-major-change-to-the-affordable-homes-programme";
 
-        PolicyStatementOnRentsForSocialHousing = configuration.GetValue<string>("AppConfiguration:ExternalLinks") ??
+        PolicyStatementOnRentsForSocialHousing = ConfigurationRetriever.TryGetValue(configuration, ConfigurationKey(nameof(PolicyStatementOnRentsForSocialHousing))) ??
                                                  "https://www.gov.uk/government/publications/direction-on-the-rent-standard-from-1-april-2020/policy-statement-on-rents-for-social-housing";
 
-        SelfBuildAndCustomHousebuilding = configuration.GetValue<string>("AppConfiguration:ExternalLinks") ??
+        SelfBuildAndCustomHousebuilding = ConfigurationRetriever.TryGetValue(configuration, ConfigurationKey(nameof(SelfBuildAndCustomHousebuilding))) ??
                                           "https://www.gov.uk/guidance/self-build-and-custom-housebuilding";
 
-        NationallyDescribedSpaceStandard = configuration.GetValue<string>("AppConfiguration:ExternalLinks") ??
+        NationallyDescribedSpaceStandard = ConfigurationRetriever.TryGetValue(configuration, ConfigurationKey(nameof(NationallyDescribedSpaceStandard))) ??
                                            "https://www.gov.uk/government/publications/technical-housing-standards-nationally-described-space-standard/technical-housing-standards-nationally-described-space-standard";
 
-        TheHousingOurAgeingPopulationPanelForInnovation = configuration.GetValue<string>("AppConfiguration:ExternalLinks") ??
+        TheHousingOurAgeingPopulationPanelForInnovation = ConfigurationRetriever.TryGetValue(configuration, ConfigurationKey(nameof(TheHousingOurAgeingPopulationPanelForInnovation))) ??
                                                           "https://www.housinglin.org.uk/Topics/type/The-Housing-our-Ageing-Population-Panel-for-Innovation-HAPPI-Report-2009/";
 
-        GovUk = configuration.GetValue<string>("AppConfiguration:ExternalLinks") ?? "https://www.gov.uk/";
+        GovUk = ConfigurationRetriever.TryGetValue(configuration, ConfigurationKey(nameof(GovUk))) ?? "https://www.gov.uk/";
     }
 
     public string BuildingRegulations { get; }
@@ -98,4 +98,6 @@ public class ExternalLinks : IExternalLinks
     public string TheHousingOurAgeingPopulationPanelForInnovation { get; }
 
     public string GovUk { get; }
+
+    public string ConfigurationKey(string propertyName) => $"{nameof(ExternalLinks)}:{propertyName}";
 }
