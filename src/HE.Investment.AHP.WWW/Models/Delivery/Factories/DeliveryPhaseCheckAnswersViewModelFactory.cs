@@ -227,13 +227,5 @@ public class DeliveryPhaseCheckAnswersViewModelFactory : IDeliveryPhaseCheckAnsw
         return action ?? string.Empty;
     }
 
-    private static IList<string>? FormatDate(DateDetails? date)
-    {
-        if (date == null)
-        {
-            return Array.Empty<string>();
-        }
-
-        return $"{date.Day}/{date.Month}/{date.Year}".ToOneElementList();
-    }
+    private static IList<string>? FormatDate(DateDetails? date) => DateHelper.DisplayAsUkFormatDate(date)?.ToOneElementList();
 }

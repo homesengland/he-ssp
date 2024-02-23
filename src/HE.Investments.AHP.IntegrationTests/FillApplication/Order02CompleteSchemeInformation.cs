@@ -7,6 +7,7 @@ using HE.Investments.AHP.IntegrationTests.FillApplication.Data;
 using HE.Investments.AHP.IntegrationTests.Framework;
 using HE.Investments.AHP.IntegrationTests.Pages;
 using HE.Investments.IntegrationTestsFramework;
+using HE.Investments.IntegrationTestsFramework.Assertions;
 using HE.Investments.Loans.Common.Extensions;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
@@ -143,15 +144,15 @@ public class Order02CompleteSchemeInformation : AhpIntegrationTest
             .HasSaveAndContinueButton(out var continueButton);
 
         // when
-        var schemaInformationSummary = checkAnswersPage.GetSummaryListItems();
-        schemaInformationSummary["Application name"].Should().Be(ApplicationData.ApplicationName);
-        schemaInformationSummary["Funding required"].Should().BePoundsOnly(SchemeInformationData.RequiredFunding);
-        schemaInformationSummary["Number of homes"].Should().Be(SchemeInformationData.HousesToDeliver.ToString(CultureInfo.InvariantCulture));
-        schemaInformationSummary["Affordability of Shared Ownership"].Should().Be(SchemeInformationData.Affordability);
-        schemaInformationSummary["Sales risk of Shared Ownership"].Should().Be(SchemeInformationData.SalesRisk);
-        schemaInformationSummary["Type and tenure of homes"].Should().Be(SchemeInformationData.HousingNeedsMeetingLocalPriorities);
-        schemaInformationSummary["Locally identified housing need"].Should().Be(SchemeInformationData.HousingNeedsMeetingLocalHousingNeed);
-        schemaInformationSummary["Local stakeholder discussions"].Should().Be(SchemeInformationData.StakeholderDiscussions);
+        var summary = checkAnswersPage.GetSummaryListItems();
+        summary.Should().ContainKey("Application name").WithValue(ApplicationData.ApplicationName);
+        summary.Should().ContainKey("Funding required").WhoseValue.Should().BePoundsOnly(SchemeInformationData.RequiredFunding);
+        summary.Should().ContainKey("Number of homes").WithValue(SchemeInformationData.HousesToDeliver.ToString(CultureInfo.InvariantCulture));
+        summary.Should().ContainKey("Affordability of Shared Ownership").WithValue(SchemeInformationData.Affordability);
+        summary.Should().ContainKey("Sales risk of Shared Ownership").WithValue(SchemeInformationData.SalesRisk);
+        summary.Should().ContainKey("Type and tenure of homes").WithValue(SchemeInformationData.HousingNeedsMeetingLocalPriorities);
+        summary.Should().ContainKey("Locally identified housing need").WithValue(SchemeInformationData.HousingNeedsMeetingLocalHousingNeed);
+        summary.Should().ContainKey("Local stakeholder discussions").WithValue(SchemeInformationData.StakeholderDiscussions);
 
         var taskListPage = await TestClient.SubmitButton(
             continueButton,

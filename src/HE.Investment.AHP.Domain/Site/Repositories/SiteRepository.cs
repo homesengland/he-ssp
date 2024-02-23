@@ -5,7 +5,6 @@ using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investment.AHP.Domain.Site.Entities;
 using HE.Investment.AHP.Domain.Site.ValueObjects;
-using HE.Investment.AHP.Domain.Site.ValueObjects.Factories;
 using HE.Investment.AHP.Domain.Site.ValueObjects.StrategicSite;
 using HE.Investment.AHP.Domain.Site.ValueObjects.TenderingStatus;
 using HE.Investments.Account.Shared.User;
@@ -41,7 +40,7 @@ public class SiteRepository : ISiteRepository
     {
         if (siteId.IsNew)
         {
-            return Task.FromResult(new SiteEntity());
+            return Task.FromResult(SiteEntity.NewSite());
         }
 
         return Task.FromResult(MockedSites.FirstOrDefault(x => x.Id == siteId) ?? throw new NotFoundException("Site not found", siteId));
@@ -52,7 +51,7 @@ public class SiteRepository : ISiteRepository
         if (site.Id.IsNew)
         {
             site.Id = new SiteId((MockedSites.Count + 1).ToString(CultureInfo.InvariantCulture));
-            MockedSites.Add(site);
+            MockedSites.Insert(0, site);
         }
         else
         {
@@ -60,7 +59,7 @@ public class SiteRepository : ISiteRepository
                 ?? throw new NotFoundException("Site not found", site.Id);
 
             MockedSites.Remove(existingSite);
-            MockedSites.Add(site);
+            MockedSites.Insert(0, site);
         }
 
         return Task.FromResult(site.Id);
@@ -70,26 +69,26 @@ public class SiteRepository : ISiteRepository
     {
         return new List<SiteEntity>
         {
-            new(new SiteId("1"), new SiteName("Mocked Site 1"), new Section106(), PlanningDetailsFactory.CreateEmpty(), new NationalDesignGuidePriorities(), null, new LandAcquisitionStatus(), new TenderingStatusDetails(), new StrategicSiteDetails(true, new StrategicSiteName("nazwa strony")), new SiteTypeDetails(SiteType.Brownfield, true, false), new SiteProcurements(), new LocalAuthority(new LocalAuthorityId("1"), "local auth")),
-            new(new SiteId("2"), new SiteName("Mocked Site Carquinez"), new Section106(), PlanningDetailsFactory.CreateEmpty(), new NationalDesignGuidePriorities(), null, new LandAcquisitionStatus(), new TenderingStatusDetails(), new StrategicSiteDetails(), new SiteTypeDetails(), new SiteProcurements()),
-            new(new SiteId("3"), new SiteName("Mocked Site JJ"), new Section106(), PlanningDetailsFactory.CreateEmpty(), new NationalDesignGuidePriorities(), null, new LandAcquisitionStatus(), new TenderingStatusDetails(SiteTenderingStatus.TenderForWorksContract), new StrategicSiteDetails(), new SiteTypeDetails(), new SiteProcurements()),
-            new(new SiteId("4"), new SiteName("Mocked Site Antonios"), new Section106(), PlanningDetailsFactory.CreateEmpty(), new NationalDesignGuidePriorities(), null, new LandAcquisitionStatus(), new TenderingStatusDetails(), new StrategicSiteDetails(), new SiteTypeDetails(), new SiteProcurements(), new LocalAuthority(new LocalAuthorityId("4"), "local auth")),
-            new(new SiteId("5"), new SiteName("Mocked Site 5"), new Section106(), PlanningDetailsFactory.CreateEmpty(), new NationalDesignGuidePriorities(), null, new LandAcquisitionStatus(), new TenderingStatusDetails(), new StrategicSiteDetails(), new SiteTypeDetails(), new SiteProcurements()),
-            new(new SiteId("6"), new SiteName("Mocked Site Dawidex"), new Section106(), PlanningDetailsFactory.CreateEmpty(), new NationalDesignGuidePriorities(), null, new LandAcquisitionStatus(), new TenderingStatusDetails(), new StrategicSiteDetails(), new SiteTypeDetails(), new SiteProcurements(), new LocalAuthority(new LocalAuthorityId("6"), "local auth")),
-            new(new SiteId("7"), new SiteName("Mocked Site 7"), new Section106(), PlanningDetailsFactory.CreateEmpty(), new NationalDesignGuidePriorities(), null, new LandAcquisitionStatus(), new TenderingStatusDetails(), new StrategicSiteDetails(), new SiteTypeDetails(SiteType.Greenfield), new SiteProcurements()),
-            new(new SiteId("8"), new SiteName("Mocked Site Rafus"), new Section106(true, false, null, null, null, null), PlanningDetailsFactory.CreateEmpty(), new NationalDesignGuidePriorities(), null, new LandAcquisitionStatus(SiteLandAcquisitionStatus.ConditionalAcquisition), new TenderingStatusDetails(), new StrategicSiteDetails(), new SiteTypeDetails(), new SiteProcurements()),
-            new(new SiteId("9"), new SiteName("Mocked Site 9"), new Section106(), PlanningDetailsFactory.CreateEmpty(), new NationalDesignGuidePriorities(), null, new LandAcquisitionStatus(), new TenderingStatusDetails(), new StrategicSiteDetails(), new SiteTypeDetails(), new SiteProcurements()),
-            new(new SiteId("10"), new SiteName("Mocked Site 2 10"), new Section106(), PlanningDetailsFactory.CreateEmpty(), new NationalDesignGuidePriorities(), null, new LandAcquisitionStatus(), new TenderingStatusDetails(), new StrategicSiteDetails(), new SiteTypeDetails(), new SiteProcurements()),
-            new(new SiteId("11"), new SiteName("Mocked Site 2 1"), new Section106(), PlanningDetailsFactory.CreateEmpty(), new NationalDesignGuidePriorities(), null, new LandAcquisitionStatus(), new TenderingStatusDetails(), new StrategicSiteDetails(), new SiteTypeDetails(), new SiteProcurements()),
-            new(new SiteId("12"), new SiteName("Mocked Site 2 Carquinez"), new Section106(), PlanningDetailsFactory.CreateEmpty(), new NationalDesignGuidePriorities(), null, new LandAcquisitionStatus(), new TenderingStatusDetails(), new StrategicSiteDetails(), new SiteTypeDetails(), new SiteProcurements()),
-            new(new SiteId("13"), new SiteName("Mocked Site 2 JJ"), new Section106(), PlanningDetailsFactory.CreateEmpty(), new NationalDesignGuidePriorities(), null, new LandAcquisitionStatus(), new TenderingStatusDetails(SiteTenderingStatus.ConditionalWorksContract), new StrategicSiteDetails(), new SiteTypeDetails(), new SiteProcurements()),
-            new(new SiteId("14"), new SiteName("Mocked Site 2 Antonios"), new Section106(), PlanningDetailsFactory.CreateEmpty(), new NationalDesignGuidePriorities(), null, new LandAcquisitionStatus(), new TenderingStatusDetails(), new StrategicSiteDetails(), new SiteTypeDetails(), new SiteProcurements(), new LocalAuthority(new LocalAuthorityId("14"), "local auth")),
-            new(new SiteId("15"), new SiteName("Mocked Site 2 5"), new Section106(), PlanningDetailsFactory.CreateEmpty(), new NationalDesignGuidePriorities(), null, new LandAcquisitionStatus(), new TenderingStatusDetails(), new StrategicSiteDetails(), new SiteTypeDetails(), new SiteProcurements()),
-            new(new SiteId("16"), new SiteName("Mocked Site 2 Dawidex"), new Section106(), PlanningDetailsFactory.CreateEmpty(), new NationalDesignGuidePriorities(), null, new LandAcquisitionStatus(), new TenderingStatusDetails(), new StrategicSiteDetails(), new SiteTypeDetails(), new SiteProcurements()),
-            new(new SiteId("17"), new SiteName("Mocked Site 2 7"), new Section106(), PlanningDetailsFactory.CreateEmpty(), new NationalDesignGuidePriorities(), null, new LandAcquisitionStatus(), new TenderingStatusDetails(), new StrategicSiteDetails(), new SiteTypeDetails(), new SiteProcurements()),
-            new(new SiteId("18"), new SiteName("Mocked Site 2 Rafus"), new Section106(true, false, null, null, null, null), PlanningDetailsFactory.CreateEmpty(), new NationalDesignGuidePriorities(), null, new LandAcquisitionStatus(), new TenderingStatusDetails(), new StrategicSiteDetails(), new SiteTypeDetails(), new SiteProcurements()),
-            new(new SiteId("19"), new SiteName("Mocked Site 2 9"), new Section106(), PlanningDetailsFactory.CreateEmpty(), new NationalDesignGuidePriorities(), null, new LandAcquisitionStatus(), new TenderingStatusDetails(), new StrategicSiteDetails(), new SiteTypeDetails(), new SiteProcurements(), new LocalAuthority(new LocalAuthorityId("19"), "local auth")),
-            new(new SiteId("20"), new SiteName("Mocked Site 2 10"), new Section106(), PlanningDetailsFactory.CreateEmpty(), new NationalDesignGuidePriorities(), null, new LandAcquisitionStatus(), new TenderingStatusDetails(), new StrategicSiteDetails(), new SiteTypeDetails(), new SiteProcurements()),
+            new(new SiteId("1"), new SiteName("Mocked Site 1"), SiteStatus.Completed, strategicSiteDetails: new StrategicSiteDetails(true, new StrategicSiteName("nazwa strony")), siteTypeDetails: new SiteTypeDetails(SiteType.Brownfield, true, false), localAuthority: new LocalAuthority(new LocalAuthorityId("1"), "local auth")),
+            new(new SiteId("2"), new SiteName("Mocked Site Carquinez")),
+            new(new SiteId("3"), new SiteName("Mocked Site JJ"), tenderingStatusDetails: new TenderingStatusDetails(SiteTenderingStatus.TenderForWorksContract)),
+            new(new SiteId("4"), new SiteName("Mocked Site Antonios"), localAuthority: new LocalAuthority(new LocalAuthorityId("4"), "local auth")),
+            new(new SiteId("5"), new SiteName("Mocked Site 5")),
+            new(new SiteId("6"), new SiteName("Mocked Site Dawidex"), localAuthority: new LocalAuthority(new LocalAuthorityId("6"), "local auth")),
+            new(new SiteId("7"), new SiteName("Mocked Site 7"), siteTypeDetails: new SiteTypeDetails(SiteType.Greenfield)),
+            new(new SiteId("8"), new SiteName("Mocked Site Rafus"), section106: new Section106(true, false), landAcquisitionStatus: new LandAcquisitionStatus(SiteLandAcquisitionStatus.ConditionalAcquisition)),
+            new(new SiteId("9"), new SiteName("Mocked Site 9")),
+            new(new SiteId("10"), new SiteName("Mocked Site 2 10")),
+            new(new SiteId("11"), new SiteName("Mocked Site 2 1")),
+            new(new SiteId("12"), new SiteName("Mocked Site 2 Carquinez")),
+            new(new SiteId("13"), new SiteName("Mocked Site 2 JJ"), tenderingStatusDetails: new TenderingStatusDetails(SiteTenderingStatus.ConditionalWorksContract)),
+            new(new SiteId("14"), new SiteName("Mocked Site 2 Antonios"), localAuthority: new LocalAuthority(new LocalAuthorityId("14"), "local auth")),
+            new(new SiteId("15"), new SiteName("Mocked Site 2 5")),
+            new(new SiteId("16"), new SiteName("Mocked Site 2 Dawidex")),
+            new(new SiteId("17"), new SiteName("Mocked Site 2 7")),
+            new(new SiteId("18"), new SiteName("Mocked Site 2 Rafus"), section106: new Section106(true, false)),
+            new(new SiteId("19"), new SiteName("Mocked Site 2 9"), localAuthority: new LocalAuthority(new LocalAuthorityId("19"), "local auth")),
+            new(new SiteId("20"), new SiteName("Mocked Site 2 10")),
         };
     }
 }
