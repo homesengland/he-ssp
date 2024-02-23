@@ -20,8 +20,8 @@
 }
 
 <div class="govuk-grid-column-full govuk-!-margin-top-6">
-    <partial name="~/Partials/Errors/_ErrorSummaryPartial.cshtml" />
-    <partial name="~/Partials/_Notification.cshtml" />
+    <partial name="~/Partials/Errors/_ErrorSummaryPartial.cshtml"/>
+    <partial name="~/Partials/_Notification.cshtml"/>
 
     <span class="govuk-caption-l govuk-!-margin-top-1">@Model.ApplicationName</span>
     <gds-h1>@HomeTypesPageTitles.HomeTypes</gds-h1>
@@ -37,25 +37,25 @@
         @if (Model.HomeTypes.Any())
         {
             <table class="govuk-table govuk-!-margin-bottom-0" data-testid="home-types-table">
-                <thead class="govuk-table__head">
+            <thead class="govuk-table__head">
+                <tr class="govuk-table__row">
+                    <th scope="col" class="govuk-table__header">Home type name</th>
+                    <th scope="col" class="govuk-table__header">Number of homes</th>
+                    <th scope="col" class="govuk-table__header">Type of housing</th>
+                    <td class="govuk-table__header" />
+                </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+
+                @for (int i = 0; i < Model.HomeTypes.Count; i++)
+                {
+                    var index = i;
+                    @Html.HiddenFor(model => Model.HomeTypes[index].HomeTypeId)
+                    @Html.HiddenFor(model => Model.HomeTypes[index].HomeTypeName)
+                    @Html.HiddenFor(model => Model.HomeTypes[index].HousingType)
+                    @Html.HiddenFor(model => Model.HomeTypes[index].NumberOfHomes)
+
                     <tr class="govuk-table__row">
-                        <th scope="col" class="govuk-table__header">Home type name</th>
-                        <th scope="col" class="govuk-table__header">Number of homes</th>
-                        <th scope="col" class="govuk-table__header">Type of housing</th>
-                        <td class="govuk-table__header" />
-                    </tr>
-                </thead>
-                <tbody class="govuk-table__body">
-
-                    @for (int i = 0; i < Model.HomeTypes.Count; i++)
-                    {
-                        var index = i;
-                        @Html.HiddenFor(model => Model.HomeTypes[index].HomeTypeId)
-                        @Html.HiddenFor(model => Model.HomeTypes[index].HomeTypeName)
-                        @Html.HiddenFor(model => Model.HomeTypes[index].HousingType)
-                        @Html.HiddenFor(model => Model.HomeTypes[index].NumberOfHomes)
-
-                     <tr class="govuk-table__row">
                         <td class="govuk-table__cell">
                             <gds-link class="govuk-link--no-visited-state"
                                       data-testid="home-type-@Model.HomeTypes[index].HomeTypeId"
@@ -81,7 +81,7 @@
                                 </gds-link>
                             </td>
                         </tr>
-                    }
+                }
                     <tr>
                         <td class="govuk-!-padding-top-6" colspan="4">
                             <div class="govuk-details__text">
