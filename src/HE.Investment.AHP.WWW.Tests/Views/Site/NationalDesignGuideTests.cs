@@ -1,10 +1,7 @@
 using HE.Investment.AHP.Contract.Site.Enums;
-using HE.Investment.AHP.WWW.Config;
 using HE.Investment.AHP.WWW.Models.Site;
 using HE.Investment.AHP.WWW.Views.Site.Const;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.Extensions.DependencyInjection;
-using Moq;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.Site;
 

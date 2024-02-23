@@ -1,9 +1,7 @@
 using AngleSharp.Html.Dom;
-using HE.Investment.AHP.WWW.Config;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
-using Moq;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.HomeTypes;
 

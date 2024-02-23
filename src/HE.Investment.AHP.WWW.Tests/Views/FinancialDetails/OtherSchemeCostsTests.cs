@@ -1,10 +1,7 @@
 using AngleSharp.Html.Dom;
 using HE.Investment.AHP.Contract.FinancialDetails.Constants;
-using HE.Investment.AHP.WWW.Config;
 using HE.Investment.AHP.WWW.Models.FinancialDetails;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.Extensions.DependencyInjection;
-using Moq;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.FinancialDetails;
 
