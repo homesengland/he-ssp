@@ -7,7 +7,7 @@ using Moq;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.Site;
 
-public class BuildingForHealthyLifeTests : ViewTestBase
+public class BuildingForHealthyLifeTests : AhpViewTestBase
 {
     private readonly string _viewPath = "/Views/Site/BuildingForHealthyLife.cshtml";
 
@@ -17,10 +17,7 @@ public class BuildingForHealthyLifeTests : ViewTestBase
         // given & when
         var siteName = "Test Site 33";
         var site = new SiteModel() { Name = siteName };
-        var document = await Render(_viewPath, site, mockDependencies: services =>
-        {
-            services.AddTransient(_ => new Mock<IExternalLinks>().Object);
-        });
+        var document = await Render(_viewPath, site);
 
         // then
         document
@@ -50,10 +47,7 @@ public class BuildingForHealthyLifeTests : ViewTestBase
         modelState.AddModelError(nameof(SiteModel.BuildingForHealthyLife), errorMessage);
 
         // when
-        var document = await Render(_viewPath, site, modelStateDictionary: modelState, mockDependencies: services =>
-        {
-            services.AddTransient(_ => new Mock<IExternalLinks>().Object);
-        });
+        var document = await Render(_viewPath, site, modelStateDictionary: modelState);
 
         // then
         document

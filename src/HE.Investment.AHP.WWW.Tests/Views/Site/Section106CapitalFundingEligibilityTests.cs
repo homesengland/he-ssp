@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.Site;
 
-public class Section106CapitalFundingEligibilityTests : ViewTestBase
+public class Section106CapitalFundingEligibilityTests : AhpViewTestBase
 {
     private readonly string _viewPath = "/Views/Site/Section106CapitalFundingEligibility.cshtml";
     private readonly string _siteId = Guid.NewGuid().ToString();

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Routing;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.DeliveryPhase;
 
-public class RemoveDeliveryPhaseConfirmationTests : ViewTestBase
+public class RemoveDeliveryPhaseConfirmationTests : AhpViewTestBase
 {
     private const string ViewPath = "/Views/DeliveryPhase/RemoveDeliveryPhaseConfirmation.cshtml";
 

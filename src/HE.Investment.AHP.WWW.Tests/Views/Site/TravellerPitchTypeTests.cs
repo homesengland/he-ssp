@@ -4,7 +4,7 @@ using HE.Investment.AHP.WWW.Views.Site.Const;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.Site;
 
-public class TravellerPitchTypeTests : ViewTestBase
+public class TravellerPitchTypeTests : AhpViewTestBase
 {
     private readonly string _viewPath = "/Views/Site/TravellerPitchType.cshtml";
 

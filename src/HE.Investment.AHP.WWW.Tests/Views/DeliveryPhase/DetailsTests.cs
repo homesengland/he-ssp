@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Routing;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.DeliveryPhase;
 
-public class DetailsTests : ViewTestBase
+public class DetailsTests : AhpViewTestBase
 {
     private readonly string _viewPath = "/Views/DeliveryPhase/Details.cshtml";
 

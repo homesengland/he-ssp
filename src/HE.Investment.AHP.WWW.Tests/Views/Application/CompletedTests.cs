@@ -4,7 +4,7 @@ using HE.Investment.AHP.WWW.Views.Application;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.Application;
 
-public class CompletedTests : ViewTestBase
+public class CompletedTests : AhpViewTestBase
 {
     private readonly string _viewPath = "/Views/Application/Completed.cshtml";
 

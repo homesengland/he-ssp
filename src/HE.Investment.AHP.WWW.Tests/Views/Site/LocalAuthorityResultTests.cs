@@ -4,7 +4,7 @@ using HE.Investments.Common.Contract.Pagination;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.Site;
 
-public class LocalAuthorityResultTests : ViewTestBase
+public class LocalAuthorityResultTests : AhpViewTestBase
 {
     private readonly string _viewPath = "/Views/Site/LocalAuthorityResult.cshtml";
 

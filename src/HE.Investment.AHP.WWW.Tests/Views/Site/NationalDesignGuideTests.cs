@@ -8,7 +8,7 @@ using Moq;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.Site;
 
-public class NationalDesignGuideTests : ViewTestBase
+public class NationalDesignGuideTests : AhpViewTestBase
 {
     private readonly string _viewPath = "/Views/Site/NationalDesignGuide.cshtml";
 
@@ -23,10 +23,7 @@ public class NationalDesignGuideTests : ViewTestBase
             SiteName = siteName,
             DesignPriorities = new List<NationalDesignGuidePriority>(),
         };
-        var document = await Render(_viewPath, site, mockDependencies: services =>
-        {
-            services.AddTransient(_ => new Mock<IExternalLinks>().Object);
-        });
+        var document = await Render(_viewPath, site);
 
         // then
         document
@@ -52,10 +49,7 @@ public class NationalDesignGuideTests : ViewTestBase
         modelState.AddModelError(nameof(NationalDesignGuidePrioritiesModel.DesignPriorities), errorMessage);
 
         // when
-        var document = await Render(_viewPath, site, modelStateDictionary: modelState, mockDependencies: services =>
-        {
-            services.AddTransient(_ => new Mock<IExternalLinks>().Object);
-        });
+        var document = await Render(_viewPath, site, modelStateDictionary: modelState);
 
         // then
         document

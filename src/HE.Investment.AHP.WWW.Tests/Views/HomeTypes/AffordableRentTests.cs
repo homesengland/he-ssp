@@ -39,10 +39,7 @@ public class AffordableRentTests : HomeTypesTestBase
         modelState.AddModelError(nameof(AffordableRentModel.TargetRentExceedMarketRent), ErrorMessage);
 
         // when
-        var document = await RenderHomeTypePage(ViewPath, Model, modelStateDictionary: modelState, mockDependencies: services =>
-        {
-            services.AddTransient(_ => new Mock<IExternalLinks>().Object);
-        });
+        var document = await RenderHomeTypePage(ViewPath, Model, modelStateDictionary: modelState);
 
         // then
         AssertView(document);

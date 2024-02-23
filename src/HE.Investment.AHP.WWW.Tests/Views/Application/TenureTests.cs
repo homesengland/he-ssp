@@ -10,7 +10,7 @@ using Moq;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.Application;
 
-public class TenureTests : ViewTestBase
+public class TenureTests : AhpViewTestBase
 {
     private readonly ApplicationBasicModel _model = new("1", "test name", Tenure.Undefined);
     private readonly string _viewPath = "/Views/Application/Tenure.cshtml";
@@ -20,10 +20,7 @@ public class TenureTests : ViewTestBase
     public async Task ShouldDisplayView()
     {
         // given & when
-        var document = await Render(_viewPath, _model, routeData: _routeData, mockDependencies: services =>
-        {
-            services.AddTransient(_ => new Mock<IExternalLinks>().Object);
-        });
+        var document = await Render(_viewPath, _model, routeData: _routeData);
 
         // then
         AssertView(document, _model);
@@ -38,10 +35,7 @@ public class TenureTests : ViewTestBase
         modelState.AddModelError(nameof(ApplicationBasicModel.Tenure), errorMessage);
 
         // when
-        var document = await Render(_viewPath, _model, modelStateDictionary: modelState, routeData: _routeData, mockDependencies: services =>
-        {
-            services.AddTransient(_ => new Mock<IExternalLinks>().Object);
-        });
+        var document = await Render(_viewPath, _model, modelStateDictionary: modelState, routeData: _routeData);
 
         // then
         AssertView(document, _model, errorMessage);
