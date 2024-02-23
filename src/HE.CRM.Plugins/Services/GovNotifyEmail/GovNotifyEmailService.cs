@@ -221,9 +221,6 @@ namespace HE.CRM.Plugins.Services.GovNotifyEmail
                 this.TracingService.Trace("EXTERNAL_APPLICATION_CASHFLOW_REQUESTED");
                 var emailTemplate = _notificationSettingRepositoryAdmin.GetTemplateViaTypeName("EXTERNAL_APPLICATION_CASHFLOW_REQUESTED");
                 var loanContactData = _contactRepositoryAdmin.GetById(loanApplication.invln_Contact.Id, nameof(Contact.EMailAddress1).ToLower(), nameof(SystemUser.FullName).ToLower());
-                var programme_name = "Levelling Up Home Building Fund";
-                var subject = emailTemplate?.invln_subject;
-                subject = subject.Replace("programme_name", programme_name);
 
                 var govNotParams = new EXTERNAL_APPLICATION_CASHFLOW_REQUESTED()
                 {
@@ -232,8 +229,7 @@ namespace HE.CRM.Plugins.Services.GovNotifyEmail
                     {
                         recipientEmail = loanContactData.EMailAddress1,
                         username = loanContactData.FullName ?? "NO NAME",
-                        subject = subject,
-                        programme_name = programme_name,
+                        subject = emailTemplate?.invln_subject,
                         applicationId = loanApplication.invln_Name
                     }
                 };

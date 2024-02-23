@@ -18,7 +18,6 @@ namespace HE.CRM.Model.CrmSerialiedParameters
         public string recipientEmail { get; set; }
         // Additional
         public string username { get; set; }
-        public string programme_name { get; set; }
         public string applicationId { get; set; }
     }
 }
