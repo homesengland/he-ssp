@@ -115,8 +115,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     [HttpPost("finish")]
     public async Task<IActionResult> FinishHomeTypes([FromRoute] string applicationId, FinishHomeTypeModel model, CancellationToken cancellationToken)
     {
-        var scheme = await _mediator.Send(new GetApplicationSchemeQuery(AhpApplicationId.From(applicationId)), cancellationToken);
-
         var result = await _mediator.Send(new SaveFinishHomeTypesAnswerCommand(AhpApplicationId.From(applicationId), model.FinishAnswer), cancellationToken);
         if (result.HasValidationErrors)
         {
