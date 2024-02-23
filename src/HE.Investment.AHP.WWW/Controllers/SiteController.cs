@@ -106,9 +106,8 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     }
 
     [HttpGet("name")]
-    [HttpGet("{siteId}/name")]
     [WorkflowState(SiteWorkflowState.Name)]
-    public async Task<IActionResult> Name(string? siteId, CancellationToken cancellationToken)
+    public async Task<IActionResult> Name([FromQuery] string? siteId, CancellationToken cancellationToken)
     {
         SiteModel siteModel = new();
         if (siteId.IsProvided())
@@ -120,9 +119,8 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     }
 
     [HttpPost("name")]
-    [HttpPost("{siteId}/name")]
     [WorkflowState(SiteWorkflowState.Name)]
-    public async Task<IActionResult> NamePost(string? siteId, SiteModel model, CancellationToken cancellationToken)
+    public async Task<IActionResult> NamePost([FromQuery] string? siteId, SiteModel model, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new ProvideNameCommand(siteId ?? model.Id, model.Name), cancellationToken);
 
