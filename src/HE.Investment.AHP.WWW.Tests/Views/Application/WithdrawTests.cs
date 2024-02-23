@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.Application;
 
-public class WithdrawTests : ViewTestBase
+public class WithdrawTests : AhpViewTestBase
 {
     private readonly string _viewPath = "/Views/Application/Withdraw.cshtml";
     private readonly ChangeApplicationStatusModel _model = new(Guid.NewGuid(), "my application");

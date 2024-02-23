@@ -1,13 +1,11 @@
 using AngleSharp.Html.Dom;
-using HE.Investments.Common.WWWTestsFramework;
-
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.HomeTypes;
 
-public abstract class HomeTypesTestBase : ViewTestBase
+public abstract class HomeTypesTestBase : AhpViewTestBase
 {
     protected const string ErrorMessage = "Some error message";
 
@@ -26,10 +24,7 @@ public abstract class HomeTypesTestBase : ViewTestBase
             viewBagOrViewData,
             modelStateDictionary,
             new RouteData(
-                new RouteValueDictionary
-                {
-                    { "applicationId", "123" }, { "homeTypeId", "456" },
-                }));
+                new RouteValueDictionary { { "applicationId", "123" }, { "homeTypeId", "456" }, }));
     }
 
     protected void AssertErrors(IHtmlDocument document, string fieldName, bool hasError)

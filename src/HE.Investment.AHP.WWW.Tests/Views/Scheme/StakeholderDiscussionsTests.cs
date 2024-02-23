@@ -1,13 +1,12 @@
 using AngleSharp.Html.Dom;
 using HE.Investment.AHP.WWW.Models.Scheme;
-using HE.Investments.Common.WWWTestsFramework;
 
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Routing;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.Scheme;
 
-public class StakeholderDiscussionsTests : ViewTestBase
+public class StakeholderDiscussionsTests : AhpViewTestBase
 {
     private const string ViewPath = "/Views/Scheme/StakeholderDiscussions.cshtml";
     private const string StakeholderDiscussionsReportError = "Test error";

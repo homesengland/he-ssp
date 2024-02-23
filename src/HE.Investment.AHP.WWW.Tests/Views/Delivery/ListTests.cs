@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Routing;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.Delivery;
 
-public class ListTests : ViewTestBase
+public class ListTests : AhpViewTestBase
 {
     private const string ViewPath = "/Views/Delivery/List.cshtml";
 

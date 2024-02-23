@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.Site;
 
-public class NumberOfGreenLightsTests : ViewTestBase
+public class NumberOfGreenLightsTests : AhpViewTestBase
 {
     private readonly string _viewPath = "/Views/Site/NumberOfGreenLights.cshtml";
 

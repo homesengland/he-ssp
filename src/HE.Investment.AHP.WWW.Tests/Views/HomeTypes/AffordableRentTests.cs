@@ -1,6 +1,5 @@
 using AngleSharp.Html.Dom;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
-
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.HomeTypes;

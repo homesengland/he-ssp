@@ -9,7 +9,7 @@ using HE.Investments.Common.Messages;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.Application;
 
-public class ApplicationListTests : ViewTestBase
+public class ApplicationListTests : AhpViewTestBase
 {
     private readonly string _viewPath = "/Views/Application/Index.cshtml";
 

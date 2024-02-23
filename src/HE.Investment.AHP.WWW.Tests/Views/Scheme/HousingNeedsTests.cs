@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Routing;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.Scheme;
 
-public class HousingNeedsTests : ViewTestBase
+public class HousingNeedsTests : AhpViewTestBase
 {
     private const string ViewPath = "/Views/Scheme/HousingNeeds.cshtml";
     private const string MeetingLocalPrioritiesError = "Test error";
