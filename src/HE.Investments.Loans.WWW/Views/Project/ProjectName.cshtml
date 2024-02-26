@@ -18,7 +18,7 @@
     <partial name="_ErrorSummaryPartial" model="null" />
     <form asp-controller="Project" asp-action="ProjectName" asp-route-id="@Model.ApplicationId" asp-route-projectId="@Model.ProjectId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
             <gds-div-form-group invalid="inputInvalid">
-                <vc:page-header title="Add a name for this project"/>
+                <vc:page-header title="@ProjectPageTitles.Name"/>
 
                 <gds-div-hint>
                     Each project needs a unique name.

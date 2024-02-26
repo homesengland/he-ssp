@@ -4,13 +4,14 @@
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Lists
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Paragraphs
+@using HE.Investments.Loans.WWW.Views.LoanApplicationV2.Consts
 @model HE.Investments.Loans.BusinessLogic.ViewModel.LoanApplicationViewModel
 
 <gds-div-grid-column-two-thirds>
     <form asp-controller="LoanApplicationV2" asp-action="AboutLoanPost" asp-method="post" novalidate>
         <gds-back-link href="@Url.Action("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.AboutLoan})" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
 
-        <vc:page-header title="Before you apply for this loan"/>
+        <vc:page-header title="@LoanApplicationPageTitles.AboutLoan"/>
 
         <gds-p>Before you apply, you must confirm you have read and agree with the following information.</gds-p>
 

@@ -4,6 +4,7 @@
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Lists
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Paragraphs
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Buttons
+@using HE.Investments.Loans.WWW.Views.CompanyStructureV2.Consts
 @model HE.Investments.Loans.Contract.Application.ValueObjects.LoanApplicationId
 
 <gds-div-grid-column-two-thirds>
@@ -11,7 +12,7 @@
         <gds-back-link href="@Url.Action("TaskList","LoanApplicationV2", new {id = Model.Value})" text="Back to application" class="govuk-!-margin-bottom-8">
         </gds-back-link>
 
-        <vc:page-header title="Organisation structure and residential building experience"/>
+        <vc:page-header title="@CompanyStructurePageTitles.Start"/>
 
         <div class="govuk-!-padding-bottom-8">
             <gds-p>In this section, you’ll need to tell us:</gds-p>

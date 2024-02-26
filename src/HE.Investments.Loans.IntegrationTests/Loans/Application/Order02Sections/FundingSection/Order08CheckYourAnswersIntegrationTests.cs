@@ -83,7 +83,7 @@ public class Order08CheckYourAnswersIntegrationTests : IntegrationTest
         // then
         grossDevelopmentValuePage
             .UrlWithoutQueryEndsWith(FundingPageUrls.GrossDevelopmentValueSuffix)
-            .HasLabelTitle(FundingPageTitles.GrossDevelopmentValue);
+            .HasTitle(FundingPageTitles.GrossDevelopmentValue);
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
