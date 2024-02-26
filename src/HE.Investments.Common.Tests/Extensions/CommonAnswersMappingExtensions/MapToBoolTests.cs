@@ -1,26 +1,25 @@
 using FluentAssertions;
 using HE.Investments.Common.Contract.Constants;
 using HE.Investments.Common.WWW.Extensions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace HE.Investments.Common.Tests.Extensions.CommonAnswersMappingExtensions;
 
-[TestClass]
 public class MapToBoolTests
 {
-    [TestMethod]
+    [Fact]
     public void MapYesToTrue()
     {
         CommonResponse.Yes.MapToBool().Should().BeTrue();
     }
 
-    [TestMethod]
+    [Fact]
     public void MapNoToFalse()
     {
         CommonResponse.No.MapToBool().Should().BeFalse();
     }
 
-    [TestMethod]
+    [Fact]
     public void MapAnyOtherStringToNull()
     {
         "AnyString".MapToBool().Should().BeNull();

@@ -19,11 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\He.AspNetCore.Mvc.Gds.Components\He.AspNetCore.Mvc.Gds.Components.csproj" />
-    <ProjectReference Include="..\HE.Investments.Common\HE.Investments.Common.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <EmbeddedResource Include="Components\CheckboxListContent\CheckboxListContent.cshtml" />
     <EmbeddedResource Include="Components\ApplicationStatusTagComponent\ApplicationStatusTagComponent.cshtml" />
     <EmbeddedResource Include="Components\CheckboxListWithOr\CheckboxListWithOr.cshtml" />
@@ -70,6 +65,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Properties\" />
+    <ProjectReference Include="..\HE.Investments.Common.Contract\HE.Investments.Common.Contract.csproj" />
+    <ProjectReference Include="..\HE.Investments.Common\HE.Investments.Common.csproj" />
   </ItemGroup>
+
 </Project>
