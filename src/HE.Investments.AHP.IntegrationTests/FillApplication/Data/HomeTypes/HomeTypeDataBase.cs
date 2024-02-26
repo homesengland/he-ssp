@@ -1,6 +1,7 @@
 using System.Globalization;
 using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
+using HE.Investments.AHP.IntegrationTests.Extensions;
 
 namespace HE.Investments.AHP.IntegrationTests.FillApplication.Data.HomeTypes;
 
@@ -129,7 +130,7 @@ public abstract class HomeTypeDataBase<THomeTypeData> : INestedItemData
 
     public THomeTypeData GenerateExemptionJustification()
     {
-        ExemptionJustification = GenerateTextField(nameof(ExemptionJustification));
+        ExemptionJustification = nameof(ExemptionJustification).WithTimestampPrefix();
         return HomeType;
     }
 
@@ -144,8 +145,6 @@ public abstract class HomeTypeDataBase<THomeTypeData> : INestedItemData
         ModernMethodsConstructionCategory = ModernMethodsConstructionCategoriesType.Category1PreManufacturing3DPrimaryStructuralSystems;
         return HomeType;
     }
-
-    protected static string GenerateTextField(string fieldName) => $"{GenerateDateString()}: {fieldName}";
 
     protected static string GenerateDateString() => DateTime.UtcNow.ToString(CultureInfo.InvariantCulture);
 }

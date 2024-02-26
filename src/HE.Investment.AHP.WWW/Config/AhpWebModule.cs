@@ -38,6 +38,7 @@ public static class AhpWebModule
 
         service.AddScoped<ISchemeProvider, CachedSchemeProvider>();
         service.AddScoped<IDeliveryPhaseProvider, CachedDeliveryPhaseProvider>();
+        service.AddSingleton<IExternalLinks, ExternalLinks>();
     }
 
     private static void AddConfiguration(IServiceCollection services, IConfiguration configuration)

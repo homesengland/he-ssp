@@ -1,13 +1,11 @@
 using AngleSharp.Html.Dom;
 using HE.Investment.AHP.Contract.FinancialDetails.Constants;
 using HE.Investment.AHP.WWW.Models.FinancialDetails;
-using HE.Investments.Common.WWWTestsFramework;
-
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.FinancialDetails;
 
-public class OtherSchemeCostsTests : ViewTestBase
+public class OtherSchemeCostsTests : AhpViewTestBase
 {
     private readonly string _viewPath = "/Views/FinancialDetails/OtherApplicationCosts.cshtml";
 

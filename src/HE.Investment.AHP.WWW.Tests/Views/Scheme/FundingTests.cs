@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Routing;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.Scheme;
 
-public class FundingTests : ViewTestBase
+public class FundingTests : AhpViewTestBase
 {
     private const string ViewPath = "/Views/Scheme/Funding.cshtml";
     private const string FundingError = "Funding error";

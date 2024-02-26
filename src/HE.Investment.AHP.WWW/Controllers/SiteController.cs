@@ -88,11 +88,11 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         return View("Details", response);
     }
 
-    [HttpGet("{siteId}/start")]
-    [WorkflowState(SiteWorkflowState.Start)]
-    public IActionResult StartSite(string siteId)
+    [HttpGet("{siteId}/continue-answering")]
+    public async Task<IActionResult> ContinueAnswering(string siteId, CancellationToken cancellationToken)
     {
-        return View("Start", new StartSiteModel(Url.Action("Details", new { siteId })));
+        var summary = await CreateSiteSummary(cancellationToken, useWorkflowRedirection: false);
+        return this.ContinueSectionAnswering(summary, () => RedirectToAction("CheckAnswers", new { siteId }));
     }
 
     [HttpGet("start")]
@@ -106,9 +106,8 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     }
 
     [HttpGet("name")]
-    [HttpGet("{siteId}/name")]
     [WorkflowState(SiteWorkflowState.Name)]
-    public async Task<IActionResult> Name(string? siteId, CancellationToken cancellationToken)
+    public async Task<IActionResult> Name([FromQuery] string? siteId, CancellationToken cancellationToken)
     {
         SiteModel siteModel = new();
         if (siteId.IsProvided())
@@ -120,9 +119,8 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     }
 
     [HttpPost("name")]
-    [HttpPost("{siteId}/name")]
     [WorkflowState(SiteWorkflowState.Name)]
-    public async Task<IActionResult> NamePost(string? siteId, SiteModel model, CancellationToken cancellationToken)
+    public async Task<IActionResult> NamePost([FromQuery] string? siteId, SiteModel model, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new ProvideNameCommand(siteId ?? model.Id, model.Name), cancellationToken);
 
@@ -867,7 +865,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     [WorkflowState(SiteWorkflowState.CheckAnswers)]
     public async Task<IActionResult> CheckAnswers(CancellationToken cancellationToken)
     {
-        return View("CheckAnswers", await CreateSiteSummary(null, cancellationToken));
+        return View("CheckAnswers", await CreateSiteSummary(cancellationToken));
     }
 
     [HttpPost("{siteId}/check-answers")]
@@ -878,7 +876,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
             _mediator,
             new CompleteSiteCommand(new SiteId(siteId), isSectionCompleted),
             () => Task.FromResult<IActionResult>(RedirectToAction("Index")),
-            async () => View("CheckAnswers", await CreateSiteSummary(isSectionCompleted, cancellationToken)),
+            async () => View("CheckAnswers", await CreateSiteSummary(cancellationToken, isSectionCompleted)),
             cancellationToken);
     }
 
@@ -933,12 +931,15 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         return siteBasicModel;
     }
 
-    private async Task<SiteSummaryViewModel> CreateSiteSummary(IsSectionCompleted? isSectionCompleted, CancellationToken cancellationToken)
+    private async Task<SiteSummaryViewModel> CreateSiteSummary(
+        CancellationToken cancellationToken,
+        IsSectionCompleted? isSectionCompleted = null,
+        bool useWorkflowRedirection = true)
     {
         var siteId = this.GetSiteIdFromRoute();
         var siteDetails = await GetSiteDetails(siteId.Value, cancellationToken);
         var isEditable = await _accountAccessContext.CanEditApplication();
-        var sections = _siteSummaryViewModelFactory.CreateSiteSummary(siteDetails, Url, isEditable);
+        var sections = _siteSummaryViewModelFactory.CreateSiteSummary(siteDetails, Url, isEditable, useWorkflowRedirection);
 
         return new SiteSummaryViewModel(
             siteId.Value,

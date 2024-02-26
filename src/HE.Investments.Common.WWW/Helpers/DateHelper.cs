@@ -1,4 +1,5 @@
 using System.Globalization;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
 
 namespace HE.Investments.Common.WWW.Helpers;
@@ -27,6 +28,36 @@ public static class DateHelper
         }
 
         return string.Empty;
+    }
+
+    public static string? DisplayAsUkFormatDate(DateDetails? utcDateTime)
+    {
+        if (utcDateTime == null)
+        {
+            return null;
+        }
+
+        if (DateTime.TryParseExact(
+                $"{utcDateTime.Day}/{utcDateTime.Month}/{utcDateTime.Year}",
+                "d/M/yyyy",
+                CultureInfo.InvariantCulture,
+                DateTimeStyles.AssumeUniversal,
+                out var dateOnly))
+        {
+            return DisplayAsUkFormatOnlyDate(dateOnly);
+        }
+
+        return null;
+    }
+
+    public static string? DisplayAsUkFormatOnlyDate(DateTime? utcDateTime)
+    {
+        if (!utcDateTime.HasValue)
+        {
+            return null;
+        }
+
+        return DateOnly.FromDateTime(utcDateTime.Value.ConvertUtcToUkLocalTime()).ToString(Culture.Uk);
     }
 
     public static string? DisplayAsUkFormatDateTime(DateTime? utcDateTime)

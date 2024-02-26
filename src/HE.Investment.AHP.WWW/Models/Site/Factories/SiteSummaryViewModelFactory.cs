@@ -8,6 +8,7 @@ using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Components.SectionSummary;
+using HE.Investments.Common.WWW.Helpers;
 using HE.Investments.Common.WWW.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Controller = HE.Investment.AHP.WWW.Controllers.SiteController;
@@ -18,9 +19,9 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
 {
     private delegate string CreateAction(string actionName);
 
-    public IEnumerable<SectionSummaryViewModel> CreateSiteSummary(SiteModel siteDetails, IUrlHelper urlHelper, bool isEditable)
+    public IEnumerable<SectionSummaryViewModel> CreateSiteSummary(SiteModel siteDetails, IUrlHelper urlHelper, bool isEditable, bool useWorkflowRedirection)
     {
-        string CreateAction(string actionName) => CreateSiteActionUrl(urlHelper, new SiteId(siteDetails.Id!), actionName);
+        string CreateAction(string actionName) => CreateSiteActionUrl(urlHelper, new SiteId(siteDetails.Id!), actionName, useWorkflowRedirection);
 
         yield return new SectionSummaryViewModel("Site details", CreateSiteDetailsSummary(siteDetails, CreateAction, isEditable));
         yield return new SectionSummaryViewModel("Section 106", CreateSection106Summary(siteDetails.Section106, CreateAction, isEditable));
@@ -88,7 +89,7 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
                 section?.LocalAuthorityConfirmation.ToOneElementList(),
                 createAction(nameof(Controller.Section106LocalAuthorityConfirmation)),
                 IsEditable: isEditable),
-            section?.CapitalFundingEligibility == true);
+            section?.AdditionalAffordableHousing == true);
 
         return summary;
     }
@@ -423,14 +424,14 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
         return enumValue == null || Convert.ToInt32(enumValue, CultureInfo.InvariantCulture) == 0 ? null : enumValue.Value.GetDescription().ToOneElementList();
     }
 
-    private static IList<string>? ToDate(DateDetails? date) => date == null ? null : $"{date.Day}/{date.Month}/{date.Year}".ToOneElementList();
+    private static IList<string>? ToDate(DateDetails? date) => DateHelper.DisplayAsUkFormatDate(date)?.ToOneElementList();
 
-    private static string CreateSiteActionUrl(IUrlHelper urlHelper, SiteId siteId, string actionName)
+    private static string CreateSiteActionUrl(IUrlHelper urlHelper, SiteId siteId, string actionName, bool useWorkflowRedirection)
     {
         var action = urlHelper.Action(
             actionName,
             new ControllerName(nameof(SiteController)).WithoutPrefix(),
-            new { siteId = siteId.Value, redirect = nameof(SiteController.CheckAnswers) });
+            new { siteId = siteId.Value, redirect = useWorkflowRedirection ? nameof(SiteController.CheckAnswers) : null });
 
         return action ?? string.Empty;
     }

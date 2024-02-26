@@ -31,60 +31,6 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
         return Task.FromResult(CanBeAccessed(nextState));
     }
 
-    public SiteWorkflowState CurrentState(SiteWorkflowState targetState)
-    {
-        if (targetState != SiteWorkflowState.Start || _siteModel == null)
-        {
-            return targetState;
-        }
-
-        return _siteModel switch
-        {
-            { Name: var x } when x.IsNotProvided() => SiteWorkflowState.Name,
-            { Section106: var x } when x == null || x.GeneralAgreement.IsNotProvided() => SiteWorkflowState.Section106GeneralAgreement,
-            { Section106: var x } when x!.AffordableHousing.IsNotProvided() && x.GeneralAgreement == true => SiteWorkflowState.Section106AffordableHousing,
-            { Section106: var x } when x!.OnlyAffordableHousing.IsNotProvided() && x.GeneralAgreement == true => SiteWorkflowState
-                .Section106OnlyAffordableHousing,
-            { Section106: var x } when x!.AdditionalAffordableHousing.IsNotProvided() && x.OnlyAffordableHousing == false => SiteWorkflowState
-                .Section106AdditionalAffordableHousing,
-            { Section106: var x } when x!.CapitalFundingEligibility.IsNotProvided() && x.GeneralAgreement == true => SiteWorkflowState
-                .Section106CapitalFundingEligibility,
-            { Section106: var x } when x!.LocalAuthorityConfirmation.IsNotProvided() && x.AdditionalAffordableHousing == true => SiteWorkflowState
-                .Section106LocalAuthorityConfirmation,
-            { LocalAuthority: var x } when x.IsNotProvided() => SiteWorkflowState.LocalAuthoritySearch,
-            { PlanningDetails: var x } when x.PlanningStatus.IsNotProvided() => SiteWorkflowState.PlanningStatus,
-            { PlanningDetails.ArePlanningDetailsProvided: false } => SiteWorkflowState.PlanningDetails,
-            { PlanningDetails: var x } when !IsLandRegistryProvided(x) => SiteWorkflowState.LandRegistry,
-            { NationalDesignGuidePriorities: var x } when x.IsNotProvided() || x.Count == 0 => SiteWorkflowState.NationalDesignGuide,
-            { BuildingForHealthyLife: BuildingForHealthyLifeType.Undefined } => SiteWorkflowState.BuildingForHealthyLife,
-            { NumberOfGreenLights: var x } when x.IsNotProvided() && IsBuildingForHealthyLife() => SiteWorkflowState.NumberOfGreenLights,
-            { LandAcquisitionStatus: var x } when x.IsNotProvided() => SiteWorkflowState.LandAcquisitionStatus,
-            { TenderingStatusDetails: var x } when x.TenderingStatus.IsNotProvided() => SiteWorkflowState.TenderingStatus,
-            { TenderingStatusDetails: var x } when IsConditionalOrUnconditionalWorksContract() &&
-                                                   (x.ContractorName.IsNotProvided() || x.IsSmeContractor.IsNotProvided()) => SiteWorkflowState
-                .ContractorDetails,
-            { TenderingStatusDetails: var x } when IsTenderForWorksContractOrContractingHasNotYetBegun() &&
-                                                   x.IsIntentionToWorkWithSme.IsNotProvided() => SiteWorkflowState.IntentionToWorkWithSme,
-            { StrategicSiteDetails: var x } when x.IsStrategicSite.IsNotProvided() => SiteWorkflowState.StrategicSite,
-            { SiteTypeDetails.IsAnswered: false } => SiteWorkflowState.SiteType,
-            { SiteUseDetails: var x } when x.IsForTravellerPitchSite.IsNotProvided() || x.IsPartOfStreetFrontInfill.IsNotProvided() =>
-                SiteWorkflowState.SiteUse,
-            { SiteUseDetails: { IsForTravellerPitchSite: true, TravellerPitchSiteType: TravellerPitchSiteType.Undefined } } => SiteWorkflowState
-                .TravellerPitchType,
-            { RuralClassification: var x } when x.IsRuralExceptionSite.IsNotProvided() || x.IsWithinRuralSettlement.IsNotProvided() => SiteWorkflowState
-                .RuralClassification,
-            { EnvironmentalImpact: var x } when x.IsNotProvided() => SiteWorkflowState.EnvironmentalImpact,
-            { ModernMethodsOfConstruction.UsingModernMethodsOfConstruction: var x } when x.IsNotProvided() => SiteWorkflowState.MmcUsing,
-            { ModernMethodsOfConstruction: var x } when x.InformationBarriers.IsNotProvided() || x.InformationImpact.IsNotProvided() => SiteWorkflowState
-                .MmcInformation,
-            { ModernMethodsOfConstruction.ModernMethodsConstructionCategories: var x } when x == null || !x.Any() => SiteWorkflowState.MmcCategories,
-            { ModernMethodsOfConstruction.ModernMethodsConstruction3DSubcategories: var x } when x == null || !x.Any() => SiteWorkflowState.Mmc3DCategory,
-            { ModernMethodsOfConstruction.ModernMethodsConstruction2DSubcategories: var x } when x == null || !x.Any() => SiteWorkflowState.Mmc2DCategory,
-            { SiteProcurements: var x } when !x.Any() => SiteWorkflowState.Procurements,
-            _ => SiteWorkflowState.CheckAnswers,
-        };
-    }
-
     private bool CanBeAccessed(SiteWorkflowState state)
     {
         return state switch
@@ -157,8 +103,8 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
 
         _machine.Configure(SiteWorkflowState.Section106CapitalFundingEligibility)
             .PermitIf(Trigger.Continue, SiteWorkflowState.Section106Ineligible, () => _siteModel?.Section106?.IsIneligible == true)
-            .PermitIf(Trigger.Continue, SiteWorkflowState.Section106LocalAuthorityConfirmation, () => IsSection106EligibleWithAdditionalAffordableHousing())
-            .PermitIf(Trigger.Continue, SiteWorkflowState.LocalAuthoritySearch, () => IsSection106EligibleWithoutAdditionalAffordableHousing())
+            .PermitIf(Trigger.Continue, SiteWorkflowState.Section106LocalAuthorityConfirmation, IsSection106EligibleWithAdditionalAffordableHousing)
+            .PermitIf(Trigger.Continue, SiteWorkflowState.LocalAuthoritySearch, IsSection106EligibleWithoutAdditionalAffordableHousing)
             .PermitIf(Trigger.Back, SiteWorkflowState.Section106AdditionalAffordableHousing, () => _siteModel?.Section106?.OnlyAffordableHousing == false)
             .PermitIf(Trigger.Back, SiteWorkflowState.Section106OnlyAffordableHousing, () => _siteModel?.Section106?.OnlyAffordableHousing == true)
             .PermitIf(Trigger.Back, SiteWorkflowState.Section106AffordableHousing, () => _siteModel?.Section106?.OnlyAffordableHousing == null);
@@ -223,7 +169,7 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
 
         _machine.Configure(SiteWorkflowState.LandAcquisitionStatus)
             .Permit(Trigger.Continue, SiteWorkflowState.TenderingStatus)
-            .PermitIf(Trigger.Back, SiteWorkflowState.NumberOfGreenLights, () => IsBuildingForHealthyLife())
+            .PermitIf(Trigger.Back, SiteWorkflowState.NumberOfGreenLights, IsBuildingForHealthyLife)
             .PermitIf(Trigger.Back, SiteWorkflowState.BuildingForHealthyLife, () => !IsBuildingForHealthyLife());
 
         _machine.Configure(SiteWorkflowState.TenderingStatus)
@@ -313,10 +259,6 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
     private bool IsLocalAuthorityProvided() => _siteModel?.LocalAuthority?.Name.IsProvided() ?? false;
 
     private bool IsLandTitleRegistered() => _siteModel?.PlanningDetails.IsLandRegistryTitleNumberRegistered ?? false;
-
-    private bool IsLandRegistryProvided(SitePlanningDetails planningDetails) => IsLandTitleRegistered() &&
-                                                                                planningDetails.LandRegistryTitleNumber.IsProvided() &&
-                                                                                planningDetails.IsGrantFundingForAllHomesCoveredByTitleNumber.IsProvided();
 
     private bool IsConditionalOrUnconditionalWorksContract() =>
         _siteModel?.TenderingStatusDetails.TenderingStatus is SiteTenderingStatus.UnconditionalWorksContract or

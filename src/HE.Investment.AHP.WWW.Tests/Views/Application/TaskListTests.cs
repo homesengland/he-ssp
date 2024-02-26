@@ -3,11 +3,10 @@ using AngleSharp.Html.Dom;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investments.Common.Contract;
-using HE.Investments.Common.WWWTestsFramework;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.Application;
 
-public class TaskListTests : ViewTestBase
+public class TaskListTests : AhpViewTestBase
 {
     private readonly string _viewPath = "/Views/Application/TaskList.cshtml";
     private readonly ModificationDetails _testModificationDetails = new("Jan", "Kowalski", new DateTime(2023, 11, 29, 0, 0, 0, DateTimeKind.Unspecified));

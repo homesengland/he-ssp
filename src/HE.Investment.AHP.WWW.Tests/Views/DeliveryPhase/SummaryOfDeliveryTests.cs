@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Routing;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.DeliveryPhase;
 
-public class SummaryOfDeliveryTests : ViewTestBase
+public class SummaryOfDeliveryTests : AhpViewTestBase
 {
     private readonly string _viewPath = "/Views/DeliveryPhase/SummaryOfDelivery.cshtml";
 

@@ -1,13 +1,10 @@
-using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.Contract.Site;
-using HE.Investment.AHP.Domain.Site.ValueObjects;
 using HE.Investment.AHP.WWW.Models.Site;
-using HE.Investment.AHP.WWW.Tests.Views.Site;
 using HE.Investment.AHP.WWW.Views.Site.Const;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.Site;
 
-public class LandAcquisitionStatusTests : ViewTestBase
+public class LandAcquisitionStatusTests : AhpViewTestBase
 {
     private const string ViewPath = "/Views/Site/LandAcquisitionStatus.cshtml";
 

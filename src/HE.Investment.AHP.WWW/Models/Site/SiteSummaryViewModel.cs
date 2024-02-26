@@ -3,7 +3,7 @@ using HE.Investment.AHP.WWW.Models.Application;
 
 namespace HE.Investment.AHP.WWW.Models.Site;
 
-public class SiteSummaryViewModel
+public class SiteSummaryViewModel : ISummaryViewModel
 {
     public SiteSummaryViewModel(string siteId, IsSectionCompleted? isSectionCompleted, IList<SectionSummaryViewModel> sections, bool isEditable)
     {

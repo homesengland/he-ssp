@@ -1,6 +1,5 @@
 using FluentAssertions;
 using HE.Investment.AHP.Contract.Site;
-using HE.Investment.AHP.Domain.Site.ValueObjects;
 using SiteTypeDetails = HE.Investment.AHP.Domain.Site.ValueObjects.SiteTypeDetails;
 
 namespace HE.Investment.AHP.Domain.Tests.Site.ValueObjects.SiteTypeDetailsTests;

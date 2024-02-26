@@ -1,13 +1,12 @@
 using AngleSharp.Html.Dom;
 using HE.Investment.AHP.WWW.Models.Scheme;
-using HE.Investments.Common.WWWTestsFramework;
 
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Routing;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.Scheme;
 
-public class AffordabilityTests : ViewTestBase
+public class AffordabilityTests : AhpViewTestBase
 {
     private const string ViewPath = "/Views/Scheme/Affordability.cshtml";
     private const string AffordabilityEvidenceError = "Test error";

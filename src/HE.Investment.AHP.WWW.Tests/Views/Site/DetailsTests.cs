@@ -4,7 +4,7 @@ using HE.Investments.Common.Contract;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.Site;
 
-public class DetailsTests : ViewTestBase
+public class DetailsTests : AhpViewTestBase
 {
     private readonly string _viewPath = "/Views/Site/Details.cshtml";
 

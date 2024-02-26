@@ -9,6 +9,7 @@ using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Extensions;
+using HE.Investments.Common.WWW.Helpers;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -46,7 +47,13 @@ public class DeliveryController : Controller
             IsEditable = isEditable,
             UnusedHomeTypesCount = deliveryPhases.UnusedHomeTypesCount,
             DeliveryPhases = deliveryPhases.DeliveryPhases
-                .Select(x => new DeliveryPhaseItemModel(x.Id, x.Name, x.NumberOfHomes, x.Acquisition, x.StartOnSite, x.PracticalCompletion))
+                .Select(x => new DeliveryPhaseItemModel(
+                    x.Id,
+                    x.Name,
+                    x.NumberOfHomes,
+                    DateHelper.DisplayAsUkFormatDate(x.Acquisition),
+                    DateHelper.DisplayAsUkFormatDate(x.StartOnSite),
+                    DateHelper.DisplayAsUkFormatDate(x.PracticalCompletion)))
                 .ToList(),
         });
     }

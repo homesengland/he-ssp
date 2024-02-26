@@ -4,7 +4,7 @@ using HE.Investment.AHP.WWW.Views.Site.Const;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.Site;
 
-public class SiteUseTests : ViewTestBase
+public class SiteUseTests : AhpViewTestBase
 {
     private readonly string _viewPath = "/Views/Site/SiteUse.cshtml";
 
