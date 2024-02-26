@@ -43,7 +43,7 @@
         additionalProjectDetails.Add($"Purchased: {purchaseDate}");
         additionalProjectDetails.Add($"Purchase cost: {MoneyLabelHelper.Pounds(Model.Cost)}");
         additionalProjectDetails.Add($"Current value: {MoneyLabelHelper.Pounds(Model.Value)}");
-        additionalProjectDetails.Add($"Source: {TemporaryFormOptions.SiteAdditionalSource.GetSummaryLabel(Model.Source)}");
+        additionalProjectDetails.Add($"Source: {FormOption.SiteAdditionalSource.GetSummaryLabel(Model.Source)}");
     }
 }
 
@@ -83,7 +83,7 @@
     @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
            {
                { "Title", ProjectFieldNames.TypeHomes },
-               { "Value", TemporaryFormOptions.SiteTypeHomesCheckbox.GetSummaryLabel(typeHomesList) },
+               { "Value", FormOption.SiteTypeHomesCheckbox.GetSummaryLabel(typeHomesList) },
                { "Link", Url.Action("TypeHomes", "Project", new { id = id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
                { "LinkId", "homes-type" },
                { "IsEditable", Model?.IsEditable() }
@@ -92,7 +92,7 @@
     @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
            {
                { "Title", ProjectFieldNames.ProjectType },
-               { "Value", TemporaryFormOptions.SiteType.GetSummaryLabel(Model?.ProjectType) },
+               { "Value", FormOption.SiteType.GetSummaryLabel(Model?.ProjectType) },
                { "Link", Url.Action("Type", "Project", new { id = id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
                { "LinkId", "project-type" },
                { "IsEditable", Model?.IsEditable() }
@@ -121,7 +121,7 @@
         @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
                {
                    { "Title", ProjectFieldNames.PlanningPermissionStatus },
-                   { "Value", TemporaryFormOptions.PermissionStatus.GetSummaryLabel(Model?.PlanningPermissionStatus) },
+                   { "Value", FormOption.PermissionStatus.GetSummaryLabel(Model?.PlanningPermissionStatus) },
                    { "Link", Url.Action("PlanningPermissionStatus", "Project", new { id = id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
                    { "LinkId", "planning-permission-status" },
                    { "IsEditable", Model?.IsEditable() }
@@ -187,7 +187,7 @@
     @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
            {
                { "Title", ProjectFieldNames.GrantFundingExists },
-               { "Value", TemporaryFormOptions.GrantFunding.GetSummaryLabel(Model?.GrantFundingStatus) },
+               { "Value", FormOption.GrantFunding.GetSummaryLabel(Model?.GrantFundingStatus) },
                { "Link", Url.Action("GrantFundingExists", "Project", new { id = id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
                { "LinkId", "grant-funding-exists" },
                { "IsEditable", Model?.IsEditable() }

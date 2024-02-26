@@ -48,7 +48,7 @@
     @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
            {
                { "Title", "Refinance or repay" },
-               { "Value", TemporaryFormOptions.LoanResolution.GetSummaryLabel(Model.Refinance, Model.RefinanceInfo) },
+               { "Value", FormOption.LoanResolution.GetSummaryLabel(Model.Refinance, Model.RefinanceInfo) },
                { "Link", Url.Action("RepaymentSystem", "FundingV2", new {id = id,  redirect = "CheckAnswers"}) },
                { "LinkId", "repayment-system-change"},
                { "IsEditable", Model.IsEditable() }

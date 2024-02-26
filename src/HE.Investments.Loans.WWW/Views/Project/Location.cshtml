@@ -41,12 +41,12 @@
                     </gds-fieldset-heading>
                 </gds-legend>
                 <gds-custom-radio asp-for="LocationOption"
-                                  radio-items="TemporaryFormOptions.SiteLocation"
+                                  radio-items="FormOption.SiteLocation"
                                   value="@Model.LocationOption"
-                                  conditional-input-ids=TemporaryFormOptions.LocationDetailsNames
-                                  conditional-input-labels=TemporaryFormOptions.LocationDescription
+                                  conditional-input-ids=FormOption.LocationDetailsNames
+                                  conditional-input-labels=FormOption.LocationDescription
                                   conditional-input-values="@values"
-                                  conditional-input-names=TemporaryFormOptions.LocationDetailsNames
+                                  conditional-input-names=FormOption.LocationDetailsNames
                                   conditional-input-error="@inputErrors"
                                   is-conditional-input-invalid="@conditionalInputInvalid">
                 </gds-custom-radio>
