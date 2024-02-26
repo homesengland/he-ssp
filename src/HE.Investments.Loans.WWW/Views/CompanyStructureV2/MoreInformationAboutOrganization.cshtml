@@ -40,9 +40,9 @@
                                 allowed-extensions="@Model.AllowedExtensions"
                                 is-multiple="true"
                                 max-file-size-in-mb="@Settings.MaxFileSizeInMegabytes"
-                                upload-one-file-url="@Url.RouteUrl(new { controller = "CompanyStructureV2", action = "MoreInformationAboutOrganizationUploadFile", id = Model.LoanApplicationId })"
-                                remove-file-url-template="@Url.RouteUrl(new { controller = "CompanyStructureV2", action = "MoreInformationAboutOrganizationRemoveFile", id = Model.LoanApplicationId, fileId = ":fileId" })"
-                                download-file-url-template="@Url.RouteUrl(new { controller = "CompanyStructureV2", action = "MoreInformationAboutOrganizationDownloadFile", id = Model.LoanApplicationId, fileId = ":fileId" })"/>
+                                upload-one-file-url="@Url.Action("MoreInformationAboutOrganizationUploadFile", "CompanyStructureV2", new { id = Model.LoanApplicationId })"
+                                remove-file-url-template="@Url.Action("MoreInformationAboutOrganizationRemoveFile", "CompanyStructureV2",new { id = Model.LoanApplicationId, fileId = ":fileId" })"
+                                download-file-url-template="@Url.Action("MoreInformationAboutOrganizationDownloadFile", "CompanyStructureV2",new { id = Model.LoanApplicationId, fileId = ":fileId" })"/>
 
             </gds-error-form-group>
         </gds-div-grid-column-two-thirds>

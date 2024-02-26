@@ -73,10 +73,8 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
         response.ViewModel.OrganisationMoreInformationFiles = files.Select(
                 x => x with
                 {
-                    RemoveAction = Url.RouteUrl(new { controller = "CompanyStructureV2", action = "MoreInformationAboutOrganizationRemoveFile", id, fileId = x.FileId }) ??
-                                   string.Empty,
-                    DownloadAction = Url.RouteUrl(new { controller = "CompanyStructureV2", action = "MoreInformationAboutOrganizationDownloadFile", id, fileId = x.FileId }) ??
-                                   string.Empty,
+                    RemoveAction = Url.Action("MoreInformationAboutOrganizationRemoveFile", "CompanyStructureV2", new { id, fileId = x.FileId }) ?? string.Empty,
+                    DownloadAction = Url.Action("MoreInformationAboutOrganizationDownloadFile", "CompanyStructureV2", new { id, fileId = x.FileId }) ?? string.Empty,
                 })
             .ToList();
 
