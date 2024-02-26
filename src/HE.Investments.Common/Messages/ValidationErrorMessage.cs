@@ -1,6 +1,3 @@
-using System.Globalization;
-using HE.Investments.Common.Extensions;
-
 namespace HE.Investments.Common.Messages;
 
 public static class ValidationErrorMessage
@@ -43,8 +40,6 @@ public static class ValidationErrorMessage
 
     public const string FileIncorrectFormat = "The selected file must be a PDF, Word Doc, JPEG or RTF";
 
-    public const string FilesMaxCount = "You can only select up to {0} files";
-
     public const string LoanPurpose = "Select what you need Homes England funding for";
 
     public const string EnterCoordinates = "Enter your XY coordinates";
@@ -74,6 +69,8 @@ public static class ValidationErrorMessage
     public const string EnterDate = "Enter a date. The date must include a day, month and year";
 
     public const string SquareMetersMustBeNumber = "The square meterage in the internal floor each of each home must be a number, like 75.50";
+
+    public static string FilesMaxCount(int numberOfFiles) => $"You can only select up to {numberOfFiles} files";
 
     public static string EstimatedPoundInput(string name) => PoundInput($"estimated {name}");
 

@@ -1,5 +1,8 @@
 using HE.Investments.Account.Shared.Authorization.Attributes;
+using HE.Investments.Common.Contract;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
+using HE.Investments.Common.WWW.Helpers;
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.Loans.BusinessLogic.CompanyStructure;
 using HE.Investments.Loans.Common.Utils.Enums;
@@ -7,6 +10,7 @@ using HE.Investments.Loans.Contract.Application.ValueObjects;
 using HE.Investments.Loans.Contract.CompanyStructure;
 using HE.Investments.Loans.Contract.CompanyStructure.Commands;
 using HE.Investments.Loans.Contract.CompanyStructure.Queries;
+using HE.Investments.Loans.Contract.Documents;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -65,19 +69,26 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
     {
         var loanApplicationId = LoanApplicationId.From(id);
         var response = await _mediator.Send(new GetCompanyStructureQuery(loanApplicationId, CompanyStructureFieldsSet.MoreInformationAboutOrganization));
-        response.ViewModel.OrganisationMoreInformationFiles = (await _mediator.Send(new GetCompanyStructureFilesQuery(loanApplicationId))).Items;
+        var files = await _mediator.Send(new GetCompanyStructureFilesQuery(loanApplicationId));
+        response.ViewModel.OrganisationMoreInformationFiles = files.Select(
+                x => x with
+                {
+                    RemoveAction = Url.RouteUrl(new { controller = "CompanyStructureV2", action = "MoreInformationAboutOrganizationRemoveFile", id, fileId = x.FileId }) ??
+                                   string.Empty,
+                    DownloadAction = Url.RouteUrl(new { controller = "CompanyStructureV2", action = "MoreInformationAboutOrganizationDownloadFile", id, fileId = x.FileId }) ??
+                                   string.Empty,
+                })
+            .ToList();
 
         return View("MoreInformationAboutOrganization", response.ViewModel);
     }
 
     [HttpGet("more-information-about-organization-remove-file")]
     [WorkflowState(CompanyStructureState.ExistingCompany)]
-    public async Task<IActionResult> MoreInformationAboutOrganizationRemoveFile(Guid id, string folderPath, string fileName, CancellationToken cancellationToken)
+    public async Task<IActionResult> MoreInformationAboutOrganizationRemoveFile(Guid id, string fileId, CancellationToken cancellationToken)
     {
-        var loanApplicationId = LoanApplicationId.From(id);
-
         var result = await _mediator.Send(
-            new ProvideMoreInformationAboutOrganizationRemoveFileCommand(loanApplicationId, folderPath, fileName),
+            new RemoveMoreInformationAboutOrganizationFileCommand(LoanApplicationId.From(id), FileId.From(fileId)),
             cancellationToken);
 
         if (result.HasValidationErrors)
@@ -90,24 +101,42 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
 
     [HttpGet("more-information-about-organization-download-file")]
     [WorkflowState(CompanyStructureState.ExistingCompany)]
-    public async Task<IActionResult> MoreInformationAboutOrganizationDownloadFile(Guid id, string folderPath, string fileName, CancellationToken cancellationToken)
+    public async Task<IActionResult> MoreInformationAboutOrganizationDownloadFile(Guid id, string fileId, CancellationToken cancellationToken)
     {
-        var response = await _mediator.Send(new GetCompanyStructureFileQuery(id, folderPath, fileName), cancellationToken);
+        var response = await _mediator.Send(new GetCompanyStructureFileQuery(LoanApplicationId.From(id), FileId.From(fileId)), cancellationToken);
 
         return File(response.Content, "application/octet-stream", response.Name);
     }
 
+    [HttpPost("more-information-about-organization-upload-file")]
+    [WorkflowState(CompanyStructureState.ExistingCompany)]
+    public async Task<IActionResult> MoreInformationAboutOrganizationUploadFile(Guid id, [FromForm(Name = "file")] IFormFile file, CancellationToken cancellationToken)
+    {
+        var documentToUpload = new FileToUpload(file.FileName, file.Length, file.OpenReadStream());
+        try
+        {
+            var result = await _mediator.Send(new UploadOrganisationMoreInformationFileCommand(new LoanApplicationId(id), documentToUpload), cancellationToken);
+            return result.HasValidationErrors
+                ? new BadRequestObjectResult(result.Errors)
+                : Ok(new
+                {
+                    fileId = result.ReturnedData!.Id?.Value,
+                    uploadDetails = $"uploaded {DateHelper.DisplayAsUkFormatDateTime(result.ReturnedData.UploadedOn)} by {result.ReturnedData.UploadedBy}",
+                    canBeRemoved = result.ReturnedData.Id.IsProvided(),
+                });
+        }
+        finally
+        {
+            await documentToUpload.Content.DisposeAsync();
+        }
+    }
+
     [HttpPost("more-information-about-organization")]
     [WorkflowState(CompanyStructureState.ExistingCompany)]
-    [DisableRequestSizeLimit]
-    public async Task<IActionResult> MoreInformationAboutOrganizationPost(Guid id, CompanyStructureViewModel viewModel, [FromQuery] string redirect, [FromForm(Name = "File")] List<IFormFile> formFiles, CancellationToken cancellationToken)
+    public async Task<IActionResult> MoreInformationAboutOrganizationPost(Guid id, CompanyStructureViewModel viewModel, [FromQuery] string redirect, [FromForm(Name = "OrganisationMoreInformationFile")] List<IFormFile> formFiles, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(
-            new ProvideMoreInformationAboutOrganizationCommand(
-                LoanApplicationId.From(id),
-                viewModel.OrganisationMoreInformation,
-                viewModel.OrganisationMoreInformationFiles,
-                formFiles),
+            new ProvideMoreInformationAboutOrganizationCommand(LoanApplicationId.From(id), viewModel.OrganisationMoreInformation, formFiles),
             cancellationToken);
 
         if (result.HasValidationErrors)
@@ -152,7 +181,7 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
     {
         var loanApplicationId = LoanApplicationId.From(id);
         var response = await _mediator.Send(new GetCompanyStructureQuery(loanApplicationId, CompanyStructureFieldsSet.GetAllFields), cancellationToken);
-        response.ViewModel.OrganisationMoreInformationFiles = (await _mediator.Send(new GetCompanyStructureFilesQuery(loanApplicationId), cancellationToken)).Items;
+        response.ViewModel.OrganisationMoreInformationFiles = await _mediator.Send(new GetCompanyStructureFilesQuery(loanApplicationId), cancellationToken);
         return View("CheckAnswers", response.ViewModel);
     }
 

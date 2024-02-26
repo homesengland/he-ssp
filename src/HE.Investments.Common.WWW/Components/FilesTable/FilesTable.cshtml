@@ -16,7 +16,7 @@
       @Html.Hidden($"{Model.fieldName}[{index}].{nameof(FileModel.UploadedOn)}", Model.files[index].UploadedOn)
       @Html.Hidden($"{Model.fieldName}[{index}].{nameof(FileModel.CanBeRemoved)}", Model.files[index].CanBeRemoved)
       @Html.Hidden($"{Model.fieldName}[{index}].{nameof(FileModel.RemoveAction)}", Model.files[index].RemoveAction)
-      @Html.Hidden($"{Model.fieldName}[{index}].{nameof(FileModel.RemoveAction)}", Model.files[index].DownloadAction)
+      @Html.Hidden($"{Model.fieldName}[{index}].{nameof(FileModel.DownloadAction)}", Model.files[index].DownloadAction)
 
       <tr class="govuk-table__row">
           <td class="govuk-table__cell govuk-!-font-weight-bold">

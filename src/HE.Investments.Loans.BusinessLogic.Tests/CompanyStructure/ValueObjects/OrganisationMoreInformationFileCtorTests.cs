@@ -16,13 +16,13 @@ public class OrganisationMoreInformationFileCtorTests
     [InlineData("document.jpeg")]
     [InlineData("document.jpg")]
     [InlineData("document.rtf")]
-    public void ShouldOrganisationMoreInformationFile(string fileName)
+    public void ShouldCreateFile_WhenFileExtensionAndSizeIsValid(string fileName)
     {
         // given
         const long fileSize = 1024; // 1 kB
 
         // when
-        var organisationMoreInformationFile = new OrganisationMoreInformationFile(fileName, fileSize, 1);
+        using var organisationMoreInformationFile = new OrganisationMoreInformationFile(fileName, fileSize, 1, new MemoryStream());
 
         // then
         organisationMoreInformationFile.FileName.Should().Be(fileName);
@@ -35,7 +35,7 @@ public class OrganisationMoreInformationFileCtorTests
         const long fileSize = (1024L * 1024L) + 1024L; // 1.1MB
 
         // when
-        var action = () => new OrganisationMoreInformationFile("validFileName.doc", fileSize, 1);
+        var action = () => new OrganisationMoreInformationFile("validFileName.doc", fileSize, 1, new MemoryStream());
 
         // then
         action
@@ -51,7 +51,7 @@ public class OrganisationMoreInformationFileCtorTests
         const long fileSize = (1024L * 1024L) + 1024L; // 1.1MB
 
         // when
-        var action = () => new OrganisationMoreInformationFile("validFileName.xxx", fileSize, 1);
+        var action = () => new OrganisationMoreInformationFile("validFileName.xxx", fileSize, 1, new MemoryStream());
 
         // then
         action

@@ -1,6 +1,7 @@
 using HE.Investments.Common.WWW.Infrastructure.Authorization;
 using HE.Investments.Common.WWW.Infrastructure.Cache;
 using HE.Investments.Common.WWW.Infrastructure.ErrorHandling;
+using HE.Investments.Common.WWW.Infrastructure.Middlewares;
 using HE.Investments.Common.WWW.Partials;
 using HE.Investments.DocumentService.Extensions;
 using HE.Investments.Loans.Common.Infrastructure.Middlewares;
@@ -73,6 +74,7 @@ app.UseStaticFiles();
 app.UseMiddleware<HeaderSecurityMiddleware>();
 app.UseCrossSiteScriptingSecurity();
 app.ConfigureAdditionalMiddlewares();
+app.UseCustomDisableRequestLimitSize("/more-information-about-organization-upload-file", "/more-information-about-organization");
 
 app.UseCookiePolicy(
     new CookiePolicyOptions

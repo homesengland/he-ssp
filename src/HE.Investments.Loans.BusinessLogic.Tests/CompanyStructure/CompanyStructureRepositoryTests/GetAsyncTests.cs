@@ -39,7 +39,6 @@ public class GetAsyncTests : TestBase<CompanyStructureRepository>
         result.LoanApplicationId.Should().Be(loanApplicationId);
         result.Purpose.Should().BeNull();
         result.MoreInformation.Should().BeNull();
-        result.MoreInformationFiles.Should().BeNull();
         result.HomesBuilt.Should().BeNull();
         result.Status.Should().Be(SectionStatus.NotStarted);
     }
@@ -70,7 +69,6 @@ public class GetAsyncTests : TestBase<CompanyStructureRepository>
         result.LoanApplicationId.Should().Be(loanApplicationId);
         result.Purpose.Should().Be(CompanyPurpose.New(true));
         result.MoreInformation.Should().Be(new OrganisationMoreInformation("Short description"));
-        result.MoreInformationFiles.Should().BeNull();
         result.HomesBuilt.Should().Be(new HomesBuilt(5));
         result.Status.Should().Be(SectionStatus.InProgress);
     }

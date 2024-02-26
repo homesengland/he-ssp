@@ -139,6 +139,8 @@
   const fileInputChanged = () => {
     const maxFileSizeInMegabytes = document.getElementById(maxFileSizeId).value;
     const maxFileSize = maxFileSizeInMegabytes * 1024 * 1024;
+    const allowedExtensions = document.getElementById('AllowedExtensions').value;
+    const allowedExtensionsArray = allowedExtensions.split(', ').map(x => `.${x.toUpperCase()}`);
     const uploadControl = document.querySelectorAll(fileInputSelector)[0];
     const continueButton = document.querySelectorAll(continueButtonSelector)[0];
     const uploadFileUrl = document.getElementById(uploadFileUrlId);
@@ -158,16 +160,23 @@
     clearInputFieldErrorSummary();
 
     for (let i = invalidFiles.files.length - 1; i >= 0; i--) {
-      if (invalidFiles.files[i].size > maxFileSize) {
-        const errorMessage = `The selected file must be smaller than ${maxFileSizeInMegabytes}MB`;
+      const file = invalidFiles.files[i];
+      if (file.size > maxFileSize) {
+        const errorMessage = `The selected file ${sanitize(file.name)} must be smaller than ${maxFileSizeInMegabytes}MB`;
+
+        hasErrors = true;
+        addInputFieldError(errorMessage);
+        addInputFieldErrorSummary(errorMessage);
+      } else if (!allowedExtensionsArray.includes(getFileExtension(file.name))) {
+        const errorMessage = `The selected file ${sanitize(file.name)} must be a ${allowedExtensions}`;
 
         hasErrors = true;
         addInputFieldError(errorMessage);
         addInputFieldErrorSummary(errorMessage);
       } else if (shouldUpload) {
         const fileId = (Math.random() + 1).toString(36).substring(7);
-        fileUploadInitialized(fileId, invalidFiles.files[i]);
-        filesToUpload[fileId] = invalidFiles.files[i];
+        fileUploadInitialized(fileId, file);
+        filesToUpload[fileId] = file;
         invalidFiles.items.remove(i);
       }
     }
@@ -328,6 +337,11 @@
     };
     const reg = /[&<>"'/]/ig;
     return string.replace(reg, (match)=>(map[match]));
+  }
+
+  const getFileExtension = fileName =>
+  {
+    return fileName.substring(fileName.lastIndexOf('.')).toUpperCase();
   }
 
   document.addEventListener("DOMContentLoaded", function() {
