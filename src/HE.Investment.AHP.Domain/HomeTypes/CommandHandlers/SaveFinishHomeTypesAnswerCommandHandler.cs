@@ -31,14 +31,7 @@ public class SaveFinishHomeTypesAnswerCommandHandler : HomeTypeCommandHandlerBas
         var homeTypes = await _repository.GetByApplicationId(request.ApplicationId, account, HomeTypeSegmentTypes.None, cancellationToken);
         var scheme = await _schemeRepository.GetByApplicationId(request.ApplicationId, account, false, cancellationToken);
 
-        if (request.FinishHomeTypesAnswer == Contract.HomeTypes.Enums.FinishHomeTypesAnswer.Yes
-            && !request.IsCheckOnly
-            && scheme?.Funding?.HousesToDeliver != homeTypes.HomeTypes.Sum(x => x.HomeInformation?.NumberOfHomes?.Value))
-        {
-            return OperationResult.New().AddValidationError("HomeTypes", "You have not assigned all of the homes you are delivering to a home type");
-        }
-
-        var validationErrors = PerformWithValidation(() => homeTypes.CompleteSection(request.FinishHomeTypesAnswer));
+        var validationErrors = PerformWithValidation(() => homeTypes.CompleteSection(request.FinishHomeTypesAnswer, scheme?.Funding?.HousesToDeliver ?? 0));
         if (validationErrors.Any())
         {
             return new OperationResult(validationErrors);

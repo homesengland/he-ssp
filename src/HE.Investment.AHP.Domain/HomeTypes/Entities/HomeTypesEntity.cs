@@ -2,6 +2,7 @@ using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Helpers;
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
+using HE.Investment.AHP.Contract.Scheme;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
@@ -9,6 +10,7 @@ using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
+using MediatR;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 
@@ -94,7 +96,7 @@ public class HomeTypesEntity
         entity.ChangeName(ValidateNameUniqueness(name, entity));
     }
 
-    public void CompleteSection(FinishHomeTypesAnswer finishAnswer)
+    public void CompleteSection(FinishHomeTypesAnswer finishAnswer, int expectedNumberOfHomes)
     {
         if (finishAnswer == FinishHomeTypesAnswer.Undefined)
         {
@@ -117,6 +119,11 @@ public class HomeTypesEntity
             {
                 throw new DomainValidationException(new OperationResult().AddValidationErrors(
                     notCompletedHomeTypes.Select(x => new ErrorItem($"HomeType-{x.Id}", $"Complete {x.Name.Value} to save and continue")).ToList()));
+            }
+
+            if (expectedNumberOfHomes != _homeTypes.Sum(x => x.HomeInformation?.NumberOfHomes?.Value ?? 0))
+            {
+                OperationResult.New().AddValidationError("HomeTypes", "You have not assigned all of the homes you are delivering to a home type").CheckErrors();
             }
 
             Status = _statusModificationTracker.Change(Status, SectionStatus.Completed);
