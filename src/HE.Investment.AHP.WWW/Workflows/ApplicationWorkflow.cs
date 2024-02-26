@@ -49,6 +49,8 @@ public class ApplicationWorkflow : IStateRouting<ApplicationWorkflowState>
             ApplicationWorkflowState.RequestToEdit => await CanApplicationStatusBeChanged(ApplicationStatusDivision.GetAllStatusesAllowedForRequestToEdit()),
             ApplicationWorkflowState.Withdraw => await CanApplicationStatusBeChanged(ApplicationStatusDivision.GetAllStatusesAllowedForWithdraw()),
             ApplicationWorkflowState.CheckAnswers => await CanBeSubmitted(),
+            ApplicationWorkflowState.Submit => await CanBeSubmitted(),
+            ApplicationWorkflowState.Completed => await IsSubmitted(),
             _ => false,
         };
     }
@@ -88,7 +90,12 @@ public class ApplicationWorkflow : IStateRouting<ApplicationWorkflowState>
             .Permit(Trigger.Back, ApplicationWorkflowState.TaskList);
 
         _machine.Configure(ApplicationWorkflowState.CheckAnswers)
+            .Permit(Trigger.Continue, ApplicationWorkflowState.Submit)
             .Permit(Trigger.Back, ApplicationWorkflowState.TaskList);
+
+        _machine.Configure(ApplicationWorkflowState.Submit)
+            .Permit(Trigger.Continue, ApplicationWorkflowState.Completed)
+            .Permit(Trigger.Back, ApplicationWorkflowState.CheckAnswers);
     }
 
     private async Task<bool> CanApplicationStatusBeChanged(IEnumerable<ApplicationStatus> statusesAllowedForStatusChange)
@@ -103,5 +110,12 @@ public class ApplicationWorkflow : IStateRouting<ApplicationWorkflowState>
         var model = await _modelFactory();
         var allSectionsCompleted = model.Sections.All(x => x.SectionStatus == SectionStatus.Completed);
         return statusesAllowedForSubmit.Contains(model.Status) && allSectionsCompleted;
+    }
+
+    private async Task<bool> IsSubmitted()
+    {
+        var model = await _modelFactory();
+        var allSectionsCompleted = model.Sections.All(x => x.SectionStatus == SectionStatus.Submitted);
+        return model.Status == ApplicationStatus.ApplicationSubmitted && allSectionsCompleted;
     }
 }

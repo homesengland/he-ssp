@@ -15,7 +15,7 @@ public static class ApplicationStatusDivision
         yield return ApplicationStatus.InDueDiligence;
         yield return ApplicationStatus.ApprovedSubjectToContract;
         yield return ApplicationStatus.AwaitingCpSatisfaction;
-        yield return ApplicationStatus.CpsSatisfied;
+        yield return ApplicationStatus.ConditionsSatisfied;
         yield return ApplicationStatus.LoanAvailable;
         yield return ApplicationStatus.HoldRequested;
         yield return ApplicationStatus.OnHold;
@@ -39,7 +39,7 @@ public static class ApplicationStatusDivision
         yield return ApplicationStatus.SentForPreCompleteApproval;
         yield return ApplicationStatus.ApprovedSubjectToContract;
         yield return ApplicationStatus.AwaitingCpSatisfaction;
-        yield return ApplicationStatus.CpsSatisfied;
+        yield return ApplicationStatus.ConditionsSatisfied;
         yield return ApplicationStatus.Withdrawn;
     }
 
@@ -60,7 +60,7 @@ public static class ApplicationStatusDivision
         yield return ApplicationStatus.SentForPreCompleteApproval;
         yield return ApplicationStatus.ApprovedSubjectToContract;
         yield return ApplicationStatus.AwaitingCpSatisfaction;
-        yield return ApplicationStatus.CpsSatisfied;
+        yield return ApplicationStatus.ConditionsSatisfied;
         yield return ApplicationStatus.Draft;
     }
 }

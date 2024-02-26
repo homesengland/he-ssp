@@ -4,8 +4,10 @@ using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.MilestonePayments;
 using HE.Investment.AHP.WWW.Controllers;
 using HE.Investment.AHP.WWW.Models.Application;
+using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Common.Workflow;
 using HE.Investments.Common.WWW.Components.SectionSummary;
 using HE.Investments.Common.WWW.Helpers;
 using HE.Investments.Common.WWW.Utils;
@@ -22,24 +24,26 @@ public class DeliveryPhaseCheckAnswersViewModelFactory : IDeliveryPhaseCheckAnsw
         DeliveryPhaseDetails deliveryPhase,
         DeliveryPhaseHomes deliveryPhaseHomes,
         IUrlHelper urlHelper,
-        bool isEditable)
+        bool isEditable,
+        bool useWorkflowRedirection = true)
     {
+        var encodedWorkflow = useWorkflowRedirection
+            ? new DeliveryPhaseWorkflow(DeliveryPhaseWorkflowState.Name, deliveryPhase, !isEditable).GetEncodedWorkflow()
+            : null;
+
         string CreateAction(string actionName) =>
             CreateDeliveryPhaseActionUrl(
                 urlHelper,
                 applicationId,
                 new DeliveryPhaseId(deliveryPhase.Id),
-                actionName);
+                actionName,
+                encodedWorkflow);
 
         return new List<SectionSummaryViewModel>
         {
             CreateDeliveryPhaseSummary(deliveryPhase, deliveryPhaseHomes, CreateAction, isEditable),
             CreateMilestonesSummary(deliveryPhase, CreateAction, isEditable),
-            CreateMilestonesDatesSummary(
-                applicationId,
-                deliveryPhase,
-                urlHelper,
-                isEditable),
+            CreateMilestonesDatesSummary(deliveryPhase, CreateAction, isEditable),
         };
     }
 
@@ -65,7 +69,9 @@ public class DeliveryPhaseCheckAnswersViewModelFactory : IDeliveryPhaseCheckAnsw
                 "Build activity type",
                 deliveryPhase.BuildActivityType?.GetDescription().ToOneElementList(),
                 IsEditable: isEditable,
-                ActionUrl: createAction(nameof(DeliveryPhaseController.BuildActivityType))),
+                ActionUrl: createAction(deliveryPhase.IsReconfiguringExistingNeeded
+                    ? nameof(DeliveryPhaseController.RehabBuildActivityType)
+                    : nameof(DeliveryPhaseController.NewBuildActivityType))),
         };
 
         items.AddWhen(
@@ -147,88 +153,79 @@ public class DeliveryPhaseCheckAnswersViewModelFactory : IDeliveryPhaseCheckAnsw
             ActionUrl: createAction(nameof(DeliveryPhaseController.SummaryOfDelivery)));
     }
 
-    private static SectionSummaryViewModel CreateMilestonesDatesSummary(
-        AhpApplicationId applicationId,
-        DeliveryPhaseDetails deliveryPhase,
-        IUrlHelper urlHelper,
-        bool isEditable)
+    private static SectionSummaryViewModel CreateMilestonesDatesSummary(DeliveryPhaseDetails deliveryPhase, CreateAction createAction, bool isEditable)
     {
-        string CreateAction(string actionName) =>
-            CreateDeliveryPhaseActionUrl(
-                urlHelper,
-                applicationId,
-                new DeliveryPhaseId(deliveryPhase.Id),
-                actionName);
-
         var items = new List<SectionSummaryItemModel>();
         items.AddWhen(
             new(
                 "Acquisition date",
                 FormatDate(deliveryPhase.AcquisitionDate),
                 IsEditable: isEditable,
-                ActionUrl: CreateAction(nameof(DeliveryPhaseController.AcquisitionMilestone))),
+                ActionUrl: createAction(nameof(DeliveryPhaseController.AcquisitionMilestone))),
             !deliveryPhase.IsOnlyCompletionMilestone);
         items.AddWhen(
             new(
                 "Forecast acquisition claim date",
                 FormatDate(deliveryPhase.AcquisitionPaymentDate),
                 IsEditable: isEditable,
-                ActionUrl: CreateAction(nameof(DeliveryPhaseController.AcquisitionMilestone))),
+                ActionUrl: createAction(nameof(DeliveryPhaseController.AcquisitionMilestone))),
             !deliveryPhase.IsOnlyCompletionMilestone);
         items.AddWhen(
             new(
                 "Start on site date",
                 FormatDate(deliveryPhase.StartOnSiteDate),
                 IsEditable: isEditable,
-                ActionUrl: CreateAction(nameof(DeliveryPhaseController.StartOnSiteMilestone))),
+                ActionUrl: createAction(nameof(DeliveryPhaseController.StartOnSiteMilestone))),
             !deliveryPhase.IsOnlyCompletionMilestone);
         items.AddWhen(
             new(
                 "Forecast start on site claim date",
                 FormatDate(deliveryPhase.StartOnSitePaymentDate),
                 IsEditable: isEditable,
-                ActionUrl: CreateAction(nameof(DeliveryPhaseController.StartOnSiteMilestone))),
+                ActionUrl: createAction(nameof(DeliveryPhaseController.StartOnSiteMilestone))),
             !deliveryPhase.IsOnlyCompletionMilestone);
         items.Add(
             new(
                 "Completion date",
                 FormatDate(deliveryPhase.PracticalCompletionDate),
                 IsEditable: isEditable,
-                ActionUrl: CreateAction(nameof(DeliveryPhaseController.PracticalCompletionMilestone))));
+                ActionUrl: createAction(nameof(DeliveryPhaseController.PracticalCompletionMilestone))));
         items.Add(
             new(
                 "Forecast completion claim date",
                 FormatDate(deliveryPhase.PracticalCompletionPaymentDate),
                 IsEditable: isEditable,
-                ActionUrl: CreateAction(nameof(DeliveryPhaseController.PracticalCompletionMilestone))));
+                ActionUrl: createAction(nameof(DeliveryPhaseController.PracticalCompletionMilestone))));
         items.AddWhen(
             new(
                 "Request additional payments",
                 deliveryPhase.IsAdditionalPaymentRequested?.ToString().ToOneElementList(),
                 IsEditable: isEditable,
-                ActionUrl: CreateAction(nameof(DeliveryPhaseController.UnregisteredBodyFollowUp))),
+                ActionUrl: createAction(nameof(DeliveryPhaseController.UnregisteredBodyFollowUp))),
             deliveryPhase.IsUnregisteredBody);
 
         return new SectionSummaryViewModel("Milestones", items);
     }
 
-    private static string CreateDeliveryPhaseActionUrl(IUrlHelper urlHelper, AhpApplicationId applicationId, DeliveryPhaseId deliveryPhaseId, string actionName)
+    private static string CreateDeliveryPhaseActionUrl(
+        IUrlHelper urlHelper,
+        AhpApplicationId applicationId,
+        DeliveryPhaseId deliveryPhaseId,
+        string actionName,
+        EncodedWorkflow<DeliveryPhaseWorkflowState>? encodedWorkflow)
     {
         var action = urlHelper.Action(
             actionName,
             new ControllerName(nameof(DeliveryPhaseController)).WithoutPrefix(),
-            new { applicationId = applicationId.Value, deliveryPhaseId = deliveryPhaseId.Value, redirect = nameof(DeliveryPhaseController.CheckAnswers) });
+            new
+            {
+                applicationId = applicationId.Value,
+                deliveryPhaseId = deliveryPhaseId.Value,
+                workflow = encodedWorkflow?.Value,
+            });
 
         return action ?? string.Empty;
     }
 
-    private static IList<string>? FormatDate(DateDetails? date)
-    {
-        if (date == null)
-        {
-            return Array.Empty<string>();
-        }
-
-        return $"{date.Day}/{date.Month}/{date.Year}".ToOneElementList();
-    }
+    private static IList<string>? FormatDate(DateDetails? date) => DateHelper.DisplayAsUkFormatDate(date)?.ToOneElementList();
 }

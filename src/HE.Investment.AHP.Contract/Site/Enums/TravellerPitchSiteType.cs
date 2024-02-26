@@ -1,5 +1,3 @@
-using System.ComponentModel;
-
 namespace HE.Investment.AHP.Contract.Site.Enums;
 
 public enum TravellerPitchSiteType

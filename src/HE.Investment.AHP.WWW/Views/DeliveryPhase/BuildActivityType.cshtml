@@ -12,14 +12,16 @@
     var title = DeliveryPageTitles.BuildActivityType;
     ViewData["Title"] = title;
     var availableOptions = BuildActivityTypeOptions.GetBuildActivityTypesOptions(Model.AvailableBuildActivityTypes ?? Array.Empty<BuildActivityType>(), Model.BuildActivityType);
+    var currentPage = Model.TypeOfHomes == TypeOfHomes.Rehab ? DeliveryPhaseWorkflowState.RehabBuildActivityType : DeliveryPhaseWorkflowState.NewBuildActivityType;
+    var aspAction = Model.TypeOfHomes == TypeOfHomes.Rehab ? "RehabBuildActivityType" : "NewBuildActivityType";
 }
 
 <gds-div-grid-column-two-thirds>
-    <vc:ahp-workflow-back-button current-page="@DeliveryPhaseWorkflowState.BuildActivityType"/>
+    <vc:ahp-workflow-back-button current-page="@currentPage"/>
 
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
-    <form asp-controller="DeliveryPhase" asp-action="BuildActivityType" asp-method="post" asp-route-redirect="@Context.Request.Query["redirect"]" novalidate>
+    <form asp-controller="DeliveryPhase" asp-action="@aspAction" asp-method="post" asp-route-workflow="@Context.Request.Query["workflow"]" novalidate>
         <vc:page-header caption="@($"{Model.ApplicationName} - {Model.Name}")"/>
         @Html.HiddenFor(m => m.TypeOfHomes)
         <vc:radio-list

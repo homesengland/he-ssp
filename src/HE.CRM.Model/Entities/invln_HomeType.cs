@@ -57,6 +57,7 @@ namespace DataverseModel
 			public const string CreatedOnBehalfBy = "createdonbehalfby";
 			public const string CreatedOnBehalfByName = "createdonbehalfbyname";
 			public const string CreatedOnBehalfByYomiName = "createdonbehalfbyyominame";
+			public const string ExchangeRate = "exchangerate";
 			public const string ImportSequenceNumber = "importsequencenumber";
 			public const string invln_AccessabilityStandards = "invln_accessabilitystandards";
 			public const string invln_accessabilitystandardsName = "invln_accessabilitystandardsname";
@@ -75,9 +76,10 @@ namespace DataverseModel
 			public const string invln_doallhomesmeetndssName = "invln_doallhomesmeetndssname";
 			public const string invln_doallunitsmeetndss = "invln_doallunitsmeetndss";
 			public const string invln_doallunitsmeetndssName = "invln_doallunitsmeetndssname";
-			public const string invln_expectedfirsttranchesalereceipt = "invln_expectedfirsttranchesalereceipt";
 			public const string invln_facilities = "invln_facilities";
 			public const string invln_facilitiesName = "invln_facilitiesname";
+			public const string invln_FirstTrancheSalesReceipt = "invln_firsttranchesalesreceipt";
+			public const string invln_firsttranchesalesreceipt_Base = "invln_firsttranchesalesreceipt_base";
 			public const string invln_floorarea = "invln_floorarea";
 			public const string invln_happiprinciples = "invln_happiprinciples";
 			public const string invln_happiprinciplesName = "invln_happiprinciplesname";
@@ -95,7 +97,6 @@ namespace DataverseModel
 			public const string invln_HomeTypeMMC = "invln_hometypemmc";
 			public const string invln_hometypemmcName = "invln_hometypemmcname";
 			public const string invln_hometypename = "invln_hometypename";
-			public const string invln_initialsale = "invln_initialsale";
 			public const string invln_invln_homesindeliveryphase_hometypelookup = "invln_invln_homesindeliveryphase_hometypelookup";
 			public const string invln_invln_hometype_application_invln_scheme = "invln_invln_hometype_application_invln_scheme";
 			public const string invln_ishometypecompleted = "invln_ishometypecompleted";
@@ -104,12 +105,12 @@ namespace DataverseModel
 			public const string invln_iswheelchairstandardmetName = "invln_iswheelchairstandardmetname";
 			public const string invln_localcommissioningbodiesconsulted = "invln_localcommissioningbodiesconsulted";
 			public const string invln_localcommissioningbodiesconsultedName = "invln_localcommissioningbodiesconsultedname";
-			public const string invln_marketrent = "invln_marketrent";
-			public const string invln_marketvalue = "invln_marketvalue";
+			public const string invln_MarketRentperWeek = "invln_marketrentperweek";
+			public const string invln_marketrentperweek_Base = "invln_marketrentperweek_base";
+			public const string invln_MarketValueofEachProperty = "invln_marketvalueofeachproperty";
+			public const string invln_marketvalueofeachproperty_Base = "invln_marketvalueofeachproperty_base";
 			public const string invln_maxoccupancy = "invln_maxoccupancy";
 			public const string invln_meetingtheneedsoftheclientgroup = "invln_meetingtheneedsoftheclientgroup";
-			public const string invln_meetingwheelchairstandards = "invln_meetingwheelchairstandards";
-			public const string invln_meetingwheelchairstandardsName = "invln_meetingwheelchairstandardsname";
 			public const string invln_mmccategories = "invln_mmccategories";
 			public const string invln_mmccategoriesName = "invln_mmccategoriesname";
 			public const string invln_mmccategory1manufacturer = "invln_mmccategory1manufacturer";
@@ -125,9 +126,17 @@ namespace DataverseModel
 			public const string invln_numberofhomeshometype = "invln_numberofhomeshometype";
 			public const string invln_numberofstoreys = "invln_numberofstoreys";
 			public const string invln_proposedrentasaofunsoldshare = "invln_proposedrentasaofunsoldshare";
-			public const string invln_prospectiverent = "invln_prospectiverent";
 			public const string invln_prospectiverentasofmarketrent = "invln_prospectiverentasofmarketrent";
+			public const string invln_ProspectiveRentperWeek = "invln_prospectiverentperweek";
+			public const string invln_prospectiverentperweek_Base = "invln_prospectiverentperweek_base";
 			public const string invln_reasonsforrtsoexemption = "invln_reasonsforrtsoexemption";
+			public const string invln_RentasofUnsoldShare = "invln_rentasofunsoldshare";
+			public const string invln_RenttoBuyMarketRent = "invln_renttobuymarketrent";
+			public const string invln_renttobuymarketrent_Base = "invln_renttobuymarketrent_base";
+			public const string invln_RenttoBuyMarketValue = "invln_renttobuymarketvalue";
+			public const string invln_renttobuymarketvalue_Base = "invln_renttobuymarketvalue_base";
+			public const string invln_RenttoBuyProspectiveRent = "invln_renttobuyprospectiverent";
+			public const string invln_renttobuyprospectiverent_Base = "invln_renttobuyprospectiverent_base";
 			public const string invln_revenuefunding = "invln_revenuefunding";
 			public const string invln_revenuefundingName = "invln_revenuefundingname";
 			public const string invln_revenuefundingsources = "invln_revenuefundingsources";
@@ -138,6 +147,16 @@ namespace DataverseModel
 			public const string invln_roomwidthsName = "invln_roomwidthsname";
 			public const string invln_rtsoexempt = "invln_rtsoexempt";
 			public const string invln_rtsoexemptName = "invln_rtsoexemptname";
+			public const string invln_SharedOwnershipInitialSale = "invln_sharedownershipinitialsale";
+			public const string invln_SharedOwnershipMarketvalue = "invln_sharedownershipmarketvalue";
+			public const string invln_sharedownershipmarketvalue_Base = "invln_sharedownershipmarketvalue_base";
+			public const string invln_SocialRentMarketValue = "invln_socialrentmarketvalue";
+			public const string invln_socialrentmarketvalue_Base = "invln_socialrentmarketvalue_base";
+			public const string invln_SocialRentProspectiveRent = "invln_socialrentprospectiverent";
+			public const string invln_socialrentprospectiverent_Base = "invln_socialrentprospectiverent_base";
+			public const string invln_SocialRentReasonsforRtSOExemption = "invln_socialrentreasonsforrtsoexemption";
+			public const string invln_SocialRentRtSOExempt = "invln_socialrentrtsoexempt";
+			public const string invln_socialrentrtsoexemptName = "invln_socialrentrtsoexemptname";
 			public const string invln_storagespace = "invln_storagespace";
 			public const string invln_storagespaceName = "invln_storagespacename";
 			public const string invln_supportedhousingexitplan = "invln_supportedhousingexitplan";
@@ -179,6 +198,8 @@ namespace DataverseModel
 			public const string statuscodeName = "statuscodename";
 			public const string team_invln_hometype = "team_invln_hometype";
 			public const string TimeZoneRuleVersionNumber = "timezoneruleversionnumber";
+			public const string TransactionCurrencyId = "transactioncurrencyid";
+			public const string TransactionCurrencyIdName = "transactioncurrencyidname";
 			public const string user_invln_hometype = "user_invln_hometype";
 			public const string UTCConversionTimeZoneCode = "utcconversiontimezonecode";
 			public const string VersionNumber = "versionnumber";
@@ -338,6 +359,19 @@ namespace DataverseModel
 				{
 					return default(string);
 				}
+			}
+		}
+		
+		/// <summary>
+		/// Exchange rate for the currency associated with the entity with respect to the base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("exchangerate")]
+		public System.Nullable<decimal> ExchangeRate
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("exchangerate");
 			}
 		}
 		
@@ -650,23 +684,6 @@ namespace DataverseModel
 			}
 		}
 		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_expectedfirsttranchesalereceipt")]
-		public System.Nullable<decimal> invln_expectedfirsttranchesalereceipt
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<System.Nullable<decimal>>("invln_expectedfirsttranchesalereceipt");
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("invln_expectedfirsttranchesalereceipt");
-				this.SetAttributeValue("invln_expectedfirsttranchesalereceipt", value);
-				this.OnPropertyChanged("invln_expectedfirsttranchesalereceipt");
-			}
-		}
-		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_facilities")]
 		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_facilities
 		{
@@ -698,6 +715,36 @@ namespace DataverseModel
 				{
 					return default(string);
 				}
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_firsttranchesalesreceipt")]
+		public Microsoft.Xrm.Sdk.Money invln_FirstTrancheSalesReceipt
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_firsttranchesalesreceipt");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_FirstTrancheSalesReceipt");
+				this.SetAttributeValue("invln_firsttranchesalesreceipt", value);
+				this.OnPropertyChanged("invln_FirstTrancheSalesReceipt");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the First Tranche Sales Receipt in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_firsttranchesalesreceipt_base")]
+		public Microsoft.Xrm.Sdk.Money invln_firsttranchesalesreceipt_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_firsttranchesalesreceipt_base");
 			}
 		}
 		
@@ -982,23 +1029,6 @@ namespace DataverseModel
 			}
 		}
 		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_initialsale")]
-		public System.Nullable<int> invln_initialsale
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<System.Nullable<int>>("invln_initialsale");
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("invln_initialsale");
-				this.SetAttributeValue("invln_initialsale", value);
-				this.OnPropertyChanged("invln_initialsale");
-			}
-		}
-		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_ishometypecompleted")]
 		public System.Nullable<bool> invln_ishometypecompleted
 		{
@@ -1101,37 +1131,63 @@ namespace DataverseModel
 			}
 		}
 		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_marketrent")]
-		public System.Nullable<decimal> invln_marketrent
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_marketrentperweek")]
+		public Microsoft.Xrm.Sdk.Money invln_MarketRentperWeek
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetAttributeValue<System.Nullable<decimal>>("invln_marketrent");
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_marketrentperweek");
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("invln_marketrent");
-				this.SetAttributeValue("invln_marketrent", value);
-				this.OnPropertyChanged("invln_marketrent");
+				this.OnPropertyChanging("invln_MarketRentperWeek");
+				this.SetAttributeValue("invln_marketrentperweek", value);
+				this.OnPropertyChanged("invln_MarketRentperWeek");
 			}
 		}
 		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_marketvalue")]
-		public System.Nullable<int> invln_marketvalue
+		/// <summary>
+		/// Value of the Market Rent per Week in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_marketrentperweek_base")]
+		public Microsoft.Xrm.Sdk.Money invln_marketrentperweek_Base
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetAttributeValue<System.Nullable<int>>("invln_marketvalue");
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_marketrentperweek_base");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_marketvalueofeachproperty")]
+		public Microsoft.Xrm.Sdk.Money invln_MarketValueofEachProperty
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_marketvalueofeachproperty");
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("invln_marketvalue");
-				this.SetAttributeValue("invln_marketvalue", value);
-				this.OnPropertyChanged("invln_marketvalue");
+				this.OnPropertyChanging("invln_MarketValueofEachProperty");
+				this.SetAttributeValue("invln_marketvalueofeachproperty", value);
+				this.OnPropertyChanged("invln_MarketValueofEachProperty");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Market Value of Each Property in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_marketvalueofeachproperty_base")]
+		public Microsoft.Xrm.Sdk.Money invln_marketvalueofeachproperty_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_marketvalueofeachproperty_base");
 			}
 		}
 		
@@ -1166,40 +1222,6 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_meetingtheneedsoftheclientgroup");
 				this.SetAttributeValue("invln_meetingtheneedsoftheclientgroup", value);
 				this.OnPropertyChanged("invln_meetingtheneedsoftheclientgroup");
-			}
-		}
-		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_meetingwheelchairstandards")]
-		public System.Nullable<bool> invln_meetingwheelchairstandards
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<System.Nullable<bool>>("invln_meetingwheelchairstandards");
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("invln_meetingwheelchairstandards");
-				this.SetAttributeValue("invln_meetingwheelchairstandards", value);
-				this.OnPropertyChanged("invln_meetingwheelchairstandards");
-			}
-		}
-		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_meetingwheelchairstandardsname")]
-		public string invln_meetingwheelchairstandardsName
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				if (this.FormattedValues.Contains("invln_meetingwheelchairstandards"))
-				{
-					return this.FormattedValues["invln_meetingwheelchairstandards"];
-				}
-				else
-				{
-					return default(string);
-				}
 			}
 		}
 		
@@ -1458,23 +1480,6 @@ namespace DataverseModel
 			}
 		}
 		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_prospectiverent")]
-		public System.Nullable<decimal> invln_prospectiverent
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<System.Nullable<decimal>>("invln_prospectiverent");
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("invln_prospectiverent");
-				this.SetAttributeValue("invln_prospectiverent", value);
-				this.OnPropertyChanged("invln_prospectiverent");
-			}
-		}
-		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_prospectiverentasofmarketrent")]
 		public System.Nullable<decimal> invln_prospectiverentasofmarketrent
 		{
@@ -1492,6 +1497,36 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_prospectiverentperweek")]
+		public Microsoft.Xrm.Sdk.Money invln_ProspectiveRentperWeek
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_prospectiverentperweek");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_ProspectiveRentperWeek");
+				this.SetAttributeValue("invln_prospectiverentperweek", value);
+				this.OnPropertyChanged("invln_ProspectiveRentperWeek");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Prospective Rent per Week in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_prospectiverentperweek_base")]
+		public Microsoft.Xrm.Sdk.Money invln_prospectiverentperweek_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_prospectiverentperweek_base");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_reasonsforrtsoexemption")]
 		public string invln_reasonsforrtsoexemption
 		{
@@ -1506,6 +1541,113 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_reasonsforrtsoexemption");
 				this.SetAttributeValue("invln_reasonsforrtsoexemption", value);
 				this.OnPropertyChanged("invln_reasonsforrtsoexemption");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_rentasofunsoldshare")]
+		public System.Nullable<decimal> invln_RentasofUnsoldShare
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_rentasofunsoldshare");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_RentasofUnsoldShare");
+				this.SetAttributeValue("invln_rentasofunsoldshare", value);
+				this.OnPropertyChanged("invln_RentasofUnsoldShare");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_renttobuymarketrent")]
+		public Microsoft.Xrm.Sdk.Money invln_RenttoBuyMarketRent
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_renttobuymarketrent");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_RenttoBuyMarketRent");
+				this.SetAttributeValue("invln_renttobuymarketrent", value);
+				this.OnPropertyChanged("invln_RenttoBuyMarketRent");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Rent to Buy - Market Rent in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_renttobuymarketrent_base")]
+		public Microsoft.Xrm.Sdk.Money invln_renttobuymarketrent_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_renttobuymarketrent_base");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_renttobuymarketvalue")]
+		public Microsoft.Xrm.Sdk.Money invln_RenttoBuyMarketValue
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_renttobuymarketvalue");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_RenttoBuyMarketValue");
+				this.SetAttributeValue("invln_renttobuymarketvalue", value);
+				this.OnPropertyChanged("invln_RenttoBuyMarketValue");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Rent to Buy - Market Value in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_renttobuymarketvalue_base")]
+		public Microsoft.Xrm.Sdk.Money invln_renttobuymarketvalue_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_renttobuymarketvalue_base");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_renttobuyprospectiverent")]
+		public Microsoft.Xrm.Sdk.Money invln_RenttoBuyProspectiveRent
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_renttobuyprospectiverent");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_RenttoBuyProspectiveRent");
+				this.SetAttributeValue("invln_renttobuyprospectiverent", value);
+				this.OnPropertyChanged("invln_RenttoBuyProspectiveRent");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Rent to Buy - Prospective Rent in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_renttobuyprospectiverent_base")]
+		public Microsoft.Xrm.Sdk.Money invln_renttobuyprospectiverent_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_renttobuyprospectiverent_base");
 			}
 		}
 		
@@ -1671,6 +1813,164 @@ namespace DataverseModel
 				if (this.FormattedValues.Contains("invln_rtsoexempt"))
 				{
 					return this.FormattedValues["invln_rtsoexempt"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_sharedownershipinitialsale")]
+		public System.Nullable<decimal> invln_SharedOwnershipInitialSale
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_sharedownershipinitialsale");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_SharedOwnershipInitialSale");
+				this.SetAttributeValue("invln_sharedownershipinitialsale", value);
+				this.OnPropertyChanged("invln_SharedOwnershipInitialSale");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_sharedownershipmarketvalue")]
+		public Microsoft.Xrm.Sdk.Money invln_SharedOwnershipMarketvalue
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_sharedownershipmarketvalue");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_SharedOwnershipMarketvalue");
+				this.SetAttributeValue("invln_sharedownershipmarketvalue", value);
+				this.OnPropertyChanged("invln_SharedOwnershipMarketvalue");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Shared Ownership - Market value in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_sharedownershipmarketvalue_base")]
+		public Microsoft.Xrm.Sdk.Money invln_sharedownershipmarketvalue_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_sharedownershipmarketvalue_base");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_socialrentmarketvalue")]
+		public Microsoft.Xrm.Sdk.Money invln_SocialRentMarketValue
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_socialrentmarketvalue");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_SocialRentMarketValue");
+				this.SetAttributeValue("invln_socialrentmarketvalue", value);
+				this.OnPropertyChanged("invln_SocialRentMarketValue");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Social Rent - Market Value in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_socialrentmarketvalue_base")]
+		public Microsoft.Xrm.Sdk.Money invln_socialrentmarketvalue_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_socialrentmarketvalue_base");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_socialrentprospectiverent")]
+		public Microsoft.Xrm.Sdk.Money invln_SocialRentProspectiveRent
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_socialrentprospectiverent");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_SocialRentProspectiveRent");
+				this.SetAttributeValue("invln_socialrentprospectiverent", value);
+				this.OnPropertyChanged("invln_SocialRentProspectiveRent");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Social Rent - Prospective Rent in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_socialrentprospectiverent_base")]
+		public Microsoft.Xrm.Sdk.Money invln_socialrentprospectiverent_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_socialrentprospectiverent_base");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_socialrentreasonsforrtsoexemption")]
+		public string invln_SocialRentReasonsforRtSOExemption
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("invln_socialrentreasonsforrtsoexemption");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_SocialRentReasonsforRtSOExemption");
+				this.SetAttributeValue("invln_socialrentreasonsforrtsoexemption", value);
+				this.OnPropertyChanged("invln_SocialRentReasonsforRtSOExemption");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_socialrentrtsoexempt")]
+		public System.Nullable<bool> invln_SocialRentRtSOExempt
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_socialrentrtsoexempt");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_SocialRentRtSOExempt");
+				this.SetAttributeValue("invln_socialrentrtsoexempt", value);
+				this.OnPropertyChanged("invln_SocialRentRtSOExempt");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_socialrentrtsoexemptname")]
+		public string invln_socialrentrtsoexemptName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_socialrentrtsoexempt"))
+				{
+					return this.FormattedValues["invln_socialrentrtsoexempt"];
 				}
 				else
 				{
@@ -2299,6 +2599,43 @@ namespace DataverseModel
 				this.OnPropertyChanging("TimeZoneRuleVersionNumber");
 				this.SetAttributeValue("timezoneruleversionnumber", value);
 				this.OnPropertyChanged("TimeZoneRuleVersionNumber");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the currency associated with the entity.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("transactioncurrencyid")]
+		public Microsoft.Xrm.Sdk.EntityReference TransactionCurrencyId
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("transactioncurrencyid");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("TransactionCurrencyId");
+				this.SetAttributeValue("transactioncurrencyid", value);
+				this.OnPropertyChanged("TransactionCurrencyId");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("transactioncurrencyidname")]
+		public string TransactionCurrencyIdName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("transactioncurrencyid"))
+				{
+					return this.FormattedValues["transactioncurrencyid"];
+				}
+				else
+				{
+					return default(string);
+				}
 			}
 		}
 		

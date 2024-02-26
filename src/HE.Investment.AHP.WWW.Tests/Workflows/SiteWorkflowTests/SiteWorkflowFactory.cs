@@ -14,7 +14,6 @@ public static class SiteWorkflowFactory
         SiteWorkflowState currentSiteWorkflowState,
         Section106Dto? section106 = null,
         LocalAuthority? localAuthority = null,
-        string? name = null,
         SitePlanningDetails? planningDetails = null,
         BuildingForHealthyLifeType buildingForHealthyLife = BuildingForHealthyLifeType.Undefined,
         NumberOfGreenLights? numberOfGreenLights = null,
@@ -31,7 +30,7 @@ public static class SiteWorkflowFactory
     {
         var site = new SiteModel
         {
-            Name = name,
+            Name = "some site",
             Section106 = section106,
             LocalAuthority = localAuthority,
             PlanningDetails = planningDetails ?? new SitePlanningDetails(SitePlanningStatus.Undefined),

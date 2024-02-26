@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.FinancialDetails;
 
-public class ContributionsTests : ViewTestBase
+public class ContributionsTests : AhpViewTestBase
 {
     private readonly string _viewPath = "/Views/FinancialDetails/Contributions.cshtml";
 

@@ -9,7 +9,7 @@
     <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.Section106OnlyAffordableHousing" />
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
-    <form asp-controller="Site" asp-action="Section106OnlyAffordableHousing" asp-method="post" novalidate>
+    <form asp-controller="Site" asp-action="Section106OnlyAffordableHousing" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
         <vc:page-header title="@SitePageTitles.SiteSection106OnlyAffordableHousing" caption="@Model.SiteName" />
 
         <vc:radio-yes-no field-name="@nameof(Model.OnlyAffordableHousing)"

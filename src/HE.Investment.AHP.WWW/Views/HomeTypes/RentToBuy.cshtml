@@ -6,6 +6,8 @@
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.Extensions
 @using HE.Investment.AHP.Contract.HomeTypes
+@using HE.Investment.AHP.WWW.Config
+@inject IExternalLinks ExternalLinks
 @model HE.Investment.AHP.WWW.Models.HomeTypes.RentToBuyModel;
 
 @{
@@ -88,7 +90,7 @@
                 }
 
                 <gds-p class="govuk-!-margin-top-1">
-                    @(Model.ProspectiveRentAsPercentageOfMarketRent.IsProvided() ? $"{Model.ProspectiveRentAsPercentageOfMarketRent}%"
+                    @(Model.ProspectiveRentAsPercentageOfMarketRent.IsProvided() ? $"{Model.ProspectiveRentAsPercentageOfMarketRent}"
                         : "To calculate the rent as percentage of market rent, enter the market rent per week and the rent per week. Then select the calculate button.")
                 </gds-p>
 
@@ -107,7 +109,7 @@
                     <div class="govuk-details__text">
                         Target rent is also known as "formula rent".
                         <a class="govuk-link" target="_blank"
-                           href="https://www.gov.uk/government/publications/direction-on-the-rent-standard-from-1-april-2020/policy-statement-on-rents-for-social-housing">
+                           href="@ExternalLinks.PolicyStatementOnRentsForSocialHousing">
                             Find out more information on our Rent Policy Statement (opens in the new tab).
                         </a>
                     </div>

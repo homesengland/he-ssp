@@ -12,4 +12,6 @@ public enum ApplicationWorkflowState
     RequestToEdit,
     Withdraw,
     CheckAnswers,
+    Submit,
+    Completed,
 }

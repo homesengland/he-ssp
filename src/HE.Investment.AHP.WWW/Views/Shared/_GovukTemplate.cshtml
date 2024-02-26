@@ -1,3 +1,5 @@
+@using HE.Investment.AHP.WWW.Config
+@inject IExternalLinks ExternalLinks
 @{
     var currentUri = $"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.PathBase}{Context.Request.Path}{Context.Request.QueryString}";
     var redirectUri = Context.Request.Query.ContainsKey("redirectUri") ? Context.Request.Query["redirectUri"].ToString() : currentUri;
@@ -52,7 +54,7 @@
         @RenderSection("CookieBanner", required: false)
         <div class="govuk-header__container govuk-width-container">
             <div class="govuk-header__logo">
-                <a href="https://www.gov.uk/" class="govuk-header__link govuk-header__link--homepage">
+                <a href="@ExternalLinks.GovUk" class="govuk-header__link govuk-header__link--homepage">
                     <span class="govuk-header__logotype">
                         <svg aria-hidden="true"
                              focusable="false"
@@ -143,7 +145,7 @@
                             </a>
                         </li>
                         <li class="govuk-footer__inline-list-item">
-                            <a class="govuk-footer__link" href="https://www.gov.uk/government/publications/homes-england-privacy-notice/homes-england-privacy-notice#help-to-build-equity-loan" target="_blank">
+                            <a class="govuk-footer__link" href="@ExternalLinks.HomesEnglandPrivacyNotice" target="_blank">
                                 Government Digital Service
                             </a>
                         </li>
@@ -163,7 +165,7 @@
                         <span class="govuk-footer__licence-description">
                             All content is available under the
                             <a class="govuk-footer__link"
-                               href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+                               href="@ExternalLinks.OpenGovernmentLicence"
                                rel="license">
                                 Open Government Licence v3.0
                             </a>, except where otherwise stated
@@ -172,7 +174,7 @@
                 </div>
                 <div class="govuk-footer__meta-item">
                     <a class="govuk-footer__link govuk-footer__copyright-logo"
-                       href="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/">
+                       href="@ExternalLinks.UkGovernmentLicensingFramework">
                         © Crown copyright
                     </a>
                 </div>

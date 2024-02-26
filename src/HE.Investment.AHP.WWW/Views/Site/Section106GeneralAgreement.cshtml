@@ -11,7 +11,7 @@
     <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.Section106GeneralAgreement" />
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
-    <form asp-controller="Site" asp-action="Section106GeneralAgreement" asp-method="post" novalidate>
+    <form asp-controller="Site" asp-action="Section106GeneralAgreement" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
         <vc:page-header title="@SitePageTitles.SiteSection106Agreement" caption="@Model.SiteName"/>
         <gds-p>
             You'll need to provide details of any section 106 agreements (or planning conditions

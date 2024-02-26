@@ -13,7 +13,7 @@
 
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
-    <form asp-controller="DeliveryPhase" asp-action="AddHomes" asp-method="post" asp-route-redirect="@Context.Request.Query["redirect"]" novalidate>
+    <form asp-controller="DeliveryPhase" asp-action="AddHomes" asp-method="post" asp-route-workflow="@Context.Request.Query["workflow"]" novalidate>
         <vc:page-header caption="@($"{Model.ApplicationName} - {Model.DeliveryPhaseName}")" title="@title"/>
 
         <gds-p>Enter the number of homes from each home type that will be delivered in this phase.</gds-p>

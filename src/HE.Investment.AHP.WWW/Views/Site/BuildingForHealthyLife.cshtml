@@ -7,6 +7,8 @@
 @using HE.Investments.Common.WWW.Components.Details
 @using HE.Investments.Common.WWW.Components.RadioList
 @using HE.Investments.Common.WWW.Helpers
+@using HE.Investment.AHP.WWW.Config
+@inject IExternalLinks ExternalLinks
 
 @model SiteModel
 @{
@@ -16,7 +18,7 @@
         {
             title = "What are the Building for a Healthy Life criteria?",
             contentText = "Building for a Healthy Life is a design code to help people improve the design of new and growing neighbourhoods. You can read more in the",
-            linkUrl = "https://www.designforhomes.org/wp-content/uploads/2020/11/BFL-2020-Brochure.pdf",
+            linkUrl = ExternalLinks.BuildingForHealthyLifeBrochure,
             linkText = "Building for a Healthy life toolkit (opens in a new tab).",
             header = SitePageTitles.BuildingForHealthyLife
         });
@@ -26,7 +28,7 @@
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <vc:page-header caption="@Model.Name" title="@SitePageTitles.BuildingForHealthyLife"/>
 
-    <form asp-controller="Site" asp-action="BuildingForHealthyLife" asp-method="post" novalidate>
+    <form asp-controller="Site" asp-action="BuildingForHealthyLife" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
         <vc:radio-list
             additional-content="@details"
             field-name="@nameof(Model.BuildingForHealthyLife)"

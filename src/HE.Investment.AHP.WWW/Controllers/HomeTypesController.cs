@@ -17,6 +17,7 @@ using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.Workflow;
@@ -27,7 +28,6 @@ using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Routing;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.WebUtilities;
 
 namespace HE.Investment.AHP.WWW.Controllers;
 
@@ -85,7 +85,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
 
     [WorkflowState(HomeTypesWorkflowState.List)]
     [HttpPost("list")]
-    public async Task<IActionResult> List([FromRoute] string applicationId, HomeTypeListModel model, string action, CancellationToken cancellationToken)
+    public async Task<IActionResult> List([FromRoute] string applicationId, HomeTypeListModel model, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new SaveFinishHomeTypesAnswerCommand(AhpApplicationId.From(applicationId), FinishHomeTypesAnswer.Yes, true), cancellationToken);
         if (result.HasValidationErrors)
@@ -109,11 +109,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
 
     [WorkflowState(HomeTypesWorkflowState.FinishHomeTypes)]
     [HttpPost("finish")]
-    public async Task<IActionResult> FinishHomeTypes(
-        [FromRoute] string applicationId,
-        FinishHomeTypeModel model,
-        string action,
-        CancellationToken cancellationToken)
+    public async Task<IActionResult> FinishHomeTypes([FromRoute] string applicationId, FinishHomeTypeModel model, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new SaveFinishHomeTypesAnswerCommand(AhpApplicationId.From(applicationId), model.FinishAnswer), cancellationToken);
         if (result.HasValidationErrors)
@@ -158,6 +154,13 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         return RedirectToAction("List", new { applicationId });
     }
 
+    [HttpGet("{homeTypeId}/start")]
+    public async Task<IActionResult> Start([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
+    {
+        var summary = await GetHomeTypeAndCreateSummary(Url, applicationId, homeTypeId, false, cancellationToken);
+        return this.ContinueSectionAnswering(summary, () => RedirectToAction("CheckAnswers", new { applicationId, homeTypeId }));
+    }
+
     [WorkflowState(HomeTypesWorkflowState.NewHomeTypeDetails)]
     [HttpGet("details")]
     public async Task<IActionResult> NewHomeTypeDetails([FromRoute] string applicationId, CancellationToken cancellationToken)
@@ -178,31 +181,8 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
 
     [WorkflowState(HomeTypesWorkflowState.HomeTypeDetails)]
     [HttpGet("{homeTypeId}/details")]
-    public async Task<IActionResult> HomeTypeDetails(
-        [FromRoute] string applicationId,
-        string homeTypeId,
-        [FromQuery] bool redirect,
-        CancellationToken cancellationToken)
+    public async Task<IActionResult> HomeTypeDetails([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
     {
-        var homeType = await _mediator.Send(new GetFullHomeTypeQuery(AhpApplicationId.From(applicationId), HomeTypeId.From(homeTypeId)), cancellationToken);
-        var isReadOnly = !await _accountAccessContext.CanEditApplication() || homeType.IsReadOnly;
-        if (isReadOnly)
-        {
-            return RedirectToAction("CheckAnswers", new { applicationId, homeTypeId });
-        }
-
-        if (redirect)
-        {
-            var firstNotAnsweredQuestion = _summaryViewModelFactory
-                .CreateSummaryModel(homeType, Url, isReadOnly)
-                .Where(x => x.Items != null)
-                .SelectMany(x => x.Items!)
-                .FirstOrDefault(x => x is { HasAnswer: false, HasRedirectAction: true });
-            return firstNotAnsweredQuestion != null
-                ? Redirect(firstNotAnsweredQuestion.ActionUrl!)
-                : RedirectToAction("CheckAnswers", new { applicationId, homeTypeId });
-        }
-
         var homeTypeDetails = await _mediator.Send(new GetHomeTypeDetailsQuery(AhpApplicationId.From(applicationId), HomeTypeId.From(homeTypeId)), cancellationToken);
         return View(new HomeTypeDetailsModel(homeTypeDetails.ApplicationName)
         {
@@ -448,7 +428,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
             throw new DomainValidationException(result);
         }
 
-        TryGetWorkflowQueryParameter(out var workflow);
+        Request.TryGetWorkflowQueryParameter(out var workflow);
         return RedirectToAction("DesignPlans", new { applicationId, homeTypeId, workflow });
     }
 
@@ -863,7 +843,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
             MarketValue = CurrencyHelper.InputPounds(tenureDetails.MarketValue),
             MarketRent = CurrencyHelper.InputPoundsPences(tenureDetails.MarketRent),
             ProspectiveRent = CurrencyHelper.InputPoundsPences(tenureDetails.ProspectiveRent),
-            ProspectiveRentAsPercentageOfMarketRent = tenureDetails.ProspectiveRentAsPercentageOfMarketRent?.ToString("0", CultureInfo.InvariantCulture),
+            ProspectiveRentAsPercentageOfMarketRent = tenureDetails.ProspectiveRentAsPercentageOfMarketRent.ToWholePercentage(),
             TargetRentExceedMarketRent = tenureDetails.TargetRentExceedMarketRent,
         };
 
@@ -891,7 +871,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
                     model.TargetRentExceedMarketRent),
                 cancellationToken);
             this.AddOrderedErrors<AffordableRentModel>(operationResult);
-            model.ProspectiveRentAsPercentageOfMarketRent = calculationResult.ProspectiveRentPercentage?.ToString("0", CultureInfo.InvariantCulture);
+            model.ProspectiveRentAsPercentageOfMarketRent = calculationResult.ProspectiveRentPercentage.ToWholePercentage();
             return View(model);
         }
 
@@ -956,11 +936,11 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         var model = new SharedOwnershipModel(tenureDetails.ApplicationName, tenureDetails.HomeTypeName)
         {
             MarketValue = CurrencyHelper.InputPounds(tenureDetails.MarketValue),
-            InitialSale = tenureDetails.InitialSale?.ToString(CultureInfo.InvariantCulture),
+            InitialSale = tenureDetails.InitialSale.ToWholePercentage(),
             ExpectedFirstTranche = tenureDetails.ExpectedFirstTranche.DisplayPoundsPences(),
             ProspectiveRent = CurrencyHelper.InputPoundsPences(tenureDetails.ProspectiveRent),
             RentAsPercentageOfTheUnsoldShare =
-                tenureDetails.RentAsPercentageOfTheUnsoldShare?.ToString("0.##", CultureInfo.InvariantCulture),
+                tenureDetails.RentAsPercentageOfTheUnsoldShare.ToPercentageWithTwoDecimal().WithoutPercentageChar(),
         };
 
         return View(model);
@@ -987,7 +967,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
                 cancellationToken);
 
             model.ExpectedFirstTranche = calculationResult.ExpectedFirstTranche.DisplayPoundsPences();
-            model.RentAsPercentageOfTheUnsoldShare = calculationResult.ProspectiveRentPercentage?.ToString("0.##", CultureInfo.InvariantCulture);
+            model.RentAsPercentageOfTheUnsoldShare = calculationResult.ProspectiveRentPercentage.ToPercentageWithTwoDecimal();
 
             this.AddOrderedErrors<SharedOwnershipModel>(operationResult);
 
@@ -1024,7 +1004,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
             MarketValue = CurrencyHelper.InputPounds(tenureDetails.MarketValue),
             MarketRent = CurrencyHelper.InputPoundsPences(tenureDetails.MarketRent),
             ProspectiveRent = CurrencyHelper.InputPoundsPences(tenureDetails.ProspectiveRent),
-            ProspectiveRentAsPercentageOfMarketRent = tenureDetails.ProspectiveRentAsPercentageOfMarketRent?.ToString("00.00", CultureInfo.InvariantCulture),
+            ProspectiveRentAsPercentageOfMarketRent = tenureDetails.ProspectiveRentAsPercentageOfMarketRent.ToPercentageWithTwoDecimal(),
             TargetRentExceedMarketRent = tenureDetails.TargetRentExceedMarketRent,
         };
 
@@ -1052,7 +1032,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
                     model.TargetRentExceedMarketRent),
                 cancellationToken);
             this.AddOrderedErrors<RentToBuyModel>(operationResult);
-            model.ProspectiveRentAsPercentageOfMarketRent = calculationResult.ProspectiveRentPercentage?.ToString("0", CultureInfo.InvariantCulture);
+            model.ProspectiveRentAsPercentageOfMarketRent = calculationResult.ProspectiveRentPercentage?.ToWholePercentage();
 
             return View(model);
         }
@@ -1084,11 +1064,10 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         var model = new HomeOwnershipDisabilitiesModel(tenureDetails.ApplicationName, tenureDetails.HomeTypeName)
         {
             MarketValue = CurrencyHelper.InputPounds(tenureDetails.MarketValue),
-            InitialSale = tenureDetails.InitialSale?.ToString(CultureInfo.InvariantCulture),
+            InitialSale = tenureDetails.InitialSale.ToWholePercentage().WithoutPercentageChar(),
             ExpectedFirstTranche = tenureDetails.ExpectedFirstTranche.DisplayPoundsPences(),
             ProspectiveRent = CurrencyHelper.InputPoundsPences(tenureDetails.ProspectiveRent),
-            RentAsPercentageOfTheUnsoldShare =
-                tenureDetails.RentAsPercentageOfTheUnsoldShare?.ToString("0.##", CultureInfo.InvariantCulture),
+            RentAsPercentageOfTheUnsoldShare = tenureDetails.RentAsPercentageOfTheUnsoldShare.ToPercentageWithTwoDecimal(),
         };
 
         return View(model);
@@ -1115,7 +1094,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
                 cancellationToken);
 
             model.ExpectedFirstTranche = calculationResult.ExpectedFirstTranche.DisplayPoundsPences();
-            model.RentAsPercentageOfTheUnsoldShare = calculationResult.ProspectiveRentPercentage?.ToString("0.##", CultureInfo.InvariantCulture);
+            model.RentAsPercentageOfTheUnsoldShare = calculationResult.ProspectiveRentPercentage.ToPercentageWithTwoDecimal();
 
             this.AddOrderedErrors<HomeOwnershipDisabilitiesModel>(operationResult);
             return View(model);
@@ -1140,11 +1119,11 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         var model = new OlderPersonsSharedOwnershipModel(tenureDetails.ApplicationName, tenureDetails.HomeTypeName)
         {
             MarketValue = CurrencyHelper.InputPounds(tenureDetails.MarketValue),
-            InitialSale = tenureDetails.InitialSale?.ToString(CultureInfo.InvariantCulture),
+            InitialSale = tenureDetails.InitialSale.ToWholePercentage().WithoutPercentageChar(),
             ExpectedFirstTranche = tenureDetails.ExpectedFirstTranche.DisplayPoundsPences(),
             ProspectiveRent = CurrencyHelper.InputPoundsPences(tenureDetails.ProspectiveRent),
             RentAsPercentageOfTheUnsoldShare =
-                tenureDetails.RentAsPercentageOfTheUnsoldShare?.ToString("0.##", CultureInfo.InvariantCulture),
+                tenureDetails.RentAsPercentageOfTheUnsoldShare.ToPercentageWithTwoDecimal().WithoutPercentageChar(),
         };
 
         return View(model);
@@ -1171,7 +1150,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
                 cancellationToken);
 
             model.ExpectedFirstTranche = calculationResult.ExpectedFirstTranche.DisplayPoundsPences();
-            model.RentAsPercentageOfTheUnsoldShare = calculationResult.ProspectiveRentPercentage?.ToString("0.##", CultureInfo.InvariantCulture);
+            model.RentAsPercentageOfTheUnsoldShare = calculationResult.ProspectiveRentPercentage.ToPercentageWithTwoDecimal();
 
             this.AddOrderedErrors<OlderPersonsSharedOwnershipModel>(operationResult);
             return View(model);
@@ -1340,7 +1319,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     [HttpGet("{homeTypeId}/check-answers")]
     public async Task<IActionResult> CheckAnswers([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
     {
-        return View(await GetHomeTypeAndCreateSummary(Url, applicationId, homeTypeId, cancellationToken));
+        return View(await GetHomeTypeAndCreateSummary(Url, applicationId, homeTypeId, true, cancellationToken));
     }
 
     [WorkflowState(HomeTypesWorkflowState.CheckAnswers)]
@@ -1355,7 +1334,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
-            return View("CheckAnswers", await GetHomeTypeAndCreateSummary(Url, applicationId, homeTypeId, cancellationToken));
+            return View("CheckAnswers", await GetHomeTypeAndCreateSummary(Url, applicationId, homeTypeId, true, cancellationToken));
         }
 
         return RedirectToAction("List", new { applicationId });
@@ -1381,7 +1360,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         var homeType = await _mediator.Send(new GetHomeTypeQuery(AhpApplicationId.From(applicationId), HomeTypeId.From(homeTypeId)));
         isReadOnly = isReadOnly || homeType.IsReadOnly;
         var workflow = new HomeTypesWorkflow(currentState, homeType, isReadOnly);
-        if (TryGetWorkflowQueryParameter(out var lastEncodedWorkflow))
+        if (Request.TryGetWorkflowQueryParameter(out var lastEncodedWorkflow))
         {
             var lastWorkflow = new EncodedWorkflow<HomeTypesWorkflowState>(lastEncodedWorkflow);
             var currentWorkflow = workflow.GetEncodedWorkflow();
@@ -1437,39 +1416,28 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
 
     private string GetDesignFileAction(string actionName, string applicationId, string homeTypeId, FileId fileId)
     {
-        TryGetWorkflowQueryParameter(out var workflow);
+        Request.TryGetWorkflowQueryParameter(out var workflow);
         return Url.Action($"{actionName}DesignPlansFile", "HomeTypes", new { applicationId, homeTypeId, fileId = fileId.Value, workflow }) ?? string.Empty;
     }
 
     private async Task<IActionResult> ProcessAction(AhpApplicationId applicationId, HomeTypeId homeTypeId)
     {
         return await this.ReturnToTaskListOrContinue(
-            async () => TryGetWorkflowQueryParameter(out var workflow)
+            async () => Request.TryGetWorkflowQueryParameter(out var workflow)
                 ? await Continue(new { applicationId = applicationId.Value, homeTypeId = homeTypeId.Value, workflow })
                 : await Continue(new { applicationId = applicationId.Value, homeTypeId = homeTypeId.Value }));
-    }
-
-    private bool TryGetWorkflowQueryParameter(out string workflow)
-    {
-        if (QueryHelpers.ParseQuery(Request.QueryString.Value).TryGetValue("workflow", out var lastEncodedWorkflow))
-        {
-            workflow = lastEncodedWorkflow.ToString();
-            return true;
-        }
-
-        workflow = string.Empty;
-        return false;
     }
 
     private async Task<HomeTypeSummaryModel> GetHomeTypeAndCreateSummary(
         IUrlHelper urlHelper,
         string applicationId,
         string homeTypeId,
+        bool useWorkflowRedirection,
         CancellationToken cancellationToken)
     {
         var homeType = await _mediator.Send(new GetFullHomeTypeQuery(AhpApplicationId.From(applicationId), HomeTypeId.From(homeTypeId)), cancellationToken);
         var isEditable = await _accountAccessContext.CanEditApplication() && !homeType.IsReadOnly;
-        var sections = _summaryViewModelFactory.CreateSummaryModel(homeType, urlHelper, !isEditable, true);
+        var sections = _summaryViewModelFactory.CreateSummaryModel(homeType, urlHelper, !isEditable, useWorkflowRedirection);
 
         return new HomeTypeSummaryModel(homeType.ApplicationName, homeType.Name)
         {

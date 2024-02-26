@@ -1,5 +1,6 @@
 using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
+using HE.Investments.AHP.IntegrationTests.Extensions;
 using HE.Investments.IntegrationTestsFramework.Data;
 
 namespace HE.Investments.AHP.IntegrationTests.FillApplication.Data.HomeTypes;
@@ -99,7 +100,7 @@ public class HomesForDisabledPeopleData : HomeTypeDataBase<HomesForDisabledPeopl
     public HomesForDisabledPeopleData GenerateDesignPlans()
     {
         DesignFile = new FileEntry("design_plan.pdf", "application/pdf", new MemoryStream(new byte[] { 1, 2, 3 }));
-        DesignPlanInformation = GenerateTextField(nameof(DesignPlanInformation));
+        DesignPlanInformation = nameof(DesignPlanInformation).WithTimestampPrefix();
         return this;
     }
 
@@ -119,19 +120,19 @@ public class HomesForDisabledPeopleData : HomeTypeDataBase<HomesForDisabledPeopl
 
     public HomesForDisabledPeopleData GenerateMoveOnArrangements()
     {
-        MoveOnArrangements = GenerateTextField(nameof(MoveOnArrangements));
+        MoveOnArrangements = nameof(MoveOnArrangements).WithTimestampPrefix();
         return this;
     }
 
     public HomesForDisabledPeopleData GenerateExitPlan()
     {
-        ExitPlan = GenerateTextField(nameof(ExitPlan));
+        ExitPlan = nameof(ExitPlan).WithTimestampPrefix();
         return this;
     }
 
     public HomesForDisabledPeopleData GenerateTypologyLocationAndDesign()
     {
-        TypologyLocationAndDesign = GenerateTextField(nameof(TypologyLocationAndDesign));
+        TypologyLocationAndDesign = nameof(TypologyLocationAndDesign).WithTimestampPrefix();
         return this;
     }
 

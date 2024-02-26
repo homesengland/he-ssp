@@ -4,7 +4,7 @@ namespace HE.Investment.AHP.Contract.Site;
 
 public enum SiteStatus
 {
-    [Description("Not Ready")]
-    NotReady,
+    [Description("In progress")]
+    InProgress,
     Completed,
 }

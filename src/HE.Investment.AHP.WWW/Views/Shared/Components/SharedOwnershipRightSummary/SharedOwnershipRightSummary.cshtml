@@ -1,3 +1,5 @@
+@using HE.Investment.AHP.WWW.Config
+@inject IExternalLinks ExternalLinks
 <details class="govuk-details govuk-!-margin-bottom-6" data-module="govuk-details">
     <summary class="govuk-details__summary">
         <span class="govuk-details__summary-text">
@@ -7,7 +9,7 @@
     <div class="govuk-details__text">
         The Right to Shared Ownership applies to all new rented homes delivered through the Affordable Homes Programme 2021-26, with limited exceptions.
         <a class="govuk-link" target="_blank"
-           href="https://www.gov.uk/government/publications/right-to-shared-ownership-initial-guidance-for-registered-providers/right-to-shared-ownership-initial-guidance-for-registered-providers">
+           href="@ExternalLinks.RightToSharedOwnershipInitialGuidanceForRegisteredProviders">
             Read about the Right to Shared Ownership and the types of property that are in scope (opens in the new tab).
         </a>
     </div>

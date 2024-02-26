@@ -1,10 +1,8 @@
 using HE.Investment.AHP.Contract.Site;
-using HE.Investments.Common.Domain;
-using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.Domain.Site.ValueObjects.Planning.PlanningDetailsTypes;
 
-public class NoProgressOnPlanningApplicationPlanningDetails : PlanningDetails, IQuestion
+public class NoProgressOnPlanningApplicationPlanningDetails : PlanningDetails
 {
     public NoProgressOnPlanningApplicationPlanningDetails(
         ExpectedPlanningApprovalDate? expectedPlanningApprovalDate = null,
@@ -15,8 +13,9 @@ public class NoProgressOnPlanningApplicationPlanningDetails : PlanningDetails, I
 
     public override SitePlanningStatus? PlanningStatus => SitePlanningStatus.NoProgressOnPlanningApplication;
 
-    public override bool IsAnswered()
+    protected override IReadOnlyCollection<string> ActiveFields => new[]
     {
-        return ExpectedPlanningApprovalDate.IsProvided() && LandRegistryDetails != null && LandRegistryDetails.IsAnswered();
-    }
+        nameof(ExpectedPlanningApprovalDate),
+        nameof(LandRegistryDetails),
+    };
 }

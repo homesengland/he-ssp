@@ -25,6 +25,8 @@ public interface IApplicationRepository : IChangeApplicationStatus
         PaginationRequest paginationRequest,
         CancellationToken cancellationToken);
 
+    Task<ApplicationWithFundingDetails> GetApplicationWithFundingDetailsById(AhpApplicationId id, UserAccount userAccount, CancellationToken cancellationToken);
+
     Task<PaginationResult<ApplicationWithFundingDetails>> GetSiteApplications(
         SiteId siteId,
         UserAccount userAccount,
