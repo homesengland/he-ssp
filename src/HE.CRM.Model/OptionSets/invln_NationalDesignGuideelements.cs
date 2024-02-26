@@ -45,6 +45,9 @@ namespace DataverseModel
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		JLifespan = 858110009,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Noneoftheabove = 858111000,
 	}
 }
 #pragma warning restore CS1591

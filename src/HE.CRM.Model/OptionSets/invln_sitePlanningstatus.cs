@@ -36,6 +36,9 @@ namespace DataverseModel
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		_7Noprogressyetonplanningapplication = 858110006,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		_8Noplanningrequired = 858110007,
 	}
 }
 #pragma warning restore CS1591
