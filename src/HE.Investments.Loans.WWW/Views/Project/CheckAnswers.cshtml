@@ -2,12 +2,10 @@
 @using HE.Investments.Loans.WWW.Views.Project.Consts
 @using HE.Investments.Loans.Contract.Application.Helper
 @using Microsoft.AspNetCore.Mvc.TagHelpers
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Headings
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
 @model HE.Investments.Loans.Contract.Projects.ViewModels.ProjectViewModel;
 
-<gds-div-grid-column-two-thirds>
+<he-div-grid-column-full>
     <form asp-controller="Project" asp-action="CheckAnswers" asp-route-id="@Model.ApplicationId" asp-route-projectId="@Model.ProjectId" asp-method="post" novalidate>
 
         <gds-back-link href="@Url.Action("Back", "Project", new {id = Model.ApplicationId, projectId = Model.ProjectId, currentPage = ProjectState.CheckAnswers})" text="Back" class="govuk-!-margin-bottom-8">
@@ -15,9 +13,8 @@
 
         <partial name="_ErrorSummaryPartial" model="null" />
 
-        <gds-h1 class="govuk-heading-xl">
-            @(ApplicationStatusDivision.GetAllStatusesAfterSubmit().Contains(Model.LoanApplicationStatus) ? @ProjectPageTitles.ReadOnlyAnswers : @ProjectPageTitles.CheckAnswers)
-        </gds-h1>
+        <vc:page-header title="@(ApplicationStatusDivision.GetAllStatusesAfterSubmit().Contains(Model.LoanApplicationStatus)
+                                   ? ProjectPageTitles.ReadOnlyAnswers : ProjectPageTitles.CheckAnswers)"/>
 
         <partial name="Sections/_ReadOnlyAdditionalInformation" model="Model"/>
 
@@ -25,4 +22,4 @@
 
         <partial name="Sections/_HaveYouCompletedThisSection" model="Model"/>
     </form>
-</gds-div-grid-column-two-thirds>
+</he-div-grid-column-full>

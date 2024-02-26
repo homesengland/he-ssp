@@ -1,7 +1,5 @@
-﻿@using HE.Investments.Common.Gds
-@using Microsoft.AspNetCore.Mvc.TagHelpers
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Headings
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Lists
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Paragraphs
@@ -13,15 +11,13 @@
         <gds-back-link href="@Url.Action("TaskList","LoanApplicationV2", new {id = Model.Value})" text="Back to application" class="govuk-!-margin-bottom-8">
         </gds-back-link>
 
-        <gds-h1 size="ControlSize.L">
-            Company structure and experience
-        </gds-h1>
+        <vc:page-header title="Organisation structure and residential building experience"/>
 
         <div class="govuk-!-padding-bottom-8">
             <gds-p>In this section, you’ll need to tell us:</gds-p>
             <gds-ul>
                 <gds-li>if your organisation was established for the sole purpose of delivering this project</gds-li>
-                <gds-li>how much residential experience your organisation has </gds-li>
+                <gds-li>how many homes you have previously built </gds-li>
             </gds-ul>
         </div>
         <gds-button-start name="action" type="submit" value="Continue" Id="start-now-button">
