@@ -1,7 +1,6 @@
 @using HE.Investments.Loans.BusinessLogic.LoanApplication
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Headings
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Lists
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Paragraphs
@@ -11,11 +10,9 @@
     <form asp-controller="LoanApplicationV2" asp-action="AboutLoanPost" asp-method="post" novalidate>
         <gds-back-link href="@Url.Action("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.AboutLoan})" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
 
-        <gds-h1 class="govuk-heading-xl">
-            What you need to know about the loan
-        </gds-h1>
+        <vc:page-header title="Before you apply for this loan"/>
 
-        <gds-p>Before continuing with your application, you must read the following information.</gds-p>
+        <gds-p>Before you apply, you must confirm you have read and agree with the following information.</gds-p>
 
         <gds-p>Homes England reserves the right to deny any application based on the information you provide us. Homes England cannot:</gds-p>
         <gds-ul>
@@ -24,9 +21,10 @@
             <gds-li>fund any developments outside England</gds-li>
         </gds-ul>
 
-        <gds-p>To secure any loan, Homes England also expects:</gds-p>
+        <gds-p>To secure any loan, Homes England usually/typically expects:</gds-p>
         <gds-ul>
-            <gds-li>a first ranking debenture and first legal charge over the development site</gds-li>
+            <gds-li>a first ranking debenture</gds-li>
+            <gds-li>a first legal charge over the development site</gds-li>
             <gds-li>any outstanding director or shareholder loans to be fully subordinated behind Homes England funding</gds-li>
         </gds-ul>
 

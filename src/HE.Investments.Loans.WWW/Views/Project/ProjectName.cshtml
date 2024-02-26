@@ -17,15 +17,11 @@
     </gds-back-link>
     <partial name="_ErrorSummaryPartial" model="null" />
     <form asp-controller="Project" asp-action="ProjectName" asp-route-id="@Model.ApplicationId" asp-route-projectId="@Model.ProjectId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
-            <gds-h1 size="@ControlSize.L">
-                    @ProjectPageTitles.Name
-            </gds-h1>
             <gds-div-form-group invalid="inputInvalid">
-
-                <label for="Name" class="govuk-label--m">What is the project name?</label>
+                <vc:page-header title="Add a name for this project"/>
 
                 <gds-div-hint>
-                    We will use this name to differentiate between projects if you have added more than one as part of this application.
+                    Each project needs a unique name.
                 </gds-div-hint>
 
                 <gds-input-wrapper class="govuk-!-margin-bottom-6">

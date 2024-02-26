@@ -12,7 +12,7 @@ public static class ProjectPageTitles
 
     public const string TypeHomes = "What type of homes are you building?";
 
-    public const string ProjectType = "What type of project is this?";
+    public const string ProjectType = "What land is this project going to be built on?";
 
     public const string PlanningReferenceNumberExists = "Do you have a planning reference number?";
 
@@ -32,7 +32,7 @@ public static class ProjectPageTitles
 
     public const string Ownership = "Do you have full ownership of this land?";
 
-    public const string AdditionalDetails = "Additional project details";
+    public const string AdditionalDetails = "Additional land details";
 
     public const string GrantFundingExists = "To the best of your knowledge, has this land received public sector grant funding?";
 
