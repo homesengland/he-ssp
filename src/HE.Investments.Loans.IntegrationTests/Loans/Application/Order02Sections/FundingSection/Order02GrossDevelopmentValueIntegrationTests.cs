@@ -37,7 +37,7 @@ public class Order02GrossDevelopmentValueIntegrationTests : IntegrationTest
         // then
         grossDevelopmentValuePage
             .UrlEndWith(FundingPageUrls.GrossDevelopmentValueSuffix)
-            .HasLabelTitle(FundingPageTitles.GrossDevelopmentValue)
+            .HasTitle(FundingPageTitles.GrossDevelopmentValue)
             .ContainsValidationMessage(ValidationErrorMessage.EstimatedPoundInput("GDV"));
 
         SetSharedData(SharedKeys.CurrentPageKey, grossDevelopmentValuePage);

@@ -1,23 +1,20 @@
 @model HE.Investments.Loans.Contract.Funding.FundingViewModel
-@using HE.Investments.Common.Gds
 @using HE.Investments.Loans.Contract.Application.Helper
 @using HE.Investments.Loans.Contract.Funding.Enums
 @using HE.Investments.Loans.WWW.Views.FundingV2.Consts
 @using Microsoft.AspNetCore.Mvc.TagHelpers
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Headings
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
 
-<gds-div-grid-column-two-thirds>
+<he-div-grid-column-full>
     <form asp-controller="FundingV2" asp-action="CheckAnswersPost" asp-route-id="@Model.LoanApplicationId" asp-method="post" novalidate>
         <gds-back-link href="@Url.Action("Back", "FundingV2", new { id = Model.LoanApplicationId, currentPage = FundingState.CheckAnswers })" text="Back" class="govuk-!-margin-bottom-8">
         </gds-back-link>
 
         <partial name="_ErrorSummaryPartial" model="null"/>
 
-        <gds-h1 size="ControlSize.L">
-            @(ApplicationStatusDivision.GetAllStatusesAfterSubmit().Contains(Model.LoanApplicationStatus) ? @FundingPageTitles.ReadOnlyAnswers : @FundingPageTitles.CheckAnswers)
-        </gds-h1>
+        <vc:page-header
+            title="@(ApplicationStatusDivision.GetAllStatusesAfterSubmit().Contains(Model.LoanApplicationStatus)
+                       ? FundingPageTitles.ReadOnlyAnswers : FundingPageTitles.CheckAnswers)"/>
 
         <partial name="Sections/_ReadOnlyAdditionalInformation" model="Model"/>
 
@@ -26,4 +23,4 @@
         <partial name="Sections/_HaveYouCompletedThisSection" model="Model"/>
 
     </form>
-</gds-div-grid-column-two-thirds>
+</he-div-grid-column-full>

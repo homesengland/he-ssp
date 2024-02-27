@@ -72,6 +72,8 @@ namespace DataverseModel
 			public const string invln_developercontributionsforahName = "invln_developercontributionsforahname";
 			public const string invln_expectedplanningapproval = "invln_expectedplanningapproval";
 			public const string invln_furtherstepsrequired = "invln_furtherstepsrequired";
+			public const string invln_grantfundingforallhomes = "invln_grantfundingforallhomes";
+			public const string invln_grantfundingforallhomesName = "invln_grantfundingforallhomesname";
 			public const string invln_greenbelt = "invln_greenbelt";
 			public const string invln_greenbeltName = "invln_greenbeltname";
 			public const string invln_homesintheapplicationareadditional = "invln_homesintheapplicationareadditional";
@@ -79,10 +81,16 @@ namespace DataverseModel
 			public const string invln_intentiontoworkwithsme = "invln_intentiontoworkwithsme";
 			public const string invln_intentiontoworkwithsmeName = "invln_intentiontoworkwithsmename";
 			public const string invln_invln_scheme_Site_invln_sites = "invln_invln_scheme_Site_invln_sites";
+			public const string invln_invlngrantfundingforallhomescoveredbytit = "invln_invlngrantfundingforallhomescoveredbytit";
+			public const string invln_invlngrantfundingforallhomescoveredbytitName = "invln_invlngrantfundingforallhomescoveredbytitname";
+			public const string invln_landregistrytitle = "invln_landregistrytitle";
+			public const string invln_landregistrytitleName = "invln_landregistrytitlename";
 			public const string invln_landregistrytitlenumber = "invln_landregistrytitlenumber";
 			public const string invln_landstatus = "invln_landstatus";
 			public const string invln_landstatusName = "invln_landstatusname";
+			public const string invln_LocalAuthority = "invln_localauthority";
 			public const string invln_localauthorityconfirmationofadditionality = "invln_localauthorityconfirmationofadditionality";
+			public const string invln_LocalAuthorityName = "invln_localauthorityname";
 			public const string invln_maincontractorname = "invln_maincontractorname";
 			public const string invln_mmcbarriers = "invln_mmcbarriers";
 			public const string invln_mmccategories = "invln_mmccategories";
@@ -114,6 +122,8 @@ namespace DataverseModel
 			public const string invln_reducingenvironmentalimpact = "invln_reducingenvironmentalimpact";
 			public const string invln_regensite = "invln_regensite";
 			public const string invln_regensiteName = "invln_regensitename";
+			public const string invln_Region = "invln_region";
+			public const string invln_RegionName = "invln_regionname";
 			public const string invln_Ruralclassification = "invln_ruralclassification";
 			public const string invln_ruralclassificationName = "invln_ruralclassificationname";
 			public const string invln_RuralExceptionSite = "invln_ruralexceptionsite";
@@ -124,6 +134,7 @@ namespace DataverseModel
 			public const string invln_siteis100affordableName = "invln_siteis100affordablename";
 			public const string invln_sitename = "invln_sitename";
 			public const string invln_SiteReferenceNumber = "invln_sitereferencenumber";
+			public const string invln_sites_LocalAuthority_invln_ahglocalauthor = "invln_sites_LocalAuthority_invln_ahglocalauthor";
 			public const string invln_SitesId = "invln_sitesid";
 			public const string Id = "invln_sitesid";
 			public const string invln_sme = "invln_sme";
@@ -588,6 +599,40 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_grantfundingforallhomes")]
+		public System.Nullable<bool> invln_grantfundingforallhomes
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_grantfundingforallhomes");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_grantfundingforallhomes");
+				this.SetAttributeValue("invln_grantfundingforallhomes", value);
+				this.OnPropertyChanged("invln_grantfundingforallhomes");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_grantfundingforallhomesname")]
+		public string invln_grantfundingforallhomesName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_grantfundingforallhomes"))
+				{
+					return this.FormattedValues["invln_grantfundingforallhomes"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_greenbelt")]
 		public System.Nullable<bool> invln_greenbelt
 		{
@@ -690,6 +735,77 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_invlngrantfundingforallhomescoveredbytit")]
+		public System.Nullable<bool> invln_invlngrantfundingforallhomescoveredbytit
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_invlngrantfundingforallhomescoveredbytit");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_invlngrantfundingforallhomescoveredbytit");
+				this.SetAttributeValue("invln_invlngrantfundingforallhomescoveredbytit", value);
+				this.OnPropertyChanged("invln_invlngrantfundingforallhomescoveredbytit");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_invlngrantfundingforallhomescoveredbytitname")]
+		public string invln_invlngrantfundingforallhomescoveredbytitName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_invlngrantfundingforallhomescoveredbytit"))
+				{
+					return this.FormattedValues["invln_invlngrantfundingforallhomescoveredbytit"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
+		/// <summary>
+		/// Land Registry Title
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_landregistrytitle")]
+		public System.Nullable<bool> invln_landregistrytitle
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_landregistrytitle");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_landregistrytitle");
+				this.SetAttributeValue("invln_landregistrytitle", value);
+				this.OnPropertyChanged("invln_landregistrytitle");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_landregistrytitlename")]
+		public string invln_landregistrytitleName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_landregistrytitle"))
+				{
+					return this.FormattedValues["invln_landregistrytitle"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_landregistrytitlenumber")]
 		public string invln_landregistrytitlenumber
 		{
@@ -741,6 +857,23 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_localauthority")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_LocalAuthority
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_localauthority");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_LocalAuthority");
+				this.SetAttributeValue("invln_localauthority", value);
+				this.OnPropertyChanged("invln_LocalAuthority");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_localauthorityconfirmationofadditionality")]
 		public string invln_localauthorityconfirmationofadditionality
 		{
@@ -755,6 +888,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_localauthorityconfirmationofadditionality");
 				this.SetAttributeValue("invln_localauthorityconfirmationofadditionality", value);
 				this.OnPropertyChanged("invln_localauthorityconfirmationofadditionality");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_localauthorityname")]
+		public string invln_LocalAuthorityName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_localauthority"))
+				{
+					return this.FormattedValues["invln_localauthority"];
+				}
+				else
+				{
+					return default(string);
+				}
 			}
 		}
 		
@@ -1277,6 +1427,40 @@ namespace DataverseModel
 				if (this.FormattedValues.Contains("invln_regensite"))
 				{
 					return this.FormattedValues["invln_regensite"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_region")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_Region
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_region");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_Region");
+				this.SetAttributeValue("invln_region", value);
+				this.OnPropertyChanged("invln_Region");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_regionname")]
+		public string invln_RegionName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_region"))
+				{
+					return this.FormattedValues["invln_region"];
 				}
 				else
 				{
@@ -2188,6 +2372,27 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_invln_scheme_Site_invln_sites");
 				this.SetRelatedEntities<DataverseModel.invln_scheme>("invln_invln_scheme_Site_invln_sites", null, value);
 				this.OnPropertyChanged("invln_invln_scheme_Site_invln_sites");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_sites_LocalAuthority_invln_ahglocalauthor
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_localauthority")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_sites_LocalAuthority_invln_ahglocalauthor")]
+		public DataverseModel.invln_AHGLocalAuthorities invln_sites_LocalAuthority_invln_ahglocalauthor
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.invln_AHGLocalAuthorities>("invln_sites_LocalAuthority_invln_ahglocalauthor", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_sites_LocalAuthority_invln_ahglocalauthor");
+				this.SetRelatedEntity<DataverseModel.invln_AHGLocalAuthorities>("invln_sites_LocalAuthority_invln_ahglocalauthor", null, value);
+				this.OnPropertyChanged("invln_sites_LocalAuthority_invln_ahglocalauthor");
 			}
 		}
 		

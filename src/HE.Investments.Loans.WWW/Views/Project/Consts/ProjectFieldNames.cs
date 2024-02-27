@@ -20,13 +20,13 @@ public static class ProjectFieldNames
 
     public const string Coordinates = "Location coordinates";
 
-    public const string LandRegistryTitleNumber = "Land registry title number";
+    public const string LandRegistryTitleNumber = "Land Registry title number";
 
     public const string LandOwnership = "Land ownership";
 
-    public const string AdditionalDetails = "Additional details";
+    public const string AdditionalDetails = "Additional land details";
 
-    public const string GrantFunding = "Additional information";
+    public const string GrantFunding = "Additional public sector grant funding information";
 
     public const string GrantFundingExists = "Public sector grant funding";
 

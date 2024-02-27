@@ -1,7 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
-using HE.Investment.AHP.Contract.HomeTypes.Enums;
+using System.Globalization;
+using FluentAssertions;
+using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.Site;
-using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investment.AHP.Domain.Site.ValueObjects;
 using HE.Investment.AHP.WWW;
 using HE.Investment.AHP.WWW.Models.Site;
@@ -10,6 +11,7 @@ using HE.Investments.AHP.IntegrationTests.Extensions;
 using HE.Investments.AHP.IntegrationTests.Framework;
 using HE.Investments.AHP.IntegrationTests.Pages;
 using HE.Investments.IntegrationTestsFramework;
+using HE.Investments.IntegrationTestsFramework.Assertions;
 using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
@@ -94,7 +96,7 @@ public class Order01StartAhpSite : AhpIntegrationTest
             SitePagesUrl.SiteSection106GeneralAgreement(SiteData.SiteId),
             SitePageTitles.SiteSection106Agreement,
             SitePagesUrl.SiteSection106AffordableHousing(SiteData.SiteId),
-            (nameof(SiteModel.Section106.GeneralAgreement), "True"));
+            (nameof(SiteModel.Section106.GeneralAgreement), SiteData.Section106GeneralAgreement.ToBoolAnswer()));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
@@ -105,7 +107,7 @@ public class Order01StartAhpSite : AhpIntegrationTest
             SitePagesUrl.SiteSection106AffordableHousing(SiteData.SiteId),
             SitePageTitles.SiteSection106AffordableHousing,
             SitePagesUrl.SiteSection106OnlyAffordableHousing(SiteData.SiteId),
-            (nameof(SiteModel.Section106.AffordableHousing), "True"));
+            (nameof(SiteModel.Section106.AffordableHousing), SiteData.Section106AffordableHousing.ToBoolAnswer()));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
@@ -116,7 +118,7 @@ public class Order01StartAhpSite : AhpIntegrationTest
             SitePagesUrl.SiteSection106OnlyAffordableHousing(SiteData.SiteId),
             SitePageTitles.SiteSection106OnlyAffordableHousing,
             SitePagesUrl.SiteSection106AdditionalAffordableHousing(SiteData.SiteId),
-            (nameof(SiteModel.Section106.OnlyAffordableHousing), "False"));
+            (nameof(SiteModel.Section106.OnlyAffordableHousing), SiteData.Section106OnlyAffordableHousing.ToBoolAnswer()));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
@@ -127,7 +129,7 @@ public class Order01StartAhpSite : AhpIntegrationTest
             SitePagesUrl.SiteSection106AdditionalAffordableHousing(SiteData.SiteId),
             SitePageTitles.SiteSection106AdditionalAffordableHousing,
             SitePagesUrl.SiteSection106CapitalFundingEligibility(SiteData.SiteId),
-            (nameof(SiteModel.Section106.AdditionalAffordableHousing), "True"));
+            (nameof(SiteModel.Section106.AdditionalAffordableHousing), SiteData.Section106AdditionalAffordableHousing.ToBoolAnswer()));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
@@ -138,7 +140,7 @@ public class Order01StartAhpSite : AhpIntegrationTest
             SitePagesUrl.SiteSection106CapitalFundingEligibility(SiteData.SiteId),
             SitePageTitles.SiteSection106CapitalFundingEligibility,
             SitePagesUrl.SiteSection106LocalAuthorityConfirmation(SiteData.SiteId),
-            (nameof(SiteModel.Section106.CapitalFundingEligibility), "False"));
+            (nameof(SiteModel.Section106.CapitalFundingEligibility), SiteData.Section106CapitalFundingEligibility.ToBoolAnswer()));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
@@ -149,7 +151,7 @@ public class Order01StartAhpSite : AhpIntegrationTest
             SitePagesUrl.SiteSection106LocalAuthorityConfirmation(SiteData.SiteId),
             SitePageTitles.SiteSection106LocalAuthorityConfirmation,
             SitePagesUrl.SiteLocalAuthoritySearch(SiteData.SiteId),
-            (nameof(SiteModel.Section106.LocalAuthorityConfirmation), "Local authority confirmed"));
+            (nameof(SiteModel.Section106.LocalAuthorityConfirmation), SiteData.GenerateLocalAuthorityConfirmation()));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
@@ -222,7 +224,7 @@ public class Order01StartAhpSite : AhpIntegrationTest
             SitePagesUrl.SitePlanningStatus(SiteData.SiteId),
             SitePageTitles.PlanningStatus,
             SitePagesUrl.SitePlanningDetails(SiteData.SiteId),
-            (nameof(SitePlanningDetails.PlanningStatus), SitePlanningStatus.PlanningDiscussionsUnderwayWithThePlanningOffice.ToString()));
+            (nameof(SitePlanningDetails.PlanningStatus), SiteData.PlanningStatus.ToString()));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
@@ -233,10 +235,10 @@ public class Order01StartAhpSite : AhpIntegrationTest
             SitePagesUrl.SitePlanningDetails(SiteData.SiteId),
             "Enter when you expect to get detailed planning approval",
             SitePagesUrl.SiteLandRegistry(SiteData.SiteId),
-            ("ExpectedPlanningApprovalDate.Day", "1"),
-            ("ExpectedPlanningApprovalDate.Month", "12"),
-            ("ExpectedPlanningApprovalDate.Year", "2024"),
-            (nameof(SitePlanningDetails.IsLandRegistryTitleNumberRegistered), "True"));
+            ("ExpectedPlanningApprovalDate.Day", SiteData.ExpectedPlanningApprovalDate.Day.ToString(CultureInfo.InvariantCulture)),
+            ("ExpectedPlanningApprovalDate.Month", SiteData.ExpectedPlanningApprovalDate.Month.ToString(CultureInfo.InvariantCulture)),
+            ("ExpectedPlanningApprovalDate.Year", SiteData.ExpectedPlanningApprovalDate.Year.ToString(CultureInfo.InvariantCulture)),
+            (nameof(SitePlanningDetails.IsLandRegistryTitleNumberRegistered), SiteData.IsLandRegistryTitleNumberRegistered.ToBoolAnswer()));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
@@ -247,8 +249,8 @@ public class Order01StartAhpSite : AhpIntegrationTest
             SitePagesUrl.SiteLandRegistry(SiteData.SiteId),
             SitePageTitles.LandRegistry,
             SitePagesUrl.SiteNationalDesignGuide(SiteData.SiteId),
-            (nameof(SitePlanningDetails.LandRegistryTitleNumber), "some title"),
-            (nameof(SitePlanningDetails.IsGrantFundingForAllHomesCoveredByTitleNumber), "True"));
+            (nameof(SitePlanningDetails.LandRegistryTitleNumber), SiteData.GenerateLandRegistryTitleNumber()),
+            (nameof(SitePlanningDetails.IsGrantFundingForAllHomesCoveredByTitleNumber), SiteData.IsGrantFundingForAllHomesCoveredByTitleNumber.ToBoolAnswer()));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
@@ -259,7 +261,7 @@ public class Order01StartAhpSite : AhpIntegrationTest
             SitePagesUrl.SiteNationalDesignGuide(SiteData.SiteId),
             SitePageTitles.NationalDesignGuide,
             SitePagesUrl.SiteBuildingForHealthyLife(SiteData.SiteId),
-            (nameof(NationalDesignGuidePrioritiesModel.DesignPriorities), NationalDesignGuidePriority.Nature.ToString()));
+            SiteData.NationalDesignGuidePriorities.ToFormInputs(nameof(NationalDesignGuidePrioritiesModel.DesignPriorities)));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
@@ -270,7 +272,7 @@ public class Order01StartAhpSite : AhpIntegrationTest
             SitePagesUrl.SiteBuildingForHealthyLife(SiteData.SiteId),
             SitePageTitles.BuildingForHealthyLife,
             SitePagesUrl.SiteProvideNumberOfGreenLights(SiteData.SiteId),
-            (nameof(SiteModel.BuildingForHealthyLife), BuildingForHealthyLifeType.Yes.ToString()));
+            (nameof(SiteModel.BuildingForHealthyLife), SiteData.BuildingForHealthyLife.ToString()));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
@@ -281,7 +283,7 @@ public class Order01StartAhpSite : AhpIntegrationTest
             SitePagesUrl.SiteProvideNumberOfGreenLights(SiteData.SiteId),
             SitePageTitles.NumberOfGreenLights,
             SitePagesUrl.SiteLandAcquisitionStatus(SiteData.SiteId),
-            (nameof(SiteModel.NumberOfGreenLights), "5"));
+            (nameof(SiteModel.NumberOfGreenLights), SiteData.NumberOfGreenLights));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
@@ -292,7 +294,7 @@ public class Order01StartAhpSite : AhpIntegrationTest
             SitePagesUrl.SiteLandAcquisitionStatus(SiteData.SiteId),
             SitePageTitles.LandAcquisitionStatus,
             SitePagesUrl.SiteTenderingStatus(SiteData.SiteId),
-            (nameof(SiteModel.LandAcquisitionStatus), nameof(SiteLandAcquisitionStatus.FullOwnership)));
+            (nameof(SiteModel.LandAcquisitionStatus), SiteData.LandAcquisitionStatus.ToString()));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
@@ -303,7 +305,7 @@ public class Order01StartAhpSite : AhpIntegrationTest
             SitePagesUrl.SiteTenderingStatus(SiteData.SiteId),
             SitePageTitles.TenderingStatus,
             SitePagesUrl.SiteContractorDetails(SiteData.SiteId),
-            (nameof(SiteTenderingStatusDetails.TenderingStatus), SiteTenderingStatus.ConditionalWorksContract.ToString()));
+            (nameof(SiteTenderingStatusDetails.TenderingStatus), SiteData.TenderingStatus.ToString()));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
@@ -314,8 +316,8 @@ public class Order01StartAhpSite : AhpIntegrationTest
             SitePagesUrl.SiteContractorDetails(SiteData.SiteId),
             SitePageTitles.ContractorDetails,
             SitePagesUrl.SiteStrategicSite(SiteData.SiteId),
-            (nameof(SiteTenderingStatusDetails.ContractorName), "traktor john deere"),
-            (nameof(SiteTenderingStatusDetails.IsSmeContractor), "False"));
+            (nameof(SiteTenderingStatusDetails.ContractorName), SiteData.GenerateContractorName()),
+            (nameof(SiteTenderingStatusDetails.IsSmeContractor), SiteData.IsSmeContractor.ToBoolAnswer()));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
@@ -326,8 +328,8 @@ public class Order01StartAhpSite : AhpIntegrationTest
             SitePagesUrl.SiteStrategicSite(SiteData.SiteId),
             SitePageTitles.StrategicSite,
             SitePagesUrl.SiteType(SiteData.SiteId),
-            (nameof(StrategicSite.IsStrategicSite), "True"),
-            (nameof(StrategicSite.StrategicSiteName), "super-duper ważna strona"));
+            (nameof(StrategicSite.IsStrategicSite), SiteData.IsStrategicSite.ToBoolAnswer()),
+            (nameof(StrategicSite.StrategicSiteName), SiteData.GenerateStrategicSiteName()));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
@@ -338,9 +340,9 @@ public class Order01StartAhpSite : AhpIntegrationTest
             SitePagesUrl.SiteType(SiteData.SiteId),
             SitePageTitles.SiteType,
             SitePagesUrl.SiteUse(SiteData.SiteId),
-            (nameof(SiteTypeDetails.SiteType), SiteType.Brownfield.ToString()),
-            (nameof(SiteTypeDetails.IsOnGreenBelt), "True"),
-            (nameof(SiteTypeDetails.IsRegenerationSite), "False"));
+            (nameof(SiteTypeDetails.SiteType), SiteData.SiteType.ToString()),
+            (nameof(SiteTypeDetails.IsOnGreenBelt), SiteData.IsOnGreenBelt.ToBoolAnswer()),
+            (nameof(SiteTypeDetails.IsRegenerationSite), SiteData.IsRegenerationSite.ToBoolAnswer()));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
@@ -351,8 +353,8 @@ public class Order01StartAhpSite : AhpIntegrationTest
             SitePagesUrl.SiteUse(SiteData.SiteId),
             SitePageTitles.SiteUse,
             SitePagesUrl.SiteTravellerPitchType(SiteData.SiteId),
-            (nameof(SiteUseDetails.IsPartOfStreetFrontInfill), "True"),
-            (nameof(SiteUseDetails.IsForTravellerPitchSite), "True"));
+            (nameof(SiteUseDetails.IsPartOfStreetFrontInfill), SiteData.IsPartOfStreetFrontInfill.ToBoolAnswer()),
+            (nameof(SiteUseDetails.IsForTravellerPitchSite), SiteData.IsForTravellerPitchSite.ToBoolAnswer()));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
@@ -363,7 +365,7 @@ public class Order01StartAhpSite : AhpIntegrationTest
             SitePagesUrl.SiteTravellerPitchType(SiteData.SiteId),
             SitePageTitles.TravellerPitchType,
             SitePagesUrl.SiteRuralClassification(SiteData.SiteId),
-            (nameof(SiteUseDetails.TravellerPitchSiteType), TravellerPitchSiteType.Permanent.ToString()));
+            (nameof(SiteUseDetails.TravellerPitchSiteType), SiteData.TravellerPitchSiteType.ToString()));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
@@ -374,7 +376,8 @@ public class Order01StartAhpSite : AhpIntegrationTest
             SitePagesUrl.SiteRuralClassification(SiteData.SiteId),
             SitePageTitles.RuralClassification,
             SitePagesUrl.SiteEnvironmentalImpact(SiteData.SiteId),
-            (nameof(SiteRuralClassification.IsWithinRuralSettlement), "True"));
+            (nameof(SiteRuralClassification.IsWithinRuralSettlement), SiteData.IsWithinRuralSettlement.ToBoolAnswer()),
+            (nameof(SiteRuralClassification.IsRuralExceptionSite), SiteData.IsRuralExceptionSite.ToBoolAnswer()));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
@@ -385,7 +388,7 @@ public class Order01StartAhpSite : AhpIntegrationTest
             SitePagesUrl.SiteEnvironmentalImpact(SiteData.SiteId),
             SitePageTitles.EnvironmentalImpact,
             SitePagesUrl.SiteMmcUsing(SiteData.SiteId),
-            (nameof(EnvironmentalImpact), "reducing environmental impact"));
+            (nameof(EnvironmentalImpact), SiteData.GenerateEnvironmentalImpact()));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
@@ -396,7 +399,7 @@ public class Order01StartAhpSite : AhpIntegrationTest
             SitePagesUrl.SiteMmcUsing(SiteData.SiteId),
             SitePageTitles.MmcUsing,
             SitePagesUrl.SiteMmcInformation(SiteData.SiteId),
-            (nameof(SiteModernMethodsOfConstruction.UsingModernMethodsOfConstruction), SiteUsingModernMethodsOfConstruction.Yes.ToString()));
+            (nameof(SiteModernMethodsOfConstruction.UsingModernMethodsOfConstruction), SiteData.UsingMmc.ToString()));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
@@ -407,8 +410,8 @@ public class Order01StartAhpSite : AhpIntegrationTest
             SitePagesUrl.SiteMmcInformation(SiteData.SiteId),
             SitePageTitles.MmcInformation,
             SitePagesUrl.SiteMmcCategories(SiteData.SiteId),
-            (nameof(SiteModernMethodsOfConstruction.InformationBarriers), "za wysokie progi"),
-            (nameof(SiteModernMethodsOfConstruction.InformationImpact), "fest importante"));
+            (nameof(SiteModernMethodsOfConstruction.InformationBarriers), SiteData.GenerateInformationBarriers()),
+            (nameof(SiteModernMethodsOfConstruction.InformationImpact), SiteData.GenerateInformationImpact()));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
@@ -419,8 +422,7 @@ public class Order01StartAhpSite : AhpIntegrationTest
             SitePagesUrl.SiteMmcCategories(SiteData.SiteId),
             SitePageTitles.MmcCategories,
             SitePagesUrl.SiteMmcCategory3D(SiteData.SiteId),
-            (nameof(SiteModernMethodsOfConstruction.ModernMethodsConstructionCategories), ModernMethodsConstructionCategoriesType.Category1PreManufacturing3DPrimaryStructuralSystems.ToString()),
-            (nameof(SiteModernMethodsOfConstruction.ModernMethodsConstructionCategories), ModernMethodsConstructionCategoriesType.Category2PreManufacturing2DPrimaryStructuralSystems.ToString()));
+            SiteData.MmcCategories.ToFormInputs(nameof(SiteModernMethodsOfConstruction.ModernMethodsConstructionCategories)));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
@@ -431,7 +433,7 @@ public class Order01StartAhpSite : AhpIntegrationTest
             SitePagesUrl.SiteMmcCategory3D(SiteData.SiteId),
             SitePageTitles.Mmc3DCategory,
             SitePagesUrl.SiteMmcCategory2D(SiteData.SiteId),
-            (nameof(SiteModernMethodsOfConstruction.ModernMethodsConstruction3DSubcategories), ModernMethodsConstruction3DSubcategoriesType.StructuralChassisAndInternallyFittedOut.ToString()));
+            (nameof(SiteModernMethodsOfConstruction.ModernMethodsConstruction3DSubcategories), SiteData.Mmc3DSubcategory.ToString()));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
@@ -442,7 +444,7 @@ public class Order01StartAhpSite : AhpIntegrationTest
             SitePagesUrl.SiteMmcCategory2D(SiteData.SiteId),
             SitePageTitles.Mmc2DCategory,
             SitePagesUrl.SiteProcurements(SiteData.SiteId),
-            (nameof(SiteModernMethodsOfConstruction.ModernMethodsConstruction2DSubcategories), ModernMethodsConstruction2DSubcategoriesType.BasicFramingOnly.ToString()));
+            (nameof(SiteModernMethodsOfConstruction.ModernMethodsConstruction2DSubcategories), SiteData.Mmc2DSubcategory.ToString()));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
@@ -453,6 +455,75 @@ public class Order01StartAhpSite : AhpIntegrationTest
             SitePagesUrl.SiteProcurements(SiteData.SiteId),
             SitePageTitles.Procurements,
             SitePagesUrl.SiteCheckAnswers(SiteData.SiteId),
-            (nameof(SiteModel.SiteProcurements), SiteProcurement.PartneringSupplyChain.ToString()));
+            SiteData.Procurements.ToFormInputs(nameof(SiteModel.SiteProcurements)));
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(34)]
+    public async Task Order34_CheckAnswersHasValidSummary()
+    {
+        // given
+        var checkAnswersPage = await GetCurrentPage(SitePagesUrl.SiteCheckAnswers(SiteData.SiteId));
+        checkAnswersPage
+            .UrlEndWith(SitePagesUrl.SiteCheckAnswers(SiteData.SiteId))
+            .HasTitle(SitePageTitles.CheckAnswers);
+
+        // when
+        var summary = checkAnswersPage.GetSummaryListItems();
+        summary.Should().ContainKey("Site name").WithValue(SiteData.SiteName);
+        summary.Should().ContainKey("106 agreement").WithValue(SiteData.Section106GeneralAgreement);
+        summary.Should().ContainKey("Secure delivery through developer contributions").WithValue(SiteData.Section106AffordableHousing);
+        summary.Should().ContainKey("100% affordable housing").WithValue(SiteData.Section106OnlyAffordableHousing);
+        summary.Should().ContainKey("Additional affordable housing").WithValue(SiteData.Section106AdditionalAffordableHousing);
+        summary.Should().ContainKey("Capital funding guide eligibility").WithValue(SiteData.Section106CapitalFundingEligibility);
+        summary.Should().ContainKey("Local authority confirmation").WithValue(SiteData.LocalAuthorityConfirmation);
+        summary.Should().ContainKey("Local authority").WithValue(SiteData.LocalAuthorityName);
+        summary.Should().ContainKey("Planning status").WithValue(SiteData.PlanningStatus);
+        summary.Should().ContainKey("Expected detailed planning approval date").WithValue(SiteData.ExpectedPlanningApprovalDisplayDate);
+        summary.Should().ContainKey("Registered title to the land").WithValue(SiteData.IsLandRegistryTitleNumberRegistered);
+        summary.Should().ContainKey("Land Registry title number").WithValue(SiteData.LandRegistryTitleNumber);
+        summary.Should().ContainKey("All the homes covered by title number").WithValue(SiteData.IsGrantFundingForAllHomesCoveredByTitleNumber);
+        summary.Should().ContainKey("National Design Guide priorities").WithOnlyValues(SiteData.NationalDesignGuidePriorities);
+        summary.Should().ContainKey("Building for a Healthy Life criteria").WithValue(SiteData.BuildingForHealthyLife.ToString());
+        summary.Should().ContainKey("Number of green lights").WithValue(SiteData.NumberOfGreenLights);
+        summary.Should().ContainKey("Developing partner").WithValue("TODO");
+        summary.Should().ContainKey("Owner of the land").WithValue("TODO");
+        summary.Should().ContainKey("Owner of the homes").WithValue("TODO");
+        summary.Should().ContainKey("URB - Owner of the homes").WithValue("TODO");
+        summary.Should().ContainKey("Land status").WithValue(SiteData.LandAcquisitionStatus);
+        summary.Should().ContainKey("Tendering progress for main works contract").WithValue(SiteData.TenderingStatus);
+        summary.Should().ContainKey("Name of contractor").WithValue(SiteData.ContractorName);
+        summary.Should().ContainKey("Contractor SME").WithValue(SiteData.IsSmeContractor);
+        summary.Should().ContainKey("Strategic site").WithValue($"Yes, {SiteData.StrategicSiteName}");
+        summary.Should().ContainKey("Site type").WithValue(SiteData.SiteType);
+        summary.Should().ContainKey("Green belt").WithValue(SiteData.IsOnGreenBelt);
+        summary.Should().ContainKey("Regeneration site").WithValue(SiteData.IsRegenerationSite);
+        summary.Should().ContainKey("Street front infill").WithValue(SiteData.IsPartOfStreetFrontInfill);
+        summary.Should().ContainKey("Traveller pitch site").WithValue(SiteData.IsForTravellerPitchSite);
+        summary.Should().ContainKey("Type of traveller pitch site").WithValue(SiteData.TravellerPitchSiteType);
+        summary.Should().ContainKey("Rural settlement").WithValue(SiteData.IsWithinRuralSettlement);
+        summary.Should().ContainKey("Rural exception site").WithValue(SiteData.IsRuralExceptionSite);
+        summary.Should().ContainKey("Actions taken to reduce environmental impact").WithValue(SiteData.EnvironmentalImpact);
+        summary.Should().ContainKey("MMC").WithValue(SiteData.UsingMmc);
+        summary.Should().ContainKey("Barriers").WithValue(SiteData.InformationBarriers);
+        summary.Should().ContainKey("Impact on developments").WithValue(SiteData.InformationImpact);
+        summary.Should().ContainKey("MMC categories").WithOnlyValues(SiteData.MmcCategories);
+        summary.Should().ContainKey("Sub-categories of 3D primary structural systems").WithValue(SiteData.Mmc3DSubcategory);
+        summary.Should().ContainKey("Sub-categories of 2D primary structural systems").WithValue(SiteData.Mmc2DSubcategory);
+        summary.Should().ContainKey("Procurement mechanisms").WithOnlyValues(SiteData.Procurements);
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(35)]
+    public async Task Order35_CheckAnswersCompleteSite()
+    {
+        var siteListPage = await TestQuestionPage(
+            SitePagesUrl.SiteCheckAnswers(SiteData.SiteId),
+            SitePageTitles.CheckAnswers,
+            SitePagesUrl.SiteList,
+            (nameof(IsSectionCompleted), IsSectionCompleted.Yes.ToString()));
+
+        siteListPage.HasTitle(SitePageTitles.SiteList)
+            .HasLinkWithHref(SitePagesUrl.SiteDetails(SiteData.SiteId), out _);
     }
 }

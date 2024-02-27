@@ -103,6 +103,7 @@ namespace HE.CRM.Plugins.Services.LoanStatusChange
                     if (loanStatusChange.invln_changesource?.Value == (int)invln_ChangesourceSet.Internal)
                     {
                         _govNotifyEmailService.SendNotifications_EXTERNAL_APPLICATION_ACTION_REQUIRED(loanStatusChange, loanApplication, "complete and upload your cashflow for");
+                        _govNotifyEmailService.SendNotifications_EXTERNAL_APPLICATION_CASHFLOW_REQUESTED(loanApplication);
                     }
                     break;
                 case (int)invln_InternalStatus.CashflowUnderReview:

@@ -1,5 +1,3 @@
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Headings
-@using HE.Investments.Common.WWW.TagHelpers
 @model (string title, string fieldName, string allowedExtensions, int? maxFileSizeInMb, string description, string multiple, bool isHidden, bool hasFileError, string fileErrorMessage, string uploadOneFileUrl, string removeFileUrlTemplate, string downloadFileUrlTemplate)
 
 @if (!string.IsNullOrWhiteSpace(Model.title))
@@ -22,7 +20,11 @@
     @Html.Hidden("download-file-url-template", Model.downloadFileUrlTemplate)
 }
 
-<he-div-hint class="govuk-!-margin-bottom-6">@Model.description</he-div-hint>
+@if (!string.IsNullOrWhiteSpace(Model.description))
+{
+    <he-div-hint class="govuk-!-margin-bottom-6">@Model.description</he-div-hint>
+}
+
 <div id="file-input-form-group" class="govuk-form-group @(Model.hasFileError ? "govuk-form-group--error" : string.Empty)">
 
     @if (!Model.isHidden)
@@ -50,7 +52,7 @@
     else
     {
         <div class="govuk-label">
-            Upload a file (JPG, PNG, PDF, DOCX)
+            <span>Upload a file (@Model.allowedExtensions)</span>
             @if (Model.maxFileSizeInMb.HasValue)
             {
                 <br/>

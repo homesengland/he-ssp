@@ -1,3 +1,5 @@
+using HE.Investments.Common.Contract;
+
 namespace HE.Investment.AHP.Contract.Delivery;
 
 public record DeliveryPhaseBasicDetails(
@@ -5,6 +7,6 @@ public record DeliveryPhaseBasicDetails(
     string Id,
     string? Name,
     int? NumberOfHomes,
-    string? Acquisition,
-    string? StartOnSite,
-    string? PracticalCompletion);
+    DateDetails? Acquisition,
+    DateDetails? StartOnSite,
+    DateDetails? PracticalCompletion);

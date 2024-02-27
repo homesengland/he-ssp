@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.Site;
 
-public class LocalAuthoritySearchTests : ViewTestBase
+public class LocalAuthoritySearchTests : AhpViewTestBase
 {
     private readonly string _viewPath = "/Views/Site/LocalAuthoritySearch.cshtml";
 

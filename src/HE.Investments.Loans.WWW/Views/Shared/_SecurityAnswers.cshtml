@@ -7,7 +7,7 @@
 <gds-summary-list class="govuk-!-margin-bottom-9">
     @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
            {
-               { "Title", "Charges outstanding or debt secured on company" },
+               { "Title", "Charges outstanding or debt secured on organisation" },
                { "Value", Model.ChargesDebtCompany },
                { "Link", Url.Action("ChargesDebtCompany", "Security", new { id = id, redirect = "CheckAnswers" }) },
                { "LinkId", "charges-debt-change" },
@@ -29,7 +29,7 @@
 
     @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
            {
-               { "Title", "Director loans" },
+               { "Title", "Directors' loans" },
                { "Value", Model.DirLoans },
                { "Link", Url.Action("DirLoans", "Security", new { id = id, redirect = "CheckAnswers" }) },
                { "LinkId", "dir-loans-change" },

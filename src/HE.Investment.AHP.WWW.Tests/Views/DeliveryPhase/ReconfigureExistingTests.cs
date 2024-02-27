@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Routing;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.DeliveryPhase;
 
-public class ReconfigureExistingTests : ViewTestBase
+public class ReconfigureExistingTests : AhpViewTestBase
 {
     private readonly string _viewPath = "/Views/DeliveryPhase/ReconfiguringExisting.cshtml";
 

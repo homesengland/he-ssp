@@ -3,15 +3,21 @@ using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
+using HE.Investments.Loans.BusinessLogic.Files;
 using HE.Investments.Loans.Contract.Application.Enums;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
 using HE.Investments.Loans.Contract.CompanyStructure.ValueObjects;
+using HE.Investments.Loans.Contract.Documents;
 using SectionStatus = HE.Investments.Common.Contract.SectionStatus;
 
 namespace HE.Investments.Loans.BusinessLogic.CompanyStructure;
 
 public class CompanyStructureEntity : DomainEntity
 {
+    private const int AllowedFilesCount = 10;
+
+    private IList<UploadedFile>? _files;
+
     public CompanyStructureEntity(
         LoanApplicationId loanApplicationId,
         CompanyPurpose? purpose,
@@ -31,10 +37,6 @@ public class CompanyStructureEntity : DomainEntity
     public CompanyPurpose? Purpose { get; private set; }
 
     public OrganisationMoreInformation? MoreInformation { get; private set; }
-
-    public OrganisationMoreInformationFile? MoreInformationFile { get; private set; }
-
-    public OrganisationMoreInformationFiles? MoreInformationFiles { get; private set; }
 
     public HomesBuilt? HomesBuilt { get; private set; }
 
@@ -66,26 +68,36 @@ public class CompanyStructureEntity : DomainEntity
         UnCompleteSection();
     }
 
-    public void ProvideFileWithMoreInformation(OrganisationMoreInformationFile moreInformationFile)
+    public async Task<IReadOnlyCollection<UploadedFile>> UploadFiles(
+        ILoansFileService<LoanApplicationId> fileService,
+        IList<OrganisationMoreInformationFile> filesToUpload,
+        CancellationToken cancellationToken)
     {
-        if (MoreInformationFile == moreInformationFile)
+        _files ??= (await fileService.GetFiles(LoanApplicationId, cancellationToken)).ToList();
+        if (_files.Count + filesToUpload.Count > AllowedFilesCount)
         {
-            return;
+            OperationResult.ThrowValidationError(nameof(OrganisationMoreInformationFile), ValidationErrorMessage.FilesMaxCount(AllowedFilesCount));
         }
 
-        MoreInformationFile = moreInformationFile;
-        UnCompleteSection();
-    }
-
-    public void ProvideFilesWithMoreInformation(OrganisationMoreInformationFiles moreInformationFiles)
-    {
-        if (MoreInformationFiles == moreInformationFiles)
+        var isNameDuplicated = _files!.Select(x => x.Name)
+            .Concat(filesToUpload.Select(x => x.FileName))
+            .GroupBy(x => x)
+            .Any(x => x.Count() > 1);
+        if (isNameDuplicated)
         {
-            return;
+            OperationResult.ThrowValidationError(nameof(OrganisationMoreInformationFile), GenericValidationError.FileUniqueName);
         }
 
-        MoreInformationFiles = moreInformationFiles;
+        var result = new List<UploadedFile>();
+        foreach (var fileToUpload in filesToUpload)
+        {
+            result.Add(await fileService.UploadFile(fileToUpload.FileName, fileToUpload.FileContent, LoanApplicationId, cancellationToken));
+        }
+
         UnCompleteSection();
+        _files.AddRange(result);
+
+        return result;
     }
 
     public void ProvideHowManyHomesBuilt(HomesBuilt? homesBuilt)

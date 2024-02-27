@@ -1,13 +1,12 @@
 using AngleSharp.Html.Dom;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.WWW.Models.Application;
-
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Routing;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.Application;
 
-public class TenureTests : ViewTestBase
+public class TenureTests : AhpViewTestBase
 {
     private readonly ApplicationBasicModel _model = new("1", "test name", Tenure.Undefined);
     private readonly string _viewPath = "/Views/Application/Tenure.cshtml";

@@ -17,10 +17,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)dtomapping\MilestoneFrameWorkItemMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)dtomapping\ProgrammeMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)dtomapping\SiteDetailsDtoMapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DtoMapping\SiteMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\DateTimeExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\Entities\EntityExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\Entities\OptionSetValueCollectionExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\StringHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\AccountRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\AhgLocalAuthorityRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\AhpApplicationRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\implementations\AhpStatusChangeRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\ConditionRepository.cs" />
@@ -45,12 +48,14 @@
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\PortalPermissionRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\implementations\SharepointSiteRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\SiteDetailsRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\SiteRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\StandardConditionsRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\SystemUserRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\TeamRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\WebRoleRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IAccountRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\TraceHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IAhgLocalAuthorityRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IAhpApplicationRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IAhpStatusChangeRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IConditionRepository.cs" />
@@ -75,6 +80,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\ISharepointDocumentLocationRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\interfaces\ISharepointSiteRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\ISiteDetailsRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\ISiteRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IStandardConditionsRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\ISystemUserRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\ITeamRepository.cs" />

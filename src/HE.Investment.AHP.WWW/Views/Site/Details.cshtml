@@ -26,7 +26,7 @@
     <div class="govuk-!-width-two-thirds">
         <gds-h2>View details of this site</gds-h2>
         <gds-p>View or edit this site's details. You cannot edit the details for a site if an application connected to it has already been submitted.</gds-p>
-        <link-button action-url="@Url.Action("StartSite", "Site", new { siteId = Model.SiteId.Value })" button-type="@ButtonType.Secondary">
+        <link-button action-url="@Url.Action("ContinueAnswering", "Site", new { siteId = Model.SiteId.Value })" button-type="@ButtonType.Secondary">
             View details
         </link-button>
     </div>

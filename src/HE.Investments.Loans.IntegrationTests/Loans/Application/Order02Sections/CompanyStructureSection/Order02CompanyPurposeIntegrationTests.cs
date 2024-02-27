@@ -35,6 +35,6 @@ public class Order02CompanyPurposeIntegrationTests : IntegrationTest
         // then
         moreInformationAboutOrganizationPage
             .UrlEndWith(CompanyStructurePagesUrls.MoreInformationAboutOrganizationSuffix)
-            .HasLabelTitle("Provide more information about your organisation");
+            .HasTitle("Organisation structure");
     }
 }

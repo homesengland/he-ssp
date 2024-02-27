@@ -9,8 +9,8 @@ using HE.Investments.AHP.IntegrationTests.FillApplication.Data;
 using HE.Investments.AHP.IntegrationTests.FillApplication.Data.HomeTypes;
 using HE.Investments.AHP.IntegrationTests.Framework;
 using HE.Investments.AHP.IntegrationTests.Pages;
-using HE.Investments.Common.Extensions;
 using HE.Investments.IntegrationTestsFramework;
+using HE.Investments.IntegrationTestsFramework.Assertions;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
 using Xunit.Extensions.Ordering;
@@ -331,28 +331,28 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         var summary = checkAnswersPage.GetSummaryListItems();
 
         // then
-        summary.Should().ContainKey("Home type name").WhoseValue.Should().Be(GeneralHomeType.Name);
-        summary.Should().ContainKey("Type of home").WhoseValue.Should().Be(GeneralHomeType.HousingType.GetDescription());
-        summary.Should().ContainKey("Number of homes").WhoseValue.Should().Be(_numberOfHomesPerHomeType.ToString(CultureInfo.InvariantCulture));
-        summary.Should().ContainKey("Number of bedrooms").WhoseValue.Should().Be(GeneralHomeType.NumberOfBedrooms.ToString(CultureInfo.InvariantCulture));
-        summary.Should().ContainKey("Maximum occupancy").WhoseValue.Should().Be(GeneralHomeType.MaximumOccupancy.ToString(CultureInfo.InvariantCulture));
-        summary.Should().ContainKey("Number of storeys").WhoseValue.Should().Be(GeneralHomeType.NumberOfStoreys.ToString(CultureInfo.InvariantCulture));
-        summary.Should().ContainKey("Move on accommodation").WhoseValue.Should().Be(GeneralHomeType.MoveOnAccommodation.GetDescription());
-        summary.Should().ContainKey("Building type").WhoseValue.Should().Be(GeneralHomeType.BuildingType.GetDescription());
-        summary.Should().ContainKey("Custom built").WhoseValue.Should().Be(GeneralHomeType.CustomBuild.GetDescription());
-        summary.Should().ContainKey("Type of facilities").WhoseValue.Should().Be(GeneralHomeType.FacilityType.GetDescription());
-        summary.Should().ContainKey("Accessibility categories met").WhoseValue.Should().Be(GeneralHomeType.AccessibilityStandards.GetDescription());
-        summary.Should().ContainKey("Accessibility categories").WhoseValue.Should().Be(GeneralHomeType.AccessibilityCategory.GetDescription());
-        summary.Should().ContainKey("Square metres of internal floor area").WhoseValue.Should().Be($"{GeneralHomeType.FloorArea.ToString("0.##", CultureInfo.InvariantCulture)}m\u00b2");
-        summary.Should().ContainKey("Nationally Described Space Standards met").WhoseValue.Should().Be(GeneralHomeType.MeetSpaceStandards.GetDescription());
-        summary.Should().ContainKey("Nationally Described Space Standards").WhoseValue.Should().Be(GeneralHomeType.SpaceStandards.GetDescription());
+        summary.Should().ContainKey("Home type name").WithValue(GeneralHomeType.Name);
+        summary.Should().ContainKey("Type of home").WithValue(GeneralHomeType.HousingType);
+        summary.Should().ContainKey("Number of homes").WithValue(_numberOfHomesPerHomeType.ToString(CultureInfo.InvariantCulture));
+        summary.Should().ContainKey("Number of bedrooms").WithValue(GeneralHomeType.NumberOfBedrooms.ToString(CultureInfo.InvariantCulture));
+        summary.Should().ContainKey("Maximum occupancy").WithValue(GeneralHomeType.MaximumOccupancy.ToString(CultureInfo.InvariantCulture));
+        summary.Should().ContainKey("Number of storeys").WithValue(GeneralHomeType.NumberOfStoreys.ToString(CultureInfo.InvariantCulture));
+        summary.Should().ContainKey("Move on accommodation").WithValue(GeneralHomeType.MoveOnAccommodation);
+        summary.Should().ContainKey("Building type").WithValue(GeneralHomeType.BuildingType);
+        summary.Should().ContainKey("Custom built").WithValue(GeneralHomeType.CustomBuild);
+        summary.Should().ContainKey("Type of facilities").WithValue(GeneralHomeType.FacilityType);
+        summary.Should().ContainKey("Accessibility categories met").WithValue(GeneralHomeType.AccessibilityStandards);
+        summary.Should().ContainKey("Accessibility categories").WithValue(GeneralHomeType.AccessibilityCategory);
+        summary.Should().ContainKey("Square metres of internal floor area").WithValue($"{GeneralHomeType.FloorArea.ToString("0.##", CultureInfo.InvariantCulture)}m\u00b2");
+        summary.Should().ContainKey("Nationally Described Space Standards met").WithValue(GeneralHomeType.MeetSpaceStandards);
+        summary.Should().ContainKey("Nationally Described Space Standards").WithValue(GeneralHomeType.SpaceStandards);
         summary.Should().ContainKey("Market value of each home").WhoseValue.Should().BePoundsOnly(GeneralHomeType.MarketValue);
         summary.Should().ContainKey("Market rent per week").WhoseValue.Should().BePoundsPences(GeneralHomeType.MarketRent);
         summary.Should().ContainKey("Affordable rent per week").WhoseValue.Should().BePoundsPences(GeneralHomeType.ProspectiveRent);
-        summary.Should().ContainKey("Affordable rent as percentage of market rent").WhoseValue.Should().Be(GeneralHomeType.ProspectiveRentPercentage);
-        summary.Should().ContainKey("Target rent exceeded 80% of market rent").WhoseValue.Should().Be(GeneralHomeType.Exceeds80PercentOfMarketRent.GetDescription());
-        summary.Should().ContainKey("Exempt from Right to Shared ownership").WhoseValue.Should().Be(GeneralHomeType.ExemptFromTheRightToSharedOwnership.GetDescription());
-        summary.Should().ContainKey("Right to Shared Ownership criteria").WhoseValue.Should().Be(GeneralHomeType.ExemptionJustification);
+        summary.Should().ContainKey("Affordable rent as percentage of market rent").WithValue(GeneralHomeType.ProspectiveRentPercentage);
+        summary.Should().ContainKey("Target rent exceeded 80% of market rent").WithValue(GeneralHomeType.Exceeds80PercentOfMarketRent);
+        summary.Should().ContainKey("Exempt from Right to Shared ownership").WithValue(GeneralHomeType.ExemptFromTheRightToSharedOwnership);
+        summary.Should().ContainKey("Right to Shared Ownership criteria").WithValue(GeneralHomeType.ExemptionJustification);
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
@@ -630,39 +630,39 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         var summary = checkAnswersPage.GetSummaryListItems();
 
         // then
-        summary.Should().ContainKey("Home type name").WhoseValue.Should().Be(DisabledHomeType.Name);
-        summary.Should().ContainKey("Type of home").WhoseValue.Should().Be(DisabledHomeType.HousingType.GetDescription());
-        summary.Should().ContainKey("Disabled and vulnerable people - Type of home").WhoseValue.Should().Be(DisabledHomeType.DisabledPeopleHousingType.GetDescription());
-        summary.Should().ContainKey("Client group").WhoseValue.Should().Be(DisabledHomeType.ClientGroup.GetDescription());
-        summary.Should().ContainKey("HAPPI principles").WhoseValue.Should().Be(DisabledHomeType.HappiDesignPrinciple.GetDescription());
+        summary.Should().ContainKey("Home type name").WithValue(DisabledHomeType.Name);
+        summary.Should().ContainKey("Type of home").WithValue(DisabledHomeType.HousingType);
+        summary.Should().ContainKey("Disabled and vulnerable people - Type of home").WithValue(DisabledHomeType.DisabledPeopleHousingType);
+        summary.Should().ContainKey("Client group").WithValue(DisabledHomeType.ClientGroup);
+        summary.Should().ContainKey("HAPPI principles").WithValue(DisabledHomeType.HappiDesignPrinciple);
         summary.Should().ContainKey("Design plans").WhoseValue.Should().ContainAll(DisabledHomeType.DesignPlanInformation, DisabledHomeType.DesignFile.Name);
-        summary.Should().ContainKey("Local commissioning bodies consultation").WhoseValue.Should().Be(DisabledHomeType.LocalCommissioningBodiesConsulted.GetDescription());
-        summary.Should().ContainKey("Short stay").WhoseValue.Should().Be(DisabledHomeType.ShortStayAccommodation.GetDescription());
-        summary.Should().ContainKey("Revenue funding").WhoseValue.Should().Be(DisabledHomeType.RevenueFundingType.GetDescription());
-        summary.Should().ContainKey("Sources of revenue funding").WhoseValue.Should().Be(DisabledHomeType.RevenueFundingSource.GetDescription());
-        summary.Should().ContainKey("Move on arrangements in place").WhoseValue.Should().Be(DisabledHomeType.MoveOnArrangements);
-        summary.Should().ContainKey("Exit plan or alternative use").WhoseValue.Should().Be(DisabledHomeType.ExitPlan);
-        summary.Should().ContainKey("Typology, location and design").WhoseValue.Should().Be(DisabledHomeType.TypologyLocationAndDesign);
-        summary.Should().ContainKey("Number of homes").WhoseValue.Should().Be(_numberOfHomesPerHomeType.ToString(CultureInfo.InvariantCulture));
-        summary.Should().ContainKey("Number of bedrooms").WhoseValue.Should().Be(DisabledHomeType.NumberOfBedrooms.ToString(CultureInfo.InvariantCulture));
-        summary.Should().ContainKey("Maximum occupancy").WhoseValue.Should().Be(DisabledHomeType.MaximumOccupancy.ToString(CultureInfo.InvariantCulture));
-        summary.Should().ContainKey("Number of storeys").WhoseValue.Should().Be(DisabledHomeType.NumberOfStoreys.ToString(CultureInfo.InvariantCulture));
-        summary.Should().ContainKey("Particular group").WhoseValue.Should().Be(DisabledHomeType.PeopleGroupForSpecificDesignFeatures.GetDescription());
-        summary.Should().ContainKey("Building type").WhoseValue.Should().Be(DisabledHomeType.BuildingType.GetDescription());
-        summary.Should().ContainKey("Custom built").WhoseValue.Should().Be(DisabledHomeType.CustomBuild.GetDescription());
-        summary.Should().ContainKey("Type of facilities").WhoseValue.Should().Be(DisabledHomeType.FacilityType.GetDescription());
-        summary.Should().ContainKey("Accessibility categories met").WhoseValue.Should().Be(DisabledHomeType.AccessibilityStandards.GetDescription());
-        summary.Should().ContainKey("Accessibility categories").WhoseValue.Should().Be(DisabledHomeType.AccessibilityCategory.GetDescription());
-        summary.Should().ContainKey("Square metres of internal floor area").WhoseValue.Should().Be($"{DisabledHomeType.FloorArea.ToString("0.##", CultureInfo.InvariantCulture)}m\u00b2");
-        summary.Should().ContainKey("Nationally Described Space Standards met").WhoseValue.Should().Be(DisabledHomeType.MeetSpaceStandards.GetDescription());
-        summary.Should().ContainKey("Nationally Described Space Standards").WhoseValue.Should().Be(DisabledHomeType.SpaceStandards.GetDescription());
+        summary.Should().ContainKey("Local commissioning bodies consultation").WithValue(DisabledHomeType.LocalCommissioningBodiesConsulted);
+        summary.Should().ContainKey("Short stay").WithValue(DisabledHomeType.ShortStayAccommodation);
+        summary.Should().ContainKey("Revenue funding").WithValue(DisabledHomeType.RevenueFundingType);
+        summary.Should().ContainKey("Sources of revenue funding").WithValue(DisabledHomeType.RevenueFundingSource);
+        summary.Should().ContainKey("Move on arrangements in place").WithValue(DisabledHomeType.MoveOnArrangements);
+        summary.Should().ContainKey("Exit plan or alternative use").WithValue(DisabledHomeType.ExitPlan);
+        summary.Should().ContainKey("Typology, location and design").WithValue(DisabledHomeType.TypologyLocationAndDesign);
+        summary.Should().ContainKey("Number of homes").WithValue(_numberOfHomesPerHomeType.ToString(CultureInfo.InvariantCulture));
+        summary.Should().ContainKey("Number of bedrooms").WithValue(DisabledHomeType.NumberOfBedrooms.ToString(CultureInfo.InvariantCulture));
+        summary.Should().ContainKey("Maximum occupancy").WithValue(DisabledHomeType.MaximumOccupancy.ToString(CultureInfo.InvariantCulture));
+        summary.Should().ContainKey("Number of storeys").WithValue(DisabledHomeType.NumberOfStoreys.ToString(CultureInfo.InvariantCulture));
+        summary.Should().ContainKey("Particular group").WithValue(DisabledHomeType.PeopleGroupForSpecificDesignFeatures);
+        summary.Should().ContainKey("Building type").WithValue(DisabledHomeType.BuildingType);
+        summary.Should().ContainKey("Custom built").WithValue(DisabledHomeType.CustomBuild);
+        summary.Should().ContainKey("Type of facilities").WithValue(DisabledHomeType.FacilityType);
+        summary.Should().ContainKey("Accessibility categories met").WithValue(DisabledHomeType.AccessibilityStandards);
+        summary.Should().ContainKey("Accessibility categories").WithValue(DisabledHomeType.AccessibilityCategory);
+        summary.Should().ContainKey("Square metres of internal floor area").WithValue($"{DisabledHomeType.FloorArea.ToString("0.##", CultureInfo.InvariantCulture)}m\u00b2");
+        summary.Should().ContainKey("Nationally Described Space Standards met").WithValue(DisabledHomeType.MeetSpaceStandards);
+        summary.Should().ContainKey("Nationally Described Space Standards").WithValue(DisabledHomeType.SpaceStandards);
         summary.Should().ContainKey("Market value of each home").WhoseValue.Should().BePoundsOnly(DisabledHomeType.MarketValue);
         summary.Should().ContainKey("Market rent per week").WhoseValue.Should().BePoundsPences(DisabledHomeType.MarketRent);
         summary.Should().ContainKey("Affordable rent per week").WhoseValue.Should().BePoundsPences(DisabledHomeType.ProspectiveRent);
-        summary.Should().ContainKey("Affordable rent as percentage of market rent").WhoseValue.Should().Be(DisabledHomeType.ProspectiveRentPercentage);
-        summary.Should().ContainKey("Target rent exceeded 80% of market rent").WhoseValue.Should().Be(DisabledHomeType.Exceeds80PercentOfMarketRent.GetDescription());
-        summary.Should().ContainKey("Exempt from Right to Shared ownership").WhoseValue.Should().Be(DisabledHomeType.ExemptFromTheRightToSharedOwnership.GetDescription());
-        summary.Should().ContainKey("Right to Shared Ownership criteria").WhoseValue.Should().Be(DisabledHomeType.ExemptionJustification);
+        summary.Should().ContainKey("Affordable rent as percentage of market rent").WithValue(DisabledHomeType.ProspectiveRentPercentage);
+        summary.Should().ContainKey("Target rent exceeded 80% of market rent").WithValue(DisabledHomeType.Exceeds80PercentOfMarketRent);
+        summary.Should().ContainKey("Exempt from Right to Shared ownership").WithValue(DisabledHomeType.ExemptFromTheRightToSharedOwnership);
+        summary.Should().ContainKey("Right to Shared Ownership criteria").WithValue(DisabledHomeType.ExemptionJustification);
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]

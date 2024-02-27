@@ -7,6 +7,8 @@
 @using HE.Investments.Common.WWW.Components.RadioList
 @using HE.Investments.Common.WWW.Components.PageHeader
 @using HE.Investments.Common.WWW.Helpers
+@using HE.Investment.AHP.WWW.Config
+@inject IExternalLinks ExternalLinks
 @model SiteTypeDetails
 @{
     ViewData["Title"] = SitePageTitles.SiteType;
@@ -17,7 +19,7 @@
             title = "What regeneration sites are covered by this funding?",
             contentText = "Visit our article to find out more information about",
             linkText = " regeneration funding within 21-26 AHP (opens in a new tab).",
-            linkUrl = "https://www.gov.uk/government/news/turbo-boost-for-estate-regeneration-with-major-change-to-the-affordable-homes-programme"
+            linkUrl = ExternalLinks.RegenerationFundingWithin21To26Ahp
         });
 }
 

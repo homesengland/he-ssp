@@ -177,10 +177,7 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
         Status = _modificationTracker.Change(Status, SectionStatus.Completed);
     }
 
-    public void UnComplete()
-    {
-        Status = _modificationTracker.Change(Status, SectionStatus.InProgress);
-    }
+    public void UnComplete() => MarkAsNotCompleted();
 
     public void ProvideBuildActivity(BuildActivity buildActivity)
     {

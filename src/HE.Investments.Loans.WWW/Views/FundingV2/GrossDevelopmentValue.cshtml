@@ -24,13 +24,8 @@
         <partial name="_ErrorSummaryPartial" model="null" />
         <gds-field-set>
             <gds-div-form-group invalid="inputInvalid">
-                <legend>
-                    <gds-label-wrapper>
-                        <gds-label size="@ControlSize.L" for="GrossDevelopmentValue">
-                            @FundingPageTitles.GrossDevelopmentValue
-                        </gds-label>
-                    </gds-label-wrapper>
-                </legend>
+                <vc:page-header title="@FundingPageTitles.GrossDevelopmentValue"/>
+
                 <gds-input-wrapper class="govuk-!-margin-bottom-8">
                     <gds-input asp-prefixtext="GdsInputPrefixText.Pounds"
                                class="govuk-input--width-5"
@@ -40,7 +35,7 @@
                                asp-excludelabel/>
                 </gds-input-wrapper>
             </gds-div-form-group>
-            <gds-details-summary label="Gross Development Value (GDV)">
+            <gds-details-summary label="Help with Gross Development Value (GDV) ">
                 Gross Development Value (GDV) is the estimated value that a property or new development would fetch on the open market if it were to be sold in the current economic climate.
             </gds-details-summary>
             <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="@(Model.StateChanged?"Change":"Continue")" id="continue-button">

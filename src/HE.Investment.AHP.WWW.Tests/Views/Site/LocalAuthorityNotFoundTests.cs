@@ -3,7 +3,7 @@ using HE.Investment.AHP.WWW.Views.Site.Const;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.Site;
 
-public class LocalAuthorityNotFoundTests : ViewTestBase
+public class LocalAuthorityNotFoundTests : AhpViewTestBase
 {
     private readonly string _viewPath = "/Views/Site/LocalAuthorityNotFound.cshtml";
 

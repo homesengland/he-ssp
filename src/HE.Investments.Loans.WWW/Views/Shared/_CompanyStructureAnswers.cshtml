@@ -1,4 +1,3 @@
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Summary
 @model HE.Investments.Loans.Contract.CompanyStructure.CompanyStructureViewModel
 @{
     var id = ViewContext.RouteData.Values["id"];
@@ -6,7 +5,7 @@
 <gds-summary-list class="govuk-!-margin-bottom-9">
     @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
            {
-               { "Title", "Company established for this development" },
+               { "Title", "Organisation established specifically for this development" },
                { "Value", Model.Purpose },
                { "Link", Url.Action("Purpose", "CompanyStructureV2", new { id, state = "Purpose", redirect = "CheckAnswers" }) },
                { "IsEditable", Model.IsEditable() }
@@ -14,11 +13,11 @@
     @{
         var files = Model.OrganisationMoreInformationFiles?.ToDictionary(
             key => key.FileName,
-            value => Url.Action("MoreInformationAboutOrganizationDownloadFile", "CompanyStructureV2", new { id = Model.LoanApplicationId, folderPath = value.FolderPath, fileName = value.FileName })
+            value => Url.Action("MoreInformationAboutOrganizationDownloadFile", "CompanyStructureV2", new { id = Model.LoanApplicationId, fileId = value.FileId })
         );
         @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
                {
-                   { "Title", "Additional information" },
+                   { "Title", "Organisation structure" },
                    { "Value", Model.OrganisationMoreInformation },
                    { "Link", Url.Action("MoreInformationAboutOrganization", "CompanyStructureV2", new { id, state = "ExistingCompany", redirect = "CheckAnswers" }) },
                    { "IsEditable", Model.IsEditable() },

@@ -29,59 +29,41 @@ public class SiteEntity : DomainEntity, IQuestion
     public SiteEntity(
         SiteId id,
         SiteName name,
-        Section106 section106,
-        PlanningDetails planningDetails,
-        NationalDesignGuidePriorities nationalDesignGuidePriorities,
-        NumberOfGreenLights? numberOfGreenLights,
-        LandAcquisitionStatus landAcquisitionStatus,
-        TenderingStatusDetails tenderingStatusDetails,
-        StrategicSiteDetails strategicSiteDetails,
-        SiteTypeDetails siteTypeDetails,
-        SiteProcurements siteProcurements,
+        SiteStatus status = SiteStatus.InProgress,
+        Section106? section106 = null,
         LocalAuthority? localAuthority = null,
-        BuildingForHealthyLifeType buildingForHealthyLife = BuildingForHealthyLifeType.Undefined,
+        PlanningDetails? planningDetails = null,
+        NationalDesignGuidePriorities? nationalDesignGuidePriorities = null,
+        BuildingForHealthyLifeType? buildingForHealthyLife = null,
+        NumberOfGreenLights? numberOfGreenLights = null,
+        LandAcquisitionStatus? landAcquisitionStatus = null,
+        TenderingStatusDetails? tenderingStatusDetails = null,
+        StrategicSiteDetails? strategicSiteDetails = null,
+        SiteTypeDetails? siteTypeDetails = null,
         SiteUseDetails? siteUseDetails = null,
         SiteRuralClassification? ruralClassification = null,
         EnvironmentalImpact? environmentalImpact = null,
-        SiteModernMethodsOfConstruction? modernMethodsOfConstruction = null)
+        SiteModernMethodsOfConstruction? modernMethodsOfConstruction = null,
+        SiteProcurements? siteProcurements = null)
     {
         Id = id;
         Name = name;
-        Status = SiteStatus.InProgress;
-        Section106 = section106;
+        Status = status;
+        Section106 = section106 ?? new Section106();
         LocalAuthority = localAuthority;
-        PlanningDetails = planningDetails;
-        NationalDesignGuidePriorities = nationalDesignGuidePriorities;
-        BuildingForHealthyLife = buildingForHealthyLife;
-        Procurements = siteProcurements;
+        PlanningDetails = planningDetails ?? PlanningDetailsFactory.CreateEmpty();
+        NationalDesignGuidePriorities = nationalDesignGuidePriorities ?? new NationalDesignGuidePriorities();
+        BuildingForHealthyLife = buildingForHealthyLife ?? BuildingForHealthyLifeType.Undefined;
         NumberOfGreenLights = numberOfGreenLights;
-        LandAcquisitionStatus = landAcquisitionStatus;
-        TenderingStatusDetails = tenderingStatusDetails;
-        StrategicSiteDetails = strategicSiteDetails;
-        SiteTypeDetails = siteTypeDetails;
+        LandAcquisitionStatus = landAcquisitionStatus ?? new LandAcquisitionStatus();
+        TenderingStatusDetails = tenderingStatusDetails ?? new TenderingStatusDetails();
+        StrategicSiteDetails = strategicSiteDetails ?? new StrategicSiteDetails();
+        SiteTypeDetails = siteTypeDetails ?? new SiteTypeDetails();
         SiteUseDetails = siteUseDetails ?? new SiteUseDetails();
         RuralClassification = ruralClassification ?? new SiteRuralClassification();
         EnvironmentalImpact = environmentalImpact;
         ModernMethodsOfConstruction = modernMethodsOfConstruction ?? new SiteModernMethodsOfConstruction();
-    }
-
-    public SiteEntity()
-    {
-        Id = SiteId.New();
-        Name = new SiteName("New Site");
-        Status = SiteStatus.InProgress;
-        Section106 = new Section106();
-        PlanningDetails = PlanningDetailsFactory.CreateEmpty();
-        NationalDesignGuidePriorities = new NationalDesignGuidePriorities();
-        LandAcquisitionStatus = new LandAcquisitionStatus();
-        TenderingStatusDetails = new TenderingStatusDetails();
-        StrategicSiteDetails = new StrategicSiteDetails();
-        SiteTypeDetails = new SiteTypeDetails();
-        SiteUseDetails = new SiteUseDetails();
-        Procurements = new SiteProcurements();
-        RuralClassification = new SiteRuralClassification();
-        EnvironmentalImpact = null;
-        ModernMethodsOfConstruction = new SiteModernMethodsOfConstruction();
+        Procurements = siteProcurements ?? new SiteProcurements();
     }
 
     public SiteId Id { get; set; }
@@ -112,13 +94,20 @@ public class SiteEntity : DomainEntity, IQuestion
 
     public SiteUseDetails SiteUseDetails { get; private set; }
 
-    public SiteProcurements Procurements { get; private set; }
-
     public SiteRuralClassification RuralClassification { get; private set; }
 
     public EnvironmentalImpact? EnvironmentalImpact { get; private set; }
 
     public SiteModernMethodsOfConstruction ModernMethodsOfConstruction { get; private set; }
+
+    public SiteProcurements Procurements { get; private set; }
+
+    public bool IsModified => _modificationTracker.IsModified;
+
+    public static SiteEntity NewSite()
+    {
+        return new SiteEntity(SiteId.New(), new SiteName("New Site"));
+    }
 
     public async Task ProvideName(SiteName siteName, ISiteNameExist siteNameExist, CancellationToken cancellationToken)
     {
@@ -129,32 +118,32 @@ public class SiteEntity : DomainEntity, IQuestion
                 .CheckErrors();
         }
 
-        Name = _modificationTracker.Change(Name, siteName);
+        Name = _modificationTracker.Change(Name, siteName, MarkAsNotCompleted);
     }
 
     public void ProvideSection106(Section106 section106)
     {
-        Section106 = _modificationTracker.Change(Section106, section106);
-    }
-
-    public void ProvidePlanningDetails(PlanningDetails planningDetails)
-    {
-        PlanningDetails = _modificationTracker.Change(PlanningDetails, planningDetails);
+        Section106 = _modificationTracker.Change(Section106, section106, MarkAsNotCompleted);
     }
 
     public void ProvideLocalAuthority(LocalAuthority? localAuthority)
     {
-        LocalAuthority = _modificationTracker.Change(LocalAuthority, localAuthority);
+        LocalAuthority = _modificationTracker.Change(LocalAuthority, localAuthority, MarkAsNotCompleted);
+    }
+
+    public void ProvidePlanningDetails(PlanningDetails planningDetails)
+    {
+        PlanningDetails = _modificationTracker.Change(PlanningDetails, planningDetails, MarkAsNotCompleted);
     }
 
     public void ProvideNationalDesignGuidePriorities(NationalDesignGuidePriorities nationalDesignGuidePriorities)
     {
-        NationalDesignGuidePriorities = _modificationTracker.Change(NationalDesignGuidePriorities, nationalDesignGuidePriorities);
+        NationalDesignGuidePriorities = _modificationTracker.Change(NationalDesignGuidePriorities, nationalDesignGuidePriorities, MarkAsNotCompleted);
     }
 
     public void ProvideBuildingForHealthyLife(BuildingForHealthyLifeType buildingForHealthyLife)
     {
-        BuildingForHealthyLife = _modificationTracker.Change(BuildingForHealthyLife, buildingForHealthyLife);
+        BuildingForHealthyLife = _modificationTracker.Change(BuildingForHealthyLife, buildingForHealthyLife, MarkAsNotCompleted);
         if (BuildingForHealthyLife != BuildingForHealthyLifeType.Yes)
         {
             ProvideNumberOfGreenLights(null);
@@ -163,52 +152,52 @@ public class SiteEntity : DomainEntity, IQuestion
 
     public void ProvideNumberOfGreenLights(NumberOfGreenLights? numberOfGreenLights)
     {
-        NumberOfGreenLights = _modificationTracker.Change(NumberOfGreenLights, numberOfGreenLights);
+        NumberOfGreenLights = _modificationTracker.Change(NumberOfGreenLights, numberOfGreenLights, MarkAsNotCompleted);
     }
 
     public void ProvideLandAcquisitionStatus(LandAcquisitionStatus landAcquisitionStatus)
     {
-        LandAcquisitionStatus = _modificationTracker.Change(LandAcquisitionStatus, landAcquisitionStatus);
+        LandAcquisitionStatus = _modificationTracker.Change(LandAcquisitionStatus, landAcquisitionStatus, MarkAsNotCompleted);
     }
 
     public void ProvideTenderingStatusDetails(TenderingStatusDetails tenderingStatusDetails)
     {
-        TenderingStatusDetails = _modificationTracker.Change(TenderingStatusDetails, tenderingStatusDetails);
+        TenderingStatusDetails = _modificationTracker.Change(TenderingStatusDetails, tenderingStatusDetails, MarkAsNotCompleted);
     }
 
     public void ProvideStrategicSiteDetails(StrategicSiteDetails details)
     {
-        StrategicSiteDetails = _modificationTracker.Change(StrategicSiteDetails, details);
+        StrategicSiteDetails = _modificationTracker.Change(StrategicSiteDetails, details, MarkAsNotCompleted);
     }
 
     public void ProvideSiteTypeDetails(SiteTypeDetails details)
     {
-        SiteTypeDetails = _modificationTracker.Change(SiteTypeDetails, details);
+        SiteTypeDetails = _modificationTracker.Change(SiteTypeDetails, details, MarkAsNotCompleted);
     }
 
     public void ProvideSiteUseDetails(SiteUseDetails details)
     {
-        SiteUseDetails = _modificationTracker.Change(SiteUseDetails, details);
-    }
-
-    public void ProvideProcurement(SiteProcurements procurements)
-    {
-        Procurements = _modificationTracker.Change(Procurements, procurements);
+        SiteUseDetails = _modificationTracker.Change(SiteUseDetails, details, MarkAsNotCompleted);
     }
 
     public void ProvideRuralClassification(SiteRuralClassification ruralClassification)
     {
-        RuralClassification = _modificationTracker.Change(RuralClassification, ruralClassification);
+        RuralClassification = _modificationTracker.Change(RuralClassification, ruralClassification, MarkAsNotCompleted);
     }
 
     public void ProvideEnvironmentalImpact(EnvironmentalImpact? environmentalImpact)
     {
-        EnvironmentalImpact = _modificationTracker.Change(EnvironmentalImpact, environmentalImpact);
+        EnvironmentalImpact = _modificationTracker.Change(EnvironmentalImpact, environmentalImpact, MarkAsNotCompleted);
     }
 
     public void ProvideModernMethodsOfConstruction(SiteModernMethodsOfConstruction modernMethodsOfConstruction)
     {
-        ModernMethodsOfConstruction = _modificationTracker.Change(ModernMethodsOfConstruction, modernMethodsOfConstruction);
+        ModernMethodsOfConstruction = _modificationTracker.Change(ModernMethodsOfConstruction, modernMethodsOfConstruction, MarkAsNotCompleted);
+    }
+
+    public void ProvideProcurement(SiteProcurements procurements)
+    {
+        Procurements = _modificationTracker.Change(Procurements, procurements, MarkAsNotCompleted);
     }
 
     public void Complete(IsSectionCompleted isSectionCompleted)
@@ -220,7 +209,7 @@ public class SiteEntity : DomainEntity, IQuestion
 
         if (isSectionCompleted == IsSectionCompleted.No)
         {
-            Status = _modificationTracker.Change(Status, SiteStatus.InProgress);
+            MarkAsNotCompleted();
             return;
         }
 
@@ -236,17 +225,21 @@ public class SiteEntity : DomainEntity, IQuestion
 
     public bool IsAnswered()
     {
-        return PlanningDetails.IsAnswered() &&
+        return Section106.IsAnswered() &&
+               LocalAuthority.IsProvided() &&
+               PlanningDetails.IsAnswered() &&
+               NationalDesignGuidePriorities.IsAnswered() &&
+               BuildingForHealthyLife != BuildingForHealthyLifeType.Undefined &&
+               LandAcquisitionStatus.IsAnswered() &&
                TenderingStatusDetails.IsAnswered() &&
                StrategicSiteDetails.IsAnswered() &&
                SiteTypeDetails.IsAnswered() &&
                SiteUseDetails.IsAnswered() &&
-               BuildingForHealthyLife != BuildingForHealthyLifeType.Undefined &&
-               BuildConditionalRouteCompletionPredicates().All(isCompleted => isCompleted()) &&
-               Procurements.IsAnswered() &&
                RuralClassification.IsAnswered() &&
                EnvironmentalImpact.IsProvided() &&
-               ModernMethodsOfConstruction.IsAnswered();
+               ModernMethodsOfConstruction.IsAnswered() &&
+               Procurements.IsAnswered() &&
+               BuildConditionalRouteCompletionPredicates().All(isCompleted => isCompleted());
     }
 
     private IEnumerable<Func<bool>> BuildConditionalRouteCompletionPredicates()
@@ -255,5 +248,10 @@ public class SiteEntity : DomainEntity, IQuestion
         {
             yield return () => NumberOfGreenLights.IsProvided();
         }
+    }
+
+    private void MarkAsNotCompleted()
+    {
+        Status = _modificationTracker.Change(Status, SiteStatus.InProgress);
     }
 }

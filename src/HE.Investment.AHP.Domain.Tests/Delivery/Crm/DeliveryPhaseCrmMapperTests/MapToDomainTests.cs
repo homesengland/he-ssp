@@ -105,6 +105,7 @@ public class MapToDomainTests : TestBase<DeliveryPhaseCrmMapper>
     [InlineData(858110004, BuildActivityType.Reimprovement)]
     [InlineData(858110005, BuildActivityType.Conversion)]
     [InlineData(858110006, BuildActivityType.WorksOnlyRehab)]
+    [InlineData(858110007, BuildActivityType.RegenerationRehab)]
     public void ShouldMapBuildActivity_WhenTypeOfHomesIsRehab(int rehabBuildActivityType, BuildActivityType expectedBuildActivityType)
     {
         // given
@@ -130,6 +131,7 @@ public class MapToDomainTests : TestBase<DeliveryPhaseCrmMapper>
     [InlineData(858110001, BuildActivityType.OffTheShelf)]
     [InlineData(858110002, BuildActivityType.WorksOnly)]
     [InlineData(858110003, BuildActivityType.LandInclusivePackage)]
+    [InlineData(858110004, BuildActivityType.Regeneration)]
     public void ShouldMapBuildActivity_WhenTypeOfHomesIsNewBuild(int newBuildActivityType, BuildActivityType expectedBuildActivityType)
     {
         // given

@@ -5,7 +5,11 @@ using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.CRM.Mappers;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Serialization;
+using HE.Investments.DocumentService.Models;
+using HE.Investments.Loans.BusinessLogic.CompanyStructure.Constants;
 using HE.Investments.Loans.BusinessLogic.CompanyStructure.Mappers;
+using HE.Investments.Loans.BusinessLogic.Config;
+using HE.Investments.Loans.BusinessLogic.Files;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories.Mapper;
 using HE.Investments.Loans.Common.Utils.Enums;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
@@ -17,9 +21,15 @@ public class CompanyStructureRepository : ICompanyStructureRepository
 {
     private readonly IOrganizationServiceAsync2 _serviceClient;
 
-    public CompanyStructureRepository(IOrganizationServiceAsync2 serviceClient)
+    private readonly IFileApplicationRepository _fileRepository;
+
+    private readonly ILoansDocumentSettings _documentSettings;
+
+    public CompanyStructureRepository(IOrganizationServiceAsync2 serviceClient, IFileApplicationRepository fileRepository, ILoansDocumentSettings documentSettings)
     {
         _serviceClient = serviceClient;
+        _fileRepository = fileRepository;
+        _documentSettings = documentSettings;
     }
 
     public async Task<CompanyStructureEntity> GetAsync(LoanApplicationId loanApplicationId, UserAccount userAccount, CompanyStructureFieldsSet companyStructureFieldsSet, CancellationToken cancellationToken)
@@ -49,17 +59,13 @@ public class CompanyStructureRepository : ICompanyStructureRepository
             ApplicationStatusMapper.MapToPortalStatus(loanApplicationDto.loanApplicationExternalStatus));
     }
 
-    public async Task<string> GetFilesLocationAsync(LoanApplicationId loanApplicationId, CancellationToken cancellationToken)
+    public async Task<FileLocation> GetFilesLocationAsync(LoanApplicationId fileParams, CancellationToken cancellationToken)
     {
-        var req = new invln_getfilelocationforapplicationloanRequest
-        {
-            invln_loanapplicationid = loanApplicationId.ToString(),
-        };
-
-        var response = await _serviceClient.ExecuteAsync(req, cancellationToken) as invln_getfilelocationforapplicationloanResponse
-                       ?? throw new NotFoundException(nameof(CompanyStructureEntity), loanApplicationId.ToString());
-
-        return response.invln_filelocation;
+        var basePath = await _fileRepository.GetBaseFilePath(fileParams, cancellationToken);
+        return new FileLocation(
+            _documentSettings.ListTitle,
+            _documentSettings.ListAlias,
+            $"{basePath}{CompanyStructureConstants.MoreInformationAboutOrganizationExternal}");
     }
 
     public async Task SaveAsync(CompanyStructureEntity companyStructure, UserAccount userAccount, CancellationToken cancellationToken)

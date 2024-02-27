@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.Site;
 
-public class LocalAuthorityConfirmTests : ViewTestBase
+public class LocalAuthorityConfirmTests : AhpViewTestBase
 {
     private readonly string _viewPath = "/Views/Site/LocalAuthorityConfirm.cshtml";
 

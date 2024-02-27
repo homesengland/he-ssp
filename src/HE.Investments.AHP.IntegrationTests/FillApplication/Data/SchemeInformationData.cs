@@ -1,4 +1,4 @@
-using System.Globalization;
+using HE.Investments.AHP.IntegrationTests.Extensions;
 
 namespace HE.Investments.AHP.IntegrationTests.FillApplication.Data;
 
@@ -33,23 +33,23 @@ public class SchemeInformationData
 
     public void GenerateAffordability()
     {
-        Affordability = $"{nameof(Affordability)}_{DateTime.UtcNow.ToString(CultureInfo.InvariantCulture)}";
+        Affordability = nameof(Affordability).WithTimestampPrefix();
     }
 
     public void GenerateSalesRisk()
     {
-        SalesRisk = $"{nameof(SalesRisk)}_{DateTime.UtcNow.ToString(CultureInfo.InvariantCulture)}";
+        SalesRisk = nameof(SalesRisk).WithTimestampPrefix();
     }
 
     public void GenerateHousingNeeds()
     {
-        HousingNeedsMeetingLocalPriorities = $"{nameof(HousingNeedsMeetingLocalPriorities)}_{DateTime.UtcNow.ToString(CultureInfo.InvariantCulture)}";
-        HousingNeedsMeetingLocalHousingNeed = $"{nameof(HousingNeedsMeetingLocalHousingNeed)}_{DateTime.UtcNow.ToString(CultureInfo.InvariantCulture)}";
+        HousingNeedsMeetingLocalPriorities = nameof(HousingNeedsMeetingLocalPriorities).WithTimestampPrefix();
+        HousingNeedsMeetingLocalHousingNeed = nameof(HousingNeedsMeetingLocalHousingNeed).WithTimestampPrefix();
     }
 
     public void GenerateStakeholderDiscussions()
     {
-        StakeholderDiscussions = $"{nameof(StakeholderDiscussions)}_{DateTime.UtcNow.ToString(CultureInfo.InvariantCulture)}";
+        StakeholderDiscussions = nameof(StakeholderDiscussions).WithTimestampPrefix();
     }
 
     private decimal GetDecimalValue(string fieldName)

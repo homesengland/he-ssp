@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace HE.Investments.Loans.WWW.Models;
 
-public static class TemporaryFormOptions
+public static class FormOption
 {
     public static List<SelectItemWithSummaryLabel> LoanResolution { get; } = new()
     {
@@ -27,25 +27,6 @@ public static class TemporaryFormOptions
         SelectListHelper.FromEnum(FundingPurpose.BuildingNewHomes, "Building new homes"),
         SelectListHelper.FromEnum(FundingPurpose.BuildingInfrastructure, "Building infrastructure only"),
         SelectListHelper.FromEnum(FundingPurpose.Other, "Other"),
-    };
-
-    public static List<SelectListItem> FundingType { get; } = new()
-    {
-        new SelectListItem
-        {
-            Value = "bank",
-            Text = "Bank funding",
-        },
-        new SelectListItem
-        {
-            Value = "grant",
-            Text = "Grant funding",
-        },
-        new SelectListItem
-        {
-            Value = "selfFunded",
-            Text = "Self-funded",
-        },
     };
 
     public static List<SelectListItem> SiteAdditionalSource { get; } = new()
@@ -101,26 +82,12 @@ public static class TemporaryFormOptions
         new SelectListItem
         {
             Value = "Yes",
-            Text = "Yes, I`ve completed this section",
-        },
-        new SelectListItem
-        {
-            Value = "No",
-            Text = "No, I`ll come back later",
-        },
-    };
-
-    public static List<SelectListItem> HaveStartDate { get; } = new()
-    {
-        new SelectListItem
-        {
-            Value = "Yes",
             Text = "Yes",
         },
         new SelectListItem
         {
             Value = "No",
-            Text = "No, I do not have a build start date yet",
+            Text = "No, I`ll come back later",
         },
     };
 

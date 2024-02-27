@@ -1,4 +1,3 @@
-using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
@@ -10,13 +9,6 @@ public class NationalDesignGuidePriorities : ValueObject, IQuestion
 {
     public NationalDesignGuidePriorities(IReadOnlyCollection<NationalDesignGuidePriority> priorities)
     {
-        if (!priorities.Any())
-        {
-            OperationResult.New()
-                .AddValidationError("DesignPriorities", ValidationErrorMessage.MustProvideRequiredField("National Design Guide"))
-                .CheckErrors();
-        }
-
         if (priorities.Any(x => x == NationalDesignGuidePriority.NoneOfTheAbove) && priorities.Count > 1)
         {
             OperationResult.New()
@@ -28,8 +20,8 @@ public class NationalDesignGuidePriorities : ValueObject, IQuestion
     }
 
     public NationalDesignGuidePriorities()
+        : this(Array.Empty<NationalDesignGuidePriority>())
     {
-        Values = Enumerable.Empty<NationalDesignGuidePriority>();
     }
 
     public IEnumerable<NationalDesignGuidePriority> Values { get; }
