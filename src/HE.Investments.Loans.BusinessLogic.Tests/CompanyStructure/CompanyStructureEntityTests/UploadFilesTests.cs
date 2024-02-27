@@ -18,10 +18,12 @@ public class UploadFilesTests
         // given
         var fileService = MockFileService(10);
         var testCandidate = CompanyStructureEntityTestBuilder.New().Build();
-        var file = new OrganisationMoreInformationFile("test.pdf", 1000, 10, new MemoryStream());
 
         // when
-        var upload = () => testCandidate.UploadFiles(fileService, new[] { file }, CancellationToken.None);
+        var upload = () => testCandidate.UploadFiles(
+            fileService,
+            new[] { new OrganisationMoreInformationFile("test.pdf", 1000, 10, new MemoryStream()) },
+            CancellationToken.None);
 
         // then
         await upload.Should().ThrowAsync<DomainValidationException>();
@@ -33,10 +35,12 @@ public class UploadFilesTests
         // given
         var fileService = MockFileService(5);
         var testCandidate = CompanyStructureEntityTestBuilder.New().Build();
-        var file = new OrganisationMoreInformationFile("test-1.pdf", 1000, 10, new MemoryStream());
 
         // when
-        var upload = () => testCandidate.UploadFiles(fileService, new[] { file }, CancellationToken.None);
+        var upload = () => testCandidate.UploadFiles(
+            fileService,
+            new[] { new OrganisationMoreInformationFile("test-1.pdf", 1000, 10, new MemoryStream()) },
+            CancellationToken.None);
 
         // then
         await upload.Should().ThrowAsync<DomainValidationException>();
