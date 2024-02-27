@@ -46,7 +46,7 @@ if (!app.Environment.IsDevelopment())
         .UseHttps();
 }
 
-app.UseCustomDisableRequestLimitSize("/DesignPlans", "/UploadDesignPlansFile", "/stakeholder-discussions");
+app.UseCustomDisableRequestLimitSize("/design-plans", "/upload-design-plans-file", "/stakeholder-discussions");
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();

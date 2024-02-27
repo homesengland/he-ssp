@@ -31,12 +31,14 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getmultipleahpapplications.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getmultipledeliveryphase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getmultipleprogramme.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getmultiplesites.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getorganisationchangedetails.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getorganizationdetails.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getsingledeliveryphase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getsinglehometype.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getsingleloanapplicationforaccountandcontact.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getsingleprogramme.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getsinglesite.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getsinglesitedetails.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_gettemporaryportaldata.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_gettypeofhomeslist.cs" />
@@ -56,6 +58,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_setahpapplication.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_setdeliveryphase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_sethometype.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_setsite.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_updatesingleloanapplication.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_updatesinglesitedetails.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_updateuserprofile.cs" />
@@ -71,6 +74,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\COMMON_INVITE_CONTACT_TO_JOIN_ORGANIZATION.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\COMMON_REQUEST_TO_ASSIGN_CONTACT_TO_EXISTING_ORGANISATION.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\EXTERNAL_APPLICATION_ACTION_REQUIRED.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\EXTERNAL_APPLICATION_CASHFLOW_REQUESTED.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\EXTERNAL_APPLICATION_STATUS_CONFIRMATION.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\EXTERNAL_APPLICATION_STATUS_INFORMATION.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\EXTERNAL_KYC_STATUS_CHANGE.cs" />
@@ -84,6 +88,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Entities\Email.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\EnvironmentVariableDefinition.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\EnvironmentVariableValue.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_AHGLocalAuthorities.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_ahpcontract.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_AHPStatusChange.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_BorrowerPreviousSchemes.cs" />

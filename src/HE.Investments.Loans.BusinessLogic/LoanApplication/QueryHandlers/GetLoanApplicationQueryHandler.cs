@@ -31,7 +31,7 @@ public class GetLoanApplicationQueryHandler : IRequestHandler<GetLoanApplication
         var companyStructureResponse = await _mediator.Send(new GetCompanyStructureQuery(request.Id, CompanyStructureFieldsSet.GetAllFields), cancellationToken);
         if (request.LoadFiles)
         {
-            companyStructureResponse.ViewModel.OrganisationMoreInformationFiles = (await _mediator.Send(new GetCompanyStructureFilesQuery(request.Id), cancellationToken)).Items;
+            companyStructureResponse.ViewModel.OrganisationMoreInformationFiles = await _mediator.Send(new GetCompanyStructureFilesQuery(request.Id), cancellationToken);
         }
 
         var securityResponse = await _mediator.Send(new GetSecurity(request.Id, SecurityFieldsSet.GetAllFields), cancellationToken);

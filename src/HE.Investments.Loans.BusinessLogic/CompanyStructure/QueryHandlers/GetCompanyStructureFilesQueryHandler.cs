@@ -1,54 +1,35 @@
-using HE.Investments.DocumentService.Models;
-using HE.Investments.DocumentService.Services;
-using HE.Investments.Loans.BusinessLogic.CompanyStructure.Constants;
-using HE.Investments.Loans.BusinessLogic.CompanyStructure.Repositories;
-using HE.Investments.Loans.BusinessLogic.Config;
+using HE.Investments.Common.Extensions;
+using HE.Investments.Common.WWW.Models;
+using HE.Investments.Loans.BusinessLogic.Files;
+using HE.Investments.Loans.Contract.Application.ValueObjects;
 using HE.Investments.Loans.Contract.CompanyStructure.Queries;
-using HE.Investments.Loans.Contract.Documents;
 using MediatR;
 
 namespace HE.Investments.Loans.BusinessLogic.CompanyStructure.QueryHandlers;
 
-public class GetCompanyStructureFilesQueryHandler : IRequestHandler<GetCompanyStructureFilesQuery, LoansTableResult>
+public class GetCompanyStructureFilesQueryHandler : IRequestHandler<GetCompanyStructureFilesQuery, IList<FileModel>>
 {
-    private readonly IDocumentService _documentService;
+    private readonly ILoansFileService<LoanApplicationId> _fileService;
 
-    private readonly ILoansDocumentSettings _documentSettings;
-
-    private readonly ICompanyStructureRepository _repository;
-
-    public GetCompanyStructureFilesQueryHandler(
-        IDocumentService documentService,
-        ILoansDocumentSettings documentSettings,
-        ICompanyStructureRepository repository)
+    public GetCompanyStructureFilesQueryHandler(ILoansFileService<LoanApplicationId> fileService)
     {
-        _documentService = documentService;
-        _documentSettings = documentSettings;
-        _repository = repository;
+        _fileService = fileService;
     }
 
-    public async Task<LoansTableResult> Handle(GetCompanyStructureFilesQuery request, CancellationToken cancellationToken)
+    public async Task<IList<FileModel>> Handle(GetCompanyStructureFilesQuery request, CancellationToken cancellationToken)
     {
-        var path = await _repository.GetFilesLocationAsync(request.LoanApplicationId, cancellationToken);
+        var result = await _fileService.GetFiles(request.LoanApplicationId, cancellationToken);
 
-        var folderPaths = new List<string> { $"{path}{CompanyStructureConstants.MoreInformationAboutOrganizationExternal}" };
-
-        var result = await _documentService.GetFilesAsync<LoansFileMetadata>(
-            new GetFilesQuery(_documentSettings.ListTitle, _documentSettings.ListAlias, folderPaths),
-            cancellationToken);
-
-        return new LoansTableResult
-        {
-            Items = result.Select(
-                    x => new LoansFileTableRow
-                    {
-                        FileName = x.FileName,
-                        FolderPath = x.FolderPath,
-                        Editor = x.Editor,
-                        Modified = x.Modified,
-                        Creator = x.Metadata?.Creator,
-                    })
-                .ToList(),
-        };
+        return result
+            .OrderBy(x => x.UploadedOn)
+            .Select(x => new FileModel(
+                x.Id?.Value ?? string.Empty,
+                x.Name,
+                x.UploadedOn,
+                x.UploadedBy ?? string.Empty,
+                x.Id.IsProvided(),
+                string.Empty,
+                string.Empty))
+            .ToList();
     }
 }

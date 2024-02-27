@@ -5,38 +5,33 @@
 @using HE.Investments.Loans.BusinessLogic.LoanApplication
 @using HE.Investments.Loans.BusinessLogic.Projects.ValueObjects
 @using HE.Investments.Common.Contract
-@using Microsoft.AspNetCore.Mvc.TagHelpers
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Headings
-
-<gds-back-link href="@Url.Action("Back", "LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.TaskList, ApplicationId = Model.Id })" text="Back to application dashboard" class="govuk-!-margin-bottom-8 govuk-grid-column-full"></gds-back-link>
 
 <gds-div-grid-column-two-thirds>
+    <gds-back-link href="@Url.Action("Back", "LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.TaskList, ApplicationId = Model.Id })" text="Back to application dashboard" class="govuk-!-margin-bottom-8 govuk-grid-column-full"></gds-back-link>
     <partial name="~/Partials/_Notification.cshtml" />
 
-    <span class="govuk-caption-m govuk-!-margin-left-3">
+    <span class="govuk-caption-m">
         @Model.OrganisationName
     </span>
 
-    <gds-h1 size="ControlSize.L" class="govuk-!-margin-bottom-1 govuk-grid-column-full">
+    <gds-h1 size="ControlSize.L" class="govuk-!-margin-bottom-1">
         @Model.ApplicationName.Value
     </gds-h1>
 
     @if (Model.Status is ApplicationStatus.Draft or ApplicationStatus.ReferredBackToApplicant)
     {
-        <gds-div-hint class="govuk-grid-column-full govuk-!-margin-bottom-2" id="last-saved-label">
+        <gds-div-hint class="govuk-!-margin-bottom-2" id="last-saved-label">
             Last saved on @DateHelper.DisplayAsUkFormatDateTime(Model.LastSavedOn) @(!string.IsNullOrEmpty(Model.LastModifiedBy) ? $"by {Model.LastModifiedBy}" : string.Empty)
         </gds-div-hint>
     }
     else
     {
-        <gds-div-hint class="govuk-grid-column-full govuk-!-margin-bottom-2" id="submitted-on-label">
+        <gds-div-hint class="govuk-!-margin-bottom-2" id="submitted-on-label">
             Submitted on @DateHelper.DisplayAsUkFormatDateTime(Model.SubmittedOn)
         </gds-div-hint>
     }
     <div>
-        <application-status-tag application-status="@Model.Status" additional-classes="govuk-!-static-margin-left-3"></application-status-tag>
+        <application-status-tag application-status="@Model.Status"></application-status-tag>
     </div>
 
     @await Html.PartialAsync("Partials/_ApplicationUpdateInformation", Model.Status)
@@ -149,7 +144,7 @@
         <p class="govuk-body-s">
             <span class="govuk-!-font-weight-bold">Telephone</span> <br/>
             0800 389 2500<br/>
-            Monday to Friday 8:30 am to 5:30 pm<br/>
+            Monday to Friday 8:30am to 5:30pm<br/>
             (except public holidays)<br/>
             Free of charge
         </p>
