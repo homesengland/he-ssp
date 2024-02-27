@@ -5,6 +5,7 @@ using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Extensions;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
 using HE.Investments.Loans.WWW;
+using HE.Investments.Loans.WWW.Views.CompanyStructureV2.Consts;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
 using Xunit.Extensions.Ordering;
@@ -34,7 +35,7 @@ public class Order01StartCompanyStructureIntegrationTests : IntegrationTest
         // then
         startCompanyStructurePage
             .UrlEndWith(CompanyStructurePagesUrls.StartCompanyStructureSuffix)
-            .HasTitle("Company structure and experience")
+            .HasTitle(CompanyStructurePageTitles.Start)
             .HasGdsSubmitButton("start-now-button", out _);
 
         SetSharedData(SharedKeys.CurrentPageKey, startCompanyStructurePage);

@@ -2,27 +2,30 @@
 @using HE.Investments.Loans.Contract.Application.Helper
 @using HE.Investments.Loans.Contract.CompanyStructure
 @using HE.Investments.Loans.WWW.Views.CompanyStructureV2.Consts
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Headings
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
 @model HE.Investments.Loans.Contract.CompanyStructure.CompanyStructureViewModel
 
-<gds-div-grid-column-two-thirds>
+<he-div-grid-column-full>
     <form asp-controller="CompanyStructureV2" asp-action="CheckAnswersPost" asp-route-id="@Model.LoanApplicationId" asp-method="post" novalidate>
-        <gds-back-link href="@Url.Action("Back","CompanyStructureV2", new { id = Model.LoanApplicationId, currentPage = CompanyStructureState.CheckAnswers})" text="Back" class="govuk-!-margin-bottom-8">
+        <gds-back-link href="@Url.Action("Back", "CompanyStructureV2", new { id = Model.LoanApplicationId, currentPage = CompanyStructureState.CheckAnswers })" text="Back" class="govuk-!-margin-bottom-8">
         </gds-back-link>
 
-        <partial name="_ErrorSummaryPartial" model="null" />
+        <partial name="_ErrorSummaryPartial" model="null"/>
 
-        <gds-h1 size="ControlSize.L">
-            @(ApplicationStatusDivision.GetAllStatusesAfterSubmit().Contains(Model.LoanApplicationStatus) ? @CompanyStructurePageTitles.ReadOnlyAnswers : @CompanyStructurePageTitles.CheckAnswers)
-        </gds-h1>
+        <vc:page-header
+            title="@(ApplicationStatusDivision.GetAllStatusesAfterSubmit().Contains(Model.LoanApplicationStatus)
+                       ? CompanyStructurePageTitles.ReadOnlyAnswers : CompanyStructurePageTitles.CheckAnswers)"/>
 
         <partial name="Sections/_ReadOnlyAdditionalInformation" model="Model"/>
 
         <gds-h1 size="ControlSize.M">
-            Company structure and experience
+            Organisation structure and residential building experience
         </gds-h1>
 
         @await Html.PartialAsync("_CompanyStructureAnswers", Model)
 
         <partial name="Sections/_HaveYouCompletedThisSection" model="Model"/>
     </form>
-</gds-div-grid-column-two-thirds>
+</he-div-grid-column-full>

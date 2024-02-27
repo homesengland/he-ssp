@@ -67,7 +67,7 @@
                             }
                         }
                         <gds-div-date-input id="PurchaseDate">
-                            <GdsDivDateInputItemTagHelper>
+                            <gds-div-date-input-item>
                                 <gds-input govuk-formgroup-asp-for="PurchaseDay" name="PurchaseDay"
                                            type="text"
                                            asp-autocomplete="on"
@@ -77,8 +77,8 @@
                                            is-invalid="dayInputInvalid || dateInputInvalid"
                                            value=@Model.PurchaseDay
                                            pattern="[0-9]*" inputmode="numeric" class="govuk-date-input__input govuk-input--width-2" />
-                            </GdsDivDateInputItemTagHelper>
-                            <GdsDivDateInputItemTagHelper>
+                            </gds-div-date-input-item>
+                            <gds-div-date-input-item>
                                 <gds-input govuk-formgroup-asp-for="PurchaseMonth" name="PurchaseMonth"
                                            type="text"
                                            asp-autocomplete="on"
@@ -89,8 +89,8 @@
                                            is-invalid="monthInputInvalid || dateInputInvalid"
                                            value=@Model.PurchaseMonth
                                            pattern="[0-9]*" inputmode="numeric" class="govuk-date-input__input govuk-input--width-2" />
-                            </GdsDivDateInputItemTagHelper>
-                            <GdsDivDateInputItemTagHelper>
+                            </gds-div-date-input-item>
+                            <gds-div-date-input-item>
                                 <gds-input govuk-formgroup-asp-for="PurchaseYear" name="PurchaseYear"
                                            type="text"
                                            asp-autocomplete="on"
@@ -101,7 +101,7 @@
                                            is-invalid="yearInputInvalid || dateInputInvalid"
                                            value=@Model.PurchaseYear
                                            pattern="[0-9]*" inputmode="numeric" class="govuk-date-input__input govuk-input--width-4" />
-                            </GdsDivDateInputItemTagHelper>
+                            </gds-div-date-input-item>
                         </gds-div-date-input>
                     </gds-div-form-group>
                 </gds-field-set>
@@ -141,7 +141,7 @@
                         What is the source of this valuation?
                     </gds-legend>
                     <gds-radio govuk-formgroup-asp-for="Source" asp-isexcludeheader
-                               asp-selectlistitems="TemporaryFormOptions.SiteAdditionalSource">
+                               asp-selectlistitems="FormOption.SiteAdditionalSource">
                     </gds-radio>
                 </gds-field-set>
             </gds-div-form-group>

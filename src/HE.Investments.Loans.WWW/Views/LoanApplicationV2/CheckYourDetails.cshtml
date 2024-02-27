@@ -6,16 +6,12 @@
     <form asp-controller="LoanApplicationV2" asp-action="CheckYourDetailsPost" asp-method="post" novalidate>
         <gds-back-link href="@Url.Action("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.CheckYourDetails})" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
 
-        <gds-h1 size="ControlSize.Xl">
-            Check your details
-        </gds-h1>
-        <gds-div-inset-text>
-            Homes England only offers loans to UK-registered corporate entities.<br/> If you have any questions, contact us via telephone: 0300 1234 500
-        </gds-div-inset-text>
+        <vc:page-header title="Check your details"/>
+
         <gds-summary-list class="govuk-!-margin-bottom-9">
             @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
                    {
-                       { "Title", "Registered company name" },
+                       { "Title", "Registered organisation name" },
                        { "Value", Model.CompanyRegisteredName },
                    })
 
@@ -27,7 +23,7 @@
 
             @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
                    {
-                       { "Title", "Company address" },
+                       { "Title", "Organisation address" },
                        { "Value", Model.CompanyAddress },
                    })
 
@@ -55,7 +51,7 @@
 
             @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
                    {
-                       { "Title", "Preferred telephone number" },
+                       { "Title", "Telephone number" },
                        { "Value", Model.LoanApplicationContactTelephoneNumber},
                        { "Link", Url.RouteUrl(new {
                            controller = "Accounts",

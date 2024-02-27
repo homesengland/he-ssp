@@ -9,6 +9,7 @@ using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Extensions;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
 using HE.Investments.Loans.WWW;
+using HE.Investments.Loans.WWW.Views.LoanApplicationV2.Consts;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
 using Xunit.Extensions.Ordering;
@@ -82,7 +83,7 @@ public class Order01StartApplicationIntegrationTests : IntegrationTest
         // then
         aboutLoanPage
             .UrlEndWith(ApplicationPagesUrls.AboutLoanPage)
-            .HasTitle("What you need to know about the loan");
+            .HasTitle(LoanApplicationPageTitles.AboutLoan);
 
         SetSharedData(CurrentPageKey, aboutLoanPage);
     }

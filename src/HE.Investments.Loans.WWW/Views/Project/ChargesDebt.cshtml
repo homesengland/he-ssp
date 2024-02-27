@@ -20,9 +20,9 @@
 <gds-div-grid-column-two-thirds>
     <form asp-controller="Project" asp-action="ChargesDebt" asp-route-id="@Model.ApplicationId" asp-route-projectId="@Model.ProjectId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
 
-        <gds-back-link href="@Url.Action("Back", "Project", new {id = Model.ApplicationId, projectId = Model.ProjectId, currentPage = ProjectState.ChargesDebt})" text="Back" class="govuk-!-margin-bottom-8">
+        <gds-back-link href="@Url.Action("Back", "Project", new { id = Model.ApplicationId, projectId = Model.ProjectId, currentPage = ProjectState.ChargesDebt })" text="Back" class="govuk-!-margin-bottom-8">
         </gds-back-link>
-        <partial name="_ErrorSummaryPartial" model="null" />
+        <partial name="_ErrorSummaryPartial" model="null"/>
         <gds-field-set>
             <gds-div-form-group invalid="radioInvalid">
                 <gds-legend size="ControlSize.L">
@@ -30,15 +30,17 @@
                         @ProjectPageTitles.ChargesDebt
                     </gds-fieldset-heading>
                 </gds-legend>
-                <gds-div-hint class="govuk-!-margin-bottom-6">
-                    There may be a legal charge over the development as security for funding any development activity or land purchase.
-                    Do not include any debentures.
-                </gds-div-hint>
+                <gds-p>
+                    There may be existing legal charges registered against the land as security for funding any development activity or land purchase.
+                </gds-p>
+                <gds-p class="govuk-!-margin-bottom-6">
+                    Homes England expects a first legal charge over the development.
+                </gds-p>
 
                 <gds-radio-yes-no asp-for="@Model.ChargesDebt"
                                   inner-input-for="@Model.ChargesDebtInfo"
                                   with-yes-input
-                                  inner-input-text="Tell us more about any existing legal charges or debt secured on this land."
+                                  inner-input-text="Tell us more about any existing legal charges or debt secured on this land. Do not include any debentures."
                                   inner-input-value="@Model.ChargesDebtInfo"
                                   class="govuk-!-margin-bottom-8"
                                   is-conditional-input-invalid="@conditionalInputInvalid"
@@ -63,7 +65,7 @@
     </form>
 
 
-    <partial name="_HomeAndCheckAnswersLinks" />
+    <partial name="_HomeAndCheckAnswersLinks"/>
 </gds-div-grid-column-two-thirds>
 
 @await Html.YesNoConditionalInputScript(nameof(Model.ChargesDebt))

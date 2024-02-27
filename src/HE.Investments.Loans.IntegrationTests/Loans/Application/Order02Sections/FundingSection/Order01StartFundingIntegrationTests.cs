@@ -58,6 +58,6 @@ public class Order01StartFundingIntegrationTests : IntegrationTest
         // then
         grossDevelopmentValuePage
             .UrlEndWith(FundingPageUrls.GrossDevelopmentValueSuffix)
-            .HasLabelTitle(FundingPageTitles.GrossDevelopmentValue);
+            .HasTitle(FundingPageTitles.GrossDevelopmentValue);
     }
 }

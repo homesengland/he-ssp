@@ -5,7 +5,7 @@
 <gds-summary-list class="govuk-!-margin-bottom-9">
     @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
            {
-               { "Title", "Company established for this development" },
+               { "Title", "Organisation established specifically for this development" },
                { "Value", Model.Purpose },
                { "Link", Url.Action("Purpose", "CompanyStructureV2", new { id, state = "Purpose", redirect = "CheckAnswers" }) },
                { "IsEditable", Model.IsEditable() }
@@ -17,7 +17,7 @@
         );
         @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
                {
-                   { "Title", "Additional information" },
+                   { "Title", "Organisation structure" },
                    { "Value", Model.OrganisationMoreInformation },
                    { "Link", Url.Action("MoreInformationAboutOrganization", "CompanyStructureV2", new { id, state = "ExistingCompany", redirect = "CheckAnswers" }) },
                    { "IsEditable", Model.IsEditable() },
