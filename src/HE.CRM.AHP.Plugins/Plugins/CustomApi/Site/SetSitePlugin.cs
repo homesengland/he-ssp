@@ -13,7 +13,7 @@ namespace HE.CRM.AHP.Plugins.Plugins.CustomApi.Site
         StageEnum.PostOperation,
         ExecutionModeEnum.Synchronous,
         "",
-        "HE.CRM.Plugins.Plugins.CustomApi.GetMultipleSitesPlugin: invln_setsite",
+        "HE.CRM.Plugins.Plugins.CustomApi.Site.GetMultipleSitesPlugin: invln_setsite",
         1,
         IsolationModeEnum.Sandbox,
         Id = "7BFB9FD1-3BB7-4021-B90C-2115685ACD43")]

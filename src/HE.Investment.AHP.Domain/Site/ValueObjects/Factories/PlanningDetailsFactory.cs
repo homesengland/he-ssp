@@ -21,49 +21,7 @@ public static class PlanningDetailsFactory
         planningDetails.IsGrantFundingForAllHomesCoveredByApplication,
         planningDetails.LandRegistryDetails);
 
-    public static PlanningDetails WithLandRegistryDetails(
-        PlanningDetails planningDetails,
-        LandRegistryDetails? landRegistryDetails = null)
-    {
-        return Create(
-            planningDetails.PlanningStatus,
-            planningDetails.ReferenceNumber,
-            planningDetails.DetailedPlanningApprovalDate,
-            planningDetails.RequiredFurtherSteps,
-            planningDetails.ApplicationForDetailedPlanningSubmittedDate,
-            planningDetails.ExpectedPlanningApprovalDate,
-            planningDetails.OutlinePlanningApprovalDate,
-            planningDetails.PlanningSubmissionDate,
-            planningDetails.IsGrantFundingForAllHomesCoveredByApplication,
-            landRegistryDetails);
-    }
-
-    public static PlanningDetails WithDetails(
-        PlanningDetails planningDetails,
-        ReferenceNumber? referenceNumber = null,
-        DetailedPlanningApprovalDate? detailedPlanningApprovalDate = null,
-        RequiredFurtherSteps? requiredFurtherSteps = null,
-        ApplicationForDetailedPlanningSubmittedDate? applicationForDetailedPlanningSubmittedDate = null,
-        ExpectedPlanningApprovalDate? expectedPlanningApprovalDate = null,
-        OutlinePlanningApprovalDate? outlinePlanningApprovalDate = null,
-        PlanningSubmissionDate? planningSubmissionDate = null,
-        bool? isGrantFundingForAllHomesCoveredByApplication = null,
-        LandRegistryDetails? landRegistryDetails = null)
-    {
-        return Create(
-            planningDetails.PlanningStatus,
-            referenceNumber,
-            detailedPlanningApprovalDate,
-            requiredFurtherSteps,
-            applicationForDetailedPlanningSubmittedDate,
-            expectedPlanningApprovalDate,
-            outlinePlanningApprovalDate,
-            planningSubmissionDate,
-            isGrantFundingForAllHomesCoveredByApplication,
-            landRegistryDetails);
-    }
-
-    private static PlanningDetails Create(
+    public static PlanningDetails Create(
         SitePlanningStatus? planningStatus,
         ReferenceNumber? referenceNumber = null,
         DetailedPlanningApprovalDate? detailedPlanningApprovalDate = null,
@@ -115,5 +73,47 @@ public static class PlanningDetailsFactory
             null => throw new DomainValidationException("PlanningStatus", "Please select value"),
             _ => throw new DomainValidationException("PlanningStatus", $"Value {planningStatus} is not supported."),
         };
+    }
+
+    public static PlanningDetails WithLandRegistryDetails(
+        PlanningDetails planningDetails,
+        LandRegistryDetails? landRegistryDetails = null)
+    {
+        return Create(
+            planningDetails.PlanningStatus,
+            planningDetails.ReferenceNumber,
+            planningDetails.DetailedPlanningApprovalDate,
+            planningDetails.RequiredFurtherSteps,
+            planningDetails.ApplicationForDetailedPlanningSubmittedDate,
+            planningDetails.ExpectedPlanningApprovalDate,
+            planningDetails.OutlinePlanningApprovalDate,
+            planningDetails.PlanningSubmissionDate,
+            planningDetails.IsGrantFundingForAllHomesCoveredByApplication,
+            landRegistryDetails);
+    }
+
+    public static PlanningDetails WithDetails(
+        PlanningDetails planningDetails,
+        ReferenceNumber? referenceNumber = null,
+        DetailedPlanningApprovalDate? detailedPlanningApprovalDate = null,
+        RequiredFurtherSteps? requiredFurtherSteps = null,
+        ApplicationForDetailedPlanningSubmittedDate? applicationForDetailedPlanningSubmittedDate = null,
+        ExpectedPlanningApprovalDate? expectedPlanningApprovalDate = null,
+        OutlinePlanningApprovalDate? outlinePlanningApprovalDate = null,
+        PlanningSubmissionDate? planningSubmissionDate = null,
+        bool? isGrantFundingForAllHomesCoveredByApplication = null,
+        LandRegistryDetails? landRegistryDetails = null)
+    {
+        return Create(
+            planningDetails.PlanningStatus,
+            referenceNumber,
+            detailedPlanningApprovalDate,
+            requiredFurtherSteps,
+            applicationForDetailedPlanningSubmittedDate,
+            expectedPlanningApprovalDate,
+            outlinePlanningApprovalDate,
+            planningSubmissionDate,
+            isGrantFundingForAllHomesCoveredByApplication,
+            landRegistryDetails);
     }
 }

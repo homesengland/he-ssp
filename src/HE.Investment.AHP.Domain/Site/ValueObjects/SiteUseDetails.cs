@@ -10,11 +10,11 @@ public class SiteUseDetails : ValueObject, IQuestion
     public SiteUseDetails(
         bool? isPartOfStreetFrontInfill = null,
         bool? isForTravellerPitchSite = null,
-        TravellerPitchSiteType travellerPitchSiteType = TravellerPitchSiteType.Undefined)
+        TravellerPitchSiteType? travellerPitchSiteType = null)
     {
         IsPartOfStreetFrontInfill = isPartOfStreetFrontInfill;
         IsForTravellerPitchSite = isForTravellerPitchSite;
-        TravellerPitchSiteType = travellerPitchSiteType;
+        TravellerPitchSiteType = travellerPitchSiteType ?? TravellerPitchSiteType.Undefined;
 
         if (IsForTravellerPitchSite == false && TravellerPitchSiteType != TravellerPitchSiteType.Undefined)
         {

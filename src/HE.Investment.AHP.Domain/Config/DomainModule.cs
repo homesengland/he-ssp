@@ -101,6 +101,7 @@ public static class DomainModule
 
     private static void AddSite(IServiceCollection services)
     {
+        services.AddScoped<ISiteCrmContext, SiteCrmContext>();
         services.AddScoped<ISiteRepository, SiteRepository>();
         services.AddScoped<ILocalAuthorityRepository, LocalAuthorityRepository>();
     }

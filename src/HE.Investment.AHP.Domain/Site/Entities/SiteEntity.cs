@@ -34,7 +34,7 @@ public class SiteEntity : DomainEntity, IQuestion
         LocalAuthority? localAuthority = null,
         PlanningDetails? planningDetails = null,
         NationalDesignGuidePriorities? nationalDesignGuidePriorities = null,
-        BuildingForHealthyLifeType buildingForHealthyLife = BuildingForHealthyLifeType.Undefined,
+        BuildingForHealthyLifeType? buildingForHealthyLife = null,
         NumberOfGreenLights? numberOfGreenLights = null,
         LandAcquisitionStatus? landAcquisitionStatus = null,
         TenderingStatusDetails? tenderingStatusDetails = null,
@@ -53,7 +53,7 @@ public class SiteEntity : DomainEntity, IQuestion
         LocalAuthority = localAuthority;
         PlanningDetails = planningDetails ?? PlanningDetailsFactory.CreateEmpty();
         NationalDesignGuidePriorities = nationalDesignGuidePriorities ?? new NationalDesignGuidePriorities();
-        BuildingForHealthyLife = buildingForHealthyLife;
+        BuildingForHealthyLife = buildingForHealthyLife ?? BuildingForHealthyLifeType.Undefined;
         NumberOfGreenLights = numberOfGreenLights;
         LandAcquisitionStatus = landAcquisitionStatus ?? new LandAcquisitionStatus();
         TenderingStatusDetails = tenderingStatusDetails ?? new TenderingStatusDetails();
@@ -101,6 +101,8 @@ public class SiteEntity : DomainEntity, IQuestion
     public SiteModernMethodsOfConstruction ModernMethodsOfConstruction { get; private set; }
 
     public SiteProcurements Procurements { get; private set; }
+
+    public bool IsModified => _modificationTracker.IsModified;
 
     public static SiteEntity NewSite()
     {
