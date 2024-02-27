@@ -1,7 +1,7 @@
 using System.Globalization;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.HomeTypes;
-using HE.Investment.AHP.WWW.Controllers;
+using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
@@ -83,7 +83,10 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
             yield return CreateOlderPersonsSharedOwnershipSection(homeType.TenureDetails, factory);
         }
 
-        yield return CreateModernMethodsConstructionSection(homeType.ModernMethodsConstruction, factory);
+        if (homeType.ModernMethodsConstruction.SiteUsingModernMethodsOfConstruction == SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes)
+        {
+            yield return CreateModernMethodsConstructionSection(homeType.ModernMethodsConstruction, factory);
+        }
     }
 
     private static SectionSummaryViewModel CreateHomeTypeDetailsSection(FullHomeType homeType, HomeTypeQuestionFactory factory)
@@ -267,17 +270,18 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
     {
         return SectionSummaryViewModel.New(
             "Modern Methods of Construction (MMC)",
+            factory.Question("Using MMC", nameof(Controller.ModernMethodsConstruction), modernMethodsConstruction.ModernMethodsConstructionApplied),
             factory.Question(
                 "MMC categories used",
-                nameof(HomeTypesController.ModernMethodsConstructionCategories),
+                nameof(Controller.ModernMethodsConstructionCategories),
                 modernMethodsConstruction.ModernMethodsConstructionCategories.ToArray()),
             factory.Question(
                 "Sub-categories of 3D primary structural systems",
-                nameof(HomeTypesController.ModernMethodsConstruction3DSubcategories),
+                nameof(Controller.ModernMethodsConstruction3DSubcategories),
                 modernMethodsConstruction.ModernMethodsConstruction3DSubcategories.ToArray()),
             factory.Question(
                 "Sub-categories of 2D primary structural systems",
-                nameof(HomeTypesController.ModernMethodsConstruction2DSubcategories),
+                nameof(Controller.ModernMethodsConstruction2DSubcategories),
                 modernMethodsConstruction.ModernMethodsConstruction2DSubcategories.ToArray()));
     }
 

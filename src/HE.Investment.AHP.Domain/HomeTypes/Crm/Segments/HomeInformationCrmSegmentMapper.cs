@@ -34,7 +34,11 @@ public class HomeInformationCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Home
 
     public override HomeTypeSegmentType SegmentType => HomeTypeSegmentType.HomeInformation;
 
-    public override IHomeTypeSegmentEntity MapToEntity(ApplicationBasicInfo application, HomeTypeDto dto, IReadOnlyCollection<UploadedFile> uploadedFiles)
+    public override IHomeTypeSegmentEntity MapToEntity(
+        ApplicationBasicInfo application,
+        SiteBasicInfo site,
+        HomeTypeDto dto,
+        IReadOnlyCollection<UploadedFile> uploadedFiles)
     {
         return new HomeInformationSegmentEntity(
             dto.numberOfHomes.IsProvided() ? new NumberOfHomes(dto.numberOfHomes!.Value) : null,

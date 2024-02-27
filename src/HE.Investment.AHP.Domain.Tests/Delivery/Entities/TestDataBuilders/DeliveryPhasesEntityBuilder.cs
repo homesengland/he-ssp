@@ -1,4 +1,5 @@
 using HE.Investment.AHP.Contract.Application;
+using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.Entities;
@@ -41,6 +42,7 @@ public class DeliveryPhasesEntityBuilder
         return new DeliveryPhasesEntity(
             new ApplicationBasicInfo(
                 new AhpApplicationId("test-app-42123"),
+                new SiteId("test-site-12312"),
                 new ApplicationName("Test Application"),
                 Tenure.AffordableRent,
                 ApplicationStatus.Draft,

@@ -21,9 +21,13 @@ public class ModernMethodsConstructionCrmSegmentMapper : HomeTypeCrmSegmentMappe
 
     public override HomeTypeSegmentType SegmentType => HomeTypeSegmentType.ModernMethodsConstruction;
 
-    public override IHomeTypeSegmentEntity MapToEntity(ApplicationBasicInfo application, HomeTypeDto dto, IReadOnlyCollection<UploadedFile> uploadedFiles)
+    public override IHomeTypeSegmentEntity MapToEntity(
+        ApplicationBasicInfo application,
+        SiteBasicInfo site,
+        HomeTypeDto dto,
+        IReadOnlyCollection<UploadedFile> uploadedFiles)
     {
-        return new ModernMethodsConstructionSegmentEntity();
+        return new ModernMethodsConstructionSegmentEntity(site.SiteUsingModernMethodsOfConstruction);
 
         // TODO waiting for crm
         //// return new ModernMethodsConstructionEntity(

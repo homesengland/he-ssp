@@ -38,6 +38,7 @@ public class HomeTypeCrmMapper : IHomeTypeCrmMapper
 
     public HomeTypeEntity MapToDomain(
         ApplicationBasicInfo application,
+        SiteBasicInfo site,
         HomeTypeDto dto,
         IEnumerable<HomeTypeSegmentType> segments,
         IDictionary<HomeTypeSegmentType, IReadOnlyCollection<UploadedFile>> uploadedFiles)
@@ -45,6 +46,7 @@ public class HomeTypeCrmMapper : IHomeTypeCrmMapper
         var segmentEntities = GetSegmentMappers(segments)
             .Select(x => x.MapToEntity(
                 application,
+                site,
                 dto,
                 uploadedFiles.TryGetValue(x.SegmentType, out var file) ? file : Array.Empty<UploadedFile>()));
 

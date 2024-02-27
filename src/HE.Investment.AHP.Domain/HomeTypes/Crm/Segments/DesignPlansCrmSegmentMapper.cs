@@ -17,7 +17,11 @@ public class DesignPlansCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<DesignPl
 
     public override HomeTypeSegmentType SegmentType => HomeTypeSegmentType.DesignPlans;
 
-    public override IHomeTypeSegmentEntity MapToEntity(ApplicationBasicInfo application, HomeTypeDto dto, IReadOnlyCollection<UploadedFile> uploadedFiles)
+    public override IHomeTypeSegmentEntity MapToEntity(
+        ApplicationBasicInfo application,
+        SiteBasicInfo site,
+        HomeTypeDto dto,
+        IReadOnlyCollection<UploadedFile> uploadedFiles)
     {
         return new DesignPlansSegmentEntity(
             application,

@@ -18,7 +18,11 @@ public abstract class HomeTypeCrmSegmentMapperBase<TSegment> : IHomeTypeCrmSegme
 
     public abstract HomeTypeSegmentType SegmentType { get; }
 
-    public abstract IHomeTypeSegmentEntity MapToEntity(ApplicationBasicInfo application, HomeTypeDto dto, IReadOnlyCollection<UploadedFile> uploadedFiles);
+    public abstract IHomeTypeSegmentEntity MapToEntity(
+        ApplicationBasicInfo application,
+        SiteBasicInfo site,
+        HomeTypeDto dto,
+        IReadOnlyCollection<UploadedFile> uploadedFiles);
 
     public HomeTypeDto MapToDto(HomeTypeDto dto, HomeTypeEntity entity)
     {

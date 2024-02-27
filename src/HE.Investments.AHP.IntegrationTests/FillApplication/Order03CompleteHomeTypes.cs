@@ -275,43 +275,13 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         await TestQuestionPage(
             BuildHomeTypePage(HomeTypePagesUrl.ExemptionJustification, GeneralHomeType),
             HomeTypesPageTitles.ExemptionJustification,
-            BuildHomeTypePage(HomeTypePagesUrl.ModernMethodsConstruction, GeneralHomeType),
+            BuildHomeTypePage(HomeTypePagesUrl.CheckAnswers, GeneralHomeType),
             ("MoreInformation", homeType.ExemptionJustification));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
     [Order(15)]
-    public async Task Order15_ProvideModernMethodsOfConstruction()
-    {
-        // given
-        var homeType = GeneralHomeType.GenerateModernMethodsOfConstruction();
-
-        // when & then
-        await TestQuestionPage(
-            BuildHomeTypePage(HomeTypePagesUrl.ModernMethodsConstruction, GeneralHomeType),
-            HomeTypesPageTitles.ModernMethodsConstruction,
-            BuildHomeTypePage(HomeTypePagesUrl.ModernMethodsConstructionCategories, GeneralHomeType),
-            ("ModernMethodsConstructionApplied", homeType.ModernMethodsOfConstruction.ToString()));
-    }
-
-    [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(16)]
-    public async Task Order16_ProvideModernMethodsConstructionCategory()
-    {
-        // given
-        var homeType = GeneralHomeType.GenerateModernMethodsConstructionCategory();
-
-        // when & then
-        await TestQuestionPage(
-            BuildHomeTypePage(HomeTypePagesUrl.ModernMethodsConstructionCategories, GeneralHomeType),
-            HomeTypesPageTitles.ModernMethodsConstructionCategories,
-            BuildHomeTypePage(HomeTypePagesUrl.CheckAnswers, GeneralHomeType),
-            ("ModernMethodsConstructionCategories", homeType.ModernMethodsConstructionCategory.ToString()));
-    }
-
-    [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(17)]
-    public async Task Order17_GeneralCheckAnswersHasValidSummary()
+    public async Task Order15_GeneralCheckAnswersHasValidSummary()
     {
         // given
         var checkAnswersPage = await GetCurrentPage(BuildHomeTypePage(HomeTypePagesUrl.CheckAnswers, GeneralHomeType));
@@ -349,8 +319,8 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(18)]
-    public async Task Order18_GeneralCheckAnswersCompleteHomeType()
+    [Order(16)]
+    public async Task Order16_GeneralCheckAnswersCompleteHomeType()
     {
         // given
         var checkAnswersPage = await GetCurrentPage(BuildHomeTypePage(HomeTypePagesUrl.CheckAnswers, GeneralHomeType));
@@ -373,8 +343,8 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(19)]
-    public async Task Order19_DuplicateHomeType()
+    [Order(17)]
+    public async Task Order17_DuplicateHomeType()
     {
         // given
         var homeTypeListPage = await GetCurrentPage(BuildHomeTypesPage(HomeTypesPagesUrl.List));
@@ -401,8 +371,8 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(20)]
-    public async Task Order20_EditDuplicatedHomeType()
+    [Order(18)]
+    public async Task Order18_EditDuplicatedHomeType()
     {
         // given
         var homeTypeListPage = await GetCurrentPage(BuildHomeTypesPage(HomeTypesPagesUrl.List));
@@ -412,16 +382,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
             .HasHomeTypeItem(DisabledHomeType.Id, DisabledHomeType.Name, out var editHomeTypeButton);
 
         // when
-        await TestClient.NavigateTo(editHomeTypeButton);
-
-        //// TODO: AB#8702 When MMC is stored in CRM, user should be redirected to Check Answers. Remove section code below
-
-        SaveCurrentPage();
-        await TestQuestionPage(
-            BuildHomeTypePage(HomeTypePagesUrl.ModernMethodsConstructionCategories, DisabledHomeType),
-            HomeTypesPageTitles.ModernMethodsConstructionCategories,
-            BuildHomeTypePage(HomeTypePagesUrl.CheckAnswers, DisabledHomeType));
-        var checkAnswersPage = await GetCurrentPage();
+        var checkAnswersPage = await TestClient.NavigateTo(editHomeTypeButton);
 
         // then
         checkAnswersPage.UrlEndWith(BuildHomeTypePage(HomeTypePagesUrl.CheckAnswers, DisabledHomeType))
@@ -438,8 +399,8 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(22)]
-    public async Task Order22_ProvideHomeTypeDetails()
+    [Order(19)]
+    public async Task Order19_ProvideHomeTypeDetails()
     {
         // given
         var homeType = DisabledHomeType.GenerateHomeTypeDetails();
@@ -454,8 +415,8 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(23)]
-    public async Task Order23_ProvideDisabledPeopleHousingType()
+    [Order(20)]
+    public async Task Order20_ProvideDisabledPeopleHousingType()
     {
         // given
         var homeType = DisabledHomeType.GenerateDisabledPeopleHousingType();
@@ -469,8 +430,8 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(24)]
-    public async Task Order24_ProvideDisabledPeopleClientGroup()
+    [Order(21)]
+    public async Task Order21_ProvideDisabledPeopleClientGroup()
     {
         // given
         var homeType = DisabledHomeType.GenerateClientGroup();
@@ -484,8 +445,8 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(25)]
-    public async Task Order25_ProvideHappiDesignPrinciples()
+    [Order(22)]
+    public async Task Order22_ProvideHappiDesignPrinciples()
     {
         // given
         var homeType = DisabledHomeType.GenerateHappiDesignPrinciple();
@@ -499,8 +460,8 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(26)]
-    public async Task Order26_ProvideDesignPlans()
+    [Order(23)]
+    public async Task Order23_ProvideDesignPlans()
     {
         // given
         var homeType = DisabledHomeType.GenerateDesignPlans();
@@ -517,8 +478,8 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(27)]
-    public async Task Order27_ProvideSupportedHousingInformation()
+    [Order(24)]
+    public async Task Order24_ProvideSupportedHousingInformation()
     {
         // given
         var homeType = DisabledHomeType.GenerateSupportedHousingInformation();
@@ -534,8 +495,8 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(28)]
-    public async Task Order28_ProvideRevenueFundingSource()
+    [Order(25)]
+    public async Task Order25_ProvideRevenueFundingSource()
     {
         // given
         var homeType = DisabledHomeType.GenerateRevenueFundingSource();
@@ -549,8 +510,8 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(29)]
-    public async Task Order29_ProvideMoveOnArrangements()
+    [Order(26)]
+    public async Task Order26_ProvideMoveOnArrangements()
     {
         // given
         var homeType = DisabledHomeType.GenerateMoveOnArrangements();
@@ -564,8 +525,8 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(30)]
-    public async Task Order30_ProvideExitPlan()
+    [Order(27)]
+    public async Task Order27_ProvideExitPlan()
     {
         // given
         var homeType = DisabledHomeType.GenerateExitPlan();
@@ -579,8 +540,8 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(31)]
-    public async Task Order31_ProvideTypologyLocationAndDesign()
+    [Order(28)]
+    public async Task Order28_ProvideTypologyLocationAndDesign()
     {
         // given
         var homeType = DisabledHomeType.GenerateTypologyLocationAndDesign();
@@ -594,8 +555,8 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(32)]
-    public async Task Order32_ProvidePeopleGroupForSpecificDesignFeatures()
+    [Order(29)]
+    public async Task Order29_ProvidePeopleGroupForSpecificDesignFeatures()
     {
         // given
         var homeType = DisabledHomeType.GeneratePeopleGroupForSpecificDesignFeatures();
@@ -609,8 +570,8 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(33)]
-    public async Task Order33_DisabledPeopleCheckAnswersHasValidSummary()
+    [Order(30)]
+    public async Task Order30_DisabledPeopleCheckAnswersHasValidSummary()
     {
         // given
         var checkAnswersPage = await GetCurrentPage(BuildHomeTypePage(HomeTypePagesUrl.CheckAnswers, DisabledHomeType));
@@ -659,8 +620,8 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(34)]
-    public async Task Order34_DisabledPeopleCheckAnswersCompleteHomeType()
+    [Order(31)]
+    public async Task Order31_DisabledPeopleCheckAnswersCompleteHomeType()
     {
         // given
         var checkAnswersPage = await GetCurrentPage(BuildHomeTypePage(HomeTypePagesUrl.CheckAnswers, DisabledHomeType));
@@ -684,8 +645,8 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(35)]
-    public async Task Order35_CompleteHomeTypesSection()
+    [Order(32)]
+    public async Task Order32_CompleteHomeTypesSection()
     {
         // given
         var homeTypeListPage = await GetCurrentPage(BuildHomeTypesPage(HomeTypesPagesUrl.List));
@@ -704,8 +665,8 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(36)]
-    public async Task Order36_ConfirmCompleteHomeTypesSection()
+    [Order(33)]
+    public async Task Order33_ConfirmCompleteHomeTypesSection()
     {
         // given
         var finishHomeTypesPage = await GetCurrentPage(BuildHomeTypesPage(HomeTypesPagesUrl.FinishHomeTypes));

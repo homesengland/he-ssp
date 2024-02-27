@@ -1,6 +1,7 @@
 extern alias Org;
 
 using HE.Investment.AHP.Contract.Site;
+using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Data;
 using HE.Investment.AHP.Domain.Site.Entities;
 using HE.Investment.AHP.Domain.Site.Mappers;
@@ -36,6 +37,15 @@ public class SiteRepository : ISiteRepository
             paginationRequest.Page,
             paginationRequest.ItemsPerPage,
             sites.Count);
+    }
+
+    public async Task<SiteBasicInfo> GetSiteBasicInfo(SiteId siteId, UserAccount userAccount, CancellationToken cancellationToken)
+    {
+        var site = await GetSite(siteId, userAccount, cancellationToken);
+        return new SiteBasicInfo(
+            site.Id,
+            site.Name,
+            site.ModernMethodsOfConstruction.SiteUsingModernMethodsOfConstruction ?? SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes);
     }
 
     public async Task<SiteEntity> GetSite(SiteId siteId, UserAccount userAccount, CancellationToken cancellationToken)
