@@ -3340,10 +3340,6 @@ p + .govuk-heading-s,
   }
 }
 
-.govuk-character-count__message:after {
-  content: "?";
-}
-
 .govuk-character-count__message--disabled {
   visibility: hidden;
 }
