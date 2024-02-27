@@ -28,7 +28,7 @@ public class SaveFinishHomeTypesAnswerCommandHandler : HomeTypeCommandHandlerBas
     public async Task<OperationResult> Handle(SaveFinishHomeTypesAnswerCommand request, CancellationToken cancellationToken)
     {
         var account = await _accountUserContext.GetSelectedAccount();
-        var homeTypes = await _repository.GetByApplicationId(request.ApplicationId, account, HomeTypeSegmentTypes.None, cancellationToken);
+        var homeTypes = await _repository.GetByApplicationId(request.ApplicationId, account, HomeTypeSegmentTypes.HomeInformationOnly, cancellationToken);
         var scheme = await _schemeRepository.GetByApplicationId(request.ApplicationId, account, false, cancellationToken);
 
         var validationErrors = PerformWithValidation(() => homeTypes.CompleteSection(request.FinishHomeTypesAnswer, scheme?.Funding?.HousesToDeliver ?? 0));

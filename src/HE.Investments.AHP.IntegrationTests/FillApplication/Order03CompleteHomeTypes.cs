@@ -23,6 +23,8 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
 {
     private readonly HomeTypesData _homeTypesData;
 
+    private readonly int _numberOfHomesPerHomeType;
+
     public Order03CompleteHomeTypes(IntegrationTestFixture<Program> fixture)
         : base(fixture)
     {
@@ -34,6 +36,9 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         }
 
         _homeTypesData = homeTypesData;
+
+        var schemaInformationData = GetSharedDataOrNull<SchemeInformationData>(nameof(SchemeInformationData));
+        _numberOfHomesPerHomeType = (schemaInformationData?.HousesToDeliver ?? 10) / 2;
     }
 
     private GeneralHomeTypeData GeneralHomeType => _homeTypesData.General;
@@ -104,7 +109,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
             BuildHomeTypePage(HomeTypePagesUrl.HomeInformation, GeneralHomeType),
             HomeTypesPageTitles.HomeInformation,
             BuildHomeTypePage(HomeTypePagesUrl.MoveOnAccommodation, GeneralHomeType),
-            ("NumberOfHomes", homeType.NumberOfHomes.ToString(CultureInfo.InvariantCulture)),
+            ("NumberOfHomes", _numberOfHomesPerHomeType.ToString(CultureInfo.InvariantCulture)),
             ("NumberOfBedrooms", homeType.NumberOfBedrooms.ToString(CultureInfo.InvariantCulture)),
             ("MaximumOccupancy", homeType.MaximumOccupancy.ToString(CultureInfo.InvariantCulture)),
             ("NumberOfStoreys", homeType.NumberOfStoreys.ToString(CultureInfo.InvariantCulture)));
@@ -320,13 +325,15 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
             .HasTitle(HomeTypesPageTitles.CheckAnswers)
             .HasSaveAndContinueButton();
 
+        var schemaInformationData = GetSharedDataOrNull<SchemeInformationData>(nameof(SchemeInformationData));
+
         // when
         var summary = checkAnswersPage.GetSummaryListItems();
 
         // then
         summary.Should().ContainKey("Home type name").WhoseValue.Should().Be(GeneralHomeType.Name);
         summary.Should().ContainKey("Type of home").WhoseValue.Should().Be(GeneralHomeType.HousingType.GetDescription());
-        summary.Should().ContainKey("Number of homes").WhoseValue.Should().Be(GeneralHomeType.NumberOfHomes.ToString(CultureInfo.InvariantCulture));
+        summary.Should().ContainKey("Number of homes").WhoseValue.Should().Be(_numberOfHomesPerHomeType.ToString(CultureInfo.InvariantCulture));
         summary.Should().ContainKey("Number of bedrooms").WhoseValue.Should().Be(GeneralHomeType.NumberOfBedrooms.ToString(CultureInfo.InvariantCulture));
         summary.Should().ContainKey("Maximum occupancy").WhoseValue.Should().Be(GeneralHomeType.MaximumOccupancy.ToString(CultureInfo.InvariantCulture));
         summary.Should().ContainKey("Number of storeys").WhoseValue.Should().Be(GeneralHomeType.NumberOfStoreys.ToString(CultureInfo.InvariantCulture));
@@ -636,7 +643,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         summary.Should().ContainKey("Move on arrangements in place").WhoseValue.Should().Be(DisabledHomeType.MoveOnArrangements);
         summary.Should().ContainKey("Exit plan or alternative use").WhoseValue.Should().Be(DisabledHomeType.ExitPlan);
         summary.Should().ContainKey("Typology, location and design").WhoseValue.Should().Be(DisabledHomeType.TypologyLocationAndDesign);
-        summary.Should().ContainKey("Number of homes").WhoseValue.Should().Be(DisabledHomeType.NumberOfHomes.ToString(CultureInfo.InvariantCulture));
+        summary.Should().ContainKey("Number of homes").WhoseValue.Should().Be(_numberOfHomesPerHomeType.ToString(CultureInfo.InvariantCulture));
         summary.Should().ContainKey("Number of bedrooms").WhoseValue.Should().Be(DisabledHomeType.NumberOfBedrooms.ToString(CultureInfo.InvariantCulture));
         summary.Should().ContainKey("Maximum occupancy").WhoseValue.Should().Be(DisabledHomeType.MaximumOccupancy.ToString(CultureInfo.InvariantCulture));
         summary.Should().ContainKey("Number of storeys").WhoseValue.Should().Be(DisabledHomeType.NumberOfStoreys.ToString(CultureInfo.InvariantCulture));

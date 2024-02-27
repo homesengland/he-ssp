@@ -22,4 +22,9 @@ internal static class HomeTypeSegmentTypes
         HomeTypeSegmentType.TenureDetails,
         HomeTypeSegmentType.ModernMethodsConstruction,
     };
+
+    public static readonly IReadOnlyCollection<HomeTypeSegmentType> HomeInformationOnly = new[]
+    {
+        HomeTypeSegmentType.HomeInformation,
+    };
 }

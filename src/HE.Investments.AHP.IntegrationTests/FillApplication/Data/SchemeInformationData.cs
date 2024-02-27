@@ -8,7 +8,7 @@ public class SchemeInformationData
 
     public SchemeInformationData()
     {
-        _dataSeed = new Random().Next(1, 100);
+        _dataSeed = new Random().Next(1, 50) * 2;
     }
 
     public decimal RequiredFunding { get; private set; }
