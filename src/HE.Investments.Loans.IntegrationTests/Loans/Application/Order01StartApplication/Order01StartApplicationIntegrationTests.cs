@@ -90,13 +90,34 @@ public class Order01StartApplicationIntegrationTests : IntegrationTest
 
     [Fact(Skip = LoansConfig.SkipTest)]
     [Order(5)]
-    public async Task Order05_ShouldRedirectToCheckYouDetailsPageAndDisplayMyData_WhenContinueButtonIsClicked()
+    public async Task Order05_ShouldRedirectToLoanApplyInformation_WhenContinueButtonIsClicked()
     {
         // given
         var aboutLoanPage = GetSharedData<IHtmlDocument>(CurrentPageKey);
 
         // when
         var continueButton = aboutLoanPage.GetGdsSubmitButtonById("continue-button");
+        var loanApplyInformationPage = await TestClient.SubmitButton(
+            continueButton,
+            new Dictionary<string, string> { { "InformationAgreement", "true" }, });
+
+        // then
+        loanApplyInformationPage
+            .UrlEndWith(ApplicationPagesUrls.LoanApplyInformation)
+            .HasTitle(LoanApplicationPageTitles.LoanApplyInformation);
+
+        SetSharedData(CurrentPageKey, loanApplyInformationPage);
+    }
+
+    [Fact(Skip = LoansConfig.SkipTest)]
+    [Order(6)]
+    public async Task Order06_ShouldRedirectToCheckYouDetailsPageAndDisplayMyData_WhenContinueButtonIsClicked()
+    {
+        // given
+        var loanApplyInformationPage = GetSharedData<IHtmlDocument>(CurrentPageKey);
+
+        // when
+        var continueButton = loanApplyInformationPage.GetGdsSubmitButtonById("continue-button");
         var checkYourDetailsPage = await TestClient.SubmitButton(continueButton);
 
         // then
@@ -115,8 +136,8 @@ public class Order01StartApplicationIntegrationTests : IntegrationTest
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
-    [Order(6)]
-    public async Task Order06_ShouldRedirectToLoanPurpose_WhenContinueButtonIsClicked()
+    [Order(7)]
+    public async Task Order07_ShouldRedirectToLoanPurpose_WhenContinueButtonIsClicked()
     {
         // given
         var checkYourDetailsPage = GetSharedData<IHtmlDocument>(CurrentPageKey);
@@ -134,8 +155,8 @@ public class Order01StartApplicationIntegrationTests : IntegrationTest
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
-    [Order(7)]
-    public async Task Order07_ShouldRedirectToApplicationName_WhenContinueButtonIsClicked()
+    [Order(8)]
+    public async Task Order08_ShouldRedirectToApplicationName_WhenContinueButtonIsClicked()
     {
         // given
         var loanPurposePage = GetSharedData<IHtmlDocument>(CurrentPageKey);
@@ -155,8 +176,8 @@ public class Order01StartApplicationIntegrationTests : IntegrationTest
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
-    [Order(8)]
-    public async Task Order08_ShouldCreateLoanApplicationWithDraftStatus_WhenContinueButtonIsClicked()
+    [Order(9)]
+    public async Task Order09_ShouldCreateLoanApplicationWithDraftStatus_WhenContinueButtonIsClicked()
     {
         // given
         var applicationNamePage = GetSharedData<IHtmlDocument>(CurrentPageKey);

@@ -15,6 +15,7 @@ public class LoanApplicationWorkflow : IStateRouting<LoanApplicationWorkflow.Sta
         ApplicationDashboard,
         UserDashboard,
         AboutLoan,
+        LoanApplyInformation,
         CheckYourDetails,
         ApplicationName,
         LoanPurpose,
@@ -90,8 +91,12 @@ public class LoanApplicationWorkflow : IStateRouting<LoanApplicationWorkflow.Sta
         .Permit(Trigger.Continue, State.AboutLoan);
 
         _machine.Configure(State.AboutLoan)
-            .Permit(Trigger.Continue, State.CheckYourDetails)
+            .Permit(Trigger.Continue, State.LoanApplyInformation)
             .Permit(Trigger.Back, State.Index);
+
+        _machine.Configure(State.LoanApplyInformation)
+            .Permit(Trigger.Continue, State.CheckYourDetails)
+            .Permit(Trigger.Back, State.AboutLoan);
 
         _machine.Configure(State.CheckYourDetails)
             .Permit(Trigger.Continue, State.LoanPurpose)
