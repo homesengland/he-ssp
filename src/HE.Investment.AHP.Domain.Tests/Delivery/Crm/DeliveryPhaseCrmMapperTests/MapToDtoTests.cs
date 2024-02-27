@@ -66,6 +66,7 @@ public class MapToDtoTests : TestBase<DeliveryPhaseCrmMapper>
     [InlineData(BuildActivityType.Reimprovement, 858110004)]
     [InlineData(BuildActivityType.Conversion, 858110005)]
     [InlineData(BuildActivityType.WorksOnlyRehab, 858110006)]
+    [InlineData(BuildActivityType.RegenerationRehab, 858110007)]
     public void ShouldMapBuildActivity_WhenTypeOfHomesIsRehab(BuildActivityType buildActivityType, int expectedRehabBuildActivityType)
     {
         // given
@@ -88,6 +89,7 @@ public class MapToDtoTests : TestBase<DeliveryPhaseCrmMapper>
     [InlineData(BuildActivityType.OffTheShelf, 858110001)]
     [InlineData(BuildActivityType.WorksOnly, 858110002)]
     [InlineData(BuildActivityType.LandInclusivePackage, 858110003)]
+    [InlineData(BuildActivityType.Regeneration, 858110004)]
     public void ShouldMapBuildActivity_WhenTypeOfHomesIsNewBuild(BuildActivityType buildActivityType, int expectedNewBuildActivityType)
     {
         // given
