@@ -9,8 +9,8 @@ public class UploadFile : ViewComponent
 {
     public IViewComponentResult Invoke(
         string fieldName,
-        string description,
         string allowedExtensions,
+        string? description = null,
         bool isMultiple = false,
         bool isHidden = false,
         int? maxFileSizeInMb = null,

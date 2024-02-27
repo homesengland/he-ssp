@@ -1,4 +1,4 @@
-@using HE.Investments.Common.Gds
+@using HE.Investments.Common.WWW.Components
 @using HE.Investments.Loans.BusinessLogic.Config
 @using HE.Investments.Loans.Contract.CompanyStructure
 @model HE.Investments.Loans.Contract.CompanyStructure.CompanyStructureViewModel
@@ -8,52 +8,45 @@
 
 <div class="govuk-grid-column-full">
     <form id="formWithFile" asp-controller="CompanyStructureV2" asp-action="MoreInformationAboutOrganizationPost" asp-route-id="@Model.LoanApplicationId" asp-route-redirect="@Context.Request.Query["redirect"]" enctype="multipart/form-data" asp-method="post" novalidate>
-        <gds-back-link href="@Url.Action("Back","CompanyStructureV2", new { id = Model.LoanApplicationId, currentPage = CompanyStructureState.ExistingCompany})" text="Back" class="govuk-!-margin-bottom-8">
+        <gds-back-link href="@Url.Action("Back", "CompanyStructureV2", new { id = Model.LoanApplicationId, currentPage = CompanyStructureState.ExistingCompany })" text="Back" class="govuk-!-margin-bottom-8">
         </gds-back-link>
-        <partial name="~/Partials/_Notification.cshtml" />
-        <partial name="_ErrorSummaryPartial" model="null" />
+        <partial name="~/Partials/_Notification.cshtml"/>
+        <partial name="_ErrorSummaryPartial" model="null"/>
         @Html.HiddenFor(x => x.LoanApplicationId)
         @Html.HiddenFor(x => x.AllowedExtensions)
 
         <gds-div-grid-column-two-thirds class="govuk-!-padding-left-0">
+
+            <vc:page-header title="Organisation structure"/>
             <gds-field-set>
-                <gds-error-form-group asp-for="OrganisationMoreInformation">
-                    <legend>
-                        <gds-label-wrapper>
-                            <gds-label size="@ControlSize.L" for="OrganisationMoreInformation">
-                                Provide more information about your organisation
-                            </gds-label>
-                        </gds-label-wrapper>
-                    </legend>
-                    <gds-div-hint>
-                        Tell us about your organisation structure, including if your organisation is or has a parent company, or is part of a group structure.
-                    </gds-div-hint>
-                    <gds-text-area
-                        asp-for="OrganisationMoreInformation"
-                        rows="5"></gds-text-area>
-                </gds-error-form-group>
+                <vc:text-area-input-with-counter
+                    field-name="@nameof(Model.OrganisationMoreInformation)"
+                    value="@Model.OrganisationMoreInformation"
+                    title="Tell us more about your organisation structure"
+                    title-type="InputTitleType.InputTitle"
+                    hint="For example if your organisation is or has a parent company, or is part of a group structure."/>
             </gds-field-set>
 
             <gds-error-form-group asp-for="OrganisationMoreInformationFile">
                 <vc:upload-file field-name="OrganisationMoreInformationFile"
-                                description="You can also upload any relevant files such as company structure charts."
+                                title="Upload any evidence you have of your organisation structure (optional)"
                                 allowed-extensions="@Model.AllowedExtensions"
                                 is-multiple="true"
                                 max-file-size-in-mb="@Settings.MaxFileSizeInMegabytes"
                                 upload-one-file-url="@Url.Action("MoreInformationAboutOrganizationUploadFile", "CompanyStructureV2", new { id = Model.LoanApplicationId })"
-                                remove-file-url-template="@Url.Action("MoreInformationAboutOrganizationRemoveFile", "CompanyStructureV2",new { id = Model.LoanApplicationId, fileId = ":fileId" })"
-                                download-file-url-template="@Url.Action("MoreInformationAboutOrganizationDownloadFile", "CompanyStructureV2",new { id = Model.LoanApplicationId, fileId = ":fileId" })"/>
+                                remove-file-url-template="@Url.Action("MoreInformationAboutOrganizationRemoveFile", "CompanyStructureV2", new { id = Model.LoanApplicationId, fileId = ":fileId" })"
+                                download-file-url-template="@Url.Action("MoreInformationAboutOrganizationDownloadFile", "CompanyStructureV2", new { id = Model.LoanApplicationId, fileId = ":fileId" })"/>
 
             </gds-error-form-group>
         </gds-div-grid-column-two-thirds>
 
         <vc:files-table asp-for="@Model.OrganisationMoreInformationFiles"/>
 
-        <button class="govuk-button" id="continue-button" data-module="govuk-button" name="action" type="submit" value="@(Model.StateChanged?"Change":"Continue")">
+        <button class="govuk-button" id="continue-button" data-module="govuk-button" name="action" type="submit" value="@(Model.StateChanged ? "Change" : "Continue")">
             Continue
         </button>
 
-        <partial name="_HomeAndCheckAnswersLinks" />
+        <partial name="_HomeAndCheckAnswersLinks"/>
     </form>
 </div>
 

@@ -20,7 +20,11 @@
     @Html.Hidden("download-file-url-template", Model.downloadFileUrlTemplate)
 }
 
-<he-div-hint class="govuk-!-margin-bottom-6">@Model.description</he-div-hint>
+@if (!string.IsNullOrWhiteSpace(Model.description))
+{
+    <he-div-hint class="govuk-!-margin-bottom-6">@Model.description</he-div-hint>
+}
+
 <div id="file-input-form-group" class="govuk-form-group @(Model.hasFileError ? "govuk-form-group--error" : string.Empty)">
 
     @if (!Model.isHidden)
