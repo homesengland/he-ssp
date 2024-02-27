@@ -33,11 +33,11 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
         nameof(invln_DeliveryPhase.invln_completionmilestoneclaimdate),
         nameof(invln_DeliveryPhase.invln_urbrequestingearlymilestonepayments),
         nameof(invln_DeliveryPhase.invln_nbrh),
-        "invln_AcquisitionPercentageValue",
-        "invln_StartOnSitePercentageValue",
-        "invln_CompletionPercentageValue",
-        "invln_ClaimingtheMilestoneConfirmed",
-        "invln_AllowAmendmentstoMilestoneProportions",
+        nameof(invln_DeliveryPhase.invln_AcquisitionPercentageValue),
+        nameof(invln_DeliveryPhase.invln_StartOnSitePercentageValue),
+        nameof(invln_DeliveryPhase.invln_CompletionPercentageValue),
+        nameof(invln_DeliveryPhase.invln_ClaimingtheMilestoneConfirmed),
+        nameof(invln_DeliveryPhase.invln_AllowAmendmentstoMilestoneProportions),
     };
 
     public DeliveryPhaseEntity MapToDomain(ApplicationBasicInfo application, OrganisationBasicInfo organisation, DeliveryPhaseDto dto, SchemeFunding schemeFunding)
@@ -146,6 +146,7 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
             (int)invln_NewBuildActivityType.LandInclusivePackagepackagedeal => BuildActivityType.LandInclusivePackage,
             (int)invln_NewBuildActivityType.OffTheShelf => BuildActivityType.OffTheShelf,
             (int)invln_NewBuildActivityType.WorksOnly => BuildActivityType.WorksOnly,
+            (int)invln_NewBuildActivityType.Regeneration => BuildActivityType.Regeneration,
             _ => null,
         };
     }
@@ -158,6 +159,7 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
             BuildActivityType.LandInclusivePackage => (int)invln_NewBuildActivityType.LandInclusivePackagepackagedeal,
             BuildActivityType.OffTheShelf => (int)invln_NewBuildActivityType.OffTheShelf,
             BuildActivityType.WorksOnly => (int)invln_NewBuildActivityType.WorksOnly,
+            BuildActivityType.Regeneration => (int)invln_NewBuildActivityType.Regeneration,
             _ => null,
         };
     }
@@ -173,6 +175,7 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
             (int)invln_RehabActivityType.PurchaseandRepair => BuildActivityType.PurchaseAndRepair,
             (int)invln_RehabActivityType.Reimprovement => BuildActivityType.Reimprovement,
             (int)invln_RehabActivityType.WorksOnly => BuildActivityType.WorksOnlyRehab,
+            (int)invln_RehabActivityType.Regeneration => BuildActivityType.RegenerationRehab,
             _ => null,
         };
     }
@@ -188,6 +191,7 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
             BuildActivityType.PurchaseAndRepair => (int)invln_RehabActivityType.PurchaseandRepair,
             BuildActivityType.Reimprovement => (int)invln_RehabActivityType.Reimprovement,
             BuildActivityType.WorksOnlyRehab => (int)invln_RehabActivityType.WorksOnly,
+            BuildActivityType.RegenerationRehab => (int)invln_RehabActivityType.Regeneration,
             _ => null,
         };
     }
