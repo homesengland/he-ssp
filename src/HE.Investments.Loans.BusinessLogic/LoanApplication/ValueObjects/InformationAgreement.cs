@@ -23,7 +23,6 @@ public class InformationAgreement : ValueObject
 
     public static InformationAgreement FromString(string? value) => new(value);
 
-
     protected override IEnumerable<object> GetAtomicValues()
     {
         yield return Value;
