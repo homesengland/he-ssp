@@ -123,6 +123,9 @@
     <Compile Include="Handlers\CustomApi\SetApplicationHandler.cs" />
     <Compile Include="Handlers\CustomApi\SetDeliveryPhaseHandler.cs" />
     <Compile Include="Handlers\CustomApi\SetHomeTypeHandler.cs" />
+    <Compile Include="Handlers\CustomApi\Site\GetMultipleSitesHandler.cs" />
+    <Compile Include="Handlers\CustomApi\Site\GetSingleSiteHandler.cs" />
+    <Compile Include="Handlers\CustomApi\Site\SetSiteHandler.cs" />
     <Compile Include="Handlers\DeliveryPhase\SendNotificationUrbWantsAdditionalPaymentsForPhaseHandler.cs" />
     <Compile Include="Handlers\HomeType\CreateDocumentLocationOnCreateHandler.cs" />
     <Compile Include="Handlers\HomeType\SetHappiPrinciplesValueHandler.cs" />
@@ -215,6 +218,9 @@
     <Compile Include="Plugins\CustomApi\SetApplicationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\SetDeliveryPhasePlugin.cs" />
     <Compile Include="Plugins\CustomApi\SetHomeTypePlugin.cs" />
+    <Compile Include="Plugins\CustomApi\Site\GetMultipleSitesPlugin.cs" />
+    <Compile Include="Plugins\CustomApi\Site\GetSingleSitePlugin.cs" />
+    <Compile Include="Plugins\CustomApi\Site\SetSitePlugin.cs" />
     <Compile Include="Plugins\DeliveryPhase\SendNotificationUrbWantsAdditionalPaymentsForPhasePlugin.cs" />
     <Compile Include="Plugins\HomeType\CreateDocumentLocationOnCreatePlugin.cs" />
     <Compile Include="Plugins\HomeType\SetHappiPrinciplesValuePlugin.cs" />
@@ -234,6 +240,8 @@
     <Compile Include="Services\HomeType\IHomeTypeService.cs" />
     <Compile Include="Services\Programme\IProgrammeService.cs" />
     <Compile Include="Services\Programme\ProgrammeService.cs" />
+    <Compile Include="Services\Site\ISiteService.cs" />
+    <Compile Include="Services\Site\SiteService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ahp-build-export.yml" />

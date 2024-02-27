@@ -29,12 +29,14 @@ invln_getloanapplicationsforaccountandcontact|
 invln_getmultipleahpapplications|
 invln_getmultipledeliveryphase|
 invln_getmultipleprogramme|
+invln_getmultiplesites|
 invln_getorganisationchangedetails|
 invln_getorganizationdetails|
 invln_getsingledeliveryphase|
 invln_getsinglehometype|
 invln_getsingleloanapplicationforaccountandcontact|
 invln_getsingleprogramme|
+invln_getsinglesite|
 invln_getsinglesitedetails|
 invln_gettemporaryportaldata|
 invln_gettypeofhomeslist|
@@ -53,6 +55,7 @@ invln_sendrequesttoassigncontacttoexistingorganisation|
 invln_setahpapplication|
 invln_setdeliveryphase|
 invln_sethometype|
+invln_setsite|
 invln_updatesingleloanapplication|
 invln_updatesinglesitedetails|
 invln_updateuserprofile|
@@ -79,6 +82,7 @@ retrieveenvironmentvariablevalue</ActionsWhitelist>
 contact|
 environmentvariabledefinition|
 environmentvariablevalue|
+invln_ahglocalauthorities|
 invln_ahpcontract|
 invln_ahpstatuschange|
 invln_borrowerpreviousschemes|
