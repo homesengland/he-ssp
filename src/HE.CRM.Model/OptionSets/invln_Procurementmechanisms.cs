@@ -26,6 +26,9 @@ namespace DataverseModel
 		Largescalecontractprocurement_858110001 = 858110001,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Noneoftheabove = 858111000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Other = 858110005,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]

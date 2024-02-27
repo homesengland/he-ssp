@@ -75,6 +75,19 @@ namespace HE.CRM.Common.DtoMapping
                     isRuralClassification = entity.invln_Ruralclassification, isRuralExceptionSite = entity.invln_RuralExceptionSite,
                 },
                 environmentalImpact = entity.invln_ActionstoReduce,
+                modernMethodsOfConstruction = new ModernMethodsOfConstructionDto
+                {
+                    usingMmc = entity.invln_mmcuse?.Value,
+                    mmcBarriers = entity.invln_mmcbarriers,
+                    mmcImpact = entity.invln_mmcimpact,
+                    mmcCategories = entity.invln_mmccategories.ToIntValueList(),
+                    mmc3DSubcategories = entity.invln_mmccategory1subcategories.ToIntValueList(),
+                    mmc2DSubcategories = entity.invln_mmccategory2subcategories.ToIntValueList(),
+                    mmcFutureAdoptionPlans = entity.invln_mmcplans,
+                    mmcFutureAdoptionExpectedImpact = entity.invln_mmcexpectedimpact,
+                },
+
+                procurementMechanisms = entity.invln_procurementmechanisms.ToIntValueList(),
             };
         }
 
@@ -143,6 +156,17 @@ namespace HE.CRM.Common.DtoMapping
             SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_RuralExceptionSite), dto.ruralDetails.isRuralExceptionSite);
 
             SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_ActionstoReduce), dto.environmentalImpact);
+
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_mmcuse), TryCreateOptionSetValue(dto.modernMethodsOfConstruction.usingMmc));
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_mmcplans), dto.modernMethodsOfConstruction.mmcFutureAdoptionPlans);
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_mmcexpectedimpact), dto.modernMethodsOfConstruction.mmcFutureAdoptionExpectedImpact);
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_mmcbarriers), dto.modernMethodsOfConstruction.mmcBarriers);
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_mmcimpact), dto.modernMethodsOfConstruction.mmcImpact);
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_mmccategories), CreateOptionSetValueCollection(dto.modernMethodsOfConstruction.mmcCategories));
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_mmccategory1subcategories), CreateOptionSetValueCollection(dto.modernMethodsOfConstruction.mmc3DSubcategories));
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_mmccategory2subcategories), CreateOptionSetValueCollection(dto.modernMethodsOfConstruction.mmc2DSubcategories));
+
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_procurementmechanisms), CreateOptionSetValueCollection(dto.procurementMechanisms));
 
             return site;
         }

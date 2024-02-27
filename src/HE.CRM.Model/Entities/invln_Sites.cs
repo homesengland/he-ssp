@@ -1351,12 +1351,12 @@ namespace DataverseModel
 		}
 		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_procurementmechanisms")]
-		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_procurementmechanisms
+		public virtual Microsoft.Xrm.Sdk.OptionSetValueCollection invln_procurementmechanisms
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_procurementmechanisms");
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValueCollection>("invln_procurementmechanisms");
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
