@@ -1,6 +1,7 @@
 using HE.Investment.AHP.Contract.HomeTypes.Commands;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
+using HE.Investment.AHP.Domain.Scheme.Repositories;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
 using MediatR;
@@ -14,18 +15,23 @@ public class SaveFinishHomeTypesAnswerCommandHandler : HomeTypeCommandHandlerBas
 
     private readonly IAccountUserContext _accountUserContext;
 
-    public SaveFinishHomeTypesAnswerCommandHandler(IHomeTypeRepository repository, IAccountUserContext accountUserContext, ILogger<SaveFinishHomeTypesAnswerCommandHandler> logger)
+    private readonly ISchemeRepository _schemeRepository;
+
+    public SaveFinishHomeTypesAnswerCommandHandler(IHomeTypeRepository repository, ISchemeRepository schemeRepository, IAccountUserContext accountUserContext, ILogger<SaveFinishHomeTypesAnswerCommandHandler> logger)
         : base(logger)
     {
         _repository = repository;
+        _schemeRepository = schemeRepository;
         _accountUserContext = accountUserContext;
     }
 
     public async Task<OperationResult> Handle(SaveFinishHomeTypesAnswerCommand request, CancellationToken cancellationToken)
     {
         var account = await _accountUserContext.GetSelectedAccount();
-        var homeTypes = await _repository.GetByApplicationId(request.ApplicationId, account, HomeTypeSegmentTypes.None, cancellationToken);
-        var validationErrors = PerformWithValidation(() => homeTypes.CompleteSection(request.FinishHomeTypesAnswer));
+        var homeTypes = await _repository.GetByApplicationId(request.ApplicationId, account, HomeTypeSegmentTypes.HomeInformationOnly, cancellationToken);
+        var scheme = await _schemeRepository.GetByApplicationId(request.ApplicationId, account, false, cancellationToken);
+
+        var validationErrors = PerformWithValidation(() => homeTypes.CompleteSection(request.FinishHomeTypesAnswer, scheme?.Funding?.HousesToDeliver ?? 0));
         if (validationErrors.Any())
         {
             return new OperationResult(validationErrors);

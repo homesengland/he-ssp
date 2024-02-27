@@ -22,10 +22,16 @@
 
         <gds-field-set>
             <he-error-form-group asp-for="FinishAnswer">
-                <gds-legend class="govuk-!-margin-bottom-0">
+                <gds-legend class="govuk-!-margin-bottom-6">
                     <gds-h1 class="govuk-!-margin-bottom-0">@HomeTypesPageTitles.FinishHomeTypes</gds-h1>
                 </gds-legend>
 
+                <gds-p>
+                    You must assign all of the homes in this application to a home type. To do this, return to home types.
+                </gds-p>
+                <gds-p>
+                    To continue without completing this section, select no and come back later.
+                </gds-p>
                 <gds-radio govuk-formgroup-asp-for="FinishAnswer"
                            asp-hiddenlabeltext="Have you added all of the home types for this application?"
                            value="@Model.FinishAnswer"

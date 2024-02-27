@@ -7,6 +7,7 @@ using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Commands;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Contract.HomeTypes.Queries;
+using HE.Investment.AHP.Contract.Scheme.Queries;
 using HE.Investment.AHP.Domain.Documents.Config;
 using HE.Investment.AHP.WWW.Extensions;
 using HE.Investment.AHP.WWW.Models.Common;
@@ -76,10 +77,13 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         var homeTypes = await _mediator.Send(new GetHomeTypesQuery(AhpApplicationId.From(applicationId)), cancellationToken);
         var isEditable = await _accountAccessContext.CanEditApplication() && !homeTypes.IsReadOnly;
 
+        var scheme = await _mediator.Send(new GetApplicationSchemeQuery(AhpApplicationId.From(applicationId)), cancellationToken);
+
         return View(new HomeTypeListModel(homeTypes.ApplicationName)
         {
             HomeTypes = homeTypes.HomeTypes.Select(x => new HomeTypeItemModel(x.Id.Value, x.Name, x.HousingType, x.NumberOfHomes)).ToList(),
             IsEditable = isEditable,
+            TotalExpectedNumberOfHomes = scheme.HousesToDeliver ?? 0,
         });
     }
 
