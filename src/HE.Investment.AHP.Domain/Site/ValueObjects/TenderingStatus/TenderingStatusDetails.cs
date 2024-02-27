@@ -37,6 +37,25 @@ public class TenderingStatusDetails : ValueObject, IQuestion
 
     public bool? IsIntentionToWorkWithSme { get; }
 
+    public static TenderingStatusDetails Create(
+        SiteTenderingStatus? tenderingStatus,
+        ContractorName? contractorName,
+        bool? isSmeContractor,
+        bool? isIntentionToWorkWithSme)
+    {
+        if (tenderingStatus is SiteTenderingStatus.ConditionalWorksContract or SiteTenderingStatus.UnconditionalWorksContract)
+        {
+            return new TenderingStatusDetails(tenderingStatus, contractorName, isSmeContractor);
+        }
+
+        if (tenderingStatus is SiteTenderingStatus.NotApplicable)
+        {
+            return new TenderingStatusDetails(tenderingStatus);
+        }
+
+        return new TenderingStatusDetails(tenderingStatus, isIntentionToWorkWithSme);
+    }
+
     public bool IsAnswered()
     {
         return TenderingStatus switch

@@ -72,6 +72,8 @@ namespace HE.Investments.Common.CRM.Model
 			public const string invln_developercontributionsforahName = "invln_developercontributionsforahname";
 			public const string invln_expectedplanningapproval = "invln_expectedplanningapproval";
 			public const string invln_furtherstepsrequired = "invln_furtherstepsrequired";
+			public const string invln_grantfundingforallhomes = "invln_grantfundingforallhomes";
+			public const string invln_grantfundingforallhomesName = "invln_grantfundingforallhomesname";
 			public const string invln_greenbelt = "invln_greenbelt";
 			public const string invln_greenbeltName = "invln_greenbeltname";
 			public const string invln_homesintheapplicationareadditional = "invln_homesintheapplicationareadditional";
@@ -79,6 +81,8 @@ namespace HE.Investments.Common.CRM.Model
 			public const string invln_intentiontoworkwithsme = "invln_intentiontoworkwithsme";
 			public const string invln_intentiontoworkwithsmeName = "invln_intentiontoworkwithsmename";
 			public const string invln_invln_scheme_Site_invln_sites = "invln_invln_scheme_Site_invln_sites";
+			public const string invln_invlngrantfundingforallhomescoveredbytit = "invln_invlngrantfundingforallhomescoveredbytit";
+			public const string invln_invlngrantfundingforallhomescoveredbytitName = "invln_invlngrantfundingforallhomescoveredbytitname";
 			public const string invln_landregistrytitle = "invln_landregistrytitle";
 			public const string invln_landregistrytitleName = "invln_landregistrytitlename";
 			public const string invln_landregistrytitlenumber = "invln_landregistrytitlenumber";
@@ -595,6 +599,40 @@ namespace HE.Investments.Common.CRM.Model
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_grantfundingforallhomes")]
+		public System.Nullable<bool> invln_grantfundingforallhomes
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_grantfundingforallhomes");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_grantfundingforallhomes");
+				this.SetAttributeValue("invln_grantfundingforallhomes", value);
+				this.OnPropertyChanged("invln_grantfundingforallhomes");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_grantfundingforallhomesname")]
+		public string invln_grantfundingforallhomesName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_grantfundingforallhomes"))
+				{
+					return this.FormattedValues["invln_grantfundingforallhomes"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_greenbelt")]
 		public System.Nullable<bool> invln_greenbelt
 		{
@@ -689,6 +727,40 @@ namespace HE.Investments.Common.CRM.Model
 				if (this.FormattedValues.Contains("invln_intentiontoworkwithsme"))
 				{
 					return this.FormattedValues["invln_intentiontoworkwithsme"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_invlngrantfundingforallhomescoveredbytit")]
+		public System.Nullable<bool> invln_invlngrantfundingforallhomescoveredbytit
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_invlngrantfundingforallhomescoveredbytit");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_invlngrantfundingforallhomescoveredbytit");
+				this.SetAttributeValue("invln_invlngrantfundingforallhomescoveredbytit", value);
+				this.OnPropertyChanged("invln_invlngrantfundingforallhomescoveredbytit");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_invlngrantfundingforallhomescoveredbytitname")]
+		public string invln_invlngrantfundingforallhomescoveredbytitName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_invlngrantfundingforallhomescoveredbytit"))
+				{
+					return this.FormattedValues["invln_invlngrantfundingforallhomescoveredbytit"];
 				}
 				else
 				{

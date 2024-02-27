@@ -40,6 +40,10 @@ namespace HE.CRM.Common.DtoMapping
                     expectedPlanningApprovalDate = entity.invln_expectedplanningapproval,
                     outlinePlanningApprovalDate = entity.invln_outlineplanningapprovaldate,
                     planningSubmissionDate = entity.invln_planningsubmissiondate,
+                    isGrantFundingForAllHomes = entity.invln_grantfundingforallhomes,
+                    isLandRegistryTitleNumber = entity.invln_landregistrytitle,
+                    landRegistryTitleNumber = entity.invln_landregistrytitlenumber,
+                    isGrantFundingForAllHomesCoveredByTitleNumber = entity.invln_invlngrantfundingforallhomescoveredbytit,
                 },
                 nationalDesignGuidePriorities = entity.invln_nationaldesignguideelements.ToIntValueList(),
                 buildingForHealthyLife = entity.invln_assessedforbhl?.Value,
@@ -106,6 +110,11 @@ namespace HE.CRM.Common.DtoMapping
             SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_expectedplanningapproval), dto.planningDetails.expectedPlanningApprovalDate);
             SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_outlineplanningapprovaldate), dto.planningDetails.outlinePlanningApprovalDate);
             SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_planningsubmissiondate), dto.planningDetails.planningSubmissionDate);
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_grantfundingforallhomes), dto.planningDetails.isGrantFundingForAllHomes);
+
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_landregistrytitle), dto.planningDetails.isLandRegistryTitleNumber);
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_landregistrytitlenumber), dto.planningDetails.landRegistryTitleNumber);
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_invlngrantfundingforallhomescoveredbytit), dto.planningDetails.isGrantFundingForAllHomesCoveredByTitleNumber);
 
             SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_nationaldesignguideelements), CreateOptionSetValueCollection(dto.nationalDesignGuidePriorities));
 

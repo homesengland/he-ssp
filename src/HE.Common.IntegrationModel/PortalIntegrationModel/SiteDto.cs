@@ -92,13 +92,28 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
     public class PlanningDetailsDto
     {
         public int? planningStatus { get; set; }
+
         public string referenceNumber { get; set; }
+
         public DateTime? detailedPlanningApprovalDate { get; set; }
+
         public string requiredFurtherSteps { get; set; }
+
         public DateTime? applicationForDetailedPlanningSubmittedDate { get; set; }
+
         public DateTime? expectedPlanningApprovalDate { get; set; }
+
         public DateTime? outlinePlanningApprovalDate { get; set; }
+
         public DateTime? planningSubmissionDate { get; set; }
+
+        public bool? isGrantFundingForAllHomes { get; set; }
+
+        public bool? isLandRegistryTitleNumber { get; set; }
+
+        public string landRegistryTitleNumber { get; set; }
+
+        public bool? isGrantFundingForAllHomesCoveredByTitleNumber { get; set; }
     }
 
     public class Section106Dto
