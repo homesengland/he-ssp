@@ -1,25 +1,24 @@
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
-using HE.Investments.Common.Extensions;
 using HE.Investments.Loans.BusinessLogic.CompanyStructure.Repositories;
 using HE.Investments.Loans.BusinessLogic.Files;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
 using HE.Investments.Loans.Contract.CompanyStructure.Commands;
-using HE.Investments.Loans.Contract.CompanyStructure.ValueObjects;
+using HE.Investments.Loans.Contract.Documents;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace HE.Investments.Loans.BusinessLogic.CompanyStructure.CommandHandlers;
 
-public class ProvideMoreInformationAboutOrganizationCommandHandler : CompanyStructureBaseCommandHandler,
-    IRequestHandler<ProvideMoreInformationAboutOrganizationCommand, OperationResult>
+public class UploadOrganisationMoreInformationFileCommandHandler : CompanyStructureBaseCommandHandler,
+    IRequestHandler<UploadOrganisationMoreInformationFileCommand, OperationResult<UploadedFile?>>
 {
     private readonly ILoansFileService<LoanApplicationId> _fileService;
 
     private readonly ICompanyStructureFileFactory _fileFactory;
 
-    public ProvideMoreInformationAboutOrganizationCommandHandler(
+    public UploadOrganisationMoreInformationFileCommandHandler(
         ILoansFileService<LoanApplicationId> fileService,
         ICompanyStructureFileFactory fileFactory,
         ICompanyStructureRepository companyStructureRepository,
@@ -28,27 +27,22 @@ public class ProvideMoreInformationAboutOrganizationCommandHandler : CompanyStru
         ILogger<CompanyStructureBaseCommandHandler> logger)
         : base(companyStructureRepository, loanApplicationRepository, loanUserContext, logger)
     {
-        _fileFactory = fileFactory;
         _fileService = fileService;
+        _fileFactory = fileFactory;
     }
 
-    public async Task<OperationResult> Handle(ProvideMoreInformationAboutOrganizationCommand request, CancellationToken cancellationToken)
+    public async Task<OperationResult<UploadedFile?>> Handle(UploadOrganisationMoreInformationFileCommand request, CancellationToken cancellationToken)
     {
-        return await Perform(
+        UploadedFile? uploadedFile = null;
+        var result = await Perform(
             async companyStructure =>
             {
-                companyStructure.ProvideMoreInformation(
-                    request.OrganisationMoreInformation.IsProvided() ? new OrganisationMoreInformation(request.OrganisationMoreInformation!) : null);
-
-                if (request.FormFiles == null)
-                {
-                    return;
-                }
-
-                using var files = request.FormFiles.Select(_fileFactory.Create).ToDisposableList();
-                await companyStructure.UploadFiles(_fileService, files, cancellationToken);
+                await using var file = _fileFactory.Create(request.File);
+                uploadedFile = (await companyStructure.UploadFiles(_fileService, new[] { file }, cancellationToken)).Single();
             },
             request.LoanApplicationId,
             cancellationToken);
+
+        return result.HasValidationErrors ? new OperationResult<UploadedFile?>(result.Errors, null) : new OperationResult<UploadedFile?>(uploadedFile);
     }
 }
