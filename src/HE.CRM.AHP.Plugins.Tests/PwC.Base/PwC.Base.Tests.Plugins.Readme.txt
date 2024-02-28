@@ -1,0 +1,55 @@
+﻿====Package Overview===========
+-------------------------------
+Project with unit tests form PwC.Plugins project. Unit tests should be created based on PwC.Plugins.Tests.Base framework (nuget package)
+and FakeXrmEasy framework which enables mocking capability form IOrganization service and whole Crm plugin. See details in code sample in
+installed PwC.Plugins.Tests.Base folder.
+
+--------------------
+==History----------
+9.1.1.0------------
+	- Logging support
+9.1.0.0------------
+	- Crm sdk updated to 9.1
+9.0.0.0------------
+	- CrmServiceTestBase - additional properties mocks
+
+8.0.0.1------------ 
+	- CodeSamples updated, renamed, and moved to the PwC.Base folder
+	- Readme file updated, renamed, and moved to the PwC.Base folder
+	- StyleCop rules applied
+	- Crm***TestBase classes extended with HandlerCache objects
+	- New base test class added 'CrmLogicTestBase' to test non-handler, non-service classes
+	- FakeXrmEasy.365 updated to the 1.45 version
+
+8.0.0.0------------ Warning!: no backward compatibility
+	- new versioning convention
+	- style cop fixes
+	- CrmEntityHandlerTestBase - bug fixes
+	- CrmHandlerTestBase - new method 'CanWorkWithFilters' for testing CanWork && Attribute filters
+	- CrmValidationHandlerTestBase - new test base class
+
+1.0.0.4------------
+	- Project renamed, project structure refactored
+
+1.0.0.2------------
+	- Added support for the PwC.PluginsBase 1.0.0.2 nuget
+	- Some minor bugfixes
+	- Factories mocks now available in a CrmHandlerTestBase
+
+Project structure:
+====================
+==Handlers----------
+--------------------
+Here handlers test classes should be placed. Handlers tests should be organised in subnamespaces (folders) based on the entity in
+plural name form (Accounts, Contacts, etc.) as Handlers itself in PwC.Plugins project. Each handler test should inherit form CrmEntityHandlerTestBase or
+CrmHandlerTestBase generic type, depending whether it's handler for entity message or more general handler.
+
+==Services----------
+--------------------
+Here all services tests are stored. Each service test class should inherit from CrmServiceTestBase abstract class.
+
+
+---Note: Each test class should call base.InitializeTest method in it's TestInitialize part (for MSTest Framework) or in other
+initialization place for other frammeworks. Additionally before each test act part there should be base Asset
+method called to setup all required objects.
+

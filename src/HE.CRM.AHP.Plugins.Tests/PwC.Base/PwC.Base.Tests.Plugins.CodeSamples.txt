@@ -1,0 +1,47 @@
+﻿===================Crm Entity Handler Test Sample code=============================
+[TestClass]
+public class DoSomethingExampleCrmHandlerTest : CrmEntityHandlerTestBase<Account, DoSomethingExampleCrmHandler, XrmServiceContext>
+{
+    [TestInitialize]
+    public void Initialize()
+    {
+        base.InitializeTest();
+    }
+
+    [TestMethod]
+    public void CanWork_Success()
+    {
+        Target = new Account
+        {
+            Id = Guid.NewGuid(),
+            Name = "TestName"
+        };
+        Asset(CrmMessagesNames.Create, CrmProcessingStepStages.Preoperation);
+
+        var result = handler.CanWork();
+
+        Assert.IsTrue(result);
+    }
+
+    [TestMethod]
+    public void DoWork_Success()
+    {
+        Target = new Account
+        {
+            Id = Guid.NewGuid(),
+            Name = "TestName"
+        };
+        fakedContext.Initialize(new List<Entity>()
+        {
+            { new Account(){ Id = Guid.NewGuid(), Name = "1" } },
+            { new Account(){ Id = Guid.NewGuid(), Name = "2" } },
+            { new Account(){ Id = Guid.NewGuid(), Name = null } }
+        });
+        Asset(CrmMessagesNames.Create, CrmProcessingStepStages.Preoperation);
+
+        handler.DoWork();
+
+        Assert.IsFalse(string.IsNullOrEmpty(Target.AccountNumber));
+        Assert.AreEqual("TestName_2", Target.AccountNumber);
+    }
+}
