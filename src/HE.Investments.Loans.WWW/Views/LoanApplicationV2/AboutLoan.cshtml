@@ -5,12 +5,14 @@
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Lists
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Paragraphs
 @using HE.Investments.Loans.WWW.Views.LoanApplicationV2.Consts
-@model HE.Investments.Loans.BusinessLogic.ViewModel.LoanApplicationViewModel
+@model HE.Investments.Loans.WWW.Models.ApplicationInformationAgreementModel
 
 <gds-div-grid-column-two-thirds>
     <form asp-controller="LoanApplicationV2" asp-action="AboutLoanPost" asp-method="post" novalidate>
         <gds-back-link href="@Url.Action("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.AboutLoan})" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
 
+        <partial name="_ErrorSummaryPartial" model="null" />
+         <gds-error-form-group asp-for="InformationAgreement">
         <vc:page-header title="@LoanApplicationPageTitles.AboutLoan"/>
 
         <gds-p>Before you apply, you must confirm you have read and agree with the following information.</gds-p>
@@ -29,7 +31,21 @@
             <gds-li>any outstanding director or shareholder loans to be fully subordinated behind Homes England funding</gds-li>
         </gds-ul>
 
-        <gds-p>By continuing, you are confirming that you have read and understood the information provided. You are also confirming that any information you provide is truthful and accurate to the best of your knowledge.</gds-p>
+        <gds-p>Homes England only offers loans to UK-registered corporate entities. If you have any questions, contact us via:</gds-p>
+                <gds-ul>
+                    <gds-li>telephone: 0300 1234 500</gds-li>
+                    <gds-li>email: fundingenquiries@homesengland.gov.uk</gds-li>
+                </gds-ul>
+
+        <gds-p>For more information, read our <gds-link href="#">Levelling Up Home Building Fund guidance (opens in a new tab)</gds-link>.</gds-p>
+
+        <gds-checkbox govuk-formgroup-asp-for="InformationAgreement"
+                      asp-selectlistitems='@(new List<SelectListItem> { new() { Text = "I can confirm I have read and agree with the above information", Value = "true", } })'
+                      asp-ischeckboxgroup="true"
+                      asp-isexcludeheader="true"
+                      asp-excludelabel="true">
+        </gds-checkbox>
+        </gds-error-form-group>
 
         <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="continue-button">
             Continue

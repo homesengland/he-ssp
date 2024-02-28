@@ -58,7 +58,28 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
 
     [HttpPost("about-loan")]
     [WorkflowState(LoanApplicationWorkflow.State.AboutLoan)]
-    public async Task<IActionResult> AboutLoanPost()
+    public async Task<IActionResult> AboutLoanPost(ApplicationInformationAgreementModel model, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new ConfirmInformationAgreementCommand(model.InformationAgreement), cancellationToken);
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+            return View("AboutLoan", model);
+        }
+
+        return await Continue();
+    }
+
+    [HttpGet("loan-apply-information")]
+    [WorkflowState(LoanApplicationWorkflow.State.LoanApplyInformation)]
+    public IActionResult LoanApplyInformation()
+    {
+        return View("LoanApplyInformation");
+    }
+
+    [HttpPost("loan-apply-information")]
+    [WorkflowState(LoanApplicationWorkflow.State.LoanApplyInformation)]
+    public async Task<IActionResult> LoanApplyInformationPost()
     {
         return await Continue();
     }

@@ -1,0 +1,35 @@
+@using HE.Investments.Loans.BusinessLogic.LoanApplication
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Lists
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Paragraphs
+@using HE.Investments.Loans.WWW.Views.LoanApplicationV2.Consts
+@model HE.Investments.Loans.WWW.Models.ApplicationInformationAgreementModel
+
+<gds-div-grid-column-two-thirds>
+    <form asp-controller="LoanApplicationV2" asp-action="LoanApplyInformationPost" asp-method="post" novalidate>
+        <gds-back-link href="@Url.Action("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.LoanApplyInformation})" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
+
+        <vc:page-header title="@LoanApplicationPageTitles.LoanApplyInformation"/>
+
+        <gds-p>Before starting your Levelling Up Home Building Fund application read <gds-link href="#">our latest guidance (opens in a new tab)</gds-link>.</gds-p>
+
+        <gds-p>If you want to apply for different funding, you can <gds-link href="#">find these on our website (opens in a new tab)</gds-link>.</gds-p>
+
+        <gds-p>As part of your application, you’ll provide information about your:</gds-p>
+        <gds-ul>
+            <gds-li>organisation details and residential building experience</gds-li>
+            <gds-li>funding</gds-li>
+            <gds-li>funding security</gds-li>
+            <gds-li>project</gds-li>
+        </gds-ul>
+
+        <gds-p>You can save and return at any time. If you do not have the information to answer a question, you can skip the question and answer it later.</gds-p>
+        <gds-p>By starting this application, you are confirming that any information you provide is truthful and accurate to the best of your knowledge.</gds-p>
+
+        <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="continue-button">
+            Continue
+        </button>
+    </form>
+</gds-div-grid-column-two-thirds>

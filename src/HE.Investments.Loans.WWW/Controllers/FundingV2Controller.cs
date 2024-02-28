@@ -238,9 +238,8 @@ public class FundingV2Controller : WorkflowController<FundingState>
         if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
-            viewModel.SetLoanApplicationId(id);
-
-            return View("CheckAnswers", viewModel);
+            var response = await _mediator.Send(new GetFundingQuery(LoanApplicationId.From(id), FundingFieldsSet.GetAllFields), cancellationToken);
+            return View("CheckAnswers", response.ViewModel);
         }
 
         return await Continue(new { Id = id });

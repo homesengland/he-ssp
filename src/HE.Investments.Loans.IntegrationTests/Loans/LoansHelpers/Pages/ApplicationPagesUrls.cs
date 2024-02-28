@@ -6,6 +6,8 @@ public static class ApplicationPagesUrls
 
     public const string AboutLoanPage = "/application/about-loan";
 
+    public const string LoanApplyInformation = "/application/loan-apply-information";
+
     public const string CheckYourDetails = "/application/check-your-details";
 
     public const string LoanPurpose = "/application/loan-purpose";

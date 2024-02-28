@@ -56,6 +56,8 @@ public static class ValidationErrorMessage
 
     public const string AcceptTermsAndConditions = "Select that you have read and understood the privacy notice";
 
+    public const string InformationAgreement = "Select that you have read and agree with the information";
+
     public const string DirectorLoansDoesNotExist = "Cannot add director loans subordinate because director loans does not exist.";
 
     public const string ProjectNameIsEmpty = "Project name cannot be empty";
