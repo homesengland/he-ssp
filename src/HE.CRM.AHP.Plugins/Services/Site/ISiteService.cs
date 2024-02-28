@@ -10,6 +10,8 @@ namespace HE.CRM.AHP.Plugins.Services.Site
 
         SiteDto GetById(string id, string fieldsToRetrieve);
 
+        bool Exist(string name);
+
         string Save(string siteId, SiteDto site, string fieldsToSet);
     }
 }

@@ -8,25 +8,25 @@ using Microsoft.Xrm.Sdk;
 namespace HE.CRM.AHP.Plugins.Plugins.CustomApi.Site
 {
     [CrmPluginRegistration(
-        "invln_setsite",
+        "invln_checkifsitewithgivennameexists",
         "none",
         StageEnum.PostOperation,
         ExecutionModeEnum.Synchronous,
         "",
-        "HE.CRM.Plugins.Plugins.CustomApi.Site.SetSitePlugin: invln_setsite",
+        "HE.CRM.Plugins.Plugins.CustomApi.Site.CheckIfSiteWithGivenNameExistsPlugin: invln_checkifsitewithgivennameexists",
         1,
         IsolationModeEnum.Sandbox,
-        Id = "7BFB9FD1-3BB7-4021-B90C-2115685ACD43")]
+        Id = "933749E6-6642-4C64-A2B7-9B4592654EBE")]
 
-    public class SetSitePlugin : PluginBase<DataverseContext>, IPlugin
+    public class CheckIfSiteWithGivenNameExistsPlugin : PluginBase<DataverseContext>, IPlugin
     {
-        public SetSitePlugin(string unsecureConfig, string secureConfig) : base(unsecureConfig, secureConfig)
+        public CheckIfSiteWithGivenNameExistsPlugin(string unsecureConfig, string secureConfig) : base(unsecureConfig, secureConfig)
         {
         }
 
         public override void RegisterHandlers(CrmHandlerFactory<DataverseContext> handlerFactory, IList<ICrmHandler> registeredHandlers)
         {
-            registeredHandlers.Add(handlerFactory.GetHandler<SetSiteHandler>());
+            registeredHandlers.Add(handlerFactory.GetHandler<CheckIfSiteWithGivenNameExistsHandler>());
         }
     }
 }

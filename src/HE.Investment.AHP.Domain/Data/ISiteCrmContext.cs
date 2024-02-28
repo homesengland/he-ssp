@@ -8,5 +8,7 @@ public interface ISiteCrmContext
 
     Task<SiteDto?> GetById(string id, CancellationToken cancellationToken);
 
+    Task<bool> Exist(string name, CancellationToken cancellationToken);
+
     Task<string> Save(SiteDto dto, CancellationToken cancellationToken);
 }

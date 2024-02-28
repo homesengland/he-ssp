@@ -87,7 +87,7 @@ namespace HE.CRM.Common.DtoMapping
                     mmcFutureAdoptionExpectedImpact = entity.invln_mmcexpectedimpact,
                 },
 
-                procurementMechanisms = entity.invln_procurementmechanisms.ToIntValueList(),
+                procurementMechanisms = entity.invln_procurementmechanismsnew.ToIntValueList(),
             };
         }
 
@@ -166,7 +166,7 @@ namespace HE.CRM.Common.DtoMapping
             SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_mmccategory1subcategories), CreateOptionSetValueCollection(dto.modernMethodsOfConstruction.mmc3DSubcategories));
             SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_mmccategory2subcategories), CreateOptionSetValueCollection(dto.modernMethodsOfConstruction.mmc2DSubcategories));
 
-            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_procurementmechanisms), CreateOptionSetValueCollection(dto.procurementMechanisms));
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_procurementmechanismsnew), CreateOptionSetValueCollection(dto.procurementMechanisms));
 
             return site;
         }
