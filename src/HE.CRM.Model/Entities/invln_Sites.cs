@@ -119,6 +119,8 @@ namespace DataverseModel
 			public const string invln_procurementefficiencyName = "invln_procurementefficiencyname";
 			public const string invln_procurementmechanisms = "invln_procurementmechanisms";
 			public const string invln_procurementmechanismsName = "invln_procurementmechanismsname";
+			public const string invln_procurementmechanismsnew = "invln_procurementmechanismsnew";
+			public const string invln_procurementmechanismsnewName = "invln_procurementmechanismsnewname";
 			public const string invln_reducingenvironmentalimpact = "invln_reducingenvironmentalimpact";
 			public const string invln_regensite = "invln_regensite";
 			public const string invln_regensiteName = "invln_regensitename";
@@ -1351,12 +1353,12 @@ namespace DataverseModel
 		}
 		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_procurementmechanisms")]
-		public virtual Microsoft.Xrm.Sdk.OptionSetValueCollection invln_procurementmechanisms
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_procurementmechanisms
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValueCollection>("invln_procurementmechanisms");
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_procurementmechanisms");
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
@@ -1376,6 +1378,40 @@ namespace DataverseModel
 				if (this.FormattedValues.Contains("invln_procurementmechanisms"))
 				{
 					return this.FormattedValues["invln_procurementmechanisms"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_procurementmechanismsnew")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValueCollection invln_procurementmechanismsnew
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValueCollection>("invln_procurementmechanismsnew");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_procurementmechanismsnew");
+				this.SetAttributeValue("invln_procurementmechanismsnew", value);
+				this.OnPropertyChanged("invln_procurementmechanismsnew");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_procurementmechanismsnewname")]
+		public string invln_procurementmechanismsnewName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_procurementmechanismsnew"))
+				{
+					return this.FormattedValues["invln_procurementmechanismsnew"];
 				}
 				else
 				{

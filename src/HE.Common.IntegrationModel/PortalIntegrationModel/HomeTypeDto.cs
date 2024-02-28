@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DataverseModel;
 
 namespace HE.Common.IntegrationModel.PortalIntegrationModel
 {
@@ -47,5 +48,9 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public bool? targetRentOver80PercentOfMarketRent { get; set; }
         public decimal? expectedFirstTrancheSaleReceipt { get; set; }
         public decimal? proposedRentAsPercentOfUnsoldShare { get; set; }
+        public bool? mmcApplied { get; set; }
+        public List<int> mmcCategories { get; set; }
+        public List<int> mmcCategories_1subcategories { get; set; }
+        public List<int> mmcCategories_2subcategories { get; set; }
     }
 }

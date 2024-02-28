@@ -117,17 +117,6 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// Gets a binding to the set of all <see cref="DataverseModel.invln_Cashflow"/> entities.
-		/// </summary>
-		public System.Linq.IQueryable<DataverseModel.invln_Cashflow> invln_CashflowSet
-		{
-			get
-			{
-				return this.CreateQuery<DataverseModel.invln_Cashflow>();
-			}
-		}
-		
-		/// <summary>
 		/// Gets a binding to the set of all <see cref="DataverseModel.invln_comment"/> entities.
 		/// </summary>
 		public System.Linq.IQueryable<DataverseModel.invln_comment> invln_commentSet

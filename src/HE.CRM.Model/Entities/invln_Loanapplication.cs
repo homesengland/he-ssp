@@ -173,7 +173,6 @@ namespace DataverseModel
 			public const string invln_interestguaranteeName = "invln_interestguaranteename";
 			public const string invln_InvestedbyBorrower = "invln_investedbyborrower";
 			public const string invln_investedbyborrowerName = "invln_investedbyborrowername";
-			public const string invln_invln_cashflow_Loanapplication = "invln_invln_cashflow_Loanapplication";
 			public const string invln_invln_emailnotification_Regarding_invln_l = "invln_invln_emailnotification_Regarding_invln_l";
 			public const string invln_invln_isp_Loanapplication_invln_loanappli = "invln_invln_isp_Loanapplication_invln_loanappli";
 			public const string invln_invln_loanapplication_invln_contract_Loanapplication = "invln_invln_loanapplication_invln_contract_Loanapplication";
@@ -2880,26 +2879,6 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_Conditions_invln_Loanapplication_in");
 				this.SetRelatedEntities<DataverseModel.invln_Conditions>("invln_Conditions_invln_Loanapplication_in", null, value);
 				this.OnPropertyChanged("invln_Conditions_invln_Loanapplication_in");
-			}
-		}
-		
-		/// <summary>
-		/// 1:N invln_invln_cashflow_Loanapplication
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_invln_cashflow_Loanapplication")]
-		public System.Collections.Generic.IEnumerable<DataverseModel.invln_Cashflow> invln_invln_cashflow_Loanapplication
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<DataverseModel.invln_Cashflow>("invln_invln_cashflow_Loanapplication", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("invln_invln_cashflow_Loanapplication");
-				this.SetRelatedEntities<DataverseModel.invln_Cashflow>("invln_invln_cashflow_Loanapplication", null, value);
-				this.OnPropertyChanged("invln_invln_cashflow_Loanapplication");
 			}
 		}
 		

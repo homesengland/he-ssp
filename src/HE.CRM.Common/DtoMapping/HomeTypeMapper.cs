@@ -55,6 +55,10 @@ namespace HE.CRM.Common.DtoMapping
                 targetRentOver80PercentOfMarketRent = homeType.invln_targetrentover80ofmarketrent,
                 proposedRentAsPercentOfUnsoldShare = homeType.invln_proposedrentasaofunsoldshare,
                 expectedFirstTrancheSaleReceipt = homeType.invln_FirstTrancheSalesReceipt?.Value, //before invln_expectedfirsttranchesalereceipt
+                mmcApplied = homeType.invln_mmcapplied,
+                mmcCategories = homeType.invln_mmccategories.Select(x => x.Value).ToList(),
+                mmcCategories_1subcategories = homeType.invln_mmccategory1subcategories.Select(x => x.Value).ToList(),
+                mmcCategories_2subcategories = homeType.invln_mmccategory2subcategories.Select(x => x.Value).ToList(),
             };
             if (homeType.Id != null)
             {
@@ -136,6 +140,10 @@ namespace HE.CRM.Common.DtoMapping
                 invln_targetrentover80ofmarketrent = homeTypeDto.targetRentOver80PercentOfMarketRent,
                 invln_FirstTrancheSalesReceipt = MapNullableDecimalToMoney(homeTypeDto.expectedFirstTrancheSaleReceipt),
                 invln_proposedrentasaofunsoldshare = homeTypeDto.proposedRentAsPercentOfUnsoldShare,
+                invln_mmcapplied = homeTypeDto.mmcApplied,
+                invln_mmccategories = new OptionSetValueCollection(homeTypeDto.mmcCategories.Select(x => new OptionSetValue(x)).ToList()),
+                invln_mmccategory1subcategories = new OptionSetValueCollection(homeTypeDto.mmcCategories_1subcategories.Select(x => new OptionSetValue(x)).ToList()),
+                invln_mmccategory2subcategories = new OptionSetValueCollection(homeTypeDto.mmcCategories_2subcategories.Select(x => new OptionSetValue(x)).ToList()),
             };
             if (homeTypeDto.id != null)
             {

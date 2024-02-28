@@ -13,26 +13,35 @@ namespace DataverseModel
 	
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum he_Sector
+	public enum invln_TenureCategory
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Charity = 134370000,
+		AffordableHomeOwnershipAHOAHPIntermediaterent = 896440003,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Financial = 134370003,
+		AffordableHomeOwnershipAHOAHPSharedequity = 896440002,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		GovernmentCentral = 134370002,
+		AffordableHomeOwnershipAHOAHPSharedownership = 896440004,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		GovernmentLocal = 134370001,
+		AffordableHomeOwnershipAHONonAHPIntermediaterent = 896440006,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		OtherPublicSector = 134370005,
+		AffordableHomeOwnershipAHONonAHPSharedequity = 896440005,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		PrivateSectornonfinancial = 134370004,
+		AffordableHomeOwnershipAHONonAHPSharedownership = 896440007,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		AffordableRent = 896440001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Openmarkethousing = 896440000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		OtherincludeanysocialrentLCHOandintermediaterent = 896440008,
 	}
 }
 #pragma warning restore CS1591
