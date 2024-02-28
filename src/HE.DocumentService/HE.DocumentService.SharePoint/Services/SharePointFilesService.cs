@@ -35,11 +35,16 @@ public class SharePointFilesService : BaseService, ISharePointFilesService
                             <Where>
                                 <And>
                                     <And>
-                                        {GetCamlQueryForFolderPaths(filter.ListAlias, filter.FolderPaths)}
-                                        <Eq>
-                                            <FieldRef Name='FSObjType' />
-                                            <Value Type='FSObjType'>0</Value>
-                                        </Eq>
+                                        <And>
+                                            {GetCamlQueryForFolderPaths(filter.ListAlias, filter.FolderPaths)}
+                                            <Eq>
+                                                <FieldRef Name='FSObjType' />
+                                                <Value Type='FSObjType'>0</Value>
+                                            </Eq>
+                                        </And>
+                                        <IsNull>
+                                            <FieldRef Name='_VirusInfo' />
+                                        </IsNull>
                                     </And>
                                     <IsNotNull>
                                         <FieldRef Name='_ModerationComments' />
