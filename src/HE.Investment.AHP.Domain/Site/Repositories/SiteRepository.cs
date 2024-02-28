@@ -22,10 +22,9 @@ public class SiteRepository : ISiteRepository
         _siteCrmContext = siteCrmContext;
     }
 
-    public Task<bool> IsExist(SiteName name, SiteId exceptSiteId, CancellationToken cancellationToken)
+    public async Task<bool> IsExist(SiteName name, SiteId exceptSiteId, CancellationToken cancellationToken)
     {
-        // TODO: #87822 - check availability
-        return Task.FromResult(false);
+        return await _siteCrmContext.Exist(name.Value, cancellationToken);
     }
 
     public async Task<PaginationResult<SiteEntity>> GetSites(UserAccount userAccount, PaginationRequest paginationRequest, CancellationToken cancellationToken)

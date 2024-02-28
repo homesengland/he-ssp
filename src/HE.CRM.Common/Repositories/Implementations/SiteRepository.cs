@@ -3,6 +3,7 @@ using System.Linq;
 using DataverseModel;
 using HE.Base.Repositories;
 using HE.CRM.Common.Repositories.Interfaces;
+using Microsoft.Xrm.Sdk.Client;
 using Microsoft.Xrm.Sdk.Query;
 
 namespace HE.CRM.Common.Repositories.Implementations
@@ -16,6 +17,17 @@ namespace HE.CRM.Common.Repositories.Implementations
         public invln_Sites GetById(string id, string fieldsToRetrieve)
         {
             return Get(fieldsToRetrieve, id).FirstOrDefault();
+        }
+
+        public bool Exist(string name)
+        {
+            using (var ctx = new OrganizationServiceContext(service))
+            {
+                return ctx.CreateQuery<invln_Sites>()
+                    .Where(x => x.invln_sitename == name)
+                    .AsEnumerable()
+                    .Any();
+            }
         }
 
         public List<invln_Sites> GetAll(string fieldsToRetrieve)

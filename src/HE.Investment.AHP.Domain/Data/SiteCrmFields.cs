@@ -54,6 +54,6 @@ public static class SiteCrmFields
         nameof(invln_Sites.invln_mmccategories),
         nameof(invln_Sites.invln_mmccategory1subcategories),
         nameof(invln_Sites.invln_mmccategory2subcategories),
-        nameof(invln_Sites.invln_procurementmechanisms),
+        nameof(invln_Sites.invln_procurementmechanismsnew),
     };
 }
