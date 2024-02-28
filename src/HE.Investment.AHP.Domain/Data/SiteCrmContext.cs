@@ -37,6 +37,19 @@ public class SiteCrmContext : ISiteCrmContext
             cancellationToken);
     }
 
+    public async Task<bool> Exist(string name, CancellationToken cancellationToken)
+    {
+        var response = await _service.ExecuteAsync<invln_checkifsitewithgivennameexistsRequest, invln_checkifsitewithgivennameexistsResponse>(
+            new invln_checkifsitewithgivennameexistsRequest
+            {
+                invln_sitename = name,
+            },
+            r => r.invln_siteexists,
+            cancellationToken);
+
+        return bool.TryParse(response, out var result) && result;
+    }
+
     public async Task<string> Save(SiteDto dto, CancellationToken cancellationToken)
     {
         return await _service.ExecuteAsync<invln_setsiteRequest, invln_setsiteResponse>(

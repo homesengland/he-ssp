@@ -1,0 +1,5 @@
+@model (string href, string text)
+
+<a href="@Model.href" data-testid="start-button">
+    <gds-button-start type="submit">@(Model.text ?? "Start now")</gds-button-start>
+</a>

@@ -9,13 +9,13 @@
 
 <gds-div-grid-column-two-thirds>
     <form asp-controller="LoanApplicationV2" asp-action="LoanApplyInformationPost" asp-method="post" novalidate>
-        <gds-back-link href="@Url.Action("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.LoanApplyInformation})" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
+        <gds-back-link href="@Url.Action("Back", "LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.LoanApplyInformation })" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
 
         <vc:page-header title="@LoanApplicationPageTitles.LoanApplyInformation"/>
 
-        <gds-p>Before starting your Levelling Up Home Building Fund application read <gds-link href="#">our latest guidance (opens in a new tab)</gds-link>.</gds-p>
+        <gds-p>Before starting your Levelling Up Home Building Fund application read <he-link href="https://www.gov.uk/guidance/levelling-up-home-building-fund-development-finance" target="_blank" text="our latest guidance (opens in a new tab)"></he-link>.</gds-p>
 
-        <gds-p>If you want to apply for different funding, you can <gds-link href="#">find these on our website (opens in a new tab)</gds-link>.</gds-p>
+        <gds-p>If you want to apply for different funding, you can <he-link href="https://www.gov.uk/government/organisations/homes-england" target="_blank" text="find these on our website (opens in a new tab)"></he-link>.</gds-p>
 
         <gds-p>As part of your application, you’ll provide information about your:</gds-p>
         <gds-ul>

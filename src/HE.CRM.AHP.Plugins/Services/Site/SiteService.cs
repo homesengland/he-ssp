@@ -32,6 +32,11 @@ namespace HE.CRM.AHP.Plugins.Services.Site
             return SiteMapper.ToDto(site);
         }
 
+        public bool Exist(string name)
+        {
+            return _repository.Exist(name);
+        }
+
         public string Save(string siteId, SiteDto site, string fieldsToSet)
         {
             invln_AHGLocalAuthorities localAuth = null;
