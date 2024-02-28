@@ -1,10 +1,10 @@
 extern alias Org;
 
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investment.AHP.Domain.Site.Entities;
 using HE.Investment.AHP.Domain.Site.ValueObjects;
+using HE.Investment.AHP.Domain.Site.ValueObjects.Mmc;
 using HE.Investment.AHP.Domain.Site.ValueObjects.Planning;
 using HE.Investment.AHP.Domain.Site.ValueObjects.StrategicSite;
 using HE.Investment.AHP.Domain.Site.ValueObjects.TenderingStatus;
@@ -22,6 +22,11 @@ public static class SiteEntityToSiteDtoMapper
     private static readonly TravellerPitchSiteTypeMapper TravellerPitchSiteTypeMapper = new();
     private static readonly PlanningStatusMapper PlanningStatusMapper = new();
     private static readonly NationalDesignGuideMapper NationalDesignGuideMapper = new();
+    private static readonly SiteUsingModernMethodsOfConstructionMapper SiteUsingModernMethodsOfConstructionMapper = new();
+    private static readonly ModernMethodsConstructionCategoriesTypeMapper ModernMethodsConstructionCategoriesTypeMapper = new();
+    private static readonly ModernMethodsConstruction2DSubcategoriesTypeMapper ModernMethodsConstruction2DSubcategoriesTypeMapper = new();
+    private static readonly ModernMethodsConstruction3DSubcategoriesTypeMapper ModernMethodsConstruction3DSubcategoriesTypeMapper = new();
+    private static readonly SiteProcurementMapper SiteProcurementMapper = new();
 
     public static SiteDto Map(SiteEntity entity)
     {
@@ -34,7 +39,7 @@ public static class SiteEntityToSiteDtoMapper
             // TODO #88655: localAuth mapping
             localAuthority = new SiteLocalAuthority { id = "bss" },
             planningDetails = CreatePlanningDetails(entity.PlanningDetails),
-            nationalDesignGuidePriorities = CreateNationalDesignGuidePriorities(entity.NationalDesignGuidePriorities.Values),
+            nationalDesignGuidePriorities = MapCollection(entity.NationalDesignGuidePriorities.Values, NationalDesignGuideMapper),
             buildingForHealthyLife = BuildingForHealthyLifeTypeMapper.ToDto(entity.BuildingForHealthyLife),
             numberOfGreenLights = entity.NumberOfGreenLights?.Value,
             landStatus = entity.LandAcquisitionStatus.Value == null ? null : SiteLandAcquisitionStatusMapper.ToDto(entity.LandAcquisitionStatus.Value.Value),
@@ -44,6 +49,8 @@ public static class SiteEntityToSiteDtoMapper
             siteUseDetails = CreateSiteUseDetails(entity.SiteUseDetails),
             ruralDetails = CreateRuralDetails(entity.RuralClassification),
             environmentalImpact = entity.EnvironmentalImpact?.Value,
+            modernMethodsOfConstruction = CreateModernMethodsOfConstruction(entity.ModernMethodsOfConstruction),
+            procurementMechanisms = MapCollection(entity.Procurements.Procurements, SiteProcurementMapper),
         };
     }
 
@@ -77,15 +84,6 @@ public static class SiteEntityToSiteDtoMapper
             landRegistryTitleNumber = planningDetails.LandRegistryDetails?.TitleNumber?.Value,
             isGrantFundingForAllHomesCoveredByTitleNumber = planningDetails.LandRegistryDetails?.IsGrantFundingForAllHomesCoveredByTitleNumber,
         };
-    }
-
-    private static IList<int> CreateNationalDesignGuidePriorities(IEnumerable<NationalDesignGuidePriority> items)
-    {
-        return items
-            .Select(v => NationalDesignGuideMapper.ToDto(v))
-            .Where(x => x != null)
-            .Cast<int>()
-            .ToList();
     }
 
     private static TenderingDetailsDto CreateTenderingDetails(TenderingStatusDetails details) =>
@@ -123,8 +121,33 @@ public static class SiteEntityToSiteDtoMapper
             isRuralExceptionSite = details.IsRuralExceptionSite,
         };
 
+    private static ModernMethodsOfConstructionDto CreateModernMethodsOfConstruction(SiteModernMethodsOfConstruction mmc)
+    {
+        return new ModernMethodsOfConstructionDto
+        {
+            usingMmc = SiteUsingModernMethodsOfConstructionMapper.ToDto(mmc.SiteUsingModernMethodsOfConstruction),
+            mmcBarriers = mmc.Information?.Barriers?.Value,
+            mmcImpact = mmc.Information?.Impact?.Value,
+            mmcCategories = MapCollection(mmc.ModernMethodsOfConstruction?.ModernMethodsConstructionCategories, ModernMethodsConstructionCategoriesTypeMapper),
+            mmc3DSubcategories = MapCollection(mmc.ModernMethodsOfConstruction?.ModernMethodsConstruction3DSubcategories, ModernMethodsConstruction3DSubcategoriesTypeMapper),
+            mmc2DSubcategories = MapCollection(mmc.ModernMethodsOfConstruction?.ModernMethodsConstruction2DSubcategories, ModernMethodsConstruction2DSubcategoriesTypeMapper),
+            mmcFutureAdoptionPlans = mmc.FutureAdoption?.Plans?.Value,
+            mmcFutureAdoptionExpectedImpact = mmc.FutureAdoption?.ExpectedImpact?.Value,
+        };
+    }
+
     private static DateTime? ToDateTime(DateValueObject? date)
     {
         return date?.Value.ToDateTime(TimeOnly.MinValue);
+    }
+
+    private static IList<int> MapCollection<T>(IEnumerable<T>? values, EnumMapper<T> mapper)
+        where T : struct
+    {
+        return (values ?? Enumerable.Empty<T>())
+            .Select(x => mapper.ToDto(x))
+            .Where(x => x != null)
+            .Cast<int>()
+            .ToList();
     }
 }

@@ -100,7 +100,7 @@ namespace HE.CRM.Common.Repositories.Implementations
                     return null;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw new InvalidPluginExecutionException("Contact with invln_externalid: " + contactExternalId + " does not extst in CRM");
             }

@@ -37,6 +37,10 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public RuralDetailsDto ruralDetails { get; set; }
 
         public string environmentalImpact { get; set; }
+
+        public ModernMethodsOfConstructionDto modernMethodsOfConstruction { get; set; }
+
+        public IList<int> procurementMechanisms { get; set; }
     }
 
     public class SiteLocalAuthority
@@ -131,4 +135,22 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public string localAuthorityConfirmation { get; set; }
     }
 
+    public class ModernMethodsOfConstructionDto
+    {
+        public int? usingMmc { get; set; }
+
+        public string mmcBarriers { get; set; }
+
+        public string mmcImpact { get; set; }
+
+        public IList<int> mmcCategories { get; set; }
+
+        public IList<int> mmc3DSubcategories { get; set; }
+
+        public IList<int> mmc2DSubcategories { get; set; }
+
+        public string mmcFutureAdoptionPlans { get; set; }
+
+        public string mmcFutureAdoptionExpectedImpact { get; set; }
+    }
 }

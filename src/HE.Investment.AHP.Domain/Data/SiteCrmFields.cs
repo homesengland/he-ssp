@@ -46,5 +46,14 @@ public static class SiteCrmFields
         nameof(invln_Sites.invln_Ruralclassification),
         nameof(invln_Sites.invln_RuralExceptionSite),
         nameof(invln_Sites.invln_ActionstoReduce),
+        nameof(invln_Sites.invln_mmcuse),
+        nameof(invln_Sites.invln_mmcplans),
+        nameof(invln_Sites.invln_mmcexpectedimpact),
+        nameof(invln_Sites.invln_mmcbarriers),
+        nameof(invln_Sites.invln_mmcimpact),
+        nameof(invln_Sites.invln_mmccategories),
+        nameof(invln_Sites.invln_mmccategory1subcategories),
+        nameof(invln_Sites.invln_mmccategory2subcategories),
+        nameof(invln_Sites.invln_procurementmechanisms),
     };
 }

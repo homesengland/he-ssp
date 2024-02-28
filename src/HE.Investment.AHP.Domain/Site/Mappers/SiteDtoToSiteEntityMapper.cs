@@ -8,19 +8,19 @@ using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investment.AHP.Domain.Site.Entities;
 using HE.Investment.AHP.Domain.Site.ValueObjects;
 using HE.Investment.AHP.Domain.Site.ValueObjects.Factories;
+using HE.Investment.AHP.Domain.Site.ValueObjects.Mmc;
 using HE.Investment.AHP.Domain.Site.ValueObjects.Planning;
 using HE.Investment.AHP.Domain.Site.ValueObjects.StrategicSite;
 using HE.Investment.AHP.Domain.Site.ValueObjects.TenderingStatus;
 using Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects;
 using Section106Dto = HE.Common.IntegrationModel.PortalIntegrationModel.Section106Dto;
+using SiteModernMethodsOfConstruction = HE.Investment.AHP.Domain.Site.ValueObjects.Mmc.SiteModernMethodsOfConstruction;
 using SiteRuralClassification = HE.Investment.AHP.Domain.Site.ValueObjects.SiteRuralClassification;
 using SiteTypeDetails = HE.Investment.AHP.Domain.Site.ValueObjects.SiteTypeDetails;
 using SiteUseDetails = HE.Investment.AHP.Domain.Site.ValueObjects.SiteUseDetails;
 using StrategicSiteDetails = HE.Investment.AHP.Domain.Site.ValueObjects.StrategicSite.StrategicSiteDetails;
 
 namespace HE.Investment.AHP.Domain.Site.Mappers;
-
-extern alias Org;
 
 public static class SiteDtoToSiteEntityMapper
 {
@@ -31,10 +31,14 @@ public static class SiteDtoToSiteEntityMapper
     private static readonly TravellerPitchSiteTypeMapper TravellerPitchSiteTypeMapper = new();
     private static readonly PlanningStatusMapper PlanningStatusMapper = new();
     private static readonly NationalDesignGuideMapper NationalDesignGuideMapper = new();
+    private static readonly SiteUsingModernMethodsOfConstructionMapper SiteUsingModernMethodsOfConstructionMapper = new();
+    private static readonly ModernMethodsConstructionCategoriesTypeMapper ModernMethodsConstructionCategoriesTypeMapper = new();
+    private static readonly ModernMethodsConstruction2DSubcategoriesTypeMapper ModernMethodsConstruction2DSubcategoriesTypeMapper = new();
+    private static readonly ModernMethodsConstruction3DSubcategoriesTypeMapper ModernMethodsConstruction3DSubcategoriesTypeMapper = new();
+    private static readonly SiteProcurementMapper SiteProcurementMapper = new();
 
     public static SiteEntity Map(SiteDto dto)
     {
-        // TODO: #90352 MMC mapping and others
         return new SiteEntity(
             new SiteId(dto.id),
             new SiteName(dto.name),
@@ -52,8 +56,8 @@ public static class SiteDtoToSiteEntityMapper
             CreateSiteUseDetails(dto.siteUseDetails),
             CreateSiteRuralClassification(dto.ruralDetails),
             string.IsNullOrWhiteSpace(dto.environmentalImpact) ? null : new EnvironmentalImpact(dto.environmentalImpact),
-            null,
-            new SiteProcurements());
+            CreateMmc(dto.modernMethodsOfConstruction),
+            new SiteProcurements(MapCollection(dto.procurementMechanisms, SiteProcurementMapper)));
     }
 
     private static Section106 CreateSection106(Section106Dto dto)
@@ -95,16 +99,15 @@ public static class SiteDtoToSiteEntityMapper
             CreateDate(dto.outlinePlanningApprovalDate, (day, month, year) => new OutlinePlanningApprovalDate(day, month, year)),
             CreateDate(dto.planningSubmissionDate, (day, month, year) => new PlanningSubmissionDate(day, month, year)),
             dto.isGrantFundingForAllHomes,
-            new LandRegistryDetails(dto.isLandRegistryTitleNumber, string.IsNullOrWhiteSpace(dto.landRegistryTitleNumber) ? null : new LandRegistryTitleNumber(dto.landRegistryTitleNumber), dto.isGrantFundingForAllHomesCoveredByTitleNumber));
+            new LandRegistryDetails(
+                dto.isLandRegistryTitleNumber,
+                string.IsNullOrWhiteSpace(dto.landRegistryTitleNumber) ? null : new LandRegistryTitleNumber(dto.landRegistryTitleNumber),
+                dto.isGrantFundingForAllHomesCoveredByTitleNumber));
     }
 
     private static NationalDesignGuidePriorities CreateNationalDesignGuidePriorities(IList<int> nationalDesignGuidePriorities)
     {
-        var priorities = nationalDesignGuidePriorities
-            .Select(x => NationalDesignGuideMapper.ToDomain(x))
-            .Where(x => x != null)
-            .Cast<NationalDesignGuidePriority>()
-            .ToList();
+        var priorities = MapCollection(nationalDesignGuidePriorities, NationalDesignGuideMapper);
 
         return priorities.Any()
             ? new NationalDesignGuidePriorities(new ReadOnlyCollection<NationalDesignGuidePriority>(priorities))
@@ -146,6 +149,20 @@ public static class SiteDtoToSiteEntityMapper
     private static SiteRuralClassification CreateSiteRuralClassification(RuralDetailsDto dto) =>
         new(dto.isRuralClassification, dto.isRuralExceptionSite);
 
+    private static SiteModernMethodsOfConstruction CreateMmc(ModernMethodsOfConstructionDto dto) =>
+        new(
+            SiteUsingModernMethodsOfConstructionMapper.ToDomain(dto.usingMmc),
+            new ModernMethodsOfConstructionInformation(
+                string.IsNullOrWhiteSpace(dto.mmcBarriers) ? null : new ModernMethodsOfConstructionBarriers(dto.mmcBarriers),
+                string.IsNullOrWhiteSpace(dto.mmcImpact) ? null : new ModernMethodsOfConstructionImpact(dto.mmcImpact)),
+            new ModernMethodsOfConstructionFutureAdoption(
+                string.IsNullOrWhiteSpace(dto.mmcFutureAdoptionPlans) ? null : new ModernMethodsOfConstructionPlans(dto.mmcFutureAdoptionPlans),
+                string.IsNullOrWhiteSpace(dto.mmcFutureAdoptionExpectedImpact) ? null : new ModernMethodsOfConstructionExpectedImpact(dto.mmcFutureAdoptionExpectedImpact)),
+            new ModernMethodsOfConstruction(
+                MapCollection(dto.mmcCategories, ModernMethodsConstructionCategoriesTypeMapper),
+                MapCollection(dto.mmc2DSubcategories, ModernMethodsConstruction2DSubcategoriesTypeMapper),
+                MapCollection(dto.mmc3DSubcategories, ModernMethodsConstruction3DSubcategoriesTypeMapper)));
+
     private static T? CreateDate<T>(DateTime? date, Func<string, string, string, T?> create)
         where T : class
     {
@@ -155,5 +172,15 @@ public static class SiteDtoToSiteEntityMapper
                 date.Value.Day.ToString(CultureInfo.InvariantCulture),
                 date.Value.Month.ToString(CultureInfo.InvariantCulture),
                 date.Value.Year.ToString(CultureInfo.InvariantCulture));
+    }
+
+    private static IList<T> MapCollection<T>(IList<int>? values, EnumMapper<T> mapper)
+        where T : struct
+    {
+        return (values ?? Enumerable.Empty<int>())
+            .Select(x => mapper.ToDomain(x))
+            .Where(x => x != null)
+            .Cast<T>()
+            .ToList();
     }
 }

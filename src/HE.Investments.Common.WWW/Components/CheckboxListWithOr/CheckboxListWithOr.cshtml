@@ -37,7 +37,7 @@
             <div id='alternative-option-form-group' class='govuk-form-group '>
                 <div class="exclusive-checkbox-group--exclusive-option">
                     <div class="govuk-checkboxes__item">
-                        <input id="@Model.fieldName-@Model.alternativeOption.Value" type="checkbox" checked="@Model.alternativeOption.Selected" class="govuk-checkboxes__input" value="NoneOfTheAbove" name="@Model.fieldName"/>
+                        <input id="@Model.fieldName-@Model.alternativeOption.Value" type="checkbox" checked="@Model.alternativeOption.Selected" class="govuk-checkboxes__input" value="@Model.alternativeOption.Value" name="@Model.fieldName"/>
                         <label class="govuk-label govuk-checkboxes__label" for="@Model.fieldName-@Model.alternativeOption.Value">@Model.alternativeOption.Text</label>
                     </div>
                 </div>
