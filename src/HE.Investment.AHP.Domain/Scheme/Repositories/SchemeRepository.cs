@@ -1,5 +1,6 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investment.AHP.Contract.Application;
+using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
@@ -83,6 +84,7 @@ public class SchemeRepository : ISchemeRepository
         var applicationId = AhpApplicationId.From(application.id);
         var applicationBasicInfo = new ApplicationBasicInfo(
             applicationId,
+            new SiteId("15489c1b-6fd5-ee11-904d-0022480041cf"), // TODO: AB#88650 Assign application to site
             new ApplicationName(application.name),
             ApplicationTenureMapper.ToDomain(application.tenure)!.Value,
             AhpApplicationStatusMapper.MapToPortalStatus(application.applicationStatus),

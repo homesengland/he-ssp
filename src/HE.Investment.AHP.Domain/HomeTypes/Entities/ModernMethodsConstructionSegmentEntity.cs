@@ -1,6 +1,7 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
+using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Domain.HomeTypes.Attributes;
 using HE.Investments.Common.Domain;
 
@@ -10,17 +11,21 @@ namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 public class ModernMethodsConstructionSegmentEntity : IHomeTypeSegmentEntity
 {
     private readonly List<ModernMethodsConstructionCategoriesType> _modernMethodsConstructionCategories;
+
     private readonly List<ModernMethodsConstruction2DSubcategoriesType> _modernMethodsConstruction2DSubcategories;
+
     private readonly List<ModernMethodsConstruction3DSubcategoriesType> _modernMethodsConstruction3DSubcategories;
 
     private readonly ModificationTracker _modificationTracker;
 
     public ModernMethodsConstructionSegmentEntity(
+        SiteUsingModernMethodsOfConstruction siteUsingModernMethodsOfConstruction,
         YesNoType modernMethodsConstructionApplied = YesNoType.Undefined,
         IEnumerable<ModernMethodsConstructionCategoriesType>? modernMethodsConstructionCategories = null,
         IEnumerable<ModernMethodsConstruction2DSubcategoriesType>? modernMethodsConstruction2DSubcategories = null,
         IEnumerable<ModernMethodsConstruction3DSubcategoriesType>? modernMethodsConstruction3DSubcategories = null)
     {
+        SiteUsingModernMethodsOfConstruction = siteUsingModernMethodsOfConstruction;
         _modificationTracker = new ModificationTracker(() => SegmentModified?.Invoke());
         ModernMethodsConstructionApplied = modernMethodsConstructionApplied;
         _modernMethodsConstructionCategories = modernMethodsConstructionCategories?.ToList() ?? new List<ModernMethodsConstructionCategoriesType>();
@@ -31,6 +36,8 @@ public class ModernMethodsConstructionSegmentEntity : IHomeTypeSegmentEntity
     public event EntityModifiedEventHandler SegmentModified;
 
     public bool IsModified => _modificationTracker.IsModified;
+
+    public SiteUsingModernMethodsOfConstruction SiteUsingModernMethodsOfConstruction { get; }
 
     public YesNoType ModernMethodsConstructionApplied { get; private set; }
 
@@ -99,6 +106,7 @@ public class ModernMethodsConstructionSegmentEntity : IHomeTypeSegmentEntity
     public IHomeTypeSegmentEntity Duplicate()
     {
         return new ModernMethodsConstructionSegmentEntity(
+            SiteUsingModernMethodsOfConstruction,
             ModernMethodsConstructionApplied,
             ModernMethodsConstructionCategories,
             ModernMethodsConstruction2DSubcategories,
@@ -107,7 +115,7 @@ public class ModernMethodsConstructionSegmentEntity : IHomeTypeSegmentEntity
 
     public bool IsRequired(HousingType housingType)
     {
-        return true;
+        return SiteUsingModernMethodsOfConstruction == SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes;
     }
 
     public bool IsCompleted(HousingType housingType, Tenure tenure)

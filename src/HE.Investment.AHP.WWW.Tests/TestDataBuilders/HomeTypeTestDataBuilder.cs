@@ -2,6 +2,7 @@ using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
+using HE.Investment.AHP.Contract.Site;
 
 namespace HE.Investment.AHP.WWW.Tests.TestDataBuilders;
 
@@ -27,7 +28,7 @@ public class HomeTypeTestDataBuilder
 
     private YesNoType _modernMethodsConstructionApplied = YesNoType.Yes;
 
-    private bool _isReadOnly;
+    private SiteUsingModernMethodsOfConstruction _siteUsingMmc = SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes;
 
     private IList<ModernMethodsConstructionCategoriesType> _modernMethodsConstructionCategories = new List<ModernMethodsConstructionCategoriesType>();
 
@@ -85,6 +86,12 @@ public class HomeTypeTestDataBuilder
         return this;
     }
 
+    public HomeTypeTestDataBuilder WithSiteUsingMmc(SiteUsingModernMethodsOfConstruction siteUsingMmc)
+    {
+        _siteUsingMmc = siteUsingMmc;
+        return this;
+    }
+
     public HomeTypeTestDataBuilder WithModernMethodsConstructionApplied(YesNoType modernMethodsConstructionApplied)
     {
         _modernMethodsConstructionApplied = modernMethodsConstructionApplied;
@@ -94,12 +101,6 @@ public class HomeTypeTestDataBuilder
     public HomeTypeTestDataBuilder WithModernMethodsConstructionCategories(IList<ModernMethodsConstructionCategoriesType> modernMethodsConstructionCategories)
     {
         _modernMethodsConstructionCategories = modernMethodsConstructionCategories;
-        return this;
-    }
-
-    public HomeTypeTestDataBuilder WithReadOnlyMode(bool isReadOnly)
-    {
-        _isReadOnly = isReadOnly;
         return this;
     }
 
@@ -118,8 +119,9 @@ public class HomeTypeTestDataBuilder
                 _spaceStandardsMet,
                 _exemptFromTheRightToSharedOwnership,
                 _isProspectiveRentIneligible,
+                _siteUsingMmc,
                 _modernMethodsConstructionApplied,
                 _modernMethodsConstructionCategories),
-            _isReadOnly);
+            false);
     }
 }

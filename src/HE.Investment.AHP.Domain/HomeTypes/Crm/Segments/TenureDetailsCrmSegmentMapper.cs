@@ -29,7 +29,11 @@ public class TenureDetailsCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Tenure
 
     public override HomeTypeSegmentType SegmentType => HomeTypeSegmentType.TenureDetails;
 
-    public override IHomeTypeSegmentEntity MapToEntity(ApplicationBasicInfo application, HomeTypeDto dto, IReadOnlyCollection<UploadedFile> uploadedFiles)
+    public override IHomeTypeSegmentEntity MapToEntity(
+        ApplicationBasicInfo application,
+        SiteBasicInfo site,
+        HomeTypeDto dto,
+        IReadOnlyCollection<UploadedFile> uploadedFiles)
     {
         return new TenureDetailsSegmentEntity(
             dto.marketValue.IsProvided() ? new MarketValue((int)dto.marketValue!.Value.ToWholeNumberRoundFloor()) : null,

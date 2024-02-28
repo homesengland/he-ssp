@@ -59,6 +59,7 @@ public class ApplicationRepository : IApplicationRepository
         var application = await GetById(id, userAccount, cancellationToken);
         return new ApplicationBasicInfo(
             application.Id,
+            application.SiteId,
             application.Name,
             application.Tenure?.Value ?? Tenure.Undefined,
             application.Status,
@@ -143,7 +144,7 @@ public class ApplicationRepository : IApplicationRepository
         var applicationStatus = AhpApplicationStatusMapper.MapToPortalStatus(application.applicationStatus);
 
         return new ApplicationEntity(
-            new SiteId("1"), // TODO: AB#88650 Assign application to site
+            new SiteId("15489c1b-6fd5-ee11-904d-0022480041cf"), // TODO: AB#88650 Assign application to site
             new AhpApplicationId(application.id),
             new ApplicationName(application.name ?? "Unknown"),
             applicationStatus,
@@ -189,7 +190,7 @@ public class ApplicationRepository : IApplicationRepository
         var otherApplicationCosts = OtherApplicationCostsMapper.MapToOtherApplicationCosts(ahpApplicationDto);
 
         return new ApplicationWithFundingDetails(
-            new SiteId("1"), // TODO: AB#88650 Assign application to site
+            new SiteId("15489c1b-6fd5-ee11-904d-0022480041cf"), // TODO: AB#88650 Assign application to site
             new AhpApplicationId(ahpApplicationDto.id),
             ahpApplicationDto.name,
             ahpApplicationDto.referenceNumber,

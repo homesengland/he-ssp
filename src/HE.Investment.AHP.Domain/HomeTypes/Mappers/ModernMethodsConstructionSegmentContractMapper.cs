@@ -12,6 +12,7 @@ public class ModernMethodsConstructionSegmentContractMapper : IHomeTypeSegmentCo
         return new ModernMethodsConstruction(
             applicationName.Name,
             homeTypeName.Value,
+            segment.SiteUsingModernMethodsOfConstruction,
             segment.ModernMethodsConstructionApplied,
             segment.ModernMethodsConstructionCategories.ToList(),
             segment.ModernMethodsConstruction2DSubcategories.ToList(),

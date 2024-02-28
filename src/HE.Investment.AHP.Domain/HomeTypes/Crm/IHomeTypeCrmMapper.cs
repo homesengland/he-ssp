@@ -12,6 +12,7 @@ public interface IHomeTypeCrmMapper
 
     HomeTypeEntity MapToDomain(
         ApplicationBasicInfo application,
+        SiteBasicInfo site,
         HomeTypeDto dto,
         IEnumerable<HomeTypeSegmentType> segments,
         IDictionary<HomeTypeSegmentType, IReadOnlyCollection<UploadedFile>> uploadedFiles);

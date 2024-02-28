@@ -2,6 +2,7 @@ using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.Contract.HomeTypes;
+using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.Entities;
@@ -24,6 +25,7 @@ public class DeliveryPhaseEntityBuilder
 
     private ApplicationBasicInfo _applicationBasicInfo = new(
         new AhpApplicationId("test-app-42123"),
+        new SiteId("test-site-12312"),
         new ApplicationName("Test Application"),
         Tenure.AffordableRent,
         ApplicationStatus.Draft,

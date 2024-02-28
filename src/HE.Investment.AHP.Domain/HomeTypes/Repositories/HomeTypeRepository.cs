@@ -8,6 +8,7 @@ using HE.Investment.AHP.Domain.Documents.Services;
 using HE.Investment.AHP.Domain.HomeTypes.Crm;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
+using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.Contract.Exceptions;
@@ -19,6 +20,8 @@ public class HomeTypeRepository : IHomeTypeRepository
 {
     private readonly IApplicationRepository _applicationRepository;
 
+    private readonly ISiteRepository _siteRepository;
+
     private readonly IAhpFileService<DesignFileParams> _designFileService;
 
     private readonly IHomeTypeCrmContext _homeTypeCrmContext;
@@ -29,12 +32,14 @@ public class HomeTypeRepository : IHomeTypeRepository
 
     public HomeTypeRepository(
         IApplicationRepository applicationRepository,
+        ISiteRepository siteRepository,
         IAhpFileService<DesignFileParams> designFileService,
         IHomeTypeCrmContext homeTypeCrmContext,
         IHomeTypeCrmMapper homeTypeCrmMapper,
         IEventDispatcher eventDispatcher)
     {
         _applicationRepository = applicationRepository;
+        _siteRepository = siteRepository;
         _designFileService = designFileService;
         _homeTypeCrmContext = homeTypeCrmContext;
         _homeTypeCrmMapper = homeTypeCrmMapper;
@@ -49,6 +54,7 @@ public class HomeTypeRepository : IHomeTypeRepository
     {
         var organisationId = userAccount.SelectedOrganisationId().Value;
         var application = await _applicationRepository.GetApplicationBasicInfo(applicationId, userAccount, cancellationToken);
+        var site = await _siteRepository.GetSiteBasicInfo(application.SiteId, userAccount, cancellationToken);
         var homeTypes = userAccount.CanViewAllApplications()
             ? await _homeTypeCrmContext.GetAllOrganisationHomeTypes(applicationId.Value, organisationId, _homeTypeCrmMapper.GetCrmFields(segments), cancellationToken)
             : await _homeTypeCrmContext.GetAllUserHomeTypes(applicationId.Value, organisationId, _homeTypeCrmMapper.GetCrmFields(segments), cancellationToken);
@@ -56,7 +62,7 @@ public class HomeTypeRepository : IHomeTypeRepository
 
         return new HomeTypesEntity(
             application,
-            homeTypes.Select(x => _homeTypeCrmMapper.MapToDomain(application, x, segments, new Dictionary<HomeTypeSegmentType, IReadOnlyCollection<UploadedFile>>())),
+            homeTypes.Select(x => _homeTypeCrmMapper.MapToDomain(application, site, x, segments, new Dictionary<HomeTypeSegmentType, IReadOnlyCollection<UploadedFile>>())),
             SectionStatusMapper.ToDomain(sectionStatus, application.Status));
     }
 
@@ -69,6 +75,7 @@ public class HomeTypeRepository : IHomeTypeRepository
     {
         var organisationId = userAccount.SelectedOrganisationId().Value;
         var application = await _applicationRepository.GetApplicationBasicInfo(applicationId, userAccount, cancellationToken);
+        var site = await _siteRepository.GetSiteBasicInfo(application.SiteId, userAccount, cancellationToken);
         var homeType = userAccount.CanViewAllApplications()
             ? await _homeTypeCrmContext.GetOrganisationHomeTypeById(applicationId.Value, homeTypeId.Value, organisationId, _homeTypeCrmMapper.GetCrmFields(segments), cancellationToken)
             : await _homeTypeCrmContext.GetUserHomeTypeById(applicationId.Value, homeTypeId.Value, organisationId, _homeTypeCrmMapper.GetCrmFields(segments), cancellationToken);
@@ -76,7 +83,7 @@ public class HomeTypeRepository : IHomeTypeRepository
         var uploadedFiles = await GetUploadedFiles(applicationId, homeTypeId, segments, cancellationToken);
         if (homeType != null)
         {
-            return _homeTypeCrmMapper.MapToDomain(application, homeType, segments, uploadedFiles);
+            return _homeTypeCrmMapper.MapToDomain(application, site, homeType, segments, uploadedFiles);
         }
 
         throw new NotFoundException(nameof(HomeTypeEntity), homeTypeId);

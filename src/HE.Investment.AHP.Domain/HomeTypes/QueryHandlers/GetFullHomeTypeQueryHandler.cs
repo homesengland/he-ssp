@@ -75,9 +75,9 @@ internal sealed class GetFullHomeTypeQueryHandler : IRequestHandler<GetFullHomeT
             MapOptionalSegment(homeType, homeType.DisabledPeopleHomeTypeDetails, _disabledPeopleSegmentMapper),
             MapOptionalSegment(homeType, homeType.DesignPlans, _designPlansSegmentMapper),
             MapOptionalSegment(homeType, homeType.SupportedHousingInformation, _supportedHousingSegmentMapper),
-            MapOptionalSegment(homeType, homeType.HomeInformation, _homeInformationSegmentMapper)!,
-            MapOptionalSegment(homeType, homeType.TenureDetails, _tenureDetailsSegmentMapper)!,
-            MapOptionalSegment(homeType, homeType.ModernMethodsConstruction, _modernMethodsConstructionSegmentMapper)!);
+            MapRequiredSegment(homeType, homeType.HomeInformation, _homeInformationSegmentMapper),
+            MapRequiredSegment(homeType, homeType.TenureDetails, _tenureDetailsSegmentMapper),
+            MapRequiredSegment(homeType, homeType.ModernMethodsConstruction, _modernMethodsConstructionSegmentMapper));
     }
 
     private static TSegmentContract? MapOptionalSegment<TSegmentEntity, TSegmentContract>(
