@@ -9,42 +9,42 @@
 
 <gds-div-grid-column-two-thirds>
     <form asp-controller="LoanApplicationV2" asp-action="AboutLoanPost" asp-method="post" novalidate>
-        <gds-back-link href="@Url.Action("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.AboutLoan})" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
+        <gds-back-link href="@Url.Action("Back", "LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.AboutLoan })" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
 
-        <partial name="_ErrorSummaryPartial" model="null" />
-         <gds-error-form-group asp-for="InformationAgreement">
-        <vc:page-header title="@LoanApplicationPageTitles.AboutLoan"/>
+        <partial name="_ErrorSummaryPartial" model="null"/>
+        <gds-error-form-group asp-for="InformationAgreement">
+            <vc:page-header title="@LoanApplicationPageTitles.AboutLoan"/>
 
-        <gds-p>Before you apply, you must confirm you have read and agree with the following information.</gds-p>
+            <gds-p>Before you apply, you must confirm you have read and agree with the following information.</gds-p>
 
-        <gds-p>Homes England reserves the right to deny any application based on the information you provide us. Homes England cannot:</gds-p>
-        <gds-ul>
-            <gds-li>fund VAT on costs</gds-li>
-            <gds-li>fund leasehold schemes where the ground rent is greater than a peppercorn</gds-li>
-            <gds-li>fund any developments outside England</gds-li>
-        </gds-ul>
+            <gds-p>Homes England reserves the right to deny any application based on the information you provide us. Homes England cannot:</gds-p>
+            <gds-ul>
+                <gds-li>fund VAT on costs</gds-li>
+                <gds-li>fund leasehold schemes where the ground rent is greater than a peppercorn</gds-li>
+                <gds-li>fund any developments outside England</gds-li>
+            </gds-ul>
 
-        <gds-p>To secure any loan, Homes England usually/typically expects:</gds-p>
-        <gds-ul>
-            <gds-li>a first ranking debenture</gds-li>
-            <gds-li>a first legal charge over the development site</gds-li>
-            <gds-li>any outstanding director or shareholder loans to be fully subordinated behind Homes England funding</gds-li>
-        </gds-ul>
+            <gds-p>To secure any loan, Homes England usually/typically expects:</gds-p>
+            <gds-ul>
+                <gds-li>a first ranking debenture</gds-li>
+                <gds-li>a first legal charge over the development site</gds-li>
+                <gds-li>any outstanding director or shareholder loans to be fully subordinated behind Homes England funding</gds-li>
+            </gds-ul>
 
-        <gds-p>Homes England only offers loans to UK-registered corporate entities. If you have any questions, contact us via:</gds-p>
-                <gds-ul>
-                    <gds-li>telephone: 0300 1234 500</gds-li>
-                    <gds-li>email: fundingenquiries@homesengland.gov.uk</gds-li>
-                </gds-ul>
+            <gds-p>Homes England only offers loans to UK-registered corporate entities. If you have any questions, contact us via:</gds-p>
+            <gds-ul>
+                <gds-li>telephone: 0300 1234 500</gds-li>
+                <gds-li>email: fundingenquiries@homesengland.gov.uk</gds-li>
+            </gds-ul>
 
-                <gds-p>For more information, read our <he-link href="https://www.gov.uk/guidance/levelling-up-home-building-fund-development-finance" target="_blank" text="Levelling Up Home Building Fund guidance (opens in a new tab)"></he-link>.</gds-p>
+            <gds-p>For more information, read our <he-link href="https://www.gov.uk/guidance/levelling-up-home-building-fund-development-finance" target="_blank" text="Levelling Up Home Building Fund guidance (opens in a new tab)"></he-link>.</gds-p>
 
-        <gds-checkbox govuk-formgroup-asp-for="InformationAgreement"
-                      asp-selectlistitems='@(new List<SelectListItem> { new() { Text = "I can confirm I have read and agree with the above information", Value = "true", } })'
-                      asp-ischeckboxgroup="true"
-                      asp-isexcludeheader="true"
-                      asp-excludelabel="true">
-        </gds-checkbox>
+            <gds-checkbox govuk-formgroup-asp-for="InformationAgreement"
+                          asp-selectlistitems='@(new List<SelectListItem> { new() { Text = "I can confirm I have read and agree with the above information", Value = "true", } })'
+                          asp-ischeckboxgroup="true"
+                          asp-isexcludeheader="true"
+                          asp-excludelabel="true">
+            </gds-checkbox>
         </gds-error-form-group>
 
         <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="continue-button">

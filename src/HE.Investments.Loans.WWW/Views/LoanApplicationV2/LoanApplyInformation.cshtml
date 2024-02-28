@@ -9,7 +9,7 @@
 
 <gds-div-grid-column-two-thirds>
     <form asp-controller="LoanApplicationV2" asp-action="LoanApplyInformationPost" asp-method="post" novalidate>
-        <gds-back-link href="@Url.Action("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.LoanApplyInformation})" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
+        <gds-back-link href="@Url.Action("Back", "LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.LoanApplyInformation })" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
 
         <vc:page-header title="@LoanApplicationPageTitles.LoanApplyInformation"/>
 
