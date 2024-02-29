@@ -1,6 +1,6 @@
-﻿using System.Security.Cryptography;
+using System.Security.Cryptography;
 
-namespace HE.Investments.Loans.Common.Infrastructure;
+namespace HE.Investments.Common.WWW.Infrastructure.Middlewares;
 
 #pragma warning disable CS1570 // XML comment has badly formed XML
 /// <summary>

@@ -1,28 +1,27 @@
 using FluentAssertions;
-using HE.Investments.Loans.Common.Extensions;
-using HE.Investments.Loans.Common.Utils.Constants.FormOption;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using HE.Investments.Common.Contract.Constants;
+using HE.Investments.Common.WWW.Extensions;
+using Xunit;
 
-namespace HE.Investments.Loans.Common.Tests.Extensions.CommonAnswersMappingExtensions;
+namespace HE.Investments.Common.Tests.Extensions.CommonAnswersMappingExtensions;
 
-[TestClass]
 public class MapToCommonResponseTests
 {
-    [TestMethod]
+    [Fact]
     public void MapTrueToYes()
     {
         bool? boolField = true;
         boolField.MapToCommonResponse().Should().Be(CommonResponse.Yes);
     }
 
-    [TestMethod]
+    [Fact]
     public void MapFalseToNo()
     {
         bool? boolField = false;
         boolField.MapToCommonResponse().Should().Be(CommonResponse.No);
     }
 
-    [TestMethod]
+    [Fact]
     public void MapNullToNull()
     {
         bool? boolField = null;

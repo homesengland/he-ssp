@@ -1,5 +1,5 @@
+using HE.Investments.Common.Contract.Constants;
 using HE.Investments.Common.Domain;
-using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 
 namespace HE.Investments.Loans.Contract.CompanyStructure.ValueObjects;
 

@@ -6,9 +6,9 @@ using HE.Investment.AHP.WWW.Views.Scheme.Const;
 using HE.Investments.AHP.IntegrationTests.FillApplication.Data;
 using HE.Investments.AHP.IntegrationTests.Framework;
 using HE.Investments.AHP.IntegrationTests.Pages;
+using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.IntegrationTestsFramework.Assertions;
-using HE.Investments.Loans.Common.Extensions;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
 using Xunit.Extensions.Ordering;
@@ -146,7 +146,7 @@ public class Order02CompleteSchemeInformation : AhpIntegrationTest
         // when
         var summary = checkAnswersPage.GetSummaryListItems();
         summary.Should().ContainKey("Application name").WithValue(ApplicationData.ApplicationName);
-        summary.Should().ContainKey("Funding required").WhoseValue.Should().BePoundsOnly(SchemeInformationData.RequiredFunding);
+        summary.Should().ContainKey("Funding required").WhoseValue.Value.Should().BePoundsOnly(SchemeInformationData.RequiredFunding);
         summary.Should().ContainKey("Number of homes").WithValue(SchemeInformationData.HousesToDeliver.ToString(CultureInfo.InvariantCulture));
         summary.Should().ContainKey("Affordability of Shared Ownership").WithValue(SchemeInformationData.Affordability);
         summary.Should().ContainKey("Sales risk of Shared Ownership").WithValue(SchemeInformationData.SalesRisk);

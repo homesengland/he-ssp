@@ -1,3 +1,4 @@
+using HE.Investments.Common.Contract.Constants;
 using HE.Investments.Common.Tests.TestObjectBuilders;
 using HE.Investments.Loans.BusinessLogic.Funding.QueryHandlers;
 using HE.Investments.Loans.BusinessLogic.Tests.Funding.TestObjectBuilders;

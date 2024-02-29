@@ -1,9 +1,8 @@
-using HE.Investments.Common.CRM.Config;
 using HE.Investments.Common.Infrastructure.Cache.Config;
 
-namespace HE.Investments.Loans.Common.Models.App;
+namespace HE.Investments.Common.Models.App;
 
-public class AppConfig : IAppConfig
+public interface IAppConfig
 {
     public string? SupportEmail { get; set; }
 

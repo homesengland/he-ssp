@@ -1231,9 +1231,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     [HttpGet("{homeTypeId}/modern-methods-construction")]
     public async Task<IActionResult> ModernMethodsConstruction([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
     {
-        var modernMethodsConstruction = await _mediator.Send(new GetModernMethodsConstructionQuery(AhpApplicationId.From(applicationId), HomeTypeId.From(homeTypeId)), cancellationToken);
-
-        return View(new ModernMethodsConstructionModel(modernMethodsConstruction.ApplicationName, modernMethodsConstruction.HomeTypeName));
+        return View(await BuildModernMethodsConstructionModel(applicationId, homeTypeId, cancellationToken));
     }
 
     [WorkflowState(HomeTypesWorkflowState.ModernMethodsConstruction)]
@@ -1254,7 +1252,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     [HttpGet("{homeTypeId}/modern-methods-construction-categories")]
     public async Task<IActionResult> ModernMethodsConstructionCategories([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
     {
-        return await ModernMethodsConstruction(applicationId, homeTypeId, cancellationToken);
+        return View(await BuildModernMethodsConstructionModel(applicationId, homeTypeId, cancellationToken));
     }
 
     [WorkflowState(HomeTypesWorkflowState.ModernMethodsConstructionCategories)]
@@ -1277,7 +1275,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     [HttpGet("{homeTypeId}/modern-methods-construction-2d-subcategories")]
     public async Task<IActionResult> ModernMethodsConstruction2DSubcategories([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
     {
-        return await ModernMethodsConstruction(applicationId, homeTypeId, cancellationToken);
+        return View(await BuildModernMethodsConstructionModel(applicationId, homeTypeId, cancellationToken));
     }
 
     [WorkflowState(HomeTypesWorkflowState.ModernMethodsConstruction2DSubcategories)]
@@ -1300,7 +1298,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     [HttpGet("{homeTypeId}/modern-methods-construction-3d-subcategories")]
     public async Task<IActionResult> ModernMethodsConstruction3DSubcategories([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
     {
-        return await ModernMethodsConstruction(applicationId, homeTypeId, cancellationToken);
+        return View(await BuildModernMethodsConstructionModel(applicationId, homeTypeId, cancellationToken));
     }
 
     [WorkflowState(HomeTypesWorkflowState.ModernMethodsConstruction3DSubcategories)]
@@ -1449,6 +1447,19 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
             Sections = sections.ToList(),
             IsEditable = isEditable,
             IsApplicationLocked = homeType.IsApplicationLocked,
+        };
+    }
+
+    private async Task<ModernMethodsConstructionModel> BuildModernMethodsConstructionModel(string applicationId, string homeTypeId, CancellationToken cancellationToken)
+    {
+        var mmc = await _mediator.Send(new GetModernMethodsConstructionQuery(AhpApplicationId.From(applicationId), HomeTypeId.From(homeTypeId)), cancellationToken);
+
+        return new ModernMethodsConstructionModel(mmc.ApplicationName, mmc.HomeTypeName)
+        {
+            ModernMethodsConstructionApplied = mmc.ModernMethodsConstructionApplied,
+            ModernMethodsConstructionCategories = mmc.ModernMethodsConstructionCategories,
+            ModernMethodsConstruction3DSubcategories = mmc.ModernMethodsConstruction3DSubcategories,
+            ModernMethodsConstruction2DSubcategories = mmc.ModernMethodsConstruction2DSubcategories,
         };
     }
 }

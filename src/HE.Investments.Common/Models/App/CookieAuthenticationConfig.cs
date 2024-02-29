@@ -1,4 +1,4 @@
-namespace HE.Investments.Loans.Common.Models.App;
+namespace HE.Investments.Common.Models.App;
 
 /// <summary>
 /// Configuration settings related to Cookie Authentication and timeouts.

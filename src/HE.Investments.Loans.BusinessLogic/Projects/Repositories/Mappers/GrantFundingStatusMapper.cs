@@ -1,4 +1,5 @@
 using System.Globalization;
+using HE.Investments.Common.Contract.Constants;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Loans.BusinessLogic.Projects.Entities;
 using HE.Investments.Loans.Common.Utils.Constants.FormOption;

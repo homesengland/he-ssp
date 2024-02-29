@@ -1,7 +1,7 @@
 using HE.Investments.Common.Infrastructure.Events;
+using HE.Investments.Common.Models.App;
 using HE.Investments.Common.Services.Notifications;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Notifications;
-using HE.Investments.Loans.Common.Models.App;
 using HE.Investments.Loans.Contract.Application.Events;
 
 namespace HE.Investments.Loans.BusinessLogic.LoanApplication.EventHandlers;
