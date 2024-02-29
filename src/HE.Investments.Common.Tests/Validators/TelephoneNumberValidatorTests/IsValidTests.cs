@@ -9,7 +9,9 @@ public class IsValidTests
 {
     [Theory]
     [InlineData("+44 (0)20 7450 4000")]
-    [InlineData("+44 (0)27 2678 6125")]
+    [InlineData("020 7450 4000")]
+    [InlineData("01273 800 900")]
+    [InlineData("07771 900 900")]
     public void ShouldNotReturnError_WhenValueIsValid(string telephoneNumber)
     {
         // given
@@ -29,6 +31,9 @@ public class IsValidTests
     [Theory]
     [InlineData("test")]
     [InlineData(null)]
+    [InlineData("020 7450 40005")]
+    [InlineData("+444 (0)20 7450 4000")]
+    [InlineData("123 123 123 123")]
     public void ShouldReturnError_WhenValueIsInvalid(string? telephoneNumber)
     {
         // given

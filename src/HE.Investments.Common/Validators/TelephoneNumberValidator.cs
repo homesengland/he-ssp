@@ -1,4 +1,5 @@
 using HE.Investments.Common.Contract.Validators;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
 using PhoneNumbers;
 
@@ -42,18 +43,36 @@ public class TelephoneNumberValidator
             return this;
         }
 
-        var phoneNumberUtil = PhoneNumberUtil.GetInstance();
-
         try
         {
-            phoneNumberUtil.Parse(_telephoneNumber, "UK");
+            IsPossiblePhoneNumber();
         }
-        catch (NumberParseException)
+        catch (NumberParseException e)
         {
             _operationResult.AddValidationError(_fieldName, errorMessage ?? ValidationErrorMessage.EnterUkTelephoneNumber);
         }
 
         return this;
+    }
+
+    private void IsPossiblePhoneNumber()
+    {
+        var phoneNumberUtil = PhoneNumberUtil.GetInstance();
+        PhoneNumber phoneNumber;
+
+        if (_telephoneNumber.IsProvided() &&  _telephoneNumber!.StartsWith("+"))
+        {
+            phoneNumber = phoneNumberUtil.Parse(_telephoneNumber, null);
+        }
+        else
+        {
+            phoneNumber = phoneNumberUtil.Parse(_telephoneNumber, "GB");
+        }
+
+        if (!phoneNumberUtil.IsPossibleNumber(phoneNumber))
+        {
+            throw new NumberParseException(ErrorType.NOT_A_NUMBER, $"{phoneNumber} is not a valid phone number");
+        }
     }
 }
 
