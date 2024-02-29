@@ -1,5 +1,5 @@
 using HE.Investments.Common.Domain;
-using HE.Investments.Loans.Common.Extensions;
+using HE.Investments.Common.WWW.Extensions;
 
 namespace HE.Investments.Loans.Contract.Security.ValueObjects;
 

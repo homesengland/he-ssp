@@ -1,4 +1,4 @@
-namespace HE.Investments.Loans.Common.Utils.Constants.FormOption;
+namespace HE.Investments.Common.Contract.Constants;
 public static class CommonResponse
 {
     public const string Yes = "Yes";

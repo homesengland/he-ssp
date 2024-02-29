@@ -1,6 +1,6 @@
-using HE.Investments.Loans.Common.Utils.Constants.FormOption;
+using HE.Investments.Common.Contract.Constants;
 
-namespace HE.Investments.Loans.Common.Extensions;
+namespace HE.Investments.Common.WWW.Extensions;
 public static class CommonAnswersMappingExtensions
 {
     public static bool? MapToBool(this string? value)
@@ -40,7 +40,7 @@ public static class CommonAnswersMappingExtensions
             return null!;
         }
 
-        return MapToCommonResponse(value.Value);
+        return value.Value.MapToCommonResponse();
     }
 
     public static string MapToCommonResponse(this bool value)
