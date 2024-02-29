@@ -9,7 +9,6 @@ using HE.Investments.AHP.IntegrationTests.Pages;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.IntegrationTestsFramework.Assertions;
-using HE.Investments.Loans.Common.Extensions;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
 using Xunit.Extensions.Ordering;
