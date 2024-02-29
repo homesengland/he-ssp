@@ -24,7 +24,11 @@ public class TelephoneNumberValidator
 
     public static implicit operator string?(TelephoneNumberValidator v) => v._telephoneNumber ?? null;
 
-    public static TelephoneNumberValidator For(string? telephoneNumber, string fieldName, string fieldLabel, bool isOptional,
+    public static TelephoneNumberValidator For(
+        string? telephoneNumber,
+        string fieldName,
+        string fieldLabel,
+        bool isOptional,
         OperationResult? operationResult = null)
     {
         return new TelephoneNumberValidator(telephoneNumber, fieldName, fieldLabel, isOptional, operationResult ?? OperationResult.New());
@@ -40,7 +44,8 @@ public class TelephoneNumberValidator
 
         if (_telephoneNumber!.Length > MaximumInputLength.ShortInput)
         {
-            _operationResult.AddValidationError(_fieldName,
+            _operationResult.AddValidationError(
+                _fieldName,
                 errorMessage ?? ValidationErrorMessage.StringLengthExceeded(_fieldLabel, MaximumInputLength.ShortInput));
             return this;
         }
@@ -62,7 +67,7 @@ public class TelephoneNumberValidator
         var phoneNumberUtil = PhoneNumberUtil.GetInstance();
         PhoneNumber phoneNumber;
 
-        if (_telephoneNumber.IsProvided() && _telephoneNumber!.StartsWith("+"))
+        if (_telephoneNumber.IsProvided() && _telephoneNumber!.StartsWith("+", StringComparison.InvariantCulture))
         {
             phoneNumber = phoneNumberUtil.Parse(_telephoneNumber, null);
         }
