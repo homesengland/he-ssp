@@ -50,9 +50,9 @@ public class UserProfileDetails
             .WithValidation(() => FirstName = new FirstName(firstName))
             .WithValidation(() => LastName = new LastName(lastName))
             .WithValidation(() => JobTitle = new JobTitle(jobTitle))
-            .WithValidation(() => TelephoneNumber = new TelephoneNumber(telephoneNumber, nameof(TelephoneNumber), "preferred telephone number"))
+            .WithValidation(() => TelephoneNumber = TelephoneNumber.FromString(telephoneNumber, nameof(TelephoneNumber), "preferred telephone number"))
             .WithValidation(() => SecondaryTelephoneNumber = secondaryTelephoneNumber.IsProvided()
-                ? new TelephoneNumber(secondaryTelephoneNumber, nameof(SecondaryTelephoneNumber), "secondary telephone number", true)
+                ? TelephoneNumber.FromString(secondaryTelephoneNumber, nameof(SecondaryTelephoneNumber), "secondary telephone number", true)
                 : null)
             .CheckErrors();
 

@@ -46,7 +46,7 @@ public class TelephoneNumberValidator
 
         try
         {
-            phoneNumberUtil.Parse(_telephoneNumber, "UK"); // todo
+            phoneNumberUtil.Parse(_telephoneNumber, "UK");
         }
         catch (NumberParseException)
         {
