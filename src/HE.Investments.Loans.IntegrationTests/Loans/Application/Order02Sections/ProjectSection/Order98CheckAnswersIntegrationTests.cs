@@ -13,6 +13,7 @@ using HE.Investments.Loans.WWW.Extensions;
 using HE.Investments.Loans.WWW.Models;
 using HE.Investments.Loans.WWW.Views.Project.Consts;
 using HE.Investments.TestsUtils.Extensions;
+using HE.Investments.TestsUtils.Helpers;
 using Xunit;
 using Xunit.Extensions.Ordering;
 
@@ -44,32 +45,32 @@ public class Order98CheckAnswersIntegrationTests : IntegrationTest
         var projectSummary = checkAnswersPage.GetSummaryListItems();
 
         // then
-        projectSummary[ProjectFieldNames.Name].Should().Be(TextTestData.TextThatNotExceedsShortInputLimit);
-        projectSummary[ProjectFieldNames.StartDate].Should().Contain(DateTimeTestData.CorrectDateDisplay);
-        projectSummary[ProjectFieldNames.ManyHomes].Should().Contain("1");
-        projectSummary[ProjectFieldNames.TypeHomes].Should().Contain(TextTestData.TextThatNotExceedsShortInputLimit);
-        projectSummary[ProjectFieldNames.ProjectType].Should().Contain("Greenfield");
-        projectSummary[ProjectFieldNames.PlanningReferenceNumberExists].Should().Be(CommonResponse.Yes);
-        projectSummary[ProjectFieldNames.PlanningReferenceNumber].Should().Be(TextTestData.TextThatNotExceedsShortInputLimit);
-        projectSummary[ProjectFieldNames.LocalAuthority].Should().Be(UserData.LocalAuthorityName);
+        projectSummary[ProjectFieldNames.Name].Value.Should().Be(TextTestData.TextThatNotExceedsShortInputLimit);
+        projectSummary[ProjectFieldNames.StartDate].Value.Should().Contain(DateTimeTestData.CorrectDateDisplay);
+        projectSummary[ProjectFieldNames.ManyHomes].Value.Should().Contain("1");
+        projectSummary[ProjectFieldNames.TypeHomes].Value.Should().Contain(TextTestData.TextThatNotExceedsShortInputLimit);
+        projectSummary[ProjectFieldNames.ProjectType].Value.Should().Contain("Greenfield");
+        projectSummary[ProjectFieldNames.PlanningReferenceNumberExists].Value.Should().Be(CommonResponse.Yes);
+        projectSummary[ProjectFieldNames.PlanningReferenceNumber].Value.Should().Be(TextTestData.TextThatNotExceedsShortInputLimit);
+        projectSummary[ProjectFieldNames.LocalAuthority].Value.Should().Be(UserData.LocalAuthorityName);
 
         var statusDisplay = FormOption.PermissionStatus.GetSummaryLabel(ProjectFormOption.PlanningPermissionStatusOptions.NotSubmitted);
-        projectSummary[ProjectFieldNames.PlanningPermissionStatus].Should().Be(statusDisplay);
+        projectSummary[ProjectFieldNames.PlanningPermissionStatus].Value.Should().Be(statusDisplay);
 
-        projectSummary[ProjectFieldNames.LandRegistryTitleNumber].Should().Be(TextTestData.TextThatNotExceedsLongInputLimit);
-        projectSummary[ProjectFieldNames.LandRegistryTitleNumber].Should().Be(TextTestData.TextThatNotExceedsLongInputLimit);
+        projectSummary[ProjectFieldNames.LandRegistryTitleNumber].Value.Should().Be(TextTestData.TextThatNotExceedsLongInputLimit);
+        projectSummary[ProjectFieldNames.LandRegistryTitleNumber].Value.Should().Be(TextTestData.TextThatNotExceedsLongInputLimit);
 
         projectSummary.Should().NotContainKey(ProjectFieldNames.Coordinates);
 
-        projectSummary[ProjectFieldNames.LandOwnership].Should().Be(CommonResponse.Yes);
+        projectSummary[ProjectFieldNames.LandOwnership].Value.Should().Be(CommonResponse.Yes);
 
         CheckIfAdditionalDetailsAreCorrect(projectSummary);
 
-        projectSummary[ProjectFieldNames.GrantFundingExists].Should().Be(CommonResponse.Yes);
+        projectSummary[ProjectFieldNames.GrantFundingExists].Value.Should().Be(CommonResponse.Yes);
         CheckIfGrantFundingInformationIsCorrect(projectSummary);
 
-        projectSummary[ProjectFieldNames.ChargesDebt].Should().Contain(CommonResponse.Yes).And.Contain(TextTestData.TextThatNotExceedsLongInputLimit);
-        projectSummary[ProjectFieldNames.AffordableHomes].Should().Be(CommonResponse.Yes);
+        projectSummary[ProjectFieldNames.ChargesDebt].Value.Should().Contain(CommonResponse.Yes).And.Contain(TextTestData.TextThatNotExceedsLongInputLimit);
+        projectSummary[ProjectFieldNames.AffordableHomes].Value.Should().Be(CommonResponse.Yes);
 
         SetCurrentPage(checkAnswersPage);
     }
@@ -111,9 +112,9 @@ public class Order98CheckAnswersIntegrationTests : IntegrationTest
         status.Should().Be("Completed");
     }
 
-    private static void CheckIfAdditionalDetailsAreCorrect(IDictionary<string, string> projectSummary)
+    private static void CheckIfAdditionalDetailsAreCorrect(IDictionary<string, SummaryItem> projectSummary)
     {
-        var additionalDetails = projectSummary[ProjectFieldNames.AdditionalDetails];
+        var additionalDetails = projectSummary[ProjectFieldNames.AdditionalDetails].Value;
 
         additionalDetails.Should().Contain(DateTimeTestData.CorrectDateDisplay);
         additionalDetails.Should().Contain($"Purchase cost: {PoundsTestData.CorrectAmountDisplay}");
@@ -121,9 +122,9 @@ public class Order98CheckAnswersIntegrationTests : IntegrationTest
         additionalDetails.Should().Contain(SourceOfValuationTestData.AnySourceDisplay);
     }
 
-    private static void CheckIfGrantFundingInformationIsCorrect(IDictionary<string, string> projectSummary)
+    private static void CheckIfGrantFundingInformationIsCorrect(IDictionary<string, SummaryItem> projectSummary)
     {
-        var additionalDetails = projectSummary[ProjectFieldNames.GrantFunding];
+        var additionalDetails = projectSummary[ProjectFieldNames.GrantFunding].Value;
 
         additionalDetails.Should().Contain($"Previous funding: {TextTestData.TextThatNotExceedsShortInputLimit}");
         additionalDetails.Should().Contain($"Amount: {PoundsTestData.CorrectAmountDisplay}");

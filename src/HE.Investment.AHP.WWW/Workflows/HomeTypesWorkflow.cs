@@ -110,7 +110,7 @@ public class HomeTypesWorkflow : EncodedStateRouting<HomeTypesWorkflowState>
             HomeTypesWorkflowState.ExemptFromTheRightToSharedOwnership => IsTenure(Tenure.AffordableRent, Tenure.SocialRent),
             HomeTypesWorkflowState.ExemptionJustification => IsTenure(Tenure.AffordableRent, Tenure.SocialRent) && IsExemptFromTheRightToSharedOwnership(),
             HomeTypesWorkflowState.ModernMethodsConstruction => IsMmcRequired(),
-            HomeTypesWorkflowState.ModernMethodsConstructionCategories => !IsMmcUsed(),
+            HomeTypesWorkflowState.ModernMethodsConstructionCategories => IsMmcUsed(),
             HomeTypesWorkflowState.ModernMethodsConstruction3DSubcategories => IsMmc3DCategoryUsed(),
             HomeTypesWorkflowState.ModernMethodsConstruction2DSubcategories => IsMmc2DCategoryUsed(),
             HomeTypesWorkflowState.CheckAnswers => true,

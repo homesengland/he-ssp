@@ -41,12 +41,12 @@ public class Order08CheckYourAnswersIntegrationTests : IntegrationTest
         var fundingSummary = checkYourAnswersPage.GetSummaryListItems();
 
         // then
-        fundingSummary[FundingFields.GrossDevelopmentValue].Should().Be("£12");
-        fundingSummary[FundingFields.EstimatedTotalCosts].Should().Be("£999");
-        fundingSummary[FundingFields.AbnormalCosts].Should().Contain(CommonResponse.Yes).And.Contain(TextTestData.TextThatNotExceedsLongInputLimit);
-        fundingSummary[FundingFields.PrivateSectorFunding].Should().Contain(CommonResponse.Yes).And.Contain(TextTestData.TextThatNotExceedsLongInputLimit);
-        fundingSummary[FundingFields.RefinanceOrRepay].Should().Contain(FundingFormOption.Refinance.TitleCaseFirstLetterInString()).And.Contain(TextTestData.TextThatNotExceedsLongInputLimit);
-        fundingSummary[FundingFields.AdditionalProjects].Should().Be(CommonResponse.No);
+        fundingSummary[FundingFields.GrossDevelopmentValue].Value.Should().Be("£12");
+        fundingSummary[FundingFields.EstimatedTotalCosts].Value.Should().Be("£999");
+        fundingSummary[FundingFields.AbnormalCosts].Value.Should().Contain(CommonResponse.Yes).And.Contain(TextTestData.TextThatNotExceedsLongInputLimit);
+        fundingSummary[FundingFields.PrivateSectorFunding].Value.Should().Contain(CommonResponse.Yes).And.Contain(TextTestData.TextThatNotExceedsLongInputLimit);
+        fundingSummary[FundingFields.RefinanceOrRepay].Value.Should().Contain(FundingFormOption.Refinance.TitleCaseFirstLetterInString()).And.Contain(TextTestData.TextThatNotExceedsLongInputLimit);
+        fundingSummary[FundingFields.AdditionalProjects].Value.Should().Be(CommonResponse.No);
 
         SetSharedData(SharedKeys.CurrentPageKey, checkYourAnswersPage);
     }
