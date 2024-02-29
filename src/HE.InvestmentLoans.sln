@@ -108,7 +108,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.Investments.Account.Api.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.Investments.Account.IntegrationTests", "HE.Investments.Account.IntegrationTests\HE.Investments.Account.IntegrationTests.csproj", "{039B0E9D-CDF4-469A-9C10-D4A65E68B3EA}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frontdoor", "Frontdoor", "{220CDEC9-4FED-470A-BC91-8B4241744B12}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FrontDoor", "FrontDoor", "{220CDEC9-4FED-470A-BC91-8B4241744B12}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.Investments.FrontDoor.WWW", "HE.Investments.FrontDoor.WWW\HE.Investments.FrontDoor.WWW.csproj", "{7EFA60DB-B51A-4894-9F49-D89E655544E2}"
 EndProject
