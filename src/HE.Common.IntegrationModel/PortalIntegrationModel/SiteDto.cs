@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 namespace HE.Common.IntegrationModel.PortalIntegrationModel
 {
-
     public class SiteDto
     {
         public string id { get; set; }
