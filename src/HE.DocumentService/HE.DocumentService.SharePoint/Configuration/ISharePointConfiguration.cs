@@ -1,4 +1,4 @@
-namespace HE.DocumentService.SharePoint.Configurartion;
+namespace HE.DocumentService.SharePoint.Configuration;
 
 public interface ISharePointConfiguration
 {
@@ -8,12 +8,10 @@ public interface ISharePointConfiguration
 
     public string SiteUrl { get; set; }
 
-    public string WhiteListOfFileExtensions { get; set; }
-
     /// <summary>
-    /// SP_FileMaxSize the value in bytes
+    /// SP_FileMaxSize the value in bytes.
     /// </summary>
     public int FileMaxSize { get; set; }
 
-    public List<string> AllowedFileExtensions();
+    public int RetryCount { get; set; }
 }
