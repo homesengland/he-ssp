@@ -6,6 +6,8 @@ public static class ValidationErrorMessage
 
     public const string EnterUkTelephoneNumber = "Enter a UK telephone number";
 
+    public const string EnterTelephoneNumberInValidFormat = "Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 808 157 0192";
+
     public const string EnterWhyYouWantToWithdrawApplication = "Enter why you want to withdraw your application";
 
     public const string InvalidValue = "Provided invalid value";
