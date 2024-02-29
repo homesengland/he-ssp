@@ -66,7 +66,7 @@ public class TelephoneNumberValidator
     {
         var phoneNumberUtil = PhoneNumberUtil.GetInstance();
         PhoneNumber phoneNumber;
-        var UkRegionCode = "GB";
+        var ukRegionCode = "GB";
 
         if (_telephoneNumber.IsProvided() && _telephoneNumber!.StartsWith("+", StringComparison.InvariantCulture))
         {
@@ -74,7 +74,7 @@ public class TelephoneNumberValidator
         }
         else
         {
-            phoneNumber = phoneNumberUtil.Parse(_telephoneNumber, UkRegionCode);
+            phoneNumber = phoneNumberUtil.Parse(_telephoneNumber, ukRegionCode);
         }
 
         if (!phoneNumberUtil.IsPossibleNumber(phoneNumber))
@@ -82,7 +82,7 @@ public class TelephoneNumberValidator
             throw new NumberParseException(ErrorType.NOT_A_NUMBER, $"{phoneNumber} is not a phone number");
         }
 
-        if (!phoneNumberUtil.IsValidNumberForRegion(phoneNumber, "GB"))
+        if (!phoneNumberUtil.IsValidNumberForRegion(phoneNumber, ukRegionCode))
         {
             _operationResult.AddValidationError(_fieldName, errorMessage ?? ValidationErrorMessage.EnterTelephoneNumberInValidFormat);
         }
