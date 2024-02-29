@@ -4,6 +4,8 @@ public static class ValidationErrorMessage
 {
     public const string EnterMoreDetails = "Enter more details";
 
+    public const string EnterUkTelephoneNumber = "Enter a UK telephone number";
+
     public const string EnterWhyYouWantToWithdrawApplication = "Enter why you want to withdraw your application";
 
     public const string InvalidValue = "Provided invalid value";

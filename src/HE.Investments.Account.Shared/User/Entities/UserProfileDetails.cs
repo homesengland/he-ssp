@@ -12,7 +12,7 @@ public class UserProfileDetails
         JobTitle? jobTitle,
         string? email,
         TelephoneNumber? telephoneNumber,
-        SecondaryTelephoneNumber? secondaryTelephoneNumber,
+        TelephoneNumber? secondaryTelephoneNumber,
         bool? isTermsAndConditionsAccepted)
     {
         FirstName = firstName;
@@ -34,7 +34,7 @@ public class UserProfileDetails
 
     public TelephoneNumber? TelephoneNumber { get; private set; }
 
-    public SecondaryTelephoneNumber? SecondaryTelephoneNumber { get; private set; }
+    public TelephoneNumber? SecondaryTelephoneNumber { get; private set; }
 
     public bool? IsTermsAndConditionsAccepted { get; private set; }
 
@@ -50,8 +50,10 @@ public class UserProfileDetails
             .WithValidation(() => FirstName = new FirstName(firstName))
             .WithValidation(() => LastName = new LastName(lastName))
             .WithValidation(() => JobTitle = new JobTitle(jobTitle))
-            .WithValidation(() => TelephoneNumber = new TelephoneNumber(telephoneNumber))
-            .WithValidation(() => SecondaryTelephoneNumber = secondaryTelephoneNumber.IsProvided() ? new SecondaryTelephoneNumber(secondaryTelephoneNumber) : null)
+            .WithValidation(() => TelephoneNumber = new TelephoneNumber(telephoneNumber, nameof(TelephoneNumber), "preferred telephone number"))
+            .WithValidation(() => SecondaryTelephoneNumber = secondaryTelephoneNumber.IsProvided()
+                ? new TelephoneNumber(secondaryTelephoneNumber, nameof(SecondaryTelephoneNumber), "secondary telephone number", true)
+                : null)
             .CheckErrors();
 
         Email = userEmail;

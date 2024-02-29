@@ -54,7 +54,7 @@ internal class AccountHttpRepository : IAccountRepository
             profile.JobTitle.IsProvided() ? new JobTitle(profile.JobTitle) : null,
             profile.Email,
             profile.TelephoneNumber.IsProvided() ? new TelephoneNumber(profile.TelephoneNumber) : null,
-            profile.SecondaryTelephoneNumber.IsProvided() ? new SecondaryTelephoneNumber(profile.SecondaryTelephoneNumber) : null,
+            profile.SecondaryTelephoneNumber.IsProvided() ? new TelephoneNumber(profile.SecondaryTelephoneNumber) : null,
             profile.IsTermsAndConditionsAccepted);
     }
 }
