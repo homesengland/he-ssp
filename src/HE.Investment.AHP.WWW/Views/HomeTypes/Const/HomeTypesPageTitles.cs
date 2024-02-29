@@ -56,6 +56,10 @@ public static class HomeTypesPageTitles
 
     public const string ModernMethodsConstructionCategories = "Which Modern Methods of Construction (MMC) categories are you using?";
 
+    public const string ModernMethodsConstruction3DCategories = "Category 1";
+
+    public const string ModernMethodsConstruction2DCategories = "Category 2";
+
     public const string CheckAnswers = "Check your answers before adding your home type";
 
     public const string FinishHomeTypes = "Have you added all of the home types for this application?";

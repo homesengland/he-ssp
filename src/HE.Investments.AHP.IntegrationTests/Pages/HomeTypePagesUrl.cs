@@ -52,6 +52,10 @@ internal static class HomeTypePagesUrl
 
     public static string ModernMethodsConstructionCategories(string applicationId, string homeTypeId) => BuildHomeTypePage(applicationId, homeTypeId, "modern-methods-construction-categories");
 
+    public static string ModernMethodsConstruction3DSubcategories(string applicationId, string homeTypeId) => BuildHomeTypePage(applicationId, homeTypeId, "modern-methods-construction-3d-subcategories");
+
+    public static string ModernMethodsConstruction2DSubcategories(string applicationId, string homeTypeId) => BuildHomeTypePage(applicationId, homeTypeId, "modern-methods-construction-2d-subcategories");
+
     public static string CheckAnswers(string applicationId, string homeTypeId) => BuildHomeTypePage(applicationId, homeTypeId, "check-answers");
 
     private static string BuildHomeTypePage(string applicationId, string homeTypeId, string pageSuffix)

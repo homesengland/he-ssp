@@ -13,7 +13,6 @@ using HE.Investments.AHP.IntegrationTests.Pages;
 using HE.Investments.Common.Contract.Constants;
 using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.IntegrationTestsFramework.Assertions;
-using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
 using Xunit.Extensions.Ordering;
@@ -512,6 +511,61 @@ public class Order01StartAhpSite : AhpIntegrationTest
         summary.Should().ContainKey("Sub-categories of 3D primary structural systems").WithValue(SiteData.Mmc3DSubcategory);
         summary.Should().ContainKey("Sub-categories of 2D primary structural systems").WithValue(SiteData.Mmc2DSubcategory);
         summary.Should().ContainKey("Procurement mechanisms").WithOnlyValues(SiteData.Procurements);
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(35)]
+    public async Task Order35_CheckAnswersChangeMmcAnswer()
+    {
+        // given
+        var checkAnswersPage = await GetCurrentPage(SitePagesUrl.SiteCheckAnswers(SiteData.SiteId));
+        var summary = checkAnswersPage
+            .UrlEndWith(SitePagesUrl.SiteCheckAnswers(SiteData.SiteId))
+            .HasTitle(SitePageTitles.CheckAnswers)
+            .GetSummaryListItems();
+
+        summary.Should().ContainKey("MMC");
+        summary["MMC"].ChangeAnswerLink.Should().NotBeNull();
+
+        // when
+        var mmcPage = await TestClient.NavigateTo(summary["MMC"].ChangeAnswerLink!);
+
+        // then
+        mmcPage.UrlWithoutQueryEndsWith(SitePagesUrl.SiteMmcUsing(SiteData.SiteId))
+            .HasTitle(SitePageTitles.MmcUsing);
+        SaveCurrentPage();
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(36)]
+    public async Task Order36_ShouldProvideSiteMmcUsing()
+    {
+        var mmcUsing = SiteData.ChangeMmcUsingAnswer();
+        await TestQuestionPage(
+            SitePagesUrl.SiteMmcUsing(SiteData.SiteId),
+            SitePageTitles.MmcUsing,
+            SitePagesUrl.SiteCheckAnswers(SiteData.SiteId),
+            (nameof(SiteModernMethodsOfConstruction.UsingModernMethodsOfConstruction), mmcUsing.ToString()));
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(37)]
+    public async Task Order37_CheckAnswersHasValidSummaryAfterChangingMmc()
+    {
+        // given
+        var checkAnswersPage = await GetCurrentPage(SitePagesUrl.SiteCheckAnswers(SiteData.SiteId));
+        checkAnswersPage
+            .UrlEndWith(SitePagesUrl.SiteCheckAnswers(SiteData.SiteId))
+            .HasTitle(SitePageTitles.CheckAnswers);
+
+        // when
+        var summary = checkAnswersPage.GetSummaryListItems();
+        summary.Should().ContainKey("MMC").WithValue(SiteData.UsingMmc);
+        summary.Should().NotContainKey("Barriers");
+        summary.Should().NotContainKey("Impact on developments");
+        summary.Should().NotContainKey("MMC categories");
+        summary.Should().NotContainKey("Sub-categories of 3D primary structural systems");
+        summary.Should().NotContainKey("Sub-categories of 2D primary structural systems");
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]

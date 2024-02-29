@@ -38,10 +38,10 @@ public class Order05CheckYourAnswersIntegrationTests : IntegrationTest
         var companyStructureSummary = checkYourAnswersPage.GetSummaryListItems();
 
         // then
-        companyStructureSummary[SecurityFields.ChargesDebt].Should().Be(CommonResponse.Yes);
-        companyStructureSummary[SecurityFields.Debenture].Should().Contain(TextTestData.TextThatNotExceedsLongInputLimit);
-        companyStructureSummary[SecurityFields.DirLoans].Should().Be(CommonResponse.Yes);
-        companyStructureSummary[SecurityFields.DirLoansSub].Should().Contain(CommonResponse.No).And.Contain(TextTestData.TextThatNotExceedsLongInputLimit);
+        companyStructureSummary[SecurityFields.ChargesDebt].Value.Should().Be(CommonResponse.Yes);
+        companyStructureSummary[SecurityFields.Debenture].Value.Should().Contain(TextTestData.TextThatNotExceedsLongInputLimit);
+        companyStructureSummary[SecurityFields.DirLoans].Value.Should().Be(CommonResponse.Yes);
+        companyStructureSummary[SecurityFields.DirLoansSub].Value.Should().Contain(CommonResponse.No).And.Contain(TextTestData.TextThatNotExceedsLongInputLimit);
 
         SetSharedData(SharedKeys.CurrentPageKey, checkYourAnswersPage);
     }

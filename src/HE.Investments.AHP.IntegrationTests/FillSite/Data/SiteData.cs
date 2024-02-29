@@ -86,22 +86,22 @@ public class SiteData
 
     public string EnvironmentalImpact { get; private set; }
 
-    public SiteUsingModernMethodsOfConstruction UsingMmc => SiteUsingModernMethodsOfConstruction.Yes;
+    public SiteUsingModernMethodsOfConstruction UsingMmc { get; private set; } = SiteUsingModernMethodsOfConstruction.Yes;
 
     public string InformationBarriers { get; private set; }
 
     public string InformationImpact { get; private set; }
 
-    public IReadOnlyCollection<ModernMethodsConstructionCategoriesType> MmcCategories => new[]
+    public IReadOnlyCollection<ModernMethodsConstructionCategoriesType> MmcCategories { get; private set; } = new[]
     {
         ModernMethodsConstructionCategoriesType.Category1PreManufacturing3DPrimaryStructuralSystems,
         ModernMethodsConstructionCategoriesType.Category2PreManufacturing2DPrimaryStructuralSystems,
         ModernMethodsConstructionCategoriesType.Category6TraditionalBuildingProductLedSiteLabourReductionOrProductivityImprovements,
     };
 
-    public ModernMethodsConstruction3DSubcategoriesType Mmc3DSubcategory => ModernMethodsConstruction3DSubcategoriesType.StructuralChassisOnly;
+    public ModernMethodsConstruction3DSubcategoriesType Mmc3DSubcategory { get; private set; } = ModernMethodsConstruction3DSubcategoriesType.StructuralChassisOnly;
 
-    public ModernMethodsConstruction2DSubcategoriesType Mmc2DSubcategory => ModernMethodsConstruction2DSubcategoriesType.FurtherEnhancedConsolidation;
+    public ModernMethodsConstruction2DSubcategoriesType Mmc2DSubcategory { get; private set; } = ModernMethodsConstruction2DSubcategoriesType.FurtherEnhancedConsolidation;
 
     public IReadOnlyCollection<SiteProcurement> Procurements => new[] { SiteProcurement.BulkPurchaseOfComponents, SiteProcurement.PartneringSupplyChain };
 
@@ -124,6 +124,17 @@ public class SiteData
     public string GenerateInformationBarriers() => InformationBarriers = nameof(InformationBarriers).WithTimestampPrefix();
 
     public string GenerateInformationImpact() => InformationImpact = nameof(InformationImpact).WithTimestampPrefix();
+
+    public SiteUsingModernMethodsOfConstruction ChangeMmcUsingAnswer()
+    {
+        UsingMmc = SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes;
+        InformationBarriers = string.Empty;
+        InformationImpact = string.Empty;
+        MmcCategories = new List<ModernMethodsConstructionCategoriesType>();
+        Mmc2DSubcategory = ModernMethodsConstruction2DSubcategoriesType.Undefined;
+        Mmc3DSubcategory = ModernMethodsConstruction3DSubcategoriesType.Undefined;
+        return UsingMmc;
+    }
 
     public void SetSiteId(string siteId)
     {
