@@ -14,27 +14,26 @@ ENV VSS_NUGET_EXTERNAL_FEED_ENDPOINTS \
 WORKDIR /src
 COPY ["Directory.Build.props", "."]
 COPY ["nuget.config", "."]
-COPY ["HE.Investment.AHP.WWW/HE.Investment.AHP.WWW.csproj", "HE.Investment.AHP.WWW/"]
-COPY ["HE.Investment.AHP.Contract/HE.Investment.AHP.Contract.csproj", "HE.Investment.AHP.Contract/"]
+COPY ["HE.Investments.FrontDoor.WWW/HE.Investments.FrontDoor.WWW.csproj", "HE.Investments.FrontDoor.WWW/"]
+COPY ["HE.Investments.FrontDoor.Contract/HE.Investments.FrontDoor.Contract", "HE.Investments.FrontDoor.Contract/"]
 COPY ["HE.Investments.Common.Contract/HE.Investments.Common.Contract.csproj", "HE.Investments.Common.Contract/"]
-COPY ["HE.Investment.AHP.Domain/HE.Investment.AHP.Domain.csproj", "HE.Investment.AHP.Domain/"]
+COPY ["HE.Investments.FrontDoor.Domain/HE.Investments.FrontDoor.Domain.csproj", "HE.Investments.FrontDoor.Domain/"]
 COPY ["HE.Investments.Account.Shared/HE.Investments.Account.Shared.csproj", "HE.Investments.Account.Shared/"]
 COPY ["HE.Investments.Account.Contract/HE.Investments.Account.Contract.csproj", "HE.Investments.Account.Contract/"]
 COPY ["HE.Investments.Common.CRM/HE.Investments.Common.CRM.csproj", "HE.Investments.Common.CRM/"]
 COPY ["HE.Investments.Common/HE.Investments.Common.csproj", "HE.Investments.Common/"]
 COPY ["HE.Investments.Organisation/HE.Investments.Organisation.csproj", "HE.Investments.Organisation/"]
-COPY ["HE.Investments.DocumentService/HE.Investments.DocumentService.csproj", "HE.Investments.DocumentService/"]
 COPY ["HE.Investments.Common.WWW/HE.Investments.Common.WWW.csproj", "HE.Investments.Common.WWW/"]
-RUN dotnet restore "./HE.Investment.AHP.WWW/./HE.Investment.AHP.WWW.csproj"
+RUN dotnet restore "./HE.Investments.FrontDoor.WWW/./HE.Investments.FrontDoor.WWW.csproj"
 
 COPY . .
-WORKDIR "/src/HE.Investment.AHP.WWW"
-RUN dotnet build "./HE.Investment.AHP.WWW.csproj" -c Release -o /app/build
+WORKDIR "/src/HE.Investments.FrontDoor.WWW"
+RUN dotnet build "./HE.Investments.FrontDoor.WWW.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "./HE.Investment.AHP.WWW.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./HE.Investments.FrontDoor.WWW.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "HE.Investment.AHP.WWW.dll"]
+ENTRYPOINT ["dotnet", "HE.Investments.FrontDoor.WWW.dll"]
