@@ -1,5 +1,6 @@
 @using HE.Investments.Common.WWW.Components.TextInput
 @using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investments.Account.WWW.Views.User
 @model HE.Investments.Account.WWW.Models.User.UserProfileDetailsModel;
 @{
     ViewData["Title"] = "Profile details";
@@ -15,9 +16,10 @@
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
     <vc:page-header
-        title="Complete your details"
-        hint="Register as an individual, we will ask you for your organisation details later."
+        title="@UserPageTitles.ProfileDetails"
         additional-css-class="@marginClass"/>
+
+    <gds-p>Enter your personal details, you will be asked to add your organisation details later.</gds-p>
 
     <form asp-controller="User" asp-action="SaveProfileDetails" asp-method="post" novalidate>
             @Html.HiddenFor(x => x.CallbackUrl)
