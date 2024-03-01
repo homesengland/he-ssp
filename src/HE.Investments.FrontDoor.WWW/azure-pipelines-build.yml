@@ -1,0 +1,54 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+  batch: true
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - src/HE.InvestmentLoans.sln
+      - src/HE.Investments.FrontDoor.*/*
+      - src/HE.Investments.Account.Shared/*
+      - src/HE.Investments.Account.Api.Contract/*
+      - src/HE.Investments.Common*/*
+      - src/HE.Common.*/*
+      - src/HE.Investments.IntegrationTestsFramework/*
+      - src/HE.Investments.Organisation/*
+      - src/HE.Investments.TestsUtils/*
+
+pr:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - src/HE.InvestmentLoans.sln
+      - src/HE.Investments.FrontDoor.*/*
+      - src/HE.Investments.Account.Shared/*
+      - src/HE.Investments.Account.Api.Contract/*
+      - src/HE.Investments.Common*/*
+      - src/HE.Common.*/*
+      - src/HE.Investments.IntegrationTestsFramework/*
+      - src/HE.Investments.Organisation/*
+      - src/HE.Investments.TestsUtils/*
+
+pool:
+  vmImage: 'ubuntu-22.04'
+
+resources:
+  repositories:
+  - repository: he-invst-deployment
+    type: git
+    name: 'Investments Programme/he-invst-deployment'
+    ref: 'main'
+  - repository: templates
+    type: git
+    name: 'Cloud Hosting Service/Templates'
+    ref: 'master'
+
+stages:
+- template: azure-pipelines-frontdoor-portal-build.yml@he-invst-deployment
