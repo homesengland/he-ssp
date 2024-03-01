@@ -36,6 +36,9 @@ public class IsValidTests
     [InlineData("+444 (0)20 7450 4000")]
     [InlineData("123 123 123 123")]
     [InlineData("+44 (0)20 7450 4002df")]
+    [InlineData("+44 (0)20 7450 abcd")]
+    [InlineData("+44")]
+    [InlineData("dd+44 (0)20 7450 400")]
     public void ShouldReturnError_WhenValueIsInvalid(string? telephoneNumber)
     {
         // given
