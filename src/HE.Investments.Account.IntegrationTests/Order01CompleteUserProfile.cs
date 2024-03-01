@@ -55,7 +55,7 @@ public class Order01CompleteUserProfile : AccountIntegrationTest
             "Enter your job title",
             "Enter your last name",
             "Enter your first name",
-            "Enter your preferred telephone number");
+            "Enter preferred telephone number");
     }
 
     [SkippableFact(typeof(SkipException), Skip = AccountConfig.SkipTest)]

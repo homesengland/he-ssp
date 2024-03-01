@@ -19,7 +19,7 @@ public class FreshProfileData
         FirstName = "John";
         LastName = "Smith";
         JobTitle = "Software Developer";
-        TelephoneNumber = "123 456 789";
+        TelephoneNumber = "+44 (0)20 7450 4000";
         return this;
     }
 

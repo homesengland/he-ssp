@@ -1,12 +1,12 @@
-using System.Collections.Generic;
 using DataverseModel;
 using HE.Base.Repositories;
+using HE.Common.IntegrationModel.PortalIntegrationModel;
 
 namespace HE.CRM.Common.Repositories.Interfaces
 {
     public interface IAhgLocalAuthorityRepository : ICrmEntityRepository<invln_AHGLocalAuthorities, DataverseContext>
     {
-        List<invln_AHGLocalAuthorities> GetAll();
+        PagedResponseDto<invln_AHGLocalAuthorities> Get(PagingRequestDto pagingRequestDto, string searchPhrase, string fieldsToRetrieve);
         invln_AHGLocalAuthorities GetLocalAuthorityWithGivenCode(string code);
     }
 }

@@ -29,6 +29,7 @@ invln_getfilelocationforapplicationloan|
 invln_getloanapplicationsforaccountandcontact|
 invln_getmultipleahpapplications|
 invln_getmultipledeliveryphase|
+invln_getmultiplelocalauthorities|
 invln_getmultipleprogramme|
 invln_getmultiplesites|
 invln_getorganisationchangedetails|

@@ -67,7 +67,7 @@ public class AccountCrmRepository : IAccountRepository
             contactDto.jobTitle.IsProvided() ? new JobTitle(contactDto.jobTitle) : null,
             contactDto.email,
             contactDto.phoneNumber.IsProvided() ? new TelephoneNumber(contactDto.phoneNumber) : null,
-            contactDto.secondaryPhoneNumber.IsProvided() ? new SecondaryTelephoneNumber(contactDto.secondaryPhoneNumber) : null,
+            contactDto.secondaryPhoneNumber.IsProvided() ? new TelephoneNumber(contactDto.secondaryPhoneNumber) : null,
             contactDto.isTermsAndConditionsAccepted);
     }
 

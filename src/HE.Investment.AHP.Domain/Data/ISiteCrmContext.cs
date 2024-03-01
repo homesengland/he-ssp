@@ -1,10 +1,11 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.Investments.Common.Contract.Pagination;
 
 namespace HE.Investment.AHP.Domain.Data;
 
 public interface ISiteCrmContext
 {
-    Task<IList<SiteDto>> GetAll(CancellationToken cancellationToken);
+    Task<PagedResponseDto<SiteDto>> Get(PagingRequestDto pagination, CancellationToken cancellationToken);
 
     Task<SiteDto?> GetById(string id, CancellationToken cancellationToken);
 
