@@ -71,6 +71,8 @@ namespace HE.Investments.Common.CRM.Model
 			public const string invln_developercontributionsforah = "invln_developercontributionsforah";
 			public const string invln_developercontributionsforahName = "invln_developercontributionsforahname";
 			public const string invln_expectedplanningapproval = "invln_expectedplanningapproval";
+			public const string invln_externalsitestatus = "invln_externalsitestatus";
+			public const string invln_externalsitestatusName = "invln_externalsitestatusname";
 			public const string invln_furtherstepsrequired = "invln_furtherstepsrequired";
 			public const string invln_grantfundingforallhomes = "invln_grantfundingforallhomes";
 			public const string invln_grantfundingforallhomesName = "invln_grantfundingforallhomesname";
@@ -579,6 +581,40 @@ namespace HE.Investments.Common.CRM.Model
 				this.OnPropertyChanging("invln_expectedplanningapproval");
 				this.SetAttributeValue("invln_expectedplanningapproval", value);
 				this.OnPropertyChanged("invln_expectedplanningapproval");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_externalsitestatus")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_externalsitestatus
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_externalsitestatus");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_externalsitestatus");
+				this.SetAttributeValue("invln_externalsitestatus", value);
+				this.OnPropertyChanged("invln_externalsitestatus");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_externalsitestatusname")]
+		public string invln_externalsitestatusName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_externalsitestatus"))
+				{
+					return this.FormattedValues["invln_externalsitestatus"];
+				}
+				else
+				{
+					return default(string);
+				}
 			}
 		}
 		

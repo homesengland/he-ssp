@@ -16,6 +16,7 @@ namespace HE.CRM.Common.DtoMapping
             {
                 id = entity.invln_SitesId?.ToString(),
                 name = entity.invln_sitename,
+                status = entity.invln_externalsitestatus?.Value,
                 section106 = new Section106Dto
                 {
                     isAgreement106 = entity.invln_s106agreementinplace,
@@ -101,7 +102,7 @@ namespace HE.CRM.Common.DtoMapping
             }
 
             SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_sitename), dto.name);
-            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.StateCode), dto.name);
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_externalsitestatus), TryCreateOptionSetValue(dto.status));
 
             SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_s106agreementinplace), dto.section106.isAgreement106);
             SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_developercontributionsforah), dto.section106.areContributionsForAffordableHomes);
