@@ -44,7 +44,7 @@ public class TelephoneNumberValidator
         {
             _operationResult.AddValidationError(
                 _fieldName,
-                errorMessage ?? ValidationErrorMessage.StringLengthExceeded(_fieldLabel, MaximumInputLength.ShortInput));
+                errorMessage ?? ValidationErrorMessage.StringLengthExceededUncommon(_fieldLabel, MaximumInputLength.ShortInput));
             return this;
         }
 

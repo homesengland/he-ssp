@@ -1,3 +1,5 @@
+using HE.Investments.Common.Extensions;
+
 namespace HE.Investments.Common.Messages;
 
 public static class ValidationErrorMessage
@@ -113,6 +115,8 @@ public static class ValidationErrorMessage
     public static string MustBeSelectedForCalculation(string displayName) => $"Select if {displayName} to calculate";
 
     public static string StringLengthExceeded(string displayName, int maxLength) => new($"The {displayName} must be {maxLength} characters or less");
+
+    public static string StringLengthExceededUncommon(string displayName, int maxLength) => new($"{displayName.TitleCaseFirstLetterInString()} must be {maxLength} characters or less");
 
     public static string ExclusiveOptionSelected(string displayName, string optionName) => $"The {optionName} {displayName} option is exclusive and cannot be selected with any other option.";
 

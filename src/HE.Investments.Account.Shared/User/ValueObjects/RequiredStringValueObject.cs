@@ -19,7 +19,7 @@ public abstract class RequiredStringValueObject : ValueObject
         if (value!.Length > maxLength)
         {
             OperationResult.New()
-                .AddValidationError(fieldName, ValidationErrorMessage.StringLengthExceeded(displayName, maxLength))
+                .AddValidationError(fieldName, ValidationErrorMessage.StringLengthExceededUncommon(displayName, maxLength))
                 .CheckErrors();
         }
 

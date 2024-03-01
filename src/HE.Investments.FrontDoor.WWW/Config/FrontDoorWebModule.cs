@@ -1,9 +1,9 @@
-using HE.Investments.Assessment.Domain.Config;
 using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.Common.Models.App;
 using HE.Investments.Common.WWW.Infrastructure.Authorization;
 using HE.Investments.Common.WWW.Infrastructure.ErrorHandling;
 using HE.Investments.Common.WWW.Infrastructure.Middlewares;
+using HE.Investments.FrontDoor.Domain.Config;
 using HE.Investments.FrontDoor.WWW.Routing;
 using HE.Investments.Organisation.Config;
 
@@ -25,6 +25,7 @@ public static class FrontDoorWebModule
 
     private static void AddConfiguration(IServiceCollection services, IConfiguration configuration)
     {
+        services.AddSingleton<IExternalLinks, ExternalLinks>();
         services.AddSingleton<IErrorViewPaths, FrontDoorErrorViewPaths>();
         services.AddSingleton<IFrontDoorAppConfig, FrontDoorAppConfig>(x => x.GetRequiredService<IConfiguration>().GetSection("AppConfiguration").Get<FrontDoorAppConfig>());
         services.Configure<ContactInfoOptions>(configuration.GetSection("AppConfiguration:ContactInfo"));
