@@ -19,7 +19,7 @@ public class HomesTypes : ValueObject
                 .CheckErrors();
         }
 
-        if (otherHomesTypes.IsProvided() && otherHomesTypes.Length >= MaximumInputLength.ShortInput)
+        if (otherHomesTypes.IsProvided() && otherHomesTypes.Length > MaximumInputLength.ShortInput)
         {
             OperationResult
                 .New()

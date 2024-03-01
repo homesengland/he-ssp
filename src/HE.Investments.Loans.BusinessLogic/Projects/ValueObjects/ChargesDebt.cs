@@ -19,7 +19,7 @@ public class ChargesDebt : ValueObject
                 .CheckErrors();
         }
 
-        if (info.IsProvided() && info?.Length >= MaximumInputLength.LongInput)
+        if (info.IsProvided() && info?.Length > MaximumInputLength.LongInput)
         {
             OperationResult
                 .New()
