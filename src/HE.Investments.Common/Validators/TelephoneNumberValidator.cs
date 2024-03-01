@@ -70,11 +70,13 @@ public class TelephoneNumberValidator
         if (!phoneNumberUtil.IsPossibleNumber(phoneNumber))
         {
             _operationResult.AddValidationError(_fieldName, errorMessage ?? ValidationErrorMessage.EnterUkTelephoneNumber);
+            return;
         }
 
         if (!phoneNumberUtil.IsValidNumberForRegion(phoneNumber, ukRegionCode))
         {
             _operationResult.AddValidationError(_fieldName, errorMessage ?? ValidationErrorMessage.EnterTelephoneNumberInValidFormat);
+            return;
         }
 
         if (phoneNumber.NationalNumber.ToString(CultureInfo.InvariantCulture) != TelephoneNumberRecognizer.StripToNationalFormat(_telephoneNumber!))
