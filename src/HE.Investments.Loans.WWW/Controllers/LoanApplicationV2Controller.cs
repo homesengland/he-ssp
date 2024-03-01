@@ -248,6 +248,13 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
         return View("ApplicationDashboard", new ApplicationDashboardModel { LoanApplicationId = LoanApplicationId.From(id), Data = response, IsOverviewSectionSelected = false });
     }
 
+    [HttpGet("{id}/hold")]
+    [WorkflowState(LoanApplicationWorkflow.State.Hold)]
+    public IActionResult Hold(Guid id)
+    {
+        return View("Hold", new ApplicationHoldModel { LoanApplicationId = LoanApplicationId.From(id) });
+    }
+
     [HttpGet("{id}/withdraw")]
     [WorkflowState(LoanApplicationWorkflow.State.Withdraw)]
     public IActionResult Withdraw(Guid id)
