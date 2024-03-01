@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HE.DocumentService.SharePoint.Configurartion;
+using HE.DocumentService.SharePoint.Configuration;
 using HE.DocumentService.SharePoint.Interfaces;
 using Microsoft.SharePoint.Client;
 using PnP.Framework;
@@ -16,12 +11,17 @@ public class SharePointContext : ISharePointContext, IDisposable
 
     public SharePointContext(ISharePointConfiguration spConfig)
     {
-        _context = new Lazy<ClientContext>(() =>
-            new AuthenticationManager().GetACSAppOnlyContext(spConfig.SiteUrl, spConfig.ClientId, spConfig.ClientSecret)
-        );
+        _context = new Lazy<ClientContext>(
+            () => new AuthenticationManager().GetACSAppOnlyContext(spConfig.SiteUrl, spConfig.ClientId, spConfig.ClientSecret));
     }
 
     public ClientContext Context => _context.Value;
+
+    public void Dispose()
+    {
+        Dispose(disposing: true);
+        GC.SuppressFinalize(this);
+    }
 
     protected virtual void Dispose(bool disposing)
     {
@@ -29,11 +29,5 @@ public class SharePointContext : ISharePointContext, IDisposable
         {
             _context.Value.Dispose();
         }
-    }
-
-    public void Dispose()
-    {
-        Dispose(disposing: true);
-        GC.SuppressFinalize(this);
     }
 }

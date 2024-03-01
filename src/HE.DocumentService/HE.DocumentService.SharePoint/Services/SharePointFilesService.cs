@@ -1,5 +1,5 @@
 using AutoMapper;
-using HE.DocumentService.SharePoint.Configurartion;
+using HE.DocumentService.SharePoint.Configuration;
 using HE.DocumentService.SharePoint.Constants;
 using HE.DocumentService.SharePoint.Exceptions;
 using HE.DocumentService.SharePoint.Extensions;
@@ -10,16 +10,25 @@ using Microsoft.SharePoint.Client;
 
 namespace HE.DocumentService.SharePoint.Services;
 
-public class SharePointFilesService : BaseService, ISharePointFilesService
+public class SharePointFilesService : ISharePointFilesService
 {
+    private readonly ClientContext _spContext;
+
+    private readonly ISharePointConfiguration _spConfig;
+
+    private readonly IMapper _mapper;
+
     private readonly ISharePointFolderService _sharePointFolderService;
 
-    public SharePointFilesService(ISharePointContext spContext,
+    public SharePointFilesService(
+        ISharePointContext spContext,
         ISharePointConfiguration spConfig,
         IMapper mapper,
         ISharePointFolderService sharePointFolderService)
-        : base(spContext, spConfig, mapper)
     {
+        _spContext = spContext.Context;
+        _spConfig = spConfig;
+        _mapper = mapper;
         _sharePointFolderService = sharePointFolderService;
     }
 
@@ -27,8 +36,7 @@ public class SharePointFilesService : BaseService, ISharePointFilesService
     {
         var take = 20;
         var documentsList = _spContext.Web.Lists.GetByTitle(filter.ListTitle);
-        var camlQuery = new CamlQuery();
-        camlQuery = new CamlQuery()
+        var camlQuery = new CamlQuery()
         {
             ViewXml = $@"<View Scope='RecursiveAll'>
                         <Query>
@@ -54,11 +62,13 @@ public class SharePointFilesService : BaseService, ISharePointFilesService
                             <OrderBy><FieldRef Name='Modified' Ascending='false'/></OrderBy>
                         </Query>
                         <RowLimit>{take}</RowLimit>
-                    </View>"
+                    </View>",
         };
-        camlQuery.SetPostion(filter.PagingInfo);
+        camlQuery.SetPosition(filter.PagingInfo);
         var listItems = documentsList.GetItems(camlQuery);
-        _spContext.Load(listItems, items => items.Include(
+        _spContext.Load(
+            listItems,
+            items => items.Include(
                 item => item["ID"],
                 item => item["FileRef"],
                 item => item["FileLeafRef"],
@@ -67,14 +77,14 @@ public class SharePointFilesService : BaseService, ISharePointFilesService
                 item => item["File_x0020_Size"],
                 item => item["_ModerationComments"],
                 item => item["Editor"]),
-                items => items.ListItemCollectionPosition);
-        await _spContext.ExecuteQueryRetryAsync(RETRY_COUNT);
+            items => items.ListItemCollectionPosition);
+        await _spContext.ExecuteQueryRetryAsync(_spConfig.RetryCount);
 
         using var data = listItems.MapDataTable();
         var rows = _mapper.Map<List<FileTableRow>>(data.Rows);
 
         var chunkToRemove = $"{new Uri(_spConfig.SiteUrl).AbsolutePath}/{filter.ListAlias}/";
-        rows.ForEach(row => row.FolderPath = row.FolderPath.Replace(chunkToRemove, ""));
+        rows.ForEach(row => row.FolderPath = row.FolderPath.Replace(chunkToRemove, string.Empty));
 
         return new TableResult<FileTableRow>(rows, pagingInfo: listItems.ListItemCollectionPosition?.PagingInfo);
     }
@@ -84,7 +94,7 @@ public class SharePointFilesService : BaseService, ISharePointFilesService
         var folder = _spContext.Web.GetFolderByServerRelativeUrl(GetFolderPath(listAlias, folderPath));
         var file = await folder.GetFileAsync(fileName);
         var fileInfo = file.OpenBinaryStream();
-        await _spContext.ExecuteQueryRetryAsync(RETRY_COUNT);
+        await _spContext.ExecuteQueryRetryAsync(_spConfig.RetryCount);
 
         return fileInfo.Value;
     }
@@ -92,14 +102,14 @@ public class SharePointFilesService : BaseService, ISharePointFilesService
     public async Task RemoveFile(string listAlias, string folderPath, string fileName)
     {
         var folder = _spContext.Web.GetFolderByServerRelativeUrl(GetFolderPath(listAlias, folderPath));
-        var file = folder.GetFile(fileName);
+        var file = await folder.GetFileAsync(fileName);
         file.DeleteObject();
-        await _spContext.ExecuteQueryRetryAsync(RETRY_COUNT);
+        await _spContext.ExecuteQueryRetryAsync(_spConfig.RetryCount);
     }
 
     public async Task UploadFile(FileUploadModel item)
     {
-        using var fileContent = item.File.OpenReadStream();
+        await using var fileContent = item.File.OpenReadStream();
 
         if (fileContent.Length == 0)
         {
@@ -119,14 +129,14 @@ public class SharePointFilesService : BaseService, ISharePointFilesService
             {
                 ContentStream = fileContent,
                 Url = item.File.FileName,
-                Overwrite = item.Overwrite ?? false
+                Overwrite = item.Overwrite ?? false,
             });
 
             var fileFields = file.ListItemAllFields;
 
             fileFields["_ModerationComments"] = item.Metadata;
             fileFields.Update();
-            await _spContext.ExecuteQueryRetryAsync(RETRY_COUNT);
+            await _spContext.ExecuteQueryRetryAsync(_spConfig.RetryCount);
         }
         catch (ServerException ex)
         {
@@ -149,7 +159,7 @@ public class SharePointFilesService : BaseService, ISharePointFilesService
 
     private string GetCamlQueryForFolderPaths(string listAlias, List<string> folderPaths)
     {
-        var result = string.Join("", folderPaths.Select(folderPath => $@"
+        var result = string.Join(string.Empty, folderPaths.Select(folderPath => $@"
                                         <Eq>
                                             <FieldRef Name='FileDirRef'/>
                                             <Value Type='Text'>{GetFolderPath(listAlias, folderPath)}</Value>

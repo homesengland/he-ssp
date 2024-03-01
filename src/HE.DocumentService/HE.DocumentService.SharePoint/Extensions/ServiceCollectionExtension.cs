@@ -1,8 +1,6 @@
-using HE.DocumentService.SharePoint.Configurartion;
 using HE.DocumentService.SharePoint.Interfaces;
 using HE.DocumentService.SharePoint.Services;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 
 namespace HE.DocumentService.SharePoint.Extensions;
 

@@ -1,16 +1,12 @@
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Globalization;
 using Microsoft.SharePoint.Client;
 
 namespace HE.DocumentService.SharePoint.Extensions;
 
 public static class ListItemCollectionExtension
 {
-    public static DataTable MapDataTable(this ListItemCollection items)
+    public static DataTable MapDataTable(this ListItemCollection? items)
     {
         var dtGetReqForm = new DataTable();
         if (items != null && items.Count > 0)
@@ -48,16 +44,13 @@ public static class ListItemCollectionExtension
                         }
                         else if (type == "System.DateTime")
                         {
-#pragma warning disable CS8602
-#pragma warning disable S6580 // Dereference of a possibly null reference.
                             var val = obj.Value.ToString();
-                            if (val.Length > 0 && DateTime.TryParse(val, out var r))
+                            if (val is { Length: > 0 } && DateTime.TryParse(val, CultureInfo.InvariantCulture, DateTimeStyles.None, out var r))
                             {
                                 dr[obj.Key] = r;
                             }
+
                             dr[obj.Key] = obj.Value;
-#pragma warning restore CS8602
-#pragma warning restore S6580 // Dereference of a possibly null reference.
                         }
                         else
                         {
@@ -69,6 +62,7 @@ public static class ListItemCollectionExtension
                         dr[obj.Key] = null;
                     }
                 }
+
                 dtGetReqForm.Rows.Add(dr);
             }
         }
