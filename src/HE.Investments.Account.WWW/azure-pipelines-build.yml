@@ -7,20 +7,30 @@ trigger:
   batch: true
   branches:
     include:
-    - main
+      - main
   paths:
-    exclude:
-    - src/HE.DocumentService/*
-    - src/HE.Investment.AHP*
+    include:
+      - src/HE.InvestmentLoans.sln
+      - src/HE.Investments.Account.*/*
+      - src/HE.Investments.Common*/*
+      - src/HE.Common.*/*
+      - src/HE.Investments.IntegrationTestsFramework/*
+      - src/HE.Investments.Organisation/*
+      - src/HE.Investments.TestsUtils/*
 
 pr:
   branches:
     include:
-    - main
+      - main
   paths:
-    exclude:
-    - src/HE.DocumentService/*
-    - src/HE.Investment.AHP*
+    include:
+      - src/HE.InvestmentLoans.sln
+      - src/HE.Investments.Account.*/*
+      - src/HE.Investments.Common*/*
+      - src/HE.Common.*/*
+      - src/HE.Investments.IntegrationTestsFramework/*
+      - src/HE.Investments.Organisation/*
+      - src/HE.Investments.TestsUtils/*
 
 pool:
   vmImage: 'ubuntu-22.04'
