@@ -1,9 +1,9 @@
-using HE.Investments.Assessment.Domain.Config;
 using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.Common.Models.App;
 using HE.Investments.Common.WWW.Infrastructure.Authorization;
 using HE.Investments.Common.WWW.Infrastructure.ErrorHandling;
 using HE.Investments.Common.WWW.Infrastructure.Middlewares;
+using HE.Investments.FrontDoor.Domain.Config;
 using HE.Investments.FrontDoor.WWW.Routing;
 using HE.Investments.Organisation.Config;
 
