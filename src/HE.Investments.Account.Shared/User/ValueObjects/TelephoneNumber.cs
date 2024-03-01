@@ -12,15 +12,15 @@ public class TelephoneNumber : ValueObject
         Value = value;
     }
 
-    private TelephoneNumber(string? telephoneNumber, string fieldName, string fieldLabel, bool isOptional)
+    private TelephoneNumber(string? telephoneNumber, string fieldName, string fieldLabel)
     {
-        Build(telephoneNumber, fieldName, fieldLabel, isOptional).CheckErrors();
+        Build(telephoneNumber, fieldName, fieldLabel).CheckErrors();
     }
 
     public string Value { get; private set; }
 
-    public static TelephoneNumber FromString(string? telephoneNumber, string fieldName, string fieldLabel, bool isOptional = false) =>
-        new(telephoneNumber, fieldName, fieldLabel, isOptional);
+    public static TelephoneNumber FromString(string? telephoneNumber, string fieldName, string fieldLabel) =>
+        new(telephoneNumber, fieldName, fieldLabel);
 
     public override string ToString()
     {
@@ -32,12 +32,12 @@ public class TelephoneNumber : ValueObject
         yield return Value;
     }
 
-    private OperationResult Build(string? telephoneNumber, string fieldName, string fieldLabel, bool isOptional)
+    private OperationResult Build(string? telephoneNumber, string fieldName, string fieldLabel)
     {
         var operationResult = OperationResult.New();
 
         var value = TelephoneNumberValidator
-            .For(telephoneNumber, fieldName, fieldLabel, isOptional, operationResult)
+            .For(telephoneNumber, fieldName, fieldLabel, operationResult)
             .IsValid();
 
         if (value.IsProvided())

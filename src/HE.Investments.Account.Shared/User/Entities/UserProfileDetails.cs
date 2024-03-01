@@ -52,7 +52,7 @@ public class UserProfileDetails
             .WithValidation(() => JobTitle = new JobTitle(jobTitle))
             .WithValidation(() => TelephoneNumber = TelephoneNumber.FromString(telephoneNumber, nameof(TelephoneNumber), "preferred telephone number"))
             .WithValidation(() => SecondaryTelephoneNumber = secondaryTelephoneNumber.IsProvided()
-                ? TelephoneNumber.FromString(secondaryTelephoneNumber, nameof(SecondaryTelephoneNumber), "secondary telephone number", true)
+                ? TelephoneNumber.FromString(secondaryTelephoneNumber, nameof(SecondaryTelephoneNumber), "secondary telephone number")
                 : null)
             .CheckErrors();
 
