@@ -2,7 +2,7 @@ using HE.Investments.Account.Shared.Config;
 using HE.Investments.Common.Utils;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace HE.Investments.Assessment.Domain.Config;
+namespace HE.Investments.FrontDoor.Domain.Config;
 
 public static class DomainModule
 {

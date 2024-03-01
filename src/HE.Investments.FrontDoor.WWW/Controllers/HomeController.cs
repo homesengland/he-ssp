@@ -8,9 +8,9 @@ public class HomeController : Controller
 {
     [Route("/")]
     [AuthorizeWithCompletedProfile]
-    public string Index()
+    public IActionResult Index()
     {
-        return "Hello world";
+        return View();
     }
 
     [HttpGet("error")]

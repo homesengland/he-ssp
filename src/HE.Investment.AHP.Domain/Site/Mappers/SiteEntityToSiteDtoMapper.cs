@@ -27,6 +27,7 @@ public static class SiteEntityToSiteDtoMapper
     private static readonly ModernMethodsConstruction2DSubcategoriesTypeMapper ModernMethodsConstruction2DSubcategoriesTypeMapper = new();
     private static readonly ModernMethodsConstruction3DSubcategoriesTypeMapper ModernMethodsConstruction3DSubcategoriesTypeMapper = new();
     private static readonly SiteProcurementMapper SiteProcurementMapper = new();
+    private static readonly SiteStatusMapper SiteStatusMapper = new();
 
     public static SiteDto Map(SiteEntity entity)
     {
@@ -34,6 +35,7 @@ public static class SiteEntityToSiteDtoMapper
         {
             id = string.IsNullOrWhiteSpace(entity.Id.Value) ? null : entity.Id.Value,
             name = entity.Name.Value,
+            status = SiteStatusMapper.ToDto(entity.Status),
             section106 = CreateSection106(entity.Section106),
             localAuthority = new SiteLocalAuthority { id = entity.LocalAuthority?.Id.Value },
             planningDetails = CreatePlanningDetails(entity.PlanningDetails),
