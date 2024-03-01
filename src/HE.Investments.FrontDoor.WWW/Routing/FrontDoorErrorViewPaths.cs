@@ -2,7 +2,7 @@ using HE.Investments.Common.WWW.Infrastructure.ErrorHandling;
 
 namespace HE.Investments.FrontDoor.WWW.Routing;
 
-public class AssessmentErrorViewPaths : IErrorViewPaths
+public class FrontDoorErrorViewPaths : IErrorViewPaths
 {
     public string PageNotFoundViewPath => "/Views/Home/PageNotFound.cshtml";
 
