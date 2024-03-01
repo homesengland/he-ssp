@@ -1,5 +1,4 @@
-extern alias Org;
-
+using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Data;
@@ -9,7 +8,6 @@ using HE.Investment.AHP.Domain.Site.ValueObjects;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Pagination;
-using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.Domain.Site.Repositories;
 
@@ -29,13 +27,14 @@ public class SiteRepository : ISiteRepository
 
     public async Task<PaginationResult<SiteEntity>> GetSites(UserAccount userAccount, PaginationRequest paginationRequest, CancellationToken cancellationToken)
     {
-        var sites = await _siteCrmContext.GetAll(cancellationToken);
+        var paging = new PagingRequestDto { pageNumber = paginationRequest.Page, pageSize = paginationRequest.ItemsPerPage };
+        var result = await _siteCrmContext.Get(paging, cancellationToken);
 
         return new PaginationResult<SiteEntity>(
-            sites.TakePage(paginationRequest).Select(SiteDtoToSiteEntityMapper.Map).ToList(),
+            result.items.Select(SiteDtoToSiteEntityMapper.Map).ToList(),
             paginationRequest.Page,
             paginationRequest.ItemsPerPage,
-            sites.Count);
+            result.totalItemsCount);
     }
 
     public async Task<SiteBasicInfo> GetSiteBasicInfo(SiteId siteId, UserAccount userAccount, CancellationToken cancellationToken)

@@ -13,17 +13,18 @@ namespace HE.Investments.Common.CRM.Model
 	
 	
 	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
-	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_getmultiplesites")]
-	public partial class invln_getmultiplesitesRequest : Microsoft.Xrm.Sdk.OrganizationRequest
+	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_getmultiplelocalauthorities")]
+	public partial class invln_getmultiplelocalauthoritiesRequest : Microsoft.Xrm.Sdk.OrganizationRequest
 	{
 		
 		public static class Fields
 		{
 			public const string invln_pagingrequest = "invln_pagingrequest";
 			public const string invln_fieldstoretrieve = "invln_fieldstoretrieve";
+			public const string invln_searchphrase = "invln_searchphrase";
 		}
 		
-		public const string ActionLogicalName = "invln_getmultiplesites";
+		public const string ActionLogicalName = "invln_getmultiplelocalauthorities";
 		
 		public string invln_pagingrequest
 		{
@@ -63,51 +64,56 @@ namespace HE.Investments.Common.CRM.Model
 			}
 		}
 		
-		public invln_getmultiplesitesRequest()
-		{
-			this.RequestName = "invln_getmultiplesites";
-		}
-	}
-	
-	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
-	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_getmultiplesites")]
-	public partial class invln_getmultiplesitesResponse : Microsoft.Xrm.Sdk.OrganizationResponse
-	{
-		
-		public static class Fields
-		{
-			public const string invln_pagedsites = "invln_pagedsites";
-			public const string invln_sites = "invln_sites";
-		}
-		
-		public const string ActionLogicalName = "invln_getmultiplesites";
-		
-		public invln_getmultiplesitesResponse()
-		{
-		}
-		
-		public string invln_pagedsites
+		public string invln_searchphrase
 		{
 			get
 			{
-				if (this.Results.Contains("invln_pagedsites"))
+				if (this.Parameters.Contains("invln_searchphrase"))
 				{
-					return ((string)(this.Results["invln_pagedsites"]));
+					return ((string)(this.Parameters["invln_searchphrase"]));
 				}
 				else
 				{
 					return default(string);
 				}
 			}
+			set
+			{
+				this.Parameters["invln_searchphrase"] = value;
+			}
 		}
 		
-		public string invln_sites
+		public invln_getmultiplelocalauthoritiesRequest()
+		{
+			this.RequestName = "invln_getmultiplelocalauthorities";
+			this.invln_pagingrequest = default(string);
+			this.invln_fieldstoretrieve = default(string);
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_getmultiplelocalauthorities")]
+	public partial class invln_getmultiplelocalauthoritiesResponse : Microsoft.Xrm.Sdk.OrganizationResponse
+	{
+		
+		public static class Fields
+		{
+			public const string invln_localauthorities = "invln_localauthorities";
+		}
+		
+		public const string ActionLogicalName = "invln_getmultiplelocalauthorities";
+		
+		public invln_getmultiplelocalauthoritiesResponse()
+		{
+		}
+		
+		public string invln_localauthorities
 		{
 			get
 			{
-				if (this.Results.Contains("invln_sites"))
+				if (this.Results.Contains("invln_localauthorities"))
 				{
-					return ((string)(this.Results["invln_sites"]));
+					return ((string)(this.Results["invln_localauthorities"]));
 				}
 				else
 				{

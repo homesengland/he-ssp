@@ -1,7 +1,13 @@
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
+using System.Xml;
 using DataverseModel;
 using HE.Base.Repositories;
+using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.CRM.Common.Helpers;
 using HE.CRM.Common.Repositories.Interfaces;
 using Microsoft.Xrm.Sdk.Client;
 using Microsoft.Xrm.Sdk.Query;
@@ -16,7 +22,8 @@ namespace HE.CRM.Common.Repositories.Implementations
 
         public invln_Sites GetById(string id, string fieldsToRetrieve)
         {
-            return Get(fieldsToRetrieve, id).FirstOrDefault();
+            var result = Get(fieldsToRetrieve, new PagingRequestDto { pageNumber = 1, pageSize = 1 }, id);
+            return result.items.FirstOrDefault();
         }
 
         public bool Exist(string name)
@@ -30,37 +37,36 @@ namespace HE.CRM.Common.Repositories.Implementations
             }
         }
 
-        public List<invln_Sites> GetAll(string fieldsToRetrieve)
+        public PagedResponseDto<invln_Sites> Get(PagingRequestDto paging, string fieldsToRetrieve)
         {
-            return Get(fieldsToRetrieve);
+            return Get(fieldsToRetrieve, paging);
         }
 
-        private List<invln_Sites> Get(string fieldsToRetrieve, string id = null)
+        private PagedResponseDto<invln_Sites> Get(string fieldsToRetrieve, PagingRequestDto paging, string id = null)
         {
-            var fields = GenerateAttributes(fieldsToRetrieve);
             var filter = GenerateIdFilter(id);
 
             var fetchXml =
-                $@"<fetch>
+                $@"<fetch page=""{paging.pageNumber}"" count=""{paging.pageSize}"" returntotalrecordcount=""true"">
 	                <entity name=""invln_sites"">
-                        {fields}
+                        {FetchXmlHelper.GenerateAttributes(fieldsToRetrieve)}
                         <order attribute=""createdon"" descending=""true"" />
                         {filter}
                         <link-entity name=""invln_ahglocalauthorities"" to=""invln_localauthority"" from=""invln_ahglocalauthoritiesid""  link-type=""outer"">
                             <attribute name=""invln_gsscode"" />
+                            <attribute name=""invln_localauthorityname"" />
                         </link-entity>
 	                </entity>
                 </fetch>";
 
             var result = service.RetrieveMultiple(new FetchExpression(fetchXml));
-            return result.Entities.Select(x => x.ToEntity<invln_Sites>()).AsEnumerable().ToList();
-        }
 
-        private static string GenerateAttributes(string fieldsToRetrieve)
-        {
-            var items = fieldsToRetrieve.Split(',');
-            var fields = string.Join(string.Empty, items.Select(f => $"<attribute name=\"{f}\" />"));
-            return fields;
+            return new PagedResponseDto<invln_Sites>
+            {
+                paging = paging,
+                items = result.Entities.Select(x => x.ToEntity<invln_Sites>()).AsEnumerable().ToList(),
+                totalItemsCount = result.TotalRecordCount,
+            };
         }
 
         private static string GenerateIdFilter(string id)

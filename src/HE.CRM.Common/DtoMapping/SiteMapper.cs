@@ -27,8 +27,8 @@ namespace HE.CRM.Common.DtoMapping
                 },
                 localAuthority = new SiteLocalAuthority
                 {
-                   id = entity.invln_LocalAuthority?.Id.ToString(),
-                   name = entity.GetAttributeValue<AliasedValue>("invln_ahglocalauthorities1.invln_gsscode")?.Value.ToString(),
+                   id = entity.GetAttributeValue<AliasedValue>("invln_ahglocalauthorities1.invln_gsscode")?.Value.ToString(),
+                   name = entity.invln_LocalAuthority?.Name,
                 },
                 planningDetails = new PlanningDetailsDto
                 {

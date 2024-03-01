@@ -6,7 +6,7 @@ namespace HE.CRM.AHP.Plugins.Services.Site
 {
     public interface ISiteService : ICrmService
     {
-        List<SiteDto> GetSites(string fieldsToRetrieve);
+        PagedResponseDto<SiteDto> Get(PagingRequestDto paging, string fieldsToRetrieve);
 
         SiteDto GetById(string id, string fieldsToRetrieve);
 

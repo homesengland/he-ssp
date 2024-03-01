@@ -104,6 +104,7 @@ public static class DomainModule
         services.AddScoped<ISiteCrmContext, SiteCrmContext>();
         services.AddScoped<ISiteRepository, SiteRepository>();
         services.AddScoped<ILocalAuthorityRepository, LocalAuthorityRepository>();
+        services.AddScoped<IAhgLocalAuthorityRepository, AhgLocalAuthorityRepository>();
     }
 
     private static void AddDelivery(IServiceCollection services)
