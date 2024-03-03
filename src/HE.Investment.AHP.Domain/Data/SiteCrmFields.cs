@@ -8,6 +8,7 @@ public static class SiteCrmFields
     {
         nameof(invln_Sites.invln_SitesId),
         nameof(invln_Sites.invln_sitename),
+        nameof(invln_Sites.invln_externalsitestatus),
         nameof(invln_Sites.invln_s106agreementinplace),
         nameof(invln_Sites.invln_developercontributionsforah),
         nameof(invln_Sites.invln_siteis100affordable),

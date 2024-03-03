@@ -165,12 +165,12 @@ public class Order10LocationIntegrationTests : IntegrationTest
         var projectSummary = checkAnswersPage.GetSummaryListItems();
 
         // then
-        projectSummary[ProjectFieldNames.Coordinates].Should().Be(TextTestData.TextThatNotExceedsLongInputLimit);
+        projectSummary[ProjectFieldNames.Coordinates].Value.Should().Be(TextTestData.TextThatNotExceedsLongInputLimit);
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
     [Order(8)]
-    public async Task Order08_RedirectTolocalAuthoritySearchPage_WhenTitleNumberWasSelected()
+    public async Task Order08_RedirectToLocalAuthoritySearchPage_WhenTitleNumberWasSelected()
     {
         // given
         var locationPage = await GetCurrentPage(() => TestClient.NavigateTo(ProjectPagesUrls.Location(_applicationLoanId, _projectId)));

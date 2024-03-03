@@ -35,7 +35,9 @@ public class HomesForDisabledPeopleData : HomeTypeDataBase<HomesForDisabledPeopl
         ExemptFromTheRightToSharedOwnership = homeType.ExemptFromTheRightToSharedOwnership;
         ExemptionJustification = homeType.ExemptionJustification;
         ModernMethodsOfConstruction = homeType.ModernMethodsOfConstruction;
-        ModernMethodsConstructionCategory = homeType.ModernMethodsConstructionCategory;
+        MmcCategories = homeType.MmcCategories;
+        Mmc3DSubcategory = homeType.Mmc3DSubcategory;
+        Mmc2DSubcategory = homeType.Mmc2DSubcategory;
     }
 
     public override HousingType HousingType => HousingType.HomesForDisabledAndVulnerablePeople;

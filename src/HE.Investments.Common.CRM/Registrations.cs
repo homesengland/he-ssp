@@ -1,8 +1,8 @@
 using System.IdentityModel.Tokens.Jwt;
-using HE.Investments.Common.CRM.Config;
 using HE.Investments.Common.CRM.Services;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Infrastructure.Cache.Interfaces;
+using HE.Investments.Common.Models.App;
 using HE.Investments.Common.Utils;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;

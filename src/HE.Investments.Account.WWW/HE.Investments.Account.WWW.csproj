@@ -30,7 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HE.Investments.Loans.Common\HE.Investments.Loans.Common.csproj" />
     <ProjectReference Include="..\HE.Investments.Account.Domain\HE.Investments.Account.Domain.csproj" />
     <ProjectReference Include="..\HE.Investments.Common.WWW\HE.Investments.Common.WWW.csproj" />
   </ItemGroup>

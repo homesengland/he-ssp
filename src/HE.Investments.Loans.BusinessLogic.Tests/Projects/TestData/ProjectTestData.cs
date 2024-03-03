@@ -1,5 +1,6 @@
 extern alias Org;
 
+using HE.Investments.Common.Contract.Constants;
 using HE.Investments.Loans.BusinessLogic.Projects.Entities;
 using HE.Investments.Loans.BusinessLogic.Projects.ValueObjects;
 using HE.Investments.Loans.Common.Tests.TestData;

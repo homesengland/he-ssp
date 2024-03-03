@@ -34,7 +34,7 @@ public class ShortText : ValueObject
         : this(
             value,
             fieldName,
-            ValidationErrorMessage.MissingRequiredField(fieldDisplayName),
+            ValidationErrorMessage.MustProvideRequiredField(fieldDisplayName),
             ValidationErrorMessage.ShortInputLengthExceeded(fieldDisplayName))
     {
     }

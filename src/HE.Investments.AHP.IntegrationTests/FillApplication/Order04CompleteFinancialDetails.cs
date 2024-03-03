@@ -7,9 +7,9 @@ using HE.Investment.AHP.WWW.Views.FinancialDetails.Consts;
 using HE.Investments.AHP.IntegrationTests.FillApplication.Data;
 using HE.Investments.AHP.IntegrationTests.Framework;
 using HE.Investments.AHP.IntegrationTests.Pages;
+using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.IntegrationTestsFramework.Assertions;
-using HE.Investments.Loans.Common.Extensions;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
 using Xunit.Extensions.Ordering;
@@ -158,15 +158,15 @@ public class Order04CompleteFinancialDetails : AhpIntegrationTest
 
         // when
         var summary = checkAnswersPage.GetSummaryListItems();
-        summary.Should().ContainKey("Purchase price").WhoseValue.Should().BePoundsOnly(FinancialDetailsData.LandStatus);
-        summary.Should().ContainKey("Current value").WhoseValue.Should().BePoundsOnly(FinancialDetailsData.PublicLandValue);
+        summary.Should().ContainKey("Purchase price").WhoseValue.Value.Should().BePoundsOnly(FinancialDetailsData.LandStatus);
+        summary.Should().ContainKey("Current value").WhoseValue.Value.Should().BePoundsOnly(FinancialDetailsData.PublicLandValue);
         summary.Should().ContainKey("Public land").WithValue(YesNoType.Yes);
-        summary.Should().ContainKey("Works costs").WhoseValue.Should().BePoundsOnly(FinancialDetailsData.ExpectedWorksCosts);
-        summary.Should().ContainKey("On costs").WhoseValue.Should().BePoundsOnly(FinancialDetailsData.ExpectedOnCosts);
-        summary.Should().ContainKey("Total scheme costs").WhoseValue.Should().BePoundsOnly(FinancialDetailsData.PublicLandValue + FinancialDetailsData.ExpectedWorksCosts + FinancialDetailsData.ExpectedOnCosts);
-        summary.Should().ContainKey("Your contributions").WhoseValue.Should().BePoundsOnly(FinancialDetailsData.TotalExpectedContributions);
-        summary.Should().ContainKey("Grants from other public bodies").WhoseValue.Should().BePoundsOnly(FinancialDetailsData.TotalGrants);
-        summary.Should().ContainKey("Total contributions").WhoseValue.Should().BePoundsOnly(FinancialDetailsData.TotalContributions);
+        summary.Should().ContainKey("Works costs").WhoseValue.Value.Should().BePoundsOnly(FinancialDetailsData.ExpectedWorksCosts);
+        summary.Should().ContainKey("On costs").WhoseValue.Value.Should().BePoundsOnly(FinancialDetailsData.ExpectedOnCosts);
+        summary.Should().ContainKey("Total scheme costs").WhoseValue.Value.Should().BePoundsOnly(FinancialDetailsData.PublicLandValue + FinancialDetailsData.ExpectedWorksCosts + FinancialDetailsData.ExpectedOnCosts);
+        summary.Should().ContainKey("Your contributions").WhoseValue.Value.Should().BePoundsOnly(FinancialDetailsData.TotalExpectedContributions);
+        summary.Should().ContainKey("Grants from other public bodies").WhoseValue.Value.Should().BePoundsOnly(FinancialDetailsData.TotalGrants);
+        summary.Should().ContainKey("Total contributions").WhoseValue.Value.Should().BePoundsOnly(FinancialDetailsData.TotalContributions);
 
         var taskListPage = await TestClient.SubmitButton(
             continueButton,

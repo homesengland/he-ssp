@@ -54,7 +54,11 @@ public abstract class HomeTypeDataBase<THomeTypeData> : INestedItemData
 
     public YesNoType ModernMethodsOfConstruction { get; protected set; }
 
-    public ModernMethodsConstructionCategoriesType ModernMethodsConstructionCategory { get; protected set; }
+    public IReadOnlyCollection<ModernMethodsConstructionCategoriesType> MmcCategories { get; protected set; }
+
+    public ModernMethodsConstruction3DSubcategoriesType Mmc3DSubcategory { get; protected set; }
+
+    public ModernMethodsConstruction2DSubcategoriesType Mmc2DSubcategory { get; protected set; }
 
     protected abstract THomeTypeData HomeType { get; }
 
@@ -140,9 +144,18 @@ public abstract class HomeTypeDataBase<THomeTypeData> : INestedItemData
         return HomeType;
     }
 
-    public THomeTypeData GenerateModernMethodsConstructionCategory()
+    public THomeTypeData GenerateModernMethodsConstructionCategories()
     {
-        ModernMethodsConstructionCategory = ModernMethodsConstructionCategoriesType.Category1PreManufacturing3DPrimaryStructuralSystems;
+        MmcCategories = new[]
+        {
+            ModernMethodsConstructionCategoriesType.Category1PreManufacturing3DPrimaryStructuralSystems,
+            ModernMethodsConstructionCategoriesType.Category2PreManufacturing2DPrimaryStructuralSystems,
+            ModernMethodsConstructionCategoriesType.Category6TraditionalBuildingProductLedSiteLabourReductionOrProductivityImprovements,
+        };
+
+        Mmc3DSubcategory = ModernMethodsConstruction3DSubcategoriesType.StructuralChassisOnly;
+        Mmc2DSubcategory = ModernMethodsConstruction2DSubcategoriesType.FurtherEnhancedConsolidation;
+
         return HomeType;
     }
 

@@ -33,6 +33,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getmultipledeliveryphase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getmultiplefrontdoorprojects.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getmultiplefrontdoorprojectssite.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getmultiplelocalauthorities.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getmultipleprogramme.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getmultiplesites.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getorganisationchangedetails.cs" />
@@ -289,6 +290,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_SecurityType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_SecurityTypeAHPPartnerOnboarding.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_sitePlanningstatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Sitestatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Source.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Sourceofincome.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_StatusReviewApprovalSet.cs" />

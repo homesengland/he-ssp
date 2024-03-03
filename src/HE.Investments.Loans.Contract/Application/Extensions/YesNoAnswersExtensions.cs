@@ -1,4 +1,4 @@
-using HE.Investments.Loans.Common.Utils.Constants.FormOption;
+using HE.Investments.Common.Contract.Constants;
 using HE.Investments.Loans.Contract.Application.Enums;
 
 namespace HE.Investments.Loans.Contract.Application.Extensions;

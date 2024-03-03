@@ -6,7 +6,7 @@ namespace HE.Investments.Loans.Contract.Application.ValueObjects;
 public class LoanApplicationName : ShortText
 {
     public LoanApplicationName(string? value)
-        : base(value, nameof(LoanApplicationName), ValidationErrorMessage.EnterLoanApplicationName)
+        : base(value, nameof(LoanApplicationName), "name for your application")
     {
     }
 

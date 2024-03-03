@@ -1,7 +1,6 @@
-using HE.DocumentService.SharePoint.Exceptions;
-using PnP.Core;
 using System.Net;
 using System.Text.Json;
+using HE.DocumentService.SharePoint.Exceptions;
 
 namespace HE.DocumentService.Api.Middlewares;
 
@@ -30,7 +29,7 @@ public class ErrorHandlerMiddleware
                 case SharepointException e:
                     // custom sharepoint error
                     response.StatusCode = (int)HttpStatusCode.BadRequest;
-                    result = JsonSerializer.Serialize(new { message = error?.Message, statusCode = e.StatusCode.ToString() });
+                    result = JsonSerializer.Serialize(new { message = error.Message, statusCode = e.StatusCode.ToString() });
                     break;
                 default:
                     // unhandled error
