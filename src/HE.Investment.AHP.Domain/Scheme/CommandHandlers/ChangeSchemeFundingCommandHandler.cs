@@ -35,6 +35,5 @@ public class ChangeSchemeFundingCommandHandler : UpdateSchemeCommandHandler<Chan
         {
             _dispatcher.Publish(new SchemeNumberOfHomesHasBeenUpdatedEvent(scheme.Application.Id), CancellationToken.None);
         }
-
     }
 }
