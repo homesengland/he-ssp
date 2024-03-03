@@ -86,9 +86,8 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     [HttpPost("funding")]
     public async Task<IActionResult> Funding(SchemeViewModel model, CancellationToken cancellationToken)
     {
-        return await ExecuteCommands(
+        return await ExecuteCommand(
             new ChangeSchemeFundingCommand(AhpApplicationId.From(model.ApplicationId), model.RequiredFunding, model.HousesToDeliver),
-            new SaveNumberOfHomesFromSchemaCommand(AhpApplicationId.From(model.ApplicationId), model.HousesToDeliver ?? "0"),
             model.ApplicationId,
             nameof(Funding),
             model,
@@ -332,27 +331,6 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
             _mediator,
             command,
             async () => await this.ReturnToTaskListOrContinue(async () => await ContinueWithRedirect(new { applicationId })),
-            async () => await Task.FromResult<IActionResult>(View(viewName, model)),
-            cancellationToken);
-    }
-
-    private async Task<IActionResult> ExecuteCommands(
-        IRequest<OperationResult> firstCommand,
-        IRequest<OperationResult> secondCommand,
-        string applicationId,
-        string viewName,
-        SchemeViewModel model,
-        CancellationToken cancellationToken)
-    {
-        return await this.ExecuteCommand<SchemeViewModel>(
-            _mediator,
-            firstCommand,
-            async () => await this.ExecuteCommand<SchemeViewModel>(
-                            _mediator,
-                            secondCommand,
-                            async () => await this.ReturnToTaskListOrContinue(async () => await ContinueWithRedirect(new { applicationId })),
-                            async () => await Task.FromResult<IActionResult>(View(viewName, model)),
-                            cancellationToken),
             async () => await Task.FromResult<IActionResult>(View(viewName, model)),
             cancellationToken);
     }

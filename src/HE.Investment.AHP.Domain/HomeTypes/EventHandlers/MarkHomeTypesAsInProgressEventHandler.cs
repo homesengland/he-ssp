@@ -1,5 +1,6 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.HomeTypes.Events;
+using HE.Investment.AHP.Contract.Scheme.Events;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investments.Account.Shared;
@@ -10,7 +11,8 @@ namespace HE.Investment.AHP.Domain.HomeTypes.EventHandlers;
 public class MarkHomeTypesAsInProgressEventHandler :
     IEventHandler<HomeTypeHasBeenCreatedEvent>,
     IEventHandler<HomeTypeHasBeenUpdatedEvent>,
-    IEventHandler<HomeTypeHasBeenRemovedEvent>
+    IEventHandler<HomeTypeHasBeenRemovedEvent>,
+    IEventHandler<SchemeNumberOfHomesHasBeenUpdatedEvent>
 {
     private readonly IHomeTypeRepository _repository;
 
@@ -33,6 +35,11 @@ public class MarkHomeTypesAsInProgressEventHandler :
     }
 
     public async Task Handle(HomeTypeHasBeenRemovedEvent domainEvent, CancellationToken cancellationToken)
+    {
+        await ChangeStatus(domainEvent.ApplicationId, cancellationToken);
+    }
+
+    public async Task Handle(SchemeNumberOfHomesHasBeenUpdatedEvent domainEvent, CancellationToken cancellationToken)
     {
         await ChangeStatus(domainEvent.ApplicationId, cancellationToken);
     }
