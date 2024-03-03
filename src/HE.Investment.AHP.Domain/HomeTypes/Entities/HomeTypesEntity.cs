@@ -41,8 +41,6 @@ public class HomeTypesEntity
 
     public SectionStatus Status { get; private set; }
 
-    public int NumberOfHomesFromSchemaSection { get; private set; }
-
     public bool IsStatusChanged => _statusModificationTracker.IsModified;
 
     public bool IsReadOnly => _application.IsReadOnly();
@@ -86,22 +84,6 @@ public class HomeTypesEntity
 
             _toRemove.Add(homeType);
             _homeTypes.Remove(homeType);
-        }
-    }
-
-    public void ChangeNumberOfHomesFromSchemaSection(string numberOfHomes)
-    {
-        if (!int.TryParse(numberOfHomes, out var numberOfHomesInt))
-        {
-            OperationResult.New()
-                    .AddValidationError(nameof(NumberOfHomesFromSchemaSection), $"Provided value is not a number")
-                    .CheckErrors();
-        }
-
-        if (numberOfHomesInt != NumberOfHomesFromSchemaSection)
-        {
-            NumberOfHomesFromSchemaSection = numberOfHomesInt;
-            MarkAsInProgress();
         }
     }
 

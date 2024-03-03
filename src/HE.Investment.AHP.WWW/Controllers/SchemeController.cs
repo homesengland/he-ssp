@@ -2,7 +2,6 @@ using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Contract.Common;
 using HE.Investment.AHP.Contract.Common.Enums;
-using HE.Investment.AHP.Contract.HomeTypes.Commands;
 using HE.Investment.AHP.Contract.Scheme;
 using HE.Investment.AHP.Contract.Scheme.Commands;
 using HE.Investment.AHP.Contract.Scheme.Queries;
