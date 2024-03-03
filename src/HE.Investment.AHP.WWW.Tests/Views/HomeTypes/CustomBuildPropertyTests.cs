@@ -19,7 +19,7 @@ public class CustomBuildPropertyTests : HomeTypesTestBase
         document
             .HasPageHeader("My application - My homes", "Are the properties custom build?")
             .HasElementWithText("span", "What are custom build properties?")
-            .HasElementWithText("a", "more information on custom build.")
+            .HasElementWithText("a", "more information on custom build (opens in a new tab).")
             .HasRadio(
                 "CustomBuild",
                 new[]
