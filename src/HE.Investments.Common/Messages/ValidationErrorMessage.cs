@@ -70,6 +70,8 @@ public static class ValidationErrorMessage
 
     public const string LocalAuthorityNameIsEmpty = "Enter the name of the local authority";
 
+    public const string OrganisationNameIsEmpty = "Enter the name of the organisation";
+
     public const string SectionIsNotCompleted = "You have not completed this section. Select no if you want to come back later";
 
     public const string CouldNotCalculate = "Could not calculate as all fields have not been entered";

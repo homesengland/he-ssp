@@ -15,7 +15,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace HE.Investments.Account.WWW.Controllers;
 
 [Route(OrganisationAccountEndpoints.Controller)]
-[AuthorizeWithoutLinkedOrganisationOnly]
 public class OrganisationController : Controller
 {
     private readonly IMediator _mediator;
@@ -32,9 +31,14 @@ public class OrganisationController : Controller
     }
 
     [HttpPost(OrganisationAccountEndpoints.SearchOrganisationSuffix)]
-    public IActionResult SearchOrganisation(OrganisationSearchModel organisation)
+    public async Task<IActionResult> SearchOrganisation(OrganisationSearchModel model, CancellationToken cancellationToken)
     {
-        return RedirectToAction(nameof(SearchOrganisationResult), new { searchPhrase = organisation.Name });
+        return await this.ExecuteCommand<OrganisationSearchModel>(
+            _mediator,
+            new ProvideOrganisationSearchPhraseCommand(model.Name),
+            async () => await Task.FromResult(RedirectToAction(nameof(SearchOrganisationResult), new { searchPhrase = model.Name })),
+            () => Task.FromResult<IActionResult>(View("SearchOrganisation", model)),
+            cancellationToken);
     }
 
     [HttpGet("search/result")]

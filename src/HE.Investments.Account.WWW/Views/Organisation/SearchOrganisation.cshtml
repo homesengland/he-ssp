@@ -1,7 +1,7 @@
 @using HE.Investments.Account.WWW.Controllers
 @using HE.Investments.Account.WWW.Views.Organisation
-@using HE.Investments.Common.Gds
 @using HE.Investments.Common.WWW.Utils
+@using HE.Investments.Common.WWW.Components.TextInput;
 @model HE.Investments.Account.Contract.Organisation.Queries.OrganisationSearchModel;
 @{
     ViewData["Title"] = OrganisationPageTitles.SearchForYourOrganisation;
@@ -10,6 +10,8 @@
 
 <gds-div-grid-column-two-thirds>
     <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("GetProfileDetails", "User")"></gds-back-link>
+
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
     <gds-h1 size="ControlSize.L">
         @OrganisationPageTitles.SearchForYourOrganisation
@@ -28,17 +30,10 @@
     </gds-p>
 
     <form asp-controller="@controllerName.WithoutPrefix()" asp-action="@nameof(OrganisationController.SearchOrganisation)" asp-method="post" novalidate>
-        <gds-h1 size="@ControlSize.M" class="govuk-!-margin-top-9">
-            What is your organisation name?
-        </gds-h1>
-
-        <he-div-hint class="govuk-!-margin-top-6 govuk-!-margin-bottom-6">
-            Enter all or part of your organisation name. This will search on our Customer Relationship Management (CRM) system and Companies House.
-        </he-div-hint>
-
-        <gds-input asp-hiddenlabeltext="Name"
-                   govuk-formgroup-asp-for="Name"
-                   type="text" />
+        <vc:text-input title="What is your organisation name?"
+                       title-type="InputTitleType.PageHeader"
+                       hint="Enter all or part of your organisation name. This will search on our Customer Relationship Management (CRM) system and Companies House."
+                       field-name="@nameof(Model.Name)"/>
 
         <vc:form-button text="Search" />
     </form>
