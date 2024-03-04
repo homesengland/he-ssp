@@ -23,7 +23,7 @@ public class SiteCrmContext : ISiteCrmContext
                 invln_pagingrequest = CrmResponseSerializer.Serialize(pagination),
                 invln_fieldstoretrieve = FormatFields(SiteCrmFields.Fields),
             },
-            r => r.invln_pagedsites,
+            r => r.invln_sites,
             cancellationToken);
     }
 

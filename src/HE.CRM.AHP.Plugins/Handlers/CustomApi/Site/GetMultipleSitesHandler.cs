@@ -13,18 +13,16 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.Site
 
         public override bool CanWork()
         {
-            return true;
+            return !string.IsNullOrWhiteSpace(Paging);
         }
 
         public override void DoWork()
         {
-            // TODO: remove backwards compatibility changes
-            var paging = string.IsNullOrWhiteSpace(Paging) ? new PagingRequestDto{ pageNumber = 1, pageSize = int.MaxValue } : JsonSerializer.Deserialize<PagingRequestDto>(Paging);
+            var paging = JsonSerializer.Deserialize<PagingRequestDto>(Paging);
             var result = CrmServicesFactory.Get<ISiteService>().Get(paging, FieldsToRetrieve);
             if (result != null)
             {
-                ExecutionData.SetOutputParameter(invln_getmultiplesitesResponse.Fields.invln_sites, JsonSerializer.Serialize(result.items));
-                ExecutionData.SetOutputParameter(invln_getmultiplesitesResponse.Fields.invln_pagedsites, JsonSerializer.Serialize(result));
+                ExecutionData.SetOutputParameter(invln_getmultiplesitesResponse.Fields.invln_sites, JsonSerializer.Serialize(result));
             }
         }
     }
