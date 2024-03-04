@@ -108,7 +108,6 @@ namespace HE.CRM.Plugins.Services.FrontDoorProject
 
             //THIS IS CONTACT WHO IS SENDING MESSAGE 
             var requestContact = _contactRepository.GetContactViaExternalId(externalContactId);
-
             var frontDoorProjecToCreate = FrontDoorProjectMapper.MapDtoToRegularEntity(frontDoorProjectFromPortal, requestContact, organisationId);
 
             // Update Or Create a FrontDoorProject Record
@@ -118,37 +117,13 @@ namespace HE.CRM.Plugins.Services.FrontDoorProject
                 frontdoorprojectGUID = projectId;
                 frontDoorProjecToCreate.Id = projectId;
                 _frontDoorProjectRepository.Update(frontDoorProjecToCreate);
+                this.TracingService.Trace("After update record");
             }
             else
             {
-                if (frontDoorProjecToCreate.invln_ContactId == null)
-                {
-                    frontDoorProjecToCreate.invln_ContactId = requestContact.ToEntityReference();
-                }
-
                 this.TracingService.Trace("Create FrontDoorProject");
                 frontdoorprojectGUID = _frontDoorProjectRepository.Create(frontDoorProjecToCreate);
-            }
-
-            // Site Creator
-            if (frontDoorProjectFromPortal.FrontDoorSiteList != null && frontDoorProjectFromPortal.FrontDoorSiteList.Count > 0)
-            {
-                this.TracingService.Trace($"FrontDoorSiteList.Count {frontDoorProjectFromPortal.FrontDoorSiteList.Count}");
-                foreach (var siteDto in frontDoorProjectFromPortal.FrontDoorSiteList)
-                {
-                    this.TracingService.Trace("loop begin");
-                    var siteToCreate = FrontDoorProjectSiteMapper.MapFrontDoorProjectSiteDtoToRegularEntity(siteDto, frontdoorprojectGUID.ToString());
-                    this.TracingService.Trace("create");
-                    if (!String.IsNullOrEmpty(siteDto.SiteId) && Guid.TryParse(siteDto.SiteId, out Guid result))
-                    {
-                        _frontDoorProjectSiteRepository.Update(siteToCreate);
-                    }
-                    else
-                    {
-                        _frontDoorProjectSiteRepository.Create(siteToCreate);
-                    }
-                    this.TracingService.Trace("after create record");
-                }
+                this.TracingService.Trace("After create record");
             }
             return frontdoorprojectGUID.ToString();
         }
