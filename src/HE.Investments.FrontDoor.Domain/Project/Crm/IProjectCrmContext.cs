@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using HE.Investments.Account.Shared.User;
 
 namespace HE.Investments.FrontDoor.Domain.Project.Crm;
@@ -15,4 +16,6 @@ public interface IProjectCrmContext
     Task<string> Save(ProjectDto dto, UserAccount userAccount, CancellationToken cancellationToken);
 }
 
+[SuppressMessage("nvm", "IDE1006", Justification = "It is temporary")]
+[SuppressMessage("nvm", "SA1300", Justification = "It is temporary")]
 public record ProjectDto(string id, string name);

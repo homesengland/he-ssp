@@ -86,6 +86,11 @@ public class ProjectCrmContext : IProjectCrmContext
             cancellationToken);
     }
 
+    private static string FormatFields(IList<string> fieldsToRetrieve)
+    {
+        return string.Join(",", fieldsToRetrieve.Select(f => f.ToLowerInvariant()));
+    }
+
     private async Task<IList<ProjectDto>> GetProjects(invln_getmultipleahpapplicationsRequest request, CancellationToken cancellationToken)
     {
         return await _service.ExecuteAsync<invln_getmultipleahpapplicationsRequest, invln_getmultipleahpapplicationsResponse, IList<ProjectDto>>(
@@ -109,10 +114,5 @@ public class ProjectCrmContext : IProjectCrmContext
         }
 
         return response[0];
-    }
-
-    private static string FormatFields(IList<string> fieldsToRetrieve)
-    {
-        return string.Join(",", fieldsToRetrieve.Select(f => f.ToLowerInvariant()));
     }
 }
