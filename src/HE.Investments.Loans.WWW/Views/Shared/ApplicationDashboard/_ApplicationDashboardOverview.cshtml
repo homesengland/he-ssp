@@ -39,7 +39,7 @@
     <gds-p>
         This will notify Homes England that you no longer wish to proceed with this application at this time. You can revisit this later on and submit once you're ready.
     </gds-p>
-    <a class="govuk-button govuk-button--secondary" data-module="govuk-button" href="@Url.Action("", "LoanApplicationV2", new { id = Model.LoanApplicationId })">
+    <a class="govuk-button govuk-button--secondary" data-module="govuk-button" href="@Url.Action("Hold", "LoanApplicationV2", new { id = Model.LoanApplicationId })">
         Hold
     </a>
 </div>

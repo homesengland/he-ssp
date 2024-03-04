@@ -71,6 +71,8 @@ namespace DataverseModel
 			public const string invln_developercontributionsforah = "invln_developercontributionsforah";
 			public const string invln_developercontributionsforahName = "invln_developercontributionsforahname";
 			public const string invln_expectedplanningapproval = "invln_expectedplanningapproval";
+			public const string invln_externalsitestatus = "invln_externalsitestatus";
+			public const string invln_externalsitestatusName = "invln_externalsitestatusname";
 			public const string invln_furtherstepsrequired = "invln_furtherstepsrequired";
 			public const string invln_grantfundingforallhomes = "invln_grantfundingforallhomes";
 			public const string invln_grantfundingforallhomesName = "invln_grantfundingforallhomesname";
@@ -117,8 +119,6 @@ namespace DataverseModel
 			public const string invln_planningtypeName = "invln_planningtypename";
 			public const string invln_procurementefficiency = "invln_procurementefficiency";
 			public const string invln_procurementefficiencyName = "invln_procurementefficiencyname";
-			public const string invln_procurementmechanisms = "invln_procurementmechanisms";
-			public const string invln_procurementmechanismsName = "invln_procurementmechanismsname";
 			public const string invln_procurementmechanismsnew = "invln_procurementmechanismsnew";
 			public const string invln_procurementmechanismsnewName = "invln_procurementmechanismsnewname";
 			public const string invln_reducingenvironmentalimpact = "invln_reducingenvironmentalimpact";
@@ -581,6 +581,40 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_expectedplanningapproval");
 				this.SetAttributeValue("invln_expectedplanningapproval", value);
 				this.OnPropertyChanged("invln_expectedplanningapproval");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_externalsitestatus")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_externalsitestatus
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_externalsitestatus");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_externalsitestatus");
+				this.SetAttributeValue("invln_externalsitestatus", value);
+				this.OnPropertyChanged("invln_externalsitestatus");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_externalsitestatusname")]
+		public string invln_externalsitestatusName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_externalsitestatus"))
+				{
+					return this.FormattedValues["invln_externalsitestatus"];
+				}
+				else
+				{
+					return default(string);
+				}
 			}
 		}
 		
@@ -1344,40 +1378,6 @@ namespace DataverseModel
 				if (this.FormattedValues.Contains("invln_procurementefficiency"))
 				{
 					return this.FormattedValues["invln_procurementefficiency"];
-				}
-				else
-				{
-					return default(string);
-				}
-			}
-		}
-		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_procurementmechanisms")]
-		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_procurementmechanisms
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_procurementmechanisms");
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("invln_procurementmechanisms");
-				this.SetAttributeValue("invln_procurementmechanisms", value);
-				this.OnPropertyChanged("invln_procurementmechanisms");
-			}
-		}
-		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_procurementmechanismsname")]
-		public string invln_procurementmechanismsName
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				if (this.FormattedValues.Contains("invln_procurementmechanisms"))
-				{
-					return this.FormattedValues["invln_procurementmechanisms"];
 				}
 				else
 				{

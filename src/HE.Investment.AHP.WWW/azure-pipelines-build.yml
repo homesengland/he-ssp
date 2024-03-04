@@ -9,16 +9,36 @@ trigger:
     include:
       - main
   paths:
-    exclude:
-      - src/HE.DocumentService/*
+    include:
+      - src/HE.InvestmentLoans.sln
+      - src/HE.Investment.AHP.*/*
+      - src/HE.Investments.AHP.*/*
+      - src/HE.Investments.Account.Shared/*
+      - src/HE.Investments.Account.Api.Contract/*
+      - src/HE.Investments.Common*/*
+      - src/HE.Common.*/*
+      - src/HE.Investments.DocumentService/*
+      - src/HE.Investments.IntegrationTestsFramework/*
+      - src/HE.Investments.Organisation/*
+      - src/HE.Investments.TestsUtils/*
 
 pr:
   branches:
     include:
       - main
   paths:
-    exclude:
-      - src/HE.DocumentService/*
+    include:
+      - src/HE.InvestmentLoans.sln
+      - src/HE.Investment.AHP.*/*
+      - src/HE.Investments.AHP.*/*
+      - src/HE.Investments.Account.Shared/*
+      - src/HE.Investments.Account.Api.Contract/*
+      - src/HE.Investments.Common*/*
+      - src/HE.Common.*/*
+      - src/HE.Investments.DocumentService/*
+      - src/HE.Investments.IntegrationTestsFramework/*
+      - src/HE.Investments.Organisation/*
+      - src/HE.Investments.TestsUtils/*
 
 pool:
   vmImage: 'ubuntu-22.04'

@@ -1,8 +1,14 @@
+using HE.Investments.Common.Extensions;
+
 namespace HE.Investments.Common.Messages;
 
 public static class ValidationErrorMessage
 {
     public const string EnterMoreDetails = "Enter more details";
+
+    public const string EnterUkTelephoneNumber = "Enter a UK telephone number";
+
+    public const string EnterTelephoneNumberInValidFormat = "Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 808 157 0192";
 
     public const string EnterWhyYouWantToWithdrawApplication = "Enter why you want to withdraw your application";
 
@@ -109,6 +115,8 @@ public static class ValidationErrorMessage
     public static string MustBeSelectedForCalculation(string displayName) => $"Select if {displayName} to calculate";
 
     public static string StringLengthExceeded(string displayName, int maxLength) => new($"The {displayName} must be {maxLength} characters or less");
+
+    public static string StringLengthExceededUncommon(string displayName, int maxLength) => new($"{displayName.TitleCaseFirstLetterInString()} must be {maxLength} characters or less");
 
     public static string ExclusiveOptionSelected(string displayName, string optionName) => $"The {optionName} {displayName} option is exclusive and cannot be selected with any other option.";
 

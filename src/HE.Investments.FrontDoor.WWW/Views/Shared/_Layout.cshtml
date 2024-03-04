@@ -1,0 +1,38 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using HE.Investments.FrontDoor.WWW.Config
+@inject IFrontDoorAppConfig AppConfig
+
+@{
+    Layout = "_GovukTemplate";
+    ViewData["ServiceName"] = AppConfig.AppName;
+}
+
+@section AdditionalMeta
+    {
+}
+
+@section HeadCss
+    {
+    <partial name="_LoadStylesheetPartial" />
+}
+
+@section HeadScripts {
+
+}
+
+@section CookieBanner{
+    <partial name="_CookieBanner" />
+}
+
+@section BeforeContent{
+    <partial name="~/Partials/_Breadcrumbs.cshtml" />
+}
+
+<gds-div-grid-row>
+    @RenderBody()
+</gds-div-grid-row>
+
+@section BodyEnd
+    {
+    <partial name="_LoadJavascriptPartial" />
+}

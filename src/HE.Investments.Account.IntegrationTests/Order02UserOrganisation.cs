@@ -52,16 +52,16 @@ public class Order02UserOrganisation : AccountIntegrationTest
         var organisationDetailsPage = await TestClient.NavigateTo(organisationDetailsLink);
 
         // then
-        var organisationDetails = organisationDetailsPage
+        var summary = organisationDetailsPage
             .UrlEndWith(MainPagesUrl.UserOrganisationDetails)
             .GetSummaryListItems();
 
-        organisationDetails["Registered company name"].Should().NotBeNull().And.NotBe("Not provided");
-        organisationDetails["Organisation phone number"].Should().NotBeNull();
-        organisationDetails["Organisation address"].Should().NotBeNull();
-        organisationDetails["Companies House Registration number"].Should().NotBeNull();
+        summary.Should().ContainKey("Registered company name").WhoseValue.Value.Should().NotBeNull().And.NotBe("Not provided");
+        summary.Should().ContainKey("Organisation phone number").WhoseValue.Value.Should().NotBeNull();
+        summary.Should().ContainKey("Organisation address").WhoseValue.Value.Should().NotBeNull();
+        summary.Should().ContainKey("Companies House Registration number").WhoseValue.Value.Should().NotBeNull();
 
-        UserOrganisationData.SetOrganisationName(organisationDetails["Registered company name"]);
+        UserOrganisationData.SetOrganisationName(summary["Registered company name"].Value);
         SaveCurrentPage();
     }
 

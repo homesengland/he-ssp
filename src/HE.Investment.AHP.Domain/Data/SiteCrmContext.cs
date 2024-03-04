@@ -1,4 +1,5 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Serialization;
 using HE.Investments.Common.CRM.Services;
@@ -14,14 +15,15 @@ public class SiteCrmContext : ISiteCrmContext
         _service = service;
     }
 
-    public async Task<IList<SiteDto>> GetAll(CancellationToken cancellationToken)
+    public async Task<PagedResponseDto<SiteDto>> Get(PagingRequestDto pagination, CancellationToken cancellationToken)
     {
-        return await _service.ExecuteAsync<invln_getmultiplesitesRequest, invln_getmultiplesitesResponse, IList<SiteDto>>(
+        return await _service.ExecuteAsync<invln_getmultiplesitesRequest, invln_getmultiplesitesResponse, PagedResponseDto<SiteDto>>(
             new invln_getmultiplesitesRequest
             {
+                invln_pagingrequest = CrmResponseSerializer.Serialize(pagination),
                 invln_fieldstoretrieve = FormatFields(SiteCrmFields.Fields),
             },
-            r => r.invln_sites,
+            r => r.invln_pagedsites,
             cancellationToken);
     }
 

@@ -1,3 +1,4 @@
+using HE.Investments.Common.Contract.Constants;
 using HE.Investments.Loans.BusinessLogic.Projects.Entities;
 using HE.Investments.Loans.BusinessLogic.Projects.ValueObjects;
 using HE.Investments.Loans.BusinessLogic.Tests.Projects.TestData;

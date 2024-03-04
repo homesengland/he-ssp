@@ -126,12 +126,12 @@ public class Order01StartApplicationIntegrationTests : IntegrationTest
             .HasTitle("Check your details")
             .GetSummaryListItems();
 
-        items[CheckYourDetailsFields.RegisteredCompanyName].Should().NotBeNullOrWhiteSpace();
-        items[CheckYourDetailsFields.CompanyRegistrationNumber].Should().NotBeNullOrWhiteSpace();
-        items[CheckYourDetailsFields.CompanyAddress].Should().NotBeNullOrWhiteSpace();
-        items[CheckYourDetailsFields.ContactName].Should().NotBeNullOrWhiteSpace();
-        items[CheckYourDetailsFields.EmailAddress].Should().Be(LoginData.Email);
-        items[CheckYourDetailsFields.TelephoneNumber].Should().NotBeNullOrWhiteSpace();
+        items[CheckYourDetailsFields.RegisteredCompanyName].Value.Should().NotBeNullOrWhiteSpace();
+        items[CheckYourDetailsFields.CompanyRegistrationNumber].Value.Should().NotBeNullOrWhiteSpace();
+        items[CheckYourDetailsFields.CompanyAddress].Value.Should().NotBeNullOrWhiteSpace();
+        items[CheckYourDetailsFields.ContactName].Value.Should().NotBeNullOrWhiteSpace();
+        items[CheckYourDetailsFields.EmailAddress].Value.Should().Be(LoginData.Email);
+        items[CheckYourDetailsFields.TelephoneNumber].Value.Should().NotBeNullOrWhiteSpace();
         SetSharedData(CurrentPageKey, checkYourDetailsPage);
     }
 

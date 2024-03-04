@@ -5,6 +5,7 @@ using HE.Investments.Account.IntegrationTests.Framework;
 using HE.Investments.Account.IntegrationTests.Pages;
 using HE.Investments.Account.WWW;
 using HE.Investments.Account.WWW.Views.Organisation;
+using HE.Investments.Account.WWW.Views.User;
 using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
@@ -32,7 +33,7 @@ public class Order01CompleteUserProfile : AccountIntegrationTest
         // then
         profileDetailsPage
             .UrlEndWith(MainPagesUrl.ProfileDetails)
-            .HasTitle("Complete your details");
+            .HasTitle(UserPageTitles.ProfileDetails);
         SaveCurrentPage();
     }
 
@@ -44,7 +45,7 @@ public class Order01CompleteUserProfile : AccountIntegrationTest
         var currentPage = await GetCurrentPage(MainPagesUrl.ProfileDetails);
         currentPage
             .UrlWithoutQueryEndsWith(MainPagesUrl.ProfileDetails)
-            .HasTitle("Complete your details")
+            .HasTitle(UserPageTitles.ProfileDetails)
             .HasSaveAndContinueButton(out var continueButton);
 
         // when
@@ -65,7 +66,7 @@ public class Order01CompleteUserProfile : AccountIntegrationTest
         // given
         var profileDetailsPage = await GetCurrentPage(MainPagesUrl.ProfileDetails);
         profileDetailsPage.UrlEndWith(MainPagesUrl.ProfileDetails)
-            .HasTitle("Complete your details")
+            .HasTitle(UserPageTitles.ProfileDetails)
             .HasSaveAndContinueButton(out var continueButton);
         var profileData = FreshProfileData.GenerateProfileData();
 

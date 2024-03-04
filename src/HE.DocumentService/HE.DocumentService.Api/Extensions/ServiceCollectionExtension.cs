@@ -1,5 +1,5 @@
 using HE.DocumentService.Api.Configuration;
-using HE.DocumentService.SharePoint.Configurartion;
+using HE.DocumentService.SharePoint.Configuration;
 using Microsoft.Extensions.Options;
 
 namespace HE.DocumentService.Api.Extensions;

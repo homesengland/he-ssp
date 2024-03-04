@@ -280,13 +280,65 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         await TestQuestionPage(
             BuildHomeTypePage(HomeTypePagesUrl.ExemptionJustification, GeneralHomeType),
             HomeTypesPageTitles.ExemptionJustification,
-            BuildHomeTypePage(HomeTypePagesUrl.CheckAnswers, GeneralHomeType),
+            BuildHomeTypePage(HomeTypePagesUrl.ModernMethodsConstruction, GeneralHomeType),
             ("MoreInformation", homeType.ExemptionJustification));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
     [Order(15)]
-    public async Task Order15_GeneralCheckAnswersHasValidSummary()
+    public async Task Order15_ProvideModernMethodsOfConstruction()
+    {
+        // given
+        var homeType = GeneralHomeType.GenerateModernMethodsOfConstruction();
+
+        // when & then
+        await TestQuestionPage(
+            BuildHomeTypePage(HomeTypePagesUrl.ModernMethodsConstruction, GeneralHomeType),
+            HomeTypesPageTitles.ModernMethodsConstruction,
+            BuildHomeTypePage(HomeTypePagesUrl.ModernMethodsConstructionCategories, GeneralHomeType),
+            ("ModernMethodsConstructionApplied", homeType.ModernMethodsOfConstruction.ToString()));
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(16)]
+    public async Task Order16_ProvideModernMethodsConstructionCategories()
+    {
+        // given
+        var homeType = GeneralHomeType.GenerateModernMethodsConstructionCategories();
+
+        // when & then
+        await TestQuestionPage(
+            BuildHomeTypePage(HomeTypePagesUrl.ModernMethodsConstructionCategories, GeneralHomeType),
+            HomeTypesPageTitles.ModernMethodsConstructionCategories,
+            BuildHomeTypePage(HomeTypePagesUrl.ModernMethodsConstruction3DSubcategories, GeneralHomeType),
+            homeType.MmcCategories.ToFormInputs("ModernMethodsConstructionCategories"));
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(17)]
+    public async Task Order17_ProvideModernMethodsConstruction3DSubcategories()
+    {
+        await TestQuestionPage(
+            BuildHomeTypePage(HomeTypePagesUrl.ModernMethodsConstruction3DSubcategories, GeneralHomeType),
+            HomeTypesPageTitles.ModernMethodsConstruction3DCategories,
+            BuildHomeTypePage(HomeTypePagesUrl.ModernMethodsConstruction2DSubcategories, GeneralHomeType),
+            ("ModernMethodsConstruction3DSubcategories", GeneralHomeType.Mmc3DSubcategory.ToString()));
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(18)]
+    public async Task Order18_ProvideModernMethodsConstruction2DSubcategories()
+    {
+        await TestQuestionPage(
+            BuildHomeTypePage(HomeTypePagesUrl.ModernMethodsConstruction2DSubcategories, GeneralHomeType),
+            HomeTypesPageTitles.ModernMethodsConstruction2DCategories,
+            BuildHomeTypePage(HomeTypePagesUrl.CheckAnswers, GeneralHomeType),
+            ("ModernMethodsConstruction2DSubcategories", GeneralHomeType.Mmc2DSubcategory.ToString()));
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(19)]
+    public async Task Order19_GeneralCheckAnswersHasValidSummary()
     {
         // given
         var checkAnswersPage = await GetCurrentPage(BuildHomeTypePage(HomeTypePagesUrl.CheckAnswers, GeneralHomeType));
@@ -294,8 +346,6 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
             .UrlEndWith(BuildHomeTypePage(HomeTypePagesUrl.CheckAnswers, GeneralHomeType))
             .HasTitle(HomeTypesPageTitles.CheckAnswers)
             .HasSaveAndContinueButton();
-
-        var schemaInformationData = GetSharedDataOrNull<SchemeInformationData>(nameof(SchemeInformationData));
 
         // when
         var summary = checkAnswersPage.GetSummaryListItems();
@@ -316,18 +366,22 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         summary.Should().ContainKey("Square metres of internal floor area").WithValue($"{GeneralHomeType.FloorArea.ToString("0.##", CultureInfo.InvariantCulture)}m\u00b2");
         summary.Should().ContainKey("Nationally Described Space Standards met").WithValue(GeneralHomeType.MeetSpaceStandards);
         summary.Should().ContainKey("Nationally Described Space Standards").WithValue(GeneralHomeType.SpaceStandards);
-        summary.Should().ContainKey("Market value of each home").WhoseValue.Should().BePoundsOnly(GeneralHomeType.MarketValue);
-        summary.Should().ContainKey("Market rent per week").WhoseValue.Should().BePoundsPences(GeneralHomeType.MarketRent);
-        summary.Should().ContainKey("Affordable rent per week").WhoseValue.Should().BePoundsPences(GeneralHomeType.ProspectiveRent);
+        summary.Should().ContainKey("Market value of each home").WhoseValue.Value.Should().BePoundsOnly(GeneralHomeType.MarketValue);
+        summary.Should().ContainKey("Market rent per week").WhoseValue.Value.Should().BePoundsPences(GeneralHomeType.MarketRent);
+        summary.Should().ContainKey("Affordable rent per week").WhoseValue.Value.Should().BePoundsPences(GeneralHomeType.ProspectiveRent);
         summary.Should().ContainKey("Affordable rent as percentage of market rent").WithValue(GeneralHomeType.ProspectiveRentPercentage);
         summary.Should().ContainKey("Target rent exceeded 80% of market rent").WithValue(GeneralHomeType.Exceeds80PercentOfMarketRent);
         summary.Should().ContainKey("Exempt from Right to Shared ownership").WithValue(GeneralHomeType.ExemptFromTheRightToSharedOwnership);
         summary.Should().ContainKey("Right to Shared Ownership criteria").WithValue(GeneralHomeType.ExemptionJustification);
+        summary.Should().ContainKey("Using MMC").WithValue(GeneralHomeType.ModernMethodsOfConstruction);
+        summary.Should().ContainKey("MMC categories used").WithOnlyValues(GeneralHomeType.MmcCategories);
+        summary.Should().ContainKey("Sub-categories of 3D primary structural systems").WithValue(GeneralHomeType.Mmc3DSubcategory);
+        summary.Should().ContainKey("Sub-categories of 2D primary structural systems").WithValue(GeneralHomeType.Mmc2DSubcategory);
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(16)]
-    public async Task Order16_GeneralCheckAnswersCompleteHomeType()
+    [Order(20)]
+    public async Task Order20_GeneralCheckAnswersCompleteHomeType()
     {
         // given
         var checkAnswersPage = await GetCurrentPage(BuildHomeTypePage(HomeTypePagesUrl.CheckAnswers, GeneralHomeType));
@@ -350,8 +404,8 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(17)]
-    public async Task Order17_DuplicateHomeType()
+    [Order(21)]
+    public async Task Order21_DuplicateHomeType()
     {
         // given
         var homeTypeListPage = await GetCurrentPage(BuildHomeTypesPage(HomeTypesPagesUrl.List));
@@ -378,8 +432,8 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(18)]
-    public async Task Order18_EditDuplicatedHomeType()
+    [Order(22)]
+    public async Task Order22_EditDuplicatedHomeType()
     {
         // given
         var homeTypeListPage = await GetCurrentPage(BuildHomeTypesPage(HomeTypesPagesUrl.List));
@@ -406,8 +460,8 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(19)]
-    public async Task Order19_ProvideHomeTypeDetails()
+    [Order(23)]
+    public async Task Order23_ProvideHomeTypeDetails()
     {
         // given
         var homeType = DisabledHomeType.GenerateHomeTypeDetails();
@@ -422,8 +476,8 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(20)]
-    public async Task Order20_ProvideDisabledPeopleHousingType()
+    [Order(24)]
+    public async Task Order24_ProvideDisabledPeopleHousingType()
     {
         // given
         var homeType = DisabledHomeType.GenerateDisabledPeopleHousingType();
@@ -437,8 +491,8 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(21)]
-    public async Task Order21_ProvideDisabledPeopleClientGroup()
+    [Order(25)]
+    public async Task Order25_ProvideDisabledPeopleClientGroup()
     {
         // given
         var homeType = DisabledHomeType.GenerateClientGroup();
@@ -452,8 +506,8 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(22)]
-    public async Task Order22_ProvideHappiDesignPrinciples()
+    [Order(26)]
+    public async Task Order26_ProvideHappiDesignPrinciples()
     {
         // given
         var homeType = DisabledHomeType.GenerateHappiDesignPrinciple();
@@ -467,8 +521,8 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(23)]
-    public async Task Order23_ProvideDesignPlans()
+    [Order(27)]
+    public async Task Order27_ProvideDesignPlans()
     {
         // given
         var homeType = DisabledHomeType.GenerateDesignPlans();
@@ -485,8 +539,8 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(24)]
-    public async Task Order24_ProvideSupportedHousingInformation()
+    [Order(28)]
+    public async Task Order28_ProvideSupportedHousingInformation()
     {
         // given
         var homeType = DisabledHomeType.GenerateSupportedHousingInformation();
@@ -502,8 +556,8 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(25)]
-    public async Task Order25_ProvideRevenueFundingSource()
+    [Order(29)]
+    public async Task Order29_ProvideRevenueFundingSource()
     {
         // given
         var homeType = DisabledHomeType.GenerateRevenueFundingSource();
@@ -517,8 +571,8 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(26)]
-    public async Task Order26_ProvideMoveOnArrangements()
+    [Order(30)]
+    public async Task Order30_ProvideMoveOnArrangements()
     {
         // given
         var homeType = DisabledHomeType.GenerateMoveOnArrangements();
@@ -532,8 +586,8 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(27)]
-    public async Task Order27_ProvideExitPlan()
+    [Order(31)]
+    public async Task Order31_ProvideExitPlan()
     {
         // given
         var homeType = DisabledHomeType.GenerateExitPlan();
@@ -547,8 +601,8 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(28)]
-    public async Task Order28_ProvideTypologyLocationAndDesign()
+    [Order(32)]
+    public async Task Order32_ProvideTypologyLocationAndDesign()
     {
         // given
         var homeType = DisabledHomeType.GenerateTypologyLocationAndDesign();
@@ -562,8 +616,8 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(29)]
-    public async Task Order29_ProvidePeopleGroupForSpecificDesignFeatures()
+    [Order(33)]
+    public async Task Order33_ProvidePeopleGroupForSpecificDesignFeatures()
     {
         // given
         var homeType = DisabledHomeType.GeneratePeopleGroupForSpecificDesignFeatures();
@@ -577,8 +631,8 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(30)]
-    public async Task Order30_DisabledPeopleCheckAnswersHasValidSummary()
+    [Order(34)]
+    public async Task Order34_DisabledPeopleCheckAnswersHasValidSummary()
     {
         // given
         var checkAnswersPage = await GetCurrentPage(BuildHomeTypePage(HomeTypePagesUrl.CheckAnswers, DisabledHomeType));
@@ -596,7 +650,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         summary.Should().ContainKey("Disabled and vulnerable people - Type of home").WithValue(DisabledHomeType.DisabledPeopleHousingType);
         summary.Should().ContainKey("Client group").WithValue(DisabledHomeType.ClientGroup);
         summary.Should().ContainKey("HAPPI principles").WithValue(DisabledHomeType.HappiDesignPrinciple);
-        summary.Should().ContainKey("Design plans").WhoseValue.Should().ContainAll(DisabledHomeType.DesignPlanInformation, DisabledHomeType.DesignFile.Name);
+        summary.Should().ContainKey("Design plans").WhoseValue.Value.Should().ContainAll(DisabledHomeType.DesignPlanInformation, DisabledHomeType.DesignFile.Name);
         summary.Should().ContainKey("Local commissioning bodies consultation").WithValue(DisabledHomeType.LocalCommissioningBodiesConsulted);
         summary.Should().ContainKey("Short stay").WithValue(DisabledHomeType.ShortStayAccommodation);
         summary.Should().ContainKey("Revenue funding").WithValue(DisabledHomeType.RevenueFundingType);
@@ -617,18 +671,22 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         summary.Should().ContainKey("Square metres of internal floor area").WithValue($"{DisabledHomeType.FloorArea.ToString("0.##", CultureInfo.InvariantCulture)}m\u00b2");
         summary.Should().ContainKey("Nationally Described Space Standards met").WithValue(DisabledHomeType.MeetSpaceStandards);
         summary.Should().ContainKey("Nationally Described Space Standards").WithValue(DisabledHomeType.SpaceStandards);
-        summary.Should().ContainKey("Market value of each home").WhoseValue.Should().BePoundsOnly(DisabledHomeType.MarketValue);
-        summary.Should().ContainKey("Market rent per week").WhoseValue.Should().BePoundsPences(DisabledHomeType.MarketRent);
-        summary.Should().ContainKey("Affordable rent per week").WhoseValue.Should().BePoundsPences(DisabledHomeType.ProspectiveRent);
+        summary.Should().ContainKey("Market value of each home").WhoseValue.Value.Should().BePoundsOnly(DisabledHomeType.MarketValue);
+        summary.Should().ContainKey("Market rent per week").WhoseValue.Value.Should().BePoundsPences(DisabledHomeType.MarketRent);
+        summary.Should().ContainKey("Affordable rent per week").WhoseValue.Value.Should().BePoundsPences(DisabledHomeType.ProspectiveRent);
         summary.Should().ContainKey("Affordable rent as percentage of market rent").WithValue(DisabledHomeType.ProspectiveRentPercentage);
         summary.Should().ContainKey("Target rent exceeded 80% of market rent").WithValue(DisabledHomeType.Exceeds80PercentOfMarketRent);
         summary.Should().ContainKey("Exempt from Right to Shared ownership").WithValue(DisabledHomeType.ExemptFromTheRightToSharedOwnership);
         summary.Should().ContainKey("Right to Shared Ownership criteria").WithValue(DisabledHomeType.ExemptionJustification);
+        summary.Should().ContainKey("Using MMC").WithValue(GeneralHomeType.ModernMethodsOfConstruction);
+        summary.Should().ContainKey("MMC categories used").WithOnlyValues(GeneralHomeType.MmcCategories);
+        summary.Should().ContainKey("Sub-categories of 3D primary structural systems").WithValue(GeneralHomeType.Mmc3DSubcategory);
+        summary.Should().ContainKey("Sub-categories of 2D primary structural systems").WithValue(GeneralHomeType.Mmc2DSubcategory);
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(31)]
-    public async Task Order31_DisabledPeopleCheckAnswersCompleteHomeType()
+    [Order(35)]
+    public async Task Order35_DisabledPeopleCheckAnswersCompleteHomeType()
     {
         // given
         var checkAnswersPage = await GetCurrentPage(BuildHomeTypePage(HomeTypePagesUrl.CheckAnswers, DisabledHomeType));
@@ -652,8 +710,8 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(32)]
-    public async Task Order32_CompleteHomeTypesSection()
+    [Order(36)]
+    public async Task Order36_CompleteHomeTypesSection()
     {
         // given
         var homeTypeListPage = await GetCurrentPage(BuildHomeTypesPage(HomeTypesPagesUrl.List));
@@ -672,8 +730,8 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(33)]
-    public async Task Order33_ConfirmCompleteHomeTypesSection()
+    [Order(37)]
+    public async Task Order37_ConfirmCompleteHomeTypesSection()
     {
         // given
         var finishHomeTypesPage = await GetCurrentPage(BuildHomeTypesPage(HomeTypesPagesUrl.FinishHomeTypes));

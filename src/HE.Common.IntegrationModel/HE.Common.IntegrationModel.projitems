@@ -9,6 +9,7 @@
     <Import_RootNamespace>HE.Common.IntegrationModel</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\AhgLocalAuthorityDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\AhpApplicationDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\ContactDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\ContactRolesDto.cs" />
@@ -20,6 +21,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\LocalAuthorityDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\MilestoneFrameworkItemDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\OrganizationDetailsDto.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\PagedResponseDto.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\PagingRequestDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\ProgrammeDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\SiteDetailsDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\SiteDto.cs" />

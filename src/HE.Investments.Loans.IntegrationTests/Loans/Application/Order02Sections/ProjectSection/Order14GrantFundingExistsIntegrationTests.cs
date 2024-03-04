@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using HE.Investments.Common.Contract.Constants;
 using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using HE.Investments.Loans.Contract.Projects.ViewModels;
