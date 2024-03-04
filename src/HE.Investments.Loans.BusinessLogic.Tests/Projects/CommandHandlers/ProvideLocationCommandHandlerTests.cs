@@ -84,11 +84,10 @@ public class ProvideLocationCommandHandlerTests : TestBase<ProvideLocationComman
         // when
         _command = new ProvideLocationCommand(LoanApplicationIdTestData.LoanApplicationIdOne, projectId, ProjectFormOption.Coordinates, NoCoordinates, null!);
 
-        var result = await TestCandidate.Handle(_command, CancellationToken.None);
+        var action = () => TestCandidate.Handle(_command, CancellationToken.None);
 
         // then
-        result.HasValidationErrors.Should().BeTrue();
-        result.Errors.Should().ContainsOnlyOneErrorMessage(ValidationErrorMessage.EnterCoordinates);
+        await action.Should().ThrowAsync<DomainValidationException>().WithMessage(ValidationErrorMessage.EnterCoordinates);
     }
 
     [Fact]
@@ -149,11 +148,10 @@ public class ProvideLocationCommandHandlerTests : TestBase<ProvideLocationComman
             null!,
             NoLandRegistryNumber);
 
-        var result = await TestCandidate.Handle(_command, CancellationToken.None);
+        var action = () => TestCandidate.Handle(_command, CancellationToken.None);
 
         // then
-        result.HasValidationErrors.Should().BeTrue();
-        result.Errors.Should().ContainsOnlyOneErrorMessage(ValidationErrorMessage.EnterLandRegistryTitleNumber);
+        await action.Should().ThrowAsync<DomainValidationException>().WithMessage(ValidationErrorMessage.EnterLandRegistryTitleNumber);
     }
 
     [Fact]

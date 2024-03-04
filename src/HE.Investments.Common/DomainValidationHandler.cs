@@ -4,7 +4,7 @@ using MediatR;
 using MediatR.Pipeline;
 using Microsoft.Extensions.Logging;
 
-namespace HE.Investment.AHP.Domain;
+namespace HE.Investments.Common;
 
 public class DomainValidationHandler<TRequest, TResponse, TException> : IRequestExceptionHandler<TRequest, TResponse, TException>
     where TRequest : IRequest<TResponse>

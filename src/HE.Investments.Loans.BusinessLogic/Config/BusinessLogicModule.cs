@@ -3,6 +3,7 @@ extern alias Org;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using HE.Investments.Account.Shared.Config;
+using HE.Investments.Common;
 using HE.Investments.Common.Utils;
 using HE.Investments.Loans.BusinessLogic.CompanyStructure;
 using HE.Investments.Loans.BusinessLogic.CompanyStructure.Repositories;
@@ -12,6 +13,7 @@ using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories;
 using HE.Investments.Loans.BusinessLogic.Projects.Repositories;
 using HE.Investments.Loans.BusinessLogic.Security.Repositories;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
+using MediatR.Pipeline;
 using Microsoft.Extensions.DependencyInjection;
 using Org::HE.Investments.Organisation.LocalAuthorities.Repositories;
 
@@ -22,6 +24,7 @@ public static class BusinessLogicModule
     public static void AddBusinessLogic(this IServiceCollection services)
     {
         services.AddAccountSharedModule();
+        services.AddTransient(typeof(IRequestExceptionHandler<,,>), typeof(DomainValidationHandler<,,>));
         services.AddFluentValidationAutoValidation();
         services.AddValidatorsFromAssemblyContaining<LoanApplicationRepository>();
         services.AddScoped<ILoanApplicationRepository, LoanApplicationRepository>();

@@ -12,7 +12,6 @@ using HE.Investments.Loans.Contract.Common;
 using HE.Investments.Loans.Contract.Projects.Commands;
 using HE.Investments.Loans.Contract.Projects.ViewModels;
 using MediatR;
-using Microsoft.Extensions.Logging;
 
 namespace HE.Investments.Loans.BusinessLogic.Projects.CommandHandlers;
 
@@ -24,9 +23,8 @@ public class ProvideAdditionalDataCommandHandler : ProjectCommandHandlerBase, IR
         IApplicationProjectsRepository applicationProjectsRepository,
         ILoanApplicationRepository loanApplicationRepository,
         IAccountUserContext loanUserContext,
-        ILogger<ProjectCommandHandlerBase> logger,
         IDateTimeProvider timeProvider)
-        : base(applicationProjectsRepository, loanApplicationRepository, loanUserContext, logger)
+        : base(applicationProjectsRepository, loanApplicationRepository, loanUserContext)
     {
         _timeProvider = timeProvider;
     }

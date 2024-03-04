@@ -6,14 +6,13 @@ using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories;
 using HE.Investments.Loans.Contract.Funding.Commands;
 using HE.Investments.Loans.Contract.Funding.ValueObjects;
 using MediatR;
-using Microsoft.Extensions.Logging;
 
 namespace HE.Investments.Loans.BusinessLogic.Funding.CommandHandlers;
 
 public class ProvidePrivateSectorFundingCommandHandler : FundingBaseCommandHandler, IRequestHandler<ProvidePrivateSectorFundingCommand, OperationResult>
 {
-    public ProvidePrivateSectorFundingCommandHandler(IFundingRepository fundingRepository, ILoanApplicationRepository loanApplicationRepository, IAccountUserContext loanUserContext, ILogger<FundingBaseCommandHandler> logger)
-        : base(fundingRepository, loanApplicationRepository, loanUserContext, logger)
+    public ProvidePrivateSectorFundingCommandHandler(IFundingRepository fundingRepository, ILoanApplicationRepository loanApplicationRepository, IAccountUserContext loanUserContext)
+        : base(fundingRepository, loanApplicationRepository, loanUserContext)
     {
     }
 

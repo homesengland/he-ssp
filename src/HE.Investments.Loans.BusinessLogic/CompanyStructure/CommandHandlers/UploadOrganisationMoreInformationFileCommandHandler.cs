@@ -7,7 +7,6 @@ using HE.Investments.Loans.Contract.Application.ValueObjects;
 using HE.Investments.Loans.Contract.CompanyStructure.Commands;
 using HE.Investments.Loans.Contract.Documents;
 using MediatR;
-using Microsoft.Extensions.Logging;
 
 namespace HE.Investments.Loans.BusinessLogic.CompanyStructure.CommandHandlers;
 
@@ -23,9 +22,8 @@ public class UploadOrganisationMoreInformationFileCommandHandler : CompanyStruct
         ICompanyStructureFileFactory fileFactory,
         ICompanyStructureRepository companyStructureRepository,
         ILoanApplicationRepository loanApplicationRepository,
-        IAccountUserContext loanUserContext,
-        ILogger<CompanyStructureBaseCommandHandler> logger)
-        : base(companyStructureRepository, loanApplicationRepository, loanUserContext, logger)
+        IAccountUserContext loanUserContext)
+        : base(companyStructureRepository, loanApplicationRepository, loanUserContext)
     {
         _fileService = fileService;
         _fileFactory = fileFactory;

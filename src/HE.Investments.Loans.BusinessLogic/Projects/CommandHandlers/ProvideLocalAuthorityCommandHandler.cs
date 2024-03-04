@@ -7,7 +7,6 @@ using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories;
 using HE.Investments.Loans.BusinessLogic.Projects.Repositories;
 using HE.Investments.Loans.Contract.Projects.Commands;
 using MediatR;
-using Microsoft.Extensions.Logging;
 using Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects;
 
 namespace HE.Investments.Loans.BusinessLogic.Projects.CommandHandlers;
@@ -17,9 +16,8 @@ public class ProvideLocalAuthorityCommandHandler : ProjectCommandHandlerBase, IR
     public ProvideLocalAuthorityCommandHandler(
         IApplicationProjectsRepository applicationProjectsRepository,
         ILoanApplicationRepository loanApplicationRepository,
-        IAccountUserContext loanUserContext,
-        ILogger<ProjectCommandHandlerBase> logger)
-        : base(applicationProjectsRepository, loanApplicationRepository, loanUserContext, logger)
+        IAccountUserContext loanUserContext)
+        : base(applicationProjectsRepository, loanApplicationRepository, loanUserContext)
     {
     }
 

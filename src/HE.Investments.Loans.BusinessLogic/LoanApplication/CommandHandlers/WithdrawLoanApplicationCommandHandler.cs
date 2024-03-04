@@ -1,12 +1,9 @@
 using HE.Investments.Account.Shared;
-using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
-using HE.Investments.Loans.BusinessLogic.CompanyStructure.CommandHandlers;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories;
 using HE.Investments.Loans.Contract.Application.Commands;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
 using MediatR;
-using Microsoft.Extensions.Logging;
 
 namespace HE.Investments.Loans.BusinessLogic.LoanApplication.CommandHandlers;
 
@@ -14,34 +11,24 @@ public class WithdrawLoanApplicationCommandHandler : IRequestHandler<WithdrawLoa
 {
     private readonly ILoanApplicationRepository _loanApplicationRepository;
     private readonly IAccountUserContext _loanUserContext;
-    private readonly ILogger<CompanyStructureBaseCommandHandler> _logger;
 
     public WithdrawLoanApplicationCommandHandler(
         ILoanApplicationRepository loanApplicationRepository,
-        IAccountUserContext loanUserContext,
-        ILogger<CompanyStructureBaseCommandHandler> logger)
+        IAccountUserContext loanUserContext)
     {
         _loanApplicationRepository = loanApplicationRepository;
         _loanUserContext = loanUserContext;
-        _logger = logger;
     }
 
     public async Task<OperationResult> Handle(WithdrawLoanApplicationCommand request, CancellationToken cancellationToken)
     {
-        try
-        {
-            var loanApplication = await _loanApplicationRepository
-                                .GetLoanApplication(request.LoanApplicationId, await _loanUserContext.GetSelectedAccount(), cancellationToken);
-            var withdrawReason = WithdrawReason.New(request.WithdrawReason);
+        var loanApplication = await _loanApplicationRepository
+                            .GetLoanApplication(request.LoanApplicationId, await _loanUserContext.GetSelectedAccount(), cancellationToken);
+        var withdrawReason = WithdrawReason.New(request.WithdrawReason);
 
-            await loanApplication.Withdraw(_loanApplicationRepository, withdrawReason, cancellationToken);
-            await _loanApplicationRepository.DispatchEvents(loanApplication, cancellationToken);
-            return OperationResult.Success();
-        }
-        catch (DomainValidationException domainValidationException)
-        {
-            _logger.LogWarning(domainValidationException, "Validation error(s) occured: {Message}", domainValidationException.Message);
-            return domainValidationException.OperationResult;
-        }
+        await loanApplication.Withdraw(_loanApplicationRepository, withdrawReason, cancellationToken);
+        await _loanApplicationRepository.DispatchEvents(loanApplication, cancellationToken);
+        return OperationResult.Success();
+
     }
 }
