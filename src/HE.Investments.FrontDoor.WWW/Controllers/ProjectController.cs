@@ -423,7 +423,7 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
         return await this.ExecuteCommand<TViewModel>(
             _mediator,
             command,
-            async () => await ContinueWithRedirect(routeData ?? new { projectId.Value }),
+            async () => await ContinueWithRedirect(routeData ?? new { projectId = projectId.Value }),
             async () =>
             {
                 var siteDetails = await GetProjectDetails(projectId.Value, cancellationToken);
