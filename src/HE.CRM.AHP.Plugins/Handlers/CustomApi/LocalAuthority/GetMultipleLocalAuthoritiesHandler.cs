@@ -16,7 +16,7 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.LocalAuthority
 
         public override bool CanWork()
         {
-            return true;
+            return !string.IsNullOrWhiteSpace(Paging);
         }
 
         public override void DoWork()
