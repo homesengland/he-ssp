@@ -1,27 +1,23 @@
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.Components.TextInput
 @using HE.Investments.FrontDoor.Contract.Project
-@using HE.Investments.FrontDoor.WWW.Views.Project
+@using HE.Investments.FrontDoor.WWW.Extensions
 @using HE.Investments.FrontDoor.WWW.Views.Project.Const
-@using HE.Investments.FrontDoor.WWW.Workflows
-@using Microsoft.AspNetCore.Mvc.TagHelpers
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
 @model string
 @{
     ViewData["Title"] = ProjectPageTitles.Name;
-    var projectId = ViewContext.RouteData.Values.FirstOrDefault(x => x.Key == "projectId").Value as string;
+    var projectId = this.GetOptionalProjectIdFromRoute();
     var backUrl = string.IsNullOrEmpty(projectId)
         ? Url.Action("NewEnglandHousingDelivery", "Project", new { IsEnglandHousingDelivery = true })
         : Url.Action("Back", "Project", new { projectId, currentPage = ProjectWorkflowState.Name });
     var submitAction = string.IsNullOrEmpty(projectId) ? "NewName" : "Name";
-
 }
+
 <gds-div-grid-column-two-thirds>
     <gds-back-link href="@backUrl" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
-
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
-    <form asp-controller="Project" asp-action="@submitAction" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
 
+    <form asp-controller="Project" asp-action="@submitAction" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
         <vc:text-input
             title="@ProjectPageTitles.Name"
             title-type="InputTitleType.PageHeader"
@@ -32,5 +28,4 @@
 
         <vc:form-button/>
     </form>
-
 </gds-div-grid-column-two-thirds>
