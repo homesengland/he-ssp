@@ -1,4 +1,5 @@
 using HE.Investments.FrontDoor.Contract.Project;
+using HE.Investments.FrontDoor.Contract.Project.Enums;
 using HE.Investments.FrontDoor.Contract.Project.Queries;
 using MediatR;
 
@@ -13,6 +14,10 @@ public class GetProjectDetailsQueryHandler : IRequestHandler<GetProjectDetailsQu
             Id = request.ProjectId,
             Name = "Test name",
             IsEnglandHousingDelivery = true,
+            IsSiteIdentified = true,
+            GeographicFocus = ProjectGeographicFocus.Regional,
+            IsFundingRequired = true,
+            ActivityTypes = new[] { ActivityType.ProvidingInfrastructure },
         });
     }
 }

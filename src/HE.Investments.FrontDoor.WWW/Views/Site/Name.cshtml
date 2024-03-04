@@ -1,0 +1,20 @@
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investments.FrontDoor.WWW.Extensions
+@using HE.Investments.FrontDoor.WWW.Views.Site.Const
+@{
+    ViewData["Title"] = SitePageTitles.Name;
+    var siteId = this.GetOptionalSiteIdFromRoute();
+    var projectId = this.GetProjectIdFromRoute();
+    var submitAction = string.IsNullOrEmpty(siteId) ? "NewName" : "Name";
+}
+
+<gds-div-grid-column-two-thirds>
+    <gds-back-link href="@Url.Action("IdentifiedSite", "Project", new { projectId })" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+
+    <form asp-controller="Site" asp-action="@submitAction" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
+        TODO: @SitePageTitles.Name
+
+        <vc:form-button/>
+    </form>
+</gds-div-grid-column-two-thirds>
