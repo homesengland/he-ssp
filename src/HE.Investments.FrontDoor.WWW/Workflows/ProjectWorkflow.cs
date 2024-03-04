@@ -23,7 +23,6 @@ public class ProjectWorkflow : EncodedStateRouting<ProjectWorkflowState>
             ProjectWorkflowState.NotEligibleForAnything => !IsEligibleForAnything(),
             ProjectWorkflowState.Name => true,
             ProjectWorkflowState.SupportRequiredActivities => true,
-            ProjectWorkflowState.ActivityTypes => true,
             _ => throw new ArgumentOutOfRangeException(nameof(state), state, null),
         };
     }
@@ -42,11 +41,7 @@ public class ProjectWorkflow : EncodedStateRouting<ProjectWorkflowState>
             .Permit(Trigger.Back, ProjectWorkflowState.EnglandHousingDelivery);
 
         Machine.Configure(ProjectWorkflowState.SupportRequiredActivities)
-            .Permit(Trigger.Continue, ProjectWorkflowState.ActivityTypes)
             .Permit(Trigger.Back, ProjectWorkflowState.Name);
-
-        Machine.Configure(ProjectWorkflowState.ActivityTypes)
-            .Permit(Trigger.Back, ProjectWorkflowState.SupportRequiredActivities);
     }
 
     private IEnumerable<Func<bool>> BuildDeadEndConditions(ProjectWorkflowState state)

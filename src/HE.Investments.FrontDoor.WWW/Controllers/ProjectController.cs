@@ -90,7 +90,9 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
 
     [HttpPost("{projectId}/england-housing-delivery")]
     [WorkflowState(ProjectWorkflowState.EnglandHousingDelivery)]
-    public async Task<IActionResult> EnglandHousingDelivery([FromRoute] string projectId, [FromForm] bool? isEnglandHousingDelivery,
+    public async Task<IActionResult> EnglandHousingDelivery(
+        [FromRoute] string projectId,
+        [FromForm] bool? isEnglandHousingDelivery,
         CancellationToken cancellationToken)
     {
         return await ExecuteProjectCommand(
@@ -133,18 +135,11 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
         return View(await GetProjectDetails(projectId, cancellationToken));
     }
 
-    [HttpGet("{projectId}/activity")]
-    [WorkflowState(ProjectWorkflowState.ActivityTypes)]
-    public IActionResult Activity([FromRoute] string projectId)
+    [HttpPost("{projectId}/support-required-activities")]
+    [WorkflowState(ProjectWorkflowState.SupportRequiredActivities)]
+    public async Task<IActionResult> SupportRequiredActivities([FromRoute] string projectId, ProjectDetails projectDetails, CancellationToken cancellationToken)
     {
-        return View(new ProjectDetails());
-    }
-
-    [HttpPost("{projectId}/activity")]
-    [WorkflowState(ProjectWorkflowState.ActivityTypes)]
-    public IActionResult ActivityPost([FromRoute] string projectId, ProjectDetails projectDetails)
-    {
-        return RedirectToAction("Index", "Home");
+        return View("SupportRequiredActivities", await GetProjectDetails(projectId, cancellationToken));
     }
 
     protected override async Task<IStateRouting<ProjectWorkflowState>> Routing(ProjectWorkflowState currentState, object? routeData = null)

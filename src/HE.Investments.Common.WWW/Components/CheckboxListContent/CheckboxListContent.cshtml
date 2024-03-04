@@ -8,8 +8,11 @@
     <div class="govuk-checkboxes__item">
         <input id="@id" type="checkbox" checked="@option.Selected" class="govuk-checkboxes__input" value="@option.Value" name="@Model.fieldName"/>
         <label class="govuk-label govuk-checkboxes__label" for="@id">@option.Text</label>
-        <he-div-hint class="govuk-!-padding-left-3">
-            @option.Hint
-        </he-div-hint>
+        @if (!string.IsNullOrWhiteSpace(@option.Hint))
+        {
+            <he-div-hint class="govuk-!-padding-left-3">
+                @option.Hint
+            </he-div-hint>
+        }
     </div>
 }
