@@ -6,7 +6,10 @@ using HE.Investments.Account.Domain.Users.Repositories;
 using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Config;
 using HE.Investments.Account.Shared.Repositories;
+using HE.Investments.Common;
+using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Organisation.Config;
+using MediatR.Pipeline;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace HE.Investments.Account.Domain.Config;
@@ -18,6 +21,8 @@ public static class AccountModule
         services.AddOrganizationsModule();
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(AccountModule).Assembly));
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(AccountSharedModule).Assembly));
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(DomainValidationException).Assembly));
+        services.AddTransient(typeof(IRequestExceptionHandler<,,>), typeof(DomainValidationHandler<,,>));
         services.AddScoped<IProfileRepository, ProfileRepository>();
         services.AddScoped<IContactRepository, ContactRepository>();
         services.AddScoped<IAccountRepository, AccountCrmRepository>();

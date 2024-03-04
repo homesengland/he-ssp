@@ -31,43 +31,36 @@ public class ChangeOrganisationDetailsCommandHandler : IRequestHandler<ChangeOrg
 
     public async Task<OperationResult> Handle(ChangeOrganisationDetailsCommand request, CancellationToken cancellationToken)
     {
-        try
+        var userAccount = await _accountUserContext.GetSelectedAccount();
+
+        if (!await _accountUserContext.IsLinkedWithOrganisation())
         {
-            var userAccount = await _accountUserContext.GetSelectedAccount();
-
-            if (!await _accountUserContext.IsLinkedWithOrganisation())
-            {
-                throw new DomainException(
-                    $"User with id {_accountUserContext.UserGlobalId} is not linked with organization: {request.Name}",
-                    CommonErrorCodes.ContactIsNotLinkedWithRequestedOrganization);
-            }
-
-            var operationResult = OperationResult.New();
-            var name = operationResult.Aggregate(() => new OrganisationName(request.Name, OrganisationErrorMessages.MissingRegisteredOrganisationName));
-            var phoneNumber = operationResult.Aggregate(() => new OrganisationPhoneNumber(request.PhoneNumber));
-            var address = operationResult.Aggregate(() =>
-                new OrganisationAddress(
-                    request.AddressLine1,
-                    request.AddressLine2,
-                    null,
-                    request.TownOrCity,
-                    request.Postcode,
-                    request.County,
-                    null));
-
-            operationResult.CheckErrors();
-
-            var organisation = new OrganisationEntity(name, address, phoneNumber);
-
-            await _repository.Save(userAccount.SelectedOrganisationId(), organisation, cancellationToken);
-
-            await _notificationService.Publish(new ChangeOrganisationDetailsRequestedNotification());
-
-            return OperationResult.Success();
+            throw new DomainException(
+                $"User with id {_accountUserContext.UserGlobalId} is not linked with organization: {request.Name}",
+                CommonErrorCodes.ContactIsNotLinkedWithRequestedOrganization);
         }
-        catch (DomainValidationException domainValidationException)
-        {
-            return domainValidationException.OperationResult;
-        }
+
+        var operationResult = OperationResult.New();
+        var name = operationResult.Aggregate(() => new OrganisationName(request.Name, OrganisationErrorMessages.MissingRegisteredOrganisationName));
+        var phoneNumber = operationResult.Aggregate(() => new OrganisationPhoneNumber(request.PhoneNumber));
+        var address = operationResult.Aggregate(() =>
+            new OrganisationAddress(
+                request.AddressLine1,
+                request.AddressLine2,
+                null,
+                request.TownOrCity,
+                request.Postcode,
+                request.County,
+                null));
+
+        operationResult.CheckErrors();
+
+        var organisation = new OrganisationEntity(name, address, phoneNumber);
+
+        await _repository.Save(userAccount.SelectedOrganisationId(), organisation, cancellationToken);
+
+        await _notificationService.Publish(new ChangeOrganisationDetailsRequestedNotification());
+
+        return OperationResult.Success();
     }
 }
