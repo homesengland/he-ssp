@@ -1,3 +1,4 @@
+using System.Text.Json;
 using DataverseModel;
 using HE.Base.Plugins.Handlers;
 using HE.CRM.Plugins.Services.FrontDoorProject;
@@ -21,11 +22,12 @@ namespace HE.CRM.Plugins.Handlers.CustomApi
         public override void DoWork()
         {
             this.TracingService.Trace("GetMultipleFrontDoorProjectsForAccountHandler");
-            var frontDoorProject = CrmServicesFactory.Get<IFrontDoorProjectService>().GetFrontDoorProjectsForAccountAndContact(externalContactId, organisationId);
+            var frontDoorProjectsDto = CrmServicesFactory.Get<IFrontDoorProjectService>().GetFrontDoorProjectsForAccountAndContact(externalContactId, organisationId);
             this.TracingService.Trace("Send Response");
-            if (frontDoorProject != null)
+            if (frontDoorProjectsDto != null)
             {
-                ExecutionData.SetOutputParameter(invln_getmultiplefrontdoorprojectsResponse.Fields.invln_frontdoorprojects, frontDoorProject);
+                var frontDoorProjectDtoListSerialized = JsonSerializer.Serialize(frontDoorProjectsDto);
+                ExecutionData.SetOutputParameter(invln_getmultiplefrontdoorprojectsResponse.Fields.invln_frontdoorprojects, frontDoorProjectDtoListSerialized);
             }
         }
         #endregion

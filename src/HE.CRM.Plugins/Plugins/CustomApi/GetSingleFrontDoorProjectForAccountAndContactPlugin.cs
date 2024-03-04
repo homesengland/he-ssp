@@ -17,7 +17,7 @@ namespace HE.CRM.Plugins.Plugins.CustomApi
     "HE.CRM.Plugins.Plugins.CustomApi.GetSingleFrontDoorProjectForAccountAndContactPlugin: invln_getsinglefrontdoorproject",
     1,
     IsolationModeEnum.Sandbox,
-    Id = "10E74A4B-DD1F-4033-B29D-1582BD4D1FC2")] //done
+    Id = "10E74A4B-DD1F-4033-B29D-1582BD4D1FC2")]
 
     public class GetSingleFrontDoorProjectForAccountAndContactPlugin : PluginBase<DataverseContext>, IPlugin
     {

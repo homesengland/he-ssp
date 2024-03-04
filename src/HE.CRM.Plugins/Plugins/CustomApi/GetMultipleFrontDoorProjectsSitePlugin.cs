@@ -16,7 +16,7 @@ namespace HE.CRM.Plugins.Plugins.CustomApi
     "HE.CRM.Plugins.Plugins.CustomApi.GetMultipleFrontDoorProjectsSitePlugin: invln_getmultiplefrontdoorprojectssite",
     1,
     IsolationModeEnum.Sandbox,
-    Id = "5193DCAE-956B-4F1F-8B5E-015BDF13DD39")] //done
+    Id = "5193DCAE-956B-4F1F-8B5E-015BDF13DD39")]
 
     public class GetMultipleFrontDoorProjectsSitePlugin : PluginBase<DataverseContext>, IPlugin
     {

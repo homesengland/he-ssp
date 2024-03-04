@@ -41,7 +41,7 @@ namespace HE.CRM.Plugins.Services.FrontDoorProject
         }
         #endregion
 
-        public string GetFrontDoorProjectsForAccountAndContact(string externalContactId, string accountId, string frontDoorProjectId = null, string fieldsToRetrieve = null)
+        public List<FrontDoorProjectDto> GetFrontDoorProjectsForAccountAndContact(string externalContactId, string accountId, string frontDoorProjectId = null, string fieldsToRetrieve = null)
         {
             List<FrontDoorProjectDto> entityCollection = new List<FrontDoorProjectDto>();
             if (Guid.TryParse(accountId, out Guid accountGuid))
@@ -72,13 +72,11 @@ namespace HE.CRM.Plugins.Services.FrontDoorProject
                     this.TracingService.Trace($"Front Door Project id {element.Id}");
                     this.TracingService.Trace("GetFrontDoorProjectSiteRelatedToFrontDoorProject");
                     var frontDoorProjectSiteList = _frontDoorProjectSiteRepository.GetSiteRelatedToFrontDoorProject(element.ToEntityReference());
-                    if (frontDoorProjectSiteList != null)
+
+                    foreach (var site in frontDoorProjectSiteList)
                     {
-                        foreach (var site in frontDoorProjectSiteList)
-                        {
-                            this.TracingService.Trace("MapFrontDoorProjectSiteToDto");
-                            frontDoorProjectSiteDtoList.Add(FrontDoorProjectSiteMapper.MapFrontDoorProjectSiteToDto(site));
-                        }
+                        this.TracingService.Trace("MapFrontDoorProjectSiteToDto");
+                        frontDoorProjectSiteDtoList.Add(FrontDoorProjectSiteMapper.MapFrontDoorProjectSiteToDto(site));
                     }
 
                     this.TracingService.Trace("MapFrontDoorProjectToDto");
@@ -98,10 +96,7 @@ namespace HE.CRM.Plugins.Services.FrontDoorProject
                     entityCollection.Add(FrontDoorProjectMapper.MapRegularEntityToDto(element, frontDoorProjectSiteDtoList, externalContactId, frontDoorProjectContact));
                 }
             }
-
-            this.TracingService.Trace("Serialize");
-            return JsonSerializer.Serialize(entityCollection);
-
+            return entityCollection;
         }
 
         public string CreateRecordFromPortal(string externalContactId, string organisationId, string frontDoorProjectId, string entityFieldsParameters)
@@ -131,8 +126,7 @@ namespace HE.CRM.Plugins.Services.FrontDoorProject
                     frontDoorProjecToCreate.invln_ContactId = requestContact.ToEntityReference();
                 }
 
-                this.TracingService.Trace("Create invln_Loanapplication");
-                //frontDoorProjecToCreate.StatusCode = new OptionSetValue((int)invln_FrontDoorProjectPOC_StatusCode.Active);
+                this.TracingService.Trace("Create FrontDoorProject");
                 frontdoorprojectGUID = _frontDoorProjectRepository.Create(frontDoorProjecToCreate);
             }
 

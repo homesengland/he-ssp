@@ -27,22 +27,20 @@ namespace HE.CRM.Common.Repositories.Implementations
             }
         }
 
-        // Maybe it is unnecessary
-
-        //public invln_FrontDoorProjectSitePOC GetSingleSiteRelatedToFrontDoorProject(EntityReference frontDoorProjectId, string frontDoorSiteId)
-        //{
-        //    if (Guid.TryParse(frontDoorSiteId, out Guid siteId))
-        //    {
-        //        using (var ctx = new OrganizationServiceContext(service))
-        //        {
-        //            return ctx.CreateQuery<invln_FrontDoorProjectSitePOC>().FirstOrDefault(x => x.Id == siteId && x.invln_FrontDoorProjectId.Id == frontDoorProjectId.Id && x.StateCode.Value == (int)invln_FrontDoorProjectSitePOCState.Active);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        return new invln_FrontDoorProjectSitePOC();
-        //    }
-        //}
+        public invln_FrontDoorProjectSitePOC GetSingleSiteRelatedToFrontDoorProject(EntityReference frontDoorProjectId, string frontDoorSiteId)
+        {
+            if (Guid.TryParse(frontDoorSiteId, out Guid siteId))
+            {
+                using (var ctx = new OrganizationServiceContext(service))
+                {
+                    return ctx.CreateQuery<invln_FrontDoorProjectSitePOC>().FirstOrDefault(x => x.Id == siteId && x.invln_FrontDoorProjectId.Id == frontDoorProjectId.Id && x.StateCode.Value == (int)invln_FrontDoorProjectSitePOCState.Active);
+                }
+            }
+            else
+            {
+                return new invln_FrontDoorProjectSitePOC();
+            }
+        }
 
         public List<invln_FrontDoorProjectSitePOC> GetMultipleSiteRelatedToFrontDoorProjectForGivenAccountAndContact(string frontDoorProjectId, string organisationId, string externalContactId)
         {

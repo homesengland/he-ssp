@@ -45,16 +45,14 @@ namespace HE.CRM.Plugins.Services.FrontDoorProjectSite
         public List<FrontDoorProjectSiteDto> GetMultipleSiteRelatedToFrontDoorProjectForGivenAccountAndContact(string frontDoorProjectId, string organisationId, string externalContactId)
         {
             List<FrontDoorProjectSiteDto> frontDoorProjectSiteDtoList = new List<FrontDoorProjectSiteDto>();
-            var frontDoorProjectSiteList = _frontDoorProjectSiteRepository.GetMultipleSiteRelatedToFrontDoorProjectForGivenAccountAndContact(frontDoorProjectId, organisationId, externalContactId); ;
+            var frontDoorProjectSiteList = _frontDoorProjectSiteRepository.GetMultipleSiteRelatedToFrontDoorProjectForGivenAccountAndContact(frontDoorProjectId, organisationId, externalContactId);
 
-            if(frontDoorProjectSiteList.Count > 0)
+            foreach(var frontDoorProjectSite in frontDoorProjectSiteList)
             {
-                foreach(var frontDoorProjectSite in frontDoorProjectSiteList)
-                {
-                    var frontDoorProjectSiteDto = FrontDoorProjectSiteMapper.MapFrontDoorProjectSiteToDto(frontDoorProjectSite);
-                    frontDoorProjectSiteDtoList.Add(frontDoorProjectSiteDto);
-                }
+                var frontDoorProjectSiteDto = FrontDoorProjectSiteMapper.MapFrontDoorProjectSiteToDto(frontDoorProjectSite);
+                frontDoorProjectSiteDtoList.Add(frontDoorProjectSiteDto);
             }
+
             return frontDoorProjectSiteDtoList;
         }
     }
