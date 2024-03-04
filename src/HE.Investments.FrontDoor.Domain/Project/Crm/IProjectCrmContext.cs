@@ -1,21 +1,19 @@
-using System.Diagnostics.CodeAnalysis;
+extern alias Org;
+
+using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Shared.User;
 
 namespace HE.Investments.FrontDoor.Domain.Project.Crm;
 
 public interface IProjectCrmContext
 {
-    Task<IList<ProjectDto>> GetOrganisationProjects(Guid organisationId, CancellationToken cancellationToken);
+    Task<IList<FrontDoorProjectDto>> GetOrganisationProjects(string userGlobalId, Guid organisationId, CancellationToken cancellationToken);
 
-    Task<IList<ProjectDto>> GetUserProjects(string userGlobalId, Guid organisationId, CancellationToken cancellationToken);
+    Task<IList<FrontDoorProjectDto>> GetUserProjects(string userGlobalId, Guid organisationId, CancellationToken cancellationToken);
 
-    Task<ProjectDto> GetOrganisationProjectById(string projectId, Guid organisationId, CancellationToken cancellationToken);
+    Task<FrontDoorProjectDto> GetOrganisationProjectById(string projectId, string userGlobalId, Guid organisationId, CancellationToken cancellationToken);
 
-    Task<ProjectDto> GetUserProjectById(string projectId, string userGlobalId, Guid organisationId, CancellationToken cancellationToken);
+    Task<FrontDoorProjectDto> GetUserProjectById(string projectId, string userGlobalId, Guid organisationId, CancellationToken cancellationToken);
 
-    Task<string> Save(ProjectDto dto, UserAccount userAccount, CancellationToken cancellationToken);
+    Task<string> Save(FrontDoorProjectDto dto, UserAccount userAccount, CancellationToken cancellationToken);
 }
-
-[SuppressMessage("nvm", "IDE1006", Justification = "It is temporary")]
-[SuppressMessage("nvm", "SA1300", Justification = "It is temporary")]
-public record ProjectDto(string id, string name);
