@@ -1,8 +1,7 @@
 using HE.Investments.Common.Workflow;
-using HE.Investments.Common.WWW.Routing;
 using Stateless;
 
-namespace HE.Investment.AHP.WWW.Workflows;
+namespace HE.Investments.Common.WWW.Routing;
 
 public abstract class EncodedStateRouting<TState> : IStateRouting<TState>
     where TState : struct, Enum

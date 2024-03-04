@@ -11,4 +11,6 @@ public interface IExternalLinks
     public string UkGovernmentLicensingFramework { get; }
 
     public string GovUk { get; }
+
+    public string HomeBuildingFundInfrastructureLoans { get; }
 }

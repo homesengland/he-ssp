@@ -1,0 +1,28 @@
+@using HE.Investments.FrontDoor.WWW.Views.Project
+@{
+    ViewData["Title"] = ProjectPageTitles.Start;
+}
+
+<gds-div-grid-column-two-thirds>
+    <gds-back-link href="@Url.Action("Index", "Projects")" class="govuk-!-margin-bottom-8">
+    </gds-back-link>
+    <vc:page-header title="@ProjectPageTitles.Start"/>
+
+    <div class="govuk-!-padding-bottom-8">
+        <gds-p>You'll need to provide information about your project. This includes:</gds-p>
+        <ul class="govuk-list govuk-list govuk-list--bullet">
+            <li>where your project is</li>
+            <li>what you require support for</li>
+            <li>if you have a site and additional site information, including planning</li>
+            <li>if you require funding and how much funding you require</li>
+            <li>when you expect to start the project</li>
+        </ul>
+
+        <gds-p>Once you have answered these questions, we will be able to suggest what you need to do next.</gds-p>
+        <gds-p>By starting a new project you are confirming that, to the best of your knowledge, the details you are providing are correct.</gds-p>
+    </div>
+
+    <a href="@Url.Action("NewEnglandHousingDelivery", "Project")">
+        <gds-button-start type="submit">Start now</gds-button-start>
+    </a>
+</gds-div-grid-column-two-thirds>
