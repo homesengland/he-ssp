@@ -73,17 +73,6 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// Gets a binding to the set of all <see cref="DataverseModel.invln_AHGLocalAuthorities"/> entities.
-		/// </summary>
-		public System.Linq.IQueryable<DataverseModel.invln_AHGLocalAuthorities> invln_AHGLocalAuthoritiesSet
-		{
-			get
-			{
-				return this.CreateQuery<DataverseModel.invln_AHGLocalAuthorities>();
-			}
-		}
-		
-		/// <summary>
 		/// Gets a binding to the set of all <see cref="DataverseModel.invln_ahpcontract"/> entities.
 		/// </summary>
 		public System.Linq.IQueryable<DataverseModel.invln_ahpcontract> invln_ahpcontractSet
@@ -113,17 +102,6 @@ namespace DataverseModel
 			get
 			{
 				return this.CreateQuery<DataverseModel.invln_BorrowerPreviousSchemes>();
-			}
-		}
-		
-		/// <summary>
-		/// Gets a binding to the set of all <see cref="DataverseModel.invln_Cashflow"/> entities.
-		/// </summary>
-		public System.Linq.IQueryable<DataverseModel.invln_Cashflow> invln_CashflowSet
-		{
-			get
-			{
-				return this.CreateQuery<DataverseModel.invln_Cashflow>();
 			}
 		}
 		
@@ -256,6 +234,28 @@ namespace DataverseModel
 			get
 			{
 				return this.CreateQuery<DataverseModel.invln_FinancialCovenants>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.invln_FrontDoorProjectPOC"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.invln_FrontDoorProjectPOC> invln_FrontDoorProjectPOCSet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.invln_FrontDoorProjectPOC>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.invln_FrontDoorProjectSitePOC"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.invln_FrontDoorProjectSitePOC> invln_FrontDoorProjectSitePOCSet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.invln_FrontDoorProjectSitePOC>();
 			}
 		}
 		

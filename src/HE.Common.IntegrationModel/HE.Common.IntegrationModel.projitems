@@ -14,6 +14,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\ContactDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\ContactRolesDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\DeliveryPhaseDto.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\FrontDoorProjectDto.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\FrontDoorProjectSiteDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\HomeTypeDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\LoanApplicationDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\LocalAuthorityDto.cs" />
