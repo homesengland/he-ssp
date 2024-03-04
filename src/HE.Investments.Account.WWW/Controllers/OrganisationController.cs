@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HE.Investments.Account.WWW.Controllers;
 
 [Route(OrganisationAccountEndpoints.Controller)]
+[AuthorizeWithCompletedProfile]
 public class OrganisationController : Controller
 {
     private readonly IMediator _mediator;
