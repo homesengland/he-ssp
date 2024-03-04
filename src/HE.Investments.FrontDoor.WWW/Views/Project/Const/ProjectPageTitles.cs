@@ -1,4 +1,4 @@
-namespace HE.Investments.FrontDoor.WWW.Views.Project;
+namespace HE.Investments.FrontDoor.WWW.Views.Project.Const;
 
 public static class ProjectPageTitles
 {

@@ -8,6 +8,11 @@ public class GetProjectDetailsQueryHandler : IRequestHandler<GetProjectDetailsQu
 {
     public Task<ProjectDetails> Handle(GetProjectDetailsQuery request, CancellationToken cancellationToken)
     {
-        return Task.FromResult(new ProjectDetails(request.ProjectId, "Test name", true));
+        return Task.FromResult(new ProjectDetails
+        {
+            Id = request.ProjectId,
+            Name = "Test name",
+            IsEnglandHousingDelivery = true,
+        });
     }
 }
