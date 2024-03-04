@@ -1,5 +1,6 @@
 using HE.Investments.Account.Shared;
 using HE.Investments.FrontDoor.Contract.Project;
+using HE.Investments.FrontDoor.Contract.Project.Enums;
 using HE.Investments.FrontDoor.Contract.Project.Queries;
 using HE.Investments.FrontDoor.Domain.Project.Repository;
 using MediatR;
@@ -27,6 +28,10 @@ public class GetProjectDetailsQueryHandler : IRequestHandler<GetProjectDetailsQu
             Id = project.Id,
             Name = project.Name,
             IsEnglandHousingDelivery = true,
+            IsSiteIdentified = true,
+            GeographicFocus = ProjectGeographicFocus.Regional,
+            IsFundingRequired = true,
+            ActivityTypes = new[] { ActivityType.ProvidingInfrastructure },
         };
     }
 }

@@ -1,10 +1,8 @@
 @using HE.Investments.Common.WWW.Components.FormButton
-@using Microsoft.AspNetCore.Mvc.TagHelpers
 @using HE.Investments.FrontDoor.WWW.Models
 @using HE.Investments.FrontDoor.WWW.Views.Project.Const
-@using HE.Investments.FrontDoor.WWW.Workflows
 @using HE.Investments.Common.WWW.Components.CheckboxListWithOr
-
+@using HE.Investments.FrontDoor.Contract.Project
 @model HE.Investments.FrontDoor.Contract.Project.ProjectDetails
 @{
     var title = ProjectPageTitles.SupportRequiredActivities;
@@ -13,6 +11,8 @@
 
 <gds-div-grid-column-two-thirds>
     <vc:front-door-workflow-back-button current-page="@ProjectWorkflowState.SupportRequiredActivities"></vc:front-door-workflow-back-button>
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+
     <form asp-controller="Project" asp-action="SupportRequiredActivities" asp-method="post" novalidate>
         @Html.HiddenFor(m => Model.Id)
         @Html.HiddenFor(m => Model.Name)

@@ -15,6 +15,7 @@ public class FrontDoorWorkflowBackButton : ViewComponent
         return new
         {
             projectId = ViewContext.RouteData.Values["projectId"] as string,
+            siteId = ViewContext.RouteData.Values["siteId"] as string,
             currentPage = currentPage.ToString(),
         };
     }

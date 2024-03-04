@@ -78,8 +78,6 @@ namespace HE.CRM.Common.DtoMapping
         {
             var frontDoorProjectPOC = new invln_FrontDoorProjectPOC()
             {
-                invln_FrontDoorProjectPOCId = Guid.TryParse(frontDoorProjectDto.ProjectId, out Guid projectid) == true ? projectid : Guid.Empty,
-                invln_AccountId = Guid.TryParse(organisationId, out Guid organisationid) == true ? new EntityReference(Account.EntityLogicalName, organisationid) : null, //pusty account?
                 invln_Name = frontDoorProjectDto.ProjectName,
                 invln_ProjectSupportsHousingDeliveryinEngland = frontDoorProjectDto.ProjectSupportsHousingDeliveryinEngland,
                 invln_ActivitiesinThisProject = MapNullableIntToOptionSetValueCollection(frontDoorProjectDto.ActivitiesinThisProject),
@@ -98,11 +96,15 @@ namespace HE.CRM.Common.DtoMapping
                 invln_StartofProjectYear = frontDoorProjectDto.StartofProjectYear,
             };
 
+            if (!string.IsNullOrEmpty(organisationId) && Guid.TryParse(organisationId, out Guid organisationGUID))
+            {
+                frontDoorProjectPOC.invln_AccountId = new EntityReference(Account.EntityLogicalName, organisationGUID);
+            }
+
             if (contact != null)
             {
                 frontDoorProjectPOC.invln_ContactId = contact.ToEntityReference();
             }
-
             return frontDoorProjectPOC;
         }
 
@@ -117,7 +119,7 @@ namespace HE.CRM.Common.DtoMapping
 
         private static OptionSetValueCollection MapNullableIntToOptionSetValueCollection(List<int> valueToMap)
         {
-            if (valueToMap.Any())
+            if (valueToMap != null)
             {
                 var osvcollection = new OptionSetValueCollection();
                 foreach (var ops in valueToMap)
