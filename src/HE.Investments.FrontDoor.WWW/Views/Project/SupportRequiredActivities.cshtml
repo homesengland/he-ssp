@@ -1,0 +1,31 @@
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investments.FrontDoor.WWW.Models
+@using HE.Investments.FrontDoor.WWW.Views.Project.Const
+@using HE.Investments.Common.WWW.Components.CheckboxListWithOr
+@using HE.Investments.FrontDoor.Contract.Project
+@model HE.Investments.FrontDoor.Contract.Project.ProjectDetails
+@{
+    var title = ProjectPageTitles.SupportRequiredActivities;
+    ViewData["Title"] = title;
+}
+
+<gds-div-grid-column-two-thirds>
+    <vc:front-door-workflow-back-button current-page="@ProjectWorkflowState.SupportRequiredActivities"></vc:front-door-workflow-back-button>
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+
+    <form asp-controller="Project" asp-action="SupportRequiredActivities" asp-method="post" novalidate>
+        @Html.HiddenFor(m => Model.Id)
+        @Html.HiddenFor(m => Model.Name)
+
+        <vc:checkbox-list-with-or
+            title="@title"
+            title-type="InputTitleType.PageHeader"
+            hint="Select all that apply."
+            field-name="@nameof(Model.ActivityTypes)"
+            available-options="ProjectFormOptions.ActivityTypes"
+            alternative-option="ProjectFormOptions.ActivityTypeOther"
+            selected-values="@Model?.ActivityTypes?.Cast<Enum>()"/>
+
+        <vc:form-button/>
+    </form>
+</gds-div-grid-column-two-thirds>

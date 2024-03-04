@@ -1,0 +1,27 @@
+@using HE.Investments.FrontDoor.Contract.Project
+@using HE.Investments.FrontDoor.WWW.Views.Project.Const
+@using HE.Investments.Common.WWW.Components.RadioYesNo
+@using HE.Investments.Common.WWW.Components.FormButton
+@model bool?
+@{
+    ViewData["Title"] = ProjectPageTitles.EnglandHousingDelivery;
+    var projectId = ViewContext.RouteData.Values.FirstOrDefault(x => x.Key == "projectId").Value as string;
+    var backUrl = string.IsNullOrEmpty(projectId) ? Url.Action("Start", "Project") : Url.Action("Index", "Projects");
+    var submitAction = string.IsNullOrEmpty(projectId) ? "NewEnglandHousingDelivery" : "EnglandHousingDelivery";
+}
+
+<gds-div-grid-column-two-thirds>
+    <gds-back-link href="@backUrl" class="govuk-!-margin-bottom-8"></gds-back-link>
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+
+    <form asp-controller="Project" asp-action="@submitAction" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
+        <vc:radio-yes-no
+            title="@ProjectPageTitles.EnglandHousingDelivery"
+            title-type="InputTitleType.PageHeader"
+            hint="The project must be based in England and support the delivery of homes in some way."
+            field-name="@nameof(ProjectDetails.IsEnglandHousingDelivery)"
+            value="@Model"/>
+
+        <vc:form-button text="Continue"/>
+    </form>
+</gds-div-grid-column-two-thirds>

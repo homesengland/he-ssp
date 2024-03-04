@@ -12,7 +12,7 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.Site
 
         public override bool CanWork()
         {
-            return true;
+            return !string.IsNullOrWhiteSpace(SiteId);
         }
 
         public override void DoWork()

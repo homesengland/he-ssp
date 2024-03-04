@@ -569,8 +569,8 @@ public class Order01StartAhpSite : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(35)]
-    public async Task Order35_CheckAnswersCompleteSite()
+    [Order(38)]
+    public async Task Order38_CheckAnswersCompleteSite()
     {
         var siteListPage = await TestQuestionPage(
             SitePagesUrl.SiteCheckAnswers(SiteData.SiteId),

@@ -1,0 +1,18 @@
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investments.FrontDoor.Contract.Site
+@using HE.Investments.FrontDoor.WWW.Views.Shared.Components.FrontDoorWorkflowBackButton
+@using HE.Investments.FrontDoor.WWW.Views.Site.Const
+@{
+    ViewData["Title"] = SitePageTitles.LocalAuthoritySearch;
+}
+
+<gds-div-grid-column-two-thirds>
+    <vc:front-door-workflow-back-button current-page="@SiteWorkflowState.LocalAuthoritySearch"></vc:front-door-workflow-back-button>
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+
+    <form asp-controller="Site" asp-action="LocalAuthoritySearch" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
+        TODO: @SitePageTitles.LocalAuthoritySearch
+
+        <vc:form-button/>
+    </form>
+</gds-div-grid-column-two-thirds>
