@@ -139,7 +139,9 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     [WorkflowState(ProjectWorkflowState.SupportRequiredActivities)]
     public async Task<IActionResult> SupportRequiredActivities([FromRoute] string projectId, ProjectDetails projectDetails, CancellationToken cancellationToken)
     {
-        return View("SupportRequiredActivities", await GetProjectDetails(projectId, cancellationToken));
+        var project = await GetProjectDetails(projectId, cancellationToken);
+        project.ActivityTypes = projectDetails.ActivityTypes;
+        return View("SupportRequiredActivities", project);
     }
 
     protected override async Task<IStateRouting<ProjectWorkflowState>> Routing(ProjectWorkflowState currentState, object? routeData = null)
