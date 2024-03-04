@@ -6,4 +6,5 @@ public enum ProjectWorkflowState
     NotEligibleForAnything,
     Name,
     SupportRequiredActivities,
+    ActivityTypes,
 }
