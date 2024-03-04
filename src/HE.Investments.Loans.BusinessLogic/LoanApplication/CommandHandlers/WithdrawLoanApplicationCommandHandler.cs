@@ -29,6 +29,5 @@ public class WithdrawLoanApplicationCommandHandler : IRequestHandler<WithdrawLoa
         await loanApplication.Withdraw(_loanApplicationRepository, withdrawReason, cancellationToken);
         await _loanApplicationRepository.DispatchEvents(loanApplication, cancellationToken);
         return OperationResult.Success();
-
     }
 }
