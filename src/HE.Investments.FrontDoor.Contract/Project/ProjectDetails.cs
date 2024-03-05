@@ -20,4 +20,6 @@ public class ProjectDetails
     public ProjectGeographicFocus GeographicFocus { get; set; }
 
     public bool? IsFundingRequired { get; set; }
+
+    public AffordableHomesAmount AffordableHomesAmount { get; set; }
 }

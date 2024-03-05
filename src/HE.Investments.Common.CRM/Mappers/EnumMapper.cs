@@ -1,6 +1,6 @@
 using HE.Investments.Common.Extensions;
 
-namespace HE.Investment.AHP.Domain.Site.Mappers;
+namespace HE.Investments.Common.CRM.Mappers;
 
 public abstract class EnumMapper<TSource>
     where TSource : struct
