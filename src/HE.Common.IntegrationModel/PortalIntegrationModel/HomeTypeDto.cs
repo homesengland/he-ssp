@@ -50,7 +50,7 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public decimal? proposedRentAsPercentOfUnsoldShare { get; set; }
         public bool? mmcApplied { get; set; }
         public List<int> mmcCategories { get; set; }
-        public List<int> mmcCategories_1subcategories { get; set; }
-        public List<int> mmcCategories_2subcategories { get; set; }
+        public List<int> mmcCategories1subcategories { get; set; }
+        public List<int> mmcCategories2subcategories { get; set; }
     }
 }

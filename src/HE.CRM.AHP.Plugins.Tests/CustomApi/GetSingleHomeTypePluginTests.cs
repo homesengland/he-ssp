@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using DataverseModel;
 using FakeXrmEasy;
+using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.CRM.AHP.Plugins.Plugins.CustomApi;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Xrm.Sdk;
@@ -16,6 +18,7 @@ namespace HE.CRM.AHP.Plugins.Tests.CustomApi
     public class GetSingleHomeTypePluginTests
     {
         private XrmFakedContext fakedContext;
+
         private XrmFakedPluginExecutionContext pluginContext;
 
         [TestInitialize]
@@ -26,7 +29,7 @@ namespace HE.CRM.AHP.Plugins.Tests.CustomApi
         }
 
         [TestMethod]
-        public void Test_1()
+        public void GetSingleHomeTypePluginTestSucces()
         {
             var homeTypeId = Guid.NewGuid();
             var appId = Guid.NewGuid();
@@ -78,6 +81,7 @@ namespace HE.CRM.AHP.Plugins.Tests.CustomApi
             var outputResponce = pluginContext.OutputParameters[invln_getsinglehometypeResponse.Fields.invln_hometype].ToString();
             Assert.IsNotNull(outputResponce);
             Assert.AreNotEqual("[]", outputResponce);
+            Assert.AreEqual(homeTypeId.ToString(), JsonSerializer.Deserialize<HomeTypeDto>(outputResponce).id);
         }
     }
 }

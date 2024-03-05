@@ -57,8 +57,8 @@ namespace HE.CRM.Common.DtoMapping
                 expectedFirstTrancheSaleReceipt = homeType.invln_FirstTrancheSalesReceipt?.Value, //before invln_expectedfirsttranchesalereceipt
                 mmcApplied = homeType.invln_mmcapplied,
                 mmcCategories = new List<int>(),
-                mmcCategories_1subcategories = new List<int>(),
-                mmcCategories_2subcategories =new List<int>()
+                mmcCategories1subcategories = new List<int>(),
+                mmcCategories2subcategories =new List<int>()
             };
 
             if (homeType.invln_mmccategories != null && homeType.invln_mmccategories.Any())
@@ -73,7 +73,7 @@ namespace HE.CRM.Common.DtoMapping
             {
                 foreach (var firstSubcategory in homeType.invln_mmccategory1subcategories)
                 {
-                    homeTypeDto.mmcCategories_1subcategories.Add(firstSubcategory.Value);
+                    homeTypeDto.mmcCategories1subcategories.Add(firstSubcategory.Value);
                 }
             }
 
@@ -81,7 +81,7 @@ namespace HE.CRM.Common.DtoMapping
             {
                 foreach (var secondSubcategory in homeType.invln_mmccategory2subcategories)
                 {
-                    homeTypeDto.mmcCategories_1subcategories.Add(secondSubcategory.Value);
+                    homeTypeDto.mmcCategories1subcategories.Add(secondSubcategory.Value);
                 }
             }
 
@@ -179,17 +179,17 @@ namespace HE.CRM.Common.DtoMapping
                 }
             }
 
-            if (homeTypeDto.mmcCategories_1subcategories != null && homeTypeDto.mmcCategories_1subcategories.Any())
+            if (homeTypeDto.mmcCategories1subcategories != null && homeTypeDto.mmcCategories1subcategories.Any())
             {
-                foreach (var firstSubagegory in homeTypeDto.mmcCategories_1subcategories)
+                foreach (var firstSubagegory in homeTypeDto.mmcCategories1subcategories)
                 {
                     homeType.invln_mmccategory1subcategories.Add(new OptionSetValue(firstSubagegory));
                 }
             }
 
-            if (homeTypeDto.mmcCategories_2subcategories != null && homeTypeDto.mmcCategories_2subcategories.Any())
+            if (homeTypeDto.mmcCategories2subcategories != null && homeTypeDto.mmcCategories2subcategories.Any())
             {
-                foreach (var secondSubcategory in homeTypeDto.mmcCategories_2subcategories)
+                foreach (var secondSubcategory in homeTypeDto.mmcCategories2subcategories)
                 {
                     homeType.invln_mmccategory2subcategories.Add(new OptionSetValue(secondSubcategory));
                 }
