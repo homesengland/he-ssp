@@ -90,31 +90,33 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.Investments.Common.CRM",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.Investments.Common.WWWTestsFramework", "HE.Investments.Common.WWWTestsFramework\HE.Investments.Common.WWWTestsFramework.csproj", "{8619E600-0788-40E7-8901-6DF2C29E88A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.Investments.Common.Tests", "HE.Investments.Common.Tests\HE.Investments.Common.Tests.csproj", "{933FBB75-C838-4280-A39F-EE0C6B80734C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.Investments.Common.Tests", "HE.Investments.Common.Tests\HE.Investments.Common.Tests.csproj", "{933FBB75-C838-4280-A39F-EE0C6B80734C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.Investments.Common.WWW.Tests", "HE.Investments.Common.WWW.Tests\HE.Investments.Common.WWW.Tests.csproj", "{E19D8DB0-71C7-40A8-A07B-8B86EB5BD351}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.Investments.Common.WWW.Tests", "HE.Investments.Common.WWW.Tests\HE.Investments.Common.WWW.Tests.csproj", "{E19D8DB0-71C7-40A8-A07B-8B86EB5BD351}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.Investment.AHP.Domain.Tests", "HE.Investment.AHP.Domain.Tests\HE.Investment.AHP.Domain.Tests.csproj", "{DAD32348-A1E4-42B5-BB19-879CD4942364}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.Investment.AHP.Domain.Tests", "HE.Investment.AHP.Domain.Tests\HE.Investment.AHP.Domain.Tests.csproj", "{DAD32348-A1E4-42B5-BB19-879CD4942364}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.Investments.AHP.IntegrationTests", "HE.Investments.AHP.IntegrationTests\HE.Investments.AHP.IntegrationTests.csproj", "{DD6D95E6-8F60-4FBF-AA13-4380326376C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.Investments.AHP.IntegrationTests", "HE.Investments.AHP.IntegrationTests\HE.Investments.AHP.IntegrationTests.csproj", "{DD6D95E6-8F60-4FBF-AA13-4380326376C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.Investments.IntegrationTestsFramework", "HE.Investments.IntegrationTestsFramework\HE.Investments.IntegrationTestsFramework.csproj", "{BD343DEA-2308-4A4F-8504-3AACD72E177F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.Investments.IntegrationTestsFramework", "HE.Investments.IntegrationTestsFramework\HE.Investments.IntegrationTestsFramework.csproj", "{BD343DEA-2308-4A4F-8504-3AACD72E177F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.Investments.Account.Shared.Tests", "HE.Investments.Account.Shared.Tests\HE.Investments.Account.Shared.Tests.csproj", "{A43CCB41-975D-4F95-AD9C-915AC770AEC0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.Investments.Account.Shared.Tests", "HE.Investments.Account.Shared.Tests\HE.Investments.Account.Shared.Tests.csproj", "{A43CCB41-975D-4F95-AD9C-915AC770AEC0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.Investments.Common.Contract", "HE.Investments.Common.Contract\HE.Investments.Common.Contract.csproj", "{14E5AE18-EF38-4407-BC5E-252CF4F6CAF0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.Investments.Common.Contract", "HE.Investments.Common.Contract\HE.Investments.Common.Contract.csproj", "{14E5AE18-EF38-4407-BC5E-252CF4F6CAF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.Investments.Account.Api.Contract", "HE.Investments.Account.Api.Contract\HE.Investments.Account.Api.Contract.csproj", "{885F6E0A-C2BD-4290-B4F3-7E79C00CAE17}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.Investments.Account.Api.Contract", "HE.Investments.Account.Api.Contract\HE.Investments.Account.Api.Contract.csproj", "{885F6E0A-C2BD-4290-B4F3-7E79C00CAE17}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.Investments.Account.IntegrationTests", "HE.Investments.Account.IntegrationTests\HE.Investments.Account.IntegrationTests.csproj", "{039B0E9D-CDF4-469A-9C10-D4A65E68B3EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.Investments.Account.IntegrationTests", "HE.Investments.Account.IntegrationTests\HE.Investments.Account.IntegrationTests.csproj", "{039B0E9D-CDF4-469A-9C10-D4A65E68B3EA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FrontDoor", "FrontDoor", "{220CDEC9-4FED-470A-BC91-8B4241744B12}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.Investments.FrontDoor.WWW", "HE.Investments.FrontDoor.WWW\HE.Investments.FrontDoor.WWW.csproj", "{7EFA60DB-B51A-4894-9F49-D89E655544E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.Investments.FrontDoor.WWW", "HE.Investments.FrontDoor.WWW\HE.Investments.FrontDoor.WWW.csproj", "{7EFA60DB-B51A-4894-9F49-D89E655544E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.Investments.FrontDoor.Domain", "HE.Investments.FrontDoor.Domain\HE.Investments.FrontDoor.Domain.csproj", "{7B92A861-D77C-48D1-85A9-429FDC881B2A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.Investments.FrontDoor.Domain", "HE.Investments.FrontDoor.Domain\HE.Investments.FrontDoor.Domain.csproj", "{7B92A861-D77C-48D1-85A9-429FDC881B2A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.Investments.FrontDoor.Contract", "HE.Investments.FrontDoor.Contract\HE.Investments.FrontDoor.Contract.csproj", "{814F143D-FEC9-4D8C-92AC-6723891AAE2C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.Investments.FrontDoor.Contract", "HE.Investments.FrontDoor.Contract\HE.Investments.FrontDoor.Contract.csproj", "{814F143D-FEC9-4D8C-92AC-6723891AAE2C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.CRM.AHP.Plugins.Tests", "HE.CRM.AHP.Plugins.Tests\HE.CRM.AHP.Plugins.Tests.csproj", "{BAA5ADD8-36F5-4B64-BA3E-650E5EC3497D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -557,6 +559,7 @@ Global
 		HE.CRM.Common\HE.CRM.Common.projitems*{464f5b11-c934-42c4-b544-40cfcee6c683}*SharedItemsImports = 4
 		HE.CRM.Model\HE.CRM.Model.projitems*{464f5b11-c934-42c4-b544-40cfcee6c683}*SharedItemsImports = 4
 		HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems*{6219f273-9b01-4851-8a17-ac30d0305cae}*SharedItemsImports = 5
+		HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems*{7b92a861-d77c-48d1-85a9-429fdc881b2a}*SharedItemsImports = 5
 		HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems*{a719513a-72c3-4da8-b16c-8af395fcee16}*SharedItemsImports = 4
 		HE.CRM.Common\HE.CRM.Common.projitems*{a719513a-72c3-4da8-b16c-8af395fcee16}*SharedItemsImports = 4
 		HE.CRM.Model\HE.CRM.Model.projitems*{a719513a-72c3-4da8-b16c-8af395fcee16}*SharedItemsImports = 4
