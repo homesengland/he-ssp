@@ -138,6 +138,8 @@ namespace DataverseModel
 			public const string team_invln_emailnotification = "team_invln_emailnotification";
 			public const string team_invln_emailtemplate = "team_invln_emailtemplate";
 			public const string team_invln_financialcovenants = "team_invln_financialcovenants";
+			public const string team_invln_frontdoorprojectpoc = "team_invln_frontdoorprojectpoc";
+			public const string team_invln_frontdoorprojectsitepoc = "team_invln_frontdoorprojectsitepoc";
 			public const string team_invln_grantbenchmark = "team_invln_grantbenchmark";
 			public const string team_invln_homesindeliveryphase = "team_invln_homesindeliveryphase";
 			public const string team_invln_hometype = "team_invln_hometype";
@@ -1628,6 +1630,46 @@ namespace DataverseModel
 				this.OnPropertyChanging("team_invln_financialcovenants");
 				this.SetRelatedEntities<DataverseModel.invln_FinancialCovenants>("team_invln_financialcovenants", null, value);
 				this.OnPropertyChanged("team_invln_financialcovenants");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N team_invln_frontdoorprojectpoc
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_invln_frontdoorprojectpoc")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_FrontDoorProjectPOC> team_invln_frontdoorprojectpoc
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_FrontDoorProjectPOC>("team_invln_frontdoorprojectpoc", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("team_invln_frontdoorprojectpoc");
+				this.SetRelatedEntities<DataverseModel.invln_FrontDoorProjectPOC>("team_invln_frontdoorprojectpoc", null, value);
+				this.OnPropertyChanged("team_invln_frontdoorprojectpoc");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N team_invln_frontdoorprojectsitepoc
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_invln_frontdoorprojectsitepoc")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_FrontDoorProjectSitePOC> team_invln_frontdoorprojectsitepoc
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_FrontDoorProjectSitePOC>("team_invln_frontdoorprojectsitepoc", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("team_invln_frontdoorprojectsitepoc");
+				this.SetRelatedEntities<DataverseModel.invln_FrontDoorProjectSitePOC>("team_invln_frontdoorprojectsitepoc", null, value);
+				this.OnPropertyChanged("team_invln_frontdoorprojectsitepoc");
 			}
 		}
 		

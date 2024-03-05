@@ -550,6 +550,14 @@ namespace DataverseModel
 			public const string lk_invln_financialcovenants_createdonbehalfby = "lk_invln_financialcovenants_createdonbehalfby";
 			public const string lk_invln_financialcovenants_modifiedby = "lk_invln_financialcovenants_modifiedby";
 			public const string lk_invln_financialcovenants_modifiedonbehalfby = "lk_invln_financialcovenants_modifiedonbehalfby";
+			public const string lk_invln_frontdoorprojectpoc_createdby = "lk_invln_frontdoorprojectpoc_createdby";
+			public const string lk_invln_frontdoorprojectpoc_createdonbehalfby = "lk_invln_frontdoorprojectpoc_createdonbehalfby";
+			public const string lk_invln_frontdoorprojectpoc_modifiedby = "lk_invln_frontdoorprojectpoc_modifiedby";
+			public const string lk_invln_frontdoorprojectpoc_modifiedonbehalfby = "lk_invln_frontdoorprojectpoc_modifiedonbehalfby";
+			public const string lk_invln_frontdoorprojectsitepoc_createdby = "lk_invln_frontdoorprojectsitepoc_createdby";
+			public const string lk_invln_frontdoorprojectsitepoc_createdonbehalfby = "lk_invln_frontdoorprojectsitepoc_createdonbehalfby";
+			public const string lk_invln_frontdoorprojectsitepoc_modifiedby = "lk_invln_frontdoorprojectsitepoc_modifiedby";
+			public const string lk_invln_frontdoorprojectsitepoc_modifiedonbehalfby = "lk_invln_frontdoorprojectsitepoc_modifiedonbehalfby";
 			public const string lk_invln_grantbenchmark_createdby = "lk_invln_grantbenchmark_createdby";
 			public const string lk_invln_grantbenchmark_createdonbehalfby = "lk_invln_grantbenchmark_createdonbehalfby";
 			public const string lk_invln_grantbenchmark_modifiedby = "lk_invln_grantbenchmark_modifiedby";
@@ -773,6 +781,8 @@ namespace DataverseModel
 			public const string user_invln_emailnotification = "user_invln_emailnotification";
 			public const string user_invln_emailtemplate = "user_invln_emailtemplate";
 			public const string user_invln_financialcovenants = "user_invln_financialcovenants";
+			public const string user_invln_frontdoorprojectpoc = "user_invln_frontdoorprojectpoc";
+			public const string user_invln_frontdoorprojectsitepoc = "user_invln_frontdoorprojectsitepoc";
 			public const string user_invln_grantbenchmark = "user_invln_grantbenchmark";
 			public const string user_invln_homesindeliveryphase = "user_invln_homesindeliveryphase";
 			public const string user_invln_hometype = "user_invln_hometype";
@@ -6192,6 +6202,166 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// 1:N lk_invln_frontdoorprojectpoc_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_frontdoorprojectpoc_createdby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_FrontDoorProjectPOC> lk_invln_frontdoorprojectpoc_createdby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_FrontDoorProjectPOC>("lk_invln_frontdoorprojectpoc_createdby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_invln_frontdoorprojectpoc_createdby");
+				this.SetRelatedEntities<DataverseModel.invln_FrontDoorProjectPOC>("lk_invln_frontdoorprojectpoc_createdby", null, value);
+				this.OnPropertyChanged("lk_invln_frontdoorprojectpoc_createdby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_invln_frontdoorprojectpoc_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_frontdoorprojectpoc_createdonbehalfby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_FrontDoorProjectPOC> lk_invln_frontdoorprojectpoc_createdonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_FrontDoorProjectPOC>("lk_invln_frontdoorprojectpoc_createdonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_invln_frontdoorprojectpoc_createdonbehalfby");
+				this.SetRelatedEntities<DataverseModel.invln_FrontDoorProjectPOC>("lk_invln_frontdoorprojectpoc_createdonbehalfby", null, value);
+				this.OnPropertyChanged("lk_invln_frontdoorprojectpoc_createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_invln_frontdoorprojectpoc_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_frontdoorprojectpoc_modifiedby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_FrontDoorProjectPOC> lk_invln_frontdoorprojectpoc_modifiedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_FrontDoorProjectPOC>("lk_invln_frontdoorprojectpoc_modifiedby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_invln_frontdoorprojectpoc_modifiedby");
+				this.SetRelatedEntities<DataverseModel.invln_FrontDoorProjectPOC>("lk_invln_frontdoorprojectpoc_modifiedby", null, value);
+				this.OnPropertyChanged("lk_invln_frontdoorprojectpoc_modifiedby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_invln_frontdoorprojectpoc_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_frontdoorprojectpoc_modifiedonbehalfby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_FrontDoorProjectPOC> lk_invln_frontdoorprojectpoc_modifiedonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_FrontDoorProjectPOC>("lk_invln_frontdoorprojectpoc_modifiedonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_invln_frontdoorprojectpoc_modifiedonbehalfby");
+				this.SetRelatedEntities<DataverseModel.invln_FrontDoorProjectPOC>("lk_invln_frontdoorprojectpoc_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("lk_invln_frontdoorprojectpoc_modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_invln_frontdoorprojectsitepoc_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_frontdoorprojectsitepoc_createdby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_FrontDoorProjectSitePOC> lk_invln_frontdoorprojectsitepoc_createdby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_FrontDoorProjectSitePOC>("lk_invln_frontdoorprojectsitepoc_createdby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_invln_frontdoorprojectsitepoc_createdby");
+				this.SetRelatedEntities<DataverseModel.invln_FrontDoorProjectSitePOC>("lk_invln_frontdoorprojectsitepoc_createdby", null, value);
+				this.OnPropertyChanged("lk_invln_frontdoorprojectsitepoc_createdby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_invln_frontdoorprojectsitepoc_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_frontdoorprojectsitepoc_createdonbehalfby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_FrontDoorProjectSitePOC> lk_invln_frontdoorprojectsitepoc_createdonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_FrontDoorProjectSitePOC>("lk_invln_frontdoorprojectsitepoc_createdonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_invln_frontdoorprojectsitepoc_createdonbehalfby");
+				this.SetRelatedEntities<DataverseModel.invln_FrontDoorProjectSitePOC>("lk_invln_frontdoorprojectsitepoc_createdonbehalfby", null, value);
+				this.OnPropertyChanged("lk_invln_frontdoorprojectsitepoc_createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_invln_frontdoorprojectsitepoc_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_frontdoorprojectsitepoc_modifiedby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_FrontDoorProjectSitePOC> lk_invln_frontdoorprojectsitepoc_modifiedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_FrontDoorProjectSitePOC>("lk_invln_frontdoorprojectsitepoc_modifiedby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_invln_frontdoorprojectsitepoc_modifiedby");
+				this.SetRelatedEntities<DataverseModel.invln_FrontDoorProjectSitePOC>("lk_invln_frontdoorprojectsitepoc_modifiedby", null, value);
+				this.OnPropertyChanged("lk_invln_frontdoorprojectsitepoc_modifiedby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_invln_frontdoorprojectsitepoc_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_frontdoorprojectsitepoc_modifiedonbehalfby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_FrontDoorProjectSitePOC> lk_invln_frontdoorprojectsitepoc_modifiedonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_FrontDoorProjectSitePOC>("lk_invln_frontdoorprojectsitepoc_modifiedonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_invln_frontdoorprojectsitepoc_modifiedonbehalfby");
+				this.SetRelatedEntities<DataverseModel.invln_FrontDoorProjectSitePOC>("lk_invln_frontdoorprojectsitepoc_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("lk_invln_frontdoorprojectsitepoc_modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N lk_invln_grantbenchmark_createdby
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_grantbenchmark_createdby")]
@@ -9068,6 +9238,46 @@ namespace DataverseModel
 				this.OnPropertyChanging("user_invln_financialcovenants");
 				this.SetRelatedEntities<DataverseModel.invln_FinancialCovenants>("user_invln_financialcovenants", null, value);
 				this.OnPropertyChanged("user_invln_financialcovenants");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N user_invln_frontdoorprojectpoc
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("user_invln_frontdoorprojectpoc")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_FrontDoorProjectPOC> user_invln_frontdoorprojectpoc
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_FrontDoorProjectPOC>("user_invln_frontdoorprojectpoc", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("user_invln_frontdoorprojectpoc");
+				this.SetRelatedEntities<DataverseModel.invln_FrontDoorProjectPOC>("user_invln_frontdoorprojectpoc", null, value);
+				this.OnPropertyChanged("user_invln_frontdoorprojectpoc");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N user_invln_frontdoorprojectsitepoc
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("user_invln_frontdoorprojectsitepoc")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_FrontDoorProjectSitePOC> user_invln_frontdoorprojectsitepoc
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_FrontDoorProjectSitePOC>("user_invln_frontdoorprojectsitepoc", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("user_invln_frontdoorprojectsitepoc");
+				this.SetRelatedEntities<DataverseModel.invln_FrontDoorProjectSitePOC>("user_invln_frontdoorprojectsitepoc", null, value);
+				this.OnPropertyChanged("user_invln_frontdoorprojectsitepoc");
 			}
 		}
 		

@@ -643,6 +643,9 @@ namespace DataverseModel
 			}
 		}
 		
+		/// <summary>
+		/// A boolean to say if a Cashflow has been received 
+		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_cashflowreceived")]
 		public System.Nullable<bool> invln_CashflowReceived
 		{
@@ -677,6 +680,9 @@ namespace DataverseModel
 			}
 		}
 		
+		/// <summary>
+		/// A field to state if a Cashflow has been requested
+		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_cashflowrequested")]
 		public string invln_CashflowRequested
 		{
@@ -983,6 +989,9 @@ namespace DataverseModel
 			}
 		}
 		
+		/// <summary>
+		/// The date the TM changes the status of a loan application to "Cashflow Requested"
+		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_datecashflowrequested")]
 		public System.Nullable<System.DateTime> invln_DateCashflowRequested
 		{

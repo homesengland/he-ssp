@@ -787,6 +787,7 @@ namespace DataverseModel
 			public const string invln_externalcreditratingName = "invln_externalcreditratingname";
 			public const string invln_ExternalStatus = "invln_externalstatus";
 			public const string invln_externalstatusName = "invln_externalstatusname";
+			public const string invln_frontdoorprojectpoc_AccountId_account = "invln_frontdoorprojectpoc_AccountId_account";
 			public const string invln_Governance = "invln_governance";
 			public const string invln_governanceName = "invln_governancename";
 			public const string invln_GradingsunderReviewRegulatoryNotice = "invln_gradingsunderreviewregulatorynotice";
@@ -7403,6 +7404,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_consortiummember_Partner_account");
 				this.SetRelatedEntities<DataverseModel.invln_ConsortiumMember>("invln_consortiummember_Partner_account", null, value);
 				this.OnPropertyChanged("invln_consortiummember_Partner_account");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_frontdoorprojectpoc_AccountId_account
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_frontdoorprojectpoc_AccountId_account")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_FrontDoorProjectPOC> invln_frontdoorprojectpoc_AccountId_account
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_FrontDoorProjectPOC>("invln_frontdoorprojectpoc_AccountId_account", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_frontdoorprojectpoc_AccountId_account");
+				this.SetRelatedEntities<DataverseModel.invln_FrontDoorProjectPOC>("invln_frontdoorprojectpoc_AccountId_account", null, value);
+				this.OnPropertyChanged("invln_frontdoorprojectpoc_AccountId_account");
 			}
 		}
 		
