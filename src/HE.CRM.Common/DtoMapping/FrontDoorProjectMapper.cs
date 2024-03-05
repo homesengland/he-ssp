@@ -11,12 +11,11 @@ namespace HE.CRM.Common.DtoMapping
     public class FrontDoorProjectMapper
     {
 
-        public static FrontDoorProjectDto MapRegularEntityToDto(invln_FrontDoorProjectPOC project, List<FrontDoorProjectSiteDto> frontDoorProjectSiteDtoList, string externalContactId, Contact contact = null)
+        public static FrontDoorProjectDto MapRegularEntityToDto(invln_FrontDoorProjectPOC project, Contact contact = null)
         {
             var frontDoorProjectDto = new FrontDoorProjectDto()
             {
                 ProjectId = project.Id.ToString(),
-                externalId = externalContactId,
                 OrganisationId = project.invln_AccountId != null ? project.invln_AccountId.Id : Guid.Empty,
                 ProjectName = project.invln_Name,
                 ProjectSupportsHousingDeliveryinEngland = project.invln_ProjectSupportsHousingDeliveryinEngland,
@@ -34,7 +33,6 @@ namespace HE.CRM.Common.DtoMapping
                 AmountofFundingRequired = project.invln_AmountofFundingRequired?.Value,
                 StartofProjectMonth = project.invln_StartofProjectMonth,
                 StartofProjectYear = project.invln_StartofProjectYear,
-                FrontDoorSiteList = frontDoorProjectSiteDtoList,
             };
 
             if (project.invln_ActivitiesinThisProject != null && project.invln_ActivitiesinThisProject.Any())
@@ -61,6 +59,7 @@ namespace HE.CRM.Common.DtoMapping
 
             if (contact != null)
             {
+                frontDoorProjectDto.externalId = contact.invln_externalid;
                 frontDoorProjectDto.FrontDoorProjectContact = new UserAccountDto()
                 {
                     ContactEmail = contact.EMailAddress1,
