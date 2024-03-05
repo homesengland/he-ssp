@@ -3,7 +3,7 @@ using HE.Investments.FrontDoor.Contract.Project;
 
 namespace HE.Investments.FrontDoor.Domain.Project.Repository;
 
-public interface IProjectRepository
+public interface IProjectRepository : IProjectNameExists
 {
     Task<IList<ProjectEntity>> GetProjects(UserAccount userAccount, CancellationToken cancellationToken);
 
