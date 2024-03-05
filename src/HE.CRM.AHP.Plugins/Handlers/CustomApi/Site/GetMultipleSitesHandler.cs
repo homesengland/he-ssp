@@ -9,6 +9,7 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.Site
     public class GetMultipleSitesHandler : CrmActionHandlerBase<invln_getmultiplesitesRequest, DataverseContext>
     {
         private string FieldsToRetrieve => ExecutionData.GetInputParameter<string>(invln_getmultiplesitesRequest.Fields.invln_fieldstoretrieve);
+
         private string Paging => ExecutionData.GetInputParameter<string>(invln_getmultiplesitesRequest.Fields.invln_pagingrequest);
 
         public override bool CanWork()
@@ -22,7 +23,7 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.Site
             var result = CrmServicesFactory.Get<ISiteService>().Get(paging, FieldsToRetrieve);
             if (result != null)
             {
-                ExecutionData.SetOutputParameter(invln_getmultiplesitesResponse.Fields.invln_sites, JsonSerializer.Serialize(result));
+                ExecutionData.SetOutputParameter(invln_getmultiplesitesResponse.Fields.invln_pagedsites, JsonSerializer.Serialize(result));
             }
         }
     }
