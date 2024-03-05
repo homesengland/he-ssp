@@ -31,7 +31,7 @@ public class GetProjectDetailsQueryHandler : IRequestHandler<GetProjectDetailsQu
             IsSiteIdentified = true,
             GeographicFocus = ProjectGeographicFocus.Regional,
             IsFundingRequired = true,
-            ActivityTypes = new[] { ActivityType.DevelopingHomes },
+            SupportActivityTypes = project.SupportActivityTypes,
             AffordableHomesAmount = project.AffordableHomesAmount.AffordableHomesAmount,
         };
     }

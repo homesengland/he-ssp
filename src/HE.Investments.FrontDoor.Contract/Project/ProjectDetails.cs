@@ -11,7 +11,7 @@ public class ProjectDetails
 
     public bool IsEnglandHousingDelivery { get; set; }
 
-    public IList<ActivityType>? ActivityTypes { get; set; }
+    public IList<SupportActivityType>? SupportActivityTypes { get; set; }
 
     public bool? IsSiteIdentified { get; set; }
 

@@ -139,9 +139,17 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
 
     [HttpPost("{projectId}/support-required-activities")]
     [WorkflowState(ProjectWorkflowState.SupportRequiredActivities)]
-    public async Task<IActionResult> SupportRequiredActivities([FromRoute] string projectId, ProjectDetails projectDetails, CancellationToken cancellationToken)
+    public async Task<IActionResult> SupportRequiredActivities([FromRoute] string projectId, ProjectDetails model, CancellationToken cancellationToken)
     {
-        return await Continue(new { projectId });
+        return await ExecuteProjectCommand(
+            new ProvideSupportActivitiesCommand(new FrontDoorProjectId(projectId), model.SupportActivityTypes ?? new List<SupportActivityType>()),
+            nameof(SupportRequiredActivities),
+            project =>
+            {
+                project.SupportActivityTypes = model.SupportActivityTypes;
+                return project;
+            },
+            cancellationToken);
     }
 
     [HttpGet("{projectId}/infrastructure")]

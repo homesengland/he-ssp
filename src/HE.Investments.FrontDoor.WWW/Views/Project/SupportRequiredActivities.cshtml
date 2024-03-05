@@ -11,20 +11,21 @@
 
 <gds-div-grid-column-two-thirds>
     <vc:front-door-workflow-back-button current-page="@ProjectWorkflowState.SupportRequiredActivities"></vc:front-door-workflow-back-button>
+
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
+    <vc:page-header caption="@ViewBag.ProjectName" />
+
     <form asp-controller="Project" asp-action="SupportRequiredActivities" asp-method="post" novalidate>
-        @Html.HiddenFor(m => Model.Id)
-        @Html.HiddenFor(m => Model.Name)
 
         <vc:checkbox-list-with-or
             title="@title"
             title-type="InputTitleType.PageHeader"
             hint="Select all that apply."
-            field-name="@nameof(Model.ActivityTypes)"
+            field-name="@nameof(Model.SupportActivityTypes)"
             available-options="ProjectFormOptions.ActivityTypes"
             alternative-option="ProjectFormOptions.ActivityTypeOther"
-            selected-values="@Model?.ActivityTypes?.Cast<Enum>()"/>
+            selected-values="@Model?.SupportActivityTypes?.Cast<Enum>()"/>
 
         <vc:form-button/>
     </form>

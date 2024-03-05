@@ -11,8 +11,6 @@ public class ProjectRepository : IProjectRepository
 {
     private readonly IProjectCrmContext _crmContext;
 
-    private readonly AffordableHomesAmountMapper _affordableHomesAmountMapper = new();
-
     public ProjectRepository(IProjectCrmContext crmContext)
     {
         _crmContext = crmContext;
@@ -46,7 +44,8 @@ public class ProjectRepository : IProjectRepository
             ProjectName = project.Name,
             OrganisationId = userAccount.SelectedOrganisationId().Value,
             externalId = userAccount.UserGlobalId.Value,
-            AmountofAffordableHomes = _affordableHomesAmountMapper.ToDto(project.AffordableHomesAmount.AffordableHomesAmount),
+            ActivitiesinThisProject = project.SupportActivityTypes.Select(x => new SupportActivitiesMapper().ToDto(x)!.Value).ToList(),
+            AmountofAffordableHomes = new AffordableHomesAmountMapper().ToDto(project.AffordableHomesAmount.AffordableHomesAmount),
         };
 
         var projectId = await _crmContext.Save(dto, userAccount, cancellationToken);
@@ -63,6 +62,7 @@ public class ProjectRepository : IProjectRepository
         return new ProjectEntity(
             new FrontDoorProjectId(dto.ProjectId),
             dto.ProjectName,
-            ProjectAffordableHomesAmount.Create(_affordableHomesAmountMapper.ToDomain(dto.AmountofAffordableHomes)));
+            supportActivityTypes: dto.ActivitiesinThisProject?.Select(x => new SupportActivitiesMapper().ToDomain(x)!.Value).ToList(),
+            affordableHomesAmount: ProjectAffordableHomesAmount.Create(new AffordableHomesAmountMapper().ToDomain(dto.AmountofAffordableHomes)));
     }
 }
