@@ -43,7 +43,7 @@ public class ProjectRepository : IProjectRepository
         var dto = new FrontDoorProjectDto
         {
             ProjectId = project.Id.IsNew ? null : project.Id.Value,
-            ProjectName = project.Name,
+            ProjectName = project.Name.Value,
             OrganisationId = userAccount.SelectedOrganisationId().Value,
             externalId = userAccount.UserGlobalId.Value,
             AmountofAffordableHomes = _affordableHomesAmountMapper.ToDto(project.AffordableHomesAmount.AffordableHomesAmount),
@@ -58,11 +58,17 @@ public class ProjectRepository : IProjectRepository
         return project;
     }
 
+    public Task<bool> DoesExist(ProjectName name, FrontDoorProjectId? exceptProjectId, CancellationToken cancellationToken)
+    {
+        // TODO: AB#91792 Validate project name uniqueness
+        return Task.FromResult(false);
+    }
+
     private ProjectEntity MapToEntity(FrontDoorProjectDto dto)
     {
         return new ProjectEntity(
             new FrontDoorProjectId(dto.ProjectId),
-            dto.ProjectName,
+            new ProjectName(dto.ProjectName),
             ProjectAffordableHomesAmount.Create(_affordableHomesAmountMapper.ToDomain(dto.AmountofAffordableHomes)));
     }
 }
