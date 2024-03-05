@@ -24,6 +24,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.CRM.AHP.Plugins", "HE.CR
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "HE.Common.IntegrationModel", "HE.Common.IntegrationModel\HE.Common.IntegrationModel.shproj", "{F4CF4046-1578-49F6-9AB9-E2ACD2765ECF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.CRM.AHP.Plugins.Tests", "HE.CRM.AHP.Plugins.Tests\HE.CRM.AHP.Plugins.Tests.csproj", "{BAA5ADD8-36F5-4B64-BA3E-650E5EC3497D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -72,11 +74,17 @@ Global
 		{A719513A-72C3-4DA8-B16C-8AF395FCEE16}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A719513A-72C3-4DA8-B16C-8AF395FCEE16}.Release|x64.ActiveCfg = Release|Any CPU
 		{A719513A-72C3-4DA8-B16C-8AF395FCEE16}.Release|x64.Build.0 = Release|Any CPU
+		{BAA5ADD8-36F5-4B64-BA3E-650E5EC3497D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAA5ADD8-36F5-4B64-BA3E-650E5EC3497D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAA5ADD8-36F5-4B64-BA3E-650E5EC3497D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{BAA5ADD8-36F5-4B64-BA3E-650E5EC3497D}.Debug|x64.Build.0 = Debug|Any CPU
+		{BAA5ADD8-36F5-4B64-BA3E-650E5EC3497D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAA5ADD8-36F5-4B64-BA3E-650E5EC3497D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAA5ADD8-36F5-4B64-BA3E-650E5EC3497D}.Release|x64.ActiveCfg = Release|Any CPU
+		{BAA5ADD8-36F5-4B64-BA3E-650E5EC3497D}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {44D30F0B-F008-4D12-95FB-E893E3AFB749}
@@ -87,13 +95,10 @@ Global
 		HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems*{464f5b11-c934-42c4-b544-40cfcee6c683}*SharedItemsImports = 4
 		HE.CRM.Common\HE.CRM.Common.projitems*{464f5b11-c934-42c4-b544-40cfcee6c683}*SharedItemsImports = 4
 		HE.CRM.Model\HE.CRM.Model.projitems*{464f5b11-c934-42c4-b544-40cfcee6c683}*SharedItemsImports = 4
-		HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems*{6219f273-9b01-4851-8a17-ac30d0305cae}*SharedItemsImports = 5
 		HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems*{a719513a-72c3-4da8-b16c-8af395fcee16}*SharedItemsImports = 4
 		HE.CRM.Common\HE.CRM.Common.projitems*{a719513a-72c3-4da8-b16c-8af395fcee16}*SharedItemsImports = 4
 		HE.CRM.Model\HE.CRM.Model.projitems*{a719513a-72c3-4da8-b16c-8af395fcee16}*SharedItemsImports = 4
-		HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems*{b6e1af99-263c-4e52-a766-5fb02f6276dd}*SharedItemsImports = 5
 		HE.CRM.Common\HE.CRM.Common.projitems*{c57c0cf7-dc36-45cd-bfaa-c0f9b632aecb}*SharedItemsImports = 13
-		HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems*{d06ea4dc-76cf-4ceb-98a0-d89e88020c8d}*SharedItemsImports = 5
 		HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems*{f4cf4046-1578-49f6-9ab9-e2acd2765ecf}*SharedItemsImports = 13
 		HE.CRM.Model\HE.CRM.Model.projitems*{f6da36ca-a062-404b-b6ad-278652bb3ecb}*SharedItemsImports = 13
 	EndGlobalSection
