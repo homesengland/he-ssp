@@ -8,4 +8,5 @@ public enum CompanyStructureState
     HomesBuilt,
     CheckAnswers,
     Complete,
+    TaskList,
 }

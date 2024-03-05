@@ -35,7 +35,7 @@ public class LoanApplicationHasBeenStartedEventHandler : IEventHandler<LoanAppli
             {
                 $"{basePath}{CompanyStructureConstants.MoreInformationAboutOrganizationExternal}",
                 $"{basePath}{CompanyStructureConstants.MoreInformationAboutOrganizationInternal}",
-                $"{basePath}internal/cashflow",
+                $"{basePath}/internal/cashflow",
             },
             cancellationToken);
     }

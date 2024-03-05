@@ -1,18 +1,35 @@
 @using HE.Investments.FrontDoor.Contract.Project
 @using HE.Investments.FrontDoor.WWW.Views.Project.Const
 @using HE.Investments.FrontDoor.WWW.Views.Shared.Components.FrontDoorWorkflowBackButton
-@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investments.Common.WWW.Components.RadioListWithOr
+@using HE.Investments.Common.WWW.Helpers
+@using HE.Investments.FrontDoor.Contract.Project.Enums
+@model ProjectDetails
+
 @{
     ViewData["Title"] = ProjectPageTitles.Tenure;
+    var allOptions = SelectListHelper.FromEnumToExtendedList<AffordableHomesAmount>().ToList();
+    var availableOptions = allOptions.Where(o => o.Value != AffordableHomesAmount.Unknown.ToString());
+    var alternativeOption = allOptions.Single(o => o.Value == AffordableHomesAmount.Unknown.ToString());
 }
 
 <gds-div-grid-column-two-thirds>
     <vc:front-door-workflow-back-button current-page="@ProjectWorkflowState.Tenure"></vc:front-door-workflow-back-button>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
-    <form asp-controller="Project" asp-action="Tenure" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
-        TODO: @ProjectPageTitles.Tenure
+    <vc:page-header caption="@ViewBag.ProjectName" />
 
-        <vc:form-button/>
+    <form asp-controller="Project" asp-action="Tenure" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
+
+        <vc:radio-list-with-or
+            title="@ProjectPageTitles.Tenure"
+            title-type="@InputTitleType.PageHeader"
+            hint="Affordable homes, as defined by the National Planning Policy Framework, are homes for sale or rent for those whose needs are not met by the market."
+            field-name="@nameof(Model.AffordableHomesAmount)"
+            available-options="@availableOptions"
+            alternative-option="@alternativeOption"
+            value="@Model.AffordableHomesAmount"/>
+
+        <vc:form-button />
     </form>
 </gds-div-grid-column-two-thirds>

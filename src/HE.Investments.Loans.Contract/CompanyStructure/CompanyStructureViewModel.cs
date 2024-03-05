@@ -5,7 +5,7 @@ using HE.Investments.Loans.Contract.ViewModels;
 
 namespace HE.Investments.Loans.Contract.CompanyStructure;
 
-public class CompanyStructureViewModel : ICompletedSectionViewModel
+public class CompanyStructureViewModel : ISectionViewModel
 {
     public CompanyStructureViewModel()
     {
@@ -28,7 +28,7 @@ public class CompanyStructureViewModel : ICompletedSectionViewModel
 
     public string? CompanyInfoFileName { get; set; }
 
-    public SectionStatus State { get; set; }
+    public SectionStatus Status { get; set; }
 
     public bool StateChanged { get; set; }
 
@@ -38,12 +38,12 @@ public class CompanyStructureViewModel : ICompletedSectionViewModel
 
     public bool IsCompleted()
     {
-        return State == SectionStatus.Completed;
+        return Status == SectionStatus.Completed;
     }
 
     public bool IsProgress()
     {
-        return State == SectionStatus.InProgress;
+        return Status == SectionStatus.InProgress;
     }
 
     public bool IsReadOnly()

@@ -15,7 +15,7 @@ WORKDIR /src
 COPY ["Directory.Build.props", "."]
 COPY ["nuget.config", "."]
 COPY ["HE.Investments.FrontDoor.WWW/HE.Investments.FrontDoor.WWW.csproj", "HE.Investments.FrontDoor.WWW/"]
-COPY ["HE.Investments.FrontDoor.Contract/HE.Investments.FrontDoor.Contract", "HE.Investments.FrontDoor.Contract/"]
+COPY ["HE.Investments.FrontDoor.Contract/HE.Investments.FrontDoor.Contract.csproj", "HE.Investments.FrontDoor.Contract/"]
 COPY ["HE.Investments.Common.Contract/HE.Investments.Common.Contract.csproj", "HE.Investments.Common.Contract/"]
 COPY ["HE.Investments.FrontDoor.Domain/HE.Investments.FrontDoor.Domain.csproj", "HE.Investments.FrontDoor.Domain/"]
 COPY ["HE.Investments.Account.Shared/HE.Investments.Account.Shared.csproj", "HE.Investments.Account.Shared/"]

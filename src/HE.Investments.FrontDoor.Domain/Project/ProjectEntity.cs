@@ -3,20 +3,29 @@ using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Errors;
 using HE.Investments.FrontDoor.Contract.Project;
+using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
 
 namespace HE.Investments.FrontDoor.Domain.Project;
 
 public class ProjectEntity : DomainEntity
 {
-    public ProjectEntity(FrontDoorProjectId id, string name)
+    private readonly ModificationTracker _modificationTracker = new();
+
+    public ProjectEntity(
+        FrontDoorProjectId id,
+        string name,
+        ProjectAffordableHomesAmount? affordableHomesAmount = null)
     {
         Id = id;
         Name = name;
+        AffordableHomesAmount = affordableHomesAmount ?? ProjectAffordableHomesAmount.Empty();
     }
 
     public FrontDoorProjectId Id { get; private set; }
 
     public string Name { get; private set; }
+
+    public ProjectAffordableHomesAmount AffordableHomesAmount { get; private set; }
 
     public static ProjectEntity New(string name) => new(FrontDoorProjectId.New(), name);
 
@@ -28,6 +37,11 @@ public class ProjectEntity : DomainEntity
         }
 
         Name = name!;
+    }
+
+    public void ProvideAffordableHomesAmount(ProjectAffordableHomesAmount affordableHomesAmount)
+    {
+        AffordableHomesAmount = _modificationTracker.Change(AffordableHomesAmount, affordableHomesAmount);
     }
 
     public void SetId(FrontDoorProjectId newId)
