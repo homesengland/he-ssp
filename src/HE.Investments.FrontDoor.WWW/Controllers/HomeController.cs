@@ -8,23 +8,11 @@ namespace HE.Investments.FrontDoor.WWW.Controllers;
 [Route("home")]
 public class HomeController : Controller
 {
-    private readonly IProjectRepository _projectRepository;
-
-    private readonly IAccountUserContext _accountUserContext;
-
-    public HomeController(IProjectRepository projectRepository, IAccountUserContext accountUserContext)
-    {
-        _projectRepository = projectRepository;
-        _accountUserContext = accountUserContext;
-    }
-
     [Route("/")]
     [AuthorizeWithCompletedProfile]
-    public async Task<IActionResult> Index(CancellationToken cancellationToken)
+    public IActionResult Index()
     {
-        var userAccount = await _accountUserContext.GetSelectedAccount();
-        var projects = await _projectRepository.GetProjects(userAccount, cancellationToken);
-        return View(projects);
+        return RedirectToAction("Index", "Projects");
     }
 
     [HttpGet("error")]

@@ -1,24 +1,35 @@
+using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.FrontDoor.Contract.Project;
 using HE.Investments.FrontDoor.Contract.Project.Commands;
+using HE.Investments.FrontDoor.Domain.Project.Repository;
 using MediatR;
 
 namespace HE.Investments.FrontDoor.Domain.Project.CommandHandlers;
 
 public class CreateProjectCommandHandler : IRequestHandler<CreateProjectCommand, OperationResult<FrontDoorProjectId>>
 {
-    public Task<OperationResult<FrontDoorProjectId>> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
+    private readonly IProjectRepository _repository;
+
+    private readonly IAccountUserContext _accountUserContext;
+
+    public CreateProjectCommandHandler(IProjectRepository repository, IAccountUserContext accountUserContext)
     {
-        // TODO: move to Domain
+        _repository = repository;
+        _accountUserContext = accountUserContext;
+    }
+
+    public async Task<OperationResult<FrontDoorProjectId>> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
+    {
         if (string.IsNullOrWhiteSpace(request.Name))
         {
             var errorResult = new OperationResult<FrontDoorProjectId>();
             errorResult.AddValidationError("Name", "Enter name");
 
-            return Task.FromResult(errorResult);
+            return errorResult;
         }
 
-        var result = new OperationResult<FrontDoorProjectId>(new FrontDoorProjectId(Guid.NewGuid().ToString()));
-        return Task.FromResult(result);
+        var project = await _repository.Save(ProjectEntity.New(request.Name), await _accountUserContext.GetSelectedAccount(), cancellationToken);
+        return new OperationResult<FrontDoorProjectId>(project.Id);
     }
 }
