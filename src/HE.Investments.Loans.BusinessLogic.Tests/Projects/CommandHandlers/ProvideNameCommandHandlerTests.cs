@@ -76,7 +76,7 @@ public class ProvideNameCommandHandlerTests : TestBase<ChangeProjectNameCommandH
         var projectId = project.Id;
         var oldName = project.Name;
 
-        _command = new ChangeProjectNameCommand(LoanApplicationIdTestData.LoanApplicationIdOne, projectId!, string.Empty);
+        _command = new ChangeProjectNameCommand(LoanApplicationIdTestData.LoanApplicationIdOne, projectId, string.Empty);
 
         await TestCandidate.Handle(_command, CancellationToken.None);
 
@@ -99,11 +99,11 @@ public class ProvideNameCommandHandlerTests : TestBase<ChangeProjectNameCommandH
             .ForProject(projectId)
             .ReturnsOneProject(project));
 
-        _command = new ChangeProjectNameCommand(LoanApplicationIdTestData.LoanApplicationIdOne, projectId!, TextTestData.TextThatExceedsShortInputLimit);
+        _command = new ChangeProjectNameCommand(LoanApplicationIdTestData.LoanApplicationIdOne, projectId, TextTestData.TextThatExceedsShortInputLimit);
 
-        var result = await TestCandidate.Handle(_command, CancellationToken.None);
+        var action = () => TestCandidate.Handle(_command, CancellationToken.None);
 
-        result.Errors.Should().ContainsOnlyOneErrorMessage(ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.ProjectName));
+        await action.Should().ThrowAsync<DomainValidationException>().WithMessage(ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.ProjectName));
     }
 
     [Fact]
@@ -122,7 +122,7 @@ public class ProvideNameCommandHandlerTests : TestBase<ChangeProjectNameCommandH
             .ForProject(projectId)
             .ReturnsOneProject(project));
 
-        _command = new ChangeProjectNameCommand(LoanApplicationIdTestData.LoanApplicationIdOne, projectId!, ValidProjectName());
+        _command = new ChangeProjectNameCommand(LoanApplicationIdTestData.LoanApplicationIdOne, projectId, ValidProjectName());
 
         await TestCandidate.Handle(_command, CancellationToken.None);
 

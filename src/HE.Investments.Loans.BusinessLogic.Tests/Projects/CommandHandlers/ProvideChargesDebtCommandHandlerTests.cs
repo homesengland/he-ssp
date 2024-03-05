@@ -1,13 +1,12 @@
+using HE.Investments.Common.Contract.Constants;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.Tests.TestObjectBuilders;
 using HE.Investments.Loans.BusinessLogic.Projects.CommandHandlers;
 using HE.Investments.Loans.BusinessLogic.Projects.ValueObjects;
-using HE.Investments.Loans.BusinessLogic.Tests.Assertions;
 using HE.Investments.Loans.BusinessLogic.Tests.Projects.ObjectBuilders;
 using HE.Investments.Loans.BusinessLogic.Tests.Projects.TestData;
 using HE.Investments.Loans.BusinessLogic.Tests.TestData;
-using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using HE.Investments.Loans.Contract.Projects.Commands;
 using HE.Investments.TestsUtils.TestFramework;
 using Xunit;
@@ -83,13 +82,13 @@ public class ProvideChargesDebtCommandHandlerTests : TestBase<ProvideChargesDebt
 
         _command = new ProvideChargesDebtCommand(
             LoanApplicationIdTestData.LoanApplicationIdOne,
-            projectId!,
+            projectId,
             ValidChargesDebt_YesSelected(),
             InvalidChargesDebtInfo());
 
-        var result = await TestCandidate.Handle(_command, CancellationToken.None);
+        var action = () => TestCandidate.Handle(_command, CancellationToken.None);
 
-        result.Errors.Should().ContainsOnlyOneErrorMessage(ValidationErrorMessage.EnterExistingLegal);
+        await action.Should().ThrowAsync<DomainValidationException>().WithMessage(ValidationErrorMessage.EnterExistingLegal);
     }
 
     [Fact]
@@ -108,7 +107,7 @@ public class ProvideChargesDebtCommandHandlerTests : TestBase<ProvideChargesDebt
             .ForProject(projectId)
             .ReturnsOneProject(project));
 
-        _command = new ProvideChargesDebtCommand(LoanApplicationIdTestData.LoanApplicationIdOne, projectId!, ValidChargesDebt_NoSelected(), null!);
+        _command = new ProvideChargesDebtCommand(LoanApplicationIdTestData.LoanApplicationIdOne, projectId, ValidChargesDebt_NoSelected(), null!);
 
         await TestCandidate.Handle(_command, CancellationToken.None);
 
@@ -133,7 +132,7 @@ public class ProvideChargesDebtCommandHandlerTests : TestBase<ProvideChargesDebt
 
         _command = new ProvideChargesDebtCommand(
             LoanApplicationIdTestData.LoanApplicationIdOne,
-            projectId!,
+            projectId,
             ValidChargesDebt_YesSelected(),
             ValidChargesDebtInfo());
 

@@ -1,0 +1,3 @@
+.govuk-heading-s, .govuk-heading-m, .govuk-heading-l, .govuk-heading-xl {
+  word-break: break-word;
+}

@@ -1,0 +1,11 @@
+<environment include="Development">
+    <link href="~/stylesheets/govuk-frontend-all.min.css" rel="stylesheet">
+    <link href="~/stylesheets/govuk-frontend-extensions.min.css" rel="stylesheet">
+    <link href="~/stylesheets/main.css" rel="stylesheet" asp-append-version="true">
+</environment>
+
+<environment exclude="Development">
+    <link href="~/stylesheets/govuk-frontend-all.min.css" rel="stylesheet">
+    <link href="~/stylesheets/govuk-frontend-extensions.min.css" rel="stylesheet">
+    <link href="~/stylesheets/main.min.css" rel="stylesheet" asp-append-version="true">
+</environment>

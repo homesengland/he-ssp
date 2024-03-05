@@ -3,12 +3,12 @@ using HE.Investments.Account.Contract.Organisation.Commands;
 using HE.Investments.Account.Contract.Organisation.Queries;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Account.Shared.Routing;
+using HE.Investments.Common.Contract.Constants;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Utils;
-using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,9 +32,14 @@ public class OrganisationController : Controller
     }
 
     [HttpPost(OrganisationAccountEndpoints.SearchOrganisationSuffix)]
-    public IActionResult SearchOrganisation(OrganisationSearchModel organisation)
+    public async Task<IActionResult> SearchOrganisation(OrganisationSearchModel model, CancellationToken cancellationToken)
     {
-        return RedirectToAction(nameof(SearchOrganisationResult), new { searchPhrase = organisation.Name });
+        return await this.ExecuteCommand<OrganisationSearchModel>(
+            _mediator,
+            new ProvideOrganisationSearchPhraseCommand(model.Name),
+            async () => await Task.FromResult(RedirectToAction(nameof(SearchOrganisationResult), new { searchPhrase = model.Name })),
+            () => Task.FromResult<IActionResult>(View("SearchOrganisation", model)),
+            cancellationToken);
     }
 
     [HttpGet("search/result")]

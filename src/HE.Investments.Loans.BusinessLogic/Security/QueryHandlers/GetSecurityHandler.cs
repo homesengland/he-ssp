@@ -1,6 +1,6 @@
 using HE.Investments.Account.Shared;
+using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Loans.BusinessLogic.Security.Repositories;
-using HE.Investments.Loans.Common.Extensions;
 using HE.Investments.Loans.Contract.Security;
 using HE.Investments.Loans.Contract.Security.Queries;
 using MediatR;

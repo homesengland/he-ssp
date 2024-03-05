@@ -24,6 +24,7 @@ public class LoanApplicationWorkflow : IStateRouting<LoanApplicationWorkflow.Sta
         ResubmitApplication,
         ApplicationSubmitted,
         Ineligible,
+        Hold,
         Withdraw,
     }
 
@@ -125,6 +126,9 @@ public class LoanApplicationWorkflow : IStateRouting<LoanApplicationWorkflow.Sta
 
         _machine.Configure(State.ApplicationDashboard)
             .Permit(Trigger.Withdraw, State.Withdraw);
+
+        _machine.Configure(State.Hold)
+            .Permit(Trigger.Back, State.ApplicationDashboard);
 
         _machine.Configure(State.Withdraw)
             .PermitIf(Trigger.Continue, State.ApplicationDashboard, () => _isLoanApplicationExist().Result)

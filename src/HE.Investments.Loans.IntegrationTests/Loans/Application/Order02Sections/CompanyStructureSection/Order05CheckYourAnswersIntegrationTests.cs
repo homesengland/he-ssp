@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
+using HE.Investments.Common.Contract.Constants;
 using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.Loans.Common.Tests.TestData;
 using HE.Investments.Loans.Common.Utils.Constants.FormOption;
@@ -38,9 +39,9 @@ public class Order05CheckYourAnswersIntegrationTests : IntegrationTest
         var companyStructureSummary = checkYourAnswersPage.GetSummaryListItems();
 
         // then
-        companyStructureSummary[CompanyStructureFields.CompanyEstablishedForThisDevelopment].Should().Be(CommonResponse.Yes);
-        companyStructureSummary[CompanyStructureFields.AdditionalInformation].Should().Be(TextTestData.TextThatNotExceedsLongInputLimit);
-        companyStructureSummary[CompanyStructureFields.HomesInLastThreeYears].Should().Be("13");
+        companyStructureSummary[CompanyStructureFields.CompanyEstablishedForThisDevelopment].Value.Should().Be(CommonResponse.Yes);
+        companyStructureSummary[CompanyStructureFields.AdditionalInformation].Value.Should().Be(TextTestData.TextThatNotExceedsLongInputLimit);
+        companyStructureSummary[CompanyStructureFields.HomesInLastThreeYears].Value.Should().Be("13");
         SetSharedData(SharedKeys.CurrentPageKey, checkYourAnswersPage);
     }
 

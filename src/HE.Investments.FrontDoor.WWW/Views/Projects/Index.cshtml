@@ -1,0 +1,36 @@
+@model IList<HE.Investments.FrontDoor.Domain.Project.ProjectEntity>
+@{
+    ViewData["Title"] = "Morelas Ltd. Homes England account";
+}
+
+<gds-div-grid-column-two-thirds>
+
+    <gds-h2 size="ControlSize.M">
+        Your projects
+    </gds-h2>
+
+    <table class="govuk-table">
+        <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header govuk-!-width-one-third">Name</th>
+        </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+        @foreach (var project in Model)
+        {
+            <tr class="govuk-table__row">
+                <td class="govuk-table__cell">
+                    <span class="app-task-list__task-name">
+                        <strong>
+                            <a href="@Url.Action("Name", "Project", new { projectId = project.Id.Value })" id=@($"open-project-link-{project.Id.Value}")>@project.Name</a>
+                        </strong>
+                    </span>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+    <a href="@(Url.Action("Start", "Project"))">Start a new project</a>
+
+</gds-div-grid-column-two-thirds>

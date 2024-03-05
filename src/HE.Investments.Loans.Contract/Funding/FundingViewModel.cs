@@ -1,4 +1,5 @@
 using HE.Investments.Common.Contract;
+using HE.Investments.Common.Contract.Constants;
 using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using HE.Investments.Loans.Contract.Application.Helper;
 using HE.Investments.Loans.Contract.ViewModels;

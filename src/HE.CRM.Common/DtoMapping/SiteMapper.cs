@@ -16,6 +16,7 @@ namespace HE.CRM.Common.DtoMapping
             {
                 id = entity.invln_SitesId?.ToString(),
                 name = entity.invln_sitename,
+                status = entity.invln_externalsitestatus?.Value,
                 section106 = new Section106Dto
                 {
                     isAgreement106 = entity.invln_s106agreementinplace,
@@ -27,8 +28,8 @@ namespace HE.CRM.Common.DtoMapping
                 },
                 localAuthority = new SiteLocalAuthority
                 {
-                   id = entity.invln_LocalAuthority?.Id.ToString(),
-                   name = entity.GetAttributeValue<AliasedValue>("invln_ahglocalauthorities1.invln_gsscode")?.Value.ToString(),
+                   id = entity.GetAttributeValue<AliasedValue>("invln_ahglocalauthorities1.invln_gsscode")?.Value.ToString(),
+                   name = entity.invln_LocalAuthority?.Name,
                 },
                 planningDetails = new PlanningDetailsDto
                 {
@@ -87,7 +88,7 @@ namespace HE.CRM.Common.DtoMapping
                     mmcFutureAdoptionExpectedImpact = entity.invln_mmcexpectedimpact,
                 },
 
-                procurementMechanisms = entity.invln_procurementmechanismsnew.ToIntValueList(),
+                procurementMechanisms = entity.invln_procurementmechanisms.ToIntValueList(),
             };
         }
 
@@ -101,7 +102,7 @@ namespace HE.CRM.Common.DtoMapping
             }
 
             SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_sitename), dto.name);
-            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.StateCode), dto.name);
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_externalsitestatus), TryCreateOptionSetValue(dto.status));
 
             SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_s106agreementinplace), dto.section106.isAgreement106);
             SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_developercontributionsforah), dto.section106.areContributionsForAffordableHomes);
@@ -166,7 +167,7 @@ namespace HE.CRM.Common.DtoMapping
             SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_mmccategory1subcategories), CreateOptionSetValueCollection(dto.modernMethodsOfConstruction.mmc3DSubcategories));
             SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_mmccategory2subcategories), CreateOptionSetValueCollection(dto.modernMethodsOfConstruction.mmc2DSubcategories));
 
-            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_procurementmechanismsnew), CreateOptionSetValueCollection(dto.procurementMechanisms));
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_procurementmechanisms), CreateOptionSetValueCollection(dto.procurementMechanisms));
 
             return site;
         }

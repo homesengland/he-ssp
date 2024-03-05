@@ -69,7 +69,7 @@ public class WithdrawTests : TestBase<LoanApplicationEntity>
     }
 
     [Fact]
-    public async Task ShouldExecuteWithdrawSubmitted_WhenLoanApplicationStatusIsAplicationSubmitted()
+    public async Task ShouldExecuteWithdrawSubmitted_WhenLoanApplicationStatusIsApplicationSubmitted()
     {
         // given
         var loanApplicationId = LoanApplicationIdTestData.LoanApplicationIdOne;

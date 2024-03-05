@@ -12,6 +12,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)dtomapping\AhpApplicationMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)dtomapping\ContactDtoMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DtoMapping\DeliveryPhaseMapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)dtomapping\FrontDoorProjectMapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)dtomapping\FrontDoorProjectSiteMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)dtomapping\HomeTypeMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)dtomapping\LoanApplicationDtoMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)dtomapping\MilestoneFrameWorkItemMapper.cs" />
@@ -21,6 +23,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\DateTimeExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\Entities\EntityExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\Entities\OptionSetValueCollectionExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\FetchXmlHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\StringHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\AccountRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\AhgLocalAuthorityRepository.cs" />
@@ -31,6 +34,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\ContactWebroleRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\implementations\DeliveryPhaseRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\EnvironmentVariableRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\FrontDoorProjectRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\FrontDoorProjectSiteRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\GovNotifyEmailRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\GlobalRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\implementations\HomesInDeliveryPhaseRepository.cs" />
@@ -63,6 +68,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IContactWebroleRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IDeliveryPhaseRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IEnvironmentVariableRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IFrontDoorProjectRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IFrontDoorProjectSiteRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IGovNotifyEmailRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IGlobalRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IHomesInDeliveryPhaseRepository.cs" />
@@ -85,6 +92,5 @@
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\ISystemUserRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\ITeamRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IWebRoleRepository.cs" />
-    <Folder Include="$(MSBuildThisFileDirectory)Helpers\" />
   </ItemGroup>
 </Project>

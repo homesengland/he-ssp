@@ -1,12 +1,13 @@
 using FluentValidation;
+using HE.Investments.Common;
 using HE.Investments.Common.Config;
 using HE.Investments.Common.CRM;
 using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.Common.WWW.Infrastructure.Authorization;
 using HE.Investments.Common.WWW.Infrastructure.ErrorHandling;
+using HE.Investments.Common.WWW.Infrastructure.Middlewares;
 using HE.Investments.Loans.BusinessLogic.Config;
 using HE.Investments.Loans.BusinessLogic.ViewModel;
-using HE.Investments.Loans.Common.Infrastructure;
 using HE.Investments.Loans.WWW.Models;
 using HE.Investments.Loans.WWW.Notifications;
 using HE.Investments.Loans.WWW.Routing;
@@ -19,6 +20,7 @@ public static class WebModule
     public static void AddWebModule(this IServiceCollection serviceCollections)
     {
         serviceCollections.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(LoanApplicationViewModel).Assembly));
+        serviceCollections.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(DomainValidationHandler<,,>).Assembly));
         serviceCollections.AddScoped<NonceModel>();
         serviceCollections.AddCrmConnection();
         serviceCollections.AddBusinessLogic();

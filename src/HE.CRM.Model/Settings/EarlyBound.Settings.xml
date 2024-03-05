@@ -29,11 +29,16 @@ invln_getfilelocationforapplicationloan|
 invln_getloanapplicationsforaccountandcontact|
 invln_getmultipleahpapplications|
 invln_getmultipledeliveryphase|
+invln_getmultiplefrontdoorprojects|
+invln_getmultiplefrontdoorprojectssite|
+invln_getmultiplelocalauthorities|
 invln_getmultipleprogramme|
 invln_getmultiplesites|
 invln_getorganisationchangedetails|
 invln_getorganizationdetails|
 invln_getsingledeliveryphase|
+invln_getsinglefrontdoorproject|
+invln_getsinglefrontdoorprojectsite|
 invln_getsinglehometype|
 invln_getsingleloanapplicationforaccountandcontact|
 invln_getsingleprogramme|
@@ -55,6 +60,7 @@ invln_sendremindertofinalisadraftapplication|
 invln_sendrequesttoassigncontacttoexistingorganisation|
 invln_setahpapplication|
 invln_setdeliveryphase|
+invln_setfrontdoorproject|
 invln_sethometype|
 invln_setsite|
 invln_updatesingleloanapplication|
@@ -87,7 +93,6 @@ invln_ahglocalauthorities|
 invln_ahpcontract|
 invln_ahpstatuschange|
 invln_borrowerpreviousschemes|
-invln_cashflow|
 invln_comment|
 invln_conditions|
 invln_consortium|
@@ -100,6 +105,8 @@ invln_emailnotification|
 invln_emailtemplate|
 invln_externalcomms|
 invln_financialcovenants|
+invln_frontdoorprojectpoc|
+invln_frontdoorprojectsitepoc|
 invln_govnotifyemail|
 invln_grantbenchmark|
 invln_homesindeliveryphase|

@@ -1,10 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
-using HE.DocumentService.SharePoint.Configurartion;
+using HE.DocumentService.SharePoint.Configuration;
 using HE.DocumentService.SharePoint.Constants;
 using HE.DocumentService.SharePoint.Exceptions;
 using HE.DocumentService.SharePoint.Interfaces;
@@ -12,11 +6,16 @@ using Microsoft.SharePoint.Client;
 
 namespace HE.DocumentService.SharePoint.Services;
 
-public class SharePointFolderService : BaseService, ISharePointFolderService
+public class SharePointFolderService : ISharePointFolderService
 {
-    public SharePointFolderService(ISharePointContext spContext, ISharePointConfiguration spConfig, IMapper mapper)
-        : base(spContext, spConfig, mapper)
+    private readonly ClientContext _spContext;
+
+    private readonly ISharePointConfiguration _spConfig;
+
+    public SharePointFolderService(ISharePointContext spContext, ISharePointConfiguration spConfig)
     {
+        _spConfig = spConfig;
+        _spContext = spContext.Context;
     }
 
     public Folder CreateFolderIfNotExist(string listTitle, string fullFolderPath)
@@ -42,7 +41,7 @@ public class SharePointFolderService : BaseService, ISharePointFolderService
     public Folder EnsureAndGetTargetFolder(List list, List<string> folderPath)
     {
         var returnFolder = list.RootFolder;
-        return (folderPath != null && folderPath.Count > 0)
+        return folderPath.Count > 0
             ? EnsureAndGetTargetSubfolder(list, folderPath)
             : returnFolder;
     }
@@ -53,7 +52,7 @@ public class SharePointFolderService : BaseService, ISharePointFolderService
         var currentFolder = list.RootFolder;
         _spContext.Load(web, t => t.Url);
         _spContext.Load(currentFolder);
-        _spContext.ExecuteQueryRetry(RETRY_COUNT);
+        _spContext.ExecuteQueryRetry(_spConfig.RetryCount);
 
         foreach (var folderPointer in folderPath)
         {
@@ -79,7 +78,7 @@ public class SharePointFolderService : BaseService, ISharePointFolderService
     {
         var folders = currentFolder.Folders;
         _spContext.Load(folders);
-        _spContext.ExecuteQueryRetry(RETRY_COUNT);
+        _spContext.ExecuteQueryRetry(_spConfig.RetryCount);
 
         var existingFolder = folders.FirstOrDefault(x => x.Name.Equals(folderPointer, StringComparison.OrdinalIgnoreCase));
 
@@ -97,30 +96,31 @@ public class SharePointFolderService : BaseService, ISharePointFolderService
         {
             UnderlyingObjectType = FileSystemObjectType.Folder,
             LeafName = folderPointer,
-            FolderUrl = currentFolder.ServerRelativeUrl
+            FolderUrl = currentFolder.ServerRelativeUrl,
         };
 
         var folderItemCreated = list.AddItem(itemCreationInfo);
         folderItemCreated.Update();
 
         _spContext.Load(folderItemCreated, f => f.Folder);
-        _spContext.ExecuteQueryRetry(RETRY_COUNT);
+        _spContext.ExecuteQueryRetry(_spConfig.RetryCount);
 
         return folderItemCreated.Folder;
     }
 
     private Folder CreateFolderInternal(Folder parentFolder, string fullFolderPath)
     {
-        var folderUrls = fullFolderPath.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+        var folderUrls = fullFolderPath.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
         var folderUrl = folderUrls[0];
         var curFolder = parentFolder.Folders.Add(folderUrl);
         _spContext.Load(curFolder);
-        _spContext.ExecuteQueryRetry(RETRY_COUNT);
+        _spContext.ExecuteQueryRetry(_spConfig.RetryCount);
         if (folderUrls.Length > 1)
         {
             var folderPath = string.Join("/", folderUrls, 1, folderUrls.Length - 1);
             return CreateFolderInternal(curFolder, folderPath);
         }
+
         return curFolder;
     }
 }

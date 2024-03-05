@@ -64,6 +64,10 @@ namespace HE.CRM.Common.DtoMapping
             {
                 applicationToReturn.invln_organisationid = new EntityReference(Account.EntityLogicalName, organisationGuid);
             }
+            if (Guid.TryParse(applicationDto.siteId, out var siteGuid))
+            {
+                applicationToReturn.invln_Site = new EntityReference(invln_Sites.EntityLogicalName, siteGuid);
+            }
             return applicationToReturn;
         }
 
@@ -125,6 +129,10 @@ namespace HE.CRM.Common.DtoMapping
             if (application.invln_contactid != null)
             {
                 applicationDtoToReturn.contactId = application.invln_contactid.Id.ToString();
+            }
+            if (application.invln_Site != null)
+            {
+                applicationDtoToReturn.siteId = application.invln_Site.Id.ToString();
             }
             return applicationDtoToReturn;
         }

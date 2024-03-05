@@ -32,15 +32,8 @@ public class InviteUserToOrganisationCommandHandler : IRequestHandler<InviteUser
         var account = await _userContext.GetSelectedAccount();
         var organisationUsers = await _organisationUsersRepository.GetOrganisationUsers(account.SelectedOrganisationId(), cancellationToken);
 
-        try
-        {
-            organisationUsers.InviteUser(createInvitationResult.ReturnedData!);
-            await _organisationUsersRepository.Save(organisationUsers, cancellationToken);
-        }
-        catch (DomainValidationException ex)
-        {
-            return ex.OperationResult;
-        }
+        organisationUsers.InviteUser(createInvitationResult.ReturnedData!);
+        await _organisationUsersRepository.Save(organisationUsers, cancellationToken);
 
         return OperationResult.Success();
     }

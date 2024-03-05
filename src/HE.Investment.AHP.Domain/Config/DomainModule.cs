@@ -26,6 +26,7 @@ using HE.Investment.AHP.Domain.Scheme.Services;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investments.Account.Shared.Config;
+using HE.Investments.Common;
 using HE.Investments.Common.Utils;
 using MediatR.Pipeline;
 using Microsoft.Extensions.DependencyInjection;
@@ -104,6 +105,7 @@ public static class DomainModule
         services.AddScoped<ISiteCrmContext, SiteCrmContext>();
         services.AddScoped<ISiteRepository, SiteRepository>();
         services.AddScoped<ILocalAuthorityRepository, LocalAuthorityRepository>();
+        services.AddScoped<IAhgLocalAuthorityRepository, AhgLocalAuthorityRepository>();
     }
 
     private static void AddDelivery(IServiceCollection services)

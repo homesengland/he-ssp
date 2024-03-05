@@ -1,0 +1,63 @@
+[
+  {
+    "outputFileName": "wwwroot/stylesheets/main.min.css",
+    "inputFiles": [
+      "wwwroot/stylesheets/*.css",
+      "!wwwroot/stylesheets/*.min.css",
+      "!wwwroot/stylesheets/main.css",
+      "!wwwroot/stylesheets/govuk-frontend-all.min.css",
+      "!wwwroot/stylesheets/govuk-frontend-extensions.min.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/stylesheets/main.css",
+    "inputFiles": [
+      "wwwroot/stylesheets/*.css",
+      "!wwwroot/stylesheets/*.min.css",
+      "!wwwroot/stylesheets/govuk-frontend-all.min.css",
+      "!wwwroot/stylesheets/govuk-frontend-extensions.min.css"
+    ],
+    "minify": {
+      "enabled": false,
+      "renameLocals": false
+    }
+  },
+  {
+    "outputFileName": "wwwroot/javascripts/site.min.js",
+    "inputFiles": [
+      "wwwroot/javascripts/*.js",
+      "!wwwroot/javascripts/*.min.js",
+      "!wwwroot/javascripts/site.js",
+      "!wwwroot/javascripts/enable-js.js",
+      "!wwwroot/javascripts/ExistingCompany.file-validation.js",
+      "!wwwroot/javascripts/govuk-frontend-all.min.js",
+      "!wwwroot/javascripts/history.js",
+      "!wwwroot/javascripts/land-cost-radio.js",
+      "!wwwroot/javascripts/manual.js",
+      "!wwwroot/javascripts/mortgage-term-radio.js",
+      "!wwwroot/javascripts/service-charge-radio.js",
+      "!wwwroot/javascripts/tmp.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/javascripts/site.js",
+    "inputFiles": [
+      "wwwroot/javascripts/*.js",
+      "!wwwroot/javascripts/*.min.js",
+      "!wwwroot/javascripts/enable-js.js",
+      "!wwwroot/javascripts/ExistingCompany.file-validation.js",
+      "!wwwroot/javascripts/govuk-frontend-all.min.js",
+      "!wwwroot/javascripts/history.js",
+      "!wwwroot/javascripts/land-cost-radio.js",
+      "!wwwroot/javascripts/manual.js",
+      "!wwwroot/javascripts/mortgage-term-radio.js",
+      "!wwwroot/javascripts/service-charge-radio.js",
+      "!wwwroot/javascripts/tmp.js"
+    ],
+    "minify": {
+      "enabled": false,
+      "renameLocals": false
+    }
+  }
+]
+

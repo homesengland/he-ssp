@@ -31,11 +31,16 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getloanapplicationsforaccountandcontact.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getmultipleahpapplications.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getmultipledeliveryphase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getmultiplefrontdoorprojects.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getmultiplefrontdoorprojectssite.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getmultiplelocalauthorities.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getmultipleprogramme.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getmultiplesites.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getorganisationchangedetails.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getorganizationdetails.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getsingledeliveryphase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getsinglefrontdoorproject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getsinglefrontdoorprojectsite.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getsinglehometype.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getsingleloanapplicationforaccountandcontact.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getsingleprogramme.cs" />
@@ -58,6 +63,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_sendrequesttoassigncontacttoexistingorganisation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_setahpapplication.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_setdeliveryphase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_setfrontdoorproject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_sethometype.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_setsite.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_updatesingleloanapplication.cs" />
@@ -108,6 +114,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_EmailTemplate.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_Externalcomms.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_FinancialCovenants.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_FrontDoorProjectPOC.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_FrontDoorProjectSitePOC.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_govnotifyemail.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_grantbenchmark.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_homesindeliveryphase.cs" />
@@ -232,6 +240,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ExternalStatusAHP.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ExternalStatusAHPOrganisation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Facilities.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_FrontDoorActivitiesinProject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_FrontDoorAmountofAffordableHomes.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_FrontDoorAmountofFundingRequired.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_FrontDoorGeographicFocus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_FrontDoorInfrastructureDelivered.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_FrontDoorPlanningStatues.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_FrontDoorRegion.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_FundingReason.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Fundingtypeforadditionalprojects.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_FundRecoveryRate.cs" />
@@ -282,6 +297,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_SecurityType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_SecurityTypeAHPPartnerOnboarding.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_sitePlanningstatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Sitestatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Source.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Sourceofincome.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_StatusReviewApprovalSet.cs" />

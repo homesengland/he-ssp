@@ -1,3 +1,4 @@
+using HE.Investments.Common.Contract.Constants;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Messages;
 using HE.Investments.Loans.BusinessLogic.Projects.ValueObjects;

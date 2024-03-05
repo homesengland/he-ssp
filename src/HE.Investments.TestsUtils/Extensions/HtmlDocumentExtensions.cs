@@ -2,6 +2,7 @@ using System.Text;
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
+using HE.Investments.TestsUtils.Helpers;
 
 namespace HE.Investments.TestsUtils.Extensions;
 
@@ -117,19 +118,21 @@ public static class HtmlDocumentExtensions
         return htmlDocument;
     }
 
-    public static IDictionary<string, string> GetSummaryListItems(this IHtmlDocument htmlDocument)
+    public static IDictionary<string, SummaryItem> GetSummaryListItems(this IHtmlDocument htmlDocument)
     {
         var summaryRows = htmlDocument.GetElementsByClassName("govuk-summary-list__row");
-        var dictionary = new Dictionary<string, string>();
+        var dictionary = new Dictionary<string, SummaryItem>();
         foreach (var summaryRow in summaryRows)
         {
             var key = summaryRow.GetElementsByClassName("govuk-summary-list__key").Single().InnerHtml.Trim();
+            var header = summaryRow.Parent?.PreviousSibling?.PreviousSibling?.Text().Trim() ?? string.Empty;
             var value = GetValueFor(summaryRow);
+            var link = summaryRow.QuerySelector<IHtmlAnchorElement>(".govuk-summary-list__actions a");
+            var item = new SummaryItem(header, key, value, link);
 
-            if (!dictionary.TryAdd(key, value))
+            if (!dictionary.TryAdd(key, item))
             {
-                var summaryHeader = summaryRow.Parent?.PreviousSibling?.PreviousSibling?.Text().Trim() ?? string.Empty;
-                dictionary[$"{summaryHeader} - {key}"] = value;
+                dictionary[$"{header} - {key}"] = item;
             }
         }
 

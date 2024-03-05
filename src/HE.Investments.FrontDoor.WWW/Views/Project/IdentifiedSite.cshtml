@@ -1,0 +1,18 @@
+@using HE.Investments.FrontDoor.Contract.Project
+@using HE.Investments.FrontDoor.WWW.Views.Project.Const
+@using HE.Investments.FrontDoor.WWW.Views.Shared.Components.FrontDoorWorkflowBackButton
+@using HE.Investments.Common.WWW.Components.FormButton
+@{
+    ViewData["Title"] = ProjectPageTitles.IdentifiedSite;
+}
+
+<gds-div-grid-column-two-thirds>
+    <vc:front-door-workflow-back-button current-page="@ProjectWorkflowState.IdentifiedSite"></vc:front-door-workflow-back-button>
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+
+    <form asp-controller="Project" asp-action="IdentifiedSite" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
+        TODO: @ProjectPageTitles.IdentifiedSite
+
+        <vc:form-button/>
+    </form>
+</gds-div-grid-column-two-thirds>

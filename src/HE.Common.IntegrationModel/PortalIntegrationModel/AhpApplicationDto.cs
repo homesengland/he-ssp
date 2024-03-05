@@ -10,6 +10,7 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public int? tenure { get; set; }
         public string referenceNumber { get; set; }
         public int? applicationStatus { get; set; }
+        public string siteId { get; set; }
 
         //sections statuses
         public int? schemeInformationSectionCompletionStatus { get; set; }

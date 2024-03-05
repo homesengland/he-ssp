@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using DataverseModel;
 using HE.Base.Services;
@@ -18,12 +17,16 @@ namespace HE.CRM.AHP.Plugins.Services.Site
             _repository = CrmRepositoriesFactory.Get<ISiteRepository>();
             _localAuthorityRepository = CrmRepositoriesFactory.Get<IAhgLocalAuthorityRepository>();
         }
-
-        public List<SiteDto> GetSites(string fieldsToRetrieve)
+        public PagedResponseDto<SiteDto> Get(PagingRequestDto paging, string fieldsToRetrieve)
         {
-            var all = _repository.GetAll(fieldsToRetrieve);
+            var result = _repository.Get(paging, fieldsToRetrieve);
 
-            return all.Select(SiteMapper.ToDto).ToList();
+            return new PagedResponseDto<SiteDto>
+            {
+                paging = paging,
+                items = result.items.Select(SiteMapper.ToDto).ToList(),
+                totalItemsCount = result.totalItemsCount,
+            };
         }
 
         public SiteDto GetById(string id, string fieldsToRetrieve)

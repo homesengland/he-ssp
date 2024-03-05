@@ -1,0 +1,100 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33516.290
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CE64880E-48EA-4E9B-8421-0FE2DEDF84D2}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.CRM.Plugins", "HE.CRM.Plugins\HE.CRM.Plugins.csproj", "{464F5B11-C934-42C4-B544-40CFCEE6C683}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "HE.CRM.Model", "HE.CRM.Model\HE.CRM.Model.shproj", "{F6DA36CA-A062-404B-B6AD-278652BB3ECB}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "HE.CRM.Common", "HE.CRM.Common\HE.CRM.Common.shproj", "{C57C0CF7-DC36-45CD-BFAA-C0F9B632AECB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.Xrm.ServiceClientExample", "HE.Xrm.ServiceClient\HE.Xrm.ServiceClientExample.csproj", "{36E8826B-DD73-4A11-B523-486F3C54F1F4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.CRM.Plugins.Tests", "HE.CRM.Plugins.Tests\HE.CRM.Plugins.Tests.csproj", "{87D9EABA-C229-42AF-95B7-B8C100124499}"
+EndProject
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "HE.CRM.WebResources", "HE.CRM.WebResources\HE.CRM.WebResources.njsproj", "{23CA5083-A949-46EB-8B60-E1E856E95324}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.CRM.AHP.Plugins", "HE.CRM.AHP.Plugins\HE.CRM.AHP.Plugins.csproj", "{A719513A-72C3-4DA8-B16C-8AF395FCEE16}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "HE.Common.IntegrationModel", "HE.Common.IntegrationModel\HE.Common.IntegrationModel.shproj", "{F4CF4046-1578-49F6-9AB9-E2ACD2765ECF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{464F5B11-C934-42C4-B544-40CFCEE6C683}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{464F5B11-C934-42C4-B544-40CFCEE6C683}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{464F5B11-C934-42C4-B544-40CFCEE6C683}.Debug|x64.ActiveCfg = Debug|x64
+		{464F5B11-C934-42C4-B544-40CFCEE6C683}.Debug|x64.Build.0 = Debug|x64
+		{464F5B11-C934-42C4-B544-40CFCEE6C683}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{464F5B11-C934-42C4-B544-40CFCEE6C683}.Release|Any CPU.Build.0 = Release|Any CPU
+		{464F5B11-C934-42C4-B544-40CFCEE6C683}.Release|x64.ActiveCfg = Release|x64
+		{464F5B11-C934-42C4-B544-40CFCEE6C683}.Release|x64.Build.0 = Release|x64
+		{36E8826B-DD73-4A11-B523-486F3C54F1F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36E8826B-DD73-4A11-B523-486F3C54F1F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36E8826B-DD73-4A11-B523-486F3C54F1F4}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{36E8826B-DD73-4A11-B523-486F3C54F1F4}.Debug|x64.Build.0 = Debug|Any CPU
+		{36E8826B-DD73-4A11-B523-486F3C54F1F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36E8826B-DD73-4A11-B523-486F3C54F1F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36E8826B-DD73-4A11-B523-486F3C54F1F4}.Release|x64.ActiveCfg = Release|Any CPU
+		{36E8826B-DD73-4A11-B523-486F3C54F1F4}.Release|x64.Build.0 = Release|Any CPU
+		{87D9EABA-C229-42AF-95B7-B8C100124499}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87D9EABA-C229-42AF-95B7-B8C100124499}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87D9EABA-C229-42AF-95B7-B8C100124499}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{87D9EABA-C229-42AF-95B7-B8C100124499}.Debug|x64.Build.0 = Debug|Any CPU
+		{87D9EABA-C229-42AF-95B7-B8C100124499}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87D9EABA-C229-42AF-95B7-B8C100124499}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87D9EABA-C229-42AF-95B7-B8C100124499}.Release|x64.ActiveCfg = Release|Any CPU
+		{87D9EABA-C229-42AF-95B7-B8C100124499}.Release|x64.Build.0 = Release|Any CPU
+		{23CA5083-A949-46EB-8B60-E1E856E95324}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23CA5083-A949-46EB-8B60-E1E856E95324}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23CA5083-A949-46EB-8B60-E1E856E95324}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{23CA5083-A949-46EB-8B60-E1E856E95324}.Debug|x64.Build.0 = Debug|Any CPU
+		{23CA5083-A949-46EB-8B60-E1E856E95324}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23CA5083-A949-46EB-8B60-E1E856E95324}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23CA5083-A949-46EB-8B60-E1E856E95324}.Release|x64.ActiveCfg = Release|Any CPU
+		{23CA5083-A949-46EB-8B60-E1E856E95324}.Release|x64.Build.0 = Release|Any CPU
+		{A719513A-72C3-4DA8-B16C-8AF395FCEE16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A719513A-72C3-4DA8-B16C-8AF395FCEE16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A719513A-72C3-4DA8-B16C-8AF395FCEE16}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A719513A-72C3-4DA8-B16C-8AF395FCEE16}.Debug|x64.Build.0 = Debug|Any CPU
+		{A719513A-72C3-4DA8-B16C-8AF395FCEE16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A719513A-72C3-4DA8-B16C-8AF395FCEE16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A719513A-72C3-4DA8-B16C-8AF395FCEE16}.Release|x64.ActiveCfg = Release|Any CPU
+		{A719513A-72C3-4DA8-B16C-8AF395FCEE16}.Release|x64.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {44D30F0B-F008-4D12-95FB-E893E3AFB749}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems*{36e8826b-dd73-4a11-b523-486f3c54f1f4}*SharedItemsImports = 5
+		HE.CRM.Model\HE.CRM.Model.projitems*{36e8826b-dd73-4a11-b523-486f3c54f1f4}*SharedItemsImports = 5
+		HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems*{464f5b11-c934-42c4-b544-40cfcee6c683}*SharedItemsImports = 4
+		HE.CRM.Common\HE.CRM.Common.projitems*{464f5b11-c934-42c4-b544-40cfcee6c683}*SharedItemsImports = 4
+		HE.CRM.Model\HE.CRM.Model.projitems*{464f5b11-c934-42c4-b544-40cfcee6c683}*SharedItemsImports = 4
+		HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems*{6219f273-9b01-4851-8a17-ac30d0305cae}*SharedItemsImports = 5
+		HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems*{a719513a-72c3-4da8-b16c-8af395fcee16}*SharedItemsImports = 4
+		HE.CRM.Common\HE.CRM.Common.projitems*{a719513a-72c3-4da8-b16c-8af395fcee16}*SharedItemsImports = 4
+		HE.CRM.Model\HE.CRM.Model.projitems*{a719513a-72c3-4da8-b16c-8af395fcee16}*SharedItemsImports = 4
+		HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems*{b6e1af99-263c-4e52-a766-5fb02f6276dd}*SharedItemsImports = 5
+		HE.CRM.Common\HE.CRM.Common.projitems*{c57c0cf7-dc36-45cd-bfaa-c0f9b632aecb}*SharedItemsImports = 13
+		HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems*{d06ea4dc-76cf-4ceb-98a0-d89e88020c8d}*SharedItemsImports = 5
+		HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems*{f4cf4046-1578-49f6-9ab9-e2acd2765ecf}*SharedItemsImports = 13
+		HE.CRM.Model\HE.CRM.Model.projitems*{f6da36ca-a062-404b-b6ad-278652bb3ecb}*SharedItemsImports = 13
+	EndGlobalSection
+EndGlobal

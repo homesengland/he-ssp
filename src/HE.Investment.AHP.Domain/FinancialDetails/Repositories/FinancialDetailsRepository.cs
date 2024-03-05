@@ -67,7 +67,7 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
         var applicationId = AhpApplicationId.From(application.id);
         var applicationBasicInfo = new ApplicationBasicInfo(
             applicationId,
-            new SiteId("15489c1b-6fd5-ee11-904d-0022480041cf"), // TODO: AB#88650 Assign application to site
+            new SiteId(application.siteId),
             new ApplicationName(application.name),
             ApplicationTenureMapper.ToDomain(application.tenure)!.Value,
             AhpApplicationStatusMapper.MapToPortalStatus(application.applicationStatus),

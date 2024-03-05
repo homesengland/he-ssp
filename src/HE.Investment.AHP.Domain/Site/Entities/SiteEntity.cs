@@ -29,7 +29,7 @@ public class SiteEntity : DomainEntity, IQuestion
     public SiteEntity(
         SiteId id,
         SiteName name,
-        SiteStatus status = SiteStatus.InProgress,
+        SiteStatus? status = null,
         Section106? section106 = null,
         LocalAuthority? localAuthority = null,
         PlanningDetails? planningDetails = null,
@@ -48,7 +48,7 @@ public class SiteEntity : DomainEntity, IQuestion
     {
         Id = id;
         Name = name;
-        Status = status;
+        Status = status ?? SiteStatus.InProgress;
         Section106 = section106 ?? new Section106();
         LocalAuthority = localAuthority;
         PlanningDetails = planningDetails ?? PlanningDetailsFactory.CreateEmpty();

@@ -86,8 +86,7 @@ public class ApplicationRepository : IApplicationRepository
 
     public async Task<PaginationResult<ApplicationWithFundingDetails>> GetSiteApplications(SiteId siteId, UserAccount userAccount, PaginationRequest paginationRequest, CancellationToken cancellationToken)
     {
-        // TODO: AB#88650 filter by site: x => x.siteId == siteId.Value
-        return await GetApplications(userAccount, paginationRequest, null, cancellationToken);
+        return await GetApplications(userAccount, paginationRequest, a => a.siteId == siteId.Value, cancellationToken);
     }
 
     public async Task<ApplicationEntity> Save(ApplicationEntity application, OrganisationId organisationId, CancellationToken cancellationToken)
@@ -99,12 +98,12 @@ public class ApplicationRepository : IApplicationRepository
 
         var dto = new AhpApplicationDto
         {
-            // TODO: AB#88650 Assign application to site
             id = application.Id.IsNew ? null : application.Id.Value,
             name = application.Name.Name,
             tenure = ApplicationTenureMapper.ToDto(application.Tenure),
             organisationId = organisationId.Value.ToString(),
             applicationStatus = AhpApplicationStatusMapper.MapToCrmStatus(application.Status),
+            siteId = application.SiteId.Value,
         };
 
         var id = await _applicationCrmContext.Save(dto, organisationId.Value, CrmFields.ApplicationToUpdate.ToList(), cancellationToken);
@@ -144,7 +143,7 @@ public class ApplicationRepository : IApplicationRepository
         var applicationStatus = AhpApplicationStatusMapper.MapToPortalStatus(application.applicationStatus);
 
         return new ApplicationEntity(
-            new SiteId("15489c1b-6fd5-ee11-904d-0022480041cf"), // TODO: AB#88650 Assign application to site
+            new SiteId(application.siteId),
             new AhpApplicationId(application.id),
             new ApplicationName(application.name ?? "Unknown"),
             applicationStatus,
@@ -182,7 +181,7 @@ public class ApplicationRepository : IApplicationRepository
             .Select(CreateApplicationWithFundingDetails)
             .ToList();
 
-        return new PaginationResult<ApplicationWithFundingDetails>(filtered, paginationRequest.Page, paginationRequest.ItemsPerPage, applications.Count);
+        return new PaginationResult<ApplicationWithFundingDetails>(filtered, paginationRequest.Page, paginationRequest.ItemsPerPage, filtered.Count);
     }
 
     private ApplicationWithFundingDetails CreateApplicationWithFundingDetails(AhpApplicationDto ahpApplicationDto)
@@ -190,7 +189,7 @@ public class ApplicationRepository : IApplicationRepository
         var otherApplicationCosts = OtherApplicationCostsMapper.MapToOtherApplicationCosts(ahpApplicationDto);
 
         return new ApplicationWithFundingDetails(
-            new SiteId("15489c1b-6fd5-ee11-904d-0022480041cf"), // TODO: AB#88650 Assign application to site
+            new SiteId(ahpApplicationDto.siteId),
             new AhpApplicationId(ahpApplicationDto.id),
             ahpApplicationDto.name,
             ahpApplicationDto.referenceNumber,

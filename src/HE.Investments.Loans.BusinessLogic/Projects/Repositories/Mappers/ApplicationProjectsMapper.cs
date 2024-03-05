@@ -3,10 +3,10 @@ extern alias Org;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Common.CRM.Mappers;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories.Mapper;
 using HE.Investments.Loans.BusinessLogic.Projects.Entities;
 using HE.Investments.Loans.BusinessLogic.Projects.ValueObjects;
-using HE.Investments.Loans.Common.Extensions;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
 using LocalAuthorityMapper = Org::HE.Investments.Organisation.LocalAuthorities.Mappers.LocalAuthorityMapper;
 

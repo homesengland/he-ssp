@@ -1,6 +1,5 @@
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
-using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Loans.BusinessLogic.Funding.Entities;
 using HE.Investments.Loans.BusinessLogic.Funding.Repositories;
@@ -11,6 +10,7 @@ using HE.Investments.Loans.Contract.Application.ValueObjects;
 using Microsoft.Extensions.Logging;
 
 namespace HE.Investments.Loans.BusinessLogic.Funding.CommandHandlers;
+
 public class FundingBaseCommandHandler
 {
     private readonly IFundingRepository _fundingRepository;
@@ -19,14 +19,14 @@ public class FundingBaseCommandHandler
 
     private readonly IAccountUserContext _loanUserContext;
 
-    private readonly ILogger<FundingBaseCommandHandler> _logger;
-
-    public FundingBaseCommandHandler(IFundingRepository fundingRepository, ILoanApplicationRepository loanApplicationRepository, IAccountUserContext loanUserContext, ILogger<FundingBaseCommandHandler> logger)
+    public FundingBaseCommandHandler(
+        IFundingRepository fundingRepository,
+        ILoanApplicationRepository loanApplicationRepository,
+        IAccountUserContext loanUserContext)
     {
         _fundingRepository = fundingRepository;
         _loanApplicationRepository = loanApplicationRepository;
         _loanUserContext = loanUserContext;
-        _logger = logger;
     }
 
     protected async Task<OperationResult> Perform(Action<FundingEntity> action, LoanApplicationId loanApplicationId, CancellationToken cancellationToken)
@@ -34,20 +34,12 @@ public class FundingBaseCommandHandler
         var userAccount = await _loanUserContext.GetSelectedAccount();
         var funding = await _fundingRepository.GetAsync(loanApplicationId, userAccount, FundingFieldsSet.GetAllFields, cancellationToken);
 
-        try
-        {
-            action(funding);
+        action(funding);
 
-            if (funding.LoanApplicationStatus != ApplicationStatus.Draft)
-            {
-                funding.Publish(new LoanApplicationChangeToDraftStatusEvent(loanApplicationId));
-                await _loanApplicationRepository.DispatchEvents(funding, cancellationToken);
-            }
-        }
-        catch (DomainValidationException domainValidationException)
+        if (funding.LoanApplicationStatus != ApplicationStatus.Draft)
         {
-            _logger.LogWarning(domainValidationException, "Validation error(s) occured: {Message}", domainValidationException.Message);
-            return domainValidationException.OperationResult;
+            funding.Publish(new LoanApplicationChangeToDraftStatusEvent(loanApplicationId));
+            await _loanApplicationRepository.DispatchEvents(funding, cancellationToken);
         }
 
         await _fundingRepository.SaveAsync(funding, userAccount, cancellationToken);

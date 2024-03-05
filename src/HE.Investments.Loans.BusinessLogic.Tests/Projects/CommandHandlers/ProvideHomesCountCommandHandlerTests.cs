@@ -3,7 +3,6 @@ using HE.Investments.Common.Messages;
 using HE.Investments.Common.Tests.TestObjectBuilders;
 using HE.Investments.Loans.BusinessLogic.Projects.CommandHandlers;
 using HE.Investments.Loans.BusinessLogic.Projects.ValueObjects;
-using HE.Investments.Loans.BusinessLogic.Tests.Assertions;
 using HE.Investments.Loans.BusinessLogic.Tests.Projects.ObjectBuilders;
 using HE.Investments.Loans.BusinessLogic.Tests.Projects.TestData;
 using HE.Investments.Loans.BusinessLogic.Tests.TestData;
@@ -72,11 +71,11 @@ public class ProvideHomesCountCommandHandlerTests : TestBase<ProvideHomesCountCo
             .ForProject(projectId)
             .ReturnsOneProject(project));
 
-        _command = new ProvideHomesCountCommand(LoanApplicationIdTestData.LoanApplicationIdOne, projectId!, InvalidHomesCount_EmptyString());
+        _command = new ProvideHomesCountCommand(LoanApplicationIdTestData.LoanApplicationIdOne, projectId, InvalidHomesCount_EmptyString());
 
-        var result = await TestCandidate.Handle(_command, CancellationToken.None);
+        var action = () => TestCandidate.Handle(_command, CancellationToken.None);
 
-        result.Errors.Should().ContainsOnlyOneErrorMessage(ValidationErrorMessage.ManyHomesAmount);
+        await action.Should().ThrowAsync<DomainValidationException>().WithMessage(ValidationErrorMessage.ManyHomesAmount);
     }
 
     [Fact]
@@ -95,11 +94,11 @@ public class ProvideHomesCountCommandHandlerTests : TestBase<ProvideHomesCountCo
             .ForProject(projectId)
             .ReturnsOneProject(project));
 
-        _command = new ProvideHomesCountCommand(LoanApplicationIdTestData.LoanApplicationIdOne, projectId!, InvalidHomesCount_TooLong());
+        _command = new ProvideHomesCountCommand(LoanApplicationIdTestData.LoanApplicationIdOne, projectId, InvalidHomesCount_TooLong());
 
-        var result = await TestCandidate.Handle(_command, CancellationToken.None);
+        var action = () => TestCandidate.Handle(_command, CancellationToken.None);
 
-        result.Errors.Should().ContainsOnlyOneErrorMessage(ValidationErrorMessage.ManyHomesAmount);
+        await action.Should().ThrowAsync<DomainValidationException>().WithMessage(ValidationErrorMessage.ManyHomesAmount);
     }
 
     [Fact]
@@ -118,11 +117,11 @@ public class ProvideHomesCountCommandHandlerTests : TestBase<ProvideHomesCountCo
             .ForProject(projectId)
             .ReturnsOneProject(project));
 
-        _command = new ProvideHomesCountCommand(LoanApplicationIdTestData.LoanApplicationIdOne, projectId!, InvalidHomesCount_WithLetters());
+        _command = new ProvideHomesCountCommand(LoanApplicationIdTestData.LoanApplicationIdOne, projectId, InvalidHomesCount_WithLetters());
 
-        var result = await TestCandidate.Handle(_command, CancellationToken.None);
+        var action = () => TestCandidate.Handle(_command, CancellationToken.None);
 
-        result.Errors.Should().ContainsOnlyOneErrorMessage(ValidationErrorMessage.ManyHomesAmount);
+        await action.Should().ThrowAsync<DomainValidationException>().WithMessage(ValidationErrorMessage.ManyHomesAmount);
     }
 
     [Fact]
@@ -141,11 +140,11 @@ public class ProvideHomesCountCommandHandlerTests : TestBase<ProvideHomesCountCo
             .ForProject(projectId)
             .ReturnsOneProject(project));
 
-        _command = new ProvideHomesCountCommand(LoanApplicationIdTestData.LoanApplicationIdOne, projectId!, InvalidHomesCount_StartWithZero());
+        _command = new ProvideHomesCountCommand(LoanApplicationIdTestData.LoanApplicationIdOne, projectId, InvalidHomesCount_StartWithZero());
 
-        var result = await TestCandidate.Handle(_command, CancellationToken.None);
+        var action = () => TestCandidate.Handle(_command, CancellationToken.None);
 
-        result.Errors.Should().ContainsOnlyOneErrorMessage(ValidationErrorMessage.ManyHomesAmount);
+        await action.Should().ThrowAsync<DomainValidationException>().WithMessage(ValidationErrorMessage.ManyHomesAmount);
     }
 
     [Fact]
@@ -164,7 +163,7 @@ public class ProvideHomesCountCommandHandlerTests : TestBase<ProvideHomesCountCo
             .ForProject(projectId)
             .ReturnsOneProject(project));
 
-        _command = new ProvideHomesCountCommand(LoanApplicationIdTestData.LoanApplicationIdOne, projectId!, ValidHomesCount());
+        _command = new ProvideHomesCountCommand(LoanApplicationIdTestData.LoanApplicationIdOne, projectId, ValidHomesCount());
 
         await TestCandidate.Handle(_command, CancellationToken.None);
 

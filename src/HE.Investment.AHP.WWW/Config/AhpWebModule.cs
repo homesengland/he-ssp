@@ -9,13 +9,14 @@ using HE.Investment.AHP.WWW.Models.Site.Factories;
 using HE.Investment.AHP.WWW.Notifications;
 using HE.Investment.AHP.WWW.Routing;
 using HE.Investment.AHP.WWW.Utils;
+using HE.Investments.Common;
 using HE.Investments.Common.Config;
-using HE.Investments.Common.CRM.Config;
 using HE.Investments.Common.Infrastructure.Events;
+using HE.Investments.Common.Models.App;
 using HE.Investments.Common.WWW.Infrastructure.Authorization;
 using HE.Investments.Common.WWW.Infrastructure.ErrorHandling;
+using HE.Investments.Common.WWW.Infrastructure.Middlewares;
 using HE.Investments.DocumentService.Extensions;
-using HE.Investments.Loans.Common.Infrastructure;
 using HE.Investments.Organisation.Config;
 
 namespace HE.Investment.AHP.WWW.Config;
@@ -26,6 +27,7 @@ public static class AhpWebModule
     {
         service.AddOrganisationCrmModule();
         service.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(SaveHomeTypeDetailsCommandHandler).Assembly));
+        service.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(DomainValidationHandler<,,>).Assembly));
         service.AddScoped<NonceModel>();
 
         AddConfiguration(service, configuration);

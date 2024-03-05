@@ -6,14 +6,13 @@
 
   <ItemGroup>
     <PackageReference Include="Dawn.Guard" Version="1.12.0" />
+    <PackageReference Include="He.Cookies.Mvc" Version="1.0.36" />
+    <PackageReference Include="He.Identity.Auth0" Version="2.1.1" />
+    <PackageReference Include="He.Identity.Mvc" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.DataProtection.StackExchangeRedis" Version="7.0.13" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.24" />
     <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="7.0.13" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\HE.Investments.Loans.Common\HE.Investments.Loans.Common.csproj" />
-    <ProjectReference Include="..\HE.Investments.Common\HE.Investments.Common.csproj" />
+    <PackageReference Include="Stateless" Version="5.13.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -62,4 +61,10 @@
     <EmbeddedResource Include="Components\DynamicComponent\DynamicComponent.cshtml" />
     <EmbeddedResource Include="Components\ButtonStart\ButtonStart.cshtml" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HE.Investments.Common.Contract\HE.Investments.Common.Contract.csproj" />
+    <ProjectReference Include="..\HE.Investments.Common\HE.Investments.Common.csproj" />
+  </ItemGroup>
+
 </Project>

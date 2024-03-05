@@ -36,13 +36,14 @@ public static class SiteDtoToSiteEntityMapper
     private static readonly ModernMethodsConstruction2DSubcategoriesTypeMapper ModernMethodsConstruction2DSubcategoriesTypeMapper = new();
     private static readonly ModernMethodsConstruction3DSubcategoriesTypeMapper ModernMethodsConstruction3DSubcategoriesTypeMapper = new();
     private static readonly SiteProcurementMapper SiteProcurementMapper = new();
+    private static readonly SiteStatusMapper SiteStatusMapper = new();
 
     public static SiteEntity Map(SiteDto dto)
     {
         return new SiteEntity(
             new SiteId(dto.id),
             new SiteName(dto.name),
-            SiteStatus.Completed,
+            SiteStatusMapper.ToDomain(dto.status),
             CreateSection106(dto.section106),
             CreateLocalAuthority(dto.localAuthority.id, dto.localAuthority.name),
             CreatePlanningDetails(dto.planningDetails),

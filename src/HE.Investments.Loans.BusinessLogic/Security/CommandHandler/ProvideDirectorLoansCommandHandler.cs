@@ -6,7 +6,6 @@ using HE.Investments.Loans.BusinessLogic.Security.Repositories;
 using HE.Investments.Loans.Contract.Security.Commands;
 using HE.Investments.Loans.Contract.Security.ValueObjects;
 using MediatR;
-using Microsoft.Extensions.Logging;
 
 namespace HE.Investments.Loans.BusinessLogic.Security.CommandHandler;
 
@@ -15,9 +14,8 @@ public class ProvideDirectorLoansCommandHandler : SecurityBaseCommandHandler, IR
     public ProvideDirectorLoansCommandHandler(
         ISecurityRepository securityRepository,
         ILoanApplicationRepository loanApplicationRepository,
-        IAccountUserContext loanUserContext,
-        ILogger<SecurityBaseCommandHandler> logger)
-        : base(securityRepository, loanApplicationRepository, loanUserContext, logger)
+        IAccountUserContext loanUserContext)
+        : base(securityRepository, loanApplicationRepository, loanUserContext)
     {
     }
 

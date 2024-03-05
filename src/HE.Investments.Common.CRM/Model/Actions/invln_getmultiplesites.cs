@@ -19,10 +19,30 @@ namespace HE.Investments.Common.CRM.Model
 		
 		public static class Fields
 		{
+			public const string invln_pagingrequest = "invln_pagingrequest";
 			public const string invln_fieldstoretrieve = "invln_fieldstoretrieve";
 		}
 		
 		public const string ActionLogicalName = "invln_getmultiplesites";
+		
+		public string invln_pagingrequest
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_pagingrequest"))
+				{
+					return ((string)(this.Parameters["invln_pagingrequest"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_pagingrequest"] = value;
+			}
+		}
 		
 		public string invln_fieldstoretrieve
 		{
@@ -56,6 +76,7 @@ namespace HE.Investments.Common.CRM.Model
 		
 		public static class Fields
 		{
+			public const string invln_pagedsites = "invln_pagedsites";
 			public const string invln_sites = "invln_sites";
 		}
 		
@@ -63,6 +84,21 @@ namespace HE.Investments.Common.CRM.Model
 		
 		public invln_getmultiplesitesResponse()
 		{
+		}
+		
+		public string invln_pagedsites
+		{
+			get
+			{
+				if (this.Results.Contains("invln_pagedsites"))
+				{
+					return ((string)(this.Results["invln_pagedsites"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
 		}
 		
 		public string invln_sites

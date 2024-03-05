@@ -1,4 +1,4 @@
-﻿using HE.DocumentService.SharePoint.Configurartion;
+﻿using HE.DocumentService.SharePoint.Configuration;
 
 namespace HE.DocumentService.Api.Configuration;
 
