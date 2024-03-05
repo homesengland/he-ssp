@@ -26,12 +26,13 @@ public class GetProjectDetailsQueryHandler : IRequestHandler<GetProjectDetailsQu
         return new ProjectDetails
         {
             Id = project.Id,
-            Name = project.Name,
-            IsEnglandHousingDelivery = true,
+            Name = project.Name.Value,
+            IsEnglandHousingDelivery = project.IsEnglandHousingDelivery,
             IsSiteIdentified = true,
             GeographicFocus = ProjectGeographicFocus.Regional,
             IsFundingRequired = true,
-            ActivityTypes = new[] { ActivityType.ProvidingInfrastructure },
+            ActivityTypes = new[] { ActivityType.DevelopingHomes },
+            AffordableHomesAmount = project.AffordableHomesAmount.AffordableHomesAmount,
         };
     }
 }

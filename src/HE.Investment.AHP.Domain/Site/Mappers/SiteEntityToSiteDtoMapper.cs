@@ -8,6 +8,7 @@ using HE.Investment.AHP.Domain.Site.ValueObjects.Mmc;
 using HE.Investment.AHP.Domain.Site.ValueObjects.Planning;
 using HE.Investment.AHP.Domain.Site.ValueObjects.StrategicSite;
 using HE.Investment.AHP.Domain.Site.ValueObjects.TenderingStatus;
+using HE.Investments.Common.CRM.Mappers;
 using Section106 = HE.Investment.AHP.Domain.Site.ValueObjects.Section106;
 using Section106Dto = HE.Common.IntegrationModel.PortalIntegrationModel.Section106Dto;
 

@@ -12,7 +12,6 @@ public class SaveUserProfileDetailsCommandHandler : IRequestHandler<SaveUserProf
 
     private readonly IAccountUserContext _accountContext;
 
-
     public SaveUserProfileDetailsCommandHandler(IProfileRepository profileRepository, IAccountUserContext accountContext)
     {
         _profileRepository = profileRepository;

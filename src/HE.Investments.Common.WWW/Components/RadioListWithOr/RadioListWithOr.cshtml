@@ -2,7 +2,10 @@
 @using HE.Investments.Common.WWW.Extensions
 @using HE.Investments.Common.WWW.Components.ErrorMessage
 @using HE.Investments.Common.WWW.Components.InputListHeader
-@model (string fieldName, string title, string hint, IEnumerable<ExtendedSelectListItem> availableOptions, ExtendedSelectListItem alternativeOption, string value)
+@using HE.Investments.Common.WWW.Components.RadioListContent
+@using HE.Investments.Common.WWW.Components
+
+@model (string fieldName, string title, InputTitleType titleType, string hint, IEnumerable<ExtendedSelectListItem> availableOptions, ExtendedSelectListItem alternativeOption, string value)
 
 @{
     var (hasError, radioErrors) = ViewData.ModelState.GetErrors(Model.fieldName);
@@ -13,6 +16,7 @@
     <gds-field-set>
         <vc:input-list-header
             title="@Model.title"
+            title-type="@Model.titleType"
             hint="@Model.hint"/>
 
         <vc:error-message field-name="@Model.fieldName"/>
@@ -28,8 +32,9 @@
             <div class="govuk-radios__item">
                 @{
                     var orId = $"{Model.fieldName}-{Model.alternativeOption.Value}";
+                    var isSelected = Model.alternativeOption.Selected || Model.value == Model.alternativeOption.Value;
                 }
-                @Html.RadioButton(Model.fieldName, Model.alternativeOption.Value, new { id = orId, @class = "govuk-radios__input" })
+                @Html.RadioButton(Model.fieldName, Model.alternativeOption.Value, isSelected, new { id = orId, @class = "govuk-radios__input" })
                 <label class="govuk-label govuk-radios__label" for="@orId">@Model.alternativeOption.Text</label>
                 <he-div-hint class="govuk-!-padding-left-3">
                     @Model.alternativeOption.Hint

@@ -58,7 +58,7 @@ public static class LoanApplicationMapper
             DirLoans = loanApplicationDto.directorLoans.MapToCommonResponse(),
             DirLoansSub = loanApplicationDto.confirmationDirectorLoansCanBeSubordinated.MapToCommonResponse(),
             DirLoansSubMore = loanApplicationDto.reasonForDirectorLoanNotSubordinated,
-            State = SectionStatusMapper.Map(loanApplicationDto.SecurityDetailsCompletionStatus),
+            Status = SectionStatusMapper.Map(loanApplicationDto.SecurityDetailsCompletionStatus),
         };
     }
 
@@ -76,7 +76,7 @@ public static class LoanApplicationMapper
             AdditionalProjects = loanApplicationDto.additionalProjects.MapToCommonResponse(),
             Refinance = loanApplicationDto.refinanceRepayment,
             RefinanceInfo = loanApplicationDto.refinanceRepaymentDetails,
-            State = SectionStatusMapper.Map(loanApplicationDto.FundingDetailsCompletionStatus),
+            Status = SectionStatusMapper.Map(loanApplicationDto.FundingDetailsCompletionStatus),
         };
     }
 
@@ -88,7 +88,7 @@ public static class LoanApplicationMapper
             Purpose = loanApplicationDto.companyPurpose.MapToCommonResponse(),
             OrganisationMoreInformation = loanApplicationDto.existingCompany,
             HomesBuilt = loanApplicationDto.companyExperience.ToString(),
-            State = SectionStatusMapper.Map(loanApplicationDto.CompanyStructureAndExperienceCompletionStatus),
+            Status = SectionStatusMapper.Map(loanApplicationDto.CompanyStructureAndExperienceCompletionStatus),
         };
     }
 }

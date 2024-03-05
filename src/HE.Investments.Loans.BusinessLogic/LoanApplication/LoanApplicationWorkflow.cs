@@ -61,7 +61,7 @@ public class LoanApplicationWorkflow : IStateRouting<LoanApplicationWorkflow.Sta
     public bool IsFilled()
     {
         return _model.Company.IsCompleted()
-               && (_model.Security.State == SectionStatus.Completed || _model.Security.IsFlowCompleted)
+               && (_model.Security.Status == SectionStatus.Completed || _model.Security.IsFlowCompleted)
                && (_model.Funding.IsCompleted() || _model.Funding.IsFlowCompleted)
                && _model.Projects.All(x => x.Status == SectionStatus.Completed)
                && _model.Projects.Any();
@@ -70,7 +70,7 @@ public class LoanApplicationWorkflow : IStateRouting<LoanApplicationWorkflow.Sta
     public bool IsFilled(LoanApplicationViewModel application)
     {
         return application.Company.IsCompleted()
-               && (application.Security.State == SectionStatus.Completed || application.Security.IsFlowCompleted)
+               && (application.Security.Status == SectionStatus.Completed || application.Security.IsFlowCompleted)
                && (application.Funding.IsCompleted() || application.Funding.IsFlowCompleted)
                && application.Projects.All(x => x.Status == SectionStatus.Completed)
                && application.Projects.Any();

@@ -1,31 +1,20 @@
 using HE.Investments.Account.Shared;
-using HE.Investments.Common.Contract.Validators;
 using HE.Investments.FrontDoor.Contract.Project.Commands;
 using HE.Investments.FrontDoor.Domain.Project.Repository;
-using MediatR;
+using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
 
 namespace HE.Investments.FrontDoor.Domain.Project.CommandHandlers;
 
-public class ProvideProjectNameCommandHandler : IRequestHandler<ProvideProjectNameCommand, OperationResult>
+public class ProvideProjectNameCommandHandler : ProjectBaseCommandHandler<ProvideProjectNameCommand>
 {
-    private readonly IProjectRepository _repository;
-
-    private readonly IAccountUserContext _accountUserContext;
-
     public ProvideProjectNameCommandHandler(IProjectRepository repository, IAccountUserContext accountUserContext)
+        : base(repository, accountUserContext)
     {
-        _repository = repository;
-        _accountUserContext = accountUserContext;
     }
 
-    public async Task<OperationResult> Handle(ProvideProjectNameCommand request, CancellationToken cancellationToken)
+    protected override async Task PerformAsync(ProjectEntity project, ProvideProjectNameCommand request, CancellationToken cancellationToken)
     {
-        var userAccount = await _accountUserContext.GetSelectedAccount();
-        var project = await _repository.GetProject(request.ProjectId, userAccount, cancellationToken);
-
-        project.ProvideName(request.Name);
-
-        await _repository.Save(project, userAccount, cancellationToken);
-        return OperationResult.Success();
+        var projectName = new ProjectName(request.Name ?? string.Empty);
+        await project.ProvideName(projectName, ProjectRepository, cancellationToken);
     }
 }

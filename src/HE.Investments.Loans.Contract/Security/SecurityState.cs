@@ -8,4 +8,5 @@ public enum SecurityState
     DirLoansSub = 4,
     CheckAnswers = 5,
     Complete = 6,
+    TaskList = 7,
 }

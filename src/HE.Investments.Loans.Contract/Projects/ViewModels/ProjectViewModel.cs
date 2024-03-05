@@ -4,7 +4,7 @@ using HE.Investments.Loans.Contract.ViewModels;
 
 namespace HE.Investments.Loans.Contract.Projects.ViewModels;
 
-public class ProjectViewModel : ICompletedSectionViewModel
+public class ProjectViewModel : ISectionViewModel
 {
     public Guid ApplicationId { get; set; }
 

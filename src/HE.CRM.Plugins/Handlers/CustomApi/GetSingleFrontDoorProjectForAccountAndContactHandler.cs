@@ -18,18 +18,18 @@ namespace HE.CRM.Plugins.Handlers.CustomApi
         #region Base Methods Overrides
         public override bool CanWork()
         {
-            return !string.IsNullOrEmpty(externalContactId) && !string.IsNullOrEmpty(organisationId) && !string.IsNullOrEmpty(frontDoorProjectId);
+            return organisationId != null;
         }
 
         public override void DoWork()
         {
             this.TracingService.Trace("GetSingleFrontDoorProjectForAccountAndContact");
-            var frontDoorProjectDto = CrmServicesFactory.Get<IFrontDoorProjectService>().GetFrontDoorProjectsForAccountAndContact(externalContactId, organisationId, frontDoorProjectId, fieldsToRetrieve);
+            var frontDoorProjectsDtoList = CrmServicesFactory.Get<IFrontDoorProjectService>().GetFrontDoorProjects(organisationId, externalContactId, fieldsToRetrieve, frontDoorProjectId);
             this.TracingService.Trace("Send Response");
-            if (frontDoorProjectDto != null)
+            if (frontDoorProjectsDtoList != null)
             {
-                var frontDoorProjectDtoSerialized = JsonSerializer.Serialize(frontDoorProjectDto);
-                ExecutionData.SetOutputParameter(invln_getsinglefrontdoorprojectResponse.Fields.invln_retrievedfrontdoorprojectfields, frontDoorProjectDtoSerialized);
+                var frontDoorProjectDtoListSerialized = JsonSerializer.Serialize(frontDoorProjectsDtoList);
+                ExecutionData.SetOutputParameter(invln_getsinglefrontdoorprojectResponse.Fields.invln_retrievedfrontdoorprojectfields, frontDoorProjectDtoListSerialized);
             }
         }
         #endregion

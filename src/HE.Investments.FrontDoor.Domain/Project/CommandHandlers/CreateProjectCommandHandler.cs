@@ -3,6 +3,7 @@ using HE.Investments.Common.Contract.Validators;
 using HE.Investments.FrontDoor.Contract.Project;
 using HE.Investments.FrontDoor.Contract.Project.Commands;
 using HE.Investments.FrontDoor.Domain.Project.Repository;
+using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
 using MediatR;
 
 namespace HE.Investments.FrontDoor.Domain.Project.CommandHandlers;
@@ -21,15 +22,8 @@ public class CreateProjectCommandHandler : IRequestHandler<CreateProjectCommand,
 
     public async Task<OperationResult<FrontDoorProjectId>> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
     {
-        if (string.IsNullOrWhiteSpace(request.Name))
-        {
-            var errorResult = new OperationResult<FrontDoorProjectId>();
-            errorResult.AddValidationError("Name", "Enter name");
-
-            return errorResult;
-        }
-
-        var project = await _repository.Save(ProjectEntity.New(request.Name), await _accountUserContext.GetSelectedAccount(), cancellationToken);
+        var project = await ProjectEntity.New(new ProjectName(request.Name ?? string.Empty), _repository, cancellationToken);
+        await _repository.Save(project, await _accountUserContext.GetSelectedAccount(), cancellationToken);
         return new OperationResult<FrontDoorProjectId>(project.Id);
     }
 }
