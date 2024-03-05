@@ -1,13 +1,13 @@
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Routing;
-using HE.Investments.Loans.BusinessLogic.Funding;
 using HE.Investments.Loans.Common.Utils.Enums;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
 using HE.Investments.Loans.Contract.Funding;
 using HE.Investments.Loans.Contract.Funding.Commands;
 using HE.Investments.Loans.Contract.Funding.Enums;
 using HE.Investments.Loans.Contract.Funding.Queries;
+using HE.Investments.Loans.WWW.Workflows;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

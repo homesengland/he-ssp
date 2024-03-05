@@ -170,6 +170,10 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
     [WorkflowState(SecurityState.Complete)]
     [WorkflowState(FundingState.Complete)]
     [WorkflowState(ProjectState.Complete)]
+    [WorkflowState(CompanyStructureState.TaskList)]
+    [WorkflowState(SecurityState.TaskList)]
+    [WorkflowState(FundingState.TaskList)]
+    [WorkflowState(ProjectState.TaskList)]
     public async Task<IActionResult> TaskList(Guid id)
     {
         var response = await _mediator.Send(new GetTaskListDataQuery(LoanApplicationId.From(id)));

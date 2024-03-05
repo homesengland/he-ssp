@@ -1,16 +1,15 @@
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Constants;
-using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using HE.Investments.Loans.Contract.Application.Helper;
 using HE.Investments.Loans.Contract.ViewModels;
 
 namespace HE.Investments.Loans.Contract.Security;
 
-public class SecurityViewModel : ICompletedSectionViewModel
+public class SecurityViewModel : ISectionViewModel
 {
     public SecurityViewModel()
     {
-        State = SectionStatus.NotStarted;
+        Status = SectionStatus.NotStarted;
     }
 
     public Guid LoanApplicationId { get; set; }
@@ -31,7 +30,7 @@ public class SecurityViewModel : ICompletedSectionViewModel
 
     public string? Name { get; set; }
 
-    public SectionStatus State { get; set; }
+    public SectionStatus Status { get; set; }
 
     public bool StateChanged { get; set; }
 
@@ -62,12 +61,12 @@ public class SecurityViewModel : ICompletedSectionViewModel
 
     public bool IsCompleted()
     {
-        return State == SectionStatus.Completed;
+        return Status == SectionStatus.Completed;
     }
 
     public bool IsInProgress()
     {
-        return State == SectionStatus.InProgress;
+        return Status == SectionStatus.InProgress;
     }
 
     public bool IsReadOnly()

@@ -2,66 +2,45 @@ using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Constants;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Routing;
-using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using HE.Investments.Loans.Contract.Projects;
 using HE.Investments.Loans.Contract.Projects.ViewModels;
 using Stateless;
 
-namespace HE.Investments.Loans.BusinessLogic.Projects;
+namespace HE.Investments.Loans.WWW.Workflows;
 
-public class ProjectWorkflow : IStateRouting<ProjectState>
+public class ProjectWorkflow : WorkflowBase<ProjectState, ProjectViewModel>
 {
-    private readonly StateMachine<ProjectState, Trigger> _machine;
-
-    private readonly ProjectViewModel _model;
-
     public ProjectWorkflow()
     {
-        _machine = new StateMachine<ProjectState, Trigger>(ProjectState.Index);
-        _model = new ProjectViewModel();
+        Machine = new StateMachine<ProjectState, Trigger>(ProjectState.Index);
+        Model = new ProjectViewModel();
 
         ConfigureTransitions();
     }
 
     public ProjectWorkflow(ProjectState currentState, ProjectViewModel model)
     {
-        _machine = new StateMachine<ProjectState, Trigger>(currentState);
-
-        _model = model;
+        Machine = new StateMachine<ProjectState, Trigger>(currentState);
+        Model = model;
 
         ConfigureTransitions();
     }
 
     public static ProjectWorkflow ForStartPage() => new();
 
-    public Task<ProjectState> NextState(Trigger trigger)
+    public override ProjectState CurrentState(ProjectState targetState)
     {
-        _machine.Fire(trigger);
-
-        return Task.FromResult(_machine.State);
-    }
-
-    public Task<bool> StateCanBeAccessed(ProjectState nextState)
-    {
-        return nextState switch
-        {
-            _ => Task.FromResult(true),
-        };
-    }
-
-    public ProjectState CurrentState(ProjectState targetState)
-    {
-        if (_model.IsReadOnly())
+        if (Model.IsReadOnly())
         {
             return ProjectState.CheckAnswers;
         }
 
-        if (targetState != ProjectState.Index || _model.Status == SectionStatus.NotStarted || _model.Status == SectionStatus.Undefined)
+        if (targetState != ProjectState.Index || !IsSectionStarted() || Model.Status == SectionStatus.Undefined)
         {
             return targetState;
         }
 
-        return _model switch
+        return Model switch
         {
             { ProjectName: var x } when x.IsNotProvided() => ProjectState.Name,
             { HasEstimatedStartDate: var x } when x.IsNotProvided() => ProjectState.StartDate,
@@ -84,101 +63,102 @@ public class ProjectWorkflow : IStateRouting<ProjectState>
 
     private void ConfigureTransitions()
     {
-        _machine.Configure(ProjectState.Index)
+        Machine.Configure(ProjectState.Index)
             .Permit(Trigger.Continue, ProjectState.Name)
             .Permit(Trigger.Back, ProjectState.TaskList);
 
-        _machine.Configure(ProjectState.Name)
+        Machine.Configure(ProjectState.Name)
             .Permit(Trigger.Continue, ProjectState.StartDate)
-            .Permit(Trigger.Back, ProjectState.TaskList);
+            .PermitIf(Trigger.Back, ProjectState.TaskList, IsSectionStarted)
+            .PermitIf(Trigger.Back, ProjectState.Index, () => !IsSectionStarted());
 
-        _machine.Configure(ProjectState.StartDate)
+        Machine.Configure(ProjectState.StartDate)
            .Permit(Trigger.Continue, ProjectState.ManyHomes)
            .Permit(Trigger.Back, ProjectState.Name);
 
-        _machine.Configure(ProjectState.ManyHomes)
+        Machine.Configure(ProjectState.ManyHomes)
             .Permit(Trigger.Continue, ProjectState.TypeHomes)
             .Permit(Trigger.Back, ProjectState.StartDate)
             .Permit(Trigger.Change, ProjectState.CheckAnswers);
 
-        _machine.Configure(ProjectState.TypeHomes)
+        Machine.Configure(ProjectState.TypeHomes)
             .Permit(Trigger.Continue, ProjectState.Type)
             .Permit(Trigger.Back, ProjectState.ManyHomes)
             .Permit(Trigger.Change, ProjectState.CheckAnswers);
 
-        _machine.Configure(ProjectState.Type)
+        Machine.Configure(ProjectState.Type)
             .Permit(Trigger.Continue, ProjectState.PlanningRef)
             .Permit(Trigger.Back, ProjectState.TypeHomes)
             .Permit(Trigger.Change, ProjectState.CheckAnswers);
 
-        _machine.Configure(ProjectState.PlanningRef)
-            .PermitIf(Trigger.Continue, ProjectState.PlanningRefEnter, () => _model.PlanningReferenceNumberExists != CommonResponse.No)
-            .PermitIf(Trigger.Continue, ProjectState.Location, () => _model.PlanningReferenceNumberExists == CommonResponse.No)
+        Machine.Configure(ProjectState.PlanningRef)
+            .PermitIf(Trigger.Continue, ProjectState.PlanningRefEnter, () => Model.PlanningReferenceNumberExists != CommonResponse.No)
+            .PermitIf(Trigger.Continue, ProjectState.Location, () => Model.PlanningReferenceNumberExists == CommonResponse.No)
             .Permit(Trigger.Back, ProjectState.Type);
 
-        _machine.Configure(ProjectState.PlanningRefEnter)
+        Machine.Configure(ProjectState.PlanningRefEnter)
             .Permit(Trigger.Continue, ProjectState.PlanningPermissionStatus)
             .Permit(Trigger.Back, ProjectState.PlanningRef);
 
-        _machine.Configure(ProjectState.PlanningPermissionStatus)
+        Machine.Configure(ProjectState.PlanningPermissionStatus)
             .Permit(Trigger.Continue, ProjectState.Location)
             .Permit(Trigger.Back, ProjectState.PlanningRefEnter);
 
-        _machine.Configure(ProjectState.Location)
+        Machine.Configure(ProjectState.Location)
             .Permit(Trigger.Continue, ProjectState.ProvideLocalAuthority)
-            .PermitIf(Trigger.Back, ProjectState.PlanningPermissionStatus, () => _model.PlanningReferenceNumberExists == CommonResponse.Yes)
-            .PermitIf(Trigger.Back, ProjectState.PlanningRef, () => _model.PlanningReferenceNumberExists != CommonResponse.Yes);
+            .PermitIf(Trigger.Back, ProjectState.PlanningPermissionStatus, () => Model.PlanningReferenceNumberExists == CommonResponse.Yes)
+            .PermitIf(Trigger.Back, ProjectState.PlanningRef, () => Model.PlanningReferenceNumberExists != CommonResponse.Yes);
 
-        _machine.Configure(ProjectState.ProvideLocalAuthority)
+        Machine.Configure(ProjectState.ProvideLocalAuthority)
             .Permit(Trigger.Continue, ProjectState.LocalAuthorityResult)
             .Permit(Trigger.Back, ProjectState.Location);
 
-        _machine.Configure(ProjectState.LocalAuthorityResult)
+        Machine.Configure(ProjectState.LocalAuthorityResult)
             .Permit(Trigger.Continue, ProjectState.LocalAuthorityConfirm)
             .Permit(Trigger.Back, ProjectState.ProvideLocalAuthority);
 
-        _machine.Configure(ProjectState.LocalAuthorityConfirm)
+        Machine.Configure(ProjectState.LocalAuthorityConfirm)
             .Permit(Trigger.Continue, ProjectState.Ownership)
             .Permit(Trigger.Back, ProjectState.ProvideLocalAuthority);
 
-        _machine.Configure(ProjectState.LocalAuthorityReset)
+        Machine.Configure(ProjectState.LocalAuthorityReset)
             .Permit(Trigger.Continue, ProjectState.Ownership)
             .Permit(Trigger.Back, ProjectState.ProvideLocalAuthority);
 
-        _machine.Configure(ProjectState.Ownership)
-            .PermitIf(Trigger.Continue, ProjectState.Additional, () => _model.Ownership == CommonResponse.Yes)
-            .PermitIf(Trigger.Continue, ProjectState.GrantFunding, () => _model.Ownership != CommonResponse.Yes)
-            .PermitIf(Trigger.Back, ProjectState.LocalAuthorityConfirm, () => _model.LocalAuthorityName.IsProvided())
-            .PermitIf(Trigger.Back, ProjectState.ProvideLocalAuthority, () => _model.LocalAuthorityName.IsNotProvided());
+        Machine.Configure(ProjectState.Ownership)
+            .PermitIf(Trigger.Continue, ProjectState.Additional, () => Model.Ownership == CommonResponse.Yes)
+            .PermitIf(Trigger.Continue, ProjectState.GrantFunding, () => Model.Ownership != CommonResponse.Yes)
+            .PermitIf(Trigger.Back, ProjectState.LocalAuthorityConfirm, () => Model.LocalAuthorityName.IsProvided())
+            .PermitIf(Trigger.Back, ProjectState.ProvideLocalAuthority, () => Model.LocalAuthorityName.IsNotProvided());
 
-        _machine.Configure(ProjectState.Additional)
+        Machine.Configure(ProjectState.Additional)
             .Permit(Trigger.Continue, ProjectState.GrantFunding)
             .Permit(Trigger.Back, ProjectState.Ownership);
 
-        _machine.Configure(ProjectState.GrantFunding)
-           .PermitIf(Trigger.Continue, ProjectState.GrantFundingMore, () => _model.GrantFundingStatus == CommonResponse.Yes)
-           .PermitIf(Trigger.Continue, ProjectState.ChargesDebt, () => _model.GrantFundingStatus != CommonResponse.Yes)
-           .PermitIf(Trigger.Back, ProjectState.Additional, () => _model.Ownership == CommonResponse.Yes)
-           .PermitIf(Trigger.Back, ProjectState.Ownership, () => _model.Ownership != CommonResponse.Yes);
+        Machine.Configure(ProjectState.GrantFunding)
+           .PermitIf(Trigger.Continue, ProjectState.GrantFundingMore, () => Model.GrantFundingStatus == CommonResponse.Yes)
+           .PermitIf(Trigger.Continue, ProjectState.ChargesDebt, () => Model.GrantFundingStatus != CommonResponse.Yes)
+           .PermitIf(Trigger.Back, ProjectState.Additional, () => Model.Ownership == CommonResponse.Yes)
+           .PermitIf(Trigger.Back, ProjectState.Ownership, () => Model.Ownership != CommonResponse.Yes);
 
-        _machine.Configure(ProjectState.GrantFundingMore)
+        Machine.Configure(ProjectState.GrantFundingMore)
             .Permit(Trigger.Continue, ProjectState.ChargesDebt)
             .Permit(Trigger.Back, ProjectState.GrantFunding);
 
-        _machine.Configure(ProjectState.ChargesDebt)
+        Machine.Configure(ProjectState.ChargesDebt)
             .Permit(Trigger.Continue, ProjectState.AffordableHomes)
-            .PermitIf(Trigger.Back, ProjectState.GrantFundingMore, () => _model.GrantFundingStatus == CommonResponse.Yes)
-            .PermitIf(Trigger.Back, ProjectState.GrantFunding, () => _model.GrantFundingStatus != CommonResponse.Yes)
+            .PermitIf(Trigger.Back, ProjectState.GrantFundingMore, () => Model.GrantFundingStatus == CommonResponse.Yes)
+            .PermitIf(Trigger.Back, ProjectState.GrantFunding, () => Model.GrantFundingStatus != CommonResponse.Yes)
             .Permit(Trigger.Change, ProjectState.CheckAnswers);
 
-        _machine.Configure(ProjectState.AffordableHomes)
+        Machine.Configure(ProjectState.AffordableHomes)
            .Permit(Trigger.Continue, ProjectState.CheckAnswers)
            .Permit(Trigger.Back, ProjectState.ChargesDebt)
            .Permit(Trigger.Change, ProjectState.CheckAnswers);
 
-        _machine.Configure(ProjectState.CheckAnswers)
+        Machine.Configure(ProjectState.CheckAnswers)
             .Permit(Trigger.Continue, ProjectState.Complete)
-            .PermitIf(Trigger.Back, ProjectState.AffordableHomes, () => _model.IsEditable())
-            .PermitIf(Trigger.Back, ProjectState.Complete, () => _model.IsReadOnly());
+            .PermitIf(Trigger.Back, ProjectState.AffordableHomes, () => Model.IsEditable())
+            .PermitIf(Trigger.Back, ProjectState.Complete, () => Model.IsReadOnly());
     }
 }
