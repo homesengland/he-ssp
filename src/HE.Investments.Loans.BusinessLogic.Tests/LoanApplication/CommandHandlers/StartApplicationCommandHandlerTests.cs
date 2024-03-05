@@ -1,4 +1,5 @@
 using HE.Investments.Account.Shared.User.Entities;
+using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Tests.TestObjectBuilders;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.CommandHandlers;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Entities;
@@ -23,12 +24,10 @@ public class StartApplicationCommandHandlerTests : TestBase<StartApplicationComm
             .Register(this);
 
         // when
-        var result = await TestCandidate.Handle(new StartApplicationCommand(string.Empty), CancellationToken.None);
+        var action = () => TestCandidate.Handle(new StartApplicationCommand(string.Empty), CancellationToken.None);
 
         // then
-        result.IsValid.Should().BeFalse();
-        result.Errors.Should().HaveCount(1).And.ContainSingle(x => x.AffectedField == nameof(LoanApplicationName));
-        result.ReturnedData.Should().BeNull();
+        await action.Should().ThrowAsync<DomainValidationException>().WithMessage("Enter the name for your application");
     }
 
     [Fact]

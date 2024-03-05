@@ -1,4 +1,5 @@
 using FluentValidation;
+using HE.Investments.Common;
 using HE.Investments.Common.Config;
 using HE.Investments.Common.CRM;
 using HE.Investments.Common.Infrastructure.Events;
@@ -19,6 +20,7 @@ public static class WebModule
     public static void AddWebModule(this IServiceCollection serviceCollections)
     {
         serviceCollections.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(LoanApplicationViewModel).Assembly));
+        serviceCollections.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(DomainValidationHandler<,,>).Assembly));
         serviceCollections.AddScoped<NonceModel>();
         serviceCollections.AddCrmConnection();
         serviceCollections.AddBusinessLogic();

@@ -9,6 +9,7 @@ using HE.Investment.AHP.WWW.Models.Site.Factories;
 using HE.Investment.AHP.WWW.Notifications;
 using HE.Investment.AHP.WWW.Routing;
 using HE.Investment.AHP.WWW.Utils;
+using HE.Investments.Common;
 using HE.Investments.Common.Config;
 using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.Common.Models.App;
@@ -26,6 +27,7 @@ public static class AhpWebModule
     {
         service.AddOrganisationCrmModule();
         service.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(SaveHomeTypeDetailsCommandHandler).Assembly));
+        service.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(DomainValidationHandler<,,>).Assembly));
         service.AddScoped<NonceModel>();
 
         AddConfiguration(service, configuration);

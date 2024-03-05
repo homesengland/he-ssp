@@ -2,7 +2,6 @@ using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.Tests.TestObjectBuilders;
 using HE.Investments.Loans.BusinessLogic.Projects.CommandHandlers;
-using HE.Investments.Loans.BusinessLogic.Tests.Assertions;
 using HE.Investments.Loans.BusinessLogic.Tests.Projects.ObjectBuilders;
 using HE.Investments.Loans.BusinessLogic.Tests.Projects.TestData;
 using HE.Investments.Loans.BusinessLogic.Tests.TestData;
@@ -81,13 +80,13 @@ public class ProvideHomesTypesCommandHandlerTests : TestBase<ProvideHomesTypesCo
 
         _command = new ProvideHomesTypesCommand(
             LoanApplicationIdTestData.LoanApplicationIdOne,
-            projectId!,
+            projectId,
             ValidHomesTypes_WithOtherSelected(),
             InvalidOtherHomesTypes());
 
-        var result = await TestCandidate.Handle(_command, CancellationToken.None);
+        var action = () => TestCandidate.Handle(_command, CancellationToken.None);
 
-        result.Errors.Should().ContainsOnlyOneErrorMessage(ValidationErrorMessage.TypeHomesOtherType);
+        await action.Should().ThrowAsync<DomainValidationException>().WithMessage(ValidationErrorMessage.TypeHomesOtherType);
     }
 
     [Fact]
@@ -106,7 +105,7 @@ public class ProvideHomesTypesCommandHandlerTests : TestBase<ProvideHomesTypesCo
             .ForProject(projectId)
             .ReturnsOneProject(project));
 
-        _command = new ProvideHomesTypesCommand(LoanApplicationIdTestData.LoanApplicationIdOne, projectId!, ValidHomesTypes_WithoutOtherSelected(), null!);
+        _command = new ProvideHomesTypesCommand(LoanApplicationIdTestData.LoanApplicationIdOne, projectId, ValidHomesTypes_WithoutOtherSelected(), null!);
 
         await TestCandidate.Handle(_command, CancellationToken.None);
 
@@ -135,7 +134,7 @@ public class ProvideHomesTypesCommandHandlerTests : TestBase<ProvideHomesTypesCo
 
         _command = new ProvideHomesTypesCommand(
             LoanApplicationIdTestData.LoanApplicationIdOne,
-            projectId!,
+            projectId,
             ValidHomesTypes_WithOtherSelected(),
             ValidOtherHomesTypes());
 
@@ -148,9 +147,9 @@ public class ProvideHomesTypesCommandHandlerTests : TestBase<ProvideHomesTypesCo
         project.HomesTypes?.OtherHomesTypesValue.Should().Be(ValidOtherHomesTypes());
     }
 
-    private string[] ValidHomesTypes_WithoutOtherSelected() => new string[] { "bungalows", "apartments" };
+    private string[] ValidHomesTypes_WithoutOtherSelected() => new[] { "bungalows", "apartments" };
 
-    private string[] ValidHomesTypes_WithOtherSelected() => new string[] { "bungalows", "other" };
+    private string[] ValidHomesTypes_WithOtherSelected() => new[] { "bungalows", "other" };
 
     private string ValidOtherHomesTypes() => "ValidOtherHomeType";
 

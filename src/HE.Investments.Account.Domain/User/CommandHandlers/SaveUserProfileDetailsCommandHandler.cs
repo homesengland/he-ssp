@@ -1,10 +1,8 @@
 using HE.Investments.Account.Contract.User.Commands;
 using HE.Investments.Account.Domain.User.Repositories;
 using HE.Investments.Account.Shared;
-using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
 using MediatR;
-using Microsoft.Extensions.Logging;
 
 namespace HE.Investments.Account.Domain.User.CommandHandlers;
 
@@ -14,12 +12,10 @@ public class SaveUserProfileDetailsCommandHandler : IRequestHandler<SaveUserProf
 
     private readonly IAccountUserContext _accountContext;
 
-    private readonly ILogger<SaveUserProfileDetailsCommandHandler> _logger;
 
-    public SaveUserProfileDetailsCommandHandler(IProfileRepository profileRepository, IAccountUserContext accountContext, ILogger<SaveUserProfileDetailsCommandHandler> logger)
+    public SaveUserProfileDetailsCommandHandler(IProfileRepository profileRepository, IAccountUserContext accountContext)
     {
         _profileRepository = profileRepository;
-        _logger = logger;
         _accountContext = accountContext;
     }
 
@@ -27,21 +23,13 @@ public class SaveUserProfileDetailsCommandHandler : IRequestHandler<SaveUserProf
     {
         var userDetails = await _profileRepository.GetProfileDetails(_accountContext.UserGlobalId);
 
-        try
-        {
-            userDetails.ProvideUserProfileDetails(
-                request.FirstName,
-                request.LastName,
-                request.JobTitle,
-                request.TelephoneNumber,
-                request.SecondaryTelephoneNumber,
-                _accountContext.Email);
-        }
-        catch (DomainValidationException domainValidationException)
-        {
-            _logger.LogWarning(domainValidationException, "Validation error(s) occured: {Message}", domainValidationException.Message);
-            return domainValidationException.OperationResult;
-        }
+        userDetails.ProvideUserProfileDetails(
+            request.FirstName,
+            request.LastName,
+            request.JobTitle,
+            request.TelephoneNumber,
+            request.SecondaryTelephoneNumber,
+            _accountContext.Email);
 
         await _profileRepository.SaveAsync(userDetails, _accountContext.UserGlobalId, cancellationToken);
 

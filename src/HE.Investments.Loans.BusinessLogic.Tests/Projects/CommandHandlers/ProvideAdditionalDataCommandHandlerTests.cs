@@ -1,7 +1,7 @@
+using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.Tests.TestObjectBuilders;
 using HE.Investments.Loans.BusinessLogic.Projects.CommandHandlers;
-using HE.Investments.Loans.BusinessLogic.Tests.Assertions;
 using HE.Investments.Loans.BusinessLogic.Tests.Projects.ObjectBuilders;
 using HE.Investments.Loans.BusinessLogic.Tests.TestData;
 using HE.Investments.Loans.Common.Tests.ObjectBuilders;
@@ -41,7 +41,7 @@ public class ProvideAdditionalDataCommandHandlerTests : TestBase<ProvideAddition
         GivenCurrentDate(CorrectDateTime);
 
         // when
-        var result = await TestCandidate.Handle(
+        var action = () => TestCandidate.Handle(
             new ProvideAdditionalDetailsCommand(
                 LoanApplicationIdTestData.LoanApplicationIdOne,
                 projectId,
@@ -54,12 +54,13 @@ public class ProvideAdditionalDataCommandHandlerTests : TestBase<ProvideAddition
             CancellationToken.None);
 
         // then
-        result.Errors.Should()
-            .ContainsErrorMessages(
-                ValidationErrorMessage.NoPurchaseDate,
-                ValidationErrorMessage.IncorrectProjectCost,
-                ValidationErrorMessage.IncorrectProjectValue,
-                ValidationErrorMessage.EnterMoreDetails);
+        await action.Should()
+            .ThrowAsync<DomainValidationException>()
+            .WithMessage(
+                $"{ValidationErrorMessage.NoPurchaseDate}" +
+                $"\n{ValidationErrorMessage.IncorrectProjectCost}" +
+                $"\n{ValidationErrorMessage.IncorrectProjectValue}" +
+                $"\n{ValidationErrorMessage.EnterMoreDetails}");
     }
 
     [Fact]

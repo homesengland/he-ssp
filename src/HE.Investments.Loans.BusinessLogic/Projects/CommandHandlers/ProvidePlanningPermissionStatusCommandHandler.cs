@@ -6,7 +6,6 @@ using HE.Investments.Loans.BusinessLogic.Projects.Repositories;
 using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using HE.Investments.Loans.Contract.Funding.Commands;
 using MediatR;
-using Microsoft.Extensions.Logging;
 
 namespace HE.Investments.Loans.BusinessLogic.Projects.CommandHandlers;
 
@@ -15,9 +14,8 @@ public class ProvidePlanningPermissionStatusCommandHandler : ProjectCommandHandl
     public ProvidePlanningPermissionStatusCommandHandler(
         IApplicationProjectsRepository applicationProjectsRepository,
         ILoanApplicationRepository loanApplicationRepository,
-        IAccountUserContext loanUserContext,
-        ILogger<ProjectCommandHandlerBase> logger)
-        : base(applicationProjectsRepository, loanApplicationRepository, loanUserContext, logger)
+        IAccountUserContext loanUserContext)
+        : base(applicationProjectsRepository, loanApplicationRepository, loanUserContext)
     {
     }
 

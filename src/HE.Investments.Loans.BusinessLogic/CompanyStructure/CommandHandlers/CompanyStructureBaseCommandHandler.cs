@@ -1,13 +1,11 @@
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
-using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Loans.BusinessLogic.CompanyStructure.Repositories;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories;
 using HE.Investments.Loans.Common.Utils.Enums;
 using HE.Investments.Loans.Contract.Application.Events;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
-using Microsoft.Extensions.Logging;
 
 namespace HE.Investments.Loans.BusinessLogic.CompanyStructure.CommandHandlers;
 
@@ -19,18 +17,14 @@ public class CompanyStructureBaseCommandHandler
 
     private readonly IAccountUserContext _loanUserContext;
 
-    private readonly ILogger<CompanyStructureBaseCommandHandler> _logger;
-
     public CompanyStructureBaseCommandHandler(
         ICompanyStructureRepository companyStructureRepository,
         ILoanApplicationRepository loanApplicationRepository,
-        IAccountUserContext loanUserContext,
-        ILogger<CompanyStructureBaseCommandHandler> logger)
+        IAccountUserContext loanUserContext)
     {
         _companyStructureRepository = companyStructureRepository;
         _loanApplicationRepository = loanApplicationRepository;
         _loanUserContext = loanUserContext;
-        _logger = logger;
     }
 
     protected async Task<OperationResult> Perform(
@@ -42,20 +36,12 @@ public class CompanyStructureBaseCommandHandler
         var companyStructure =
             await _companyStructureRepository.GetAsync(loanApplicationId, userAccount, CompanyStructureFieldsSet.GetAllFields, cancellationToken);
 
-        try
-        {
-            await action(companyStructure);
+        await action(companyStructure);
 
-            if (companyStructure.LoanApplicationStatus != ApplicationStatus.Draft)
-            {
-                companyStructure.Publish(new LoanApplicationChangeToDraftStatusEvent(loanApplicationId));
-                await _loanApplicationRepository.DispatchEvents(companyStructure, cancellationToken);
-            }
-        }
-        catch (DomainValidationException domainValidationException)
+        if (companyStructure.LoanApplicationStatus != ApplicationStatus.Draft)
         {
-            _logger.LogWarning(domainValidationException, "Validation error(s) occured: {Message}", domainValidationException.Message);
-            return domainValidationException.OperationResult;
+            companyStructure.Publish(new LoanApplicationChangeToDraftStatusEvent(loanApplicationId));
+            await _loanApplicationRepository.DispatchEvents(companyStructure, cancellationToken);
         }
 
         await _companyStructureRepository.SaveAsync(companyStructure, userAccount, cancellationToken);

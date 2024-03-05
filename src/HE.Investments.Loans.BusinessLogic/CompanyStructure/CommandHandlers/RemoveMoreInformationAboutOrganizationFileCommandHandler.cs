@@ -9,7 +9,6 @@ using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
 using HE.Investments.Loans.Contract.CompanyStructure.Commands;
 using MediatR;
-using Microsoft.Extensions.Logging;
 
 namespace HE.Investments.Loans.BusinessLogic.CompanyStructure.CommandHandlers;
 
@@ -24,9 +23,8 @@ public class RemoveMoreInformationAboutOrganizationFileCommandHandler : CompanyS
                 ILoanApplicationRepository loanApplicationRepository,
                 ILoansFileService<LoanApplicationId> companyStructureFileService,
                 IAccountUserContext loanUserContext,
-                ILogger<CompanyStructureBaseCommandHandler> logger,
                 INotificationService notificationService)
-        : base(companyStructureRepository, loanApplicationRepository, loanUserContext, logger)
+        : base(companyStructureRepository, loanApplicationRepository, loanUserContext)
     {
         _notificationService = notificationService;
         _companyStructureFileService = companyStructureFileService;

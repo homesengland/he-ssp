@@ -33,33 +33,26 @@ public class CreateAndLinkOrganisationCommandHandler : IRequestHandler<CreateAnd
 
     public async Task<OperationResult> Handle(CreateAndLinkOrganisationCommand request, CancellationToken cancellationToken)
     {
-        try
+        if (await _userContext.IsLinkedWithOrganisation())
         {
-            if (await _userContext.IsLinkedWithOrganisation())
-            {
-                throw new DomainException(
-                    $"Cannot link organization to user account id: {_userContext.UserGlobalId}, because it is already linked to other organization.",
-                    CommonErrorCodes.ContactAlreadyLinkedWithOrganization);
-            }
-
-            var operationResult = OperationResult.New();
-            var name = operationResult.Aggregate(() => new OrganisationName(request.Name));
-            var address = operationResult.Aggregate(() =>
-                new OrganisationAddress(request.AddressLine1, request.AddressLine2, null, request.TownOrCity, request.Postcode, request.County, null));
-            var organisation = operationResult.Aggregate(() => new OrganisationEntity(name, address));
-
-            operationResult.CheckErrors();
-
-            var organisationId = await _repository.CreateOrganisation(organisation);
-
-            await _contactRepository.LinkOrganisation(organisationId, PortalConstants.CommonPortalType);
-            await _mediator.Publish(new UserAccountsChangedEvent(_userContext.UserGlobalId), cancellationToken);
-
-            return OperationResult.Success();
+            throw new DomainException(
+                $"Cannot link organization to user account id: {_userContext.UserGlobalId}, because it is already linked to other organization.",
+                CommonErrorCodes.ContactAlreadyLinkedWithOrganization);
         }
-        catch (DomainValidationException domainValidationException)
-        {
-            return domainValidationException.OperationResult;
-        }
+
+        var operationResult = OperationResult.New();
+        var name = operationResult.Aggregate(() => new OrganisationName(request.Name));
+        var address = operationResult.Aggregate(() =>
+            new OrganisationAddress(request.AddressLine1, request.AddressLine2, null, request.TownOrCity, request.Postcode, request.County, null));
+        var organisation = operationResult.Aggregate(() => new OrganisationEntity(name, address));
+
+        operationResult.CheckErrors();
+
+        var organisationId = await _repository.CreateOrganisation(organisation);
+
+        await _contactRepository.LinkOrganisation(organisationId, PortalConstants.CommonPortalType);
+        await _mediator.Publish(new UserAccountsChangedEvent(_userContext.UserGlobalId), cancellationToken);
+
+        return OperationResult.Success();
     }
 }
