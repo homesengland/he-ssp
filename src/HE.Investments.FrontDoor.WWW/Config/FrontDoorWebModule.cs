@@ -1,3 +1,4 @@
+using HE.Investments.Common;
 using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.Common.Models.App;
 using HE.Investments.Common.WWW.Infrastructure.Authorization;
@@ -15,6 +16,7 @@ public static class FrontDoorWebModule
     {
         service.AddOrganisationCrmModule();
         service.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(DomainModule).Assembly));
+        service.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(DomainValidationHandler<,,>).Assembly));
         service.AddScoped<NonceModel>();
 
         AddConfiguration(service, configuration);

@@ -8,6 +8,7 @@ using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.FrontDoor.Contract.Project;
 using HE.Investments.FrontDoor.Contract.Project.Commands;
+using HE.Investments.FrontDoor.Contract.Project.Enums;
 using HE.Investments.FrontDoor.Contract.Project.Queries;
 using HE.Investments.FrontDoor.WWW.Extensions;
 using HE.Investments.FrontDoor.WWW.Workflows;
@@ -168,7 +169,15 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     [WorkflowState(ProjectWorkflowState.Tenure)]
     public async Task<IActionResult> Tenure([FromRoute] string projectId, ProjectDetails model, CancellationToken cancellationToken)
     {
-        return await Continue(new { projectId });
+        return await ExecuteProjectCommand(
+            new ProvideAffordableHomesAmountCommand(new FrontDoorProjectId(projectId), model.AffordableHomesAmount),
+            nameof(Tenure),
+            project =>
+            {
+                project.AffordableHomesAmount = model.AffordableHomesAmount;
+                return project;
+            },
+            cancellationToken);
     }
 
     [HttpGet("{projectId}/organisation-homes-built")]
