@@ -10,4 +10,5 @@ public enum FundingState
     Refinance,
     CheckAnswers,
     Complete,
+    TaskList,
 }

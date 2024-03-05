@@ -6,7 +6,7 @@ using HE.Investments.Loans.Contract.ViewModels;
 
 namespace HE.Investments.Loans.Contract.Funding;
 
-public class FundingViewModel : ICompletedSectionViewModel
+public class FundingViewModel : ISectionViewModel
 {
     public FundingViewModel()
     {
@@ -39,7 +39,7 @@ public class FundingViewModel : ICompletedSectionViewModel
 
     public string? CheckAnswers { get; set; }
 
-    public SectionStatus State { get; set; }
+    public SectionStatus Status { get; set; }
 
     public bool StateChanged { get; set; }
 
@@ -79,12 +79,12 @@ public class FundingViewModel : ICompletedSectionViewModel
 
     public bool IsCompleted()
     {
-        return State == SectionStatus.Completed;
+        return Status == SectionStatus.Completed;
     }
 
     public bool IsInProgress()
     {
-        return State == SectionStatus.InProgress;
+        return Status == SectionStatus.InProgress;
     }
 
     public bool IsReadOnly()
