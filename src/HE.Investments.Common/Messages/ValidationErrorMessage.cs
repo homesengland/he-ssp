@@ -80,6 +80,8 @@ public static class ValidationErrorMessage
 
     public const string SquareMetersMustBeNumber = "The square meterage in the internal floor each of each home must be a number, like 75.50";
 
+    public const string SelectIdentifiedSite = "Select yes if you have an identified site";
+
     public static string FilesMaxCount(int numberOfFiles) => $"You can only select up to {numberOfFiles} files";
 
     public static string EstimatedPoundInput(string name) => PoundInput($"estimated {name}");

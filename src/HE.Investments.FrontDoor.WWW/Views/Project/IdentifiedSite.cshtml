@@ -2,6 +2,7 @@
 @using HE.Investments.FrontDoor.WWW.Views.Project.Const
 @using HE.Investments.FrontDoor.WWW.Views.Shared.Components.FrontDoorWorkflowBackButton
 @using HE.Investments.Common.WWW.Components.FormButton
+@model ProjectDetails
 @{
     ViewData["Title"] = ProjectPageTitles.IdentifiedSite;
 }
@@ -10,8 +11,15 @@
     <vc:front-door-workflow-back-button current-page="@ProjectWorkflowState.IdentifiedSite"></vc:front-door-workflow-back-button>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
+    <vc:page-header caption="@ViewBag.ProjectName" />
+
     <form asp-controller="Project" asp-action="IdentifiedSite" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
-        TODO: @ProjectPageTitles.IdentifiedSite
+        <vc:radio-yes-no
+            title="@ProjectPageTitles.IdentifiedSite"
+            title-type="InputTitleType.PageHeader"
+            hint="You will be able to add multiple sites."
+            field-name="@nameof(Model.IsSiteIdentified)"
+            value="@Model.IsSiteIdentified"/>
 
         <vc:form-button/>
     </form>
