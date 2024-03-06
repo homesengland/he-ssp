@@ -1,3 +1,4 @@
+using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Account.Shared.Routing;
 using HE.Investments.Common;
 using Microsoft.AspNetCore.Mvc;
@@ -6,6 +7,7 @@ using Microsoft.FeatureManagement;
 namespace HE.Investments.FrontDoor.WWW.Controllers;
 
 [Route("account")]
+[AuthorizeWithCompletedProfile]
 public class AccountController : Controller
 {
     private readonly AccountConfig _accountConfig;
