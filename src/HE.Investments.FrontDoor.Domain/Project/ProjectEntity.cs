@@ -47,13 +47,13 @@ public class ProjectEntity : DomainEntity
 
     public ProjectInfrastructureTypes InfrastructureTypes { get; private set; }
 
-    public static ProjectEntity New(string name) => new(FrontDoorProjectId.New(), name);
-
     public OrganisationHomesBuilt? OrganisationHomesBuilt { get; private set; }
 
     public IsSiteIdentified? IsSiteIdentified { get; private set; }
 
     public HomesNumber? HomesNumber { get; private set; }
+
+    public static ProjectEntity New(string name) => new(FrontDoorProjectId.New(), new ProjectName(name));
 
     public static async Task<ProjectEntity> New(ProjectName projectName, IProjectNameExists projectNameExists, CancellationToken cancellationToken)
     {
