@@ -23,7 +23,7 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.Site
             var result = CrmServicesFactory.Get<ISiteService>().Get(paging, FieldsToRetrieve);
             if (result != null)
             {
-                ExecutionData.SetOutputParameter(invln_getmultiplesitesResponse.Fields.invln_pagedsites, JsonSerializer.Serialize(result));
+                ExecutionData.SetOutputParameter(invln_getmultiplesitesResponse.Fields.invln_sites, JsonSerializer.Serialize(result));
             }
         }
     }
