@@ -60,7 +60,7 @@ public class ProjectEntity : DomainEntity
     {
         if (supportActivityTypes.Count == 0)
         {
-            OperationResult.New().AddValidationError(nameof(SupportActivityTypes), "Select activities you require support for, or select ‘other'").CheckErrors();
+            OperationResult.ThrowValidationError(nameof(SupportActivityTypes), "Select activities you require support for, or select ‘other'");
         }
 
         SupportActivityTypes = _modificationTracker.Change(SupportActivityTypes, supportActivityTypes, null, SupportActivityTypesHaveChanged);
