@@ -13,6 +13,8 @@ public class ProjectDetails
 
     public IList<SupportActivityType>? SupportActivityTypes { get; set; }
 
+    public string? OrganisationHomesBuilt { get; set; }
+
     public bool? IsSiteIdentified { get; set; }
 
     public FrontDoorSiteId? LastSiteId { get; set; }

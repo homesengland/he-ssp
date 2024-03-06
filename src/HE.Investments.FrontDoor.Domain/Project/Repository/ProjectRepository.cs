@@ -74,6 +74,7 @@ public class ProjectRepository : IProjectRepository
             dto.ProjectSupportsHousingDeliveryinEngland,
             supportActivityTypes: new SupportActivitiesMapper().Map(dto.ActivitiesinThisProject),
             affordableHomesAmount: ProjectAffordableHomesAmount.Create(new AffordableHomesAmountMapper().ToDomain(dto.AmountofAffordableHomes)),
+            organisationHomesBuilt: dto.PreviousResidentialBuildingExperience.IsProvided() ? new OrganisationHomesBuilt((int)dto.PreviousResidentialBuildingExperience!) : null,
             isSiteIdentified: dto.IdentifiedSite.IsProvided() ? new IsSiteIdentified(dto.IdentifiedSite) : null);
     }
 }

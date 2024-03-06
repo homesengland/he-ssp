@@ -15,7 +15,7 @@ public class IsSiteIdentified : ValueObject, IQuestion
         }
         else
         {
-            OperationResult.ThrowValidationError(nameof(IsSiteIdentified), ValidationErrorMessage.SelectIdentifiedSite);
+            OperationResult.ThrowValidationError(nameof(IsSiteIdentified), "Select yes if you have an identified site");
         }
     }
 

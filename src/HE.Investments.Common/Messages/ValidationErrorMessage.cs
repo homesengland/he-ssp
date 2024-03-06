@@ -80,8 +80,6 @@ public static class ValidationErrorMessage
 
     public const string SquareMetersMustBeNumber = "The square meterage in the internal floor each of each home must be a number, like 75.50";
 
-    public const string SelectIdentifiedSite = "Select yes if you have an identified site";
-
     public static string FilesMaxCount(int numberOfFiles) => $"You can only select up to {numberOfFiles} files";
 
     public static string EstimatedPoundInput(string name) => PoundInput($"estimated {name}");
@@ -101,6 +99,12 @@ public static class ValidationErrorMessage
     public static string MustProvideRequiredField(string displayName) => $"Enter the {displayName}";
 
     public static string MustProvideYourRequiredField(string displayName) => $"Enter your {displayName}";
+
+    public static string MustProvideYourHigherNumber(string fieldName, int minValue) => $"Your {fieldName} must be {minValue} or more";
+
+    public static string MustProvideYourLowerNumber(string fieldName, int maxValue) => $"Your {fieldName} must be {maxValue} or fewer";
+
+    public static string MustProvideYourWholeNumber(string fieldName, int example = 30) => $"Your {fieldName} must be a whole number, like {example}";
 
     public static string MustBeNumberBetween(string displayName, int minValue, int maxValue) => $"The {displayName} must be between {minValue} and {maxValue}";
 

@@ -199,7 +199,15 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     [WorkflowState(ProjectWorkflowState.OrganisationHomesBuilt)]
     public async Task<IActionResult> OrganisationHomesBuilt([FromRoute] string projectId, ProjectDetails model, CancellationToken cancellationToken)
     {
-        return await Continue(new { projectId });
+        return await ExecuteProjectCommand(
+            new ProvideOrganisationHomesBuiltCommand(new FrontDoorProjectId(projectId), model.OrganisationHomesBuilt),
+            nameof(OrganisationHomesBuilt),
+            project =>
+            {
+                project.OrganisationHomesBuilt = model.OrganisationHomesBuilt;
+                return project;
+            },
+            cancellationToken);
     }
 
     [HttpGet("{projectId}/identified-site")]
