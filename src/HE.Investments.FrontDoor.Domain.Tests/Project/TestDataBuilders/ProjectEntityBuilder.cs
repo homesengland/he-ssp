@@ -1,4 +1,5 @@
 using HE.Investments.FrontDoor.Contract.Project;
+using HE.Investments.FrontDoor.Contract.Project.Enums;
 using HE.Investments.FrontDoor.Domain.Project;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
 using HE.Investments.TestsUtils.TestFramework;
@@ -15,4 +16,16 @@ public class ProjectEntityBuilder : TestObjectBuilder<ProjectEntityBuilder, Proj
     protected override ProjectEntityBuilder Builder => this;
 
     public static ProjectEntityBuilder New() => new();
+
+    public ProjectEntityBuilder WithSupportActivitiesAsDevelopingHomes()
+    {
+        Item.ProvideSupportActivityTypes(new SupportActivities(new[] { SupportActivityType.DevelopingHomes }));
+        return this;
+    }
+
+    public ProjectEntityBuilder WithAffordableHomesAmount()
+    {
+        Item.ProvideAffordableHomesAmount(new ProjectAffordableHomesAmount(AffordableHomesAmount.OpenMarkedAndAffordableHomes));
+        return this;
+    }
 }
