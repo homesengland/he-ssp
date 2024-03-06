@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Moq" Version="4.20.69" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HE.Investments.Common.Tests\HE.Investments.Common.Tests.csproj" />
+    <ProjectReference Include="..\HE.Investments.FrontDoor.Domain\HE.Investments.FrontDoor.Domain.csproj" />
+    <ProjectReference Include="..\HE.Investments.TestsUtils\HE.Investments.TestsUtils.csproj" />
+    <ProjectReference Include="..\HE.Investments.Organisation\HE.Investments.Organisation.csproj">
+      <Aliases>Org</Aliases>
+    </ProjectReference>
+  </ItemGroup>
+
+</Project>

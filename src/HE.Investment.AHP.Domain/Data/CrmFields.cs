@@ -58,7 +58,7 @@ public static class CrmFields
     };
 
     public static readonly IReadOnlyList<string> SchemeToRead = SchemeToUpdate.ToList()
-        .Append(new List<string> { nameof(invln_scheme.invln_schemename), nameof(invln_scheme.invln_Tenure), nameof(invln_ExternalStatus), })
+        .Append(new List<string> { nameof(invln_scheme.invln_schemename), nameof(invln_scheme.invln_Tenure), nameof(invln_ExternalStatus), nameof(invln_scheme.invln_Site) })
         .ToImmutableList();
 
     public static readonly IReadOnlyList<string> FinancialDetailsToUpdate = new List<string>
@@ -88,6 +88,6 @@ public static class CrmFields
     };
 
     public static readonly IReadOnlyList<string> FinancialDetailsToRead = FinancialDetailsToUpdate.ToList()
-        .Append(new List<string> { nameof(invln_scheme.invln_schemename), nameof(invln_scheme.invln_Tenure), nameof(invln_ExternalStatus), })
+        .Append(new List<string> { nameof(invln_scheme.invln_schemename), nameof(invln_scheme.invln_Tenure), nameof(invln_ExternalStatus), nameof(invln_scheme.invln_Site) })
         .ToImmutableList();
 }

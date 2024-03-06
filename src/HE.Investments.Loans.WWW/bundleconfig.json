@@ -38,11 +38,7 @@
       "!wwwroot/javascripts/file-helper.js",
       "!wwwroot/javascripts/govuk-frontend-all.min.js",
       "!wwwroot/javascripts/history.js",
-      "!wwwroot/javascripts/land-cost-radio.js",
-      "!wwwroot/javascripts/manual.js",
-      "!wwwroot/javascripts/mortgage-term-radio.js",
       "!wwwroot/javascripts/radios-with-conditional-input.js",
-      "!wwwroot/javascripts/service-charge-radio.js",
       "!wwwroot/javascripts/tmp.js"
     ]
   },
@@ -56,11 +52,7 @@
       "!wwwroot/javascripts/file-helper.js",
       "!wwwroot/javascripts/govuk-frontend-all.min.js",
       "!wwwroot/javascripts/history.js",
-      "!wwwroot/javascripts/land-cost-radio.js",
-      "!wwwroot/javascripts/manual.js",
-      "!wwwroot/javascripts/mortgage-term-radio.js",
       "!wwwroot/javascripts/radios-with-conditional-input.js",
-      "!wwwroot/javascripts/service-charge-radio.js",
       "!wwwroot/javascripts/tmp.js"
     ],
     "minify": {

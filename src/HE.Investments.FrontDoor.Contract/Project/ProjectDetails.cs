@@ -11,7 +11,9 @@ public class ProjectDetails
 
     public bool IsEnglandHousingDelivery { get; set; }
 
-    public IList<ActivityType>? ActivityTypes { get; set; }
+    public IList<SupportActivityType>? SupportActivityTypes { get; set; }
+
+    public string? OrganisationHomesBuilt { get; set; }
 
     public IList<InfrastructureType>? InfrastructureTypes { get; set; }
 
@@ -24,4 +26,6 @@ public class ProjectDetails
     public bool? IsFundingRequired { get; set; }
 
     public AffordableHomesAmount AffordableHomesAmount { get; set; }
+
+    public string? HomesNumber { get; set; }
 }

@@ -139,9 +139,17 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
 
     [HttpPost("{projectId}/support-required-activities")]
     [WorkflowState(ProjectWorkflowState.SupportRequiredActivities)]
-    public async Task<IActionResult> SupportRequiredActivities([FromRoute] string projectId, ProjectDetails projectDetails, CancellationToken cancellationToken)
+    public async Task<IActionResult> SupportRequiredActivities([FromRoute] string projectId, ProjectDetails model, CancellationToken cancellationToken)
     {
-        return await Continue(new { projectId });
+        return await ExecuteProjectCommand(
+            new ProvideSupportActivitiesCommand(new FrontDoorProjectId(projectId), model.SupportActivityTypes ?? new List<SupportActivityType>()),
+            nameof(SupportRequiredActivities),
+            project =>
+            {
+                project.SupportActivityTypes = model.SupportActivityTypes;
+                return project;
+            },
+            cancellationToken);
     }
 
     [HttpGet("{projectId}/infrastructure")]
@@ -199,7 +207,15 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     [WorkflowState(ProjectWorkflowState.OrganisationHomesBuilt)]
     public async Task<IActionResult> OrganisationHomesBuilt([FromRoute] string projectId, ProjectDetails model, CancellationToken cancellationToken)
     {
-        return await Continue(new { projectId });
+        return await ExecuteProjectCommand(
+            new ProvideOrganisationHomesBuiltCommand(new FrontDoorProjectId(projectId), model.OrganisationHomesBuilt),
+            nameof(OrganisationHomesBuilt),
+            project =>
+            {
+                project.OrganisationHomesBuilt = model.OrganisationHomesBuilt;
+                return project;
+            },
+            cancellationToken);
     }
 
     [HttpGet("{projectId}/identified-site")]
@@ -213,7 +229,15 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     [WorkflowState(ProjectWorkflowState.IdentifiedSite)]
     public async Task<IActionResult> IdentifiedSite([FromRoute] string projectId, ProjectDetails model, CancellationToken cancellationToken)
     {
-        return await Continue(new { projectId });
+        return await ExecuteProjectCommand(
+            new ProvideIdentifiedSiteCommand(new FrontDoorProjectId(projectId), model.IsSiteIdentified),
+            nameof(IdentifiedSite),
+            project =>
+            {
+                project.IsSiteIdentified = model.IsSiteIdentified;
+                return project;
+            },
+            cancellationToken);
     }
 
     [HttpGet("{projectId}/start-site-details")]
@@ -222,7 +246,7 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     {
         var project = await GetProjectDetails(projectId, cancellationToken);
         return project.LastSiteId.IsProvided()
-            ? RedirectToAction("Name", "Site", new { projectId, project.LastSiteId!.Value })
+            ? RedirectToAction("Name", "Site", new { projectId, siteId = project.LastSiteId!.Value })
             : RedirectToAction("NewName", "Site", new { projectId });
     }
 
@@ -324,7 +348,15 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     [WorkflowState(ProjectWorkflowState.HomesNumber)]
     public async Task<IActionResult> HomesNumber([FromRoute] string projectId, ProjectDetails model, CancellationToken cancellationToken)
     {
-        return await Continue(new { projectId });
+        return await ExecuteProjectCommand(
+            new ProvideHomesNumberCommand(new FrontDoorProjectId(projectId), model.HomesNumber),
+            nameof(HomesNumber),
+            project =>
+            {
+                project.HomesNumber = model.HomesNumber;
+                return project;
+            },
+            cancellationToken);
     }
 
     [HttpGet("{projectId}/progress")]
@@ -408,7 +440,7 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     [WorkflowState(ProjectWorkflowState.CheckAnswers)]
     public IActionResult Complete([FromRoute] string projectId, ProjectDetails model)
     {
-        return RedirectToAction("Index", "Projects");
+        return RedirectToAction("Index", "Account");
     }
 
     protected override async Task<IStateRouting<ProjectWorkflowState>> Routing(ProjectWorkflowState currentState, object? routeData = null)
@@ -440,7 +472,7 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
         return await this.ExecuteCommand<TViewModel>(
             _mediator,
             command,
-            async () => await ContinueWithRedirect(routeData ?? new { projectId = projectId.Value }),
+            async () => await ReturnToAccountOrContinue(async () => await ContinueWithRedirect(routeData ?? new { projectId = projectId.Value })),
             async () =>
             {
                 var siteDetails = await GetProjectDetails(projectId.Value, cancellationToken);
@@ -456,5 +488,15 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
         var projectDetails = await _mediator.Send(new GetProjectDetailsQuery(new FrontDoorProjectId(projectId)), cancellationToken);
         ViewBag.ProjectName = projectDetails.Name;
         return projectDetails;
+    }
+
+    private async Task<IActionResult> ReturnToAccountOrContinue(Func<Task<IActionResult>> onContinue)
+    {
+        if (Request.IsSaveAndReturnAction())
+        {
+            return RedirectToAction("Index", "Account");
+        }
+
+        return await onContinue();
     }
 }

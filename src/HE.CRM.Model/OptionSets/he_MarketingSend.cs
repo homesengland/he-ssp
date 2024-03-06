@@ -17,7 +17,10 @@ namespace DataverseModel
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		DoNotSend = 134370000,
+		DoNotSendAwaitingConfirmation = 134370000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DoNotSendConsentWithdrawn = 134370002,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Send = 134370001,

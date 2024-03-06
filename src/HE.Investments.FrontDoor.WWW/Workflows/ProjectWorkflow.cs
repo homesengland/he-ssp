@@ -24,9 +24,9 @@ public class ProjectWorkflow : EncodedStateRouting<ProjectWorkflowState>
             ProjectWorkflowState.NotEligibleForAnything => !IsEligibleForAnything(),
             ProjectWorkflowState.Name => true,
             ProjectWorkflowState.SupportRequiredActivities => true,
-            ProjectWorkflowState.Infrastructure => IsActivityOnly(ActivityType.ProvidingInfrastructure),
-            ProjectWorkflowState.Tenure => IsActivityOnly(ActivityType.DevelopingHomes),
-            ProjectWorkflowState.OrganisationHomesBuilt => IsActivityOnly(ActivityType.DevelopingHomes),
+            ProjectWorkflowState.Infrastructure => IsActivityOnly(SupportActivityType.ProvidingInfrastructure),
+            ProjectWorkflowState.Tenure => IsActivityOnly(SupportActivityType.DevelopingHomes),
+            ProjectWorkflowState.OrganisationHomesBuilt => IsActivityOnly(SupportActivityType.DevelopingHomes),
             ProjectWorkflowState.IdentifiedSite => true,
             ProjectWorkflowState.StartSiteDetails => IsSiteIdentified(),
             ProjectWorkflowState.LastSiteDetails => IsSiteIdentified(),
@@ -61,12 +61,12 @@ public class ProjectWorkflow : EncodedStateRouting<ProjectWorkflowState>
             .Permit(Trigger.Back, ProjectWorkflowState.EnglandHousingDelivery);
 
         Machine.Configure(ProjectWorkflowState.SupportRequiredActivities)
-            .PermitIf(Trigger.Continue, ProjectWorkflowState.Infrastructure, () => IsActivityOnly(ActivityType.ProvidingInfrastructure))
-            .PermitIf(Trigger.Continue, ProjectWorkflowState.Tenure, () => IsActivityOnly(ActivityType.DevelopingHomes))
+            .PermitIf(Trigger.Continue, ProjectWorkflowState.Infrastructure, () => IsActivityOnly(SupportActivityType.ProvidingInfrastructure))
+            .PermitIf(Trigger.Continue, ProjectWorkflowState.Tenure, () => IsActivityOnly(SupportActivityType.DevelopingHomes))
             .PermitIf(
                 Trigger.Continue,
                 ProjectWorkflowState.IdentifiedSite,
-                () => IsActivityNotOnly(ActivityType.ProvidingInfrastructure, ActivityType.DevelopingHomes))
+                () => IsActivityNotOnly(SupportActivityType.ProvidingInfrastructure, SupportActivityType.DevelopingHomes))
             .Permit(Trigger.Back, ProjectWorkflowState.Name);
 
         Machine.Configure(ProjectWorkflowState.Infrastructure)
@@ -84,12 +84,12 @@ public class ProjectWorkflow : EncodedStateRouting<ProjectWorkflowState>
         Machine.Configure(ProjectWorkflowState.IdentifiedSite)
             .PermitIf(Trigger.Continue, ProjectWorkflowState.StartSiteDetails, IsSiteIdentified)
             .PermitIf(Trigger.Continue, ProjectWorkflowState.GeographicFocus, IsSiteNotIdentified)
-            .PermitIf(Trigger.Back, ProjectWorkflowState.Infrastructure, () => IsActivityOnly(ActivityType.ProvidingInfrastructure))
-            .PermitIf(Trigger.Back, ProjectWorkflowState.OrganisationHomesBuilt, () => IsActivityOnly(ActivityType.DevelopingHomes))
+            .PermitIf(Trigger.Back, ProjectWorkflowState.Infrastructure, () => IsActivityOnly(SupportActivityType.ProvidingInfrastructure))
+            .PermitIf(Trigger.Back, ProjectWorkflowState.OrganisationHomesBuilt, () => IsActivityOnly(SupportActivityType.DevelopingHomes))
             .PermitIf(
                 Trigger.Back,
                 ProjectWorkflowState.SupportRequiredActivities,
-                () => IsActivityNotOnly(ActivityType.ProvidingInfrastructure, ActivityType.DevelopingHomes));
+                () => IsActivityNotOnly(SupportActivityType.ProvidingInfrastructure, SupportActivityType.DevelopingHomes));
 
         Machine.Configure(ProjectWorkflowState.GeographicFocus)
             .PermitIf(
@@ -165,11 +165,11 @@ public class ProjectWorkflow : EncodedStateRouting<ProjectWorkflowState>
 
     private bool IsEligibleForAnything() => _model.IsEnglandHousingDelivery;
 
-    private bool IsActivityOnly(ActivityType activity) => _model.ActivityTypes?.Count == 1
-                                                          && _model.ActivityTypes.Single() == activity;
+    private bool IsActivityOnly(SupportActivityType supportActivity) => _model.SupportActivityTypes?.Count == 1
+                                                          && _model.SupportActivityTypes.Single() == supportActivity;
 
-    private bool IsActivityNotOnly(params ActivityType[] activity) => !(_model.ActivityTypes?.Count == 1
-                                                                        && activity.Contains(_model.ActivityTypes.Single()));
+    private bool IsActivityNotOnly(params SupportActivityType[] activity) => !(_model.SupportActivityTypes?.Count == 1
+                                                                        && activity.Contains(_model.SupportActivityTypes.Single()));
 
     private bool IsSiteIdentified() => _model.IsSiteIdentified == true;
 

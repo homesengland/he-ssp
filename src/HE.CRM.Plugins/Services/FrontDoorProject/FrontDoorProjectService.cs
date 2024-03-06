@@ -41,64 +41,7 @@ namespace HE.CRM.Plugins.Services.FrontDoorProject
         }
         #endregion
 
-        public List<FrontDoorProjectDto> GetFrontDoorProjectsForAccountAndContact(string externalContactId, string accountId, string frontDoorProjectId = null, string fieldsToRetrieve = null)
-        {
-            List<FrontDoorProjectDto> entityCollection = new List<FrontDoorProjectDto>();
-            if (Guid.TryParse(accountId, out Guid accountGuid))
-            {
-                var contact = _contactRepository.GetContactViaExternalId(externalContactId);
-                var role = _webroleRepository.GetContactWebRole(contact.Id, ((int)invln_Portal1.Loans).ToString());
-                List<invln_FrontDoorProjectPOC> frontDoorProjectsForAccountAndContact;
-                if (role.Any(x => x.Contains("pl.invln_permission") && ((OptionSetValue)((AliasedValue)x["pl.invln_permission"]).Value).Value == (int)invln_Permission.Admin) && frontDoorProjectId == null)
-                {
-                    TracingService.Trace("admin");
-                    frontDoorProjectsForAccountAndContact = _frontDoorProjectRepository.GetAccountFrontDoorProjects(accountGuid);
-                }
-                else
-                {
-                    TracingService.Trace("regular user, not admin");
-                    string attributes = null;
-                    if (!string.IsNullOrEmpty(fieldsToRetrieve))
-                    {
-                        attributes = GenerateFetchXmlAttributes(fieldsToRetrieve);
-                    }
-                    frontDoorProjectsForAccountAndContact = _frontDoorProjectRepository.GetFrontDoorProjectForOrganisationAndContact(accountGuid, externalContactId, frontDoorProjectId, attributes);
-                }
-                this.TracingService.Trace("GetFrontDoorProjectForOrganisationAndContact");
-                this.TracingService.Trace($"{frontDoorProjectsForAccountAndContact.Count}");
-                foreach (var element in frontDoorProjectsForAccountAndContact)
-                {
-                    List<FrontDoorProjectSiteDto> frontDoorProjectSiteDtoList = new List<FrontDoorProjectSiteDto>();
-                    this.TracingService.Trace($"Front Door Project id {element.Id}");
-                    this.TracingService.Trace("GetFrontDoorProjectSiteRelatedToFrontDoorProject");
-                    var frontDoorProjectSiteList = _frontDoorProjectSiteRepository.GetSiteRelatedToFrontDoorProject(element.ToEntityReference());
-
-                    foreach (var site in frontDoorProjectSiteList)
-                    {
-                        this.TracingService.Trace("MapFrontDoorProjectSiteToDto");
-                        frontDoorProjectSiteDtoList.Add(FrontDoorProjectSiteMapper.MapFrontDoorProjectSiteToDto(site));
-                    }
-
-                    this.TracingService.Trace("MapFrontDoorProjectToDto");
-                    Contact frontDoorProjectContact = null;
-                    if (element.invln_ContactId != null)
-                    {
-                        frontDoorProjectContact = this._contactRepository.GetById(element.invln_ContactId.Id, new string[]
-                        {
-                            nameof(Contact.EMailAddress1).ToLower(),
-                            nameof(Contact.FirstName).ToLower(),
-                            nameof(Contact.LastName).ToLower(),
-                            nameof(Contact.invln_externalid).ToLower(),
-                            nameof(Contact.Telephone1).ToLower(),
-                        });
-                    }
-                    this.TracingService.Trace("MapRegularEntityToDto");
-                    entityCollection.Add(FrontDoorProjectMapper.MapRegularEntityToDto(element, frontDoorProjectSiteDtoList, externalContactId, frontDoorProjectContact));
-                }
-            }
-            return entityCollection;
-        }
-
+       
         public string CreateRecordFromPortal(string externalContactId, string organisationId, string frontDoorProjectId, string entityFieldsParameters)
         {
             Guid frontdoorprojectGUID = Guid.NewGuid();
@@ -128,6 +71,33 @@ namespace HE.CRM.Plugins.Services.FrontDoorProject
             return frontdoorprojectGUID.ToString();
         }
 
+        public List<FrontDoorProjectDto> GetFrontDoorProjects(string organisationId, string externalContactId = null, string fieldsToRetrieve = null, string frontDoorProjectId = null)
+        {
+            this.TracingService.Trace("GetFrontDoorProjects");
+            var listOfFrontDoorProjects = new List<FrontDoorProjectDto>();
+            var organisationCondition = GetFetchXmlConditionForGivenField(organisationId, nameof(invln_FrontDoorProjectPOC.invln_AccountId).ToLower());
+            var contactExternalIdFilter = GetFetchXmlConditionForGivenField(externalContactId, nameof(Contact.invln_externalid).ToLower());
+            contactExternalIdFilter = GenerateFilterMarksForCondition(contactExternalIdFilter);
+            string attributes = null;
+            if (!string.IsNullOrEmpty(fieldsToRetrieve))
+            {
+                attributes = GenerateFetchXmlAttributes(fieldsToRetrieve);
+            }
+            var frontDoorProjectCondition = GetFetchXmlConditionForGivenField(frontDoorProjectId, nameof(invln_FrontDoorProjectPOC.invln_FrontDoorProjectPOCId).ToLower());
+
+            var frontDoorProjects = _frontDoorProjectRepository.GetFrontDoorProjectForOrganisationAndContact(organisationCondition, contactExternalIdFilter, attributes, frontDoorProjectCondition);
+            if (frontDoorProjects.Any())
+            {
+                foreach (var frontDoorProject in frontDoorProjects)
+                {
+                    var contact = _contactRepository.GetById(frontDoorProject.invln_ContactId.Id, new string[] { nameof(Contact.FirstName).ToLower(), nameof(Contact.LastName).ToLower(), nameof(Contact.invln_externalid).ToLower(), nameof(Contact.EMailAddress1).ToLower(), nameof(Contact.Telephone1).ToLower() });
+                    var frontDoorProjecDto = FrontDoorProjectMapper.MapRegularEntityToDto(frontDoorProject, contact);
+                    listOfFrontDoorProjects.Add(frontDoorProjecDto);
+                }
+            }
+            return listOfFrontDoorProjects;
+        }
+
         private string GenerateFetchXmlAttributes(string fieldsToRetrieve)
         {
             var fields = fieldsToRetrieve.Split(',');
@@ -140,6 +110,24 @@ namespace HE.CRM.Plugins.Services.FrontDoorProject
                 }
             }
             return generatedAttribuesFetchXml;
+        }
+
+        private string GetFetchXmlConditionForGivenField(string fieldValue, string fieldName)
+        {
+            if (!string.IsNullOrEmpty(fieldValue))
+            {
+                return $"<condition attribute=\"{fieldName}\" operator=\"eq\" value=\"{fieldValue}\" />";
+            }
+            return string.Empty;
+        }
+
+        private string GenerateFilterMarksForCondition(string condition)
+        {
+            if (!string.IsNullOrEmpty(condition))
+            {
+                return $"<filter>{condition}</filter>";
+            }
+            return string.Empty;
         }
     }
 }

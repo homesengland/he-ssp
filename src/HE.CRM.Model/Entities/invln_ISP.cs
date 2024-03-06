@@ -267,6 +267,7 @@ namespace DataverseModel
 			public const string invln_ReportFrequency = "invln_reportfrequency";
 			public const string invln_reportfrequencyName = "invln_reportfrequencyname";
 			public const string invln_ReturnonEquityROE = "invln_returnonequityroe";
+			public const string invln_reviewapproval_ISPOwner_invln_isp = "invln_reviewapproval_ISPOwner_invln_isp";
 			public const string invln_S106Costsk = "invln_s106costsk";
 			public const string invln_s106costsk_Base = "invln_s106costsk_base";
 			public const string invln_S106Costspercent = "invln_s106costspercent";
@@ -5612,6 +5613,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_isp_invln_reviewapproval_ispid");
 				this.SetRelatedEntities<DataverseModel.invln_reviewapproval>("invln_isp_invln_reviewapproval_ispid", null, value);
 				this.OnPropertyChanged("invln_isp_invln_reviewapproval_ispid");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_reviewapproval_ISPOwner_invln_isp
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_reviewapproval_ISPOwner_invln_isp")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_reviewapproval> invln_reviewapproval_ISPOwner_invln_isp
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_reviewapproval>("invln_reviewapproval_ISPOwner_invln_isp", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_reviewapproval_ISPOwner_invln_isp");
+				this.SetRelatedEntities<DataverseModel.invln_reviewapproval>("invln_reviewapproval_ISPOwner_invln_isp", null, value);
+				this.OnPropertyChanged("invln_reviewapproval_ISPOwner_invln_isp");
 			}
 		}
 		

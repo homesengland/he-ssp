@@ -47,5 +47,9 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public bool? targetRentOver80PercentOfMarketRent { get; set; }
         public decimal? expectedFirstTrancheSaleReceipt { get; set; }
         public decimal? proposedRentAsPercentOfUnsoldShare { get; set; }
+        public bool? mmcApplied { get; set; }
+        public List<int> mmcCategories { get; set; }
+        public List<int> mmcCategories1Subcategories { get; set; }
+        public List<int> mmcCategories2Subcategories { get; set; }
     }
 }

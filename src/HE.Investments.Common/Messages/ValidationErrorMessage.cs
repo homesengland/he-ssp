@@ -98,6 +98,18 @@ public static class ValidationErrorMessage
 
     public static string MustProvideRequiredField(string displayName) => $"Enter the {displayName}";
 
+    public static string MustProvideYourRequiredField(string displayName) => $"Enter your {displayName}";
+
+    public static string MustProvideYourHigherNumber(string fieldName, int minValue) => $"Your {fieldName} must be {minValue} or more";
+
+    public static string MustProvideYourLowerNumber(string fieldName, int maxValue) => $"Your {fieldName} must be {maxValue} or fewer";
+
+    public static string MustProvideTheHigherNumber(string fieldName, int minValue) => $"The {fieldName} must be {minValue} or more";
+
+    public static string MustProvideTheLowerNumber(string fieldName, int maxValue) => $"The {fieldName} must be {maxValue} or fewer";
+
+    public static string MustProvideYourWholeNumber(string fieldName, int example = 30) => $"Your {fieldName} must be a whole number, like {example}";
+
     public static string MustBeNumberBetween(string displayName, int minValue, int maxValue) => $"The {displayName} must be between {minValue} and {maxValue}";
 
     public static string MustBeWholeNumberBetween(string displayName, int minValue, int maxValue) => $"The {displayName} must be a whole number between {minValue} and {maxValue}";
@@ -117,6 +129,8 @@ public static class ValidationErrorMessage
     public static string MustBeSelectedForCalculation(string displayName) => $"Select if {displayName} to calculate";
 
     public static string StringLengthExceeded(string displayName, int maxLength) => new($"The {displayName} must be {maxLength} characters or less");
+
+    public static string YourStringLengthExceeded(string displayName, int maxLength) => new($"Your {displayName} must be {maxLength} characters or less");
 
     public static string StringLengthExceededUncommon(string displayName, int maxLength) => new($"{displayName.TitleCaseFirstLetterInString()} must be {maxLength} characters or less");
 

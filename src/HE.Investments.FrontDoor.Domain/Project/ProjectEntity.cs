@@ -2,7 +2,9 @@ using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Errors;
+using HE.Investments.Common.Extensions;
 using HE.Investments.FrontDoor.Contract.Project;
+using HE.Investments.FrontDoor.Domain.Project.Repository;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
 
 namespace HE.Investments.FrontDoor.Domain.Project;
@@ -13,19 +15,33 @@ public class ProjectEntity : DomainEntity
 
     public ProjectEntity(
         FrontDoorProjectId id,
-        string name,
+        ProjectName name,
+        bool? isEnglandHousingDelivery = null,
+        SupportActivities? supportActivityTypes = null,
+        ProjectInfrastructureTypes? infrastructureTypes = null,
         ProjectAffordableHomesAmount? affordableHomesAmount = null,
-        ProjectInfrastructureTypes? infrastructureTypes = null)
+        OrganisationHomesBuilt? organisationHomesBuilt = null,
+        IsSiteIdentified? isSiteIdentified = null,
+        HomesNumber? homesNumber = null)
     {
         Id = id;
         Name = name;
-        AffordableHomesAmount = affordableHomesAmount ?? ProjectAffordableHomesAmount.Empty();
+        IsEnglandHousingDelivery = isEnglandHousingDelivery ?? true;
+        SupportActivities = supportActivityTypes ?? SupportActivities.Empty();
         InfrastructureTypes = infrastructureTypes ?? ProjectInfrastructureTypes.Empty();
+        AffordableHomesAmount = affordableHomesAmount ?? ProjectAffordableHomesAmount.Empty();
+        OrganisationHomesBuilt = organisationHomesBuilt;
+        IsSiteIdentified = isSiteIdentified;
+        HomesNumber = homesNumber;
     }
 
     public FrontDoorProjectId Id { get; private set; }
 
-    public string Name { get; private set; }
+    public bool IsEnglandHousingDelivery { get; private set; }
+
+    public ProjectName Name { get; private set; }
+
+    public SupportActivities SupportActivities { get; private set; }
 
     public ProjectAffordableHomesAmount AffordableHomesAmount { get; private set; }
 
@@ -33,14 +49,30 @@ public class ProjectEntity : DomainEntity
 
     public static ProjectEntity New(string name) => new(FrontDoorProjectId.New(), name);
 
-    public void ProvideName(string? name)
+    public OrganisationHomesBuilt? OrganisationHomesBuilt { get; private set; }
+
+    public IsSiteIdentified? IsSiteIdentified { get; private set; }
+
+    public HomesNumber? HomesNumber { get; private set; }
+
+    public static async Task<ProjectEntity> New(ProjectName projectName, IProjectNameExists projectNameExists, CancellationToken cancellationToken)
     {
-        if (string.IsNullOrWhiteSpace(name))
+        return new(FrontDoorProjectId.New(), await ValidateProjectName(projectName, projectNameExists, null, cancellationToken));
+    }
+
+    public static bool ValidateEnglandHousingDelivery(bool? isEnglandHousingDelivery)
+    {
+        if (isEnglandHousingDelivery.IsNotProvided())
         {
-            OperationResult.New().AddValidationError("Name", "Enter name").CheckErrors();
+            OperationResult.ThrowValidationError(nameof(isEnglandHousingDelivery), "Select yes if your project is supporting housing delivery in England");
         }
 
-        Name = name!;
+        return isEnglandHousingDelivery!.Value;
+    }
+
+    public void ProvideSupportActivityTypes(SupportActivities supportActivityTypes)
+    {
+        SupportActivities = _modificationTracker.Change(SupportActivities, supportActivityTypes, null, SupportActivityTypesHaveChanged);
     }
 
     public void ProvideAffordableHomesAmount(ProjectAffordableHomesAmount affordableHomesAmount)
@@ -61,5 +93,57 @@ public class ProjectEntity : DomainEntity
         }
 
         Id = newId;
+    }
+
+    public async Task ProvideName(ProjectName projectName, IProjectNameExists projectNameExists, CancellationToken cancellationToken)
+    {
+        Name = _modificationTracker.Change(Name, await ValidateProjectName(projectName, projectNameExists, Id, cancellationToken));
+    }
+
+    public void ProvideIsEnglandHousingDelivery(bool? isEnglandHousingDelivery)
+    {
+        IsEnglandHousingDelivery = _modificationTracker.Change(IsEnglandHousingDelivery, ValidateEnglandHousingDelivery(isEnglandHousingDelivery));
+    }
+
+    public void ProvideIsSiteIdentified(IsSiteIdentified isSiteIdentified)
+    {
+        IsSiteIdentified = _modificationTracker.Change(IsSiteIdentified, isSiteIdentified);
+    }
+
+    public void ProvideOrganisationHomesBuilt(OrganisationHomesBuilt organisationHomesBuilt)
+    {
+        OrganisationHomesBuilt = _modificationTracker.Change(OrganisationHomesBuilt, organisationHomesBuilt);
+    }
+
+    public void ProvideHomesNumber(HomesNumber homesNumber)
+    {
+        HomesNumber = _modificationTracker.Change(HomesNumber, homesNumber);
+    }
+
+    private static async Task<ProjectName> ValidateProjectName(
+        ProjectName projectName,
+        IProjectNameExists projectNameExists,
+        FrontDoorProjectId? projectId,
+        CancellationToken cancellationToken)
+    {
+        if (await projectNameExists.DoesExist(projectName, projectId, cancellationToken))
+        {
+            OperationResult.ThrowValidationError(nameof(Name), "This name has already been used on another project");
+        }
+
+        return projectName;
+    }
+
+    private void SupportActivityTypesHaveChanged(SupportActivities newSupportActivityTypes)
+    {
+        if (!newSupportActivityTypes.IsTenureRequired())
+        {
+            AffordableHomesAmount = ProjectAffordableHomesAmount.Empty();
+        }
+
+        if (!newSupportActivityTypes.IsInfrastructureRequired())
+        {
+            // TODO: Wipe answers #91004: Assess infrastructure delivery (portal user)
+        }
     }
 }
