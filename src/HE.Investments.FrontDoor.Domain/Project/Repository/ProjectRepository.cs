@@ -43,6 +43,7 @@ public class ProjectRepository : IProjectRepository
         {
             ProjectId = project.Id.IsNew ? null : project.Id.Value,
             ProjectName = project.Name.Value,
+            ProjectSupportsHousingDeliveryinEngland = project.IsEnglandHousingDelivery,
             OrganisationId = userAccount.SelectedOrganisationId().Value,
             externalId = userAccount.UserGlobalId.Value,
             ActivitiesinThisProject = project.SupportActivityTypes.Select(x => new SupportActivitiesMapper().ToDto(x)!.Value).ToList(),
@@ -70,6 +71,7 @@ public class ProjectRepository : IProjectRepository
         return new ProjectEntity(
             new FrontDoorProjectId(dto.ProjectId),
             new ProjectName(dto.ProjectName),
+            dto.ProjectSupportsHousingDeliveryinEngland,
             supportActivityTypes: dto.ActivitiesinThisProject?.Select(x => new SupportActivitiesMapper().ToDomain(x)!.Value).ToList(),
             affordableHomesAmount: ProjectAffordableHomesAmount.Create(new AffordableHomesAmountMapper().ToDomain(dto.AmountofAffordableHomes)),
             isSiteIdentified: dto.IdentifiedSite.IsProvided() ? new IsSiteIdentified(dto.IdentifiedSite) : null);

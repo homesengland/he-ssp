@@ -17,12 +17,14 @@ public class ProjectEntity : DomainEntity
     public ProjectEntity(
         FrontDoorProjectId id,
         ProjectName name,
+        bool? isEnglandHousingDelivery = null,
         IList<SupportActivityType>? supportActivityTypes = null,
         ProjectAffordableHomesAmount? affordableHomesAmount = null,
         IsSiteIdentified? isSiteIdentified = null)
     {
         Id = id;
         Name = name;
+        IsEnglandHousingDelivery = isEnglandHousingDelivery ?? true;
         IsEnglandHousingDelivery = true;
         SupportActivityTypes = supportActivityTypes ?? new List<SupportActivityType>();
         AffordableHomesAmount = affordableHomesAmount ?? ProjectAffordableHomesAmount.Empty();
