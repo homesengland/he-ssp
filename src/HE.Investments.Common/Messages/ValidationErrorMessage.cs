@@ -104,6 +104,10 @@ public static class ValidationErrorMessage
 
     public static string MustProvideYourLowerNumber(string fieldName, int maxValue) => $"Your {fieldName} must be {maxValue} or fewer";
 
+    public static string MustProvideTheHigherNumber(string fieldName, int minValue) => $"The {fieldName} must be {minValue} or more";
+
+    public static string MustProvideTheLowerNumber(string fieldName, int maxValue) => $"The {fieldName} must be {maxValue} or fewer";
+
     public static string MustProvideYourWholeNumber(string fieldName, int example = 30) => $"Your {fieldName} must be a whole number, like {example}";
 
     public static string MustBeNumberBetween(string displayName, int minValue, int maxValue) => $"The {displayName} must be between {minValue} and {maxValue}";
