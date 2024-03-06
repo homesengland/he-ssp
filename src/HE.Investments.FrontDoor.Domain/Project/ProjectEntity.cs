@@ -47,8 +47,6 @@ public class ProjectEntity : DomainEntity
 
     public ProjectInfrastructureTypes InfrastructureTypes { get; private set; }
 
-    public static ProjectEntity New(string name) => new(FrontDoorProjectId.New(), name);
-
     public OrganisationHomesBuilt? OrganisationHomesBuilt { get; private set; }
 
     public IsSiteIdentified? IsSiteIdentified { get; private set; }
