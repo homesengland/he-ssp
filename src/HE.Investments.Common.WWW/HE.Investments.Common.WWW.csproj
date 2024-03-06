@@ -60,6 +60,7 @@
     <EmbeddedResource Include="Components\SelectList\SelectList.cshtml" />
     <EmbeddedResource Include="Components\DynamicComponent\DynamicComponent.cshtml" />
     <EmbeddedResource Include="Components\ButtonStart\ButtonStart.cshtml" />
+    <EmbeddedResource Include="Components\LinkWorkingAsButton\LinkWorkingAsButton.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

@@ -456,7 +456,7 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
         return await this.ExecuteCommand<TViewModel>(
             _mediator,
             command,
-            async () => await ContinueWithRedirect(routeData ?? new { projectId = projectId.Value }),
+            async () => await ReturnToAccountOrContinue(async () => await ContinueWithRedirect(routeData ?? new { projectId = projectId.Value })),
             async () =>
             {
                 var siteDetails = await GetProjectDetails(projectId.Value, cancellationToken);
@@ -472,5 +472,15 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
         var projectDetails = await _mediator.Send(new GetProjectDetailsQuery(new FrontDoorProjectId(projectId)), cancellationToken);
         ViewBag.ProjectName = projectDetails.Name;
         return projectDetails;
+    }
+
+    private async Task<IActionResult> ReturnToAccountOrContinue(Func<Task<IActionResult>> onContinue)
+    {
+        if (Request.IsSaveAndReturnAction())
+        {
+            return RedirectToAction("Index", "Account");
+        }
+
+        return await onContinue();
     }
 }
