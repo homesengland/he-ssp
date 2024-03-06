@@ -26,9 +26,9 @@ public class GetProjectDetailsQueryHandler : IRequestHandler<GetProjectDetailsQu
         return new ProjectDetails
         {
             Id = project.Id,
-            Name = project.Name,
-            IsEnglandHousingDelivery = true,
-            IsSiteIdentified = true,
+            Name = project.Name.Value,
+            IsEnglandHousingDelivery = project.IsEnglandHousingDelivery,
+            IsSiteIdentified = project.IsSiteIdentified?.Value,
             GeographicFocus = ProjectGeographicFocus.Regional,
             IsFundingRequired = true,
             SupportActivityTypes = project.SupportActivityTypes,

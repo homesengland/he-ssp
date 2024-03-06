@@ -11,22 +11,23 @@ namespace HE.CRM.Plugins.Handlers.CustomApi
         #region Fields
         private string organisationId => ExecutionData.GetInputParameter<string>(invln_getmultiplefrontdoorprojectsRequest.Fields.invln_organisationid);
         private string externalContactId => ExecutionData.GetInputParameter<string>(invln_getmultiplefrontdoorprojectsRequest.Fields.inlvn_userid);
+        private string fieldsToRetrieve => ExecutionData.GetInputParameter<string>(invln_getmultiplefrontdoorprojectsRequest.Fields.invln_fieldstoretrieve);
         #endregion
 
         #region Base Methods Overrides
         public override bool CanWork()
         {
-            return !string.IsNullOrEmpty(externalContactId) && !string.IsNullOrEmpty(organisationId);
+            return organisationId != null;
         }
 
         public override void DoWork()
         {
             this.TracingService.Trace("GetMultipleFrontDoorProjectsForAccountHandler");
-            var frontDoorProjectsDto = CrmServicesFactory.Get<IFrontDoorProjectService>().GetFrontDoorProjectsForAccountAndContact(externalContactId, organisationId);
+            var frontDoorProjectsDtoList = CrmServicesFactory.Get<IFrontDoorProjectService>().GetFrontDoorProjects(organisationId, externalContactId, fieldsToRetrieve);
             this.TracingService.Trace("Send Response");
-            if (frontDoorProjectsDto != null)
+            if (frontDoorProjectsDtoList != null)
             {
-                var frontDoorProjectDtoListSerialized = JsonSerializer.Serialize(frontDoorProjectsDto);
+                var frontDoorProjectDtoListSerialized = JsonSerializer.Serialize(frontDoorProjectsDtoList);
                 ExecutionData.SetOutputParameter(invln_getmultiplefrontdoorprojectsResponse.Fields.invln_frontdoorprojects, frontDoorProjectDtoListSerialized);
             }
         }

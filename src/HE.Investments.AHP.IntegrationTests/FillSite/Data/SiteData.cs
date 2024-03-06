@@ -3,7 +3,7 @@ using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Enums;
-using HE.Investments.AHP.IntegrationTests.Extensions;
+using HE.Investments.TestsUtils.Extensions;
 
 namespace HE.Investments.AHP.IntegrationTests.FillSite.Data;
 

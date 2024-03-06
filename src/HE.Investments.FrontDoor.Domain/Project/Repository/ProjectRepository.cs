@@ -1,5 +1,6 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Shared.User;
+using HE.Investments.Common.Extensions;
 using HE.Investments.FrontDoor.Contract.Project;
 using HE.Investments.FrontDoor.Domain.Project.Crm;
 using HE.Investments.FrontDoor.Domain.Project.Crm.Mappers;
@@ -41,11 +42,12 @@ public class ProjectRepository : IProjectRepository
         var dto = new FrontDoorProjectDto
         {
             ProjectId = project.Id.IsNew ? null : project.Id.Value,
-            ProjectName = project.Name,
+            ProjectName = project.Name.Value,
             OrganisationId = userAccount.SelectedOrganisationId().Value,
             externalId = userAccount.UserGlobalId.Value,
             ActivitiesinThisProject = project.SupportActivityTypes.Select(x => new SupportActivitiesMapper().ToDto(x)!.Value).ToList(),
             AmountofAffordableHomes = new AffordableHomesAmountMapper().ToDto(project.AffordableHomesAmount.AffordableHomesAmount),
+            IdentifiedSite = project.IsSiteIdentified?.Value,
         };
 
         var projectId = await _crmContext.Save(dto, userAccount, cancellationToken);
@@ -57,12 +59,19 @@ public class ProjectRepository : IProjectRepository
         return project;
     }
 
+    public Task<bool> DoesExist(ProjectName name, FrontDoorProjectId? exceptProjectId, CancellationToken cancellationToken)
+    {
+        // TODO: AB#91792 Validate project name uniqueness
+        return Task.FromResult(false);
+    }
+
     private ProjectEntity MapToEntity(FrontDoorProjectDto dto)
     {
         return new ProjectEntity(
             new FrontDoorProjectId(dto.ProjectId),
-            dto.ProjectName,
+            new ProjectName(dto.ProjectName),
             supportActivityTypes: dto.ActivitiesinThisProject?.Select(x => new SupportActivitiesMapper().ToDomain(x)!.Value).ToList(),
-            affordableHomesAmount: ProjectAffordableHomesAmount.Create(new AffordableHomesAmountMapper().ToDomain(dto.AmountofAffordableHomes)));
+            affordableHomesAmount: ProjectAffordableHomesAmount.Create(new AffordableHomesAmountMapper().ToDomain(dto.AmountofAffordableHomes)),
+            isSiteIdentified: dto.IdentifiedSite.IsProvided() ? new IsSiteIdentified(dto.IdentifiedSite) : null);
     }
 }
