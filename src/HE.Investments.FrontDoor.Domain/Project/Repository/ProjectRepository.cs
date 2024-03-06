@@ -45,7 +45,7 @@ public class ProjectRepository : IProjectRepository
             ProjectName = project.Name.Value,
             OrganisationId = userAccount.SelectedOrganisationId().Value,
             externalId = userAccount.UserGlobalId.Value,
-            ActivitiesinThisProject = project.SupportActivityTypes.Select(x => new SupportActivitiesMapper().ToDto(x)!.Value).ToList(),
+            ActivitiesinThisProject = new SupportActivitiesMapper().Map(project.SupportActivities),
             AmountofAffordableHomes = new AffordableHomesAmountMapper().ToDto(project.AffordableHomesAmount.AffordableHomesAmount),
             IdentifiedSite = project.IsSiteIdentified?.Value,
         };
@@ -70,7 +70,7 @@ public class ProjectRepository : IProjectRepository
         return new ProjectEntity(
             new FrontDoorProjectId(dto.ProjectId),
             new ProjectName(dto.ProjectName),
-            supportActivityTypes: dto.ActivitiesinThisProject?.Select(x => new SupportActivitiesMapper().ToDomain(x)!.Value).ToList(),
+            supportActivityTypes: new SupportActivitiesMapper().Map(dto.ActivitiesinThisProject),
             affordableHomesAmount: ProjectAffordableHomesAmount.Create(new AffordableHomesAmountMapper().ToDomain(dto.AmountofAffordableHomes)),
             isSiteIdentified: dto.IdentifiedSite.IsProvided() ? new IsSiteIdentified(dto.IdentifiedSite) : null);
     }
