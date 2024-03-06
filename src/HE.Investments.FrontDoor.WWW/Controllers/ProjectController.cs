@@ -8,6 +8,7 @@ using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.FrontDoor.Contract.Project;
 using HE.Investments.FrontDoor.Contract.Project.Commands;
+using HE.Investments.FrontDoor.Contract.Project.Enums;
 using HE.Investments.FrontDoor.Contract.Project.Queries;
 using HE.Investments.FrontDoor.WWW.Extensions;
 using HE.Investments.FrontDoor.WWW.Workflows;
@@ -138,9 +139,17 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
 
     [HttpPost("{projectId}/support-required-activities")]
     [WorkflowState(ProjectWorkflowState.SupportRequiredActivities)]
-    public async Task<IActionResult> SupportRequiredActivities([FromRoute] string projectId, ProjectDetails projectDetails, CancellationToken cancellationToken)
+    public async Task<IActionResult> SupportRequiredActivities([FromRoute] string projectId, ProjectDetails model, CancellationToken cancellationToken)
     {
-        return await Continue(new { projectId });
+        return await ExecuteProjectCommand(
+            new ProvideSupportActivitiesCommand(new FrontDoorProjectId(projectId), model.SupportActivityTypes ?? new List<SupportActivityType>()),
+            nameof(SupportRequiredActivities),
+            project =>
+            {
+                project.SupportActivityTypes = model.SupportActivityTypes;
+                return project;
+            },
+            cancellationToken);
     }
 
     [HttpGet("{projectId}/infrastructure")]

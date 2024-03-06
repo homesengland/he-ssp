@@ -3,7 +3,7 @@ using HE.Investments.Common.Contract.Enum;
 
 namespace HE.Investments.FrontDoor.Contract.Project.Enums;
 
-public enum ActivityType
+public enum SupportActivityType
 {
     [Description("Developing homes (including any minor site related infrastructure)")]
     [Hint("This includes new build and regeneration.")]

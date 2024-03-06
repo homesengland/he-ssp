@@ -12,8 +12,6 @@ public class ProjectRepository : IProjectRepository
 {
     private readonly IProjectCrmContext _crmContext;
 
-    private readonly AffordableHomesAmountMapper _affordableHomesAmountMapper = new();
-
     public ProjectRepository(IProjectCrmContext crmContext)
     {
         _crmContext = crmContext;
@@ -47,7 +45,8 @@ public class ProjectRepository : IProjectRepository
             ProjectName = project.Name.Value,
             OrganisationId = userAccount.SelectedOrganisationId().Value,
             externalId = userAccount.UserGlobalId.Value,
-            AmountofAffordableHomes = _affordableHomesAmountMapper.ToDto(project.AffordableHomesAmount.AffordableHomesAmount),
+            ActivitiesinThisProject = project.SupportActivityTypes.Select(x => new SupportActivitiesMapper().ToDto(x)!.Value).ToList(),
+            AmountofAffordableHomes = new AffordableHomesAmountMapper().ToDto(project.AffordableHomesAmount.AffordableHomesAmount),
             IdentifiedSite = project.IsSiteIdentified?.Value,
         };
 
@@ -71,7 +70,8 @@ public class ProjectRepository : IProjectRepository
         return new ProjectEntity(
             new FrontDoorProjectId(dto.ProjectId),
             new ProjectName(dto.ProjectName),
-            ProjectAffordableHomesAmount.Create(_affordableHomesAmountMapper.ToDomain(dto.AmountofAffordableHomes)),
-            dto.IdentifiedSite.IsProvided() ? new IsSiteIdentified(dto.IdentifiedSite) : null);
+            supportActivityTypes: dto.ActivitiesinThisProject?.Select(x => new SupportActivitiesMapper().ToDomain(x)!.Value).ToList(),
+            affordableHomesAmount: ProjectAffordableHomesAmount.Create(new AffordableHomesAmountMapper().ToDomain(dto.AmountofAffordableHomes)),
+            isSiteIdentified: dto.IdentifiedSite.IsProvided() ? new IsSiteIdentified(dto.IdentifiedSite) : null);
     }
 }
