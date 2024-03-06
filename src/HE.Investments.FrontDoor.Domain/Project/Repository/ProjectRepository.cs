@@ -48,6 +48,7 @@ public class ProjectRepository : IProjectRepository
             externalId = userAccount.UserGlobalId.Value,
             ActivitiesinThisProject = new SupportActivitiesMapper().Map(project.SupportActivities),
             AmountofAffordableHomes = new AffordableHomesAmountMapper().ToDto(project.AffordableHomesAmount.AffordableHomesAmount),
+            PreviousResidentialBuildingExperience = project.OrganisationHomesBuilt?.Value,
             IdentifiedSite = project.IsSiteIdentified?.Value,
         };
 
