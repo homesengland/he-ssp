@@ -9,9 +9,9 @@ public class RadioListWithOr : ViewComponent
     public IViewComponentResult Invoke(
         string fieldName,
         string title,
-        string hint,
         IEnumerable<ExtendedSelectListItem> availableOptions,
         ExtendedSelectListItem alternativeOption,
+        string? hint = null,
         InputTitleType? titleType = null,
         Enum? value = null)
     {

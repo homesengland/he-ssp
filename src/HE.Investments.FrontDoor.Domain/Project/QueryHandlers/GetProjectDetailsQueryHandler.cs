@@ -30,7 +30,7 @@ public class GetProjectDetailsQueryHandler : IRequestHandler<GetProjectDetailsQu
             IsEnglandHousingDelivery = project.IsEnglandHousingDelivery,
             OrganisationHomesBuilt = project.OrganisationHomesBuilt?.ToString(),
             IsSiteIdentified = project.IsSiteIdentified?.Value,
-            GeographicFocus = ProjectGeographicFocus.Regional,
+            GeographicFocus = project.GeographicFocus.GeographicFocus,
             IsFundingRequired = true,
             SupportActivityTypes = project.SupportActivities.Values,
             AffordableHomesAmount = project.AffordableHomesAmount.AffordableHomesAmount,

@@ -21,7 +21,8 @@ public class ProjectEntity : DomainEntity
         ProjectAffordableHomesAmount? affordableHomesAmount = null,
         OrganisationHomesBuilt? organisationHomesBuilt = null,
         IsSiteIdentified? isSiteIdentified = null,
-        HomesNumber? homesNumber = null)
+        HomesNumber? homesNumber = null,
+        ProjectGeographicFocus? geographicFocus = null)
     {
         Id = id;
         Name = name;
@@ -31,6 +32,7 @@ public class ProjectEntity : DomainEntity
         OrganisationHomesBuilt = organisationHomesBuilt;
         IsSiteIdentified = isSiteIdentified;
         HomesNumber = homesNumber;
+        GeographicFocus = geographicFocus ?? ProjectGeographicFocus.Empty();
     }
 
     public FrontDoorProjectId Id { get; private set; }
@@ -48,6 +50,8 @@ public class ProjectEntity : DomainEntity
     public IsSiteIdentified? IsSiteIdentified { get; private set; }
 
     public HomesNumber? HomesNumber { get; private set; }
+
+    public ProjectGeographicFocus GeographicFocus { get; private set; }
 
     public static async Task<ProjectEntity> New(ProjectName projectName, IProjectNameExists projectNameExists, CancellationToken cancellationToken)
     {
@@ -72,6 +76,11 @@ public class ProjectEntity : DomainEntity
     public void ProvideAffordableHomesAmount(ProjectAffordableHomesAmount affordableHomesAmount)
     {
         AffordableHomesAmount = _modificationTracker.Change(AffordableHomesAmount, affordableHomesAmount);
+    }
+
+    public void ProvideGeographicFocus(ProjectGeographicFocus geographicFocus)
+    {
+        GeographicFocus = _modificationTracker.Change(GeographicFocus, geographicFocus);
     }
 
     public void SetId(FrontDoorProjectId newId)
