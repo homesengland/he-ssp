@@ -340,7 +340,15 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     [WorkflowState(ProjectWorkflowState.HomesNumber)]
     public async Task<IActionResult> HomesNumber([FromRoute] string projectId, ProjectDetails model, CancellationToken cancellationToken)
     {
-        return await Continue(new { projectId });
+        return await ExecuteProjectCommand(
+            new ProvideHomesNumberCommand(new FrontDoorProjectId(projectId), model.HomesNumber),
+            nameof(HomesNumber),
+            project =>
+            {
+                project.HomesNumber = model.HomesNumber;
+                return project;
+            },
+            cancellationToken);
     }
 
     [HttpGet("{projectId}/progress")]

@@ -5,19 +5,19 @@ using Xunit;
 
 namespace HE.Investments.FrontDoor.Domain.Tests.Project.ProjectEntityTests;
 
-public class ProvideOrganisationHomesBuiltTests
+public class ProvideHomesNumberTests
 {
     [Fact]
-    public void ShouldChangeOrganisationHomesBuilt_WhenOrganisationHomesBuiltIsProvided()
+    public void ShouldChangeHomesNumber_WhenHomesNumberIsProvided()
     {
         // given
         var project = ProjectEntityBuilder.New().Build();
-        var organisationHomesBuilt = new OrganisationHomesBuilt("50");
+        var homesNumber = new HomesNumber("50");
 
         // when
-        project.ProvideOrganisationHomesBuilt(organisationHomesBuilt);
+        project.ProvideHomesNumber(homesNumber);
 
         // then
-        project.OrganisationHomesBuilt.Should().Be(organisationHomesBuilt);
+        project.HomesNumber.Should().Be(homesNumber);
     }
 }

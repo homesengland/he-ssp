@@ -24,4 +24,6 @@ public class ProjectDetails
     public bool? IsFundingRequired { get; set; }
 
     public AffordableHomesAmount AffordableHomesAmount { get; set; }
+
+    public string? HomesNumber { get; set; }
 }

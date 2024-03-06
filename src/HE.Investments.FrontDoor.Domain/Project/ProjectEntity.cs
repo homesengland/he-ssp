@@ -20,7 +20,8 @@ public class ProjectEntity : DomainEntity
         SupportActivities? supportActivityTypes = null,
         ProjectAffordableHomesAmount? affordableHomesAmount = null,
         OrganisationHomesBuilt? organisationHomesBuilt = null,
-        IsSiteIdentified? isSiteIdentified = null)
+        IsSiteIdentified? isSiteIdentified = null,
+        HomesNumber? homesNumber = null)
     {
         Id = id;
         Name = name;
@@ -29,6 +30,7 @@ public class ProjectEntity : DomainEntity
         AffordableHomesAmount = affordableHomesAmount ?? ProjectAffordableHomesAmount.Empty();
         OrganisationHomesBuilt = organisationHomesBuilt;
         IsSiteIdentified = isSiteIdentified;
+        HomesNumber = homesNumber;
     }
 
     public FrontDoorProjectId Id { get; private set; }
@@ -44,6 +46,8 @@ public class ProjectEntity : DomainEntity
     public OrganisationHomesBuilt? OrganisationHomesBuilt { get; private set; }
 
     public IsSiteIdentified? IsSiteIdentified { get; private set; }
+
+    public HomesNumber? HomesNumber { get; private set; }
 
     public static async Task<ProjectEntity> New(ProjectName projectName, IProjectNameExists projectNameExists, CancellationToken cancellationToken)
     {
@@ -98,6 +102,11 @@ public class ProjectEntity : DomainEntity
     public void ProvideOrganisationHomesBuilt(OrganisationHomesBuilt organisationHomesBuilt)
     {
         OrganisationHomesBuilt = _modificationTracker.Change(OrganisationHomesBuilt, organisationHomesBuilt);
+    }
+
+    public void ProvideHomesNumber(HomesNumber homesNumber)
+    {
+        HomesNumber = _modificationTracker.Change(HomesNumber, homesNumber);
     }
 
     private static async Task<ProjectName> ValidateProjectName(
