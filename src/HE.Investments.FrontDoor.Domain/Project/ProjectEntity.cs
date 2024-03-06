@@ -53,8 +53,6 @@ public class ProjectEntity : DomainEntity
 
     public HomesNumber? HomesNumber { get; private set; }
 
-    public static ProjectEntity New(string name) => new(FrontDoorProjectId.New(), new ProjectName(name));
-
     public static async Task<ProjectEntity> New(ProjectName projectName, IProjectNameExists projectNameExists, CancellationToken cancellationToken)
     {
         return new(FrontDoorProjectId.New(), await ValidateProjectName(projectName, projectNameExists, null, cancellationToken));
