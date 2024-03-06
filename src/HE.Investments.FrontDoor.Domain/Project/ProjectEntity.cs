@@ -19,6 +19,7 @@ public class ProjectEntity : DomainEntity
         bool? isEnglandHousingDelivery = null,
         SupportActivities? supportActivityTypes = null,
         ProjectAffordableHomesAmount? affordableHomesAmount = null,
+        OrganisationHomesBuilt? organisationHomesBuilt = null,
         IsSiteIdentified? isSiteIdentified = null)
     {
         Id = id;
@@ -26,6 +27,7 @@ public class ProjectEntity : DomainEntity
         IsEnglandHousingDelivery = isEnglandHousingDelivery ?? true;
         SupportActivities = supportActivityTypes ?? SupportActivities.Empty();
         AffordableHomesAmount = affordableHomesAmount ?? ProjectAffordableHomesAmount.Empty();
+        OrganisationHomesBuilt = organisationHomesBuilt;
         IsSiteIdentified = isSiteIdentified;
     }
 
@@ -38,6 +40,8 @@ public class ProjectEntity : DomainEntity
     public SupportActivities SupportActivities { get; private set; }
 
     public ProjectAffordableHomesAmount AffordableHomesAmount { get; private set; }
+
+    public OrganisationHomesBuilt? OrganisationHomesBuilt { get; private set; }
 
     public IsSiteIdentified? IsSiteIdentified { get; private set; }
 
@@ -89,6 +93,11 @@ public class ProjectEntity : DomainEntity
     public void ProvideIsSiteIdentified(IsSiteIdentified isSiteIdentified)
     {
         IsSiteIdentified = _modificationTracker.Change(IsSiteIdentified, isSiteIdentified);
+    }
+
+    public void ProvideOrganisationHomesBuilt(OrganisationHomesBuilt organisationHomesBuilt)
+    {
+        OrganisationHomesBuilt = _modificationTracker.Change(OrganisationHomesBuilt, organisationHomesBuilt);
     }
 
     private static async Task<ProjectName> ValidateProjectName(

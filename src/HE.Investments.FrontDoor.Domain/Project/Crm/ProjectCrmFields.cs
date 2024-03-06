@@ -19,6 +19,7 @@ public static class ProjectCrmFields
             nameof(invln_FrontDoorProjectPOC.invln_activitiesinthisprojectName),
             nameof(invln_FrontDoorProjectPOC.invln_ProjectSupportsHousingDeliveryinEngland),
             nameof(invln_FrontDoorProjectPOC.invln_AmountofAffordableHomes),
+            nameof(invln_FrontDoorProjectPOC.invln_PreviousResidentialBuildingExperience),
             nameof(invln_FrontDoorProjectPOC.invln_IdentifiedSite),
         })
         .ToImmutableList();

@@ -1,6 +1,5 @@
 using FluentAssertions;
 using HE.Investments.Common.Contract.Exceptions;
-using HE.Investments.Common.Messages;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
 using Xunit;
 
@@ -29,6 +28,6 @@ public class IsSiteIdentifiedCtorTests
         var result = () => new IsSiteIdentified(null);
 
         // then
-        result.Should().Throw<DomainValidationException>().WithMessage(ValidationErrorMessage.SelectIdentifiedSite);
+        result.Should().Throw<DomainValidationException>().WithMessage("Select yes if you have an identified site");
     }
 }

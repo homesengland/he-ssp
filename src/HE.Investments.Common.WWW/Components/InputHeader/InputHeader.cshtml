@@ -1,7 +1,7 @@
 @using HE.Investments.Common.WWW.Components.InputHeader
 @using HE.Investments.Common.WWW.Components
 
-@model (string fieldName, string title, HE.Investments.Common.WWW.Components.InputTitleType titleType, string hint)
+@model (string fieldName, string title, HE.Investments.Common.WWW.Components.InputTitleType titleType, string hint, string paragraph)
 
 @{
     var cssClass = Model.titleType switch
@@ -20,6 +20,13 @@
             @Model.title
         </label>
     </h1>
+}
+
+@if (!string.IsNullOrWhiteSpace(Model.paragraph))
+{
+    <gds-p>
+        @Model.paragraph
+    </gds-p>
 }
 
 @if (!string.IsNullOrWhiteSpace(Model.hint))

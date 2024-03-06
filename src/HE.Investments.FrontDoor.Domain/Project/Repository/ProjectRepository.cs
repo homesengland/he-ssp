@@ -48,6 +48,7 @@ public class ProjectRepository : IProjectRepository
             externalId = userAccount.UserGlobalId.Value,
             ActivitiesinThisProject = new SupportActivitiesMapper().Map(project.SupportActivities),
             AmountofAffordableHomes = new AffordableHomesAmountMapper().ToDto(project.AffordableHomesAmount.AffordableHomesAmount),
+            PreviousResidentialBuildingExperience = project.OrganisationHomesBuilt?.Value,
             IdentifiedSite = project.IsSiteIdentified?.Value,
         };
 
@@ -74,6 +75,7 @@ public class ProjectRepository : IProjectRepository
             dto.ProjectSupportsHousingDeliveryinEngland,
             supportActivityTypes: new SupportActivitiesMapper().Map(dto.ActivitiesinThisProject),
             affordableHomesAmount: ProjectAffordableHomesAmount.Create(new AffordableHomesAmountMapper().ToDomain(dto.AmountofAffordableHomes)),
+            organisationHomesBuilt: dto.PreviousResidentialBuildingExperience.IsProvided() ? new OrganisationHomesBuilt((int)dto.PreviousResidentialBuildingExperience!) : null,
             isSiteIdentified: dto.IdentifiedSite.IsProvided() ? new IsSiteIdentified(dto.IdentifiedSite) : null);
     }
 }
