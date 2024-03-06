@@ -1,4 +1,4 @@
-using HE.Investments.AHP.IntegrationTests.Extensions;
+using HE.Investments.TestsUtils.Extensions;
 
 namespace HE.Investments.AHP.IntegrationTests.FillApplication.Data;
 

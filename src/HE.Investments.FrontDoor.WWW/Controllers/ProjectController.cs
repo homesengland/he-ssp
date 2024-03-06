@@ -139,9 +139,17 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
 
     [HttpPost("{projectId}/support-required-activities")]
     [WorkflowState(ProjectWorkflowState.SupportRequiredActivities)]
-    public async Task<IActionResult> SupportRequiredActivities([FromRoute] string projectId, ProjectDetails projectDetails, CancellationToken cancellationToken)
+    public async Task<IActionResult> SupportRequiredActivities([FromRoute] string projectId, ProjectDetails model, CancellationToken cancellationToken)
     {
-        return await Continue(new { projectId });
+        return await ExecuteProjectCommand(
+            new ProvideSupportActivitiesCommand(new FrontDoorProjectId(projectId), model.SupportActivityTypes ?? new List<SupportActivityType>()),
+            nameof(SupportRequiredActivities),
+            project =>
+            {
+                project.SupportActivityTypes = model.SupportActivityTypes;
+                return project;
+            },
+            cancellationToken);
     }
 
     [HttpGet("{projectId}/infrastructure")]
@@ -205,7 +213,15 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     [WorkflowState(ProjectWorkflowState.IdentifiedSite)]
     public async Task<IActionResult> IdentifiedSite([FromRoute] string projectId, ProjectDetails model, CancellationToken cancellationToken)
     {
-        return await Continue(new { projectId });
+        return await ExecuteProjectCommand(
+            new ProvideIdentifiedSiteCommand(new FrontDoorProjectId(projectId), model.IsSiteIdentified),
+            nameof(IdentifiedSite),
+            project =>
+            {
+                project.IsSiteIdentified = model.IsSiteIdentified;
+                return project;
+            },
+            cancellationToken);
     }
 
     [HttpGet("{projectId}/start-site-details")]
@@ -214,7 +230,7 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     {
         var project = await GetProjectDetails(projectId, cancellationToken);
         return project.LastSiteId.IsProvided()
-            ? RedirectToAction("Name", "Site", new { projectId, project.LastSiteId!.Value })
+            ? RedirectToAction("Name", "Site", new { projectId, siteId = project.LastSiteId!.Value })
             : RedirectToAction("NewName", "Site", new { projectId });
     }
 

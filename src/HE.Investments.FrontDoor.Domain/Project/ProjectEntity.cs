@@ -4,6 +4,7 @@ using HE.Investments.Common.Domain;
 using HE.Investments.Common.Errors;
 using HE.Investments.Common.Extensions;
 using HE.Investments.FrontDoor.Contract.Project;
+using HE.Investments.FrontDoor.Contract.Project.Enums;
 using HE.Investments.FrontDoor.Domain.Project.Repository;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
 
@@ -16,12 +17,16 @@ public class ProjectEntity : DomainEntity
     public ProjectEntity(
         FrontDoorProjectId id,
         ProjectName name,
-        ProjectAffordableHomesAmount? affordableHomesAmount = null)
+        IList<SupportActivityType>? supportActivityTypes = null,
+        ProjectAffordableHomesAmount? affordableHomesAmount = null,
+        IsSiteIdentified? isSiteIdentified = null)
     {
         Id = id;
         Name = name;
         IsEnglandHousingDelivery = true;
+        SupportActivityTypes = supportActivityTypes ?? new List<SupportActivityType>();
         AffordableHomesAmount = affordableHomesAmount ?? ProjectAffordableHomesAmount.Empty();
+        IsSiteIdentified = isSiteIdentified;
     }
 
     public FrontDoorProjectId Id { get; private set; }
@@ -30,7 +35,11 @@ public class ProjectEntity : DomainEntity
 
     public ProjectName Name { get; private set; }
 
+    public IList<SupportActivityType> SupportActivityTypes { get; private set; }
+
     public ProjectAffordableHomesAmount AffordableHomesAmount { get; private set; }
+
+    public IsSiteIdentified? IsSiteIdentified { get; private set; }
 
     public static async Task<ProjectEntity> New(ProjectName projectName, IProjectNameExists projectNameExists, CancellationToken cancellationToken)
     {
@@ -46,6 +55,20 @@ public class ProjectEntity : DomainEntity
 
         return isEnglandHousingDelivery!.Value;
     }
+
+    public void ProvideSupportActivityTypes(IList<SupportActivityType> supportActivityTypes)
+    {
+        if (supportActivityTypes.Count == 0)
+        {
+            OperationResult.ThrowValidationError(nameof(SupportActivityTypes), "Select activities you require support for, or select ‘other'");
+        }
+
+        SupportActivityTypes = _modificationTracker.Change(SupportActivityTypes, supportActivityTypes, null, SupportActivityTypesHaveChanged);
+    }
+
+    public bool IsTenureRequired(IList<SupportActivityType> supportActivityTypes) => supportActivityTypes.Count == 1 && supportActivityTypes.Contains(SupportActivityType.DevelopingHomes);
+
+    public bool IsInfrastructureRequired(IList<SupportActivityType> supportActivityTypes) => supportActivityTypes.Count == 1 && supportActivityTypes.Contains(SupportActivityType.ProvidingInfrastructure);
 
     public void ProvideAffordableHomesAmount(ProjectAffordableHomesAmount affordableHomesAmount)
     {
@@ -72,6 +95,11 @@ public class ProjectEntity : DomainEntity
         IsEnglandHousingDelivery = _modificationTracker.Change(IsEnglandHousingDelivery, ValidateEnglandHousingDelivery(isEnglandHousingDelivery));
     }
 
+    public void ProvideIsSiteIdentified(IsSiteIdentified isSiteIdentified)
+    {
+        IsSiteIdentified = _modificationTracker.Change(IsSiteIdentified, isSiteIdentified);
+    }
+
     private static async Task<ProjectName> ValidateProjectName(
         ProjectName projectName,
         IProjectNameExists projectNameExists,
@@ -84,5 +112,18 @@ public class ProjectEntity : DomainEntity
         }
 
         return projectName;
+    }
+
+    private void SupportActivityTypesHaveChanged(IList<SupportActivityType> newSupportActivityTypes)
+    {
+        if (!IsTenureRequired(newSupportActivityTypes))
+        {
+            AffordableHomesAmount = ProjectAffordableHomesAmount.Empty();
+        }
+
+        if (!IsInfrastructureRequired(newSupportActivityTypes))
+        {
+            // TODO: Wipe answers #91004: Assess infrastructure delivery (portal user)
+        }
     }
 }

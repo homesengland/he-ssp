@@ -1,5 +1,6 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Shared.User;
+using HE.Investments.Common.Extensions;
 using HE.Investments.FrontDoor.Contract.Project;
 using HE.Investments.FrontDoor.Domain.Project.Crm;
 using HE.Investments.FrontDoor.Domain.Project.Crm.Mappers;
@@ -10,8 +11,6 @@ namespace HE.Investments.FrontDoor.Domain.Project.Repository;
 public class ProjectRepository : IProjectRepository
 {
     private readonly IProjectCrmContext _crmContext;
-
-    private readonly AffordableHomesAmountMapper _affordableHomesAmountMapper = new();
 
     public ProjectRepository(IProjectCrmContext crmContext)
     {
@@ -46,7 +45,9 @@ public class ProjectRepository : IProjectRepository
             ProjectName = project.Name.Value,
             OrganisationId = userAccount.SelectedOrganisationId().Value,
             externalId = userAccount.UserGlobalId.Value,
-            AmountofAffordableHomes = _affordableHomesAmountMapper.ToDto(project.AffordableHomesAmount.AffordableHomesAmount),
+            ActivitiesinThisProject = project.SupportActivityTypes.Select(x => new SupportActivitiesMapper().ToDto(x)!.Value).ToList(),
+            AmountofAffordableHomes = new AffordableHomesAmountMapper().ToDto(project.AffordableHomesAmount.AffordableHomesAmount),
+            IdentifiedSite = project.IsSiteIdentified?.Value,
         };
 
         var projectId = await _crmContext.Save(dto, userAccount, cancellationToken);
@@ -69,6 +70,8 @@ public class ProjectRepository : IProjectRepository
         return new ProjectEntity(
             new FrontDoorProjectId(dto.ProjectId),
             new ProjectName(dto.ProjectName),
-            ProjectAffordableHomesAmount.Create(_affordableHomesAmountMapper.ToDomain(dto.AmountofAffordableHomes)));
+            supportActivityTypes: dto.ActivitiesinThisProject?.Select(x => new SupportActivitiesMapper().ToDomain(x)!.Value).ToList(),
+            affordableHomesAmount: ProjectAffordableHomesAmount.Create(new AffordableHomesAmountMapper().ToDomain(dto.AmountofAffordableHomes)),
+            isSiteIdentified: dto.IdentifiedSite.IsProvided() ? new IsSiteIdentified(dto.IdentifiedSite) : null);
     }
 }
