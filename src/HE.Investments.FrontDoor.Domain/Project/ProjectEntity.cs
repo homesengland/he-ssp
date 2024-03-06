@@ -16,13 +16,14 @@ public class ProjectEntity : DomainEntity
     public ProjectEntity(
         FrontDoorProjectId id,
         ProjectName name,
+        bool? isEnglandHousingDelivery = null,
         SupportActivities? supportActivityTypes = null,
         ProjectAffordableHomesAmount? affordableHomesAmount = null,
         IsSiteIdentified? isSiteIdentified = null)
     {
         Id = id;
         Name = name;
-        IsEnglandHousingDelivery = true;
+        IsEnglandHousingDelivery = isEnglandHousingDelivery ?? true;
         SupportActivities = supportActivityTypes ?? SupportActivities.Empty();
         AffordableHomesAmount = affordableHomesAmount ?? ProjectAffordableHomesAmount.Empty();
         IsSiteIdentified = isSiteIdentified;

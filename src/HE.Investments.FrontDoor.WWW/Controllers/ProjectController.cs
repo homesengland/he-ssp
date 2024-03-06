@@ -416,7 +416,7 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     [WorkflowState(ProjectWorkflowState.CheckAnswers)]
     public IActionResult Complete([FromRoute] string projectId, ProjectDetails model)
     {
-        return RedirectToAction("Index", "Projects");
+        return RedirectToAction("Index", "Account");
     }
 
     protected override async Task<IStateRouting<ProjectWorkflowState>> Routing(ProjectWorkflowState currentState, object? routeData = null)

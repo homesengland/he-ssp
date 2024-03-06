@@ -118,6 +118,6 @@ public class Order01CreateFrontDoorProject : FrontDoorIntegrationTest
             ProjectPagesUrl.SupportRequiredActivities(ProjectData.Id),
             ProjectPageTitles.SupportRequiredActivities,
             ProjectPagesUrl.Tenure(ProjectData.Id),
-            (nameof(ProjectDetails.ActivityTypes), ProjectData.ActivityType.ToString()));
+            (nameof(ProjectDetails.SupportActivityTypes), ProjectData.ActivityType.ToString()));
     }
 }

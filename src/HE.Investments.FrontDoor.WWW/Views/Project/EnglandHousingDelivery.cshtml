@@ -6,7 +6,7 @@
 @{
     ViewData["Title"] = ProjectPageTitles.EnglandHousingDelivery;
     var projectId = ViewContext.RouteData.Values.FirstOrDefault(x => x.Key == "projectId").Value as string;
-    var backUrl = string.IsNullOrEmpty(projectId) ? Url.Action("Start", "Project") : Url.Action("Index", "Projects");
+    var backUrl = string.IsNullOrEmpty(projectId) ? Url.Action("Start", "Project") : Url.Action("Index", "Account");
     var submitAction = string.IsNullOrEmpty(projectId) ? "NewEnglandHousingDelivery" : "EnglandHousingDelivery";
 }
 

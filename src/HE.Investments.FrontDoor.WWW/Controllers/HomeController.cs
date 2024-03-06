@@ -1,6 +1,4 @@
-using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
-using HE.Investments.FrontDoor.Domain.Project.Repository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investments.FrontDoor.WWW.Controllers;
@@ -12,7 +10,7 @@ public class HomeController : Controller
     [AuthorizeWithCompletedProfile]
     public IActionResult Index()
     {
-        return RedirectToAction("Index", "Projects");
+        return RedirectToAction("Index", "Account");
     }
 
     [HttpGet("error")]
