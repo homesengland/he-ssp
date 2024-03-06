@@ -9,7 +9,7 @@ public class ProjectData
 
     public string Name { get; private set; }
 
-    public ActivityType ActivityType => ActivityType.DevelopingHomes;
+    public SupportActivityType ActivityType => SupportActivityType.DevelopingHomes;
 
     public void SetProjectId(string projectId)
     {

@@ -4,7 +4,6 @@ using HE.Investments.Common.Domain;
 using HE.Investments.Common.Errors;
 using HE.Investments.Common.Extensions;
 using HE.Investments.FrontDoor.Contract.Project;
-using HE.Investments.FrontDoor.Contract.Project.Enums;
 using HE.Investments.FrontDoor.Domain.Project.Repository;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
 
@@ -17,14 +16,14 @@ public class ProjectEntity : DomainEntity
     public ProjectEntity(
         FrontDoorProjectId id,
         ProjectName name,
-        IList<SupportActivityType>? supportActivityTypes = null,
+        SupportActivities? supportActivityTypes = null,
         ProjectAffordableHomesAmount? affordableHomesAmount = null,
         IsSiteIdentified? isSiteIdentified = null)
     {
         Id = id;
         Name = name;
         IsEnglandHousingDelivery = true;
-        SupportActivityTypes = supportActivityTypes ?? new List<SupportActivityType>();
+        SupportActivities = supportActivityTypes ?? SupportActivities.Empty();
         AffordableHomesAmount = affordableHomesAmount ?? ProjectAffordableHomesAmount.Empty();
         IsSiteIdentified = isSiteIdentified;
     }
@@ -35,7 +34,7 @@ public class ProjectEntity : DomainEntity
 
     public ProjectName Name { get; private set; }
 
-    public IList<SupportActivityType> SupportActivityTypes { get; private set; }
+    public SupportActivities SupportActivities { get; private set; }
 
     public ProjectAffordableHomesAmount AffordableHomesAmount { get; private set; }
 
@@ -56,19 +55,10 @@ public class ProjectEntity : DomainEntity
         return isEnglandHousingDelivery!.Value;
     }
 
-    public void ProvideSupportActivityTypes(IList<SupportActivityType> supportActivityTypes)
+    public void ProvideSupportActivityTypes(SupportActivities supportActivityTypes)
     {
-        if (supportActivityTypes.Count == 0)
-        {
-            OperationResult.ThrowValidationError(nameof(SupportActivityTypes), "Select activities you require support for, or select ‘other'");
-        }
-
-        SupportActivityTypes = _modificationTracker.Change(SupportActivityTypes, supportActivityTypes, null, SupportActivityTypesHaveChanged);
+        SupportActivities = _modificationTracker.Change(SupportActivities, supportActivityTypes, null, SupportActivityTypesHaveChanged);
     }
-
-    public bool IsTenureRequired(IList<SupportActivityType> supportActivityTypes) => supportActivityTypes.Count == 1 && supportActivityTypes.Contains(SupportActivityType.DevelopingHomes);
-
-    public bool IsInfrastructureRequired(IList<SupportActivityType> supportActivityTypes) => supportActivityTypes.Count == 1 && supportActivityTypes.Contains(SupportActivityType.ProvidingInfrastructure);
 
     public void ProvideAffordableHomesAmount(ProjectAffordableHomesAmount affordableHomesAmount)
     {
@@ -114,14 +104,14 @@ public class ProjectEntity : DomainEntity
         return projectName;
     }
 
-    private void SupportActivityTypesHaveChanged(IList<SupportActivityType> newSupportActivityTypes)
+    private void SupportActivityTypesHaveChanged(SupportActivities newSupportActivityTypes)
     {
-        if (!IsTenureRequired(newSupportActivityTypes))
+        if (!newSupportActivityTypes.IsTenureRequired())
         {
             AffordableHomesAmount = ProjectAffordableHomesAmount.Empty();
         }
 
-        if (!IsInfrastructureRequired(newSupportActivityTypes))
+        if (!newSupportActivityTypes.IsInfrastructureRequired())
         {
             // TODO: Wipe answers #91004: Assess infrastructure delivery (portal user)
         }
