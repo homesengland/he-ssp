@@ -155,7 +155,15 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     [WorkflowState(ProjectWorkflowState.Infrastructure)]
     public async Task<IActionResult> Infrastructure([FromRoute] string projectId, ProjectDetails model, CancellationToken cancellationToken)
     {
-        return await Continue(new { projectId });
+        return await ExecuteProjectCommand(
+            new ProvideInfrastructureTypesCommand(new FrontDoorProjectId(projectId), model.InfrastructureTypes ?? new List<InfrastructureType>()),
+            nameof(Infrastructure),
+            project =>
+            {
+                project.InfrastructureTypes = model.InfrastructureTypes;
+                return project;
+            },
+            cancellationToken);
     }
 
     [HttpGet("{projectId}/tenure")]

@@ -13,6 +13,8 @@ public class ProjectDetails
 
     public IList<ActivityType>? ActivityTypes { get; set; }
 
+    public IList<InfrastructureType>? InfrastructureTypes { get; set; }
+
     public bool? IsSiteIdentified { get; set; }
 
     public FrontDoorSiteId? LastSiteId { get; set; }

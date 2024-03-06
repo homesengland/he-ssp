@@ -10,4 +10,9 @@ public static class ProjectFormOptions
         .Where(x => x.Value != ActivityType.Other.ToString());
 
     public static ExtendedSelectListItem ActivityTypeOther => SelectListHelper.FromEnumToExtendedListItem(ActivityType.Other);
+
+    public static IEnumerable<ExtendedSelectListItem> InfrastructureTypes => SelectListHelper.FromEnumToExtendedList<InfrastructureType>()
+        .Where(x => x.Value != InfrastructureType.IDoNotKnow.ToString());
+
+    public static ExtendedSelectListItem InfrastructureTypeUnknown => SelectListHelper.FromEnumToExtendedListItem(InfrastructureType.IDoNotKnow);
 }

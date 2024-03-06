@@ -14,11 +14,13 @@ public class ProjectEntity : DomainEntity
     public ProjectEntity(
         FrontDoorProjectId id,
         string name,
-        ProjectAffordableHomesAmount? affordableHomesAmount = null)
+        ProjectAffordableHomesAmount? affordableHomesAmount = null,
+        ProjectInfrastructureTypes? infrastructureTypes = null)
     {
         Id = id;
         Name = name;
         AffordableHomesAmount = affordableHomesAmount ?? ProjectAffordableHomesAmount.Empty();
+        InfrastructureTypes = infrastructureTypes ?? ProjectInfrastructureTypes.Empty();
     }
 
     public FrontDoorProjectId Id { get; private set; }
@@ -26,6 +28,8 @@ public class ProjectEntity : DomainEntity
     public string Name { get; private set; }
 
     public ProjectAffordableHomesAmount AffordableHomesAmount { get; private set; }
+
+    public ProjectInfrastructureTypes InfrastructureTypes { get; private set; }
 
     public static ProjectEntity New(string name) => new(FrontDoorProjectId.New(), name);
 
@@ -42,6 +46,11 @@ public class ProjectEntity : DomainEntity
     public void ProvideAffordableHomesAmount(ProjectAffordableHomesAmount affordableHomesAmount)
     {
         AffordableHomesAmount = _modificationTracker.Change(AffordableHomesAmount, affordableHomesAmount);
+    }
+
+    public void ProvideInfrastructureTypes(ProjectInfrastructureTypes infrastructureTypes)
+    {
+        InfrastructureTypes = _modificationTracker.Change(InfrastructureTypes, infrastructureTypes);
     }
 
     public void SetId(FrontDoorProjectId newId)
