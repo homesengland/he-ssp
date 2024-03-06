@@ -25,7 +25,6 @@ public class ProjectEntity : DomainEntity
         Id = id;
         Name = name;
         IsEnglandHousingDelivery = isEnglandHousingDelivery ?? true;
-        IsEnglandHousingDelivery = true;
         SupportActivityTypes = supportActivityTypes ?? new List<SupportActivityType>();
         AffordableHomesAmount = affordableHomesAmount ?? ProjectAffordableHomesAmount.Empty();
         IsSiteIdentified = isSiteIdentified;
