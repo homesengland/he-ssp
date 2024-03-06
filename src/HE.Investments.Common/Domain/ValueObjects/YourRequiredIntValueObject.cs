@@ -16,30 +16,22 @@ public abstract class YourRequiredIntValueObject : ValueObject
     {
         if (value.IsNotProvided())
         {
-            OperationResult.New()
-                .AddValidationError(fieldName, ValidationErrorMessage.MustProvideYourRequiredField(displayName))
-                .CheckErrors();
+            OperationResult.ThrowValidationError(fieldName, ValidationErrorMessage.MustProvideYourRequiredField(displayName));
         }
 
         if (!int.TryParse(value!, NumberStyles.Integer, CultureInfo.InvariantCulture, out var parsedValue))
         {
-            OperationResult.New()
-                .AddValidationError(fieldName, ValidationErrorMessage.MustProvideYourWholeNumber(displayName))
-                .CheckErrors();
+            OperationResult.ThrowValidationError(fieldName, ValidationErrorMessage.MustProvideYourWholeNumber(displayName));
         }
 
         if (parsedValue < minValue)
         {
-            OperationResult.New()
-                .AddValidationError(fieldName, ValidationErrorMessage.MustProvideYourHigherNumber(displayName, minValue))
-                .CheckErrors();
+            OperationResult.ThrowValidationError(fieldName, ValidationErrorMessage.MustProvideYourHigherNumber(displayName, minValue));
         }
 
         if (parsedValue > maxValue)
         {
-            OperationResult.New()
-                .AddValidationError(fieldName, ValidationErrorMessage.MustProvideYourLowerNumber(displayName, maxValue))
-                .CheckErrors();
+            OperationResult.ThrowValidationError(fieldName, ValidationErrorMessage.MustProvideYourLowerNumber(displayName, maxValue));
         }
 
         Value = parsedValue;
@@ -54,16 +46,12 @@ public abstract class YourRequiredIntValueObject : ValueObject
     {
         if (value < minValue)
         {
-            OperationResult.New()
-                .AddValidationError(fieldName, ValidationErrorMessage.MustProvideYourHigherNumber(displayName, minValue))
-                .CheckErrors();
+            OperationResult.ThrowValidationError(fieldName, ValidationErrorMessage.MustProvideYourHigherNumber(displayName, minValue));
         }
 
         if (value > maxValue)
         {
-            OperationResult.New()
-                .AddValidationError(fieldName, ValidationErrorMessage.MustProvideYourLowerNumber(displayName, maxValue))
-                .CheckErrors();
+            OperationResult.ThrowValidationError(fieldName, ValidationErrorMessage.MustProvideYourLowerNumber(displayName, maxValue));
         }
 
         Value = value;
