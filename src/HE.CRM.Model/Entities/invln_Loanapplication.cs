@@ -173,7 +173,6 @@ namespace DataverseModel
 			public const string invln_interestguaranteeName = "invln_interestguaranteename";
 			public const string invln_InvestedbyBorrower = "invln_investedbyborrower";
 			public const string invln_investedbyborrowerName = "invln_investedbyborrowername";
-			public const string invln_invln_cashflow_Loanapplication = "invln_invln_cashflow_Loanapplication";
 			public const string invln_invln_emailnotification_Regarding_invln_l = "invln_invln_emailnotification_Regarding_invln_l";
 			public const string invln_invln_isp_Loanapplication_invln_loanappli = "invln_invln_isp_Loanapplication_invln_loanappli";
 			public const string invln_invln_loanapplication_invln_contract_Loanapplication = "invln_invln_loanapplication_invln_contract_Loanapplication";
@@ -644,6 +643,9 @@ namespace DataverseModel
 			}
 		}
 		
+		/// <summary>
+		/// A boolean to say if a Cashflow has been received 
+		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_cashflowreceived")]
 		public System.Nullable<bool> invln_CashflowReceived
 		{
@@ -678,6 +680,9 @@ namespace DataverseModel
 			}
 		}
 		
+		/// <summary>
+		/// A field to state if a Cashflow has been requested
+		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_cashflowrequested")]
 		public string invln_CashflowRequested
 		{
@@ -984,6 +989,9 @@ namespace DataverseModel
 			}
 		}
 		
+		/// <summary>
+		/// The date the TM changes the status of a loan application to "Cashflow Requested"
+		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_datecashflowrequested")]
 		public System.Nullable<System.DateTime> invln_DateCashflowRequested
 		{
@@ -2880,26 +2888,6 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_Conditions_invln_Loanapplication_in");
 				this.SetRelatedEntities<DataverseModel.invln_Conditions>("invln_Conditions_invln_Loanapplication_in", null, value);
 				this.OnPropertyChanged("invln_Conditions_invln_Loanapplication_in");
-			}
-		}
-		
-		/// <summary>
-		/// 1:N invln_invln_cashflow_Loanapplication
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_invln_cashflow_Loanapplication")]
-		public System.Collections.Generic.IEnumerable<DataverseModel.invln_Cashflow> invln_invln_cashflow_Loanapplication
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<DataverseModel.invln_Cashflow>("invln_invln_cashflow_Loanapplication", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("invln_invln_cashflow_Loanapplication");
-				this.SetRelatedEntities<DataverseModel.invln_Cashflow>("invln_invln_cashflow_Loanapplication", null, value);
-				this.OnPropertyChanged("invln_invln_cashflow_Loanapplication");
 			}
 		}
 		

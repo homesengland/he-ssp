@@ -665,6 +665,7 @@ namespace DataverseModel
 			public const string invln_contact_invln_scheme_contactid = "invln_contact_invln_scheme_contactid";
 			public const string invln_contact_invln_scheme_lastexternalmodificationby = "invln_contact_invln_scheme_lastexternalmodificationby";
 			public const string invln_externalid = "invln_externalid";
+			public const string invln_frontdoorprojectpoc_ContactId_contact = "invln_frontdoorprojectpoc_ContactId_contact";
 			public const string invln_invln_isp_TMName_contact = "invln_invln_isp_TMName_contact";
 			public const string invln_isp_Name_contact = "invln_isp_Name_contact";
 			public const string invln_loanapplication_contact = "invln_loanapplication_contact";
@@ -7524,6 +7525,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_contact_invln_scheme_lastexternalmodificationby");
 				this.SetRelatedEntities<DataverseModel.invln_scheme>("invln_contact_invln_scheme_lastexternalmodificationby", null, value);
 				this.OnPropertyChanged("invln_contact_invln_scheme_lastexternalmodificationby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_frontdoorprojectpoc_ContactId_contact
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_frontdoorprojectpoc_ContactId_contact")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_FrontDoorProjectPOC> invln_frontdoorprojectpoc_ContactId_contact
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_FrontDoorProjectPOC>("invln_frontdoorprojectpoc_ContactId_contact", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_frontdoorprojectpoc_ContactId_contact");
+				this.SetRelatedEntities<DataverseModel.invln_FrontDoorProjectPOC>("invln_frontdoorprojectpoc_ContactId_contact", null, value);
+				this.OnPropertyChanged("invln_frontdoorprojectpoc_ContactId_contact");
 			}
 		}
 		

@@ -74,6 +74,7 @@ namespace DataverseModel
 			public const string invln_frontdoorprojectpoc_ContactId_contact = "invln_frontdoorprojectpoc_ContactId_contact";
 			public const string invln_FrontDoorProjectPOCId = "invln_frontdoorprojectpocid";
 			public const string Id = "invln_frontdoorprojectpocid";
+			public const string invln_frontdoorprojectsitepoc_FrontDoorProjectI = "invln_frontdoorprojectsitepoc_FrontDoorProjectI";
 			public const string invln_FundingRequired = "invln_fundingrequired";
 			public const string invln_fundingrequiredName = "invln_fundingrequiredname";
 			public const string invln_GeographicFocus = "invln_geographicfocus";
@@ -1287,6 +1288,26 @@ namespace DataverseModel
 			get
 			{
 				return this.GetAttributeValue<System.Nullable<long>>("versionnumber");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_frontdoorprojectsitepoc_FrontDoorProjectI
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_frontdoorprojectsitepoc_FrontDoorProjectI")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_FrontDoorProjectSitePOC> invln_frontdoorprojectsitepoc_FrontDoorProjectI
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_FrontDoorProjectSitePOC>("invln_frontdoorprojectsitepoc_FrontDoorProjectI", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_frontdoorprojectsitepoc_FrontDoorProjectI");
+				this.SetRelatedEntities<DataverseModel.invln_FrontDoorProjectSitePOC>("invln_frontdoorprojectsitepoc_FrontDoorProjectI", null, value);
+				this.OnPropertyChanged("invln_frontdoorprojectsitepoc_FrontDoorProjectI");
 			}
 		}
 		

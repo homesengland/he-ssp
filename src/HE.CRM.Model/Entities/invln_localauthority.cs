@@ -58,7 +58,6 @@ namespace DataverseModel
 			public const string CreatedOnBehalfByName = "createdonbehalfbyname";
 			public const string CreatedOnBehalfByYomiName = "createdonbehalfbyyominame";
 			public const string ImportSequenceNumber = "importsequencenumber";
-			public const string invln_invln_scheme_localauthoritylookup_invln_l = "invln_invln_scheme_localauthoritylookup_invln_l";
 			public const string invln_localauthorityId = "invln_localauthorityid";
 			public const string Id = "invln_localauthorityid";
 			public const string invln_localauthorityname = "invln_localauthorityname";
@@ -765,26 +764,6 @@ namespace DataverseModel
 			get
 			{
 				return this.GetAttributeValue<System.Nullable<long>>("versionnumber");
-			}
-		}
-		
-		/// <summary>
-		/// 1:N invln_invln_scheme_localauthoritylookup_invln_l
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_invln_scheme_localauthoritylookup_invln_l")]
-		public System.Collections.Generic.IEnumerable<DataverseModel.invln_scheme> invln_invln_scheme_localauthoritylookup_invln_l
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<DataverseModel.invln_scheme>("invln_invln_scheme_localauthoritylookup_invln_l", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("invln_invln_scheme_localauthoritylookup_invln_l");
-				this.SetRelatedEntities<DataverseModel.invln_scheme>("invln_invln_scheme_localauthoritylookup_invln_l", null, value);
-				this.OnPropertyChanged("invln_invln_scheme_localauthoritylookup_invln_l");
 			}
 		}
 		

@@ -111,6 +111,8 @@ namespace DataverseModel
 			public const string invln_marketvalueofeachproperty_Base = "invln_marketvalueofeachproperty_base";
 			public const string invln_maxoccupancy = "invln_maxoccupancy";
 			public const string invln_meetingtheneedsoftheclientgroup = "invln_meetingtheneedsoftheclientgroup";
+			public const string invln_mmcapplied = "invln_mmcapplied";
+			public const string invln_mmcappliedName = "invln_mmcappliedname";
 			public const string invln_mmccategories = "invln_mmccategories";
 			public const string invln_mmccategoriesName = "invln_mmccategoriesname";
 			public const string invln_mmccategory1manufacturer = "invln_mmccategory1manufacturer";
@@ -1222,6 +1224,40 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_meetingtheneedsoftheclientgroup");
 				this.SetAttributeValue("invln_meetingtheneedsoftheclientgroup", value);
 				this.OnPropertyChanged("invln_meetingtheneedsoftheclientgroup");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_mmcapplied")]
+		public System.Nullable<bool> invln_mmcapplied
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_mmcapplied");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_mmcapplied");
+				this.SetAttributeValue("invln_mmcapplied", value);
+				this.OnPropertyChanged("invln_mmcapplied");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_mmcappliedname")]
+		public string invln_mmcappliedName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_mmcapplied"))
+				{
+					return this.FormattedValues["invln_mmcapplied"];
+				}
+				else
+				{
+					return default(string);
+				}
 			}
 		}
 		

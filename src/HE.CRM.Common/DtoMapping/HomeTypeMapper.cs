@@ -55,7 +55,36 @@ namespace HE.CRM.Common.DtoMapping
                 targetRentOver80PercentOfMarketRent = homeType.invln_targetrentover80ofmarketrent,
                 proposedRentAsPercentOfUnsoldShare = homeType.invln_proposedrentasaofunsoldshare,
                 expectedFirstTrancheSaleReceipt = homeType.invln_FirstTrancheSalesReceipt?.Value, //before invln_expectedfirsttranchesalereceipt
+                mmcApplied = homeType.invln_mmcapplied,
+                mmcCategories = new List<int>(),
+                mmcCategories1Subcategories = new List<int>(),
+                mmcCategories2Subcategories = new List<int>()
             };
+
+            if (homeType.invln_mmccategories != null && homeType.invln_mmccategories.Any())
+            {
+                foreach (var category in homeType.invln_mmccategories)
+                {
+                    homeTypeDto.mmcCategories.Add(category.Value);
+                }
+            }
+
+            if (homeType.invln_mmccategory1subcategories != null && homeType.invln_mmccategory1subcategories.Any())
+            {
+                foreach (var firstSubcategory in homeType.invln_mmccategory1subcategories)
+                {
+                    homeTypeDto.mmcCategories1Subcategories.Add(firstSubcategory.Value);
+                }
+            }
+
+            if (homeType.invln_mmccategory2subcategories != null && homeType.invln_mmccategory2subcategories.Any())
+            {
+                foreach (var secondSubcategory in homeType.invln_mmccategory2subcategories)
+                {
+                    homeTypeDto.mmcCategories2Subcategories.Add(secondSubcategory.Value);
+                }
+            }
+
             if (homeType.Id != null)
             {
                 homeTypeDto.id = homeType.Id.ToString();
@@ -136,7 +165,36 @@ namespace HE.CRM.Common.DtoMapping
                 invln_targetrentover80ofmarketrent = homeTypeDto.targetRentOver80PercentOfMarketRent,
                 invln_FirstTrancheSalesReceipt = MapNullableDecimalToMoney(homeTypeDto.expectedFirstTrancheSaleReceipt),
                 invln_proposedrentasaofunsoldshare = homeTypeDto.proposedRentAsPercentOfUnsoldShare,
+                invln_mmcapplied = homeTypeDto.mmcApplied,
+                invln_mmccategories = new OptionSetValueCollection(),
+                invln_mmccategory1subcategories = new OptionSetValueCollection(),
+                invln_mmccategory2subcategories = new OptionSetValueCollection(),
             };
+
+            if (homeTypeDto.mmcCategories != null && homeTypeDto.mmcCategories.Any())
+            {
+                foreach (var category in homeTypeDto.mmcCategories)
+                {
+                    homeType.invln_mmccategories.Add(new OptionSetValue(category));
+                }
+            }
+
+            if (homeTypeDto.mmcCategories1Subcategories != null && homeTypeDto.mmcCategories1Subcategories.Any())
+            {
+                foreach (var firstSubagegory in homeTypeDto.mmcCategories1Subcategories)
+                {
+                    homeType.invln_mmccategory1subcategories.Add(new OptionSetValue(firstSubagegory));
+                }
+            }
+
+            if (homeTypeDto.mmcCategories2Subcategories != null && homeTypeDto.mmcCategories2Subcategories.Any())
+            {
+                foreach (var secondSubcategory in homeTypeDto.mmcCategories2Subcategories)
+                {
+                    homeType.invln_mmccategory2subcategories.Add(new OptionSetValue(secondSubcategory));
+                }
+            }
+
             if (homeTypeDto.id != null)
             {
                 homeType.Id = new Guid(homeTypeDto.id);
