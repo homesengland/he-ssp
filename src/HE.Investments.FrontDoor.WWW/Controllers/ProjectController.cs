@@ -214,7 +214,7 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     {
         var project = await GetProjectDetails(projectId, cancellationToken);
         return project.LastSiteId.IsProvided()
-            ? RedirectToAction("Name", "Site", new { projectId, project.LastSiteId!.Value })
+            ? RedirectToAction("Name", "Site", new { projectId, siteId = project.LastSiteId!.Value })
             : RedirectToAction("NewName", "Site", new { projectId });
     }
 
