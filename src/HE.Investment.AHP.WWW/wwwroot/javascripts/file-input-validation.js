@@ -179,7 +179,11 @@
       return response.json()
         .then(errors => {
           if (Array.isArray(errors) && errors.length > 0 && errors[0].errorMessage){
-            uploadedColumn.innerText = errors[0].errorMessage;
+            const errorMessage = errors[0].errorMessage;
+
+            uploadedColumn.innerText = errorMessage;
+            addInputFieldError(errorMessage, true);
+            addInputFieldErrorSummary(errorMessage, true);
           }
         })
         .catch(error => console.log(error));
@@ -190,16 +194,22 @@
 
   const addInputFieldError = (message) => {
     const formGroup = document.getElementById(fileInputFormGroupId);
+    const inputControl = document.querySelectorAll(fileInputSelector)[0];
+    const error = inputFieldError(message);
 
-    document.querySelectorAll(fileInputSelector)[0].insertAdjacentHTML('beforebegin', inputFieldError(message));
     formGroup.classList.add('govuk-form-group--error');
+    if (inputControl.parentNode.childNodes.values().toArray().map(x => x.outerHTML).includes(error)) {
+      return;
+    }
+
+    inputControl.insertAdjacentHTML('beforebegin', error);
   }
 
   const clearInputFieldError = () => {
     const formGroup = document.getElementById(fileInputFormGroupId);
-    const errorSpan = document.getElementById(`${getUploadControlId()}-error`);
-    if (errorSpan){
-      errorSpan.remove();
+    const errorSpans = formGroup.getElementsByClassName('govuk-error-message');
+    for (let i = errorSpans.length - 1; i >= 0; i--) {
+      errorSpans[i].remove();
     }
 
     formGroup.classList.remove('govuk-form-group--error');
@@ -214,12 +224,16 @@
       summaryValidationList = document.getElementById(validationSummaryListId);
     }
 
-    summaryValidationList.getElementsByTagName('ul')[0].innerHTML += inputFiledErrorSummaryMessage(message);
+    const list = summaryValidationList.getElementsByTagName('ul')[0];
+    const error = inputFiledErrorSummaryMessage(message);
+    if (!list.childNodes.values().toArray().map(x => x.outerHTML).includes(error)){
+      list.innerHTML += inputFiledErrorSummaryMessage(message);
+    }
   }
 
   const removeInputFieldErrorSummaryMessages = (summaryValidationList) => {
     const errors = summaryValidationList.getElementsByTagName('a');
-    for (let i = 0; i < errors.length; i++) {
+    for (let i = errors.length - 1; i >= 0; i--) {
       if (errors[i].href.endsWith(`#${getUploadControlId()}`)) {
         errors[i].parentNode.remove();
       }
