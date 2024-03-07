@@ -1,0 +1,130 @@
+
+<entities xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" timestamp="2024-03-07T20:35:28.6174489Z">
+  <entity name="invln_notificationsetting" displayname="Notification Setting">
+    <records>
+      <record id="1ab09971-d199-ee11-be37-0022480041cf">
+        <field name="invln_name" value="AHP - Reminder to finalise application in &amp;quot;referred back to applicant&amp;quot; status" />
+        <field name="invln_notificationsettingid" value="1ab09971-d199-ee11-be37-0022480041cf" />
+        <field name="statecode" value="0" />
+        <field name="statuscode" value="1" />
+        <field name="invln_subject" value="Update your Affordable Homes Programme application now" />
+        <field name="invln_templateid" value="026c5333-a593-415f-8bb8-df1a02b7729b" />
+        <field name="invln_templatetypename" value="AHP_EXTERNAL_REMINDER_TO_FINALIZE_APPLICATION_REFERRED_BACK" />
+      </record>
+      <record id="a7a26595-0669-ee11-9ae6-002248004268">
+        <field name="invln_name" value="Internal - Application Owner Change" />
+        <field name="invln_notificationsettingid" value="a7a26595-0669-ee11-9ae6-002248004268" />
+        <field name="statecode" value="0" />
+        <field name="statuscode" value="1" />
+        <field name="invln_templateid" value="69d00158-29d3-4fdb-b1ff-344974160a4b" />
+        <field name="invln_templatetypename" value="INTERNAL_LOAN_APP_OWNER_CHANGE" />
+      </record>
+      <record id="22fe37ae-0669-ee11-9ae6-002248004268">
+        <field name="invln_name" value="External - KYC status has changed" />
+        <field name="invln_notificationsettingid" value="22fe37ae-0669-ee11-9ae6-002248004268" />
+        <field name="statecode" value="0" />
+        <field name="statuscode" value="1" />
+        <field name="invln_templateid" value="887efac5-4cbd-465a-b2b8-2650367379df" />
+        <field name="invln_templatetypename" value="EXTERNAL_KYC_STATUS_CHANGE" />
+      </record>
+      <record id="65c47c42-d8c5-ee11-9079-002248004a06">
+        <field name="invln_name" value="AHP - Delivery Phase - Notification of additional payments for phase" />
+        <field name="invln_notificationsettingid" value="65c47c42-d8c5-ee11-9079-002248004a06" />
+        <field name="statecode" value="0" />
+        <field name="statuscode" value="1" />
+        <field name="invln_subject" value="has requested Acquisition and Start on Site milestone payments" />
+        <field name="invln_templateid" value="0be4b08f-6989-4d1c-875a-027dc6388cc9" />
+        <field name="invln_templatetypename" value="AHP_DELIVERY_PHASE_NOTIFICATION_OF_ADDITIONAL_PAYMENTS_FOR_PHASE" />
+      </record>
+      <record id="a361b6c3-0669-ee11-9ae6-002248004a06">
+        <field name="invln_name" value="External - Application Action Required" />
+        <field name="invln_notificationsettingid" value="a361b6c3-0669-ee11-9ae6-002248004a06" />
+        <field name="statecode" value="0" />
+        <field name="statuscode" value="1" />
+        <field name="invln_subject" value="You need to update your Levelling Up Home Building Fund application" />
+        <field name="invln_templateid" value="10b93db2-4468-4d76-93c0-2761e7bc2ca4" />
+        <field name="invln_templatetypename" value="EXTERNAL_APPLICATION_ACTION_REQUIRED" />
+      </record>
+      <record id="2a0ea4d5-0669-ee11-9ae6-002248004a06">
+        <field name="invln_name" value="External - Application status - Confirmation" />
+        <field name="invln_notificationsettingid" value="2a0ea4d5-0669-ee11-9ae6-002248004a06" />
+        <field name="statecode" value="0" />
+        <field name="statuscode" value="1" />
+        <field name="invln_templateid" value="01be75c5-3ea3-447e-9781-0e502579303b" />
+        <field name="invln_templatetypename" value="EXTERNAL_APPLICATION_STATUS_CONFIRMATION" />
+      </record>
+      <record id="017da9e7-0669-ee11-9ae6-002248004a06">
+        <field name="invln_name" value="External - Application status - Information" />
+        <field name="invln_notificationsettingid" value="017da9e7-0669-ee11-9ae6-002248004a06" />
+        <field name="statecode" value="0" />
+        <field name="statuscode" value="1" />
+        <field name="invln_subject" value="Your Levelling Up Home Building Fund application status has changed" />
+        <field name="invln_templateid" value="e9d4a40e-0cd2-440e-b7f8-a01c24750d54" />
+        <field name="invln_templatetypename" value="EXTERNAL_APPLICATION_STATUS_INFORMATION" />
+      </record>
+      <record id="246b2311-9899-ee11-be37-002248004a06">
+        <field name="invln_name" value="[COMMON] - Change User Permissions" />
+        <field name="invln_notificationsettingid" value="246b2311-9899-ee11-be37-002248004a06" />
+        <field name="statecode" value="0" />
+        <field name="statuscode" value="1" />
+        <field name="invln_subject" value="Homes England account permissions changed" />
+        <field name="invln_templateid" value="01f07697-d9cd-4299-9e15-b685dda1787e" />
+        <field name="invln_templatetypename" value="COMMON_CHANGE_EXTERNAL_USER_PERMISSIONS" />
+      </record>
+      <record id="9dc78b56-c599-ee11-be37-002248004a06">
+        <field name="invln_name" value="[COMMON] - Invite contact to join existing organisation" />
+        <field name="invln_notificationsettingid" value="9dc78b56-c599-ee11-be37-002248004a06" />
+        <field name="statecode" value="0" />
+        <field name="statuscode" value="1" />
+        <field name="invln_subject" value="You’ve been invited to create a Homes England account" />
+        <field name="invln_templateid" value="ae71a463-ab0c-4bac-8845-e3aa84c1095f" />
+        <field name="invln_templatetypename" value="COMMON_INVITE_CONTACT_TO_JOIN_ORGANIZATION" />
+      </record>
+      <record id="e56d5d54-859a-ee11-be37-002248004a06">
+        <field name="invln_name" value="AHP - Reminder to finalise draft application" />
+        <field name="invln_notificationsettingid" value="e56d5d54-859a-ee11-be37-002248004a06" />
+        <field name="statecode" value="0" />
+        <field name="statuscode" value="1" />
+        <field name="invln_subject" value="Remember to submit your Affordable Homes application" />
+        <field name="invln_templateid" value="f8b10b2e-bf41-431a-9367-2e4744536b89" />
+        <field name="invln_templatetypename" value="AHP_EXTERNAL_REMINDER_TO_FINALIZE_DRAFT_APPLICATION" />
+      </record>
+      <record id="06c8b475-c9d1-ee11-9079-002248004f63">
+        <field name="invln_name" value="External - Application Cashflow Requested" />
+        <field name="invln_notificationsettingid" value="06c8b475-c9d1-ee11-9079-002248004f63" />
+        <field name="statecode" value="0" />
+        <field name="statuscode" value="1" />
+        <field name="invln_subject" value="You need to update your Levelling Up Home Building Fund application" />
+        <field name="invln_templateid" value="4b81bc47-e354-4d33-b704-c9026c69f3a8" />
+        <field name="invln_templatetypename" value="EXTERNAL_APPLICATION_CASHFLOW_REQUESTED" />
+      </record>
+      <record id="cf26411d-ab99-ee11-be37-002248004f63">
+        <field name="invln_name" value="[COMMON] - Grant Organisation Admin Permissions" />
+        <field name="invln_notificationsettingid" value="cf26411d-ab99-ee11-be37-002248004f63" />
+        <field name="statecode" value="0" />
+        <field name="statuscode" value="1" />
+        <field name="invln_subject" value="You’ve been granted organisation admin user role" />
+        <field name="invln_templateid" value="9be25010-ef71-4000-b870-5c47bd66e185" />
+        <field name="invln_templatetypename" value="COMMON_GRANT_ORGANISATION_ADMIN_PERMISSIONS" />
+      </record>
+      <record id="0be6e629-899a-ee11-be37-002248004f63">
+        <field name="invln_name" value="[COMMON] - Request to assign contact to existing organisation" />
+        <field name="invln_notificationsettingid" value="0be6e629-899a-ee11-be37-002248004f63" />
+        <field name="statecode" value="0" />
+        <field name="statuscode" value="1" />
+        <field name="invln_subject" value="Confirm user is associated with your Homes England organisation" />
+        <field name="invln_templateid" value="1b1ab127-cd5d-4d05-87b6-825f2235dbe9" />
+        <field name="invln_templatetypename" value="COMMON_REQUEST_TO_ASSIGN_CONTACT_TO_EXISTING_ORGANISATION" />
+      </record>
+      <record id="527f5f8a-8859-ee11-be6f-002248c653e1">
+        <field name="invln_name" value="Internal Loan App Status Change" />
+        <field name="invln_notificationsettingid" value="527f5f8a-8859-ee11-be6f-002248c653e1" />
+        <field name="statecode" value="0" />
+        <field name="statuscode" value="1" />
+        <field name="invln_templateid" value="1d421464-cc21-424c-b7d1-45feb68177e8" />
+        <field name="invln_templatetypename" value="INTERNAL_LOAN_APP_STATUS_CHANGE" />
+      </record>
+    </records>
+    <m2mrelationships />
+  </entity>
+</entities>
