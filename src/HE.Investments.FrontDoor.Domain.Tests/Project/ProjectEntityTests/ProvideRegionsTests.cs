@@ -13,7 +13,7 @@ public class ProvideRegionsTests
     {
         // given
         var project = ProjectEntityBuilder.New().Build();
-        var regions = new Regions(new[] { RegionType.London, RegionType.NorthWest});
+        var regions = new Regions(new[] { RegionType.London, RegionType.NorthWest });
 
         // when
         project.ProvideRegions(regions);
