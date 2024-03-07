@@ -1,6 +1,6 @@
+using HE.Investments.Common.Services.Notifications;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.EventHandlers;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Notifications;
-using HE.Investments.Loans.BusinessLogic.Tests.TestObjectBuilders;
 using HE.Investments.Loans.Contract.Application.Events;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
 using HE.Investments.TestsUtils.TestFramework;
@@ -12,15 +12,15 @@ namespace HE.Investments.Loans.BusinessLogic.Tests.LoanApplication.EventHandlers
 public class LoanApplicationHasBeenResubmittedEventHandlerTests : TestBase<LoanApplicationHasBeenResubmittedEventHandler>
 {
     [Fact]
-    public async Task ShouldCallNotificationServiceWithNotifySuccessAction()
+    public async Task ShouldPublishLoanApplicationHasBeenResubmittedNotification()
     {
         // given
-        var notificationServiceMock = NotificationServiceMockTestBuilder.New().BuildMockAndRegister(this);
+        var notificationPublisherMock = CreateAndRegisterDependencyMock<INotificationPublisher>();
 
         // when
         await TestCandidate.Handle(new LoanApplicationHasBeenResubmittedEvent(new LoanApplicationId(Guid.Empty)), CancellationToken.None);
 
         // then
-        notificationServiceMock.Verify(x => x.Publish(It.IsAny<LoanApplicationHasBeenResubmittedNotification>()), Times.Once);
+        notificationPublisherMock.Verify(x => x.Publish(It.IsAny<LoanApplicationHasBeenResubmittedNotification>()), Times.Once);
     }
 }

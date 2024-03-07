@@ -5,7 +5,7 @@ namespace HE.Investment.AHP.WWW.Notifications;
 
 public class ApplicationHasBeenRequestedToEditNotificationFactory : IDisplayNotificationFactory
 {
-    public Type HandledNotificationType => typeof(ApplicationHasBeenRequestedToEditNotification);
+    public string HandledNotificationType => nameof(ApplicationHasBeenRequestedToEditNotification);
 
     public DisplayNotification Create(Notification notification)
     {

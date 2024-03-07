@@ -1,7 +1,9 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.FrontDoor.Contract.Project;
+using HE.Investments.FrontDoor.Contract.Project.Events;
 using HE.Investments.FrontDoor.Domain.Project.Crm;
 using HE.Investments.FrontDoor.Domain.Project.Crm.Mappers;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
@@ -12,9 +14,12 @@ public class ProjectRepository : IProjectRepository
 {
     private readonly IProjectCrmContext _crmContext;
 
-    public ProjectRepository(IProjectCrmContext crmContext)
+    private readonly IEventDispatcher _eventDispatcher;
+
+    public ProjectRepository(IProjectCrmContext crmContext, IEventDispatcher eventDispatcher)
     {
         _crmContext = crmContext;
+        _eventDispatcher = eventDispatcher;
     }
 
     public async Task<IList<ProjectEntity>> GetProjects(UserAccount userAccount, CancellationToken cancellationToken)
@@ -60,6 +65,7 @@ public class ProjectRepository : IProjectRepository
         if (project.Id.IsNew)
         {
             project.SetId(new FrontDoorProjectId(projectId));
+            await _eventDispatcher.Publish(new FrontDoorProjectHasBeenCreatedEvent(project.Id, project.Name.Value), cancellationToken);
         }
 
         return project;

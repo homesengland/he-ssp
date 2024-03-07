@@ -8,6 +8,7 @@ using HE.Investments.Common.Config;
 using HE.Investments.Common.CRM;
 using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.Common.Models.App;
+using HE.Investments.Common.Services.Notifications;
 using HE.Investments.Common.Utils;
 using HE.Investments.Common.WWW.Infrastructure.Authorization;
 using HE.Investments.Common.WWW.Infrastructure.ErrorHandling;
@@ -27,7 +28,8 @@ public static class OrganisationWebModule
         services.AddAccountModule();
         services.AddEventInfrastructure();
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetUserProfileInformationQueryHandler).Assembly));
-        services.AddNotifications("Account", typeof(ChangeOrganisationDetailsRequestedDisplayNotificationFactory).Assembly);
+        services.AddNotificationPublisher(ApplicationType.Account);
+        services.AddNotificationConsumer(ApplicationType.Account, typeof(ChangeOrganisationDetailsRequestedDisplayNotificationFactory).Assembly);
         services.AddScoped<IAccountRoutes, AccountRoutes>();
         services.AddSingleton<IErrorViewPaths, AccountErrorViewPaths>();
     }

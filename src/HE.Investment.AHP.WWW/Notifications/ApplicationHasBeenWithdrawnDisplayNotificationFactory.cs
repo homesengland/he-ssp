@@ -5,7 +5,7 @@ namespace HE.Investment.AHP.WWW.Notifications;
 
 public class ApplicationHasBeenWithdrawnDisplayNotificationFactory : IDisplayNotificationFactory
 {
-    public Type HandledNotificationType => typeof(ApplicationHasBeenWithdrawnNotification);
+    public string HandledNotificationType => nameof(ApplicationHasBeenWithdrawnNotification);
 
     public DisplayNotification Create(Notification notification)
     {

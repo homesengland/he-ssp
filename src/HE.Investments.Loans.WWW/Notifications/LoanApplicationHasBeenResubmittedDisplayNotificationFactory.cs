@@ -5,7 +5,7 @@ namespace HE.Investments.Loans.WWW.Notifications;
 
 public class LoanApplicationHasBeenResubmittedDisplayNotificationFactory : IDisplayNotificationFactory
 {
-    public Type HandledNotificationType => typeof(LoanApplicationHasBeenResubmittedNotification);
+    public string HandledNotificationType => nameof(LoanApplicationHasBeenResubmittedNotification);
 
     public DisplayNotification Create(Notification notification)
     {

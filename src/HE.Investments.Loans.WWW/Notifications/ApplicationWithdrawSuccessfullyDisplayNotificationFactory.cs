@@ -5,7 +5,7 @@ namespace HE.Investments.Loans.WWW.Notifications;
 
 public class ApplicationWithdrawSuccessfullyDisplayNotificationFactory : IDisplayNotificationFactory
 {
-    public Type HandledNotificationType => typeof(ApplicationWithdrawSuccessfullyNotification);
+    public string HandledNotificationType => nameof(ApplicationWithdrawSuccessfullyNotification);
 
     public DisplayNotification Create(Notification notification)
     {

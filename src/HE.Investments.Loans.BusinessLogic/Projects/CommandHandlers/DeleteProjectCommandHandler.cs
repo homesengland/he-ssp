@@ -6,6 +6,7 @@ using HE.Investments.Loans.BusinessLogic.Projects.Repositories;
 using HE.Investments.Loans.BusinessLogic.Projects.ValueObjects;
 using HE.Investments.Loans.Contract.Projects.Commands;
 using MediatR;
+using INotificationPublisher = HE.Investments.Common.Services.Notifications.INotificationPublisher;
 
 namespace HE.Investments.Loans.BusinessLogic.Projects.CommandHandlers;
 
@@ -13,16 +14,16 @@ public class DeleteProjectCommandHandler : IRequestHandler<DeleteProjectCommand,
 {
     private readonly IApplicationProjectsRepository _applicationProjectsRepository;
     private readonly IAccountUserContext _loanUserContext;
-    private readonly INotificationService _notificationService;
+    private readonly INotificationPublisher _notificationPublisher;
 
     public DeleteProjectCommandHandler(
         IApplicationProjectsRepository applicationProjectsRepository,
         IAccountUserContext loanUserContext,
-        INotificationService notificationService)
+        INotificationPublisher notificationPublisher)
     {
         _applicationProjectsRepository = applicationProjectsRepository;
         _loanUserContext = loanUserContext;
-        _notificationService = notificationService;
+        _notificationPublisher = notificationPublisher;
     }
 
     public async Task<OperationResult> Handle(DeleteProjectCommand request, CancellationToken cancellationToken)
@@ -35,7 +36,7 @@ public class DeleteProjectCommandHandler : IRequestHandler<DeleteProjectCommand,
         var deletedProject = applicationProjects.Remove(request.ProjectId);
 
         await _applicationProjectsRepository.SaveAsync(request.LoanApplicationId, deletedProject, cancellationToken);
-        await _notificationService.Publish(new ProjectDeletedSuccessfullyNotification(deletedProject.Name?.Value ?? ProjectName.Default.Value));
+        await _notificationPublisher.Publish(new ProjectDeletedSuccessfullyNotification(deletedProject.Name?.Value ?? ProjectName.Default.Value));
 
         return OperationResult.Success();
     }

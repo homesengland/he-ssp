@@ -7,15 +7,15 @@ namespace HE.Investment.AHP.Domain.Delivery.EventHandlers;
 
 public class SendDeliveryPhaseHasBeenCreatedNotificationEventHandler : IEventHandler<DeliveryPhaseHasBeenCreatedEvent>
 {
-    private readonly INotificationService _notificationService;
+    private readonly INotificationPublisher _notificationPublisher;
 
-    public SendDeliveryPhaseHasBeenCreatedNotificationEventHandler(INotificationService notificationService)
+    public SendDeliveryPhaseHasBeenCreatedNotificationEventHandler(INotificationPublisher notificationPublisher)
     {
-        _notificationService = notificationService;
+        _notificationPublisher = notificationPublisher;
     }
 
     public async Task Handle(DeliveryPhaseHasBeenCreatedEvent domainEvent, CancellationToken cancellationToken)
     {
-        await _notificationService.Publish(new DeliveryPhaseHasBeenCreatedNotification(domainEvent.DeliveryPhaseName));
+        await _notificationPublisher.Publish(new DeliveryPhaseHasBeenCreatedNotification(domainEvent.DeliveryPhaseName));
     }
 }
