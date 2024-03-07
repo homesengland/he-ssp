@@ -43,6 +43,9 @@ public class ProjectInfrastructureTypes : ValueObject, IQuestion
 
     protected override IEnumerable<object?> GetAtomicValues()
     {
-        yield return Values;
+        foreach (var infrastructureType in Values)
+        {
+            yield return infrastructureType;
+        }
     }
 }
