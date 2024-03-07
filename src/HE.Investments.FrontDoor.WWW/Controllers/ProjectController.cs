@@ -263,7 +263,15 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     [WorkflowState(ProjectWorkflowState.GeographicFocus)]
     public async Task<IActionResult> GeographicFocus([FromRoute] string projectId, ProjectDetails model, CancellationToken cancellationToken)
     {
-        return await Continue(new { projectId });
+        return await ExecuteProjectCommand(
+            new ProvideGeographicFocusCommand(new FrontDoorProjectId(projectId), model.GeographicFocus),
+            nameof(GeographicFocus),
+            project =>
+            {
+                project.GeographicFocus = model.GeographicFocus;
+                return project;
+            },
+            cancellationToken);
     }
 
     [HttpGet("{projectId}/region")]

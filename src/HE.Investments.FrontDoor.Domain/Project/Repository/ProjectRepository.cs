@@ -51,6 +51,7 @@ public class ProjectRepository : IProjectRepository
             PreviousResidentialBuildingExperience = project.OrganisationHomesBuilt?.Value,
             IdentifiedSite = project.IsSiteIdentified?.Value,
             NumberofHomesEnabledBuilt = project.HomesNumber?.Value,
+            GeographicFocus = new ProjectGeographicFocusMapper().ToDto(project.GeographicFocus.GeographicFocus),
         };
 
         var projectId = await _crmContext.Save(dto, userAccount, cancellationToken);
@@ -78,6 +79,7 @@ public class ProjectRepository : IProjectRepository
             affordableHomesAmount: ProjectAffordableHomesAmount.Create(new AffordableHomesAmountMapper().ToDomain(dto.AmountofAffordableHomes)),
             organisationHomesBuilt: dto.PreviousResidentialBuildingExperience.IsProvided() ? new OrganisationHomesBuilt((int)dto.PreviousResidentialBuildingExperience!) : null,
             isSiteIdentified: dto.IdentifiedSite.IsProvided() ? new IsSiteIdentified(dto.IdentifiedSite) : null,
-            homesNumber: dto.NumberofHomesEnabledBuilt.IsProvided() ? new HomesNumber(dto.NumberofHomesEnabledBuilt!.Value) : null);
+            homesNumber: dto.NumberofHomesEnabledBuilt.IsProvided() ? new HomesNumber(dto.NumberofHomesEnabledBuilt!.Value) : null,
+            geographicFocus: ProjectGeographicFocus.Create(new ProjectGeographicFocusMapper().ToDomain(dto.GeographicFocus)));
     }
 }
