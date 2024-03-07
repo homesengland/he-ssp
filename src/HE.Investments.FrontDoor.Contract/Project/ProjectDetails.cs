@@ -15,6 +15,8 @@ public class ProjectDetails
 
     public string? OrganisationHomesBuilt { get; set; }
 
+    public IList<InfrastructureType>? InfrastructureTypes { get; set; }
+
     public bool? IsSiteIdentified { get; set; }
 
     public FrontDoorSiteId? LastSiteId { get; set; }

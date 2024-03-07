@@ -1,7 +1,9 @@
 @using HE.Investments.FrontDoor.Contract.Project
+@using HE.Investments.FrontDoor.WWW.Models;
 @using HE.Investments.FrontDoor.WWW.Views.Project.Const
 @using HE.Investments.FrontDoor.WWW.Views.Shared.Components.FrontDoorWorkflowBackButton
 @using HE.Investments.Common.WWW.Components.FormButton
+@model HE.Investments.FrontDoor.Contract.Project.ProjectDetails
 @{
     ViewData["Title"] = ProjectPageTitles.Infrastructure;
 }
@@ -11,7 +13,13 @@
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
     <form asp-controller="Project" asp-action="Infrastructure" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
-        TODO: @ProjectPageTitles.Infrastructure
+        <vc:checkbox-list-with-or title="@ProjectPageTitles.Infrastructure"
+                                  title-type="InputTitleType.PageHeader"
+                                  hint="Select all that apply."
+                                  field-name="@nameof(Model.InfrastructureTypes)"
+                                  available-options="@ProjectFormOptions.InfrastructureTypes"
+                                  alternative-option="@ProjectFormOptions.InfrastructureTypeUnknown"
+                                  selected-values="@Model.InfrastructureTypes?.Cast<Enum>()" />
 
         <vc:form-button/>
         <vc:return-to-account-link/>

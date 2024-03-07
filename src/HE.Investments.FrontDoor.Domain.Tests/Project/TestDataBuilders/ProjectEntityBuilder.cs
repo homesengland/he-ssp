@@ -28,4 +28,10 @@ public class ProjectEntityBuilder : TestObjectBuilder<ProjectEntityBuilder, Proj
         Item.ProvideAffordableHomesAmount(new ProjectAffordableHomesAmount(AffordableHomesAmount.OpenMarkedAndAffordableHomes));
         return this;
     }
+
+    public ProjectEntityBuilder WithInfrastructureTypeUnknown()
+    {
+        Item.ProvideInfrastructureTypes(new ProjectInfrastructureTypes(new List<InfrastructureType>() { InfrastructureType.IDoNotKnow }));
+        return this;
+    }
 }
