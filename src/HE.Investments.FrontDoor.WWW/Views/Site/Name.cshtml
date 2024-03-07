@@ -1,20 +1,36 @@
 @using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investments.Common.WWW.Components.TextInput
 @using HE.Investments.FrontDoor.WWW.Extensions
+@using HE.Investments.FrontDoor.WWW.Views.Project.Const
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
+@using HE.Investments.FrontDoor.Contract.Site
 @using HE.Investments.FrontDoor.WWW.Views.Site.Const
+@model string
 @{
-    ViewData["Title"] = SitePageTitles.Name;
+    var title = SitePageTitles.Name;
+    ViewData["Title"] = title;
+    var projectId = this.GetOptionalProjectIdFromRoute();
     var siteId = this.GetOptionalSiteIdFromRoute();
-    var projectId = this.GetProjectIdFromRoute();
     var submitAction = string.IsNullOrEmpty(siteId) ? "NewName" : "Name";
 }
 
 <gds-div-grid-column-two-thirds>
     <gds-back-link href="@Url.Action("IdentifiedSite", "Project", new { projectId })" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
+
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
     <form asp-controller="Site" asp-action="@submitAction" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
-        TODO: @SitePageTitles.Name
+
+        <vc:text-input
+            title="@title"
+            title-type="InputTitleType.PageHeader"
+            hint="Each site needs a unique name. You will be able to add multiple sites."
+            field-name="@(nameof(SiteDetails.Name))"
+            css-class="govuk-!-width-one-third"
+            value=@Model/>
 
         <vc:form-button/>
+        <vc:return-to-account-link/>
     </form>
 </gds-div-grid-column-two-thirds>

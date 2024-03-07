@@ -1,7 +1,9 @@
 using HE.Investments.Account.Shared.Authorization.Attributes;
+using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.FrontDoor.Contract.Project;
 using HE.Investments.FrontDoor.Contract.Site;
+using HE.Investments.FrontDoor.Contract.Site.Commands;
 using HE.Investments.FrontDoor.Contract.Site.Queries;
 using HE.Investments.FrontDoor.WWW.Workflows;
 using MediatR;
@@ -33,9 +35,16 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     }
 
     [HttpPost("")]
-    public IActionResult NewName([FromRoute] string projectId, string? name)
+    public async Task<IActionResult> NewName([FromRoute] string projectId, string? name, CancellationToken cancellationToken)
     {
-        return RedirectToAction("HomesNumber", "Site", new { projectId, siteId = Guid.NewGuid().ToString() });
+        var result = await _mediator.Send(new CreateSiteCommand(new FrontDoorProjectId(projectId), name), cancellationToken);
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+            return View(nameof(Name), name);
+        }
+
+        return await Continue(SiteWorkflowState.Name, new { siteId = result.ReturnedData.Value });
     }
 
     [HttpGet("{siteId}/name")]
@@ -47,8 +56,21 @@ public class SiteController : WorkflowController<SiteWorkflowState>
 
     [HttpPost("{siteId}/name")]
     [WorkflowState(SiteWorkflowState.Name)]
-    public async Task<IActionResult> Name([FromRoute] string projectId, [FromRoute] string siteId, string? name)
+    public async Task<IActionResult> Name([FromRoute] string projectId, [FromRoute] string siteId, string? name, CancellationToken cancellationToken)
     {
+        var result = await _mediator.Send(
+                                new ProvideSiteNameCommand(
+                                    new FrontDoorProjectId(projectId),
+                                    new FrontDoorSiteId(siteId),
+                                    name),
+                                cancellationToken);
+
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+            return View(nameof(Name), name);
+        }
+
         return await Continue(new { projectId, siteId });
     }
 

@@ -21,7 +21,6 @@ public class ProjectCrmContext : IProjectCrmContext
         var request = new invln_getmultiplefrontdoorprojectsRequest
         {
             invln_organisationid = organisationId.ToString(),
-            inlvn_userid = userGlobalId,
             invln_fieldstoretrieve = ProjectCrmFields.ProjectToRead.FormatFields(),
         };
         return await GetProjects(request, cancellationToken);
@@ -43,7 +42,6 @@ public class ProjectCrmContext : IProjectCrmContext
     {
         var request = new invln_getsinglefrontdoorprojectRequest
         {
-            invln_userid = userGlobalId,
             invln_organisationid = organisationId.ToString(),
             invln_frontdoorprojectid = projectId,
             invln_fieldstoretrieve = ProjectCrmFields.ProjectToRead.FormatFields(),
