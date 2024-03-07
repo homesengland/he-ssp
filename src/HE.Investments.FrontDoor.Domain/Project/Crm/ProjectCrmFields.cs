@@ -18,6 +18,7 @@ public static class ProjectCrmFields
         nameof(invln_FrontDoorProjectPOC.invln_Region),
         nameof(invln_FrontDoorProjectPOC.invln_NumberofHomesEnabledBuilt),
         nameof(invln_FrontDoorProjectPOC.invln_GeographicFocus),
+        nameof(invln_FrontDoorProjectPOC.invln_FundingRequired),
     };
 
     public static readonly IReadOnlyList<string> ProjectToRead = ProjectToUpdate
