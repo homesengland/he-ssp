@@ -101,7 +101,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
             nameof(PlanningStatus),
             project =>
             {
-                project.PlanningStatus = model.PlanningStatus;
+                project.HomesNumber = model.HomesNumber;
                 return project;
             },
             cancellationToken);
