@@ -5,7 +5,7 @@ using Xunit;
 
 namespace HE.Investments.FrontDoor.Domain.Tests.Project.ProjectEntityTests;
 
-public class ProvideHomesNumberTests
+public class ProvideHomesNumberCommandTests
 {
     [Fact]
     public void ShouldChangeHomesNumber_WhenHomesNumberIsProvided()

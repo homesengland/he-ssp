@@ -10,5 +10,7 @@ public class SiteDetails
 
     public string ProjectName { get; set; }
 
+    public string? HomesNumber { get; set; }
+
     public SitePlanningStatus? PlanningStatus { get; set; }
 }

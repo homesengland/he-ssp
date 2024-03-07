@@ -96,7 +96,15 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     [WorkflowState(SiteWorkflowState.HomesNumber)]
     public async Task<IActionResult> HomesNumber([FromRoute] string projectId, [FromRoute] string siteId, SiteDetails model, CancellationToken cancellationToken)
     {
-        return await Continue(new { projectId, siteId });
+        return await ExecuteSiteCommand(
+            new ProvideHomesNumberCommand(new FrontDoorSiteId(siteId), model.HomesNumber),
+            nameof(HomesNumber),
+            project =>
+            {
+                project.HomesNumber = model.HomesNumber;
+                return project;
+            },
+            cancellationToken);
     }
 
     [HttpGet("{siteId}/local-authority-search")]

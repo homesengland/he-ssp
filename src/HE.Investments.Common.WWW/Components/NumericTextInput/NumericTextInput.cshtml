@@ -1,8 +1,10 @@
 @using HE.Investments.Common.WWW.Extensions
+@using HE.Investments.Common.WWW.Components;
 @using HE.Investments.Common.WWW.Components.ErrorMessage
 @using HE.Investments.Common.WWW.Components.InputHeader
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
-@model (string fieldName, string value, string label, string hint, string prefix, string suffix, string cssClass)
+
+@model (string fieldName, string value, string label, InputTitleType? titleType, string hint, string prefix, string suffix, string cssClass)
 @{
     var (hasError, errors) = ViewData.ModelState.GetErrors(Model.fieldName);
     var groupClass = hasError ? "govuk-form-group--error" : string.Empty;
@@ -13,6 +15,7 @@
     <vc:input-header
         field-name="@Model.fieldName"
         title="@Model.label"
+        title-type="@Model.titleType"
         hint="@Model.hint"/>
 
     <vc:error-message field-name="@Model.fieldName"/>
