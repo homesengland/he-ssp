@@ -2,6 +2,7 @@ using FluentAssertions;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Enums;
+using HE.Investments.Common.Contract.Enum;
 
 namespace HE.Investment.AHP.WWW.Tests.Workflows.SiteWorkflowTests;
 

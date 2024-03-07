@@ -1,4 +1,5 @@
 using HE.Investment.AHP.Contract.Site;
+using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.CRM.Mappers;
 using HE.Investments.Common.CRM.Model;
 

@@ -4,9 +4,9 @@ using HE.Investments.FrontDoor.Domain.Site.Repository;
 
 namespace HE.Investments.FrontDoor.Domain.Site.CommandHandlers;
 
-public class ProvideSiteNameCommandHandler : SiteBaseCommandHandler<ProvideSiteNameCommand>
+public class ProvidePlanningStatusCommandHandler : SiteBaseCommandHandler<ProvidePlanningStatusCommand>
 {
-    public ProvideSiteNameCommandHandler(ISiteRepository siteRepository, IAccountUserContext accountUserContext)
+    public ProvidePlanningStatusCommandHandler(ISiteRepository siteRepository, IAccountUserContext accountUserContext)
         : base(siteRepository, accountUserContext)
     {
     }

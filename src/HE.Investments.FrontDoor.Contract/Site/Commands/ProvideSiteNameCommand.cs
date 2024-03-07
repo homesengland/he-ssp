@@ -4,4 +4,4 @@ using MediatR;
 
 namespace HE.Investments.FrontDoor.Contract.Site.Commands;
 
-public record ProvideSiteNameCommand(FrontDoorProjectId ProjectId, FrontDoorSiteId SiteId, string? Name) : IRequest<OperationResult>;
+public record ProvideSiteNameCommand(FrontDoorProjectId ProjectId, FrontDoorSiteId SiteId, string? Name) : IProvideSiteDetailsCommand;

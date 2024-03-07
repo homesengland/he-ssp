@@ -1,10 +1,15 @@
 using HE.Investments.Account.Shared.Authorization.Attributes;
+using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Validators;
+using HE.Investments.Common.WWW.Controllers;
+using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.FrontDoor.Contract.Project;
+using HE.Investments.FrontDoor.Contract.Project.Queries;
 using HE.Investments.FrontDoor.Contract.Site;
 using HE.Investments.FrontDoor.Contract.Site.Commands;
 using HE.Investments.FrontDoor.Contract.Site.Queries;
+using HE.Investments.FrontDoor.WWW.Extensions;
 using HE.Investments.FrontDoor.WWW.Workflows;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -29,8 +34,10 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     }
 
     [HttpGet("")]
-    public IActionResult NewName([FromRoute] string projectId)
+    public async Task<IActionResult> NewName([FromRoute] string projectId, CancellationToken cancellationToken)
     {
+        var project = await _mediator.Send(new GetProjectDetailsQuery(new FrontDoorProjectId(projectId)), cancellationToken);
+        ViewBag.ProjectName = project.Name;
         return View("Name");
     }
 
@@ -40,18 +47,21 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         var result = await _mediator.Send(new CreateSiteCommand(new FrontDoorProjectId(projectId), name), cancellationToken);
         if (result.HasValidationErrors)
         {
+            var project = await _mediator.Send(new GetProjectDetailsQuery(new FrontDoorProjectId(projectId)), cancellationToken);
+            ViewBag.ProjectName = project.Name;
             ModelState.AddValidationErrors(result);
             return View(nameof(Name), name);
         }
 
-        return await Continue(SiteWorkflowState.Name, new { siteId = result.ReturnedData.Value });
+        return await Continue(SiteWorkflowState.Name, new { projectId, siteId = result.ReturnedData.Value });
     }
 
     [HttpGet("{siteId}/name")]
     [WorkflowState(SiteWorkflowState.Name)]
-    public IActionResult Name([FromRoute] string projectId, [FromRoute] string siteId)
+    public async Task<IActionResult> Name([FromRoute] string projectId, [FromRoute] string siteId, CancellationToken cancellationToken)
     {
-        return View("Name");
+        var siteDetails = await GetSiteDetails(projectId, siteId, cancellationToken);
+        return View("Name", siteDetails.Name);
     }
 
     [HttpPost("{siteId}/name")]
@@ -67,6 +77,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
 
         if (result.HasValidationErrors)
         {
+            await GetSiteDetails(projectId, siteId, cancellationToken);
             ModelState.AddValidationErrors(result);
             return View(nameof(Name), name);
         }
@@ -148,7 +159,15 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     [WorkflowState(SiteWorkflowState.PlanningStatus)]
     public async Task<IActionResult> PlanningStatus([FromRoute] string projectId, [FromRoute] string siteId, SiteDetails model, CancellationToken cancellationToken)
     {
-        return await Continue(new { projectId, siteId });
+        return await ExecuteSiteCommand(
+            new ProvidePlanningStatusCommand(new FrontDoorSiteId(siteId), model.PlanningStatus),
+            nameof(PlanningStatus),
+            project =>
+            {
+                project.PlanningStatus = model.PlanningStatus;
+                return project;
+            },
+            cancellationToken);
     }
 
     [HttpGet("{siteId}/add-another-site")]
@@ -175,5 +194,39 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         var siteDetails = await _mediator.Send(new GetSiteDetailsQuery(new FrontDoorProjectId(projectId), new FrontDoorSiteId(siteId)), cancellationToken);
         ViewBag.ProjectName = siteDetails.ProjectName;
         return siteDetails;
+    }
+
+    private async Task<IActionResult> ExecuteSiteCommand<TViewModel>(
+        IRequest<OperationResult> command,
+        string viewName,
+        Func<SiteDetails, TViewModel> createViewModelForError,
+        CancellationToken cancellationToken,
+        object? routeData = null)
+    {
+        var projectId = this.GetProjectIdFromRoute();
+        var siteId = this.GetSiteIdFromRoute();
+
+        return await this.ExecuteCommand<TViewModel>(
+            _mediator,
+            command,
+            async () => await ReturnToAccountOrContinue(async () => await ContinueWithRedirect(routeData ?? new { projectId = projectId.Value, siteId = siteId.Value })),
+            async () =>
+            {
+                var siteDetails = await GetSiteDetails(projectId.Value, siteId.Value, cancellationToken);
+                var model = createViewModelForError(siteDetails);
+
+                return View(viewName, model);
+            },
+            cancellationToken);
+    }
+
+    private async Task<IActionResult> ReturnToAccountOrContinue(Func<Task<IActionResult>> onContinue)
+    {
+        if (Request.IsSaveAndReturnAction())
+        {
+            return RedirectToAction("Index", "Account");
+        }
+
+        return await onContinue();
     }
 }

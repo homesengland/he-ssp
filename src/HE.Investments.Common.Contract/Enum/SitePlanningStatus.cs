@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-namespace HE.Investment.AHP.Contract.Site;
+namespace HE.Investments.Common.Contract.Enum;
 
 public enum SitePlanningStatus
 {
