@@ -1,17 +1,35 @@
-@using HE.Investments.FrontDoor.Contract.Project
-@using HE.Investments.FrontDoor.WWW.Views.Shared.Components.FrontDoorWorkflowBackButton
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.FrontDoor.WWW.Views.Project.Const
+@using HE.Investments.Common.WWW.Components.PageHeader
+@using HE.Investments.Common.WWW.Helpers
+@using HE.Investments.FrontDoor.Contract.Project
+@using HE.Investments.FrontDoor.Contract.Project.Enums
+@using HE.Investments.FrontDoor.WWW.Views.Shared.Components.FrontDoorWorkflowBackButton
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using HE.Investments.Common.WWW.Components.CheckboxList
+@using HE.Investments.FrontDoor.WWW.Views.Shared.Components.ReturnToAccountLink
+@model HE.Investments.FrontDoor.Contract.Project.ProjectDetails
 @{
-    ViewData["Title"] = ProjectPageTitles.Region;
+    var title = ProjectPageTitles.Region;
+    ViewData["Title"] = title;
 }
 
 <gds-div-grid-column-two-thirds>
     <vc:front-door-workflow-back-button current-page="@ProjectWorkflowState.Region"></vc:front-door-workflow-back-button>
+
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
-    <form asp-controller="Project" asp-action="Region" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
-        TODO: @ProjectPageTitles.Region
+    <vc:page-header caption="@ViewBag.ProjectName"/>
+
+    <form asp-controller="Project" asp-action="Region" asp-method="post" novalidate>
+
+        <vc:checkbox-list
+            title="@ProjectPageTitles.Region"
+            title-type="InputTitleType.PageHeader"
+            hint="Select all that apply."
+            field-name="@nameof(Model.Regions)"
+            available-options="@SelectListHelper.FromEnumToExtendedList<RegionType>()"
+            selected-values="@Model.Regions?.Cast<Enum>()"/>
 
         <vc:form-button/>
         <vc:return-to-account-link/>

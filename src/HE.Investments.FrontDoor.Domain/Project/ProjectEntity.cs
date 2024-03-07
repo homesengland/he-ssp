@@ -21,6 +21,7 @@ public class ProjectEntity : DomainEntity
         ProjectAffordableHomesAmount? affordableHomesAmount = null,
         OrganisationHomesBuilt? organisationHomesBuilt = null,
         IsSiteIdentified? isSiteIdentified = null,
+        Regions? regions = null,
         HomesNumber? homesNumber = null,
         ProjectGeographicFocus? geographicFocus = null)
     {
@@ -31,6 +32,7 @@ public class ProjectEntity : DomainEntity
         AffordableHomesAmount = affordableHomesAmount ?? ProjectAffordableHomesAmount.Empty();
         OrganisationHomesBuilt = organisationHomesBuilt;
         IsSiteIdentified = isSiteIdentified;
+        Regions = regions ?? Regions.Empty();
         HomesNumber = homesNumber;
         GeographicFocus = geographicFocus ?? ProjectGeographicFocus.Empty();
     }
@@ -48,6 +50,8 @@ public class ProjectEntity : DomainEntity
     public OrganisationHomesBuilt? OrganisationHomesBuilt { get; private set; }
 
     public IsSiteIdentified? IsSiteIdentified { get; private set; }
+
+    public Regions Regions { get; private set; }
 
     public HomesNumber? HomesNumber { get; private set; }
 
@@ -111,6 +115,11 @@ public class ProjectEntity : DomainEntity
     public void ProvideOrganisationHomesBuilt(OrganisationHomesBuilt organisationHomesBuilt)
     {
         OrganisationHomesBuilt = _modificationTracker.Change(OrganisationHomesBuilt, organisationHomesBuilt);
+    }
+
+    public void ProvideRegions(Regions regions)
+    {
+        Regions = _modificationTracker.Change(Regions, regions);
     }
 
     public void ProvideHomesNumber(HomesNumber homesNumber)
