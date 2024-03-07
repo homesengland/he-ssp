@@ -6,9 +6,9 @@ namespace HE.Investments.FrontDoor.Domain.Site.Repository;
 
 public interface ISiteRepository
 {
-    Task<IList<ProjectSiteEntity>> GetSites(FrontDoorProjectId projectId, UserAccount userAccount, CancellationToken cancellationToken);
+    Task<ProjectSitesEntity> GetSites(FrontDoorProjectId projectId, UserAccount userAccount, CancellationToken cancellationToken);
 
-    Task<ProjectSiteEntity> GetSite(FrontDoorSiteId siteId, UserAccount userAccount, CancellationToken cancellationToken);
+    Task<ProjectSiteEntity> GetSite(FrontDoorProjectId projectId, FrontDoorSiteId siteId, UserAccount userAccount, CancellationToken cancellationToken);
 
-    Task<ProjectSiteEntity> Save(ProjectSiteEntity project, UserAccount userAccount, CancellationToken cancellationToken);
+    Task<ProjectSiteEntity> Save(ProjectSiteEntity site, UserAccount userAccount, CancellationToken cancellationToken);
 }

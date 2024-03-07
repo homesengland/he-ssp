@@ -22,7 +22,7 @@ public class SiteBaseCommandHandler<TRequest> : IRequestHandler<TRequest, Operat
     public async Task<OperationResult> Handle(TRequest request, CancellationToken cancellationToken)
     {
         var userAccount = await AccountUserContext.GetSelectedAccount();
-        var projectSite = await SiteRepository.GetSite(request.SiteId, userAccount, cancellationToken);
+        var projectSite = await SiteRepository.GetSite(request.ProjectId, request.SiteId, userAccount, cancellationToken);
 
         Perform(projectSite, request);
         await PerformAsync(projectSite, request, cancellationToken);

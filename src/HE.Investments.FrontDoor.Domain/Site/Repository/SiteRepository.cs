@@ -1,27 +1,61 @@
+using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.FrontDoor.Contract.Project;
 using HE.Investments.FrontDoor.Contract.Site;
+using HE.Investments.FrontDoor.Domain.Site.Crm;
 using HE.Investments.FrontDoor.Domain.Site.ValueObjects;
 
 namespace HE.Investments.FrontDoor.Domain.Site.Repository;
 
 public class SiteRepository : ISiteRepository
 {
-    public Task<IList<ProjectSiteEntity>> GetSites(FrontDoorProjectId projectId, UserAccount userAccount, CancellationToken cancellationToken)
-    {
-        IList<ProjectSiteEntity> mocked =
-            new List<ProjectSiteEntity>(new[] { new ProjectSiteEntity(new FrontDoorSiteId("456"), projectId, new SiteName("Site test")) });
+    private readonly ISiteCrmContext _siteCrmContext;
 
-        return Task.FromResult(mocked);
+    public SiteRepository(ISiteCrmContext siteCrmContext)
+    {
+        _siteCrmContext = siteCrmContext;
     }
 
-    public Task<ProjectSiteEntity> GetSite(FrontDoorSiteId siteId, UserAccount userAccount, CancellationToken cancellationToken)
+    public async Task<ProjectSitesEntity> GetSites(FrontDoorProjectId projectId, UserAccount userAccount, CancellationToken cancellationToken)
     {
-        return Task.FromResult(new ProjectSiteEntity(siteId, new FrontDoorProjectId("123"), new SiteName("Site test")));
+        var sites = await _siteCrmContext.GetSites(projectId.Value, userAccount, new PagingRequestDto { pageNumber = 1, pageSize = 100 }, cancellationToken);
+
+        return new ProjectSitesEntity(projectId, sites.items.Select(x => ToDomain(x, projectId)).ToList());
     }
 
-    public Task<ProjectSiteEntity> Save(ProjectSiteEntity project, UserAccount userAccount, CancellationToken cancellationToken)
+    public async Task<ProjectSiteEntity> GetSite(FrontDoorProjectId projectId, FrontDoorSiteId siteId, UserAccount userAccount, CancellationToken cancellationToken)
     {
-        return Task.FromResult(project);
+        var site = await _siteCrmContext.GetSite(projectId.Value, siteId.Value, userAccount, cancellationToken);
+
+        return ToDomain(site, projectId);
+    }
+
+    public async Task<ProjectSiteEntity> Save(ProjectSiteEntity site, UserAccount userAccount, CancellationToken cancellationToken)
+    {
+        var siteId = await _siteCrmContext.Save(site.ProjectId.Value, ToDto(site), userAccount, cancellationToken);
+        if (site.Id.IsNew)
+        {
+            site.SetId(new FrontDoorSiteId(siteId));
+        }
+
+        return site;
+    }
+
+    private FrontDoorProjectSiteDto ToDto(ProjectSiteEntity entity)
+    {
+        return new FrontDoorProjectSiteDto
+        {
+            SiteId = entity.Id.Value,
+            SiteName = entity.Name.Value,
+        };
+    }
+
+    private ProjectSiteEntity ToDomain(FrontDoorProjectSiteDto dto, FrontDoorProjectId projectId)
+    {
+        return new ProjectSiteEntity(
+            new FrontDoorSiteId(dto.SiteId),
+            projectId,
+            new SiteName(dto.SiteName),
+            dto.CreatedOn);
     }
 }

@@ -160,7 +160,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     public async Task<IActionResult> PlanningStatus([FromRoute] string projectId, [FromRoute] string siteId, SiteDetails model, CancellationToken cancellationToken)
     {
         return await ExecuteSiteCommand(
-            new ProvidePlanningStatusCommand(new FrontDoorSiteId(siteId), model.PlanningStatus),
+            new ProvidePlanningStatusCommand(new FrontDoorProjectId(projectId), new FrontDoorSiteId(siteId), model.PlanningStatus),
             nameof(PlanningStatus),
             project =>
             {
