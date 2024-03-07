@@ -94,7 +94,7 @@ public class ProjectEntity : DomainEntity
     {
         InfrastructureTypes = _modificationTracker.Change(InfrastructureTypes, infrastructureTypes);
     }
-    
+
     public void ProvideGeographicFocus(ProjectGeographicFocus geographicFocus)
     {
         GeographicFocus = _modificationTracker.Change(GeographicFocus, geographicFocus);
