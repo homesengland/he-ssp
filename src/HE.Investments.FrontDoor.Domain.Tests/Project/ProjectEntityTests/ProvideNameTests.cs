@@ -1,6 +1,5 @@
 using FluentAssertions;
 using HE.Investments.Common.Contract.Exceptions;
-using HE.Investments.FrontDoor.Contract.Project;
 using HE.Investments.FrontDoor.Domain.Project.Repository;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
 using HE.Investments.FrontDoor.Domain.Tests.Project.TestDataBuilders;
@@ -47,7 +46,7 @@ public class ProvideNameTests
     private static IProjectNameExists MockProjectNameExists(bool exists)
     {
         var mock = new Mock<IProjectNameExists>();
-        mock.Setup(x => x.DoesExist(It.IsAny<ProjectName>(), It.IsAny<FrontDoorProjectId?>(), CancellationToken.None))
+        mock.Setup(x => x.DoesExist(It.IsAny<ProjectName>(), CancellationToken.None))
             .ReturnsAsync(exists);
 
         return mock.Object;

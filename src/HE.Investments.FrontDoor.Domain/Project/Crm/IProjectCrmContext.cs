@@ -15,5 +15,7 @@ public interface IProjectCrmContext
 
     Task<FrontDoorProjectDto> GetUserProjectById(string projectId, string userGlobalId, Guid organisationId, CancellationToken cancellationToken);
 
+    Task<bool> IsThereProjectWithName(string projectName, CancellationToken cancellationToken);
+
     Task<string> Save(FrontDoorProjectDto dto, UserAccount userAccount, CancellationToken cancellationToken);
 }
