@@ -3,11 +3,13 @@ using DataverseModel;
 using HE.Base.Plugins.Handlers;
 using HE.CRM.Plugins.Services.FrontDoorProjectSite;
 
-namespace HE.CRM.Plugins.Handlers.CustomApi
+namespace HE.CRM.Plugins.Handlers.CustomApi.FrontDoor
 {
     internal class GetSingleFrontDoorProjectSiteHandler : CrmActionHandlerBase<invln_getsinglefrontdoorprojectsiteRequest, DataverseContext>
     {
         #region Fields
+        private string frontDoorProjectId => ExecutionData.GetInputParameter<string>(invln_getsinglefrontdoorprojectsiteRequest.Fields.invln_frontdoorprojectid);
+        private string fieldsToRetrieve => ExecutionData.GetInputParameter<string>(invln_getsinglefrontdoorprojectsiteRequest.Fields.invln_fieldstoretrieve);
         private string frontDoorProjectSiteId => ExecutionData.GetInputParameter<string>(invln_getsinglefrontdoorprojectsiteRequest.Fields.invln_frontdoorprojectsiteid);
         #endregion
 
@@ -20,7 +22,7 @@ namespace HE.CRM.Plugins.Handlers.CustomApi
         public override void DoWork()
         {
             this.TracingService.Trace("GetSingleFrontDoorProjectSiteHandler");
-            var frontDoorProjectSiteDto = CrmServicesFactory.Get<IFrontDoorProjectSiteService>().GetSingleFrontDoorProjectSite(frontDoorProjectSiteId);
+            var frontDoorProjectSiteDto = CrmServicesFactory.Get<IFrontDoorProjectSiteService>().GetFrontDoorProjectSite(frontDoorProjectId, fieldsToRetrieve, frontDoorProjectSiteId);
             this.TracingService.Trace("Send Response");
             if (frontDoorProjectSiteDto != null)
             {

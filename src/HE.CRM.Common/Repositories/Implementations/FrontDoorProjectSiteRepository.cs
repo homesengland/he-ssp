@@ -8,6 +8,8 @@ using HE.CRM.Common.Repositories.Interfaces;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Client;
 using Microsoft.Xrm.Sdk.Query;
+using HE.Common.IntegrationModel.PortalIntegrationModel;
+
 
 
 namespace HE.CRM.Common.Repositories.Implementations
@@ -18,81 +20,45 @@ namespace HE.CRM.Common.Repositories.Implementations
         {
         }
 
-        public List<invln_FrontDoorProjectSitePOC> GetSiteRelatedToFrontDoorProject(EntityReference frontDoorProjectId)
+        public PagedResponseDto<invln_FrontDoorProjectSitePOC> GetFrontDoorProjectSites(PagingRequestDto paging, string frontDoorProjectIdCondition, string attributes)
         {
-            using (var ctx = new OrganizationServiceContext(service))
-            {
-                return ctx.CreateQuery<invln_FrontDoorProjectSitePOC>()
-                    .Where(x => x.invln_FrontDoorProjectId.Id == frontDoorProjectId.Id && x.StateCode.Value == (int)invln_FrontDoorProjectSitePOCState.Active).ToList();
-            }
-        }
-
-        public invln_FrontDoorProjectSitePOC GetSingleSiteRelatedToFrontDoorProject(EntityReference frontDoorProjectId, string frontDoorSiteId)
-        {
-            if (Guid.TryParse(frontDoorSiteId, out Guid siteId))
-            {
-                using (var ctx = new OrganizationServiceContext(service))
-                {
-                    return ctx.CreateQuery<invln_FrontDoorProjectSitePOC>().FirstOrDefault(x => x.Id == siteId && x.invln_FrontDoorProjectId.Id == frontDoorProjectId.Id && x.StateCode.Value == (int)invln_FrontDoorProjectSitePOCState.Active);
-                }
-            }
-            else
-            {
-                return new invln_FrontDoorProjectSitePOC();
-            }
-        }
-
-        public List<invln_FrontDoorProjectSitePOC> GetMultipleSiteRelatedToFrontDoorProjectForGivenAccountAndContact(string frontDoorProjectId, string organisationId, string externalContactId)
-        {
-            var contactId = string.Empty;
-            using (var ctx = new OrganizationServiceContext(service))
-            {
-                contactId = ctx.CreateQuery<Contact>().FirstOrDefault(x => x.invln_externalid == externalContactId).Id.ToString();
-            }
-            logger.Trace($"contactid: {contactId}");
-            logger.Trace($"organisationId: {organisationId}");
-
-
-
-            if (Guid.TryParse(frontDoorProjectId, out Guid frontDoorProjecGuid) && Guid.TryParse(organisationId, out Guid organisationGuid))
-            {
-                var fetchXML = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+            var fetchXML = $@"<fetch page=""{paging.pageNumber}"" count=""{paging.pageSize}"" returntotalrecordcount=""true"">
 	                                <entity name='invln_frontdoorprojectsitepoc'>
+                                            <attribute name=""ownerid"" />
+                                              {attributes}
                                             <filter>
                                               <condition attribute=""statuscode"" operator=""eq"" value=""1"" />
-                                              <condition entityname=""FrontDoorProject"" attribute=""invln_accountid"" operator=""eq"" value=""" + organisationId + @""" />
-                                              <condition entityname=""FrontDoorProject"" attribute=""invln_contactid"" operator=""eq"" value=""" + contactId + @""" />
-                                              <condition attribute=""invln_frontdoorprojectid"" operator=""eq"" value=""" + frontDoorProjectId + @""" />
+                                              {frontDoorProjectIdCondition}
                                             </filter>
-		                                    <link-entity name=""invln_frontdoorprojectpoc"" from=""invln_frontdoorprojectpocid"" to=""invln_frontdoorprojectid"" alias=""FrontDoorProject"">
-		                                    </link-entity>
                                           </entity>
                                         </fetch>";
 
-                EntityCollection result = service.RetrieveMultiple(new FetchExpression(fetchXML));
-                return result.Entities.Select(x => x.ToEntity<invln_FrontDoorProjectSitePOC>()).ToList();
-            }
-            else
+            var result = service.RetrieveMultiple(new FetchExpression(fetchXML));
+
+            return new PagedResponseDto<invln_FrontDoorProjectSitePOC>
             {
-                return new List<invln_FrontDoorProjectSitePOC>();
-            }
+                paging = paging,
+                items = result.Entities.Select(x => x.ToEntity<invln_FrontDoorProjectSitePOC>()).AsEnumerable().ToList(),
+                totalItemsCount = result.TotalRecordCount,
+            };
         }
 
-
-        public invln_FrontDoorProjectSitePOC GetSingleFrontDoorProjectSite(string frontDoorSiteId)
+        public invln_FrontDoorProjectSitePOC GetFrontDoorProjectSite(string frontDoorProjectIdCondition, string frontDoorProjecSitetIdCondition, string attributes)
         {
-            if (Guid.TryParse(frontDoorSiteId, out Guid siteId))
-            {
-                using (var ctx = new OrganizationServiceContext(service))
-                {
-                    return ctx.CreateQuery<invln_FrontDoorProjectSitePOC>().FirstOrDefault(x => x.Id == siteId);
-                }
-            }
-            else
-            {
-                return new invln_FrontDoorProjectSitePOC();
-            }
-        }
+            var fetchXML = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+	                                <entity name='invln_frontdoorprojectsitepoc'>
+                                            <attribute name=""ownerid"" />
+                                            {attributes}
+                                            <filter>
+                                              <condition attribute=""statuscode"" operator=""eq"" value=""1"" />
+                                              {frontDoorProjectIdCondition}
+                                              {frontDoorProjecSitetIdCondition}
+                                            </filter>
+                                          </entity>
+                                        </fetch>";
 
+            EntityCollection result = service.RetrieveMultiple(new FetchExpression(fetchXML));
+            return result.Entities.Select(x => x.ToEntity<invln_FrontDoorProjectSitePOC>()).SingleOrDefault();
+        }
     }
 }

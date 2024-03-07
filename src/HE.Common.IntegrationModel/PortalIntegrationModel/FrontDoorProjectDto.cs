@@ -21,7 +21,7 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public int? GeographicFocus { get; set; } 
         public List<int> Region { get; set; } 
         public Guid LocalAuthority { get; set; }
-        public int? NumberofHomesEnabled_Built { get; set; }
+        public int? NumberofHomesEnabledBuilt { get; set; }
         public bool? WouldyourprojectfailwithoutHEsupport { get; set; }
         public bool? FundingRequired { get; set; }
         public int? AmountofFundingRequired { get; set; } 

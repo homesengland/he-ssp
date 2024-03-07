@@ -15,6 +15,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_changeahpapplicationstatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_changeloanapplicationexternalstatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_checkifapplicationwithgivennameexists.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_checkiffrontdoorprojectwithgivennameexists.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_checkifloanapplicationwithgivennameexists.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_checkifsitewithgivennameexists.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_createsinglesitedetail.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_setahpapplication.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_setdeliveryphase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_setfrontdoorproject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_setfrontdoorsite.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_sethometype.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_setsite.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_updatesingleloanapplication.cs" />

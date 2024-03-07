@@ -1,11 +1,11 @@
 using DataverseModel;
 using HE.Base.Plugins.Handlers;
 using HE.Base.Plugins;
-using HE.CRM.Plugins.Handlers.CustomApi;
+using HE.CRM.Plugins.Handlers.CustomApi.FrontDoor;
 using Microsoft.Xrm.Sdk;
 using System.Collections.Generic;
 
-namespace HE.CRM.Plugins.Plugins.CustomApi
+namespace HE.CRM.Plugins.Plugins.CustomApi.FrontDoor
 {
     [CrmPluginRegistration(
     "invln_getsinglefrontdoorprojectsite",
@@ -13,7 +13,7 @@ namespace HE.CRM.Plugins.Plugins.CustomApi
     StageEnum.PostOperation,
     ExecutionModeEnum.Synchronous,
     "",
-    "HE.CRM.Plugins.Plugins.CustomApi.GetSingleFrontDoorProjectSitePlugin: invln_getsinglefrontdoorprojectsite",
+    "HE.CRM.Plugins.Plugins.CustomApi.FrontDoor.GetSingleFrontDoorProjectSitePlugin: invln_getsinglefrontdoorprojectsite",
     1,
     IsolationModeEnum.Sandbox,
     Id = "12740757-7338-44AD-A941-F9E326E6C07E")]
