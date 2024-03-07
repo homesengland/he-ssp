@@ -31,7 +31,7 @@ public class ProjectEntity : DomainEntity
         Name = name;
         IsEnglandHousingDelivery = isEnglandHousingDelivery ?? true;
         SupportActivities = supportActivityTypes ?? SupportActivities.Empty();
-        InfrastructureTypes = infrastructureTypes ?? ProjectInfrastructureTypes.Empty();
+        InfrastructureTypes = infrastructureTypes;
         AffordableHomesAmount = affordableHomesAmount ?? ProjectAffordableHomesAmount.Empty();
         OrganisationHomesBuilt = organisationHomesBuilt;
         IsSiteIdentified = isSiteIdentified;
@@ -51,7 +51,7 @@ public class ProjectEntity : DomainEntity
 
     public ProjectAffordableHomesAmount AffordableHomesAmount { get; private set; }
 
-    public ProjectInfrastructureTypes InfrastructureTypes { get; private set; }
+    public ProjectInfrastructureTypes? InfrastructureTypes { get; private set; }
 
     public OrganisationHomesBuilt? OrganisationHomesBuilt { get; private set; }
 
@@ -172,7 +172,7 @@ public class ProjectEntity : DomainEntity
 
         if (!newSupportActivityTypes.IsInfrastructureRequired())
         {
-            InfrastructureTypes = ProjectInfrastructureTypes.Empty();
+            InfrastructureTypes = null;
         }
     }
 }

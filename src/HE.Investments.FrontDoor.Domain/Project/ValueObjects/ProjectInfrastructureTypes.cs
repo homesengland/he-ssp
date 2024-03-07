@@ -34,8 +34,6 @@ public class ProjectInfrastructureTypes : ValueObject, IQuestion
 
     public IEnumerable<InfrastructureType> Values { get; }
 
-    public static ProjectInfrastructureTypes Empty() => new();
-
     public bool IsAnswered()
     {
         return Values.Any();
