@@ -23,7 +23,8 @@ public class ProjectEntity : DomainEntity
         IsSiteIdentified? isSiteIdentified = null,
         Regions? regions = null,
         HomesNumber? homesNumber = null,
-        ProjectGeographicFocus? geographicFocus = null)
+        ProjectGeographicFocus? geographicFocus = null,
+        IsFundingRequired? isFundingRequired = null)
     {
         Id = id;
         Name = name;
@@ -35,6 +36,7 @@ public class ProjectEntity : DomainEntity
         Regions = regions ?? Regions.Empty();
         HomesNumber = homesNumber;
         GeographicFocus = geographicFocus ?? ProjectGeographicFocus.Empty();
+        IsFundingRequired = isFundingRequired;
     }
 
     public FrontDoorProjectId Id { get; private set; }
@@ -56,6 +58,8 @@ public class ProjectEntity : DomainEntity
     public HomesNumber? HomesNumber { get; private set; }
 
     public ProjectGeographicFocus GeographicFocus { get; private set; }
+
+    public IsFundingRequired? IsFundingRequired { get; private set; }
 
     public static async Task<ProjectEntity> New(ProjectName projectName, IProjectNameExists projectNameExists, CancellationToken cancellationToken)
     {
@@ -130,6 +134,11 @@ public class ProjectEntity : DomainEntity
     public void ProvideHomesNumber(HomesNumber homesNumber)
     {
         HomesNumber = _modificationTracker.Change(HomesNumber, homesNumber);
+    }
+
+    public void ProvideIsFundingRequired(IsFundingRequired isFundingRequired)
+    {
+        IsFundingRequired = _modificationTracker.Change(IsFundingRequired, isFundingRequired);
     }
 
     private static async Task<ProjectName> ValidateProjectNameUniqueness(

@@ -53,6 +53,7 @@ public class ProjectRepository : IProjectRepository
             Region = new RegionsMapper().Map(project.Regions),
             NumberofHomesEnabledBuilt = project.HomesNumber?.Value,
             GeographicFocus = new ProjectGeographicFocusMapper().ToDto(project.GeographicFocus.GeographicFocus),
+            FundingRequired = project.IsFundingRequired?.Value,
         };
 
         var projectId = await _crmContext.Save(dto, userAccount, cancellationToken);
@@ -81,6 +82,7 @@ public class ProjectRepository : IProjectRepository
             isSiteIdentified: dto.IdentifiedSite.IsProvided() ? new IsSiteIdentified(dto.IdentifiedSite) : null,
             regions: new RegionsMapper().Map(dto.Region),
             homesNumber: dto.NumberofHomesEnabledBuilt.IsProvided() ? new HomesNumber(dto.NumberofHomesEnabledBuilt!.Value) : null,
-            geographicFocus: ProjectGeographicFocus.Create(new ProjectGeographicFocusMapper().ToDomain(dto.GeographicFocus)));
+            geographicFocus: ProjectGeographicFocus.Create(new ProjectGeographicFocusMapper().ToDomain(dto.GeographicFocus)),
+            isFundingRequired: dto.FundingRequired.IsProvided() ? new IsFundingRequired(dto.FundingRequired) : null);
     }
 }

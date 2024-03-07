@@ -392,7 +392,15 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     [WorkflowState(ProjectWorkflowState.RequiresFunding)]
     public async Task<IActionResult> RequiresFunding([FromRoute] string projectId, ProjectDetails model, CancellationToken cancellationToken)
     {
-        return await Continue(new { projectId });
+        return await ExecuteProjectCommand(
+            new ProvideIsFundingRequiredCommand(new FrontDoorProjectId(projectId), model.IsFundingRequired),
+            nameof(RequiresFunding),
+            project =>
+            {
+                project.IsFundingRequired = model.IsFundingRequired;
+                return project;
+            },
+            cancellationToken);
     }
 
     [HttpGet("{projectId}/funding-amount")]
