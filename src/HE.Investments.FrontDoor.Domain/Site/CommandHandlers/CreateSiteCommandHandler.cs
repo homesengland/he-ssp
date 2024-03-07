@@ -9,6 +9,6 @@ public class CreateSiteCommandHandler : IRequestHandler<CreateSiteCommand, Opera
 {
     public Task<OperationResult<FrontDoorSiteId>> Handle(CreateSiteCommand request, CancellationToken cancellationToken)
     {
-        return Task.FromResult(new OperationResult<FrontDoorSiteId>());
+        return Task.FromResult(new OperationResult<FrontDoorSiteId>(new FrontDoorSiteId("123")));
     }
 }

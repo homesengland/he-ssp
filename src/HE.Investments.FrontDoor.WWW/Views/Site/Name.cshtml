@@ -1,7 +1,6 @@
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.Components.TextInput
 @using HE.Investments.FrontDoor.WWW.Extensions
-@using HE.Investments.FrontDoor.WWW.Views.Project.Const
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
 @using HE.Investments.FrontDoor.Contract.Site
@@ -19,6 +18,8 @@
     <gds-back-link href="@Url.Action("IdentifiedSite", "Project", new { projectId })" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
 
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+
+    <vc:page-header caption="@ViewBag.ProjectName" />
 
     <form asp-controller="Site" asp-action="@submitAction" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
 

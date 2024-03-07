@@ -1,5 +1,6 @@
 using HE.Investment.AHP.Contract.Site;
 using HE.Investments.Common.Contract;
+using HE.Investments.Common.Contract.Enum;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.Site;
 
