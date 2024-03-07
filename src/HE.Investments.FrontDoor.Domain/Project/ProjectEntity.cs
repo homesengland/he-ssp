@@ -141,7 +141,7 @@ public class ProjectEntity : DomainEntity
 
         if (!newSupportActivityTypes.IsInfrastructureRequired())
         {
-            // TODO: Wipe answers #91004: Assess infrastructure delivery (portal user)
+            InfrastructureTypes = ProjectInfrastructureTypes.Empty();
         }
     }
 }

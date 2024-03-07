@@ -10,10 +10,17 @@ public class ProjectInfrastructureTypes : ValueObject, IQuestion
 {
     public ProjectInfrastructureTypes(IList<InfrastructureType> infrastructureTypes)
     {
+        if (!infrastructureTypes.Any())
+        {
+            OperationResult.New()
+                .AddValidationError("InfrastructureTypes", "Select the infrastructure your project delivers, or select 'I do not know'")
+                .CheckErrors();
+        }
+
         if (infrastructureTypes.Any(x => x == InfrastructureType.IDoNotKnow) && infrastructureTypes.Count > 1)
         {
             OperationResult.New()
-                .AddValidationError("InfrastructureTypes", ValidationErrorMessage.InvalidValue)
+                .AddValidationError("InfrastructureTypes", ValidationErrorMessage.ExclusiveOptionSelected("infrastructure type", "I do not know"))
                 .CheckErrors();
         }
 
