@@ -75,7 +75,7 @@ public class TelephoneNumberValidator
 
         if (!phoneNumberUtil.IsValidNumberForRegion(phoneNumber, ukRegionCode))
         {
-            _operationResult.AddValidationError(_fieldName, errorMessage ?? ValidationErrorMessage.EnterTelephoneNumberInValidFormat);
+            _operationResult.AddValidationError(_fieldName, errorMessage ?? ValidationErrorMessage.EnterUkTelephoneNumber);
             return;
         }
 
