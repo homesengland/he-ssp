@@ -5,6 +5,7 @@ using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.CRM.Mappers;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Serialization;
+using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.DocumentService.Models;
 using HE.Investments.Loans.BusinessLogic.CompanyStructure.Constants;
 using HE.Investments.Loans.BusinessLogic.CompanyStructure.Mappers;
@@ -25,11 +26,18 @@ public class CompanyStructureRepository : ICompanyStructureRepository
 
     private readonly ILoansDocumentSettings _documentSettings;
 
-    public CompanyStructureRepository(IOrganizationServiceAsync2 serviceClient, IFileApplicationRepository fileRepository, ILoansDocumentSettings documentSettings)
+    private readonly IEventDispatcher _eventDispatcher;
+
+    public CompanyStructureRepository(
+        IOrganizationServiceAsync2 serviceClient,
+        IFileApplicationRepository fileRepository,
+        ILoansDocumentSettings documentSettings,
+        IEventDispatcher eventDispatcher)
     {
         _serviceClient = serviceClient;
         _fileRepository = fileRepository;
         _documentSettings = documentSettings;
+        _eventDispatcher = eventDispatcher;
     }
 
     public async Task<CompanyStructureEntity> GetAsync(LoanApplicationId loanApplicationId, UserAccount userAccount, CompanyStructureFieldsSet companyStructureFieldsSet, CancellationToken cancellationToken)
@@ -56,7 +64,8 @@ public class CompanyStructureRepository : ICompanyStructureRepository
             CompanyStructureMapper.MapMoreInformation(loanApplicationDto.existingCompany),
             CompanyStructureMapper.MapHomesBuild(loanApplicationDto.companyExperience),
             SectionStatusMapper.Map(loanApplicationDto.CompanyStructureAndExperienceCompletionStatus),
-            ApplicationStatusMapper.MapToPortalStatus(loanApplicationDto.loanApplicationExternalStatus));
+            ApplicationStatusMapper.MapToPortalStatus(loanApplicationDto.loanApplicationExternalStatus),
+            _eventDispatcher);
     }
 
     public async Task<FileLocation> GetFilesLocationAsync(LoanApplicationId fileParams, CancellationToken cancellationToken)
