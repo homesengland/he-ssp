@@ -30,5 +30,6 @@ public static class WebModule
         serviceCollections.AddEventInfrastructure();
         serviceCollections.AddHttpUserContext();
         serviceCollections.AddSingleton<IErrorViewPaths, LoansErrorViewPaths>();
+        serviceCollections.AddSingleton(x => x.GetRequiredService<IConfiguration>().GetSection("AppConfiguration:FrontDoorService").Get<FrontDoorConfig>());
     }
 }
