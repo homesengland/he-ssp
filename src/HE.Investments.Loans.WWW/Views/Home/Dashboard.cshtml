@@ -71,12 +71,12 @@
 
     <div class="govuk-!-padding-top-8">
         <gds-h3 size="ControlSize.M">
-            Start new Home Building Fund application
+            Start new project
         </gds-h3>
-        <p class="govuk-body govuk-!-margin-bottom-3">You can start a new application here. This will not impact any of your previous applications.</p>
+        <p class="govuk-body govuk-!-margin-bottom-3">Start a new project by answering a few questions to check if Homes England support is suitable for you, this will only take a few minutes.</p>
 
-        <link-button action-url="@Url.Action("StartApplication", "LoanApplicationV2")" id="start-application-link">
-            Start new application
-        </link-button>
+        <vc:button-start
+            text="Start"
+            href="@Url.Action("StartNewProject", "FrontDoor")"/>
     </div>
 </gds-column>
