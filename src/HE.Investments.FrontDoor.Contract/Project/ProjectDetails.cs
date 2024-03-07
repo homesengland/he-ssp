@@ -27,5 +27,7 @@ public class ProjectDetails
 
     public AffordableHomesAmount AffordableHomesAmount { get; set; }
 
+    public IList<RegionType>? Regions { get; set; }
+
     public string? HomesNumber { get; set; }
 }

@@ -2,10 +2,12 @@ using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.Common.Messages;
 using HE.Investments.Loans.BusinessLogic.Files;
 using HE.Investments.Loans.Contract.Application.Enums;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
+using HE.Investments.Loans.Contract.CompanyStructure.Events;
 using HE.Investments.Loans.Contract.CompanyStructure.ValueObjects;
 using HE.Investments.Loans.Contract.Documents;
 using SectionStatus = HE.Investments.Common.Contract.SectionStatus;
@@ -16,6 +18,8 @@ public class CompanyStructureEntity : DomainEntity
 {
     private const int AllowedFilesCount = 10;
 
+    private readonly IEventDispatcher _eventDispatcher;
+
     private IList<UploadedFile>? _files;
 
     public CompanyStructureEntity(
@@ -24,7 +28,8 @@ public class CompanyStructureEntity : DomainEntity
         OrganisationMoreInformation? moreInformation,
         HomesBuilt? homesBuilt,
         SectionStatus status,
-        ApplicationStatus loanApplicationStatus)
+        ApplicationStatus loanApplicationStatus,
+        IEventDispatcher eventDispatcher)
     {
         LoanApplicationId = loanApplicationId;
         Purpose = purpose;
@@ -32,6 +37,7 @@ public class CompanyStructureEntity : DomainEntity
         HomesBuilt = homesBuilt;
         Status = status;
         LoanApplicationStatus = loanApplicationStatus;
+        _eventDispatcher = eventDispatcher;
     }
 
     public CompanyPurpose? Purpose { get; private set; }
@@ -73,6 +79,11 @@ public class CompanyStructureEntity : DomainEntity
         IList<OrganisationMoreInformationFile> filesToUpload,
         CancellationToken cancellationToken)
     {
+        if (!filesToUpload.Any())
+        {
+            return Array.Empty<UploadedFile>();
+        }
+
         _files ??= (await fileService.GetFiles(LoanApplicationId, cancellationToken)).ToList();
         if (_files.Count + filesToUpload.Count > AllowedFilesCount)
         {
@@ -96,6 +107,7 @@ public class CompanyStructureEntity : DomainEntity
 
         UnCompleteSection();
         _files.AddRange(result);
+        await _eventDispatcher.Publish(new FilesUploadedSuccessfullyEvent(result.Select(x => x.Name).ToList()), cancellationToken);
 
         return result;
     }

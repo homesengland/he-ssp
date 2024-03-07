@@ -1,6 +1,7 @@
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Domain.Site.ValueObjects.Planning;
 using HE.Investment.AHP.Domain.Site.ValueObjects.Planning.PlanningDetailsTypes;
+using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.Contract.Exceptions;
 
 namespace HE.Investment.AHP.Domain.Site.ValueObjects.Factories;

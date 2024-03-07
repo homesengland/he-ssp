@@ -19,11 +19,31 @@ namespace DataverseModel
 		
 		public static class Fields
 		{
+			public const string invln_frontdoorprojectid = "invln_frontdoorprojectid";
 			public const string invln_fieldstoretrieve = "invln_fieldstoretrieve";
 			public const string invln_frontdoorprojectsiteid = "invln_frontdoorprojectsiteid";
 		}
 		
 		public const string ActionLogicalName = "invln_getsinglefrontdoorprojectsite";
+		
+		public string invln_frontdoorprojectid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_frontdoorprojectid"))
+				{
+					return ((string)(this.Parameters["invln_frontdoorprojectid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_frontdoorprojectid"] = value;
+			}
+		}
 		
 		public string invln_fieldstoretrieve
 		{
@@ -66,6 +86,7 @@ namespace DataverseModel
 		public invln_getsinglefrontdoorprojectsiteRequest()
 		{
 			this.RequestName = "invln_getsinglefrontdoorprojectsite";
+			this.invln_frontdoorprojectid = default(string);
 			this.invln_frontdoorprojectsiteid = default(string);
 		}
 	}

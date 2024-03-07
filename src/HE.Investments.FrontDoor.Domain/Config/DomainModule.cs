@@ -3,6 +3,7 @@ using HE.Investments.Common;
 using HE.Investments.Common.Utils;
 using HE.Investments.FrontDoor.Domain.Project.Crm;
 using HE.Investments.FrontDoor.Domain.Project.Repository;
+using HE.Investments.FrontDoor.Domain.Site.Repository;
 using MediatR.Pipeline;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,6 +17,7 @@ public static class DomainModule
         services.AddScoped<IDateTimeProvider, DateTimeProvider>();
         services.AddScoped<IProjectCrmContext, ProjectCrmContext>();
         services.AddScoped<IProjectRepository, ProjectRepository>();
+        services.AddScoped<ISiteRepository, SiteRepository>();
 
         services.AddTransient(typeof(IRequestExceptionHandler<,,>), typeof(DomainValidationHandler<,,>));
     }

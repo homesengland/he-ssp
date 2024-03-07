@@ -1,17 +1,35 @@
 @using HE.Investments.FrontDoor.Contract.Project
 @using HE.Investments.FrontDoor.WWW.Views.Shared.Components.FrontDoorWorkflowBackButton
 @using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investments.Common.WWW.Components.PageHeader
+@using HE.Investments.Common.WWW.Components.RadioListWithOr
+@using HE.Investments.Common.WWW.Helpers
+@using HE.Investments.FrontDoor.Contract.Project.Enums
 @using HE.Investments.FrontDoor.WWW.Views.Project.Const
+@model ProjectDetails
+
 @{
     ViewData["Title"] = ProjectPageTitles.GeographicFocus;
+    var allOptions = SelectListHelper.FromEnumToExtendedList<ProjectGeographicFocus>().ToList();
+    var availableOptions = allOptions.Where(o => o.Value != ProjectGeographicFocus.Unknown.ToString());
+    var alternativeOption = allOptions.Single(o => o.Value == ProjectGeographicFocus.Unknown.ToString());
 }
 
 <gds-div-grid-column-two-thirds>
     <vc:front-door-workflow-back-button current-page="@ProjectWorkflowState.GeographicFocus"></vc:front-door-workflow-back-button>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
+    <vc:page-header caption="@ViewBag.ProjectName" />
+
     <form asp-controller="Project" asp-action="GeographicFocus" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
-        TODO: @ProjectPageTitles.GeographicFocus
+
+                <vc:radio-list-with-or
+                    title="@ProjectPageTitles.GeographicFocus"
+                    title-type="@InputTitleType.PageHeader"
+                    field-name="@nameof(Model.GeographicFocus)"
+                    available-options="@availableOptions"
+                    alternative-option="@alternativeOption"
+                    value="@Model.GeographicFocus"/>
 
         <vc:form-button/>
         <vc:return-to-account-link/>

@@ -30,10 +30,11 @@ public class GetProjectDetailsQueryHandler : IRequestHandler<GetProjectDetailsQu
             IsEnglandHousingDelivery = project.IsEnglandHousingDelivery,
             OrganisationHomesBuilt = project.OrganisationHomesBuilt?.ToString(),
             IsSiteIdentified = project.IsSiteIdentified?.Value,
-            GeographicFocus = ProjectGeographicFocus.Regional,
-            IsFundingRequired = true,
+            GeographicFocus = project.GeographicFocus.GeographicFocus,
+            IsFundingRequired = project.IsFundingRequired?.Value,
             SupportActivityTypes = project.SupportActivities.Values,
             AffordableHomesAmount = project.AffordableHomesAmount.AffordableHomesAmount,
+            Regions = project.Regions.Values,
             HomesNumber = project.HomesNumber?.ToString(),
         };
     }

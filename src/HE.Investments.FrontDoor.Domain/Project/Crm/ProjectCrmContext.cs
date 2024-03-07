@@ -21,7 +21,6 @@ public class ProjectCrmContext : IProjectCrmContext
         var request = new invln_getmultiplefrontdoorprojectsRequest
         {
             invln_organisationid = organisationId.ToString(),
-            inlvn_userid = userGlobalId,
             invln_fieldstoretrieve = ProjectCrmFields.ProjectToRead.FormatFields(),
         };
         return await GetProjects(request, cancellationToken);
@@ -43,7 +42,6 @@ public class ProjectCrmContext : IProjectCrmContext
     {
         var request = new invln_getsinglefrontdoorprojectRequest
         {
-            invln_userid = userGlobalId,
             invln_organisationid = organisationId.ToString(),
             invln_frontdoorprojectid = projectId,
             invln_fieldstoretrieve = ProjectCrmFields.ProjectToRead.FormatFields(),
@@ -63,6 +61,17 @@ public class ProjectCrmContext : IProjectCrmContext
         };
 
         return await GetProject(request, cancellationToken);
+    }
+
+    public async Task<bool> IsThereProjectWithName(string projectName, CancellationToken cancellationToken)
+    {
+        var request = new invln_checkiffrontdoorprojectwithgivennameexistsRequest { invln_frontdoorprojectname = projectName };
+        var response = await _service.ExecuteAsync<invln_checkiffrontdoorprojectwithgivennameexistsRequest, invln_checkiffrontdoorprojectwithgivennameexistsResponse>(
+            request,
+            r => r.invln_frontdoorprojectexists,
+            cancellationToken);
+
+        return bool.TryParse(response, out var result) && result;
     }
 
     public async Task<string> Save(FrontDoorProjectDto dto, UserAccount userAccount, CancellationToken cancellationToken)

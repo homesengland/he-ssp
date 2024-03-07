@@ -50,7 +50,10 @@ public class ProjectRepository : IProjectRepository
             AmountofAffordableHomes = new AffordableHomesAmountMapper().ToDto(project.AffordableHomesAmount.AffordableHomesAmount),
             PreviousResidentialBuildingExperience = project.OrganisationHomesBuilt?.Value,
             IdentifiedSite = project.IsSiteIdentified?.Value,
-            NumberofHomesEnabled_Built = project.HomesNumber?.Value,
+            Region = new RegionsMapper().Map(project.Regions),
+            NumberofHomesEnabledBuilt = project.HomesNumber?.Value,
+            GeographicFocus = new ProjectGeographicFocusMapper().ToDto(project.GeographicFocus.GeographicFocus),
+            FundingRequired = project.IsFundingRequired?.Value,
         };
 
         var projectId = await _crmContext.Save(dto, userAccount, cancellationToken);
@@ -62,10 +65,9 @@ public class ProjectRepository : IProjectRepository
         return project;
     }
 
-    public Task<bool> DoesExist(ProjectName name, FrontDoorProjectId? exceptProjectId, CancellationToken cancellationToken)
+    public async Task<bool> DoesExist(ProjectName name, CancellationToken cancellationToken)
     {
-        // TODO: AB#91792 Validate project name uniqueness
-        return Task.FromResult(false);
+        return await _crmContext.IsThereProjectWithName(name.Value, cancellationToken);
     }
 
     private ProjectEntity MapToEntity(FrontDoorProjectDto dto)
@@ -78,6 +80,9 @@ public class ProjectRepository : IProjectRepository
             affordableHomesAmount: ProjectAffordableHomesAmount.Create(new AffordableHomesAmountMapper().ToDomain(dto.AmountofAffordableHomes)),
             organisationHomesBuilt: dto.PreviousResidentialBuildingExperience.IsProvided() ? new OrganisationHomesBuilt((int)dto.PreviousResidentialBuildingExperience!) : null,
             isSiteIdentified: dto.IdentifiedSite.IsProvided() ? new IsSiteIdentified(dto.IdentifiedSite) : null,
-            homesNumber: dto.NumberofHomesEnabled_Built.IsProvided() ? new HomesNumber((int)dto.NumberofHomesEnabled_Built!) : null);
+            regions: new RegionsMapper().Map(dto.Region),
+            homesNumber: dto.NumberofHomesEnabledBuilt.IsProvided() ? new HomesNumber(dto.NumberofHomesEnabledBuilt!.Value) : null,
+            geographicFocus: ProjectGeographicFocus.Create(new ProjectGeographicFocusMapper().ToDomain(dto.GeographicFocus)),
+            isFundingRequired: dto.FundingRequired.IsProvided() ? new IsFundingRequired(dto.FundingRequired) : null);
     }
 }

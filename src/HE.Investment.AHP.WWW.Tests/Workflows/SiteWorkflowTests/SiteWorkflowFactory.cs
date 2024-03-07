@@ -2,6 +2,7 @@ using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investment.AHP.Domain.Site.ValueObjects;
 using HE.Investment.AHP.WWW.Workflows;
+using HE.Investments.Common.Contract.Enum;
 using ContractSiteTypeDetails = HE.Investment.AHP.Contract.Site.SiteTypeDetails;
 using SiteRuralClassification = HE.Investment.AHP.Contract.Site.SiteRuralClassification;
 using SiteUseDetails = HE.Investment.AHP.Contract.Site.SiteUseDetails;

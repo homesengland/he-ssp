@@ -2,6 +2,7 @@ using FluentAssertions;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investment.AHP.WWW.Tests.TestDataBuilders;
+using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.WWW.Routing;
 
 namespace HE.Investment.AHP.WWW.Tests.Workflows.SiteWorkflowTests;

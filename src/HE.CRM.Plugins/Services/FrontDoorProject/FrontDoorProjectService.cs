@@ -41,7 +41,7 @@ namespace HE.CRM.Plugins.Services.FrontDoorProject
         }
         #endregion
 
-       
+
         public string CreateRecordFromPortal(string externalContactId, string organisationId, string frontDoorProjectId, string entityFieldsParameters)
         {
             Guid frontdoorprojectGUID = Guid.NewGuid();
@@ -56,7 +56,7 @@ namespace HE.CRM.Plugins.Services.FrontDoorProject
             // Update Or Create a FrontDoorProject Record
             if (!string.IsNullOrEmpty(frontDoorProjectId) && Guid.TryParse(frontDoorProjectId, out Guid projectId))
             {
-                this.TracingService.Trace("Update invln_FrontDoorProjectPOC");
+                this.TracingService.Trace("Update FrontDoorProjectPOC");
                 frontdoorprojectGUID = projectId;
                 frontDoorProjecToCreate.Id = projectId;
                 _frontDoorProjectRepository.Update(frontDoorProjecToCreate);
@@ -96,6 +96,10 @@ namespace HE.CRM.Plugins.Services.FrontDoorProject
                 }
             }
             return listOfFrontDoorProjects;
+        }
+        public bool CheckIfFrontDoorProjectWithGivenNameExists(string frontDoorProjectName)
+        {
+            return _frontDoorProjectRepository.CheckIfFrontDoorProjectWithGivenNameExists(frontDoorProjectName);
         }
 
         private string GenerateFetchXmlAttributes(string fieldsToRetrieve)

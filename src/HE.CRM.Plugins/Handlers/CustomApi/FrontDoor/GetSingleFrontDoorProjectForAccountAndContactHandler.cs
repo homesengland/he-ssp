@@ -4,7 +4,7 @@ using HE.Base.Plugins.Handlers;
 using HE.CRM.Plugins.Services.FrontDoorProject;
 
 
-namespace HE.CRM.Plugins.Handlers.CustomApi
+namespace HE.CRM.Plugins.Handlers.CustomApi.FrontDoor
 {
     public class GetSingleFrontDoorProjectForAccountAndContactHandler : CrmActionHandlerBase<invln_getsingleloanapplicationforaccountandcontactRequest, DataverseContext>
     {

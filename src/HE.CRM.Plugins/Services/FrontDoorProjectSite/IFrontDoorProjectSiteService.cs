@@ -8,7 +8,8 @@ namespace HE.CRM.Plugins.Services.FrontDoorProjectSite
 {
     public interface IFrontDoorProjectSiteService : ICrmService
     {
-        FrontDoorProjectSiteDto GetSingleFrontDoorProjectSite(string frontDoorSiteId);
-        List<FrontDoorProjectSiteDto> GetMultipleSiteRelatedToFrontDoorProjectForGivenAccountAndContact(string frontDoorProjectId, string organisationId, string externalContactId);
+        PagedResponseDto<FrontDoorProjectSiteDto> GetFrontDoorProjectSites(PagingRequestDto pagingRequestDto, string frontDoorProjectId, string fieldsToRetrieve = null);
+        FrontDoorProjectSiteDto GetFrontDoorProjectSite(string frontDoorProjectId, string fieldsToRetrieve = null, string frontDoorProjectSiteId = null);
+        string CreateRecordFromPortal(string frontDoorProjectId, string entityFieldsParameters, string frontDoorSiteId = null);
     }
 }

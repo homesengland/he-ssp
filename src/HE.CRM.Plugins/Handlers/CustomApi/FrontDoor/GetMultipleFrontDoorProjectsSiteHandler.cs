@@ -2,27 +2,29 @@ using System.Text.Json;
 using DataverseModel;
 using HE.Base.Plugins.Handlers;
 using HE.CRM.Plugins.Services.FrontDoorProjectSite;
+using HE.Common.IntegrationModel.PortalIntegrationModel;
 
-namespace HE.CRM.Plugins.Handlers.CustomApi
+namespace HE.CRM.Plugins.Handlers.CustomApi.FrontDoor
 {
     internal class GetMultipleFrontDoorProjectsSiteHandler : CrmActionHandlerBase<invln_getmultiplefrontdoorprojectssiteRequest, DataverseContext>
     {
         #region Fields
-        private string organisationId => ExecutionData.GetInputParameter<string>(invln_getmultiplefrontdoorprojectssiteRequest.Fields.invln_organisationid);
-        private string externalContactId => ExecutionData.GetInputParameter<string>(invln_getmultiplefrontdoorprojectssiteRequest.Fields.invln_externalcontactid);
         private string frontDoorProjectId => ExecutionData.GetInputParameter<string>(invln_getmultiplefrontdoorprojectssiteRequest.Fields.invln_frontdoorprojectid);
+        private string fieldsToRetrieve => ExecutionData.GetInputParameter<string>(invln_getmultiplefrontdoorprojectssiteRequest.Fields.invln_fieldstoretrieve);
+        private string pagingRequest => ExecutionData.GetInputParameter<string>(invln_getmultiplefrontdoorprojectssiteRequest.Fields.invln_pagingrequest);
         #endregion
 
         #region Base Methods Overrides
         public override bool CanWork()
         {
-            return !string.IsNullOrEmpty(organisationId) && !string.IsNullOrEmpty(externalContactId) && !string.IsNullOrEmpty(frontDoorProjectId);
+            return !string.IsNullOrEmpty(frontDoorProjectId) && !string.IsNullOrEmpty(pagingRequest);
         }
 
         public override void DoWork()
         {
             this.TracingService.Trace("GetMultipleFrontDoorProjectsSiteHandler");
-            var frontDoorProjectSiteDtoList = CrmServicesFactory.Get<IFrontDoorProjectSiteService>().GetMultipleSiteRelatedToFrontDoorProjectForGivenAccountAndContact(frontDoorProjectId, organisationId, externalContactId);
+            var paging = JsonSerializer.Deserialize<PagingRequestDto>(pagingRequest);
+            var frontDoorProjectSiteDtoList = CrmServicesFactory.Get<IFrontDoorProjectSiteService>().GetFrontDoorProjectSites(paging, frontDoorProjectId, fieldsToRetrieve);
             this.TracingService.Trace("Send Response");
             if (frontDoorProjectSiteDtoList != null)
             {

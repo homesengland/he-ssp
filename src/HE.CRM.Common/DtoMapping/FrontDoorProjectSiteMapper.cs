@@ -24,7 +24,7 @@ namespace HE.CRM.Common.DtoMapping
             return frontDoorProjectSiteToReturn;
         }
 
-        public static invln_FrontDoorProjectSitePOC MapFrontDoorProjectSiteDtoToRegularEntity(FrontDoorProjectSiteDto frontDoorProjectSiteDto, string frontdoorprojectGUID)
+        public static invln_FrontDoorProjectSitePOC MapFrontDoorProjectSiteDtoToRegularEntity(FrontDoorProjectSiteDto frontDoorProjectSiteDto, string frontdoorprojectId)
         {
             var frontDoorProjectSiteDtoToReturn = new invln_FrontDoorProjectSitePOC()
             {
@@ -33,7 +33,7 @@ namespace HE.CRM.Common.DtoMapping
                 invln_PlanningStatus = frontDoorProjectSiteDto.PlanningStatus.HasValue ? new OptionSetValue(frontDoorProjectSiteDto.PlanningStatus.Value) : null,
             };
 
-            if (Guid.TryParse(frontdoorprojectGUID, out Guid projectId))
+            if (Guid.TryParse(frontdoorprojectId, out Guid projectId))
             {
                 frontDoorProjectSiteDtoToReturn.invln_FrontDoorProjectId = new EntityReference(invln_FrontDoorProjectPOC.EntityLogicalName, projectId);
             }

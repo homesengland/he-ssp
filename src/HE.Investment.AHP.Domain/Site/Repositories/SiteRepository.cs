@@ -20,7 +20,7 @@ public class SiteRepository : ISiteRepository
         _siteCrmContext = siteCrmContext;
     }
 
-    public async Task<bool> IsExist(SiteName name, SiteId exceptSiteId, CancellationToken cancellationToken)
+    public async Task<bool> IsExist(SiteName name, CancellationToken cancellationToken)
     {
         return await _siteCrmContext.Exist(name.Value, cancellationToken);
     }

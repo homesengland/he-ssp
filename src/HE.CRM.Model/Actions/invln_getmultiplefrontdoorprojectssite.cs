@@ -20,9 +20,8 @@ namespace DataverseModel
 		public static class Fields
 		{
 			public const string invln_fieldstoretrieve = "invln_fieldstoretrieve";
+			public const string invln_pagingrequest = "invln_pagingrequest";
 			public const string invln_frontdoorprojectid = "invln_frontdoorprojectid";
-			public const string invln_organisationid = "invln_organisationid";
-			public const string invln_externalcontactid = "invln_externalcontactid";
 		}
 		
 		public const string ActionLogicalName = "invln_getmultiplefrontdoorprojectssite";
@@ -46,6 +45,25 @@ namespace DataverseModel
 			}
 		}
 		
+		public string invln_pagingrequest
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_pagingrequest"))
+				{
+					return ((string)(this.Parameters["invln_pagingrequest"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_pagingrequest"] = value;
+			}
+		}
+		
 		public string invln_frontdoorprojectid
 		{
 			get
@@ -65,50 +83,11 @@ namespace DataverseModel
 			}
 		}
 		
-		public string invln_organisationid
-		{
-			get
-			{
-				if (this.Parameters.Contains("invln_organisationid"))
-				{
-					return ((string)(this.Parameters["invln_organisationid"]));
-				}
-				else
-				{
-					return default(string);
-				}
-			}
-			set
-			{
-				this.Parameters["invln_organisationid"] = value;
-			}
-		}
-		
-		public string invln_externalcontactid
-		{
-			get
-			{
-				if (this.Parameters.Contains("invln_externalcontactid"))
-				{
-					return ((string)(this.Parameters["invln_externalcontactid"]));
-				}
-				else
-				{
-					return default(string);
-				}
-			}
-			set
-			{
-				this.Parameters["invln_externalcontactid"] = value;
-			}
-		}
-		
 		public invln_getmultiplefrontdoorprojectssiteRequest()
 		{
 			this.RequestName = "invln_getmultiplefrontdoorprojectssite";
+			this.invln_pagingrequest = default(string);
 			this.invln_frontdoorprojectid = default(string);
-			this.invln_organisationid = default(string);
-			this.invln_externalcontactid = default(string);
 		}
 	}
 	
