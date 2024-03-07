@@ -63,10 +63,9 @@ public class ProjectRepository : IProjectRepository
         return project;
     }
 
-    public Task<bool> DoesExist(ProjectName name, FrontDoorProjectId? exceptProjectId, CancellationToken cancellationToken)
+    public async Task<bool> DoesExist(ProjectName name, CancellationToken cancellationToken)
     {
-        // TODO: AB#91792 Validate project name uniqueness
-        return Task.FromResult(false);
+        return await _crmContext.IsThereProjectWithName(name.Value, cancellationToken);
     }
 
     private ProjectEntity MapToEntity(FrontDoorProjectDto dto)

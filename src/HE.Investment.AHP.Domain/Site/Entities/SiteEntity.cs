@@ -111,7 +111,12 @@ public class SiteEntity : DomainEntity, IQuestion
 
     public async Task ProvideName(SiteName siteName, ISiteNameExist siteNameExist, CancellationToken cancellationToken)
     {
-        if (await siteNameExist.IsExist(siteName, Id, cancellationToken))
+        if (Name == siteName)
+        {
+            return;
+        }
+
+        if (await siteNameExist.IsExist(siteName, cancellationToken))
         {
             OperationResult.New()
                 .AddValidationError(nameof(Name), "There is already a site with this name. Enter a different name")

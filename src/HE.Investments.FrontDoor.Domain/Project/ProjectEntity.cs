@@ -55,7 +55,7 @@ public class ProjectEntity : DomainEntity
 
     public static async Task<ProjectEntity> New(ProjectName projectName, IProjectNameExists projectNameExists, CancellationToken cancellationToken)
     {
-        return new(FrontDoorProjectId.New(), await ValidateProjectName(projectName, projectNameExists, null, cancellationToken));
+        return new(FrontDoorProjectId.New(), await ValidateProjectNameUniqueness(projectName, projectNameExists, cancellationToken));
     }
 
     public static bool ValidateEnglandHousingDelivery(bool? isEnglandHousingDelivery)
@@ -95,7 +95,12 @@ public class ProjectEntity : DomainEntity
 
     public async Task ProvideName(ProjectName projectName, IProjectNameExists projectNameExists, CancellationToken cancellationToken)
     {
-        Name = _modificationTracker.Change(Name, await ValidateProjectName(projectName, projectNameExists, Id, cancellationToken));
+        if (Name == projectName)
+        {
+            return;
+        }
+
+        Name = _modificationTracker.Change(Name, await ValidateProjectNameUniqueness(projectName, projectNameExists, cancellationToken));
     }
 
     public void ProvideIsEnglandHousingDelivery(bool? isEnglandHousingDelivery)
@@ -118,13 +123,12 @@ public class ProjectEntity : DomainEntity
         HomesNumber = _modificationTracker.Change(HomesNumber, homesNumber);
     }
 
-    private static async Task<ProjectName> ValidateProjectName(
+    private static async Task<ProjectName> ValidateProjectNameUniqueness(
         ProjectName projectName,
         IProjectNameExists projectNameExists,
-        FrontDoorProjectId? projectId,
         CancellationToken cancellationToken)
     {
-        if (await projectNameExists.DoesExist(projectName, projectId, cancellationToken))
+        if (await projectNameExists.DoesExist(projectName, cancellationToken))
         {
             OperationResult.ThrowValidationError(nameof(Name), "This name has already been used on another project");
         }

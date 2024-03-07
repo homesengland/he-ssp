@@ -63,6 +63,17 @@ public class ProjectCrmContext : IProjectCrmContext
         return await GetProject(request, cancellationToken);
     }
 
+    public async Task<bool> IsThereProjectWithName(string projectName, CancellationToken cancellationToken)
+    {
+        var request = new invln_checkiffrontdoorprojectwithgivennameexistsRequest { invln_frontdoorprojectname = projectName };
+        var response = await _service.ExecuteAsync<invln_checkiffrontdoorprojectwithgivennameexistsRequest, invln_checkiffrontdoorprojectwithgivennameexistsResponse>(
+            request,
+            r => r.invln_frontdoorprojectexists,
+            cancellationToken);
+
+        return bool.TryParse(response, out var result) && result;
+    }
+
     public async Task<string> Save(FrontDoorProjectDto dto, UserAccount userAccount, CancellationToken cancellationToken)
     {
         var request = new invln_setfrontdoorprojectRequest
