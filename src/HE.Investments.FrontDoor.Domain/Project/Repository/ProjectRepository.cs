@@ -50,6 +50,7 @@ public class ProjectRepository : IProjectRepository
             AmountofAffordableHomes = new AffordableHomesAmountMapper().ToDto(project.AffordableHomesAmount.AffordableHomesAmount),
             PreviousResidentialBuildingExperience = project.OrganisationHomesBuilt?.Value,
             IdentifiedSite = project.IsSiteIdentified?.Value,
+            Region = new RegionsMapper().Map(project.Regions),
             NumberofHomesEnabledBuilt = project.HomesNumber?.Value,
             GeographicFocus = new ProjectGeographicFocusMapper().ToDto(project.GeographicFocus.GeographicFocus),
         };
@@ -78,6 +79,7 @@ public class ProjectRepository : IProjectRepository
             affordableHomesAmount: ProjectAffordableHomesAmount.Create(new AffordableHomesAmountMapper().ToDomain(dto.AmountofAffordableHomes)),
             organisationHomesBuilt: dto.PreviousResidentialBuildingExperience.IsProvided() ? new OrganisationHomesBuilt((int)dto.PreviousResidentialBuildingExperience!) : null,
             isSiteIdentified: dto.IdentifiedSite.IsProvided() ? new IsSiteIdentified(dto.IdentifiedSite) : null,
+            regions: new RegionsMapper().Map(dto.Region),
             homesNumber: dto.NumberofHomesEnabledBuilt.IsProvided() ? new HomesNumber(dto.NumberofHomesEnabledBuilt!.Value) : null,
             geographicFocus: ProjectGeographicFocus.Create(new ProjectGeographicFocusMapper().ToDomain(dto.GeographicFocus)));
     }

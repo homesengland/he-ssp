@@ -34,6 +34,7 @@ public class GetProjectDetailsQueryHandler : IRequestHandler<GetProjectDetailsQu
             IsFundingRequired = true,
             SupportActivityTypes = project.SupportActivities.Values,
             AffordableHomesAmount = project.AffordableHomesAmount.AffordableHomesAmount,
+            Regions = project.Regions.Values,
             HomesNumber = project.HomesNumber?.ToString(),
         };
     }

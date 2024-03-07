@@ -285,7 +285,15 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     [WorkflowState(ProjectWorkflowState.Region)]
     public async Task<IActionResult> Region([FromRoute] string projectId, ProjectDetails model, CancellationToken cancellationToken)
     {
-        return await Continue(new { projectId });
+        return await ExecuteProjectCommand(
+            new ProvideRegionCommand(new FrontDoorProjectId(projectId), model.Regions ?? new List<RegionType>()),
+            nameof(Region),
+            project =>
+            {
+                project.Regions = model.Regions;
+                return project;
+            },
+            cancellationToken);
     }
 
     [HttpGet("{projectId}/local-authority-search")]
