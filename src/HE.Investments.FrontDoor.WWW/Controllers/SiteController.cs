@@ -98,7 +98,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     {
         return await ExecuteSiteCommand(
             new ProvideSiteHomesNumberCommand(new FrontDoorSiteId(siteId), model.HomesNumber),
-            nameof(PlanningStatus),
+            nameof(HomesNumber),
             project =>
             {
                 project.HomesNumber = model.HomesNumber;
