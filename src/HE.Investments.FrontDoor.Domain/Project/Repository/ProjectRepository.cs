@@ -48,7 +48,9 @@ public class ProjectRepository : IProjectRepository
             externalId = userAccount.UserGlobalId.Value,
             ActivitiesinThisProject = new SupportActivitiesMapper().Map(project.SupportActivities),
             AmountofAffordableHomes = new AffordableHomesAmountMapper().ToDto(project.AffordableHomesAmount.AffordableHomesAmount),
+            PreviousResidentialBuildingExperience = project.OrganisationHomesBuilt?.Value,
             IdentifiedSite = project.IsSiteIdentified?.Value,
+            NumberofHomesEnabled_Built = project.HomesNumber?.Value,
         };
 
         var projectId = await _crmContext.Save(dto, userAccount, cancellationToken);
@@ -74,6 +76,8 @@ public class ProjectRepository : IProjectRepository
             dto.ProjectSupportsHousingDeliveryinEngland,
             supportActivityTypes: new SupportActivitiesMapper().Map(dto.ActivitiesinThisProject),
             affordableHomesAmount: ProjectAffordableHomesAmount.Create(new AffordableHomesAmountMapper().ToDomain(dto.AmountofAffordableHomes)),
-            isSiteIdentified: dto.IdentifiedSite.IsProvided() ? new IsSiteIdentified(dto.IdentifiedSite) : null);
+            organisationHomesBuilt: dto.PreviousResidentialBuildingExperience.IsProvided() ? new OrganisationHomesBuilt((int)dto.PreviousResidentialBuildingExperience!) : null,
+            isSiteIdentified: dto.IdentifiedSite.IsProvided() ? new IsSiteIdentified(dto.IdentifiedSite) : null,
+            homesNumber: dto.NumberofHomesEnabled_Built.IsProvided() ? new HomesNumber((int)dto.NumberofHomesEnabled_Built!) : null);
     }
 }

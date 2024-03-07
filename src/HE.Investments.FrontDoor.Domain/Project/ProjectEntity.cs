@@ -19,14 +19,18 @@ public class ProjectEntity : DomainEntity
         bool? isEnglandHousingDelivery = null,
         SupportActivities? supportActivityTypes = null,
         ProjectAffordableHomesAmount? affordableHomesAmount = null,
-        IsSiteIdentified? isSiteIdentified = null)
+        OrganisationHomesBuilt? organisationHomesBuilt = null,
+        IsSiteIdentified? isSiteIdentified = null,
+        HomesNumber? homesNumber = null)
     {
         Id = id;
         Name = name;
         IsEnglandHousingDelivery = isEnglandHousingDelivery ?? true;
         SupportActivities = supportActivityTypes ?? SupportActivities.Empty();
         AffordableHomesAmount = affordableHomesAmount ?? ProjectAffordableHomesAmount.Empty();
+        OrganisationHomesBuilt = organisationHomesBuilt;
         IsSiteIdentified = isSiteIdentified;
+        HomesNumber = homesNumber;
     }
 
     public FrontDoorProjectId Id { get; private set; }
@@ -39,7 +43,11 @@ public class ProjectEntity : DomainEntity
 
     public ProjectAffordableHomesAmount AffordableHomesAmount { get; private set; }
 
+    public OrganisationHomesBuilt? OrganisationHomesBuilt { get; private set; }
+
     public IsSiteIdentified? IsSiteIdentified { get; private set; }
+
+    public HomesNumber? HomesNumber { get; private set; }
 
     public static async Task<ProjectEntity> New(ProjectName projectName, IProjectNameExists projectNameExists, CancellationToken cancellationToken)
     {
@@ -89,6 +97,16 @@ public class ProjectEntity : DomainEntity
     public void ProvideIsSiteIdentified(IsSiteIdentified isSiteIdentified)
     {
         IsSiteIdentified = _modificationTracker.Change(IsSiteIdentified, isSiteIdentified);
+    }
+
+    public void ProvideOrganisationHomesBuilt(OrganisationHomesBuilt organisationHomesBuilt)
+    {
+        OrganisationHomesBuilt = _modificationTracker.Change(OrganisationHomesBuilt, organisationHomesBuilt);
+    }
+
+    public void ProvideHomesNumber(HomesNumber homesNumber)
+    {
+        HomesNumber = _modificationTracker.Change(HomesNumber, homesNumber);
     }
 
     private static async Task<ProjectName> ValidateProjectName(

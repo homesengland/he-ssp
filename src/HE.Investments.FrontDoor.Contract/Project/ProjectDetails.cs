@@ -13,6 +13,8 @@ public class ProjectDetails
 
     public IList<SupportActivityType>? SupportActivityTypes { get; set; }
 
+    public string? OrganisationHomesBuilt { get; set; }
+
     public bool? IsSiteIdentified { get; set; }
 
     public FrontDoorSiteId? LastSiteId { get; set; }
@@ -22,4 +24,6 @@ public class ProjectDetails
     public bool? IsFundingRequired { get; set; }
 
     public AffordableHomesAmount AffordableHomesAmount { get; set; }
+
+    public string? HomesNumber { get; set; }
 }

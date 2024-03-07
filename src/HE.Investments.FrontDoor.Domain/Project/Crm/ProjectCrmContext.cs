@@ -22,6 +22,7 @@ public class ProjectCrmContext : IProjectCrmContext
         {
             invln_organisationid = organisationId.ToString(),
             inlvn_userid = userGlobalId,
+            invln_fieldstoretrieve = ProjectCrmFields.ProjectToRead.FormatFields(),
         };
         return await GetProjects(request, cancellationToken);
     }
@@ -32,6 +33,7 @@ public class ProjectCrmContext : IProjectCrmContext
         {
             inlvn_userid = userGlobalId,
             invln_organisationid = organisationId.ToString(),
+            invln_fieldstoretrieve = ProjectCrmFields.ProjectToRead.FormatFields(),
         };
 
         return await GetProjects(request, cancellationToken);
@@ -44,6 +46,7 @@ public class ProjectCrmContext : IProjectCrmContext
             invln_userid = userGlobalId,
             invln_organisationid = organisationId.ToString(),
             invln_frontdoorprojectid = projectId,
+            invln_fieldstoretrieve = ProjectCrmFields.ProjectToRead.FormatFields(),
         };
 
         return await GetProject(request, cancellationToken);
@@ -56,6 +59,7 @@ public class ProjectCrmContext : IProjectCrmContext
             invln_organisationid = organisationId.ToString(),
             invln_userid = userGlobalId,
             invln_frontdoorprojectid = projectId,
+            invln_fieldstoretrieve = ProjectCrmFields.ProjectToRead.FormatFields(),
         };
 
         return await GetProject(request, cancellationToken);

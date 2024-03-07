@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace HE.Investment.AHP.WWW.Views.Shared.Components.LinkWorkingAsButton;
+namespace HE.Investments.Common.WWW.Components.LinkWorkingAsButton;
 
 public class LinkWorkingAsButton : ViewComponent
 {
