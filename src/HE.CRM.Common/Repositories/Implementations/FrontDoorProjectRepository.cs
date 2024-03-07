@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Linq;
 using DataverseModel;
 using HE.Base.Repositories;
 using HE.CRM.Common.Repositories.Interfaces;
@@ -43,6 +44,14 @@ namespace HE.CRM.Common.Repositories.Implementations
             {
                 return ctx.CreateQuery<invln_FrontDoorProjectPOC>()
                     .Where(x => x.invln_AccountId.Id == accountId && x.StatusCode.Value != (int)invln_FrontDoorProjectPOC_StatusCode.Inactive && x.StateCode.Value != (int)invln_FrontDoorProjectPOCState.Inactive).ToList();
+            }
+        }
+
+        public bool CheckIfFrontDoorProjectWithGivenNameExists(string frontDoorProjectName)
+        {
+            using (var ctx = new OrganizationServiceContext(service))
+            {
+                return ctx.CreateQuery<invln_FrontDoorProjectPOC>().Where(x => x.invln_Name == frontDoorProjectName).AsEnumerable().Any();
             }
         }
     }

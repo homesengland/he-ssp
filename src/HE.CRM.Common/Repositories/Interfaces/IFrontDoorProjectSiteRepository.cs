@@ -3,13 +3,13 @@ using DataverseModel;
 using System.Collections.Generic;
 using System;
 using Microsoft.Xrm.Sdk;
+using HE.Common.IntegrationModel.PortalIntegrationModel;
 
 namespace HE.CRM.Common.Repositories.Interfaces
 {
     public interface IFrontDoorProjectSiteRepository : ICrmEntityRepository<invln_FrontDoorProjectSitePOC, DataverseContext>
     {
-        List<invln_FrontDoorProjectSitePOC> GetSiteRelatedToFrontDoorProject(EntityReference frontDoorProjectId);
-        invln_FrontDoorProjectSitePOC GetSingleFrontDoorProjectSite(string frontDoorSiteId);
-        List<invln_FrontDoorProjectSitePOC> GetMultipleSiteRelatedToFrontDoorProjectForGivenAccountAndContact(string frontDoorProjectId, string organisationId, string externalContactId);
+        PagedResponseDto<invln_FrontDoorProjectSitePOC> GetFrontDoorProjectSites(PagingRequestDto paging, string frontDoorProjectIdCondition, string attributes);
+        invln_FrontDoorProjectSitePOC GetFrontDoorProjectSite(string frontDoorProjectIdCondition, string frontDoorProjecSitetIdCondition, string attributes);
     }
 }

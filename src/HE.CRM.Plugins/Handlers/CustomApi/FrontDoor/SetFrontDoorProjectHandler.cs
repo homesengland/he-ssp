@@ -1,9 +1,8 @@
 using DataverseModel;
 using HE.Base.Plugins.Handlers;
 using HE.CRM.Plugins.Services.FrontDoorProject;
-using HE.CRM.Plugins.Services.LoanApplication;
 
-namespace HE.CRM.Plugins.Handlers.CustomApi
+namespace HE.CRM.Plugins.Handlers.CustomApi.FrontDoor
 {
     public class SetFrontDoorProjectHandler : CrmActionHandlerBase<invln_setfrontdoorprojectRequest, DataverseContext>
     {

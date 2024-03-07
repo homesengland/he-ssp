@@ -116,9 +116,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.Investments.FrontDoor.Do
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.Investments.FrontDoor.Contract", "HE.Investments.FrontDoor.Contract\HE.Investments.FrontDoor.Contract.csproj", "{814F143D-FEC9-4D8C-92AC-6723891AAE2C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.Investments.FrontDoor.IntegrationTests", "HE.Investments.FrontDoor.IntegrationTests\HE.Investments.FrontDoor.IntegrationTests.csproj", "{5DA9B080-B380-445A-81D6-B0F19352EC45}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.Investments.FrontDoor.IntegrationTests", "HE.Investments.FrontDoor.IntegrationTests\HE.Investments.FrontDoor.IntegrationTests.csproj", "{5DA9B080-B380-445A-81D6-B0F19352EC45}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.Investments.FrontDoor.Domain.Tests", "HE.Investments.FrontDoor.Domain.Tests\HE.Investments.FrontDoor.Domain.Tests.csproj", "{98BBFE0A-050D-478E-965C-44651F2A743A}"
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.Investments.FrontDoor.Domain.Tests", "HE.Investments.FrontDoor.Domain.Tests\HE.Investments.FrontDoor.Domain.Tests.csproj", "{98BBFE0A-050D-478E-965C-44651F2A743A}"
 EndProject
 Global

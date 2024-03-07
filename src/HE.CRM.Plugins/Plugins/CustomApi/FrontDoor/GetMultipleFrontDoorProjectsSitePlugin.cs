@@ -1,11 +1,11 @@
 using DataverseModel;
 using HE.Base.Plugins.Handlers;
 using HE.Base.Plugins;
-using HE.CRM.Plugins.Handlers.CustomApi;
+using HE.CRM.Plugins.Handlers.CustomApi.FrontDoor;
 using Microsoft.Xrm.Sdk;
 using System.Collections.Generic;
 
-namespace HE.CRM.Plugins.Plugins.CustomApi
+namespace HE.CRM.Plugins.Plugins.CustomApi.FrontDoor
 {
     [CrmPluginRegistration(
     "invln_getmultiplefrontdoorprojectssite",
@@ -13,7 +13,7 @@ namespace HE.CRM.Plugins.Plugins.CustomApi
     StageEnum.PostOperation,
     ExecutionModeEnum.Synchronous,
     "",
-    "HE.CRM.Plugins.Plugins.CustomApi.GetMultipleFrontDoorProjectsSitePlugin: invln_getmultiplefrontdoorprojectssite",
+    "HE.CRM.Plugins.Plugins.CustomApi.FrontDoor.GetMultipleFrontDoorProjectsSitePlugin: invln_getmultiplefrontdoorprojectssite",
     1,
     IsolationModeEnum.Sandbox,
     Id = "5193DCAE-956B-4F1F-8B5E-015BDF13DD39")]

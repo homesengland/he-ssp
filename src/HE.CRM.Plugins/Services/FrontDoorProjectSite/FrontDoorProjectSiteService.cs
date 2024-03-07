@@ -35,25 +35,95 @@ namespace HE.CRM.Plugins.Services.FrontDoorProjectSite
         }
         #endregion
 
-        public FrontDoorProjectSiteDto GetSingleFrontDoorProjectSite(string frontDoorSiteId)
+
+        public PagedResponseDto<FrontDoorProjectSiteDto> GetFrontDoorProjectSites(PagingRequestDto pagingRequestDto, string frontDoorProjectId, string fieldsToRetrieve = null)
         {
-            var frontDoorProjectSite = _frontDoorProjectSiteRepository.GetSingleFrontDoorProjectSite(frontDoorSiteId);
-            var frontDoorProjectSiteDto = FrontDoorProjectSiteMapper.MapFrontDoorProjectSiteToDto(frontDoorProjectSite);
-            return frontDoorProjectSiteDto;
+            this.TracingService.Trace("GetFrontDoorProjectSites");
+            var frontDoorProjectIdCondition = GetFetchXmlConditionForGivenField(frontDoorProjectId, nameof(invln_FrontDoorProjectSitePOC.invln_FrontDoorProjectId).ToLower());
+            var attributes = GenerateFetchXmlAttributes(fieldsToRetrieve);
+
+            var frontDoorProjectPaging = _frontDoorProjectSiteRepository.GetFrontDoorProjectSites(pagingRequestDto, frontDoorProjectIdCondition, attributes);
+
+            return new PagedResponseDto<FrontDoorProjectSiteDto>
+            {
+                paging = frontDoorProjectPaging.paging,
+                totalItemsCount = frontDoorProjectPaging.totalItemsCount,
+                items = frontDoorProjectPaging.items.Select(x => FrontDoorProjectSiteMapper.MapFrontDoorProjectSiteToDto(x)).ToList(),
+            };
         }
 
-        public List<FrontDoorProjectSiteDto> GetMultipleSiteRelatedToFrontDoorProjectForGivenAccountAndContact(string frontDoorProjectId, string organisationId, string externalContactId)
+        public FrontDoorProjectSiteDto GetFrontDoorProjectSite(string frontDoorProjectId, string fieldsToRetrieve = null, string frontDoorProjectSiteId = null)
         {
-            List<FrontDoorProjectSiteDto> frontDoorProjectSiteDtoList = new List<FrontDoorProjectSiteDto>();
-            var frontDoorProjectSiteList = _frontDoorProjectSiteRepository.GetMultipleSiteRelatedToFrontDoorProjectForGivenAccountAndContact(frontDoorProjectId, organisationId, externalContactId);
+            this.TracingService.Trace("GetFrontDoorProjectSites");
 
-            foreach(var frontDoorProjectSite in frontDoorProjectSiteList)
+            var frontDoorProjectIdCondition = GetFetchXmlConditionForGivenField(frontDoorProjectId, nameof(invln_FrontDoorProjectSitePOC.invln_FrontDoorProjectId).ToLower());
+            var attributes = GenerateFetchXmlAttributes(fieldsToRetrieve);
+            var frontDoorProjectSiteIdCondition = GetFetchXmlConditionForGivenField(frontDoorProjectSiteId, nameof(invln_FrontDoorProjectSitePOC.invln_FrontDoorProjectSitePOCId).ToLower());
+
+            var frontDoorProjectSite = _frontDoorProjectSiteRepository.GetFrontDoorProjectSite(frontDoorProjectIdCondition, frontDoorProjectSiteIdCondition, attributes);
+            if (frontDoorProjectSite != null)
             {
-                var frontDoorProjectSiteDto = FrontDoorProjectSiteMapper.MapFrontDoorProjectSiteToDto(frontDoorProjectSite);
-                frontDoorProjectSiteDtoList.Add(frontDoorProjectSiteDto);
+                return FrontDoorProjectSiteMapper.MapFrontDoorProjectSiteToDto(frontDoorProjectSite);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public string CreateRecordFromPortal(string frontDoorProjectId, string entityFieldsParameters, string frontDoorSiteId = null)
+        {
+            Guid frontDoorSiteGUID = Guid.NewGuid();
+            this.TracingService.Trace("frontDoorProjectId:" + frontDoorProjectId);
+            this.TracingService.Trace("entityFieldsParameters:" + entityFieldsParameters);
+
+            FrontDoorProjectSiteDto frontDoorSiteFromPortal = JsonSerializer.Deserialize<FrontDoorProjectSiteDto>(entityFieldsParameters);
+            var frontDoorSiteToCreate = FrontDoorProjectSiteMapper.MapFrontDoorProjectSiteDtoToRegularEntity(frontDoorSiteFromPortal, frontDoorProjectId);
+
+            if (!string.IsNullOrEmpty(frontDoorSiteId) && Guid.TryParse(frontDoorSiteId, out Guid siteId))
+            {
+                this.TracingService.Trace("Update FrontDoorProjectSitePOC");
+                frontDoorSiteGUID = siteId;
+                frontDoorSiteToCreate.Id = siteId;
+                _frontDoorProjectSiteRepository.Update(frontDoorSiteToCreate);
+                this.TracingService.Trace("After update record");
+            }
+            else
+            {
+                this.TracingService.Trace("Create FrontDoorProjectSitePOC");
+                frontDoorSiteGUID = _frontDoorProjectSiteRepository.Create(frontDoorSiteToCreate);
+                this.TracingService.Trace("After create record");
             }
 
-            return frontDoorProjectSiteDtoList;
+            return frontDoorSiteGUID.ToString();
         }
+
+        private string GenerateFetchXmlAttributes(string fieldsToRetrieve)
+        {
+            if (!string.IsNullOrEmpty(fieldsToRetrieve))
+            {
+                var fields = fieldsToRetrieve.Split(',');
+                var generatedAttribuesFetchXml = "";
+                if (fields.Length > 0)
+                {
+                    foreach (var field in fields)
+                    {
+                        generatedAttribuesFetchXml += $"<attribute name=\"{field}\" />";
+                    }
+                }
+                return generatedAttribuesFetchXml;
+            }
+            return null;
+        }
+
+        private string GetFetchXmlConditionForGivenField(string fieldValue, string fieldName)
+        {
+            if (!string.IsNullOrEmpty(fieldValue))
+            {
+                return $"<condition attribute=\"{fieldName}\" operator=\"eq\" value=\"{fieldValue}\" />";
+            }
+            return string.Empty;
+        }
+
     }
 }
