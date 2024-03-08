@@ -27,7 +27,7 @@ namespace HE.CRM.Common.Repositories.Implementations
                                             <attribute name=""ownerid"" />
                                               {attributes}
                                             <filter>
-                                              <condition attribute=""statuscode"" operator=""eq"" value=""1"" />
+                                              <condition attribute=""statecode"" operator=""eq"" value=""0"" />
                                               {frontDoorProjectIdCondition}
                                             </filter>
                                           </entity>
@@ -50,7 +50,7 @@ namespace HE.CRM.Common.Repositories.Implementations
                                             <attribute name=""ownerid"" />
                                             {attributes}
                                             <filter>
-                                              <condition attribute=""statuscode"" operator=""eq"" value=""1"" />
+                                              <condition attribute=""statecode"" operator=""eq"" value=""0"" />
                                               {frontDoorProjectIdCondition}
                                               {frontDoorProjecSitetIdCondition}
                                             </filter>

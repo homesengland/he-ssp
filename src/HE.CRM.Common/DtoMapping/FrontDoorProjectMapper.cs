@@ -33,6 +33,7 @@ namespace HE.CRM.Common.DtoMapping
                 AmountofFundingRequired = project.invln_AmountofFundingRequired?.Value,
                 StartofProjectMonth = project.invln_StartofProjectMonth,
                 StartofProjectYear = project.invln_StartofProjectYear,
+                CreatedOn = project.CreatedOn,
             };
 
             if (project.invln_ActivitiesinThisProject != null && project.invln_ActivitiesinThisProject.Any())

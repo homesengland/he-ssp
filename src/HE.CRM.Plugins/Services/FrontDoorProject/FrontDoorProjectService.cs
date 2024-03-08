@@ -25,19 +25,14 @@ namespace HE.CRM.Plugins.Services.FrontDoorProject
 
         #region Fields
         private readonly IFrontDoorProjectRepository _frontDoorProjectRepository;
-        private readonly IFrontDoorProjectSiteRepository _frontDoorProjectSiteRepository;
         private readonly IContactRepository _contactRepository;
-        private readonly IWebRoleRepository _webroleRepository;
         #endregion
 
         #region Constructors
         public FrontDoorProjectService(CrmServiceArgs args) : base(args)
         {
-
             _frontDoorProjectRepository = CrmRepositoriesFactory.Get<IFrontDoorProjectRepository>();
-            _frontDoorProjectSiteRepository = CrmRepositoriesFactory.Get<IFrontDoorProjectSiteRepository>();
             _contactRepository = CrmRepositoriesFactory.Get<IContactRepository>();
-            _webroleRepository = CrmRepositoriesFactory.Get<IWebRoleRepository>();
         }
         #endregion
 
@@ -97,9 +92,18 @@ namespace HE.CRM.Plugins.Services.FrontDoorProject
             }
             return listOfFrontDoorProjects;
         }
+
         public bool CheckIfFrontDoorProjectWithGivenNameExists(string frontDoorProjectName)
         {
             return _frontDoorProjectRepository.CheckIfFrontDoorProjectWithGivenNameExists(frontDoorProjectName);
+        }
+
+        public bool DeactivateFrontDoorProject(string frontDoorProjectId)
+        { 
+            var frontDoorProject = _frontDoorProjectRepository.GetById(new Guid(frontDoorProjectId), new string[] { nameof(invln_FrontDoorProjectPOC.invln_FrontDoorProjectPOCId).ToLower() });
+            _frontDoorProjectRepository.SetState(frontDoorProject, invln_FrontDoorProjectPOCState.Inactive, invln_FrontDoorProjectPOC_StatusCode.Inactive);
+            var frontDoorProjectAfter = _frontDoorProjectRepository.GetById(new Guid(frontDoorProjectId), new string[] { nameof(invln_FrontDoorProjectPOC.StateCode).ToLower() });
+            return frontDoorProjectAfter.StateCode.Value == (int)invln_FrontDoorProjectPOCState.Inactive;
         }
 
         private string GenerateFetchXmlAttributes(string fieldsToRetrieve)

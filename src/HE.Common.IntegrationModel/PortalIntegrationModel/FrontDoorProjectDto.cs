@@ -27,7 +27,7 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public int? AmountofFundingRequired { get; set; } 
         public int? StartofProjectMonth { get; set; }
         public int? StartofProjectYear { get; set; }
+        public DateTime? CreatedOn { get; set; }
         public UserAccountDto FrontDoorProjectContact { get; set; }
-        public List<FrontDoorProjectSiteDto> FrontDoorSiteList { get; set; }
     }
 }
