@@ -1,7 +1,5 @@
-@using HE.Investments.FrontDoor.WWW.Config
 @using HE.Investments.Common.WWW.Components.PageHeader
 @using HE.Investments.FrontDoor.WWW.Views.Project.Const
-@inject IExternalLinks ExternalLinks
 @{
     ViewData["Title"] = ProjectPageTitles.NotEligibleForAnything;
     var projectId = ViewContext.RouteData.Values.FirstOrDefault(x => x.Key == "projectId").Value as string;
@@ -15,7 +13,6 @@
     <vc:page-header title="@ProjectPageTitles.NotEligibleForAnything"/>
     <gds-p>Based on your answers, you are not eligible for any Homes England support.</gds-p>
     <gds-p>You were not eligible because you told us your project is outside of the area that Homes England supports.</gds-p>
-    <gds-p>You may be eligible to apply for a <a target="_blank" href="@ExternalLinks.HomeBuildingFundInfrastructureLoans">Home Building Fund Infrastructure Loan</a>, or another Homes England service.</gds-p>
 
     <a class="govuk-button govuk-!-margin-right-4" data-module="govuk-button" href="@Url.Action("Index", "Account")">
         Continue
