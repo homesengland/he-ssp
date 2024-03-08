@@ -8,7 +8,8 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
     {
         public string SiteId { get; set; }
         public string SiteName { get; set; }
-        public int? NumberofHomesEnabledBuilt { get; set; }        
+        public int? NumberofHomesEnabledBuilt { get; set; }
         public int? PlanningStatus { get; set; }
+        public DateTime? CreatedOn { get; set; }
     }
 }
