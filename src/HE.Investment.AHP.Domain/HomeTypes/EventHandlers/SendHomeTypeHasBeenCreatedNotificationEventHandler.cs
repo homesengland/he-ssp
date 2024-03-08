@@ -7,15 +7,15 @@ namespace HE.Investment.AHP.Domain.HomeTypes.EventHandlers;
 
 public class SendHomeTypeHasBeenCreatedNotificationEventHandler : IEventHandler<HomeTypeHasBeenCreatedEvent>
 {
-    private readonly INotificationService _notificationService;
+    private readonly INotificationPublisher _notificationPublisher;
 
-    public SendHomeTypeHasBeenCreatedNotificationEventHandler(INotificationService notificationService)
+    public SendHomeTypeHasBeenCreatedNotificationEventHandler(INotificationPublisher notificationPublisher)
     {
-        _notificationService = notificationService;
+        _notificationPublisher = notificationPublisher;
     }
 
     public async Task Handle(HomeTypeHasBeenCreatedEvent domainEvent, CancellationToken cancellationToken)
     {
-        await _notificationService.Publish(new HomeTypeHasBeenCreatedNotification(domainEvent.HomeTypeName));
+        await _notificationPublisher.Publish(new HomeTypeHasBeenCreatedNotification(domainEvent.HomeTypeName));
     }
 }

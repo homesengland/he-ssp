@@ -5,7 +5,7 @@ namespace HE.Investment.AHP.WWW.Notifications;
 
 public class HomeTypeHasBeenCreatedDisplayNotificationFactory : IDisplayNotificationFactory
 {
-    public Type HandledNotificationType => typeof(HomeTypeHasBeenCreatedNotification);
+    public string HandledNotificationType => nameof(HomeTypeHasBeenCreatedNotification);
 
     public DisplayNotification Create(Notification notification)
     {

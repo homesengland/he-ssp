@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
 using HE.Investments.FrontDoor.Contract.Project;
+using HE.Investments.FrontDoor.Contract.Project.Enums;
 using HE.Investments.FrontDoor.IntegrationTests.Framework;
 using HE.Investments.FrontDoor.IntegrationTests.Pages;
 using HE.Investments.FrontDoor.WWW;
@@ -119,5 +120,16 @@ public class Order01CreateFrontDoorProject : FrontDoorIntegrationTest
             ProjectPageTitles.SupportRequiredActivities,
             ProjectPagesUrl.Tenure(ProjectData.Id),
             (nameof(ProjectDetails.SupportActivityTypes), ProjectData.ActivityType.ToString()));
+    }
+
+    [Fact(Skip = FrontDoorConfig.SkipTest)]
+    [Order(6)]
+    public async Task Order06_ProvideTenure()
+    {
+        await TestQuestionPage(
+            ProjectPagesUrl.Tenure(ProjectData.Id),
+            ProjectPageTitles.Tenure,
+            ProjectPagesUrl.OrganisationHomesBuilt(ProjectData.Id),
+            (nameof(ProjectDetails.AffordableHomesAmount), AffordableHomesAmount.OpenMarkedAndAffordableHomes.ToString()));
     }
 }

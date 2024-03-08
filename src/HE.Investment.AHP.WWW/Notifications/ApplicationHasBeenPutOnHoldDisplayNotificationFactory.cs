@@ -5,7 +5,7 @@ namespace HE.Investment.AHP.WWW.Notifications;
 
 public class ApplicationHasBeenPutOnHoldDisplayNotificationFactory : IDisplayNotificationFactory
 {
-    public Type HandledNotificationType => typeof(ApplicationHasBeenPutOnHoldNotification);
+    public string HandledNotificationType => nameof(ApplicationHasBeenPutOnHoldNotification);
 
     public DisplayNotification Create(Notification notification)
     {

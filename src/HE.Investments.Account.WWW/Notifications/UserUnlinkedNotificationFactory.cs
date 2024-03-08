@@ -5,7 +5,7 @@ namespace HE.Investments.Account.WWW.Notifications;
 
 public class UserUnlinkedNotificationFactory : IDisplayNotificationFactory
 {
-    public Type HandledNotificationType => typeof(UserUnlinkedNotification);
+    public string HandledNotificationType => nameof(UserUnlinkedNotification);
 
     public DisplayNotification Create(Notification notification)
     {

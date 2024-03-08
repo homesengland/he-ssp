@@ -163,7 +163,15 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     [WorkflowState(ProjectWorkflowState.Infrastructure)]
     public async Task<IActionResult> Infrastructure([FromRoute] string projectId, ProjectDetails model, CancellationToken cancellationToken)
     {
-        return await Continue(new { projectId });
+        return await ExecuteProjectCommand(
+            new ProvideInfrastructureTypesCommand(new FrontDoorProjectId(projectId), model.InfrastructureTypes ?? new List<InfrastructureType>()),
+            nameof(Infrastructure),
+            project =>
+            {
+                project.InfrastructureTypes = model.InfrastructureTypes;
+                return project;
+            },
+            cancellationToken);
     }
 
     [HttpGet("{projectId}/tenure")]
@@ -285,7 +293,15 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     [WorkflowState(ProjectWorkflowState.Region)]
     public async Task<IActionResult> Region([FromRoute] string projectId, ProjectDetails model, CancellationToken cancellationToken)
     {
-        return await Continue(new { projectId });
+        return await ExecuteProjectCommand(
+            new ProvideRegionCommand(new FrontDoorProjectId(projectId), model.Regions ?? new List<RegionType>()),
+            nameof(Region),
+            project =>
+            {
+                project.Regions = model.Regions;
+                return project;
+            },
+            cancellationToken);
     }
 
     [HttpGet("{projectId}/local-authority-search")]
@@ -384,7 +400,15 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     [WorkflowState(ProjectWorkflowState.RequiresFunding)]
     public async Task<IActionResult> RequiresFunding([FromRoute] string projectId, ProjectDetails model, CancellationToken cancellationToken)
     {
-        return await Continue(new { projectId });
+        return await ExecuteProjectCommand(
+            new ProvideIsFundingRequiredCommand(new FrontDoorProjectId(projectId), model.IsFundingRequired),
+            nameof(RequiresFunding),
+            project =>
+            {
+                project.IsFundingRequired = model.IsFundingRequired;
+                return project;
+            },
+            cancellationToken);
     }
 
     [HttpGet("{projectId}/funding-amount")]

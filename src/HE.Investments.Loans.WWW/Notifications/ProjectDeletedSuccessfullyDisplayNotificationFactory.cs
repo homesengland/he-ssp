@@ -5,7 +5,7 @@ namespace HE.Investments.Loans.WWW.Notifications;
 
 public class ProjectDeletedSuccessfullyDisplayNotificationFactory : IDisplayNotificationFactory
 {
-    public Type HandledNotificationType => typeof(ProjectDeletedSuccessfullyNotification);
+    public string HandledNotificationType => nameof(ProjectDeletedSuccessfullyNotification);
 
     public DisplayNotification Create(Notification notification)
     {

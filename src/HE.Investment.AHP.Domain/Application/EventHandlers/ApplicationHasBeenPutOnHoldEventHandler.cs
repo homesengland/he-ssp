@@ -7,15 +7,15 @@ namespace HE.Investment.AHP.Domain.Application.EventHandlers;
 
 public class ApplicationHasBeenPutOnHoldEventHandler : IEventHandler<ApplicationHasBeenPutOnHoldEvent>
 {
-    private readonly INotificationService _notificationService;
+    private readonly INotificationPublisher _notificationPublisher;
 
-    public ApplicationHasBeenPutOnHoldEventHandler(INotificationService notificationService)
+    public ApplicationHasBeenPutOnHoldEventHandler(INotificationPublisher notificationPublisher)
     {
-        _notificationService = notificationService;
+        _notificationPublisher = notificationPublisher;
     }
 
     public async Task Handle(ApplicationHasBeenPutOnHoldEvent domainEvent, CancellationToken cancellationToken)
     {
-        await _notificationService.Publish(new ApplicationHasBeenPutOnHoldNotification());
+        await _notificationPublisher.Publish(new ApplicationHasBeenPutOnHoldNotification());
     }
 }

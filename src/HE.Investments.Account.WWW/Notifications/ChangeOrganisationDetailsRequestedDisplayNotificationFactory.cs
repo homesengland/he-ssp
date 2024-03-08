@@ -5,7 +5,7 @@ namespace HE.Investments.Account.WWW.Notifications;
 
 public class ChangeOrganisationDetailsRequestedDisplayNotificationFactory : IDisplayNotificationFactory
 {
-    public Type HandledNotificationType => typeof(ChangeOrganisationDetailsRequestedNotification);
+    public string HandledNotificationType => nameof(ChangeOrganisationDetailsRequestedNotification);
 
     public DisplayNotification Create(Notification notification)
     {

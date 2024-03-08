@@ -3,6 +3,7 @@ using HE.Investments.Common;
 using HE.Investments.Common.Config;
 using HE.Investments.Common.CRM;
 using HE.Investments.Common.Infrastructure.Events;
+using HE.Investments.Common.Services.Notifications;
 using HE.Investments.Common.WWW.Infrastructure.Authorization;
 using HE.Investments.Common.WWW.Infrastructure.ErrorHandling;
 using HE.Investments.Common.WWW.Infrastructure.Middlewares;
@@ -25,10 +26,12 @@ public static class WebModule
         serviceCollections.AddCrmConnection();
         serviceCollections.AddBusinessLogic();
         serviceCollections.AddValidatorsFromAssemblyContaining<LoanPurposeModel>();
-        serviceCollections.AddNotifications("Loans", typeof(LoanApplicationHasBeenResubmittedDisplayNotificationFactory).Assembly);
+        serviceCollections.AddNotificationPublisher(ApplicationType.Loans);
+        serviceCollections.AddNotificationConsumer(ApplicationType.Loans, typeof(LoanApplicationHasBeenResubmittedDisplayNotificationFactory).Assembly);
         serviceCollections.AddOrganizationsModule();
         serviceCollections.AddEventInfrastructure();
         serviceCollections.AddHttpUserContext();
         serviceCollections.AddSingleton<IErrorViewPaths, LoansErrorViewPaths>();
+        serviceCollections.AddSingleton(x => x.GetRequiredService<IConfiguration>().GetSection("AppConfiguration:FrontDoorService").Get<FrontDoorConfig>());
     }
 }

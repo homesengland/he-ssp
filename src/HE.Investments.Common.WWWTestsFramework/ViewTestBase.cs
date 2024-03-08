@@ -23,7 +23,7 @@ public abstract class ViewTestBase
     {
         CustomRazorTemplateEngine.RegisterDependencies = services =>
         {
-            services.AddTransient(_ => new Mock<INotificationService>().Object);
+            services.AddTransient(_ => new Mock<INotificationConsumer>().Object);
             services.AddTransient(_ => new Mock<IAccountAccessContext>().Object);
             mockDependencies?.Invoke(services);
         };

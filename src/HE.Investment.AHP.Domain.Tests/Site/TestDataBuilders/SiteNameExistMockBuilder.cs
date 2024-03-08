@@ -18,7 +18,7 @@ public class SiteNameExistMockBuilder
 
     public SiteNameExistMockBuilder WithIsExistAsFalse()
     {
-        _mock.Setup(x => x.IsExist(It.IsAny<SiteName>(), It.IsAny<SiteId>(), It.IsAny<CancellationToken>()))
+        _mock.Setup(x => x.IsExist(It.IsAny<SiteName>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(false);
 
         return this;
@@ -26,7 +26,7 @@ public class SiteNameExistMockBuilder
 
     public SiteNameExistMockBuilder WithIsExistAsTrue()
     {
-        _mock.Setup(x => x.IsExist(It.IsAny<SiteName>(), It.IsAny<SiteId>(), It.IsAny<CancellationToken>()))
+        _mock.Setup(x => x.IsExist(It.IsAny<SiteName>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(true);
 
         return this;

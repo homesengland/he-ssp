@@ -15,6 +15,8 @@ public class ProjectDetails
 
     public string? OrganisationHomesBuilt { get; set; }
 
+    public IList<InfrastructureType>? InfrastructureTypes { get; set; }
+
     public bool? IsSiteIdentified { get; set; }
 
     public FrontDoorSiteId? LastSiteId { get; set; }
@@ -24,6 +26,8 @@ public class ProjectDetails
     public bool? IsFundingRequired { get; set; }
 
     public AffordableHomesAmount AffordableHomesAmount { get; set; }
+
+    public IList<RegionType>? Regions { get; set; }
 
     public string? HomesNumber { get; set; }
 }
