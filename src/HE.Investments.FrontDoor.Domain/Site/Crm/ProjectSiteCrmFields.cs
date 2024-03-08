@@ -9,7 +9,7 @@ public static class ProjectSiteCrmFields
     {
         nameof(invln_FrontDoorProjectSitePOC.invln_FrontDoorProjectId),
         nameof(invln_FrontDoorProjectSitePOC.invln_Name),
-        nameof(invln_FrontDoorProjectSitePOC.invln_planningstatusName),
+        nameof(invln_FrontDoorProjectSitePOC.invln_PlanningStatus),
         nameof(invln_FrontDoorProjectSitePOC.invln_NumberofHomesEnabledBuilt),
     };
 

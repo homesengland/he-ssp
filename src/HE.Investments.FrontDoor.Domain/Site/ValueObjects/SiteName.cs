@@ -8,4 +8,9 @@ public class SiteName : YourShortText
         : base(value, "Name", "site name")
     {
     }
+
+    protected override IEnumerable<object> GetAtomicValues()
+    {
+        yield return Value.ToLowerInvariant();
+    }
 }

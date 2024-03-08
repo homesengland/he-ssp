@@ -53,8 +53,8 @@ public class SiteRepository : ISiteRepository
     private ProjectSiteEntity ToDomain(FrontDoorProjectSiteDto dto, FrontDoorProjectId projectId)
     {
         return new ProjectSiteEntity(
-            new FrontDoorSiteId(dto.SiteId),
             projectId,
+            new FrontDoorSiteId(dto.SiteId),
             new SiteName(dto.SiteName),
             dto.CreatedOn);
     }
