@@ -11,5 +11,6 @@ namespace HE.CRM.Plugins.Services.FrontDoorProjectSite
         PagedResponseDto<FrontDoorProjectSiteDto> GetFrontDoorProjectSites(PagingRequestDto pagingRequestDto, string frontDoorProjectId, string fieldsToRetrieve = null);
         FrontDoorProjectSiteDto GetFrontDoorProjectSite(string frontDoorProjectId, string fieldsToRetrieve = null, string frontDoorProjectSiteId = null);
         string CreateRecordFromPortal(string frontDoorProjectId, string entityFieldsParameters, string frontDoorSiteId = null);
+        bool DeactivateFrontDoorSite(string frontDoorSiteId);
     }
 }

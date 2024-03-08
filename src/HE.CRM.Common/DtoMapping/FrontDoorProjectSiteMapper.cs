@@ -18,7 +18,7 @@ namespace HE.CRM.Common.DtoMapping
                 SiteName = frontDoorProjectSite.invln_Name,
                 NumberofHomesEnabledBuilt = frontDoorProjectSite.invln_NumberofHomesEnabledBuilt,
                 PlanningStatus = frontDoorProjectSite.invln_PlanningStatus?.Value,
-
+                CreatedOn = frontDoorProjectSite.CreatedOn,
             };
 
             return frontDoorProjectSiteToReturn;

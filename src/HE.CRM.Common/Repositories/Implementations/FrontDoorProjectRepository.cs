@@ -25,7 +25,7 @@ namespace HE.CRM.Common.Repositories.Implementations
                                             <attribute name=""invln_contactid"" />"
                                             + attributes +
                                             @"<filter>
-                                              <condition attribute=""statuscode"" operator=""ne"" value=""2"" />"
+                                              <condition attribute=""statecode"" operator=""eq"" value=""0"" />"
                                               + organisationCondition +
                                               frontDoorProjectFilters +
                                             @" </filter>
@@ -43,7 +43,7 @@ namespace HE.CRM.Common.Repositories.Implementations
             using (var ctx = new OrganizationServiceContext(service))
             {
                 return ctx.CreateQuery<invln_FrontDoorProjectPOC>()
-                    .Where(x => x.invln_AccountId.Id == accountId && x.StatusCode.Value != (int)invln_FrontDoorProjectPOC_StatusCode.Inactive && x.StateCode.Value != (int)invln_FrontDoorProjectPOCState.Inactive).ToList();
+                    .Where(x => x.invln_AccountId.Id == accountId && x.StatusCode.Value != (int)invln_FrontDoorProjectPOC_StatusCode.Inactive && x.StateCode.Value == (int)invln_FrontDoorProjectPOCState.Active).ToList();
             }
         }
 
@@ -51,7 +51,7 @@ namespace HE.CRM.Common.Repositories.Implementations
         {
             using (var ctx = new OrganizationServiceContext(service))
             {
-                return ctx.CreateQuery<invln_FrontDoorProjectPOC>().Where(x => x.invln_Name == frontDoorProjectName).AsEnumerable().Any();
+                return ctx.CreateQuery<invln_FrontDoorProjectPOC>().Where(x => x.invln_Name == frontDoorProjectName && x.StateCode.Value == (int)invln_FrontDoorProjectPOCState.Active).AsEnumerable().Any();
             }
         }
     }

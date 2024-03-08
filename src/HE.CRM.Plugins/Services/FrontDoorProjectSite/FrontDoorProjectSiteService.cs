@@ -98,6 +98,14 @@ namespace HE.CRM.Plugins.Services.FrontDoorProjectSite
             return frontDoorSiteGUID.ToString();
         }
 
+        public bool DeactivateFrontDoorSite(string frontDoorSiteId)
+        {
+            var frontDoorSite = _frontDoorProjectSiteRepository.GetById(new Guid(frontDoorSiteId), new string[] { nameof(invln_FrontDoorProjectSitePOC.invln_FrontDoorProjectSitePOCId).ToLower() });
+            _frontDoorProjectSiteRepository.SetState(frontDoorSite, invln_FrontDoorProjectSitePOCState.Inactive, invln_FrontDoorProjectSitePOC_StatusCode.Inactive);
+            var frontDoorSiteAfter = _frontDoorProjectSiteRepository.GetById(new Guid(frontDoorSiteId), new string[] { nameof(invln_FrontDoorProjectSitePOC.StateCode).ToLower() });
+            return frontDoorSiteAfter.StateCode.Value == (int)invln_FrontDoorProjectSitePOCState.Inactive;
+        }
+
         private string GenerateFetchXmlAttributes(string fieldsToRetrieve)
         {
             if (!string.IsNullOrEmpty(fieldsToRetrieve))

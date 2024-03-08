@@ -67,7 +67,7 @@ namespace HE.CRM.Plugins.Services.GovNotifyEmail
                 this.TracingService.Trace("EXTERNAL_APPLICATION_STATUS_CONFIRMATION");
                 var emailTemplate = _notificationSettingRepositoryAdmin.GetTemplateViaTypeName("EXTERNAL_APPLICATION_STATUS_CONFIRMATION");
                 var loanContactData = _contactRepositoryAdmin.GetById(loanApplication.invln_Contact.Id, nameof(Contact.EMailAddress1).ToLower(), nameof(SystemUser.FullName).ToLower());
-                var subject = "Your have " + actionCompleted;
+                var subject = "You have " + actionCompleted;
                 var govNotParams = new EXTERNAL_APPLICATION_STATUS_CONFIRMATION()
                 {
                     templateId = emailTemplate?.invln_templateid,
