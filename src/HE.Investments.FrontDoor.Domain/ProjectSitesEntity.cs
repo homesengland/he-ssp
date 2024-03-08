@@ -9,34 +9,34 @@ namespace HE.Investments.FrontDoor.Domain;
 
 public class ProjectSitesEntity
 {
-    private readonly IList<ProjectSiteEntity> _sites = new List<ProjectSiteEntity>();
-
-    public ProjectSitesEntity(FrontDoorProjectId projectId, IList<ProjectSiteEntity> sites)
+    public ProjectSitesEntity(FrontDoorProjectId projectId, IList<ProjectSiteEntity>? sites = null)
     {
         ProjectId = projectId;
-        _sites.AddRange(sites);
+        Sites.AddRange(sites);
     }
 
     public FrontDoorProjectId ProjectId { get; }
 
+    public IList<ProjectSiteEntity> Sites { get; } = new List<ProjectSiteEntity>();
+
     public ProjectSiteEntity CreateNewSite(SiteName siteName)
     {
-        if (_sites.Any(x => x.Name == siteName))
+        if (Sites.Any(x => x.Name == siteName))
         {
-            OperationResult.ThrowValidationError("Name", "This name has already been used on another site");
+            OperationResult.ThrowValidationError("Name", ValidationMessages.SiteNameIsAlreadyInUser);
         }
 
-        var newSite = new ProjectSiteEntity(FrontDoorSiteId.New(), ProjectId, siteName);
-        _sites.Add(newSite);
+        var newSite = new ProjectSiteEntity(ProjectId, FrontDoorSiteId.New(), siteName);
+        Sites.Add(newSite);
         return newSite;
     }
 
     public ProjectSiteEntity ChangeSiteName(FrontDoorSiteId siteId, SiteName siteName)
     {
-        var site = _sites.Single(x => x.Id == siteId);
-        if (_sites.Any(x => x.Name == siteName && x.Id != siteId))
+        var site = Sites.Single(x => x.Id == siteId);
+        if (Sites.Any(x => x.Name == siteName && x.Id != siteId))
         {
-            OperationResult.ThrowValidationError("Name", "This name has already been used on another site");
+            OperationResult.ThrowValidationError("Name", ValidationMessages.SiteNameIsAlreadyInUser);
         }
 
         site.ProvideName(siteName);
@@ -45,6 +45,6 @@ public class ProjectSitesEntity
 
     public FrontDoorSiteId? LastSiteId()
     {
-        return _sites.MaxBy(x => x.CreatedOn)?.Id;
+        return Sites.MaxBy(x => x.CreatedOn)?.Id;
     }
 }

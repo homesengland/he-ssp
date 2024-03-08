@@ -11,7 +11,7 @@ public class ProjectSiteEntity
 {
     private readonly ModificationTracker _modificationTracker = new();
 
-    public ProjectSiteEntity(FrontDoorSiteId id, FrontDoorProjectId projectId, SiteName name, DateTime? createdOn = null)
+    public ProjectSiteEntity(FrontDoorProjectId projectId, FrontDoorSiteId id, SiteName name, DateTime? createdOn = null)
     {
         Id = id;
         ProjectId = projectId;
