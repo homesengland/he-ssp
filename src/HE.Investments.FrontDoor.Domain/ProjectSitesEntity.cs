@@ -34,12 +34,17 @@ public class ProjectSitesEntity
     public ProjectSiteEntity ChangeSiteName(FrontDoorSiteId siteId, SiteName siteName)
     {
         var site = _sites.Single(x => x.Id == siteId);
+        if (_sites.Any(x => x.Name == siteName && x.Id != siteId))
+        {
+            OperationResult.ThrowValidationError("Name", "This name has already been used on another site");
+        }
+
         site.ProvideName(siteName);
         return site;
     }
 
     public FrontDoorSiteId? LastSiteId()
     {
-        return _sites.MinBy(x => x.CreatedOn)?.Id;
+        return _sites.MaxBy(x => x.CreatedOn)?.Id;
     }
 }
