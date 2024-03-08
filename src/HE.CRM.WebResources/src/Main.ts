@@ -6,6 +6,7 @@ import { Condition } from './events/Condition'
 import { LoanApplication } from './events/LoanApplication'
 import { ReviewApproval } from './events/ReviewApproval'
 import { AhpApplication } from './events/AhpApplication'
+import { Programme } from './events/Programme'
 
 export function initialize() {
   console.log('Initialize main library')
@@ -19,3 +20,4 @@ exports.Condition = Condition
 exports.LoanApplication = LoanApplication
 exports.ReviewApproval = ReviewApproval
 exports.AhpApplication = AhpApplication
+exports.Programme = Programme
