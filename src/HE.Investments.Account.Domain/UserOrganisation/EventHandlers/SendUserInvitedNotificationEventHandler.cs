@@ -7,15 +7,15 @@ namespace HE.Investments.Account.Domain.UserOrganisation.EventHandlers;
 
 public class SendUserInvitedNotificationEventHandler : IEventHandler<UserInvitedEvent>
 {
-    private readonly INotificationService _notificationService;
+    private readonly INotificationPublisher _notificationPublisher;
 
-    public SendUserInvitedNotificationEventHandler(INotificationService notificationService)
+    public SendUserInvitedNotificationEventHandler(INotificationPublisher notificationPublisher)
     {
-        _notificationService = notificationService;
+        _notificationPublisher = notificationPublisher;
     }
 
     public async Task Handle(UserInvitedEvent domainEvent, CancellationToken cancellationToken)
     {
-        await _notificationService.Publish(new UserInvitedNotification($"{domainEvent.FirstName} {domainEvent.LastName}"));
+        await _notificationPublisher.Publish(new UserInvitedNotification($"{domainEvent.FirstName} {domainEvent.LastName}"));
     }
 }

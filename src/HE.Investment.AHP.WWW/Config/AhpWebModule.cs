@@ -13,6 +13,7 @@ using HE.Investments.Common;
 using HE.Investments.Common.Config;
 using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.Common.Models.App;
+using HE.Investments.Common.Services.Notifications;
 using HE.Investments.Common.WWW.Infrastructure.Authorization;
 using HE.Investments.Common.WWW.Infrastructure.ErrorHandling;
 using HE.Investments.Common.WWW.Infrastructure.Middlewares;
@@ -34,7 +35,8 @@ public static class AhpWebModule
         service.AddHttpUserContext();
         service.AddDomainModule();
         service.AddEventInfrastructure();
-        service.AddNotifications("AHP", typeof(HomeTypeHasBeenCreatedDisplayNotificationFactory).Assembly);
+        service.AddNotificationPublisher(ApplicationType.Ahp);
+        service.AddNotificationConsumer(ApplicationType.Ahp, typeof(HomeTypeHasBeenCreatedDisplayNotificationFactory).Assembly);
         service.AddDocumentServiceModule();
         AddViewModelFactories(service);
 

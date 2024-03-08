@@ -1,8 +1,8 @@
 @using HE.Investments.Common.Services.Notifications
 
-@inject INotificationService NotificationService
+@inject INotificationConsumer NotificationConsumer
 @{
-    var notification = NotificationService.Pop();
+    var notification = NotificationConsumer.Pop();
 }
 
 @if (notification != null)

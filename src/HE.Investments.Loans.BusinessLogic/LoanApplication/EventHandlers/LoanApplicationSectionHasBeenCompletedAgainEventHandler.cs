@@ -9,16 +9,16 @@ namespace HE.Investments.Loans.BusinessLogic.LoanApplication.EventHandlers;
 
 public class LoanApplicationSectionHasBeenCompletedAgainEventHandler : IEventHandler<LoanApplicationSectionHasBeenCompletedAgainEvent>
 {
-    private readonly INotificationService _notificationService;
+    private readonly INotificationPublisher _notificationPublisher;
     private readonly ILoanApplicationRepository _loanApplicationRepository;
     private readonly IAccountUserContext _loanUserContext;
 
     public LoanApplicationSectionHasBeenCompletedAgainEventHandler(
-        INotificationService notificationService,
+        INotificationPublisher notificationPublisher,
         ILoanApplicationRepository loanApplicationRepository,
         IAccountUserContext loanUserContext)
     {
-        _notificationService = notificationService;
+        _notificationPublisher = notificationPublisher;
         _loanApplicationRepository = loanApplicationRepository;
         _loanUserContext = loanUserContext;
     }
@@ -30,7 +30,7 @@ public class LoanApplicationSectionHasBeenCompletedAgainEventHandler : IEventHan
 
         if (loanApplication.WasSubmitted())
         {
-            await _notificationService.Publish(new SectionCompletedAgainNotification());
+            await _notificationPublisher.Publish(new SectionCompletedAgainNotification());
         }
     }
 }

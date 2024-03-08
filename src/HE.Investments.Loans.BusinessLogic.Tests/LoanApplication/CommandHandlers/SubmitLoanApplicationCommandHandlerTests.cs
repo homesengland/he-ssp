@@ -45,7 +45,7 @@ public class SubmitLoanApplicationCommandHandlerTests : TestBase<SubmitLoanAppli
     }
 
     [Fact]
-    public async Task ShouldCallNotificationServiceIfApplicationWasPreviouslySubmitted()
+    public async Task ShouldPublishDomainEvents_WhenApplicationWasPreviouslySubmitted()
     {
         // given
         var loanApplicationId = LoanApplicationIdTestData.LoanApplicationIdOne;

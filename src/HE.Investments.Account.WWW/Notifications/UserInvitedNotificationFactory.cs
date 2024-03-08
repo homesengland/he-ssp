@@ -5,7 +5,7 @@ namespace HE.Investments.Account.WWW.Notifications;
 
 public class UserInvitedNotificationFactory : IDisplayNotificationFactory
 {
-    public Type HandledNotificationType => typeof(UserInvitedNotification);
+    public string HandledNotificationType => nameof(UserInvitedNotification);
 
     public DisplayNotification Create(Notification notification)
     {

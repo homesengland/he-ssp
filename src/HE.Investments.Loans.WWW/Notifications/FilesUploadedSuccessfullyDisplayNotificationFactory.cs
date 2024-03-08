@@ -5,7 +5,7 @@ namespace HE.Investments.Loans.WWW.Notifications;
 
 public class FilesUploadedSuccessfullyDisplayNotificationFactory : IDisplayNotificationFactory
 {
-    public Type HandledNotificationType => typeof(FilesUploadedSuccessfullyNotification);
+    public string HandledNotificationType => nameof(FilesUploadedSuccessfullyNotification);
 
     public DisplayNotification Create(Notification notification)
     {

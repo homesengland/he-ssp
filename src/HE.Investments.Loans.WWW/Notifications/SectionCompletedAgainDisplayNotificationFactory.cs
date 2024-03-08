@@ -5,7 +5,7 @@ namespace HE.Investments.Loans.WWW.Notifications;
 
 public class SectionCompletedAgainDisplayNotificationFactory : IDisplayNotificationFactory
 {
-    public Type HandledNotificationType => typeof(SectionCompletedAgainNotification);
+    public string HandledNotificationType => nameof(SectionCompletedAgainNotification);
 
     public DisplayNotification Create(Notification notification)
     {

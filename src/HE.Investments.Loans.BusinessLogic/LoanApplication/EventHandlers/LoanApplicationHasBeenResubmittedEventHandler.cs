@@ -7,15 +7,15 @@ namespace HE.Investments.Loans.BusinessLogic.LoanApplication.EventHandlers;
 
 public class LoanApplicationHasBeenResubmittedEventHandler : IEventHandler<LoanApplicationHasBeenResubmittedEvent>
 {
-    private readonly INotificationService _notificationService;
+    private readonly INotificationPublisher _notificationPublisher;
 
-    public LoanApplicationHasBeenResubmittedEventHandler(INotificationService notificationService)
+    public LoanApplicationHasBeenResubmittedEventHandler(INotificationPublisher notificationPublisher)
     {
-        _notificationService = notificationService;
+        _notificationPublisher = notificationPublisher;
     }
 
     public async Task Handle(LoanApplicationHasBeenResubmittedEvent domainEvent, CancellationToken cancellationToken)
     {
-        await _notificationService.Publish(new LoanApplicationHasBeenResubmittedNotification());
+        await _notificationPublisher.Publish(new LoanApplicationHasBeenResubmittedNotification());
     }
 }

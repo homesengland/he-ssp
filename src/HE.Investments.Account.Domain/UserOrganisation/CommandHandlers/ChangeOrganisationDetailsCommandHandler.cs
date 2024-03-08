@@ -8,8 +8,8 @@ using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Errors;
 using HE.Investments.Common.Messages;
-using HE.Investments.Common.Services.Notifications;
 using MediatR;
+using INotificationPublisher = HE.Investments.Common.Services.Notifications.INotificationPublisher;
 
 namespace HE.Investments.Account.Domain.UserOrganisation.CommandHandlers;
 
@@ -17,16 +17,16 @@ public class ChangeOrganisationDetailsCommandHandler : IRequestHandler<ChangeOrg
 {
     private readonly IAccountUserContext _accountUserContext;
     private readonly IOrganizationRepository _repository;
-    private readonly INotificationService _notificationService;
+    private readonly INotificationPublisher _notificationPublisher;
 
     public ChangeOrganisationDetailsCommandHandler(
         IAccountUserContext accountUserContext,
         IOrganizationRepository repository,
-        INotificationService notificationService)
+        INotificationPublisher notificationPublisher)
     {
         _accountUserContext = accountUserContext;
         _repository = repository;
-        _notificationService = notificationService;
+        _notificationPublisher = notificationPublisher;
     }
 
     public async Task<OperationResult> Handle(ChangeOrganisationDetailsCommand request, CancellationToken cancellationToken)
@@ -59,7 +59,7 @@ public class ChangeOrganisationDetailsCommandHandler : IRequestHandler<ChangeOrg
 
         await _repository.Save(userAccount.SelectedOrganisationId(), organisation, cancellationToken);
 
-        await _notificationService.Publish(new ChangeOrganisationDetailsRequestedNotification());
+        await _notificationPublisher.Publish(new ChangeOrganisationDetailsRequestedNotification());
 
         return OperationResult.Success();
     }

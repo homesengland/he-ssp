@@ -7,15 +7,15 @@ namespace HE.Investments.Account.Domain.UserOrganisation.EventHandlers;
 
 public class SendUserUnlinkedNotificationEventHandler : IEventHandler<UserUnlinkedEvent>
 {
-    private readonly INotificationService _notificationService;
+    private readonly INotificationPublisher _notificationPublisher;
 
-    public SendUserUnlinkedNotificationEventHandler(INotificationService notificationService)
+    public SendUserUnlinkedNotificationEventHandler(INotificationPublisher notificationPublisher)
     {
-        _notificationService = notificationService;
+        _notificationPublisher = notificationPublisher;
     }
 
     public async Task Handle(UserUnlinkedEvent domainEvent, CancellationToken cancellationToken)
     {
-        await _notificationService.Publish(new UserUnlinkedNotification($"{domainEvent.FirstName} {domainEvent.LastName}"));
+        await _notificationPublisher.Publish(new UserUnlinkedNotification($"{domainEvent.FirstName} {domainEvent.LastName}"));
     }
 }

@@ -1,7 +1,6 @@
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
-using HE.Investments.Common.Services.Notifications;
 using HE.Investments.Loans.BusinessLogic.CompanyStructure.Notifications;
 using HE.Investments.Loans.BusinessLogic.CompanyStructure.Repositories;
 using HE.Investments.Loans.BusinessLogic.Files;
@@ -9,6 +8,7 @@ using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
 using HE.Investments.Loans.Contract.CompanyStructure.Commands;
 using MediatR;
+using INotificationPublisher = HE.Investments.Common.Services.Notifications.INotificationPublisher;
 
 namespace HE.Investments.Loans.BusinessLogic.CompanyStructure.CommandHandlers;
 
@@ -16,17 +16,17 @@ public class RemoveMoreInformationAboutOrganizationFileCommandHandler : CompanyS
     IRequestHandler<RemoveMoreInformationAboutOrganizationFileCommand, OperationResult>
 {
     private readonly ILoansFileService<LoanApplicationId> _companyStructureFileService;
-    private readonly INotificationService _notificationService;
+    private readonly INotificationPublisher _notificationPublisher;
 
     public RemoveMoreInformationAboutOrganizationFileCommandHandler(
                 ICompanyStructureRepository companyStructureRepository,
                 ILoanApplicationRepository loanApplicationRepository,
                 ILoansFileService<LoanApplicationId> companyStructureFileService,
                 IAccountUserContext loanUserContext,
-                INotificationService notificationService)
+                INotificationPublisher notificationPublisher)
         : base(companyStructureRepository, loanApplicationRepository, loanUserContext)
     {
-        _notificationService = notificationService;
+        _notificationPublisher = notificationPublisher;
         _companyStructureFileService = companyStructureFileService;
     }
 
@@ -38,7 +38,7 @@ public class RemoveMoreInformationAboutOrganizationFileCommandHandler : CompanyS
                 var removedFile = await _companyStructureFileService.RemoveFile(request.FileId, request.LoanApplicationId, cancellationToken);
                 if (removedFile.IsProvided())
                 {
-                    await _notificationService.Publish(new FileRemovedSuccessfullyNotification(removedFile!.Name));
+                    await _notificationPublisher.Publish(new FileRemovedSuccessfullyNotification(removedFile!.Name));
                 }
             },
             request.LoanApplicationId,

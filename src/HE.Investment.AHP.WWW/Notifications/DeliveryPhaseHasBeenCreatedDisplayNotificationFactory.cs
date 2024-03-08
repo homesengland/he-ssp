@@ -5,7 +5,7 @@ namespace HE.Investment.AHP.WWW.Notifications;
 
 public class DeliveryPhaseHasBeenCreatedDisplayNotificationFactory : IDisplayNotificationFactory
 {
-    public Type HandledNotificationType => typeof(DeliveryPhaseHasBeenCreatedNotification);
+    public string HandledNotificationType => nameof(DeliveryPhaseHasBeenCreatedNotification);
 
     public DisplayNotification Create(Notification notification)
     {
