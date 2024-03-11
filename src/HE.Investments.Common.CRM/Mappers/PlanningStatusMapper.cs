@@ -1,9 +1,7 @@
-using HE.Investment.AHP.Contract.Site;
 using HE.Investments.Common.Contract.Enum;
-using HE.Investments.Common.CRM.Mappers;
 using HE.Investments.Common.CRM.Model;
 
-namespace HE.Investment.AHP.Domain.Site.Mappers;
+namespace HE.Investments.Common.CRM.Mappers;
 
 public class PlanningStatusMapper : EnumMapper<SitePlanningStatus>
 {

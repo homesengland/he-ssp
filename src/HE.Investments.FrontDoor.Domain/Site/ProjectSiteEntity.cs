@@ -11,12 +11,18 @@ public class ProjectSiteEntity
 {
     private readonly ModificationTracker _modificationTracker = new();
 
-    public ProjectSiteEntity(FrontDoorProjectId projectId, FrontDoorSiteId id, SiteName name, DateTime? createdOn = null)
+    public ProjectSiteEntity(
+        FrontDoorProjectId projectId,
+        FrontDoorSiteId id,
+        SiteName name,
+        DateTime? createdOn = null,
+        PlanningStatus? planningStatus = null)
     {
         Id = id;
         ProjectId = projectId;
         Name = name;
         CreatedOn = createdOn;
+        PlanningStatus = planningStatus ?? PlanningStatus.Empty();
     }
 
     public FrontDoorSiteId Id { get; private set; }
@@ -26,6 +32,8 @@ public class ProjectSiteEntity
     public SiteName Name { get; private set; }
 
     public DateTime? CreatedOn { get; }
+
+    public PlanningStatus PlanningStatus { get; private set; }
 
     public void ProvideName(SiteName siteName)
     {
@@ -40,5 +48,10 @@ public class ProjectSiteEntity
         }
 
         Id = newId;
+    }
+
+    public void ProvidePlanningStatus(PlanningStatus planningStatus)
+    {
+        PlanningStatus = _modificationTracker.Change(PlanningStatus, planningStatus);
     }
 }
