@@ -3,6 +3,7 @@ using HE.Investments.Common.Domain;
 using HE.Investments.Common.Errors;
 using HE.Investments.FrontDoor.Contract.Project;
 using HE.Investments.FrontDoor.Contract.Site;
+using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
 using HE.Investments.FrontDoor.Domain.Site.ValueObjects;
 
 namespace HE.Investments.FrontDoor.Domain.Site;
@@ -16,12 +17,14 @@ public class ProjectSiteEntity
         FrontDoorSiteId id,
         SiteName name,
         DateTime? createdOn = null,
+        HomesNumber? homesNumber = null,
         PlanningStatus? planningStatus = null)
     {
         Id = id;
         ProjectId = projectId;
         Name = name;
         CreatedOn = createdOn;
+        HomesNumber = homesNumber;
         PlanningStatus = planningStatus ?? PlanningStatus.Empty();
     }
 
@@ -30,6 +33,8 @@ public class ProjectSiteEntity
     public FrontDoorProjectId ProjectId { get; }
 
     public SiteName Name { get; private set; }
+
+    public HomesNumber? HomesNumber { get; private set; }
 
     public DateTime? CreatedOn { get; }
 
@@ -53,5 +58,10 @@ public class ProjectSiteEntity
     public void ProvidePlanningStatus(PlanningStatus planningStatus)
     {
         PlanningStatus = _modificationTracker.Change(PlanningStatus, planningStatus);
+    }
+
+    public void ProvideHomesNumber(HomesNumber homesNumber)
+    {
+        HomesNumber = _modificationTracker.Change(HomesNumber, homesNumber);
     }
 }

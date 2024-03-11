@@ -178,6 +178,7 @@ public class ProjectEntity : DomainEntity
         if (!newSupportActivityTypes.IsTenureRequired())
         {
             AffordableHomesAmount = ProjectAffordableHomesAmount.Empty();
+            OrganisationHomesBuilt = null;
         }
 
         if (!newSupportActivityTypes.IsInfrastructureRequired())
