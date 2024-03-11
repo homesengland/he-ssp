@@ -9,7 +9,7 @@ using Xunit;
 
 namespace HE.Investments.Loans.BusinessLogic.Tests.LoanApplication.EventHandlersTests;
 
-public class LoanApplicationHasBeenStartedEventHandlerTests : TestBase<LoanApplicationHasBeenStartedEventHandler>
+public class CreateLoanApplicationFolderStructureEventHandlerTests : TestBase<CreateLoanApplicationFolderStructureEventHandler>
 {
     [Fact]
     public async Task ShouldCreateFolders()
@@ -20,7 +20,7 @@ public class LoanApplicationHasBeenStartedEventHandlerTests : TestBase<LoanAppli
         RegisterDependency(MockFileApplicationRepository(applicationId, "007"));
 
         // when
-        await TestCandidate.Handle(new LoanApplicationHasBeenStartedEvent(applicationId), CancellationToken.None);
+        await TestCandidate.Handle(new LoanApplicationHasBeenStartedEvent(applicationId, "test"), CancellationToken.None);
 
         // then
         var expectedFolders = new List<string>

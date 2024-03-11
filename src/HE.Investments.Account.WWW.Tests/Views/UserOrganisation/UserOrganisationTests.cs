@@ -57,8 +57,8 @@ public class UserOrganisationTests : ViewTestBase
             programmesToAccess: new List<ProgrammeToAccessModel>
             {
                 new(
-                    new ProgrammeModel(ProgrammeType.Ahp, "P1", "Desc1", "C", "V", true),
-                    new List<ApplicationBasicDetailsModel>()),
+                    new ProgrammeModel(ProgrammeType.Ahp, "P1", "Desc1", "V"),
+                    new List<UserApplicationModel>()),
             });
 
         // when
@@ -66,19 +66,6 @@ public class UserOrganisationTests : ViewTestBase
 
         // then
         AssertUserOrganisation(document, model, programmesToAccessExist: false);
-    }
-
-    [Fact]
-    public async Task ShouldDisplayUserOrganisation_ForMissingProgrammesToApply()
-    {
-        // given
-        var model = CreateTestModel(programmesToApply: new List<ProgrammeModel>());
-
-        // when
-        var document = await Render(_viewPath, model);
-
-        // then
-        AssertUserOrganisation(document, model, programmesToApplyExist: false);
     }
 
     [Fact]
@@ -99,7 +86,6 @@ public class UserOrganisationTests : ViewTestBase
         UserOrganisationModel model,
         bool isLimitedUser = true,
         bool programmesToAccessExist = true,
-        bool programmesToApplyExist = true,
         bool actionsExist = true)
     {
         document
@@ -107,7 +93,7 @@ public class UserOrganisationTests : ViewTestBase
             .HasElementWithText("h1", $"{model.OrganisationName}'s Homes England account")
             .HasElementWithText("div", "Your request to join", isLimitedUser)
             .HasParagraph("You have not applied for any funding. To apply, select a funding programme below.", !programmesToAccessExist)
-            .HasElementWithText("h2", "Programmes you can apply for", programmesToApplyExist);
+            .HasElementWithText("h2", "Apply for support");
 
         if (actionsExist)
         {
@@ -120,8 +106,8 @@ public class UserOrganisationTests : ViewTestBase
         return new List<ProgrammeToAccessModel>
         {
             new(
-                new ProgrammeModel(ProgrammeType.Ahp, "P1", "Desc1", "C", "V", false),
-                new List<ApplicationBasicDetailsModel> { new("1", "AP1", ApplicationStatus.Withdrawn, "http://localhost/app/") }),
+                new ProgrammeModel(ProgrammeType.Ahp, "P1", "Desc1", "V"),
+                new List<UserApplicationModel> { new("1", "AP1", ApplicationStatus.Withdrawn, "http://localhost/app/") }),
         };
     }
 
@@ -130,15 +116,15 @@ public class UserOrganisationTests : ViewTestBase
         string? userName = null,
         bool isLimitedUser = true,
         List<ProgrammeToAccessModel>? programmesToAccess = null,
-        List<ProgrammeModel>? programmesToApply = null,
         List<ActionModel>? actions = null)
     {
         return new(
             orgName ?? "Organizacja Narodów Śląskich",
             userName ?? "Jan Muzykant",
             isLimitedUser,
+            "start-project",
+            new List<UserProjectModel>(),
             programmesToAccess ?? ProgrammesToToAccess(),
-            programmesToApply ?? new List<ProgrammeModel> { new(ProgrammeType.Ahp, "P2", "D2", "C", "V", true) },
             actions ?? new List<ActionModel> { new("ViewAllApplicationsUrl Name", "A", "C", true) });
     }
 }

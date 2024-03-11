@@ -4,12 +4,14 @@ using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Serialization;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.Common.Utils;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories.Mapper;
 using HE.Investments.Loans.BusinessLogic.Projects.Entities;
 using HE.Investments.Loans.BusinessLogic.Projects.Repositories.Mappers;
 using HE.Investments.Loans.Common.Utils.Enums;
+using HE.Investments.Loans.Contract.Application.Events;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
 using Microsoft.PowerPlatform.Dataverse.Client;
 
@@ -21,12 +23,16 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
 
     private readonly IOrganizationServiceAsync2 _serviceClient;
 
+    private readonly IEventDispatcher _eventDispatcher;
+
     public ApplicationProjectsRepository(
         IDateTimeProvider dateTime,
-        IOrganizationServiceAsync2 serviceClient)
+        IOrganizationServiceAsync2 serviceClient,
+        IEventDispatcher eventDispatcher)
     {
         _timeProvider = dateTime;
         _serviceClient = serviceClient;
+        _eventDispatcher = eventDispatcher;
     }
 
     public async Task<ApplicationProjects> GetAllAsync(LoanApplicationId loanApplicationId, UserAccount userAccount, CancellationToken cancellationToken)
@@ -94,6 +100,10 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
         {
             await UpdateProject(loanApplicationId, projectToSave, cancellationToken);
         }
+
+        await _eventDispatcher.Publish(
+            new LoanApplicationHasBeenChangedEvent(loanApplicationId, projectToSave.LoanApplicationStatus),
+            cancellationToken);
     }
 
     private async Task DeleteProject(Project projectToDelete, CancellationToken cancellationToken)

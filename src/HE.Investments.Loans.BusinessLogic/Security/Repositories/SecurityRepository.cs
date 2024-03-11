@@ -4,9 +4,11 @@ using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.CRM.Mappers;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Serialization;
+using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories.Mapper;
 using HE.Investments.Loans.BusinessLogic.Security.Mappers;
 using HE.Investments.Loans.Common.Utils.Enums;
+using HE.Investments.Loans.Contract.Application.Events;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
 using HE.Investments.Loans.Contract.Security.ValueObjects;
 using Microsoft.PowerPlatform.Dataverse.Client;
@@ -17,9 +19,12 @@ internal class SecurityRepository : ISecurityRepository
 {
     private readonly IOrganizationServiceAsync2 _serviceClient;
 
-    public SecurityRepository(IOrganizationServiceAsync2 serviceClient)
+    private readonly IEventDispatcher _eventDispatcher;
+
+    public SecurityRepository(IOrganizationServiceAsync2 serviceClient, IEventDispatcher eventDispatcher)
     {
         _serviceClient = serviceClient;
+        _eventDispatcher = eventDispatcher;
     }
 
     public async Task<SecurityEntity> GetAsync(
@@ -92,5 +97,8 @@ internal class SecurityRepository : ISecurityRepository
         };
 
         await _serviceClient.ExecuteAsync(req, cancellationToken);
+        await _eventDispatcher.Publish(
+            new LoanApplicationHasBeenChangedEvent(entity.LoanApplicationId, entity.LoanApplicationStatus),
+            cancellationToken);
     }
 }
