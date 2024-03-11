@@ -51,31 +51,6 @@ public class NumericValidator
         return this;
     }
 
-    public NumericValidator IsConditionallyRequired(bool condition, string? errorMessage = null)
-    {
-        if (condition && string.IsNullOrEmpty(_value))
-        {
-            AddError(_fieldName, errorMessage ?? ValidationErrorMessage.MissingRequiredField(_fieldLabel));
-        }
-
-        return this;
-    }
-
-    public NumericValidator IsNumber(string? errorMessage = null)
-    {
-        if (_value == null)
-        {
-            return this;
-        }
-
-        if (_parsedDecimalValue == null)
-        {
-            AddError(_fieldName, errorMessage ?? ValidationErrorMessage.MustBeNumber(_fieldLabel));
-        }
-
-        return this;
-    }
-
     public NumericValidator IsWholeNumber(string? errorMessage = null)
     {
         if (_value == null)

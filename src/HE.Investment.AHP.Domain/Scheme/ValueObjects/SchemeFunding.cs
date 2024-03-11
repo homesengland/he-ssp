@@ -42,7 +42,6 @@ public class SchemeFunding : ValueObject
         RequiredFunding = NumericValidator
             .For(requiredFundingGbp, nameof(RequiredFunding), requiredFundingName, fundingOperationResult)
             .IsProvided(ValidationErrorMessage.MustProvideRequiredField(requiredFundingName))
-            .IsNumber(ValidationErrorMessage.MustBeWholeNumber(requiredFundingName))
             .IsWholeNumber()
             .IsGreaterOrEqualTo(1)
             .IsLessOrEqualTo(999999999);
@@ -51,7 +50,6 @@ public class SchemeFunding : ValueObject
         HousesToDeliver = NumericValidator
             .For(housesToDeliver, nameof(HousesToDeliver), housesToDeliverName, housesOperationResult)
             .IsProvided(ValidationErrorMessage.MustProvideRequiredField(housesToDeliverName))
-            .IsNumber(ValidationErrorMessage.MustBeWholeNumber(housesToDeliverName))
             .IsWholeNumber()
             .IsGreaterOrEqualTo(1)
             .IsLessOrEqualTo(999999);
