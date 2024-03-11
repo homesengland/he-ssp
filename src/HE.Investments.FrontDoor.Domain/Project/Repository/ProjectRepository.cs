@@ -58,6 +58,7 @@ public class ProjectRepository : IProjectRepository
             Region = new RegionsMapper().Map(project.Regions),
             NumberofHomesEnabledBuilt = project.HomesNumber?.Value,
             GeographicFocus = new ProjectGeographicFocusMapper().ToDto(project.GeographicFocus.GeographicFocus),
+            WouldyourprojectfailwithoutHEsupport = project.IsSupportRequired?.Value,
             FundingRequired = project.IsFundingRequired?.Value,
         };
 
@@ -89,6 +90,7 @@ public class ProjectRepository : IProjectRepository
             regions: new RegionsMapper().Map(dto.Region),
             homesNumber: dto.NumberofHomesEnabledBuilt.IsProvided() ? new HomesNumber(dto.NumberofHomesEnabledBuilt!.Value) : null,
             geographicFocus: ProjectGeographicFocus.Create(new ProjectGeographicFocusMapper().ToDomain(dto.GeographicFocus)),
+            isSupportRequired: dto.WouldyourprojectfailwithoutHEsupport.IsProvided() ? new IsSupportRequired(dto.WouldyourprojectfailwithoutHEsupport) : null,
             isFundingRequired: dto.FundingRequired.IsProvided() ? new IsFundingRequired(dto.FundingRequired) : null);
     }
 }

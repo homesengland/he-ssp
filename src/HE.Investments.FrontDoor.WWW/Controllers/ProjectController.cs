@@ -386,7 +386,15 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     [WorkflowState(ProjectWorkflowState.Progress)]
     public async Task<IActionResult> Progress([FromRoute] string projectId, ProjectDetails model, CancellationToken cancellationToken)
     {
-        return await Continue(new { projectId });
+        return await ExecuteProjectCommand(
+            new ProvideIsSupportRequiredCommand(new FrontDoorProjectId(projectId), model.IsSupportRequired),
+            nameof(Progress),
+            project =>
+            {
+                project.IsSupportRequired = model.IsSupportRequired;
+                return project;
+            },
+            cancellationToken);
     }
 
     [HttpGet("{projectId}/requires-funding")]

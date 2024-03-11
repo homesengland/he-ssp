@@ -15,9 +15,10 @@ public static class ProjectCrmFields
         nameof(invln_FrontDoorProjectPOC.invln_ActivitiesinThisProject),
         nameof(invln_FrontDoorProjectPOC.invln_ProjectSupportsHousingDeliveryinEngland),
         nameof(invln_FrontDoorProjectPOC.invln_PreviousResidentialBuildingExperience),
+        nameof(invln_FrontDoorProjectPOC.invln_GeographicFocus),
         nameof(invln_FrontDoorProjectPOC.invln_Region),
         nameof(invln_FrontDoorProjectPOC.invln_NumberofHomesEnabledBuilt),
-        nameof(invln_FrontDoorProjectPOC.invln_GeographicFocus),
+        nameof(invln_FrontDoorProjectPOC.invln_WouldyourprojectfailwithoutHEsupport),
         nameof(invln_FrontDoorProjectPOC.invln_FundingRequired),
     };
 
