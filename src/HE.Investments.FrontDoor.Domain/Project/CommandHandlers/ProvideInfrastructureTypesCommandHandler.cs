@@ -17,6 +17,6 @@ public class ProvideInfrastructureTypesCommandHandler : ProjectBaseCommandHandle
 
     protected override void Perform(ProjectEntity project, ProvideInfrastructureTypesCommand request)
     {
-        project.ProvideInfrastructureTypes(new ProjectInfrastructureTypes(request.InfrastructureTypes));
+        project.ProvideInfrastructureTypes(new ProjectInfrastructure(request.InfrastructureTypes));
     }
 }
