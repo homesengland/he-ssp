@@ -5,10 +5,12 @@ using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.CRM.Mappers;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Serialization;
+using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.Loans.BusinessLogic.Funding.Entities;
 using HE.Investments.Loans.BusinessLogic.Funding.Mappers;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories.Mapper;
 using HE.Investments.Loans.Common.Utils.Enums;
+using HE.Investments.Loans.Contract.Application.Events;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
 using Microsoft.PowerPlatform.Dataverse.Client;
 
@@ -17,9 +19,12 @@ public class FundingRepository : IFundingRepository
 {
     private readonly IOrganizationServiceAsync2 _serviceClient;
 
-    public FundingRepository(IOrganizationServiceAsync2 serviceClient)
+    private readonly IEventDispatcher _eventDispatcher;
+
+    public FundingRepository(IOrganizationServiceAsync2 serviceClient, IEventDispatcher eventDispatcher)
     {
         _serviceClient = serviceClient;
+        _eventDispatcher = eventDispatcher;
     }
 
     public async Task<FundingEntity> GetAsync(LoanApplicationId loanApplicationId, UserAccount userAccount, FundingFieldsSet fundingFieldsSet, CancellationToken cancellationToken)
@@ -78,5 +83,8 @@ public class FundingRepository : IFundingRepository
         };
 
         await _serviceClient.ExecuteAsync(req, cancellationToken);
+        await _eventDispatcher.Publish(
+            new LoanApplicationHasBeenChangedEvent(funding.LoanApplicationId, funding.LoanApplicationStatus),
+            cancellationToken);
     }
 }

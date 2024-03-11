@@ -8,6 +8,7 @@ using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Account.Shared.Routing;
 using HE.Investments.Account.WWW.Models.UserOrganisation;
+using HE.Investments.Account.WWW.Routing;
 using HE.Investments.Account.WWW.Utils;
 using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Utils;
@@ -26,11 +27,18 @@ public class UserOrganisationController : Controller
 
     private readonly IAccountAccessContext _accountAccessContext;
 
-    public UserOrganisationController(IMediator mediator, IProgrammes programmes, IAccountAccessContext accountAccessContext)
+    private readonly ProgrammeUrlConfig _programmeUrlConfig;
+
+    public UserOrganisationController(
+        IMediator mediator,
+        IProgrammes programmes,
+        IAccountAccessContext accountAccessContext,
+        ProgrammeUrlConfig programmeUrlConfig)
     {
         _mediator = mediator;
         _programmes = programmes;
         _accountAccessContext = accountAccessContext;
+        _programmeUrlConfig = programmeUrlConfig;
     }
 
     [HttpGet(UserOrganisationAccountEndpoints.DashboardSuffix)]
@@ -38,8 +46,8 @@ public class UserOrganisationController : Controller
     {
         var userOrganisationResult = await _mediator.Send(new GetUserOrganisationWithProgrammesQuery());
         var canViewOrganisationDetails = await _accountAccessContext.CanAccessOrganisationView();
-        var programmeModels = await GetProgrammes(
-            userOrganisationResult.ProgrammesTypesToApply.Concat(userOrganisationResult.ProgrammesToAccess.Select(x => x.Type)).Distinct().ToList());
+        var programmeModels = GetProgrammes(userOrganisationResult.ProgrammesToAccess.Select(x => x.Type).ToList());
+        var projects = userOrganisationResult.Projects.Select(x => new UserProjectModel(x.Id.Value, x.Name, x.Status, GetProjectUrl(x.Id))).ToList();
 
         return View(
             "UserOrganisation",
@@ -47,18 +55,19 @@ public class UserOrganisationController : Controller
                 userOrganisationResult.OrganisationBasicInformation.RegisteredCompanyName,
                 userOrganisationResult.UserFirstName,
                 userOrganisationResult.IsLimitedUser,
+                await GetStartNewProjectUrl(),
+                projects,
                 userOrganisationResult.ProgrammesToAccess.Select(
                     p => new ProgrammeToAccessModel(
                         programmeModels[p.Type],
                         p.Applications.Select(a =>
-                                new ApplicationBasicDetailsModel(
+                                new UserApplicationModel(
                                         a.Id.Value,
                                         a.ApplicationName,
                                         a.Status,
                                         _programmes.GetApplicationUrl(p.Type, a.Id)))
                             .ToList()))
                     .ToList(),
-                userOrganisationResult.ProgrammesTypesToApply.Select(t => programmeModels[t]).ToList(),
                 new List<Common.WWW.Models.ActionModel>
                 {
                     new("Add or manage users at this Organisation", "Index", "Users", HasAccess: canViewOrganisationDetails),
@@ -111,10 +120,23 @@ public class UserOrganisationController : Controller
             cancellationToken);
     }
 
-    private async Task<Dictionary<ProgrammeType, ProgrammeModel>> GetProgrammes(IList<ProgrammeType> programmeTypes)
+    private async Task<string?> GetStartNewProjectUrl()
     {
-        var programmes = await Task.WhenAll(programmeTypes.Select(x => _programmes.GetProgramme(x)));
+        if (await _accountAccessContext.CanEditApplication())
+        {
+            return $"{_programmeUrlConfig.FrontDoor}/project/start";
+        }
 
-        return programmeTypes.Zip(programmes).ToDictionary(x => x.First, x => x.Second);
+        return null;
+    }
+
+    private string GetProjectUrl(HeProjectId projectId)
+    {
+        return $"{_programmeUrlConfig.FrontDoor}/project/{projectId}/name";
+    }
+
+    private Dictionary<ProgrammeType, ProgrammeModel> GetProgrammes(IList<ProgrammeType> programmeTypes)
+    {
+        return programmeTypes.Select(x => _programmes.GetProgramme(x)).ToDictionary(x => x.Type, x => x);
     }
 }

@@ -6,6 +6,4 @@ public record ProgrammeModel(
     ProgrammeType Type,
     string Name,
     string Description,
-    string CreateApplicationUrl,
-    string ViewAllApplicationsUrl,
-    bool CanCreateApplication);
+    string ViewAllApplicationsUrl);

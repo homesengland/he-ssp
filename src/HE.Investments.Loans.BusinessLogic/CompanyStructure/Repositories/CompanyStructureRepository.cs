@@ -13,6 +13,7 @@ using HE.Investments.Loans.BusinessLogic.Config;
 using HE.Investments.Loans.BusinessLogic.Files;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories.Mapper;
 using HE.Investments.Loans.Common.Utils.Enums;
+using HE.Investments.Loans.Contract.Application.Events;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
 using Microsoft.PowerPlatform.Dataverse.Client;
 
@@ -98,5 +99,8 @@ public class CompanyStructureRepository : ICompanyStructureRepository
         };
 
         await _serviceClient.ExecuteAsync(req, cancellationToken);
+        await _eventDispatcher.Publish(
+            new LoanApplicationHasBeenChangedEvent(companyStructure.LoanApplicationId, companyStructure.LoanApplicationStatus),
+            cancellationToken);
     }
 }

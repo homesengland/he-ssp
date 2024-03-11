@@ -40,5 +40,6 @@ public static class AccountModule
     {
         services.AddScoped<IProgrammeApplicationsRepository, ProgrammeApplicationsRepository>();
         services.AddScoped<IOrganisationUsersRepository, OrganisationUsersRepository>();
+        services.AddScoped<IProjectRepository, ProjectRepository>();
     }
 }

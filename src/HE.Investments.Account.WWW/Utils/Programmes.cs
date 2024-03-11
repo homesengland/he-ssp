@@ -1,9 +1,7 @@
 using System.ComponentModel;
 using HE.Investments.Account.Contract.UserOrganisation;
-using HE.Investments.Account.Shared;
 using HE.Investments.Account.WWW.Models.UserOrganisation;
 using HE.Investments.Account.WWW.Routing;
-using NuGet.Common;
 
 namespace HE.Investments.Account.WWW.Utils;
 
@@ -11,22 +9,17 @@ public class Programmes : IProgrammes
 {
     private readonly ProgrammeUrlConfig _programmeUrlConfig;
 
-    private readonly AsyncLazy<IDictionary<ProgrammeType, ProgrammeModel>> _programmes;
+    private readonly IDictionary<ProgrammeType, ProgrammeModel> _programmes;
 
-    public Programmes(ProgrammeUrlConfig programmeUrlConfig, IAccountAccessContext accountAccessContext)
+    public Programmes(ProgrammeUrlConfig programmeUrlConfig)
     {
         _programmeUrlConfig = programmeUrlConfig;
-        _programmes = new AsyncLazy<IDictionary<ProgrammeType, ProgrammeModel>>(async () =>
-        {
-            var canEditApplication = await accountAccessContext.CanEditApplication();
-            return BuildProgrammeModels(canEditApplication);
-        });
+        _programmes = BuildProgrammeModels();
     }
 
-    public async Task<ProgrammeModel> GetProgramme(ProgrammeType programmeType)
+    public ProgrammeModel GetProgramme(ProgrammeType programmeType)
     {
-        var programmes = await _programmes;
-        return programmes.TryGetValue(programmeType, out var programmeModel)
+        return _programmes.TryGetValue(programmeType, out var programmeModel)
             ? programmeModel
             : throw new InvalidEnumArgumentException($"Programme for {programmeType} does not exist.");
     }
@@ -46,7 +39,7 @@ public class Programmes : IProgrammes
         throw new InvalidEnumArgumentException($"Programme for {programmeType} does not exist.");
     }
 
-    private IDictionary<ProgrammeType, ProgrammeModel> BuildProgrammeModels(bool canCreateApplication)
+    private IDictionary<ProgrammeType, ProgrammeModel> BuildProgrammeModels()
     {
         return new Dictionary<ProgrammeType, ProgrammeModel>
         {
@@ -55,18 +48,14 @@ public class Programmes : IProgrammes
                     ProgrammeType.Loans,
                     "Levelling Up Home Building Fund",
                     "Start a new Levelling Up Home Building Fund application. This will not affect any of your previous applications.",
-                    $"{_programmeUrlConfig.Loans}/application",
-                    $"{_programmeUrlConfig.Loans}/dashboard",
-                    canCreateApplication)
+                    $"{_programmeUrlConfig.Loans}/dashboard")
             },
             {
                 ProgrammeType.Ahp, new(
                     ProgrammeType.Ahp,
                     "Affordable Homes Programme 2021-2026 Continuous Market Engagement",
                     "Start a new Affordable Homes Programme application. This will not affect any of your previous applications.",
-                    $"{_programmeUrlConfig.Ahp}/application/start",
-                    $"{_programmeUrlConfig.Ahp}/application",
-                    canCreateApplication)
+                    $"{_programmeUrlConfig.Ahp}/application")
             },
         };
     }
