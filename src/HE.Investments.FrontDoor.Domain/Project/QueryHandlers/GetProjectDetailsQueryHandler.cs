@@ -41,6 +41,7 @@ public class GetProjectDetailsQueryHandler : IRequestHandler<GetProjectDetailsQu
             IsFundingRequired = project.IsFundingRequired?.Value,
             SupportActivityTypes = project.SupportActivities.Values,
             AffordableHomesAmount = project.AffordableHomesAmount.AffordableHomesAmount,
+            InfrastructureTypes = project.Infrastructure.Values,
             Regions = project.Regions.Values,
             HomesNumber = project.HomesNumber?.ToString(),
             LastSiteId = projectSite.LastSiteId(),

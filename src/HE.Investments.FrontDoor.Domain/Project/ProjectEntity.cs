@@ -19,7 +19,7 @@ public class ProjectEntity : DomainEntity
         ProjectName name,
         bool? isEnglandHousingDelivery = null,
         SupportActivities? supportActivityTypes = null,
-        ProjectInfrastructureTypes? infrastructureTypes = null,
+        ProjectInfrastructure? infrastructureTypes = null,
         ProjectAffordableHomesAmount? affordableHomesAmount = null,
         OrganisationHomesBuilt? organisationHomesBuilt = null,
         IsSiteIdentified? isSiteIdentified = null,
@@ -33,7 +33,7 @@ public class ProjectEntity : DomainEntity
         Name = name;
         IsEnglandHousingDelivery = isEnglandHousingDelivery ?? true;
         SupportActivities = supportActivityTypes ?? SupportActivities.Empty();
-        InfrastructureTypes = infrastructureTypes;
+        Infrastructure = infrastructureTypes ?? ProjectInfrastructure.Empty();
         AffordableHomesAmount = affordableHomesAmount ?? ProjectAffordableHomesAmount.Empty();
         OrganisationHomesBuilt = organisationHomesBuilt;
         IsSiteIdentified = isSiteIdentified;
@@ -54,7 +54,7 @@ public class ProjectEntity : DomainEntity
 
     public ProjectAffordableHomesAmount AffordableHomesAmount { get; private set; }
 
-    public ProjectInfrastructureTypes? InfrastructureTypes { get; private set; }
+    public ProjectInfrastructure Infrastructure { get; private set; }
 
     public OrganisationHomesBuilt? OrganisationHomesBuilt { get; private set; }
 
@@ -95,9 +95,9 @@ public class ProjectEntity : DomainEntity
         AffordableHomesAmount = _modificationTracker.Change(AffordableHomesAmount, affordableHomesAmount);
     }
 
-    public void ProvideInfrastructureTypes(ProjectInfrastructureTypes infrastructureTypes)
+    public void ProvideInfrastructureTypes(ProjectInfrastructure infrastructure)
     {
-        InfrastructureTypes = _modificationTracker.Change(InfrastructureTypes, infrastructureTypes);
+        Infrastructure = _modificationTracker.Change(Infrastructure, infrastructure);
     }
 
     public void ProvideGeographicFocus(ProjectGeographicFocus geographicFocus)
@@ -182,7 +182,7 @@ public class ProjectEntity : DomainEntity
 
         if (!newSupportActivityTypes.IsInfrastructureRequired())
         {
-            InfrastructureTypes = null;
+            Infrastructure = ProjectInfrastructure.Empty();
         }
     }
 }

@@ -20,6 +20,7 @@ public static class ProjectCrmFields
         nameof(invln_FrontDoorProjectPOC.invln_NumberofHomesEnabledBuilt),
         nameof(invln_FrontDoorProjectPOC.invln_WouldyourprojectfailwithoutHEsupport),
         nameof(invln_FrontDoorProjectPOC.invln_FundingRequired),
+        nameof(invln_FrontDoorProjectPOC.invln_InfrastructureDelivered),
     };
 
     public static readonly IReadOnlyList<string> ProjectToRead = ProjectToUpdate

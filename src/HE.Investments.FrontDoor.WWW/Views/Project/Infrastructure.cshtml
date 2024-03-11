@@ -12,14 +12,17 @@
     <vc:front-door-workflow-back-button current-page="@ProjectWorkflowState.Infrastructure"></vc:front-door-workflow-back-button>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
+    <vc:page-header caption="@ViewBag.ProjectName"/>
+
     <form asp-controller="Project" asp-action="Infrastructure" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
+
         <vc:checkbox-list-with-or title="@ProjectPageTitles.Infrastructure"
                                   title-type="InputTitleType.PageHeader"
                                   hint="Select all that apply."
                                   field-name="@nameof(Model.InfrastructureTypes)"
                                   available-options="@ProjectFormOptions.InfrastructureTypes"
                                   alternative-option="@ProjectFormOptions.InfrastructureTypeUnknown"
-                                  selected-values="@Model.InfrastructureTypes?.Cast<Enum>()" />
+                                  selected-values="@Model.InfrastructureTypes?.Cast<Enum>()"/>
 
         <vc:form-button/>
         <vc:return-to-account-link/>

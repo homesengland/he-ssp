@@ -22,6 +22,19 @@ public class ProvideSupportActivityTypesTests
     }
 
     [Fact]
+    public void ShouldResetProvidingInfrastructureQuestion_WhenSupportActivityHasChanged()
+    {
+        // given
+        var project = ProjectEntityBuilder.New().WithSupportActivitiesAsProvidingInfrastructure().WithAffordableHomesAmount().Build();
+
+        // when
+        project.ProvideSupportActivityTypes(new SupportActivities(new[] { SupportActivityType.AcquiringLand }));
+
+        // then
+        project.Infrastructure.Should().Be(ProjectInfrastructure.Empty());
+    }
+
+    [Fact]
     public void ShouldNotResetAffordableHomesQuestion_WhenSupportActivityHasChangedToTheSame()
     {
         // given
