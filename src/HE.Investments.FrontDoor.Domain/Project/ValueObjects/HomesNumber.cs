@@ -12,13 +12,13 @@ public class HomesNumber : TheRequiredIntValueObject, IQuestion
 
     private const int MaxValue = 9999;
 
-    public HomesNumber(string? value)
-        : base(value, nameof(HomesNumber), DisplayName, MinValue, MaxValue)
+    public HomesNumber(string? value, string? displayName = null)
+        : base(value, nameof(HomesNumber), displayName ?? DisplayName, MinValue, MaxValue)
     {
     }
 
-    public HomesNumber(int value)
-        : base(value, nameof(HomesNumber), DisplayName, MinValue, MaxValue)
+    public HomesNumber(int value, string? displayName = null)
+        : base(value, nameof(HomesNumber), displayName ?? DisplayName, MinValue, MaxValue)
     {
     }
 
