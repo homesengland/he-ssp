@@ -75,8 +75,6 @@ public class ListCardTests : ViewTestBase
         }
     }
 
-    // TODO: extract method for creating dynamic component view model
-
     private static ListCardItemModel[] ApplicationBasicDetailsModels()
     {
         return new[]
