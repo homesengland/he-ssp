@@ -51,31 +51,6 @@ public class NumericValidator
         return this;
     }
 
-    public NumericValidator IsConditionallyRequired(bool condition, string? errorMessage = null)
-    {
-        if (condition && string.IsNullOrEmpty(_value))
-        {
-            AddError(_fieldName, errorMessage ?? ValidationErrorMessage.MissingRequiredField(_fieldLabel));
-        }
-
-        return this;
-    }
-
-    public NumericValidator IsNumber(string? errorMessage = null)
-    {
-        if (_value == null)
-        {
-            return this;
-        }
-
-        if (_parsedDecimalValue == null)
-        {
-            AddError(_fieldName, errorMessage ?? ValidationErrorMessage.MustBeNumber(_fieldLabel));
-        }
-
-        return this;
-    }
-
     public NumericValidator IsWholeNumber(string? errorMessage = null)
     {
         if (_value == null)
@@ -91,16 +66,31 @@ public class NumericValidator
         return this;
     }
 
-    public NumericValidator IsBetween(decimal minValue, decimal maxValue, string? errorMessage = null)
+    public NumericValidator IsLessOrEqualTo(decimal maxValue, string? errorMessage = null)
     {
         if (_value == null)
         {
             return this;
         }
 
-        if (_parsedDecimalValue < minValue || _parsedDecimalValue > maxValue)
+        if (_parsedDecimalValue > maxValue)
         {
-            AddError(_fieldName, errorMessage ?? ValidationErrorMessage.MustBeDecimalNumberBetween(_fieldLabel, minValue, maxValue));
+            AddError(_fieldName, errorMessage ?? ValidationErrorMessage.MustProvideTheLowerNumber(_fieldLabel, (int)maxValue));
+        }
+
+        return this;
+    }
+
+    public NumericValidator IsGreaterOrEqualTo(decimal minValue, string? errorMessage = null)
+    {
+        if (_value == null)
+        {
+            return this;
+        }
+
+        if (_parsedDecimalValue < minValue)
+        {
+            AddError(_fieldName, errorMessage ?? ValidationErrorMessage.MustProvideTheHigherNumber(_fieldLabel, (int)minValue));
         }
 
         return this;
