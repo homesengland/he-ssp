@@ -32,6 +32,7 @@ public class GetSiteDetailsQueryHandler : IRequestHandler<GetSiteDetailsQuery, S
             Id = site.Id,
             Name = site.Name.Value,
             ProjectName = project.Name.Value,
+            PlanningStatus = site.PlanningStatus.Value,
         };
     }
 }

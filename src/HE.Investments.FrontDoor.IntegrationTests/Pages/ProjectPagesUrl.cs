@@ -16,6 +16,14 @@ internal static class ProjectPagesUrl
 
     public static string IdentifiedSite(string projectId) => BuildProjectPage(projectId, "identified-site");
 
+    public static string GeographicFocus(string projectId) => BuildProjectPage(projectId, "geographic-focus");
+
+    public static string Region(string projectId) => BuildProjectPage(projectId, "region");
+
+    public static string HomesNumber(string projectId) => BuildProjectPage(projectId, "homes-number");
+
+    public static string Progress(string projectId) => BuildProjectPage(projectId, "progress");
+
     public static string BuildProjectPage(string projectId, string pageName)
     {
         return $"apply-for-support/project/{projectId}/{pageName}";

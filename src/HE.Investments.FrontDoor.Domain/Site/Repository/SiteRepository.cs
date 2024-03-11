@@ -1,5 +1,7 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Shared.User;
+using HE.Investments.Common.Contract.Enum;
+using HE.Investments.Common.CRM.Mappers;
 using HE.Investments.FrontDoor.Contract.Project;
 using HE.Investments.FrontDoor.Contract.Site;
 using HE.Investments.FrontDoor.Domain.Site.Crm;
@@ -10,6 +12,7 @@ namespace HE.Investments.FrontDoor.Domain.Site.Repository;
 public class SiteRepository : ISiteRepository
 {
     private readonly ISiteCrmContext _siteCrmContext;
+    private readonly PlanningStatusMapper _planningStatusMapper = new();
 
     public SiteRepository(ISiteCrmContext siteCrmContext)
     {
@@ -47,6 +50,7 @@ public class SiteRepository : ISiteRepository
         {
             SiteId = entity.Id.Value,
             SiteName = entity.Name.Value,
+            PlanningStatus = entity.PlanningStatus.Value == SitePlanningStatus.Undefined ? null : _planningStatusMapper.ToDto(entity.PlanningStatus.Value),
         };
     }
 
@@ -56,6 +60,7 @@ public class SiteRepository : ISiteRepository
             projectId,
             new FrontDoorSiteId(dto.SiteId),
             new SiteName(dto.SiteName),
-            dto.CreatedOn);
+            dto.CreatedOn,
+            PlanningStatus.Create(_planningStatusMapper.ToDomain(dto.PlanningStatus)));
     }
 }
