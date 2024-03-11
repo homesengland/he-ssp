@@ -1,5 +1,11 @@
 # Loans-CRM-Deploy-Upgrade
-
+schedules:
+- cron: '0 23 * * 1,2,3,4,5'
+  displayName: AHP - CRM - Deploy - Upgrade - Automatic night Deploy
+  branches:
+    include:
+    - main
+    
 trigger: none
 pr: none
 
