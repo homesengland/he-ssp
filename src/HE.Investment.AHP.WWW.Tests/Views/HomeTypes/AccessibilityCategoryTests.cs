@@ -19,7 +19,7 @@ public class AccessibilityCategoryTests : HomeTypesTestBase
         document
             .HasPageHeader("My application - My homes", "Which accessibility categories do the homes meet?")
             .HasElementWithText("span", "What are the accessibility categories?")
-            .HasElementWithText("a", "Read the Building Regulations to find out more (opens in the new tab).")
+            .HasElementWithText("a", "Read the Building Regulations to find out more (opens in a new tab).")
             .HasRadio(
                 "AccessibilityCategory",
                 new[]
