@@ -60,6 +60,16 @@ public class IsValidTests
     [InlineData("+44 (0)20 7450 abcd")]
     [InlineData("+44")]
     [InlineData("dd+44 (0)20 7450 400")]
+    [InlineData("+44 (0)11 22 44 543")]
+    [InlineData("(0)11 22 44 543")]
+    [InlineData("011 22 44 543")]
+    [InlineData("+44 (0)11 222 444 543")]
+    [InlineData("(0)11 222 444 543")]
+    [InlineData("+011 222 444 543")]
+    [InlineData("+011 222 444 5433567")]
+    [InlineData("(0)00 7450 4000")]
+    [InlineData("00273 800 900")]
+    [InlineData("00071 900 900")]
     public void ShouldReturnTelephoneNumberFormatValidationError_WhenValueIsInvalid(string? telephoneNumber)
     {
         // given
