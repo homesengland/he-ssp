@@ -3,6 +3,13 @@
 trigger: none
 pr: none
 
+schedules:
+- cron: '0 23 * * 1,2,3,4,5'
+  displayName: Loans - CRM - Deploy - Upgrade - Automatic night Deploy
+  branches:
+    include:
+    - main
+
 pool: 
   vmImage: windows-latest
 
