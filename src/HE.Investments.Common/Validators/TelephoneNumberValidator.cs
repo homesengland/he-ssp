@@ -1,8 +1,6 @@
-using System.Globalization;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.Utils;
-using PhoneNumbers;
 
 namespace HE.Investments.Common.Validators;
 
@@ -48,38 +46,24 @@ public class TelephoneNumberValidator
             return this;
         }
 
-        try
-        {
-            IsValidUkPhoneNumber(errorMessage);
-        }
-        catch (NumberParseException)
-        {
-            _operationResult.AddValidationError(_fieldName, errorMessage ?? ValidationErrorMessage.EnterUkTelephoneNumber);
-        }
+        IsValidUkPhoneNumber(errorMessage);
 
         return this;
     }
 
     private void IsValidUkPhoneNumber(string? errorMessage)
     {
-        var phoneNumberUtil = PhoneNumberUtil.GetInstance();
-        var ukRegionCode = "GB";
+        const int ukTelephoneNumberLengthWithoutPrefix = 10;
 
-        var phoneNumber = phoneNumberUtil.Parse(_telephoneNumber, TelephoneNumberRecognizer.StartWithCountryCode(_telephoneNumber!) ? null : ukRegionCode);
-
-        if (!phoneNumberUtil.IsPossibleNumber(phoneNumber))
+        if (TelephoneNumberRecognizer.StartWithCountryCode(_telephoneNumber!) && !TelephoneNumberRecognizer.IsUkCountryCode(_telephoneNumber!))
         {
             _operationResult.AddValidationError(_fieldName, errorMessage ?? ValidationErrorMessage.EnterUkTelephoneNumber);
             return;
         }
 
-        if (!phoneNumberUtil.IsValidNumberForRegion(phoneNumber, ukRegionCode))
-        {
-            _operationResult.AddValidationError(_fieldName, errorMessage ?? ValidationErrorMessage.EnterUkTelephoneNumber);
-            return;
-        }
+        var telephoneNumber = TelephoneNumberRecognizer.StripToNationalFormat(_telephoneNumber!);
 
-        if (phoneNumber.NationalNumber.ToString(CultureInfo.InvariantCulture) != TelephoneNumberRecognizer.StripToNationalFormat(_telephoneNumber!))
+        if (telephoneNumber.Length != ukTelephoneNumberLengthWithoutPrefix || !telephoneNumber.All(char.IsDigit) || telephoneNumber.StartsWith('0'))
         {
             _operationResult.AddValidationError(_fieldName, errorMessage ?? ValidationErrorMessage.EnterTelephoneNumberInValidFormat);
         }
