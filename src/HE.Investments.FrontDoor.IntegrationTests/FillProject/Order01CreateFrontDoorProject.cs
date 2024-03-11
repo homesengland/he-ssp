@@ -187,4 +187,26 @@ public class Order01CreateFrontDoorProject : FrontDoorIntegrationTest
             ProjectPagesUrl.Progress(ProjectData.Id),
             (nameof(ProjectDetails.HomesNumber), "2"));
     }
+
+    [Fact(Skip = FrontDoorConfig.SkipTest)]
+    [Order(12)]
+    public async Task Order12_ProvideProgress()
+    {
+        await TestQuestionPage(
+            ProjectPagesUrl.Progress(ProjectData.Id),
+            ProjectPageTitles.Progress,
+            ProjectPagesUrl.RequiresFunding(ProjectData.Id),
+            (nameof(ProjectDetails.IsSupportRequired), "True"));
+    }
+
+    [Fact(Skip = FrontDoorConfig.SkipTest)]
+    [Order(13)]
+    public async Task Order13_ProvideRequiresFunding()
+    {
+        await TestQuestionPage(
+            ProjectPagesUrl.RequiresFunding(ProjectData.Id),
+            ProjectPageTitles.RequiresFunding,
+            ProjectPagesUrl.FundingAmount(ProjectData.Id),
+            (nameof(ProjectDetails.IsFundingRequired), "True"));
+    }
 }

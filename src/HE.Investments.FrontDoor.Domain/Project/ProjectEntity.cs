@@ -26,6 +26,7 @@ public class ProjectEntity : DomainEntity
         Regions? regions = null,
         HomesNumber? homesNumber = null,
         ProjectGeographicFocus? geographicFocus = null,
+        IsSupportRequired? isSupportRequired = null,
         IsFundingRequired? isFundingRequired = null)
     {
         Id = id;
@@ -39,6 +40,7 @@ public class ProjectEntity : DomainEntity
         Regions = regions ?? Regions.Empty();
         HomesNumber = homesNumber;
         GeographicFocus = geographicFocus ?? ProjectGeographicFocus.Empty();
+        IsSupportRequired = isSupportRequired;
         IsFundingRequired = isFundingRequired;
     }
 
@@ -65,6 +67,8 @@ public class ProjectEntity : DomainEntity
     public ProjectGeographicFocus GeographicFocus { get; private set; }
 
     public IsFundingRequired? IsFundingRequired { get; private set; }
+
+    public IsSupportRequired? IsSupportRequired { get; private set; }
 
     public static async Task<ProjectEntity> New(ProjectName projectName, IProjectNameExists projectNameExists, CancellationToken cancellationToken)
     {
@@ -144,6 +148,11 @@ public class ProjectEntity : DomainEntity
     public void ProvideHomesNumber(HomesNumber homesNumber)
     {
         HomesNumber = _modificationTracker.Change(HomesNumber, homesNumber);
+    }
+
+    public void ProvideIsSupportRequired(IsSupportRequired isSupportRequired)
+    {
+        IsSupportRequired = _modificationTracker.Change(IsSupportRequired, isSupportRequired);
     }
 
     public void ProvideIsFundingRequired(IsFundingRequired isFundingRequired)
