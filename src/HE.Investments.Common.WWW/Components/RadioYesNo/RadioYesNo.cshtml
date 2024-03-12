@@ -4,8 +4,10 @@
 @using HE.Investments.Common.WWW.Components.ErrorMessage
 @using HE.Investments.Common.WWW.Components.RadioListContent
 @using HE.Investments.Common.WWW.Components
+@using HE.Investments.Common.Extensions
+@using Microsoft.AspNetCore.Html;
 
-@model (string fieldName, string title, InputTitleType titleType, DynamicComponentViewModel additionalContent, string hint, bool? value, bool isDisplayed)
+@model (string fieldName, string title, InputTitleType titleType, DynamicComponentViewModel additionalContent, string hint, IHtmlContent optionalContent, bool? value, bool isDisplayed)
 @{
     var (hasError, radioErrors) = ViewData.ModelState.GetErrors(Model.fieldName);
     var groupClass = hasError ? "govuk-form-group--error" : string.Empty;
@@ -21,6 +23,11 @@
     <gds-div-form-group class="@groupClass">
         <gds-field-set>
             <vc:input-list-header title="@Model.title" title-type="@Model.titleType" additional-content="@Model.additionalContent" hint="@Model.hint"/>
+
+            @if (Model.optionalContent.IsProvided())
+            {
+                <gds-p>@Model.optionalContent</gds-p>
+            }
 
             <vc:error-message field-name="@Model.fieldName"/>
 

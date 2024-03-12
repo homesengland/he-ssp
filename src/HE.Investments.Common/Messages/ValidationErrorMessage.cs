@@ -58,8 +58,6 @@ public static class ValidationErrorMessage
 
     public const string IncorrectGrantFundingAmount = "The amount of funding provided";
 
-    public const string EnterLoanApplicationName = "Enter a name for your application";
-
     public const string AcceptTermsAndConditions = "Select that you have read and understood the privacy notice";
 
     public const string InformationAgreement = "Select that you have read and agree with the information";
@@ -69,8 +67,6 @@ public static class ValidationErrorMessage
     public const string ProjectNameIsEmpty = "Project name cannot be empty";
 
     public const string LocalAuthorityNameIsEmpty = "Enter the name of the local authority";
-
-    public const string OrganisationNameIsEmpty = "Enter the name of the organisation";
 
     public const string SectionIsNotCompleted = "You have not completed this section. Select no if you want to come back later";
 

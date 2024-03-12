@@ -61,6 +61,7 @@ public class UserOrganisationController : Controller
                 userOrganisationResult.ProgrammesTypesToApply.Select(t => programmeModels[t]).ToList(),
                 new List<Common.WWW.Models.ActionModel>
                 {
+                    new("Add another organisation", "SearchOrganisation", "Organisation", HasAccess: true),
                     new("Add or manage users at this Organisation", "Index", "Users", HasAccess: canViewOrganisationDetails),
                     new($"Manage {userOrganisationResult.OrganisationBasicInformation.RegisteredCompanyName} details", "Details", "UserOrganisation", HasAccess: canViewOrganisationDetails),
                     new("Manage your account", "GetProfileDetails", "User", new { callback = Url.Action("Index") }, true),
@@ -109,6 +110,12 @@ public class UserOrganisationController : Controller
                 new ControllerName(nameof(UserOrganisationController)).WithoutPrefix())),
             () => Task.FromResult<IActionResult>(View(viewModel)),
             cancellationToken);
+    }
+
+    [HttpGet("list")]
+    public IActionResult UserOrganisationsList()
+    {
+        return View("UserOrganisationsList");
     }
 
     private async Task<Dictionary<ProgrammeType, ProgrammeModel>> GetProgrammes(IList<ProgrammeType> programmeTypes)

@@ -3,8 +3,8 @@ using HE.Investments.Account.Contract.Organisation.Commands;
 using HE.Investments.Account.Contract.Organisation.Queries;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Account.Shared.Routing;
-using HE.Investments.Common.Contract.Constants;
 using HE.Investments.Common.Contract.Pagination;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Models;
@@ -56,30 +56,31 @@ public class OrganisationController : Controller
     }
 
     [HttpGet("{organisationNumberOrId}/confirm")]
-    public async Task<IActionResult> ConfirmOrganisation(string organisationNumberOrId)
+    public async Task<IActionResult> ConfirmOrganisation(string organisationNumberOrId, [FromQuery] string searchPhrase)
     {
         var response = await _mediator.Send(new GetOrganisationQuery(organisationNumberOrId));
 
-        return View("ConfirmYourSelection", new ConfirmModel<OrganisationBasicDetails> { ViewModel = response });
+        return View("ConfirmYourSelection", new ConfirmModel<OrganisationBasicDetails> { ViewModel = response, SearchPhrase = searchPhrase });
     }
 
     [HttpPost("{organisationNumberOrId}/confirm")]
-    public async Task<IActionResult> ConfirmOrganisationPost(string organisationNumberOrId, ConfirmModel<OrganisationBasicDetails> model)
+    public async Task<IActionResult> ConfirmOrganisationPost(string organisationNumberOrId, ConfirmModel<OrganisationBasicDetails> model, [FromQuery] string searchPhrase)
     {
-        if (string.IsNullOrEmpty(model.Response))
+        if (model.IsConfirmed.IsNotProvided())
         {
-            ModelState.AddModelError(nameof(model.Response), ValidationErrorMessage.ChooseYourAnswer);
+            ModelState.AddModelError(nameof(model.IsConfirmed), ValidationErrorMessage.ChooseYourAnswer);
             model.ViewModel = await _mediator.Send(new GetOrganisationQuery(organisationNumberOrId));
+            model.SearchPhrase = searchPhrase;
             return View("ConfirmYourSelection", model);
         }
 
-        if (model.Response == CommonResponse.Yes)
+        if (!model.IsConfirmed!.Value)
         {
-            await _mediator.Send(new LinkContactWithOrganisationCommand(organisationNumberOrId));
-            return RedirectToAction(null);
+            return RedirectToAction("SearchOrganisationResult", "Organisation", new { searchPhrase });
         }
 
-        return RedirectToAction(nameof(SearchOrganisation));
+        await _mediator.Send(new LinkContactWithOrganisationCommand(organisationNumberOrId));
+        return RedirectToAction("UserOrganisationsList", "UserOrganisation");
     }
 
     [HttpGet("no-match-found")]
@@ -109,7 +110,7 @@ public class OrganisationController : Controller
             _mediator,
             command,
             onSuccess: () => Task.FromResult<IActionResult>(RedirectToAction(
-                nameof(UserOrganisationController.Index),
+                nameof(UserOrganisationController.UserOrganisationsList),
                 new ControllerName(nameof(UserOrganisationController)).WithoutPrefix())),
             onError: () => Task.FromResult<IActionResult>(View(viewModel)),
             cancellationToken);
