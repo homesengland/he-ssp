@@ -21,7 +21,7 @@ public class HomeOwnershipDisabilitiesTests : HomeTypesTestBase
         AssertView(document);
         AssertErrors(document, nameof(HomeOwnershipDisabilitiesModel.MarketValue), false);
         AssertErrors(document, nameof(HomeOwnershipDisabilitiesModel.InitialSale), false);
-        AssertErrors(document, nameof(HomeOwnershipDisabilitiesModel.ProspectiveRent), false);
+        AssertErrors(document, nameof(HomeOwnershipDisabilitiesModel.RentPerWeek), false);
     }
 
     [Fact]
@@ -31,7 +31,7 @@ public class HomeOwnershipDisabilitiesTests : HomeTypesTestBase
         var modelState = new ModelStateDictionary();
         modelState.AddModelError(nameof(HomeOwnershipDisabilitiesModel.MarketValue), ErrorMessage);
         modelState.AddModelError(nameof(HomeOwnershipDisabilitiesModel.InitialSale), ErrorMessage);
-        modelState.AddModelError(nameof(HomeOwnershipDisabilitiesModel.ProspectiveRent), ErrorMessage);
+        modelState.AddModelError(nameof(HomeOwnershipDisabilitiesModel.RentPerWeek), ErrorMessage);
 
         // when
         var document = await RenderHomeTypePage(ViewPath, Model, modelStateDictionary: modelState);
@@ -40,7 +40,7 @@ public class HomeOwnershipDisabilitiesTests : HomeTypesTestBase
         AssertView(document);
         AssertErrors(document, nameof(HomeOwnershipDisabilitiesModel.MarketValue), true);
         AssertErrors(document, nameof(HomeOwnershipDisabilitiesModel.InitialSale), true);
-        AssertErrors(document, nameof(HomeOwnershipDisabilitiesModel.ProspectiveRent), true);
+        AssertErrors(document, nameof(HomeOwnershipDisabilitiesModel.RentPerWeek), true);
     }
 
     private static void AssertView(IHtmlDocument document)
@@ -56,7 +56,7 @@ public class HomeOwnershipDisabilitiesTests : HomeTypesTestBase
             .HasElementWithText("h2", "Assumed first tranche sales receipt")
             .HasElementWithText("h2", "Enter the rent per week")
             .HasElementWithText("span", "Enter the rent in pounds and pence. This is inclusive of all charges.")
-            .HasInput("ProspectiveRent")
+            .HasInput("RentPerWeek")
             .HasElementWithText("h2", "Rent as percentage of the unsold share")
             .HasSaveAndContinueButton()
             .HasElementWithText("button", "Calculate");

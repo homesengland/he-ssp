@@ -1,11 +1,13 @@
 using HE.Investment.AHP.Contract.Application;
+using HE.Investment.AHP.Contract.Common.Enums;
 
 namespace HE.Investment.AHP.Contract.HomeTypes.Queries;
 
-public record CalculateOlderPersonsSharedOwnershipQuery(
+public record CalculateRentToBuyQuery(
         AhpApplicationId ApplicationId,
         HomeTypeId HomeTypeId,
         string? MarketValue,
-        string? InitialSale,
-        string? RentPerWeek)
+        string? MarketRentPerWeek,
+        string? RentPerWeek,
+        YesNoType TargetRentExceedMarketRent)
     : CalculateQueryBase(ApplicationId, HomeTypeId);

@@ -6,4 +6,4 @@ public record SaveSocialRentCommand(
     AhpApplicationId ApplicationId,
     HomeTypeId HomeTypeId,
     string? MarketValue,
-    string? ProspectiveRent) : ISaveHomeTypeSegmentCommand;
+    string? RentPerWeek) : ISaveHomeTypeSegmentCommand;

@@ -31,7 +31,7 @@
                 </gds-span-hint>
                 <gds-input
                     class="govuk-input--width-5"
-                    asp-hiddenlabeltext="Enter the number of market value"
+                    asp-hiddenlabeltext="Enter the market value of each home"
                     govuk-formgroup-asp-for="MarketValue"
                     name="MarketValue"
                     value=@Model.MarketValue
@@ -71,7 +71,7 @@
                 </gds-p>
             </he-error-form-group>
 
-            <he-error-form-group asp-for="ProspectiveRent">
+            <he-error-form-group asp-for="RentPerWeek">
                 <gds-legend>
                     <gds-h2 class="govuk-!-margin-bottom-0">Enter the rent per week</gds-h2>
                 </gds-legend>
@@ -80,10 +80,10 @@
                 </gds-span-hint>
                 <gds-input
                     class="govuk-input--width-4"
-                    asp-hiddenlabeltext="Enter the Shared Ownership rent per week"
-                    govuk-formgroup-asp-for="ProspectiveRent"
-                    name="ProspectiveRent"
-                    value=@Model.ProspectiveRent
+                    asp-hiddenlabeltext="Enter the rent per week"
+                    govuk-formgroup-asp-for="RentPerWeek"
+                    name="RentPerWeek"
+                    value=@Model.RentPerWeek
                     asp-prefixtext="GdsInputPrefixText.Pounds"
                     asp-suffixtext="GdsInputSuffixText.PerWeek"/>
             </he-error-form-group>
@@ -107,8 +107,7 @@
                 }
 
                 <gds-p class="govuk-!-margin-top-1">
-                    @(Model.RentAsPercentageOfTheUnsoldShare.IsProvided() ? $"{Model.RentAsPercentageOfTheUnsoldShare}%"
-                        : "To calculate the rent as percentage of the unsold share, enter the rent per week once you have found the assumed first tranche sales receipt. Then select the calculate button.")
+                    @(Model.RentAsPercentageOfTheUnsoldShare ?? "To calculate the rent as percentage of the unsold share, enter the rent per week once you have found the assumed first tranche sales receipt. Then select the calculate button.")
                 </gds-p>
             </he-error-form-group>
 

@@ -4,17 +4,17 @@ using HE.Investment.AHP.Domain.Tests.HomeTypes.TestDataBuilders;
 
 namespace HE.Investment.AHP.Domain.Tests.HomeTypes.EntitiesTests.TenureDetailsSegmentEntityTests;
 
-public class CalculateProspectiveRentAsPercentageOfTheUnsoldShareTests
+public class ChangeRentAsPercentageOfTheUnsoldShareTests
 {
     [Theory]
     [InlineData(1, 0, 0.1, 0)]
     [InlineData(99_999_999, 9999.99, 0.75, 0.0207)]
     [InlineData(0, 1000, 0.50, 0)]
-    public void ShouldReturnCalculatedResult_WhenInputsAreProvided(int marketValue, decimal prospectiveRent, decimal initialSale, decimal expectedResult)
+    public void ShouldReturnCalculatedResult_WhenInputsAreProvided(int marketValue, decimal rentPerWeek, decimal initialSale, decimal expectedResult)
     {
         // given
         var marketValueVO = new MarketValue(marketValue);
-        var prospectiveRentVO = new ProspectiveRent(prospectiveRent);
+        var prospectiveRentVO = new RentPerWeek(rentPerWeek);
         var initialSaleVO = new InitialSale(initialSale);
 
         var tenureDetails = new TenureDetailsTestDataBuilder()
@@ -24,7 +24,7 @@ public class CalculateProspectiveRentAsPercentageOfTheUnsoldShareTests
             .Build();
 
         // when
-        tenureDetails.ChangeProspectiveRentAsPercentageOfTheUnsoldShare();
+        tenureDetails.ChangeRentAsPercentageOfTheUnsoldShare();
 
         // then
         tenureDetails.RentAsPercentageOfTheUnsoldShare.Should().NotBeNull();
@@ -35,15 +35,15 @@ public class CalculateProspectiveRentAsPercentageOfTheUnsoldShareTests
     [InlineData("10", "10", null)]
     [InlineData("10", null, "10")]
     [InlineData(null, "10", "10")]
-    public void ShouldReturnNull_WhenAnyValueIsNotProvided(string? marketValue, string? prospectiveRent, string? initialSale)
+    public void ShouldReturnNull_WhenAnyValueIsNotProvided(string? marketValue, string? rentPerWeek, string? initialSale)
     {
         // given
         var tenureDetails = new TenureDetailsTestDataBuilder().Build();
 
         // when
-        var result = tenureDetails.CalculateProspectiveRentAsPercentageOfTheUnsoldShare(
+        var result = tenureDetails.CalculateRentAsPercentageOfTheUnsoldShare(
             marketValue == null ? null : new MarketValue(marketValue, true),
-            prospectiveRent == null ? null : new ProspectiveRent(prospectiveRent, true),
+            rentPerWeek == null ? null : new RentPerWeek(rentPerWeek, true),
             initialSale == null ? null : new InitialSale(initialSale, true));
 
         // then
