@@ -30,6 +30,13 @@ public class ProjectEntityBuilder : TestObjectBuilder<ProjectEntityBuilder, Proj
         return this;
     }
 
+    public ProjectEntityBuilder WithRequiredFunding()
+    {
+        Item.ProvideIsFundingRequired(new IsFundingRequired(true));
+        Item.ProvideRequiredFunding(new RequiredFunding(RequiredFundingOption.LessThan250K));
+        return this;
+    }
+
     public ProjectEntityBuilder WithAffordableHomesAmount()
     {
         Item.ProvideAffordableHomesAmount(new ProjectAffordableHomesAmount(AffordableHomesAmount.OpenMarkedAndAffordableHomes));

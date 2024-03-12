@@ -2,10 +2,9 @@ using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
 using HE.Investments.FrontDoor.Contract.Project;
 using HE.Investments.FrontDoor.Contract.Site;
-using HE.Investments.FrontDoor.Domain.Site;
 using HE.Investments.FrontDoor.Domain.Site.ValueObjects;
 
-namespace HE.Investments.FrontDoor.Domain;
+namespace HE.Investments.FrontDoor.Domain.Site;
 
 public class ProjectSitesEntity
 {

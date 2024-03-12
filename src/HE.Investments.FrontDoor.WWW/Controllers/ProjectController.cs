@@ -430,7 +430,15 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     [WorkflowState(ProjectWorkflowState.FundingAmount)]
     public async Task<IActionResult> FundingAmount([FromRoute] string projectId, ProjectDetails model, CancellationToken cancellationToken)
     {
-        return await Continue(new { projectId });
+        return await ExecuteProjectCommand(
+            new ProvideRequiredFundingCommand(new FrontDoorProjectId(projectId), model.RequiredFunding),
+            nameof(FundingAmount),
+            project =>
+            {
+                project.RequiredFunding = model.RequiredFunding;
+                return project;
+            },
+            cancellationToken);
     }
 
     [HttpGet("{projectId}/profit")]

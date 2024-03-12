@@ -1,5 +1,6 @@
 using HE.Investments.FrontDoor.Contract.Project;
 using HE.Investments.FrontDoor.Contract.Site;
+using HE.Investments.FrontDoor.Domain.Site;
 using HE.Investments.FrontDoor.Domain.Site.ValueObjects;
 using HE.Investments.FrontDoor.Domain.Tests.Project.TestDataBuilders;
 using HE.Investments.TestsUtils.TestFramework;
