@@ -1,11 +1,11 @@
 using System.Diagnostics.CodeAnalysis;
-using HE.Investments.Account.Contract.UserOrganisation;
 using HE.Investments.Account.IntegrationTests.Extensions;
 using HE.Investments.Account.IntegrationTests.Framework;
 using HE.Investments.Account.IntegrationTests.Pages;
 using HE.Investments.Account.WWW;
 using HE.Investments.Account.WWW.Views.Organisation;
 using HE.Investments.Account.WWW.Views.User;
+using HE.Investments.Account.WWW.Views.UserOrganisation;
 using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
@@ -108,7 +108,6 @@ public class Order01CompleteUserProfile : AccountIntegrationTest
         organisationSearchPage
             .UrlEndWith(OrganisationPagesUrls.Search)
             .HasTitle(OrganisationPageTitles.SearchForYourOrganisation)
-            .HasBackLink()
             .HasSubmitButton(out var searchButton, "Search");
 
         // when
@@ -138,7 +137,7 @@ public class Order01CompleteUserProfile : AccountIntegrationTest
 
         // then
         confirmationPage
-            .UrlEndWith(OrganisationPagesUrls.Confirm(organisationId))
+            .UrlWithoutQueryEndsWith(OrganisationPagesUrls.Confirm(organisationId))
             .HasTitle(OrganisationPageTitles.ConfirmYourSelection);
         FreshProfileData.SetSelectedOrganisationId(organisationId);
         SaveCurrentPage();
@@ -154,17 +153,14 @@ public class Order01CompleteUserProfile : AccountIntegrationTest
             .UrlWithoutQueryEndsWith(OrganisationPagesUrls.Confirm(FreshProfileData.SelectedOrganisationId))
             .HasTitle(OrganisationPageTitles.ConfirmYourSelection)
             .HasBackLink()
-            .HasContinueButton(out var continueButton);
+            .HasSaveAndContinueButton(out var continueButton);
 
         // then
-        var dashboardPage = await TestClient.SubmitButton(continueButton, ("Response", "Yes"));
+        var organisationsList = await TestClient.SubmitButton(continueButton, ("IsConfirmed", "True"));
 
         // then
-        dashboardPage
-            .HasTitle(OrganisationPageTitles.OrganisationDashboard(FreshProfileData.OrganisationName))
-            .HasOrganisationJoinRequestConfirmation()
-            .HasStartNewApplicationLink(ProgrammeType.Ahp)
-            .HasStartNewApplicationLink(ProgrammeType.Loans);
+        organisationsList
+            .HasTitle(UserOrganisationPageTitles.OrganisationsList);
         SaveCurrentPage();
     }
 }
