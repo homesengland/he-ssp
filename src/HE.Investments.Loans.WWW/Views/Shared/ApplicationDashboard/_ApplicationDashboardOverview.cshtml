@@ -4,19 +4,32 @@
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Paragraphs
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Summary
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Summary.V2
+@using HE.Investments.Common
+@inject Microsoft.FeatureManagement.IFeatureManager FeatureManager
 @model HE.Investments.Loans.WWW.Models.ApplicationDashboardModel
 @{
-    var data = new List<(string Title, string Desription, string Link)>
+    var data = async () =>
     {
-        ("Application details",  "You can view or edit your company and project information.", Url.Action("TaskList", "LoanApplicationV2", new { id = Model.LoanApplicationId })),
-        ("Conditions management", "You can upload evidence to satisfy your Conditions Precedent and Subsequent.", null),
-        ("Letters", "You'll be able to download letters and upload your signed copies here.", Url.Link("#", null)),
+        if (await FeatureManager.IsEnabledAsync(FeatureFlags.DisplayPostMvpLoans))
+        {
+            return new List<(string Title, string Desription, string Link)>
+            {
+                ("Application details", "You can view or edit your company and project information.", Url.Action("TaskList", "LoanApplicationV2", new { id = Model.LoanApplicationId })),
+                ("Conditions management", "You can upload evidence to satisfy your Conditions Precedent and Subsequent.", null),
+                ("Letters", "You'll be able to download letters and upload your signed copies here.", Url.Link("#", null)),
+            };
+        }
+
+        return new List<(string Title, string Desription, string Link)>
+        {
+            ("Application details", "You can view or edit your company and project information.", Url.Action("TaskList", "LoanApplicationV2", new { id = Model.LoanApplicationId })),
+        };
     };
 }
 
 <gds-h2 size="ControlSize.M"> Overview</gds-h2>
 <gds-summary-list class="govuk-!-margin-bottom-4">
-    @foreach (var singleData in data)
+    @foreach (var singleData in data.Invoke().Result)
     {
         <gds-summary-list-row-v2>
             <dt class="govuk-summary-list__key govuk-!-width-three-quarters">
@@ -34,19 +47,22 @@
     }
 </gds-summary-list>
 
-<div class="govuk-!-margin-top-8">
-    <gds-h2 size="ControlSize.M">Request to hold</gds-h2>
-    <gds-p>
-        This will notify Homes England that you no longer wish to proceed with this application at this time. You can revisit this later on and submit once you're ready.
-    </gds-p>
-    <a class="govuk-button govuk-button--secondary" data-module="govuk-button" href="@Url.Action("Hold", "LoanApplicationV2", new { id = Model.LoanApplicationId })">
-        Hold
-    </a>
-</div>
+@if (await FeatureManager.IsEnabledAsync(FeatureFlags.DisplayPostMvpLoans))
+{
+    <div class="govuk-!-margin-top-8">
+        <gds-h2 size="ControlSize.M">Request to hold</gds-h2>
+        <gds-p>
+            This will notify Homes England that you no longer wish to proceed with this application at this time. You can revisit this later on and submit once you're ready.
+        </gds-p>
+        <a class="govuk-button govuk-button--secondary" data-module="govuk-button" href="@Url.Action("Hold", "LoanApplicationV2", new { id = Model.LoanApplicationId })">
+            Hold
+        </a>
+    </div>
+}
 
 @if (Model.CanBeWithdrawn())
 {
-    <div class="govuk-!-margin-top-2">
+    <div class="govuk-!-margin-top-8">
         <gds-h2 size="ControlSize.M">Withdraw</gds-h2>
         <gds-p>
             This will notify Homes England that you no longer wish to proceed. Your application will be permanently deleted.
