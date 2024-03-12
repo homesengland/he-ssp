@@ -41,11 +41,6 @@
                    {
                        { "Title", "Email address" },
                        { "Value", Model.LoanApplicationContactEmail },
-                       { "Link", Url.RouteUrl(new {
-                           controller = "Accounts",
-                           action = "UserProfile",
-                           callback = "/application/check-your-details"
-                       }) }
                    })
 
             @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
