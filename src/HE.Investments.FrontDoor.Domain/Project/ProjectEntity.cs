@@ -163,7 +163,7 @@ public class ProjectEntity : DomainEntity
 
     public void ProvideIsFundingRequired(IsFundingRequired isFundingRequired)
     {
-        IsFundingRequired = _modificationTracker.Change(IsFundingRequired, isFundingRequired);
+        IsFundingRequired = _modificationTracker.Change(IsFundingRequired, isFundingRequired, null, IsFundingRequiredHasChanged);
     }
 
     public void ProvideRequiredFunding(RequiredFunding requiredFunding)
@@ -182,6 +182,14 @@ public class ProjectEntity : DomainEntity
         }
 
         return projectName;
+    }
+
+    private void IsFundingRequiredHasChanged(IsFundingRequired? isFundingRequired)
+    {
+        if (!isFundingRequired?.Value ?? false)
+        {
+            RequiredFunding = RequiredFunding.Empty;
+        }
     }
 
     private void SupportActivityTypesHaveChanged(SupportActivities newSupportActivityTypes)
