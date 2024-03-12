@@ -4,7 +4,7 @@ using HE.Investment.AHP.Domain.Tests.HomeTypes.TestDataBuilders;
 
 namespace HE.Investment.AHP.Domain.Tests.HomeTypes.EntitiesTests.TenureDetailsSegmentEntityTests;
 
-public class CalculateProspectiveRentTests
+public class ChangeRentAsPercentageOfMarketRentTests
 {
     [Theory]
     [InlineData(0, 0, 0)]
@@ -12,11 +12,11 @@ public class CalculateProspectiveRentTests
     [InlineData(9999.99, 0, 0)]
     [InlineData(0, 9999.99, 0)]
     [InlineData(9999.99, 9999.99, 1)]
-    public void ShouldReturnCalculatedResult_WhenInputsAreProvided(decimal marketRent, decimal prospectiveRent, decimal expectedResult)
+    public void ShouldReturnCalculatedResult_WhenInputsAreProvided(decimal marketRentPerWeek, decimal rentPerWeek, decimal expectedResult)
     {
         // given
-        var marketRentVO = new MarketRent(marketRent);
-        var prospectiveRentVO = new ProspectiveRent(prospectiveRent);
+        var marketRentVO = new MarketRentPerWeek(marketRentPerWeek);
+        var prospectiveRentVO = new RentPerWeek(rentPerWeek);
 
         var tenureDetails = new TenureDetailsTestDataBuilder()
             .WithMarketRent(marketRentVO)
@@ -24,7 +24,7 @@ public class CalculateProspectiveRentTests
             .Build();
 
         // when
-        tenureDetails.ChangeProspectiveRentAsPercentageOfMarketRent();
+        tenureDetails.ChangeRentAsPercentageOfMarketRent();
 
         // then
         tenureDetails.ProspectiveRentAsPercentageOfMarketRent.Should().NotBeNull();
@@ -34,15 +34,15 @@ public class CalculateProspectiveRentTests
     [Theory]
     [InlineData("10", null)]
     [InlineData(null, "10")]
-    public void ShouldReturnNull_WhenAnyValueIsNotProvided(string? marketRent, string? prospectiveRent)
+    public void ShouldReturnNull_WhenAnyValueIsNotProvided(string? marketRentPerWeek, string? rentPerWeek)
     {
         // given
         var tenureDetails = new TenureDetailsTestDataBuilder().Build();
 
         // when
-        var result = tenureDetails.CalculateProspectiveRent(
-            marketRent == null ? null : new MarketRent(marketRent, true),
-            prospectiveRent == null ? null : new ProspectiveRent(prospectiveRent, true));
+        var result = tenureDetails.CalculateRentAsPercentageOfMarketRent(
+            marketRentPerWeek == null ? null : new MarketRentPerWeek(marketRentPerWeek, true),
+            rentPerWeek == null ? null : new RentPerWeek(rentPerWeek, true));
 
         // then
         result.Should().BeNull();

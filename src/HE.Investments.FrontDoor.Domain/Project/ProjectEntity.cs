@@ -4,9 +4,11 @@ using HE.Investments.Common.Domain;
 using HE.Investments.Common.Errors;
 using HE.Investments.Common.Extensions;
 using HE.Investments.FrontDoor.Contract.Project;
+using HE.Investments.FrontDoor.Contract.Project.Enums;
 using HE.Investments.FrontDoor.Contract.Project.Events;
 using HE.Investments.FrontDoor.Domain.Project.Repository;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
+using ProjectGeographicFocus = HE.Investments.FrontDoor.Domain.Project.ValueObjects.ProjectGeographicFocus;
 
 namespace HE.Investments.FrontDoor.Domain.Project;
 
@@ -19,27 +21,33 @@ public class ProjectEntity : DomainEntity
         ProjectName name,
         bool? isEnglandHousingDelivery = null,
         SupportActivities? supportActivityTypes = null,
-        ProjectInfrastructureTypes? infrastructureTypes = null,
+        ProjectInfrastructure? infrastructureTypes = null,
         ProjectAffordableHomesAmount? affordableHomesAmount = null,
         OrganisationHomesBuilt? organisationHomesBuilt = null,
         IsSiteIdentified? isSiteIdentified = null,
         Regions? regions = null,
         HomesNumber? homesNumber = null,
         ProjectGeographicFocus? geographicFocus = null,
-        IsFundingRequired? isFundingRequired = null)
+        IsSupportRequired? isSupportRequired = null,
+        IsFundingRequired? isFundingRequired = null,
+        RequiredFunding? requiredFunding = null,
+        IsProfit? isProfit = null)
     {
         Id = id;
         Name = name;
         IsEnglandHousingDelivery = isEnglandHousingDelivery ?? true;
         SupportActivities = supportActivityTypes ?? SupportActivities.Empty();
-        InfrastructureTypes = infrastructureTypes;
+        Infrastructure = infrastructureTypes ?? ProjectInfrastructure.Empty();
         AffordableHomesAmount = affordableHomesAmount ?? ProjectAffordableHomesAmount.Empty();
         OrganisationHomesBuilt = organisationHomesBuilt;
         IsSiteIdentified = isSiteIdentified;
         Regions = regions ?? Regions.Empty();
         HomesNumber = homesNumber;
         GeographicFocus = geographicFocus ?? ProjectGeographicFocus.Empty();
+        IsSupportRequired = isSupportRequired;
         IsFundingRequired = isFundingRequired;
+        RequiredFunding = requiredFunding ?? RequiredFunding.Empty;
+        IsProfit = isProfit ?? IsProfit.Empty;
     }
 
     public FrontDoorProjectId Id { get; private set; }
@@ -52,7 +60,7 @@ public class ProjectEntity : DomainEntity
 
     public ProjectAffordableHomesAmount AffordableHomesAmount { get; private set; }
 
-    public ProjectInfrastructureTypes? InfrastructureTypes { get; private set; }
+    public ProjectInfrastructure Infrastructure { get; private set; }
 
     public OrganisationHomesBuilt? OrganisationHomesBuilt { get; private set; }
 
@@ -65,6 +73,12 @@ public class ProjectEntity : DomainEntity
     public ProjectGeographicFocus GeographicFocus { get; private set; }
 
     public IsFundingRequired? IsFundingRequired { get; private set; }
+
+    public IsSupportRequired? IsSupportRequired { get; private set; }
+
+    public RequiredFunding RequiredFunding { get; private set; }
+
+    public IsProfit IsProfit { get; private set; }
 
     public static async Task<ProjectEntity> New(ProjectName projectName, IProjectNameExists projectNameExists, CancellationToken cancellationToken)
     {
@@ -91,9 +105,9 @@ public class ProjectEntity : DomainEntity
         AffordableHomesAmount = _modificationTracker.Change(AffordableHomesAmount, affordableHomesAmount);
     }
 
-    public void ProvideInfrastructureTypes(ProjectInfrastructureTypes infrastructureTypes)
+    public void ProvideInfrastructureTypes(ProjectInfrastructure infrastructure)
     {
-        InfrastructureTypes = _modificationTracker.Change(InfrastructureTypes, infrastructureTypes);
+        Infrastructure = _modificationTracker.Change(Infrastructure, infrastructure);
     }
 
     public void ProvideGeographicFocus(ProjectGeographicFocus geographicFocus)
@@ -146,9 +160,24 @@ public class ProjectEntity : DomainEntity
         HomesNumber = _modificationTracker.Change(HomesNumber, homesNumber);
     }
 
+    public void ProvideIsSupportRequired(IsSupportRequired isSupportRequired)
+    {
+        IsSupportRequired = _modificationTracker.Change(IsSupportRequired, isSupportRequired);
+    }
+
     public void ProvideIsFundingRequired(IsFundingRequired isFundingRequired)
     {
-        IsFundingRequired = _modificationTracker.Change(IsFundingRequired, isFundingRequired);
+        IsFundingRequired = _modificationTracker.Change(IsFundingRequired, isFundingRequired, null, IsFundingRequiredHasChanged);
+    }
+
+    public void ProvideRequiredFunding(RequiredFunding requiredFunding)
+    {
+        RequiredFunding = _modificationTracker.Change(RequiredFunding, requiredFunding);
+    }
+
+    public void ProvideIsProfit(IsProfit isProfit)
+    {
+        IsProfit = _modificationTracker.Change(IsProfit, isProfit);
     }
 
     private static async Task<ProjectName> ValidateProjectNameUniqueness(
@@ -164,16 +193,26 @@ public class ProjectEntity : DomainEntity
         return projectName;
     }
 
+    private void IsFundingRequiredHasChanged(IsFundingRequired? isFundingRequired)
+    {
+        if (!isFundingRequired?.Value ?? false)
+        {
+            RequiredFunding = RequiredFunding.Empty;
+            IsProfit = IsProfit.Empty;
+        }
+    }
+
     private void SupportActivityTypesHaveChanged(SupportActivities newSupportActivityTypes)
     {
         if (!newSupportActivityTypes.IsTenureRequired())
         {
             AffordableHomesAmount = ProjectAffordableHomesAmount.Empty();
+            OrganisationHomesBuilt = null;
         }
 
         if (!newSupportActivityTypes.IsInfrastructureRequired())
         {
-            InfrastructureTypes = null;
+            Infrastructure = ProjectInfrastructure.Empty();
         }
     }
 }

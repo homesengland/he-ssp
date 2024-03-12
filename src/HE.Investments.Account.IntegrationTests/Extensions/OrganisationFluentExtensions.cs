@@ -26,11 +26,6 @@ public static class OrganisationFluentExtensions
         return htmlDocument.HasElementForTestId("user-organisation-limited-user", out _);
     }
 
-    public static IHtmlDocument HasStartNewApplicationLink(this IHtmlDocument htmlDocument, ProgrammeType programmeType)
-    {
-        return htmlDocument.HasLinkWithTestId($"user-organisation-start-new-application-{programmeType.ToString().ToLowerInvariant()}", out _);
-    }
-
     public static IHtmlDocument HasActionLink(this IHtmlDocument htmlDocument, string href, out IHtmlAnchorElement actionLink)
     {
         var link = htmlDocument

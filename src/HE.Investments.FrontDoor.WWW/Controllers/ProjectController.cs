@@ -386,7 +386,15 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     [WorkflowState(ProjectWorkflowState.Progress)]
     public async Task<IActionResult> Progress([FromRoute] string projectId, ProjectDetails model, CancellationToken cancellationToken)
     {
-        return await Continue(new { projectId });
+        return await ExecuteProjectCommand(
+            new ProvideIsSupportRequiredCommand(new FrontDoorProjectId(projectId), model.IsSupportRequired),
+            nameof(Progress),
+            project =>
+            {
+                project.IsSupportRequired = model.IsSupportRequired;
+                return project;
+            },
+            cancellationToken);
     }
 
     [HttpGet("{projectId}/requires-funding")]
@@ -422,7 +430,15 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     [WorkflowState(ProjectWorkflowState.FundingAmount)]
     public async Task<IActionResult> FundingAmount([FromRoute] string projectId, ProjectDetails model, CancellationToken cancellationToken)
     {
-        return await Continue(new { projectId });
+        return await ExecuteProjectCommand(
+            new ProvideRequiredFundingCommand(new FrontDoorProjectId(projectId), model.RequiredFunding),
+            nameof(FundingAmount),
+            project =>
+            {
+                project.RequiredFunding = model.RequiredFunding;
+                return project;
+            },
+            cancellationToken);
     }
 
     [HttpGet("{projectId}/profit")]
@@ -436,7 +452,15 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     [WorkflowState(ProjectWorkflowState.Profit)]
     public async Task<IActionResult> Profit([FromRoute] string projectId, ProjectDetails model, CancellationToken cancellationToken)
     {
-        return await Continue(new { projectId });
+        return await ExecuteProjectCommand(
+            new ProvideIsProfitCommand(new FrontDoorProjectId(projectId), model.IsProfit),
+            nameof(Profit),
+            project =>
+            {
+                project.IsProfit = model.IsProfit;
+                return project;
+            },
+            cancellationToken);
     }
 
     [HttpGet("{projectId}/expected-start")]

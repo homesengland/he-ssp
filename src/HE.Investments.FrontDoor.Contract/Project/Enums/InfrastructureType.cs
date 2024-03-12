@@ -5,6 +5,8 @@ namespace HE.Investments.FrontDoor.Contract.Project.Enums;
 
 public enum InfrastructureType
 {
+    Unknown = 0,
+
     [Description("Site preparation")]
     SitePreparation,
 

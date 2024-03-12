@@ -97,7 +97,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     public async Task<IActionResult> HomesNumber([FromRoute] string projectId, [FromRoute] string siteId, SiteDetails model, CancellationToken cancellationToken)
     {
         return await ExecuteSiteCommand(
-            new ProvideHomesNumberCommand(new FrontDoorProjectId(projectId), new FrontDoorSiteId(siteId), model.HomesNumber),
+            new ProvideSiteHomesNumberCommand(new FrontDoorProjectId(projectId), new FrontDoorSiteId(siteId), model.HomesNumber),
             nameof(HomesNumber),
             project =>
             {
@@ -187,9 +187,21 @@ public class SiteController : WorkflowController<SiteWorkflowState>
 
     [HttpPost("{siteId}/add-another-site")]
     [WorkflowState(SiteWorkflowState.AddAnotherSite)]
-    public IActionResult AddAnotherSite([FromRoute] string projectId, [FromRoute] string siteId, SiteDetails model)
+    public async Task<IActionResult> AddAnotherSite([FromRoute] string projectId, [FromRoute] string siteId, SiteDetails model, CancellationToken cancellationToken)
     {
-        return RedirectToAction("Progress", "Project", new { projectId });
+        if (model.AddAnotherSite == Contract.Site.AddAnotherSite.Yes)
+        {
+            return RedirectToAction("NewName", "Site", new { projectId });
+        }
+
+        if (model.AddAnotherSite == Contract.Site.AddAnotherSite.No)
+        {
+            return RedirectToAction("Progress", "Project", new { projectId });
+        }
+
+        ModelState.Clear();
+        ModelState.AddValidationErrors(OperationResult.New().AddValidationError(nameof(SiteDetails.AddAnotherSite), "Select yes if you want to add another site"));
+        return View(nameof(AddAnotherSite), await GetSiteDetails(projectId, siteId, cancellationToken));
     }
 
     protected override Task<IStateRouting<SiteWorkflowState>> Routing(SiteWorkflowState currentState, object? routeData = null)

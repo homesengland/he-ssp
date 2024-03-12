@@ -7,7 +7,7 @@ using HE.Investments.Loans.Contract.Application.Events;
 
 namespace HE.Investments.Loans.BusinessLogic.LoanApplication.EventHandlers;
 
-public class LoanApplicationHasBeenStartedEventHandler : IEventHandler<LoanApplicationHasBeenStartedEvent>
+public class CreateLoanApplicationFolderStructureEventHandler : IEventHandler<LoanApplicationHasBeenStartedEvent>
 {
     private readonly IDocumentService _documentService;
 
@@ -15,7 +15,7 @@ public class LoanApplicationHasBeenStartedEventHandler : IEventHandler<LoanAppli
 
     private readonly ILoansDocumentSettings _documentSettings;
 
-    public LoanApplicationHasBeenStartedEventHandler(
+    public CreateLoanApplicationFolderStructureEventHandler(
         IDocumentService documentService,
         IFileApplicationRepository fileApplicationRepository,
         ILoansDocumentSettings documentSettings)

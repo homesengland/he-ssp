@@ -3,6 +3,7 @@ using HE.Investments.FrontDoor.Contract.Project.Enums;
 using HE.Investments.FrontDoor.Domain.Project;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
 using HE.Investments.TestsUtils.TestFramework;
+using ProjectInfrastructure = HE.Investments.FrontDoor.Domain.Project.ValueObjects.ProjectInfrastructure;
 
 namespace HE.Investments.FrontDoor.Domain.Tests.Project.TestDataBuilders;
 
@@ -23,6 +24,25 @@ public class ProjectEntityBuilder : TestObjectBuilder<ProjectEntityBuilder, Proj
         return this;
     }
 
+    public ProjectEntityBuilder WithSupportActivitiesAsProvidingInfrastructure()
+    {
+        Item.ProvideSupportActivityTypes(new SupportActivities(new[] { SupportActivityType.ProvidingInfrastructure }));
+        return this;
+    }
+
+    public ProjectEntityBuilder WithRequiredFunding()
+    {
+        Item.ProvideIsFundingRequired(new IsFundingRequired(true));
+        Item.ProvideRequiredFunding(new RequiredFunding(RequiredFundingOption.LessThan250K));
+        return this;
+    }
+
+    public ProjectEntityBuilder WithIsProfit()
+    {
+        Item.ProvideIsProfit(new IsProfit(true));
+        return this;
+    }
+
     public ProjectEntityBuilder WithAffordableHomesAmount()
     {
         Item.ProvideAffordableHomesAmount(new ProjectAffordableHomesAmount(AffordableHomesAmount.OpenMarkedAndAffordableHomes));
@@ -31,7 +51,7 @@ public class ProjectEntityBuilder : TestObjectBuilder<ProjectEntityBuilder, Proj
 
     public ProjectEntityBuilder WithInfrastructureTypeUnknown()
     {
-        Item.ProvideInfrastructureTypes(new ProjectInfrastructureTypes(new List<InfrastructureType>() { InfrastructureType.IDoNotKnow }));
+        Item.ProvideInfrastructureTypes(new ProjectInfrastructure(new List<InfrastructureType>() { InfrastructureType.IDoNotKnow }));
         return this;
     }
 }

@@ -18,7 +18,7 @@ public class OlderPersonsSharedOwnershipModel : HomeTypeBasicModel
 
     public string? ExpectedFirstTranche { get; set; }
 
-    public string? ProspectiveRent { get; set; }
+    public string? RentPerWeek { get; set; }
 
     public string? RentAsPercentageOfTheUnsoldShare { get; set; }
 }

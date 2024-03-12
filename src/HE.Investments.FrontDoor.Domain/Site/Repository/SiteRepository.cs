@@ -4,6 +4,7 @@ using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.CRM.Mappers;
 using HE.Investments.FrontDoor.Contract.Project;
 using HE.Investments.FrontDoor.Contract.Site;
+using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
 using HE.Investments.FrontDoor.Domain.Site.Crm;
 using HE.Investments.FrontDoor.Domain.Site.ValueObjects;
 
@@ -50,6 +51,7 @@ public class SiteRepository : ISiteRepository
         {
             SiteId = entity.Id.Value,
             SiteName = entity.Name.Value,
+            NumberofHomesEnabledBuilt = entity.HomesNumber?.Value,
             PlanningStatus = entity.PlanningStatus.Value == SitePlanningStatus.Undefined ? null : _planningStatusMapper.ToDto(entity.PlanningStatus.Value),
         };
     }
@@ -61,6 +63,7 @@ public class SiteRepository : ISiteRepository
             new FrontDoorSiteId(dto.SiteId),
             new SiteName(dto.SiteName),
             dto.CreatedOn,
-            PlanningStatus.Create(_planningStatusMapper.ToDomain(dto.PlanningStatus)));
+            dto.NumberofHomesEnabledBuilt == null ? null : new HomesNumber(dto.NumberofHomesEnabledBuilt.Value),
+            planningStatus: PlanningStatus.Create(_planningStatusMapper.ToDomain(dto.PlanningStatus)));
     }
 }

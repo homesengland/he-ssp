@@ -53,12 +53,16 @@ public class ProjectRepository : IProjectRepository
             externalId = userAccount.UserGlobalId.Value,
             ActivitiesinThisProject = new SupportActivitiesMapper().Map(project.SupportActivities),
             AmountofAffordableHomes = new AffordableHomesAmountMapper().ToDto(project.AffordableHomesAmount.AffordableHomesAmount),
+            InfrastructureDelivered = new ProjectInfrastructureMapper().Map(project.Infrastructure),
             PreviousResidentialBuildingExperience = project.OrganisationHomesBuilt?.Value,
             IdentifiedSite = project.IsSiteIdentified?.Value,
             Region = new RegionsMapper().Map(project.Regions),
             NumberofHomesEnabledBuilt = project.HomesNumber?.Value,
             GeographicFocus = new ProjectGeographicFocusMapper().ToDto(project.GeographicFocus.GeographicFocus),
+            WouldyourprojectfailwithoutHEsupport = project.IsSupportRequired?.Value,
             FundingRequired = project.IsFundingRequired?.Value,
+            AmountofFundingRequired = new RequiredFundingMapper().Map(project.RequiredFunding),
+            IntentiontoMakeaProfit = project.IsProfit.Value,
         };
 
         var projectId = await _crmContext.Save(dto, userAccount, cancellationToken);
@@ -83,12 +87,16 @@ public class ProjectRepository : IProjectRepository
             new ProjectName(dto.ProjectName),
             dto.ProjectSupportsHousingDeliveryinEngland,
             supportActivityTypes: new SupportActivitiesMapper().Map(dto.ActivitiesinThisProject),
+            infrastructureTypes: new ProjectInfrastructureMapper().Map(dto.InfrastructureDelivered),
             affordableHomesAmount: ProjectAffordableHomesAmount.Create(new AffordableHomesAmountMapper().ToDomain(dto.AmountofAffordableHomes)),
             organisationHomesBuilt: dto.PreviousResidentialBuildingExperience.IsProvided() ? new OrganisationHomesBuilt((int)dto.PreviousResidentialBuildingExperience!) : null,
             isSiteIdentified: dto.IdentifiedSite.IsProvided() ? new IsSiteIdentified(dto.IdentifiedSite) : null,
             regions: new RegionsMapper().Map(dto.Region),
             homesNumber: dto.NumberofHomesEnabledBuilt.IsProvided() ? new HomesNumber(dto.NumberofHomesEnabledBuilt!.Value) : null,
             geographicFocus: ProjectGeographicFocus.Create(new ProjectGeographicFocusMapper().ToDomain(dto.GeographicFocus)),
-            isFundingRequired: dto.FundingRequired.IsProvided() ? new IsFundingRequired(dto.FundingRequired) : null);
+            isSupportRequired: dto.WouldyourprojectfailwithoutHEsupport.IsProvided() ? new IsSupportRequired(dto.WouldyourprojectfailwithoutHEsupport) : null,
+            isFundingRequired: dto.FundingRequired.IsProvided() ? new IsFundingRequired(dto.FundingRequired) : null,
+            requiredFunding: new RequiredFundingMapper().Map(dto.AmountofFundingRequired),
+            isProfit: dto.IntentiontoMakeaProfit.IsProvided() ? new IsProfit(dto.IntentiontoMakeaProfit) : null);
     }
 }

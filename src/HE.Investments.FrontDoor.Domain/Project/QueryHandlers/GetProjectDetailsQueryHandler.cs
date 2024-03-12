@@ -37,11 +37,14 @@ public class GetProjectDetailsQueryHandler : IRequestHandler<GetProjectDetailsQu
             OrganisationHomesBuilt = project.OrganisationHomesBuilt?.ToString(),
             IsSiteIdentified = project.IsSiteIdentified?.Value,
             GeographicFocus = project.GeographicFocus.GeographicFocus,
+            IsSupportRequired = project.IsSupportRequired?.Value,
             IsFundingRequired = project.IsFundingRequired?.Value,
             SupportActivityTypes = project.SupportActivities.Values,
             AffordableHomesAmount = project.AffordableHomesAmount.AffordableHomesAmount,
+            InfrastructureTypes = project.Infrastructure.Values,
             Regions = project.Regions.Values,
             HomesNumber = project.HomesNumber?.ToString(),
+            RequiredFunding = project.RequiredFunding.Value,
             LastSiteId = projectSite.LastSiteId(),
         };
     }

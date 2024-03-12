@@ -1,3 +1,4 @@
+using System.Globalization;
 using HE.Investments.Account.Shared;
 using HE.Investments.FrontDoor.Contract.Site;
 using HE.Investments.FrontDoor.Contract.Site.Queries;
@@ -33,6 +34,7 @@ public class GetSiteDetailsQueryHandler : IRequestHandler<GetSiteDetailsQuery, S
             Name = site.Name.Value,
             ProjectName = project.Name.Value,
             PlanningStatus = site.PlanningStatus.Value,
+            HomesNumber = site.HomesNumber?.Value.ToString(CultureInfo.InvariantCulture),
         };
     }
 }

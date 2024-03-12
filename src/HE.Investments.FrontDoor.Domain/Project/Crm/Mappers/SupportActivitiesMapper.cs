@@ -21,11 +21,11 @@ public class SupportActivitiesMapper : EnumMapper<SupportActivityType>
     {
         return values.Count == 0
             ? SupportActivities.Empty()
-            : new SupportActivities(values.Select(x => new SupportActivitiesMapper().ToDomain(x)!.Value).ToList());
+            : new SupportActivities(values.Select(x => ToDomain(x)!.Value).ToList());
     }
 
     public List<int> Map(SupportActivities value)
     {
-        return value.Values.Select(x => new SupportActivitiesMapper().ToDto(x)!.Value).ToList();
+        return value.Values.Select(x => ToDto(x)!.Value).ToList();
     }
 }

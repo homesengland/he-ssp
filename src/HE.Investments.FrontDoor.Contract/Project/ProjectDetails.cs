@@ -30,4 +30,10 @@ public class ProjectDetails
     public IList<RegionType>? Regions { get; set; }
 
     public string? HomesNumber { get; set; }
+
+    public RequiredFundingOption? RequiredFunding { get; set; }
+
+    public bool? IsSupportRequired { get; set; }
+
+    public bool? IsProfit { get; set; }
 }

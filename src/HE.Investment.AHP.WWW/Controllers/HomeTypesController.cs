@@ -845,8 +845,8 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         var model = new AffordableRentModel(tenureDetails.ApplicationName, tenureDetails.HomeTypeName)
         {
             MarketValue = CurrencyHelper.InputPounds(tenureDetails.MarketValue),
-            MarketRent = CurrencyHelper.InputPoundsPences(tenureDetails.MarketRent),
-            ProspectiveRent = CurrencyHelper.InputPoundsPences(tenureDetails.ProspectiveRent),
+            MarketRentPerWeek = CurrencyHelper.InputPoundsPences(tenureDetails.MarketRentPerWeek),
+            RentPerWeek = CurrencyHelper.InputPoundsPences(tenureDetails.RentPerWeek),
             ProspectiveRentAsPercentageOfMarketRent = tenureDetails.ProspectiveRentAsPercentageOfMarketRent.ToWholePercentage(),
             TargetRentExceedMarketRent = tenureDetails.TargetRentExceedMarketRent,
         };
@@ -866,12 +866,12 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         if (action == GenericMessages.Calculate)
         {
             var (operationResult, calculationResult) = await _mediator.Send(
-                new CalculateProspectiveRentQuery(
+                new CalculateAffordableRentQuery(
                     AhpApplicationId.From(applicationId),
                     HomeTypeId.From(homeTypeId),
                     model.MarketValue,
-                    model.MarketRent,
-                    model.ProspectiveRent,
+                    model.MarketRentPerWeek,
+                    model.RentPerWeek,
                     model.TargetRentExceedMarketRent),
                 cancellationToken);
             this.AddOrderedErrors<AffordableRentModel>(operationResult);
@@ -880,12 +880,12 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         }
 
         return await SaveHomeTypeSegment(
-            new SaveProspectiveRentCommand(
+            new SaveAffordableRentCommand(
                 AhpApplicationId.From(applicationId),
                 HomeTypeId.From(homeTypeId),
                 model.MarketValue,
-                model.MarketRent,
-                model.ProspectiveRent,
+                model.MarketRentPerWeek,
+                model.RentPerWeek,
                 model.TargetRentExceedMarketRent),
             model,
             cancellationToken);
@@ -908,7 +908,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         var model = new SocialRentModel(tenureDetails.ApplicationName, tenureDetails.HomeTypeName)
         {
             MarketValue = CurrencyHelper.InputPounds(tenureDetails.MarketValue),
-            ProspectiveRent = CurrencyHelper.InputPoundsPences(tenureDetails.ProspectiveRent),
+            RentPerWeek = CurrencyHelper.InputPoundsPences(tenureDetails.RentPerWeek),
         };
 
         return View(model);
@@ -927,7 +927,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
                 AhpApplicationId.From(applicationId),
                 HomeTypeId.From(homeTypeId),
                 model.MarketValue,
-                model.ProspectiveRent),
+                model.RentPerWeek),
             model,
             cancellationToken);
     }
@@ -940,11 +940,10 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         var model = new SharedOwnershipModel(tenureDetails.ApplicationName, tenureDetails.HomeTypeName)
         {
             MarketValue = CurrencyHelper.InputPounds(tenureDetails.MarketValue),
-            InitialSale = tenureDetails.InitialSale.ToWholePercentage(),
+            InitialSale = tenureDetails.InitialSale.ToWholePercentage().WithoutPercentageChar(),
             ExpectedFirstTranche = tenureDetails.ExpectedFirstTranche.DisplayPoundsPences(),
-            ProspectiveRent = CurrencyHelper.InputPoundsPences(tenureDetails.ProspectiveRent),
-            RentAsPercentageOfTheUnsoldShare =
-                tenureDetails.RentAsPercentageOfTheUnsoldShare.ToPercentageWithTwoDecimal().WithoutPercentageChar(),
+            RentPerWeek = CurrencyHelper.InputPoundsPences(tenureDetails.RentPerWeek),
+            RentAsPercentageOfTheUnsoldShare = tenureDetails.RentAsPercentageOfTheUnsoldShare.ToPercentageWithTwoDecimal(),
         };
 
         return View(model);
@@ -967,7 +966,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
                     HomeTypeId.From(homeTypeId),
                     model.MarketValue,
                     model.InitialSale,
-                    model.ProspectiveRent),
+                    model.RentPerWeek),
                 cancellationToken);
 
             model.ExpectedFirstTranche = calculationResult.ExpectedFirstTranche.DisplayPoundsPences();
@@ -984,7 +983,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
                 HomeTypeId.From(homeTypeId),
                 model.MarketValue,
                 model.InitialSale,
-                model.ProspectiveRent),
+                model.RentPerWeek),
             model,
             cancellationToken);
     }
@@ -1006,9 +1005,9 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         var model = new RentToBuyModel(tenureDetails.ApplicationName, tenureDetails.HomeTypeName)
         {
             MarketValue = CurrencyHelper.InputPounds(tenureDetails.MarketValue),
-            MarketRent = CurrencyHelper.InputPoundsPences(tenureDetails.MarketRent),
-            ProspectiveRent = CurrencyHelper.InputPoundsPences(tenureDetails.ProspectiveRent),
-            ProspectiveRentAsPercentageOfMarketRent = tenureDetails.ProspectiveRentAsPercentageOfMarketRent.ToPercentageWithTwoDecimal(),
+            MarketRentPerWeek = CurrencyHelper.InputPoundsPences(tenureDetails.MarketRentPerWeek),
+            RentPerWeek = CurrencyHelper.InputPoundsPences(tenureDetails.RentPerWeek),
+            ProspectiveRentAsPercentageOfMarketRent = tenureDetails.ProspectiveRentAsPercentageOfMarketRent.ToWholePercentage(),
             TargetRentExceedMarketRent = tenureDetails.TargetRentExceedMarketRent,
         };
 
@@ -1027,12 +1026,12 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         if (action == GenericMessages.Calculate)
         {
             var (operationResult, calculationResult) = await _mediator.Send(
-                new CalculateProspectiveRentQuery(
+                new CalculateRentToBuyQuery(
                     AhpApplicationId.From(applicationId),
                     HomeTypeId.From(homeTypeId),
                     model.MarketValue,
-                    model.MarketRent,
-                    model.ProspectiveRent,
+                    model.MarketRentPerWeek,
+                    model.RentPerWeek,
                     model.TargetRentExceedMarketRent),
                 cancellationToken);
             this.AddOrderedErrors<RentToBuyModel>(operationResult);
@@ -1042,12 +1041,12 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         }
 
         return await SaveHomeTypeSegment(
-            new SaveProspectiveRentCommand(
+            new SaveRentToBuyCommand(
                 AhpApplicationId.From(applicationId),
                 HomeTypeId.From(homeTypeId),
                 model.MarketValue,
-                model.MarketRent,
-                model.ProspectiveRent,
+                model.MarketRentPerWeek,
+                model.RentPerWeek,
                 model.TargetRentExceedMarketRent),
             model,
             cancellationToken);
@@ -1070,7 +1069,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
             MarketValue = CurrencyHelper.InputPounds(tenureDetails.MarketValue),
             InitialSale = tenureDetails.InitialSale.ToWholePercentage().WithoutPercentageChar(),
             ExpectedFirstTranche = tenureDetails.ExpectedFirstTranche.DisplayPoundsPences(),
-            ProspectiveRent = CurrencyHelper.InputPoundsPences(tenureDetails.ProspectiveRent),
+            RentPerWeek = CurrencyHelper.InputPoundsPences(tenureDetails.RentPerWeek),
             RentAsPercentageOfTheUnsoldShare = tenureDetails.RentAsPercentageOfTheUnsoldShare.ToPercentageWithTwoDecimal(),
         };
 
@@ -1094,7 +1093,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
                     HomeTypeId.From(homeTypeId),
                     model.MarketValue,
                     model.InitialSale,
-                    model.ProspectiveRent),
+                    model.RentPerWeek),
                 cancellationToken);
 
             model.ExpectedFirstTranche = calculationResult.ExpectedFirstTranche.DisplayPoundsPences();
@@ -1110,7 +1109,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
                 HomeTypeId.From(homeTypeId),
                 model.MarketValue,
                 model.InitialSale,
-                model.ProspectiveRent),
+                model.RentPerWeek),
             model,
             cancellationToken);
     }
@@ -1125,9 +1124,9 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
             MarketValue = CurrencyHelper.InputPounds(tenureDetails.MarketValue),
             InitialSale = tenureDetails.InitialSale.ToWholePercentage().WithoutPercentageChar(),
             ExpectedFirstTranche = tenureDetails.ExpectedFirstTranche.DisplayPoundsPences(),
-            ProspectiveRent = CurrencyHelper.InputPoundsPences(tenureDetails.ProspectiveRent),
+            RentPerWeek = CurrencyHelper.InputPoundsPences(tenureDetails.RentPerWeek),
             RentAsPercentageOfTheUnsoldShare =
-                tenureDetails.RentAsPercentageOfTheUnsoldShare.ToPercentageWithTwoDecimal().WithoutPercentageChar(),
+                tenureDetails.RentAsPercentageOfTheUnsoldShare.ToPercentageWithTwoDecimal(),
         };
 
         return View(model);
@@ -1150,7 +1149,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
                     HomeTypeId.From(homeTypeId),
                     model.MarketValue,
                     model.InitialSale,
-                    model.ProspectiveRent),
+                    model.RentPerWeek),
                 cancellationToken);
 
             model.ExpectedFirstTranche = calculationResult.ExpectedFirstTranche.DisplayPoundsPences();
@@ -1166,7 +1165,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
                 HomeTypeId.From(homeTypeId),
                 model.MarketValue,
                 model.InitialSale,
-                model.ProspectiveRent),
+                model.RentPerWeek),
             model,
             cancellationToken);
     }

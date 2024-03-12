@@ -7,4 +7,4 @@ public record SaveSharedOwnershipCommand(
     HomeTypeId HomeTypeId,
     string? MarketValue,
     string? InitialSale,
-    string? ProspectiveRent) : ISaveHomeTypeSegmentCommand;
+    string? SharedOwnershipRentPerWeek) : ISaveHomeTypeSegmentCommand;
