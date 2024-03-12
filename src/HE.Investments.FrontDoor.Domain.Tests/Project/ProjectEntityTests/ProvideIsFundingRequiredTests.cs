@@ -25,25 +25,27 @@ public class ProvideIsFundingRequiredTests
     public void ShouldResetRequiredFundingQuestion_WhenIsFundingRequiredHasChanged()
     {
         // given
-        var project = ProjectEntityBuilder.New().WithRequiredFunding().Build();
+        var project = ProjectEntityBuilder.New().WithRequiredFunding().WithIsProfit().Build();
 
         // when
         project.ProvideIsFundingRequired(new IsFundingRequired(false));
 
         // then
         project.RequiredFunding.Should().Be(RequiredFunding.Empty);
+        project.IsProfit.Should().Be(IsProfit.Empty);
     }
 
     [Fact]
     public void ShouldNotResetRequiredFundingQuestion_WhenIsFundingRequiredHasChangedToTheSameValue()
     {
         // given
-        var project = ProjectEntityBuilder.New().WithRequiredFunding().Build();
+        var project = ProjectEntityBuilder.New().WithRequiredFunding().WithIsProfit().Build();
 
         // when
         project.ProvideIsFundingRequired(new IsFundingRequired(true));
 
         // then
         project.RequiredFunding.Should().NotBe(RequiredFunding.Empty);
+        project.IsProfit.Should().NotBe(IsProfit.Empty);
     }
 }

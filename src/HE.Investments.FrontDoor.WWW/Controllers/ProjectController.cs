@@ -452,7 +452,15 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     [WorkflowState(ProjectWorkflowState.Profit)]
     public async Task<IActionResult> Profit([FromRoute] string projectId, ProjectDetails model, CancellationToken cancellationToken)
     {
-        return await Continue(new { projectId });
+        return await ExecuteProjectCommand(
+            new ProvideIsProfitCommand(new FrontDoorProjectId(projectId), model.IsProfit),
+            nameof(Profit),
+            project =>
+            {
+                project.IsProfit = model.IsProfit;
+                return project;
+            },
+            cancellationToken);
     }
 
     [HttpGet("{projectId}/expected-start")]

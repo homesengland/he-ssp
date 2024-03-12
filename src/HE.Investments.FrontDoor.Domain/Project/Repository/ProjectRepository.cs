@@ -62,6 +62,7 @@ public class ProjectRepository : IProjectRepository
             WouldyourprojectfailwithoutHEsupport = project.IsSupportRequired?.Value,
             FundingRequired = project.IsFundingRequired?.Value,
             AmountofFundingRequired = new RequiredFundingMapper().Map(project.RequiredFunding),
+            IntentiontoMakeaProfit = project.IsProfit.Value,
         };
 
         var projectId = await _crmContext.Save(dto, userAccount, cancellationToken);
@@ -95,6 +96,7 @@ public class ProjectRepository : IProjectRepository
             geographicFocus: ProjectGeographicFocus.Create(new ProjectGeographicFocusMapper().ToDomain(dto.GeographicFocus)),
             isSupportRequired: dto.WouldyourprojectfailwithoutHEsupport.IsProvided() ? new IsSupportRequired(dto.WouldyourprojectfailwithoutHEsupport) : null,
             isFundingRequired: dto.FundingRequired.IsProvided() ? new IsFundingRequired(dto.FundingRequired) : null,
-            requiredFunding: new RequiredFundingMapper().Map(dto.AmountofFundingRequired));
+            requiredFunding: new RequiredFundingMapper().Map(dto.AmountofFundingRequired),
+            isProfit: dto.IntentiontoMakeaProfit.IsProvided() ? new IsProfit(dto.IntentiontoMakeaProfit) : null);
     }
 }

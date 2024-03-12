@@ -34,4 +34,6 @@ public class ProjectDetails
     public RequiredFundingOption? RequiredFunding { get; set; }
 
     public bool? IsSupportRequired { get; set; }
+
+    public bool? IsProfit { get; set; }
 }
