@@ -24,7 +24,7 @@ public class SaveHomeOwnershipDisabilitiesCommandHandler : SaveHomeTypeSegmentCo
         (request, homeType) => homeType.TenureDetails.ChangeMarketValue(request.MarketValue),
         (request, homeType) => homeType.TenureDetails.ChangeInitialSale(request.InitialSale),
         (_, homeType) => homeType.TenureDetails.ChangeExpectedFirstTranche(),
-        (request, homeType) => homeType.TenureDetails.ChangeProspectiveRent(request.ProspectiveRent),
-        (_, homeType) => homeType.TenureDetails.ChangeProspectiveRentAsPercentageOfTheUnsoldShare(),
+        (request, homeType) => homeType.TenureDetails.ChangeRentPerWeek(request.RentPerWeek),
+        (_, homeType) => homeType.TenureDetails.ChangeRentAsPercentageOfTheUnsoldShare(),
     };
 }

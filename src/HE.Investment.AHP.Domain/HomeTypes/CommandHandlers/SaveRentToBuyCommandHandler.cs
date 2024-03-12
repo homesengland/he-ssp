@@ -6,25 +6,25 @@ using Microsoft.Extensions.Logging;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.CommandHandlers;
 
-public class SaveOlderPersonsSharedOwnershipCommandHandler : SaveHomeTypeSegmentCommandHandlerBase<SaveOlderPersonsSharedOwnershipCommand>
+public class SaveRentToBuyCommandHandler : SaveHomeTypeSegmentCommandHandlerBase<SaveRentToBuyCommand>
 {
-    public SaveOlderPersonsSharedOwnershipCommandHandler(
+    public SaveRentToBuyCommandHandler(
         IHomeTypeRepository homeTypeRepository,
         IAccountUserContext accountUserContext,
-        ILogger<SaveOlderPersonsSharedOwnershipCommandHandler> logger)
+        ILogger<SaveRentToBuyCommandHandler> logger)
         : base(homeTypeRepository, accountUserContext, logger)
     {
     }
 
     protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => new[] { HomeTypeSegmentType.TenureDetails };
 
-    protected override IEnumerable<Action<SaveOlderPersonsSharedOwnershipCommand, IHomeTypeEntity>> SaveActions => new[]
+    protected override IEnumerable<Action<SaveRentToBuyCommand, IHomeTypeEntity>> SaveActions => new[]
     {
-        (SaveOlderPersonsSharedOwnershipCommand _, IHomeTypeEntity homeType) => homeType.TenureDetails.ClearValuesForNewCalculation(),
+        (SaveRentToBuyCommand _, IHomeTypeEntity homeType) => homeType.TenureDetails.ClearValuesForNewCalculation(),
         (request, homeType) => homeType.TenureDetails.ChangeMarketValue(request.MarketValue),
-        (request, homeType) => homeType.TenureDetails.ChangeInitialSale(request.InitialSale),
-        (_, homeType) => homeType.TenureDetails.ChangeExpectedFirstTranche(),
+        (request, homeType) => homeType.TenureDetails.ChangeMarketRentPerWeek(request.MarketRentPerWeek),
         (request, homeType) => homeType.TenureDetails.ChangeRentPerWeek(request.RentPerWeek),
-        (_, homeType) => homeType.TenureDetails.ChangeRentAsPercentageOfTheUnsoldShare(),
+        (request, homeType) => homeType.TenureDetails.ChangeTargetRentExceedMarketRent(request.TargetRentExceedMarketRent),
+        (_, homeType) => homeType.TenureDetails.ChangeRentAsPercentageOfMarketRent(),
     };
 }

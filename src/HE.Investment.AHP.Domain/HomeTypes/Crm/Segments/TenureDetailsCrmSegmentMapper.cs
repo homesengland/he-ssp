@@ -37,8 +37,8 @@ public class TenureDetailsCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Tenure
     {
         return new TenureDetailsSegmentEntity(
             dto.marketValue.IsProvided() ? new MarketValue((int)dto.marketValue!.Value.ToWholeNumberRoundFloor()) : null,
-            dto.marketRent.IsProvided() ? new MarketRent(dto.marketRent!.Value) : null,
-            dto.prospectiveRent.IsProvided() ? new ProspectiveRent(dto.prospectiveRent!.Value) : null,
+            dto.marketRent.IsProvided() ? new MarketRentPerWeek(dto.marketRent!.Value) : null,
+            dto.prospectiveRent.IsProvided() ? new RentPerWeek(dto.prospectiveRent!.Value) : null,
             dto.prospectiveRentAsPercentOfMarketRent.IsProvided() ? new ProspectiveRentPercentage(dto.prospectiveRentAsPercentOfMarketRent!.Value) : null,
             YesNoTypeMapper.Map(dto.targetRentOver80PercentOfMarketRent),
             YesNoTypeMapper.Map(dto.RtSOExemption),
@@ -53,8 +53,8 @@ public class TenureDetailsCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Tenure
     protected override void MapToDto(HomeTypeDto dto, TenureDetailsSegmentEntity segment)
     {
         dto.marketValue = segment.MarketValue?.Value;
-        dto.marketRent = segment.MarketRent?.Value;
-        dto.prospectiveRent = segment.ProspectiveRent?.Value;
+        dto.marketRent = segment.MarketRentPerWeek?.Value;
+        dto.prospectiveRent = segment.RentPerWeek?.Value;
         dto.prospectiveRentAsPercentOfMarketRent = segment.ProspectiveRentAsPercentageOfMarketRent?.Value;
         dto.targetRentOver80PercentOfMarketRent = YesNoTypeMapper.Map(segment.TargetRentExceedMarketRent?.Value);
         dto.RtSOExemption = YesNoTypeMapper.Map(segment.ExemptFromTheRightToSharedOwnership);

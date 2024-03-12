@@ -35,14 +35,14 @@
                 </gds-span-hint>
                 <gds-input
                     class="govuk-input--width-5"
-                    asp-hiddenlabeltext="Enter the number of market value"
+                    asp-hiddenlabeltext="Enter the market value of each home"
                     govuk-formgroup-asp-for="MarketValue"
                     name="MarketValue"
                     value=@Model.MarketValue
                     asp-prefixtext="GdsInputPrefixText.Pounds"/>
             </he-error-form-group>
 
-            <he-error-form-group asp-for="MarketRent">
+            <he-error-form-group asp-for="MarketRentPerWeek">
                 <gds-legend>
                     <gds-h2 class="govuk-!-margin-bottom-0">Enter the market rent per week</gds-h2>
                 </gds-legend>
@@ -51,15 +51,15 @@
                 </gds-span-hint>
                 <gds-input
                     class="govuk-input--width-4"
-                    asp-hiddenlabeltext="Enter the number of market rent per week"
-                    govuk-formgroup-asp-for="MarketRent"
-                    name="MarketRent"
-                    value=@Model.MarketRent
+                    asp-hiddenlabeltext="Enter the market rent per week"
+                    govuk-formgroup-asp-for="MarketRentPerWeek"
+                    name="MarketRentPerWeek"
+                    value=@Model.MarketRentPerWeek
                     asp-prefixtext="GdsInputPrefixText.Pounds"
                     asp-suffixtext="GdsInputSuffixText.PerWeek"/>
             </he-error-form-group>
 
-            <he-error-form-group asp-for="ProspectiveRent">
+            <he-error-form-group asp-for="RentPerWeek">
                 <gds-legend>
                     <gds-h2 class="govuk-!-margin-bottom-0">Enter the Affordable Rent per week</gds-h2>
                 </gds-legend>
@@ -68,10 +68,10 @@
                 </gds-span-hint>
                 <gds-input
                     class="govuk-input--width-4"
-                    asp-hiddenlabeltext="Enter the number of the Affordable Rent per week"
-                    govuk-formgroup-asp-for="ProspectiveRent"
-                    name="ProspectiveRent"
-                    value=@Model.ProspectiveRent
+                    asp-hiddenlabeltext="Enter the Affordable Rent per week"
+                    govuk-formgroup-asp-for="RentPerWeek"
+                    name="RentPerWeek"
+                    value=@Model.RentPerWeek
                     asp-prefixtext="GdsInputPrefixText.Pounds"
                     asp-suffixtext="GdsInputSuffixText.PerWeek"/>
             </he-error-form-group>

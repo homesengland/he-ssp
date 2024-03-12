@@ -21,7 +21,7 @@ public class SharedOwnershipTests : HomeTypesTestBase
         AssertView(document);
         AssertErrors(document, nameof(SharedOwnershipModel.MarketValue), false);
         AssertErrors(document, nameof(SharedOwnershipModel.InitialSale), false);
-        AssertErrors(document, nameof(SharedOwnershipModel.ProspectiveRent), false);
+        AssertErrors(document, nameof(SharedOwnershipModel.RentPerWeek), false);
     }
 
     [Fact]
@@ -31,7 +31,7 @@ public class SharedOwnershipTests : HomeTypesTestBase
         var modelState = new ModelStateDictionary();
         modelState.AddModelError(nameof(SharedOwnershipModel.MarketValue), ErrorMessage);
         modelState.AddModelError(nameof(SharedOwnershipModel.InitialSale), ErrorMessage);
-        modelState.AddModelError(nameof(SharedOwnershipModel.ProspectiveRent), ErrorMessage);
+        modelState.AddModelError(nameof(SharedOwnershipModel.RentPerWeek), ErrorMessage);
 
         // when
         var document = await RenderHomeTypePage(ViewPath, Model, modelStateDictionary: modelState);
@@ -40,7 +40,7 @@ public class SharedOwnershipTests : HomeTypesTestBase
         AssertView(document);
         AssertErrors(document, nameof(SharedOwnershipModel.MarketValue), true);
         AssertErrors(document, nameof(SharedOwnershipModel.InitialSale), true);
-        AssertErrors(document, nameof(SharedOwnershipModel.ProspectiveRent), true);
+        AssertErrors(document, nameof(SharedOwnershipModel.RentPerWeek), true);
     }
 
     private static void AssertView(IHtmlDocument document)
@@ -56,7 +56,7 @@ public class SharedOwnershipTests : HomeTypesTestBase
             .HasElementWithText("h2", "Assumed first tranche sales receipt")
             .HasElementWithText("h2", "Enter the Shared Ownership rent per week")
             .HasElementWithText("span", "Enter the rent in pounds and pence. This is inclusive of all charges.")
-            .HasInput("ProspectiveRent")
+            .HasInput("RentPerWeek")
             .HasElementWithText("h2", "Shared Ownership rent as percentage of the unsold share")
             .HasSaveAndContinueButton()
             .HasElementWithText("button", "Calculate");

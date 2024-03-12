@@ -249,8 +249,8 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
             HomeTypesPageTitles.AffordableRent,
             BuildHomeTypePage(HomeTypePagesUrl.ExemptFromTheRightToSharedOwnership, GeneralHomeType),
             ("MarketValue", homeType.MarketValue.ToString(CultureInfo.InvariantCulture)),
-            ("MarketRent", homeType.MarketRent.ToString(CultureInfo.InvariantCulture)),
-            ("ProspectiveRent", homeType.ProspectiveRent.ToString(CultureInfo.InvariantCulture)),
+            ("MarketRentPerWeek", homeType.MarketRentPerWeek.ToString(CultureInfo.InvariantCulture)),
+            ("RentPerWeek", homeType.RentPerWeek.ToString(CultureInfo.InvariantCulture)),
             ("TargetRentExceedMarketRent", homeType.Exceeds80PercentOfMarketRent.ToString()));
     }
 
@@ -367,8 +367,8 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         summary.Should().ContainKey("Nationally Described Space Standards met").WithValue(GeneralHomeType.MeetSpaceStandards);
         summary.Should().ContainKey("Nationally Described Space Standards").WithValue(GeneralHomeType.SpaceStandards);
         summary.Should().ContainKey("Market value of each home").WhoseValue.Value.Should().BePoundsOnly(GeneralHomeType.MarketValue);
-        summary.Should().ContainKey("Market rent per week").WhoseValue.Value.Should().BePoundsPences(GeneralHomeType.MarketRent);
-        summary.Should().ContainKey("Affordable rent per week").WhoseValue.Value.Should().BePoundsPences(GeneralHomeType.ProspectiveRent);
+        summary.Should().ContainKey("Market rent per week").WhoseValue.Value.Should().BePoundsPences(GeneralHomeType.MarketRentPerWeek);
+        summary.Should().ContainKey("Affordable rent per week").WhoseValue.Value.Should().BePoundsPences(GeneralHomeType.RentPerWeek);
         summary.Should().ContainKey("Affordable rent as percentage of market rent").WithValue(GeneralHomeType.ProspectiveRentPercentage);
         summary.Should().ContainKey("Target rent exceeded 80% of market rent").WithValue(GeneralHomeType.Exceeds80PercentOfMarketRent);
         summary.Should().ContainKey("Exempt from Right to Shared ownership").WithValue(GeneralHomeType.ExemptFromTheRightToSharedOwnership);
@@ -672,8 +672,8 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         summary.Should().ContainKey("Nationally Described Space Standards met").WithValue(DisabledHomeType.MeetSpaceStandards);
         summary.Should().ContainKey("Nationally Described Space Standards").WithValue(DisabledHomeType.SpaceStandards);
         summary.Should().ContainKey("Market value of each home").WhoseValue.Value.Should().BePoundsOnly(DisabledHomeType.MarketValue);
-        summary.Should().ContainKey("Market rent per week").WhoseValue.Value.Should().BePoundsPences(DisabledHomeType.MarketRent);
-        summary.Should().ContainKey("Affordable rent per week").WhoseValue.Value.Should().BePoundsPences(DisabledHomeType.ProspectiveRent);
+        summary.Should().ContainKey("Market rent per week").WhoseValue.Value.Should().BePoundsPences(DisabledHomeType.MarketRentPerWeek);
+        summary.Should().ContainKey("Affordable rent per week").WhoseValue.Value.Should().BePoundsPences(DisabledHomeType.RentPerWeek);
         summary.Should().ContainKey("Affordable rent as percentage of market rent").WithValue(DisabledHomeType.ProspectiveRentPercentage);
         summary.Should().ContainKey("Target rent exceeded 80% of market rent").WithValue(DisabledHomeType.Exceeds80PercentOfMarketRent);
         summary.Should().ContainKey("Exempt from Right to Shared ownership").WithValue(DisabledHomeType.ExemptFromTheRightToSharedOwnership);

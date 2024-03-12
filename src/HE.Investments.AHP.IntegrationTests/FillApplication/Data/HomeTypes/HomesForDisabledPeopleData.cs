@@ -28,8 +28,8 @@ public class HomesForDisabledPeopleData : HomeTypeDataBase<HomesForDisabledPeopl
         MeetSpaceStandards = homeType.MeetSpaceStandards;
         SpaceStandards = homeType.SpaceStandards;
         MarketValue = homeType.MarketValue;
-        MarketRent = homeType.MarketRent;
-        ProspectiveRent = homeType.ProspectiveRent;
+        MarketRentPerWeek = homeType.MarketRentPerWeek;
+        RentPerWeek = homeType.RentPerWeek;
         ProspectiveRentPercentage = homeType.ProspectiveRentPercentage;
         Exceeds80PercentOfMarketRent = homeType.Exceeds80PercentOfMarketRent;
         ExemptFromTheRightToSharedOwnership = homeType.ExemptFromTheRightToSharedOwnership;
