@@ -4,9 +4,11 @@ using HE.Investments.Common.Domain;
 using HE.Investments.Common.Errors;
 using HE.Investments.Common.Extensions;
 using HE.Investments.FrontDoor.Contract.Project;
+using HE.Investments.FrontDoor.Contract.Project.Enums;
 using HE.Investments.FrontDoor.Contract.Project.Events;
 using HE.Investments.FrontDoor.Domain.Project.Repository;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
+using ProjectGeographicFocus = HE.Investments.FrontDoor.Domain.Project.ValueObjects.ProjectGeographicFocus;
 
 namespace HE.Investments.FrontDoor.Domain.Project;
 
@@ -27,7 +29,8 @@ public class ProjectEntity : DomainEntity
         HomesNumber? homesNumber = null,
         ProjectGeographicFocus? geographicFocus = null,
         IsSupportRequired? isSupportRequired = null,
-        IsFundingRequired? isFundingRequired = null)
+        IsFundingRequired? isFundingRequired = null,
+        RequiredFunding? requiredFunding = null)
     {
         Id = id;
         Name = name;
@@ -42,6 +45,7 @@ public class ProjectEntity : DomainEntity
         GeographicFocus = geographicFocus ?? ProjectGeographicFocus.Empty();
         IsSupportRequired = isSupportRequired;
         IsFundingRequired = isFundingRequired;
+        RequiredFunding = requiredFunding ?? RequiredFunding.Empty;
     }
 
     public FrontDoorProjectId Id { get; private set; }
@@ -69,6 +73,8 @@ public class ProjectEntity : DomainEntity
     public IsFundingRequired? IsFundingRequired { get; private set; }
 
     public IsSupportRequired? IsSupportRequired { get; private set; }
+
+    public RequiredFunding RequiredFunding { get; private set; }
 
     public static async Task<ProjectEntity> New(ProjectName projectName, IProjectNameExists projectNameExists, CancellationToken cancellationToken)
     {
@@ -158,6 +164,11 @@ public class ProjectEntity : DomainEntity
     public void ProvideIsFundingRequired(IsFundingRequired isFundingRequired)
     {
         IsFundingRequired = _modificationTracker.Change(IsFundingRequired, isFundingRequired);
+    }
+
+    public void ProvideRequiredFunding(RequiredFunding requiredFunding)
+    {
+        RequiredFunding = _modificationTracker.Change(RequiredFunding, requiredFunding);
     }
 
     private static async Task<ProjectName> ValidateProjectNameUniqueness(

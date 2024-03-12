@@ -61,6 +61,7 @@ public class ProjectRepository : IProjectRepository
             GeographicFocus = new ProjectGeographicFocusMapper().ToDto(project.GeographicFocus.GeographicFocus),
             WouldyourprojectfailwithoutHEsupport = project.IsSupportRequired?.Value,
             FundingRequired = project.IsFundingRequired?.Value,
+            AmountofFundingRequired = new RequiredFundingMapper().Map(project.RequiredFunding),
         };
 
         var projectId = await _crmContext.Save(dto, userAccount, cancellationToken);
@@ -93,6 +94,7 @@ public class ProjectRepository : IProjectRepository
             homesNumber: dto.NumberofHomesEnabledBuilt.IsProvided() ? new HomesNumber(dto.NumberofHomesEnabledBuilt!.Value) : null,
             geographicFocus: ProjectGeographicFocus.Create(new ProjectGeographicFocusMapper().ToDomain(dto.GeographicFocus)),
             isSupportRequired: dto.WouldyourprojectfailwithoutHEsupport.IsProvided() ? new IsSupportRequired(dto.WouldyourprojectfailwithoutHEsupport) : null,
-            isFundingRequired: dto.FundingRequired.IsProvided() ? new IsFundingRequired(dto.FundingRequired) : null);
+            isFundingRequired: dto.FundingRequired.IsProvided() ? new IsFundingRequired(dto.FundingRequired) : null,
+            requiredFunding: new RequiredFundingMapper().Map(dto.AmountofFundingRequired));
     }
 }

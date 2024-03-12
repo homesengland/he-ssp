@@ -44,6 +44,7 @@ public class GetProjectDetailsQueryHandler : IRequestHandler<GetProjectDetailsQu
             InfrastructureTypes = project.Infrastructure.Values,
             Regions = project.Regions.Values,
             HomesNumber = project.HomesNumber?.ToString(),
+            RequiredFunding = project.RequiredFunding.Value,
             LastSiteId = projectSite.LastSiteId(),
         };
     }

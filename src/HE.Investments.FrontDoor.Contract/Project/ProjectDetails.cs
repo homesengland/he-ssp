@@ -31,5 +31,7 @@ public class ProjectDetails
 
     public string? HomesNumber { get; set; }
 
+    public RequiredFundingOption? RequiredFunding { get; set; }
+
     public bool? IsSupportRequired { get; set; }
 }
