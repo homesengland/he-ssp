@@ -37,6 +37,12 @@ public class ProjectEntityBuilder : TestObjectBuilder<ProjectEntityBuilder, Proj
         return this;
     }
 
+    public ProjectEntityBuilder WithIsProfit()
+    {
+        Item.ProvideIsProfit(new IsProfit(true));
+        return this;
+    }
+
     public ProjectEntityBuilder WithAffordableHomesAmount()
     {
         Item.ProvideAffordableHomesAmount(new ProjectAffordableHomesAmount(AffordableHomesAmount.OpenMarkedAndAffordableHomes));

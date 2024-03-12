@@ -22,6 +22,7 @@ public static class ProjectCrmFields
         nameof(invln_FrontDoorProjectPOC.invln_FundingRequired),
         nameof(invln_FrontDoorProjectPOC.invln_AmountofFundingRequired),
         nameof(invln_FrontDoorProjectPOC.invln_InfrastructureDelivered),
+        nameof(invln_FrontDoorProjectPOC.invln_IntentiontoMakeaProfit),
     };
 
     public static readonly IReadOnlyList<string> ProjectToRead = ProjectToUpdate

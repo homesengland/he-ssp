@@ -30,7 +30,8 @@ public class ProjectEntity : DomainEntity
         ProjectGeographicFocus? geographicFocus = null,
         IsSupportRequired? isSupportRequired = null,
         IsFundingRequired? isFundingRequired = null,
-        RequiredFunding? requiredFunding = null)
+        RequiredFunding? requiredFunding = null,
+        IsProfit? isProfit = null)
     {
         Id = id;
         Name = name;
@@ -46,6 +47,7 @@ public class ProjectEntity : DomainEntity
         IsSupportRequired = isSupportRequired;
         IsFundingRequired = isFundingRequired;
         RequiredFunding = requiredFunding ?? RequiredFunding.Empty;
+        IsProfit = isProfit ?? IsProfit.Empty;
     }
 
     public FrontDoorProjectId Id { get; private set; }
@@ -75,6 +77,8 @@ public class ProjectEntity : DomainEntity
     public IsSupportRequired? IsSupportRequired { get; private set; }
 
     public RequiredFunding RequiredFunding { get; private set; }
+
+    public IsProfit IsProfit { get; private set; }
 
     public static async Task<ProjectEntity> New(ProjectName projectName, IProjectNameExists projectNameExists, CancellationToken cancellationToken)
     {
@@ -171,6 +175,11 @@ public class ProjectEntity : DomainEntity
         RequiredFunding = _modificationTracker.Change(RequiredFunding, requiredFunding);
     }
 
+    public void ProvideIsProfit(IsProfit isProfit)
+    {
+        IsProfit = _modificationTracker.Change(IsProfit, isProfit);
+    }
+
     private static async Task<ProjectName> ValidateProjectNameUniqueness(
         ProjectName projectName,
         IProjectNameExists projectNameExists,
@@ -189,6 +198,7 @@ public class ProjectEntity : DomainEntity
         if (!isFundingRequired?.Value ?? false)
         {
             RequiredFunding = RequiredFunding.Empty;
+            IsProfit = IsProfit.Empty;
         }
     }
 

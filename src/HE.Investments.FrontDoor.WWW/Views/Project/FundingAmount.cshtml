@@ -18,17 +18,18 @@
     <vc:front-door-workflow-back-button current-page="@ProjectWorkflowState.FundingAmount"></vc:front-door-workflow-back-button>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
-    <vc:page-header caption="@ViewBag.ProjectName" />
+    <vc:page-header caption="@ViewBag.ProjectName"/>
 
     <form asp-controller="Project" asp-action="FundingAmount" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
 
         <vc:radio-list-with-or
-               title="@ProjectPageTitles.GeographicFocus"
-                                title-type="@InputTitleType.PageHeader"
-                                field-name="@nameof(Model.RequiredFunding)"
-                                available-options="@availableOptions"
-                                alternative-option="@alternativeOption"
-                                value="@Model.RequiredFunding"/>
+            title="@ProjectPageTitles.GeographicFocus"
+            title-type="@InputTitleType.PageHeader"
+            field-name="@nameof(Model.RequiredFunding)"
+            available-options="@availableOptions"
+            hint="Choose the amount that best represents the funding you might need. You can change this later but give your best estimate."
+            alternative-option="@alternativeOption"
+            value="@Model.RequiredFunding"/>
 
         <vc:form-button/>
         <vc:return-to-account-link/>
