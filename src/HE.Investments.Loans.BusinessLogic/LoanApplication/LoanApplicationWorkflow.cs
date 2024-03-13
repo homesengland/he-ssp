@@ -11,8 +11,7 @@ public class LoanApplicationWorkflow : IStateRouting<LoanApplicationWorkflow.Sta
 {
     public enum State
     {
-        Index = 1,
-        ApplicationDashboard,
+        ApplicationDashboard = 1,
         UserDashboard,
         AboutLoan,
         LoanApplyInformation,
@@ -88,12 +87,8 @@ public class LoanApplicationWorkflow : IStateRouting<LoanApplicationWorkflow.Sta
 
     private void ConfigureTransitions()
     {
-        _machine.Configure(State.Index)
-        .Permit(Trigger.Continue, State.AboutLoan);
-
         _machine.Configure(State.AboutLoan)
-            .Permit(Trigger.Continue, State.LoanApplyInformation)
-            .Permit(Trigger.Back, State.Index);
+            .Permit(Trigger.Continue, State.LoanApplyInformation);
 
         _machine.Configure(State.LoanApplyInformation)
             .Permit(Trigger.Continue, State.CheckYourDetails)

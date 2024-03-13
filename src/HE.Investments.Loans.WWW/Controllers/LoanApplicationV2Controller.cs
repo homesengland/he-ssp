@@ -35,21 +35,8 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
         _accountUserContext = accountUserContext;
     }
 
-    [HttpGet("")]
-    [WorkflowState(LoanApplicationWorkflow.State.Index)]
-    public IActionResult StartApplication()
-    {
-        return View("StartApplication");
-    }
-
-    [HttpPost("start-now")]
-    [WorkflowState(LoanApplicationWorkflow.State.Index)]
-    public async Task<IActionResult> StartNow()
-    {
-        return await Continue();
-    }
-
     [HttpGet("about-loan")]
+    [HttpGet("")]
     [WorkflowState(LoanApplicationWorkflow.State.AboutLoan)]
     public IActionResult AboutLoan()
     {

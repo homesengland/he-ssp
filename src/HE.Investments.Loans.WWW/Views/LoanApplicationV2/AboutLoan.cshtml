@@ -1,4 +1,3 @@
-@using HE.Investments.Loans.BusinessLogic.LoanApplication
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
@@ -9,7 +8,7 @@
 
 <gds-div-grid-column-two-thirds>
     <form asp-controller="LoanApplicationV2" asp-action="AboutLoanPost" asp-method="post" novalidate>
-        <gds-back-link href="@Url.Action("Back", "LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.AboutLoan })" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
+        <gds-back-link href="@Url.Action("Dashboard", "Home")" text="Back to account homepage" class="govuk-!-margin-bottom-8"></gds-back-link>
 
         <partial name="_ErrorSummaryPartial" model="null"/>
         <gds-error-form-group asp-for="InformationAgreement">
