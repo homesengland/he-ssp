@@ -48,7 +48,7 @@ public class SocialRentTests : HomeTypesTestBase
             .HasElementWithText("span", "Enter the market value in pounds only.")
             .HasInput("MarketValue")
             .HasElementWithText("h2", "Enter the rent per week")
-            .HasElementWithText("span", "Enter the rent in pounds and pence. This is inclusive of all charges.")
+            .HasElementWithText("span", "Enter the rent in pounds and pence. This is exclusive of any service charges.")
             .HasInput("RentPerWeek")
             .HasSaveAndContinueButton();
     }

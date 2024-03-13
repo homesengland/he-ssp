@@ -48,6 +48,16 @@ public static class HomeTypesPageTitles
 
     public const string AffordableRent = "Affordable Rent details";
 
+    public const string SocialRent = "Social Rent details";
+
+    public const string HomeOwnershipDisabilities = "Home Ownership for People with Long-term Disabilities (HOLD) details";
+
+    public const string OlderPersonsSharedOwnership = "Older Persons Shared Ownership (OPSO) details";
+
+    public const string RentToBuy = "Rent to Buy details";
+
+    public const string SharedOwnership = "Shared Ownership details";
+
     public const string ExemptFromTheRightToSharedOwnership = "For any reason, are these homes considered exempt from the Right to Shared Ownership?";
 
     public const string ExemptionJustification = "Outline the criteria under which you intend to apply for an exemption to the Right to Shared Ownership";
