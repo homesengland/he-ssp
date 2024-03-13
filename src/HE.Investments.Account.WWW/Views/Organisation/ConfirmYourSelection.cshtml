@@ -1,27 +1,15 @@
 @using HE.Investments.Account.WWW.Views.Organisation
-@using HE.Investments.Common.Extensions
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.Components.RadioYesNo
-@using Microsoft.AspNetCore.Html
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
+@using HE.Investments.Account.WWW.Views.Shared.Components.SelectedOrganisationInformation
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @model HE.Investments.Common.WWW.Models.ConfirmModel<HE.Investments.Account.Contract.Organisation.Queries.OrganisationBasicDetails>
 @{
     ViewData["Title"] = OrganisationPageTitles.ConfirmYourSelection;
-    var organisationInformation = new HtmlString(
-            "<ul class=\"govuk-list\">" +
-            "<li>" +
-            "<span class=\"govuk-body\">" +
-            $"<strong>{Model.ViewModel.Name}</strong>" +
-            "</span>" +
-            "<br/>" +
-            (Model.ViewModel.Street.IsProvided() ? $"<span class=\"govuk-body\">{Model.ViewModel.Street}</span><br/>" : "") +
-            (Model.ViewModel.City.IsProvided() ? $"<span class=\"govuk-body\">{Model.ViewModel.City}</span><br/>" : "") +
-            (Model.ViewModel.PostalCode.IsProvided() ? $"<span class=\"govuk-body\">{Model.ViewModel.PostalCode}</span><br/>" : "") +
-            $"<p class=\"govuk-body govuk-!-margin-bottom-6\">Companies house number: {Model.ViewModel.CompaniesHouseNumber}</p>" +
-            "</li>" +
-            "</ul>"
-        );
+    var organisationInformation = new DynamicComponentViewModel(
+        nameof(SelectedOrganisationInformation),
+        new { name = Model.ViewModel.Name, street = Model.ViewModel.Street, city = Model.ViewModel.City, postalCode = Model.ViewModel.City, companiesHouseNumber = Model.ViewModel.CompaniesHouseNumber });
 }
 
 <gds-div-grid-column-two-thirds>
@@ -34,7 +22,7 @@
         <vc:radio-yes-no
             title="@OrganisationPageTitles.ConfirmYourSelection"
             title-type="InputTitleType.PageHeader"
-            optional-content="@(IHtmlContent)organisationInformation"
+            additional-content="@organisationInformation"
             field-name="@nameof(Model.IsConfirmed)"
             value="@Model.IsConfirmed"/>
 

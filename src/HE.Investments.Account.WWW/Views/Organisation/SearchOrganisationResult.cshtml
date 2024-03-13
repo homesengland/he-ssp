@@ -43,6 +43,8 @@
         }
     </ul>
 
+    <he-pagination base-url="/organisation/search/result?searchPhrase=@Model.Name" page="@Model.Page" items-per-page="@Model.ItemsPerPage" total-items="@Model.TotalOrganisations"></he-pagination>
+
     <gds-p class="govuk-!-margin-bottom-9">
         If the organisation is not listed above, you can
         <gds-link href="@Url.Action("SearchOrganisation", "Organisation")">
@@ -53,7 +55,5 @@
             enter details manually
         </gds-link>
     </gds-p>
-
-    <he-pagination base-url="/organisation/search/result?searchPhrase=@Model.Name" page="@Model.Page" items-per-page="@Model.ItemsPerPage" total-items="@Model.TotalOrganisations"></he-pagination>
 
 </gds-div-grid-column-two-thirds>

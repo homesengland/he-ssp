@@ -114,7 +114,7 @@ public class Order02UserOrganisation : AccountIntegrationTest
         // then
         changeOrganisationDetailsPage.ContainsValidationMessages(
             "The Address Line 1 must be 100 characters or less",
-            "Enter your organisation's town or city",
+            "Enter your organisation town or city",
             "Enter a full UK postcode");
     }
 }
