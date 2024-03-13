@@ -7,8 +7,8 @@ namespace HE.Investments.Common.WWW.Components.DateInput;
 
 public class DateInput : ViewComponent
 {
-    public IViewComponentResult Invoke(string fieldName, string title, string? description = null, string? hint = null, DateDetails? value = null, bool? isDisplayed = null)
+    public IViewComponentResult Invoke(string fieldName, string title, InputTitleType? titleType = null, string? description = null, string? hint = null, DateDetails? value = null, bool? isDisplayed = null, bool? isDayHidden = false)
     {
-        return View("DateInput", (fieldName, title, description, hint, value ?? DateDetails.Empty(), isDisplayed ?? true));
+        return View("DateInput", (fieldName, title, titleType ?? InputTitleType.InputTitle, description, hint, value ?? DateDetails.Empty(), isDisplayed ?? true, isDayHidden ?? false));
     }
 }

@@ -474,7 +474,15 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     [WorkflowState(ProjectWorkflowState.ExpectedStart)]
     public async Task<IActionResult> ExpectedStart([FromRoute] string projectId, ProjectDetails model, CancellationToken cancellationToken)
     {
-        return await Continue(new { projectId });
+        return await ExecuteProjectCommand(
+            new ProvideExpectedStartDateCommand(new FrontDoorProjectId(projectId), model.ExpectedStartDate),
+            nameof(ExpectedStart),
+            project =>
+            {
+                project.ExpectedStartDate = model.ExpectedStartDate;
+                return project;
+            },
+            cancellationToken);
     }
 
     [HttpGet("{projectId}/check-answers")]
