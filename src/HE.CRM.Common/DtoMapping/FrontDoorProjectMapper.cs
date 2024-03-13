@@ -34,6 +34,7 @@ namespace HE.CRM.Common.DtoMapping
                 StartofProjectMonth = project.invln_StartofProjectMonth,
                 StartofProjectYear = project.invln_StartofProjectYear,
                 CreatedOn = project.CreatedOn,
+                IntentiontoMakeaProfit = project.invln_IntentiontoMakeaProfit,
             };
 
             if (project.invln_ActivitiesinThisProject != null && project.invln_ActivitiesinThisProject.Any())
@@ -94,6 +95,7 @@ namespace HE.CRM.Common.DtoMapping
                 invln_AmountofFundingRequired = MapNullableIntToOptionSetValue(frontDoorProjectDto.AmountofFundingRequired),
                 invln_StartofProjectMonth = frontDoorProjectDto.StartofProjectMonth,
                 invln_StartofProjectYear = frontDoorProjectDto.StartofProjectYear,
+                invln_IntentiontoMakeaProfit = frontDoorProjectDto.IntentiontoMakeaProfit,
             };
 
             if (!string.IsNullOrEmpty(organisationId) && Guid.TryParse(organisationId, out Guid organisationGUID))
