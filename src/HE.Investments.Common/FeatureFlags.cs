@@ -9,4 +9,6 @@ public static class FeatureFlags
     public const string UseLocalProjectsDashboard = nameof(UseLocalProjectsDashboard);
 
     public const string UseLocalLoansStartApplication = nameof(UseLocalLoansStartApplication);
+
+    public const string DisplayPostMvpLoans = nameof(DisplayPostMvpLoans);
 }
