@@ -5,11 +5,13 @@
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.Extensions
 @using HE.Investment.AHP.Contract.HomeTypes
+@using HE.Investment.AHP.WWW.Views.HomeTypes.Const
 @model HE.Investment.AHP.WWW.Models.HomeTypes.SharedOwnershipModel;
 
 @{
     var applicationId = this.GetApplicationIdFromRoute();
     var workflow = Context.Request.Query["workflow"];
+    ViewData["Title"] = HomeTypesPageTitles.SharedOwnership;
     var (expectedFirstTrancheInvalid, expectedFirstTrancheError) = ViewData.ModelState.GetErrors(nameof(Model.ExpectedFirstTranche));
     var (rentAsPercentageOfTheUnsoldShareInvalid, rentAsPercentageOfTheUnsoldShareError) = ViewData.ModelState.GetErrors(nameof(Model.RentAsPercentageOfTheUnsoldShare));
 }
@@ -20,7 +22,7 @@
         @Html.HiddenFor(m => Model.HomeTypeName)
         <vc:home-type-form-header current-page="@HomeTypesWorkflowState.SharedOwnership"
                                   caption="@Model.Header"
-                                  title="Shared Ownership details"/>
+                                  title="@HomeTypesPageTitles.SharedOwnership"/>
         <gds-field-set>
             <he-error-form-group asp-for="MarketValue">
                 <gds-legend>
