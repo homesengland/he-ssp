@@ -134,6 +134,7 @@
     <Compile Include="Handlers\CustomApi\FrontDoor\CheckIfFrontDoorProjectWithGivenNameExistsHandler.cs" />
     <Compile Include="Handlers\CustomApi\FrontDoor\DeactivateFrontDoorProjectHandler.cs" />
     <Compile Include="Handlers\CustomApi\FrontDoor\DeactivateFrontDoorSiteHandler.cs" />
+    <Compile Include="Handlers\CustomApi\FrontDoor\GetMultipleFrontDoorProjectsHandler.cs" />
     <Compile Include="Handlers\CustomApi\FrontDoor\SetFrontDoorSiteHandler.cs" />
     <Compile Include="Handlers\CustomApi\GenerateRichTextDocumentHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetContactRoleHandler.cs" />
@@ -180,6 +181,7 @@
     <Compile Include="Plugins\CustomApi\FrontDoor\CheckIfFrontDoorProjectWithGivenNameExistsPlugin.cs" />
     <Compile Include="Plugins\CustomApi\FrontDoor\DeactivateFrontDoorProjectPlugin.cs" />
     <Compile Include="Plugins\CustomApi\FrontDoor\DeactivateFrontDoorSitePlugin.cs" />
+    <Compile Include="Plugins\CustomApi\FrontDoor\GetMultipleFrontDoorProjectsPlugin.cs" />
     <Compile Include="Plugins\CustomApi\FrontDoor\SetFrontDoorSitePlugin.cs" />
     <Compile Include="Plugins\CustomApi\GenerateRichTextDocumentPlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetContactRolePlugin.cs" />
