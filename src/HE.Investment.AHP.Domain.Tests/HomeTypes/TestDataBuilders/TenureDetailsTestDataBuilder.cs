@@ -8,9 +8,9 @@ public class TenureDetailsTestDataBuilder
 {
     private MarketValue? _marketValue;
 
-    private MarketRent? _marketRent;
+    private MarketRentPerWeek? _marketRent;
 
-    private ProspectiveRent? _prospectiveRent;
+    private RentPerWeek? _prospectiveRent;
 
     private InitialSale? _initialSale;
 
@@ -24,13 +24,13 @@ public class TenureDetailsTestDataBuilder
         return this;
     }
 
-    public TenureDetailsTestDataBuilder WithMarketRent(MarketRent marketRent)
+    public TenureDetailsTestDataBuilder WithMarketRent(MarketRentPerWeek marketRentPerWeek)
     {
-        _marketRent = marketRent;
+        _marketRent = marketRentPerWeek;
         return this;
     }
 
-    public TenureDetailsTestDataBuilder WithProspectiveRent(ProspectiveRent prospectiveRent)
+    public TenureDetailsTestDataBuilder WithProspectiveRent(RentPerWeek prospectiveRent)
     {
         _prospectiveRent = prospectiveRent;
         return this;
@@ -58,8 +58,8 @@ public class TenureDetailsTestDataBuilder
     {
         return new TenureDetailsSegmentEntity(
                 marketValue: _marketValue,
-                marketRent: _marketRent,
-                prospectiveRent: _prospectiveRent,
+                marketRentPerWeek: _marketRent,
+                rentPerWeek: _prospectiveRent,
                 initialSale: _initialSale,
                 exemptFromTheRightToSharedOwnership: _exemptFromTheRightToSharedOwnership,
                 exemptionJustification: _exemptionJustification);
