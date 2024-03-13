@@ -7,71 +7,65 @@
 <gds-div-grid-column-two-thirds>
     <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("SearchOrganisation", "Organisation")"></gds-back-link>
 
-     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
     <form asp-controller="Organisation" asp-action="CreateOrganisation" asp-method="post" novalidate>
-        <gds-field-set role="group">
-            <gds-legend size="ControlSize.L">
-                <h1 class="govuk-fieldset__heading">
-                    @OrganisationPageTitles.CreateOrganisation
-                </h1>
-            </gds-legend>
+        <vc:page-header title="@OrganisationPageTitles.CreateOrganisation"/>
 
-            <gds-p>
-                Enter your organisation’s name manually. This may mean you have not yet established your organisation, or we could not find it in our initial search.
-            </gds-p>
+        <gds-p>
+            This may mean you have not yet established your organisation, or we could not find it in our initial search.
+        </gds-p>
 
-            <gds-input asp-hiddenlabeltext="Name"
-                       govuk-formgroup-asp-for="Name"
-                       value="@Model.Name"/>
-        </gds-field-set>
-
+        <vc:text-input
+            title="@OrganisationPageTitles.OrganisationName"
+            title-type="InputTitleType.InputTitle"
+            hint="Enter your organisation name as it would appear on Companies House or any legal document."
+            field-name="@nameof(Model.Name)"
+            value="@Model.Name"/>
 
         <gds-field-set role="group">
-            <gds-legend size="ControlSize.M">
-                <h1 class="govuk-fieldset__heading">
-                    Registered address
-                </h1>
-            </gds-legend>
+            <gds-h2>
+                @OrganisationPageTitles.OrganisationAddress
+            </gds-h2>
+            <he-div-hint>
+                If you have not yet registered your organisation, enter your intended details below.
+            </he-div-hint>
 
-            <gds-p>
-                If you have not established your organisation, enter the intended registered address.
-            </gds-p>
+            <vc:text-input
+                title="Address line 1"
+                title-type="InputTitleType.InputDescription"
+                field-name="@nameof(Model.AddressLine1)"
+                value="@Model.AddressLine1"/>
 
-            <gds-input
-                govuk-formgroup-asp-for="AddressLine1"
-                name="AddressLine1"
-                asp-labeltext="Address line 1"
-                value=@Model.AddressLine1/>
+            <vc:text-input
+                title="Address line 2 (optional)"
+                title-type="InputTitleType.InputDescription"
+                field-name="@nameof(Model.AddressLine2)"
+                value="@Model.AddressLine2"/>
 
-            <gds-input
-                govuk-formgroup-asp-for="AddressLine2"
-                name="AddressLine2"
-                asp-labeltext="Address line 2 (optional)"
-                value=@Model.AddressLine2/>
+            <vc:text-input
+                title="Town or city"
+                title-type="InputTitleType.InputDescription"
+                field-name="@nameof(Model.TownOrCity)"
+                value="@Model.TownOrCity"/>
 
-            <gds-input
-                govuk-formgroup-asp-for="TownOrCity"
-                name="TownOrCity"
-                asp-labeltext="Town or city"
-                value=@Model.TownOrCity/>
 
-            <gds-input
-                govuk-formgroup-asp-for="County"
-                name="County"
-                asp-labeltext="County (optional)"
-                value=@Model.County/>
+            <vc:text-input
+                title="County (optional)"
+                title-type="InputTitleType.InputDescription"
+                field-name="@nameof(Model.County)"
+                value="@Model.County"/>
 
-            <gds-input
-                govuk-formgroup-asp-for="Postcode"
-                name="Postcode"
-                class="govuk-!-width-one-half"
-                asp-labeltext="Postcode"
-                value=@Model.Postcode/>
+            <vc:text-input
+                title="Postcode"
+                title-type="InputTitleType.InputDescription"
+                field-name="@nameof(Model.Postcode)"
+                css-class="govuk-!-width-one-half"
+                value="@Model.Postcode"/>
 
         </gds-field-set>
 
-        <vc:form-button text="Continue"/>
+        <vc:form-button/>
     </form>
 
 </gds-div-grid-column-two-thirds>

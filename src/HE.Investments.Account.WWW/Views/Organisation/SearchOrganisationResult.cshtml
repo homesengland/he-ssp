@@ -18,7 +18,7 @@
         {
             var organisationNumberOrId = organisation.OrganisationId ?? organisation.CompaniesHouseNumber;
             <li data-testId="organisation-@organisation.Name.ToIdTag()">
-                <gds-link href="@Url.Action("ConfirmOrganisation", "Organisation", new { organisationNumberOrId })"
+                <gds-link href="@Url.Action("ConfirmOrganisation", "Organisation", new { organisationNumberOrId, searchPhrase = Model.Name })"
                           data-testId="confirm-organisation-@organisationNumberOrId">
                     <b>@organisation.Name</b>
                 </gds-link>
@@ -43,12 +43,17 @@
         }
     </ul>
 
+    <he-pagination base-url="/organisation/search/result?searchPhrase=@Model.Name" page="@Model.Page" items-per-page="@Model.ItemsPerPage" total-items="@Model.TotalOrganisations"></he-pagination>
+
     <gds-p class="govuk-!-margin-bottom-9">
+        If the organisation is not listed above, you can
+        <gds-link href="@Url.Action("SearchOrganisation", "Organisation")">
+            search again for your organisation
+        </gds-link>
+        or
         <gds-link href="@Url.Action("CreateOrganisation", "Organisation")">
-            The organisation is not listed above, enter details manually
+            enter details manually
         </gds-link>
     </gds-p>
-
-    <he-pagination base-url="/organisation/search/result?searchPhrase=@Model.Name" page="@Model.Page" items-per-page="@Model.ItemsPerPage" total-items="@Model.TotalOrganisations"></he-pagination>
 
 </gds-div-grid-column-two-thirds>

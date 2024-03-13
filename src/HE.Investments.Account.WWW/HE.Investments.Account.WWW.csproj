@@ -50,6 +50,7 @@
     <EmbeddedResource Include="Views\Shared\Components\JoinRequestsTable\JoinRequestsTable.cshtml" />
     <EmbeddedResource Include="Views\Shared\Components\UsersTable\UsersTable.cshtml" />
     <EmbeddedResource Include="Views\Shared\Components\ProjectStatusTagComponent\ProjectStatusTagComponent.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Components\SelectedOrganisationInformation\SelectedOrganisationInformation.cshtml" />
   </ItemGroup>
 
 </Project>

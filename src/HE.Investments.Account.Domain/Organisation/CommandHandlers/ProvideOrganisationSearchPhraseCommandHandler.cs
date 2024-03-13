@@ -13,10 +13,9 @@ public class ProvideOrganisationSearchPhraseCommandHandler : IRequestHandler<Pro
     {
         if (request.Name.IsNotProvided())
         {
-            OperationResult
-                .New()
-                .AddValidationError(nameof(OrganisationSearchModel.Name), ValidationErrorMessage.OrganisationNameIsEmpty)
-                .CheckErrors();
+            OperationResult.ThrowValidationError(
+                nameof(OrganisationSearchModel.Name),
+                ValidationErrorMessage.MustProvideYourRequiredField("organisation name"));
         }
 
         return Task.FromResult(OperationResult.Success());
