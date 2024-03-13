@@ -29,7 +29,7 @@
 
 <gds-h2 size="ControlSize.M"> Overview</gds-h2>
 <gds-summary-list class="govuk-!-margin-bottom-4">
-    @foreach (var singleData in data.Invoke().Result)
+    @foreach (var singleData in await data())
     {
         <gds-summary-list-row-v2>
             <dt class="govuk-summary-list__key govuk-!-width-three-quarters">
