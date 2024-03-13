@@ -108,15 +108,21 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
 
                 var programme = _ahpProgrammeRepository.GetById(application.invln_programmelookup.Id, [invln_programme.Fields.Id]);
                 var milestones = _ahpMilestoneFrameworkItemRepository.GetByAttribute(invln_milestoneframeworkitem.Fields.invln_programmeId, application.invln_programmelookup).ToList();
-                var namberOfHouse = application.invln_noofhomes;
-                if (namberOfHouse == null || namberOfHouse == 0)
+                if (application.invln_noofhomes == null || application.invln_noofhomes == 0)
                 {
                     return Guid.Empty;
                 }
                 if (IsNewPhase(devlieryPhaseDto, applicationGuid, organisationGuid))
                 {
-                    var existingPhase = GetExistingPhase(applicationGuid);
-
+                    var numberOfHouseApplication = application.invln_noofhomes.Value;
+                    var numberOfHousePhase = application.invln_noofhomes.Value;
+                    var fundingRequired = application.invln_fundingrequired.Value;
+                    deliveryPhaseMapped.invln_AcquisitionValue = new Money(fundingRequired / numberOfHouseApplication * numberOfHousePhase);
+                    deliveryPhaseMapped.invln_AcquisitionPercentageValue = 0;
+                    deliveryPhaseMapped.invln_StartOnSiteValue = ;
+                    deliveryPhaseMapped.invln_StartOnSitePercentageValue = ;
+                    deliveryPhaseMapped.invln_CompletionValue = ,
+                    deliveryPhaseMapped.invln_CompletionPercentageValue = ;
                 }
                 else
                 {
