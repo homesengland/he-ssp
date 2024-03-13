@@ -50,7 +50,7 @@ public class DateInputTests : ViewComponentTestBase<DateInputTests>
     private static void Assert(IHtmlDocument document, DateInputTestsViewModel? model = null)
     {
         document
-            .HasElementWithText("h1", "Enter start date")
+            .HasElementWithText("h2", "Enter start date")
             .HasElementWithText("div", "This can be a date in the past. For future dates, include a reasonable level of risk adjustment in your forecasts.")
             .HasElementWithText("div", "Enter date, for example: 11 05 2024")
             .HasInput($"{nameof(DateInputTestsViewModel.StartDate)}.Day", "Day", model?.StartDate.Day)

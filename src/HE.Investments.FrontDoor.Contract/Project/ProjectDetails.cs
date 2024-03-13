@@ -1,3 +1,4 @@
+using HE.Investments.Common.Contract;
 using HE.Investments.FrontDoor.Contract.Project.Enums;
 using HE.Investments.FrontDoor.Contract.Site;
 
@@ -36,4 +37,6 @@ public class ProjectDetails
     public bool? IsSupportRequired { get; set; }
 
     public bool? IsProfit { get; set; }
+
+    public DateDetails? ExpectedStartDate { get; set; }
 }

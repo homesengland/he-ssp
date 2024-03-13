@@ -63,7 +63,7 @@ public static class HtmlDocumentInputExtensions
             return htmlDocument;
         }
 
-        var header = htmlDocument.GetElements(".govuk-fieldset__heading", title).FirstOrDefault();
+        var header = htmlDocument.GetElements(".govuk-fieldset__legend .govuk-heading-m", title).FirstOrDefault();
         header.Should().NotBeNull($"Cannot find title for {fieldName}");
 
         if (!string.IsNullOrEmpty(day))

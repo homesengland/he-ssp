@@ -1,12 +1,10 @@
-using System.Collections.Immutable;
 using HE.Investments.Common.CRM.Model;
-using HE.Investments.Common.Extensions;
 
 namespace HE.Investments.FrontDoor.Domain.Project.Crm;
 
 public static class ProjectCrmFields
 {
-    public static readonly IReadOnlyList<string> ProjectToUpdate = new List<string>
+    public static readonly IReadOnlyList<string> ProjectToRead = new List<string>
     {
         nameof(invln_FrontDoorProjectPOC.invln_Name),
         nameof(invln_FrontDoorProjectPOC.invln_FrontDoorProjectPOCId),
@@ -23,10 +21,9 @@ public static class ProjectCrmFields
         nameof(invln_FrontDoorProjectPOC.invln_AmountofFundingRequired),
         nameof(invln_FrontDoorProjectPOC.invln_InfrastructureDelivered),
         nameof(invln_FrontDoorProjectPOC.invln_IntentiontoMakeaProfit),
+        nameof(invln_FrontDoorProjectPOC.invln_StartofProjectYear),
+        nameof(invln_FrontDoorProjectPOC.invln_StartofProjectMonth),
     };
-
-    public static readonly IReadOnlyList<string> ProjectToRead = ProjectToUpdate
-        .ToImmutableList();
 
     public static string FormatFields(this IReadOnlyList<string> fieldsToRetrieve)
     {

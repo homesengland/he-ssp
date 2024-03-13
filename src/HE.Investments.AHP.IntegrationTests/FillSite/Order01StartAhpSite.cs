@@ -233,7 +233,7 @@ public class Order01StartAhpSite : AhpIntegrationTest
     {
         await TestQuestionPage(
             SitePagesUrl.SitePlanningDetails(SiteData.SiteId),
-            "Enter when you expect to get detailed planning approval",
+            "Planning details",
             SitePagesUrl.SiteLandRegistry(SiteData.SiteId),
             ("ExpectedPlanningApprovalDate.Day", SiteData.ExpectedPlanningApprovalDate.Day.ToString(CultureInfo.InvariantCulture)),
             ("ExpectedPlanningApprovalDate.Month", SiteData.ExpectedPlanningApprovalDate.Month.ToString(CultureInfo.InvariantCulture)),

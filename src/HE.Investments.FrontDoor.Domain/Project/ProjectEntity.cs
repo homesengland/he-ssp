@@ -4,8 +4,6 @@ using HE.Investments.Common.Domain;
 using HE.Investments.Common.Errors;
 using HE.Investments.Common.Extensions;
 using HE.Investments.FrontDoor.Contract.Project;
-using HE.Investments.FrontDoor.Contract.Project.Enums;
-using HE.Investments.FrontDoor.Contract.Project.Events;
 using HE.Investments.FrontDoor.Domain.Project.Repository;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
 using ProjectGeographicFocus = HE.Investments.FrontDoor.Domain.Project.ValueObjects.ProjectGeographicFocus;
@@ -31,7 +29,8 @@ public class ProjectEntity : DomainEntity
         IsSupportRequired? isSupportRequired = null,
         IsFundingRequired? isFundingRequired = null,
         RequiredFunding? requiredFunding = null,
-        IsProfit? isProfit = null)
+        IsProfit? isProfit = null,
+        ExpectedStartDate? expectedStartDate = null)
     {
         Id = id;
         Name = name;
@@ -48,6 +47,7 @@ public class ProjectEntity : DomainEntity
         IsFundingRequired = isFundingRequired;
         RequiredFunding = requiredFunding ?? RequiredFunding.Empty;
         IsProfit = isProfit ?? IsProfit.Empty;
+        ExpectedStartDate = expectedStartDate ?? ExpectedStartDate.Empty;
     }
 
     public FrontDoorProjectId Id { get; private set; }
@@ -79,6 +79,8 @@ public class ProjectEntity : DomainEntity
     public RequiredFunding RequiredFunding { get; private set; }
 
     public IsProfit IsProfit { get; private set; }
+
+    public ExpectedStartDate ExpectedStartDate { get; private set; }
 
     public static async Task<ProjectEntity> New(ProjectName projectName, IProjectNameExists projectNameExists, CancellationToken cancellationToken)
     {
@@ -178,6 +180,11 @@ public class ProjectEntity : DomainEntity
     public void ProvideIsProfit(IsProfit isProfit)
     {
         IsProfit = _modificationTracker.Change(IsProfit, isProfit);
+    }
+
+    public void ProvideExpectedStartDate(ExpectedStartDate expectedStartDate)
+    {
+        ExpectedStartDate = _modificationTracker.Change(ExpectedStartDate, expectedStartDate);
     }
 
     private static async Task<ProjectName> ValidateProjectNameUniqueness(

@@ -63,6 +63,8 @@ public class ProjectRepository : IProjectRepository
             FundingRequired = project.IsFundingRequired?.Value,
             AmountofFundingRequired = new RequiredFundingMapper().Map(project.RequiredFunding),
             IntentiontoMakeaProfit = project.IsProfit.Value,
+            StartofProjectMonth = project.ExpectedStartDate.Value?.Month,
+            StartofProjectYear = project.ExpectedStartDate.Value?.Year,
         };
 
         var projectId = await _crmContext.Save(dto, userAccount, cancellationToken);
@@ -97,6 +99,7 @@ public class ProjectRepository : IProjectRepository
             isSupportRequired: dto.WouldyourprojectfailwithoutHEsupport.IsProvided() ? new IsSupportRequired(dto.WouldyourprojectfailwithoutHEsupport) : null,
             isFundingRequired: dto.FundingRequired.IsProvided() ? new IsFundingRequired(dto.FundingRequired) : null,
             requiredFunding: new RequiredFundingMapper().Map(dto.AmountofFundingRequired),
-            isProfit: dto.IntentiontoMakeaProfit.IsProvided() ? new IsProfit(dto.IntentiontoMakeaProfit) : null);
+            isProfit: dto.IntentiontoMakeaProfit.IsProvided() ? new IsProfit(dto.IntentiontoMakeaProfit) : null,
+            expectedStartDate: ExpectedStartDate.Create(dto.StartofProjectMonth, dto.StartofProjectYear));
     }
 }

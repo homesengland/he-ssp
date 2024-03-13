@@ -1,6 +1,8 @@
+using System.Globalization;
 using HE.Investments.Account.Shared;
+using HE.Investments.Common.Contract;
+using HE.Investments.Common.Extensions;
 using HE.Investments.FrontDoor.Contract.Project;
-using HE.Investments.FrontDoor.Contract.Project.Enums;
 using HE.Investments.FrontDoor.Contract.Project.Queries;
 using HE.Investments.FrontDoor.Domain.Project.Repository;
 using HE.Investments.FrontDoor.Domain.Site.Repository;
@@ -46,6 +48,17 @@ public class GetProjectDetailsQueryHandler : IRequestHandler<GetProjectDetailsQu
             HomesNumber = project.HomesNumber?.ToString(),
             RequiredFunding = project.RequiredFunding.Value,
             LastSiteId = projectSite.LastSiteId(),
+            ExpectedStartDate = BuildDateDetails(project.ExpectedStartDate.Value),
         };
+    }
+
+    private static DateDetails? BuildDateDetails(DateOnly? date)
+    {
+        return date.IsProvided()
+            ? new DateDetails(
+                date!.Value.Day.ToString(CultureInfo.InvariantCulture),
+                date.Value.Month.ToString(CultureInfo.InvariantCulture),
+                date.Value.Year.ToString(CultureInfo.InvariantCulture))
+            : null;
     }
 }
