@@ -25,7 +25,7 @@ public class FrontDoorController : Controller
     {
         if (await _featureManager.IsEnabledAsync(FeatureFlags.UseLocalLoansStartApplication, cancellationToken))
         {
-            return RedirectToAction("StartApplication", "LoanApplicationV2");
+            return RedirectToAction("AboutLoan", "LoanApplicationV2");
         }
 
         return new RedirectResult(_frontDoorConfig.StartNewProjectUrl);
