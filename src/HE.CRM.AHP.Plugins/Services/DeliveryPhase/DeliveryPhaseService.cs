@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -93,10 +94,10 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
             if (Guid.TryParse(applicationId, out var applicationGuid) && Guid.TryParse(organisationId, out var organisationGuid))
             {
                 TracingService.Trace("Get Application");
-                var application = _ahpApplicationRepository.GetById(applicationGuid, [invln_scheme.Fields.invln_noofhomes,
-                                                                                        invln_scheme.Fields.invln_fundingfromopenmarkethomesonthisscheme
-                                                                                        , invln_scheme.Fields.invln_programmelookup
-                                                                                        ]);
+                var application = _ahpApplicationRepository.
+                    GetById(applicationGuid, [invln_scheme.Fields.invln_noofhomes,
+                                              invln_scheme.Fields.invln_fundingfromopenmarkethomesonthisscheme,
+                                              invln_scheme.Fields.invln_programmelookup]);
 
                 TracingService.Trace("Deserialize and Map imput data");
                 var devlieryPhaseDto = JsonSerializer.Deserialize<DeliveryPhaseDto>(deliveryPhase);
@@ -104,83 +105,79 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
 
                 TracingService.Trace($"Get Contact by externalUserId:{userId}");
                 var contact = _contactRepository.GetContactViaExternalId(userId);
-
-
-                var programme = _ahpProgrammeRepository.GetById(application.invln_programmelookup.Id, [invln_programme.Fields.Id]);
-                var milestones = _ahpMilestoneFrameworkItemRepository.GetByAttribute(invln_milestoneframeworkitem.Fields.invln_programmeId, application.invln_programmelookup).ToList();
+               // var programme = _ahpProgrammeRepository.GetById(application.invln_programmelookup.Id, [invln_programme.Fields.Id]);
+                var milestones = _ahpMilestoneFrameworkItemRepository.
+                    GetByAttribute(invln_milestoneframeworkitem.Fields.invln_programmeId, application.invln_programmelookup).ToList();
                 if (application.invln_noofhomes == null || application.invln_noofhomes == 0)
                 {
                     return Guid.Empty;
                 }
-                if (IsNewPhase(devlieryPhaseDto, applicationGuid, organisationGuid))
+
+                if (string.IsNullOrEmpty(devlieryPhaseDto.id) &&
+                   _ahpApplicationRepository.ApplicationWithGivenIdExistsForOrganisation(applicationGuid, organisationGuid))
                 {
                     var numberOfHouseApplication = application.invln_noofhomes.Value;
-                    var numberOfHousePhase = application.invln_noofhomes.Value;
+                    var numberOfHousePhase = deliveryPhaseMapped.invln_NoofHomes.Value;
                     var fundingRequired = application.invln_fundingrequired.Value;
-                    deliveryPhaseMapped.invln_AcquisitionValue = new Money(fundingRequired / numberOfHouseApplication * numberOfHousePhase);
-                    deliveryPhaseMapped.invln_AcquisitionPercentageValue = 0;
-                    deliveryPhaseMapped.invln_StartOnSiteValue = ;
-                    deliveryPhaseMapped.invln_StartOnSitePercentageValue = ;
-                    deliveryPhaseMapped.invln_CompletionValue = ,
-                    deliveryPhaseMapped.invln_CompletionPercentageValue = ;
+                    var acquisitionPercentageValue = milestones.FirstOrDefault(x => x.invln_milestone.Value == (int)invln_Milestone.Acquisition).invln_percentagepaidonmilestone.Value;
+                    var startOnSitePercentageValue = milestones.FirstOrDefault(x => x.invln_milestone.Value == (int)invln_Milestone.SoS).invln_percentagepaidonmilestone.Value;
+                    var completionPercentageValue = milestones.FirstOrDefault(x => x.invln_milestone.Value == (int)invln_Milestone.PC).invln_percentagepaidonmilestone.Value;
+                    deliveryPhaseMapped.invln_AcquisitionValue = new Money((fundingRequired / numberOfHouseApplication) * numberOfHousePhase * acquisitionPercentageValue / 100);
+                    deliveryPhaseMapped.invln_AcquisitionPercentageValue = acquisitionPercentageValue;
+                    deliveryPhaseMapped.invln_StartOnSiteValue = new Money((fundingRequired / numberOfHouseApplication) * numberOfHousePhase * startOnSitePercentageValue / 100);
+                    deliveryPhaseMapped.invln_StartOnSitePercentageValue = startOnSitePercentageValue;
+                    deliveryPhaseMapped.invln_CompletionValue = new Money((fundingRequired / numberOfHouseApplication) * numberOfHousePhase * completionPercentageValue / 100);
+                    deliveryPhaseMapped.invln_CompletionPercentageValue = completionPercentageValue;
+                    UpdateApplicationModificationFields(applicationGuid, contact.Id);
+                    var deliveryPhaseId = _deliveryPhaseRepository.Create(deliveryPhaseMapped);
+                    SetHomesinDeliveryPhase(devlieryPhaseDto.numberOfHomes, deliveryPhaseId);
+                    return deliveryPhaseId;
                 }
-                else
+                else if (Guid.TryParse(devlieryPhaseDto.id, out var deliveryPhaseGuid))
                 {
-
+                    invln_DeliveryPhase deliveryPhaseToUpdateOrCreate;
+                    if (!string.IsNullOrEmpty(fieldsToSet))
+                    {
+                        var fields = fieldsToSet.Split(',');
+                        deliveryPhaseToUpdateOrCreate = new invln_DeliveryPhase();
+                        foreach (var field in fields)
+                        {
+                            TracingService.Trace($"field name {field}");
+                            if (deliveryPhaseMapped.Contains(field))
+                            {
+                                TracingService.Trace($"contains");
+                                deliveryPhaseToUpdateOrCreate[field] = deliveryPhaseMapped[field];
+                            }
+                        }
+                    }
+                    else
+                    {
+                        deliveryPhaseToUpdateOrCreate = deliveryPhaseMapped;
+                    }
+                    deliveryPhaseToUpdateOrCreate.Id = deliveryPhaseGuid;
+                    if (deliveryPhaseMapped.invln_NoofHomes != null)
+                    {
+                        var numberOfHouseApplication = application.invln_noofhomes.Value;
+                        var numberOfHousePhase = application.invln_noofhomes.Value;
+                        var fundingRequired = application.invln_fundingrequired.Value;
+                        var acquisitionPercentageValue = milestones.FirstOrDefault(x => x.invln_milestone.Value == (int)invln_Milestone.Acquisition).invln_percentagepaidonmilestone.Value;
+                        var startOnSitePercentageValue = milestones.FirstOrDefault(x => x.invln_milestone.Value == (int)invln_Milestone.SoS).invln_percentagepaidonmilestone.Value;
+                        var completionPercentageValue = milestones.FirstOrDefault(x => x.invln_milestone.Value == (int)invln_Milestone.PC).invln_percentagepaidonmilestone.Value;
+                        deliveryPhaseMapped.invln_AcquisitionValue = new Money((fundingRequired / numberOfHouseApplication) * numberOfHousePhase * acquisitionPercentageValue / 100);
+                        deliveryPhaseMapped.invln_AcquisitionPercentageValue = acquisitionPercentageValue;
+                        deliveryPhaseMapped.invln_StartOnSiteValue = new Money((fundingRequired / numberOfHouseApplication) * numberOfHousePhase * startOnSitePercentageValue / 100);
+                        deliveryPhaseMapped.invln_StartOnSitePercentageValue = startOnSitePercentageValue;
+                        deliveryPhaseMapped.invln_CompletionValue = new Money((fundingRequired / numberOfHouseApplication) * numberOfHousePhase * completionPercentageValue / 100);
+                        deliveryPhaseMapped.invln_CompletionPercentageValue = completionPercentageValue;
+                    }
+                    _deliveryPhaseRepository.Update(deliveryPhaseToUpdateOrCreate);
+                    DeleteHomesFromDeliveryPhase(deliveryPhaseGuid);
+                    SetHomesinDeliveryPhase(devlieryPhaseDto.numberOfHomes, deliveryPhaseGuid);
+                    UpdateApplicationModificationFields(applicationGuid, contact.Id);
+                    return deliveryPhaseToUpdateOrCreate.Id;
                 }
-
-
-
-                //if (string.IsNullOrEmpty(devlieryPhaseDto.id) &&
-                //   _ahpApplicationRepository.ApplicationWithGivenIdExistsForOrganisation(applicationGuid, organisationGuid))
-                //{
-
-                //    deliveryPhaseMapped.invln_AcquisitionValue = 0;
-                //    deliveryPhaseMapped.invln_AcquisitionPercentageValue = 0;
-                //    deliveryPhaseMapped.invln_StartOnSiteValue = ;
-                //    deliveryPhaseMapped.invln_StartOnSitePercentageValue = ;
-                //    deliveryPhaseMapped.invln_CompletionValue = ,
-                //    deliveryPhaseMapped.invln_CompletionPercentageValue = ;
-                //    UpdateApplicationModificationFields(applicationGuid, contact.Id);
-                //    var deliveryPhaseId = _deliveryPhaseRepository.Create(deliveryPhaseMapped);
-                //    SetHomesinDeliveryPhase(devlieryPhaseDto.numberOfHomes, deliveryPhaseId);
-                //    return deliveryPhaseId;
-                //}
-                //else if (Guid.TryParse(devlieryPhaseDto.id, out var deliveryPhaseGuid))
-                //{
-                //    invln_DeliveryPhase deliveryPhaseToUpdateOrCreate;
-                //    if (!string.IsNullOrEmpty(fieldsToSet))
-                //    {
-                //        var fields = fieldsToSet.Split(',');
-                //        deliveryPhaseToUpdateOrCreate = new invln_DeliveryPhase();
-                //        foreach (var field in fields)
-                //        {
-                //            TracingService.Trace($"field name {field}");
-                //            if (deliveryPhaseMapped.Contains(field))
-                //            {
-                //                TracingService.Trace($"contains");
-                //                deliveryPhaseToUpdateOrCreate[field] = deliveryPhaseMapped[field];
-                //            }
-                //        }
-                //    }
-                //    else
-                //    {
-                //        deliveryPhaseToUpdateOrCreate = deliveryPhaseMapped;
-                //    }
-                //    deliveryPhaseToUpdateOrCreate.Id = deliveryPhaseGuid;
-                //    _deliveryPhaseRepository.Update(deliveryPhaseToUpdateOrCreate);
-                //    DeleteHomesFromDeliveryPhase(deliveryPhaseGuid);
-                //    SetHomesinDeliveryPhase(devlieryPhaseDto.numberOfHomes, deliveryPhaseGuid);
-                //    UpdateApplicationModificationFields(applicationGuid, contact.Id);
-                //    return deliveryPhaseToUpdateOrCreate.Id;
-               // }
             }
             return Guid.Empty;
-        }
-
-        private bool IsNewPhase(DeliveryPhaseDto devlieryPhaseDto, Guid applicationGuid, Guid organisationGuid)
-        {
-            throw new NotImplementedException();
         }
 
         private void SetHomesinDeliveryPhase(Dictionary<string, int?> numberOfHomes, Guid deliveryPhaseId)
