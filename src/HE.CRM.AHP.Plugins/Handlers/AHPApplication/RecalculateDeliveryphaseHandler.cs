@@ -11,12 +11,12 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace HE.CRM.AHP.Plugins.Handlers.AHPApplication
 {
-    public class RecalculateDeliveryphase : CrmEntityHandlerBase<invln_scheme, DataverseContext>
+    public class RecalculateDeliveryphaseHandler : CrmEntityHandlerBase<invln_scheme, DataverseContext>
     {
         private readonly IMilestoneFrameworkItemRepository _milestonesRepository;
         private readonly IDeliveryPhaseRepository _deliveryPhaseRepository;
         private readonly IContactRepository _contactRepository;
-        public RecalculateDeliveryphase(IMilestoneFrameworkItemRepository milestonesRepository, IDeliveryPhaseRepository deliveryPhaseRepository, IContactRepository contactRepository)
+        public RecalculateDeliveryphaseHandler(IMilestoneFrameworkItemRepository milestonesRepository, IDeliveryPhaseRepository deliveryPhaseRepository, IContactRepository contactRepository)
         {
             this._milestonesRepository = milestonesRepository;
             this._deliveryPhaseRepository = deliveryPhaseRepository;

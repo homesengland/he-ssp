@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>HE.CRM.AHP.Plugins</RootNamespace>
-    <AssemblyName>HE.CRM.AHP.Plugins</AssemblyName>
+    <AssemblyName>HE.CRM.AHP.Plugins_WS</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -98,7 +98,7 @@
     <Compile Include="Handlers\AHPApplication\ChangeExternalStatusOnInternalStatusChangeHandler.cs" />
     <Compile Include="Handlers\AHPApplication\CheckIfApplicationWithNewNameExistsHandler.cs" />
     <Compile Include="Handlers\AHPApplication\CreateDocumentLocationOnCreateHandler.cs" />
-    <Compile Include="Handlers\AHPApplication\RecalculateDeliveryphase.cs" />
+    <Compile Include="Handlers\AHPApplication\RecalculateDeliveryphaseHandler.cs" />
     <Compile Include="Handlers\AhpStatusChange\SendNotificationOnCreateHandler.cs" />
     <Compile Include="Handlers\ContactWebrole\SendNotificationOnAdminRoleGrantedPlugin.cs" />
     <Compile Include="Handlers\ContactWebrole\SendNotificationOnRoleModificationHandler.cs" />
