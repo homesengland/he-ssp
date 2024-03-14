@@ -19,10 +19,10 @@ public class ProjectRepository : IProjectRepository
 
     public async Task<IList<UserProject>> GetUserProjects(UserAccount userAccount, CancellationToken cancellationToken)
     {
-        var request = new invln_getmultiplefrontdoorprojectsRequest()
+        var request = new invln_getmultiplefrontdoorprojectsRequest
         {
             invln_organisationid = userAccount.SelectedOrganisationId().ToString(),
-            inlvn_userid = userAccount.UserGlobalId.ToString(),
+            inlvn_userid = userAccount.CanViewAllApplications() ? string.Empty : userAccount.UserGlobalId.ToString(),
             invln_fieldstoretrieve = nameof(invln_FrontDoorProjectPOC.invln_Name).ToLowerInvariant(),
         };
 
