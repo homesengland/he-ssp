@@ -46,22 +46,30 @@ public class TelephoneNumberValidator
             return this;
         }
 
-        IsValidUkPhoneNumber(errorMessage);
+        ValidateUkPhoneNumber(errorMessage);
 
         return this;
     }
 
-    private void IsValidUkPhoneNumber(string? errorMessage)
+    private void ValidateUkPhoneNumber(string? errorMessage)
     {
         const int ukTelephoneNumberLengthWithoutPrefix = 10;
 
-        if (TelephoneNumberRecognizer.StartWithCountryCode(_telephoneNumber!) && !TelephoneNumberRecognizer.IsUkCountryCode(_telephoneNumber!))
+        if (_telephoneNumber!.Contains("--"))
+        {
+            _operationResult.AddValidationError(_fieldName, errorMessage ?? ValidationErrorMessage.EnterTelephoneNumberInValidFormat);
+            return;
+        }
+
+        var telephoneNumber = TelephoneNumberRecognizer.StripFromSpecialCharacters(_telephoneNumber!);
+
+        if (TelephoneNumberRecognizer.StartWithCountryCode(telephoneNumber) && !TelephoneNumberRecognizer.IsUkCountryCode(telephoneNumber))
         {
             _operationResult.AddValidationError(_fieldName, errorMessage ?? ValidationErrorMessage.EnterUkTelephoneNumber);
             return;
         }
 
-        var telephoneNumber = TelephoneNumberRecognizer.StripToNationalFormat(_telephoneNumber!);
+        telephoneNumber = TelephoneNumberRecognizer.StripToNationalFormat(telephoneNumber);
 
         if (telephoneNumber.Length != ukTelephoneNumberLengthWithoutPrefix || !telephoneNumber.All(char.IsDigit) || telephoneNumber.StartsWith('0'))
         {
