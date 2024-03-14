@@ -34,6 +34,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getloanapplicationsforaccountandcontact.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getmultipleahpapplications.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getmultipledeliveryphase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getmultiplefdprojects.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getmultiplefrontdoorprojects.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getmultiplefrontdoorprojectssite.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getmultiplelocalauthorities.cs" />

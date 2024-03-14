@@ -6,7 +6,7 @@ using HE.CRM.Plugins.Services.FrontDoorProject;
 
 namespace HE.CRM.Plugins.Handlers.CustomApi.FrontDoor
 {
-    public class GetSingleFrontDoorProjectForAccountAndContactHandler : CrmActionHandlerBase<invln_getsingleloanapplicationforaccountandcontactRequest, DataverseContext>
+    public class GetSingleFrontDoorProjectForAccountAndContactHandler : CrmActionHandlerBase<invln_getsinglefrontdoorprojectRequest, DataverseContext>
     {
         #region Fields
         private string organisationId => ExecutionData.GetInputParameter<string>(invln_getsinglefrontdoorprojectRequest.Fields.invln_organisationid);

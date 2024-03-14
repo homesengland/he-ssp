@@ -6,12 +6,12 @@ using HE.CRM.Plugins.Services.FrontDoorProject;
 
 namespace HE.CRM.Plugins.Handlers.CustomApi.FrontDoor
 {
-    public class GetMultipleFrontDoorProjectsForAccountHandler : CrmActionHandlerBase<invln_getmultiplefrontdoorprojectsRequest, DataverseContext>
+    public class GetMultipleFrontDoorProjectsHandler : CrmActionHandlerBase<invln_getmultiplefdprojectsRequest, DataverseContext>
     {
         #region Fields
-        private string organisationId => ExecutionData.GetInputParameter<string>(invln_getmultiplefrontdoorprojectsRequest.Fields.invln_organisationid);
-        private string externalContactId => ExecutionData.GetInputParameter<string>(invln_getmultiplefrontdoorprojectsRequest.Fields.inlvn_userid);
-        private string fieldsToRetrieve => ExecutionData.GetInputParameter<string>(invln_getmultiplefrontdoorprojectsRequest.Fields.invln_fieldstoretrieve);
+        private string organisationId => ExecutionData.GetInputParameter<string>(invln_getmultiplefdprojectsRequest.Fields.invln_organisationid);
+        private string externalContactId => ExecutionData.GetInputParameter<string>(invln_getmultiplefdprojectsRequest.Fields.inlvn_userid);
+        private string fieldsToRetrieve => ExecutionData.GetInputParameter<string>(invln_getmultiplefdprojectsRequest.Fields.invln_fieldstoretrieve);
         #endregion
 
         #region Base Methods Overrides
@@ -22,13 +22,13 @@ namespace HE.CRM.Plugins.Handlers.CustomApi.FrontDoor
 
         public override void DoWork()
         {
-            this.TracingService.Trace("GetMultipleFrontDoorProjectsForAccountHandler");
+            this.TracingService.Trace("GetMultipleFrontDoorProjectsHandler");
             var frontDoorProjectsDtoList = CrmServicesFactory.Get<IFrontDoorProjectService>().GetFrontDoorProjects(organisationId, externalContactId, fieldsToRetrieve);
             this.TracingService.Trace("Send Response");
             if (frontDoorProjectsDtoList != null)
             {
                 var frontDoorProjectDtoListSerialized = JsonSerializer.Serialize(frontDoorProjectsDtoList);
-                ExecutionData.SetOutputParameter(invln_getmultiplefrontdoorprojectsResponse.Fields.invln_frontdoorprojects, frontDoorProjectDtoListSerialized);
+                ExecutionData.SetOutputParameter(invln_getmultiplefdprojectsResponse.Fields.invln_frontdoorprojects, frontDoorProjectDtoListSerialized);
             }
         }
         #endregion
