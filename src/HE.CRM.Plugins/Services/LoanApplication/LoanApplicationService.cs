@@ -208,7 +208,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 }
 
                 this.TracingService.Trace("Create invln_Loanapplication");
-                loanApplicationToCreate.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.Draft);
+                loanApplicationToCreate.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.New);
                 loanApplicationGuid = _loanApplicationRepository.Create(loanApplicationToCreate);
 
                 var loanStatusChangeToCreate = new invln_Loanstatuschange()
