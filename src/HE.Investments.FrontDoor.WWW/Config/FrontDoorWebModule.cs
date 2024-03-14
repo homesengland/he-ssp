@@ -9,6 +9,7 @@ using HE.Investments.Common.WWW.Infrastructure.Middlewares;
 using HE.Investments.FrontDoor.Domain.Config;
 using HE.Investments.FrontDoor.WWW.Routing;
 using HE.Investments.Organisation.Config;
+using HE.Investments.Organisation.LocalAuthorities.Repositories;
 
 namespace HE.Investments.FrontDoor.WWW.Config;
 
@@ -17,6 +18,8 @@ public static class FrontDoorWebModule
     public static void AddWebModule(this IServiceCollection service, IConfiguration configuration)
     {
         service.AddOrganisationCrmModule();
+        service.AddScoped<ILocalAuthorityRepository, LocalAuthorityRepository>();
+
         service.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(DomainModule).Assembly));
         service.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(DomainValidationHandler<,,>).Assembly));
         service.AddScoped<NonceModel>();

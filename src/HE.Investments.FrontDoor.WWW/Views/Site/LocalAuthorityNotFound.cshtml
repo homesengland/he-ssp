@@ -1,6 +1,7 @@
 @using HE.Investments.FrontDoor.Contract.Site
 @using HE.Investments.FrontDoor.WWW.Views.Shared.Components.FrontDoorWorkflowBackButton
 @using HE.Investments.FrontDoor.WWW.Views.Site.Const
+@model (string ProjectId, string SiteId)
 @{
     ViewData["Title"] = SitePageTitles.LocalAuthorityNotFound;
 }
@@ -8,5 +9,16 @@
 <gds-div-grid-column-two-thirds>
     <vc:front-door-workflow-back-button current-page="@SiteWorkflowState.LocalAuthorityNotFound"></vc:front-door-workflow-back-button>
 
-    TODO: @SitePageTitles.LocalAuthorityNotFound
+    <vc:page-header title="@SitePageTitles.LocalAuthorityNotFound"/>
+
+    <gds-p>We could not find the details you entered in our records.</gds-p>
+
+    <gds-p>
+        If you think you have entered the wrong details, you can
+        <gds-link
+            text="try again using a different name."
+            href="@Url.Action("LocalAuthoritySearch", "Site", new { projectId = Model.ProjectId, siteId = Model.SiteId })">
+        </gds-link>
+    </gds-p>
+
 </gds-div-grid-column-two-thirds>

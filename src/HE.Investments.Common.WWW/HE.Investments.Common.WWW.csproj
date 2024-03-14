@@ -20,6 +20,7 @@
     <EmbeddedResource Include="Components\ApplicationStatusTagComponent\ApplicationStatusTagComponent.cshtml" />
     <EmbeddedResource Include="Components\CheckboxListWithOr\CheckboxListWithOr.cshtml" />
     <EmbeddedResource Include="Components\CheckboxList\CheckboxList.cshtml" />
+    <EmbeddedResource Include="Components\SelectListConfirmationHeader\SelectListConfirmationHeader.cshtml" />
     <EmbeddedResource Include="_ViewImports.cshtml" />
     <EmbeddedResource Include="Partials\Errors\_ErrorSummaryPartial.cshtml" />
     <EmbeddedResource Include="Partials\Cookies\_AdditionalCookies.cshtml" />

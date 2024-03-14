@@ -306,8 +306,9 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
 
     [HttpGet("{projectId}/local-authority-search")]
     [WorkflowState(ProjectWorkflowState.LocalAuthoritySearch)]
-    public IActionResult LocalAuthoritySearch([FromRoute] string projectId)
+    public async Task<IActionResult> LocalAuthoritySearch([FromRoute] string projectId, CancellationToken cancellationToken)
     {
+        await GetProjectDetails(projectId, cancellationToken);
         return View(nameof(LocalAuthoritySearch));
     }
 

@@ -6,7 +6,7 @@ public static class SitePageTitles
 
     public const string HomesNumber = "Enter the number of homes you are building or the nearest estimate";
 
-    public const string LocalAuthoritySearch = "Your local authority";
+    public const string LocalAuthoritySearch = "Which local authority will your project be located in?";
 
     public const string LocalAuthorityResult = "Select your local authority";
 
