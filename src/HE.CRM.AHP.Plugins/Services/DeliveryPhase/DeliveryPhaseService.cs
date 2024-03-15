@@ -139,7 +139,7 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
                         var acquisitionPercentageValue = milestones.FirstOrDefault(x => x.invln_milestone.Value == (int)invln_Milestone.Acquisition).invln_percentagepaidonmilestone.Value;
                         var startOnSitePercentageValue = milestones.FirstOrDefault(x => x.invln_milestone.Value == (int)invln_Milestone.SoS).invln_percentagepaidonmilestone.Value;
                         var completionPercentageValue = milestones.FirstOrDefault(x => x.invln_milestone.Value == (int)invln_Milestone.PC).invln_percentagepaidonmilestone.Value;
-                        deliveryPhaseMapped.invln_AcquisitionValue = new Money((fundingRequired / numberOfHouseApplication) * numberOfHousePhase * acquisitionPercentageValue / 100);
+                        deliveryPhaseMapped.invln_AcquisitionValue = new Money((fundingRequired / (decimal)numberOfHouseApplication) * (decimal)numberOfHousePhase * acquisitionPercentageValue / 100);
                         deliveryPhaseMapped.invln_AcquisitionPercentageValue = acquisitionPercentageValue;
                         deliveryPhaseMapped.invln_StartOnSiteValue = new Money((fundingRequired / numberOfHouseApplication) * numberOfHousePhase * startOnSitePercentageValue / 100);
                         deliveryPhaseMapped.invln_StartOnSitePercentageValue = startOnSitePercentageValue;
@@ -168,6 +168,21 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
                                 deliveryPhaseToUpdateOrCreate[field] = deliveryPhaseMapped[field];
                             }
                         }
+                        TracingService.Trace($"Number of house - Application {application.invln_noofhomes.Value}");
+                        var numberOfHouseApplication = application.invln_noofhomes.Value;
+                        TracingService.Trace($"Number of house - DeliveryPhase {deliveryPhaseMapped.invln_NoofHomes}");
+                        var numberOfHousePhase = deliveryPhaseMapped.invln_NoofHomes.Value;
+                        TracingService.Trace($"Fumding Required {application.invln_noofhomes.Value}");
+                        var fundingRequired = application.invln_fundingrequired.Value;
+                        var acquisitionPercentageValue = milestones.FirstOrDefault(x => x.invln_milestone.Value == (int)invln_Milestone.Acquisition).invln_percentagepaidonmilestone.Value;
+                        var startOnSitePercentageValue = milestones.FirstOrDefault(x => x.invln_milestone.Value == (int)invln_Milestone.SoS).invln_percentagepaidonmilestone.Value;
+                        var completionPercentageValue = milestones.FirstOrDefault(x => x.invln_milestone.Value == (int)invln_Milestone.PC).invln_percentagepaidonmilestone.Value;
+                        deliveryPhaseMapped.invln_AcquisitionValue = new Money((fundingRequired / (decimal)numberOfHouseApplication) * (decimal)numberOfHousePhase * acquisitionPercentageValue / 100);
+                        deliveryPhaseMapped.invln_AcquisitionPercentageValue = acquisitionPercentageValue;
+                        deliveryPhaseMapped.invln_StartOnSiteValue = new Money((fundingRequired / numberOfHouseApplication) * numberOfHousePhase * startOnSitePercentageValue / 100);
+                        deliveryPhaseMapped.invln_StartOnSitePercentageValue = startOnSitePercentageValue;
+                        deliveryPhaseMapped.invln_CompletionValue = new Money((fundingRequired / numberOfHouseApplication) * numberOfHousePhase * completionPercentageValue / 100);
+                        deliveryPhaseMapped.invln_CompletionPercentageValue = completionPercentageValue;
                     }
                     else
                     {
@@ -177,17 +192,17 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
                     if (deliveryPhaseMapped.invln_NoofHomes != null)
                     {
                         var numberOfHouseApplication = application.invln_noofhomes.Value;
-                        var numberOfHousePhase = application.invln_noofhomes.Value;
+                        var numberOfHousePhase = deliveryPhaseMapped.invln_NoofHomes.Value;
                         var fundingRequired = application.invln_fundingrequired.Value;
                         var acquisitionPercentageValue = milestones.FirstOrDefault(x => x.invln_milestone.Value == (int)invln_Milestone.Acquisition).invln_percentagepaidonmilestone.Value;
                         var startOnSitePercentageValue = milestones.FirstOrDefault(x => x.invln_milestone.Value == (int)invln_Milestone.SoS).invln_percentagepaidonmilestone.Value;
                         var completionPercentageValue = milestones.FirstOrDefault(x => x.invln_milestone.Value == (int)invln_Milestone.PC).invln_percentagepaidonmilestone.Value;
-                        deliveryPhaseMapped.invln_AcquisitionValue = new Money((fundingRequired / numberOfHouseApplication) * numberOfHousePhase * acquisitionPercentageValue / 100);
-                        deliveryPhaseMapped.invln_AcquisitionPercentageValue = acquisitionPercentageValue;
-                        deliveryPhaseMapped.invln_StartOnSiteValue = new Money((fundingRequired / numberOfHouseApplication) * numberOfHousePhase * startOnSitePercentageValue / 100);
-                        deliveryPhaseMapped.invln_StartOnSitePercentageValue = startOnSitePercentageValue;
-                        deliveryPhaseMapped.invln_CompletionValue = new Money((fundingRequired / numberOfHouseApplication) * numberOfHousePhase * completionPercentageValue / 100);
-                        deliveryPhaseMapped.invln_CompletionPercentageValue = completionPercentageValue;
+                        deliveryPhaseToUpdateOrCreate.invln_AcquisitionValue = new Money((fundingRequired / numberOfHouseApplication) * numberOfHousePhase * acquisitionPercentageValue / 100);
+                        deliveryPhaseToUpdateOrCreate.invln_AcquisitionPercentageValue = acquisitionPercentageValue;
+                        deliveryPhaseToUpdateOrCreate.invln_StartOnSiteValue = new Money((fundingRequired / numberOfHouseApplication) * numberOfHousePhase * startOnSitePercentageValue / 100);
+                        deliveryPhaseToUpdateOrCreate.invln_StartOnSitePercentageValue = startOnSitePercentageValue;
+                        deliveryPhaseToUpdateOrCreate.invln_CompletionValue = new Money((fundingRequired / numberOfHouseApplication) * numberOfHousePhase * completionPercentageValue / 100);
+                        deliveryPhaseToUpdateOrCreate.invln_CompletionPercentageValue = completionPercentageValue;
                     }
                     _deliveryPhaseRepository.Update(deliveryPhaseToUpdateOrCreate);
                     DeleteHomesFromDeliveryPhase(deliveryPhaseGuid);
