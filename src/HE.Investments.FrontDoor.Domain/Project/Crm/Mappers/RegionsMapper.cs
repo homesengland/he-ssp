@@ -1,24 +1,13 @@
 using HE.Investments.Common.CRM.Mappers;
-using HE.Investments.Common.CRM.Model;
-using HE.Investments.FrontDoor.Contract.Project.Enums;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
+using HE.Investments.FrontDoor.Shared.Project.Contract;
+using HE.Investments.FrontDoor.Shared.Project.Crm;
 
 namespace HE.Investments.FrontDoor.Domain.Project.Crm.Mappers;
 
 public class RegionsMapper : EnumMapper<RegionType>
 {
-    protected override IDictionary<RegionType, int?> Mapping => new Dictionary<RegionType, int?>
-    {
-        { RegionType.NorthEast, (int)invln_FrontDoorRegion.NorthEast },
-        { RegionType.NorthWest, (int)invln_FrontDoorRegion.NorthWest },
-        { RegionType.YorkshireAndTheHumber, (int)invln_FrontDoorRegion.YorkshireandtheHumber },
-        { RegionType.EastMidlands, (int)invln_FrontDoorRegion.EastMidlands },
-        { RegionType.WestMidlands, (int)invln_FrontDoorRegion.WestMidlands },
-        { RegionType.EastOfEngland, (int)invln_FrontDoorRegion.EastofEngland },
-        { RegionType.SouthEast, (int)invln_FrontDoorRegion.SouthEast },
-        { RegionType.SouthWest, (int)invln_FrontDoorRegion.SouthWest },
-        { RegionType.London, (int)invln_FrontDoorRegion.London },
-    };
+    protected override IDictionary<RegionType, int?> Mapping => FrontDoorProjectEnumMapping.RegionType;
 
     public Regions Map(IList<int> values)
     {

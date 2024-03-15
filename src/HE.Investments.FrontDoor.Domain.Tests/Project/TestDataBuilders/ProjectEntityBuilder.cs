@@ -1,7 +1,8 @@
 using HE.Investments.FrontDoor.Contract.Project;
-using HE.Investments.FrontDoor.Contract.Project.Enums;
 using HE.Investments.FrontDoor.Domain.Project;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
+using HE.Investments.FrontDoor.Shared.Project;
+using HE.Investments.FrontDoor.Shared.Project.Contract;
 using HE.Investments.TestsUtils.TestFramework;
 using ProjectInfrastructure = HE.Investments.FrontDoor.Domain.Project.ValueObjects.ProjectInfrastructure;
 

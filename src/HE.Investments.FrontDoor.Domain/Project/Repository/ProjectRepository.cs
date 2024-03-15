@@ -7,6 +7,7 @@ using HE.Investments.FrontDoor.Contract.Project.Events;
 using HE.Investments.FrontDoor.Domain.Project.Crm;
 using HE.Investments.FrontDoor.Domain.Project.Crm.Mappers;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
+using HE.Investments.FrontDoor.Shared.Project;
 
 namespace HE.Investments.FrontDoor.Domain.Project.Repository;
 

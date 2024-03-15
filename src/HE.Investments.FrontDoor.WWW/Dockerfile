@@ -18,6 +18,7 @@ COPY ["HE.Investments.FrontDoor.WWW/HE.Investments.FrontDoor.WWW.csproj", "HE.In
 COPY ["HE.Investments.FrontDoor.Contract/HE.Investments.FrontDoor.Contract.csproj", "HE.Investments.FrontDoor.Contract/"]
 COPY ["HE.Investments.Common.Contract/HE.Investments.Common.Contract.csproj", "HE.Investments.Common.Contract/"]
 COPY ["HE.Investments.FrontDoor.Domain/HE.Investments.FrontDoor.Domain.csproj", "HE.Investments.FrontDoor.Domain/"]
+COPY ["HE.Investments.FrontDoor.Shared/HE.Investments.FrontDoor.Shared.csproj", "HE.Investments.FrontDoor.Shared/"]
 COPY ["HE.Investments.Account.Shared/HE.Investments.Account.Shared.csproj", "HE.Investments.Account.Shared/"]
 COPY ["HE.Investments.Account.Contract/HE.Investments.Account.Contract.csproj", "HE.Investments.Account.Contract/"]
 COPY ["HE.Investments.Common.CRM/HE.Investments.Common.CRM.csproj", "HE.Investments.Common.CRM/"]

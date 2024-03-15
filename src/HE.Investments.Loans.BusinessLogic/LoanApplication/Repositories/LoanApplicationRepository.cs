@@ -9,7 +9,6 @@ using HE.Investments.Common.CRM.Serialization;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Infrastructure.Events;
-using HE.Investments.Common.Utils;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Entities;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories.Mapper;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.ValueObjects;
@@ -137,6 +136,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
     {
         var loanApplicationDto = new LoanApplicationDto()
         {
+            // TODO AB#93237: save LoanApplicationDto.FrontDoorProjectId
             LoanApplicationContact = LoanApplicationMapper.MapToUserAccountDto(loanApplication.UserAccount, userDetails),
             fundingReason = FundingPurposeMapper.Map(loanApplication.FundingReason),
             ApplicationName = loanApplication.Name.Value,

@@ -3,6 +3,7 @@ using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Errors;
+using HE.Investments.FrontDoor.Shared.Project;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.ValueObjects;
 using HE.Investments.Loans.Contract.Application.Enums;
@@ -28,7 +29,8 @@ public class LoanApplicationEntity : DomainEntity
         LoanApplicationSection security,
         LoanApplicationSection funding,
         ProjectsSection projectsSection,
-        string referenceNumber)
+        string referenceNumber,
+        FrontDoorProjectId? frontDoorProjectId = null)
     {
         Id = id;
         Name = name;
@@ -47,6 +49,8 @@ public class LoanApplicationEntity : DomainEntity
     }
 
     public LoanApplicationId Id { get; private set; }
+
+    public FrontDoorProjectId? FrontDoorProjectId { get; private set; }
 
     public LoanApplicationName Name { get; }
 
@@ -74,7 +78,7 @@ public class LoanApplicationEntity : DomainEntity
 
     public string ReferenceNumber { get; private set; }
 
-    public static LoanApplicationEntity New(UserAccount userAccount, LoanApplicationName name) => new(LoanApplicationId.New(), name, userAccount, ApplicationStatus.Draft, FundingPurpose.BuildingNewHomes, null, null, null, string.Empty, LoanApplicationSection.New(), LoanApplicationSection.New(), LoanApplicationSection.New(), ProjectsSection.Empty(), string.Empty);
+    public static LoanApplicationEntity New(UserAccount userAccount, LoanApplicationName name, FrontDoorProjectId? frontDoorProjectId = null) => new(LoanApplicationId.New(), name, userAccount, ApplicationStatus.Draft, FundingPurpose.BuildingNewHomes, null, null, null, string.Empty, LoanApplicationSection.New(), LoanApplicationSection.New(), LoanApplicationSection.New(), ProjectsSection.Empty(), string.Empty, frontDoorProjectId);
 
     public void SetId(LoanApplicationId newId)
     {
@@ -84,7 +88,7 @@ public class LoanApplicationEntity : DomainEntity
         }
 
         Id = newId;
-        Publish(new LoanApplicationHasBeenStartedEvent(Id, Name.Value));
+        Publish(new LoanApplicationHasBeenStartedEvent(Id, Name.Value, FrontDoorProjectId?.Value));
     }
 
     public bool IsReadOnly()

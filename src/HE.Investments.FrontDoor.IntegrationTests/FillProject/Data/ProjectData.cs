@@ -1,4 +1,4 @@
-using HE.Investments.FrontDoor.Contract.Project.Enums;
+using HE.Investments.FrontDoor.Shared.Project.Contract;
 using HE.Investments.TestsUtils.Extensions;
 
 namespace HE.Investments.FrontDoor.IntegrationTests.FillProject.Data;

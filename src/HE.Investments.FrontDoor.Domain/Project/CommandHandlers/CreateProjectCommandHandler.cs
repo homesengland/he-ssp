@@ -4,6 +4,7 @@ using HE.Investments.FrontDoor.Contract.Project;
 using HE.Investments.FrontDoor.Contract.Project.Commands;
 using HE.Investments.FrontDoor.Domain.Project.Repository;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
+using HE.Investments.FrontDoor.Shared.Project;
 using MediatR;
 
 namespace HE.Investments.FrontDoor.Domain.Project.CommandHandlers;

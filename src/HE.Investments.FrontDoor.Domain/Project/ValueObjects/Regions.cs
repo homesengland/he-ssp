@@ -1,7 +1,7 @@
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Messages;
-using HE.Investments.FrontDoor.Contract.Project.Enums;
+using HE.Investments.FrontDoor.Shared.Project.Contract;
 
 namespace HE.Investments.FrontDoor.Domain.Project.ValueObjects;
 

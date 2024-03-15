@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-namespace HE.Investments.FrontDoor.Contract.Project.Enums;
+namespace HE.Investments.FrontDoor.Shared.Project.Contract;
 
 public enum RequiredFundingOption
 {

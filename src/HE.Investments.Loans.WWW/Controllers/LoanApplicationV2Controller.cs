@@ -12,6 +12,8 @@ using HE.Investments.Loans.Contract.Application.Queries;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
 using HE.Investments.Loans.Contract.CompanyStructure;
 using HE.Investments.Loans.Contract.Funding.Enums;
+using HE.Investments.Loans.Contract.PrefillData;
+using HE.Investments.Loans.Contract.PrefillData.Queries;
 using HE.Investments.Loans.Contract.Projects;
 using HE.Investments.Loans.Contract.Security;
 using HE.Investments.Loans.WWW.Models;
@@ -99,14 +101,18 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
 
     [HttpGet("loan-purpose")]
     [WorkflowState(LoanApplicationWorkflow.State.LoanPurpose)]
-    public IActionResult LoanPurpose()
+    public async Task<IActionResult> LoanPurpose([FromQuery] string fdProjectId, CancellationToken cancellationToken)
     {
-        return View("LoanPurpose", new LoanPurposeModel());
+        var prefillData = string.IsNullOrWhiteSpace(fdProjectId)
+            ? NewLoanApplicationPrefillData.Empty
+            : await _mediator.Send(new GetNewLoanApplicationPrefillDataQuery(fdProjectId), cancellationToken);
+
+        return View("LoanPurpose", new LoanPurposeModel { FundingPurpose = prefillData.FundingPurpose });
     }
 
     [HttpPost("loan-purpose")]
     [WorkflowState(LoanApplicationWorkflow.State.LoanPurpose)]
-    public async Task<IActionResult> LoanPurposePost(LoanPurposeModel model, CancellationToken cancellationToken)
+    public async Task<IActionResult> LoanPurposePost([FromQuery] string fdProjectId, LoanPurposeModel model, CancellationToken cancellationToken)
     {
         var validationResult = await _validator.ValidateAsync(model, cancellationToken);
         if (!validationResult.IsValid)
@@ -116,24 +122,28 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
 
         if (model.FundingPurpose == FundingPurpose.BuildingNewHomes)
         {
-            return RedirectToAction(nameof(ApplicationName));
+            return RedirectToAction(nameof(ApplicationName), new { fdProjectId });
         }
 
-        return RedirectToAction(nameof(Ineligible));
+        return RedirectToAction(nameof(Ineligible), new { fdProjectId });
     }
 
     [HttpGet("application-name")]
     [WorkflowState(LoanApplicationWorkflow.State.ApplicationName)]
-    public IActionResult ApplicationName()
+    public async Task<IActionResult> ApplicationName([FromQuery] string fdProjectId, CancellationToken cancellationToken)
     {
-        return View("ApplicationName", new ApplicationNameModel());
+        var prefillData = string.IsNullOrWhiteSpace(fdProjectId)
+            ? NewLoanApplicationPrefillData.Empty
+            : await _mediator.Send(new GetNewLoanApplicationPrefillDataQuery(fdProjectId), cancellationToken);
+
+        return View("ApplicationName", new ApplicationNameModel { LoanApplicationName = prefillData.ApplicationName });
     }
 
     [HttpPost("application-name")]
     [WorkflowState(LoanApplicationWorkflow.State.ApplicationName)]
-    public async Task<IActionResult> ApplicationNamePost(ApplicationNameModel model, CancellationToken cancellationToken)
+    public async Task<IActionResult> ApplicationNamePost([FromQuery] string fdProjectId, ApplicationNameModel model, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new StartApplicationCommand(model.LoanApplicationName), cancellationToken);
+        var result = await _mediator.Send(new StartApplicationCommand(model.LoanApplicationName, fdProjectId), cancellationToken);
         if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
@@ -270,9 +280,10 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
     }
 
     [HttpGet("back")]
-    public Task<IActionResult> Back(LoanApplicationWorkflow.State currentPage, Guid applicationId)
+    public Task<IActionResult> Back(LoanApplicationWorkflow.State currentPage, Guid applicationId, string fdProjectId)
     {
-        return Back(currentPage, new { Id = applicationId });
+        Guid? id = applicationId == Guid.Empty ? null : applicationId;
+        return Back(currentPage, new { id, fdProjectId });
     }
 
     protected override Task<IStateRouting<LoanApplicationWorkflow.State>> Routing(LoanApplicationWorkflow.State currentState, object routeData = null)

@@ -5,6 +5,7 @@ using HE.Investments.FrontDoor.Contract.Project;
 using HE.Investments.FrontDoor.Contract.Site;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
 using HE.Investments.FrontDoor.Domain.Site.ValueObjects;
+using HE.Investments.FrontDoor.Shared.Project;
 
 namespace HE.Investments.FrontDoor.Domain.Site;
 

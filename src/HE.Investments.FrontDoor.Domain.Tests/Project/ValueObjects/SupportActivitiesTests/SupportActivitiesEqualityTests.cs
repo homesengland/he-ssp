@@ -1,6 +1,6 @@
 using FluentAssertions;
-using HE.Investments.FrontDoor.Contract.Project.Enums;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
+using HE.Investments.FrontDoor.Shared.Project.Contract;
 using Xunit;
 
 namespace HE.Investments.FrontDoor.Domain.Tests.Project.ValueObjects.SupportActivitiesTests;
