@@ -6,11 +6,11 @@ namespace HE.Investments.FrontDoor.Domain.Project.ValueObjects;
 
 public class IsProfit : ValueObject, IQuestion
 {
-    public IsProfit(bool? isFundingRequired)
+    public IsProfit(bool? isProfit)
     {
-        if (isFundingRequired.IsProvided())
+        if (isProfit.IsProvided())
         {
-            Value = isFundingRequired!.Value;
+            Value = isProfit!.Value;
         }
         else
         {
