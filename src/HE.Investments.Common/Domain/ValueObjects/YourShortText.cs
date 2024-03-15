@@ -9,7 +9,7 @@ public abstract class YourShortText : StringValueObject
             value,
             fieldName,
             ValidationErrorMessage.MustProvideYourRequiredField(fieldDisplayName),
-            ValidationErrorMessage.StringLengthExceeded(fieldDisplayName, MaximumInputLength.ShortInput),
+            ValidationErrorMessage.YourStringLengthExceeded(fieldDisplayName, MaximumInputLength.ShortInput),
             MaximumInputLength.ShortInput)
     {
     }
