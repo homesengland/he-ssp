@@ -43,5 +43,13 @@ namespace HE.CRM.Common.Repositories.Implementations
             EntityCollection result = service.RetrieveMultiple(new FetchExpression(fetchXml));
             return result.Entities.Select(x => x.ToEntity<invln_programme>()).AsEnumerable().ToList();
         }
+
+        public List<invln_programme> GetProgrammes(params string[] columns)
+        {
+            QueryExpression query = new QueryExpression();
+            query.ColumnSet = new ColumnSet(columns);
+            query.EntityName = invln_programme.EntityLogicalName;
+            return this.service.RetrieveMultiple(query).Entities.Select(x => x.ToEntity<invln_programme>()).ToList();
+        }
     }
 }
