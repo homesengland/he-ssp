@@ -13,7 +13,7 @@ export class ReviewApprovalService {
       var entityId = this.common.getCurrentEntityId();
       Xrm.WebApi.retrieveMultipleRecords("invln_reviewapproval", "?$select=invln_reviewerapprover,invln_status&$filter=_invln_ispid_value eq '" + this.common.trimBraces(entityId) + "' and (invln_reviewerapprover eq 858110000 or invln_reviewerapprover eq 858110001)").then(result => {
         for (var i = 0; i < result.entities.length; i++) {
-          var element = result.entities[0];
+          var element = result.entities[i];
           if (element.invln_status == StatusReviewApproval.Pending || element.invln_status == StatusReviewApproval.Sent_Back || element.invln_status == StatusReviewApproval.Rejected) {
             resolve(false);
           }
