@@ -46,76 +46,22 @@ namespace HE.CRM.Plugins.Services.ReviewsApprovals
                     }
                     case (int)invln_StatusReviewApprovalSet.Pending:
                     {
-                        var rejected = reviewApprovals.Where(x => x.invln_status.Value == (int)invln_StatusReviewApprovalSet.Rejected);
-                        if (rejected.Any())
-                        {
-                            isp.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Rejected);
-                            this._ispRepository.Update(isp);
-                        }
-                        else
-                        {
-                            isp.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Pending);
-                            this._ispRepository.Update(isp);
-                        }
+                        CheckAndChangeStatusToPending(isp, reviewApprovals);
                         break;
                     }
                     case (int)invln_StatusReviewApprovalSet.SentBack:
                     {
-                        var rejected = reviewApprovals.Where(x => x.invln_status.Value == (int)invln_StatusReviewApprovalSet.Rejected);
-                        if (rejected.Any())
-                        {
-                            isp.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Rejected);
-                            this._ispRepository.Update(isp);
-                        }
-                        else
-                        {
-                            isp.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Pending);
-                            this._ispRepository.Update(isp);
-                        }
+                        CheckAndChangeStatusToPending(isp, reviewApprovals);
                         break;
                     }
                     case (int)invln_StatusReviewApprovalSet.Approved:
                     {
-                        var rejected = reviewApprovals.Where(x => x.invln_status.Value == (int)invln_StatusReviewApprovalSet.Rejected);
-                        if (rejected.Any())
-                        {
-                            isp.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Rejected);
-                            this._ispRepository.Update(isp);
-                            break;
-                        }
-                        var pendingOrSendBack = reviewApprovals.Where(x => x.invln_status.Value == (int)invln_StatusReviewApprovalSet.Pending ||
-                                                                     x.invln_status.Value == (int)invln_StatusReviewApprovalSet.SentBack);
-                        if (pendingOrSendBack.Any())
-                        {
-                            isp.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Pending);
-                            this._ispRepository.Update(isp);
-                            break;
-                        }
-                        isp.invln_DateApproved = DateTime.UtcNow;
-                        isp.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Approved);
-                        this._ispRepository.Update(isp);
+                        CheckAndChangeToAproved(reviewApprovals, isp);
                         break;
                     }
                     case (int)invln_StatusReviewApprovalSet.Reviewed:
                     {
-                        var rejected = reviewApprovals.Where(x => x.invln_status.Value == (int)invln_StatusReviewApprovalSet.Rejected);
-                        if (rejected.Any())
-                        {
-                            isp.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Rejected);
-                            this._ispRepository.Update(isp);
-                            break;
-                        }
-                        var pendingOrSendBack = reviewApprovals.Where(x => x.invln_status.Value == (int)invln_StatusReviewApprovalSet.Pending ||
-                                                                     x.invln_status.Value == (int)invln_StatusReviewApprovalSet.SentBack);
-                        if (pendingOrSendBack.Any())
-                        {
-                            isp.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Pending);
-                            this._ispRepository.Update(isp);
-                            break;
-                        }
-                        isp.invln_DateApproved = DateTime.UtcNow;
-                        isp.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Approved);
-                        this._ispRepository.Update(isp);
+                        CheckAndChangeToAproved(reviewApprovals, isp);
                         break;
                     }
                     case (int)invln_StatusReviewApprovalSet.NotRequired:
@@ -147,6 +93,43 @@ namespace HE.CRM.Plugins.Services.ReviewsApprovals
                         break;
                     }
                 }
+            }
+        }
+
+        private void CheckAndChangeToAproved(List<invln_reviewapproval> reviewApprovals, invln_ISP isp)
+        {
+            var rejected = reviewApprovals.Where(x => x.invln_status.Value == (int)invln_StatusReviewApprovalSet.Rejected);
+            if (rejected.Any())
+            {
+                isp.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Rejected);
+                this._ispRepository.Update(isp);
+                return;
+            }
+            var pendingOrSendBack = reviewApprovals.Where(x => x.invln_status.Value == (int)invln_StatusReviewApprovalSet.Pending ||
+                                                         x.invln_status.Value == (int)invln_StatusReviewApprovalSet.SentBack);
+            if (pendingOrSendBack.Any())
+            {
+                isp.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Pending);
+                this._ispRepository.Update(isp);
+                return;
+            }
+            isp.invln_DateApproved = DateTime.UtcNow;
+            isp.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Approved);
+            this._ispRepository.Update(isp);
+        }
+
+        private void CheckAndChangeStatusToPending(invln_ISP isp, List<invln_reviewapproval> reviewApprovals)
+        {
+            var rejected = reviewApprovals.Where(x => x.invln_status.Value == (int)invln_StatusReviewApprovalSet.Rejected);
+            if (rejected.Any())
+            {
+                isp.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Rejected);
+                this._ispRepository.Update(isp);
+            }
+            else
+            {
+                isp.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Pending);
+                this._ispRepository.Update(isp);
             }
         }
         #endregion
