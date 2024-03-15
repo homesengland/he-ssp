@@ -9,4 +9,3 @@ public class SelectListConfirmationHeader : ViewComponent
         return View("SelectListConfirmationHeader", (header, name, description));
     }
 }
-

@@ -26,12 +26,6 @@ public static class ProjectPageTitles
 
     public const string HomesNumber = "How many homes will your project enable?";
 
-    public const string LocalAuthoritySearch = "Which local authority will your project be located in?";
-
-    public const string LocalAuthorityResult = "Select your local authority";
-
-    public const string LocalAuthorityNotFound = "The details you entered did not match our records";
-
     public const string LocalAuthorityConfirm = "Confirm your selection";
 
     public const string Progress = "Would your project progress more slowly or stall without Homes England support?";

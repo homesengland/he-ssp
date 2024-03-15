@@ -33,9 +33,7 @@ public class ProjectWorkflow : EncodedStateRouting<ProjectWorkflowState>
             ProjectWorkflowState.GeographicFocus => IsSiteNotIdentified(),
             ProjectWorkflowState.Region => IsSiteNotIdentified() && _model.GeographicFocus is ProjectGeographicFocus.Regional,
             ProjectWorkflowState.LocalAuthoritySearch => IsSiteNotIdentified() && _model.GeographicFocus is ProjectGeographicFocus.SpecificLocalAuthority,
-            ProjectWorkflowState.LocalAuthorityResult => IsSiteNotIdentified() && _model.GeographicFocus is ProjectGeographicFocus.SpecificLocalAuthority,
             ProjectWorkflowState.LocalAuthorityConfirm => IsSiteNotIdentified() && _model.GeographicFocus is ProjectGeographicFocus.SpecificLocalAuthority,
-            ProjectWorkflowState.LocalAuthorityNotFound => IsSiteNotIdentified() && _model.GeographicFocus is ProjectGeographicFocus.SpecificLocalAuthority,
             ProjectWorkflowState.HomesNumber => IsSiteNotIdentified(),
             ProjectWorkflowState.Progress => true,
             ProjectWorkflowState.RequiresFunding => true,
@@ -105,18 +103,10 @@ public class ProjectWorkflow : EncodedStateRouting<ProjectWorkflowState>
             .Permit(Trigger.Back, ProjectWorkflowState.GeographicFocus);
 
         Machine.Configure(ProjectWorkflowState.LocalAuthoritySearch)
-            .Permit(Trigger.Continue, ProjectWorkflowState.LocalAuthorityResult)
             .Permit(Trigger.Back, ProjectWorkflowState.GeographicFocus);
 
-        Machine.Configure(ProjectWorkflowState.LocalAuthorityResult)
-            .Permit(Trigger.Continue, ProjectWorkflowState.LocalAuthorityConfirm)
-            .Permit(Trigger.Back, ProjectWorkflowState.LocalAuthoritySearch);
-
         Machine.Configure(ProjectWorkflowState.LocalAuthorityConfirm)
-            .Permit(Trigger.Continue, ProjectWorkflowState.Progress)
-            .Permit(Trigger.Back, ProjectWorkflowState.LocalAuthorityResult);
-
-        Machine.Configure(ProjectWorkflowState.LocalAuthorityNotFound)
+            .Permit(Trigger.Continue, ProjectWorkflowState.HomesNumber)
             .Permit(Trigger.Back, ProjectWorkflowState.LocalAuthoritySearch);
 
         Machine.Configure(ProjectWorkflowState.HomesNumber)

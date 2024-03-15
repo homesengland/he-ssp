@@ -1,17 +1,17 @@
-@using HE.Investments.FrontDoor.Contract.Site
-@using HE.Investments.FrontDoor.WWW.Views.Shared.Components.FrontDoorWorkflowBackButton
-@using HE.Investments.FrontDoor.WWW.Views.Site.Const
 @using HE.Investments.FrontDoor.Contract.LocalAuthority
+@using HE.Investments.FrontDoor.WWW.Views.LocalAuthority.Const
+@using HE.Investments.FrontDoor.WWW.Views.Shared.Components.LocalAuthorityWorkflowBackButton
+@using HE.Investments.Common.WWW.Components.PageHeader
 @model (string ProjectId, string SiteId)
 @{
-    ViewData["Title"] = SitePageTitles.LocalAuthorityNotFound;
+    ViewData["Title"] = LocalAuthorityPageTitles.NotFound;
 }
 
 <gds-div-grid-column-two-thirds>
 
-    <vc:local-authority-workflow-back-button current-page="@LocalAuthorityWorkflowState.NotFound" project-id="@Model.ProjectId" site-id="@Model.SiteId" />
+    <vc:local-authority-workflow-back-button current-page="@LocalAuthorityWorkflowState.NotFound" project-id="@Model.ProjectId" site-id="@Model.SiteId"/>
 
-    <vc:page-header title="@SitePageTitles.LocalAuthorityNotFound"/>
+    <vc:page-header title="@LocalAuthorityPageTitles.NotFound"/>
 
     <gds-p>We could not find the details you entered in our records.</gds-p>
 
@@ -22,5 +22,7 @@
             href="@Url.Action("Search", "LocalAuthority", new { projectId = Model.ProjectId, siteId = Model.SiteId })">
         </gds-link>
     </gds-p>
+
+    <vc:return-to-account-link/>
 
 </gds-div-grid-column-two-thirds>

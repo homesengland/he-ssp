@@ -5,7 +5,6 @@ using HE.Investments.FrontDoor.Contract.LocalAuthority;
 using HE.Investments.FrontDoor.Contract.LocalAuthority.Queries;
 using HE.Investments.FrontDoor.Contract.Project;
 using HE.Investments.FrontDoor.Contract.Project.Queries;
-using HE.Investments.FrontDoor.Contract.Site;
 using HE.Investments.FrontDoor.WWW.Models;
 using HE.Investments.FrontDoor.WWW.Workflows;
 using MediatR;
@@ -25,11 +24,16 @@ public class LocalAuthorityController : WorkflowController<LocalAuthorityWorkflo
     }
 
     [HttpGet("back")]
-    public async Task<IActionResult> Back([FromQuery] string projectId, [FromQuery] string siteId, LocalAuthorityWorkflowState currentPage)
+    public async Task<IActionResult> Back([FromQuery] string projectId, [FromQuery] string? siteId, LocalAuthorityWorkflowState currentPage)
     {
-        if (currentPage == LocalAuthorityWorkflowState.Search)
+        if (currentPage == LocalAuthorityWorkflowState.Search && !string.IsNullOrWhiteSpace(siteId))
         {
             return RedirectToAction("HomesNumber", "Site", new { projectId, siteId });
+        }
+
+        if (currentPage == LocalAuthorityWorkflowState.Search && string.IsNullOrWhiteSpace(siteId))
+        {
+            return RedirectToAction("GeographicFocus", "Project", new { projectId });
         }
 
         return await Back(currentPage, new { projectId, siteId });
@@ -37,7 +41,7 @@ public class LocalAuthorityController : WorkflowController<LocalAuthorityWorkflo
 
     [HttpGet("search")]
     [WorkflowState(LocalAuthorityWorkflowState.Search)]
-    public async Task<IActionResult> Search([FromQuery] string projectId, [FromQuery] string siteId, CancellationToken cancellationToken)
+    public async Task<IActionResult> Search([FromQuery] string projectId, [FromQuery] string? siteId, CancellationToken cancellationToken)
     {
         await GetProjectDetails(projectId, cancellationToken);
         return View(nameof(Search), new LocalAuthoritySearchVewModel(string.Empty, projectId, siteId));
@@ -45,14 +49,14 @@ public class LocalAuthorityController : WorkflowController<LocalAuthorityWorkflo
 
     [HttpPost("search")]
     [WorkflowState(LocalAuthorityWorkflowState.Search)]
-    public async Task<IActionResult> Search([FromForm] string projectId, [FromForm] string siteId, [FromForm] string phrase)
+    public async Task<IActionResult> Search([FromForm] string projectId, [FromForm] string? siteId, [FromForm] string phrase)
     {
         return await Continue(new { projectId, siteId, phrase });
     }
 
     [HttpGet("search-result")]
     [WorkflowState(LocalAuthorityWorkflowState.SearchResult)]
-    public async Task<IActionResult> SearchResult([FromQuery] string projectId, [FromQuery] string siteId, [FromQuery] string? phrase, [FromQuery] int? page, CancellationToken cancellationToken)
+    public async Task<IActionResult> SearchResult([FromQuery] string projectId, [FromQuery] string? siteId, [FromQuery] string? phrase, [FromQuery] int? page, CancellationToken cancellationToken)
     {
         await GetProjectDetails(projectId, cancellationToken);
         var projectLocalAuthorities = await _mediator.Send(new GetLocalAuthoritiesQuery(new PaginationRequest(page ?? 1), phrase ?? string.Empty), cancellationToken);
@@ -67,7 +71,7 @@ public class LocalAuthorityController : WorkflowController<LocalAuthorityWorkflo
 
     [HttpGet("not-found")]
     [WorkflowState(LocalAuthorityWorkflowState.NotFound)]
-    public IActionResult NotFound([FromQuery] string projectId, [FromQuery] string siteId)
+    public IActionResult NotFound([FromQuery] string projectId, [FromQuery] string? siteId)
     {
         return View(nameof(NotFound), (projectId, siteId));
     }
