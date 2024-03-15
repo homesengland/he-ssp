@@ -1,0 +1,13 @@
+@model (Enum CurrentPage, string projectId, string siteId);
+@{
+    object RedirectParametersFactory(Enum currentPage)
+    {
+        return new
+        {
+            projectId = Model.projectId,
+            siteId = Model.siteId,
+            currentPage = currentPage.ToString(),
+        };
+    }
+}
+<vc:workflow-back-button current-page="@Model.CurrentPage" redirect-parameters-factory="@RedirectParametersFactory"/>

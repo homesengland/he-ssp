@@ -1,15 +1,14 @@
 extern alias Org;
 
 using HE.Investments.Common.Contract.Pagination;
-using HE.Investments.FrontDoor.Contract.Project.Queries;
+using HE.Investments.FrontDoor.Contract.LocalAuthority.Queries;
 using MediatR;
 
 using Org::HE.Investments.Organisation.LocalAuthorities.Repositories;
-using LocalAuth = Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
 
 namespace HE.Investments.FrontDoor.Domain.LocalAuthority.QueryHandlers;
 
-public class GetLocalAuthoritiesQueryHandler : IRequestHandler<GetLocalAuthoritiesQuery, PaginationResult<LocalAuth>>
+public class GetLocalAuthoritiesQueryHandler : IRequestHandler<GetLocalAuthoritiesQuery, PaginationResult<Common.Contract.LocalAuthority>>
 {
     private readonly ILocalAuthorityRepository _repository;
 
@@ -18,13 +17,13 @@ public class GetLocalAuthoritiesQueryHandler : IRequestHandler<GetLocalAuthoriti
         _repository = repository;
     }
 
-    public async Task<PaginationResult<LocalAuth>> Handle(GetLocalAuthoritiesQuery request, CancellationToken cancellationToken)
+    public async Task<PaginationResult<Common.Contract.LocalAuthority>> Handle(GetLocalAuthoritiesQuery request, CancellationToken cancellationToken)
     {
-        //TODO: pages should be indexed form 1, there is no 0 page
+        //TODO: #92119 pages should be indexed form 1, there is no 0 page
         var result = await _repository.Search(request.Phrase, request.PaginationRequest.Page - 1, request.PaginationRequest.ItemsPerPage, cancellationToken);
 
-        return new PaginationResult<LocalAuth>(
-                result.Items.Select(l => new LocalAuth(l.Id, l.Name)).ToList(),
+        return new PaginationResult<Common.Contract.LocalAuthority>(
+                result.Items.Select(l => new Common.Contract.LocalAuthority(l.Id.Value, l.Name)).ToList(),
                 request.PaginationRequest.Page,
                 request.PaginationRequest.ItemsPerPage,
                 result.TotalItems);

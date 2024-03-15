@@ -1,14 +1,16 @@
 @using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investments.Common.WWW.Components.PageHeader
+@using HE.Investments.Common.WWW.Components.RadioYesNo
 @using HE.Investments.Common.WWW.Components.SelectListConfirmationHeader
 @using HE.Investments.FrontDoor.Contract.Site
 @using HE.Investments.FrontDoor.WWW.Views.Shared.Components.FrontDoorWorkflowBackButton
 @using HE.Investments.FrontDoor.WWW.Views.Site.Const
 @using HE.Investments.Organisation.LocalAuthorities.ValueObjects;
 
-@model LocalAuthority
+@model HE.Investments.FrontDoor.WWW.Models.LocalAuthorityVewModel
 @{
     ViewData["Title"] = SitePageTitles.LocalAuthorityConfirm;
-    var header = new DynamicComponentViewModel(nameof(SelectListConfirmationHeader), new { header =  SitePageTitles.LocalAuthorityConfirm, name = Model.Name, description = "Is this a correct local authority?" });
+    var header = new DynamicComponentViewModel(nameof(SelectListConfirmationHeader), new { header =  SitePageTitles.LocalAuthorityConfirm, name = Model.LocalAuthorityName, description = "Is this a correct local authority?" });
 }
 
 <gds-div-grid-column-two-thirds>
@@ -19,7 +21,7 @@
 
     <form asp-controller="Site" asp-action="LocalAuthorityConfirm" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
 
-        @Html.Hidden("localAuthorityId", Model.Id)
+        @Html.Hidden("localAuthorityId", Model.LocalAuthorityId)
 
         <vc:radio-yes-no
             field-name="IsConfirmed"

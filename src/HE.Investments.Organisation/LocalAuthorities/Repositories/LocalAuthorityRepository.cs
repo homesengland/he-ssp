@@ -6,8 +6,8 @@ using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Serialization;
 using HE.Investments.Common.Infrastructure.Cache.Interfaces;
 using HE.Investments.Organisation.LocalAuthorities.Mappers;
-using HE.Investments.Organisation.LocalAuthorities.ValueObjects;
 using Microsoft.PowerPlatform.Dataverse.Client;
+using LocalAuthority = HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
 
 namespace HE.Investments.Organisation.LocalAuthorities.Repositories;
 

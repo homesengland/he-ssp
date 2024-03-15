@@ -1,15 +1,14 @@
 extern alias Org;
 
 using HE.Investments.Common.Contract;
-using HE.Investments.FrontDoor.Contract.Project.Queries;
+using HE.Investments.FrontDoor.Contract.LocalAuthority.Queries;
 using MediatR;
 
 using Org::HE.Investments.Organisation.LocalAuthorities.Repositories;
-using LocalAuth = Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
 
 namespace HE.Investments.FrontDoor.Domain.LocalAuthority.QueryHandlers;
 
-public class GetLocalAuthorityQueryHandler : IRequestHandler<GetLocalAuthorityQuery, LocalAuth>
+public class GetLocalAuthorityQueryHandler : IRequestHandler<GetLocalAuthorityQuery, Common.Contract.LocalAuthority>
 {
     private readonly ILocalAuthorityRepository _repository;
 
@@ -18,8 +17,9 @@ public class GetLocalAuthorityQueryHandler : IRequestHandler<GetLocalAuthorityQu
         _repository = repository;
     }
 
-    public async Task<LocalAuth> Handle(GetLocalAuthorityQuery request, CancellationToken cancellationToken)
+    public async Task<Common.Contract.LocalAuthority> Handle(GetLocalAuthorityQuery request, CancellationToken cancellationToken)
     {
-        return await _repository.GetById(new StringIdValueObject(request.LocalAuthorityId.Value), cancellationToken);
+        var localAuthority = await _repository.GetById(new StringIdValueObject(request.LocalAuthorityId.Value), cancellationToken);
+        return new Common.Contract.LocalAuthority(localAuthority.Id.Value, localAuthority.Name);
     }
 }

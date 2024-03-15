@@ -43,6 +43,7 @@
     <AdditionalFiles Include="Views\Home\Error.cshtml" />
     <AdditionalFiles Include="Views\Home\PageNotFound.cshtml" />
     <AdditionalFiles Include="Views\Shared\Components\ConfirmLocalAuthoritySelectionHeader\ConfirmLocalAuthoritySelectionHeader.cshtml" />
+    <AdditionalFiles Include="Views\Shared\Components\LocalAuthorityWorkflowBackButton\LocalAuthorityWorkflowBackButton.cshtml" />
     <AdditionalFiles Include="Views\Shared\_CookieBanner.cshtml" />
     <AdditionalFiles Include="Views\Shared\_GovukTemplate.cshtml" />
     <AdditionalFiles Include="Views\Shared\_Layout.cshtml" />

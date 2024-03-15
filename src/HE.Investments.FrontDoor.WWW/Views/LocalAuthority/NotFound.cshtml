@@ -1,13 +1,15 @@
 @using HE.Investments.FrontDoor.Contract.Site
 @using HE.Investments.FrontDoor.WWW.Views.Shared.Components.FrontDoorWorkflowBackButton
 @using HE.Investments.FrontDoor.WWW.Views.Site.Const
+@using HE.Investments.FrontDoor.Contract.LocalAuthority
 @model (string ProjectId, string SiteId)
 @{
     ViewData["Title"] = SitePageTitles.LocalAuthorityNotFound;
 }
 
 <gds-div-grid-column-two-thirds>
-    <vc:front-door-workflow-back-button current-page="@SiteWorkflowState.LocalAuthorityNotFound"></vc:front-door-workflow-back-button>
+
+    <vc:local-authority-workflow-back-button current-page="@LocalAuthorityWorkflowState.NotFound" project-id="@Model.ProjectId" site-id="@Model.SiteId" />
 
     <vc:page-header title="@SitePageTitles.LocalAuthorityNotFound"/>
 
@@ -17,7 +19,7 @@
         If you think you have entered the wrong details, you can
         <gds-link
             text="try again using a different name."
-            href="@Url.Action("LocalAuthoritySearch", "Site", new { projectId = Model.ProjectId, siteId = Model.SiteId })">
+            href="@Url.Action("Search", "LocalAuthority", new { projectId = Model.ProjectId, siteId = Model.SiteId })">
         </gds-link>
     </gds-p>
 

@@ -12,6 +12,7 @@ using HE.Investments.Common.WWW.Helpers;
 using HE.Investments.Common.WWW.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Controller = HE.Investment.AHP.WWW.Controllers.SiteController;
+using LocalAuthority = HE.Investment.AHP.Contract.Site.LocalAuthority;
 
 namespace HE.Investment.AHP.WWW.Models.Site.Factories;
 
