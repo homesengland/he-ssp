@@ -14,14 +14,18 @@ namespace HE.CRM.AHP.Plugins.Handlers.AHPApplication
     public class RecalculateDeliveryphaseHandler : CrmEntityHandlerBase<invln_scheme, DataverseContext>
     {
         private readonly IMilestoneFrameworkItemRepository _milestonesRepository;
+
         private readonly IDeliveryPhaseRepository _deliveryPhaseRepository;
+
         private readonly IContactRepository _contactRepository;
+
         public RecalculateDeliveryphaseHandler(IMilestoneFrameworkItemRepository milestonesRepository, IDeliveryPhaseRepository deliveryPhaseRepository, IContactRepository contactRepository)
         {
             this._milestonesRepository = milestonesRepository;
             this._deliveryPhaseRepository = deliveryPhaseRepository;
             this._contactRepository = contactRepository;
         }
+
         public override bool CanWork()
         {
             return ValueChanged(invln_scheme.Fields.invln_noofhomes) || ValueChanged(invln_scheme.Fields.invln_fundingrequired);
@@ -31,7 +35,7 @@ namespace HE.CRM.AHP.Plugins.Handlers.AHPApplication
         {
             var contact = _contactRepository.GetById(CurrentState.invln_contactid);
             var milestones = _milestonesRepository.
-                    GetByAttribute(invln_milestoneframeworkitem.Fields.invln_programmeId, CurrentState.invln_programmelookup).ToList();
+                    GetByAttribute(invln_milestoneframeworkitem.Fields.invln_programmeId, CurrentState.invln_programmelookup.Id).ToList();
 
             var deliveryPhases = _deliveryPhaseRepository.GetByAttribute(invln_DeliveryPhase.Fields.invln_Application, CurrentState.Id).ToList();
 
@@ -49,6 +53,7 @@ namespace HE.CRM.AHP.Plugins.Handlers.AHPApplication
                 deliveryphase.invln_StartOnSitePercentageValue = startOnSitePercentageValue;
                 deliveryphase.invln_CompletionValue = new Money((fundingRequired / numberOfHouseApplication) * numberOfHousePhase * completionPercentageValue / 100);
                 deliveryphase.invln_CompletionPercentageValue = completionPercentageValue;
+                _deliveryPhaseRepository.Update(deliveryphase);
             }
             CurrentState.invln_lastexternalmodificationon = DateTime.UtcNow;
             CurrentState.invln_lastexternalmodificationby = new EntityReference(Contact.EntityLogicalName, contact.Id);

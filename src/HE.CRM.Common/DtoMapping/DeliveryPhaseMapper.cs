@@ -87,6 +87,11 @@ namespace HE.CRM.Common.DtoMapping
                 invln_AllowAmendmentstoMilestoneProportions = deliveryPhaseDto.allowAmendmentstoMilestoneProportions,
             };
 
+            if (deliveryPhaseDto.numberOfHomes.Count > 0)
+            {
+                deliveryPhase.invln_NoofHomes = deliveryPhaseDto.numberOfHomes.Sum(x => x.Value);
+            }
+
             if (deliveryPhaseDto.id != null)
             {
                 deliveryPhase.Id = new Guid(deliveryPhaseDto.id);
