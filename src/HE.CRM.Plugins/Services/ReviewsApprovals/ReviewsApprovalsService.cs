@@ -35,30 +35,89 @@ namespace HE.CRM.Plugins.Services.ReviewsApprovals
                 {
                     Id = postImage.invln_ispid.Id
                 };
-
-                switch (postImage.invln_status.Value)
+                var reviewApprovals = _reviewApprovalRepository.GetReviewApprovalsForIsp(postImage.invln_ispid, null);
+                switch(postImage.invln_status.Value)
                 {
                     case (int)invln_StatusReviewApprovalSet.Rejected:
+                    {
                         isp.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Rejected);
                         this._ispRepository.Update(isp);
                         break;
+                    }
                     case (int)invln_StatusReviewApprovalSet.Pending:
-                        isp.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Pending);
-                        this._ispRepository.Update(isp);
-                        break;
-                    case (int)invln_StatusReviewApprovalSet.Approved:
-                    case (int)invln_StatusReviewApprovalSet.Reviewed:
-                        var reviewApprovals = _reviewApprovalRepository.GetReviewApprovalsForIsp(postImage.invln_ispid, null);
-                        var notCorrect = reviewApprovals.Where(x => x.invln_status.Value == (int)invln_StatusReviewApprovalSet.Pending || x.invln_status.Value == (int)invln_StatusReviewApprovalSet.Rejected);
-                        if (!notCorrect.Any())
+                    {
+                        var rejected = reviewApprovals.Where(x => x.invln_status.Value == (int)invln_StatusReviewApprovalSet.Rejected);
+                        if (rejected.Any())
                         {
-                            isp.invln_DateApproved = DateTime.UtcNow;
-                            isp.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Approved);
+                            isp.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Rejected);
+                            this._ispRepository.Update(isp);
+                        }
+                        else
+                        {
+                            isp.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Pending);
                             this._ispRepository.Update(isp);
                         }
                         break;
-                    default:
+                    }
+                    case (int)invln_StatusReviewApprovalSet.SentBack:
+                    {
+                        var rejected = reviewApprovals.Where(x => x.invln_status.Value == (int)invln_StatusReviewApprovalSet.Rejected);
+                        if (rejected.Any())
+                        {
+                            isp.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Rejected);
+                            this._ispRepository.Update(isp);
+                        }
+                        else
+                        {
+                            isp.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Pending);
+                            this._ispRepository.Update(isp);
+                        }
                         break;
+                    }
+                    case (int)invln_StatusReviewApprovalSet.Approved:
+                    {
+                        var rejected = reviewApprovals.Where(x => x.invln_status.Value == (int)invln_StatusReviewApprovalSet.Rejected);
+                        if (rejected.Any())
+                        {
+                            isp.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Rejected);
+                            this._ispRepository.Update(isp);
+                            break;
+                        }
+                        var pendingOrSendBack = reviewApprovals.Where(x => x.invln_status.Value == (int)invln_StatusReviewApprovalSet.Pending ||
+                                                                     x.invln_status.Value == (int)invln_StatusReviewApprovalSet.SentBack);
+                        if (!pendingOrSendBack.Any())
+                        {
+                            isp.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Pending);
+                            this._ispRepository.Update(isp);
+                            break;
+                        }
+                        isp.invln_DateApproved = DateTime.UtcNow;
+                        isp.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Approved);
+                        this._ispRepository.Update(isp);
+                        break;
+                    }
+                    case (int)invln_StatusReviewApprovalSet.Reviewed:
+                    {
+                        var rejected = reviewApprovals.Where(x => x.invln_status.Value == (int)invln_StatusReviewApprovalSet.Rejected);
+                        if (rejected.Any())
+                        {
+                            isp.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Rejected);
+                            this._ispRepository.Update(isp);
+                            break;
+                        }
+                        var pendingOrSendBack = reviewApprovals.Where(x => x.invln_status.Value == (int)invln_StatusReviewApprovalSet.Pending ||
+                                                                     x.invln_status.Value == (int)invln_StatusReviewApprovalSet.SentBack);
+                        if (!pendingOrSendBack.Any())
+                        {
+                            isp.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Pending);
+                            this._ispRepository.Update(isp);
+                            break;
+                        }
+                        isp.invln_DateApproved = DateTime.UtcNow;
+                        isp.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Approved);
+                        this._ispRepository.Update(isp);
+                        break;
+                    }
                 }
             }
         }
