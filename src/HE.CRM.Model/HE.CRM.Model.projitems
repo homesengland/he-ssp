@@ -38,6 +38,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getmultiplefrontdoorprojects.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getmultiplefrontdoorprojectssite.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getmultiplelocalauthorities.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getmultiplelocalauthoritiesformodule.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getmultipleprogramme.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getmultiplesites.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getorganisationchangedetails.cs" />

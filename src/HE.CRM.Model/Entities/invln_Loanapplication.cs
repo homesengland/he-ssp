@@ -164,6 +164,8 @@ namespace DataverseModel
 			public const string invln_existingcompanyName = "invln_existingcompanyname";
 			public const string invln_ExternalStatus = "invln_externalstatus";
 			public const string invln_externalstatusName = "invln_externalstatusname";
+			public const string invln_FDProjectId = "invln_fdprojectid";
+			public const string invln_FDProjectIdName = "invln_fdprojectidname";
 			public const string invln_FinalConclusion = "invln_finalconclusion";
 			public const string invln_fundingdetailscompletionstatus = "invln_fundingdetailscompletionstatus";
 			public const string invln_fundingdetailscompletionstatusName = "invln_fundingdetailscompletionstatusname";
@@ -186,6 +188,7 @@ namespace DataverseModel
 			public const string invln_loanamountrequested_Base = "invln_loanamountrequested_base";
 			public const string invln_loanapplication_account = "invln_loanapplication_account";
 			public const string invln_loanapplication_contact = "invln_loanapplication_contact";
+			public const string invln_loanapplication_FDProjectId_invln_frontdo = "invln_loanapplication_FDProjectId_invln_frontdo";
 			public const string invln_loanapplication_invln_Externalcommses = "invln_loanapplication_invln_Externalcommses";
 			public const string invln_loanapplication_invln_govnotifyemails = "invln_loanapplication_invln_govnotifyemails";
 			public const string invln_loanapplication_SharePointDocumentLocations = "invln_loanapplication_SharePointDocumentLocations";
@@ -1177,6 +1180,43 @@ namespace DataverseModel
 				if (this.FormattedValues.Contains("invln_externalstatus"))
 				{
 					return this.FormattedValues["invln_externalstatus"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
+		/// <summary>
+		/// Front Door Project
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_fdprojectid")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_FDProjectId
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_fdprojectid");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_FDProjectId");
+				this.SetAttributeValue("invln_fdprojectid", value);
+				this.OnPropertyChanged("invln_FDProjectId");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_fdprojectidname")]
+		public string invln_FDProjectIdName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_fdprojectid"))
+				{
+					return this.FormattedValues["invln_fdprojectid"];
 				}
 				else
 				{
@@ -3171,6 +3211,27 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_loanapplication_contact");
 				this.SetRelatedEntity<DataverseModel.Contact>("invln_loanapplication_contact", null, value);
 				this.OnPropertyChanged("invln_loanapplication_contact");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_loanapplication_FDProjectId_invln_frontdo
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_fdprojectid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_loanapplication_FDProjectId_invln_frontdo")]
+		public DataverseModel.invln_FrontDoorProjectPOC invln_loanapplication_FDProjectId_invln_frontdo
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.invln_FrontDoorProjectPOC>("invln_loanapplication_FDProjectId_invln_frontdo", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_loanapplication_FDProjectId_invln_frontdo");
+				this.SetRelatedEntity<DataverseModel.invln_FrontDoorProjectPOC>("invln_loanapplication_FDProjectId_invln_frontdo", null, value);
+				this.OnPropertyChanged("invln_loanapplication_FDProjectId_invln_frontdo");
 			}
 		}
 		

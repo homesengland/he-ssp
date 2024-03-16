@@ -164,6 +164,8 @@ namespace HE.Investments.Common.CRM.Model
 			public const string invln_existingcompanyName = "invln_existingcompanyname";
 			public const string invln_ExternalStatus = "invln_externalstatus";
 			public const string invln_externalstatusName = "invln_externalstatusname";
+			public const string invln_FDProjectId = "invln_fdprojectid";
+			public const string invln_FDProjectIdName = "invln_fdprojectidname";
 			public const string invln_FinalConclusion = "invln_finalconclusion";
 			public const string invln_fundingdetailscompletionstatus = "invln_fundingdetailscompletionstatus";
 			public const string invln_fundingdetailscompletionstatusName = "invln_fundingdetailscompletionstatusname";
@@ -173,7 +175,6 @@ namespace HE.Investments.Common.CRM.Model
 			public const string invln_interestguaranteeName = "invln_interestguaranteename";
 			public const string invln_InvestedbyBorrower = "invln_investedbyborrower";
 			public const string invln_investedbyborrowerName = "invln_investedbyborrowername";
-			public const string invln_invln_cashflow_Loanapplication = "invln_invln_cashflow_Loanapplication";
 			public const string invln_invln_emailnotification_Regarding_invln_l = "invln_invln_emailnotification_Regarding_invln_l";
 			public const string invln_invln_isp_Loanapplication_invln_loanappli = "invln_invln_isp_Loanapplication_invln_loanappli";
 			public const string invln_invln_loanapplication_invln_contract_Loanapplication = "invln_invln_loanapplication_invln_contract_Loanapplication";
@@ -187,6 +188,7 @@ namespace HE.Investments.Common.CRM.Model
 			public const string invln_loanamountrequested_Base = "invln_loanamountrequested_base";
 			public const string invln_loanapplication_account = "invln_loanapplication_account";
 			public const string invln_loanapplication_contact = "invln_loanapplication_contact";
+			public const string invln_loanapplication_FDProjectId_invln_frontdo = "invln_loanapplication_FDProjectId_invln_frontdo";
 			public const string invln_loanapplication_invln_Externalcommses = "invln_loanapplication_invln_Externalcommses";
 			public const string invln_loanapplication_invln_govnotifyemails = "invln_loanapplication_invln_govnotifyemails";
 			public const string invln_loanapplication_SharePointDocumentLocations = "invln_loanapplication_SharePointDocumentLocations";
@@ -644,6 +646,9 @@ namespace HE.Investments.Common.CRM.Model
 			}
 		}
 		
+		/// <summary>
+		/// A boolean to say if a Cashflow has been received 
+		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_cashflowreceived")]
 		public System.Nullable<bool> invln_CashflowReceived
 		{
@@ -678,6 +683,9 @@ namespace HE.Investments.Common.CRM.Model
 			}
 		}
 		
+		/// <summary>
+		/// A field to state if a Cashflow has been requested
+		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_cashflowrequested")]
 		public string invln_CashflowRequested
 		{
@@ -984,6 +992,9 @@ namespace HE.Investments.Common.CRM.Model
 			}
 		}
 		
+		/// <summary>
+		/// The date the TM changes the status of a loan application to "Cashflow Requested"
+		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_datecashflowrequested")]
 		public System.Nullable<System.DateTime> invln_DateCashflowRequested
 		{
@@ -1169,6 +1180,43 @@ namespace HE.Investments.Common.CRM.Model
 				if (this.FormattedValues.Contains("invln_externalstatus"))
 				{
 					return this.FormattedValues["invln_externalstatus"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
+		/// <summary>
+		/// Front Door Project
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_fdprojectid")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_FDProjectId
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_fdprojectid");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_FDProjectId");
+				this.SetAttributeValue("invln_fdprojectid", value);
+				this.OnPropertyChanged("invln_FDProjectId");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_fdprojectidname")]
+		public string invln_FDProjectIdName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_fdprojectid"))
+				{
+					return this.FormattedValues["invln_fdprojectid"];
 				}
 				else
 				{
@@ -2884,26 +2932,6 @@ namespace HE.Investments.Common.CRM.Model
 		}
 		
 		/// <summary>
-		/// 1:N invln_invln_cashflow_Loanapplication
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_invln_cashflow_Loanapplication")]
-		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_Cashflow> invln_invln_cashflow_Loanapplication
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_Cashflow>("invln_invln_cashflow_Loanapplication", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("invln_invln_cashflow_Loanapplication");
-				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_Cashflow>("invln_invln_cashflow_Loanapplication", null, value);
-				this.OnPropertyChanged("invln_invln_cashflow_Loanapplication");
-			}
-		}
-		
-		/// <summary>
 		/// 1:N invln_invln_emailnotification_Regarding_invln_l
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_invln_emailnotification_Regarding_invln_l")]
@@ -3183,6 +3211,27 @@ namespace HE.Investments.Common.CRM.Model
 				this.OnPropertyChanging("invln_loanapplication_contact");
 				this.SetRelatedEntity<HE.Investments.Common.CRM.Model.Contact>("invln_loanapplication_contact", null, value);
 				this.OnPropertyChanged("invln_loanapplication_contact");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_loanapplication_FDProjectId_invln_frontdo
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_fdprojectid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_loanapplication_FDProjectId_invln_frontdo")]
+		public HE.Investments.Common.CRM.Model.invln_FrontDoorProjectPOC invln_loanapplication_FDProjectId_invln_frontdo
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<HE.Investments.Common.CRM.Model.invln_FrontDoorProjectPOC>("invln_loanapplication_FDProjectId_invln_frontdo", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_loanapplication_FDProjectId_invln_frontdo");
+				this.SetRelatedEntity<HE.Investments.Common.CRM.Model.invln_FrontDoorProjectPOC>("invln_loanapplication_FDProjectId_invln_frontdo", null, value);
+				this.OnPropertyChanged("invln_loanapplication_FDProjectId_invln_frontdo");
 			}
 		}
 		

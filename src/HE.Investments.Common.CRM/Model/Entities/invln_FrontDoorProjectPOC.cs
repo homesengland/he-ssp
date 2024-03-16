@@ -72,6 +72,7 @@ namespace HE.Investments.Common.CRM.Model
 			public const string invln_ContactIdYomiName = "invln_contactidyominame";
 			public const string invln_frontdoorprojectpoc_AccountId_account = "invln_frontdoorprojectpoc_AccountId_account";
 			public const string invln_frontdoorprojectpoc_ContactId_contact = "invln_frontdoorprojectpoc_ContactId_contact";
+			public const string invln_frontdoorprojectpoc_LocalAuthorityId_invl = "invln_frontdoorprojectpoc_LocalAuthorityId_invl";
 			public const string invln_FrontDoorProjectPOCId = "invln_frontdoorprojectpocid";
 			public const string Id = "invln_frontdoorprojectpocid";
 			public const string invln_frontdoorprojectsitepoc_FrontDoorProjectI = "invln_frontdoorprojectsitepoc_FrontDoorProjectI";
@@ -85,6 +86,9 @@ namespace HE.Investments.Common.CRM.Model
 			public const string invln_infrastructuredeliveredName = "invln_infrastructuredeliveredname";
 			public const string invln_IntentiontoMakeaProfit = "invln_intentiontomakeaprofit";
 			public const string invln_intentiontomakeaprofitName = "invln_intentiontomakeaprofitname";
+			public const string invln_loanapplication_FDProjectId_invln_frontdo = "invln_loanapplication_FDProjectId_invln_frontdo";
+			public const string invln_LocalAuthorityId = "invln_localauthorityid";
+			public const string invln_LocalAuthorityIdName = "invln_localauthorityidname";
 			public const string invln_Name = "invln_name";
 			public const string invln_NumberofHomesEnabledBuilt = "invln_numberofhomesenabledbuilt";
 			public const string invln_PreviousResidentialBuildingExperience = "invln_previousresidentialbuildingexperience";
@@ -720,6 +724,43 @@ namespace HE.Investments.Common.CRM.Model
 			}
 		}
 		
+		/// <summary>
+		/// Lookup for invln_localauthority
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_localauthorityid")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_LocalAuthorityId
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_localauthorityid");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_LocalAuthorityId");
+				this.SetAttributeValue("invln_localauthorityid", value);
+				this.OnPropertyChanged("invln_LocalAuthorityId");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_localauthorityidname")]
+		public string invln_LocalAuthorityIdName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_localauthorityid"))
+				{
+					return this.FormattedValues["invln_localauthorityid"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_name")]
 		public string invln_Name
 		{
@@ -1312,6 +1353,26 @@ namespace HE.Investments.Common.CRM.Model
 		}
 		
 		/// <summary>
+		/// 1:N invln_loanapplication_FDProjectId_invln_frontdo
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_loanapplication_FDProjectId_invln_frontdo")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_Loanapplication> invln_loanapplication_FDProjectId_invln_frontdo
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_Loanapplication>("invln_loanapplication_FDProjectId_invln_frontdo", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_loanapplication_FDProjectId_invln_frontdo");
+				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_Loanapplication>("invln_loanapplication_FDProjectId_invln_frontdo", null, value);
+				this.OnPropertyChanged("invln_loanapplication_FDProjectId_invln_frontdo");
+			}
+		}
+		
+		/// <summary>
 		/// N:1 invln_frontdoorprojectpoc_AccountId_account
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_accountid")]
@@ -1350,6 +1411,27 @@ namespace HE.Investments.Common.CRM.Model
 				this.OnPropertyChanging("invln_frontdoorprojectpoc_ContactId_contact");
 				this.SetRelatedEntity<HE.Investments.Common.CRM.Model.Contact>("invln_frontdoorprojectpoc_ContactId_contact", null, value);
 				this.OnPropertyChanged("invln_frontdoorprojectpoc_ContactId_contact");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_frontdoorprojectpoc_LocalAuthorityId_invl
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_localauthorityid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_frontdoorprojectpoc_LocalAuthorityId_invl")]
+		public HE.Investments.Common.CRM.Model.invln_localauthority invln_frontdoorprojectpoc_LocalAuthorityId_invl
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<HE.Investments.Common.CRM.Model.invln_localauthority>("invln_frontdoorprojectpoc_LocalAuthorityId_invl", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_frontdoorprojectpoc_LocalAuthorityId_invl");
+				this.SetRelatedEntity<HE.Investments.Common.CRM.Model.invln_localauthority>("invln_frontdoorprojectpoc_LocalAuthorityId_invl", null, value);
+				this.OnPropertyChanged("invln_frontdoorprojectpoc_LocalAuthorityId_invl");
 			}
 		}
 		

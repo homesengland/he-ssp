@@ -19,6 +19,8 @@ namespace HE.CRM.Common.DtoMapping
                 NumberofHomesEnabledBuilt = frontDoorProjectSite.invln_NumberofHomesEnabledBuilt,
                 PlanningStatus = frontDoorProjectSite.invln_PlanningStatus?.Value,
                 CreatedOn = frontDoorProjectSite.CreatedOn,
+                LocalAuthority = frontDoorProjectSite.invln_LocalAuthorityId != null ? frontDoorProjectSite.invln_LocalAuthorityId.Id : Guid.Empty,
+                LocalAuthorityName = frontDoorProjectSite.invln_LocalAuthorityId != null ? frontDoorProjectSite.invln_LocalAuthorityId.Name : string.Empty,
             };
 
             return frontDoorProjectSiteToReturn;
@@ -36,6 +38,11 @@ namespace HE.CRM.Common.DtoMapping
             if (Guid.TryParse(frontdoorprojectId, out Guid projectId))
             {
                 frontDoorProjectSiteDtoToReturn.invln_FrontDoorProjectId = new EntityReference(invln_FrontDoorProjectPOC.EntityLogicalName, projectId);
+            }
+
+            if (frontDoorProjectSiteDto.LocalAuthority != null)
+            {
+                frontDoorProjectSiteDtoToReturn.invln_LocalAuthorityId = new EntityReference(invln_localauthority.EntityLogicalCollectionName, frontDoorProjectSiteDto.LocalAuthority);
             }
 
             return frontDoorProjectSiteDtoToReturn;

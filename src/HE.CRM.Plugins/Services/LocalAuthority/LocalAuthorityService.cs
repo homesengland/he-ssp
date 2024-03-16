@@ -18,6 +18,7 @@ namespace HE.CRM.Plugins.Services.LocalAuthority
         {
             _localAuthorityRepository = CrmRepositoriesFactory.Get<ILocalAuthorityRepository>();
         }
+        #endregion
 
         public List<LocalAuthorityDto> GetAllLocalAuthoritiesAsDto()
         {
@@ -36,6 +37,35 @@ namespace HE.CRM.Plugins.Services.LocalAuthority
             }
             return localAuthoritiesDtoList;
         }
-        #endregion
+
+
+        public PagedResponseDto<LocalAuthorityDto> GetLocalAuthoritiesForModule(PagingRequestDto pagingRequestDto, string searchPhrase, string module)
+        {
+            if (module == "loan" || module == "loanFD")
+            {
+                var result = _localAuthorityRepository.GetLocalAuthoritiesForLoan(pagingRequestDto, searchPhrase);
+
+                return new PagedResponseDto<LocalAuthorityDto>
+                {
+                    paging = result.paging,
+                    totalItemsCount = result.totalItemsCount,
+                    items = result.items.Select(i => new LocalAuthorityDto { id = i.invln_localauthorityId.ToString(), name = i.invln_localauthorityname, code = i.invln_onscode }).ToList(),
+                };
+            }
+
+            if (module == "ahp")
+            {
+                var result = _localAuthorityRepository.GetLocalAuthoritiesForAHP(pagingRequestDto, searchPhrase);
+
+                return new PagedResponseDto<LocalAuthorityDto>
+                {
+                    paging = result.paging,
+                    totalItemsCount = result.totalItemsCount,
+                    items = result.items.Select(i => new LocalAuthorityDto { id = i.invln_AHGLocalAuthoritiesId.ToString(), name = i.invln_LocalAuthorityName, code = i.invln_GSSCode }).ToList(),
+                };
+            }
+
+            return null;
+        }
     }
 }

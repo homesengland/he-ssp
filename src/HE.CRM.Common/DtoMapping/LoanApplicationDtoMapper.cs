@@ -70,6 +70,12 @@ namespace HE.CRM.Common.DtoMapping
             {
                 loanApplication.Id = loanApplicationId;
             }
+
+            if (Guid.TryParse(loanApplicationDto.frontDoorProjectId, out Guid frontDoorProjectId))
+            {
+                loanApplication.invln_FDProjectId = new EntityReference(invln_FrontDoorProjectPOC.EntityLogicalName, frontDoorProjectId);
+            }
+
             return loanApplication;
         }
 
@@ -124,6 +130,8 @@ namespace HE.CRM.Common.DtoMapping
                 createdOn = loanApplication.CreatedOn,
                 ApplicationName = loanApplication.invln_applicationname,
                 dateSubmitted = loanApplication.invln_Datesubmitted,
+                frontDoorProjectId = loanApplication.invln_FDProjectId?.Id.ToString(),
+                frontDoorProjectName = loanApplication.invln_FDProjectId?.Name,
             };
             if(loanApplication.invln_Account != null)
             {

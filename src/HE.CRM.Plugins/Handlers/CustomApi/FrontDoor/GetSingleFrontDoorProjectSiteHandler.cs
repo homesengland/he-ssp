@@ -5,7 +5,7 @@ using HE.CRM.Plugins.Services.FrontDoorProjectSite;
 
 namespace HE.CRM.Plugins.Handlers.CustomApi.FrontDoor
 {
-    internal class GetSingleFrontDoorProjectSiteHandler : CrmActionHandlerBase<invln_getsinglefrontdoorprojectsiteRequest, DataverseContext>
+    public class GetSingleFrontDoorProjectSiteHandler : CrmActionHandlerBase<invln_getsinglefrontdoorprojectsiteRequest, DataverseContext>
     {
         #region Fields
         private string frontDoorProjectId => ExecutionData.GetInputParameter<string>(invln_getsinglefrontdoorprojectsiteRequest.Fields.invln_frontdoorprojectid);
