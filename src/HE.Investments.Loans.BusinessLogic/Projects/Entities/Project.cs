@@ -11,7 +11,7 @@ using HE.Investments.Loans.BusinessLogic.Projects.ValueObjects;
 using HE.Investments.Loans.Contract;
 using HE.Investments.Loans.Contract.Application.Enums;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
-using Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects;
+using LocalAuthority = Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
 
 namespace HE.Investments.Loans.BusinessLogic.Projects.Entities;
 

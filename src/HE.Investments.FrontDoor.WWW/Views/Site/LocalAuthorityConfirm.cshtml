@@ -1,18 +1,32 @@
 @using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investments.Common.WWW.Components.PageHeader
+@using HE.Investments.Common.WWW.Components.RadioYesNo
+@using HE.Investments.Common.WWW.Components.SelectListConfirmationHeader
 @using HE.Investments.FrontDoor.Contract.Site
 @using HE.Investments.FrontDoor.WWW.Views.Shared.Components.FrontDoorWorkflowBackButton
 @using HE.Investments.FrontDoor.WWW.Views.Site.Const
+
+@model HE.Investments.FrontDoor.WWW.Models.LocalAuthorityVewModel
 @{
     ViewData["Title"] = SitePageTitles.LocalAuthorityConfirm;
+    var header = new DynamicComponentViewModel(nameof(SelectListConfirmationHeader), new { header = SitePageTitles.LocalAuthorityConfirm, name = Model.LocalAuthorityName, description = "Is this a correct local authority?" });
 }
 
 <gds-div-grid-column-two-thirds>
     <vc:front-door-workflow-back-button current-page="@SiteWorkflowState.LocalAuthorityConfirm"></vc:front-door-workflow-back-button>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
+    <vc:page-header caption="@ViewBag.ProjectName"/>
+
     <form asp-controller="Site" asp-action="LocalAuthorityConfirm" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
-        TODO: @SitePageTitles.LocalAuthorityConfirm
+
+        @Html.HiddenFor(m => m.LocalAuthorityId)
+
+        <vc:radio-yes-no
+            field-name="IsConfirmed"
+            additional-content="@header"/>
 
         <vc:form-button/>
+        <vc:return-to-account-link/>
     </form>
 </gds-div-grid-column-two-thirds>

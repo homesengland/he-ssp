@@ -1,0 +1,39 @@
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investments.Common.WWW.Components.PageHeader
+@using HE.Investments.Common.WWW.Components.TextInput
+@using HE.Investments.FrontDoor.Contract.LocalAuthority
+@using HE.Investments.FrontDoor.WWW.Views.LocalAuthority.Const
+@using HE.Investments.FrontDoor.WWW.Views.Shared.Components.LocalAuthorityWorkflowBackButton
+
+@model HE.Investments.FrontDoor.WWW.Models.LocalAuthoritySearchVewModel
+@{
+    var title = string.IsNullOrWhiteSpace(Model.SiteId) ? LocalAuthorityPageTitles.SearchForProject : LocalAuthorityPageTitles.SearchForSite;
+    ViewData["Title"] = title;
+    var paragraph = string.IsNullOrWhiteSpace(Model.SiteId) ?
+        "If your project is located in more than one local authority, enter the local authority where the largest part of the project is located." :
+        "Search for your local authority. If your site is located in more than one local authority, search for the local authority where you have planning permission or intend to apply for planning permission.";
+}
+
+<gds-div-grid-column-two-thirds>
+    <vc:local-authority-workflow-back-button current-page="@LocalAuthorityWorkflowState.Search" project-id="@Model.ProjectId" site-id="@Model.SiteId"/>
+
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+
+    <vc:page-header caption="@ViewBag.ProjectName"/>
+
+    <form asp-controller="LocalAuthority" asp-action="Search" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
+
+        @Html.HiddenFor(m => m.ProjectId)
+        @Html.HiddenFor(m => m.SiteId)
+
+        <vc:text-input
+            field-name="@nameof(Model.Phrase)"
+            title="@title"
+            title-type="InputTitleType.PageHeader"
+            paragraph="@paragraph"
+            hint="Enter all or part of your local authority name."/>
+
+        <vc:form-button/>
+        <vc:return-to-account-link/>
+    </form>
+</gds-div-grid-column-two-thirds>

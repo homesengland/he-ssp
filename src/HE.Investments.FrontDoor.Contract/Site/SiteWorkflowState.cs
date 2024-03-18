@@ -5,9 +5,7 @@ public enum SiteWorkflowState
     Name,
     HomesNumber,
     LocalAuthoritySearch,
-    LocalAuthorityResult,
     LocalAuthorityConfirm,
-    LocalAuthorityNotFound,
     PlanningStatus,
     AddAnotherSite,
 }
