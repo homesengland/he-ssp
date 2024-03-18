@@ -19,6 +19,8 @@ public class ExternalLinks : IExternalLinks
                                          "https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/";
 
         GovUk = configuration.TryGetValue(ConfigurationKey(nameof(GovUk))) ?? "https://www.gov.uk/";
+
+        MailToEnquiries = configuration.TryGetValue(ConfigurationKey(nameof(MailToEnquiries))) ?? "enquiries@homesengland.gov.uk";
     }
 
     public string MailToHelpToBuildTechSupport { get; }
@@ -30,6 +32,8 @@ public class ExternalLinks : IExternalLinks
     public string UkGovernmentLicensingFramework { get; }
 
     public string GovUk { get; }
+
+    public string MailToEnquiries { get; }
 
     private string ConfigurationKey(string propertyName) => $"{nameof(ExternalLinks)}:{propertyName}";
 }

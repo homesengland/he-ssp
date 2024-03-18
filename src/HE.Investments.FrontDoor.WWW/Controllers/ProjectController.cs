@@ -498,6 +498,12 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
         return RedirectToAction("Index", "Account");
     }
 
+    [HttpGet("{projectId}/you-need-to-speak-to-homes-england")]
+    public IActionResult YouNeedToSpeakToHomesEngland([FromRoute] string projectId, ProjectDetails model)
+    {
+        return View("YouNeedToSpeakToHomesEngland");
+    }
+
     protected override async Task<IStateRouting<ProjectWorkflowState>> Routing(ProjectWorkflowState currentState, object? routeData = null)
     {
         var projectId = routeData?.GetPropertyValue<string>("projectId") ?? this.GetProjectIdFromRoute().Value;
