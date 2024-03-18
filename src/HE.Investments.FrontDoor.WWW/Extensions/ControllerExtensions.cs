@@ -2,6 +2,7 @@ using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.FrontDoor.Contract.Project;
 using HE.Investments.FrontDoor.Contract.Site;
+using HE.Investments.FrontDoor.Shared.Project;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investments.FrontDoor.WWW.Extensions;

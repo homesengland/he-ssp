@@ -11,12 +11,14 @@ using HE.Investments.FrontDoor.Contract.Project.Queries;
 using HE.Investments.FrontDoor.Contract.Site;
 using HE.Investments.FrontDoor.Contract.Site.Commands;
 using HE.Investments.FrontDoor.Contract.Site.Queries;
+using HE.Investments.FrontDoor.Shared.Project;
 using HE.Investments.FrontDoor.WWW.Extensions;
 using HE.Investments.FrontDoor.WWW.Models;
 using HE.Investments.FrontDoor.WWW.Workflows;
 using HE.Investments.Organisation.LocalAuthorities.ValueObjects;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using SiteDetails = HE.Investments.FrontDoor.Contract.Site.SiteDetails;
 
 namespace HE.Investments.FrontDoor.WWW.Controllers;
 

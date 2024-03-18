@@ -1,20 +1,13 @@
 using HE.Investments.Common.CRM.Mappers;
-using HE.Investments.Common.CRM.Model;
-using HE.Investments.FrontDoor.Contract.Project.Enums;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
+using HE.Investments.FrontDoor.Shared.Project.Contract;
+using HE.Investments.FrontDoor.Shared.Project.Crm;
 
 namespace HE.Investments.FrontDoor.Domain.Project.Crm.Mappers;
 
 public class ProjectInfrastructureMapper : EnumMapper<InfrastructureType>
 {
-    protected override IDictionary<InfrastructureType, int?> Mapping => new Dictionary<InfrastructureType, int?>
-    {
-        { InfrastructureType.SitePreparation, (int)invln_FrontDoorInfrastructureDelivered.Sitepreparation },
-        { InfrastructureType.Enabling, (int)invln_FrontDoorInfrastructureDelivered.Enabling },
-        { InfrastructureType.PhysicalInfrastructure, (int)invln_FrontDoorInfrastructureDelivered.Physicalinfrastructure },
-        { InfrastructureType.Other, (int)invln_FrontDoorInfrastructureDelivered.Other },
-        { InfrastructureType.IDoNotKnow, (int)invln_FrontDoorInfrastructureDelivered.Idonotknow },
-    };
+    protected override IDictionary<InfrastructureType, int?> Mapping => FrontDoorProjectEnumMapping.Infrastructure;
 
     public ProjectInfrastructure Map(IList<int> values)
     {

@@ -3,4 +3,4 @@ using HE.Investments.Loans.Contract.Application.ValueObjects;
 
 namespace HE.Investments.Loans.Contract.Application.Events;
 
-public record LoanApplicationHasBeenStartedEvent(LoanApplicationId LoanApplicationId, string ApplicationName) : IDomainEvent;
+public record LoanApplicationHasBeenStartedEvent(LoanApplicationId LoanApplicationId, string ApplicationName, string? FrontDoorProjectId) : IDomainEvent;

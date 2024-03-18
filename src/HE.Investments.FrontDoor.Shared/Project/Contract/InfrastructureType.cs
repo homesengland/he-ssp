@@ -1,7 +1,7 @@
 using System.ComponentModel;
 using HE.Investments.Common.Contract.Enum;
 
-namespace HE.Investments.FrontDoor.Contract.Project.Enums;
+namespace HE.Investments.FrontDoor.Shared.Project.Contract;
 
 public enum InfrastructureType
 {

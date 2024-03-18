@@ -1,5 +1,6 @@
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
+using HE.Investments.FrontDoor.Shared.Project;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Entities;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories;
 using HE.Investments.Loans.BusinessLogic.Projects.Entities;
@@ -29,9 +30,10 @@ public class StartApplicationCommandHandler : IRequestHandler<StartApplicationCo
     public async Task<OperationResult<LoanApplicationId?>> Handle(StartApplicationCommand request, CancellationToken cancellationToken)
     {
         var userAccount = await _loanUserContext.GetSelectedAccount();
+        var frontDoorProjectId = string.IsNullOrWhiteSpace(request.FrontDoorProjectId) ? null : new FrontDoorProjectId(request.FrontDoorProjectId);
 
         var applicationName = new LoanApplicationName(request.ApplicationName);
-        var newLoanApplication = LoanApplicationEntity.New(userAccount, applicationName);
+        var newLoanApplication = LoanApplicationEntity.New(userAccount, applicationName, frontDoorProjectId);
 
         if (await _applicationRepository.IsExist(applicationName, userAccount, cancellationToken))
         {

@@ -1,6 +1,6 @@
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.FrontDoor.Contract.Project;
-using HE.Investments.FrontDoor.Contract.Project.Enums;
+using HE.Investments.FrontDoor.Shared.Project.Contract;
 
 namespace HE.Investments.FrontDoor.WWW.Workflows;
 

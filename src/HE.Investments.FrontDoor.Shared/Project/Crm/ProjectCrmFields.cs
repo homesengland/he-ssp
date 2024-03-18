@@ -1,6 +1,6 @@
 using HE.Investments.Common.CRM.Model;
 
-namespace HE.Investments.FrontDoor.Domain.Project.Crm;
+namespace HE.Investments.FrontDoor.Shared.Project.Crm;
 
 public static class ProjectCrmFields
 {

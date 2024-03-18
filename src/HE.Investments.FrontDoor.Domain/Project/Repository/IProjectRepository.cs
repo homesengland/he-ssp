@@ -1,5 +1,6 @@
 using HE.Investments.Account.Shared.User;
 using HE.Investments.FrontDoor.Contract.Project;
+using HE.Investments.FrontDoor.Shared.Project;
 
 namespace HE.Investments.FrontDoor.Domain.Project.Repository;
 

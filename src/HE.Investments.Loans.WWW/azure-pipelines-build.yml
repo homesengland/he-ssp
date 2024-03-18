@@ -12,6 +12,7 @@ trigger:
     include:
       - src/HE.InvestmentLoans.sln
       - src/HE.Investments.Loans.*/*
+      - src/HE.Investments.FrontDoor.Shared/*
       - src/HE.Investments.Account.Shared/*
       - src/HE.Investments.Account.Api.Contract/*
       - src/HE.Investments.Common*/*

@@ -5,11 +5,13 @@ using FluentValidation.AspNetCore;
 using HE.Investments.Account.Shared.Config;
 using HE.Investments.Common;
 using HE.Investments.Common.Utils;
+using HE.Investments.FrontDoor.Shared.Config;
 using HE.Investments.Loans.BusinessLogic.CompanyStructure;
 using HE.Investments.Loans.BusinessLogic.CompanyStructure.Repositories;
 using HE.Investments.Loans.BusinessLogic.Files;
 using HE.Investments.Loans.BusinessLogic.Funding.Repositories;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories;
+using HE.Investments.Loans.BusinessLogic.PrefillData.Repositories;
 using HE.Investments.Loans.BusinessLogic.Projects.Repositories;
 using HE.Investments.Loans.BusinessLogic.Security.Repositories;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
@@ -24,6 +26,7 @@ public static class BusinessLogicModule
     public static void AddBusinessLogic(this IServiceCollection services)
     {
         services.AddAccountSharedModule();
+        services.AddFrontDoorSharedModule();
         services.AddTransient(typeof(IRequestExceptionHandler<,,>), typeof(DomainValidationHandler<,,>));
         services.AddFluentValidationAutoValidation();
         services.AddValidatorsFromAssemblyContaining<LoanApplicationRepository>();
@@ -38,6 +41,7 @@ public static class BusinessLogicModule
         services.AddSecuritySubmodule();
         services.AddCompanyStructureSubmodule();
         services.AddFundingSubmodule();
+        services.AddPrefillDataSubmodule();
     }
 
     private static void AddSecuritySubmodule(this IServiceCollection services)
@@ -56,5 +60,10 @@ public static class BusinessLogicModule
     private static void AddFundingSubmodule(this IServiceCollection services)
     {
         services.AddScoped<IFundingRepository, FundingRepository>();
+    }
+
+    private static void AddPrefillDataSubmodule(this IServiceCollection services)
+    {
+        services.AddScoped<ILoanPrefillDataRepository, LoanPrefillDataRepository>();
     }
 }

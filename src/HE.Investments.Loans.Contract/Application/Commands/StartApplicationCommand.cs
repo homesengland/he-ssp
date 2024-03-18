@@ -4,4 +4,4 @@ using MediatR;
 
 namespace HE.Investments.Loans.Contract.Application.Commands;
 
-public record StartApplicationCommand(string ApplicationName) : IRequest<OperationResult<LoanApplicationId?>>;
+public record StartApplicationCommand(string ApplicationName, string? FrontDoorProjectId = null) : IRequest<OperationResult<LoanApplicationId?>>;

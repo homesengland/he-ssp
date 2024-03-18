@@ -1,4 +1,4 @@
-using HE.Investments.FrontDoor.Contract.Project;
+using HE.Investments.FrontDoor.Shared.Project;
 using HE.Investments.Organisation.LocalAuthorities.ValueObjects;
 
 namespace HE.Investments.FrontDoor.Contract.Site.Commands;
