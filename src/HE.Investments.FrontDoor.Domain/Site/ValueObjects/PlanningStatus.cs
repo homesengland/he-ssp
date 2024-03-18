@@ -11,7 +11,7 @@ public class PlanningStatus : ValueObject, IQuestion
     {
         if (value is null or SitePlanningStatus.Undefined)
         {
-            OperationResult.ThrowValidationError(nameof(SitePlanningStatus), ValidationErrorMessage.MustBeSelected("planning status of the site"));
+            OperationResult.ThrowValidationError(nameof(PlanningStatus), ValidationErrorMessage.MustBeSelected("planning status of the site"));
         }
 
         Value = value!.Value;
