@@ -130,7 +130,7 @@ public class ProjectWorkflow : EncodedStateRouting<ProjectWorkflowState>
 
         Machine.Configure(ProjectWorkflowState.FundingAmount)
             .Permit(Trigger.Continue, ProjectWorkflowState.Profit)
-            .Permit(Trigger.Back, ProjectWorkflowState.Progress);
+            .Permit(Trigger.Back, ProjectWorkflowState.RequiresFunding);
 
         Machine.Configure(ProjectWorkflowState.Profit)
             .Permit(Trigger.Continue, ProjectWorkflowState.ExpectedStart)
