@@ -1,9 +1,11 @@
 using HE.Investments.Account.Shared.Authorization.Attributes;
+using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Routing;
+using HE.Investments.FrontDoor.Contract.LocalAuthority.Queries;
 using HE.Investments.FrontDoor.Contract.Project;
 using HE.Investments.FrontDoor.Contract.Project.Queries;
 using HE.Investments.FrontDoor.Contract.Site;
@@ -11,7 +13,9 @@ using HE.Investments.FrontDoor.Contract.Site.Commands;
 using HE.Investments.FrontDoor.Contract.Site.Queries;
 using HE.Investments.FrontDoor.Shared.Project;
 using HE.Investments.FrontDoor.WWW.Extensions;
+using HE.Investments.FrontDoor.WWW.Models;
 using HE.Investments.FrontDoor.WWW.Workflows;
+using HE.Investments.Organisation.LocalAuthorities.ValueObjects;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SiteDetails = HE.Investments.FrontDoor.Contract.Site.SiteDetails;
@@ -111,51 +115,46 @@ public class SiteController : WorkflowController<SiteWorkflowState>
 
     [HttpGet("{siteId}/local-authority-search")]
     [WorkflowState(SiteWorkflowState.LocalAuthoritySearch)]
-    public async Task<IActionResult> LocalAuthoritySearch([FromRoute] string projectId, [FromRoute] string siteId, CancellationToken cancellationToken)
+    public IActionResult LocalAuthoritySearch([FromRoute] string projectId, [FromRoute] string siteId)
     {
-        return View(nameof(LocalAuthoritySearch), await GetSiteDetails(projectId, siteId, cancellationToken));
-    }
-
-    [HttpPost("{siteId}/local-authority-search")]
-    [WorkflowState(SiteWorkflowState.LocalAuthoritySearch)]
-    public async Task<IActionResult> LocalAuthoritySearch([FromRoute] string projectId, [FromRoute] string siteId, [FromQuery] string phrase, CancellationToken cancellationToken)
-    {
-        return await Continue(new { projectId, siteId, phrase });
-    }
-
-    [HttpGet("{siteId}/local-authority-result")]
-    [WorkflowState(SiteWorkflowState.LocalAuthorityResult)]
-    public async Task<IActionResult> LocalAuthorityResult([FromRoute] string projectId, [FromRoute] string siteId, CancellationToken cancellationToken)
-    {
-        return View(nameof(LocalAuthorityResult), await GetSiteDetails(projectId, siteId, cancellationToken));
-    }
-
-    [HttpPost("{siteId}/local-authority-result")]
-    [WorkflowState(SiteWorkflowState.LocalAuthorityResult)]
-    public async Task<IActionResult> LocalAuthorityResult([FromRoute] string projectId, [FromRoute] string siteId, [FromQuery] string phrase, CancellationToken cancellationToken)
-    {
-        return await Continue(new { projectId, siteId, phrase });
-    }
-
-    [HttpGet("{siteId}/local-authority-not-found")]
-    [WorkflowState(SiteWorkflowState.LocalAuthorityNotFound)]
-    public IActionResult LocalAuthorityNotFound([FromRoute] string projectId, [FromRoute] string siteId)
-    {
-        return View(nameof(LocalAuthorityNotFound));
+        return RedirectToAction("Search", "LocalAuthority", new { projectId, siteId });
     }
 
     [HttpGet("{siteId}/local-authority-confirm")]
     [WorkflowState(SiteWorkflowState.LocalAuthorityConfirm)]
-    public async Task<IActionResult> LocalAuthorityConfirm([FromRoute] string projectId, [FromRoute] string siteId, CancellationToken cancellationToken)
+    public async Task<IActionResult> LocalAuthorityConfirm([FromRoute] string projectId, [FromRoute] string siteId, [FromQuery] string localAuthorityId, CancellationToken cancellationToken)
     {
-        return View(nameof(LocalAuthorityConfirm), await GetSiteDetails(projectId, siteId, cancellationToken));
+        await GetSiteDetails(projectId, siteId, cancellationToken);
+        var localAuthority = await _mediator.Send(new GetLocalAuthorityQuery(new LocalAuthorityId(localAuthorityId)), cancellationToken);
+
+        return View(nameof(LocalAuthorityConfirm), new LocalAuthorityVewModel(localAuthority.Id, localAuthority.Name, projectId, siteId));
     }
 
     [HttpPost("{siteId}/local-authority-confirm")]
     [WorkflowState(SiteWorkflowState.LocalAuthorityConfirm)]
-    public async Task<IActionResult> LocalAuthorityConfirm([FromRoute] string projectId, [FromRoute] string siteId, SiteDetails model, CancellationToken cancellationToken)
+    public async Task<IActionResult> LocalAuthorityConfirm([FromRoute] string projectId, [FromRoute] string siteId, string localAuthorityId, bool? isConfirmed, CancellationToken cancellationToken)
     {
-        return await Continue(new { projectId, siteId });
+        if (isConfirmed == null)
+        {
+            ModelState.Clear();
+            ModelState.AddModelError("IsConfirmed", "Select yes if the local authority is correct");
+
+            await GetSiteDetails(projectId, siteId, cancellationToken);
+            var localAuthority = await _mediator.Send(new GetLocalAuthorityQuery(new LocalAuthorityId(localAuthorityId)), cancellationToken);
+
+            return View("LocalAuthorityConfirm", new LocalAuthorityVewModel(localAuthority.Id, localAuthority.Name, projectId, siteId));
+        }
+
+        if (isConfirmed.Value)
+        {
+            return await ExecuteSiteCommand(
+                new ProvideLocalAuthorityCommand(new FrontDoorProjectId(projectId), new FrontDoorSiteId(siteId), new LocalAuthorityId(localAuthorityId)),
+                nameof(LocalAuthorityConfirm),
+                project => project,
+                cancellationToken);
+        }
+
+        return RedirectToAction("Search", "LocalAuthority", new { projectId, siteId });
     }
 
     [HttpGet("{siteId}/planning-status")]

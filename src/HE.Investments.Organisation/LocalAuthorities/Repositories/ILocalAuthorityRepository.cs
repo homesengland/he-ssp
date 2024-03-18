@@ -1,5 +1,5 @@
 using HE.Investments.Common.Contract;
-using HE.Investments.Organisation.LocalAuthorities.ValueObjects;
+using LocalAuthority = HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
 
 namespace HE.Investments.Organisation.LocalAuthorities.Repositories;
 public interface ILocalAuthorityRepository

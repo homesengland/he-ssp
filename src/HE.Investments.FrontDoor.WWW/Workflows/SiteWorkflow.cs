@@ -35,18 +35,10 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             .Permit(Trigger.Back, SiteWorkflowState.Name);
 
         _machine.Configure(SiteWorkflowState.LocalAuthoritySearch)
-            .Permit(Trigger.Continue, SiteWorkflowState.LocalAuthorityResult)
             .Permit(Trigger.Back, SiteWorkflowState.HomesNumber);
-
-        _machine.Configure(SiteWorkflowState.LocalAuthorityResult)
-            .Permit(Trigger.Continue, SiteWorkflowState.LocalAuthorityConfirm)
-            .Permit(Trigger.Back, SiteWorkflowState.LocalAuthoritySearch);
 
         _machine.Configure(SiteWorkflowState.LocalAuthorityConfirm)
             .Permit(Trigger.Continue, SiteWorkflowState.PlanningStatus)
-            .Permit(Trigger.Back, SiteWorkflowState.LocalAuthorityResult);
-
-        _machine.Configure(SiteWorkflowState.LocalAuthorityNotFound)
             .Permit(Trigger.Back, SiteWorkflowState.LocalAuthoritySearch);
 
         _machine.Configure(SiteWorkflowState.PlanningStatus)

@@ -26,6 +26,7 @@ using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Routing;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using LocalAuthority = HE.Investment.AHP.Contract.Site.LocalAuthority;
 
 namespace HE.Investment.AHP.WWW.Controllers;
 

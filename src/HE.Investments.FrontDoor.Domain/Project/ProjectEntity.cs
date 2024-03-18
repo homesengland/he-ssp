@@ -1,12 +1,14 @@
+extern alias Org;
+
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Errors;
 using HE.Investments.Common.Extensions;
-using HE.Investments.FrontDoor.Contract.Project;
 using HE.Investments.FrontDoor.Domain.Project.Repository;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
 using HE.Investments.FrontDoor.Shared.Project;
+using Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects;
 using ProjectGeographicFocus = HE.Investments.FrontDoor.Domain.Project.ValueObjects.ProjectGeographicFocus;
 
 namespace HE.Investments.FrontDoor.Domain.Project;
@@ -82,6 +84,8 @@ public class ProjectEntity : DomainEntity
     public IsProfit IsProfit { get; private set; }
 
     public ExpectedStartDate ExpectedStartDate { get; private set; }
+
+    public LocalAuthorityId? LocalAuthorityId { get; private set; }
 
     public static async Task<ProjectEntity> New(ProjectName projectName, IProjectNameExists projectNameExists, CancellationToken cancellationToken)
     {
@@ -186,6 +190,11 @@ public class ProjectEntity : DomainEntity
     public void ProvideExpectedStartDate(ExpectedStartDate expectedStartDate)
     {
         ExpectedStartDate = _modificationTracker.Change(ExpectedStartDate, expectedStartDate);
+    }
+
+    public void ProvideLocalAuthority(LocalAuthorityId localAuthorityId)
+    {
+        LocalAuthorityId = _modificationTracker.Change(LocalAuthorityId, localAuthorityId);
     }
 
     private static async Task<ProjectName> ValidateProjectNameUniqueness(
