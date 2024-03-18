@@ -8,10 +8,8 @@ Insert some screenshots if you made UI changes.
 
 ### 🏎 Quality check
 
-- [ ] Have you peformed local tests?
-
+- [ ] Have you performed local tests?
 - [ ] Are integration tests passing locally?
-
 - [ ] Have you added some unit tests?
-
 - [ ] Have you added some integration tests?
+- [ ] Have you checked WCAG (included screenshot)
