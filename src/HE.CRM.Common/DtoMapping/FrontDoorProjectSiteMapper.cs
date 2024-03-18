@@ -40,9 +40,9 @@ namespace HE.CRM.Common.DtoMapping
                 frontDoorProjectSiteDtoToReturn.invln_FrontDoorProjectId = new EntityReference(invln_FrontDoorProjectPOC.EntityLogicalName, projectId);
             }
 
-            if (frontDoorProjectSiteDto.LocalAuthority != null)
+            if (frontDoorProjectSiteDto.LocalAuthority != null && frontDoorProjectSiteDto.LocalAuthority != Guid.Empty)
             {
-                frontDoorProjectSiteDtoToReturn.invln_LocalAuthorityId = new EntityReference(invln_localauthority.EntityLogicalCollectionName, frontDoorProjectSiteDto.LocalAuthority);
+                frontDoorProjectSiteDtoToReturn.invln_LocalAuthorityId = new EntityReference(invln_localauthority.EntityLogicalName, frontDoorProjectSiteDto.LocalAuthority);
             }
 
             return frontDoorProjectSiteDtoToReturn;

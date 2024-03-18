@@ -108,9 +108,9 @@ namespace HE.CRM.Common.DtoMapping
                 frontDoorProjectPOC.invln_ContactId = contact.ToEntityReference();
             }
 
-            if (frontDoorProjectDto.LocalAuthority != null)
+            if (frontDoorProjectDto.LocalAuthority != null && frontDoorProjectDto.LocalAuthority != Guid.Empty)
             {
-                frontDoorProjectPOC.invln_LocalAuthorityId = new EntityReference(invln_localauthority.EntityLogicalCollectionName, frontDoorProjectDto.LocalAuthority);
+                frontDoorProjectPOC.invln_LocalAuthorityId = new EntityReference(invln_localauthority.EntityLogicalName, frontDoorProjectDto.LocalAuthority);
             }
 
             return frontDoorProjectPOC;
