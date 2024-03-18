@@ -6,7 +6,7 @@
 @model HE.Investments.Loans.BusinessLogic.ViewModel.LoanApplicationViewModel;
 
 @{
-    var loanApllicationWorkflow = new LoanApplicationWorkflow(Model);
+    var loanApplicationWorkflow = new LoanApplicationWorkflow(Model);
 
     var submitAction = Model.WasSubmittedPreviously ? "Resubmit" : "Submit";
 }
@@ -39,7 +39,7 @@
         <gds-h2 size="ControlSize.M">Submit your application</gds-h2>
         <p>By submitting this application you are confirming that, to the best of your knowledge, the details you are providing are correct.</p>
 
-        @if (loanApllicationWorkflow.IsFilled())
+        @if (loanApplicationWorkflow.IsFilled())
         {
             <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="accept-and-submit">
                 Accept and submit

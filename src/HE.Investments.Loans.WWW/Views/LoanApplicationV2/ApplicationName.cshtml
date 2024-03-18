@@ -1,10 +1,13 @@
 @using HE.Investments.Common.Gds
 @using HE.Investments.Loans.BusinessLogic.LoanApplication
 @model HE.Investments.Loans.WWW.Models.ApplicationNameModel;
+@{
+    var fdProjectId = Context.Request.Query["fdProjectId"];
+}
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="LoanApplicationV2" asp-action="ApplicationNamePost" asp-method="post" asp-route-fdProjectId="@Context.Request.Query["fdProjectId"]" novalidate>
-        <gds-back-link href="@Url.Action("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.ApplicationName, fdProjectId = Context.Request.Query["fdProjectId"]})" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
+    <form asp-controller="LoanApplicationV2" asp-action="ApplicationNamePost" asp-method="post" asp-route-fdProjectId="@fdProjectId" novalidate>
+        <gds-back-link href="@Url.Action("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.ApplicationName, fdProjectId })" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
 
         <partial name="_ErrorSummaryPartial" model="null"/>
 

@@ -1,13 +1,11 @@
 using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
 using HE.Investments.Common.Messages;
-using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.Loans.Common.Tests.TestData;
 using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Extensions;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
-using HE.Investments.Loans.WWW;
 using HE.Investments.Loans.WWW.Views.LoanApplicationV2.Consts;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
@@ -19,7 +17,7 @@ namespace HE.Investments.Loans.IntegrationTests.Loans.Application.Order04Withdra
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
 public class WithdrawDraftApplicationIntegrationTests : IntegrationTest
 {
-    public WithdrawDraftApplicationIntegrationTests(IntegrationTestFixture<Program> fixture)
+    public WithdrawDraftApplicationIntegrationTests(LoansIntegrationTestFixture fixture)
         : base(fixture)
     {
     }
@@ -108,7 +106,7 @@ public class WithdrawDraftApplicationIntegrationTests : IntegrationTest
 
     private async Task<string> CreateNewApplicationDraft()
     {
-        var applicationNamePage = await TestClient.NavigateTo(ApplicationPagesUrls.ApplicationName);
+        var applicationNamePage = await TestClient.NavigateTo(ApplicationPagesUrls.ApplicationName());
 
         var continueButton = applicationNamePage.GetGdsSubmitButtonById("continue-button");
         var taskListPage = await TestClient.SubmitButton(

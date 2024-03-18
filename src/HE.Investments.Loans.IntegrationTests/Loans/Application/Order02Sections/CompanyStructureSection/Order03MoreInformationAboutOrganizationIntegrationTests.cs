@@ -18,7 +18,7 @@ public class Order03MoreInformationAboutOrganizationIntegrationTests : Integrati
 {
     private readonly string _applicationLoanId;
 
-    public Order03MoreInformationAboutOrganizationIntegrationTests(IntegrationTestFixture<Program> fixture)
+    public Order03MoreInformationAboutOrganizationIntegrationTests(LoansIntegrationTestFixture fixture)
         : base(fixture)
     {
         _applicationLoanId = UserData.LoanApplicationIdInDraftState;

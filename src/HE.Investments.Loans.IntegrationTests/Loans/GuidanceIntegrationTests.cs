@@ -18,7 +18,7 @@ public class GuidanceIntegrationTests : IntegrationTest
 {
     private const string CurrentPageKey = "CurrentPage";
 
-    public GuidanceIntegrationTests(IntegrationTestFixture<Program> fixture)
+    public GuidanceIntegrationTests(LoansIntegrationTestFixture fixture)
      : base(fixture)
     {
     }

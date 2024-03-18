@@ -98,7 +98,7 @@ public static class HtmlDocumentInputExtensions
         return htmlDocument;
     }
 
-    public static IHtmlDocument HasRadio(this IHtmlDocument htmlDocument, string fieldName, IList<string> options, string? value = null, bool exist = true)
+    public static IHtmlDocument HasRadio(this IHtmlDocument htmlDocument, string fieldName, IList<string>? options = null, string? value = null, bool exist = true)
     {
         var inputs = GetAndValidateInputs<IElement>(htmlDocument, fieldName, exist: exist);
 
@@ -107,14 +107,16 @@ public static class HtmlDocumentInputExtensions
             return htmlDocument;
         }
 
-        inputs.Count.Should().Be(options.Count, $"{options.Count} inputs with name {fieldName} should exist");
+        if (options != null)
+        {
+            inputs.Count.Should().Be(options.Count, $"{options.Count} inputs with name {fieldName} should exist");
+        }
 
         if (!string.IsNullOrWhiteSpace(value))
         {
-            var selected = inputs
-                .FirstOrDefault(i => i.Attributes.Any(a => a.Name == "checked" && a.Value.Contains("checked")));
+            var selected = inputs.FirstOrDefault(i => i.IsChecked());
 
-            selected.Should().NotBeNull($"Radio input with name {fieldName} should have selected value.");
+            selected.Should().NotBeNull($"Radio input with name {fieldName} should be checked.");
             selected!.Attributes.FirstOrDefault(a => a.Name == "value")!.Value.Should()
                 .Be(value, $"Radio input with name {fieldName} should have value {value}.");
         }

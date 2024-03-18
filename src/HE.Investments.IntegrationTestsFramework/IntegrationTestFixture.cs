@@ -54,6 +54,10 @@ public class IntegrationTestFixture<TProgram> : WebApplicationFactory<TProgram>
             (HttpMethod.Get, $"api/user/{LoginData.UserGlobalId}/profile", profileDetails));
     }
 
+    protected virtual void ConfigureTestServices(IServiceCollection services)
+    {
+    }
+
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         builder.ConfigureTestServices(x =>
@@ -68,6 +72,7 @@ public class IntegrationTestFixture<TProgram> : WebApplicationFactory<TProgram>
 
             x.AddSingleton<IDocumentServiceSettings, MockedDocumentServiceSettings>();
             x.Decorate<IHttpClientFactory, IntegrationTestsHttpClientFactory>();
+            ConfigureTestServices(x);
         });
 
         base.ConfigureWebHost(builder);

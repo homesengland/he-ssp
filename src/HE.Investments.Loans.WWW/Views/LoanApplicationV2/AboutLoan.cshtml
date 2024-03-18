@@ -1,13 +1,11 @@
-@using Microsoft.AspNetCore.Mvc.TagHelpers
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Lists
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Paragraphs
 @using HE.Investments.Loans.WWW.Views.LoanApplicationV2.Consts
 @model HE.Investments.Loans.WWW.Models.ApplicationInformationAgreementModel
+@{
+    var fdProjectId = Context.Request.Query["fdProjectId"];
+}
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="LoanApplicationV2" asp-action="AboutLoanPost" asp-method="post" novalidate>
+    <form asp-controller="LoanApplicationV2" asp-action="AboutLoanPost" asp-method="post" asp-route-fdProjectId="@fdProjectId" novalidate>
         <gds-back-link href="@Url.Action("Dashboard", "Home")" text="Back to account homepage" class="govuk-!-margin-bottom-8"></gds-back-link>
 
         <partial name="_ErrorSummaryPartial" model="null"/>

@@ -21,7 +21,7 @@ public class Order05CheckYourAnswersIntegrationTests : IntegrationTest
 {
     private readonly string _applicationId;
 
-    public Order05CheckYourAnswersIntegrationTests(IntegrationTestFixture<Program> fixture)
+    public Order05CheckYourAnswersIntegrationTests(LoansIntegrationTestFixture fixture)
         : base(fixture)
     {
         _applicationId = UserData.LoanApplicationIdInDraftState;

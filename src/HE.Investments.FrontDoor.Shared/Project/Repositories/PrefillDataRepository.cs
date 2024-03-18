@@ -34,6 +34,11 @@ internal class PrefillDataRepository : IPrefillDataRepository
         return Map(project);
     }
 
+    public async Task MarkProjectAsUsed(FrontDoorProjectId projectId, CancellationToken cancellationToken)
+    {
+        await _crmContext.DeactivateProject(projectId.Value, cancellationToken);
+    }
+
     private static ProjectPrefillData Map(FrontDoorProjectDto project)
     {
         var isSiteIdentified = project.IdentifiedSite ?? false;

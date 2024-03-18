@@ -23,7 +23,7 @@ public class Order11LocalAuthorityTests : IntegrationTest
 
     private readonly string _applicationLoanId;
 
-    public Order11LocalAuthorityTests(IntegrationTestFixture<Program> fixture)
+    public Order11LocalAuthorityTests(LoansIntegrationTestFixture fixture)
         : base(fixture)
     {
         _applicationLoanId = UserData.LoanApplicationIdInDraftState;

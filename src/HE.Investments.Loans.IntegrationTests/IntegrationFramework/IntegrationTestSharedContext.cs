@@ -5,6 +5,6 @@ using Xunit;
 namespace HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 
 [CollectionDefinition(nameof(IntegrationTestSharedContext))]
-public class IntegrationTestSharedContext : ICollectionFixture<IntegrationTestFixture<Program>>
+public class IntegrationTestSharedContext : ICollectionFixture<LoansIntegrationTestFixture>
 {
 }

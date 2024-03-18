@@ -9,4 +9,6 @@ public interface IPrefillDataRepository
         FrontDoorProjectId projectId,
         UserAccount userAccount,
         CancellationToken cancellationToken);
+
+    Task MarkProjectAsUsed(FrontDoorProjectId projectId, CancellationToken cancellationToken);
 }

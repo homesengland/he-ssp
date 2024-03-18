@@ -22,7 +22,7 @@ public class Order14GrantFundingExistsIntegrationTests : IntegrationTest
 
     private readonly string _applicationLoanId;
 
-    public Order14GrantFundingExistsIntegrationTests(IntegrationTestFixture<Program> fixture)
+    public Order14GrantFundingExistsIntegrationTests(LoansIntegrationTestFixture fixture)
         : base(fixture)
     {
         _applicationLoanId = UserData.LoanApplicationIdInDraftState;
