@@ -22,7 +22,7 @@ public class WithdrawSubmittedApplicationIntegrationTests : IntegrationTest
     private readonly string _applicationLoanId;
     private readonly string _withdrawnInsetText = "Your application has been withdrawn, contact your Transaction Manager if you need to discuss a change";
 
-    public WithdrawSubmittedApplicationIntegrationTests(IntegrationTestFixture<Program> fixture)
+    public WithdrawSubmittedApplicationIntegrationTests(LoansIntegrationTestFixture fixture)
         : base(fixture)
     {
         _applicationLoanId = UserData.SubmittedLoanApplicationId;

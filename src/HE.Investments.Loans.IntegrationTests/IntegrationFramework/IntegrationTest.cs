@@ -11,7 +11,7 @@ namespace HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 [Collection(nameof(IntegrationTestSharedContext))]
 public class IntegrationTest : IntegrationTestBase<Program>
 {
-    protected IntegrationTest(IntegrationTestFixture<Program> fixture)
+    protected IntegrationTest(LoansIntegrationTestFixture fixture)
         : base(fixture)
     {
         SetUserData();

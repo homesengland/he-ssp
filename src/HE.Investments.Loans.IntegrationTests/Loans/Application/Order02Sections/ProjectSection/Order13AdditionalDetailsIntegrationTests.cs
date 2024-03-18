@@ -22,7 +22,7 @@ public class Order13AdditionalDetailsIntegrationTests : IntegrationTest
 
     private readonly string _applicationLoanId;
 
-    public Order13AdditionalDetailsIntegrationTests(IntegrationTestFixture<Program> fixture)
+    public Order13AdditionalDetailsIntegrationTests(LoansIntegrationTestFixture fixture)
         : base(fixture)
     {
         _applicationLoanId = UserData.LoanApplicationIdInDraftState;

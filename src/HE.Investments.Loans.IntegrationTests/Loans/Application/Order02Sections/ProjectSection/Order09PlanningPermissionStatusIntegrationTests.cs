@@ -21,7 +21,7 @@ public class Order09PlanningPermissionStatusIntegrationTests : IntegrationTest
 
     private readonly string _applicationLoanId;
 
-    public Order09PlanningPermissionStatusIntegrationTests(IntegrationTestFixture<Program> fixture)
+    public Order09PlanningPermissionStatusIntegrationTests(LoansIntegrationTestFixture fixture)
         : base(fixture)
     {
         _applicationLoanId = UserData.LoanApplicationIdInDraftState;

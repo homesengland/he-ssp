@@ -21,7 +21,7 @@ public class Order07PlanningReferenceNumberExistsIntegrationTests : IntegrationT
 
     private readonly string _applicationLoanId;
 
-    public Order07PlanningReferenceNumberExistsIntegrationTests(IntegrationTestFixture<Program> fixture)
+    public Order07PlanningReferenceNumberExistsIntegrationTests(LoansIntegrationTestFixture fixture)
         : base(fixture)
     {
         _applicationLoanId = UserData.LoanApplicationIdInDraftState;

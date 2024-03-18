@@ -24,7 +24,7 @@ public class Order16ChargesDebtIntegrationTests : IntegrationTest
 
     private readonly string _applicationLoanId;
 
-    public Order16ChargesDebtIntegrationTests(IntegrationTestFixture<Program> fixture)
+    public Order16ChargesDebtIntegrationTests(LoansIntegrationTestFixture fixture)
         : base(fixture)
     {
         _applicationLoanId = UserData.LoanApplicationIdInDraftState;

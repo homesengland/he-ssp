@@ -47,7 +47,7 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
 
     [HttpPost("about-loan")]
     [WorkflowState(LoanApplicationWorkflow.State.AboutLoan)]
-    public async Task<IActionResult> AboutLoanPost(ApplicationInformationAgreementModel model, CancellationToken cancellationToken)
+    public async Task<IActionResult> AboutLoanPost([FromQuery] string fdProjectId, ApplicationInformationAgreementModel model, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new ConfirmInformationAgreementCommand(model.InformationAgreement), cancellationToken);
         if (result.HasValidationErrors)
@@ -56,7 +56,7 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
             return View("AboutLoan", model);
         }
 
-        return await Continue();
+        return await Continue(new { fdProjectId });
     }
 
     [HttpGet("loan-apply-information")]
@@ -68,9 +68,9 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
 
     [HttpPost("loan-apply-information")]
     [WorkflowState(LoanApplicationWorkflow.State.LoanApplyInformation)]
-    public async Task<IActionResult> LoanApplyInformationPost()
+    public async Task<IActionResult> LoanApplyInformationPost([FromQuery] string fdProjectId)
     {
-        return await Continue();
+        return await Continue(new { fdProjectId });
     }
 
     [HttpGet("check-your-details")]
@@ -94,9 +94,9 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
 
     [HttpPost("check-your-details")]
     [WorkflowState(LoanApplicationWorkflow.State.CheckYourDetails)]
-    public Task<IActionResult> CheckYourDetailsPost()
+    public Task<IActionResult> CheckYourDetailsPost([FromQuery] string fdProjectId)
     {
-        return Continue();
+        return Continue(new { fdProjectId });
     }
 
     [HttpGet("loan-purpose")]

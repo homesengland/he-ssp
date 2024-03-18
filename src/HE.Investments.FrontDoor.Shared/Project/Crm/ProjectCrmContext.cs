@@ -41,6 +41,16 @@ internal class ProjectCrmContext : IProjectCrmContext
         return await GetProject(request, cancellationToken);
     }
 
+    public async Task DeactivateProject(string projectId, CancellationToken cancellationToken)
+    {
+        var request = new invln_deactivatefrontdoorprojectRequest { invln_frontdoorprojectid = projectId };
+
+        await _service.ExecuteAsync<invln_deactivatefrontdoorprojectRequest, invln_deactivatefrontdoorprojectResponse>(
+            request,
+            r => r.invln_projectdeactivated,
+            cancellationToken);
+    }
+
     private async Task<FrontDoorProjectDto> GetProject(
         invln_getsinglefrontdoorprojectRequest request,
         CancellationToken cancellationToken)
