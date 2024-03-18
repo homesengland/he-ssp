@@ -3,7 +3,10 @@ using HE.Investments.Account.Contract.User.Queries;
 using HE.Investments.Account.Shared.Routing;
 using HE.Investments.Account.WWW.Models.User;
 using HE.Investments.Account.WWW.Routing;
+using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Common.Messages;
+using HE.Investments.Common.User;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Utils;
@@ -21,10 +24,40 @@ public class UserController : Controller
 
     private readonly ProgrammeUrlConfig _programmeUrlConfig;
 
-    public UserController(IMediator mediator, ProgrammeUrlConfig programmeUrlConfig)
+    private readonly IUserContext _userContext;
+
+    public UserController(IUserContext userContext, IMediator mediator, ProgrammeUrlConfig programmeUrlConfig)
     {
+        _userContext = userContext;
         _mediator = mediator;
         _programmeUrlConfig = programmeUrlConfig;
+    }
+
+    [AllowAnonymous]
+    [HttpGet(UserAccountEndpoints.InformationAboutYourAccount)]
+    public IActionResult InformationAboutYourAccount()
+    {
+        if (_userContext.IsAuthenticated)
+        {
+            return RedirectToAction("Index", "UserOrganisation");
+        }
+
+        return View("InformationAboutHomesEnglandAccount", new AcceptHeTermsAndConditionsModel());
+    }
+
+    [AllowAnonymous]
+    [HttpPost(UserAccountEndpoints.InformationAboutYourAccount)]
+    public IActionResult InformationAboutYourAccount(AcceptHeTermsAndConditionsModel model)
+    {
+        if (model.AcceptHeTermsAndConditions != "true")
+        {
+            ModelState.Clear();
+            ModelState.AddValidationErrors(OperationResult.New()
+                .AddValidationError(nameof(model.AcceptHeTermsAndConditions), ValidationErrorMessage.AcceptTermsAndConditionsAndContinue));
+            return View("InformationAboutHomesEnglandAccount", model);
+        }
+
+        return RedirectToAction("SignUp", "HeIdentity");
     }
 
     [HttpGet(UserAccountEndpoints.ProfileDetailsSuffix)]

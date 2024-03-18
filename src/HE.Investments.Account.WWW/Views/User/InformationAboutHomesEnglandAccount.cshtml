@@ -1,0 +1,47 @@
+@using HE.Investments.Account.WWW.Views.User
+@using HE.Investments.Account.WWW.Config
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Checkboxes
+@model HE.Investments.Account.WWW.Models.User.AcceptHeTermsAndConditionsModel
+@{
+    var title = UserPageTitles.InformationAboutYourAccount;
+    ViewData["Title"] = title;
+}
+
+<div class="govuk-!-margin-bottom-8">
+    <gds-div-grid-column-two-thirds>
+        <form asp-controller="User" asp-action="InformationAboutYourAccount" asp-method="post" novalidate>
+
+            @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+
+            <gds-field-set class="govuk-!-margin-bottom-6">
+                <he-error-form-group asp-for="@Model.AcceptHeTermsAndConditions">
+
+                    <vc:page-header title="@title"/>
+
+                    <gds-p>You use your Homes England account to apply for and manage grants and loans. This includes:</gds-p>
+
+                    <ul class="govuk-list govuk-list govuk-list--bullet">
+                        <li>Levelling Up Home Building Fund</li>
+                        <li>Affordable Homes Programme Continuous Market Engagement 2021 to 2026 (AHP CME 21-26)</li>
+                        <li>managing ongoing applications</li>
+                    </ul>
+
+                    <gds-p>If you have already created an account, <he-link href="@Url.Action("SignIn", "HeIdentity")" text="sign in"></he-link>.</gds-p>
+
+                    <gds-p>Before creating an account, you must read the <he-link href="@ExternalLinks.HePrivacyPolicy" target="_blank" text="Homes England privacy notice (opens in a new tab)"></he-link>.</gds-p>
+
+                    <gds-checkbox govuk-formgroup-asp-for="AcceptHeTermsAndConditions"
+                                  value="AcceptHeTermsAndConditions"
+                                  asp-selectlistitems='@(new List<SelectListItem> { new() { Text = "I have read and understood the privacy notice ", Value = "true", } })'
+                                  asp-ischeckboxgroup="true"
+                                  asp-isexcludeheader="true"
+                                  asp-excludelabel="true">
+                    </gds-checkbox>
+                </he-error-form-group>
+            </gds-field-set>
+
+            <vc:form-button text="Create an account"/>
+        </form>
+    </gds-div-grid-column-two-thirds>
+</div>
