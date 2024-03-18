@@ -19,6 +19,7 @@ namespace HE.Investments.Common.CRM.Model
 		
 		public static class Fields
 		{
+			public const string invln_includeinactive = "invln_includeinactive";
 			public const string invln_fieldstoretrieve = "invln_fieldstoretrieve";
 			public const string invln_frontdoorprojectid = "invln_frontdoorprojectid";
 			public const string invln_organisationid = "invln_organisationid";
@@ -26,6 +27,25 @@ namespace HE.Investments.Common.CRM.Model
 		}
 		
 		public const string ActionLogicalName = "invln_getsinglefrontdoorproject";
+		
+		public string invln_includeinactive
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_includeinactive"))
+				{
+					return ((string)(this.Parameters["invln_includeinactive"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_includeinactive"] = value;
+			}
+		}
 		
 		public string invln_fieldstoretrieve
 		{

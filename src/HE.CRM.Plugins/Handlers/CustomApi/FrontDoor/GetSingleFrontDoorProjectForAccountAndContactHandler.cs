@@ -13,6 +13,8 @@ namespace HE.CRM.Plugins.Handlers.CustomApi.FrontDoor
         private string externalContactId => ExecutionData.GetInputParameter<string>(invln_getsinglefrontdoorprojectRequest.Fields.invln_userid);
         private string frontDoorProjectId => ExecutionData.GetInputParameter<string>(invln_getsinglefrontdoorprojectRequest.Fields.invln_frontdoorprojectid);
         private string fieldsToRetrieve => ExecutionData.GetInputParameter<string>(invln_getsinglefrontdoorprojectRequest.Fields.invln_fieldstoretrieve);
+        private string includeInactive => ExecutionData.GetInputParameter<string>(invln_getsinglefrontdoorprojectRequest.Fields.invln_includeinactive);
+
         #endregion
 
         #region Base Methods Overrides
@@ -24,7 +26,7 @@ namespace HE.CRM.Plugins.Handlers.CustomApi.FrontDoor
         public override void DoWork()
         {
             this.TracingService.Trace("GetSingleFrontDoorProjectForAccountAndContact");
-            var frontDoorProjectsDtoList = CrmServicesFactory.Get<IFrontDoorProjectService>().GetFrontDoorProjects(organisationId, externalContactId, fieldsToRetrieve, frontDoorProjectId);
+            var frontDoorProjectsDtoList = CrmServicesFactory.Get<IFrontDoorProjectService>().GetFrontDoorProjects(organisationId, externalContactId, fieldsToRetrieve, frontDoorProjectId, includeInactive);
             this.TracingService.Trace("Send Response");
             if (frontDoorProjectsDtoList != null)
             {

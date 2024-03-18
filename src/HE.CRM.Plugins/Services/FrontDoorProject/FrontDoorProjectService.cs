@@ -66,7 +66,7 @@ namespace HE.CRM.Plugins.Services.FrontDoorProject
             return frontdoorprojectGUID.ToString();
         }
 
-        public List<FrontDoorProjectDto> GetFrontDoorProjects(string organisationId, string externalContactId = null, string fieldsToRetrieve = null, string frontDoorProjectId = null)
+        public List<FrontDoorProjectDto> GetFrontDoorProjects(string organisationId, string externalContactId = null, string fieldsToRetrieve = null, string frontDoorProjectId = null, string includeInactive = null)
         {
             this.TracingService.Trace("GetFrontDoorProjects");
             var listOfFrontDoorProjects = new List<FrontDoorProjectDto>();
@@ -80,7 +80,13 @@ namespace HE.CRM.Plugins.Services.FrontDoorProject
             }
             var frontDoorProjectCondition = GetFetchXmlConditionForGivenField(frontDoorProjectId, nameof(invln_FrontDoorProjectPOC.invln_FrontDoorProjectPOCId).ToLower());
 
-            var frontDoorProjects = _frontDoorProjectRepository.GetFrontDoorProjectForOrganisationAndContact(organisationCondition, contactExternalIdFilter, attributes, frontDoorProjectCondition);
+            string statecodeCondition = GetFetchXmlConditionForGivenField("0", nameof(invln_FrontDoorProjectPOC.StateCode).ToLower());
+            if (!string.IsNullOrEmpty(includeInactive) && includeInactive == "true")
+            {
+                statecodeCondition = null;
+            }
+
+            var frontDoorProjects = _frontDoorProjectRepository.GetFrontDoorProjectForOrganisationAndContact(organisationCondition, contactExternalIdFilter, attributes, frontDoorProjectCondition, statecodeCondition);
             if (frontDoorProjects.Any())
             {
                 foreach (var frontDoorProject in frontDoorProjects)

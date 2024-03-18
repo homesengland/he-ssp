@@ -26,7 +26,8 @@ namespace HE.CRM.Common.DtoMapping
                 IdentifiedSite = project.invln_IdentifiedSite,
                 GeographicFocus = project.invln_GeographicFocus?.Value,
                 Region = new List<int>(),
-                LocalAuthority = Guid.Empty,
+                LocalAuthority = project.invln_LocalAuthorityId != null ? project.invln_LocalAuthorityId.Id : Guid.Empty,
+                LocalAuthorityName = project.invln_LocalAuthorityId != null ? project.invln_LocalAuthorityId.Name : string.Empty,
                 NumberofHomesEnabledBuilt = project.invln_NumberofHomesEnabledBuilt,
                 WouldyourprojectfailwithoutHEsupport = project.invln_WouldyourprojectfailwithoutHEsupport,
                 FundingRequired = project.invln_FundingRequired,
@@ -88,7 +89,6 @@ namespace HE.CRM.Common.DtoMapping
                 invln_IdentifiedSite = frontDoorProjectDto.IdentifiedSite,
                 invln_GeographicFocus = MapNullableIntToOptionSetValue(frontDoorProjectDto.GeographicFocus),
                 invln_Region = MapNullableIntToOptionSetValueCollection(frontDoorProjectDto.Region),
-                //LocalAuthority = Guid.Empty,
                 invln_NumberofHomesEnabledBuilt = frontDoorProjectDto.NumberofHomesEnabledBuilt,
                 invln_WouldyourprojectfailwithoutHEsupport = frontDoorProjectDto.WouldyourprojectfailwithoutHEsupport,
                 invln_FundingRequired = frontDoorProjectDto.FundingRequired,
@@ -107,6 +107,12 @@ namespace HE.CRM.Common.DtoMapping
             {
                 frontDoorProjectPOC.invln_ContactId = contact.ToEntityReference();
             }
+
+            if (frontDoorProjectDto.LocalAuthority != null && frontDoorProjectDto.LocalAuthority != Guid.Empty)
+            {
+                frontDoorProjectPOC.invln_LocalAuthorityId = new EntityReference(invln_localauthority.EntityLogicalName, frontDoorProjectDto.LocalAuthority);
+            }
+
             return frontDoorProjectPOC;
         }
 

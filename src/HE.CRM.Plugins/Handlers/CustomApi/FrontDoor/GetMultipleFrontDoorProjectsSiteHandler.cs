@@ -6,7 +6,7 @@ using HE.Common.IntegrationModel.PortalIntegrationModel;
 
 namespace HE.CRM.Plugins.Handlers.CustomApi.FrontDoor
 {
-    internal class GetMultipleFrontDoorProjectsSiteHandler : CrmActionHandlerBase<invln_getmultiplefrontdoorprojectssiteRequest, DataverseContext>
+    public class GetMultipleFrontDoorProjectsSiteHandler : CrmActionHandlerBase<invln_getmultiplefrontdoorprojectssiteRequest, DataverseContext>
     {
         #region Fields
         private string frontDoorProjectId => ExecutionData.GetInputParameter<string>(invln_getmultiplefrontdoorprojectssiteRequest.Fields.invln_frontdoorprojectid);
