@@ -21,7 +21,7 @@
     <ProjectReference Include="..\HE.Investments.DocumentService\HE.Investments.DocumentService.csproj" />
     <ProjectReference Include="..\HE.Investments.Organisation\HE.Investments.Organisation.csproj">
       <Aliases>Org</Aliases>
-  </ProjectReference>
+    </ProjectReference>
   </ItemGroup>
 
   <ItemGroup>

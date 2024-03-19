@@ -33,7 +33,8 @@ public class LoanApplicationTestBuilder : TestEntityBuilderBase<LoanApplicationE
             LoanApplicationSection.New(),
             LoanApplicationSection.New(),
             ProjectsSection.Empty(),
-            ReferenceNumberTestData.One));
+            ReferenceNumberTestData.One,
+            null));
 
     public static LoanApplicationTestBuilder NewSubmitted(UserAccount? userAccount = null) => new(
         new LoanApplicationEntity(
@@ -50,7 +51,8 @@ public class LoanApplicationTestBuilder : TestEntityBuilderBase<LoanApplicationE
             LoanApplicationSectionTestData.CompletedSection,
             LoanApplicationSectionTestData.CompletedSection,
             LoanApplicationSectionTestData.CompletedProjectsSection,
-            ReferenceNumberTestData.One));
+            ReferenceNumberTestData.One,
+            null));
 
     public LoanApplicationTestBuilder WithCreatedOn(DateTime createdOn)
     {

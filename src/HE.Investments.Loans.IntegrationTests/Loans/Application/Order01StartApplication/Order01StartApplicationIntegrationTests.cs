@@ -7,7 +7,6 @@ using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Extensions;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
-using HE.Investments.Loans.IntegrationTests.MockedServices;
 using HE.Investments.Loans.WWW.Views.LoanApplicationV2.Consts;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
@@ -51,7 +50,7 @@ public class Order01StartApplicationIntegrationTests : IntegrationTest
     public async Task Order03_ShouldRedirectToLoanApplyInformation_WhenContinueButtonIsClicked()
     {
         // given
-        PrefillDataRepositoryMock.MockProjectData(UserData.GenerateProjectPrefillData());
+        await FrontDoorProjectCrmRepository.CreateProject(UserData.GenerateProjectPrefillData(), LoginData);
 
         var currentPage = await TestClient.NavigateTo(ApplicationPagesUrls.AboutLoanPage(UserData.ProjectPrefillData.Id));
         var continueButton = currentPage

@@ -9,6 +9,7 @@ using HE.Investments.Common.CRM.Serialization;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Infrastructure.Events;
+using HE.Investments.FrontDoor.Shared.Project;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Entities;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories.Mapper;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.ValueObjects;
@@ -105,7 +106,8 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
             new LoanApplicationSection(SectionStatusMapper.Map(loanApplicationDto.SecurityDetailsCompletionStatus)),
             new LoanApplicationSection(SectionStatusMapper.Map(loanApplicationDto.FundingDetailsCompletionStatus)),
             new ProjectsSection(projects),
-            loanApplicationDto.name);
+            loanApplicationDto.name,
+            string.IsNullOrWhiteSpace(loanApplicationDto.frontDoorProjectId) ? null : new FrontDoorProjectId(loanApplicationDto.frontDoorProjectId));
     }
 
     public async Task<IList<UserLoanApplication>> LoadAllLoanApplications(UserAccount userAccount, CancellationToken cancellationToken)
@@ -134,12 +136,12 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
 
     public async Task Save(LoanApplicationEntity loanApplication, UserProfileDetails userDetails, CancellationToken cancellationToken)
     {
-        var loanApplicationDto = new LoanApplicationDto()
+        var loanApplicationDto = new LoanApplicationDto
         {
-            // TODO AB#93237: save LoanApplicationDto.FrontDoorProjectId
             LoanApplicationContact = LoanApplicationMapper.MapToUserAccountDto(loanApplication.UserAccount, userDetails),
             fundingReason = FundingPurposeMapper.Map(loanApplication.FundingReason),
             ApplicationName = loanApplication.Name.Value,
+            frontDoorProjectId = loanApplication.FrontDoorProjectId?.Value,
         };
 
         var loanApplicationSerialized = CrmResponseSerializer.Serialize(loanApplicationDto);

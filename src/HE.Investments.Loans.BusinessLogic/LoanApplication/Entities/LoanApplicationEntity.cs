@@ -30,7 +30,7 @@ public class LoanApplicationEntity : DomainEntity
         LoanApplicationSection funding,
         ProjectsSection projectsSection,
         string referenceNumber,
-        FrontDoorProjectId? frontDoorProjectId = null)
+        FrontDoorProjectId? frontDoorProjectId)
     {
         Id = id;
         Name = name;
@@ -46,6 +46,7 @@ public class LoanApplicationEntity : DomainEntity
         Funding = funding;
         ProjectsSection = projectsSection;
         ReferenceNumber = referenceNumber;
+        FrontDoorProjectId = frontDoorProjectId;
     }
 
     public LoanApplicationId Id { get; private set; }
@@ -78,7 +79,7 @@ public class LoanApplicationEntity : DomainEntity
 
     public string ReferenceNumber { get; private set; }
 
-    public static LoanApplicationEntity New(UserAccount userAccount, LoanApplicationName name, FrontDoorProjectId? frontDoorProjectId = null) => new(LoanApplicationId.New(), name, userAccount, ApplicationStatus.Draft, FundingPurpose.BuildingNewHomes, null, null, null, string.Empty, LoanApplicationSection.New(), LoanApplicationSection.New(), LoanApplicationSection.New(), ProjectsSection.Empty(), string.Empty, frontDoorProjectId);
+    public static LoanApplicationEntity New(UserAccount userAccount, LoanApplicationName name, FrontDoorProjectId? frontDoorProjectId) => new(LoanApplicationId.New(), name, userAccount, ApplicationStatus.Draft, FundingPurpose.BuildingNewHomes, null, null, null, string.Empty, LoanApplicationSection.New(), LoanApplicationSection.New(), LoanApplicationSection.New(), ProjectsSection.Empty(), string.Empty, frontDoorProjectId);
 
     public void SetId(LoanApplicationId newId)
     {
