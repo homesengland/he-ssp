@@ -9,7 +9,7 @@ namespace HE.CRM.Common.Repositories.Interfaces
     {
         List<invln_FrontDoorProjectPOC> GetFrontDoorProjectForOrganisationAndContact(string organisationCondition, string contactExternalIdFilter, string attributes, string frontDoorProjectFilters, string statecodeCondition);
         List<invln_FrontDoorProjectPOC> GetAccountFrontDoorProjects(Guid accountId);
-        bool CheckIfFrontDoorProjectWithGivenNameExists(string frontDoorProjectName);
+        bool CheckIfFrontDoorProjectWithGivenNameExists(string frontDoorProjectName, Guid organisationId);
     }
 }
 

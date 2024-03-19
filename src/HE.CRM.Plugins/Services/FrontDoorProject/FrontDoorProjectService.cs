@@ -26,6 +26,7 @@ namespace HE.CRM.Plugins.Services.FrontDoorProject
         #region Fields
         private readonly IFrontDoorProjectRepository _frontDoorProjectRepository;
         private readonly IContactRepository _contactRepository;
+        private readonly ILocalAuthorityRepository _localAuthorityRepository;
         #endregion
 
         #region Constructors
@@ -33,6 +34,7 @@ namespace HE.CRM.Plugins.Services.FrontDoorProject
         {
             _frontDoorProjectRepository = CrmRepositoriesFactory.Get<IFrontDoorProjectRepository>();
             _contactRepository = CrmRepositoriesFactory.Get<IContactRepository>();
+            _localAuthorityRepository = CrmRepositoriesFactory.Get<ILocalAuthorityRepository>();
         }
         #endregion
 
@@ -43,6 +45,10 @@ namespace HE.CRM.Plugins.Services.FrontDoorProject
 
             this.TracingService.Trace("entityFieldsParameters:" + entityFieldsParameters);
             FrontDoorProjectDto frontDoorProjectFromPortal = JsonSerializer.Deserialize<FrontDoorProjectDto>(entityFieldsParameters);
+            if (frontDoorProjectFromPortal.LocalAuthorityCode != null)
+            {
+                frontDoorProjectFromPortal.LocalAuthority = _localAuthorityRepository.GetLocalAuthorityWithGivenOnsCode(frontDoorProjectFromPortal.LocalAuthorityCode).Id.ToString();
+            }
 
             //THIS IS CONTACT WHO IS SENDING MESSAGE 
             var requestContact = _contactRepository.GetContactViaExternalId(externalContactId);
@@ -99,9 +105,16 @@ namespace HE.CRM.Plugins.Services.FrontDoorProject
             return listOfFrontDoorProjects;
         }
 
-        public bool CheckIfFrontDoorProjectWithGivenNameExists(string frontDoorProjectName)
+        public bool CheckIfFrontDoorProjectWithGivenNameExists(string frontDoorProjectName, string organisationId)
         {
-            return _frontDoorProjectRepository.CheckIfFrontDoorProjectWithGivenNameExists(frontDoorProjectName);
+            if (!string.IsNullOrEmpty(organisationId) && Guid.TryParse(organisationId, out Guid orgId))
+            {
+                return _frontDoorProjectRepository.CheckIfFrontDoorProjectWithGivenNameExists(frontDoorProjectName, orgId);
+            }
+            else
+            {
+                return _frontDoorProjectRepository.CheckIfFrontDoorProjectWithGivenNameExists(frontDoorProjectName, Guid.Empty);
+            }
         }
 
         public bool DeactivateFrontDoorProject(string frontDoorProjectId)

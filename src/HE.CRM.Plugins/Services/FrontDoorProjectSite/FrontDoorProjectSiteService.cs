@@ -26,12 +26,14 @@ namespace HE.CRM.Plugins.Services.FrontDoorProjectSite
     {
         #region Fields
         private readonly IFrontDoorProjectSiteRepository _frontDoorProjectSiteRepository;
+        private readonly ILocalAuthorityRepository _localAuthorityRepository;
         #endregion
 
         #region Constructors
         public FrontDoorProjectSiteService(CrmServiceArgs args) : base(args)
         {
             _frontDoorProjectSiteRepository = CrmRepositoriesFactory.Get<IFrontDoorProjectSiteRepository>();
+            _localAuthorityRepository = CrmRepositoriesFactory.Get<ILocalAuthorityRepository>();
         }
         #endregion
 
@@ -78,6 +80,11 @@ namespace HE.CRM.Plugins.Services.FrontDoorProjectSite
             this.TracingService.Trace("entityFieldsParameters:" + entityFieldsParameters);
 
             FrontDoorProjectSiteDto frontDoorSiteFromPortal = JsonSerializer.Deserialize<FrontDoorProjectSiteDto>(entityFieldsParameters);
+            if (frontDoorSiteFromPortal.LocalAuthorityCode != null)
+            {
+                frontDoorSiteFromPortal.LocalAuthority = _localAuthorityRepository.GetLocalAuthorityWithGivenOnsCode(frontDoorSiteFromPortal.LocalAuthorityCode).Id.ToString();
+            }
+
             var frontDoorSiteToCreate = FrontDoorProjectSiteMapper.MapFrontDoorProjectSiteDtoToRegularEntity(frontDoorSiteFromPortal, frontDoorProjectId);
 
             if (!string.IsNullOrEmpty(frontDoorSiteId) && Guid.TryParse(frontDoorSiteId, out Guid siteId))

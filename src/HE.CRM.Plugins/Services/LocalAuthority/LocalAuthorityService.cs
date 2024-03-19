@@ -43,6 +43,7 @@ namespace HE.CRM.Plugins.Services.LocalAuthority
         {
             if (module == "loan" || module == "loanFD")
             {
+                this.TracingService.Trace("module loan or loanFD");
                 var result = _localAuthorityRepository.GetLocalAuthoritiesForLoan(pagingRequestDto, searchPhrase);
 
                 return new PagedResponseDto<LocalAuthorityDto>
@@ -55,6 +56,7 @@ namespace HE.CRM.Plugins.Services.LocalAuthority
 
             if (module == "ahp")
             {
+                this.TracingService.Trace("module ahp");
                 var result = _localAuthorityRepository.GetLocalAuthoritiesForAHP(pagingRequestDto, searchPhrase);
 
                 return new PagedResponseDto<LocalAuthorityDto>

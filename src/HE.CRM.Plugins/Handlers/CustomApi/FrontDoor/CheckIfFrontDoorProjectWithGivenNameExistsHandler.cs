@@ -8,6 +8,8 @@ namespace HE.CRM.Plugins.Handlers.CustomApi.FrontDoor
     {
         #region Fields
         private string frontDoorProjectName => ExecutionData.GetInputParameter<string>(invln_checkiffrontdoorprojectwithgivennameexistsRequest.Fields.invln_frontdoorprojectname);
+        private string organisationId => ExecutionData.GetInputParameter<string>(invln_checkiffrontdoorprojectwithgivennameexistsRequest.Fields.invln_organisationid);
+
         #endregion
 
         #region Base Methods Overrides
@@ -19,7 +21,7 @@ namespace HE.CRM.Plugins.Handlers.CustomApi.FrontDoor
         public override void DoWork()
         {
             this.TracingService.Trace("CheckIfFrontDoorProjectWithGivenNameExistsHandler");
-            var frontDoorProjectExists = CrmServicesFactory.Get<IFrontDoorProjectService>().CheckIfFrontDoorProjectWithGivenNameExists(frontDoorProjectName);
+            var frontDoorProjectExists = CrmServicesFactory.Get<IFrontDoorProjectService>().CheckIfFrontDoorProjectWithGivenNameExists(frontDoorProjectName, organisationId);
             this.TracingService.Trace("Send Response");
             if (frontDoorProjectExists != null)
             {

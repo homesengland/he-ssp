@@ -48,11 +48,18 @@ namespace HE.CRM.Common.Repositories.Implementations
             }
         }
 
-        public bool CheckIfFrontDoorProjectWithGivenNameExists(string frontDoorProjectName)
+        public bool CheckIfFrontDoorProjectWithGivenNameExists(string frontDoorProjectName, Guid organisationId)
         {
             using (var ctx = new OrganizationServiceContext(service))
             {
-                return ctx.CreateQuery<invln_FrontDoorProjectPOC>().Where(x => x.invln_Name == frontDoorProjectName && x.StateCode.Value == (int)invln_FrontDoorProjectPOCState.Active).AsEnumerable().Any();
+                if (organisationId != Guid.Empty)
+                {
+                    return ctx.CreateQuery<invln_FrontDoorProjectPOC>().Where(x => x.invln_Name == frontDoorProjectName && x.invln_AccountId.Id == organisationId && x.StateCode.Value == (int)invln_FrontDoorProjectPOCState.Active).AsEnumerable().Any();
+                }
+                else
+                {
+                    return ctx.CreateQuery<invln_FrontDoorProjectPOC>().Where(x => x.invln_Name == frontDoorProjectName && x.StateCode.Value == (int)invln_FrontDoorProjectPOCState.Active).AsEnumerable().Any();
+                }
             }
         }
     }
