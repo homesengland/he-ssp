@@ -58,7 +58,7 @@ public class LocalAuthorityRepository : ILocalAuthorityRepository
     private async Task<IList<LocalAuthority>> GetLocalAuthorities(LocalAuthoritiesSource source, CancellationToken cancellationToken)
     {
         return await _cacheService.GetValueAsync(
-                   $"local-authorities-{source}",
+                   $"local-authorities-{source.ToString().ToLowerInvariant()}",
                    async () => await GetLocalAuthoritiesFromCrm(string.Empty, source, cancellationToken))
                ?? throw new NotFoundException(nameof(LocalAuthority));
     }
