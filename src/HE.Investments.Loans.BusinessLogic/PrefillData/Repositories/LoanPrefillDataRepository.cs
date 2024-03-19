@@ -36,6 +36,11 @@ public class LoanPrefillDataRepository : ILoanPrefillDataRepository
         return new LoanPrefillData(prefillData.Name);
     }
 
+    private static string FormatFields(params string[] fieldsToRetrieve)
+    {
+        return string.Join(",", fieldsToRetrieve.Select(f => f.ToLowerInvariant()));
+    }
+
     private async Task<FrontDoorProjectId?> GetFrontDoorProjectId(
         LoanApplicationId loanApplicationId,
         UserAccount userAccount,
@@ -46,7 +51,9 @@ public class LoanPrefillDataRepository : ILoanPrefillDataRepository
             invln_accountid = userAccount.SelectedOrganisationId().ToString(),
             invln_externalcontactid = userAccount.UserGlobalId.ToString(),
             invln_loanapplicationid = loanApplicationId.ToString(),
-            invln_fieldstoretrieve = nameof(invln_Loanapplication.invln_LoanapplicationId).ToLowerInvariant(), // TODO AB#93237: frontDoorProjectId
+            invln_fieldstoretrieve = FormatFields(
+                nameof(invln_Loanapplication.invln_LoanapplicationId),
+                nameof(invln_Loanapplication.invln_loanapplication_FDProjectId_invln_frontdo)),
         };
 
         var response = await _serviceClient.ExecuteAsync(req, cancellationToken) as invln_getsingleloanapplicationforaccountandcontactResponse;
@@ -56,12 +63,11 @@ public class LoanPrefillDataRepository : ILoanPrefillDataRepository
         }
 
         var dto = CrmResponseSerializer.Deserialize<IList<LoanApplicationDto>>(response!.invln_loanapplication)?.FirstOrDefault();
-        if (dto.IsNotProvided())
+        if (dto.IsNotProvided() || string.IsNullOrWhiteSpace(dto?.frontDoorProjectId))
         {
             return null;
         }
 
-        // TODO AB#93237: return dto.frontDoorProjectId
-        return new FrontDoorProjectId("5c98ba51-25e1-ee11-904c-0022481b49d4");
+        return new FrontDoorProjectId(dto.frontDoorProjectId);
     }
 }
