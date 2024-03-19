@@ -13,17 +13,26 @@ namespace DataverseModel
 	
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum invln_Messagetype
+	public enum he_InterventionTypes
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		ConditionsManagement = 858110001,
+		AHPGrant = 134370005,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		HoTFeeIndemnity = 858110002,
+		Brokering = 134370000,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		SupportingDocuments = 858110000,
+		Equity = 134370003,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Grant = 134370002,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		HEAcquisition = 134370004,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Loan = 134370001,
 	}
 }
 #pragma warning restore CS1591

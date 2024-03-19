@@ -303,6 +303,8 @@ namespace DataverseModel
 			public const string invln_staticstrategic = "invln_staticstrategic";
 			public const string invln_staticstrategicrationale = "invln_staticstrategicrationale";
 			public const string invln_staticsummary = "invln_staticsummary";
+			public const string invln_statictextaboveplotgrid = "invln_statictextaboveplotgrid";
+			public const string invln_statictextaboveplots = "invln_statictextaboveplots";
 			public const string invln_StrategicAssessmentBanding = "invln_strategicassessmentbanding";
 			public const string invln_strategicassessmentbandingName = "invln_strategicassessmentbandingname";
 			public const string invln_StrategicRationale = "invln_strategicrationale";
@@ -4356,6 +4358,40 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_staticsummary");
 				this.SetAttributeValue("invln_staticsummary", value);
 				this.OnPropertyChanged("invln_staticsummary");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_statictextaboveplotgrid")]
+		public string invln_statictextaboveplotgrid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("invln_statictextaboveplotgrid");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_statictextaboveplotgrid");
+				this.SetAttributeValue("invln_statictextaboveplotgrid", value);
+				this.OnPropertyChanged("invln_statictextaboveplotgrid");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_statictextaboveplots")]
+		public string invln_statictextaboveplots
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("invln_statictextaboveplots");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_statictextaboveplots");
+				this.SetAttributeValue("invln_statictextaboveplots", value);
+				this.OnPropertyChanged("invln_statictextaboveplots");
 			}
 		}
 		

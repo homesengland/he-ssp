@@ -13,17 +13,20 @@ namespace DataverseModel
 	
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum invln_Messagetype
+	public enum he_ProjectStages
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		ConditionsManagement = 858110001,
+		Draft = 134370000,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		HoTFeeIndemnity = 858110002,
+		Lead = 134370002,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		SupportingDocuments = 858110000,
+		Opportunity = 134370003,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Prospect = 134370001,
 	}
 }
 #pragma warning restore CS1591
