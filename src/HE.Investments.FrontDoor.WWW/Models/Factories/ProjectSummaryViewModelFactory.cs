@@ -134,7 +134,8 @@ public class ProjectSummaryViewModelFactory : IProjectSummaryViewModelFactory
                 new(
                     "Identified site",
                     SummaryAnswerHelper.ToYesNo(projectDetails.IsSiteIdentified),
-                    createAction(nameof(ProjectController.IdentifiedSite))),
+                    createAction(nameof(ProjectController.IdentifiedSite)),
+                    IsEditable: isEditable),
             };
 
             var siteSummary = new SectionSummaryViewModel(
