@@ -12,14 +12,14 @@ public class ProjectInfrastructure : ValueObject, IQuestion
         if (!infrastructureTypes.Any())
         {
             OperationResult.New()
-                .AddValidationError("Infrastructure", "Select the infrastructure your project delivers, or select 'I do not know'")
+                .AddValidationError("InfrastructureTypes", "Select the infrastructure your project delivers, or select 'I do not know'")
                 .CheckErrors();
         }
 
         if (infrastructureTypes.Any(x => x == InfrastructureType.IDoNotKnow) && infrastructureTypes.Count > 1)
         {
             OperationResult.New()
-                .AddValidationError("Infrastructure", ValidationErrorMessage.ExclusiveOptionSelected("infrastructure type", "I do not know"))
+                .AddValidationError("InfrastructureTypes", ValidationErrorMessage.ExclusiveOptionSelected("infrastructure type", "I do not know"))
                 .CheckErrors();
         }
 
