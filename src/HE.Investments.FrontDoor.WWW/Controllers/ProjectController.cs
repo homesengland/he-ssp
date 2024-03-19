@@ -322,7 +322,7 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
         await GetProjectDetails(projectId, cancellationToken);
         var localAuthority = await _mediator.Send(new GetLocalAuthorityQuery(new LocalAuthorityId(localAuthorityId)), cancellationToken);
 
-        return View(nameof(LocalAuthorityConfirm), new LocalAuthorityVewModel(localAuthority.Id, localAuthority.Name, projectId));
+        return View(nameof(LocalAuthorityConfirm), new LocalAuthorityViewModel(localAuthority.Id, localAuthority.Name, projectId));
     }
 
     [HttpPost("{projectId}/local-authority-confirm")]
@@ -337,7 +337,7 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
             await GetProjectDetails(projectId, cancellationToken);
             var localAuthority = await _mediator.Send(new GetLocalAuthorityQuery(new LocalAuthorityId(localAuthorityId)), cancellationToken);
 
-            return View("LocalAuthorityConfirm", new LocalAuthorityVewModel(localAuthority.Id, localAuthority.Name, projectId));
+            return View("LocalAuthorityConfirm", new LocalAuthorityViewModel(localAuthority.Id, localAuthority.Name, projectId));
         }
 
         if (isConfirmed.Value)

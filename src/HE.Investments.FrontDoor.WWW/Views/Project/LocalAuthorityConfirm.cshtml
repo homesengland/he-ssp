@@ -7,7 +7,7 @@
 @using HE.Investments.FrontDoor.WWW.Views.Project.Const
 @using HE.Investments.FrontDoor.WWW.Views.Shared.Components.ReturnToAccountLink
 
-@model HE.Investments.FrontDoor.WWW.Models.LocalAuthorityVewModel
+@model HE.Investments.FrontDoor.WWW.Models.LocalAuthorityViewModel
 @{
     ViewData["Title"] = ProjectPageTitles.LocalAuthorityConfirm;
     var header = new DynamicComponentViewModel(nameof(SelectListConfirmationHeader), new { header = ProjectPageTitles.LocalAuthorityConfirm, name = Model.LocalAuthorityName, description = "Is this a correct local authority?" });

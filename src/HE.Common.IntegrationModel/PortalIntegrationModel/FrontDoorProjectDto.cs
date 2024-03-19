@@ -20,8 +20,9 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public bool? IdentifiedSite { get; set; }
         public int? GeographicFocus { get; set; }
         public List<int> Region { get; set; }
-        public Guid LocalAuthority { get; set; }
+        public string LocalAuthority { get; set; }
         public string LocalAuthorityName { get; set; }
+        public string LocalAuthorityCode { get; set; }
         public int? NumberofHomesEnabledBuilt { get; set; }
         public bool? WouldyourprojectfailwithoutHEsupport { get; set; }
         public bool? FundingRequired { get; set; }

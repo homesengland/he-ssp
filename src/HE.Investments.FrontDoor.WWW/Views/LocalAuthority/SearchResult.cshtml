@@ -25,15 +25,29 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <vc:local-authority-workflow-back-button current-page="@LocalAuthorityWorkflowState.SearchResult" project-id="@Model.ProjectId" site-id="@Model.SiteId" />
+    <vc:local-authority-workflow-back-button current-page="@LocalAuthorityWorkflowState.SearchResult" project-id="@Model.ProjectId" site-id="@Model.SiteId"/>
 
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
     <vc:page-header title="@LocalAuthorityPageTitles.SearchResult" caption="@ViewBag.ProjectName"/>
 
-    <vc:select-list
-        items="@items"
-        paragraph-with-link="@(new ParagraphWithLinkModel("If you are not sure which local authority to choose, you can", new LinkModel("Search", "LocalAuthority", new { siteId = Model.SiteId, projectId = Model.ProjectId }), "search for the name of the local authority using a postcode."))"
-        paging-navigation-url="@Url.Action("SearchResult", "LocalAuthority", new { siteId = Model.SiteId, projectId = Model.ProjectId, phrase = Model.Phrase })"/>
+    @if (Model.Items.TotalItems == 0)
+    {
+        <gds-p>We could not find the details you entered in our records.</gds-p>
+        <gds-p>
+            If you think you have entered the wrong details, you can
+            <gds-link href="@Url.Action("LocalAuthoritySearch", controller, new { projectId = Model.ProjectId, siteId = Model.SiteId })">
+                try again using a different name.
+            </gds-link>.
+        </gds-p>
+    }
+    else
+    {
+        <vc:select-list
+            items="@items"
+            paragraph-with-link="@(new ParagraphWithLinkModel("If you are not sure which local authority to choose, you can", new LinkModel("Search", "LocalAuthority", new { siteId = Model.SiteId, projectId = Model.ProjectId }), "search for the name of the local authority using a postcode."))"
+            paging-navigation-url="@Url.Action("SearchResult", "LocalAuthority", new { siteId = Model.SiteId, projectId = Model.ProjectId, phrase = Model.Phrase })"/>
+    }
+
 
 </gds-div-grid-column-two-thirds>

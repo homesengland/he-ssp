@@ -33,7 +33,8 @@ public class ProjectEntity : DomainEntity
         IsFundingRequired? isFundingRequired = null,
         RequiredFunding? requiredFunding = null,
         IsProfit? isProfit = null,
-        ExpectedStartDate? expectedStartDate = null)
+        ExpectedStartDate? expectedStartDate = null,
+        LocalAuthorityId? localAuthorityId = null)
     {
         Id = id;
         Name = name;
@@ -51,6 +52,7 @@ public class ProjectEntity : DomainEntity
         RequiredFunding = requiredFunding ?? RequiredFunding.Empty;
         IsProfit = isProfit ?? IsProfit.Empty;
         ExpectedStartDate = expectedStartDate ?? ExpectedStartDate.Empty;
+        LocalAuthorityId = localAuthorityId;
     }
 
     public FrontDoorProjectId Id { get; private set; }

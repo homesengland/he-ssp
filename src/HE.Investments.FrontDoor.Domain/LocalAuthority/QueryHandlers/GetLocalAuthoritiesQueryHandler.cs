@@ -19,7 +19,6 @@ public class GetLocalAuthoritiesQueryHandler : IRequestHandler<GetLocalAuthoriti
 
     public async Task<PaginationResult<Common.Contract.LocalAuthority>> Handle(GetLocalAuthoritiesQuery request, CancellationToken cancellationToken)
     {
-        // TODO: #92119 pages should be indexed form 1, there is no 0 page
         var (items, totalItems) = await _repository.Search(request.Phrase, request.PaginationRequest.Page - 1, request.PaginationRequest.ItemsPerPage, cancellationToken);
 
         return new PaginationResult<Common.Contract.LocalAuthority>(
