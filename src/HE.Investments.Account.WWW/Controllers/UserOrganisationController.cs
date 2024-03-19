@@ -70,7 +70,6 @@ public class UserOrganisationController : Controller
                     .ToList(),
                 new List<Common.WWW.Models.ActionModel>
                 {
-                    new("Add another organisation", "SearchOrganisation", "Organisation", HasAccess: true),
                     new("Add or manage users at this Organisation", "Index", "Users", HasAccess: canViewOrganisationDetails),
                     new($"Manage {userOrganisationResult.OrganisationBasicInformation.RegisteredCompanyName} details", "Details", "UserOrganisation", HasAccess: canViewOrganisationDetails),
                     new("Manage your account", "GetProfileDetails", "User", new { callback = Url.Action("Index") }, true),
