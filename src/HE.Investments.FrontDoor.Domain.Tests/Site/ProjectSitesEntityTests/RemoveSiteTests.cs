@@ -31,15 +31,13 @@ public class RemoveSiteTests : TestBase<ProjectSiteEntity>
             .ReturnProjectSites(projectId, userAccount, projectSites)
             .BuildIRemoveSiteRepositoryMockAndRegister(this);
 
-        var site = projectSites.Sites.FirstOrDefault();
-
         // when
-        await site!.Remove(removeSiteRepository.Object, userAccount, RemoveSiteAnswer.Yes, CancellationToken.None);
+        await projectSites.Remove(removeSiteRepository.Object, siteId, userAccount, RemoveSiteAnswer.Yes, CancellationToken.None);
 
         // then
         removeSiteRepository.Verify(
             repo => repo.Remove(
-                site,
+                siteId,
                 userAccount,
                 CancellationToken.None),
             Times.Once);
@@ -62,15 +60,13 @@ public class RemoveSiteTests : TestBase<ProjectSiteEntity>
             .ReturnProjectSites(projectId, userAccount, projectSites)
             .BuildIRemoveSiteRepositoryMockAndRegister(this);
 
-        var site = projectSites.Sites.FirstOrDefault();
-
         // when
-        await site!.Remove(removeSiteRepository.Object, userAccount, RemoveSiteAnswer.No, CancellationToken.None);
+        await projectSites.Remove(removeSiteRepository.Object, siteId, userAccount, RemoveSiteAnswer.No, CancellationToken.None);
 
         // then
         removeSiteRepository.Verify(
             repo => repo.Remove(
-                site,
+                siteId,
                 userAccount,
                 CancellationToken.None),
             Times.Never);
@@ -93,10 +89,8 @@ public class RemoveSiteTests : TestBase<ProjectSiteEntity>
             .ReturnProjectSites(projectId, userAccount, projectSites)
             .BuildIRemoveSiteRepositoryMockAndRegister(this);
 
-        var site = projectSites.Sites.FirstOrDefault();
-
         // when
-        var action = async () => await site!.Remove(removeSiteRepository.Object, userAccount, RemoveSiteAnswer.Undefined, CancellationToken.None);
+        var action = async () => await projectSites.Remove(removeSiteRepository.Object, siteId, userAccount, RemoveSiteAnswer.Undefined, CancellationToken.None);
 
         // then
         await action.Should().ThrowAsync<DomainValidationException>().WithMessage("Select yes if you want to remove this site");

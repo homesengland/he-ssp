@@ -6,8 +6,8 @@ namespace HE.Investments.FrontDoor.WWW.Views.Shared.Components.ProjectSummary;
 
 public class ProjectSummary : ViewComponent
 {
-    public IViewComponentResult Invoke(IList<SectionSummaryViewModel> sections, bool isSiteIdentified)
+    public IViewComponentResult Invoke(IList<SectionSummaryViewModel> sections, bool isSiteIdentified, bool isReadOnly = false)
     {
-        return View("ProjectSummary", (sections, isSiteIdentified));
+        return View("ProjectSummary", (sections, isSiteIdentified, isReadOnly));
     }
 }

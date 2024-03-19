@@ -14,14 +14,18 @@
 
     <vc:page-header caption="@ViewBag.SiteName" title="@ProjectPageTitles.CheckAnswers"/>
 
-    <vc:project-summary sections="@Model.Sections" is-site-identified="@(Model.IsSiteIdentified ?? false)"/>
+    <vc:project-summary sections="@Model.Sections" is-site-identified="@(Model.IsSiteIdentified ?? false)" is-read-only="@Model.IsReadOnly"/>
 
     <form asp-controller="Project" asp-action="Complete" asp-route-projectId="@projectId" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
 
-        <gds-h2>Submit your project</gds-h2>
-        <gds-p>By submitting this project you are confirming that, to the best of your knowledge, the details you are providing are correct.</gds-p>
+        @if (!Model.IsReadOnly)
+        {
+            <gds-h2>Submit your project</gds-h2>
+            <gds-p>By submitting this project you are confirming that, to the best of your knowledge, the details you are providing are correct.</gds-p>
 
-        <vc:form-button text="Accept and submit"/>
+            <vc:form-button text="Accept and submit"/>
+        }
+
         <vc:return-to-account-link is-editable="false"/>
     </form>
 </div>

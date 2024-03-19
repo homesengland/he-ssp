@@ -5,8 +5,8 @@ namespace HE.Investments.FrontDoor.WWW.Views.Shared.Components.ProjectSitesSecti
 
 public class ProjectSitesSectionSummary : ViewComponent
 {
-    public IViewComponentResult Invoke(IList<SectionSummaryViewModel> sites)
+    public IViewComponentResult Invoke(IList<SectionSummaryViewModel> sites, bool isReadOnly)
     {
-        return View("ProjectSitesSectionSummary", sites);
+        return View("ProjectSitesSectionSummary", (sites, isReadOnly));
     }
 }

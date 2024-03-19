@@ -2,23 +2,26 @@
 @using HE.Investments.FrontDoor.WWW.Extensions
 @using HE.Investments.FrontDoor.WWW.Helpers
 
-@model IList<SectionSummaryViewModel>
+@model (IList<SectionSummaryViewModel> sites, bool isReadOnly)
 @{
     var projectId = this.GetProjectIdFromRoute();
 }
 
-@foreach (var site in Model)
+@foreach (var site in Model.sites)
 {
     var siteId = SiteIdFromActionUrlHelper.Get(site.Items?.Last().ActionUrl);
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <gds-h2>@site.Title details</gds-h2>
         </div>
-        <div class="remove-site-link">
-            <gds-link href="@Url.Action("Remove", "Site", new { projectId, siteId })">
-                Remove site
-            </gds-link>
-        </div>
+        @if (!Model.isReadOnly)
+        {
+            <div class="remove-site-link">
+                <gds-link href="@Url.Action("Remove", "Site", new { projectId, siteId })">
+                    Remove site
+                </gds-link>
+            </div>
+        }
     </div>
 
     <gds-summary-list>

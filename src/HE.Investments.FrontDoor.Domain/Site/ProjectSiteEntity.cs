@@ -1,15 +1,10 @@
 extern alias Org;
 
-using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Contract.Exceptions;
-using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Errors;
-using HE.Investments.Common.Extensions;
 using HE.Investments.FrontDoor.Contract.Site;
-using HE.Investments.FrontDoor.Contract.Site.Enums;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
-using HE.Investments.FrontDoor.Domain.Site.Repository;
 using HE.Investments.FrontDoor.Domain.Site.ValueObjects;
 using HE.Investments.FrontDoor.Shared.Project;
 using Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects;
@@ -80,17 +75,5 @@ public class ProjectSiteEntity
     public void ProvideLocalAuthority(LocalAuthorityId localAuthorityId)
     {
         LocalAuthorityId = _modificationTracker.Change(LocalAuthorityId, localAuthorityId);
-    }
-
-    public async Task Remove(IRemoveSiteRepository removeSiteRepository, UserAccount userAccount, RemoveSiteAnswer? removeAnswer, CancellationToken cancellationToken)
-    {
-        if (removeAnswer.IsNotProvided() || removeAnswer == RemoveSiteAnswer.Undefined)
-        {
-            OperationResult.ThrowValidationError(nameof(RemoveSiteAnswer), "Select yes if you want to remove this site");
-        }
-        else if (removeAnswer == RemoveSiteAnswer.Yes)
-        {
-            await removeSiteRepository.Remove(this, userAccount, cancellationToken);
-        }
     }
 }

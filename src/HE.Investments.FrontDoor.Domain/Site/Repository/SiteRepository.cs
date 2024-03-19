@@ -45,9 +45,9 @@ public class SiteRepository : ISiteRepository, IRemoveSiteRepository
         return site;
     }
 
-    public async Task<string> Remove(ProjectSiteEntity site, UserAccount userAccount, CancellationToken cancellationToken)
+    public async Task<string> Remove(FrontDoorSiteId siteId, UserAccount userAccount, CancellationToken cancellationToken)
     {
-        return await _siteCrmContext.Remove(site.Id.Value, userAccount, cancellationToken);
+        return await _siteCrmContext.Remove(siteId.Value, userAccount, cancellationToken);
     }
 
     private FrontDoorProjectSiteDto ToDto(ProjectSiteEntity entity)
