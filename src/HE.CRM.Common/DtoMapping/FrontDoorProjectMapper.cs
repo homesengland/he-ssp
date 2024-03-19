@@ -11,7 +11,7 @@ namespace HE.CRM.Common.DtoMapping
     public class FrontDoorProjectMapper
     {
 
-        public static FrontDoorProjectDto MapRegularEntityToDto(invln_FrontDoorProjectPOC project, Contact contact = null)
+        public static FrontDoorProjectDto MapRegularEntityToDto(invln_FrontDoorProjectPOC project, Contact contact = null, invln_localauthority localauthority = null)
         {
             var frontDoorProjectDto = new FrontDoorProjectDto()
             {
@@ -28,6 +28,7 @@ namespace HE.CRM.Common.DtoMapping
                 Region = new List<int>(),
                 LocalAuthority = project.invln_LocalAuthorityId != null ? project.invln_LocalAuthorityId.Id.ToString() : string.Empty,
                 LocalAuthorityName = project.invln_LocalAuthorityId != null ? project.invln_LocalAuthorityId.Name : string.Empty,
+                LocalAuthorityCode = localauthority.invln_onscode != null ? localauthority.invln_onscode : string.Empty,
                 NumberofHomesEnabledBuilt = project.invln_NumberofHomesEnabledBuilt,
                 WouldyourprojectfailwithoutHEsupport = project.invln_WouldyourprojectfailwithoutHEsupport,
                 FundingRequired = project.invln_FundingRequired,
