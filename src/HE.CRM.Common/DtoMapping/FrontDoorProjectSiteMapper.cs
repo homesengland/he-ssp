@@ -19,7 +19,7 @@ namespace HE.CRM.Common.DtoMapping
                 NumberofHomesEnabledBuilt = frontDoorProjectSite.invln_NumberofHomesEnabledBuilt,
                 PlanningStatus = frontDoorProjectSite.invln_PlanningStatus?.Value,
                 CreatedOn = frontDoorProjectSite.CreatedOn,
-                LocalAuthority = frontDoorProjectSite.invln_LocalAuthorityId != null ? frontDoorProjectSite.invln_LocalAuthorityId.Id : Guid.Empty,
+                LocalAuthority = frontDoorProjectSite.invln_LocalAuthorityId != null ? frontDoorProjectSite.invln_LocalAuthorityId.Id.ToString() : string.Empty,
                 LocalAuthorityName = frontDoorProjectSite.invln_LocalAuthorityId != null ? frontDoorProjectSite.invln_LocalAuthorityId.Name : string.Empty,
             };
 
@@ -40,9 +40,9 @@ namespace HE.CRM.Common.DtoMapping
                 frontDoorProjectSiteDtoToReturn.invln_FrontDoorProjectId = new EntityReference(invln_FrontDoorProjectPOC.EntityLogicalName, projectId);
             }
 
-            if (frontDoorProjectSiteDto.LocalAuthority != null && frontDoorProjectSiteDto.LocalAuthority != Guid.Empty)
+            if (!string.IsNullOrEmpty(frontDoorProjectSiteDto.LocalAuthority) && Guid.TryParse(frontDoorProjectSiteDto.LocalAuthority, out Guid localAuthorityGUID) && localAuthorityGUID != Guid.Empty)
             {
-                frontDoorProjectSiteDtoToReturn.invln_LocalAuthorityId = new EntityReference(invln_localauthority.EntityLogicalName, frontDoorProjectSiteDto.LocalAuthority);
+                frontDoorProjectSiteDtoToReturn.invln_LocalAuthorityId = new EntityReference(invln_localauthority.EntityLogicalName, localAuthorityGUID);
             }
 
             return frontDoorProjectSiteDtoToReturn;

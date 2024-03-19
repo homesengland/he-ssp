@@ -20,6 +20,7 @@ namespace HE.Investments.Common.CRM.Model
 		public static class Fields
 		{
 			public const string invln_frontdoorprojectname = "invln_frontdoorprojectname";
+			public const string invln_organisationid = "invln_organisationid";
 		}
 		
 		public const string ActionLogicalName = "invln_checkiffrontdoorprojectwithgivennameexists";
@@ -40,6 +41,25 @@ namespace HE.Investments.Common.CRM.Model
 			set
 			{
 				this.Parameters["invln_frontdoorprojectname"] = value;
+			}
+		}
+		
+		public string invln_organisationid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_organisationid"))
+				{
+					return ((string)(this.Parameters["invln_organisationid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_organisationid"] = value;
 			}
 		}
 		
