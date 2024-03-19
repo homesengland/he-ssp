@@ -2,7 +2,6 @@ using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.CRM.Mappers;
-using HE.Investments.FrontDoor.Contract.Project;
 using HE.Investments.FrontDoor.Contract.Site;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
 using HE.Investments.FrontDoor.Domain.Site.Crm;
@@ -11,7 +10,7 @@ using HE.Investments.FrontDoor.Shared.Project;
 
 namespace HE.Investments.FrontDoor.Domain.Site.Repository;
 
-public class SiteRepository : ISiteRepository
+public class SiteRepository : ISiteRepository, IRemoveSiteRepository
 {
     private readonly ISiteCrmContext _siteCrmContext;
     private readonly PlanningStatusMapper _planningStatusMapper = new();
@@ -21,7 +20,7 @@ public class SiteRepository : ISiteRepository
         _siteCrmContext = siteCrmContext;
     }
 
-    public async Task<ProjectSitesEntity> GetSites(FrontDoorProjectId projectId, UserAccount userAccount, CancellationToken cancellationToken)
+    public async Task<ProjectSitesEntity> GetProjectSites(FrontDoorProjectId projectId, UserAccount userAccount, CancellationToken cancellationToken)
     {
         var sites = await _siteCrmContext.GetSites(projectId.Value, userAccount, new PagingRequestDto { pageNumber = 1, pageSize = 100 }, cancellationToken);
 
@@ -44,6 +43,11 @@ public class SiteRepository : ISiteRepository
         }
 
         return site;
+    }
+
+    public async Task<string> Remove(ProjectSiteEntity site, UserAccount userAccount, CancellationToken cancellationToken)
+    {
+        return await _siteCrmContext.Remove(site.Id.Value, userAccount, cancellationToken);
     }
 
     private FrontDoorProjectSiteDto ToDto(ProjectSiteEntity entity)

@@ -1,0 +1,31 @@
+@using HE.Investments.Common.WWW.Components.FormButton
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using HE.Investments.Common.WWW.Helpers
+@using HE.Investments.FrontDoor.Contract.Site
+@using HE.Investments.FrontDoor.Contract.Site.Enums
+@using HE.Investments.FrontDoor.WWW.Views.Site.Const
+@model SiteDetails;
+@{
+    var title = SitePageTitles.Remove;
+    ViewData["Title"] = title;
+}
+
+<gds-div-grid-column-two-thirds>
+    <vc:front-door-workflow-back-button current-page="@SiteWorkflowState.RemoveSite"></vc:front-door-workflow-back-button>
+
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+
+    <form asp-controller="Site" asp-action="Remove" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
+
+        <vc:radio-list
+            title="@title"
+            title-type="InputTitleType.PageHeader"
+            field-name="@nameof(Model.RemoveSiteAnswer)"
+            available-options="@SelectListHelper.FromEnumToExtendedList<RemoveSiteAnswer>()"
+        />
+
+        <vc:form-button/>
+        <vc:return-to-account-link/>
+    </form>
+
+</gds-div-grid-column-two-thirds>

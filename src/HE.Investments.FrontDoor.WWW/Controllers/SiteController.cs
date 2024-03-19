@@ -1,12 +1,10 @@
 using HE.Investments.Account.Shared.Authorization.Attributes;
-using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.FrontDoor.Contract.LocalAuthority.Queries;
-using HE.Investments.FrontDoor.Contract.Project;
 using HE.Investments.FrontDoor.Contract.Project.Queries;
 using HE.Investments.FrontDoor.Contract.Site;
 using HE.Investments.FrontDoor.Contract.Site.Commands;
@@ -203,6 +201,24 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         ModelState.Clear();
         ModelState.AddValidationErrors(OperationResult.New().AddValidationError(nameof(SiteDetails.AddAnotherSite), "Select yes if you want to add another site"));
         return View(nameof(AddAnotherSite), await GetSiteDetails(projectId, siteId, cancellationToken));
+    }
+
+    [WorkflowState(SiteWorkflowState.RemoveSite)]
+    [HttpGet("{siteId}/remove")]
+    public IActionResult Remove()
+    {
+        return View();
+    }
+
+    [WorkflowState(SiteWorkflowState.RemoveSite)]
+    [HttpPost("{siteId}/remove")]
+    public async Task<IActionResult> Remove([FromRoute] string projectId, [FromRoute] string siteId, SiteDetails model, CancellationToken cancellationToken)
+    {
+        return await ExecuteSiteCommand(
+            new RemoveSiteCommand(new FrontDoorProjectId(projectId), new FrontDoorSiteId(siteId), model.RemoveSiteAnswer),
+            nameof(Remove),
+            site => site,
+            cancellationToken);
     }
 
     protected override Task<IStateRouting<SiteWorkflowState>> Routing(SiteWorkflowState currentState, object? routeData = null)

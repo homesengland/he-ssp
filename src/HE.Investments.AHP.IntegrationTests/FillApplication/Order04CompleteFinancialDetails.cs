@@ -1,12 +1,12 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using FluentAssertions;
-using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.WWW;
 using HE.Investment.AHP.WWW.Views.FinancialDetails.Consts;
 using HE.Investments.AHP.IntegrationTests.FillApplication.Data;
 using HE.Investments.AHP.IntegrationTests.Framework;
 using HE.Investments.AHP.IntegrationTests.Pages;
+using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.IntegrationTestsFramework.Assertions;

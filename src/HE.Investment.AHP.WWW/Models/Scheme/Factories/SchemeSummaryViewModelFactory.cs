@@ -2,10 +2,10 @@ using System.Globalization;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Common;
 using HE.Investment.AHP.WWW.Controllers;
-using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Components.SectionSummary;
 using HE.Investments.Common.WWW.Helpers;
+using HE.Investments.Common.WWW.Models.Summary;
 using HE.Investments.Common.WWW.Utils;
 using Microsoft.AspNetCore.Mvc;
 

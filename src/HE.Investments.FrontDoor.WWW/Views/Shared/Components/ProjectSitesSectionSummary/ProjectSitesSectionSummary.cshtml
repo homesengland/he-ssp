@@ -1,0 +1,36 @@
+@using HE.Investments.Common.WWW.Models.Summary;
+@using HE.Investments.FrontDoor.WWW.Extensions
+@using HE.Investments.FrontDoor.WWW.Helpers
+
+@model IList<SectionSummaryViewModel>
+@{
+    var projectId = this.GetProjectIdFromRoute();
+}
+
+@foreach (var site in Model)
+{
+    var siteId = SiteIdFromActionUrlHelper.Get(site.Items?.Last().ActionUrl);
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <gds-h2>@site.Title details</gds-h2>
+        </div>
+        <div class="remove-site-link">
+            <gds-link href="@Url.Action("Remove", "Site", new { projectId, siteId })">
+                Remove site
+            </gds-link>
+        </div>
+    </div>
+
+    <gds-summary-list>
+        @foreach (var item in site.Items!)
+        {
+            <vc:section-summary-item
+                name="@item.Name"
+                values="@item.Values"
+                action-url="@item.ActionUrl"
+                files="@item.Files"
+                is-editable="@item.IsEditable"
+                is-visible="@item.IsVisible"/>
+        }
+    </gds-summary-list>
+}

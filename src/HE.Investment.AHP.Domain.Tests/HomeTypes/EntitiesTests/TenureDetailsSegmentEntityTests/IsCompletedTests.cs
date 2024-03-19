@@ -1,9 +1,9 @@
 using FluentAssertions;
 using HE.Investment.AHP.Contract.Application;
-using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investment.AHP.Domain.Tests.HomeTypes.TestDataBuilders;
+using HE.Investments.Common.Contract.Enum;
 
 namespace HE.Investment.AHP.Domain.Tests.HomeTypes.EntitiesTests.TenureDetailsSegmentEntityTests;
 

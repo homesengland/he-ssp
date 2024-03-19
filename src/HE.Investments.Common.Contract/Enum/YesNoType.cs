@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-namespace HE.Investment.AHP.Contract.Common.Enums;
+namespace HE.Investments.Common.Contract.Enum;
 
 public enum YesNoType
 {
