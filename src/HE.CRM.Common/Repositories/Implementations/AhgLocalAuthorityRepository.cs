@@ -56,11 +56,19 @@ namespace HE.CRM.Common.Repositories.Implementations
         {
             var query = new QueryExpression
             {
-                EntityName = invln_AHGLocalAuthorities.EntityLogicalName,
-                ColumnSet = new ColumnSet(invln_AHGLocalAuthorities.Fields.invln_GrowthManager)
+                EntityName = invln_Sites.EntityLogicalName,
+                ColumnSet = new ColumnSet(invln_Sites.Fields.Id, invln_Sites.Fields.invln_LocalAuthority)
             };
-            query.Criteria.Conditions.Add(new ConditionExpression(invln_AHGLocalAuthorities.Fields.Id, ConditionOperator.Equal, siteId));
-            return service.RetrieveMultiple(query).Entities.Select(x => x.ToEntity<invln_AHGLocalAuthorities>()).FirstOrDefault();
+            query.Criteria.AddCondition(invln_Sites.Fields.Id, ConditionOperator.Equal, siteId);
+            var site = service.RetrieveMultiple(query).Entities.Select(x => x.ToEntity<invln_Sites>()).FirstOrDefault();
+
+            var queryLA = new QueryExpression
+            {
+                EntityName = invln_AHGLocalAuthorities.EntityLogicalName,
+                ColumnSet = new ColumnSet(invln_AHGLocalAuthorities.Fields.Id, invln_AHGLocalAuthorities.Fields.invln_GrowthManager)
+            };
+            query.Criteria.AddCondition(invln_AHGLocalAuthorities.Fields.Id, ConditionOperator.Equal, site.invln_LocalAuthority.Id);
+            return service.RetrieveMultiple(queryLA).Entities.Select(x => x.ToEntity<invln_AHGLocalAuthorities>()).FirstOrDefault();
         }
     }
 }

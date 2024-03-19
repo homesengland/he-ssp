@@ -16,7 +16,7 @@ namespace HE.CRM.AHP.Plugins.Plugins.AhpApplication
        invln_scheme.EntityLogicalName,
        StageEnum.PreOperation,
        ExecutionModeEnum.Synchronous,
-       "statuscode",
+       "statuscode," + invln_scheme.Fields.invln_Site,
        "HE.CRM.AHP.Plugins.Plugins.AhpApplication.ChangeExternalStatusOnInternalStatusChangePlugin: Update of AHP Application",
        1,
        IsolationModeEnum.Sandbox,

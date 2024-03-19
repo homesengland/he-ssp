@@ -29,18 +29,17 @@ namespace HE.CRM.AHP.Plugins.Handlers.Site
 
         public override void DoWork()
         {
-            var localAuthority = _localAuthorityRepository.GetById(CurrentState.invln_LocalAuthority,
+            var localAuthority = _localAuthorityRepository.GetById(CurrentState.invln_LocalAuthority.Id,
                                                                     invln_AHGLocalAuthorities.Fields.invln_GrowthManager);
-
             var ahpApplications = _ahpApplicationRepository.GetByAttribute(invln_scheme.Fields.invln_Site, CurrentState.Id).ToList();
             foreach (var ahpApplication in ahpApplications)
             {
-                _ahpApplicationRepository.Update(new invln_scheme()
+                repo.Update(new invln_scheme()
                 {
                     Id = ahpApplication.Id,
                     invln_LocalAuthority = CurrentState.invln_LocalAuthority,
                 });
-                _ahpApplicationRepository.Assign(new invln_scheme() { Id = CurrentState.Id }, localAuthority.invln_GrowthManager);
+                _ahpApplicationRepository.Assign(new invln_scheme() { Id = ahpApplication.Id }, localAuthority.invln_GrowthManager);
             }
         }
     }

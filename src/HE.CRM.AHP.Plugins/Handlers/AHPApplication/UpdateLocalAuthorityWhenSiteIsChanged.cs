@@ -24,12 +24,14 @@ namespace HE.CRM.AHP.Plugins.Handlers.AHPApplication
 
         public override bool CanWork()
         {
-            return ValueChanged(invln_scheme.Fields.invln_Site) && CurrentState.invln_Site != null;
+            return ExecutionData.Target.invln_Site != null;
         }
 
         public override void DoWork()
         {
-            var ahpLocalAuthority = _localAuthorityRepository.GetAhpLocalAuthoritiesReletedToSite(CurrentState.invln_Site.Id);
+            this.TracingService.Trace($"{ExecutionData.Target.invln_Site.Id}");
+            var ahpLocalAuthority = _localAuthorityRepository.GetAhpLocalAuthoritiesReletedToSite(ExecutionData.Target.invln_Site.Id);
+            this.TracingService.Trace($"Grow Manager");
             _ahpApplicationRepository.Assign(new invln_scheme() { Id = CurrentState.Id }, ahpLocalAuthority.invln_GrowthManager);
         }
     }
