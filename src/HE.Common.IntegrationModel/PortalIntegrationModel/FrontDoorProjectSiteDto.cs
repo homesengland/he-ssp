@@ -13,6 +13,6 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public DateTime? CreatedOn { get; set; }
         public string LocalAuthority { get; set; }
         public string LocalAuthorityName { get; set; }
-
+        public string LocalAuthorityCode { get; set; }
     }
 }

@@ -61,7 +61,7 @@ public class ProjectRepository : IProjectRepository
             IdentifiedSite = project.IsSiteIdentified?.Value,
             Region = new RegionsMapper().Map(project.Regions),
             NumberofHomesEnabledBuilt = project.HomesNumber?.Value,
-            LocalAuthority = project.LocalAuthorityId?.Value,
+            LocalAuthorityCode = project.LocalAuthorityId?.Value,
             GeographicFocus = new ProjectGeographicFocusMapper().ToDto(project.GeographicFocus.GeographicFocus),
             WouldyourprojectfailwithoutHEsupport = project.IsSupportRequired?.Value,
             FundingRequired = project.IsFundingRequired?.Value,
@@ -105,6 +105,6 @@ public class ProjectRepository : IProjectRepository
             requiredFunding: new RequiredFundingMapper().Map(dto.AmountofFundingRequired),
             isProfit: dto.IntentiontoMakeaProfit.IsProvided() ? new IsProfit(dto.IntentiontoMakeaProfit) : null,
             expectedStartDate: ExpectedStartDate.Create(dto.StartofProjectMonth, dto.StartofProjectYear),
-            localAuthorityId: dto.LocalAuthority == null ? null : new LocalAuthorityId(dto.LocalAuthority));
+            localAuthorityId: dto.LocalAuthorityCode == null ? null : new LocalAuthorityId(dto.LocalAuthorityCode));
     }
 }

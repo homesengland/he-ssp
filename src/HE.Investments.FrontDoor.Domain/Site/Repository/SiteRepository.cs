@@ -56,7 +56,7 @@ public class SiteRepository : ISiteRepository
             SiteName = entity.Name.Value,
             NumberofHomesEnabledBuilt = entity.HomesNumber?.Value,
             PlanningStatus = entity.PlanningStatus.Value == SitePlanningStatus.Undefined ? null : _planningStatusMapper.ToDto(entity.PlanningStatus.Value),
-            LocalAuthority = entity.LocalAuthorityId?.Value,
+            LocalAuthorityCode = entity.LocalAuthorityId?.Value,
         };
     }
 
@@ -69,6 +69,6 @@ public class SiteRepository : ISiteRepository
             dto.CreatedOn,
             dto.NumberofHomesEnabledBuilt == null ? null : new HomesNumber(dto.NumberofHomesEnabledBuilt.Value),
             planningStatus: PlanningStatus.Create(_planningStatusMapper.ToDomain(dto.PlanningStatus)),
-            localAuthorityId: dto.LocalAuthority == null ? null : new LocalAuthorityId(dto.LocalAuthority));
+            localAuthorityId: dto.LocalAuthorityCode == null ? null : new LocalAuthorityId(dto.LocalAuthorityCode));
     }
 }
