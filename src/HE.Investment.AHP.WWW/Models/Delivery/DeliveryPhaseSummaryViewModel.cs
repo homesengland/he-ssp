@@ -1,5 +1,5 @@
 using HE.Investment.AHP.Contract.Common.Enums;
-using HE.Investment.AHP.WWW.Models.Application;
+using HE.Investments.Common.WWW.Models.Summary;
 
 namespace HE.Investment.AHP.WWW.Models.Delivery;
 

@@ -23,7 +23,7 @@ public class CreateSiteCommandHandler : IRequestHandler<CreateSiteCommand, Opera
     public async Task<OperationResult<FrontDoorSiteId>> Handle(CreateSiteCommand request, CancellationToken cancellationToken)
     {
         var userAccount = await _accountUserContext.GetSelectedAccount();
-        var projectSites = await _siteRepository.GetSites(request.ProjectId, userAccount, cancellationToken);
+        var projectSites = await _siteRepository.GetProjectSites(request.ProjectId, userAccount, cancellationToken);
 
         var newProject = projectSites.CreateNewSite(new SiteName(request.Name ?? string.Empty));
         await _siteRepository.Save(newProject, userAccount, cancellationToken);

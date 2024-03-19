@@ -22,7 +22,7 @@ public class ProvideSiteNameCommandHandler : IRequestHandler<ProvideSiteNameComm
     public async Task<OperationResult> Handle(ProvideSiteNameCommand request, CancellationToken cancellationToken)
     {
         var userAccount = await _accountUserContext.GetSelectedAccount();
-        var projectSites = await _siteRepository.GetSites(request.ProjectId, userAccount, cancellationToken);
+        var projectSites = await _siteRepository.GetProjectSites(request.ProjectId, userAccount, cancellationToken);
 
         var existingProject = projectSites.ChangeSiteName(request.SiteId, new SiteName(request.Name ?? string.Empty));
         await _siteRepository.Save(existingProject, userAccount, cancellationToken);

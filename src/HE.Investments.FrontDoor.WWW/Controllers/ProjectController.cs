@@ -1,3 +1,4 @@
+using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
@@ -10,10 +11,13 @@ using HE.Investments.FrontDoor.Contract.LocalAuthority.Queries;
 using HE.Investments.FrontDoor.Contract.Project;
 using HE.Investments.FrontDoor.Contract.Project.Commands;
 using HE.Investments.FrontDoor.Contract.Project.Queries;
+using HE.Investments.FrontDoor.Contract.Site;
+using HE.Investments.FrontDoor.Contract.Site.Queries;
 using HE.Investments.FrontDoor.Shared.Project;
 using HE.Investments.FrontDoor.Shared.Project.Contract;
 using HE.Investments.FrontDoor.WWW.Extensions;
 using HE.Investments.FrontDoor.WWW.Models;
+using HE.Investments.FrontDoor.WWW.Models.Factories;
 using HE.Investments.FrontDoor.WWW.Workflows;
 using HE.Investments.Organisation.LocalAuthorities.ValueObjects;
 using MediatR;
@@ -27,9 +31,15 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
 {
     private readonly IMediator _mediator;
 
-    public ProjectController(IMediator mediator)
+    private readonly IAccountAccessContext _accountAccessContext;
+
+    private readonly IProjectSummaryViewModelFactory _projectSummaryViewModelFactory;
+
+    public ProjectController(IMediator mediator, IAccountAccessContext accountAccessContext, IProjectSummaryViewModelFactory projectSummaryViewModelFactory)
     {
         _mediator = mediator;
+        _accountAccessContext = accountAccessContext;
+        _projectSummaryViewModelFactory = projectSummaryViewModelFactory;
     }
 
     [HttpGet("{projectId}/back")]
@@ -486,12 +496,13 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
 
     [HttpGet("{projectId}/check-answers")]
     [WorkflowState(ProjectWorkflowState.CheckAnswers)]
-    public async Task<IActionResult> CheckAnswers([FromRoute] string projectId, CancellationToken cancellationToken)
+    [WorkflowState(SiteWorkflowState.CheckAnswers)]
+    public async Task<IActionResult> CheckAnswers(CancellationToken cancellationToken)
     {
-        return View(await GetProjectDetails(projectId, cancellationToken));
+        return View("CheckAnswers", await CreateProjectSummary(cancellationToken));
     }
 
-    [HttpPost("{projectId}/complete")]
+    [HttpPost("{projectId}/check-answers")]
     [WorkflowState(ProjectWorkflowState.CheckAnswers)]
     public IActionResult Complete([FromRoute] string projectId)
     {
@@ -559,5 +570,23 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
         }
 
         return await onContinue();
+    }
+
+    private async Task<ProjectSummaryViewModel> CreateProjectSummary(
+        CancellationToken cancellationToken,
+        bool useWorkflowRedirection = true)
+    {
+        var projectId = this.GetProjectIdFromRoute();
+        var projectDetails = await GetProjectDetails(projectId.Value, cancellationToken);
+        var projectSites = await _mediator.Send(new GetProjectSitesQuery(projectId), cancellationToken);
+        var isEditable = await _accountAccessContext.CanEditApplication();
+        var sections = _projectSummaryViewModelFactory
+            .CreateProjectSummary(projectDetails, projectSites, Url, isEditable, useWorkflowRedirection);
+
+        return new ProjectSummaryViewModel(
+            projectId.Value,
+            sections.ToList(),
+            projectDetails.IsSiteIdentified,
+            isEditable);
     }
 }

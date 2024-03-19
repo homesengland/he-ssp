@@ -1,0 +1,43 @@
+@using HE.Investments.Common.WWW.Models.Summary;
+@using HE.Investments.FrontDoor.WWW.Extensions
+@using HE.Investments.Common.Contract.Constants
+@using HE.Investments.Common.Extensions
+
+@model (IList<SectionSummaryViewModel> sections, bool isSiteIdentified, bool isReadOnly)
+@{
+    var projectDetailsSection = Model.sections.First();
+    var projectFinancialDetailsSection = Model.sections.Last();
+    var projectSitesSection = Model.sections.Skip(1).Take(Model.sections.Count - 2).ToList();
+    var projectId = this.GetProjectIdFromRoute();
+}
+
+<div>
+    <vc:section-summary title="@projectDetailsSection.Title" items="@projectDetailsSection.Items"/>
+
+    @if (Model.isSiteIdentified)
+    {
+        <vc:project-sites-section-summary sites="@projectSitesSection" is-read-only="@Model.isReadOnly"/>
+
+        @if (projectSitesSection.Count == 0)
+        {
+            <gds-summary-list>
+                <vc:section-summary-item
+                    name="Identified site"
+                    values="CommonResponse.Yes.ToOneElementList()"
+                    action-url="@Url.Action("IdentifiedSite", "Project", new { projectId })"
+                    is-editable="@(!Model.isReadOnly)"/>
+            </gds-summary-list>
+        }
+
+        @if (!Model.isReadOnly)
+        {
+            <div class="govuk-!-margin-bottom-9 govuk-!-font-size-19">
+                <gds-link href="@Url.Action("NewName", "Site", new { projectId })">
+                    Add another site
+                </gds-link>
+            </div>
+        }
+
+        <vc:section-summary title="@projectFinancialDetailsSection.Title" items="@projectFinancialDetailsSection.Items"/>
+    }
+</div>

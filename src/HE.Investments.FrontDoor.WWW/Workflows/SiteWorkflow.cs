@@ -47,5 +47,9 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
 
         _machine.Configure(SiteWorkflowState.AddAnotherSite)
             .Permit(Trigger.Back, SiteWorkflowState.PlanningStatus);
+
+        _machine.Configure(SiteWorkflowState.RemoveSite)
+            .Permit(Trigger.Continue, SiteWorkflowState.CheckAnswers)
+            .Permit(Trigger.Back, SiteWorkflowState.CheckAnswers);
     }
 }
