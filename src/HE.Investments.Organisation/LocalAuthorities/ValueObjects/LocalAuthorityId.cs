@@ -1,6 +1,7 @@
 using HE.Investments.Common.Domain;
 
 namespace HE.Investments.Organisation.LocalAuthorities.ValueObjects;
+
 public class LocalAuthorityId : ValueObject
 {
     public LocalAuthorityId(string value)

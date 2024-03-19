@@ -11,7 +11,7 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public int? NumberofHomesEnabledBuilt { get; set; }
         public int? PlanningStatus { get; set; }
         public DateTime? CreatedOn { get; set; }
-        public Guid LocalAuthority { get; set; }
+        public string LocalAuthority { get; set; }
         public string LocalAuthorityName { get; set; }
 
     }

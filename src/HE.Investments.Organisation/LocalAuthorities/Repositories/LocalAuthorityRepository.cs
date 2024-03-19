@@ -7,6 +7,7 @@ using HE.Investments.Common.CRM.Serialization;
 using HE.Investments.Common.Infrastructure.Cache.Interfaces;
 using HE.Investments.Organisation.LocalAuthorities.Mappers;
 using Microsoft.PowerPlatform.Dataverse.Client;
+using Microsoft.Xrm.Sdk;
 using LocalAuthority = HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
 
 namespace HE.Investments.Organisation.LocalAuthorities.Repositories;
@@ -25,7 +26,7 @@ public class LocalAuthorityRepository : ILocalAuthorityRepository
 
     public async Task<(IList<LocalAuthority> Items, int TotalItems)> Search(string phrase, int startPage, int pageSize, CancellationToken cancellationToken)
     {
-        var localAuthorities = await GetLocalAuthorities(cancellationToken);
+        var localAuthorities = await GetLocalAuthorities(LocalAuthoritiesSource.Loans, cancellationToken);
 
         if (!string.IsNullOrEmpty(phrase))
         {
@@ -46,7 +47,7 @@ public class LocalAuthorityRepository : ILocalAuthorityRepository
 
     public async Task<LocalAuthority> GetById(StringIdValueObject localAuthorityId, CancellationToken cancellationToken)
     {
-        var localAuthorities = await GetLocalAuthorities(cancellationToken);
+        var localAuthorities = await GetLocalAuthorities(LocalAuthoritiesSource.Loans, cancellationToken);
 
         var localAuthority = localAuthorities.FirstOrDefault(x => x.Id.ToString() == localAuthorityId.ToString()) ??
                              throw new NotFoundException($"Local authority with id {localAuthorityId} cannot be found");
@@ -54,23 +55,31 @@ public class LocalAuthorityRepository : ILocalAuthorityRepository
         return localAuthority;
     }
 
-    private async Task<IList<LocalAuthority>> GetLocalAuthorities(CancellationToken cancellationToken)
+    private async Task<IList<LocalAuthority>> GetLocalAuthorities(LocalAuthoritiesSource source, CancellationToken cancellationToken)
     {
         return await _cacheService.GetValueAsync(
-                   "local-authorities",
-                   async () => await GetLocalAuthoritiesFromCrm(cancellationToken))
+                   $"local-authorities-{source}",
+                   async () => await GetLocalAuthoritiesFromCrm(string.Empty, source, cancellationToken))
                ?? throw new NotFoundException(nameof(LocalAuthority));
     }
 
-    private async Task<IList<LocalAuthority>> GetLocalAuthoritiesFromCrm(CancellationToken cancellationToken)
+    private async Task<IList<LocalAuthority>> GetLocalAuthoritiesFromCrm(string searchPage, LocalAuthoritiesSource source, CancellationToken cancellationToken)
     {
-        var req = new invln_searchlocalauthorityRequest();
-        var response = await _serviceClient.ExecuteAsync(req, cancellationToken) as invln_searchlocalauthorityResponse
+        var req = new invln_getmultiplelocalauthoritiesformoduleRequest
+        {
+            invln_searchphrase = searchPage,
+            invln_isahp = (source == LocalAuthoritiesSource.Ahp).ToString().ToLowerInvariant(),
+            invln_isloanfd = (source == LocalAuthoritiesSource.FrontDoor).ToString().ToLowerInvariant(),
+            invln_isloan = (source == LocalAuthoritiesSource.Loans).ToString().ToLowerInvariant(),
+            invln_pagingrequest = CrmResponseSerializer.Serialize(new PagingRequestDto { pageNumber = 1, pageSize = 1000 }),
+        };
+
+        var response = await _serviceClient.ExecuteAsync(req, cancellationToken) as invln_getmultiplelocalauthoritiesformoduleResponse
                        ?? throw new NotFoundException(nameof(LocalAuthority));
 
-        var localAuthoritiesDto = CrmResponseSerializer.Deserialize<IList<LocalAuthorityDto>>(response.invln_localauthorities)
+        var localAuthoritiesDto = CrmResponseSerializer.Deserialize<PagedResponseDto<LocalAuthorityDto>>(response.invln_localauthorities)
                                   ?? throw new NotFoundException(nameof(LocalAuthority));
 
-        return LocalAuthorityMapper.MapToLocalAuthorityList(localAuthoritiesDto);
+        return LocalAuthorityMapper.MapToLocalAuthorityList(localAuthoritiesDto.items);
     }
 }
