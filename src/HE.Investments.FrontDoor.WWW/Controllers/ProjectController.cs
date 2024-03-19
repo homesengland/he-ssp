@@ -493,13 +493,13 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
 
     [HttpPost("{projectId}/complete")]
     [WorkflowState(ProjectWorkflowState.CheckAnswers)]
-    public IActionResult Complete([FromRoute] string projectId, ProjectDetails model)
+    public IActionResult Complete([FromRoute] string projectId)
     {
         return RedirectToAction("Index", "Account");
     }
 
     [HttpGet("{projectId}/you-need-to-speak-to-homes-england")]
-    public IActionResult YouNeedToSpeakToHomesEngland([FromRoute] string projectId, ProjectDetails model)
+    public IActionResult YouNeedToSpeakToHomesEngland([FromRoute] string projectId)
     {
         return View("YouNeedToSpeakToHomesEngland");
     }
