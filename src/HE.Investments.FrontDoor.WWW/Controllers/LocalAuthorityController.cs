@@ -44,7 +44,7 @@ public class LocalAuthorityController : WorkflowController<LocalAuthorityWorkflo
     public async Task<IActionResult> Search([FromQuery] string projectId, [FromQuery] string? siteId, CancellationToken cancellationToken)
     {
         await GetProjectDetails(projectId, cancellationToken);
-        return View(nameof(Search), new LocalAuthoritySearchVewModel(string.Empty, projectId, siteId));
+        return View(nameof(Search), new LocalAuthoritySearchViewModel(string.Empty, projectId, siteId));
     }
 
     [HttpPost("search")]

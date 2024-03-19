@@ -1,5 +1,4 @@
 using HE.Investments.Common.Contract;
-using HE.Investments.FrontDoor.Shared.Project;
 using HE.Investments.FrontDoor.Shared.Project.Contract;
 using HE.Investments.FrontDoor.Shared.Project.Data;
 using HE.Investments.TestsUtils.Extensions;
@@ -20,7 +19,7 @@ public class IntegrationUserData
 
     public string ProjectInDraftStateId { get; private set; }
 
-    public ProjectPrefillData ProjectPrefillData { get; private set; }
+    public FrontDoorProjectData ProjectPrefillData { get; private set; }
 
     public void SetApplicationLoanId(string loanApplicationId)
     {
@@ -37,22 +36,11 @@ public class IntegrationUserData
         ProjectInDraftStateId = projectId;
     }
 
-    public ProjectPrefillData GenerateProjectPrefillData()
+    public FrontDoorProjectData GenerateProjectPrefillData()
     {
-        return ProjectPrefillData = new ProjectPrefillData(
-            new FrontDoorProjectId(Guid.NewGuid().ToString()),
-            true,
+        return ProjectPrefillData = new FrontDoorProjectData(
             "IT-FD-Project".WithTimestampSuffix(),
-            new[] { SupportActivityType.DevelopingHomes },
-            AffordableHomesAmount.OnlyAffordableHomes,
-            10,
-            Array.Empty<InfrastructureType>(),
-            false,
-            new SiteNotIdentifiedDetails(ProjectGeographicFocus.National, null, 20),
-            true,
-            true,
-            new FundingDetails(RequiredFundingOption.Between5MlnAnd10Mln, true),
-            new DateDetails("01", "12", "2025"));
+            new[] { SupportActivityType.DevelopingHomes });
     }
 
     public string GenerateApplicationName()

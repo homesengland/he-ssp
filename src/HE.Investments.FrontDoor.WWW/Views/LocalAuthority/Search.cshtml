@@ -5,7 +5,7 @@
 @using HE.Investments.FrontDoor.WWW.Views.LocalAuthority.Const
 @using HE.Investments.FrontDoor.WWW.Views.Shared.Components.LocalAuthorityWorkflowBackButton
 
-@model HE.Investments.FrontDoor.WWW.Models.LocalAuthoritySearchVewModel
+@model HE.Investments.FrontDoor.WWW.Models.LocalAuthoritySearchViewModel
 @{
     var title = string.IsNullOrWhiteSpace(Model.SiteId) ? LocalAuthorityPageTitles.SearchForProject : LocalAuthorityPageTitles.SearchForSite;
     ViewData["Title"] = title;
@@ -33,7 +33,7 @@
             paragraph="@paragraph"
             hint="Enter all or part of your local authority name."/>
 
-        <vc:form-button/>
-        <vc:return-to-account-link/>
+        <vc:form-button text="Search" />
+        <vc:return-to-account-link />
     </form>
 </gds-div-grid-column-two-thirds>

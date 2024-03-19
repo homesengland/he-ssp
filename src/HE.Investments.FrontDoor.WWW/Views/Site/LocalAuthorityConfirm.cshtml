@@ -6,7 +6,7 @@
 @using HE.Investments.FrontDoor.WWW.Views.Shared.Components.FrontDoorWorkflowBackButton
 @using HE.Investments.FrontDoor.WWW.Views.Site.Const
 
-@model HE.Investments.FrontDoor.WWW.Models.LocalAuthorityVewModel
+@model HE.Investments.FrontDoor.WWW.Models.LocalAuthorityViewModel
 @{
     ViewData["Title"] = SitePageTitles.LocalAuthorityConfirm;
     var header = new DynamicComponentViewModel(nameof(SelectListConfirmationHeader), new { header = SitePageTitles.LocalAuthorityConfirm, name = Model.LocalAuthorityName, description = "Is this a correct local authority?" });

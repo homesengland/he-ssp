@@ -12,7 +12,7 @@ public static class LocalAuthorityMapper
 
         foreach (var localAuthorityDto in localAuthoritiesDto)
         {
-            result.Add(LocalAuthority.New(localAuthorityDto.onsCode, localAuthorityDto.name));
+            result.Add(LocalAuthority.New(string.IsNullOrWhiteSpace(localAuthorityDto.code) ? localAuthorityDto.onsCode : localAuthorityDto.code, localAuthorityDto.name));
         }
 
         return result;
