@@ -5,11 +5,12 @@
 @using HE.Investments.Common.Contract.Pagination
 @using HE.Investments.Common.WWW.Components.PageHeader
 @using HE.Investments.FrontDoor.Contract.LocalAuthority
+@using HE.Investments.FrontDoor.WWW.Config
 @using HE.Investments.FrontDoor.WWW.Views.LocalAuthority.Const
 @using HE.Investments.FrontDoor.WWW.Views.Shared.Components.LocalAuthorityWorkflowBackButton
 
+@inject IExternalLinks ExternalLinks
 @model (PaginationResult<LocalAuthority> Items, string ProjectId, string SiteId, string Phrase)
-
 @{
     ViewData["Title"] = LocalAuthorityPageTitles.SearchResult;
     var controller = string.IsNullOrWhiteSpace(Model.SiteId) ? "Project" : "Site";
@@ -45,9 +46,10 @@
     {
         <vc:select-list
             items="@items"
-            paragraph-with-link="@(new ParagraphWithLinkModel("If you are not sure which local authority to choose, you can", new LinkModel("Search", "LocalAuthority", new { siteId = Model.SiteId, projectId = Model.ProjectId }), "search for the name of the local authority using a postcode."))"
+            paragraph-with-link="@(new ParagraphWithLinkModel("If you are not sure which local authority to choose, you can", new LinkModel(null!, new DirectLinkModel(ExternalLinks.FindLocalCouncil, true)), "search for the name of the local authority using a postcode."))"
             paging-navigation-url="@Url.Action("SearchResult", "LocalAuthority", new { siteId = Model.SiteId, projectId = Model.ProjectId, phrase = Model.Phrase })"/>
     }
 
+    <vc:return-to-account-link is-editable="false" />
 
 </gds-div-grid-column-two-thirds>
