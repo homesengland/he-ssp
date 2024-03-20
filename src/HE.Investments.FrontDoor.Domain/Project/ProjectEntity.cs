@@ -151,7 +151,7 @@ public class ProjectEntity : DomainEntity
 
     public void ProvideIsSiteIdentified(IsSiteIdentified isSiteIdentified)
     {
-        IsSiteIdentified = _modificationTracker.Change(IsSiteIdentified, isSiteIdentified);
+        IsSiteIdentified = _modificationTracker.Change(IsSiteIdentified, isSiteIdentified, null, IsSiteIdentifiedHasChanged);
     }
 
     public void ProvideOrganisationHomesBuilt(OrganisationHomesBuilt organisationHomesBuilt)
@@ -219,6 +219,22 @@ public class ProjectEntity : DomainEntity
             RequiredFunding = RequiredFunding.Empty;
             IsProfit = IsProfit.Empty;
         }
+    }
+
+    private void IsSiteIdentifiedHasChanged(IsSiteIdentified? isSiteIdentified)
+    {
+        if (isSiteIdentified?.Value ?? false)
+        {
+            ResetNonSiteQuestions();
+        }
+    }
+
+    private void ResetNonSiteQuestions()
+    {
+        GeographicFocus = ProjectGeographicFocus.Empty();
+        LocalAuthorityId = null;
+        Regions = Regions.Empty();
+        HomesNumber = null;
     }
 
     private void SupportActivityTypesHaveChanged(SupportActivities newSupportActivityTypes)

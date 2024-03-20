@@ -20,4 +20,19 @@ public class ProvideIsSiteIdentifiedTests
         // then
         project.IsSiteIdentified.Should().Be(isSiteIdentified);
     }
+
+    [Fact]
+    public void ShouldNotChangeIsSiteIdentified_WhenIsSiteIdentifiedIsNotProvided()
+    {
+        // given
+        var project = ProjectEntityBuilder.New().WithNonSiteQuestionFulfilled().Build();
+
+        // when
+        project.ProvideIsSiteIdentified(new IsSiteIdentified(true));
+
+        // then
+        project.IsSiteIdentified!.Value.Should().BeTrue();
+        project.Regions.IsAnswered().Should().BeFalse();
+        project.HomesNumber.Should().BeNull();
+    }
 }

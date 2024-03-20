@@ -4,6 +4,7 @@ using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
 using HE.Investments.FrontDoor.Shared.Project;
 using HE.Investments.FrontDoor.Shared.Project.Contract;
 using HE.Investments.TestsUtils.TestFramework;
+using Microsoft.Crm.Sdk.Messages;
 using ProjectInfrastructure = HE.Investments.FrontDoor.Domain.Project.ValueObjects.ProjectInfrastructure;
 
 namespace HE.Investments.FrontDoor.Domain.Tests.Project.TestDataBuilders;
@@ -54,5 +55,30 @@ public class ProjectEntityBuilder : TestObjectBuilder<ProjectEntityBuilder, Proj
     {
         Item.ProvideInfrastructureTypes(new ProjectInfrastructure(new List<InfrastructureType>() { InfrastructureType.IDoNotKnow }));
         return this;
+    }
+
+    public ProjectEntityBuilder WithIsSiteIdentified(bool isSiteIdentified)
+    {
+        Item.ProvideIsSiteIdentified(new IsSiteIdentified(isSiteIdentified));
+        return this;
+    }
+
+    public ProjectEntityBuilder WithRegions()
+    {
+        Item.ProvideRegions(new Regions(new[] { RegionType.EastMidlands }));
+        return this;
+    }
+
+    public ProjectEntityBuilder WithHomesNumber()
+    {
+        Item.ProvideHomesNumber(new HomesNumber(5));
+        return this;
+    }
+
+    public ProjectEntityBuilder WithNonSiteQuestionFulfilled()
+    {
+        return WithIsSiteIdentified(false)
+            .WithRegions()
+            .WithHomesNumber();
     }
 }
