@@ -1,0 +1,8 @@
+<entities >
+  <entity name="invln_notificationsetting" displayname="Notification Setting" etc="10965" primaryidfield="invln_notificationsettingid" primarynamefield="invln_name" disableplugins="false">
+    <fields>
+      <field displayname="Name" name="invln_name" type="string" customfield="true" />
+      <field displayname="Template Id" name="invln_templateid" type="string" customfield="true" />
+    </fields>
+  </entity>
+</entities>
