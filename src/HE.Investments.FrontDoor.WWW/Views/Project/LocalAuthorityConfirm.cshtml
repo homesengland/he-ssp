@@ -6,6 +6,7 @@
 @using HE.Investments.Common.WWW.Components.SelectListConfirmationHeader
 @using HE.Investments.FrontDoor.WWW.Views.Project.Const
 @using HE.Investments.FrontDoor.WWW.Views.Shared.Components.ReturnToAccountLink
+@using HE.Investments.Common.Extensions
 
 @model HE.Investments.FrontDoor.WWW.Models.LocalAuthorityViewModel
 @{
@@ -25,6 +26,7 @@
 
         <vc:radio-yes-no
             field-name="IsConfirmed"
+            value="@Model.IsConfirmed"
             additional-content="@header"/>
 
         <vc:form-button/>
