@@ -1,11 +1,8 @@
 @using HE.Investments.Common.Contract.Constants;
 @using HE.Investments.Common.WWW.Helpers
-@using HE.Investments.Loans.Common.Utils.Constants.FormOption
 @using HE.Investments.Loans.WWW.Extensions
-@using HE.Investments.Loans.WWW.Helpers
 @using HE.Investments.Loans.WWW.Models
 @using HE.Investments.Loans.WWW.Views.Project.Consts
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Summary
 @model HE.Investments.Loans.Contract.Projects.ViewModels.ProjectViewModel;
 @{
     var id = ViewContext.RouteData.Values["id"];
@@ -31,7 +28,7 @@
     if (Model?.GrantFundingProviderName != null)
     {
         grantFundingMore.Add($"Previous funding: {Model.GrantFundingProviderName}");
-        grantFundingMore.Add($"Amount: {MoneyLabelHelper.Pounds(Model.GrantFundingAmount)}");
+        grantFundingMore.Add($"Amount: {CurrencyHelper.DisplayPoundsPences(Model.GrantFundingAmount)}");
         grantFundingMore.Add($"Name of the grant/found: {Model.GrantFundingName}");
         grantFundingMore.Add($"It was for: {Model.GrantFundingPurpose}");
     }
@@ -42,8 +39,8 @@
     {
         var purchaseDate = DateHelper.ConvertToDateString(Model.PurchaseDay, Model.PurchaseMonth, Model.PurchaseYear);
         additionalProjectDetails.Add($"Purchased: {purchaseDate}");
-        additionalProjectDetails.Add($"Purchase cost: {MoneyLabelHelper.Pounds(Model.Cost)}");
-        additionalProjectDetails.Add($"Current value: {MoneyLabelHelper.Pounds(Model.Value)}");
+        additionalProjectDetails.Add($"Purchase cost: {CurrencyHelper.DisplayPoundsPences(Model.Cost)}");
+        additionalProjectDetails.Add($"Current value: {CurrencyHelper.DisplayPoundsPences(Model.Value)}");
         additionalProjectDetails.Add($"Source: {FormOption.SiteAdditionalSource.GetSummaryLabel(Model.Source)}");
     }
 }

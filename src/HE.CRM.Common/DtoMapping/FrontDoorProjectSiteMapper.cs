@@ -10,7 +10,7 @@ namespace HE.CRM.Common.DtoMapping
 {
     public class FrontDoorProjectSiteMapper
     {
-        public static FrontDoorProjectSiteDto MapFrontDoorProjectSiteToDto(invln_FrontDoorProjectSitePOC frontDoorProjectSite)
+        public static FrontDoorProjectSiteDto MapFrontDoorProjectSiteToDto(invln_FrontDoorProjectSitePOC frontDoorProjectSite, invln_localauthority localauthority = null)
         {
             var frontDoorProjectSiteToReturn = new FrontDoorProjectSiteDto()
             {
@@ -21,6 +21,7 @@ namespace HE.CRM.Common.DtoMapping
                 CreatedOn = frontDoorProjectSite.CreatedOn,
                 LocalAuthority = frontDoorProjectSite.invln_LocalAuthorityId != null ? frontDoorProjectSite.invln_LocalAuthorityId.Id.ToString() : string.Empty,
                 LocalAuthorityName = frontDoorProjectSite.invln_LocalAuthorityId != null ? frontDoorProjectSite.invln_LocalAuthorityId.Name : string.Empty,
+                LocalAuthorityCode = localauthority.invln_onscode != null ? localauthority.invln_onscode : string.Empty,
             };
 
             return frontDoorProjectSiteToReturn;

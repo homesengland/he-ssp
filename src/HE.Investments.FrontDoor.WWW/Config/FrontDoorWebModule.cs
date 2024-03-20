@@ -7,6 +7,7 @@ using HE.Investments.Common.WWW.Infrastructure.Authorization;
 using HE.Investments.Common.WWW.Infrastructure.ErrorHandling;
 using HE.Investments.Common.WWW.Infrastructure.Middlewares;
 using HE.Investments.FrontDoor.Domain.Config;
+using HE.Investments.FrontDoor.WWW.Models.Factories;
 using HE.Investments.FrontDoor.WWW.Routing;
 using HE.Investments.Organisation.Config;
 using HE.Investments.Organisation.LocalAuthorities.Repositories;
@@ -39,5 +40,6 @@ public static class FrontDoorWebModule
         services.Configure<ContactInfoOptions>(configuration.GetSection("AppConfiguration:ContactInfo"));
         services.AddSingleton<IDataverseConfig, DataverseConfig>(x =>
             x.GetRequiredService<IConfiguration>().GetSection("AppConfiguration:Dataverse").Get<DataverseConfig>());
+        services.AddScoped<IProjectSummaryViewModelFactory, ProjectSummaryViewModelFactory>();
     }
 }

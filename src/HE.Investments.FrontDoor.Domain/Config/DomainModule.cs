@@ -21,6 +21,7 @@ public static class DomainModule
 
         services.AddScoped<ISiteCrmContext, SiteCrmContext>();
         services.AddScoped<ISiteRepository, SiteRepository>();
+        services.AddScoped<IRemoveSiteRepository, SiteRepository>();
 
         services.AddTransient(typeof(IRequestExceptionHandler<,,>), typeof(DomainValidationHandler<,,>));
     }

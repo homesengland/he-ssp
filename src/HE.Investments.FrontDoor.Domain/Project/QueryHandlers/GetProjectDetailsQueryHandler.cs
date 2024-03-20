@@ -29,7 +29,7 @@ public class GetProjectDetailsQueryHandler : IRequestHandler<GetProjectDetailsQu
     {
         var userAccount = await _accountUserContext.GetSelectedAccount();
         var project = await _projectRepository.GetProject(request.ProjectId, userAccount, cancellationToken);
-        var projectSite = await _siteRepository.GetSites(request.ProjectId, userAccount, cancellationToken);
+        var projectSite = await _siteRepository.GetProjectSites(request.ProjectId, userAccount, cancellationToken);
 
         return new ProjectDetails
         {

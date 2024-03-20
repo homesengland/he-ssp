@@ -8,4 +8,6 @@ public enum SiteWorkflowState
     LocalAuthorityConfirm,
     PlanningStatus,
     AddAnotherSite,
+    RemoveSite,
+    CheckAnswers,
 }

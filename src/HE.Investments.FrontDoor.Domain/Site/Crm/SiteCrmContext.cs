@@ -67,4 +67,17 @@ public class SiteCrmContext : ISiteCrmContext
             r => r.invln_frontdoorsiteid,
             cancellationToken);
     }
+
+    public Task<string> Remove(string siteId, UserAccount userAccount, CancellationToken cancellationToken)
+    {
+        var request = new invln_deactivatefrontdoorsiteRequest
+        {
+            invln_frontdoorsiteid = siteId,
+        };
+
+        return _service.ExecuteAsync<invln_deactivatefrontdoorsiteRequest, invln_deactivatefrontdoorsiteResponse>(
+            request,
+            r => r.invln_sitedeactivated,
+            cancellationToken);
+    }
 }

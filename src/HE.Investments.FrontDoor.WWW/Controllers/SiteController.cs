@@ -1,6 +1,7 @@
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Contract.Validators;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Extensions;
@@ -124,10 +125,10 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     [WorkflowState(SiteWorkflowState.LocalAuthorityConfirm)]
     public async Task<IActionResult> LocalAuthorityConfirm([FromRoute] string projectId, [FromRoute] string siteId, [FromQuery] string? localAuthorityId, CancellationToken cancellationToken)
     {
-        var siteDetails = await GetSiteDetails(projectId, siteId, cancellationToken);
-        var localAuthority = await _mediator.Send(new GetLocalAuthorityQuery(new LocalAuthorityId(localAuthorityId ?? siteDetails.LocalAuthorityCode!)), cancellationToken);
+        var site = await GetSiteDetails(projectId, siteId, cancellationToken);
+        var localAuthority = await _mediator.Send(new GetLocalAuthorityQuery(new LocalAuthorityId(localAuthorityId ?? site.LocalAuthorityCode!)), cancellationToken);
 
-        return View(nameof(LocalAuthorityConfirm), new LocalAuthorityViewModel(localAuthority.Id, localAuthority.Name, projectId, siteId));
+        return View(nameof(LocalAuthorityConfirm), new LocalAuthorityViewModel(localAuthority.Id, localAuthority.Name, projectId, siteId, site.LocalAuthorityCode.IsProvided()));
     }
 
     [HttpPost("{siteId}/local-authority-confirm")]
@@ -203,6 +204,24 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         ModelState.Clear();
         ModelState.AddValidationErrors(OperationResult.New().AddValidationError(nameof(SiteDetails.AddAnotherSite), "Select yes if you want to add another site"));
         return View(nameof(AddAnotherSite), await GetSiteDetails(projectId, siteId, cancellationToken));
+    }
+
+    [WorkflowState(SiteWorkflowState.RemoveSite)]
+    [HttpGet("{siteId}/remove")]
+    public IActionResult Remove()
+    {
+        return View();
+    }
+
+    [WorkflowState(SiteWorkflowState.RemoveSite)]
+    [HttpPost("{siteId}/remove")]
+    public async Task<IActionResult> Remove([FromRoute] string projectId, [FromRoute] string siteId, SiteDetails model, CancellationToken cancellationToken)
+    {
+        return await ExecuteSiteCommand(
+            new RemoveSiteCommand(new FrontDoorProjectId(projectId), new FrontDoorSiteId(siteId), model.RemoveSiteAnswer),
+            nameof(Remove),
+            site => site,
+            cancellationToken);
     }
 
     protected override async Task<IStateRouting<SiteWorkflowState>> Routing(SiteWorkflowState currentState, object? routeData = null)

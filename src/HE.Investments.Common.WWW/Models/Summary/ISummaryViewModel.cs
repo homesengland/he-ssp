@@ -1,6 +1,4 @@
-using HE.Investments.Common.WWW.Models;
-
-namespace HE.Investment.AHP.WWW.Models.Application;
+namespace HE.Investments.Common.WWW.Models.Summary;
 
 public interface ISummaryViewModel : IEditableViewModel
 {

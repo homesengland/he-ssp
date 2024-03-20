@@ -1,11 +1,11 @@
 using FluentAssertions;
 using HE.Investment.AHP.Contract.Application;
-using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.WWW.Tests.TestDataBuilders;
 using HE.Investment.AHP.WWW.Workflows;
+using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.WWW.Routing;
 
 namespace HE.Investment.AHP.WWW.Tests.Workflows.HomeTypesWorkflowTests;

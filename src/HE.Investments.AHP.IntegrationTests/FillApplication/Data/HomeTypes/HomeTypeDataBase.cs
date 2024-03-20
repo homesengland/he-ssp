@@ -1,6 +1,6 @@
 using System.Globalization;
-using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
+using HE.Investments.Common.Contract.Enum;
 using HE.Investments.TestsUtils.Extensions;
 
 namespace HE.Investments.AHP.IntegrationTests.FillApplication.Data.HomeTypes;

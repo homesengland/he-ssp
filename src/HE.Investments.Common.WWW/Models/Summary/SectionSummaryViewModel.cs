@@ -1,6 +1,6 @@
 using HE.Investments.Common.WWW.Components.SectionSummary;
 
-namespace HE.Investment.AHP.WWW.Models.Application;
+namespace HE.Investments.Common.WWW.Models.Summary;
 
 public record SectionSummaryViewModel(string Title, IList<SectionSummaryItemModel>? Items)
 {

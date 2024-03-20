@@ -35,7 +35,8 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             .Permit(Trigger.Continue, SiteWorkflowState.HomesNumber);
 
         _machine.Configure(SiteWorkflowState.HomesNumber)
-            .Permit(Trigger.Continue, SiteWorkflowState.LocalAuthoritySearch)
+            .PermitIf(Trigger.Continue, SiteWorkflowState.LocalAuthoritySearch, () => _model.LocalAuthorityCode.IsNotProvided())
+            .PermitIf(Trigger.Continue, SiteWorkflowState.LocalAuthorityConfirm, () => _model.LocalAuthorityCode.IsProvided())
             .Permit(Trigger.Back, SiteWorkflowState.Name);
 
         _machine.Configure(SiteWorkflowState.LocalAuthoritySearch)
@@ -52,5 +53,9 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
 
         _machine.Configure(SiteWorkflowState.AddAnotherSite)
             .Permit(Trigger.Back, SiteWorkflowState.PlanningStatus);
+
+        _machine.Configure(SiteWorkflowState.RemoveSite)
+            .Permit(Trigger.Continue, SiteWorkflowState.CheckAnswers)
+            .Permit(Trigger.Back, SiteWorkflowState.CheckAnswers);
     }
 }

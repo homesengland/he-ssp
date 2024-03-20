@@ -1,4 +1,5 @@
 using HE.Investment.AHP.Contract.Common.Enums;
+using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.WWW.Helpers;
 using HE.Investments.Common.WWW.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;

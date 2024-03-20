@@ -16,6 +16,7 @@ using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Constants;
+using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;

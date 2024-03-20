@@ -1,7 +1,9 @@
+using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
-using HE.Investments.FrontDoor.Contract.Project;
 using HE.Investments.FrontDoor.Contract.Site;
+using HE.Investments.FrontDoor.Contract.Site.Enums;
+using HE.Investments.FrontDoor.Domain.Site.Repository;
 using HE.Investments.FrontDoor.Domain.Site.ValueObjects;
 using HE.Investments.FrontDoor.Shared.Project;
 
@@ -46,5 +48,17 @@ public class ProjectSitesEntity
     public FrontDoorSiteId? LastSiteId()
     {
         return Sites.MaxBy(x => x.CreatedOn)?.Id;
+    }
+
+    public async Task Remove(IRemoveSiteRepository removeSiteRepository, FrontDoorSiteId siteId, UserAccount userAccount, RemoveSiteAnswer? removeAnswer, CancellationToken cancellationToken)
+    {
+        if (removeAnswer.IsNotProvided() || removeAnswer == RemoveSiteAnswer.Undefined)
+        {
+            OperationResult.ThrowValidationError(nameof(RemoveSiteAnswer), "Select yes if you want to remove this site");
+        }
+        else if (removeAnswer == RemoveSiteAnswer.Yes)
+        {
+            await removeSiteRepository.Remove(siteId, userAccount, cancellationToken);
+        }
     }
 }

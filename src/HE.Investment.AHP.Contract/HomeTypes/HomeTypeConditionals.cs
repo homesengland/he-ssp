@@ -1,6 +1,6 @@
-using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Contract.Site;
+using HE.Investments.Common.Contract.Enum;
 
 namespace HE.Investment.AHP.Contract.HomeTypes;
 

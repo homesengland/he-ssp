@@ -1,4 +1,4 @@
-using HE.Investment.AHP.Contract.Common.Enums;
+using HE.Investments.Common.Contract.Enum;
 
 namespace HE.Investment.AHP.Domain.Common.Mappers;
 

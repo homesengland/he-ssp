@@ -1,4 +1,5 @@
 using HE.Investments.Common.Contract.Enum;
+using HE.Investments.FrontDoor.Contract.Site.Enums;
 
 namespace HE.Investments.FrontDoor.Contract.Site;
 
@@ -17,4 +18,6 @@ public class SiteDetails
     public SitePlanningStatus? PlanningStatus { get; set; }
 
     public AddAnotherSite? AddAnotherSite { get; set; }
+
+    public RemoveSiteAnswer? RemoveSiteAnswer { get; set; }
 }

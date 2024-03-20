@@ -1,6 +1,6 @@
 using HE.Investment.AHP.Contract.Application;
-using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investments.Common.Contract;
+using HE.Investments.Common.Contract.Enum;
 
 namespace HE.Investment.AHP.Contract.FinancialDetails;
 
