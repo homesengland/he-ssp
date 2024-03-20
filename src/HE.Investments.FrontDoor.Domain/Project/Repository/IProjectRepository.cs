@@ -1,4 +1,5 @@
 using HE.Investments.Account.Shared.User;
+using HE.Investments.Common.Domain;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
 using HE.Investments.FrontDoor.Shared.Project;
 
@@ -13,4 +14,6 @@ public interface IProjectRepository
     Task<ProjectEntity> Save(ProjectEntity project, UserAccount userAccount, CancellationToken cancellationToken);
 
     Task<bool> DoesExist(ProjectName name, UserAccount userAccount, CancellationToken cancellationToken);
+
+    Task DispatchEvents(DomainEntity domainEntity, CancellationToken cancellationToken);
 }

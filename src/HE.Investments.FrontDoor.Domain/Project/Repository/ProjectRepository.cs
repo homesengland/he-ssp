@@ -2,6 +2,7 @@ extern alias Org;
 
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Shared.User;
+using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.FrontDoor.Contract.Project.Events;
@@ -75,8 +76,10 @@ public class ProjectRepository : IProjectRepository
         if (project.Id.IsNew)
         {
             project.SetId(new FrontDoorProjectId(projectId));
-            await _eventDispatcher.Publish(new FrontDoorProjectHasBeenCreatedEvent(project.Id, project.Name.Value), cancellationToken);
+            project.Publish(new FrontDoorProjectHasBeenCreatedEvent(project.Id, project.Name.Value));
         }
+
+        await DispatchEvents(project, cancellationToken);
 
         return project;
     }
@@ -84,6 +87,11 @@ public class ProjectRepository : IProjectRepository
     public async Task<bool> DoesExist(ProjectName name, UserAccount userAccount, CancellationToken cancellationToken)
     {
         return await _crmContext.IsThereProjectWithName(name.Value, userAccount.SelectedOrganisationId().Value, cancellationToken);
+    }
+
+    public async Task DispatchEvents(DomainEntity domainEntity, CancellationToken cancellationToken)
+    {
+        await _eventDispatcher.Publish(domainEntity, cancellationToken);
     }
 
     private ProjectEntity MapToEntity(FrontDoorProjectDto dto)
