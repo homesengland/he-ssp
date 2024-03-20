@@ -23,5 +23,6 @@ public static class ProjectCrmFields
         nameof(invln_FrontDoorProjectPOC.invln_IntentiontoMakeaProfit),
         nameof(invln_FrontDoorProjectPOC.invln_StartofProjectYear),
         nameof(invln_FrontDoorProjectPOC.invln_StartofProjectMonth),
+        nameof(invln_FrontDoorProjectPOC.invln_LocalAuthorityId),
     };
 }

@@ -327,12 +327,12 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
 
     [HttpGet("{projectId}/local-authority-confirm")]
     [WorkflowState(ProjectWorkflowState.LocalAuthorityConfirm)]
-    public async Task<IActionResult> LocalAuthorityConfirm([FromRoute] string projectId, [FromQuery] string localAuthorityId, CancellationToken cancellationToken)
+    public async Task<IActionResult> LocalAuthorityConfirm([FromRoute] string projectId, [FromQuery] string? localAuthorityId, CancellationToken cancellationToken)
     {
-        await GetProjectDetails(projectId, cancellationToken);
-        var localAuthority = await _mediator.Send(new GetLocalAuthorityQuery(new LocalAuthorityId(localAuthorityId)), cancellationToken);
+        var project = await GetProjectDetails(projectId, cancellationToken);
+        var localAuthority = await _mediator.Send(new GetLocalAuthorityQuery(new LocalAuthorityId(localAuthorityId ?? project.LocalAuthorityCode!)), cancellationToken);
 
-        return View(nameof(LocalAuthorityConfirm), new LocalAuthorityViewModel(localAuthority.Id, localAuthority.Name, projectId));
+        return View(nameof(LocalAuthorityConfirm), new LocalAuthorityViewModel(localAuthority.Id, localAuthority.Name, projectId, null, project.LocalAuthorityCode.IsProvided()));
     }
 
     [HttpPost("{projectId}/local-authority-confirm")]

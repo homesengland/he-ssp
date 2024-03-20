@@ -1,10 +1,13 @@
 using HE.Investments.Account.Shared.Authorization.Attributes;
+using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Contract.Validators;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.FrontDoor.Contract.LocalAuthority.Queries;
+using HE.Investments.FrontDoor.Contract.Project;
 using HE.Investments.FrontDoor.Contract.Project.Queries;
 using HE.Investments.FrontDoor.Contract.Site;
 using HE.Investments.FrontDoor.Contract.Site.Commands;
@@ -120,12 +123,12 @@ public class SiteController : WorkflowController<SiteWorkflowState>
 
     [HttpGet("{siteId}/local-authority-confirm")]
     [WorkflowState(SiteWorkflowState.LocalAuthorityConfirm)]
-    public async Task<IActionResult> LocalAuthorityConfirm([FromRoute] string projectId, [FromRoute] string siteId, [FromQuery] string localAuthorityId, CancellationToken cancellationToken)
+    public async Task<IActionResult> LocalAuthorityConfirm([FromRoute] string projectId, [FromRoute] string siteId, [FromQuery] string? localAuthorityId, CancellationToken cancellationToken)
     {
-        await GetSiteDetails(projectId, siteId, cancellationToken);
-        var localAuthority = await _mediator.Send(new GetLocalAuthorityQuery(new LocalAuthorityId(localAuthorityId)), cancellationToken);
+        var site = await GetSiteDetails(projectId, siteId, cancellationToken);
+        var localAuthority = await _mediator.Send(new GetLocalAuthorityQuery(new LocalAuthorityId(localAuthorityId ?? site.LocalAuthorityCode!)), cancellationToken);
 
-        return View(nameof(LocalAuthorityConfirm), new LocalAuthorityViewModel(localAuthority.Id, localAuthority.Name, projectId, siteId));
+        return View(nameof(LocalAuthorityConfirm), new LocalAuthorityViewModel(localAuthority.Id, localAuthority.Name, projectId, siteId, site.LocalAuthorityCode.IsProvided()));
     }
 
     [HttpPost("{siteId}/local-authority-confirm")]
@@ -221,9 +224,11 @@ public class SiteController : WorkflowController<SiteWorkflowState>
             cancellationToken);
     }
 
-    protected override Task<IStateRouting<SiteWorkflowState>> Routing(SiteWorkflowState currentState, object? routeData = null)
+    protected override async Task<IStateRouting<SiteWorkflowState>> Routing(SiteWorkflowState currentState, object? routeData = null)
     {
-        return Task.FromResult<IStateRouting<SiteWorkflowState>>(new SiteWorkflow(currentState));
+        var projectId = routeData?.GetPropertyValue<string>("projectId") ?? this.GetProjectIdFromRoute().Value;
+        var siteId = routeData?.GetPropertyValue<string>("siteId") ?? this.GetSiteIdFromRoute().Value;
+        return new SiteWorkflow(currentState, await GetSiteDetails(projectId, siteId, CancellationToken.None));
     }
 
     private async Task<SiteDetails> GetSiteDetails(string projectId, string siteId, CancellationToken cancellationToken)

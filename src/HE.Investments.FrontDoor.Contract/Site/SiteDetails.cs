@@ -13,6 +13,8 @@ public class SiteDetails
 
     public string? HomesNumber { get; set; }
 
+    public string? LocalAuthorityCode { get; set; }
+
     public SitePlanningStatus? PlanningStatus { get; set; }
 
     public AddAnotherSite? AddAnotherSite { get; set; }

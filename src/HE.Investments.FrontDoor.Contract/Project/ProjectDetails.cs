@@ -39,5 +39,7 @@ public class ProjectDetails
 
     public bool? IsProfit { get; set; }
 
+    public string? LocalAuthorityCode { get; set; }
+
     public DateDetails? ExpectedStartDate { get; set; }
 }
