@@ -221,14 +221,18 @@ public class SiteController : WorkflowController<SiteWorkflowState>
             new RemoveSiteCommand(new FrontDoorProjectId(projectId), new FrontDoorSiteId(siteId), model.RemoveSiteAnswer),
             nameof(Remove),
             site => site,
-            cancellationToken);
+            cancellationToken,
+            new { projectId, siteId, remove = true });
     }
 
     protected override async Task<IStateRouting<SiteWorkflowState>> Routing(SiteWorkflowState currentState, object? routeData = null)
     {
         var projectId = routeData?.GetPropertyValue<string>("projectId") ?? this.GetProjectIdFromRoute().Value;
         var siteId = routeData?.GetPropertyValue<string>("siteId") ?? this.GetSiteIdFromRoute().Value;
-        return new SiteWorkflow(currentState, await GetSiteDetails(projectId, siteId, CancellationToken.None));
+        var isSiteRemoved = routeData?.GetPropertyValue<bool>("remove") ?? false;
+        return isSiteRemoved
+            ? new SiteWorkflow(currentState)
+            : new SiteWorkflow(currentState, await GetSiteDetails(projectId, siteId, CancellationToken.None));
     }
 
     private async Task<SiteDetails> GetSiteDetails(string projectId, string siteId, CancellationToken cancellationToken)
