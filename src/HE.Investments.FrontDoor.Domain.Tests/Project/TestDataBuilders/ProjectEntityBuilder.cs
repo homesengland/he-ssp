@@ -5,6 +5,7 @@ using HE.Investments.FrontDoor.Shared.Project;
 using HE.Investments.FrontDoor.Shared.Project.Contract;
 using HE.Investments.TestsUtils.TestFramework;
 using Microsoft.Crm.Sdk.Messages;
+using ProjectGeographicFocus = HE.Investments.FrontDoor.Domain.Project.ValueObjects.ProjectGeographicFocus;
 using ProjectInfrastructure = HE.Investments.FrontDoor.Domain.Project.ValueObjects.ProjectInfrastructure;
 
 namespace HE.Investments.FrontDoor.Domain.Tests.Project.TestDataBuilders;
@@ -57,6 +58,12 @@ public class ProjectEntityBuilder : TestObjectBuilder<ProjectEntityBuilder, Proj
         return this;
     }
 
+    public ProjectEntityBuilder WithGeographicFocus()
+    {
+        Item.ProvideGeographicFocus(new ProjectGeographicFocus(Shared.Project.Contract.ProjectGeographicFocus.Regional));
+        return this;
+    }
+
     public ProjectEntityBuilder WithIsSiteIdentified(bool isSiteIdentified)
     {
         Item.ProvideIsSiteIdentified(new IsSiteIdentified(isSiteIdentified));
@@ -78,6 +85,7 @@ public class ProjectEntityBuilder : TestObjectBuilder<ProjectEntityBuilder, Proj
     public ProjectEntityBuilder WithNonSiteQuestionFulfilled()
     {
         return WithIsSiteIdentified(false)
+            .WithGeographicFocus()
             .WithRegions()
             .WithHomesNumber();
     }
