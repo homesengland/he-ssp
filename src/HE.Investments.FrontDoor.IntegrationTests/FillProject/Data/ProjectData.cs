@@ -36,7 +36,7 @@ public class ProjectData
 
     public bool IsSupportRequired => true;
 
-    public bool IsFundingRequired => true;
+    public bool IsFundingRequired { get; set; } = true;
 
     public RequiredFundingOption RequiredFunding => RequiredFundingOption.Between10MlnAnd30Mln;
 
@@ -60,5 +60,6 @@ public class ProjectData
     public void SwitchIsSiteIdentified()
     {
         IsSiteIdentified = !IsSiteIdentified;
+        IsFundingRequired = false;
     }
 }

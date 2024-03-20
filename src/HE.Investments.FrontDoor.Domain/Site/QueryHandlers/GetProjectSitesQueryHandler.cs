@@ -31,6 +31,7 @@ public class GetProjectSitesQueryHandler : IRequestHandler<GetProjectSitesQuery,
                 Id = x.Id,
                 Name = x.Name.Value,
                 PlanningStatus = x.PlanningStatus.Value,
+                LocalAuthorityCode = x.LocalAuthorityId?.Value,
                 HomesNumber = x.HomesNumber?.Value.ToString(CultureInfo.InvariantCulture),
             }).ToList(),
         };

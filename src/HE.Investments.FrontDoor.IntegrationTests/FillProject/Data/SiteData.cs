@@ -1,3 +1,4 @@
+using HE.Investments.Common.Contract.Enum;
 using HE.Investments.TestsUtils.Extensions;
 
 namespace HE.Investments.FrontDoor.IntegrationTests.FillProject.Data;
@@ -15,7 +16,15 @@ public class SiteData
 
     public string Name { get; private set; }
 
+    public string LocalAuthorityCode => "E09000001";
+
+    public string LocalAuthorityName => "City of London";
+
     public int HomesNumber => _dataSeed + 4;
+
+    public SitePlanningStatus PlanningStatus => SitePlanningStatus.OutlinePlanningApplicationSubmitted;
+
+    public bool AddAnotherSite => false;
 
     public string GenerateSiteName()
     {

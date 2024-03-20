@@ -34,6 +34,15 @@ public static class HtmlDocumentExtensions
         return anchorElement;
     }
 
+    public static IHtmlAnchorElement GetLinkByTestId(this IHtmlDocument htmlDocument, string testId)
+    {
+        var element = GetElementByTestId(htmlDocument, testId);
+
+        var anchorElement = element as IHtmlAnchorElement;
+        anchorElement.Should().NotBeNull($"Element with data-testid {testId} should be IHtmlAnchorElement");
+        return anchorElement!;
+    }
+
     public static string GetPageTitle(this IHtmlDocument htmlDocument)
     {
         var header = htmlDocument.GetElementsByClassName(CssConstants.GovUkHxl).FirstOrDefault()
