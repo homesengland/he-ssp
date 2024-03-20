@@ -31,4 +31,6 @@ public static class SummaryAnswerHelper
     }
 
     public static IList<string>? ToDate(DateDetails? date) => DateHelper.DisplayAsUkFormatDate(date)?.ToOneElementList();
+
+    public static IList<string>? ToOnlyMonthAndYearDate(DateDetails? date) => DateHelper.DisplayAsUkFormatOnlyMonthAndYearDate(date)?.ToOneElementList();
 }

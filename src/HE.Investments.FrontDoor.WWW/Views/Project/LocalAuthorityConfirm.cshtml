@@ -23,6 +23,7 @@
     <form asp-controller="Project" asp-action="LocalAuthorityConfirm" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
 
         @Html.HiddenFor(m => m.LocalAuthorityId)
+        @Html.HiddenFor(m => m.LocalAuthorityName)
 
         <vc:radio-yes-no
             field-name="IsConfirmed"

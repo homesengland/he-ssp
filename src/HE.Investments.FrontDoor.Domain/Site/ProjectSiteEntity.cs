@@ -7,7 +7,7 @@ using HE.Investments.FrontDoor.Contract.Site;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
 using HE.Investments.FrontDoor.Domain.Site.ValueObjects;
 using HE.Investments.FrontDoor.Shared.Project;
-using Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects;
+using SiteLocalAuthority = Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
 
 namespace HE.Investments.FrontDoor.Domain.Site;
 
@@ -22,14 +22,14 @@ public class ProjectSiteEntity
         DateTime? createdOn = null,
         HomesNumber? homesNumber = null,
         PlanningStatus? planningStatus = null,
-        LocalAuthorityId? localAuthorityId = null)
+        SiteLocalAuthority? localAuthority = null)
     {
         Id = id;
         ProjectId = projectId;
         Name = name;
         CreatedOn = createdOn;
         HomesNumber = homesNumber;
-        LocalAuthorityId = localAuthorityId;
+        LocalAuthority = localAuthority;
         PlanningStatus = planningStatus ?? PlanningStatus.Empty();
     }
 
@@ -45,7 +45,7 @@ public class ProjectSiteEntity
 
     public PlanningStatus PlanningStatus { get; private set; }
 
-    public LocalAuthorityId? LocalAuthorityId { get; set; }
+    public SiteLocalAuthority? LocalAuthority { get; set; }
 
     public void ProvideName(SiteName siteName)
     {
@@ -72,8 +72,8 @@ public class ProjectSiteEntity
         HomesNumber = _modificationTracker.Change(HomesNumber, homesNumber);
     }
 
-    public void ProvideLocalAuthority(LocalAuthorityId localAuthorityId)
+    public void ProvideLocalAuthority(SiteLocalAuthority localAuthority)
     {
-        LocalAuthorityId = _modificationTracker.Change(LocalAuthorityId, localAuthorityId);
+        LocalAuthority = _modificationTracker.Change(LocalAuthority, localAuthority);
     }
 }

@@ -1,6 +1,9 @@
+extern alias Org;
+
 using HE.Investments.Account.Shared;
 using HE.Investments.FrontDoor.Contract.Project.Commands;
 using HE.Investments.FrontDoor.Domain.Project.Repository;
+using ProjectLocalAuthority = Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
 
 namespace HE.Investments.FrontDoor.Domain.Project.CommandHandlers;
 
@@ -13,6 +16,6 @@ public class ProvideLocalAuthorityCommandHandler : ProjectBaseCommandHandler<Pro
 
     protected override void Perform(ProjectEntity project, ProvideLocalAuthorityCommand request)
     {
-        project.ProvideLocalAuthority(request.LocalAuthorityId);
+        project.ProvideLocalAuthority(ProjectLocalAuthority.New(request.LocalAuthorityId, request.LocalAuthorityName));
     }
 }
