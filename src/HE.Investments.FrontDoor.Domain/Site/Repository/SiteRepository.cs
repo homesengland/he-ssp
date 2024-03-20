@@ -74,6 +74,6 @@ public class SiteRepository : ISiteRepository, IRemoveSiteRepository
             dto.CreatedOn,
             dto.NumberofHomesEnabledBuilt == null ? null : new HomesNumber(dto.NumberofHomesEnabledBuilt.Value),
             planningStatus: PlanningStatus.Create(_planningStatusMapper.ToDomain(dto.PlanningStatus)),
-            localAuthorityId: dto.LocalAuthorityCode == null ? null : new LocalAuthorityId(dto.LocalAuthorityCode));
+            localAuthorityId: string.IsNullOrWhiteSpace(dto.LocalAuthorityCode) ? null : new LocalAuthorityId(dto.LocalAuthorityCode));
     }
 }

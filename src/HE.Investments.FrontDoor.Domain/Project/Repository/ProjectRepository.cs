@@ -105,6 +105,6 @@ public class ProjectRepository : IProjectRepository
             requiredFunding: new RequiredFundingMapper().Map(dto.AmountofFundingRequired),
             isProfit: dto.IntentiontoMakeaProfit.IsProvided() ? new IsProfit(dto.IntentiontoMakeaProfit) : null,
             expectedStartDate: ExpectedStartDate.Create(dto.StartofProjectMonth, dto.StartofProjectYear),
-            localAuthorityId: dto.LocalAuthorityCode == null ? null : new LocalAuthorityId(dto.LocalAuthorityCode));
+            localAuthorityId: string.IsNullOrWhiteSpace(dto.LocalAuthorityCode) ? null : new LocalAuthorityId(dto.LocalAuthorityCode));
     }
 }
