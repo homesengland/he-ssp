@@ -2,15 +2,17 @@ namespace HE.Investments.FrontDoor.WWW.Config;
 
 public interface IExternalLinks
 {
-    public string MailToHelpToBuildTechSupport { get; }
+    string MailToHelpToBuildTechSupport { get; }
 
-    public string HomesEnglandPrivacyNotice { get; }
+    string HomesEnglandPrivacyNotice { get; }
 
-    public string OpenGovernmentLicence { get; }
+    string OpenGovernmentLicence { get; }
 
-    public string UkGovernmentLicensingFramework { get; }
+    string UkGovernmentLicensingFramework { get; }
 
-    public string GovUk { get; }
+    string GovUk { get; }
 
     string MailToEnquiries { get; }
+
+    string FindLocalCouncil { get; }
 }

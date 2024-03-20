@@ -128,7 +128,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         var site = await GetSiteDetails(projectId, siteId, cancellationToken);
         var localAuthority = await _mediator.Send(new GetLocalAuthorityQuery(new LocalAuthorityId(localAuthorityId ?? site.LocalAuthorityCode!)), cancellationToken);
 
-        return View(nameof(LocalAuthorityConfirm), new LocalAuthorityViewModel(localAuthority.Id, localAuthority.Name, projectId, siteId, site.LocalAuthorityCode.IsProvided()));
+        return View(nameof(LocalAuthorityConfirm), new LocalAuthorityViewModel(localAuthority.Id, localAuthority.Name, projectId, siteId, site.LocalAuthorityCode.IsProvided() ? true : null));
     }
 
     [HttpPost("{siteId}/local-authority-confirm")]

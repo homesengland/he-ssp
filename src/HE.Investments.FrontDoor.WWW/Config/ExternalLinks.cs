@@ -21,6 +21,8 @@ public class ExternalLinks : IExternalLinks
         GovUk = configuration.TryGetValue(ConfigurationKey(nameof(GovUk))) ?? "https://www.gov.uk/";
 
         MailToEnquiries = configuration.TryGetValue(ConfigurationKey(nameof(MailToEnquiries))) ?? "enquiries@homesengland.gov.uk";
+
+        FindLocalCouncil = configuration.TryGetValue(ConfigurationKey(nameof(FindLocalCouncil))) ?? "https://www.gov.uk/find-local-council";
     }
 
     public string MailToHelpToBuildTechSupport { get; }
@@ -34,6 +36,8 @@ public class ExternalLinks : IExternalLinks
     public string GovUk { get; }
 
     public string MailToEnquiries { get; }
+
+    public string FindLocalCouncil { get; }
 
     private string ConfigurationKey(string propertyName) => $"{nameof(ExternalLinks)}:{propertyName}";
 }
