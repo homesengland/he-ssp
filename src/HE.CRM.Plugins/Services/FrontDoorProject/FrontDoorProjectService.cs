@@ -47,7 +47,7 @@ namespace HE.CRM.Plugins.Services.FrontDoorProject
             FrontDoorProjectDto frontDoorProjectFromPortal = JsonSerializer.Deserialize<FrontDoorProjectDto>(entityFieldsParameters);
             if (frontDoorProjectFromPortal.LocalAuthorityCode != null)
             {
-                frontDoorProjectFromPortal.LocalAuthority = _localAuthorityRepository.GetLocalAuthorityWithGivenOnsCode(frontDoorProjectFromPortal.LocalAuthorityCode).Id.ToString();
+                frontDoorProjectFromPortal.LocalAuthority = _localAuthorityRepository.GetLocalAuthorityWithGivenOnsCode(frontDoorProjectFromPortal.LocalAuthorityCode)?.Id.ToString();
             }
 
             //THIS IS CONTACT WHO IS SENDING MESSAGE 
@@ -98,7 +98,12 @@ namespace HE.CRM.Plugins.Services.FrontDoorProject
                 foreach (var frontDoorProject in frontDoorProjects)
                 {
                     var contact = _contactRepository.GetById(frontDoorProject.invln_ContactId.Id, new string[] { nameof(Contact.FirstName).ToLower(), nameof(Contact.LastName).ToLower(), nameof(Contact.invln_externalid).ToLower(), nameof(Contact.EMailAddress1).ToLower(), nameof(Contact.Telephone1).ToLower() });
-                    var frontDoorProjecDto = FrontDoorProjectMapper.MapRegularEntityToDto(frontDoorProject, contact);
+                    invln_localauthority localauthority = new invln_localauthority();
+                    if (frontDoorProject.invln_LocalAuthorityId != null)
+                    {
+                        localauthority = _localAuthorityRepository.GetById(frontDoorProject.invln_LocalAuthorityId.Id, new string[] { nameof(invln_localauthority.invln_localauthorityId).ToLower(), nameof(invln_localauthority.invln_localauthorityname).ToLower(), nameof(invln_localauthority.invln_onscode).ToLower() });
+                    }
+                    var frontDoorProjecDto = FrontDoorProjectMapper.MapRegularEntityToDto(frontDoorProject, contact, localauthority);
                     listOfFrontDoorProjects.Add(frontDoorProjecDto);
                 }
             }
@@ -118,7 +123,7 @@ namespace HE.CRM.Plugins.Services.FrontDoorProject
         }
 
         public bool DeactivateFrontDoorProject(string frontDoorProjectId)
-        { 
+        {
             var frontDoorProject = _frontDoorProjectRepository.GetById(new Guid(frontDoorProjectId), new string[] { nameof(invln_FrontDoorProjectPOC.invln_FrontDoorProjectPOCId).ToLower() });
             _frontDoorProjectRepository.SetState(frontDoorProject, invln_FrontDoorProjectPOCState.Inactive, invln_FrontDoorProjectPOC_StatusCode.Inactive);
             var frontDoorProjectAfter = _frontDoorProjectRepository.GetById(new Guid(frontDoorProjectId), new string[] { nameof(invln_FrontDoorProjectPOC.StateCode).ToLower() });

@@ -46,11 +46,23 @@ namespace HE.CRM.Plugins.Services.FrontDoorProjectSite
 
             var frontDoorProjectPaging = _frontDoorProjectSiteRepository.GetFrontDoorProjectSites(pagingRequestDto, frontDoorProjectIdCondition, attributes);
 
+            List<FrontDoorProjectSiteDto> frontDoorProjectSiteDtoList = new List<FrontDoorProjectSiteDto>();
+            foreach (var siteFromCrm in frontDoorProjectPaging.items)
+            {
+                invln_localauthority localauthority = new invln_localauthority();
+                if (siteFromCrm.invln_LocalAuthorityId != null)
+                {
+                    localauthority = _localAuthorityRepository.GetById(siteFromCrm.invln_LocalAuthorityId.Id, new string[] { nameof(invln_localauthority.invln_localauthorityId).ToLower(), nameof(invln_localauthority.invln_localauthorityname).ToLower(), nameof(invln_localauthority.invln_onscode).ToLower() });
+                }
+                var frontDoorProjectSiteDto = FrontDoorProjectSiteMapper.MapFrontDoorProjectSiteToDto(siteFromCrm, localauthority);
+                frontDoorProjectSiteDtoList.Add(frontDoorProjectSiteDto);
+            }
+
             return new PagedResponseDto<FrontDoorProjectSiteDto>
             {
                 paging = frontDoorProjectPaging.paging,
                 totalItemsCount = frontDoorProjectPaging.totalItemsCount,
-                items = frontDoorProjectPaging.items.Select(x => FrontDoorProjectSiteMapper.MapFrontDoorProjectSiteToDto(x)).ToList(),
+                items = frontDoorProjectSiteDtoList,
             };
         }
 
@@ -63,9 +75,16 @@ namespace HE.CRM.Plugins.Services.FrontDoorProjectSite
             var frontDoorProjectSiteIdCondition = GetFetchXmlConditionForGivenField(frontDoorProjectSiteId, nameof(invln_FrontDoorProjectSitePOC.invln_FrontDoorProjectSitePOCId).ToLower());
 
             var frontDoorProjectSite = _frontDoorProjectSiteRepository.GetFrontDoorProjectSite(frontDoorProjectIdCondition, frontDoorProjectSiteIdCondition, attributes);
+
             if (frontDoorProjectSite != null)
             {
-                return FrontDoorProjectSiteMapper.MapFrontDoorProjectSiteToDto(frontDoorProjectSite);
+                invln_localauthority localauthority = new invln_localauthority();
+                if (frontDoorProjectSite.invln_LocalAuthorityId != null)
+                {
+                    localauthority = _localAuthorityRepository.GetById(frontDoorProjectSite.invln_LocalAuthorityId.Id, new string[] { nameof(invln_localauthority.invln_localauthorityId).ToLower(), nameof(invln_localauthority.invln_localauthorityname).ToLower(), nameof(invln_localauthority.invln_onscode).ToLower() });
+                }
+
+                return FrontDoorProjectSiteMapper.MapFrontDoorProjectSiteToDto(frontDoorProjectSite, localauthority);
             }
             else
             {
@@ -82,7 +101,7 @@ namespace HE.CRM.Plugins.Services.FrontDoorProjectSite
             FrontDoorProjectSiteDto frontDoorSiteFromPortal = JsonSerializer.Deserialize<FrontDoorProjectSiteDto>(entityFieldsParameters);
             if (frontDoorSiteFromPortal.LocalAuthorityCode != null)
             {
-                frontDoorSiteFromPortal.LocalAuthority = _localAuthorityRepository.GetLocalAuthorityWithGivenOnsCode(frontDoorSiteFromPortal.LocalAuthorityCode).Id.ToString();
+                frontDoorSiteFromPortal.LocalAuthority = _localAuthorityRepository.GetLocalAuthorityWithGivenOnsCode(frontDoorSiteFromPortal.LocalAuthorityCode)?.Id.ToString();
             }
 
             var frontDoorSiteToCreate = FrontDoorProjectSiteMapper.MapFrontDoorProjectSiteDtoToRegularEntity(frontDoorSiteFromPortal, frontDoorProjectId);
