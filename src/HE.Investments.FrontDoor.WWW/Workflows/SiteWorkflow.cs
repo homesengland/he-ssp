@@ -11,6 +11,13 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
 
     private readonly SiteDetails _model;
 
+    public SiteWorkflow(SiteWorkflowState currentWorkflowState)
+    {
+        _machine = new StateMachine<SiteWorkflowState, Trigger>(currentWorkflowState);
+        _model = new SiteDetails();
+        ConfigureTransitions();
+    }
+
     public SiteWorkflow(SiteWorkflowState currentWorkflowState, SiteDetails siteDetails)
     {
         _machine = new StateMachine<SiteWorkflowState, Trigger>(currentWorkflowState);
