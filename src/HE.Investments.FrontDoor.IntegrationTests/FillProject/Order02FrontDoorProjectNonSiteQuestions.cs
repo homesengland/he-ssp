@@ -2,8 +2,10 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Extensions;
+using HE.Investments.Common.WWW.Helpers;
 using HE.Investments.FrontDoor.Contract.Project;
 using HE.Investments.FrontDoor.IntegrationTests.Framework;
 using HE.Investments.FrontDoor.IntegrationTests.Pages;
@@ -11,6 +13,7 @@ using HE.Investments.FrontDoor.Shared.Project.Contract;
 using HE.Investments.FrontDoor.WWW;
 using HE.Investments.FrontDoor.WWW.Views.Project.Const;
 using HE.Investments.IntegrationTestsFramework;
+using HE.Investments.IntegrationTestsFramework.Assertions;
 using HE.Investments.TestsUtils.Assertions;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
@@ -125,5 +128,34 @@ public class Order02FrontDoorProjectNonSiteQuestions : FrontDoorIntegrationTest
             ProjectPagesUrl.CheckAnswers(ProjectData.Id),
             ("ExpectedStartDate.Month", ProjectData.ExpectedStartDate.Month.ToString(CultureInfo.InvariantCulture)),
             ("ExpectedStartDate.Year", ProjectData.ExpectedStartDate.Year.ToString(CultureInfo.InvariantCulture)));
+    }
+
+    [Fact(Skip = FrontDoorConfig.SkipTest)]
+    [Order(10)]
+    public async Task Order10_CheckAnswers()
+    {
+        // given
+        var checkAnswersPage = await GetCurrentPage(ProjectPagesUrl.CheckAnswers(ProjectData.Id));
+        checkAnswersPage
+            .UrlEndWith(ProjectPagesUrl.CheckAnswers(ProjectData.Id))
+            .HasTitle(ProjectPageTitles.CheckAnswers)
+            .HasBackLink();
+
+        // when & then
+        var summary = checkAnswersPage.GetSummaryListItems();
+        summary.Should().ContainKey("Project in England").WithValue(ProjectData.IsEnglandHousingDelivery.MapToCommonResponse());
+        summary.Should().ContainKey("Project name").WithValue(ProjectData.Name);
+        summary.Should().ContainKey("Activities you require support for").WithValue(ProjectData.ActivityType.GetDescription());
+        summary.Should().ContainKey("Amount of affordable homes").WithValue(ProjectData.AffordableHomeAmount.GetDescription());
+        summary.Should().ContainKey("Previous residential building experience").WithValue(ProjectData.OrganisationHomesBuilt.ToString(CultureInfo.InvariantCulture));
+        summary.Should().ContainKey("Identified site").WithValue(ProjectData.IsSiteIdentified.MapToCommonResponse());
+        summary.Should().ContainKey("Geographic focus").WithValue(ProjectData.GeographicFocus.GetDescription());
+        summary.Should().ContainKey("Region").WithValue(string.Join(Environment.NewLine, ProjectData.RegionTypes.Select(x => x.GetDescription())) + Environment.NewLine);
+        summary.Should().ContainKey("Homes your project enables").WithValue(ProjectData.HomesNumber.ToString(CultureInfo.InvariantCulture));
+        summary.Should().ContainKey("Project progress more slowly or stall").WithValue(ProjectData.IsSupportRequired.MapToCommonResponse());
+        summary.Should().ContainKey("Funding required").WithValue(ProjectData.IsFundingRequired.MapToCommonResponse());
+        summary.Should().ContainKey("How much funding").WithValue(ProjectData.RequiredFunding.GetDescription());
+        summary.Should().ContainKey("Intention to make a profit").WithValue(ProjectData.IsProfit.MapToCommonResponse());
+        summary.Should().ContainKey("Expected project start date").WithValue($"{ProjectData.ExpectedStartDate.Day}/{ProjectData.ExpectedStartDate.Month}/{ProjectData.ExpectedStartDate.Year}");
     }
 }
