@@ -11,6 +11,7 @@ public class ProjectData
     public ProjectData()
     {
         _dataSeed = new Random().Next(1, 50) * 2;
+        SiteData = new SiteData();
     }
 
     public string Id { get; private set; }
@@ -41,6 +42,8 @@ public class ProjectData
 
     public bool IsProfit => true;
 
+    public SiteData SiteData { get; }
+
     public DateTime ExpectedStartDate => new DateTime(2024, 3, 20, 0, 0, 0, DateTimeKind.Utc).AddDays(_dataSeed);
 
     public void SetProjectId(string projectId)
@@ -52,5 +55,10 @@ public class ProjectData
     {
         Name = "IT-Project".WithTimestampSuffix();
         return Name;
+    }
+
+    public void SwitchIsSiteIdentified()
+    {
+        IsSiteIdentified = !IsSiteIdentified;
     }
 }

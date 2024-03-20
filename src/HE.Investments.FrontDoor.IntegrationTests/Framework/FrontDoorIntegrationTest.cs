@@ -18,6 +18,8 @@ public class FrontDoorIntegrationTest : IntegrationTestBase<Program>
 
     public ProjectData ProjectData { get; private set; }
 
+    public SiteData SiteData => ProjectData.SiteData;
+
     private void SetProjectData()
     {
         var projectData = GetSharedDataOrNull<ProjectData>(nameof(ProjectData));
