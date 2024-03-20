@@ -81,9 +81,9 @@ public class ProjectRepository : IProjectRepository
         return project;
     }
 
-    public async Task<bool> DoesExist(ProjectName name, CancellationToken cancellationToken)
+    public async Task<bool> DoesExist(ProjectName name, UserAccount userAccount, CancellationToken cancellationToken)
     {
-        return await _crmContext.IsThereProjectWithName(name.Value, cancellationToken);
+        return await _crmContext.IsThereProjectWithName(name.Value, userAccount.SelectedOrganisationId().Value, cancellationToken);
     }
 
     private ProjectEntity MapToEntity(FrontDoorProjectDto dto)
