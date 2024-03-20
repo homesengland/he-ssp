@@ -47,7 +47,19 @@ namespace HE.CRM.Plugins.Services.FrontDoorProject
             FrontDoorProjectDto frontDoorProjectFromPortal = JsonSerializer.Deserialize<FrontDoorProjectDto>(entityFieldsParameters);
             if (frontDoorProjectFromPortal.LocalAuthorityCode != null)
             {
-                frontDoorProjectFromPortal.LocalAuthority = _localAuthorityRepository.GetLocalAuthorityWithGivenOnsCode(frontDoorProjectFromPortal.LocalAuthorityCode)?.Id.ToString();
+                var localAuthorityGUID = _localAuthorityRepository.GetLocalAuthorityWithGivenOnsCode(frontDoorProjectFromPortal.LocalAuthorityCode)?.Id;
+                if (localAuthorityGUID != null)
+                {
+                    frontDoorProjectFromPortal.LocalAuthority = localAuthorityGUID.ToString();
+                }
+                else
+                {
+                    frontDoorProjectFromPortal.LocalAuthority = null;
+                }
+            }
+            else
+            {
+                frontDoorProjectFromPortal.LocalAuthority = null;
             }
 
             //THIS IS CONTACT WHO IS SENDING MESSAGE 
