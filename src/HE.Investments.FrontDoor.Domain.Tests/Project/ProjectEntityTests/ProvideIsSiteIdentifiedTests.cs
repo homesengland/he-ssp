@@ -1,4 +1,5 @@
 using FluentAssertions;
+using HE.Investments.FrontDoor.Contract.Project.Events;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
 using HE.Investments.FrontDoor.Domain.Tests.Project.TestDataBuilders;
 using Xunit;
@@ -36,5 +37,19 @@ public class ProvideIsSiteIdentifiedTests
         project.GeographicFocus.GeographicFocus.Should().Be(ProjectGeographicFocus.Undefined);
         project.Regions.IsAnswered().Should().BeFalse();
         project.HomesNumber.Should().BeNull();
+    }
+
+    [Fact]
+    public void ShouldPublishFrontDoorProjectSitesAreNotIdentifiedEvent_WhenIsSiteIdentifiedIsChangedToFalse()
+    {
+        // given
+        var project = ProjectEntityBuilder.New().WithIsSiteIdentified(true).Build();
+        var isSiteIdentified = new IsSiteIdentified(false);
+
+        // when
+        project.ProvideIsSiteIdentified(isSiteIdentified);
+
+        // then
+        project.GetDomainEventsAndRemove().Should().ContainSingle(e => e is FrontDoorProjectSitesAreNotIdentifiedEvent);
     }
 }

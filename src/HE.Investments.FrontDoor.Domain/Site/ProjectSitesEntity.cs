@@ -50,7 +50,7 @@ public class ProjectSitesEntity
         return Sites.MaxBy(x => x.CreatedOn)?.Id;
     }
 
-    public async Task Remove(IRemoveSiteRepository removeSiteRepository, FrontDoorSiteId siteId, UserAccount userAccount, RemoveSiteAnswer? removeAnswer, CancellationToken cancellationToken)
+    public async Task RemoveSite(IRemoveSiteRepository removeSiteRepository, FrontDoorSiteId siteId, UserAccount userAccount, RemoveSiteAnswer? removeAnswer, CancellationToken cancellationToken)
     {
         if (removeAnswer.IsNotProvided() || removeAnswer == RemoveSiteAnswer.Undefined)
         {
@@ -59,6 +59,14 @@ public class ProjectSitesEntity
         else if (removeAnswer == RemoveSiteAnswer.Yes)
         {
             await removeSiteRepository.Remove(siteId, userAccount, cancellationToken);
+        }
+    }
+
+    public async Task RemoveAllProjectSites(IRemoveSiteRepository removeSiteRepository, UserAccount userAccount, CancellationToken cancellationToken)
+    {
+        foreach (var site in Sites)
+        {
+            await removeSiteRepository.Remove(site.Id, userAccount, cancellationToken);
         }
     }
 }
