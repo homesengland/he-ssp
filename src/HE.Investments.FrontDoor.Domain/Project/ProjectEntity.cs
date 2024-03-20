@@ -90,6 +90,8 @@ public class ProjectEntity : DomainEntity
 
     public LocalAuthorityId? LocalAuthorityId { get; private set; }
 
+    public bool IsModified => _modificationTracker.IsModified || Id.IsNew;
+
     public static async Task<ProjectEntity> New(ProjectName projectName, IProjectNameExists projectNameExists, CancellationToken cancellationToken)
     {
         return new(FrontDoorProjectId.New(), await ValidateProjectNameUniqueness(projectName, projectNameExists, cancellationToken));
@@ -123,6 +125,16 @@ public class ProjectEntity : DomainEntity
     public void ProvideGeographicFocus(ProjectGeographicFocus geographicFocus)
     {
         GeographicFocus = _modificationTracker.Change(GeographicFocus, geographicFocus);
+    }
+
+    public void SetId(FrontDoorProjectId newId)
+    {
+        if (!Id.IsNew)
+        {
+            throw new DomainException("Id cannot be modified", CommonErrorCodes.IdCannotBeModified);
+        }
+
+        Id = _modificationTracker.Change(Id, newId);
     }
 
     public void New(FrontDoorProjectId projectId)
@@ -207,16 +219,6 @@ public class ProjectEntity : DomainEntity
         }
 
         return projectName;
-    }
-
-    private void SetId(FrontDoorProjectId newId)
-    {
-        if (!Id.IsNew)
-        {
-            throw new DomainException("Id cannot be modified", CommonErrorCodes.IdCannotBeModified);
-        }
-
-        Id = newId;
     }
 
     private void IsFundingRequiredHasChanged(IsFundingRequired? isFundingRequired)

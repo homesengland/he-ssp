@@ -1,5 +1,6 @@
 @using HE.Investments.Common.WWW.Components.SelectList
 @using HE.Investments.Common.Contract.Pagination
+@using HE.Investments.Common.WWW.Extensions
 @using HE.Investments.Common.WWW.Models
 
 @model (PaginationResult<SelectListItemViewModel> list, string pagingNavigationUrl, string addActionUrl, string addActionText, ParagraphWithLinkModel paragraphWithLink)
@@ -9,9 +10,9 @@
     {
         <li class="govuk-!-margin-bottom-4">
             <gds-p class="govuk-!-margin-bottom-0">
-                <gds-link href="@item.Url">
+                <a class="govuk-link" href="@item.Url" data-testid=@item.Text.ToIdTag()>
                     <b>@item.Text</b>
-                </gds-link>
+                </a>
                 @if (!string.IsNullOrWhiteSpace(item.Description))
                 {
                     <gds-p>@item.Description</gds-p>
@@ -42,12 +43,14 @@
 
         @if (Model.paragraphWithLink.LinkUrl.ActionLink != null)
         {
-            @Model.paragraphWithLink.Text <gds-link href="@(Url.Action(Model.paragraphWithLink.LinkUrl.ActionLink.Action, Model.paragraphWithLink.LinkUrl.ActionLink.Controller, Model.paragraphWithLink.LinkUrl.ActionLink.Values) ?? string.Empty)">@Model.paragraphWithLink.LinkText</gds-link>
+            @Model.paragraphWithLink.Text
+            <gds-link href="@(Url.Action(Model.paragraphWithLink.LinkUrl.ActionLink.Action, Model.paragraphWithLink.LinkUrl.ActionLink.Controller, Model.paragraphWithLink.LinkUrl.ActionLink.Values) ?? string.Empty)">@Model.paragraphWithLink.LinkText</gds-link>
         }
         @* ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract *@
         else if (Model.paragraphWithLink.LinkUrl.DirectLink != null)
         {
-            @Model.paragraphWithLink.Text <a class="govuk-link" @(Model.paragraphWithLink.LinkUrl.DirectLink.OpenInNewTab ? "target=\"_blank\"" : string.Empty) href="@Model.paragraphWithLink.LinkUrl.DirectLink.DirectLink">@Model.paragraphWithLink.LinkText</a>
+            @Model.paragraphWithLink.Text
+            <a class="govuk-link" @(Model.paragraphWithLink.LinkUrl.DirectLink.OpenInNewTab ? "target=\"_blank\"" : string.Empty) href="@Model.paragraphWithLink.LinkUrl.DirectLink.DirectLink">@Model.paragraphWithLink.LinkText</a>
         }
 
     </gds-p>
