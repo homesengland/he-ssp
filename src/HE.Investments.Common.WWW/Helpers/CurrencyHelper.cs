@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace HE.Investments.Common.WWW.Helpers;
 
 public static class CurrencyHelper
@@ -33,6 +35,11 @@ public static class CurrencyHelper
     public static string? DisplayPounds(decimal? value)
     {
         return Format(value, CurrencyDisplaySettings.WithoutPences);
+    }
+
+    public static string? DisplayPoundsPences(string? value)
+    {
+        return decimal.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out var parsedValue) ? DisplayPoundsPences(parsedValue) : null;
     }
 
     public static string? DisplayPoundsPences(this decimal? value)
