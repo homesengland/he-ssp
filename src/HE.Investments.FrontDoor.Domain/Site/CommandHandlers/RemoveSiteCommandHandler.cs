@@ -25,7 +25,7 @@ public class RemoveSiteCommandHandler : IRequestHandler<RemoveSiteCommand, Opera
     {
         var userAccount = await _accountUserContext.GetSelectedAccount();
         var projectSites = await _siteRepository.GetProjectSites(request.ProjectId, userAccount, cancellationToken);
-        await projectSites.Remove(_removeSiteRepository, request.SiteId, userAccount, request.RemoveSiteAnswer, cancellationToken);
+        await projectSites.RemoveSite(_removeSiteRepository, request.SiteId, userAccount, request.RemoveSiteAnswer, cancellationToken);
 
         return OperationResult.Success();
     }

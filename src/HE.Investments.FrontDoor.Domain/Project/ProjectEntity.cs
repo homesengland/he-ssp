@@ -5,6 +5,7 @@ using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Errors;
 using HE.Investments.Common.Extensions;
+using HE.Investments.FrontDoor.Contract.Project.Events;
 using HE.Investments.FrontDoor.Domain.Project.Repository;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
 using HE.Investments.FrontDoor.Shared.Project;
@@ -136,6 +137,12 @@ public class ProjectEntity : DomainEntity
         Id = _modificationTracker.Change(Id, newId);
     }
 
+    public void New(FrontDoorProjectId projectId)
+    {
+        SetId(projectId);
+        Publish(new FrontDoorProjectHasBeenCreatedEvent(projectId, Name.Value));
+    }
+
     public async Task ProvideName(ProjectName projectName, IProjectNameExists projectNameExists, CancellationToken cancellationToken)
     {
         if (Name == projectName)
@@ -228,6 +235,10 @@ public class ProjectEntity : DomainEntity
         if (isSiteIdentified?.Value ?? false)
         {
             ResetNonSiteQuestions();
+        }
+        else
+        {
+            Publish(new FrontDoorProjectSitesAreNotIdentifiedEvent(Id));
         }
     }
 
