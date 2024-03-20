@@ -122,10 +122,10 @@ public class SiteController : WorkflowController<SiteWorkflowState>
 
     [HttpGet("{siteId}/local-authority-confirm")]
     [WorkflowState(SiteWorkflowState.LocalAuthorityConfirm)]
-    public async Task<IActionResult> LocalAuthorityConfirm([FromRoute] string projectId, [FromRoute] string siteId, [FromQuery] string localAuthorityId, CancellationToken cancellationToken)
+    public async Task<IActionResult> LocalAuthorityConfirm([FromRoute] string projectId, [FromRoute] string siteId, [FromQuery] string? localAuthorityId, CancellationToken cancellationToken)
     {
-        await GetSiteDetails(projectId, siteId, cancellationToken);
-        var localAuthority = await _mediator.Send(new GetLocalAuthorityQuery(new LocalAuthorityId(localAuthorityId)), cancellationToken);
+        var siteDetails = await GetSiteDetails(projectId, siteId, cancellationToken);
+        var localAuthority = await _mediator.Send(new GetLocalAuthorityQuery(new LocalAuthorityId(localAuthorityId ?? siteDetails.LocalAuthorityCode!)), cancellationToken);
 
         return View(nameof(LocalAuthorityConfirm), new LocalAuthorityViewModel(localAuthority.Id, localAuthority.Name, projectId, siteId));
     }
@@ -205,9 +205,11 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         return View(nameof(AddAnotherSite), await GetSiteDetails(projectId, siteId, cancellationToken));
     }
 
-    protected override Task<IStateRouting<SiteWorkflowState>> Routing(SiteWorkflowState currentState, object? routeData = null)
+    protected override async Task<IStateRouting<SiteWorkflowState>> Routing(SiteWorkflowState currentState, object? routeData = null)
     {
-        return Task.FromResult<IStateRouting<SiteWorkflowState>>(new SiteWorkflow(currentState));
+        var projectId = routeData?.GetPropertyValue<string>("projectId") ?? this.GetProjectIdFromRoute().Value;
+        var siteId = routeData?.GetPropertyValue<string>("siteId") ?? this.GetSiteIdFromRoute().Value;
+        return new SiteWorkflow(currentState, await GetSiteDetails(projectId, siteId, CancellationToken.None));
     }
 
     private async Task<SiteDetails> GetSiteDetails(string projectId, string siteId, CancellationToken cancellationToken)

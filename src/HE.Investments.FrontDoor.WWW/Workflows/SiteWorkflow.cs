@@ -1,3 +1,4 @@
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.FrontDoor.Contract.Site;
 using Stateless;
@@ -8,9 +9,12 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
 {
     private readonly StateMachine<SiteWorkflowState, Trigger> _machine;
 
-    public SiteWorkflow(SiteWorkflowState currentWorkflowState)
+    private readonly SiteDetails _model;
+
+    public SiteWorkflow(SiteWorkflowState currentWorkflowState, SiteDetails siteDetails)
     {
         _machine = new StateMachine<SiteWorkflowState, Trigger>(currentWorkflowState);
+        _model = siteDetails;
         ConfigureTransitions();
     }
 
@@ -43,7 +47,8 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
 
         _machine.Configure(SiteWorkflowState.PlanningStatus)
             .Permit(Trigger.Continue, SiteWorkflowState.AddAnotherSite)
-            .Permit(Trigger.Back, SiteWorkflowState.LocalAuthoritySearch);
+            .PermitIf(Trigger.Back, SiteWorkflowState.LocalAuthoritySearch, () => _model.LocalAuthorityCode.IsNotProvided())
+            .PermitIf(Trigger.Back, SiteWorkflowState.LocalAuthorityConfirm, () => _model.LocalAuthorityCode.IsProvided());
 
         _machine.Configure(SiteWorkflowState.AddAnotherSite)
             .Permit(Trigger.Back, SiteWorkflowState.PlanningStatus);

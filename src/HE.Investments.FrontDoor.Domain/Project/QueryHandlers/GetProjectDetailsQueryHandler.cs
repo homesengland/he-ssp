@@ -50,6 +50,7 @@ public class GetProjectDetailsQueryHandler : IRequestHandler<GetProjectDetailsQu
             IsProfit = project.IsProfit.Value,
             LastSiteId = projectSite.LastSiteId(),
             ExpectedStartDate = BuildDateDetails(project.ExpectedStartDate.Value),
+            LocalAuthorityCode = project.LocalAuthorityId?.Value,
         };
     }
 

@@ -1,3 +1,4 @@
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.FrontDoor.Contract.Project;
 using HE.Investments.FrontDoor.Shared.Project.Contract;
@@ -116,7 +117,8 @@ public class ProjectWorkflow : EncodedStateRouting<ProjectWorkflowState>
                 ProjectWorkflowState.GeographicFocus,
                 () => IsGeographicFocus(ProjectGeographicFocus.National, ProjectGeographicFocus.Unknown))
             .PermitIf(Trigger.Back, ProjectWorkflowState.Region, () => IsGeographicFocus(ProjectGeographicFocus.Regional))
-            .PermitIf(Trigger.Back, ProjectWorkflowState.LocalAuthoritySearch, () => IsGeographicFocus(ProjectGeographicFocus.SpecificLocalAuthority));
+            .PermitIf(Trigger.Back, ProjectWorkflowState.LocalAuthoritySearch, () => _model.LocalAuthorityCode.IsNotProvided() && IsGeographicFocus(ProjectGeographicFocus.SpecificLocalAuthority))
+            .PermitIf(Trigger.Back, ProjectWorkflowState.LocalAuthorityConfirm, () => _model.LocalAuthorityCode.IsProvided() && IsGeographicFocus(ProjectGeographicFocus.SpecificLocalAuthority));
 
         Machine.Configure(ProjectWorkflowState.Progress)
             .Permit(Trigger.Continue, ProjectWorkflowState.RequiresFunding)
