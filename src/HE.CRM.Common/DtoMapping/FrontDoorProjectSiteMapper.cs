@@ -45,6 +45,10 @@ namespace HE.CRM.Common.DtoMapping
             {
                 frontDoorProjectSiteDtoToReturn.invln_LocalAuthorityId = new EntityReference(invln_localauthority.EntityLogicalName, localAuthorityGUID);
             }
+            else
+            {
+                frontDoorProjectSiteDtoToReturn.invln_LocalAuthorityId = null;
+            }
 
             return frontDoorProjectSiteDtoToReturn;
         }

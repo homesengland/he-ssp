@@ -101,7 +101,19 @@ namespace HE.CRM.Plugins.Services.FrontDoorProjectSite
             FrontDoorProjectSiteDto frontDoorSiteFromPortal = JsonSerializer.Deserialize<FrontDoorProjectSiteDto>(entityFieldsParameters);
             if (frontDoorSiteFromPortal.LocalAuthorityCode != null)
             {
-                frontDoorSiteFromPortal.LocalAuthority = _localAuthorityRepository.GetLocalAuthorityWithGivenOnsCode(frontDoorSiteFromPortal.LocalAuthorityCode)?.Id.ToString();
+                var localAuthorityGUID = _localAuthorityRepository.GetLocalAuthorityWithGivenOnsCode(frontDoorSiteFromPortal.LocalAuthorityCode)?.Id;
+                if (localAuthorityGUID != null)
+                {
+                    frontDoorSiteFromPortal.LocalAuthority = localAuthorityGUID.ToString();
+                }
+                else
+                {
+                    frontDoorSiteFromPortal.LocalAuthority = null;
+                }
+            }
+            else
+            {
+                frontDoorSiteFromPortal.LocalAuthority = null;
             }
 
             var frontDoorSiteToCreate = FrontDoorProjectSiteMapper.MapFrontDoorProjectSiteDtoToRegularEntity(frontDoorSiteFromPortal, frontDoorProjectId);
