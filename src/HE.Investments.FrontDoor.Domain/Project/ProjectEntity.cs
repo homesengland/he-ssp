@@ -125,14 +125,10 @@ public class ProjectEntity : DomainEntity
         GeographicFocus = _modificationTracker.Change(GeographicFocus, geographicFocus);
     }
 
-    public void SetId(FrontDoorProjectId newId)
+    public void New(FrontDoorProjectId projectId)
     {
-        if (!Id.IsNew)
-        {
-            throw new DomainException("Id cannot be modified", CommonErrorCodes.IdCannotBeModified);
-        }
-
-        Id = newId;
+        SetId(projectId);
+        Publish(new FrontDoorProjectHasBeenCreatedEvent(projectId, Name.Value));
     }
 
     public async Task ProvideName(ProjectName projectName, IProjectNameExists projectNameExists, CancellationToken cancellationToken)
@@ -211,6 +207,16 @@ public class ProjectEntity : DomainEntity
         }
 
         return projectName;
+    }
+
+    private void SetId(FrontDoorProjectId newId)
+    {
+        if (!Id.IsNew)
+        {
+            throw new DomainException("Id cannot be modified", CommonErrorCodes.IdCannotBeModified);
+        }
+
+        Id = newId;
     }
 
     private void IsFundingRequiredHasChanged(IsFundingRequired? isFundingRequired)

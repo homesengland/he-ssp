@@ -5,7 +5,6 @@ using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Infrastructure.Events;
-using HE.Investments.FrontDoor.Contract.Project.Events;
 using HE.Investments.FrontDoor.Domain.Project.Crm;
 using HE.Investments.FrontDoor.Domain.Project.Crm.Mappers;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
@@ -75,8 +74,7 @@ public class ProjectRepository : IProjectRepository
         var projectId = await _crmContext.Save(dto, userAccount, cancellationToken);
         if (project.Id.IsNew)
         {
-            project.SetId(new FrontDoorProjectId(projectId));
-            project.Publish(new FrontDoorProjectHasBeenCreatedEvent(project.Id, project.Name.Value));
+            project.New(new FrontDoorProjectId(projectId));
         }
 
         await DispatchEvents(project, cancellationToken);
