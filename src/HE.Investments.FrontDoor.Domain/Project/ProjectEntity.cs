@@ -89,6 +89,8 @@ public class ProjectEntity : DomainEntity
 
     public LocalAuthorityId? LocalAuthorityId { get; private set; }
 
+    public bool IsModified => _modificationTracker.IsModified || Id.IsNew;
+
     public static async Task<ProjectEntity> New(ProjectName projectName, IProjectNameExists projectNameExists, CancellationToken cancellationToken)
     {
         return new(FrontDoorProjectId.New(), await ValidateProjectNameUniqueness(projectName, projectNameExists, cancellationToken));
@@ -131,7 +133,7 @@ public class ProjectEntity : DomainEntity
             throw new DomainException("Id cannot be modified", CommonErrorCodes.IdCannotBeModified);
         }
 
-        Id = newId;
+        Id = _modificationTracker.Change(Id, newId);
     }
 
     public async Task ProvideName(ProjectName projectName, IProjectNameExists projectNameExists, CancellationToken cancellationToken)

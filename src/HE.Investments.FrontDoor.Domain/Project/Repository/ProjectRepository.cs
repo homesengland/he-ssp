@@ -32,7 +32,7 @@ public class ProjectRepository : IProjectRepository
             ? await _crmContext.GetOrganisationProjects(userAccount.UserGlobalId.Value, organisationId, cancellationToken)
             : await _crmContext.GetUserProjects(userAccount.UserGlobalId.Value, organisationId, cancellationToken);
 
-        return projects.Select(MapToEntity).ToList();
+        return projects.OrderByDescending(x => x.CreatedOn).Select(MapToEntity).ToList();
     }
 
     public async Task<ProjectEntity> GetProject(FrontDoorProjectId projectId, UserAccount userAccount, CancellationToken cancellationToken)
@@ -47,6 +47,11 @@ public class ProjectRepository : IProjectRepository
 
     public async Task<ProjectEntity> Save(ProjectEntity project, UserAccount userAccount, CancellationToken cancellationToken)
     {
+        if (project.IsModified is false)
+        {
+            return project;
+        }
+
         var dto = new FrontDoorProjectDto
         {
             ProjectId = project.Id.IsNew ? null : project.Id.Value,

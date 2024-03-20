@@ -28,6 +28,12 @@ internal static class ProjectPagesUrl
 
     public static string FundingAmount(string projectId) => BuildProjectPage(projectId, "funding-amount");
 
+    public static string Profit(string projectId) => BuildProjectPage(projectId, "profit");
+
+    public static string ExpectedStart(string projectId) => BuildProjectPage(projectId, "expected-start");
+
+    public static string CheckAnswers(string projectId) => BuildProjectPage(projectId, "check-answers");
+
     public static string BuildProjectPage(string projectId, string pageName)
     {
         return $"apply-for-support/project/{projectId}/{pageName}";

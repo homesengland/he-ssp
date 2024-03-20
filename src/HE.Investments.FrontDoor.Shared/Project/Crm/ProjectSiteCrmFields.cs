@@ -11,6 +11,7 @@ public static class ProjectSiteCrmFields
         nameof(invln_FrontDoorProjectSitePOC.invln_PlanningStatus),
         nameof(invln_FrontDoorProjectSitePOC.invln_NumberofHomesEnabledBuilt),
         nameof(invln_FrontDoorProjectSitePOC.invln_LocalAuthorityId),
+        nameof(invln_FrontDoorProjectSitePOC.CreatedOn),
     };
 
     public static string FormatFields(this IReadOnlyList<string> fieldsToRetrieve)
