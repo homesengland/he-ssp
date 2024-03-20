@@ -6,12 +6,12 @@ public class ApplicationProjects
 {
     private readonly List<Project> _projects;
 
-    public ApplicationProjects(LoanApplicationId loanApplicationId)
+    public ApplicationProjects(LoanApplicationId loanApplicationId, string? projectName = null)
     {
         LoanApplicationId = loanApplicationId;
         _projects = new List<Project>();
 
-        AddEmptyProject();
+        AddEmptyProject(projectName);
     }
 
     public ApplicationProjects(LoanApplicationId loanApplicationId, IEnumerable<Project> projects)
@@ -27,17 +27,12 @@ public class ApplicationProjects
 
     public IReadOnlyCollection<Project> Projects => _projects.AsReadOnly();
 
-    public Project AddEmptyProject()
+    public Project AddEmptyProject(string? projectName = null)
     {
-        var project = new Project();
+        var project = new Project(projectName);
         _projects.Add(project);
 
         return project;
-    }
-
-    public void UpdateProject(Project project)
-    {
-        project = Projects.FirstOrDefault(p => p.Id == project.Id) ?? throw new NotFoundException(nameof(Project).ToString(), project.Id!);
     }
 
     public void DeleteProject(ProjectId projectId)

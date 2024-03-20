@@ -28,10 +28,14 @@ internal class PrefillDataRepository : IPrefillDataRepository
     {
         var organisationId = userAccount.SelectedOrganisationId().Value;
         var project = userAccount.CanViewAllApplications()
-            ? await _crmContext.GetOrganisationProjectById(projectId.Value, userAccount.UserGlobalId.Value, organisationId, cancellationToken)
+            ? await _crmContext.GetOrganisationProjectById(projectId.Value, organisationId, cancellationToken)
             : await _crmContext.GetUserProjectById(projectId.Value, userAccount.UserGlobalId.Value, organisationId, cancellationToken);
 
-        return Map(project);
+        var site = project.IdentifiedSite == true
+            ? await _crmContext.GetProjectSite(projectId.Value, cancellationToken)
+            : null;
+
+        return Map(project, site);
     }
 
     public async Task MarkProjectAsUsed(FrontDoorProjectId projectId, CancellationToken cancellationToken)
@@ -39,7 +43,7 @@ internal class PrefillDataRepository : IPrefillDataRepository
         await _crmContext.DeactivateProject(projectId.Value, cancellationToken);
     }
 
-    private static ProjectPrefillData Map(FrontDoorProjectDto project)
+    private static ProjectPrefillData Map(FrontDoorProjectDto project, FrontDoorProjectSiteDto? site)
     {
         var isSiteIdentified = project.IdentifiedSite ?? false;
         var isFundingRequired = project.FundingRequired ?? false;
@@ -53,11 +57,17 @@ internal class PrefillDataRepository : IPrefillDataRepository
             project.NumberofHomesEnabledBuilt,
             new ReadOnlyCollection<InfrastructureType>(DomainEnumMapper.Map(project.InfrastructureDelivered, FrontDoorProjectEnumMapping.Infrastructure)),
             isSiteIdentified,
+            isSiteIdentified && site != null ? MapSiteDetails(site) : null,
             isSiteIdentified ? null : MapSiteNotIdentifiedDetails(project),
             project.WouldyourprojectfailwithoutHEsupport ?? false,
             isFundingRequired,
             isFundingRequired ? MapFundingDetails(project) : null,
             MapDateDetails(project.StartofProjectMonth, project.StartofProjectYear));
+    }
+
+    private static SiteDetails MapSiteDetails(FrontDoorProjectSiteDto site)
+    {
+        return new SiteDetails(site.SiteName);
     }
 
     private static SiteNotIdentifiedDetails MapSiteNotIdentifiedDetails(FrontDoorProjectDto project)

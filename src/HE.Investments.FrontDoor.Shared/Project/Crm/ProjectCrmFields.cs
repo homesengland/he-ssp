@@ -24,9 +24,4 @@ public static class ProjectCrmFields
         nameof(invln_FrontDoorProjectPOC.invln_StartofProjectYear),
         nameof(invln_FrontDoorProjectPOC.invln_StartofProjectMonth),
     };
-
-    public static string FormatFields(this IReadOnlyList<string> fieldsToRetrieve)
-    {
-        return string.Join(",", fieldsToRetrieve.Select(f => f.ToLowerInvariant()));
-    }
 }
