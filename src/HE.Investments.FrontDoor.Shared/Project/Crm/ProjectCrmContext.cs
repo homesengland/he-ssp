@@ -2,6 +2,7 @@ extern alias Org;
 
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.CRM.Model;
+using HE.Investments.Common.CRM.Serialization;
 using HE.Investments.Common.CRM.Services;
 using Org::HE.Common.IntegrationModel.PortalIntegrationModel;
 
@@ -16,7 +17,7 @@ internal class ProjectCrmContext : IProjectCrmContext
         _service = service;
     }
 
-    public async Task<FrontDoorProjectDto> GetOrganisationProjectById(string projectId, string userGlobalId, Guid organisationId, CancellationToken cancellationToken)
+    public async Task<FrontDoorProjectDto> GetOrganisationProjectById(string projectId, Guid organisationId, CancellationToken cancellationToken)
     {
         var request = new invln_getsinglefrontdoorprojectRequest
         {
@@ -39,6 +40,27 @@ internal class ProjectCrmContext : IProjectCrmContext
         };
 
         return await GetProject(request, cancellationToken);
+    }
+
+    public async Task<FrontDoorProjectSiteDto?> GetProjectSite(string projectId, CancellationToken cancellationToken)
+    {
+        var request = new invln_getmultiplefrontdoorprojectssiteRequest
+        {
+            invln_frontdoorprojectid = projectId,
+            invln_pagingrequest = CrmResponseSerializer.Serialize(new PagingRequestDto { pageNumber = 1, pageSize = 1 }),
+            invln_fieldstoretrieve = ProjectSiteCrmFields.SiteToRead.FormatFields(),
+        };
+
+        var sites = await _service
+            .ExecuteAsync<
+                invln_getmultiplefrontdoorprojectssiteRequest,
+                invln_getmultiplefrontdoorprojectssiteResponse,
+                PagedResponseDto<FrontDoorProjectSiteDto>>(
+                request,
+                r => r.invln_frontdoorprojectsites,
+                cancellationToken);
+
+        return sites.items.FirstOrDefault();
     }
 
     public async Task DeactivateProject(string projectId, CancellationToken cancellationToken)

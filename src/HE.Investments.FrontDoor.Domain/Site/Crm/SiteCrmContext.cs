@@ -3,6 +3,7 @@ using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Serialization;
 using HE.Investments.Common.CRM.Services;
+using HE.Investments.FrontDoor.Shared.Project.Crm;
 
 namespace HE.Investments.FrontDoor.Domain.Site.Crm;
 

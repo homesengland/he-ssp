@@ -12,6 +12,7 @@ public record ProjectPrefillData(
     int? OrganisationHomesBuilt,
     IReadOnlyCollection<InfrastructureType> InfrastructureTypes,
     bool IsSiteIdentified,
+    SiteDetails? Site,
     SiteNotIdentifiedDetails? SiteNotIdentified,
     bool IsSupportRequired,
     bool IsFundingRequired,

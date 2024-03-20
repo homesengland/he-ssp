@@ -17,9 +17,10 @@ namespace HE.Investments.Loans.BusinessLogic.Projects.Entities;
 
 public class Project : DomainEntity
 {
-    public Project()
+    public Project(string? name = null)
     {
         Id = new ProjectId(Guid.NewGuid());
+        Name = !string.IsNullOrWhiteSpace(name) ? new ProjectName(name) : null;
         IsNewlyCreated = true;
 
         Status = SectionStatus.NotStarted;
