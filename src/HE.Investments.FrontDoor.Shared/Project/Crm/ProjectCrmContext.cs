@@ -42,6 +42,21 @@ internal class ProjectCrmContext : IProjectCrmContext
         return await GetProject(request, cancellationToken);
     }
 
+    public async Task<FrontDoorProjectSiteDto> GetProjectSite(string projectId, string siteId, CancellationToken cancellationToken)
+    {
+        var request = new invln_getsinglefrontdoorprojectsiteRequest
+        {
+            invln_frontdoorprojectsiteid = siteId,
+            invln_frontdoorprojectid = projectId,
+            invln_fieldstoretrieve = ProjectSiteCrmFields.SiteToRead.FormatFields(),
+        };
+
+        return await _service.ExecuteAsync<invln_getsinglefrontdoorprojectsiteRequest, invln_getsinglefrontdoorprojectsiteResponse, FrontDoorProjectSiteDto>(
+            request,
+            r => r.invln_frontdoorprojectsite,
+            cancellationToken);
+    }
+
     public async Task<PagedResponseDto<FrontDoorProjectSiteDto>> GetProjectSites(string projectId, CancellationToken cancellationToken)
     {
         var request = new invln_getmultiplefrontdoorprojectssiteRequest
@@ -59,21 +74,6 @@ internal class ProjectCrmContext : IProjectCrmContext
                 request,
                 r => r.invln_frontdoorprojectsites,
                 cancellationToken);
-    }
-
-    public async Task<FrontDoorProjectSiteDto> GetProjectSite(string projectId, string siteId, CancellationToken cancellationToken)
-    {
-        var request = new invln_getsinglefrontdoorprojectsiteRequest
-        {
-            invln_frontdoorprojectsiteid = siteId,
-            invln_frontdoorprojectid = projectId,
-            invln_fieldstoretrieve = ProjectSiteCrmFields.SiteToRead.FormatFields(),
-        };
-
-        return await _service.ExecuteAsync<invln_getsinglefrontdoorprojectsiteRequest, invln_getsinglefrontdoorprojectsiteResponse, FrontDoorProjectSiteDto>(
-            request,
-            r => r.invln_frontdoorprojectsite,
-            cancellationToken);
     }
 
     public async Task DeactivateProject(string projectId, CancellationToken cancellationToken)
