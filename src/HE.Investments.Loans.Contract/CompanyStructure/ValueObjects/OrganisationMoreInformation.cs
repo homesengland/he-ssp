@@ -1,4 +1,3 @@
-using Dawn;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Messages;
@@ -19,7 +18,12 @@ public class OrganisationMoreInformation : ValueObject
                 .CheckErrors();
         }
 
-        Information = Guard.Argument(information, nameof(Information)).NotEmpty();
+        if (string.IsNullOrEmpty(information))
+        {
+            throw new ArgumentNullException(nameof(information));
+        }
+
+        Information = information;
     }
 
     public string Information { get; }

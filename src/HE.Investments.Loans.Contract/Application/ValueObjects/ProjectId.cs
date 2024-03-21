@@ -1,12 +1,12 @@
-using Dawn;
 using HE.Investments.Common.Domain;
 
 namespace HE.Investments.Loans.Contract.Application.ValueObjects;
+
 public class ProjectId : ValueObject
 {
     public ProjectId(Guid value)
     {
-        Value = Guard.Argument(value, nameof(ProjectId)).NotDefault();
+        Value = value;
     }
 
     public Guid Value { get; }
