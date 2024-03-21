@@ -32,6 +32,7 @@ public static class ProjectCrmFieldNameMapper
     private static readonly string ChargesDebtExists = $"{nameof(invln_SiteDetails.invln_Existinglegalcharges).ToLowerInvariant()}";
     private static readonly string ChargesDebtInformation = $"{nameof(invln_SiteDetails.invln_Existinglegalchargesinformation).ToLowerInvariant()}";
     private static readonly string ProjectStatus = $"{nameof(invln_SiteDetails.invln_completionstatus).ToLowerInvariant()}";
+    private static readonly string FrontDoorSiteId = string.Empty; // TODO: AB#91906 use "invln_fdprojectsiteid" when CRM provides property
 
     public static string Map(ProjectFieldsSet projectFieldsSet)
     {
@@ -115,6 +116,12 @@ public static class ProjectCrmFieldNameMapper
             _ => ProjectStatus,
         };
 
-        return result;
+        // TODO: AB#91906 remove this condition after integration with CRM because FrontDoorSiteId name should not be empty
+        if (string.IsNullOrWhiteSpace(FrontDoorSiteId))
+        {
+            return result;
+        }
+
+        return $"{result},{FrontDoorSiteId}";
     }
 }

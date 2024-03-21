@@ -11,6 +11,7 @@ using HE.Investments.Loans.BusinessLogic.CompanyStructure.Repositories;
 using HE.Investments.Loans.BusinessLogic.Files;
 using HE.Investments.Loans.BusinessLogic.Funding.Repositories;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories;
+using HE.Investments.Loans.BusinessLogic.PrefillData.Crm;
 using HE.Investments.Loans.BusinessLogic.PrefillData.Repositories;
 using HE.Investments.Loans.BusinessLogic.Projects.Repositories;
 using HE.Investments.Loans.BusinessLogic.Security.Repositories;
@@ -65,5 +66,6 @@ public static class BusinessLogicModule
     private static void AddPrefillDataSubmodule(this IServiceCollection services)
     {
         services.AddScoped<ILoanPrefillDataRepository, LoanPrefillDataRepository>();
+        services.AddScoped<ILoanPrefillDataCrmContext, LoanPrefillDataCrmContext>();
     }
 }

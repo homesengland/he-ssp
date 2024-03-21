@@ -1,9 +1,9 @@
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
-using HE.Investments.FrontDoor.Contract.Site;
 using HE.Investments.FrontDoor.Contract.Site.Commands;
 using HE.Investments.FrontDoor.Domain.Site.Repository;
 using HE.Investments.FrontDoor.Domain.Site.ValueObjects;
+using HE.Investments.FrontDoor.Shared.Project;
 using MediatR;
 
 namespace HE.Investments.FrontDoor.Domain.Site.CommandHandlers;

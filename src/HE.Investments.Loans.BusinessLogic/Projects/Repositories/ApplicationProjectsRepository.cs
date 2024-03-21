@@ -164,7 +164,12 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
 
     private async Task CreateNewProject(LoanApplicationId loanApplicationId, Project projectToSave, CancellationToken cancellationToken)
     {
-        var siteDetails = new SiteDetailsDto { siteDetailsId = projectToSave.Id.Value.ToString(), Name = projectToSave.Name?.Value };
+        var siteDetails = new SiteDetailsDto
+        {
+            // TODO: AB#91906 assign FD Site to Loans Project: frontDoorSiteId = projectToSave.FrontDoorSiteId?.Value,
+            siteDetailsId = projectToSave.Id.Value.ToString(),
+            Name = projectToSave.Name?.Value,
+        };
 
         var req = new invln_createsinglesitedetailRequest
         {

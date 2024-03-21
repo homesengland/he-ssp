@@ -1,3 +1,5 @@
+using HE.Investments.Common.Contract.Enum;
+using HE.Investments.Common.CRM.Mappers;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.FrontDoor.Shared.Project.Contract;
 
@@ -67,4 +69,6 @@ public static class FrontDoorProjectEnumMapping
         { RequiredFundingOption.MoreThan50Mln, (int)invln_FrontDoorAmountofFundingRequired.Morethan50million },
         { RequiredFundingOption.IDoNotKnow, (int)invln_FrontDoorAmountofFundingRequired.Idonotknow },
     };
+
+    public static IDictionary<SitePlanningStatus, int?> PlanningStatus => CommonEnumCrmMappings.PlanningStatus;
 }

@@ -3,7 +3,6 @@ extern alias Org;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Errors;
-using HE.Investments.FrontDoor.Contract.Site;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
 using HE.Investments.FrontDoor.Domain.Site.ValueObjects;
 using HE.Investments.FrontDoor.Shared.Project;

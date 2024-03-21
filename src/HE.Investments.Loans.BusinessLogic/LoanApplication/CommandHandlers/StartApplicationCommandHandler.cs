@@ -2,10 +2,10 @@ using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.FrontDoor.Shared.Project;
-using HE.Investments.FrontDoor.Shared.Project.Data;
-using HE.Investments.FrontDoor.Shared.Project.Repositories;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Entities;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories;
+using HE.Investments.Loans.BusinessLogic.PrefillData.Data;
+using HE.Investments.Loans.BusinessLogic.PrefillData.Repositories;
 using HE.Investments.Loans.BusinessLogic.Projects.Entities;
 using HE.Investments.Loans.BusinessLogic.Projects.Repositories;
 using HE.Investments.Loans.Contract.Application.Commands;
@@ -19,13 +19,13 @@ public class StartApplicationCommandHandler : IRequestHandler<StartApplicationCo
     private readonly IAccountUserContext _loanUserContext;
     private readonly ILoanApplicationRepository _applicationRepository;
     private readonly IApplicationProjectsRepository _applicationProjectsRepository;
-    private readonly IPrefillDataRepository _prefillDataRepository;
+    private readonly ILoanPrefillDataRepository _prefillDataRepository;
 
     public StartApplicationCommandHandler(
         IAccountUserContext loanUserContext,
         ILoanApplicationRepository applicationRepository,
         IApplicationProjectsRepository applicationProjectsRepository,
-        IPrefillDataRepository prefillDataRepository)
+        ILoanPrefillDataRepository prefillDataRepository)
     {
         _loanUserContext = loanUserContext;
         _applicationRepository = applicationRepository;
@@ -39,7 +39,7 @@ public class StartApplicationCommandHandler : IRequestHandler<StartApplicationCo
         var prefillData = await GetPrefillData(request, userAccount, cancellationToken);
 
         var applicationName = new LoanApplicationName(request.ApplicationName);
-        var newLoanApplication = LoanApplicationEntity.New(userAccount, applicationName, prefillData?.Id);
+        var newLoanApplication = LoanApplicationEntity.New(userAccount, applicationName, prefillData?.ProjectId);
 
         if (await _applicationRepository.IsExist(applicationName, userAccount, cancellationToken))
         {
@@ -50,7 +50,7 @@ public class StartApplicationCommandHandler : IRequestHandler<StartApplicationCo
 
         await _applicationRepository.Save(newLoanApplication, await _loanUserContext.GetProfileDetails(), cancellationToken);
 
-        var applicationProjects = new ApplicationProjects(newLoanApplication.Id, prefillData?.Site?.Name);
+        var applicationProjects = new ApplicationProjects(newLoanApplication.Id, prefillData?.SiteId);
         await _applicationProjectsRepository.SaveAllAsync(applicationProjects, userAccount, cancellationToken);
 
         await _applicationRepository.DispatchEvents(newLoanApplication, cancellationToken);
@@ -58,7 +58,7 @@ public class StartApplicationCommandHandler : IRequestHandler<StartApplicationCo
         return OperationResult.Success<LoanApplicationId?>(newLoanApplication.Id);
     }
 
-    private async Task<ProjectPrefillData?> GetPrefillData(StartApplicationCommand request, UserAccount userAccount, CancellationToken cancellationToken)
+    private async Task<LoanApplicationPrefillData?> GetPrefillData(StartApplicationCommand request, UserAccount userAccount, CancellationToken cancellationToken)
     {
         if (string.IsNullOrWhiteSpace(request.FrontDoorProjectId))
         {
@@ -66,6 +66,6 @@ public class StartApplicationCommandHandler : IRequestHandler<StartApplicationCo
         }
 
         var frontDoorProjectId = new FrontDoorProjectId(request.FrontDoorProjectId);
-        return await _prefillDataRepository.GetProjectPrefillData(frontDoorProjectId, userAccount, cancellationToken);
+        return await _prefillDataRepository.GetLoanApplicationPrefillData(frontDoorProjectId, userAccount, cancellationToken);
     }
 }

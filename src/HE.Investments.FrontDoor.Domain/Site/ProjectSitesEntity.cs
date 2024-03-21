@@ -1,7 +1,6 @@
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
-using HE.Investments.FrontDoor.Contract.Site;
 using HE.Investments.FrontDoor.Contract.Site.Enums;
 using HE.Investments.FrontDoor.Domain.Site.Repository;
 using HE.Investments.FrontDoor.Domain.Site.ValueObjects;

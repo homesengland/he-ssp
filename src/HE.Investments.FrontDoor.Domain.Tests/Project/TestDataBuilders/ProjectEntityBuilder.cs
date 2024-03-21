@@ -1,4 +1,3 @@
-using HE.Investments.FrontDoor.Contract.Project;
 using HE.Investments.FrontDoor.Domain.Project;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
 using HE.Investments.FrontDoor.Shared.Project;

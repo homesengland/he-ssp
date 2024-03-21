@@ -20,6 +20,7 @@ internal static class ProjectEntityMapper
 
         return new Project(
             ProjectId.From(siteDetailsDto.siteDetailsId),
+            null, // TODO: AB#91906 siteDetailsDto.frontDoorSiteId.IsProvided() ? new FrontDoorSiteId(siteDetailsDto.frontDoorSiteId) : null,
             SectionStatusMapper.Map(siteDetailsDto.completionStatus),
             siteDetailsDto.Name.IsProvided() ? new ProjectName(siteDetailsDto.Name) : null,
             startDate,

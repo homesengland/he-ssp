@@ -94,7 +94,7 @@ public class ProjectEntity : DomainEntity
 
     public static async Task<ProjectEntity> New(ProjectName projectName, IProjectNameExists projectNameExists, CancellationToken cancellationToken)
     {
-        return new(FrontDoorProjectId.New(), await ValidateProjectNameUniqueness(projectName, projectNameExists, cancellationToken));
+        return new (FrontDoorProjectId.New(), await ValidateProjectNameUniqueness(projectName, projectNameExists, cancellationToken));
     }
 
     public static bool ValidateEnglandHousingDelivery(bool? isEnglandHousingDelivery)
