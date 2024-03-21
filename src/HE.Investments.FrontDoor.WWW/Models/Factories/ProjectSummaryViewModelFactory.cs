@@ -32,7 +32,7 @@ public class ProjectSummaryViewModelFactory : IProjectSummaryViewModelFactory
 
             if (!projectSites.Sites.Any())
             {
-                projectSites.Sites.Add(new SiteDetails());
+                projectSites.Sites.Add(new SiteDetails { Id = FrontDoorSiteId.New() });
             }
 
             foreach (var siteSummary in CreateSitesSummary(urlHelper, projectDetails, projectSites, CreateProjectAction, isEditable, useWorkflowRedirection))
@@ -234,6 +234,14 @@ public class ProjectSummaryViewModelFactory : IProjectSummaryViewModelFactory
 
     private static string CreateSiteActionUrl(IUrlHelper urlHelper, FrontDoorProjectId projectId, FrontDoorSiteId siteId, string actionName, bool useWorkflowRedirection)
     {
+        if (siteId.IsNew)
+        {
+            return urlHelper.Action(
+                nameof(SiteController.NewName),
+                new ControllerName(nameof(SiteController)).WithoutPrefix(),
+                new { projectId = projectId.Value, redirect = useWorkflowRedirection ? nameof(ProjectController.CheckAnswers) : null }) ?? string.Empty;
+        }
+
         var action = urlHelper.Action(
             actionName,
             new ControllerName(nameof(SiteController)).WithoutPrefix(),
