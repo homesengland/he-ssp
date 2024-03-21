@@ -50,6 +50,26 @@ public static class DateHelper
         return null;
     }
 
+    public static string? DisplayAsUkFormatOnlyMonthAndYearDate(DateDetails? utcDateTime)
+    {
+        if (utcDateTime == null)
+        {
+            return null;
+        }
+
+        if (DateTime.TryParseExact(
+                $"{utcDateTime.Month}/{utcDateTime.Year}",
+                "M/yyyy",
+                CultureInfo.InvariantCulture,
+                DateTimeStyles.AssumeUniversal,
+                out var dateOnly))
+        {
+            return GetOnlyMonthAndYearAsUkFormat(dateOnly);
+        }
+
+        return null;
+    }
+
     public static string? DisplayAsUkFormatOnlyDate(DateTime? utcDateTime)
     {
         if (!utcDateTime.HasValue)
@@ -63,5 +83,11 @@ public static class DateHelper
     public static string? DisplayAsUkFormatDateTime(DateTime? utcDateTime)
     {
         return utcDateTime?.ConvertUtcToUkLocalTime().ToString(Culture.Uk);
+    }
+
+    private static string? GetOnlyMonthAndYearAsUkFormat(DateTime? utcDateTime)
+    {
+        var onlyDateUkFormat = DisplayAsUkFormatOnlyDate(utcDateTime);
+        return onlyDateUkFormat?[3..];
     }
 }

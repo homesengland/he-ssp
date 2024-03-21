@@ -9,7 +9,7 @@ using HE.Investments.FrontDoor.Domain.Project.Crm;
 using HE.Investments.FrontDoor.Domain.Project.Crm.Mappers;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
 using HE.Investments.FrontDoor.Shared.Project;
-using Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects;
+using ProjectLocalAuthority = Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
 
 namespace HE.Investments.FrontDoor.Domain.Project.Repository;
 
@@ -66,7 +66,8 @@ public class ProjectRepository : IProjectRepository
             IdentifiedSite = project.IsSiteIdentified?.Value,
             Region = new RegionsMapper().Map(project.Regions),
             NumberofHomesEnabledBuilt = project.HomesNumber?.Value,
-            LocalAuthorityCode = project.LocalAuthorityId?.Value,
+            LocalAuthorityCode = project.LocalAuthority?.Id.Value,
+            LocalAuthorityName = project.LocalAuthority?.Name,
             GeographicFocus = new ProjectGeographicFocusMapper().ToDto(project.GeographicFocus.GeographicFocus),
             WouldyourprojectfailwithoutHEsupport = project.IsSupportRequired?.Value,
             FundingRequired = project.IsFundingRequired?.Value,
@@ -116,6 +117,6 @@ public class ProjectRepository : IProjectRepository
             requiredFunding: new RequiredFundingMapper().Map(dto.AmountofFundingRequired),
             isProfit: dto.IntentiontoMakeaProfit.IsProvided() ? new IsProfit(dto.IntentiontoMakeaProfit) : null,
             expectedStartDate: ExpectedStartDate.Create(dto.StartofProjectMonth, dto.StartofProjectYear),
-            localAuthorityId: string.IsNullOrWhiteSpace(dto.LocalAuthorityCode) ? null : new LocalAuthorityId(dto.LocalAuthorityCode));
+            localAuthority: string.IsNullOrWhiteSpace(dto.LocalAuthorityCode) ? null : ProjectLocalAuthority.New(dto.LocalAuthorityCode, dto.LocalAuthorityName));
     }
 }

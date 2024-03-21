@@ -66,16 +66,16 @@ public class ProjectSummaryViewModelFactory : IProjectSummaryViewModelFactory
 
         sectionSummary.AddWhen(
             new(
-                "Region",
-                projectDetails.Regions?.Select(x => x.GetDescription()).ToList(),
-                createAction(nameof(ProjectController.Region)),
-                IsEditable: isEditable),
+            "Region",
+            projectDetails.Regions?.Select(x => x.GetDescription()).ToList(),
+            createAction(nameof(ProjectController.Region)),
+            IsEditable: isEditable),
             projectDetails.GeographicFocus == ProjectGeographicFocus.Regional);
 
         sectionSummary.AddWhen(
             new(
                 "Local authority",
-                "Implement Local authority".ToOneElementList(), // todo local authority
+                projectDetails.LocalAuthorityName.ToOneElementList(),
                 createAction(nameof(ProjectController.LocalAuthoritySearch)),
                 IsEditable: isEditable),
             projectDetails.GeographicFocus == ProjectGeographicFocus.Regional);
@@ -152,7 +152,7 @@ public class ProjectSummaryViewModelFactory : IProjectSummaryViewModelFactory
                 sectionSummaryItems.AddRange(siteSummary.Items!);
             }
 
-            summaries.Add(new SectionSummaryViewModel(string.IsNullOrWhiteSpace(site.Name) ? "Site" : site.Name, sectionSummaryItems));
+            summaries.Add(new SectionSummaryViewModel(site.Name, sectionSummaryItems));
         }
 
         return summaries;
@@ -215,7 +215,7 @@ public class ProjectSummaryViewModelFactory : IProjectSummaryViewModelFactory
 
         summary.Add(new(
             "Expected project start date",
-            SummaryAnswerHelper.ToDate(projectDetails.ExpectedStartDate),
+            SummaryAnswerHelper.ToOnlyMonthAndYearDate(projectDetails.ExpectedStartDate),
             createAction(nameof(ProjectController.ExpectedStart)),
             IsEditable: isEditable));
 
@@ -232,24 +232,13 @@ public class ProjectSummaryViewModelFactory : IProjectSummaryViewModelFactory
         return action ?? string.Empty;
     }
 
-    private static string CreateSiteActionUrl(
-        IUrlHelper urlHelper,
-        FrontDoorProjectId projectId,
-        FrontDoorSiteId? siteId,
-        string actionName,
-        bool useWorkflowRedirection)
+    private static string CreateSiteActionUrl(IUrlHelper urlHelper, FrontDoorProjectId projectId, FrontDoorSiteId siteId, string actionName, bool useWorkflowRedirection)
     {
-        if (siteId.IsNotProvided())
-        {
-            return urlHelper.Action(
-                nameof(SiteController.NewName),
-                new ControllerName(nameof(SiteController)).WithoutPrefix(),
-                new { projectId = projectId.Value, redirect = useWorkflowRedirection ? nameof(ProjectController.CheckAnswers) : null }) ?? string.Empty;
-        }
-
-        return urlHelper.Action(
+        var action = urlHelper.Action(
             actionName,
             new ControllerName(nameof(SiteController)).WithoutPrefix(),
-            new { projectId = projectId.Value, siteId = siteId!.Value, redirect = useWorkflowRedirection ? nameof(ProjectController.CheckAnswers) : null }) ?? string.Empty;
+            new { projectId = projectId.Value, siteId = siteId.Value, redirect = useWorkflowRedirection ? nameof(ProjectController.CheckAnswers) : null });
+
+        return action ?? string.Empty;
     }
 }

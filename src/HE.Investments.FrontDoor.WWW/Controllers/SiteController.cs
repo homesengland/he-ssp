@@ -1,5 +1,4 @@
 using HE.Investments.Account.Shared.Authorization.Attributes;
-using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
@@ -7,7 +6,6 @@ using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.FrontDoor.Contract.LocalAuthority.Queries;
-using HE.Investments.FrontDoor.Contract.Project;
 using HE.Investments.FrontDoor.Contract.Project.Queries;
 using HE.Investments.FrontDoor.Contract.Site;
 using HE.Investments.FrontDoor.Contract.Site.Commands;
@@ -133,23 +131,27 @@ public class SiteController : WorkflowController<SiteWorkflowState>
 
     [HttpPost("{siteId}/local-authority-confirm")]
     [WorkflowState(SiteWorkflowState.LocalAuthorityConfirm)]
-    public async Task<IActionResult> LocalAuthorityConfirm([FromRoute] string projectId, [FromRoute] string siteId, string localAuthorityId, bool? isConfirmed, CancellationToken cancellationToken)
+    public async Task<IActionResult> LocalAuthorityConfirm([FromRoute] string projectId, [FromRoute] string siteId, LocalAuthorityViewModel model, CancellationToken cancellationToken)
     {
-        if (isConfirmed == null)
+        if (model.IsConfirmed == null)
         {
             ModelState.Clear();
             ModelState.AddModelError("IsConfirmed", "Select yes if the local authority is correct");
 
             await GetSiteDetails(projectId, siteId, cancellationToken);
-            var localAuthority = await _mediator.Send(new GetLocalAuthorityQuery(new LocalAuthorityId(localAuthorityId)), cancellationToken);
+            var localAuthority = await _mediator.Send(new GetLocalAuthorityQuery(new LocalAuthorityId(model.LocalAuthorityId)), cancellationToken);
 
             return View("LocalAuthorityConfirm", new LocalAuthorityViewModel(localAuthority.Id, localAuthority.Name, projectId, siteId));
         }
 
-        if (isConfirmed.Value)
+        if (model.IsConfirmed.Value)
         {
             return await ExecuteSiteCommand(
-                new ProvideLocalAuthorityCommand(new FrontDoorProjectId(projectId), new FrontDoorSiteId(siteId), new LocalAuthorityId(localAuthorityId)),
+                new ProvideLocalAuthorityCommand(
+                    new FrontDoorProjectId(projectId),
+                    new FrontDoorSiteId(siteId),
+                    new LocalAuthorityId(model.LocalAuthorityId),
+                    model.LocalAuthorityName),
                 nameof(LocalAuthorityConfirm),
                 project => project,
                 cancellationToken);

@@ -346,23 +346,23 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
 
     [HttpPost("{projectId}/local-authority-confirm")]
     [WorkflowState(ProjectWorkflowState.LocalAuthorityConfirm)]
-    public async Task<IActionResult> LocalAuthorityConfirm([FromRoute] string projectId, string localAuthorityId, bool? isConfirmed, CancellationToken cancellationToken)
+    public async Task<IActionResult> LocalAuthorityConfirm([FromRoute] string projectId, LocalAuthorityViewModel model, CancellationToken cancellationToken)
     {
-        if (isConfirmed == null)
+        if (model.IsConfirmed == null)
         {
             ModelState.Clear();
             ModelState.AddModelError("IsConfirmed", "Select yes if the local authority is correct");
 
             await GetProjectDetails(projectId, cancellationToken);
-            var localAuthority = await _mediator.Send(new GetLocalAuthorityQuery(new LocalAuthorityId(localAuthorityId)), cancellationToken);
+            var localAuthority = await _mediator.Send(new GetLocalAuthorityQuery(new LocalAuthorityId(model.LocalAuthorityId)), cancellationToken);
 
             return View("LocalAuthorityConfirm", new LocalAuthorityViewModel(localAuthority.Id, localAuthority.Name, projectId));
         }
 
-        if (isConfirmed.Value)
+        if (model.IsConfirmed.Value)
         {
             return await ExecuteProjectCommand(
-                new ProvideLocalAuthorityCommand(new FrontDoorProjectId(projectId), new LocalAuthorityId(localAuthorityId)),
+                new ProvideLocalAuthorityCommand(new FrontDoorProjectId(projectId), new LocalAuthorityId(model.LocalAuthorityId), model.LocalAuthorityName),
                 nameof(LocalAuthorityConfirm),
                 project => project,
                 cancellationToken);
