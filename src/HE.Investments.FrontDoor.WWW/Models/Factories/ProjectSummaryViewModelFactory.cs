@@ -30,6 +30,11 @@ public class ProjectSummaryViewModelFactory : IProjectSummaryViewModelFactory
         {
             yield return new SectionSummaryViewModel(string.Empty, CreateProjectBasicDetailsSummary(projectDetails, CreateProjectAction, isEditable));
 
+            if (!projectSites.Sites.Any())
+            {
+                projectSites.Sites.Add(new SiteDetails { Id = FrontDoorSiteId.New() });
+            }
+
             foreach (var siteSummary in CreateSitesSummary(urlHelper, projectDetails, projectSites, CreateProjectAction, isEditable, useWorkflowRedirection))
             {
                 yield return siteSummary;
@@ -78,7 +83,7 @@ public class ProjectSummaryViewModelFactory : IProjectSummaryViewModelFactory
         sectionSummary.Add(new(
             "Homes your project enables",
             projectDetails.HomesNumber.ToOneElementList(),
-            createAction(nameof(ProjectController.OrganisationHomesBuilt)),
+            createAction(nameof(ProjectController.HomesNumber)),
             IsEditable: isEditable));
 
         sectionSummary.AddRange(CreateProjectFinancialDetailsSummary(projectDetails, createAction, isEditable));
@@ -177,7 +182,7 @@ public class ProjectSummaryViewModelFactory : IProjectSummaryViewModelFactory
         CreateAction createAction,
         bool isEditable)
     {
-        return new List<SectionSummaryItemModel>
+        var summary = new List<SectionSummaryItemModel>
         {
             new(
                 "Project progress more slowly or stall",
@@ -189,22 +194,32 @@ public class ProjectSummaryViewModelFactory : IProjectSummaryViewModelFactory
                 SummaryAnswerHelper.ToYesNo(projectDetails.IsFundingRequired),
                 createAction(nameof(ProjectController.RequiresFunding)),
                 IsEditable: isEditable),
-            new(
-                "How much funding",
-                SummaryAnswerHelper.ToEnum(projectDetails.RequiredFunding),
-                createAction(nameof(ProjectController.FundingAmount)),
-                IsEditable: isEditable),
-            new(
-                "Intention to make a profit",
-                SummaryAnswerHelper.ToYesNo(projectDetails.IsProfit),
-                createAction(nameof(ProjectController.Profit)),
-                IsEditable: isEditable),
-            new(
-                "Expected project start date",
-                SummaryAnswerHelper.ToOnlyMonthAndYearDate(projectDetails.ExpectedStartDate),
-                createAction(nameof(ProjectController.ExpectedStart)),
-                IsEditable: isEditable),
         };
+
+        if (projectDetails.IsFundingRequired == true)
+        {
+            summary.AddRange(new[]
+            {
+                new SectionSummaryItemModel(
+                    "How much funding",
+                    SummaryAnswerHelper.ToEnum(projectDetails.RequiredFunding),
+                    createAction(nameof(ProjectController.FundingAmount)),
+                    IsEditable: isEditable),
+                new SectionSummaryItemModel(
+                    "Intention to make a profit",
+                    SummaryAnswerHelper.ToYesNo(projectDetails.IsProfit),
+                    createAction(nameof(ProjectController.Profit)),
+                    IsEditable: isEditable),
+            });
+        }
+
+        summary.Add(new(
+            "Expected project start date",
+            SummaryAnswerHelper.ToOnlyMonthAndYearDate(projectDetails.ExpectedStartDate),
+            createAction(nameof(ProjectController.ExpectedStart)),
+            IsEditable: isEditable));
+
+        return summary;
     }
 
     private static string CreateProjectActionUrl(IUrlHelper urlHelper, FrontDoorProjectId projectId, string actionName, bool useWorkflowRedirection)
@@ -219,6 +234,14 @@ public class ProjectSummaryViewModelFactory : IProjectSummaryViewModelFactory
 
     private static string CreateSiteActionUrl(IUrlHelper urlHelper, FrontDoorProjectId projectId, FrontDoorSiteId siteId, string actionName, bool useWorkflowRedirection)
     {
+        if (siteId.IsNew)
+        {
+            return urlHelper.Action(
+                nameof(SiteController.NewName),
+                new ControllerName(nameof(SiteController)).WithoutPrefix(),
+                new { projectId = projectId.Value, redirect = useWorkflowRedirection ? nameof(ProjectController.CheckAnswers) : null }) ?? string.Empty;
+        }
+
         var action = urlHelper.Action(
             actionName,
             new ControllerName(nameof(SiteController)).WithoutPrefix(),

@@ -6,6 +6,7 @@ using HE.Investments.Common.Validators;
 using HE.Investments.Common.Workflow;
 using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Extensions;
+using HE.Investments.Common.WWW.Models.Summary;
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.FrontDoor.Contract.LocalAuthority.Queries;
 using HE.Investments.FrontDoor.Contract.Project;
@@ -123,6 +124,14 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     public IActionResult NotEligibleForAnything([FromRoute] string projectId)
     {
         return View();
+    }
+
+    [HttpGet("{projectId}")]
+    [WorkflowState(ProjectWorkflowState.Name)]
+    public async Task<IActionResult> Index([FromRoute] string projectId, CancellationToken cancellationToken)
+    {
+        var summary = await CreateProjectSummary(cancellationToken, false);
+        return ContinueSectionAnswering(summary, () => RedirectToAction("CheckAnswers", new { projectId }));
     }
 
     [HttpGet("{projectId}/name")]
@@ -588,5 +597,24 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
             sections.ToList(),
             projectDetails.IsSiteIdentified,
             isEditable);
+    }
+
+    private IActionResult ContinueSectionAnswering(
+        ISummaryViewModel summaryViewModel,
+        Func<RedirectToActionResult> checkAnswersRedirectFactory)
+    {
+        if (summaryViewModel.IsReadOnly)
+        {
+            return checkAnswersRedirectFactory();
+        }
+
+        var firstNotAnsweredQuestion = summaryViewModel.Sections
+            .Where(x => x.Items != null)
+            .SelectMany(x => x.Items!)
+            .FirstOrDefault(x => x is { HasAnswer: false, HasRedirectAction: true });
+
+        return firstNotAnsweredQuestion != null
+            ? Redirect(firstNotAnsweredQuestion.ActionUrl!)
+            : checkAnswersRedirectFactory();
     }
 }

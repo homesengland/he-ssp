@@ -138,7 +138,7 @@ public class UserOrganisationController : Controller
 
     private string GetProjectUrl(HeProjectId projectId)
     {
-        return $"{_programmeUrlConfig.FrontDoor}/project/{projectId}/name";
+        return $"{_programmeUrlConfig.FrontDoor}/project/{projectId}";
     }
 
     private Dictionary<ProgrammeType, ProgrammeModel> GetProgrammes(IList<ProgrammeType> programmeTypes)

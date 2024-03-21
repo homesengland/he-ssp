@@ -22,7 +22,7 @@
                 <td class="govuk-table__cell">
                     <span class="app-task-list__task-name">
                         <strong>
-                            <a href="@Url.Action("Name", "Project", new { projectId = project.Id.Value })" id=@($"open-project-link-{project.Id.Value}")>@project.Name.Value</a>
+                            <a href="@Url.Action("Index", "Project", new { projectId = project.Id.Value })" id=@($"open-project-link-{project.Id.Value}")>@project.Name.Value</a>
                         </strong>
                     </span>
                 </td>
