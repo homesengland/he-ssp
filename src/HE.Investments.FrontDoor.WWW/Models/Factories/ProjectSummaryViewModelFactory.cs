@@ -70,10 +70,10 @@ public class ProjectSummaryViewModelFactory : IProjectSummaryViewModelFactory
         sectionSummary.AddWhen(
             new(
                 "Local authority",
-                "Implement Local authority".ToOneElementList(),  // todo local authority
+                projectDetails.LocalAuthorityName.ToOneElementList(),
                 createAction(nameof(ProjectController.LocalAuthoritySearch)),
                 IsEditable: isEditable),
-            projectDetails.GeographicFocus == ProjectGeographicFocus.Regional);
+            projectDetails.GeographicFocus == ProjectGeographicFocus.SpecificLocalAuthority);
 
         sectionSummary.Add(new(
             "Homes your project enables",
@@ -161,7 +161,7 @@ public class ProjectSummaryViewModelFactory : IProjectSummaryViewModelFactory
             new("Number of homes", site.HomesNumber.ToOneElementList(), createAction(nameof(SiteController.HomesNumber)), IsEditable: isEditable),
             new(
                 "Local authority",
-                "Implement Local authority".ToOneElementList(), // todo local authority
+                site.LocalAuthorityName.ToOneElementList(),
                 createAction(nameof(SiteController.LocalAuthoritySearch)),
                 IsEditable: isEditable),
             new(
@@ -201,7 +201,7 @@ public class ProjectSummaryViewModelFactory : IProjectSummaryViewModelFactory
                 IsEditable: isEditable),
             new(
                 "Expected project start date",
-                SummaryAnswerHelper.ToDate(projectDetails.ExpectedStartDate),
+                SummaryAnswerHelper.ToOnlyMonthAndYearDate(projectDetails.ExpectedStartDate),
                 createAction(nameof(ProjectController.ExpectedStart)),
                 IsEditable: isEditable),
         };

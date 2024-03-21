@@ -9,7 +9,7 @@ using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
 using HE.Investments.FrontDoor.Domain.Site.Crm;
 using HE.Investments.FrontDoor.Domain.Site.ValueObjects;
 using HE.Investments.FrontDoor.Shared.Project;
-using Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects;
+using SiteLocalAuthority = Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
 
 namespace HE.Investments.FrontDoor.Domain.Site.Repository;
 
@@ -61,7 +61,8 @@ public class SiteRepository : ISiteRepository, IRemoveSiteRepository
             SiteName = entity.Name.Value,
             NumberofHomesEnabledBuilt = entity.HomesNumber?.Value,
             PlanningStatus = entity.PlanningStatus.Value == SitePlanningStatus.Undefined ? null : _planningStatusMapper.ToDto(entity.PlanningStatus.Value),
-            LocalAuthorityCode = entity.LocalAuthorityId?.Value,
+            LocalAuthorityCode = entity.LocalAuthority?.Id.Value,
+            LocalAuthorityName = entity.LocalAuthority?.Name,
         };
     }
 
@@ -74,6 +75,6 @@ public class SiteRepository : ISiteRepository, IRemoveSiteRepository
             dto.CreatedOn,
             dto.NumberofHomesEnabledBuilt == null ? null : new HomesNumber(dto.NumberofHomesEnabledBuilt.Value),
             planningStatus: PlanningStatus.Create(_planningStatusMapper.ToDomain(dto.PlanningStatus)),
-            localAuthorityId: string.IsNullOrWhiteSpace(dto.LocalAuthorityCode) ? null : new LocalAuthorityId(dto.LocalAuthorityCode));
+            localAuthority: string.IsNullOrWhiteSpace(dto.LocalAuthorityCode) ? null : SiteLocalAuthority.New(dto.LocalAuthorityCode, dto.LocalAuthorityName));
     }
 }
