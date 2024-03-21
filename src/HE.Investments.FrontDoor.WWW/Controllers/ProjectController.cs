@@ -50,7 +50,7 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     }
 
     [HttpGet("start")]
-    public IActionResult Start(CancellationToken cancellationToken)
+    public IActionResult Start()
     {
         return View();
     }
