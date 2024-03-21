@@ -7,7 +7,7 @@ namespace HE.Investments.Common.WWW.Tests.Helpers.DateHelperTests;
 public class DisplayAsUkFormatDateTests
 {
     [Fact]
-    public void GivenNullDateDetails_WhenDisplayAsUkFormatDate_ThenReturnNull()
+    public void ShouldReturnNull_WhenDateDetailsIsNull()
     {
         // given
         DateDetails? date = null;
@@ -20,7 +20,7 @@ public class DisplayAsUkFormatDateTests
     }
 
     [Fact]
-    public void GivenDateDetails_WhenDisplayAsUkFormatDate_ThenReturnFormattedDate()
+    public void ShouldReturnFormattedDate_WhenDateDetailsAreValid()
     {
         // given
         var date = new DateDetails("1", "1", "2022");

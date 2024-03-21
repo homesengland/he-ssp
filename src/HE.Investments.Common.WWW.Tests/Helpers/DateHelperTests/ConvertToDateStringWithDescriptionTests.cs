@@ -6,7 +6,7 @@ namespace HE.Investments.Common.WWW.Tests.Helpers.DateHelperTests;
 public class ConvertToDateStringWithDescriptionTests
 {
     [Fact]
-    public void GivenAdditionalInputYes_WhenConvertToDateStringWithDescription_ThenReturnFormattedDateWithDescription()
+    public void ShouldReturnFormattedDateWithDescription_WhenAdditionalInputIsYes()
     {
         // given
         const string day = "1";
@@ -22,7 +22,7 @@ public class ConvertToDateStringWithDescriptionTests
     }
 
     [Fact]
-    public void GivenAdditionalInputNo_WhenConvertToDateStringWithDescription_ThenReturnNo()
+    public void ShouldReturnNo_WhenAdditionalInputIsNo()
     {
         // given
         const string day = "1";

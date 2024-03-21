@@ -9,8 +9,8 @@ using HE.Investments.FrontDoor.Contract.Project.Events;
 using HE.Investments.FrontDoor.Domain.Project.Repository;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
 using HE.Investments.FrontDoor.Shared.Project;
-using ProjectLocalAuthority = Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
 using ProjectGeographicFocus = HE.Investments.FrontDoor.Domain.Project.ValueObjects.ProjectGeographicFocus;
+using ProjectLocalAuthority = Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
 
 namespace HE.Investments.FrontDoor.Domain.Project;
 

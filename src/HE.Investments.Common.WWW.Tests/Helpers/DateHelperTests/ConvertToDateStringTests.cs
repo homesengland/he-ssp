@@ -6,7 +6,7 @@ namespace HE.Investments.Common.WWW.Tests.Helpers.DateHelperTests;
 public class ConvertToDateStringTests
 {
     [Fact]
-    public void GivenDateDetails_WhenConvertToDateString_ThenReturnFormattedDate()
+    public void ShouldReturnFormattedDate_WhenDateDetailsAreValid()
     {
         // given && when
         var result = DateHelper.ConvertToDateString("1", "1", "2022");
@@ -16,7 +16,7 @@ public class ConvertToDateStringTests
     }
 
     [Fact]
-    public void GivenInvalidDateDetails_WhenConvertToDateString_ThenReturnEmptyString()
+    public void ShouldReturnEmptyString_WhenDateDetailsAreInvalid()
     {
         // given && when
         var result = DateHelper.ConvertToDateString("1", "1", "invalid");
