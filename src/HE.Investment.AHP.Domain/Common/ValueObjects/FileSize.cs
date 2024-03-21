@@ -1,4 +1,3 @@
-using Dawn;
 using HE.Investments.Common.Domain;
 
 namespace HE.Investment.AHP.Domain.Common.ValueObjects;
@@ -7,7 +6,12 @@ public class FileSize : ValueObject
 {
     public FileSize(long bytes)
     {
-        Bytes = Guard.Argument(bytes, nameof(bytes)).NotNegative();
+        if (bytes < 0)
+        {
+            throw new ArgumentException("Bytes cannot be negative", nameof(bytes));
+        }
+
+        Bytes = bytes;
     }
 
     public long Bytes { get; }
