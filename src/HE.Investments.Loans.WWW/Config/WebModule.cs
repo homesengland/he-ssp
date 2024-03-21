@@ -1,6 +1,7 @@
 using FluentValidation;
 using HE.Investments.Common;
 using HE.Investments.Common.Config;
+using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.CRM;
 using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.Common.Services.Notifications;

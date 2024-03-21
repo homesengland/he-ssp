@@ -1,5 +1,6 @@
 using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
+using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
@@ -513,9 +514,16 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
 
     [HttpPost("{projectId}/check-answers")]
     [WorkflowState(ProjectWorkflowState.CheckAnswers)]
-    public IActionResult Complete([FromRoute] string projectId, CancellationToken cancellationToken)
+    public async Task<IActionResult> Complete([FromRoute] string projectId, CancellationToken cancellationToken)
     {
-        return RedirectToAction("RedirectToLoans", "LoanApplication", new { fdProjectId = projectId });
+        var applicationType = await _mediator.Send(new ValidateProjectAnswersQuery(new FrontDoorProjectId(projectId)), cancellationToken);
+
+        if (applicationType == ApplicationType.Loans)
+        {
+            return RedirectToAction("RedirectToLoans", "LoanApplication", new { fdProjectId = projectId });
+        }
+
+        return RedirectToAction("YouNeedToSpeakToHomesEngland", new { projectId });
     }
 
     [HttpGet("{projectId}/you-need-to-speak-to-homes-england")]

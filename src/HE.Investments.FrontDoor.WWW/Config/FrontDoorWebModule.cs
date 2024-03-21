@@ -1,8 +1,8 @@
 using HE.Investments.Common;
 using HE.Investments.Common.Config;
+using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.Common.Models.App;
-using HE.Investments.Common.Services.Notifications;
 using HE.Investments.Common.WWW.Infrastructure.Authorization;
 using HE.Investments.Common.WWW.Infrastructure.ErrorHandling;
 using HE.Investments.Common.WWW.Infrastructure.Middlewares;
