@@ -19,7 +19,7 @@ public static class DomainModule
         services.AddProjectCrmContext();
         services.AddScoped<IProjectRepository, ProjectRepository>();
 
-        services.AddScoped<ISiteCrmContext, SiteCrmContext>();
+        services.AddSiteCrmContext();
         services.AddScoped<ISiteRepository, SiteRepository>();
         services.AddScoped<IRemoveSiteRepository, SiteRepository>();
 
@@ -30,5 +30,11 @@ public static class DomainModule
     {
         services.AddScoped<ProjectCrmContext>();
         services.AddScoped<IProjectCrmContext>(x => new CacheProjectCrmContext(x.GetRequiredService<ProjectCrmContext>()));
+    }
+
+    private static void AddSiteCrmContext(this IServiceCollection services)
+    {
+        services.AddScoped<SiteCrmContext>();
+        services.AddScoped<ISiteCrmContext>(x => new CacheSiteCrmContext(x.GetRequiredService<SiteCrmContext>()));
     }
 }
