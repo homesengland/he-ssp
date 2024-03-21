@@ -15,14 +15,14 @@ public class CacheProjectCrmContext : IProjectCrmContext
         _context = context;
     }
 
-    public Task<IList<FrontDoorProjectDto>> GetOrganisationProjects(string userGlobalId, Guid organisationId, CancellationToken cancellationToken)
+    public async Task<IList<FrontDoorProjectDto>> GetOrganisationProjects(string userGlobalId, Guid organisationId, CancellationToken cancellationToken)
     {
-        return _context.GetOrganisationProjects(userGlobalId, organisationId, cancellationToken);
+        return await _context.GetOrganisationProjects(userGlobalId, organisationId, cancellationToken);
     }
 
-    public Task<IList<FrontDoorProjectDto>> GetUserProjects(string userGlobalId, Guid organisationId, CancellationToken cancellationToken)
+    public async Task<IList<FrontDoorProjectDto>> GetUserProjects(string userGlobalId, Guid organisationId, CancellationToken cancellationToken)
     {
-        return _context.GetUserProjects(userGlobalId, organisationId, cancellationToken);
+        return await _context.GetUserProjects(userGlobalId, organisationId, cancellationToken);
     }
 
     public async Task<FrontDoorProjectDto> GetOrganisationProjectById(string projectId, string userGlobalId, Guid organisationId, CancellationToken cancellationToken)
@@ -35,9 +35,9 @@ public class CacheProjectCrmContext : IProjectCrmContext
         return await GetFromCache(projectId, userGlobalId, organisationId, _context.GetUserProjectById, cancellationToken);
     }
 
-    public Task<bool> IsThereProjectWithName(string projectName, Guid organisationId, CancellationToken cancellationToken)
+    public async Task<bool> IsThereProjectWithName(string projectName, Guid organisationId, CancellationToken cancellationToken)
     {
-        return _context.IsThereProjectWithName(projectName, organisationId, cancellationToken);
+        return await _context.IsThereProjectWithName(projectName, organisationId, cancellationToken);
     }
 
     public async Task<string> Save(FrontDoorProjectDto dto, UserAccount userAccount, CancellationToken cancellationToken)
