@@ -12,6 +12,7 @@ using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.TestsUtils.Assertions;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
+using Xunit.Abstractions;
 using Xunit.Extensions.Ordering;
 
 namespace HE.Investments.FrontDoor.IntegrationTests.FillProject;
@@ -20,8 +21,8 @@ namespace HE.Investments.FrontDoor.IntegrationTests.FillProject;
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
 public class Order01CreateFrontDoorProject : FrontDoorIntegrationTest
 {
-    public Order01CreateFrontDoorProject(IntegrationTestFixture<Program> fixture)
-        : base(fixture)
+    public Order01CreateFrontDoorProject(IntegrationTestFixture<Program> fixture, ITestOutputHelper output)
+        : base(fixture, output)
     {
     }
 
