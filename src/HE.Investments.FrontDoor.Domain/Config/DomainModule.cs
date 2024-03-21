@@ -16,7 +16,7 @@ public static class DomainModule
     {
         services.AddAccountSharedModule();
         services.AddScoped<IDateTimeProvider, DateTimeProvider>();
-        services.AddScoped<IProjectCrmContext, ProjectCrmContext>();
+        services.AddProjectCrmContext();
         services.AddScoped<IProjectRepository, ProjectRepository>();
 
         services.AddScoped<ISiteCrmContext, SiteCrmContext>();
@@ -24,5 +24,11 @@ public static class DomainModule
         services.AddScoped<IRemoveSiteRepository, SiteRepository>();
 
         services.AddTransient(typeof(IRequestExceptionHandler<,,>), typeof(DomainValidationHandler<,,>));
+    }
+
+    private static void AddProjectCrmContext(this IServiceCollection services)
+    {
+        services.AddScoped<ProjectCrmContext>();
+        services.AddScoped<IProjectCrmContext>(x => new CacheProjectCrmContext(x.GetRequiredService<ProjectCrmContext>()));
     }
 }

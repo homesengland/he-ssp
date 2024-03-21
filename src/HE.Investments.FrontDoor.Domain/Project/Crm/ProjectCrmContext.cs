@@ -12,6 +12,8 @@ public class ProjectCrmContext : IProjectCrmContext
 {
     private readonly ICrmService _service;
 
+    private FrontDoorProjectDto? _cachedProject;
+
     public ProjectCrmContext(ICrmService service)
     {
         _service = service;
@@ -82,6 +84,7 @@ public class ProjectCrmContext : IProjectCrmContext
 
     public async Task<string> Save(FrontDoorProjectDto dto, UserAccount userAccount, CancellationToken cancellationToken)
     {
+        _cachedProject = null;
         var request = new invln_setfrontdoorprojectRequest
         {
             invln_userid = userAccount.UserGlobalId.ToString(),
@@ -108,6 +111,11 @@ public class ProjectCrmContext : IProjectCrmContext
         invln_getsinglefrontdoorprojectRequest request,
         CancellationToken cancellationToken)
     {
+        if (_cachedProject is not null)
+        {
+            return _cachedProject;
+        }
+
         var response = await _service.ExecuteAsync<invln_getsinglefrontdoorprojectRequest, invln_getsinglefrontdoorprojectResponse, IList<FrontDoorProjectDto>>(
             request,
             r => string.IsNullOrEmpty(r.invln_retrievedfrontdoorprojectfields) ? "[]" : r.invln_retrievedfrontdoorprojectfields,
@@ -118,6 +126,7 @@ public class ProjectCrmContext : IProjectCrmContext
             throw new NotFoundException("Project", request.invln_frontdoorprojectid);
         }
 
-        return response[0];
+        _cachedProject ??= response[0];
+        return _cachedProject;
     }
 }
