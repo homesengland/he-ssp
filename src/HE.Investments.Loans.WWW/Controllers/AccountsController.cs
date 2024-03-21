@@ -1,6 +1,8 @@
 using HE.Investments.Account.Shared.Routing;
+using HE.Investments.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.FeatureManagement;
 
 namespace HE.Investments.Loans.WWW.Controllers;
 
@@ -10,9 +12,26 @@ public class AccountsController : Controller
 {
     private readonly IAccountRoutes _accountRoutes;
 
-    public AccountsController(IAccountRoutes accountRoutes)
+    private readonly AccountConfig _accountConfig;
+
+    private readonly IFeatureManager _featureManager;
+
+    public AccountsController(IAccountRoutes accountRoutes, AccountConfig accountConfig, IFeatureManager featureManager)
     {
         _accountRoutes = accountRoutes;
+        _accountConfig = accountConfig;
+        _featureManager = featureManager;
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Index(CancellationToken cancellationToken)
+    {
+        if (!await _featureManager.IsEnabledAsync(FeatureFlags.RedirectToAccountDashboard, cancellationToken))
+        {
+            return RedirectToAction("Index", "Home");
+        }
+
+        return new RedirectResult(_accountConfig.Url);
     }
 
     [Route("/user-profile")]

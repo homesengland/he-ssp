@@ -11,4 +11,10 @@ public static class FeatureFlags
     public const string UseLocalLoansStartApplication = nameof(UseLocalLoansStartApplication);
 
     public const string DisplayPostMvpLoans = nameof(DisplayPostMvpLoans);
+
+    public const string RedirectToLoanApplication = nameof(RedirectToLoanApplication);
+
+    public const string RedirectToProjectCheckAnswers = nameof(RedirectToProjectCheckAnswers);
+
+    public const string RedirectToAccountDashboard = nameof(RedirectToAccountDashboard);
 }

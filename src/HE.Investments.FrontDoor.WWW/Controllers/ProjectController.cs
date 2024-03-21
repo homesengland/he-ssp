@@ -513,9 +513,9 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
 
     [HttpPost("{projectId}/check-answers")]
     [WorkflowState(ProjectWorkflowState.CheckAnswers)]
-    public IActionResult Complete([FromRoute] string projectId)
+    public IActionResult Complete([FromRoute] string projectId, CancellationToken cancellationToken)
     {
-        return RedirectToAction("Index", "Account");
+        return RedirectToAction("RedirectToLoans", "LoanApplication", new { fdProjectId = projectId });
     }
 
     [HttpGet("{projectId}/you-need-to-speak-to-homes-england")]

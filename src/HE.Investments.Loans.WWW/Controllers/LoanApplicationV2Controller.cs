@@ -37,8 +37,14 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
         _accountUserContext = accountUserContext;
     }
 
+    [HttpGet("apply-for-loan")]
+    [WorkflowState(LoanApplicationWorkflow.State.ApplyForLoan)]
+    public IActionResult ApplyForLoan()
+    {
+        return View("ApplyForLoan");
+    }
+
     [HttpGet("about-loan")]
-    [HttpGet("")]
     [WorkflowState(LoanApplicationWorkflow.State.AboutLoan)]
     public IActionResult AboutLoan()
     {

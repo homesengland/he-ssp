@@ -1,0 +1,35 @@
+@using HE.Investments.Loans.WWW.Views.LoanApplicationV2.Consts
+@using HE.Investments.Loans.BusinessLogic.Config
+@inject ILoanAppConfig LoanAppConfig
+
+@{
+    var fdProjectId = Context.Request.Query["fdProjectId"];
+}
+
+<gds-div-grid-column-two-thirds>
+        <gds-back-link href="@Url.Action("BackToCheckAnswers", "FrontDoor", new { fdProjectId })" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
+
+        <vc:page-header title="@LoanApplicationPageTitles.LoanApplyInformation"/>
+
+        <gds-p>Based on your answers, we would like to invite you to apply for the Levelling Up Home Building Fund.</gds-p>
+
+        <gds-p>Before continuing, you should read our <he-link href="https://www.gov.uk/guidance/levelling-up-home-building-fund-development-finance" target="_blank" text="latest guidance on the fund (opens in a new tab)"></he-link>.</gds-p>
+
+        <gds-p>If this is not the right support you would like to apply for, talk to Homes England about other support we offer. You can find more information about different funds <he-link href="https://www.gov.uk/government/organisations/homes-england" target="_blank" text="on our website (opens in a new tab)"></he-link>.</gds-p>
+
+        <gds-p class="govuk-!-margin-bottom-9">
+            You can contact us by:<br/>
+            Telephone: @LoanAppConfig.LoansEnquiriesTelephoneNumber (weekdays from 9am to 5pm)<br/>
+            Email: <span class="text-underline">@LoanAppConfig.LoansEnquiriesEmail</span>
+        </gds-p>
+
+        <vc:button-start
+            href="@Url.Action("AboutLoan", "LoanApplicationV2", new { fdProjectId })"/>
+
+        <div>
+            <gds-link class="govuk-link--no-visited-state"
+                      href="@Url.Action("Index", "Accounts")">
+                Return to your account
+            </gds-link>
+        </div>
+</gds-div-grid-column-two-thirds>

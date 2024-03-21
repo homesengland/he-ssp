@@ -41,5 +41,6 @@ public static class FrontDoorWebModule
         services.AddSingleton<IDataverseConfig, DataverseConfig>(x =>
             x.GetRequiredService<IConfiguration>().GetSection("AppConfiguration:Dataverse").Get<DataverseConfig>());
         services.AddScoped<IProjectSummaryViewModelFactory, ProjectSummaryViewModelFactory>();
+        services.AddSingleton(x => x.GetRequiredService<IConfiguration>().GetSection("AppConfiguration:LoanApplicationService").Get<LoanApplicationConfig>());
     }
 }
