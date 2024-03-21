@@ -83,7 +83,7 @@ public class ProjectSummaryViewModelFactory : IProjectSummaryViewModelFactory
         sectionSummary.Add(new(
             "Homes your project enables",
             projectDetails.HomesNumber.ToOneElementList(),
-            createAction(nameof(ProjectController.OrganisationHomesBuilt)),
+            createAction(nameof(ProjectController.HomesNumber)),
             IsEditable: isEditable));
 
         sectionSummary.AddRange(CreateProjectFinancialDetailsSummary(projectDetails, createAction, isEditable));
