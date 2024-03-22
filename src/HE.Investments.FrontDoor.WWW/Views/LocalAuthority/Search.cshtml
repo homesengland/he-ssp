@@ -7,11 +7,14 @@
 
 @model HE.Investments.FrontDoor.WWW.Models.LocalAuthoritySearchViewModel
 @{
-    var title = string.IsNullOrWhiteSpace(Model.SiteId) ? LocalAuthorityPageTitles.SearchForProject : LocalAuthorityPageTitles.SearchForSite;
+    bool isSite = !string.IsNullOrWhiteSpace(Model.SiteId);
+    var title = isSite ? LocalAuthorityPageTitles.SearchForSite : LocalAuthorityPageTitles.SearchForProject;
     ViewData["Title"] = title;
-    var paragraph = string.IsNullOrWhiteSpace(Model.SiteId) ?
-        "If your project is located in more than one local authority, enter the local authority where the largest part of the project is located." :
-        "Search for your local authority. If your site is located in more than one local authority, search for the local authority where you have planning permission or intend to apply for planning permission.";
+    var paragraph = isSite ?
+        "Search for your local authority. If your site is located in more than one local authority, search for the local authority where you have planning permission or intend to apply for planning permission." :
+        "If your project is located in more than one local authority, enter the local authority where the largest part of the project is located.";
+
+    var secondHeader = isSite ? "What is your local authority" : string.Empty;
 }
 
 <gds-div-grid-column-two-thirds>
@@ -19,18 +22,19 @@
 
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
-    <vc:page-header caption="@ViewBag.ProjectName"/>
+    <vc:page-header title="@title" caption="@ViewBag.ProjectName" />
 
     <form asp-controller="LocalAuthority" asp-action="Search" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
 
         @Html.HiddenFor(m => m.ProjectId)
         @Html.HiddenFor(m => m.SiteId)
 
+        <gds-p>@paragraph</gds-p>
+
         <vc:text-input
             field-name="@nameof(Model.Phrase)"
-            title="@title"
-            title-type="InputTitleType.PageHeader"
-            paragraph="@paragraph"
+            title="@secondHeader"
+            title-type="InputTitleType.InputTitle"
             hint="Enter all or part of your local authority name."/>
 
         <vc:form-button text="Search" />
