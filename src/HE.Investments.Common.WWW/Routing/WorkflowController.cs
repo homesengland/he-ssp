@@ -1,7 +1,7 @@
 using System.Reflection;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Extensions;
-using HE.Investments.Common.WWW.Components.SectionSummary;
+using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
@@ -76,7 +76,9 @@ public abstract class WorkflowController<TState> : Controller
 
     public Task<IActionResult> ContinueWithRedirect(object routeData)
     {
-        return Continue(Request.Query["redirect"].ToString(), routeData);
+        var redirect = routeData.GetPropertyValue<string>("redirect") ?? Request.Query["redirect"].ToString();
+
+        return Continue(redirect, routeData);
     }
 
     public IActionResult Change(string redirectToState, object routeData)

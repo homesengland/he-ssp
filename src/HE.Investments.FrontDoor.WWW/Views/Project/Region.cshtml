@@ -21,7 +21,7 @@
 
     <vc:page-header caption="@ViewBag.ProjectName"/>
 
-    <form asp-controller="Project" asp-action="Region" asp-method="post" novalidate>
+    <form asp-controller="Project" asp-action="Region" asp-method="post" asp-route-redirect="@Context.Request.Query["redirect"]" novalidate>
 
         <vc:checkbox-list
             title="@ProjectPageTitles.Region"
