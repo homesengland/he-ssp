@@ -25,7 +25,7 @@ public class LoanApplicationController : Controller
     [HttpGet]
     public async Task<IActionResult> RedirectToLoans([FromQuery] string fdProjectId, CancellationToken cancellationToken)
     {
-        if (!await _featureManager.IsEnabledAsync(FeatureFlags.RedirectToLoanApplication, cancellationToken))
+        if (await _featureManager.IsEnabledAsync(FeatureFlags.StayInCurrentApplication, cancellationToken))
         {
             return RedirectToAction("Index", "Projects");
         }

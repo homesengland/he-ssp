@@ -26,7 +26,7 @@ public class AccountsController : Controller
     [HttpGet]
     public async Task<IActionResult> Index(CancellationToken cancellationToken)
     {
-        if (!await _featureManager.IsEnabledAsync(FeatureFlags.RedirectToAccountDashboard, cancellationToken))
+        if (await _featureManager.IsEnabledAsync(FeatureFlags.StayInCurrentApplication, cancellationToken))
         {
             return RedirectToAction("Index", "Home");
         }
