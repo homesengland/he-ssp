@@ -24,7 +24,7 @@ public class FrontDoorController : Controller
     [Route("")]
     public async Task<IActionResult> StartNewProject(CancellationToken cancellationToken)
     {
-        if (await _featureManager.IsEnabledAsync(FeatureFlags.UseLocalLoansStartApplication, cancellationToken))
+        if (await _featureManager.IsEnabledAsync(FeatureFlags.StayInCurrentApplication, cancellationToken))
         {
             return RedirectToAction("AboutLoan", "LoanApplicationV2");
         }
@@ -36,7 +36,7 @@ public class FrontDoorController : Controller
     [Route("return-to-project-check-answers")]
     public async Task<IActionResult> BackToCheckAnswers([FromQuery] string fdProjectId, CancellationToken cancellationToken)
     {
-        if (!await _featureManager.IsEnabledAsync(FeatureFlags.RedirectToProjectCheckAnswers, cancellationToken))
+        if (await _featureManager.IsEnabledAsync(FeatureFlags.StayInCurrentApplication, cancellationToken))
         {
             return RedirectToAction("Index", "Home");
         }
