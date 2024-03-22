@@ -8,6 +8,7 @@ namespace HE.CRM.Plugins.Handlers.CustomApi.FrontDoor
     {
         #region Fields
         private string frontDoorProjectId => ExecutionData.GetInputParameter<string>(invln_deactivatefrontdoorprojectRequest.Fields.invln_frontdoorprojectid);
+        private string useHeTablesFromPortal => ExecutionData.GetInputParameter<string>(invln_getsinglefrontdoorprojectRequest.Fields.invln_usehetables);
         #endregion
 
         #region Base Methods Overrides
@@ -19,7 +20,8 @@ namespace HE.CRM.Plugins.Handlers.CustomApi.FrontDoor
         public override void DoWork()
         {
             this.TracingService.Trace("DeactivateFrontDoorProjectHandler");
-            var result = CrmServicesFactory.Get<IFrontDoorProjectService>().DeactivateFrontDoorProject(frontDoorProjectId);
+            var useHeTables = !string.IsNullOrEmpty(useHeTablesFromPortal);
+            var result = CrmServicesFactory.Get<IFrontDoorProjectService>().DeactivateFrontDoorProject(frontDoorProjectId, useHeTables);
             this.TracingService.Trace("Send Response");
             ExecutionData.SetOutputParameter(invln_deactivatefrontdoorprojectResponse.Fields.invln_projectdeactivated, result);
         }

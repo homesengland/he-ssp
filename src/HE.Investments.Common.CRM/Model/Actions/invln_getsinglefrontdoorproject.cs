@@ -24,6 +24,7 @@ namespace HE.Investments.Common.CRM.Model
 			public const string invln_frontdoorprojectid = "invln_frontdoorprojectid";
 			public const string invln_organisationid = "invln_organisationid";
 			public const string invln_userid = "invln_userid";
+			public const string invln_usehetables = "invln_usehetables";
 		}
 		
 		public const string ActionLogicalName = "invln_getsinglefrontdoorproject";
@@ -120,6 +121,25 @@ namespace HE.Investments.Common.CRM.Model
 			set
 			{
 				this.Parameters["invln_userid"] = value;
+			}
+		}
+		
+		public string invln_usehetables
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_usehetables"))
+				{
+					return ((string)(this.Parameters["invln_usehetables"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_usehetables"] = value;
 			}
 		}
 		

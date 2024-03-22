@@ -11,6 +11,7 @@ namespace HE.CRM.Plugins.Handlers.CustomApi.FrontDoor
         private string frontDoorProjectId => ExecutionData.GetInputParameter<string>(invln_getsinglefrontdoorprojectsiteRequest.Fields.invln_frontdoorprojectid);
         private string fieldsToRetrieve => ExecutionData.GetInputParameter<string>(invln_getsinglefrontdoorprojectsiteRequest.Fields.invln_fieldstoretrieve);
         private string frontDoorProjectSiteId => ExecutionData.GetInputParameter<string>(invln_getsinglefrontdoorprojectsiteRequest.Fields.invln_frontdoorprojectsiteid);
+        private string useHeTablesFromPortal => ExecutionData.GetInputParameter<string>(invln_getsinglefrontdoorprojectsiteRequest.Fields.invln_usehetables);
         #endregion
 
         #region Base Methods Overrides
@@ -22,7 +23,8 @@ namespace HE.CRM.Plugins.Handlers.CustomApi.FrontDoor
         public override void DoWork()
         {
             this.TracingService.Trace("GetSingleFrontDoorProjectSiteHandler");
-            var frontDoorProjectSiteDto = CrmServicesFactory.Get<IFrontDoorProjectSiteService>().GetFrontDoorProjectSite(frontDoorProjectId, fieldsToRetrieve, frontDoorProjectSiteId);
+            var useHeTables = !string.IsNullOrEmpty(useHeTablesFromPortal);
+            var frontDoorProjectSiteDto = CrmServicesFactory.Get<IFrontDoorProjectSiteService>().GetFrontDoorProjectSite(frontDoorProjectId, useHeTables, fieldsToRetrieve, frontDoorProjectSiteId);
             this.TracingService.Trace("Send Response");
             if (frontDoorProjectSiteDto != null)
             {

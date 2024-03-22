@@ -8,9 +8,9 @@ namespace HE.CRM.Plugins.Services.FrontDoorProjectSite
 {
     public interface IFrontDoorProjectSiteService : ICrmService
     {
-        PagedResponseDto<FrontDoorProjectSiteDto> GetFrontDoorProjectSites(PagingRequestDto pagingRequestDto, string frontDoorProjectId, string fieldsToRetrieve = null);
-        FrontDoorProjectSiteDto GetFrontDoorProjectSite(string frontDoorProjectId, string fieldsToRetrieve = null, string frontDoorProjectSiteId = null);
-        string CreateRecordFromPortal(string frontDoorProjectId, string entityFieldsParameters, string frontDoorSiteId = null);
-        bool DeactivateFrontDoorSite(string frontDoorSiteId);
+        PagedResponseDto<FrontDoorProjectSiteDto> GetFrontDoorProjectSites(PagingRequestDto pagingRequestDto, string frontDoorProjectId, bool useHeTables, string fieldsToRetrieve = null);
+        FrontDoorProjectSiteDto GetFrontDoorProjectSite(string frontDoorProjectId, bool useHeTables, string fieldsToRetrieve = null, string frontDoorProjectSiteId = null);
+        string CreateRecordFromPortal(string frontDoorProjectId, string entityFieldsParameters, bool useHeTables, string frontDoorSiteId = null);
+        bool DeactivateFrontDoorSite(string frontDoorSiteId, bool useHeTables);
     }
 }
