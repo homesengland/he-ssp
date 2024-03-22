@@ -123,7 +123,7 @@ public class UserOrganisationController : Controller
     [HttpGet("list")]
     public IActionResult UserOrganisationsList()
     {
-        return View("UserOrganisationsList");
+        return RedirectToAction("Index");
     }
 
     private async Task<string?> GetStartNewProjectUrl()

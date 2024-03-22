@@ -159,8 +159,7 @@ public class Order01CompleteUserProfile : AccountIntegrationTest
         var organisationsList = await TestClient.SubmitButton(continueButton, ("IsConfirmed", "True"));
 
         // then
-        organisationsList
-            .HasTitle(UserOrganisationPageTitles.OrganisationsList);
+        organisationsList.HasTitle(UserOrganisationPageTitles.OrganisationDetails(FreshProfileData.OrganisationName));
         SaveCurrentPage();
     }
 }
