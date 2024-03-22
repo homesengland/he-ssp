@@ -14,6 +14,7 @@ namespace HE.CRM.Plugins.Handlers.CustomApi.LocalAuthority
         private string isLoan => ExecutionData.GetInputParameter<string>(invln_getmultiplelocalauthoritiesformoduleRequest.Fields.invln_isloan);
         private string isAHP => ExecutionData.GetInputParameter<string>(invln_getmultiplelocalauthoritiesformoduleRequest.Fields.invln_isahp);
         private string isLoanFD => ExecutionData.GetInputParameter<string>(invln_getmultiplelocalauthoritiesformoduleRequest.Fields.invln_isloanfd);
+        private string useHeTablesFromPortal => ExecutionData.GetInputParameter<string>(invln_getmultiplelocalauthoritiesformoduleRequest.Fields.invln_usehetables);
 
 
         #endregion
@@ -58,10 +59,11 @@ namespace HE.CRM.Plugins.Handlers.CustomApi.LocalAuthority
                 moduleSelected = "loanFD";
             }
 
+            var useHeTables = !string.IsNullOrEmpty(useHeTablesFromPortal);
             var paging = JsonSerializer.Deserialize<PagingRequestDto>(pagingRequest);
             if (paging != null)
             {
-                var localAuthorities = CrmServicesFactory.Get<ILocalAuthorityService>().GetLocalAuthoritiesForModule(paging, searchPhrase, moduleSelected);
+                var localAuthorities = CrmServicesFactory.Get<ILocalAuthorityService>().GetLocalAuthoritiesForModule(paging, searchPhrase, moduleSelected, useHeTables);
 
                 this.TracingService.Trace("Send Response");
                 if (localAuthorities != null)
