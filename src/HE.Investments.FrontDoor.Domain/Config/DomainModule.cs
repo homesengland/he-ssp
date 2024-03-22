@@ -3,6 +3,7 @@ using HE.Investments.Common;
 using HE.Investments.Common.Utils;
 using HE.Investments.FrontDoor.Domain.Project.Crm;
 using HE.Investments.FrontDoor.Domain.Project.Repository;
+using HE.Investments.FrontDoor.Domain.Services;
 using HE.Investments.FrontDoor.Domain.Site.Crm;
 using HE.Investments.FrontDoor.Domain.Site.Repository;
 using MediatR.Pipeline;
@@ -22,6 +23,8 @@ public static class DomainModule
         services.AddScoped<ISiteCrmContext, SiteCrmContext>();
         services.AddScoped<ISiteRepository, SiteRepository>();
         services.AddScoped<IRemoveSiteRepository, SiteRepository>();
+
+        services.AddScoped<IEligibilityService, EligibilityService>();
 
         services.AddTransient(typeof(IRequestExceptionHandler<,,>), typeof(DomainValidationHandler<,,>));
     }

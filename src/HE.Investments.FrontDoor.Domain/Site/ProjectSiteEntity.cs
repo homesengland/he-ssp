@@ -81,7 +81,7 @@ public class ProjectSiteEntity
     public bool IsSiteValidForLoanApplication()
     {
         return PlanningStatusDivision.IsStatusAllowedForLoanApplication(PlanningStatus.Value)
-               && !LocalAuthorityDivision.IsLocalAuthorityNotAllowedForLoanApplication(LocalAuthority?.Name)
+               && !LocalAuthorityDivision.IsLocalAuthorityNotAllowedForLoanApplication(LocalAuthority?.Id.ToString())
                && HomesNumber?.Value is >= 5 and <= 200;
     }
 }
