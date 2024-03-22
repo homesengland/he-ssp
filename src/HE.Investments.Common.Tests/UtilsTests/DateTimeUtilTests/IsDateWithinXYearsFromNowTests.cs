@@ -11,10 +11,10 @@ public class IsDateWithinXYearsFromNowTests
     public void ShouldReturnTrue_WhenDateIsWithinXYearsFromNow()
     {
         // given
-        var dateTimeProviderMock = DateTimeProviderBuilder.New().ReturnCurrentDate().Build();
+        var dateTimeProviderMock = DateTimeProviderBuilder.New().ReturnDate(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)).Build();
         DateTimeUtil.SetDateTimeProvider(dateTimeProviderMock);
-        var date = "01.01.2020";
-        var yearsToCheck = 4;
+        var date = new DateTime(2027, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        var yearsToCheck = 3;
 
         // when
         var result = DateTimeUtil.IsDateWithinXYearsFromNow(date, yearsToCheck);
@@ -27,10 +27,10 @@ public class IsDateWithinXYearsFromNowTests
     public void ShouldReturnFalse_WhenDateIsNotWithinXYearsFromNow()
     {
         // given
-        var dateTimeProviderMock = DateTimeProviderBuilder.New().ReturnCurrentDate().Build();
+        var dateTimeProviderMock = DateTimeProviderBuilder.New().ReturnDate(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)).Build();
         DateTimeUtil.SetDateTimeProvider(dateTimeProviderMock);
-        var date = "01.01.2019";
-        var yearsToCheck = 2;
+        var date = new DateTime(2027, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        var yearsToCheck = 1;
 
         // when
         var result = DateTimeUtil.IsDateWithinXYearsFromNow(date, yearsToCheck);

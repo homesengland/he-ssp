@@ -1,5 +1,3 @@
-using System.Globalization;
-
 namespace HE.Investments.Common.Utils;
 
 public static class DateTimeUtil
@@ -11,15 +9,10 @@ public static class DateTimeUtil
         _dateTimeProvider = dateTimeProvider;
     }
 
-    public static bool IsDateWithinXYearsFromNow(string? date, int yearsToCheck)
+    public static bool IsDateWithinXYearsFromNow(DateTime? date, int yearsToCheck)
     {
         var timeNow = _dateTimeProvider.UtcNow;
 
-        if (DateTime.TryParseExact(date, "dd.MM.yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out var parsedDate))
-        {
-            return parsedDate <= timeNow.AddYears(yearsToCheck) && parsedDate >= timeNow.AddYears(-yearsToCheck);
-        }
-
-        return false;
+        return date <= timeNow.AddYears(yearsToCheck) && date >= timeNow.AddYears(-yearsToCheck);
     }
 }

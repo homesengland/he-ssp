@@ -15,10 +15,10 @@ public class DateTimeProviderBuilder
 
     public static DateTimeProviderBuilder New() => new();
 
-    public DateTimeProviderBuilder ReturnCurrentDate()
+    public DateTimeProviderBuilder ReturnDate(DateTime date)
     {
         _mock.Setup(d => d.UtcNow)
-            .Returns(new DateTime(2023, 7, 12, 0, 0, 0, DateTimeKind.Unspecified));
+            .Returns(date);
 
         return this;
     }
