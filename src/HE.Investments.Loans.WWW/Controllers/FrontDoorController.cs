@@ -21,6 +21,7 @@ public class FrontDoorController : Controller
     }
 
     [HttpGet]
+    [Route("")]
     public async Task<IActionResult> StartNewProject(CancellationToken cancellationToken)
     {
         if (await _featureManager.IsEnabledAsync(FeatureFlags.UseLocalLoansStartApplication, cancellationToken))
@@ -29,5 +30,18 @@ public class FrontDoorController : Controller
         }
 
         return new RedirectResult(_frontDoorConfig.StartNewProjectUrl);
+    }
+
+    [HttpGet]
+    [Route("return-to-project-check-answers")]
+    public async Task<IActionResult> BackToCheckAnswers([FromQuery] string fdProjectId, CancellationToken cancellationToken)
+    {
+        if (!await _featureManager.IsEnabledAsync(FeatureFlags.RedirectToProjectCheckAnswers, cancellationToken))
+        {
+            return RedirectToAction("Index", "Home");
+        }
+
+        var redirectUrl = _frontDoorConfig.ProjectCheckAnswers.Replace("{projectId}", fdProjectId);
+        return new RedirectResult(redirectUrl);
     }
 }

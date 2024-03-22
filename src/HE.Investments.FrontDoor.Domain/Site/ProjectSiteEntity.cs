@@ -5,6 +5,7 @@ using HE.Investments.Common.Domain;
 using HE.Investments.Common.Errors;
 using HE.Investments.FrontDoor.Contract.Site;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
+using HE.Investments.FrontDoor.Domain.Site.Utilities;
 using HE.Investments.FrontDoor.Domain.Site.ValueObjects;
 using HE.Investments.FrontDoor.Shared.Project;
 using SiteLocalAuthority = Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
@@ -75,5 +76,12 @@ public class ProjectSiteEntity
     public void ProvideLocalAuthority(SiteLocalAuthority localAuthority)
     {
         LocalAuthority = _modificationTracker.Change(LocalAuthority, localAuthority);
+    }
+
+    public bool IsSiteValidForLoanApplication()
+    {
+        return PlanningStatusDivision.IsStatusAllowedForLoanApplication(PlanningStatus.Value)
+               && !LocalAuthorityDivision.IsLocalAuthorityNotAllowedForLoanApplication(LocalAuthority?.Id.ToString())
+               && HomesNumber?.Value is >= 5 and <= 200;
     }
 }

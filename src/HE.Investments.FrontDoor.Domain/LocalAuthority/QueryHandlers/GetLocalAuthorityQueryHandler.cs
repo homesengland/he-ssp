@@ -8,7 +8,7 @@ using Org::HE.Investments.Organisation.LocalAuthorities.Repositories;
 
 namespace HE.Investments.FrontDoor.Domain.LocalAuthority.QueryHandlers;
 
-public class GetLocalAuthorityQueryHandler : IRequestHandler<GetLocalAuthorityQuery, Common.Contract.LocalAuthority>
+public class GetLocalAuthorityQueryHandler : IRequestHandler<GetLocalAuthorityQuery, Investments.Common.Contract.LocalAuthority>
 {
     private readonly ILocalAuthorityRepository _repository;
 
@@ -17,9 +17,9 @@ public class GetLocalAuthorityQueryHandler : IRequestHandler<GetLocalAuthorityQu
         _repository = repository;
     }
 
-    public async Task<Common.Contract.LocalAuthority> Handle(GetLocalAuthorityQuery request, CancellationToken cancellationToken)
+    public async Task<Investments.Common.Contract.LocalAuthority> Handle(GetLocalAuthorityQuery request, CancellationToken cancellationToken)
     {
         var localAuthority = await _repository.GetById(new StringIdValueObject(request.LocalAuthorityId.Value), cancellationToken);
-        return new Common.Contract.LocalAuthority(localAuthority.Id.Value, localAuthority.Name);
+        return new Investments.Common.Contract.LocalAuthority(localAuthority.Id.Value, localAuthority.Name);
     }
 }

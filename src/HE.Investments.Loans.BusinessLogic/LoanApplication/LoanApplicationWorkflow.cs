@@ -13,6 +13,7 @@ public class LoanApplicationWorkflow : IStateRouting<LoanApplicationWorkflow.Sta
     {
         ApplicationDashboard = 1,
         UserDashboard,
+        ApplyForLoan,
         AboutLoan,
         LoanApplyInformation,
         CheckYourDetails,
@@ -87,8 +88,12 @@ public class LoanApplicationWorkflow : IStateRouting<LoanApplicationWorkflow.Sta
 
     private void ConfigureTransitions()
     {
+        _machine.Configure(State.ApplyForLoan)
+            .Permit(Trigger.Continue, State.AboutLoan);
+
         _machine.Configure(State.AboutLoan)
-            .Permit(Trigger.Continue, State.LoanApplyInformation);
+            .Permit(Trigger.Continue, State.LoanApplyInformation)
+            .Permit(Trigger.Back, State.ApplyForLoan);
 
         _machine.Configure(State.LoanApplyInformation)
             .Permit(Trigger.Continue, State.CheckYourDetails)
