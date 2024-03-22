@@ -23,7 +23,7 @@ internal sealed class CalculateAffordableRentQueryHandler : CalculateQueryHandle
     {
         (CalculateAffordableRentQuery request, IHomeTypeEntity homeType) => homeType.TenureDetails.ChangeMarketValue(request.MarketValue, true),
         (request, homeType) => homeType.TenureDetails.ChangeMarketRentPerWeek(request.MarketRentPerWeek, true),
-        (request, homeType) => homeType.TenureDetails.ChangeRentPerWeek(request.AffordableRentPerWeek, rentType: "Affordable", true),
+        (request, homeType) => homeType.TenureDetails.ChangeRentPerWeek(request.AffordableRentPerWeek, rentType: "Affordable Rent", true),
         (request, homeType) => homeType.TenureDetails.ChangeTargetRentExceedMarketRent(request.TargetRentExceedMarketRent, true),
         (_, homeType) => homeType.TenureDetails.ChangeRentAsPercentageOfMarketRent(),
     };
