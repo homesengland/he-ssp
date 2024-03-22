@@ -1,5 +1,8 @@
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Contract.Pagination;
+using HE.Investments.Common.Contract.Validators;
+using HE.Investments.Common.Messages;
+using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.FrontDoor.Contract.LocalAuthority;
 using HE.Investments.FrontDoor.Contract.LocalAuthority.Queries;
@@ -51,6 +54,13 @@ public class LocalAuthorityController : WorkflowController<LocalAuthorityWorkflo
     [WorkflowState(LocalAuthorityWorkflowState.Search)]
     public async Task<IActionResult> Search([FromForm] string projectId, [FromForm] string? siteId, [FromForm] string phrase)
     {
+        if (string.IsNullOrEmpty(phrase))
+        {
+            ModelState.Clear();
+            ModelState.AddModelError(nameof(LocalAuthoritySearchViewModel.Phrase), ValidationErrorMessage.MustProvideRequiredField("local authority"));
+            return View(nameof(Search), new LocalAuthoritySearchViewModel(phrase, projectId, siteId));
+        }
+
         return await Continue(new { projectId, siteId, phrase });
     }
 
