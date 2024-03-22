@@ -1,6 +1,7 @@
 using FluentAssertions;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
 using HE.Investments.FrontDoor.Domain.Tests.Project.TestDataBuilders;
+using HE.Investments.FrontDoor.Shared.Project.Contract;
 using Xunit;
 
 namespace HE.Investments.FrontDoor.Domain.Tests.Project.ProjectEntityTests;
@@ -25,7 +26,7 @@ public class ProvideIsFundingRequiredTests
     public void ShouldResetRequiredFundingQuestion_WhenIsFundingRequiredHasChanged()
     {
         // given
-        var project = ProjectEntityBuilder.New().WithRequiredFunding().WithIsProfit().Build();
+        var project = ProjectEntityBuilder.New().WithRequiredFunding(true, RequiredFundingOption.LessThan250K).WithIsProfit(false).Build();
 
         // when
         project.ProvideIsFundingRequired(new IsFundingRequired(false));
@@ -39,7 +40,7 @@ public class ProvideIsFundingRequiredTests
     public void ShouldNotResetRequiredFundingQuestion_WhenIsFundingRequiredHasChangedToTheSameValue()
     {
         // given
-        var project = ProjectEntityBuilder.New().WithRequiredFunding().WithIsProfit().Build();
+        var project = ProjectEntityBuilder.New().WithRequiredFunding(true, RequiredFundingOption.LessThan250K).WithIsProfit(false).Build();
 
         // when
         project.ProvideIsFundingRequired(new IsFundingRequired(true));
