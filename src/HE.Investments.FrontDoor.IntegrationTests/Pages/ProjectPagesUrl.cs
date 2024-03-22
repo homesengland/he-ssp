@@ -34,6 +34,8 @@ internal static class ProjectPagesUrl
 
     public static string CheckAnswers(string projectId) => BuildProjectPage(projectId, "check-answers");
 
+    public static string YouNeedToSpeakToHomesEngland(string projectId) => BuildProjectPage(projectId, "you-need-to-speak-to-homes-england");
+
     public static string BuildProjectPage(string projectId, string pageName)
     {
         return $"apply-for-support/project/{projectId}/{pageName}";
