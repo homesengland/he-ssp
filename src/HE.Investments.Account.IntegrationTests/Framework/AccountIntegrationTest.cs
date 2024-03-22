@@ -30,12 +30,15 @@ public class AccountIntegrationTest : IntegrationTestBase<Program>
         SetFreshProfileData();
         SetUserOrganisationData();
         fixture.CheckUserLoginData();
+        LoginData = fixture.LoginData;
         TestClient.AsLoggedUser();
     }
 
-    public FreshProfileData FreshProfileData { get; private set; }
+    protected FreshProfileData FreshProfileData { get; private set; }
 
-    public UserOrganisationData UserOrganisationData { get; private set; }
+    protected UserOrganisationData UserOrganisationData { get; private set; }
+
+    protected ILoginData LoginData { get; private set; }
 
     private UserLoginData GenerateFreshAccount()
     {

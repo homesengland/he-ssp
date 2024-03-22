@@ -1,4 +1,5 @@
 using FluentAssertions;
+using HE.Investments.Account.Contract.UserOrganisation.Events;
 using HE.Investments.Account.Domain.Tests.UserOrganisation.TestDataBuilders;
 using HE.Investments.Common.Contract.Exceptions;
 using Xunit;
@@ -80,5 +81,9 @@ public class InviteUserTests
 
         // then
         testCandidate.PendingInvitations.Should().HaveCount(1).And.Contain(invitation);
+        testCandidate.GetDomainEventsAndRemove()
+            .Should()
+            .HaveCount(1)
+            .And.Contain(new UserInvitedEvent(invitation.FirstName.Value, invitation.LastName.Value));
     }
 }

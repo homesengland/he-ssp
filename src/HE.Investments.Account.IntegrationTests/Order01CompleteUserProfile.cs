@@ -152,7 +152,7 @@ public class Order01CompleteUserProfile : AccountIntegrationTest
         confirmationPage
             .UrlWithoutQueryEndsWith(OrganisationPagesUrls.Confirm(FreshProfileData.SelectedOrganisationId))
             .HasTitle(OrganisationPageTitles.ConfirmYourSelection)
-            .HasBackLink()
+            .HasBackLink(out _)
             .HasSaveAndContinueButton(out var continueButton);
 
         // then

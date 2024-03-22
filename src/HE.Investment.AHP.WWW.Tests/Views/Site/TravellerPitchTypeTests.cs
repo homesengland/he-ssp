@@ -28,6 +28,6 @@ public class TravellerPitchTypeTests : AhpViewTestBase
             .HasHint("Sites that are only intended for temporary use as a traveller pitch site or which lack planning approval for permanent provision of traveller pitches.")
             .HasWarning("Homes England does not fund temporary sites for traveller pitches. Contact your Growth Manager to discuss your proposal before continuing your application.")
             .HasSaveAndContinueButton()
-            .HasBackLink(false);
+            .HasBackLink(out _, false);
     }
 }

@@ -8,8 +8,8 @@ using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Account.WWW.Models.Users;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Pagination;
-using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
+using HE.Investments.Common.WWW.Controllers;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -130,15 +130,11 @@ public class UsersController : Controller
     [AuthorizeWithCompletedProfile(AccountAccessContext.ManageUsers)]
     public async Task<IActionResult> Invite(InviteUserViewModel model, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(
+        return await this.ExecuteCommand<InviteUserToOrganisationCommand>(
+            _mediator,
             new InviteUserToOrganisationCommand(model.FirstName, model.LastName, model.EmailAddress, model.JobTitle, model.Role),
+            () => Task.FromResult<IActionResult>(RedirectToAction("Index")),
+            () => Task.FromResult<IActionResult>(View(model)),
             cancellationToken);
-        if (result.HasValidationErrors)
-        {
-            ModelState.AddValidationErrors(result);
-            return View(model);
-        }
-
-        return RedirectToAction("Index");
     }
 }

@@ -102,7 +102,7 @@ public class PlanningDetailsTests : AhpViewTestBase
                 value: "False",
                 exist: isLandRegistryTitleNumberRegisteredExist)
             .HasSaveAndContinueButton()
-            .HasBackLink(false);
+            .HasBackLink(out _, false);
     }
 
     private static SitePlanningDetails CreateTestModel(

@@ -2,9 +2,9 @@ using HE.Investments.Common.Domain.ValueObjects;
 
 namespace HE.Investments.Account.Shared.User.ValueObjects;
 
-public class FirstName : ShortText
+public class YourFirstName : YourShortText
 {
-    public FirstName(string? value)
+    public YourFirstName(string? value)
         : base(value, "FirstName", "first name")
     {
     }

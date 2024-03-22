@@ -27,6 +27,6 @@ public class ReconfigureExistingTests : AhpViewTestBase
         document.HasTitle(DeliveryPageTitles.ReconfiguringExisting)
             .HasGdsRadioInputWithValues(nameof(DeliveryPhaseDetails.ReconfiguringExisting), "True", "False")
             .HasSaveAndContinueButton()
-            .HasBackLink(false);
+            .HasBackLink(out _, false);
     }
 }

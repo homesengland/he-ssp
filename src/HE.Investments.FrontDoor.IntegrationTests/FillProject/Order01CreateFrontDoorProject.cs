@@ -77,7 +77,7 @@ public class Order01CreateFrontDoorProject : FrontDoorIntegrationTest
         currentPage
             .UrlEndWith(ProjectPagesUrl.NewEnglandHousingDelivery)
             .HasTitle(ProjectPageTitles.EnglandHousingDelivery)
-            .HasBackLink()
+            .HasBackLink(out _)
             .HasContinueButton(out var continueButton);
 
         // when
@@ -98,7 +98,7 @@ public class Order01CreateFrontDoorProject : FrontDoorIntegrationTest
         currentPage
             .UrlEndWith(ProjectPagesUrl.NewName)
             .HasTitle(ProjectPageTitles.Name)
-            .HasBackLink()
+            .HasBackLink(out _)
             .HasSaveAndContinueButton(out var continueButton);
 
         // when

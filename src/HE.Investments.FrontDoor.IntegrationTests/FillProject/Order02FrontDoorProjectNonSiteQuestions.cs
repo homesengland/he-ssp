@@ -140,7 +140,7 @@ public class Order02FrontDoorProjectNonSiteQuestions : FrontDoorIntegrationTest
         checkAnswersPage
             .UrlEndWith(ProjectPagesUrl.CheckAnswers(ProjectData.Id))
             .HasTitle(ProjectPageTitles.CheckAnswers)
-            .HasBackLink();
+            .HasBackLink(out _);
 
         // when & then
         var summary = checkAnswersPage.GetSummaryListItems();

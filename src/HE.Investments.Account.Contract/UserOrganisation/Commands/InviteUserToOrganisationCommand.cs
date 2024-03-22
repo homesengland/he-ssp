@@ -4,4 +4,4 @@ using MediatR;
 
 namespace HE.Investments.Account.Contract.UserOrganisation.Commands;
 
-public record InviteUserToOrganisationCommand(string? FirstName, string? LastName, string? Email, string? JobTitle, UserRole? NewRole) : IRequest<OperationResult>;
+public record InviteUserToOrganisationCommand(string? FirstName, string? LastName, string? EmailAddress, string? JobTitle, UserRole? Role) : IRequest<OperationResult>;
