@@ -23,7 +23,7 @@ public class Section106CapitalFundingEligibilityTests : AhpViewTestBase
             .HasPageHeader(_siteName, @SitePageTitles.SiteSection106CapitalFundingEligibility)
             .HasGdsRadioInputWithValues(nameof(Section106Dto.CapitalFundingEligibility), "True", "False")
             .HasSaveAndContinueButton()
-            .HasBackLink(false);
+            .HasBackLink(out _, false);
     }
 
     [Fact]
@@ -44,7 +44,7 @@ public class Section106CapitalFundingEligibilityTests : AhpViewTestBase
             .HasPageHeader(_siteName, @SitePageTitles.SiteSection106CapitalFundingEligibility)
             .HasGdsRadioInputWithValues(nameof(Section106Dto.CapitalFundingEligibility), "True", "False")
             .HasSaveAndContinueButton()
-            .HasBackLink(false)
+            .HasBackLink(out _, false)
             .HasOneValidationMessages(errorMessage);
     }
 }

@@ -23,7 +23,7 @@ public class Section106AgreementTests : AhpViewTestBase
             .HasPageHeader(_siteName, @SitePageTitles.SiteSection106Agreement)
             .HasGdsRadioInputWithValues(nameof(Section106Dto.GeneralAgreement), "True", "False")
             .HasSaveAndContinueButton()
-            .HasBackLink(false);
+            .HasBackLink(out _, false);
     }
 
     [Fact]
@@ -44,7 +44,7 @@ public class Section106AgreementTests : AhpViewTestBase
             .HasPageHeader(_siteName, @SitePageTitles.SiteSection106Agreement)
             .HasGdsRadioInputWithValues(nameof(Section106Dto.GeneralAgreement), "True", "False")
             .HasSaveAndContinueButton()
-            .HasBackLink(false)
+            .HasBackLink(out _, false)
             .HasOneValidationMessages(errorMessage);
     }
 }

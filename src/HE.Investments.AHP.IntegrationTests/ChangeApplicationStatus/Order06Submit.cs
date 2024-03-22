@@ -56,7 +56,7 @@ public class Order06Submit : AhpIntegrationTest
         currentPage
             .UrlWithoutQueryEndsWith(ApplicationPagesUrl.SubmitSuffix)
             .HasTitle(ApplicationPageTitles.Submit)
-            .HasBackLink()
+            .HasBackLink(out _)
             .HasSubmitButton(out var submitButton, "Accept and submit");
 
         // when

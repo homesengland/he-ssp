@@ -163,7 +163,7 @@ public class Order01StartAhpSite : AhpIntegrationTest
         currentPage
             .UrlWithoutQueryEndsWith(SitePagesUrl.SiteLocalAuthoritySearch(SiteData.SiteId))
             .HasTitle(SitePageTitles.LocalAuthoritySearch)
-            .HasBackLink()
+            .HasBackLink(out _)
             .HasSubmitButton(out var searchButton, "Search");
 
         // when
@@ -202,7 +202,7 @@ public class Order01StartAhpSite : AhpIntegrationTest
         currentPage
             .UrlWithoutQueryEndsWith(SitePagesUrl.SiteLocalAuthorityConfirmWithoutQuery(SiteData.SiteId, SiteData.LocalAuthorityId))
             .HasTitle(SitePageTitles.LocalAuthorityConfirm)
-            .HasBackLink()
+            .HasBackLink(out _)
             .HasSubmitButton(out var confirmButton, "Continue");
 
         // when

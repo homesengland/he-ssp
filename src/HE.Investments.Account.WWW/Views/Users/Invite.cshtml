@@ -40,7 +40,8 @@
                 field-name="@(nameof(Model.Role))"
                 title="Which role do you want to grant the user?"
                 hint="This can be updated at any time."
-                available-options="@UserRolesDescription.ToInvite"/>
+                available-options="@UserRolesDescription.ToInvite"
+                value="@Model.Role"/>
 
         </gds-field-set>
 

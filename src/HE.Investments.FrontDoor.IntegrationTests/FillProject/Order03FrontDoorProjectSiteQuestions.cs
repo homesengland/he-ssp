@@ -52,7 +52,7 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
         currentPage
             .UrlEndWith(SitePagesUrl.Name(ProjectData.Id))
             .HasTitle(SitePageTitles.Name)
-            .HasBackLink()
+            .HasBackLink(out _)
             .HasSaveAndContinueButton(out var continueButton);
 
         // when
@@ -87,7 +87,7 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
         currentPage
             .UrlWithoutQueryEndsWith(SitePagesUrl.LocalAuthoritySearch(ProjectData.Id, SiteData.Id))
             .HasTitle(LocalAuthorityPageTitles.SearchForSite)
-            .HasBackLink()
+            .HasBackLink(out _)
             .HasSubmitButton(out var continueButton, "Search");
 
         // when
@@ -99,7 +99,7 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
         nextPage
             .UrlWithoutQueryEndsWith(SitePagesUrl.LocalAuthorityResult(ProjectData.Id, SiteData.Id))
             .HasTitle(LocalAuthorityPageTitles.SearchResult)
-            .HasBackLink();
+            .HasBackLink(out _);
 
         SaveCurrentPage();
     }
@@ -113,7 +113,7 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
         currentPage
             .UrlWithoutQueryEndsWith(SitePagesUrl.LocalAuthorityResult(ProjectData.Id, SiteData.Id))
             .HasTitle(LocalAuthorityPageTitles.SearchResult)
-            .HasBackLink();
+            .HasBackLink(out _);
 
         // when
         var cityOfLondonConfimLink = currentPage.GetLinkByTestId(SiteData.LocalAuthorityName.ToIdTag());
@@ -123,7 +123,7 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
         nextPage
             .UrlEndWith(SitePagesUrl.LocalAuthorityConfirm(ProjectData.Id, SiteData.Id, SiteData.LocalAuthorityCode))
             .HasTitle(SitePageTitles.LocalAuthorityConfirm)
-            .HasBackLink()
+            .HasBackLink(out _)
             .HasSaveAndContinueButton();
 
         SaveCurrentPage();
@@ -205,7 +205,7 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
         checkAnswersPage
             .UrlEndWith(ProjectPagesUrl.CheckAnswers(ProjectData.Id))
             .HasTitle(ProjectPageTitles.CheckAnswers)
-            .HasBackLink();
+            .HasBackLink(out _);
 
         // when & then
         var summary = checkAnswersPage.GetSummaryListItems();

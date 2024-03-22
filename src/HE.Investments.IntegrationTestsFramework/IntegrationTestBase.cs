@@ -93,7 +93,7 @@ public class IntegrationTestBase<TProgram>
         currentPage
             .UrlWithoutQueryEndsWith(startPageUrl)
             .HasTitle(expectedPageTitle)
-            .HasBackLink()
+            .HasBackLink(out _)
             .HasSaveAndContinueButton(out var continueButton);
 
         return continueButton;
