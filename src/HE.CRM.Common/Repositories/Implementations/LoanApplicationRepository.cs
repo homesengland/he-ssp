@@ -31,7 +31,7 @@ namespace HE.CRM.Common.Repositories.Implementations
 
         public List<invln_Loanapplication> GetLoanApplicationsForGivenAccountAndContact(Guid accountId, string externalContactId, string loanApplicationId = null, string fieldsToRetrieve = null)
         {
-
+            logger.Trace($"GetLoanApplicationsForGivenAccountAndContact");
             if (loanApplicationId == null)
             {
                 using (DataverseContext ctx = new DataverseContext(service))
@@ -48,21 +48,23 @@ namespace HE.CRM.Common.Repositories.Implementations
             {
                 if (Guid.TryParse(loanApplicationId, out Guid loanApplicationGuid))
                 {
-                    var fetchXML = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
-	                                <entity name='invln_loanapplication'>"
-                                    + fieldsToRetrieve +
-                                    @"<filter>
-                                              <condition attribute=""statuscode"" operator=""ne"" value=""2"" />
-                                              <condition attribute=""invln_account"" operator=""eq"" value=""" + accountId + @""" />
-                                              <condition attribute=""invln_loanapplicationid"" operator=""eq"" value=""" + loanApplicationId + @""" />
-                                            </filter>
+                    var fetchXML = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+	                                    <entity name='invln_loanapplication'>
+                                        {fieldsToRetrieve}
+                                        <attribute name=""invln_fdprojectid"" />
+                                        <attribute name=""invln_heprojectid"" />
+                                        <filter>
+                                            <condition attribute=""statuscode"" operator=""ne"" value=""2"" />
+                                            <condition attribute=""invln_account"" operator=""eq"" value=""{accountId}"" />
+                                            <condition attribute=""invln_loanapplicationid"" operator=""eq"" value=""{loanApplicationId}"" />
+                                        </filter>
                                             <link-entity name=""contact"" from=""contactid"" to=""invln_contact"">
-                                              <filter>
-                                                <condition attribute=""invln_externalid"" operator=""eq"" value=""" + externalContactId + @""" />
-                                              </filter>
+                                                <filter>
+                                                    <condition attribute=""invln_externalid"" operator=""eq"" value=""{externalContactId}"" />
+                                                </filter>
                                             </link-entity>
-                                          </entity>
-                                        </fetch>";
+                                        </entity>
+                                    </fetch>";
                     EntityCollection result = service.RetrieveMultiple(new FetchExpression(fetchXML));
                     return result.Entities.Select(x => x.ToEntity<invln_Loanapplication>()).ToList();
                 }
