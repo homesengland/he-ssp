@@ -20,16 +20,16 @@ public abstract class FileValueObject : ValueObject, IDisposable, IAsyncDisposab
     {
         var operationResult = OperationResult.New();
 
+        if (!allowedExtensions.Contains(Path.GetExtension(fileName).ToLowerInvariant().TrimStart('.')))
+        {
+            operationResult.AddValidationError(fieldName, fileFormatValidationErrorMessage);
+        }
+
         if (fileSize > maxFileSizeInMb * 1024 * 1024)
         {
             operationResult.AddValidationError(
                 fieldName,
                 string.Format(CultureInfo.InvariantCulture, ValidationErrorMessage.FileIncorrectSize, maxFileSizeInMb));
-        }
-
-        if (!allowedExtensions.Contains(Path.GetExtension(fileName).ToLowerInvariant().TrimStart('.')))
-        {
-            OperationResult.ThrowValidationError(fieldName, fileFormatValidationErrorMessage);
         }
 
         operationResult.CheckErrors();
