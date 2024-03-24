@@ -31,7 +31,6 @@ public class ApplicationBaseCommandHandler
 
         await action(loanApplication);
 
-        await _loanApplicationRepository.DispatchEvents(loanApplication, cancellationToken);
         return OperationResult.Success();
     }
 }

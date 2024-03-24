@@ -1,5 +1,6 @@
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
+using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.Loans.BusinessLogic.Files;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.ValueObjects;
@@ -16,15 +17,19 @@ public class UploadSupportingDocumentsFileCommandHandler : ApplicationBaseComman
 
     private readonly ISupportingDocumentsFileFactory _fileFactory;
 
+    private readonly IEventDispatcher _eventDispatcher;
+
     public UploadSupportingDocumentsFileCommandHandler(
         ILoansFileService<SupportingDocumentsParams> fileService,
         ISupportingDocumentsFileFactory fileFactory,
         ILoanApplicationRepository loanApplicationRepository,
-        IAccountUserContext loanUserContext)
+        IAccountUserContext loanUserContext,
+        IEventDispatcher eventDispatcher)
         : base(loanApplicationRepository, loanUserContext)
     {
         _fileService = fileService;
         _fileFactory = fileFactory;
+        _eventDispatcher = eventDispatcher;
     }
 
     public async Task<OperationResult<UploadedFile?>> Handle(UploadSupportingDocumentsFileCommand request, CancellationToken cancellationToken)
@@ -34,7 +39,7 @@ public class UploadSupportingDocumentsFileCommandHandler : ApplicationBaseComman
             async loanApplication =>
             {
                 await using var file = _fileFactory.Create(request.File);
-                uploadedFile = (await loanApplication.UploadFiles(_fileService, new[] { file }, cancellationToken)).Single();
+                uploadedFile = (await loanApplication.UploadFiles(_fileService, new[] { file }, _eventDispatcher, cancellationToken)).Single();
             },
             request.LoanApplicationId,
             cancellationToken);

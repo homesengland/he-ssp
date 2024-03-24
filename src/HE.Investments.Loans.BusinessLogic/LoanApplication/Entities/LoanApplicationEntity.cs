@@ -5,6 +5,7 @@ using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Errors;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.Common.Messages;
 using HE.Investments.FrontDoor.Shared.Project;
 using HE.Investments.Loans.BusinessLogic.Files;
@@ -110,6 +111,7 @@ public class LoanApplicationEntity : DomainEntity
     public async Task<IReadOnlyCollection<UploadedFile>> UploadFiles(
         ILoansFileService<SupportingDocumentsParams> fileService,
         IList<SupportingDocumentsFile> filesToUpload,
+        IEventDispatcher eventDispatcher,
         CancellationToken cancellationToken)
     {
         _files ??= (await fileService.GetFiles(SupportingDocumentsParams.New(Id), cancellationToken)).ToList();
@@ -140,7 +142,7 @@ public class LoanApplicationEntity : DomainEntity
         }
 
         _files.AddRange(result);
-        Publish(new ApplicationFilesUploadedSuccessfullyEvent(_files.Count));
+        await eventDispatcher.Publish(new ApplicationFilesUploadedSuccessfullyEvent(_files.Count), cancellationToken);
 
         return result;
     }

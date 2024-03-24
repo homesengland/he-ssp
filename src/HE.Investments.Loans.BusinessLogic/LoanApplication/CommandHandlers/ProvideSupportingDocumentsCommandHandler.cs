@@ -2,6 +2,7 @@ using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.Loans.BusinessLogic.Files;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.ValueObjects;
@@ -19,17 +20,21 @@ public class ProvideSupportingDocumentsCommandHandler : ApplicationBaseCommandHa
 
     private readonly IChangeApplicationStatus _changeApplicationStatus;
 
+    private readonly IEventDispatcher _eventDispatcher;
+
     public ProvideSupportingDocumentsCommandHandler(
         ILoansFileService<SupportingDocumentsParams> fileService,
         ISupportingDocumentsFileFactory fileFactory,
         ILoanApplicationRepository loanApplicationRepository,
         IAccountUserContext loanUserContext,
-        IChangeApplicationStatus changeApplicationStatus)
+        IChangeApplicationStatus changeApplicationStatus,
+        IEventDispatcher eventDispatcher)
         : base(loanApplicationRepository, loanUserContext)
     {
         _fileFactory = fileFactory;
         _fileService = fileService;
         _changeApplicationStatus = changeApplicationStatus;
+        _eventDispatcher = eventDispatcher;
     }
 
     public async Task<OperationResult> Handle(ProvideSupportingDocumentsCommand request, CancellationToken cancellationToken)
@@ -43,7 +48,7 @@ public class ProvideSupportingDocumentsCommandHandler : ApplicationBaseCommandHa
                 }
 
                 using var files = request.FormFiles.Select(_fileFactory.Create).ToDisposableList();
-                await loanApplication.UploadFiles(_fileService, files, cancellationToken);
+                await loanApplication.UploadFiles(_fileService, files, _eventDispatcher, cancellationToken);
                 await _changeApplicationStatus.ChangeApplicationStatus(request.LoanApplicationId, ApplicationStatus.UnderReview, cancellationToken);
             },
             request.LoanApplicationId,

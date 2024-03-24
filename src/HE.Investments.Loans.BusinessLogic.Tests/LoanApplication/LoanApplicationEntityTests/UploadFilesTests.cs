@@ -16,11 +16,13 @@ public class UploadFilesTests
         // given
         var fileService = FileServiceMockTestBuilder.Build<SupportingDocumentsParams>(10);
         var testCandidate = LoanApplicationTestBuilder.NewWithOtherApplicationStatus(ApplicationStatus.ReferredBackToApplicant).Build();
+        var eventDispatcher = EventDispatcherTestBuilder.New().Build();
 
         // when
         var upload = () => testCandidate.UploadFiles(
             fileService,
             new[] { new SupportingDocumentsFile("test.pdf", 1000, 10, new MemoryStream()) },
+            eventDispatcher,
             CancellationToken.None);
 
         // then
@@ -33,11 +35,13 @@ public class UploadFilesTests
         // given
         var fileService = FileServiceMockTestBuilder.Build<SupportingDocumentsParams>(5);
         var testCandidate = LoanApplicationTestBuilder.NewWithOtherApplicationStatus(ApplicationStatus.ReferredBackToApplicant).Build();
+        var eventDispatcher = EventDispatcherTestBuilder.New().Build();
 
         // when
         var upload = () => testCandidate.UploadFiles(
             fileService,
             new[] { new SupportingDocumentsFile("test-1.pdf", 1000, 10, new MemoryStream()) },
+            eventDispatcher,
             CancellationToken.None);
 
         // then
@@ -51,9 +55,10 @@ public class UploadFilesTests
         var fileService = FileServiceMockTestBuilder.Build<SupportingDocumentsParams>(5);
         var testCandidate = LoanApplicationTestBuilder.NewWithOtherApplicationStatus(ApplicationStatus.ReferredBackToApplicant).Build();
         var file = new SupportingDocumentsFile("new-test.pdf", 1000, 10, new MemoryStream());
+        var eventDispatcher = EventDispatcherTestBuilder.New().Build();
 
         // when
-        var result = await testCandidate.UploadFiles(fileService, new[] { file }, CancellationToken.None);
+        var result = await testCandidate.UploadFiles(fileService, new[] { file }, eventDispatcher, CancellationToken.None);
 
         // then
         var uploadedFile = result.Should().HaveCount(1).And.Subject.Single();
