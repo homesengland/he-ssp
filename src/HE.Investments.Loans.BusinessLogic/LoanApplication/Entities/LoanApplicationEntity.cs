@@ -114,9 +114,9 @@ public class LoanApplicationEntity : DomainEntity
     {
         _files ??= (await fileService.GetFiles(SupportingDocumentsParams.New(Id), cancellationToken)).ToList();
 
-        if (!_files.Any()) // todo
+        if (!filesToUpload.Any() && !_files.Any())
         {
-            return Array.Empty<UploadedFile>();
+            OperationResult.ThrowValidationError(nameof(SupportingDocumentsFile), ValidationErrorMessage.FilesListEmpty);
         }
 
         if (_files.Count + filesToUpload.Count > AllowedFilesCount)

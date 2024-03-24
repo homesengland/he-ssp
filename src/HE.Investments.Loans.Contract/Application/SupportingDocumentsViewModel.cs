@@ -15,22 +15,13 @@ public class SupportingDocumentsViewModel
 
     public string? FileName { get; set; }
 
-    public bool StateChanged { get; set; }
-
     public IList<FileModel>? SupportingDocumentsFiles { get; set; }
 
-    public string? AllowedExtensions { get; set; }
+    public string AllowedExtensions { get; set; }
 
     public bool IsReadOnly()
     {
-        var readonlyStatuses = ApplicationStatusDivision.GetAllStatusesForReadonlyMode();
+        var readonlyStatuses = ApplicationStatusDivision.GetStatusesForReadonlySupportingDocuments();
         return readonlyStatuses.Contains(LoanApplicationStatus);
-    }
-
-    public bool IsEditable() => !IsReadOnly();
-
-    public ApplicationStatus GetApplicationStatus()
-    {
-        return LoanApplicationStatus;
     }
 }
