@@ -80,8 +80,8 @@
         hasErrors = true;
         addInputFieldError(errorMessage);
         addInputFieldErrorSummary(errorMessage);
-      } else if (!allowedExtensionsArray.includes(getFileExtension(file.name))) {
-        const errorMessage = allowedExtensionsArray.length > 10 ? "The selected file type is not supported" : `The selected file ${sanitize(file.name)} must be a PDF, Word Doc, JPEG or RTF`;
+      } else if (allowedExtensions !== "AllFileTypesAreAllowed" && !allowedExtensionsArray.includes(getFileExtension(file.name))) {
+        const errorMessage = `The selected file ${sanitize(file.name)} must be a PDF, Word Doc, JPEG or RTF`;
 
         hasErrors = true;
         addInputFieldError(errorMessage);
@@ -274,7 +274,9 @@
   const toggleFileSubmitButton = () => {
     const filesTableBody = document.querySelector('.files-table-body');
     const submitButton = document.querySelector('.files-submit-button');
-    submitButton.disabled = filesTableBody.children.length === 0;
+    if (submitButton) {
+      submitButton.disabled = filesTableBody.children.length === 0;
+    }
   }
 
   toggleFileSubmitButton();

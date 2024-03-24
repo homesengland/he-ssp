@@ -36,7 +36,7 @@ public class GetApplicationDashboardQueryHandler : IRequestHandler<GetApplicatio
             {
                 LoanApplicationId = request.ApplicationId,
                 LoanApplicationStatus = loanApplication.ExternalStatus,
-                AllowedExtensions = string.Join(", ", SupportingDocumentsFile.SharePointAllowedExtensions.Select(x => x.ToUpperInvariant())),
+                AllowedExtensions = SupportingDocumentsFile.SharePointAllowedExtensions,
             });
     }
 }

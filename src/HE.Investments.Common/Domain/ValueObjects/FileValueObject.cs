@@ -1,5 +1,6 @@
 using System.Globalization;
 using HE.Investments.Common.Contract.Validators;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
 
 namespace HE.Investments.Common.Domain.ValueObjects;
@@ -14,13 +15,13 @@ public abstract class FileValueObject : ValueObject, IDisposable, IAsyncDisposab
         string fileName,
         long fileSize,
         int maxFileSizeInMb,
-        string[] allowedExtensions,
+        string[]? allowedExtensions,
         string fileFormatValidationErrorMessage,
         Stream fileContent)
     {
         var operationResult = OperationResult.New();
 
-        if (!allowedExtensions.Contains(Path.GetExtension(fileName).ToLowerInvariant().TrimStart('.')))
+        if (allowedExtensions.IsProvided() && !allowedExtensions!.Contains(Path.GetExtension(fileName).ToLowerInvariant().TrimStart('.')))
         {
             operationResult.AddValidationError(fieldName, fileFormatValidationErrorMessage);
         }
