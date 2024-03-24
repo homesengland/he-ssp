@@ -1,8 +1,45 @@
 @using HE.Investments.Common.Gds
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Headings
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Summary
-@model HE.Investments.Loans.Contract.Application.ValueObjects.LoanApplicationId
+@using HE.Investments.Loans.BusinessLogic.Config
+@model HE.Investments.Loans.Contract.Application.SupportingDocumentsViewModel
+@inject ILoansDocumentSettings Settings
+
+@Html.Hidden("MaxFileSizeInMegabytes", Settings.MaxFileSizeInMegabytes)
 
 <gds-h2 size="ControlSize.M"> Supporting documents</gds-h2>
 <gds-summary-list class="govuk-!-margin-bottom-4">
+    <gds-p>
+        You should submit all documents at the same time. If you need to provide more documents after you have submitted them, speak to your Homes England contact.<br>
+        If you need to remove submitted documents, you will need to contact your Homes England contact.<br>
+        If you need to upload a more recent version of a document, change the document's name before uploading. You will not be able to upload a document with the same name more than once.
+    </gds-p>
+
+    <form id="formWithFile" asp-controller="LoanApplicationV2" asp-action="ApplicationDashboardSupportingDocumentsPost" asp-route-id="@Model.LoanApplicationId" enctype="multipart/form-data" asp-method="post" novalidate>
+        <partial name="_ErrorSummaryPartial" model="null"/>
+        @Html.HiddenFor(x => x.LoanApplicationId)
+        @Html.HiddenFor(x => x.AllowedExtensions)
+
+        <vc:page-header title="Organisation structure"/>
+
+        <gds-error-form-group asp-for="SupportingDocumentsFile">
+            <vc:upload-file field-name="SupportingDocumentsFile"
+                            title="Upload a file"
+                            allowed-extensions="@Model.AllowedExtensions"
+                            is-multiple="true"
+                            max-file-size-in-mb="@Settings.MaxFileSizeInMegabytes"
+                            upload-one-file-url="@Url.Action("ApplicationDashboardSupportingDocumentsUploadFile", "LoanApplicationV2", new { id = Model.LoanApplicationId })"
+                            remove-file-url-template="@Url.Action("ApplicationDashboardSupportingDocumentsRemoveFile", "LoanApplicationV2", new { id = Model.LoanApplicationId, fileId = ":fileId" })"
+                            download-file-url-template="@Url.Action("ApplicationDashboardSupportingDocumentsDownloadFile", "LoanApplicationV2", new { id = Model.LoanApplicationId, fileId = ":fileId" })"/>
+
+        </gds-error-form-group>
+
+        <vc:files-table asp-for="@Model.SupportingDocumentsFiles"/>
+
+        <button class="govuk-button" id="continue-button" data-module="govuk-button" name="action" type="submit" value="@(Model.StateChanged ? "Change" : "Continue")">
+            Submit
+        </button>
+    </form>
 </gds-summary-list>
+
+<script src="~/javascripts/file-helper.js" type="text/javascript"></script>

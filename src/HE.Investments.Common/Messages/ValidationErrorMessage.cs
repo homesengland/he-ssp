@@ -46,6 +46,8 @@ public static class ValidationErrorMessage
 
     public const string FileIncorrectFormat = "The selected file must be a PDF, Word Doc, JPEG or RTF";
 
+    public const string FileFormatNotSupported = "The selected file type is not supported";
+
     public const string LoanPurpose = "Select what you need Homes England funding for";
 
     public const string EnterCoordinates = "Enter your XY coordinates";

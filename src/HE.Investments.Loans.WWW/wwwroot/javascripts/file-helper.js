@@ -81,7 +81,7 @@
         addInputFieldError(errorMessage);
         addInputFieldErrorSummary(errorMessage);
       } else if (!allowedExtensionsArray.includes(getFileExtension(file.name))) {
-        const errorMessage = `The selected file ${sanitize(file.name)} must be a PDF, Word Doc, JPEG or RTF`;
+        const errorMessage = allowedExtensionsArray.length > 10 ? "The selected file type is not supported" : `The selected file ${sanitize(file.name)} must be a PDF, Word Doc, JPEG or RTF`;
 
         hasErrors = true;
         addInputFieldError(errorMessage);
