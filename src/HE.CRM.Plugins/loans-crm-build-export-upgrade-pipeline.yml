@@ -60,3 +60,9 @@ stages:
     deployPluginsSolution: '${{ parameters.deployPluginsSolution }}'
 
 - template: crm-deployment-pipelines/loans-crm-deploy.yml@he-invst-deployment
+  parameters:
+    useUpgrade: '${{ parameters.useUpgrade }}'
+    deployEnvironmentVariables: '${{ parameters.deployEnvironmentVariables }}'
+    deployMainSolution: '${{ parameters.deployMainSolution }}'
+    deployFlowsSolution: '${{ parameters.deployFlowsSolution }}'
+    deployPluginsSolution: '${{ parameters.deployPluginsSolution }}'
