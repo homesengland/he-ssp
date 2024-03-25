@@ -7,31 +7,31 @@ pool:
   vmImage: windows-latest
 
 parameters:
-- name: BuildAndUpdatePlugins
+- name: buildAndUpdatePlugins
   displayName: Update Plugins ?
   type: boolean
   default: true
-- name: BuildAndUpdateWebResources
+- name: buildAndUpdateWebResources
   displayName: Update Webresources ?
   type: boolean
   default: true
-- name: UseUpgrade
+- name: useUpgrade
   displayName: Upgrade Solutions?
   type: boolean
   default: true
-- name: DeployEnvironmentVariables
+- name: deployEnvironmentVariables
   displayName: Deploy Environment Variables ?
   type: boolean
   default: true
-- name: DeployMainSolution
+- name: deployMainSolution
   displayName: Deploy Main Solution ?
   type: boolean
   default: true
-- name: DeployFlowsSolution
+- name: deployFlowsSolution
   displayName: Deploy Flows Solution ?
   type: boolean
   default: true
-- name: DeployPluginsSolution
+- name: deployPluginsSolution
   displayName: Deploy Plugins Solution ?
   type: boolean
   default: true
@@ -42,7 +42,6 @@ variables:
   buildConfiguration: 'Release'
   branch: 'master'
 
-
 resources:
   repositories:
   - repository: he-invst-deployment
@@ -52,4 +51,7 @@ resources:
 
 stages:
 - template: crm-deployment-pipelines/loans-crm-build-export.yml@he-invst-deployment
+  parameters:
+    buildAndUpdatePlugins: '${{ parameters.buildAndUpdatePlugins }}'
+    buildAndUpdateWebResources: '${{ parameters.buildAndUpdateWebResources }}'
 - template: crm-deployment-pipelines/loans-crm-deploy.yml@he-invst-deployment
