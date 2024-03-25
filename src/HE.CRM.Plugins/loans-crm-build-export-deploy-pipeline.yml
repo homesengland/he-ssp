@@ -8,11 +8,11 @@ pool:
 
 parameters:
 - name: buildAndUpdatePlugins
-  displayName: Update Plugins ?
+  displayName: Build & Update Plugins ?
   type: boolean
   default: true
 - name: buildAndUpdateWebResources
-  displayName: Update Webresources ?
+  displayName: Build & Update Webresources ?
   type: boolean
   default: true
 - name: exportMigrationData
