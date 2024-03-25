@@ -3,7 +3,8 @@
 trigger: none
 pr: none
 
-pool: "vmss-ado-chs-nonprod-001"
+pool:
+  vmImage: windows-latest
 
 parameters:
 - name: buildAndUpdatePlugins
