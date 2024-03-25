@@ -330,9 +330,9 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
 
     [HttpGet("{projectId}/local-authority-search")]
     [WorkflowState(ProjectWorkflowState.LocalAuthoritySearch)]
-    public IActionResult LocalAuthoritySearch([FromRoute] string projectId, CancellationToken cancellationToken)
+    public IActionResult LocalAuthoritySearch([FromRoute] string projectId, [FromQuery] string? redirect, CancellationToken cancellationToken)
     {
-        return RedirectToAction("Search", "LocalAuthority", new { projectId });
+        return RedirectToAction("Search", "LocalAuthority", new { projectId, redirect });
     }
 
     [HttpGet("{projectId}/local-authority-confirm")]

@@ -1,4 +1,3 @@
-using FluentAssertions.Equivalency;
 using HE.Investments.FrontDoor.Shared.Project.Contract;
 using HE.Investments.TestsUtils.Extensions;
 
@@ -22,13 +21,13 @@ public class ProjectData
 
     public bool IsEnglandHousingDelivery => true;
 
-    public AffordableHomesAmount AffordableHomeAmount => AffordableHomesAmount.OpenMarkedAndAffordableHomes;
+    public AffordableHomesAmount AffordableHomeAmount => AffordableHomesAmount.OnlyAffordableHomes;
 
     public ProjectGeographicFocus GeographicFocus => ProjectGeographicFocus.Regional;
 
     public IList<RegionType> RegionTypes => new List<RegionType> { RegionType.NorthEast, RegionType.London };
 
-    public int OrganisationHomesBuilt => _dataSeed + 1;
+    public int OrganisationHomesBuilt => _dataSeed + 2000;
 
     public int HomesNumber => _dataSeed + 2;
 
@@ -36,9 +35,9 @@ public class ProjectData
 
     public bool IsSupportRequired => true;
 
-    public bool IsFundingRequired { get; set; } = true;
+    public bool IsFundingRequired { get; set; }
 
-    public RequiredFundingOption RequiredFunding => RequiredFundingOption.Between10MlnAnd30Mln;
+    public RequiredFundingOption RequiredFunding => RequiredFundingOption.Between5MlnAnd10Mln;
 
     public bool IsProfit => true;
 
@@ -60,6 +59,6 @@ public class ProjectData
     public void SwitchIsSiteIdentified()
     {
         IsSiteIdentified = !IsSiteIdentified;
-        IsFundingRequired = false;
+        IsFundingRequired = true;
     }
 }

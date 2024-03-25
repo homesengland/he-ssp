@@ -128,7 +128,7 @@ public class ProjectEntity : DomainEntity
 
     public void ProvideGeographicFocus(ProjectGeographicFocus geographicFocus)
     {
-        GeographicFocus = _modificationTracker.Change(GeographicFocus, geographicFocus);
+        GeographicFocus = _modificationTracker.Change(GeographicFocus, geographicFocus, ResetGeographicFocusDependentQuestions);
     }
 
     public void SetId(FrontDoorProjectId newId)
@@ -266,9 +266,14 @@ public class ProjectEntity : DomainEntity
     private void ResetNonSiteQuestions()
     {
         GeographicFocus = ProjectGeographicFocus.Empty();
+        HomesNumber = null;
+        ResetGeographicFocusDependentQuestions();
+    }
+
+    private void ResetGeographicFocusDependentQuestions()
+    {
         LocalAuthority = null;
         Regions = Regions.Empty();
-        HomesNumber = null;
     }
 
     private void SupportActivityTypesHaveChanged(SupportActivities newSupportActivityTypes)
