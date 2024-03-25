@@ -27,7 +27,7 @@ public class ProjectData
 
     public IList<RegionType> RegionTypes => new List<RegionType> { RegionType.NorthEast, RegionType.London };
 
-    public int OrganisationHomesBuilt => _dataSeed + 2000;
+    public int OrganisationHomesBuilt => _dataSeed + 2;
 
     public int HomesNumber => _dataSeed + 2;
 
