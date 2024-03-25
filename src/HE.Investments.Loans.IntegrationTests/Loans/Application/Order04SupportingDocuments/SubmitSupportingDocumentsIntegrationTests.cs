@@ -10,9 +10,9 @@ using HE.Investments.TestsUtils.Extensions;
 using Xunit;
 using Xunit.Extensions.Ordering;
 
-namespace HE.Investments.Loans.IntegrationTests.Loans.Application.Order05SupportingDocuments;
+namespace HE.Investments.Loans.IntegrationTests.Loans.Application.Order04SupportingDocuments;
 
-[Order(5)]
+[Order(4)]
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
 public class SubmitSupportingDocumentsIntegrationTests : IntegrationTest
 {
@@ -29,8 +29,8 @@ public class SubmitSupportingDocumentsIntegrationTests : IntegrationTest
     public async Task Order01_ShouldRedirectToApplicationDashboardSupportingDocumentsAndChangeStatusToReferredBackToApplicant()
     {
         // given && when
-        var supportingDocumentsPage = await TestClient.NavigateTo(ApplicationPagesUrls.ApplicationDashboardSupportingDocuments(_applicationLoanId));
         await LoanApplicationCrmRepository.ChangeApplicationStatus(_applicationLoanId, ApplicationStatus.ReferredBackToApplicant);
+        var supportingDocumentsPage = await TestClient.NavigateTo(ApplicationPagesUrls.ApplicationDashboardSupportingDocuments(_applicationLoanId));
 
         // then
         supportingDocumentsPage
