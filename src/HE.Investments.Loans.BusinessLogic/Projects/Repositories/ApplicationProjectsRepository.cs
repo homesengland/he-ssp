@@ -126,7 +126,7 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
             localAuthority = projectToSave.LocalAuthority.IsProvided()
                 ? new LocalAuthorityDto() { onsCode = projectToSave.LocalAuthority!.Id.ToString(), name = projectToSave.LocalAuthority!.Name } : null,
             siteOwnership = projectToSave.LandOwnership?.ApplicantHasFullOwnership,
-            dateOfPurchase = projectToSave.AdditionalDetails?.PurchaseDate.AsDateTime(),
+            dateOfPurchase = projectToSave.AdditionalDetails?.PurchaseDate?.Value,
             siteCost = projectToSave.AdditionalDetails?.Cost.ToString(),
             currentValue = projectToSave.AdditionalDetails?.CurrentValue.ToString(),
             valuationSource =

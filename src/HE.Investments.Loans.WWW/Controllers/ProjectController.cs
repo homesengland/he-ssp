@@ -513,9 +513,7 @@ public class ProjectController : WorkflowController<ProjectState>
             new ProvideAdditionalDetailsCommand(
                 LoanApplicationId.From(id),
                 ProjectId.From(projectId),
-                model.PurchaseYear,
-                model.PurchaseMonth,
-                model.PurchaseDay,
+                model.PurchaseDate,
                 model.Cost,
                 model.Value,
                 model.Source),
