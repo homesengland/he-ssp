@@ -218,7 +218,7 @@ public class ProjectEntity : DomainEntity
                && SupportActivities.Values.Contains(SupportActivityType.DevelopingHomes)
                && AffordableHomesAmount.AffordableHomesAmount is AffordableHomesAmountType.OnlyAffordableHomes
                    or AffordableHomesAmountType.OpenMarkedAndRequiredAffordableHomes
-               && OrganisationHomesBuilt?.Value >= 2000
+               && OrganisationHomesBuilt?.Value <= 2000
                && IsSiteIdentified?.Value == true
                && IsSupportRequired?.Value == true
                && IsFundingRequired?.Value == true

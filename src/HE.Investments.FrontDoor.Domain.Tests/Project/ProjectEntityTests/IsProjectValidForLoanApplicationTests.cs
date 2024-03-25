@@ -44,7 +44,7 @@ public class IsProjectValidForLoanApplicationTests
             .New()
             .WithSupportActivities(new List<SupportActivityType> { SupportActivityType.DevelopingHomes })
             .WithAffordableHomesAmount(AffordableHomesAmount.OnlyAffordableHomes)
-            .WithOrganisationHomesBuilt(5000)
+            .WithOrganisationHomesBuilt(1000)
             .WithIsSiteIdentified(true)
             .WithIsSupportRequired(true)
             .WithRequiredFunding(true, RequiredFundingOption.Between1MlnAnd5Mln)
