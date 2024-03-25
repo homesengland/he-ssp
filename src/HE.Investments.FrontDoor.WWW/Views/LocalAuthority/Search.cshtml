@@ -13,8 +13,6 @@
     var paragraph = isSite ?
         "Search for your local authority. If your site is located in more than one local authority, search for the local authority where you have planning permission or intend to apply for planning permission." :
         "If your project is located in more than one local authority, enter the local authority where the largest part of the project is located.";
-
-    var secondHeader = isSite ? "What is your local authority?" : string.Empty;
 }
 
 <gds-div-grid-column-two-thirds>
@@ -33,7 +31,7 @@
 
         <vc:text-input
             field-name="@nameof(Model.Phrase)"
-            title="@secondHeader"
+            title="What is your local authority?"
             title-type="InputTitleType.InputTitle"
             hint="Enter all or part of your local authority name."/>
 

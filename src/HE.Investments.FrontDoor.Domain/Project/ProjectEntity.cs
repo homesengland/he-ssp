@@ -105,7 +105,7 @@ public class ProjectEntity : DomainEntity
     {
         if (isEnglandHousingDelivery.IsNotProvided())
         {
-            OperationResult.ThrowValidationError(nameof(isEnglandHousingDelivery), "Select yes if your project is supporting housing delivery in England");
+            OperationResult.ThrowValidationError("IsEnglandHousingDelivery", "Select yes if your project is supporting housing delivery in England");
         }
 
         return isEnglandHousingDelivery!.Value;
