@@ -48,10 +48,6 @@ public class SiteDetailsRepository : CrmEntityRepository<invln_SiteDetails, Data
         var fetchXml = $@"<fetch>
                           <entity name='invln_sitedetails'>
                             {attributes}
-                            <attribute name=""invln_fdsiteid"" />
-                            <attribute name=""invln_heprojectlocalauthorityid"" />
-                            <attribute name=""invln_localauthorityid"" />
-                            <attribute name=""invln_helocalauthorityid"" />
                             <filter>
                               <condition attribute=""invln_sitedetailsid"" operator=""eq"" value=""{siteDetailsGuid}"" />
                             </filter>
