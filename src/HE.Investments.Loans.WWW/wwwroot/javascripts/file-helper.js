@@ -80,7 +80,7 @@
         hasErrors = true;
         addInputFieldError(errorMessage);
         addInputFieldErrorSummary(errorMessage);
-      } else if (!allowedExtensionsArray.includes(getFileExtension(file.name))) {
+      } else if (allowedExtensions !== "AllFileTypesAreAllowed" && !allowedExtensionsArray.includes(getFileExtension(file.name))) {
         const errorMessage = `The selected file ${sanitize(file.name)} must be a PDF, Word Doc, JPEG or RTF`;
 
         hasErrors = true;
@@ -270,6 +270,16 @@
   {
     return fileName.substring(fileName.lastIndexOf('.')).toUpperCase();
   }
+
+  const toggleFileSubmitButton = () => {
+    const filesTableBody = document.querySelector('.files-table-body');
+    const submitButton = document.querySelector('.files-submit-button');
+    if (submitButton) {
+      submitButton.disabled = filesTableBody.children.length === 0;
+    }
+  }
+
+  toggleFileSubmitButton();
 
   document.addEventListener("DOMContentLoaded", function() {
     const fileInput = document.querySelectorAll(fileInputSelector)[0];

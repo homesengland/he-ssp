@@ -14,6 +14,8 @@ public static class GenericValidationError
 
     public const string FileUniqueName = "File with that name is already uploaded.";
 
+    public const string FileWithThatNameExistsRename = "A file with the same name has already been uploaded. Rename the file and try again";
+
     public static string InvalidFileType(string fileName, IEnumerable<string> allowedExtensions) => $"The selected file {fileName} must be a {FileExtensions(allowedExtensions)}";
 
     public static string FileTooBig(int maxSizeInMb) => $"The selected file must be smaller than {maxSizeInMb}MB";
