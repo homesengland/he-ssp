@@ -3,8 +3,7 @@
 trigger: none
 pr: none
 
-pool:
-  vmImage: windows-latest
+pool: "vmss-ado-chs-nonprod-001"
 
 parameters:
 - name: buildAndUpdatePlugins
@@ -55,7 +54,7 @@ resources:
   - repository: he-invst-deployment
     type: git
     name: 'Investments Programme/he-invst-deployment'
-    ref: 'loans_pipeline_fix'
+    ref: 'main'
 
 stages:
 - template: crm-deployment-pipelines/loans-crm-build-export.yml@he-invst-deployment
