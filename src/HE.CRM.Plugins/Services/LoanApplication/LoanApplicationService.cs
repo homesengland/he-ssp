@@ -70,7 +70,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
 
         #region Public Methods
 
-        public string GetLoanApplicationsForAccountAndContact(string externalContactId, string accountId, string loanApplicationId = null, string fieldsToRetrieve = null)
+        public string GetLoanApplicationsForAccountAndContact(bool useHeTables, string externalContactId, string accountId, string loanApplicationId = null, string fieldsToRetrieve = null)
         {
             List<LoanApplicationDto> entityCollection = new List<LoanApplicationDto>();
             if (Guid.TryParse(accountId, out Guid accountGuid))
@@ -106,7 +106,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                         foreach (var siteDetail in siteDetailsList)
                         {
                             this.TracingService.Trace("MapSiteDetailsToDto");
-                            siteDetailsDtoList.Add(SiteDetailsDtoMapper.MapSiteDetailsToDto(siteDetail));
+                            siteDetailsDtoList.Add(SiteDetailsDtoMapper.MapSiteDetailsToDto(useHeTables, siteDetail));
                         }
                     }
                     this.TracingService.Trace("MapLoanApplicationToDto");
@@ -123,7 +123,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                         });
                     }
 
-                    entityCollection.Add(LoanApplicationDtoMapper.MapLoanApplicationToDto(element, siteDetailsDtoList, externalContactId, loanApplicationContact));
+                    entityCollection.Add(LoanApplicationDtoMapper.MapLoanApplicationToDto(useHeTables, element, siteDetailsDtoList, externalContactId, loanApplicationContact));
                 }
             }
 
@@ -154,7 +154,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             }
         }
 
-        public string CreateRecordFromPortal(string contactExternalId, string accountId, string loanApplicationId, string loanApplicationPayload)
+        public string CreateRecordFromPortal(bool useHeTables, string contactExternalId, string accountId, string loanApplicationId, string loanApplicationPayload)
         {
             this.TracingService.Trace("PAYLOAD:" + loanApplicationPayload);
 
@@ -189,7 +189,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             this.TracingService.Trace("Setting up invln_Loanapplication");
             loanApplicationFromPortal.numberOfSites = numberOfSites.ToString();
 
-            var loanApplicationToCreate = LoanApplicationDtoMapper.MapLoanApplicationDtoToRegularEntity(loanApplicationFromPortal, loanApplicationContact, accountId);
+            var loanApplicationToCreate = LoanApplicationDtoMapper.MapLoanApplicationDtoToRegularEntity(useHeTables, loanApplicationFromPortal, loanApplicationContact, accountId);
             loanApplicationToCreate.invln_lastmmodificationdate = DateTime.UtcNow;
             loanApplicationToCreate.invln_lastchangebyid = requestContact.ToEntityReference();
             Guid loanApplicationGuid = Guid.NewGuid();
@@ -226,7 +226,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 foreach (var siteDetail in loanApplicationFromPortal.siteDetailsList)
                 {
                     this.TracingService.Trace("loop begin");
-                    var siteDetailToCreate = SiteDetailsDtoMapper.MapSiteDetailsDtoToRegularEntity(siteDetail, loanApplicationGuid.ToString());
+                    var siteDetailToCreate = SiteDetailsDtoMapper.MapSiteDetailsDtoToRegularEntity(useHeTables, siteDetail, loanApplicationGuid.ToString());
                     this.TracingService.Trace("create");
                     if (!String.IsNullOrEmpty(siteDetail.siteDetailsId) && Guid.TryParse(siteDetail.siteDetailsId, out Guid result))
                     {
@@ -285,14 +285,14 @@ namespace HE.CRM.Plugins.Services.LoanApplication
         }
 
 
-        public void UpdateLoanApplication(string loanApplicationId, string loanApplication, string fieldsToUpdate, string accountId, string contactExternalId)
+        public void UpdateLoanApplication(bool useHeTables, string loanApplicationId, string loanApplication, string fieldsToUpdate, string accountId, string contactExternalId)
         {
             if (Guid.TryParse(loanApplicationId, out Guid applicationId))
             {
                 var deserializedLoanApplication = JsonSerializer.Deserialize<LoanApplicationDto>(loanApplication);
                 var contactExternalid = deserializedLoanApplication?.LoanApplicationContact?.ContactExternalId ?? contactExternalId;
                 var contact = _contactRepository.GetContactViaExternalId(contactExternalid);
-                var loanApplicationMapped = LoanApplicationDtoMapper.MapLoanApplicationDtoToRegularEntity(deserializedLoanApplication, contact, accountId);
+                var loanApplicationMapped = LoanApplicationDtoMapper.MapLoanApplicationDtoToRegularEntity(useHeTables, deserializedLoanApplication, contact, accountId);
                 var loanApplicationToUpdate = new invln_Loanapplication();
                 if (string.IsNullOrEmpty(fieldsToUpdate))
                 {

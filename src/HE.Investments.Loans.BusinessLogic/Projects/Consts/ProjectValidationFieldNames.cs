@@ -1,4 +1,5 @@
 namespace HE.Investments.Loans.BusinessLogic.Projects.Consts;
+
 public static class ProjectValidationFieldNames
 {
     public const string OtherHomeType = "OtherHomeTypes";
@@ -12,10 +13,6 @@ public static class ProjectValidationFieldNames
     public const string LandRegistryTitleNumber = "LocationLandRegistry";
 
     public const string ProjectName = "ProjectName";
-
-    public const string PurchaseDay = "PurchaseDay";
-
-    public const string PurchaseDate = "PurchaseDate";
 
     public const string StartDay = "EstimatedStartDay";
 

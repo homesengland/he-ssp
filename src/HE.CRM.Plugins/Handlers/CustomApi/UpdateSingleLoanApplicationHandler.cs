@@ -13,6 +13,7 @@ namespace HE.CRM.Plugins.Handlers.CustomApi
         private string loanApplicationId => ExecutionData.GetInputParameter<string>(invln_updatesingleloanapplicationRequest.Fields.invln_loanapplicationid);
         private string accountId => ExecutionData.GetInputParameter<string>(invln_updatesingleloanapplicationRequest.Fields.invln_accountid);
         private string contactExternalId => ExecutionData.GetInputParameter<string>(invln_updatesingleloanapplicationRequest.Fields.invln_contactexternalid);
+        private string useHeTablesFromPortal => ExecutionData.GetInputParameter<string>(invln_updatesingleloanapplicationRequest.Fields.invln_usehetables);
 
         #endregion
 
@@ -24,7 +25,9 @@ namespace HE.CRM.Plugins.Handlers.CustomApi
 
         public override void DoWork()
         {
-            CrmServicesFactory.Get<ILoanApplicationService>().UpdateLoanApplication(loanApplicationId, loanApplication, fieldsToUpdate, accountId, contactExternalId);
+            this.TracingService.Trace("UpdateSingleLoanApplicationHandler");
+            var useHeTables = !string.IsNullOrEmpty(useHeTablesFromPortal);
+            CrmServicesFactory.Get<ILoanApplicationService>().UpdateLoanApplication(useHeTables, loanApplicationId, loanApplication, fieldsToUpdate, accountId, contactExternalId);
         }
 
         #endregion

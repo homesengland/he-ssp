@@ -13,6 +13,7 @@ namespace HE.CRM.Plugins.Handlers.CustomApi
 
         private string accountId => ExecutionData.GetInputParameter<string>(invln_getloanapplicationsforaccountandcontactRequest.Fields.invln_accountid);
         private string externalContactId => ExecutionData.GetInputParameter<string>(invln_getloanapplicationsforaccountandcontactRequest.Fields.invln_externalcontactid);
+        private string useHeTablesFromPortal => ExecutionData.GetInputParameter<string>(invln_getloanapplicationsforaccountandcontactRequest.Fields.invln_usehetables);
 
         #endregion
 
@@ -25,7 +26,8 @@ namespace HE.CRM.Plugins.Handlers.CustomApi
         public override void DoWork()
         {
             this.TracingService.Trace("GetInvestmentsLoansForAccountAndContact");
-            var loanApplications = CrmServicesFactory.Get<ILoanApplicationService>().GetLoanApplicationsForAccountAndContact(externalContactId, accountId);
+            var useHeTables = !string.IsNullOrEmpty(useHeTablesFromPortal);
+            var loanApplications = CrmServicesFactory.Get<ILoanApplicationService>().GetLoanApplicationsForAccountAndContact(useHeTables, externalContactId, accountId);
             this.TracingService.Trace("Send Response");
             if (loanApplications != null)
             {

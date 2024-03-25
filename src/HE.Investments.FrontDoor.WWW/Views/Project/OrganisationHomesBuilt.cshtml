@@ -13,7 +13,7 @@
 
     <vc:page-header caption="@ViewBag.ProjectName"/>
 
-    <form asp-controller="Project" asp-action="OrganisationHomesBuilt" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
+    <form asp-controller="Project" asp-action="OrganisationHomesBuilt" asp-route-workflow="@Context.Request.Query["workflow"]" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
         <vc:text-input
             title="@ProjectPageTitles.OrganisationHomesBuilt"
             title-type="InputTitleType.PageHeader"

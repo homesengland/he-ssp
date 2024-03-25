@@ -21,6 +21,6 @@ public class CompanyStructureFileFactory : ICompanyStructureFileFactory
 
     public OrganisationMoreInformationFile Create(FileToUpload file)
     {
-        return new OrganisationMoreInformationFile(file.Name, file.Lenght, _documentSettings.MaxFileSizeInMegabytes, file.Content);
+        return new OrganisationMoreInformationFile(file.Name, file.Length, _documentSettings.MaxFileSizeInMegabytes, file.Content);
     }
 }

@@ -12,6 +12,7 @@ using HE.Investments.Common.Contract;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.Domain.ValueObjects;
 using HE.Investments.Common.Extensions;
+using DateValueObject = HE.Investment.AHP.Domain.Delivery.ValueObjects.DateValueObject;
 
 namespace HE.Investment.AHP.Domain.Delivery.Crm;
 

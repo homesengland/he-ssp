@@ -105,7 +105,7 @@ public class ProjectEntity : DomainEntity
     {
         if (isEnglandHousingDelivery.IsNotProvided())
         {
-            OperationResult.ThrowValidationError(nameof(isEnglandHousingDelivery), "Select yes if your project is supporting housing delivery in England");
+            OperationResult.ThrowValidationError("IsEnglandHousingDelivery", "Select yes if your project is supporting housing delivery in England");
         }
 
         return isEnglandHousingDelivery!.Value;
@@ -128,7 +128,7 @@ public class ProjectEntity : DomainEntity
 
     public void ProvideGeographicFocus(ProjectGeographicFocus geographicFocus)
     {
-        GeographicFocus = _modificationTracker.Change(GeographicFocus, geographicFocus);
+        GeographicFocus = _modificationTracker.Change(GeographicFocus, geographicFocus, ResetGeographicFocusDependentQuestions);
     }
 
     public void SetId(FrontDoorProjectId newId)
@@ -218,7 +218,7 @@ public class ProjectEntity : DomainEntity
                && SupportActivities.Values.Contains(SupportActivityType.DevelopingHomes)
                && AffordableHomesAmount.AffordableHomesAmount is AffordableHomesAmountType.OnlyAffordableHomes
                    or AffordableHomesAmountType.OpenMarkedAndRequiredAffordableHomes
-               && OrganisationHomesBuilt?.Value >= 2001
+               && OrganisationHomesBuilt?.Value <= 2000
                && IsSiteIdentified?.Value == true
                && IsSupportRequired?.Value == true
                && IsFundingRequired?.Value == true
@@ -266,9 +266,14 @@ public class ProjectEntity : DomainEntity
     private void ResetNonSiteQuestions()
     {
         GeographicFocus = ProjectGeographicFocus.Empty();
+        HomesNumber = null;
+        ResetGeographicFocusDependentQuestions();
+    }
+
+    private void ResetGeographicFocusDependentQuestions()
+    {
         LocalAuthority = null;
         Regions = Regions.Empty();
-        HomesNumber = null;
     }
 
     private void SupportActivityTypesHaveChanged(SupportActivities newSupportActivityTypes)

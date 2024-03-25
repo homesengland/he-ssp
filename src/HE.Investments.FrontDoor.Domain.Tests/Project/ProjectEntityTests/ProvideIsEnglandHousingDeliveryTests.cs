@@ -20,7 +20,7 @@ public class ProvideIsEnglandHousingDeliveryTests
         var errors = provide.Should().Throw<DomainValidationException>().Which.OperationResult.Errors;
 
         errors.Should().HaveCount(1);
-        errors[0].AffectedField.Should().Be("isEnglandHousingDelivery");
+        errors[0].AffectedField.Should().Be("IsEnglandHousingDelivery");
     }
 
     [Theory]

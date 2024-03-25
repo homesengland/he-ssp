@@ -1,3 +1,3 @@
 namespace HE.Investments.Loans.Contract.Documents;
 
-public record FileToUpload(string Name, long Lenght, Stream Content);
+public record FileToUpload(string Name, long Length, Stream Content);

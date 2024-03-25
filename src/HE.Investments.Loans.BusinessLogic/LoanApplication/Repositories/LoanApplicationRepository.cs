@@ -9,7 +9,11 @@ using HE.Investments.Common.CRM.Serialization;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Infrastructure.Events;
+using HE.Investments.DocumentService.Models;
 using HE.Investments.FrontDoor.Shared.Project;
+using HE.Investments.Loans.BusinessLogic.Config;
+using HE.Investments.Loans.BusinessLogic.Files;
+using HE.Investments.Loans.BusinessLogic.LoanApplication.Constants;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Entities;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories.Mapper;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.ValueObjects;
@@ -19,16 +23,26 @@ using Microsoft.PowerPlatform.Dataverse.Client;
 
 namespace HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories;
 
-public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitLoanApplication
+public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitLoanApplication, IChangeApplicationStatus
 {
     private readonly IOrganizationServiceAsync2 _serviceClient;
 
     private readonly IEventDispatcher _eventDispatcher;
 
-    public LoanApplicationRepository(IOrganizationServiceAsync2 serviceClient, IEventDispatcher eventDispatcher)
+    private readonly IFileApplicationRepository _fileRepository;
+
+    private readonly ILoansDocumentSettings _documentSettings;
+
+    public LoanApplicationRepository(
+        IOrganizationServiceAsync2 serviceClient,
+        IEventDispatcher eventDispatcher,
+        IFileApplicationRepository fileRepository,
+        ILoansDocumentSettings documentSettings)
     {
         _serviceClient = serviceClient;
         _eventDispatcher = eventDispatcher;
+        _fileRepository = fileRepository;
+        _documentSettings = documentSettings;
     }
 
     public async Task<bool> IsExist(LoanApplicationId loanApplicationId, UserAccount userAccount, CancellationToken cancellationToken)
@@ -159,12 +173,17 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
 
     public async Task Submit(LoanApplicationId loanApplicationId, CancellationToken cancellationToken)
     {
-        var crmSubmitStatus = ApplicationStatusMapper.MapToCrmStatus(ApplicationStatus.ApplicationSubmitted);
+        await ChangeApplicationStatus(loanApplicationId, ApplicationStatus.ApplicationSubmitted, cancellationToken);
+    }
+
+    public async Task ChangeApplicationStatus(LoanApplicationId loanApplicationId, ApplicationStatus applicationStatus, CancellationToken cancellationToken)
+    {
+        var crmStatus = ApplicationStatusMapper.MapToCrmStatus(applicationStatus);
 
         var request = new invln_changeloanapplicationexternalstatusRequest
         {
             invln_loanapplicationid = loanApplicationId.ToString(),
-            invln_statusexternal = crmSubmitStatus,
+            invln_statusexternal = crmStatus,
         };
 
         await _serviceClient.ExecuteAsync(request, cancellationToken);
@@ -172,47 +191,44 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
 
     public async Task WithdrawSubmitted(LoanApplicationId loanApplicationId, WithdrawReason withdrawReason, CancellationToken cancellationToken)
     {
-        var crmWithdrawnStatus = ApplicationStatusMapper.MapToCrmStatus(ApplicationStatus.Withdrawn);
-
-        var request = new invln_changeloanapplicationexternalstatusRequest
-        {
-            invln_loanapplicationid = loanApplicationId.ToString(),
-            invln_statusexternal = crmWithdrawnStatus,
-            invln_changereason = withdrawReason.ToString(),
-        };
-
-        await _serviceClient.ExecuteAsync(request, cancellationToken);
+        await ChangeApplicationStatusWithChangeReason(loanApplicationId, ApplicationStatus.Withdrawn, withdrawReason.ToString(), cancellationToken);
     }
 
     public async Task WithdrawDraft(LoanApplicationId loanApplicationId, WithdrawReason withdrawReason, CancellationToken cancellationToken)
     {
-        var crmRemoveStatus = ApplicationStatusMapper.MapToCrmStatus(ApplicationStatus.NA);
-
-        var request = new invln_changeloanapplicationexternalstatusRequest
-        {
-            invln_loanapplicationid = loanApplicationId.ToString(),
-            invln_statusexternal = crmRemoveStatus,
-            invln_changereason = withdrawReason.ToString(),
-        };
-
-        await _serviceClient.ExecuteAsync(request, cancellationToken);
+        await ChangeApplicationStatusWithChangeReason(loanApplicationId, ApplicationStatus.NA, withdrawReason.ToString(), cancellationToken);
     }
 
     public async Task MoveToDraft(LoanApplicationId loanApplicationId, CancellationToken cancellationToken)
     {
-        var crmDraftStatus = ApplicationStatusMapper.MapToCrmStatus(ApplicationStatus.Draft);
+        await ChangeApplicationStatus(loanApplicationId, ApplicationStatus.Draft, cancellationToken);
+    }
 
-        var request = new invln_changeloanapplicationexternalstatusRequest
-        {
-            invln_loanapplicationid = loanApplicationId.ToString(),
-            invln_statusexternal = crmDraftStatus,
-        };
-
-        await _serviceClient.ExecuteAsync(request, cancellationToken);
+    public async Task<FileLocation> GetFilesLocationAsync(SupportingDocumentsParams fileParams, CancellationToken cancellationToken)
+    {
+        var basePath = await _fileRepository.GetBaseFilePath(fileParams.LoanApplicationId, cancellationToken);
+        return new FileLocation(
+            _documentSettings.ListTitle,
+            _documentSettings.ListAlias,
+            $"{basePath}{LoanApplicationConstants.SupportingDocumentsExternal}");
     }
 
     public async Task DispatchEvents(DomainEntity domainEntity, CancellationToken cancellationToken)
     {
         await _eventDispatcher.Publish(domainEntity, cancellationToken);
+    }
+
+    private async Task ChangeApplicationStatusWithChangeReason(LoanApplicationId loanApplicationId, ApplicationStatus applicationStatus, string changeReason, CancellationToken cancellationToken)
+    {
+        var crmStatus = ApplicationStatusMapper.MapToCrmStatus(applicationStatus);
+
+        var request = new invln_changeloanapplicationexternalstatusRequest
+        {
+            invln_loanapplicationid = loanApplicationId.ToString(),
+            invln_statusexternal = crmStatus,
+            invln_changereason = changeReason,
+        };
+
+        await _serviceClient.ExecuteAsync(request, cancellationToken);
     }
 }

@@ -12,7 +12,7 @@
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <vc:page-header caption="@ViewBag.ProjectName" />
 
-    <form asp-controller="Project" asp-action="ExpectedStart" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
+    <form asp-controller="Project" asp-action="ExpectedStart" asp-route-workflow="@Context.Request.Query["workflow"]" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
         <vc:date-input title-type="@InputTitleType.PageHeader"
                        title="@ProjectPageTitles.ExpectedStart"
                        description="This is when you would like to receive Homes England support. You can enter your best estimate."

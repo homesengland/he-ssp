@@ -1,4 +1,3 @@
-using HE.Investments.FrontDoor.Contract.Project;
 using HE.Investments.FrontDoor.Contract.Site;
 using HE.Investments.FrontDoor.Domain.Site;
 using HE.Investments.FrontDoor.Domain.Site.ValueObjects;
@@ -22,6 +21,12 @@ public class ProjectSitesEntityBuilder : TestObjectBuilder<ProjectSitesEntityBui
     public ProjectSitesEntityBuilder WithSite(SiteName siteName, FrontDoorSiteId? siteId = null)
     {
         Item.Sites.Add(ProjectSiteEntityBuilder.New(siteName, Item.ProjectId, siteId).Build());
+        return this;
+    }
+
+    public ProjectSitesEntityBuilder AddSite(ProjectSiteEntity projectSite)
+    {
+        Item.Sites.Add(projectSite);
         return this;
     }
 }

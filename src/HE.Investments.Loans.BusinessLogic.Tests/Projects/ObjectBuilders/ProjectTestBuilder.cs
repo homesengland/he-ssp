@@ -3,9 +3,9 @@ using HE.Investments.Loans.BusinessLogic.Projects.Entities;
 using HE.Investments.Loans.BusinessLogic.Projects.ValueObjects;
 using HE.Investments.Loans.BusinessLogic.Tests.Projects.TestData;
 using HE.Investments.Loans.Common.Tests.TestData;
-using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 
 namespace HE.Investments.Loans.BusinessLogic.Tests.Projects.ObjectBuilders;
+
 internal sealed class ProjectTestBuilder
 {
     private readonly Project _project;
@@ -36,7 +36,7 @@ internal sealed class ProjectTestBuilder
         _project.ProvideLandOwnership(new LandOwnership(true));
 
         _project.ProvideAdditionalData(new AdditionalDetails(
-            new PurchaseDate(ProjectDateTestData.CorrectDate, ProjectDateTestData.CorrectDateTime),
+            PurchaseDate.FromCrm(ProjectDateTestData.CorrectDateTime),
             PoundsTestData.AnyAmount,
             PoundsTestData.AnyAmount,
             SourceOfValuationTestData.AnySource));

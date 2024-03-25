@@ -13,4 +13,5 @@ public record GetApplicationDashboardQueryResponse(
     string ApplicationReferenceNumber,
     string OrganizationName,
     DateTime? LastEditedOn,
-    string LastEditedBy);
+    string LastEditedBy,
+    SupportingDocumentsViewModel SupportingDocumentsViewModel);

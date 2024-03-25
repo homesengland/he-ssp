@@ -20,7 +20,7 @@
 
     <vc:page-header caption="@ViewBag.ProjectName"/>
 
-    <form asp-controller="Project" asp-action="LocalAuthorityConfirm" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
+    <form asp-controller="Project" asp-action="LocalAuthorityConfirm" asp-route-workflow="@Context.Request.Query["workflow"]" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
 
         @Html.HiddenFor(m => m.LocalAuthorityId)
         @Html.HiddenFor(m => m.LocalAuthorityName)

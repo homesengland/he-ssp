@@ -11,6 +11,7 @@ namespace HE.CRM.Plugins.Handlers.CustomApi
 
         private string siteDetails => ExecutionData.GetInputParameter<string>(invln_createsinglesitedetailRequest.Fields.invln_sitedetails);
         private string loanApplicationId => ExecutionData.GetInputParameter<string>(invln_createsinglesitedetailRequest.Fields.invln_loanapplicationid);
+        private string useHeTablesFromPortal => ExecutionData.GetInputParameter<string>(invln_createsinglesitedetailRequest.Fields.invln_usehetables);
 
         #endregion
 
@@ -22,7 +23,9 @@ namespace HE.CRM.Plugins.Handlers.CustomApi
 
         public override void DoWork()
         {
-            CrmServicesFactory.Get<ISiteDetailsService>().CreateSiteDetail(siteDetails, loanApplicationId);
+            this.TracingService.Trace("CreateSingleSiteDetailsHandler");
+            var useHeTables = !string.IsNullOrEmpty(useHeTablesFromPortal);
+            CrmServicesFactory.Get<ISiteDetailsService>().CreateSiteDetail(useHeTables, siteDetails, loanApplicationId);
         }
 
         #endregion

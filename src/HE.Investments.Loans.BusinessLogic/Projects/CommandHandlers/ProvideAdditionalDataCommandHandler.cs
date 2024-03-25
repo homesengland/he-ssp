@@ -36,8 +36,7 @@ public class ProvideAdditionalDataCommandHandler : ProjectCommandHandlerBase, IR
             {
                 var aggregatedResults = OperationResult.New();
 
-                var purchaseDate = aggregatedResults.CatchResult(() =>
-                    PurchaseDate.FromString(request.PurchaseYear, request.PurchaseMonth, request.PurchaseDay, _timeProvider.Now));
+                var purchaseDate = aggregatedResults.CatchResult(() => PurchaseDate.FromDateDetails(request.PurchaseDate, _timeProvider));
 
                 var cost = aggregatedResults.CatchResult(() => Pounds.FromString(request.Cost));
                 aggregatedResults.OverrideError(

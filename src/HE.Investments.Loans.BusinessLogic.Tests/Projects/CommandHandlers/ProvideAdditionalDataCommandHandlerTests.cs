@@ -1,3 +1,4 @@
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.Tests.TestObjectBuilders;
@@ -45,9 +46,7 @@ public class ProvideAdditionalDataCommandHandlerTests : TestBase<ProvideAddition
             new ProvideAdditionalDetailsCommand(
                 LoanApplicationIdTestData.LoanApplicationIdOne,
                 projectId,
-                string.Empty,
-                string.Empty,
-                string.Empty,
+                null,
                 string.Empty,
                 string.Empty,
                 string.Empty),
@@ -57,7 +56,7 @@ public class ProvideAdditionalDataCommandHandlerTests : TestBase<ProvideAddition
         await action.Should()
             .ThrowAsync<DomainValidationException>()
             .WithMessage(
-                $"{ValidationErrorMessage.NoPurchaseDate}" +
+                "Enter when you purchased this site" +
                 $"\n{ValidationErrorMessage.IncorrectProjectCost}" +
                 $"\n{ValidationErrorMessage.IncorrectProjectValue}" +
                 $"\n{ValidationErrorMessage.EnterMoreDetails}");
@@ -89,9 +88,7 @@ public class ProvideAdditionalDataCommandHandlerTests : TestBase<ProvideAddition
             new ProvideAdditionalDetailsCommand(
                 LoanApplicationIdTestData.LoanApplicationIdOne,
                 projectId,
-                year,
-                month,
-                day,
+                new DateDetails(day, month, year),
                 CorrectAmountAsString,
                 CorrectAmountAsString,
                 AnySourceAsString),
@@ -102,8 +99,8 @@ public class ProvideAdditionalDataCommandHandlerTests : TestBase<ProvideAddition
 
         project.AdditionalDetails!.Cost.Value.Should().Be(CorrectAmount);
         project.AdditionalDetails!.CurrentValue.Value.Should().Be(CorrectAmount);
-        project.AdditionalDetails!.PurchaseDate.Date.Should().Be(CorrectDate);
-        project.AdditionalDetails!.PurchaseDate.Date.Should().Be(CorrectDate);
+        project.AdditionalDetails!.PurchaseDate.Value.Should().Be(CorrectDate.Value);
+        project.AdditionalDetails!.PurchaseDate.Value.Should().Be(CorrectDate.Value);
     }
 
     private void GivenCurrentDate(DateTime date)

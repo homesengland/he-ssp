@@ -54,6 +54,24 @@ public class LoanApplicationTestBuilder : TestEntityBuilderBase<LoanApplicationE
             ReferenceNumberTestData.One,
             null));
 
+    public static LoanApplicationTestBuilder NewWithOtherApplicationStatus(ApplicationStatus applicationStatus, UserAccount? userAccount = null) => new(
+        new LoanApplicationEntity(
+            LoanApplicationIdTestData.LoanApplicationIdOne,
+            LoanApplicationNameTestData.MyFirstApplication,
+            userAccount ?? UserAccountTestData.UserAccountOne,
+            applicationStatus,
+            FundingPurpose.BuildingNewHomes,
+            DateTimeTestData.SeptemberDay20Year2023At0736,
+            DateTimeTestData.SeptemberDay20Year2023At0736.AddHours(1),
+            DateTimeTestData.SeptemberDay20Year2023At0736.AddHours(2),
+            "Anonymous",
+            LoanApplicationSectionTestData.CompletedSection,
+            LoanApplicationSectionTestData.CompletedSection,
+            LoanApplicationSectionTestData.CompletedSection,
+            LoanApplicationSectionTestData.CompletedProjectsSection,
+            ReferenceNumberTestData.One,
+            null));
+
     public LoanApplicationTestBuilder WithCreatedOn(DateTime createdOn)
     {
         PrivatePropertySetter.SetPropertyWithNoSetter(Item, nameof(Item.CreatedOn), createdOn);

@@ -14,10 +14,12 @@
 @{
     ViewData["Title"] = LocalAuthorityPageTitles.SearchResult;
     var controller = string.IsNullOrWhiteSpace(Model.SiteId) ? "Project" : "Site";
+    var redirect = Context.Request.Query["redirect"];
+    var optional = Context.Request.Query["optional"];
 
     var items = new PaginationResult<SelectListItemViewModel>(
         Model!.Items.Items.Select(i => new SelectListItemViewModel(
-            Url.Action("LocalAuthorityConfirm", controller, new { projectId = Model.ProjectId, siteId = Model.SiteId, localAuthorityId = i.Id }) ?? string.Empty,
+            Url.Action("LocalAuthorityConfirm", controller, new { projectId = Model.ProjectId, siteId = Model.SiteId, localAuthorityId = i.Id, redirect, optional }) ?? string.Empty,
             i.Name,
             null)).ToList(),
         Model.Items.CurrentPage,
@@ -26,7 +28,7 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <vc:local-authority-workflow-back-button current-page="@LocalAuthorityWorkflowState.SearchResult" project-id="@Model.ProjectId" site-id="@Model.SiteId"/>
+    <vc:local-authority-workflow-back-button current-page="@LocalAuthorityWorkflowState.SearchResult" project-id="@Model.ProjectId" site-id="@Model.SiteId" redirect="@redirect" optional="@optional"/>
 
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
@@ -37,7 +39,7 @@
         <gds-p>We could not find the details you entered in our records.</gds-p>
         <gds-p>
             If you think you have entered the wrong details, you can
-            <gds-link href="@Url.Action("LocalAuthoritySearch", controller, new { projectId = Model.ProjectId, siteId = Model.SiteId })">
+            <gds-link href="@Url.Action("LocalAuthoritySearch", controller, new { projectId = Model.ProjectId, siteId = Model.SiteId, redirect, optional })">
                 try again using a different name.
             </gds-link>.
         </gds-p>
@@ -47,7 +49,7 @@
         <vc:select-list
             items="@items"
             paragraph-with-link="@(new ParagraphWithLinkModel("If you are not sure which local authority to choose, you can", new LinkModel(null!, new DirectLinkModel(ExternalLinks.FindLocalCouncil, true)), "search for the name of the local authority using a postcode."))"
-            paging-navigation-url="@Url.Action("SearchResult", "LocalAuthority", new { siteId = Model.SiteId, projectId = Model.ProjectId, phrase = Model.Phrase })"/>
+            paging-navigation-url="@Url.Action("SearchResult", "LocalAuthority", new { siteId = Model.SiteId, projectId = Model.ProjectId, phrase = Model.Phrase, redirect, optional })"/>
     }
 
     <vc:return-to-account-link is-editable="false" />

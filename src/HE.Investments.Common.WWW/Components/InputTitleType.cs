@@ -4,5 +4,6 @@ public enum InputTitleType
 {
     PageHeader,
     InputTitle,
+    SmallInputFieldsetLegend,
     InputDescription,
 }

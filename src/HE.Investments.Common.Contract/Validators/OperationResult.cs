@@ -49,9 +49,11 @@ public class OperationResult : IOperationResult
         catch (DomainValidationException ex)
         {
             var result = ex.OperationResult;
-            var error = result.Errors.Single();
 
-            AddValidationError(string.IsNullOrWhiteSpace(overriddenFieldName) ? error.AffectedField : overriddenFieldName, error.ErrorMessage);
+            foreach (var error in result.Errors)
+            {
+                AddValidationError(string.IsNullOrWhiteSpace(overriddenFieldName) ? error.AffectedField : overriddenFieldName, error.ErrorMessage);
+            }
 
             return null!;
         }

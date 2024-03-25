@@ -44,11 +44,7 @@ public class ProjectViewModel : ISectionViewModel
 
     public string? Ownership { get; set; }
 
-    public string? PurchaseDay { get; set; }
-
-    public string? PurchaseMonth { get; set; }
-
-    public string? PurchaseYear { get; set; }
+    public DateDetails? PurchaseDate { get; set; }
 
     public string? Cost { get; set; }
 

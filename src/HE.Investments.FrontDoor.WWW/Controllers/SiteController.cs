@@ -11,6 +11,7 @@ using HE.Investments.FrontDoor.Contract.Site;
 using HE.Investments.FrontDoor.Contract.Site.Commands;
 using HE.Investments.FrontDoor.Contract.Site.Queries;
 using HE.Investments.FrontDoor.Shared.Project;
+using HE.Investments.FrontDoor.WWW.Constants;
 using HE.Investments.FrontDoor.WWW.Extensions;
 using HE.Investments.FrontDoor.WWW.Models;
 using HE.Investments.FrontDoor.WWW.Workflows;
@@ -58,7 +59,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
             return View(nameof(Name), name);
         }
 
-        return await Continue(SiteWorkflowState.Name, new { projectId, siteId = result.ReturnedData.Value });
+        return await ContinueSite(SiteWorkflowState.Name, projectId, result.ReturnedData.Value);
     }
 
     [HttpGet("{siteId}/name")]
@@ -114,9 +115,10 @@ public class SiteController : WorkflowController<SiteWorkflowState>
 
     [HttpGet("{siteId}/local-authority-search")]
     [WorkflowState(SiteWorkflowState.LocalAuthoritySearch)]
-    public IActionResult LocalAuthoritySearch([FromRoute] string projectId, [FromRoute] string siteId)
+    public IActionResult LocalAuthoritySearch([FromRoute] string projectId, [FromQuery] string? redirect, [FromRoute] string siteId)
     {
-        return RedirectToAction("Search", "LocalAuthority", new { projectId, siteId });
+        var optional = this.GetOptionalParameterFromRoute();
+        return RedirectToAction("Search", "LocalAuthority", new { projectId, siteId, redirect, optional });
     }
 
     [HttpGet("{siteId}/local-authority-confirm")]
@@ -157,7 +159,8 @@ public class SiteController : WorkflowController<SiteWorkflowState>
                 cancellationToken);
         }
 
-        return RedirectToAction("Search", "LocalAuthority", new { projectId, siteId });
+        var optional = this.GetOptionalParameterFromRoute();
+        return RedirectToAction("Search", "LocalAuthority", new { projectId, siteId, optional });
     }
 
     [HttpGet("{siteId}/planning-status")]
@@ -253,11 +256,17 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     {
         var projectId = this.GetProjectIdFromRoute();
         var siteId = this.GetSiteIdFromRoute();
+        var optional = this.GetOptionalParameterFromRoute();
+
+        if (optional == OptionalParameter.AddSite && viewName == nameof(PlanningStatus))
+        {
+            routeData = new { projectId = projectId.Value, siteId = siteId.Value, redirect = OptionalParameter.CheckAnswers };
+        }
 
         return await this.ExecuteCommand<TViewModel>(
             _mediator,
             command,
-            async () => await ReturnToAccountOrContinue(async () => await ContinueWithRedirect(routeData ?? new { projectId = projectId.Value, siteId = siteId.Value })),
+            async () => await ReturnToAccountOrContinue(async () => await ContinueWithRedirect(routeData ?? new { projectId = projectId.Value, siteId = siteId.Value, optional })),
             async () =>
             {
                 var siteDetails = await GetSiteDetails(projectId.Value, siteId.Value, cancellationToken);
@@ -276,5 +285,11 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         }
 
         return await onContinue();
+    }
+
+    private async Task<IActionResult> ContinueSite(SiteWorkflowState state, string projectId, string siteId)
+    {
+        var optional = this.GetOptionalParameterFromRoute();
+        return await Continue(state, new { projectId, siteId, optional });
     }
 }

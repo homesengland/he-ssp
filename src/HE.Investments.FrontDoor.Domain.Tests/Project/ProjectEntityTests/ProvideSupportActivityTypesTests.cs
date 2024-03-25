@@ -12,7 +12,10 @@ public class ProvideSupportActivityTypesTests
     public void ShouldResetAffordableHomesQuestion_WhenSupportActivityHasChanged()
     {
         // given
-        var project = ProjectEntityBuilder.New().WithSupportActivitiesAsDevelopingHomes().WithAffordableHomesAmount().Build();
+        var project = ProjectEntityBuilder.New().WithSupportActivities(new List<SupportActivityType>
+        {
+            SupportActivityType.DevelopingHomes,
+        }).WithAffordableHomesAmount(AffordableHomesAmount.OnlyAffordableHomes).Build();
 
         // when
         project.ProvideSupportActivityTypes(new SupportActivities(new[] { SupportActivityType.AcquiringLand }));
@@ -25,7 +28,10 @@ public class ProvideSupportActivityTypesTests
     public void ShouldResetProvidingInfrastructureQuestion_WhenSupportActivityHasChanged()
     {
         // given
-        var project = ProjectEntityBuilder.New().WithSupportActivitiesAsProvidingInfrastructure().WithAffordableHomesAmount().Build();
+        var project = ProjectEntityBuilder.New().WithSupportActivities(new List<SupportActivityType>
+        {
+            SupportActivityType.DevelopingHomes,
+        }).WithAffordableHomesAmount(AffordableHomesAmount.OnlyAffordableHomes).Build();
 
         // when
         project.ProvideSupportActivityTypes(new SupportActivities(new[] { SupportActivityType.AcquiringLand }));
@@ -38,7 +44,10 @@ public class ProvideSupportActivityTypesTests
     public void ShouldNotResetAffordableHomesQuestion_WhenSupportActivityHasChangedToTheSame()
     {
         // given
-        var project = ProjectEntityBuilder.New().WithSupportActivitiesAsDevelopingHomes().WithAffordableHomesAmount().Build();
+        var project = ProjectEntityBuilder.New().WithSupportActivities(new List<SupportActivityType>
+        {
+            SupportActivityType.DevelopingHomes,
+        }).WithAffordableHomesAmount(AffordableHomesAmount.OnlyAffordableHomes).Build();
 
         // when
         project.ProvideSupportActivityTypes(new SupportActivities(new[] { SupportActivityType.DevelopingHomes }));

@@ -1,20 +1,30 @@
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
+using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Errors;
+using HE.Investments.Common.Extensions;
+using HE.Investments.Common.Infrastructure.Events;
+using HE.Investments.Common.Messages;
 using HE.Investments.FrontDoor.Shared.Project;
+using HE.Investments.Loans.BusinessLogic.Files;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.ValueObjects;
 using HE.Investments.Loans.Contract.Application.Enums;
 using HE.Investments.Loans.Contract.Application.Events;
 using HE.Investments.Loans.Contract.Application.Helper;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
+using HE.Investments.Loans.Contract.Documents;
 
 namespace HE.Investments.Loans.BusinessLogic.LoanApplication.Entities;
 
 public class LoanApplicationEntity : DomainEntity
 {
+    private const int AllowedFilesCount = 10;
+
+    private IList<UploadedFile>? _files;
+
     public LoanApplicationEntity(
         LoanApplicationId id,
         LoanApplicationName name,
@@ -96,6 +106,45 @@ public class LoanApplicationEntity : DomainEntity
     {
         var readonlyStatuses = ApplicationStatusDivision.GetAllStatusesForReadonlyMode();
         return readonlyStatuses.Contains(ExternalStatus);
+    }
+
+    public async Task<IReadOnlyCollection<UploadedFile>> UploadFiles(
+        ILoansFileService<SupportingDocumentsParams> fileService,
+        IList<SupportingDocumentsFile> filesToUpload,
+        IEventDispatcher eventDispatcher,
+        CancellationToken cancellationToken)
+    {
+        _files ??= (await fileService.GetFiles(SupportingDocumentsParams.New(Id), cancellationToken)).ToList();
+
+        if (!filesToUpload.Any() && !_files.Any())
+        {
+            OperationResult.ThrowValidationError(nameof(SupportingDocumentsFile), ValidationErrorMessage.FilesListEmpty);
+        }
+
+        if (_files.Count + filesToUpload.Count > AllowedFilesCount)
+        {
+            OperationResult.ThrowValidationError(nameof(SupportingDocumentsFile), ValidationErrorMessage.FilesMaxCount(AllowedFilesCount));
+        }
+
+        var isNameDuplicated = _files!.Select(x => x.Name)
+            .Concat(filesToUpload.Select(x => x.FileName))
+            .GroupBy(x => x)
+            .Any(x => x.Count() > 1);
+        if (isNameDuplicated)
+        {
+            OperationResult.ThrowValidationError(nameof(SupportingDocumentsFile), GenericValidationError.FileWithThatNameExistsRename);
+        }
+
+        var result = new List<UploadedFile>();
+        foreach (var fileToUpload in filesToUpload)
+        {
+            result.Add(await fileService.UploadFile(fileToUpload.FileName, fileToUpload.FileContent, SupportingDocumentsParams.New(Id), cancellationToken));
+        }
+
+        _files.AddRange(result);
+        await eventDispatcher.Publish(new ApplicationFilesUploadedSuccessfullyEvent(_files.Count), cancellationToken);
+
+        return result;
     }
 
     public async Task Submit(ICanSubmitLoanApplication canSubmitLoanApplication, CancellationToken cancellationToken)

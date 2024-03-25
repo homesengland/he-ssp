@@ -5,7 +5,11 @@
 @using HE.Investments.Common.WWW.Components.ErrorMessage
 
 @model (string title, IList<SectionSummaryItemModel> items, string name)
-<gds-h2>@Model.title</gds-h2>
+
+@if (!string.IsNullOrEmpty(Model.title))
+{
+    <gds-h2>@Model.title</gds-h2>
+}
 
 <vc:error-message field-name="@Model.name" />
 

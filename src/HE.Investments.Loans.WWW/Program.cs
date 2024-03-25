@@ -74,6 +74,7 @@ app.UseMiddleware<HeaderSecurityMiddleware>();
 app.UseCrossSiteScriptingSecurity();
 app.ConfigureAdditionalMiddlewares();
 app.UseCustomDisableRequestLimitSize("/more-information-about-organization-upload-file", "/more-information-about-organization");
+app.UseCustomDisableRequestLimitSize("/supporting-documents-upload-file", "/supporting-documents");
 
 app.UseCookiePolicy(
     new CookiePolicyOptions

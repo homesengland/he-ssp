@@ -24,7 +24,7 @@ internal sealed class CalculateSharedOwnershipQueryHandler : CalculateQueryHandl
         (CalculateSharedOwnershipQuery request, IHomeTypeEntity homeType) => homeType.TenureDetails.ChangeMarketValue(request.MarketValue, true),
         (request, homeType) => homeType.TenureDetails.ChangeInitialSale(request.InitialSale, true),
         (_, homeType) => homeType.TenureDetails.ChangeExpectedFirstTranche(),
-        (request, homeType) => homeType.TenureDetails.ChangeRentPerWeek(request.ProspectiveRent, rentType: "Shared Ownership", isCalculation: true),
+        (request, homeType) => homeType.TenureDetails.ChangeRentPerWeek(request.ProspectiveRent, rentType: "Shared Ownership rent", isCalculation: true),
         (_, homeType) => homeType.TenureDetails.ChangeRentAsPercentageOfTheUnsoldShare(),
     };
 

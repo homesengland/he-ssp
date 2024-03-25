@@ -69,5 +69,7 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public int? loanApplicationStatus { get; set; }
 
         public LocalAuthorityDto localAuthority { get; set; }
+        public string frontDoorSiteId { get; set; }
+        public string frontDoorSiteName { get; set; }
     }
 }

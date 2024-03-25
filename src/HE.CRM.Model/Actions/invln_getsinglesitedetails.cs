@@ -21,6 +21,7 @@ namespace DataverseModel
 		{
 			public const string invln_sitedetailsid = "invln_sitedetailsid";
 			public const string invln_fieldstoretrieve = "invln_fieldstoretrieve";
+			public const string invln_usehetables = "invln_usehetables";
 			public const string invln_externalcontactid = "invln_externalcontactid";
 			public const string invln_accountid = "invln_accountid";
 		}
@@ -62,6 +63,25 @@ namespace DataverseModel
 			set
 			{
 				this.Parameters["invln_fieldstoretrieve"] = value;
+			}
+		}
+		
+		public string invln_usehetables
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_usehetables"))
+				{
+					return ((string)(this.Parameters["invln_usehetables"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_usehetables"] = value;
 			}
 		}
 		

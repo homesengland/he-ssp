@@ -8,6 +8,7 @@ using HE.Investments.FrontDoor.Contract.LocalAuthority;
 using HE.Investments.FrontDoor.Contract.LocalAuthority.Queries;
 using HE.Investments.FrontDoor.Contract.Project.Queries;
 using HE.Investments.FrontDoor.Shared.Project;
+using HE.Investments.FrontDoor.WWW.Extensions;
 using HE.Investments.FrontDoor.WWW.Models;
 using HE.Investments.FrontDoor.WWW.Workflows;
 using MediatR;
@@ -52,8 +53,9 @@ public class LocalAuthorityController : WorkflowController<LocalAuthorityWorkflo
 
     [HttpPost("search")]
     [WorkflowState(LocalAuthorityWorkflowState.Search)]
-    public async Task<IActionResult> Search([FromForm] string projectId, [FromForm] string? siteId, [FromForm] string phrase)
+    public async Task<IActionResult> Search([FromForm] string projectId, [FromForm] string? siteId, [FromForm] string phrase, [FromQuery] string? redirect)
     {
+        var optional = this.GetOptionalParameterFromRoute();
         if (string.IsNullOrEmpty(phrase))
         {
             ModelState.Clear();
@@ -61,7 +63,7 @@ public class LocalAuthorityController : WorkflowController<LocalAuthorityWorkflo
             return View(nameof(Search), new LocalAuthoritySearchViewModel(phrase, projectId, siteId));
         }
 
-        return await Continue(new { projectId, siteId, phrase });
+        return await Continue(new { projectId, siteId, phrase, redirect, optional });
     }
 
     [HttpGet("search-result")]

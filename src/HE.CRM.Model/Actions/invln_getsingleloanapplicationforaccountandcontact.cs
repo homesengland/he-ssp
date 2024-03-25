@@ -19,6 +19,7 @@ namespace DataverseModel
 		
 		public static class Fields
 		{
+			public const string invln_usehetables = "invln_usehetables";
 			public const string invln_fieldstoretrieve = "invln_fieldstoretrieve";
 			public const string invln_accountid = "invln_accountid";
 			public const string invln_externalcontactid = "invln_externalcontactid";
@@ -26,6 +27,25 @@ namespace DataverseModel
 		}
 		
 		public const string ActionLogicalName = "invln_getsingleloanapplicationforaccountandcontact";
+		
+		public string invln_usehetables
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_usehetables"))
+				{
+					return ((string)(this.Parameters["invln_usehetables"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_usehetables"] = value;
+			}
+		}
 		
 		public string invln_fieldstoretrieve
 		{

@@ -22,7 +22,9 @@ public class SiteData
 
     public int HomesNumber => _dataSeed + 4;
 
-    public SitePlanningStatus PlanningStatus => SitePlanningStatus.OutlinePlanningApplicationSubmitted;
+    public SitePlanningStatus PlanningStatus => SitePlanningStatus.NoPlanningRequired;
+
+    public SitePlanningStatus NewPlanningStatus => SitePlanningStatus.DetailedPlanningApprovalGranted;
 
     public bool AddAnotherSite => false;
 
