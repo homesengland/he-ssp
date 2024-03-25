@@ -16,6 +16,8 @@ public class LoansIntegrationTestFixture : IntegrationTestFixture<Program>
 
     public FrontDoorProjectCrmRepository FrontDoorProjectCrmRepository => _scope.Value.ServiceProvider.GetRequiredService<FrontDoorProjectCrmRepository>();
 
+    public LoanApplicationCrmRepository LoanApplicationCrmRepository => _scope.Value.ServiceProvider.GetRequiredService<LoanApplicationCrmRepository>();
+
     protected override void Dispose(bool disposing)
     {
         base.Dispose(disposing);
@@ -29,5 +31,6 @@ public class LoansIntegrationTestFixture : IntegrationTestFixture<Program>
     protected override void ConfigureTestServices(IServiceCollection services)
     {
         services.AddScoped<FrontDoorProjectCrmRepository>();
+        services.AddScoped<LoanApplicationCrmRepository>();
     }
 }

@@ -91,6 +91,13 @@ public static class HtmlFluentExtensions
         return htmlDocument;
     }
 
+    public static IHtmlDocument HasUploadedFiles(this IHtmlDocument htmlDocument, int filesCount)
+    {
+        var files = htmlDocument.GetFilesTableBody();
+        files!.Length.Should().Be(filesCount, "Files table does not have expected number of files");
+        return htmlDocument;
+    }
+
     public static IHtmlDocument HasInsetText(this IHtmlDocument htmlDocument, string title)
     {
         htmlDocument.GetInsetText().Should().Be(title);

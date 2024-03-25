@@ -7,4 +7,6 @@ public static class LoanApplicationPageTitles
     public const string AboutLoan = "Before you apply for this loan";
 
     public const string LoanApplyInformation = "Apply for Levelling Up Home Building funding";
+
+    public const string SupportingDocuments = "Supporting documents";
 }

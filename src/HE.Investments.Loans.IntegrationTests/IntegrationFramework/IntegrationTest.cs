@@ -26,6 +26,8 @@ public class IntegrationTest : IntegrationTestBase<Program>
 
     protected FrontDoorProjectCrmRepository FrontDoorProjectCrmRepository => _fixture.FrontDoorProjectCrmRepository;
 
+    protected LoanApplicationCrmRepository LoanApplicationCrmRepository => _fixture.LoanApplicationCrmRepository;
+
     protected IntegrationUserData UserData { get; private set; }
 
     protected ILoginData LoginData { get; private set; }
