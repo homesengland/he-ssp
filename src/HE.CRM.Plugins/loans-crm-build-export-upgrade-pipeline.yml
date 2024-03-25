@@ -35,6 +35,10 @@ parameters:
   displayName: Deploy Plugins Solution ?
   type: boolean
   default: true
+- name: deployDataMigration
+  displayName: Migrate Data ?
+  type: boolean
+  default: true
 
 variables:
   solution: '**/*.sln'
@@ -66,3 +70,4 @@ stages:
     deployMainSolution: '${{ parameters.deployMainSolution }}'
     deployFlowsSolution: '${{ parameters.deployFlowsSolution }}'
     deployPluginsSolution: '${{ parameters.deployPluginsSolution }}'
+    deployDataMigration: '${{ parameters.deployDataMigration }}'
