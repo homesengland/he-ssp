@@ -43,7 +43,7 @@ public class ProjectData
 
     public SiteData SiteData { get; }
 
-    public DateTime ExpectedStartDate => new DateTime(2024, 3, 20, 0, 0, 0, DateTimeKind.Utc).AddDays(_dataSeed);
+    public DateTime ExpectedStartDate => DateTime.UtcNow.AddDays(_dataSeed);
 
     public void SetProjectId(string projectId)
     {
