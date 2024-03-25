@@ -16,6 +16,8 @@ public class SiteDetails
 
     public string? LocalAuthorityCode { get; set; }
 
+    public string? LocalAuthorityName { get; set; }
+
     public SitePlanningStatus? PlanningStatus { get; set; }
 
     public AddAnotherSite? AddAnotherSite { get; set; }

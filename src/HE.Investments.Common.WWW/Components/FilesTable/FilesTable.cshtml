@@ -2,45 +2,52 @@
 @using HE.Investments.Common.WWW.Models
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
 
-@model (string fieldName, IList<HE.Investments.Common.WWW.Models.FileModel> files)
+@model (string fieldName, IList<HE.Investments.Common.WWW.Models.FileModel> files, bool isReadOnly)
 
-<table class="govuk-table">
-  <thead class="govuk-!-display-none"><tr><th>files</th></tr></thead>
-  <tbody class="govuk-table__body">
-  @for (var i = 0; i < Model.files.Count; i++)
-  {
-      var index = i;
-      @Html.Hidden($"{Model.fieldName}[{index}].{nameof(FileModel.FileId)}", Model.files[index].FileId)
-      @Html.Hidden($"{Model.fieldName}[{index}].{nameof(FileModel.FileName)}", Model.files[index].FileName)
-      @Html.Hidden($"{Model.fieldName}[{index}].{nameof(FileModel.UploadedBy)}", Model.files[index].UploadedBy)
-      @Html.Hidden($"{Model.fieldName}[{index}].{nameof(FileModel.UploadedOn)}", Model.files[index].UploadedOn)
-      @Html.Hidden($"{Model.fieldName}[{index}].{nameof(FileModel.CanBeRemoved)}", Model.files[index].CanBeRemoved)
-      @Html.Hidden($"{Model.fieldName}[{index}].{nameof(FileModel.RemoveAction)}", Model.files[index].RemoveAction)
-      @Html.Hidden($"{Model.fieldName}[{index}].{nameof(FileModel.DownloadAction)}", Model.files[index].DownloadAction)
+<table class="govuk-table files-table">
+    <thead class="govuk-!-display-none">
+    <tr>
+        <th>files</th>
+    </tr>
+    </thead>
+    <tbody class="govuk-table__body files-table-body">
+    @for (var i = 0; i < Model.files.Count; i++)
+    {
+        var index = i;
+        @Html.Hidden($"{Model.fieldName}[{index}].{nameof(FileModel.FileId)}", Model.files[index].FileId)
+        @Html.Hidden($"{Model.fieldName}[{index}].{nameof(FileModel.FileName)}", Model.files[index].FileName)
+        @Html.Hidden($"{Model.fieldName}[{index}].{nameof(FileModel.UploadedBy)}", Model.files[index].UploadedBy)
+        @Html.Hidden($"{Model.fieldName}[{index}].{nameof(FileModel.UploadedOn)}", Model.files[index].UploadedOn)
+        @Html.Hidden($"{Model.fieldName}[{index}].{nameof(FileModel.CanBeRemoved)}", Model.files[index].CanBeRemoved)
+        @Html.Hidden($"{Model.fieldName}[{index}].{nameof(FileModel.RemoveAction)}", Model.files[index].RemoveAction)
+        @Html.Hidden($"{Model.fieldName}[{index}].{nameof(FileModel.DownloadAction)}", Model.files[index].DownloadAction)
 
-      <tr class="govuk-table__row">
-          <td class="govuk-table__cell govuk-!-font-weight-bold">
-              @if (!string.IsNullOrWhiteSpace(Model.files[index].DownloadAction))
-              {
-                  <gds-link href="@Model.files[index].DownloadAction">@Model.files[index].FileName</gds-link>
-              }
-              else
-              {
-                  @Model.files[index].FileName
-              }
-          </td>
-          <td class="govuk-table__cell">
-              uploaded @DateHelper.DisplayAsUkFormatDateTime(Model.files[i].UploadedOn) by @Model.files[i].UploadedBy
-          </td>
-          <td class="govuk-table__cell govuk-!-text-align-right">
-              @if (Model.files[i].CanBeRemoved)
-              {
-                  <gds-link class="govuk-link--no-visited-state govuk-!-margin-left-4" href="@Model.files[i].RemoveAction">
-                      Remove
-                  </gds-link>
-              }
-          </td>
-      </tr>
-  }
-  </tbody>
+        <tr class="govuk-table__row">
+            <td class="govuk-table__cell govuk-!-font-weight-bold">
+                @if (!string.IsNullOrWhiteSpace(Model.files[index].DownloadAction))
+                {
+                    <gds-link href="@Model.files[index].DownloadAction">@Model.files[index].FileName</gds-link>
+                }
+                else
+                {
+                    @Model.files[index].FileName
+                }
+            </td>
+            <td class="govuk-table__cell">
+                uploaded @DateHelper.DisplayAsUkFormatDateTime(Model.files[i].UploadedOn) by @Model.files[i].UploadedBy
+            </td>
+            @if (!Model.isReadOnly)
+            {
+                <td class="govuk-table__cell govuk-!-text-align-right">
+                    @if (Model.files[i].CanBeRemoved)
+                    {
+                        <gds-link class="govuk-link--no-visited-state govuk-!-margin-left-4" href="@Model.files[i].RemoveAction">
+                            Remove
+                        </gds-link>
+                    }
+                </td>
+            }
+        </tr>
+    }
+    </tbody>
 </table>

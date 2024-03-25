@@ -37,6 +37,6 @@ public class BuildActivityTests : AhpViewTestBase
                 nameof(DeliveryPhaseDetails.BuildActivityType),
                 availableTypes.Select(x => x.ToString()).ToArray())
             .HasSaveAndContinueButton()
-            .HasBackLink(false);
+            .HasBackLink(out _, false);
     }
 }

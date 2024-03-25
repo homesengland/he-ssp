@@ -101,6 +101,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Entities\Email.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\EnvironmentVariableDefinition.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\EnvironmentVariableValue.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\he_LocalAuthority.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\he_Pipeline.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\he_ProjectLocalAuthority.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_AHGLocalAuthorities.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_ahpcontract.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_AHPStatusChange.cs" />
@@ -202,11 +205,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_howcouldweimprovethecrm.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_HoweasywasittousetheCRM.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_InteractionPipelineOpportunity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_InterventionTypes.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_MarketingSend.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_NetPromoterScores.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_Overallhowsatisfiedordissatisfied.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_Physicalorcognitiveconditions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_PrimaryOperatingRegion.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_ProjectStages.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_Sector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_SMEIndicator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_UserSatisfactionSurveyDoyouwantto.cs" />

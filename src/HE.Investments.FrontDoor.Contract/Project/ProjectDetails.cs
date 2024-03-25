@@ -41,5 +41,7 @@ public class ProjectDetails
 
     public string? LocalAuthorityCode { get; set; }
 
+    public string? LocalAuthorityName { get; set; }
+
     public DateDetails? ExpectedStartDate { get; set; }
 }

@@ -14,7 +14,7 @@
 
     <vc:page-header caption="@ViewBag.ProjectName"/>
 
-    <form asp-controller="Project" asp-action="Infrastructure" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
+    <form asp-controller="Project" asp-action="Infrastructure" asp-route-workflow="@Context.Request.Query["workflow"]" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
 
         <vc:checkbox-list-with-or title="@ProjectPageTitles.Infrastructure"
                                   title-type="InputTitleType.PageHeader"

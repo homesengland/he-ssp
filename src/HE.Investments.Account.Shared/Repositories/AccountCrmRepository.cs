@@ -62,9 +62,9 @@ public class AccountCrmRepository : IAccountRepository
                          ?? throw new NotFoundException(nameof(UserProfileDetails), userGlobalId.ToString());
 
         return new UserProfileDetails(
-            contactDto.firstName.IsProvided() ? new FirstName(contactDto.firstName) : null,
-            contactDto.lastName.IsProvided() ? new LastName(contactDto.lastName) : null,
-            contactDto.jobTitle.IsProvided() ? new JobTitle(contactDto.jobTitle) : null,
+            contactDto.firstName.IsProvided() ? new YourFirstName(contactDto.firstName) : null,
+            contactDto.lastName.IsProvided() ? new YourLastName(contactDto.lastName) : null,
+            contactDto.jobTitle.IsProvided() ? new YourJobTitle(contactDto.jobTitle) : null,
             contactDto.email,
             contactDto.phoneNumber.IsProvided() ? new TelephoneNumber(contactDto.phoneNumber) : null,
             contactDto.secondaryPhoneNumber.IsProvided() ? new TelephoneNumber(contactDto.secondaryPhoneNumber) : null,

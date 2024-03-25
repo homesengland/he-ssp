@@ -22,4 +22,10 @@ public class ProjectSitesEntityBuilder : TestObjectBuilder<ProjectSitesEntityBui
         Item.Sites.Add(ProjectSiteEntityBuilder.New(siteName, Item.ProjectId, siteId).Build());
         return this;
     }
+
+    public ProjectSitesEntityBuilder AddSite(ProjectSiteEntity projectSite)
+    {
+        Item.Sites.Add(projectSite);
+        return this;
+    }
 }

@@ -1,4 +1,5 @@
 @using HE.Investments.Loans.WWW.Views.LoanApplicationV2.Consts
+@using HE.Investments.Loans.BusinessLogic.LoanApplication
 @model HE.Investments.Loans.WWW.Models.ApplicationInformationAgreementModel
 @{
     var fdProjectId = Context.Request.Query["fdProjectId"];
@@ -6,7 +7,7 @@
 
 <gds-div-grid-column-two-thirds>
     <form asp-controller="LoanApplicationV2" asp-action="AboutLoanPost" asp-method="post" asp-route-fdProjectId="@fdProjectId" novalidate>
-        <gds-back-link href="@Url.Action("Dashboard", "Home")" text="Back to account homepage" class="govuk-!-margin-bottom-8"></gds-back-link>
+        <gds-back-link href="@Url.Action("Back", "LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.AboutLoan, fdProjectId })" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
 
         <partial name="_ErrorSummaryPartial" model="null"/>
         <gds-error-form-group asp-for="InformationAgreement">

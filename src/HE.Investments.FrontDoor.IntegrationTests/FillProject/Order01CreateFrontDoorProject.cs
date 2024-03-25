@@ -12,6 +12,7 @@ using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.TestsUtils.Assertions;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
+using Xunit.Abstractions;
 using Xunit.Extensions.Ordering;
 
 namespace HE.Investments.FrontDoor.IntegrationTests.FillProject;
@@ -20,8 +21,8 @@ namespace HE.Investments.FrontDoor.IntegrationTests.FillProject;
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
 public class Order01CreateFrontDoorProject : FrontDoorIntegrationTest
 {
-    public Order01CreateFrontDoorProject(IntegrationTestFixture<Program> fixture)
-        : base(fixture)
+    public Order01CreateFrontDoorProject(IntegrationTestFixture<Program> fixture, ITestOutputHelper output)
+        : base(fixture, output)
     {
     }
 
@@ -76,7 +77,7 @@ public class Order01CreateFrontDoorProject : FrontDoorIntegrationTest
         currentPage
             .UrlEndWith(ProjectPagesUrl.NewEnglandHousingDelivery)
             .HasTitle(ProjectPageTitles.EnglandHousingDelivery)
-            .HasBackLink()
+            .HasBackLink(out _)
             .HasContinueButton(out var continueButton);
 
         // when
@@ -97,7 +98,7 @@ public class Order01CreateFrontDoorProject : FrontDoorIntegrationTest
         currentPage
             .UrlEndWith(ProjectPagesUrl.NewName)
             .HasTitle(ProjectPageTitles.Name)
-            .HasBackLink()
+            .HasBackLink(out _)
             .HasSaveAndContinueButton(out var continueButton);
 
         // when

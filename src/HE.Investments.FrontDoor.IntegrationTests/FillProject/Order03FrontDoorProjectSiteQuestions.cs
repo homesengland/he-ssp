@@ -1,6 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using AngleSharp.Html.Dom;
 using FluentAssertions;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Extensions;
@@ -16,6 +15,7 @@ using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.IntegrationTestsFramework.Assertions;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
+using Xunit.Abstractions;
 using Xunit.Extensions.Ordering;
 
 namespace HE.Investments.FrontDoor.IntegrationTests.FillProject;
@@ -24,8 +24,8 @@ namespace HE.Investments.FrontDoor.IntegrationTests.FillProject;
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
 public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
 {
-    public Order03FrontDoorProjectSiteQuestions(IntegrationTestFixture<Program> fixture)
-        : base(fixture)
+    public Order03FrontDoorProjectSiteQuestions(IntegrationTestFixture<Program> fixture, ITestOutputHelper output)
+        : base(fixture, output)
     {
     }
 
@@ -51,7 +51,7 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
         currentPage
             .UrlEndWith(SitePagesUrl.Name(ProjectData.Id))
             .HasTitle(SitePageTitles.Name)
-            .HasBackLink()
+            .HasBackLink(out _)
             .HasSaveAndContinueButton(out var continueButton);
 
         // when
@@ -86,7 +86,7 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
         currentPage
             .UrlWithoutQueryEndsWith(SitePagesUrl.LocalAuthoritySearch(ProjectData.Id, SiteData.Id))
             .HasTitle(LocalAuthorityPageTitles.SearchForSite)
-            .HasBackLink()
+            .HasBackLink(out _)
             .HasSubmitButton(out var continueButton, "Search");
 
         // when
@@ -98,7 +98,7 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
         nextPage
             .UrlWithoutQueryEndsWith(SitePagesUrl.LocalAuthorityResult(ProjectData.Id, SiteData.Id))
             .HasTitle(LocalAuthorityPageTitles.SearchResult)
-            .HasBackLink();
+            .HasBackLink(out _);
 
         SaveCurrentPage();
     }
@@ -112,7 +112,7 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
         currentPage
             .UrlWithoutQueryEndsWith(SitePagesUrl.LocalAuthorityResult(ProjectData.Id, SiteData.Id))
             .HasTitle(LocalAuthorityPageTitles.SearchResult)
-            .HasBackLink();
+            .HasBackLink(out _);
 
         // when
         var cityOfLondonConfimLink = currentPage.GetLinkByTestId(SiteData.LocalAuthorityName.ToIdTag());
@@ -122,7 +122,7 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
         nextPage
             .UrlEndWith(SitePagesUrl.LocalAuthorityConfirm(ProjectData.Id, SiteData.Id, SiteData.LocalAuthorityCode))
             .HasTitle(SitePageTitles.LocalAuthorityConfirm)
-            .HasBackLink()
+            .HasBackLink(out _)
             .HasSaveAndContinueButton();
 
         SaveCurrentPage();
@@ -173,19 +173,41 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
     }
 
     [Fact(Skip = FrontDoorConfig.SkipTest)]
-    [Order(6)]
-    public async Task Order06_ProvideRequiresFunding()
+    [Order(9)]
+    public async Task Order09_ProvideRequiresFunding()
     {
         await TestQuestionPage(
             ProjectPagesUrl.RequiresFunding(ProjectData.Id),
             ProjectPageTitles.RequiresFunding,
-            ProjectPagesUrl.ExpectedStart(ProjectData.Id),
+            ProjectPagesUrl.FundingAmount(ProjectData.Id),
             (nameof(ProjectDetails.IsFundingRequired), ProjectData.IsFundingRequired.MapToTrueFalse()));
     }
 
     [Fact(Skip = FrontDoorConfig.SkipTest)]
-    [Order(9)]
-    public async Task Order09_ProvideExpectedStart()
+    [Order(10)]
+    public async Task Order10_ProvideFundingAmount()
+    {
+        await TestQuestionPage(
+            ProjectPagesUrl.FundingAmount(ProjectData.Id),
+            ProjectPageTitles.FundingAmount,
+            ProjectPagesUrl.Profit(ProjectData.Id),
+            (nameof(ProjectDetails.RequiredFunding), ProjectData.RequiredFunding.ToString()));
+    }
+
+    [Fact(Skip = FrontDoorConfig.SkipTest)]
+    [Order(11)]
+    public async Task Order11_ProvideProfit()
+    {
+        await TestQuestionPage(
+            ProjectPagesUrl.Profit(ProjectData.Id),
+            ProjectPageTitles.Profit,
+            ProjectPagesUrl.ExpectedStart(ProjectData.Id),
+            (nameof(ProjectDetails.IsProfit), ProjectData.IsProfit.MapToTrueFalse()));
+    }
+
+    [Fact(Skip = FrontDoorConfig.SkipTest)]
+    [Order(12)]
+    public async Task Order12_ProvideExpectedStart()
     {
         await TestQuestionPage(
             ProjectPagesUrl.ExpectedStart(ProjectData.Id),
@@ -196,15 +218,15 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
     }
 
     [Fact(Skip = FrontDoorConfig.SkipTest)]
-    [Order(10)]
-    public async Task Order10_CheckAnswers()
+    [Order(13)]
+    public async Task Order13_CheckAnswers()
     {
         // given
         var checkAnswersPage = await GetCurrentPage(ProjectPagesUrl.CheckAnswers(ProjectData.Id));
         checkAnswersPage
             .UrlEndWith(ProjectPagesUrl.CheckAnswers(ProjectData.Id))
             .HasTitle(ProjectPageTitles.CheckAnswers)
-            .HasBackLink();
+            .HasBackLink(out _);
 
         // when & then
         var summary = checkAnswersPage.GetSummaryListItems();
@@ -222,6 +244,77 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
 
         summary.Should().ContainKey("Project progress more slowly or stall").WithValue(ProjectData.IsSupportRequired.MapToCommonResponse());
         summary.Should().ContainKey("Funding required").WithValue(ProjectData.IsFundingRequired.MapToCommonResponse());
-        summary.Should().ContainKey("Expected project start date").WithValue($"01/{ProjectData.ExpectedStartDate.Month:00}/{ProjectData.ExpectedStartDate.Year}");
+        summary.Should().ContainKey("How much funding").WithValue(ProjectData.RequiredFunding.GetDescription());
+        summary.Should().ContainKey("Intention to make a profit").WithValue(ProjectData.IsProfit.MapToCommonResponse());
+        summary.Should().ContainKey("Expected project start date").WithValue($"{ProjectData.ExpectedStartDate.Month:00}/{ProjectData.ExpectedStartDate.Year}");
+    }
+
+    [Fact(Skip = FrontDoorConfig.SkipTest)]
+    [Order(14)]
+    public async Task Order14_CheckAnswersChangeSitePlanningStatusAnswer()
+    {
+        // given
+        var checkAnswersPage = await GetCurrentPage(ProjectPagesUrl.CheckAnswers(ProjectData.Id));
+        var summary = checkAnswersPage
+            .UrlEndWith(ProjectPagesUrl.CheckAnswers(ProjectData.Id))
+            .HasTitle(ProjectPageTitles.CheckAnswers)
+            .GetSummaryListItems();
+
+        summary.Should().ContainKey("Planning status");
+        summary["Planning status"].ChangeAnswerLink.Should().NotBeNull();
+
+        // when
+        var planningStatusPage = await TestClient.NavigateTo(summary["Planning status"].ChangeAnswerLink!);
+
+        // then
+        planningStatusPage.UrlWithoutQueryEndsWith(SitePagesUrl.PlanningStatus(ProjectData.Id, SiteData.Id))
+            .HasTitle(SitePageTitles.PlanningStatus);
+        SaveCurrentPage();
+    }
+
+    [Fact(Skip = FrontDoorConfig.SkipTest)]
+    [Order(15)]
+    public async Task Order15_ProvideChangedSitePlanningStatus()
+    {
+        var newPlanningStatus = SiteData.NewPlanningStatus;
+        await TestQuestionPage(
+            SitePagesUrl.PlanningStatus(ProjectData.Id, SiteData.Id),
+            SitePageTitles.PlanningStatus,
+            ProjectPagesUrl.CheckAnswers(ProjectData.Id),
+            (nameof(SiteDetails.PlanningStatus), newPlanningStatus.ToString()));
+    }
+
+    [Fact(Skip = FrontDoorConfig.SkipTest)]
+    [Order(16)]
+    public async Task Order16_CheckAnswersHasValidSummaryAfterChangingPlanningStatus()
+    {
+        // given
+        var checkAnswersPage = await GetCurrentPage(ProjectPagesUrl.CheckAnswers(ProjectData.Id));
+        checkAnswersPage
+            .UrlWithoutQueryEndsWith(ProjectPagesUrl.CheckAnswers(ProjectData.Id))
+            .HasTitle(ProjectPageTitles.CheckAnswers);
+
+        // when
+        var summary = checkAnswersPage.GetSummaryListItems();
+        summary.Should().ContainKey("Planning status").WithValue(SiteData.NewPlanningStatus.GetDescription());
+    }
+
+    [Fact(Skip = FrontDoorConfig.SkipTest)]
+    [Order(17)]
+    public async Task Order17_CheckAnswersCompleteProject()
+    {
+        // given
+        var currentPage = await TestClient.NavigateTo(ProjectPagesUrl.CheckAnswers(ProjectData.Id));
+        var continueButton = currentPage
+            .UrlEndWith(ProjectPagesUrl.CheckAnswers(ProjectData.Id))
+            .HasTitle(ProjectPageTitles.CheckAnswers)
+            .GetSubmitButton("Accept and submit");
+
+        // when
+        var nextPage = await TestClient.SubmitButton(continueButton);
+
+        // then
+        nextPage
+            .UrlWithoutQueryNotEndsWith(ProjectPagesUrl.YouNeedToSpeakToHomesEngland(ProjectData.Id));
     }
 }

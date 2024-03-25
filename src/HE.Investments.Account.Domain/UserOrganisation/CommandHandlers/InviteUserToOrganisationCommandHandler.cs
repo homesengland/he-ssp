@@ -3,7 +3,6 @@ using HE.Investments.Account.Domain.UserOrganisation.Entities;
 using HE.Investments.Account.Domain.UserOrganisation.Repositories;
 using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.User.ValueObjects;
-using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
 using MediatR;
 
@@ -43,9 +42,9 @@ public class InviteUserToOrganisationCommandHandler : IRequestHandler<InviteUser
         var operationResult = OperationResult.New();
         var firstName = operationResult.Aggregate(() => new FirstName(request.FirstName));
         var lastName = operationResult.Aggregate(() => new LastName(request.LastName));
-        var email = operationResult.Aggregate(() => new EmailAddress(request.Email));
+        var email = operationResult.Aggregate(() => new EmailAddress(request.EmailAddress));
         var jobTitle = operationResult.Aggregate(() => new JobTitle(request.JobTitle));
-        var invitation = operationResult.Aggregate(() => new UserInvitationEntity(firstName, lastName, email, jobTitle, request.NewRole));
+        var invitation = operationResult.Aggregate(() => new UserInvitationEntity(firstName, lastName, email, jobTitle, request.Role));
 
         return new OperationResult<UserInvitationEntity?>(operationResult.Errors, invitation);
     }

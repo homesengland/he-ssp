@@ -23,7 +23,7 @@ public class EnvironmentalImpactTests : AhpViewTestBase
             .HasHint("You can enter up to 1500 characters")
             .HasTextAreaInput(nameof(SiteModel.EnvironmentalImpact))
             .HasSaveAndContinueButton()
-            .HasBackLink(false);
+            .HasBackLink(out _, false);
     }
 
     [Fact]
@@ -46,7 +46,7 @@ public class EnvironmentalImpactTests : AhpViewTestBase
             .HasHint("You can enter up to 1500 characters")
             .HasTextAreaInput(nameof(SiteModel.EnvironmentalImpact))
             .HasSaveAndContinueButton()
-            .HasBackLink(false)
+            .HasBackLink(out _, false)
             .HasOneValidationMessages(errorMessage);
     }
 }

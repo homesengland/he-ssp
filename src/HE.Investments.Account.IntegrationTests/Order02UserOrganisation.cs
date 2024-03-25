@@ -1,10 +1,12 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Web;
 using FluentAssertions;
+using HE.Investments.Account.IntegrationTests.Data;
 using HE.Investments.Account.IntegrationTests.Extensions;
 using HE.Investments.Account.IntegrationTests.Framework;
 using HE.Investments.Account.IntegrationTests.Pages;
 using HE.Investments.Account.WWW;
+using HE.Investments.Account.WWW.Views.User;
 using HE.Investments.Account.WWW.Views.UserOrganisation;
 using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.TestsUtils.Extensions;
@@ -33,14 +35,127 @@ public class Order02UserOrganisation : AccountIntegrationTest
         // then
         dashboardPage
             .UrlEndWith(MainPagesUrl.Dashboard)
+            .HasMatchingTitle(".+'s Homes England account$")
             .HasActionLink(MainPagesUrl.UserOrganisationDetails, out _)
-            .HasActionLink(MainPagesUrl.ManageUsers, out _);
+            .HasActionLink(MainPagesUrl.ManageUsers, out _)
+            .HasActionLink(MainPagesUrl.ProfileDetails, out _);
         SaveCurrentPage();
     }
 
     [SkippableFact(typeof(SkipException), Skip = AccountConfig.SkipTest)]
     [Order(2)]
-    public async Task Order02_ShouldNavigateToOrganisationDetails()
+    public async Task Order02_ShouldOpenProfileDetails()
+    {
+        // given
+        var currentPage = await GetCurrentPage(MainPagesUrl.Dashboard);
+        currentPage
+            .UrlEndWith(MainPagesUrl.Dashboard)
+            .HasActionLink(MainPagesUrl.ProfileDetails, out var profileDetailsLink);
+
+        // when
+        var nextPage = await TestClient.NavigateTo(profileDetailsLink);
+
+        // then
+        nextPage.UrlWithoutQueryEndsWith(MainPagesUrl.ProfileDetails)
+            .HasTitle(UserPageTitles.ProfileDetails);
+        SaveCurrentPage();
+    }
+
+    [SkippableFact(typeof(SkipException), Skip = AccountConfig.SkipTest)]
+    [Order(3)]
+    public async Task Order03_ShouldChangeTelephoneNumber()
+    {
+        // given
+        var currentPage = await GetCurrentPage(MainPagesUrl.ProfileDetails);
+        currentPage.UrlWithoutQueryEndsWith(MainPagesUrl.ProfileDetails)
+            .HasTitle(UserPageTitles.ProfileDetails)
+            .HasSaveAndContinueButton(out var submitButton);
+
+        // when
+        var nextPage = await TestClient.SubmitButton(
+            submitButton,
+            ("TelephoneNumber", TelephoneNumberGenerator.GenerateWithCountryCode()),
+            ("SecondaryTelephoneNumber", TelephoneNumberGenerator.GenerateWithoutCountryCode()));
+
+        // then
+        nextPage.UrlEndWith(MainPagesUrl.Dashboard);
+        SaveCurrentPage();
+    }
+
+    [SkippableFact(typeof(SkipException), Skip = AccountConfig.SkipTest)]
+    [Order(4)]
+    public async Task Order04_ShouldOpenManageUsers()
+    {
+        // given
+        var currentPage = await GetCurrentPage(MainPagesUrl.Dashboard);
+        currentPage
+            .UrlEndWith(MainPagesUrl.Dashboard)
+            .HasActionLink(MainPagesUrl.ManageUsers, out var manageUsersLink);
+
+        // when
+        var nextPage = await TestClient.NavigateTo(manageUsersLink);
+
+        // then
+        nextPage
+            .UrlEndWith(MainPagesUrl.ManageUsers)
+            .HasMatchingTitle("^Manage users at .+")
+            .HasBackLink(out _)
+            .HasManageUserRow(LoginData.Email, out _);
+        SaveCurrentPage();
+    }
+
+    [SkippableFact(typeof(SkipException), Skip = AccountConfig.SkipTest)]
+    [Order(5)]
+    public async Task Order05_ShouldOpenManageUser()
+    {
+        // given
+        var currentPage = await GetCurrentPage(MainPagesUrl.ManageUsers);
+        currentPage
+            .UrlEndWith(MainPagesUrl.ManageUsers)
+            .HasManageUserRow(LoginData.Email, out var manageMyUserRow);
+        var manageMyUserLink = manageMyUserRow.GetManageUserLink();
+
+        // when
+        var nextPage = await TestClient.NavigateTo(manageMyUserLink);
+
+        // then
+        nextPage
+            .UrlEndWith(MainPagesUrl.ManageUser(LoginData.UserGlobalId))
+            .HasMatchingTitle("^Manage .+'s role")
+            .HasBackLink(out _)
+            .HasRadio("Role", value: "Admin")
+            .HasSaveAndContinueButton();
+        SaveCurrentPage();
+    }
+
+    [SkippableFact(typeof(SkipException), Skip = AccountConfig.SkipTest)]
+    [Order(6)]
+    public async Task Order06_ShouldNavigateBackwardsToDashboard()
+    {
+        // given
+        var currentPage = await GetCurrentPage(MainPagesUrl.ManageUser(LoginData.UserGlobalId));
+        currentPage.HasBackLink(out var backLink);
+
+        // when
+        var nextPage = await TestClient.NavigateTo(backLink);
+
+        // then
+        nextPage
+            .UrlEndWith(MainPagesUrl.ManageUsers)
+            .HasBackLink(out backLink);
+
+        // when
+        nextPage = await TestClient.NavigateTo(backLink);
+
+        // then
+        nextPage
+            .UrlEndWith(MainPagesUrl.Dashboard)
+;
+    }
+
+    [SkippableFact(typeof(SkipException), Skip = AccountConfig.SkipTest)]
+    [Order(7)]
+    public async Task Order07_ShouldNavigateToOrganisationDetails()
     {
         // given
         var dashboardPage = await GetCurrentPage(MainPagesUrl.Dashboard);
@@ -66,8 +181,8 @@ public class Order02UserOrganisation : AccountIntegrationTest
     }
 
     [SkippableFact(typeof(SkipException), Skip = AccountConfig.SkipTest)]
-    [Order(3)]
-    public async Task Order03_ShouldNavigateToRequestToChangeOrganisationDetails()
+    [Order(8)]
+    public async Task Order08_ShouldNavigateToRequestToChangeOrganisationDetails()
     {
         // given
         var organisationDetailsPage = await GetCurrentPage(MainPagesUrl.UserOrganisationDetails);
@@ -88,8 +203,8 @@ public class Order02UserOrganisation : AccountIntegrationTest
     }
 
     [SkippableFact(typeof(SkipException), Skip = AccountConfig.SkipTest)]
-    [Order(4)]
-    public async Task Order04_ShouldDisplayValidationError_WhenInputsAreInvalid()
+    [Order(9)]
+    public async Task Order09_ShouldDisplayValidationError_WhenInputsAreInvalid()
     {
         // given
         var tooLongShortString = new string(Enumerable.Repeat('a', 120).ToArray());
@@ -97,7 +212,7 @@ public class Order02UserOrganisation : AccountIntegrationTest
         currentPage
             .UrlWithoutQueryEndsWith(MainPagesUrl.ChangeOrganisationDetails)
             .HasTitle(UserOrganisationPageTitles.ChangeOrganisationDetails)
-            .HasBackLink()
+            .HasBackLink(out _)
             .HasSubmitButton(out var sendRequestButton, "Send request");
 
         // when

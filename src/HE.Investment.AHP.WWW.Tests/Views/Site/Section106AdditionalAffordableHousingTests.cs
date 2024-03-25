@@ -23,7 +23,7 @@ public class Section106AdditionalAffordableHousingTests : AhpViewTestBase
             .HasPageHeader(_siteName, @SitePageTitles.SiteSection106AdditionalAffordableHousing)
             .HasGdsRadioInputWithValues(nameof(Section106Dto.AdditionalAffordableHousing), "True", "False")
             .HasSaveAndContinueButton()
-            .HasBackLink(false);
+            .HasBackLink(out _, false);
     }
 
     [Fact]
@@ -44,7 +44,7 @@ public class Section106AdditionalAffordableHousingTests : AhpViewTestBase
             .HasPageHeader(_siteName, @SitePageTitles.SiteSection106AdditionalAffordableHousing)
             .HasGdsRadioInputWithValues(nameof(Section106Dto.AdditionalAffordableHousing), "True", "False")
             .HasSaveAndContinueButton()
-            .HasBackLink(false)
+            .HasBackLink(out _, false)
             .HasOneValidationMessages(errorMessage);
     }
 }

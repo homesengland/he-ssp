@@ -19,7 +19,7 @@ public class NameTests : AhpViewTestBase
             .HasTitle(SitePageTitles.SiteName)
             .HasInput(nameof(SiteModel.Name))
             .HasSaveAndContinueButton()
-            .HasBackLink(false);
+            .HasBackLink(out _, false);
     }
 
     [Fact]
@@ -38,7 +38,7 @@ public class NameTests : AhpViewTestBase
             .HasTitle(SitePageTitles.SiteName)
             .HasInput(nameof(SiteModel.Name))
             .HasSaveAndContinueButton()
-            .HasBackLink(false)
+            .HasBackLink(out _, false)
             .HasOneValidationMessages(errorMessage);
     }
 }

@@ -21,6 +21,7 @@ namespace DataverseModel
 		{
 			public const string invln_frontdoorprojectname = "invln_frontdoorprojectname";
 			public const string invln_organisationid = "invln_organisationid";
+			public const string invln_usehetables = "invln_usehetables";
 		}
 		
 		public const string ActionLogicalName = "invln_checkiffrontdoorprojectwithgivennameexists";
@@ -60,6 +61,25 @@ namespace DataverseModel
 			set
 			{
 				this.Parameters["invln_organisationid"] = value;
+			}
+		}
+		
+		public string invln_usehetables
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_usehetables"))
+				{
+					return ((string)(this.Parameters["invln_usehetables"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_usehetables"] = value;
 			}
 		}
 		

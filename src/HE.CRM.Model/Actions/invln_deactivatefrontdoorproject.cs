@@ -19,10 +19,30 @@ namespace DataverseModel
 		
 		public static class Fields
 		{
+			public const string invln_usehetables = "invln_usehetables";
 			public const string invln_frontdoorprojectid = "invln_frontdoorprojectid";
 		}
 		
 		public const string ActionLogicalName = "invln_deactivatefrontdoorproject";
+		
+		public string invln_usehetables
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_usehetables"))
+				{
+					return ((string)(this.Parameters["invln_usehetables"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_usehetables"] = value;
+			}
+		}
 		
 		public string invln_frontdoorprojectid
 		{

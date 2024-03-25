@@ -10,7 +10,9 @@ using HE.Investments.Loans.BusinessLogic.CompanyStructure;
 using HE.Investments.Loans.BusinessLogic.CompanyStructure.Repositories;
 using HE.Investments.Loans.BusinessLogic.Files;
 using HE.Investments.Loans.BusinessLogic.Funding.Repositories;
+using HE.Investments.Loans.BusinessLogic.LoanApplication;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories;
+using HE.Investments.Loans.BusinessLogic.LoanApplication.ValueObjects;
 using HE.Investments.Loans.BusinessLogic.PrefillData.Crm;
 using HE.Investments.Loans.BusinessLogic.PrefillData.Repositories;
 using HE.Investments.Loans.BusinessLogic.Projects.Repositories;
@@ -30,19 +32,25 @@ public static class BusinessLogicModule
         services.AddFrontDoorSharedModule();
         services.AddTransient(typeof(IRequestExceptionHandler<,,>), typeof(DomainValidationHandler<,,>));
         services.AddFluentValidationAutoValidation();
-        services.AddValidatorsFromAssemblyContaining<LoanApplicationRepository>();
-        services.AddScoped<ILoanApplicationRepository, LoanApplicationRepository>();
-        services.AddScoped<ICanSubmitLoanApplication, LoanApplicationRepository>();
-        services.AddScoped<IApplicationProjectsRepository, ApplicationProjectsRepository>();
         services.AddScoped<ILocalAuthorityRepository, LocalAuthorityRepository>();
+        services.AddScoped<IApplicationProjectsRepository, ApplicationProjectsRepository>();
         services.AddScoped<IDateTimeProvider, DateTimeProvider>();
-        services.AddSingleton<ILoansDocumentSettings, LoansDocumentSettings>();
-        services.AddScoped<IFileApplicationRepository, FileApplicationRepository>();
+        services.AddSingleton<ILoanAppConfig, LoanAppConfig>();
 
+        services.AddFilesSupport();
+        services.AddLoanApplicationRepositories();
         services.AddSecuritySubmodule();
         services.AddCompanyStructureSubmodule();
         services.AddFundingSubmodule();
         services.AddPrefillDataSubmodule();
+    }
+
+    private static void AddLoanApplicationRepositories(this IServiceCollection services)
+    {
+        services.AddValidatorsFromAssemblyContaining<LoanApplicationRepository>();
+        services.AddScoped<ILoanApplicationRepository, LoanApplicationRepository>();
+        services.AddScoped<ICanSubmitLoanApplication, LoanApplicationRepository>();
+        services.AddScoped<IChangeApplicationStatus, LoanApplicationRepository>();
     }
 
     private static void AddSecuritySubmodule(this IServiceCollection services)
@@ -56,6 +64,15 @@ public static class BusinessLogicModule
         services.AddScoped<ILoansFileLocationProvider<LoanApplicationId>>(x => x.GetRequiredService<ICompanyStructureRepository>());
         services.AddScoped<ILoansFileService<LoanApplicationId>, LoansFileService<LoanApplicationId>>();
         services.AddSingleton<ICompanyStructureFileFactory, CompanyStructureFileFactory>();
+    }
+
+    private static void AddFilesSupport(this IServiceCollection services)
+    {
+        services.AddSingleton<ILoansDocumentSettings, LoansDocumentSettings>();
+        services.AddScoped<ILoansFileLocationProvider<SupportingDocumentsParams>>(x => x.GetRequiredService<ILoanApplicationRepository>());
+        services.AddScoped<ILoansFileService<SupportingDocumentsParams>, LoansFileService<SupportingDocumentsParams>>();
+        services.AddSingleton<ISupportingDocumentsFileFactory, SupportingDocumentsFileFactory>();
+        services.AddScoped<IFileApplicationRepository, FileApplicationRepository>();
     }
 
     private static void AddFundingSubmodule(this IServiceCollection services)

@@ -18,14 +18,14 @@ public class UserInvitationEntity
         if (role is null or UserRole.Undefined)
         {
             OperationResult.New()
-                .AddValidationError(nameof(role), ValidationErrorMessage.MissingRequiredField(nameof(role)))
+                .AddValidationError("Role", ValidationErrorMessage.MustBeSelected(nameof(role)))
                 .CheckErrors();
         }
 
         if (role!.IsNotIn(UserRole.Enhanced, UserRole.Input, UserRole.ViewOnly))
         {
             OperationResult.New()
-                .AddValidationError(nameof(role), $"Role {role} is not allowed for invitations.")
+                .AddValidationError("Role", $"Role {role} is not allowed for invitations.")
                 .CheckErrors();
         }
 

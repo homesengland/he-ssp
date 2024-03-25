@@ -28,6 +28,6 @@ public class LocalAuthorityResultTests : AhpViewTestBase
             .HasTitle(SitePageTitles.LocalAuthorityResult)
             .HasPageHeader(viewBag["SiteName"].ToString(), SitePageTitles.LocalAuthorityResult)
             .HasSelectListItem("Liverpool", null)
-            .HasBackLink(false);
+            .HasBackLink(out _, false);
     }
 }

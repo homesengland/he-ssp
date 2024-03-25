@@ -14,6 +14,7 @@ namespace HE.CRM.Plugins.Handlers.CustomApi
         private string accountId => ExecutionData.GetInputParameter<string>(invln_sendinvestmentloansdatatocrmRequest.Fields.invln_accountid);
         private string loanApplicationId => ExecutionData.GetInputParameter<string>(invln_sendinvestmentloansdatatocrmRequest.Fields.invln_loanapplicationid);
         private string requestStringMessage => ExecutionData.GetInputParameter<string>(invln_sendinvestmentloansdatatocrmRequest.Fields.invln_entityfieldsparameters);
+        private string useHeTablesFromPortal => ExecutionData.GetInputParameter<string>(invln_sendinvestmentloansdatatocrmRequest.Fields.invln_usehetables);
 
         #endregion
 
@@ -25,7 +26,9 @@ namespace HE.CRM.Plugins.Handlers.CustomApi
 
         public override void DoWork()
         {
-            var appId = CrmServicesFactory.Get<ILoanApplicationService>().CreateRecordFromPortal(contactExternalId, accountId, loanApplicationId, requestStringMessage);
+            this.TracingService.Trace("SendInvestmentsLoanDataToCrmHandler");
+            var useHeTables = !string.IsNullOrEmpty(useHeTablesFromPortal);
+            var appId = CrmServicesFactory.Get<ILoanApplicationService>().CreateRecordFromPortal(useHeTables,contactExternalId, accountId, loanApplicationId, requestStringMessage);
             ExecutionData.SetOutputParameter(invln_sendinvestmentloansdatatocrmResponse.Fields.invln_loanapplicationid, appId);
         }
 

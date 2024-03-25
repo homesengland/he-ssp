@@ -14,6 +14,7 @@ namespace HE.CRM.Plugins.Handlers.CustomApi.FrontDoor
         private string frontDoorProjectId => ExecutionData.GetInputParameter<string>(invln_getsinglefrontdoorprojectRequest.Fields.invln_frontdoorprojectid);
         private string fieldsToRetrieve => ExecutionData.GetInputParameter<string>(invln_getsinglefrontdoorprojectRequest.Fields.invln_fieldstoretrieve);
         private string includeInactive => ExecutionData.GetInputParameter<string>(invln_getsinglefrontdoorprojectRequest.Fields.invln_includeinactive);
+        private string useHeTablesFromPortal => ExecutionData.GetInputParameter<string>(invln_getsinglefrontdoorprojectRequest.Fields.invln_usehetables);
 
         #endregion
 
@@ -26,7 +27,8 @@ namespace HE.CRM.Plugins.Handlers.CustomApi.FrontDoor
         public override void DoWork()
         {
             this.TracingService.Trace("GetSingleFrontDoorProjectForAccountAndContact");
-            var frontDoorProjectsDtoList = CrmServicesFactory.Get<IFrontDoorProjectService>().GetFrontDoorProjects(organisationId, externalContactId, fieldsToRetrieve, frontDoorProjectId, includeInactive);
+            var useHeTables = !string.IsNullOrEmpty(useHeTablesFromPortal);
+            var frontDoorProjectsDtoList = CrmServicesFactory.Get<IFrontDoorProjectService>().GetFrontDoorProjects(organisationId, useHeTables, externalContactId, fieldsToRetrieve, frontDoorProjectId, includeInactive);
             this.TracingService.Trace("Send Response");
             if (frontDoorProjectsDtoList != null)
             {

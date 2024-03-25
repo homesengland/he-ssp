@@ -71,7 +71,6 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public string frontDoorProjectName { get; set; }
 
 
-
         //TO DELETE IN SOME TIME???
         public string loanApplicationId { get; set; }
 

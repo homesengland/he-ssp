@@ -1,4 +1,4 @@
-@model (string title, string fieldName, string allowedExtensions, int? maxFileSizeInMb, string description, string multiple, bool isHidden, bool hasFileError, string fileErrorMessage, string uploadOneFileUrl, string removeFileUrlTemplate, string downloadFileUrlTemplate)
+@model (string title, string fieldName, string allowedExtensions, string customHeader, int? maxFileSizeInMb, string description, string multiple, bool isHidden, bool hasFileError, string fileErrorMessage, string uploadOneFileUrl, string removeFileUrlTemplate, string downloadFileUrlTemplate)
 
 @if (!string.IsNullOrWhiteSpace(Model.title))
 {
@@ -29,15 +29,25 @@
 
     @if (!Model.isHidden)
     {
-        <label class="govuk-label" for="@Model.fieldName">
-            <span>Upload a file (@Model.allowedExtensions)</span>
-            @if (Model.maxFileSizeInMb.HasValue)
-            {
-                <br/>
-                <span>Maximum file size @Model.maxFileSizeInMb MB</span>
-                @Html.Hidden("MaxFileSizeInMegabytes", Model.maxFileSizeInMb)
-            }
-        </label>
+        @if (!string.IsNullOrWhiteSpace(Model.customHeader))
+        {
+            <label class="govuk-label" for="@Model.fieldName">
+                <span>@Model.customHeader</span>
+            </label>
+        }
+        else
+        {
+            <label class="govuk-label" for="@Model.fieldName">
+                <span>Upload a file (@Model.allowedExtensions)</span>
+                @if (Model.maxFileSizeInMb.HasValue)
+                {
+                    <br/>
+                    <span>Maximum file size @Model.maxFileSizeInMb MB</span>
+                    @Html.Hidden("MaxFileSizeInMegabytes", Model.maxFileSizeInMb)
+                }
+            </label>
+        }
+
         @if (Model.hasFileError)
         {
             <span id="File-error"

@@ -68,4 +68,9 @@ public class ProjectSitesEntity
             await removeSiteRepository.Remove(site.Id, userAccount, cancellationToken);
         }
     }
+
+    public bool AreSitesValidForLoanApplication()
+    {
+        return Sites.Count == 1 && Sites.All(site => site.IsSiteValidForLoanApplication());
+    }
 }

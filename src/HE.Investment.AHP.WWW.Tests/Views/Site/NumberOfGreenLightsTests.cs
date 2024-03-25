@@ -23,7 +23,7 @@ public class NumberOfGreenLightsTests : AhpViewTestBase
             .HasHint("The score is out of 12. You can also include the wider site in this score.")
             .HasInput(nameof(SiteModel.NumberOfGreenLights))
             .HasSaveAndContinueButton()
-            .HasBackLink(false);
+            .HasBackLink(out _, false);
     }
 
     [Fact]
@@ -46,7 +46,7 @@ public class NumberOfGreenLightsTests : AhpViewTestBase
             .HasHint("The score is out of 12. You can also include the wider site in this score.")
             .HasInput(nameof(SiteModel.NumberOfGreenLights))
             .HasSaveAndContinueButton()
-            .HasBackLink(false)
+            .HasBackLink(out _, false)
             .HasOneValidationMessages(errorMessage);
     }
 }

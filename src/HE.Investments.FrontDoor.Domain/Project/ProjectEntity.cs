@@ -5,12 +5,16 @@ using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Errors;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Common.Utils;
+using HE.Investments.FrontDoor.Common.Extensions;
 using HE.Investments.FrontDoor.Contract.Project.Events;
 using HE.Investments.FrontDoor.Domain.Project.Repository;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
 using HE.Investments.FrontDoor.Shared.Project;
-using Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects;
+using HE.Investments.FrontDoor.Shared.Project.Contract;
+using AffordableHomesAmountType = HE.Investments.FrontDoor.Shared.Project.Contract.AffordableHomesAmount;
 using ProjectGeographicFocus = HE.Investments.FrontDoor.Domain.Project.ValueObjects.ProjectGeographicFocus;
+using ProjectLocalAuthority = Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
 
 namespace HE.Investments.FrontDoor.Domain.Project;
 
@@ -35,7 +39,7 @@ public class ProjectEntity : DomainEntity
         RequiredFunding? requiredFunding = null,
         IsProfit? isProfit = null,
         ExpectedStartDate? expectedStartDate = null,
-        LocalAuthorityId? localAuthorityId = null)
+        ProjectLocalAuthority? localAuthority = null)
     {
         Id = id;
         Name = name;
@@ -53,7 +57,7 @@ public class ProjectEntity : DomainEntity
         RequiredFunding = requiredFunding ?? RequiredFunding.Empty;
         IsProfit = isProfit ?? IsProfit.Empty;
         ExpectedStartDate = expectedStartDate ?? ExpectedStartDate.Empty;
-        LocalAuthorityId = localAuthorityId;
+        LocalAuthority = localAuthority;
     }
 
     public FrontDoorProjectId Id { get; private set; }
@@ -88,7 +92,7 @@ public class ProjectEntity : DomainEntity
 
     public ExpectedStartDate ExpectedStartDate { get; private set; }
 
-    public LocalAuthorityId? LocalAuthorityId { get; private set; }
+    public ProjectLocalAuthority? LocalAuthority { get; private set; }
 
     public bool IsModified => _modificationTracker.IsModified || Id.IsNew;
 
@@ -124,7 +128,7 @@ public class ProjectEntity : DomainEntity
 
     public void ProvideGeographicFocus(ProjectGeographicFocus geographicFocus)
     {
-        GeographicFocus = _modificationTracker.Change(GeographicFocus, geographicFocus);
+        GeographicFocus = _modificationTracker.Change(GeographicFocus, geographicFocus, ResetGeographicFocusDependentQuestions);
     }
 
     public void SetId(FrontDoorProjectId newId)
@@ -203,9 +207,26 @@ public class ProjectEntity : DomainEntity
         ExpectedStartDate = _modificationTracker.Change(ExpectedStartDate, expectedStartDate);
     }
 
-    public void ProvideLocalAuthority(LocalAuthorityId localAuthorityId)
+    public void ProvideLocalAuthority(ProjectLocalAuthority localAuthority)
     {
-        LocalAuthorityId = _modificationTracker.Change(LocalAuthorityId, localAuthorityId);
+        LocalAuthority = _modificationTracker.Change(LocalAuthority, localAuthority);
+    }
+
+    public bool IsProjectValidForLoanApplication()
+    {
+        return SupportActivities.Values.Count == 1
+               && SupportActivities.Values.Contains(SupportActivityType.DevelopingHomes)
+               && AffordableHomesAmount.AffordableHomesAmount is AffordableHomesAmountType.OnlyAffordableHomes
+                   or AffordableHomesAmountType.OpenMarkedAndRequiredAffordableHomes
+               && OrganisationHomesBuilt?.Value >= 2001
+               && IsSiteIdentified?.Value == true
+               && IsSupportRequired?.Value == true
+               && IsFundingRequired?.Value == true
+               && RequiredFunding.Value is RequiredFundingOption.Between250KAnd1Mln
+                   or RequiredFundingOption.Between1MlnAnd5Mln
+                   or RequiredFundingOption.Between5MlnAnd10Mln
+               && IsProfit.Value == true
+               && DateTimeUtil.IsDateWithinXYearsFromNow(ExpectedStartDate.Value.ToDateTime(), 2);
     }
 
     private static async Task<ProjectName> ValidateProjectNameUniqueness(
@@ -245,9 +266,14 @@ public class ProjectEntity : DomainEntity
     private void ResetNonSiteQuestions()
     {
         GeographicFocus = ProjectGeographicFocus.Empty();
-        LocalAuthorityId = null;
-        Regions = Regions.Empty();
         HomesNumber = null;
+        ResetGeographicFocusDependentQuestions();
+    }
+
+    private void ResetGeographicFocusDependentQuestions()
+    {
+        LocalAuthority = null;
+        Regions = Regions.Empty();
     }
 
     private void SupportActivityTypesHaveChanged(SupportActivities newSupportActivityTypes)

@@ -9,6 +9,7 @@ namespace HE.CRM.Plugins.Handlers.CustomApi.FrontDoor
         #region Fields
         private string frontDoorProjectName => ExecutionData.GetInputParameter<string>(invln_checkiffrontdoorprojectwithgivennameexistsRequest.Fields.invln_frontdoorprojectname);
         private string organisationId => ExecutionData.GetInputParameter<string>(invln_checkiffrontdoorprojectwithgivennameexistsRequest.Fields.invln_organisationid);
+        private string useHeTablesFromPortal => ExecutionData.GetInputParameter<string>(invln_getsinglefrontdoorprojectRequest.Fields.invln_usehetables);
 
         #endregion
 
@@ -21,7 +22,8 @@ namespace HE.CRM.Plugins.Handlers.CustomApi.FrontDoor
         public override void DoWork()
         {
             this.TracingService.Trace("CheckIfFrontDoorProjectWithGivenNameExistsHandler");
-            var frontDoorProjectExists = CrmServicesFactory.Get<IFrontDoorProjectService>().CheckIfFrontDoorProjectWithGivenNameExists(frontDoorProjectName, organisationId);
+            var useHeTables = !string.IsNullOrEmpty(useHeTablesFromPortal);
+            var frontDoorProjectExists = CrmServicesFactory.Get<IFrontDoorProjectService>().CheckIfFrontDoorProjectWithGivenNameExists(frontDoorProjectName, useHeTables, organisationId);
             this.TracingService.Trace("Send Response");
             if (frontDoorProjectExists != null)
             {

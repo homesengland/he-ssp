@@ -24,7 +24,7 @@ public class LocalAuthorityConfirmTests : AhpViewTestBase
             .HasBoldText("Liverpool")
             .HasHeader2("Is this the correct local authority?")
             .HasRadio("Response", new[] { "Yes", "No" })
-            .HasBackLink(false);
+            .HasBackLink(out _, false);
     }
 
     [Fact]
@@ -47,7 +47,7 @@ public class LocalAuthorityConfirmTests : AhpViewTestBase
             .HasBoldText("Liverpool")
             .HasHeader2("Is this the correct local authority?")
             .HasRadio("Response", new[] { "Yes", "No" })
-            .HasBackLink(false)
+            .HasBackLink(out _, false)
             .HasOneValidationMessages(errorMessage);
     }
 

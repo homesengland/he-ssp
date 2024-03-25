@@ -38,12 +38,15 @@
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\FrontDoorProjectSiteRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\GovNotifyEmailRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\GlobalRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\HeLocalAuthorityRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\HeProjectRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\implementations\HomesInDeliveryPhaseRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\HomeTypeRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\IspRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\LocalAuthorityRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\MilestoneFrameworkItemRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\ProgrammeRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\HeProjectLocalAuthorityRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\ProjectSpecificConditionRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\ReviewApprovalRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\SharepointDocumentLocationRepository.cs" />
@@ -72,6 +75,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IFrontDoorProjectSiteRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IGovNotifyEmailRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IGlobalRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IHeLocalAuthorityRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IHeProjectRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IHomesInDeliveryPhaseRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IHomeTypeRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IIspRepository.cs" />
@@ -82,6 +87,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\INotificationSettingRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IPortalPermissionRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IProgrammeRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IHeProjectLocalAuthorityRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IProjectSpecificConditionsRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IReviewApprovalRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\ISharepointDocumentLocationRepository.cs" />

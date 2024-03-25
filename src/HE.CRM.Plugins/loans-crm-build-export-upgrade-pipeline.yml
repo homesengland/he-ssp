@@ -6,6 +6,12 @@ pr: none
 pool: 
   vmImage: windows-latest
 
+parameters:
+- name: UseUpgrade
+  displayName: Use Upgrade
+  type: boolean
+  default: true
+
 variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'

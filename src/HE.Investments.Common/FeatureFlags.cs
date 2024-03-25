@@ -6,9 +6,7 @@ public static class FeatureFlags
 
     public const string AccountApiAccess = nameof(AccountApiAccess);
 
-    public const string UseLocalProjectsDashboard = nameof(UseLocalProjectsDashboard);
-
-    public const string UseLocalLoansStartApplication = nameof(UseLocalLoansStartApplication);
-
     public const string DisplayPostMvpLoans = nameof(DisplayPostMvpLoans);
+
+    public const string StayInCurrentApplication = nameof(StayInCurrentApplication);
 }

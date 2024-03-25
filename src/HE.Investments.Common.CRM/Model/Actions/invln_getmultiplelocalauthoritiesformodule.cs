@@ -21,6 +21,7 @@ namespace HE.Investments.Common.CRM.Model
 		{
 			public const string invln_pagingrequest = "invln_pagingrequest";
 			public const string invln_searchphrase = "invln_searchphrase";
+			public const string invln_usehetables = "invln_usehetables";
 			public const string invln_isloan = "invln_isloan";
 			public const string invln_isahp = "invln_isahp";
 			public const string invln_isloanfd = "invln_isloanfd";
@@ -63,6 +64,25 @@ namespace HE.Investments.Common.CRM.Model
 			set
 			{
 				this.Parameters["invln_searchphrase"] = value;
+			}
+		}
+		
+		public string invln_usehetables
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_usehetables"))
+				{
+					return ((string)(this.Parameters["invln_usehetables"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_usehetables"] = value;
 			}
 		}
 		

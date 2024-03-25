@@ -1,10 +1,14 @@
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Contract.Pagination;
+using HE.Investments.Common.Contract.Validators;
+using HE.Investments.Common.Messages;
+using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.FrontDoor.Contract.LocalAuthority;
 using HE.Investments.FrontDoor.Contract.LocalAuthority.Queries;
 using HE.Investments.FrontDoor.Contract.Project.Queries;
 using HE.Investments.FrontDoor.Shared.Project;
+using HE.Investments.FrontDoor.WWW.Extensions;
 using HE.Investments.FrontDoor.WWW.Models;
 using HE.Investments.FrontDoor.WWW.Workflows;
 using MediatR;
@@ -49,9 +53,17 @@ public class LocalAuthorityController : WorkflowController<LocalAuthorityWorkflo
 
     [HttpPost("search")]
     [WorkflowState(LocalAuthorityWorkflowState.Search)]
-    public async Task<IActionResult> Search([FromForm] string projectId, [FromForm] string? siteId, [FromForm] string phrase)
+    public async Task<IActionResult> Search([FromForm] string projectId, [FromForm] string? siteId, [FromForm] string phrase, [FromQuery] string? redirect)
     {
-        return await Continue(new { projectId, siteId, phrase });
+        var optional = this.GetOptionalParameterFromRoute();
+        if (string.IsNullOrEmpty(phrase))
+        {
+            ModelState.Clear();
+            ModelState.AddModelError(nameof(LocalAuthoritySearchViewModel.Phrase), ValidationErrorMessage.MustProvideRequiredField("local authority"));
+            return View(nameof(Search), new LocalAuthoritySearchViewModel(phrase, projectId, siteId));
+        }
+
+        return await Continue(new { projectId, siteId, phrase, redirect, optional });
     }
 
     [HttpGet("search-result")]

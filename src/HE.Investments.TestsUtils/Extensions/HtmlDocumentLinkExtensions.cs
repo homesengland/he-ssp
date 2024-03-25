@@ -6,16 +6,18 @@ namespace HE.Investments.TestsUtils.Extensions;
 
 public static class HtmlDocumentLinkExtensions
 {
-    public static IHtmlDocument HasBackLink(this IHtmlDocument htmlDocument, bool validateLink = true)
+    public static IHtmlDocument HasBackLink(this IHtmlDocument htmlDocument, out IHtmlAnchorElement backLink, bool validateLink = true)
     {
         var backButton = htmlDocument.GetElementsByClassName("govuk-back-link").SingleOrDefault();
-        backButton.Should().NotBeNull();
+        backButton.Should().NotBeNull().And.BeAssignableTo<IHtmlAnchorElement>();
         if (validateLink)
         {
             backButton!.IsLink().Should().BeTrue();
         }
 
         backButton!.Text().Trim().Should().Be("Back");
+        backLink = (backButton as IHtmlAnchorElement)!;
+
         return htmlDocument;
     }
 

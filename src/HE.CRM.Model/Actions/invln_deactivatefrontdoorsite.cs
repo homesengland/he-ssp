@@ -20,6 +20,7 @@ namespace DataverseModel
 		public static class Fields
 		{
 			public const string invln_frontdoorsiteid = "invln_frontdoorsiteid";
+			public const string invln_usehetables = "invln_usehetables";
 		}
 		
 		public const string ActionLogicalName = "invln_deactivatefrontdoorsite";
@@ -40,6 +41,25 @@ namespace DataverseModel
 			set
 			{
 				this.Parameters["invln_frontdoorsiteid"] = value;
+			}
+		}
+		
+		public string invln_usehetables
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_usehetables"))
+				{
+					return ((string)(this.Parameters["invln_usehetables"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_usehetables"] = value;
 			}
 		}
 		

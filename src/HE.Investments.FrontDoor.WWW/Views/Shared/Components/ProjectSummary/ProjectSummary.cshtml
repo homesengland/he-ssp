@@ -2,6 +2,8 @@
 @using HE.Investments.FrontDoor.WWW.Extensions
 @using HE.Investments.Common.Contract.Constants
 @using HE.Investments.Common.Extensions
+@using HE.Investments.FrontDoor.Contract.Site
+@using HE.Investments.FrontDoor.WWW.Constants
 
 @model (IList<SectionSummaryViewModel> sections, bool isSiteIdentified, bool isReadOnly)
 @{
@@ -32,7 +34,7 @@
         @if (!Model.isReadOnly)
         {
             <div class="govuk-!-margin-bottom-9 govuk-!-font-size-19">
-                <gds-link href="@Url.Action("NewName", "Site", new { projectId })">
+                <gds-link href="@Url.Action("NewName", "Site", new { projectId, optional=OptionalParameter.AddSite })">
                     Add another site
                 </gds-link>
             </div>

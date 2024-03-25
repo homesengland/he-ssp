@@ -1,4 +1,3 @@
-using Dawn;
 using HE.Investments.Common.Domain;
 
 namespace HE.Investments.Loans.Contract.Application.ValueObjects;
@@ -7,7 +6,7 @@ public class LoanApplicationId : ValueObject
 {
     public LoanApplicationId(Guid value)
     {
-        Value = Guard.Argument(value, nameof(LoanApplicationId));
+        Value = value;
     }
 
     public Guid Value { get; }

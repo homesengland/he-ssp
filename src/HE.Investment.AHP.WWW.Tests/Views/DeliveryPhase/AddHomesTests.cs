@@ -34,6 +34,6 @@ public class AddHomesTests : AhpViewTestBase
             .HasInput("HomesToDeliver[ht-1]", "First Home Type", "5")
             .HasInput("HomesToDeliver[ht-2]", "Second Home Type")
             .HasSaveAndContinueButton()
-            .HasBackLink(false);
+            .HasBackLink(out _, false);
     }
 }
