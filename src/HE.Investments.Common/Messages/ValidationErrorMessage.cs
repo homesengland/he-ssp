@@ -28,10 +28,6 @@ public static class ValidationErrorMessage
 
     public const string InvalidStartDate = "Enter a valid date. The build start date must include a day, month and year";
 
-    public const string NoPurchaseDate = "Enter the date you purchased this site";
-
-    public const string IncorrectPurchaseDate = "The date you purchased this land must be a real date";
-
     public const string FuturePurchaseDate = "The date you purchased this land must be today or in the past";
 
     public const string EnterExistingLegal = "Enter any existing legal charges or debt secured on this land";

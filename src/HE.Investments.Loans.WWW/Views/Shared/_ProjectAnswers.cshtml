@@ -37,7 +37,7 @@
 
     if (Model?.Cost != null)
     {
-        var purchaseDate = DateHelper.ConvertToDateString(Model.PurchaseDay, Model.PurchaseMonth, Model.PurchaseYear);
+        var purchaseDate = DateHelper.DisplayAsUkFormatDate(Model.PurchaseDate);
         additionalProjectDetails.Add($"Purchased: {purchaseDate}");
         additionalProjectDetails.Add($"Purchase cost: {CurrencyHelper.DisplayPoundsPences(Model.Cost)}");
         additionalProjectDetails.Add($"Current value: {CurrencyHelper.DisplayPoundsPences(Model.Value)}");
