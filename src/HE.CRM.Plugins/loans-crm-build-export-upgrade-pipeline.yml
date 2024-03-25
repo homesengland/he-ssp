@@ -24,7 +24,7 @@ resources:
   - repository: he-invst-deployment
     type: git
     name: 'Investments Programme/he-invst-deployment'
-    ref: 'main'
+    ref: 'stg2-deploy'
 
 stages:
 - template: crm-deployment-pipelines/loans-crm-build-export.yml@he-invst-deployment
