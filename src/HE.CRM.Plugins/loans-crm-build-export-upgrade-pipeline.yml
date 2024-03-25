@@ -55,5 +55,8 @@ stages:
     buildAndUpdatePlugins: '${{ parameters.buildAndUpdatePlugins }}'
     buildAndUpdateWebResources: '${{ parameters.buildAndUpdateWebResources }}'
     deployEnvironmentVariables: '${{ parameters.deployEnvironmentVariables }}'
+    deployMainSolution: '${{ parameters.deployMainSolution }}'
+    deployFlowsSolution: '${{ parameters.deployFlowsSolution }}'
+    deployPluginsSolution: '${{ parameters.deployPluginsSolution }}'
 
 - template: crm-deployment-pipelines/loans-crm-deploy.yml@he-invst-deployment
