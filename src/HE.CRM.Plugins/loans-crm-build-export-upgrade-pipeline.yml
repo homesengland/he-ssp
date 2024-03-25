@@ -7,8 +7,16 @@ pool:
   vmImage: windows-latest
 
 parameters:
+- name: BuildAndUpdatePlugins
+  displayName: Update Plugins ?
+  type: boolean
+  default: true
+- name: BuildAndUpdateWebResources
+  displayName: Update Webresources ?
+  type: boolean
+  default: true
 - name: UseUpgrade
-  displayName: Upgrade ?
+  displayName: Upgrade Solutions?
   type: boolean
   default: true
 
