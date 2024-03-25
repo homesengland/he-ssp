@@ -19,6 +19,22 @@ parameters:
   displayName: Upgrade Solutions?
   type: boolean
   default: true
+- name: DeployEnvironmentVariables
+  displayName: Deploy Environment Variables ?
+  type: boolean
+  default: true
+- name: DeployMainSolution
+  displayName: Deploy Main Solution ?
+  type: boolean
+  default: true
+- name: DeployFlowsSolution
+  displayName: Deploy Flows Solution ?
+  type: boolean
+  default: true
+- name: DeployPluginsSolution
+  displayName: Deploy Plugins Solution ?
+  type: boolean
+  default: true
 
 variables:
   solution: '**/*.sln'
