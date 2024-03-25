@@ -63,11 +63,11 @@ stages:
     deployFlowsSolution: '${{ parameters.deployFlowsSolution }}'
     deployPluginsSolution: '${{ parameters.deployPluginsSolution }}'
 
-# - template: crm-deployment-pipelines/loans-crm-deploy.yml@he-invst-deployment
-#   parameters:
-#     deployWithUpgrade: '${{ parameters.deployWithUpgrade }}'
-#     deployEnvironmentVariables: '${{ parameters.deployEnvironmentVariables }}'
-#     deployMainSolution: '${{ parameters.deployMainSolution }}'
-#     deployFlowsSolution: '${{ parameters.deployFlowsSolution }}'
-#     deployPluginsSolution: '${{ parameters.deployPluginsSolution }}'
-#     deployDataMigration: '${{ parameters.deployDataMigration }}'
+- template: crm-deployment-pipelines/loans-crm-deploy.yml@he-invst-deployment
+  parameters:
+    deployWithUpgrade: '${{ parameters.deployWithUpgrade }}'
+    deployEnvironmentVariables: '${{ parameters.deployEnvironmentVariables }}'
+    deployMainSolution: '${{ parameters.deployMainSolution }}'
+    deployFlowsSolution: '${{ parameters.deployFlowsSolution }}'
+    deployPluginsSolution: '${{ parameters.deployPluginsSolution }}'
+    deployDataMigration: '${{ parameters.deployDataMigration }}'
