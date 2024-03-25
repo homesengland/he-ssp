@@ -170,7 +170,7 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
             return Guid.Empty;
         }
 
-        private void CalculateFundingOnPhaseCreate(invln_scheme application, invln_DeliveryPhase deliveryPhaseMapped, List<invln_milestoneframeworkitem> milestones)
+        public void CalculateFundingOnPhaseCreate(invln_scheme application, invln_DeliveryPhase deliveryPhaseMapped, List<invln_milestoneframeworkitem> milestones)
         {
             if (deliveryPhaseMapped.invln_NoofHomes != null)
             {
@@ -189,7 +189,7 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
             }
         }
 
-        private void CalculateFunding(invln_scheme application, invln_DeliveryPhase deliveryPhaseMapped, List<invln_milestoneframeworkitem> milestones, invln_DeliveryPhase deliveryPhaseToUpdateOrCreate)
+        public void CalculateFunding(invln_scheme application, invln_DeliveryPhase deliveryPhaseMapped, List<invln_milestoneframeworkitem> milestones, invln_DeliveryPhase deliveryPhaseToUpdateOrCreate)
         {
             var numberOfHouseApplication = application.invln_noofhomes.Value;
             var numberOfHousePhase = deliveryPhaseMapped.invln_NoofHomes.Value;
