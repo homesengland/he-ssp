@@ -1,6 +1,7 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Contract.Exceptions;
+using HE.Investments.Common.CRM.Extensions;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Serialization;
 using HE.Investments.Common.Extensions;
@@ -13,6 +14,7 @@ using HE.Investments.Loans.BusinessLogic.Projects.Repositories.Mappers;
 using HE.Investments.Loans.Common.Utils.Enums;
 using HE.Investments.Loans.Contract.Application.Events;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
+using Microsoft.FeatureManagement;
 using Microsoft.PowerPlatform.Dataverse.Client;
 
 namespace HE.Investments.Loans.BusinessLogic.Projects.Repositories;
@@ -25,14 +27,18 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
 
     private readonly IEventDispatcher _eventDispatcher;
 
+    private readonly IFeatureManager _featureManager;
+
     public ApplicationProjectsRepository(
         IDateTimeProvider dateTime,
         IOrganizationServiceAsync2 serviceClient,
-        IEventDispatcher eventDispatcher)
+        IEventDispatcher eventDispatcher,
+        IFeatureManager featureManager)
     {
         _timeProvider = dateTime;
         _serviceClient = serviceClient;
         _eventDispatcher = eventDispatcher;
+        _featureManager = featureManager;
     }
 
     public async Task<ApplicationProjects> GetAllAsync(LoanApplicationId loanApplicationId, UserAccount userAccount, CancellationToken cancellationToken)
@@ -42,6 +48,7 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
             invln_accountid = userAccount.SelectedOrganisationId().ToString(),
             invln_externalcontactid = userAccount.UserGlobalId.ToString(),
             invln_loanapplicationid = loanApplicationId.ToString(),
+            invln_usehetables = await _featureManager.GetUseHeTablesParameter(),
         };
 
         var response = await _serviceClient.ExecuteAsync(req, cancellationToken) as invln_getsingleloanapplicationforaccountandcontactResponse
@@ -75,6 +82,7 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
             invln_externalcontactid = userAccount.UserGlobalId.ToString(),
             invln_sitedetailsid = projectId.ToString(),
             invln_fieldstoretrieve = fieldsToRetrieve,
+            invln_usehetables = await _featureManager.GetUseHeTablesParameter(),
         };
 
         var response = await _serviceClient.ExecuteAsync(req, cancellationToken) as invln_getsinglesitedetailsResponse
@@ -126,7 +134,7 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
             localAuthority = projectToSave.LocalAuthority.IsProvided()
                 ? new LocalAuthorityDto() { onsCode = projectToSave.LocalAuthority!.Id.ToString(), name = projectToSave.LocalAuthority!.Name } : null,
             siteOwnership = projectToSave.LandOwnership?.ApplicantHasFullOwnership,
-            dateOfPurchase = projectToSave.AdditionalDetails?.PurchaseDate.AsDateTime(),
+            dateOfPurchase = projectToSave.AdditionalDetails?.PurchaseDate?.Value,
             siteCost = projectToSave.AdditionalDetails?.Cost.ToString(),
             currentValue = projectToSave.AdditionalDetails?.CurrentValue.ToString(),
             valuationSource =
@@ -157,6 +165,7 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
             invln_loanapplicationid = loanApplicationId.Value.ToString(),
             invln_sitedetailsid = projectToSave.Id.ToString(),
             invln_fieldstoupdate = ProjectCrmFieldNameMapper.Map(ProjectFieldsSet.SaveAllFields),
+            invln_usehetables = await _featureManager.GetUseHeTablesParameter(),
         };
 
         await _serviceClient.ExecuteAsync(req, cancellationToken);
@@ -175,6 +184,7 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
         {
             invln_sitedetails = CrmResponseSerializer.Serialize(siteDetails),
             invln_loanapplicationid = loanApplicationId.Value.ToString(),
+            invln_usehetables = await _featureManager.GetUseHeTablesParameter(),
         };
 
         await _serviceClient.ExecuteAsync(req, cancellationToken);

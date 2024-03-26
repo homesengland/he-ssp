@@ -2,7 +2,7 @@ using HE.Investments.Common.Contract.Enum;
 
 namespace HE.Investments.Common.CRM.Mappers;
 
-public class PlanningStatusMapper : EnumMapper<SitePlanningStatus>
+internal class InternalPlanningStatusMapper : EnumMapper<SitePlanningStatus>, IPlanningStatusMapper
 {
     protected override IDictionary<SitePlanningStatus, int?> Mapping => CommonEnumCrmMappings.PlanningStatus;
 }

@@ -27,7 +27,7 @@ public class ProjectData
 
     public IList<RegionType> RegionTypes => new List<RegionType> { RegionType.NorthEast, RegionType.London };
 
-    public int OrganisationHomesBuilt => _dataSeed + 2000;
+    public int OrganisationHomesBuilt => _dataSeed + 2;
 
     public int HomesNumber => _dataSeed + 2;
 
@@ -43,7 +43,7 @@ public class ProjectData
 
     public SiteData SiteData { get; }
 
-    public DateTime ExpectedStartDate => new DateTime(2024, 3, 20, 0, 0, 0, DateTimeKind.Utc).AddDays(_dataSeed);
+    public DateTime ExpectedStartDate => DateTime.UtcNow.AddDays(_dataSeed);
 
     public void SetProjectId(string projectId)
     {

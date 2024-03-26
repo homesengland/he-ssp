@@ -1,35 +1,39 @@
 using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
 using HE.Investments.Common.Messages;
+using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.Loans.Common.Tests.TestData;
 using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Extensions;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
+using HE.Investments.Loans.WWW;
 using HE.Investments.Loans.WWW.Views.LoanApplicationV2.Consts;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
 using Xunit.Extensions.Ordering;
 
-namespace HE.Investments.Loans.IntegrationTests.Loans.Application.Order04Withdraw;
+namespace HE.Investments.Loans.IntegrationTests.Loans.Application.Order05Withdraw;
 
-[Order(3)]
+[Order(5)]
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
-public class WithdrawDraftApplicationIntegrationTests : IntegrationTest
+public class WithdrawSubmittedApplicationIntegrationTests : IntegrationTest
 {
-    public WithdrawDraftApplicationIntegrationTests(LoansIntegrationTestFixture fixture)
+    private readonly string _applicationLoanId;
+    private readonly string _withdrawnInsetText = "Your application has been withdrawn, contact your Transaction Manager if you need to discuss a change";
+
+    public WithdrawSubmittedApplicationIntegrationTests(LoansIntegrationTestFixture fixture)
         : base(fixture)
     {
+        _applicationLoanId = UserData.SubmittedLoanApplicationId;
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
     [Order(1)]
-    public async Task Order01_ShouldOpenWithdrawPage_WhenApplicationIsInDraftState()
+    public async Task Order01_ShouldOpenWithdrawPage_WhenApplicationIsInApplicationSubmittedState()
     {
         // given
-        var applicationToWithdrawId = await CreateNewApplicationDraft();
-
-        var applicationDashboardPage = await TestClient.NavigateTo(ApplicationPagesUrls.ApplicationDashboard(applicationToWithdrawId));
+        var applicationDashboardPage = await TestClient.NavigateTo(ApplicationPagesUrls.ApplicationDashboard(_applicationLoanId));
 
         // when
         var withdrawApplicationButton = applicationDashboardPage.GetAnchorElementById("withdraw-application");
@@ -86,34 +90,85 @@ public class WithdrawDraftApplicationIntegrationTests : IntegrationTest
 
     [Fact(Skip = LoansConfig.SkipTest)]
     [Order(4)]
-    public async Task Order04_ShouldMoveToMainDashboard_WhenWithdrawReasonIsProvided()
+    public async Task Order04_ShouldMoveToApplicationDashboard_WhenWithdrawReasonIsProvided()
     {
         // given
         var withdrawPage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
         var acceptAndSubmitButton = withdrawPage.GetGdsSubmitButtonById("continue-button");
 
         // when
-        var dashboardPage = await TestClient.SubmitButton(
+        var applicationDashboardPage = await TestClient.SubmitButton(
             acceptAndSubmitButton,
             new Dictionary<string, string> { { "WithdrawReason", "very important reason" } });
 
         // then
-        dashboardPage
-            .UrlWithoutQueryEndsWith(PagesUrls.DashboardPage)
+        applicationDashboardPage
+            .UrlEndWith(ApplicationPagesUrls.ApplicationDashboard(_applicationLoanId))
             .HasSuccessNotificationBanner("project has been withdrawn")
             .HasNotEmptyTitle();
+
+        SetSharedData(SharedKeys.CurrentPageKey, applicationDashboardPage);
     }
 
-    private async Task<string> CreateNewApplicationDraft()
+    [Fact(Skip = LoansConfig.SkipTest)]
+    [Order(5)]
+    public void Order05_ShouldNotSeeWithdrawButton_WhenApplicationWasAlreadyWithdrawn()
     {
-        var applicationNamePage = await TestClient.NavigateTo(ApplicationPagesUrls.ApplicationName());
+        // given & when
+        var applicationDashboardPage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
 
-        var continueButton = applicationNamePage.GetGdsSubmitButtonById("continue-button");
-        var taskListPage = await TestClient.SubmitButton(
-            continueButton,
-            ("LoanApplicationName", $"Application-{Guid.NewGuid()}"));
+        // then
+        applicationDashboardPage.HasNoButton("Withdraw");
+    }
 
-        var applicationToWithdrawId = taskListPage.Url.GetApplicationGuidFromUrl();
-        return applicationToWithdrawId;
+    [Fact(Skip = LoansConfig.SkipTest)]
+    [Order(6)]
+    public async Task Order06_ShouldSeeCompanyStructureInReadOnlyMode_WhenApplicationIsInWithdrawnState()
+    {
+        // given
+        var taskListPage = await TestClient.NavigateTo(ApplicationPagesUrls.TaskList(_applicationLoanId));
+        var linkToCompanyStructureSection = taskListPage.GetAnchorElementById("company-structure-section-link");
+
+        // when
+        var checkAnswersPage = await TestClient.NavigateTo(linkToCompanyStructureSection);
+
+        // then
+        checkAnswersPage
+            .UrlEndWith(CompanyStructurePagesUrls.CheckYourAnswersSuffix)
+            .HasInsetText(_withdrawnInsetText);
+    }
+
+    [Fact(Skip = LoansConfig.SkipTest)]
+    [Order(7)]
+    public async Task Order07_ShouldSeeFundingInReadOnlyMode_WhenApplicationIsInWithdrawnState()
+    {
+        // given
+        var taskListPage = await TestClient.NavigateTo(ApplicationPagesUrls.TaskList(_applicationLoanId));
+        var linkToFundingSection = taskListPage.GetAnchorElementById("funding-section-link");
+
+        // when
+        var checkAnswersPage = await TestClient.NavigateTo(linkToFundingSection);
+
+        // then
+        checkAnswersPage
+            .UrlEndWith(FundingPageUrls.CheckYourAnswersSuffix)
+            .HasInsetText(_withdrawnInsetText);
+    }
+
+    [Fact(Skip = LoansConfig.SkipTest)]
+    [Order(8)]
+    public async Task Order08_ShouldSeeSecurityInReadOnlyMode_WhenApplicationIsInWithdrawnState()
+    {
+        // given
+        var taskListPage = await TestClient.NavigateTo(ApplicationPagesUrls.TaskList(_applicationLoanId));
+        var linkToSecuritySection = taskListPage.GetAnchorElementById("security-section-link");
+
+        // when
+        var checkAnswersPage = await TestClient.NavigateTo(linkToSecuritySection);
+
+        // when && then
+        checkAnswersPage
+            .UrlEndWith(SecurityPageUrls.CheckYourAnswersSuffix)
+            .HasInsetText(_withdrawnInsetText);
     }
 }

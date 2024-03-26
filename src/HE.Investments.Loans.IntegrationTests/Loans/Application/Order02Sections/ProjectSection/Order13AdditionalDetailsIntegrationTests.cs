@@ -1,12 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
 using HE.Investments.Common.Messages;
-using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.Loans.Common.Tests.TestData;
 using HE.Investments.Loans.Contract.Projects.ViewModels;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Extensions;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
-using HE.Investments.Loans.WWW;
 using HE.Investments.Loans.WWW.Views.Project.Consts;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
@@ -40,16 +38,16 @@ public class Order13AdditionalDetailsIntegrationTests : IntegrationTest
 
         // when
         var grantFunding = await TestClient.SubmitButton(
-                continueButton,
-                (nameof(ProjectViewModel.PurchaseDay), string.Empty),
-                (nameof(ProjectViewModel.PurchaseMonth), string.Empty),
-                (nameof(ProjectViewModel.PurchaseYear), string.Empty));
+            continueButton,
+            ($"{nameof(ProjectViewModel.PurchaseDate)}.Day", string.Empty),
+            ($"{nameof(ProjectViewModel.PurchaseDate)}.Month", string.Empty),
+            ($"{nameof(ProjectViewModel.PurchaseDate)}.Year", string.Empty));
 
         // then
         grantFunding
             .UrlEndWith(ProjectPagesUrls.AdditionalDetailsSuffix)
             .HasTitle(ProjectPageTitles.AdditionalDetails)
-            .ContainsValidationMessage(ValidationErrorMessage.NoPurchaseDate);
+            .ContainsValidationMessage("Enter when you purchased this site");
 
         SetCurrentPage(ownershipPage);
     }
@@ -67,16 +65,16 @@ public class Order13AdditionalDetailsIntegrationTests : IntegrationTest
 
         // when
         var grantFunding = await TestClient.SubmitButton(
-                continueButton,
-                (nameof(ProjectViewModel.PurchaseDay), day),
-                (nameof(ProjectViewModel.PurchaseMonth), month),
-                (nameof(ProjectViewModel.PurchaseYear), year));
+            continueButton,
+            ($"{nameof(ProjectViewModel.PurchaseDate)}.Day", day),
+            ($"{nameof(ProjectViewModel.PurchaseDate)}.Month", month),
+            ($"{nameof(ProjectViewModel.PurchaseDate)}.Year", year));
 
         // then
         grantFunding
             .UrlEndWith(ProjectPagesUrls.AdditionalDetailsSuffix)
             .HasTitle(ProjectPageTitles.AdditionalDetails)
-            .ContainsValidationMessage(ValidationErrorMessage.IncorrectPurchaseDate);
+            .ContainsValidationMessage("When you purchased this site must be a real date");
 
         SetCurrentPage(ownershipPage);
     }
@@ -94,11 +92,11 @@ public class Order13AdditionalDetailsIntegrationTests : IntegrationTest
 
         // when
         var grantFunding = await TestClient.SubmitButton(
-                continueButton,
-                (nameof(ProjectViewModel.PurchaseDay), day),
-                (nameof(ProjectViewModel.PurchaseMonth), month),
-                (nameof(ProjectViewModel.PurchaseYear), year),
-                (nameof(ProjectViewModel.Cost), string.Empty));
+            continueButton,
+            ($"{nameof(ProjectViewModel.PurchaseDate)}.Day", day),
+            ($"{nameof(ProjectViewModel.PurchaseDate)}.Month", month),
+            ($"{nameof(ProjectViewModel.PurchaseDate)}.Year", year),
+            (nameof(ProjectViewModel.Cost), string.Empty));
 
         // then
         grantFunding
@@ -122,12 +120,12 @@ public class Order13AdditionalDetailsIntegrationTests : IntegrationTest
 
         // when
         var grantFunding = await TestClient.SubmitButton(
-                continueButton,
-                (nameof(ProjectViewModel.PurchaseDay), day),
-                (nameof(ProjectViewModel.PurchaseMonth), month),
-                (nameof(ProjectViewModel.PurchaseYear), year),
-                (nameof(ProjectViewModel.Cost), PoundsTestData.CorrectAmountAsString),
-                (nameof(ProjectViewModel.Value), string.Empty));
+            continueButton,
+            ($"{nameof(ProjectViewModel.PurchaseDate)}.Day", day),
+            ($"{nameof(ProjectViewModel.PurchaseDate)}.Month", month),
+            ($"{nameof(ProjectViewModel.PurchaseDate)}.Year", year),
+            (nameof(ProjectViewModel.Cost), PoundsTestData.CorrectAmountAsString),
+            (nameof(ProjectViewModel.Value), string.Empty));
 
         // then
         grantFunding
@@ -152,9 +150,9 @@ public class Order13AdditionalDetailsIntegrationTests : IntegrationTest
         // when
         var grantFunding = await TestClient.SubmitButton(
                 continueButton,
-                (nameof(ProjectViewModel.PurchaseDay), day),
-                (nameof(ProjectViewModel.PurchaseMonth), month),
-                (nameof(ProjectViewModel.PurchaseYear), year),
+                ($"{nameof(ProjectViewModel.PurchaseDate)}.Day", day),
+                ($"{nameof(ProjectViewModel.PurchaseDate)}.Month", month),
+                ($"{nameof(ProjectViewModel.PurchaseDate)}.Year", year),
                 (nameof(ProjectViewModel.Cost), PoundsTestData.CorrectAmountAsString),
                 (nameof(ProjectViewModel.Value), PoundsTestData.CorrectAmountAsString),
                 (nameof(ProjectViewModel.Source), string.Empty));
@@ -179,20 +177,20 @@ public class Order13AdditionalDetailsIntegrationTests : IntegrationTest
 
         // when
         var grantFunding = await TestClient.SubmitButton(
-                continueButton,
-                (nameof(ProjectViewModel.PurchaseDay), string.Empty),
-                (nameof(ProjectViewModel.PurchaseMonth), string.Empty),
-                (nameof(ProjectViewModel.PurchaseYear), string.Empty),
-                (nameof(ProjectViewModel.Cost), string.Empty),
-                (nameof(ProjectViewModel.Value), string.Empty),
-                (nameof(ProjectViewModel.Source), string.Empty));
+            continueButton,
+            ($"{nameof(ProjectViewModel.PurchaseDate)}.Day", string.Empty),
+            ($"{nameof(ProjectViewModel.PurchaseDate)}.Month", string.Empty),
+            ($"{nameof(ProjectViewModel.PurchaseDate)}.Year", string.Empty),
+            (nameof(ProjectViewModel.Cost), string.Empty),
+            (nameof(ProjectViewModel.Value), string.Empty),
+            (nameof(ProjectViewModel.Source), string.Empty));
 
         // then
         grantFunding
             .UrlEndWith(ProjectPagesUrls.AdditionalDetailsSuffix)
             .HasTitle(ProjectPageTitles.AdditionalDetails)
             .ContainsValidationMessages(
-                ValidationErrorMessage.NoPurchaseDate,
+                "Enter when you purchased this site",
                 ValidationErrorMessage.IncorrectProjectCost,
                 ValidationErrorMessage.IncorrectProjectValue,
                 ValidationErrorMessage.EnterMoreDetails);
@@ -213,13 +211,13 @@ public class Order13AdditionalDetailsIntegrationTests : IntegrationTest
 
         // when
         var grantFunding = await TestClient.SubmitButton(
-                continueButton,
-                (nameof(ProjectViewModel.PurchaseDay), day),
-                (nameof(ProjectViewModel.PurchaseMonth), month),
-                (nameof(ProjectViewModel.PurchaseYear), year),
-                (nameof(ProjectViewModel.Cost), PoundsTestData.CorrectAmountAsString),
-                (nameof(ProjectViewModel.Value), PoundsTestData.CorrectAmountAsString),
-                (nameof(ProjectViewModel.Source), SourceOfValuationTestData.AnySourceAsString));
+            continueButton,
+            ($"{nameof(ProjectViewModel.PurchaseDate)}.Day", day),
+            ($"{nameof(ProjectViewModel.PurchaseDate)}.Month", month),
+            ($"{nameof(ProjectViewModel.PurchaseDate)}.Year", year),
+            (nameof(ProjectViewModel.Cost), PoundsTestData.CorrectAmountAsString),
+            (nameof(ProjectViewModel.Value), PoundsTestData.CorrectAmountAsString),
+            (nameof(ProjectViewModel.Source), SourceOfValuationTestData.AnySourceAsString));
 
         // then
         grantFunding

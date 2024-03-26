@@ -1,4 +1,5 @@
 using System.Globalization;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Loans.BusinessLogic.PrefillData.Data;
@@ -36,9 +37,7 @@ internal static class ProjectMapper
             LocationCoordinates = project.Coordinates?.Value,
             LocationLandRegistry = project.LandRegistryTitleNumber?.Value,
             Ownership = project.LandOwnership?.ApplicantHasFullOwnership.MapToCommonResponse(),
-            PurchaseYear = project.AdditionalDetails?.PurchaseDate.AsDateTime().Year.ToString(CultureInfo.InvariantCulture),
-            PurchaseMonth = project.AdditionalDetails?.PurchaseDate.AsDateTime().Month.ToString(CultureInfo.InvariantCulture),
-            PurchaseDay = project.AdditionalDetails?.PurchaseDate.AsDateTime().Day.ToString(CultureInfo.InvariantCulture),
+            PurchaseDate = DateDetails.FromDateTime(project.AdditionalDetails?.PurchaseDate?.Value),
             Cost = project.AdditionalDetails?.Cost.ToString(),
             Value = project.AdditionalDetails?.CurrentValue.ToString(),
             Source = additionalDetailsAreProvided ? SourceOfValuationMapper.ToString(project.AdditionalDetails!.SourceOfValuation) : null,

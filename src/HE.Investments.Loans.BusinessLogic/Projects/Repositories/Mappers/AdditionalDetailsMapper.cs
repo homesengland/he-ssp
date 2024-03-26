@@ -15,7 +15,7 @@ internal static class AdditionalDetailsMapper
             return null;
         }
 
-        var dateOfPurchase = projectFromCrm.dateOfPurchase.IsProvided() ? new PurchaseDate(new ProjectDate(projectFromCrm.dateOfPurchase!.Value), now) : null!;
+        var dateOfPurchase = projectFromCrm.dateOfPurchase.IsProvided() ? PurchaseDate.FromCrm(projectFromCrm.dateOfPurchase!.Value) : null!;
         var siteCost = projectFromCrm.siteCost.IsProvided() ? new Pounds(decimal.Parse(projectFromCrm.siteCost, CultureInfo.InvariantCulture)) : null!;
         var currentValue = projectFromCrm.currentValue.IsProvided() ? new Pounds(decimal.Parse(projectFromCrm.currentValue, CultureInfo.InvariantCulture)) : null!;
         var valuationSource = SourceOfValuationMapper.FromString(projectFromCrm.valuationSource)!.Value;

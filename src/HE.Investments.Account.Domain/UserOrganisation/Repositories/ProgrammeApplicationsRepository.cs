@@ -1,9 +1,11 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Contract.UserOrganisation;
 using HE.Investments.Account.Shared.User;
+using HE.Investments.Common.CRM.Extensions;
 using HE.Investments.Common.CRM.Mappers;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Services;
+using Microsoft.FeatureManagement;
 
 namespace HE.Investments.Account.Domain.UserOrganisation.Repositories;
 
@@ -11,9 +13,12 @@ public class ProgrammeApplicationsRepository : IProgrammeApplicationsRepository
 {
     private readonly ICrmService _crmService;
 
-    public ProgrammeApplicationsRepository(ICrmService crmService)
+    private readonly IFeatureManager _featureManager;
+
+    public ProgrammeApplicationsRepository(ICrmService crmService, IFeatureManager featureManager)
     {
         _crmService = crmService;
+        _featureManager = featureManager;
     }
 
     public async Task<IList<Programme>> GetAllProgrammes(UserAccount userAccount, CancellationToken cancellationToken)
@@ -35,10 +40,11 @@ public class ProgrammeApplicationsRepository : IProgrammeApplicationsRepository
 
     private async Task<IList<UserApplication>> GetLoansApplications(UserAccount userAccount, CancellationToken cancellationToken)
     {
-        var req = new invln_getloanapplicationsforaccountandcontactRequest()
+        var req = new invln_getloanapplicationsforaccountandcontactRequest
         {
             invln_accountid = userAccount.SelectedOrganisationId().ToString(),
             invln_externalcontactid = userAccount.UserGlobalId.ToString(),
+            invln_usehetables = await _featureManager.GetUseHeTablesParameter(),
         };
 
         var loanApplications = (await _crmService.ExecuteAsync

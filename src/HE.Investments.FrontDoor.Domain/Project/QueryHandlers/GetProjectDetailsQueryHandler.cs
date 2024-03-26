@@ -1,7 +1,5 @@
-using System.Globalization;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
-using HE.Investments.Common.Extensions;
 using HE.Investments.FrontDoor.Contract.Project;
 using HE.Investments.FrontDoor.Contract.Project.Queries;
 using HE.Investments.FrontDoor.Domain.Project.Repository;
@@ -49,19 +47,9 @@ public class GetProjectDetailsQueryHandler : IRequestHandler<GetProjectDetailsQu
             RequiredFunding = project.RequiredFunding.Value,
             IsProfit = project.IsProfit.Value,
             LastSiteId = projectSite.LastSiteId(),
-            ExpectedStartDate = BuildDateDetails(project.ExpectedStartDate.Value),
+            ExpectedStartDate = DateDetails.FromDateTime(project.ExpectedStartDate.Value?.ToDateTime(TimeOnly.MinValue)),
             LocalAuthorityCode = project.LocalAuthority?.Id.Value,
             LocalAuthorityName = project.LocalAuthority?.Name,
         };
-    }
-
-    private static DateDetails? BuildDateDetails(DateOnly? date)
-    {
-        return date.IsProvided()
-            ? new DateDetails(
-                date!.Value.Day.ToString(CultureInfo.InvariantCulture),
-                date.Value.Month.ToString(CultureInfo.InvariantCulture),
-                date.Value.Year.ToString(CultureInfo.InvariantCulture))
-            : null;
     }
 }

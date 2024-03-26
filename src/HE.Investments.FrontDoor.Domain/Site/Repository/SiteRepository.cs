@@ -15,11 +15,13 @@ namespace HE.Investments.FrontDoor.Domain.Site.Repository;
 public class SiteRepository : ISiteRepository, IRemoveSiteRepository
 {
     private readonly ISiteCrmContext _siteCrmContext;
-    private readonly PlanningStatusMapper _planningStatusMapper = new();
 
-    public SiteRepository(ISiteCrmContext siteCrmContext)
+    private readonly IPlanningStatusMapper _planningStatusMapper;
+
+    public SiteRepository(ISiteCrmContext siteCrmContext, IPlanningStatusMapper planningStatusMapper)
     {
         _siteCrmContext = siteCrmContext;
+        _planningStatusMapper = planningStatusMapper;
     }
 
     public async Task<ProjectSitesEntity> GetProjectSites(FrontDoorProjectId projectId, UserAccount userAccount, CancellationToken cancellationToken)

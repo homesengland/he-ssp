@@ -1,14 +1,17 @@
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
+using HE.Investments.Common.Infrastructure.Events;
+using HE.Investments.Loans.BusinessLogic.LoanApplication.Entities;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.ValueObjects;
 using HE.Investments.Loans.BusinessLogic.Tests.LoanApplication.TestObjectBuilders;
 using HE.Investments.Loans.BusinessLogic.Tests.TestObjectBuilders;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
+using HE.Investments.TestsUtils.TestFramework;
 using Xunit;
 
 namespace HE.Investments.Loans.BusinessLogic.Tests.LoanApplication.LoanApplicationEntityTests;
 
-public class UploadFilesTests
+public class UploadFilesTests : TestBase<LoanApplicationEntity>
 {
     [Fact]
     public async Task ShouldThrowException_WhenThereIsAlreadyTenFilesUploaded()
@@ -16,7 +19,7 @@ public class UploadFilesTests
         // given
         var fileService = FileServiceMockTestBuilder.Build<SupportingDocumentsParams>(10);
         var testCandidate = LoanApplicationTestBuilder.NewWithOtherApplicationStatus(ApplicationStatus.ReferredBackToApplicant).Build();
-        var eventDispatcher = EventDispatcherTestBuilder.New().Build();
+        var eventDispatcher = CreateAndRegisterDependencyMock<IEventDispatcher>().Object;
 
         // when
         var upload = () => testCandidate.UploadFiles(
@@ -35,7 +38,7 @@ public class UploadFilesTests
         // given
         var fileService = FileServiceMockTestBuilder.Build<SupportingDocumentsParams>(5);
         var testCandidate = LoanApplicationTestBuilder.NewWithOtherApplicationStatus(ApplicationStatus.ReferredBackToApplicant).Build();
-        var eventDispatcher = EventDispatcherTestBuilder.New().Build();
+        var eventDispatcher = CreateAndRegisterDependencyMock<IEventDispatcher>().Object;
 
         // when
         var upload = () => testCandidate.UploadFiles(
@@ -55,7 +58,7 @@ public class UploadFilesTests
         var fileService = FileServiceMockTestBuilder.Build<SupportingDocumentsParams>(5);
         var testCandidate = LoanApplicationTestBuilder.NewWithOtherApplicationStatus(ApplicationStatus.ReferredBackToApplicant).Build();
         var file = new SupportingDocumentsFile("new-test.pdf", 1000, 10, new MemoryStream());
-        var eventDispatcher = EventDispatcherTestBuilder.New().Build();
+        var eventDispatcher = CreateAndRegisterDependencyMock<IEventDispatcher>().Object;
 
         // when
         var result = await testCandidate.UploadFiles(fileService, new[] { file }, eventDispatcher, CancellationToken.None);

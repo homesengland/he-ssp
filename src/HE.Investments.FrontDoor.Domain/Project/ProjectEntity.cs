@@ -6,7 +6,6 @@ using HE.Investments.Common.Domain;
 using HE.Investments.Common.Errors;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Utils;
-using HE.Investments.FrontDoor.Common.Extensions;
 using HE.Investments.FrontDoor.Contract.Project.Events;
 using HE.Investments.FrontDoor.Domain.Project.Repository;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
@@ -105,7 +104,7 @@ public class ProjectEntity : DomainEntity
     {
         if (isEnglandHousingDelivery.IsNotProvided())
         {
-            OperationResult.ThrowValidationError(nameof(isEnglandHousingDelivery), "Select yes if your project is supporting housing delivery in England");
+            OperationResult.ThrowValidationError("IsEnglandHousingDelivery", "Select yes if your project is supporting housing delivery in England");
         }
 
         return isEnglandHousingDelivery!.Value;
@@ -218,7 +217,7 @@ public class ProjectEntity : DomainEntity
                && SupportActivities.Values.Contains(SupportActivityType.DevelopingHomes)
                && AffordableHomesAmount.AffordableHomesAmount is AffordableHomesAmountType.OnlyAffordableHomes
                    or AffordableHomesAmountType.OpenMarkedAndRequiredAffordableHomes
-               && OrganisationHomesBuilt?.Value >= 2001
+               && OrganisationHomesBuilt?.Value <= 2000
                && IsSiteIdentified?.Value == true
                && IsSupportRequired?.Value == true
                && IsFundingRequired?.Value == true
@@ -226,7 +225,7 @@ public class ProjectEntity : DomainEntity
                    or RequiredFundingOption.Between1MlnAnd5Mln
                    or RequiredFundingOption.Between5MlnAnd10Mln
                && IsProfit.Value == true
-               && DateTimeUtil.IsDateWithinXYearsFromNow(ExpectedStartDate.Value.ToDateTime(), 2);
+               && DateTimeUtil.IsDateWithinXYearsFromNow(ExpectedStartDate.Value?.ToDateTime(TimeOnly.MinValue), 2);
     }
 
     private static async Task<ProjectName> ValidateProjectNameUniqueness(

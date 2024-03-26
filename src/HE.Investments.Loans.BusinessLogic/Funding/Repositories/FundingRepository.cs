@@ -2,6 +2,7 @@ using System.Text.Json;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Contract.Exceptions;
+using HE.Investments.Common.CRM.Extensions;
 using HE.Investments.Common.CRM.Mappers;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Serialization;
@@ -12,6 +13,7 @@ using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories.Mapper;
 using HE.Investments.Loans.Common.Utils.Enums;
 using HE.Investments.Loans.Contract.Application.Events;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
+using Microsoft.FeatureManagement;
 using Microsoft.PowerPlatform.Dataverse.Client;
 
 namespace HE.Investments.Loans.BusinessLogic.Funding.Repositories;
@@ -21,10 +23,13 @@ public class FundingRepository : IFundingRepository
 
     private readonly IEventDispatcher _eventDispatcher;
 
-    public FundingRepository(IOrganizationServiceAsync2 serviceClient, IEventDispatcher eventDispatcher)
+    private readonly IFeatureManager _featureManager;
+
+    public FundingRepository(IOrganizationServiceAsync2 serviceClient, IEventDispatcher eventDispatcher, IFeatureManager featureManager)
     {
         _serviceClient = serviceClient;
         _eventDispatcher = eventDispatcher;
+        _featureManager = featureManager;
     }
 
     public async Task<FundingEntity> GetAsync(LoanApplicationId loanApplicationId, UserAccount userAccount, FundingFieldsSet fundingFieldsSet, CancellationToken cancellationToken)
@@ -36,6 +41,7 @@ public class FundingRepository : IFundingRepository
             invln_externalcontactid = userAccount.UserGlobalId.ToString(),
             invln_loanapplicationid = loanApplicationId.ToString(),
             invln_fieldstoretrieve = fieldsToRetrieve,
+            invln_usehetables = await _featureManager.GetUseHeTablesParameter(),
         };
 
         var response = await _serviceClient.ExecuteAsync(req, cancellationToken) as invln_getsingleloanapplicationforaccountandcontactResponse
@@ -80,6 +86,7 @@ public class FundingRepository : IFundingRepository
             invln_accountid = userAccount.SelectedOrganisationId().ToString(),
             invln_contactexternalid = userAccount.UserGlobalId.ToString(),
             invln_fieldstoupdate = FundingCrmFieldNameMapper.Map(FundingFieldsSet.SaveAllFields),
+            invln_usehetables = await _featureManager.GetUseHeTablesParameter(),
         };
 
         await _serviceClient.ExecuteAsync(req, cancellationToken);

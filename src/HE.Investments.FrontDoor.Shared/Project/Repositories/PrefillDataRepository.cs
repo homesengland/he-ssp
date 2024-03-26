@@ -16,9 +16,12 @@ internal class PrefillDataRepository : IPrefillDataRepository
 {
     private readonly IProjectCrmContext _crmContext;
 
-    public PrefillDataRepository(IProjectCrmContext crmContext)
+    private readonly IFrontDoorProjectEnumMapping _mapping;
+
+    public PrefillDataRepository(IProjectCrmContext crmContext, IFrontDoorProjectEnumMapping mapping)
     {
         _crmContext = crmContext;
+        _mapping = mapping;
     }
 
     public async Task<ProjectPrefillData> GetProjectPrefillData(
@@ -46,7 +49,7 @@ internal class PrefillDataRepository : IPrefillDataRepository
             siteId,
             site.SiteName,
             site.NumberofHomesEnabledBuilt,
-            DomainEnumMapper.Map(site.PlanningStatus, FrontDoorProjectEnumMapping.PlanningStatus) ?? SitePlanningStatus.Undefined);
+            DomainEnumMapper.Map(site.PlanningStatus, _mapping.PlanningStatus) ?? SitePlanningStatus.Undefined);
     }
 
     public async Task MarkProjectAsUsed(FrontDoorProjectId projectId, CancellationToken cancellationToken)
@@ -54,12 +57,12 @@ internal class PrefillDataRepository : IPrefillDataRepository
         await _crmContext.DeactivateProject(projectId.Value, cancellationToken);
     }
 
-    private static ProjectPrefillData Map(FrontDoorProjectDto project, FrontDoorProjectSiteDto? site)
+    private ProjectPrefillData Map(FrontDoorProjectDto project, FrontDoorProjectSiteDto? site)
     {
         return new ProjectPrefillData(
             new FrontDoorProjectId(project.ProjectId),
             project.ProjectName,
-            new ReadOnlyCollection<SupportActivityType>(DomainEnumMapper.Map(project.ActivitiesinThisProject, FrontDoorProjectEnumMapping.ActivityType)),
+            new ReadOnlyCollection<SupportActivityType>(DomainEnumMapper.Map(project.ActivitiesinThisProject, _mapping.ActivityType)),
             site.IsProvided() ? new FrontDoorSiteId(site!.SiteId) : null);
     }
 }

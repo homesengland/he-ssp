@@ -51,8 +51,6 @@ namespace HE.CRM.Common.Repositories.Implementations
                     var fetchXML = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
 	                                    <entity name='invln_loanapplication'>
                                         {fieldsToRetrieve}
-                                        <attribute name=""invln_fdprojectid"" />
-                                        <attribute name=""invln_heprojectid"" />
                                         <filter>
                                             <condition attribute=""statuscode"" operator=""ne"" value=""2"" />
                                             <condition attribute=""invln_account"" operator=""eq"" value=""{accountId}"" />

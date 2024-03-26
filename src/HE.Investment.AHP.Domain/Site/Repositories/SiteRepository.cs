@@ -8,6 +8,7 @@ using HE.Investment.AHP.Domain.Site.ValueObjects;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Pagination;
+using HE.Investments.Common.CRM.Mappers;
 
 namespace HE.Investment.AHP.Domain.Site.Repositories;
 
@@ -15,9 +16,12 @@ public class SiteRepository : ISiteRepository
 {
     private readonly ISiteCrmContext _siteCrmContext;
 
-    public SiteRepository(ISiteCrmContext siteCrmContext)
+    private readonly IPlanningStatusMapper _planningStatusMapper;
+
+    public SiteRepository(ISiteCrmContext siteCrmContext, IPlanningStatusMapper planningStatusMapper)
     {
         _siteCrmContext = siteCrmContext;
+        _planningStatusMapper = planningStatusMapper;
     }
 
     public async Task<bool> IsExist(SiteName name, CancellationToken cancellationToken)
@@ -31,7 +35,7 @@ public class SiteRepository : ISiteRepository
         var result = await _siteCrmContext.Get(paging, cancellationToken);
 
         return new PaginationResult<SiteEntity>(
-            result.items.Select(SiteDtoToSiteEntityMapper.Map).ToList(),
+            result.items.Select(x => SiteDtoToSiteEntityMapper.Map(x, _planningStatusMapper)).ToList(),
             paginationRequest.Page,
             paginationRequest.ItemsPerPage,
             result.totalItemsCount);
@@ -60,7 +64,7 @@ public class SiteRepository : ISiteRepository
             throw new NotFoundException("Site not found", siteId);
         }
 
-        return SiteDtoToSiteEntityMapper.Map(site);
+        return SiteDtoToSiteEntityMapper.Map(site, _planningStatusMapper);
     }
 
     public async Task<SiteId> Save(SiteEntity site, UserAccount userAccount, CancellationToken cancellationToken)
@@ -70,7 +74,7 @@ public class SiteRepository : ISiteRepository
             return site.Id;
         }
 
-        var id = await _siteCrmContext.Save(SiteEntityToSiteDtoMapper.Map(site), cancellationToken);
+        var id = await _siteCrmContext.Save(SiteEntityToSiteDtoMapper.Map(site, _planningStatusMapper), cancellationToken);
         return new SiteId(id);
     }
 }
