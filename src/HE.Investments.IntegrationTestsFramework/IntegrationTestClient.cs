@@ -63,23 +63,6 @@ public class IntegrationTestClient
 
     public async Task<IHtmlDocument> SubmitButton(
         IHtmlButtonElement submitButton,
-        IEnumerable<(string InputName, FileEntry File)> formFiles)
-    {
-        var form = submitButton.Form!;
-
-        foreach (var formFile in formFiles)
-        {
-            if (!HandleFileInputs(form, formFile.InputName, formFile.File))
-            {
-                throw new HtmlElementNotFoundException($"Cannot found any file input with name {formFile.InputName}");
-            }
-        }
-
-        return await HandleButtonSubmission(form, submitButton);
-    }
-
-    public async Task<IHtmlDocument> SubmitButton(
-        IHtmlButtonElement submitButton,
         IEnumerable<KeyValuePair<string, string>> formValues,
         IEnumerable<(string InputName, FileEntry File)>? formFiles = null)
     {
@@ -109,7 +92,20 @@ public class IntegrationTestClient
             }
         }
 
-        return await HandleButtonSubmission(form, submitButton);
+        var submit = form.GetSubmission(submitButton)!;
+        var target = (Uri)submit.Target;
+        using var submission = new HttpRequestMessage(new HttpMethod(submit.Method.ToString()), target);
+        submission.Content = new StreamContent(submit.Body);
+
+        foreach (var header in submit.Headers)
+        {
+            submission.Headers.TryAddWithoutValidation(header.Key, header.Value);
+            submission.Content.Headers.TryAddWithoutValidation(header.Key, header.Value);
+        }
+
+        var clientResponse = await _client.SendAsync(submission);
+        CurrentPage = await HtmlHelpers.GetDocumentAsync(clientResponse);
+        return CurrentPage;
     }
 
     private static bool HandleRadioInputs(IHtmlFormElement form, KeyValuePair<string, string> formValue)
@@ -237,23 +233,5 @@ public class IntegrationTestClient
     {
         _client.DefaultRequestHeaders.Remove(TestAuthHandler.HeaderUserGlobalId);
         _client.DefaultRequestHeaders.Remove(TestAuthHandler.HeaderUserEmail);
-    }
-
-    private async Task<IHtmlDocument> HandleButtonSubmission(IHtmlFormElement form, IHtmlButtonElement submitButton)
-    {
-        var submit = form.GetSubmission(submitButton)!;
-        var target = (Uri)submit.Target;
-        using var submission = new HttpRequestMessage(new HttpMethod(submit.Method.ToString()), target);
-        submission.Content = new StreamContent(submit.Body);
-
-        foreach (var header in submit.Headers)
-        {
-            submission.Headers.TryAddWithoutValidation(header.Key, header.Value);
-            submission.Content.Headers.TryAddWithoutValidation(header.Key, header.Value);
-        }
-
-        var clientResponse = await _client.SendAsync(submission);
-        CurrentPage = await HtmlHelpers.GetDocumentAsync(clientResponse);
-        return CurrentPage;
     }
 }

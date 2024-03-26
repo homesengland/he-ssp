@@ -28,8 +28,10 @@ public class SubmitSupportingDocumentsIntegrationTests : IntegrationTest
     [Order(1)]
     public async Task Order01_ShouldRedirectToApplicationDashboardSupportingDocumentsAndChangeStatusToReferredBackToApplicant()
     {
-        // given && when
+        // given
         await LoanApplicationCrmRepository.ChangeApplicationStatus(_applicationLoanId, ApplicationStatus.ReferredBackToApplicant);
+
+        // when
         var supportingDocumentsPage = await TestClient.NavigateTo(ApplicationPagesUrls.ApplicationDashboardSupportingDocuments(_applicationLoanId));
 
         // then
@@ -38,7 +40,7 @@ public class SubmitSupportingDocumentsIntegrationTests : IntegrationTest
             .HasHeader2(LoanApplicationPageTitles.SupportingDocuments)
             .HasStatusTagByTestId(ApplicationStatus.ReferredBackToApplicant.GetDescription(), "application-status");
 
-        SetSharedData(SharedKeys.CurrentPageKey, supportingDocumentsPage);
+        SaveCurrentPage();
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
@@ -46,18 +48,16 @@ public class SubmitSupportingDocumentsIntegrationTests : IntegrationTest
     public async Task Order02_ProvideSupportingDocuments()
     {
         // given
-        var supportingDocumentsPage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
+        var supportingDocumentsPage = await GetCurrentPage(ApplicationPagesUrls.ApplicationDashboardSupportingDocuments(_applicationLoanId));
         var submitButton = supportingDocumentsPage.GetGdsSubmitButtonByTestId("submit-button");
         var supportingDocuments = UserData.GenerateSupportingDocuments();
+        var formFiles = new[] { ("SupportingDocumentsFile", supportingDocuments[0]), ("SupportingDocumentsFile", supportingDocuments[1]), };
 
         // when
         var nextPage = await TestClient.SubmitButton(
             submitButton,
-            new[]
-            {
-                ("SupportingDocumentsFile", supportingDocuments[0]),
-                ("SupportingDocumentsFile", supportingDocuments[1]),
-            });
+            Enumerable.Empty<KeyValuePair<string, string>>(),
+            formFiles);
 
         // then
         nextPage
