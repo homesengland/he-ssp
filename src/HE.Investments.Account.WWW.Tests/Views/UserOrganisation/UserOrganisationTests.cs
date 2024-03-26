@@ -92,7 +92,7 @@ public class UserOrganisationTests : ViewTestBase
             .HasParagraph($"Welcome {model.UserName}")
             .HasElementWithText("h1", $"{model.OrganisationName}'s Homes England account")
             .HasElementWithText("div", "Your request to join", isLimitedUser)
-            .HasParagraph("You have not applied for any funding. To apply, select a funding programme below.", !programmesToAccessExist)
+            .HasParagraph("You have not applied for any support. Select start a new project to apply for support.", !programmesToAccessExist)
             .HasElementWithText("h2", "Apply for support");
 
         if (actionsExist)
