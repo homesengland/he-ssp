@@ -228,6 +228,17 @@ public static class HtmlDocumentExtensions
         return notificationBannerContent!.TextContent.Trim();
     }
 
+    public static IHtmlCollection<IElement>? GetFilesTableBody(this IHtmlDocument htmlDocument)
+    {
+        var filesTableBody = htmlDocument.GetElementsByClassName(CssConstants.FilesTableBody).FirstOrDefault();
+        filesTableBody.Should().NotBeNull("Files table does not exist");
+
+        var filesTableRows = filesTableBody?.GetElementsByTagName(TagNames.Tr);
+        filesTableRows.Should().NotBeNull("Files table does not have any files");
+
+        return filesTableRows;
+    }
+
     public static string GetInsetText(this IHtmlDocument htmlDocument)
     {
         var insetText = htmlDocument.GetElementsByClassName(CssConstants.GovUkInsetText).FirstOrDefault();

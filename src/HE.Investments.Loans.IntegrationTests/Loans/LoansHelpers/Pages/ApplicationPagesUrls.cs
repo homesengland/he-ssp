@@ -27,6 +27,8 @@ public static class ApplicationPagesUrls
 
     public static string ApplicationDashboard(string applicationId) => $"application/{applicationId}/dashboard";
 
+    public static string ApplicationDashboardSupportingDocuments(string applicationId) => $"application/{applicationId}/dashboard/supporting-documents";
+
     private static string WithProject(this string url, FrontDoorProjectId? projectId)
     {
         return projectId.IsNotProvided() ? url : $"{url}?fdProjectId={projectId!.Value}";

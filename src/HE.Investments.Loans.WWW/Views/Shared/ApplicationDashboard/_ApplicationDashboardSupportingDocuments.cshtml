@@ -2,6 +2,7 @@
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Summary
 @using HE.Investments.Common.Messages
 @using HE.Investments.Loans.BusinessLogic.Config
+@using HE.Investments.Loans.WWW.Views.LoanApplicationV2.Consts
 @model HE.Investments.Loans.Contract.Application.SupportingDocumentsViewModel
 @inject ILoansDocumentSettings Settings
 
@@ -13,7 +14,7 @@
 <gds-summary-list class="govuk-!-margin-bottom-4">
 
 
-    <gds-h2>Supporting documents</gds-h2>
+    <gds-h2>@LoanApplicationPageTitles.SupportingDocuments</gds-h2>
 
     @if (Model.IsReadOnly())
     {
@@ -58,7 +59,7 @@
             </gds-error-form-group>
 
             <vc:files-table asp-for="@Model.SupportingDocumentsFiles"/>
-            <button class="govuk-button files-submit-button" data-module="govuk-button" name="action" type="submit" value="@GenericMessages.Continue">
+            <button class="govuk-button files-submit-button" data-module="govuk-button" name="action" type="submit" data-testid="submit-button" value="@GenericMessages.Continue">
                 Submit
             </button>
         </form>
