@@ -88,6 +88,18 @@ namespace HE.CRM.Plugins.Services.SiteDetails
                             {
                                 siteDetailToUpdate.invln_LocalAuthorityID = siteDetailsMapped.invln_LocalAuthorityID;
                             }
+                            else if (field.ToLower() == nameof(invln_SiteDetails.invln_HeLocalAuthorityId).ToLower())
+                            {
+                                siteDetailToUpdate.invln_HeLocalAuthorityId = siteDetailsMapped.invln_HeLocalAuthorityId;
+                            }
+                            else if (field.ToLower() == nameof(invln_SiteDetails.invln_FDSiteId).ToLower())
+                            {
+                                siteDetailToUpdate.invln_FDSiteId = siteDetailsMapped.invln_FDSiteId;
+                            }
+                            else if (field.ToLower() == nameof(invln_SiteDetails.invln_HeProjectLocalAuthorityId).ToLower())
+                            {
+                                siteDetailToUpdate.invln_HeProjectLocalAuthorityId = siteDetailsMapped.invln_HeProjectLocalAuthorityId;
+                            }
                             else
                             {
                                 siteDetailToUpdate[field] = siteDetailsMapped[field];
