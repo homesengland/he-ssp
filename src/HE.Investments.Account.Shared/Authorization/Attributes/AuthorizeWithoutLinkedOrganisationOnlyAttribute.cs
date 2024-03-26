@@ -18,15 +18,15 @@ public class AuthorizeWithoutLinkedOrganisationOnlyAttribute : AuthorizeAttribut
             context.Result = accountRoutes.LandingPageForNotLoggedUser();
         }
 
-        if (!await accountUserContext.IsLinkedWithOrganisation())
-        {
-            await next();
-            return;
-        }
-
         if (!await accountUserContext.IsProfileCompleted())
         {
             context.Result = accountRoutes.NotCompleteProfile();
+            return;
+        }
+
+        if (!await accountUserContext.IsLinkedWithOrganisation())
+        {
+            await next();
             return;
         }
 
