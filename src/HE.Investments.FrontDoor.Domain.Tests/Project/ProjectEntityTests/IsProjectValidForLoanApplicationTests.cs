@@ -43,7 +43,7 @@ public class IsProjectValidForLoanApplicationTests
         var project = ProjectEntityBuilder
             .New()
             .WithSupportActivities(new List<SupportActivityType> { SupportActivityType.DevelopingHomes })
-            .WithAffordableHomesAmount(AffordableHomesAmount.OnlyAffordableHomes)
+            .WithAffordableHomesAmount(AffordableHomesAmount.OnlyOpenMarketHomes)
             .WithOrganisationHomesBuilt(1000)
             .WithIsSiteIdentified(true)
             .WithIsSupportRequired(true)

@@ -216,7 +216,7 @@ public class ProjectEntity : DomainEntity
     {
         return SupportActivities.Values.Count == 1
                && SupportActivities.Values.Contains(SupportActivityType.DevelopingHomes)
-               && AffordableHomesAmount.AffordableHomesAmount is AffordableHomesAmountType.OnlyAffordableHomes
+               && AffordableHomesAmount.AffordableHomesAmount is AffordableHomesAmountType.OnlyOpenMarketHomes
                    or AffordableHomesAmountType.OpenMarkedAndRequiredAffordableHomes
                && OrganisationHomesBuilt?.Value <= 2000
                && IsSiteIdentified?.Value == true
