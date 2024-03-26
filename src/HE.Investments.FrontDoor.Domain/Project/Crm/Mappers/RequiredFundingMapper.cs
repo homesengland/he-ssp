@@ -7,7 +7,14 @@ namespace HE.Investments.FrontDoor.Domain.Project.Crm.Mappers;
 
 public class RequiredFundingMapper : EnumMapper<RequiredFundingOption>
 {
-    protected override IDictionary<RequiredFundingOption, int?> Mapping => FrontDoorProjectEnumMapping.FundingAmount;
+    private readonly IFrontDoorProjectEnumMapping _mapping;
+
+    public RequiredFundingMapper(IFrontDoorProjectEnumMapping mapping)
+    {
+        _mapping = mapping;
+    }
+
+    protected override IDictionary<RequiredFundingOption, int?> Mapping => _mapping.FundingAmount;
 
     public int? Map(RequiredFunding value)
     {

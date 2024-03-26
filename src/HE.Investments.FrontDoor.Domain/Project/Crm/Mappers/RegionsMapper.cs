@@ -7,17 +7,24 @@ namespace HE.Investments.FrontDoor.Domain.Project.Crm.Mappers;
 
 public class RegionsMapper : EnumMapper<RegionType>
 {
-    protected override IDictionary<RegionType, int?> Mapping => FrontDoorProjectEnumMapping.RegionType;
+    private readonly IFrontDoorProjectEnumMapping _mapping;
+
+    public RegionsMapper(IFrontDoorProjectEnumMapping mapping)
+    {
+        _mapping = mapping;
+    }
+
+    protected override IDictionary<RegionType, int?> Mapping => _mapping.RegionType;
 
     public Regions Map(IList<int> values)
     {
         return values.Count == 0
             ? Regions.Empty()
-            : new Regions(values.Select(x => new RegionsMapper().ToDomain(x)!.Value).ToList());
+            : new Regions(values.Select(x => ToDomain(x)!.Value).ToList());
     }
 
     public List<int> Map(Regions value)
     {
-        return value.Values.Select(x => new RegionsMapper().ToDto(x)!.Value).ToList();
+        return value.Values.Select(x => ToDto(x)!.Value).ToList();
     }
 }

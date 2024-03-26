@@ -16,9 +16,12 @@ internal class PrefillDataRepository : IPrefillDataRepository
 {
     private readonly IProjectCrmContext _crmContext;
 
-    public PrefillDataRepository(IProjectCrmContext crmContext)
+    private readonly IFrontDoorProjectEnumMapping _mapping;
+
+    public PrefillDataRepository(IProjectCrmContext crmContext, IFrontDoorProjectEnumMapping mapping)
     {
         _crmContext = crmContext;
+        _mapping = mapping;
     }
 
     public async Task<ProjectPrefillData> GetProjectPrefillData(
@@ -43,7 +46,17 @@ internal class PrefillDataRepository : IPrefillDataRepository
         await _crmContext.DeactivateProject(projectId.Value, cancellationToken);
     }
 
-    private static ProjectPrefillData Map(FrontDoorProjectDto project, FrontDoorProjectSiteDto? site)
+    private static SiteDetails MapSiteDetails(FrontDoorProjectSiteDto site)
+    {
+        return new SiteDetails(site.SiteName);
+    }
+
+    private static DateDetails MapDateDetails(int? month, int? year)
+    {
+        return new DateDetails("01", month?.ToString(CultureInfo.InvariantCulture) ?? "01", year?.ToString(CultureInfo.InvariantCulture) ?? "1900");
+    }
+
+    private ProjectPrefillData Map(FrontDoorProjectDto project, FrontDoorProjectSiteDto? site)
     {
         var isSiteIdentified = project.IdentifiedSite ?? false;
         var isFundingRequired = project.FundingRequired ?? false;
@@ -52,10 +65,10 @@ internal class PrefillDataRepository : IPrefillDataRepository
             new FrontDoorProjectId(project.ProjectId),
             project.ProjectSupportsHousingDeliveryinEngland ?? true,
             project.ProjectName,
-            new ReadOnlyCollection<SupportActivityType>(DomainEnumMapper.Map(project.ActivitiesinThisProject, FrontDoorProjectEnumMapping.ActivityType)),
-            DomainEnumMapper.Map(project.AmountofAffordableHomes, FrontDoorProjectEnumMapping.AffordableHomes),
+            new ReadOnlyCollection<SupportActivityType>(DomainEnumMapper.Map(project.ActivitiesinThisProject, _mapping.ActivityType)),
+            DomainEnumMapper.Map(project.AmountofAffordableHomes, _mapping.AffordableHomes),
             project.NumberofHomesEnabledBuilt,
-            new ReadOnlyCollection<InfrastructureType>(DomainEnumMapper.Map(project.InfrastructureDelivered, FrontDoorProjectEnumMapping.Infrastructure)),
+            new ReadOnlyCollection<InfrastructureType>(DomainEnumMapper.Map(project.InfrastructureDelivered, _mapping.Infrastructure)),
             isSiteIdentified,
             isSiteIdentified && site != null ? MapSiteDetails(site) : null,
             isSiteIdentified ? null : MapSiteNotIdentifiedDetails(project),
@@ -65,28 +78,18 @@ internal class PrefillDataRepository : IPrefillDataRepository
             MapDateDetails(project.StartofProjectMonth, project.StartofProjectYear));
     }
 
-    private static SiteDetails MapSiteDetails(FrontDoorProjectSiteDto site)
-    {
-        return new SiteDetails(site.SiteName);
-    }
-
-    private static SiteNotIdentifiedDetails MapSiteNotIdentifiedDetails(FrontDoorProjectDto project)
+    private SiteNotIdentifiedDetails MapSiteNotIdentifiedDetails(FrontDoorProjectDto project)
     {
         return new SiteNotIdentifiedDetails(
-            DomainEnumMapper.Map(project.GeographicFocus, FrontDoorProjectEnumMapping.GeographicFocus) ?? ProjectGeographicFocus.Undefined,
-            new ReadOnlyCollection<RegionType>(DomainEnumMapper.Map(project.Region, FrontDoorProjectEnumMapping.RegionType)),
+            DomainEnumMapper.Map(project.GeographicFocus, _mapping.GeographicFocus) ?? ProjectGeographicFocus.Undefined,
+            new ReadOnlyCollection<RegionType>(DomainEnumMapper.Map(project.Region, _mapping.RegionType)),
             project.NumberofHomesEnabledBuilt ?? 0);
     }
 
-    private static FundingDetails MapFundingDetails(FrontDoorProjectDto project)
+    private FundingDetails MapFundingDetails(FrontDoorProjectDto project)
     {
         return new FundingDetails(
-            DomainEnumMapper.Map(project.AmountofFundingRequired, FrontDoorProjectEnumMapping.FundingAmount) ?? RequiredFundingOption.Undefined,
+            DomainEnumMapper.Map(project.AmountofFundingRequired, _mapping.FundingAmount) ?? RequiredFundingOption.Undefined,
             project.IntentiontoMakeaProfit ?? false);
-    }
-
-    private static DateDetails MapDateDetails(int? month, int? year)
-    {
-        return new DateDetails("01", month?.ToString(CultureInfo.InvariantCulture) ?? "01", year?.ToString(CultureInfo.InvariantCulture) ?? "1900");
     }
 }

@@ -9,6 +9,7 @@
     <PackageReference Include="Microsoft.CrmSdk.CoreTools" Version="9.1.0.146" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="Microsoft.FeatureManagement" Version="3.0.0" />
     <PackageReference Include="Microsoft.PowerPlatform.Dataverse.Client" Version="1.1.12" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.35.0" />
   </ItemGroup>
