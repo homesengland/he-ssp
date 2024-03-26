@@ -6,5 +6,12 @@ namespace HE.Investments.FrontDoor.Domain.Project.Crm.Mappers;
 
 public class AffordableHomesAmountMapper : EnumMapper<AffordableHomesAmount>
 {
-    protected override IDictionary<AffordableHomesAmount, int?> Mapping => FrontDoorProjectEnumMapping.AffordableHomes;
+    private readonly IFrontDoorProjectEnumMapping _mapping;
+
+    public AffordableHomesAmountMapper(IFrontDoorProjectEnumMapping mapping)
+    {
+        _mapping = mapping;
+    }
+
+    protected override IDictionary<AffordableHomesAmount, int?> Mapping => _mapping.AffordableHomes;
 }

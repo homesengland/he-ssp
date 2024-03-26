@@ -7,7 +7,14 @@ namespace HE.Investments.FrontDoor.Domain.Project.Crm.Mappers;
 
 public class SupportActivitiesMapper : EnumMapper<SupportActivityType>
 {
-    protected override IDictionary<SupportActivityType, int?> Mapping => FrontDoorProjectEnumMapping.ActivityType;
+    private readonly IFrontDoorProjectEnumMapping _mapping;
+
+    public SupportActivitiesMapper(IFrontDoorProjectEnumMapping mapping)
+    {
+        _mapping = mapping;
+    }
+
+    protected override IDictionary<SupportActivityType, int?> Mapping => _mapping.ActivityType;
 
     public SupportActivities Map(IList<int> values)
     {

@@ -3,7 +3,7 @@ using HE.Investments.Common.CRM.Model;
 
 namespace HE.Investments.Common.CRM.Mappers;
 
-public class PlanningStatusMapper : EnumMapper<SitePlanningStatus>
+internal class InternalPlanningStatusMapper : EnumMapper<SitePlanningStatus>, IPlanningStatusMapper
 {
     protected override IDictionary<SitePlanningStatus, int?> Mapping => new Dictionary<SitePlanningStatus, int?>
     {

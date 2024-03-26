@@ -9,4 +9,6 @@ public static class FeatureFlags
     public const string DisplayPostMvpLoans = nameof(DisplayPostMvpLoans);
 
     public const string StayInCurrentApplication = nameof(StayInCurrentApplication);
+
+    public const string UseExternalFrontDoorTables = nameof(UseExternalFrontDoorTables);
 }

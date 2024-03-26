@@ -6,7 +6,6 @@ using HE.Investments.Common.Domain;
 using HE.Investments.Common.Errors;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Utils;
-using HE.Investments.FrontDoor.Common.Extensions;
 using HE.Investments.FrontDoor.Contract.Project.Events;
 using HE.Investments.FrontDoor.Domain.Project.Repository;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
@@ -226,7 +225,7 @@ public class ProjectEntity : DomainEntity
                    or RequiredFundingOption.Between1MlnAnd5Mln
                    or RequiredFundingOption.Between5MlnAnd10Mln
                && IsProfit.Value == true
-               && DateTimeUtil.IsDateWithinXYearsFromNow(ExpectedStartDate.Value.ToDateTime(), 2);
+               && DateTimeUtil.IsDateWithinXYearsFromNow(ExpectedStartDate.Value?.ToDateTime(TimeOnly.MinValue), 2);
     }
 
     private static async Task<ProjectName> ValidateProjectNameUniqueness(
