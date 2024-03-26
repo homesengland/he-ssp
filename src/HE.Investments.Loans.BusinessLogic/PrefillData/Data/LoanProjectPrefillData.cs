@@ -8,4 +8,5 @@ public record LoanProjectPrefillData(
     FrontDoorSiteId SiteId,
     string Name,
     int? NumberOfHomes,
-    PlanningPermissionStatus? PlanningPermissionStatus);
+    PlanningPermissionStatus? PlanningPermissionStatus,
+    string? LocalAuthorityName);

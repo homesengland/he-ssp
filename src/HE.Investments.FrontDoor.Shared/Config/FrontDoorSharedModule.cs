@@ -1,4 +1,5 @@
 using HE.Investments.Common;
+using HE.Investments.Common.CRM.Config;
 using HE.Investments.FrontDoor.Shared.Project.Crm;
 using HE.Investments.FrontDoor.Shared.Project.Repositories;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,6 +11,7 @@ public static class FrontDoorSharedModule
 {
     public static void AddFrontDoorSharedModule(this IServiceCollection services)
     {
+        services.AddCommonCrmModule();
         services.AddScoped<IProjectCrmContext, ProjectCrmContext>();
         services.AddScoped<IPrefillDataRepository, PrefillDataRepository>();
         services.AddSingleton<IFrontDoorProjectEnumMapping>(x =>

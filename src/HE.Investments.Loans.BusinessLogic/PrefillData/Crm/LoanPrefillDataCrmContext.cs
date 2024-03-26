@@ -28,9 +28,7 @@ internal class LoanPrefillDataCrmContext : ILoanPrefillDataCrmContext
             invln_accountid = userAccount.SelectedOrganisationId().ToString(),
             invln_externalcontactid = userAccount.UserGlobalId.ToString(),
             invln_loanapplicationid = loanApplicationId.ToString(),
-            invln_fieldstoretrieve = FormatFields(
-                nameof(invln_Loanapplication.invln_LoanapplicationId),
-                nameof(invln_Loanapplication.invln_loanapplication_FDProjectId_invln_frontdo)),
+            invln_fieldstoretrieve = FormatFields(nameof(invln_Loanapplication.invln_LoanapplicationId), "invln_fdprojectid"),
         };
 
         var response = await _serviceClient.ExecuteAsync(req, cancellationToken) as invln_getsingleloanapplicationforaccountandcontactResponse;

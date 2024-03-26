@@ -4,6 +4,7 @@ using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Common.CRM.Mappers;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Extensions;
+using HE.Investments.FrontDoor.Shared.Project;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories.Mapper;
 using HE.Investments.Loans.BusinessLogic.Projects.Entities;
 using HE.Investments.Loans.BusinessLogic.Projects.ValueObjects;
@@ -20,7 +21,7 @@ internal static class ProjectEntityMapper
 
         return new Project(
             ProjectId.From(siteDetailsDto.siteDetailsId),
-            null, // TODO: AB#91906 siteDetailsDto.frontDoorSiteId.IsProvided() ? new FrontDoorSiteId(siteDetailsDto.frontDoorSiteId) : null,
+            siteDetailsDto.frontDoorSiteId.IsProvided() ? new FrontDoorSiteId(siteDetailsDto.frontDoorSiteId) : null,
             SectionStatusMapper.Map(siteDetailsDto.completionStatus),
             siteDetailsDto.Name.IsProvided() ? new ProjectName(siteDetailsDto.Name) : null,
             startDate,

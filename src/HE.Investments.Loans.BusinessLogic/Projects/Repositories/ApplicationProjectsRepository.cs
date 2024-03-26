@@ -175,9 +175,9 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
     {
         var siteDetails = new SiteDetailsDto
         {
-            // TODO: AB#91906 assign FD Site to Loans Project: frontDoorSiteId = projectToSave.FrontDoorSiteId?.Value,
             siteDetailsId = projectToSave.Id.Value.ToString(),
             Name = projectToSave.Name?.Value,
+            frontDoorSiteId = projectToSave.FrontDoorSiteId?.Value,
         };
 
         var req = new invln_createsinglesitedetailRequest

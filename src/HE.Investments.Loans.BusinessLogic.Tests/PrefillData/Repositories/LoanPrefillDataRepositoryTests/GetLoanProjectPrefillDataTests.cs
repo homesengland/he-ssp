@@ -42,7 +42,7 @@ public class GetLoanProjectPrefillDataTests : TestBase<LoanPrefillDataRepository
         // given
         var applicationId = new LoanApplicationId(Guid.NewGuid());
         MockFrontDoorProjectId(applicationId, ProjectId);
-        MockPrefillDataRepository(siteName: "Site Name", 12);
+        MockPrefillDataRepository(siteName: "Site Name", 12, localAuthorityName: "My local authority");
 
         // when
         var result = await TestCandidate.GetLoanProjectPrefillData(applicationId, SiteId, UserAccount, CancellationToken.None);
@@ -52,6 +52,7 @@ public class GetLoanProjectPrefillDataTests : TestBase<LoanPrefillDataRepository
         result.SiteId.Should().Be(SiteId);
         result.Name.Should().Be("Site Name");
         result.NumberOfHomes.Should().Be(12);
+        result.LocalAuthorityName.Should().Be("My local authority");
     }
 
     [Theory]
@@ -89,7 +90,8 @@ public class GetLoanProjectPrefillDataTests : TestBase<LoanPrefillDataRepository
     private void MockPrefillDataRepository(
         string? siteName = null,
         int? numberOfHomes = null,
-        SitePlanningStatus planningStatus = SitePlanningStatus.Undefined)
+        SitePlanningStatus planningStatus = SitePlanningStatus.Undefined,
+        string? localAuthorityName = null)
     {
         var repository = CreateAndRegisterDependencyMock<IPrefillDataRepository>();
 
@@ -98,6 +100,7 @@ public class GetLoanProjectPrefillDataTests : TestBase<LoanPrefillDataRepository
                 SiteId,
                 siteName ?? "Empty",
                 numberOfHomes,
-                planningStatus));
+                planningStatus,
+                localAuthorityName ?? "Empty"));
     }
 }

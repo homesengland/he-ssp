@@ -49,7 +49,8 @@ public class LoanPrefillDataRepository : ILoanPrefillDataRepository
             siteId,
             prefillData.Name,
             prefillData.NumberOfHomes,
-            MapPlanningPermissionStatus(prefillData.PlanningStatus));
+            MapPlanningPermissionStatus(prefillData.PlanningStatus),
+            prefillData.LocalAuthorityName);
     }
 
     private static FundingPurpose? MapFundingPurpose(IReadOnlyCollection<SupportActivityType> supportActivities)

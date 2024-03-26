@@ -18,10 +18,13 @@ internal class PrefillDataRepository : IPrefillDataRepository
 
     private readonly IFrontDoorProjectEnumMapping _mapping;
 
-    public PrefillDataRepository(IProjectCrmContext crmContext, IFrontDoorProjectEnumMapping mapping)
+    private readonly IPlanningStatusMapper _planningStatusMapper;
+
+    public PrefillDataRepository(IProjectCrmContext crmContext, IFrontDoorProjectEnumMapping mapping, IPlanningStatusMapper planningStatusMapper)
     {
         _crmContext = crmContext;
         _mapping = mapping;
+        _planningStatusMapper = planningStatusMapper;
     }
 
     public async Task<ProjectPrefillData> GetProjectPrefillData(
@@ -49,7 +52,8 @@ internal class PrefillDataRepository : IPrefillDataRepository
             siteId,
             site.SiteName,
             site.NumberofHomesEnabledBuilt,
-            DomainEnumMapper.Map(site.PlanningStatus, _mapping.PlanningStatus) ?? SitePlanningStatus.Undefined);
+            _planningStatusMapper.ToDomain(site.PlanningStatus) ?? SitePlanningStatus.Undefined,
+            site.LocalAuthorityName);
     }
 
     public async Task MarkProjectAsUsed(FrontDoorProjectId projectId, CancellationToken cancellationToken)

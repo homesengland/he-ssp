@@ -9,6 +9,7 @@ using HE.Investments.Common.WWW.Utils;
 using HE.Investments.Loans.Common.Utils.Enums;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
 using HE.Investments.Loans.Contract.Funding.Commands;
+using HE.Investments.Loans.Contract.PrefillData.Queries;
 using HE.Investments.Loans.Contract.Projects;
 using HE.Investments.Loans.Contract.Projects.Commands;
 using HE.Investments.Loans.Contract.Projects.Queries;
@@ -367,9 +368,10 @@ public class ProjectController : WorkflowController<ProjectState>
 
     [HttpGet("{projectId}/local-authority/search")]
     [WorkflowState(ProjectState.ProvideLocalAuthority)]
-    public IActionResult LocalAuthoritySearch(Guid id, Guid projectId)
+    public async Task<IActionResult> LocalAuthoritySearch(Guid id, Guid projectId, CancellationToken cancellationToken)
     {
-        return View(new LocalAuthoritiesViewModel { ApplicationId = id, ProjectId = projectId, });
+        var projectPrefillData = await _mediator.Send(new GetLoanProjectPrefillDataQuery(LoanApplicationId.From(id), ProjectId.From(projectId)), cancellationToken);
+        return View(new LocalAuthoritiesViewModel { ApplicationId = id, ProjectId = projectId, Phrase = projectPrefillData?.LocalAuthorityName });
     }
 
     [HttpPost("{projectId}/local-authority/search")]

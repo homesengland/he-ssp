@@ -3,4 +3,4 @@ using MediatR;
 
 namespace HE.Investments.Loans.Contract.PrefillData.Queries;
 
-public record GetLoanApplicationPrefillDataQuery(LoanApplicationId ApplicationId) : IRequest<LoanApplicationPrefillData>;
+public record GetLoanProjectPrefillDataQuery(LoanApplicationId ApplicationId, ProjectId ProjectId) : IRequest<LoanProjectPrefillData?>;
