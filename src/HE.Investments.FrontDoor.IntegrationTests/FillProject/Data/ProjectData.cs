@@ -21,7 +21,7 @@ public class ProjectData
 
     public bool IsEnglandHousingDelivery => true;
 
-    public AffordableHomesAmount AffordableHomeAmount => AffordableHomesAmount.OnlyAffordableHomes;
+    public AffordableHomesAmount AffordableHomeAmount => AffordableHomesAmount.OnlyOpenMarketHomes;
 
     public ProjectGeographicFocus GeographicFocus => ProjectGeographicFocus.Regional;
 
