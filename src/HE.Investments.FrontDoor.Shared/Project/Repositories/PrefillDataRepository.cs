@@ -1,10 +1,10 @@
 extern alias Org;
 
 using System.Collections.ObjectModel;
-using System.Globalization;
 using HE.Investments.Account.Shared.User;
-using HE.Investments.Common.Contract;
+using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.CRM.Mappers;
+using HE.Investments.Common.Extensions;
 using HE.Investments.FrontDoor.Shared.Project.Contract;
 using HE.Investments.FrontDoor.Shared.Project.Crm;
 using HE.Investments.FrontDoor.Shared.Project.Data;
@@ -18,10 +18,13 @@ internal class PrefillDataRepository : IPrefillDataRepository
 
     private readonly IFrontDoorProjectEnumMapping _mapping;
 
-    public PrefillDataRepository(IProjectCrmContext crmContext, IFrontDoorProjectEnumMapping mapping)
+    private readonly IPlanningStatusMapper _planningStatusMapper;
+
+    public PrefillDataRepository(IProjectCrmContext crmContext, IFrontDoorProjectEnumMapping mapping, IPlanningStatusMapper planningStatusMapper)
     {
         _crmContext = crmContext;
         _mapping = mapping;
+        _planningStatusMapper = planningStatusMapper;
     }
 
     public async Task<ProjectPrefillData> GetProjectPrefillData(
@@ -34,11 +37,23 @@ internal class PrefillDataRepository : IPrefillDataRepository
             ? await _crmContext.GetOrganisationProjectById(projectId.Value, organisationId, cancellationToken)
             : await _crmContext.GetUserProjectById(projectId.Value, userAccount.UserGlobalId.Value, organisationId, cancellationToken);
 
-        var site = project.IdentifiedSite == true
-            ? await _crmContext.GetProjectSite(projectId.Value, cancellationToken)
+        var sites = project.IdentifiedSite == true
+            ? await _crmContext.GetProjectSites(projectId.Value, cancellationToken)
             : null;
 
-        return Map(project, site);
+        return Map(project, sites?.items.FirstOrDefault());
+    }
+
+    public async Task<SitePrefillData> GetSitePrefillData(FrontDoorProjectId projectId, FrontDoorSiteId siteId, CancellationToken cancellationToken)
+    {
+        var site = await _crmContext.GetProjectSite(projectId.Value, siteId.Value, cancellationToken);
+
+        return new SitePrefillData(
+            siteId,
+            site.SiteName,
+            site.NumberofHomesEnabledBuilt,
+            _planningStatusMapper.ToDomain(site.PlanningStatus) ?? SitePlanningStatus.Undefined,
+            site.LocalAuthorityName);
     }
 
     public async Task MarkProjectAsUsed(FrontDoorProjectId projectId, CancellationToken cancellationToken)
@@ -46,50 +61,12 @@ internal class PrefillDataRepository : IPrefillDataRepository
         await _crmContext.DeactivateProject(projectId.Value, cancellationToken);
     }
 
-    private static SiteDetails MapSiteDetails(FrontDoorProjectSiteDto site)
-    {
-        return new SiteDetails(site.SiteName);
-    }
-
-    private static DateDetails MapDateDetails(int? month, int? year)
-    {
-        return new DateDetails("01", month?.ToString(CultureInfo.InvariantCulture) ?? "01", year?.ToString(CultureInfo.InvariantCulture) ?? "1900");
-    }
-
     private ProjectPrefillData Map(FrontDoorProjectDto project, FrontDoorProjectSiteDto? site)
     {
-        var isSiteIdentified = project.IdentifiedSite ?? false;
-        var isFundingRequired = project.FundingRequired ?? false;
-
         return new ProjectPrefillData(
             new FrontDoorProjectId(project.ProjectId),
-            project.ProjectSupportsHousingDeliveryinEngland ?? true,
             project.ProjectName,
             new ReadOnlyCollection<SupportActivityType>(DomainEnumMapper.Map(project.ActivitiesinThisProject, _mapping.ActivityType)),
-            DomainEnumMapper.Map(project.AmountofAffordableHomes, _mapping.AffordableHomes),
-            project.NumberofHomesEnabledBuilt,
-            new ReadOnlyCollection<InfrastructureType>(DomainEnumMapper.Map(project.InfrastructureDelivered, _mapping.Infrastructure)),
-            isSiteIdentified,
-            isSiteIdentified && site != null ? MapSiteDetails(site) : null,
-            isSiteIdentified ? null : MapSiteNotIdentifiedDetails(project),
-            project.WouldyourprojectfailwithoutHEsupport ?? false,
-            isFundingRequired,
-            isFundingRequired ? MapFundingDetails(project) : null,
-            MapDateDetails(project.StartofProjectMonth, project.StartofProjectYear));
-    }
-
-    private SiteNotIdentifiedDetails MapSiteNotIdentifiedDetails(FrontDoorProjectDto project)
-    {
-        return new SiteNotIdentifiedDetails(
-            DomainEnumMapper.Map(project.GeographicFocus, _mapping.GeographicFocus) ?? ProjectGeographicFocus.Undefined,
-            new ReadOnlyCollection<RegionType>(DomainEnumMapper.Map(project.Region, _mapping.RegionType)),
-            project.NumberofHomesEnabledBuilt ?? 0);
-    }
-
-    private FundingDetails MapFundingDetails(FrontDoorProjectDto project)
-    {
-        return new FundingDetails(
-            DomainEnumMapper.Map(project.AmountofFundingRequired, _mapping.FundingAmount) ?? RequiredFundingOption.Undefined,
-            project.IntentiontoMakeaProfit ?? false);
+            site.IsProvided() ? new FrontDoorSiteId(site!.SiteId) : null);
     }
 }

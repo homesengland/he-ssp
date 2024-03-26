@@ -10,5 +10,7 @@ public interface IPrefillDataRepository
         UserAccount userAccount,
         CancellationToken cancellationToken);
 
+    Task<SitePrefillData> GetSitePrefillData(FrontDoorProjectId projectId, FrontDoorSiteId siteId, CancellationToken cancellationToken);
+
     Task MarkProjectAsUsed(FrontDoorProjectId projectId, CancellationToken cancellationToken);
 }

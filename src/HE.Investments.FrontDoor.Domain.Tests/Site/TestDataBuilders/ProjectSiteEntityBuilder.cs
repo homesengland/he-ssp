@@ -1,7 +1,6 @@
 extern alias Org;
 
 using HE.Investments.Common.Contract.Enum;
-using HE.Investments.FrontDoor.Contract.Site;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
 using HE.Investments.FrontDoor.Domain.Site;
 using HE.Investments.FrontDoor.Domain.Site.ValueObjects;
@@ -12,8 +11,6 @@ using Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects;
 using SiteLocalAuthority = Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
 
 namespace HE.Investments.FrontDoor.Domain.Tests.Site.TestDataBuilders;
-
-extern alias Org;
 
 public class ProjectSiteEntityBuilder : TestObjectBuilder<ProjectSiteEntityBuilder, ProjectSiteEntity>
 {

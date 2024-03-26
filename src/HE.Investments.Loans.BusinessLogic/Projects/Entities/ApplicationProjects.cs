@@ -1,4 +1,5 @@
 using HE.Investments.Common.Contract.Exceptions;
+using HE.Investments.FrontDoor.Shared.Project;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
 
 namespace HE.Investments.Loans.BusinessLogic.Projects.Entities;
@@ -6,12 +7,12 @@ public class ApplicationProjects
 {
     private readonly List<Project> _projects;
 
-    public ApplicationProjects(LoanApplicationId loanApplicationId, string? projectName = null)
+    public ApplicationProjects(LoanApplicationId loanApplicationId, FrontDoorSiteId? frontDoorSiteId = null)
     {
         LoanApplicationId = loanApplicationId;
         _projects = new List<Project>();
 
-        AddEmptyProject(projectName);
+        AddEmptyProject(frontDoorSiteId);
     }
 
     public ApplicationProjects(LoanApplicationId loanApplicationId, IEnumerable<Project> projects)
@@ -27,9 +28,9 @@ public class ApplicationProjects
 
     public IReadOnlyCollection<Project> Projects => _projects.AsReadOnly();
 
-    public Project AddEmptyProject(string? projectName = null)
+    public Project AddEmptyProject(FrontDoorSiteId? frontDoorSiteId = null)
     {
-        var project = new Project(projectName);
+        var project = new Project(frontDoorSiteId);
         _projects.Add(project);
 
         return project;
@@ -37,7 +38,7 @@ public class ApplicationProjects
 
     public void DeleteProject(ProjectId projectId)
     {
-        var projectToDelete = Projects.FirstOrDefault(p => p.Id == projectId) ?? throw new NotFoundException(nameof(Project).ToString(), projectId);
+        var projectToDelete = Projects.FirstOrDefault(p => p.Id == projectId) ?? throw new NotFoundException(nameof(Project), projectId);
 
         _projects.Remove(projectToDelete);
 

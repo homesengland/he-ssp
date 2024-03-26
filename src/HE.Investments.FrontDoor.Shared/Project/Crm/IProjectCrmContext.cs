@@ -10,7 +10,9 @@ internal interface IProjectCrmContext
 
     Task<FrontDoorProjectDto> GetUserProjectById(string projectId, string userGlobalId, Guid organisationId, CancellationToken cancellationToken);
 
-    Task<FrontDoorProjectSiteDto?> GetProjectSite(string projectId, CancellationToken cancellationToken);
+    Task<FrontDoorProjectSiteDto> GetProjectSite(string projectId, string siteId, CancellationToken cancellationToken);
+
+    Task<PagedResponseDto<FrontDoorProjectSiteDto>> GetProjectSites(string projectId, CancellationToken cancellationToken);
 
     Task DeactivateProject(string projectId, CancellationToken cancellationToken);
 }
