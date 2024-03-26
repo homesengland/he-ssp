@@ -114,4 +114,17 @@
       <field displayname="Version Number" name="versionnumber" type="bigint" />
     </fields>
   </entity>
+  <entity name="invln_localauthority" displayname="Local Authority OLD" etc="11118" primaryidfield="invln_localauthorityid" primarynamefield="invln_localauthorityname" disableplugins="false">
+    <fields>
+      <field displayname="Import Sequence Number" name="importsequencenumber" type="number" />
+      <field displayname="Local authority" name="invln_localauthorityid" type="guid" primaryKey="true" />
+      <field displayname="Local authority name" name="invln_localauthorityname" type="string" customfield="true" />
+      <field displayname="ONS code" name="invln_onscode" type="string" customfield="true" />
+      <field displayname="Region" name="invln_region" type="optionsetvalue" customfield="true" />
+      <field displayname="Status" name="statecode" type="state" />
+      <field displayname="Status Reason" name="statuscode" type="status" />
+      <field displayname="Time Zone Rule Version Number" name="timezoneruleversionnumber" type="number" />
+      <field displayname="UTC Conversion Time Zone Code" name="utcconversiontimezonecode" type="number" />
+    </fields>
+  </entity>
 </entities>
