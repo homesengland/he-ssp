@@ -7,11 +7,9 @@ using HE.Investments.FrontDoor.Contract.Project;
 using HE.Investments.FrontDoor.Contract.Site;
 using HE.Investments.FrontDoor.IntegrationTests.Framework;
 using HE.Investments.FrontDoor.IntegrationTests.Pages;
-using HE.Investments.FrontDoor.WWW;
 using HE.Investments.FrontDoor.WWW.Views.LocalAuthority.Const;
 using HE.Investments.FrontDoor.WWW.Views.Project.Const;
 using HE.Investments.FrontDoor.WWW.Views.Site.Const;
-using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.IntegrationTestsFramework.Assertions;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
@@ -24,7 +22,7 @@ namespace HE.Investments.FrontDoor.IntegrationTests.FillProject;
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
 public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
 {
-    public Order03FrontDoorProjectSiteQuestions(IntegrationTestFixture<Program> fixture, ITestOutputHelper output)
+    public Order03FrontDoorProjectSiteQuestions(FrontDoorIntegrationTestFixture fixture, ITestOutputHelper output)
         : base(fixture, output)
     {
     }
@@ -115,8 +113,8 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
             .HasBackLink(out _);
 
         // when
-        var cityOfLondonConfimLink = currentPage.GetLinkByTestId(SiteData.LocalAuthorityName.ToIdTag());
-        var nextPage = await TestClient.NavigateTo(cityOfLondonConfimLink);
+        var cityOfLondonConfirmLink = currentPage.GetLinkByTestId(SiteData.LocalAuthorityName.ToIdTag());
+        var nextPage = await TestClient.NavigateTo(cityOfLondonConfirmLink);
 
         // then
         nextPage

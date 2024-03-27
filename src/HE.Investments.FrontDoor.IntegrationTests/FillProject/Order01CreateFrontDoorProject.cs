@@ -6,9 +6,7 @@ using HE.Investments.Common.Extensions;
 using HE.Investments.FrontDoor.Contract.Project;
 using HE.Investments.FrontDoor.IntegrationTests.Framework;
 using HE.Investments.FrontDoor.IntegrationTests.Pages;
-using HE.Investments.FrontDoor.WWW;
 using HE.Investments.FrontDoor.WWW.Views.Project.Const;
-using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.TestsUtils.Assertions;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
@@ -21,7 +19,7 @@ namespace HE.Investments.FrontDoor.IntegrationTests.FillProject;
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
 public class Order01CreateFrontDoorProject : FrontDoorIntegrationTest
 {
-    public Order01CreateFrontDoorProject(IntegrationTestFixture<Program> fixture, ITestOutputHelper output)
+    public Order01CreateFrontDoorProject(FrontDoorIntegrationTestFixture fixture, ITestOutputHelper output)
         : base(fixture, output)
     {
     }
