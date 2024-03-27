@@ -5,7 +5,7 @@ namespace HE.Investment.AHP.Domain.Site.ValueObjects;
 public class SiteName : ShortText
 {
     public SiteName(string? value)
-        : base(value, "Name", "name")
+        : base(value, "Name", "site name")
     {
     }
 }
