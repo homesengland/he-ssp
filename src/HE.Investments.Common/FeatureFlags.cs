@@ -11,4 +11,6 @@ public static class FeatureFlags
     public const string StayInCurrentApplication = nameof(StayInCurrentApplication);
 
     public const string UseExternalFrontDoorTables = nameof(UseExternalFrontDoorTables);
+
+    public const string OrganisationsListImplemented = nameof(OrganisationsListImplemented);
 }

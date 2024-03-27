@@ -16,7 +16,7 @@ public class FrontDoorIntegrationTest : IntegrationTestBase<Program>, IDisposabl
 {
     private readonly ITestOutputHelper _output;
 
-    protected FrontDoorIntegrationTest(IntegrationTestFixture<Program> fixture, ITestOutputHelper output)
+    protected FrontDoorIntegrationTest(FrontDoorIntegrationTestFixture fixture, ITestOutputHelper output)
         : base(fixture)
     {
         _output = output;
