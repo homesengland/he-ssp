@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -17,15 +18,25 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
     public class DeliveryPhaseService : CrmService, IDeliveryPhaseService
     {
         private readonly IDeliveryPhaseRepository _deliveryPhaseRepository;
+
         private readonly IHomesInDeliveryPhaseRepository _homesInDeliveryPhaseRepository;
+
         private readonly IContactRepository _contactRepository;
+
         private readonly IAhpApplicationRepository _ahpApplicationRepository;
+
+        private readonly IProgrammeRepository _ahpProgrammeRepository;
+
+        private readonly IMilestoneFrameworkItemRepository _ahpMilestoneFrameworkItemRepository;
+
         public DeliveryPhaseService(CrmServiceArgs args) : base(args)
         {
             _deliveryPhaseRepository = CrmRepositoriesFactory.Get<IDeliveryPhaseRepository>();
             _contactRepository = CrmRepositoriesFactory.Get<IContactRepository>();
             _ahpApplicationRepository = CrmRepositoriesFactory.Get<IAhpApplicationRepository>();
             _homesInDeliveryPhaseRepository = CrmRepositoriesFactory.Get<IHomesInDeliveryPhaseRepository>();
+            _ahpProgrammeRepository = CrmRepositoriesFactory.Get<IProgrammeRepository>();
+            _ahpMilestoneFrameworkItemRepository = CrmRepositoriesFactory.Get<IMilestoneFrameworkItemRepository>();
         }
 
         public void DeleteDeliveryPhase(string applicationId, string organisationId, string deliveryPhaseId, string externalUserId)
@@ -85,14 +96,39 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
 
         public Guid SetDeliveryPhase(string deliveryPhase, string userId, string organisationId, string applicationId, string fieldsToSet = null)
         {
+            TracingService.Trace("Start SetDeliveryPhase function");
             if (Guid.TryParse(applicationId, out var applicationGuid) && Guid.TryParse(organisationId, out var organisationGuid))
             {
+                TracingService.Trace("Get Application");
+                var application = _ahpApplicationRepository.
+                    GetById(applicationGuid, new string[] { invln_scheme.Fields.invln_noofhomes,
+                                              invln_scheme.Fields.invln_fundingrequired,
+                                              invln_scheme.Fields.invln_programmelookup });
+
+                TracingService.Trace("Deserialize and Map imput data");
                 var devlieryPhaseDto = JsonSerializer.Deserialize<DeliveryPhaseDto>(deliveryPhase);
                 var deliveryPhaseMapped = DeliveryPhaseMapper.MapDtoToRegularEntity(devlieryPhaseDto, applicationId);
+
+                TracingService.Trace($"Get Contact by externalUserId:{userId}");
                 var contact = _contactRepository.GetContactViaExternalId(userId);
-                if (string.IsNullOrEmpty(devlieryPhaseDto.id) &&
-                    _ahpApplicationRepository.ApplicationWithGivenIdExistsForOrganisation(applicationGuid, organisationGuid))
+                // var programme = _ahpProgrammeRepository.GetById(application.invln_programmelookup.Id, [invln_programme.Fields.Id]);
+                TracingService.Trace($"Get Milestones");
+                if (application.invln_programmelookup == null)
                 {
+                    TracingService.Trace($"No programme - Finish function");
+                    return Guid.Empty;
+                }
+                var milestones = _ahpMilestoneFrameworkItemRepository.
+                    GetByAttribute(invln_milestoneframeworkitem.Fields.invln_programmeId, application.invln_programmelookup.Id).ToList();
+                if (application.invln_noofhomes == null || application.invln_noofhomes == 0)
+                {
+                    return Guid.Empty;
+                }
+                TracingService.Trace($"{organisationGuid}");
+                if (string.IsNullOrEmpty(devlieryPhaseDto.id) &&
+                   _ahpApplicationRepository.ApplicationWithGivenIdExistsForOrganisation(applicationGuid, organisationGuid))
+                {
+                    CalculateFundingOnPhaseCreate(application, deliveryPhaseMapped, milestones);
                     UpdateApplicationModificationFields(applicationGuid, contact.Id);
                     var deliveryPhaseId = _deliveryPhaseRepository.Create(deliveryPhaseMapped);
                     SetHomesinDeliveryPhase(devlieryPhaseDto.numberOfHomes, deliveryPhaseId);
@@ -120,6 +156,10 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
                         deliveryPhaseToUpdateOrCreate = deliveryPhaseMapped;
                     }
                     deliveryPhaseToUpdateOrCreate.Id = deliveryPhaseGuid;
+                    if (deliveryPhaseMapped.invln_NoofHomes != null)
+                    {
+                        CalculateFunding(application, deliveryPhaseMapped, milestones, deliveryPhaseToUpdateOrCreate);
+                    }
                     _deliveryPhaseRepository.Update(deliveryPhaseToUpdateOrCreate);
                     DeleteHomesFromDeliveryPhase(deliveryPhaseGuid);
                     SetHomesinDeliveryPhase(devlieryPhaseDto.numberOfHomes, deliveryPhaseGuid);
@@ -128,6 +168,42 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
                 }
             }
             return Guid.Empty;
+        }
+
+        public void CalculateFundingOnPhaseCreate(invln_scheme application, invln_DeliveryPhase deliveryPhaseMapped, List<invln_milestoneframeworkitem> milestones)
+        {
+            if (deliveryPhaseMapped.invln_NoofHomes != null)
+            {
+                var numberOfHouseApplication = application.invln_noofhomes.Value;
+                var numberOfHousePhase = deliveryPhaseMapped.invln_NoofHomes.Value;
+                var fundingRequired = application.invln_fundingrequired.Value;
+                var acquisitionPercentageValue = milestones.FirstOrDefault(x => x.invln_milestone.Value == (int)invln_Milestone.Acquisition).invln_percentagepaidonmilestone.Value / 100;
+                var startOnSitePercentageValue = milestones.FirstOrDefault(x => x.invln_milestone.Value == (int)invln_Milestone.SoS).invln_percentagepaidonmilestone.Value / 100;
+                var completionPercentageValue = milestones.FirstOrDefault(x => x.invln_milestone.Value == (int)invln_Milestone.PC).invln_percentagepaidonmilestone.Value / 100;
+                deliveryPhaseMapped.invln_AcquisitionValue = new Money((fundingRequired / (decimal)numberOfHouseApplication) * (decimal)numberOfHousePhase * acquisitionPercentageValue);
+                deliveryPhaseMapped.invln_AcquisitionPercentageValue = acquisitionPercentageValue;
+                deliveryPhaseMapped.invln_StartOnSiteValue = new Money((fundingRequired / numberOfHouseApplication) * numberOfHousePhase * startOnSitePercentageValue);
+                deliveryPhaseMapped.invln_StartOnSitePercentageValue = startOnSitePercentageValue;
+                deliveryPhaseMapped.invln_CompletionValue = new Money((fundingRequired / numberOfHouseApplication) * numberOfHousePhase * completionPercentageValue);
+                deliveryPhaseMapped.invln_CompletionPercentageValue = completionPercentageValue;
+            }
+        }
+
+        public void CalculateFunding(invln_scheme application, invln_DeliveryPhase deliveryPhaseMapped, List<invln_milestoneframeworkitem> milestones, invln_DeliveryPhase deliveryPhaseToUpdateOrCreate)
+        {
+            var numberOfHouseApplication = application.invln_noofhomes.Value;
+            var numberOfHousePhase = deliveryPhaseMapped.invln_NoofHomes.Value;
+            var fundingRequired = application.invln_fundingrequired.Value;
+            var acquisitionPercentageValue = milestones.FirstOrDefault(x => x.invln_milestone.Value == (int)invln_Milestone.Acquisition).invln_percentagepaidonmilestone.Value / 100;
+            var startOnSitePercentageValue = milestones.FirstOrDefault(x => x.invln_milestone.Value == (int)invln_Milestone.SoS).invln_percentagepaidonmilestone.Value / 100;
+            var completionPercentageValue = milestones.FirstOrDefault(x => x.invln_milestone.Value == (int)invln_Milestone.PC).invln_percentagepaidonmilestone.Value / 100;
+            deliveryPhaseToUpdateOrCreate.invln_AcquisitionValue = new Money((fundingRequired / numberOfHouseApplication) * numberOfHousePhase * acquisitionPercentageValue);
+            deliveryPhaseToUpdateOrCreate.invln_AcquisitionPercentageValue = acquisitionPercentageValue;
+            deliveryPhaseToUpdateOrCreate.invln_StartOnSiteValue = new Money((fundingRequired / numberOfHouseApplication) * numberOfHousePhase * startOnSitePercentageValue);
+            deliveryPhaseToUpdateOrCreate.invln_StartOnSitePercentageValue = startOnSitePercentageValue;
+            deliveryPhaseToUpdateOrCreate.invln_CompletionValue = new Money((fundingRequired / numberOfHouseApplication) * numberOfHousePhase * completionPercentageValue);
+            deliveryPhaseToUpdateOrCreate.invln_CompletionPercentageValue = completionPercentageValue;
+            deliveryPhaseToUpdateOrCreate.invln_NoofHomes = numberOfHousePhase;
         }
 
         private void SetHomesinDeliveryPhase(Dictionary<string, int?> numberOfHomes, Guid deliveryPhaseId)
@@ -165,7 +241,6 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
             };
             _ahpApplicationRepository.Update(applicationToUpdate);
         }
-
 
         private string GenerateFetchXmlAttributes(string fieldsToRetrieve)
         {

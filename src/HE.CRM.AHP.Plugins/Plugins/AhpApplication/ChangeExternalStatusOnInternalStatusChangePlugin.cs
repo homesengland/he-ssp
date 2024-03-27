@@ -26,16 +26,21 @@ namespace HE.CRM.AHP.Plugins.Plugins.AhpApplication
     public class ChangeExternalStatusOnInternalStatusChangePlugin : PluginBase<DataverseContext>, IPlugin
     {
         #region Constructors
+
         public ChangeExternalStatusOnInternalStatusChangePlugin(string unsecureConfig, string secureConfig) : base(unsecureConfig, secureConfig)
         {
         }
-        #endregion
+
+        #endregion Constructors
 
         #region Base Methods Overrides
+
         public override void RegisterHandlers(CrmHandlerFactory<DataverseContext> handlerFactory, IList<ICrmHandler> registeredHandlers)
         {
             registeredHandlers.Add(handlerFactory.GetHandler<ChangeExternalStatusOnInternalStatusChangeHandler>());
+            registeredHandlers.Add(handlerFactory.GetHandler<RecalculateDeliveryphaseHandler>());
         }
-        #endregion
+
+        #endregion Base Methods Overrides
     }
 }
