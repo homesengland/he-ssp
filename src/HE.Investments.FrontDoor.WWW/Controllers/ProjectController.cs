@@ -128,7 +128,6 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     }
 
     [HttpGet("{projectId}")]
-    [WorkflowState(ProjectWorkflowState.Name)]
     public async Task<IActionResult> Index([FromRoute] string projectId, CancellationToken cancellationToken)
     {
         var summary = await CreateProjectSummary(cancellationToken, false);
