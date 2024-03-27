@@ -19,7 +19,7 @@ internal class SearchOrganisationsQueryHandler : IRequestHandler<SearchOrganisat
     {
         var companyHousesResult = await _searchService.Search(request.SearchPhrase, new PagingQueryParams(request.PageSize, (request.Page - 1) * request.PageSize), cancellationToken);
 
-        if (!companyHousesResult.IsSuccessfull())
+        if (!companyHousesResult.IsSuccessful())
         {
             throw new ExternalServiceException();
         }
