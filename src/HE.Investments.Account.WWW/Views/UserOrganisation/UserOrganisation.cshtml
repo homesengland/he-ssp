@@ -10,7 +10,7 @@
 @model HE.Investments.Account.WWW.Models.UserOrganisation.UserOrganisationModel;
 @{
     ViewData["Title"] = OrganisationPageTitles.OrganisationDashboard(Model.OrganisationName);
-    if (await FeatureManager.IsEnabledAsync(FeatureFlags.StayInCurrentApplication, CancellationToken.None))
+    if (await FeatureManager.IsEnabledAsync(FeatureFlags.OrganisationsListImplemented, CancellationToken.None))
     {
         ViewBag.Breadcrumbs = BreadcrumbsBuilder
             .New()
