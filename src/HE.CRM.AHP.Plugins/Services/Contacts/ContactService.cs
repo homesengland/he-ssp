@@ -25,17 +25,5 @@ namespace HE.CRM.AHP.Plugins.Services.Contacts
             _govNotifyEmailService.SendNotifications_COMMON_INVITE_CONTACT_TO_JOIN_ORGANIZATION(new EntityReference(Contact.EntityLogicalName, invitedContactId),
                 new EntityReference(Contact.EntityLogicalName, inviterId), new EntityReference(Account.EntityLogicalName, organisationId));
         }
-
-        public void SendRequestToAssignContactToExistingOrganisation(Guid organisationId, Guid contactId)
-        {
-            var organisationAdministartors = _contactRepository.GetOrganisationAdministrators(organisationId);
-            if (organisationAdministartors.Any())
-            {
-                foreach (var admin in organisationAdministartors)
-                {
-                    _govNotifyEmailService.SendNotifications_COMMON_REQUEST_TO_ASSIGN_CONTACT_TO_EXISTING_ORGANISATION(admin.ToEntityReference(), new EntityReference(Contact.EntityLogicalName, contactId));
-                }
-            }
-        }
     }
 }

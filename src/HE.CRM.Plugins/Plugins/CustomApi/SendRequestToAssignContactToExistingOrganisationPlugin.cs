@@ -2,10 +2,10 @@ using System.Collections.Generic;
 using DataverseModel;
 using HE.Base.Plugins;
 using HE.Base.Plugins.Handlers;
-using HE.CRM.AHP.Plugins.Handlers.CustomApi;
+using HE.CRM.Plugins.Handlers.CustomApi;
 using Microsoft.Xrm.Sdk;
 
-namespace HE.CRM.AHP.Plugins.Plugins.CustomApi
+namespace HE.CRM.Plugins.Plugins.CustomApi
 {
     [CrmPluginRegistration(
     "invln_sendrequesttoassigncontacttoexistingorganisation",
@@ -16,7 +16,7 @@ namespace HE.CRM.AHP.Plugins.Plugins.CustomApi
     "HE.CRM.AHP.Plugins.Plugins.CustomApi.SendRequestToAssignContactToExistingOrganisationPlugin: invln_sendrequesttoassigncontacttoexistingorganisation",
     1,
     IsolationModeEnum.Sandbox,
-    Id = "a657d81e-9a3a-4f14-b2f6-2b5cf649623d")]
+    Id = "89B35099-BEEA-443A-AE4B-937011D25E3D")]
     public class SendRequestToAssignContactToExistingOrganisationPlugin : PluginBase<DataverseContext>, IPlugin
     {
         #region Constructors
