@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Organisation.CompaniesHouse;
@@ -58,7 +57,7 @@ public class OrganisationSearchService : IOrganisationSearchService
     {
         var companyHousesResult = await GetOrganizationFromCompanyHousesApi(organisationName, null, pagingParams, cancellationToken);
 
-        if (!companyHousesResult.IsSuccessfull())
+        if (!companyHousesResult.IsSuccessful())
         {
             return companyHousesResult;
         }
@@ -69,14 +68,14 @@ public class OrganisationSearchService : IOrganisationSearchService
         var mergedResult = MergeResults(companyHousesOrganizations, organizationsFromCrm);
         var foundSpvCompaniesCount = await AppendSpvCompanies(organisationName, pagingParams, companyHousesResult.TotalItems, mergedResult);
 
-        return new OrganisationSearchResult(mergedResult, companyHousesResult.TotalItems + foundSpvCompaniesCount, null!);
+        return new OrganisationSearchResult(mergedResult, companyHousesResult.TotalItems + foundSpvCompaniesCount);
     }
 
     public async Task<GetOrganizationByCompaniesHouseNumberResult> GetByCompaniesHouseNumber(string? companiesHouseNumber, CancellationToken cancellationToken)
     {
         var companyHousesResult = await GetOrganizationFromCompanyHousesApi(null!, companiesHouseNumber, new PagingQueryParams(1, 0), cancellationToken);
 
-        if (!companyHousesResult.IsSuccessfull())
+        if (!companyHousesResult.IsSuccessful())
         {
             return new GetOrganizationByCompaniesHouseNumberResult(null!, companyHousesResult.Error!);
         }
@@ -87,7 +86,7 @@ public class OrganisationSearchService : IOrganisationSearchService
 
         var mergedResult = MergeResults(companyHousesOrganizations, organizationsFromCrm);
 
-        return new GetOrganizationByCompaniesHouseNumberResult(mergedResult.FirstOrDefault()!, null!);
+        return new GetOrganizationByCompaniesHouseNumberResult(mergedResult.FirstOrDefault());
     }
 
     private async Task<int> AppendSpvCompanies(
@@ -121,20 +120,20 @@ public class OrganisationSearchService : IOrganisationSearchService
 
     private async Task<OrganisationSearchResult> GetOrganizationFromCompanyHousesApi(
         string organisationName,
-        string? compenirsHouseNumber,
+        string? companiesHouseNumber,
         PagingQueryParams pagingParams,
         CancellationToken cancellationToken)
     {
         try
         {
-            if (compenirsHouseNumber is not null)
+            if (companiesHouseNumber is not null)
             {
-                var result = await _companiesHouseApi.GetByCompanyNumber(compenirsHouseNumber, cancellationToken);
+                var result = await _companiesHouseApi.GetByCompanyNumber(companiesHouseNumber, cancellationToken);
 
                 return result != null
                     ? OrganisationSearchResult.FromSingleItem(
                         new OrganisationSearchItem(
-                            result!.CompanyNumber,
+                            result.CompanyNumber,
                             result.CompanyName,
                             result.OfficeAddress.Locality!,
                             result.OfficeAddress.AddressLine1!,
@@ -155,8 +154,7 @@ public class OrganisationSearchService : IOrganisationSearchService
                             x.OfficeAddress.PostalCode!,
                             null))
                     .ToList(),
-                companyHouseApiResult.Hits,
-                null!);
+                companyHouseApiResult.Hits);
         }
         catch (HttpRequestException ex)
         {
@@ -177,7 +175,7 @@ public class OrganisationSearchService : IOrganisationSearchService
         try
         {
             var companyHouseApiResult = await _companiesHouseApi.Search(organisationName, pagingParams with { StartIndex = 1 }, cancellationToken);
-            return new OrganisationSearchResult(Array.Empty<OrganisationSearchItem>(), companyHouseApiResult.Hits, null);
+            return new OrganisationSearchResult(Array.Empty<OrganisationSearchItem>(), companyHouseApiResult.Hits);
         }
         catch (HttpRequestException ex)
         {
@@ -201,7 +199,7 @@ public class OrganisationSearchService : IOrganisationSearchService
                 organizationsFromCrm,
                 c => c.CompanyNumber,
                 c => c.companyRegistrationNumber,
-                (ch, crm) => new OrganisationSearchItem(
+                (_, crm) => new OrganisationSearchItem(
                     crm.companyRegistrationNumber,
                     crm.registeredCompanyName,
                     crm.city,

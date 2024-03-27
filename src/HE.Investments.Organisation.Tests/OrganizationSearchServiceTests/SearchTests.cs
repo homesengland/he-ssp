@@ -24,7 +24,7 @@ public class SearchTests : TestBase<OrganisationSearchService>
 
         await WhenSearchingOrganizations();
 
-        _response.IsSuccessfull().Should().BeFalse();
+        _response.IsSuccessful().Should().BeFalse();
     }
 
     [Fact]
@@ -151,7 +151,7 @@ public class SearchTests : TestBase<OrganisationSearchService>
         var result = await TestCandidate.Search(organizationDetailsDto.registeredCompanyName, new PagingQueryParams(1, 1), CancellationToken.None);
 
         // then
-        result.IsSuccessfull().Should().BeTrue();
+        result.IsSuccessful().Should().BeTrue();
         result.TotalItems.Should().Be(1);
         result.Items.Should().ContainSingle(
             organizationDetailsDto.registeredCompanyName,
@@ -179,7 +179,7 @@ public class SearchTests : TestBase<OrganisationSearchService>
         var result = await TestCandidate.Search(spvCompany.registeredCompanyName, new PagingQueryParams(2, 1), CancellationToken.None);
 
         // then
-        result.IsSuccessfull().Should().BeTrue();
+        result.IsSuccessful().Should().BeTrue();
         result.TotalItems.Should().Be(2);
         result.Items.Count.Should().Be(2);
         result.Items[0].ShouldBe(companyFromCompanyHouse.CompanyName, companyFromCompanyHouse.CompanyNumber, null, false);
@@ -207,7 +207,7 @@ public class SearchTests : TestBase<OrganisationSearchService>
         var result = await TestCandidate.Search(spvCompany1.registeredCompanyName, new PagingQueryParams(2, 1), CancellationToken.None);
 
         // then
-        result.IsSuccessfull().Should().BeTrue();
+        result.IsSuccessful().Should().BeTrue();
         result.TotalItems.Should().Be(3);
         result.Items.Count.Should().Be(2);
         result.Items[0].ShouldBe(companyFromCompanyHouse1.CompanyName, companyFromCompanyHouse1.CompanyNumber, null, false);
@@ -235,7 +235,7 @@ public class SearchTests : TestBase<OrganisationSearchService>
         var result = await TestCandidate.Search(spvCompany1.registeredCompanyName, new PagingQueryParams(2, 4), CancellationToken.None);
 
         // then
-        result.IsSuccessfull().Should().BeTrue();
+        result.IsSuccessful().Should().BeTrue();
         result.TotalItems.Should().Be(5);
         result.Items.Count.Should().Be(1);
         result.Items.Single().ShouldBe(spvCompany4.registeredCompanyName, spvCompany4.companyRegistrationNumber, spvCompany4.organisationId, true);

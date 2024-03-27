@@ -8,6 +8,8 @@ namespace HE.Investments.Organisation.CompaniesHouse;
 
 internal class CompaniesHouseApi : ICompaniesHouseApi
 {
+    private const int MaxCompaniesHouseHits = 10000;
+
     private readonly HttpClient _httpClient;
 
     public CompaniesHouseApi(HttpClient httpClient)
@@ -33,6 +35,11 @@ internal class CompaniesHouseApi : ICompaniesHouseApi
 
         response.EnsureSuccessStatusCode();
         var result = await response.Content.ReadFromJsonAsync<CompaniesHouseSearchResult>(cancellationToken: cancellationToken);
+
+        if (result?.Hits > MaxCompaniesHouseHits)
+        {
+            result.Hits = MaxCompaniesHouseHits;
+        }
 
         return result!;
     }
