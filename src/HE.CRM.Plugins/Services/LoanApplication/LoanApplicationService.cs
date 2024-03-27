@@ -284,7 +284,6 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             }
         }
 
-
         public void UpdateLoanApplication(bool useHeTables, string loanApplicationId, string loanApplication, string fieldsToUpdate, string accountId, string contactExternalId)
         {
             if (Guid.TryParse(loanApplicationId, out Guid applicationId))
@@ -305,14 +304,26 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                     {
                         foreach (var field in fields)
                         {
+                            TracingService.Trace($"field name {field}");
                             if (string.Equals(field.ToLower(), nameof(invln_Loanapplication.invln_ExternalStatus).ToLower()))
                             {
                                 var retrievedLoanApplicationStatus = _loanApplicationRepository.GetById(applicationId, new string[] { nameof(invln_Loanapplication.invln_ExternalStatus).ToLower() }).invln_ExternalStatus;
                                 int oldStatus = retrievedLoanApplicationStatus != null ? retrievedLoanApplicationStatus.Value : 0;
                                 CheckIfExternalStatusCanBeChanged(oldStatus, loanApplicationMapped.invln_ExternalStatus.Value);
                             }
-                            TracingService.Trace($"field name {field}");
-                            loanApplicationToUpdate[field] = loanApplicationMapped[field];
+
+                            if (string.Equals(field.ToLower(), nameof(invln_Loanapplication.invln_FDProjectId).ToLower()))
+                            {
+                                loanApplicationToUpdate.invln_FDProjectId = loanApplicationToUpdate.invln_FDProjectId;
+                            }
+                            else if (string.Equals(field.ToLower(), nameof(invln_Loanapplication.invln_HeProjectId).ToLower()))
+                            {
+                                loanApplicationToUpdate.invln_HeProjectId = loanApplicationToUpdate.invln_HeProjectId;
+                            }
+                            else
+                            {
+                                loanApplicationToUpdate[field] = loanApplicationMapped[field];
+                            }
                         }
                     }
                 }
