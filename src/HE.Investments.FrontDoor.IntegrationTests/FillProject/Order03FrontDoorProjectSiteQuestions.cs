@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using FluentAssertions;
+using HE.Investments.Common.CRM.Extensions;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.FrontDoor.Contract.Project;
@@ -92,7 +93,7 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
         // when
         var nextPage = await TestClient.SubmitButton(
             continueButton,
-            ("Phrase", "london"));
+            ("Phrase", "oxford"));
 
         // then
         nextPage
@@ -108,19 +109,20 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
     public async Task Order05_SelectLocalAuthority()
     {
         // given
+        var useHeTablesParameter = await FeatureManager.GetUseHeTablesParameter();
         var currentPage = await GetCurrentPage(SitePagesUrl.LocalAuthorityResult(ProjectData.Id, SiteData.Id));
-        currentPage
+        var confirmLocalAuthorityLink = currentPage
             .UrlWithoutQueryEndsWith(SitePagesUrl.LocalAuthorityResult(ProjectData.Id, SiteData.Id))
             .HasTitle(LocalAuthorityPageTitles.SearchResult)
-            .HasBackLink(out _);
+            .HasBackLink(out _)
+            .GetLinkByTestId(SiteData.LocalAuthorityName.ToIdTag());
 
         // when
-        var cityOfLondonConfimLink = currentPage.GetLinkByTestId(SiteData.LocalAuthorityName.ToIdTag());
-        var nextPage = await TestClient.NavigateTo(cityOfLondonConfimLink);
+        var nextPage = await TestClient.NavigateTo(confirmLocalAuthorityLink);
 
         // then
         nextPage
-            .UrlEndWith(SitePagesUrl.LocalAuthorityConfirm(ProjectData.Id, SiteData.Id, SiteData.LocalAuthorityCode))
+            .UrlEndWith(SitePagesUrl.LocalAuthorityConfirm(ProjectData.Id, SiteData.Id, SiteData.LocalAuthorityCode(useHeTablesParameter)))
             .HasTitle(SitePageTitles.LocalAuthorityConfirm)
             .HasBackLink(out _)
             .HasSaveAndContinueButton();

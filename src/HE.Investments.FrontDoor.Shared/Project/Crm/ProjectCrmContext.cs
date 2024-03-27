@@ -56,6 +56,7 @@ internal class ProjectCrmContext : IProjectCrmContext
             invln_frontdoorprojectsiteid = siteId,
             invln_frontdoorprojectid = projectId,
             invln_fieldstoretrieve = ProjectSiteCrmFields.SiteToRead.FormatFields(),
+            invln_usehetables = await _featureManager.GetUseHeTablesParameter(),
         };
 
         return await _service.ExecuteAsync<invln_getsinglefrontdoorprojectsiteRequest, invln_getsinglefrontdoorprojectsiteResponse, FrontDoorProjectSiteDto>(
