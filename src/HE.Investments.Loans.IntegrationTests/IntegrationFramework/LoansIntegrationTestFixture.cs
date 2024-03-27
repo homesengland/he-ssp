@@ -7,26 +7,9 @@ namespace HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 
 public class LoansIntegrationTestFixture : IntegrationTestFixture<Program>
 {
-    private readonly Lazy<IServiceScope> _scope;
+    public FrontDoorProjectCrmRepository FrontDoorProjectCrmRepository => Scope.Value.ServiceProvider.GetRequiredService<FrontDoorProjectCrmRepository>();
 
-    public LoansIntegrationTestFixture()
-    {
-        _scope = new Lazy<IServiceScope>(() => Server.Services.CreateScope());
-    }
-
-    public FrontDoorProjectCrmRepository FrontDoorProjectCrmRepository => _scope.Value.ServiceProvider.GetRequiredService<FrontDoorProjectCrmRepository>();
-
-    public LoanApplicationCrmRepository LoanApplicationCrmRepository => _scope.Value.ServiceProvider.GetRequiredService<LoanApplicationCrmRepository>();
-
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-
-        if (_scope.IsValueCreated)
-        {
-            _scope.Value.Dispose();
-        }
-    }
+    public LoanApplicationCrmRepository LoanApplicationCrmRepository => Scope.Value.ServiceProvider.GetRequiredService<LoanApplicationCrmRepository>();
 
     protected override void ConfigureTestServices(IServiceCollection services)
     {

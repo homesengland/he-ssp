@@ -6,5 +6,12 @@ namespace HE.Investments.FrontDoor.Domain.Project.Crm.Mappers;
 
 public class ProjectGeographicFocusMapper : EnumMapper<ProjectGeographicFocus>
 {
-    protected override IDictionary<ProjectGeographicFocus, int?> Mapping => FrontDoorProjectEnumMapping.GeographicFocus;
+    private readonly IFrontDoorProjectEnumMapping _mapping;
+
+    public ProjectGeographicFocusMapper(IFrontDoorProjectEnumMapping mapping)
+    {
+        _mapping = mapping;
+    }
+
+    protected override IDictionary<ProjectGeographicFocus, int?> Mapping => _mapping.GeographicFocus;
 }

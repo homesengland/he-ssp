@@ -21,7 +21,6 @@ public static class SiteEntityToSiteDtoMapper
     private static readonly SiteTenderingStatusMapper SiteTenderingStatusMapper = new();
     private static readonly SiteTypeMapper SiteTypeMapper = new();
     private static readonly TravellerPitchSiteTypeMapper TravellerPitchSiteTypeMapper = new();
-    private static readonly PlanningStatusMapper PlanningStatusMapper = new();
     private static readonly NationalDesignGuideMapper NationalDesignGuideMapper = new();
     private static readonly SiteUsingModernMethodsOfConstructionMapper SiteUsingModernMethodsOfConstructionMapper = new();
     private static readonly ModernMethodsConstructionCategoriesTypeMapper ModernMethodsConstructionCategoriesTypeMapper = new();
@@ -30,7 +29,7 @@ public static class SiteEntityToSiteDtoMapper
     private static readonly SiteProcurementMapper SiteProcurementMapper = new();
     private static readonly SiteStatusMapper SiteStatusMapper = new();
 
-    public static SiteDto Map(SiteEntity entity)
+    public static SiteDto Map(SiteEntity entity, IPlanningStatusMapper planningStatusMapper)
     {
         return new SiteDto
         {
@@ -39,7 +38,7 @@ public static class SiteEntityToSiteDtoMapper
             status = SiteStatusMapper.ToDto(entity.Status),
             section106 = CreateSection106(entity.Section106),
             localAuthority = new SiteLocalAuthority { id = entity.LocalAuthority?.Id.Value },
-            planningDetails = CreatePlanningDetails(entity.PlanningDetails),
+            planningDetails = CreatePlanningDetails(entity.PlanningDetails, planningStatusMapper),
             nationalDesignGuidePriorities = MapCollection(entity.NationalDesignGuidePriorities.Values, NationalDesignGuideMapper),
             buildingForHealthyLife = BuildingForHealthyLifeTypeMapper.ToDto(entity.BuildingForHealthyLife),
             numberOfGreenLights = entity.NumberOfGreenLights?.Value,
@@ -68,11 +67,11 @@ public static class SiteEntityToSiteDtoMapper
         };
     }
 
-    private static PlanningDetailsDto CreatePlanningDetails(PlanningDetails planningDetails)
+    private static PlanningDetailsDto CreatePlanningDetails(PlanningDetails planningDetails, IPlanningStatusMapper planningStatusMapper)
     {
         return new PlanningDetailsDto
         {
-            planningStatus = PlanningStatusMapper.ToDto(planningDetails.PlanningStatus),
+            planningStatus = planningStatusMapper.ToDto(planningDetails.PlanningStatus),
             referenceNumber = planningDetails.ReferenceNumber?.Value,
             detailedPlanningApprovalDate = ToDateTime(planningDetails.DetailedPlanningApprovalDate),
             requiredFurtherSteps = planningDetails.RequiredFurtherSteps?.Value,

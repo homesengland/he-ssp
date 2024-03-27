@@ -152,6 +152,7 @@
     <Compile Include="Handlers\CustomApi\SearchLocalAuthorityHandler.cs" />
     <Compile Include="Handlers\CustomApi\SendInvestmentsLoanDataToCrmHandler.cs" />
     <Compile Include="Handlers\CustomApi\FrontDoor\SetFrontDoorProjectHandler.cs" />
+    <Compile Include="Handlers\CustomApi\SendRequestToAssignContactToExistingOrganisationHandler.cs" />
     <Compile Include="Handlers\CustomApi\UpdateSingleLoanApplicationHandler.cs" />
     <Compile Include="Handlers\CustomApi\UpdateSingleSiteDetailsHandler.cs" />
     <Compile Include="Handlers\CustomApi\UpdateUserProfileHandler.cs" />
@@ -199,6 +200,7 @@
     <Compile Include="Plugins\CustomApi\SearchLocalAuthorityPlugin.cs" />
     <Compile Include="Plugins\CustomApi\SendInvestmentsLoanDataToCrmPlugin.cs" />
     <Compile Include="Plugins\CustomApi\FrontDoor\SetFrontDoorProjectPlugin.cs" />
+    <Compile Include="Plugins\CustomApi\SendRequestToAssignContactToExistingOrganisationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\UpdateSingleLoanApplicationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\UpdateSingleSiteDetailsPlugin.cs" />
     <Compile Include="Plugins\Accounts\OnCurrentCrrFieldUpdatePlugin.cs" />

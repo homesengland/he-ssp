@@ -148,6 +148,8 @@ namespace DataverseModel
 			public const string invln_fundrecoveryrateName = "invln_fundrecoveryratename";
 			public const string invln_GrossDevelopmentValueGDV = "invln_grossdevelopmentvaluegdv";
 			public const string invln_grossdevelopmentvaluegdv_Base = "invln_grossdevelopmentvaluegdv_base";
+			public const string invln_HERegion = "invln_heregion";
+			public const string invln_heregionName = "invln_heregionname";
 			public const string invln_HoFApprovalRequired = "invln_hofapprovalrequired";
 			public const string invln_hofapprovalrequiredName = "invln_hofapprovalrequiredname";
 			public const string invln_InfrastructureCostsk = "invln_infrastructurecostsk";
@@ -303,6 +305,8 @@ namespace DataverseModel
 			public const string invln_staticstrategic = "invln_staticstrategic";
 			public const string invln_staticstrategicrationale = "invln_staticstrategicrationale";
 			public const string invln_staticsummary = "invln_staticsummary";
+			public const string invln_statictextaboveplotgrid = "invln_statictextaboveplotgrid";
+			public const string invln_statictextaboveplots = "invln_statictextaboveplots";
 			public const string invln_StrategicAssessmentBanding = "invln_strategicassessmentbanding";
 			public const string invln_strategicassessmentbandingName = "invln_strategicassessmentbandingname";
 			public const string invln_StrategicRationale = "invln_strategicrationale";
@@ -2026,6 +2030,40 @@ namespace DataverseModel
 			get
 			{
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_grossdevelopmentvaluegdv_base");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_heregion")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_HERegion
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_heregion");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_HERegion");
+				this.SetAttributeValue("invln_heregion", value);
+				this.OnPropertyChanged("invln_HERegion");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_heregionname")]
+		public string invln_heregionName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_heregion"))
+				{
+					return this.FormattedValues["invln_heregion"];
+				}
+				else
+				{
+					return default(string);
+				}
 			}
 		}
 		
@@ -4356,6 +4394,40 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_staticsummary");
 				this.SetAttributeValue("invln_staticsummary", value);
 				this.OnPropertyChanged("invln_staticsummary");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_statictextaboveplotgrid")]
+		public string invln_statictextaboveplotgrid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("invln_statictextaboveplotgrid");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_statictextaboveplotgrid");
+				this.SetAttributeValue("invln_statictextaboveplotgrid", value);
+				this.OnPropertyChanged("invln_statictextaboveplotgrid");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_statictextaboveplots")]
+		public string invln_statictextaboveplots
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("invln_statictextaboveplots");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_statictextaboveplots");
+				this.SetAttributeValue("invln_statictextaboveplots", value);
+				this.OnPropertyChanged("invln_statictextaboveplots");
 			}
 		}
 		

@@ -1,6 +1,6 @@
 using HE.Investments.Common.Contract;
 
-namespace HE.Investments.FrontDoor.Contract.Site;
+namespace HE.Investments.FrontDoor.Shared.Project;
 
 public record FrontDoorSiteId : StringIdValueObject
 {

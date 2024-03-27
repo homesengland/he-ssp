@@ -167,6 +167,9 @@ namespace DataverseModel
 		ProductRelationship = 1028,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ProjectTimeline = 11252,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Property = 1048,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]

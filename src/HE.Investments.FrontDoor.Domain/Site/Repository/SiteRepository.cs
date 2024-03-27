@@ -4,7 +4,6 @@ using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.CRM.Mappers;
-using HE.Investments.FrontDoor.Contract.Site;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
 using HE.Investments.FrontDoor.Domain.Site.Crm;
 using HE.Investments.FrontDoor.Domain.Site.ValueObjects;
@@ -16,11 +15,13 @@ namespace HE.Investments.FrontDoor.Domain.Site.Repository;
 public class SiteRepository : ISiteRepository, IRemoveSiteRepository
 {
     private readonly ISiteCrmContext _siteCrmContext;
-    private readonly PlanningStatusMapper _planningStatusMapper = new();
 
-    public SiteRepository(ISiteCrmContext siteCrmContext)
+    private readonly IPlanningStatusMapper _planningStatusMapper;
+
+    public SiteRepository(ISiteCrmContext siteCrmContext, IPlanningStatusMapper planningStatusMapper)
     {
         _siteCrmContext = siteCrmContext;
+        _planningStatusMapper = planningStatusMapper;
     }
 
     public async Task<ProjectSitesEntity> GetProjectSites(FrontDoorProjectId projectId, UserAccount userAccount, CancellationToken cancellationToken)

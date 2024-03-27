@@ -82,6 +82,8 @@ namespace DataverseModel
 			public const string invln_HeLocalAuthorityIdName = "invln_helocalauthorityidname";
 			public const string invln_HeProjectLocalAuthorityId = "invln_heprojectlocalauthorityid";
 			public const string invln_HeProjectLocalAuthorityIdName = "invln_heprojectlocalauthorityidname";
+			public const string invln_HERegion = "invln_heregion";
+			public const string invln_heregionName = "invln_heregionname";
 			public const string invln_HowMuch = "invln_howmuch";
 			public const string invln_howmuch_Base = "invln_howmuch_base";
 			public const string invln_Landregistrytitlenumber = "invln_landregistrytitlenumber";
@@ -114,8 +116,6 @@ namespace DataverseModel
 			public const string invln_Sitecost = "invln_sitecost";
 			public const string invln_sitecost_Base = "invln_sitecost_base";
 			public const string invln_sitedetails_FDSiteId_invln_frontdoorproje = "invln_sitedetails_FDSiteId_invln_frontdoorproje";
-			public const string invln_sitedetails_HeLocalAuthorityId_he_localau = "invln_sitedetails_HeLocalAuthorityId_he_localau";
-			public const string invln_sitedetails_HeProjectLocalAuthorityId_he_ = "invln_sitedetails_HeProjectLocalAuthorityId_he_";
 			public const string invln_sitedetails_invln_Externalcommses = "invln_sitedetails_invln_Externalcommses";
 			public const string invln_sitedetails_invln_govnotifyemails = "invln_sitedetails_invln_govnotifyemails";
 			public const string invln_sitedetails_Loanapplication = "invln_sitedetails_Loanapplication";
@@ -750,6 +750,40 @@ namespace DataverseModel
 				if (this.FormattedValues.Contains("invln_heprojectlocalauthorityid"))
 				{
 					return this.FormattedValues["invln_heprojectlocalauthorityid"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_heregion")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_HERegion
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_heregion");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_HERegion");
+				this.SetAttributeValue("invln_heregion", value);
+				this.OnPropertyChanged("invln_HERegion");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_heregionname")]
+		public string invln_heregionName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_heregion"))
+				{
+					return this.FormattedValues["invln_heregion"];
 				}
 				else
 				{
@@ -2080,48 +2114,6 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_sitedetails_FDSiteId_invln_frontdoorproje");
 				this.SetRelatedEntity<DataverseModel.invln_FrontDoorProjectSitePOC>("invln_sitedetails_FDSiteId_invln_frontdoorproje", null, value);
 				this.OnPropertyChanged("invln_sitedetails_FDSiteId_invln_frontdoorproje");
-			}
-		}
-		
-		/// <summary>
-		/// N:1 invln_sitedetails_HeLocalAuthorityId_he_localau
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_helocalauthorityid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_sitedetails_HeLocalAuthorityId_he_localau")]
-		public DataverseModel.he_LocalAuthority invln_sitedetails_HeLocalAuthorityId_he_localau
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<DataverseModel.he_LocalAuthority>("invln_sitedetails_HeLocalAuthorityId_he_localau", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("invln_sitedetails_HeLocalAuthorityId_he_localau");
-				this.SetRelatedEntity<DataverseModel.he_LocalAuthority>("invln_sitedetails_HeLocalAuthorityId_he_localau", null, value);
-				this.OnPropertyChanged("invln_sitedetails_HeLocalAuthorityId_he_localau");
-			}
-		}
-		
-		/// <summary>
-		/// N:1 invln_sitedetails_HeProjectLocalAuthorityId_he_
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_heprojectlocalauthorityid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_sitedetails_HeProjectLocalAuthorityId_he_")]
-		public DataverseModel.he_ProjectLocalAuthority invln_sitedetails_HeProjectLocalAuthorityId_he_
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<DataverseModel.he_ProjectLocalAuthority>("invln_sitedetails_HeProjectLocalAuthorityId_he_", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("invln_sitedetails_HeProjectLocalAuthorityId_he_");
-				this.SetRelatedEntity<DataverseModel.he_ProjectLocalAuthority>("invln_sitedetails_HeProjectLocalAuthorityId_he_", null, value);
-				this.OnPropertyChanged("invln_sitedetails_HeProjectLocalAuthorityId_he_");
 			}
 		}
 		

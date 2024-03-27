@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using HE.CRM.Plugins.Services.GovNotifyEmail;
 
 namespace HE.CRM.Plugins.Services.Contacts
 {
@@ -22,7 +23,7 @@ namespace HE.CRM.Plugins.Services.Contacts
         private readonly IWebRoleRepository webRoleRepository;
         private readonly IPortalPermissionRepository portalPermissionRepository;
         private readonly IContactWebroleRepository contactWebroleRepository;
-
+        private readonly IGovNotifyEmailService _govNotifyEmailService;
         #endregion
 
         #region Constructors
@@ -34,6 +35,7 @@ namespace HE.CRM.Plugins.Services.Contacts
             webRoleRepository = CrmRepositoriesFactory.Get<IWebRoleRepository>();
             contactWebroleRepository = CrmRepositoriesFactory.Get<IContactWebroleRepository>();
             portalPermissionRepository = CrmRepositoriesFactory.Get<IPortalPermissionRepository>();
+            _govNotifyEmailService = CrmServicesFactory.Get<IGovNotifyEmailService>();
         }
 
         #endregion
@@ -146,6 +148,18 @@ namespace HE.CRM.Plugins.Services.Contacts
                     var contactToUpdate = ContactDtoMapper.MapContactDtoToRegularEntitry(deserializedContact);
                     contactToUpdate.Id = retrievedContact.Id;
                     contactRepository.Update(contactToUpdate);
+                }
+            }
+        }
+
+        public void SendRequestToAssignContactToExistingOrganisation(Guid organisationId, Guid contactId)
+        {
+            var organisationAdministartors = contactRepository.GetOrganisationAdministrators(organisationId);
+            if (organisationAdministartors.Any())
+            {
+                foreach (var admin in organisationAdministartors)
+                {
+                    _govNotifyEmailService.SendNotifications_COMMON_REQUEST_TO_ASSIGN_CONTACT_TO_EXISTING_ORGANISATION(admin.ToEntityReference(), new EntityReference(Contact.EntityLogicalName, contactId));
                 }
             }
         }

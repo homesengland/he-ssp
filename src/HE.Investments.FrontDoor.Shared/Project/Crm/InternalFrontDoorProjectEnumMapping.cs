@@ -3,9 +3,9 @@ using HE.Investments.FrontDoor.Shared.Project.Contract;
 
 namespace HE.Investments.FrontDoor.Shared.Project.Crm;
 
-public static class FrontDoorProjectEnumMapping
+internal class InternalFrontDoorProjectEnumMapping : IFrontDoorProjectEnumMapping
 {
-    public static IDictionary<SupportActivityType, int?> ActivityType => new Dictionary<SupportActivityType, int?>
+    public IDictionary<SupportActivityType, int?> ActivityType => new Dictionary<SupportActivityType, int?>
     {
         { SupportActivityType.AcquiringLand, (int)invln_FrontDoorActivitiesinProject.Acquiringland },
         { SupportActivityType.DevelopingHomes, (int)invln_FrontDoorActivitiesinProject.Developinghomesincludinganyminorsiterelatedinfrastructure },
@@ -15,7 +15,7 @@ public static class FrontDoorProjectEnumMapping
         { SupportActivityType.Other, (int)invln_FrontDoorActivitiesinProject.Other },
     };
 
-    public static IDictionary<AffordableHomesAmount, int?> AffordableHomes => new Dictionary<AffordableHomesAmount, int?>
+    public IDictionary<AffordableHomesAmount, int?> AffordableHomes => new Dictionary<AffordableHomesAmount, int?>
     {
         { AffordableHomesAmount.OnlyAffordableHomes, (int)invln_FrontDoorAmountofAffordableHomes.Iwanttodeliver100affordablehomes },
         { AffordableHomesAmount.OpenMarkedAndAffordableHomes, (int)invln_FrontDoorAmountofAffordableHomes.Iwanttodeilveropenmarkethomesandalsoaffordablehomesabovetheamountrequiredbyplanning },
@@ -25,7 +25,7 @@ public static class FrontDoorProjectEnumMapping
         { AffordableHomesAmount.Undefined, null },
     };
 
-    public static IDictionary<InfrastructureType, int?> Infrastructure => new Dictionary<InfrastructureType, int?>
+    public IDictionary<InfrastructureType, int?> Infrastructure => new Dictionary<InfrastructureType, int?>
     {
         { InfrastructureType.SitePreparation, (int)invln_FrontDoorInfrastructureDelivered.Sitepreparation },
         { InfrastructureType.Enabling, (int)invln_FrontDoorInfrastructureDelivered.Enabling },
@@ -34,7 +34,7 @@ public static class FrontDoorProjectEnumMapping
         { InfrastructureType.IDoNotKnow, (int)invln_FrontDoorInfrastructureDelivered.Idonotknow },
     };
 
-    public static IDictionary<ProjectGeographicFocus, int?> GeographicFocus => new Dictionary<ProjectGeographicFocus, int?>
+    public IDictionary<ProjectGeographicFocus, int?> GeographicFocus => new Dictionary<ProjectGeographicFocus, int?>
     {
         { ProjectGeographicFocus.National, (int)invln_FrontDoorGeographicFocus.National },
         { ProjectGeographicFocus.Regional, (int)invln_FrontDoorGeographicFocus.Regional },
@@ -43,7 +43,7 @@ public static class FrontDoorProjectEnumMapping
         { ProjectGeographicFocus.Undefined, null },
     };
 
-    public static IDictionary<RegionType, int?> RegionType => new Dictionary<RegionType, int?>
+    public IDictionary<RegionType, int?> RegionType => new Dictionary<RegionType, int?>
     {
         { Contract.RegionType.NorthEast, (int)invln_FrontDoorRegion.NorthEast },
         { Contract.RegionType.NorthWest, (int)invln_FrontDoorRegion.NorthWest },
@@ -56,7 +56,7 @@ public static class FrontDoorProjectEnumMapping
         { Contract.RegionType.London, (int)invln_FrontDoorRegion.London },
     };
 
-    public static IDictionary<RequiredFundingOption, int?> FundingAmount => new Dictionary<RequiredFundingOption, int?>
+    public IDictionary<RequiredFundingOption, int?> FundingAmount => new Dictionary<RequiredFundingOption, int?>
     {
         { RequiredFundingOption.LessThan250K, (int)invln_FrontDoorAmountofFundingRequired.Lessthan250000 },
         { RequiredFundingOption.Between250KAnd1Mln, (int)invln_FrontDoorAmountofFundingRequired._250000to1million },

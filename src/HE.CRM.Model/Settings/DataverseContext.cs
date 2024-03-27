@@ -73,35 +73,13 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// Gets a binding to the set of all <see cref="DataverseModel.he_LocalAuthority"/> entities.
+		/// Gets a binding to the set of all <see cref="DataverseModel.invln_AHGLocalAuthorities"/> entities.
 		/// </summary>
-		public System.Linq.IQueryable<DataverseModel.he_LocalAuthority> he_LocalAuthoritySet
+		public System.Linq.IQueryable<DataverseModel.invln_AHGLocalAuthorities> invln_AHGLocalAuthoritiesSet
 		{
 			get
 			{
-				return this.CreateQuery<DataverseModel.he_LocalAuthority>();
-			}
-		}
-		
-		/// <summary>
-		/// Gets a binding to the set of all <see cref="DataverseModel.he_Pipeline"/> entities.
-		/// </summary>
-		public System.Linq.IQueryable<DataverseModel.he_Pipeline> he_PipelineSet
-		{
-			get
-			{
-				return this.CreateQuery<DataverseModel.he_Pipeline>();
-			}
-		}
-		
-		/// <summary>
-		/// Gets a binding to the set of all <see cref="DataverseModel.he_ProjectLocalAuthority"/> entities.
-		/// </summary>
-		public System.Linq.IQueryable<DataverseModel.he_ProjectLocalAuthority> he_ProjectLocalAuthoritySet
-		{
-			get
-			{
-				return this.CreateQuery<DataverseModel.he_ProjectLocalAuthority>();
+				return this.CreateQuery<DataverseModel.invln_AHGLocalAuthorities>();
 			}
 		}
 		

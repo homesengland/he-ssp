@@ -24,24 +24,36 @@ namespace HE.CRM.Plugins.Services.LoanApplication
         #region Fields
 
         private readonly ILoanApplicationRepository _loanApplicationRepository;
+
         private readonly ISiteDetailsRepository _siteDetailsRepository;
+
         private readonly IContactRepository _contactRepository;
+
         private readonly IWebRoleRepository _webroleRepository;
+
         private readonly ILoanStatusChangeRepository _loanStatusChangeRepository;
+
         private readonly ISharepointDocumentLocationRepository _sharepointDocumentLocationRepository;
+
         private readonly IStandardConditionsRepository _standardConditionsRepository;
+
         private readonly IConditionRepository _conditionRepository;
 
         private readonly ILoanApplicationRepository _loanApplicationRepositoryAdmin;
+
         private readonly INotificationSettingRepository _notificationSettingRepositoryAdmin;
+
         private readonly IGovNotifyEmailRepository _govNotifyEmailRepositoryAdmin;
+
         private readonly IEnvironmentVariableRepository _environmentVariableRepositoryAdmin;
+
         private readonly ISystemUserRepository _systemUserRepositoryAdmin;
+
         private readonly ITeamRepository _teamRepositoryAdmin;
 
         private readonly IGovNotifyEmailService _govNotifyEmailService;
 
-        #endregion
+        #endregion Fields
 
         #region Constructors
 
@@ -66,7 +78,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             _govNotifyEmailService = CrmServicesFactory.Get<IGovNotifyEmailService>();
         }
 
-        #endregion
+        #endregion Constructors
 
         #region Public Methods
 
@@ -249,7 +261,6 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             TracingService.Trace($"new external status {externalStatus}");
             if (Guid.TryParse(loanApplicationId, out Guid loanId) && externalStatus != null)
             {
-
                 var retrievedLoanApplication = _loanApplicationRepository.GetById(loanId, new string[] { nameof(invln_Loanapplication.invln_ExternalStatus).ToLower(), nameof(invln_Loanapplication.StatusCode).ToLower() });
                 if (externalStatus == retrievedLoanApplication.invln_ExternalStatus.Value)
                 {
@@ -284,7 +295,6 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             }
         }
 
-
         public void UpdateLoanApplication(bool useHeTables, string loanApplicationId, string loanApplication, string fieldsToUpdate, string accountId, string contactExternalId)
         {
             if (Guid.TryParse(loanApplicationId, out Guid applicationId))
@@ -305,14 +315,26 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                     {
                         foreach (var field in fields)
                         {
+                            TracingService.Trace($"field name {field}");
                             if (string.Equals(field.ToLower(), nameof(invln_Loanapplication.invln_ExternalStatus).ToLower()))
                             {
                                 var retrievedLoanApplicationStatus = _loanApplicationRepository.GetById(applicationId, new string[] { nameof(invln_Loanapplication.invln_ExternalStatus).ToLower() }).invln_ExternalStatus;
                                 int oldStatus = retrievedLoanApplicationStatus != null ? retrievedLoanApplicationStatus.Value : 0;
                                 CheckIfExternalStatusCanBeChanged(oldStatus, loanApplicationMapped.invln_ExternalStatus.Value);
                             }
-                            TracingService.Trace($"field name {field}");
-                            loanApplicationToUpdate[field] = loanApplicationMapped[field];
+
+                            if (string.Equals(field.ToLower(), nameof(invln_Loanapplication.invln_FDProjectId).ToLower()))
+                            {
+                                loanApplicationToUpdate.invln_FDProjectId = loanApplicationToUpdate.invln_FDProjectId;
+                            }
+                            else if (string.Equals(field.ToLower(), nameof(invln_Loanapplication.invln_HeProjectId).ToLower()))
+                            {
+                                loanApplicationToUpdate.invln_HeProjectId = loanApplicationToUpdate.invln_HeProjectId;
+                            }
+                            else
+                            {
+                                loanApplicationToUpdate[field] = loanApplicationMapped[field];
+                            }
                         }
                     }
                 }
@@ -413,66 +435,87 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                     case (int)invln_Loanapplication_StatusCode.Draft:
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.Draft);
                         break;
+
                     case (int)invln_Loanapplication_StatusCode.ApplicationSubmitted:
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.ApplicationSubmitted);
                         break;
+
                     case (int)invln_Loanapplication_StatusCode.Inactive:
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.NA);
                         break;
+
                     case (int)invln_Loanapplication_StatusCode.ApplicationUnderReview:
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.ApplicationUnderReview);
                         break;
+
                     case (int)invln_Loanapplication_StatusCode.HoldRequested:
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.HoldRequested);
                         break;
+
                     case (int)invln_Loanapplication_StatusCode.Withdrawn:
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.Withdrawn);
                         break;
+
                     case (int)invln_Loanapplication_StatusCode.CashflowRequested:
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.CashflowRequested);
                         break;
+
                     case (int)invln_Loanapplication_StatusCode.CashflowUnderReview:
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.CashflowUnderReview);
                         break;
+
                     case (int)invln_Loanapplication_StatusCode.OnHold:
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.OnHold);
                         break;
+
                     case (int)invln_Loanapplication_StatusCode.ReferredBacktoApplicant:
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.ReferredBacktoApplicant);
                         break;
+
                     case (int)invln_Loanapplication_StatusCode.UnderReview:
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.UnderReview);
                         break;
+
                     case (int)invln_Loanapplication_StatusCode.SentforApproval:
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.SentforApproval);
                         break;
+
                     case (int)invln_Loanapplication_StatusCode.NotApproved:
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.SentforApproval);
                         break;
+
                     case (int)invln_Loanapplication_StatusCode.ApprovedSubjecttoDueDiligence:
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.ApprovedSubjecttoDueDiligence);
                         break;
+
                     case (int)invln_Loanapplication_StatusCode.ApplicationDeclined:
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.ApplicationDeclined);
                         break;
+
                     case (int)invln_Loanapplication_StatusCode.InDueDiligence:
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.InDueDiligence);
                         break;
+
                     case (int)invln_Loanapplication_StatusCode.SentforPreCompleteApproval:
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.InDueDiligence);
                         break;
+
                     case (int)invln_Loanapplication_StatusCode.ApprovedSubjectToContract:
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.ApprovedSubjecttoContract);
                         break;
+
                     case (int)invln_Loanapplication_StatusCode.CPsSatisfied:
-                        target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.CPsSatisfied);
+                        target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.ConditionsSatisfied);
                         break;
+
                     case (int)invln_Loanapplication_StatusCode.AwaitingCPSatisfaction:
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.ContractSignedSubjecttoCP);
                         break;
+
                     case (int)invln_Loanapplication_StatusCode.LoanAvailable:
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.LoanAvailable);
                         break;
+
                     default:
                         break;
                 }
@@ -488,78 +531,97 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                     loanApplication.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.Draft);
                     loanApplication.StateCode = new OptionSetValue((int)invln_LoanapplicationState.Active);
                     break;
+
                 case (int)invln_ExternalStatus.ApplicationSubmitted:
                     loanApplication.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.ApplicationSubmitted);
                     loanApplication.StateCode = new OptionSetValue((int)invln_LoanapplicationState.Active);
                     break;
+
                 case (int)invln_ExternalStatus.NA:
                     loanApplication.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.Inactive);
                     loanApplication.StateCode = new OptionSetValue((int)invln_LoanapplicationState.Inactive);
                     break;
+
                 case (int)invln_ExternalStatus.ApplicationUnderReview:
                     loanApplication.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.ApplicationUnderReview);
                     loanApplication.StateCode = new OptionSetValue((int)invln_LoanapplicationState.Active);
                     break;
+
                 case (int)invln_ExternalStatus.HoldRequested:
                     loanApplication.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.HoldRequested);
                     loanApplication.StateCode = new OptionSetValue((int)invln_LoanapplicationState.Active);
                     break;
+
                 case (int)invln_ExternalStatus.Withdrawn:
                     loanApplication.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.Withdrawn);
                     loanApplication.StateCode = new OptionSetValue((int)invln_LoanapplicationState.Inactive);
                     break;
+
                 case (int)invln_ExternalStatus.CashflowRequested:
                     loanApplication.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.CashflowRequested);
                     loanApplication.StateCode = new OptionSetValue((int)invln_LoanapplicationState.Active);
                     break;
+
                 case (int)invln_ExternalStatus.CashflowUnderReview:
                     loanApplication.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.CashflowUnderReview);
                     loanApplication.StateCode = new OptionSetValue((int)invln_LoanapplicationState.Active);
                     break;
+
                 case (int)invln_ExternalStatus.OnHold:
                     loanApplication.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.OnHold);
                     loanApplication.StateCode = new OptionSetValue((int)invln_LoanapplicationState.Active);
                     break;
+
                 case (int)invln_ExternalStatus.ReferredBacktoApplicant:
                     loanApplication.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.ReferredBacktoApplicant);
                     loanApplication.StateCode = new OptionSetValue((int)invln_LoanapplicationState.Active);
                     break;
+
                 case (int)invln_ExternalStatus.UnderReview:
                     loanApplication.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.UnderReview);
                     loanApplication.StateCode = new OptionSetValue((int)invln_LoanapplicationState.Active);
                     break;
+
                 case (int)invln_ExternalStatus.SentforApproval:
                     loanApplication.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.SentforApproval);
                     loanApplication.StateCode = new OptionSetValue((int)invln_LoanapplicationState.Active);
                     break;
+
                 case (int)invln_ExternalStatus.ApprovedSubjecttoDueDiligence:
                     loanApplication.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.ApprovedSubjecttoDueDiligence);
                     loanApplication.StateCode = new OptionSetValue((int)invln_LoanapplicationState.Active);
                     break;
+
                 case (int)invln_ExternalStatus.ApplicationDeclined:
                     loanApplication.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.ApplicationDeclined);
                     loanApplication.StateCode = new OptionSetValue((int)invln_LoanapplicationState.Active);
                     break;
+
                 case (int)invln_ExternalStatus.InDueDiligence:
                     loanApplication.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.InDueDiligence);
                     loanApplication.StateCode = new OptionSetValue((int)invln_LoanapplicationState.Active);
                     break;
+
                 case (int)invln_ExternalStatus.ApprovedSubjecttoContract:
                     loanApplication.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.ApprovedSubjectToContract);
                     loanApplication.StateCode = new OptionSetValue((int)invln_LoanapplicationState.Active);
                     break;
+
                 case (int)invln_ExternalStatus.ContractSignedSubjecttoCP:
                     loanApplication.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.AwaitingCPSatisfaction);
                     loanApplication.StateCode = new OptionSetValue((int)invln_LoanapplicationState.Active);
                     break;
+
                 case (int)invln_ExternalStatus.LoanAvailable:
                     loanApplication.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.LoanAvailable);
                     loanApplication.StateCode = new OptionSetValue((int)invln_LoanapplicationState.Active);
                     break;
-                case (int)invln_ExternalStatus.CPsSatisfied:
+
+                case (int)invln_ExternalStatus.ConditionsSatisfied:
                     loanApplication.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.CPsSatisfied);
                     loanApplication.StateCode = new OptionSetValue((int)invln_LoanapplicationState.Active);
                     break;
+
                 default:
                     break;
             }
@@ -665,7 +727,6 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                         invln_Loanapplication = target.ToEntityReference(),
                     };
                     _conditionRepository.Create(conditionToCreate);
-
                 }
             }
         }
@@ -704,6 +765,6 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             return generatedAttribuesFetchXml;
         }
 
-        #endregion
+        #endregion Public Methods
     }
 }

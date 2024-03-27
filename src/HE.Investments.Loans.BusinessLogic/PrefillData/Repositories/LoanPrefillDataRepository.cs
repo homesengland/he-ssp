@@ -1,73 +1,79 @@
-using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Shared.User;
-using HE.Investments.Common.CRM.Model;
-using HE.Investments.Common.CRM.Serialization;
+using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.Extensions;
 using HE.Investments.FrontDoor.Shared.Project;
+using HE.Investments.FrontDoor.Shared.Project.Contract;
 using HE.Investments.FrontDoor.Shared.Project.Repositories;
-using HE.Investments.Loans.BusinessLogic.PrefillData.Entities;
+using HE.Investments.Loans.BusinessLogic.PrefillData.Crm;
+using HE.Investments.Loans.BusinessLogic.PrefillData.Data;
+using HE.Investments.Loans.BusinessLogic.Projects.Enums;
+using HE.Investments.Loans.Contract.Application.Enums;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
-using Microsoft.PowerPlatform.Dataverse.Client;
 
 namespace HE.Investments.Loans.BusinessLogic.PrefillData.Repositories;
 
 public class LoanPrefillDataRepository : ILoanPrefillDataRepository
 {
-    private readonly IOrganizationServiceAsync2 _serviceClient;
-
     private readonly IPrefillDataRepository _prefillDataRepository;
 
-    public LoanPrefillDataRepository(IPrefillDataRepository prefillDataRepository, IOrganizationServiceAsync2 serviceClient)
+    private readonly ILoanPrefillDataCrmContext _crmContext;
+
+    public LoanPrefillDataRepository(IPrefillDataRepository prefillDataRepository, ILoanPrefillDataCrmContext crmContext)
     {
         _prefillDataRepository = prefillDataRepository;
-        _serviceClient = serviceClient;
+        _crmContext = crmContext;
     }
 
-    public async Task<LoanPrefillData?> GetLoanApplicationPrefillData(LoanApplicationId applicationId, UserAccount userAccount, CancellationToken cancellationToken)
+    public async Task<LoanApplicationPrefillData> GetLoanApplicationPrefillData(FrontDoorProjectId projectId, UserAccount userAccount, CancellationToken cancellationToken)
     {
-        var frontDoorProjectId = await GetFrontDoorProjectId(applicationId, userAccount, cancellationToken);
+        var prefillData = await _prefillDataRepository.GetProjectPrefillData(projectId, userAccount, cancellationToken);
+
+        return new LoanApplicationPrefillData(
+            projectId,
+            prefillData.SiteId,
+            prefillData.Name,
+            MapFundingPurpose(prefillData.SupportActivities));
+    }
+
+    public async Task<LoanProjectPrefillData> GetLoanProjectPrefillData(LoanApplicationId applicationId, FrontDoorSiteId siteId, UserAccount userAccount, CancellationToken cancellationToken)
+    {
+        var frontDoorProjectId = await _crmContext.GetFrontDoorProjectId(applicationId, userAccount, cancellationToken);
         if (frontDoorProjectId.IsNotProvided())
         {
-            return null;
+            throw new InvalidOperationException("Loan Application is not connected to Front Door project but Site is.");
         }
 
-        var prefillData = await _prefillDataRepository.GetProjectPrefillData(frontDoorProjectId!, userAccount, cancellationToken);
-
-        return new LoanPrefillData(prefillData.Name);
+        var prefillData = await _prefillDataRepository.GetSitePrefillData(frontDoorProjectId!, siteId, cancellationToken);
+        return new LoanProjectPrefillData(
+            frontDoorProjectId!,
+            siteId,
+            prefillData.Name,
+            prefillData.NumberOfHomes,
+            MapPlanningPermissionStatus(prefillData.PlanningStatus),
+            prefillData.LocalAuthorityName);
     }
 
-    private static string FormatFields(params string[] fieldsToRetrieve)
+    private static FundingPurpose? MapFundingPurpose(IReadOnlyCollection<SupportActivityType> supportActivities)
     {
-        return string.Join(",", fieldsToRetrieve.Select(f => f.ToLowerInvariant()));
-    }
-
-    private async Task<FrontDoorProjectId?> GetFrontDoorProjectId(
-        LoanApplicationId loanApplicationId,
-        UserAccount userAccount,
-        CancellationToken cancellationToken)
-    {
-        var req = new invln_getsingleloanapplicationforaccountandcontactRequest
+        if (supportActivities.Count == 1 && supportActivities.Single() == SupportActivityType.DevelopingHomes)
         {
-            invln_accountid = userAccount.SelectedOrganisationId().ToString(),
-            invln_externalcontactid = userAccount.UserGlobalId.ToString(),
-            invln_loanapplicationid = loanApplicationId.ToString(),
-            invln_fieldstoretrieve = FormatFields(
-                nameof(invln_Loanapplication.invln_LoanapplicationId),
-                nameof(invln_Loanapplication.invln_loanapplication_FDProjectId_invln_frontdo)),
+            return FundingPurpose.BuildingNewHomes;
+        }
+
+        return null;
+    }
+
+    private static PlanningPermissionStatus? MapPlanningPermissionStatus(SitePlanningStatus planningStatus)
+    {
+        return planningStatus switch
+        {
+            SitePlanningStatus.DetailedPlanningApprovalGranted => PlanningPermissionStatus.ReceivedFull,
+            SitePlanningStatus.DetailedPlanningApprovalGrantedWithFurtherSteps => PlanningPermissionStatus.OutlineOrConsent,
+            SitePlanningStatus.DetailedPlanningApplicationSubmitted => PlanningPermissionStatus.NotReceived,
+            SitePlanningStatus.OutlinePlanningApprovalGranted => PlanningPermissionStatus.OutlineOrConsent,
+            SitePlanningStatus.OutlinePlanningApplicationSubmitted => PlanningPermissionStatus.NotReceived,
+            SitePlanningStatus.PlanningDiscussionsUnderwayWithThePlanningOffice => PlanningPermissionStatus.NotSubmitted,
+            _ => null,
         };
-
-        var response = await _serviceClient.ExecuteAsync(req, cancellationToken) as invln_getsingleloanapplicationforaccountandcontactResponse;
-        if (response.IsNotProvided())
-        {
-            return null;
-        }
-
-        var dto = CrmResponseSerializer.Deserialize<IList<LoanApplicationDto>>(response!.invln_loanapplication)?.FirstOrDefault();
-        if (dto.IsNotProvided() || string.IsNullOrWhiteSpace(dto?.frontDoorProjectId))
-        {
-            return null;
-        }
-
-        return new FrontDoorProjectId(dto.frontDoorProjectId);
     }
 }

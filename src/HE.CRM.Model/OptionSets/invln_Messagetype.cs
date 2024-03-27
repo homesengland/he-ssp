@@ -23,7 +23,7 @@ namespace DataverseModel
 		HoTFeeIndemnity = 858110002,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		SupportDocuments = 858110000,
+		SupportingDocuments = 858110000,
 	}
 }
 #pragma warning restore CS1591

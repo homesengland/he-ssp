@@ -1,9 +1,9 @@
 using System;
 using DataverseModel;
 using HE.Base.Plugins.Handlers;
-using HE.CRM.AHP.Plugins.Services.Contacts;
+using HE.CRM.Plugins.Services.Contacts;
 
-namespace HE.CRM.AHP.Plugins.Handlers.CustomApi
+namespace HE.CRM.Plugins.Handlers.CustomApi
 {
     public class SendRequestToAssignContactToExistingOrganisationHandler : CrmActionHandlerBase<invln_sendrequesttoassigncontacttoexistingorganisationRequest, DataverseContext>
     {

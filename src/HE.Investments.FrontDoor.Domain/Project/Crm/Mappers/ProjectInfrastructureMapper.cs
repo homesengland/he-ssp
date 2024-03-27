@@ -7,7 +7,14 @@ namespace HE.Investments.FrontDoor.Domain.Project.Crm.Mappers;
 
 public class ProjectInfrastructureMapper : EnumMapper<InfrastructureType>
 {
-    protected override IDictionary<InfrastructureType, int?> Mapping => FrontDoorProjectEnumMapping.Infrastructure;
+    private readonly IFrontDoorProjectEnumMapping _mapping;
+
+    public ProjectInfrastructureMapper(IFrontDoorProjectEnumMapping mapping)
+    {
+        _mapping = mapping;
+    }
+
+    protected override IDictionary<InfrastructureType, int?> Mapping => _mapping.Infrastructure;
 
     public ProjectInfrastructure Map(IList<int> values)
     {
