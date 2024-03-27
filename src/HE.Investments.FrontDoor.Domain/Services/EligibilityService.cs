@@ -1,8 +1,11 @@
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Enum;
+using HE.Investments.Common.Contract.Exceptions;
+using HE.Investments.Common.Contract.Validators;
 using HE.Investments.FrontDoor.Domain.Project.Repository;
 using HE.Investments.FrontDoor.Domain.Site.Repository;
 using HE.Investments.FrontDoor.Shared.Project;
+using Microsoft.Extensions.Logging;
 
 namespace HE.Investments.FrontDoor.Domain.Services;
 
@@ -14,27 +17,45 @@ public class EligibilityService : IEligibilityService
 
     private readonly IAccountUserContext _accountUserContext;
 
+    private readonly ILogger _logger;
+
     public EligibilityService(
         IProjectRepository projectRepository,
         IAccountUserContext accountUserContext,
-        ISiteRepository siteRepository)
+        ISiteRepository siteRepository,
+        ILogger<EligibilityService> logger)
     {
         _projectRepository = projectRepository;
         _accountUserContext = accountUserContext;
         _siteRepository = siteRepository;
+        _logger = logger;
     }
 
-    public async Task<ApplicationType> GetEligibleApplication(FrontDoorProjectId projectId, CancellationToken cancellationToken)
+    public async Task<(OperationResult OperationResult, ApplicationType ApplicationType)> GetEligibleApplication(FrontDoorProjectId projectId, CancellationToken cancellationToken)
     {
         var userAccount = await _accountUserContext.GetSelectedAccount();
         var project = await _projectRepository.GetProject(projectId, userAccount, cancellationToken);
-        var projectSite = await _siteRepository.GetProjectSites(projectId, userAccount, cancellationToken);
+        var projectSites = await _siteRepository.GetProjectSites(projectId, userAccount, cancellationToken);
 
-        if (project.IsProjectValidForLoanApplication() && projectSite.AreSitesValidForLoanApplication())
+        try
         {
-            return ApplicationType.Loans;
+            project.CanBeCompleted();
+            if (project.IsSiteIdentified?.Value == true)
+            {
+                projectSites.AllSitesAreFilled();
+            }
+        }
+        catch (DomainValidationException domainValidationException)
+        {
+            _logger.LogWarning(domainValidationException, "Validation error(s) occured: {Message}", domainValidationException.Message);
+            return (domainValidationException.OperationResult, ApplicationType.Undefined);
         }
 
-        return ApplicationType.Undefined;
+        if (project.IsProjectValidForLoanApplication() && projectSites.AreSitesValidForLoanApplication())
+        {
+            return (OperationResult.Success(), ApplicationType.Loans);
+        }
+
+        return (OperationResult.Success(), ApplicationType.Undefined);
     }
 }

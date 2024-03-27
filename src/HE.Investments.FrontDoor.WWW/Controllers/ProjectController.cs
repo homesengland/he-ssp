@@ -515,7 +515,13 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     [WorkflowState(ProjectWorkflowState.CheckAnswers)]
     public async Task<IActionResult> Complete([FromRoute] string projectId, CancellationToken cancellationToken)
     {
-        var applicationType = await _mediator.Send(new ValidateProjectAnswersQuery(new FrontDoorProjectId(projectId)), cancellationToken);
+        var (operationResult, applicationType) = await _mediator.Send(new ValidateProjectAnswersQuery(new FrontDoorProjectId(projectId)), cancellationToken);
+
+        if (operationResult.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(operationResult);
+            return View("CheckAnswers", await CreateProjectSummary(cancellationToken));
+        }
 
         if (applicationType == ApplicationType.Loans)
         {

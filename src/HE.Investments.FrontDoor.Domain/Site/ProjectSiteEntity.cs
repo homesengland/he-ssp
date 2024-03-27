@@ -1,8 +1,11 @@
 extern alias Org;
 
 using HE.Investments.Common.Contract.Exceptions;
+using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Errors;
+using HE.Investments.Common.Extensions;
+using HE.Investments.Common.Messages;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
 using HE.Investments.FrontDoor.Domain.Site.Utilities;
 using HE.Investments.FrontDoor.Domain.Site.ValueObjects;
@@ -77,10 +80,28 @@ public class ProjectSiteEntity
         LocalAuthority = _modificationTracker.Change(LocalAuthority, localAuthority);
     }
 
+    public void CanBeCompleted()
+    {
+        if (!IsAnswered())
+        {
+            OperationResult.New()
+                .AddValidationError("IsSectionCompleted", ValidationErrorMessage.ProvideAllSiteAnswers)
+                .CheckErrors();
+        }
+    }
+
     public bool IsSiteValidForLoanApplication()
     {
         return PlanningStatusDivision.IsStatusAllowedForLoanApplication(PlanningStatus.Value)
                && !LocalAuthorityDivision.IsLocalAuthorityNotAllowedForLoanApplication(LocalAuthority?.Id.ToString())
                && HomesNumber?.Value is >= 5 and <= 200;
+    }
+
+    private bool IsAnswered()
+    {
+        return Name.IsProvided() &&
+                HomesNumber.IsProvided() &&
+                LocalAuthority.IsProvided() &&
+                PlanningStatus.IsAnswered();
     }
 }

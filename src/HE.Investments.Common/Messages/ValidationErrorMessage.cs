@@ -78,6 +78,10 @@ public static class ValidationErrorMessage
 
     public const string FilesListEmpty = "Select at least one file to upload";
 
+    public const string ProvideAllProjectAnswers = "To submit, you have to provide all answers";
+
+    public const string ProvideAllSiteAnswers = "To submit, you have to provide all answers for sties";
+
     public static string FilesMaxCount(int numberOfFiles) => $"You can only select up to {numberOfFiles} files";
 
     public static string EstimatedPoundInput(string name) => PoundInput($"estimated {name}");
