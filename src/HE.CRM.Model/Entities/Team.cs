@@ -88,6 +88,7 @@ namespace DataverseModel
 			public const string invln_ahpcontract_ContractDraftedby_team = "invln_ahpcontract_ContractDraftedby_team";
 			public const string invln_externalcomms_team_owningteam = "invln_externalcomms_team_owningteam";
 			public const string invln_govnotifyemail_team_owningteam = "invln_govnotifyemail_team_owningteam";
+			public const string invln_scheme_GrowthTeam_team = "invln_scheme_GrowthTeam_team";
 			public const string IsDefault = "isdefault";
 			public const string IsDefaultName = "isdefaultname";
 			public const string IsSasTokenSet = "issastokenset";
@@ -1270,6 +1271,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_govnotifyemail_team_owningteam");
 				this.SetRelatedEntities<DataverseModel.invln_govnotifyemail>("invln_govnotifyemail_team_owningteam", null, value);
 				this.OnPropertyChanged("invln_govnotifyemail_team_owningteam");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_scheme_GrowthTeam_team
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_scheme_GrowthTeam_team")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_scheme> invln_scheme_GrowthTeam_team
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_scheme>("invln_scheme_GrowthTeam_team", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_scheme_GrowthTeam_team");
+				this.SetRelatedEntities<DataverseModel.invln_scheme>("invln_scheme_GrowthTeam_team", null, value);
+				this.OnPropertyChanged("invln_scheme_GrowthTeam_team");
 			}
 		}
 		

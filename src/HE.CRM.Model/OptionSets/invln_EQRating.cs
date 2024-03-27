@@ -13,20 +13,17 @@ namespace DataverseModel
 	
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum invln_region
+	public enum invln_EQRating
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		London = 858110002,
+		EQ1EliminatediscriminationharassmentandvictimisationandanyotherconductthatisprohibitedundertheActEQ1 = 858110000,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Midlands = 858110001,
+		EQ2Advanceequalityofopportunitybetweenpersonswhosharerelevantequalitycharacteristicsandpersonswhodonotshareit = 858110001,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		North = 858110003,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		South = 858110000,
+		EQ3Fostergoodrelationsbetweenpersonswhosharearelevantprotectedcharacteristicandpersonswhodonotshareit = 858110002,
 	}
 }
 #pragma warning restore CS1591

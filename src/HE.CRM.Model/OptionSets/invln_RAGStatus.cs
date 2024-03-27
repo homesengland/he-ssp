@@ -13,20 +13,17 @@ namespace DataverseModel
 	
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum invln_region
+	public enum invln_RAGStatus
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		London = 858110002,
+		Amber = 858110001,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Midlands = 858110001,
+		Green = 858110002,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		North = 858110003,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		South = 858110000,
+		Red = 858110000,
 	}
 }
 #pragma warning restore CS1591

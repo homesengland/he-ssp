@@ -15,17 +15,25 @@ namespace HE.CRM.Plugins.Services.ISPs
         #region Fields
 
         private readonly ILoanApplicationRepository _loanApplicationRepository;
+
         private readonly IAccountRepository _accountRepository;
+
         private readonly IConditionRepository _conditionRepository;
+
         private readonly IContactRepository _contactRepository;
+
         private readonly IProjectSpecificConditionRepository _projectSpecificConditionRepository;
+
         private readonly ISiteDetailsRepository _siteDetailsRepository;
+
         private readonly IIspRepository _ispRepository;
+
         private readonly IReviewApprovalRepository _reviewApprovalRepository;
 
         private readonly ITeamRepository _teamRepositoryAdmin;
 
-        #endregion
+        #endregion Fields
+
         #region Constructors
 
         public IspService(CrmServiceArgs args) : base(args)
@@ -49,15 +57,15 @@ namespace HE.CRM.Plugins.Services.ISPs
                 var loan = _loanApplicationRepository.GetById(target.invln_Loanapplication.Id);
                 target.invln_ProjectName = loan.invln_ProjectName;
                 target.invln_Submitter = loan.OwnerId.Name;
-                target.invln_Region = loan.invln_Region;
                 target.invln_SPPIMet = loan.invln_AssessedasSPPI;
                 target.invln_securities = loan.invln_Securities;
 
                 if (loan.invln_Account != null)
                 {
-                    var organisation = _accountRepository.GetById(loan.invln_Account.Id, new string[] {nameof(Account.invln_CurrentCRR).ToLower(), nameof(Account.invln_rating).ToLower() } );
+                    var organisation = _accountRepository.GetById(loan.invln_Account.Id, new string[] { nameof(Account.invln_CurrentCRR).ToLower(), nameof(Account.invln_rating).ToLower() });
                     target.invln_CRR = organisation.invln_CurrentCRR;
                     target.invln_KYCRating = organisation.invln_rating;
+                    target.invln_BorrowerName = organisation.PrimaryContactId;
                 }
 
                 if (loan.invln_Contact != null)
@@ -75,17 +83,19 @@ namespace HE.CRM.Plugins.Services.ISPs
                         case (int)invln_Programme1.LevellingUpHomeBuildFund:
                             programme = "Leveling Up Home Build Fund";
                             break;
+
                         default:
                             break;
                     }
                     target.invln_Programme = programme;
+                    target.invln_HERegion = siteDetailsRelatedToLoan.First().invln_HERegion;
                 }
             }
         }
 
         public void SetFieldsOnSentForApprovalChange(invln_ISP target)
         {
-            if(target.invln_SendforApproval == true)
+            if (target.invln_SendforApproval == true)
             {
                 target.invln_DateSubmitted = DateTime.UtcNow;
                 target.invln_DateSentforApproval = DateTime.UtcNow;
@@ -144,6 +154,6 @@ namespace HE.CRM.Plugins.Services.ISPs
             }
         }
 
-        #endregion
+        #endregion Constructors
     }
 }
