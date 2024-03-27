@@ -56,5 +56,14 @@ namespace HE.CRM.Common.Repositories.Implementations
                 totalItemsCount = result.TotalRecordCount,
             };
         }
+
+        public he_LocalAuthority GetHeLocalAuthorityrelatedToLoanApplication(Guid siteDetailsId)
+        {
+            var query = new QueryExpression(he_LocalAuthority.EntityLogicalName);
+            query.ColumnSet.AllColumns = true;
+            var query_invln_sitedetails = query.AddLink(invln_SiteDetails.EntityLogicalName, "he_localauthorityid", "invln_helocalauthorityid");
+            query_invln_sitedetails.LinkCriteria.AddCondition("invln_sitedetailsid", ConditionOperator.Equal, siteDetailsId);
+            return service.RetrieveMultiple(query).Entities.Select(x => x.ToEntity<he_LocalAuthority>()).FirstOrDefault();
+        }
     }
 }

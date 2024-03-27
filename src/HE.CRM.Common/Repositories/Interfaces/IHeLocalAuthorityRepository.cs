@@ -12,5 +12,6 @@ namespace HE.CRM.Common.Repositories.Interfaces
         he_LocalAuthority GetLocalAuthorityWithGivenCode(string code);
 
         PagedResponseDto<he_LocalAuthority> GetLocalAuthoritiesForFdLoan(PagingRequestDto pagingRequestDto, string searchPhrase);
+        he_LocalAuthority GetHeLocalAuthorityrelatedToLoanApplication(Guid entityReference);
     }
 }

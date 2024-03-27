@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Remoting.Metadata.W3cXsd2001;
+using System.ServiceModel.Channels;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Unicode;
@@ -31,7 +32,9 @@ namespace HE.CRM.Plugins.Services.LoanApplication
         private readonly ISharepointDocumentLocationRepository _sharepointDocumentLocationRepository;
         private readonly IStandardConditionsRepository _standardConditionsRepository;
         private readonly IConditionRepository _conditionRepository;
-
+        private readonly IHeLocalAuthorityRepository _heLocalAuthorityRepository;
+        private readonly ILocalAuthorityRepository _LocalAuthorityRepository;
+        private readonly ILocalAuthorityRepository _ocalAuthorityRepository;
         private readonly ILoanApplicationRepository _loanApplicationRepositoryAdmin;
         private readonly INotificationSettingRepository _notificationSettingRepositoryAdmin;
         private readonly IGovNotifyEmailRepository _govNotifyEmailRepositoryAdmin;
@@ -55,7 +58,8 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             _sharepointDocumentLocationRepository = CrmRepositoriesFactory.Get<ISharepointDocumentLocationRepository>();
             _standardConditionsRepository = CrmRepositoriesFactory.Get<IStandardConditionsRepository>();
             _conditionRepository = CrmRepositoriesFactory.Get<IConditionRepository>();
-
+            _heLocalAuthorityRepository = CrmRepositoriesFactory.Get<IHeLocalAuthorityRepository>();
+            _LocalAuthorityRepository = CrmRepositoriesFactory.Get<ILocalAuthorityRepository>();
             _loanApplicationRepositoryAdmin = CrmRepositoriesFactory.GetSystem<ILoanApplicationRepository>();
             _notificationSettingRepositoryAdmin = CrmRepositoriesFactory.GetSystem<INotificationSettingRepository>();
             _govNotifyEmailRepositoryAdmin = CrmRepositoriesFactory.GetSystem<IGovNotifyEmailRepository>();
@@ -106,7 +110,18 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                         foreach (var siteDetail in siteDetailsList)
                         {
                             this.TracingService.Trace("MapSiteDetailsToDto");
-                            siteDetailsDtoList.Add(SiteDetailsDtoMapper.MapSiteDetailsToDto(useHeTables, siteDetail));
+                            he_LocalAuthority heLocalAuthority = null;
+                            invln_localauthority localAuthority = null;
+                            if (useHeTables)
+                            {
+                                heLocalAuthority = _heLocalAuthorityRepository.GetHeLocalAuthorityrelatedToLoanApplication(siteDetail.Id);
+                            }
+                            else
+                            {
+                                localAuthority = _LocalAuthorityRepository.GetLocalAuthorityrelatedToLoanApplication(siteDetail.Id);
+                            }
+                            siteDetailsDtoList.Add(SiteDetailsDtoMapper.MapSiteDetailsToDto(useHeTables, siteDetail, localAuthority, heLocalAuthority));
+
                         }
                     }
                     this.TracingService.Trace("MapLoanApplicationToDto");

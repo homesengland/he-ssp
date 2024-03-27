@@ -7,6 +7,7 @@ using Microsoft.Xrm.Sdk.Client;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.CRM.Common.Helpers;
 using Microsoft.Xrm.Sdk.Query;
+using System;
 
 namespace HE.CRM.Common.Repositories.Implementations
 {
@@ -94,6 +95,13 @@ namespace HE.CRM.Common.Repositories.Implementations
                 totalItemsCount = result.TotalRecordCount,
             };
         }
-
+        public invln_localauthority GetLocalAuthorityrelatedToLoanApplication(Guid id)
+        {
+            var query = new QueryExpression(invln_localauthority.EntityLogicalName);
+            query.ColumnSet.AllColumns = true;
+            var query_invln_sitedetails = query.AddLink(invln_SiteDetails.EntityLogicalName, "invln_localauthorityid", "invln_localauthorityid");
+            query_invln_sitedetails.LinkCriteria.AddCondition("invln_sitedetailsid", ConditionOperator.Equal, id);
+            return service.RetrieveMultiple(query).Entities.Select(x => x.ToEntity<invln_localauthority>()).FirstOrDefault();
+        }
     }
 }
