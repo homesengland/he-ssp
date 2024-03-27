@@ -1,6 +1,4 @@
-using HE.Investments.Common.Contract;
 using HE.Investments.FrontDoor.Shared.Project.Contract;
-using HE.Investments.FrontDoor.Shared.Project.Data;
 using HE.Investments.IntegrationTestsFramework.Data;
 using HE.Investments.TestsUtils.Extensions;
 
@@ -8,9 +6,7 @@ namespace HE.Investments.Loans.IntegrationTests.Config;
 
 public class IntegrationUserData
 {
-    public string LocalAuthorityId { get; private set; } = "E08000012";
-
-    public string LocalAuthorityName { get; private set; } = "Liverpool";
+    public string LocalAuthorityName { get; private set; } = "Oxford";
 
     public string LoanApplicationIdInDraftState { get; private set; }
 
@@ -23,6 +19,8 @@ public class IntegrationUserData
     public IList<FileEntry> SupportingDocuments { get; private set; }
 
     public FrontDoorProjectData ProjectPrefillData { get; private set; }
+
+    public string LocalAuthorityId(string? useHeTables) => string.IsNullOrEmpty(useHeTables) ? "E07000178" : "7000178";
 
     public void SetApplicationLoanId(string loanApplicationId)
     {

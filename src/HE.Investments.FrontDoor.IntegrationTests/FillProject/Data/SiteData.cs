@@ -16,9 +16,7 @@ public class SiteData
 
     public string Name { get; private set; }
 
-    public string LocalAuthorityCode => "E09000001";
-
-    public string LocalAuthorityName => "City of London";
+    public string LocalAuthorityName => "Oxford";
 
     public int HomesNumber => _dataSeed + 4;
 
@@ -27,6 +25,8 @@ public class SiteData
     public SitePlanningStatus NewPlanningStatus => SitePlanningStatus.DetailedPlanningApprovalGranted;
 
     public bool AddAnotherSite => false;
+
+    public string LocalAuthorityCode(string? useHeTablesParameter) => string.IsNullOrWhiteSpace(useHeTablesParameter) ? "E07000178" : "7000178";
 
     public string GenerateSiteName()
     {

@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="6.0.24" />
+    <PackageReference Include="Microsoft.FeatureManagement" Version="3.0.0" />
     <PackageReference Include="RichardSzalay.MockHttp" Version="7.0.0" />
     <PackageReference Include="Scrutor" Version="4.2.2" />
     <PackageReference Include="AngleSharp" Version="1.0.7" />

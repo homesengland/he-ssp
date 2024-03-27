@@ -12,7 +12,7 @@ public static class ProjectCrmFieldNameMapper
     private static readonly string PlanningReferenceNumber = nameof(invln_SiteDetails.invln_Planningreferencenumber).ToLowerInvariant();
     private static readonly string SiteCoordinates = nameof(invln_SiteDetails.invln_Sitecoordinates).ToLowerInvariant();
     private static readonly string LandRegistryTitleNumber = nameof(invln_SiteDetails.invln_Landregistrytitlenumber).ToLowerInvariant();
-    private static readonly string LocalAuthority = nameof(invln_SiteDetails.invln_LocalAuthorityID).ToLowerInvariant();
+    private static readonly string LocalAuthority = string.Join(",", nameof(invln_SiteDetails.invln_LocalAuthorityID), nameof(invln_SiteDetails.invln_HeLocalAuthorityId)).ToLowerInvariant();
     private static readonly string SiteOwnership = nameof(invln_SiteDetails.invln_Siteownership).ToLowerInvariant();
     private static readonly string NumberOfHomes = nameof(invln_SiteDetails.invln_Numberofhomes).ToLowerInvariant();
     private static readonly string TypeOfProject = nameof(invln_SiteDetails.invln_TypeofSite).ToLowerInvariant();
@@ -32,7 +32,7 @@ public static class ProjectCrmFieldNameMapper
     private static readonly string ChargesDebtExists = nameof(invln_SiteDetails.invln_Existinglegalcharges).ToLowerInvariant();
     private static readonly string ChargesDebtInformation = nameof(invln_SiteDetails.invln_Existinglegalchargesinformation).ToLowerInvariant();
     private static readonly string ProjectStatus = nameof(invln_SiteDetails.invln_completionstatus).ToLowerInvariant();
-    private static readonly string FrontDoorSiteId = nameof(invln_SiteDetails.invln_FDSiteId).ToLowerInvariant();
+    private static readonly string FrontDoorSiteId = string.Join(",", nameof(invln_SiteDetails.invln_FDSiteId), nameof(invln_SiteDetails.invln_HeProjectLocalAuthorityId)).ToLowerInvariant();
 
     public static string Map(ProjectFieldsSet projectFieldsSet)
     {
