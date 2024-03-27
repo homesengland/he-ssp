@@ -61,7 +61,8 @@ namespace HE.CRM.Common.Repositories.Implementations
             };
             query.Criteria.AddCondition(invln_Sites.Fields.Id, ConditionOperator.Equal, siteId);
             var site = service.RetrieveMultiple(query).Entities.Select(x => x.ToEntity<invln_Sites>()).FirstOrDefault();
-
+            if (site.invln_LocalAuthority == null)
+                return null;
             var queryLA = new QueryExpression
             {
                 EntityName = invln_AHGLocalAuthorities.EntityLogicalName,

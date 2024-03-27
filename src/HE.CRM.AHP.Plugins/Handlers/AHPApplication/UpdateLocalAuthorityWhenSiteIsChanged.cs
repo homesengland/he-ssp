@@ -24,7 +24,7 @@ namespace HE.CRM.AHP.Plugins.Handlers.AHPApplication
 
         public override bool CanWork()
         {
-            return ExecutionData.Target.invln_Site != null;
+            return ValueChanged(invln_scheme.Fields.invln_Site) && ExecutionData.Target.invln_Site != null;
         }
 
         public override void DoWork()
@@ -32,6 +32,8 @@ namespace HE.CRM.AHP.Plugins.Handlers.AHPApplication
             this.TracingService.Trace($"{ExecutionData.Target.invln_Site.Id}");
             var ahpLocalAuthority = _localAuthorityRepository.GetAhpLocalAuthoritiesReletedToSite(ExecutionData.Target.invln_Site.Id);
             this.TracingService.Trace($"Grow Manager");
+            if (ahpLocalAuthority.invln_GrowthManager == null)
+                return;
             _ahpApplicationRepository.Assign(new invln_scheme() { Id = CurrentState.Id }, ahpLocalAuthority.invln_GrowthManager);
         }
     }

@@ -34,7 +34,7 @@ namespace HE.CRM.AHP.Plugins.Handlers.Site
             var ahpApplications = _ahpApplicationRepository.GetByAttribute(invln_scheme.Fields.invln_Site, CurrentState.Id).ToList();
             foreach (var ahpApplication in ahpApplications)
             {
-                repo.Update(new invln_scheme()
+                _ahpApplicationRepository.Update(new invln_scheme()
                 {
                     Id = ahpApplication.Id,
                     invln_LocalAuthority = CurrentState.invln_LocalAuthority,
