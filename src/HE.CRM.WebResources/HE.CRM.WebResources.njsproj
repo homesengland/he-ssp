@@ -57,6 +57,7 @@
     <TypeScriptCompile Include="src\events\LoanApplication.ts" />
     <TypeScriptCompile Include="src\events\Precomplete.ts" />
     <TypeScriptCompile Include="src\events\Programme.ts" />
+    <TypeScriptCompile Include="src\events\ProjectDetails.ts" />
     <TypeScriptCompile Include="src\events\ReviewApproval.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -72,6 +73,7 @@
     <TypeScriptCompile Include="src\services\LoanApplicationService.ts" />
     <TypeScriptCompile Include="src\services\PrecompleteService.ts" />
     <TypeScriptCompile Include="src\services\ProgrammeService.ts" />
+    <TypeScriptCompile Include="src\services\ProjectDetailsService.ts" />
     <TypeScriptCompile Include="src\services\ReviewApprovalService.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>

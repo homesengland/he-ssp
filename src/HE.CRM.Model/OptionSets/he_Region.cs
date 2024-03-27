@@ -13,20 +13,20 @@ namespace DataverseModel
 	
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum invln_region
+	public enum he_Region
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		London = 858110002,
+		London = 134370002,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Midlands = 858110001,
+		Midlands = 134370001,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		North = 858110003,
+		North = 134370003,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		South = 858110000,
+		South = 134370000,
 	}
 }
 #pragma warning restore CS1591
