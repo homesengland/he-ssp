@@ -1,4 +1,5 @@
 using System;
+using System.IdentityModel.Metadata;
 using System.Linq;
 using System.Security.Cryptography;
 using DataverseModel;
@@ -59,13 +60,13 @@ namespace HE.CRM.Plugins.Services.ISPs
                 target.invln_Submitter = loan.OwnerId.Name;
                 target.invln_SPPIMet = loan.invln_AssessedasSPPI;
                 target.invln_securities = loan.invln_Securities;
-
+                target.invln_BorrowerName = loan.invln_Contact;
                 if (loan.invln_Account != null)
                 {
                     var organisation = _accountRepository.GetById(loan.invln_Account.Id, new string[] { nameof(Account.invln_CurrentCRR).ToLower(), nameof(Account.invln_rating).ToLower() });
                     target.invln_CRR = organisation.invln_CurrentCRR;
                     target.invln_KYCRating = organisation.invln_rating;
-                    target.invln_BorrowerName = organisation.PrimaryContactId;
+
                 }
 
                 if (loan.invln_Contact != null)
