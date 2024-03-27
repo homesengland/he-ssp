@@ -12,6 +12,8 @@
 <div class="govuk-grid-column-full">
     <vc:front-door-workflow-back-button current-page="@ProjectWorkflowState.CheckAnswers"></vc:front-door-workflow-back-button>
 
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+
     <vc:page-header caption="@ViewBag.SiteName" title="@ProjectPageTitles.CheckAnswers"/>
 
     <vc:project-summary sections="@Model.Sections" is-site-identified="@(Model.IsSiteIdentified ?? false)" is-read-only="@Model.IsReadOnly"/>

@@ -5,6 +5,7 @@ using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Errors;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Common.Messages;
 using HE.Investments.Common.Utils;
 using HE.Investments.FrontDoor.Contract.Project.Events;
 using HE.Investments.FrontDoor.Domain.Project.Repository;
@@ -211,6 +212,16 @@ public class ProjectEntity : DomainEntity
         LocalAuthority = _modificationTracker.Change(LocalAuthority, localAuthority);
     }
 
+    public void CanBeCompleted()
+    {
+        if (!IsAnswered())
+        {
+            OperationResult.New()
+                .AddValidationError("IsSectionCompleted", ValidationErrorMessage.ProvideAllProjectAnswers)
+                .CheckErrors();
+        }
+    }
+
     public bool IsProjectValidForLoanApplication()
     {
         return SupportActivities.Values.Count == 1
@@ -286,6 +297,51 @@ public class ProjectEntity : DomainEntity
         if (!newSupportActivityTypes.IsInfrastructureRequired())
         {
             Infrastructure = ProjectInfrastructure.Empty();
+        }
+    }
+
+    private bool IsAnswered()
+    {
+        return IsEnglandHousingDelivery.IsProvided() &&
+               Name.IsProvided() &&
+               SupportActivities.IsAnswered() &&
+               IsSiteIdentified.IsProvided() &&
+               IsSupportRequired.IsProvided() &&
+               IsFundingRequired.IsProvided() &&
+               ExpectedStartDate.IsProvided() &&
+               BuildConditionalRouteCompletionPredicates().All(isCompleted => isCompleted());
+    }
+
+    private IEnumerable<Func<bool>> BuildConditionalRouteCompletionPredicates()
+    {
+        if (SupportActivities.Values.Count == 1 && SupportActivities.Values.Contains(SupportActivityType.DevelopingHomes))
+        {
+            yield return () => AffordableHomesAmount.IsAnswered() && OrganisationHomesBuilt.IsProvided();
+        }
+
+        if (SupportActivities.Values.Count == 1 && SupportActivities.Values.Contains(SupportActivityType.ProvidingInfrastructure))
+        {
+            yield return () => Infrastructure.IsAnswered();
+        }
+
+        if (IsSiteIdentified?.Value == false)
+        {
+            yield return () => HomesNumber.IsProvided() && GeographicFocus.IsAnswered();
+        }
+
+        if (GeographicFocus.GeographicFocus == Shared.Project.Contract.ProjectGeographicFocus.Regional)
+        {
+            yield return () => Regions.IsAnswered();
+        }
+
+        if (GeographicFocus.GeographicFocus == Shared.Project.Contract.ProjectGeographicFocus.SpecificLocalAuthority)
+        {
+            yield return () => LocalAuthority.IsProvided();
+        }
+
+        if (IsFundingRequired?.Value == true)
+        {
+            yield return () => RequiredFunding.IsAnswered() && IsProfit.IsProvided();
         }
     }
 }

@@ -93,30 +93,51 @@ public class ProjectSummaryViewModelFactory : IProjectSummaryViewModelFactory
 
     private static IList<SectionSummaryItemModel> CreateProjectBasicDetailsSummary(ProjectDetails projectDetails, CreateAction createAction, bool isEditable)
     {
-        return new List<SectionSummaryItemModel>
+        var summary = new List<SectionSummaryItemModel>
         {
             new(
                 "Project in England",
                 SummaryAnswerHelper.ToYesNo(projectDetails.IsEnglandHousingDelivery),
                 createAction(nameof(ProjectController.EnglandHousingDelivery)),
                 IsEditable: false),
-            new("Project name", projectDetails.Name.ToOneElementList(), createAction(nameof(ProjectController.Name)), IsEditable: isEditable),
+            new(
+                "Project name",
+                projectDetails.Name.ToOneElementList(),
+                createAction(nameof(ProjectController.Name)),
+                IsEditable: isEditable),
             new(
                 "Activities you require support for",
                 projectDetails.SupportActivityTypes?.Select(x => x.GetDescription()).ToList(),
                 createAction(nameof(ProjectController.SupportRequiredActivities)),
                 IsEditable: isEditable),
-            new(
-                "Amount of affordable homes",
-                SummaryAnswerHelper.ToEnum(projectDetails.AffordableHomesAmount),
-                createAction(nameof(ProjectController.Tenure)),
-                IsEditable: isEditable),
-            new(
-                "Previous residential building experience",
-                projectDetails.OrganisationHomesBuilt.ToOneElementList(),
-                createAction(nameof(ProjectController.OrganisationHomesBuilt)),
-                IsEditable: isEditable),
         };
+
+        summary.AddWhen(
+            new(
+                "What infrastructure does your project deliver?",
+                projectDetails.InfrastructureTypes?.Select(x => x.GetDescription()).ToList(),
+                createAction(nameof(ProjectController.Infrastructure)),
+                IsEditable: isEditable),
+            projectDetails.SupportActivityTypes?.Count == 1 && projectDetails.SupportActivityTypes.Contains(SupportActivityType.ProvidingInfrastructure));
+
+        if (projectDetails.SupportActivityTypes?.Count == 1 && projectDetails.SupportActivityTypes.Contains(SupportActivityType.DevelopingHomes))
+        {
+            summary.AddRange(new[]
+            {
+                new SectionSummaryItemModel(
+                    "Amount of affordable homes",
+                    SummaryAnswerHelper.ToEnum(projectDetails.AffordableHomesAmount),
+                    createAction(nameof(ProjectController.Tenure)),
+                    IsEditable: isEditable),
+                new SectionSummaryItemModel(
+                    "Previous residential building experience",
+                    projectDetails.OrganisationHomesBuilt.ToOneElementList(),
+                    createAction(nameof(ProjectController.OrganisationHomesBuilt)),
+                    IsEditable: isEditable),
+            });
+        }
+
+        return summary;
     }
 
     private static IEnumerable<SectionSummaryViewModel> CreateSitesSummary(
