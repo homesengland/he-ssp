@@ -1,25 +1,16 @@
 @using HE.Investments.Common.Gds
 @using HE.Investments.Common.WWW.Extensions
 @using HE.Investments.Loans.BusinessLogic.Projects.ValueObjects
-@using HE.Investments.Loans.Contract.Projects
 @using HE.Investments.Loans.Contract.Projects.ViewModels
 @using HE.Investments.Loans.WWW.Views.Project.Consts
-@using Microsoft.AspNetCore.Mvc.TagHelpers
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Fieldset
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Legend
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Paragraphs
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Radios
 @model HE.Investments.Loans.Contract.Projects.ViewModels.ProjectViewModel;
 @{
     var id = ViewContext.RouteData.Values["id"];
-
-    var (inputInvalid, inputErrors) = @ViewData.ModelState.GetErrors(nameof(ProjectViewModel.DeleteProject));
+    var (inputInvalid, _) = ViewData.ModelState.GetErrors(nameof(ProjectViewModel.DeleteProject));
 }
 
 <gds-div-grid-column-two-thirds>
-    <gds-back-link href="@Url.Action("Back", "Project", new {id = Model.ApplicationId, projectId = Model.ProjectId, currentPage = ProjectState.DeleteProject})" text="Back" class="govuk-!-margin-bottom-8">
+    <gds-back-link href="@Url.Action("TaskList", "LoanApplicationV2", new { id })" text="Back" class="govuk-!-margin-bottom-8">
     </gds-back-link>
 
     <form asp-controller="Project" asp-action="Delete" asp-route-id="@id" asp-route-project-id="@Model.ProjectId" asp-method="post" novalidate>
