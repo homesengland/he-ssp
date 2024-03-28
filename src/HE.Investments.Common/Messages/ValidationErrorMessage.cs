@@ -136,7 +136,7 @@ public static class ValidationErrorMessage
 
     public static string StringLengthExceededUncommon(string displayName, int maxLength) => new($"{displayName.TitleCaseFirstLetterInString()} must be {maxLength} characters or less");
 
-    public static string ExclusiveOptionSelected(string displayName, string optionName) => $"The {optionName} {displayName} option is exclusive and cannot be selected with any other option.";
+    public static string ExclusiveOptionSelected(string displayName, string optionName) => $"The {optionName} {displayName} option is exclusive and cannot be selected with any other option";
 
     public static string MustBeDate(string displayName) => $"The {displayName} must be a valid date";
 

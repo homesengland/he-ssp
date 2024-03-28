@@ -19,7 +19,7 @@ public class ProjectInfrastructure : ValueObject, IQuestion
         if (infrastructureTypes.Any(x => x == InfrastructureType.IDoNotKnow) && infrastructureTypes.Count > 1)
         {
             OperationResult.New()
-                .AddValidationError("InfrastructureTypes", ValidationErrorMessage.ExclusiveOptionSelected("infrastructure type", "I do not know"))
+                .AddValidationError("InfrastructureTypes", ValidationErrorMessage.ExclusiveOptionSelected("infrastructure type", "'I do not know'"))
                 .CheckErrors();
         }
 

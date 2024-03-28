@@ -43,7 +43,7 @@ public class SupportActivitiesCtorTests
         var result = () => new SupportActivities(new List<SupportActivityType>());
 
         // then
-        result.Should().Throw<DomainValidationException>().WithMessage("Select activities you require support for, or select ‘other'");
+        result.Should().Throw<DomainValidationException>().WithMessage("Select activities you require support for, or select 'other'");
     }
 
     [Fact]
