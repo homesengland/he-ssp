@@ -1,26 +1,30 @@
+extern alias Org;
+
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.CRM.Mappers;
-using HE.Investments.FrontDoor.Contract.Project;
-using HE.Investments.FrontDoor.Contract.Site;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
 using HE.Investments.FrontDoor.Domain.Site.Crm;
 using HE.Investments.FrontDoor.Domain.Site.ValueObjects;
+using HE.Investments.FrontDoor.Shared.Project;
+using SiteLocalAuthority = Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
 
 namespace HE.Investments.FrontDoor.Domain.Site.Repository;
 
-public class SiteRepository : ISiteRepository
+public class SiteRepository : ISiteRepository, IRemoveSiteRepository
 {
     private readonly ISiteCrmContext _siteCrmContext;
-    private readonly PlanningStatusMapper _planningStatusMapper = new();
 
-    public SiteRepository(ISiteCrmContext siteCrmContext)
+    private readonly IPlanningStatusMapper _planningStatusMapper;
+
+    public SiteRepository(ISiteCrmContext siteCrmContext, IPlanningStatusMapper planningStatusMapper)
     {
         _siteCrmContext = siteCrmContext;
+        _planningStatusMapper = planningStatusMapper;
     }
 
-    public async Task<ProjectSitesEntity> GetSites(FrontDoorProjectId projectId, UserAccount userAccount, CancellationToken cancellationToken)
+    public async Task<ProjectSitesEntity> GetProjectSites(FrontDoorProjectId projectId, UserAccount userAccount, CancellationToken cancellationToken)
     {
         var sites = await _siteCrmContext.GetSites(projectId.Value, userAccount, new PagingRequestDto { pageNumber = 1, pageSize = 100 }, cancellationToken);
 
@@ -45,6 +49,11 @@ public class SiteRepository : ISiteRepository
         return site;
     }
 
+    public async Task<string> Remove(FrontDoorSiteId siteId, UserAccount userAccount, CancellationToken cancellationToken)
+    {
+        return await _siteCrmContext.Remove(siteId.Value, userAccount, cancellationToken);
+    }
+
     private FrontDoorProjectSiteDto ToDto(ProjectSiteEntity entity)
     {
         return new FrontDoorProjectSiteDto
@@ -53,6 +62,8 @@ public class SiteRepository : ISiteRepository
             SiteName = entity.Name.Value,
             NumberofHomesEnabledBuilt = entity.HomesNumber?.Value,
             PlanningStatus = entity.PlanningStatus.Value == SitePlanningStatus.Undefined ? null : _planningStatusMapper.ToDto(entity.PlanningStatus.Value),
+            LocalAuthorityCode = entity.LocalAuthority?.Id.Value,
+            LocalAuthorityName = entity.LocalAuthority?.Name,
         };
     }
 
@@ -64,6 +75,7 @@ public class SiteRepository : ISiteRepository
             new SiteName(dto.SiteName),
             dto.CreatedOn,
             dto.NumberofHomesEnabledBuilt == null ? null : new HomesNumber(dto.NumberofHomesEnabledBuilt.Value),
-            planningStatus: PlanningStatus.Create(_planningStatusMapper.ToDomain(dto.PlanningStatus)));
+            planningStatus: PlanningStatus.Create(_planningStatusMapper.ToDomain(dto.PlanningStatus)),
+            localAuthority: string.IsNullOrWhiteSpace(dto.LocalAuthorityCode) ? null : SiteLocalAuthority.New(dto.LocalAuthorityCode, dto.LocalAuthorityName));
     }
 }

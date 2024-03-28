@@ -1,18 +1,25 @@
+using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
+using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.Workflow;
 using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Extensions;
+using HE.Investments.Common.WWW.Models.Summary;
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.FrontDoor.Contract.LocalAuthority.Queries;
 using HE.Investments.FrontDoor.Contract.Project;
 using HE.Investments.FrontDoor.Contract.Project.Commands;
-using HE.Investments.FrontDoor.Contract.Project.Enums;
 using HE.Investments.FrontDoor.Contract.Project.Queries;
+using HE.Investments.FrontDoor.Contract.Site;
+using HE.Investments.FrontDoor.Contract.Site.Queries;
+using HE.Investments.FrontDoor.Shared.Project;
+using HE.Investments.FrontDoor.Shared.Project.Contract;
 using HE.Investments.FrontDoor.WWW.Extensions;
 using HE.Investments.FrontDoor.WWW.Models;
+using HE.Investments.FrontDoor.WWW.Models.Factories;
 using HE.Investments.FrontDoor.WWW.Workflows;
 using HE.Investments.Organisation.LocalAuthorities.ValueObjects;
 using MediatR;
@@ -26,9 +33,15 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
 {
     private readonly IMediator _mediator;
 
-    public ProjectController(IMediator mediator)
+    private readonly IAccountAccessContext _accountAccessContext;
+
+    private readonly IProjectSummaryViewModelFactory _projectSummaryViewModelFactory;
+
+    public ProjectController(IMediator mediator, IAccountAccessContext accountAccessContext, IProjectSummaryViewModelFactory projectSummaryViewModelFactory)
     {
         _mediator = mediator;
+        _accountAccessContext = accountAccessContext;
+        _projectSummaryViewModelFactory = projectSummaryViewModelFactory;
     }
 
     [HttpGet("{projectId}/back")]
@@ -112,6 +125,13 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     public IActionResult NotEligibleForAnything([FromRoute] string projectId)
     {
         return View();
+    }
+
+    [HttpGet("{projectId}")]
+    public async Task<IActionResult> Index([FromRoute] string projectId, CancellationToken cancellationToken)
+    {
+        var summary = await CreateProjectSummary(cancellationToken, false);
+        return ContinueSectionAnswering(summary, () => RedirectToAction("CheckAnswers", new { projectId }));
     }
 
     [HttpGet("{projectId}/name")]
@@ -309,40 +329,40 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
 
     [HttpGet("{projectId}/local-authority-search")]
     [WorkflowState(ProjectWorkflowState.LocalAuthoritySearch)]
-    public IActionResult LocalAuthoritySearch([FromRoute] string projectId, CancellationToken cancellationToken)
+    public IActionResult LocalAuthoritySearch([FromRoute] string projectId, [FromQuery] string? redirect, CancellationToken cancellationToken)
     {
-        return RedirectToAction("Search", "LocalAuthority", new { projectId });
+        return RedirectToAction("Search", "LocalAuthority", new { projectId, redirect });
     }
 
     [HttpGet("{projectId}/local-authority-confirm")]
     [WorkflowState(ProjectWorkflowState.LocalAuthorityConfirm)]
-    public async Task<IActionResult> LocalAuthorityConfirm([FromRoute] string projectId, [FromQuery] string localAuthorityId, CancellationToken cancellationToken)
+    public async Task<IActionResult> LocalAuthorityConfirm([FromRoute] string projectId, [FromQuery] string? localAuthorityId, CancellationToken cancellationToken)
     {
-        await GetProjectDetails(projectId, cancellationToken);
-        var localAuthority = await _mediator.Send(new GetLocalAuthorityQuery(new LocalAuthorityId(localAuthorityId)), cancellationToken);
+        var project = await GetProjectDetails(projectId, cancellationToken);
+        var localAuthority = await _mediator.Send(new GetLocalAuthorityQuery(new LocalAuthorityId(localAuthorityId ?? project.LocalAuthorityCode!)), cancellationToken);
 
-        return View(nameof(LocalAuthorityConfirm), new LocalAuthorityVewModel(localAuthority.Id, localAuthority.Name, projectId));
+        return View(nameof(LocalAuthorityConfirm), new LocalAuthorityViewModel(localAuthority.Id, localAuthority.Name, projectId, null, project.LocalAuthorityCode.IsProvided() ? true : null));
     }
 
     [HttpPost("{projectId}/local-authority-confirm")]
     [WorkflowState(ProjectWorkflowState.LocalAuthorityConfirm)]
-    public async Task<IActionResult> LocalAuthorityConfirm([FromRoute] string projectId, string localAuthorityId, bool? isConfirmed, CancellationToken cancellationToken)
+    public async Task<IActionResult> LocalAuthorityConfirm([FromRoute] string projectId, LocalAuthorityViewModel model, CancellationToken cancellationToken)
     {
-        if (isConfirmed == null)
+        if (model.IsConfirmed == null)
         {
             ModelState.Clear();
             ModelState.AddModelError("IsConfirmed", "Select yes if the local authority is correct");
 
             await GetProjectDetails(projectId, cancellationToken);
-            var localAuthority = await _mediator.Send(new GetLocalAuthorityQuery(new LocalAuthorityId(localAuthorityId)), cancellationToken);
+            var localAuthority = await _mediator.Send(new GetLocalAuthorityQuery(new LocalAuthorityId(model.LocalAuthorityId)), cancellationToken);
 
-            return View("LocalAuthorityConfirm", new LocalAuthorityVewModel(localAuthority.Id, localAuthority.Name, projectId));
+            return View("LocalAuthorityConfirm", new LocalAuthorityViewModel(localAuthority.Id, localAuthority.Name, projectId));
         }
 
-        if (isConfirmed.Value)
+        if (model.IsConfirmed.Value)
         {
             return await ExecuteProjectCommand(
-                new ProvideLocalAuthorityCommand(new FrontDoorProjectId(projectId), new LocalAuthorityId(localAuthorityId)),
+                new ProvideLocalAuthorityCommand(new FrontDoorProjectId(projectId), new LocalAuthorityId(model.LocalAuthorityId), model.LocalAuthorityName),
                 nameof(LocalAuthorityConfirm),
                 project => project,
                 cancellationToken);
@@ -485,16 +505,36 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
 
     [HttpGet("{projectId}/check-answers")]
     [WorkflowState(ProjectWorkflowState.CheckAnswers)]
-    public async Task<IActionResult> CheckAnswers([FromRoute] string projectId, CancellationToken cancellationToken)
+    [WorkflowState(SiteWorkflowState.CheckAnswers)]
+    public async Task<IActionResult> CheckAnswers(CancellationToken cancellationToken)
     {
-        return View(await GetProjectDetails(projectId, cancellationToken));
+        return View("CheckAnswers", await CreateProjectSummary(cancellationToken));
     }
 
-    [HttpPost("{projectId}/complete")]
+    [HttpPost("{projectId}/check-answers")]
     [WorkflowState(ProjectWorkflowState.CheckAnswers)]
-    public IActionResult Complete([FromRoute] string projectId, ProjectDetails model)
+    public async Task<IActionResult> Complete([FromRoute] string projectId, CancellationToken cancellationToken)
     {
-        return RedirectToAction("Index", "Account");
+        var (operationResult, applicationType) = await _mediator.Send(new ValidateProjectAnswersQuery(new FrontDoorProjectId(projectId)), cancellationToken);
+
+        if (operationResult.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(operationResult);
+            return View("CheckAnswers", await CreateProjectSummary(cancellationToken));
+        }
+
+        if (applicationType == ApplicationType.Loans)
+        {
+            return RedirectToAction("RedirectToLoans", "LoanApplication", new { fdProjectId = projectId });
+        }
+
+        return RedirectToAction("YouNeedToSpeakToHomesEngland", new { projectId });
+    }
+
+    [HttpGet("{projectId}/you-need-to-speak-to-homes-england")]
+    public IActionResult YouNeedToSpeakToHomesEngland([FromRoute] string projectId)
+    {
+        return View("YouNeedToSpeakToHomesEngland");
     }
 
     protected override async Task<IStateRouting<ProjectWorkflowState>> Routing(ProjectWorkflowState currentState, object? routeData = null)
@@ -552,5 +592,42 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
         }
 
         return await onContinue();
+    }
+
+    private async Task<ProjectSummaryViewModel> CreateProjectSummary(
+        CancellationToken cancellationToken,
+        bool useWorkflowRedirection = true)
+    {
+        var projectId = this.GetProjectIdFromRoute();
+        var projectDetails = await GetProjectDetails(projectId.Value, cancellationToken);
+        var projectSites = await _mediator.Send(new GetProjectSitesQuery(projectId), cancellationToken);
+        var isEditable = await _accountAccessContext.CanEditApplication();
+        var sections = _projectSummaryViewModelFactory
+            .CreateProjectSummary(projectDetails, projectSites, Url, isEditable, useWorkflowRedirection);
+
+        return new ProjectSummaryViewModel(
+            projectId.Value,
+            sections.ToList(),
+            projectDetails.IsSiteIdentified,
+            isEditable);
+    }
+
+    private IActionResult ContinueSectionAnswering(
+        ISummaryViewModel summaryViewModel,
+        Func<RedirectToActionResult> checkAnswersRedirectFactory)
+    {
+        if (summaryViewModel.IsReadOnly)
+        {
+            return checkAnswersRedirectFactory();
+        }
+
+        var firstNotAnsweredQuestion = summaryViewModel.Sections
+            .Where(x => x.Items != null)
+            .SelectMany(x => x.Items!)
+            .FirstOrDefault(x => x is { HasAnswer: false, HasRedirectAction: true });
+
+        return firstNotAnsweredQuestion != null
+            ? Redirect(firstNotAnsweredQuestion.ActionUrl!)
+            : checkAnswersRedirectFactory();
     }
 }

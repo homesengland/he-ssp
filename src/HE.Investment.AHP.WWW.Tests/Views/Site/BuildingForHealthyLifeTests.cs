@@ -30,7 +30,7 @@ public class BuildingForHealthyLifeTests : AhpViewTestBase
                     "Not applicable, this site does not contain more than 10 homes",
                 })
             .HasSaveAndContinueButton()
-            .HasBackLink(false);
+            .HasBackLink(out _, false);
     }
 
     [Fact]
@@ -60,7 +60,7 @@ public class BuildingForHealthyLifeTests : AhpViewTestBase
                     "Not applicable, this site does not contain more than 10 homes",
                 })
             .HasSaveAndContinueButton()
-            .HasBackLink(false)
+            .HasBackLink(out _, false)
             .HasOneValidationMessages(errorMessage);
     }
 }

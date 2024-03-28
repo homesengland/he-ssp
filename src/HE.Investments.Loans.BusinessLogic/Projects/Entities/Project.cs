@@ -6,6 +6,7 @@ using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
+using HE.Investments.FrontDoor.Shared.Project;
 using HE.Investments.Loans.BusinessLogic.Projects.Enums;
 using HE.Investments.Loans.BusinessLogic.Projects.ValueObjects;
 using HE.Investments.Loans.Contract;
@@ -17,9 +18,10 @@ namespace HE.Investments.Loans.BusinessLogic.Projects.Entities;
 
 public class Project : DomainEntity
 {
-    public Project()
+    public Project(FrontDoorSiteId? frontDoorSiteId = null)
     {
         Id = new ProjectId(Guid.NewGuid());
+        FrontDoorSiteId = frontDoorSiteId;
         IsNewlyCreated = true;
 
         Status = SectionStatus.NotStarted;
@@ -27,6 +29,7 @@ public class Project : DomainEntity
 
     public Project(
         ProjectId id,
+        FrontDoorSiteId? frontDoorSiteId,
         SectionStatus status,
         ProjectName? name,
         StartDate? startDate,
@@ -49,6 +52,7 @@ public class Project : DomainEntity
         IsNewlyCreated = false;
 
         Id = id;
+        FrontDoorSiteId = frontDoorSiteId;
         Status = status;
         Name = name;
         StartDate = startDate;
@@ -72,6 +76,8 @@ public class Project : DomainEntity
     }
 
     public ProjectId Id { get; private set; }
+
+    public FrontDoorSiteId? FrontDoorSiteId { get; private set; }
 
     public ApplicationStatus LoanApplicationStatus { get; }
 

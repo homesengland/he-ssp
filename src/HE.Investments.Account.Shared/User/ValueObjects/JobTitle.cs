@@ -1,11 +1,11 @@
-using HE.Investments.Common.Messages;
+using HE.Investments.Common.Domain.ValueObjects;
 
 namespace HE.Investments.Account.Shared.User.ValueObjects;
 
-public class JobTitle : RequiredStringValueObject
+public class JobTitle : ShortText
 {
     public JobTitle(string? value)
-        : base(value, nameof(JobTitle), "your job title", MaximumInputLength.ShortInput)
+        : base(value, nameof(JobTitle), "job title")
     {
     }
 }

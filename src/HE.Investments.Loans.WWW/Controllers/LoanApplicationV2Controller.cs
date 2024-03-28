@@ -1,8 +1,10 @@
 using FluentValidation;
 using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
+using HE.Investments.Common.WWW.Helpers;
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.Loans.BusinessLogic.LoanApplication;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.QueryHandlers;
@@ -11,7 +13,10 @@ using HE.Investments.Loans.Contract.Application.Enums;
 using HE.Investments.Loans.Contract.Application.Queries;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
 using HE.Investments.Loans.Contract.CompanyStructure;
+using HE.Investments.Loans.Contract.Documents;
 using HE.Investments.Loans.Contract.Funding.Enums;
+using HE.Investments.Loans.Contract.PrefillData;
+using HE.Investments.Loans.Contract.PrefillData.Queries;
 using HE.Investments.Loans.Contract.Projects;
 using HE.Investments.Loans.Contract.Security;
 using HE.Investments.Loans.WWW.Models;
@@ -35,8 +40,14 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
         _accountUserContext = accountUserContext;
     }
 
+    [HttpGet("apply-for-loan")]
+    [WorkflowState(LoanApplicationWorkflow.State.ApplyForLoan)]
+    public IActionResult ApplyForLoan()
+    {
+        return View("ApplyForLoan");
+    }
+
     [HttpGet("about-loan")]
-    [HttpGet("")]
     [WorkflowState(LoanApplicationWorkflow.State.AboutLoan)]
     public IActionResult AboutLoan()
     {
@@ -45,7 +56,7 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
 
     [HttpPost("about-loan")]
     [WorkflowState(LoanApplicationWorkflow.State.AboutLoan)]
-    public async Task<IActionResult> AboutLoanPost(ApplicationInformationAgreementModel model, CancellationToken cancellationToken)
+    public async Task<IActionResult> AboutLoanPost([FromQuery] string fdProjectId, ApplicationInformationAgreementModel model, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new ConfirmInformationAgreementCommand(model.InformationAgreement), cancellationToken);
         if (result.HasValidationErrors)
@@ -54,7 +65,7 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
             return View("AboutLoan", model);
         }
 
-        return await Continue();
+        return await Continue(new { fdProjectId });
     }
 
     [HttpGet("loan-apply-information")]
@@ -66,9 +77,9 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
 
     [HttpPost("loan-apply-information")]
     [WorkflowState(LoanApplicationWorkflow.State.LoanApplyInformation)]
-    public async Task<IActionResult> LoanApplyInformationPost()
+    public async Task<IActionResult> LoanApplyInformationPost([FromQuery] string fdProjectId)
     {
-        return await Continue();
+        return await Continue(new { fdProjectId });
     }
 
     [HttpGet("check-your-details")]
@@ -92,21 +103,25 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
 
     [HttpPost("check-your-details")]
     [WorkflowState(LoanApplicationWorkflow.State.CheckYourDetails)]
-    public Task<IActionResult> CheckYourDetailsPost()
+    public Task<IActionResult> CheckYourDetailsPost([FromQuery] string fdProjectId)
     {
-        return Continue();
+        return Continue(new { fdProjectId });
     }
 
     [HttpGet("loan-purpose")]
     [WorkflowState(LoanApplicationWorkflow.State.LoanPurpose)]
-    public IActionResult LoanPurpose()
+    public async Task<IActionResult> LoanPurpose([FromQuery] string fdProjectId, CancellationToken cancellationToken)
     {
-        return View("LoanPurpose", new LoanPurposeModel());
+        var prefillData = string.IsNullOrWhiteSpace(fdProjectId)
+            ? NewLoanApplicationPrefillData.Empty
+            : await _mediator.Send(new GetNewLoanApplicationPrefillDataQuery(fdProjectId), cancellationToken);
+
+        return View("LoanPurpose", new LoanPurposeModel { FundingPurpose = prefillData.FundingPurpose });
     }
 
     [HttpPost("loan-purpose")]
     [WorkflowState(LoanApplicationWorkflow.State.LoanPurpose)]
-    public async Task<IActionResult> LoanPurposePost(LoanPurposeModel model, CancellationToken cancellationToken)
+    public async Task<IActionResult> LoanPurposePost([FromQuery] string fdProjectId, LoanPurposeModel model, CancellationToken cancellationToken)
     {
         var validationResult = await _validator.ValidateAsync(model, cancellationToken);
         if (!validationResult.IsValid)
@@ -116,24 +131,28 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
 
         if (model.FundingPurpose == FundingPurpose.BuildingNewHomes)
         {
-            return RedirectToAction(nameof(ApplicationName));
+            return RedirectToAction(nameof(ApplicationName), new { fdProjectId });
         }
 
-        return RedirectToAction(nameof(Ineligible));
+        return RedirectToAction(nameof(Ineligible), new { fdProjectId });
     }
 
     [HttpGet("application-name")]
     [WorkflowState(LoanApplicationWorkflow.State.ApplicationName)]
-    public IActionResult ApplicationName()
+    public async Task<IActionResult> ApplicationName([FromQuery] string fdProjectId, CancellationToken cancellationToken)
     {
-        return View("ApplicationName", new ApplicationNameModel());
+        var prefillData = string.IsNullOrWhiteSpace(fdProjectId)
+            ? NewLoanApplicationPrefillData.Empty
+            : await _mediator.Send(new GetNewLoanApplicationPrefillDataQuery(fdProjectId), cancellationToken);
+
+        return View("ApplicationName", new ApplicationNameModel { LoanApplicationName = prefillData.ApplicationName });
     }
 
     [HttpPost("application-name")]
     [WorkflowState(LoanApplicationWorkflow.State.ApplicationName)]
-    public async Task<IActionResult> ApplicationNamePost(ApplicationNameModel model, CancellationToken cancellationToken)
+    public async Task<IActionResult> ApplicationNamePost([FromQuery] string fdProjectId, ApplicationNameModel model, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new StartApplicationCommand(model.LoanApplicationName), cancellationToken);
+        var result = await _mediator.Send(new StartApplicationCommand(model.LoanApplicationName, fdProjectId), cancellationToken);
         if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
@@ -234,9 +253,75 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
     [WorkflowState(LoanApplicationWorkflow.State.ApplicationDashboard)]
     public async Task<IActionResult> ApplicationDashboardSupportingDocuments(Guid id)
     {
-        var response = await _mediator.Send(new GetApplicationDashboardQuery(LoanApplicationId.From(id)));
+        var response = await GetSupportingDocuments(id);
 
         return View("ApplicationDashboard", new ApplicationDashboardModel { LoanApplicationId = LoanApplicationId.From(id), Data = response, IsOverviewSectionSelected = false });
+    }
+
+    [HttpGet("{id}/dashboard/supporting-documents-remove-file")]
+    [WorkflowState(LoanApplicationWorkflow.State.ApplicationDashboard)]
+    public async Task<IActionResult> ApplicationDashboardSupportingDocumentsRemoveFile(Guid id, string fileId, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(
+            new RemoveSupportingDocumentsFileCommand(LoanApplicationId.From(id), FileId.From(fileId)),
+            cancellationToken);
+
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+        }
+
+        return RedirectToAction("ApplicationDashboardSupportingDocuments", new { Id = id });
+    }
+
+    [HttpGet("{id}/dashboard/supporting-documents-download-file")]
+    [WorkflowState(LoanApplicationWorkflow.State.ApplicationDashboard)]
+    public async Task<IActionResult> ApplicationDashboardSupportingDocumentsDownloadFile(Guid id, string fileId, CancellationToken cancellationToken)
+    {
+        var response = await _mediator.Send(new GetSupportingDocumentsFileQuery(LoanApplicationId.From(id), FileId.From(fileId)), cancellationToken);
+
+        return File(response.Content, "application/octet-stream", response.Name);
+    }
+
+    [HttpPost("{id}/dashboard/supporting-documents-upload-file")]
+    [WorkflowState(LoanApplicationWorkflow.State.ApplicationDashboard)]
+    public async Task<IActionResult> ApplicationDashboardSupportingDocumentsUploadFile(Guid id, [FromForm(Name = "file")] IFormFile file, CancellationToken cancellationToken)
+    {
+        var documentToUpload = new FileToUpload(file.FileName, file.Length, file.OpenReadStream());
+        try
+        {
+            var result = await _mediator.Send(new UploadSupportingDocumentsFileCommand(new LoanApplicationId(id), documentToUpload), cancellationToken);
+            return result.HasValidationErrors
+                ? new BadRequestObjectResult(result.Errors)
+                : Ok(new
+                {
+                    fileId = result.ReturnedData!.Id?.Value,
+                    uploadDetails = $"uploaded {DateHelper.DisplayAsUkFormatDateTime(result.ReturnedData.UploadedOn)} by {result.ReturnedData.UploadedBy}",
+                    canBeRemoved = result.ReturnedData.Id.IsProvided(),
+                });
+        }
+        finally
+        {
+            await documentToUpload.Content.DisposeAsync();
+        }
+    }
+
+    [HttpPost("{id}/dashboard/supporting-documents")]
+    [WorkflowState(LoanApplicationWorkflow.State.ApplicationDashboard)]
+    public async Task<IActionResult> ApplicationDashboardSupportingDocumentsPost(Guid id, [FromForm(Name = "SupportingDocumentsFile")] List<IFormFile> formFiles, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(
+            new ProvideSupportingDocumentsCommand(LoanApplicationId.From(id), formFiles),
+            cancellationToken);
+
+        if (result.HasValidationErrors)
+        {
+            var response = await GetSupportingDocuments(id);
+            ModelState.AddValidationErrors(result);
+            return View("ApplicationDashboard", new ApplicationDashboardModel { LoanApplicationId = LoanApplicationId.From(id), Data = response, IsOverviewSectionSelected = false });
+        }
+
+        return RedirectToAction("ApplicationDashboardSupportingDocuments", new { Id = id });
     }
 
     [HttpGet("{id}/hold")]
@@ -270,9 +355,10 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
     }
 
     [HttpGet("back")]
-    public Task<IActionResult> Back(LoanApplicationWorkflow.State currentPage, Guid applicationId)
+    public Task<IActionResult> Back(LoanApplicationWorkflow.State currentPage, Guid applicationId, string fdProjectId)
     {
-        return Back(currentPage, new { Id = applicationId });
+        Guid? id = applicationId == Guid.Empty ? null : applicationId;
+        return Back(currentPage, new { id, fdProjectId });
     }
 
     protected override Task<IStateRouting<LoanApplicationWorkflow.State>> Routing(LoanApplicationWorkflow.State currentState, object routeData = null)
@@ -286,5 +372,22 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
                 currentState,
                 async () => (await _mediator.Send(new GetLoanApplicationQuery(applicationId!))).LoanApplication,
                 async () => applicationId.IsProvided() && await _mediator.Send(new IsLoanApplicationExistQuery(applicationId!))));
+    }
+
+    private async Task<GetApplicationDashboardQueryResponse> GetSupportingDocuments(Guid id)
+    {
+        var loanApplicationId = LoanApplicationId.From(id);
+        var response = await _mediator.Send(new GetApplicationDashboardQuery(loanApplicationId));
+        var files = await _mediator.Send(new GetSupportingDocumentsFilesQuery(loanApplicationId));
+
+        response.SupportingDocumentsViewModel.SupportingDocumentsFiles = files.Select(
+                x => x with
+                {
+                    RemoveAction = Url.Action("ApplicationDashboardSupportingDocumentsRemoveFile", "LoanApplicationV2", new { id, fileId = x.FileId }) ?? string.Empty,
+                    DownloadAction = Url.Action("ApplicationDashboardSupportingDocumentsDownloadFile", "LoanApplicationV2", new { id, fileId = x.FileId }) ?? string.Empty,
+                })
+            .ToList();
+
+        return response;
     }
 }

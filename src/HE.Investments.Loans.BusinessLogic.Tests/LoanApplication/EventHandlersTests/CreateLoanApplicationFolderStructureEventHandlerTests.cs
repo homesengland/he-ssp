@@ -20,7 +20,7 @@ public class CreateLoanApplicationFolderStructureEventHandlerTests : TestBase<Cr
         RegisterDependency(MockFileApplicationRepository(applicationId, "007"));
 
         // when
-        await TestCandidate.Handle(new LoanApplicationHasBeenStartedEvent(applicationId, "test"), CancellationToken.None);
+        await TestCandidate.Handle(new LoanApplicationHasBeenStartedEvent(applicationId, "test", "test2"), CancellationToken.None);
 
         // then
         var expectedFolders = new List<string>

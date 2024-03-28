@@ -3,12 +3,14 @@ using HE.Investments.Common.Contract.Constants;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
+using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.Common.WWW.Utils;
 using HE.Investments.Loans.Common.Utils.Enums;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
 using HE.Investments.Loans.Contract.Funding.Commands;
+using HE.Investments.Loans.Contract.PrefillData.Queries;
 using HE.Investments.Loans.Contract.Projects;
 using HE.Investments.Loans.Contract.Projects.Commands;
 using HE.Investments.Loans.Contract.Projects.Queries;
@@ -367,9 +369,10 @@ public class ProjectController : WorkflowController<ProjectState>
 
     [HttpGet("{projectId}/local-authority/search")]
     [WorkflowState(ProjectState.ProvideLocalAuthority)]
-    public IActionResult LocalAuthoritySearch(Guid id, Guid projectId)
+    public async Task<IActionResult> LocalAuthoritySearch(Guid id, Guid projectId, CancellationToken cancellationToken)
     {
-        return View(new LocalAuthoritiesViewModel { ApplicationId = id, ProjectId = projectId, });
+        var projectPrefillData = await _mediator.Send(new GetLoanProjectPrefillDataQuery(LoanApplicationId.From(id), ProjectId.From(projectId)), cancellationToken);
+        return View(new LocalAuthoritiesViewModel { ApplicationId = id, ProjectId = projectId, Phrase = projectPrefillData?.LocalAuthorityName });
     }
 
     [HttpPost("{projectId}/local-authority/search")]
@@ -507,28 +510,20 @@ public class ProjectController : WorkflowController<ProjectState>
 
     [HttpPost("{projectId}/additional-details")]
     [WorkflowState(ProjectState.Additional)]
-    public async Task<IActionResult> AdditionalDetails(Guid id, Guid projectId, [FromQuery] string redirect, ProjectViewModel model, CancellationToken token)
+    public async Task<IActionResult> AdditionalDetails(Guid id, Guid projectId, [FromQuery] string redirect, ProjectViewModel model, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(
+        return await this.ExecuteCommand<ProjectViewModel>(
+            _mediator,
             new ProvideAdditionalDetailsCommand(
                 LoanApplicationId.From(id),
                 ProjectId.From(projectId),
-                model.PurchaseYear,
-                model.PurchaseMonth,
-                model.PurchaseDay,
+                model.PurchaseDate,
                 model.Cost,
                 model.Value,
                 model.Source),
-            token);
-
-        if (result.HasValidationErrors)
-        {
-            ModelState.AddValidationErrors(result);
-
-            return View(model);
-        }
-
-        return await Continue(redirect, new { id, projectId });
+            async () => await Continue(redirect, new { id, projectId }),
+            () => Task.FromResult<IActionResult>(View(model)),
+            cancellationToken);
     }
 
     [HttpGet("{projectId}/grant-funding-exists")]

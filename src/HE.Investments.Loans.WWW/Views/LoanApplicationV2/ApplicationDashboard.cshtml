@@ -9,7 +9,6 @@
 @{
     ViewBag.Breadcrumbs = BreadcrumbsBuilder
         .New()
-        .WithOrganisations()
         .WithOrganisation(Model.Data.OrganizationName)
         .WithLuhbfApplications()
         .WithApplication(Model.Data.ApplicationName.Value, Model.Data.ApplicationId.Value)
@@ -30,7 +29,7 @@
 
             <p class="govuk-body govuk-!-margin-bottom-1">
                 <strong>ID @Model.Data.ApplicationReferenceNumber</strong>
-                <application-status-tag application-status="@Model.Data.ApplicationStatus" additional-classes="govuk-!-static-margin-left-2"></application-status-tag>
+                <application-status-tag application-status="@Model.Data.ApplicationStatus" additional-classes="govuk-!-static-margin-left-2" data-testid="application-status"></application-status-tag>
             </p >
             <p class="govuk-body govuk-!-margin-bottom-1">
                 <strong>LUHBF</strong>
@@ -64,7 +63,7 @@
         }
         else
         {
-            @await Html.PartialAsync("ApplicationDashboard/_ApplicationDashboardSupportingDocuments", Model.Data.ApplicationId)
+            @await Html.PartialAsync("ApplicationDashboard/_ApplicationDashboardSupportingDocuments", Model.Data.SupportingDocumentsViewModel)
         }
     </div>
 </div>

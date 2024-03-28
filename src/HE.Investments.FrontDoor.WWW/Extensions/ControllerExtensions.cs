@@ -1,7 +1,7 @@
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.WWW.Extensions;
-using HE.Investments.FrontDoor.Contract.Project;
 using HE.Investments.FrontDoor.Contract.Site;
+using HE.Investments.FrontDoor.Shared.Project;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investments.FrontDoor.WWW.Extensions;
@@ -18,5 +18,10 @@ public static class ControllerExtensions
     {
         var siteId = controller.Request.GetRouteValue("siteId") ?? throw new NotFoundException("Missing required siteId path parameter.");
         return new FrontDoorSiteId(siteId);
+    }
+
+    public static string? GetOptionalParameterFromRoute(this Controller controller)
+    {
+        return controller.Request.Query["optional"];
     }
 }

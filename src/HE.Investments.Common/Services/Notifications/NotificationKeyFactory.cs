@@ -1,3 +1,4 @@
+using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.User;
 
 namespace HE.Investments.Common.Services.Notifications;

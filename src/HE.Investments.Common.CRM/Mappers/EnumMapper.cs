@@ -1,5 +1,3 @@
-using HE.Investments.Common.Extensions;
-
 namespace HE.Investments.Common.CRM.Mappers;
 
 public abstract class EnumMapper<TSource>
@@ -30,16 +28,6 @@ public abstract class EnumMapper<TSource>
 
     public TSource? ToDomain(int? value)
     {
-        if (value == null)
-        {
-            return ToDomainMissing;
-        }
-
-        if (!Mapping.TryGetKeyByValue(value.Value, out var result))
-        {
-            throw new ArgumentException($"Cannot find {Name} Domain mapping for {value}");
-        }
-
-        return result;
+        return DomainEnumMapper.Map(value, Mapping, ToDomainMissing);
     }
 }

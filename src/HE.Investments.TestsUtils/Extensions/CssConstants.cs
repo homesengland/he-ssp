@@ -25,4 +25,6 @@ public static class CssConstants
     public const string GovUkNotificationBannerContent = "govuk-notification-banner__content";
 
     public const string GovUkInsetText = "govuk-inset-text";
+
+    public const string FilesTableBody = "files-table-body";
 }

@@ -21,6 +21,6 @@ public class LocalAuthorityNotFoundTests : AhpViewTestBase
             .HasParagraph("We could not find the details you entered in our records.")
             .HasLinkWithTestId("local-authority-search-link", out _)
             .HasLinkWithTestId("assign-empty-local-authority-link", out _)
-            .HasBackLink(false);
+            .HasBackLink(out _, false);
     }
 }

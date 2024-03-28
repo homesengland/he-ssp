@@ -1,3 +1,4 @@
+using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.Common.Services.Notifications;
 using HE.Investments.Loans.Contract.Application.Events;
@@ -15,7 +16,10 @@ public class SendLoanApplicationCreatedNotificationEventHandler : IEventHandler<
 
     public async Task Handle(LoanApplicationHasBeenStartedEvent domainEvent, CancellationToken cancellationToken)
     {
-        await _notificationPublisher.Publish(ApplicationType.Account, ToNotification(domainEvent));
+        if (!string.IsNullOrEmpty(domainEvent.FrontDoorProjectId))
+        {
+            await _notificationPublisher.Publish(ApplicationType.Account, ToNotification(domainEvent));
+        }
     }
 
     private static Notification ToNotification(LoanApplicationHasBeenStartedEvent domainEvent)

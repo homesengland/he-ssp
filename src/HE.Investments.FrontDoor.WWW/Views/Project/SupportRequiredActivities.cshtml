@@ -16,7 +16,7 @@
 
     <vc:page-header caption="@ViewBag.ProjectName" />
 
-    <form asp-controller="Project" asp-action="SupportRequiredActivities" asp-method="post" novalidate>
+    <form asp-controller="Project" asp-action="SupportRequiredActivities" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
 
         <vc:checkbox-list-with-or
             title="@title"

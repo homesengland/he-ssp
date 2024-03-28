@@ -1,12 +1,14 @@
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.Entities;
 using HE.Investments.Common.Domain;
+using HE.Investments.Loans.BusinessLogic.Files;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Entities;
+using HE.Investments.Loans.BusinessLogic.LoanApplication.ValueObjects;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
 
 namespace HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories;
 
-public interface ILoanApplicationRepository
+public interface ILoanApplicationRepository : ILoansFileLocationProvider<SupportingDocumentsParams>
 {
     Task<LoanApplicationEntity> GetLoanApplication(LoanApplicationId id, UserAccount userAccount, CancellationToken cancellationToken);
 

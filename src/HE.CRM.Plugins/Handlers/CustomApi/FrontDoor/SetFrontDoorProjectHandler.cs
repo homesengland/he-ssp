@@ -11,6 +11,7 @@ namespace HE.CRM.Plugins.Handlers.CustomApi.FrontDoor
         private string externalContactId => ExecutionData.GetInputParameter<string>(invln_setfrontdoorprojectRequest.Fields.invln_userid);
         private string frontDoorProjectId => ExecutionData.GetInputParameter<string>(invln_setfrontdoorprojectRequest.Fields.invln_frontdoorprojectid);
         private string entityFieldsParameters => ExecutionData.GetInputParameter<string>(invln_setfrontdoorprojectRequest.Fields.invln_entityfieldsparameters);
+        private string useHeTablesFromPortal => ExecutionData.GetInputParameter<string>(invln_getsinglefrontdoorprojectRequest.Fields.invln_usehetables);
         #endregion
 
         #region Base Methods Overrides
@@ -22,7 +23,8 @@ namespace HE.CRM.Plugins.Handlers.CustomApi.FrontDoor
         public override void DoWork()
         {
             this.TracingService.Trace("SetFrontDoorProjectHandler");
-            var frontdoorprojectid = CrmServicesFactory.Get<IFrontDoorProjectService>().CreateRecordFromPortal(externalContactId, organisationId, frontDoorProjectId, entityFieldsParameters);
+            var useHeTables = !string.IsNullOrEmpty(useHeTablesFromPortal);
+            var frontdoorprojectid = CrmServicesFactory.Get<IFrontDoorProjectService>().CreateRecordFromPortal(externalContactId, organisationId, frontDoorProjectId, entityFieldsParameters, useHeTables);
             this.TracingService.Trace("Send Response");
             if (frontdoorprojectid != null)
             {

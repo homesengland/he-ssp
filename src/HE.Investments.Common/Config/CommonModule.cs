@@ -1,4 +1,5 @@
 using System.Reflection;
+using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.Infrastructure.Cache.Interfaces;
 using HE.Investments.Common.Services.Notifications;
 using Microsoft.Extensions.DependencyInjection;

@@ -1,7 +1,7 @@
 using FluentAssertions;
-using HE.Investments.FrontDoor.Contract.Project.Enums;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
 using HE.Investments.FrontDoor.Domain.Tests.Project.TestDataBuilders;
+using HE.Investments.FrontDoor.Shared.Project.Contract;
 using Xunit;
 
 namespace HE.Investments.FrontDoor.Domain.Tests.Project.ProjectEntityTests;
@@ -12,7 +12,10 @@ public class ProvideSupportActivityTypesTests
     public void ShouldResetAffordableHomesQuestion_WhenSupportActivityHasChanged()
     {
         // given
-        var project = ProjectEntityBuilder.New().WithSupportActivitiesAsDevelopingHomes().WithAffordableHomesAmount().Build();
+        var project = ProjectEntityBuilder.New().WithSupportActivities(new List<SupportActivityType>
+        {
+            SupportActivityType.DevelopingHomes,
+        }).WithAffordableHomesAmount(AffordableHomesAmount.OnlyAffordableHomes).Build();
 
         // when
         project.ProvideSupportActivityTypes(new SupportActivities(new[] { SupportActivityType.AcquiringLand }));
@@ -25,7 +28,10 @@ public class ProvideSupportActivityTypesTests
     public void ShouldResetProvidingInfrastructureQuestion_WhenSupportActivityHasChanged()
     {
         // given
-        var project = ProjectEntityBuilder.New().WithSupportActivitiesAsProvidingInfrastructure().WithAffordableHomesAmount().Build();
+        var project = ProjectEntityBuilder.New().WithSupportActivities(new List<SupportActivityType>
+        {
+            SupportActivityType.DevelopingHomes,
+        }).WithAffordableHomesAmount(AffordableHomesAmount.OnlyAffordableHomes).Build();
 
         // when
         project.ProvideSupportActivityTypes(new SupportActivities(new[] { SupportActivityType.AcquiringLand }));
@@ -38,7 +44,10 @@ public class ProvideSupportActivityTypesTests
     public void ShouldNotResetAffordableHomesQuestion_WhenSupportActivityHasChangedToTheSame()
     {
         // given
-        var project = ProjectEntityBuilder.New().WithSupportActivitiesAsDevelopingHomes().WithAffordableHomesAmount().Build();
+        var project = ProjectEntityBuilder.New().WithSupportActivities(new List<SupportActivityType>
+        {
+            SupportActivityType.DevelopingHomes,
+        }).WithAffordableHomesAmount(AffordableHomesAmount.OnlyAffordableHomes).Build();
 
         // when
         project.ProvideSupportActivityTypes(new SupportActivities(new[] { SupportActivityType.DevelopingHomes }));

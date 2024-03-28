@@ -25,7 +25,7 @@
 
     <vc:select-list
         items="@items"
-        paragraph-with-link="@(new ParagraphWithLinkModel("If your local authority is not listed above, your", new LinkModel("LocalAuthorityReset", "Site", new { siteId = Model.SiteId, redirect }), "Growth Manager can add this for you later."))"
+        paragraph-with-link="@(new ParagraphWithLinkModel("If your local authority is not listed above, your", new LinkModel(new ActionLinkModel("LocalAuthorityReset", "Site", new { siteId = Model.SiteId, redirect }), null!), "Growth Manager can add this for you later."))"
         paging-navigation-url="@Url.Action("LocalAuthorityResult", "Site", new { siteId = Model.SiteId, localAuthorityId = Model.LocalAuthorityId, phrase = Model.Phrase, redirect })"/>
 
     <vc:return-to-sites-link is-link-inside-form="false"/>

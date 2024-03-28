@@ -6,7 +6,7 @@
 @using HE.Investments.FrontDoor.WWW.Views.Shared.Components.FrontDoorWorkflowBackButton
 @using HE.Investments.FrontDoor.WWW.Views.Site.Const
 
-@model HE.Investments.FrontDoor.WWW.Models.LocalAuthorityVewModel
+@model HE.Investments.FrontDoor.WWW.Models.LocalAuthorityViewModel
 @{
     ViewData["Title"] = SitePageTitles.LocalAuthorityConfirm;
     var header = new DynamicComponentViewModel(nameof(SelectListConfirmationHeader), new { header = SitePageTitles.LocalAuthorityConfirm, name = Model.LocalAuthorityName, description = "Is this a correct local authority?" });
@@ -18,12 +18,14 @@
 
     <vc:page-header caption="@ViewBag.ProjectName"/>
 
-    <form asp-controller="Site" asp-action="LocalAuthorityConfirm" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
+    <form asp-controller="Site" asp-action="LocalAuthorityConfirm" asp-route-workflow="@Context.Request.Query["workflow"]" asp-route-redirect="@Context.Request.Query["redirect"]" asp-route-optional="@Context.Request.Query["optional"]" asp-method="post" novalidate>
 
         @Html.HiddenFor(m => m.LocalAuthorityId)
+        @Html.HiddenFor(m => m.LocalAuthorityName)
 
         <vc:radio-yes-no
             field-name="IsConfirmed"
+            value="@Model.IsConfirmed"
             additional-content="@header"/>
 
         <vc:form-button/>

@@ -1,8 +1,8 @@
-using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.FinancialDetails.Entities;
 using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 using HE.Investment.AHP.Domain.Tests.Application.TestData;
+using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.Extensions;
 using HE.Investments.TestsUtils;
 

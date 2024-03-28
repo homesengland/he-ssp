@@ -8,7 +8,7 @@ namespace HE.CRM.Common.DtoMapping
 {
     public class LoanApplicationDtoMapper
     {
-        public static invln_Loanapplication MapLoanApplicationDtoToRegularEntity(LoanApplicationDto loanApplicationDto, Contact contact, string accountId)
+        public static invln_Loanapplication MapLoanApplicationDtoToRegularEntity(bool useHeTables, LoanApplicationDto loanApplicationDto, Contact contact, string accountId)
         {
             var loanApplication = new invln_Loanapplication()
             {
@@ -69,10 +69,23 @@ namespace HE.CRM.Common.DtoMapping
             {
                 loanApplication.Id = loanApplicationId;
             }
+
+            if (Guid.TryParse(loanApplicationDto.frontDoorProjectId, out Guid frontDoorProjectId))
+            {
+                if (useHeTables)
+                {
+                    loanApplication.invln_HeProjectId = new EntityReference(he_Pipeline.EntityLogicalName, frontDoorProjectId);
+                }
+                else
+                {
+                    loanApplication.invln_FDProjectId = new EntityReference(invln_FrontDoorProjectPOC.EntityLogicalName, frontDoorProjectId);
+                }
+            }
+
             return loanApplication;
         }
 
-        public static LoanApplicationDto MapLoanApplicationToDto(invln_Loanapplication loanApplication, List<SiteDetailsDto> siteDetailsDtoList, string externalContactId, Contact contact = null)
+        public static LoanApplicationDto MapLoanApplicationToDto(bool useHeTables, invln_Loanapplication loanApplication, List<SiteDetailsDto> siteDetailsDtoList, string externalContactId, Contact contact = null)
         {
             var loanApplicationDto = new LoanApplicationDto()
             {
@@ -156,6 +169,17 @@ namespace HE.CRM.Common.DtoMapping
                 {
                     loanApplicationDto.LoanApplicationContact.AccountId = loanApplication.invln_Account.Id;
                 }
+            }
+
+            if (useHeTables)
+            {
+                loanApplicationDto.frontDoorProjectId = loanApplication.invln_HeProjectId?.Id.ToString();
+                loanApplicationDto.frontDoorProjectName = loanApplication.invln_HeProjectId?.Name;
+            }
+            else
+            {
+                loanApplicationDto.frontDoorProjectId = loanApplication.invln_FDProjectId?.Id.ToString();
+                loanApplicationDto.frontDoorProjectName = loanApplication.invln_FDProjectId?.Name;
             }
 
             return loanApplicationDto;

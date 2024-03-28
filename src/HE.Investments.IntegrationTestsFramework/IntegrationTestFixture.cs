@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.FeatureManagement;
 
 namespace HE.Investments.IntegrationTestsFramework;
 
@@ -22,6 +23,7 @@ public class IntegrationTestFixture<TProgram> : WebApplicationFactory<TProgram>
 
         var userConfig = Configuration.GetSection("IntegrationTestsConfig:UserConfig").Get<UserLoginData>();
         LoginData = userConfig ?? new UserLoginData();
+        Scope = new Lazy<IServiceScope>(() => Server.Services.CreateScope());
     }
 
     public IDictionary<string, object> DataBag { get; }
@@ -29,6 +31,10 @@ public class IntegrationTestFixture<TProgram> : WebApplicationFactory<TProgram>
     public ILoginData LoginData { get; }
 
     public IConfiguration Configuration { get; }
+
+    public IFeatureManager FeatureManager => Scope.Value.ServiceProvider.GetRequiredService<IFeatureManager>();
+
+    protected Lazy<IServiceScope> Scope { get; }
 
     public void ProvideLoginData(ILoginData loginData)
     {
@@ -54,6 +60,10 @@ public class IntegrationTestFixture<TProgram> : WebApplicationFactory<TProgram>
             (HttpMethod.Get, $"api/user/{LoginData.UserGlobalId}/profile", profileDetails));
     }
 
+    protected virtual void ConfigureTestServices(IServiceCollection services)
+    {
+    }
+
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         builder.ConfigureTestServices(x =>
@@ -68,9 +78,20 @@ public class IntegrationTestFixture<TProgram> : WebApplicationFactory<TProgram>
 
             x.AddSingleton<IDocumentServiceSettings, MockedDocumentServiceSettings>();
             x.Decorate<IHttpClientFactory, IntegrationTestsHttpClientFactory>();
+            ConfigureTestServices(x);
         });
 
         base.ConfigureWebHost(builder);
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+
+        if (Scope.IsValueCreated)
+        {
+            Scope.Value.Dispose();
+        }
     }
 
     private class MockedDocumentServiceSettings : IDocumentServiceSettings

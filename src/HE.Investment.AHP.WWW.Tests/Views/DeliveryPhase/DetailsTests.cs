@@ -33,6 +33,6 @@ public class DetailsTests : AhpViewTestBase
         document.HasTitle(DeliveryPageTitles.Details)
             .HasGdsRadioInputWithValues(nameof(DeliveryPhaseDetails.TypeOfHomes), TypeOfHomes.NewBuild.ToString(), TypeOfHomes.Rehab.ToString())
             .HasSaveAndContinueButton()
-            .HasBackLink(false);
+            .HasBackLink(out _, false);
     }
 }

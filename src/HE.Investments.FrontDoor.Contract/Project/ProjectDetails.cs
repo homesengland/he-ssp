@@ -1,6 +1,7 @@
 using HE.Investments.Common.Contract;
-using HE.Investments.FrontDoor.Contract.Project.Enums;
 using HE.Investments.FrontDoor.Contract.Site;
+using HE.Investments.FrontDoor.Shared.Project;
+using HE.Investments.FrontDoor.Shared.Project.Contract;
 
 namespace HE.Investments.FrontDoor.Contract.Project;
 
@@ -37,6 +38,10 @@ public class ProjectDetails
     public bool? IsSupportRequired { get; set; }
 
     public bool? IsProfit { get; set; }
+
+    public string? LocalAuthorityCode { get; set; }
+
+    public string? LocalAuthorityName { get; set; }
 
     public DateDetails? ExpectedStartDate { get; set; }
 }

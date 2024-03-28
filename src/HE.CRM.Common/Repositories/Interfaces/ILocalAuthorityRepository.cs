@@ -1,6 +1,8 @@
 using HE.Base.Repositories;
 using DataverseModel;
 using System.Collections.Generic;
+using HE.Common.IntegrationModel.PortalIntegrationModel;
+using System;
 
 namespace HE.CRM.Common.Repositories.Interfaces
 {
@@ -8,5 +10,9 @@ namespace HE.CRM.Common.Repositories.Interfaces
     {
         List<invln_localauthority> GetAll();
         invln_localauthority GetLocalAuthorityWithGivenOnsCode(string onsCode);
+
+        PagedResponseDto<invln_localauthority> GetLocalAuthoritiesForLoan(PagingRequestDto pagingRequestDto, string searchPhrase);
+        PagedResponseDto<invln_AHGLocalAuthorities> GetLocalAuthoritiesForAHP(PagingRequestDto pagingRequestDto, string searchPhrase);
+        invln_localauthority GetLocalAuthorityrelatedToLoanApplication(Guid id);
     }
 }

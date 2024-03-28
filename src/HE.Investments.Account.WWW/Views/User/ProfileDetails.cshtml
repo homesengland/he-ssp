@@ -5,6 +5,9 @@
 @{
     ViewData["Title"] = "Profile details";
     var marginClass = !string.IsNullOrWhiteSpace(Model.CallbackUrl) ? string.Empty : "govuk-!-margin-top-9";
+
+    var programme = Context.Request.Query["programme"];
+    var callback = Context.Request.Query["callback"];
 }
 
 <gds-div-grid-column-two-thirds>
@@ -13,7 +16,7 @@
         <gds-back-link class="govuk-!-margin-bottom-8" href="@Model.CallbackUrl"></gds-back-link>
     }
 
-    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml" )
 
     <vc:page-header
         title="@UserPageTitles.ProfileDetails"
@@ -21,7 +24,7 @@
 
     <gds-p>Enter your personal details, you will be asked to add your organisation details later.</gds-p>
 
-    <form asp-controller="User" asp-action="SaveProfileDetails" asp-method="post" novalidate>
+    <form asp-controller="User" asp-action="SaveProfileDetails" asp-method="post" asp-route-programme="@programme" asp-route-callback="@callback" novalidate>
             @Html.HiddenFor(x => x.CallbackUrl)
             <vc:text-input
                 field-name="@(nameof(Model.FirstName))"

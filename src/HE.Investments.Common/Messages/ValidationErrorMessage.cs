@@ -28,10 +28,6 @@ public static class ValidationErrorMessage
 
     public const string InvalidStartDate = "Enter a valid date. The build start date must include a day, month and year";
 
-    public const string NoPurchaseDate = "Enter the date you purchased this site";
-
-    public const string IncorrectPurchaseDate = "The date you purchased this land must be a real date";
-
     public const string FuturePurchaseDate = "The date you purchased this land must be today or in the past";
 
     public const string EnterExistingLegal = "Enter any existing legal charges or debt secured on this land";
@@ -46,6 +42,8 @@ public static class ValidationErrorMessage
 
     public const string FileIncorrectFormat = "The selected file must be a PDF, Word Doc, JPEG or RTF";
 
+    public const string FileFormatNotSupported = "The selected file type is not supported";
+
     public const string LoanPurpose = "Select what you need Homes England funding for";
 
     public const string EnterCoordinates = "Enter your XY coordinates";
@@ -59,6 +57,8 @@ public static class ValidationErrorMessage
     public const string IncorrectGrantFundingAmount = "The amount of funding provided";
 
     public const string AcceptTermsAndConditions = "Select that you have read and understood the privacy notice";
+
+    public const string AcceptTermsAndConditionsAndContinue = "You must select you have read and understood the privacy policy to continue";
 
     public const string InformationAgreement = "Select that you have read and agree with the information";
 
@@ -75,6 +75,12 @@ public static class ValidationErrorMessage
     public const string EnterDate = "Enter a date. The date must include a day, month and year";
 
     public const string SquareMetersMustBeNumber = "The square meterage in the internal floor each of each home must be a number, like 75.50";
+
+    public const string FilesListEmpty = "Select at least one file to upload";
+
+    public const string ProvideAllProjectAnswers = "To submit, you have to provide all answers";
+
+    public const string ProvideAllSiteAnswers = "To submit, you have to provide all answers for sties";
 
     public static string FilesMaxCount(int numberOfFiles) => $"You can only select up to {numberOfFiles} files";
 

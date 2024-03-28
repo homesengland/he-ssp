@@ -1,6 +1,8 @@
 using System.Globalization;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Extensions;
+using HE.Investments.Loans.BusinessLogic.PrefillData.Data;
 using HE.Investments.Loans.BusinessLogic.Projects.Entities;
 using HE.Investments.Loans.BusinessLogic.Projects.Repositories.Mappers;
 using HE.Investments.Loans.Common.Utils.Constants.FormOption;
@@ -8,21 +10,20 @@ using HE.Investments.Loans.Contract.Application.ValueObjects;
 using HE.Investments.Loans.Contract.Projects.ViewModels;
 
 namespace HE.Investments.Loans.BusinessLogic.Projects;
+
 internal static class ProjectMapper
 {
-    public static ProjectViewModel MapToViewModel(Project project, LoanApplicationId loanApplicationId)
+    public static ProjectViewModel MapToViewModel(Project project, LoanApplicationId loanApplicationId, LoanProjectPrefillData? projectPrefillData = null)
     {
         var additionalDetailsAreProvided = project.AdditionalDetails.IsProvided();
-
         var startDate = project.StartDate?.Value;
-
         var locationOption = DetermineLocationOption(project);
 
         return new ProjectViewModel
         {
-            ProjectId = project.Id!.Value,
-            ProjectName = project.Name?.Value,
-            HomesCount = project.HomesCount?.Value,
+            ProjectId = project.Id.Value,
+            ProjectName = project.Name?.Value ?? projectPrefillData?.Name,
+            HomesCount = project.HomesCount?.Value ?? projectPrefillData?.NumberOfHomes.ToString(),
             HomeTypes = project.HomesTypes?.HomesTypesValue,
             OtherHomeTypes = project.HomesTypes?.OtherHomesTypesValue,
             ProjectType = project.ProjectType?.Value,
@@ -36,9 +37,7 @@ internal static class ProjectMapper
             LocationCoordinates = project.Coordinates?.Value,
             LocationLandRegistry = project.LandRegistryTitleNumber?.Value,
             Ownership = project.LandOwnership?.ApplicantHasFullOwnership.MapToCommonResponse(),
-            PurchaseYear = project.AdditionalDetails?.PurchaseDate.AsDateTime().Year.ToString(CultureInfo.InvariantCulture),
-            PurchaseMonth = project.AdditionalDetails?.PurchaseDate.AsDateTime().Month.ToString(CultureInfo.InvariantCulture),
-            PurchaseDay = project.AdditionalDetails?.PurchaseDate.AsDateTime().Day.ToString(CultureInfo.InvariantCulture),
+            PurchaseDate = DateDetails.FromDateTime(project.AdditionalDetails?.PurchaseDate?.Value),
             Cost = project.AdditionalDetails?.Cost.ToString(),
             Value = project.AdditionalDetails?.CurrentValue.ToString(),
             Source = additionalDetailsAreProvided ? SourceOfValuationMapper.ToString(project.AdditionalDetails!.SourceOfValuation) : null,
@@ -56,7 +55,7 @@ internal static class ProjectMapper
             EstimatedStartMonth = startDate.HasValue ? startDate.Value.Month.ToString(CultureInfo.InvariantCulture) : null,
             EstimatedStartYear = startDate.HasValue ? startDate.Value.Year.ToString(CultureInfo.InvariantCulture) : null,
 
-            PlanningPermissionStatus = PlanningPermissionStatusMapper.MapToString(project.PlanningPermissionStatus),
+            PlanningPermissionStatus = PlanningPermissionStatusMapper.MapToString(project.PlanningPermissionStatus ?? projectPrefillData?.PlanningPermissionStatus),
             Status = project.Status,
         };
     }

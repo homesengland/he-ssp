@@ -1,6 +1,6 @@
-using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
+using HE.Investments.Common.Contract.Enum;
 
 namespace HE.Investment.AHP.Domain.Tests.HomeTypes.TestDataBuilders;
 

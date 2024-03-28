@@ -1,4 +1,5 @@
 using HE.Investments.Account.Shared;
+using HE.Investments.Account.Shared.User;
 using HE.Investments.FrontDoor.Contract.Project.Commands;
 using HE.Investments.FrontDoor.Domain.Project.Repository;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
@@ -12,9 +13,11 @@ public class ProvideProjectNameCommandHandler : ProjectBaseCommandHandler<Provid
     {
     }
 
-    protected override async Task PerformAsync(ProjectEntity project, ProvideProjectNameCommand request, CancellationToken cancellationToken)
+    protected override async Task PerformAsync(ProjectEntity project, ProvideProjectNameCommand request, UserAccount userAccount, CancellationToken cancellationToken)
     {
         var projectName = new ProjectName(request.Name ?? string.Empty);
-        await project.ProvideName(projectName, ProjectRepository, cancellationToken);
+        var projectNameExists = new ProjectNameWithinOrganisationExists(ProjectRepository, userAccount);
+
+        await project.ProvideName(projectName, projectNameExists, cancellationToken);
     }
 }

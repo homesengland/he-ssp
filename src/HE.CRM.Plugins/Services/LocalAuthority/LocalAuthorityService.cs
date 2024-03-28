@@ -10,6 +10,7 @@ namespace HE.CRM.Plugins.Services.LocalAuthority
     {
         #region Fields
         private readonly ILocalAuthorityRepository _localAuthorityRepository;
+        private readonly IHeLocalAuthorityRepository _heLocalAuthorityRepository;
         #endregion
 
         #region Constructors
@@ -17,7 +18,9 @@ namespace HE.CRM.Plugins.Services.LocalAuthority
         public LocalAuthorityService(CrmServiceArgs args) : base(args)
         {
             _localAuthorityRepository = CrmRepositoriesFactory.Get<ILocalAuthorityRepository>();
+            _heLocalAuthorityRepository = CrmRepositoriesFactory.Get<IHeLocalAuthorityRepository>();
         }
+        #endregion
 
         public List<LocalAuthorityDto> GetAllLocalAuthoritiesAsDto()
         {
@@ -36,6 +39,50 @@ namespace HE.CRM.Plugins.Services.LocalAuthority
             }
             return localAuthoritiesDtoList;
         }
-        #endregion
+
+
+        public PagedResponseDto<LocalAuthorityDto> GetLocalAuthoritiesForModule(PagingRequestDto pagingRequestDto, string searchPhrase, string module, bool useHeTables)
+        {
+            if ((module == "loan" || module == "loanFD") && !useHeTables)
+            {
+                this.TracingService.Trace("module loan or loanFD");
+                var result = _localAuthorityRepository.GetLocalAuthoritiesForLoan(pagingRequestDto, searchPhrase);
+
+                return new PagedResponseDto<LocalAuthorityDto>
+                {
+                    paging = result.paging,
+                    totalItemsCount = result.totalItemsCount,
+                    items = result.items.Select(i => new LocalAuthorityDto { id = i.invln_localauthorityId.ToString(), name = i.invln_localauthorityname, code = i.invln_onscode }).ToList(),
+                };
+            }
+
+            if (module == "ahp" && !useHeTables)
+            {
+                this.TracingService.Trace("module ahp");
+                var result = _localAuthorityRepository.GetLocalAuthoritiesForAHP(pagingRequestDto, searchPhrase);
+
+                return new PagedResponseDto<LocalAuthorityDto>
+                {
+                    paging = result.paging,
+                    totalItemsCount = result.totalItemsCount,
+                    items = result.items.Select(i => new LocalAuthorityDto { id = i.invln_AHGLocalAuthoritiesId.ToString(), name = i.invln_LocalAuthorityName, code = i.invln_GSSCode }).ToList(),
+                };
+            }
+
+            if (useHeTables)
+            {
+                this.TracingService.Trace("module loanFD");
+                var result = _heLocalAuthorityRepository.GetLocalAuthoritiesForFdLoan(pagingRequestDto, searchPhrase);
+
+                return new PagedResponseDto<LocalAuthorityDto>
+                {
+                    paging = result.paging,
+                    totalItemsCount = result.totalItemsCount,
+                    items = result.items.Select(i => new LocalAuthorityDto { id = i.he_LocalAuthorityId.ToString(), name = i.he_Name, code = i.he_GSSCode }).ToList(),
+                };
+            }
+
+            return null;
+        }
     }
 }

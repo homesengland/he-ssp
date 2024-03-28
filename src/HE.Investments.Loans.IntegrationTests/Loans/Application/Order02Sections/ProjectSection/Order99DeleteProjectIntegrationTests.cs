@@ -22,7 +22,7 @@ public class Order99DeleteProjectIntegrationTests : IntegrationTest
     private readonly string _applicationLoanId;
     private readonly string? _projectId;
 
-    public Order99DeleteProjectIntegrationTests(IntegrationTestFixture<Program> fixture)
+    public Order99DeleteProjectIntegrationTests(LoansIntegrationTestFixture fixture)
         : base(fixture)
     {
         _applicationLoanId = UserData.LoanApplicationIdInDraftState;

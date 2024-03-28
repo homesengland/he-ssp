@@ -58,7 +58,8 @@ namespace HE.Investments.Common.CRM.Model
 			public const string CreatedOnBehalfByName = "createdonbehalfbyname";
 			public const string CreatedOnBehalfByYomiName = "createdonbehalfbyyominame";
 			public const string ImportSequenceNumber = "importsequencenumber";
-			public const string invln_invln_scheme_localauthoritylookup_invln_l = "invln_invln_scheme_localauthoritylookup_invln_l";
+			public const string invln_frontdoorprojectpoc_LocalAuthorityId_invl = "invln_frontdoorprojectpoc_LocalAuthorityId_invl";
+			public const string invln_frontdoorprojectsitepoc_LocalAuthorityId_ = "invln_frontdoorprojectsitepoc_LocalAuthorityId_";
 			public const string invln_localauthorityId = "invln_localauthorityid";
 			public const string Id = "invln_localauthorityid";
 			public const string invln_localauthorityname = "invln_localauthorityname";
@@ -769,22 +770,42 @@ namespace HE.Investments.Common.CRM.Model
 		}
 		
 		/// <summary>
-		/// 1:N invln_invln_scheme_localauthoritylookup_invln_l
+		/// 1:N invln_frontdoorprojectpoc_LocalAuthorityId_invl
 		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_invln_scheme_localauthoritylookup_invln_l")]
-		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_scheme> invln_invln_scheme_localauthoritylookup_invln_l
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_frontdoorprojectpoc_LocalAuthorityId_invl")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_FrontDoorProjectPOC> invln_frontdoorprojectpoc_LocalAuthorityId_invl
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_scheme>("invln_invln_scheme_localauthoritylookup_invln_l", null);
+				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_FrontDoorProjectPOC>("invln_frontdoorprojectpoc_LocalAuthorityId_invl", null);
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("invln_invln_scheme_localauthoritylookup_invln_l");
-				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_scheme>("invln_invln_scheme_localauthoritylookup_invln_l", null, value);
-				this.OnPropertyChanged("invln_invln_scheme_localauthoritylookup_invln_l");
+				this.OnPropertyChanging("invln_frontdoorprojectpoc_LocalAuthorityId_invl");
+				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_FrontDoorProjectPOC>("invln_frontdoorprojectpoc_LocalAuthorityId_invl", null, value);
+				this.OnPropertyChanged("invln_frontdoorprojectpoc_LocalAuthorityId_invl");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_frontdoorprojectsitepoc_LocalAuthorityId_
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_frontdoorprojectsitepoc_LocalAuthorityId_")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_FrontDoorProjectSitePOC> invln_frontdoorprojectsitepoc_LocalAuthorityId_
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_FrontDoorProjectSitePOC>("invln_frontdoorprojectsitepoc_LocalAuthorityId_", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_frontdoorprojectsitepoc_LocalAuthorityId_");
+				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_FrontDoorProjectSitePOC>("invln_frontdoorprojectsitepoc_LocalAuthorityId_", null, value);
+				this.OnPropertyChanged("invln_frontdoorprojectsitepoc_LocalAuthorityId_");
 			}
 		}
 		

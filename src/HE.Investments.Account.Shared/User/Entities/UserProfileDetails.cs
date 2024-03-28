@@ -7,9 +7,9 @@ namespace HE.Investments.Account.Shared.User.Entities;
 public class UserProfileDetails
 {
     public UserProfileDetails(
-        FirstName? firstName,
-        LastName? lastName,
-        JobTitle? jobTitle,
+        YourFirstName? firstName,
+        YourLastName? lastName,
+        YourJobTitle? jobTitle,
         string? email,
         TelephoneNumber? telephoneNumber,
         TelephoneNumber? secondaryTelephoneNumber,
@@ -24,11 +24,11 @@ public class UserProfileDetails
         IsTermsAndConditionsAccepted = isTermsAndConditionsAccepted;
     }
 
-    public FirstName? FirstName { get; private set; }
+    public YourFirstName? FirstName { get; private set; }
 
-    public LastName? LastName { get; private set; }
+    public YourLastName? LastName { get; private set; }
 
-    public JobTitle? JobTitle { get; private set; }
+    public YourJobTitle? JobTitle { get; private set; }
 
     public string? Email { get; private set; }
 
@@ -47,9 +47,9 @@ public class UserProfileDetails
         string? userEmail)
     {
         OperationResult.New()
-            .WithValidation(() => FirstName = new FirstName(firstName))
-            .WithValidation(() => LastName = new LastName(lastName))
-            .WithValidation(() => JobTitle = new JobTitle(jobTitle))
+            .WithValidation(() => FirstName = new YourFirstName(firstName))
+            .WithValidation(() => LastName = new YourLastName(lastName))
+            .WithValidation(() => JobTitle = new YourJobTitle(jobTitle))
             .WithValidation(() => TelephoneNumber = TelephoneNumber.FromString(telephoneNumber, nameof(TelephoneNumber), "your preferred telephone number"))
             .WithValidation(() => SecondaryTelephoneNumber = secondaryTelephoneNumber.IsProvided()
                 ? TelephoneNumber.FromString(secondaryTelephoneNumber, nameof(SecondaryTelephoneNumber), "your secondary telephone number")

@@ -3,7 +3,7 @@
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.Components.RadioListWithOr
 @using HE.Investments.Common.WWW.Helpers
-@using HE.Investments.FrontDoor.Contract.Project.Enums
+@using HE.Investments.FrontDoor.Shared.Project.Contract
 @using HE.Investments.FrontDoor.WWW.Views.Project.Const
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @model ProjectDetails
@@ -21,7 +21,7 @@
 
     <vc:page-header caption="@ViewBag.ProjectName"/>
 
-    <form asp-controller="Project" asp-action="FundingAmount" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
+    <form asp-controller="Project" asp-action="FundingAmount" asp-route-workflow="@Context.Request.Query["workflow"]" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
 
         <vc:radio-list-with-or
             title="@title"

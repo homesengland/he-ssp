@@ -8,9 +8,17 @@ public class UserInvitationEntityTestDataBuilder
 {
     private string _emailAddress = "test@test.com";
 
+    private UserRole _role = UserRole.ViewOnly;
+
     public UserInvitationEntityTestDataBuilder WithEmailAddress(string emailAddress)
     {
         _emailAddress = emailAddress;
+        return this;
+    }
+
+    public UserInvitationEntityTestDataBuilder WithRole(UserRole role)
+    {
+        _role = role;
         return this;
     }
 
@@ -21,6 +29,6 @@ public class UserInvitationEntityTestDataBuilder
             new LastName("Paul"),
             new EmailAddress(_emailAddress),
             new JobTitle("Engineer"),
-            UserRole.ViewOnly);
+            _role);
     }
 }

@@ -134,7 +134,6 @@
     <Compile Include="Handlers\CustomApi\FrontDoor\CheckIfFrontDoorProjectWithGivenNameExistsHandler.cs" />
     <Compile Include="Handlers\CustomApi\FrontDoor\DeactivateFrontDoorProjectHandler.cs" />
     <Compile Include="Handlers\CustomApi\FrontDoor\DeactivateFrontDoorSiteHandler.cs" />
-    <Compile Include="Handlers\CustomApi\FrontDoor\GetMultipleFrontDoorProjectsHandler.cs" />
     <Compile Include="Handlers\CustomApi\FrontDoor\SetFrontDoorSiteHandler.cs" />
     <Compile Include="Handlers\CustomApi\GenerateRichTextDocumentHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetContactRoleHandler.cs" />
@@ -148,10 +147,12 @@
     <Compile Include="Handlers\CustomApi\FrontDoor\GetSingleFrontDoorProjectSiteHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetSingleInvestmentLoanForAccountAndContactHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetSingleSiteDetailsHandler.cs" />
+    <Compile Include="Handlers\CustomApi\LocalAuthority\GetMultipleLocalAuthoritiesForModuleHandler.cs" />
     <Compile Include="Handlers\CustomApi\ReturnUserProfileHandler.cs" />
     <Compile Include="Handlers\CustomApi\SearchLocalAuthorityHandler.cs" />
     <Compile Include="Handlers\CustomApi\SendInvestmentsLoanDataToCrmHandler.cs" />
     <Compile Include="Handlers\CustomApi\FrontDoor\SetFrontDoorProjectHandler.cs" />
+    <Compile Include="Handlers\CustomApi\SendRequestToAssignContactToExistingOrganisationHandler.cs" />
     <Compile Include="Handlers\CustomApi\UpdateSingleLoanApplicationHandler.cs" />
     <Compile Include="Handlers\CustomApi\UpdateSingleSiteDetailsHandler.cs" />
     <Compile Include="Handlers\CustomApi\UpdateUserProfileHandler.cs" />
@@ -181,7 +182,6 @@
     <Compile Include="Plugins\CustomApi\FrontDoor\CheckIfFrontDoorProjectWithGivenNameExistsPlugin.cs" />
     <Compile Include="Plugins\CustomApi\FrontDoor\DeactivateFrontDoorProjectPlugin.cs" />
     <Compile Include="Plugins\CustomApi\FrontDoor\DeactivateFrontDoorSitePlugin.cs" />
-    <Compile Include="Plugins\CustomApi\FrontDoor\GetMultipleFrontDoorProjectsPlugin.cs" />
     <Compile Include="Plugins\CustomApi\FrontDoor\SetFrontDoorSitePlugin.cs" />
     <Compile Include="Plugins\CustomApi\GenerateRichTextDocumentPlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetContactRolePlugin.cs" />
@@ -195,10 +195,12 @@
     <Compile Include="Plugins\CustomApi\FrontDoor\GetSingleFrontDoorProjectSitePlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetSingleInvestmentLoanForAccountAndContactPlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetSingleSiteDetailsPlugin.cs" />
+    <Compile Include="Plugins\CustomApi\LocalAuthority\GetMultipleLocalAuthoritiesForModulePlugin.cs" />
     <Compile Include="Plugins\CustomApi\ReturnUserProfilePlugin.cs" />
     <Compile Include="Plugins\CustomApi\SearchLocalAuthorityPlugin.cs" />
     <Compile Include="Plugins\CustomApi\SendInvestmentsLoanDataToCrmPlugin.cs" />
     <Compile Include="Plugins\CustomApi\FrontDoor\SetFrontDoorProjectPlugin.cs" />
+    <Compile Include="Plugins\CustomApi\SendRequestToAssignContactToExistingOrganisationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\UpdateSingleLoanApplicationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\UpdateSingleSiteDetailsPlugin.cs" />
     <Compile Include="Plugins\Accounts\OnCurrentCrrFieldUpdatePlugin.cs" />

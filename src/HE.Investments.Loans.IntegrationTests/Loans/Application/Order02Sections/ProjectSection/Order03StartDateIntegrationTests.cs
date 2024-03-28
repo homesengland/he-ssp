@@ -23,7 +23,7 @@ public class Order03StartDateIntegrationTests : IntegrationTest
 
     private readonly string _applicationLoanId;
 
-    public Order03StartDateIntegrationTests(IntegrationTestFixture<Program> fixture)
+    public Order03StartDateIntegrationTests(LoansIntegrationTestFixture fixture)
         : base(fixture)
     {
         _applicationLoanId = UserData.LoanApplicationIdInDraftState;

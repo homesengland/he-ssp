@@ -24,7 +24,7 @@ public class Order10LocationIntegrationTests : IntegrationTest
 
     private readonly string _applicationLoanId;
 
-    public Order10LocationIntegrationTests(IntegrationTestFixture<Program> fixture)
+    public Order10LocationIntegrationTests(LoansIntegrationTestFixture fixture)
         : base(fixture)
     {
         _applicationLoanId = UserData.LoanApplicationIdInDraftState;

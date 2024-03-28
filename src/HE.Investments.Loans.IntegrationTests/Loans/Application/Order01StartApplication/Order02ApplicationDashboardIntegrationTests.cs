@@ -1,10 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
-using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Extensions;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
-using HE.Investments.Loans.WWW;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
 using Xunit.Extensions.Ordering;
@@ -17,7 +15,7 @@ public class Order02ApplicationDashboardIntegrationTests : IntegrationTest
 {
     private readonly string _applicationLoanId;
 
-    public Order02ApplicationDashboardIntegrationTests(IntegrationTestFixture<Program> fixture)
+    public Order02ApplicationDashboardIntegrationTests(LoansIntegrationTestFixture fixture)
         : base(fixture)
     {
         _applicationLoanId = UserData.LoanApplicationIdInDraftState;

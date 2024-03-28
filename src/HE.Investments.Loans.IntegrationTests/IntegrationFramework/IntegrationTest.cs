@@ -3,6 +3,7 @@ using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.IntegrationTestsFramework.Auth;
 using HE.Investments.IntegrationTestsFramework.Config;
 using HE.Investments.Loans.IntegrationTests.Config;
+using HE.Investments.Loans.IntegrationTests.Crm;
 using HE.Investments.Loans.WWW;
 using Xunit;
 
@@ -11,14 +12,21 @@ namespace HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 [Collection(nameof(IntegrationTestSharedContext))]
 public class IntegrationTest : IntegrationTestBase<Program>
 {
-    protected IntegrationTest(IntegrationTestFixture<Program> fixture)
+    private readonly LoansIntegrationTestFixture _fixture;
+
+    protected IntegrationTest(LoansIntegrationTestFixture fixture)
         : base(fixture)
     {
         SetUserData();
         fixture.CheckUserLoginData();
         LoginData = fixture.LoginData;
         fixture.MockUserAccount();
+        _fixture = fixture;
     }
+
+    protected FrontDoorProjectCrmRepository FrontDoorProjectCrmRepository => _fixture.FrontDoorProjectCrmRepository;
+
+    protected LoanApplicationCrmRepository LoanApplicationCrmRepository => _fixture.LoanApplicationCrmRepository;
 
     protected IntegrationUserData UserData { get; private set; }
 

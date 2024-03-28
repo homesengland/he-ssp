@@ -27,7 +27,7 @@ export class IspService {
   private static standardConditionsToBeWaivedValue: string = "Please highlight any Standard Conditions that do not apply to this proposal and the rationale for those exclusion(s)."
   private static lessThan10MInformationValue: string = "You will not be able to send this ISP for approval until the DES and HoF reviews have taken place. It is policy that the following review / approve this ISP: Risk, CRO Delegated Authority";
   private static moreThan10MLessThan50InformationValue: string = "You will not be able to send this ISP for approval until the DES and HoF reviews have taken place. It is policy that the following review / approve this ISP: Risk, CRO, IPE";
-
+  private static statictextaboveplots = "Please use this section to give an overview of the homes being delivered."
   constructor(eCtx) {
     this.common = new CommonLib(eCtx)
   }
@@ -141,6 +141,7 @@ export class IspService {
 
     this.common.setAttributeValue('invln_staticrecommendation', IspService.recommendationValue)
     this.common.setAttributeValue('invln_staticstandardconditionstobewaived', IspService.standardConditionsToBeWaivedValue)
+    this.common.setAttributeValue('invln_statictextaboveplots', IspService.statictextaboveplots)
   }
 
   public setFieldsRequirementBasedOnSendOnApproval() {
@@ -332,5 +333,4 @@ export class IspService {
     this.common.hideControl('invln_completionguaranteevaluek', isDisabled);
     this.common.hideControl('invln_completionguaranteemarginedsecurityk', isDisabled);
   }
-
 }

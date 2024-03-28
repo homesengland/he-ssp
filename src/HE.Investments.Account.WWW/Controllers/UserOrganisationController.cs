@@ -70,7 +70,6 @@ public class UserOrganisationController : Controller
                     .ToList(),
                 new List<Common.WWW.Models.ActionModel>
                 {
-                    new("Add another organisation", "SearchOrganisation", "Organisation", HasAccess: true),
                     new("Add or manage users at this Organisation", "Index", "Users", HasAccess: canViewOrganisationDetails),
                     new($"Manage {userOrganisationResult.OrganisationBasicInformation.RegisteredCompanyName} details", "Details", "UserOrganisation", HasAccess: canViewOrganisationDetails),
                     new("Manage your account", "GetProfileDetails", "User", new { callback = Url.Action("Index") }, true),
@@ -124,7 +123,7 @@ public class UserOrganisationController : Controller
     [HttpGet("list")]
     public IActionResult UserOrganisationsList()
     {
-        return View("UserOrganisationsList");
+        return RedirectToAction("Index");
     }
 
     private async Task<string?> GetStartNewProjectUrl()
@@ -139,7 +138,7 @@ public class UserOrganisationController : Controller
 
     private string GetProjectUrl(HeProjectId projectId)
     {
-        return $"{_programmeUrlConfig.FrontDoor}/project/{projectId}/name";
+        return $"{_programmeUrlConfig.FrontDoor}/project/{projectId}";
     }
 
     private Dictionary<ProgrammeType, ProgrammeModel> GetProgrammes(IList<ProgrammeType> programmeTypes)

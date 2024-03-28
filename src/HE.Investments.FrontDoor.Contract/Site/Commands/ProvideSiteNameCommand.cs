@@ -1,6 +1,5 @@
-using HE.Investments.Common.Contract.Validators;
 using HE.Investments.FrontDoor.Contract.Project;
-using MediatR;
+using HE.Investments.FrontDoor.Shared.Project;
 
 namespace HE.Investments.FrontDoor.Contract.Site.Commands;
 

@@ -2,13 +2,12 @@ using System.Globalization;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.Site;
-using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Helpers;
+using HE.Investments.Common.WWW.Models.Summary;
 using Microsoft.AspNetCore.Mvc;
 using Controller = HE.Investment.AHP.WWW.Controllers.HomeTypesController;
-using Workflow = HE.Investment.AHP.Contract.HomeTypes.HomeTypesWorkflowState;
 
 namespace HE.Investment.AHP.WWW.Models.HomeTypes.Factories;
 

@@ -14,6 +14,7 @@ namespace HE.CRM.Plugins.Handlers.CustomApi
         private string externalContactId => ExecutionData.GetInputParameter<string>(invln_getsinglesitedetailsRequest.Fields.invln_externalcontactid);
         private string accountId => ExecutionData.GetInputParameter<string>(invln_getsinglesitedetailsRequest.Fields.invln_accountid);
         private string fieldsToRetrieve => ExecutionData.GetInputParameter<string>(invln_getsinglesitedetailsRequest.Fields.invln_fieldstoretrieve);
+        private string useHeTablesFromPortal => ExecutionData.GetInputParameter<string>(invln_getsinglesitedetailsRequest.Fields.invln_usehetables);
 
         #endregion
 
@@ -26,7 +27,8 @@ namespace HE.CRM.Plugins.Handlers.CustomApi
         public override void DoWork()
         {
             this.TracingService.Trace("GetSingleSiteDetail");
-            var siteDetailsSerialized = CrmServicesFactory.Get<ISiteDetailsService>().GetSingleSiteDetail(siteDetailsId, accountId, externalContactId, fieldsToRetrieve);
+            var useHeTables = !string.IsNullOrEmpty(useHeTablesFromPortal);
+            var siteDetailsSerialized = CrmServicesFactory.Get<ISiteDetailsService>().GetSingleSiteDetail(useHeTables, siteDetailsId, accountId, externalContactId, fieldsToRetrieve);
             if (siteDetailsSerialized != null)
             {
                 ExecutionData.SetOutputParameter(invln_getsinglesitedetailsResponse.Fields.invln_sitedetail, siteDetailsSerialized);

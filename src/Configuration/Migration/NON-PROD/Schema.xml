@@ -1,0 +1,130 @@
+<entities >
+  <entity name="invln_notificationsetting" displayname="Notification Setting" etc="11070" primaryidfield="invln_notificationsettingid" primarynamefield="invln_name" disableplugins="false">
+    <fields>
+      <field displayname="Name" name="invln_name" type="string" customfield="true" />
+      <field displayname="Notification Setting" name="invln_notificationsettingid" type="guid" primaryKey="true" />
+      <field displayname="Status" name="statecode" type="state" />
+      <field displayname="Status Reason" name="statuscode" type="status" />
+      <field displayname="Subject" name="invln_subject" type="string" customfield="true" />
+      <field displayname="Template Id" name="invln_templateid" type="string" customfield="true" />
+      <field displayname="Template Type Name" name="invln_templatetypename" type="string" customfield="true" />
+      <field displayname="Time Zone Rule Version Number" name="timezoneruleversionnumber" type="number" />
+      <field displayname="UTC Conversion Time Zone Code" name="utcconversiontimezonecode" type="number" />
+      <field displayname="Version Number" name="versionnumber" type="bigint" />
+    </fields>
+  </entity>
+  <entity name="team" displayname="Team" etc="9" primaryidfield="teamid" primarynamefield="name" disableplugins="false">
+    <fields>
+      <field displayname="Administrator" name="administratorid" type="entityreference" lookupType="systemuser" />
+      <field displayname="Business Unit" name="businessunitid" type="entityreference" lookupType="businessunit" />
+      <field displayname="Currency" name="transactioncurrencyid" type="entityreference" lookupType="transactioncurrency" />
+      <field displayname="Default Queue" name="queueid" type="entityreference" lookupType="queue" />
+      <field displayname="Description" name="description" type="string" />
+      <field displayname="Email" name="emailaddress" type="string" />
+      <field displayname="Exchange Rate" name="exchangerate" type="decimal" />
+      <field displayname="Import Sequence Number" name="importsequencenumber" type="number" />
+      <field displayname="Is System Managed" name="systemmanaged" type="bool" />
+      <field displayname="Membership Type" name="membershiptype" type="optionsetvalue" />
+      <field displayname="Process" name="processid" type="guid" />
+      <field displayname="Team" name="teamid" type="guid" primaryKey="true" />
+      <field displayname="Team Name" name="name" type="string" />
+      <field displayname="Team Template Identifier" name="teamtemplateid" type="entityreference" lookupType="teamtemplate" />
+      <field displayname="Team Type" name="teamtype" type="optionsetvalue" />
+      <field displayname="Yomi Name" name="yominame" type="string" />
+    </fields>
+    <filter>    &lt;filter type="or"&gt;
+      &lt;condition attribute="name" operator="eq" value="Admin Digital Security Team" /&gt;
+      &lt;condition attribute="name" operator="eq" value="Administrator - Business Team" /&gt;
+      &lt;condition attribute="name" operator="eq" value="Bristol Hub" /&gt;
+      &lt;condition attribute="name" operator="eq" value="Core Service Team" /&gt;
+      &lt;condition attribute="name" operator="eq" value="Coventry Hub" /&gt;
+      &lt;condition attribute="name" operator="eq" value="CRO Team" /&gt;
+      &lt;condition attribute="name" operator="eq" value="DES team" /&gt;
+      &lt;condition attribute="name" operator="eq" value="General Team" /&gt;
+      &lt;condition attribute="name" operator="eq" value="Growth Team" /&gt;
+      &lt;condition attribute="name" operator="eq" value="Homes England" /&gt;
+      &lt;condition attribute="name" operator="eq" value="Homes England Integrations" /&gt;
+      &lt;condition attribute="name" operator="eq" value="North Hub" /&gt;
+      &lt;condition attribute="name" operator="eq" value="Northstowe Hub" /&gt;
+      &lt;condition attribute="name" operator="eq" value="TM Team" /&gt;
+    &lt;/filter&gt;</filter>
+  </entity>
+  <entity name="invln_standardcondition" displayname="Standard Condition" etc="11002" primaryidfield="invln_standardconditionid" primarynamefield="invln_name" disableplugins="false">
+    <fields>
+      <field displayname="Status Comment" name="invln_statuscomment" type="string" customfield="true" />
+      <field displayname="Satisfactory" name="invln_satisfactory" type="optionsetvalue" customfield="true" />
+      <field displayname="Satisfied By" name="invln_satisfiedby" type="optionsetvalue" customfield="true" />
+      <field displayname="Standard Condition" name="invln_standardconditionid" type="guid" primaryKey="true" />
+      <field displayname="Status Reason" name="statuscode" type="status" />
+      <field displayname="Time Zone Rule Version Number" name="timezoneruleversionnumber" type="number" />
+      <field displayname="UTC Conversion Time Zone Code" name="utcconversiontimezonecode" type="number" />
+      <field displayname="Version Number" name="versionnumber" type="bigint" />
+    </fields>
+  </entity>
+  <entity name="invln_webrole" displayname="Web role" etc="10898" primaryidfield="invln_webroleid" primarynamefield="invln_name" disableplugins="false">
+    <fields>
+      <field displayname="Import Sequence Number" name="importsequencenumber" type="number" />
+      <field displayname="Is default role" name="invln_isdefaultrole" type="bool" customfield="true" />
+      <field displayname="Name" name="invln_name" type="string" customfield="true" />
+      <field displayname="Organization Id" name="organizationid" type="entityreference" lookupType="organization" />
+      <field displayname="Portal" name="invln_portalid" type="entityreference" lookupType="invln_portal" customfield="true" />
+      <field displayname="Portal permission level" name="invln_portalpermissionlevelid" type="entityreference" lookupType="invln_portalpermissionlevel" customfield="true" />
+      <field displayname="Record Created On" name="overriddencreatedon" type="datetime" />
+      <field displayname="Status" name="statecode" type="state" />
+      <field displayname="Status Reason" name="statuscode" type="status" />
+      <field displayname="Time Zone Rule Version Number" name="timezoneruleversionnumber" type="number" />
+      <field displayname="UTC Conversion Time Zone Code" name="utcconversiontimezonecode" type="number" />
+      <field displayname="Version Number" name="versionnumber" type="bigint" />
+      <field displayname="Web role" name="invln_webroleid" type="guid" primaryKey="true" />
+    </fields>
+  </entity>
+  <entity name="invln_portal" displayname="Portal" etc="10893" primaryidfield="invln_portalid" primarynamefield="invln_name" disableplugins="false">
+    <fields>
+      <field displayname="External Id" name="invln_externalid" type="string" customfield="true" />
+      <field displayname="Import Sequence Number" name="importsequencenumber" type="number" />
+      <field displayname="Name" name="invln_name" type="string" customfield="true" />
+      <field displayname="Owner" name="ownerid" type="owner" />
+      <field displayname="Owning Business Unit" name="owningbusinessunit" type="entityreference" lookupType="businessunit" />
+      <field displayname="Owning Team" name="owningteam" type="entityreference" lookupType="team" />
+      <field displayname="Owning User" name="owninguser" type="entityreference" lookupType="systemuser" />
+      <field displayname="Portal" name="invln_portal" type="optionsetvalue" customfield="true" />
+      <field displayname="Portal" name="invln_portalid" type="guid" primaryKey="true" />
+      <field displayname="Record Created On" name="overriddencreatedon" type="datetime" />
+      <field displayname="Status" name="statecode" type="state" />
+      <field displayname="Status Reason" name="statuscode" type="status" />
+      <field displayname="Time Zone Rule Version Number" name="timezoneruleversionnumber" type="number" />
+      <field displayname="UTC Conversion Time Zone Code" name="utcconversiontimezonecode" type="number" />
+      <field displayname="Version Number" name="versionnumber" type="bigint" />
+    </fields>
+  </entity>
+  <entity name="invln_portalpermissionlevel" displayname="Portal permission level" etc="10894" primaryidfield="invln_portalpermissionlevelid" primarynamefield="invln_name" disableplugins="false">
+    <fields>
+      <field displayname="Import Sequence Number" name="importsequencenumber" type="number" />
+      <field displayname="Name" name="invln_name" type="string" customfield="true" />
+      <field displayname="Owner" name="ownerid" type="owner" />
+      <field displayname="Owning Business Unit" name="owningbusinessunit" type="entityreference" lookupType="businessunit" />
+      <field displayname="Owning Team" name="owningteam" type="entityreference" lookupType="team" />
+      <field displayname="Owning User" name="owninguser" type="entityreference" lookupType="systemuser" />
+      <field displayname="Permission" name="invln_permission" type="optionsetvalue" customfield="true" />
+      <field displayname="Portal permission level" name="invln_portalpermissionlevelid" type="guid" primaryKey="true" />
+      <field displayname="Status" name="statecode" type="state" />
+      <field displayname="Status Reason" name="statuscode" type="status" />
+      <field displayname="Time Zone Rule Version Number" name="timezoneruleversionnumber" type="number" />
+      <field displayname="UTC Conversion Time Zone Code" name="utcconversiontimezonecode" type="number" />
+      <field displayname="Version Number" name="versionnumber" type="bigint" />
+    </fields>
+  </entity>
+  <entity name="invln_localauthority" displayname="Local Authority OLD" etc="11118" primaryidfield="invln_localauthorityid" primarynamefield="invln_localauthorityname" disableplugins="false">
+    <fields>
+      <field displayname="Import Sequence Number" name="importsequencenumber" type="number" />
+      <field displayname="Local authority" name="invln_localauthorityid" type="guid" primaryKey="true" />
+      <field displayname="Local authority name" name="invln_localauthorityname" type="string" customfield="true" />
+      <field displayname="ONS code" name="invln_onscode" type="string" customfield="true" />
+      <field displayname="Region" name="invln_region" type="optionsetvalue" customfield="true" />
+      <field displayname="Status" name="statecode" type="state" />
+      <field displayname="Status Reason" name="statuscode" type="status" />
+      <field displayname="Time Zone Rule Version Number" name="timezoneruleversionnumber" type="number" />
+      <field displayname="UTC Conversion Time Zone Code" name="utcconversiontimezonecode" type="number" />
+    </fields>
+  </entity>
+</entities>

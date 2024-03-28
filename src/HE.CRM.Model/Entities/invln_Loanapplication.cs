@@ -171,6 +171,8 @@ namespace DataverseModel
 			public const string invln_fundingdetailscompletionstatusName = "invln_fundingdetailscompletionstatusname";
 			public const string invln_FundingReason = "invln_fundingreason";
 			public const string invln_fundingreasonName = "invln_fundingreasonname";
+			public const string invln_HeProjectId = "invln_heprojectid";
+			public const string invln_HeProjectIdName = "invln_heprojectidname";
 			public const string invln_InterestGuarantee = "invln_interestguarantee";
 			public const string invln_interestguaranteeName = "invln_interestguaranteename";
 			public const string invln_InvestedbyBorrower = "invln_investedbyborrower";
@@ -1302,6 +1304,43 @@ namespace DataverseModel
 				if (this.FormattedValues.Contains("invln_fundingreason"))
 				{
 					return this.FormattedValues["invln_fundingreason"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
+		/// <summary>
+		/// HE Project
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_heprojectid")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_HeProjectId
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_heprojectid");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_HeProjectId");
+				this.SetAttributeValue("invln_heprojectid", value);
+				this.OnPropertyChanged("invln_HeProjectId");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_heprojectidname")]
+		public string invln_HeProjectIdName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_heprojectid"))
+				{
+					return this.FormattedValues["invln_heprojectid"];
 				}
 				else
 				{

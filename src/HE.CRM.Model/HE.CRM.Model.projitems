@@ -101,6 +101,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Entities\Email.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\EnvironmentVariableDefinition.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\EnvironmentVariableValue.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\he_LocalAuthority.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\he_Pipeline.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\he_ProjectLocalAuthority.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_AHGLocalAuthorities.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_ahpcontract.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_AHPStatusChange.cs" />
@@ -209,6 +212,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_Physicalorcognitiveconditions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_PrimaryOperatingRegion.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_ProjectStages.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_Region.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_Sector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_SMEIndicator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_UserSatisfactionSurveyDoyouwantto.cs" />
@@ -244,6 +248,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_DefineTenure.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Developmenttype.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Emailsendstatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_EQRating.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ExternalStatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ExternalStatusAHP.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ExternalStatusAHPOrganisation.cs" />
@@ -287,6 +292,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Programme.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_PropertyType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Publicsectorfunding.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_RAGStatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Rating.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_refinancerepayment.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Region.cs" />

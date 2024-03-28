@@ -9,7 +9,7 @@ namespace HE.CRM.Common.DtoMapping
     public class SiteDetailsDtoMapper
     {
         public SiteDetailsDtoMapper() { }
-        public static invln_SiteDetails MapSiteDetailsDtoToRegularEntity(SiteDetailsDto siteDetail, string loanApplicationGuid, invln_localauthority localAuthority = null)
+        public static invln_SiteDetails MapSiteDetailsDtoToRegularEntity(bool useHeTables, SiteDetailsDto siteDetail, string loanApplicationGuid, invln_localauthority localAuthority = null, he_LocalAuthority heLocalAuthority = null)
         {
             var siteDetailToReturn = new invln_SiteDetails()
             {
@@ -49,14 +49,33 @@ namespace HE.CRM.Common.DtoMapping
             {
                 siteDetailToReturn.Id = detailId;
             }
+
+            if (Guid.TryParse(siteDetail.frontDoorSiteId, out Guid frontDoorSiteId))
+            {
+                if (useHeTables)
+                {
+                    siteDetailToReturn.invln_HeProjectLocalAuthorityId = new EntityReference(he_ProjectLocalAuthority.EntityLogicalName, frontDoorSiteId);
+                }
+                else
+                {
+                    siteDetailToReturn.invln_FDSiteId = new EntityReference(invln_FrontDoorProjectSitePOC.EntityLogicalName, frontDoorSiteId);
+                }
+            }
+
+            if (heLocalAuthority != null)
+            {
+                siteDetailToReturn.invln_HeLocalAuthorityId = heLocalAuthority.ToEntityReference();
+            }
+
             if (localAuthority != null)
             {
-                siteDetailToReturn.invln_LocalAuthorityID = new EntityReference(localAuthority.LogicalName, localAuthority.Id);
+                siteDetailToReturn.invln_LocalAuthorityID = localAuthority.ToEntityReference();
             }
+
             return siteDetailToReturn;
         }
 
-        public static SiteDetailsDto MapSiteDetailsToDto(invln_SiteDetails siteDetails, invln_localauthority localAuthority = null)
+        public static SiteDetailsDto MapSiteDetailsToDto(bool useHeTables, invln_SiteDetails siteDetails, invln_localauthority localAuthority = null, he_LocalAuthority heLocalAuthority = null)
         {
             var siteDetailToReturn = new SiteDetailsDto()
             {
@@ -89,14 +108,38 @@ namespace HE.CRM.Common.DtoMapping
                 completionStatus = siteDetails.invln_completionstatus?.Value,
                 projectHasStartDate = siteDetails.invln_projecthasstartdate,
             };
-            if (localAuthority != null)
+
+            if (useHeTables)
             {
-                siteDetailToReturn.localAuthority = new LocalAuthorityDto()
+                siteDetailToReturn.frontDoorSiteId = siteDetails.invln_HeProjectLocalAuthorityId?.Id.ToString();
+                siteDetailToReturn.frontDoorSiteName = siteDetails.invln_HeProjectLocalAuthorityId?.Name;
+
+                if (heLocalAuthority != null)
                 {
-                    name = localAuthority.invln_localauthorityname.ToString(),
-                    onsCode = localAuthority.invln_onscode,
-                };
+                    siteDetailToReturn.localAuthority = new LocalAuthorityDto()
+                    {
+                        name = heLocalAuthority.he_Name,
+                        code = heLocalAuthority.he_GSSCode,
+                        onsCode = heLocalAuthority.he_GSSCode,
+                    };
+                }
             }
+            else
+            {
+                siteDetailToReturn.frontDoorSiteId = siteDetails.invln_FDSiteId?.Id.ToString();
+                siteDetailToReturn.frontDoorSiteName = siteDetails.invln_FDSiteId?.Name;
+
+                if (localAuthority != null)
+                {
+                    siteDetailToReturn.localAuthority = new LocalAuthorityDto()
+                    {
+                        name = localAuthority.invln_localauthorityname.ToString(),
+                        code = localAuthority.invln_onscode,
+                        onsCode = localAuthority.invln_onscode,
+                    };
+                }
+            }
+
             return siteDetailToReturn;
         }
 

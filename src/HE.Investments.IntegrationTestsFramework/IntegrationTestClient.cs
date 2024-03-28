@@ -94,7 +94,8 @@ public class IntegrationTestClient
 
         var submit = form.GetSubmission(submitButton)!;
         var target = (Uri)submit.Target;
-        using var submission = new HttpRequestMessage(new HttpMethod(submit.Method.ToString()), target) { Content = new StreamContent(submit.Body), };
+        using var submission = new HttpRequestMessage(new HttpMethod(submit.Method.ToString()), target);
+        submission.Content = new StreamContent(submit.Body);
 
         foreach (var header in submit.Headers)
         {

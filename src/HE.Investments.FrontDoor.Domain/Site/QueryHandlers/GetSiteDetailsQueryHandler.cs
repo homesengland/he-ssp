@@ -34,6 +34,8 @@ public class GetSiteDetailsQueryHandler : IRequestHandler<GetSiteDetailsQuery, S
             Name = site.Name.Value,
             ProjectName = project.Name.Value,
             PlanningStatus = site.PlanningStatus.Value,
+            LocalAuthorityCode = site.LocalAuthority?.Id.Value,
+            LocalAuthorityName = site.LocalAuthority?.Name,
             HomesNumber = site.HomesNumber?.Value.ToString(CultureInfo.InvariantCulture),
         };
     }

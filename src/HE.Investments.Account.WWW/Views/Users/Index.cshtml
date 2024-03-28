@@ -17,7 +17,9 @@
 
     @if (Model.usersAndJoinRequests.Users.Any())
     {
-        <vc:users-table users="@Model.usersAndJoinRequests.Users"/>
+        <div data-testId="users-table">
+            <vc:users-table users="@Model.usersAndJoinRequests.Users"/>
+        </div>
     }
 
     @if (canManageUsers)

@@ -21,7 +21,7 @@ public class SubmitApplicationIntegrationTests : IntegrationTest
 {
     private readonly string _applicationLoanId;
 
-    public SubmitApplicationIntegrationTests(IntegrationTestFixture<Program> fixture)
+    public SubmitApplicationIntegrationTests(LoansIntegrationTestFixture fixture)
         : base(fixture)
     {
         _applicationLoanId = UserData.LoanApplicationIdInDraftState;
