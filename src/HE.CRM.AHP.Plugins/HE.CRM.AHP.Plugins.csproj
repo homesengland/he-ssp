@@ -98,6 +98,7 @@
     <Compile Include="Handlers\AHPApplication\ChangeExternalStatusOnInternalStatusChangeHandler.cs" />
     <Compile Include="Handlers\AHPApplication\CheckIfApplicationWithNewNameExistsHandler.cs" />
     <Compile Include="Handlers\AHPApplication\CreateDocumentLocationOnCreateHandler.cs" />
+    <Compile Include="Handlers\AHPApplication\UpdateLocalAuthorityWhenSiteIsChanged.cs" />
     <Compile Include="Handlers\AhpStatusChange\SendNotificationOnCreateHandler.cs" />
     <Compile Include="Handlers\ContactWebrole\SendNotificationOnAdminRoleGrantedPlugin.cs" />
     <Compile Include="Handlers\ContactWebrole\SendNotificationOnRoleModificationHandler.cs" />
@@ -132,6 +133,7 @@
     <Compile Include="Handlers\HomeType\SetHappiPrinciplesValueHandler.cs" />
     <Compile Include="Handlers\HomeType\SetWhichNdssStandardsHaveBeenMetValueHandler.cs" />
     <Compile Include="Handlers\Programme\ProgrammeDuplicateDetectionHandler.cs" />
+    <Compile Include="Handlers\Site\UpdateLocalAuthorityOnSiteHandler.cs" />
     <Compile Include="HE.Base\Common\AssemblyTypesCache.cs" />
     <Compile Include="HE.Base\Common\Constants\EntityCommonFieldsNames.cs" />
     <Compile Include="HE.Base\Common\EqualityComparers\EntityIdComparer.cs" />
@@ -229,6 +231,7 @@
     <Compile Include="Plugins\HomeType\SetHappiPrinciplesValuePlugin.cs" />
     <Compile Include="Plugins\HomeType\SetWhichNdssStandardsHaveBeenMetValuePlugin.cs" />
     <Compile Include="Plugins\Programme\PreValidation.cs" />
+    <Compile Include="Plugins\Site\SitePreUpdate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AhpStatusChange\AhpStatusChangeService.cs" />
     <Compile Include="Services\AhpStatusChange\IAhpStatusChangeService.cs" />
