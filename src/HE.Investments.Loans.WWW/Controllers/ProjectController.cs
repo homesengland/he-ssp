@@ -346,7 +346,7 @@ public class ProjectController : WorkflowController<ProjectState>
 
     [HttpPost("{projectId}/location")]
     [WorkflowState(ProjectState.Location)]
-    public async Task<IActionResult> Location(Guid id, Guid projectId, [FromQuery] string redirect, ProjectViewModel model, CancellationToken token)
+    public async Task<IActionResult> Location(Guid id, Guid projectId, [FromQuery] string redirect, ProjectViewModel model, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(
             new ProvideLocationCommand(
@@ -355,12 +355,12 @@ public class ProjectController : WorkflowController<ProjectState>
                 model.LocationOption,
                 model.LocationCoordinates,
                 model.LocationLandRegistry),
-            token);
+            cancellationToken);
 
         if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
-
+            model.ApplicationId = id;
             return View(model);
         }
 
