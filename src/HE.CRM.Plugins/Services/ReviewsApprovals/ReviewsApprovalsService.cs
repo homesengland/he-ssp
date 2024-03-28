@@ -26,7 +26,7 @@ namespace HE.CRM.Plugins.Services.ReviewsApprovals
         public ReviewsApprovalsService(CrmServiceArgs args) : base(args)
         {
             _reviewApprovalRepository = CrmRepositoriesFactory.Get<IReviewApprovalRepository>();
-            _ispRepository = CrmRepositoriesFactory.GetSystem<IIspRepository>();
+            _ispRepository = CrmRepositoriesFactory.Get<IIspRepository>();
         }
 
         public void UpdateIspRelatedToApprovalsService(invln_reviewapproval target, invln_reviewapproval postImage)
