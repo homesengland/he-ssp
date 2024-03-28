@@ -1,4 +1,3 @@
-@using HE.Investments.Common.Gds
 @using HE.Investments.Common.WWW.Extensions
 @using HE.Investments.Loans.Contract.Projects
 @using HE.Investments.Loans.WWW.Extensions
@@ -8,7 +7,6 @@
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Fieldset
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Input
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Legend
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Checkboxes
 
@@ -27,14 +25,9 @@
         <partial name="_ErrorSummaryPartial" model="null" />
         <gds-field-set>
             <gds-div-form-group invalid="inputInvalid">
-                <gds-legend size="ControlSize.L">
-                    <gds-fieldset-heading>
-                        @ProjectPageTitles.TypeHomes
-                    </gds-fieldset-heading>
-                </gds-legend>
-                <gds-div-hint>
-                    Select all that apply.
-                </gds-div-hint>
+                <vc:page-header
+                    title="@ProjectPageTitles.TypeHomes"
+                    hint="Select all that apply."/>
 
                 <gds-checkbox govuk-formgroup-asp-for="@Model.HomeTypes"
                               asp-selectlistitems="FormOption.SiteTypeHomesCheckbox"
@@ -42,10 +35,17 @@
                               asp-ischeckboxgroup="true"
                               asp-isexcludeheader="true"
                               asp-excludelabel="true"
+                              asp-hiddenlabeltext="Homes Types"
                               asp-condtionalprimaryindexes="4">
 
                     <gds-div-form-group>
-                        <gds-input title="Other" govuk-formgroup-asp-for="@Model.OtherHomeTypes" class="govuk-!-width-two-third" type="text" value=@Model?.OtherHomeTypes asp-excludelabel/>
+                        <gds-input
+                            title="Other"
+                            govuk-formgroup-asp-for="@Model.OtherHomeTypes"
+                            class="govuk-!-width-two-third"
+                            type="text"
+                            value=@Model?.OtherHomeTypes
+                            asp-hiddenlabeltext="Other Home Types"/>
                     </gds-div-form-group>
                 </gds-checkbox>
 
