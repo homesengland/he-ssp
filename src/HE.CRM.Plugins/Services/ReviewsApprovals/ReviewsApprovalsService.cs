@@ -11,20 +11,22 @@ using Microsoft.Xrm.Sdk;
 
 namespace HE.CRM.Plugins.Services.ReviewsApprovals
 {
-
     public class ReviewsApprovalsService : CrmService, IReviewsApprovalsService
     {
         #region Fields
+
         private readonly IReviewApprovalRepository _reviewApprovalRepository;
+
         private readonly IIspRepository _ispRepository;
-        #endregion
+
+        #endregion Fields
 
         #region Constructors
 
         public ReviewsApprovalsService(CrmServiceArgs args) : base(args)
         {
             _reviewApprovalRepository = CrmRepositoriesFactory.Get<IReviewApprovalRepository>();
-            _ispRepository = CrmRepositoriesFactory.Get<IIspRepository>();
+            _ispRepository = CrmRepositoriesFactory.GetSystem<IIspRepository>();
         }
 
         public void UpdateIspRelatedToApprovalsService(invln_reviewapproval target, invln_reviewapproval postImage)
@@ -36,7 +38,7 @@ namespace HE.CRM.Plugins.Services.ReviewsApprovals
                     Id = postImage.invln_ispid.Id
                 };
                 var reviewApprovals = _reviewApprovalRepository.GetReviewApprovalsForIsp(postImage.invln_ispid, null);
-                switch(postImage.invln_status.Value)
+                switch (postImage.invln_status.Value)
                 {
                     case (int)invln_StatusReviewApprovalSet.Rejected:
                     {
@@ -132,6 +134,7 @@ namespace HE.CRM.Plugins.Services.ReviewsApprovals
                 this._ispRepository.Update(isp);
             }
         }
-        #endregion
+
+        #endregion Constructors
     }
 }
