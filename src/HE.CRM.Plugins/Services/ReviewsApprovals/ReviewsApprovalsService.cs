@@ -107,7 +107,6 @@ namespace HE.CRM.Plugins.Services.ReviewsApprovals
                 this._ispRepository.Update(isp);
                 return;
             }
-
             var pendingOrSendBack = reviewApprovals.Where(x => x.invln_status.Value == (int)invln_StatusReviewApprovalSet.Pending ||
                                                          x.invln_status.Value == (int)invln_StatusReviewApprovalSet.SentBack);
             if (pendingOrSendBack.Any())
