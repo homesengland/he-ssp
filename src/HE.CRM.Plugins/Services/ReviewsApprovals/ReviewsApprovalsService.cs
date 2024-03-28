@@ -107,6 +107,7 @@ namespace HE.CRM.Plugins.Services.ReviewsApprovals
                 this._ispRepository.Update(isp);
                 return;
             }
+
             var pendingOrSendBack = reviewApprovals.Where(x => x.invln_status.Value == (int)invln_StatusReviewApprovalSet.Pending ||
                                                          x.invln_status.Value == (int)invln_StatusReviewApprovalSet.SentBack);
             if (pendingOrSendBack.Any())
@@ -115,6 +116,7 @@ namespace HE.CRM.Plugins.Services.ReviewsApprovals
                 this._ispRepository.Update(isp);
                 return;
             }
+
             isp.invln_DateApproved = DateTime.UtcNow;
             isp.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Approved);
             this._ispRepository.Update(isp);
