@@ -3,6 +3,7 @@ using HE.Investments.Common.Contract.Constants;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
+using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.Common.WWW.Utils;
@@ -509,9 +510,10 @@ public class ProjectController : WorkflowController<ProjectState>
 
     [HttpPost("{projectId}/additional-details")]
     [WorkflowState(ProjectState.Additional)]
-    public async Task<IActionResult> AdditionalDetails(Guid id, Guid projectId, [FromQuery] string redirect, ProjectViewModel model, CancellationToken token)
+    public async Task<IActionResult> AdditionalDetails(Guid id, Guid projectId, [FromQuery] string redirect, ProjectViewModel model, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(
+        return await this.ExecuteCommand<ProjectViewModel>(
+            _mediator,
             new ProvideAdditionalDetailsCommand(
                 LoanApplicationId.From(id),
                 ProjectId.From(projectId),
@@ -519,16 +521,9 @@ public class ProjectController : WorkflowController<ProjectState>
                 model.Cost,
                 model.Value,
                 model.Source),
-            token);
-
-        if (result.HasValidationErrors)
-        {
-            ModelState.AddValidationErrors(result);
-
-            return View(model);
-        }
-
-        return await Continue(redirect, new { id, projectId });
+            async () => await Continue(redirect, new { id, projectId }),
+            () => Task.FromResult<IActionResult>(View(model)),
+            cancellationToken);
     }
 
     [HttpGet("{projectId}/grant-funding-exists")]
