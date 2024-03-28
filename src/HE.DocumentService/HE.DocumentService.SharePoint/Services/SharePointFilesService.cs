@@ -86,7 +86,7 @@ public class SharePointFilesService : ISharePointFilesService
         var chunkToRemove = $"{new Uri(_spConfig.SiteUrl).AbsolutePath}/{filter.ListAlias}/";
         rows.ForEach(row => row.FolderPath = row.FolderPath.Replace(chunkToRemove, string.Empty));
 
-        return new TableResult<FileTableRow>(rows, pagingInfo: listItems.ListItemCollectionPosition?.PagingInfo);
+        return new TableResult<FileTableRow>(rows, pagingInfo: listItems.ListItemCollectionPosition?.PagingInfo, trimStringLength: 512);
     }
 
     public async Task<Stream> DownloadFileStream(string listAlias, string folderPath, string fileName)
