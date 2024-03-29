@@ -96,7 +96,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             if (Guid.TryParse(accountId, out Guid accountGuid))
             {
                 List<invln_Loanapplication> loanApplicationsForAccountAndContact;
-                TracingService.Trace("regular user, not admin");
+                TracingService.Trace("Get Attributes");
                 string attributes = null;
                 if (!string.IsNullOrEmpty(fieldsToRetrieve))
                 {
