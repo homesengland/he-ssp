@@ -4,6 +4,11 @@
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Headings
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Buttons
 
+@if (Model.IsReadOnly)
+{
+    return;
+}
+
 @if (Model.Status is ApplicationStatus.Draft or ApplicationStatus.ReferredBackToApplicant)
 {
     @if (Model.WasSubmitted)
@@ -19,7 +24,7 @@
             }
             else
             {
-                <button class="govuk-button govuk-button--secondary" data-module="govuk-button" type="button" id="submit-application">
+                <button class="govuk-button govuk-button--secondary" disabled data-module="govuk-button" type="button" id="submit-application">
                     Submit
                 </button>
             }
@@ -38,7 +43,7 @@
             }
             else
             {
-                <button class="govuk-button govuk-button--secondary" data-module="govuk-button" type="button" id="submit-application">
+                <button class="govuk-button govuk-button--secondary" disabled data-module="govuk-button" type="button" id="submit-application">
                     Check and submit application
                 </button>
             }
