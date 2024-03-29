@@ -48,7 +48,7 @@ public class GetProjectDetailsQueryHandler : IRequestHandler<GetProjectDetailsQu
             IsProfit = project.IsProfit.Value,
             LastSiteId = projectSite.LastSiteId(),
             ExpectedStartDate = DateDetails.FromDateTime(project.ExpectedStartDate.Value?.ToDateTime(TimeOnly.MinValue)),
-            LocalAuthorityCode = project.LocalAuthority?.Id.Value,
+            LocalAuthorityCode = project.LocalAuthority?.Code.Value,
             LocalAuthorityName = project.LocalAuthority?.Name,
         };
     }

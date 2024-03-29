@@ -49,5 +49,5 @@ public class ProjectSiteEntityBuilder : TestObjectBuilder<ProjectSiteEntityBuild
 
     public ProjectSiteEntityBuilder WithLocalAuthority(string? localAuthorityCode = null, string? localAuthorityName = null) => SetProperty(
         x => x.LocalAuthority,
-        new SiteLocalAuthority(new LocalAuthorityId(localAuthorityCode ?? _localAuthorityCode), localAuthorityName ?? _localAuthorityName));
+        new SiteLocalAuthority(new LocalAuthorityCode(localAuthorityCode ?? _localAuthorityCode), localAuthorityName ?? _localAuthorityName));
 }

@@ -14,8 +14,8 @@ public class LocalAuthorityResultTests : ViewTestBase
     {
         // given
         var model = new LocalAuthoritiesViewModel { Items = new List<LocalAuthorityViewModel>() };
-        var localAuthority = LocalAuthority.New(LocalAuthorityId.From("10"), "Liverpool");
-        model.Items.Add(new LocalAuthorityViewModel() { Id = localAuthority.Id.ToString(), Name = localAuthority.Name });
+        var localAuthority = LocalAuthority.New(LocalAuthorityCode.From("10"), "Liverpool");
+        model.Items.Add(new LocalAuthorityViewModel() { Id = localAuthority.Code.ToString(), Name = localAuthority.Name });
 
         // when
         var document = await Render(_viewPath, model);

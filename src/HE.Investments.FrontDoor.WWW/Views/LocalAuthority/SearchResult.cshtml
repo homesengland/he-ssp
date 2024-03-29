@@ -19,7 +19,7 @@
 
     var items = new PaginationResult<SelectListItemViewModel>(
         Model!.Items.Items.Select(i => new SelectListItemViewModel(
-            Url.Action("LocalAuthorityConfirm", controller, new { projectId = Model.ProjectId, siteId = Model.SiteId, localAuthorityId = i.Id, redirect, optional }) ?? string.Empty,
+            Url.Action("LocalAuthorityConfirm", controller, new { projectId = Model.ProjectId, siteId = Model.SiteId, localAuthorityCode = i.Code, redirect, optional }) ?? string.Empty,
             i.Name,
             null)).ToList(),
         Model.Items.CurrentPage,

@@ -132,7 +132,7 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
             siteCoordinates = projectToSave.Coordinates?.Value,
             landRegistryTitleNumber = projectToSave.LandRegistryTitleNumber?.Value,
             localAuthority = projectToSave.LocalAuthority.IsProvided()
-                ? new LocalAuthorityDto() { onsCode = projectToSave.LocalAuthority!.Id.ToString(), name = projectToSave.LocalAuthority!.Name } : null,
+                ? new LocalAuthorityDto() { onsCode = projectToSave.LocalAuthority!.Code.ToString(), name = projectToSave.LocalAuthority!.Name } : null,
             siteOwnership = projectToSave.LandOwnership?.ApplicantHasFullOwnership,
             dateOfPurchase = projectToSave.AdditionalDetails?.PurchaseDate?.Value,
             siteCost = projectToSave.AdditionalDetails?.Cost.ToString(),

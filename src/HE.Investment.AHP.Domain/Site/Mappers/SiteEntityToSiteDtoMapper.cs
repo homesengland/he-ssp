@@ -37,7 +37,7 @@ public static class SiteEntityToSiteDtoMapper
             name = entity.Name.Value,
             status = SiteStatusMapper.ToDto(entity.Status),
             section106 = CreateSection106(entity.Section106),
-            localAuthority = new SiteLocalAuthority { id = entity.LocalAuthority?.Id.Value },
+            localAuthority = new SiteLocalAuthority { id = entity.LocalAuthority?.Code.Value },
             planningDetails = CreatePlanningDetails(entity.PlanningDetails, planningStatusMapper),
             nationalDesignGuidePriorities = MapCollection(entity.NationalDesignGuidePriorities.Values, NationalDesignGuideMapper),
             buildingForHealthyLife = BuildingForHealthyLifeTypeMapper.ToDto(entity.BuildingForHealthyLife),

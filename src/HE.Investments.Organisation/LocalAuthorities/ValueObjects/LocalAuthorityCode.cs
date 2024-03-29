@@ -2,16 +2,16 @@ using HE.Investments.Common.Domain;
 
 namespace HE.Investments.Organisation.LocalAuthorities.ValueObjects;
 
-public class LocalAuthorityId : ValueObject
+public class LocalAuthorityCode : ValueObject
 {
-    public LocalAuthorityId(string value)
+    public LocalAuthorityCode(string value)
     {
         Value = value;
     }
 
     public string Value { get; }
 
-    public static LocalAuthorityId From(string value) => new(value);
+    public static LocalAuthorityCode From(string value) => new(value);
 
     public override string ToString()
     {

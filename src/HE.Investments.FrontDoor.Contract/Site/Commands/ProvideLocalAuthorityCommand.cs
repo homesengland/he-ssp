@@ -6,5 +6,5 @@ namespace HE.Investments.FrontDoor.Contract.Site.Commands;
 public record ProvideLocalAuthorityCommand(
     FrontDoorProjectId ProjectId,
     FrontDoorSiteId SiteId,
-    LocalAuthorityId LocalAuthorityId,
+    LocalAuthorityCode LocalAuthorityCode,
     string LocalAuthorityName) : IProvideSiteDetailsCommand;

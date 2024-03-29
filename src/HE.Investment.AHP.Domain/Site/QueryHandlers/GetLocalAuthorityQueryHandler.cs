@@ -19,6 +19,6 @@ public class GetLocalAuthorityQueryHandler : IRequestHandler<GetLocalAuthorityQu
     public async Task<LocalAuthority> Handle(GetLocalAuthorityQuery request, CancellationToken cancellationToken)
     {
         var localAuthority = await _localAuthorityRepository.GetById(request.LocalAuthorityId, cancellationToken);
-        return new LocalAuthority { Id = localAuthority.Id.ToString(), Name = localAuthority.Name };
+        return new LocalAuthority { Id = localAuthority.Code.ToString(), Name = localAuthority.Name };
     }
 }

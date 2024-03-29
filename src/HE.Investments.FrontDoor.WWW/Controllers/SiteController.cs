@@ -1,6 +1,5 @@
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Contract.Validators;
-using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Extensions;
@@ -123,12 +122,13 @@ public class SiteController : WorkflowController<SiteWorkflowState>
 
     [HttpGet("{siteId}/local-authority-confirm")]
     [WorkflowState(SiteWorkflowState.LocalAuthorityConfirm)]
-    public async Task<IActionResult> LocalAuthorityConfirm([FromRoute] string projectId, [FromRoute] string siteId, [FromQuery] string? localAuthorityId, CancellationToken cancellationToken)
+    public async Task<IActionResult> LocalAuthorityConfirm([FromRoute] string projectId, [FromRoute] string siteId, [FromQuery] string? localAuthorityCode, CancellationToken cancellationToken)
     {
         var site = await GetSiteDetails(projectId, siteId, cancellationToken);
-        var localAuthority = await _mediator.Send(new GetLocalAuthorityQuery(new LocalAuthorityId(localAuthorityId ?? site.LocalAuthorityCode!)), cancellationToken);
+        var localAuthority = await _mediator.Send(new GetLocalAuthorityQuery(new LocalAuthorityCode(localAuthorityCode ?? site.LocalAuthorityCode!)), cancellationToken);
+        bool? isConfirmed = site.LocalAuthorityCode == localAuthority.Code ? true : null;
 
-        return View(nameof(LocalAuthorityConfirm), new LocalAuthorityViewModel(localAuthority.Id, localAuthority.Name, projectId, siteId, site.LocalAuthorityCode.IsProvided() ? true : null));
+        return View(nameof(LocalAuthorityConfirm), new LocalAuthorityViewModel(localAuthority.Code, localAuthority.Name, projectId, siteId, isConfirmed));
     }
 
     [HttpPost("{siteId}/local-authority-confirm")]
@@ -141,9 +141,9 @@ public class SiteController : WorkflowController<SiteWorkflowState>
             ModelState.AddModelError("IsConfirmed", "Select yes if the local authority is correct");
 
             await GetSiteDetails(projectId, siteId, cancellationToken);
-            var localAuthority = await _mediator.Send(new GetLocalAuthorityQuery(new LocalAuthorityId(model.LocalAuthorityId)), cancellationToken);
+            var localAuthority = await _mediator.Send(new GetLocalAuthorityQuery(new LocalAuthorityCode(model.LocalAuthorityCode)), cancellationToken);
 
-            return View("LocalAuthorityConfirm", new LocalAuthorityViewModel(localAuthority.Id, localAuthority.Name, projectId, siteId));
+            return View("LocalAuthorityConfirm", new LocalAuthorityViewModel(localAuthority.Code, localAuthority.Name, projectId, siteId));
         }
 
         if (model.IsConfirmed.Value)
@@ -152,7 +152,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
                 new ProvideLocalAuthorityCommand(
                     new FrontDoorProjectId(projectId),
                     new FrontDoorSiteId(siteId),
-                    new LocalAuthorityId(model.LocalAuthorityId),
+                    new LocalAuthorityCode(model.LocalAuthorityCode),
                     model.LocalAuthorityName),
                 nameof(LocalAuthorityConfirm),
                 project => project,

@@ -336,12 +336,13 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
 
     [HttpGet("{projectId}/local-authority-confirm")]
     [WorkflowState(ProjectWorkflowState.LocalAuthorityConfirm)]
-    public async Task<IActionResult> LocalAuthorityConfirm([FromRoute] string projectId, [FromQuery] string? localAuthorityId, CancellationToken cancellationToken)
+    public async Task<IActionResult> LocalAuthorityConfirm([FromRoute] string projectId, [FromQuery] string? localAuthorityCode, CancellationToken cancellationToken)
     {
         var project = await GetProjectDetails(projectId, cancellationToken);
-        var localAuthority = await _mediator.Send(new GetLocalAuthorityQuery(new LocalAuthorityId(localAuthorityId ?? project.LocalAuthorityCode!)), cancellationToken);
+        var localAuthority = await _mediator.Send(new GetLocalAuthorityQuery(new LocalAuthorityCode(localAuthorityCode ?? project.LocalAuthorityCode!)), cancellationToken);
+        bool? isConfirmed = project.LocalAuthorityCode == localAuthority.Code ? true : null;
 
-        return View(nameof(LocalAuthorityConfirm), new LocalAuthorityViewModel(localAuthority.Id, localAuthority.Name, projectId, null, project.LocalAuthorityCode.IsProvided() ? true : null));
+        return View(nameof(LocalAuthorityConfirm), new LocalAuthorityViewModel(localAuthority.Code, localAuthority.Name, projectId, null, isConfirmed));
     }
 
     [HttpPost("{projectId}/local-authority-confirm")]
@@ -354,15 +355,15 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
             ModelState.AddModelError("IsConfirmed", "Select yes if the local authority is correct");
 
             await GetProjectDetails(projectId, cancellationToken);
-            var localAuthority = await _mediator.Send(new GetLocalAuthorityQuery(new LocalAuthorityId(model.LocalAuthorityId)), cancellationToken);
+            var localAuthority = await _mediator.Send(new GetLocalAuthorityQuery(new LocalAuthorityCode(model.LocalAuthorityCode)), cancellationToken);
 
-            return View("LocalAuthorityConfirm", new LocalAuthorityViewModel(localAuthority.Id, localAuthority.Name, projectId));
+            return View("LocalAuthorityConfirm", new LocalAuthorityViewModel(localAuthority.Code, localAuthority.Name, projectId));
         }
 
         if (model.IsConfirmed.Value)
         {
             return await ExecuteProjectCommand(
-                new ProvideLocalAuthorityCommand(new FrontDoorProjectId(projectId), new LocalAuthorityId(model.LocalAuthorityId), model.LocalAuthorityName),
+                new ProvideLocalAuthorityCommand(new FrontDoorProjectId(projectId), new LocalAuthorityCode(model.LocalAuthorityCode), model.LocalAuthorityName),
                 nameof(LocalAuthorityConfirm),
                 project => project,
                 cancellationToken);
