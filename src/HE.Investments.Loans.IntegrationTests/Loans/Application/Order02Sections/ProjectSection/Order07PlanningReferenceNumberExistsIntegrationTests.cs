@@ -63,6 +63,6 @@ public class Order07PlanningReferenceNumberExistsIntegrationTests : IntegrationT
         // then
         locationPage
             .UrlEndWith(ProjectPagesUrls.PlanningReferenceNumberSuffix)
-            .HasLabelTitle(ProjectPageTitles.PlanningReferenceNumber);
+            .HasTitle(ProjectPageTitles.PlanningReferenceNumber);
     }
 }

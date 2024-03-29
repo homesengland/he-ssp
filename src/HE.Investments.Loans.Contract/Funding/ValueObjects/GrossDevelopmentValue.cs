@@ -18,7 +18,7 @@ public class GrossDevelopmentValue : ValueObject
 
     public static GrossDevelopmentValue FromString(string grossDevelopmentValue)
     {
-        if (!Regex.IsMatch(grossDevelopmentValue, @"^[0-9]+([.][0-9]{1,2})?$"))
+        if (!Regex.IsMatch(grossDevelopmentValue.Trim(), "^[0-9]+([.][0-9]{1,2})?$"))
         {
             OperationResult
                 .New()
