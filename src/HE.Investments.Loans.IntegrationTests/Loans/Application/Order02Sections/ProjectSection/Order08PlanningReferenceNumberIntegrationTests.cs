@@ -44,7 +44,7 @@ public class Order08PlanningReferenceNumberIntegrationTests : IntegrationTest
         // then
         planningReferenceNumberPage
             .UrlEndWith(ProjectPagesUrls.PlanningReferenceNumberSuffix)
-            .HasLabelTitle(ProjectPageTitles.PlanningReferenceNumber)
+            .HasTitle(ProjectPageTitles.PlanningReferenceNumber)
             .HasOneValidationMessages(ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.PlanningReferenceNumber));
 
         SetSharedData(SharedKeys.CurrentPageKey, planningReferenceNumberPage);

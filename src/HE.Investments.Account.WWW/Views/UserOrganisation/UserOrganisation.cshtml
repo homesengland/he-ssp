@@ -47,7 +47,7 @@
 
     <div class="govuk-grid-column-full govuk-!-padding-0">
 
-        @if (!Model.ProgrammesToAccess.Any() || Model.ProgrammesToAccess.All(p => !p.Applications.Any()))
+        @if ((!Model.ProgrammesToAccess.Any() || Model.ProgrammesToAccess.All(p => !p.Applications.Any())) && !Model.Projects.Any())
         {
             <gds-p>
                 You have not applied for any support. Select start a new project to apply for support.

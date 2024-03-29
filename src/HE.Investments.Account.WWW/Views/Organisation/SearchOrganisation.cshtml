@@ -14,8 +14,10 @@
 <gds-div-grid-column-two-thirds>
     @if (isLinkedWithOrganisation)
     {
-        <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("Index", "UserOrganisation")"></gds-back-link>
+        <gds-back-link href="@Url.Action("Index", "UserOrganisation")"></gds-back-link>
     }
+
+    <div class="govuk-!-margin-bottom-8"></div>
 
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 

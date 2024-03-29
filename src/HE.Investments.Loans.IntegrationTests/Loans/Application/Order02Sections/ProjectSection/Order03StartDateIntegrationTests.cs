@@ -87,6 +87,6 @@ public class Order03StartDateIntegrationTests : IntegrationTest
         // then
         startDate
             .UrlEndWith(ProjectPagesUrls.ManyHomesSuffix)
-            .HasLabelTitle(ProjectPageTitles.ManyHomes);
+            .HasTitle(ProjectPageTitles.ManyHomes);
     }
 }
