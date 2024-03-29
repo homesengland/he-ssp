@@ -37,7 +37,6 @@
       "!wwwroot/javascripts/enable-js.js",
       "!wwwroot/javascripts/file-helper.js",
       "!wwwroot/javascripts/govuk-frontend-all.min.js",
-      "!wwwroot/javascripts/history.js",
       "!wwwroot/javascripts/radios-with-conditional-input.js",
       "!wwwroot/javascripts/tmp.js"
     ]
@@ -51,7 +50,6 @@
       "!wwwroot/javascripts/enable-js.js",
       "!wwwroot/javascripts/file-helper.js",
       "!wwwroot/javascripts/govuk-frontend-all.min.js",
-      "!wwwroot/javascripts/history.js",
       "!wwwroot/javascripts/radios-with-conditional-input.js",
       "!wwwroot/javascripts/tmp.js"
     ],
