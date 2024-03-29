@@ -39,9 +39,13 @@ namespace HE.CRM.Plugins.Services.LoanApplication
         private readonly IStandardConditionsRepository _standardConditionsRepository;
 
         private readonly IConditionRepository _conditionRepository;
+
         private readonly IHeLocalAuthorityRepository _heLocalAuthorityRepository;
+
         private readonly ILocalAuthorityRepository _LocalAuthorityRepository;
+
         private readonly ILocalAuthorityRepository _ocalAuthorityRepository;
+
         private readonly ILoanApplicationRepository _loanApplicationRepositoryAdmin;
 
         private readonly INotificationSettingRepository _notificationSettingRepositoryAdmin;
@@ -91,24 +95,14 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             List<LoanApplicationDto> entityCollection = new List<LoanApplicationDto>();
             if (Guid.TryParse(accountId, out Guid accountGuid))
             {
-                var contact = _contactRepository.GetContactViaExternalId(externalContactId);
-                var role = _webroleRepository.GetContactWebRole(contact.Id, ((int)invln_Portal1.Loans).ToString());
                 List<invln_Loanapplication> loanApplicationsForAccountAndContact;
-                if (role.Any(x => x.Contains("pl.invln_permission") && ((OptionSetValue)((AliasedValue)x["pl.invln_permission"]).Value).Value == (int)invln_Permission.Admin) && loanApplicationId == null)
+                TracingService.Trace("regular user, not admin");
+                string attributes = null;
+                if (!string.IsNullOrEmpty(fieldsToRetrieve))
                 {
-                    TracingService.Trace("admin");
-                    loanApplicationsForAccountAndContact = _loanApplicationRepository.GetAccountLoans(accountGuid);
+                    attributes = GenerateFetchXmlAttributes(fieldsToRetrieve);
                 }
-                else
-                {
-                    TracingService.Trace("regular user, not admin");
-                    string attributes = null;
-                    if (!string.IsNullOrEmpty(fieldsToRetrieve))
-                    {
-                        attributes = GenerateFetchXmlAttributes(fieldsToRetrieve);
-                    }
-                    loanApplicationsForAccountAndContact = _loanApplicationRepository.GetLoanApplicationsForGivenAccountAndContact(accountGuid, externalContactId, loanApplicationId, attributes);
-                }
+                loanApplicationsForAccountAndContact = _loanApplicationRepository.GetLoanApplicationsForGivenAccountAndContact(accountGuid, externalContactId, loanApplicationId, attributes);
                 this.TracingService.Trace("GetLoanApplicationsForGivenAccountAndContact");
                 this.TracingService.Trace($"{loanApplicationsForAccountAndContact.Count}");
                 foreach (var element in loanApplicationsForAccountAndContact)
@@ -133,7 +127,6 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                                 localAuthority = _LocalAuthorityRepository.GetLocalAuthorityrelatedToLoanApplication(siteDetail.Id);
                             }
                             siteDetailsDtoList.Add(SiteDetailsDtoMapper.MapSiteDetailsToDto(useHeTables, siteDetail, localAuthority, heLocalAuthority));
-
                         }
                     }
                     this.TracingService.Trace("MapLoanApplicationToDto");
