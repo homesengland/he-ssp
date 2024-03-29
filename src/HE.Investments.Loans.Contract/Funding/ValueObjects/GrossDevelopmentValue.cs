@@ -1,18 +1,23 @@
 using System.Globalization;
 using System.Text.RegularExpressions;
 using HE.Investments.Common.Contract.Validators;
-using HE.Investments.Common.Domain;
 using HE.Investments.Common.Messages;
+using HE.Investments.Loans.Contract.Application.ValueObjects;
 
 namespace HE.Investments.Loans.Contract.Funding.ValueObjects;
-public class GrossDevelopmentValue : ValueObject
+public class GrossDevelopmentValue : MoneyValueObject
 {
-    public GrossDevelopmentValue(decimal value)
+    private const string DisplayName = "Gross Development Value";
+
+    public GrossDevelopmentValue(string value)
+        : base(value, nameof(GrossDevelopmentValue), DisplayName)
     {
-        Value = value;
     }
 
-    public decimal Value { get; }
+    public GrossDevelopmentValue(decimal value)
+        : base(value, nameof(GrossDevelopmentValue), DisplayName)
+    {
+    }
 
     public static GrossDevelopmentValue New(decimal value) => new(value);
 
@@ -20,23 +25,14 @@ public class GrossDevelopmentValue : ValueObject
     {
         if (!Regex.IsMatch(grossDevelopmentValue, @"^[0-9]+([.][0-9]{1,2})?$"))
         {
-            OperationResult
-                .New()
-                .AddValidationError(nameof(FundingViewModel.GrossDevelopmentValue), ValidationErrorMessage.EstimatedPoundInput("GDV"))
-                .CheckErrors();
+            OperationResult.ThrowValidationError(nameof(FundingViewModel.GrossDevelopmentValue), ValidationErrorMessage.EstimatedPoundInput("GDV"));
         }
 
-        _ = decimal.TryParse(grossDevelopmentValue, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var parsedValue);
-        return new GrossDevelopmentValue(parsedValue);
+        return new GrossDevelopmentValue(grossDevelopmentValue);
     }
 
     public override string ToString()
     {
         return Value.ToString("0.##", CultureInfo.InvariantCulture);
-    }
-
-    protected override IEnumerable<object?> GetAtomicValues()
-    {
-        yield return Value;
     }
 }
