@@ -19,7 +19,7 @@
         @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
                {
                    { "Title", "Debenture" },
-                   { "Value", $"{Model.ChargesDebtCompany}, {Model.ChargesDebtCompanyInfo}" },
+                   { "Value", $"{Model.ChargesDebtCompanyInfo}" },
                    { "Link", Url.Action("ChargesDebtCompany", "Security", new { id = id, redirect = "CheckAnswers" }) },
                    { "LinkId", "debenture-change" },
                    { "IsEditable", Model.IsEditable() }
