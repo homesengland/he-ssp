@@ -32,7 +32,7 @@ namespace HE.CRM.Common.Repositories.Implementations
         public List<invln_Loanapplication> GetLoanApplicationsForGivenAccountAndContact(Guid accountId, string externalContactId, string loanApplicationId = null, string fieldsToRetrieve = null)
         {
             logger.Trace($"GetLoanApplicationsForGivenAccountAndContact");
-            if (externalContactId == null)
+            if (externalContactId == null && loanApplicationId == null)
             {
                 using (DataverseContext ctx = new DataverseContext(service))
                 {
