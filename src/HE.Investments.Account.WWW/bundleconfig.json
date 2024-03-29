@@ -30,7 +30,6 @@
       "!wwwroot/javascripts/site.js",
       "!wwwroot/javascripts/enable-js.js",
       "!wwwroot/javascripts/govuk-frontend-all.min.js",
-      "!wwwroot/javascripts/history.js",
       "!wwwroot/javascripts/tmp.js"
     ]
   },
@@ -41,7 +40,6 @@
       "!wwwroot/javascripts/*.min.js",
       "!wwwroot/javascripts/enable-js.js",
       "!wwwroot/javascripts/govuk-frontend-all.min.js",
-      "!wwwroot/javascripts/history.js",
       "!wwwroot/javascripts/tmp.js"
     ],
     "minify": {

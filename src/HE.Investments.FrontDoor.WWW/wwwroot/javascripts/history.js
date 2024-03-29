@@ -1,11 +1,12 @@
-function setUpBackLink() {
-    let backLink = document.getElementById("js-back-link");
-
-    backLink.onclick = function () {
-        window.history.back();
+(() => {
+  const setUpBackLink = () => {
+    const backLink = document.getElementById("js-back-link");
+    if (backLink) {
+      backLink.onclick = () => window.history.back();
     }
-}
+  }
 
-document.addEventListener("DOMContentLoaded", function (event) {
+  document.addEventListener("DOMContentLoaded", function () {
     setUpBackLink();
-});
+  });
+})();
