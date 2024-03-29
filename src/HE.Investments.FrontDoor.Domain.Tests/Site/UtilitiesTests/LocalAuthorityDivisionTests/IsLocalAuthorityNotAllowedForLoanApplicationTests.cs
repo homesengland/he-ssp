@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using HE.Investments.FrontDoor.Domain.Site.Utilities;
 using Xunit;
@@ -6,17 +7,14 @@ namespace HE.Investments.FrontDoor.Domain.Tests.Site.UtilitiesTests.LocalAuthori
 
 public class IsLocalAuthorityNotAllowedForLoanApplicationTests
 {
+    public static IEnumerable<object[]> NotAllowedLocalAuthority =>
+        Enumerable.Range(1, 10)
+            .Select(x => new object[] { $"E080000{x:00}" })
+            .Concat(Enumerable.Range(1, 10).Select(x => new object[] { $"80000{x:00}" }));
+
     [Theory]
-    [InlineData("E08000001")]
-    [InlineData("E08000002")]
-    [InlineData("E08000003")]
-    [InlineData("E08000004")]
-    [InlineData("E08000005")]
-    [InlineData("E08000006")]
-    [InlineData("E08000007")]
-    [InlineData("E08000008")]
-    [InlineData("E08000009")]
-    [InlineData("E08000010")]
+    [SuppressMessage("Performance", "CA1825:Avoid zero-length array allocations", Justification = "False positive returned by analyzer")]
+    [MemberData(nameof(NotAllowedLocalAuthority))]
     public void ShouldReturnTrue_WhenLocalAuthorityIsNotAllowedForLoanApplication(string localAuthorityCode)
     {
         // given && when
@@ -28,11 +26,7 @@ public class IsLocalAuthorityNotAllowedForLoanApplicationTests
 
     [Theory]
     [InlineData("E08000011")]
-    [InlineData("E08000012")]
-    [InlineData("E08000013")]
-    [InlineData("E08000014")]
-    [InlineData("E08000015")]
-    [InlineData("E08000016")]
+    [InlineData("8000011")]
     public void ShouldReturnFalse_WhenLocalAuthorityIsAllowedForLoanApplication(string localAuthorityCode)
     {
         // given && when
