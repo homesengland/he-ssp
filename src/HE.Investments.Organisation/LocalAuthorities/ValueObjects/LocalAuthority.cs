@@ -4,19 +4,19 @@ namespace HE.Investments.Organisation.LocalAuthorities.ValueObjects;
 
 public class LocalAuthority : ValueObject
 {
-    public LocalAuthority(LocalAuthorityId id, string name)
+    public LocalAuthority(LocalAuthorityCode code, string name)
     {
-        Id = id;
+        Code = code;
         Name = name;
     }
 
-    public LocalAuthorityId Id { get; }
+    public LocalAuthorityCode Code { get; }
 
     public string Name { get; }
 
-    public static LocalAuthority New(string id, string name) => new(LocalAuthorityId.From(id), name);
+    public static LocalAuthority New(string id, string name) => new(LocalAuthorityCode.From(id), name);
 
-    public static LocalAuthority New(LocalAuthorityId id, string name) => new(id, name);
+    public static LocalAuthority New(LocalAuthorityCode code, string name) => new(code, name);
 
     public override string ToString()
     {
@@ -25,7 +25,7 @@ public class LocalAuthority : ValueObject
 
     protected override IEnumerable<object?> GetAtomicValues()
     {
-        yield return Id;
+        yield return Code;
         yield return Name;
     }
 }

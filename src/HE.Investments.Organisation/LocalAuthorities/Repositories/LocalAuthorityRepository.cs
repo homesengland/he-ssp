@@ -53,7 +53,7 @@ public class LocalAuthorityRepository : ILocalAuthorityRepository
     {
         var localAuthorities = await GetLocalAuthorities(LocalAuthoritiesSource.Loans, cancellationToken);
 
-        var localAuthority = localAuthorities.FirstOrDefault(x => x.Id.ToString() == localAuthorityId.ToString()) ??
+        var localAuthority = localAuthorities.FirstOrDefault(x => x.Code.ToString() == localAuthorityId.ToString()) ??
                              throw new NotFoundException($"Local authority with id {localAuthorityId} cannot be found");
 
         return localAuthority;

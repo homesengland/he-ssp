@@ -24,7 +24,7 @@ public class SearchLocalAuthoritiesQueryHandler : IRequestHandler<SearchLocalAut
 
         var result = new LocalAuthoritiesViewModel
         {
-            Items = itemsFound.Select(c => new LocalAuthorityViewModel { Id = c.Id.ToString(), Name = c.Name }).ToList(),
+            Items = itemsFound.Select(c => new LocalAuthorityViewModel { Id = c.Code.ToString(), Name = c.Name }).ToList(),
             TotalItems = totalItems,
             Page = request.StartPage,
             PageSize = request.PageSize,

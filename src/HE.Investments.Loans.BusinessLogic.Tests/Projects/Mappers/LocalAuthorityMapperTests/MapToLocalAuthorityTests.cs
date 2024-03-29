@@ -23,7 +23,7 @@ public class MapToLocalAuthorityTests
         var result = LocalAuthorityMapper.MapToLocalAuthority(localAuthorityDto.onsCode, localAuthorityDto.name);
 
         // then
-        result?.Id.ToString().Should().Be(localAuthorityDto.onsCode);
+        result?.Code.ToString().Should().Be(localAuthorityDto.onsCode);
         result?.Name.Should().Be(localAuthorityDto.name);
     }
 }

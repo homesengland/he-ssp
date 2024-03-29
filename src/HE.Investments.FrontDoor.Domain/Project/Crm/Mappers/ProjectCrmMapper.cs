@@ -50,7 +50,7 @@ public class ProjectCrmMapper : IProjectCrmMapper
             IdentifiedSite = entity.IsSiteIdentified?.Value,
             Region = _regionsMapper.Map(entity.Regions),
             NumberofHomesEnabledBuilt = entity.HomesNumber?.Value,
-            LocalAuthorityCode = entity.LocalAuthority?.Id.Value,
+            LocalAuthorityCode = entity.LocalAuthority?.Code.Value,
             LocalAuthorityName = entity.LocalAuthority?.Name,
             GeographicFocus = _projectGeographicFocusMapper.ToDto(entity.GeographicFocus.GeographicFocus),
             WouldyourprojectfailwithoutHEsupport = entity.IsSupportRequired?.Value,

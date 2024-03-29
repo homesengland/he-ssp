@@ -62,7 +62,7 @@ public class SiteRepository : ISiteRepository, IRemoveSiteRepository
             SiteName = entity.Name.Value,
             NumberofHomesEnabledBuilt = entity.HomesNumber?.Value,
             PlanningStatus = entity.PlanningStatus.Value == SitePlanningStatus.Undefined ? null : _planningStatusMapper.ToDto(entity.PlanningStatus.Value),
-            LocalAuthorityCode = entity.LocalAuthority?.Id.Value,
+            LocalAuthorityCode = entity.LocalAuthority?.Code.Value,
             LocalAuthorityName = entity.LocalAuthority?.Name,
         };
     }
