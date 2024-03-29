@@ -95,7 +95,7 @@ public class WithdrawDraftApplicationIntegrationTests : IntegrationTest
         // when
         var dashboardPage = await TestClient.SubmitButton(
             acceptAndSubmitButton,
-            new Dictionary<string, string> { { "WithdrawReason", "very important reason" } });
+            new Dictionary<string, string> { { "WithdrawReason", TextTestData.TextThatNotExceedsLongInputLimit } });
 
         // then
         dashboardPage

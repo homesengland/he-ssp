@@ -99,7 +99,7 @@ public class WithdrawSubmittedApplicationIntegrationTests : IntegrationTest
         // when
         var applicationDashboardPage = await TestClient.SubmitButton(
             acceptAndSubmitButton,
-            new Dictionary<string, string> { { "WithdrawReason", "very important reason" } });
+            new Dictionary<string, string> { { "WithdrawReason", TextTestData.TextThatNotExceedsLongInputLimit } });
 
         // then
         applicationDashboardPage
