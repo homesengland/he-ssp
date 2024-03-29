@@ -7,9 +7,9 @@
 @Html.Hidden("MaxFileSizeInMegabytes", Settings.MaxFileSizeInMegabytes)
 
 <div class="govuk-grid-column-full">
+    <gds-back-link href="@Url.Action("Back", "CompanyStructureV2", new { id = Model.LoanApplicationId, currentPage = CompanyStructureState.ExistingCompany })" text="Back" class="govuk-!-margin-bottom-8">
+    </gds-back-link>
     <form id="formWithFile" asp-controller="CompanyStructureV2" asp-action="MoreInformationAboutOrganizationPost" asp-route-id="@Model.LoanApplicationId" asp-route-redirect="@Context.Request.Query["redirect"]" enctype="multipart/form-data" asp-method="post" novalidate>
-        <gds-back-link href="@Url.Action("Back", "CompanyStructureV2", new { id = Model.LoanApplicationId, currentPage = CompanyStructureState.ExistingCompany })" text="Back" class="govuk-!-margin-bottom-8">
-        </gds-back-link>
         <partial name="~/Partials/_Notification.cshtml"/>
         <partial name="_ErrorSummaryPartial" model="null"/>
         @Html.HiddenFor(x => x.LoanApplicationId)
@@ -18,14 +18,12 @@
         <gds-div-grid-column-two-thirds class="govuk-!-padding-left-0">
 
             <vc:page-header title="Organisation structure"/>
-            <gds-field-set>
-                <vc:text-area-input-with-counter
-                    field-name="@nameof(Model.OrganisationMoreInformation)"
-                    value="@Model.OrganisationMoreInformation"
-                    title="Tell us more about your organisation structure"
-                    title-type="InputTitleType.InputTitle"
-                    hint="For example if your organisation is or has a parent company, or is part of a group structure."/>
-            </gds-field-set>
+            <vc:text-area-input-with-counter
+                field-name="@nameof(Model.OrganisationMoreInformation)"
+                value="@Model.OrganisationMoreInformation"
+                title="Tell us more about your organisation structure"
+                title-type="InputTitleType.InputTitle"
+                hint="For example if your organisation is or has a parent company, or is part of a group structure."/>
 
             <gds-error-form-group asp-for="OrganisationMoreInformationFile">
                 <vc:upload-file field-name="OrganisationMoreInformationFile"

@@ -1,14 +1,11 @@
 @model HE.Investments.Loans.Contract.Funding.FundingViewModel
-@using HE.Investments.Common.Gds
 @using HE.Investments.Common.WWW.Extensions
 @using HE.Investments.Loans.Contract.Funding
 @using HE.Investments.Loans.Contract.Funding.Enums
 @using HE.Investments.Loans.WWW.Views.FundingV2.Consts
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Fieldset
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Input
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Labels
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Details
 @inject ModelExpressionProvider modelProvider
@@ -22,7 +19,6 @@
         <gds-back-link href="@Url.Action("Back","FundingV2", new {id = Model.LoanApplicationId, currentPage = FundingState.GDV})" text="Back" class="govuk-!-margin-bottom-8">
         </gds-back-link>
         <partial name="_ErrorSummaryPartial" model="null" />
-        <gds-field-set>
             <gds-div-form-group invalid="inputInvalid">
                 <vc:page-header title="@FundingPageTitles.GrossDevelopmentValue"/>
 
@@ -32,7 +28,7 @@
                                govuk-formgroup-asp-for="GrossDevelopmentValue"
                                value="@Model.GrossDevelopmentValue"
                                type="text"
-                               asp-excludelabel/>
+                               asp-hiddenlabeltext="Gross Development Value"/>
                 </gds-input-wrapper>
             </gds-div-form-group>
             <gds-details-summary label="Help with Gross Development Value (GDV) ">
@@ -41,7 +37,6 @@
             <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="@(Model.StateChanged?"Change":"Continue")" id="continue-button">
                 Continue
             </button>
-        </gds-field-set>
     </form>
 
     <partial name="_HomeAndCheckAnswersLinks" />
