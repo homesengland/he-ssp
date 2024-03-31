@@ -78,7 +78,7 @@ public static class ValidationErrorMessage
 
     public const string ProvideAllProjectAnswers = "To submit, you have to provide all answers";
 
-    public const string ProvideAllSiteAnswers = "To submit, you have to provide all answers for sties";
+    public const string ProvideAllSiteAnswers = "To submit, you have to provide all answers for sites";
 
     public static string FilesMaxCount(int numberOfFiles) => $"You can only select up to {numberOfFiles} files";
 
