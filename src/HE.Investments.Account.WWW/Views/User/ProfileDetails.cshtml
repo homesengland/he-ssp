@@ -13,10 +13,12 @@
 <gds-div-grid-column-two-thirds>
     @if (!string.IsNullOrWhiteSpace(Model.CallbackUrl))
     {
-        <gds-back-link class="govuk-!-margin-bottom-8" href="@Model.CallbackUrl"></gds-back-link>
+        <gds-back-link href="@Model.CallbackUrl"></gds-back-link>
     }
 
-    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml" )
+    <div class="govuk-!-margin-bottom-8"></div>
+
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
     <vc:page-header
         title="@UserPageTitles.ProfileDetails"
@@ -25,31 +27,31 @@
     <gds-p>Enter your personal details, you will be asked to add your organisation details later.</gds-p>
 
     <form asp-controller="User" asp-action="SaveProfileDetails" asp-method="post" asp-route-programme="@programme" asp-route-callback="@callback" novalidate>
-            @Html.HiddenFor(x => x.CallbackUrl)
-            <vc:text-input
-                field-name="@(nameof(Model.FirstName))"
-                value="@Model.FirstName"
-                title="First name"/>
+        @Html.HiddenFor(x => x.CallbackUrl)
+        <vc:text-input
+            field-name="@(nameof(Model.FirstName))"
+            value="@Model.FirstName"
+            title="First name"/>
 
-            <vc:text-input
-                field-name="@(nameof(Model.LastName))"
-                value="@Model.LastName"
-                title="Last name"/>
+        <vc:text-input
+            field-name="@(nameof(Model.LastName))"
+            value="@Model.LastName"
+            title="Last name"/>
 
-            <vc:text-input
-                field-name="@(nameof(Model.JobTitle))"
-                value="@Model.JobTitle"
-                title="Job title"/>
+        <vc:text-input
+            field-name="@(nameof(Model.JobTitle))"
+            value="@Model.JobTitle"
+            title="Job title"/>
 
-            <vc:text-input
-                field-name="@(nameof(Model.TelephoneNumber))"
-                value="@Model.TelephoneNumber"
-                title="Preferred telephone number"/>
+        <vc:text-input
+            field-name="@(nameof(Model.TelephoneNumber))"
+            value="@Model.TelephoneNumber"
+            title="Preferred telephone number"/>
 
-            <vc:text-input
-                field-name="@(nameof(Model.SecondaryTelephoneNumber))"
-                value="@Model.SecondaryTelephoneNumber"
-                title="Secondary telephone number (optional)"/>
+        <vc:text-input
+            field-name="@(nameof(Model.SecondaryTelephoneNumber))"
+            value="@Model.SecondaryTelephoneNumber"
+            title="Secondary telephone number (optional)"/>
 
         <vc:form-button/>
     </form>

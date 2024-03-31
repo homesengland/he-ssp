@@ -373,7 +373,7 @@ public class Project : DomainEntity
             GrantFundingStatus.IsProvided() && (GrantFundingStatus != PublicSectorGrantFundingStatus.Received || PublicSectorGrantFunding.IsProvided()) &&
             ChargesDebt.IsProvided() &&
             AffordableHomes.IsProvided() &&
-            LocalAuthority is not null && LocalAuthority.Id.IsProvided() && LocalAuthority.Name.IsProvided();
+            LocalAuthority is not null && LocalAuthority.Code.IsProvided() && LocalAuthority.Name.IsProvided();
     }
 
     private void CompleteSection()

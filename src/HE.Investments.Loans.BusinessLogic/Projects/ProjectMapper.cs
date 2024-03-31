@@ -47,7 +47,7 @@ internal static class ProjectMapper
             GrantFundingName = project.PublicSectorGrantFunding?.GrantOrFundName?.Value,
             GrantFundingPurpose = project.PublicSectorGrantFunding?.Purpose?.Value,
             LoanApplicationStatus = project.LoanApplicationStatus,
-            LocalAuthorityId = project.LocalAuthority?.Id.ToString(),
+            LocalAuthorityId = project.LocalAuthority?.Code.ToString(),
             LocalAuthorityName = project.LocalAuthority?.Name,
             HasEstimatedStartDate = project.StartDate?.Exists.MapToCommonResponse(),
 

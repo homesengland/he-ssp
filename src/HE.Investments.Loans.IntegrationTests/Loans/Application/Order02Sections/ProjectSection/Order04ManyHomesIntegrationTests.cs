@@ -42,7 +42,7 @@ public class Order04ManyHomesIntegrationTests : IntegrationTest
         // then
         manyHomesPage
             .UrlEndWith(ProjectPagesUrls.ManyHomesSuffix)
-            .HasLabelTitle(ProjectPageTitles.ManyHomes)
+            .HasTitle(ProjectPageTitles.ManyHomes)
             .HasOneValidationMessages(ValidationErrorMessage.ManyHomesAmount);
 
         SetCurrentPage(manyHomesPage);

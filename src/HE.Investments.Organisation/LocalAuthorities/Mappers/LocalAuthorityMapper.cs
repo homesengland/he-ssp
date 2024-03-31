@@ -25,6 +25,6 @@ public static class LocalAuthorityMapper
             return null;
         }
 
-        return new LocalAuthority(LocalAuthorityId.From(localAuthorityId!), localAuthorityName!);
+        return new LocalAuthority(LocalAuthorityCode.From(localAuthorityId!), localAuthorityName!);
     }
 }

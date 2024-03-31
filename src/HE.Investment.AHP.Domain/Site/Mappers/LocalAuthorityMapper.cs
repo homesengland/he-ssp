@@ -12,7 +12,7 @@ public static class LocalAuthorityMapper
         return organisationLocalAuthority != null ? new ContractLocalAuthority
         {
             Name = organisationLocalAuthority.Name,
-            Id = organisationLocalAuthority.Id.ToString(),
+            Id = organisationLocalAuthority.Code.ToString(),
         }
         : null;
     }

@@ -30,6 +30,7 @@ public class GetTaskListDataQueryHandler : IRequestHandler<GetTaskListDataQuery,
             loanApplication.ExternalStatus,
             loanApplication.CanBeSubmitted(),
             loanApplication.WasSubmitted(),
+            loanApplication.IsReadOnly(),
             new Sections(
                 MapToSectionStatus(loanApplication.ExternalStatus, loanApplication.CompanyStructure.Status),
                 MapToSectionStatus(loanApplication.ExternalStatus, loanApplication.Funding.Status),

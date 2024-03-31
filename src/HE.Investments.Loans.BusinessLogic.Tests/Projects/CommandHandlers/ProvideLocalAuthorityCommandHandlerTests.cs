@@ -38,7 +38,7 @@ public class ProvideLocalAuthorityCommandHandlerTests : TestBase<ProvideLocalAut
 
         // then
         result.IsValid.Should().BeTrue();
-        project.LocalAuthority?.Id.Should().BeNull();
+        project.LocalAuthority?.Code.Should().BeNull();
         project.LocalAuthority?.Name.Should().BeNull();
     }
 
@@ -62,11 +62,11 @@ public class ProvideLocalAuthorityCommandHandlerTests : TestBase<ProvideLocalAut
         var localAuthority = LocalAuthorityTestData.LocalAuthorityOne;
 
         // when
-        var result = await TestCandidate.Handle(new ProvideLocalAuthorityCommand(loanApplicationId, projectId, localAuthority.Id.ToString(), localAuthority.Name), CancellationToken.None);
+        var result = await TestCandidate.Handle(new ProvideLocalAuthorityCommand(loanApplicationId, projectId, localAuthority.Code.ToString(), localAuthority.Name), CancellationToken.None);
 
         // then
         result.IsValid.Should().BeTrue();
-        project.LocalAuthority?.Id.Should().Be(localAuthority.Id);
+        project.LocalAuthority?.Code.Should().Be(localAuthority.Code);
         project.LocalAuthority?.Name.Should().Be(localAuthority.Name);
     }
 }

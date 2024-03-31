@@ -4,24 +4,24 @@ namespace HE.Investments.FrontDoor.Domain.Site.Utilities.Enums;
 
 public enum NotAllowedLocalAuthority
 {
-    [Description("E08000001")]
+    [Description("8000001")]
     Bolton,
-    [Description("E08000002")]
+    [Description("8000002")]
     Bury,
-    [Description("E08000003")]
+    [Description("8000003")]
     Manchester,
-    [Description("E08000004")]
+    [Description("8000004")]
     Oldham,
-    [Description("E08000005")]
+    [Description("8000005")]
     Rochdale,
-    [Description("E08000006")]
+    [Description("8000006")]
     Salford,
-    [Description("E08000007")]
+    [Description("8000007")]
     Stockport,
-    [Description("E08000008")]
+    [Description("8000008")]
     Tameside,
-    [Description("E08000009")]
+    [Description("8000009")]
     Trafford,
-    [Description("E08000010")]
+    [Description("8000010")]
     Wigan,
 }

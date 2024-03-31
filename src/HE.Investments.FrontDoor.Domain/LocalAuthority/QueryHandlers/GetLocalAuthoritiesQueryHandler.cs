@@ -22,7 +22,7 @@ public class GetLocalAuthoritiesQueryHandler : IRequestHandler<GetLocalAuthoriti
         var (items, totalItems) = await _repository.Search(request.Phrase, request.PaginationRequest.Page - 1, request.PaginationRequest.ItemsPerPage, cancellationToken);
 
         return new PaginationResult<Investments.Common.Contract.LocalAuthority>(
-                items.Select(l => new Investments.Common.Contract.LocalAuthority(l.Id.Value, l.Name)).ToList(),
+                items.Select(l => new Investments.Common.Contract.LocalAuthority(l.Code.Value, l.Name)).ToList(),
                 request.PaginationRequest.Page,
                 request.PaginationRequest.ItemsPerPage,
                 totalItems);

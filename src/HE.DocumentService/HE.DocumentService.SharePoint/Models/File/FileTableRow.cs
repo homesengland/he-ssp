@@ -1,6 +1,6 @@
 namespace HE.DocumentService.SharePoint.Models.File;
 
-public class FileTableRow
+public record FileTableRow
 {
     public int Id { get; set; }
 

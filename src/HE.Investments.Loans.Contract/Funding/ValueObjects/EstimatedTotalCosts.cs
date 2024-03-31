@@ -23,7 +23,7 @@ public class EstimatedTotalCosts : MoneyValueObject
 
     public static EstimatedTotalCosts FromString(string estimatedTotalCosts)
     {
-        if (!Regex.IsMatch(estimatedTotalCosts, @"^[0-9]+([.][0-9]{1,2})?$"))
+        if (!Regex.IsMatch(estimatedTotalCosts.Trim(), "^[0-9]+([.][0-9]{1,2})?$"))
         {
             OperationResult.ThrowValidationError(nameof(FundingViewModel.TotalCosts), ValidationErrorMessage.EstimatedPoundInput("total cost"));
         }

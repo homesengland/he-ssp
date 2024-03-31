@@ -16,6 +16,6 @@ public class ProvideLocalAuthorityCommandHandler : ProjectBaseCommandHandler<Pro
 
     protected override void Perform(ProjectEntity project, ProvideLocalAuthorityCommand request)
     {
-        project.ProvideLocalAuthority(ProjectLocalAuthority.New(request.LocalAuthorityId, request.LocalAuthorityName));
+        project.ProvideLocalAuthority(ProjectLocalAuthority.New(request.LocalAuthorityCode, request.LocalAuthorityName));
     }
 }
