@@ -38,13 +38,13 @@ public class ProvideAdditionalDataCommandHandler : ProjectCommandHandlerBase, IR
 
                 var purchaseDate = aggregatedResults.CatchResult(() => PurchaseDate.FromDateDetails(request.PurchaseDate, _timeProvider));
 
-                var cost = aggregatedResults.CatchResult(() => Pounds.FromString(request.Cost));
+                var cost = aggregatedResults.CatchResult(() => Pounds.FromString(request.Cost, nameof(ProjectViewModel.Cost), "cost"));
                 aggregatedResults.OverrideError(
                     GenericValidationError.InvalidPoundsValue,
                     nameof(ProjectViewModel.Cost),
                     ValidationErrorMessage.IncorrectProjectCost);
 
-                var currentValue = aggregatedResults.CatchResult(() => Pounds.FromString(request.CurrentValue));
+                var currentValue = aggregatedResults.CatchResult(() => Pounds.FromString(request.CurrentValue, nameof(ProjectViewModel.Value), "current value"));
                 aggregatedResults.OverrideError(
                     GenericValidationError.InvalidPoundsValue,
                     nameof(ProjectViewModel.Value),

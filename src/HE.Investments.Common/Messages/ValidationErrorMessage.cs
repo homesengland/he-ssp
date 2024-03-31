@@ -54,8 +54,6 @@ public static class ValidationErrorMessage
 
     public const string IncorrectProjectValue = "The current value of the land must be entered as a number, in pounds and pence";
 
-    public const string IncorrectGrantFundingAmount = "The amount of funding provided";
-
     public const string AcceptTermsAndConditions = "Select that you have read and understood the privacy notice";
 
     public const string AcceptTermsAndConditionsAndContinue = "You must select you have read and understood the privacy policy to continue";
@@ -106,9 +104,9 @@ public static class ValidationErrorMessage
 
     public static string MustProvideYourLowerNumber(string fieldName, int maxValue) => $"Your {fieldName} must be {maxValue} or fewer";
 
-    public static string MustProvideTheHigherNumber(string fieldName, int minValue) => $"The {fieldName} must be {minValue} or more";
+    public static string MustProvideTheHigherNumber(string fieldName, long minValue) => $"The {fieldName} must be {minValue} or more";
 
-    public static string MustProvideTheLowerNumber(string fieldName, int maxValue) => $"The {fieldName} must be {maxValue} or fewer";
+    public static string MustProvideTheLowerNumber(string fieldName, long maxValue) => $"The {fieldName} must be {maxValue} or fewer";
 
     public static string MustProvideYourWholeNumber(string fieldName, int example = 30) => $"Your {fieldName} must be a whole number, like {example}";
 

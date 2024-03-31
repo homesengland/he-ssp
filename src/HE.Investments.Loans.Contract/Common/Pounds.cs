@@ -1,43 +1,39 @@
 using System.Globalization;
 using System.Text.RegularExpressions;
 using HE.Investments.Common.Contract.Validators;
-using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
 
 namespace HE.Investments.Loans.Contract.Common;
-
-public class Pounds : ValueObject
+public class Pounds : MoneyValueObject
 {
-    public Pounds(decimal value)
+    public Pounds(string value, string fieldName, string displayName)
+        : base(value, fieldName, displayName)
     {
-        Value = value;
     }
 
-    public decimal Value { get; }
-
-    public static Pounds FromString(string? estimatedTotalCosts)
+    public Pounds(decimal value, string fieldName = nameof(Pounds), string displayName = "pounds value")
+        : base(value, fieldName, displayName)
     {
-        if (estimatedTotalCosts.IsNotProvided() || !Regex.IsMatch(estimatedTotalCosts!, @"^[0-9]+([.][0-9]{1,2})?$"))
+    }
+
+    public static Pounds New(decimal value, string fieldName, string displayName) => new(value, fieldName, displayName);
+
+    public static Pounds FromString(string value, string fieldName, string displayName)
+    {
+        if (value.IsNotProvided() || !Regex.IsMatch(value, @"^[0-9]+([.][0-9]{1,2})?$"))
         {
             OperationResult
                 .New()
-                .AddValidationError(nameof(Pounds), GenericValidationError.InvalidPoundsValue)
+                .AddValidationError(fieldName, GenericValidationError.InvalidPoundsValue)
                 .CheckErrors();
         }
 
-        _ = decimal.TryParse(estimatedTotalCosts, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var parsedValue);
-
-        return new Pounds(parsedValue);
+        return new Pounds(value, fieldName, displayName);
     }
 
     public override string ToString()
     {
         return Value.ToString("0.##", CultureInfo.InvariantCulture);
-    }
-
-    protected override IEnumerable<object> GetAtomicValues()
-    {
-        yield return Value;
     }
 }

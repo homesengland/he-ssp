@@ -1,18 +1,23 @@
 using System.Globalization;
 using System.Text.RegularExpressions;
 using HE.Investments.Common.Contract.Validators;
-using HE.Investments.Common.Domain;
 using HE.Investments.Common.Messages;
+using HE.Investments.Loans.Contract.Common;
 
 namespace HE.Investments.Loans.Contract.Funding.ValueObjects;
-public class EstimatedTotalCosts : ValueObject
+public class EstimatedTotalCosts : MoneyValueObject
 {
-    public EstimatedTotalCosts(decimal value)
+    private const string DisplayName = "Estimated Total Costs";
+
+    public EstimatedTotalCosts(string value)
+        : base(value, nameof(EstimatedTotalCosts), DisplayName)
     {
-        Value = value;
     }
 
-    public decimal Value { get; }
+    public EstimatedTotalCosts(decimal value)
+        : base(value, nameof(EstimatedTotalCosts), DisplayName)
+    {
+    }
 
     public static EstimatedTotalCosts New(decimal value) => new(value);
 
@@ -20,23 +25,14 @@ public class EstimatedTotalCosts : ValueObject
     {
         if (!Regex.IsMatch(estimatedTotalCosts.Trim(), "^[0-9]+([.][0-9]{1,2})?$"))
         {
-            OperationResult
-                .New()
-                .AddValidationError(nameof(FundingViewModel.TotalCosts), ValidationErrorMessage.EstimatedPoundInput("total cost"))
-                .CheckErrors();
+            OperationResult.ThrowValidationError(nameof(FundingViewModel.TotalCosts), ValidationErrorMessage.EstimatedPoundInput("total cost"));
         }
 
-        _ = decimal.TryParse(estimatedTotalCosts, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var parsedValue);
-        return new EstimatedTotalCosts(parsedValue);
+        return new EstimatedTotalCosts(estimatedTotalCosts);
     }
 
     public override string ToString()
     {
         return Value.ToString("0.##", CultureInfo.InvariantCulture);
-    }
-
-    protected override IEnumerable<object?> GetAtomicValues()
-    {
-        yield return Value;
     }
 }

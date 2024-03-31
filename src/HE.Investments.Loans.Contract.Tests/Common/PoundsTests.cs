@@ -21,7 +21,7 @@ public class PoundsTests
         _ = decimal.TryParse(estimatedTotalCostsAsString, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var parsedValue);
 
         // given
-        var action = () => Pounds.FromString(estimatedTotalCostsAsString);
+        var action = () => Pounds.FromString(estimatedTotalCostsAsString, nameof(Pounds), "pounds value");
 
         // then
         action.Should().NotThrow<DomainValidationException>();
@@ -35,7 +35,7 @@ public class PoundsTests
     public void ShouldThrowDomainValidationException_WhenStringIsNotPositiveDecimalWithMaxTwoSpacesAfterDot(string estimatedTotalCostsAsString)
     {
         // given && when
-        var action = () => Pounds.FromString(estimatedTotalCostsAsString);
+        var action = () => Pounds.FromString(estimatedTotalCostsAsString, nameof(Pounds), "pounds value");
 
         // then
         action.Should()
@@ -48,7 +48,7 @@ public class PoundsTests
     public void ShouldThrowDomainValidationException_WhenValueIsNull()
     {
         // given && when
-        var action = () => Pounds.FromString(null);
+        var action = () => Pounds.FromString(string.Empty, nameof(Pounds), "pounds value");
 
         // then
         action.Should()
