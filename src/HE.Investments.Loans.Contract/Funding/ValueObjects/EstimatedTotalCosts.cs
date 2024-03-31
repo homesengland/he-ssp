@@ -2,7 +2,7 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Messages;
-using HE.Investments.Loans.Contract.Application.ValueObjects;
+using HE.Investments.Loans.Contract.Common;
 
 namespace HE.Investments.Loans.Contract.Funding.ValueObjects;
 public class EstimatedTotalCosts : MoneyValueObject

@@ -3,13 +3,13 @@ using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Messages;
 
-namespace HE.Investments.Loans.Contract.Application.ValueObjects;
+namespace HE.Investments.Loans.Contract.Common;
 
 public abstract class MoneyValueObject : ValueObject
 {
-    private const long MinValue = -922337203685477;
+    private const long MinValue = 0;
 
-    private const long MaxValue = 922337203685477;
+    private const long MaxValue = 99999999999999;
 
     protected MoneyValueObject(
         string value,

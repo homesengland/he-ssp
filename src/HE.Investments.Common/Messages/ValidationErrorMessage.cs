@@ -54,8 +54,6 @@ public static class ValidationErrorMessage
 
     public const string IncorrectProjectValue = "The current value of the land must be entered as a number, in pounds and pence";
 
-    public const string IncorrectGrantFundingAmount = "The amount of funding provided";
-
     public const string AcceptTermsAndConditions = "Select that you have read and understood the privacy notice";
 
     public const string AcceptTermsAndConditionsAndContinue = "You must select you have read and understood the privacy policy to continue";

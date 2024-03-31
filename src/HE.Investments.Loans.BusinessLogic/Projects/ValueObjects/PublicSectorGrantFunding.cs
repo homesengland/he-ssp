@@ -5,6 +5,7 @@ using HE.Investments.Common.Messages;
 using HE.Investments.Loans.BusinessLogic.Projects.Consts;
 using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using HE.Investments.Loans.Contract.Common;
+using HE.Investments.Loans.Contract.Projects.ViewModels;
 
 namespace HE.Investments.Loans.BusinessLogic.Projects.ValueObjects;
 
@@ -33,8 +34,8 @@ public class PublicSectorGrantFunding : ValueObject
         var providerName = providerNameString.IsProvided() ? aggregatedResult.CatchResult(() => new ShortText(providerNameString)) : null;
         aggregatedResult.OverrideError(GenericValidationError.TextTooLong, ProjectValidationFieldNames.GrantFunding.ProviderName, ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.GrantFundingProviderName));
 
-        var amount = amountString.IsProvided() ? aggregatedResult.CatchResult(() => Pounds.FromString(amountString)) : null;
-        aggregatedResult.OverrideError(GenericValidationError.InvalidPoundsValue, ProjectValidationFieldNames.GrantFunding.Amount, ValidationErrorMessage.IncorrectGrantFundingAmount);
+        var amount = amountString.IsProvided() ? aggregatedResult.CatchResult(() => Pounds.FromString(amountString, nameof(ProjectViewModel.GrantFundingAmount), "grant funding amount")) : null;
+        aggregatedResult.OverrideError(GenericValidationError.InvalidPoundsValue, ProjectValidationFieldNames.GrantFunding.Amount, ValidationErrorMessage.PoundInput("grant funding amount"));
 
         var grantOrFoundName = grantOrFoundNameString.IsProvided() ? aggregatedResult.CatchResult(() => new ShortText(grantOrFoundNameString)) : null;
         aggregatedResult.OverrideError(GenericValidationError.TextTooLong, ProjectValidationFieldNames.GrantFunding.FundingName, ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.GrantFundingName));
