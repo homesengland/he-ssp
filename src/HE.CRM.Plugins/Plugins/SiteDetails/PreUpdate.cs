@@ -30,19 +30,24 @@ namespace HE.CRM.Plugins.Plugins.SiteDetails
        Image1Name = "PreImage",
        Image1Attributes = "",
        Image1Type = ImageTypeEnum.PreImage)]
-    public class FulfillRegionOnLocalAuthorityChangePlugin : PluginBase<DataverseContext>, IPlugin
+    public class PreUpdate : PluginBase<DataverseContext>, IPlugin
     {
         #region Constructors
-        public FulfillRegionOnLocalAuthorityChangePlugin(string unsecureConfig, string secureConfig) : base(unsecureConfig, secureConfig)
+
+        public PreUpdate(string unsecureConfig, string secureConfig) : base(unsecureConfig, secureConfig)
         {
         }
-        #endregion
+
+        #endregion Constructors
 
         #region Base Methods Overrides
+
         public override void RegisterHandlers(CrmHandlerFactory<DataverseContext> handlerFactory, IList<ICrmHandler> registeredHandlers)
         {
             registeredHandlers.Add(handlerFactory.GetHandler<FulfillRegionOnLocalAuthorityChangeHandler>());
+            registeredHandlers.Add(handlerFactory.GetHandler<UpdateLoansApplicationAfterStatusChange>());
         }
-        #endregion
+
+        #endregion Base Methods Overrides
     }
 }
