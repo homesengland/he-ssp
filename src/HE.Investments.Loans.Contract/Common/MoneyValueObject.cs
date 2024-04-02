@@ -9,7 +9,7 @@ public abstract class MoneyValueObject : ValueObject
 {
     private const long MinValue = 0;
 
-    private const long MaxValue = 99999999999999;
+    private const long MaxValue = 999999999;
 
     protected MoneyValueObject(
         string value,
