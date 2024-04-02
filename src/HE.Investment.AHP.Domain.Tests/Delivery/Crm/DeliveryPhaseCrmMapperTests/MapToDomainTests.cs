@@ -173,8 +173,8 @@ public class MapToDomainTests : TestBase<DeliveryPhaseCrmMapper>
 
         // then
         result.Should().HaveCount(2);
-        result.Single(x => x.HomeTypeId == HomeTypeId.From("ht-2")).ToDeliver.Should().Be(0);
-        result.Single(x => x.HomeTypeId == HomeTypeId.From("ht-3")).ToDeliver.Should().Be(12);
+        result.Single(x => x.HomeTypeId == HomeTypeId.From("ht-2")).Value.Should().Be(0);
+        result.Single(x => x.HomeTypeId == HomeTypeId.From("ht-3")).Value.Should().Be(12);
     }
 
     [Fact]

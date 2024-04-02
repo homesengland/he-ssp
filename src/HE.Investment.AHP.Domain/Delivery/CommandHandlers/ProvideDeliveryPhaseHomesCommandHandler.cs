@@ -29,7 +29,7 @@ public class ProvideDeliveryPhaseHomesCommandHandler : DeliveryCommandHandlerBas
     {
         var operationResult = new OperationResult();
         var result = homesToDeliver
-            .Select(x => operationResult.Aggregate(() => HomesToDeliverInPhase.Create(HomeTypeId.From(x.Key), x.Value)))
+            .Select(x => operationResult.Aggregate(() => new HomesToDeliverInPhase(HomeTypeId.From(x.Key), x.Value)))
             .ToList();
         operationResult.CheckErrors();
 
