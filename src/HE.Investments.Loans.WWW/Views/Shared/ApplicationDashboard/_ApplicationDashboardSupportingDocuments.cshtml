@@ -1,5 +1,3 @@
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Headings
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Summary
 @using HE.Investments.Common.Messages
 @using HE.Investments.Loans.BusinessLogic.Config
 @using HE.Investments.Loans.WWW.Views.LoanApplicationV2.Consts
@@ -60,7 +58,7 @@
 
             <vc:files-table asp-for="@Model.SupportingDocumentsFiles"/>
             <button class="govuk-button" data-module="govuk-button" name="action" type="submit" data-testid="submit-button" value="@GenericMessages.Continue"
-                    disabled="@(Model.SupportingDocumentsFiles?.Any() == true)">
+                    disabled="@(Model.SupportingDocumentsFiles?.Count == 0)">
                 Submit
             </button>
         </form>
