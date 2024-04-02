@@ -3,10 +3,10 @@ using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Messages;
 using HE.Investments.Loans.BusinessLogic.Projects.ValueObjects;
 using HE.Investments.Loans.BusinessLogic.Tests.Assertions;
-using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using Xunit;
 
 namespace HE.Investments.Loans.BusinessLogic.Tests.Projects.ValueObjects;
+
 public class StartDateTests
 {
     [Fact]
@@ -32,6 +32,7 @@ public class StartDateTests
     [InlineData("32", "1", "2023")]
     [InlineData("1", "13", "2023")]
     [InlineData("1", "1", "-1")]
+    [InlineData("31", "12", "1752")]
     public void ShouldFail_WhenStartDateExistButIsNotCorrect(string day, string month, string year)
     {
         var action = () => StartDate.From(CommonResponse.Yes, year, month, day);
