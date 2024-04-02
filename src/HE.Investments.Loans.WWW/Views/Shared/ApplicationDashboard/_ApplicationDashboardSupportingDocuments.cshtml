@@ -57,8 +57,7 @@
             </gds-error-form-group>
 
             <vc:files-table asp-for="@Model.SupportingDocumentsFiles"/>
-            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" data-testid="submit-button" value="@GenericMessages.Continue"
-                    disabled="@(Model.SupportingDocumentsFiles?.Count == 0)">
+            <button class="govuk-button files-submit-button" data-module="govuk-button" name="action" type="submit" data-testid="submit-button" value="@GenericMessages.Continue">
                 Submit
             </button>
         </form>

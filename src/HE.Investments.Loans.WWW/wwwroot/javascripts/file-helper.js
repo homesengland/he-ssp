@@ -279,6 +279,16 @@
     return fileName.substring(fileName.lastIndexOf('.')).toUpperCase();
   }
 
+  const toggleFileSubmitButton = () => {
+    const filesTableBody = document.querySelector('.files-table-body');
+    const submitButton = document.querySelector('.files-submit-button');
+    if (submitButton) {
+      submitButton.disabled = filesTableBody.children.length === 0;
+    }
+  }
+
+  toggleFileSubmitButton();
+
   document.addEventListener("DOMContentLoaded", function() {
     const fileInput = document.querySelectorAll(fileInputSelector)[0];
     if (fileInput !== null && fileInput !== undefined) {
