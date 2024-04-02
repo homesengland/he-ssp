@@ -22,7 +22,7 @@ namespace HE.CRM.Plugins.Plugins.SiteDetails
        invln_SiteDetails.EntityLogicalName,
        StageEnum.PreOperation,
        ExecutionModeEnum.Synchronous,
-       "invln_localauthorityid",
+       "invln_localauthorityid" + "," + invln_SiteDetails.Fields.invln_completionstatus,
        "HE.CRM.Plugins.Plugins.SiteDetails.FulfillRegionOnLocalAuthorityChange: Update of Site Details",
        1,
        IsolationModeEnum.Sandbox,
