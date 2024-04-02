@@ -2,6 +2,7 @@ using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
+using HE.Investments.Common.Messages;
 using HE.Investments.FrontDoor.Domain.Project.Repository;
 using HE.Investments.FrontDoor.Domain.Site.Repository;
 using HE.Investments.FrontDoor.Shared.Project;
@@ -42,6 +43,13 @@ public class EligibilityService : IEligibilityService
             project.CanBeCompleted();
             if (project.IsSiteIdentified?.Value == true)
             {
+                if (!projectSites.Sites.Any())
+                {
+                    OperationResult.New()
+                        .AddValidationError("IsSectionCompleted", ValidationErrorMessage.ProvideAllSiteAnswers)
+                        .CheckErrors();
+                }
+
                 projectSites.AllSitesAreFilled();
             }
         }

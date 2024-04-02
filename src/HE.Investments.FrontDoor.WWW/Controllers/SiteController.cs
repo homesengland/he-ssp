@@ -73,21 +73,14 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     [WorkflowState(SiteWorkflowState.Name)]
     public async Task<IActionResult> Name([FromRoute] string projectId, [FromRoute] string siteId, string? name, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(
-                                new ProvideSiteNameCommand(
-                                    new FrontDoorProjectId(projectId),
-                                    new FrontDoorSiteId(siteId),
-                                    name),
-                                cancellationToken);
-
-        if (result.HasValidationErrors)
-        {
-            await GetSiteDetails(projectId, siteId, cancellationToken);
-            ModelState.AddValidationErrors(result);
-            return View(nameof(Name), name);
-        }
-
-        return await Continue(new { projectId, siteId });
+        return await ExecuteSiteCommand(
+            new ProvideSiteNameCommand(
+                new FrontDoorProjectId(projectId),
+                new FrontDoorSiteId(siteId),
+                name),
+            nameof(Name),
+            project => View(nameof(Name), name),
+            cancellationToken);
     }
 
     [HttpGet("{siteId}/homes-number")]
