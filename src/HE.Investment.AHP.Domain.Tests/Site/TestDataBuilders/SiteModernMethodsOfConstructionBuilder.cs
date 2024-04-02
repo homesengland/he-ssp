@@ -1,4 +1,5 @@
 using HE.Investment.AHP.Contract.Site;
+using HE.Investment.AHP.Domain.Site.ValueObjects.Mmc;
 using HE.Investments.TestsUtils.TestFramework;
 using SiteModernMethodsOfConstruction = HE.Investment.AHP.Domain.Site.ValueObjects.Mmc.SiteModernMethodsOfConstruction;
 
@@ -16,4 +17,8 @@ public class SiteModernMethodsOfConstructionBuilder : TestObjectBuilder<SiteMode
     public static SiteModernMethodsOfConstructionBuilder New() => new();
 
     public SiteModernMethodsOfConstructionBuilder WithIsUsingMmc(SiteUsingModernMethodsOfConstruction value) => SetProperty(x => x.SiteUsingModernMethodsOfConstruction, value);
+
+    public SiteModernMethodsOfConstructionBuilder WithInformation(string barriers, string impact) => SetProperty(
+        x => x.Information,
+        new ModernMethodsOfConstructionInformation(new ModernMethodsOfConstructionBarriers(barriers), new ModernMethodsOfConstructionImpact(impact)));
 }

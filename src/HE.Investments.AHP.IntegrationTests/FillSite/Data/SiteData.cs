@@ -129,8 +129,6 @@ public class SiteData
     public SiteUsingModernMethodsOfConstruction ChangeMmcUsingAnswer()
     {
         UsingMmc = SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes;
-        InformationBarriers = string.Empty;
-        InformationImpact = string.Empty;
         MmcCategories = new List<ModernMethodsConstructionCategoriesType>();
         Mmc2DSubcategory = ModernMethodsConstruction2DSubcategoriesType.Undefined;
         Mmc3DSubcategory = ModernMethodsConstruction3DSubcategoriesType.Undefined;

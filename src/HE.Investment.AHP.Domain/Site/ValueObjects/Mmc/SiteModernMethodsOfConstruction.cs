@@ -35,7 +35,7 @@ public class SiteModernMethodsOfConstruction : ValueObject, IQuestion
 
         if (siteUsingModernMethodsOfConstruction == Contract.Site.SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes)
         {
-            return new SiteModernMethodsOfConstruction(siteUsingModernMethodsOfConstruction);
+            return new SiteModernMethodsOfConstruction(siteUsingModernMethodsOfConstruction, old.Information);
         }
 
         if (siteUsingModernMethodsOfConstruction == Contract.Site.SiteUsingModernMethodsOfConstruction.Yes)
@@ -105,7 +105,7 @@ public class SiteModernMethodsOfConstruction : ValueObject, IQuestion
 
         if (SiteUsingModernMethodsOfConstruction is Contract.Site.SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes)
         {
-            return true;
+            return Information != null && Information.IsAnswered();
         }
 
         return false;

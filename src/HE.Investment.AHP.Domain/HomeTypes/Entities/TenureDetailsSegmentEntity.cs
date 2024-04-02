@@ -103,7 +103,10 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
 
     public void ChangeExemptFromTheRightToSharedOwnership(YesNoType exemptFromTheRightToSharedOwnership)
     {
-        ExemptFromTheRightToSharedOwnership = _modificationTracker.Change(ExemptFromTheRightToSharedOwnership, exemptFromTheRightToSharedOwnership);
+        ExemptFromTheRightToSharedOwnership = _modificationTracker.Change(
+            ExemptFromTheRightToSharedOwnership,
+            exemptFromTheRightToSharedOwnership,
+            onChangedWithParamList: ClearExemptJustification);
     }
 
     public void ChangeExemptionJustification(MoreInformation? newValue)
@@ -223,6 +226,14 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
         ExpectedFirstTranche = null;
         ProspectiveRentAsPercentageOfMarketRent = null;
         RentAsPercentageOfTheUnsoldShare = null;
+    }
+
+    private void ClearExemptJustification(YesNoType exemptFromTheRightToSharedOwnership)
+    {
+        if (exemptFromTheRightToSharedOwnership != YesNoType.Yes)
+        {
+            ChangeExemptionJustification(null);
+        }
     }
 
     private bool IsExemptJustificationProvided()
