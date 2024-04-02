@@ -68,9 +68,10 @@ public class ProjectController : WorkflowController<ProjectState>
     }
 
     [HttpGet("{projectId}/delete")]
-    public IActionResult Delete(Guid id, Guid projectId)
+    public async Task<IActionResult> Delete(Guid id, Guid projectId)
     {
-        return View(new ProjectViewModel { ApplicationId = id, ProjectId = projectId });
+        var result = await _mediator.Send(new GetProjectQuery(LoanApplicationId.From(id), ProjectId.From(projectId), ProjectFieldsSet.ProjectName));
+        return View(new ProjectViewModel { ApplicationId = id, ProjectId = projectId, ProjectName = result.ProjectName });
     }
 
     [HttpPost("{projectId}/delete")]
