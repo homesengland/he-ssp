@@ -9,12 +9,22 @@ namespace HE.Investments.Loans.BusinessLogic.Tests.Projects.ValueObjects;
 
 public class StartDateTests
 {
+    [Theory]
+    [InlineData("1", "1", "1899")]
+    [InlineData("1", "1", "10000")]
+    public void ShouldFail_WhenStartDateExistButDateIsOutOfValidRange(string day, string month, string year)
+    {
+        var action = () => new StartDate(true, year, month, day);
+
+        action.Should().Throw<DomainValidationException>().WithOnlyOneErrorMessage("When you plan to start the project must be a real date");
+    }
+
     [Fact]
     public void ShouldFail_WhenStartDateExistButDateIsNotProvided()
     {
-        var action = () => new StartDate(true, null);
+        var action = () => StartDate.FromProjectDate(true, null);
 
-        action.Should().Throw<DomainValidationException>().WithOnlyOneErrorMessage(ValidationErrorMessage.NoStartDate);
+        action.Should().Throw<DomainValidationException>().WithOnlyOneErrorMessage("Enter when you plan to start the project");
     }
 
     [Theory]

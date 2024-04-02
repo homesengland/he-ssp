@@ -9,10 +9,16 @@ public abstract class DateValueObject : ValueObject
         string? month,
         string? year,
         string fieldName,
-        string fieldDescription)
+        string fieldDescription,
+        bool isEmpty = false)
     {
         if (string.IsNullOrWhiteSpace(day) && string.IsNullOrWhiteSpace(month) && string.IsNullOrWhiteSpace(year))
         {
+            if (isEmpty)
+            {
+                return;
+            }
+
             OperationResult.ThrowValidationError(fieldName, $"Enter when {fieldDescription}");
         }
 
@@ -24,7 +30,7 @@ public abstract class DateValueObject : ValueObject
             }.Where(x => x != null)
             .ToList();
 
-        if (missingParts.Any())
+        if (missingParts.Count != 0)
         {
             OperationResult.ThrowValidationError(fieldName, $"The date when {fieldDescription} must include a {string.Join(" and ", missingParts)}");
         }
