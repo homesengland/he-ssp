@@ -6,8 +6,11 @@ using HE.Investments.Common.Messages;
 using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 
 namespace HE.Investments.Loans.BusinessLogic.Projects.ValueObjects;
+
 public class ProjectDate : ValueObject
 {
+    private static readonly DateTime MinDateValue = new(1753, 1, 1, 0, 0, 0, DateTimeKind.Unspecified);
+
     public ProjectDate(DateTime value)
     {
         Value = value;
@@ -26,7 +29,8 @@ public class ProjectDate : ValueObject
 
         var dateString = $"{day}/{month}/{year}";
 
-        if (!DateTime.TryParseExact(dateString, ProjectFormOption.AllowedDateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out var dateValue))
+        if (!DateTime.TryParseExact(dateString, ProjectFormOption.AllowedDateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out var dateValue)
+            || dateValue < MinDateValue)
         {
             OperationResult.New()
                 .AddValidationError(nameof(ProjectDate), GenericValidationError.InvalidDate)
