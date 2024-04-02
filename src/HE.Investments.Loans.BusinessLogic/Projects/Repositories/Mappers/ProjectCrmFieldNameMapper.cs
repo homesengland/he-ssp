@@ -51,7 +51,7 @@ public static class ProjectCrmFieldNameMapper
             ProjectFieldsSet.LocalAuthority => string.Join(",", LocalAuthority, FrontDoorSiteId),
             ProjectFieldsSet.Ownership => string.Join(",", SiteOwnership, LocalAuthority, FrontDoorSiteId),
             ProjectFieldsSet.PlanningPermissionStatus => string.Join(",", PlanningPermissionStatus, FrontDoorSiteId),
-            ProjectFieldsSet.PlanningReferenceNumber => string.Join(",", PlanningReferenceNumber, FrontDoorSiteId),
+            ProjectFieldsSet.PlanningReferenceNumber => string.Join(",", PlanningReferenceNumber, FrontDoorSiteId, HaveAPlanningReferenceNumber),
             ProjectFieldsSet.PlanningReferenceNumberExists => string.Join(",", HaveAPlanningReferenceNumber, FrontDoorSiteId),
             ProjectFieldsSet.AffordableHomes => string.Join(",", AffordableHomes, FrontDoorSiteId),
             ProjectFieldsSet.GetStatus => string.Join(",", ProjectStatus, FrontDoorSiteId),
