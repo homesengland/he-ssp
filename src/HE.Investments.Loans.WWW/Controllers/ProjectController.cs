@@ -7,7 +7,9 @@ using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.Common.WWW.Utils;
+using HE.Investments.Loans.BusinessLogic.LoanApplication.QueryHandlers;
 using HE.Investments.Loans.Common.Utils.Enums;
+using HE.Investments.Loans.Contract.Application.Helper;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
 using HE.Investments.Loans.Contract.Funding.Commands;
 using HE.Investments.Loans.Contract.PrefillData.Queries;
@@ -49,6 +51,11 @@ public class ProjectController : WorkflowController<ProjectState>
             }
         }
 
+        if (await IsLoanApplicationReadOnly(id))
+        {
+            return RedirectToTaskList(id);
+        }
+
         return View("Index", new ProjectStartModel { LoanApplicationId = id, ProjectId = projectId });
     }
 
@@ -82,10 +89,7 @@ public class ProjectController : WorkflowController<ProjectState>
             await _mediator.Send(new DeleteProjectCommand(LoanApplicationId.From(id), ProjectId.From(projectId)));
         }
 
-        return RedirectToAction(
-            nameof(LoanApplicationV2Controller.TaskList),
-            new ControllerName(nameof(LoanApplicationV2Controller)).WithoutPrefix(),
-            new { id });
+        return RedirectToTaskList(id);
     }
 
     [HttpGet("{projectId}/name")]
@@ -696,5 +700,20 @@ public class ProjectController : WorkflowController<ProjectState>
         var response = await _mediator.Send(new GetProjectQuery(LoanApplicationId.From(id!), ProjectId.From(projectId!), ProjectFieldsSet.GetAllFields));
 
         return new ProjectWorkflow(currentState, response);
+    }
+
+    private async Task<bool> IsLoanApplicationReadOnly(Guid id)
+    {
+        var response = await _mediator.Send(new GetLoanApplicationQuery(LoanApplicationId.From(id)));
+
+        return ApplicationStatusDivision.GetAllStatusesForReadonlyMode().Contains(response.LoanApplication.Status);
+    }
+
+    private IActionResult RedirectToTaskList(Guid id)
+    {
+        return RedirectToAction(
+            nameof(LoanApplicationV2Controller.TaskList),
+            new ControllerName(nameof(LoanApplicationV2Controller)).WithoutPrefix(),
+            new { id });
     }
 }
