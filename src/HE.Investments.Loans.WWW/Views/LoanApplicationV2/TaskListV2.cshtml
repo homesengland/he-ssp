@@ -100,7 +100,7 @@
                             </span>
 
                             <div class="task-list-remove-link">
-                                @if (Model.Status != ApplicationStatus.Withdrawn)
+                                @if (!Model.IsReadOnly)
                                 {
                                     <a href="@Url.Action("Delete", "Project", new { id = Model.Id, projectId = project.Id })">
                                         Remove
@@ -113,7 +113,7 @@
                         </div>
                     </li>
                 }
-                @if (Model.Status != ApplicationStatus.Withdrawn)
+                @if (!Model.IsReadOnly)
                 {
                     <li class="app-task-list__item">
                         <span class="app-task-list__task-name">
