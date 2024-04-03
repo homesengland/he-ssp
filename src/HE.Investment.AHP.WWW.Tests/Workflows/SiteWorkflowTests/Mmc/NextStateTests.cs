@@ -11,7 +11,6 @@ public class NextStateTests
     [InlineData(SiteWorkflowState.EnvironmentalImpact, SiteWorkflowState.MmcUsing)]
     [InlineData(SiteWorkflowState.MmcUsing, SiteWorkflowState.Procurements)]
     [InlineData(SiteWorkflowState.MmcFutureAdoption, SiteWorkflowState.Procurements)]
-    [InlineData(SiteWorkflowState.MmcInformation, SiteWorkflowState.MmcCategories)]
     [InlineData(SiteWorkflowState.MmcCategories, SiteWorkflowState.Procurements)]
     [InlineData(SiteWorkflowState.Mmc3DCategory, SiteWorkflowState.Procurements)]
     [InlineData(SiteWorkflowState.Mmc2DCategory, SiteWorkflowState.Procurements)]
@@ -42,7 +41,7 @@ public class NextStateTests
 
     [Theory]
     [InlineData(SiteUsingModernMethodsOfConstruction.Yes, SiteWorkflowState.MmcInformation)]
-    [InlineData(SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes, SiteWorkflowState.Procurements)]
+    [InlineData(SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes, SiteWorkflowState.MmcInformation)]
     public async Task ShouldReturnNextState_WhenContinueTriggerExecutedWithModernMethodsOfConstruction(
         SiteUsingModernMethodsOfConstruction usingModernMethodsOfConstruction,
         SiteWorkflowState expectedState)
@@ -162,11 +161,11 @@ public class NextStateTests
     }
 
     [Fact]
-    public async Task ShouldReturnMmcUsing_WhenBackTriggerExecutedForOnlyForSomeHomesModernMethodsOfConstruction()
+    public async Task ShouldReturnMmcInformation_WhenBackTriggerExecutedForOnlyForSomeHomesModernMethodsOfConstruction()
     {
         var modernMethodsOfConstruction = new SiteModernMethodsOfConstruction(SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes);
 
-        await TestBack(SiteWorkflowState.Procurements, SiteWorkflowState.MmcUsing, modernMethodsOfConstruction);
+        await TestBack(SiteWorkflowState.Procurements, SiteWorkflowState.MmcInformation, modernMethodsOfConstruction);
     }
 
     private static async Task TestBack(

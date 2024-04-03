@@ -136,7 +136,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
             return View(nameof(Name), model);
         }
 
-        return await Continue(new { siteId = result.ReturnedData.Value });
+        return await ContinueWithRedirect(new { siteId = result.ReturnedData.Value });
     }
 
     [HttpGet("{siteId}/section-106-general-agreement")]
