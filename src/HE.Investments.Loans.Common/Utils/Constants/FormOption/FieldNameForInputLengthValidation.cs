@@ -10,8 +10,6 @@ public static class FieldNameForInputLengthValidation
     public const string GrantFundingName = "Name of the grant/found";
     public const string GrantFundingProviderName = "Previous funding";
     public const string ChargesDebtInfo = "Infomation for legal charges";
-    public const string TelephoneNumber = "Preferred telephone number";
-    public const string SecondaryTelephoneNumber = "Secondary telephone number";
     public const string OrganisationMoreInformation = "organisation more information";
     public const string Debenture = "Debenture";
     public const string SubordinatedLoans = "Subordinated loans";
@@ -21,9 +19,4 @@ public static class FieldNameForInputLengthValidation
     public const string RefinanceInfo = "Refinance";
     public const string WithdrawReason = "Reason for withdrawing application";
     public const string PlanningReferenceNumber = "Planning reference number";
-
-    public static string TelephoneNumberType(string affectedField)
-    {
-        return affectedField == nameof(TelephoneNumber) ? TelephoneNumber : SecondaryTelephoneNumber;
-    }
 }
