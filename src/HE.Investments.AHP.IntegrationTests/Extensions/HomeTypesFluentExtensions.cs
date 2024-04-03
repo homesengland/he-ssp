@@ -1,6 +1,7 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
+using HE.Investments.AHP.IntegrationTests.FillApplication.Data;
 using HE.Investments.TestsUtils.Extensions;
 
 namespace HE.Investments.AHP.IntegrationTests.Extensions;
@@ -17,9 +18,9 @@ public static class HomeTypesFluentExtensions
         htmlDocument.HasElementForTestId("home-types-table", out var table);
         var firstHomeTypeLink = table.FindDescendant<IHtmlAnchorElement>();
         firstHomeTypeLink.Should().NotBeNull();
-        firstHomeTypeLink!.GetAttribute("data-testid").Should().NotBeNull();
+        firstHomeTypeLink!.GetAttribute("data-testId").Should().NotBeNull();
 
-        homeTypeId = firstHomeTypeLink.GetAttribute("data-testid")!.Replace("home-type-", string.Empty);
+        homeTypeId = firstHomeTypeLink.GetAttribute("data-testId")!.Replace("home-type-", string.Empty);
         homeTypeName = firstHomeTypeLink.Text.Trim();
 
         return htmlDocument;
@@ -45,10 +46,14 @@ public static class HomeTypesFluentExtensions
         return homeTypeListPage.GetHiddenListInput("HomeTypes", "HomeTypeId").ToList();
     }
 
-    public static int GetHomeTypeNumberOfHomes(this IHtmlDocument homeTypeListPage, string homeTypeId)
+    public static HomeTypeDetails GetHomeTypeDetails(this IHtmlDocument homeTypeListPage, string homeTypeId)
     {
         var numberOfHomes = homeTypeListPage.GetElementByTestId($"number-of-homes-{homeTypeId}").Text().Trim();
+        homeTypeListPage.HasLinkWithTestId($"home-type-{homeTypeId}", out var editHomeTypeButton);
 
-        return int.TryParse(numberOfHomes, out var number) ? number : 0;
+        return new HomeTypeDetails(
+            homeTypeId,
+            editHomeTypeButton.Text.Trim(),
+            int.TryParse(numberOfHomes, out var number) ? number : 0);
     }
 }

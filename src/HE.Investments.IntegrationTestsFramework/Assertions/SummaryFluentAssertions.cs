@@ -1,7 +1,9 @@
 using FluentAssertions;
 using FluentAssertions.Collections;
 using FluentAssertions.Primitives;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Common.WWW.Helpers;
 using HE.Investments.TestsUtils.Helpers;
 
 namespace HE.Investments.IntegrationTestsFramework.Assertions;
@@ -25,6 +27,15 @@ public static class SummaryFluentAssertions
         where TAssertions : GenericDictionaryAssertions<TCollection, string, SummaryItem, TAssertions>
     {
         return summary.WhoseValue.Value.Should().Be(expectedValue);
+    }
+
+    public static AndConstraint<StringAssertions> WithValue<TCollection, TAssertions>(
+        this WhoseValueConstraint<TCollection, string, SummaryItem, TAssertions> summary,
+        DateDetails expectedValue)
+        where TCollection : IEnumerable<KeyValuePair<string, SummaryItem>>
+        where TAssertions : GenericDictionaryAssertions<TCollection, string, SummaryItem, TAssertions>
+    {
+        return summary.WhoseValue.Value.Should().Be(DateHelper.DisplayAsUkFormatDate(expectedValue));
     }
 
     public static AndConstraint<StringAssertions> WithOnlyValues<TCollection, TAssertions, TEnum>(
