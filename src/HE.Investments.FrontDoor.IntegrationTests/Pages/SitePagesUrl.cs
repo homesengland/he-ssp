@@ -18,6 +18,8 @@ internal static class SitePagesUrl
 
     public static string AddAnotherSite(string projectId, string siteId) => BuildSitePage(projectId, siteId, "add-another-site");
 
+    public static string Remove(string projectId, string siteId) => BuildSitePage(projectId, siteId, "remove");
+
     private static string BuildSitePage(string projectId, string siteId, string pageName)
     {
         return ProjectPagesUrl.BuildProjectPage(projectId, $"site/{siteId}/{pageName}");

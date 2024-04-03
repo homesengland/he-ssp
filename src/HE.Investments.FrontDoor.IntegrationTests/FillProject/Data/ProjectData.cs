@@ -11,6 +11,7 @@ public class ProjectData
     {
         _dataSeed = new Random().Next(1, 50) * 2;
         SiteData = new SiteData();
+        SecondSiteData = new SiteData();
     }
 
     public string Id { get; private set; }
@@ -42,6 +43,8 @@ public class ProjectData
     public bool IsProfit => true;
 
     public SiteData SiteData { get; }
+
+    public SiteData SecondSiteData { get; }
 
     public DateTime ExpectedStartDate => DateTime.UtcNow.AddDays(_dataSeed);
 

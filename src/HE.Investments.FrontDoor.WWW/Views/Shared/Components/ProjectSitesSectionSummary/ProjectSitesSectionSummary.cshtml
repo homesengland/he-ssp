@@ -17,7 +17,7 @@
         @if (!Model.isReadOnly)
         {
             <div class="remove-site-link">
-                <gds-link href="@Url.Action("Remove", "Site", new { projectId, siteId })">
+                <gds-link href="@Url.Action("Remove", "Site", new { projectId, siteId })" data-testId="@(site.Title)-remove-site">
                     Remove site
                 </gds-link>
             </div>
