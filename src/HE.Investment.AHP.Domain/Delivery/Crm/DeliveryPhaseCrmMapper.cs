@@ -205,7 +205,7 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
 
     private static Dictionary<string, int?> MapHomesToDeliver(IList<HomesToDeliverInPhase> homesToDeliver)
     {
-        return homesToDeliver.ToDictionary<HomesToDeliverInPhase, string, int?>(x => x.HomeTypeId.Value, x => x.ToDeliver);
+        return homesToDeliver.ToDictionary<HomesToDeliverInPhase, string, int?>(x => x.HomeTypeId.Value, x => x.Value);
     }
 
     private static DateTime? MapMilestoneDate<TDate>(MilestoneDetails<TDate>? milestoneDetails)
