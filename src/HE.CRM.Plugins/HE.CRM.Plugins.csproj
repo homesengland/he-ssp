@@ -171,6 +171,7 @@
     <Compile Include="Handlers\LoanStatusChange\SendNotificationOnCreateHandler.cs" />
     <Compile Include="Handlers\ReviewsApprovals\IspStatusOnReviewApprovalStatusChangeHandler.cs" />
     <Compile Include="Handlers\SiteDetails\FulfillRegionOnLocalAuthorityChangeHandler.cs" />
+    <Compile Include="Handlers\SiteDetails\UpdateLoansApplicationAfterStatusChange.cs" />
     <Compile Include="Models\AzureAdToken.cs" />
     <Compile Include="Plugins\Accounts\SendEmailOnRatingChangePlugin.cs" />
     <Compile Include="Plugins\Contract\RejectAddingWhenRelatedLoanInApprovedStatusPlugin.cs" />
@@ -219,7 +220,7 @@
     <Compile Include="Plugins\LoanApplications\ChangeExternalStatusOnInternalStatusChangePlugin.cs" />
     <Compile Include="Plugins\LoanApplications\SetFieldsWhenChangingStatusFromDraftPlugin.cs" />
     <Compile Include="Plugins\ReviewsApprovals\IspStatusOnReviewApprovalStatusChangePlugin.cs" />
-    <Compile Include="Plugins\SiteDetails\FulfillRegionOnLocalAuthorityChangePlugin.cs" />
+    <Compile Include="Plugins\SiteDetails\PreUpdate.cs" />
     <Compile Include="Services\Accounts\AccountService.cs" />
     <Compile Include="Services\Accounts\IAccountService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
