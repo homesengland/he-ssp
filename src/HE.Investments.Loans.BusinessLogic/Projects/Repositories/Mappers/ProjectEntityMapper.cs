@@ -1,5 +1,6 @@
 extern alias Org;
 
+using System.Globalization;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Common.CRM.Mappers;
 using HE.Investments.Common.Extensions;
@@ -53,9 +54,13 @@ internal static class ProjectEntityMapper
 
         if (startDateExists!.Value)
         {
-            return StartDate.FromProjectDate(true, new ProjectDate(siteDetailsDto.startDate!.Value));
+            return new StartDate(
+                true,
+                siteDetailsDto.startDate!.Value.Day.ToString(CultureInfo.InvariantCulture),
+                siteDetailsDto.startDate!.Value.Month.ToString(CultureInfo.InvariantCulture),
+                siteDetailsDto.startDate!.Value.Year.ToString(CultureInfo.InvariantCulture));
         }
 
-        return StartDate.FromProjectDate(false, null);
+        return new StartDate(false, null, null, null);
     }
 }

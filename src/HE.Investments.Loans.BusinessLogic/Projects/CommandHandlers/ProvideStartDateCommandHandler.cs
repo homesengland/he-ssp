@@ -1,6 +1,7 @@
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories;
 using HE.Investments.Loans.BusinessLogic.Projects.Repositories;
 using HE.Investments.Loans.BusinessLogic.Projects.ValueObjects;
@@ -29,7 +30,7 @@ public class ProvideStartDateCommandHandler : ProjectCommandHandlerBase, IReques
                     return;
                 }
 
-                project.ProvideStartDate(StartDate.From(request.Exists, request.Year, request.Month, request.Day));
+                project.ProvideStartDate(new StartDate(request.Exists.MapToNonNullableBool(), request.Day, request.Month, request.Year));
             },
             request.LoanApplicationId,
             request.ProjectId,

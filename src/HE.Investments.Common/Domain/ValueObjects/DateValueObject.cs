@@ -12,13 +12,13 @@ public abstract class DateValueObject : ValueObject
         string fieldDescription,
         bool isEmpty = false)
     {
+        if (isEmpty)
+        {
+            return;
+        }
+
         if (string.IsNullOrWhiteSpace(day) && string.IsNullOrWhiteSpace(month) && string.IsNullOrWhiteSpace(year))
         {
-            if (isEmpty)
-            {
-                return;
-            }
-
             OperationResult.ThrowValidationError(fieldName, $"Enter when {fieldDescription}");
         }
 
