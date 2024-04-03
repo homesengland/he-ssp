@@ -18,9 +18,9 @@ public static class HomeTypesFluentExtensions
         htmlDocument.HasElementForTestId("home-types-table", out var table);
         var firstHomeTypeLink = table.FindDescendant<IHtmlAnchorElement>();
         firstHomeTypeLink.Should().NotBeNull();
-        firstHomeTypeLink!.GetAttribute("data-testId").Should().NotBeNull();
+        firstHomeTypeLink!.GetAttribute("data-testid").Should().NotBeNull();
 
-        homeTypeId = firstHomeTypeLink.GetAttribute("data-testId")!.Replace("home-type-", string.Empty);
+        homeTypeId = firstHomeTypeLink.GetAttribute("data-testid")!.Replace("home-type-", string.Empty);
         homeTypeName = firstHomeTypeLink.Text.Trim();
 
         return htmlDocument;
