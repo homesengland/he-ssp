@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataverseModel;
+using HE.Base.Plugins.Common.Constants;
 using HE.Base.Plugins.Handlers;
 using HE.CRM.Common.Repositories.Interfaces;
 using Microsoft.Xrm.Sdk;
@@ -25,13 +26,17 @@ namespace HE.CRM.Plugins.Handlers.SiteDetails
 
         public override bool CanWork()
         {
-            return ValueChanged(invln_SiteDetails.Fields.StatusCode);
+            return ValueChanged(invln_SiteDetails.Fields.invln_completionstatus) && ExecutionData.IsMessage(CrmMessage.Update);
         }
 
         public override void DoWork()
         {
             var siteDetails = _siteDetailsRepository.GetSiteDetailRelatedToLoanApplication(CurrentState.invln_Loanapplication);
-
+            if (siteDetails.Count == 1)
+            {
+                UpdateLoansApplication(CurrentState.invln_completionstatus.Value);
+                return;
+            }
             switch (CurrentState.invln_completionstatus.Value)
             {
                 case (int)invln_Sectioncompletionstatus.Notstarted:
@@ -67,7 +72,7 @@ namespace HE.CRM.Plugins.Handlers.SiteDetails
                                                             siteDetails))
                         break;
 
-                    UpdateLoansApplication((int)invln_Sectioncompletionstatus.NotSubmitted);
+                    UpdateLoansApplication((int)invln_Sectioncompletionstatus.Submitted);
 
                     break;
                 }
@@ -93,8 +98,11 @@ namespace HE.CRM.Plugins.Handlers.SiteDetails
             foreach (var status in listOfErlierStatuses)
             {
                 var isInStatus = siteDetails.Where(x => x.Id != CurrentState.Id).Any(x => x.invln_completionstatus.Value == status);
-                UpdateLoansApplication(status);
-                return true;
+                if (isInStatus)
+                {
+                    UpdateLoansApplication(status);
+                    return true;
+                }
             }
             return false;
         }
@@ -103,7 +111,7 @@ namespace HE.CRM.Plugins.Handlers.SiteDetails
         {
             var appToUpdate = new invln_Loanapplication()
             {
-                Id = CurrentState.Id,
+                Id = CurrentState.invln_Loanapplication.Id,
                 invln_sitedetailscompletionstatus = new OptionSetValue(status),
             };
             _loanApplicationRepository.Update(appToUpdate);
