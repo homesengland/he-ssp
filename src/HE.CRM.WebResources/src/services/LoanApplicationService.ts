@@ -12,6 +12,15 @@ export class LoanApplicationService {
     this.common = new CommonLib(eCtx)
   }
 
+  public setFieldRequired() {
+    let status = this.common.getAttribute("statuscode").getValue();
+    if (status == 1 || status == 858110001) {
+      this.common.setControlRequiredV2('invln_securities', false);
+    } else {
+      this.common.setControlRequiredV2('invln_securities', true);
+    }
+  }
+
   public setFieldsVisibilityBasedOnSecurities() {
     var securities: any = this.common.getAttributeValue('invln_securities')
     if (securities != null) {
