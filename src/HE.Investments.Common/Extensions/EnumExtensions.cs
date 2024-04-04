@@ -2,7 +2,6 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Reflection;
-using HE.Investments.Common.Contract;
 
 namespace HE.Investments.Common.Extensions;
 
