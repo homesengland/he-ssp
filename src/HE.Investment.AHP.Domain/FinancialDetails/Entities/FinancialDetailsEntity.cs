@@ -129,7 +129,7 @@ public class FinancialDetailsEntity : IQuestion
 
     public decimal? ExpectedTotalCosts()
     {
-        if (OtherApplicationCosts.AreAllNotAnswered())
+        if (OtherApplicationCosts.AreAllNotAnswered() && LandValue.CurrentLandValue.IsNotProvided())
         {
             return null;
         }

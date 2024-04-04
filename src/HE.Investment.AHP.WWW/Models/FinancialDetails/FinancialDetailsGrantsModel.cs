@@ -16,7 +16,7 @@ public class FinancialDetailsGrantsModel : FinancialDetailsBaseModel
         string? healthRelatedGrants,
         string? lotteryGrants,
         string? otherPublicBodiesGrants,
-        string totalReceivedGrands)
+        string? totalReceivedGrands)
         : base(applicationId, applicationName)
     {
         CountyCouncilGrants = countyCouncilGrants;
