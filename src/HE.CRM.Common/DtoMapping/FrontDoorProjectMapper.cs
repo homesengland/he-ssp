@@ -195,7 +195,6 @@ namespace HE.CRM.Common.DtoMapping
         {
             var Pipeline = new he_Pipeline()
             {
-                he_Name = frontDoorProjectDto.ProjectName,
                 he_ProjectName = frontDoorProjectDto.ProjectName,
                 he_housingdeliveryinengland = frontDoorProjectDto.ProjectSupportsHousingDeliveryinEngland,
                 he_activitiesinthisproject = MapNullableIntToOptionSetValueCollection(frontDoorProjectDto.ActivitiesinThisProject),
