@@ -12,8 +12,17 @@ export class LoanApplicationService {
     this.common = new CommonLib(eCtx)
   }
 
+  public setFieldRequired() {
+    let status = this.common.getAttribute("statuscode").getValue();
+    if (status == 1 || status == 858110001) {
+      this.common.setControlRequiredV2('invln_securities', false);
+    } else {
+      this.common.setControlRequiredV2('invln_securities', true);
+    }
+  }
+
   public setFieldsVisibilityBasedOnSecurities() {
-    var securities :any = this.common.getAttributeValue('invln_securities')
+    var securities: any = this.common.getAttributeValue('invln_securities')
     if (securities != null) {
       if (securities.includes(Securities.other)) {
         this.common.hideControl('invln_customsecurity', false)
@@ -30,8 +39,7 @@ export class LoanApplicationService {
     if (additionalReturns) {
       this.common.setAttributeValue('invln_assessedassppi', false)
       this.common.setAttributeValue('invln_finalconclusion', LoanApplicationService.finalConclusionAssetDoesNotMeet)
-
-    } else if(additionalReturns == false){
+    } else if (additionalReturns == false) {
       var rateOfInterest = this.common.getAttributeValue('invln_rateofinterest')
       var specialPurposeVehicleProvided = this.common.getAttributeValue('invln_specialpurposevehicleprovided')
       var LTGDVOver80 = this.common.getAttributeValue('invln_ltgdv')
@@ -58,35 +66,78 @@ export class LoanApplicationService {
   }
 
   public setFieldsVisibilityBasedOnAssessedAsSppi() {
-    var assesedAsSppi = this.common.getAttributeValue('invln_assessedassppi')
-    this.common.hideControl('invln_additionalreturns', false)
-    this.common.hideControl('invln_rateofinterest', false)
-    this.common.hideControl('invln_specialpurposevehicleprovided', false)
-    if (assesedAsSppi == false) {
-      this.common.hideControl('invln_additionalreturns', true)
-      this.common.hideControl('invln_rateofinterest', true)
-      this.common.hideControl('invln_specialpurposevehicleprovided', true)
+    console.log("setFieldsVisibilityBasedOnAssessedAsSppi");
+    let assesedAsSppi = this.common.getAttributeValue('invln_additionalreturns');
+    let rateofinterest = this.common.getAttributeValue('invln_rateofinterest');
+    this.populateFields()
+    if (assesedAsSppi == null) {
+      this.common.hideControl('invln_rateofinterest', false);
+      this.common.hideControl('invln_specialpurposevehicleprovided', false);
+      this.common.hideControl('invln_ltgdv', false);
+      this.common.hideControl('invln_projectedprofitmargin', false);
+      this.common.hideControl('invln_investedbyborrower', false);
+      this.common.hideControl('invln_assessedassppi', false);
+      this.common.hideControl('invln_finalconclusion', false);
+    }
+
+    if (assesedAsSppi) {
+      this.common.hideControl('invln_rateofinterest', true);
+      this.common.hideControl('invln_specialpurposevehicleprovided', true);
+      this.common.hideControl('invln_ltgdv', true);
+      this.common.hideControl('invln_projectedprofitmargin', true);
+      this.common.hideControl('invln_investedbyborrower', true);
+      this.common.hideControl('invln_assessedassppi', false);
+      this.common.hideControl('invln_finalconclusion', false);
+      this.common.setAttributeValue("invln_rateofinterest", false);
+      this.common.setAttributeValue('invln_specialpurposevehicleprovided', false);
+      this.common.setAttributeValue('invln_ltgdv', false);
+      this.common.setAttributeValue('invln_projectedprofitmargin', false);
+      this.common.setAttributeValue('invln_investedbyborrower', false);
+    }
+
+    if (assesedAsSppi == false && (rateofinterest == null || rateofinterest == false)) {
+      this.common.hideControl('invln_rateofinterest', false);
+      this.common.hideControl('invln_specialpurposevehicleprovided', false);
+      this.common.hideControl('invln_ltgdv', false);
+      this.common.hideControl('invln_projectedprofitmargin', false);
+      this.common.hideControl('invln_investedbyborrower', false);
+      this.common.hideControl('invln_assessedassppi', false);
+      this.common.hideControl('invln_finalconclusion', false);
+    }
+
+    if (!assesedAsSppi && rateofinterest) {
+      this.common.hideControl('invln_rateofinterest', false);
+      this.common.hideControl('invln_specialpurposevehicleprovided', true);
+      this.common.hideControl('invln_ltgdv', true);
+      this.common.hideControl('invln_projectedprofitmargin', true);
+      this.common.hideControl('invln_investedbyborrower', true);
+      this.common.hideControl('invln_assessedassppi', false);
+      this.common.hideControl('invln_finalconclusion', false);
+
+      this.common.setAttributeValue('invln_specialpurposevehicleprovided', false);
+      this.common.setAttributeValue('invln_ltgdv', false);
+      this.common.setAttributeValue('invln_projectedprofitmargin', false);
+      this.common.setAttributeValue('invln_investedbyborrower', false);
     }
   }
 
   public openCustomPage() {
     var recordId = this.common.trimBraces(this.common.getCurrentEntityId())
-    var pageInput : any = {
+    var pageInput: any = {
       pageType: "custom",
       name: "invln_changeloanapplicationstatus_2a09b",
       recordLogicalName: "invln_loanapplication",
       recordId: recordId,
     };
-    var navigationOptions : any = {
+    var navigationOptions: any = {
       target: 2,
       position: 1,
       width: { value: 900, unit: "px" },
-      height: { value: 600, unit: "px"},
+      height: { value: 600, unit: "px" },
       title: "Change Status"
     };
     Xrm.Navigation.navigateTo(pageInput, navigationOptions).then(() => {
       this.common.refresh(false)
     })
   }
-
 }

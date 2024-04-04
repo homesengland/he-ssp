@@ -1,8 +1,9 @@
 @using HE.Investments.Common.WWW.Extensions
+@using HE.Investments.Common.WWW.Components
 @using HE.Investments.Common.WWW.Components.ErrorMessage
 @using HE.Investments.Common.Contract
 
-@model (string fieldName, string title, string description, string hint, DateDetails value, bool isDisplayed)
+@model (string fieldName, string title, InputTitleType titleType, string description, string hint, DateDetails value, bool isDisplayed, bool isDayHidden)
 @{
     var hasDateError = ViewData.ModelState.HasError(Model.fieldName);
     var hasDayError = ViewData.ModelState.HasError($"{Model.fieldName}.Day");
@@ -16,18 +17,12 @@
 @if (Model.isDisplayed)
 {
     <gds-div-form-group class="@groupClass">
-        <fieldset class="govuk-fieldset" role="group">
-            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                <h1 class="govuk-fieldset__heading">
-                    @Model.title
-                </h1>
-            </legend>
-            @if (!string.IsNullOrWhiteSpace(Model.description))
-            {
-                <div class="govuk-hint">
-                    @Model.description
-                </div>
-            }
+        <gds-field-set>
+            <vc:input-list-header
+                title="@Model.title"
+                title-type="@Model.titleType"
+                hint="@Model.description"/>
+
             @if (!string.IsNullOrWhiteSpace(Model.hint))
             {
                 <div class="govuk-hint">
@@ -38,20 +33,23 @@
             <vc:error-message field-name="@Model.fieldName"/>
 
             <div class="govuk-date-input" id="@Model.fieldName">
-                <div class="govuk-date-input__item">
-                    <div class="govuk-form-group">
-                        <label class="govuk-label govuk-date-input__label" for="@($"{Model.fieldName}.Day")">
-                            Day
-                        </label>
-                        <input
-                            class="@($"govuk-input govuk-date-input__input govuk-input--width-2 {GetInputErrorClass(hasDayError)}")"
-                            id="@($"{Model.fieldName}.Day")"
-                            name="@($"{Model.fieldName}.Day")"
-                            type="text"
-                            value="@Model.value.Day"
-                            inputmode="numeric">
+                @if (!Model.isDayHidden)
+                {
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="@($"{Model.fieldName}.Day")">
+                                Day
+                            </label>
+                            <input
+                                class="@($"govuk-input govuk-date-input__input govuk-input--width-2 {GetInputErrorClass(hasDayError)}")"
+                                id="@($"{Model.fieldName}.Day")"
+                                name="@($"{Model.fieldName}.Day")"
+                                type="text"
+                                value="@Model.value.Day"
+                                inputmode="numeric">
+                        </div>
                     </div>
-                </div>
+                }
 
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
@@ -83,6 +81,6 @@
                     </div>
                 </div>
             </div>
-        </fieldset>
+        </gds-field-set>
     </gds-div-form-group>
 }

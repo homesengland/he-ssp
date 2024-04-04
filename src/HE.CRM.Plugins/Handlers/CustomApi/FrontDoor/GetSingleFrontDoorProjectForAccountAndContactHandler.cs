@@ -6,13 +6,16 @@ using HE.CRM.Plugins.Services.FrontDoorProject;
 
 namespace HE.CRM.Plugins.Handlers.CustomApi.FrontDoor
 {
-    public class GetSingleFrontDoorProjectForAccountAndContactHandler : CrmActionHandlerBase<invln_getsingleloanapplicationforaccountandcontactRequest, DataverseContext>
+    public class GetSingleFrontDoorProjectForAccountAndContactHandler : CrmActionHandlerBase<invln_getsinglefrontdoorprojectRequest, DataverseContext>
     {
         #region Fields
         private string organisationId => ExecutionData.GetInputParameter<string>(invln_getsinglefrontdoorprojectRequest.Fields.invln_organisationid);
         private string externalContactId => ExecutionData.GetInputParameter<string>(invln_getsinglefrontdoorprojectRequest.Fields.invln_userid);
         private string frontDoorProjectId => ExecutionData.GetInputParameter<string>(invln_getsinglefrontdoorprojectRequest.Fields.invln_frontdoorprojectid);
         private string fieldsToRetrieve => ExecutionData.GetInputParameter<string>(invln_getsinglefrontdoorprojectRequest.Fields.invln_fieldstoretrieve);
+        private string includeInactive => ExecutionData.GetInputParameter<string>(invln_getsinglefrontdoorprojectRequest.Fields.invln_includeinactive);
+        private string useHeTablesFromPortal => ExecutionData.GetInputParameter<string>(invln_getsinglefrontdoorprojectRequest.Fields.invln_usehetables);
+
         #endregion
 
         #region Base Methods Overrides
@@ -24,7 +27,8 @@ namespace HE.CRM.Plugins.Handlers.CustomApi.FrontDoor
         public override void DoWork()
         {
             this.TracingService.Trace("GetSingleFrontDoorProjectForAccountAndContact");
-            var frontDoorProjectsDtoList = CrmServicesFactory.Get<IFrontDoorProjectService>().GetFrontDoorProjects(organisationId, externalContactId, fieldsToRetrieve, frontDoorProjectId);
+            var useHeTables = !string.IsNullOrEmpty(useHeTablesFromPortal);
+            var frontDoorProjectsDtoList = CrmServicesFactory.Get<IFrontDoorProjectService>().GetFrontDoorProjects(organisationId, useHeTables, externalContactId, fieldsToRetrieve, frontDoorProjectId, includeInactive);
             this.TracingService.Trace("Send Response");
             if (frontDoorProjectsDtoList != null)
             {

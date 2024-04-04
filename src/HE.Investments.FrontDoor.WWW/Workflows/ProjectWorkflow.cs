@@ -1,6 +1,7 @@
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.FrontDoor.Contract.Project;
-using HE.Investments.FrontDoor.Contract.Project.Enums;
+using HE.Investments.FrontDoor.Shared.Project.Contract;
 
 namespace HE.Investments.FrontDoor.WWW.Workflows;
 
@@ -33,9 +34,7 @@ public class ProjectWorkflow : EncodedStateRouting<ProjectWorkflowState>
             ProjectWorkflowState.GeographicFocus => IsSiteNotIdentified(),
             ProjectWorkflowState.Region => IsSiteNotIdentified() && _model.GeographicFocus is ProjectGeographicFocus.Regional,
             ProjectWorkflowState.LocalAuthoritySearch => IsSiteNotIdentified() && _model.GeographicFocus is ProjectGeographicFocus.SpecificLocalAuthority,
-            ProjectWorkflowState.LocalAuthorityResult => IsSiteNotIdentified() && _model.GeographicFocus is ProjectGeographicFocus.SpecificLocalAuthority,
             ProjectWorkflowState.LocalAuthorityConfirm => IsSiteNotIdentified() && _model.GeographicFocus is ProjectGeographicFocus.SpecificLocalAuthority,
-            ProjectWorkflowState.LocalAuthorityNotFound => IsSiteNotIdentified() && _model.GeographicFocus is ProjectGeographicFocus.SpecificLocalAuthority,
             ProjectWorkflowState.HomesNumber => IsSiteNotIdentified(),
             ProjectWorkflowState.Progress => true,
             ProjectWorkflowState.RequiresFunding => true,
@@ -97,7 +96,8 @@ public class ProjectWorkflow : EncodedStateRouting<ProjectWorkflowState>
                 ProjectWorkflowState.HomesNumber,
                 () => IsGeographicFocus(ProjectGeographicFocus.National, ProjectGeographicFocus.Unknown))
             .PermitIf(Trigger.Continue, ProjectWorkflowState.Region, () => IsGeographicFocus(ProjectGeographicFocus.Regional))
-            .PermitIf(Trigger.Continue, ProjectWorkflowState.LocalAuthoritySearch, () => IsGeographicFocus(ProjectGeographicFocus.SpecificLocalAuthority))
+            .PermitIf(Trigger.Continue, ProjectWorkflowState.LocalAuthoritySearch, () => _model.LocalAuthorityCode.IsNotProvided() && IsGeographicFocus(ProjectGeographicFocus.SpecificLocalAuthority))
+            .PermitIf(Trigger.Continue, ProjectWorkflowState.LocalAuthorityConfirm, () => _model.LocalAuthorityCode.IsProvided() && IsGeographicFocus(ProjectGeographicFocus.SpecificLocalAuthority))
             .Permit(Trigger.Back, ProjectWorkflowState.IdentifiedSite);
 
         Machine.Configure(ProjectWorkflowState.Region)
@@ -105,18 +105,10 @@ public class ProjectWorkflow : EncodedStateRouting<ProjectWorkflowState>
             .Permit(Trigger.Back, ProjectWorkflowState.GeographicFocus);
 
         Machine.Configure(ProjectWorkflowState.LocalAuthoritySearch)
-            .Permit(Trigger.Continue, ProjectWorkflowState.LocalAuthorityResult)
             .Permit(Trigger.Back, ProjectWorkflowState.GeographicFocus);
 
-        Machine.Configure(ProjectWorkflowState.LocalAuthorityResult)
-            .Permit(Trigger.Continue, ProjectWorkflowState.LocalAuthorityConfirm)
-            .Permit(Trigger.Back, ProjectWorkflowState.LocalAuthoritySearch);
-
         Machine.Configure(ProjectWorkflowState.LocalAuthorityConfirm)
-            .Permit(Trigger.Continue, ProjectWorkflowState.Progress)
-            .Permit(Trigger.Back, ProjectWorkflowState.LocalAuthorityResult);
-
-        Machine.Configure(ProjectWorkflowState.LocalAuthorityNotFound)
+            .Permit(Trigger.Continue, ProjectWorkflowState.HomesNumber)
             .Permit(Trigger.Back, ProjectWorkflowState.LocalAuthoritySearch);
 
         Machine.Configure(ProjectWorkflowState.HomesNumber)
@@ -126,7 +118,8 @@ public class ProjectWorkflow : EncodedStateRouting<ProjectWorkflowState>
                 ProjectWorkflowState.GeographicFocus,
                 () => IsGeographicFocus(ProjectGeographicFocus.National, ProjectGeographicFocus.Unknown))
             .PermitIf(Trigger.Back, ProjectWorkflowState.Region, () => IsGeographicFocus(ProjectGeographicFocus.Regional))
-            .PermitIf(Trigger.Back, ProjectWorkflowState.LocalAuthoritySearch, () => IsGeographicFocus(ProjectGeographicFocus.SpecificLocalAuthority));
+            .PermitIf(Trigger.Back, ProjectWorkflowState.LocalAuthoritySearch, () => _model.LocalAuthorityCode.IsNotProvided() && IsGeographicFocus(ProjectGeographicFocus.SpecificLocalAuthority))
+            .PermitIf(Trigger.Back, ProjectWorkflowState.LocalAuthorityConfirm, () => _model.LocalAuthorityCode.IsProvided() && IsGeographicFocus(ProjectGeographicFocus.SpecificLocalAuthority));
 
         Machine.Configure(ProjectWorkflowState.Progress)
             .Permit(Trigger.Continue, ProjectWorkflowState.RequiresFunding)
@@ -140,7 +133,7 @@ public class ProjectWorkflow : EncodedStateRouting<ProjectWorkflowState>
 
         Machine.Configure(ProjectWorkflowState.FundingAmount)
             .Permit(Trigger.Continue, ProjectWorkflowState.Profit)
-            .Permit(Trigger.Back, ProjectWorkflowState.Progress);
+            .Permit(Trigger.Back, ProjectWorkflowState.RequiresFunding);
 
         Machine.Configure(ProjectWorkflowState.Profit)
             .Permit(Trigger.Continue, ProjectWorkflowState.ExpectedStart)

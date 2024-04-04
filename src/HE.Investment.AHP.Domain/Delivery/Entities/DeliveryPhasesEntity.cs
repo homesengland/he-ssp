@@ -94,7 +94,7 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
             OperationResult.ThrowValidationError(nameof(HomesToDeliver), "You must add at least 1 home type in home types section");
         }
 
-        if (homesToDeliver.All(x => x.ToDeliver == 0))
+        if (homesToDeliver.All(x => x.Value == 0))
         {
             OperationResult.ThrowValidationError(nameof(HomesToDeliver), "You must add at least 1 home to a home type for this delivery phase");
         }
@@ -234,7 +234,7 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
     {
         return _deliveryPhases.SelectMany(x => x.HomesToDeliver)
             .Where(x => x.HomeTypeId == homeTypeId)
-            .Select(x => x.ToDeliver)
+            .Select(x => x.Value)
             .Sum();
     }
 }

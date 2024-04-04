@@ -43,13 +43,14 @@
     <AdditionalFiles Include="Views\UserOrganisation\ChangeOrganisationDetails.cshtml" />
     <AdditionalFiles Include="Views\UserOrganisation\OrganisationDetails.cshtml" />
     <AdditionalFiles Include="Views\UserOrganisation\UserOrganisation.cshtml" />
-    <AdditionalFiles Include="Views\UserOrganisation\_ApplicationsCard.cshtml" />
-    <AdditionalFiles Include="Views\UserOrganisation\_ProgrammesToApply.cshtml" />
+    <AdditionalFiles Include="Views\UserOrganisation\_ListCard.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Views\Shared\Components\JoinRequestsTable\JoinRequestsTable.cshtml" />
     <EmbeddedResource Include="Views\Shared\Components\UsersTable\UsersTable.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Components\ProjectStatusTagComponent\ProjectStatusTagComponent.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Components\SelectedOrganisationInformation\SelectedOrganisationInformation.cshtml" />
   </ItemGroup>
 
 </Project>

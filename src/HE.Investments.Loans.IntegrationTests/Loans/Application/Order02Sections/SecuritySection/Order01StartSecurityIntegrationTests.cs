@@ -18,7 +18,7 @@ public class Order01StartSecurityIntegrationTests : IntegrationTest
 {
     private readonly string _applicationLoanId;
 
-    public Order01StartSecurityIntegrationTests(IntegrationTestFixture<Program> fixture)
+    public Order01StartSecurityIntegrationTests(LoansIntegrationTestFixture fixture)
         : base(fixture)
     {
         _applicationLoanId = UserData.LoanApplicationIdInDraftState;

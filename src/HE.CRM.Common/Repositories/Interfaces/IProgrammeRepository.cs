@@ -10,5 +10,6 @@ namespace HE.CRM.Common.Repositories.Interfaces
     {
         invln_programme GetProgrammeById(string programmeId);
         List<invln_programme> GetProgrammes();
+        List<invln_programme> GetProgrammes(params string[] columns);
     }
 }

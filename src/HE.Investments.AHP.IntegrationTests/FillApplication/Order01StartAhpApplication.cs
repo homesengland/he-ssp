@@ -101,7 +101,7 @@ public class Order01StartAhpApplication : AhpIntegrationTest
         siteConfirmPage
             .UrlEndWith(SitePagesUrl.SiteConfirm(ApplicationData.SiteId))
             .HasTitle(SitePageTitles.SiteConfirmSelect)
-            .HasBackLink()
+            .HasBackLink(out _)
             .HasContinueButton(out var continueButton);
 
         // when
@@ -124,7 +124,7 @@ public class Order01StartAhpApplication : AhpIntegrationTest
         applicationNamePage
             .UrlEndWith(ApplicationPagesUrl.ApplicationName(ApplicationData.SiteId))
             .HasTitle(ApplicationPageTitles.ApplicationName)
-            .HasBackLink()
+            .HasBackLink(out _)
             .HasContinueButton(out var continueButton);
 
         // when

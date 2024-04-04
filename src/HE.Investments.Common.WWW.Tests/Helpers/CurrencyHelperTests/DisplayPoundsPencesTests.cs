@@ -20,7 +20,7 @@ public class DisplayPoundsPencesTests
     public void ShouldReturnNull_WhenValueIsNull()
     {
         // given & when
-        var result = CurrencyHelper.DisplayPoundsPences(null);
+        var result = ((decimal?)null).DisplayPoundsPences();
 
         // then
         result.Should().BeNull();

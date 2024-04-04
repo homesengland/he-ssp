@@ -1,0 +1,27 @@
+@using HE.Investments.Common.Extensions
+@model (string name, string street, string city, string postalCode, string companiesHouseNumber)
+
+<ul class="govuk-list">
+    <li>
+        <span class="govuk-body">
+            <strong>@Model.name</strong>
+        </span>
+        <br/>
+        @if (Model.street.IsProvided())
+        {
+            <span class="govuk-body">@Model.street</span>
+            <br/>
+        }
+        @if (Model.street.IsProvided())
+        {
+            <span class="govuk-body">@Model.city</span>
+            <br/>
+        }
+        @if (Model.street.IsProvided())
+        {
+            <span class="govuk-body">@Model.postalCode</span>
+            <br/>
+        }
+        <p class="govuk-body govuk-!-margin-bottom-6">Companies house number: @Model.companiesHouseNumber</p>
+    </li>
+</ul>

@@ -11,5 +11,5 @@ public record GetUserOrganisationWithProgrammesQueryResponse(
     OrganizationBasicInformation OrganisationBasicInformation,
     string? UserFirstName,
     bool IsLimitedUser,
-    IList<Programme> ProgrammesToAccess,
-    IList<ProgrammeType> ProgrammesTypesToApply);
+    IList<UserProject> Projects,
+    IList<Programme> ProgrammesToAccess);

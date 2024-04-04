@@ -18,6 +18,12 @@
                 @Model.title
             </gds-h2>
         }
+        else if (Model.titleType == InputTitleType.SmallInputFieldsetLegend)
+        {
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                @Model.title
+            </legend>
+        }
         else
         {
             <gds-p>@Model.title</gds-p>

@@ -7,5 +7,5 @@ public record CalculateOlderPersonsSharedOwnershipQuery(
         HomeTypeId HomeTypeId,
         string? MarketValue,
         string? InitialSale,
-        string? ProspectiveRent)
+        string? RentPerWeek)
     : CalculateQueryBase(ApplicationId, HomeTypeId);

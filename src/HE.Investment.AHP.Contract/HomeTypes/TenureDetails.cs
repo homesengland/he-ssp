@@ -1,4 +1,4 @@
-using HE.Investment.AHP.Contract.Common.Enums;
+using HE.Investments.Common.Contract.Enum;
 
 namespace HE.Investment.AHP.Contract.HomeTypes;
 
@@ -6,8 +6,8 @@ public record TenureDetails(
     string ApplicationName,
     string HomeTypeName,
     int? MarketValue,
-    decimal? MarketRent,
-    decimal? ProspectiveRent,
+    decimal? MarketRentPerWeek,
+    decimal? RentPerWeek,
     decimal? ProspectiveRentAsPercentageOfMarketRent,
     YesNoType TargetRentExceedMarketRent,
     YesNoType ExemptFromTheRightToSharedOwnership,

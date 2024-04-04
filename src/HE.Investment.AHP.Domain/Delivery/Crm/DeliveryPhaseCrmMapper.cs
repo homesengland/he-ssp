@@ -12,6 +12,7 @@ using HE.Investments.Common.Contract;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.Domain.ValueObjects;
 using HE.Investments.Common.Extensions;
+using DateValueObject = HE.Investment.AHP.Domain.Delivery.ValueObjects.DateValueObject;
 
 namespace HE.Investment.AHP.Domain.Delivery.Crm;
 
@@ -204,7 +205,7 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
 
     private static Dictionary<string, int?> MapHomesToDeliver(IList<HomesToDeliverInPhase> homesToDeliver)
     {
-        return homesToDeliver.ToDictionary<HomesToDeliverInPhase, string, int?>(x => x.HomeTypeId.Value, x => x.ToDeliver);
+        return homesToDeliver.ToDictionary<HomesToDeliverInPhase, string, int?>(x => x.HomeTypeId.Value, x => x.Value);
     }
 
     private static DateTime? MapMilestoneDate<TDate>(MilestoneDetails<TDate>? milestoneDetails)

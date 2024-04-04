@@ -28,6 +28,6 @@ public class SiteUseTests : AhpViewTestBase
             .HasHeader2("Is this application for a traveller pitch site?")
             .HasRadio(nameof(SiteUseDetails.IsForTravellerPitchSite), new[] { "True", "False" })
             .HasSaveAndContinueButton()
-            .HasBackLink(false);
+            .HasBackLink(out _, false);
     }
 }

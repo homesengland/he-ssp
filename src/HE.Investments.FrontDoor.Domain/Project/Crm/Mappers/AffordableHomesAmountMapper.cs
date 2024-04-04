@@ -1,18 +1,17 @@
 using HE.Investments.Common.CRM.Mappers;
-using HE.Investments.Common.CRM.Model;
-using HE.Investments.FrontDoor.Contract.Project.Enums;
+using HE.Investments.FrontDoor.Shared.Project.Contract;
+using HE.Investments.FrontDoor.Shared.Project.Crm;
 
 namespace HE.Investments.FrontDoor.Domain.Project.Crm.Mappers;
 
 public class AffordableHomesAmountMapper : EnumMapper<AffordableHomesAmount>
 {
-    protected override IDictionary<AffordableHomesAmount, int?> Mapping => new Dictionary<AffordableHomesAmount, int?>
+    private readonly IFrontDoorProjectEnumMapping _mapping;
+
+    public AffordableHomesAmountMapper(IFrontDoorProjectEnumMapping mapping)
     {
-        { AffordableHomesAmount.OnlyAffordableHomes, (int)invln_FrontDoorAmountofAffordableHomes.Iwanttodeliver100affordablehomes },
-        { AffordableHomesAmount.OpenMarkedAndAffordableHomes, (int)invln_FrontDoorAmountofAffordableHomes.Iwanttodeilveropenmarkethomesandalsoaffordablehomesabovetheamountrequiredbyplanning },
-        { AffordableHomesAmount.OpenMarkedAndRequiredAffordableHomes, (int)invln_FrontDoorAmountofAffordableHomes.Iwanttodeliveropenmarkethomesandtheamountofaffordablehomesrequiredbyplanning },
-        { AffordableHomesAmount.OnlyOpenMarketHomes, (int)invln_FrontDoorAmountofAffordableHomes.Ionlywanttodeliveropenmarkethomes },
-        { AffordableHomesAmount.Unknown, (int)invln_FrontDoorAmountofAffordableHomes.Idonotknow },
-        { AffordableHomesAmount.Undefined, null },
-    };
+        _mapping = mapping;
+    }
+
+    protected override IDictionary<AffordableHomesAmount, int?> Mapping => _mapping.AffordableHomes;
 }

@@ -1,4 +1,4 @@
-using HE.Investments.FrontDoor.Contract.Project;
+using HE.Investments.FrontDoor.Shared.Project;
 
 namespace HE.Investments.FrontDoor.Domain.Tests.Project.TestDataBuilders;
 

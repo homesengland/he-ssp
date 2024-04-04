@@ -20,8 +20,8 @@ public class RentToBuyTests : HomeTypesTestBase
         // then
         AssertView(document);
         AssertErrors(document, nameof(RentToBuyModel.MarketValue), false);
-        AssertErrors(document, nameof(RentToBuyModel.MarketRent), false);
-        AssertErrors(document, nameof(RentToBuyModel.ProspectiveRent), false);
+        AssertErrors(document, nameof(RentToBuyModel.MarketRentPerWeek), false);
+        AssertErrors(document, nameof(RentToBuyModel.RentPerWeek), false);
         AssertErrors(document, nameof(RentToBuyModel.TargetRentExceedMarketRent), false);
     }
 
@@ -31,8 +31,8 @@ public class RentToBuyTests : HomeTypesTestBase
         // given
         var modelState = new ModelStateDictionary();
         modelState.AddModelError(nameof(RentToBuyModel.MarketValue), ErrorMessage);
-        modelState.AddModelError(nameof(RentToBuyModel.MarketRent), ErrorMessage);
-        modelState.AddModelError(nameof(RentToBuyModel.ProspectiveRent), ErrorMessage);
+        modelState.AddModelError(nameof(RentToBuyModel.MarketRentPerWeek), ErrorMessage);
+        modelState.AddModelError(nameof(RentToBuyModel.RentPerWeek), ErrorMessage);
         modelState.AddModelError(nameof(RentToBuyModel.TargetRentExceedMarketRent), ErrorMessage);
 
         // when
@@ -41,8 +41,8 @@ public class RentToBuyTests : HomeTypesTestBase
         // then
         AssertView(document);
         AssertErrors(document, nameof(RentToBuyModel.MarketValue), true);
-        AssertErrors(document, nameof(RentToBuyModel.MarketRent), true);
-        AssertErrors(document, nameof(RentToBuyModel.ProspectiveRent), true);
+        AssertErrors(document, nameof(RentToBuyModel.MarketRentPerWeek), true);
+        AssertErrors(document, nameof(RentToBuyModel.RentPerWeek), true);
         AssertErrors(document, nameof(RentToBuyModel.TargetRentExceedMarketRent), true);
     }
 
@@ -55,10 +55,10 @@ public class RentToBuyTests : HomeTypesTestBase
             .HasInput("MarketValue")
             .HasElementWithText("h2", "Enter the market rent per week")
             .HasElementWithText("span", "Enter the market rent in pounds and pence.")
-            .HasInput("MarketRent")
+            .HasInput("MarketRentPerWeek")
             .HasElementWithText("h2", "Enter the rent per week")
             .HasElementWithText("span", "Enter the rent in pounds and pence. This is inclusive of all charges.")
-            .HasInput("ProspectiveRent")
+            .HasInput("RentPerWeek")
             .HasElementWithText("h2", "Rent as percentage of market rent")
             .HasElementWithText("h2", "Would the target rent plus service charge for these homes exceed 80% of market rent?")
             .HasElementWithText("span", "Help with target rent")

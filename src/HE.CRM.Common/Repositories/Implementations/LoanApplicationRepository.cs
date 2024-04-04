@@ -31,6 +31,17 @@ namespace HE.CRM.Common.Repositories.Implementations
 
         public List<invln_Loanapplication> GetLoanApplicationsForGivenAccountAndContact(Guid accountId, string externalContactId, string loanApplicationId = null, string fieldsToRetrieve = null)
         {
+            logger.Trace($"GetLoanApplicationsForGivenAccountAndContact");
+            if (externalContactId == null && loanApplicationId == null)
+            {
+                using (DataverseContext ctx = new DataverseContext(service))
+                {
+                    return (from la in ctx.invln_LoanapplicationSet
+                            where la.invln_Account.Id == accountId &&
+                            la.StatusCode.Value != (int)invln_Loanapplication_StatusCode.Inactive
+                            select la).ToList();
+                }
+            }
 
             if (loanApplicationId == null)
             {
@@ -41,28 +52,27 @@ namespace HE.CRM.Common.Repositories.Implementations
                             where la.invln_Account.Id == accountId && cnt.invln_externalid == externalContactId &&
                             la.StatusCode.Value != (int)invln_Loanapplication_StatusCode.Inactive
                             select la).ToList();
-
                 }
             }
             else
             {
                 if (Guid.TryParse(loanApplicationId, out Guid loanApplicationGuid))
                 {
-                    var fetchXML = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
-	                                <entity name='invln_loanapplication'>"
-                                    + fieldsToRetrieve +
-                                    @"<filter>
-                                              <condition attribute=""statuscode"" operator=""ne"" value=""2"" />
-                                              <condition attribute=""invln_account"" operator=""eq"" value=""" + accountId + @""" />
-                                              <condition attribute=""invln_loanapplicationid"" operator=""eq"" value=""" + loanApplicationId + @""" />
-                                            </filter>
+                    var fetchXML = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+	                                    <entity name='invln_loanapplication'>
+                                        {fieldsToRetrieve}
+                                        <filter>
+                                            <condition attribute=""statuscode"" operator=""ne"" value=""2"" />
+                                            <condition attribute=""invln_account"" operator=""eq"" value=""{accountId}"" />
+                                            <condition attribute=""invln_loanapplicationid"" operator=""eq"" value=""{loanApplicationId}"" />
+                                        </filter>
                                             <link-entity name=""contact"" from=""contactid"" to=""invln_contact"">
-                                              <filter>
-                                                <condition attribute=""invln_externalid"" operator=""eq"" value=""" + externalContactId + @""" />
-                                              </filter>
+                                                <filter>
+                                                    <condition attribute=""invln_externalid"" operator=""eq"" value=""{externalContactId}"" />
+                                                </filter>
                                             </link-entity>
-                                          </entity>
-                                        </fetch>";
+                                        </entity>
+                                    </fetch>";
                     EntityCollection result = service.RetrieveMultiple(new FetchExpression(fetchXML));
                     return result.Entities.Select(x => x.ToEntity<invln_Loanapplication>()).ToList();
                 }
@@ -78,7 +88,8 @@ namespace HE.CRM.Common.Repositories.Implementations
             using (var ctx = new OrganizationServiceContext(service))
             {
                 return ctx.CreateQuery<invln_Loanapplication>()
-                    .Where(x => x.invln_Account.Id == accountId && x.StatusCode.Value != (int)invln_Loanapplication_StatusCode.Inactive && x.StateCode.Value != (int)invln_LoanapplicationState.Inactive).ToList();
+                    .Where(x => x.invln_Account.Id == accountId &&
+                    x.StatusCode.Value != (int)invln_Loanapplication_StatusCode.Inactive && x.StateCode.Value != (int)invln_LoanapplicationState.Inactive).ToList();
             }
         }
 
@@ -91,7 +102,7 @@ namespace HE.CRM.Common.Repositories.Implementations
             }
         }
 
-        #endregion
+        #endregion Constructors
 
         #region Interface Implementation
 
@@ -131,6 +142,6 @@ namespace HE.CRM.Common.Repositories.Implementations
             }
         }
 
-        #endregion
+        #endregion Interface Implementation
     }
 }

@@ -98,6 +98,7 @@
     <Compile Include="Handlers\AHPApplication\ChangeExternalStatusOnInternalStatusChangeHandler.cs" />
     <Compile Include="Handlers\AHPApplication\CheckIfApplicationWithNewNameExistsHandler.cs" />
     <Compile Include="Handlers\AHPApplication\CreateDocumentLocationOnCreateHandler.cs" />
+    <Compile Include="Handlers\AHPApplication\UpdateLocalAuthorityWhenSiteIsChanged.cs" />
     <Compile Include="Handlers\AHPApplication\RecalculateDeliveryphaseHandler.cs" />
     <Compile Include="Handlers\AhpStatusChange\SendNotificationOnCreateHandler.cs" />
     <Compile Include="Handlers\ContactWebrole\SendNotificationOnAdminRoleGrantedPlugin.cs" />
@@ -120,7 +121,6 @@
     <Compile Include="Handlers\CustomApi\LocalAuthority\GetMultipleLocalAuthoritiesHandler.cs" />
     <Compile Include="Handlers\CustomApi\SendReminderEmailForFinaliseDraftApplicationHandler.cs" />
     <Compile Include="Handlers\CustomApi\SendReminderEmailForRefferedBackToApplicantHandler.cs" />
-    <Compile Include="Handlers\CustomApi\SendRequestToAssignContactToExistingOrganisationHandler.cs" />
     <Compile Include="Handlers\CustomApi\SentInviteContactToJoinOrganisationHandler.cs" />
     <Compile Include="Handlers\CustomApi\SetApplicationHandler.cs" />
     <Compile Include="Handlers\CustomApi\SetDeliveryPhaseHandler.cs" />
@@ -133,6 +133,8 @@
     <Compile Include="Handlers\HomeType\CreateDocumentLocationOnCreateHandler.cs" />
     <Compile Include="Handlers\HomeType\SetHappiPrinciplesValueHandler.cs" />
     <Compile Include="Handlers\HomeType\SetWhichNdssStandardsHaveBeenMetValueHandler.cs" />
+    <Compile Include="Handlers\Programme\ProgrammeDuplicateDetectionHandler.cs" />
+    <Compile Include="Handlers\Site\UpdateLocalAuthorityOnSiteHandler.cs" />
     <Compile Include="HE.Base\Common\AssemblyTypesCache.cs" />
     <Compile Include="HE.Base\Common\Constants\EntityCommonFieldsNames.cs" />
     <Compile Include="HE.Base\Common\EqualityComparers\EntityIdComparer.cs" />
@@ -217,7 +219,6 @@
     <Compile Include="Plugins\CustomApi\GetSingleHomeTypePlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetTypeOfHomesListPlugin.cs" />
     <Compile Include="Plugins\CustomApi\SendReminderEmailForRefferedBackToApplicantPlugin.cs" />
-    <Compile Include="Plugins\CustomApi\SendRequestToAssignContactToExistingOrganisationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\SentInviteContactToJoinOrganisationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\SetApplicationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\SetDeliveryPhasePlugin.cs" />
@@ -230,6 +231,8 @@
     <Compile Include="Plugins\HomeType\CreateDocumentLocationOnCreatePlugin.cs" />
     <Compile Include="Plugins\HomeType\SetHappiPrinciplesValuePlugin.cs" />
     <Compile Include="Plugins\HomeType\SetWhichNdssStandardsHaveBeenMetValuePlugin.cs" />
+    <Compile Include="Plugins\Programme\PreValidation.cs" />
+    <Compile Include="Plugins\Site\SitePreUpdate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AhpStatusChange\AhpStatusChangeService.cs" />
     <Compile Include="Services\AhpStatusChange\IAhpStatusChangeService.cs" />

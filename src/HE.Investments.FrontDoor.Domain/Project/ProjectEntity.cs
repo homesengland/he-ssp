@@ -1,12 +1,20 @@
+extern alias Org;
+
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Errors;
 using HE.Investments.Common.Extensions;
-using HE.Investments.FrontDoor.Contract.Project;
+using HE.Investments.Common.Messages;
+using HE.Investments.Common.Utils;
 using HE.Investments.FrontDoor.Contract.Project.Events;
 using HE.Investments.FrontDoor.Domain.Project.Repository;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
+using HE.Investments.FrontDoor.Shared.Project;
+using HE.Investments.FrontDoor.Shared.Project.Contract;
+using AffordableHomesAmountType = HE.Investments.FrontDoor.Shared.Project.Contract.AffordableHomesAmount;
+using ProjectGeographicFocus = HE.Investments.FrontDoor.Domain.Project.ValueObjects.ProjectGeographicFocus;
+using ProjectLocalAuthority = Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
 
 namespace HE.Investments.FrontDoor.Domain.Project;
 
@@ -19,27 +27,37 @@ public class ProjectEntity : DomainEntity
         ProjectName name,
         bool? isEnglandHousingDelivery = null,
         SupportActivities? supportActivityTypes = null,
-        ProjectInfrastructureTypes? infrastructureTypes = null,
+        ProjectInfrastructure? infrastructureTypes = null,
         ProjectAffordableHomesAmount? affordableHomesAmount = null,
         OrganisationHomesBuilt? organisationHomesBuilt = null,
         IsSiteIdentified? isSiteIdentified = null,
         Regions? regions = null,
         HomesNumber? homesNumber = null,
         ProjectGeographicFocus? geographicFocus = null,
-        IsFundingRequired? isFundingRequired = null)
+        IsSupportRequired? isSupportRequired = null,
+        IsFundingRequired? isFundingRequired = null,
+        RequiredFunding? requiredFunding = null,
+        IsProfit? isProfit = null,
+        ExpectedStartDate? expectedStartDate = null,
+        ProjectLocalAuthority? localAuthority = null)
     {
         Id = id;
         Name = name;
         IsEnglandHousingDelivery = isEnglandHousingDelivery ?? true;
         SupportActivities = supportActivityTypes ?? SupportActivities.Empty();
-        InfrastructureTypes = infrastructureTypes;
+        Infrastructure = infrastructureTypes ?? ProjectInfrastructure.Empty();
         AffordableHomesAmount = affordableHomesAmount ?? ProjectAffordableHomesAmount.Empty();
         OrganisationHomesBuilt = organisationHomesBuilt;
         IsSiteIdentified = isSiteIdentified;
         Regions = regions ?? Regions.Empty();
         HomesNumber = homesNumber;
         GeographicFocus = geographicFocus ?? ProjectGeographicFocus.Empty();
+        IsSupportRequired = isSupportRequired;
         IsFundingRequired = isFundingRequired;
+        RequiredFunding = requiredFunding ?? RequiredFunding.Empty;
+        IsProfit = isProfit ?? IsProfit.Empty;
+        ExpectedStartDate = expectedStartDate ?? ExpectedStartDate.Empty;
+        LocalAuthority = localAuthority;
     }
 
     public FrontDoorProjectId Id { get; private set; }
@@ -52,7 +70,7 @@ public class ProjectEntity : DomainEntity
 
     public ProjectAffordableHomesAmount AffordableHomesAmount { get; private set; }
 
-    public ProjectInfrastructureTypes? InfrastructureTypes { get; private set; }
+    public ProjectInfrastructure Infrastructure { get; private set; }
 
     public OrganisationHomesBuilt? OrganisationHomesBuilt { get; private set; }
 
@@ -66,6 +84,18 @@ public class ProjectEntity : DomainEntity
 
     public IsFundingRequired? IsFundingRequired { get; private set; }
 
+    public IsSupportRequired? IsSupportRequired { get; private set; }
+
+    public RequiredFunding RequiredFunding { get; private set; }
+
+    public IsProfit IsProfit { get; private set; }
+
+    public ExpectedStartDate ExpectedStartDate { get; private set; }
+
+    public ProjectLocalAuthority? LocalAuthority { get; private set; }
+
+    public bool IsModified => _modificationTracker.IsModified || Id.IsNew;
+
     public static async Task<ProjectEntity> New(ProjectName projectName, IProjectNameExists projectNameExists, CancellationToken cancellationToken)
     {
         return new(FrontDoorProjectId.New(), await ValidateProjectNameUniqueness(projectName, projectNameExists, cancellationToken));
@@ -75,7 +105,7 @@ public class ProjectEntity : DomainEntity
     {
         if (isEnglandHousingDelivery.IsNotProvided())
         {
-            OperationResult.ThrowValidationError(nameof(isEnglandHousingDelivery), "Select yes if your project is supporting housing delivery in England");
+            OperationResult.ThrowValidationError("IsEnglandHousingDelivery", "Select yes if your project is supporting housing delivery in England");
         }
 
         return isEnglandHousingDelivery!.Value;
@@ -91,14 +121,14 @@ public class ProjectEntity : DomainEntity
         AffordableHomesAmount = _modificationTracker.Change(AffordableHomesAmount, affordableHomesAmount);
     }
 
-    public void ProvideInfrastructureTypes(ProjectInfrastructureTypes infrastructureTypes)
+    public void ProvideInfrastructureTypes(ProjectInfrastructure infrastructure)
     {
-        InfrastructureTypes = _modificationTracker.Change(InfrastructureTypes, infrastructureTypes);
+        Infrastructure = _modificationTracker.Change(Infrastructure, infrastructure);
     }
 
     public void ProvideGeographicFocus(ProjectGeographicFocus geographicFocus)
     {
-        GeographicFocus = _modificationTracker.Change(GeographicFocus, geographicFocus);
+        GeographicFocus = _modificationTracker.Change(GeographicFocus, geographicFocus, ResetGeographicFocusDependentQuestions);
     }
 
     public void SetId(FrontDoorProjectId newId)
@@ -108,7 +138,13 @@ public class ProjectEntity : DomainEntity
             throw new DomainException("Id cannot be modified", CommonErrorCodes.IdCannotBeModified);
         }
 
-        Id = newId;
+        Id = _modificationTracker.Change(Id, newId);
+    }
+
+    public void New(FrontDoorProjectId projectId)
+    {
+        SetId(projectId);
+        Publish(new FrontDoorProjectHasBeenCreatedEvent(projectId, Name.Value));
     }
 
     public async Task ProvideName(ProjectName projectName, IProjectNameExists projectNameExists, CancellationToken cancellationToken)
@@ -128,7 +164,7 @@ public class ProjectEntity : DomainEntity
 
     public void ProvideIsSiteIdentified(IsSiteIdentified isSiteIdentified)
     {
-        IsSiteIdentified = _modificationTracker.Change(IsSiteIdentified, isSiteIdentified);
+        IsSiteIdentified = _modificationTracker.Change(IsSiteIdentified, isSiteIdentified, null, IsSiteIdentifiedHasChanged);
     }
 
     public void ProvideOrganisationHomesBuilt(OrganisationHomesBuilt organisationHomesBuilt)
@@ -146,9 +182,61 @@ public class ProjectEntity : DomainEntity
         HomesNumber = _modificationTracker.Change(HomesNumber, homesNumber);
     }
 
+    public void ProvideIsSupportRequired(IsSupportRequired isSupportRequired)
+    {
+        IsSupportRequired = _modificationTracker.Change(IsSupportRequired, isSupportRequired);
+    }
+
     public void ProvideIsFundingRequired(IsFundingRequired isFundingRequired)
     {
-        IsFundingRequired = _modificationTracker.Change(IsFundingRequired, isFundingRequired);
+        IsFundingRequired = _modificationTracker.Change(IsFundingRequired, isFundingRequired, null, IsFundingRequiredHasChanged);
+    }
+
+    public void ProvideRequiredFunding(RequiredFunding requiredFunding)
+    {
+        RequiredFunding = _modificationTracker.Change(RequiredFunding, requiredFunding);
+    }
+
+    public void ProvideIsProfit(IsProfit isProfit)
+    {
+        IsProfit = _modificationTracker.Change(IsProfit, isProfit);
+    }
+
+    public void ProvideExpectedStartDate(ExpectedStartDate expectedStartDate)
+    {
+        ExpectedStartDate = _modificationTracker.Change(ExpectedStartDate, expectedStartDate);
+    }
+
+    public void ProvideLocalAuthority(ProjectLocalAuthority localAuthority)
+    {
+        LocalAuthority = _modificationTracker.Change(LocalAuthority, localAuthority);
+    }
+
+    public void CanBeCompleted()
+    {
+        if (!IsAnswered())
+        {
+            OperationResult.New()
+                .AddValidationError("IsSectionCompleted", ValidationErrorMessage.ProvideAllProjectAnswers)
+                .CheckErrors();
+        }
+    }
+
+    public bool IsProjectValidForLoanApplication()
+    {
+        return SupportActivities.Values.Count == 1
+               && SupportActivities.Values.Contains(SupportActivityType.DevelopingHomes)
+               && AffordableHomesAmount.AffordableHomesAmount is AffordableHomesAmountType.OnlyOpenMarketHomes
+                   or AffordableHomesAmountType.OpenMarkedAndRequiredAffordableHomes
+               && OrganisationHomesBuilt?.Value <= 2000
+               && IsSiteIdentified?.Value == true
+               && IsSupportRequired?.Value == true
+               && IsFundingRequired?.Value == true
+               && RequiredFunding.Value is RequiredFundingOption.Between250KAnd1Mln
+                   or RequiredFundingOption.Between1MlnAnd5Mln
+                   or RequiredFundingOption.Between5MlnAnd10Mln
+               && IsProfit.Value == true
+               && DateTimeUtil.IsDateWithinXYearsFromNow(ExpectedStartDate.Value?.ToDateTime(TimeOnly.MinValue), 2);
     }
 
     private static async Task<ProjectName> ValidateProjectNameUniqueness(
@@ -164,16 +252,96 @@ public class ProjectEntity : DomainEntity
         return projectName;
     }
 
+    private void IsFundingRequiredHasChanged(IsFundingRequired? isFundingRequired)
+    {
+        if (!isFundingRequired?.Value ?? false)
+        {
+            RequiredFunding = RequiredFunding.Empty;
+            IsProfit = IsProfit.Empty;
+        }
+    }
+
+    private void IsSiteIdentifiedHasChanged(IsSiteIdentified? isSiteIdentified)
+    {
+        if (isSiteIdentified?.Value ?? false)
+        {
+            ResetNonSiteQuestions();
+        }
+        else
+        {
+            Publish(new FrontDoorProjectSitesAreNotIdentifiedEvent(Id));
+        }
+    }
+
+    private void ResetNonSiteQuestions()
+    {
+        GeographicFocus = ProjectGeographicFocus.Empty();
+        HomesNumber = null;
+        ResetGeographicFocusDependentQuestions();
+    }
+
+    private void ResetGeographicFocusDependentQuestions()
+    {
+        LocalAuthority = null;
+        Regions = Regions.Empty();
+    }
+
     private void SupportActivityTypesHaveChanged(SupportActivities newSupportActivityTypes)
     {
         if (!newSupportActivityTypes.IsTenureRequired())
         {
             AffordableHomesAmount = ProjectAffordableHomesAmount.Empty();
+            OrganisationHomesBuilt = null;
         }
 
         if (!newSupportActivityTypes.IsInfrastructureRequired())
         {
-            InfrastructureTypes = null;
+            Infrastructure = ProjectInfrastructure.Empty();
+        }
+    }
+
+    private bool IsAnswered()
+    {
+        return IsEnglandHousingDelivery.IsProvided() &&
+               Name.IsProvided() &&
+               SupportActivities.IsAnswered() &&
+               IsSiteIdentified.IsProvided() &&
+               IsSupportRequired.IsProvided() &&
+               IsFundingRequired.IsProvided() &&
+               ExpectedStartDate.IsProvided() &&
+               BuildConditionalRouteCompletionPredicates().All(isCompleted => isCompleted());
+    }
+
+    private IEnumerable<Func<bool>> BuildConditionalRouteCompletionPredicates()
+    {
+        if (SupportActivities.Values.Count == 1 && SupportActivities.Values.Contains(SupportActivityType.DevelopingHomes))
+        {
+            yield return () => AffordableHomesAmount.IsAnswered() && OrganisationHomesBuilt.IsProvided();
+        }
+
+        if (SupportActivities.Values.Count == 1 && SupportActivities.Values.Contains(SupportActivityType.ProvidingInfrastructure))
+        {
+            yield return () => Infrastructure.IsAnswered();
+        }
+
+        if (IsSiteIdentified?.Value == false)
+        {
+            yield return () => HomesNumber.IsProvided() && GeographicFocus.IsAnswered();
+        }
+
+        if (GeographicFocus.GeographicFocus == Shared.Project.Contract.ProjectGeographicFocus.Regional)
+        {
+            yield return () => Regions.IsAnswered();
+        }
+
+        if (GeographicFocus.GeographicFocus == Shared.Project.Contract.ProjectGeographicFocus.SpecificLocalAuthority)
+        {
+            yield return () => LocalAuthority.IsProvided();
+        }
+
+        if (IsFundingRequired?.Value == true)
+        {
+            yield return () => RequiredFunding.IsAnswered() && IsProfit.IsProvided();
         }
     }
 }

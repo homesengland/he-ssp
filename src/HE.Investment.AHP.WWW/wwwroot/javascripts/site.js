@@ -285,8 +285,11 @@
     const error = inputFieldError(message);
 
     formGroup.classList.add('govuk-form-group--error');
-    if (inputControl.parentNode.childNodes.values().toArray().map(x => x.outerHTML).includes(error)) {
-      return;
+
+    for (const node in inputControl.parentNode.childNodes.values()) {
+      if (node.outerHTML === error) {
+        return;
+      }
     }
 
     inputControl.insertAdjacentHTML('beforebegin', error);
@@ -313,9 +316,14 @@
 
     const list = summaryValidationList.getElementsByTagName('ul')[0];
     const error = inputFiledErrorSummaryMessage(message);
-    if (!list.childNodes.values().toArray().map(x => x.outerHTML).includes(error)){
-      list.innerHTML += inputFiledErrorSummaryMessage(message);
+
+    for (const node in list.childNodes.values()) {
+      if (node.outerHTML === error) {
+        return;
+      }
     }
+
+    list.innerHTML += inputFiledErrorSummaryMessage(message);
   }
 
   const removeInputFieldErrorSummaryMessages = (summaryValidationList) => {
@@ -363,6 +371,19 @@
     if (fileInput !== null && fileInput !== undefined) {
       fileInput.addEventListener("change", fileInputChanged);
     }
+  });
+})();
+
+(() => {
+  const setUpBackLink = () => {
+    const backLink = document.getElementById("js-back-link");
+    if (backLink) {
+      backLink.onclick = () => window.history.back();
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    setUpBackLink();
   });
 })();
 

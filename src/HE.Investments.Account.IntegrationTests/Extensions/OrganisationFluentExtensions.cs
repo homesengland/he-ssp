@@ -1,7 +1,6 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
-using HE.Investments.Account.Contract.UserOrganisation;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.TestsUtils.Extensions;
 
@@ -21,26 +20,30 @@ public static class OrganisationFluentExtensions
         return htmlDocument;
     }
 
-    public static IHtmlDocument HasOrganisationJoinRequestConfirmation(this IHtmlDocument htmlDocument)
-    {
-        return htmlDocument.HasElementForTestId("user-organisation-limited-user", out _);
-    }
-
-    public static IHtmlDocument HasStartNewApplicationLink(this IHtmlDocument htmlDocument, ProgrammeType programmeType)
-    {
-        return htmlDocument.HasLinkWithTestId($"user-organisation-start-new-application-{programmeType.ToString().ToLowerInvariant()}", out _);
-    }
-
     public static IHtmlDocument HasActionLink(this IHtmlDocument htmlDocument, string href, out IHtmlAnchorElement actionLink)
     {
         var link = htmlDocument
             .GetElementsByTagName("a")
             .OfType<IHtmlAnchorElement>()
-            .SingleOrDefault(x => x.Href.EndsWith(href, StringComparison.CurrentCultureIgnoreCase));
+            .SingleOrDefault(x => x.Href.Split("?")[0].EndsWith(href, StringComparison.CurrentCultureIgnoreCase));
 
         link.Should().NotBeNull();
         link!.IsDisabled().Should().BeFalse();
         actionLink = link!;
+
+        return htmlDocument;
+    }
+
+    public static IHtmlDocument HasManageUserRow(this IHtmlDocument htmlDocument, string userEmail, out IHtmlTableRowElement rowElement)
+    {
+        htmlDocument.HasElementForTestId("users-table", out var table);
+        var usersTable = table.FindDescendant<IHtmlTableElement>();
+
+        usersTable.Should().NotBeNull();
+        var userRow = usersTable!.Rows.FirstOrDefault(x => x.Cells.OfType<IHtmlTableDataCellElement>().Any(y => y.TextContent.Contains(userEmail)));
+
+        userRow.Should().NotBeNull();
+        rowElement = userRow!;
 
         return htmlDocument;
     }

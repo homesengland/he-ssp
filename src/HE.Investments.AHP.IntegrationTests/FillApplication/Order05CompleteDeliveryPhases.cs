@@ -175,7 +175,7 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
         summaryOfDeliveryPhase
             .UrlEndWith(BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.SummaryOfDelivery, RehabDeliveryPhase))
             .HasTitle(DeliveryPageTitles.SummaryOfDelivery(RehabDeliveryPhase.Name.Value))
-            .HasBackLink()
+            .HasBackLink(out _)
             .HasContinueButton(out var continueButton);
 
         // when

@@ -1,14 +1,12 @@
 using System.Diagnostics.CodeAnalysis;
-using AngleSharp.Html.Dom;
 using FluentAssertions;
 using HE.Investments.Common.Extensions;
-using HE.Investments.IntegrationTestsFramework;
+using HE.Investments.IntegrationTestsFramework.Assertions;
 using HE.Investments.Loans.Contract.Application.Enums;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Extensions;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
-using HE.Investments.Loans.WWW;
 using HE.Investments.Loans.WWW.Views.LoanApplicationV2.Consts;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
@@ -20,9 +18,7 @@ namespace HE.Investments.Loans.IntegrationTests.Loans.Application.Order01StartAp
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
 public class Order01StartApplicationIntegrationTests : IntegrationTest
 {
-    private const string CurrentPageKey = nameof(CurrentPageKey);
-
-    public Order01StartApplicationIntegrationTests(IntegrationTestFixture<Program> fixture)
+    public Order01StartApplicationIntegrationTests(LoansIntegrationTestFixture fixture)
         : base(fixture)
     {
     }
@@ -47,141 +43,130 @@ public class Order01StartApplicationIntegrationTests : IntegrationTest
 
         // then
         dashboardPage.UrlEndWith(PagesUrls.DashboardPage);
-        SetSharedData(CurrentPageKey, dashboardPage);
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
     [Order(3)]
-    public async Task Order03_ShouldRedirectToAboutLoanPage_WhenStartNowButtonIsClicked()
+    public async Task Order03_ShouldRedirectToLoanApplyInformation_WhenContinueButtonIsClicked()
     {
         // given
-        var applyForLoanPage = await TestClient.NavigateTo(ApplicationPagesUrls.StartPage);
-        applyForLoanPage
-            .UrlEndWith(ApplicationPagesUrls.StartPage)
-            .HasTitle("Apply for a development loan");
+        await FrontDoorProjectCrmRepository.CreateProject(UserData.GenerateProjectPrefillData(), LoginData);
+
+        var currentPage = await TestClient.NavigateTo(ApplicationPagesUrls.AboutLoanPage(UserData.ProjectPrefillData.Id));
+        var continueButton = currentPage
+            .UrlEndWith(ApplicationPagesUrls.AboutLoanPage(UserData.ProjectPrefillData.Id))
+            .HasTitle(LoanApplicationPageTitles.AboutLoan)
+            .GetGdsSubmitButtonById("continue-button");
 
         // when
-        var startNowButton = applyForLoanPage.GetGdsSubmitButtonById("start-now-button");
-        var aboutLoanPage = await TestClient.SubmitButton(startNowButton);
+        var nextPage = await TestClient.SubmitButton(continueButton, ("InformationAgreement", "true"));
 
         // then
-        aboutLoanPage
-            .UrlEndWith(ApplicationPagesUrls.AboutLoanPage)
-            .HasTitle(LoanApplicationPageTitles.AboutLoan);
-
-        SetSharedData(CurrentPageKey, aboutLoanPage);
+        nextPage
+            .UrlEndWith(ApplicationPagesUrls.LoanApplyInformation(UserData.ProjectPrefillData.Id))
+            .HasTitle(LoanApplicationPageTitles.LoanApplyInformation);
+        SaveCurrentPage();
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
     [Order(4)]
-    public async Task Order04_ShouldRedirectToLoanApplyInformation_WhenContinueButtonIsClicked()
+    public async Task Order04_ShouldRedirectToCheckYouDetailsPageAndDisplayMyData_WhenContinueButtonIsClicked()
     {
         // given
-        var aboutLoanPage = GetSharedData<IHtmlDocument>(CurrentPageKey);
+        var currentPage = await GetCurrentPage(ApplicationPagesUrls.LoanApplyInformation(UserData.ProjectPrefillData.Id));
+        var continueButton = currentPage
+            .UrlEndWith(ApplicationPagesUrls.LoanApplyInformation(UserData.ProjectPrefillData.Id))
+            .HasTitle(LoanApplicationPageTitles.LoanApplyInformation)
+            .GetGdsSubmitButtonById("continue-button");
 
         // when
-        var continueButton = aboutLoanPage.GetGdsSubmitButtonById("continue-button");
-        var loanApplyInformationPage = await TestClient.SubmitButton(
-            continueButton,
-            new Dictionary<string, string> { { "InformationAgreement", "true" }, });
+        var nextPage = await TestClient.SubmitButton(continueButton);
 
         // then
-        loanApplyInformationPage
-            .UrlEndWith(ApplicationPagesUrls.LoanApplyInformation)
-            .HasTitle(LoanApplicationPageTitles.LoanApplyInformation);
+        var summary = nextPage
+            .UrlEndWith(ApplicationPagesUrls.CheckYourDetails(UserData.ProjectPrefillData.Id))
+            .HasTitle("Check your details")
+            .GetSummaryListItems();
 
-        SetSharedData(CurrentPageKey, loanApplyInformationPage);
+        summary.Should().ContainKey(CheckYourDetailsFields.RegisteredCompanyName).WhoseValue.Value.Should().NotBeNullOrWhiteSpace();
+        summary.Should().ContainKey(CheckYourDetailsFields.CompanyAddress).WhoseValue.Value.Should().NotBeNullOrWhiteSpace();
+        summary.Should().ContainKey(CheckYourDetailsFields.ContactName).WhoseValue.Value.Should().NotBeNullOrWhiteSpace();
+        summary.Should().ContainKey(CheckYourDetailsFields.EmailAddress).WithValue(LoginData.Email);
+        summary.Should().ContainKey(CheckYourDetailsFields.TelephoneNumber).WhoseValue.Value.Should().NotBeNullOrWhiteSpace();
+        SaveCurrentPage();
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
     [Order(5)]
-    public async Task Order05_ShouldRedirectToCheckYouDetailsPageAndDisplayMyData_WhenContinueButtonIsClicked()
+    public async Task Order05_ShouldRedirectToLoanPurpose_WhenContinueButtonIsClicked()
     {
         // given
-        var loanApplyInformationPage = GetSharedData<IHtmlDocument>(CurrentPageKey);
+        var currentPage = await GetCurrentPage(ApplicationPagesUrls.CheckYourDetails(UserData.ProjectPrefillData.Id));
+        var continueButton = currentPage
+            .UrlEndWith(ApplicationPagesUrls.CheckYourDetails(UserData.ProjectPrefillData.Id))
+            .HasTitle("Check your details")
+            .GetGdsSubmitButtonById("continue-button");
 
         // when
-        var continueButton = loanApplyInformationPage.GetGdsSubmitButtonById("continue-button");
-        var checkYourDetailsPage = await TestClient.SubmitButton(continueButton);
+        var nextPage = await TestClient.SubmitButton(continueButton);
 
         // then
-        var items = checkYourDetailsPage
-            .UrlEndWith(ApplicationPagesUrls.CheckYourDetails)
-            .HasTitle("Check your details")
-            .GetSummaryListItems();
-
-        items[CheckYourDetailsFields.RegisteredCompanyName].Value.Should().NotBeNullOrWhiteSpace();
-        items[CheckYourDetailsFields.CompanyRegistrationNumber].Value.Should().NotBeNullOrWhiteSpace();
-        items[CheckYourDetailsFields.CompanyAddress].Value.Should().NotBeNullOrWhiteSpace();
-        items[CheckYourDetailsFields.ContactName].Value.Should().NotBeNullOrWhiteSpace();
-        items[CheckYourDetailsFields.EmailAddress].Value.Should().Be(LoginData.Email);
-        items[CheckYourDetailsFields.TelephoneNumber].Value.Should().NotBeNullOrWhiteSpace();
-        SetSharedData(CurrentPageKey, checkYourDetailsPage);
+        nextPage
+            .UrlEndWith(ApplicationPagesUrls.LoanPurpose(UserData.ProjectPrefillData.Id))
+            .HasTitle("What do you require Homes England funding for?")
+            .HasRadio("FundingPurpose", value: FundingPurpose.BuildingNewHomes.ToString());
+        SaveCurrentPage();
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
     [Order(6)]
-    public async Task Order06_ShouldRedirectToLoanPurpose_WhenContinueButtonIsClicked()
+    public async Task Order06_ShouldRedirectToApplicationName_WhenContinueButtonIsClicked()
     {
         // given
-        var checkYourDetailsPage = GetSharedData<IHtmlDocument>(CurrentPageKey);
+        var currentPage = await GetCurrentPage(ApplicationPagesUrls.LoanPurpose(UserData.ProjectPrefillData.Id));
+        var continueButton = currentPage
+            .UrlEndWith(ApplicationPagesUrls.LoanPurpose(UserData.ProjectPrefillData.Id))
+            .HasTitle("What do you require Homes England funding for?")
+            .HasRadio("FundingPurpose", value: FundingPurpose.BuildingNewHomes.ToString())
+            .GetGdsSubmitButtonById("continue-button");
 
         // when
-        var continueButton = checkYourDetailsPage.GetGdsSubmitButtonById("continue-button");
-        var loanPurposePage = await TestClient.SubmitButton(continueButton);
+        var nextPage = await TestClient.SubmitButton(
+            continueButton,
+            ("FundingPurpose", FundingPurpose.BuildingNewHomes.ToString()));
 
         // then
-        loanPurposePage
-            .UrlEndWith(ApplicationPagesUrls.LoanPurpose)
-            .HasTitle("What do you require Homes England funding for?");
-
-        SetSharedData(CurrentPageKey, loanPurposePage);
+        nextPage
+            .UrlEndWith(ApplicationPagesUrls.ApplicationName(UserData.ProjectPrefillData.Id))
+            .HasTitle("Name your application")
+            .HasInput("LoanApplicationName", value: UserData.ProjectPrefillData.Name);
+        SaveCurrentPage();
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
     [Order(7)]
-    public async Task Order07_ShouldRedirectToApplicationName_WhenContinueButtonIsClicked()
+    public async Task Order07_ShouldCreateLoanApplicationWithDraftStatus_WhenContinueButtonIsClicked()
     {
         // given
-        var loanPurposePage = GetSharedData<IHtmlDocument>(CurrentPageKey);
+        var currentPage = await GetCurrentPage(ApplicationPagesUrls.ApplicationName(UserData.ProjectPrefillData.Id));
+        var continueButton = currentPage
+            .UrlEndWith(ApplicationPagesUrls.ApplicationName(UserData.ProjectPrefillData.Id))
+            .HasTitle("Name your application")
+            .GetGdsSubmitButtonById("continue-button");
+        var applicationName = UserData.GenerateApplicationName();
 
         // when
-        var continueButton = loanPurposePage.GetGdsSubmitButtonById("continue-button");
-        var applicationNamePage = await TestClient.SubmitButton(
-            continueButton,
-            new Dictionary<string, string> { { "FundingPurpose", FundingPurpose.BuildingNewHomes.ToString() }, });
+        var nextPage = await TestClient.SubmitButton(continueButton, ("LoanApplicationName", applicationName));
 
         // then
-        applicationNamePage
-            .UrlEndWith(ApplicationPagesUrls.ApplicationName)
-            .HasTitle("Name your application");
-
-        SetSharedData(CurrentPageKey, applicationNamePage);
-    }
-
-    [Fact(Skip = LoansConfig.SkipTest)]
-    [Order(8)]
-    public async Task Order08_ShouldCreateLoanApplicationWithDraftStatus_WhenContinueButtonIsClicked()
-    {
-        // given
-        var applicationNamePage = GetSharedData<IHtmlDocument>(CurrentPageKey);
-
-        // when
-        var continueButton = applicationNamePage.GetGdsSubmitButtonById("continue-button");
-        UserData.SetLoanApplicationName();
-        var taskListPage = await TestClient.SubmitButton(
-            continueButton,
-            new Dictionary<string, string> { { "LoanApplicationName", UserData.LoanApplicationName }, });
-
-        // then
-        taskListPage
+        nextPage
             .UrlEndWith(ApplicationPagesUrls.TaskListSuffix)
             .HasTitle(UserData.LoanApplicationName)
             .ExtractLastSavedDateFromTaskListPage(out var dateTime);
 
         dateTime.Should().BeCloseTo(DateTime.UtcNow.ConvertUtcToUkLocalTime(), TimeSpan.FromMinutes(2));
 
-        var applicationGuid = taskListPage.Url.GetApplicationGuidFromUrl();
+        var applicationGuid = nextPage.Url.GetApplicationGuidFromUrl();
         applicationGuid.Should().NotBeEmpty();
         UserData.SetApplicationLoanId(applicationGuid);
     }

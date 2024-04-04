@@ -163,7 +163,7 @@ public class Order01StartAhpSite : AhpIntegrationTest
         currentPage
             .UrlWithoutQueryEndsWith(SitePagesUrl.SiteLocalAuthoritySearch(SiteData.SiteId))
             .HasTitle(SitePageTitles.LocalAuthoritySearch)
-            .HasBackLink()
+            .HasBackLink(out _)
             .HasSubmitButton(out var searchButton, "Search");
 
         // when
@@ -202,7 +202,7 @@ public class Order01StartAhpSite : AhpIntegrationTest
         currentPage
             .UrlWithoutQueryEndsWith(SitePagesUrl.SiteLocalAuthorityConfirmWithoutQuery(SiteData.SiteId, SiteData.LocalAuthorityId))
             .HasTitle(SitePageTitles.LocalAuthorityConfirm)
-            .HasBackLink()
+            .HasBackLink(out _)
             .HasSubmitButton(out var confirmButton, "Continue");
 
         // when
@@ -233,7 +233,7 @@ public class Order01StartAhpSite : AhpIntegrationTest
     {
         await TestQuestionPage(
             SitePagesUrl.SitePlanningDetails(SiteData.SiteId),
-            "Enter when you expect to get detailed planning approval",
+            "Planning details",
             SitePagesUrl.SiteLandRegistry(SiteData.SiteId),
             ("ExpectedPlanningApprovalDate.Day", SiteData.ExpectedPlanningApprovalDate.Day.ToString(CultureInfo.InvariantCulture)),
             ("ExpectedPlanningApprovalDate.Month", SiteData.ExpectedPlanningApprovalDate.Month.ToString(CultureInfo.InvariantCulture)),
@@ -561,8 +561,8 @@ public class Order01StartAhpSite : AhpIntegrationTest
         // when
         var summary = checkAnswersPage.GetSummaryListItems();
         summary.Should().ContainKey("MMC").WithValue(SiteData.UsingMmc);
-        summary.Should().NotContainKey("Barriers");
-        summary.Should().NotContainKey("Impact on developments");
+        summary.Should().ContainKey("Barriers").WithValue(SiteData.InformationBarriers);
+        summary.Should().ContainKey("Impact on developments").WithValue(SiteData.InformationImpact);
         summary.Should().NotContainKey("MMC categories");
         summary.Should().NotContainKey("Sub-categories of 3D primary structural systems");
         summary.Should().NotContainKey("Sub-categories of 2D primary structural systems");

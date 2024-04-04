@@ -1,9 +1,9 @@
 using FluentAssertions;
 using HE.Investment.AHP.Contract.Application;
-using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investment.AHP.Domain.Tests.HomeTypes.TestDataBuilders;
+using HE.Investments.Common.Contract.Enum;
 
 namespace HE.Investment.AHP.Domain.Tests.HomeTypes.EntitiesTests.TenureDetailsSegmentEntityTests;
 
@@ -21,7 +21,7 @@ public class IsCompletedTests
         // given
         var tenureDetailsBuilder = new TenureDetailsTestDataBuilder()
             .WithMarketValue(new MarketValue(marketValue))
-            .WithProspectiveRent(new ProspectiveRent(prospectiveRent))
+            .WithProspectiveRent(new RentPerWeek(prospectiveRent))
             .WithExemptFromTheRightToSharedOwnership(exemptFromTheRightToSharedOwnership);
 
         if (exemptionJustification != null)
@@ -56,7 +56,7 @@ public class IsCompletedTests
 
         if (prospectiveRent != null)
         {
-            tenureDetailsBuilder = tenureDetailsBuilder.WithProspectiveRent(new ProspectiveRent(prospectiveRent.Value));
+            tenureDetailsBuilder = tenureDetailsBuilder.WithProspectiveRent(new RentPerWeek(prospectiveRent.Value));
         }
 
         if (exemptionJustification != null)

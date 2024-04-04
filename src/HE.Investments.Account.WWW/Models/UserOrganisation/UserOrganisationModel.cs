@@ -6,6 +6,7 @@ public record UserOrganisationModel(
     string OrganisationName,
     string? UserName,
     bool IsLimitedUser,
-    IList<ProgrammeToAccessModel> ProgrammesToToAccess,
-    IList<ProgrammeModel> ProgrammesToApply,
+    string? StartFrontDoorProjectUrl,
+    IList<UserProjectModel> Projects,
+    IList<ProgrammeToAccessModel> ProgrammesToAccess,
     IList<ActionModel> Actions);

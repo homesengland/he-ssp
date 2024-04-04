@@ -58,6 +58,8 @@ namespace DataverseModel
 			public const string CreatedOnBehalfByName = "createdonbehalfbyname";
 			public const string CreatedOnBehalfByYomiName = "createdonbehalfbyyominame";
 			public const string ImportSequenceNumber = "importsequencenumber";
+			public const string invln_frontdoorprojectpoc_LocalAuthorityId_invl = "invln_frontdoorprojectpoc_LocalAuthorityId_invl";
+			public const string invln_frontdoorprojectsitepoc_LocalAuthorityId_ = "invln_frontdoorprojectsitepoc_LocalAuthorityId_";
 			public const string invln_localauthorityId = "invln_localauthorityid";
 			public const string Id = "invln_localauthorityid";
 			public const string invln_localauthorityname = "invln_localauthorityname";
@@ -764,6 +766,46 @@ namespace DataverseModel
 			get
 			{
 				return this.GetAttributeValue<System.Nullable<long>>("versionnumber");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_frontdoorprojectpoc_LocalAuthorityId_invl
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_frontdoorprojectpoc_LocalAuthorityId_invl")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_FrontDoorProjectPOC> invln_frontdoorprojectpoc_LocalAuthorityId_invl
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_FrontDoorProjectPOC>("invln_frontdoorprojectpoc_LocalAuthorityId_invl", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_frontdoorprojectpoc_LocalAuthorityId_invl");
+				this.SetRelatedEntities<DataverseModel.invln_FrontDoorProjectPOC>("invln_frontdoorprojectpoc_LocalAuthorityId_invl", null, value);
+				this.OnPropertyChanged("invln_frontdoorprojectpoc_LocalAuthorityId_invl");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_frontdoorprojectsitepoc_LocalAuthorityId_
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_frontdoorprojectsitepoc_LocalAuthorityId_")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_FrontDoorProjectSitePOC> invln_frontdoorprojectsitepoc_LocalAuthorityId_
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_FrontDoorProjectSitePOC>("invln_frontdoorprojectsitepoc_LocalAuthorityId_", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_frontdoorprojectsitepoc_LocalAuthorityId_");
+				this.SetRelatedEntities<DataverseModel.invln_FrontDoorProjectSitePOC>("invln_frontdoorprojectsitepoc_LocalAuthorityId_", null, value);
+				this.OnPropertyChanged("invln_frontdoorprojectsitepoc_LocalAuthorityId_");
 			}
 		}
 		

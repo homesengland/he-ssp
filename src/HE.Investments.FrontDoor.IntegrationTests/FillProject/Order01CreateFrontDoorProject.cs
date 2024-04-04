@@ -1,16 +1,16 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
+using HE.Investments.Common.Extensions;
 using HE.Investments.FrontDoor.Contract.Project;
-using HE.Investments.FrontDoor.Contract.Project.Enums;
 using HE.Investments.FrontDoor.IntegrationTests.Framework;
 using HE.Investments.FrontDoor.IntegrationTests.Pages;
-using HE.Investments.FrontDoor.WWW;
 using HE.Investments.FrontDoor.WWW.Views.Project.Const;
-using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.TestsUtils.Assertions;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
+using Xunit.Abstractions;
 using Xunit.Extensions.Ordering;
 
 namespace HE.Investments.FrontDoor.IntegrationTests.FillProject;
@@ -19,8 +19,8 @@ namespace HE.Investments.FrontDoor.IntegrationTests.FillProject;
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
 public class Order01CreateFrontDoorProject : FrontDoorIntegrationTest
 {
-    public Order01CreateFrontDoorProject(IntegrationTestFixture<Program> fixture)
-        : base(fixture)
+    public Order01CreateFrontDoorProject(FrontDoorIntegrationTestFixture fixture, ITestOutputHelper output)
+        : base(fixture, output)
     {
     }
 
@@ -75,13 +75,13 @@ public class Order01CreateFrontDoorProject : FrontDoorIntegrationTest
         currentPage
             .UrlEndWith(ProjectPagesUrl.NewEnglandHousingDelivery)
             .HasTitle(ProjectPageTitles.EnglandHousingDelivery)
-            .HasBackLink()
+            .HasBackLink(out _)
             .HasContinueButton(out var continueButton);
 
         // when
         var nextPage = await TestClient.SubmitButton(
             continueButton,
-            (nameof(ProjectDetails.IsEnglandHousingDelivery), "True"));
+            (nameof(ProjectDetails.IsEnglandHousingDelivery), ProjectData.IsEnglandHousingDelivery.MapToTrueFalse()));
 
         // then
         ThenTestQuestionPage(nextPage, ProjectPagesUrl.NewName);
@@ -96,7 +96,7 @@ public class Order01CreateFrontDoorProject : FrontDoorIntegrationTest
         currentPage
             .UrlEndWith(ProjectPagesUrl.NewName)
             .HasTitle(ProjectPageTitles.Name)
-            .HasBackLink()
+            .HasBackLink(out _)
             .HasSaveAndContinueButton(out var continueButton);
 
         // when
@@ -130,6 +130,17 @@ public class Order01CreateFrontDoorProject : FrontDoorIntegrationTest
             ProjectPagesUrl.Tenure(ProjectData.Id),
             ProjectPageTitles.Tenure,
             ProjectPagesUrl.OrganisationHomesBuilt(ProjectData.Id),
-            (nameof(ProjectDetails.AffordableHomesAmount), AffordableHomesAmount.OpenMarkedAndAffordableHomes.ToString()));
+            (nameof(ProjectDetails.AffordableHomesAmount), ProjectData.AffordableHomeAmount.ToString()));
+    }
+
+    [Fact(Skip = FrontDoorConfig.SkipTest)]
+    [Order(7)]
+    public async Task Order07_ProvideOrganisationHomesBuilt()
+    {
+        await TestQuestionPage(
+            ProjectPagesUrl.OrganisationHomesBuilt(ProjectData.Id),
+            ProjectPageTitles.OrganisationHomesBuilt,
+            ProjectPagesUrl.IdentifiedSite(ProjectData.Id),
+            (nameof(ProjectDetails.OrganisationHomesBuilt), ProjectData.OrganisationHomesBuilt.ToString(CultureInfo.InvariantCulture)));
     }
 }

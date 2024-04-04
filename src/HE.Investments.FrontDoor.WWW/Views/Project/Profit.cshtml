@@ -10,8 +10,16 @@
     <vc:front-door-workflow-back-button current-page="@ProjectWorkflowState.Profit"></vc:front-door-workflow-back-button>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
-    <form asp-controller="Project" asp-action="Profit" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
-        TODO: @ProjectPageTitles.Profit
+    <vc:page-header caption="@ViewBag.ProjectName"/>
+
+    <form asp-controller="Project" asp-action="Profit" asp-route-workflow="@Context.Request.Query["workflow"]" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
+
+        <vc:radio-yes-no
+            title="@ProjectPageTitles.Profit"
+            title-type="InputTitleType.PageHeader"
+            hint="This will help us decide what type of support we can offer you."
+            field-name="@nameof(ProjectDetails.IsProfit)"
+            value="@Model.IsProfit"/>
 
         <vc:form-button/>
         <vc:return-to-account-link/>

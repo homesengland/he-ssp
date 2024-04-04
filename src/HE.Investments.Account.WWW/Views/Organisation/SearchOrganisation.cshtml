@@ -2,14 +2,22 @@
 @using HE.Investments.Account.WWW.Views.Organisation
 @using HE.Investments.Common.WWW.Utils
 @using HE.Investments.Common.WWW.Components.TextInput;
+@using HE.Investments.Account.Shared
+@inject IAccountUserContext AccountUserContext
 @model HE.Investments.Account.Contract.Organisation.Queries.OrganisationSearchModel;
 @{
     ViewData["Title"] = OrganisationPageTitles.SearchForYourOrganisation;
     var controllerName = new ControllerName(nameof(OrganisationController));
+    var isLinkedWithOrganisation = await AccountUserContext.IsLinkedWithOrganisation();
 }
 
 <gds-div-grid-column-two-thirds>
-    <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("GetProfileDetails", "User")"></gds-back-link>
+    @if (isLinkedWithOrganisation)
+    {
+        <gds-back-link href="@Url.Action("Index", "UserOrganisation")"></gds-back-link>
+    }
+
+    <div class="govuk-!-margin-bottom-8"></div>
 
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
@@ -18,30 +26,24 @@
     </gds-h1>
 
     <gds-p>
-        You can search for your organisation below.
+        We will search our Customer Relationship Management (CRM) system and Companies House.
     </gds-p>
 
     <gds-p>
-        If you've not yet established your organisation, or you'll set up a special purpose vehicle (SPV), you can select <gds-link href="@Url.Action("CreateOrganisation", "Organisation")">enter details manually</gds-link>.
+        If you are bidding for a grant from the Affordable Homes Programme, the organisation should have or will have a secure legal interest in the land during the development.
     </gds-p>
 
     <gds-p>
-        If you intend to bid for a grant from the Affordable Homes Programme, the organisation should have or will have a secure legal interest in the land during the development.
+        If you’ve not yet established your organisation, or you’ll set up a special purpose vehicle (SPV), you can <gds-link href="@Url.Action("CreateOrganisation", "Organisation")">enter details manually</gds-link>.
     </gds-p>
 
     <form asp-controller="@controllerName.WithoutPrefix()" asp-action="@nameof(OrganisationController.SearchOrganisation)" asp-method="post" novalidate>
-        <vc:text-input title="What is your organisation name?"
-                       title-type="InputTitleType.PageHeader"
-                       hint="Enter all or part of your organisation name. This will search on our Customer Relationship Management (CRM) system and Companies House."
+        <vc:text-input title="Organisation name"
+                       title-type="InputTitleType.InputTitle"
+                       hint="Enter all or part of your organisation name."
                        field-name="@nameof(Model.Name)"/>
 
-        <vc:form-button text="Search" />
+        <vc:form-button text="Search"/>
     </form>
-
-    <gds-p>
-        <gds-link href="@Url.Action("CreateOrganisation", "Organisation")">
-            Enter details manually.
-        </gds-link>
-    </gds-p>
 
 </gds-div-grid-column-two-thirds>

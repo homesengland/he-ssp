@@ -1,61 +1,31 @@
 @using HE.Investments.Account.WWW.Views.Organisation
-@using HE.Investments.Common.Extensions
-@using HE.Investments.Common.WWW.Models
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investments.Common.WWW.Components.RadioYesNo
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
+@using HE.Investments.Account.WWW.Views.Shared.Components.SelectedOrganisationInformation
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model HE.Investments.Common.WWW.Models.ConfirmModel<HE.Investments.Account.Contract.Organisation.Queries.OrganisationBasicDetails>
 @{
     ViewData["Title"] = OrganisationPageTitles.ConfirmYourSelection;
+    var organisationInformation = new DynamicComponentViewModel(
+        nameof(SelectedOrganisationInformation),
+        new { name = Model.ViewModel.Name, street = Model.ViewModel.Street, city = Model.ViewModel.City, postalCode = Model.ViewModel.City, companiesHouseNumber = Model.ViewModel.CompaniesHouseNumber });
 }
 
 <gds-div-grid-column-two-thirds>
-    <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("SearchOrganisation", "Organisation")"></gds-back-link>
+    <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("SearchOrganisationResult", "Organisation", new { searchPhrase = Model.SearchPhrase })"></gds-back-link>
 
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
-    <gds-h1 size="ControlSize.Xl" class="govuk-!-margin-bottom-6">
-        @OrganisationPageTitles.ConfirmYourSelection
-    </gds-h1>
+    <form asp-controller="Organisation" asp-action="ConfirmOrganisationPost" asp-route-organisationNumberOrId=@(Model.ViewModel.OrganisationId ?? Model.ViewModel.CompaniesHouseNumber) asp-route-searchphrase=@(Model.SearchPhrase) asp-method="post" novalidate>
 
-    <ul class="govuk-list">
-        <li>
-            <span class="govuk-body">
-                <strong>@Model.ViewModel.Name</strong>
-            </span>
-            <br/>
-            @if (Model.ViewModel.Street.IsProvided())
-            {
-                <span class="govuk-body">@Model.ViewModel.Street</span>
-                <br/>
-            }
-            @if (Model.ViewModel.Street.IsProvided())
-            {
-                <span class="govuk-body">@Model.ViewModel.City</span>
-                <br/>
-            }
-            @if (Model.ViewModel.Street.IsProvided())
-            {
-                <span class="govuk-body">@Model.ViewModel.PostalCode</span>
-                <br/>
-            }
-            <p class="govuk-body govuk-!-margin-bottom-6">Companies house number: @Model.ViewModel.CompaniesHouseNumber</p>
-        </li>
-    </ul>
-    <form asp-controller="Organisation" asp-action="ConfirmOrganisationPost" asp-route-organisationNumberOrId=@(Model.ViewModel.OrganisationId ?? Model.ViewModel.CompaniesHouseNumber) asp-method="post" novalidate>
-        <gds-div-form-group>
-            <gds-field-set>
-                <gds-legend class="govuk-fieldset__legend--m">
-                    Is this the correct organisation?
-                </gds-legend>
+        <vc:radio-yes-no
+            title="@OrganisationPageTitles.ConfirmYourSelection"
+            title-type="InputTitleType.PageHeader"
+            additional-content="@organisationInformation"
+            field-name="@nameof(Model.IsConfirmed)"
+            value="@Model.IsConfirmed"/>
 
-                <gds-div-form-group invalid="radioInvalid">
-                    <gds-radio
-                        govuk-formgroup-asp-for="Response"
-                        asp-selectlistitems="FormOptions.YesNo"
-                        asp-isexcludeheader>
-                    </gds-radio>
-                </gds-div-form-group>
-            </gds-field-set>
-        </gds-div-form-group>
-
-        <vc:form-button text="Continue"/>
+        <vc:form-button/>
     </form>
 </gds-div-grid-column-two-thirds>

@@ -1,6 +1,7 @@
 using AngleSharp.Html.Dom;
 using HE.Investments.IntegrationTestsFramework.Config;
 using HE.Investments.TestsUtils.Extensions;
+using Microsoft.FeatureManagement;
 
 namespace HE.Investments.IntegrationTestsFramework;
 
@@ -16,6 +17,8 @@ public class IntegrationTestBase<TProgram>
     }
 
     protected IntegrationTestClient TestClient { get; }
+
+    protected IFeatureManager FeatureManager => _fixture.FeatureManager;
 
     protected void SaveCurrentPage()
     {
@@ -93,7 +96,7 @@ public class IntegrationTestBase<TProgram>
         currentPage
             .UrlWithoutQueryEndsWith(startPageUrl)
             .HasTitle(expectedPageTitle)
-            .HasBackLink()
+            .HasBackLink(out _)
             .HasSaveAndContinueButton(out var continueButton);
 
         return continueButton;

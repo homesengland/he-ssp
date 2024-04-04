@@ -33,7 +33,8 @@ public class LoanApplicationTestBuilder : TestEntityBuilderBase<LoanApplicationE
             LoanApplicationSection.New(),
             LoanApplicationSection.New(),
             ProjectsSection.Empty(),
-            ReferenceNumberTestData.One));
+            ReferenceNumberTestData.One,
+            null));
 
     public static LoanApplicationTestBuilder NewSubmitted(UserAccount? userAccount = null) => new(
         new LoanApplicationEntity(
@@ -50,7 +51,26 @@ public class LoanApplicationTestBuilder : TestEntityBuilderBase<LoanApplicationE
             LoanApplicationSectionTestData.CompletedSection,
             LoanApplicationSectionTestData.CompletedSection,
             LoanApplicationSectionTestData.CompletedProjectsSection,
-            ReferenceNumberTestData.One));
+            ReferenceNumberTestData.One,
+            null));
+
+    public static LoanApplicationTestBuilder NewWithOtherApplicationStatus(ApplicationStatus applicationStatus, UserAccount? userAccount = null) => new(
+        new LoanApplicationEntity(
+            LoanApplicationIdTestData.LoanApplicationIdOne,
+            LoanApplicationNameTestData.MyFirstApplication,
+            userAccount ?? UserAccountTestData.UserAccountOne,
+            applicationStatus,
+            FundingPurpose.BuildingNewHomes,
+            DateTimeTestData.SeptemberDay20Year2023At0736,
+            DateTimeTestData.SeptemberDay20Year2023At0736.AddHours(1),
+            DateTimeTestData.SeptemberDay20Year2023At0736.AddHours(2),
+            "Anonymous",
+            LoanApplicationSectionTestData.CompletedSection,
+            LoanApplicationSectionTestData.CompletedSection,
+            LoanApplicationSectionTestData.CompletedSection,
+            LoanApplicationSectionTestData.CompletedProjectsSection,
+            ReferenceNumberTestData.One,
+            null));
 
     public LoanApplicationTestBuilder WithCreatedOn(DateTime createdOn)
     {

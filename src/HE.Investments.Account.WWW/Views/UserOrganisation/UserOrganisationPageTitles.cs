@@ -4,5 +4,9 @@ public static class UserOrganisationPageTitles
 {
     public const string ChangeOrganisationDetails = "Request to change organisation details";
 
+    public const string OrganisationsList = "Your organisations";
+
     public static string Details(string? organisationName) => $"Manage {organisationName ?? "organisation"} details";
+
+    public static string OrganisationDetails(string organisationName) => $"{organisationName.ToUpperInvariant()}'s Homes England account";
 }

@@ -12,6 +12,7 @@ namespace HE.CRM.Plugins.Handlers.CustomApi
         private string siteDetail => ExecutionData.GetInputParameter<string>(invln_updatesinglesitedetailsRequest.Fields.invln_sitedetail);
         private string fieldsToUpdate => ExecutionData.GetInputParameter<string>(invln_updatesinglesitedetailsRequest.Fields.invln_fieldstoupdate);
         private string loanApplicationId => ExecutionData.GetInputParameter<string>(invln_updatesinglesitedetailsRequest.Fields.invln_loanapplicationid);
+        private string useHeTablesFromPortal => ExecutionData.GetInputParameter<string>(invln_updatesinglesitedetailsRequest.Fields.invln_usehetables);
 
         #endregion
 
@@ -23,7 +24,9 @@ namespace HE.CRM.Plugins.Handlers.CustomApi
 
         public override void DoWork()
         {
-            CrmServicesFactory.Get<ISiteDetailsService>().UpdateSiteDetails(siteDetailsId, siteDetail, fieldsToUpdate, loanApplicationId);
+            this.TracingService.Trace("UpdateSingleSiteDetailsHandler");
+            var useHeTables = !string.IsNullOrEmpty(useHeTablesFromPortal);
+            CrmServicesFactory.Get<ISiteDetailsService>().UpdateSiteDetails(useHeTables, siteDetailsId, siteDetail, fieldsToUpdate, loanApplicationId);
         }
 
         #endregion

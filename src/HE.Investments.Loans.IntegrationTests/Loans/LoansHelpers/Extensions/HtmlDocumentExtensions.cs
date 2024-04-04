@@ -1,5 +1,6 @@
 using AngleSharp.Html.Dom;
 using FluentAssertions;
+using HE.Investments.TestsUtils.Extensions;
 using ElementExtensions = HE.Investments.TestsUtils.Assertions.ElementExtensions;
 
 namespace HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Extensions;
@@ -26,6 +27,20 @@ public static class HtmlDocumentExtensions
         buttonElement.Should().NotBeNull($"Element with Id {id} should be HtmlButtonElement");
 
         buttonElement!.ClassName.Should().Contain("govuk-button", $"Element with Id {id} should be HtmlButtonElement with govuk-button class name");
+        buttonElement.Form.Should().NotBeNull("Form is required to perform submit");
+
+        return buttonElement;
+    }
+
+    public static IHtmlButtonElement GetGdsSubmitButtonByTestId(this IHtmlDocument htmlDocument, string testId)
+    {
+        var elementById = htmlDocument.GetElementByTestId(testId);
+        elementById.Should().NotBeNull($"Element with test-id {testId} should exist");
+
+        var buttonElement = elementById as IHtmlButtonElement;
+        buttonElement.Should().NotBeNull($"Element with test-id {testId} should be HtmlButtonElement");
+
+        buttonElement!.ClassName.Should().Contain("govuk-button", $"Element with test-id {testId} should be HtmlButtonElement with govuk-button class name");
         buttonElement.Form.Should().NotBeNull("Form is required to perform submit");
 
         return buttonElement;

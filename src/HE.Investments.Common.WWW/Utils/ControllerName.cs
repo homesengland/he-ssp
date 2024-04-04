@@ -1,4 +1,3 @@
-using Dawn;
 using HE.Investments.Common.Domain;
 
 namespace HE.Investments.Common.WWW.Utils;
@@ -9,7 +8,12 @@ public class ControllerName : ValueObject
 
     public ControllerName(string controllerFullName)
     {
-        _name = Guard.Argument(controllerFullName, nameof(controllerFullName)).NotNull().NotEmpty();
+        if (string.IsNullOrWhiteSpace(controllerFullName))
+        {
+            throw new ArgumentNullException(nameof(controllerFullName));
+        }
+
+        _name = controllerFullName;
     }
 
     public string WithoutPrefix()

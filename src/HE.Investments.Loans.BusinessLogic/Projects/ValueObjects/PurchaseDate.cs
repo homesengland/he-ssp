@@ -1,37 +1,32 @@
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Validators;
+using HE.Investments.Common.Domain.ValueObjects;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
-using HE.Investments.Loans.BusinessLogic.Projects.Consts;
+using HE.Investments.Common.Utils;
 
 namespace HE.Investments.Loans.BusinessLogic.Projects.ValueObjects;
-public class PurchaseDate
+
+public class PurchaseDate : DateValueObject
 {
-    public PurchaseDate(ProjectDate date, DateTime now)
+    private const string FieldDescription = "you purchased this site";
+
+    public PurchaseDate(string? day, string? month, string? year, IDateTimeProvider dateTimeProvider)
+        : base(day, month, year, nameof(PurchaseDate), FieldDescription)
     {
-        if (date.Value.IsAfter(now))
+        if (Value.IsAfter(dateTimeProvider.Now.Date))
         {
-            OperationResult.ThrowValidationError(ProjectValidationFieldNames.PurchaseDay, ValidationErrorMessage.FuturePurchaseDate);
+            OperationResult.ThrowValidationError(nameof(PurchaseDate), ValidationErrorMessage.FuturePurchaseDate);
         }
-
-        Date = date;
     }
 
-    public ProjectDate Date { get; }
-
-    public static PurchaseDate FromString(string year, string month, string day, DateTime now)
+    private PurchaseDate(DateTime value)
+        : base(value)
     {
-        var operationResult = OperationResult.ResultOf(() => ProjectDate.FromString(year, month, day));
-
-        operationResult.OverrideError(GenericValidationError.NoDate, ProjectValidationFieldNames.PurchaseDate, ValidationErrorMessage.NoPurchaseDate);
-        operationResult.OverrideError(GenericValidationError.InvalidDate, ProjectValidationFieldNames.PurchaseDate, ValidationErrorMessage.IncorrectPurchaseDate);
-
-        operationResult.CheckErrors();
-
-        return new PurchaseDate(operationResult.ReturnedData, now);
     }
 
-    internal DateTime AsDateTime()
-    {
-        return Date.Value;
-    }
+    public static PurchaseDate FromCrm(DateTime value) => new(value);
+
+    public static PurchaseDate FromDateDetails(DateDetails? date, IDateTimeProvider dateTimeProvider) =>
+        new(date?.Day, date?.Month, date?.Year, dateTimeProvider);
 }

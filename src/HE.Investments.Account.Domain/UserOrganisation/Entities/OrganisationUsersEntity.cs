@@ -25,6 +25,10 @@ public class OrganisationUsersEntity : DomainEntity
 
     public OrganisationId OrganisationId { get; }
 
+    public IEnumerable<EmailAddress> ActiveUsers => _activeUserEmails;
+
+    public IEnumerable<EmailAddress> InvitedUsers => _invitedUserEmails;
+
     public IEnumerable<UserInvitationEntity> PendingInvitations => _pendingInvitations;
 
     public void InviteUser(UserInvitationEntity invitation)

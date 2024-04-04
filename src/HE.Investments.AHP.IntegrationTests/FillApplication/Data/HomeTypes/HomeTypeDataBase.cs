@@ -1,6 +1,6 @@
 using System.Globalization;
-using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
+using HE.Investments.Common.Contract.Enum;
 using HE.Investments.TestsUtils.Extensions;
 
 namespace HE.Investments.AHP.IntegrationTests.FillApplication.Data.HomeTypes;
@@ -40,9 +40,9 @@ public abstract class HomeTypeDataBase<THomeTypeData> : INestedItemData
 
     public int MarketValue { get; protected set; }
 
-    public decimal MarketRent { get; protected set; }
+    public decimal MarketRentPerWeek { get; protected set; }
 
-    public decimal ProspectiveRent { get; protected set; }
+    public decimal RentPerWeek { get; protected set; }
 
     public string ProspectiveRentPercentage { get; protected set; }
 
@@ -119,8 +119,8 @@ public abstract class HomeTypeDataBase<THomeTypeData> : INestedItemData
     public THomeTypeData GenerateAffordableRent()
     {
         MarketValue = 5000000;
-        MarketRent = 1000;
-        ProspectiveRent = 750;
+        MarketRentPerWeek = 1000;
+        RentPerWeek = 750;
         Exceeds80PercentOfMarketRent = YesNoType.Yes;
         ProspectiveRentPercentage = "75%";
         return HomeType;

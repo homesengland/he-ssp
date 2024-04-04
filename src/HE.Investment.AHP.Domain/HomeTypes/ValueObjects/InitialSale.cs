@@ -19,7 +19,7 @@ public class InitialSale : ValueObject
         if (value.IsNotProvided() && !isCalculation)
         {
             OperationResult.New()
-                .AddValidationError(nameof(InitialSale), ValidationErrorMessage.MissingRequiredField(DisplayName))
+                .AddValidationError(nameof(InitialSale), ValidationErrorMessage.MustProvideRequiredField(DisplayName))
                 .CheckErrors();
         }
 

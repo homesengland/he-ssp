@@ -1,5 +1,4 @@
 using HE.Investments.Account.Api.Contract.User;
-using HE.Investments.Account.Contract.UserOrganisation;
 using HE.Investments.Account.Contract.UserOrganisation.Queries;
 using HE.Investments.Account.Domain.Organisation.Repositories;
 using HE.Investments.Account.Domain.User.Repositories;
@@ -17,6 +16,7 @@ public class GetUserOrganisationWithProgrammesQueryHandler : IRequestHandler<Get
     private readonly IProgrammeApplicationsRepository _programmeApplicationsRepository;
     private readonly IOrganizationRepository _organizationRepository;
     private readonly IProfileRepository _profileRepository;
+    private readonly IProjectRepository _projectRepository;
     private readonly IFeatureManager _featureManager;
 
     public GetUserOrganisationWithProgrammesQueryHandler(
@@ -24,12 +24,14 @@ public class GetUserOrganisationWithProgrammesQueryHandler : IRequestHandler<Get
         IProfileRepository profileRepository,
         IAccountUserContext accountUserContext,
         IProgrammeApplicationsRepository programmeApplicationsRepository,
+        IProjectRepository projectRepository,
         IFeatureManager featureManager)
     {
         _accountUserContext = accountUserContext;
         _programmeApplicationsRepository = programmeApplicationsRepository;
         _featureManager = featureManager;
         _organizationRepository = organizationRepository;
+        _projectRepository = projectRepository;
         _profileRepository = profileRepository;
     }
 
@@ -38,6 +40,7 @@ public class GetUserOrganisationWithProgrammesQueryHandler : IRequestHandler<Get
         var account = await _accountUserContext.GetSelectedAccount();
         var organisationDetails = await _organizationRepository.GetBasicInformation(account.SelectedOrganisationId(), cancellationToken);
         var userDetails = await _profileRepository.GetProfileDetails(_accountUserContext.UserGlobalId);
+        var projects = await _projectRepository.GetUserProjects(account, cancellationToken);
 
         if (!await _featureManager.IsEnabledAsync(FeatureFlags.AhpProgram, account.SelectedOrganisationId().ToString()))
         {
@@ -45,15 +48,15 @@ public class GetUserOrganisationWithProgrammesQueryHandler : IRequestHandler<Get
                 organisationDetails,
                 userDetails.FirstName?.Value,
                 account.Roles.All(r => r == UserRole.Limited),
-                await _programmeApplicationsRepository.GetLoanProgrammes(account, cancellationToken),
-                new List<ProgrammeType> { ProgrammeType.Loans });
+                projects,
+                await _programmeApplicationsRepository.GetLoanProgrammes(account, cancellationToken));
         }
 
         return new GetUserOrganisationWithProgrammesQueryResponse(
             organisationDetails,
             userDetails.FirstName?.Value,
             account.Roles.All(r => r == UserRole.Limited),
-            await _programmeApplicationsRepository.GetAllProgrammes(account, cancellationToken),
-            new List<ProgrammeType> { ProgrammeType.Loans, ProgrammeType.Ahp });
+            projects,
+            await _programmeApplicationsRepository.GetAllProgrammes(account, cancellationToken));
     }
 }

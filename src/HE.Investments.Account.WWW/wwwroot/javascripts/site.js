@@ -23,3 +23,16 @@ function validateFileSize() {
 }
 
 document.getElementById("File").addEventListener("change", validateFileSize);
+
+(() => {
+  const setUpBackLink = () => {
+    const backLink = document.getElementById("js-back-link");
+    if (backLink) {
+      backLink.onclick = () => window.history.back();
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    setUpBackLink();
+  });
+})();

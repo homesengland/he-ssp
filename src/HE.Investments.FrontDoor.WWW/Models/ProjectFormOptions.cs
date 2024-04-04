@@ -1,6 +1,6 @@
 using HE.Investments.Common.WWW.Helpers;
 using HE.Investments.Common.WWW.Models;
-using HE.Investments.FrontDoor.Contract.Project.Enums;
+using HE.Investments.FrontDoor.Shared.Project.Contract;
 
 namespace HE.Investments.FrontDoor.WWW.Models;
 

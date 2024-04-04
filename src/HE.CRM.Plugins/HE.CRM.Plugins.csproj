@@ -147,10 +147,12 @@
     <Compile Include="Handlers\CustomApi\FrontDoor\GetSingleFrontDoorProjectSiteHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetSingleInvestmentLoanForAccountAndContactHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetSingleSiteDetailsHandler.cs" />
+    <Compile Include="Handlers\CustomApi\LocalAuthority\GetMultipleLocalAuthoritiesForModuleHandler.cs" />
     <Compile Include="Handlers\CustomApi\ReturnUserProfileHandler.cs" />
     <Compile Include="Handlers\CustomApi\SearchLocalAuthorityHandler.cs" />
     <Compile Include="Handlers\CustomApi\SendInvestmentsLoanDataToCrmHandler.cs" />
     <Compile Include="Handlers\CustomApi\FrontDoor\SetFrontDoorProjectHandler.cs" />
+    <Compile Include="Handlers\CustomApi\SendRequestToAssignContactToExistingOrganisationHandler.cs" />
     <Compile Include="Handlers\CustomApi\UpdateSingleLoanApplicationHandler.cs" />
     <Compile Include="Handlers\CustomApi\UpdateSingleSiteDetailsHandler.cs" />
     <Compile Include="Handlers\CustomApi\UpdateUserProfileHandler.cs" />
@@ -169,6 +171,7 @@
     <Compile Include="Handlers\LoanStatusChange\SendNotificationOnCreateHandler.cs" />
     <Compile Include="Handlers\ReviewsApprovals\IspStatusOnReviewApprovalStatusChangeHandler.cs" />
     <Compile Include="Handlers\SiteDetails\FulfillRegionOnLocalAuthorityChangeHandler.cs" />
+    <Compile Include="Handlers\SiteDetails\UpdateLoansApplicationAfterStatusChange.cs" />
     <Compile Include="Models\AzureAdToken.cs" />
     <Compile Include="Plugins\Accounts\SendEmailOnRatingChangePlugin.cs" />
     <Compile Include="Plugins\Contract\RejectAddingWhenRelatedLoanInApprovedStatusPlugin.cs" />
@@ -193,10 +196,12 @@
     <Compile Include="Plugins\CustomApi\FrontDoor\GetSingleFrontDoorProjectSitePlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetSingleInvestmentLoanForAccountAndContactPlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetSingleSiteDetailsPlugin.cs" />
+    <Compile Include="Plugins\CustomApi\LocalAuthority\GetMultipleLocalAuthoritiesForModulePlugin.cs" />
     <Compile Include="Plugins\CustomApi\ReturnUserProfilePlugin.cs" />
     <Compile Include="Plugins\CustomApi\SearchLocalAuthorityPlugin.cs" />
     <Compile Include="Plugins\CustomApi\SendInvestmentsLoanDataToCrmPlugin.cs" />
     <Compile Include="Plugins\CustomApi\FrontDoor\SetFrontDoorProjectPlugin.cs" />
+    <Compile Include="Plugins\CustomApi\SendRequestToAssignContactToExistingOrganisationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\UpdateSingleLoanApplicationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\UpdateSingleSiteDetailsPlugin.cs" />
     <Compile Include="Plugins\Accounts\OnCurrentCrrFieldUpdatePlugin.cs" />
@@ -215,7 +220,7 @@
     <Compile Include="Plugins\LoanApplications\ChangeExternalStatusOnInternalStatusChangePlugin.cs" />
     <Compile Include="Plugins\LoanApplications\SetFieldsWhenChangingStatusFromDraftPlugin.cs" />
     <Compile Include="Plugins\ReviewsApprovals\IspStatusOnReviewApprovalStatusChangePlugin.cs" />
-    <Compile Include="Plugins\SiteDetails\FulfillRegionOnLocalAuthorityChangePlugin.cs" />
+    <Compile Include="Plugins\SiteDetails\PreUpdate.cs" />
     <Compile Include="Services\Accounts\AccountService.cs" />
     <Compile Include="Services\Accounts\IAccountService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

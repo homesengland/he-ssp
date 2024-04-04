@@ -20,7 +20,7 @@ public class SocialRentTests : HomeTypesTestBase
         // then
         AssertView(document);
         AssertErrors(document, nameof(SocialRentModel.MarketValue), false);
-        AssertErrors(document, nameof(SocialRentModel.ProspectiveRent), false);
+        AssertErrors(document, nameof(SocialRentModel.RentPerWeek), false);
     }
 
     [Fact]
@@ -29,7 +29,7 @@ public class SocialRentTests : HomeTypesTestBase
         // given
         var modelState = new ModelStateDictionary();
         modelState.AddModelError(nameof(SocialRentModel.MarketValue), ErrorMessage);
-        modelState.AddModelError(nameof(SocialRentModel.ProspectiveRent), ErrorMessage);
+        modelState.AddModelError(nameof(SocialRentModel.RentPerWeek), ErrorMessage);
 
         // when
         var document = await RenderHomeTypePage(ViewPath, Model, modelStateDictionary: modelState);
@@ -37,7 +37,7 @@ public class SocialRentTests : HomeTypesTestBase
         // then
         AssertView(document);
         AssertErrors(document, nameof(SocialRentModel.MarketValue), true);
-        AssertErrors(document, nameof(SocialRentModel.ProspectiveRent), true);
+        AssertErrors(document, nameof(SocialRentModel.RentPerWeek), true);
     }
 
     private static void AssertView(IHtmlDocument document)
@@ -47,9 +47,9 @@ public class SocialRentTests : HomeTypesTestBase
             .HasElementWithText("h2", "Enter the market value of each home")
             .HasElementWithText("span", "Enter the market value in pounds only.")
             .HasInput("MarketValue")
-            .HasElementWithText("h2", "Enter the market rent per week")
-            .HasElementWithText("span", "Enter the rent in pounds and pence. This is inclusive of all charges.")
-            .HasInput("ProspectiveRent")
+            .HasElementWithText("h2", "Enter the rent per week")
+            .HasElementWithText("span", "Enter the rent in pounds and pence. This is exclusive of any service charges.")
+            .HasInput("RentPerWeek")
             .HasSaveAndContinueButton();
     }
 }

@@ -1,13 +1,11 @@
 using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
 using HE.Investments.Common.Contract.Constants;
+using HE.Investments.Common.CRM.Extensions;
 using HE.Investments.Common.Messages;
-using HE.Investments.IntegrationTestsFramework;
-using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Extensions;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
-using HE.Investments.Loans.WWW;
 using HE.Investments.Loans.WWW.Views.Project.Consts;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
@@ -23,7 +21,7 @@ public class Order11LocalAuthorityTests : IntegrationTest
 
     private readonly string _applicationLoanId;
 
-    public Order11LocalAuthorityTests(IntegrationTestFixture<Program> fixture)
+    public Order11LocalAuthorityTests(LoansIntegrationTestFixture fixture)
         : base(fixture)
     {
         _applicationLoanId = UserData.LoanApplicationIdInDraftState;
@@ -131,9 +129,10 @@ public class Order11LocalAuthorityTests : IntegrationTest
     {
         // given
         var localAuthorityResultPage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
+        var useHeTablesParameter = await FeatureManager.GetUseHeTablesParameter();
 
         // when
-        localAuthorityResultPage.HasAnchorElementById($"local-authority-link-{UserData.LocalAuthorityId}", out var liverpoolAuthorityLink);
+        localAuthorityResultPage.HasAnchorElementById($"local-authority-link-{UserData.LocalAuthorityId(useHeTablesParameter)}", out var liverpoolAuthorityLink);
         var localAuthorityConfirmPage = await TestClient.NavigateTo(liverpoolAuthorityLink);
 
         // then

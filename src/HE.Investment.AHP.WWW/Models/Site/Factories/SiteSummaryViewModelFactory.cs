@@ -1,17 +1,15 @@
-using System.Globalization;
-using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investment.AHP.WWW.Controllers;
-using HE.Investment.AHP.WWW.Models.Application;
-using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Components.SectionSummary;
 using HE.Investments.Common.WWW.Helpers;
+using HE.Investments.Common.WWW.Models.Summary;
 using HE.Investments.Common.WWW.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Controller = HE.Investment.AHP.WWW.Controllers.SiteController;
+using LocalAuthority = HE.Investment.AHP.Contract.Site.LocalAuthority;
 
 namespace HE.Investment.AHP.WWW.Models.Site.Factories;
 
@@ -50,7 +48,7 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
         {
             new(
                 "106 agreement",
-                ToYesNoAnswer(section?.GeneralAgreement),
+                SummaryAnswerHelper.ToYesNo(section?.GeneralAgreement),
                 createAction(nameof(Controller.Section106GeneralAgreement)),
                 IsEditable: isEditable),
         };
@@ -58,28 +56,28 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
         summary.AddWhen(
             new(
                 "Secure delivery through developer contributions",
-                ToYesNoAnswer(section?.AffordableHousing),
+                SummaryAnswerHelper.ToYesNo(section?.AffordableHousing),
                 createAction(nameof(Controller.Section106AffordableHousing)),
                 IsEditable: isEditable),
             section?.GeneralAgreement == true);
         summary.AddWhen(
             new(
                 "100% affordable housing",
-                ToYesNoAnswer(section?.OnlyAffordableHousing),
+                SummaryAnswerHelper.ToYesNo(section?.OnlyAffordableHousing),
                 createAction(nameof(Controller.Section106OnlyAffordableHousing)),
                 IsEditable: isEditable),
             section?.AffordableHousing == true);
         summary.AddWhen(
             new(
                 "Additional affordable housing",
-                ToYesNoAnswer(section?.AdditionalAffordableHousing),
+                SummaryAnswerHelper.ToYesNo(section?.AdditionalAffordableHousing),
                 createAction(nameof(Controller.Section106AdditionalAffordableHousing)),
                 IsEditable: isEditable),
             section?.OnlyAffordableHousing == false);
         summary.AddWhen(
             new(
                 "Capital funding guide eligibility",
-                ToYesNoAnswer(section?.CapitalFundingEligibility),
+                SummaryAnswerHelper.ToYesNo(section?.CapitalFundingEligibility),
                 createAction(nameof(Controller.Section106CapitalFundingEligibility)),
                 IsEditable: isEditable),
             section?.GeneralAgreement == true);
@@ -111,7 +109,7 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
         var detailsAction = createAction(nameof(Controller.PlanningDetails));
         var summary = new List<SectionSummaryItemModel>
         {
-            new("Planning status", ToEnumAnswer(planning.PlanningStatus), createAction(nameof(Controller.PlanningStatus)), IsEditable: isEditable),
+            new("Planning status", SummaryAnswerHelper.ToEnum(planning.PlanningStatus), createAction(nameof(Controller.PlanningStatus)), IsEditable: isEditable),
         };
 
         summary.AddWhen(
@@ -120,42 +118,42 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
         summary.AddWhen(
             new SectionSummaryItemModel(
                 "Date application for outline planning permission submitted",
-                ToDate(planning.PlanningSubmissionDate),
+                SummaryAnswerHelper.ToDate(planning.PlanningSubmissionDate),
                 detailsAction,
                 IsEditable: isEditable),
             planning.IsPlanningSubmissionDateActive);
         summary.AddWhen(
             new SectionSummaryItemModel(
                 "Date outline planning approval granted",
-                ToDate(planning.OutlinePlanningApprovalDate),
+                SummaryAnswerHelper.ToDate(planning.OutlinePlanningApprovalDate),
                 detailsAction,
                 IsEditable: isEditable),
             planning.IsOutlinePlanningApprovalDateActive);
         summary.AddWhen(
             new SectionSummaryItemModel(
                 "Date detailed planning approval granted",
-                ToDate(planning.DetailedPlanningApprovalDate),
+                SummaryAnswerHelper.ToDate(planning.DetailedPlanningApprovalDate),
                 detailsAction,
                 IsEditable: isEditable),
             planning.IsDetailedPlanningApprovalDateActive);
         summary.AddWhen(
             new SectionSummaryItemModel(
                 "Date application for detailed planning submitted",
-                ToDate(planning.ApplicationForDetailedPlanningSubmittedDate),
+                SummaryAnswerHelper.ToDate(planning.ApplicationForDetailedPlanningSubmittedDate),
                 detailsAction,
                 IsEditable: isEditable),
             planning.IsApplicationForDetailedPlanningSubmittedDateActive);
         summary.AddWhen(
             new SectionSummaryItemModel(
                 "Expected detailed planning approval date",
-                ToDate(planning.ExpectedPlanningApprovalDate),
+                SummaryAnswerHelper.ToDate(planning.ExpectedPlanningApprovalDate),
                 detailsAction,
                 IsEditable: isEditable),
             planning.IsExpectedPlanningApprovalDateActive);
         summary.AddWhen(
             new SectionSummaryItemModel(
                 "All the homes covered by planning application",
-                ToYesNoAnswer(planning.IsGrantFundingForAllHomesCoveredByApplication),
+                SummaryAnswerHelper.ToYesNo(planning.IsGrantFundingForAllHomesCoveredByApplication),
                 detailsAction,
                 IsEditable: isEditable),
             planning.IsGrantFundingForAllHomesCoveredByApplicationActive);
@@ -169,7 +167,7 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
         summary.AddWhen(
             new SectionSummaryItemModel(
                 "Registered title to the land",
-                ToYesNoAnswer(planning.IsLandRegistryTitleNumberRegistered),
+                SummaryAnswerHelper.ToYesNo(planning.IsLandRegistryTitleNumberRegistered),
                 detailsAction,
                 IsEditable: isEditable),
             planning.IsLandRegistryActive);
@@ -183,7 +181,7 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
         summary.AddWhen(
             new SectionSummaryItemModel(
                 "All the homes covered by title number",
-                ToYesNoAnswer(planning.IsGrantFundingForAllHomesCoveredByTitleNumber),
+                SummaryAnswerHelper.ToYesNo(planning.IsGrantFundingForAllHomesCoveredByTitleNumber),
                 createAction(nameof(Controller.LandRegistry)),
                 IsEditable: isEditable),
             planning is { IsLandRegistryActive: true, IsLandRegistryTitleNumberRegistered: true });
@@ -202,7 +200,7 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
                 IsEditable: isEditable),
             new(
                 "Building for a Healthy Life criteria",
-                ToEnumAnswer<BuildingForHealthyLifeType>(site.BuildingForHealthyLife),
+                SummaryAnswerHelper.ToEnum(site.BuildingForHealthyLife),
                 createAction(nameof(Controller.BuildingForHealthyLife)),
                 IsEditable: isEditable),
         };
@@ -241,12 +239,12 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
         {
             new(
                 "Land status",
-                ToEnumAnswer(site.LandAcquisitionStatus),
+                SummaryAnswerHelper.ToEnum(site.LandAcquisitionStatus),
                 createAction(nameof(Controller.LandAcquisitionStatus)),
                 IsEditable: isEditable),
             new(
                 "Tendering progress for main works contract",
-                ToEnumAnswer(site.TenderingStatusDetails.TenderingStatus),
+                SummaryAnswerHelper.ToEnum(site.TenderingStatusDetails.TenderingStatus),
                 createAction(nameof(Controller.TenderingStatus)),
                 IsEditable: isEditable),
         };
@@ -260,7 +258,7 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
                 IsEditable: isEditable));
             summary.Add(new SectionSummaryItemModel(
                 "Contractor SME",
-                ToYesNoAnswer(site.TenderingStatusDetails.IsSmeContractor),
+                SummaryAnswerHelper.ToYesNo(site.TenderingStatusDetails.IsSmeContractor),
                 createAction(nameof(Controller.ContractorDetails)),
                 IsEditable: isEditable));
         }
@@ -268,28 +266,28 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
         summary.AddWhen(
             new SectionSummaryItemModel(
                 "Intention to work with SME contractor",
-                ToYesNoAnswer(site.TenderingStatusDetails.IsIntentionToWorkWithSme),
+                SummaryAnswerHelper.ToYesNo(site.TenderingStatusDetails.IsIntentionToWorkWithSme),
                 createAction(nameof(Controller.IntentionToWorkWithSme)),
                 IsEditable: isEditable),
             site.TenderingStatusDetails.TenderingStatus is SiteTenderingStatus.TenderForWorksContract or SiteTenderingStatus.ContractingHasNotYetBegun);
         summary.Add(new SectionSummaryItemModel(
             "Strategic site",
-            ToYesNoAnswer(site.StrategicSiteDetails.IsStrategicSite, site.StrategicSiteDetails.IsStrategicSite == true ? site.StrategicSiteDetails.StrategicSiteName : null),
+            SummaryAnswerHelper.ToYesNo(site.StrategicSiteDetails.IsStrategicSite, site.StrategicSiteDetails.IsStrategicSite == true ? site.StrategicSiteDetails.StrategicSiteName : null),
             createAction(nameof(Controller.StrategicSite)),
             IsEditable: isEditable));
         summary.Add(new SectionSummaryItemModel(
             "Site type",
-            ToEnumAnswer(site.SiteTypeDetails.SiteType),
+            SummaryAnswerHelper.ToEnum(site.SiteTypeDetails.SiteType),
             createAction(nameof(Controller.SiteType)),
             IsEditable: isEditable));
         summary.Add(new SectionSummaryItemModel(
             "Green belt",
-            ToYesNoAnswer(site.SiteTypeDetails.IsOnGreenBelt),
+            SummaryAnswerHelper.ToYesNo(site.SiteTypeDetails.IsOnGreenBelt),
             createAction(nameof(Controller.SiteType)),
             IsEditable: isEditable));
         summary.Add(new SectionSummaryItemModel(
             "Regeneration site",
-            ToYesNoAnswer(site.SiteTypeDetails.IsRegenerationSite),
+            SummaryAnswerHelper.ToYesNo(site.SiteTypeDetails.IsRegenerationSite),
             createAction(nameof(Controller.SiteType)),
             IsEditable: isEditable));
 
@@ -302,12 +300,12 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
         {
             new(
                 "Street front infill",
-                ToYesNoAnswer(site.SiteUseDetails.IsPartOfStreetFrontInfill),
+                SummaryAnswerHelper.ToYesNo(site.SiteUseDetails.IsPartOfStreetFrontInfill),
                 createAction(nameof(Controller.SiteUse)),
                 IsEditable: isEditable),
             new(
                 "Traveller pitch site",
-                ToYesNoAnswer(site.SiteUseDetails.IsForTravellerPitchSite),
+                SummaryAnswerHelper.ToYesNo(site.SiteUseDetails.IsForTravellerPitchSite),
                 createAction(nameof(Controller.SiteUse)),
                 IsEditable: isEditable),
         };
@@ -315,18 +313,18 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
         summary.AddWhen(
             new(
                 "Type of traveller pitch site",
-                ToEnumAnswer<TravellerPitchSiteType>(site.SiteUseDetails.TravellerPitchSiteType),
+                SummaryAnswerHelper.ToEnum(site.SiteUseDetails.TravellerPitchSiteType),
                 createAction(nameof(Controller.TravellerPitchType)),
                 IsEditable: isEditable),
             site.SiteUseDetails.IsForTravellerPitchSite == true);
         summary.Add(new(
             "Rural settlement",
-            ToYesNoAnswer(site.RuralClassification.IsWithinRuralSettlement),
+            SummaryAnswerHelper.ToYesNo(site.RuralClassification.IsWithinRuralSettlement),
             createAction(nameof(Controller.RuralClassification)),
             IsEditable: isEditable));
         summary.Add(new(
             "Rural exception site",
-            ToYesNoAnswer(site.RuralClassification.IsRuralExceptionSite),
+            SummaryAnswerHelper.ToYesNo(site.RuralClassification.IsRuralExceptionSite),
             createAction(nameof(Controller.RuralClassification)),
             IsEditable: isEditable));
         summary.Add(new(
@@ -342,21 +340,26 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
     {
         var summary = new List<SectionSummaryItemModel>
         {
-            new("MMC", ToEnumAnswer(mmc.UsingModernMethodsOfConstruction), createAction(nameof(Controller.MmcUsing)), IsEditable: isEditable),
+            new("MMC", SummaryAnswerHelper.ToEnum(mmc.UsingModernMethodsOfConstruction), createAction(nameof(Controller.MmcUsing)), IsEditable: isEditable),
         };
 
-        if (mmc.UsingModernMethodsOfConstruction == SiteUsingModernMethodsOfConstruction.Yes)
-        {
-            summary.Add(new SectionSummaryItemModel(
+        summary.AddWhen(
+            new SectionSummaryItemModel(
                 "Barriers",
                 mmc.InformationBarriers.ToOneElementList(),
                 createAction(nameof(Controller.MmcInformation)),
-                IsEditable: isEditable));
-            summary.Add(new SectionSummaryItemModel(
+                IsEditable: isEditable),
+            mmc.UsingModernMethodsOfConstruction is SiteUsingModernMethodsOfConstruction.Yes or SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes);
+        summary.AddWhen(
+            new SectionSummaryItemModel(
                 "Impact on developments",
                 mmc.InformationImpact.ToOneElementList(),
                 createAction(nameof(Controller.MmcInformation)),
-                IsEditable: isEditable));
+                IsEditable: isEditable),
+            mmc.UsingModernMethodsOfConstruction is SiteUsingModernMethodsOfConstruction.Yes or SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes);
+
+        if (mmc.UsingModernMethodsOfConstruction == SiteUsingModernMethodsOfConstruction.Yes)
+        {
             summary.Add(new SectionSummaryItemModel(
                 "MMC categories",
                 mmc.ModernMethodsConstructionCategories?.Select(x => x.GetDescription()).ToList(),
@@ -406,25 +409,6 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
                 IsEditable: isEditable),
         };
     }
-
-    private static IList<string>? ToYesNoAnswer(bool? answer, string? additionalText = null)
-    {
-        if (answer.IsNotProvided())
-        {
-            return null;
-        }
-
-        var yesNoAnswer = (answer!.Value ? YesNoType.Yes : YesNoType.No).GetDescription();
-        return additionalText.IsProvided() ? $"{yesNoAnswer}, {additionalText}".ToOneElementList() : yesNoAnswer.ToOneElementList();
-    }
-
-    private static IList<string>? ToEnumAnswer<TEnum>(TEnum? enumValue)
-        where TEnum : struct, Enum
-    {
-        return enumValue == null || Convert.ToInt32(enumValue, CultureInfo.InvariantCulture) == 0 ? null : enumValue.Value.GetDescription().ToOneElementList();
-    }
-
-    private static IList<string>? ToDate(DateDetails? date) => DateHelper.DisplayAsUkFormatDate(date)?.ToOneElementList();
 
     private static string CreateSiteActionUrl(IUrlHelper urlHelper, SiteId siteId, string actionName, bool useWorkflowRedirection)
     {

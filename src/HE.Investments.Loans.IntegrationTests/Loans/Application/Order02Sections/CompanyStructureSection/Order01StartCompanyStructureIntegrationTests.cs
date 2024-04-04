@@ -16,7 +16,7 @@ namespace HE.Investments.Loans.IntegrationTests.Loans.Application.Order02Section
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
 public class Order01StartCompanyStructureIntegrationTests : IntegrationTest
 {
-    public Order01StartCompanyStructureIntegrationTests(IntegrationTestFixture<Program> fixture)
+    public Order01StartCompanyStructureIntegrationTests(LoansIntegrationTestFixture fixture)
         : base(fixture)
     {
     }

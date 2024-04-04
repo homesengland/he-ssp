@@ -22,7 +22,7 @@ public class Order04DirLoansSubIntegrationTests : IntegrationTest
 {
     private readonly string _applicationId;
 
-    public Order04DirLoansSubIntegrationTests(IntegrationTestFixture<Program> fixture)
+    public Order04DirLoansSubIntegrationTests(LoansIntegrationTestFixture fixture)
         : base(fixture)
     {
         _applicationId = UserData.LoanApplicationIdInDraftState;

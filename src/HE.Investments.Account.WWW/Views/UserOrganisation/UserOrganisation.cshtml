@@ -1,14 +1,23 @@
 @using HE.Investments.Account.WWW.Models.UserOrganisation
 @using HE.Investments.Account.WWW.Utils
 @using HE.Investments.Account.WWW.Views.Organisation
+@using HE.Investments.Account.WWW.Views.Shared.Components.ProjectStatusTagComponent
+@using HE.Investments.Common
+@using HE.Investments.Common.WWW.Components.ApplicationStatusTagComponent
+@using Microsoft.FeatureManagement
+@using System.Threading
+@inject IFeatureManager FeatureManager
 @model HE.Investments.Account.WWW.Models.UserOrganisation.UserOrganisationModel;
 @{
     ViewData["Title"] = OrganisationPageTitles.OrganisationDashboard(Model.OrganisationName);
-    ViewBag.Breadcrumbs = BreadcrumbsBuilder
-        .New()
-        .WithOrganisations()
-        .WithOrganisation(Model.OrganisationName)
-        .Build();
+    if (await FeatureManager.IsEnabledAsync(FeatureFlags.OrganisationsListImplemented, CancellationToken.None))
+    {
+        ViewBag.Breadcrumbs = BreadcrumbsBuilder
+            .New()
+            .WithOrganisations()
+            .WithOrganisation(Model.OrganisationName)
+            .Build();
+    }
 }
 
 <div class="govuk-grid-column-full">
@@ -38,32 +47,54 @@
 
     <div class="govuk-grid-column-full govuk-!-padding-0">
 
-        @if (!Model.ProgrammesToToAccess.Any() || Model.ProgrammesToToAccess.All(p => !p.Applications.Any()))
+        @if ((!Model.ProgrammesToAccess.Any() || Model.ProgrammesToAccess.All(p => !p.Applications.Any())) && !Model.Projects.Any())
         {
             <gds-p>
-                You have not applied for any funding. To apply, select a funding programme below.
+                You have not applied for any support. Select start a new project to apply for support.
             </gds-p>
         }
 
         <gds-div-grid-column-two-thirds class="govuk-!-padding-left-0 govuk-!-padding-right-6">
-            @if (Model.ProgrammesToToAccess.Any(p => p.Applications.Any()))
+            @if (Model.Projects.Any())
             {
-                <gds-h2 size="ControlSize.M">
-                    Programmes you can access in @Model.OrganisationName
-                </gds-h2>
+                @await Html.PartialAsync(
+                           "/Views/UserOrganisation/_ListCard.cshtml",
+                           new ListCardModel("New projects", Model.Projects.Select(
+                               x => new ListCardItemModel(
+                                   x.Name,
+                                   new DynamicComponentViewModel(nameof(ProjectStatusTagComponent), x.Status),
+                                   x.Url)).ToList()))
+            }
 
-                @foreach (var programmeToAccess in Model.ProgrammesToToAccess)
+            @if (Model.ProgrammesToAccess.Any(p => p.Applications.Any()))
+            {
+                @foreach (var programmeToAccess in Model.ProgrammesToAccess)
                 {
                     @await Html.PartialAsync(
-                               "/Views/UserOrganisation/_ApplicationsCard.cshtml",
-                               new UserApplicationsModel(
+                               "/Views/UserOrganisation/_ListCard.cshtml",
+                               new ListCardModel(
                                    programmeToAccess.Programme.Name,
-                                   programmeToAccess.Applications,
-                                   programmeToAccess.Programme.ViewAllApplicationsUrl))
+                                   programmeToAccess.Applications.Select(x =>
+                                       new ListCardItemModel(
+                                           x.Name,
+                                           new DynamicComponentViewModel(nameof(ApplicationStatusTagComponent), new { ApplicationStatus = x.Status }), x.Url)).ToList(),
+                                   Title: "Applications",
+                                   ViewAllUrl: programmeToAccess.Programme.ViewAllApplicationsUrl))
                 }
             }
 
-            @await Html.PartialAsync("/Views/UserOrganisation/_ProgrammesToApply.cshtml", Model.ProgrammesToApply)
+            @if (!string.IsNullOrEmpty(Model.StartFrontDoorProjectUrl))
+            {
+                <gds-h2>Apply for support</gds-h2>
+                <hr class="separator govuk-!-margin-top-6 govuk-!-margin-bottom-6"/>
+                <div>
+                    <a class="govuk-heading-m" href="@Model.StartFrontDoorProjectUrl" data-testId="start-new-project">Start a new project</a>
+                    <gds-p class="govuk-!-margin-top-4">
+                        Start a new project by answering a few questions to check if Homes England support is suitable for you, this will only take a few minutes.
+                    </gds-p>
+                </div>
+            }
+
         </gds-div-grid-column-two-thirds>
         <div class="govuk-grid-column-one-third">
             @await Html.PartialAsync("_ActionsPanel", Model.Actions)

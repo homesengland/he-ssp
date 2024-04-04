@@ -19,11 +19,31 @@ namespace HE.Investments.Common.CRM.Model
 		
 		public static class Fields
 		{
+			public const string invln_usehetables = "invln_usehetables";
 			public const string invln_sitedetails = "invln_sitedetails";
 			public const string invln_loanapplicationid = "invln_loanapplicationid";
 		}
 		
 		public const string ActionLogicalName = "invln_createsinglesitedetail";
+		
+		public string invln_usehetables
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_usehetables"))
+				{
+					return ((string)(this.Parameters["invln_usehetables"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_usehetables"] = value;
+			}
+		}
 		
 		public string invln_sitedetails
 		{

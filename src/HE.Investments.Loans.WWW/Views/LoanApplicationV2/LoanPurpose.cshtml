@@ -2,24 +2,18 @@
 @using HE.Investments.Common.WWW.Extensions
 @using HE.Investments.Loans.BusinessLogic.LoanApplication
 @using HE.Investments.Loans.WWW.Models
-@using Microsoft.AspNetCore.Mvc.TagHelpers
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Fieldset
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Legend
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Paragraphs
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Radios
 @model HE.Investments.Loans.WWW.Models.LoanPurposeModel;
-@inject ModelExpressionProvider modelProvider
+@inject ModelExpressionProvider ModelProvider
 @{
     var hints = new[] { "This can include the redevelopment of uninhabitable buildings, or associated infrastructure." };
 
-    var (radioInvalid, radioErrors) = @ViewData.ModelState.GetErrors(modelProvider.GetExpressionText((LoanPurposeModel x) => x.FundingPurpose));
+    var (radioInvalid, radioErrors) = ViewData.ModelState.GetErrors(ModelProvider.GetExpressionText((LoanPurposeModel x) => x.FundingPurpose));
+    var fdProjectId = Context.Request.Query["fdProjectId"];
 }
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="LoanApplicationV2" asp-action="LoanPurposePost"  asp-method="post" novalidate>
-        <gds-back-link href="@Url.Action("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.LoanPurpose})" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
+    <form asp-controller="LoanApplicationV2" asp-action="LoanPurposePost" asp-method="post" asp-route-fdProjectId="@fdProjectId" novalidate>
+        <gds-back-link href="@Url.Action("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.LoanPurpose, fdProjectId })" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
         <partial name="_ErrorSummaryPartial" model="null" />
         <gds-field-set>
                 <gds-legend size="ControlSize.L">

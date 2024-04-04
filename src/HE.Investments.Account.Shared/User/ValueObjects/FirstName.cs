@@ -1,11 +1,11 @@
-using HE.Investments.Common.Messages;
+using HE.Investments.Common.Domain.ValueObjects;
 
 namespace HE.Investments.Account.Shared.User.ValueObjects;
 
-public class FirstName : RequiredStringValueObject
+public class FirstName : ShortText
 {
     public FirstName(string? value)
-        : base(value, nameof(FirstName), "your first name", MaximumInputLength.ShortInput)
+        : base(value, "FirstName", "first name")
     {
     }
 }

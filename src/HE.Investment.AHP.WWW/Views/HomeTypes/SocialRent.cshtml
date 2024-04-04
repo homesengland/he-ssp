@@ -3,11 +3,13 @@
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investment.AHP.Contract.HomeTypes
+@using HE.Investment.AHP.WWW.Views.HomeTypes.Const
 @model HE.Investment.AHP.WWW.Models.HomeTypes.SocialRentModel;
 
 @{
     var applicationId = this.GetApplicationIdFromRoute();
     var workflow = Context.Request.Query["workflow"];
+    ViewData["Title"] = HomeTypesPageTitles.SocialRent;
 }
 
 <gds-div-grid-column-two-thirds>
@@ -16,7 +18,7 @@
         @Html.HiddenFor(m => Model.HomeTypeName)
         <vc:home-type-form-header current-page="@HomeTypesWorkflowState.SocialRent"
                                   caption="@Model.Header"
-                                  title="Social Rent details"/>
+                                  title="@HomeTypesPageTitles.SocialRent"/>
         <gds-field-set>
             <he-error-form-group asp-for="MarketValue">
                 <gds-legend>
@@ -27,26 +29,26 @@
                     </gds-span-hint>
                 <gds-input
                     class="govuk-input--width-5"
-                    asp-hiddenlabeltext="Enter the number of market value"
+                    asp-hiddenlabeltext="Enter the market value of each home"
                     govuk-formgroup-asp-for="MarketValue"
                     name="MarketValue"
                     value=@Model.MarketValue
                     asp-prefixtext="GdsInputPrefixText.Pounds"/>
             </he-error-form-group>
 
-            <he-error-form-group asp-for="ProspectiveRent">
+            <he-error-form-group asp-for="RentPerWeek">
                 <gds-legend>
-                    <gds-h2 class="govuk-!-margin-bottom-0">Enter the market rent per week</gds-h2>
+                    <gds-h2 class="govuk-!-margin-bottom-0">Enter the rent per week</gds-h2>
                 </gds-legend>
                     <gds-span-hint>
-                        Enter the rent in pounds and pence. This is inclusive of all charges.
+                        Enter the rent in pounds and pence. This is exclusive of any service charges.
                     </gds-span-hint>
                 <gds-input
                     class="govuk-input--width-4"
-                    asp-hiddenlabeltext="Enter the number of market rent per week"
-                    govuk-formgroup-asp-for="ProspectiveRent"
-                    name="ProspectiveRent"
-                    value=@Model.ProspectiveRent
+                    asp-hiddenlabeltext="Enter the rent per week"
+                    govuk-formgroup-asp-for="RentPerWeek"
+                    name="RentPerWeek"
+                    value=@Model.RentPerWeek
                     asp-prefixtext="GdsInputPrefixText.Pounds"
                     asp-suffixtext="GdsInputSuffixText.PerWeek"/>
             </he-error-form-group>

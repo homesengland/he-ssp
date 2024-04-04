@@ -247,7 +247,10 @@ public class IsAnsweredTests
             .WithSiteUseDetails(SiteUseDetailsBuilder.New().WithIsPartOfStreetFrontInfill(true).WithIsForTravellerPitchSite(false).Build())
             .WithRuralClassification(SiteRuralClassificationBuilder.New().WithIsRuralExceptionSite(true).WithIsWithinRuralSettlement(true).Build())
             .WithEnvironmentalImpact(new EnvironmentalImpact("impact"))
-            .WithModernMethodsOfConstruction(SiteModernMethodsOfConstructionBuilder.New().WithIsUsingMmc(SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes).Build())
+            .WithModernMethodsOfConstruction(SiteModernMethodsOfConstructionBuilder.New()
+                .WithIsUsingMmc(SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes)
+                .WithInformation("some barriers", "some impact")
+                .Build())
             .WithProcurements(SiteProcurementsBuilder.New().WithProcurements(SiteProcurement.PartneringSupplyChain).Build());
     }
 }

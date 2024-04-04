@@ -27,7 +27,7 @@ public class DetailsTests : AhpViewTestBase
             .HasHeader2("Applications on this site", false)
             .HasParagraph("View or manage existing applications for this site.", false)
             .HasLinkWithTestId("application-list", out _)
-            .HasBackLink(false);
+            .HasBackLink(out _, false);
     }
 
     [Fact]
@@ -56,6 +56,6 @@ public class DetailsTests : AhpViewTestBase
             .HasParagraph("View or manage existing applications for this site.")
             .HasLinkWithHref("/Application/TaskList?applicationId=321", out _)
             .HasLinkWithTestId("application-list", out _)
-            .HasBackLink(false);
+            .HasBackLink(out _, false);
     }
 }

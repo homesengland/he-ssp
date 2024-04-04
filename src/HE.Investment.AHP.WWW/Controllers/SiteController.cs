@@ -16,6 +16,7 @@ using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Constants;
+using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
@@ -26,6 +27,7 @@ using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Routing;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using LocalAuthority = HE.Investment.AHP.Contract.Site.LocalAuthority;
 
 namespace HE.Investment.AHP.WWW.Controllers;
 
@@ -134,7 +136,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
             return View(nameof(Name), model);
         }
 
-        return await Continue(new { siteId = result.ReturnedData.Value });
+        return await ContinueWithRedirect(new { siteId = result.ReturnedData.Value });
     }
 
     [HttpGet("{siteId}/section-106-general-agreement")]

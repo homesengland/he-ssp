@@ -74,8 +74,16 @@ namespace DataverseModel
 			public const string invln_Existinglegalcharges = "invln_existinglegalcharges";
 			public const string invln_Existinglegalchargesinformation = "invln_existinglegalchargesinformation";
 			public const string invln_existinglegalchargesName = "invln_existinglegalchargesname";
+			public const string invln_FDSiteId = "invln_fdsiteid";
+			public const string invln_FDSiteIdName = "invln_fdsiteidname";
 			public const string invln_Haveaplanningreferencenumber = "invln_haveaplanningreferencenumber";
 			public const string invln_haveaplanningreferencenumberName = "invln_haveaplanningreferencenumbername";
+			public const string invln_HeLocalAuthorityId = "invln_helocalauthorityid";
+			public const string invln_HeLocalAuthorityIdName = "invln_helocalauthorityidname";
+			public const string invln_HeProjectLocalAuthorityId = "invln_heprojectlocalauthorityid";
+			public const string invln_HeProjectLocalAuthorityIdName = "invln_heprojectlocalauthorityidname";
+			public const string invln_HERegion = "invln_heregion";
+			public const string invln_heregionName = "invln_heregionname";
 			public const string invln_HowMuch = "invln_howmuch";
 			public const string invln_howmuch_Base = "invln_howmuch_base";
 			public const string invln_Landregistrytitlenumber = "invln_landregistrytitlenumber";
@@ -107,6 +115,7 @@ namespace DataverseModel
 			public const string invln_Sitecoordinates = "invln_sitecoordinates";
 			public const string invln_Sitecost = "invln_sitecost";
 			public const string invln_sitecost_Base = "invln_sitecost_base";
+			public const string invln_sitedetails_FDSiteId_invln_frontdoorproje = "invln_sitedetails_FDSiteId_invln_frontdoorproje";
 			public const string invln_sitedetails_invln_Externalcommses = "invln_sitedetails_invln_Externalcommses";
 			public const string invln_sitedetails_invln_govnotifyemails = "invln_sitedetails_invln_govnotifyemails";
 			public const string invln_sitedetails_Loanapplication = "invln_sitedetails_Loanapplication";
@@ -604,6 +613,43 @@ namespace DataverseModel
 			}
 		}
 		
+		/// <summary>
+		/// Front Door Project Site
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_fdsiteid")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_FDSiteId
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_fdsiteid");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_FDSiteId");
+				this.SetAttributeValue("invln_fdsiteid", value);
+				this.OnPropertyChanged("invln_FDSiteId");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_fdsiteidname")]
+		public string invln_FDSiteIdName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_fdsiteid"))
+				{
+					return this.FormattedValues["invln_fdsiteid"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_haveaplanningreferencenumber")]
 		public System.Nullable<bool> invln_Haveaplanningreferencenumber
 		{
@@ -630,6 +676,114 @@ namespace DataverseModel
 				if (this.FormattedValues.Contains("invln_haveaplanningreferencenumber"))
 				{
 					return this.FormattedValues["invln_haveaplanningreferencenumber"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
+		/// <summary>
+		/// HE Local Authority
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_helocalauthorityid")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_HeLocalAuthorityId
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_helocalauthorityid");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_HeLocalAuthorityId");
+				this.SetAttributeValue("invln_helocalauthorityid", value);
+				this.OnPropertyChanged("invln_HeLocalAuthorityId");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_helocalauthorityidname")]
+		public string invln_HeLocalAuthorityIdName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_helocalauthorityid"))
+				{
+					return this.FormattedValues["invln_helocalauthorityid"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
+		/// <summary>
+		/// HE Project Local Authority
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_heprojectlocalauthorityid")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_HeProjectLocalAuthorityId
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_heprojectlocalauthorityid");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_HeProjectLocalAuthorityId");
+				this.SetAttributeValue("invln_heprojectlocalauthorityid", value);
+				this.OnPropertyChanged("invln_HeProjectLocalAuthorityId");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_heprojectlocalauthorityidname")]
+		public string invln_HeProjectLocalAuthorityIdName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_heprojectlocalauthorityid"))
+				{
+					return this.FormattedValues["invln_heprojectlocalauthorityid"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_heregion")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_HERegion
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_heregion");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_HERegion");
+				this.SetAttributeValue("invln_heregion", value);
+				this.OnPropertyChanged("invln_HERegion");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_heregionname")]
+		public string invln_heregionName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_heregion"))
+				{
+					return this.FormattedValues["invln_heregion"];
 				}
 				else
 				{
@@ -1939,6 +2093,27 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_sitedetails_invln_govnotifyemails");
 				this.SetRelatedEntities<DataverseModel.invln_govnotifyemail>("invln_sitedetails_invln_govnotifyemails", null, value);
 				this.OnPropertyChanged("invln_sitedetails_invln_govnotifyemails");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_sitedetails_FDSiteId_invln_frontdoorproje
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_fdsiteid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_sitedetails_FDSiteId_invln_frontdoorproje")]
+		public DataverseModel.invln_FrontDoorProjectSitePOC invln_sitedetails_FDSiteId_invln_frontdoorproje
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.invln_FrontDoorProjectSitePOC>("invln_sitedetails_FDSiteId_invln_frontdoorproje", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_sitedetails_FDSiteId_invln_frontdoorproje");
+				this.SetRelatedEntity<DataverseModel.invln_FrontDoorProjectSitePOC>("invln_sitedetails_FDSiteId_invln_frontdoorproje", null, value);
+				this.OnPropertyChanged("invln_sitedetails_FDSiteId_invln_frontdoorproje");
 			}
 		}
 		

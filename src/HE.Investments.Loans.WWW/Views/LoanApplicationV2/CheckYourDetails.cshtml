@@ -1,9 +1,15 @@
 @using HE.Investments.Loans.BusinessLogic.LoanApplication
 @model HE.Investments.Loans.WWW.Models.CheckYourDetailsModel
+@{
+    var fdProjectId = Context.Request.Query["fdProjectId"];
+    var callback = string.IsNullOrWhiteSpace(fdProjectId)
+        ? "/application/check-your-details"
+        : $"/application/check-your-details?fdProjectId={fdProjectId}";
+}
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="LoanApplicationV2" asp-action="CheckYourDetailsPost" asp-method="post" novalidate>
-        <gds-back-link href="@Url.Action("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.CheckYourDetails})" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
+    <form asp-controller="LoanApplicationV2" asp-action="CheckYourDetailsPost" asp-method="post" asp-route-fdProjectId="@fdProjectId" novalidate>
+        <gds-back-link href="@Url.Action("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.CheckYourDetails, fdProjectId })" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
 
         <vc:page-header title="Check your details"/>
 
@@ -33,7 +39,7 @@
                        { "Link", Url.RouteUrl(new {
                            controller = "Accounts",
                            action = "UserProfile",
-                           callback = "/application/check-your-details"
+                           callback
                        }) }
                    })
 
@@ -41,11 +47,6 @@
                    {
                        { "Title", "Email address" },
                        { "Value", Model.LoanApplicationContactEmail },
-                       { "Link", Url.RouteUrl(new {
-                           controller = "Accounts",
-                           action = "UserProfile",
-                           callback = "/application/check-your-details"
-                       }) }
                    })
 
             @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
@@ -55,7 +56,7 @@
                        { "Link", Url.RouteUrl(new {
                            controller = "Accounts",
                            action = "UserProfile",
-                           callback = "/application/check-your-details"
+                           callback
                        }) }
                    })
         </gds-summary-list>

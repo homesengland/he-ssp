@@ -30,7 +30,6 @@ public static class SiteDtoToSiteEntityMapper
     private static readonly SiteTenderingStatusMapper SiteTenderingStatusMapper = new();
     private static readonly SiteTypeMapper SiteTypeMapper = new();
     private static readonly TravellerPitchSiteTypeMapper TravellerPitchSiteTypeMapper = new();
-    private static readonly PlanningStatusMapper PlanningStatusMapper = new();
     private static readonly NationalDesignGuideMapper NationalDesignGuideMapper = new();
     private static readonly SiteUsingModernMethodsOfConstructionMapper SiteUsingModernMethodsOfConstructionMapper = new();
     private static readonly ModernMethodsConstructionCategoriesTypeMapper ModernMethodsConstructionCategoriesTypeMapper = new();
@@ -39,7 +38,7 @@ public static class SiteDtoToSiteEntityMapper
     private static readonly SiteProcurementMapper SiteProcurementMapper = new();
     private static readonly SiteStatusMapper SiteStatusMapper = new();
 
-    public static SiteEntity Map(SiteDto dto)
+    public static SiteEntity Map(SiteDto dto, IPlanningStatusMapper planningStatusMapper)
     {
         return new SiteEntity(
             new SiteId(dto.id),
@@ -47,7 +46,7 @@ public static class SiteDtoToSiteEntityMapper
             SiteStatusMapper.ToDomain(dto.status),
             CreateSection106(dto.section106),
             CreateLocalAuthority(dto.localAuthority.id, dto.localAuthority.name),
-            CreatePlanningDetails(dto.planningDetails),
+            CreatePlanningDetails(dto.planningDetails, planningStatusMapper),
             CreateNationalDesignGuidePriorities(dto.nationalDesignGuidePriorities),
             BuildingForHealthyLifeTypeMapper.ToDomain(dto.buildingForHealthyLife),
             CreateNumberOfGreenLights(dto.numberOfGreenLights),
@@ -79,10 +78,10 @@ public static class SiteDtoToSiteEntityMapper
     {
         return string.IsNullOrWhiteSpace(id)
             ? null
-            : new Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority(new LocalAuthorityId(id), name);
+            : new Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority(new LocalAuthorityCode(id), name);
     }
 
-    private static PlanningDetails CreatePlanningDetails(PlanningDetailsDto dto)
+    private static PlanningDetails CreatePlanningDetails(PlanningDetailsDto dto, IPlanningStatusMapper planningStatusMapper)
     {
         if (dto.planningStatus == null)
         {
@@ -90,7 +89,7 @@ public static class SiteDtoToSiteEntityMapper
         }
 
         return PlanningDetailsFactory.Create(
-            PlanningStatusMapper.ToDomain(dto.planningStatus),
+            planningStatusMapper.ToDomain(dto.planningStatus),
             string.IsNullOrWhiteSpace(dto.referenceNumber) ? null : new ReferenceNumber(dto.referenceNumber),
             CreateDate(dto.detailedPlanningApprovalDate, (day, month, year) => new DetailedPlanningApprovalDate(day, month, year)),
             string.IsNullOrWhiteSpace(dto.requiredFurtherSteps) ? null : new RequiredFurtherSteps(dto.requiredFurtherSteps),

@@ -18,20 +18,21 @@ namespace HE.CRM.Common.Repositories.Implementations
         {
         }
 
-        public List<invln_FrontDoorProjectPOC> GetFrontDoorProjectForOrganisationAndContact(string organisationCondition, string contactExternalIdFilter, string attributes, string frontDoorProjectFilters)
+        public List<invln_FrontDoorProjectPOC> GetFrontDoorProjectForOrganisationAndContact(string organisationCondition, string contactExternalIdFilter, string attributes, string frontDoorProjectFilters, string statecodeCondition)
         {
-            var fetchXML = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+            logger.Trace("FrontDoorProjectRepository GetFrontDoorProjectForOrganisationAndContact");
+            var fetchXML = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
 	                                <entity name='invln_frontdoorprojectpoc'>
-                                            <attribute name=""invln_contactid"" />"
-                                            + attributes +
-                                            @"<filter>
-                                              <condition attribute=""statecode"" operator=""eq"" value=""0"" />"
-                                              + organisationCondition +
-                                              frontDoorProjectFilters +
-                                            @" </filter>
-                                            <link-entity name=""contact"" from=""contactid"" to=""invln_contactid"">"
-                                              + contactExternalIdFilter +
-                                            @"</link-entity>
+                                            <attribute name=""invln_contactid"" />
+                                             {attributes}
+                                             <filter>
+                                              {statecodeCondition}
+                                              {organisationCondition}
+                                              {frontDoorProjectFilters}
+                                             </filter>
+                                             <link-entity name=""contact"" from=""contactid"" to=""invln_contactid"">
+                                              {contactExternalIdFilter}
+                                            </link-entity>
                                           </entity>
                                         </fetch>";
             EntityCollection result = service.RetrieveMultiple(new FetchExpression(fetchXML));
@@ -47,11 +48,18 @@ namespace HE.CRM.Common.Repositories.Implementations
             }
         }
 
-        public bool CheckIfFrontDoorProjectWithGivenNameExists(string frontDoorProjectName)
+        public bool CheckIfFrontDoorProjectWithGivenNameExists(string frontDoorProjectName, Guid organisationId)
         {
             using (var ctx = new OrganizationServiceContext(service))
             {
-                return ctx.CreateQuery<invln_FrontDoorProjectPOC>().Where(x => x.invln_Name == frontDoorProjectName && x.StateCode.Value == (int)invln_FrontDoorProjectPOCState.Active).AsEnumerable().Any();
+                if (organisationId != Guid.Empty)
+                {
+                    return ctx.CreateQuery<invln_FrontDoorProjectPOC>().Where(x => x.invln_Name == frontDoorProjectName && x.invln_AccountId.Id == organisationId && x.StateCode.Value == (int)invln_FrontDoorProjectPOCState.Active).AsEnumerable().Any();
+                }
+                else
+                {
+                    return ctx.CreateQuery<invln_FrontDoorProjectPOC>().Where(x => x.invln_Name == frontDoorProjectName && x.StateCode.Value == (int)invln_FrontDoorProjectPOCState.Active).AsEnumerable().Any();
+                }
             }
         }
     }

@@ -1,5 +1,4 @@
 @using HE.Investments.Account.WWW.Config
-@using Microsoft.AspNetCore.Mvc.TagHelpers
 @inject IOrganisationAppConfig OrganisationAppConfig
 
 @{
@@ -9,10 +8,6 @@
 
 @section AdditionalMeta
 {
-}
-
-@{
-    var cookieConsent = Context.Request.Cookies["CookieConsent"] == "Yes";
 }
 
 @section HeadCss

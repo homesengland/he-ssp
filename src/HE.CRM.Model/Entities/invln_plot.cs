@@ -68,7 +68,6 @@ namespace DataverseModel
 			public const string invln_avgsqft = "invln_avgsqft";
 			public const string invln_ComparableeValue = "invln_comparableevalue";
 			public const string invln_comparableevalue_Base = "invln_comparableevalue_base";
-			public const string invln_comparablevalue = "invln_comparablevalue";
 			public const string invln_invln_isp_invln_plot = "invln_invln_isp_invln_plot";
 			public const string invln_ispid = "invln_ispid";
 			public const string invln_ispidName = "invln_ispidname";
@@ -433,23 +432,6 @@ namespace DataverseModel
 			get
 			{
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_comparableevalue_base");
-			}
-		}
-		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_comparablevalue")]
-		public System.Nullable<double> invln_comparablevalue
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<System.Nullable<double>>("invln_comparablevalue");
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("invln_comparablevalue");
-				this.SetAttributeValue("invln_comparablevalue", value);
-				this.OnPropertyChanged("invln_comparablevalue");
 			}
 		}
 		

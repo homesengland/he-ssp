@@ -6,12 +6,13 @@ using HE.CRM.Plugins.Services.FrontDoorProject;
 
 namespace HE.CRM.Plugins.Handlers.CustomApi.FrontDoor
 {
-    public class GetMultipleFrontDoorProjectsForAccountHandler : CrmActionHandlerBase<invln_getsingleloanapplicationforaccountandcontactRequest, DataverseContext>
+    public class GetMultipleFrontDoorProjectsForAccountHandler : CrmActionHandlerBase<invln_getmultiplefrontdoorprojectsRequest, DataverseContext>
     {
         #region Fields
         private string organisationId => ExecutionData.GetInputParameter<string>(invln_getmultiplefrontdoorprojectsRequest.Fields.invln_organisationid);
         private string externalContactId => ExecutionData.GetInputParameter<string>(invln_getmultiplefrontdoorprojectsRequest.Fields.inlvn_userid);
         private string fieldsToRetrieve => ExecutionData.GetInputParameter<string>(invln_getmultiplefrontdoorprojectsRequest.Fields.invln_fieldstoretrieve);
+        private string useHeTablesFromPortal => ExecutionData.GetInputParameter<string>(invln_getsinglefrontdoorprojectRequest.Fields.invln_usehetables);
         #endregion
 
         #region Base Methods Overrides
@@ -23,7 +24,8 @@ namespace HE.CRM.Plugins.Handlers.CustomApi.FrontDoor
         public override void DoWork()
         {
             this.TracingService.Trace("GetMultipleFrontDoorProjectsForAccountHandler");
-            var frontDoorProjectsDtoList = CrmServicesFactory.Get<IFrontDoorProjectService>().GetFrontDoorProjects(organisationId, externalContactId, fieldsToRetrieve);
+            var useHeTables = !string.IsNullOrEmpty(useHeTablesFromPortal);
+            var frontDoorProjectsDtoList = CrmServicesFactory.Get<IFrontDoorProjectService>().GetFrontDoorProjects(organisationId, useHeTables, externalContactId, fieldsToRetrieve);
             this.TracingService.Trace("Send Response");
             if (frontDoorProjectsDtoList != null)
             {

@@ -49,9 +49,9 @@ internal class AccountHttpRepository : IAccountRepository
         }
 
         return new UserProfileDetails(
-            profile.FirstName.IsProvided() ? new FirstName(profile.FirstName) : null,
-            profile.LastName.IsProvided() ? new LastName(profile.LastName) : null,
-            profile.JobTitle.IsProvided() ? new JobTitle(profile.JobTitle) : null,
+            profile.FirstName.IsProvided() ? new YourFirstName(profile.FirstName) : null,
+            profile.LastName.IsProvided() ? new YourLastName(profile.LastName) : null,
+            profile.JobTitle.IsProvided() ? new YourJobTitle(profile.JobTitle) : null,
             profile.Email,
             profile.TelephoneNumber.IsProvided() ? new TelephoneNumber(profile.TelephoneNumber!) : null,
             profile.SecondaryTelephoneNumber.IsProvided() ? new TelephoneNumber(profile.SecondaryTelephoneNumber!) : null,

@@ -1,13 +1,11 @@
 using System.Diagnostics.CodeAnalysis;
 using HE.Investments.Common.Messages;
-using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.Loans.Common.Tests.TestData;
 using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using HE.Investments.Loans.Contract.Projects.ViewModels;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Extensions;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
-using HE.Investments.Loans.WWW;
 using HE.Investments.Loans.WWW.Views.Project.Consts;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
@@ -23,7 +21,7 @@ public class Order15GrantFundingIntegrationTests : IntegrationTest
 
     private readonly string _applicationLoanId;
 
-    public Order15GrantFundingIntegrationTests(IntegrationTestFixture<Program> fixture)
+    public Order15GrantFundingIntegrationTests(LoansIntegrationTestFixture fixture)
         : base(fixture)
     {
         _applicationLoanId = UserData.LoanApplicationIdInDraftState;
@@ -90,7 +88,7 @@ public class Order15GrantFundingIntegrationTests : IntegrationTest
         grantFundingPage
             .UrlEndWith(ProjectPagesUrls.GrantFundingSuffix)
             .HasTitle(ProjectPageTitles.GrantFunding)
-            .HasOneValidationMessages(ValidationErrorMessage.IncorrectGrantFundingAmount);
+            .HasOneValidationMessages(ValidationErrorMessage.PoundInput("grant funding amount"));
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
@@ -158,7 +156,7 @@ public class Order15GrantFundingIntegrationTests : IntegrationTest
             .UrlEndWith(ProjectPagesUrls.GrantFundingSuffix)
             .HasTitle(ProjectPageTitles.GrantFunding)
             .HasValidationMessages(ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.GrantFundingProviderName))
-            .HasValidationMessages(ValidationErrorMessage.IncorrectGrantFundingAmount)
+            .HasValidationMessages(ValidationErrorMessage.PoundInput("grant funding amount"))
             .HasValidationMessages(ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.GrantFundingName))
             .HasValidationMessages(ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.GrantFundingPurpose));
     }

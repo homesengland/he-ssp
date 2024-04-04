@@ -2,6 +2,8 @@
 @using HE.Investments.FrontDoor.WWW.Views.Shared.Components.FrontDoorWorkflowBackButton
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.FrontDoor.WWW.Views.Project.Const
+@model ProjectDetails
+
 @{
     ViewData["Title"] = ProjectPageTitles.Progress;
 }
@@ -10,8 +12,16 @@
     <vc:front-door-workflow-back-button current-page="@ProjectWorkflowState.Progress"></vc:front-door-workflow-back-button>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
-    <form asp-controller="Project" asp-action="Progress" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
-        TODO: @ProjectPageTitles.Progress
+    <vc:page-header caption="@ViewBag.ProjectName" />
+
+    <form asp-controller="Project" asp-action="Progress" asp-route-workflow="@Context.Request.Query["workflow"]" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
+
+        <vc:radio-yes-no
+            title="@ProjectPageTitles.Progress"
+            title-type="InputTitleType.PageHeader"
+            hint="The project should be able to progress faster with this support in place."
+            field-name="@nameof(ProjectDetails.IsSupportRequired)"
+            value="@Model.IsSupportRequired"/>
 
         <vc:form-button/>
         <vc:return-to-account-link/>

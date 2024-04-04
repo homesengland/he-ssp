@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
@@ -21,9 +22,26 @@ public static class HtmlFluentExtensions
         return htmlDocument;
     }
 
+    public static IHtmlDocument UrlWithoutQueryNotEndsWith(this IHtmlDocument htmlDocument, string endsWith)
+    {
+        var url = new Uri(htmlDocument.Url);
+
+        url.AbsolutePath.ToLowerInvariant().Should().NotEndWith(endsWith.ToLowerInvariant());
+
+        return htmlDocument;
+    }
+
     public static IHtmlDocument HasTitle(this IHtmlDocument htmlDocument, string title)
     {
         htmlDocument.GetPageTitle().Should().Be(title);
+        return htmlDocument;
+    }
+
+    public static IHtmlDocument HasMatchingTitle(this IHtmlDocument htmlDocument, string titlePattern)
+    {
+        var title = htmlDocument.GetPageTitle();
+        new Regex(titlePattern).IsMatch(title).Should().BeTrue($"\"{title}\" should match \"{titlePattern}\"");
+
         return htmlDocument;
     }
 
@@ -60,16 +78,6 @@ public static class HtmlFluentExtensions
         return htmlDocument;
     }
 
-    public static IHtmlDocument HasElementWithTextByTestId(this IHtmlDocument htmlDocument, string testId, string text)
-    {
-        var element = htmlDocument.GetElementByTestId(testId);
-
-        element.Should().NotBeNull($"Element with data-testId {testId} does not exist");
-        element!.TextContent.Should().Contain(text, $"Element with data-testId {testId} is missing text \"{text}\"");
-
-        return htmlDocument;
-    }
-
     public static IHtmlDocument HasElementForTestId(this IHtmlDocument htmlDocument, string testId, out IElement htmlElement)
     {
         htmlElement = htmlDocument.GetElementByTestId(testId);
@@ -80,6 +88,13 @@ public static class HtmlFluentExtensions
     public static IHtmlDocument HasSuccessNotificationBanner(this IHtmlDocument htmlDocument, string bodyText)
     {
         htmlDocument.GetSuccessNotificationBannerBody().Should().Contain(bodyText);
+        return htmlDocument;
+    }
+
+    public static IHtmlDocument HasUploadedFiles(this IHtmlDocument htmlDocument, int filesCount)
+    {
+        var files = htmlDocument.GetFilesTableBody();
+        files!.Length.Should().Be(filesCount, "Files table does not have expected number of files");
         return htmlDocument;
     }
 
@@ -98,5 +113,15 @@ public static class HtmlFluentExtensions
     public static IHtmlDocument HasSectionWithStatus(this IHtmlDocument htmlDocument, string sectionStatusId, string expectedStatus)
     {
         return htmlDocument.HasElementWithTextByTestId(sectionStatusId, expectedStatus);
+    }
+
+    private static IHtmlDocument HasElementWithTextByTestId(this IHtmlDocument htmlDocument, string testId, string text)
+    {
+        var element = htmlDocument.GetElementByTestId(testId);
+
+        element.Should().NotBeNull($"Element with data-testId {testId} does not exist");
+        element.TextContent.Should().Contain(text, $"Element with data-testId {testId} is missing text \"{text}\"");
+
+        return htmlDocument;
     }
 }

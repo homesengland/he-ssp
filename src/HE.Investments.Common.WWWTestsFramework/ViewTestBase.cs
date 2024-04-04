@@ -6,6 +6,7 @@ using HE.Investments.Common.WWWTestsFramework.Framework;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.FeatureManagement;
 using Moq;
 
 namespace HE.Investments.Common.WWWTestsFramework;
@@ -25,6 +26,7 @@ public abstract class ViewTestBase
         {
             services.AddTransient(_ => new Mock<INotificationConsumer>().Object);
             services.AddTransient(_ => new Mock<IAccountAccessContext>().Object);
+            services.AddTransient(_ => new Mock<IFeatureManager>().Object);
             mockDependencies?.Invoke(services);
         };
 

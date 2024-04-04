@@ -38,10 +38,10 @@ namespace DataverseModel
 		CashflowUnderReview = 858110007,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		ContractSignedSubjecttoCP = 858110015,
+		ConditionsSatisfied = 858110016,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		CPsSatisfied = 858110016,
+		ContractSignedSubjecttoCP = 858110015,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Draft = 858110000,

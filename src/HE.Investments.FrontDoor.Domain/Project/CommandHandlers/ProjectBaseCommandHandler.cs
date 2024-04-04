@@ -1,4 +1,5 @@
 using HE.Investments.Account.Shared;
+using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.FrontDoor.Contract.Project.Commands;
 using HE.Investments.FrontDoor.Domain.Project.Repository;
@@ -25,7 +26,7 @@ public abstract class ProjectBaseCommandHandler<TRequest> : IRequestHandler<TReq
         var project = await ProjectRepository.GetProject(request.ProjectId, userAccount, cancellationToken);
 
         Perform(project, request);
-        await PerformAsync(project, request, cancellationToken);
+        await PerformAsync(project, request, userAccount, cancellationToken);
 
         await ProjectRepository.Save(project, userAccount, cancellationToken);
         return OperationResult.Success();
@@ -35,7 +36,7 @@ public abstract class ProjectBaseCommandHandler<TRequest> : IRequestHandler<TReq
     {
     }
 
-    protected virtual Task PerformAsync(ProjectEntity project, TRequest request, CancellationToken cancellationToken)
+    protected virtual Task PerformAsync(ProjectEntity project, TRequest request, UserAccount userAccount, CancellationToken cancellationToken)
     {
         return Task.CompletedTask;
     }

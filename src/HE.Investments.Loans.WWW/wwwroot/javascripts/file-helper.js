@@ -80,7 +80,7 @@
         hasErrors = true;
         addInputFieldError(errorMessage);
         addInputFieldErrorSummary(errorMessage);
-      } else if (!allowedExtensionsArray.includes(getFileExtension(file.name))) {
+      } else if (allowedExtensions !== "AllFileTypesAreAllowed" && !allowedExtensionsArray.includes(getFileExtension(file.name))) {
         const errorMessage = `The selected file ${sanitize(file.name)} must be a PDF, Word Doc, JPEG or RTF`;
 
         hasErrors = true;
@@ -198,8 +198,11 @@
     const error = inputFieldError(message);
 
     formGroup.classList.add('govuk-form-group--error');
-    if (inputControl.parentNode.childNodes.values().toArray().map(x => x.outerHTML).includes(error)) {
-      return;
+
+    for (const node in inputControl.parentNode.childNodes.values()) {
+      if (node.outerHTML === error) {
+        return;
+      }
     }
 
     inputControl.insertAdjacentHTML('beforebegin', error);
@@ -226,9 +229,14 @@
 
     const list = summaryValidationList.getElementsByTagName('ul')[0];
     const error = inputFiledErrorSummaryMessage(message);
-    if (!list.childNodes.values().toArray().map(x => x.outerHTML).includes(error)){
-      list.innerHTML += inputFiledErrorSummaryMessage(message);
+
+    for (const node in list.childNodes.values()) {
+      if (node.outerHTML === error) {
+        return;
+      }
     }
+
+    list.innerHTML += inputFiledErrorSummaryMessage(message);
   }
 
   const removeInputFieldErrorSummaryMessages = (summaryValidationList) => {
@@ -270,6 +278,16 @@
   {
     return fileName.substring(fileName.lastIndexOf('.')).toUpperCase();
   }
+
+  const toggleFileSubmitButton = () => {
+    const filesTableBody = document.querySelector('.files-table-body');
+    const submitButton = document.querySelector('.files-submit-button');
+    if (submitButton) {
+      submitButton.disabled = filesTableBody.children.length === 0;
+    }
+  }
+
+  toggleFileSubmitButton();
 
   document.addEventListener("DOMContentLoaded", function() {
     const fileInput = document.querySelectorAll(fileInputSelector)[0];

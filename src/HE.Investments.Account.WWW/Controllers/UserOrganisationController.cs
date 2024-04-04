@@ -8,8 +8,10 @@ using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Account.Shared.Routing;
 using HE.Investments.Account.WWW.Models.UserOrganisation;
+using HE.Investments.Account.WWW.Routing;
 using HE.Investments.Account.WWW.Utils;
 using HE.Investments.Common.WWW.Controllers;
+using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Utils;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -26,20 +28,26 @@ public class UserOrganisationController : Controller
 
     private readonly IAccountAccessContext _accountAccessContext;
 
-    public UserOrganisationController(IMediator mediator, IProgrammes programmes, IAccountAccessContext accountAccessContext)
+    private readonly ProgrammeUrlConfig _programmeUrlConfig;
+
+    public UserOrganisationController(
+        IMediator mediator,
+        IProgrammes programmes,
+        IAccountAccessContext accountAccessContext,
+        ProgrammeUrlConfig programmeUrlConfig)
     {
         _mediator = mediator;
         _programmes = programmes;
         _accountAccessContext = accountAccessContext;
+        _programmeUrlConfig = programmeUrlConfig;
     }
 
     [HttpGet(UserOrganisationAccountEndpoints.DashboardSuffix)]
     public async Task<IActionResult> Index()
     {
         var userOrganisationResult = await _mediator.Send(new GetUserOrganisationWithProgrammesQuery());
-        var canViewOrganisationDetails = await _accountAccessContext.CanAccessOrganisationView();
-        var programmeModels = await GetProgrammes(
-            userOrganisationResult.ProgrammesTypesToApply.Concat(userOrganisationResult.ProgrammesToAccess.Select(x => x.Type)).Distinct().ToList());
+        var programmeModels = GetProgrammes(userOrganisationResult.ProgrammesToAccess.Select(x => x.Type).ToList());
+        var projects = userOrganisationResult.Projects.Select(x => new UserProjectModel(x.Id.Value, x.Name, x.Status, GetProjectUrl(x.Id))).ToList();
 
         return View(
             "UserOrganisation",
@@ -47,24 +55,20 @@ public class UserOrganisationController : Controller
                 userOrganisationResult.OrganisationBasicInformation.RegisteredCompanyName,
                 userOrganisationResult.UserFirstName,
                 userOrganisationResult.IsLimitedUser,
+                await GetStartNewProjectUrl(),
+                projects,
                 userOrganisationResult.ProgrammesToAccess.Select(
                     p => new ProgrammeToAccessModel(
                         programmeModels[p.Type],
                         p.Applications.Select(a =>
-                                new ApplicationBasicDetailsModel(
+                                new UserApplicationModel(
                                         a.Id.Value,
                                         a.ApplicationName,
                                         a.Status,
                                         _programmes.GetApplicationUrl(p.Type, a.Id)))
                             .ToList()))
                     .ToList(),
-                userOrganisationResult.ProgrammesTypesToApply.Select(t => programmeModels[t]).ToList(),
-                new List<Common.WWW.Models.ActionModel>
-                {
-                    new("Add or manage users at this Organisation", "Index", "Users", HasAccess: canViewOrganisationDetails),
-                    new($"Manage {userOrganisationResult.OrganisationBasicInformation.RegisteredCompanyName} details", "Details", "UserOrganisation", HasAccess: canViewOrganisationDetails),
-                    new("Manage your account", "GetProfileDetails", "User", new { callback = Url.Action("Index") }, true),
-                }));
+                await UserOrganisationActions(userOrganisationResult.OrganisationBasicInformation.RegisteredCompanyName)));
     }
 
     [HttpGet("details")]
@@ -111,10 +115,46 @@ public class UserOrganisationController : Controller
             cancellationToken);
     }
 
-    private async Task<Dictionary<ProgrammeType, ProgrammeModel>> GetProgrammes(IList<ProgrammeType> programmeTypes)
+    [HttpGet("list")]
+    public IActionResult UserOrganisationsList()
     {
-        var programmes = await Task.WhenAll(programmeTypes.Select(x => _programmes.GetProgramme(x)));
+        return RedirectToAction("Index");
+    }
 
-        return programmeTypes.Zip(programmes).ToDictionary(x => x.First, x => x.Second);
+    private async Task<string?> GetStartNewProjectUrl()
+    {
+        if (await _accountAccessContext.CanEditApplication())
+        {
+            return $"{_programmeUrlConfig.FrontDoor}/project/start";
+        }
+
+        return null;
+    }
+
+    private string GetProjectUrl(HeProjectId projectId)
+    {
+        return $"{_programmeUrlConfig.FrontDoor}/project/{projectId}";
+    }
+
+    private Dictionary<ProgrammeType, ProgrammeModel> GetProgrammes(IList<ProgrammeType> programmeTypes)
+    {
+        return programmeTypes.Select(x => _programmes.GetProgramme(x)).ToDictionary(x => x.Type, x => x);
+    }
+
+    private async Task<List<ActionModel>> UserOrganisationActions(string organisationName)
+    {
+        var canViewOrganisationDetails = await _accountAccessContext.CanAccessOrganisationView();
+        var userOrganisationActions = new List<ActionModel>();
+        if (canViewOrganisationDetails)
+        {
+            userOrganisationActions.AddRange(new List<ActionModel>
+            {
+                new("Add or manage users at this Organisation", "Index", "Users", HasAccess: canViewOrganisationDetails),
+                new($"Manage {organisationName} details", "Details", "UserOrganisation", HasAccess: canViewOrganisationDetails),
+            });
+        }
+
+        userOrganisationActions.Add(new("Manage your account", "GetProfileDetails", "User", new { callback = Url.Action("Index") }, true));
+        return userOrganisationActions;
     }
 }

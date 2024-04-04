@@ -28,10 +28,6 @@ public static class ValidationErrorMessage
 
     public const string InvalidStartDate = "Enter a valid date. The build start date must include a day, month and year";
 
-    public const string NoPurchaseDate = "Enter the date you purchased this site";
-
-    public const string IncorrectPurchaseDate = "The date you purchased this land must be a real date";
-
     public const string FuturePurchaseDate = "The date you purchased this land must be today or in the past";
 
     public const string EnterExistingLegal = "Enter any existing legal charges or debt secured on this land";
@@ -46,6 +42,8 @@ public static class ValidationErrorMessage
 
     public const string FileIncorrectFormat = "The selected file must be a PDF, Word Doc, JPEG or RTF";
 
+    public const string FileFormatNotSupported = "The selected file type is not supported";
+
     public const string LoanPurpose = "Select what you need Homes England funding for";
 
     public const string EnterCoordinates = "Enter your XY coordinates";
@@ -56,11 +54,9 @@ public static class ValidationErrorMessage
 
     public const string IncorrectProjectValue = "The current value of the land must be entered as a number, in pounds and pence";
 
-    public const string IncorrectGrantFundingAmount = "The amount of funding provided";
-
-    public const string EnterLoanApplicationName = "Enter a name for your application";
-
     public const string AcceptTermsAndConditions = "Select that you have read and understood the privacy notice";
+
+    public const string AcceptTermsAndConditionsAndContinue = "You must select you have read and understood the privacy policy to continue";
 
     public const string InformationAgreement = "Select that you have read and agree with the information";
 
@@ -70,8 +66,6 @@ public static class ValidationErrorMessage
 
     public const string LocalAuthorityNameIsEmpty = "Enter the name of the local authority";
 
-    public const string OrganisationNameIsEmpty = "Enter the name of the organisation";
-
     public const string SectionIsNotCompleted = "You have not completed this section. Select no if you want to come back later";
 
     public const string CouldNotCalculate = "Could not calculate as all fields have not been entered";
@@ -79,6 +73,12 @@ public static class ValidationErrorMessage
     public const string EnterDate = "Enter a date. The date must include a day, month and year";
 
     public const string SquareMetersMustBeNumber = "The square meterage in the internal floor each of each home must be a number, like 75.50";
+
+    public const string FilesListEmpty = "Select at least one file to upload";
+
+    public const string ProvideAllProjectAnswers = "To submit, you have to provide all answers";
+
+    public const string ProvideAllSiteAnswers = "To submit, you have to provide all answers for sites";
 
     public static string FilesMaxCount(int numberOfFiles) => $"You can only select up to {numberOfFiles} files";
 
@@ -104,9 +104,9 @@ public static class ValidationErrorMessage
 
     public static string MustProvideYourLowerNumber(string fieldName, int maxValue) => $"Your {fieldName} must be {maxValue} or fewer";
 
-    public static string MustProvideTheHigherNumber(string fieldName, int minValue) => $"The {fieldName} must be {minValue} or more";
+    public static string MustProvideTheHigherNumber(string fieldName, long minValue) => $"The {fieldName} must be {minValue} or more";
 
-    public static string MustProvideTheLowerNumber(string fieldName, int maxValue) => $"The {fieldName} must be {maxValue} or fewer";
+    public static string MustProvideTheLowerNumber(string fieldName, long maxValue) => $"The {fieldName} must be {maxValue} or fewer";
 
     public static string MustProvideYourWholeNumber(string fieldName, int example = 30) => $"Your {fieldName} must be a whole number, like {example}";
 
@@ -134,7 +134,7 @@ public static class ValidationErrorMessage
 
     public static string StringLengthExceededUncommon(string displayName, int maxLength) => new($"{displayName.TitleCaseFirstLetterInString()} must be {maxLength} characters or less");
 
-    public static string ExclusiveOptionSelected(string displayName, string optionName) => $"The {optionName} {displayName} option is exclusive and cannot be selected with any other option.";
+    public static string ExclusiveOptionSelected(string displayName, string optionName) => $"The {optionName} {displayName} option is exclusive and cannot be selected with any other option";
 
     public static string MustBeDate(string displayName) => $"The {displayName} must be a valid date";
 

@@ -34,9 +34,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getloanapplicationsforaccountandcontact.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getmultipleahpapplications.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getmultipledeliveryphase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getmultiplefdprojects.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getmultiplefrontdoorprojects.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getmultiplefrontdoorprojectssite.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getmultiplelocalauthorities.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getmultiplelocalauthoritiesformodule.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getmultipleprogramme.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getmultiplesites.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getorganisationchangedetails.cs" />
@@ -99,6 +101,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Entities\Email.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\EnvironmentVariableDefinition.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\EnvironmentVariableValue.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\he_LocalAuthority.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\he_Pipeline.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\he_ProjectLocalAuthority.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_AHGLocalAuthorities.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_ahpcontract.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_AHPStatusChange.cs" />
@@ -200,11 +205,14 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_howcouldweimprovethecrm.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_HoweasywasittousetheCRM.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_InteractionPipelineOpportunity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_InterventionTypes.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_MarketingSend.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_NetPromoterScores.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_Overallhowsatisfiedordissatisfied.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_Physicalorcognitiveconditions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_PrimaryOperatingRegion.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_ProjectStages.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_Region.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_Sector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_SMEIndicator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_UserSatisfactionSurveyDoyouwantto.cs" />
@@ -240,6 +248,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_DefineTenure.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Developmenttype.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Emailsendstatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_EQRating.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ExternalStatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ExternalStatusAHP.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ExternalStatusAHPOrganisation.cs" />
@@ -283,6 +292,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Programme.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_PropertyType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Publicsectorfunding.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_RAGStatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Rating.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_refinancerepayment.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Region.cs" />
@@ -611,6 +621,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\OpenAISchemaVersion.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\Opportunity_SalesStage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\organization_applicationbasedaccesscontrolmode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\organization_SamesitemodeforSessionCookie.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\orginsightsconfiguration_Lookback.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\orginsightsconfiguration_PlotOption.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\photo_resolution.cs" />

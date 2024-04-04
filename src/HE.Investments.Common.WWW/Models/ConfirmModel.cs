@@ -14,4 +14,8 @@ public class ConfirmModel<T>
     public T ViewModel { get; set; }
 
     public string Response { get; set; }
+
+    public bool? IsConfirmed { get; set; }
+
+    public string? SearchPhrase { get; set; }
 }

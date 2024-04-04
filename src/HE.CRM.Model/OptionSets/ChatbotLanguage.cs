@@ -38,10 +38,16 @@ namespace DataverseModel
 		English = 1033,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		EnglishUnitedKingdom = 2057,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Finnish = 1035,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		French = 1036,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		FrenchCanada = 3084,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		German = 1031,
@@ -78,6 +84,9 @@ namespace DataverseModel
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Spanish = 1034,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		SpanishUnitedStates = 21514,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Swedish = 1053,

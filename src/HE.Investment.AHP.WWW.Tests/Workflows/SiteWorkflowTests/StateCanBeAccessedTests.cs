@@ -117,7 +117,8 @@ public class StateCanBeAccessedTests
 
     [Theory]
     [InlineData(SiteUsingModernMethodsOfConstruction.Yes, true)]
-    [InlineData(SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes, false)]
+    [InlineData(SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes, true)]
+    [InlineData(SiteUsingModernMethodsOfConstruction.No, false)]
     public async Task ShouldReturnTrue_WhenMethodCalledForMmcInformationForSomeSiteUsingModernMethodsOfConstruction(SiteUsingModernMethodsOfConstruction usingModernMethodsOfConstruction, bool expectedCanBeAccessed)
     {
         var modernMethodsOfConstruction = new SiteModernMethodsOfConstruction(usingModernMethodsOfConstruction);

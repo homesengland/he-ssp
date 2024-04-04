@@ -23,7 +23,7 @@ public class AccountController : Controller
     [HttpGet]
     public async Task<IActionResult> Index(CancellationToken cancellationToken)
     {
-        if (await _featureManager.IsEnabledAsync(FeatureFlags.UseLocalProjectsDashboard, cancellationToken))
+        if (await _featureManager.IsEnabledAsync(FeatureFlags.StayInCurrentApplication, cancellationToken))
         {
             return RedirectToAction("Index", "Projects");
         }

@@ -32,6 +32,11 @@ public abstract class StringValueObject : ValueObject
 
     public string Value { get; }
 
+    public override string ToString()
+    {
+        return Value;
+    }
+
     protected override IEnumerable<object> GetAtomicValues()
     {
         yield return Value;

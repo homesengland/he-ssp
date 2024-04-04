@@ -1,4 +1,4 @@
-using HE.Investment.AHP.WWW.Models.Application;
+using HE.Investments.Common.WWW.Models.Summary;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investment.AHP.WWW.Models.Scheme.Factories;

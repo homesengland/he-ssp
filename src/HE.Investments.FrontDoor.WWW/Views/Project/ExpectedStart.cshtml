@@ -2,6 +2,7 @@
 @using HE.Investments.FrontDoor.WWW.Views.Shared.Components.FrontDoorWorkflowBackButton
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.FrontDoor.WWW.Views.Project.Const
+@model ProjectDetails
 @{
     ViewData["Title"] = ProjectPageTitles.ExpectedStart;
 }
@@ -9,9 +10,16 @@
 <gds-div-grid-column-two-thirds>
     <vc:front-door-workflow-back-button current-page="@ProjectWorkflowState.ExpectedStart"></vc:front-door-workflow-back-button>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+    <vc:page-header caption="@ViewBag.ProjectName" />
 
-    <form asp-controller="Project" asp-action="ExpectedStart" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
-        TODO: @ProjectPageTitles.ExpectedStart
+    <form asp-controller="Project" asp-action="ExpectedStart" asp-route-workflow="@Context.Request.Query["workflow"]" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
+        <vc:date-input title-type="@InputTitleType.PageHeader"
+                       title="@ProjectPageTitles.ExpectedStart"
+                       description="This is when you would like to receive Homes England support. You can enter your best estimate."
+                       hint="Enter a date, for example 03 2024."
+                       field-name="@nameof(Model.ExpectedStartDate)"
+                       value="@Model.ExpectedStartDate"
+                       is-day-hidden="@true"/>
 
         <vc:form-button/>
         <vc:return-to-account-link/>

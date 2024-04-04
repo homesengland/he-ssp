@@ -15,7 +15,7 @@ public class LocalAuthorityConfirmTests : ViewTestBase
     {
         // given
         var localAuthoritiesViewModel = new LocalAuthoritiesViewModel { Items = new List<LocalAuthorityViewModel>() };
-        var localAuthority = LocalAuthority.New(LocalAuthorityId.From("10"), "Liverpool");
+        var localAuthority = LocalAuthority.New(LocalAuthorityCode.From("10"), "Liverpool");
         var model = new ConfirmModel<LocalAuthoritiesViewModel> { ViewModel = localAuthoritiesViewModel };
         model.ViewModel.LocalAuthorityName = localAuthority.Name;
 

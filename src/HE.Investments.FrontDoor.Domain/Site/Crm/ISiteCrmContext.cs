@@ -10,4 +10,6 @@ public interface ISiteCrmContext
     Task<FrontDoorProjectSiteDto> GetSite(string projectId, string siteId, UserAccount userAccount, CancellationToken cancellationToken);
 
     Task<string> Save(string projectId, FrontDoorProjectSiteDto dto, UserAccount userAccount, CancellationToken cancellationToken);
+
+    Task<string> Remove(string siteId, UserAccount userAccount, CancellationToken cancellationToken);
 }

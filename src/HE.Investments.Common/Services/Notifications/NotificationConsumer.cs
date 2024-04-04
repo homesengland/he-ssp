@@ -1,3 +1,4 @@
+using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.Infrastructure.Cache.Interfaces;
 
 namespace HE.Investments.Common.Services.Notifications;

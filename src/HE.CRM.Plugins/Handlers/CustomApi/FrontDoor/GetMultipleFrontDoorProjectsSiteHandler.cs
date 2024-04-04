@@ -6,12 +6,13 @@ using HE.Common.IntegrationModel.PortalIntegrationModel;
 
 namespace HE.CRM.Plugins.Handlers.CustomApi.FrontDoor
 {
-    internal class GetMultipleFrontDoorProjectsSiteHandler : CrmActionHandlerBase<invln_getmultiplefrontdoorprojectssiteRequest, DataverseContext>
+    public class GetMultipleFrontDoorProjectsSiteHandler : CrmActionHandlerBase<invln_getmultiplefrontdoorprojectssiteRequest, DataverseContext>
     {
         #region Fields
         private string frontDoorProjectId => ExecutionData.GetInputParameter<string>(invln_getmultiplefrontdoorprojectssiteRequest.Fields.invln_frontdoorprojectid);
         private string fieldsToRetrieve => ExecutionData.GetInputParameter<string>(invln_getmultiplefrontdoorprojectssiteRequest.Fields.invln_fieldstoretrieve);
         private string pagingRequest => ExecutionData.GetInputParameter<string>(invln_getmultiplefrontdoorprojectssiteRequest.Fields.invln_pagingrequest);
+        private string useHeTablesFromPortal => ExecutionData.GetInputParameter<string>(invln_getmultiplefrontdoorprojectssiteRequest.Fields.invln_usehetables);
         #endregion
 
         #region Base Methods Overrides
@@ -23,8 +24,9 @@ namespace HE.CRM.Plugins.Handlers.CustomApi.FrontDoor
         public override void DoWork()
         {
             this.TracingService.Trace("GetMultipleFrontDoorProjectsSiteHandler");
+            var useHeTables = !string.IsNullOrEmpty(useHeTablesFromPortal);
             var paging = JsonSerializer.Deserialize<PagingRequestDto>(pagingRequest);
-            var frontDoorProjectSiteDtoList = CrmServicesFactory.Get<IFrontDoorProjectSiteService>().GetFrontDoorProjectSites(paging, frontDoorProjectId, fieldsToRetrieve);
+            var frontDoorProjectSiteDtoList = CrmServicesFactory.Get<IFrontDoorProjectSiteService>().GetFrontDoorProjectSites(paging, frontDoorProjectId, useHeTables, fieldsToRetrieve);
             this.TracingService.Trace("Send Response");
             if (frontDoorProjectSiteDtoList != null)
             {

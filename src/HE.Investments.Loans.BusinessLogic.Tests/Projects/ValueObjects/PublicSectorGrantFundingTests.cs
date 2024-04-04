@@ -30,7 +30,7 @@ public class PublicSectorGrantFundingTests
                 TextTestData.TextThatNotExceedsShortInputLimit,
                 TextTestData.TextThatNotExceedsLongInputLimit);
 
-        action.Should().ThrowExactly<DomainValidationException>().WithOnlyOneErrorMessage(ValidationErrorMessage.IncorrectGrantFundingAmount);
+        action.Should().ThrowExactly<DomainValidationException>().WithOnlyOneErrorMessage(ValidationErrorMessage.PoundInput("grant funding amount"));
     }
 
     [Fact]
@@ -69,7 +69,7 @@ public class PublicSectorGrantFundingTests
         action.Should().ThrowExactly<DomainValidationException>()
             .WithErrorMessage(ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.GrantFundingPurpose))
             .WithErrorMessage(ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.GrantFundingName))
-            .WithErrorMessage(ValidationErrorMessage.IncorrectGrantFundingAmount)
+            .WithErrorMessage(ValidationErrorMessage.PoundInput("grant funding amount"))
             .WithErrorMessage(ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.GrantFundingName));
     }
 }

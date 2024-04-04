@@ -1,17 +1,34 @@
 @using HE.Investments.FrontDoor.Contract.Project
 @using HE.Investments.FrontDoor.WWW.Views.Shared.Components.FrontDoorWorkflowBackButton
 @using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investments.Common.WWW.Components.PageHeader
+@using HE.Investments.Common.WWW.Components.RadioYesNo
+@using HE.Investments.Common.WWW.Components.SelectListConfirmationHeader
 @using HE.Investments.FrontDoor.WWW.Views.Project.Const
+@using HE.Investments.FrontDoor.WWW.Views.Shared.Components.ReturnToAccountLink
+@using HE.Investments.Common.Extensions
+
+@model HE.Investments.FrontDoor.WWW.Models.LocalAuthorityViewModel
 @{
     ViewData["Title"] = ProjectPageTitles.LocalAuthorityConfirm;
+    var header = new DynamicComponentViewModel(nameof(SelectListConfirmationHeader), new { header = ProjectPageTitles.LocalAuthorityConfirm, name = Model.LocalAuthorityName, description = "Is this a correct local authority?" });
 }
 
 <gds-div-grid-column-two-thirds>
-    <vc:front-door-workflow-back-button current-page="@ProjectWorkflowState.LocalAuthorityConfirm"></vc:front-door-workflow-back-button>
+    <vc:front-door-workflow-back-button current-page="@ProjectWorkflowState.LocalAuthorityConfirm"/>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
-    <form asp-controller="Project" asp-action="LocalAuthorityConfirm" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
-        TODO: @ProjectPageTitles.LocalAuthorityConfirm
+    <vc:page-header caption="@ViewBag.ProjectName"/>
+
+    <form asp-controller="Project" asp-action="LocalAuthorityConfirm" asp-route-workflow="@Context.Request.Query["workflow"]" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
+
+        @Html.HiddenFor(m => m.LocalAuthorityCode)
+        @Html.HiddenFor(m => m.LocalAuthorityName)
+
+        <vc:radio-yes-no
+            field-name="IsConfirmed"
+            value="@Model.IsConfirmed"
+            additional-content="@header"/>
 
         <vc:form-button/>
         <vc:return-to-account-link/>

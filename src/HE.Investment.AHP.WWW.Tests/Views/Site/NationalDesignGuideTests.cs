@@ -27,7 +27,7 @@ public class NationalDesignGuideTests : AhpViewTestBase
             .HasTitle(SitePageTitles.NationalDesignGuide)
             .HasPageHeader(siteName, @SitePageTitles.NationalDesignGuide)
             .HasSaveAndContinueButton()
-            .HasBackLink(false);
+            .HasBackLink(out _, false);
     }
 
     [Fact]
@@ -53,7 +53,7 @@ public class NationalDesignGuideTests : AhpViewTestBase
             .HasTitle(SitePageTitles.NationalDesignGuide)
             .HasPageHeader(siteName, @SitePageTitles.NationalDesignGuide)
             .HasSaveAndContinueButton()
-            .HasBackLink(false)
+            .HasBackLink(out _, false)
             .HasOneValidationMessages(errorMessage);
     }
 }

@@ -11,7 +11,7 @@ public class ApplicationWithdrawSuccessfullyDisplayNotificationFactory : IDispla
     {
         return DisplayNotification.Success(
             notification.TemplateText($"<{ApplicationWithdrawSuccessfullyNotification.ApplicationNameParameterName}> project has been withdrawn."),
-            notification.TemplateText(
+            body: notification.TemplateText(
                 $"Contact <{ApplicationWithdrawSuccessfullyNotification.FundingSupportEmailParameterName}> if you think there's a problem."));
     }
 }

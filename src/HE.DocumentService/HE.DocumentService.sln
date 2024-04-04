@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.DocumentService.Api", "H
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.DocumentService.SharePoint", "HE.DocumentService.SharePoint\HE.DocumentService.SharePoint.csproj", "{7E9AE818-D513-444B-A74A-53B94D397C8B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.DocumentService.Tests", "HE.DocumentService.Tests\HE.DocumentService.Tests.csproj", "{447429F7-D228-4D63-8A52-ABBDB7014656}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{7E9AE818-D513-444B-A74A-53B94D397C8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E9AE818-D513-444B-A74A-53B94D397C8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E9AE818-D513-444B-A74A-53B94D397C8B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{447429F7-D228-4D63-8A52-ABBDB7014656}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{447429F7-D228-4D63-8A52-ABBDB7014656}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{447429F7-D228-4D63-8A52-ABBDB7014656}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{447429F7-D228-4D63-8A52-ABBDB7014656}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

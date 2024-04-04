@@ -1,16 +1,13 @@
 @using HE.Investments.Common.Gds
 @using HE.Investments.Loans.BusinessLogic.LoanApplication
-@using Microsoft.AspNetCore.Mvc.TagHelpers
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Headings
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Input
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Paragraphs
 @model HE.Investments.Loans.WWW.Models.ApplicationNameModel;
+@{
+    var fdProjectId = Context.Request.Query["fdProjectId"];
+}
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="LoanApplicationV2" asp-action="ApplicationNamePost" asp-method="post" novalidate>
-        <gds-back-link href="@Url.Action("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.ApplicationName})" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
+    <form asp-controller="LoanApplicationV2" asp-action="ApplicationNamePost" asp-method="post" asp-route-fdProjectId="@fdProjectId" novalidate>
+        <gds-back-link href="@Url.Action("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.ApplicationName, fdProjectId })" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
 
         <partial name="_ErrorSummaryPartial" model="null"/>
 

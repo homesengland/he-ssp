@@ -8,7 +8,6 @@ public enum ProjectState
     TypeHomes,
     PlanningRef,
     PlanningRefEnter,
-    CheckPlanning,
     PlanningPermissionStatus,
     Location,
     ProvideLocalAuthority,
@@ -24,6 +23,5 @@ public enum ProjectState
     Complete,
     Type,
     ChargesDebt,
-    DeleteProject,
     TaskList,
 }

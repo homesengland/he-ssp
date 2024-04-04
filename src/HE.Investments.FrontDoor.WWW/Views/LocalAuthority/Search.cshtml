@@ -1,0 +1,41 @@
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investments.Common.WWW.Components.PageHeader
+@using HE.Investments.Common.WWW.Components.TextInput
+@using HE.Investments.FrontDoor.Contract.LocalAuthority
+@using HE.Investments.FrontDoor.WWW.Views.LocalAuthority.Const
+@using HE.Investments.FrontDoor.WWW.Views.Shared.Components.LocalAuthorityWorkflowBackButton
+
+@model HE.Investments.FrontDoor.WWW.Models.LocalAuthoritySearchViewModel
+@{
+    bool isSite = !string.IsNullOrWhiteSpace(Model.SiteId);
+    var title = isSite ? LocalAuthorityPageTitles.SearchForSite : LocalAuthorityPageTitles.SearchForProject;
+    ViewData["Title"] = title;
+    var paragraph = isSite ?
+        "Search for your local authority. If your site is located in more than one local authority, search for the local authority where you have planning permission or intend to apply for planning permission." :
+        "If your project is located in more than one local authority, enter the local authority where the largest part of the project is located.";
+}
+
+<gds-div-grid-column-two-thirds>
+    <vc:local-authority-workflow-back-button current-page="@LocalAuthorityWorkflowState.Search" project-id="@Model.ProjectId" site-id="@Model.SiteId"/>
+
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+
+    <vc:page-header title="@title" caption="@ViewBag.ProjectName" />
+
+    <form asp-controller="LocalAuthority" asp-action="Search" asp-route-workflow="@Context.Request.Query["workflow"]" asp-route-redirect="@Context.Request.Query["redirect"]" asp-route-optional="@Context.Request.Query["optional"]" asp-method="post" novalidate>
+
+        @Html.HiddenFor(m => m.ProjectId)
+        @Html.HiddenFor(m => m.SiteId)
+
+        <gds-p>@paragraph</gds-p>
+
+        <vc:text-input
+            field-name="@nameof(Model.Phrase)"
+            title="What is your local authority?"
+            title-type="InputTitleType.InputTitle"
+            hint="Enter all or part of your local authority name."/>
+
+        <vc:form-button text="Search" />
+        <vc:return-to-account-link is-editable="false" />
+    </form>
+</gds-div-grid-column-two-thirds>

@@ -60,12 +60,14 @@ public class IsAnsweredTests
         result.Should().BeTrue();
     }
 
-    [Fact]
-    public void ShouldReturnFalse_WhenSiteUsingModernMethodsOfConstructionInformationNotProvided()
+    [Theory]
+    [InlineData(SiteUsingModernMethodsOfConstruction.Yes)]
+    [InlineData(SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes)]
+    public void ShouldReturnFalse_WhenSiteUsingModernMethodsOfConstructionInformationNotProvided(SiteUsingModernMethodsOfConstruction usingMmc)
     {
         // given
         var details = new SiteModernMethodsOfConstruction(
-            SiteUsingModernMethodsOfConstruction.Yes,
+            usingMmc,
             null,
             null,
             _modernMethodsOfConstruction);
@@ -93,10 +95,12 @@ public class IsAnsweredTests
     }
 
     [Fact]
-    public void ShouldReturnTrue_WhenSiteUsingModernMethodsOfConstructionOnlyForSomeHomes()
+    public void ShouldReturnTrue_WhenAllDataProvidedForSiteUsingModernMethodsOfConstructionOnlyForSomeHomes()
     {
         // given
-        var details = new SiteModernMethodsOfConstruction(SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes);
+        var details = new SiteModernMethodsOfConstruction(
+            SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes,
+            new ModernMethodsOfConstructionInformation(_modernMethodsOfConstructionBarriers, _modernMethodsOfConstructionImpact));
 
         // when
         var result = details.IsAnswered();

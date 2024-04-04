@@ -12,6 +12,7 @@ public static class ModelStateDictionaryExtensions
             return;
         }
 
+        modelState.Clear();
         foreach (var error in result.Errors)
         {
             modelState.AddModelError(error.AffectedField, error.ErrorMessage);

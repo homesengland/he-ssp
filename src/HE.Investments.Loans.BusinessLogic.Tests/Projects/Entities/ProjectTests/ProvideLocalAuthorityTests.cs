@@ -2,8 +2,8 @@ extern alias Org;
 
 using HE.Investments.Common.Contract;
 using HE.Investments.Loans.BusinessLogic.Projects.Entities;
-using Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects;
 using Xunit;
+using LocalAuthority = Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
 
 namespace HE.Investments.Loans.BusinessLogic.Tests.Projects.Entities.ProjectTests;
 

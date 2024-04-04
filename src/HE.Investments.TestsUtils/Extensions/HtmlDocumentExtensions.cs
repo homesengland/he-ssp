@@ -34,6 +34,15 @@ public static class HtmlDocumentExtensions
         return anchorElement;
     }
 
+    public static IHtmlAnchorElement GetLinkByTestId(this IHtmlDocument htmlDocument, string testId)
+    {
+        var element = GetElementByTestId(htmlDocument, testId);
+
+        var anchorElement = element as IHtmlAnchorElement;
+        anchorElement.Should().NotBeNull($"Element with data-testid {testId} should be IHtmlAnchorElement");
+        return anchorElement!;
+    }
+
     public static string GetPageTitle(this IHtmlDocument htmlDocument)
     {
         var header = htmlDocument.GetElementsByClassName(CssConstants.GovUkHxl).FirstOrDefault()
@@ -217,6 +226,17 @@ public static class HtmlDocumentExtensions
         notificationBannerContent.Should().NotBeNull("Notification banner does not have content");
 
         return notificationBannerContent!.TextContent.Trim();
+    }
+
+    public static IHtmlCollection<IElement>? GetFilesTableBody(this IHtmlDocument htmlDocument)
+    {
+        var filesTableBody = htmlDocument.GetElementsByClassName(CssConstants.FilesTableBody).FirstOrDefault();
+        filesTableBody.Should().NotBeNull("Files table does not exist");
+
+        var filesTableRows = filesTableBody?.GetElementsByTagName(TagNames.Tr);
+        filesTableRows.Should().NotBeNull("Files table does not have any files");
+
+        return filesTableRows;
     }
 
     public static string GetInsetText(this IHtmlDocument htmlDocument)

@@ -16,7 +16,7 @@ public static class ProjectPageTitles
 
     public const string Tenure = "What amount of affordable homes are you planning to deliver?";
 
-    public const string OrganisationHomesBuilt = "Previous redidential building experience";
+    public const string OrganisationHomesBuilt = "Previous residential building experience";
 
     public const string IdentifiedSite = "Do you have an identified site?";
 
@@ -25,12 +25,6 @@ public static class ProjectPageTitles
     public const string Region = "Which region will the project be located in?";
 
     public const string HomesNumber = "How many homes will your project enable?";
-
-    public const string LocalAuthoritySearch = "Which local authority will your project be located in?";
-
-    public const string LocalAuthorityResult = "Select your local authority";
-
-    public const string LocalAuthorityNotFound = "The details you entered did not match our records";
 
     public const string LocalAuthorityConfirm = "Confirm your selection";
 
@@ -45,4 +39,6 @@ public static class ProjectPageTitles
     public const string ExpectedStart = "When do you expect to start your project?";
 
     public const string CheckAnswers = "Check your answers";
+
+    public const string YouNeedToSpeakToHomesEngland = "You need to speak to Homes England";
 }

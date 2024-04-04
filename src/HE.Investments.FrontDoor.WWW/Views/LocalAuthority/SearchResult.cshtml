@@ -1,0 +1,57 @@
+@using HE.Investments.Common.WWW.Components.SelectList
+@using HE.Investments.Common.WWW.Models
+@using HE.Investments.Common.Contract;
+@using SelectList = Microsoft.AspNetCore.Mvc.Rendering.SelectList
+@using HE.Investments.Common.Contract.Pagination
+@using HE.Investments.Common.WWW.Components.PageHeader
+@using HE.Investments.FrontDoor.Contract.LocalAuthority
+@using HE.Investments.FrontDoor.WWW.Config
+@using HE.Investments.FrontDoor.WWW.Views.LocalAuthority.Const
+@using HE.Investments.FrontDoor.WWW.Views.Shared.Components.LocalAuthorityWorkflowBackButton
+
+@inject IExternalLinks ExternalLinks
+@model (PaginationResult<LocalAuthority> Items, string ProjectId, string SiteId, string Phrase)
+@{
+    ViewData["Title"] = LocalAuthorityPageTitles.SearchResult;
+    var controller = string.IsNullOrWhiteSpace(Model.SiteId) ? "Project" : "Site";
+    var redirect = Context.Request.Query["redirect"];
+    var optional = Context.Request.Query["optional"];
+
+    var items = new PaginationResult<SelectListItemViewModel>(
+        Model!.Items.Items.Select(i => new SelectListItemViewModel(
+            Url.Action("LocalAuthorityConfirm", controller, new { projectId = Model.ProjectId, siteId = Model.SiteId, localAuthorityCode = i.Code, redirect, optional }) ?? string.Empty,
+            i.Name,
+            null)).ToList(),
+        Model.Items.CurrentPage,
+        Model.Items.ItemsPerPage,
+        Model.Items.TotalItems);
+}
+
+<gds-div-grid-column-two-thirds>
+    <vc:local-authority-workflow-back-button current-page="@LocalAuthorityWorkflowState.SearchResult" project-id="@Model.ProjectId" site-id="@Model.SiteId" redirect="@redirect" optional="@optional"/>
+
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+
+    <vc:page-header title="@LocalAuthorityPageTitles.SearchResult" caption="@ViewBag.ProjectName"/>
+
+    @if (Model.Items.TotalItems == 0)
+    {
+        <gds-p>We could not find the details you entered in our records.</gds-p>
+        <gds-p>
+            If you think you have entered the wrong details, you can
+            <gds-link href="@Url.Action("LocalAuthoritySearch", controller, new { projectId = Model.ProjectId, siteId = Model.SiteId, redirect, optional })">
+                try again using a different name.
+            </gds-link>.
+        </gds-p>
+    }
+    else
+    {
+        <vc:select-list
+            items="@items"
+            paragraph-with-link="@(new ParagraphWithLinkModel("If you are not sure which local authority to choose, you can", new LinkModel(null!, new DirectLinkModel(ExternalLinks.FindLocalCouncil, true)), "search for the name of the local authority using a postcode."))"
+            paging-navigation-url="@Url.Action("SearchResult", "LocalAuthority", new { siteId = Model.SiteId, projectId = Model.ProjectId, phrase = Model.Phrase, redirect, optional })"/>
+    }
+
+    <vc:return-to-account-link is-editable="false" />
+
+</gds-div-grid-column-two-thirds>

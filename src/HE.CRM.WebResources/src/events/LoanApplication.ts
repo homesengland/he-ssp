@@ -16,6 +16,7 @@ export class LoanApplication {
     eventLogic.loanApplicationService.setFieldsVisibilityBasedOnSecurities();
     eventLogic.loanApplicationService.populateFields();
     eventLogic.loanApplicationService.setFieldsVisibilityBasedOnAssessedAsSppi();
+    eventLogic.loanApplicationService.setFieldRequired();
   }
 
   public static onChangeLoanApplicationStatusButtonClick(eCtx) {
@@ -35,7 +36,7 @@ export class LoanApplication {
 
   public static onRateOfInterestChange(eCtx) {
     const eventLogic = new LoanApplication(eCtx)
-    eventLogic.loanApplicationService.populateFields()
+    eventLogic.loanApplicationService.setFieldsVisibilityBasedOnAssessedAsSppi()
   }
 
   public static onSpecialPuproseVehicleProvidedChange(eCtx) {
@@ -63,10 +64,24 @@ export class LoanApplication {
     eventLogic.loanApplicationService.setFieldsVisibilityBasedOnAssessedAsSppi()
   }
 
+  public static onAdditionalreturnsChange(eCtx) {
+    const eventLogic = new LoanApplication(eCtx)
+    eventLogic.loanApplicationService.setFieldsVisibilityBasedOnAssessedAsSppi()
+  }
+
   public registerEvents() {
+    if (this.common.getAttribute('invln_additionalreturns')) {
+      this.common.getAttribute('invln_additionalreturns').removeOnChange(LoanApplication.onAdditionalreturnsChange)
+      this.common.getAttribute('invln_additionalreturns').addOnChange(LoanApplication.onAdditionalreturnsChange)
+    }
+
     if (this.common.getAttribute('invln_securities')) {
       this.common.getAttribute('invln_securities').removeOnChange(LoanApplication.onSecuritiesChange)
       this.common.getAttribute('invln_securities').addOnChange(LoanApplication.onSecuritiesChange)
+    }
+    if (this.common.getAttribute('invln_assessedassppi')) {
+      this.common.getAttribute('invln_assessedassppi').removeOnChange(LoanApplication.onAssessedAsSppiChange)
+      this.common.getAttribute('invln_assessedassppi').addOnChange(LoanApplication.onAssessedAsSppiChange)
     }
     if (this.common.getAttribute('invln_additionalreturns')) {
       this.common.getAttribute('invln_additionalreturns').removeOnChange(LoanApplication.onAdditionalReturnsChange)
@@ -91,10 +106,6 @@ export class LoanApplication {
     if (this.common.getAttribute('invln_projectedprofitmargin')) {
       this.common.getAttribute('invln_projectedprofitmargin').removeOnChange(LoanApplication.onProjectedProfitMarginChange)
       this.common.getAttribute('invln_projectedprofitmargin').addOnChange(LoanApplication.onProjectedProfitMarginChange)
-    }
-    if (this.common.getAttribute('invln_assessedassppi')) {
-      this.common.getAttribute('invln_assessedassppi').removeOnChange(LoanApplication.onAssessedAsSppiChange)
-      this.common.getAttribute('invln_assessedassppi').addOnChange(LoanApplication.onAssessedAsSppiChange)
     }
   }
 }

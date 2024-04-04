@@ -18,7 +18,7 @@ public class LocalAuthorityCtorTests
         var result = LocalAuthority.New(id, name);
 
         // then
-        result.Id.ToString().Should().Be(id);
+        result.Code.ToString().Should().Be(id);
         result.Name.Should().Be(name);
     }
 }

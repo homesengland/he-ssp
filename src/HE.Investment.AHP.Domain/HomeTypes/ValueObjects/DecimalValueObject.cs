@@ -19,7 +19,7 @@ public abstract class DecimalValueObject : ValueObject
         if (value.IsNotProvided() && !isCalculation)
         {
             OperationResult.New()
-                .AddValidationError(fieldName, ValidationErrorMessage.MissingRequiredField(displayName))
+                .AddValidationError(fieldName, ValidationErrorMessage.MustProvideRequiredField(displayName))
                 .CheckErrors();
         }
 

@@ -20,7 +20,7 @@ public class Order04ManyHomesIntegrationTests : IntegrationTest
 
     private readonly string _applicationLoanId;
 
-    public Order04ManyHomesIntegrationTests(IntegrationTestFixture<Program> fixture)
+    public Order04ManyHomesIntegrationTests(LoansIntegrationTestFixture fixture)
         : base(fixture)
     {
         _applicationLoanId = UserData.LoanApplicationIdInDraftState;
@@ -42,7 +42,7 @@ public class Order04ManyHomesIntegrationTests : IntegrationTest
         // then
         manyHomesPage
             .UrlEndWith(ProjectPagesUrls.ManyHomesSuffix)
-            .HasLabelTitle(ProjectPageTitles.ManyHomes)
+            .HasTitle(ProjectPageTitles.ManyHomes)
             .HasOneValidationMessages(ValidationErrorMessage.ManyHomesAmount);
 
         SetCurrentPage(manyHomesPage);

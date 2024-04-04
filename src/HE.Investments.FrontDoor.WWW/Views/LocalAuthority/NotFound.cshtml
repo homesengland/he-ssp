@@ -1,0 +1,28 @@
+@using HE.Investments.FrontDoor.Contract.LocalAuthority
+@using HE.Investments.FrontDoor.WWW.Views.LocalAuthority.Const
+@using HE.Investments.FrontDoor.WWW.Views.Shared.Components.LocalAuthorityWorkflowBackButton
+@using HE.Investments.Common.WWW.Components.PageHeader
+@model (string ProjectId, string SiteId)
+@{
+    ViewData["Title"] = LocalAuthorityPageTitles.NotFound;
+}
+
+<gds-div-grid-column-two-thirds>
+
+    <vc:local-authority-workflow-back-button current-page="@LocalAuthorityWorkflowState.NotFound" project-id="@Model.ProjectId" site-id="@Model.SiteId"/>
+
+    <vc:page-header title="@LocalAuthorityPageTitles.NotFound"/>
+
+    <gds-p>We could not find the details you entered in our records.</gds-p>
+
+    <gds-p>
+        If you think you have entered the wrong details, you can
+        <gds-link
+            text="try again using a different name."
+            href="@Url.Action("Search", "LocalAuthority", new { projectId = Model.ProjectId, siteId = Model.SiteId })">
+        </gds-link>
+    </gds-p>
+
+    <vc:return-to-account-link is-editable="false" />
+
+</gds-div-grid-column-two-thirds>

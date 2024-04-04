@@ -5,11 +5,13 @@
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.Extensions
 @using HE.Investment.AHP.Contract.HomeTypes
+@using HE.Investment.AHP.WWW.Views.HomeTypes.Const
 @model HE.Investment.AHP.WWW.Models.HomeTypes.HomeOwnershipDisabilitiesModel;
 
 @{
     var applicationId = this.GetApplicationIdFromRoute();
     var workflow = Context.Request.Query["workflow"];
+    ViewData["Title"] = HomeTypesPageTitles.HomeOwnershipDisabilities;
 
     var (expectedFirstTrancheInvalid, expectedFirstTrancheError) = ViewData.ModelState.GetErrors(nameof(Model.ExpectedFirstTranche));
     var (rentAsPercentageOfTheUnsoldShareInvalid, rentAsPercentageOfTheUnsoldShareError) = ViewData.ModelState.GetErrors(nameof(Model.RentAsPercentageOfTheUnsoldShare));
@@ -21,7 +23,7 @@
         @Html.HiddenFor(m => Model.HomeTypeName)
         <vc:home-type-form-header current-page="@HomeTypesWorkflowState.HomeOwnershipDisabilities"
                                   caption="@Model.Header"
-                                  title="Home Ownership for People with Long-term Disabilities (HOLD) details"/>
+                                  title="@HomeTypesPageTitles.HomeOwnershipDisabilities"/>
         <gds-field-set>
             <he-error-form-group asp-for="MarketValue">
                 <gds-legend>
@@ -32,7 +34,7 @@
                 </gds-span-hint>
                 <gds-input
                     class="govuk-input--width-5"
-                    asp-hiddenlabeltext="Enter the number of market value"
+                    asp-hiddenlabeltext="Enter the market value of each home"
                     govuk-formgroup-asp-for="MarketValue"
                     name="MarketValue"
                     value=@Model.MarketValue
@@ -72,7 +74,7 @@
                 </gds-p>
             </he-error-form-group>
 
-            <he-error-form-group asp-for="ProspectiveRent">
+            <he-error-form-group asp-for="RentPerWeek">
                 <gds-legend>
                     <gds-h2 class="govuk-!-margin-bottom-0">Enter the rent per week</gds-h2>
                 </gds-legend>
@@ -82,9 +84,9 @@
                 <gds-input
                     class="govuk-input--width-4"
                     asp-hiddenlabeltext="Enter the rent per week"
-                    govuk-formgroup-asp-for="ProspectiveRent"
-                    name="ProspectiveRent"
-                    value=@Model.ProspectiveRent
+                    govuk-formgroup-asp-for="RentPerWeek"
+                    name="RentPerWeek"
+                    value=@Model.RentPerWeek
                     asp-prefixtext="GdsInputPrefixText.Pounds"
                     asp-suffixtext="GdsInputSuffixText.PerWeek"/>
             </he-error-form-group>

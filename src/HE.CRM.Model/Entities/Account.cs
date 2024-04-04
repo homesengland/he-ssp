@@ -229,79 +229,37 @@ namespace DataverseModel
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		ALBArmsLengthBodyofGovernment = 134370015,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
 		ALMOArmsLengthManagementOrganisation = 134370011,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Bank = 134370016,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		CombinedAuthority = 134370014,
+		CharitableOrganisation = 134370010,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Consultant = 134370002,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Education = 134370024,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
 		FinancialInstitution = 134370001,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		ForProfitRegisteredProvder = 134370000,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		GovernmentPolicyMaker = 134370008,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		HealthandSocialCare = 134370025,
+		HousingAssociation = 134370000,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Insurer = 134370017,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		InvestmentManager = 134370018,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Landowner_134370003 = 134370003,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Landowner_134370023 = 134370023,
+		Landowner = 134370003,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		LocalAuthority = 134370007,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		NonBankLender = 134370019,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		NonregisteredCharitableOrganisation = 134370013,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		NotForProfitRegisteredProvider = 134370021,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Other = 134370012,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		OtherFinancialInstitutionorAdvisory = 134370020,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		PrivateContractor = 134370009,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		PrivateSectorHousebuilder = 134370004,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		PublicPrivatePartnership = 134370026,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		RegisteredCharitableOrganisation = 134370010,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		UnregisteredHousingAssociation = 134370022,
 	}
 	
 	/// <summary>
@@ -818,6 +776,9 @@ namespace DataverseModel
 			public const string invln_previouscrrName = "invln_previouscrrname";
 			public const string invln_rating = "invln_rating";
 			public const string invln_ratingName = "invln_ratingname";
+			public const string invln_scheme_DevelopingPartner_account = "invln_scheme_DevelopingPartner_account";
+			public const string invln_scheme_OwneroftheHomes_account = "invln_scheme_OwneroftheHomes_account";
+			public const string invln_scheme_OwneroftheLand_account = "invln_scheme_OwneroftheLand_account";
 			public const string invln_scheme_ProviderNameNew_account = "invln_scheme_ProviderNameNew_account";
 			public const string invln_SecurityType = "invln_securitytype";
 			public const string invln_securitytypeName = "invln_securitytypename";
@@ -7444,6 +7405,66 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_loanapplication_account");
 				this.SetRelatedEntities<DataverseModel.invln_Loanapplication>("invln_loanapplication_account", null, value);
 				this.OnPropertyChanged("invln_loanapplication_account");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_scheme_DevelopingPartner_account
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_scheme_DevelopingPartner_account")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_scheme> invln_scheme_DevelopingPartner_account
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_scheme>("invln_scheme_DevelopingPartner_account", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_scheme_DevelopingPartner_account");
+				this.SetRelatedEntities<DataverseModel.invln_scheme>("invln_scheme_DevelopingPartner_account", null, value);
+				this.OnPropertyChanged("invln_scheme_DevelopingPartner_account");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_scheme_OwneroftheHomes_account
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_scheme_OwneroftheHomes_account")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_scheme> invln_scheme_OwneroftheHomes_account
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_scheme>("invln_scheme_OwneroftheHomes_account", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_scheme_OwneroftheHomes_account");
+				this.SetRelatedEntities<DataverseModel.invln_scheme>("invln_scheme_OwneroftheHomes_account", null, value);
+				this.OnPropertyChanged("invln_scheme_OwneroftheHomes_account");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_scheme_OwneroftheLand_account
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_scheme_OwneroftheLand_account")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_scheme> invln_scheme_OwneroftheLand_account
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_scheme>("invln_scheme_OwneroftheLand_account", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_scheme_OwneroftheLand_account");
+				this.SetRelatedEntities<DataverseModel.invln_scheme>("invln_scheme_OwneroftheLand_account", null, value);
+				this.OnPropertyChanged("invln_scheme_OwneroftheLand_account");
 			}
 		}
 		

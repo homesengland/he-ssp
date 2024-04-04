@@ -23,7 +23,7 @@ public class Section106LocalAuthorityConfirmationTests : AhpViewTestBase
             .HasPageHeader(_siteName, @SitePageTitles.SiteSection106LocalAuthorityConfirmation)
             .HasTextAreaInput(nameof(Section106Dto.LocalAuthorityConfirmation))
             .HasSaveAndContinueButton()
-            .HasBackLink(false);
+            .HasBackLink(out _, false);
     }
 
     [Fact]
@@ -44,7 +44,7 @@ public class Section106LocalAuthorityConfirmationTests : AhpViewTestBase
             .HasPageHeader(_siteName, @SitePageTitles.SiteSection106LocalAuthorityConfirmation)
             .HasTextAreaInput(nameof(Section106Dto.LocalAuthorityConfirmation))
             .HasSaveAndContinueButton()
-            .HasBackLink(false)
+            .HasBackLink(out _, false)
             .HasOneValidationMessages(errorMessage);
     }
 }

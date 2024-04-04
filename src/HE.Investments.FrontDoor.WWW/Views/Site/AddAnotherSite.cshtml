@@ -1,7 +1,12 @@
 @using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investments.Common.WWW.Components.PageHeader
+@using HE.Investments.Common.WWW.Components.RadioList
+@using HE.Investments.Common.WWW.Helpers
 @using HE.Investments.FrontDoor.Contract.Site
 @using HE.Investments.FrontDoor.WWW.Views.Shared.Components.FrontDoorWorkflowBackButton
 @using HE.Investments.FrontDoor.WWW.Views.Site.Const
+@model SiteDetails
+
 @{
     ViewData["Title"] = SitePageTitles.AddAnotherSite;
 }
@@ -10,9 +15,18 @@
     <vc:front-door-workflow-back-button current-page="@SiteWorkflowState.AddAnotherSite"></vc:front-door-workflow-back-button>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
-    <form asp-controller="Site" asp-action="AddAnotherSite" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
-        TODO: @SitePageTitles.AddAnotherSite
+    <vc:page-header caption="@ViewBag.ProjectName"/>
+
+    <form asp-controller="Site" asp-action="AddAnotherSite" asp-route-workflow="@Context.Request.Query["workflow"]" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
+
+        <vc:radio-list
+            title="@SitePageTitles.AddAnotherSite"
+            title-type="InputTitleType.PageHeader"
+            hint="You will be able to add multiple sites."
+            field-name="@nameof(Model.AddAnotherSite)"
+            available-options="@SelectListHelper.FromEnumToExtendedList<AddAnotherSite>()"/>
 
         <vc:form-button/>
+        <vc:return-to-account-link is-editable="false"/>
     </form>
 </gds-div-grid-column-two-thirds>

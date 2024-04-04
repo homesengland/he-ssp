@@ -1,5 +1,5 @@
-using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
+using HE.Investments.Common.Contract.Enum;
 using HE.Investments.IntegrationTestsFramework.Data;
 using HE.Investments.TestsUtils.Extensions;
 
@@ -28,8 +28,8 @@ public class HomesForDisabledPeopleData : HomeTypeDataBase<HomesForDisabledPeopl
         MeetSpaceStandards = homeType.MeetSpaceStandards;
         SpaceStandards = homeType.SpaceStandards;
         MarketValue = homeType.MarketValue;
-        MarketRent = homeType.MarketRent;
-        ProspectiveRent = homeType.ProspectiveRent;
+        MarketRentPerWeek = homeType.MarketRentPerWeek;
+        RentPerWeek = homeType.RentPerWeek;
         ProspectiveRentPercentage = homeType.ProspectiveRentPercentage;
         Exceeds80PercentOfMarketRent = homeType.Exceeds80PercentOfMarketRent;
         ExemptFromTheRightToSharedOwnership = homeType.ExemptFromTheRightToSharedOwnership;

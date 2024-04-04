@@ -8,7 +8,7 @@ namespace HE.CRM.Common.DtoMapping
 {
     public class LoanApplicationDtoMapper
     {
-        public static invln_Loanapplication MapLoanApplicationDtoToRegularEntity(LoanApplicationDto loanApplicationDto, Contact contact, string accountId)
+        public static invln_Loanapplication MapLoanApplicationDtoToRegularEntity(bool useHeTables, LoanApplicationDto loanApplicationDto, Contact contact, string accountId)
         {
             var loanApplication = new invln_Loanapplication()
             {
@@ -29,7 +29,6 @@ namespace HE.CRM.Common.DtoMapping
                 invln_Additionalprojects = loanApplicationDto.additionalProjects, //AdditionalProjects
                 invln_Refinancerepayment = MapRefinancePayment(loanApplicationDto.refinanceRepayment), //Refinance
                 invln_Refinancerepaymentdetails = loanApplicationDto.refinanceRepaymentDetails, //Refinance
-
 
                 //SECURITY
                 invln_Outstandinglegalchargesordebt = loanApplicationDto.outstandingLegalChargesOrDebt, //ChargesDebtCompany
@@ -70,11 +69,23 @@ namespace HE.CRM.Common.DtoMapping
             {
                 loanApplication.Id = loanApplicationId;
             }
+
+            if (Guid.TryParse(loanApplicationDto.frontDoorProjectId, out Guid frontDoorProjectId))
+            {
+                if (useHeTables)
+                {
+                    loanApplication.invln_HeProjectId = new EntityReference(he_Pipeline.EntityLogicalName, frontDoorProjectId);
+                }
+                else
+                {
+                    loanApplication.invln_FDProjectId = new EntityReference(invln_FrontDoorProjectPOC.EntityLogicalName, frontDoorProjectId);
+                }
+            }
+
             return loanApplication;
         }
 
-
-        public static LoanApplicationDto MapLoanApplicationToDto(invln_Loanapplication loanApplication, List<SiteDetailsDto> siteDetailsDtoList, string externalContactId, Contact contact = null)
+        public static LoanApplicationDto MapLoanApplicationToDto(bool useHeTables, invln_Loanapplication loanApplication, List<SiteDetailsDto> siteDetailsDtoList, string externalContactId, Contact contact = null)
         {
             var loanApplicationDto = new LoanApplicationDto()
             {
@@ -125,7 +136,7 @@ namespace HE.CRM.Common.DtoMapping
                 ApplicationName = loanApplication.invln_applicationname,
                 dateSubmitted = loanApplication.invln_Datesubmitted,
             };
-            if(loanApplication.invln_Account != null)
+            if (loanApplication.invln_Account != null)
             {
                 loanApplicationDto.accountId = loanApplication.invln_Account.Id;
             }
@@ -154,10 +165,21 @@ namespace HE.CRM.Common.DtoMapping
                     ContactExternalId = contact.invln_externalid,
                     ContactTelephoneNumber = contact.Telephone1,
                 };
-                if(loanApplication.invln_Account != null)
+                if (loanApplication.invln_Account != null)
                 {
                     loanApplicationDto.LoanApplicationContact.AccountId = loanApplication.invln_Account.Id;
                 }
+            }
+
+            if (useHeTables)
+            {
+                loanApplicationDto.frontDoorProjectId = loanApplication.invln_HeProjectId?.Id.ToString();
+                loanApplicationDto.frontDoorProjectName = loanApplication.invln_HeProjectId?.Name;
+            }
+            else
+            {
+                loanApplicationDto.frontDoorProjectId = loanApplication.invln_FDProjectId?.Id.ToString();
+                loanApplicationDto.frontDoorProjectName = loanApplication.invln_FDProjectId?.Name;
             }
 
             return loanApplicationDto;
@@ -165,7 +187,7 @@ namespace HE.CRM.Common.DtoMapping
 
         public static OptionSetValue MapNullableIntToOptionSetValue(int? valueToMap)
         {
-            if(valueToMap.HasValue)
+            if (valueToMap.HasValue)
             {
                 return new OptionSetValue(valueToMap.Value);
             }
@@ -182,10 +204,13 @@ namespace HE.CRM.Common.DtoMapping
             {
                 case (int)invln_FundingReason.Buildinginfrastructureonly:
                     return "buildinginfrastructureonly";
+
                 case (int)invln_FundingReason.Buildingnewhomes:
                     return "buildingnewhomes";
+
                 case (int)invln_FundingReason.Other:
                     return "other";
+
                 default:
                     return null;
             }
@@ -197,32 +222,46 @@ namespace HE.CRM.Common.DtoMapping
             {
                 case "draft":
                     return new OptionSetValue((int)invln_ExternalStatus.Draft);
+
                 case "submitted":
                     return new OptionSetValue((int)invln_ExternalStatus.ApplicationSubmitted);
+
                 case "under review":
                     return new OptionSetValue((int)invln_ExternalStatus.UnderReview);
+
                 case "in due diligence":
                     return new OptionSetValue((int)invln_ExternalStatus.InDueDiligence);
+
                 case "contract signed subject to cp":
                     return new OptionSetValue((int)invln_ExternalStatus.ContractSignedSubjecttoCP);
+
                 case "cps satisfied":
-                    return new OptionSetValue((int)invln_ExternalStatus.CPsSatisfied);
+                    return new OptionSetValue((int)invln_ExternalStatus.ConditionsSatisfied);
+
                 case "loan available":
                     return new OptionSetValue((int)invln_ExternalStatus.LoanAvailable);
+
                 case "hold requested":
                     return new OptionSetValue((int)invln_ExternalStatus.HoldRequested);
+
                 case "on hold":
                     return new OptionSetValue((int)invln_ExternalStatus.OnHold);
+
                 case "referred back to applicant":
                     return new OptionSetValue((int)invln_ExternalStatus.ReferredBacktoApplicant);
+
                 case "inactive":
                     return new OptionSetValue((int)invln_ExternalStatus.NA);
+
                 case "withdrawn":
                     return new OptionSetValue((int)invln_ExternalStatus.Withdrawn);
+
                 case "not approved":
                     return new OptionSetValue((int)invln_ExternalStatus.SentforApproval);
+
                 case "application declined":
                     return new OptionSetValue((int)invln_ExternalStatus.ApplicationDeclined);
+
                 case "approved subject to contract":
                     return new OptionSetValue((int)invln_ExternalStatus.ApprovedSubjecttoContract);
             }
@@ -240,32 +279,46 @@ namespace HE.CRM.Common.DtoMapping
             {
                 case (int)invln_ExternalStatus.Draft:
                     return "draft";
+
                 case (int)invln_ExternalStatus.ApplicationSubmitted:
                     return "submitted";
+
                 case (int)invln_ExternalStatus.UnderReview:
                     return "under review";
+
                 case (int)invln_ExternalStatus.InDueDiligence:
                     return "in due diligence";
+
                 case (int)invln_ExternalStatus.ContractSignedSubjecttoCP:
                     return "contract signed subject to cp";
-                case (int)invln_ExternalStatus.CPsSatisfied:
+
+                case (int)invln_ExternalStatus.ConditionsSatisfied:
                     return "cps satisfied";
+
                 case (int)invln_ExternalStatus.LoanAvailable:
                     return "loan available";
+
                 case (int)invln_ExternalStatus.HoldRequested:
                     return "hold requested";
+
                 case (int)invln_ExternalStatus.OnHold:
                     return "on hold";
+
                 case (int)invln_ExternalStatus.ReferredBacktoApplicant:
                     return "referred back to applicant";
+
                 case (int)invln_ExternalStatus.NA:
                     return "inactive";
+
                 case (int)invln_ExternalStatus.Withdrawn:
                     return "withdrawn";
+
                 case (int)invln_ExternalStatus.SentforApproval:
                     return "not approved";
+
                 case (int)invln_ExternalStatus.ApplicationDeclined:
                     return "application declined";
+
                 case (int)invln_ExternalStatus.ApprovedSubjecttoContract:
                     return "approved subject to contract";
             }
@@ -278,8 +331,10 @@ namespace HE.CRM.Common.DtoMapping
             {
                 case "buildinginfrastructureonly":
                     return new OptionSetValue((int)invln_FundingReason.Buildinginfrastructureonly);
+
                 case "buildingnewhomes":
                     return new OptionSetValue((int)invln_FundingReason.Buildingnewhomes);
+
                 case "other":
                     return new OptionSetValue((int)invln_FundingReason.Other);
             }
@@ -293,6 +348,7 @@ namespace HE.CRM.Common.DtoMapping
             {
                 case "refinance":
                     return new OptionSetValue((int)invln_refinancerepayment.Refinance);
+
                 case "repay":
                     return new OptionSetValue((int)invln_refinancerepayment.Repay);
             }
@@ -310,6 +366,7 @@ namespace HE.CRM.Common.DtoMapping
             {
                 case (int)invln_refinancerepayment.Refinance:
                     return "refinance";
+
                 case (int)invln_refinancerepayment.Repay:
                     return "repay";
             }
@@ -322,6 +379,7 @@ namespace HE.CRM.Common.DtoMapping
             {
                 case "yes":
                     return true;
+
                 case "no":
                     return false;
             }
@@ -359,6 +417,5 @@ namespace HE.CRM.Common.DtoMapping
                 return null;
             }
         }
-
     }
 }

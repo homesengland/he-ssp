@@ -1,31 +1,30 @@
 using HE.Investments.Common.CRM.Mappers;
-using HE.Investments.Common.CRM.Model;
-using HE.Investments.FrontDoor.Contract.Project.Enums;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
+using HE.Investments.FrontDoor.Shared.Project.Contract;
+using HE.Investments.FrontDoor.Shared.Project.Crm;
 
 namespace HE.Investments.FrontDoor.Domain.Project.Crm.Mappers;
 
 public class SupportActivitiesMapper : EnumMapper<SupportActivityType>
 {
-    protected override IDictionary<SupportActivityType, int?> Mapping => new Dictionary<SupportActivityType, int?>
+    private readonly IFrontDoorProjectEnumMapping _mapping;
+
+    public SupportActivitiesMapper(IFrontDoorProjectEnumMapping mapping)
     {
-        { SupportActivityType.AcquiringLand, (int)invln_FrontDoorActivitiesinProject.Acquiringland },
-        { SupportActivityType.DevelopingHomes, (int)invln_FrontDoorActivitiesinProject.Developinghomesincludinganyminorsiterelatedinfrastructure },
-        { SupportActivityType.ProvidingInfrastructure, (int)invln_FrontDoorActivitiesinProject.Providinginfrastructure },
-        { SupportActivityType.ManufacturingHomesWithinFactory, (int)invln_FrontDoorActivitiesinProject.Manufacturinghomeswithinafactory },
-        { SupportActivityType.SellingLandToHomesEngland, (int)invln_FrontDoorActivitiesinProject.SellinglandtoHomesEngland },
-        { SupportActivityType.Other, (int)invln_FrontDoorActivitiesinProject.Other },
-    };
+        _mapping = mapping;
+    }
+
+    protected override IDictionary<SupportActivityType, int?> Mapping => _mapping.ActivityType;
 
     public SupportActivities Map(IList<int> values)
     {
         return values.Count == 0
             ? SupportActivities.Empty()
-            : new SupportActivities(values.Select(x => new SupportActivitiesMapper().ToDomain(x)!.Value).ToList());
+            : new SupportActivities(values.Select(x => ToDomain(x)!.Value).ToList());
     }
 
     public List<int> Map(SupportActivities value)
     {
-        return value.Values.Select(x => new SupportActivitiesMapper().ToDto(x)!.Value).ToList();
+        return value.Values.Select(x => ToDto(x)!.Value).ToList();
     }
 }

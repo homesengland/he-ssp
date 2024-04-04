@@ -1,4 +1,4 @@
-using HE.Investment.AHP.Contract.Common.Enums;
+using HE.Investments.Common.Contract.Enum;
 
 namespace HE.Investment.AHP.WWW.Models.HomeTypes;
 
@@ -16,9 +16,9 @@ public class RentToBuyModel : HomeTypeBasicModel
 
     public string? MarketValue { get; set; }
 
-    public string? MarketRent { get; set; }
+    public string? MarketRentPerWeek { get; set; }
 
-    public string? ProspectiveRent { get; set; }
+    public string? RentPerWeek { get; set; }
 
     public string? ProspectiveRentAsPercentageOfMarketRent { get; set; }
 

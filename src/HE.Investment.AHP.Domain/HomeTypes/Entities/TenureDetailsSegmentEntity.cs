@@ -1,8 +1,8 @@
 using HE.Investment.AHP.Contract.Application;
-using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Domain.HomeTypes.Attributes;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
+using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 
@@ -15,8 +15,8 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
 
     public TenureDetailsSegmentEntity(
         MarketValue? marketValue = null,
-        MarketRent? marketRent = null,
-        ProspectiveRent? prospectiveRent = null,
+        MarketRentPerWeek? marketRentPerWeek = null,
+        RentPerWeek? rentPerWeek = null,
         ProspectiveRentPercentage? prospectiveRentAsPercentageOfMarketRent = null,
         YesNoType targetRentExceedMarketRent = YesNoType.Undefined,
         YesNoType exemptFromTheRightToSharedOwnership = YesNoType.Undefined,
@@ -27,8 +27,8 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
     {
         _modificationTracker = new ModificationTracker(() => SegmentModified?.Invoke());
         MarketValue = marketValue;
-        MarketRent = marketRent;
-        ProspectiveRent = prospectiveRent;
+        MarketRentPerWeek = marketRentPerWeek;
+        RentPerWeek = rentPerWeek;
         ProspectiveRentAsPercentageOfMarketRent = prospectiveRentAsPercentageOfMarketRent;
         TargetRentExceedMarketRent = new TargetRentExceedMarketRent(targetRentExceedMarketRent);
         ExemptFromTheRightToSharedOwnership = exemptFromTheRightToSharedOwnership;
@@ -44,16 +44,16 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
 
     public MarketValue? MarketValue { get; private set; }
 
-    public MarketRent? MarketRent { get; private set; }
+    public MarketRentPerWeek? MarketRentPerWeek { get; private set; }
 
-    public ProspectiveRent? ProspectiveRent { get; private set; }
+    public RentPerWeek? RentPerWeek { get; private set; }
 
     public ProspectiveRentPercentage? ProspectiveRentAsPercentageOfMarketRent { get; private set; }
 
     public TargetRentExceedMarketRent? TargetRentExceedMarketRent { get; private set; }
 
-    public bool IsProspectiveRentIneligible => (ProspectiveRentAsPercentageOfMarketRent?.Value > 80 && TargetRentExceedMarketRent?.Value == YesNoType.No)
-                                               || RentAsPercentageOfTheUnsoldShare?.Value > 3;
+    public bool IsProspectiveRentIneligible => (ProspectiveRentAsPercentageOfMarketRent?.Value > 0.8m && TargetRentExceedMarketRent?.Value == YesNoType.No)
+                                               || RentAsPercentageOfTheUnsoldShare?.Value > 0.03m;
 
     public YesNoType ExemptFromTheRightToSharedOwnership { get; private set; }
 
@@ -72,23 +72,23 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
         MarketValue = _modificationTracker.Change(MarketValue, newValue);
     }
 
-    public void ChangeMarketRent(string? marketRent, bool isCalculation = false)
+    public void ChangeMarketRentPerWeek(string? marketRentPerWeek, bool isCalculation = false)
     {
-        var newValue = new MarketRent(marketRent, isCalculation);
+        var newValue = new MarketRentPerWeek(marketRentPerWeek, isCalculation);
 
-        MarketRent = _modificationTracker.Change(MarketRent, newValue);
+        MarketRentPerWeek = _modificationTracker.Change(MarketRentPerWeek, newValue);
     }
 
-    public void ChangeProspectiveRent(string? prospectiveRent, bool isCalculation = false)
+    public void ChangeRentPerWeek(string? rentPerWeek, string? rentType = null, bool isCalculation = false)
     {
-        var newValue = new ProspectiveRent(prospectiveRent, isCalculation);
+        var newValue = new RentPerWeek(rentPerWeek, isCalculation, rentType);
 
-        ProspectiveRent = _modificationTracker.Change(ProspectiveRent, newValue);
+        RentPerWeek = _modificationTracker.Change(RentPerWeek, newValue);
     }
 
-    public void ChangeProspectiveRentAsPercentageOfMarketRent()
+    public void ChangeRentAsPercentageOfMarketRent()
     {
-        var result = CalculateProspectiveRent(MarketRent, ProspectiveRent);
+        var result = CalculateRentAsPercentageOfMarketRent(MarketRentPerWeek, RentPerWeek);
         var newValue = new ProspectiveRentPercentage(result, nameof(ProspectiveRentAsPercentageOfMarketRent));
 
         ProspectiveRentAsPercentageOfMarketRent = _modificationTracker.Change(ProspectiveRentAsPercentageOfMarketRent, newValue);
@@ -103,7 +103,10 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
 
     public void ChangeExemptFromTheRightToSharedOwnership(YesNoType exemptFromTheRightToSharedOwnership)
     {
-        ExemptFromTheRightToSharedOwnership = _modificationTracker.Change(ExemptFromTheRightToSharedOwnership, exemptFromTheRightToSharedOwnership);
+        ExemptFromTheRightToSharedOwnership = _modificationTracker.Change(
+            ExemptFromTheRightToSharedOwnership,
+            exemptFromTheRightToSharedOwnership,
+            onChangedWithParamList: ClearExemptJustification);
     }
 
     public void ChangeExemptionJustification(MoreInformation? newValue)
@@ -111,9 +114,9 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
         ExemptionJustification = _modificationTracker.Change(ExemptionJustification, newValue);
     }
 
-    public void ChangeProspectiveRentAsPercentageOfTheUnsoldShare()
+    public void ChangeRentAsPercentageOfTheUnsoldShare()
     {
-        var result = CalculateProspectiveRentAsPercentageOfTheUnsoldShare(MarketValue, ProspectiveRent, InitialSale);
+        var result = CalculateRentAsPercentageOfTheUnsoldShare(MarketValue, RentPerWeek, InitialSale);
         var newValue = new ProspectiveRentPercentage(result, nameof(RentAsPercentageOfTheUnsoldShare));
 
         RentAsPercentageOfTheUnsoldShare = _modificationTracker.Change(RentAsPercentageOfTheUnsoldShare, newValue);
@@ -134,19 +137,19 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
         InitialSale = _modificationTracker.Change(InitialSale, newValue);
     }
 
-    public decimal? CalculateProspectiveRent(MarketRent? marketRent, ProspectiveRent? prospectiveRent)
+    public decimal? CalculateRentAsPercentageOfMarketRent(MarketRentPerWeek? marketRentPerWeek, RentPerWeek? rentPerWeek)
     {
-        if (marketRent.IsNotProvided() || prospectiveRent.IsNotProvided())
+        if (marketRentPerWeek.IsNotProvided() || rentPerWeek.IsNotProvided())
         {
             return null;
         }
 
-        if (marketRent!.Value == 0)
+        if (marketRentPerWeek!.Value == 0)
         {
             return 0;
         }
 
-        return (prospectiveRent!.Value / marketRent.Value).RoundToTwoDecimalPlaces();
+        return (rentPerWeek!.Value / marketRentPerWeek.Value).RoundToTwoDecimalPlaces();
     }
 
     public decimal? CalculateExpectedFirstTranche(MarketValue? marketValue, InitialSale? initialSale)
@@ -159,10 +162,10 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
         return (marketValue!.Value * initialSale!.Value).RoundToTwoDecimalPlaces();
     }
 
-    public decimal? CalculateProspectiveRentAsPercentageOfTheUnsoldShare(MarketValue? marketValue, ProspectiveRent? prospectiveRent, InitialSale? initialSale)
+    public decimal? CalculateRentAsPercentageOfTheUnsoldShare(MarketValue? marketValue, RentPerWeek? rentPerWeek, InitialSale? initialSale)
     {
         const int weeksAYear = 52;
-        if (marketValue.IsNotProvided() || prospectiveRent.IsNotProvided() || initialSale.IsNotProvided())
+        if (marketValue.IsNotProvided() || rentPerWeek.IsNotProvided() || initialSale.IsNotProvided())
         {
             return null;
         }
@@ -173,15 +176,15 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
         }
 
         var expectedFirstTranche = CalculateExpectedFirstTranche(marketValue, initialSale);
-        return (prospectiveRent!.Value * weeksAYear / (marketValue.Value - expectedFirstTranche!.Value)).RoundToFourDecimalPlaces();
+        return (rentPerWeek!.Value * weeksAYear / (marketValue.Value - expectedFirstTranche!.Value)).RoundToFourDecimalPlaces();
     }
 
     public IHomeTypeSegmentEntity Duplicate()
     {
         return new TenureDetailsSegmentEntity(
             MarketValue,
-            MarketRent,
-            ProspectiveRent,
+            MarketRentPerWeek,
+            RentPerWeek,
             ProspectiveRentAsPercentageOfMarketRent,
             TargetRentExceedMarketRent.IsNotProvided() ? YesNoType.Undefined : TargetRentExceedMarketRent!.Value,
             ExemptFromTheRightToSharedOwnership,
@@ -217,12 +220,20 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
     public void ClearValuesForNewCalculation()
     {
         MarketValue = null;
-        MarketRent = null;
-        ProspectiveRent = null;
+        MarketRentPerWeek = null;
+        RentPerWeek = null;
         InitialSale = null;
         ExpectedFirstTranche = null;
         ProspectiveRentAsPercentageOfMarketRent = null;
         RentAsPercentageOfTheUnsoldShare = null;
+    }
+
+    private void ClearExemptJustification(YesNoType exemptFromTheRightToSharedOwnership)
+    {
+        if (exemptFromTheRightToSharedOwnership != YesNoType.Yes)
+        {
+            ChangeExemptionJustification(null);
+        }
     }
 
     private bool IsExemptJustificationProvided()
@@ -238,8 +249,8 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
     private bool IsAffordableRentTenureCompleted()
     {
         return MarketValue.IsProvided()
-               && MarketRent.IsProvided()
-               && ProspectiveRent.IsProvided()
+               && MarketRentPerWeek.IsProvided()
+               && RentPerWeek.IsProvided()
                && TargetRentExceedMarketRent?.Value != YesNoType.Undefined
                && ExemptFromTheRightToSharedOwnership != YesNoType.Undefined
                && !IsProspectiveRentIneligible
@@ -249,7 +260,7 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
     private bool IsSocialRentTenureCompleted()
     {
         return MarketValue.IsProvided()
-            && ProspectiveRent.IsProvided()
+            && RentPerWeek.IsProvided()
             && ExemptFromTheRightToSharedOwnership != YesNoType.Undefined
             && IsExemptJustificationProvided();
     }
@@ -259,15 +270,15 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
         return MarketValue.IsProvided()
             && InitialSale.IsProvided()
             && ExpectedFirstTranche.IsProvided()
-            && ProspectiveRent.IsProvided()
+            && RentPerWeek.IsProvided()
             && !IsProspectiveRentIneligible;
     }
 
     private bool IsRentToBuyTenureCompleted()
     {
         return MarketValue.IsProvided()
-               && MarketRent.IsProvided()
-               && ProspectiveRent.IsProvided()
+               && MarketRentPerWeek.IsProvided()
+               && RentPerWeek.IsProvided()
                && TargetRentExceedMarketRent?.Value != YesNoType.Undefined
                && !IsProspectiveRentIneligible;
     }
@@ -277,7 +288,7 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
         return MarketValue.IsProvided()
                && InitialSale.IsProvided()
                && ExpectedFirstTranche.IsProvided()
-               && ProspectiveRent.IsProvided()
+               && RentPerWeek.IsProvided()
                && !IsProspectiveRentIneligible;
     }
 
@@ -286,7 +297,7 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
         return MarketValue.IsProvided()
                && InitialSale.IsProvided()
                && ExpectedFirstTranche.IsProvided()
-               && ProspectiveRent.IsProvided()
+               && RentPerWeek.IsProvided()
                && !IsProspectiveRentIneligible;
     }
 }

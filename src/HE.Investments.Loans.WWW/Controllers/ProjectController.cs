@@ -3,12 +3,16 @@ using HE.Investments.Common.Contract.Constants;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
+using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.Common.WWW.Utils;
+using HE.Investments.Loans.BusinessLogic.LoanApplication.QueryHandlers;
 using HE.Investments.Loans.Common.Utils.Enums;
+using HE.Investments.Loans.Contract.Application.Helper;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
 using HE.Investments.Loans.Contract.Funding.Commands;
+using HE.Investments.Loans.Contract.PrefillData.Queries;
 using HE.Investments.Loans.Contract.Projects;
 using HE.Investments.Loans.Contract.Projects.Commands;
 using HE.Investments.Loans.Contract.Projects.Queries;
@@ -47,6 +51,11 @@ public class ProjectController : WorkflowController<ProjectState>
             }
         }
 
+        if (await IsLoanApplicationReadOnly(id))
+        {
+            return RedirectToTaskList(id);
+        }
+
         return View("Index", new ProjectStartModel { LoanApplicationId = id, ProjectId = projectId });
     }
 
@@ -66,9 +75,10 @@ public class ProjectController : WorkflowController<ProjectState>
     }
 
     [HttpGet("{projectId}/delete")]
-    public IActionResult Delete(Guid id, Guid projectId)
+    public async Task<IActionResult> Delete(Guid id, Guid projectId)
     {
-        return View(new ProjectViewModel { ApplicationId = id, ProjectId = projectId });
+        var result = await _mediator.Send(new GetProjectQuery(LoanApplicationId.From(id), ProjectId.From(projectId), ProjectFieldsSet.ProjectName));
+        return View(new ProjectViewModel { ApplicationId = id, ProjectId = projectId, ProjectName = result.ProjectName });
     }
 
     [HttpPost("{projectId}/delete")]
@@ -79,10 +89,7 @@ public class ProjectController : WorkflowController<ProjectState>
             await _mediator.Send(new DeleteProjectCommand(LoanApplicationId.From(id), ProjectId.From(projectId)));
         }
 
-        return RedirectToAction(
-            nameof(LoanApplicationV2Controller.TaskList),
-            new ControllerName(nameof(LoanApplicationV2Controller)).WithoutPrefix(),
-            new { id });
+        return RedirectToTaskList(id);
     }
 
     [HttpGet("{projectId}/name")]
@@ -344,7 +351,7 @@ public class ProjectController : WorkflowController<ProjectState>
 
     [HttpPost("{projectId}/location")]
     [WorkflowState(ProjectState.Location)]
-    public async Task<IActionResult> Location(Guid id, Guid projectId, [FromQuery] string redirect, ProjectViewModel model, CancellationToken token)
+    public async Task<IActionResult> Location(Guid id, Guid projectId, [FromQuery] string redirect, ProjectViewModel model, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(
             new ProvideLocationCommand(
@@ -353,12 +360,12 @@ public class ProjectController : WorkflowController<ProjectState>
                 model.LocationOption,
                 model.LocationCoordinates,
                 model.LocationLandRegistry),
-            token);
+            cancellationToken);
 
         if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
-
+            model.ApplicationId = id;
             return View(model);
         }
 
@@ -367,9 +374,10 @@ public class ProjectController : WorkflowController<ProjectState>
 
     [HttpGet("{projectId}/local-authority/search")]
     [WorkflowState(ProjectState.ProvideLocalAuthority)]
-    public IActionResult LocalAuthoritySearch(Guid id, Guid projectId)
+    public async Task<IActionResult> LocalAuthoritySearch(Guid id, Guid projectId, CancellationToken cancellationToken)
     {
-        return View(new LocalAuthoritiesViewModel { ApplicationId = id, ProjectId = projectId, });
+        var projectPrefillData = await _mediator.Send(new GetLoanProjectPrefillDataQuery(LoanApplicationId.From(id), ProjectId.From(projectId)), cancellationToken);
+        return View(new LocalAuthoritiesViewModel { ApplicationId = id, ProjectId = projectId, Phrase = projectPrefillData?.LocalAuthorityName });
     }
 
     [HttpPost("{projectId}/local-authority/search")]
@@ -507,28 +515,20 @@ public class ProjectController : WorkflowController<ProjectState>
 
     [HttpPost("{projectId}/additional-details")]
     [WorkflowState(ProjectState.Additional)]
-    public async Task<IActionResult> AdditionalDetails(Guid id, Guid projectId, [FromQuery] string redirect, ProjectViewModel model, CancellationToken token)
+    public async Task<IActionResult> AdditionalDetails(Guid id, Guid projectId, [FromQuery] string redirect, ProjectViewModel model, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(
+        return await this.ExecuteCommand<ProjectViewModel>(
+            _mediator,
             new ProvideAdditionalDetailsCommand(
                 LoanApplicationId.From(id),
                 ProjectId.From(projectId),
-                model.PurchaseYear,
-                model.PurchaseMonth,
-                model.PurchaseDay,
+                model.PurchaseDate,
                 model.Cost,
                 model.Value,
                 model.Source),
-            token);
-
-        if (result.HasValidationErrors)
-        {
-            ModelState.AddValidationErrors(result);
-
-            return View(model);
-        }
-
-        return await Continue(redirect, new { id, projectId });
+            async () => await Continue(redirect, new { id, projectId }),
+            () => Task.FromResult<IActionResult>(View(model)),
+            cancellationToken);
     }
 
     [HttpGet("{projectId}/grant-funding-exists")]
@@ -700,5 +700,20 @@ public class ProjectController : WorkflowController<ProjectState>
         var response = await _mediator.Send(new GetProjectQuery(LoanApplicationId.From(id!), ProjectId.From(projectId!), ProjectFieldsSet.GetAllFields));
 
         return new ProjectWorkflow(currentState, response);
+    }
+
+    private async Task<bool> IsLoanApplicationReadOnly(Guid id)
+    {
+        var response = await _mediator.Send(new GetLoanApplicationQuery(LoanApplicationId.From(id)));
+
+        return ApplicationStatusDivision.GetAllStatusesForReadonlyMode().Contains(response.LoanApplication.Status);
+    }
+
+    private IActionResult RedirectToTaskList(Guid id)
+    {
+        return RedirectToAction(
+            nameof(LoanApplicationV2Controller.TaskList),
+            new ControllerName(nameof(LoanApplicationV2Controller)).WithoutPrefix(),
+            new { id });
     }
 }

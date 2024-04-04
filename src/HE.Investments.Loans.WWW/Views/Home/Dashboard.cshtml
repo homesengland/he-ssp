@@ -10,7 +10,6 @@
     ViewData["Title"] = "Home Page";
     ViewBag.Breadcrumbs = BreadcrumbsBuilder
         .New()
-        .WithOrganisations()
         .WithOrganisation(Model.AccountName)
         .WithLuhbfApplications()
         .Build();

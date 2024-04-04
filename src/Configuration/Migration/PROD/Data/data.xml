@@ -1,0 +1,64 @@
+
+<entities xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" timestamp="2024-03-20T05:57:31.8670493Z">
+  <entity name="invln_notificationsetting" displayname="Notification Setting">
+    <records>
+      <record id="1ab09971-d199-ee11-be37-0022480041cf">
+        <field name="invln_name" value="AHP - Reminder to finalise application in &amp;quot;referred back to applicant&amp;quot; status" />
+        <field name="invln_templateid" value="7d01cea9-e334-44fa-a5d0-41048bef24ee" />
+      </record>
+      <record id="a7a26595-0669-ee11-9ae6-002248004268">
+        <field name="invln_name" value="Internal - Application Owner Change" />
+        <field name="invln_templateid" value="594019b0-9057-4e25-9664-430dfa6395a9" />
+      </record>
+      <record id="22fe37ae-0669-ee11-9ae6-002248004268">
+        <field name="invln_name" value="External - KYC status has changed" />
+        <field name="invln_templateid" value="bd89cbf6-1a2b-4fe4-9d2c-94cbbf1ef871" />
+      </record>
+      <record id="65c47c42-d8c5-ee11-9079-002248004a06">
+        <field name="invln_name" value="AHP - Delivery Phase - Notification of additional payments for phase" />
+        <field name="invln_templateid" value="7bfd82ce-0e1a-49dd-94b5-79f00872369d" />
+      </record>
+      <record id="a361b6c3-0669-ee11-9ae6-002248004a06">
+        <field name="invln_name" value="External - Application Action Required" />
+        <field name="invln_templateid" value="296497d3-f3ab-487c-ae63-4e4813dd4204" />
+      </record>
+      <record id="2a0ea4d5-0669-ee11-9ae6-002248004a06">
+        <field name="invln_name" value="External - Application status - Confirmation" />
+        <field name="invln_templateid" value="668a073e-645b-4e9e-b9fb-38b396a2882e" />
+      </record>
+      <record id="017da9e7-0669-ee11-9ae6-002248004a06">
+        <field name="invln_name" value="External - Application status - Information" />
+        <field name="invln_templateid" value="1b0cceae-c0d2-4489-ad5d-f9953005326d" />
+      </record>
+      <record id="246b2311-9899-ee11-be37-002248004a06">
+        <field name="invln_name" value="[COMMON] - Change User Permissions" />
+        <field name="invln_templateid" value="6114f7a4-9463-4a77-9237-1fcdccc68efb" />
+      </record>
+      <record id="9dc78b56-c599-ee11-be37-002248004a06">
+        <field name="invln_name" value="[COMMON] - Invite contact to join existing organisation" />
+        <field name="invln_templateid" value="ecfb1f0a-3463-41c8-acb7-87cce566b682" />
+      </record>
+      <record id="e56d5d54-859a-ee11-be37-002248004a06">
+        <field name="invln_name" value="AHP - Reminder to finalise draft application" />
+        <field name="invln_templateid" value="d934f1c6-fd42-42f1-bc0a-73a4d91bf37c" />
+      </record>
+      <record id="06c8b475-c9d1-ee11-9079-002248004f63">
+        <field name="invln_name" value="External - Application Cashflow Requested" />
+        <field name="invln_templateid" value="141d3b19-9079-4f1a-91e1-92186fe63cd4" />
+      </record>
+      <record id="cf26411d-ab99-ee11-be37-002248004f63">
+        <field name="invln_name" value="[COMMON] - Grant Organisation Admin Permissions" />
+        <field name="invln_templateid" value="7215ea4f-4334-4b9a-b6b5-99ef8c6b0b8e" />
+      </record>
+      <record id="0be6e629-899a-ee11-be37-002248004f63">
+        <field name="invln_name" value="[COMMON] - Request to assign contact to existing organisation" />
+        <field name="invln_templateid" value="26be79af-29a1-424d-8587-8796c3e9fd63" />
+      </record>
+      <record id="527f5f8a-8859-ee11-be6f-002248c653e1">
+        <field name="invln_name" value="Internal Loan App Status Change" />
+        <field name="invln_templateid" value="2850633d-f402-40e5-8968-e1611c87dc8f" />
+      </record>
+    </records>
+    <m2mrelationships />
+  </entity>
+</entities>

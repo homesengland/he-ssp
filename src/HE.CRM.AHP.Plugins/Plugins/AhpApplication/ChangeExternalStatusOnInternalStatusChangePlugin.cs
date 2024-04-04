@@ -16,7 +16,7 @@ namespace HE.CRM.AHP.Plugins.Plugins.AhpApplication
        invln_scheme.EntityLogicalName,
        StageEnum.PreOperation,
        ExecutionModeEnum.Synchronous,
-       "statuscode",
+       "statuscode," + invln_scheme.Fields.invln_Site,
        "HE.CRM.AHP.Plugins.Plugins.AhpApplication.ChangeExternalStatusOnInternalStatusChangePlugin: Update of AHP Application",
        1,
        IsolationModeEnum.Sandbox,
@@ -38,6 +38,7 @@ namespace HE.CRM.AHP.Plugins.Plugins.AhpApplication
         public override void RegisterHandlers(CrmHandlerFactory<DataverseContext> handlerFactory, IList<ICrmHandler> registeredHandlers)
         {
             registeredHandlers.Add(handlerFactory.GetHandler<ChangeExternalStatusOnInternalStatusChangeHandler>());
+            registeredHandlers.Add(handlerFactory.GetHandler<UpdateLocalAuthorityWhenSiteIsChanged>());
             registeredHandlers.Add(handlerFactory.GetHandler<RecalculateDeliveryphaseHandler>());
         }
 
