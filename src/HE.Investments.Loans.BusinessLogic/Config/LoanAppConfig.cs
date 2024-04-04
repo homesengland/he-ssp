@@ -8,9 +8,12 @@ public class LoanAppConfig : ILoanAppConfig
     {
         LoansEnquiriesTelephoneNumber = configuration.GetValue<string>("AppConfiguration:LoansEnquiriesTelephoneNumber") ?? string.Empty;
         LoansEnquiriesEmail = configuration.GetValue<string>("AppConfiguration:LoansEnquiriesEmail") ?? string.Empty;
+        FundingSupportEmail = configuration.GetValue<string>("AppConfiguration:FundingSupportEmail") ?? string.Empty;
     }
 
     public string? LoansEnquiriesTelephoneNumber { get; set; }
 
     public string? LoansEnquiriesEmail { get; set; }
+
+    public string? FundingSupportEmail { get; set; }
 }
