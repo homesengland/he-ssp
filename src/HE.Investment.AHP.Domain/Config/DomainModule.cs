@@ -2,7 +2,6 @@ extern alias Org;
 
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Domain.Application.Repositories;
-using HE.Investment.AHP.Domain.Application.Repositories.Interfaces;
 using HE.Investment.AHP.Domain.Data;
 using HE.Investment.AHP.Domain.Delivery.Crm;
 using HE.Investment.AHP.Domain.Delivery.Policies;
@@ -91,7 +90,6 @@ public static class DomainModule
     private static void AddApplication(IServiceCollection services)
     {
         services.AddScoped<IApplicationRepository, ApplicationRepository>();
-        services.AddScoped<IChangeApplicationStatus>(x => x.GetRequiredService<IApplicationRepository>());
     }
 
     private static void AddScheme(IServiceCollection services)

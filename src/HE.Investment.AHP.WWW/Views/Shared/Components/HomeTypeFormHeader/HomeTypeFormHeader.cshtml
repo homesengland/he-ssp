@@ -2,7 +2,10 @@
 
 <vc:ahp-workflow-back-button current-page="@Model.CurrentPage"/>
 
-<partial name="_LockedApplicationInformation" model="@Model.IsApplicationLocked"/>
+@if (Model.IsApplicationLocked)
+{
+    <partial name="_LockedApplicationInformation"/>
+}
 
 @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 

@@ -5,7 +5,6 @@ using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.Contract.Delivery.Queries;
 using HE.Investment.AHP.WWW.Extensions;
 using HE.Investment.AHP.WWW.Models.Delivery;
-using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Extensions;
@@ -21,12 +20,9 @@ public class DeliveryController : Controller
 {
     private readonly IMediator _mediator;
 
-    private readonly IAccountAccessContext _accountAccessContext;
-
-    public DeliveryController(IMediator mediator, IAccountAccessContext accountAccessContext)
+    public DeliveryController(IMediator mediator)
     {
         _mediator = mediator;
-        _accountAccessContext = accountAccessContext;
     }
 
     [HttpGet("start")]
@@ -40,11 +36,10 @@ public class DeliveryController : Controller
     public async Task<IActionResult> List([FromRoute] string applicationId, CancellationToken cancellationToken)
     {
         var deliveryPhases = await _mediator.Send(new GetDeliveryPhasesQuery(AhpApplicationId.From(applicationId)), cancellationToken);
-        var isEditable = await _accountAccessContext.CanEditApplication() && !deliveryPhases.IsReadOnly;
 
-        return View(new DeliveryListModel(deliveryPhases.ApplicationName)
+        return View(new DeliveryListModel(deliveryPhases.Application.Name)
         {
-            IsEditable = isEditable,
+            AllowedOperations = deliveryPhases.Application.AllowedOperations,
             UnusedHomeTypesCount = deliveryPhases.UnusedHomeTypesCount,
             DeliveryPhases = deliveryPhases.DeliveryPhases
                 .Select(x => new DeliveryPhaseItemModel(

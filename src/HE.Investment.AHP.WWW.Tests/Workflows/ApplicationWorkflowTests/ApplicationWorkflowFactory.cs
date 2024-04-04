@@ -22,22 +22,22 @@ public static class ApplicationWorkflowFactory
         string? referenceNumber = null,
         ModificationDetails? lastModificationDetails = null,
         IList<ApplicationSection>? sections = null,
-        bool? isReadOnly = null)
+        IEnumerable<AhpApplicationOperation>? allowedOperations = null)
     {
         var application = new Application(
             new AhpApplicationId("new id"),
             name,
             tenure,
             status,
+            allowedOperations?.ToList() ?? new List<AhpApplicationOperation>(),
             referenceNumber,
             lastModificationDetails,
-            sections ?? NotStartedSections,
-            isReadOnly ?? false);
+            sections ?? NotStartedSections);
 
         return new ApplicationWorkflow(
             currentSiteWorkflowState,
             () => Task.FromResult(application),
             () => Task.FromResult(true),
-            isReadOnly ?? false);
+            application.IsReadOnly);
     }
 }

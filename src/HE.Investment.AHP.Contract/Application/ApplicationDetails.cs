@@ -2,15 +2,12 @@ using HE.Investments.Common.Contract;
 
 namespace HE.Investment.AHP.Contract.Application;
 
-public record Application(
+public record ApplicationDetails(
     AhpApplicationId Id,
     string Name,
     Tenure Tenure,
     ApplicationStatus Status,
-    IReadOnlyCollection<AhpApplicationOperation> AllowedOperations,
-    string? ReferenceNumber,
-    ModificationDetails? LastModificationDetails,
-    IList<ApplicationSection> Sections)
+    IReadOnlyCollection<AhpApplicationOperation> AllowedOperations)
 {
     public bool IsEditable => AllowedOperations.Contains(AhpApplicationOperation.Modification);
 

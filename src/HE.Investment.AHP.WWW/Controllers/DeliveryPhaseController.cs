@@ -10,7 +10,6 @@ using HE.Investment.AHP.WWW.Models.Delivery;
 using HE.Investment.AHP.WWW.Models.Delivery.Factories;
 using HE.Investment.AHP.WWW.Utils;
 using HE.Investment.AHP.WWW.Workflows;
-using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Validators;
@@ -30,18 +29,15 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     private readonly IMediator _mediator;
     private readonly IDeliveryPhaseProvider _deliveryPhaseProvider;
     private readonly IDeliveryPhaseCheckAnswersViewModelFactory _deliveryPhaseCheckAnswersViewModelFactory;
-    private readonly IAccountAccessContext _accountAccessContext;
 
     public DeliveryPhaseController(
         IMediator mediator,
         IDeliveryPhaseProvider deliveryPhaseProvider,
-        IDeliveryPhaseCheckAnswersViewModelFactory deliveryPhaseCheckAnswersViewModelFactory,
-        IAccountAccessContext accountAccessContext)
+        IDeliveryPhaseCheckAnswersViewModelFactory deliveryPhaseCheckAnswersViewModelFactory)
     {
         _mediator = mediator;
         _deliveryPhaseProvider = deliveryPhaseProvider;
         _deliveryPhaseCheckAnswersViewModelFactory = deliveryPhaseCheckAnswersViewModelFactory;
-        _accountAccessContext = accountAccessContext;
     }
 
     [HttpGet("{deliveryPhaseId}/back")]
@@ -92,7 +88,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         var deliveryPhase = await _mediator.Send(
             new GetDeliveryPhaseDetailsQuery(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId)),
             cancellationToken);
-        var model = new DeliveryPhaseNameViewModel(applicationId, deliveryPhaseId, deliveryPhase.ApplicationName, deliveryPhase.Name, nameof(this.Name));
+        var model = new DeliveryPhaseNameViewModel(applicationId, deliveryPhaseId, deliveryPhase.Application.Name, deliveryPhase.Name, nameof(this.Name));
         return View("Name", model);
     }
 
@@ -297,7 +293,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
                 tranche,
                 deliveryPhaseDetails.Id,
                 deliveryPhaseDetails.Name,
-                deliveryPhaseDetails.ApplicationName));
+                deliveryPhaseDetails.Application.Name));
     }
 
     [HttpPost("{deliveryPhaseId}/summary-of-delivery/tranche")]
@@ -339,7 +335,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
                 new GetDeliveryPhaseDetailsQuery(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId)),
                 cancellationToken);
 
-        return View("RemoveDeliveryPhaseConfirmation", new RemoveDeliveryPhaseModel(deliveryPhaseDetails.ApplicationName, deliveryPhaseDetails.Name));
+        return View("RemoveDeliveryPhaseConfirmation", new RemoveDeliveryPhaseModel(deliveryPhaseDetails.Application.Name, deliveryPhaseDetails.Name));
     }
 
     [HttpPost("{deliveryPhaseId}/remove")]
@@ -371,7 +367,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
                 cancellationToken);
 
         return View(CreateMilestoneViewModel(
-            deliveryPhaseDetails.ApplicationName,
+            deliveryPhaseDetails.Application.Name,
             deliveryPhaseDetails.Name,
             deliveryPhaseDetails.AcquisitionDate,
             deliveryPhaseDetails.AcquisitionPaymentDate));
@@ -402,7 +398,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
                 cancellationToken);
 
         return View(CreateMilestoneViewModel(
-            deliveryPhaseDetails.ApplicationName,
+            deliveryPhaseDetails.Application.Name,
             deliveryPhaseDetails.Name,
             deliveryPhaseDetails.StartOnSiteDate,
             deliveryPhaseDetails.StartOnSitePaymentDate));
@@ -433,7 +429,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
                 cancellationToken);
 
         return View(CreateMilestoneViewModel(
-            deliveryPhaseDetails.ApplicationName,
+            deliveryPhaseDetails.Application.Name,
             deliveryPhaseDetails.Name,
             deliveryPhaseDetails.PracticalCompletionDate,
             deliveryPhaseDetails.PracticalCompletionPaymentDate));
@@ -465,7 +461,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
 
         return View(new DeliveryRequestAdditionalPaymentViewModel(
             applicationId,
-            deliveryPhaseDetails.ApplicationName,
+            deliveryPhaseDetails.Application.Name,
             deliveryPhaseDetails.Name,
             deliveryPhaseDetails.IsAdditionalPaymentRequested));
     }
@@ -486,7 +482,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
             nameof(UnregisteredBodyFollowUp),
             savedModel => new DeliveryRequestAdditionalPaymentViewModel(
                 applicationId,
-                savedModel.ApplicationName,
+                savedModel.Application.Name,
                 savedModel.Name,
                 isAdditionalPaymentRequested),
             cancellationToken);
@@ -522,23 +518,27 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
 
     protected override async Task<IStateRouting<DeliveryPhaseWorkflowState>> Routing(DeliveryPhaseWorkflowState currentState, object? routeData = null)
     {
+        var applicationId = this.GetApplicationIdFromRoute();
         var deliveryPhase = currentState != DeliveryPhaseWorkflowState.Create
-            ? await _deliveryPhaseProvider.Get(
-                new GetDeliveryPhaseDetailsQuery(this.GetApplicationIdFromRoute(), this.GetDeliveryPhaseIdFromRoute()), CancellationToken.None)
-            : new DeliveryPhaseDetails(string.Empty, string.Empty, string.Empty, SectionStatus.NotStarted, false, false);
+            ? await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(applicationId, this.GetDeliveryPhaseIdFromRoute()), CancellationToken.None)
+            : new DeliveryPhaseDetails(ToApplicationDetails(await _mediator.Send(new GetApplicationQuery(applicationId), CancellationToken.None)), string.Empty, string.Empty, SectionStatus.NotStarted);
 
-        var isReadOnly = !await _accountAccessContext.CanEditApplication() || deliveryPhase.IsReadOnly;
-        var workflow = new DeliveryPhaseWorkflow(currentState, deliveryPhase, isReadOnly);
+        var workflow = new DeliveryPhaseWorkflow(currentState, deliveryPhase, deliveryPhase.Application.IsReadOnly);
         if (Request.TryGetWorkflowQueryParameter(out var lastEncodedWorkflow))
         {
             var lastWorkflow = new EncodedWorkflow<DeliveryPhaseWorkflowState>(lastEncodedWorkflow);
             var currentWorkflow = workflow.GetEncodedWorkflow();
             var changedState = currentWorkflow.GetNextChangedWorkflowState(currentState, lastWorkflow);
 
-            return new DeliveryPhaseWorkflow(changedState, deliveryPhase, isReadOnly, true);
+            return new DeliveryPhaseWorkflow(changedState, deliveryPhase, true);
         }
 
         return workflow;
+    }
+
+    private static ApplicationDetails ToApplicationDetails(Application application)
+    {
+        return new ApplicationDetails(application.Id, application.Name, application.Tenure, application.Status, application.AllowedOperations);
     }
 
     private async Task<IActionResult> GetBuildActivityType(
@@ -585,24 +585,21 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         var deliveryPhaseId = this.GetDeliveryPhaseIdFromRoute();
         var deliveryPhaseDetails = await _deliveryPhaseProvider.Get(new GetDeliveryPhaseDetailsQuery(applicationId, deliveryPhaseId, true), cancellationToken);
         var deliveryPhaseHomes = await _mediator.Send(new GetDeliveryPhaseHomesQuery(applicationId, deliveryPhaseId), cancellationToken);
-        var isEditable = await _accountAccessContext.CanEditApplication() && !deliveryPhaseDetails.IsReadOnly;
         var sections = _deliveryPhaseCheckAnswersViewModelFactory.CreateSummary(
             applicationId,
             deliveryPhaseDetails,
             deliveryPhaseHomes,
             Url,
-            isEditable,
             useWorkflowRedirection);
 
         return new DeliveryPhaseSummaryViewModel(
             applicationId.Value,
             deliveryPhaseDetails.Id,
-            deliveryPhaseDetails.ApplicationName,
+            deliveryPhaseDetails.Application.Name,
             deliveryPhaseDetails.Name,
             deliveryPhaseDetails.Status == SectionStatus.Completed ? IsSectionCompleted.Yes : null,
             sections,
-            isEditable,
-            deliveryPhaseDetails.IsApplicationLocked);
+            deliveryPhaseDetails.Application.AllowedOperations);
     }
 
     private MilestoneViewModel CreateMilestoneViewModel(
@@ -629,7 +626,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
             command,
             viewName,
             savedModel => CreateMilestoneViewModel(
-                savedModel.ApplicationName,
+                savedModel.Application.Name,
                 savedModel.Name,
                 modelWithError.MilestoneStartAt,
                 modelWithError.ClaimMilestonePaymentAt),

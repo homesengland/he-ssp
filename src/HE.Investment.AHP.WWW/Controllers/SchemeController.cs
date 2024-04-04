@@ -11,7 +11,6 @@ using HE.Investment.AHP.WWW.Models.Scheme;
 using HE.Investment.AHP.WWW.Models.Scheme.Factories;
 using HE.Investment.AHP.WWW.Utils;
 using HE.Investment.AHP.WWW.Workflows;
-using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
@@ -35,20 +34,17 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     private readonly ISchemeSummaryViewModelFactory _summaryViewModelFactory;
     private readonly IAhpDocumentSettings _documentSettings;
     private readonly ISchemeProvider _schemeProvider;
-    private readonly IAccountAccessContext _accountAccessContext;
 
     public SchemeController(
         IMediator mediator,
         ISchemeSummaryViewModelFactory summaryViewModelFactory,
         IAhpDocumentSettings documentSettings,
-        ISchemeProvider schemeProvider,
-        IAccountAccessContext accountAccessContext)
+        ISchemeProvider schemeProvider)
     {
         _mediator = mediator;
         _summaryViewModelFactory = summaryViewModelFactory;
         _documentSettings = documentSettings;
         _schemeProvider = schemeProvider;
-        _accountAccessContext = accountAccessContext;
     }
 
     [WorkflowState(SchemeWorkflowState.Start)]
@@ -290,8 +286,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
         }
 
         var scheme = await _schemeProvider.Get(new GetApplicationSchemeQuery(AhpApplicationId.From(applicationId)), CancellationToken.None);
-        var isReadOnly = !await _accountAccessContext.CanEditApplication() || scheme.IsReadOnly;
-        return await Task.FromResult(new SchemeWorkflow(currentState, scheme, isReadOnly));
+        return await Task.FromResult(new SchemeWorkflow(currentState, scheme));
     }
 
     private SchemeViewModel CreateModel(string applicationId, Scheme scheme)
@@ -306,7 +301,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
 
         return new SchemeViewModel(
             applicationId,
-            scheme.ApplicationName,
+            scheme.Application.Name,
             CurrencyHelper.InputPounds(scheme.RequiredFunding),
             scheme.HousesToDeliver.ToString(),
             scheme.AffordabilityEvidence,
@@ -340,15 +335,13 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
         CancellationToken cancellationToken)
     {
         var scheme = await _schemeProvider.Get(new GetApplicationSchemeQuery(AhpApplicationId.From(applicationId), true), cancellationToken);
-        var isEditable = await _accountAccessContext.CanEditApplication() && !scheme.IsReadOnly;
-        var section = _summaryViewModelFactory.GetSchemeAndCreateSummary("Scheme information", scheme, urlHelper, !isEditable);
+        var section = _summaryViewModelFactory.GetSchemeAndCreateSummary("Scheme information", scheme, urlHelper);
 
         return new SchemeSummaryViewModel(
-            scheme.ApplicationId.Value,
-            scheme.ApplicationName,
+            scheme.Application.Id.Value,
+            scheme.Application.Name,
             scheme.Status == SectionStatus.Completed ? IsSectionCompleted.Yes : null,
             section,
-            isEditable,
-            scheme.IsApplicationLocked);
+            scheme.Application.AllowedOperations);
     }
 }

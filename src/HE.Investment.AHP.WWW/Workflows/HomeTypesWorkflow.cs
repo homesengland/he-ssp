@@ -23,15 +23,15 @@ public class HomeTypesWorkflow : EncodedStateRouting<HomeTypesWorkflowState>
         ConfigureTransitions();
     }
 
-    public HomeTypesWorkflow(FullHomeType homeType, bool isReadOnly)
+    public HomeTypesWorkflow(FullHomeType homeType)
         : base(HomeTypesWorkflowState.Index, false)
     {
-        _isReadOnly = isReadOnly;
+        _isReadOnly = homeType.Application.IsReadOnly;
         _homeTypeModel = new HomeType(
+            homeType.Application,
             homeType.Id,
             homeType.Name,
             homeType.HousingType,
-            homeType.Tenure,
             new HomeTypeConditionals(
                 homeType.SupportedHousing?.ShortStayAccommodation ?? YesNoType.Undefined,
                 homeType.SupportedHousing?.RevenueFundingType ?? RevenueFundingType.Undefined,
@@ -42,14 +42,8 @@ public class HomeTypesWorkflow : EncodedStateRouting<HomeTypesWorkflowState>
                 homeType.TenureDetails.IsProspectiveRentIneligible,
                 homeType.ModernMethodsConstruction.SiteUsingModernMethodsOfConstruction,
                 homeType.ModernMethodsConstruction.ModernMethodsConstructionApplied,
-                homeType.ModernMethodsConstruction.ModernMethodsConstructionCategories),
-            isReadOnly);
+                homeType.ModernMethodsConstruction.ModernMethodsConstructionCategories));
         ConfigureTransitions();
-    }
-
-    public HomeTypesWorkflow(bool isReadOnly)
-        : this(HomeTypesWorkflowState.Index, null, isReadOnly)
-    {
     }
 
     public override bool CanBeAccessed(HomeTypesWorkflowState state, bool? isReadOnlyMode = null)
@@ -421,7 +415,7 @@ public class HomeTypesWorkflow : EncodedStateRouting<HomeTypesWorkflowState>
 
     private bool IsTenure(params Tenure[] tenure)
     {
-        return tenure.Contains(_homeTypeModel?.Tenure ?? Tenure.Undefined);
+        return tenure.Contains(_homeTypeModel?.Application.Tenure ?? Tenure.Undefined);
     }
 
     private bool IsAffordableRentEligible() => !(IsTenure(Tenure.AffordableRent) && _homeTypeModel is { Conditionals.IsProspectiveRentIneligible: true });

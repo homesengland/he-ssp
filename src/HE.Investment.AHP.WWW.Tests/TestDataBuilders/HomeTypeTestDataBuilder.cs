@@ -2,6 +2,7 @@ using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Contract.Site;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Enum;
 
 namespace HE.Investment.AHP.WWW.Tests.TestDataBuilders;
@@ -107,10 +108,15 @@ public class HomeTypeTestDataBuilder
     public HomeType Build()
     {
         return new HomeType(
+            new ApplicationDetails(
+                new AhpApplicationId("test-1234"),
+                "appName",
+                _tenure,
+                ApplicationStatus.Draft,
+                new[] { AhpApplicationOperation.Modification }),
             HomeTypeId.From("home-type-id"),
             "My Home Type",
             _housingType,
-            _tenure,
             new HomeTypeConditionals(
                 _shortStayAccommodation,
                 _revenueFundingType,
@@ -121,7 +127,6 @@ public class HomeTypeTestDataBuilder
                 _isProspectiveRentIneligible,
                 _siteUsingMmc,
                 _modernMethodsConstructionApplied,
-                _modernMethodsConstructionCategories),
-            false);
+                _modernMethodsConstructionCategories));
     }
 }

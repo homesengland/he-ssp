@@ -44,8 +44,6 @@ public class SchemeEntity
 
     public bool IsModified => _modificationTracker.IsModified || StakeholderDiscussions.IsModified;
 
-    public bool IsReadOnly => Application.IsReadOnly();
-
     public void ChangeFunding(SchemeFunding funding)
     {
         Funding = _modificationTracker.Change(Funding, funding, SetInProgress);

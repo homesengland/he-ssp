@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Models.Summary;
@@ -17,16 +18,14 @@ public class FinancialDetailsCheckAnswersModel : FinancialDetailsBaseModel, IEdi
         SectionSummaryViewModel costsSummary,
         SectionSummaryViewModel contributionsSummary,
         IsSectionCompleted isSectionCompleted,
-        bool isEditable,
-        bool isApplicationLocked)
+        IReadOnlyCollection<AhpApplicationOperation> allowedOperations)
         : base(applicationId, applicationName)
     {
         LandValueSummary = landValueSummary;
         CostsSummary = costsSummary;
         ContributionsSummary = contributionsSummary;
         IsSectionCompleted = isSectionCompleted;
-        IsEditable = isEditable;
-        IsApplicationLocked = isApplicationLocked;
+        AllowedOperations = allowedOperations;
     }
 
     [ValidateNever]
@@ -41,11 +40,11 @@ public class FinancialDetailsCheckAnswersModel : FinancialDetailsBaseModel, IEdi
     [ValidateNever]
     public bool? CostsAndFunding { get; set; }
 
-    public bool IsEditable { get; set; }
+    public IReadOnlyCollection<AhpApplicationOperation> AllowedOperations { get; set; }
+
+    public bool IsEditable => AllowedOperations.Contains(AhpApplicationOperation.Modification);
 
     public bool IsReadOnly => !IsEditable;
-
-    public bool IsApplicationLocked { get; set; }
 
     public IsSectionCompleted IsSectionCompleted { get; set; }
 }

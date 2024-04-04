@@ -4,15 +4,11 @@ using HE.Investment.AHP.Contract.HomeTypes.Enums;
 namespace HE.Investment.AHP.Contract.HomeTypes;
 
 public record FullHomeType(
+    ApplicationDetails Application,
     HomeTypeId Id,
     string Name,
-    AhpApplicationId ApplicationId,
-    string ApplicationName,
-    Tenure Tenure,
-    bool IsApplicationLocked,
     HousingType HousingType,
     bool IsCompleted,
-    bool IsReadOnly,
     OlderPeopleHomeTypeDetails? OlderPeople,
     DisabledPeopleHomeTypeDetails? DisabledPeople,
     DesignPlans? DesignPlans,

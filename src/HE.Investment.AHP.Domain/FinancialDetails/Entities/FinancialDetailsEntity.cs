@@ -54,8 +54,6 @@ public class FinancialDetailsEntity : IQuestion
 
     public SectionStatus SectionStatus { get; private set; }
 
-    public bool IsReadOnly => ApplicationBasicInfo.IsReadOnly();
-
     public void ProvideLandStatus(LandStatus landStatus)
     {
         ChangeStatus(LandStatus != landStatus);

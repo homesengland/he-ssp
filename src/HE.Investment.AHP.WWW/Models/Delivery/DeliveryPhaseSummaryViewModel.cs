@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investments.Common.WWW.Models.Summary;
 
@@ -12,8 +13,7 @@ public class DeliveryPhaseSummaryViewModel : ISummaryViewModel
         string deliveryPhaseName,
         IsSectionCompleted? isCompleted,
         IList<SectionSummaryViewModel> sections,
-        bool isEditable,
-        bool isApplicationLocked)
+        IReadOnlyCollection<AhpApplicationOperation> allowedOperations)
     {
         ApplicationId = applicationId;
         DeliveryPhaseId = deliveryPhaseId;
@@ -21,8 +21,7 @@ public class DeliveryPhaseSummaryViewModel : ISummaryViewModel
         DeliveryPhaseName = deliveryPhaseName;
         IsCompleted = isCompleted;
         Sections = sections;
-        IsEditable = isEditable;
-        IsApplicationLocked = isApplicationLocked;
+        AllowedOperations = allowedOperations;
     }
 
     public string ApplicationId { get; }
@@ -37,9 +36,9 @@ public class DeliveryPhaseSummaryViewModel : ISummaryViewModel
 
     public IList<SectionSummaryViewModel> Sections { get; }
 
-    public bool IsEditable { get; }
+    public IReadOnlyCollection<AhpApplicationOperation> AllowedOperations { get; }
 
-    public bool IsApplicationLocked { get; }
+    public bool IsEditable => AllowedOperations.Contains(AhpApplicationOperation.Modification);
 
     public bool IsReadOnly => !IsEditable;
 }

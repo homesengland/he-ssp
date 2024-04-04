@@ -12,6 +12,14 @@ public class AccountAccessContext : IAccountAccessContext
 
     public const string SubmitApplication = $"{nameof(UserRole.Admin)},{nameof(UserRole.Enhanced)},{nameof(UserRole.Limited)}";
 
+    public static readonly IReadOnlyCollection<UserRole> OrganisationViewRoles = ToUserAccountRoles(OrganisationView);
+
+    public static readonly IReadOnlyCollection<UserRole> ManageUsersRoles = ToUserAccountRoles(ManageUsers);
+
+    public static readonly IReadOnlyCollection<UserRole> EditApplicationRoles = ToUserAccountRoles(EditApplications);
+
+    public static readonly IReadOnlyCollection<UserRole> SubmitApplicationRoles = ToUserAccountRoles(SubmitApplication);
+
     private readonly IAccountUserContext _accountUserContext;
 
     public AccountAccessContext(IAccountUserContext accountUserContext)
@@ -22,25 +30,25 @@ public class AccountAccessContext : IAccountAccessContext
     public async Task<bool> CanManageUsers()
     {
         var account = await _accountUserContext.GetSelectedAccount();
-        return account.HasOneOfRole(ToUserAccountRoles(ManageUsers));
+        return account.CanManageUsers;
     }
 
     public async Task<bool> CanAccessOrganisationView()
     {
         var account = await _accountUserContext.GetSelectedAccount();
-        return account.HasOneOfRole(ToUserAccountRoles(OrganisationView));
+        return account.CanAccessOrganisationView;
     }
 
     public async Task<bool> CanSubmitApplication()
     {
         var account = await _accountUserContext.GetSelectedAccount();
-        return account.HasOneOfRole(ToUserAccountRoles(SubmitApplication));
+        return account.CanSubmitApplication;
     }
 
     public async Task<bool> CanEditApplication()
     {
         var account = await _accountUserContext.GetSelectedAccount();
-        return account.HasOneOfRole(ToUserAccountRoles(EditApplications));
+        return account.CanEditApplication;
     }
 
     private static UserRole[] ToUserAccountRoles(string roles)

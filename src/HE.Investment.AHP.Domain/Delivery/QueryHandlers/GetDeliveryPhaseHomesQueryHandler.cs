@@ -27,7 +27,7 @@ public class GetDeliveryPhaseHomesQueryHandler : IRequestHandler<GetDeliveryPhas
         return new DeliveryPhaseHomes(
             request.DeliveryPhaseId,
             deliveryPhase.Name.Value,
-            deliveryPhases.ApplicationName.Name,
+            deliveryPhases.Application.Name.Name,
             deliveryPhases.GetHomesToDeliverInPhase(request.DeliveryPhaseId)
                 .Select(x => new HomeTypesToDeliver(x.HomesToDeliver.HomeTypeId, x.HomesToDeliver.HomeTypeName.Value, x.ToDeliver))
                 .ToList());

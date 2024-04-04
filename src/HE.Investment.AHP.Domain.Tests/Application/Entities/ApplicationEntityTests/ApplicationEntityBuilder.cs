@@ -1,8 +1,10 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Domain.Application.Entities;
+using HE.Investment.AHP.Domain.Application.Factories;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investments.Common.Contract;
+using HE.Investments.Common.Tests.TestData;
 using ApplicationSection = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationSection;
 
 namespace HE.Investment.AHP.Domain.Tests.Application.Entities.ApplicationEntityTests;
@@ -37,6 +39,15 @@ public class ApplicationEntityBuilder
 
     public ApplicationEntity Build()
     {
-        return new ApplicationEntity(_siteId, _id, _name, _status, _reference, null, null, new ApplicationSections(_sections ?? new List<ApplicationSection>()));
+        return new ApplicationEntity(
+            _siteId,
+            _id,
+            _name,
+            _status,
+            _reference,
+            null,
+            null,
+            new ApplicationSections(_sections ?? new List<ApplicationSection>()),
+            new ApplicationStateFactory(UserAccountTestData.AdminUserAccountOne));
     }
 }

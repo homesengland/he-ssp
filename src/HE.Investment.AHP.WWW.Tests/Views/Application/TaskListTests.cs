@@ -128,6 +128,7 @@ public class TaskListTests : AhpViewTestBase
             "some site",
             "application xyz",
             status,
+            new[] { AhpApplicationOperation.Modification, AhpApplicationOperation.Submit },
             "Ref1",
             modificationDetails,
             sections ?? new List<ApplicationSection>());

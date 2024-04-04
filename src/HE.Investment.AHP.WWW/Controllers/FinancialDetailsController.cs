@@ -7,7 +7,6 @@ using HE.Investment.AHP.WWW.Extensions;
 using HE.Investment.AHP.WWW.Models.FinancialDetails;
 using HE.Investment.AHP.WWW.Models.FinancialDetails.Factories;
 using HE.Investment.AHP.WWW.Workflows;
-using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
@@ -29,16 +28,13 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
 {
     private readonly IMediator _mediator;
     private readonly IFinancialDetailsSummaryViewModelFactory _financialDetailsSummaryViewModelFactory;
-    private readonly IAccountAccessContext _accountAccessContext;
 
     public FinancialDetailsController(
         IMediator mediator,
-        IFinancialDetailsSummaryViewModelFactory financialDetailsSummaryViewModelFactory,
-        IAccountAccessContext accountAccessContext)
+        IFinancialDetailsSummaryViewModelFactory financialDetailsSummaryViewModelFactory)
     {
         _mediator = mediator;
         _financialDetailsSummaryViewModelFactory = financialDetailsSummaryViewModelFactory;
-        _accountAccessContext = accountAccessContext;
     }
 
     [HttpGet("start")]
@@ -58,7 +54,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
         var financialDetails = await _mediator.Send(new GetFinancialDetailsQuery(AhpApplicationId.From(applicationId)));
         return View(new FinancialDetailsLandStatusModel(
             applicationId,
-            financialDetails.ApplicationName,
+            financialDetails.Application.Name,
             CurrencyHelper.InputPoundsPences(financialDetails.PurchasePrice),
             financialDetails.IsPurchasePriceFinal ?? siteLandStatus));
     }
@@ -80,7 +76,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
         var financialDetails = await _mediator.Send(new GetFinancialDetailsQuery(AhpApplicationId.From(applicationId)));
         return View(new FinancialDetailsLandValueModel(
             applicationId,
-            financialDetails.ApplicationName,
+            financialDetails.Application.Name,
             CurrencyHelper.InputPoundsPences(financialDetails.LandValue),
             financialDetails.IsSchemaOnPublicLand));
     }
@@ -102,7 +98,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
         var financialDetails = await _mediator.Send(new GetFinancialDetailsQuery(AhpApplicationId.From(applicationId)));
         return View(new FinancialDetailsOtherApplicationCostsModel(
             applicationId,
-            financialDetails.ApplicationName,
+            financialDetails.Application.Name,
             CurrencyHelper.InputPounds(financialDetails.ExpectedWorkCost),
             CurrencyHelper.InputPounds(financialDetails.ExpectedOnCost)));
     }
@@ -134,7 +130,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
         var financialDetails = await _mediator.Send(new GetFinancialDetailsQuery(AhpApplicationId.From(applicationId)));
         return View(new FinancialDetailsContributionsModel(
             applicationId,
-            financialDetails.ApplicationName,
+            financialDetails.Application.Name,
             CurrencyHelper.InputPounds(financialDetails.RentalIncomeContribution),
             CurrencyHelper.InputPounds(financialDetails.SubsidyFromSaleOnThisScheme),
             CurrencyHelper.InputPounds(financialDetails.SubsidyFromSaleOnOtherSchemes),
@@ -200,7 +196,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
         var financialDetails = await _mediator.Send(new GetFinancialDetailsQuery(AhpApplicationId.From(applicationId)));
         return View(new FinancialDetailsGrantsModel(
             applicationId,
-            financialDetails.ApplicationName,
+            financialDetails.Application.Name,
             CurrencyHelper.InputPounds(financialDetails.CountyCouncilGrants),
             CurrencyHelper.InputPounds(financialDetails.DhscExtraCareGrants),
             CurrencyHelper.InputPounds(financialDetails.LocalAuthorityGrants),
@@ -254,11 +250,9 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
     [WorkflowState(FinancialDetailsWorkflowState.CheckAnswers)]
     public async Task<IActionResult> CheckAnswers(Guid applicationId, CancellationToken cancellationToken)
     {
-        var isReadOnly = !await _accountAccessContext.CanEditApplication();
         var model = await _financialDetailsSummaryViewModelFactory.GetFinancialDetailsAndCreateSummary(
             AhpApplicationId.From(applicationId),
             Url,
-            isReadOnly,
             cancellationToken);
 
         return View(model);
@@ -272,11 +266,9 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
 
         if (result.HasValidationErrors)
         {
-            var isReadOnly = !await _accountAccessContext.CanEditApplication();
             var summary = await _financialDetailsSummaryViewModelFactory.GetFinancialDetailsAndCreateSummary(
                 AhpApplicationId.From(applicationId),
                 Url,
-                isReadOnly,
                 cancellationToken);
 
             ModelState.AddValidationErrors(result);
@@ -317,8 +309,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
         }
 
         var financialDetails = await _mediator.Send(new GetFinancialDetailsQuery(AhpApplicationId.From(applicationId)));
-        var isReadOnly = !await _accountAccessContext.CanEditApplication() || financialDetails.IsReadOnly;
-        return new FinancialDetailsWorkflow(currentState, financialDetails, isReadOnly);
+        return new FinancialDetailsWorkflow(currentState, financialDetails);
     }
 
     private async Task<IActionResult> ProvideFinancialDetails<TModel, TCommand>(

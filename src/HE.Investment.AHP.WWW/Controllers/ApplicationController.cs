@@ -125,6 +125,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
             _siteName,
             application.Name,
             application.Status,
+            application.AllowedOperations,
             application.ReferenceNumber,
             application.LastModificationDetails,
             application.Sections);
@@ -136,9 +137,10 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     [HttpGet("{applicationId}/check-answers")]
     public async Task<IActionResult> CheckAnswers(string applicationId, CancellationToken cancellationToken)
     {
-        var application = await _mediator.Send(new GetApplicationQuery(AhpApplicationId.From(applicationId)), cancellationToken);
-        var isReadOnly = !await _accountAccessContext.CanEditApplication() || application.IsReadOnly;
-        var applicationSummary = await _applicationSummaryViewModelFactory.GetDataAndCreate(AhpApplicationId.From(applicationId), Url, isReadOnly, cancellationToken);
+        var applicationSummary = await _applicationSummaryViewModelFactory.GetDataAndCreate(
+            AhpApplicationId.From(applicationId),
+            Url,
+            cancellationToken);
 
         return View("CheckAnswers", applicationSummary);
     }
@@ -152,8 +154,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
 
         if (result.HasValidationErrors)
         {
-            var isReadOnly = !await _accountAccessContext.CanEditApplication();
-            var applicationSummary = await _applicationSummaryViewModelFactory.GetDataAndCreate(AhpApplicationId.From(applicationId), Url, isReadOnly, cancellationToken);
+            var applicationSummary = await _applicationSummaryViewModelFactory.GetDataAndCreate(AhpApplicationId.From(applicationId), Url, cancellationToken);
 
             ModelState.AddValidationErrors(result);
             return View("CheckAnswers", applicationSummary);
