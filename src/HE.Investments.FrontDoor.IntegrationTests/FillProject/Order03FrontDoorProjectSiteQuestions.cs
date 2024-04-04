@@ -6,6 +6,7 @@ using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.FrontDoor.Contract.Project;
 using HE.Investments.FrontDoor.Contract.Site;
+using HE.Investments.FrontDoor.Contract.Site.Enums;
 using HE.Investments.FrontDoor.IntegrationTests.Framework;
 using HE.Investments.FrontDoor.IntegrationTests.Pages;
 using HE.Investments.FrontDoor.WWW.Views.LocalAuthority.Const;
@@ -234,7 +235,9 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
         summary.Should().ContainKey("Project name").WithValue(ProjectData.Name);
         summary.Should().ContainKey("Activities you require support for").WithValue(ProjectData.ActivityType.GetDescription());
         summary.Should().ContainKey("Amount of affordable homes").WithValue(ProjectData.AffordableHomeAmount.GetDescription());
-        summary.Should().ContainKey("Previous residential building experience").WithValue(ProjectData.OrganisationHomesBuilt.ToString(CultureInfo.InvariantCulture));
+        summary.Should()
+            .ContainKey("Previous residential building experience")
+            .WithValue(ProjectData.OrganisationHomesBuilt.ToString(CultureInfo.InvariantCulture));
 
         summary.Should().ContainKey("Identified site").WithValue(ProjectData.IsSiteIdentified.MapToCommonResponse());
         summary.Should().ContainKey("Site name").WithValue(SiteData.Name);
@@ -301,7 +304,208 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
 
     [Fact(Skip = FrontDoorConfig.SkipTest)]
     [Order(17)]
-    public async Task Order17_CheckAnswersCompleteProject()
+    public async Task Order17_RedirectToAddAnotherSite()
+    {
+        // given
+        var checkAnswersPage = await GetCurrentPage(ProjectPagesUrl.CheckAnswers(ProjectData.Id));
+        var addAnotherSiteLink = checkAnswersPage
+            .UrlWithoutQueryEndsWith(ProjectPagesUrl.CheckAnswers(ProjectData.Id))
+            .HasTitle(ProjectPageTitles.CheckAnswers)
+            .GetLinkByTestId("add-another-site");
+
+        // when
+        var nextPage = await TestClient.NavigateTo(addAnotherSiteLink);
+
+        // then
+        nextPage
+            .UrlWithoutQueryEndsWith(SitePagesUrl.Name(ProjectData.Id))
+            .HasTitle(SitePageTitles.Name)
+            .HasBackLink(out _)
+            .HasSaveAndContinueButton();
+
+        SaveCurrentPage();
+    }
+
+    [Fact(Skip = FrontDoorConfig.SkipTest)]
+    [Order(18)]
+    public async Task Order18_ProvideSecondSiteName()
+    {
+        // given
+        var currentPage = await GetCurrentPage(SitePagesUrl.Name(ProjectData.Id));
+        currentPage
+            .UrlWithoutQueryEndsWith(SitePagesUrl.Name(ProjectData.Id))
+            .HasTitle(SitePageTitles.Name)
+            .HasBackLink(out _)
+            .HasSaveAndContinueButton(out var continueButton);
+
+        // when
+        var nextPage = await TestClient.SubmitButton(
+            continueButton,
+            (nameof(SiteDetails.Name), SecondSiteData.GenerateSiteName()));
+
+        // then
+        SecondSiteData.SetId(nextPage.Url.GetSiteGuidFromUrl());
+        nextPage.UrlWithoutQueryEndsWith(SitePagesUrl.HomesNumber(ProjectData.Id, SecondSiteData.Id));
+
+        SaveCurrentPage();
+    }
+
+    [Fact(Skip = FrontDoorConfig.SkipTest)]
+    [Order(19)]
+    public async Task Order19_ProvideSecondSiteHomesNumber()
+    {
+        await TestQuestionPage(
+            SitePagesUrl.HomesNumber(ProjectData.Id, SecondSiteData.Id),
+            SitePageTitles.HomesNumber,
+            SitePagesUrl.LocalAuthoritySearch(ProjectData.Id, SecondSiteData.Id),
+            (nameof(SiteDetails.HomesNumber), SecondSiteData.HomesNumber.ToString(CultureInfo.InvariantCulture)));
+    }
+
+    [Fact(Skip = FrontDoorConfig.SkipTest)]
+    [Order(20)]
+    public async Task Order20_SecondSiteSearchLocalAuthority()
+    {
+        // given
+        var currentPage = await GetCurrentPage(SitePagesUrl.LocalAuthoritySearch(ProjectData.Id, SecondSiteData.Id));
+        currentPage
+            .UrlWithoutQueryEndsWith(SitePagesUrl.LocalAuthoritySearch(ProjectData.Id, SecondSiteData.Id))
+            .HasTitle(LocalAuthorityPageTitles.SearchForSite)
+            .HasBackLink(out _)
+            .HasSubmitButton(out var continueButton, "Search");
+
+        // when
+        var nextPage = await TestClient.SubmitButton(
+            continueButton,
+            ("Phrase", "oxford"));
+
+        // then
+        nextPage
+            .UrlWithoutQueryEndsWith(SitePagesUrl.LocalAuthorityResult(ProjectData.Id, SecondSiteData.Id))
+            .HasTitle(LocalAuthorityPageTitles.SearchResult)
+            .HasBackLink(out _);
+
+        SaveCurrentPage();
+    }
+
+    [Fact(Skip = FrontDoorConfig.SkipTest)]
+    [Order(21)]
+    public async Task Order21_SecondSiteSelectLocalAuthority()
+    {
+        // given
+        var currentPage = await GetCurrentPage(SitePagesUrl.LocalAuthorityResult(ProjectData.Id, SecondSiteData.Id));
+        var confirmLocalAuthorityLink = currentPage
+            .UrlWithoutQueryEndsWith(SitePagesUrl.LocalAuthorityResult(ProjectData.Id, SecondSiteData.Id))
+            .HasTitle(LocalAuthorityPageTitles.SearchResult)
+            .HasBackLink(out _)
+            .GetLinkByTestId(SecondSiteData.LocalAuthorityName.ToIdTag());
+
+        // when
+        var nextPage = await TestClient.NavigateTo(confirmLocalAuthorityLink);
+
+        // then
+        nextPage
+            .UrlWithoutQueryEndsWith(SitePagesUrl.LocalAuthorityConfirmSuffix(ProjectData.Id, SecondSiteData.Id))
+            .HasTitle(SitePageTitles.LocalAuthorityConfirm)
+            .HasBackLink(out _)
+            .HasSaveAndContinueButton();
+
+        SaveCurrentPage();
+    }
+
+    [Fact(Skip = FrontDoorConfig.SkipTest)]
+    [Order(22)]
+    public async Task Order22_SecondSiteConfirmLocalAuthority()
+    {
+        await TestQuestionPage(
+            SitePagesUrl.LocalAuthorityConfirmSuffix(ProjectData.Id, SecondSiteData.Id),
+            SitePageTitles.LocalAuthorityConfirm,
+            SitePagesUrl.PlanningStatus(ProjectData.Id, SecondSiteData.Id),
+            ("IsConfirmed", "True"));
+    }
+
+    [Fact(Skip = FrontDoorConfig.SkipTest)]
+    [Order(23)]
+    public async Task Order23_SecondSiteProvidePlanningStatus()
+    {
+        await TestQuestionPage(
+            SitePagesUrl.PlanningStatus(ProjectData.Id, SecondSiteData.Id),
+            SitePageTitles.PlanningStatus,
+            ProjectPagesUrl.CheckAnswers(ProjectData.Id),
+            (nameof(SiteDetails.PlanningStatus), SiteData.PlanningStatus.ToString()));
+    }
+
+    [Fact(Skip = FrontDoorConfig.SkipTest)]
+    [Order(24)]
+    public async Task Order24_CheckAnswersWithSecondSite()
+    {
+        // given
+        var checkAnswersPage = await GetCurrentPage(ProjectPagesUrl.CheckAnswers(ProjectData.Id));
+        checkAnswersPage
+            .UrlWithoutQueryEndsWith(ProjectPagesUrl.CheckAnswers(ProjectData.Id))
+            .HasTitle(ProjectPageTitles.CheckAnswers)
+            .HasBackLink(out _);
+
+        // when & then
+        var summary = checkAnswersPage.GetSummaryListItems();
+        summary.Any(x => x.Value.Value == SecondSiteData.Name).Should().BeTrue();
+        summary.Any(x => x.Value.Value == SiteData.Name).Should().BeTrue();
+    }
+
+    [Fact(Skip = FrontDoorConfig.SkipTest)]
+    [Order(25)]
+    public async Task Order25_RedirectToRemoveSite()
+    {
+        // given
+        var checkAnswersPage = await GetCurrentPage(ProjectPagesUrl.CheckAnswers(ProjectData.Id));
+        var removeSiteLink = checkAnswersPage
+            .UrlWithoutQueryEndsWith(ProjectPagesUrl.CheckAnswers(ProjectData.Id))
+            .HasTitle(ProjectPageTitles.CheckAnswers)
+            .GetLinkByTestId($"{SecondSiteData.Name}-remove-site");
+
+        // when
+        var nextPage = await TestClient.NavigateTo(removeSiteLink);
+
+        // then
+        nextPage
+            .UrlWithoutQueryEndsWith(SitePagesUrl.Remove(ProjectData.Id, SecondSiteData.Id))
+            .HasTitle(SitePageTitles.Remove)
+            .HasBackLink(out _)
+            .HasSaveAndContinueButton();
+
+        SaveCurrentPage();
+    }
+
+    [Fact(Skip = FrontDoorConfig.SkipTest)]
+    [Order(26)]
+    public async Task Order26_RemoveSite()
+    {
+        await TestQuestionPage(
+            SitePagesUrl.Remove(ProjectData.Id, SecondSiteData.Id),
+            SitePageTitles.Remove,
+            ProjectPagesUrl.CheckAnswers(ProjectData.Id),
+            (nameof(SiteDetails.RemoveSiteAnswer), RemoveSiteAnswer.Yes.ToString()));
+    }
+
+    [Fact(Skip = FrontDoorConfig.SkipTest)]
+    [Order(27)]
+    public async Task Order27_CheckAnswersWithoutSite()
+    {
+        // given
+        var checkAnswersPage = await GetCurrentPage(ProjectPagesUrl.CheckAnswers(ProjectData.Id));
+        checkAnswersPage
+            .UrlWithoutQueryEndsWith(ProjectPagesUrl.CheckAnswers(ProjectData.Id))
+            .HasTitle(ProjectPageTitles.CheckAnswers)
+            .HasBackLink(out _);
+
+        // when & then
+        var summary = checkAnswersPage.GetSummaryListItems();
+        summary.Any(x => x.Value.Value == SiteData.Name).Should().BeTrue();
+        summary.Any(x => x.Value.Value == SecondSiteData.Name).Should().BeFalse();
+    }
+
+    [Fact(Skip = FrontDoorConfig.SkipTest)]
+    [Order(28)]
+    public async Task Order28_CheckAnswersCompleteProject()
     {
         // given
         var currentPage = await TestClient.NavigateTo(ProjectPagesUrl.CheckAnswers(ProjectData.Id));

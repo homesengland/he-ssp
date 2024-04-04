@@ -30,6 +30,8 @@ public class FrontDoorIntegrationTest : IntegrationTestBase<Program>, IDisposabl
 
     public SiteData SiteData => ProjectData.SiteData;
 
+    public SiteData SecondSiteData => ProjectData.SecondSiteData;
+
     public Stopwatch Stopwatch { get; private set; }
 
     public void Dispose()

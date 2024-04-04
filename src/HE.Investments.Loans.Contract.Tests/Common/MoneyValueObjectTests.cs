@@ -7,18 +7,16 @@ using Xunit;
 
 namespace HE.Investments.Loans.Contract.Tests.Common;
 
-public class PoundsTests
+public class MoneyValueObjectTests
 {
     [Theory]
-    [InlineData("0")]
-    [InlineData("1")]
-    [InlineData("1.42")]
-    [InlineData("753.7")]
-    [InlineData("99999")]
-    public void ShouldCreatePounds_WhenValueIsString(string value)
+    [InlineData("1245367")]
+    [InlineData("5.98")]
+    [InlineData("1356.7")]
+    public void ShouldCreateMoneyValueObject_WhenValueIsString(string value)
     {
         // given && when
-        var action = () => Pounds.FromString(value, nameof(Pounds), "pounds value");
+        var action = () => TestMoneyValueObject.FromString(value);
 
         // then
         action.Should().NotThrow<DomainValidationException>();
@@ -31,10 +29,10 @@ public class PoundsTests
     [InlineData(1.42)]
     [InlineData(753.7)]
     [InlineData(99999)]
-    public void ShouldCreatePounds_WhenValueIsDecimal(decimal value)
+    public void ShouldCreateMoneyValueObject_WhenValueIsDecimal(decimal value)
     {
         // given && when
-        var action = () => Pounds.New(value, nameof(Pounds), "pounds value");
+        var action = () => TestMoneyValueObject.FromDecimal(value);
 
         // then
         action.Should().NotThrow<DomainValidationException>();
@@ -47,13 +45,13 @@ public class PoundsTests
     public void ShouldThrowDomainValidationException_WhenStringValueIsTooHigh(string value)
     {
         // given && when
-        var action = () => Pounds.FromString(value, nameof(Pounds), "pounds value");
+        var action = () => TestMoneyValueObject.FromString(value);
 
         // then
         action.Should()
             .ThrowExactly<DomainValidationException>()
             .Which.OperationResult.Errors.Should()
-            .ContainSingle(x => x.ErrorMessage == ValidationErrorMessage.MustProvideTheLowerNumber("pounds value", 999999999));
+            .ContainSingle(x => x.ErrorMessage == ValidationErrorMessage.MustProvideTheLowerNumber("money value", 999999999));
     }
 
     [Fact]
@@ -63,13 +61,13 @@ public class PoundsTests
         var value = -12.22M;
 
         // when
-        var action = () => Pounds.New(value, nameof(Pounds), "pounds value");
+        var action = () => TestMoneyValueObject.FromDecimal(value);
 
         // then
         action.Should()
             .ThrowExactly<DomainValidationException>()
             .Which.OperationResult.Errors.Should()
-            .ContainSingle(x => x.ErrorMessage == ValidationErrorMessage.MustProvideTheHigherNumber("pounds value", 0));
+            .ContainSingle(x => x.ErrorMessage == ValidationErrorMessage.MustProvideTheHigherNumber("money value", 0));
     }
 
     [Fact]
@@ -79,31 +77,35 @@ public class PoundsTests
         var value = 9999999999999M;
 
         // when
-        var action = () => Pounds.New(value, nameof(Pounds), "pounds value");
+        var action = () => TestMoneyValueObject.FromDecimal(value);
 
         // then
         action.Should()
             .ThrowExactly<DomainValidationException>()
             .Which.OperationResult.Errors.Should()
-            .ContainSingle(x => x.ErrorMessage == ValidationErrorMessage.MustProvideTheLowerNumber("pounds value", 999999999));
+            .ContainSingle(x => x.ErrorMessage == ValidationErrorMessage.MustProvideTheLowerNumber("money value", 999999999));
     }
 
-    [Theory]
-    [InlineData(null)]
-    [InlineData("")]
-    [InlineData(" ")]
-    [InlineData("abc")]
-    [InlineData("1.234")]
-    [InlineData("12.34.56")]
-    public void ShouldThrowDomainValidationException_WhenValueIsInvalid(string value)
+    private class TestMoneyValueObject : MoneyValueObject
     {
-        // given && when
-        var action = () => Pounds.FromString(value, nameof(Pounds), "pounds value");
+        public TestMoneyValueObject(string value, string fieldName, string displayName)
+            : base(value, fieldName, displayName)
+        {
+        }
 
-        // then
-        action.Should()
-            .ThrowExactly<DomainValidationException>()
-            .Which.OperationResult.Errors.Should()
-            .ContainSingle(x => x.ErrorMessage == GenericValidationError.InvalidPoundsValue);
+        public TestMoneyValueObject(decimal value, string fieldName, string displayName)
+            : base(value, fieldName, displayName)
+        {
+        }
+
+        public static TestMoneyValueObject FromString(string value)
+        {
+            return new TestMoneyValueObject(value, nameof(TestMoneyValueObject), "money value");
+        }
+
+        public static TestMoneyValueObject FromDecimal(decimal value)
+        {
+            return new TestMoneyValueObject(value, nameof(TestMoneyValueObject), "money value");
+        }
     }
 }

@@ -39,4 +39,46 @@ public class GrossDevelopmentValueCtorTests
         // then
         action.Should().ThrowExactly<DomainValidationException>().WithOnlyOneErrorMessage(ValidationErrorMessage.EstimatedPoundInput("GDV"));
     }
+
+    [Fact]
+    public void ShouldThrowDomainValidationException_WhenValueIsNull()
+    {
+        // given && when
+        var action = () => GrossDevelopmentValue.FromString(string.Empty);
+
+        // then
+        action.Should().ThrowExactly<DomainValidationException>().WithOnlyOneErrorMessage(ValidationErrorMessage.EstimatedPoundInput("GDV"));
+    }
+
+    [Fact]
+    public void ShouldThrowDomainValidationException_WhenValueIsGreaterThanMaxValue()
+    {
+        // given && when
+        var action = () => GrossDevelopmentValue.FromString("1000000000");
+
+        // then
+        action.Should().ThrowExactly<DomainValidationException>().WithOnlyOneErrorMessage(ValidationErrorMessage.MustProvideTheLowerNumber("Gross Development Value", 999999999));
+    }
+
+    [Fact]
+    public void ShouldCreateGrossDevelopmentValue_WhenValueIsEqualToMaxValue()
+    {
+        // given
+        var action = () => GrossDevelopmentValue.FromString("999999999");
+
+        // then
+        action.Should().NotThrow<DomainValidationException>();
+        action().Value.Should().Be(999999999);
+    }
+
+    [Fact]
+    public void ShouldCreateGrossDevelopmentValue_WhenValueIsEqualToMinValue()
+    {
+        // given
+        var action = () => GrossDevelopmentValue.FromString("0");
+
+        // then
+        action.Should().NotThrow<DomainValidationException>();
+        action().Value.Should().Be(0);
+    }
 }
