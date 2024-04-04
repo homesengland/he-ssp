@@ -18,9 +18,17 @@ public class StartDate : DateValueObject
         Exists = exists;
     }
 
+    private StartDate(bool exists, DateTime value)
+        : base(value)
+    {
+        Exists = exists;
+    }
+
     public new DateTime? Value => Exists ? base.Value : null;
 
     public bool Exists { get; }
+
+    public static StartDate FromCrm(DateTime? value) => new(value.HasValue, value ?? default);
 
     protected override IEnumerable<object> GetAtomicValues()
     {

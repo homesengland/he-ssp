@@ -54,13 +54,9 @@ internal static class ProjectEntityMapper
 
         if (startDateExists!.Value)
         {
-            return new StartDate(
-                true,
-                siteDetailsDto.startDate!.Value.Day.ToString(CultureInfo.InvariantCulture),
-                siteDetailsDto.startDate!.Value.Month.ToString(CultureInfo.InvariantCulture),
-                siteDetailsDto.startDate!.Value.Year.ToString(CultureInfo.InvariantCulture));
+            return StartDate.FromCrm(siteDetailsDto!.startDate);
         }
 
-        return new StartDate(false, null, null, null);
+        return StartDate.FromCrm(null);
     }
 }
