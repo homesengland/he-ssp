@@ -20,11 +20,24 @@ public class OtherApplicationCosts : ValueObject, IQuestion
 
     public ExpectedOnCosts? ExpectedOnCosts { get; }
 
-    public decimal ExpectedTotalCosts() => (ExpectedWorksCosts?.Value ?? 0) + (ExpectedOnCosts?.Value ?? 0);
+    public decimal? ExpectedTotalCosts()
+    {
+        if (AreAllNotAnswered())
+        {
+            return null;
+        }
+
+        return (ExpectedWorksCosts?.Value ?? 0) + (ExpectedOnCosts?.Value ?? 0);
+    }
 
     public bool IsAnswered()
     {
         return ExpectedWorksCosts.IsProvided() && ExpectedOnCosts.IsProvided();
+    }
+
+    public bool AreAllNotAnswered()
+    {
+        return ExpectedWorksCosts.IsNotProvided() && ExpectedOnCosts.IsNotProvided();
     }
 
     protected override IEnumerable<object?> GetAtomicValues()

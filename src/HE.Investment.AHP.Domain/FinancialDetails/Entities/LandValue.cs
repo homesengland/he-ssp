@@ -26,6 +26,8 @@ public class LandValue : ValueObject, IQuestion
         return CurrentLandValue.IsProvided() && IsPublicLand != YesNoType.Undefined;
     }
 
+    public bool IsNotAnswered() => !IsAnswered();
+
     protected override IEnumerable<object?> GetAtomicValues()
     {
         yield return CurrentLandValue;

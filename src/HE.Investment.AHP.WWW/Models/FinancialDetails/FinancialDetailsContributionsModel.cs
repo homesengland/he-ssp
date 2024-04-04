@@ -18,7 +18,7 @@ public class FinancialDetailsContributionsModel : FinancialDetailsBaseModel
         string? homesTransferValue,
         bool isSharedOwnership,
         bool isUnregisteredBodyAccount,
-        string totalExpectedContributions)
+        string? totalExpectedContributions)
         : base(applicationId, applicationName)
     {
         RentalIncomeBorrowing = rentalIncomeBorrowing;
