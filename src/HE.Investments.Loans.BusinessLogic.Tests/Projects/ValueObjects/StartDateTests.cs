@@ -10,40 +10,45 @@ namespace HE.Investments.Loans.BusinessLogic.Tests.Projects.ValueObjects;
 public class StartDateTests
 {
     [Fact]
-    public void ShouldFail_WhenStartDateExistButDateIsNotProvided()
+    public void ShouldFail_WhenStartDateExistButDateIsEmpty()
     {
-        var action = () => new StartDate(true, null);
+        var action = () => new StartDate(true, string.Empty, string.Empty, string.Empty);
 
-        action.Should().Throw<DomainValidationException>().WithOnlyOneErrorMessage(ValidationErrorMessage.NoStartDate);
+        action.Should().Throw<DomainValidationException>().WithOnlyOneErrorMessage("Enter when you plan to start the project");
     }
 
     [Theory]
-    [InlineData("", "9", "2023")]
-    [InlineData("24", "", "2023")]
-    [InlineData("24", "9", "")]
-    public void ShouldFail_WhenStartDateExistButDateIsNotCompleted(string day, string month, string year)
+    [InlineData("", "9", "2023", "day")]
+    [InlineData("", "", "2023", "day and month")]
+    [InlineData("", "9", "", "day and year")]
+    [InlineData("24", "", "2023", "month")]
+    [InlineData("24", "", "", "month and year")]
+    [InlineData("24", "9", "", "year")]
+    public void ShouldFail_WhenStartDateExistButDateIsNotCompleted(string day, string month, string year, string expectedMessage)
     {
-        var action = () => StartDate.From(CommonResponse.Yes, year, month, day);
+        var action = () => new StartDate(true, day, month, year);
 
-        action.Should().Throw<DomainValidationException>().WithOnlyOneErrorMessage(ValidationErrorMessage.NoStartDate);
+        action.Should().Throw<DomainValidationException>().WithOnlyOneErrorMessage($"The date when you plan to start the project must include a {expectedMessage}");
     }
 
     [Theory]
+    [InlineData("1", "1", "1899")]
+    [InlineData("1", "1", "10000")]
     [InlineData("32", "1", "2023")]
     [InlineData("1", "13", "2023")]
     [InlineData("1", "1", "-1")]
     [InlineData("31", "12", "1752")]
     public void ShouldFail_WhenStartDateExistButIsNotCorrect(string day, string month, string year)
     {
-        var action = () => StartDate.From(CommonResponse.Yes, year, month, day);
+        var action = () => new StartDate(true, day, month, year);
 
-        action.Should().Throw<DomainValidationException>().WithOnlyOneErrorMessage(ValidationErrorMessage.InvalidStartDate);
+        action.Should().Throw<DomainValidationException>().WithOnlyOneErrorMessage("When you plan to start the project must be a real date");
     }
 
     [Fact]
     public void ShouldCreateNonExistingStartDate_NoMatterWhatIsPassedAsDayMonthOrYear()
     {
-        var startDate = StartDate.From(CommonResponse.No, "any", "any", "any");
+        var startDate = new StartDate(false, "any", "any", "any");
 
         startDate.Exists.Should().BeFalse();
     }
@@ -51,7 +56,7 @@ public class StartDateTests
     [Fact]
     public void ShouldCreateExistingStartDate_WhenCorrectDataIsProvided()
     {
-        var startDate = StartDate.From(CommonResponse.Yes, "2023", "9", "24");
+        var startDate = new StartDate(true, "24", "9", "2023");
 
         startDate.Exists.Should().BeTrue();
         startDate.Value.Should().Be(new DateTime(2023, 9, 24, 0, 0, 0, DateTimeKind.Unspecified));
