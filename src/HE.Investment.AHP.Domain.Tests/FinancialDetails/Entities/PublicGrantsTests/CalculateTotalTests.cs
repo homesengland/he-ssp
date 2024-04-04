@@ -27,7 +27,7 @@ public class CalculateTotalTests
     }
 
     [Fact]
-    public void ShouldCalculateTotal_WhenSomeValuesAreProvided()
+    public void ShouldReturnNull_WhenSomeValuesAreProvided()
     {
         // given
         var sut = new PublicGrants(
@@ -63,7 +63,7 @@ public class CalculateTotalTests
         var result = sut.CalculateTotal();
 
         // then
-        result.Should().Be(0);
+        result.Should().BeNull();
     }
 
     [Fact]

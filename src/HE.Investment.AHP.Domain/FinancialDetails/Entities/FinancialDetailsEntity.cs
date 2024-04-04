@@ -5,6 +5,7 @@ using HE.Investment.AHP.Domain.FinancialDetails.Constants;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.Entities;
@@ -126,9 +127,25 @@ public class FinancialDetailsEntity : IQuestion
         SectionStatus = SectionStatus.Completed;
     }
 
-    public decimal ExpectedTotalCosts() => OtherApplicationCosts.ExpectedTotalCosts() + (LandValue.CurrentLandValue?.Value ?? 0);
+    public decimal? ExpectedTotalCosts()
+    {
+        if (OtherApplicationCosts.AreAllNotAnswered() && LandValue.CurrentLandValue.IsNotProvided())
+        {
+            return null;
+        }
 
-    public decimal ExpectedTotalContributions() => ExpectedContributions.CalculateTotal() + PublicGrants.CalculateTotal();
+        return OtherApplicationCosts.ExpectedTotalCosts().GetValueOrDefault() + (LandValue.CurrentLandValue?.Value ?? 0);
+    }
+
+    public decimal? ExpectedTotalContributions()
+    {
+        if (ExpectedContributions.AreAllNotAnswered() && PublicGrants.AreAllNotAnswered())
+        {
+            return null;
+        }
+
+        return ExpectedContributions.CalculateTotal().GetValueOrDefault() + PublicGrants.CalculateTotal().GetValueOrDefault();
+    }
 
     private void ChangeStatus(bool isChanged)
     {
