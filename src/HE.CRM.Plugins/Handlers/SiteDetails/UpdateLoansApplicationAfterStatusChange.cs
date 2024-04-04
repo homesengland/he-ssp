@@ -97,11 +97,16 @@ namespace HE.CRM.Plugins.Handlers.SiteDetails
         {
             foreach (var status in listOfErlierStatuses)
             {
-                var isInStatus = siteDetails.Where(x => x.Id != CurrentState.Id).Any(x => x.invln_completionstatus.Value == status);
-                if (isInStatus)
+                var filteredList = siteDetails.Where(x => x.Id != CurrentState.Id && x.invln_completionstatus != null).ToList();
+                if (filteredList.Count > 0)
                 {
-                    UpdateLoansApplication(status);
-                    return true;
+                    var isInStatus = filteredList.Any(x => x.invln_completionstatus.Value == status);
+
+                    if (isInStatus)
+                    {
+                        UpdateLoansApplication(status);
+                        return true;
+                    }
                 }
             }
             return false;
