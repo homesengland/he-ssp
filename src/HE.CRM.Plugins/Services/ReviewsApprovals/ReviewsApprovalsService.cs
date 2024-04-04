@@ -43,6 +43,7 @@ namespace HE.CRM.Plugins.Services.ReviewsApprovals
                     case (int)invln_StatusReviewApprovalSet.Rejected:
                     {
                         isp.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Rejected);
+                        isp.invln_DateApproved = null;
                         this._ispRepository.Update(isp);
                         break;
                     }
@@ -104,6 +105,7 @@ namespace HE.CRM.Plugins.Services.ReviewsApprovals
             if (rejected.Any())
             {
                 isp.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Rejected);
+                isp.invln_DateApproved = null;
                 this._ispRepository.Update(isp);
                 return;
             }
@@ -127,10 +129,12 @@ namespace HE.CRM.Plugins.Services.ReviewsApprovals
             if (rejected.Any())
             {
                 isp.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Rejected);
+                isp.invln_DateApproved = null;
                 this._ispRepository.Update(isp);
             }
             else
             {
+                isp.invln_DateApproved = null;
                 isp.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Pending);
                 this._ispRepository.Update(isp);
             }
