@@ -9,6 +9,7 @@ using HE.Investments.Common.Extensions;
 using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
+using Xunit.Abstractions;
 using Xunit.Extensions.Ordering;
 
 namespace HE.Investments.AHP.IntegrationTests.ChangeApplicationStatus;
@@ -17,8 +18,8 @@ namespace HE.Investments.AHP.IntegrationTests.ChangeApplicationStatus;
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
 public class Order06Submit : AhpIntegrationTest
 {
-    public Order06Submit(IntegrationTestFixture<Program> fixture)
-        : base(fixture)
+    public Order06Submit(IntegrationTestFixture<Program> fixture, ITestOutputHelper output)
+        : base(fixture, output)
     {
     }
 

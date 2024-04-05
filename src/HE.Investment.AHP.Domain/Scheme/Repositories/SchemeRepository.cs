@@ -12,6 +12,7 @@ using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.CRM.Mappers;
+using HE.Investments.Common.Infrastructure.Events;
 
 namespace HE.Investment.AHP.Domain.Scheme.Repositories;
 
@@ -23,13 +24,17 @@ public class SchemeRepository : ISchemeRepository
 
     private readonly IAhpFileService<LocalAuthoritySupportFileParams> _fileService;
 
+    private readonly IEventDispatcher _eventDispatcher;
+
     public SchemeRepository(
         IApplicationCrmContext repository,
         IAhpProgrammeRepository programmeRepository,
-        IAhpFileService<LocalAuthoritySupportFileParams> fileService)
+        IAhpFileService<LocalAuthoritySupportFileParams> fileService,
+        IEventDispatcher eventDispatcher)
     {
         _repository = repository;
         _fileService = fileService;
+        _eventDispatcher = eventDispatcher;
         _programmeRepository = programmeRepository;
     }
 
@@ -73,8 +78,8 @@ public class SchemeRepository : ISchemeRepository
         };
 
         await _repository.Save(dto, organisationId.Value, CrmFields.SchemeToUpdate.ToList(), cancellationToken);
-
         await entity.StakeholderDiscussions.SaveChanges(entity.Application.Id, _fileService, cancellationToken);
+        await _eventDispatcher.Publish(entity, cancellationToken);
 
         return entity;
     }

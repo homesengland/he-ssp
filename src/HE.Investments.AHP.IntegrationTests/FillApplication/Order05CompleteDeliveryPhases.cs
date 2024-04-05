@@ -13,6 +13,7 @@ using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.IntegrationTestsFramework.Assertions;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
+using Xunit.Abstractions;
 using Xunit.Extensions.Ordering;
 
 namespace HE.Investments.AHP.IntegrationTests.FillApplication;
@@ -23,8 +24,8 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
 {
     private readonly DeliveryPhasesData _deliveryPhasesData;
 
-    public Order05CompleteDeliveryPhases(IntegrationTestFixture<Program> fixture)
-        : base(fixture)
+    public Order05CompleteDeliveryPhases(IntegrationTestFixture<Program> fixture, ITestOutputHelper output)
+        : base(fixture, output)
     {
         var deliveryPhasesData = GetSharedDataOrNull<DeliveryPhasesData>(nameof(_deliveryPhasesData));
         if (deliveryPhasesData is null)
