@@ -74,11 +74,9 @@ public class ApplicationEntityBuilder
             _id,
             _name,
             _status,
-            null,
+            new ApplicationTenure(Tenure.AffordableRent),
             new ApplicationStateFactory(_userAccount, _previousStatus),
             _reference,
-            new ApplicationSections(_sections ?? new List<ApplicationSection>()),
-            null,
-            null);
+            new ApplicationSections(_sections ?? new List<ApplicationSection>()));
     }
 }
