@@ -132,6 +132,6 @@ public class CalculateTotalTests
         var total = expectedContributionsToScheme.CalculateTotal();
 
         // then
-        total.Should().Be(0);
+        total.Should().BeNull();
     }
 }

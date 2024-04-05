@@ -49,8 +49,20 @@ public class PublicGrants : ValueObject, IQuestion
                OtherPublicBodies.IsProvided();
     }
 
-    public decimal CalculateTotal()
+    public bool AreAllNotAnswered()
     {
+        return CountyCouncil.IsNotProvided() && DhscExtraCare.IsNotProvided() && LocalAuthority.IsNotProvided() &&
+               SocialServices.IsNotProvided() && HealthRelated.IsNotProvided() && Lottery.IsNotProvided() &&
+               OtherPublicBodies.IsNotProvided();
+    }
+
+    public decimal? CalculateTotal()
+    {
+        if (AreAllNotAnswered())
+        {
+            return null;
+        }
+
         var totalGrants = CountyCouncil.GetValueOrZero() + DhscExtraCare.GetValueOrZero() + LocalAuthority.GetValueOrZero() + SocialServices.GetValueOrZero() +
                           HealthRelated.GetValueOrZero() + Lottery.GetValueOrZero() + OtherPublicBodies.GetValueOrZero();
 

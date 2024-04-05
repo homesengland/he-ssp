@@ -6,7 +6,7 @@ namespace HE.Investment.AHP.Domain.Tests.FinancialDetails.Entities.FinancialDeta
 public class ExpectedTotalCostsTests
 {
     [Fact]
-    public void ShouldReturnZero_WhenAllCostsAreNotProvided()
+    public void ShouldReturnNull_WhenAllCostsAreNotProvided()
     {
         // given
         var financialDetailsEntity = FinancialDetailsEntityBuilder
@@ -17,7 +17,7 @@ public class ExpectedTotalCostsTests
         var expectedTotalCosts = financialDetailsEntity.ExpectedTotalCosts();
 
         // then
-        expectedTotalCosts.Should().Be(0);
+        expectedTotalCosts.Should().BeNull();
     }
 
     [Theory]

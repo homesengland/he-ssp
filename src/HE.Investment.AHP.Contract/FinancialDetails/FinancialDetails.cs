@@ -50,11 +50,11 @@ public class FinancialDetails
 
     public decimal? OtherPublicGrants { get; set; }
 
-    public decimal TotalExpectedCosts { get; set; }
+    public decimal? TotalExpectedCosts { get; set; }
 
-    public decimal TotalExpectedContributions { get; set; }
+    public decimal? TotalExpectedContributions { get; set; }
 
-    public decimal TotalReceivedGrants { get; set; }
+    public decimal? TotalReceivedGrants { get; set; }
 
     public SectionStatus SectionStatus { get; set; }
 }
