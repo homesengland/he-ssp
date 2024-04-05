@@ -176,7 +176,6 @@ public class ApplicationRepository : IApplicationRepository
 
         var filtered = applications
             .Where(x => filter == null || filter(x))
-            .Where(x => x.tenure.HasValue)
             .OrderByDescending(x => x.lastExternalModificationOn)
             .TakePage(paginationRequest)
             .Select(CreateApplicationWithFundingDetails)
