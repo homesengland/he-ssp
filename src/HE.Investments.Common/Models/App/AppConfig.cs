@@ -8,8 +8,6 @@ public class AppConfig : IAppConfig
 
     public string? FundingSupportEmail { get; set; }
 
-    public string? AppName { get; set; }
-
     public CacheConfig Cache { get; set; }
 
     public DataverseConfig? Dataverse { get; set; }

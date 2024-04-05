@@ -9,20 +9,22 @@ namespace HE.Investments.Common.WWW.Infrastructure.Cache;
 
 public static class CacheModule
 {
-    public static void AddCache(this IServiceCollection services, ICacheConfig config, string appName)
+    private const string AppName = "InvestmentsProgramme";
+
+    public static void AddCache(this IServiceCollection services, ICacheConfig config)
     {
-        services.AddSingleton<ICacheConfig>(config);
+        services.AddSingleton(config);
         if (string.IsNullOrEmpty(config.RedisConnectionString) || config.RedisConnectionString == "off")
         {
             services.AddSingleton<ICacheService, MemoryCacheService>();
         }
         else
         {
-            var redis = new RedisConfigurationOptions(config, appName);
+            var redis = new RedisConfigurationOptions(config, AppName);
 
-            services.AddSingleton<ICacheService>(x => new RedisService(config, redis.ConfigurationOptions));
+            services.AddSingleton<ICacheService>(_ => new RedisService(config, redis.ConfigurationOptions));
             services.AddDataProtection()
-                .SetApplicationName(appName)
+                .SetApplicationName(AppName)
                 .PersistKeysToStackExchangeRedis(ConnectionMultiplexer.Connect(redis.ConfigurationOptions), "DataProtection-Keys");
 
             services.AddStackExchangeRedisCache(action =>

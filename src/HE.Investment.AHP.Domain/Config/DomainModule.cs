@@ -28,6 +28,7 @@ using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investments.Account.Shared.Config;
 using HE.Investments.Common;
 using HE.Investments.Common.CRM.Config;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Utils;
 using MediatR.Pipeline;
 using Microsoft.Extensions.DependencyInjection;
@@ -122,6 +123,6 @@ public static class DomainModule
     {
         services.AddScoped<IAhpProgrammeRepository, AhpProgrammeRepository>();
         services.AddScoped<IProgrammeCrmContext, ProgrammeCrmContext>();
-        services.AddSingleton<IProgrammeSettings, ProgrammeSettings>();
+        services.AddAppConfiguration<IProgrammeSettings, ProgrammeSettings>();
     }
 }
