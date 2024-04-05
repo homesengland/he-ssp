@@ -46,4 +46,24 @@ public class ProvideFundingTests
             .Should()
             .BeEmpty();
     }
+
+    [Fact]
+    public void ShouldSetNewFundingAndPublishTwoDomainEvents_WhenNewFundingIsDifferent()
+    {
+        // given
+        var funding = new SchemeFunding(1_000_000, 20);
+        var testCandidate = SchemeEntityBuilder.NewNotStarted().WithSchemeFunding(new SchemeFunding(2_000_000, 20)).Build();
+
+        // when
+        testCandidate.ProvideFunding(funding);
+
+        // then
+        testCandidate.Funding.RequiredFunding.Should().Be(funding.RequiredFunding);
+        testCandidate.Funding.HousesToDeliver.Should().Be(funding.HousesToDeliver);
+        testCandidate.Status.Should().Be(SectionStatus.InProgress);
+        testCandidate.GetDomainEventsAndRemove()
+            .Should()
+            .HaveCount(1)
+            .And.Contain(new SchemeFundingHasBeenChangedEvent(testCandidate.Application.Id));
+    }
 }

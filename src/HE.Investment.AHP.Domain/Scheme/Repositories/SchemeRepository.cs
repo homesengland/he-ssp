@@ -29,7 +29,8 @@ public class SchemeRepository : ISchemeRepository
     public SchemeRepository(
         IApplicationCrmContext repository,
         IAhpProgrammeRepository programmeRepository,
-        IAhpFileService<LocalAuthoritySupportFileParams> fileService, IEventDispatcher eventDispatcher)
+        IAhpFileService<LocalAuthoritySupportFileParams> fileService,
+        IEventDispatcher eventDispatcher)
     {
         _repository = repository;
         _fileService = fileService;
