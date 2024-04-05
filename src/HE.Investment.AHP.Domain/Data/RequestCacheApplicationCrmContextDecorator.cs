@@ -17,12 +17,12 @@ public class RequestCacheApplicationCrmContextDecorator : IApplicationCrmContext
 
     public async Task<AhpApplicationDto> GetOrganisationApplicationById(string id, Guid organisationId, IList<string> fieldsToRetrieve, CancellationToken cancellationToken)
     {
-        return await GetFromCache(id, organisationId, fieldsToRetrieve, _decorated.GetOrganisationApplicationById, cancellationToken);
+        return await GetFromCache(id, organisationId, CrmFields.All.ToList(), _decorated.GetOrganisationApplicationById, cancellationToken);
     }
 
     public async Task<AhpApplicationDto> GetUserApplicationById(string id, Guid organisationId, IList<string> fieldsToRetrieve, CancellationToken cancellationToken)
     {
-        return await GetFromCache(id, organisationId, fieldsToRetrieve, _decorated.GetUserApplicationById, cancellationToken);
+        return await GetFromCache(id, organisationId, CrmFields.All.ToList(), _decorated.GetUserApplicationById, cancellationToken);
     }
 
     public async Task<bool> IsNameExist(string applicationName, Guid organisationId, CancellationToken cancellationToken)

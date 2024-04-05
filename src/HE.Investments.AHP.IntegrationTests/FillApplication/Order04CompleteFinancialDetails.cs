@@ -12,6 +12,7 @@ using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.IntegrationTestsFramework.Assertions;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
+using Xunit.Abstractions;
 using Xunit.Extensions.Ordering;
 
 namespace HE.Investments.AHP.IntegrationTests.FillApplication;
@@ -20,8 +21,8 @@ namespace HE.Investments.AHP.IntegrationTests.FillApplication;
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
 public class Order04CompleteFinancialDetails : AhpIntegrationTest
 {
-    public Order04CompleteFinancialDetails(IntegrationTestFixture<Program> fixture)
-        : base(fixture)
+    public Order04CompleteFinancialDetails(IntegrationTestFixture<Program> fixture, ITestOutputHelper output)
+        : base(fixture, output)
     {
         var financialDetailsData = GetSharedDataOrNull<FinancialDetailsData>(nameof(FinancialDetailsData));
         if (financialDetailsData is null)

@@ -13,6 +13,7 @@ using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.IntegrationTestsFramework.Assertions;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
+using Xunit.Abstractions;
 using Xunit.Extensions.Ordering;
 
 namespace HE.Investments.AHP.IntegrationTests.FillApplication;
@@ -25,8 +26,8 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
 
     private readonly int _numberOfHomesPerHomeType;
 
-    public Order03CompleteHomeTypes(IntegrationTestFixture<Program> fixture)
-        : base(fixture)
+    public Order03CompleteHomeTypes(IntegrationTestFixture<Program> fixture, ITestOutputHelper output)
+        : base(fixture, output)
     {
         var homeTypesData = GetSharedDataOrNull<HomeTypesData>(nameof(_homeTypesData));
         if (homeTypesData is null)
@@ -363,7 +364,9 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         summary.Should().ContainKey("Type of facilities").WithValue(GeneralHomeType.FacilityType);
         summary.Should().ContainKey("Accessibility categories met").WithValue(GeneralHomeType.AccessibilityStandards);
         summary.Should().ContainKey("Accessibility categories").WithValue(GeneralHomeType.AccessibilityCategory);
-        summary.Should().ContainKey("Square metres of internal floor area").WithValue($"{GeneralHomeType.FloorArea.ToString("0.##", CultureInfo.InvariantCulture)}m\u00b2");
+        summary.Should()
+            .ContainKey("Square metres of internal floor area")
+            .WithValue($"{GeneralHomeType.FloorArea.ToString("0.##", CultureInfo.InvariantCulture)}m\u00b2");
         summary.Should().ContainKey("Nationally Described Space Standards met").WithValue(GeneralHomeType.MeetSpaceStandards);
         summary.Should().ContainKey("Nationally Described Space Standards").WithValue(GeneralHomeType.SpaceStandards);
         summary.Should().ContainKey("Market value of each home").WhoseValue.Value.Should().BePoundsOnly(GeneralHomeType.MarketValue);
@@ -650,7 +653,10 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         summary.Should().ContainKey("Disabled and vulnerable people - Type of home").WithValue(DisabledHomeType.DisabledPeopleHousingType);
         summary.Should().ContainKey("Client group").WithValue(DisabledHomeType.ClientGroup);
         summary.Should().ContainKey("HAPPI principles").WithValue(DisabledHomeType.HappiDesignPrinciple);
-        summary.Should().ContainKey("Design plans").WhoseValue.Value.Should().ContainAll(DisabledHomeType.DesignPlanInformation, DisabledHomeType.DesignFile.Name);
+        summary.Should()
+            .ContainKey("Design plans")
+            .WhoseValue.Value.Should()
+            .ContainAll(DisabledHomeType.DesignPlanInformation, DisabledHomeType.DesignFile.Name);
         summary.Should().ContainKey("Local commissioning bodies consultation").WithValue(DisabledHomeType.LocalCommissioningBodiesConsulted);
         summary.Should().ContainKey("Short stay").WithValue(DisabledHomeType.ShortStayAccommodation);
         summary.Should().ContainKey("Revenue funding").WithValue(DisabledHomeType.RevenueFundingType);
@@ -668,7 +674,9 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         summary.Should().ContainKey("Type of facilities").WithValue(DisabledHomeType.FacilityType);
         summary.Should().ContainKey("Accessibility categories met").WithValue(DisabledHomeType.AccessibilityStandards);
         summary.Should().ContainKey("Accessibility categories").WithValue(DisabledHomeType.AccessibilityCategory);
-        summary.Should().ContainKey("Square metres of internal floor area").WithValue($"{DisabledHomeType.FloorArea.ToString("0.##", CultureInfo.InvariantCulture)}m\u00b2");
+        summary.Should()
+            .ContainKey("Square metres of internal floor area")
+            .WithValue($"{DisabledHomeType.FloorArea.ToString("0.##", CultureInfo.InvariantCulture)}m\u00b2");
         summary.Should().ContainKey("Nationally Described Space Standards met").WithValue(DisabledHomeType.MeetSpaceStandards);
         summary.Should().ContainKey("Nationally Described Space Standards").WithValue(DisabledHomeType.SpaceStandards);
         summary.Should().ContainKey("Market value of each home").WhoseValue.Value.Should().BePoundsOnly(DisabledHomeType.MarketValue);
