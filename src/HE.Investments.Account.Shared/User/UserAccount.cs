@@ -9,7 +9,7 @@ public record UserAccount(
     UserGlobalId UserGlobalId,
     string UserEmail,
     OrganisationBasicInfo? Organisation,
-    IReadOnlyCollection<UserRole> Roles)
+    IReadOnlyCollection<UserRole> Roles) : IUserAccount
 {
     public bool CanManageUsers => HasOneOfRole(AccountAccessContext.ManageUsersRoles.ToArray());
 

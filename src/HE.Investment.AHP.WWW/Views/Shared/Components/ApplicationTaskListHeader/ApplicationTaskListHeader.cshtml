@@ -1,11 +1,5 @@
-@using HE.Investments.Common.WWW.Helpers
 @using HE.Investments.Common.Contract
-@model (int completeSectionsCount, int incompleteSectionsCount, int totalSectionsCount, HE.Investments.Common.Contract.ApplicationStatus applicationStatus,string referenceNumber,HE.Investments.Common.Contract.ModificationDetails LastModificationDetails)
-@{
-    // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
-    var lastModifiedBy = Model.LastModificationDetails != null ? $"{Model.LastModificationDetails.ChangedByFirstName} {Model.LastModificationDetails.ChangedByLastName}" : null;
-}
-
+@model (int completeSectionsCount, int incompleteSectionsCount, int totalSectionsCount, HE.Investments.Common.Contract.ApplicationStatus applicationStatus, string referenceNumber, HE.Investments.Common.Contract.ModificationDetails LastModificationDetails, HE.Investments.Common.Contract.ModificationDetails LastSubmissionDetails)
 
 <gds-h3 class="govuk-!-display-inline-block govuk-!-margin-bottom-1">ID @Model.referenceNumber</gds-h3>
 <application-status-tag application-status="@Model.applicationStatus" additional-classes="govuk-!-static-margin-left-3" data-testid="application-status"></application-status-tag>
@@ -17,9 +11,11 @@
     <gds-p class="govuk-body govuk-!-margin-bottom-0">You have completed @Model.completeSectionsCount of @Model.totalSectionsCount sections.</gds-p>
 }
 
-@if (Model.LastModificationDetails != null && Model.applicationStatus is ApplicationStatus.Draft or ApplicationStatus.ReferredBackToApplicant)
+@if (Model.applicationStatus is ApplicationStatus.Draft or ApplicationStatus.ReferredBackToApplicant)
 {
-    <gds-p >
-        Last saved on @DateHelper.DisplayAsUkFormatDateTime(Model.LastModificationDetails.ChangedOn) @(!string.IsNullOrEmpty(lastModifiedBy) ? $"by {lastModifiedBy}" : string.Empty)
-    </gds-p>
+    <vc:change-audit-details change-audit-type="Modification" modification-details="Model.LastModificationDetails" />
+}
+else
+{
+    <vc:change-audit-details change-audit-type="Submission" modification-details="Model.LastSubmissionDetails" />
 }

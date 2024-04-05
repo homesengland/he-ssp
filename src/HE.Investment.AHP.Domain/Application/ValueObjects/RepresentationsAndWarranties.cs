@@ -15,14 +15,16 @@ public class RepresentationsAndWarranties : ValueObject
                 .CheckErrors();
         }
 
-        Value = value!;
+        Value = true;
     }
 
-    public string Value { get; }
+    public bool Value { get; }
+
+    public static RepresentationsAndWarranties Confirmed() => new("checked");
 
     public override string ToString()
     {
-        return Value;
+        return Value.ToString();
     }
 
     protected override IEnumerable<object> GetAtomicValues()

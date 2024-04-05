@@ -4,6 +4,7 @@ using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investments.Common.Contract.Exceptions;
 
 namespace HE.Investment.AHP.Domain.Tests.Application.ValueObjects;
+
 public class RepresentationsAndWarrantiesCtorTests
 {
     [Fact]
@@ -14,7 +15,7 @@ public class RepresentationsAndWarrantiesCtorTests
 
         // then
         action.Should().NotThrow<DomainValidationException>();
-        action().Value.Should().Be("checked");
+        action().Value.Should().BeTrue();
     }
 
     [Theory]

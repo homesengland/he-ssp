@@ -8,13 +8,13 @@ namespace HE.Investment.AHP.Domain.Application.Entities;
 
 public class ApplicationState
 {
-    private readonly UserAccount _userAccount;
+    private readonly IUserAccount _userAccount;
 
     private readonly ApplicationStatus? _previousStatus;
 
     private readonly StateMachine<ApplicationStatus, AhpApplicationOperation> _machine;
 
-    public ApplicationState(ApplicationStatus currentStatus, UserAccount userAccount, ApplicationStatus? previousStatus)
+    public ApplicationState(ApplicationStatus currentStatus, IUserAccount userAccount, ApplicationStatus? previousStatus)
     {
         _userAccount = userAccount;
         _previousStatus = previousStatus;

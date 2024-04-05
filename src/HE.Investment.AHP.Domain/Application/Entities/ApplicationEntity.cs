@@ -25,20 +25,22 @@ public class ApplicationEntity : DomainEntity
         AhpApplicationId id,
         ApplicationName name,
         ApplicationStatus status,
-        ApplicationReferenceNumber referenceNumber,
-        ApplicationTenure? tenure,
-        AuditEntry? lastModified,
-        ApplicationSections sections,
-        IApplicationStateFactory applicationStateFactory)
+        ApplicationTenure tenure,
+        IApplicationStateFactory applicationStateFactory,
+        ApplicationReferenceNumber? referenceNumber = null,
+        ApplicationSections? sections = null,
+        AuditEntry? lastModified = null,
+        AuditEntry? lastSubmitted = null)
     {
         SiteId = siteId;
         Id = id;
         Name = name;
         Status = status;
-        ReferenceNumber = referenceNumber;
+        ReferenceNumber = referenceNumber ?? new ApplicationReferenceNumber(null);
         Tenure = tenure;
         LastModified = lastModified;
-        Sections = sections;
+        LastSubmitted = lastSubmitted;
+        Sections = sections ?? new ApplicationSections(new List<ApplicationSection>());
         _applicationState = applicationStateFactory.Create(status);
     }
 
@@ -56,9 +58,11 @@ public class ApplicationEntity : DomainEntity
 
     public ApplicationReferenceNumber ReferenceNumber { get; }
 
-    public ApplicationTenure? Tenure { get; private set; }
+    public ApplicationTenure Tenure { get; private set; }
 
     public AuditEntry? LastModified { get; }
+
+    public AuditEntry? LastSubmitted { get; }
 
     public ApplicationSections Sections { get; }
 
@@ -68,15 +72,14 @@ public class ApplicationEntity : DomainEntity
 
     public bool IsNew => Id.IsNew;
 
+    public RepresentationsAndWarranties? RepresentationsAndWarranties { get; private set; }
+
     public static ApplicationEntity New(SiteId siteId, ApplicationName name, ApplicationTenure tenure, IApplicationStateFactory applicationStateFactory) => new(
         siteId,
         AhpApplicationId.New(),
         name,
         ApplicationStatus.New,
-        new ApplicationReferenceNumber(null),
         tenure,
-        null,
-        new ApplicationSections(new List<ApplicationSection>()),
         applicationStateFactory);
 
     public void SetId(AhpApplicationId newId)
@@ -98,12 +101,12 @@ public class ApplicationEntity : DomainEntity
         }
     }
 
-    public void Submit(RepresentationsAndWarranties reason)
+    public void Submit(RepresentationsAndWarranties representationAndWarranties)
     {
         AreAllSectionsCompleted();
 
         Status = _statusModificationTracker.Change(Status, _applicationState.Trigger(AhpApplicationOperation.Submit));
-        ChangeStatusReason = reason.Value;
+        RepresentationsAndWarranties = representationAndWarranties;
     }
 
     public void Hold(HoldReason reason)

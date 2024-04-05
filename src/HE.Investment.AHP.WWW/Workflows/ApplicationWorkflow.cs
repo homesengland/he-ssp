@@ -11,7 +11,9 @@ public class ApplicationWorkflow : IStateRouting<ApplicationWorkflowState>
     private readonly StateMachine<ApplicationWorkflowState, Trigger> _machine;
 
     private readonly Func<Task<Application>> _modelFactory;
+
     private readonly Func<Task<bool>> _isApplicationExist;
+
     private readonly bool _isReadOnly;
 
     public ApplicationWorkflow(ApplicationWorkflowState currentWorkflowState, Func<Task<Application>> modelFactory, Func<Task<bool>> isApplicationExist, bool isReadOnly)
@@ -29,24 +31,19 @@ public class ApplicationWorkflow : IStateRouting<ApplicationWorkflowState>
         return _machine.State;
     }
 
-    public Task<bool> StateCanBeAccessed(ApplicationWorkflowState nextState)
+    public async Task<bool> StateCanBeAccessed(ApplicationWorkflowState nextState)
     {
-        return CanBeAccessed(nextState);
-    }
-
-    public async Task<bool> CanBeAccessed(ApplicationWorkflowState state)
-    {
-        return state switch
+        return nextState switch
         {
             ApplicationWorkflowState.Start => true,
             ApplicationWorkflowState.ApplicationsList => true,
             ApplicationWorkflowState.ApplicationName => true,
             ApplicationWorkflowState.ApplicationTenure => true,
             ApplicationWorkflowState.TaskList => true,
-            ApplicationWorkflowState.OnHold => await IsActionAllowed(AhpApplicationOperation.PutOnHold),
-            ApplicationWorkflowState.Reactivate => await IsActionAllowed(AhpApplicationOperation.Reactivate),
-            ApplicationWorkflowState.RequestToEdit => await IsActionAllowed(AhpApplicationOperation.RequestToEdit),
-            ApplicationWorkflowState.Withdraw => await IsActionAllowed(AhpApplicationOperation.Withdraw),
+            ApplicationWorkflowState.OnHold => await IsOperationAllowed(AhpApplicationOperation.PutOnHold),
+            ApplicationWorkflowState.Reactivate => await IsOperationAllowed(AhpApplicationOperation.Reactivate),
+            ApplicationWorkflowState.RequestToEdit => await IsOperationAllowed(AhpApplicationOperation.RequestToEdit),
+            ApplicationWorkflowState.Withdraw => await IsOperationAllowed(AhpApplicationOperation.Withdraw),
             ApplicationWorkflowState.CheckAnswers => await CanBeSubmitted(),
             ApplicationWorkflowState.Submit => await CanBeSubmitted(),
             ApplicationWorkflowState.Completed => await IsSubmitted(),
@@ -97,7 +94,7 @@ public class ApplicationWorkflow : IStateRouting<ApplicationWorkflowState>
             .Permit(Trigger.Back, ApplicationWorkflowState.CheckAnswers);
     }
 
-    private async Task<bool> IsActionAllowed(AhpApplicationOperation operation)
+    private async Task<bool> IsOperationAllowed(AhpApplicationOperation operation)
     {
         var model = await _modelFactory();
         return model.AllowedOperations.Contains(operation);

@@ -128,6 +128,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
             application.AllowedOperations,
             application.ReferenceNumber,
             application.LastModificationDetails,
+            application.LastSubmissionDetails,
             application.Sections);
 
         return View("TaskList", model);
@@ -319,6 +320,6 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
             application.NumberOfHomes.ToString()!,
             CurrencyHelper.DisplayPounds(application.FundingRequested)!,
             CurrencyHelper.DisplayPounds(application.TotalSchemeCost)!,
-            application.RepresentationsAndWarranties);
+            application.RepresentationsAndWarranties == true ? "checked" : null);
     }
 }

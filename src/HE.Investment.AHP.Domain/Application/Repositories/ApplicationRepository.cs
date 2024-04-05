@@ -63,7 +63,7 @@ public class ApplicationRepository : IApplicationRepository
             application.Id,
             application.SiteId,
             application.Name,
-            application.Tenure?.Value ?? Tenure.Undefined,
+            application.Tenure.Value,
             application.Status,
             await _programmeRepository.GetProgramme(id, cancellationToken),
             new ApplicationStateFactory(userAccount));
@@ -145,12 +145,9 @@ public class ApplicationRepository : IApplicationRepository
             new AhpApplicationId(application.id),
             new ApplicationName(application.name ?? "Unknown"),
             applicationStatus,
+            ApplicationTenureMapper.ToDomain(application.tenure)!,
+            new ApplicationStateFactory(userAccount, previousStatus),
             new ApplicationReferenceNumber(application.referenceNumber),
-            ApplicationTenureMapper.ToDomain(application.tenure),
-            new AuditEntry(
-                application.lastExternalModificationBy?.firstName,
-                application.lastExternalModificationBy?.lastName,
-                application.lastExternalModificationOn),
             new ApplicationSections(
                 new List<ApplicationSection>
                 {
@@ -159,7 +156,11 @@ public class ApplicationRepository : IApplicationRepository
                     new(SectionType.FinancialDetails, SectionStatusMapper.ToDomain(application.financialDetailsSectionCompletionStatus, applicationStatus)),
                     new(SectionType.DeliveryPhases, SectionStatusMapper.ToDomain(application.deliveryPhasesSectionCompletionStatus, applicationStatus)),
                 }),
-            new ApplicationStateFactory(userAccount, previousStatus));
+            new AuditEntry(
+                application.lastExternalModificationBy?.firstName,
+                application.lastExternalModificationBy?.lastName,
+                application.lastExternalModificationOn),
+            application.dateSubmitted.IsProvided() ? new AuditEntry(application.lastExternalModificationBy?.firstName, application.lastExternalModificationBy?.lastName, application.dateSubmitted) : null); // TODO: AB#63432 Fetch submit user when added to CRM endpoint
     }
 
     private async Task<PaginationResult<ApplicationWithFundingDetails>> GetApplications(
@@ -198,7 +199,7 @@ public class ApplicationRepository : IApplicationRepository
             ahpApplicationDto.fundingRequested,
             otherApplicationCosts.ExpectedTotalCosts(),
             ahpApplicationDto.currentLandValue,
-            null); // TODO: task AB#91399 fetch value from crm
+            ahpApplicationDto.dateSubmitted.IsProvided() ? true : null); // TODO: task AB#91399 fetch value from crm
     }
 
     private async Task<AhpApplicationDto> GetAhpApplicationDto(AhpApplicationId id, UserAccount userAccount, IList<string> crmFields, CancellationToken cancellationToken)

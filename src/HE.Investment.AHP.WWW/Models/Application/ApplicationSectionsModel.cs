@@ -11,4 +11,5 @@ public record ApplicationSectionsModel(
     IReadOnlyCollection<AhpApplicationOperation> AllowedOperations,
     string? ReferenceNumber,
     ModificationDetails? LastModificationDetails,
+    ModificationDetails? LastSubmissionDetails,
     IList<ApplicationSection> Sections);

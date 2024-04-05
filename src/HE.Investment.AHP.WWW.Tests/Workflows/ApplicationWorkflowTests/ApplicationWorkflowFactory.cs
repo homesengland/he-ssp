@@ -32,6 +32,7 @@ public static class ApplicationWorkflowFactory
             allowedOperations?.ToList() ?? new List<AhpApplicationOperation>(),
             referenceNumber,
             lastModificationDetails,
+            null,
             sections ?? NotStartedSections);
 
         return new ApplicationWorkflow(

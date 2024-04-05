@@ -10,6 +10,7 @@ public record Application(
     IReadOnlyCollection<AhpApplicationOperation> AllowedOperations,
     string? ReferenceNumber,
     ModificationDetails? LastModificationDetails,
+    ModificationDetails? LastSubmissionDetails,
     IList<ApplicationSection> Sections)
 {
     public bool IsEditable => AllowedOperations.Contains(AhpApplicationOperation.Modification);

@@ -6,11 +6,11 @@ namespace HE.Investment.AHP.Domain.Application.Factories;
 
 public class ApplicationStateFactory : IApplicationStateFactory
 {
-    private readonly UserAccount _userAccount;
+    private readonly IUserAccount _userAccount;
 
     private readonly ApplicationStatus? _previousStatus;
 
-    public ApplicationStateFactory(UserAccount userAccount, ApplicationStatus? previousStatus = null)
+    public ApplicationStateFactory(IUserAccount userAccount, ApplicationStatus? previousStatus = null)
     {
         _userAccount = userAccount;
         _previousStatus = previousStatus;
