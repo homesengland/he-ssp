@@ -7,7 +7,7 @@ using MediatR;
 
 namespace HE.Investments.Loans.BusinessLogic.LoanApplication.QueryHandlers;
 
-public class GetApplicationDashboardQueryHandler : IRequestHandler<GetApplicationDashboardQuery, GetApplicationDashboardQueryResponse>
+public class  GetApplicationDashboardQueryHandler : IRequestHandler<GetApplicationDashboardQuery, GetApplicationDashboardQueryResponse>
 {
     private readonly ILoanApplicationRepository _loanApplicationRepository;
 

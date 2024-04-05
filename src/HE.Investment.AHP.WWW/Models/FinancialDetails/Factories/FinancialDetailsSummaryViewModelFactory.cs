@@ -121,6 +121,11 @@ public class FinancialDetailsSummaryViewModelFactory : IFinancialDetailsSummaryV
         var contributionsItems = new List<SectionSummaryItemModel>
         {
             new(
+                "Funding requested",
+                GetCurrencyStringWithPrefix(totalContributions.SchemaFunding),
+                string.Empty,
+                IsEditable: !isReadOnly),
+            new(
                 "Your contributions",
                 GetCurrencyStringWithPrefix(totalContributions.YourContributions),
                 CreateFinancialDetailsActionUrl(urlHelper, applicationId, nameof(FinancialDetailsController.Contributions)),

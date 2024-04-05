@@ -26,7 +26,9 @@ public class Order04CompleteFinancialDetails : AhpIntegrationTest
         var financialDetailsData = GetSharedDataOrNull<FinancialDetailsData>(nameof(FinancialDetailsData));
         if (financialDetailsData is null)
         {
+            var schemeInformationData = GetSharedDataOrNull<SchemeInformationData>(nameof(SchemeInformationData));
             financialDetailsData = new FinancialDetailsData();
+            financialDetailsData.ProvideSchemeFunding(schemeInformationData?.RequiredFunding ?? 0m);
             SetSharedData(nameof(FinancialDetailsData), financialDetailsData);
         }
 

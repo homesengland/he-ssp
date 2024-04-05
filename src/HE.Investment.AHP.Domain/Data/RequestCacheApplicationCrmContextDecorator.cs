@@ -78,12 +78,16 @@ public class RequestCacheApplicationCrmContextDecorator : IApplicationCrmContext
 
     private void RemoveFromCache(string applicationId, Guid organisationId)
     {
-        var key = _applicationCache
-            .SingleOrDefault(x => x.Key.StartsWith($"{applicationId}-{organisationId}-".ToLowerInvariant(), StringComparison.InvariantCulture))
-            .Key;
-        if (!string.IsNullOrEmpty(key))
+        var keys = _applicationCache
+            .Where(x => x.Key.StartsWith($"{applicationId}-{organisationId}-".ToLowerInvariant(), StringComparison.InvariantCulture))
+            .Select(x => x.Key);
+
+        foreach (var key in keys)
         {
-            _applicationCache.Remove(key, out _);
+            if (!string.IsNullOrEmpty(key))
+            {
+                _applicationCache.Remove(key, out _);
+            }
         }
     }
 }

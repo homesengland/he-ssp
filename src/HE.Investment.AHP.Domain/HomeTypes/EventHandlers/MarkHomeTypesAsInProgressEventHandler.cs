@@ -4,6 +4,8 @@ using HE.Investment.AHP.Contract.Scheme.Events;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investments.Account.Shared;
+using HE.Investments.Common.Contract;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Infrastructure.Events;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.EventHandlers;
@@ -48,8 +50,13 @@ public class MarkHomeTypesAsInProgressEventHandler :
     {
         var account = await _accountUserContext.GetSelectedAccount();
         var homeTypes = await _repository.GetByApplicationId(applicationId, account, HomeTypeSegmentTypes.None, cancellationToken);
-        homeTypes.MarkAsInProgress();
 
+        if (homeTypes.Status.IsIn(SectionStatus.NotStarted))
+        {
+            return;
+        }
+
+        homeTypes.MarkAsInProgress();
         await _repository.Save(homeTypes, account.SelectedOrganisationId(), cancellationToken);
     }
 }

@@ -34,6 +34,7 @@ public class GetFinancialCheckAnswersQueryHandler : IRequestHandler<GetFinancial
             financialDetails.ExpectedTotalCosts());
 
         var totalContributions = new TotalContributions(
+            financialDetails.SchemeFunding.RequiredFunding,
             financialDetails.ExpectedContributions.CalculateTotal(),
             financialDetails.PublicGrants.CalculateTotal(),
             financialDetails.ExpectedTotalContributions());
