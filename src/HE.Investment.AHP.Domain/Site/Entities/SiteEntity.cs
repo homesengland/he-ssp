@@ -88,7 +88,7 @@ public class SiteEntity : DomainEntity, IQuestion
 
     public TenderingStatusDetails TenderingStatusDetails { get; private set; }
 
-    public StrategicSiteDetails StrategicSiteDetails { get; private set; }
+    public StrategicSiteDetails? StrategicSiteDetails { get; private set; }
 
     public SiteTypeDetails SiteTypeDetails { get; private set; }
 
@@ -170,7 +170,7 @@ public class SiteEntity : DomainEntity, IQuestion
         TenderingStatusDetails = _modificationTracker.Change(TenderingStatusDetails, tenderingStatusDetails, MarkAsNotCompleted);
     }
 
-    public void ProvideStrategicSiteDetails(StrategicSiteDetails details)
+    public void ProvideStrategicSiteDetails(StrategicSiteDetails? details)
     {
         StrategicSiteDetails = _modificationTracker.Change(StrategicSiteDetails, details, MarkAsNotCompleted);
     }
@@ -237,7 +237,7 @@ public class SiteEntity : DomainEntity, IQuestion
                BuildingForHealthyLife != BuildingForHealthyLifeType.Undefined &&
                LandAcquisitionStatus.IsAnswered() &&
                TenderingStatusDetails.IsAnswered() &&
-               StrategicSiteDetails.IsAnswered() &&
+               StrategicSiteDetails.IsProvided() &&
                SiteTypeDetails.IsAnswered() &&
                SiteUseDetails.IsAnswered() &&
                RuralClassification.IsAnswered() &&
@@ -252,6 +252,11 @@ public class SiteEntity : DomainEntity, IQuestion
         if (BuildingForHealthyLife == BuildingForHealthyLifeType.Yes)
         {
             yield return () => NumberOfGreenLights.IsProvided();
+        }
+
+        if (StrategicSiteDetails.IsProvided())
+        {
+            yield return () => StrategicSiteDetails!.IsAnswered();
         }
     }
 

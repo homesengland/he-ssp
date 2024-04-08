@@ -3,6 +3,7 @@ using HE.Investment.AHP.Domain.Site.Entities;
 using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investment.AHP.Domain.Site.ValueObjects.StrategicSite;
 using HE.Investments.Account.Shared;
+using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.Domain.Site.CommandHandlers;
 
@@ -15,6 +16,8 @@ public class ProvideStrategicSiteDetailsCommandHandler : ProvideSiteDetailsBaseC
 
     protected override void Provide(ProvideStrategicSiteDetailsCommand request, SiteEntity site)
     {
-        site.ProvideStrategicSiteDetails(StrategicSiteDetails.Create(request.IsStrategicSite, request.StrategicSiteName));
+        var strategicSite = request.IsStrategicSite.IsProvided() ?
+            StrategicSiteDetails.Create(request.IsStrategicSite, request.StrategicSiteName) : null;
+        site.ProvideStrategicSiteDetails(strategicSite);
     }
 }
