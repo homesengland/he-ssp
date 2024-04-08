@@ -10,12 +10,6 @@ namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 [HomeTypeSegmentType(HomeTypeSegmentType.ModernMethodsConstruction)]
 public class ModernMethodsConstructionSegmentEntity : IHomeTypeSegmentEntity
 {
-    private readonly List<ModernMethodsConstructionCategoriesType> _modernMethodsConstructionCategories;
-
-    private readonly List<ModernMethodsConstruction2DSubcategoriesType> _modernMethodsConstruction2DSubcategories;
-
-    private readonly List<ModernMethodsConstruction3DSubcategoriesType> _modernMethodsConstruction3DSubcategories;
-
     private readonly ModificationTracker _modificationTracker;
 
     public ModernMethodsConstructionSegmentEntity(
@@ -28,9 +22,9 @@ public class ModernMethodsConstructionSegmentEntity : IHomeTypeSegmentEntity
         SiteUsingModernMethodsOfConstruction = siteUsingModernMethodsOfConstruction;
         _modificationTracker = new ModificationTracker(() => SegmentModified?.Invoke());
         ModernMethodsConstructionApplied = modernMethodsConstructionApplied;
-        _modernMethodsConstructionCategories = modernMethodsConstructionCategories?.ToList() ?? new List<ModernMethodsConstructionCategoriesType>();
-        _modernMethodsConstruction2DSubcategories = modernMethodsConstruction2DSubcategories?.ToList() ?? new List<ModernMethodsConstruction2DSubcategoriesType>();
-        _modernMethodsConstruction3DSubcategories = modernMethodsConstruction3DSubcategories?.ToList() ?? new List<ModernMethodsConstruction3DSubcategoriesType>();
+        ModernMethodsConstructionCategories = modernMethodsConstructionCategories?.ToList() ?? new List<ModernMethodsConstructionCategoriesType>();
+        ModernMethodsConstruction2DSubcategories = modernMethodsConstruction2DSubcategories?.ToList() ?? new List<ModernMethodsConstruction2DSubcategoriesType>();
+        ModernMethodsConstruction3DSubcategories = modernMethodsConstruction3DSubcategories?.ToList() ?? new List<ModernMethodsConstruction3DSubcategoriesType>();
     }
 
     public event EntityModifiedEventHandler SegmentModified;
@@ -41,11 +35,11 @@ public class ModernMethodsConstructionSegmentEntity : IHomeTypeSegmentEntity
 
     public YesNoType ModernMethodsConstructionApplied { get; private set; }
 
-    public IReadOnlyCollection<ModernMethodsConstructionCategoriesType> ModernMethodsConstructionCategories => _modernMethodsConstructionCategories;
+    public IReadOnlyCollection<ModernMethodsConstructionCategoriesType> ModernMethodsConstructionCategories { get; private set; }
 
-    public IReadOnlyCollection<ModernMethodsConstruction2DSubcategoriesType> ModernMethodsConstruction2DSubcategories => _modernMethodsConstruction2DSubcategories;
+    public IReadOnlyCollection<ModernMethodsConstruction2DSubcategoriesType> ModernMethodsConstruction2DSubcategories { get; private set; }
 
-    public IReadOnlyCollection<ModernMethodsConstruction3DSubcategoriesType> ModernMethodsConstruction3DSubcategories => _modernMethodsConstruction3DSubcategories;
+    public IReadOnlyCollection<ModernMethodsConstruction3DSubcategoriesType> ModernMethodsConstruction3DSubcategories { get; private set; }
 
     public void ChangeModernMethodsConstructionApplied(YesNoType modernMethodsConstructionApplied)
     {
@@ -61,10 +55,9 @@ public class ModernMethodsConstructionSegmentEntity : IHomeTypeSegmentEntity
     {
         var uniqueModernMethodsConstructionCategories = modernMethodsConstructionCategories.Distinct().ToList();
 
-        if (!_modernMethodsConstructionCategories.SequenceEqual(uniqueModernMethodsConstructionCategories))
+        if (!ModernMethodsConstructionCategories.SequenceEqual(uniqueModernMethodsConstructionCategories))
         {
-            _modernMethodsConstructionCategories.Clear();
-            _modernMethodsConstructionCategories.AddRange(uniqueModernMethodsConstructionCategories);
+            ModernMethodsConstructionCategories = uniqueModernMethodsConstructionCategories;
             _modificationTracker.MarkAsModified();
         }
 
@@ -83,10 +76,9 @@ public class ModernMethodsConstructionSegmentEntity : IHomeTypeSegmentEntity
     {
         var uniqueModernMethodsConstruction2DSubcategories = modernMethodsConstruction2DSubcategories.Distinct().ToList();
 
-        if (!_modernMethodsConstruction2DSubcategories.SequenceEqual(uniqueModernMethodsConstruction2DSubcategories))
+        if (!ModernMethodsConstruction2DSubcategories.SequenceEqual(uniqueModernMethodsConstruction2DSubcategories))
         {
-            _modernMethodsConstruction2DSubcategories.Clear();
-            _modernMethodsConstruction2DSubcategories.AddRange(uniqueModernMethodsConstruction2DSubcategories);
+            ModernMethodsConstruction2DSubcategories = uniqueModernMethodsConstruction2DSubcategories;
             _modificationTracker.MarkAsModified();
         }
     }
@@ -95,10 +87,9 @@ public class ModernMethodsConstructionSegmentEntity : IHomeTypeSegmentEntity
     {
         var uniqueModernMethodsConstruction3DSubcategories = modernMethodsConstruction3DSubcategories.Distinct().ToList();
 
-        if (!_modernMethodsConstruction3DSubcategories.SequenceEqual(uniqueModernMethodsConstruction3DSubcategories))
+        if (!ModernMethodsConstruction3DSubcategories.SequenceEqual(uniqueModernMethodsConstruction3DSubcategories))
         {
-            _modernMethodsConstruction3DSubcategories.Clear();
-            _modernMethodsConstruction3DSubcategories.AddRange(uniqueModernMethodsConstruction3DSubcategories);
+            ModernMethodsConstruction3DSubcategories = uniqueModernMethodsConstruction3DSubcategories;
             _modificationTracker.MarkAsModified();
         }
     }
@@ -121,7 +112,7 @@ public class ModernMethodsConstructionSegmentEntity : IHomeTypeSegmentEntity
     public bool IsCompleted(HousingType housingType, Tenure tenure)
     {
         return ModernMethodsConstructionApplied != YesNoType.Undefined
-              && BuildConditionalRouteCompletionPredicates().All(isCompleted => isCompleted());
+               && BuildConditionalRouteCompletionPredicates().All(isCompleted => isCompleted());
     }
 
     public void HousingTypeChanged(HousingType sourceHousingType, HousingType targetHousingType)
@@ -130,7 +121,7 @@ public class ModernMethodsConstructionSegmentEntity : IHomeTypeSegmentEntity
 
     private IEnumerable<Func<bool>> BuildConditionalRouteCompletionPredicates()
     {
-        if (ModernMethodsConstructionApplied is not YesNoType.No)
+        if (ModernMethodsConstructionApplied == YesNoType.Yes)
         {
             yield return () => ModernMethodsConstructionCategories.Any();
         }
