@@ -67,7 +67,7 @@ public class ProgrammeApplicationsRepository : IProgrammeApplicationsRepository
         {
             inlvn_userid = userAccount.CanViewAllApplications() ? string.Empty : userAccount.UserGlobalId.ToString(),
             invln_organisationid = userAccount.SelectedOrganisationId().ToString(),
-            invln_appfieldstoretrieve = $"{nameof(invln_scheme.invln_schemename)},{nameof(invln_scheme.StatusCode)}".ToLowerInvariant(),
+            invln_appfieldstoretrieve = $"{nameof(invln_scheme.invln_schemename)},{nameof(invln_scheme.StatusCode)},{nameof(invln_ExternalStatus)}".ToLowerInvariant(),
         };
 
         var applications = await _crmService.ExecuteAsync<invln_getmultipleahpapplicationsRequest, invln_getmultipleahpapplicationsResponse, IList<AhpApplicationDto>>(
