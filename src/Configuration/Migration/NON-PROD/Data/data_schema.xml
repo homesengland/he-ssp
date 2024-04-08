@@ -47,6 +47,8 @@
       &lt;condition attribute="name" operator="eq" value="North Hub" /&gt;
       &lt;condition attribute="name" operator="eq" value="Northstowe Hub" /&gt;
       &lt;condition attribute="name" operator="eq" value="TM Team" /&gt;
+      &lt;condition attribute="name" operator="eq" value="HoF Team" /&gt;
+      &lt;condition attribute="name" operator="eq" value="Risk team" /&gt;
     &lt;/filter&gt;</filter>
   </entity>
   <entity name="invln_standardcondition" displayname="Standard Condition" etc="11002" primaryidfield="invln_standardconditionid" primarynamefield="invln_name" disableplugins="false">
