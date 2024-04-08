@@ -131,9 +131,7 @@ public class ProjectController : WorkflowController<ProjectState>
                 LoanApplicationId.From(id),
                 ProjectId.From(projectId),
                 model.HasEstimatedStartDate,
-                model.EstimatedStartYear,
-                model.EstimatedStartMonth,
-                model.EstimatedStartDay),
+                model.StartDate),
             token);
 
         if (result.HasValidationErrors)

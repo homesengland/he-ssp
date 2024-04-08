@@ -50,11 +50,7 @@ internal static class ProjectMapper
             LocalAuthorityId = project.LocalAuthority?.Code.ToString(),
             LocalAuthorityName = project.LocalAuthority?.Name,
             HasEstimatedStartDate = project.StartDate?.Exists.MapToCommonResponse(),
-
-            EstimatedStartDay = startDate.HasValue ? startDate.Value.Day.ToString(CultureInfo.InvariantCulture) : null,
-            EstimatedStartMonth = startDate.HasValue ? startDate.Value.Month.ToString(CultureInfo.InvariantCulture) : null,
-            EstimatedStartYear = startDate.HasValue ? startDate.Value.Year.ToString(CultureInfo.InvariantCulture) : null,
-
+            StartDate = DateDetails.FromDateTime(project.StartDate?.Value),
             PlanningPermissionStatus = PlanningPermissionStatusMapper.MapToString(project.PlanningPermissionStatus ?? projectPrefillData?.PlanningPermissionStatus),
             Status = project.Status,
         };
