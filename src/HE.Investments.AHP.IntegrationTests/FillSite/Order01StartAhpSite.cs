@@ -13,6 +13,7 @@ using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.IntegrationTestsFramework.Assertions;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
+using Xunit.Abstractions;
 using Xunit.Extensions.Ordering;
 
 namespace HE.Investments.AHP.IntegrationTests.FillSite;
@@ -21,8 +22,8 @@ namespace HE.Investments.AHP.IntegrationTests.FillSite;
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
 public class Order01StartAhpSite : AhpIntegrationTest
 {
-    public Order01StartAhpSite(IntegrationTestFixture<Program> fixture)
-        : base(fixture)
+    public Order01StartAhpSite(IntegrationTestFixture<Program> fixture, ITestOutputHelper output)
+        : base(fixture, output)
     {
     }
 

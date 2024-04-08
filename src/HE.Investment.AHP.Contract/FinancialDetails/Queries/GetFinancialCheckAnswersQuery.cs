@@ -13,4 +13,4 @@ public record LandValueSummary(decimal? PurchasePrice, decimal? CurrentValue, Ye
 
 public record TotalSchemeCost(decimal? CurrentValue, decimal? WorkCosts, decimal? OnCosts, decimal? Total);
 
-public record TotalContributions(decimal? YourContributions, decimal? GrantsFromOtherPublicBodies, decimal? Total);
+public record TotalContributions(decimal? SchemaFunding, decimal? YourContributions, decimal? GrantsFromOtherPublicBodies, decimal? Total);

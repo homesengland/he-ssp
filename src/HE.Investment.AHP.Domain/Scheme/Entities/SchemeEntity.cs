@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Contract.Scheme.Events;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investments.Common.Contract;
@@ -6,7 +7,7 @@ using HE.Investments.Common.Domain;
 
 namespace HE.Investment.AHP.Domain.Scheme.Entities;
 
-public class SchemeEntity
+public class SchemeEntity : DomainEntity
 {
     private readonly ModificationTracker _modificationTracker = new();
 
@@ -44,9 +45,9 @@ public class SchemeEntity
 
     public bool IsModified => _modificationTracker.IsModified || StakeholderDiscussions.IsModified;
 
-    public void ChangeFunding(SchemeFunding funding)
+    public void ProvideFunding(SchemeFunding funding)
     {
-        Funding = _modificationTracker.Change(Funding, funding, SetInProgress);
+        Funding = _modificationTracker.Change(Funding, funding, SetInProgress, FundingHasChanged);
     }
 
     public void ChangeAffordabilityEvidence(AffordabilityEvidence affordabilityEvidence)
@@ -98,13 +99,23 @@ public class SchemeEntity
         Status = _modificationTracker.Change(Status, SectionStatus.Completed);
     }
 
-    public void UnComplete()
+    public void SetInProgress()
     {
         Status = _modificationTracker.Change(Status, SectionStatus.InProgress);
     }
 
-    private void SetInProgress()
+    private void FundingHasChanged(SchemeFunding? newFunding)
     {
-        Status = _modificationTracker.Change(Status, SectionStatus.InProgress);
+        var oldFunding = Funding;
+
+        if (oldFunding.HousesToDeliver != newFunding?.HousesToDeliver)
+        {
+            Publish(new SchemeNumberOfHomesHasBeenUpdatedEvent(Application.Id));
+        }
+
+        if (oldFunding.RequiredFunding != newFunding?.RequiredFunding)
+        {
+            Publish(new SchemeFundingHasBeenChangedEvent(Application.Id));
+        }
     }
 }

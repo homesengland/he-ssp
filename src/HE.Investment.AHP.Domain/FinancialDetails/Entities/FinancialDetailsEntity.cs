@@ -2,6 +2,7 @@ using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.FinancialDetails.Constants;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.FinancialDetails.Constants;
+using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
@@ -12,6 +13,8 @@ namespace HE.Investment.AHP.Domain.FinancialDetails.Entities;
 
 public class FinancialDetailsEntity : IQuestion
 {
+    private readonly ModificationTracker _modificationTracker = new();
+
     public FinancialDetailsEntity(ApplicationBasicInfo applicationBasicInfo)
     {
         SectionStatus = SectionStatus.NotStarted;
@@ -21,10 +24,12 @@ public class FinancialDetailsEntity : IQuestion
         OtherApplicationCosts = new OtherApplicationCosts();
         ExpectedContributions = new ExpectedContributionsToScheme(applicationBasicInfo.Tenure);
         PublicGrants = new PublicGrants();
+        SchemeFunding = SchemeFunding.Empty();
     }
 
     public FinancialDetailsEntity(
         ApplicationBasicInfo applicationBasicInfo,
+        SchemeFunding schemeFunding,
         LandStatus landStatus,
         LandValue landValue,
         OtherApplicationCosts otherApplicationCosts,
@@ -33,6 +38,7 @@ public class FinancialDetailsEntity : IQuestion
         SectionStatus sectionStatus)
     {
         ApplicationBasicInfo = applicationBasicInfo;
+        SchemeFunding = schemeFunding;
         LandStatus = landStatus;
         LandValue = landValue;
         OtherApplicationCosts = otherApplicationCosts;
@@ -42,6 +48,8 @@ public class FinancialDetailsEntity : IQuestion
     }
 
     public ApplicationBasicInfo ApplicationBasicInfo { get; }
+
+    public SchemeFunding SchemeFunding { get; }
 
     public LandStatus LandStatus { get; private set; }
 
@@ -55,34 +63,31 @@ public class FinancialDetailsEntity : IQuestion
 
     public SectionStatus SectionStatus { get; private set; }
 
+    public bool IsModified => _modificationTracker.IsModified;
+
     public void ProvideLandStatus(LandStatus landStatus)
     {
-        ChangeStatus(LandStatus != landStatus);
-        LandStatus = landStatus;
+        LandStatus = _modificationTracker.Change(LandStatus, landStatus, MarkAsNotCompleted);
     }
 
     public void ProvideLandValue(LandValue landValue)
     {
-        ChangeStatus(LandValue != landValue);
-        LandValue = landValue;
+        LandValue = _modificationTracker.Change(LandValue, landValue, MarkAsNotCompleted);
     }
 
     public void ProvideOtherApplicationCosts(OtherApplicationCosts otherApplicationCosts)
     {
-        ChangeStatus(OtherApplicationCosts != otherApplicationCosts);
-        OtherApplicationCosts = otherApplicationCosts;
+        OtherApplicationCosts = _modificationTracker.Change(OtherApplicationCosts, otherApplicationCosts, MarkAsNotCompleted);
     }
 
     public void ProvideExpectedContributions(ExpectedContributionsToScheme expectedContribution)
     {
-        ChangeStatus(ExpectedContributions != expectedContribution);
-        ExpectedContributions = expectedContribution;
+        ExpectedContributions = _modificationTracker.Change(ExpectedContributions, expectedContribution, MarkAsNotCompleted);
     }
 
     public void ProvideGrants(PublicGrants publicGrants)
     {
-        ChangeStatus(PublicGrants != publicGrants);
-        PublicGrants = publicGrants;
+        PublicGrants = _modificationTracker.Change(PublicGrants, publicGrants, MarkAsNotCompleted);
     }
 
     public bool IsAnswered()
@@ -91,7 +96,8 @@ public class FinancialDetailsEntity : IQuestion
                LandValue.IsAnswered() &&
                OtherApplicationCosts.IsAnswered() &&
                ExpectedContributions.IsAnswered() &&
-               PublicGrants.IsAnswered();
+               PublicGrants.IsAnswered() &&
+               SchemeFunding.IsAnswered();
     }
 
     public void CompleteFinancialDetails(IsSectionCompleted isSectionCompleted)
@@ -122,7 +128,7 @@ public class FinancialDetailsEntity : IQuestion
                 .CheckErrors();
         }
 
-        SectionStatus = SectionStatus.Completed;
+        SectionStatus = _modificationTracker.Change(SectionStatus, SectionStatus.Completed);
     }
 
     public decimal? ExpectedTotalCosts()
@@ -137,16 +143,18 @@ public class FinancialDetailsEntity : IQuestion
 
     public decimal? ExpectedTotalContributions()
     {
-        if (ExpectedContributions.AreAllNotAnswered() && PublicGrants.AreAllNotAnswered())
+        if (ExpectedContributions.AreAllNotAnswered() && PublicGrants.AreAllNotAnswered() && SchemeFunding.IsNotAnswered())
         {
             return null;
         }
 
-        return ExpectedContributions.CalculateTotal().GetValueOrDefault() + PublicGrants.CalculateTotal().GetValueOrDefault();
+        return SchemeFunding.RequiredFunding.GetValueOrDefault()
+               + ExpectedContributions.CalculateTotal().GetValueOrDefault()
+               + PublicGrants.CalculateTotal().GetValueOrDefault();
     }
 
-    private void ChangeStatus(bool isChanged)
+    public void MarkAsNotCompleted()
     {
-        SectionStatus = isChanged ? SectionStatus.InProgress : SectionStatus;
+        SectionStatus = _modificationTracker.Change(SectionStatus, SectionStatus.InProgress);
     }
 }
