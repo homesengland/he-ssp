@@ -144,13 +144,13 @@ namespace HE.CRM.Plugins.Services.FrontDoorProject
                 var organisationCondition = GetFetchXmlConditionForGivenField(organisationId, nameof(he_Pipeline.he_Account).ToLower());
                 var frontDoorProjectCondition = GetFetchXmlConditionForGivenField(frontDoorProjectId, nameof(he_Pipeline.he_PipelineId).ToLower());
 
-                string statecodeCondition = GetFetchXmlConditionForGivenField("0", nameof(he_Pipeline.StateCode).ToLower());
+                string recordStatusCondition = GetFetchXmlConditionForGivenField(((int)he_Pipeline_he_RecordStatus.Open).ToString(), nameof(he_Pipeline.he_RecordStatus).ToLower());
                 if (!string.IsNullOrEmpty(includeInactive) && includeInactive == "true")
                 {
-                    statecodeCondition = null;
+                    recordStatusCondition = null;
                 }
 
-                var frontDoorProjects = _heProjectRepository.GetHeProject(organisationCondition, contactExternalIdFilter, frontDoorProjectCondition, statecodeCondition);
+                var frontDoorProjects = _heProjectRepository.GetHeProject(organisationCondition, contactExternalIdFilter, frontDoorProjectCondition, recordStatusCondition);
                 if (frontDoorProjects.Any())
                 {
                     foreach (var frontDoorProject in frontDoorProjects)
@@ -232,10 +232,14 @@ namespace HE.CRM.Plugins.Services.FrontDoorProject
         {
             if (useHeTables)
             {
+                // Update a he_RecordStaus on Project Record
                 var frontDoorProject = _heProjectRepository.GetById(new Guid(frontDoorProjectId), new string[] { nameof(he_Pipeline.he_PipelineId).ToLower() });
-                _heProjectRepository.SetState(frontDoorProject, he_PipelineState.Inactive, he_Pipeline_StatusCode.Inactive);
-                var frontDoorProjectAfter = _heProjectRepository.GetById(new Guid(frontDoorProjectId), new string[] { nameof(he_Pipeline.StateCode).ToLower() });
-                return frontDoorProjectAfter.StateCode.Value == (int)he_PipelineState.Inactive;
+                frontDoorProject.he_RecordStatus = new OptionSetValue((int)he_Pipeline_he_RecordStatus.Loancreated);
+                this.TracingService.Trace("Update a he_RecordStaus on Project Record");
+                _heProjectRepository.Update(frontDoorProject);
+                this.TracingService.Trace("After update a he_RecordStaus on Project Record");
+                var frontDoorProjectAfter = _heProjectRepository.GetById(new Guid(frontDoorProjectId), new string[] { nameof(he_Pipeline.he_RecordStatus).ToLower() });
+                return frontDoorProjectAfter.he_RecordStatus.Value == (int)he_Pipeline_he_RecordStatus.Loancreated;
             }
             else
             {
