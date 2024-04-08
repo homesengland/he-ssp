@@ -33,7 +33,7 @@ public class AhpApplicationCrmContext
             invln_organisationid = organisationId.ToString(),
             invln_userid = _userContext.UserGlobalId,
             invln_newapplicationstatus = crmStatus,
-            invln_changereason = changeReason ?? string.Empty,
+            invln_changereason = $"[IntegrationTests] {changeReason}",
         };
 
         await _service.ExecuteAsync<invln_changeahpapplicationstatusRequest, invln_changeahpapplicationstatusResponse>(
