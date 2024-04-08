@@ -5,5 +5,5 @@ namespace HE.Investment.AHP.WWW.Models.Scheme.Factories;
 
 public interface ISchemeSummaryViewModelFactory
 {
-    SectionSummaryViewModel GetSchemeAndCreateSummary(string title, Contract.Scheme.Scheme scheme, IUrlHelper urlHelper, bool isReadOnly);
+    SectionSummaryViewModel GetSchemeAndCreateSummary(string title, Contract.Scheme.Scheme scheme, IUrlHelper urlHelper);
 }

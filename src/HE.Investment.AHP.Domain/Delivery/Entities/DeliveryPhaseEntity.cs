@@ -89,10 +89,6 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
 
     public bool IsModified => _modificationTracker.IsModified || Tranches.IsModified;
 
-    public bool IsReadOnly => Application.IsReadOnly();
-
-    public bool IsApplicationLocked => Application.IsLocked();
-
     public bool IsOnlyCompletionMilestone => OnlyCompletionMilestone(Organisation, BuildActivity);
 
     public IEnumerable<HomesToDeliverInPhase> HomesToDeliver => _homesToDeliver;

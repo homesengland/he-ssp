@@ -11,4 +11,4 @@ public record ApplicationExtendedDetails(
     int? NumberOfHomes,
     decimal? FundingRequested,
     decimal? TotalSchemeCost,
-    string? RepresentationsAndWarranties);
+    bool? RepresentationsAndWarranties);

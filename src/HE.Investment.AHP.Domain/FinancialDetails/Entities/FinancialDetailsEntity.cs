@@ -63,8 +63,6 @@ public class FinancialDetailsEntity : IQuestion
 
     public SectionStatus SectionStatus { get; private set; }
 
-    public bool IsReadOnly => ApplicationBasicInfo.IsReadOnly();
-
     public bool IsModified => _modificationTracker.IsModified;
 
     public void ProvideLandStatus(LandStatus landStatus)

@@ -7,7 +7,13 @@ public record Application(
     string Name,
     Tenure Tenure,
     ApplicationStatus Status,
+    IReadOnlyCollection<AhpApplicationOperation> AllowedOperations,
     string? ReferenceNumber,
     ModificationDetails? LastModificationDetails,
-    IList<ApplicationSection> Sections,
-    bool IsReadOnly);
+    ModificationDetails? LastSubmissionDetails,
+    IList<ApplicationSection> Sections)
+{
+    public bool IsEditable => AllowedOperations.Contains(AhpApplicationOperation.Modification);
+
+    public bool IsReadOnly => !IsEditable;
+}

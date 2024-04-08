@@ -7,19 +7,16 @@ public class DeliveryPhaseWorkflow : EncodedStateRouting<DeliveryPhaseWorkflowSt
 {
     private readonly DeliveryPhaseDetails _model;
 
-    private readonly bool _isReadOnly;
-
-    public DeliveryPhaseWorkflow(DeliveryPhaseWorkflowState currentSiteWorkflowState, DeliveryPhaseDetails model, bool isReadOnly, bool isLocked = false)
+    public DeliveryPhaseWorkflow(DeliveryPhaseWorkflowState currentSiteWorkflowState, DeliveryPhaseDetails model, bool isLocked = false)
         : base(currentSiteWorkflowState, isLocked)
     {
         _model = model;
-        _isReadOnly = isReadOnly;
         ConfigureTransitions();
     }
 
     public override bool CanBeAccessed(DeliveryPhaseWorkflowState state, bool? isReadOnlyMode = null)
     {
-        if (isReadOnlyMode ?? _isReadOnly)
+        if (isReadOnlyMode ?? _model.Application.IsReadOnly)
         {
             return state == DeliveryPhaseWorkflowState.CheckAnswers;
         }

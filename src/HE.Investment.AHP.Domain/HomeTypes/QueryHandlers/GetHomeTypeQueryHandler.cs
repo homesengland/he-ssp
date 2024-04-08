@@ -1,5 +1,6 @@
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Queries;
+using HE.Investment.AHP.Domain.Application.Mappers;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Mappers;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
@@ -31,11 +32,10 @@ internal sealed class GetHomeTypeQueryHandler : IRequestHandler<GetHomeTypeQuery
             cancellationToken);
 
         return new HomeType(
+            ApplicationBasicInfoMapper.Map(homeType.Application),
             request.HomeTypeId,
             homeType.Name.Value,
             homeType.HousingType,
-            homeType.Application.Tenure,
-            HomeTypeConditionalsMapper.Map(homeType),
-            homeType.IsReadOnly);
+            HomeTypeConditionalsMapper.Map(homeType));
     }
 }

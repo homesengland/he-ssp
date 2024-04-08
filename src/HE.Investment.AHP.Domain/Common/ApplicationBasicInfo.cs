@@ -1,23 +1,46 @@
 using HE.Investment.AHP.Contract.Application;
-using HE.Investment.AHP.Contract.Application.Helpers;
 using HE.Investment.AHP.Contract.Site;
+using HE.Investment.AHP.Domain.Application.Entities;
+using HE.Investment.AHP.Domain.Application.Factories;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Programme;
 using HE.Investments.Common.Contract;
 
 namespace HE.Investment.AHP.Domain.Common;
 
-public record ApplicationBasicInfo(AhpApplicationId Id, SiteId SiteId, ApplicationName Name, Tenure Tenure, ApplicationStatus Status, AhpProgramme Programme)
+public class ApplicationBasicInfo
 {
-    public bool IsReadOnly()
+    private readonly ApplicationState _applicationState;
+
+    public ApplicationBasicInfo(
+        AhpApplicationId id,
+        SiteId siteId,
+        ApplicationName name,
+        Tenure tenure,
+        ApplicationStatus status,
+        AhpProgramme programme,
+        IApplicationStateFactory applicationStateFactory)
     {
-        var readonlyStatuses = ApplicationStatusDivision.GetAllStatusesForReadonlyMode();
-        return readonlyStatuses.Contains(Status);
+        Id = id;
+        SiteId = siteId;
+        Name = name;
+        Tenure = tenure;
+        Status = status;
+        Programme = programme;
+        _applicationState = applicationStateFactory.Create(Status);
     }
 
-    public bool IsLocked()
-    {
-        var lockedStatuses = ApplicationStatusDivision.GetAllStatusesForLockedMode();
-        return lockedStatuses.Contains(Status);
-    }
+    public AhpApplicationId Id { get; }
+
+    public SiteId SiteId { get; }
+
+    public ApplicationName Name { get; }
+
+    public Tenure Tenure { get; }
+
+    public ApplicationStatus Status { get; }
+
+    public AhpProgramme Programme { get; }
+
+    public IEnumerable<AhpApplicationOperation> AllowedOperations => _applicationState.AllowedOperations;
 }

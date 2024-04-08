@@ -12,13 +12,10 @@ public class SchemeWorkflow : IStateRouting<SchemeWorkflowState>
 
     private readonly StateMachine<SchemeWorkflowState, Trigger> _machine;
 
-    private readonly bool _isReadOnly;
-
-    public SchemeWorkflow(SchemeWorkflowState currentWorkflowState, Scheme scheme, bool isReadOnly)
+    public SchemeWorkflow(SchemeWorkflowState currentWorkflowState, Scheme scheme)
     {
         _scheme = scheme;
         _machine = new StateMachine<SchemeWorkflowState, Trigger>(currentWorkflowState);
-        _isReadOnly = isReadOnly;
         ConfigureTransitions();
     }
 
@@ -35,7 +32,7 @@ public class SchemeWorkflow : IStateRouting<SchemeWorkflowState>
 
     public SchemeWorkflowState CurrentState(SchemeWorkflowState targetState)
     {
-        if (_isReadOnly)
+        if (_scheme.Application.IsReadOnly)
         {
             return SchemeWorkflowState.CheckAnswers;
         }

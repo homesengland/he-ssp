@@ -45,8 +45,6 @@ public class SchemeEntity : DomainEntity
 
     public bool IsModified => _modificationTracker.IsModified || StakeholderDiscussions.IsModified;
 
-    public bool IsReadOnly => Application.IsReadOnly();
-
     public void ProvideFunding(SchemeFunding funding)
     {
         Funding = _modificationTracker.Change(Funding, funding, SetInProgress, FundingHasChanged);

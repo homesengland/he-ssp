@@ -72,8 +72,6 @@ public class HomeTypeEntity : IHomeTypeEntity
 
     public SectionStatus Status { get; private set; }
 
-    public bool IsReadOnly => Application.IsReadOnly();
-
     public void CompleteHomeType(IsSectionCompleted isSectionCompleted)
     {
         if (isSectionCompleted == IsSectionCompleted.Undefied)

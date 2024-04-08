@@ -1,5 +1,6 @@
 ﻿using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Queries;
+using HE.Investment.AHP.Domain.Application.Mappers;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Mappers;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
@@ -62,15 +63,11 @@ internal sealed class GetFullHomeTypeQueryHandler : IRequestHandler<GetFullHomeT
             cancellationToken);
 
         return new FullHomeType(
+            ApplicationBasicInfoMapper.Map(homeType.Application),
             homeType.Id,
             homeType.Name.Value,
-            homeType.Application.Id,
-            homeType.Application.Name.Name,
-            homeType.Application.Tenure,
-            homeType.Application.IsLocked(),
             homeType.HousingType,
             homeType.Status == SectionStatus.Completed,
-            homeType.IsReadOnly,
             MapOptionalSegment(homeType, homeType.OlderPeopleHomeTypeDetails, _olderPeopleSegmentMapper),
             MapOptionalSegment(homeType, homeType.DisabledPeopleHomeTypeDetails, _disabledPeopleSegmentMapper),
             MapOptionalSegment(homeType, homeType.DesignPlans, _designPlansSegmentMapper),

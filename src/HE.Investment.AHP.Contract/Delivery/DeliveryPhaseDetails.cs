@@ -1,15 +1,14 @@
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investments.Common.Contract;
 
 namespace HE.Investment.AHP.Contract.Delivery;
 
 public record DeliveryPhaseDetails(
-    string ApplicationName,
+    ApplicationDetails Application,
     string Id,
     string Name,
     SectionStatus Status,
-    bool IsReadOnly,
-    bool IsApplicationLocked,
     TypeOfHomes? TypeOfHomes = null,
     BuildActivityType? BuildActivityType = null,
     IList<BuildActivityType>? AvailableBuildActivityTypes = null,

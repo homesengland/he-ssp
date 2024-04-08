@@ -6,6 +6,7 @@
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ApplicationTaskListHeader
 @using HE.Investments.Common.Contract
 @using HE.Investments.Common.Gds
+@using HE.Investment.AHP.Contract.Application
 @model HE.Investment.AHP.WWW.Models.Application.ApplicationSectionsModel
 @inject IOptions<ContactInfoOptions> Options
 
@@ -31,15 +32,14 @@
         total-sections-count="@Model.Sections.Count"
         application-status="@Model.Status"
         reference-number="@Model.ReferenceNumber"
-        last-modification-details="@Model.LastModificationDetails"/>
+        last-modification-details="@Model.LastModificationDetails"
+        last-submission-details="@Model.LastSubmissionDetails"/>
 </div>
 <div class="govuk-grid-column-two-thirds">
-    <div class="govuk-!-margin-top-8">
-        <partial name="_LockedApplicationInformation" model="@Model.IsLocked()"/>
-    </div>
-
-    @if (Model.CanBeRequestedToEdit())
+    @if (Model.AllowedOperations.Contains(AhpApplicationOperation.RequestToEdit))
     {
+        <partial name="_LockedApplicationInformation"/>
+
         <vc:change-status-section
             title="Request to edit"
             paragraph="Send a request to your Growth Manager if you want to edit your application. They will review your request and will allow you to edit your application."

@@ -13,54 +13,54 @@ namespace HE.Investment.AHP.WWW.Models.Scheme.Factories;
 
 public class SchemeSummaryViewModelFactory : ISchemeSummaryViewModelFactory
 {
-    public SectionSummaryViewModel GetSchemeAndCreateSummary(string title, Contract.Scheme.Scheme scheme, IUrlHelper urlHelper, bool isReadOnly)
+    public SectionSummaryViewModel GetSchemeAndCreateSummary(string title, Contract.Scheme.Scheme scheme, IUrlHelper urlHelper)
     {
         return new SectionSummaryViewModel(title, new List<SectionSummaryItemModel>
         {
             new(
                 "Application name",
-                scheme.ApplicationName.ToOneElementList(),
+                scheme.Application.Name.ToOneElementList(),
                 IsEditable: false),
             new(
                 "Tenure",
-                scheme.ApplicationTenure?.GetDescription().ToOneElementList(),
+                scheme.Application.Tenure.GetDescription().ToOneElementList(),
                 IsEditable: false),
             new(
                 "Funding required",
                 CurrencyHelper.DisplayPounds(scheme.RequiredFunding).ToOneElementList(),
-                IsEditable: !isReadOnly,
-                ActionUrl: CreateSchemeActionUrl(urlHelper, scheme.ApplicationId, nameof(SchemeController.Funding))),
+                IsEditable: scheme.Application.IsEditable,
+                ActionUrl: CreateSchemeActionUrl(urlHelper, scheme.Application.Id, nameof(SchemeController.Funding))),
             new(
                 "Number of homes",
                 scheme.HousesToDeliver?.ToString(CultureInfo.InvariantCulture).ToOneElementList(),
-                IsEditable: !isReadOnly,
-                ActionUrl: CreateSchemeActionUrl(urlHelper, scheme.ApplicationId, nameof(SchemeController.Funding), allowWcagDuplicate: true)),
+                IsEditable: scheme.Application.IsEditable,
+                ActionUrl: CreateSchemeActionUrl(urlHelper, scheme.Application.Id, nameof(SchemeController.Funding), allowWcagDuplicate: true)),
             new(
                 "Affordability of Shared Ownership",
                 scheme.AffordabilityEvidence.ToOneElementList(),
-                IsEditable: !isReadOnly,
-                ActionUrl: CreateSchemeActionUrl(urlHelper, scheme.ApplicationId, nameof(SchemeController.Affordability))),
+                IsEditable: scheme.Application.IsEditable,
+                ActionUrl: CreateSchemeActionUrl(urlHelper, scheme.Application.Id, nameof(SchemeController.Affordability))),
             new(
                 "Sales risk of Shared Ownership",
                 scheme.SalesRisk.ToOneElementList(),
-                IsEditable: !isReadOnly,
-                ActionUrl: CreateSchemeActionUrl(urlHelper, scheme.ApplicationId, nameof(SchemeController.SalesRisk))),
+                IsEditable: scheme.Application.IsEditable,
+                ActionUrl: CreateSchemeActionUrl(urlHelper, scheme.Application.Id, nameof(SchemeController.SalesRisk))),
             new(
                 "Type and tenure of homes",
                 scheme.MeetingLocalPriorities.ToOneElementList(),
-                IsEditable: !isReadOnly,
-                ActionUrl: CreateSchemeActionUrl(urlHelper, scheme.ApplicationId, nameof(SchemeController.HousingNeeds))),
+                IsEditable: scheme.Application.IsEditable,
+                ActionUrl: CreateSchemeActionUrl(urlHelper, scheme.Application.Id, nameof(SchemeController.HousingNeeds))),
             new(
                 "Locally identified housing need",
                 scheme.MeetingLocalHousingNeed.ToOneElementList(),
-                IsEditable: !isReadOnly,
-                ActionUrl: CreateSchemeActionUrl(urlHelper, scheme.ApplicationId, nameof(SchemeController.HousingNeeds), allowWcagDuplicate: true)),
+                IsEditable: scheme.Application.IsEditable,
+                ActionUrl: CreateSchemeActionUrl(urlHelper, scheme.Application.Id, nameof(SchemeController.HousingNeeds), allowWcagDuplicate: true)),
             new(
                 "Local stakeholder discussions",
                 scheme.StakeholderDiscussionsReport.ToOneElementList(),
-                ActionUrl: CreateSchemeActionUrl(urlHelper, scheme.ApplicationId, nameof(SchemeController.StakeholderDiscussions)),
-                IsEditable: !isReadOnly,
-                Files: ConvertFiles(urlHelper, scheme.ApplicationId, scheme.LocalAuthoritySupportFile)),
+                ActionUrl: CreateSchemeActionUrl(urlHelper, scheme.Application.Id, nameof(SchemeController.StakeholderDiscussions)),
+                IsEditable: scheme.Application.IsEditable,
+                Files: ConvertFiles(urlHelper, scheme.Application.Id, scheme.LocalAuthoritySupportFile)),
         });
     }
 

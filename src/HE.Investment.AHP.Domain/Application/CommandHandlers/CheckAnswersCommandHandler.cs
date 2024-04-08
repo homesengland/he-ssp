@@ -1,5 +1,5 @@
 using HE.Investment.AHP.Contract.Application.Commands;
-using HE.Investment.AHP.Domain.Application.Repositories.Interfaces;
+using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
 using MediatR;

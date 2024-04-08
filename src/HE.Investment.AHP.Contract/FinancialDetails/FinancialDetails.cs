@@ -6,9 +6,7 @@ namespace HE.Investment.AHP.Contract.FinancialDetails;
 
 public class FinancialDetails
 {
-    public AhpApplicationId ApplicationId { get; set; }
-
-    public string ApplicationName { get; set; }
+    public ApplicationDetails Application { get; set; }
 
     public decimal? PurchasePrice { get; set; }
 
@@ -59,6 +57,4 @@ public class FinancialDetails
     public decimal? TotalReceivedGrants { get; set; }
 
     public SectionStatus SectionStatus { get; set; }
-
-    public bool IsReadOnly { get; set; }
 }

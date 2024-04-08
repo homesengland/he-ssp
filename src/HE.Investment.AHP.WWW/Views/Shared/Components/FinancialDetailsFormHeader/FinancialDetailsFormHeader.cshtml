@@ -12,7 +12,10 @@ else
     <gds-back-link href="@Model.CustomBackLinkUrl" class="govuk-!-margin-bottom-8"></gds-back-link>
 }
 
-<partial name="_LockedApplicationInformation" model="@Model.IsApplicationLocked"/>
+@if (Model.IsApplicationLocked)
+{
+    <partial name="_LockedApplicationInformation"/>
+}
 
 @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 

@@ -1,4 +1,5 @@
 using HE.Investment.AHP.Contract.FinancialDetails.Queries;
+using HE.Investment.AHP.Domain.Application.Mappers;
 using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 using HE.Investments.Account.Shared;
 using MediatR;
@@ -40,8 +41,7 @@ public class GetFinancialCheckAnswersQueryHandler : IRequestHandler<GetFinancial
             financialDetails.ExpectedTotalContributions());
 
         return new GetFinancialCheckAnswersResult(
-            financialDetails.ApplicationBasicInfo.Name.Name,
-            financialDetails.ApplicationBasicInfo.Status,
+            ApplicationBasicInfoMapper.Map(financialDetails.ApplicationBasicInfo),
             financialDetails.SectionStatus,
             landValueSummary,
             totalSchemeCost,

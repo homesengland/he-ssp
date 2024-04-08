@@ -1,9 +1,10 @@
-using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Queries;
-using HE.Investment.AHP.Domain.Application.Repositories.Interfaces;
+using HE.Investment.AHP.Domain.Application.Repositories;
+using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
 using MediatR;
+using ApplicationSection = HE.Investment.AHP.Contract.Application.ApplicationSection;
 using ContractApplication = HE.Investment.AHP.Contract.Application.Application;
 
 namespace HE.Investment.AHP.Domain.Application.QueryHandlers;
@@ -28,11 +29,19 @@ public class GetApplicationQueryHandler : IRequestHandler<GetApplicationQuery, C
         return new ContractApplication(
             application.Id,
             application.Name.Name,
-            application.Tenure?.Value ?? default,
+            application.Tenure.Value,
             application.Status,
+            application.AllowedOperations.ToList(),
             application.ReferenceNumber.Value,
-            application.LastModified != null ? new ModificationDetails(application.LastModified.FirstName, application.LastModified.LastName, application.LastModified.ChangedOn) : null,
-            application.Sections.Sections.Select(s => new ApplicationSection(s.Type, s.Status)).ToList(),
-            application.IsReadOnly());
+            MapModificationDetails(application.LastModified),
+            MapModificationDetails(application.LastSubmitted),
+            application.Sections.Sections.Select(s => new ApplicationSection(s.Type, s.Status)).ToList());
+    }
+
+    private static ModificationDetails? MapModificationDetails(AuditEntry? auditEntry)
+    {
+        return auditEntry != null
+            ? new ModificationDetails(auditEntry.FirstName, auditEntry.LastName, auditEntry.ChangedOn)
+            : null;
     }
 }

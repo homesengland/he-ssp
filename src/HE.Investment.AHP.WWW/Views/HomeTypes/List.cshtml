@@ -32,7 +32,7 @@
 
     <form asp-controller="HomeTypes" asp-action="List" asp-method="post" novalidate>
         @Html.HiddenFor(m => Model.ApplicationName)
-        @Html.HiddenFor(m => Model.IsEditable)
+        @Html.HiddenFor(m => m.AllowedOperations)
 
         @if (Model.HomeTypes.Any())
         {

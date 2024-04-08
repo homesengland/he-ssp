@@ -13,7 +13,7 @@ public class NextStateTests
     public async Task ShouldReturnNextState_WhenContinueTriggerExecuted(ApplicationWorkflowState current, ApplicationWorkflowState expectedNext)
     {
         // given
-        var sectionsWithCompletedStatus = new List<ApplicationSection>()
+        var sectionsWithCompletedStatus = new List<ApplicationSection>
         {
             new(SectionType.Scheme, SectionStatus.Completed),
             new(SectionType.HomeTypes, SectionStatus.Completed),
@@ -35,7 +35,7 @@ public class NextStateTests
     public async Task ShouldReturnNextState_WhenBackTriggerExecuted(ApplicationWorkflowState current, ApplicationWorkflowState expectedNext)
     {
         // given
-        var sectionsWithCompletedStatus = new List<ApplicationSection>()
+        var sectionsWithCompletedStatus = new List<ApplicationSection>
         {
             new(SectionType.Scheme, SectionStatus.Completed),
             new(SectionType.HomeTypes, SectionStatus.Completed),

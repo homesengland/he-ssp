@@ -1,15 +1,13 @@
-@using HE.Investments.Account.Shared
 @using HE.Investments.Common.Contract
 @using HE.Investments.Common.Gds
-@inject IAccountAccessContext AccountAccessContext
+@using HE.Investment.AHP.Contract.Application
 @model HE.Investment.AHP.WWW.Models.Application.ApplicationSectionsModel
 
 @{
     var incompleteSectionsCount = Model.Sections.Count(s => s.SectionStatus == SectionStatus.NotStarted || s.SectionStatus == SectionStatus.InProgress);
-    var canSubmitApplication = await AccountAccessContext.CanSubmitApplication();
 }
 
-@if (Model.CanBeSubmitted())
+@if (Model.AllowedOperations.Contains(AhpApplicationOperation.Submit))
 {
     <vc:change-status-section
         title="Check and submit"
@@ -17,11 +15,11 @@
         action-url="@Url.Action("CheckAnswers", "Application", new { applicationId = Model.ApplicationId })"
         link-button-name="Check and submit application"
         button-type="@ButtonType.Standard"
-        is-disabled="@(incompleteSectionsCount > 0 || !canSubmitApplication)"
+        is-disabled="@(incompleteSectionsCount > 0)"
         test-id="check-and-submit-application"/>
 }
 
-@if (Model.CanBePutOnHold())
+@if (Model.AllowedOperations.Contains(AhpApplicationOperation.PutOnHold))
 {
     <vc:change-status-section
         title="Put on hold"
@@ -32,7 +30,7 @@
         test-id="put-application-on-hold"/>
 }
 
-@if (Model.CanReactivate())
+@if (Model.AllowedOperations.Contains(AhpApplicationOperation.Reactivate))
 {
     <vc:change-status-section
         title="Reactivate application"
@@ -43,7 +41,7 @@
         test-id="reactivate-application"/>
 }
 
-@if (Model.CanBeWithdrawn())
+@if (Model.AllowedOperations.Contains(AhpApplicationOperation.Withdraw))
 {
     <vc:change-status-section
         title="Withdraw"

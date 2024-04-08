@@ -1,6 +1,7 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Site;
+using HE.Investment.AHP.Domain.Application.Factories;
 using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
@@ -40,10 +41,9 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
         var application = userAccount.CanViewAllApplications()
             ? await _applicationCrmContext.GetOrganisationApplicationById(id.Value, organisationId, CrmFields.FinancialDetailsToRead.ToList(), cancellationToken)
             : await _applicationCrmContext.GetUserApplicationById(id.Value, organisationId, CrmFields.FinancialDetailsToRead.ToList(), cancellationToken);
-
         var schemeFunding = (await _schemeRepository.GetByApplicationId(id, userAccount, false, cancellationToken)).Funding;
 
-        return await CreateEntity(application, schemeFunding, cancellationToken);
+        return await CreateEntity(application, userAccount, schemeFunding, cancellationToken);
     }
 
     public async Task<FinancialDetailsEntity> Save(FinancialDetailsEntity financialDetails, OrganisationId organisationId, CancellationToken cancellationToken)
@@ -74,7 +74,7 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
         return financialDetails;
     }
 
-    private async Task<FinancialDetailsEntity> CreateEntity(AhpApplicationDto application, SchemeFunding schemeFunding, CancellationToken cancellationToken)
+    private async Task<FinancialDetailsEntity> CreateEntity(AhpApplicationDto application, UserAccount userAccount, SchemeFunding schemeFunding, CancellationToken cancellationToken)
     {
         var applicationId = AhpApplicationId.From(application.id);
         var applicationBasicInfo = new ApplicationBasicInfo(
@@ -83,7 +83,8 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
             new ApplicationName(application.name),
             ApplicationTenureMapper.ToDomain(application.tenure)!.Value,
             AhpApplicationStatusMapper.MapToPortalStatus(application.applicationStatus),
-            await _programmeRepository.GetProgramme(applicationId, cancellationToken));
+            await _programmeRepository.GetProgramme(applicationId, cancellationToken),
+            new ApplicationStateFactory(userAccount));
 
         return new FinancialDetailsEntity(
             applicationBasicInfo,

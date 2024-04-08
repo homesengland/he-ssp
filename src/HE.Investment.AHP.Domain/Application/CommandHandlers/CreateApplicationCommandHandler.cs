@@ -1,8 +1,8 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Commands;
 using HE.Investment.AHP.Domain.Application.Entities;
+using HE.Investment.AHP.Domain.Application.Factories;
 using HE.Investment.AHP.Domain.Application.Repositories;
-using HE.Investment.AHP.Domain.Application.Repositories.Interfaces;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Exceptions;
@@ -31,7 +31,7 @@ public class CreateApplicationCommandHandler : IRequestHandler<CreateApplication
             throw new FoundException("Name", "There is already an application with this name. Enter a different name");
         }
 
-        var applicationToCreate = ApplicationEntity.New(request.SiteId, name, new ApplicationTenure(request.Tenure));
+        var applicationToCreate = ApplicationEntity.New(request.SiteId, name, new ApplicationTenure(request.Tenure), new ApplicationStateFactory(account));
         var application = await _repository.Save(applicationToCreate, account.SelectedOrganisationId(), cancellationToken);
 
         return new OperationResult<AhpApplicationId>(application.Id);
