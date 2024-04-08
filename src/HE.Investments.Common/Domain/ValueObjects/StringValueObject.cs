@@ -12,6 +12,7 @@ public abstract class StringValueObject : ValueObject
         string textTooLongErrorMessage,
         int maxLength)
     {
+        value = value?.Trim().NormalizeLineEndings();
         if (value.IsNotProvided())
         {
             OperationResult.New()
@@ -19,8 +20,7 @@ public abstract class StringValueObject : ValueObject
                 .CheckErrors();
         }
 
-        value = value!.Trim();
-        if (value.Length > maxLength)
+        if (value!.Length > maxLength)
         {
             OperationResult.New()
                 .AddValidationError(fieldName, textTooLongErrorMessage)

@@ -5,7 +5,7 @@ namespace HE.Investment.AHP.Domain.Site.ValueObjects.Mmc;
 public class ModernMethodsOfConstructionBarriers : LongText
 {
     public ModernMethodsOfConstructionBarriers(string? value)
-        : base(value, "ModernMethodsOfConstructionBarriers", "barriers you have experienced or foresee yourself experiencing in introducing greater levels of MMC into your development programme")
+        : base(value, "InformationBarriers", "barriers you have experienced or foresee yourself experiencing in introducing greater levels of MMC into your development programme")
     {
     }
 
