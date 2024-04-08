@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.WWW;
+using HE.Investments.AHP.IntegrationTests.Crm;
 using HE.Investments.AHP.IntegrationTests.FillApplication.Data;
 using HE.Investments.AHP.IntegrationTests.FillSite.Data;
 using HE.Investments.IntegrationTestsFramework;
@@ -17,7 +18,9 @@ public class AhpIntegrationTest : IntegrationTestBase<Program>, IDisposable
 {
     private readonly ITestOutputHelper _output;
 
-    protected AhpIntegrationTest(IntegrationTestFixture<Program> fixture, ITestOutputHelper output)
+    private readonly AhpIntegrationTestFixture _fixture;
+
+    protected AhpIntegrationTest(AhpIntegrationTestFixture fixture, ITestOutputHelper output)
         : base(fixture)
     {
         SetApplicationData();
@@ -26,6 +29,7 @@ public class AhpIntegrationTest : IntegrationTestBase<Program>, IDisposable
         fixture.CheckUserLoginData();
         fixture.MockUserAccount();
         _output = output;
+        _fixture = fixture;
     }
 
     public ApplicationData ApplicationData { get; private set; }
@@ -33,6 +37,8 @@ public class AhpIntegrationTest : IntegrationTestBase<Program>, IDisposable
     public SiteData SiteData { get; private set; }
 
     public Stopwatch Stopwatch { get; private set; }
+
+    protected AhpApplicationCrmContext AhpApplicationCrmContext => _fixture.AhpApplicationCrmContext;
 
     public void Dispose()
     {
