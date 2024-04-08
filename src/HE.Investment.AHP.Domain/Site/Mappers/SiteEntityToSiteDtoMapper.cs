@@ -95,8 +95,8 @@ public static class SiteEntityToSiteDtoMapper
             isIntentionToWorkWithSme = details.IsIntentionToWorkWithSme,
         };
 
-    private static StrategicSiteDetailsDto CreateStrategicSiteDetails(StrategicSiteDetails details) =>
-        new() { isStrategicSite = details.IsStrategicSite, name = details.SiteName?.Value, };
+    private static StrategicSiteDetailsDto CreateStrategicSiteDetails(StrategicSiteDetails? details) =>
+        new() { isStrategicSite = details?.IsStrategicSite, name = details?.SiteName?.Value, };
 
     private static SiteTypeDetailsDto CreateSiteTypeDetails(SiteTypeDetails details) =>
         new()
