@@ -1,12 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
-using HE.Investment.AHP.WWW;
 using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investment.AHP.WWW.Views.Application;
 using HE.Investments.AHP.IntegrationTests.Framework;
 using HE.Investments.AHP.IntegrationTests.Pages;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
-using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
 using Xunit.Abstractions;
@@ -18,7 +16,7 @@ namespace HE.Investments.AHP.IntegrationTests.ChangeApplicationStatus;
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
 public class Order06Submit : AhpIntegrationTest
 {
-    public Order06Submit(IntegrationTestFixture<Program> fixture, ITestOutputHelper output)
+    public Order06Submit(AhpIntegrationTestFixture fixture, ITestOutputHelper output)
         : base(fixture, output)
     {
     }
