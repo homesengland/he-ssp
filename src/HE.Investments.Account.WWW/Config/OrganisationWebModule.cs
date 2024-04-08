@@ -7,9 +7,11 @@ using HE.Investments.Account.WWW.Utils;
 using HE.Investments.Common.Config;
 using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.CRM;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.Common.Models.App;
 using HE.Investments.Common.Utils;
+using HE.Investments.Common.WWW.Config;
 using HE.Investments.Common.WWW.Infrastructure.Authorization;
 using HE.Investments.Common.WWW.Infrastructure.ErrorHandling;
 using HE.Investments.Common.WWW.Infrastructure.Middlewares;
@@ -20,6 +22,7 @@ public static class OrganisationWebModule
 {
     public static void AddWebModule(this IServiceCollection services)
     {
+        services.AddAppConfiguration<IMvcAppConfig, MvcAppConfig>();
         services.AddScoped<NonceModel>();
         AddConfiguration(services);
         AddCommonModule(services);
@@ -36,10 +39,9 @@ public static class OrganisationWebModule
 
     private static void AddConfiguration(IServiceCollection services)
     {
-        services.AddSingleton<IOrganisationAppConfig, OrganisationAppConfig>(x => x.GetRequiredService<IConfiguration>().GetSection("AppConfiguration").Get<OrganisationAppConfig>());
-        services.AddSingleton(x => x.GetRequiredService<IConfiguration>().GetSection("AppConfiguration").Get<ProgrammeUrlConfig>());
+        services.AddAppConfiguration<ProgrammeUrlConfig>();
         services.AddScoped<IProgrammes, Programmes>();
-        services.AddSingleton<IDataverseConfig, DataverseConfig>(x => x.GetRequiredService<IConfiguration>().GetSection("AppConfiguration:Dataverse").Get<DataverseConfig>());
+        services.AddAppConfiguration<IDataverseConfig, DataverseConfig>("Dataverse");
     }
 
     private static void AddCommonModule(IServiceCollection services)

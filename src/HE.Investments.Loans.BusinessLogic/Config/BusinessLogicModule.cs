@@ -4,6 +4,7 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using HE.Investments.Account.Shared.Config;
 using HE.Investments.Common;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Utils;
 using HE.Investments.FrontDoor.Shared.Config;
 using HE.Investments.Loans.BusinessLogic.CompanyStructure;
@@ -35,7 +36,7 @@ public static class BusinessLogicModule
         services.AddScoped<ILocalAuthorityRepository, LocalAuthorityRepository>();
         services.AddScoped<IApplicationProjectsRepository, ApplicationProjectsRepository>();
         services.AddScoped<IDateTimeProvider, DateTimeProvider>();
-        services.AddSingleton<ILoanAppConfig, LoanAppConfig>();
+        services.AddAppConfiguration<ILoanAppConfig, LoanAppConfig>();
 
         services.AddFilesSupport();
         services.AddLoanApplicationRepositories();
@@ -68,7 +69,7 @@ public static class BusinessLogicModule
 
     private static void AddFilesSupport(this IServiceCollection services)
     {
-        services.AddSingleton<ILoansDocumentSettings, LoansDocumentSettings>();
+        services.AddAppConfiguration<ILoansDocumentSettings, LoansDocumentSettings>("DocumentService");
         services.AddScoped<ILoansFileLocationProvider<SupportingDocumentsParams>>(x => x.GetRequiredService<ILoanApplicationRepository>());
         services.AddScoped<ILoansFileService<SupportingDocumentsParams>, LoansFileService<SupportingDocumentsParams>>();
         services.AddSingleton<ISupportingDocumentsFileFactory, SupportingDocumentsFileFactory>();

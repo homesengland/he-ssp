@@ -13,11 +13,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddEnvironmentVariables();
 var appConfig = builder.Configuration.GetSection("AppConfiguration").Get<AppConfig>();
 
-builder.Services.AddCache(appConfig.Cache, appConfig.AppName!);
+builder.Services.AddCache(appConfig.Cache);
 builder.Services.AddApplicationInsightsTelemetry();
 builder.Services.AddHttpClient();
 builder.Services.AddCrmConnection();
-builder.Services.AddWebModule(builder.Configuration);
+builder.Services.AddWebModule();
 builder.Services.AddFeatureManagement();
 builder.Services.AddCommonBuildingBlocks();
 

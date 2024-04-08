@@ -1,8 +1,10 @@
 using HE.Investments.Common;
 using HE.Investments.Common.Config;
 using HE.Investments.Common.Contract.Enum;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.Common.Models.App;
+using HE.Investments.Common.WWW.Config;
 using HE.Investments.Common.WWW.Infrastructure.Authorization;
 using HE.Investments.Common.WWW.Infrastructure.ErrorHandling;
 using HE.Investments.Common.WWW.Infrastructure.Middlewares;
@@ -16,31 +18,30 @@ namespace HE.Investments.FrontDoor.WWW.Config;
 
 public static class FrontDoorWebModule
 {
-    public static void AddWebModule(this IServiceCollection service, IConfiguration configuration)
+    public static void AddWebModule(this IServiceCollection services)
     {
-        service.AddOrganisationCrmModule();
-        service.AddScoped<ILocalAuthorityRepository, LocalAuthorityRepository>();
+        services.AddAppConfiguration<IMvcAppConfig, MvcAppConfig>();
+        services.AddOrganisationCrmModule();
+        services.AddScoped<ILocalAuthorityRepository, LocalAuthorityRepository>();
 
-        service.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(DomainModule).Assembly));
-        service.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(DomainValidationHandler<,,>).Assembly));
-        service.AddScoped<NonceModel>();
-        service.AddNotificationPublisher(ApplicationType.FrontDoor);
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(DomainModule).Assembly));
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(DomainValidationHandler<,,>).Assembly));
+        services.AddScoped<NonceModel>();
+        services.AddNotificationPublisher(ApplicationType.FrontDoor);
 
-        AddConfiguration(service, configuration);
-        service.AddDomainModule();
-        service.AddHttpUserContext();
-        service.AddEventInfrastructure();
+        AddConfiguration(services);
+        services.AddDomainModule();
+        services.AddHttpUserContext();
+        services.AddEventInfrastructure();
     }
 
-    private static void AddConfiguration(IServiceCollection services, IConfiguration configuration)
+    private static void AddConfiguration(IServiceCollection services)
     {
         services.AddSingleton<IExternalLinks, ExternalLinks>();
         services.AddSingleton<IErrorViewPaths, FrontDoorErrorViewPaths>();
-        services.AddSingleton<IFrontDoorAppConfig, FrontDoorAppConfig>(x => x.GetRequiredService<IConfiguration>().GetSection("AppConfiguration").Get<FrontDoorAppConfig>());
-        services.Configure<ContactInfoOptions>(configuration.GetSection("AppConfiguration:ContactInfo"));
-        services.AddSingleton<IDataverseConfig, DataverseConfig>(x =>
-            x.GetRequiredService<IConfiguration>().GetSection("AppConfiguration:Dataverse").Get<DataverseConfig>());
+        services.AddAppConfiguration<ContactInfoOptions>("ContactInfo");
+        services.AddAppConfiguration<IDataverseConfig, DataverseConfig>("Dataverse");
         services.AddScoped<IProjectSummaryViewModelFactory, ProjectSummaryViewModelFactory>();
-        services.AddSingleton(x => x.GetRequiredService<IConfiguration>().GetSection("AppConfiguration:LoanApplicationService").Get<LoanApplicationConfig>());
+        services.AddAppConfiguration<LoanApplicationConfig>("LoanApplicationService");
     }
 }

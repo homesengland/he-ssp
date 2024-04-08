@@ -1,8 +1,8 @@
 using System.Configuration;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Organisation.CompaniesHouse;
 using HE.Investments.Organisation.CrmRepository;
 using HE.Investments.Organisation.Services;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.PowerPlatform.Dataverse.Client;
 
@@ -10,31 +10,30 @@ namespace HE.Investments.Organisation.Config;
 
 public static class ServiceCollectionExtensions
 {
-    public static void AddOrganizationsModule(this IServiceCollection serviceCollections)
+    public static void AddOrganizationsModule(this IServiceCollection services)
     {
-        serviceCollections.AddCompaniesHouseHttpClient();
-        serviceCollections.AddScoped<IOrganisationSearchService, OrganisationSearchService>();
-        AddOrganisationCrmModule(serviceCollections);
+        services.AddCompaniesHouseHttpClient();
+        services.AddScoped<IOrganisationSearchService, OrganisationSearchService>();
+        AddOrganisationCrmModule(services);
 
-        serviceCollections.AddSingleton<ICompaniesHouseConfig>(x =>
-            x.GetRequiredService<IConfiguration>().GetRequiredSection("AppConfiguration:CompaniesHouse").Get<CompaniesHouseConfig>());
+        services.AddAppConfiguration<ICompaniesHouseConfig, CompaniesHouseConfig>("CompaniesHouse");
     }
 
-    public static void AddOrganisationCrmModule(this IServiceCollection serviceCollections)
+    public static void AddOrganisationCrmModule(this IServiceCollection services)
     {
-        if (serviceCollections.All(s => s.ServiceType != typeof(IOrganizationServiceAsync2)))
+        if (services.All(s => s.ServiceType != typeof(IOrganizationServiceAsync2)))
         {
             throw new ConfigurationErrorsException($"{nameof(IOrganizationServiceAsync2)} is required to be added to service collection.");
         }
 
-        serviceCollections.AddScoped<IOrganizationRepository, OrganizationRepository>();
-        serviceCollections.AddScoped<IOrganizationCrmSearchService, OrganizationCrmSearchService>();
-        serviceCollections.AddScoped<IOrganisationChangeRequestRepository, OrganisationChangeRequestRepository>();
-        serviceCollections.AddScoped<IContactService, ContactService>();
-        serviceCollections.AddScoped<IContactRepository, ContactRepository>();
-        serviceCollections.AddScoped<IWebRoleRepository, WebRoleRepository>();
-        serviceCollections.AddScoped<IPortalPermissionRepository, PortalPermissionRepository>();
-        serviceCollections.AddScoped<IOrganizationService, OrganizationService>();
-        serviceCollections.AddScoped<IProgrammeService, ProgrammeService>();
+        services.AddScoped<IOrganizationRepository, OrganizationRepository>();
+        services.AddScoped<IOrganizationCrmSearchService, OrganizationCrmSearchService>();
+        services.AddScoped<IOrganisationChangeRequestRepository, OrganisationChangeRequestRepository>();
+        services.AddScoped<IContactService, ContactService>();
+        services.AddScoped<IContactRepository, ContactRepository>();
+        services.AddScoped<IWebRoleRepository, WebRoleRepository>();
+        services.AddScoped<IPortalPermissionRepository, PortalPermissionRepository>();
+        services.AddScoped<IOrganizationService, OrganizationService>();
+        services.AddScoped<IProgrammeService, ProgrammeService>();
     }
 }
