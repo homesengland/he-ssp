@@ -24,11 +24,10 @@ public class DeliveryPhaseCheckAnswersViewModelFactory : IDeliveryPhaseCheckAnsw
         DeliveryPhaseDetails deliveryPhase,
         DeliveryPhaseHomes deliveryPhaseHomes,
         IUrlHelper urlHelper,
-        bool isEditable,
         bool useWorkflowRedirection = true)
     {
         var encodedWorkflow = useWorkflowRedirection
-            ? new DeliveryPhaseWorkflow(DeliveryPhaseWorkflowState.Name, deliveryPhase, !isEditable).GetEncodedWorkflow()
+            ? new DeliveryPhaseWorkflow(DeliveryPhaseWorkflowState.Name, deliveryPhase).GetEncodedWorkflow()
             : null;
 
         string CreateAction(string actionName) =>
@@ -41,9 +40,9 @@ public class DeliveryPhaseCheckAnswersViewModelFactory : IDeliveryPhaseCheckAnsw
 
         return new List<SectionSummaryViewModel>
         {
-            CreateDeliveryPhaseSummary(deliveryPhase, deliveryPhaseHomes, CreateAction, isEditable),
-            CreateMilestonesSummary(deliveryPhase, CreateAction, isEditable),
-            CreateMilestonesDatesSummary(deliveryPhase, CreateAction, isEditable),
+            CreateDeliveryPhaseSummary(deliveryPhase, deliveryPhaseHomes, CreateAction, deliveryPhase.Application.IsEditable),
+            CreateMilestonesSummary(deliveryPhase, CreateAction, deliveryPhase.Application.IsEditable),
+            CreateMilestonesDatesSummary(deliveryPhase, CreateAction, deliveryPhase.Application.IsEditable),
         };
     }
 

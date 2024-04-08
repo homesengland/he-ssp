@@ -18,7 +18,7 @@ public class ExpectedTotalContributionsTests
         var expectedTotalContributions = financialDetailsEntity.ExpectedTotalContributions();
 
         // then
-        expectedTotalContributions.Should().Be(0);
+        expectedTotalContributions.Should().BeNull();
     }
 
     [Fact]

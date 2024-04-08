@@ -15,7 +15,7 @@ public record ApplicationWithFundingDetails(
     decimal? RequiredFunding,
     decimal? OtherApplicationCosts,
     decimal? CurrentLandValue,
-    string? RepresentationsAndWarranties)
+    bool? RepresentationsAndWarranties)
 {
     public decimal? TotalSchemeCost()
     {

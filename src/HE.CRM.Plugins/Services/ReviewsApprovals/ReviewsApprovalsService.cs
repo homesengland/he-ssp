@@ -11,20 +11,22 @@ using Microsoft.Xrm.Sdk;
 
 namespace HE.CRM.Plugins.Services.ReviewsApprovals
 {
-
     public class ReviewsApprovalsService : CrmService, IReviewsApprovalsService
     {
         #region Fields
+
         private readonly IReviewApprovalRepository _reviewApprovalRepository;
+
         private readonly IIspRepository _ispRepository;
-        #endregion
+
+        #endregion Fields
 
         #region Constructors
 
         public ReviewsApprovalsService(CrmServiceArgs args) : base(args)
         {
             _reviewApprovalRepository = CrmRepositoriesFactory.Get<IReviewApprovalRepository>();
-            _ispRepository = CrmRepositoriesFactory.Get<IIspRepository>();
+            _ispRepository = CrmRepositoriesFactory.GetSystem<IIspRepository>();
         }
 
         public void UpdateIspRelatedToApprovalsService(invln_reviewapproval target, invln_reviewapproval postImage)
@@ -36,11 +38,12 @@ namespace HE.CRM.Plugins.Services.ReviewsApprovals
                     Id = postImage.invln_ispid.Id
                 };
                 var reviewApprovals = _reviewApprovalRepository.GetReviewApprovalsForIsp(postImage.invln_ispid, null);
-                switch(postImage.invln_status.Value)
+                switch (postImage.invln_status.Value)
                 {
                     case (int)invln_StatusReviewApprovalSet.Rejected:
                     {
                         isp.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Rejected);
+                        isp.invln_DateApproved = null;
                         this._ispRepository.Update(isp);
                         break;
                     }
@@ -102,6 +105,7 @@ namespace HE.CRM.Plugins.Services.ReviewsApprovals
             if (rejected.Any())
             {
                 isp.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Rejected);
+                isp.invln_DateApproved = null;
                 this._ispRepository.Update(isp);
                 return;
             }
@@ -113,6 +117,7 @@ namespace HE.CRM.Plugins.Services.ReviewsApprovals
                 this._ispRepository.Update(isp);
                 return;
             }
+
             isp.invln_DateApproved = DateTime.UtcNow;
             isp.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Approved);
             this._ispRepository.Update(isp);
@@ -124,14 +129,17 @@ namespace HE.CRM.Plugins.Services.ReviewsApprovals
             if (rejected.Any())
             {
                 isp.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Rejected);
+                isp.invln_DateApproved = null;
                 this._ispRepository.Update(isp);
             }
             else
             {
+                isp.invln_DateApproved = null;
                 isp.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Pending);
                 this._ispRepository.Update(isp);
             }
         }
-        #endregion
+
+        #endregion Constructors
     }
 }

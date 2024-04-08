@@ -16,7 +16,6 @@ internal static class ProjectMapper
     public static ProjectViewModel MapToViewModel(Project project, LoanApplicationId loanApplicationId, LoanProjectPrefillData? projectPrefillData = null)
     {
         var additionalDetailsAreProvided = project.AdditionalDetails.IsProvided();
-        var startDate = project.StartDate?.Value;
         var locationOption = DetermineLocationOption(project);
 
         return new ProjectViewModel

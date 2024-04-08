@@ -13,6 +13,7 @@ public enum ApplicationStatus
     UnderReview,
     [Description("Application Under Review")]
     ApplicationUnderReview,
+    [Description("Withdrawn")]
     Withdrawn,
     [Description("Hold Requested")]
     HoldRequested,

@@ -1,8 +1,6 @@
-using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.Contract.HomeTypes;
-using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.Tranches;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
@@ -23,8 +21,6 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
 
     private readonly IList<DeliveryPhaseEntity> _toRemove = new List<DeliveryPhaseEntity>();
 
-    private readonly ApplicationBasicInfo _application;
-
     private readonly IList<HomesToDeliver> _homesToDeliver;
 
     private readonly ModificationTracker _statusModificationTracker = new();
@@ -35,23 +31,19 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
         IEnumerable<HomesToDeliver> homesToDeliver,
         SectionStatus status)
     {
-        _application = application;
+        Application = application;
         _deliveryPhases = deliveryPhases.ToList();
         _homesToDeliver = homesToDeliver.ToList();
         Status = status;
     }
 
-    public AhpApplicationId ApplicationId => _application.Id;
-
-    public ApplicationName ApplicationName => _application.Name;
+    public ApplicationBasicInfo Application { get; }
 
     public IEnumerable<IDeliveryPhaseEntity> DeliveryPhases => _deliveryPhases;
 
     public SectionStatus Status { get; private set; }
 
     public bool IsStatusChanged => _statusModificationTracker.IsModified;
-
-    public bool IsReadOnly => _application.IsReadOnly();
 
     public int UnusedHomeTypesCount => _homesToDeliver.Select(x => x.TotalHomes).Sum() -
                                        _homesToDeliver.Select(x => GetHomesToBeDeliveredInAllPhases(x.HomeTypeId)).Sum();
@@ -94,7 +86,7 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
             OperationResult.ThrowValidationError(nameof(HomesToDeliver), "You must add at least 1 home type in home types section");
         }
 
-        if (homesToDeliver.All(x => x.ToDeliver == 0))
+        if (homesToDeliver.All(x => x.Value == 0))
         {
             OperationResult.ThrowValidationError(nameof(HomesToDeliver), "You must add at least 1 home to a home type for this delivery phase");
         }
@@ -123,7 +115,7 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
     public DeliveryPhaseEntity CreateDeliveryPhase(DeliveryPhaseName name, OrganisationBasicInfo organisationBasicInfo)
     {
         var deliveryPhase = new DeliveryPhaseEntity(
-            _application,
+            Application,
             ValidateNameUniqueness(name),
             organisationBasicInfo,
             SectionStatus.InProgress,
@@ -234,7 +226,7 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
     {
         return _deliveryPhases.SelectMany(x => x.HomesToDeliver)
             .Where(x => x.HomeTypeId == homeTypeId)
-            .Select(x => x.ToDeliver)
+            .Select(x => x.Value)
             .Sum();
     }
 }

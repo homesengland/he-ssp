@@ -1,16 +1,11 @@
-using HE.Investment.AHP.Contract.Application;
-using HE.Investment.AHP.Contract.Application.Helpers;
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
-using HE.Investment.AHP.Contract.Scheme;
-using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
-using MediatR;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 
@@ -20,20 +15,16 @@ public class HomeTypesEntity
 
     private readonly IList<HomeTypeEntity> _toRemove = new List<HomeTypeEntity>();
 
-    private readonly ApplicationBasicInfo _application;
-
     private readonly ModificationTracker _statusModificationTracker = new();
 
     public HomeTypesEntity(ApplicationBasicInfo application, IEnumerable<HomeTypeEntity> homeTypes, SectionStatus status)
     {
-        _application = application;
+        Application = application;
         _homeTypes = homeTypes.ToList();
         Status = status;
     }
 
-    public AhpApplicationId ApplicationId => _application.Id;
-
-    public ApplicationName ApplicationName => _application.Name;
+    public ApplicationBasicInfo Application { get; }
 
     public IEnumerable<IHomeTypeEntity> HomeTypes => _homeTypes;
 
@@ -43,11 +34,9 @@ public class HomeTypesEntity
 
     public bool IsStatusChanged => _statusModificationTracker.IsModified;
 
-    public bool IsReadOnly => _application.IsReadOnly();
-
     public IHomeTypeEntity CreateHomeType(string? name, HousingType housingType)
     {
-        var homeType = new HomeTypeEntity(_application, ValidateNameUniqueness(name), housingType, SectionStatus.InProgress);
+        var homeType = new HomeTypeEntity(Application, ValidateNameUniqueness(name), housingType, SectionStatus.InProgress);
         _homeTypes.Add(homeType);
 
         return homeType;
@@ -121,7 +110,7 @@ public class HomeTypesEntity
                     notCompletedHomeTypes.Select(x => new ErrorItem($"HomeType-{x.Id}", $"Complete {x.Name.Value} to save and continue")).ToList()));
             }
 
-            if (expectedNumberOfHomes != _homeTypes.Sum(x => x.HomeInformation?.NumberOfHomes?.Value ?? 0))
+            if (expectedNumberOfHomes != _homeTypes.Sum(x => x.HomeInformation.NumberOfHomes?.Value ?? 0))
             {
                 OperationResult.New().AddValidationError("HomeTypes", "You have not assigned all of the homes you are delivering to a home type").CheckErrors();
             }

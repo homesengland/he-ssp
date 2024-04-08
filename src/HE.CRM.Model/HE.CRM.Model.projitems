@@ -621,6 +621,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\OpenAISchemaVersion.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\Opportunity_SalesStage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\organization_applicationbasedaccesscontrolmode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\organization_SamesitemodeforSessionCookie.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\orginsightsconfiguration_Lookback.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\orginsightsconfiguration_PlotOption.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\photo_resolution.cs" />

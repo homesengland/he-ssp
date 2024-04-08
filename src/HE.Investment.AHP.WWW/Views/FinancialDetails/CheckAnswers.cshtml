@@ -8,6 +8,7 @@
 @using HE.Investments.Common.WWW.Components.SectionSummary
 @using HE.Investments.Common.WWW.Extensions;
 @using HE.Investment.AHP.Contract.FinancialDetails
+@using HE.Investment.AHP.Contract.Application
 @model FinancialDetailsCheckAnswersModel
 @{
     ViewData["Title"] = FinancialDetailsPageTitles.CheckAnswers;
@@ -22,7 +23,7 @@
                                           application-id="@Model.ApplicationId.ToString()"
                                           caption="@Model.ApplicationName - Finance details"
                                           custom-back-link-url="@customBackLinkUrl"
-                                          is-application-locked="@Model.IsApplicationLocked"/>
+                                          is-application-locked="@Model.AllowedOperations.Contains(AhpApplicationOperation.RequestToEdit)"/>
 
         <gds-p hidden="@Model.IsReadOnly">
             Total scheme costs and total contributions must match for you to continue.
@@ -31,13 +32,13 @@
             You can edit this page until the figures match. You can save and return to this section later if you do not have the correct figures.
         </gds-p>
         <vc:section-summary title="@Model.LandValueSummary.Title" items="@Model.LandValueSummary.Items" />
-        <div class="govuk-form-group @errorCssClass">
+        <div class="govuk-form-group @errorCssClass" id="@FinancialDetailsValidationFieldNames.CostsAndFunding">
             <vc:section-summary title="@Model.CostsSummary.Title" items="@Model.CostsSummary.Items" name="@FinancialDetailsValidationFieldNames.CostsAndFunding" />
             <vc:section-summary title="@Model.ContributionsSummary.Title" items="@Model.ContributionsSummary.Items" />
         </div>
 
         @Html.HiddenFor(m => Model.ApplicationName)
-        @Html.HiddenFor(m => Model.IsReadOnly)
+        @Html.HiddenFor(m => Model.AllowedOperations)
 
         <gds-field-set role="group" hidden="@Model.IsReadOnly">
             <gds-legend>

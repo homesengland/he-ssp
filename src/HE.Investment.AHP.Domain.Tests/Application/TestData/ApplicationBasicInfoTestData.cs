@@ -1,5 +1,6 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Site;
+using HE.Investment.AHP.Domain.Application.Factories;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
@@ -19,7 +20,8 @@ public static class ApplicationBasicInfoTestData
         new ApplicationName(GuidTestData.GuidTwo.ToString()),
         Tenure.AffordableRent,
         ApplicationStatus.Draft,
-        new AhpProgramme(ProgrammeDatesTestData.ProgrammeDates, MilestoneFramework.Default));
+        new AhpProgramme(ProgrammeDatesTestData.ProgrammeDates, MilestoneFramework.Default),
+        new ApplicationStateFactory(UserAccountTestData.AdminUserAccountOne));
 
     public static readonly ApplicationBasicInfo SharedOwnershipInDraftState = new(
         AhpApplicationId.From(GuidTestData.GuidOne),
@@ -27,5 +29,6 @@ public static class ApplicationBasicInfoTestData
         new ApplicationName(GuidTestData.GuidOne.ToString()),
         Tenure.SharedOwnership,
         ApplicationStatus.Draft,
-        new AhpProgramme(ProgrammeDatesTestData.ProgrammeDates, MilestoneFramework.Default));
+        new AhpProgramme(ProgrammeDatesTestData.ProgrammeDates, MilestoneFramework.Default),
+        new ApplicationStateFactory(UserAccountTestData.AdminUserAccountOne));
 }

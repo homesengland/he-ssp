@@ -1,5 +1,4 @@
 using HE.Investment.AHP.Contract.Application;
-using HE.Investment.AHP.Contract.Application.Helpers;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.WWW.Routing;
@@ -12,7 +11,9 @@ public class ApplicationWorkflow : IStateRouting<ApplicationWorkflowState>
     private readonly StateMachine<ApplicationWorkflowState, Trigger> _machine;
 
     private readonly Func<Task<Application>> _modelFactory;
+
     private readonly Func<Task<bool>> _isApplicationExist;
+
     private readonly bool _isReadOnly;
 
     public ApplicationWorkflow(ApplicationWorkflowState currentWorkflowState, Func<Task<Application>> modelFactory, Func<Task<bool>> isApplicationExist, bool isReadOnly)
@@ -30,24 +31,19 @@ public class ApplicationWorkflow : IStateRouting<ApplicationWorkflowState>
         return _machine.State;
     }
 
-    public Task<bool> StateCanBeAccessed(ApplicationWorkflowState nextState)
+    public async Task<bool> StateCanBeAccessed(ApplicationWorkflowState nextState)
     {
-        return CanBeAccessed(nextState);
-    }
-
-    public async Task<bool> CanBeAccessed(ApplicationWorkflowState state)
-    {
-        return state switch
+        return nextState switch
         {
             ApplicationWorkflowState.Start => true,
             ApplicationWorkflowState.ApplicationsList => true,
             ApplicationWorkflowState.ApplicationName => true,
             ApplicationWorkflowState.ApplicationTenure => true,
             ApplicationWorkflowState.TaskList => true,
-            ApplicationWorkflowState.OnHold => await CanApplicationStatusBeChanged(ApplicationStatusDivision.GetAllStatusesAllowedForPutOnHold()),
-            ApplicationWorkflowState.Reactivate => await CanApplicationStatusBeChanged(ApplicationStatusDivision.GetAllStatusesForReactivate()),
-            ApplicationWorkflowState.RequestToEdit => await CanApplicationStatusBeChanged(ApplicationStatusDivision.GetAllStatusesAllowedForRequestToEdit()),
-            ApplicationWorkflowState.Withdraw => await CanApplicationStatusBeChanged(ApplicationStatusDivision.GetAllStatusesAllowedForWithdraw()),
+            ApplicationWorkflowState.OnHold => await IsOperationAllowed(AhpApplicationOperation.PutOnHold),
+            ApplicationWorkflowState.Reactivate => await IsOperationAllowed(AhpApplicationOperation.Reactivate),
+            ApplicationWorkflowState.RequestToEdit => await IsOperationAllowed(AhpApplicationOperation.RequestToEdit),
+            ApplicationWorkflowState.Withdraw => await IsOperationAllowed(AhpApplicationOperation.Withdraw),
             ApplicationWorkflowState.CheckAnswers => await CanBeSubmitted(),
             ApplicationWorkflowState.Submit => await CanBeSubmitted(),
             ApplicationWorkflowState.Completed => await IsSubmitted(),
@@ -98,18 +94,17 @@ public class ApplicationWorkflow : IStateRouting<ApplicationWorkflowState>
             .Permit(Trigger.Back, ApplicationWorkflowState.CheckAnswers);
     }
 
-    private async Task<bool> CanApplicationStatusBeChanged(IEnumerable<ApplicationStatus> statusesAllowedForStatusChange)
+    private async Task<bool> IsOperationAllowed(AhpApplicationOperation operation)
     {
         var model = await _modelFactory();
-        return statusesAllowedForStatusChange.Contains(model.Status);
+        return model.AllowedOperations.Contains(operation);
     }
 
     private async Task<bool> CanBeSubmitted()
     {
-        var statusesAllowedForSubmit = ApplicationStatusDivision.GetAllStatusesAllowedForSubmit();
         var model = await _modelFactory();
         var allSectionsCompleted = model.Sections.All(x => x.SectionStatus == SectionStatus.Completed);
-        return statusesAllowedForSubmit.Contains(model.Status) && allSectionsCompleted;
+        return model.AllowedOperations.Contains(AhpApplicationOperation.Submit) && allSectionsCompleted;
     }
 
     private async Task<bool> IsSubmitted()

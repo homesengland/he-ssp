@@ -22,7 +22,7 @@
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
     <form asp-controller="DeliveryPhase" asp-action="@aspAction" asp-method="post" asp-route-workflow="@Context.Request.Query["workflow"]" novalidate>
-        <vc:page-header caption="@($"{Model.ApplicationName} - {Model.Name}")"/>
+        <vc:page-header caption="@($"{Model.Application.Name} - {Model.Name}")"/>
         @Html.HiddenFor(m => m.TypeOfHomes)
         <vc:radio-list
             title="@title"

@@ -1,4 +1,5 @@
 using HE.Investment.AHP.Contract.Scheme.Queries;
+using HE.Investment.AHP.Domain.Application.Mappers;
 using HE.Investment.AHP.Domain.Scheme.Entities;
 using HE.Investment.AHP.Domain.Scheme.Repositories;
 using HE.Investments.Account.Shared;
@@ -25,10 +26,7 @@ public class GetSchemeQueryHandler : IRequestHandler<GetApplicationSchemeQuery, 
         var entity = await _repository.GetByApplicationId(request.ApplicationId, account, request.IncludeFiles, cancellationToken);
 
         return new Contract.Scheme.Scheme(
-            entity.Application.Id,
-            entity.Application.Name.Name,
-            entity.Application.Tenure,
-            entity.Application.IsLocked(),
+            ApplicationBasicInfoMapper.Map(entity.Application),
             entity.Status,
             entity.Funding.RequiredFunding,
             entity.Funding.HousesToDeliver,
@@ -37,8 +35,7 @@ public class GetSchemeQueryHandler : IRequestHandler<GetApplicationSchemeQuery, 
             entity.HousingNeeds.MeetingLocalPriorities,
             entity.HousingNeeds.MeetingLocalHousingNeed,
             entity.StakeholderDiscussions.StakeholderDiscussionsDetails.Report,
-            CreateFile(entity.StakeholderDiscussions.LocalAuthoritySupportFileContainer),
-            entity.IsReadOnly);
+            CreateFile(entity.StakeholderDiscussions.LocalAuthoritySupportFileContainer));
     }
 
     private static UploadedFile? CreateFile(LocalAuthoritySupportFileContainer fileContainer)

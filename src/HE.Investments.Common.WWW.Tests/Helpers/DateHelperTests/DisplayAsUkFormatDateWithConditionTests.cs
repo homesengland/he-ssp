@@ -12,6 +12,7 @@ public class DisplayAsUkFormatDateWithConditionTests
         // given
         var date = new DateDetails("1", "1", "2022");
         const string additionalInput = "Yes";
+
         // when
         var result = DateHelper.DisplayAsUkFormatDateWithCondition(date, additionalInput);
 

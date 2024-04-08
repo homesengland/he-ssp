@@ -89,15 +89,11 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
 
     public bool IsModified => _modificationTracker.IsModified || Tranches.IsModified;
 
-    public bool IsReadOnly => Application.IsReadOnly();
-
-    public bool IsApplicationLocked => Application.IsLocked();
-
     public bool IsOnlyCompletionMilestone => OnlyCompletionMilestone(Organisation, BuildActivity);
 
     public IEnumerable<HomesToDeliverInPhase> HomesToDeliver => _homesToDeliver;
 
-    public int TotalHomesToBeDeliveredInThisPhase => _homesToDeliver.Select(x => x.ToDeliver).Sum();
+    public int TotalHomesToBeDeliveredInThisPhase => _homesToDeliver.Select(x => x.Value).Sum();
 
     public DeliveryPhaseMilestones DeliveryPhaseMilestones { get; private set; }
 
@@ -105,12 +101,12 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
 
     public bool IsHomeTypeUsed(HomeTypeId homeTypeId)
     {
-        return _homesToDeliver.Any(x => x.HomeTypeId == homeTypeId && x.ToDeliver > 0);
+        return _homesToDeliver.Any(x => x.HomeTypeId == homeTypeId && x.Value > 0);
     }
 
     public int? GetHomesToBeDeliveredForHomeType(HomeTypeId homeTypeId)
     {
-        return _homesToDeliver.SingleOrDefault(x => x.HomeTypeId == homeTypeId)?.ToDeliver;
+        return _homesToDeliver.SingleOrDefault(x => x.HomeTypeId == homeTypeId)?.Value;
     }
 
     public void SetHomesToBeDeliveredInThisPhase(IReadOnlyCollection<HomesToDeliverInPhase> homesToDeliver)

@@ -5,6 +5,8 @@
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Input
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
+@using HE.Investments.Loans.BusinessLogic.Config
+@inject ILoanAppConfig LoanAppConfig
 
 @model HE.Investments.Loans.Contract.Projects.ViewModels.ProjectViewModel;
 @{
@@ -31,7 +33,7 @@
 
             <gds-div-inset-text>
                 Homes England does not provide loans to developers building less than 5 homes.<br/>
-                If you have any questions, contact us via telephone: 0800...
+                If you have any questions, contact us via telephone: @LoanAppConfig.LoansEnquiriesTelephoneNumber
             </gds-div-inset-text>
         </gds-div-form-group>
 

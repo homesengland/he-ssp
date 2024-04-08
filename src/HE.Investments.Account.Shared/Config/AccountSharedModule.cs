@@ -1,6 +1,6 @@
 using HE.Investments.Account.Shared.Repositories;
 using HE.Investments.Account.Shared.Routing;
-using Microsoft.Extensions.Configuration;
+using HE.Investments.Common.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace HE.Investments.Account.Shared.Config;
@@ -16,7 +16,7 @@ public static class AccountSharedModule
         services.AddScoped<AccountCrmRepository>();
         services.AddScoped<Func<AccountCrmRepository>>(x => x.GetRequiredService<AccountCrmRepository>);
         services.AddScoped<IAccountRepository, AccountRepositoryDecorator>();
-        services.AddSingleton(x => x.GetRequiredService<IConfiguration>().GetSection("AppConfiguration:AccountService").Get<AccountConfig>());
+        services.AddAppConfiguration<AccountConfig>("AccountService");
         services.AddScoped<IAccountRoutes, HttpAccountRoutes>();
     }
 

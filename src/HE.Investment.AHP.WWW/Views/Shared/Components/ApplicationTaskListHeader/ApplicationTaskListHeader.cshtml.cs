@@ -12,8 +12,9 @@ public class ApplicationTaskListHeader : ViewComponent
         int totalSectionsCount,
         ApplicationStatus applicationStatus,
         string? referenceNumber,
-        ModificationDetails? lastModificationDetails)
+        ModificationDetails? lastModificationDetails,
+        ModificationDetails? lastSubmissionDetails)
     {
-        return View("ApplicationTaskListHeader", (completeSectionsCount, incompleteSectionsCount, totalSectionsCount, applicationStatus, referenceNumber, lastModificationDetails));
+        return View("ApplicationTaskListHeader", (completeSectionsCount, incompleteSectionsCount, totalSectionsCount, applicationStatus, referenceNumber, lastModificationDetails, lastSubmissionDetails));
     }
 }

@@ -2,7 +2,6 @@ using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Events;
 using HE.Investment.AHP.Domain.Application.Repositories;
-using HE.Investment.AHP.Domain.Application.Repositories.Interfaces;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Documents.Services;
 using HE.Investment.AHP.Domain.HomeTypes.Crm;
@@ -132,13 +131,13 @@ public class HomeTypeRepository : IHomeTypeRepository
     {
         if (homeTypes.IsStatusChanged)
         {
-            await _homeTypeCrmContext.SaveHomeTypesStatus(homeTypes.ApplicationId.Value, organisationId.Value, SectionStatusMapper.ToDto(homeTypes.Status), cancellationToken);
+            await _homeTypeCrmContext.SaveHomeTypesStatus(homeTypes.Application.Id.Value, organisationId.Value, SectionStatusMapper.ToDto(homeTypes.Status), cancellationToken);
         }
 
         var homeTypeToRemove = homeTypes.PopRemovedHomeType();
         while (homeTypeToRemove != null)
         {
-            await _homeTypeCrmContext.Remove(homeTypes.ApplicationId.Value, homeTypeToRemove.Id.Value, organisationId.Value, cancellationToken);
+            await _homeTypeCrmContext.Remove(homeTypes.Application.Id.Value, homeTypeToRemove.Id.Value, organisationId.Value, cancellationToken);
             await _eventDispatcher.Publish(
                 new HomeTypeHasBeenRemovedEvent(homeTypeToRemove.Application.Id, homeTypeToRemove.Id),
                 cancellationToken);

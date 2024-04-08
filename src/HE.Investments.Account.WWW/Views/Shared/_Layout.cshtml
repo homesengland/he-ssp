@@ -1,9 +1,9 @@
-@using HE.Investments.Account.WWW.Config
-@inject IOrganisationAppConfig OrganisationAppConfig
+@using HE.Investments.Common.WWW.Config
+@inject IMvcAppConfig AppConfig
 
 @{
     Layout = "_GovukTemplate";
-    ViewData["ServiceName"] = OrganisationAppConfig.AppName;
+    ViewData["ServiceName"] = AppConfig.BuildAppTitle("Access Your Homes England Account");
 }
 
 @section AdditionalMeta

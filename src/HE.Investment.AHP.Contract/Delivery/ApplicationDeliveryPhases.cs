@@ -1,3 +1,5 @@
+using HE.Investment.AHP.Contract.Application;
+
 namespace HE.Investment.AHP.Contract.Delivery;
 
-public record ApplicationDeliveryPhases(string ApplicationName, int UnusedHomeTypesCount, IList<DeliveryPhaseBasicDetails> DeliveryPhases, bool IsReadOnly);
+public record ApplicationDeliveryPhases(ApplicationDetails Application, int UnusedHomeTypesCount, IList<DeliveryPhaseBasicDetails> DeliveryPhases);

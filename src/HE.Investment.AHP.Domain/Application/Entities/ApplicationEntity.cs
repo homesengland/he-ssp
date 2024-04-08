@@ -1,10 +1,8 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Events;
-using HE.Investment.AHP.Contract.Application.Helpers;
 using HE.Investment.AHP.Contract.Site;
-using HE.Investment.AHP.Domain.Application.Repositories.Interfaces;
+using HE.Investment.AHP.Domain.Application.Factories;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
-using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
@@ -16,26 +14,34 @@ namespace HE.Investment.AHP.Domain.Application.Entities;
 
 public class ApplicationEntity : DomainEntity
 {
+    private readonly ModificationTracker _statusModificationTracker = new();
+
     private readonly ModificationTracker _modificationTracker = new();
+
+    private readonly ApplicationState _applicationState;
 
     public ApplicationEntity(
         SiteId siteId,
         AhpApplicationId id,
         ApplicationName name,
         ApplicationStatus status,
-        ApplicationReferenceNumber referenceNumber,
-        ApplicationTenure? tenure,
-        AuditEntry? lastModified,
-        ApplicationSections sections)
+        ApplicationTenure tenure,
+        IApplicationStateFactory applicationStateFactory,
+        ApplicationReferenceNumber? referenceNumber = null,
+        ApplicationSections? sections = null,
+        AuditEntry? lastModified = null,
+        AuditEntry? lastSubmitted = null)
     {
         SiteId = siteId;
         Id = id;
         Name = name;
         Status = status;
-        ReferenceNumber = referenceNumber;
+        ReferenceNumber = referenceNumber ?? new ApplicationReferenceNumber(null);
         Tenure = tenure;
         LastModified = lastModified;
-        Sections = sections;
+        LastSubmitted = lastSubmitted;
+        Sections = sections ?? new ApplicationSections(new List<ApplicationSection>());
+        _applicationState = applicationStateFactory.Create(status);
     }
 
     public SiteId SiteId { get; }
@@ -46,35 +52,35 @@ public class ApplicationEntity : DomainEntity
 
     public ApplicationStatus Status { get; private set; }
 
-    public WithdrawReason? WithdrawReason { get; private set; }
+    public IEnumerable<AhpApplicationOperation> AllowedOperations => _applicationState.AllowedOperations;
 
-    public HoldReason? HoldReason { get; private set; }
-
-    public RequestToEditReason? RequestToEditReason { get; private set; }
+    public string? ChangeStatusReason { get; private set; }
 
     public ApplicationReferenceNumber ReferenceNumber { get; }
 
-    public ApplicationTenure? Tenure { get; private set; }
+    public ApplicationTenure Tenure { get; private set; }
 
     public AuditEntry? LastModified { get; }
 
-    public ApplicationSections Sections { get; }
+    public AuditEntry? LastSubmitted { get; }
 
-    public RepresentationsAndWarranties RepresentationsAndWarranties { get; private set; }
+    public ApplicationSections Sections { get; }
 
     public bool IsModified => _modificationTracker.IsModified;
 
+    public bool IsStatusModified => _statusModificationTracker.IsModified;
+
     public bool IsNew => Id.IsNew;
 
-    public static ApplicationEntity New(SiteId siteId, ApplicationName name, ApplicationTenure tenure) => new(
+    public RepresentationsAndWarranties? RepresentationsAndWarranties { get; private set; }
+
+    public static ApplicationEntity New(SiteId siteId, ApplicationName name, ApplicationTenure tenure, IApplicationStateFactory applicationStateFactory) => new(
         siteId,
         AhpApplicationId.New(),
         name,
         ApplicationStatus.New,
-        new ApplicationReferenceNumber(null),
         tenure,
-        null,
-        new ApplicationSections(new List<ApplicationSection>()));
+        applicationStateFactory);
 
     public void SetId(AhpApplicationId newId)
     {
@@ -95,69 +101,40 @@ public class ApplicationEntity : DomainEntity
         }
     }
 
-    public async Task Submit(IChangeApplicationStatus applicationSubmit, OrganisationId organisationId, RepresentationsAndWarranties representationsAndWarranties, CancellationToken cancellationToken)
+    public void Submit(RepresentationsAndWarranties representationAndWarranties)
     {
         AreAllSectionsCompleted();
 
-        Status = _modificationTracker.Change(Status, ApplicationStatus.ApplicationSubmitted);
-        RepresentationsAndWarranties = _modificationTracker.Change(RepresentationsAndWarranties, representationsAndWarranties);
-
-        await applicationSubmit.ChangeApplicationStatus(this, organisationId, null, cancellationToken); // TODO: task AB#91399 this will be change to pass representationsAndWarranties when it will be added to crm
+        Status = _statusModificationTracker.Change(Status, _applicationState.Trigger(AhpApplicationOperation.Submit));
+        RepresentationsAndWarranties = representationAndWarranties;
     }
 
-    public async Task Hold(IChangeApplicationStatus applicationHold, HoldReason? newHoldReason, OrganisationId organisationId, CancellationToken cancellationToken)
+    public void Hold(HoldReason reason)
     {
-        Status = _modificationTracker.Change(Status, ApplicationStatus.OnHold);
-        HoldReason = _modificationTracker.Change(HoldReason, newHoldReason);
-
-        await applicationHold.ChangeApplicationStatus(this, organisationId, HoldReason?.Value, cancellationToken);
+        Status = _statusModificationTracker.Change(Status, _applicationState.Trigger(AhpApplicationOperation.PutOnHold));
+        ChangeStatusReason = reason.Value;
 
         Publish(new ApplicationHasBeenPutOnHoldEvent(Id));
     }
 
-    public async Task Reactivate(IChangeApplicationStatus applicationReactivate, ApplicationStatus newApplicationStatus, OrganisationId organisationId, CancellationToken cancellationToken)
+    public void Reactivate()
     {
-        Status = _modificationTracker.Change(Status, newApplicationStatus);
-
-        await applicationReactivate.ChangeApplicationStatus(this, organisationId, null, cancellationToken);
+        Status = _statusModificationTracker.Change(Status, _applicationState.Trigger(AhpApplicationOperation.Reactivate));
     }
 
-    public async Task RequestToEdit(IChangeApplicationStatus applicationRequestToEdit, RequestToEditReason? newRequestToEditReason, OrganisationId organisationId, CancellationToken cancellationToken)
+    public void RequestToEdit(RequestToEditReason reason)
     {
-        Status = _modificationTracker.Change(Status, ApplicationStatus.RequestedEditing);
-        RequestToEditReason = _modificationTracker.Change(RequestToEditReason, newRequestToEditReason);
-
-        await applicationRequestToEdit.ChangeApplicationStatus(this, organisationId, RequestToEditReason?.Value, cancellationToken);
+        Status = _statusModificationTracker.Change(Status, _applicationState.Trigger(AhpApplicationOperation.RequestToEdit));
+        ChangeStatusReason = reason.Value;
 
         Publish(new ApplicationHasBeenRequestedToEditEvent(Id));
     }
 
-    public async Task Withdraw(IChangeApplicationStatus applicationWithdraw, WithdrawReason? newWithdrawReason, OrganisationId organisationId, CancellationToken cancellationToken)
+    public void Withdraw(WithdrawReason reason)
     {
-        var statusesAfterSubmit = ApplicationStatusDivision.GetAllStatusesAllowedToChangeApplicationStatusToWithdrawn();
-        WithdrawReason = _modificationTracker.Change(WithdrawReason, newWithdrawReason);
-
-        if (Status == ApplicationStatus.Draft)
-        {
-            Status = _modificationTracker.Change(Status, ApplicationStatus.Deleted);
-            await applicationWithdraw.ChangeApplicationStatus(this, organisationId, WithdrawReason?.Value, cancellationToken);
-        }
-        else if (statusesAfterSubmit.Contains(Status))
-        {
-            Status = _modificationTracker.Change(Status, ApplicationStatus.Withdrawn);
-            await applicationWithdraw.ChangeApplicationStatus(this, organisationId, WithdrawReason?.Value, cancellationToken);
-        }
-        else
-        {
-            throw new DomainException("The application cannot be withdrawn", CommonErrorCodes.ApplicationCannotBeWithdrawn);
-        }
+        Status = _statusModificationTracker.Change(Status, _applicationState.Trigger(AhpApplicationOperation.Withdraw));
+        ChangeStatusReason = reason.Value;
 
         Publish(new ApplicationHasBeenWithdrawnEvent(Id));
-    }
-
-    public bool IsReadOnly()
-    {
-        var readonlyStatuses = ApplicationStatusDivision.GetAllStatusesForReadonlyMode();
-        return readonlyStatuses.Contains(Status);
     }
 }

@@ -6,6 +6,7 @@
 @using HE.Investments.Common.WWW.Components.RadioList
 @using HE.Investment.AHP.Contract.Delivery
 @using HE.Investment.AHP.WWW.Views.Delivery.Const
+@using HE.Investment.AHP.Contract.Application
 
 @model HE.Investment.AHP.WWW.Models.Delivery.DeliveryPhaseSummaryViewModel
 
@@ -24,7 +25,10 @@
         <vc:ahp-workflow-back-button current-page="@DeliveryPhaseWorkflowState.CheckAnswers"/>
     }
 
-    <partial name="_LockedApplicationInformation" model="@Model.IsApplicationLocked"/>
+    @if (Model.AllowedOperations.Contains(AhpApplicationOperation.RequestToEdit))
+    {
+        <partial name="_LockedApplicationInformation"/>
+    }
 
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 

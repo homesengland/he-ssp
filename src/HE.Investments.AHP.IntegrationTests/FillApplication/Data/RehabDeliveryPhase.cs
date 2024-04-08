@@ -1,6 +1,6 @@
 using System.Globalization;
 using HE.Investment.AHP.Contract.Delivery.Enums;
-using HE.Investment.AHP.Domain.Delivery.ValueObjects;
+using HE.Investments.Common.Contract;
 
 namespace HE.Investments.AHP.IntegrationTests.FillApplication.Data;
 
@@ -8,21 +8,27 @@ public class RehabDeliveryPhase : INestedItemData
 {
     public string Id { get; private set; }
 
-    public DeliveryPhaseName Name { get; private set; }
+    public string Name { get; private set; }
 
     public TypeOfHomes TypeOfHomes { get; private set; }
 
     public BuildActivityType BuildActivityType { get; private set; }
 
-    public AcquisitionMilestoneDetails AcquisitionMilestone { get; private set; }
+    public DateDetails AcquisitionMilestoneDate { get; private set; }
 
-    public StartOnSiteMilestoneDetails StartOnSiteMilestone { get; private set; }
+    public DateDetails AcquisitionMilestonePaymentDate { get; private set; }
 
-    public CompletionMilestoneDetails CompletionMilestone { get; private set; }
+    public DateDetails StartOnSiteMilestoneDate { get; private set; }
+
+    public DateDetails StartOnSiteMilestonePaymentDate { get; private set; }
+
+    public DateDetails CompletionMilestoneDate { get; private set; }
+
+    public DateDetails CompletionMilestonePaymentDate { get; private set; }
 
     public bool ReconfiguringExisting { get; private set; }
 
-    public IDictionary<string, int> DeliveryPhaseHomes { get; private set; }
+    public IList<HomeTypeDetails> DeliveryPhaseHomes { get; private set; }
 
     public void SetDeliveryPhaseId(string deliveryPhaseId)
     {
@@ -31,7 +37,7 @@ public class RehabDeliveryPhase : INestedItemData
 
     public RehabDeliveryPhase GenerateDeliveryPhase()
     {
-        Name = new DeliveryPhaseName($"IT-Rehab-WorksOnly-{DateTime.UtcNow.ToString(CultureInfo.InvariantCulture)}");
+        Name = $"IT-Rehab-WorksOnly-{DateTime.UtcNow.ToString(CultureInfo.InvariantCulture)}";
         return this;
     }
 
@@ -53,7 +59,7 @@ public class RehabDeliveryPhase : INestedItemData
         return this;
     }
 
-    public RehabDeliveryPhase GenerateHomes(IDictionary<string, int> deliveryPhaseHomes)
+    public RehabDeliveryPhase GenerateHomes(IList<HomeTypeDetails> deliveryPhaseHomes)
     {
         DeliveryPhaseHomes = deliveryPhaseHomes;
         return this;
@@ -61,25 +67,22 @@ public class RehabDeliveryPhase : INestedItemData
 
     public RehabDeliveryPhase GenerateAcquisitionMilestone()
     {
-        AcquisitionMilestone = new AcquisitionMilestoneDetails(
-            new AcquisitionDate("12", "12", "2021"),
-            new MilestonePaymentDate("13", "7", "2022"));
+        AcquisitionMilestoneDate = new DateDetails("12", "12", "2021");
+        AcquisitionMilestonePaymentDate = new DateDetails("13", "7", "2022");
         return this;
     }
 
     public RehabDeliveryPhase GenerateStartOnSiteMilestone()
     {
-        StartOnSiteMilestone = new StartOnSiteMilestoneDetails(
-            new StartOnSiteDate("7", "7", "2022"),
-            new MilestonePaymentDate("8", "8", "2022"));
+        StartOnSiteMilestoneDate = new DateDetails("7", "7", "2022");
+        StartOnSiteMilestonePaymentDate = new DateDetails("8", "8", "2022");
         return this;
     }
 
     public RehabDeliveryPhase GenerateCompletionMilestone()
     {
-        CompletionMilestone = new CompletionMilestoneDetails(
-            new CompletionDate("9", "9", "2023"),
-            new MilestonePaymentDate("10", "10", "2023"));
+        CompletionMilestoneDate = new DateDetails("9", "9", "2023");
+        CompletionMilestonePaymentDate = new DateDetails("10", "10", "2023");
         return this;
     }
 }

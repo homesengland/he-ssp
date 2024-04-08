@@ -1,4 +1,5 @@
 using HE.Investment.AHP.Contract.FinancialDetails.Queries;
+using HE.Investment.AHP.Domain.Application.Mappers;
 using HE.Investment.AHP.Domain.FinancialDetails.Entities;
 using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 using HE.Investments.Account.Shared;
@@ -25,7 +26,7 @@ public class GetFinancialDetailsQueryHandler : IRequestHandler<GetFinancialDetai
 
         var financialDetailsDto = new Contract.FinancialDetails.FinancialDetails
         {
-            ApplicationName = financialDetails.ApplicationBasicInfo.Name.Name,
+            Application = ApplicationBasicInfoMapper.Map(financialDetails.ApplicationBasicInfo),
             PurchasePrice = financialDetails.LandStatus.PurchasePrice?.Value ?? financialDetails.LandStatus.ExpectedPurchasePrice?.Value,
             IsSchemaOnPublicLand = financialDetails.LandValue.IsPublicLand,
             LandValue = financialDetails.LandValue.CurrentLandValue?.Value,
@@ -33,7 +34,6 @@ public class GetFinancialDetailsQueryHandler : IRequestHandler<GetFinancialDetai
             ExpectedOnCost = financialDetails.OtherApplicationCosts.ExpectedOnCosts?.Value,
             TotalExpectedCosts = financialDetails.ExpectedTotalCosts(),
             SectionStatus = financialDetails.SectionStatus,
-            IsReadOnly = financialDetails.IsReadOnly,
         };
 
         MapPublicGrants(financialDetailsDto, financialDetails.PublicGrants);

@@ -12,16 +12,12 @@ public class FinancialDetailsWorkflow : IStateRouting<FinancialDetailsWorkflowSt
 
     private readonly StateMachine<FinancialDetailsWorkflowState, Trigger> _machine;
 
-    private readonly bool _isReadOnly;
-
     public FinancialDetailsWorkflow(
         FinancialDetailsWorkflowState currentFinancialDetailsWorkflowState,
-        FinancialDetails model,
-        bool isReadOnly)
+        FinancialDetails model)
     {
         _model = model;
         _machine = new StateMachine<FinancialDetailsWorkflowState, Trigger>(currentFinancialDetailsWorkflowState);
-        _isReadOnly = isReadOnly;
         ConfigureTransitions();
     }
 
@@ -33,7 +29,7 @@ public class FinancialDetailsWorkflow : IStateRouting<FinancialDetailsWorkflowSt
 
     public FinancialDetailsWorkflowState CurrentState(FinancialDetailsWorkflowState targetState)
     {
-        if (_isReadOnly)
+        if (_model.Application.IsReadOnly)
         {
             return FinancialDetailsWorkflowState.CheckAnswers;
         }

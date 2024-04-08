@@ -3,7 +3,7 @@ using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Events;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Domain.Application.Entities;
-using HE.Investment.AHP.Domain.Application.Repositories.Interfaces;
+using HE.Investment.AHP.Domain.Application.Factories;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Data;
@@ -11,6 +11,7 @@ using HE.Investment.AHP.Domain.FinancialDetails.Mappers;
 using HE.Investment.AHP.Domain.Programme;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.ValueObjects;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.CRM.Mappers;
 using HE.Investments.Common.Domain;
@@ -35,11 +36,12 @@ public class ApplicationRepository : IApplicationRepository
         _programmeRepository = programmeRepository;
     }
 
-    public async Task<ApplicationEntity> GetById(AhpApplicationId id, UserAccount userAccount, CancellationToken cancellationToken)
+    public async Task<ApplicationEntity> GetById(AhpApplicationId id, UserAccount userAccount, CancellationToken cancellationToken, bool fetchPreviousStatus = false)
     {
         var application = await GetAhpApplicationDto(id, userAccount, CrmFields.ApplicationToRead.ToList(), cancellationToken);
 
-        return CreateEntity(application);
+        // TODO: fetch previous application status when implemented on CRM side and flag is set to true
+        return CreateEntity(application, userAccount, null);
     }
 
     public async Task<bool> IsNameExist(ApplicationName applicationName, OrganisationId organisationId, CancellationToken cancellationToken)
@@ -61,9 +63,10 @@ public class ApplicationRepository : IApplicationRepository
             application.Id,
             application.SiteId,
             application.Name,
-            application.Tenure?.Value ?? Tenure.Undefined,
+            application.Tenure.Value,
             application.Status,
-            await _programmeRepository.GetProgramme(id, cancellationToken));
+            await _programmeRepository.GetProgramme(id, cancellationToken),
+            new ApplicationStateFactory(userAccount));
     }
 
     public async Task<PaginationResult<ApplicationWithFundingDetails>> GetApplicationsWithFundingDetails(
@@ -91,6 +94,16 @@ public class ApplicationRepository : IApplicationRepository
 
     public async Task<ApplicationEntity> Save(ApplicationEntity application, OrganisationId organisationId, CancellationToken cancellationToken)
     {
+        if (application.IsStatusModified)
+        {
+            await _applicationCrmContext.ChangeApplicationStatus(
+                application.Id.Value,
+                organisationId.Value,
+                application.Status,
+                application.ChangeStatusReason,
+                cancellationToken);
+        }
+
         if (application is { IsModified: false, IsNew: false })
         {
             return application;
@@ -118,27 +131,12 @@ public class ApplicationRepository : IApplicationRepository
         return application;
     }
 
-    public async Task ChangeApplicationStatus(ApplicationEntity application, OrganisationId organisationId, string? changeReason, CancellationToken cancellationToken)
-    {
-        if (application is { IsModified: false })
-        {
-            return;
-        }
-
-        await _applicationCrmContext.ChangeApplicationStatus(
-            application.Id.Value,
-            organisationId.Value,
-            application.Status,
-            changeReason,
-            cancellationToken);
-    }
-
     public async Task DispatchEvents(DomainEntity domainEntity, CancellationToken cancellationToken)
     {
         await _eventDispatcher.Publish(domainEntity, cancellationToken);
     }
 
-    private static ApplicationEntity CreateEntity(AhpApplicationDto application)
+    private static ApplicationEntity CreateEntity(AhpApplicationDto application, UserAccount userAccount, ApplicationStatus? previousStatus)
     {
         var applicationStatus = AhpApplicationStatusMapper.MapToPortalStatus(application.applicationStatus);
 
@@ -147,12 +145,9 @@ public class ApplicationRepository : IApplicationRepository
             new AhpApplicationId(application.id),
             new ApplicationName(application.name ?? "Unknown"),
             applicationStatus,
+            ApplicationTenureMapper.ToDomain(application.tenure)!,
+            new ApplicationStateFactory(userAccount, previousStatus),
             new ApplicationReferenceNumber(application.referenceNumber),
-            ApplicationTenureMapper.ToDomain(application.tenure),
-            new AuditEntry(
-                application.lastExternalModificationBy?.firstName,
-                application.lastExternalModificationBy?.lastName,
-                application.lastExternalModificationOn),
             new ApplicationSections(
                 new List<ApplicationSection>
                 {
@@ -160,7 +155,12 @@ public class ApplicationRepository : IApplicationRepository
                     new(SectionType.HomeTypes, SectionStatusMapper.ToDomain(application.homeTypesSectionCompletionStatus, applicationStatus)),
                     new(SectionType.FinancialDetails, SectionStatusMapper.ToDomain(application.financialDetailsSectionCompletionStatus, applicationStatus)),
                     new(SectionType.DeliveryPhases, SectionStatusMapper.ToDomain(application.deliveryPhasesSectionCompletionStatus, applicationStatus)),
-                }));
+                }),
+            new AuditEntry(
+                application.lastExternalModificationBy?.firstName,
+                application.lastExternalModificationBy?.lastName,
+                application.lastExternalModificationOn),
+            application.dateSubmitted.IsProvided() ? new AuditEntry(application.lastExternalModificationBy?.firstName, application.lastExternalModificationBy?.lastName, application.dateSubmitted) : null); // TODO: AB#63432 Fetch submit user when added to CRM endpoint
     }
 
     private async Task<PaginationResult<ApplicationWithFundingDetails>> GetApplications(
@@ -199,7 +199,7 @@ public class ApplicationRepository : IApplicationRepository
             ahpApplicationDto.fundingRequested,
             otherApplicationCosts.ExpectedTotalCosts(),
             ahpApplicationDto.currentLandValue,
-            null); // TODO: task AB#91399 fetch value from crm
+            ahpApplicationDto.dateSubmitted.IsProvided() ? true : null); // TODO: task AB#91399 fetch value from crm
     }
 
     private async Task<AhpApplicationDto> GetAhpApplicationDto(AhpApplicationId id, UserAccount userAccount, IList<string> crmFields, CancellationToken cancellationToken)

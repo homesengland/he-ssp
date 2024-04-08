@@ -1,10 +1,12 @@
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.FinancialDetails.Entities;
 using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
+using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investment.AHP.Domain.Tests.Application.TestData;
 using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.Extensions;
 using HE.Investments.TestsUtils;
+using Microsoft.Crm.Sdk.Messages;
 
 namespace HE.Investment.AHP.Domain.Tests.FinancialDetails.TestObjectBuilders;
 
@@ -64,6 +66,16 @@ public class FinancialDetailsEntityBuilder
             _item,
             nameof(_item.PublicGrants),
             publicGrants);
+
+        return this;
+    }
+
+    public FinancialDetailsEntityBuilder WithSchemaFunding(int schemaFunding)
+    {
+        PrivatePropertySetter.SetPropertyWithNoSetter(
+            _item,
+            nameof(_item.SchemeFunding),
+            new SchemeFunding(schemaFunding, 5));
 
         return this;
     }

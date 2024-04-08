@@ -343,18 +343,23 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
             new("MMC", SummaryAnswerHelper.ToEnum(mmc.UsingModernMethodsOfConstruction), createAction(nameof(Controller.MmcUsing)), IsEditable: isEditable),
         };
 
-        if (mmc.UsingModernMethodsOfConstruction == SiteUsingModernMethodsOfConstruction.Yes)
-        {
-            summary.Add(new SectionSummaryItemModel(
+        summary.AddWhen(
+            new SectionSummaryItemModel(
                 "Barriers",
                 mmc.InformationBarriers.ToOneElementList(),
                 createAction(nameof(Controller.MmcInformation)),
-                IsEditable: isEditable));
-            summary.Add(new SectionSummaryItemModel(
+                IsEditable: isEditable),
+            mmc.UsingModernMethodsOfConstruction is SiteUsingModernMethodsOfConstruction.Yes or SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes);
+        summary.AddWhen(
+            new SectionSummaryItemModel(
                 "Impact on developments",
                 mmc.InformationImpact.ToOneElementList(),
                 createAction(nameof(Controller.MmcInformation)),
-                IsEditable: isEditable));
+                IsEditable: isEditable),
+            mmc.UsingModernMethodsOfConstruction is SiteUsingModernMethodsOfConstruction.Yes or SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes);
+
+        if (mmc.UsingModernMethodsOfConstruction == SiteUsingModernMethodsOfConstruction.Yes)
+        {
             summary.Add(new SectionSummaryItemModel(
                 "MMC categories",
                 mmc.ModernMethodsConstructionCategories?.Select(x => x.GetDescription()).ToList(),

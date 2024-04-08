@@ -5,7 +5,9 @@
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Panels
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Paragraphs
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Buttons
+@using HE.Investments.Loans.BusinessLogic.Config
 @model HE.Investments.Loans.Contract.Application.ValueObjects.SubmitLoanApplication
+@inject ILoanAppConfig LoanAppConfig
 
 <gds-div-grid-column-two-thirds>
     <gds-panel class="govuk-!-margin-top-5" title="Application complete" confirmation>
@@ -25,7 +27,7 @@
         <gds-p>We’ve sent you a confirmation email. You can log back in to your account to see the progress of your application at any time.</gds-p>
         <gds-h2 size="ControlSize.M">What happens next</gds-h2>
         <gds-p>We’ll contact you to discuss next steps and to ask for more information.</gds-p>
-        <gds-p>If a transaction manager has not contacted you within 10 working days, you can contact: 0300 1234 500 or <a href="mailto:fundingenquiries@homesengland.gov.uk">fundingenquiries@homesengland.gov.uk</a></gds-p>
+        <gds-p>If a transaction manager has not contacted you within 10 working days, you can contact: @LoanAppConfig.LoansEnquiriesTelephoneNumber or <a href="mailto:fundingenquiries@homesengland.gov.uk">@LoanAppConfig.FundingSupportEmail</a></gds-p>
         <gds-p><gds-link href="#">What did you think of this service?</gds-link> (takes 30 seconds)</gds-p>
     </div>
 

@@ -120,20 +120,15 @@ public class ModernMethodsConstructionSegmentEntity : IHomeTypeSegmentEntity
 
     public bool IsCompleted(HousingType housingType, Tenure tenure)
     {
-        return true;
-
-        // TODO crm missing - returning true not to block section completion
-        //// return ModernMethodsConstructionApplied != YesNoType.Undefined
-        ////       && BuildConditionalRouteCompletionPredicates().All();
+        return ModernMethodsConstructionApplied != YesNoType.Undefined
+              && BuildConditionalRouteCompletionPredicates().All(isCompleted => isCompleted());
     }
 
     public void HousingTypeChanged(HousingType sourceHousingType, HousingType targetHousingType)
     {
     }
 
-#pragma warning disable IDE0051, S1144
     private IEnumerable<Func<bool>> BuildConditionalRouteCompletionPredicates()
-#pragma warning restore IDE0051
     {
         if (ModernMethodsConstructionApplied is not YesNoType.No)
         {

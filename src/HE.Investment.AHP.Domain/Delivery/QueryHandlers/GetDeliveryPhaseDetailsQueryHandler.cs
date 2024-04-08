@@ -1,10 +1,10 @@
 using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.MilestonePayments;
 using HE.Investment.AHP.Contract.Delivery.Queries;
+using HE.Investment.AHP.Domain.Application.Mappers;
 using HE.Investment.AHP.Domain.Common.Mappers;
 using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.Repositories;
-using HE.Investment.AHP.Domain.Delivery.Tranches;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Extensions;
 using MediatR;
@@ -36,12 +36,10 @@ public class GetDeliveryPhaseDetailsQueryHandler : IRequestHandler<GetDeliveryPh
             cancellationToken);
 
         return new DeliveryPhaseDetails(
-            deliveryPhase.Application.Name.Name,
+            ApplicationBasicInfoMapper.Map(deliveryPhase.Application),
             deliveryPhase.Id.Value,
             deliveryPhase.Name.Value,
             deliveryPhase.Status,
-            deliveryPhase.IsReadOnly,
-            deliveryPhase.IsApplicationLocked,
             deliveryPhase.TypeOfHomes,
             deliveryPhase.BuildActivity.Type,
             deliveryPhase.BuildActivity.GetAvailableTypes(),

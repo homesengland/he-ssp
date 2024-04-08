@@ -2,7 +2,6 @@ extern alias Org;
 
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Domain.Application.Repositories;
-using HE.Investment.AHP.Domain.Application.Repositories.Interfaces;
 using HE.Investment.AHP.Domain.Data;
 using HE.Investment.AHP.Domain.Delivery.Crm;
 using HE.Investment.AHP.Domain.Delivery.Policies;
@@ -28,6 +27,7 @@ using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investments.Account.Shared.Config;
 using HE.Investments.Common;
 using HE.Investments.Common.CRM.Config;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Utils;
 using MediatR.Pipeline;
 using Microsoft.Extensions.DependencyInjection;
@@ -91,7 +91,6 @@ public static class DomainModule
     private static void AddApplication(IServiceCollection services)
     {
         services.AddScoped<IApplicationRepository, ApplicationRepository>();
-        services.AddScoped<IChangeApplicationStatus>(x => x.GetRequiredService<IApplicationRepository>());
     }
 
     private static void AddScheme(IServiceCollection services)
@@ -122,6 +121,6 @@ public static class DomainModule
     {
         services.AddScoped<IAhpProgrammeRepository, AhpProgrammeRepository>();
         services.AddScoped<IProgrammeCrmContext, ProgrammeCrmContext>();
-        services.AddSingleton<IProgrammeSettings, ProgrammeSettings>();
+        services.AddAppConfiguration<IProgrammeSettings, ProgrammeSettings>();
     }
 }

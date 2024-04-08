@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Models.Summary;
@@ -11,15 +12,13 @@ public class SchemeSummaryViewModel : IEditableViewModel
         string applicationName,
         IsSectionCompleted? isCompleted,
         SectionSummaryViewModel section,
-        bool isEditable,
-        bool isApplicationLocked)
+        IReadOnlyCollection<AhpApplicationOperation> allowedOperations)
     {
         ApplicationId = applicationId;
         ApplicationName = applicationName;
         IsCompleted = isCompleted;
         Section = section;
-        IsEditable = isEditable;
-        IsApplicationLocked = isApplicationLocked;
+        AllowedOperations = allowedOperations;
     }
 
     public string ApplicationId { get; }
@@ -30,9 +29,9 @@ public class SchemeSummaryViewModel : IEditableViewModel
 
     public SectionSummaryViewModel Section { get; }
 
-    public bool IsEditable { get; }
+    public IReadOnlyCollection<AhpApplicationOperation> AllowedOperations { get; }
+
+    public bool IsEditable => AllowedOperations.Contains(AhpApplicationOperation.Modification);
 
     public bool IsReadOnly => !IsEditable;
-
-    public bool IsApplicationLocked { get; }
 }

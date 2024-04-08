@@ -34,7 +34,7 @@
         @if (!Model.isReadOnly)
         {
             <div class="govuk-!-margin-bottom-9 govuk-!-font-size-19">
-                <gds-link href="@Url.Action("NewName", "Site", new { projectId, optional=OptionalParameter.AddSite })">
+                <gds-link href="@Url.Action("NewName", "Site", new { projectId, optional=OptionalParameter.AddSite })" data-testId="add-another-site">
                     Add another site
                 </gds-link>
             </div>

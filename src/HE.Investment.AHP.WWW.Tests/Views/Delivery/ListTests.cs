@@ -1,4 +1,5 @@
 using AngleSharp.Html.Dom;
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.WWW.Models.Delivery;
 
 using Microsoft.AspNetCore.Routing;
@@ -19,7 +20,7 @@ public class ListTests : AhpViewTestBase
         // given
         var model = new DeliveryListModel(ApplicationName)
         {
-            IsEditable = true,
+            AllowedOperations = new[] { AhpApplicationOperation.Modification },
             UnusedHomeTypesCount = 0,
             DeliveryPhases = new[]
             {
@@ -44,7 +45,7 @@ public class ListTests : AhpViewTestBase
         // given
         var model = new DeliveryListModel(ApplicationName)
         {
-            IsEditable = true,
+            AllowedOperations = new[] { AhpApplicationOperation.Modification },
             UnusedHomeTypesCount = -1,
             DeliveryPhases = new[]
             {
@@ -69,7 +70,7 @@ public class ListTests : AhpViewTestBase
         // given
         var model = new DeliveryListModel(ApplicationName)
         {
-            IsEditable = true,
+            AllowedOperations = new[] { AhpApplicationOperation.Modification },
             UnusedHomeTypesCount = 2,
             DeliveryPhases = new List<DeliveryPhaseItemModel>(),
         };
@@ -90,7 +91,7 @@ public class ListTests : AhpViewTestBase
         // given
         var model = new DeliveryListModel(ApplicationName)
         {
-            IsEditable = true,
+            AllowedOperations = new[] { AhpApplicationOperation.Modification },
             UnusedHomeTypesCount = 1,
             DeliveryPhases = new[]
             {

@@ -1,12 +1,13 @@
 using System.Globalization;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
 
 namespace HE.Investment.AHP.Domain.Scheme.ValueObjects;
 
-public class SchemeFunding : ValueObject
+public class SchemeFunding : ValueObject, IQuestion
 {
     public SchemeFunding(string? requiredFunding, string? housesToDeliver)
     {
@@ -22,10 +23,16 @@ public class SchemeFunding : ValueObject
 
     public int? HousesToDeliver { get; private set; }
 
+    public static SchemeFunding Empty() => new((int?)null, null);
+
     public void CheckIsComplete()
     {
         Build(RequiredFunding.ToString(), HousesToDeliver.ToString()).CheckErrors();
     }
+
+    public bool IsAnswered() => RequiredFunding.IsProvided() && HousesToDeliver.IsProvided();
+
+    public bool IsNotAnswered() => !IsAnswered();
 
     protected override IEnumerable<object?> GetAtomicValues()
     {

@@ -11,6 +11,7 @@ using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.IntegrationTestsFramework.Assertions;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
+using Xunit.Abstractions;
 using Xunit.Extensions.Ordering;
 
 namespace HE.Investments.AHP.IntegrationTests.FillApplication;
@@ -19,8 +20,8 @@ namespace HE.Investments.AHP.IntegrationTests.FillApplication;
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
 public class Order02CompleteSchemeInformation : AhpIntegrationTest
 {
-    public Order02CompleteSchemeInformation(IntegrationTestFixture<Program> fixture)
-        : base(fixture)
+    public Order02CompleteSchemeInformation(IntegrationTestFixture<Program> fixture, ITestOutputHelper output)
+        : base(fixture, output)
     {
         var schemaInformationData = GetSharedDataOrNull<SchemeInformationData>(nameof(SchemeInformationData));
         if (schemaInformationData is null)

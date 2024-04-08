@@ -11,7 +11,6 @@ public class FinancialDetailsFormHeader : ViewComponent
     public IViewComponentResult Invoke(
         FinancialDetailsWorkflowState currentPage,
         string applicationId,
-        string? homeTypeId = null,
         string? title = null,
         string? caption = null,
         string? customBackLinkUrl = null,

@@ -14,14 +14,6 @@ public static class ProjectValidationFieldNames
 
     public const string ProjectName = "ProjectName";
 
-    public const string StartDay = "EstimatedStartDay";
-
-    public const string StartMonth = "EstimatedStartMonth";
-
-    public const string StartYear = "EstimatedStartYear";
-
-    public const string StartDate = "HasEstimatedStartDate";
-
     public static class GrantFunding
     {
         public const string ProviderName = "GrantFundingProviderName";

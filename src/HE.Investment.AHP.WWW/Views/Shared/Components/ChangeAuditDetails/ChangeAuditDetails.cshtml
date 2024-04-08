@@ -1,0 +1,11 @@
+@using HE.Investments.Common.WWW.Helpers
+@using HE.Investments.Common.Extensions
+@model (HE.Investment.AHP.WWW.Views.Shared.Components.ChangeAuditDetails.ChangeAuditType ChangeAuditType, HE.Investments.Common.Contract.ModificationDetails ModificationDetails)
+
+@{ /* ReSharper disable ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract */ }
+@if (Model.ModificationDetails != null)
+{
+    <gds-p>
+        @Model.ChangeAuditType.GetDescription() on @DateHelper.DisplayAsUkFormatDateTime(Model.ModificationDetails.ChangedOn) @(!string.IsNullOrWhiteSpace(Model.ModificationDetails.ChangedBy) ? $"by {Model.ModificationDetails.ChangedBy}" : string.Empty)
+    </gds-p>
+}

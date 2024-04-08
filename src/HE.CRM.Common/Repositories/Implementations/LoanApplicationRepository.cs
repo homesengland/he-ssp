@@ -32,6 +32,17 @@ namespace HE.CRM.Common.Repositories.Implementations
         public List<invln_Loanapplication> GetLoanApplicationsForGivenAccountAndContact(Guid accountId, string externalContactId, string loanApplicationId = null, string fieldsToRetrieve = null)
         {
             logger.Trace($"GetLoanApplicationsForGivenAccountAndContact");
+            if (externalContactId == null && loanApplicationId == null)
+            {
+                using (DataverseContext ctx = new DataverseContext(service))
+                {
+                    return (from la in ctx.invln_LoanapplicationSet
+                            where la.invln_Account.Id == accountId &&
+                            la.StatusCode.Value != (int)invln_Loanapplication_StatusCode.Inactive
+                            select la).ToList();
+                }
+            }
+
             if (loanApplicationId == null)
             {
                 using (DataverseContext ctx = new DataverseContext(service))
@@ -41,7 +52,6 @@ namespace HE.CRM.Common.Repositories.Implementations
                             where la.invln_Account.Id == accountId && cnt.invln_externalid == externalContactId &&
                             la.StatusCode.Value != (int)invln_Loanapplication_StatusCode.Inactive
                             select la).ToList();
-
                 }
             }
             else
@@ -78,7 +88,8 @@ namespace HE.CRM.Common.Repositories.Implementations
             using (var ctx = new OrganizationServiceContext(service))
             {
                 return ctx.CreateQuery<invln_Loanapplication>()
-                    .Where(x => x.invln_Account.Id == accountId && x.StatusCode.Value != (int)invln_Loanapplication_StatusCode.Inactive && x.StateCode.Value != (int)invln_LoanapplicationState.Inactive).ToList();
+                    .Where(x => x.invln_Account.Id == accountId &&
+                    x.StatusCode.Value != (int)invln_Loanapplication_StatusCode.Inactive && x.StateCode.Value != (int)invln_LoanapplicationState.Inactive).ToList();
             }
         }
 
@@ -91,7 +102,7 @@ namespace HE.CRM.Common.Repositories.Implementations
             }
         }
 
-        #endregion
+        #endregion Constructors
 
         #region Interface Implementation
 
@@ -131,6 +142,6 @@ namespace HE.CRM.Common.Repositories.Implementations
             }
         }
 
-        #endregion
+        #endregion Interface Implementation
     }
 }

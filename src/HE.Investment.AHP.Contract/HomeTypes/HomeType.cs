@@ -3,4 +3,4 @@ using HE.Investment.AHP.Contract.HomeTypes.Enums;
 
 namespace HE.Investment.AHP.Contract.HomeTypes;
 
-public record HomeType(HomeTypeId HomeTypeId, string HomeTypeName, HousingType HousingType, Tenure Tenure, HomeTypeConditionals Conditionals, bool IsReadOnly);
+public record HomeType(ApplicationDetails Application, HomeTypeId HomeTypeId, string HomeTypeName, HousingType HousingType, HomeTypeConditionals Conditionals);
