@@ -55,7 +55,7 @@ public class SiteData
 
     public string NumberOfGreenLights => "5";
 
-    public SiteLandAcquisitionStatus LandAcquisitionStatus => SiteLandAcquisitionStatus.FullOwnership;
+    public SiteLandAcquisitionStatus LandAcquisitionStatus => SiteLandAcquisitionStatus.ConditionalAcquisition;
 
     public SiteTenderingStatus TenderingStatus => SiteTenderingStatus.ConditionalWorksContract;
 

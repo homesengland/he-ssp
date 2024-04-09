@@ -49,14 +49,12 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
     [WorkflowState(FinancialDetailsWorkflowState.LandStatus)]
     public async Task<IActionResult> LandStatus(Guid applicationId)
     {
-        var siteLandStatus = false;
-
         var financialDetails = await _mediator.Send(new GetFinancialDetailsQuery(AhpApplicationId.From(applicationId)));
         return View(new FinancialDetailsLandStatusModel(
             applicationId,
             financialDetails.Application.Name,
             CurrencyHelper.InputPoundsPences(financialDetails.PurchasePrice),
-            financialDetails.IsPurchasePriceFinal ?? siteLandStatus));
+            financialDetails.IsFullUnconditionalOption));
     }
 
     [HttpPost("land-status")]
@@ -64,7 +62,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
     public async Task<IActionResult> LandStatus(Guid applicationId, FinancialDetailsLandStatusModel model, CancellationToken cancellationToken)
     {
         return await ProvideFinancialDetails(
-            new ProvideLandStatusCommand(AhpApplicationId.From(applicationId), model.PurchasePrice, model.IsFinal),
+            new ProvideLandStatusCommand(AhpApplicationId.From(applicationId), model.PurchasePrice, model.IsFullUnconditionalOption),
             model,
             cancellationToken);
     }

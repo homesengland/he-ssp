@@ -15,10 +15,11 @@ public class FinancialDetailsEntity : IQuestion
 {
     private readonly ModificationTracker _modificationTracker = new();
 
-    public FinancialDetailsEntity(ApplicationBasicInfo applicationBasicInfo)
+    public FinancialDetailsEntity(ApplicationBasicInfo applicationBasicInfo, SiteBasicInfo siteBasicInfo)
     {
         SectionStatus = SectionStatus.NotStarted;
         ApplicationBasicInfo = applicationBasicInfo;
+        SiteBasicInfo = siteBasicInfo;
         LandStatus = new LandStatus();
         LandValue = new LandValue();
         OtherApplicationCosts = new OtherApplicationCosts();
@@ -29,6 +30,7 @@ public class FinancialDetailsEntity : IQuestion
 
     public FinancialDetailsEntity(
         ApplicationBasicInfo applicationBasicInfo,
+        SiteBasicInfo siteBasicInfo,
         SchemeFunding schemeFunding,
         LandStatus landStatus,
         LandValue landValue,
@@ -38,6 +40,7 @@ public class FinancialDetailsEntity : IQuestion
         SectionStatus sectionStatus)
     {
         ApplicationBasicInfo = applicationBasicInfo;
+        SiteBasicInfo = siteBasicInfo;
         SchemeFunding = schemeFunding;
         LandStatus = landStatus;
         LandValue = landValue;
@@ -48,6 +51,8 @@ public class FinancialDetailsEntity : IQuestion
     }
 
     public ApplicationBasicInfo ApplicationBasicInfo { get; }
+
+    public SiteBasicInfo SiteBasicInfo { get; }
 
     public SchemeFunding SchemeFunding { get; }
 
@@ -67,6 +72,13 @@ public class FinancialDetailsEntity : IQuestion
 
     public void ProvideLandStatus(LandStatus landStatus)
     {
+        if (SiteBasicInfo.LandAcquisitionStatus.IsFullUnconditionalOption && landStatus.ExpectedPurchasePrice.IsProvided())
+        {
+            OperationResult.New()
+                .AddValidationError(nameof(LandStatus), "Expected purchase price cannot be provided for unconditional land status")
+                .CheckErrors();
+        }
+
         LandStatus = _modificationTracker.Change(LandStatus, landStatus, MarkAsNotCompleted);
     }
 
@@ -117,7 +129,8 @@ public class FinancialDetailsEntity : IQuestion
         {
             OperationResult
                 .New()
-                .AddValidationError(nameof(IsSectionCompleted), ValidationErrorMessage.SectionIsNotCompleted).CheckErrors();
+                .AddValidationError(nameof(IsSectionCompleted), ValidationErrorMessage.SectionIsNotCompleted)
+                .CheckErrors();
         }
 
         if (ExpectedTotalCosts() != ExpectedTotalContributions())

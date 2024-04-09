@@ -7,7 +7,7 @@ public class FinancialDetailsLandValueModel : FinancialDetailsBaseModel
     {
     }
 
-    public FinancialDetailsLandValueModel(Guid applicationId, string applicationName, string? landValue, YesNoType isOnPublicLand)
+    public FinancialDetailsLandValueModel(Guid applicationId, string applicationName, string? landValue, bool? isOnPublicLand)
         : base(applicationId, applicationName)
     {
         LandValue = landValue;
@@ -16,5 +16,5 @@ public class FinancialDetailsLandValueModel : FinancialDetailsBaseModel
 
     public string? LandValue { get; set; }
 
-    public YesNoType IsOnPublicLand { get; set; }
+    public bool? IsOnPublicLand { get; set; }
 }

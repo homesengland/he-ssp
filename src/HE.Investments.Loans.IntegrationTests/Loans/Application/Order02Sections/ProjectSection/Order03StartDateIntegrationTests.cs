@@ -43,9 +43,10 @@ public class Order03StartDateIntegrationTests : IntegrationTest
         // when
         startDatePage = await TestClient.SubmitButton(
             continueButton,
-            new Dictionary<string, string> {
+            new Dictionary<string, string>
+            {
                 { "HasEstimatedStartDate", CommonResponse.Yes },
-                { $"{nameof(ProjectViewModel.StartDate)}.Day", string.Empty},
+                { $"{nameof(ProjectViewModel.StartDate)}.Day", string.Empty },
                 { $"{nameof(ProjectViewModel.StartDate)}.Month", string.Empty },
                 { $"{nameof(ProjectViewModel.StartDate)}.Year", string.Empty },
             });
@@ -69,7 +70,8 @@ public class Order03StartDateIntegrationTests : IntegrationTest
 
         // when
         startDate = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> {
+            continueButton, new Dictionary<string, string>
+            {
                 { "HasEstimatedStartDate", CommonResponse.Yes },
                 { $"{nameof(ProjectViewModel.StartDate)}.Day", "32" },
                 { $"{nameof(ProjectViewModel.StartDate)}.Month", "1" },
@@ -95,7 +97,8 @@ public class Order03StartDateIntegrationTests : IntegrationTest
 
         // when
         startDate = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> {
+            continueButton, new Dictionary<string, string>
+            {
                 { "HasEstimatedStartDate", CommonResponse.Yes },
                 { $"{nameof(ProjectViewModel.StartDate)}.Day", day },
                 { $"{nameof(ProjectViewModel.StartDate)}.Month", month },

@@ -14,7 +14,7 @@ public class AhpApplicationCrmContext
 
     public AhpApplicationCrmContext(ICrmService service, IUserContext userContext)
     {
-        _service = service;;
+        _service = service;
         _userContext = userContext;
     }
 
