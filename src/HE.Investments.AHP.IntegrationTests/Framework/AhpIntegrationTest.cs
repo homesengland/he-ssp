@@ -3,7 +3,9 @@ using HE.Investment.AHP.WWW;
 using HE.Investments.AHP.IntegrationTests.Crm;
 using HE.Investments.AHP.IntegrationTests.FillApplication.Data;
 using HE.Investments.AHP.IntegrationTests.FillSite.Data;
+using HE.Investments.Common.Contract;
 using HE.Investments.IntegrationTestsFramework;
+using HE.Investments.IntegrationTestsFramework.Auth;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -26,6 +28,7 @@ public class AhpIntegrationTest : IntegrationTestBase<Program>, IAsyncLifetime
         fixture.MockUserAccount();
         _output = output;
         _fixture = fixture;
+        LoginData = fixture.LoginData;
     }
 
     public ApplicationData ApplicationData { get; private set; }
@@ -36,6 +39,8 @@ public class AhpIntegrationTest : IntegrationTestBase<Program>, IAsyncLifetime
 
     protected AhpApplicationCrmContext AhpApplicationCrmContext => _fixture.AhpApplicationCrmContext;
 
+    private ILoginData LoginData { get; }
+
     public Task InitializeAsync()
     {
         return Task.CompletedTask;
@@ -45,6 +50,11 @@ public class AhpIntegrationTest : IntegrationTestBase<Program>, IAsyncLifetime
     {
         _output.WriteLine($"Elapsed time: {Stopwatch.Elapsed.TotalSeconds} sec");
         return Task.CompletedTask;
+    }
+
+    public async Task ChangeApplicationStatus(string applicationId, ApplicationStatus applicationStatus)
+    {
+        await AhpApplicationCrmContext.ChangeApplicationStatus(applicationId, applicationStatus, LoginData);
     }
 
     private void SetApplicationData()
