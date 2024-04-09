@@ -34,14 +34,12 @@ public class CompletedTests : AhpViewTestBase
         document
             .HasPanel(ApplicationPageTitles.Completed, "Your reference number", "testNumber", true)
             .HasHeader2("Application submitted")
-            .HasTableRowsHeaders(new()
-            {
-                "Site name",
-                "Scheme name and tenure",
-                "Number of homes",
-                "Funding requested",
-                "Scheme cost",
-            })
+
+            .HasSummaryItem("Site name", "SiteName")
+            .HasSummaryItem("Scheme name and tenure", "testName: testTenure")
+            .HasSummaryItem("Number of homes", "15")
+            .HasSummaryItem("Funding requested", "250")
+            .HasSummaryItem("Scheme cost", "500000")
             .HasParagraph("We have sent you a confirmation email. You can log back in to your account to see the progress of your application at any time.")
             .HasParagraph("We will contact you either to confirm your registration, or to ask for more information.")
             .HasParagraph("If you have not been contacted within 10 working days, you should contact [INSERT CONTACT DETAILS]");

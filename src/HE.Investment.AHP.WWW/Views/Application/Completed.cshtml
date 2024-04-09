@@ -6,11 +6,11 @@
     ViewData["Title"] = "Application submitted";
 }
 
-<div class="govuk-grid-column-full">
+<div class="govuk-grid-column-two-thirds">
 <he-panel class="govuk-!-margin-top-5 govuk-!-margin-bottom-8" title="@ApplicationPageTitles.Completed" sub-title="Your reference number" reference="@Model.ReferenceNumber" confirmation/>
 
     <h2 class="govuk-heading-l">@ApplicationPageTitles.CompletedSecondTitle</h2>
-    <vc:application-submit-table model="@Model"/>
+    <vc:application-completed-summary model="@Model"/>
 
     <h3 class="govuk-heading-l">What happens next</h3>
 
