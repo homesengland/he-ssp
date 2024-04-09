@@ -9,7 +9,7 @@ public class ExpectedOnCosts : PoundsValueObject
 {
     public static readonly UiFields Fields = new(
         FinancialDetailsValidationFieldNames.ExpectedOnCosts,
-        "The expected on works costs",
+        "expected on works costs",
         FinancialDetailsValidationErrors.InvalidExpectedOnCosts);
 
     public ExpectedOnCosts(decimal landValue)

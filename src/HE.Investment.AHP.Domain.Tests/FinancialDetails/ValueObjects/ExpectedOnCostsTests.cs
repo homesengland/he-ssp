@@ -31,7 +31,7 @@ public class ExpectedOnCostsTests
         action.Should()
             .ThrowExactly<DomainValidationException>()
             .Which.OperationResult.Errors.Should()
-            .ContainSingle(x => x.ErrorMessage == FinancialDetailsValidationErrors.InvalidExpectedOnCosts);
+            .ContainSingle(x => x.ErrorMessage == "The expected on works costs must be a whole number between 0 and 999999999");
     }
 
     [Fact]

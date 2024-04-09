@@ -1,23 +1,22 @@
 using HE.Investment.AHP.Contract.FinancialDetails.Constants;
 using HE.Investment.AHP.Domain.FinancialDetails.Constants;
+using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Domain.ValueObjects;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 
-public class CurrentLandValue : PoundsPenceValueObject
+public class CurrentLandValue : PoundsValueObject
 {
-    public static readonly UiFields Fields = new(FinancialDetailsValidationFieldNames.LandValue, "Current Land Value");
+    public static readonly UiFields Fields = new(FinancialDetailsValidationFieldNames.LandValue, "current value of the land");
 
     public CurrentLandValue(decimal landValue)
-        : base(landValue)
+        : base(landValue, Fields)
     {
     }
 
     public CurrentLandValue(string landValue)
-        : base(landValue, FinancialDetailsValidationErrors.InvalidLandValue, 999999999, "The current land value must be 999,999,999 or fewer")
+        : base(landValue, Fields)
     {
     }
-
-    public override UiFields UiFields => Fields;
 }

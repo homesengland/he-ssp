@@ -13,7 +13,7 @@ public abstract class PoundsValueObject : ValueObject
     protected PoundsValueObject(decimal value, UiFields uiFields)
     {
         UiFields = uiFields;
-        Value = WholeNumberValidator.Validate(value, UiFields.FieldName, DisplayName, ValidationErrorMessage.WholePoundInput(DisplayName));
+        Value = WholeNumberRangeValidator.Validate(value, UiFields.FieldName, DisplayName);
     }
 
     protected PoundsValueObject(string value, UiFields uiFields)
@@ -33,11 +33,10 @@ public abstract class PoundsValueObject : ValueObject
                 .CheckErrors();
         }
 
-        Value = WholeNumberValidator.Validate(
+        Value = WholeNumberRangeValidator.Validate(
             parsedValue,
             UiFields.FieldName,
-            DisplayName,
-            UiFields.InvalidValueValidationMessage ?? ValidationErrorMessage.WholePoundInput(DisplayName));
+            DisplayName);
     }
 
     public UiFields UiFields { get; }
