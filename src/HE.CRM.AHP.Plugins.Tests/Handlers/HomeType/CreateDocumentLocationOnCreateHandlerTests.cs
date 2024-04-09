@@ -49,9 +49,20 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.HomeType
 
             fakedContext.Initialize(new List<Entity>()
             {
-                new invln_HomeType() { Id = homeTypeId},
-                new SharePointDocumentLocation() { Id = parentApplicationId, RegardingObjectId = applicationId.ToEntityReference<invln_HomeType>()},
-                new SharePointDocumentLocation() { Id = homeTypeLocationId , ParentSiteOrLocation = parentApplicationId.ToEntityReference<SharePointDocumentLocation>()}
+                new invln_HomeType()
+                {
+                    Id = homeTypeId
+                },
+                new SharePointDocumentLocation()
+                {
+                    Id = parentApplicationId,
+                    RegardingObjectId = applicationId.ToEntityReference<invln_HomeType>()
+                },
+                new SharePointDocumentLocation()
+                {
+                    Id = homeTypeLocationId ,
+                    ParentSiteOrLocation = parentApplicationId.ToEntityReference<SharePointDocumentLocation>()
+                }
             });
 
             Target = new invln_HomeType

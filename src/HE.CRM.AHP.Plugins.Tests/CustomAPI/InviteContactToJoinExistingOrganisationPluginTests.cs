@@ -37,16 +37,41 @@ namespace HE.CRM.AHP.Plugins.Tests.CustomApi
 
             fakedContext.Initialize(new List<Entity>()
             {
-                { new Contact() { Id = invitedContactId, OwnerId = systemUserId.ToEntityReference<SystemUser>(), FirstName = "Zdzisław", LastName = "Botak", EMailAddress1 = "bonie@OoO.pl" } },
-                { new Contact() { Id = inviterContactId, FirstName = "Bogdan", LastName = "Bonie"} },
-                { new Account() { Id = organizationId, Name = "ABW"} },
-                { new invln_notificationsetting { Id = Guid.NewGuid(), invln_subject = "subject", invln_templateid = "tempalte id", invln_templatetypename = "COMMON_INVITE_CONTACT_TO_JOIN_ORGANIZATION" } }
+                new Contact()
+                {
+                    Id = invitedContactId,
+                    OwnerId = systemUserId.ToEntityReference<SystemUser>(),
+                    FirstName = "Zdzisław",
+                    LastName = "Botak",
+                    EMailAddress1 = "bonie@OoO.pl"
+                },
+                new Contact()
+                {
+                    Id = inviterContactId,
+                    FirstName = "Bogdan"
+                    , LastName = "Bonie"
+                },
+                new Account()
+                {
+                    Id = organizationId,
+                    Name = "ABW"
+                },
+                new invln_notificationsetting
+                {
+                    Id = Guid.NewGuid(),
+                    invln_subject = "subject",
+                    invln_templateid = "tempalte id",
+                    invln_templatetypename = "COMMON_INVITE_CONTACT_TO_JOIN_ORGANIZATION"
+                }
             });
             pluginContext.InputParameters = new ParameterCollection
             {
-                { invln_invitecontacttojoinexistingorganisationRequest.Fields.invln_invitedcontactid, invitedContactId.ToString()},
-                { invln_invitecontacttojoinexistingorganisationRequest.Fields.invln_organisationid, organizationId.ToString()},
-                { invln_invitecontacttojoinexistingorganisationRequest.Fields.invln_invitercontactid, inviterContactId.ToString()}
+                { invln_invitecontacttojoinexistingorganisationRequest.Fields.invln_invitedcontactid,
+                                                                        invitedContactId.ToString()},
+                { invln_invitecontacttojoinexistingorganisationRequest.Fields.invln_organisationid,
+                                                                        organizationId.ToString()},
+                { invln_invitecontacttojoinexistingorganisationRequest.Fields.invln_invitercontactid,
+                                                                        inviterContactId.ToString()}
             };
             try
             {

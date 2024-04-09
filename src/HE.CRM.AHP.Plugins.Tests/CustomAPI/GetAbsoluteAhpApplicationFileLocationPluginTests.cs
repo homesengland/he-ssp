@@ -39,14 +39,30 @@ namespace HE.CRM.AHP.Plugins.Tests.CustomApi
 
             fakedContext.Initialize(new List<Entity>()
             {
-                { application },
-                { new SharePointDocumentLocation() { Id = siteLocationId, RegardingObjectId = application.Id.ToEntityReference<invln_scheme>(), RelativeUrl = "bla3", ParentSiteOrLocation = parentLocataionId.ToEntityReference<SharePointDocumentLocation>() } },
-                { new SharePointDocumentLocation() { Id = parentLocataionId, RelativeUrl = "bla2", ParentSiteOrLocation = mainLocationId.ToEntityReference<SharePointSite>() } },
-                { new SharePointSite() { Id = mainLocationId, AbsoluteURL = "/bla1" } },
+                application,
+                new SharePointDocumentLocation()
+                {
+                    Id = siteLocationId,
+                    RegardingObjectId = application.Id.ToEntityReference<invln_scheme>(),
+                    RelativeUrl = "bla3",
+                    ParentSiteOrLocation = parentLocataionId.ToEntityReference<SharePointDocumentLocation>()
+                },
+                new SharePointDocumentLocation()
+                {
+                    Id = parentLocataionId,
+                    RelativeUrl = "bla2",
+                    ParentSiteOrLocation = mainLocationId.ToEntityReference<SharePointSite>()
+                },
+                new SharePointSite()
+                {
+                    Id = mainLocationId,
+                    AbsoluteURL = "/bla1"
+                },
             });
             pluginContext.InputParameters = new ParameterCollection
                 {
-                    {invln_getabsoluteahpapplicationfilelocationRequest.Fields.invln_applicationid, application.Id.ToString() }
+                    {invln_getabsoluteahpapplicationfilelocationRequest.Fields.invln_applicationid,
+                                                                                application.Id.ToString() }
                 };
 
             fakedContext.ExecutePluginWithConfigurations<GetAbsoluteAhpApplicationFileLocationPlugin>(pluginContext, "", "");
@@ -68,10 +84,20 @@ namespace HE.CRM.AHP.Plugins.Tests.CustomApi
 
             fakedContext.Initialize(new List<Entity>()
             {
-                { application },
-                { new SharePointDocumentLocation() { Id = siteLocationId, RegardingObjectId = application.Id.ToEntityReference<invln_scheme>(), RelativeUrl = "bla3", ParentSiteOrLocation = parentLocataionId.ToEntityReference<SharePointDocumentLocation>() } },
-                { new SharePointDocumentLocation() { Id = parentLocataionId, RelativeUrl = "bla2",  } },
-                { new SharePointSite() { Id = mainLocationId, AbsoluteURL = "/bla1" } },
+                application,
+                new SharePointDocumentLocation()
+                {
+                    Id = siteLocationId,
+                    RegardingObjectId = application.Id.ToEntityReference<invln_scheme>(),
+                    RelativeUrl = "bla3", ParentSiteOrLocation = parentLocataionId.ToEntityReference<SharePointDocumentLocation>()
+                },
+                new SharePointDocumentLocation()
+                {
+                    Id = parentLocataionId,
+                    RelativeUrl = "bla2",
+                },
+                new SharePointSite() { Id = mainLocationId, AbsoluteURL = "/bla1"
+                },
             });
             pluginContext.InputParameters = new ParameterCollection
                 {

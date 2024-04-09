@@ -35,10 +35,26 @@ namespace HE.CRM.AHP.Plugins.Tests.CustomApi
 
             fakedContext.Initialize(new List<Entity>()
             {
-                { new invln_HomeType() { Id = homeTypeId, invln_application = appId.ToEntityReference<invln_HomeType>() } },
-                { new invln_scheme() { Id = appId, invln_organisationid = organizationId.ToEntityReference<Account>(), invln_contactid =  userId.ToEntityReference<Contact>()} },
-                { new Account() { Id = organizationId} },
-                { new Contact() { Id = userId, invln_externalid = userId.ToString()} }
+                new invln_HomeType()
+                {
+                    Id = homeTypeId,
+                    invln_application = appId.ToEntityReference<invln_HomeType>()
+                },
+                new invln_scheme()
+                {
+                    Id = appId,
+                    invln_organisationid = organizationId.ToEntityReference <Account>(),
+                    invln_contactid = userId.ToEntityReference <Contact>()
+                },
+                new Account()
+                {
+                    Id = organizationId
+                },
+                new Contact()
+                {
+                    Id = userId,
+                    invln_externalid = userId.ToString()
+                }
             });
 
             pluginContext.InputParameters = new ParameterCollection

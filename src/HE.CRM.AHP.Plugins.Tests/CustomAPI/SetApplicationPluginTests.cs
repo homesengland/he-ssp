@@ -61,9 +61,15 @@ namespace HE.CRM.AHP.Plugins.Tests.CustomApi
 
             fakedContext.Initialize(new List<Entity>()
             {
-                { new invln_scheme() { Id = applicationId, } },
-                { new Account() { Id = organizationId } },
-                { contact },
+                new invln_scheme()
+                {
+                    Id = applicationId,
+                },
+                new Account()
+                {
+                    Id = organizationId
+                },
+                contact
             });
 
             var metadata = fakedContext.GetEntityMetadataByName("contact");

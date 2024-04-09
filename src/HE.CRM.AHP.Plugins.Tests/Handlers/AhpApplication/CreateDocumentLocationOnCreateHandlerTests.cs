@@ -44,8 +44,15 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpApplication
 
             fakedContext.Initialize(new List<Entity>()
             {
-                new SharePointDocumentLocation() { Id = Guid.NewGuid(), Name = "AHP Application Documents"},
-                new invln_scheme() { Id = invln_schemeId}
+                new SharePointDocumentLocation()
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "AHP Application Documents"
+                },
+                new invln_scheme()
+                {
+                    Id = invln_schemeId
+                }
             });
 
             Asset("Create", (int)StageEnum.PreOperation);

@@ -35,10 +35,25 @@ namespace HE.CRM.AHP.Plugins.Tests.CustomApi
 
             fakedContext.Initialize(new List<Entity>()
             {
-                new Contact() { Id = contactId, invln_externalid = contactId.ToString()},
-                new Account() { Id= accountId },
-                new invln_scheme() { Id = appId_1, invln_organisationid = accountId.ToEntityReference<Account>(), invln_contactid = contactId.ToEntityReference<Contact>()},
-                new invln_scheme() { Id = appId_2, invln_organisationid = accountId.ToEntityReference<Account>(), invln_contactid = contactId.ToEntityReference<Contact>()},
+                new Contact()
+                {
+                    Id = contactId,
+                    invln_externalid = contactId.ToString()
+                },
+                new Account()
+                {
+                    Id= accountId
+                },
+                new invln_scheme()
+                { Id = appId_1,
+                    invln_organisationid = accountId.ToEntityReference<Account>(),
+                    invln_contactid = contactId.ToEntityReference<Contact>()
+                },
+                new invln_scheme()
+                { Id = appId_2,
+                    invln_organisationid = accountId.ToEntityReference<Account>(),
+                    invln_contactid = contactId.ToEntityReference<Contact>()
+                },
             });
 
             //   var request = new invln_changeahpapplicationstatusRequest();

@@ -66,7 +66,11 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpApplication
 
             fakedContext.Initialize(new List<Entity>()
         {
-            { new invln_scheme(){ Id = shemeId, StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Draft) } }
+            new invln_scheme()
+            {
+                Id = shemeId,
+                StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Draft)
+            }
         });
 
             PreImage = new invln_scheme
@@ -101,7 +105,10 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpApplication
 
             fakedContext.Initialize(new List<Entity>()
         {
-            { new invln_scheme(){ Id = shemeId, StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Draft) } }
+            new invln_scheme()
+            {
+                Id = shemeId, StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Draft)
+            }
         });
 
             Asset("Update", (int)StageEnum.PreOperation);
@@ -169,7 +176,11 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpApplication
 
             fakedContext.Initialize(new List<Entity>()
         {
-            { new invln_scheme(){ Id = schemeId, StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Draft) } }
+            new invln_scheme()
+            {
+                Id = schemeId,
+                StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Draft)
+            }
         });
 
             Asset("Update", (int)StageEnum.PreOperation);
@@ -198,7 +209,11 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpApplication
 
             fakedContext.Initialize(new List<Entity>()
         {
-            { new invln_scheme(){ Id = schemeId, StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Draft) } }
+            new invln_scheme()
+            {
+                Id = schemeId,
+                StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Draft)
+            }
         });
 
             Asset("Update", (int)StageEnum.PreOperation);
@@ -226,9 +241,13 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpApplication
             };
 
             fakedContext.Initialize(new List<Entity>()
-        {
-            { new invln_scheme(){ Id = schemeId, StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Draft) } }
-        });
+            {
+                new invln_scheme()
+                {
+                    Id = schemeId,
+                    StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Draft)
+                }
+            });
 
             Asset("Update", (int)StageEnum.PreOperation);
 
@@ -255,9 +274,13 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpApplication
             };
 
             fakedContext.Initialize(new List<Entity>()
-        {
-            { new invln_scheme(){ Id = schemeId, StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Draft) } }
-        });
+            {
+                new invln_scheme()
+                {
+                    Id = schemeId,
+                    StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Draft)
+                }
+            });
 
             Asset("Update", (int)StageEnum.PreOperation);
 
@@ -284,9 +307,13 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpApplication
             };
 
             fakedContext.Initialize(new List<Entity>()
-        {
-            { new invln_scheme(){ Id = schemeId, StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Draft) } }
-        });
+            {
+                new invln_scheme()
+                {
+                    Id = schemeId,
+                    StatusCode = new OptionSetValue((int) invln_scheme_StatusCode.Draft)
+                }
+            });
 
             Asset("Update", (int)StageEnum.PreOperation);
 
@@ -313,9 +340,13 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpApplication
             };
 
             fakedContext.Initialize(new List<Entity>()
-        {
-            { new invln_scheme(){ Id = schemeId, StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Draft) } }
-        });
+            {
+                new invln_scheme()
+                {
+                    Id = schemeId,
+                    StatusCode = new OptionSetValue((int) invln_scheme_StatusCode.Draft)
+                }
+            });
 
             Asset("Update", (int)StageEnum.PreOperation);
 
@@ -342,9 +373,13 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpApplication
             };
 
             fakedContext.Initialize(new List<Entity>()
-        {
-            { new invln_scheme(){ Id = schemeId, StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Draft) } }
-        });
+            {
+                new invln_scheme()
+                {
+                    Id = schemeId,
+                    StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Draft)
+                }
+            });
 
             Asset("Update", (int)StageEnum.PreOperation);
 
@@ -371,9 +406,13 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpApplication
             };
 
             fakedContext.Initialize(new List<Entity>()
-        {
-            { new invln_scheme(){ Id = schemeId, StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Draft) } }
-        });
+            {
+                new invln_scheme()
+                {
+                    Id = schemeId,
+                    StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Draft)
+                }
+            });
 
             Asset("Update", (int)StageEnum.PreOperation);
 
@@ -400,9 +439,13 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpApplication
             };
 
             fakedContext.Initialize(new List<Entity>()
-        {
-            { new invln_scheme(){ Id = schemeId, StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Draft) } }
-        });
+            {
+                new invln_scheme()
+                {
+                    Id = schemeId,
+                    StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Draft)
+                }
+            });
 
             Asset("Update", (int)StageEnum.PreOperation);
 
@@ -429,9 +472,12 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpApplication
             };
 
             fakedContext.Initialize(new List<Entity>()
-        {
-            { new invln_scheme(){ Id = schemeId, StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Draft) } }
-        });
+            {
+                new invln_scheme()
+                {
+                    Id = schemeId, StatusCode = new OptionSetValue((int) invln_scheme_StatusCode.Draft)
+                }
+            });
 
             Asset("Update", (int)StageEnum.PreOperation);
 
@@ -458,9 +504,13 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpApplication
             };
 
             fakedContext.Initialize(new List<Entity>()
-        {
-            { new invln_scheme(){ Id = schemeId, StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Draft) } }
-        });
+            {
+                new invln_scheme()
+                {
+                    Id = schemeId,
+                    StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Draft)
+                }
+            });
 
             Asset("Update", (int)StageEnum.PreOperation);
 
@@ -487,9 +537,13 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpApplication
             };
 
             fakedContext.Initialize(new List<Entity>()
-        {
-            { new invln_scheme(){ Id = schemeId, StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Draft) } }
-        });
+            {
+                new invln_scheme()
+                {
+                    Id = schemeId,
+                    StatusCode = new OptionSetValue((int) invln_scheme_StatusCode.Draft)
+                }
+            });
 
             Asset("Update", (int)StageEnum.PreOperation);
 
@@ -516,9 +570,13 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpApplication
             };
 
             fakedContext.Initialize(new List<Entity>()
-        {
-            { new invln_scheme(){ Id = schemeId, StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Draft) } }
-        });
+            {
+                new invln_scheme()
+                {
+                    Id = schemeId,
+                    StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Draft)
+                }
+            });
 
             Asset("Update", (int)StageEnum.PreOperation);
 
@@ -545,9 +603,13 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpApplication
             };
 
             fakedContext.Initialize(new List<Entity>()
-        {
-            { new invln_scheme(){ Id = schemeId, StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Draft) } }
-        });
+            {
+                new invln_scheme()
+                {
+                    Id = schemeId,
+                    StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Draft)
+                }
+            });
 
             Asset("Update", (int)StageEnum.PreOperation);
 
@@ -574,9 +636,13 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpApplication
             };
 
             fakedContext.Initialize(new List<Entity>()
-        {
-            { new invln_scheme(){ Id = schemeId, StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Draft) } }
-        });
+            {
+                new invln_scheme()
+                {
+                    Id = schemeId,
+                    StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Draft)
+                }
+            });
 
             Asset("Update", (int)StageEnum.PreOperation);
 
@@ -603,9 +669,13 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpApplication
             };
 
             fakedContext.Initialize(new List<Entity>()
-        {
-            { new invln_scheme(){ Id = schemeId, StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Draft) } }
-        });
+            {
+                new invln_scheme()
+                {
+                    Id = schemeId,
+                    StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Draft)
+                }
+            });
 
             Asset("Update", (int)StageEnum.PreOperation);
 
@@ -632,9 +702,13 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpApplication
             };
 
             fakedContext.Initialize(new List<Entity>()
-        {
-            { new invln_scheme(){ Id = schemeId, StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Draft) } }
-        });
+            {
+                new invln_scheme()
+                {
+                    Id = schemeId,
+                    StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Draft)
+                }
+            });
 
             Asset("Update", (int)StageEnum.PreOperation);
 
@@ -661,9 +735,13 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpApplication
             };
 
             fakedContext.Initialize(new List<Entity>()
-        {
-            { new invln_scheme(){ Id = schemeId, StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Draft) } }
-        });
+            {
+                new invln_scheme()
+                {
+                    Id = schemeId,
+                    StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Draft)
+                }
+            });
 
             Asset("Update", (int)StageEnum.PreOperation);
 
@@ -690,9 +768,13 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpApplication
             };
 
             fakedContext.Initialize(new List<Entity>()
-        {
-            { new invln_scheme(){ Id = schemeId, StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Draft) } }
-        });
+            {
+                new invln_scheme()
+                {
+                    Id = schemeId,
+                    StatusCode = new OptionSetValue((int) invln_scheme_StatusCode.Draft)
+                }
+            });
 
             Asset("Update", (int)StageEnum.PreOperation);
 
@@ -719,9 +801,13 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpApplication
             };
 
             fakedContext.Initialize(new List<Entity>()
-        {
-            { new invln_scheme(){ Id = schemeId, StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Draft) } }
-        });
+            {
+                new invln_scheme()
+                {
+                    Id = schemeId,
+                    StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Draft)
+                }
+            });
 
             Asset("Update", (int)StageEnum.PreOperation);
 
@@ -748,9 +834,13 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpApplication
             };
 
             fakedContext.Initialize(new List<Entity>()
-        {
-            { new invln_scheme(){ Id = schemeId, StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Draft) } }
-        });
+            {
+                new invln_scheme()
+                {
+                    Id = schemeId,
+                    StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Draft)
+                }
+            });
 
             Asset("Update", (int)StageEnum.PreOperation);
 
@@ -777,9 +867,12 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpApplication
             };
 
             fakedContext.Initialize(new List<Entity>()
-        {
-            { new invln_scheme(){ Id = schemeId, StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Draft) } }
-        });
+            {
+                new invln_scheme()
+                {
+                    Id = schemeId,
+                    StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Draft) }
+            });
 
             Asset("Update", (int)StageEnum.PreOperation);
 

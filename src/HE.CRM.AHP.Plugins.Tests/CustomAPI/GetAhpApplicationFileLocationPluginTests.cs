@@ -39,10 +39,23 @@ namespace HE.CRM.AHP.Plugins.Tests.CustomApi
 
             fakedContext.Initialize(new List<Entity>()
             {
-                { app},
-                { new SharePointDocumentLocation() { Id = siteLocationId, RegardingObjectId = app.Id.ToEntityReference<invln_scheme>(), RelativeUrl = "bla3", ParentSiteOrLocation = parentLocataionId.ToEntityReference<SharePointDocumentLocation>() } },
-                { new SharePointDocumentLocation() { Id = parentLocataionId, RelativeUrl = "bla2", ParentSiteOrLocation = mainLocationId.ToEntityReference<SharePointSite>() } },
-                { new SharePointSite() { Id = mainLocationId, AbsoluteURL = "/bla1" } },
+                app,
+                new SharePointDocumentLocation()
+                {
+                    Id = siteLocationId,
+                    RegardingObjectId = app.Id.ToEntityReference<invln_scheme>(),
+                    RelativeUrl = "bla3", ParentSiteOrLocation = parentLocataionId.ToEntityReference<SharePointDocumentLocation>()
+                },
+                new SharePointDocumentLocation()
+                {
+                    Id = parentLocataionId,
+                    RelativeUrl = "bla2", ParentSiteOrLocation = mainLocationId.ToEntityReference<SharePointSite>()
+                },
+                new SharePointSite()
+                {
+                    Id = mainLocationId,
+                    AbsoluteURL = "/bla1"
+                },
             });
 
             pluginContext.InputParameters = new ParameterCollection

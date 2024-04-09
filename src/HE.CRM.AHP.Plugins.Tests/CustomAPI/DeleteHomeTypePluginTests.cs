@@ -58,9 +58,19 @@ namespace HE.CRM.AHP.Plugins.Tests.CustomApi
 
             fakedContext.Initialize(new List<Entity>()
             {
-                { new invln_scheme() { Id = applicationId, invln_organisationid = organizationId.ToEntityReference<Account>()} },
-                { new invln_HomeType() { Id = homeTypeId, invln_application = applicationId.ToEntityReference<invln_scheme>()} },
-                { contact }
+                 new invln_scheme()
+                {
+                    Id = applicationId,
+                    invln_organisationid = organizationId.ToEntityReference<Account>()
+                },
+                new invln_HomeType()
+                {
+                    Id = homeTypeId,
+                    invln_application = applicationId.ToEntityReference<invln_scheme>()
+                },
+                {
+                    contact
+                }
             });
             var metadata = fakedContext.GetEntityMetadataByName("contact");
             var keymetadata = new EntityKeyMetadata[]
@@ -82,10 +92,14 @@ namespace HE.CRM.AHP.Plugins.Tests.CustomApi
                     {invln_deletehometypeRequest.Fields.invln_organisationid, organizationId.ToString()},
                     {invln_deletehometypeRequest.Fields.invln_applicationid, applicationId.ToString()}
                 };
-            var homeTypesCountAfterDelete = fakedContext.CreateQuery<invln_HomeType>().Where(x => x.Id == homeTypeId).ToList().Count();
+            var homeTypesCountAfterDelete = fakedContext.CreateQuery<invln_HomeType>()
+                                                        .Where(x => x.Id == homeTypeId)
+                                                        .ToList().Count();
             Assert.AreEqual(1, homeTypesCountAfterDelete);
             fakedContext.ExecutePluginWithConfigurations<DeleteHomeTypePlugin>(pluginContext, "", "");
-            var homeTypesCount = fakedContext.CreateQuery<invln_HomeType>().Where(x => x.Id == homeTypeId).ToList().Count();
+            var homeTypesCount = fakedContext.CreateQuery<invln_HomeType>()
+                                                .Where(x => x.Id == homeTypeId)
+                                                .ToList().Count();
             Assert.AreEqual(0, homeTypesCount);
         }
     }

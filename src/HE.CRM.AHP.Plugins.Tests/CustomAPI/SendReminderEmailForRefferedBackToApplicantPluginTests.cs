@@ -35,14 +35,32 @@ namespace HE.CRM.AHP.Plugins.Tests.CustomApi
 
             fakedContext.Initialize(new List<Entity>()
             {
-                { new Contact() { Id = contactId, FirstName = "Zdzisław", LastName = "Botak", EMailAddress1 = "bonie@OoO.pl" }  },
-                { new invln_scheme() { Id = appId, invln_contactid = contactId.ToEntityReference<Contact>(), OwnerId = systemUserID.ToEntityReference<SystemUser>()}  },
-                { new invln_notificationsetting { Id = Guid.NewGuid(), invln_subject = "subject", invln_templateid = "tempalte id", invln_templatetypename = "AHP_EXTERNAL_REMINDER_TO_FINALIZE_APPLICATION_REFERRED_BACK" } }
+                new Contact()
+                {
+                    Id = contactId,
+                    FirstName = "Zdzisław",
+                    LastName = "Botak",
+                    EMailAddress1 = "bonie@OoO.pl"
+                },
+                new invln_scheme()
+                {
+                    Id = appId,
+                    invln_contactid = contactId.ToEntityReference<Contact>(),
+                    OwnerId = systemUserID.ToEntityReference<SystemUser>()
+                },
+                new invln_notificationsetting()
+                {
+                    Id = Guid.NewGuid(),
+                    invln_subject = "subject",
+                    invln_templateid = "tempalte id",
+                    invln_templatetypename = "AHP_EXTERNAL_REMINDER_TO_FINALIZE_APPLICATION_REFERRED_BACK"
+                }
             });
 
             pluginContext.InputParameters = new ParameterCollection
             {
-                { invln_sendreminderemailforrefferedbacktoapplicantRequest.Fields.invln_applicationid, appId.ToString()}
+                { invln_sendreminderemailforrefferedbacktoapplicantRequest.Fields.invln_applicationid,
+                                                                                    appId.ToString()}
             };
             try
             {

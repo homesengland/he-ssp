@@ -34,8 +34,17 @@ namespace HE.CRM.AHP.Plugins.Tests.CustomApi
 
             fakedContext.Initialize(new List<Entity>()
             {
-                new invln_scheme() { Id = schemaID, invln_organisationid = accountId.ToEntityReference<Account>(), invln_contactid = contactId.ToEntityReference<Contact>()},
-                new Contact() { Id = contactId, invln_externalid = contactId.ToString()},
+                new invln_scheme()
+                {
+                    Id = schemaID,
+                    invln_organisationid = accountId.ToEntityReference<Account>(),
+                    invln_contactid = contactId.ToEntityReference<Contact>()
+                },
+                new Contact()
+                {
+                    Id = contactId,
+                    invln_externalid = contactId.ToString()
+                },
                 new Account() { Id= accountId }
             });
 
@@ -44,10 +53,18 @@ namespace HE.CRM.AHP.Plugins.Tests.CustomApi
                 var request = new invln_changeahpapplicationstatusRequest();
                 pluginContext.InputParameters = new ParameterCollection
                 {
-                    {invln_changeahpapplicationstatusRequest.Fields.invln_applicationid, schemaID.ToString() },  //invln_scheme
-                    {invln_changeahpapplicationstatusRequest.Fields.invln_userid, contactId.ToString() },         //contact
-                    {invln_changeahpapplicationstatusRequest.Fields.invln_organisationid, accountId.ToString() }, //account
-                    {invln_changeahpapplicationstatusRequest.Fields.invln_newapplicationstatus, (int)invln_scheme_StatusCode.Approved },
+                    {invln_changeahpapplicationstatusRequest.Fields.invln_applicationid,
+                                                                    schemaID.ToString()
+                    },
+                    {invln_changeahpapplicationstatusRequest.Fields.invln_userid,
+                                                                    contactId.ToString()
+                    },
+                    {invln_changeahpapplicationstatusRequest.Fields.invln_organisationid,
+                                                                    accountId.ToString()
+                    }, 
+                    {invln_changeahpapplicationstatusRequest.Fields.invln_newapplicationstatus,
+                                                                    (int)invln_scheme_StatusCode.Approved
+                    },
                 };
 
                 fakedContext.ExecutePluginWithConfigurations<ChangeAhpApplicationStatusPlugin>(pluginContext, "", "");

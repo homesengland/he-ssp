@@ -39,7 +39,12 @@ namespace HE.CRM.AHP.Plugins.Tests.CustomApi
             var organizationId = Guid.NewGuid();
             fakedContext.Initialize(new List<Entity>()
             {
-                new invln_scheme() { Id = schemaId, invln_schemename = "abc_cba" ,invln_organisationid = organizationId.ToEntityReference<Account>()},
+                new invln_scheme()
+                {
+                    Id = schemaId,
+                    invln_schemename = "abc_cba",
+                    invln_organisationid = organizationId.ToEntityReference<Account>()
+                },
                 new Account() { Id = organizationId}
             });
 
@@ -48,8 +53,10 @@ namespace HE.CRM.AHP.Plugins.Tests.CustomApi
                 var request = new invln_checkifapplicationwithgivennameexistsRequest();
                 pluginContext.InputParameters = new ParameterCollection
                 {
-                    {invln_checkifapplicationwithgivennameexistsRequest.Fields.invln_application , JsonSerializer.Serialize(aplication)},
-                    {invln_checkifapplicationwithgivennameexistsRequest.Fields.invln_organisationid, organizationId.ToString() }
+                    {invln_checkifapplicationwithgivennameexistsRequest.Fields.invln_application,
+                                                                                JsonSerializer.Serialize(aplication)},
+                    {invln_checkifapplicationwithgivennameexistsRequest.Fields.invln_organisationid,
+                                                                                organizationId.ToString() }
                 };
 
                 fakedContext.ExecutePluginWithConfigurations<CheckIfApplicationWithGivenNameExistsPlugin>(pluginContext, "", "");

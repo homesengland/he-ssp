@@ -66,10 +66,21 @@ namespace HE.CRM.AHP.Plugins.Tests.CustomApi
 
             fakedContext.Initialize(new List<Entity>()
             {
-                { new invln_HomeType() {Id = homeTypeId, invln_application = applicationId.ToEntityReference<invln_scheme>()} },
-                {contact },
-                {new Account() { Id = organizationId} },
-                {new invln_scheme() { Id = applicationId, invln_organisationid = organizationId.ToEntityReference<Account>()} }
+                new invln_HomeType()
+                {
+                    Id = homeTypeId,
+                    invln_application = applicationId.ToEntityReference<invln_scheme>()
+                },
+                contact,
+                new Account()
+                {
+                    Id = organizationId
+                },
+                new invln_scheme()
+                {
+                    Id = applicationId,
+                    invln_organisationid = organizationId.ToEntityReference<Account>()
+                }
             });
 
             var metadata = fakedContext.GetEntityMetadataByName("contact");
@@ -120,9 +131,16 @@ namespace HE.CRM.AHP.Plugins.Tests.CustomApi
 
             fakedContext.Initialize(new List<Entity>()
             {
-                {contact },
-                {new Account() { Id = organizationId} },
-                {new invln_scheme() { Id = applicationId, invln_organisationid = organizationId.ToEntityReference<Account>()} }
+                contact,
+                new Account()
+                {
+                    Id = organizationId
+                },
+                new invln_scheme()
+                {
+                    Id = applicationId,
+                    invln_organisationid = organizationId.ToEntityReference<Account>()
+                }
             });
 
             var metadata = fakedContext.GetEntityMetadataByName("contact");

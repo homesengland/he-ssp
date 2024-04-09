@@ -76,9 +76,21 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpStatusChange
 
             fakedContext.Initialize(new List<Entity>()
             {
-                { new Contact() { Id = contactId} },
-                { new SystemUser() { Id = systemUserID} },
-                { new invln_scheme() { Id = ahpApplicationID, OwnerId = systemUserID.ToEntityReference<SystemUser>() , invln_schemename = "ABC", invln_contactid = contactId.ToEntityReference<Contact>()} }
+                new Contact()
+                {
+                    Id = contactId
+                },
+                new SystemUser()
+                {
+                    Id = systemUserID
+                },
+                new invln_scheme()
+                {
+                    Id = ahpApplicationID,
+                    OwnerId = systemUserID.ToEntityReference<SystemUser>() ,
+                    invln_schemename = "ABC",
+                    invln_contactid = contactId.ToEntityReference<Contact>()
+                }
             });
 
             Asset("Create", (int)StageEnum.PostOperation);
@@ -113,9 +125,21 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpStatusChange
 
             fakedContext.Initialize(new List<Entity>()
             {
-                { new Contact() { Id = contactId} },
-                { new SystemUser() { Id = systemUserID} },
-                { new invln_scheme() { Id = ahpApplicationID, OwnerId = systemUserID.ToEntityReference<SystemUser>() , invln_schemename = "ABC", invln_contactid = contactId.ToEntityReference<Contact>()} }
+                new Contact()
+                {
+                    Id = contactId
+                },
+                new SystemUser()
+                {
+                    Id = systemUserID
+                },
+                new invln_scheme()
+                {
+                    Id = ahpApplicationID,
+                    OwnerId = systemUserID.ToEntityReference<SystemUser>(),
+                    invln_schemename = "ABC",
+                    invln_contactid = contactId.ToEntityReference<Contact>()
+                }
             });
 
             Asset("Create", (int)StageEnum.PostOperation);
@@ -150,9 +174,21 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpStatusChange
 
             fakedContext.Initialize(new List<Entity>()
             {
-                { new Contact() { Id = contactId} },
-                { new SystemUser() { Id = systemUserID} },
-                { new invln_scheme() { Id = ahpApplicationID, OwnerId = systemUserID.ToEntityReference<SystemUser>() , invln_schemename = "ABC", invln_contactid = contactId.ToEntityReference<Contact>()} }
+                new Contact()
+                {
+                    Id = contactId
+                },
+                new SystemUser()
+                {
+                    Id = systemUserID
+                },
+                new invln_scheme()
+                {
+                    Id = ahpApplicationID,
+                    OwnerId = systemUserID.ToEntityReference<SystemUser>()
+                    , invln_schemename = "ABC",
+                    invln_contactid = contactId.ToEntityReference<Contact>()
+                }
             });
 
             Asset("Create", (int)StageEnum.PostOperation);
@@ -187,9 +223,20 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpStatusChange
 
             fakedContext.Initialize(new List<Entity>()
             {
-                { new Contact() { Id = contactId} },
-                { new SystemUser() { Id = systemUserID} },
-                { new invln_scheme() { Id = ahpApplicationID, OwnerId = systemUserID.ToEntityReference<SystemUser>() , invln_schemename = "ABC", invln_contactid = contactId.ToEntityReference<Contact>()} }
+                new Contact()
+                {
+                    Id = contactId
+                },
+                new SystemUser()
+                {
+                    Id = systemUserID
+                },
+                new invln_scheme()
+                {
+                    Id = ahpApplicationID,
+                    OwnerId = systemUserID.ToEntityReference<SystemUser>() ,
+                    invln_schemename = "ABC", invln_contactid = contactId.ToEntityReference<Contact>()
+                }
             });
 
             Asset("Create", (int)StageEnum.PostOperation);
@@ -224,9 +271,20 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpStatusChange
 
             fakedContext.Initialize(new List<Entity>()
             {
-                { new Contact() { Id = contactId} },
-                { new SystemUser() { Id = systemUserID} },
-                { new invln_scheme() { Id = ahpApplicationID, OwnerId = systemUserID.ToEntityReference<SystemUser>() , invln_schemename = "ABC", invln_contactid = contactId.ToEntityReference<Contact>()} }
+                new Contact()
+                {
+                    Id = contactId
+                },
+                new SystemUser()
+                {
+                    Id = systemUserID
+                },
+                new invln_scheme()
+                {
+                    Id = ahpApplicationID,
+                    OwnerId = systemUserID.ToEntityReference<SystemUser>() ,
+                    invln_schemename = "ABC", invln_contactid = contactId.ToEntityReference<Contact>()
+                }
             });
 
             Asset("Create", (int)StageEnum.PostOperation);
@@ -261,9 +319,20 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpStatusChange
 
             fakedContext.Initialize(new List<Entity>()
             {
-                { new Contact() { Id = contactId} },
-                { new SystemUser() { Id = systemUserID} },
-                { new invln_scheme() { Id = ahpApplicationID, OwnerId = systemUserID.ToEntityReference<SystemUser>() , invln_schemename = "ABC", invln_contactid = contactId.ToEntityReference<Contact>()} }
+                new Contact()
+                {
+                    Id = contactId
+                },
+                new SystemUser()
+                {
+                    Id = systemUserID
+                },
+                new invln_scheme()
+                {
+                    Id = ahpApplicationID,
+                    OwnerId = systemUserID.ToEntityReference<SystemUser>() ,
+                    invln_schemename = "ABC", invln_contactid = contactId.ToEntityReference<Contact>()
+                }
             });
 
             Asset("Create", (int)StageEnum.PostOperation);
@@ -298,9 +367,20 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpStatusChange
 
             fakedContext.Initialize(new List<Entity>()
             {
-                { new Contact() { Id = contactId} },
-                { new SystemUser() { Id = systemUserID} },
-                { new invln_scheme() { Id = ahpApplicationID, OwnerId = systemUserID.ToEntityReference<SystemUser>() , invln_schemename = "ABC", invln_contactid = contactId.ToEntityReference<Contact>()} }
+                new Contact()
+                {
+                    Id = contactId
+                },
+                new SystemUser()
+                {
+                    Id = systemUserID
+                },
+                new invln_scheme()
+                {
+                    Id = ahpApplicationID,
+                    OwnerId = systemUserID.ToEntityReference<SystemUser>() ,
+                    invln_schemename = "ABC", invln_contactid = contactId.ToEntityReference<Contact>()
+                }
             });
 
             Asset("Create", (int)StageEnum.PostOperation);
@@ -335,9 +415,20 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpStatusChange
 
             fakedContext.Initialize(new List<Entity>()
             {
-                { new Contact() { Id = contactId} },
-                { new SystemUser() { Id = systemUserID} },
-                { new invln_scheme() { Id = ahpApplicationID, OwnerId = systemUserID.ToEntityReference<SystemUser>() , invln_schemename = "ABC", invln_contactid = contactId.ToEntityReference<Contact>()} }
+                new Contact()
+                {
+                    Id = contactId
+                },
+                new SystemUser()
+                {
+                    Id = systemUserID
+                },
+                new invln_scheme()
+                {
+                    Id = ahpApplicationID,
+                    OwnerId = systemUserID.ToEntityReference<SystemUser>() ,
+                    invln_schemename = "ABC", invln_contactid = contactId.ToEntityReference<Contact>()
+                }
             });
 
             Asset("Create", (int)StageEnum.PostOperation);
@@ -372,9 +463,20 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpStatusChange
 
             fakedContext.Initialize(new List<Entity>()
             {
-                { new Contact() { Id = contactId} },
-                { new SystemUser() { Id = systemUserID} },
-                { new invln_scheme() { Id = ahpApplicationID, OwnerId = systemUserID.ToEntityReference<SystemUser>() , invln_schemename = "ABC", invln_contactid = contactId.ToEntityReference<Contact>()} }
+                new Contact()
+                {
+                    Id = contactId
+                },
+                new SystemUser()
+                {
+                    Id = systemUserID
+                },
+                new invln_scheme()
+                {
+                    Id = ahpApplicationID,
+                    OwnerId = systemUserID.ToEntityReference<SystemUser>() ,
+                    invln_schemename = "ABC", invln_contactid = contactId.ToEntityReference<Contact>()
+                }
             });
 
             Asset("Create", (int)StageEnum.PostOperation);
@@ -409,9 +511,20 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpStatusChange
 
             fakedContext.Initialize(new List<Entity>()
             {
-                { new Contact() { Id = contactId} },
-                { new SystemUser() { Id = systemUserID} },
-                { new invln_scheme() { Id = ahpApplicationID, OwnerId = systemUserID.ToEntityReference<SystemUser>() , invln_schemename = "ABC", invln_contactid = contactId.ToEntityReference<Contact>()} }
+                new Contact()
+                {
+                    Id = contactId
+                },
+                new SystemUser()
+                {
+                    Id = systemUserID
+                },
+                new invln_scheme()
+                {
+                    Id = ahpApplicationID,
+                    OwnerId = systemUserID.ToEntityReference<SystemUser>() ,
+                    invln_schemename = "ABC", invln_contactid = contactId.ToEntityReference<Contact>()
+                }
             });
 
             Asset("Create", (int)StageEnum.PostOperation);
@@ -446,9 +559,20 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpStatusChange
 
             fakedContext.Initialize(new List<Entity>()
             {
-                { new Contact() { Id = contactId} },
-                { new SystemUser() { Id = systemUserID} },
-                { new invln_scheme() { Id = ahpApplicationID, OwnerId = systemUserID.ToEntityReference<SystemUser>() , invln_schemename = "ABC", invln_contactid = contactId.ToEntityReference<Contact>()} }
+                new Contact()
+                {
+                    Id = contactId
+                },
+                new SystemUser()
+                {
+                    Id = systemUserID
+                },
+                new invln_scheme()
+                {
+                    Id = ahpApplicationID,
+                    OwnerId = systemUserID.ToEntityReference<SystemUser>() ,
+                    invln_schemename = "ABC", invln_contactid = contactId.ToEntityReference<Contact>()
+                }
             });
 
             Asset("Create", (int)StageEnum.PostOperation);
@@ -483,9 +607,20 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpStatusChange
 
             fakedContext.Initialize(new List<Entity>()
             {
-                { new Contact() { Id = contactId} },
-                { new SystemUser() { Id = systemUserID} },
-                { new invln_scheme() { Id = ahpApplicationID, OwnerId = systemUserID.ToEntityReference<SystemUser>() , invln_schemename = "ABC", invln_contactid = contactId.ToEntityReference<Contact>()} }
+                new Contact()
+                {
+                    Id = contactId
+                },
+                new SystemUser()
+                {
+                    Id = systemUserID
+                },
+                new invln_scheme()
+                {
+                    Id = ahpApplicationID,
+                    OwnerId = systemUserID.ToEntityReference<SystemUser>() ,
+                    invln_schemename = "ABC", invln_contactid = contactId.ToEntityReference<Contact>()
+                }
             });
 
             Asset("Create", (int)StageEnum.PostOperation);
@@ -520,9 +655,20 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpStatusChange
 
             fakedContext.Initialize(new List<Entity>()
             {
-                { new Contact() { Id = contactId} },
-                { new SystemUser() { Id = systemUserID} },
-                { new invln_scheme() { Id = ahpApplicationID, OwnerId = systemUserID.ToEntityReference<SystemUser>() , invln_schemename = "ABC", invln_contactid = contactId.ToEntityReference<Contact>()} }
+                new Contact()
+                {
+                    Id = contactId
+                },
+                new SystemUser()
+                {
+                    Id = systemUserID
+                },
+                new invln_scheme()
+                {
+                    Id = ahpApplicationID,
+                    OwnerId = systemUserID.ToEntityReference<SystemUser>() ,
+                    invln_schemename = "ABC", invln_contactid = contactId.ToEntityReference<Contact>()
+                }
             });
 
             Asset("Create", (int)StageEnum.PostOperation);
@@ -557,9 +703,20 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpStatusChange
 
             fakedContext.Initialize(new List<Entity>()
             {
-                { new Contact() { Id = contactId} },
-                { new SystemUser() { Id = systemUserID} },
-                { new invln_scheme() { Id = ahpApplicationID, OwnerId = systemUserID.ToEntityReference<SystemUser>() , invln_schemename = "ABC", invln_contactid = contactId.ToEntityReference<Contact>()} }
+                new Contact()
+                {
+                    Id = contactId
+                },
+                new SystemUser()
+                {
+                    Id = systemUserID
+                },
+                new invln_scheme()
+                {
+                    Id = ahpApplicationID,
+                    OwnerId = systemUserID.ToEntityReference<SystemUser>() ,
+                    invln_schemename = "ABC", invln_contactid = contactId.ToEntityReference<Contact>()
+                }
             });
 
             Asset("Create", (int)StageEnum.PostOperation);
@@ -594,9 +751,20 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpStatusChange
 
             fakedContext.Initialize(new List<Entity>()
             {
-                { new Contact() { Id = contactId} },
-                { new SystemUser() { Id = systemUserID} },
-                { new invln_scheme() { Id = ahpApplicationID, OwnerId = systemUserID.ToEntityReference<SystemUser>() , invln_schemename = "ABC", invln_contactid = contactId.ToEntityReference<Contact>()} }
+                new Contact()
+                {
+                    Id = contactId
+                },
+                new SystemUser()
+                {
+                    Id = systemUserID
+                },
+                new invln_scheme()
+                {
+                    Id = ahpApplicationID,
+                    OwnerId = systemUserID.ToEntityReference<SystemUser>() ,
+                    invln_schemename = "ABC", invln_contactid = contactId.ToEntityReference<Contact>()
+                }
             });
 
             Asset("Create", (int)StageEnum.PostOperation);
@@ -631,9 +799,20 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpStatusChange
 
             fakedContext.Initialize(new List<Entity>()
             {
-                { new Contact() { Id = contactId} },
-                { new SystemUser() { Id = systemUserID} },
-                { new invln_scheme() { Id = ahpApplicationID, OwnerId = systemUserID.ToEntityReference<SystemUser>() , invln_schemename = "ABC", invln_contactid = contactId.ToEntityReference<Contact>()} }
+                new Contact()
+                {
+                    Id = contactId
+                },
+                new SystemUser()
+                {
+                    Id = systemUserID
+                },
+                new invln_scheme()
+                {
+                    Id = ahpApplicationID,
+                    OwnerId = systemUserID.ToEntityReference<SystemUser>() ,
+                    invln_schemename = "ABC", invln_contactid = contactId.ToEntityReference<Contact>()
+                }
             });
 
             Asset("Create", (int)StageEnum.PostOperation);
@@ -668,9 +847,20 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpStatusChange
 
             fakedContext.Initialize(new List<Entity>()
             {
-                { new Contact() { Id = contactId} },
-                { new SystemUser() { Id = systemUserID} },
-                { new invln_scheme() { Id = ahpApplicationID, OwnerId = systemUserID.ToEntityReference<SystemUser>() , invln_schemename = "ABC", invln_contactid = contactId.ToEntityReference<Contact>()} }
+                new Contact()
+                {
+                    Id = contactId
+                },
+                new SystemUser()
+                {
+                    Id = systemUserID
+                },
+                new invln_scheme()
+                {
+                    Id = ahpApplicationID,
+                    OwnerId = systemUserID.ToEntityReference<SystemUser>() ,
+                    invln_schemename = "ABC", invln_contactid = contactId.ToEntityReference<Contact>()
+                }
             });
 
             Asset("Create", (int)StageEnum.PostOperation);
@@ -705,9 +895,20 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpStatusChange
 
             fakedContext.Initialize(new List<Entity>()
             {
-                { new Contact() { Id = contactId} },
-                { new SystemUser() { Id = systemUserID} },
-                { new invln_scheme() { Id = ahpApplicationID, OwnerId = systemUserID.ToEntityReference<SystemUser>() , invln_schemename = "ABC", invln_contactid = contactId.ToEntityReference<Contact>()} }
+                new Contact()
+                {
+                    Id = contactId
+                },
+                new SystemUser()
+                {
+                    Id = systemUserID
+                },
+                new invln_scheme()
+                {
+                    Id = ahpApplicationID,
+                    OwnerId = systemUserID.ToEntityReference<SystemUser>() ,
+                    invln_schemename = "ABC", invln_contactid = contactId.ToEntityReference<Contact>()
+                }
             });
 
             Asset("Create", (int)StageEnum.PostOperation);
@@ -742,9 +943,20 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpStatusChange
 
             fakedContext.Initialize(new List<Entity>()
             {
-                { new Contact() { Id = contactId} },
-                { new SystemUser() { Id = systemUserID} },
-                { new invln_scheme() { Id = ahpApplicationID, OwnerId = systemUserID.ToEntityReference<SystemUser>() , invln_schemename = "ABC", invln_contactid = contactId.ToEntityReference<Contact>()} }
+                new Contact()
+                {
+                    Id = contactId
+                },
+                new SystemUser()
+                {
+                    Id = systemUserID
+                },
+                new invln_scheme()
+                {
+                    Id = ahpApplicationID,
+                    OwnerId = systemUserID.ToEntityReference<SystemUser>() ,
+                    invln_schemename = "ABC", invln_contactid = contactId.ToEntityReference<Contact>()
+                }
             });
 
             Asset("Create", (int)StageEnum.PostOperation);
@@ -779,9 +991,20 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpStatusChange
 
             fakedContext.Initialize(new List<Entity>()
             {
-                { new Contact() { Id = contactId} },
-                { new SystemUser() { Id = systemUserID} },
-                { new invln_scheme() { Id = ahpApplicationID, OwnerId = systemUserID.ToEntityReference<SystemUser>() , invln_schemename = "ABC", invln_contactid = contactId.ToEntityReference<Contact>()} }
+                new Contact()
+                {
+                    Id = contactId
+                },
+                new SystemUser()
+                {
+                    Id = systemUserID
+                },
+                new invln_scheme()
+                {
+                    Id = ahpApplicationID,
+                    OwnerId = systemUserID.ToEntityReference<SystemUser>() ,
+                    invln_schemename = "ABC", invln_contactid = contactId.ToEntityReference<Contact>()
+                }
             });
 
             Asset("Create", (int)StageEnum.PostOperation);
@@ -816,9 +1039,20 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpStatusChange
 
             fakedContext.Initialize(new List<Entity>()
             {
-                { new Contact() { Id = contactId} },
-                { new SystemUser() { Id = systemUserID} },
-                { new invln_scheme() { Id = ahpApplicationID, OwnerId = systemUserID.ToEntityReference<SystemUser>() , invln_schemename = "ABC", invln_contactid = contactId.ToEntityReference<Contact>()} }
+                new Contact()
+                {
+                    Id = contactId
+                },
+                new SystemUser()
+                {
+                    Id = systemUserID
+                },
+                new invln_scheme()
+                {
+                    Id = ahpApplicationID,
+                    OwnerId = systemUserID.ToEntityReference<SystemUser>() ,
+                    invln_schemename = "ABC", invln_contactid = contactId.ToEntityReference<Contact>()
+                }
             });
 
             Asset("Create", (int)StageEnum.PostOperation);
@@ -853,9 +1087,20 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpStatusChange
 
             fakedContext.Initialize(new List<Entity>()
             {
-                { new Contact() { Id = contactId} },
-                { new SystemUser() { Id = systemUserID} },
-                { new invln_scheme() { Id = ahpApplicationID, OwnerId = systemUserID.ToEntityReference<SystemUser>() , invln_schemename = "ABC", invln_contactid = contactId.ToEntityReference<Contact>()} }
+                new Contact()
+                {
+                    Id = contactId
+                },
+                new SystemUser()
+                {
+                    Id = systemUserID
+                },
+                new invln_scheme()
+                {
+                    Id = ahpApplicationID,
+                    OwnerId = systemUserID.ToEntityReference<SystemUser>() ,
+                    invln_schemename = "ABC", invln_contactid = contactId.ToEntityReference<Contact>()
+                }
             });
 
             Asset("Create", (int)StageEnum.PostOperation);
@@ -890,9 +1135,20 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpStatusChange
 
             fakedContext.Initialize(new List<Entity>()
             {
-                { new Contact() { Id = contactId} },
-                { new SystemUser() { Id = systemUserID} },
-                { new invln_scheme() { Id = ahpApplicationID, OwnerId = systemUserID.ToEntityReference<SystemUser>() , invln_schemename = "ABC", invln_contactid = contactId.ToEntityReference<Contact>()} }
+                new Contact()
+                {
+                    Id = contactId
+                },
+                new SystemUser()
+                {
+                    Id = systemUserID
+                },
+                new invln_scheme()
+                {
+                    Id = ahpApplicationID,
+                    OwnerId = systemUserID.ToEntityReference<SystemUser>() ,
+                    invln_schemename = "ABC", invln_contactid = contactId.ToEntityReference<Contact>()
+                }
             });
 
             Asset("Create", (int)StageEnum.PostOperation);
@@ -927,9 +1183,20 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpStatusChange
 
             fakedContext.Initialize(new List<Entity>()
             {
-                { new Contact() { Id = contactId} },
-                { new SystemUser() { Id = systemUserID} },
-                { new invln_scheme() { Id = ahpApplicationID, OwnerId = systemUserID.ToEntityReference<SystemUser>() , invln_schemename = "ABC", invln_contactid = contactId.ToEntityReference<Contact>()} }
+                new Contact()
+                {
+                    Id = contactId
+                },
+                new SystemUser()
+                {
+                    Id = systemUserID
+                },
+                new invln_scheme()
+                {
+                    Id = ahpApplicationID,
+                    OwnerId = systemUserID.ToEntityReference<SystemUser>() ,
+                    invln_schemename = "ABC", invln_contactid = contactId.ToEntityReference<Contact>()
+                }
             });
 
             Asset("Create", (int)StageEnum.PostOperation);

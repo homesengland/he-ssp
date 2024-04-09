@@ -91,9 +91,26 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.ContactWebRole
 
             fakedContext.Initialize(new List<Entity>()
             {
-                new invln_contactwebrole() { Id = contactWebRoleId, invln_Contactid = contactId.ToEntityReference<Contact>(), invln_Webroleid = webRoleId.ToEntityReference<invln_Webrole>()},
-                new Contact() { Id = contactId, OwnerId = ownerId.ToEntityReference<SystemUser>() , FirstName = "Eugenius", LastName = "Sosna", EMailAddress1 = "gieneksosna@OoO.pl"},
-                new invln_notificationsetting() { Id = notificationSetingsId, invln_subject = "AHP", invln_templateid = notificationSetingsId.ToString() ,invln_templatetypename = "COMMON_CHANGE_EXTERNAL_USER_PERMISSIONS" },
+                new invln_contactwebrole()
+                {
+                    Id = contactWebRoleId,
+                    invln_Contactid = contactId.ToEntityReference<Contact>(),
+                    invln_Webroleid = webRoleId.ToEntityReference<invln_Webrole>()
+                },
+                new Contact()
+                {
+                    Id = contactId,
+                    OwnerId = ownerId.ToEntityReference<SystemUser>(),
+                    FirstName = "Eugenius",
+                    LastName = "Sosna",
+                    EMailAddress1 = "gieneksosna@OoO.pl"},
+                new invln_notificationsetting()
+                {
+                    Id = notificationSetingsId,
+                    invln_subject = "AHP",
+                    invln_templateid = notificationSetingsId.ToString(),
+                    invln_templatetypename = "COMMON_CHANGE_EXTERNAL_USER_PERMISSIONS"
+                },
             });
 
             Target = new invln_contactwebrole()
@@ -128,8 +145,20 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.ContactWebRole
 
             fakedContext.Initialize(new List<Entity>()
             {
-                new invln_contactwebrole() { Id = contactWebRoleId, invln_Contactid = contactId.ToEntityReference<Contact>(), invln_Webroleid = webRoleId.ToEntityReference<invln_Webrole>()},
-                new Contact() { Id = contactId, OwnerId = ownerId.ToEntityReference<SystemUser>() , FirstName = "Eugenius", LastName = "Sosna", EMailAddress1 = "gieneksosna@OoO.pl"},
+                new invln_contactwebrole()
+                {
+                    Id = contactWebRoleId,
+                    invln_Contactid = contactId.ToEntityReference<Contact>(),
+                    invln_Webroleid = webRoleId.ToEntityReference<invln_Webrole>()
+                },
+                new Contact()
+                {
+                    Id = contactId,
+                    OwnerId = ownerId.ToEntityReference<SystemUser>(),
+                    FirstName = "Eugenius",
+                    LastName = "Sosna",
+                    EMailAddress1 = "gieneksosna@OoO.pl"
+                },
                 new invln_notificationsetting() { Id = notificationSetingsId, invln_subject = "AHP", invln_templateid = notificationSetingsId.ToString() ,invln_templatetypename = "COMMON_CHANGE_EXTERNAL_USER_PERMISSIONS" },
             });
 

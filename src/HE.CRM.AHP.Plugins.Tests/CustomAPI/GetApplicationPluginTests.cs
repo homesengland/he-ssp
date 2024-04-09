@@ -34,12 +34,23 @@ namespace HE.CRM.AHP.Plugins.Tests.CustomApi
 
             fakedContext.Initialize(new List<Entity>()
             {
-                new invln_scheme() { Id = appId, invln_organisationid = organizationId.ToEntityReference<Account>(), invln_contactid = userId.ToEntityReference<Contact>()},
-                new Contact() { Id = userId, invln_externalid = userId.ToString()},
-                new Account() { Id= organizationId }
+                new invln_scheme()
+                {
+                    Id = appId,
+                    invln_organisationid = organizationId.ToEntityReference<Account>(),
+                    invln_contactid = userId.ToEntityReference<Contact>()
+                },
+                new Contact()
+                {
+                    Id = userId,
+                    invln_externalid = userId.ToString()
+                },
+                new Account()
+                {
+                    Id= organizationId
+                }
             });
 
-            //   var request = new invln_changeahpapplicationstatusRequest();
             pluginContext.InputParameters = new ParameterCollection
             {
                 { invln_getahpapplicationRequest.Fields.invln_applicationid, appId.ToString()},
