@@ -10,7 +10,7 @@ public class OlderPeopleHomeTypeDetailsSegmentContractMapper : IHomeTypeSegmentC
     public OlderPeopleHomeTypeDetails Map(ApplicationName applicationName, HomeTypeName homeTypeName, OlderPeopleHomeTypeDetailsSegmentEntity segment)
     {
         return new OlderPeopleHomeTypeDetails(
-            applicationName.Name,
+            applicationName.Value,
             homeTypeName.Value,
             segment.HousingType);
     }

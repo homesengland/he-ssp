@@ -1,15 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
-using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Constants;
-using HE.Investments.Common.Messages;
-using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.Loans.Common.Tests.TestData;
-using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using HE.Investments.Loans.Contract.Projects.ViewModels;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Extensions;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
-using HE.Investments.Loans.WWW;
 using HE.Investments.Loans.WWW.Views.Project.Consts;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;

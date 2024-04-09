@@ -24,9 +24,10 @@
 
 @if (!string.IsNullOrWhiteSpace(Model.paragraph))
 {
-    <gds-p>
-        @Model.paragraph
-    </gds-p>
+    foreach (var line in Model.paragraph.Split(Environment.NewLine))
+    {
+        <gds-p>@line</gds-p>
+    }
 }
 
 @if (!string.IsNullOrWhiteSpace(Model.hint))

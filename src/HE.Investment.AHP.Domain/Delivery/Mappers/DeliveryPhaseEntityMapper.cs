@@ -9,7 +9,7 @@ public static class DeliveryPhaseEntityMapper
     public static DeliveryPhaseBasicDetails ToDeliveryPhaseBasicDetails(IDeliveryPhaseEntity deliveryPhase)
     {
         return new DeliveryPhaseBasicDetails(
-            deliveryPhase.Application.Name.Name,
+            deliveryPhase.Application.Name.Value,
             deliveryPhase.Id.Value,
             deliveryPhase.Name.Value,
             deliveryPhase.TotalHomesToBeDeliveredInThisPhase,

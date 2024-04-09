@@ -10,7 +10,7 @@ public class SupportedHousingInformationSegmentContractMapper : IHomeTypeSegment
     public SupportedHousingInformation Map(ApplicationName applicationName, HomeTypeName homeTypeName, SupportedHousingInformationSegmentEntity segment)
     {
         return new SupportedHousingInformation(
-            applicationName.Name,
+            applicationName.Value,
             homeTypeName.Value,
             segment.LocalCommissioningBodiesConsulted,
             segment.ShortStayAccommodation,

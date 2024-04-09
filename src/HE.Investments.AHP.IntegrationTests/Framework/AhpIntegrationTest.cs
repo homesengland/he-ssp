@@ -1,5 +1,4 @@
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.WWW;
 using HE.Investments.AHP.IntegrationTests.Crm;
 using HE.Investments.AHP.IntegrationTests.FillApplication.Data;
@@ -12,11 +11,8 @@ using Xunit.Abstractions;
 
 namespace HE.Investments.AHP.IntegrationTests.Framework;
 
-[SuppressMessage("Usage", "CA1816", Justification = "It is not needed here")]
-[SuppressMessage("Design", "CA1063", Justification = "It is not needed here")]
-[SuppressMessage("Code Smell", "S3881", Justification = "It is not needed here")]
 [Collection(nameof(AhpIntegrationTestSharedContext))]
-public class AhpIntegrationTest : IntegrationTestBase<Program>, IDisposable
+public class AhpIntegrationTest : IntegrationTestBase<Program>, IAsyncLifetime
 {
     private readonly ITestOutputHelper _output;
 
@@ -45,9 +41,15 @@ public class AhpIntegrationTest : IntegrationTestBase<Program>, IDisposable
 
     private ILoginData LoginData { get; }
 
-    public void Dispose()
+    public Task InitializeAsync()
+    {
+        return Task.CompletedTask;
+    }
+
+    public Task DisposeAsync()
     {
         _output.WriteLine($"Elapsed time: {Stopwatch.Elapsed.TotalSeconds} sec");
+        return Task.CompletedTask;
     }
 
     public async Task ChangeApplicationStatus(string applicationId, ApplicationStatus applicationStatus)
