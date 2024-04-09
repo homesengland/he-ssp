@@ -12,6 +12,8 @@ public static class BoolExtensions
         };
     }
 
+    public static string MapToTrueFalse(this bool value) => ((bool?)value).MapToTrueFalse();
+
     public static string MapToYesNo(this bool? value)
     {
         return value switch
@@ -21,6 +23,4 @@ public static class BoolExtensions
             _ => string.Empty,
         };
     }
-
-    public static string MapToTrueFalse(this bool value) => ((bool?)value).MapToTrueFalse();
 }

@@ -20,8 +20,10 @@ public class FinancialDetailsEntityBuilder
     private FinancialDetailsEntityBuilder(ApplicationBasicInfo? applicationBasicInfo)
     {
         applicationBasicInfo ??= ApplicationBasicInfoTestData.AffordableRentInDraftState;
-        _item = new(applicationBasicInfo,
-            new SiteBasicInfo(applicationBasicInfo.SiteId,
+        _item = new(
+            applicationBasicInfo,
+            new SiteBasicInfo(
+                applicationBasicInfo.SiteId,
                 new SiteName("Site name"),
                 new LandAcquisitionStatus(SiteLandAcquisitionStatus.FullOwnership),
                 SiteUsingModernMethodsOfConstruction.Yes));

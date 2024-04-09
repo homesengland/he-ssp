@@ -47,7 +47,8 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
     {
         var organisationId = userAccount.SelectedOrganisationId().Value;
         var application = userAccount.CanViewAllApplications()
-            ? await _applicationCrmContext.GetOrganisationApplicationById(id.Value,
+            ? await _applicationCrmContext.GetOrganisationApplicationById(
+                id.Value,
                 organisationId,
                 CrmFields.FinancialDetailsToRead.ToList(),
                 cancellationToken)
