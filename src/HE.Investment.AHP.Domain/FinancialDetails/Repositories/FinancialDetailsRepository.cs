@@ -1,6 +1,7 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Site;
+using HE.Investment.AHP.Domain.Application.Factories;
 using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
@@ -10,6 +11,8 @@ using HE.Investment.AHP.Domain.FinancialDetails.Entities;
 using HE.Investment.AHP.Domain.FinancialDetails.Mappers;
 using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 using HE.Investment.AHP.Domain.Programme;
+using HE.Investment.AHP.Domain.Scheme.Repositories;
+using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.CRM.Mappers;
@@ -23,10 +26,13 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
 
     private readonly IAhpProgrammeRepository _programmeRepository;
 
-    public FinancialDetailsRepository(IApplicationCrmContext applicationCrmContext, IAhpProgrammeRepository programmeRepository)
+    private readonly ISchemeRepository _schemeRepository;
+
+    public FinancialDetailsRepository(IApplicationCrmContext applicationCrmContext, IAhpProgrammeRepository programmeRepository, ISchemeRepository schemeRepository)
     {
         _applicationCrmContext = applicationCrmContext;
         _programmeRepository = programmeRepository;
+        _schemeRepository = schemeRepository;
     }
 
     public async Task<FinancialDetailsEntity> GetById(AhpApplicationId id, UserAccount userAccount, CancellationToken cancellationToken)
@@ -35,12 +41,18 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
         var application = userAccount.CanViewAllApplications()
             ? await _applicationCrmContext.GetOrganisationApplicationById(id.Value, organisationId, CrmFields.FinancialDetailsToRead.ToList(), cancellationToken)
             : await _applicationCrmContext.GetUserApplicationById(id.Value, organisationId, CrmFields.FinancialDetailsToRead.ToList(), cancellationToken);
+        var schemeFunding = (await _schemeRepository.GetByApplicationId(id, userAccount, false, cancellationToken)).Funding;
 
-        return await CreateEntity(application, cancellationToken);
+        return await CreateEntity(application, userAccount, schemeFunding, cancellationToken);
     }
 
     public async Task<FinancialDetailsEntity> Save(FinancialDetailsEntity financialDetails, OrganisationId organisationId, CancellationToken cancellationToken)
     {
+        if (financialDetails.IsModified is false)
+        {
+            return financialDetails;
+        }
+
         var dto = new AhpApplicationDto
         {
             id = financialDetails.ApplicationBasicInfo.Id.Value,
@@ -62,7 +74,7 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
         return financialDetails;
     }
 
-    private async Task<FinancialDetailsEntity> CreateEntity(AhpApplicationDto application, CancellationToken cancellationToken)
+    private async Task<FinancialDetailsEntity> CreateEntity(AhpApplicationDto application, UserAccount userAccount, SchemeFunding schemeFunding, CancellationToken cancellationToken)
     {
         var applicationId = AhpApplicationId.From(application.id);
         var applicationBasicInfo = new ApplicationBasicInfo(
@@ -71,10 +83,12 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
             new ApplicationName(application.name),
             ApplicationTenureMapper.ToDomain(application.tenure)!.Value,
             AhpApplicationStatusMapper.MapToPortalStatus(application.applicationStatus),
-            await _programmeRepository.GetProgramme(applicationId, cancellationToken));
+            await _programmeRepository.GetProgramme(applicationId, cancellationToken),
+            new ApplicationStateFactory(userAccount));
 
         return new FinancialDetailsEntity(
             applicationBasicInfo,
+            schemeFunding,
             new LandStatus(
                 application.actualAcquisitionCost.IsProvided() ? new PurchasePrice(application.actualAcquisitionCost!.Value) : null,
                 application.expectedAcquisitionCost.IsProvided() ? new ExpectedPurchasePrice(application.expectedAcquisitionCost!.Value) : null),

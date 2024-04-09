@@ -37,9 +37,33 @@ namespace HE.CRM.Common.Repositories.Implementations
             }
         }
 
-        public PagedResponseDto<invln_Sites> Get(PagingRequestDto paging, string fieldsToRetrieve)
+        public PagedResponseDto<invln_Sites> GetMultiple(PagingRequestDto paging, string fieldsToRetrieve, string externalContactIdFilter, string accountIdFilter)
         {
-            return Get(fieldsToRetrieve, paging);
+
+            var fetchXml =
+                $@"<fetch page=""{paging.pageNumber}"" count=""{paging.pageSize}"" returntotalrecordcount=""true"">
+	                <entity name=""invln_sites"">
+                        {FetchXmlHelper.GenerateAttributes(fieldsToRetrieve)}
+                        <order attribute=""createdon"" descending=""true"" />
+                        {accountIdFilter}
+                        <link-entity name=""invln_ahglocalauthorities"" to=""invln_localauthority"" from=""invln_ahglocalauthoritiesid""  link-type=""outer"">
+                            <attribute name=""invln_gsscode"" />
+                            <attribute name=""invln_localauthorityname"" />
+                        </link-entity>
+		                <link-entity name=""contact"" from=""contactid"" to=""invln_createdbycontactid"" link-type=""outer"">
+			                {externalContactIdFilter}
+		                </link-entity>
+	                </entity>
+                </fetch>";
+
+            var result = service.RetrieveMultiple(new FetchExpression(fetchXml));
+
+            return new PagedResponseDto<invln_Sites>
+            {
+                paging = paging,
+                items = result.Entities.Select(x => x.ToEntity<invln_Sites>()).AsEnumerable().ToList(),
+                totalItemsCount = result.TotalRecordCount,
+            };
         }
 
         private PagedResponseDto<invln_Sites> Get(string fieldsToRetrieve, PagingRequestDto paging, string id = null)

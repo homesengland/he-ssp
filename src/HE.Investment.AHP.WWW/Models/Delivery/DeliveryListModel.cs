@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Contract.Application;
 using HE.Investments.Common.WWW.Models;
 
 namespace HE.Investment.AHP.WWW.Models.Delivery;
@@ -14,7 +15,9 @@ public class DeliveryListModel : DeliveryModelBase, IEditableViewModel
     {
     }
 
-    public bool IsEditable { get; set; }
+    public IReadOnlyCollection<AhpApplicationOperation> AllowedOperations { get; set; }
+
+    public bool IsEditable => AllowedOperations.Contains(AhpApplicationOperation.Modification);
 
     public bool IsReadOnly => !IsEditable;
 

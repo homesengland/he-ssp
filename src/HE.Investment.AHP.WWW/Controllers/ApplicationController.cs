@@ -125,8 +125,10 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
             _siteName,
             application.Name,
             application.Status,
+            application.AllowedOperations,
             application.ReferenceNumber,
             application.LastModificationDetails,
+            application.LastSubmissionDetails,
             application.Sections);
 
         return View("TaskList", model);
@@ -136,9 +138,10 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     [HttpGet("{applicationId}/check-answers")]
     public async Task<IActionResult> CheckAnswers(string applicationId, CancellationToken cancellationToken)
     {
-        var application = await _mediator.Send(new GetApplicationQuery(AhpApplicationId.From(applicationId)), cancellationToken);
-        var isReadOnly = !await _accountAccessContext.CanEditApplication() || application.IsReadOnly;
-        var applicationSummary = await _applicationSummaryViewModelFactory.GetDataAndCreate(AhpApplicationId.From(applicationId), Url, isReadOnly, cancellationToken);
+        var applicationSummary = await _applicationSummaryViewModelFactory.GetDataAndCreate(
+            AhpApplicationId.From(applicationId),
+            Url,
+            cancellationToken);
 
         return View("CheckAnswers", applicationSummary);
     }
@@ -152,8 +155,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
 
         if (result.HasValidationErrors)
         {
-            var isReadOnly = !await _accountAccessContext.CanEditApplication();
-            var applicationSummary = await _applicationSummaryViewModelFactory.GetDataAndCreate(AhpApplicationId.From(applicationId), Url, isReadOnly, cancellationToken);
+            var applicationSummary = await _applicationSummaryViewModelFactory.GetDataAndCreate(AhpApplicationId.From(applicationId), Url, cancellationToken);
 
             ModelState.AddValidationErrors(result);
             return View("CheckAnswers", applicationSummary);
@@ -318,6 +320,6 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
             application.NumberOfHomes.ToString()!,
             CurrencyHelper.DisplayPounds(application.FundingRequested)!,
             CurrencyHelper.DisplayPounds(application.TotalSchemeCost)!,
-            application.RepresentationsAndWarranties);
+            application.RepresentationsAndWarranties == true ? "checked" : null);
     }
 }

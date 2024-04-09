@@ -18,8 +18,9 @@ public class CompleteFinancialDetailsTests
         // given
         var financialDetailsEntity = FinancialDetailsEntityBuilder
             .New(ApplicationBasicInfoTestData.SharedOwnershipInDraftState)
+            .WithSchemaFunding(100)
             .WithLandStatus(10)
-            .WithLandValue(700)
+            .WithLandValue(800)
             .WithOtherApplicationCosts(25, 25)
             .WithExpectedContributions(ExpectedContributionsToSchemeBuilder.NewWithAllValuesAs50().Build())
             .WithGrants(PublicGrantsBuilder.NewWithAllValuesAs50().Build())
@@ -86,6 +87,7 @@ public class CompleteFinancialDetailsTests
         // given
         var financialDetailsEntity = FinancialDetailsEntityBuilder
             .New(ApplicationBasicInfoTestData.SharedOwnershipInDraftState)
+            .WithSchemaFunding(150)
             .WithLandStatus(10)
             .WithLandValue(700)
             .WithOtherApplicationCosts(25, 20)

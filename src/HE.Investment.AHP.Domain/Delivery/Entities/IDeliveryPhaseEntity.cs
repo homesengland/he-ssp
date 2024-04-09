@@ -38,10 +38,6 @@ public interface IDeliveryPhaseEntity
 
     bool IsModified { get; }
 
-    bool IsReadOnly { get; }
-
-    bool IsApplicationLocked { get; }
-
     int TotalHomesToBeDeliveredInThisPhase { get; }
 
     DeliveryPhaseMilestones DeliveryPhaseMilestones { get; }

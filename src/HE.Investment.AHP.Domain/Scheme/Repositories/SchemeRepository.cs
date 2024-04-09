@@ -1,6 +1,7 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Site;
+using HE.Investment.AHP.Domain.Application.Factories;
 using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
@@ -12,6 +13,7 @@ using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.CRM.Mappers;
+using HE.Investments.Common.Infrastructure.Events;
 
 namespace HE.Investment.AHP.Domain.Scheme.Repositories;
 
@@ -23,13 +25,17 @@ public class SchemeRepository : ISchemeRepository
 
     private readonly IAhpFileService<LocalAuthoritySupportFileParams> _fileService;
 
+    private readonly IEventDispatcher _eventDispatcher;
+
     public SchemeRepository(
         IApplicationCrmContext repository,
         IAhpProgrammeRepository programmeRepository,
-        IAhpFileService<LocalAuthoritySupportFileParams> fileService)
+        IAhpFileService<LocalAuthoritySupportFileParams> fileService,
+        IEventDispatcher eventDispatcher)
     {
         _repository = repository;
         _fileService = fileService;
+        _eventDispatcher = eventDispatcher;
         _programmeRepository = programmeRepository;
     }
 
@@ -48,7 +54,7 @@ public class SchemeRepository : ISchemeRepository
             file = stakeholderDiscussionsFiles.Any() ? stakeholderDiscussionsFiles.First() : null;
         }
 
-        return await CreateEntity(application, file, cancellationToken);
+        return await CreateEntity(application, userAccount, file, cancellationToken);
     }
 
     public async Task<SchemeEntity> Save(SchemeEntity entity, OrganisationId organisationId, CancellationToken cancellationToken)
@@ -73,13 +79,13 @@ public class SchemeRepository : ISchemeRepository
         };
 
         await _repository.Save(dto, organisationId.Value, CrmFields.SchemeToUpdate.ToList(), cancellationToken);
-
         await entity.StakeholderDiscussions.SaveChanges(entity.Application.Id, _fileService, cancellationToken);
+        await _eventDispatcher.Publish(entity, cancellationToken);
 
         return entity;
     }
 
-    private async Task<SchemeEntity> CreateEntity(AhpApplicationDto application, UploadedFile? stakeholderDiscussionsFile, CancellationToken cancellationToken)
+    private async Task<SchemeEntity> CreateEntity(AhpApplicationDto application, UserAccount userAccount, UploadedFile? stakeholderDiscussionsFile, CancellationToken cancellationToken)
     {
         var applicationId = AhpApplicationId.From(application.id);
         var applicationBasicInfo = new ApplicationBasicInfo(
@@ -88,7 +94,8 @@ public class SchemeRepository : ISchemeRepository
             new ApplicationName(application.name),
             ApplicationTenureMapper.ToDomain(application.tenure)!.Value,
             AhpApplicationStatusMapper.MapToPortalStatus(application.applicationStatus),
-            await _programmeRepository.GetProgramme(applicationId, cancellationToken));
+            await _programmeRepository.GetProgramme(applicationId, cancellationToken),
+            new ApplicationStateFactory(userAccount));
 
         return new SchemeEntity(
             applicationBasicInfo,

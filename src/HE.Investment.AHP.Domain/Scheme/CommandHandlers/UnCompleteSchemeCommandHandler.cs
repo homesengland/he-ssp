@@ -14,6 +14,6 @@ public class UnCompleteSchemeCommandHandler : UpdateSchemeCommandHandler<UnCompl
 
     protected override void Update(SchemeEntity scheme, UnCompleteSchemeCommand request)
     {
-        scheme.UnComplete();
+        scheme.SetInProgress();
     }
 }

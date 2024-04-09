@@ -1,8 +1,8 @@
 using System.Globalization;
-using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Enums;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Enum;
 using HE.Investments.TestsUtils.Extensions;
 
@@ -36,9 +36,7 @@ public class SiteData
 
     public SitePlanningStatus PlanningStatus => SitePlanningStatus.PlanningDiscussionsUnderwayWithThePlanningOffice;
 
-    public DateOnly ExpectedPlanningApprovalDate => new(2024, 12, 01);
-
-    public string ExpectedPlanningApprovalDisplayDate => "01/12/2024";
+    public DateDetails ExpectedPlanningApprovalDate => new("1", "12", "2024");
 
     public YesNoType IsLandRegistryTitleNumberRegistered => YesNoType.Yes;
 

@@ -2,7 +2,6 @@ using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Events;
 using HE.Investment.AHP.Domain.Application.Repositories;
-using HE.Investment.AHP.Domain.Application.Repositories.Interfaces;
 using HE.Investment.AHP.Domain.Delivery.Crm;
 using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.Tranches;
@@ -111,7 +110,7 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
         if (deliveryPhases.IsStatusChanged)
         {
             await _crmContext.SaveDeliveryStatus(
-                deliveryPhases.ApplicationId.Value,
+                deliveryPhases.Application.Id.Value,
                 organisationId.Value,
                 SectionStatusMapper.ToDto(deliveryPhases.Status),
                 cancellationToken);
@@ -125,7 +124,7 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
         var deliveryPhaseToRemove = deliveryPhases.PopRemovedDeliveryPhase();
         while (deliveryPhaseToRemove != null)
         {
-            await _crmContext.Remove(deliveryPhases.ApplicationId.Value, deliveryPhaseToRemove.Id.Value, organisationId.Value, cancellationToken);
+            await _crmContext.Remove(deliveryPhases.Application.Id.Value, deliveryPhaseToRemove.Id.Value, organisationId.Value, cancellationToken);
             await _eventDispatcher.Publish(new DeliveryPhaseHasBeenRemovedEvent(deliveryPhaseToRemove.Application.Id), cancellationToken);
 
             deliveryPhaseToRemove = deliveryPhases.PopRemovedDeliveryPhase();

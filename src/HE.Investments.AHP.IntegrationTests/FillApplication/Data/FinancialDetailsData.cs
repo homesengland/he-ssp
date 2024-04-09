@@ -47,6 +47,8 @@ public class FinancialDetailsData
 
     public decimal OtherPublicBodiesGrants { get; private set; }
 
+    public decimal SchemaFunding { get; private set; }
+
     public decimal TotalExpectedContributions => ExpectedContributionsRentalIncomeBorrowing +
                                                   ExpectedContributionsSaleOfHomesOnThisScheme +
                                                   ExpectedContributionsSaleOfHomesOnOtherSchemes +
@@ -63,7 +65,7 @@ public class FinancialDetailsData
                                    LotteryGrants +
                                    OtherPublicBodiesGrants;
 
-    public decimal TotalContributions => TotalGrants + TotalExpectedContributions;
+    public decimal TotalContributions => TotalGrants + TotalExpectedContributions + SchemaFunding;
 
     public decimal TotalCost => ExpectedWorksCosts + ExpectedOnCosts + PublicLandValue;
 
@@ -104,6 +106,11 @@ public class FinancialDetailsData
         HealthRelatedGrants = CountyCouncilGrants + 4;
         LotteryGrants = CountyCouncilGrants + 5;
         OtherPublicBodiesGrants = TotalCost - TotalContributions;
+    }
+
+    public void ProvideSchemeFunding(decimal schemaFunding)
+    {
+        SchemaFunding = schemaFunding;
     }
 
     private decimal GetDecimalValue(string fieldName)

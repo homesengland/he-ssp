@@ -1,7 +1,8 @@
+@using HE.Investments.Common.WWW.Config
+@inject IMvcAppConfig AppConfig
 @{
     Layout = "_GovukTemplate";
-    //ViewData["HomepageUrl"] = RouteConstants.Homepage;
-    ViewData["ServiceName"] = "Development loan application";
+    ViewData["ServiceName"] = AppConfig.BuildAppTitle("Apply for Levelling Up Home Building Fund Loan");
 }
 
 @section AdditionalMeta

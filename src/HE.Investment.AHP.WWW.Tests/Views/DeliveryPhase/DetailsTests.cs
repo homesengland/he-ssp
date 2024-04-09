@@ -1,10 +1,8 @@
-using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Enums;
+using HE.Investment.AHP.WWW.Tests.TestDataBuilders;
 using HE.Investment.AHP.WWW.Views.Delivery.Const;
 using HE.Investments.Common.Contract;
-using HE.Investments.Common.WWWTestsFramework;
-using HE.Investments.TestsUtils.Extensions;
 using Microsoft.AspNetCore.Routing;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.DeliveryPhase;
@@ -19,12 +17,10 @@ public class DetailsTests : AhpViewTestBase
     public async Task ShouldDisplayView()
     {
         var model = new DeliveryPhaseDetails(
-            "AppName",
+            ApplicationTestData.SampleApplication,
             "Id",
             "DeliveryPhaseName",
-            SectionStatus.InProgress,
-            false,
-            false);
+            SectionStatus.InProgress);
 
         // given & when
         var document = await Render(_viewPath, model, routeData: _routeData);

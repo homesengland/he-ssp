@@ -16,20 +16,18 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
     public IEnumerable<SectionSummaryViewModel> CreateSummaryModel(
         FullHomeType homeType,
         IUrlHelper urlHelper,
-        bool isReadOnly,
         bool useWorkflowRedirection = false)
     {
-        return CreateSummarySectionsModel(homeType, urlHelper, isReadOnly, useWorkflowRedirection)
+        return CreateSummarySectionsModel(homeType, urlHelper, useWorkflowRedirection)
             .Where(x => x.Items != null && x.Items.Any());
     }
 
     private static IEnumerable<SectionSummaryViewModel> CreateSummarySectionsModel(
         FullHomeType homeType,
         IUrlHelper urlHelper,
-        bool isReadOnly,
         bool useWorkflowRedirection)
     {
-        var factory = new HomeTypeQuestionFactory(homeType, urlHelper, isReadOnly, useWorkflowRedirection);
+        var factory = new HomeTypeQuestionFactory(homeType, urlHelper, useWorkflowRedirection);
 
         yield return CreateHomeTypeDetailsSection(homeType, factory);
 
@@ -57,27 +55,27 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
         yield return CreateBuildingInformationSection(homeType.HomeInformation, factory);
         yield return CreateFloorAreaSection(homeType.HomeInformation, factory);
 
-        if (homeType.Tenure is Tenure.AffordableRent)
+        if (homeType.Application.Tenure is Tenure.AffordableRent)
         {
             yield return CreateAffordableRentSection(homeType.TenureDetails, factory);
         }
-        else if (homeType.Tenure is Tenure.SocialRent)
+        else if (homeType.Application.Tenure is Tenure.SocialRent)
         {
             yield return CreateSocialRentSection(homeType.TenureDetails, factory);
         }
-        else if (homeType.Tenure is Tenure.SharedOwnership)
+        else if (homeType.Application.Tenure is Tenure.SharedOwnership)
         {
             yield return CreateSharedOwnershipSection(homeType.TenureDetails, factory);
         }
-        else if (homeType.Tenure is Tenure.RentToBuy)
+        else if (homeType.Application.Tenure is Tenure.RentToBuy)
         {
             yield return CreateRentToBuySection(homeType.TenureDetails, factory);
         }
-        else if (homeType.Tenure is Tenure.HomeOwnershipLongTermDisabilities)
+        else if (homeType.Application.Tenure is Tenure.HomeOwnershipLongTermDisabilities)
         {
             yield return CreateHomeOwnershipDisabilitiesSection(homeType.TenureDetails, factory);
         }
-        else if (homeType.Tenure is Tenure.OlderPersonsSharedOwnership)
+        else if (homeType.Application.Tenure is Tenure.OlderPersonsSharedOwnership)
         {
             yield return CreateOlderPersonsSharedOwnershipSection(homeType.TenureDetails, factory);
         }
@@ -117,7 +115,7 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
     {
         var files = designPlans.UploadedFiles.ToDictionary(
             x => x.FileName,
-            x => DownloadDesignFileUrl(urlHelper, homeType.ApplicationId, homeType.Id, x.FileId));
+            x => DownloadDesignFileUrl(urlHelper, homeType.Application.Id, homeType.Id, x.FileId));
         return SectionSummaryViewModel.New(
             "Design plans",
             factory.FileQuestion("Design plans", nameof(Controller.DesignPlans), designPlans.MoreInformation, files));

@@ -99,8 +99,8 @@ public class ProvideAdditionalDataCommandHandlerTests : TestBase<ProvideAddition
 
         project.AdditionalDetails!.Cost.Value.Should().Be(CorrectAmount);
         project.AdditionalDetails!.CurrentValue.Value.Should().Be(CorrectAmount);
-        project.AdditionalDetails!.PurchaseDate.Value.Should().Be(CorrectDate.Value);
-        project.AdditionalDetails!.PurchaseDate.Value.Should().Be(CorrectDate.Value);
+        project.AdditionalDetails!.PurchaseDate.Value.Should().Be(CorrectDateTime);
+        project.AdditionalDetails!.PurchaseDate.Value.Should().Be(CorrectDateTime);
     }
 
     private void GivenCurrentDate(DateTime date)

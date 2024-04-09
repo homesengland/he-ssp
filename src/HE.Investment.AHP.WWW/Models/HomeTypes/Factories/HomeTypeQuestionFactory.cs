@@ -23,12 +23,12 @@ internal class HomeTypeQuestionFactory
 
     private readonly EncodedWorkflow<HomeTypesWorkflowState>? _encodedWorkflow;
 
-    public HomeTypeQuestionFactory(FullHomeType homeType, IUrlHelper urlHelper, bool isReadOnly, bool useWorkflowRedirection)
+    public HomeTypeQuestionFactory(FullHomeType homeType, IUrlHelper urlHelper, bool useWorkflowRedirection)
     {
         _homeType = homeType;
         _urlHelper = urlHelper;
-        _isReadOnly = isReadOnly;
-        _workflow = new HomeTypesWorkflow(homeType, isReadOnly);
+        _isReadOnly = homeType.Application.IsReadOnly;
+        _workflow = new HomeTypesWorkflow(homeType);
         _encodedWorkflow = useWorkflowRedirection ? _workflow.GetEncodedWorkflow() : null;
     }
 
@@ -110,8 +110,8 @@ internal class HomeTypeQuestionFactory
     private string CreateActionUrl(string controllerActionName)
     {
         object routeParameters = _encodedWorkflow != null
-            ? new { applicationId = _homeType.ApplicationId.Value, homeTypeId = _homeType.Id.Value, workflow = _encodedWorkflow.Value }
-            : new { applicationId = _homeType.ApplicationId.Value, homeTypeId = _homeType.Id.Value };
+            ? new { applicationId = _homeType.Application.Id.Value, homeTypeId = _homeType.Id.Value, workflow = _encodedWorkflow.Value }
+            : new { applicationId = _homeType.Application.Id.Value, homeTypeId = _homeType.Id.Value };
 
         return _urlHelper.Action(controllerActionName, "HomeTypes", routeParameters) ?? string.Empty;
     }

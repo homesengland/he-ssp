@@ -19,11 +19,51 @@ namespace DataverseModel
 		
 		public static class Fields
 		{
+			public const string invln_accountid = "invln_accountid";
+			public const string invln_externalcontactid = "invln_externalcontactid";
 			public const string invln_pagingrequest = "invln_pagingrequest";
 			public const string invln_fieldstoretrieve = "invln_fieldstoretrieve";
 		}
 		
 		public const string ActionLogicalName = "invln_getmultiplesites";
+		
+		public string invln_accountid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_accountid"))
+				{
+					return ((string)(this.Parameters["invln_accountid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_accountid"] = value;
+			}
+		}
+		
+		public string invln_externalcontactid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_externalcontactid"))
+				{
+					return ((string)(this.Parameters["invln_externalcontactid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_externalcontactid"] = value;
+			}
+		}
 		
 		public string invln_pagingrequest
 		{

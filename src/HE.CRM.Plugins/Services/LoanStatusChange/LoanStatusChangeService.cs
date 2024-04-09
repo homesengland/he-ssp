@@ -115,7 +115,7 @@ namespace HE.CRM.Plugins.Services.LoanStatusChange
                     pastFormStatus = "has been changed to " + statusLabel; //TODO: to update
                     break;
                 case (int)invln_InternalStatus.ReferredBacktoApplicant:
-                    statusLabel = "Reffered back to applicant";
+                    statusLabel = "Referred back to applicant";
                     pastFormStatus = "has been changed to " + statusLabel; //TODO: to update
                     _govNotifyEmailService.SendNotifications_EXTERNAL_APPLICATION_ACTION_REQUIRED(loanStatusChange, loanApplication, "update");
                     break;

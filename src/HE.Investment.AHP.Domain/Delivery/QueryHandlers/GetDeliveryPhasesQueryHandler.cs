@@ -1,5 +1,6 @@
 using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Queries;
+using HE.Investment.AHP.Domain.Application.Mappers;
 using HE.Investment.AHP.Domain.Delivery.Mappers;
 using HE.Investment.AHP.Domain.Delivery.Repositories;
 using HE.Investments.Account.Shared;
@@ -25,9 +26,8 @@ public class GetDeliveryPhasesQueryHandler : IRequestHandler<GetDeliveryPhasesQu
         var deliveryPhases = await _repository.GetByApplicationId(request.ApplicationId, account, cancellationToken);
 
         return new ApplicationDeliveryPhases(
-            deliveryPhases.ApplicationName.Name,
+            ApplicationBasicInfoMapper.Map(deliveryPhases.Application),
             deliveryPhases.UnusedHomeTypesCount,
-            deliveryPhases.DeliveryPhases.OrderByDescending(x => x.CreatedOn).Select(DeliveryPhaseEntityMapper.ToDeliveryPhaseBasicDetails).ToList(),
-            deliveryPhases.IsReadOnly);
+            deliveryPhases.DeliveryPhases.OrderByDescending(x => x.CreatedOn).Select(DeliveryPhaseEntityMapper.ToDeliveryPhaseBasicDetails).ToList());
     }
 }

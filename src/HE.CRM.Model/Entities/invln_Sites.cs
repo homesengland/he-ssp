@@ -58,6 +58,9 @@ namespace DataverseModel
 			public const string CreatedOnBehalfByName = "createdonbehalfbyname";
 			public const string CreatedOnBehalfByYomiName = "createdonbehalfbyyominame";
 			public const string ImportSequenceNumber = "importsequencenumber";
+			public const string invln_AccountId = "invln_accountid";
+			public const string invln_AccountIdName = "invln_accountidname";
+			public const string invln_AccountIdYomiName = "invln_accountidyominame";
 			public const string invln_ActionstoReduce = "invln_actionstoreduce";
 			public const string invln_anyrestrictionsinthes106 = "invln_anyrestrictionsinthes106";
 			public const string invln_anyrestrictionsinthes106Name = "invln_anyrestrictionsinthes106name";
@@ -67,6 +70,9 @@ namespace DataverseModel
 			public const string invln_bhlgreentrafficlights = "invln_bhlgreentrafficlights";
 			public const string invln_brownfieldgreenfield = "invln_brownfieldgreenfield";
 			public const string invln_brownfieldgreenfieldName = "invln_brownfieldgreenfieldname";
+			public const string invln_CreatedByContactId = "invln_createdbycontactid";
+			public const string invln_CreatedByContactIdName = "invln_createdbycontactidname";
+			public const string invln_CreatedByContactIdYomiName = "invln_createdbycontactidyominame";
 			public const string invln_detailedplanningapprovaldate = "invln_detailedplanningapprovaldate";
 			public const string invln_developercontributionsforah = "invln_developercontributionsforah";
 			public const string invln_developercontributionsforahName = "invln_developercontributionsforahname";
@@ -138,7 +144,8 @@ namespace DataverseModel
 			public const string invln_siteis100affordableName = "invln_siteis100affordablename";
 			public const string invln_sitename = "invln_sitename";
 			public const string invln_SiteReferenceNumber = "invln_sitereferencenumber";
-			public const string invln_sites_LocalAuthority_invln_ahglocalauthor = "invln_sites_LocalAuthority_invln_ahglocalauthor";
+			public const string invln_sites_AccountId_account = "invln_sites_AccountId_account";
+			public const string invln_sites_CreatedByContactId_contact = "invln_sites_CreatedByContactId_contact";
 			public const string invln_SitesId = "invln_sitesid";
 			public const string Id = "invln_sitesid";
 			public const string invln_sme = "invln_sme";
@@ -365,6 +372,57 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_accountid")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_AccountId
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_accountid");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_AccountId");
+				this.SetAttributeValue("invln_accountid", value);
+				this.OnPropertyChanged("invln_AccountId");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_accountidname")]
+		public string invln_AccountIdName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_accountid"))
+				{
+					return this.FormattedValues["invln_accountid"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_accountidyominame")]
+		public string invln_AccountIdYomiName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_accountid"))
+				{
+					return this.FormattedValues["invln_accountid"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_actionstoreduce")]
 		public string invln_ActionstoReduce
 		{
@@ -510,6 +568,57 @@ namespace DataverseModel
 				if (this.FormattedValues.Contains("invln_brownfieldgreenfield"))
 				{
 					return this.FormattedValues["invln_brownfieldgreenfield"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_createdbycontactid")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_CreatedByContactId
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_createdbycontactid");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_CreatedByContactId");
+				this.SetAttributeValue("invln_createdbycontactid", value);
+				this.OnPropertyChanged("invln_CreatedByContactId");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_createdbycontactidname")]
+		public string invln_CreatedByContactIdName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_createdbycontactid"))
+				{
+					return this.FormattedValues["invln_createdbycontactid"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_createdbycontactidyominame")]
+		public string invln_CreatedByContactIdYomiName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_createdbycontactid"))
+				{
+					return this.FormattedValues["invln_createdbycontactid"];
 				}
 				else
 				{
@@ -2448,23 +2557,44 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// N:1 invln_sites_LocalAuthority_invln_ahglocalauthor
+		/// N:1 invln_sites_AccountId_account
 		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_localauthority")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_sites_LocalAuthority_invln_ahglocalauthor")]
-		public DataverseModel.invln_AHGLocalAuthorities invln_sites_LocalAuthority_invln_ahglocalauthor
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_accountid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_sites_AccountId_account")]
+		public DataverseModel.Account invln_sites_AccountId_account
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntity<DataverseModel.invln_AHGLocalAuthorities>("invln_sites_LocalAuthority_invln_ahglocalauthor", null);
+				return this.GetRelatedEntity<DataverseModel.Account>("invln_sites_AccountId_account", null);
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("invln_sites_LocalAuthority_invln_ahglocalauthor");
-				this.SetRelatedEntity<DataverseModel.invln_AHGLocalAuthorities>("invln_sites_LocalAuthority_invln_ahglocalauthor", null, value);
-				this.OnPropertyChanged("invln_sites_LocalAuthority_invln_ahglocalauthor");
+				this.OnPropertyChanging("invln_sites_AccountId_account");
+				this.SetRelatedEntity<DataverseModel.Account>("invln_sites_AccountId_account", null, value);
+				this.OnPropertyChanged("invln_sites_AccountId_account");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_sites_CreatedByContactId_contact
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_createdbycontactid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_sites_CreatedByContactId_contact")]
+		public DataverseModel.Contact invln_sites_CreatedByContactId_contact
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.Contact>("invln_sites_CreatedByContactId_contact", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_sites_CreatedByContactId_contact");
+				this.SetRelatedEntity<DataverseModel.Contact>("invln_sites_CreatedByContactId_contact", null, value);
+				this.OnPropertyChanged("invln_sites_CreatedByContactId_contact");
 			}
 		}
 		

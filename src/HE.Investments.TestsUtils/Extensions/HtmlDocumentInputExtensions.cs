@@ -28,9 +28,16 @@ public static class HtmlDocumentInputExtensions
         return htmlDocument;
     }
 
+    public static IHtmlDocument HasInput(this IHtmlDocument htmlDocument, string fieldName, out IHtmlInputElement input)
+    {
+        input = GetAndValidateSingleInput<IHtmlInputElement>(htmlDocument, fieldName)!;
+
+        return htmlDocument;
+    }
+
     public static IHtmlDocument HasInput(this IHtmlDocument htmlDocument, string fieldName, string? label = null, string? value = null, bool exist = true)
     {
-        var inputs = GetAndValidateSingleInput<IHtmlInputElement>(htmlDocument, fieldName, label, exist);
+        var input = GetAndValidateSingleInput<IHtmlInputElement>(htmlDocument, fieldName, label, exist);
 
         if (!exist)
         {
@@ -39,7 +46,7 @@ public static class HtmlDocumentInputExtensions
 
         if (!string.IsNullOrEmpty(value))
         {
-            inputs!.Value.Should().Contain(value);
+            input!.Value.Should().Contain(value);
         }
 
         return htmlDocument;

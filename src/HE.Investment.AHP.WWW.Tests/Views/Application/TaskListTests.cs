@@ -9,6 +9,7 @@ namespace HE.Investment.AHP.WWW.Tests.Views.Application;
 public class TaskListTests : AhpViewTestBase
 {
     private readonly string _viewPath = "/Views/Application/TaskList.cshtml";
+
     private readonly ModificationDetails _testModificationDetails = new("Jan", "Kowalski", new DateTime(2023, 11, 29, 0, 0, 0, DateTimeKind.Unspecified));
 
     private readonly IList<ApplicationSection> _testSections = new List<ApplicationSection>
@@ -94,13 +95,29 @@ public class TaskListTests : AhpViewTestBase
         }
 
         // given
-        var model = CreateApplicationSectionsModel(_testSections, _testModificationDetails, status);
+        var model = CreateApplicationSectionsModel(_testSections, _testModificationDetails, status: status);
 
         // when
         var document = await Render(_viewPath, model);
 
         // then
         AssertView(document, model, false, "You have completed", false);
+    }
+
+    [Fact]
+    public async Task ShouldDisplayView_WhenApplicationIsSubmitted()
+    {
+        // given
+        var model = CreateApplicationSectionsModel(_testSections, submissionDetails: _testModificationDetails, status: ApplicationStatus.ApplicationSubmitted);
+
+        // when
+        var document = await Render(_viewPath, model);
+
+        // then
+        document
+            .HasPageHeader(model.SiteName, model.Name)
+            .HasElementWithText("p", "Submitted on 29/11/2023 00:00:00 by Jan Kowalski")
+            .HasElementWithText("a", "Return to applications");
     }
 
     private static void AssertView(
@@ -121,6 +138,7 @@ public class TaskListTests : AhpViewTestBase
     private static ApplicationSectionsModel CreateApplicationSectionsModel(
         IList<ApplicationSection>? sections = null,
         ModificationDetails? modificationDetails = null,
+        ModificationDetails? submissionDetails = null,
         ApplicationStatus status = ApplicationStatus.Draft)
     {
         return new ApplicationSectionsModel(
@@ -128,8 +146,10 @@ public class TaskListTests : AhpViewTestBase
             "some site",
             "application xyz",
             status,
+            new[] { AhpApplicationOperation.Modification, AhpApplicationOperation.Submit },
             "Ref1",
             modificationDetails,
+            submissionDetails,
             sections ?? new List<ApplicationSection>());
     }
 }

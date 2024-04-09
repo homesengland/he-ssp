@@ -1,15 +1,19 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using AngleSharp.Html.Dom;
+using FluentAssertions;
 using HE.Investment.AHP.WWW;
 using HE.Investment.AHP.WWW.Views.Delivery.Const;
 using HE.Investments.AHP.IntegrationTests.Extensions;
 using HE.Investments.AHP.IntegrationTests.FillApplication.Data;
 using HE.Investments.AHP.IntegrationTests.Framework;
 using HE.Investments.AHP.IntegrationTests.Pages;
+using HE.Investments.Common.Extensions;
 using HE.Investments.IntegrationTestsFramework;
+using HE.Investments.IntegrationTestsFramework.Assertions;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
+using Xunit.Abstractions;
 using Xunit.Extensions.Ordering;
 
 namespace HE.Investments.AHP.IntegrationTests.FillApplication;
@@ -20,8 +24,8 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
 {
     private readonly DeliveryPhasesData _deliveryPhasesData;
 
-    public Order05CompleteDeliveryPhases(IntegrationTestFixture<Program> fixture)
-        : base(fixture)
+    public Order05CompleteDeliveryPhases(IntegrationTestFixture<Program> fixture, ITestOutputHelper output)
+        : base(fixture, output)
     {
         var deliveryPhasesData = GetSharedDataOrNull<DeliveryPhasesData>(nameof(_deliveryPhasesData));
         if (deliveryPhasesData is null)
@@ -96,7 +100,7 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
             .HasContinueButton(out var continueButton);
 
         var deliveryPhase = RehabDeliveryPhase.GenerateDeliveryPhase();
-        var deliveryPhaseNamePage = await TestClient.SubmitButton(continueButton, ("DeliveryPhaseName", deliveryPhase.Name.ToString()));
+        var deliveryPhaseNamePage = await TestClient.SubmitButton(continueButton, ("DeliveryPhaseName", deliveryPhase.Name));
 
         RehabDeliveryPhase.SetDeliveryPhaseId(deliveryPhaseNamePage.Url.GetNestedGuidFromUrl());
         deliveryPhaseNamePage.UrlEndWith(BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.Details, RehabDeliveryPhase));
@@ -156,7 +160,7 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
         // given
         var startPageUrl = BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.AddHomes, RehabDeliveryPhase);
         var deliveryPhase = RehabDeliveryPhase.GenerateHomes(await GetHomeTypes(startPageUrl));
-        var inputs = deliveryPhase.DeliveryPhaseHomes.Select(x => ($"HomesToDeliver[{x.Key}]", x.Value.ToString(CultureInfo.InvariantCulture))).ToArray();
+        var inputs = deliveryPhase.DeliveryPhaseHomes.Select(x => ($"HomesToDeliver[{x.Id}]", x.NumberOfHomes.ToString(CultureInfo.InvariantCulture))).ToArray();
 
         // when & then
         await TestQuestionPage(
@@ -174,7 +178,7 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
         var summaryOfDeliveryPhase = await GetCurrentPage(BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.SummaryOfDelivery, RehabDeliveryPhase));
         summaryOfDeliveryPhase
             .UrlEndWith(BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.SummaryOfDelivery, RehabDeliveryPhase))
-            .HasTitle(DeliveryPageTitles.SummaryOfDelivery(RehabDeliveryPhase.Name.Value))
+            .HasTitle(DeliveryPageTitles.SummaryOfDelivery(RehabDeliveryPhase.Name))
             .HasBackLink(out _)
             .HasContinueButton(out var continueButton);
 
@@ -200,12 +204,12 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
             BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.AcquisitionMilestone, RehabDeliveryPhase),
             DeliveryPageTitles.AcquisitionMilestone,
             BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.StartOnSiteMilestone, RehabDeliveryPhase),
-            ("MilestoneStartAt.Day", deliveryPhase.AcquisitionMilestone.MilestoneDate!.Value.Day.ToString(CultureInfo.InvariantCulture)),
-            ("MilestoneStartAt.Month", deliveryPhase.AcquisitionMilestone.MilestoneDate!.Value.Month.ToString(CultureInfo.InvariantCulture)),
-            ("MilestoneStartAt.Year", deliveryPhase.AcquisitionMilestone.MilestoneDate!.Value.Year.ToString(CultureInfo.InvariantCulture)),
-            ("ClaimMilestonePaymentAt.Day", deliveryPhase.AcquisitionMilestone.PaymentDate!.Value.Day.ToString(CultureInfo.InvariantCulture)),
-            ("ClaimMilestonePaymentAt.Month", deliveryPhase.AcquisitionMilestone.PaymentDate!.Value.Month.ToString(CultureInfo.InvariantCulture)),
-            ("ClaimMilestonePaymentAt.Year", deliveryPhase.AcquisitionMilestone.PaymentDate!.Value.Year.ToString(CultureInfo.InvariantCulture)));
+            ("MilestoneStartAt.Day", deliveryPhase.AcquisitionMilestoneDate.Day!),
+            ("MilestoneStartAt.Month", deliveryPhase.AcquisitionMilestoneDate.Month!),
+            ("MilestoneStartAt.Year", deliveryPhase.AcquisitionMilestoneDate.Year!),
+            ("ClaimMilestonePaymentAt.Day", deliveryPhase.AcquisitionMilestonePaymentDate.Day!),
+            ("ClaimMilestonePaymentAt.Month", deliveryPhase.AcquisitionMilestonePaymentDate.Month!),
+            ("ClaimMilestonePaymentAt.Year", deliveryPhase.AcquisitionMilestonePaymentDate.Year!));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
@@ -220,12 +224,12 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
             BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.StartOnSiteMilestone, RehabDeliveryPhase),
             DeliveryPageTitles.StartOnSiteMilestone,
             BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.PracticalCompletionMilestone, RehabDeliveryPhase),
-            ("MilestoneStartAt.Day", deliveryPhase.StartOnSiteMilestone.MilestoneDate!.Value.Day.ToString(CultureInfo.InvariantCulture)),
-            ("MilestoneStartAt.Month", deliveryPhase.StartOnSiteMilestone.MilestoneDate!.Value.Month.ToString(CultureInfo.InvariantCulture)),
-            ("MilestoneStartAt.Year", deliveryPhase.StartOnSiteMilestone.MilestoneDate!.Value.Year.ToString(CultureInfo.InvariantCulture)),
-            ("ClaimMilestonePaymentAt.Day", deliveryPhase.StartOnSiteMilestone.PaymentDate!.Value.Day.ToString(CultureInfo.InvariantCulture)),
-            ("ClaimMilestonePaymentAt.Month", deliveryPhase.StartOnSiteMilestone.PaymentDate!.Value.Month.ToString(CultureInfo.InvariantCulture)),
-            ("ClaimMilestonePaymentAt.Year", deliveryPhase.StartOnSiteMilestone.PaymentDate!.Value.Year.ToString(CultureInfo.InvariantCulture)));
+            ("MilestoneStartAt.Day", deliveryPhase.StartOnSiteMilestoneDate.Day!),
+            ("MilestoneStartAt.Month", deliveryPhase.StartOnSiteMilestoneDate.Month!),
+            ("MilestoneStartAt.Year", deliveryPhase.StartOnSiteMilestoneDate.Year!),
+            ("ClaimMilestonePaymentAt.Day", deliveryPhase.StartOnSiteMilestonePaymentDate.Day!),
+            ("ClaimMilestonePaymentAt.Month", deliveryPhase.StartOnSiteMilestonePaymentDate.Month!),
+            ("ClaimMilestonePaymentAt.Year", deliveryPhase.StartOnSiteMilestonePaymentDate.Year!));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
@@ -240,24 +244,61 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
             BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.PracticalCompletionMilestone, RehabDeliveryPhase),
             DeliveryPageTitles.PracticalCompletionMilestone,
             BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.CheckAnswers, RehabDeliveryPhase),
-            ("MilestoneStartAt.Day", deliveryPhase.CompletionMilestone.MilestoneDate!.Value.Day.ToString(CultureInfo.InvariantCulture)),
-            ("MilestoneStartAt.Month", deliveryPhase.CompletionMilestone.MilestoneDate!.Value.Month.ToString(CultureInfo.InvariantCulture)),
-            ("MilestoneStartAt.Year", deliveryPhase.CompletionMilestone.MilestoneDate!.Value.Year.ToString(CultureInfo.InvariantCulture)),
-            ("ClaimMilestonePaymentAt.Day", deliveryPhase.CompletionMilestone.PaymentDate!.Value.Day.ToString(CultureInfo.InvariantCulture)),
-            ("ClaimMilestonePaymentAt.Month", deliveryPhase.CompletionMilestone.PaymentDate!.Value.Month.ToString(CultureInfo.InvariantCulture)),
-            ("ClaimMilestonePaymentAt.Year", deliveryPhase.CompletionMilestone.PaymentDate!.Value.Year.ToString(CultureInfo.InvariantCulture)));
+            ("MilestoneStartAt.Day", deliveryPhase.CompletionMilestoneDate.Day!),
+            ("MilestoneStartAt.Month", deliveryPhase.CompletionMilestoneDate.Month!),
+            ("MilestoneStartAt.Year", deliveryPhase.CompletionMilestoneDate.Year!),
+            ("ClaimMilestonePaymentAt.Day", deliveryPhase.CompletionMilestonePaymentDate.Day!),
+            ("ClaimMilestonePaymentAt.Month", deliveryPhase.CompletionMilestonePaymentDate.Month!),
+            ("ClaimMilestonePaymentAt.Year", deliveryPhase.CompletionMilestonePaymentDate.Year!));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
     [Order(11)]
-    public async Task Order11_CompleteDeliveryPhase()
+    public async Task Order11_CheckAnswersHasValidSummary()
     {
         // given
-        var deliveryPhase = RehabDeliveryPhase.GenerateCompletionMilestone();
-        var continueButton =
-            await GivenTestQuestionPage(
-                BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.CheckAnswers, deliveryPhase),
-                DeliveryPageTitles.CheckAnswers);
+        var checkAnswersUrl = BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.CheckAnswers, RehabDeliveryPhase);
+        var requiredFunding = await GetRequiredFunding(checkAnswersUrl);
+        var checkAnswersPage = await GetCurrentPage(checkAnswersUrl);
+        checkAnswersPage
+            .UrlEndWith(BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.CheckAnswers, RehabDeliveryPhase))
+            .HasTitle(DeliveryPageTitles.CheckAnswers)
+            .HasSaveAndContinueButton();
+
+        // when
+        var summary = checkAnswersPage.GetSummaryListItems();
+
+        // then
+        summary.Should().ContainKey("Phase name").WithValue(RehabDeliveryPhase.Name);
+        summary.Should().ContainKey("Type of homes").WithValue(RehabDeliveryPhase.TypeOfHomes);
+        summary.Should().ContainKey("Build activity type").WithValue(RehabDeliveryPhase.BuildActivityType);
+        summary.Should().ContainKey("Reconfiguring existing residential properties").WithValue(RehabDeliveryPhase.ReconfiguringExisting.MapToTrueFalse());
+
+        foreach (var homeType in RehabDeliveryPhase.DeliveryPhaseHomes)
+        {
+            summary.Should().ContainKey($"Number of homes {homeType.Name}").WithValue(homeType.NumberOfHomes.ToString(CultureInfo.InvariantCulture));
+        }
+
+        summary.Should().ContainKey("Grant apportioned to this phase").WhoseValue.Value.Should().BePoundsOnly(requiredFunding);
+        summary.Should().ContainKey("Acquisition milestone").WhoseValue.Value.Should().BePoundsOnly(requiredFunding * 0.5m);
+        summary.Should().ContainKey("Start on site milestone").WhoseValue.Value.Should().BePoundsOnly(requiredFunding * 0.4m);
+        summary.Should().ContainKey("Completion milestone").WhoseValue.Value.Should().BePoundsOnly(requiredFunding * 0.1m);
+        summary.Should().ContainKey("Acquisition date").WithValue(RehabDeliveryPhase.AcquisitionMilestoneDate);
+        summary.Should().ContainKey("Forecast acquisition claim date").WithValue(RehabDeliveryPhase.AcquisitionMilestonePaymentDate);
+        summary.Should().ContainKey("Start on site date").WithValue(RehabDeliveryPhase.StartOnSiteMilestoneDate);
+        summary.Should().ContainKey("Forecast start on site claim date").WithValue(RehabDeliveryPhase.StartOnSiteMilestonePaymentDate);
+        summary.Should().ContainKey("Completion date").WithValue(RehabDeliveryPhase.CompletionMilestoneDate);
+        summary.Should().ContainKey("Forecast completion claim date").WithValue(RehabDeliveryPhase.CompletionMilestonePaymentDate);
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(12)]
+    public async Task Order12_CompleteDeliveryPhase()
+    {
+        // given
+        var continueButton = await GivenTestQuestionPage(
+            BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.CheckAnswers, RehabDeliveryPhase),
+            DeliveryPageTitles.CheckAnswers);
 
         // when
         var deliveryPhasesListPage = await TestClient.SubmitButton(
@@ -271,8 +312,8 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(12)]
-    public async Task Order12_CompleteDeliveryPhasesSection()
+    [Order(13)]
+    public async Task Order13_CompleteDeliveryPhasesSection()
     {
         // given
         var deliveryPhaseListPage = await GetCurrentPage(BuildDeliveryPhasesPage(DeliveryPhasesPagesUrl.List));
@@ -291,8 +332,8 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(13)]
-    public async Task Order13_ConfirmCompleteDeliveryPhasesSection()
+    [Order(14)]
+    public async Task Order14_ConfirmCompleteDeliveryPhasesSection()
     {
         // given
         var completeDeliveryPhasesPage = await GetCurrentPage(BuildDeliveryPhasesPage(DeliveryPhasesPagesUrl.CompleteDeliveryPhases));
@@ -328,16 +369,24 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
         return await TestClient.SubmitButton(continueButton, ("RemoveDeliveryPhaseAnswer", "Yes"));
     }
 
-    private async Task<IDictionary<string, int>> GetHomeTypes(string currentPageUrl)
+    private async Task<IList<HomeTypeDetails>> GetHomeTypes(string currentPageUrl)
     {
         var homeTypeListPage = await TestClient.NavigateTo(HomeTypesPagesUrl.List(ApplicationData.ApplicationId));
-        var result = homeTypeListPage.GetHomeTypeIds()
-            .Select(x => new { Id = x, NumberOfHomes = homeTypeListPage.GetHomeTypeNumberOfHomes(x) })
-            .ToDictionary(x => x.Id, x => x.NumberOfHomes);
+        var result = homeTypeListPage.GetHomeTypeIds().Select(x => homeTypeListPage.GetHomeTypeDetails(x)).ToList();
 
         await TestClient.NavigateTo(currentPageUrl);
 
         return result;
+    }
+
+    private async Task<decimal> GetRequiredFunding(string currentPageUrl)
+    {
+        var fundingDetailsPage = await TestClient.NavigateTo(SchemeInformationPagesUrl.FundingDetails(ApplicationData.ApplicationId));
+        fundingDetailsPage.HasInput("RequiredFunding", out var requiredFunding);
+
+        await TestClient.NavigateTo(currentPageUrl);
+
+        return int.Parse(requiredFunding.Value, CultureInfo.InvariantCulture);
     }
 
     private string BuildDeliveryPhasesPage(Func<string, string> deliveryPhasesPageUrlFactory)

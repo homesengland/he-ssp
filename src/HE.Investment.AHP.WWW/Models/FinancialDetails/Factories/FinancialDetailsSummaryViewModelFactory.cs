@@ -1,5 +1,4 @@
 using HE.Investment.AHP.Contract.Application;
-using HE.Investment.AHP.Contract.Application.Helpers;
 using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.FinancialDetails.Queries;
 using HE.Investment.AHP.WWW.Controllers;
@@ -27,25 +26,22 @@ public class FinancialDetailsSummaryViewModelFactory : IFinancialDetailsSummaryV
     public async Task<FinancialDetailsCheckAnswersModel> GetFinancialDetailsAndCreateSummary(
         AhpApplicationId applicationId,
         IUrlHelper urlHelper,
-        bool isReadOnly,
         CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new GetFinancialCheckAnswersQuery(applicationId), cancellationToken);
-        isReadOnly = isReadOnly || ApplicationStatusDivision.GetAllStatusesForReadonlyMode().Contains(result.ApplicationStatus);
-        var isApplicationLocked = ApplicationStatusDivision.GetAllStatusesForLockedMode().Contains(result.ApplicationStatus);
-        var landValueSectionSummary = GetLandValueSectionSummary(result.LandValue, applicationId, isReadOnly, urlHelper);
-        var costsSectionSummary = GetCostsSectionSummary(result.TotalSchemeCost, applicationId, isReadOnly, urlHelper);
-        var contributionsSectionSummary = GetContributionsSectionSummary(result.TotalContributions, applicationId, isReadOnly, urlHelper);
+
+        var landValueSectionSummary = GetLandValueSectionSummary(result.LandValue, applicationId, result.Application.IsEditable, urlHelper);
+        var costsSectionSummary = GetCostsSectionSummary(result.TotalSchemeCost, applicationId, result.Application.IsEditable, urlHelper);
+        var contributionsSectionSummary = GetContributionsSectionSummary(result.TotalContributions, applicationId, result.Application.IsEditable, urlHelper);
 
         return new FinancialDetailsCheckAnswersModel(
             Guid.Parse(applicationId.Value),
-            result.ApplicationName,
+            result.Application.Name,
             landValueSectionSummary,
             costsSectionSummary,
             contributionsSectionSummary,
             result.SectionStatus == SectionStatus.Completed ? IsSectionCompleted.Yes : IsSectionCompleted.Undefied,
-            !isReadOnly,
-            isApplicationLocked);
+            result.Application.AllowedOperations);
     }
 
     private static IList<string> GetCurrencyStringWithPrefix(decimal? value)
@@ -63,7 +59,7 @@ public class FinancialDetailsSummaryViewModelFactory : IFinancialDetailsSummaryV
         return $"{action}{(allowWcagDuplicate ? "#" : string.Empty)}";
     }
 
-    private static SectionSummaryViewModel GetLandValueSectionSummary(LandValueSummary landValueSummary, AhpApplicationId applicationId, bool isReadOnly, IUrlHelper urlHelper)
+    private static SectionSummaryViewModel GetLandValueSectionSummary(LandValueSummary landValueSummary, AhpApplicationId applicationId, bool isEditable, IUrlHelper urlHelper)
     {
         var landValueItems = new List<SectionSummaryItemModel>
         {
@@ -71,23 +67,23 @@ public class FinancialDetailsSummaryViewModelFactory : IFinancialDetailsSummaryV
                 "Purchase price",
                 GetCurrencyStringWithPrefix(landValueSummary.PurchasePrice),
                 CreateFinancialDetailsActionUrl(urlHelper, applicationId, nameof(FinancialDetailsController.LandStatus)),
-                IsEditable: !isReadOnly),
+                IsEditable: isEditable),
             new(
                 "Current value",
                 GetCurrencyStringWithPrefix(landValueSummary.CurrentValue),
                 CreateFinancialDetailsActionUrl(urlHelper, applicationId, nameof(FinancialDetailsController.LandValue)),
-                IsEditable: !isReadOnly),
+                IsEditable: isEditable),
             new(
                 "Public land",
                 landValueSummary.IsPublicLand == YesNoType.Undefined ? null : landValueSummary.IsPublicLand.GetDescription().ToOneElementList(),
                 CreateFinancialDetailsActionUrl(urlHelper, applicationId, nameof(FinancialDetailsController.LandValue)),
-                IsEditable: !isReadOnly),
+                IsEditable: isEditable),
         };
 
         return new SectionSummaryViewModel("Land value", landValueItems);
     }
 
-    private static SectionSummaryViewModel GetCostsSectionSummary(TotalSchemeCost totalSchemeCost, AhpApplicationId applicationId, bool isReadOnly, IUrlHelper urlHelper)
+    private static SectionSummaryViewModel GetCostsSectionSummary(TotalSchemeCost totalSchemeCost, AhpApplicationId applicationId, bool isEditable, IUrlHelper urlHelper)
     {
         var costsItems = new List<SectionSummaryItemModel>
         {
@@ -95,17 +91,17 @@ public class FinancialDetailsSummaryViewModelFactory : IFinancialDetailsSummaryV
                 "Current value",
                 GetCurrencyStringWithPrefix(totalSchemeCost.CurrentValue),
                 CreateFinancialDetailsActionUrl(urlHelper, applicationId, nameof(FinancialDetailsController.LandValue)),
-                IsEditable: !isReadOnly),
+                IsEditable: isEditable),
             new(
                 "Works costs",
                 GetCurrencyStringWithPrefix(totalSchemeCost.WorkCosts),
                 CreateFinancialDetailsActionUrl(urlHelper, applicationId, nameof(FinancialDetailsController.OtherApplicationCosts)),
-                IsEditable: !isReadOnly),
+                IsEditable: isEditable),
             new(
                 "On costs",
                 GetCurrencyStringWithPrefix(totalSchemeCost.OnCosts),
                 CreateFinancialDetailsActionUrl(urlHelper, applicationId, nameof(FinancialDetailsController.OtherApplicationCosts)),
-                IsEditable: !isReadOnly),
+                IsEditable: isEditable),
             new(
                 "Total scheme costs",
                 GetCurrencyStringWithPrefix(totalSchemeCost.Total),
@@ -116,20 +112,25 @@ public class FinancialDetailsSummaryViewModelFactory : IFinancialDetailsSummaryV
         return new SectionSummaryViewModel("Total scheme costs", costsItems);
     }
 
-    private static SectionSummaryViewModel GetContributionsSectionSummary(TotalContributions totalContributions, AhpApplicationId applicationId, bool isReadOnly, IUrlHelper urlHelper)
+    private static SectionSummaryViewModel GetContributionsSectionSummary(TotalContributions totalContributions, AhpApplicationId applicationId, bool isEditable, IUrlHelper urlHelper)
     {
         var contributionsItems = new List<SectionSummaryItemModel>
         {
             new(
+                "Funding requested",
+                GetCurrencyStringWithPrefix(totalContributions.SchemaFunding),
+                string.Empty,
+                IsEditable: isEditable),
+            new(
                 "Your contributions",
                 GetCurrencyStringWithPrefix(totalContributions.YourContributions),
                 CreateFinancialDetailsActionUrl(urlHelper, applicationId, nameof(FinancialDetailsController.Contributions)),
-                IsEditable: !isReadOnly),
+                IsEditable: isEditable),
             new(
                 "Grants from other public bodies",
                 GetCurrencyStringWithPrefix(totalContributions.GrantsFromOtherPublicBodies),
                 CreateFinancialDetailsActionUrl(urlHelper, applicationId, nameof(FinancialDetailsController.Grants)),
-                IsEditable: !isReadOnly),
+                IsEditable: isEditable),
             new(
                 "Total contributions",
                 GetCurrencyStringWithPrefix(totalContributions.Total),

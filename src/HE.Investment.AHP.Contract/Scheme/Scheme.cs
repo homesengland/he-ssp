@@ -5,10 +5,7 @@ using UploadedFile = HE.Investment.AHP.Contract.Common.UploadedFile;
 namespace HE.Investment.AHP.Contract.Scheme;
 
 public record Scheme(
-    AhpApplicationId ApplicationId,
-    string ApplicationName,
-    Tenure? ApplicationTenure,
-    bool IsApplicationLocked,
+    ApplicationDetails Application,
     SectionStatus Status,
     decimal? RequiredFunding,
     int? HousesToDeliver,
@@ -17,5 +14,4 @@ public record Scheme(
     string? MeetingLocalPriorities,
     string? MeetingLocalHousingNeed,
     string? StakeholderDiscussionsReport,
-    UploadedFile? LocalAuthoritySupportFile,
-    bool IsReadOnly);
+    UploadedFile? LocalAuthoritySupportFile);

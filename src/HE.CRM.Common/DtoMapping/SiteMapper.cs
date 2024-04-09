@@ -92,7 +92,7 @@ namespace HE.CRM.Common.DtoMapping
             };
         }
 
-        public static invln_Sites ToEntity(SiteDto dto, string fieldsToSet, invln_AHGLocalAuthorities localAuthorities)
+        public static invln_Sites ToEntity(SiteDto dto, string fieldsToSet, invln_AHGLocalAuthorities localAuthorities, Contact createdByContact, string accountId)
         {
             var site = new invln_Sites();
 
@@ -168,6 +168,17 @@ namespace HE.CRM.Common.DtoMapping
             SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_mmccategory2subcategories), CreateOptionSetValueCollection(dto.modernMethodsOfConstruction.mmc2DSubcategories));
 
             SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_procurementmechanisms), CreateOptionSetValueCollection(dto.procurementMechanisms));
+
+
+            if (createdByContact != null)
+            {
+                site.invln_CreatedByContactId = createdByContact.ToEntityReference();
+            }
+
+            if (!string.IsNullOrEmpty(accountId) && Guid.TryParse(accountId, out Guid accountGUID))
+            {
+                site.invln_AccountId = new EntityReference(Account.EntityLogicalName, accountGUID);
+            }
 
             return site;
         }

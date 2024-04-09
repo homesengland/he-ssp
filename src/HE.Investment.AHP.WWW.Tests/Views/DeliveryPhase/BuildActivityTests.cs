@@ -1,6 +1,6 @@
-using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Enums;
+using HE.Investment.AHP.WWW.Tests.TestDataBuilders;
 using HE.Investment.AHP.WWW.Views.Delivery.Const;
 using HE.Investments.Common.Contract;
 using Microsoft.AspNetCore.Routing;
@@ -18,12 +18,10 @@ public class BuildActivityTests : AhpViewTestBase
     {
         var availableTypes = new List<BuildActivityType>() { BuildActivityType.WorksOnly, BuildActivityType.RegenerationRehab };
         var model = new DeliveryPhaseDetails(
-            "AppName",
+            ApplicationTestData.SampleApplication,
             "Id",
             "DeliveryPhaseName",
             SectionStatus.InProgress,
-            false,
-            false,
             null,
             null,
             availableTypes);

@@ -22,6 +22,7 @@ public static class CrmFields
             nameof(invln_scheme.invln_lastexternalmodificationon),
             nameof(invln_ExternalStatus),
             nameof(invln_scheme.invln_pplicationid),
+            nameof(invln_scheme.invln_DateSubmitted),
         }).ToImmutableList();
 
     public static readonly IReadOnlyList<string> ApplicationListToRead = ApplicationToUpdate.ToList()
@@ -89,5 +90,13 @@ public static class CrmFields
 
     public static readonly IReadOnlyList<string> FinancialDetailsToRead = FinancialDetailsToUpdate.ToList()
         .Append(new List<string> { nameof(invln_scheme.invln_schemename), nameof(invln_scheme.invln_Tenure), nameof(invln_ExternalStatus), nameof(invln_scheme.invln_Site) })
+        .ToImmutableList();
+
+    public static readonly IReadOnlyList<string> All = ApplicationToRead.ToList()
+        .Append(ApplicationListToRead.ToList())
+        .Append(ApplicationWithFundingDetailsToRead.ToList())
+        .Append(SchemeToRead.ToList())
+        .Append(FinancialDetailsToRead.ToList())
+        .Distinct()
         .ToImmutableList();
 }

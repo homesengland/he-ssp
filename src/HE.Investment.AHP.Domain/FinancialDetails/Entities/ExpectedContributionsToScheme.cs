@@ -60,8 +60,21 @@ public class ExpectedContributionsToScheme : ValueObject, IQuestion
         return isAnswered && IsAnsweredForSharedOwnershipHomes();
     }
 
-    public decimal CalculateTotal()
+    public bool AreAllNotAnswered()
     {
+        var isNotAnswered = RentalIncome.IsNotProvided() && SalesOfHomesOnThisScheme.IsNotProvided() && SalesOfHomesOnOtherSchemes.IsNotProvided() &&
+                         OwnResources.IsNotProvided() && RcgfContributions.IsNotProvided() && OtherCapitalSources.IsNotProvided() && HomesTransferValue.IsNotProvided();
+
+        return isNotAnswered || !IsAnsweredForSharedOwnershipHomes();
+    }
+
+    public decimal? CalculateTotal()
+    {
+        if (AreAllNotAnswered())
+        {
+            return null;
+        }
+
         var totalExpectedContributions = RentalIncome.GetValueOrZero() + SalesOfHomesOnThisScheme.GetValueOrZero() +
                                          SalesOfHomesOnOtherSchemes.GetValueOrZero() + OwnResources.GetValueOrZero() + RcgfContributions.GetValueOrZero() +
                                          OtherCapitalSources.GetValueOrZero() + HomesTransferValue.GetValueOrZero();

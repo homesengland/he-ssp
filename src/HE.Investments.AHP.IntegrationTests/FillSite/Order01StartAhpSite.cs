@@ -1,9 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
 using FluentAssertions;
 using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.Site;
-using HE.Investment.AHP.Domain.Site.ValueObjects;
 using HE.Investment.AHP.WWW;
 using HE.Investment.AHP.WWW.Models.Site;
 using HE.Investment.AHP.WWW.Views.Site.Const;
@@ -15,10 +13,8 @@ using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.IntegrationTestsFramework.Assertions;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
+using Xunit.Abstractions;
 using Xunit.Extensions.Ordering;
-using SiteRuralClassification = HE.Investment.AHP.Contract.Site.SiteRuralClassification;
-using SiteTypeDetails = HE.Investment.AHP.Domain.Site.ValueObjects.SiteTypeDetails;
-using SiteUseDetails = HE.Investment.AHP.Contract.Site.SiteUseDetails;
 
 namespace HE.Investments.AHP.IntegrationTests.FillSite;
 
@@ -26,8 +22,8 @@ namespace HE.Investments.AHP.IntegrationTests.FillSite;
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
 public class Order01StartAhpSite : AhpIntegrationTest
 {
-    public Order01StartAhpSite(IntegrationTestFixture<Program> fixture)
-        : base(fixture)
+    public Order01StartAhpSite(IntegrationTestFixture<Program> fixture, ITestOutputHelper output)
+        : base(fixture, output)
     {
     }
 
@@ -235,9 +231,9 @@ public class Order01StartAhpSite : AhpIntegrationTest
             SitePagesUrl.SitePlanningDetails(SiteData.SiteId),
             "Planning details",
             SitePagesUrl.SiteLandRegistry(SiteData.SiteId),
-            ("ExpectedPlanningApprovalDate.Day", SiteData.ExpectedPlanningApprovalDate.Day.ToString(CultureInfo.InvariantCulture)),
-            ("ExpectedPlanningApprovalDate.Month", SiteData.ExpectedPlanningApprovalDate.Month.ToString(CultureInfo.InvariantCulture)),
-            ("ExpectedPlanningApprovalDate.Year", SiteData.ExpectedPlanningApprovalDate.Year.ToString(CultureInfo.InvariantCulture)),
+            ("ExpectedPlanningApprovalDate.Day", SiteData.ExpectedPlanningApprovalDate.Day!),
+            ("ExpectedPlanningApprovalDate.Month", SiteData.ExpectedPlanningApprovalDate.Month!),
+            ("ExpectedPlanningApprovalDate.Year", SiteData.ExpectedPlanningApprovalDate.Year!),
             (nameof(SitePlanningDetails.IsLandRegistryTitleNumberRegistered), SiteData.IsLandRegistryTitleNumberRegistered.ToBoolAnswer()));
     }
 
@@ -388,7 +384,7 @@ public class Order01StartAhpSite : AhpIntegrationTest
             SitePagesUrl.SiteEnvironmentalImpact(SiteData.SiteId),
             SitePageTitles.EnvironmentalImpact,
             SitePagesUrl.SiteMmcUsing(SiteData.SiteId),
-            (nameof(EnvironmentalImpact), SiteData.GenerateEnvironmentalImpact()));
+            ("EnvironmentalImpact", SiteData.GenerateEnvironmentalImpact()));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
@@ -479,7 +475,7 @@ public class Order01StartAhpSite : AhpIntegrationTest
         summary.Should().ContainKey("Local authority confirmation").WithValue(SiteData.LocalAuthorityConfirmation);
         summary.Should().ContainKey("Local authority").WithValue(SiteData.LocalAuthorityName);
         summary.Should().ContainKey("Planning status").WithValue(SiteData.PlanningStatus);
-        summary.Should().ContainKey("Expected detailed planning approval date").WithValue(SiteData.ExpectedPlanningApprovalDisplayDate);
+        summary.Should().ContainKey("Expected detailed planning approval date").WithValue(SiteData.ExpectedPlanningApprovalDate);
         summary.Should().ContainKey("Registered title to the land").WithValue(SiteData.IsLandRegistryTitleNumberRegistered);
         summary.Should().ContainKey("Land Registry title number").WithValue(SiteData.LandRegistryTitleNumber);
         summary.Should().ContainKey("All the homes covered by title number").WithValue(SiteData.IsGrantFundingForAllHomesCoveredByTitleNumber);
