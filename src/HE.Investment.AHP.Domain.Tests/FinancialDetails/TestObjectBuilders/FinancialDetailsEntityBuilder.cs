@@ -1,7 +1,10 @@
+using HE.Investment.AHP.Contract.Site;
+using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.FinancialDetails.Entities;
 using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
+using HE.Investment.AHP.Domain.Site.ValueObjects;
 using HE.Investment.AHP.Domain.Tests.Application.TestData;
 using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.Extensions;
@@ -16,7 +19,12 @@ public class FinancialDetailsEntityBuilder
 
     private FinancialDetailsEntityBuilder(ApplicationBasicInfo? applicationBasicInfo)
     {
-        _item = new(applicationBasicInfo ?? ApplicationBasicInfoTestData.AffordableRentInDraftState);
+        applicationBasicInfo ??= ApplicationBasicInfoTestData.AffordableRentInDraftState;
+        _item = new(applicationBasicInfo,
+            new SiteBasicInfo(applicationBasicInfo.SiteId,
+                new SiteName("Site name"),
+                new LandAcquisitionStatus(SiteLandAcquisitionStatus.FullOwnership),
+                SiteUsingModernMethodsOfConstruction.Yes));
     }
 
     public static FinancialDetailsEntityBuilder New(ApplicationBasicInfo? applicationBasicInfo = null) => new(applicationBasicInfo);
@@ -38,7 +46,7 @@ public class FinancialDetailsEntityBuilder
         PrivatePropertySetter.SetPropertyWithNoSetter(
             _item,
             nameof(_item.LandValue),
-            new LandValue(new CurrentLandValue(landValue), YesNoType.Yes));
+            new LandValue(new CurrentLandValue(landValue), true));
 
         return this;
     }
@@ -86,6 +94,16 @@ public class FinancialDetailsEntityBuilder
             _item,
             nameof(_item.LandStatus),
             new LandStatus(new PurchasePrice(purchasePrice), null));
+
+        return this;
+    }
+
+    public FinancialDetailsEntityBuilder WithSiteBasicInfo(SiteLandAcquisitionStatus status)
+    {
+        PrivatePropertySetter.SetPropertyWithNoSetter(
+            _item,
+            nameof(_item.SiteBasicInfo),
+            _item.SiteBasicInfo with { LandAcquisitionStatus = new LandAcquisitionStatus(status) });
 
         return this;
     }
