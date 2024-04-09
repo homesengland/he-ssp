@@ -146,6 +146,7 @@
     <Compile Include="Handlers\AhpApplication\ChangeExternalStatusOnInternalStatusChangeHandlerTests.cs" />
     <Compile Include="Handlers\AhpApplication\CheckIfApplicationWithNewNameExistsHandlerTests.cs" />
     <Compile Include="Handlers\AhpApplication\CreateDocumentLocationOnCreateHandlerTests.cs" />
+    <Compile Include="Handlers\AhpApplication\RecalculateDeliveryphaseHandlerTests.cs" />
     <Compile Include="Handlers\AhpStatusChange\SendNotificationOnCreateHandlerTest.cs" />
     <Compile Include="Handlers\ContactWebRole\SendNotificationOnAdminRoleGrantedHandlerTests.cs" />
     <Compile Include="Handlers\ContactWebRole\SendNotificationOnRoleModificationHandlerTests.cs" />

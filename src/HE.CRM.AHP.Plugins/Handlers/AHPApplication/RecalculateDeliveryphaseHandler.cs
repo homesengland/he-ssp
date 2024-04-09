@@ -44,6 +44,7 @@ namespace HE.CRM.AHP.Plugins.Handlers.AHPApplication
             foreach (var deliveryphase in deliveryPhases)
             {
                 CrmServicesFactory.Get<IDeliveryPhaseService>().CalculateFunding(CurrentState, deliveryphase, milestones, deliveryphase);
+                _deliveryPhaseRepository.Update(deliveryphase);
             }
             ExecutionData.Target.invln_lastexternalmodificationon = DateTime.UtcNow;
             ExecutionData.Target.invln_lastexternalmodificationby = new EntityReference(Contact.EntityLogicalName, contact.Id);
