@@ -6,6 +6,7 @@ using HE.Investments.AHP.IntegrationTests.FillApplication.Data;
 using HE.Investments.AHP.IntegrationTests.Framework;
 using HE.Investments.AHP.IntegrationTests.Pages;
 using HE.Investments.Common.Contract.Enum;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.IntegrationTestsFramework.Assertions;
 using HE.Investments.TestsUtils.Extensions;
@@ -84,7 +85,7 @@ public class Order04CompleteFinancialDetails : AhpIntegrationTest
             FinancialDetailsPagesUrl.LandValue(ApplicationData.ApplicationId),
             FinancialDetailsPageTitles.LandValuePage,
             FinancialDetailsPagesUrl.OtherApplicationCostsSuffix,
-            ("IsOnPublicLand", FinancialDetailsData.IsPublicLand.MapToCommonResponse()),
+            ("IsOnPublicLand", FinancialDetailsData.IsPublicLand.MapToTrueFalse()),
             ("LandValue", FinancialDetailsData.PublicLandValue.ToString(CultureInfo.InvariantCulture)));
     }
 
