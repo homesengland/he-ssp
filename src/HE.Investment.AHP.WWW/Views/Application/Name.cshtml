@@ -3,27 +3,26 @@
 @using HE.Investments.Common.WWW.Components.BackLinkWithCallback
 @model HE.Investment.AHP.WWW.Models.Application.ApplicationBasicModel
 @{
-    ViewData["Title"] = "Application name";
+    ViewData["Title"] = ApplicationPageTitles.ApplicationName;
+
+    var paragraph = string.Join(
+        Environment.NewLine,
+        "Each application must be for a single tenure. If you are developing a multi-tenure site, each tenure must be applied for within a separate application.",
+        "Each application needs a unique name. You will not be able to edit this later.",
+        "You should include the tenure type within your application name. For example, Village Way – Affordable Rent or Village Way – Shared Ownership.");
 }
 <gds-div-grid-column-two-thirds>
 
     <vc:back-link-with-callback url="@Url.Action("Select", "Site")"/>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <form asp-controller="Application" asp-action="Name" asp-method="post" novalidate>
-        <vc:page-header title="@ApplicationPageTitles.ApplicationName"/>
-        <gds-field-set role="group">
-            <legend>
-                <gds-p >Each application must be for a single tenure. If you are developing a multi-tenure site, each tenure must be applied for within a separate application.</gds-p>
-
-                <gds-p >Each application needs a unique name. You will not be able to edit this later.</gds-p>
-
-                <gds-p >You should include the tenure type within your application name. For example, Village Way – Affordable Rent or Village Way – Shared Ownership.</gds-p>
-            </legend>
-
-            <gds-input asp-hiddenlabeltext="Name"
-                       class="govuk-!-width-one-third"
-                       govuk-formgroup-asp-for="Name"/>
-        </gds-field-set>
+        <vc:text-input
+            title="@ApplicationPageTitles.ApplicationName"
+            title-type="InputTitleType.PageHeader"
+            field-name="@(nameof(Model.Name))"
+            css-class="govuk-!-width-one-third"
+            value=@Model.Name
+            paragraph="@paragraph"/>
 
         <vc:form-button text="Continue"/>
     </form>

@@ -10,7 +10,7 @@ public class HomeInformationSegmentContractMapper : IHomeTypeSegmentContractMapp
     public HomeInformation Map(ApplicationName applicationName, HomeTypeName homeTypeName, HomeInformationSegmentEntity segment)
     {
         return new HomeInformation(
-            applicationName.Name,
+            applicationName.Value,
             homeTypeName.Value,
             segment.NumberOfHomes?.Value,
             segment.NumberOfBedrooms?.Value,

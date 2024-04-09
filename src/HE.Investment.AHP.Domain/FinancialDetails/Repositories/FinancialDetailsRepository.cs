@@ -56,7 +56,7 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
         var dto = new AhpApplicationDto
         {
             id = financialDetails.ApplicationBasicInfo.Id.Value,
-            name = financialDetails.ApplicationBasicInfo.Name.Name,
+            name = financialDetails.ApplicationBasicInfo.Name.Value,
             actualAcquisitionCost = financialDetails.LandStatus.PurchasePrice?.Value,
             expectedAcquisitionCost = financialDetails.LandStatus.ExpectedPurchasePrice?.Value,
             isPublicLand = YesNoTypeMapper.Map(financialDetails.LandValue.IsPublicLand),

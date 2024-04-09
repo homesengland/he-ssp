@@ -37,7 +37,7 @@ internal sealed class GetHomeTypesQueryHandler : IRequestHandler<GetHomeTypesQue
     private static HomeTypeDetails Map(IHomeTypeEntity homeType)
     {
         return new HomeTypeDetails(
-            homeType.Application.Name.Name,
+            homeType.Application.Name.Value,
             homeType.Id,
             homeType.Name.Value,
             homeType.HomeInformation.NumberOfHomes?.Value,

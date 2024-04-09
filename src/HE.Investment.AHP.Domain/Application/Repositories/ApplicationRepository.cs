@@ -46,7 +46,7 @@ public class ApplicationRepository : IApplicationRepository
 
     public async Task<bool> IsNameExist(ApplicationName applicationName, OrganisationId organisationId, CancellationToken cancellationToken)
     {
-        return await _applicationCrmContext.IsNameExist(applicationName.Name, organisationId.Value, cancellationToken);
+        return await _applicationCrmContext.IsNameExist(applicationName.Value, organisationId.Value, cancellationToken);
     }
 
     public async Task<bool> IsExist(AhpApplicationId applicationId, OrganisationId organisationId, CancellationToken cancellationToken)
@@ -112,7 +112,7 @@ public class ApplicationRepository : IApplicationRepository
         var dto = new AhpApplicationDto
         {
             id = application.Id.IsNew ? null : application.Id.Value,
-            name = application.Name.Name,
+            name = application.Name.Value,
             tenure = ApplicationTenureMapper.ToDto(application.Tenure),
             organisationId = organisationId.Value.ToString(),
             applicationStatus = AhpApplicationStatusMapper.MapToCrmStatus(application.Status),
