@@ -28,7 +28,7 @@ public class GetFinishHomesTypeAnswerQueryHandler : IRequestHandler<GetFinishHom
         var homeTypes = await _repository.GetByApplicationId(request.ApplicationId, account, HomeTypeSegmentTypes.None, cancellationToken);
 
         return new ApplicationHomeTypesFinishAnswer(
-            homeTypes.Application.Name.Name,
+            homeTypes.Application.Name.Value,
             homeTypes.Status == SectionStatus.Completed ? FinishHomeTypesAnswer.Yes : FinishHomeTypesAnswer.Undefined);
     }
 }

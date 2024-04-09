@@ -9,7 +9,7 @@ public static class ApplicationBasicInfoMapper
     {
         return new ApplicationDetails(
             application.Id,
-            application.Name.Name,
+            application.Name.Value,
             application.Tenure,
             application.Status,
             application.AllowedOperations.ToList());
