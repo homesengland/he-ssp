@@ -39,6 +39,7 @@ namespace HE.CRM.AHP.Plugins.Plugins.AhpApplication
         {
             registeredHandlers.Add(handlerFactory.GetHandler<ChangeExternalStatusOnInternalStatusChangeHandler>());
             registeredHandlers.Add(handlerFactory.GetHandler<UpdateLocalAuthorityWhenSiteIsChanged>());
+            registeredHandlers.Add(handlerFactory.GetHandler<RecalculateDeliveryphaseHandler>());
         }
 
         #endregion Base Methods Overrides

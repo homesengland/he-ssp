@@ -99,6 +99,7 @@
     <Compile Include="Handlers\AHPApplication\CheckIfApplicationWithNewNameExistsHandler.cs" />
     <Compile Include="Handlers\AHPApplication\CreateDocumentLocationOnCreateHandler.cs" />
     <Compile Include="Handlers\AHPApplication\UpdateLocalAuthorityWhenSiteIsChanged.cs" />
+    <Compile Include="Handlers\AHPApplication\RecalculateDeliveryphaseHandler.cs" />
     <Compile Include="Handlers\AhpStatusChange\SendNotificationOnCreateHandler.cs" />
     <Compile Include="Handlers\ContactWebrole\SendNotificationOnAdminRoleGrantedPlugin.cs" />
     <Compile Include="Handlers\ContactWebrole\SendNotificationOnRoleModificationHandler.cs" />
