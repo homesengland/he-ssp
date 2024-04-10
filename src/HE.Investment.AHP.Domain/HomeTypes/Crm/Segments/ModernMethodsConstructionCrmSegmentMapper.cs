@@ -1,4 +1,3 @@
-using System.Collections.Concurrent;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Domain.Common;
@@ -10,12 +9,10 @@ namespace HE.Investment.AHP.Domain.HomeTypes.Crm.Segments;
 
 public class ModernMethodsConstructionCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<ModernMethodsConstructionSegmentEntity>
 {
-    private static readonly IDictionary<string, MmcDto> Dtos = new ConcurrentDictionary<string, MmcDto>();
-
     public ModernMethodsConstructionCrmSegmentMapper()
         : base(new[]
         {
-            // todo field missing inc crm nameof(invln_HomeType.invln_mmcapplied),
+            "invln_mmcapplied", // TODO: AB#86986 use nameof when earlybound will be provided
             nameof(invln_HomeType.invln_mmccategories),
             nameof(invln_HomeType.invln_mmccategory1subcategories),
             nameof(invln_HomeType.invln_mmccategory2subcategories),
@@ -31,39 +28,22 @@ public class ModernMethodsConstructionCrmSegmentMapper : HomeTypeCrmSegmentMappe
         HomeTypeDto dto,
         IReadOnlyCollection<UploadedFile> uploadedFiles)
     {
-        if (!Dtos.TryGetValue(dto.id, out var mmc))
-        {
-            if (!Dtos.TryGetValue(string.Empty, out mmc))
-            {
-                return new ModernMethodsConstructionSegmentEntity(site.SiteUsingModernMethodsOfConstruction);
-            }
-
-            Dtos.Remove(string.Empty);
-            Dtos.Add(dto.id, mmc);
-        }
-
         return new ModernMethodsConstructionSegmentEntity(
             site.SiteUsingModernMethodsOfConstruction,
-            YesNoTypeMapper.Map(mmc.MmcApplied),
-            mmc.MmcCategories.Select(MapMmcCategories),
-            mmc.MmcCategory2Subcategories.Select(MapMmcCategory2Subcategories),
-            mmc.MmcCategory1Subcategories.Select(MapMmcCategory1Subcategories));
+            YesNoTypeMapper.Map(dto.mmcApplied),
+            dto.mmcCategories.Select(MapMmcCategories),
+            dto.mmcCategories2Subcategories.Select(MapMmcCategory2Subcategories),
+            dto.mmcCategories1Subcategories.Select(MapMmcCategory1Subcategories));
     }
 
     protected override ModernMethodsConstructionSegmentEntity GetSegment(HomeTypeEntity entity) => entity.ModernMethodsConstruction;
 
     protected override void MapToDto(HomeTypeDto dto, ModernMethodsConstructionSegmentEntity segment)
     {
-        if (!Dtos.TryGetValue(dto.id ?? string.Empty, out var mmc))
-        {
-            mmc = new MmcDto();
-            Dtos.Add(dto.id ?? string.Empty, mmc);
-        }
-
-        mmc.MmcApplied = YesNoTypeMapper.Map(segment.ModernMethodsConstructionApplied);
-        mmc.MmcCategories = segment.ModernMethodsConstructionCategories.Select(MapMmcCategories).ToList();
-        mmc.MmcCategory1Subcategories = segment.ModernMethodsConstruction3DSubcategories.Select(MapMmcCategory1Subcategories).ToList();
-        mmc.MmcCategory2Subcategories = segment.ModernMethodsConstruction2DSubcategories.Select(MapMmcCategory2Subcategories).ToList();
+        dto.mmcApplied = YesNoTypeMapper.Map(segment.ModernMethodsConstructionApplied);
+        dto.mmcCategories = segment.ModernMethodsConstructionCategories.Select(MapMmcCategories).ToList();
+        dto.mmcCategories1Subcategories = segment.ModernMethodsConstruction3DSubcategories.Select(MapMmcCategory1Subcategories).ToList();
+        dto.mmcCategories2Subcategories = segment.ModernMethodsConstruction2DSubcategories.Select(MapMmcCategory2Subcategories).ToList();
     }
 
     private static int MapMmcCategories(ModernMethodsConstructionCategoriesType value)
@@ -167,28 +147,5 @@ public class ModernMethodsConstructionCrmSegmentMapper : HomeTypeCrmSegmentMappe
                 ModernMethodsConstruction2DSubcategoriesType.FurtherEnhancedConsolidation,
             _ => throw new ArgumentOutOfRangeException(nameof(value), $"Value {value} is not supported by CRM mapping."),
         };
-    }
-
-    private sealed class MmcDto
-    {
-        public MmcDto(
-            bool? mmcApplied = null,
-            IList<int>? mmcCategories = null,
-            IList<int>? mmcCategory1Subcategories = null,
-            IList<int>? mmcCategory2Subcategories = null)
-        {
-            MmcApplied = mmcApplied;
-            MmcCategories = mmcCategories ?? new List<int>();
-            MmcCategory1Subcategories = mmcCategory1Subcategories ?? new List<int>();
-            MmcCategory2Subcategories = mmcCategory2Subcategories ?? new List<int>();
-        }
-
-        public bool? MmcApplied { get; set; }
-
-        public IList<int> MmcCategories { get; set; }
-
-        public IList<int> MmcCategory1Subcategories { get; set; }
-
-        public IList<int> MmcCategory2Subcategories { get; set; }
     }
 }

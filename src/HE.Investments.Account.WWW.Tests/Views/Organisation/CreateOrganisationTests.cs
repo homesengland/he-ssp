@@ -4,7 +4,7 @@ using HE.Investments.Account.WWW.Views.Organisation;
 
 namespace HE.Investments.Account.WWW.Tests.Views.Organisation;
 
-public class CreateOrganisationTests : ViewTestBase
+public class CreateOrganisationTests : AccountViewTestBase
 {
     private readonly string _viewPath = "/Views/Organisation/CreateOrganisation.cshtml";
 
@@ -12,7 +12,7 @@ public class CreateOrganisationTests : ViewTestBase
     public async Task ShouldDisplayView()
     {
         // given & when
-        var document = await Render(_viewPath, new OrganisationDetailsViewModel());
+        var document = await Render(_viewPath, new OrganisationDetails());
 
         // then
         AssertView(document);

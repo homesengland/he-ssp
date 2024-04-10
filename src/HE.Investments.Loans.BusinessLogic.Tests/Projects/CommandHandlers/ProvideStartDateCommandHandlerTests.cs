@@ -1,3 +1,4 @@
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Constants;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Messages;
@@ -37,9 +38,7 @@ public class ProvideStartDateCommandHandlerTests : TestBase<ProvideStartDateComm
             LoanApplicationIdTestData.LoanApplicationIdOne,
             ProjectIdTestData.AnyProjectId,
             CommonResponse.Yes,
-            year,
-            month,
-            day);
+            new DateDetails(day, month, year));
 
         // when
         var action = () => TestCandidate.Handle(_command, CancellationToken.None);
@@ -67,9 +66,7 @@ public class ProvideStartDateCommandHandlerTests : TestBase<ProvideStartDateComm
             LoanApplicationIdTestData.LoanApplicationIdOne,
             ProjectIdTestData.AnyProjectId,
             CommonResponse.Yes,
-            year,
-            month,
-            day);
+            new DateDetails(day, month, year));
 
         // when
         var action = () => TestCandidate.Handle(_command, CancellationToken.None);
@@ -97,7 +94,7 @@ public class ProvideStartDateCommandHandlerTests : TestBase<ProvideStartDateComm
 
         var (day, month, year) = IncorrectDateAsStrings;
 
-        _command = new ProvideStartDateCommand(LoanApplicationIdTestData.LoanApplicationIdOne, project.Id, CommonResponse.Yes, year, month, day);
+        _command = new ProvideStartDateCommand(LoanApplicationIdTestData.LoanApplicationIdOne, project.Id, CommonResponse.Yes, new DateDetails(day, month, year));
 
         // when
         var action = () => TestCandidate.Handle(_command, CancellationToken.None);
@@ -125,7 +122,7 @@ public class ProvideStartDateCommandHandlerTests : TestBase<ProvideStartDateComm
 
         var (year, month, day) = CorrectDateAsStrings;
 
-        _command = new ProvideStartDateCommand(LoanApplicationIdTestData.LoanApplicationIdOne, project.Id, CommonResponse.Yes, year, month, day);
+        _command = new ProvideStartDateCommand(LoanApplicationIdTestData.LoanApplicationIdOne, project.Id, CommonResponse.Yes, new DateDetails(day, month, year));
 
         // when
         var result = await TestCandidate.Handle(_command, CancellationToken.None);
@@ -156,7 +153,7 @@ public class ProvideStartDateCommandHandlerTests : TestBase<ProvideStartDateComm
 
         var (day, month, year) = CorrectDateAsStrings;
 
-        _command = new ProvideStartDateCommand(LoanApplicationIdTestData.LoanApplicationIdOne, project.Id, CommonResponse.No, year, month, day);
+        _command = new ProvideStartDateCommand(LoanApplicationIdTestData.LoanApplicationIdOne, project.Id, CommonResponse.No, new DateDetails(day, month, year));
 
         // when
         var result = await TestCandidate.Handle(_command, CancellationToken.None);

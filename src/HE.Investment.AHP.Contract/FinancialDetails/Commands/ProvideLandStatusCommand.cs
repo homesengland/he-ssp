@@ -4,4 +4,4 @@ using MediatR;
 
 namespace HE.Investment.AHP.Contract.FinancialDetails.Commands;
 
-public record ProvideLandStatusCommand(AhpApplicationId ApplicationId, string? PurchasePrice, bool IsFinal) : IRequest<OperationResult>;
+public record ProvideLandStatusCommand(AhpApplicationId ApplicationId, string? PurchasePrice, bool IsFullUnconditionalOption) : IRequest<OperationResult>;

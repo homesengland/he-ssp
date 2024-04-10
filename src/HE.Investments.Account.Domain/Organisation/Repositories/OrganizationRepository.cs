@@ -2,6 +2,7 @@ using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Contract.Organisation;
 using HE.Investments.Account.Contract.Organisation.Queries;
 using HE.Investments.Account.Domain.Organisation.Entities;
+using HE.Investments.Account.Domain.Organisation.Mappers;
 using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.User;
@@ -14,6 +15,8 @@ public class OrganizationRepository : IOrganizationRepository
     private readonly IOrganizationService _organizationService;
 
     private readonly IUserContext _userContext;
+
+    private readonly InvestmentPartnerStatusMapper _investmentPartnerStatusMapper = new();
 
     public OrganizationRepository(IOrganizationService organizationService, IUserContext userContext)
     {
@@ -38,7 +41,8 @@ public class OrganizationRepository : IOrganizationRepository
                 organizationDetailsDto.country),
             new ContactInformation(
                 organizationDetailsDto.compayAdminContactTelephone,
-                organizationDetailsDto.compayAdminContactEmail));
+                organizationDetailsDto.compayAdminContactEmail),
+            _investmentPartnerStatusMapper.ToDomain(organizationDetailsDto.investmentPartnerStatus)!.Value);
     }
 
     public async Task<OrganisationChangeRequestState> GetOrganisationChangeRequestDetails(OrganisationId organisationId, CancellationToken cancellationToken)

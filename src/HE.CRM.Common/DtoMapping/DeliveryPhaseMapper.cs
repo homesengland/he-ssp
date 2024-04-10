@@ -77,15 +77,17 @@ namespace HE.CRM.Common.DtoMapping
                 invln_urbrequestingearlymilestonepayments = MapYesNo(deliveryPhaseDto.requiresAdditionalPayments),
                 invln_invln_homesindeliveryphase_deliveryphasel = MapHomesInDeliveryPhase(deliveryPhaseDto),
                 invln_iscompleted = deliveryPhaseDto.isCompleted,
-                invln_AcquisitionValue = MapNullableDecimalToMoney(deliveryPhaseDto.acquisitionValue),
                 invln_AcquisitionPercentageValue = deliveryPhaseDto.acquisitionPercentageValue,
-                invln_StartOnSiteValue = MapNullableDecimalToMoney(deliveryPhaseDto.startOnSiteValue),
                 invln_StartOnSitePercentageValue = deliveryPhaseDto.startOnSitePercentageValue,
-                invln_CompletionValue = MapNullableDecimalToMoney(deliveryPhaseDto.completionValue),
                 invln_CompletionPercentageValue = deliveryPhaseDto.completionPercentageValue,
                 invln_ClaimingtheMilestoneConfirmed = deliveryPhaseDto.claimingtheMilestoneConfirmed,
                 invln_AllowAmendmentstoMilestoneProportions = deliveryPhaseDto.allowAmendmentstoMilestoneProportions,
             };
+
+            if (deliveryPhaseDto.numberOfHomes.Count > 0)
+            {
+                deliveryPhase.invln_NoofHomes = deliveryPhaseDto.numberOfHomes.Sum(x => x.Value);
+            }
 
             if (deliveryPhaseDto.id != null)
             {

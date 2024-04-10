@@ -7,7 +7,7 @@ namespace HE.Investment.AHP.Domain.FinancialDetails.Entities;
 
 public class LandValue : ValueObject, IQuestion
 {
-    public LandValue(CurrentLandValue? currentLandValue, YesNoType isPublicLand)
+    public LandValue(CurrentLandValue? currentLandValue, bool? isPublicLand)
     {
         CurrentLandValue = currentLandValue;
         IsPublicLand = isPublicLand;
@@ -19,11 +19,11 @@ public class LandValue : ValueObject, IQuestion
 
     public CurrentLandValue? CurrentLandValue { get; }
 
-    public YesNoType IsPublicLand { get; }
+    public bool? IsPublicLand { get; }
 
     public bool IsAnswered()
     {
-        return CurrentLandValue.IsProvided() && IsPublicLand != YesNoType.Undefined;
+        return CurrentLandValue.IsProvided() && IsPublicLand.IsProvided();
     }
 
     public bool IsNotAnswered() => !IsAnswered();

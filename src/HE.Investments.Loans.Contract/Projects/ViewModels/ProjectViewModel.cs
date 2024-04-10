@@ -16,11 +16,7 @@ public class ProjectViewModel : ISectionViewModel
 
     public string? HasEstimatedStartDate { get; set; }
 
-    public string? EstimatedStartDay { get; set; }
-
-    public string? EstimatedStartMonth { get; set; }
-
-    public string? EstimatedStartYear { get; set; }
+    public DateDetails? StartDate { get; set; }
 
     public string? HomesCount { get; set; }
 

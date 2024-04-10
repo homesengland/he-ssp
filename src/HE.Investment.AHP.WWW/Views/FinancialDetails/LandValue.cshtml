@@ -20,32 +20,26 @@
         </div>
 
         <gds-field-set>
-            <gds-legend class="govuk-!-margin-bottom-0">
-                <gds-h2 class="govuk-!-margin-bottom-1">
-                    Is your scheme on public land?
-                </gds-h2>
-            </gds-legend>
-            <he-div-hint>
-                Public land is land owned by the government.
-            </he-div-hint>
-            <gds-radio govuk-formgroup-asp-for="@Model.IsOnPublicLand"
-                       value="@Model.IsOnPublicLand"
-                       asp-selectlistitems="@CommonFormOptions.YesNo">
-            </gds-radio>
+
+            <vc:radio-yes-no
+                title="Is your scheme on public land?"
+                hint="Public land is land owned by the government."
+                field-name="@nameof(Model.IsOnPublicLand)"
+                value=@Model.IsOnPublicLand/>
 
             <he-error-form-group asp-for="LandValue">
-            <gds-legend class="govuk-!-margin-bottom-0">
-                <gds-h2 class="govuk-!-margin-bottom-1">
-                    Enter the current value of the land
-                </gds-h2>
-            </gds-legend>
-            <gds-input asp-hiddenlabeltext="LandValue"
-                       class="govuk-input--width-10"
-                       asp-labelclass="govuk-label"
-                       govuk-formgroup-asp-for="LandValue"
-                       name="LandValue"
-                       asp-prefixtext=@(GdsInputPrefixText.Pounds)
-                       value=@Model.LandValue/>
+                <gds-legend class="govuk-!-margin-bottom-0">
+                    <gds-h2 class="govuk-!-margin-bottom-1">
+                        Enter the current value of the land
+                    </gds-h2>
+                </gds-legend>
+                <gds-input asp-hiddenlabeltext="LandValue"
+                           class="govuk-input--width-10"
+                           asp-labelclass="govuk-label"
+                           govuk-formgroup-asp-for="LandValue"
+                           name="LandValue"
+                           asp-prefixtext=@(GdsInputPrefixText.Pounds)
+                           value=@Model.LandValue/>
             </he-error-form-group>
 
             <vc:form-button/>

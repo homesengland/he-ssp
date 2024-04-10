@@ -18,7 +18,8 @@ internal static class AccountEntity
             Properties.PostalCode,
             Properties.Country,
             Properties.PrimaryContactId,
-            Properties.UnregisteredBody);
+            Properties.UnregisteredBody,
+            Properties.InvestmentPartnerStatus);
     }
 
     public static class Properties
@@ -44,5 +45,7 @@ internal static class AccountEntity
         public const string PrimaryContactId = "primarycontactid";
 
         public const string UnregisteredBody = "invln_unregisteredbody";
+
+        public const string InvestmentPartnerStatus = "invln_externalstatus";
     }
 }

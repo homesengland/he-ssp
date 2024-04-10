@@ -1,13 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
 using HE.Investments.Common.Contract.Constants;
-using HE.Investments.Common.Messages;
-using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.Loans.Common.Tests.TestData;
-using HE.Investments.Loans.Common.Utils.Constants.FormOption;
+using HE.Investments.Loans.Contract.Projects.ViewModels;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Extensions;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
-using HE.Investments.Loans.WWW;
 using HE.Investments.Loans.WWW.Views.Project.Consts;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
@@ -40,13 +37,20 @@ public class Order03StartDateIntegrationTests : IntegrationTest
 
         // when
         startDatePage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "HasEstimatedStartDate", CommonResponse.Yes }, { "EstimatedStartDay", string.Empty }, { "EstimatedStartMonth", string.Empty }, { "EstimatedStartYear", string.Empty } });
+            continueButton,
+            new Dictionary<string, string>
+            {
+                { "HasEstimatedStartDate", CommonResponse.Yes },
+                { $"{nameof(ProjectViewModel.StartDate)}.Day", string.Empty },
+                { $"{nameof(ProjectViewModel.StartDate)}.Month", string.Empty },
+                { $"{nameof(ProjectViewModel.StartDate)}.Year", string.Empty },
+            });
 
         // then
         startDatePage
             .UrlEndWith(ProjectPagesUrls.StartDateSuffix)
             .HasTitle(ProjectPageTitles.StartDate)
-            .HasOneValidationMessages(ValidationErrorMessage.NoStartDate);
+            .HasOneValidationMessages("Enter when you plan to start the project");
 
         SetSharedData(SharedKeys.CurrentPageKey, startDatePage);
     }
@@ -61,13 +65,19 @@ public class Order03StartDateIntegrationTests : IntegrationTest
 
         // when
         startDate = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "HasEstimatedStartDate", CommonResponse.Yes }, { "EstimatedStartDay", "32" }, { "EstimatedStartMonth", "1" }, { "EstimatedStartYear", "2020" } });
+            continueButton, new Dictionary<string, string>
+            {
+                { "HasEstimatedStartDate", CommonResponse.Yes },
+                { $"{nameof(ProjectViewModel.StartDate)}.Day", "32" },
+                { $"{nameof(ProjectViewModel.StartDate)}.Month", "1" },
+                { $"{nameof(ProjectViewModel.StartDate)}.Year", "2020" },
+            });
 
         // then
         startDate
             .UrlEndWith(ProjectPagesUrls.StartDateSuffix)
             .HasTitle(ProjectPageTitles.StartDate)
-            .HasOneValidationMessages(ValidationErrorMessage.InvalidStartDate);
+            .HasOneValidationMessages("When you plan to start the project must be a real date");
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
@@ -82,7 +92,13 @@ public class Order03StartDateIntegrationTests : IntegrationTest
 
         // when
         startDate = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "HasEstimatedStartDate", CommonResponse.Yes }, { "EstimatedStartDay", day }, { "EstimatedStartMonth", month }, { "EstimatedStartYear", year } });
+            continueButton, new Dictionary<string, string>
+            {
+                { "HasEstimatedStartDate", CommonResponse.Yes },
+                { $"{nameof(ProjectViewModel.StartDate)}.Day", day },
+                { $"{nameof(ProjectViewModel.StartDate)}.Month", month },
+                { $"{nameof(ProjectViewModel.StartDate)}.Year", year },
+            });
 
         // then
         startDate

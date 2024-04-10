@@ -9,7 +9,7 @@
 @using HE.Investments.FrontDoor.WWW.Views.LocalAuthority.Const
 @using HE.Investments.FrontDoor.WWW.Views.Shared.Components.LocalAuthorityWorkflowBackButton
 
-@inject IExternalLinks ExternalLinks
+@inject IFrontDoorExternalLinks ExternalLinks
 @model (PaginationResult<LocalAuthority> Items, string ProjectId, string SiteId, string Phrase)
 @{
     ViewData["Title"] = LocalAuthorityPageTitles.SearchResult;

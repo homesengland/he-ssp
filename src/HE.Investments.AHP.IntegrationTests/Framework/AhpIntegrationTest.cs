@@ -1,20 +1,18 @@
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.WWW;
 using HE.Investments.AHP.IntegrationTests.Crm;
 using HE.Investments.AHP.IntegrationTests.FillApplication.Data;
 using HE.Investments.AHP.IntegrationTests.FillSite.Data;
+using HE.Investments.Common.Contract;
 using HE.Investments.IntegrationTestsFramework;
+using HE.Investments.IntegrationTestsFramework.Auth;
 using Xunit;
 using Xunit.Abstractions;
 
 namespace HE.Investments.AHP.IntegrationTests.Framework;
 
-[SuppressMessage("Usage", "CA1816", Justification = "It is not needed here")]
-[SuppressMessage("Design", "CA1063", Justification = "It is not needed here")]
-[SuppressMessage("Code Smell", "S3881", Justification = "It is not needed here")]
 [Collection(nameof(AhpIntegrationTestSharedContext))]
-public class AhpIntegrationTest : IntegrationTestBase<Program>, IDisposable
+public class AhpIntegrationTest : IntegrationTestBase<Program>, IAsyncLifetime
 {
     private readonly ITestOutputHelper _output;
 
@@ -30,6 +28,7 @@ public class AhpIntegrationTest : IntegrationTestBase<Program>, IDisposable
         fixture.MockUserAccount();
         _output = output;
         _fixture = fixture;
+        LoginData = fixture.LoginData;
     }
 
     public ApplicationData ApplicationData { get; private set; }
@@ -40,9 +39,22 @@ public class AhpIntegrationTest : IntegrationTestBase<Program>, IDisposable
 
     protected AhpApplicationCrmContext AhpApplicationCrmContext => _fixture.AhpApplicationCrmContext;
 
-    public void Dispose()
+    private ILoginData LoginData { get; }
+
+    public Task InitializeAsync()
+    {
+        return Task.CompletedTask;
+    }
+
+    public Task DisposeAsync()
     {
         _output.WriteLine($"Elapsed time: {Stopwatch.Elapsed.TotalSeconds} sec");
+        return Task.CompletedTask;
+    }
+
+    public async Task ChangeApplicationStatus(string applicationId, ApplicationStatus applicationStatus)
+    {
+        await AhpApplicationCrmContext.ChangeApplicationStatus(applicationId, applicationStatus, LoginData);
     }
 
     private void SetApplicationData()

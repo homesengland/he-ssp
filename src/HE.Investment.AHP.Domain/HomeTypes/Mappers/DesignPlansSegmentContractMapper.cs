@@ -11,7 +11,7 @@ public class DesignPlansSegmentContractMapper : IHomeTypeSegmentContractMapper<D
     public DesignPlans Map(ApplicationName applicationName, HomeTypeName homeTypeName, DesignPlansSegmentEntity segment)
     {
         return new DesignPlans(
-            applicationName.Name,
+            applicationName.Value,
             homeTypeName.Value,
             segment.DesignPrinciples.ToList(),
             segment.MoreInformation?.Value,

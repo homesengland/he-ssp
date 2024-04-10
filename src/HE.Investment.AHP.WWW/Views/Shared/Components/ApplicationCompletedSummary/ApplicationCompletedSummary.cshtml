@@ -1,0 +1,16 @@
+@using HE.Investments.Common.WWW.Extensions
+@model Dictionary<string, string>;
+
+<gds-summary-list class="govuk-!-margin-bottom-9">
+    @foreach (var (key, value) in Model)
+    {
+        <div class="govuk-summary-list__row" data-testId="@($"{key}-summary".ToIdTag())">
+            <dt class="govuk-summary-list__key govuk-!-width-one-half">
+                @key
+            </dt>
+            <dd class="govuk-summary-list__value govuk-!-width-one-half">
+                <p>@value</p>
+            </dd>
+        </div>
+    }
+</gds-summary-list>

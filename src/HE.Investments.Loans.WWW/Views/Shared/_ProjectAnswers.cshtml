@@ -60,9 +60,7 @@
            {
                { "Title", ProjectFieldNames.StartDate },
                {
-                   "Value", DateHelper.ConvertToDateStringWithDescription(
-                       Model?.EstimatedStartDay, Model?.EstimatedStartMonth,
-                       Model?.EstimatedStartYear, Model?.HasEstimatedStartDate)
+                   "Value", DateHelper.DisplayAsUkFormatDateWithCondition(Model?.StartDate, Model?.HasEstimatedStartDate)
                },
                { "Link", Url.Action("StartDate", "Project", new { id = id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
                { "LinkId", "start-date" },

@@ -2,7 +2,7 @@
 @using HE.Investments.FrontDoor.WWW.Config
 @using HE.Investments.FrontDoor.WWW.Views.Project.Const
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
-@inject IExternalLinks ExternalLinks
+@inject IFrontDoorExternalLinks ExternalLinks
 @{
     var title = ProjectPageTitles.YouNeedToSpeakToHomesEngland;
     ViewData["Title"] = title;
@@ -21,7 +21,7 @@
     <gds-p>
         You can contact us by:<br/>
         Telephone: 0300 1234 500 (weekdays from 9am to 5pm)<br/>
-        Email: <a href="mailto:@ExternalLinks.MailToEnquiries">@ExternalLinks.MailToEnquiries</a>
+        Email: <a href="mailto:@ExternalLinks.EnquiriesEmail">@ExternalLinks.EnquiriesEmail</a>
     </gds-p>
 
     <a class="govuk-button govuk-!-margin-right-4" data-module="govuk-button" href="@backUrl">

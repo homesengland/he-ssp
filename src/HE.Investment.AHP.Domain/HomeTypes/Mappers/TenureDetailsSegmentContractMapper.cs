@@ -12,7 +12,7 @@ public class TenureDetailsSegmentContractMapper : IHomeTypeSegmentContractMapper
     public TenureDetails Map(ApplicationName applicationName, HomeTypeName homeTypeName, TenureDetailsSegmentEntity segment)
     {
         return new TenureDetails(
-            applicationName.Name,
+            applicationName.Value,
             homeTypeName.Value,
             segment.MarketValue?.Value,
             segment.MarketRentPerWeek?.Value,

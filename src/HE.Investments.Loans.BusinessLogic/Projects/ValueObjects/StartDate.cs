@@ -1,4 +1,5 @@
 using System.Globalization;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Domain.ValueObjects;
@@ -12,7 +13,7 @@ public class StartDate : DateValueObject
 {
     private const string FieldDescription = "you plan to start the project";
 
-    public StartDate(bool exists, string? day, string? month, string? year, string fieldName = nameof(StartDate))
+    public StartDate(bool exists, string? day, string? month, string? year)
         : base(day, month, year, nameof(StartDate), FieldDescription, !exists)
     {
         Exists = exists;
@@ -29,6 +30,9 @@ public class StartDate : DateValueObject
     public bool Exists { get; }
 
     public static StartDate FromCrm(DateTime? value) => new(value.HasValue, value ?? default);
+
+    public static StartDate FromDateDetails(bool exists, DateDetails? date) =>
+        new(exists, date?.Day, date?.Month, date?.Year);
 
     protected override IEnumerable<object> GetAtomicValues()
     {

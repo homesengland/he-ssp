@@ -1,0 +1,21 @@
+@model string
+@{
+    var items = new List<string>
+    {
+        "If you are not yet an Investment Partner, you can still submit a new bid for an Affordable Housing Grant before you have achieved Investment Partner status. However, must be an Investment Partner before an allocation of grant funding can be approved. You can also join a consortium with an organisation that is an Investment Partner. Consortium members do not need to achieve full Investment Partner status in their own right.",
+        "If you have restricted Investment Partner status, you will need to qualify as a full Investment Partner if your new application is outside the scope of your existing restricted status. For example, if you have been granted restricted IP status for refurbishing existing properties and are now planning a new build development. You can submit your application before achieving full or expanded IP status, but you must have achieved IP status covering the activity within your new application before an allocation of grant funding can be approved.",
+        "In both instances, you can also join a consortium with an organisation that is an Investment Partner. Consortium members do not need to achieve full Investment Partner status in their own right.",
+        "For more information on joining a consortium, speak to your Growth Manager."
+    };
+}
+
+@foreach (var item in items)
+{
+    <gds-p>
+        @item
+    </gds-p>
+}
+
+<gds-p>
+    For more information, <a class="govuk-link" target="_blank" href="@Model">read the Investment Partner qualifications</a>.
+</gds-p>

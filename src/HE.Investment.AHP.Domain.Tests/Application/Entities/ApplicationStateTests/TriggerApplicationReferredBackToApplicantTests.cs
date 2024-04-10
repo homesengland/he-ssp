@@ -11,7 +11,7 @@ public class TriggerApplicationReferredBackToApplicantTests : TriggerTestBase
     [InlineData(AhpApplicationOperation.Modification, ApplicationStatus.ReferredBackToApplicant)]
     [InlineData(AhpApplicationOperation.Withdraw, ApplicationStatus.Withdrawn)]
     [InlineData(AhpApplicationOperation.PutOnHold, ApplicationStatus.OnHold)]
-    [InlineData(AhpApplicationOperation.Submit, ApplicationStatus.ApplicationSubmitted)]
+    [InlineData(AhpApplicationOperation.Submit, ApplicationStatus.UnderReviewInAssessment)]
     public void ShouldAllowTransition_WhenOperationIsPossibleAndUserIsPermitted(AhpApplicationOperation operation, ApplicationStatus expectedStatus)
     {
         // given
