@@ -6,10 +6,9 @@ internal static class AccountEntity
 {
     public const string Name = "account";
 
-    public static ColumnSet AllColumns(bool isAhpEnabled)
+    public static ColumnSet AllColumns()
     {
-        var columns = new List<string>
-        {
+        return new ColumnSet(
             Properties.CompanyName,
             Properties.CompanyNumber,
             Properties.AddressLine1,
@@ -20,14 +19,7 @@ internal static class AccountEntity
             Properties.Country,
             Properties.PrimaryContactId,
             Properties.UnregisteredBody,
-        };
-
-        if (isAhpEnabled)
-        {
-            columns.Add(Properties.InvestmentPartnerStatus);
-        }
-
-        return new ColumnSet(columns.ToArray());
+            Properties.InvestmentPartnerStatus);
     }
 
     public static class Properties
