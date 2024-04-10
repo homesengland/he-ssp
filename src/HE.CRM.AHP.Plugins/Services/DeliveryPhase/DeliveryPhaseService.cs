@@ -200,14 +200,16 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
             deliveryPhase.invln_AcquisitionValue = new Money(fundingForPhase * deliveryPhase.invln_AcquisitionPercentageValue.Value);
             deliveryPhase.invln_StartOnSiteValue = new Money(fundingForPhase * deliveryPhase.invln_StartOnSitePercentageValue.Value);
             deliveryPhase.invln_CompletionValue = new Money(fundingForPhase * deliveryPhase.invln_CompletionPercentageValue.Value);
-
-            var leftOver = fundingForPhase
-                - (deliveryPhase.invln_AcquisitionValue.Value
-                + deliveryPhase.invln_StartOnSiteValue.Value
-                + deliveryPhase.invln_CompletionValue.Value);
-            if (leftOver > 0 && (leftOver < fundingForPhase * 0.01m || leftOver < 1))
+            if (deliveryPhase.invln_AcquisitionPercentageValue == null && deliveryPhase.invln_StartOnSitePercentageValue == null && deliveryPhase.invln_CompletionPercentageValue == null)
             {
-                deliveryPhase.invln_CompletionPercentageValue += leftOver;
+                var leftOver = fundingForPhase
+                    - (deliveryPhase.invln_AcquisitionValue.Value
+                    + deliveryPhase.invln_StartOnSiteValue.Value
+                    + deliveryPhase.invln_CompletionValue.Value);
+                if (leftOver > 0 && (leftOver < fundingForPhase * 0.01m || leftOver < 1))
+                {
+                    deliveryPhase.invln_CompletionPercentageValue += leftOver;
+                }
             }
         }
 
