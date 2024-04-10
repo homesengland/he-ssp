@@ -51,6 +51,10 @@ namespace HE.CRM.Common.Repositories.Implementations
 	                <entity name=""invln_sites"">
                         {fieldsToRetrieveParameters}
                         {accountIdFilter}
+                        <link-entity name=""invln_ahglocalauthorities"" to=""invln_localauthority"" from=""invln_ahglocalauthoritiesid""  link-type=""outer"">
+                            <attribute name=""invln_gsscode"" />
+                            <attribute name=""invln_localauthorityname"" />
+                        </link-entity>
 		                <link-entity name=""contact"" from=""contactid"" to=""invln_createdbycontactid"">
 			                {externalContactIdFilter}
 		                </link-entity>
