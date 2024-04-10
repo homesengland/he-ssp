@@ -45,7 +45,7 @@ public class ExpectedTotalCostsTests
         // given
         var financialDetailsEntity = FinancialDetailsEntityBuilder
             .New()
-            .WithOtherApplicationCosts("123", null)
+            .WithOtherApplicationCosts("123", string.Empty)
             .WithLandValue("2")
             .Build();
 
