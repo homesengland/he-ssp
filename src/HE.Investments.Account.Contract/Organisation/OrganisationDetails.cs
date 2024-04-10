@@ -1,42 +1,28 @@
 namespace HE.Investments.Account.Contract.Organisation;
 
-public class OrganisationDetailsViewModel
+public class OrganisationDetails
 {
-    public OrganisationDetailsViewModel()
+    public OrganisationDetails()
     {
         AddressLines = new List<string>();
     }
 
-    public OrganisationDetailsViewModel(
+    public OrganisationDetails(
         string name,
         string phoneNumber,
         IEnumerable<string> addressLines,
         string houseNumber,
-        OrganisationChangeRequestState changeRequestState)
+        OrganisationChangeRequestState changeRequestState,
+        InvestmentPartnerStatus? investmentPartnerStatus,
+        bool hasAnyAhpApplication)
     {
         Name = name;
         PhoneNumber = phoneNumber;
         AddressLines = addressLines;
         HouseNumber = houseNumber;
         ChangeRequestState = changeRequestState;
-    }
-
-    public OrganisationDetailsViewModel(
-        string name,
-        string phoneNumber,
-        string addressLine1,
-        string addressLine2,
-        string townOrCity,
-        string county,
-        string postcode)
-    {
-        Name = name;
-        PhoneNumber = phoneNumber;
-        AddressLine1 = addressLine1;
-        AddressLine2 = addressLine2;
-        TownOrCity = townOrCity;
-        County = county;
-        Postcode = postcode;
+        InvestmentPartnerStatus = investmentPartnerStatus;
+        HasAnyAhpApplication = hasAnyAhpApplication;
     }
 
     public string? Name { get; set; }
@@ -58,4 +44,8 @@ public class OrganisationDetailsViewModel
     public string HouseNumber { get; set; }
 
     public OrganisationChangeRequestState ChangeRequestState { get; set; }
+
+    public InvestmentPartnerStatus? InvestmentPartnerStatus { get; set; }
+
+    public bool HasAnyAhpApplication { get; set; }
 }

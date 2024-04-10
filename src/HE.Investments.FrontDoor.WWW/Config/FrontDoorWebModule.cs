@@ -37,7 +37,7 @@ public static class FrontDoorWebModule
 
     private static void AddConfiguration(IServiceCollection services)
     {
-        services.AddSingleton<IExternalLinks, ExternalLinks>();
+        services.AddSingleton<IFrontDoorExternalLinks, FrontDoorExternalLinks>();
         services.AddSingleton<IErrorViewPaths, FrontDoorErrorViewPaths>();
         services.AddAppConfiguration<ContactInfoOptions>("ContactInfo");
         services.AddAppConfiguration<IDataverseConfig, DataverseConfig>("Dataverse");

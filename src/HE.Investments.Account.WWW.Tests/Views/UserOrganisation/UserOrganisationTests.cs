@@ -6,7 +6,7 @@ using HE.Investments.Common.WWW.Models;
 
 namespace HE.Investments.Account.WWW.Tests.Views.UserOrganisation;
 
-public class UserOrganisationTests : ViewTestBase
+public class UserOrganisationTests : AccountViewTestBase
 {
     private readonly string _viewPath = "/Views/UserOrganisation/UserOrganisation.cshtml";
 

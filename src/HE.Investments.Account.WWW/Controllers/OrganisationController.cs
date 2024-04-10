@@ -92,27 +92,27 @@ public class OrganisationController : Controller
     [HttpGet("create")]
     public IActionResult CreateOrganisation()
     {
-        return View(new OrganisationDetailsViewModel());
+        return View(new OrganisationDetails());
     }
 
     [HttpPost("create")]
-    public async Task<IActionResult> CreateOrganisation(OrganisationDetailsViewModel viewModel, CancellationToken cancellationToken)
+    public async Task<IActionResult> CreateOrganisation(OrganisationDetails model, CancellationToken cancellationToken)
     {
         var command = new CreateAndLinkOrganisationCommand(
-            viewModel.Name,
-            viewModel.AddressLine1,
-            viewModel.AddressLine2,
-            viewModel.TownOrCity,
-            viewModel.County,
-            viewModel.Postcode);
+            model.Name,
+            model.AddressLine1,
+            model.AddressLine2,
+            model.TownOrCity,
+            model.County,
+            model.Postcode);
 
-        return await this.ExecuteCommand<OrganisationDetailsViewModel>(
+        return await this.ExecuteCommand<OrganisationDetails>(
             _mediator,
             command,
             onSuccess: () => Task.FromResult<IActionResult>(RedirectToAction(
                 nameof(UserOrganisationController.UserOrganisationsList),
                 new ControllerName(nameof(UserOrganisationController)).WithoutPrefix())),
-            onError: () => Task.FromResult<IActionResult>(View(viewModel)),
+            onError: () => Task.FromResult<IActionResult>(View(model)),
             cancellationToken);
     }
 }
