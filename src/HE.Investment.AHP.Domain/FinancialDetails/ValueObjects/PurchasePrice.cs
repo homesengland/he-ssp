@@ -4,17 +4,17 @@ using HE.Investments.Common.Domain;
 using HE.Investments.Common.Domain.ValueObjects;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
-public class PurchasePrice : PoundsValueObject
+public class PurchasePrice : TheRequiredIntValueObject
 {
-    public static readonly UiFields Fields = new(FinancialDetailsValidationFieldNames.PurchasePrice, "purchase price of the land");
-
-    public PurchasePrice(decimal landValue)
-        : base(landValue, Fields)
+    public PurchasePrice(string value)
+        : base(value, FinancialDetailsValidationFieldNames.PurchasePrice, "purchase price of the land", 0, 999999999)
     {
     }
 
-    public PurchasePrice(string landValue)
-        : base(landValue, Fields)
+    private PurchasePrice(int value)
+        : base(value, FinancialDetailsValidationFieldNames.PurchasePrice, "purchase price of the land")
     {
     }
+
+    public static PurchasePrice FromCrm(decimal value) => new(decimal.ToInt32(value));
 }

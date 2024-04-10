@@ -1,4 +1,5 @@
 using FluentAssertions;
+using HE.Investment.AHP.Contract.FinancialDetails.Constants;
 using HE.Investment.AHP.Domain.FinancialDetails.Constants;
 using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 using HE.Investments.Common.Contract.Exceptions;
@@ -18,7 +19,7 @@ public class CurrentLandValueTests
         action.Should()
             .ThrowExactly<DomainValidationException>()
             .Which.OperationResult.Errors.Should()
-            .ContainSingle(x => x.ErrorMessage == ValidationErrorMessage.MissingRequiredField(CurrentLandValue.Fields.DisplayName!));
+            .ContainSingle(x => x.ErrorMessage == ValidationErrorMessage.MustProvideRequiredField("current value of the land"));
     }
 
     [Fact]
@@ -31,7 +32,7 @@ public class CurrentLandValueTests
         action.Should()
             .ThrowExactly<DomainValidationException>()
             .Which.OperationResult.Errors.Should()
-            .ContainSingle(x => x.ErrorMessage == "The current value of the land must be a whole number between 0 and 999999999");
+            .ContainSingle(x => x.ErrorMessage == "The current value of the land must be 0 or more");
     }
 
     [Fact]
@@ -44,7 +45,7 @@ public class CurrentLandValueTests
         action.Should()
             .ThrowExactly<DomainValidationException>()
             .Which.OperationResult.Errors.Should()
-            .ContainSingle(x => x.ErrorMessage == "The current value of the land must be a whole number between 0 and 999999999");
+            .ContainSingle(x => x.ErrorMessage == "The current value of the land must be 999999999 or fewer");
     }
 
     [Fact]
@@ -57,7 +58,7 @@ public class CurrentLandValueTests
         action.Should()
             .ThrowExactly<DomainValidationException>()
             .Which.OperationResult.Errors.Should()
-            .ContainSingle(x => x.ErrorMessage == "The current value of the land must be entered as a number, in pounds");
+            .ContainSingle(x => x.ErrorMessage == "The current value of the land must be a whole number, like 300");
     }
 
     [Fact]
@@ -70,14 +71,14 @@ public class CurrentLandValueTests
         action.Should()
             .ThrowExactly<DomainValidationException>()
             .Which.OperationResult.Errors.Should()
-            .ContainSingle(x => x.ErrorMessage == "The current value of the land must be entered as a number, in pounds");
+            .ContainSingle(x => x.ErrorMessage == "The current value of the land must be a whole number, like 300");
     }
 
     [Theory]
     [InlineData("0", 0)]
     [InlineData("100", 100)]
     [InlineData("999999999", 999999999)]
-    public void ShouldCreateLandValue_WhenValueIsValid(string input, decimal expectedValue)
+    public void ShouldCreateLandValue_WhenValueIsValid(string input, int expectedValue)
     {
         // given && when
         var landValue = new CurrentLandValue(input);
@@ -90,7 +91,7 @@ public class CurrentLandValueTests
     public void ShouldCreateLandValue_WhenIntValueIsValid()
     {
         // given && when
-        var landValue = new CurrentLandValue(100);
+        var landValue = CurrentLandValue.FromCrm(100);
 
         // then
         landValue.Value.Should().Be(100);

@@ -21,22 +21,22 @@ public class ExpectedTotalCostsTests
     }
 
     [Theory]
-    [InlineData(null, 100.0, 100.0)]
-    [InlineData(5.0, null, 5.0)]
-    [InlineData(1.0, 100.0, 101.0)]
-    public void ShouldReturnExpectedTotalCosts(double? expectedWorksCosts, double? expectedOnCosts, double expectedTotalCost)
+    [InlineData(null, "100", 100)]
+    [InlineData("5", null, 5)]
+    [InlineData("1", "100", 101)]
+    public void ShouldReturnExpectedTotalCosts(string expectedWorksCosts, string expectedOnCosts, int expectedTotalCost)
     {
         // given
         var financialDetailsEntity = FinancialDetailsEntityBuilder
             .New()
-            .WithOtherApplicationCosts((decimal?)expectedWorksCosts, (decimal?)expectedOnCosts)
+            .WithOtherApplicationCosts(expectedWorksCosts, expectedOnCosts)
             .Build();
 
         // when
         var expectedTotalCosts = financialDetailsEntity.ExpectedTotalCosts();
 
         // then
-        expectedTotalCosts.Should().Be((decimal)expectedTotalCost);
+        expectedTotalCosts.Should().Be(expectedTotalCost);
     }
 
     [Fact]
@@ -45,8 +45,8 @@ public class ExpectedTotalCostsTests
         // given
         var financialDetailsEntity = FinancialDetailsEntityBuilder
             .New()
-            .WithOtherApplicationCosts(123, null)
-            .WithLandValue(2)
+            .WithOtherApplicationCosts("123", null)
+            .WithLandValue("2")
             .Build();
 
         // when

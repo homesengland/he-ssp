@@ -18,7 +18,7 @@ public class ExpectedPurchasePriceValueTests
         action.Should()
             .ThrowExactly<DomainValidationException>()
             .Which.OperationResult.Errors.Should()
-            .ContainSingle(x => x.ErrorMessage == ValidationErrorMessage.MissingRequiredField(ExpectedPurchasePrice.Fields.DisplayName!));
+            .ContainSingle(x => x.ErrorMessage == ValidationErrorMessage.MustProvideRequiredField("expected purchase price of the land"));
     }
 
     [Fact]
@@ -31,7 +31,7 @@ public class ExpectedPurchasePriceValueTests
         action.Should()
             .ThrowExactly<DomainValidationException>()
             .Which.OperationResult.Errors.Should()
-            .ContainSingle(x => x.ErrorMessage == "The expected purchase price of the land must be a whole number between 0 and 999999999");
+            .ContainSingle(x => x.ErrorMessage == "The expected purchase price of the land must be 0 or more");
     }
 
     [Fact]
@@ -44,7 +44,7 @@ public class ExpectedPurchasePriceValueTests
         action.Should()
             .ThrowExactly<DomainValidationException>()
             .Which.OperationResult.Errors.Should()
-            .ContainSingle(x => x.ErrorMessage == "The expected purchase price of the land must be a whole number between 0 and 999999999");
+            .ContainSingle(x => x.ErrorMessage == "The expected purchase price of the land must be 999999999 or fewer");
     }
 
     [Fact]
@@ -57,7 +57,7 @@ public class ExpectedPurchasePriceValueTests
         action.Should()
             .ThrowExactly<DomainValidationException>()
             .Which.OperationResult.Errors.Should()
-            .ContainSingle(x => x.ErrorMessage == "The expected purchase price of the land must be entered as a number, in pounds");
+            .ContainSingle(x => x.ErrorMessage == "The expected purchase price of the land must be a whole number, like 300");
     }
 
     [Fact]
@@ -70,14 +70,14 @@ public class ExpectedPurchasePriceValueTests
         action.Should()
             .ThrowExactly<DomainValidationException>()
             .Which.OperationResult.Errors.Should()
-            .ContainSingle(x => x.ErrorMessage == "The expected purchase price of the land must be entered as a number, in pounds");
+            .ContainSingle(x => x.ErrorMessage == "The expected purchase price of the land must be a whole number, like 300");
     }
 
     [Theory]
     [InlineData("0", 0)]
     [InlineData("100", 100)]
     [InlineData("999999999", 999999999)]
-    public void ShouldCreateExpectedPurchasePrice_WhenValueIsValid(string input, decimal expectedValue)
+    public void ShouldCreateExpectedPurchasePrice_WhenValueIsValid(string input, int expectedValue)
     {
         // given && when
         var landValue = new ExpectedPurchasePrice(input);
@@ -90,7 +90,7 @@ public class ExpectedPurchasePriceValueTests
     public void ShouldCreateExpectedPurchasePrice_WhenIntValueIsValid()
     {
         // given && when
-        var landValue = new ExpectedPurchasePrice(100);
+        var landValue = ExpectedPurchasePrice.FromCrm(100);
 
         // then
         landValue.Value.Should().Be(100);

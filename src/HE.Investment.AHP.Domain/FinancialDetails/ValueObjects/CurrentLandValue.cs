@@ -6,17 +6,17 @@ using HE.Investments.Common.Domain.ValueObjects;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 
-public class CurrentLandValue : PoundsValueObject
+public class CurrentLandValue : TheRequiredIntValueObject
 {
-    public static readonly UiFields Fields = new(FinancialDetailsValidationFieldNames.LandValue, "current value of the land");
-
-    public CurrentLandValue(decimal landValue)
-        : base(landValue, Fields)
-    {
-    }
-
     public CurrentLandValue(string landValue)
-        : base(landValue, Fields)
+    : base(landValue, FinancialDetailsValidationFieldNames.LandValue, "current value of the land", 0, 999999999)
     {
     }
+
+    private CurrentLandValue(int landValue)
+        : base(landValue, FinancialDetailsValidationFieldNames.LandValue, "current value of the land")
+    {
+    }
+
+    public static CurrentLandValue FromCrm(decimal value) => new(decimal.ToInt32(value));
 }
