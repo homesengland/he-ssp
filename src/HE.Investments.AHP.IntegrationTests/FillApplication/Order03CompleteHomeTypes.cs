@@ -369,10 +369,10 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         summary.Should().ContainKey("Nationally Described Space Standards").WithValue(GeneralHomeType.SpaceStandards);
         summary.Should().ContainKey("Market value of each home").WhoseValue.Value.Should().BePoundsOnly(GeneralHomeType.MarketValue);
         summary.Should().ContainKey("Market rent per week").WhoseValue.Value.Should().BePoundsPences(GeneralHomeType.MarketRentPerWeek);
-        summary.Should().ContainKey("Affordable rent per week").WhoseValue.Value.Should().BePoundsPences(GeneralHomeType.RentPerWeek);
-        summary.Should().ContainKey("Affordable rent as percentage of market rent").WithValue(GeneralHomeType.ProspectiveRentPercentage);
+        summary.Should().ContainKey("Affordable Rent per week").WhoseValue.Value.Should().BePoundsPences(GeneralHomeType.RentPerWeek);
+        summary.Should().ContainKey("Affordable Rent as percentage of market rent").WithValue(GeneralHomeType.ProspectiveRentPercentage);
         summary.Should().ContainKey("Target rent exceeded 80% of market rent").WithValue(GeneralHomeType.Exceeds80PercentOfMarketRent);
-        summary.Should().ContainKey("Exempt from Right to Shared ownership").WithValue(GeneralHomeType.ExemptFromTheRightToSharedOwnership);
+        summary.Should().ContainKey("Exempt from Right to Shared Ownership").WithValue(GeneralHomeType.ExemptFromTheRightToSharedOwnership);
         summary.Should().ContainKey("Right to Shared Ownership criteria").WithValue(GeneralHomeType.ExemptionJustification);
         summary.Should().ContainKey("Using MMC").WithValue(GeneralHomeType.ModernMethodsOfConstruction);
         summary.Should().ContainKey("MMC categories used").WithOnlyValues(GeneralHomeType.MmcCategories);
@@ -679,10 +679,10 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         summary.Should().ContainKey("Nationally Described Space Standards").WithValue(DisabledHomeType.SpaceStandards);
         summary.Should().ContainKey("Market value of each home").WhoseValue.Value.Should().BePoundsOnly(DisabledHomeType.MarketValue);
         summary.Should().ContainKey("Market rent per week").WhoseValue.Value.Should().BePoundsPences(DisabledHomeType.MarketRentPerWeek);
-        summary.Should().ContainKey("Affordable rent per week").WhoseValue.Value.Should().BePoundsPences(DisabledHomeType.RentPerWeek);
-        summary.Should().ContainKey("Affordable rent as percentage of market rent").WithValue(DisabledHomeType.ProspectiveRentPercentage);
+        summary.Should().ContainKey("Affordable Rent per week").WhoseValue.Value.Should().BePoundsPences(DisabledHomeType.RentPerWeek);
+        summary.Should().ContainKey("Affordable Rent as percentage of market rent").WithValue(DisabledHomeType.ProspectiveRentPercentage);
         summary.Should().ContainKey("Target rent exceeded 80% of market rent").WithValue(DisabledHomeType.Exceeds80PercentOfMarketRent);
-        summary.Should().ContainKey("Exempt from Right to Shared ownership").WithValue(DisabledHomeType.ExemptFromTheRightToSharedOwnership);
+        summary.Should().ContainKey("Exempt from Right to Shared Ownership").WithValue(DisabledHomeType.ExemptFromTheRightToSharedOwnership);
         summary.Should().ContainKey("Right to Shared Ownership criteria").WithValue(DisabledHomeType.ExemptionJustification);
         summary.Should().ContainKey("Using MMC").WithValue(GeneralHomeType.ModernMethodsOfConstruction);
         summary.Should().ContainKey("MMC categories used").WithOnlyValues(GeneralHomeType.MmcCategories);
