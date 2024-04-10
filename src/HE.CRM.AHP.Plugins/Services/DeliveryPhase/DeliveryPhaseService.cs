@@ -175,27 +175,38 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
             var numberOfHouseApplication = application.invln_noofhomes.Value;
             var numberOfHousePhase = deliveryPhaseMapped.invln_NoofHomes.Value;
             var fundingRequired = application.invln_fundingrequired.Value;
-            var acquisitionPercentageValue = milestones.FirstOrDefault(x => x.invln_milestone.Value == (int)invln_Milestone.Acquisition).invln_percentagepaidonmilestone.Value / 100;
-            var startOnSitePercentageValue = milestones.FirstOrDefault(x => x.invln_milestone.Value == (int)invln_Milestone.SoS).invln_percentagepaidonmilestone.Value / 100;
-            var completionPercentageValue = milestones.FirstOrDefault(x => x.invln_milestone.Value == (int)invln_Milestone.PC).invln_percentagepaidonmilestone.Value / 100;
+            var acquisitionPercentageValue = milestones
+                    .FirstOrDefault(x => x.invln_milestone.Value == (int)invln_Milestone.Acquisition).invln_percentagepaidonmilestone.Value / 100;
+            var startOnSitePercentageValue = milestones
+                    .FirstOrDefault(x => x.invln_milestone.Value == (int)invln_Milestone.SoS).invln_percentagepaidonmilestone.Value / 100;
+            var completionPercentageValue = milestones
+                    .FirstOrDefault(x => x.invln_milestone.Value == (int)invln_Milestone.PC).invln_percentagepaidonmilestone.Value / 100;
+            var fundingForPhase = (fundingRequired / numberOfHouseApplication) * numberOfHousePhase;
             if (deliveryPhaseToUpdateOrCreate == null)
             {
-                deliveryPhaseMapped.invln_AcquisitionValue = new Money(fundingRequired / numberOfHouseApplication * numberOfHousePhase * acquisitionPercentageValue);
-                deliveryPhaseMapped.invln_AcquisitionPercentageValue = acquisitionPercentageValue;
-                deliveryPhaseMapped.invln_StartOnSiteValue = new Money(fundingRequired / numberOfHouseApplication * numberOfHousePhase * startOnSitePercentageValue);
-                deliveryPhaseMapped.invln_StartOnSitePercentageValue = startOnSitePercentageValue;
-                deliveryPhaseMapped.invln_CompletionValue = new Money(fundingRequired / numberOfHouseApplication * numberOfHousePhase * completionPercentageValue);
-                deliveryPhaseMapped.invln_CompletionPercentageValue = completionPercentageValue;
+                CalculateFundings(deliveryPhaseMapped, acquisitionPercentageValue, startOnSitePercentageValue, completionPercentageValue, fundingForPhase);
             }
             else
             {
-                deliveryPhaseToUpdateOrCreate.invln_AcquisitionValue = new Money(fundingRequired / numberOfHouseApplication * numberOfHousePhase * acquisitionPercentageValue);
-                deliveryPhaseToUpdateOrCreate.invln_AcquisitionPercentageValue = acquisitionPercentageValue;
-                deliveryPhaseToUpdateOrCreate.invln_StartOnSiteValue = new Money(fundingRequired / numberOfHouseApplication * numberOfHousePhase * startOnSitePercentageValue);
-                deliveryPhaseToUpdateOrCreate.invln_StartOnSitePercentageValue = startOnSitePercentageValue;
-                deliveryPhaseToUpdateOrCreate.invln_CompletionValue = new Money(fundingRequired / numberOfHouseApplication * numberOfHousePhase * completionPercentageValue);
-                deliveryPhaseToUpdateOrCreate.invln_CompletionPercentageValue = completionPercentageValue;
-                deliveryPhaseToUpdateOrCreate.invln_NoofHomes = numberOfHousePhase;
+                CalculateFundings(deliveryPhaseToUpdateOrCreate, acquisitionPercentageValue, startOnSitePercentageValue, completionPercentageValue, fundingForPhase);
+            }
+        }
+
+        private static void CalculateFundings(invln_DeliveryPhase deliveryPhase, decimal acquisitionPercentageValue, decimal startOnSitePercentageValue, decimal completionPercentageValue, decimal fundingForPhase)
+        {
+            deliveryPhase.invln_AcquisitionValue = new Money(fundingForPhase * acquisitionPercentageValue);
+            deliveryPhase.invln_AcquisitionPercentageValue = acquisitionPercentageValue;
+            deliveryPhase.invln_StartOnSiteValue = new Money(fundingForPhase * startOnSitePercentageValue);
+            deliveryPhase.invln_StartOnSitePercentageValue = startOnSitePercentageValue;
+            deliveryPhase.invln_CompletionValue = new Money(fundingForPhase * completionPercentageValue);
+            deliveryPhase.invln_CompletionPercentageValue = completionPercentageValue;
+            var leftOver = fundingForPhase
+                - (deliveryPhase.invln_AcquisitionValue.Value
+                + deliveryPhase.invln_StartOnSiteValue.Value
+                + deliveryPhase.invln_CompletionValue.Value);
+            if (leftOver > 0 && (leftOver < fundingForPhase * 0.01m || leftOver < 1))
+            {
+                deliveryPhase.invln_CompletionPercentageValue += leftOver;
             }
         }
 
