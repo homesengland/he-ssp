@@ -19,6 +19,16 @@ public static class CrmEntityExtensions
         return null;
     }
 
+    public static OptionSetValue? GetOptionSetAttribute(this Entity entity, string attributeName)
+    {
+        if (entity.Contains(attributeName))
+        {
+            return entity.GetAttributeValue<OptionSetValue>(attributeName);
+        }
+
+        return null;
+    }
+
     public static EntityReference? GetEntityReference(this Entity entity, string attributeName)
     {
         if (entity.Contains(attributeName) && entity[attributeName] != null)
