@@ -1,15 +1,16 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.Investments.Common.Contract.Pagination;
 
 namespace HE.Investment.AHP.Domain.Data;
 
 public interface ISiteCrmContext
 {
-    Task<PagedResponseDto<SiteDto>> Get(PagingRequestDto pagination, CancellationToken cancellationToken);
+    Task<PagedResponseDto<SiteDto>> GetOrganisationSites(Guid organisationId, PagingRequestDto pagination, CancellationToken cancellationToken);
 
-    Task<SiteDto?> GetById(string id, CancellationToken cancellationToken);
+    Task<PagedResponseDto<SiteDto>> GetUserSites(string userGlobalId, PagingRequestDto pagination, CancellationToken cancellationToken);
+
+    Task<SiteDto?> GetById(string siteId, CancellationToken cancellationToken);
 
     Task<bool> Exist(string name, CancellationToken cancellationToken);
 
-    Task<string> Save(SiteDto dto, CancellationToken cancellationToken);
+    Task<string> Save(Guid organisationId, string userGlobalId, SiteDto dto, CancellationToken cancellationToken);
 }
