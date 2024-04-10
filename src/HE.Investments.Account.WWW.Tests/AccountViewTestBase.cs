@@ -1,13 +1,13 @@
 using AngleSharp.Html.Dom;
-using HE.Investment.AHP.WWW.Config;
+using HE.Investments.Account.WWW.Config;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 
-namespace HE.Investment.AHP.WWW.Tests;
+namespace HE.Investments.Account.WWW.Tests;
 
-public abstract class AhpViewTestBase : ViewTestBase
+public abstract class AccountViewTestBase : ViewTestBase
 {
     protected override async Task<IHtmlDocument> Render<TModel>(
         string viewPath,
@@ -20,7 +20,7 @@ public abstract class AhpViewTestBase : ViewTestBase
     {
         var document = await base.Render(viewPath, model, viewBagOrViewData, modelStateDictionary, routeData, services =>
         {
-            services.AddSingleton(_ => new Mock<IAhpExternalLinks>().Object);
+            services.AddSingleton(_ => new Mock<IAccountExternalLinks>().Object);
         });
 
         return document;

@@ -6,7 +6,7 @@ using HE.Investments.Common.WWW.Components.ApplicationStatusTagComponent;
 
 namespace HE.Investments.Account.WWW.Tests.Views.UserOrganisation;
 
-public class ListCardTests : ViewTestBase
+public class ListCardTests : AccountViewTestBase
 {
     private readonly string _viewPath = "/Views/UserOrganisation/_ListCard.cshtml";
 

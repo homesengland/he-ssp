@@ -1,6 +1,6 @@
 namespace HE.Investment.AHP.WWW.Config;
 
-public interface IExternalLinks
+public interface IAhpExternalLinks
 {
     public string BuildingRegulations { get; }
 
@@ -24,7 +24,7 @@ public interface IExternalLinks
 
     public string UkGovernmentLicensingFramework { get; }
 
-    public string BuildingForHealthyLifeBrochure { get; }
+    public string BuildingForHealthyLife { get; }
 
     public string NationalDesignGuide { get; }
 

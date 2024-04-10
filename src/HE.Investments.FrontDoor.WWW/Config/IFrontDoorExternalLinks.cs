@@ -1,6 +1,6 @@
 namespace HE.Investments.FrontDoor.WWW.Config;
 
-public interface IExternalLinks
+public interface IFrontDoorExternalLinks
 {
     string MailToHelpToBuildTechSupport { get; }
 
@@ -12,7 +12,7 @@ public interface IExternalLinks
 
     string GovUk { get; }
 
-    string MailToEnquiries { get; }
+    string EnquiriesEmail { get; }
 
     string FindLocalCouncil { get; }
 }

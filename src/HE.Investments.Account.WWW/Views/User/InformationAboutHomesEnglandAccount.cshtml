@@ -1,7 +1,7 @@
 @using HE.Investments.Account.WWW.Views.User
 @using HE.Investments.Account.WWW.Config
-@using Microsoft.AspNetCore.Mvc.TagHelpers
 @using HE.Investments.Common.WWW.Models
+@inject IAccountExternalLinks ExternalLinks;
 @model HE.Investments.Account.WWW.Models.User.AcceptHeTermsAndConditionsModel
 @{
     var title = UserPageTitles.InformationAboutYourAccount;
@@ -27,7 +27,7 @@
 
                 <gds-p>If you have already created an account, <he-link href="@Url.Action("SignIn", "HeIdentity")" text="sign in"></he-link>.</gds-p>
 
-                <gds-p>Before creating an account, you must read the <he-link href="@ExternalLinks.HePrivacyPolicy" target="_blank" text="Homes England privacy notice (opens in a new tab)"></he-link>.</gds-p>
+                <gds-p>Before creating an account, you must read the <he-link href="@ExternalLinks.AccountPrivacyPolicy" target="_blank" text="Homes England privacy notice (opens in a new tab)"></he-link>.</gds-p>
 
                 <vc:checkbox-list-content
                     field-name="AcceptHeTermsAndConditions"

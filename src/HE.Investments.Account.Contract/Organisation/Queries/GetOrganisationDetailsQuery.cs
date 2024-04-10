@@ -2,8 +2,6 @@ using MediatR;
 
 namespace HE.Investments.Account.Contract.Organisation.Queries;
 
-public class GetOrganisationDetailsQuery : IRequest<GetOrganisationDetailsQueryResponse>
+public class GetOrganisationDetailsQuery : IRequest<OrganisationDetails>
 {
 }
-
-public record GetOrganisationDetailsQueryResponse(OrganisationDetailsViewModel OrganisationDetailsViewModel);
