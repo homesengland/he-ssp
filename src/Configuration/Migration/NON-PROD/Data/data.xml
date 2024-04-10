@@ -1,5 +1,5 @@
 
-<entities xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" timestamp="2024-03-26T13:25:24.9459907Z">
+<entities xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" timestamp="2024-04-08T11:36:59.8627383Z">
   <entity name="invln_notificationsetting" displayname="Notification Setting">
     <records>
       <record id="1ab09971-d199-ee11-be37-0022480041cf">
@@ -195,6 +195,18 @@
         <field name="name" value="CRO Team" />
         <field name="teamtype" value="0" />
       </record>
+      <record id="009544c2-477a-ee11-8179-002248004a06">
+        <field name="administratorid" value="c19dae9a-b7cc-ed11-a7c6-002248c65419" lookupentity="systemuser" lookupentityname="Jasmine Smyth" />
+        <field name="businessunitid" value="bcbd46c9-65b5-ed11-a37f-0022481b5b17" lookupentity="businessunit" lookupentityname="orgbeedfa2f" />
+        <field name="transactioncurrencyid" value="08f7ec69-a4b5-ed11-a37f-0022481b5b17" lookupentity="transactioncurrency" lookupentityname="British Pound" />
+        <field name="queueid" value="019544c2-477a-ee11-8179-002248004a06" lookupentity="queue" lookupentityname="&lt;HoF Team&gt;" />
+        <field name="exchangerate" value="1.000000000000" />
+        <field name="systemmanaged" value="False" />
+        <field name="membershiptype" value="0" />
+        <field name="teamid" value="009544c2-477a-ee11-8179-002248004a06" />
+        <field name="name" value="HoF Team" />
+        <field name="teamtype" value="0" />
+      </record>
       <record id="bd52018b-9ad0-ee11-9079-002248004a06">
         <field name="administratorid" value="efce8d95-96e2-ed11-8846-002248c653e1" lookupentity="systemuser" lookupentityname="Wawrzyniec W" />
         <field name="businessunitid" value="bcbd46c9-65b5-ed11-a37f-0022481b5b17" lookupentity="businessunit" lookupentityname="orgbeedfa2f" />
@@ -248,6 +260,18 @@
         <field name="membershiptype" value="0" />
         <field name="teamid" value="5a3d327f-84c2-ed11-b597-002248c85416" />
         <field name="name" value="Admin Digital Security Team" />
+        <field name="teamtype" value="0" />
+      </record>
+      <record id="851f30d3-dc47-ee11-be6f-6045bd0d7d6d">
+        <field name="administratorid" value="c19dae9a-b7cc-ed11-a7c6-002248c65419" lookupentity="systemuser" lookupentityname="Jasmine Smyth" />
+        <field name="businessunitid" value="bcbd46c9-65b5-ed11-a37f-0022481b5b17" lookupentity="businessunit" lookupentityname="orgbeedfa2f" />
+        <field name="transactioncurrencyid" value="08f7ec69-a4b5-ed11-a37f-0022481b5b17" lookupentity="transactioncurrency" lookupentityname="British Pound" />
+        <field name="queueid" value="c51f30d3-dc47-ee11-be6f-6045bd0d7d6d" lookupentity="queue" lookupentityname="&lt;Risk team&gt;" />
+        <field name="exchangerate" value="1.000000000000" />
+        <field name="systemmanaged" value="False" />
+        <field name="membershiptype" value="0" />
+        <field name="teamid" value="851f30d3-dc47-ee11-be6f-6045bd0d7d6d" />
+        <field name="name" value="Risk team" />
         <field name="teamtype" value="0" />
       </record>
       <record id="b63d23df-dc47-ee11-be6f-6045bd0d7d6d">

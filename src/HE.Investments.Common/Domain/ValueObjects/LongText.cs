@@ -1,49 +1,21 @@
-using HE.Investments.Common.Contract.Validators;
-using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
 
 namespace HE.Investments.Common.Domain.ValueObjects;
 
-public class LongText : ValueObject
+public abstract class LongText : StringValueObject
 {
-    public LongText(
-        string? value,
-        string fieldName = nameof(LongText),
-        string noValueProvidedErrorMessage = GenericValidationError.NoValueProvided,
-        string textTooLongErrorMessage = GenericValidationError.TextTooLong)
-    {
-        var normalisedValue = value?.NormalizeLineEndings();
-
-        if (normalisedValue.IsNotProvided())
-        {
-            OperationResult.New()
-                .AddValidationError(fieldName, noValueProvidedErrorMessage)
-                .CheckErrors();
-        }
-
-        if (normalisedValue!.Length > MaximumInputLength.LongInput)
-        {
-            OperationResult.New()
-                .AddValidationError(fieldName, textTooLongErrorMessage)
-                .CheckErrors();
-        }
-
-        Value = normalisedValue;
-    }
-
-    public LongText(string? value, string fieldName, string fieldDisplayName)
-        : this(
+    protected LongText(string? value, string fieldName, string fieldDisplayName)
+        : base(
             value,
             fieldName,
-            ValidationErrorMessage.MissingRequiredField(fieldDisplayName),
-            ValidationErrorMessage.LongInputLengthExceeded(fieldDisplayName))
+            ValidationErrorMessage.MustProvideRequiredField(fieldDisplayName),
+            ValidationErrorMessage.StringLengthExceeded(fieldDisplayName, MaximumInputLength.LongInput),
+            MaximumInputLength.LongInput)
     {
     }
 
-    public string Value { get; }
-
-    protected override IEnumerable<object> GetAtomicValues()
+    protected LongText(string? value, string fieldName, string noValueProvidedErrorMessage, string textTooLongErrorMessage)
+        : base(value, fieldName, noValueProvidedErrorMessage, textTooLongErrorMessage, MaximumInputLength.LongInput)
     {
-        yield return Value;
     }
 }

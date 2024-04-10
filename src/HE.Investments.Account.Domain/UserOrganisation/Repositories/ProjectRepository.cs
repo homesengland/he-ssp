@@ -28,7 +28,6 @@ public class ProjectRepository : IProjectRepository
         {
             invln_organisationid = userAccount.SelectedOrganisationId().ToString(),
             inlvn_userid = userAccount.CanViewAllApplications() ? string.Empty : userAccount.UserGlobalId.ToString(),
-            invln_fieldstoretrieve = nameof(invln_FrontDoorProjectPOC.invln_Name).ToLowerInvariant(),
             invln_usehetables = await _featureManager.GetUseHeTablesParameter(),
         };
 

@@ -22,8 +22,8 @@ public class ProvideLandStatusCommandHandler : FinancialDetailsCommandHandlerBas
         return await Perform(
             financialDetails =>
             {
-                var purchasePrice = request.IsFinal && request.PurchasePrice.IsProvided() ? new PurchasePrice(request.PurchasePrice!) : null;
-                var expectedPurchasePrice = !request.IsFinal && request.PurchasePrice.IsProvided() ? new ExpectedPurchasePrice(request.PurchasePrice!) : null;
+                var purchasePrice = request.IsFullUnconditionalOption && request.PurchasePrice.IsProvided() ? new PurchasePrice(request.PurchasePrice!) : null;
+                var expectedPurchasePrice = !request.IsFullUnconditionalOption && request.PurchasePrice.IsProvided() ? new ExpectedPurchasePrice(request.PurchasePrice!) : null;
                 var landStatus = new LandStatus(purchasePrice, expectedPurchasePrice);
                 financialDetails.ProvideLandStatus(landStatus);
             },

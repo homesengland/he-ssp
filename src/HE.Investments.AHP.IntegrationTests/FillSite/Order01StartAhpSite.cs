@@ -22,7 +22,7 @@ namespace HE.Investments.AHP.IntegrationTests.FillSite;
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
 public class Order01StartAhpSite : AhpIntegrationTest
 {
-    public Order01StartAhpSite(IntegrationTestFixture<Program> fixture, ITestOutputHelper output)
+    public Order01StartAhpSite(AhpIntegrationTestFixture fixture, ITestOutputHelper output)
         : base(fixture, output)
     {
     }

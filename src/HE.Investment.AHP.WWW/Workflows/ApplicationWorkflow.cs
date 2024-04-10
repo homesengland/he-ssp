@@ -46,7 +46,7 @@ public class ApplicationWorkflow : IStateRouting<ApplicationWorkflowState>
             ApplicationWorkflowState.Withdraw => await IsOperationAllowed(AhpApplicationOperation.Withdraw),
             ApplicationWorkflowState.CheckAnswers => await CanBeSubmitted(),
             ApplicationWorkflowState.Submit => await CanBeSubmitted(),
-            ApplicationWorkflowState.Completed => await IsSubmitted(),
+            ApplicationWorkflowState.Completed => await IsCompleted(),
             _ => false,
         };
     }
@@ -107,10 +107,10 @@ public class ApplicationWorkflow : IStateRouting<ApplicationWorkflowState>
         return model.AllowedOperations.Contains(AhpApplicationOperation.Submit) && allSectionsCompleted;
     }
 
-    private async Task<bool> IsSubmitted()
+    private async Task<bool> IsCompleted()
     {
         var model = await _modelFactory();
         var allSectionsCompleted = model.Sections.All(x => x.SectionStatus == SectionStatus.Submitted);
-        return model.Status == ApplicationStatus.ApplicationSubmitted && allSectionsCompleted;
+        return model.Status is ApplicationStatus.ApplicationSubmitted or ApplicationStatus.UnderReview && allSectionsCompleted;
     }
 }

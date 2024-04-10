@@ -1,7 +1,9 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.Investments.Common;
 using HE.Investments.Organisation.CrmFields;
 using HE.Investments.Organisation.CrmRepository;
 using HE.Investments.Organisation.Extensions;
+using Microsoft.FeatureManagement;
 using Microsoft.PowerPlatform.Dataverse.Client;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
@@ -13,15 +15,18 @@ public class OrganizationService : IOrganizationService
     private readonly IOrganizationServiceAsync2 _service;
     private readonly IOrganisationChangeRequestRepository _organisationChangeRequestRepository;
     private readonly IContactRepository _contactRepository;
+    private readonly IFeatureManager _featureManager;
 
     public OrganizationService(
         IOrganizationServiceAsync2 service,
         IOrganisationChangeRequestRepository organisationChangeRequestRepository,
-        IContactRepository contactRepository)
+        IContactRepository contactRepository,
+        IFeatureManager featureManager)
     {
         _service = service;
         _organisationChangeRequestRepository = organisationChangeRequestRepository;
         _contactRepository = contactRepository;
+        _featureManager = featureManager;
     }
 
     public async Task<Guid> CreateOrganisationChangeRequest(OrganizationDetailsDto organizationDetails, string contactExternalId)
@@ -61,7 +66,8 @@ public class OrganizationService : IOrganizationService
         var organizationDetailsDto = new OrganizationDetailsDto();
         if (Guid.TryParse(accountId, out var organizationId))
         {
-            var account = await _service.RetrieveAsync(AccountEntity.Name, organizationId, AccountEntity.AllColumns());
+            var isAhpEnabled = await _featureManager.IsEnabledAsync(FeatureFlags.AhpProgram);
+            var account = await _service.RetrieveAsync(AccountEntity.Name, organizationId, AccountEntity.AllColumns(isAhpEnabled));
 
             organizationDetailsDto.registeredCompanyName = account.GetStringAttribute(AccountEntity.Properties.CompanyName);
             organizationDetailsDto.companyRegistrationNumber = account.GetStringAttribute(AccountEntity.Properties.CompanyNumber);
@@ -72,6 +78,11 @@ public class OrganizationService : IOrganizationService
             organizationDetailsDto.postalcode = account.GetStringAttribute(AccountEntity.Properties.PostalCode);
             organizationDetailsDto.country = account.GetStringAttribute(AccountEntity.Properties.Country);
             organizationDetailsDto.isUnregisteredBody = account.GetBooleanAttribute(AccountEntity.Properties.UnregisteredBody) ?? false;
+
+            if (isAhpEnabled)
+            {
+                organizationDetailsDto.investmentPartnerStatus = account.GetOptionSetAttribute(AccountEntity.Properties.InvestmentPartnerStatus)?.Value;
+            }
 
             var primaryContactReference = account.GetEntityReference(AccountEntity.Properties.PrimaryContactId);
             if (primaryContactReference != null)

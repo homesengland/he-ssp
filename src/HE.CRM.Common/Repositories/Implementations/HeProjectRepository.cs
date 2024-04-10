@@ -18,7 +18,7 @@ namespace HE.CRM.Common.Repositories.Implementations
         {
         }
 
-        public List<he_Pipeline> GetHeProject(string organisationCondition, string contactExternalIdFilter, string frontDoorProjectFilters, string statecodeCondition)
+        public List<he_Pipeline> GetHeProject(string organisationCondition, string contactExternalIdFilter, string frontDoorProjectFilters, string recordStatusCondition)
         {
             logger.Trace("FrontDoorProjectRepository GetFrontDoorProjectForOrganisationAndContact");
             var fetchXML = $@"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
@@ -59,7 +59,7 @@ namespace HE.CRM.Common.Repositories.Implementations
                                             <attribute name=""he_activitiesinthisproject"" />
                                             <attribute name=""he_housingdeliveryinengland"" />
                                              <filter>
-                                              {statecodeCondition}
+                                              {recordStatusCondition}
                                               {organisationCondition}
                                               {frontDoorProjectFilters}
                                              </filter>

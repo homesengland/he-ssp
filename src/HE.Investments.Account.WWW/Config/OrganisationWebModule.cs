@@ -35,6 +35,7 @@ public static class OrganisationWebModule
         services.AddNotificationConsumer(ApplicationType.Account, typeof(ChangeOrganisationDetailsRequestedDisplayNotificationFactory).Assembly);
         services.AddScoped<IAccountRoutes, AccountRoutes>();
         services.AddSingleton<IErrorViewPaths, AccountErrorViewPaths>();
+        services.AddSingleton<IAccountExternalLinks, AccountExternalLinks>();
     }
 
     private static void AddConfiguration(IServiceCollection services)

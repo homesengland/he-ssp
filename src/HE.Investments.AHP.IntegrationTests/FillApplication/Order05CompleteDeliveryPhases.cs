@@ -2,14 +2,12 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
-using HE.Investment.AHP.WWW;
 using HE.Investment.AHP.WWW.Views.Delivery.Const;
 using HE.Investments.AHP.IntegrationTests.Extensions;
 using HE.Investments.AHP.IntegrationTests.FillApplication.Data;
 using HE.Investments.AHP.IntegrationTests.Framework;
 using HE.Investments.AHP.IntegrationTests.Pages;
 using HE.Investments.Common.Extensions;
-using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.IntegrationTestsFramework.Assertions;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
@@ -24,7 +22,7 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
 {
     private readonly DeliveryPhasesData _deliveryPhasesData;
 
-    public Order05CompleteDeliveryPhases(IntegrationTestFixture<Program> fixture, ITestOutputHelper output)
+    public Order05CompleteDeliveryPhases(AhpIntegrationTestFixture fixture, ITestOutputHelper output)
         : base(fixture, output)
     {
         var deliveryPhasesData = GetSharedDataOrNull<DeliveryPhasesData>(nameof(_deliveryPhasesData));

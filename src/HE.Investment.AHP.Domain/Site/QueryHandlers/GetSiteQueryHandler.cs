@@ -109,11 +109,11 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
             tenderingStatusDetails.IsIntentionToWorkWithSme);
     }
 
-    private static StrategicSite CreateStrategicSiteDetails(StrategicSiteDetails details)
+    private static StrategicSite CreateStrategicSiteDetails(StrategicSiteDetails? details)
     {
         return new StrategicSite(
-            details.IsStrategicSite,
-            details.SiteName?.Value);
+            details?.IsStrategicSite,
+            details?.SiteName?.Value);
     }
 
     private static SiteTypeDetails CreateSiteTypeDetails(ValueObjects.SiteTypeDetails details)

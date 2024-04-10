@@ -10,9 +10,9 @@ public class FinancialDetails
 
     public decimal? PurchasePrice { get; set; }
 
-    public bool? IsPurchasePriceFinal { get; set; }
+    public bool IsFullUnconditionalOption { get; set; }
 
-    public YesNoType IsSchemaOnPublicLand { get; set; }
+    public bool? IsSchemaOnPublicLand { get; set; }
 
     public decimal? LandValue { get; set; }
 

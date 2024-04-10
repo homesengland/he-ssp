@@ -1,13 +1,11 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using FluentAssertions;
-using HE.Investment.AHP.WWW;
 using HE.Investment.AHP.WWW.Views.Scheme.Const;
 using HE.Investments.AHP.IntegrationTests.FillApplication.Data;
 using HE.Investments.AHP.IntegrationTests.Framework;
 using HE.Investments.AHP.IntegrationTests.Pages;
 using HE.Investments.Common.WWW.Extensions;
-using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.IntegrationTestsFramework.Assertions;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
@@ -20,7 +18,7 @@ namespace HE.Investments.AHP.IntegrationTests.FillApplication;
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
 public class Order02CompleteSchemeInformation : AhpIntegrationTest
 {
-    public Order02CompleteSchemeInformation(IntegrationTestFixture<Program> fixture, ITestOutputHelper output)
+    public Order02CompleteSchemeInformation(AhpIntegrationTestFixture fixture, ITestOutputHelper output)
         : base(fixture, output)
     {
         var schemaInformationData = GetSharedDataOrNull<SchemeInformationData>(nameof(SchemeInformationData));

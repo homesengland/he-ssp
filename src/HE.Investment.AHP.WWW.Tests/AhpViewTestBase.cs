@@ -20,7 +20,7 @@ public abstract class AhpViewTestBase : ViewTestBase
     {
         var document = await base.Render(viewPath, model, viewBagOrViewData, modelStateDictionary, routeData, services =>
         {
-            services.AddSingleton(_ => new Mock<IExternalLinks>().Object);
+            services.AddSingleton(_ => new Mock<IAhpExternalLinks>().Object);
         });
 
         return document;

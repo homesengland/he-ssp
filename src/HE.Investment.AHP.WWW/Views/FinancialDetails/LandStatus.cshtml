@@ -7,7 +7,7 @@
 @model FinancialDetailsLandStatusModel
 @{
     ViewData["Title"] = FinancialDetailsPageTitles.LandStatusPage;
-    var purchasePriceLabel = Model.IsFinal ? "Enter the purchase price of the land" : "Enter the expected purchase price of the land";
+    var purchasePriceLabel = Model.IsFullUnconditionalOption ? "Enter the purchase price of the land" : "Enter the expected purchase price of the land";
 }
 
 <gds-div-grid-column-two-thirds>
@@ -19,7 +19,7 @@
 
         <div class="govuk-body-l govuk-!-margin-bottom-6">
             You told us during the site section of your application that your land status was:<br />
-            @if (Model.IsFinal)
+            @if (Model.IsFullUnconditionalOption)
             {
                 <strong>Unconditional acquisition of freehold or long leasehold interest has occurred.</strong>
             }
@@ -30,7 +30,7 @@
                 </div>
             }
         </div>
-        @if (Model.IsFinal)
+        @if (Model.IsFullUnconditionalOption)
         {
             <div class="govuk-body-m govuk-!-margin-bottom-6">
                 If your application concerns existing properties rather than land-led development, this section is still relevant to you. Where we say 'site' or 'land', read 'properties'.
@@ -55,7 +55,7 @@
             </he-error-form-group>
             <vc:form-button/>
 
-            @Html.HiddenFor(c => c.IsFinal)
+            @Html.HiddenFor(c => c.IsFullUnconditionalOption)
             @Html.HiddenFor(c => c.ApplicationId)
             @Html.HiddenFor(c => c.ApplicationName)
         </gds-field-set>

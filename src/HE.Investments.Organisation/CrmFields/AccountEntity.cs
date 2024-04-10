@@ -6,9 +6,10 @@ internal static class AccountEntity
 {
     public const string Name = "account";
 
-    public static ColumnSet AllColumns()
+    public static ColumnSet AllColumns(bool isAhpEnabled)
     {
-        return new ColumnSet(
+        var columns = new List<string>
+        {
             Properties.CompanyName,
             Properties.CompanyNumber,
             Properties.AddressLine1,
@@ -18,7 +19,15 @@ internal static class AccountEntity
             Properties.PostalCode,
             Properties.Country,
             Properties.PrimaryContactId,
-            Properties.UnregisteredBody);
+            Properties.UnregisteredBody,
+        };
+
+        if (isAhpEnabled)
+        {
+            columns.Add(Properties.InvestmentPartnerStatus);
+        }
+
+        return new ColumnSet(columns.ToArray());
     }
 
     public static class Properties
@@ -44,5 +53,7 @@ internal static class AccountEntity
         public const string PrimaryContactId = "primarycontactid";
 
         public const string UnregisteredBody = "invln_unregisteredbody";
+
+        public const string InvestmentPartnerStatus = "invln_externalstatus";
     }
 }

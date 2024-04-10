@@ -1,14 +1,13 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using FluentAssertions;
-using HE.Investment.AHP.WWW;
 using HE.Investment.AHP.WWW.Views.FinancialDetails.Consts;
 using HE.Investments.AHP.IntegrationTests.FillApplication.Data;
 using HE.Investments.AHP.IntegrationTests.Framework;
 using HE.Investments.AHP.IntegrationTests.Pages;
 using HE.Investments.Common.Contract.Enum;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Extensions;
-using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.IntegrationTestsFramework.Assertions;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
@@ -21,7 +20,7 @@ namespace HE.Investments.AHP.IntegrationTests.FillApplication;
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
 public class Order04CompleteFinancialDetails : AhpIntegrationTest
 {
-    public Order04CompleteFinancialDetails(IntegrationTestFixture<Program> fixture, ITestOutputHelper output)
+    public Order04CompleteFinancialDetails(AhpIntegrationTestFixture fixture, ITestOutputHelper output)
         : base(fixture, output)
     {
         var financialDetailsData = GetSharedDataOrNull<FinancialDetailsData>(nameof(FinancialDetailsData));
@@ -86,7 +85,7 @@ public class Order04CompleteFinancialDetails : AhpIntegrationTest
             FinancialDetailsPagesUrl.LandValue(ApplicationData.ApplicationId),
             FinancialDetailsPageTitles.LandValuePage,
             FinancialDetailsPagesUrl.OtherApplicationCostsSuffix,
-            ("IsOnPublicLand", FinancialDetailsData.IsPublicLand.MapToCommonResponse()),
+            ("IsOnPublicLand", FinancialDetailsData.IsPublicLand.MapToTrueFalse()),
             ("LandValue", FinancialDetailsData.PublicLandValue.ToString(CultureInfo.InvariantCulture)));
     }
 

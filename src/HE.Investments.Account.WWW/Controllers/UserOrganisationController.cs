@@ -12,7 +12,6 @@ using HE.Investments.Account.WWW.Routing;
 using HE.Investments.Account.WWW.Utils;
 using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Models;
-using HE.Investments.Common.WWW.Utils;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -74,9 +73,9 @@ public class UserOrganisationController : Controller
     [HttpGet("details")]
     public async Task<IActionResult> Details()
     {
-        var organisationResult = await _mediator.Send(new GetOrganisationDetailsQuery());
+        var result = await _mediator.Send(new GetOrganisationDetailsQuery());
 
-        return View("OrganisationDetails", organisationResult.OrganisationDetailsViewModel);
+        return View("OrganisationDetails", result);
     }
 
     [HttpGet("request-details-change")]
@@ -84,34 +83,32 @@ public class UserOrganisationController : Controller
     public async Task<IActionResult> ChangeOrganisationDetails()
     {
         var organisationResult = await _mediator.Send(new GetOrganisationDetailsQuery());
-        if (organisationResult.OrganisationDetailsViewModel.ChangeRequestState == OrganisationChangeRequestState.NoPendingRequest)
+        if (organisationResult.ChangeRequestState == OrganisationChangeRequestState.NoPendingRequest)
         {
-            return View(organisationResult.OrganisationDetailsViewModel);
+            return View(organisationResult);
         }
 
-        return View("OrganisationDetails", organisationResult.OrganisationDetailsViewModel);
+        return View("OrganisationDetails", organisationResult);
     }
 
     [HttpPost("request-details-change")]
     [AuthorizeWithCompletedProfile(UserRole.Admin)]
-    public async Task<IActionResult> ChangeOrganisationDetails(OrganisationDetailsViewModel viewModel, CancellationToken cancellationToken)
+    public async Task<IActionResult> ChangeOrganisationDetails(OrganisationDetails model, CancellationToken cancellationToken)
     {
         var command = new ChangeOrganisationDetailsCommand(
-            viewModel.Name,
-            viewModel.PhoneNumber,
-            viewModel.AddressLine1,
-            viewModel.AddressLine2,
-            viewModel.TownOrCity,
-            viewModel.County,
-            viewModel.Postcode);
+            model.Name,
+            model.PhoneNumber,
+            model.AddressLine1,
+            model.AddressLine2,
+            model.TownOrCity,
+            model.County,
+            model.Postcode);
 
-        return await this.ExecuteCommand<OrganisationDetailsViewModel>(
+        return await this.ExecuteCommand<OrganisationDetails>(
             _mediator,
             command,
-            () => Task.FromResult<IActionResult>(RedirectToAction(
-                nameof(Details),
-                new ControllerName(nameof(UserOrganisationController)).WithoutPrefix())),
-            () => Task.FromResult<IActionResult>(View(viewModel)),
+            () => Task.FromResult<IActionResult>(RedirectToAction("Details")),
+            () => Task.FromResult<IActionResult>(View(model)),
             cancellationToken);
     }
 

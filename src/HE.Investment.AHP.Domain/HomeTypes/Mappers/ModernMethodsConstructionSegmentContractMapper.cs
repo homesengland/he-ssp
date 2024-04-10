@@ -10,7 +10,7 @@ public class ModernMethodsConstructionSegmentContractMapper : IHomeTypeSegmentCo
     public ModernMethodsConstruction Map(ApplicationName applicationName, HomeTypeName homeTypeName, ModernMethodsConstructionSegmentEntity segment)
     {
         return new ModernMethodsConstruction(
-            applicationName.Name,
+            applicationName.Value,
             homeTypeName.Value,
             segment.SiteUsingModernMethodsOfConstruction,
             segment.ModernMethodsConstructionApplied,

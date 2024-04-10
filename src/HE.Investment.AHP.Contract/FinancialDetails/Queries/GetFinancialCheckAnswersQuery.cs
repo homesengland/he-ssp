@@ -9,7 +9,7 @@ public record GetFinancialCheckAnswersQuery(AhpApplicationId ApplicationId) : IR
 
 public record GetFinancialCheckAnswersResult(ApplicationDetails Application, SectionStatus SectionStatus, LandValueSummary LandValue, TotalSchemeCost TotalSchemeCost, TotalContributions TotalContributions);
 
-public record LandValueSummary(decimal? PurchasePrice, decimal? CurrentValue, YesNoType IsPublicLand);
+public record LandValueSummary(decimal? PurchasePrice, decimal? CurrentValue, bool? IsPublicLand);
 
 public record TotalSchemeCost(decimal? CurrentValue, decimal? WorkCosts, decimal? OnCosts, decimal? Total);
 

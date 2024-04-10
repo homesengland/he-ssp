@@ -5,4 +5,4 @@ using MediatR;
 
 namespace HE.Investment.AHP.Contract.FinancialDetails.Commands;
 
-public record ProvideLandValueCommand(AhpApplicationId ApplicationId, YesNoType LandOwnership, string? LandValue) : IRequest<OperationResult>;
+public record ProvideLandValueCommand(AhpApplicationId ApplicationId, bool? LandOwnership, string? LandValue) : IRequest<OperationResult>;

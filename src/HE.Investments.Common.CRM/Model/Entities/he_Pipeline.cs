@@ -587,6 +587,7 @@ namespace HE.Investments.Common.CRM.Model
 			public const string he_whatisthegeographicfocusoftheproject = "he_whatisthegeographicfocusoftheproject";
 			public const string he_whatisthegeographicfocusoftheprojectName = "he_whatisthegeographicfocusoftheprojectname";
 			public const string ImportSequenceNumber = "importsequencenumber";
+			public const string invln_loanapplication_HeProjectId_he_pipeline = "invln_loanapplication_HeProjectId_he_pipeline";
 			public const string lk_he_pipeline_createdby = "lk_he_pipeline_createdby";
 			public const string lk_he_pipeline_createdonbehalfby = "lk_he_pipeline_createdonbehalfby";
 			public const string lk_he_pipeline_modifiedby = "lk_he_pipeline_modifiedby";
@@ -3242,6 +3243,26 @@ namespace HE.Investments.Common.CRM.Model
 				this.OnPropertyChanging("Referencedhe_strategic_parentproject_he_Pipeline");
 				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.he_Pipeline>("he_strategic_parentproject_he_Pipeline", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
 				this.OnPropertyChanged("Referencedhe_strategic_parentproject_he_Pipeline");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_loanapplication_HeProjectId_he_pipeline
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_loanapplication_HeProjectId_he_pipeline")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_Loanapplication> invln_loanapplication_HeProjectId_he_pipeline
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_Loanapplication>("invln_loanapplication_HeProjectId_he_pipeline", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_loanapplication_HeProjectId_he_pipeline");
+				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_Loanapplication>("invln_loanapplication_HeProjectId_he_pipeline", null, value);
+				this.OnPropertyChanged("invln_loanapplication_HeProjectId_he_pipeline");
 			}
 		}
 		

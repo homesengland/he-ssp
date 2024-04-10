@@ -8,4 +8,6 @@ public interface IProgrammeApplicationsRepository
     Task<IList<Programme>> GetAllProgrammes(UserAccount userAccount, CancellationToken cancellationToken);
 
     Task<IList<Programme>> GetLoanProgrammes(UserAccount userAccount, CancellationToken cancellationToken);
+
+    Task<bool> HasAnyAhpApplication(UserAccount userAccount, CancellationToken cancellationToken);
 }
