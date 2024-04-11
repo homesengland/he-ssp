@@ -42,13 +42,13 @@ variables:
 
 resources:
   repositories:
-    - repository: he-invst-Exportment
+    - repository: he-invst-deployment
       type: git
-      name: "Investments Programme/he-invst-Exportment"
+      name: "Investments Programme/he-invst-deployment"
       ref: "main"
 
 stages:
-  - template: crm-Exportment-pipelines/loans-crm-build-export.yml@he-invst-Exportment
+  - template: crm-deployment-pipelines/loans-crm-build-export.yml@he-invst-deployment
     parameters:
       buildAndUpdatePlugins: "${{ parameters.buildAndUpdatePlugins }}"
       buildAndUpdateWebResources: "${{ parameters.buildAndUpdateWebResources }}"
