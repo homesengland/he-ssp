@@ -18,19 +18,19 @@ parameters:
     type: boolean
     default: false
   - name: exportEnvironmentVariables
-    displayName: Deploy Environment Variables ?
+    displayName: Export Environment Variables ?
     type: boolean
     default: true
   - name: exportMainSolution
-    displayName: Deploy Main Solution ?
+    displayName: Export Main Solution ?
     type: boolean
     default: true
   - name: exportFlowsSolution
-    displayName: Deploy Flows Solution ?
+    displayName: Export Flows Solution ?
     type: boolean
     default: true
   - name: exportPluginsSolution
-    displayName: Deploy Plugins Solution ?
+    displayName: Export Plugins Solution ?
     type: boolean
     default: true
 
@@ -42,13 +42,13 @@ variables:
 
 resources:
   repositories:
-    - repository: he-invst-deployment
+    - repository: he-invst-Exportment
       type: git
-      name: "Investments Programme/he-invst-deployment"
+      name: "Investments Programme/he-invst-Exportment"
       ref: "main"
 
 stages:
-  - template: crm-deployment-pipelines/loans-crm-build-export.yml@he-invst-deployment
+  - template: crm-Exportment-pipelines/loans-crm-build-export.yml@he-invst-Exportment
     parameters:
       buildAndUpdatePlugins: "${{ parameters.buildAndUpdatePlugins }}"
       buildAndUpdateWebResources: "${{ parameters.buildAndUpdateWebResources }}"
