@@ -88,8 +88,6 @@ public static class ValidationErrorMessage
 
     public static string PoundInput(string name) => new($"The {name} must be entered as a number, in pounds and pence");
 
-    public static string WholePoundInput(string name) => new($"The {name} must be entered as a number, in pounds");
-
     public static string ShortInputLengthExceeded(string fieldName) => new($"The {fieldName} must be 100 characters or less");
 
     public static string LongInputLengthExceeded(string fieldName) => new($"The {fieldName} must be 1500 characters or less");

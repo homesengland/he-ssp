@@ -18,7 +18,7 @@ public class ProvideLandStatusTests
             .WithSiteBasicInfo(SiteLandAcquisitionStatus.PurchaseNegotiationsNotStarted)
             .Build();
 
-        var landStatus = new LandStatus(null, new ExpectedPurchasePrice(40));
+        var landStatus = new LandStatus(null, new ExpectedPurchasePrice("40"));
 
         // when
         financialDetailsEntity.ProvideLandStatus(landStatus);
@@ -37,7 +37,7 @@ public class ProvideLandStatusTests
             .WithSiteBasicInfo(SiteLandAcquisitionStatus.FullOwnership)
             .Build();
 
-        var landStatus = new LandStatus(new PurchasePrice(30), null);
+        var landStatus = new LandStatus(new PurchasePrice("30"), null);
 
         // when
         financialDetailsEntity.ProvideLandStatus(landStatus);
@@ -56,7 +56,7 @@ public class ProvideLandStatusTests
             .WithSiteBasicInfo(SiteLandAcquisitionStatus.FullOwnership)
             .Build();
 
-        var landStatus = new LandStatus(null, new ExpectedPurchasePrice(40));
+        var landStatus = new LandStatus(null, new ExpectedPurchasePrice("40"));
 
         // when
         var action = () => financialDetailsEntity.ProvideLandStatus(landStatus);

@@ -18,7 +18,7 @@ public class ExpectedOnCostsTests
         action.Should()
             .ThrowExactly<DomainValidationException>()
             .Which.OperationResult.Errors.Should()
-            .ContainSingle(x => x.ErrorMessage == ValidationErrorMessage.MissingRequiredField(ExpectedOnCosts.Fields.DisplayName!));
+            .ContainSingle(x => x.ErrorMessage == ValidationErrorMessage.MustProvideRequiredField("expected on works costs"));
     }
 
     [Fact]
@@ -31,7 +31,7 @@ public class ExpectedOnCostsTests
         action.Should()
             .ThrowExactly<DomainValidationException>()
             .Which.OperationResult.Errors.Should()
-            .ContainSingle(x => x.ErrorMessage == FinancialDetailsValidationErrors.InvalidExpectedOnCosts);
+            .ContainSingle(x => x.ErrorMessage == "The expected on works costs must be 0 or more");
     }
 
     [Fact]
@@ -44,13 +44,13 @@ public class ExpectedOnCostsTests
         action.Should()
             .ThrowExactly<DomainValidationException>()
             .Which.OperationResult.Errors.Should()
-            .ContainSingle(x => x.ErrorMessage == FinancialDetailsValidationErrors.InvalidExpectedOnCosts);
+            .ContainSingle(x => x.ErrorMessage == "The expected on works costs must be a whole number, like 300");
     }
 
     [Theory]
     [InlineData("0", 0)]
     [InlineData("100", 100)]
-    public void ShouldCreateExpectedOnCosts_WhenValueIsValid(string input, decimal expectedValue)
+    public void ShouldCreateExpectedOnCosts_WhenValueIsValid(string input, int expectedValue)
     {
         // given && when
         var landValue = new ExpectedOnCosts(input);

@@ -5,20 +5,17 @@ using HE.Investments.Common.Domain.ValueObjects;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 
-public class ExpectedWorksCosts : PoundsValueObject
+public class ExpectedWorksCosts : TheRequiredIntValueObject
 {
-    public static readonly UiFields Fields = new(
-        FinancialDetailsValidationFieldNames.ExpectedWorksCosts,
-        "The expected works costs",
-        FinancialDetailsValidationErrors.InvalidExpectedWorksCosts);
-
-    public ExpectedWorksCosts(decimal landValue)
-        : base(landValue, Fields)
+    public ExpectedWorksCosts(string value)
+        : base(value, FinancialDetailsValidationFieldNames.ExpectedWorksCosts, "expected works costs", 0, 999999999)
     {
     }
 
-    public ExpectedWorksCosts(string landValue)
-        : base(landValue, Fields)
+    private ExpectedWorksCosts(int value)
+        : base(value, FinancialDetailsValidationFieldNames.ExpectedWorksCosts, "expected works costs")
     {
     }
+
+    public static ExpectedWorksCosts FromCrm(decimal value) => new(decimal.ToInt32(value));
 }

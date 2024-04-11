@@ -11,13 +11,13 @@ public class CalculateTotalTests
     {
         // given
         var sut = new PublicGrants(
-            new PublicGrantValue(PublicGrantFields.CountyCouncilGrants, 1),
-            new PublicGrantValue(PublicGrantFields.DhscExtraCareGrants, 2),
-            new PublicGrantValue(PublicGrantFields.LocalAuthorityGrants, 3),
-            new PublicGrantValue(PublicGrantFields.SocialServicesGrants, 4),
-            new PublicGrantValue(PublicGrantFields.HealthRelatedGrants, 5),
-            new PublicGrantValue(PublicGrantFields.LotteryGrants, 6),
-            new PublicGrantValue(PublicGrantFields.OtherPublicBodiesGrants, 7));
+            new PublicGrantValue(PublicGrantFields.CountyCouncilGrants, "1"),
+            new PublicGrantValue(PublicGrantFields.DhscExtraCareGrants, "2"),
+            new PublicGrantValue(PublicGrantFields.LocalAuthorityGrants, "3"),
+            new PublicGrantValue(PublicGrantFields.SocialServicesGrants, "4"),
+            new PublicGrantValue(PublicGrantFields.HealthRelatedGrants, "5"),
+            new PublicGrantValue(PublicGrantFields.LotteryGrants, "6"),
+            new PublicGrantValue(PublicGrantFields.OtherPublicBodiesGrants, "7"));
 
         // when
         var result = sut.CalculateTotal();
@@ -31,13 +31,13 @@ public class CalculateTotalTests
     {
         // given
         var sut = new PublicGrants(
-            new PublicGrantValue(PublicGrantFields.CountyCouncilGrants, 1),
+            new PublicGrantValue(PublicGrantFields.CountyCouncilGrants, "1"),
             null,
-            new PublicGrantValue(PublicGrantFields.LocalAuthorityGrants, 3),
+            new PublicGrantValue(PublicGrantFields.LocalAuthorityGrants, "3"),
             null,
-            new PublicGrantValue(PublicGrantFields.HealthRelatedGrants, 5),
+            new PublicGrantValue(PublicGrantFields.HealthRelatedGrants, "5"),
             null,
-            new PublicGrantValue(PublicGrantFields.OtherPublicBodiesGrants, 7));
+            new PublicGrantValue(PublicGrantFields.OtherPublicBodiesGrants, "7"));
 
         // when
         var result = sut.CalculateTotal();
@@ -71,13 +71,13 @@ public class CalculateTotalTests
     {
         // given
         var sut = new PublicGrants(
-            new PublicGrantValue(PublicGrantFields.CountyCouncilGrants, 0),
-            new PublicGrantValue(PublicGrantFields.DhscExtraCareGrants, 0),
-            new PublicGrantValue(PublicGrantFields.LocalAuthorityGrants, 0),
-            new PublicGrantValue(PublicGrantFields.SocialServicesGrants, 0),
-            new PublicGrantValue(PublicGrantFields.HealthRelatedGrants, 0),
-            new PublicGrantValue(PublicGrantFields.LotteryGrants, 0),
-            new PublicGrantValue(PublicGrantFields.OtherPublicBodiesGrants, 0));
+            new PublicGrantValue(PublicGrantFields.CountyCouncilGrants, "0"),
+            new PublicGrantValue(PublicGrantFields.DhscExtraCareGrants, "0"),
+            new PublicGrantValue(PublicGrantFields.LocalAuthorityGrants, "0"),
+            new PublicGrantValue(PublicGrantFields.SocialServicesGrants, "0"),
+            new PublicGrantValue(PublicGrantFields.HealthRelatedGrants, "0"),
+            new PublicGrantValue(PublicGrantFields.LotteryGrants, "0"),
+            new PublicGrantValue(PublicGrantFields.OtherPublicBodiesGrants, "0"));
 
         // when
         var result = sut.CalculateTotal();

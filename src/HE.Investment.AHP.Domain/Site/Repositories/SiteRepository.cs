@@ -61,12 +61,7 @@ public class SiteRepository : ISiteRepository
             return SiteEntity.NewSite();
         }
 
-        var site = await _siteCrmContext.GetById(siteId.Value, cancellationToken);
-
-        if (site == null)
-        {
-            throw new NotFoundException("Site not found", siteId);
-        }
+        var site = await _siteCrmContext.GetById(siteId.Value, cancellationToken) ?? throw new NotFoundException("Site not found", siteId);
 
         return SiteDtoToSiteEntityMapper.Map(site, _planningStatusMapper);
     }
