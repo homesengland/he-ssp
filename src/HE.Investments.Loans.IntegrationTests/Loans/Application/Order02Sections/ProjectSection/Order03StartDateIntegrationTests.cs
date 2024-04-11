@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Constants;
 using HE.Investments.Loans.Common.Tests.TestData;
 using HE.Investments.Loans.Contract.Projects.ViewModels;
