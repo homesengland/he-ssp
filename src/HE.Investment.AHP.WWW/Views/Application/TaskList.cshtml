@@ -1,14 +1,13 @@
 @using HE.Investment.AHP.WWW.Routing
 @using HE.Investment.AHP.WWW.Config
 @using HE.Investments.Common.WWW.Components.HelpPanel
-@using Microsoft.Extensions.Options
 @using HE.Investment.AHP.WWW.Views.Application
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ApplicationTaskListHeader
 @using HE.Investments.Common.Contract
 @using HE.Investments.Common.Gds
 @using HE.Investment.AHP.Contract.Application
 @model HE.Investment.AHP.WWW.Models.Application.ApplicationSectionsModel
-@inject IOptions<ContactInfoOptions> Options
+@inject ContactInfo ContactInfo
 
 @{
     ViewData["Title"] = "Application details";
@@ -55,5 +54,5 @@
     <link-button action-url="@Url.Action("Index", "Application")" button-type="@ButtonType.Secondary">Return to applications</link-button>
 </div>
 <div class="govuk-grid-column-one-third">
-    <vc:help-panel email-address="@Options.Value.Email" phone-number="@Options.Value.Phone"/>
+    <vc:help-panel email-address="@ContactInfo.Email" phone-number="@ContactInfo.Phone"/>
 </div>
