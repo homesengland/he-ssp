@@ -165,6 +165,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Plugins\" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\HE.CRM.AHP.Plugins\HE.CRM.AHP.Plugins.csproj">
       <Project>{a719513a-72c3-4da8-b16c-8af395fcee16}</Project>
       <Name>HE.CRM.AHP.Plugins</Name>
