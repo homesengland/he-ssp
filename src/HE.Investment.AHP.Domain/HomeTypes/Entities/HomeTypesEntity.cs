@@ -99,7 +99,7 @@ public class HomeTypesEntity
                 throw new DomainValidationException(
                     new OperationResult().AddValidationErrors(new List<ErrorItem>
                     {
-                        new("HomeTypes", "Home Types cannot be completed because at least one Home Type needs to be added."),
+                        new("HomeTypes", "Home Types cannot be completed because at least one Home Type needs to be added"),
                     }));
             }
 

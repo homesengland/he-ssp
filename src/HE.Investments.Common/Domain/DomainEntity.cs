@@ -1,10 +1,9 @@
 using System.Collections.ObjectModel;
 using HE.Investments.Common.Contract.Infrastructure.Events;
-using HE.Investments.Common.Infrastructure.Events;
 
 namespace HE.Investments.Common.Domain;
 
-public class DomainEntity
+public abstract class DomainEntity
 {
     private readonly IList<IDomainEvent> _domainEvents = new List<IDomainEvent>();
 
@@ -13,7 +12,7 @@ public class DomainEntity
         _domainEvents.Add(domainEvent);
     }
 
-    public IReadOnlyList<IDomainEvent> GetDomainEventsAndRemove()
+    public virtual IReadOnlyList<IDomainEvent> GetDomainEventsAndRemove()
     {
         var toReturn = new ReadOnlyCollection<IDomainEvent>(_domainEvents.ToArray());
         _domainEvents.Clear();

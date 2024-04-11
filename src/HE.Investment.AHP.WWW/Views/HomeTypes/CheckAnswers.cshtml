@@ -29,10 +29,6 @@
     }
 
     <form asp-controller="HomeTypes" asp-action="CheckAnswers" asp-method="post" novalidate hidden="@Model.IsReadOnly">
-        @Html.HiddenFor(m => Model.ApplicationName)
-        @Html.HiddenFor(m => Model.HomeTypeName)
-        @Html.HiddenFor(m => Model.AllowedOperations)
-
         <gds-field-set role="group">
             <he-error-form-group asp-for="IsSectionCompleted">
                 <gds-legend>

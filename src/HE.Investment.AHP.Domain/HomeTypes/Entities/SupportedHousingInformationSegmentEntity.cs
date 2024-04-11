@@ -9,7 +9,7 @@ using HE.Investments.Common.Extensions;
 namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 
 [HomeTypeSegmentType(HomeTypeSegmentType.SupportedHousingInformation)]
-public class SupportedHousingInformationSegmentEntity : IHomeTypeSegmentEntity
+public class SupportedHousingInformationSegmentEntity : DomainEntity, IHomeTypeSegmentEntity
 {
     private readonly List<RevenueFundingSourceType> _revenueFundingSources;
 
