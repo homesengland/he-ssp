@@ -27,7 +27,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataMigration", "DataMigrat
 		Configuration\Migration\data\[Content_Types].xml = Configuration\Migration\data\[Content_Types].xml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.CRM.AHP.Plugins.Tests", "HE.CRM.AHP.Plugins.Tests\HE.CRM.AHP.Plugins.Tests.csproj", "{0CD54056-E9DF-4A43-8A95-D7A64CF14780}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.CRM.AHP.Plugins.Test", "HE.CRM.AHP.Plugins.Tests\HE.CRM.AHP.Plugins.Test.csproj", "{0CD54056-E9DF-4A43-8A95-D7A64CF14780}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
