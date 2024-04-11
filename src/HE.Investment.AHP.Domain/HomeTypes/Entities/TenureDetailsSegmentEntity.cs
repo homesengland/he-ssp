@@ -9,7 +9,7 @@ using HE.Investments.Common.Extensions;
 namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 
 [HomeTypeSegmentType(HomeTypeSegmentType.TenureDetails)]
-public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
+public class TenureDetailsSegmentEntity : DomainEntity, IHomeTypeSegmentEntity
 {
     private readonly ModificationTracker _modificationTracker;
 

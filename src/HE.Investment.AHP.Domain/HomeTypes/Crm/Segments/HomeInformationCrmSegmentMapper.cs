@@ -41,6 +41,7 @@ public class HomeInformationCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Home
         IReadOnlyCollection<UploadedFile> uploadedFiles)
     {
         return new HomeInformationSegmentEntity(
+            application,
             dto.numberOfHomes.IsProvided() ? new NumberOfHomes(dto.numberOfHomes!.Value) : null,
             dto.numberOfBedrooms.IsProvided() ? new NumberOfBedrooms(dto.numberOfBedrooms!.Value) : null,
             dto.maxOccupancy.IsProvided() ? new MaximumOccupancy(dto.maxOccupancy!.Value) : null,

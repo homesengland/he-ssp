@@ -6,7 +6,7 @@ using HE.Investments.Common.Domain;
 namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 
 [HomeTypeSegmentType(HomeTypeSegmentType.DisabledAndVulnerablePeople)]
-public class DisabledPeopleHomeTypeDetailsSegmentEntity : IHomeTypeSegmentEntity
+public class DisabledPeopleHomeTypeDetailsSegmentEntity : DomainEntity, IHomeTypeSegmentEntity
 {
     private readonly ModificationTracker _modificationTracker;
 

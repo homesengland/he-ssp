@@ -5,10 +5,12 @@ using HE.Investments.Common.WWW.Models.Summary;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace HE.Investment.AHP.WWW.Models.FinancialDetails;
+
 public class FinancialDetailsCheckAnswersModel : FinancialDetailsBaseModel, IEditableViewModel
 {
     public FinancialDetailsCheckAnswersModel()
     {
+        AllowedOperations = new List<AhpApplicationOperation>();
     }
 
     public FinancialDetailsCheckAnswersModel(

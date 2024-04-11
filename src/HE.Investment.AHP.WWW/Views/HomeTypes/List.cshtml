@@ -29,23 +29,27 @@
     <gds-p class="govuk-!-width-three-quarters" hidden="@Model.IsReadOnly">
         Add the home types for this application. You can duplicate and edit a home type.
     </gds-p>
-
     <form asp-controller="HomeTypes" asp-action="List" asp-method="post" novalidate>
         @Html.HiddenFor(m => Model.ApplicationName)
-        @Html.HiddenFor(m => m.AllowedOperations)
+        @Html.HiddenFor(m => Model.TotalExpectedNumberOfHomes)
+        @for (var i = 0; i < Model.AllowedOperations.Length; i++)
+        {
+            var index = i;
+            @Html.HiddenFor(m => m.AllowedOperations[index])
+        }
 
         @if (Model.HomeTypes.Any())
         {
             <table class="govuk-table govuk-!-margin-bottom-0" data-testid="home-types-table">
-            <thead class="govuk-table__head">
+                <thead class="govuk-table__head">
                 <tr class="govuk-table__row">
                     <th scope="col" class="govuk-table__header">Home type name</th>
                     <th scope="col" class="govuk-table__header">Number of homes</th>
                     <th scope="col" class="govuk-table__header">Type of housing</th>
                     <td class="govuk-table__header" />
                 </tr>
-            </thead>
-            <tbody class="govuk-table__body">
+                </thead>
+                <tbody class="govuk-table__body">
 
                 @for (int i = 0; i < Model.HomeTypes.Count; i++)
                 {
@@ -59,29 +63,32 @@
                         <td class="govuk-table__cell">
                             <gds-link class="govuk-link--no-visited-state"
                                       data-testid="home-type-@Model.HomeTypes[index].HomeTypeId"
-                                      href="@Url.Action("Start","HomeTypes", new  { applicationId, homeTypeId = Model.HomeTypes[index].HomeTypeId, redirect = true })">
+                                      href="@Url.Action("Start", "HomeTypes", new { applicationId, homeTypeId = Model.HomeTypes[index].HomeTypeId, redirect = true })">
                                 @(Model.HomeTypes[index].HomeTypeName)
                             </gds-link>
-                            </td>
-                            <td class="govuk-table__cell" data-testid="number-of-homes-@Model.HomeTypes[index].HomeTypeId">
-                                @(Model.HomeTypes[index].NumberOfHomes?.ToString() ?? "Not provided")
-                            </td>
-                            <td class="govuk-table__cell">
-                                @(Model.HomeTypes[index].HousingType == HousingType.Undefined ? "Not provided" : Model.HomeTypes[index].HousingType.GetDescription())
-                            </td>
-                            <td class="govuk-table__cell govuk-!-text-align-right" hidden="@Model.IsReadOnly">
-                                <gds-link class="govuk-link--no-visited-state"
-                                          data-testid="duplicate-@Model.HomeTypes[index].HomeTypeId"
-                                          href="@Url.Action("Duplicate","HomeTypes", new  { applicationId, homeTypeId = Model.HomeTypes[index].HomeTypeId })">
-                                    Duplicate
-                                </gds-link>
-                                <gds-link class="govuk-link--no-visited-state govuk-!-margin-left-4"
-                                          href="@Url.Action("Remove","HomeTypes", new  { applicationId, homeTypeId = Model.HomeTypes[index].HomeTypeId })">
-                                    Remove
-                                </gds-link>
-                            </td>
-                        </tr>
+                        </td>
+                        <td class="govuk-table__cell" data-testid="number-of-homes-@Model.HomeTypes[index].HomeTypeId">
+                            @(Model.HomeTypes[index].NumberOfHomes?.ToString() ?? "Not provided")
+                        </td>
+                        <td class="govuk-table__cell">
+                            @(Model.HomeTypes[index].HousingType == HousingType.Undefined ? "Not provided" : Model.HomeTypes[index].HousingType.GetDescription())
+                        </td>
+                        <td class="govuk-table__cell govuk-!-text-align-right" hidden="@Model.IsReadOnly">
+                            <gds-link class="govuk-link--no-visited-state"
+                                      data-testid="duplicate-@Model.HomeTypes[index].HomeTypeId"
+                                      href="@Url.Action("Duplicate", "HomeTypes", new { applicationId, homeTypeId = Model.HomeTypes[index].HomeTypeId })">
+                                Duplicate
+                            </gds-link>
+                            <gds-link class="govuk-link--no-visited-state govuk-!-margin-left-4"
+                                      href="@Url.Action("Remove", "HomeTypes", new { applicationId, homeTypeId = Model.HomeTypes[index].HomeTypeId })">
+                                Remove
+                            </gds-link>
+                        </td>
+                    </tr>
                 }
+
+                @if (Model.IsEditable)
+                {
                     <tr>
                         <td class="govuk-!-padding-top-6" colspan="4">
                             <div class="govuk-details__text">
@@ -98,19 +105,21 @@
                             </div>
                         </td>
                     </tr>
-                    <tr>
-                        <td class="govuk-!-padding-top-6">
-                            <vc:form-button is-disabled="@Model.IsReadOnly" />
-                        </td>
-                        <td class="govuk-!-padding-top-6" colspan="3">
-                            <link-button href="@Url.Action("NewHomeTypeDetails","HomeTypes", new  { applicationId })"
-                                         button-type="@ButtonType.Secondary"
-                                         data-testid="add-home-type"
-                                         is-disabled="@Model.IsReadOnly">
-                                Add another home type
-                            </link-button>
-                        </td>
-                    </tr>
+                }
+
+                <tr>
+                    <td class="govuk-!-padding-top-6">
+                        <vc:form-button is-disabled="@Model.IsReadOnly" />
+                    </td>
+                    <td class="govuk-!-padding-top-6" colspan="3">
+                        <link-button href="@Url.Action("NewHomeTypeDetails","HomeTypes", new  { applicationId })"
+                                     button-type="@ButtonType.Secondary"
+                                     data-testid="add-home-type"
+                                     is-disabled="@Model.IsReadOnly">
+                            Add another home type
+                        </link-button>
+                    </td>
+                </tr>
                 </tbody>
             </table>
         }
@@ -127,6 +136,5 @@
             </link-button>
         }
         <vc:return-to-application-link application-id="@applicationId" is-editable="@false" />
-
     </form>
 </div>

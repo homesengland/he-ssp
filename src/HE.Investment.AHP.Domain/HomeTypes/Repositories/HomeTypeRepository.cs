@@ -114,6 +114,7 @@ public class HomeTypeRepository : IHomeTypeRepository
                 organisationId.Value,
                 _homeTypeCrmMapper.SaveCrmFields(entity, segments),
                 cancellationToken);
+            await _eventDispatcher.Publish(entity, cancellationToken);
             await _eventDispatcher.Publish(new HomeTypeHasBeenUpdatedEvent(homeType.Application.Id, entity.Id), cancellationToken);
         }
 

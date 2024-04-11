@@ -14,7 +14,7 @@ using HE.Investments.Common.Messages;
 namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 
 [HomeTypeSegmentType(HomeTypeSegmentType.DesignPlans)]
-public class DesignPlansSegmentEntity : IHomeTypeSegmentEntity
+public class DesignPlansSegmentEntity : DomainEntity, IHomeTypeSegmentEntity
 {
     private const int AllowedNumberOfDesignFiles = 10;
 

@@ -37,9 +37,6 @@
             <vc:section-summary title="@Model.ContributionsSummary.Title" items="@Model.ContributionsSummary.Items" />
         </div>
 
-        @Html.HiddenFor(m => Model.ApplicationName)
-        @Html.HiddenFor(m => Model.AllowedOperations)
-
         <gds-field-set role="group" hidden="@Model.IsReadOnly">
             <gds-legend>
                 <gds-h2>Have you completed this section?</gds-h2>

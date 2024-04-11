@@ -15,7 +15,7 @@ public class DeliveryListModel : DeliveryModelBase, IEditableViewModel
     {
     }
 
-    public IReadOnlyCollection<AhpApplicationOperation> AllowedOperations { get; set; }
+    public AhpApplicationOperation[] AllowedOperations { get; set; }
 
     public bool IsEditable => AllowedOperations.Contains(AhpApplicationOperation.Modification);
 
