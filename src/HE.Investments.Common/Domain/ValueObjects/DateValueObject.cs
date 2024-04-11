@@ -18,16 +18,22 @@ public abstract class DateValueObject : ValueObject
             return;
         }
 
+        var (dayFieldName, monthFieldName, yearFieldName) = DatePartFieldNamesProvider.Get(fieldName);
+
         if (string.IsNullOrWhiteSpace(day) && string.IsNullOrWhiteSpace(month) && string.IsNullOrWhiteSpace(year))
         {
-            OperationResult.ThrowValidationError(fieldName + ".Day", $"Enter when {fieldDescription}");
+            var operationResult = OperationResult.New();
+            operationResult.AddValidationError(dayFieldName, $"Enter when {fieldDescription}");
+            operationResult.AddValidationError(monthFieldName, string.Empty);
+            operationResult.AddValidationError(yearFieldName, string.Empty);
+            operationResult.CheckErrors();
         }
 
         var missingParts = new[]
             {
-                string.IsNullOrWhiteSpace(day) ? (DisplayName: "day", FieldName: fieldName + ".Day") : default,
-                string.IsNullOrWhiteSpace(month) ? (DisplayName: "month", FieldName: fieldName + ".Month") : default,
-                string.IsNullOrWhiteSpace(year) ? (DisplayName: "year", FieldName: fieldName + ".Year") : default,
+                string.IsNullOrWhiteSpace(day) ? (DisplayName: "day", FieldName: dayFieldName) : default,
+                string.IsNullOrWhiteSpace(month) ? (DisplayName: "month", FieldName: monthFieldName) : default,
+                string.IsNullOrWhiteSpace(year) ? (DisplayName: "year", FieldName: yearFieldName) : default,
             }.Where(x => x != default)
             .ToList();
 
@@ -88,5 +94,14 @@ public abstract class DateValueObject : ValueObject
         }
 
         return null;
+    }
+
+    /// <summary>
+    /// Works only for vc:date-input.
+    /// </summary>
+    private static class DatePartFieldNamesProvider
+    {
+        public static (string Day, string Month, string Year) Get(string containerFieldName)
+            => (containerFieldName + ".Day", containerFieldName + ".Month", containerFieldName + ".Year");
     }
 }
