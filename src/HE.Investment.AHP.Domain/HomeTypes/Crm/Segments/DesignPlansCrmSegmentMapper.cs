@@ -4,7 +4,6 @@ using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investments.Common.CRM.Model;
-using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Crm.Segments;
 
@@ -26,7 +25,7 @@ public class DesignPlansCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<DesignPl
         return new DesignPlansSegmentEntity(
             application,
             dto.designPrinciples.Select(MapDesignPrinciple),
-            dto.designPlansMoreInformation.IsProvided() ? new MoreInformation(dto.designPlansMoreInformation) : null,
+            MoreInformation.FromCrm(dto.designPlansMoreInformation),
             uploadedFiles);
     }
 
