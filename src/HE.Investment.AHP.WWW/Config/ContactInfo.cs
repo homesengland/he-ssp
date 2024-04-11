@@ -1,6 +1,6 @@
 namespace HE.Investment.AHP.WWW.Config;
 
-public class ContactInfoOptions
+public class ContactInfo
 {
     public string Email { get; set; }
 
