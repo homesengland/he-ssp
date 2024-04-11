@@ -674,6 +674,7 @@ namespace DataverseModel
 			public const string invln_pepName = "invln_pepname";
 			public const string invln_role = "invln_role";
 			public const string invln_roleName = "invln_rolename";
+			public const string invln_sites_CreatedByContactId_contact = "invln_sites_CreatedByContactId_contact";
 			public const string invln_termsandconditionsaccepted = "invln_termsandconditionsaccepted";
 			public const string invln_termsandconditionsacceptedName = "invln_termsandconditionsacceptedname";
 			public const string IsBackofficeCustomer = "isbackofficecustomer";
@@ -7605,6 +7606,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_loanapplication_contact");
 				this.SetRelatedEntities<DataverseModel.invln_Loanapplication>("invln_loanapplication_contact", null, value);
 				this.OnPropertyChanged("invln_loanapplication_contact");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_sites_CreatedByContactId_contact
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_sites_CreatedByContactId_contact")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_Sites> invln_sites_CreatedByContactId_contact
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_Sites>("invln_sites_CreatedByContactId_contact", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_sites_CreatedByContactId_contact");
+				this.SetRelatedEntities<DataverseModel.invln_Sites>("invln_sites_CreatedByContactId_contact", null, value);
+				this.OnPropertyChanged("invln_sites_CreatedByContactId_contact");
 			}
 		}
 		

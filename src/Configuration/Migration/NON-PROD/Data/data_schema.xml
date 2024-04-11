@@ -129,4 +129,16 @@
       <field displayname="UTC Conversion Time Zone Code" name="utcconversiontimezonecode" type="number" />
     </fields>
   </entity>
+  <entity name="invln_ndss" displayname="NDSS" etc="11120" primaryidfield="invln_ndssid" primarynamefield="invln_name" disableplugins="false">
+    <fields>
+      <field displayname="Bedrooms" name="invln_bedrooms" type="number" customfield="true" />
+      <field displayname="Import Sequence Number" name="importsequencenumber" type="number" />
+      <field displayname="Name" name="invln_name" type="string" customfield="true" />
+      <field displayname="NDSS" name="invln_ndssid" type="guid" primaryKey="true" />
+      <field displayname="People" name="invln_people" type="number" customfield="true" />
+      <field displayname="Standard m2" name="invln_standard" type="decimal" customfield="true" />
+      <field displayname="Standard Number" name="invln_standardnumber" type="number" customfield="true" />
+      <field displayname="Storeys" name="invln_storeys" type="number" customfield="true" />
+    </fields>
+  </entity>
 </entities>

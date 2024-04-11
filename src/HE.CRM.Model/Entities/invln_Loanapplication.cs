@@ -152,7 +152,7 @@ namespace DataverseModel
 			public const string invln_costguaranteeName = "invln_costguaranteename";
 			public const string invln_CustomSecurity = "invln_customsecurity";
 			public const string invln_Dateapproved = "invln_dateapproved";
-			public const string invln_DateCashflowRequested = "invln_datecashflowrequested";
+			public const string invln_DateStatusChangedtoCashflowRequested = "invln_datestatuschangedtocashflowrequested";
 			public const string invln_Datesubmitted = "invln_datesubmitted";
 			public const string invln_DaysSinceCashflowRequested = "invln_dayssincecashflowrequested";
 			public const string invln_DebentureHolder = "invln_debentureholder";
@@ -999,13 +999,20 @@ namespace DataverseModel
 		/// <summary>
 		/// The date the TM changes the status of a loan application to "Cashflow Requested"
 		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_datecashflowrequested")]
-		public System.Nullable<System.DateTime> invln_DateCashflowRequested
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_datestatuschangedtocashflowrequested")]
+		public System.Nullable<System.DateTime> invln_DateStatusChangedtoCashflowRequested
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetAttributeValue<System.Nullable<System.DateTime>>("invln_datecashflowrequested");
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("invln_datestatuschangedtocashflowrequested");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_DateStatusChangedtoCashflowRequested");
+				this.SetAttributeValue("invln_datestatuschangedtocashflowrequested", value);
+				this.OnPropertyChanged("invln_DateStatusChangedtoCashflowRequested");
 			}
 		}
 		

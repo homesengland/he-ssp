@@ -84,6 +84,8 @@ namespace DataverseModel
 			public const string invln_grantfundingforallhomesName = "invln_grantfundingforallhomesname";
 			public const string invln_greenbelt = "invln_greenbelt";
 			public const string invln_greenbeltName = "invln_greenbeltname";
+			public const string invln_HeLocalAuthorityId = "invln_helocalauthorityid";
+			public const string invln_HeLocalAuthorityIdName = "invln_helocalauthorityidname";
 			public const string invln_homesintheapplicationareadditional = "invln_homesintheapplicationareadditional";
 			public const string invln_homesintheapplicationareadditionalName = "invln_homesintheapplicationareadditionalname";
 			public const string invln_intentiontoworkwithsme = "invln_intentiontoworkwithsme";
@@ -146,6 +148,7 @@ namespace DataverseModel
 			public const string invln_SiteReferenceNumber = "invln_sitereferencenumber";
 			public const string invln_sites_AccountId_account = "invln_sites_AccountId_account";
 			public const string invln_sites_CreatedByContactId_contact = "invln_sites_CreatedByContactId_contact";
+			public const string invln_sites_LocalAuthority_invln_ahglocalauthor = "invln_sites_LocalAuthority_invln_ahglocalauthor";
 			public const string invln_SitesId = "invln_sitesid";
 			public const string Id = "invln_sitesid";
 			public const string invln_sme = "invln_sme";
@@ -806,6 +809,40 @@ namespace DataverseModel
 				if (this.FormattedValues.Contains("invln_greenbelt"))
 				{
 					return this.FormattedValues["invln_greenbelt"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_helocalauthorityid")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_HeLocalAuthorityId
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_helocalauthorityid");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_HeLocalAuthorityId");
+				this.SetAttributeValue("invln_helocalauthorityid", value);
+				this.OnPropertyChanged("invln_HeLocalAuthorityId");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_helocalauthorityidname")]
+		public string invln_HeLocalAuthorityIdName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_helocalauthorityid"))
+				{
+					return this.FormattedValues["invln_helocalauthorityid"];
 				}
 				else
 				{
@@ -2595,6 +2632,27 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_sites_CreatedByContactId_contact");
 				this.SetRelatedEntity<DataverseModel.Contact>("invln_sites_CreatedByContactId_contact", null, value);
 				this.OnPropertyChanged("invln_sites_CreatedByContactId_contact");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_sites_LocalAuthority_invln_ahglocalauthor
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_localauthority")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_sites_LocalAuthority_invln_ahglocalauthor")]
+		public DataverseModel.invln_AHGLocalAuthorities invln_sites_LocalAuthority_invln_ahglocalauthor
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.invln_AHGLocalAuthorities>("invln_sites_LocalAuthority_invln_ahglocalauthor", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_sites_LocalAuthority_invln_ahglocalauthor");
+				this.SetRelatedEntity<DataverseModel.invln_AHGLocalAuthorities>("invln_sites_LocalAuthority_invln_ahglocalauthor", null, value);
+				this.OnPropertyChanged("invln_sites_LocalAuthority_invln_ahglocalauthor");
 			}
 		}
 		
