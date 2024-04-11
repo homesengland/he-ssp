@@ -42,7 +42,7 @@ public class TenureDetailsCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Tenure
             dto.prospectiveRentAsPercentOfMarketRent.IsProvided() ? new ProspectiveRentPercentage(dto.prospectiveRentAsPercentOfMarketRent!.Value) : null,
             YesNoTypeMapper.Map(dto.targetRentOver80PercentOfMarketRent),
             YesNoTypeMapper.Map(dto.RtSOExemption),
-            dto.exemptionJustification.IsProvided() ? new MoreInformation(dto.exemptionJustification) : null,
+            MoreInformation.FromCrm(dto.exemptionJustification),
             dto.initialSalePercent.IsProvided() ? new InitialSale(dto.initialSalePercent!.Value) : null,
             dto.expectedFirstTrancheSaleReceipt.IsProvided() ? new ExpectedFirstTranche(dto.expectedFirstTrancheSaleReceipt!.Value) : null,
             dto.proposedRentAsPercentOfUnsoldShare.IsProvided() ? new ProspectiveRentPercentage(dto.proposedRentAsPercentOfUnsoldShare!.Value) : null);

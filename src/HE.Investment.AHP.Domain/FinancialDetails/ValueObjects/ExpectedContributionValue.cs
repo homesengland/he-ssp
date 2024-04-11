@@ -4,19 +4,21 @@ using HE.Investments.Common.Domain.ValueObjects;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 
-public class ExpectedContributionValue : PoundsValueObject
+public class ExpectedContributionValue : TheRequiredIntValueObject
 {
-    public ExpectedContributionValue(ExpectedContributionFields field, decimal value)
-        : base(value, new UiFields(field.ToString(), InvalidValueValidationMessage: FinancialDetailsValidationErrors.GenericAmountValidationError))
+    public ExpectedContributionValue(ExpectedContributionFields field, string value)
+    : base(value, field.ToString(), "expected contribution value", 0, 999999999)
     {
         Field = field;
     }
 
-    public ExpectedContributionValue(ExpectedContributionFields field, string value)
-        : base(value, new UiFields(field.ToString(), InvalidValueValidationMessage: FinancialDetailsValidationErrors.GenericAmountValidationError))
+    private ExpectedContributionValue(ExpectedContributionFields field, int value)
+        : base(value, field.ToString(), "expected contribution value")
     {
         Field = field;
     }
 
     public ExpectedContributionFields Field { get; }
+
+    public static ExpectedContributionValue FromCrm(ExpectedContributionFields field, decimal value) => new(field, decimal.ToInt32(value));
 }

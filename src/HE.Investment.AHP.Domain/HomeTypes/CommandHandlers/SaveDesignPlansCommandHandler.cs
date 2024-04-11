@@ -1,12 +1,13 @@
 using HE.Investment.AHP.Contract.Common;
 using HE.Investment.AHP.Contract.HomeTypes.Commands;
-using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Common.ValueObjects;
 using HE.Investment.AHP.Domain.Documents.Config;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
+using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
+using HE.Investments.Common.Extensions;
 using Microsoft.Extensions.Logging;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.CommandHandlers;
@@ -29,7 +30,7 @@ public class SaveDesignPlansCommandHandler : SaveHomeTypeSegmentCommandHandlerBa
 
     protected override IEnumerable<Action<SaveDesignPlansCommand, IHomeTypeEntity>> SaveActions => new[]
     {
-        (request, homeType) => homeType.DesignPlans.ChangeMoreInformation(request.MoreInformation),
+        (request, homeType) => homeType.DesignPlans.ChangeMoreInformation(request.MoreInformation.IsProvided() ? new MoreInformation(request.MoreInformation!, "information about your design plans") : null),
         SaveDesignPlanFiles,
     };
 

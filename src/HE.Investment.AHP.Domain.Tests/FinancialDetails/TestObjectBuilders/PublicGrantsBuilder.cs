@@ -22,18 +22,18 @@ public class PublicGrantsBuilder
     public static PublicGrantsBuilder NewWithAllValuesAs50()
     {
         var item = new PublicGrants(
-            new PublicGrantValue(PublicGrantFields.CountyCouncilGrants, 50),
-            new PublicGrantValue(PublicGrantFields.DhscExtraCareGrants, 50),
-            new PublicGrantValue(PublicGrantFields.LocalAuthorityGrants, 50),
-            new PublicGrantValue(PublicGrantFields.SocialServicesGrants, 50),
-            new PublicGrantValue(PublicGrantFields.HealthRelatedGrants, 50),
-            new PublicGrantValue(PublicGrantFields.LotteryGrants, 50),
-            new PublicGrantValue(PublicGrantFields.OtherPublicBodiesGrants, 50));
+            new PublicGrantValue(PublicGrantFields.CountyCouncilGrants, "50"),
+            new PublicGrantValue(PublicGrantFields.DhscExtraCareGrants, "50"),
+            new PublicGrantValue(PublicGrantFields.LocalAuthorityGrants, "50"),
+            new PublicGrantValue(PublicGrantFields.SocialServicesGrants, "50"),
+            new PublicGrantValue(PublicGrantFields.HealthRelatedGrants, "50"),
+            new PublicGrantValue(PublicGrantFields.LotteryGrants, "50"),
+            new PublicGrantValue(PublicGrantFields.OtherPublicBodiesGrants, "50"));
 
         return new PublicGrantsBuilder(item);
     }
 
-    public PublicGrantsBuilder WithHealthRelatedGrants(decimal ownResources)
+    public PublicGrantsBuilder WithHealthRelatedGrants(string ownResources)
     {
         PrivatePropertySetter.SetPropertyWithNoSetter(
             _item,

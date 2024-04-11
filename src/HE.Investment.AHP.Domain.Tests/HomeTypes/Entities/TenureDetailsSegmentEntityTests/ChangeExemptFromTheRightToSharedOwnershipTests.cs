@@ -40,6 +40,7 @@ public class ChangeExemptFromTheRightToSharedOwnershipTests
 
         // then
         testCandidate.IsModified.Should().BeFalse();
-        testCandidate.ExemptionJustification.Should().Be(new MoreInformation("some justification"));
+        testCandidate.ExemptionJustification.Should().NotBeNull();
+        testCandidate.ExemptionJustification!.Value.Should().Be("some justification");
     }
 }

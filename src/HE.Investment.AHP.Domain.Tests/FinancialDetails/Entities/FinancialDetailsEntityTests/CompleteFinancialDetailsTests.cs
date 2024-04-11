@@ -19,9 +19,9 @@ public class CompleteFinancialDetailsTests
         var financialDetailsEntity = FinancialDetailsEntityBuilder
             .New(ApplicationBasicInfoTestData.SharedOwnershipInDraftState)
             .WithSchemaFunding(100)
-            .WithLandStatus(10)
-            .WithLandValue(800)
-            .WithOtherApplicationCosts(25, 25)
+            .WithLandStatus("10")
+            .WithLandValue("800")
+            .WithOtherApplicationCosts("25", "25")
             .WithExpectedContributions(ExpectedContributionsToSchemeBuilder.NewWithAllValuesAs50().Build())
             .WithGrants(PublicGrantsBuilder.NewWithAllValuesAs50().Build())
             .Build();
@@ -39,7 +39,7 @@ public class CompleteFinancialDetailsTests
         // given
         var financialDetailsEntity = FinancialDetailsEntityBuilder
             .New(ApplicationBasicInfoTestData.SharedOwnershipInDraftState)
-            .WithLandStatus(10)
+            .WithLandStatus("10")
             .Build();
 
         // when
@@ -55,7 +55,7 @@ public class CompleteFinancialDetailsTests
         // given
         var financialDetailsEntity = FinancialDetailsEntityBuilder
             .New(ApplicationBasicInfoTestData.SharedOwnershipInDraftState)
-            .WithLandStatus(10)
+            .WithLandStatus("10")
             .Build();
 
         // when
@@ -71,7 +71,7 @@ public class CompleteFinancialDetailsTests
         // given
         var financialDetailsEntity = FinancialDetailsEntityBuilder
             .New(ApplicationBasicInfoTestData.SharedOwnershipInDraftState)
-            .WithLandStatus(10)
+            .WithLandStatus("10")
             .Build();
 
         // when
@@ -88,9 +88,9 @@ public class CompleteFinancialDetailsTests
         var financialDetailsEntity = FinancialDetailsEntityBuilder
             .New(ApplicationBasicInfoTestData.SharedOwnershipInDraftState)
             .WithSchemaFunding(150)
-            .WithLandStatus(10)
-            .WithLandValue(700)
-            .WithOtherApplicationCosts(25, 20)
+            .WithLandStatus("10")
+            .WithLandValue("700")
+            .WithOtherApplicationCosts("25", "20")
             .WithExpectedContributions(ExpectedContributionsToSchemeBuilder.NewWithAllValuesAs50().Build())
             .WithGrants(PublicGrantsBuilder.NewWithAllValuesAs50().Build())
             .Build();
