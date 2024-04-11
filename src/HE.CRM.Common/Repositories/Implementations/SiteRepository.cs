@@ -39,22 +39,28 @@ namespace HE.CRM.Common.Repositories.Implementations
 
         public PagedResponseDto<invln_Sites> GetMultiple(PagingRequestDto paging, string fieldsToRetrieve, string externalContactIdFilter, string accountIdFilter)
         {
+            logger.Trace("SiteRepository GetMultiple");
+            string fieldsToRetrieveParameters = string.Empty;
+            if (!string.IsNullOrEmpty(fieldsToRetrieve))
+            {
+                fieldsToRetrieveParameters = FetchXmlHelper.GenerateAttributes(fieldsToRetrieve);
+            }
 
             var fetchXml =
                 $@"<fetch page=""{paging.pageNumber}"" count=""{paging.pageSize}"" returntotalrecordcount=""true"">
 	                <entity name=""invln_sites"">
-                        {FetchXmlHelper.GenerateAttributes(fieldsToRetrieve)}
-                        <order attribute=""createdon"" descending=""true"" />
+                        {fieldsToRetrieveParameters}
                         {accountIdFilter}
                         <link-entity name=""invln_ahglocalauthorities"" to=""invln_localauthority"" from=""invln_ahglocalauthoritiesid""  link-type=""outer"">
                             <attribute name=""invln_gsscode"" />
                             <attribute name=""invln_localauthorityname"" />
                         </link-entity>
-		                <link-entity name=""contact"" from=""contactid"" to=""invln_createdbycontactid"" link-type=""outer"">
+		                <link-entity name=""contact"" from=""contactid"" to=""invln_createdbycontactid"">
 			                {externalContactIdFilter}
 		                </link-entity>
 	                </entity>
                 </fetch>";
+
 
             var result = service.RetrieveMultiple(new FetchExpression(fetchXml));
 
