@@ -16,6 +16,12 @@ public static class HtmlDocumentExtensions
         return elements.First();
     }
 
+    public static IElement? TryGetElementByTestId(this IHtmlDocument htmlDocument, string testId)
+    {
+        var elements = htmlDocument.QuerySelectorAll($"[data-testid='{testId}']");
+        return elements.FirstOrDefault();
+    }
+
     public static IHtmlAnchorElement GetLinkButtonByTestId(this IHtmlDocument htmlDocument, string testId)
     {
         var element = GetElementByTestId(htmlDocument, testId);

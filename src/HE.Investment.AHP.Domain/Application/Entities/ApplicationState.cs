@@ -77,7 +77,7 @@ public class ApplicationState
             .PermitReentryIf(AhpApplicationOperation.Modification, () => _userAccount.CanEditApplication)
             .PermitIf(AhpApplicationOperation.Withdraw, ApplicationStatus.Withdrawn, () => _userAccount.CanEditApplication)
             .PermitIf(AhpApplicationOperation.PutOnHold, ApplicationStatus.OnHold, () => _userAccount.CanEditApplication)
-            .PermitIf(AhpApplicationOperation.Submit, ApplicationStatus.UnderReviewInAssessment, () => _userAccount.CanSubmitApplication);
+            .PermitIf(AhpApplicationOperation.Submit, ApplicationStatus.UnderReview, () => _userAccount.CanSubmitApplication);
 
         _machine.Configure(ApplicationStatus.RequestedEditing)
             .PermitIf(AhpApplicationOperation.Withdraw, ApplicationStatus.Withdrawn, () => _userAccount.CanEditApplication)

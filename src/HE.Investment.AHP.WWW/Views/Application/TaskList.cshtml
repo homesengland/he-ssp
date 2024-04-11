@@ -51,7 +51,7 @@
 
     @await Html.PartialAsync("Partials/_TaskListRequestChangeStatusSection.cshtml", Model)
 
-    <link-button action-url="@Url.Action("Index", "Application")" button-type="@ButtonType.Secondary">Return to applications</link-button>
+    <vc:return-to-applications-list-link/>
 </div>
 <div class="govuk-grid-column-one-third">
     <vc:help-panel email-address="@ContactInfo.Email" phone-number="@ContactInfo.Phone"/>
