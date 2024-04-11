@@ -1,9 +1,6 @@
 using FluentAssertions;
-using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Contract.HomeTypes.Events;
-using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.Tests.HomeTypes.TestDataBuilders;
-using HE.Investments.Common.Contract.Exceptions;
 
 namespace HE.Investment.AHP.Domain.Tests.HomeTypes.Entities.HomeTypeEntityTests;
 
