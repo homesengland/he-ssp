@@ -7,7 +7,7 @@ public static class ApplicationHasStatusReferredBackToApplicant
     public static DisplayNotification Create()
     {
         return DisplayNotification.Important(
-            "Your Growth Manager has referred  application back to you.",
+            "Your Growth Manager has referred application back to you.",
             body: "You can now edit and resubmit your application.");
     }
 }
