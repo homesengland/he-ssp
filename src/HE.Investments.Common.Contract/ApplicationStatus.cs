@@ -11,8 +11,6 @@ public enum ApplicationStatus
     NA,
     [Description("Under Review")]
     UnderReview,
-    [Description("Under Review in Assessment")]
-    UnderReviewInAssessment,
     [Description("Application Under Review")]
     ApplicationUnderReview,
     [Description("Withdrawn")]

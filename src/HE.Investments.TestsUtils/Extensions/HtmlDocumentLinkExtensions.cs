@@ -32,6 +32,17 @@ public static class HtmlDocumentLinkExtensions
         return htmlDocument;
     }
 
+    public static IHtmlDocument HasReturnToApplicationsListLink(this IHtmlDocument htmlDocument)
+    {
+        var links = GetLinks(htmlDocument);
+
+        links = HtmlElementFilters.WithText(links, "Return to applications");
+
+        links.SingleOrDefault().Should().NotBeNull("There is no single LinkButton element on page");
+
+        return htmlDocument;
+    }
+
     public static IHtmlDocument HasLinkWithHref(this IHtmlDocument htmlDocument, string href, out IHtmlAnchorElement htmlElement)
     {
         var allLinks = htmlDocument.GetElementsByTagName("a").OfType<IHtmlAnchorElement>();
@@ -54,10 +65,26 @@ public static class HtmlDocumentLinkExtensions
         return htmlDocument;
     }
 
+    public static IHtmlDocument HasNoElementWithTestId(this IHtmlDocument htmlDocument, string testId)
+    {
+        var element = htmlDocument.TryGetElementByTestId(testId);
+        element.Should().BeNull($"Element with data-testId {testId} should not exist");
+
+        return htmlDocument;
+    }
+
     private static IList<IElement> GetLinkButtons(this IHtmlDocument htmlDocument)
     {
         return htmlDocument
             .QuerySelectorAll("button.govuk-button-link")
+            .Select(i => i)
+            .ToList();
+    }
+
+    private static IList<IElement> GetLinks(this IHtmlDocument htmlDocument)
+    {
+        return htmlDocument
+            .QuerySelectorAll("a.govuk-link")
             .Select(i => i)
             .ToList();
     }
