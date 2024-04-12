@@ -18,7 +18,6 @@ namespace HE.CRM.AHP.Plugins.Handlers.HomeType
             this._ndssRepository = ndssRepository;
         }
 
-
         public override bool CanWork()
         {
             TracingService.Trace("CalculatePercentageValueOfNDSSStandard - Can Work");
@@ -45,7 +44,7 @@ namespace HE.CRM.AHP.Plugins.Handlers.HomeType
             }
             TracingService.Trace($"Calculate value in {invln_HomeType.Fields.invln_PercentageValueofNDSSStandard}");
 
-            var pecentageValueOfNdssStandard = nddsStandard.invln_Standard.Value / CurrentState.invln_floorarea * 100;
+            var pecentageValueOfNdssStandard = (decimal)(nddsStandard.invln_Standard.Value / CurrentState.invln_floorarea * 100);
             ExecutionData.Target.invln_PercentageValueofNDSSStandard = pecentageValueOfNdssStandard;
         }
     }
