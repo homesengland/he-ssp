@@ -3,7 +3,7 @@
 
 @model DisplayNotification;
 
-@if (Model.IsNotProvided())
+@if (Model.IsProvided())
 {
     <div class="govuk-notification-banner @(Model.NotificationType == NotificationType.Success ? "govuk-notification-banner--success" : "") govuk-!-margin-bottom-8" role="alert"
          aria-labelledby="govuk-notification-banner-title"
