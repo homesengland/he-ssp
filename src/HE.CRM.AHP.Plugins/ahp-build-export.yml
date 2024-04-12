@@ -14,16 +14,8 @@ parameters:
   displayName: Build & Update Webresources ?
   type: boolean
   default: true
-- name: exportMigrationData
-  displayName: Export Migration Data ?
-  type: boolean
-  default: false
 - name: deployWithUpgrade
   displayName: Upgrade Solutions?
-  type: boolean
-  default: true
-- name: deployEnvironmentVariables
-  displayName: Deploy Environment Variables ?
   type: boolean
   default: true
 - name: deployMainSolution
@@ -36,10 +28,6 @@ parameters:
   default: true
 - name: deployPluginsSolution
   displayName: Deploy Plugins Solution ?
-  type: boolean
-  default: true
-- name: deployDataMigration
-  displayName: Migrate Data ?
   type: boolean
   default: true
 
@@ -61,8 +49,6 @@ stages:
   parameters:
     buildAndUpdatePlugins: '${{ parameters.buildAndUpdatePlugins }}'
     buildAndUpdateWebResources: '${{ parameters.buildAndUpdateWebResources }}'
-    exportMigrationData: '${{ parameters.exportMigrationData }}'
-    deployEnvironmentVariables: '${{ parameters.deployEnvironmentVariables }}'
     deployMainSolution: '${{ parameters.deployMainSolution }}'
     deployFlowsSolution: '${{ parameters.deployFlowsSolution }}'
     deployPluginsSolution: '${{ parameters.deployPluginsSolution }}'
@@ -71,8 +57,6 @@ stages:
 - template: azure-pipelines-crm-ahp-upgrade.yml@he-invst-deployment
   parameters:
     deployWithUpgrade: '${{ parameters.deployWithUpgrade }}'
-    deployEnvironmentVariables: '${{ parameters.deployEnvironmentVariables }}'
     deployMainSolution: '${{ parameters.deployMainSolution }}'
     deployFlowsSolution: '${{ parameters.deployFlowsSolution }}'
     deployPluginsSolution: '${{ parameters.deployPluginsSolution }}'
-    deployDataMigration: '${{ parameters.deployDataMigration }}'
