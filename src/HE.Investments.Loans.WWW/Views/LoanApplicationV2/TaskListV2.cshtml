@@ -8,7 +8,7 @@
 
 <gds-div-grid-column-two-thirds>
     <gds-back-link href="@Url.Action("Back", "LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.TaskList, ApplicationId = Model.Id })" text="Back to application dashboard" class="govuk-!-margin-bottom-8"></gds-back-link>
-    <partial name="~/Partials/_Notification.cshtml" />
+    <vc:notification/>
     <span class="govuk-caption-m">
         @Model.OrganisationName
     </span>

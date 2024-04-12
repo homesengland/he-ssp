@@ -22,4 +22,19 @@ public record DisplayNotification(
             linkDescriptionUrl,
             body);
     }
+
+    public static DisplayNotification Important(
+        string description,
+        string? linkDescription = null,
+        string? linkDescriptionUrl = null,
+        string? body = null)
+    {
+        return new DisplayNotification(
+            NotificationType.Important.ToString(),
+            NotificationType.Important,
+            description,
+            linkDescription,
+            linkDescriptionUrl,
+            body);
+    }
 }
