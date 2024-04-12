@@ -78,7 +78,7 @@ public static class SiteDtoToSiteEntityMapper
     {
         return string.IsNullOrWhiteSpace(id) || string.IsNullOrWhiteSpace(name)
             ? null
-            : new Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority(new LocalAuthorityCode(id), name ?? string.Empty);
+            : new Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority(new LocalAuthorityCode(id), name);
     }
 
     private static PlanningDetails CreatePlanningDetails(PlanningDetailsDto dto, IPlanningStatusMapper planningStatusMapper)
