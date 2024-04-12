@@ -23,7 +23,7 @@
 <div class="govuk-grid-column-full">
     <div class="govuk-grid-column-full govuk-!-padding-0">
 
-        <partial name="~/Partials/_Notification.cshtml"/>
+        <vc:notification/>
 
         @if (!string.IsNullOrWhiteSpace(Model.UserName))
         {

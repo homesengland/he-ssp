@@ -234,6 +234,17 @@ public static class HtmlDocumentExtensions
         return notificationBannerContent!.TextContent.Trim();
     }
 
+    public static string GetImportantNotificationBannerBody(this IHtmlDocument htmlDocument)
+    {
+        var importantNotificationBanner = htmlDocument.GetElementsByClassName(CssConstants.GovUkNotificationBannerImportant).FirstOrDefault();
+        importantNotificationBanner.Should().NotBeNull("Important notification banner does not exist");
+
+        var notificationBannerContent = importantNotificationBanner?.GetElementsByClassName(CssConstants.GovUkNotificationBannerContent).FirstOrDefault();
+        notificationBannerContent.Should().NotBeNull("Notification banner does not have content");
+
+        return notificationBannerContent!.TextContent.Trim();
+    }
+
     public static IHtmlCollection<IElement>? GetFilesTableBody(this IHtmlDocument htmlDocument)
     {
         var filesTableBody = htmlDocument.GetElementsByClassName(CssConstants.FilesTableBody).FirstOrDefault();

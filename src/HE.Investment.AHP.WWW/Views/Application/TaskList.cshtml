@@ -6,6 +6,8 @@
 @using HE.Investments.Common.Contract
 @using HE.Investments.Common.Gds
 @using HE.Investment.AHP.Contract.Application
+@using HE.Investment.AHP.WWW.Notifications
+@using HE.Investments.Common.Services.Notifications
 @model HE.Investment.AHP.WWW.Models.Application.ApplicationSectionsModel
 @inject ContactInfo ContactInfo
 
@@ -20,7 +22,11 @@
         .Build();
 }
 <div class="govuk-grid-column-two-thirds govuk-!-padding-top-8">
-    <partial name="~/Partials/_Notification.cshtml"/>
+    @if (Model.Status == ApplicationStatus.ReferredBackToApplicant)
+    {
+        <vc:notification display-notification="@ApplicationHasStatusReferredBackToApplicant.Create()"/>
+    }
+    <vc:notification/>
 </div>
 <div class="govuk-grid-column-full">
     <vc:page-header caption="@Model.SiteName" title="@Model.Name"/>

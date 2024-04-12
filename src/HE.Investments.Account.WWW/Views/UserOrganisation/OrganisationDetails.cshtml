@@ -14,7 +14,7 @@
     <gds-back-link href="@Url.Action("Index", "UserOrganisation", new { })" class="govuk-!-margin-bottom-8">
     </gds-back-link>
 
-    <partial name="~/Partials/_Notification.cshtml" />
+    <vc:notification/>
 
     <h1 class="govuk-heading-l govuk-!-margin-bottom-9">
         @UserOrganisationPageTitles.Details(Model.Name)

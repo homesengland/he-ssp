@@ -91,6 +91,12 @@ public static class HtmlFluentExtensions
         return htmlDocument;
     }
 
+    public static IHtmlDocument HasImportantNotificationBanner(this IHtmlDocument htmlDocument, string bodyText)
+    {
+        htmlDocument.GetImportantNotificationBannerBody().Should().Contain(bodyText);
+        return htmlDocument;
+    }
+
     public static IHtmlDocument HasUploadedFiles(this IHtmlDocument htmlDocument, int filesCount)
     {
         var files = htmlDocument.GetFilesTableBody();
