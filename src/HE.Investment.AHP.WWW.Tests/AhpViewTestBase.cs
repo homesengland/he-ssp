@@ -1,6 +1,5 @@
 using AngleSharp.Html.Dom;
 using HE.Investment.AHP.WWW.Config;
-using HE.Investments.Common.Services.Notifications;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,7 +22,6 @@ public abstract class AhpViewTestBase : ViewTestBase
         {
             services.AddSingleton(_ => new Mock<IAhpExternalLinks>().Object);
             services.AddSingleton(_ => new Mock<ContactInfo>().Object);
-            services.AddSingleton(_ => new Mock<INotificationConsumer>().Object);
         });
 
         return document;
