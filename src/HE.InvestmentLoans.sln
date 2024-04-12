@@ -124,7 +124,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.Investments.FrontDoor.Sh
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.Investments.FrontDoor.WWW.Tests", "HE.Investments.FrontDoor.WWW.Tests\HE.Investments.FrontDoor.WWW.Tests.csproj", "{0BE12894-8579-4BAF-9901-239DDF04BD44}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.CRM.AHP.Plugins.Tests", "HE.CRM.AHP.Plugins.Tests\HE.CRM.AHP.Plugins.Tests.csproj", "{0CD54056-E9DF-4A43-8A95-D7A64CF14780}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.CRM.AHP.Plugins.Test", "HE.CRM.AHP.Plugins.Tests\HE.CRM.AHP.Plugins.Test.csproj", "{0CD54056-E9DF-4A43-8A95-D7A64CF14780}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
