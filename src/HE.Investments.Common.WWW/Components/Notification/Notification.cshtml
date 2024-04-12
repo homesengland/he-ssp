@@ -1,8 +1,9 @@
+@using HE.Investments.Common.Extensions
 @using HE.Investments.Common.Services.Notifications;
 
-@model DisplayNotification?;
+@model DisplayNotification;
 
-@if (Model != null)
+@if (Model.IsNotProvided())
 {
     <div class="govuk-notification-banner @(Model.NotificationType == NotificationType.Success ? "govuk-notification-banner--success" : "") govuk-!-margin-bottom-8" role="alert"
          aria-labelledby="govuk-notification-banner-title"
