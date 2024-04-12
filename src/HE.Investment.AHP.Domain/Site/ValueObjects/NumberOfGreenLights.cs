@@ -7,7 +7,7 @@ namespace HE.Investment.AHP.Domain.Site.ValueObjects;
 
 public class NumberOfGreenLights : ValueObject
 {
-    private const string DisplayName = "number you enter for the Building for Life green traffic lights";
+    private const string DisplayName = "value you enter for the Building for Life green traffic lights";
 
     private const int MinValue = 0;
 
@@ -18,7 +18,7 @@ public class NumberOfGreenLights : ValueObject
         if (!int.TryParse(value, NumberStyles.Integer, CultureInfo.InvariantCulture, out var parsedValue))
         {
             OperationResult.New()
-                .AddValidationError(nameof(NumberOfGreenLights), ValidationErrorMessage.MustBeNumber(DisplayName))
+                .AddValidationError(nameof(NumberOfGreenLights), ValidationErrorMessage.MustBeWholeNumber(DisplayName))
                 .CheckErrors();
         }
 
