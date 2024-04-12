@@ -1,26 +1,53 @@
 # AHP-CRM-Deploy-UPGRADE
+trigger: none
+pr: none
 
-trigger:
-- none
-pr:
-- none
-
-schedules:
-- cron: '0 1 * * 1,2,3,4,5'
-  displayName: AHP - CRM - Deploy - Upgrade - Automatic night Deploy
-  branches:
-    include:
-    - main
-
-pool: 
+pool:
   vmImage: windows-latest
+
+parameters:
+- name: buildAndUpdatePlugins
+  displayName: Build & Update Plugins ?
+  type: boolean
+  default: true
+- name: buildAndUpdateWebResources
+  displayName: Build & Update Webresources ?
+  type: boolean
+  default: true
+- name: exportMigrationData
+  displayName: Export Migration Data ?
+  type: boolean
+  default: false
+- name: deployWithUpgrade
+  displayName: Upgrade Solutions?
+  type: boolean
+  default: true
+- name: deployEnvironmentVariables
+  displayName: Deploy Environment Variables ?
+  type: boolean
+  default: true
+- name: deployMainSolution
+  displayName: Deploy Main Solution ?
+  type: boolean
+  default: true
+- name: deployFlowsSolution
+  displayName: Deploy Flows Solution ?
+  type: boolean
+  default: true
+- name: deployPluginsSolution
+  displayName: Deploy Plugins Solution ?
+  type: boolean
+  default: true
+- name: deployDataMigration
+  displayName: Migrate Data ?
+  type: boolean
+  default: true
 
 variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
   branch: 'master'
-
 
 resources:
   repositories:
@@ -31,4 +58,21 @@ resources:
 
 stages:
 - template: azure-pipelines-crm-ahp-build-export.yml@he-invst-deployment
+  parameters:
+    buildAndUpdatePlugins: '${{ parameters.buildAndUpdatePlugins }}'
+    buildAndUpdateWebResources: '${{ parameters.buildAndUpdateWebResources }}'
+    exportMigrationData: '${{ parameters.exportMigrationData }}'
+    deployEnvironmentVariables: '${{ parameters.deployEnvironmentVariables }}'
+    deployMainSolution: '${{ parameters.deployMainSolution }}'
+    deployFlowsSolution: '${{ parameters.deployFlowsSolution }}'
+    deployPluginsSolution: '${{ parameters.deployPluginsSolution }}'
+
+
 - template: azure-pipelines-crm-ahp-upgrade.yml@he-invst-deployment
+  parameters:
+    deployWithUpgrade: '${{ parameters.deployWithUpgrade }}'
+    deployEnvironmentVariables: '${{ parameters.deployEnvironmentVariables }}'
+    deployMainSolution: '${{ parameters.deployMainSolution }}'
+    deployFlowsSolution: '${{ parameters.deployFlowsSolution }}'
+    deployPluginsSolution: '${{ parameters.deployPluginsSolution }}'
+    deployDataMigration: '${{ parameters.deployDataMigration }}'
