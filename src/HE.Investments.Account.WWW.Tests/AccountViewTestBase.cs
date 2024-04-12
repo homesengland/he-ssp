@@ -1,5 +1,6 @@
 using AngleSharp.Html.Dom;
 using HE.Investments.Account.WWW.Config;
+using HE.Investments.Common.Services.Notifications;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,6 +22,7 @@ public abstract class AccountViewTestBase : ViewTestBase
         var document = await base.Render(viewPath, model, viewBagOrViewData, modelStateDictionary, routeData, services =>
         {
             services.AddSingleton(_ => new Mock<IAccountExternalLinks>().Object);
+            services.AddSingleton(_ => new Mock<INotificationConsumer>().Object);
         });
 
         return document;
