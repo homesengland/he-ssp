@@ -37,6 +37,11 @@ variables:
   branch: "master"
 
 resources:
+  repositories:
+    - repository: he-invst-deployment
+      type: git
+      name: "Investments Programme/he-invst-deployment"
+      ref: "pipelines/separate-pipelines"
   pipelines:
     - pipeline: BuildPipeline
       source: "Loans - CRM - Build WIP"
