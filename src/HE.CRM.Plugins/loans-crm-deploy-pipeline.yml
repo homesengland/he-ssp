@@ -39,7 +39,7 @@ variables:
 resources:
   pipelines:
     - pipeline: BuildPipeline
-      source: "Loans - CRM - Deploy"
+      source: "Loans - CRM - Build WIP"
       trigger: none
 
 stages:
