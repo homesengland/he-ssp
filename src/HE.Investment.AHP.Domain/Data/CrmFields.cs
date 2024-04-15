@@ -23,6 +23,7 @@ public static class CrmFields
             nameof(invln_ExternalStatus),
             nameof(invln_scheme.invln_pplicationid),
             nameof(invln_scheme.invln_DateSubmitted),
+            nameof(invln_scheme.invln_PreviousExternalStatus),
         }).ToImmutableList();
 
     public static readonly IReadOnlyList<string> ApplicationListToRead = ApplicationToUpdate.ToList()

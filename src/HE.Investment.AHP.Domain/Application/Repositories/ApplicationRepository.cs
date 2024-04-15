@@ -39,9 +39,9 @@ public class ApplicationRepository : IApplicationRepository
     public async Task<ApplicationEntity> GetById(AhpApplicationId id, UserAccount userAccount, CancellationToken cancellationToken, bool fetchPreviousStatus = false)
     {
         var application = await GetAhpApplicationDto(id, userAccount, CrmFields.ApplicationToRead.ToList(), cancellationToken);
+        var previousApplicationStatus = AhpApplicationStatusMapper.MapToPortalStatus(application.previousExternalStatus);
 
-        // TODO: fetch previous application status when implemented on CRM side and flag is set to true
-        return CreateEntity(application, userAccount, null);
+        return CreateEntity(application, userAccount, previousApplicationStatus);
     }
 
     public async Task<bool> IsNameExist(ApplicationName applicationName, OrganisationId organisationId, CancellationToken cancellationToken)

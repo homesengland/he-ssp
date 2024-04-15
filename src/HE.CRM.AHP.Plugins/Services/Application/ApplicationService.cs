@@ -43,21 +43,65 @@ namespace HE.CRM.AHP.Plugins.Services.Application
 
         public void ChangeApplicationStatus(string organisationId, string contactId, string applicationId, int newStatus, string changeReason)
         {
-            var additionalFilters = GetFetchXmlConditionForGivenField(applicationId, nameof(invln_scheme.invln_schemeId).ToLower());
-            var contactExternalFilter = GetFetchXmlConditionForGivenField(contactId, nameof(Contact.invln_externalid).ToLower());
-            contactExternalFilter = GenerateFilterMarksForCondition(contactExternalFilter);
-            var applications = _applicationRepository.GetApplicationsForOrganisationAndContact(organisationId, contactExternalFilter, null, additionalFilters);
-            if (applications.Any())
+            TracingService.Trace($"Service ChangeApplicationStatus");
+
+            var contact = _contactRepository.GetContactViaExternalId(contactId);
+            var application = _applicationRepository.GetById(new Guid(applicationId),
+                new string[] {
+                    nameof(invln_scheme.invln_schemeId).ToLower(),
+                    nameof(invln_scheme.invln_schemename).ToLower(),
+                    nameof(invln_scheme.invln_ExternalStatus).ToLower(),
+                    nameof(invln_scheme.invln_PreviousInternalStatus).ToLower(),
+                    nameof(invln_scheme.invln_PreviousExternalStatus).ToLower(),
+                    nameof(invln_scheme.StatusCode).ToLower(),
+                    nameof(invln_scheme.invln_organisationid).ToLower(),
+                    nameof(invln_scheme.invln_contactid).ToLower()
+                });
+
+            if (application != null && application.invln_organisationid.Id == new Guid(organisationId) && application.invln_contactid.Id == contact.Id)
             {
-                var ahpWithNewStatusCodesAndOtherChanges = MapAhpExternalStatusToInternalAndSetOtherValues(new OptionSetValue(newStatus));
-                var application = applications.First();
+                var ahpWithNewStatusCodesAndOtherChanges = new invln_scheme();
+                switch (application.invln_ExternalStatus.Value)
+                {
+                    case (int)invln_ExternalStatusAHP.ReferredBackToApplicant:
+                        if (newStatus == (int)invln_ExternalStatusAHP.UnderReview)
+                        {
+                            ahpWithNewStatusCodesAndOtherChanges.StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.UnderReviewInAssessment);
+                            ahpWithNewStatusCodesAndOtherChanges.StateCode = new OptionSetValue((int)invln_schemeState.Active);
+                        }
+                        else
+                        {
+                            ahpWithNewStatusCodesAndOtherChanges = MapAhpExternalStatusToInternalAndSetOtherValues(new OptionSetValue(newStatus));
+                        }
+                        break;
+
+                    case (int)invln_ExternalStatusAHP.OnHold:
+                        ahpWithNewStatusCodesAndOtherChanges.StatusCode = new OptionSetValue(application.invln_PreviousInternalStatus.Value);
+                        ahpWithNewStatusCodesAndOtherChanges.StateCode = new OptionSetValue(MapAhpStatusCodeToStateCode(application.invln_PreviousInternalStatus.Value));
+                        break;
+
+                    default:
+                        ahpWithNewStatusCodesAndOtherChanges = MapAhpExternalStatusToInternalAndSetOtherValues(new OptionSetValue(newStatus));
+                        break;
+                }
+
                 var applicationToUpdate = new invln_scheme()
                 {
                     Id = application.Id,
                     StatusCode = ahpWithNewStatusCodesAndOtherChanges.StatusCode,
                     StateCode = ahpWithNewStatusCodesAndOtherChanges.StateCode,
                     invln_ExternalStatus = new OptionSetValue(newStatus),
+                    invln_PreviousInternalStatus = new OptionSetValue(application.StatusCode.Value),
                 };
+
+                if (application.invln_PreviousExternalStatus == null)
+                {
+                    applicationToUpdate.invln_PreviousExternalStatus = new OptionSetValue(application.invln_ExternalStatus.Value);
+                }
+                else if (application.invln_PreviousExternalStatus.Value != newStatus)
+                {
+                    applicationToUpdate.invln_PreviousExternalStatus = new OptionSetValue(application.invln_ExternalStatus.Value);
+                }
 
                 if (ahpWithNewStatusCodesAndOtherChanges.invln_DateSubmitted != null)
                 {
@@ -403,6 +447,18 @@ namespace HE.CRM.AHP.Plugins.Services.Application
 
                 default:
                     return null;
+            }
+        }
+
+        private int MapAhpStatusCodeToStateCode(int statusCode)
+        {
+            if (statusCode == (int)invln_AHPInternalStatus.Inactive || statusCode == (int)invln_AHPInternalStatus.Withdrawn || statusCode == (int)invln_AHPInternalStatus.Deleted)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
             }
         }
 
