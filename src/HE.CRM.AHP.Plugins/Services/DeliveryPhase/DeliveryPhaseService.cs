@@ -220,7 +220,7 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
                     + deliveryPhase.invln_CompletionValue.Value);
                 if (leftOver > 0 && (leftOver < fundingForPhase * 0.01m || leftOver < 1))
                 {
-                    deliveryPhase.invln_CompletionPercentageValue += leftOver;
+                    deliveryPhase.invln_CompletionValue.Value += leftOver;
                 }
             }
             else
@@ -236,7 +236,7 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
                                             + df.invln_CompletionValue.Value);
                         if (leftOver > 0 && (leftOver < fundingForPhase * 0.01m || leftOver < 1))
                         {
-                            deliveryPhase.invln_CompletionPercentageValue += leftOver;
+                            deliveryPhase.invln_CompletionValue.Value += leftOver;
                         }
                     }
                 }
@@ -252,7 +252,7 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
                                         + df.invln_CompletionValue.Value);
                         if (leftOver > 0 && (leftOver < fundingForPhase * 0.01m || leftOver < 1))
                         {
-                            deliveryPhase.invln_CompletionPercentageValue += leftOver;
+                            deliveryPhase.invln_CompletionValue.Value += leftOver;
                         }
                     }
                 }
@@ -268,7 +268,7 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
                                         + deliveryPhase.invln_CompletionValue.Value);
                         if (leftOver > 0 && (leftOver < fundingForPhase * 0.01m || leftOver < 1))
                         {
-                            deliveryPhase.invln_CompletionPercentageValue += leftOver;
+                            deliveryPhase.invln_CompletionValue.Value += leftOver;
                         }
                     }
                 }
