@@ -38,7 +38,7 @@ public static class SiteDtoToSiteEntityMapper
     private static readonly SiteProcurementMapper SiteProcurementMapper = new();
     private static readonly SiteStatusMapper SiteStatusMapper = new();
 
-    public static SiteEntity Map(SiteDto dto, IPlanningStatusMapper planningStatusMapper)
+    public static SiteEntity Map(SiteDto dto, IAhpPlanningStatusMapper planningStatusMapper)
     {
         return new SiteEntity(
             new SiteId(dto.id),
@@ -58,7 +58,9 @@ public static class SiteDtoToSiteEntityMapper
             CreateSiteRuralClassification(dto.ruralDetails),
             string.IsNullOrWhiteSpace(dto.environmentalImpact) ? null : new EnvironmentalImpact(dto.environmentalImpact),
             CreateMmc(dto.modernMethodsOfConstruction),
-            new SiteProcurements(MapCollection(dto.procurementMechanisms, SiteProcurementMapper)));
+            new SiteProcurements(MapCollection(dto.procurementMechanisms, SiteProcurementMapper)),
+            frontDoorProjectId: null, // TODO: use value from CRM when added
+            frontDoorSiteId: null);
     }
 
     private static Section106 CreateSection106(Section106Dto dto)
@@ -81,7 +83,7 @@ public static class SiteDtoToSiteEntityMapper
             : new Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority(new LocalAuthorityCode(id), name);
     }
 
-    private static PlanningDetails CreatePlanningDetails(PlanningDetailsDto dto, IPlanningStatusMapper planningStatusMapper)
+    private static PlanningDetails CreatePlanningDetails(PlanningDetailsDto dto, IAhpPlanningStatusMapper planningStatusMapper)
     {
         if (dto.planningStatus == null)
         {

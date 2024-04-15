@@ -3,6 +3,8 @@ extern alias Org;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Queries;
 using HE.Investment.AHP.Domain.Common.Mappers;
+using HE.Investment.AHP.Domain.PrefillData.Data;
+using HE.Investment.AHP.Domain.PrefillData.Repositories;
 using HE.Investment.AHP.Domain.Site.Entities;
 using HE.Investment.AHP.Domain.Site.Mappers;
 using HE.Investment.AHP.Domain.Site.Repositories;
@@ -10,6 +12,7 @@ using HE.Investment.AHP.Domain.Site.ValueObjects.Planning;
 using HE.Investment.AHP.Domain.Site.ValueObjects.StrategicSite;
 using HE.Investment.AHP.Domain.Site.ValueObjects.TenderingStatus;
 using HE.Investments.Account.Shared;
+using HE.Investments.Common.Extensions;
 using MediatR;
 using SiteTypeDetails = HE.Investment.AHP.Contract.Site.SiteTypeDetails;
 
@@ -21,16 +24,22 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
 
     private readonly ISiteRepository _siteRepository;
 
-    public GetSiteQueryHandler(IAccountUserContext accountUserContext, ISiteRepository siteRepository)
+    private readonly IAhpPrefillDataRepository _prefillDataRepository;
+
+    public GetSiteQueryHandler(IAccountUserContext accountUserContext, ISiteRepository siteRepository, IAhpPrefillDataRepository prefillDataRepository)
     {
         _accountUserContext = accountUserContext;
         _siteRepository = siteRepository;
+        _prefillDataRepository = prefillDataRepository;
     }
 
     public async Task<SiteModel> Handle(GetSiteQuery request, CancellationToken cancellationToken)
     {
         var userAccount = await _accountUserContext.GetSelectedAccount();
         var site = await _siteRepository.GetSite(new SiteId(request.SiteId), userAccount, cancellationToken);
+        var prefillData = site.FrontDoorProjectId.IsProvided() && site.FrontDoorSiteId.IsProvided()
+            ? await _prefillDataRepository.GetAhpSitePrefillData(site.FrontDoorProjectId!, site.FrontDoorSiteId!, cancellationToken)
+            : null;
         var localAuthority = LocalAuthorityMapper.Map(site.LocalAuthority);
 
         return new SiteModel
@@ -40,7 +49,7 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
             Status = site.Status,
             Section106 = CreateSection106(site),
             LocalAuthority = localAuthority,
-            PlanningDetails = CreateSitePlanningDetails(site.PlanningDetails, localAuthority?.Id),
+            PlanningDetails = CreateSitePlanningDetails(site.PlanningDetails, localAuthority?.Id, prefillData),
             NationalDesignGuidePriorities = site.NationalDesignGuidePriorities.Values.ToList(),
             BuildingForHealthyLife = site.BuildingForHealthyLife,
             NumberOfGreenLights = site.NumberOfGreenLights?.ToString(),
@@ -72,10 +81,13 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
             site.Section106.IsIneligibleDueToCapitalFundingGuide());
     }
 
-    private static SitePlanningDetails CreateSitePlanningDetails(PlanningDetails planningDetails, string? localAuthorityId)
+    private static SitePlanningDetails CreateSitePlanningDetails(
+        PlanningDetails planningDetails,
+        string? localAuthorityId,
+        AhpSitePrefillData? prefillData)
     {
         return new SitePlanningDetails(
-            planningDetails.PlanningStatus,
+            planningDetails.PlanningStatus ?? prefillData?.PlanningStatus,
             planningDetails.ReferenceNumber?.Value,
             planningDetails.IsQuestionActive(nameof(planningDetails.ReferenceNumber)),
             DateValueObjectMapper.ToContract(planningDetails.DetailedPlanningApprovalDate),
