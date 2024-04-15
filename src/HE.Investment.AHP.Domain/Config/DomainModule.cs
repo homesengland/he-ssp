@@ -17,18 +17,21 @@ using HE.Investment.AHP.Domain.HomeTypes.Mappers;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investment.AHP.Domain.HomeTypes.Services;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
+using HE.Investment.AHP.Domain.PrefillData.Repositories;
 using HE.Investment.AHP.Domain.Programme;
 using HE.Investment.AHP.Domain.Programme.Config;
 using HE.Investment.AHP.Domain.Programme.Crm;
 using HE.Investment.AHP.Domain.Scheme.Repositories;
 using HE.Investment.AHP.Domain.Scheme.Services;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
+using HE.Investment.AHP.Domain.Site.Mappers;
 using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investments.Account.Shared.Config;
 using HE.Investments.Common;
 using HE.Investments.Common.CRM.Config;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Utils;
+using HE.Investments.FrontDoor.Shared.Config;
 using MediatR.Pipeline;
 using Microsoft.Extensions.DependencyInjection;
 using Org::HE.Investments.Organisation.LocalAuthorities.Repositories;
@@ -41,6 +44,7 @@ public static class DomainModule
     {
         services.AddAccountSharedModule();
         services.AddCommonCrmModule();
+        services.AddFrontDoorSharedModule();
         services.AddScoped<IDateTimeProvider, DateTimeProvider>();
         services.AddTransient(typeof(IRequestExceptionHandler<,,>), typeof(DomainValidationHandler<,,>));
 
@@ -56,6 +60,7 @@ public static class DomainModule
         AddSite(services);
         AddDelivery(services);
         AddProgramme(services);
+        AddPrefillData(services);
     }
 
     private static void AddHomeTypes(IServiceCollection services)
@@ -107,6 +112,7 @@ public static class DomainModule
         services.AddScoped<ISiteRepository, SiteRepository>();
         services.AddScoped<ILocalAuthorityRepository, LocalAuthorityRepository>();
         services.AddScoped<IAhgLocalAuthorityRepository, AhgLocalAuthorityRepository>();
+        services.AddSingleton<IAhpPlanningStatusMapper, AhpPlanningStatusMapper>();
     }
 
     private static void AddDelivery(IServiceCollection services)
@@ -122,5 +128,10 @@ public static class DomainModule
         services.AddScoped<IAhpProgrammeRepository, AhpProgrammeRepository>();
         services.AddScoped<IProgrammeCrmContext, ProgrammeCrmContext>();
         services.AddAppConfiguration<IProgrammeSettings, ProgrammeSettings>();
+    }
+
+    private static void AddPrefillData(IServiceCollection services)
+    {
+        services.AddScoped<IAhpPrefillDataRepository, AhpPrefillDataRepository>();
     }
 }

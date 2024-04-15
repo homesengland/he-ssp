@@ -8,7 +8,6 @@ using HE.Investment.AHP.Domain.Site.ValueObjects;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Pagination;
-using HE.Investments.Common.CRM.Mappers;
 
 namespace HE.Investment.AHP.Domain.Site.Repositories;
 
@@ -16,9 +15,9 @@ public class SiteRepository : ISiteRepository
 {
     private readonly ISiteCrmContext _siteCrmContext;
 
-    private readonly IPlanningStatusMapper _planningStatusMapper;
+    private readonly IAhpPlanningStatusMapper _planningStatusMapper;
 
-    public SiteRepository(ISiteCrmContext siteCrmContext, IPlanningStatusMapper planningStatusMapper)
+    public SiteRepository(ISiteCrmContext siteCrmContext, IAhpPlanningStatusMapper planningStatusMapper)
     {
         _siteCrmContext = siteCrmContext;
         _planningStatusMapper = planningStatusMapper;
@@ -56,11 +55,6 @@ public class SiteRepository : ISiteRepository
 
     public async Task<SiteEntity> GetSite(SiteId siteId, UserAccount userAccount, CancellationToken cancellationToken)
     {
-        if (siteId.IsNew)
-        {
-            return SiteEntity.NewSite();
-        }
-
         var site = await _siteCrmContext.GetById(siteId.Value, cancellationToken) ?? throw new NotFoundException("Site not found", siteId);
 
         return SiteDtoToSiteEntityMapper.Map(site, _planningStatusMapper);

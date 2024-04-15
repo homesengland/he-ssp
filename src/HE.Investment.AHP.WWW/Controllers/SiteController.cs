@@ -1,5 +1,6 @@
 using He.AspNetCore.Mvc.Gds.Components.Extensions;
 using HE.Investment.AHP.Contract.Common.Enums;
+using HE.Investment.AHP.Contract.PrefillData.Queries;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Commands;
 using HE.Investment.AHP.Contract.Site.Commands.Mmc;
@@ -25,6 +26,7 @@ using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Routing;
+using HE.Investments.FrontDoor.Shared.Project;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using LocalAuthority = HE.Investment.AHP.Contract.Site.LocalAuthority;
@@ -109,22 +111,27 @@ public class SiteController : WorkflowController<SiteWorkflowState>
 
     [HttpGet("name")]
     [WorkflowState(SiteWorkflowState.Name)]
-    public async Task<IActionResult> Name([FromQuery] string? siteId, CancellationToken cancellationToken)
+    public async Task<IActionResult> Name([FromQuery] string? siteId, [FromQuery] string? fdProjectId, [FromQuery] string? fdSiteId, CancellationToken cancellationToken)
     {
-        SiteModel siteModel = new();
-        if (siteId.IsProvided())
-        {
-            siteModel = await _mediator.Send(new GetSiteQuery(siteId!), cancellationToken);
-        }
-
-        return View("Name", siteModel);
+        return View("Name", await CreateSiteNameModel(siteId, fdProjectId, fdSiteId, cancellationToken));
     }
 
     [HttpPost("name")]
     [WorkflowState(SiteWorkflowState.Name)]
-    public async Task<IActionResult> NamePost([FromQuery] string? siteId, SiteModel model, CancellationToken cancellationToken)
+    public async Task<IActionResult> NamePost(
+        [FromQuery] string? siteId,
+        [FromQuery] string? fdProjectId,
+        [FromQuery] string? fdSiteId,
+        SiteModel model,
+        CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new ProvideNameCommand(siteId ?? model.Id, model.Name), cancellationToken);
+        var result = await _mediator.Send(
+            new ProvideNameCommand(
+                SiteId.Create(siteId ?? model.Id),
+                FrontDoorProjectId.Create(fdProjectId),
+                FrontDoorSiteId.Create(fdSiteId),
+                model.Name),
+            cancellationToken);
 
         if (result.HasValidationErrors)
         {
@@ -266,7 +273,8 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     public async Task<IActionResult> LocalAuthoritySearch(string siteId, CancellationToken cancellationToken)
     {
         await GetSiteBasicDetails(siteId, cancellationToken);
-        return View(nameof(LocalAuthoritySearch), new LocalAuthorities { SiteId = siteId });
+        var prefillData = await _mediator.Send(new GetAhpSitePrefillDataQuery(new SiteId(siteId)), cancellationToken);
+        return View(nameof(LocalAuthoritySearch), new LocalAuthorities { SiteId = siteId, Phrase = prefillData.LocalAuthorityName });
     }
 
     [HttpPost("{siteId}/local-authority/search")]
@@ -917,6 +925,24 @@ public class SiteController : WorkflowController<SiteWorkflowState>
                 return View(viewName, model);
             },
             cancellationToken);
+    }
+
+    private async Task<SiteModel> CreateSiteNameModel(string? siteId, string? fdProjectId, string? fdSiteId, CancellationToken cancellationToken)
+    {
+        if (siteId.IsProvided())
+        {
+            return await _mediator.Send(new GetSiteQuery(siteId!), cancellationToken);
+        }
+
+        if (fdProjectId.IsProvided() && fdSiteId.IsProvided())
+        {
+            var prefillData = await _mediator.Send(
+                new GetNewAhpSitePrefillDataQuery(new FrontDoorProjectId(fdProjectId!), new FrontDoorSiteId(fdSiteId!)),
+                cancellationToken);
+            return new SiteModel { Name = prefillData.SiteName ?? string.Empty };
+        }
+
+        return new SiteModel();
     }
 
     private async Task<SiteModel> GetSiteDetails(string siteId, CancellationToken cancellationToken)

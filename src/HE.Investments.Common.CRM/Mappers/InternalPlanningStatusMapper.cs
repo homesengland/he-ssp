@@ -3,7 +3,8 @@ using HE.Investments.Common.CRM.Model;
 
 namespace HE.Investments.Common.CRM.Mappers;
 
-internal class InternalPlanningStatusMapper : EnumMapper<SitePlanningStatus>, IPlanningStatusMapper
+// TODO: remove this class and move mapping to AhpPlanningStatusMapper when removing UseExternalFrontDoorTables Feature Flag
+public class InternalPlanningStatusMapper : EnumMapper<SitePlanningStatus>, IPlanningStatusMapper
 {
     protected override IDictionary<SitePlanningStatus, int?> Mapping => new Dictionary<SitePlanningStatus, int?>
     {
