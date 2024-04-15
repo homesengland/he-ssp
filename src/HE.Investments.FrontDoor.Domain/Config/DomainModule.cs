@@ -1,6 +1,5 @@
 using HE.Investments.Account.Shared.Config;
 using HE.Investments.Common;
-using HE.Investments.Common.CRM.Config;
 using HE.Investments.Common.Utils;
 using HE.Investments.FrontDoor.Domain.Project.Crm;
 using HE.Investments.FrontDoor.Domain.Project.Crm.Mappers;
@@ -20,7 +19,6 @@ public static class DomainModule
     {
         services.AddFrontDoorSharedModule();
         services.AddAccountSharedModule();
-        services.AddCommonCrmModule();
         services.AddScoped<IDateTimeProvider, DateTimeProvider>();
         services.AddProjectCrmContext();
         services.AddScoped<IProjectRepository, ProjectRepository>();

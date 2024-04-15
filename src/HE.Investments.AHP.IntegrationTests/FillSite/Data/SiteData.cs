@@ -18,9 +18,9 @@ public class SiteData
 
     public string SiteName { get; private set; }
 
-    public string LocalAuthorityId => "E08000012";
+    public string LocalAuthorityCode => "8000032";
 
-    public string LocalAuthorityName => "Liverpool";
+    public string LocalAuthorityName => "Bradford";
 
     public YesNoType Section106GeneralAgreement => YesNoType.Yes;
 

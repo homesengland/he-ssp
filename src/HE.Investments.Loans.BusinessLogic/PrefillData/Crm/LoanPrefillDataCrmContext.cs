@@ -1,12 +1,10 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Shared.User;
-using HE.Investments.Common.CRM.Extensions;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Serialization;
 using HE.Investments.Common.Extensions;
 using HE.Investments.FrontDoor.Shared.Project;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
-using Microsoft.FeatureManagement;
 using Microsoft.PowerPlatform.Dataverse.Client;
 
 namespace HE.Investments.Loans.BusinessLogic.PrefillData.Crm;
@@ -15,12 +13,9 @@ internal class LoanPrefillDataCrmContext : ILoanPrefillDataCrmContext
 {
     private readonly IOrganizationServiceAsync2 _serviceClient;
 
-    private readonly IFeatureManager _featureManager;
-
-    public LoanPrefillDataCrmContext(IOrganizationServiceAsync2 serviceClient, IFeatureManager featureManager)
+    public LoanPrefillDataCrmContext(IOrganizationServiceAsync2 serviceClient)
     {
         _serviceClient = serviceClient;
-        _featureManager = featureManager;
     }
 
     public async Task<FrontDoorProjectId?> GetFrontDoorProjectId(
@@ -37,7 +32,7 @@ internal class LoanPrefillDataCrmContext : ILoanPrefillDataCrmContext
                 nameof(invln_Loanapplication.invln_LoanapplicationId),
                 nameof(invln_Loanapplication.invln_FDProjectId),
                 nameof(invln_Loanapplication.invln_HeProjectId)),
-            invln_usehetables = await _featureManager.GetUseHeTablesParameter(),
+            invln_usehetables = "true",
         };
 
         var response = await _serviceClient.ExecuteAsync(req, cancellationToken) as invln_getsingleloanapplicationforaccountandcontactResponse;

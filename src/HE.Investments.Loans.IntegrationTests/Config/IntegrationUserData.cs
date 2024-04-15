@@ -20,7 +20,7 @@ public class IntegrationUserData
 
     public FrontDoorProjectData ProjectPrefillData { get; private set; }
 
-    public string LocalAuthorityId(string? useHeTables) => string.IsNullOrEmpty(useHeTables) ? "E07000178" : "7000178";
+    public string LocalAuthorityCode => "7000178";
 
     public void SetApplicationLoanId(string loanApplicationId)
     {

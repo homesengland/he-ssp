@@ -24,11 +24,9 @@ using HE.Investment.AHP.Domain.Programme.Crm;
 using HE.Investment.AHP.Domain.Scheme.Repositories;
 using HE.Investment.AHP.Domain.Scheme.Services;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
-using HE.Investment.AHP.Domain.Site.Mappers;
 using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investments.Account.Shared.Config;
 using HE.Investments.Common;
-using HE.Investments.Common.CRM.Config;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Utils;
 using HE.Investments.FrontDoor.Shared.Config;
@@ -43,7 +41,6 @@ public static class DomainModule
     public static void AddDomainModule(this IServiceCollection services)
     {
         services.AddAccountSharedModule();
-        services.AddCommonCrmModule();
         services.AddFrontDoorSharedModule();
         services.AddScoped<IDateTimeProvider, DateTimeProvider>();
         services.AddTransient(typeof(IRequestExceptionHandler<,,>), typeof(DomainValidationHandler<,,>));
@@ -108,11 +105,10 @@ public static class DomainModule
 
     private static void AddSite(IServiceCollection services)
     {
-        services.AddScoped<ISiteCrmContext, SiteCrmContext>();
+        services.AddScoped<SiteCrmContext>();
+        services.AddScoped<ISiteCrmContext>(x => new LocalAuthorityCodeDecorator(x.GetRequiredService<SiteCrmContext>()));
         services.AddScoped<ISiteRepository, SiteRepository>();
         services.AddScoped<ILocalAuthorityRepository, LocalAuthorityRepository>();
-        services.AddScoped<IAhgLocalAuthorityRepository, AhgLocalAuthorityRepository>();
-        services.AddSingleton<IAhpPlanningStatusMapper, AhpPlanningStatusMapper>();
     }
 
     private static void AddDelivery(IServiceCollection services)

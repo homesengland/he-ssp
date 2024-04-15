@@ -1,5 +1,6 @@
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investment.AHP.Contract.Site
+@using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.WWW.Views.Site.Const
 @using HE.Investments.Common.Contract.Enum
 @using HE.Investments.Common.WWW.Components.RadioList
@@ -7,14 +8,13 @@
 @model SitePlanningDetails
 @{
     ViewData["Title"] = SitePageTitles.PlanningStatus;
-    var backRouteData = new
-    {
-        SiteId = ViewContext.RouteData.Values["siteId"] as string,
-        Model.LocalAuthorityId,
-    };
+
+    var backUrl = string.IsNullOrWhiteSpace(Model.LocalAuthorityCode)
+        ? Url.Action("LocalAuthoritySearch", new { siteId = this.GetSiteIdFromRoute() })
+        : Url.Action("LocalAuthorityConfirm", new { siteId = this.GetSiteIdFromRoute(), Model.LocalAuthorityCode });
 }
 <gds-div-grid-column-two-thirds>
-    <gds-back-link href="@Url.Action("LocalAuthorityConfirm", backRouteData)" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
+    <gds-back-link href="@backUrl" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <vc:page-header caption="@ViewBag.SiteName"/>
 

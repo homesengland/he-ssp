@@ -15,12 +15,9 @@ public class SiteRepository : ISiteRepository
 {
     private readonly ISiteCrmContext _siteCrmContext;
 
-    private readonly IAhpPlanningStatusMapper _planningStatusMapper;
-
-    public SiteRepository(ISiteCrmContext siteCrmContext, IAhpPlanningStatusMapper planningStatusMapper)
+    public SiteRepository(ISiteCrmContext siteCrmContext)
     {
         _siteCrmContext = siteCrmContext;
-        _planningStatusMapper = planningStatusMapper;
     }
 
     public async Task<bool> IsExist(SiteName name, CancellationToken cancellationToken)
@@ -37,7 +34,7 @@ public class SiteRepository : ISiteRepository
             : await _siteCrmContext.GetUserSites(userAccount.UserGlobalId.Value, paging, cancellationToken);
 
         return new PaginationResult<SiteEntity>(
-            sites.items.Select(x => SiteDtoToSiteEntityMapper.Map(x, _planningStatusMapper)).ToList(),
+            sites.items.Select(SiteDtoToSiteEntityMapper.Map).ToList(),
             paginationRequest.Page,
             paginationRequest.ItemsPerPage,
             sites.totalItemsCount);
@@ -57,7 +54,7 @@ public class SiteRepository : ISiteRepository
     {
         var site = await _siteCrmContext.GetById(siteId.Value, cancellationToken) ?? throw new NotFoundException("Site not found", siteId);
 
-        return SiteDtoToSiteEntityMapper.Map(site, _planningStatusMapper);
+        return SiteDtoToSiteEntityMapper.Map(site);
     }
 
     public async Task<SiteId> Save(SiteEntity site, UserAccount userAccount, CancellationToken cancellationToken)
@@ -71,7 +68,7 @@ public class SiteRepository : ISiteRepository
         var id = await _siteCrmContext.Save(
             organisationId,
             userAccount.UserGlobalId.Value,
-            SiteEntityToSiteDtoMapper.Map(site, _planningStatusMapper),
+            SiteEntityToSiteDtoMapper.Map(site),
             cancellationToken);
         return new SiteId(id);
     }

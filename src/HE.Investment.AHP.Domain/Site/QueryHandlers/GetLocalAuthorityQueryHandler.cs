@@ -1,7 +1,8 @@
 extern alias Org;
 
-using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Queries;
+using HE.Investment.AHP.Domain.Site.Mappers;
+using HE.Investments.Common.Contract;
 using MediatR;
 using Org::HE.Investments.Organisation.LocalAuthorities.Repositories;
 
@@ -18,7 +19,7 @@ public class GetLocalAuthorityQueryHandler : IRequestHandler<GetLocalAuthorityQu
 
     public async Task<LocalAuthority> Handle(GetLocalAuthorityQuery request, CancellationToken cancellationToken)
     {
-        var localAuthority = await _localAuthorityRepository.GetById(request.LocalAuthorityId, cancellationToken);
-        return new LocalAuthority { Id = localAuthority.Code.ToString(), Name = localAuthority.Name };
+        var localAuthority = await _localAuthorityRepository.GetByCode(request.LocalAuthorityCode, cancellationToken);
+        return LocalAuthorityMapper.Map(localAuthority)!;
     }
 }
