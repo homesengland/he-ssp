@@ -7,6 +7,8 @@ public static class SiteCrmFields
     public static readonly IReadOnlyList<string> Fields = new List<string>
     {
         nameof(invln_Sites.invln_SitesId),
+        nameof(invln_Sites.invln_AccountId),
+        nameof(invln_Sites.invln_CreatedByContactId),
         nameof(invln_Sites.invln_sitename),
         nameof(invln_Sites.invln_externalsitestatus),
         nameof(invln_Sites.invln_s106agreementinplace),

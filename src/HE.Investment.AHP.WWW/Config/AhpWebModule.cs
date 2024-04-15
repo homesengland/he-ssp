@@ -51,7 +51,7 @@ public static class AhpWebModule
     private static void AddConfiguration(IServiceCollection services)
     {
         services.AddSingleton<IErrorViewPaths, AhpErrorViewPaths>();
-        services.AddAppConfiguration<ContactInfoOptions>("ContactInfo");
+        services.AddAppConfiguration<ContactInfo>("ContactInfo");
         services.AddAppConfiguration<IDataverseConfig, DataverseConfig>("Dataverse");
     }
 

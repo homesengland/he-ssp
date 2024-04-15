@@ -32,13 +32,16 @@ public class SiteRepository : ISiteRepository
     public async Task<PaginationResult<SiteEntity>> GetSites(UserAccount userAccount, PaginationRequest paginationRequest, CancellationToken cancellationToken)
     {
         var paging = new PagingRequestDto { pageNumber = paginationRequest.Page, pageSize = paginationRequest.ItemsPerPage };
-        var result = await _siteCrmContext.Get(paging, cancellationToken);
+        var organisationId = userAccount.SelectedOrganisationId().Value;
+        var sites = userAccount.CanViewAllApplications()
+            ? await _siteCrmContext.GetOrganisationSites(organisationId, paging, cancellationToken)
+            : await _siteCrmContext.GetUserSites(userAccount.UserGlobalId.Value, paging, cancellationToken);
 
         return new PaginationResult<SiteEntity>(
-            result.items.Select(x => SiteDtoToSiteEntityMapper.Map(x, _planningStatusMapper)).ToList(),
+            sites.items.Select(x => SiteDtoToSiteEntityMapper.Map(x, _planningStatusMapper)).ToList(),
             paginationRequest.Page,
             paginationRequest.ItemsPerPage,
-            result.totalItemsCount);
+            sites.totalItemsCount);
     }
 
     public async Task<SiteBasicInfo> GetSiteBasicInfo(SiteId siteId, UserAccount userAccount, CancellationToken cancellationToken)
@@ -58,12 +61,7 @@ public class SiteRepository : ISiteRepository
             return SiteEntity.NewSite();
         }
 
-        var site = await _siteCrmContext.GetById(siteId.Value, cancellationToken);
-
-        if (site == null)
-        {
-            throw new NotFoundException("Site not found", siteId);
-        }
+        var site = await _siteCrmContext.GetById(siteId.Value, cancellationToken) ?? throw new NotFoundException("Site not found", siteId);
 
         return SiteDtoToSiteEntityMapper.Map(site, _planningStatusMapper);
     }
@@ -75,7 +73,12 @@ public class SiteRepository : ISiteRepository
             return site.Id;
         }
 
-        var id = await _siteCrmContext.Save(SiteEntityToSiteDtoMapper.Map(site, _planningStatusMapper), cancellationToken);
+        var organisationId = userAccount.SelectedOrganisationId().Value;
+        var id = await _siteCrmContext.Save(
+            organisationId,
+            userAccount.UserGlobalId.Value,
+            SiteEntityToSiteDtoMapper.Map(site, _planningStatusMapper),
+            cancellationToken);
         return new SiteId(id);
     }
 }

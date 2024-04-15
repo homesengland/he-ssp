@@ -31,19 +31,19 @@ public class FinancialDetailsEntityBuilder
 
     public static FinancialDetailsEntityBuilder New(ApplicationBasicInfo? applicationBasicInfo = null) => new(applicationBasicInfo);
 
-    public FinancialDetailsEntityBuilder WithOtherApplicationCosts(decimal? expectedWorksCosts, decimal? expectedOnCosts)
+    public FinancialDetailsEntityBuilder WithOtherApplicationCosts(string expectedWorksCosts, string expectedOnCosts)
     {
         PrivatePropertySetter.SetPropertyWithNoSetter(
             _item,
             nameof(_item.OtherApplicationCosts),
             new OtherApplicationCosts(
-                expectedWorksCosts.IsProvided() ? new ExpectedWorksCosts(expectedWorksCosts!.Value) : null,
-                expectedOnCosts.IsProvided() ? new ExpectedOnCosts(expectedOnCosts!.Value) : null));
+                expectedWorksCosts.IsProvided() ? new ExpectedWorksCosts(expectedWorksCosts) : null,
+                expectedOnCosts.IsProvided() ? new ExpectedOnCosts(expectedOnCosts) : null));
 
         return this;
     }
 
-    public FinancialDetailsEntityBuilder WithLandValue(decimal landValue)
+    public FinancialDetailsEntityBuilder WithLandValue(string landValue)
     {
         PrivatePropertySetter.SetPropertyWithNoSetter(
             _item,
@@ -90,7 +90,7 @@ public class FinancialDetailsEntityBuilder
         return this;
     }
 
-    public FinancialDetailsEntityBuilder WithLandStatus(decimal purchasePrice)
+    public FinancialDetailsEntityBuilder WithLandStatus(string purchasePrice)
     {
         PrivatePropertySetter.SetPropertyWithNoSetter(
             _item,

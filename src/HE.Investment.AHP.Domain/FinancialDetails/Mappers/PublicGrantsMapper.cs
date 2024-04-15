@@ -10,7 +10,7 @@ public static class PublicGrantsMapper
     public static PublicGrants MapToPublicGrants(AhpApplicationDto application)
     {
         static PublicGrantValue? MapProvidedValues(decimal? value, PublicGrantFields field) => value.IsProvided()
-            ? new PublicGrantValue(field, value!.Value)
+            ? PublicGrantValue.FromCrm(field, value!.Value)
             : null;
 
         return new PublicGrants(

@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using System.Reflection;
 using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.HomeTypes;
@@ -6,6 +7,7 @@ using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.HomeTypes.Attributes;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investments.Common.Contract;
+using HE.Investments.Common.Contract.Infrastructure.Events;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
@@ -13,7 +15,7 @@ using HE.Investments.Common.Messages;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 
-public class HomeTypeEntity : IHomeTypeEntity
+public class HomeTypeEntity : DomainEntity, IHomeTypeEntity
 {
     private readonly IDictionary<HomeTypeSegmentType, IHomeTypeSegmentEntity> _segments;
 
@@ -133,6 +135,13 @@ public class HomeTypeEntity : IHomeTypeEntity
     public bool HasSegment(HomeTypeSegmentType segmentType)
     {
         return _segments.ContainsKey(segmentType);
+    }
+
+    public override IReadOnlyList<IDomainEvent> GetDomainEventsAndRemove()
+    {
+        return new ReadOnlyCollection<IDomainEvent>(base.GetDomainEventsAndRemove()
+            .Concat(_segments.SelectMany(x => x.Value.GetDomainEventsAndRemove()))
+            .ToList());
     }
 
     private static HomeTypeSegmentType GetSegmentType(Type segmentType)

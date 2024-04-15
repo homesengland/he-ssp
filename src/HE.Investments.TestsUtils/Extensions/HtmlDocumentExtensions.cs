@@ -16,6 +16,12 @@ public static class HtmlDocumentExtensions
         return elements.First();
     }
 
+    public static IElement? TryGetElementByTestId(this IHtmlDocument htmlDocument, string testId)
+    {
+        var elements = htmlDocument.QuerySelectorAll($"[data-testid='{testId}']");
+        return elements.FirstOrDefault();
+    }
+
     public static IHtmlAnchorElement GetLinkButtonByTestId(this IHtmlDocument htmlDocument, string testId)
     {
         var element = GetElementByTestId(htmlDocument, testId);
@@ -223,6 +229,17 @@ public static class HtmlDocumentExtensions
         successNotificationBanner.Should().NotBeNull("Success notification banner does not exist");
 
         var notificationBannerContent = successNotificationBanner?.GetElementsByClassName(CssConstants.GovUkNotificationBannerContent).FirstOrDefault();
+        notificationBannerContent.Should().NotBeNull("Notification banner does not have content");
+
+        return notificationBannerContent!.TextContent.Trim();
+    }
+
+    public static string GetImportantNotificationBannerBody(this IHtmlDocument htmlDocument)
+    {
+        var importantNotificationBanner = htmlDocument.GetElementsByClassName(CssConstants.GovUkNotificationBannerImportant).FirstOrDefault();
+        importantNotificationBanner.Should().NotBeNull("Important notification banner does not exist");
+
+        var notificationBannerContent = importantNotificationBanner?.GetElementsByClassName(CssConstants.GovUkNotificationBannerContent).FirstOrDefault();
         notificationBannerContent.Should().NotBeNull("Notification banner does not have content");
 
         return notificationBannerContent!.TextContent.Trim();

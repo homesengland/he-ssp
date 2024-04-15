@@ -6,6 +6,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\HE.Investments.FrontDoor.WWW\HE.Investments.FrontDoor.WWW.csproj" />
+      <ProjectReference Include="..\HE.Investments.TestsUtils\HE.Investments.TestsUtils.csproj" />
     </ItemGroup>
 
 </Project>

@@ -5,7 +5,6 @@ using HE.Investment.AHP.Domain.Common.Mappers;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investments.Common.CRM.Model;
-using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Crm.Segments;
 
@@ -38,9 +37,9 @@ public class SupportedHousingInformationCrmSegmentMapper : HomeTypeCrmSegmentMap
             YesNoTypeMapper.Map(dto.shortStayAccommodation),
             MapRevenueFunding(dto.revenueFunding),
             dto.fundingSources.Select(MapSources),
-            dto.moveOnArrangements.IsProvided() ? new MoreInformation(dto.moveOnArrangements) : null,
-            dto.typologyLocationAndDesign.IsProvided() ? new MoreInformation(dto.typologyLocationAndDesign) : null,
-            dto.exitPlan.IsProvided() ? new MoreInformation(dto.exitPlan) : null);
+            MoreInformation.FromCrm(dto.moveOnArrangements),
+            MoreInformation.FromCrm(dto.typologyLocationAndDesign),
+            MoreInformation.FromCrm(dto.exitPlan));
     }
 
     protected override SupportedHousingInformationSegmentEntity GetSegment(HomeTypeEntity entity) => entity.SupportedHousingInformation;

@@ -3,19 +3,21 @@ using HE.Investments.Common.Domain.ValueObjects;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 
-public class PublicGrantValue : PoundsValueObject
+public class PublicGrantValue : TheRequiredIntValueObject
 {
-    public PublicGrantValue(PublicGrantFields field, decimal value)
-        : base(value, new UiFields(field.ToString()))
+    public PublicGrantValue(PublicGrantFields field, string value)
+        : base(value, field.ToString(), "public grant value", 0, 999999999)
     {
         Field = field;
     }
 
-    public PublicGrantValue(PublicGrantFields field, string value)
-        : base(value, new UiFields(field.ToString()))
+    private PublicGrantValue(PublicGrantFields field, int value)
+        : base(value, field.ToString(), "public grant value")
     {
         Field = field;
     }
 
     public PublicGrantFields Field { get; }
+
+    public static PublicGrantValue FromCrm(PublicGrantFields field, decimal value) => new(field, decimal.ToInt32(value));
 }

@@ -24,20 +24,20 @@ public class ExpectedContributionsToSchemeBuilder
     public static ExpectedContributionsToSchemeBuilder NewWithAllValuesAs50()
     {
         var item = new ExpectedContributionsToScheme(
-            new ExpectedContributionValue(ExpectedContributionFields.RentalIncomeBorrowing, 50),
-            new ExpectedContributionValue(ExpectedContributionFields.SaleOfHomesOnThisScheme, 50),
-            new ExpectedContributionValue(ExpectedContributionFields.SaleOfHomesOnOtherSchemes, 50),
-            new ExpectedContributionValue(ExpectedContributionFields.OwnResources, 50),
-            new ExpectedContributionValue(ExpectedContributionFields.RcgfContribution, 50),
-            new ExpectedContributionValue(ExpectedContributionFields.OtherCapitalSources, 50),
-            new ExpectedContributionValue(ExpectedContributionFields.SharedOwnershipSales, 50),
-            new ExpectedContributionValue(ExpectedContributionFields.HomesTransferValue, 50),
+            new ExpectedContributionValue(ExpectedContributionFields.RentalIncomeBorrowing, "50"),
+            new ExpectedContributionValue(ExpectedContributionFields.SaleOfHomesOnThisScheme, "50"),
+            new ExpectedContributionValue(ExpectedContributionFields.SaleOfHomesOnOtherSchemes, "50"),
+            new ExpectedContributionValue(ExpectedContributionFields.OwnResources, "50"),
+            new ExpectedContributionValue(ExpectedContributionFields.RcgfContribution, "50"),
+            new ExpectedContributionValue(ExpectedContributionFields.OtherCapitalSources, "50"),
+            new ExpectedContributionValue(ExpectedContributionFields.SharedOwnershipSales, "50"),
+            new ExpectedContributionValue(ExpectedContributionFields.HomesTransferValue, "50"),
             Tenure.SharedOwnership);
 
         return new ExpectedContributionsToSchemeBuilder(item);
     }
 
-    public ExpectedContributionsToSchemeBuilder WithOwnResources(decimal ownResources)
+    public ExpectedContributionsToSchemeBuilder WithOwnResources(string ownResources)
     {
         PrivatePropertySetter.SetPropertyWithNoSetter(
             _item,
@@ -47,7 +47,7 @@ public class ExpectedContributionsToSchemeBuilder
         return this;
     }
 
-    public ExpectedContributionsToSchemeBuilder WithSharedOwnershipSales(decimal sharedOwnershipSales)
+    public ExpectedContributionsToSchemeBuilder WithSharedOwnershipSales(string sharedOwnershipSales)
     {
         PrivatePropertySetter.SetPropertyWithNoSetter(
             _item,

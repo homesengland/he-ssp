@@ -109,10 +109,10 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
             siteBasicInfo,
             schemeFunding,
             new LandStatus(
-                application.actualAcquisitionCost.IsProvided() ? new PurchasePrice(application.actualAcquisitionCost!.Value) : null,
-                application.expectedAcquisitionCost.IsProvided() ? new ExpectedPurchasePrice(application.expectedAcquisitionCost!.Value) : null),
+                application.actualAcquisitionCost.IsProvided() ? PurchasePrice.FromCrm(application.actualAcquisitionCost!.Value) : null,
+                application.expectedAcquisitionCost.IsProvided() ? ExpectedPurchasePrice.FromCrm(application.expectedAcquisitionCost!.Value) : null),
             new LandValue(
-                application.currentLandValue.IsProvided() ? new CurrentLandValue(application.currentLandValue!.Value) : null,
+                application.currentLandValue.IsProvided() ? CurrentLandValue.FromCrm(application.currentLandValue!.Value) : null,
                 application.isPublicLand),
             OtherApplicationCostsMapper.MapToOtherApplicationCosts(application),
             ExpectedContributionsToSchemeMapper.MapToExpectedContributionsToScheme(application, applicationBasicInfo.Tenure),
