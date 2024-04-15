@@ -1,33 +1,23 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 using DataverseModel;
 using HE.Base.Services;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.CRM.Common.DtoMapping;
 using HE.CRM.Common.Repositories.Interfaces;
-using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Xrm.Sdk;
-using Microsoft.Xrm.Sdk.Query;
 
 namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
 {
     public class DeliveryPhaseService : CrmService, IDeliveryPhaseService
     {
         private readonly IDeliveryPhaseRepository _deliveryPhaseRepository;
-
         private readonly IHomesInDeliveryPhaseRepository _homesInDeliveryPhaseRepository;
-
         private readonly IContactRepository _contactRepository;
-
         private readonly IAhpApplicationRepository _ahpApplicationRepository;
-
         private readonly IProgrammeRepository _ahpProgrammeRepository;
-
         private readonly IMilestoneFrameworkItemRepository _ahpMilestoneFrameworkItemRepository;
 
         public DeliveryPhaseService(CrmServiceArgs args) : base(args)
@@ -112,7 +102,6 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
 
                 TracingService.Trace($"Get Contact by externalUserId:{userId}");
                 var contact = _contactRepository.GetContactViaExternalId(userId);
-                // var programme = _ahpProgrammeRepository.GetById(application.invln_programmelookup.Id, [invln_programme.Fields.Id]);
                 TracingService.Trace($"Get Milestones");
                 if (application.invln_programmelookup == null)
                 {
@@ -202,8 +191,6 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
                                                invln_DeliveryPhase.Fields.invln_AcquisitionValue,
                                                invln_DeliveryPhase.Fields.invln_StartOnSiteValue,
                                                invln_DeliveryPhase.Fields.invln_CompletionValue,
-
-
                                 });
 
             if (deliveryPhase.invln_AcquisitionPercentageValue == null && deliveryPhase.invln_StartOnSitePercentageValue == null && deliveryPhase.invln_CompletionPercentageValue == null)
@@ -228,49 +215,32 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
                 if (deliveryPhase.invln_AcquisitionPercentageValue != null)
                 {
                     deliveryPhase.invln_AcquisitionValue = new Money(fundingForPhase * deliveryPhase.invln_AcquisitionPercentageValue.Value);
-                    if (deliveryPhase.invln_AcquisitionPercentageValue + df.invln_StartOnSitePercentageValue + df.invln_CompletionPercentageValue == 1)
-                    {
-                        var leftOver = fundingForPhase
-                                        - (deliveryPhase.invln_AcquisitionValue.Value
-                                            + df.invln_StartOnSiteValue.Value
-                                            + df.invln_CompletionValue.Value);
-                        if (leftOver > 0 && (leftOver < fundingForPhase * 0.01m || leftOver < 1))
-                        {
-                            deliveryPhase.invln_CompletionValue.Value += leftOver;
-                        }
-                    }
+                    CalculateFieldValue(deliveryPhase, fundingForPhase, df);
                 }
-
                 if (deliveryPhase.invln_StartOnSitePercentageValue != null)
                 {
                     deliveryPhase.invln_StartOnSiteValue = new Money(fundingForPhase * deliveryPhase.invln_StartOnSitePercentageValue.Value);
-                    if (df.invln_AcquisitionPercentageValue + deliveryPhase.invln_StartOnSitePercentageValue + df.invln_CompletionPercentageValue == 1)
-                    {
-                        var leftOver = fundingForPhase
-                                        - (df.invln_AcquisitionValue.Value
-                                        + deliveryPhase.invln_StartOnSiteValue.Value
-                                        + df.invln_CompletionValue.Value);
-                        if (leftOver > 0 && (leftOver < fundingForPhase * 0.01m || leftOver < 1))
-                        {
-                            deliveryPhase.invln_CompletionValue.Value += leftOver;
-                        }
-                    }
+                    CalculateFieldValue(deliveryPhase, fundingForPhase, df);
                 }
-
                 if (deliveryPhase.invln_CompletionPercentageValue != null)
                 {
                     deliveryPhase.invln_CompletionValue = new Money(fundingForPhase * deliveryPhase.invln_CompletionPercentageValue.Value);
-                    if (df.invln_AcquisitionPercentageValue + df.invln_StartOnSitePercentageValue + deliveryPhase.invln_CompletionPercentageValue == 1)
-                    {
-                        var leftOver = fundingForPhase
-                                        - (df.invln_AcquisitionValue.Value
-                                        + df.invln_StartOnSiteValue.Value
-                                        + deliveryPhase.invln_CompletionValue.Value);
-                        if (leftOver > 0 && (leftOver < fundingForPhase * 0.01m || leftOver < 1))
-                        {
-                            deliveryPhase.invln_CompletionValue.Value += leftOver;
-                        }
-                    }
+                    CalculateFieldValue(deliveryPhase, fundingForPhase, df);
+                }
+            }
+        }
+
+        private static void CalculateFieldValue(invln_DeliveryPhase deliveryPhase, decimal fundingForPhase, invln_DeliveryPhase df)
+        {
+            if (deliveryPhase.invln_AcquisitionPercentageValue + df.invln_StartOnSitePercentageValue + df.invln_CompletionPercentageValue == 1)
+            {
+                var leftOver = fundingForPhase
+                                - (deliveryPhase.invln_AcquisitionValue.Value
+                                    + df.invln_StartOnSiteValue.Value
+                                    + df.invln_CompletionValue.Value);
+                if (leftOver > 0 && (leftOver < fundingForPhase * 0.01m || leftOver < 1))
+                {
+                    deliveryPhase.invln_CompletionValue.Value += leftOver;
                 }
             }
         }
