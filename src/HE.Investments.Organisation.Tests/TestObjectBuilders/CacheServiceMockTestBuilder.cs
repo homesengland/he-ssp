@@ -16,7 +16,7 @@ public class CacheServiceMockTestBuilder
 
     public static CacheServiceMockTestBuilder New() => new();
 
-    public CacheServiceMockTestBuilder MockSearchLocalAuthorityRequest(IList<LocalAuthority> response)
+    public CacheServiceMockTestBuilder MockLoansSearchLocalAuthorityRequest(IList<LocalAuthority> response)
     {
         _mock
             .Setup(x => x.GetValueAsync("local-authorities-loans", It.IsAny<Func<Task<IList<LocalAuthority>>>>()))

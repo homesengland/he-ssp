@@ -28,10 +28,13 @@ using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investments.Account.Shared.Config;
 using HE.Investments.Common;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Common.Infrastructure.Cache.Interfaces;
 using HE.Investments.Common.Utils;
 using HE.Investments.FrontDoor.Shared.Config;
 using MediatR.Pipeline;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.PowerPlatform.Dataverse.Client;
+using Org::HE.Investments.Organisation.LocalAuthorities;
 using Org::HE.Investments.Organisation.LocalAuthorities.Repositories;
 
 namespace HE.Investment.AHP.Domain.Config;
@@ -108,7 +111,10 @@ public static class DomainModule
         services.AddScoped<SiteCrmContext>();
         services.AddScoped<ISiteCrmContext>(x => new LocalAuthorityCodeDecorator(x.GetRequiredService<SiteCrmContext>()));
         services.AddScoped<ISiteRepository, SiteRepository>();
-        services.AddScoped<ILocalAuthorityRepository, LocalAuthorityRepository>();
+        services.AddScoped<ILocalAuthorityRepository>(x => new LocalAuthorityRepository(
+            x.GetRequiredService<IOrganizationServiceAsync2>(),
+            x.GetRequiredService<ICacheService>(),
+            LocalAuthoritySource.Ahp));
     }
 
     private static void AddDelivery(IServiceCollection services)

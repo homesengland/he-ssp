@@ -17,10 +17,13 @@ public class LocalAuthorityRepository : ILocalAuthorityRepository
 
     private readonly ICacheService _cacheService;
 
-    public LocalAuthorityRepository(IOrganizationServiceAsync2 serviceClient, ICacheService cacheService)
+    private readonly LocalAuthoritySource _source;
+
+    public LocalAuthorityRepository(IOrganizationServiceAsync2 serviceClient, ICacheService cacheService, LocalAuthoritySource source)
     {
         _serviceClient = serviceClient;
         _cacheService = cacheService;
+        _source = source;
     }
 
     public async Task<(IList<LocalAuthority> Items, int TotalItems)> Search(string phrase, int startPage, int pageSize, CancellationToken cancellationToken)
@@ -57,7 +60,7 @@ public class LocalAuthorityRepository : ILocalAuthorityRepository
     private async Task<IList<LocalAuthority>> GetLocalAuthorities(CancellationToken cancellationToken)
     {
         return await _cacheService.GetValueAsync(
-                   $"local-authorities",
+                   $"local-authorities-{_source.ToString().ToLowerInvariant()}",
                    async () => await GetLocalAuthoritiesFromCrm(string.Empty, cancellationToken))
                ?? new List<LocalAuthority>();
     }
@@ -67,9 +70,9 @@ public class LocalAuthorityRepository : ILocalAuthorityRepository
         var req = new invln_getmultiplelocalauthoritiesformoduleRequest
         {
             invln_searchphrase = searchPage,
-            invln_isahp = "false",
-            invln_isloanfd = "false",
-            invln_isloan = "true",
+            invln_isahp = (_source == LocalAuthoritySource.Ahp).ToString().ToLowerInvariant(),
+            invln_isloanfd = (_source == LocalAuthoritySource.FrontDoor).ToString().ToLowerInvariant(),
+            invln_isloan = (_source == LocalAuthoritySource.Loans).ToString().ToLowerInvariant(),
             invln_pagingrequest = CrmResponseSerializer.Serialize(new PagingRequestDto { pageNumber = 1, pageSize = 1000 }),
             invln_usehetables = "true",
         };
