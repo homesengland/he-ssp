@@ -43,19 +43,27 @@ namespace HE.CRM.AHP.Plugins.Services.Application
 
         public void ChangeApplicationStatus(string organisationId, string contactId, string applicationId, int newStatus, string changeReason)
         {
-            var additionalFilters = GetFetchXmlConditionForGivenField(applicationId, nameof(invln_scheme.invln_schemeId).ToLower());
-            var contactExternalFilter = GetFetchXmlConditionForGivenField(contactId, nameof(Contact.invln_externalid).ToLower());
-            contactExternalFilter = GenerateFilterMarksForCondition(contactExternalFilter);
-            var applications = _applicationRepository.GetApplicationsForOrganisationAndContact(organisationId, contactExternalFilter, null, additionalFilters);
-            if (applications.Any())
-            {
-                var application = applications.First();
+            TracingService.Trace($"Service ChangeApplicationStatus");
 
+            var contact = _contactRepository.GetContactViaExternalId(contactId);
+            var application = _applicationRepository.GetById(new Guid(applicationId),
+                new string[] {
+                    nameof(invln_scheme.invln_schemeId).ToLower(),
+                    nameof(invln_scheme.invln_schemename).ToLower(),
+                    nameof(invln_scheme.invln_ExternalStatus).ToLower(),
+                    nameof(invln_scheme.invln_PreviousInternalStatus).ToLower(),
+                    nameof(invln_scheme.invln_PreviousExternalStatus).ToLower(),
+                    nameof(invln_scheme.StatusCode).ToLower(),
+                    nameof(invln_scheme.invln_organisationid).ToLower(),
+                    nameof(invln_scheme.invln_contactid).ToLower()
+                });
+
+            if (application != null && application.invln_organisationid.Id == new Guid(organisationId) && application.invln_contactid.Id == contact.Id)
+            {
                 var ahpWithNewStatusCodesAndOtherChanges = new invln_scheme();
                 switch (application.invln_ExternalStatus.Value)
                 {
                     case (int)invln_ExternalStatusAHP.ReferredBackToApplicant:
-
                         if (newStatus == (int)invln_ExternalStatusAHP.UnderReview)
                         {
                             ahpWithNewStatusCodesAndOtherChanges.StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.UnderReviewInAssessment);
@@ -68,7 +76,6 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                         break;
 
                     case (int)invln_ExternalStatusAHP.OnHold:
-
                         ahpWithNewStatusCodesAndOtherChanges.StatusCode = new OptionSetValue(application.invln_PreviousInternalStatus.Value);
                         ahpWithNewStatusCodesAndOtherChanges.StateCode = new OptionSetValue(MapAhpStatusCodeToStateCode(application.invln_PreviousInternalStatus.Value));
                         break;
@@ -78,7 +85,6 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                         break;
                 }
 
-
                 var applicationToUpdate = new invln_scheme()
                 {
                     Id = application.Id,
@@ -86,8 +92,16 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                     StateCode = ahpWithNewStatusCodesAndOtherChanges.StateCode,
                     invln_ExternalStatus = new OptionSetValue(newStatus),
                     invln_PreviousInternalStatus = new OptionSetValue(application.StatusCode.Value),
-                    invln_PreviousExternalStatus = new OptionSetValue(application.invln_ExternalStatus.Value)
                 };
+
+                if (application.invln_PreviousExternalStatus == null)
+                {
+                    applicationToUpdate.invln_PreviousExternalStatus = new OptionSetValue(application.invln_ExternalStatus.Value);
+                }
+                else if (application.invln_PreviousExternalStatus.Value != newStatus)
+                {
+                    applicationToUpdate.invln_PreviousExternalStatus = new OptionSetValue(application.invln_ExternalStatus.Value);
+                }
 
                 if (ahpWithNewStatusCodesAndOtherChanges.invln_DateSubmitted != null)
                 {
