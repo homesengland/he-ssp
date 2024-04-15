@@ -33,6 +33,7 @@ public class Order10ReferredBackToApplicant : AhpIntegrationTest
             .UrlEndWith(ApplicationPagesUrl.TaskListSuffix)
             .HasTitle(ApplicationData.ApplicationName)
             .HasStatusTagByTestId(ApplicationStatus.ReferredBackToApplicant.GetDescription(), "application-status")
+            .HasImportantNotificationBanner("You can now edit and resubmit your application.")
             .HasLinkWithTestId("check-and-submit-application", out var checkAndSubmitLink);
 
         // when

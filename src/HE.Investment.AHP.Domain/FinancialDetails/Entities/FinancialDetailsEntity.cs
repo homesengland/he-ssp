@@ -144,7 +144,7 @@ public class FinancialDetailsEntity : IQuestion
         SectionStatus = _modificationTracker.Change(SectionStatus, SectionStatus.Completed);
     }
 
-    public decimal? ExpectedTotalCosts()
+    public int? ExpectedTotalCosts()
     {
         if (OtherApplicationCosts.AreAllNotAnswered() && LandValue.CurrentLandValue.IsNotProvided())
         {

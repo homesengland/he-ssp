@@ -16,7 +16,6 @@ public static class AhpApplicationStatusMapper
             ApplicationStatus.OnHold => (int)invln_ExternalStatusAHP.OnHold,
             ApplicationStatus.Withdrawn => (int)invln_ExternalStatusAHP.Withdrawn,
             ApplicationStatus.UnderReview => (int)invln_ExternalStatusAHP.UnderReview,
-            ApplicationStatus.UnderReviewInAssessment => (int)invln_ExternalStatusAHP.UnderReview, // todo #94971 add UnderReviewInAssessment status and change to (int)invln_ExternalStatusAHP.UnderReviewInAssessment
             ApplicationStatus.Rejected => (int)invln_ExternalStatusAHP.Rejected,
             ApplicationStatus.RequestedEditing => (int)invln_ExternalStatusAHP.RequestedEditing,
             ApplicationStatus.ReferredBackToApplicant => (int)invln_ExternalStatusAHP.ReferredBackToApplicant,
@@ -30,7 +29,6 @@ public static class AhpApplicationStatusMapper
     {
         return crmStatus switch
         {
-            // todo #94971 add UnderReviewInAssessment status: (int)invln_ExternalStatusAHP.UnderReviewInAssessment => ApplicationStatus.UnderReview,
             (int)invln_ExternalStatusAHP.New => ApplicationStatus.New,
             (int)invln_ExternalStatusAHP.Draft => ApplicationStatus.Draft,
             (int)invln_ExternalStatusAHP.ApplicationSubmitted => ApplicationStatus.ApplicationSubmitted,

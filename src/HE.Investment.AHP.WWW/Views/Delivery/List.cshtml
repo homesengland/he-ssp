@@ -17,7 +17,7 @@
 
 <div class="govuk-grid-column-full govuk-!-margin-top-6">
     <partial name="~/Partials/Errors/_ErrorSummaryPartial.cshtml"/>
-    <partial name="~/Partials/_Notification.cshtml"/>
+    <vc:notification/>
 
     <span class="govuk-caption-l govuk-!-margin-top-1">@Model.ApplicationName</span>
     <gds-h1>@title</gds-h1>
@@ -28,8 +28,12 @@
 
     <form asp-controller="Delivery" asp-action="List" asp-method="post" novalidate>
         @Html.HiddenFor(m => Model.ApplicationName)
-        @Html.HiddenFor(m => Model.AllowedOperations)
         @Html.HiddenFor(m => Model.UnusedHomeTypesCount)
+        @for (var i = 0; i < Model.AllowedOperations.Length; i++)
+        {
+            var index = i;
+            @Html.HiddenFor(m => m.AllowedOperations[index])
+        }
 
         @if (Model.DeliveryPhases.Any())
         {

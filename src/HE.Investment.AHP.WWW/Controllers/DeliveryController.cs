@@ -39,7 +39,7 @@ public class DeliveryController : Controller
 
         return View(new DeliveryListModel(deliveryPhases.Application.Name)
         {
-            AllowedOperations = deliveryPhases.Application.AllowedOperations,
+            AllowedOperations = deliveryPhases.Application.AllowedOperations.ToArray(),
             UnusedHomeTypesCount = deliveryPhases.UnusedHomeTypesCount,
             DeliveryPhases = deliveryPhases.DeliveryPhases
                 .Select(x => new DeliveryPhaseItemModel(

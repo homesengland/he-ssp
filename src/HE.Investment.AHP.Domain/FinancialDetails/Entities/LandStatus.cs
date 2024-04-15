@@ -13,7 +13,7 @@ public class LandStatus : ValueObject, IQuestion
         if (purchasePrice.IsProvided() && expectedPurchasePrice.IsProvided())
         {
             throw new DomainException(
-                $"{PurchasePrice.Fields.DisplayName} cannot be provided together with {ExpectedPurchasePrice.Fields.DisplayName}",
+                $"The purchase price of the land cannot be provided together with the expected purchase price of the land",
                 CommonErrorCodes.InvalidDomainOperation);
         }
 

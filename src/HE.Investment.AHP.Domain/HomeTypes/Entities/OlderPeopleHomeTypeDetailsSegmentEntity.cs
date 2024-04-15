@@ -6,7 +6,7 @@ using HE.Investments.Common.Domain;
 namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 
 [HomeTypeSegmentType(HomeTypeSegmentType.OlderPeople)]
-public class OlderPeopleHomeTypeDetailsSegmentEntity : IHomeTypeSegmentEntity
+public class OlderPeopleHomeTypeDetailsSegmentEntity : DomainEntity, IHomeTypeSegmentEntity
 {
     private readonly ModificationTracker _modificationTracker;
 

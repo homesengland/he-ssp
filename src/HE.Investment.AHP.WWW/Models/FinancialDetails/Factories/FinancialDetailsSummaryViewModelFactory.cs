@@ -3,7 +3,6 @@ using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.FinancialDetails.Queries;
 using HE.Investment.AHP.WWW.Controllers;
 using HE.Investments.Common.Contract;
-using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Components.SectionSummary;
 using HE.Investments.Common.WWW.Helpers;

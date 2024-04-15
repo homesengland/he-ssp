@@ -9,11 +9,13 @@ public class HomeTypeSummaryModel : HomeTypeBasicModel, ISummaryViewModel
     public HomeTypeSummaryModel(string applicationName, string homeTypeName)
         : base(applicationName, homeTypeName)
     {
+        AllowedOperations = new List<AhpApplicationOperation>();
     }
 
     public HomeTypeSummaryModel()
         : base(string.Empty, string.Empty)
     {
+        AllowedOperations = new List<AhpApplicationOperation>();
     }
 
     public IsSectionCompleted IsSectionCompleted { get; set; }
