@@ -68,6 +68,11 @@ namespace HE.CRM.Common.DtoMapping
             {
                 applicationToReturn.invln_Site = new EntityReference(invln_Sites.EntityLogicalName, siteGuid);
             }
+            if (Guid.TryParse(applicationDto.programmeId, out var programmeId))
+            {
+                applicationToReturn.invln_programmelookup = new EntityReference(invln_programme.EntityLogicalName, programmeId);
+            }
+
             return applicationToReturn;
         }
 
@@ -81,7 +86,7 @@ namespace HE.CRM.Common.DtoMapping
                 homeTypesSectionCompletionStatus = application.invln_hometypessectioncompletionstatus?.Value,
                 financialDetailsSectionCompletionStatus = application.invln_financialdetailssectioncompletionstatus?.Value,
                 deliveryPhasesSectionCompletionStatus = application.invln_deliveryphasessectioncompletionstatus?.Value,
-                dateSubmitted = application .invln_DateSubmitted,
+                dateSubmitted = application.invln_DateSubmitted,
                 borrowingAgainstRentalIncomeFromThisScheme = application.invln_borrowingagainstrentalincome?.Value,
                 fundingFromOpenMarketHomesOnThisScheme = application.invln_fundingfromopenmarkethomesonthisscheme?.Value,
                 fundingFromOpenMarketHomesNotOnThisScheme = application.invln_fundingfromopenmarkethomesnotonthisscheme?.Value,

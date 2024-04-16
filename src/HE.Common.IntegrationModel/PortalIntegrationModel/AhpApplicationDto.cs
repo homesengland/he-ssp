@@ -11,6 +11,7 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public string referenceNumber { get; set; }
         public int? applicationStatus { get; set; }
         public string siteId { get; set; }
+        public string programmeId { get; set; }
 
         //sections statuses
         public int? schemeInformationSectionCompletionStatus { get; set; }
@@ -44,7 +45,6 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public decimal? howMuchReceivedFromLotteryFunding { get; set; }
         public decimal? howMuchReceivedFromOtherPublicBodies { get; set; }
 
-
         //schema
         public decimal? fundingRequested { get; set; }
         public int? noOfHomes { get; set; }
@@ -61,5 +61,6 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public string organisationId { get; set; }
         public DateTime? lastExternalModificationOn { get; set; }
         public ContactDto lastExternalModificationBy { get; set; }
+        public ContactDto lastExternalSubmittedBy { get; set; }
     }
 }

@@ -37,7 +37,6 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             _sharepointSiteRepository = CrmRepositoriesFactory.Get<ISharepointSiteRepository>();
             _ahpApplicationRepositoryAdmin = CrmRepositoriesFactory.GetSystem<IAhpApplicationRepository>();
             _ahpStatusChangeRepository = CrmRepositoriesFactory.Get<IAhpStatusChangeRepository>();
-
             _govNotifyEmailService = CrmServicesFactory.Get<IGovNotifyEmailService>();
         }
 
@@ -172,7 +171,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                 foreach (var application in applications)
                 {
                     var contact = _contactRepository.GetById(application.invln_contactid.Id, new string[] { nameof(Contact.FirstName).ToLower(), nameof(Contact.LastName).ToLower(), nameof(Contact.invln_externalid).ToLower() });
-
+                    var submitedBy = "";
                     var applicationDto = AhpApplicationMapper.MapRegularEntityToDto(application, contact.invln_externalid);
                     if (application.invln_lastexternalmodificationby != null)
                     {
@@ -183,6 +182,13 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                             firstName = lastExternalModificationBy.FirstName,
                             lastName = lastExternalModificationBy.LastName,
                         };
+
+                        applicationDto.lastExternalSubmittedBy = new ContactDto()
+                        {
+                            firstName = "",
+                            lastName = "",
+                        };
+
                     }
                     listOfApplications.Add(applicationDto);
                 }
