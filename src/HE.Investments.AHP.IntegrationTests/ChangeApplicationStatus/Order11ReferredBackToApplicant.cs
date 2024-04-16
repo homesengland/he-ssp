@@ -12,11 +12,11 @@ using Xunit.Extensions.Ordering;
 
 namespace HE.Investments.AHP.IntegrationTests.ChangeApplicationStatus;
 
-[Order(10)]
+[Order(11)]
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
-public class Order10ReferredBackToApplicant : AhpIntegrationTest
+public class Order11ReferredBackToApplicant : AhpIntegrationTest
 {
-    public Order10ReferredBackToApplicant(AhpIntegrationTestFixture fixture, ITestOutputHelper output)
+    public Order11ReferredBackToApplicant(AhpIntegrationTestFixture fixture, ITestOutputHelper output)
         : base(fixture, output)
     {
     }
@@ -42,7 +42,7 @@ public class Order10ReferredBackToApplicant : AhpIntegrationTest
         var completedPage = await TestClient.SubmitButton(
             submitPage.GetSubmitButton("Accept and submit"),
             (nameof(ApplicationSubmitModel.RepresentationsAndWarranties), "checked"));
-        var applicationsPage = await TestClient.NavigateTo(completedPage.GetLinkButton("Return to applications"));
+        var applicationsPage = await TestClient.NavigateTo(completedPage.GetLinkByTestId("return-to-applications"));
 
         // then
         applicationsPage
