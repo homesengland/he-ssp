@@ -176,7 +176,6 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
             (int)invln_RehabActivityType.PurchaseandRepair => BuildActivityType.PurchaseAndRepair,
             (int)invln_RehabActivityType.Reimprovement => BuildActivityType.Reimprovement,
             (int)invln_RehabActivityType.WorksOnly => BuildActivityType.WorksOnlyRehab,
-            (int)invln_RehabActivityType.Regeneration => BuildActivityType.RegenerationRehab,
             _ => null,
         };
     }
@@ -192,7 +191,6 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
             BuildActivityType.PurchaseAndRepair => (int)invln_RehabActivityType.PurchaseandRepair,
             BuildActivityType.Reimprovement => (int)invln_RehabActivityType.Reimprovement,
             BuildActivityType.WorksOnlyRehab => (int)invln_RehabActivityType.WorksOnly,
-            BuildActivityType.RegenerationRehab => (int)invln_RehabActivityType.Regeneration,
             _ => null,
         };
     }
