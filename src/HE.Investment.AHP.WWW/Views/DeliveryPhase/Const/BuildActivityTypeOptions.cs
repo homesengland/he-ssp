@@ -8,7 +8,7 @@ public static class BuildActivityTypeOptions
 {
     private static readonly IDictionary<BuildActivityType, string> BuildActivityTypeDescriptions = new Dictionary<BuildActivityType, string>()
     {
-        { BuildActivityType.AcquisitionAndWorksRehab, "Construction of new homes on land purchased by the provider without any public subsidy." },
+        { BuildActivityType.AcquisitionAndWorksRehab, "Rehabilitation of existing properties on land purchased by the provider without any public subsidy." },
         { BuildActivityType.AcquisitionAndWorks, "Construction of new homes on land purchased by the provider without any public subsidy." },
         {
             BuildActivityType.ExistingSatisfactory,
@@ -32,7 +32,7 @@ public static class BuildActivityTypeOptions
         },
         {
             BuildActivityType.WorksOnlyRehab,
-            "Construction of new homes on land already owned by the provider that was purchased with the help of public subsidy."
+            "Rehabilitation of existing properties on land already owned by the provider that was purchased with the help of public subsidy."
         },
         {
             BuildActivityType.WorksOnly,
@@ -43,7 +43,6 @@ public static class BuildActivityTypeOptions
             "Brand new completed homes, suitable for affordable housing, purchased from a housing developer, following an inspection and ready for immediate occupation."
         },
         { BuildActivityType.LandInclusivePackage, "Where land has been acquired from a developer who will also construct the new homes on the land." },
-        { BuildActivityType.RegenerationRehab, "Rehabilitation of existing properties as part of an estate regeneration project." },
         { BuildActivityType.Regeneration, "Construction of additional new build homes as part of an estate regeneration project." },
     };
 

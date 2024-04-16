@@ -21,7 +21,7 @@ public enum BuildActivityType
     [Description("Land inclusive package (package deal)")]
     LandInclusivePackage,
 
-    [Description("Acquisition and works rehab")]
+    [Description("Acquisition and works (rehab)")]
     AcquisitionAndWorksRehab,
 
     [Description("Existing satisfactory")]
