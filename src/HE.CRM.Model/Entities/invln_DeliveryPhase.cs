@@ -107,6 +107,8 @@ namespace DataverseModel
 			public const string invln_startonsitevalue_Base = "invln_startonsitevalue_base";
 			public const string invln_StatusReason = "invln_statusreason";
 			public const string invln_statusreasonName = "invln_statusreasonname";
+			public const string invln_sumofcalculatedfounds = "invln_sumofcalculatedfounds";
+			public const string invln_sumofcalculatedfounds_Base = "invln_sumofcalculatedfounds_base";
 			public const string invln_urbrequestingearlymilestonepayments = "invln_urbrequestingearlymilestonepayments";
 			public const string invln_urbrequestingearlymilestonepaymentsName = "invln_urbrequestingearlymilestonepaymentsname";
 			public const string lk_invln_deliveryphase_createdby = "lk_invln_deliveryphase_createdby";
@@ -957,6 +959,36 @@ namespace DataverseModel
 				{
 					return default(string);
 				}
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_sumofcalculatedfounds")]
+		public Microsoft.Xrm.Sdk.Money invln_sumofcalculatedfounds
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_sumofcalculatedfounds");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_sumofcalculatedfounds");
+				this.SetAttributeValue("invln_sumofcalculatedfounds", value);
+				this.OnPropertyChanged("invln_sumofcalculatedfounds");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Sum of calculated founds in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_sumofcalculatedfounds_base")]
+		public Microsoft.Xrm.Sdk.Money invln_sumofcalculatedfounds_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_sumofcalculatedfounds_base");
 			}
 		}
 		

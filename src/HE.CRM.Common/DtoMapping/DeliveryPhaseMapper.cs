@@ -36,6 +36,7 @@ namespace HE.CRM.Common.DtoMapping
                 completionPercentageValue = deliveryPhase.invln_CompletionPercentageValue,
                 claimingtheMilestoneConfirmed = deliveryPhase.invln_ClaimingtheMilestoneConfirmed,
                 allowAmendmentstoMilestoneProportions = deliveryPhase.invln_AllowAmendmentstoMilestoneProportions,
+                sumOfCalculatedFounds = deliveryPhase.invln_sumofcalculatedfounds?.Value
             };
 
             if (deliveryPhase.Id != null)
