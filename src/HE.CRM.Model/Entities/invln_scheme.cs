@@ -258,6 +258,10 @@ namespace DataverseModel
 			public const string invln_ownresources_Base = "invln_ownresources_base";
 			public const string invln_PlanScoreorGeogScore = "invln_planscoreorgeogscore";
 			public const string invln_pplicationid = "invln_pplicationid";
+			public const string invln_PreviousExternalStatus = "invln_previousexternalstatus";
+			public const string invln_previousexternalstatusName = "invln_previousexternalstatusname";
+			public const string invln_PreviousInternalStatus = "invln_previousinternalstatus";
+			public const string invln_previousinternalstatusName = "invln_previousinternalstatusname";
 			public const string invln_programmelookup = "invln_programmelookup";
 			public const string invln_programmelookupName = "invln_programmelookupname";
 			public const string invln_ProviderName = "invln_providername";
@@ -286,6 +290,7 @@ namespace DataverseModel
 			public const string invln_scheme_OwneroftheLand_account = "invln_scheme_OwneroftheLand_account";
 			public const string invln_scheme_ProviderNameNew_account = "invln_scheme_ProviderNameNew_account";
 			public const string invln_scheme_SharePointDocumentLocations = "invln_scheme_SharePointDocumentLocations";
+			public const string invln_scheme_submitedby_contact = "invln_scheme_submitedby_contact";
 			public const string invln_schemeId = "invln_schemeid";
 			public const string Id = "invln_schemeid";
 			public const string invln_schemeinformationsectioncompletionstatus = "invln_schemeinformationsectioncompletionstatus";
@@ -299,6 +304,9 @@ namespace DataverseModel
 			public const string invln_SoSScore = "invln_sosscore";
 			public const string invln_stopreminderemail = "invln_stopreminderemail";
 			public const string invln_stopreminderemailName = "invln_stopreminderemailname";
+			public const string invln_submitedby = "invln_submitedby";
+			public const string invln_submitedbyName = "invln_submitedbyname";
+			public const string invln_submitedbyYomiName = "invln_submitedbyyominame";
 			public const string invln_supportedgpuaspercentageofareaaverage = "invln_supportedgpuaspercentageofareaaverage";
 			public const string invln_TenderScore = "invln_tenderscore";
 			public const string invln_Tenure = "invln_tenure";
@@ -2489,6 +2497,74 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_previousexternalstatus")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_PreviousExternalStatus
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_previousexternalstatus");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_PreviousExternalStatus");
+				this.SetAttributeValue("invln_previousexternalstatus", value);
+				this.OnPropertyChanged("invln_PreviousExternalStatus");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_previousexternalstatusname")]
+		public string invln_previousexternalstatusName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_previousexternalstatus"))
+				{
+					return this.FormattedValues["invln_previousexternalstatus"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_previousinternalstatus")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_PreviousInternalStatus
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_previousinternalstatus");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_PreviousInternalStatus");
+				this.SetAttributeValue("invln_previousinternalstatus", value);
+				this.OnPropertyChanged("invln_PreviousInternalStatus");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_previousinternalstatusname")]
+		public string invln_previousinternalstatusName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_previousinternalstatus"))
+				{
+					return this.FormattedValues["invln_previousinternalstatus"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_programmelookup")]
 		public Microsoft.Xrm.Sdk.EntityReference invln_programmelookup
 		{
@@ -3030,6 +3106,57 @@ namespace DataverseModel
 				if (this.FormattedValues.Contains("invln_stopreminderemail"))
 				{
 					return this.FormattedValues["invln_stopreminderemail"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_submitedby")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_submitedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_submitedby");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_submitedby");
+				this.SetAttributeValue("invln_submitedby", value);
+				this.OnPropertyChanged("invln_submitedby");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_submitedbyname")]
+		public string invln_submitedbyName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_submitedby"))
+				{
+					return this.FormattedValues["invln_submitedby"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_submitedbyyominame")]
+		public string invln_submitedbyYomiName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_submitedby"))
+				{
+					return this.FormattedValues["invln_submitedby"];
 				}
 				else
 				{
@@ -4113,6 +4240,27 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_scheme_ProviderNameNew_account");
 				this.SetRelatedEntity<DataverseModel.Account>("invln_scheme_ProviderNameNew_account", null, value);
 				this.OnPropertyChanged("invln_scheme_ProviderNameNew_account");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_scheme_submitedby_contact
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_submitedby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_scheme_submitedby_contact")]
+		public DataverseModel.Contact invln_scheme_submitedby_contact
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.Contact>("invln_scheme_submitedby_contact", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_scheme_submitedby_contact");
+				this.SetRelatedEntity<DataverseModel.Contact>("invln_scheme_submitedby_contact", null, value);
+				this.OnPropertyChanged("invln_scheme_submitedby_contact");
 			}
 		}
 		

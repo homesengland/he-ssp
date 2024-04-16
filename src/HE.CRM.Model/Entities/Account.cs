@@ -784,6 +784,7 @@ namespace DataverseModel
 			public const string invln_securitytypeName = "invln_securitytypename";
 			public const string invln_SecurityValue = "invln_securityvalue";
 			public const string invln_securityvalue_Base = "invln_securityvalue_base";
+			public const string invln_sites_AccountId_account = "invln_sites_AccountId_account";
 			public const string invln_Totalofexistingallocations = "invln_totalofexistingallocations";
 			public const string invln_totalofexistingallocations_Base = "invln_totalofexistingallocations_base";
 			public const string invln_UnregisteredBody = "invln_unregisteredbody";
@@ -7485,6 +7486,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_scheme_ProviderNameNew_account");
 				this.SetRelatedEntities<DataverseModel.invln_scheme>("invln_scheme_ProviderNameNew_account", null, value);
 				this.OnPropertyChanged("invln_scheme_ProviderNameNew_account");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_sites_AccountId_account
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_sites_AccountId_account")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_Sites> invln_sites_AccountId_account
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_Sites>("invln_sites_AccountId_account", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_sites_AccountId_account");
+				this.SetRelatedEntities<DataverseModel.invln_Sites>("invln_sites_AccountId_account", null, value);
+				this.OnPropertyChanged("invln_sites_AccountId_account");
 			}
 		}
 		

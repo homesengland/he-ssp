@@ -60,7 +60,9 @@ namespace HE.CRM.AHP.Plugins.Services.Application
 
                 if (ahpWithNewStatusCodesAndOtherChanges.invln_DateSubmitted != null)
                 {
+                    var contact = _contactRepository.GetContactViaExternalId(contactId);
                     applicationToUpdate.invln_DateSubmitted = ahpWithNewStatusCodesAndOtherChanges.invln_DateSubmitted;
+                    applicationToUpdate.invln_submitedby = contact.ToEntityReference();
                 }
 
                 var ahpStatusChangeToCreate = new invln_AHPStatusChange()
@@ -170,8 +172,8 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             {
                 foreach (var application in applications)
                 {
-                    var contact = _contactRepository.GetById(application.invln_contactid.Id, new string[] { nameof(Contact.FirstName).ToLower(), nameof(Contact.LastName).ToLower(), nameof(Contact.invln_externalid).ToLower() });
-                    var submitedBy = "";
+                    var contact = _contactRepository.GetById(application.invln_contactid.Id, new string[] { Contact.Fields.FirstName, Contact.Fields.LastName, nameof(Contact.invln_externalid).ToLower() });
+
                     var applicationDto = AhpApplicationMapper.MapRegularEntityToDto(application, contact.invln_externalid);
                     if (application.invln_lastexternalmodificationby != null)
                     {
@@ -183,10 +185,11 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                             lastName = lastExternalModificationBy.LastName,
                         };
 
+                        var submitedBy = _contactRepository.GetById(application.invln_submitedby.Id, new string[] { Contact.Fields.FirstName, Contact.Fields.LastName });
                         applicationDto.lastExternalSubmittedBy = new ContactDto()
                         {
-                            firstName = "",
-                            lastName = "",
+                            firstName = submitedBy.FirstName,
+                            lastName = submitedBy.LastName,
                         };
 
                     }

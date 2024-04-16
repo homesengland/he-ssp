@@ -122,7 +122,12 @@ namespace HE.CRM.Common.DtoMapping
                 referenceNumber = application.invln_applicationid,
                 applicationStatus = application.invln_ExternalStatus?.Value,
                 contactExternalId = contactExternalId,
+
             };
+            if (application.invln_programmelookup != null)
+            {
+                applicationDtoToReturn.programmeId = application.invln_programmelookup.Id.ToString();
+            }
             if (application.Id != null)
             {
                 applicationDtoToReturn.id = application.Id.ToString();
