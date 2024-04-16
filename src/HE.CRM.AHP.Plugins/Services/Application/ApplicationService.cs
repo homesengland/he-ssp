@@ -76,8 +76,15 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                         break;
 
                     case (int)invln_ExternalStatusAHP.OnHold:
-                        ahpWithNewStatusCodesAndOtherChanges.StatusCode = new OptionSetValue(application.invln_PreviousInternalStatus.Value);
-                        ahpWithNewStatusCodesAndOtherChanges.StateCode = new OptionSetValue(MapAhpStatusCodeToStateCode(application.invln_PreviousInternalStatus.Value));
+                        if (newStatus == application.invln_PreviousExternalStatus.Value)
+                        {
+                            ahpWithNewStatusCodesAndOtherChanges.StatusCode = new OptionSetValue(application.invln_PreviousInternalStatus.Value);
+                            ahpWithNewStatusCodesAndOtherChanges.StateCode = new OptionSetValue(MapAhpStatusCodeToStateCode(application.invln_PreviousInternalStatus.Value));
+                        }
+                        else
+                        {
+                            ahpWithNewStatusCodesAndOtherChanges = MapAhpExternalStatusToInternalAndSetOtherValues(new OptionSetValue(newStatus));
+                        }
                         break;
 
                     default:
