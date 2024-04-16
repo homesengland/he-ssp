@@ -78,10 +78,10 @@ public class Order06Submit : AhpIntegrationTest
         applicationCompletedPage
             .UrlEndWith(ApplicationPagesUrl.CompletedSuffix)
             .HasTitle(ApplicationPageTitles.CompletedSecondTitle)
-            .HasLinkButton("Return to applications");
+            .HasLinkWithTestId("return-to-applications", out _);
 
         // when
-        var mainPage = await TestClient.NavigateTo(applicationCompletedPage.GetLinkButton("Return to applications"));
+        var mainPage = await TestClient.NavigateTo(applicationCompletedPage.GetLinkByTestId("return-to-applications"));
 
         // then
         mainPage
