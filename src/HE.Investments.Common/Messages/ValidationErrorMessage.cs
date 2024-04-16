@@ -88,8 +88,6 @@ public static class ValidationErrorMessage
 
     public static string PoundInput(string name) => new($"The {name} must be entered as a number, in pounds and pence");
 
-    public static string WholePoundInput(string name) => new($"The {name} must be entered as a number, in pounds");
-
     public static string ShortInputLengthExceeded(string fieldName) => new($"The {fieldName} must be 100 characters or less");
 
     public static string LongInputLengthExceeded(string fieldName) => new($"The {fieldName} must be 1500 characters or less");
@@ -115,8 +113,6 @@ public static class ValidationErrorMessage
     public static string MustBeWholeNumberBetween(string displayName, int minValue, int maxValue) => $"The {displayName} must be a whole number between {minValue} and {maxValue}";
 
     public static string MustBeDecimalNumberBetween(string displayName, decimal minValue, decimal maxValue) => $"The {displayName} must be between {minValue} and {maxValue}";
-
-    public static string MustBeNumber(string displayName) => $"The {displayName} must be a number";
 
     public static string MustBeNumberWithExample(string displayName) => $"The {displayName} must be a number, like 300.00";
 

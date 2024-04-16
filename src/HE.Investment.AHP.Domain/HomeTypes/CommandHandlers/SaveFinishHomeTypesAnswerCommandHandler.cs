@@ -31,7 +31,7 @@ public class SaveFinishHomeTypesAnswerCommandHandler : HomeTypeCommandHandlerBas
         var homeTypes = await _repository.GetByApplicationId(request.ApplicationId, account, HomeTypeSegmentTypes.HomeInformationOnly, cancellationToken);
         var scheme = await _schemeRepository.GetByApplicationId(request.ApplicationId, account, false, cancellationToken);
 
-        var validationErrors = PerformWithValidation(() => homeTypes.CompleteSection(request.FinishHomeTypesAnswer, scheme?.Funding?.HousesToDeliver ?? 0));
+        var validationErrors = PerformWithValidation(() => homeTypes.CompleteSection(request.FinishHomeTypesAnswer, scheme.Funding.HousesToDeliver ?? 0));
         if (validationErrors.Any())
         {
             return new OperationResult(validationErrors);

@@ -22,6 +22,8 @@ public static class CssConstants
 
     public const string GovUkNotificationBannerSuccess = "govuk-notification-banner--success";
 
+    public const string GovUkNotificationBannerImportant = "govuk-notification-banner";
+
     public const string GovUkNotificationBannerContent = "govuk-notification-banner__content";
 
     public const string GovUkInsetText = "govuk-inset-text";

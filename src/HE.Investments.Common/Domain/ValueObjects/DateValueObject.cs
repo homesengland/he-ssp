@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using HE.Investments.Common.Contract.Validators;
 
 namespace HE.Investments.Common.Domain.ValueObjects;
@@ -17,22 +18,36 @@ public abstract class DateValueObject : ValueObject
             return;
         }
 
+        var (dayFieldName, monthFieldName, yearFieldName) = DatePartFieldNamesProvider.Get(fieldName);
+
         if (string.IsNullOrWhiteSpace(day) && string.IsNullOrWhiteSpace(month) && string.IsNullOrWhiteSpace(year))
         {
-            OperationResult.ThrowValidationError(fieldName, $"Enter when {fieldDescription}");
+            var operationResult = OperationResult.New();
+            operationResult.AddValidationError(dayFieldName, $"Enter when {fieldDescription}");
+            operationResult.AddValidationError(monthFieldName, string.Empty);
+            operationResult.AddValidationError(yearFieldName, string.Empty);
+            operationResult.CheckErrors();
         }
 
         var missingParts = new[]
             {
-                string.IsNullOrWhiteSpace(day) ? "day" : null,
-                string.IsNullOrWhiteSpace(month) ? "month" : null,
-                string.IsNullOrWhiteSpace(year) ? "year" : null,
-            }.Where(x => x != null)
+                string.IsNullOrWhiteSpace(day) ? (DisplayName: "day", FieldName: dayFieldName) : default,
+                string.IsNullOrWhiteSpace(month) ? (DisplayName: "month", FieldName: monthFieldName) : default,
+                string.IsNullOrWhiteSpace(year) ? (DisplayName: "year", FieldName: yearFieldName) : default,
+            }.Where(x => x != default)
             .ToList();
 
         if (missingParts.Count != 0)
         {
-            OperationResult.ThrowValidationError(fieldName, $"The date when {fieldDescription} must include a {string.Join(" and ", missingParts)}");
+            var missingPartsDisplayNames = missingParts.Select(ms => ms.DisplayName).ToArray();
+            var operationResult = OperationResult.New();
+            operationResult.AddValidationError(missingParts[0].FieldName, $"The date when {fieldDescription} must include a {string.Join(" and ", missingPartsDisplayNames)}");
+            foreach (var (displayName, partFieldName) in missingParts.Skip(1))
+            {
+                operationResult.AddValidationError(partFieldName, string.Empty);
+            }
+
+            operationResult.CheckErrors();
         }
 
         var value = CreateDateTime(day, month, year);
@@ -79,5 +94,14 @@ public abstract class DateValueObject : ValueObject
         }
 
         return null;
+    }
+
+    /// <summary>
+    /// Works only for vc:date-input.
+    /// </summary>
+    private static class DatePartFieldNamesProvider
+    {
+        public static (string Day, string Month, string Year) Get(string containerFieldName)
+            => (containerFieldName + ".Day", containerFieldName + ".Month", containerFieldName + ".Year");
     }
 }

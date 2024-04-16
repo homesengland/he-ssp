@@ -22,17 +22,19 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi
         private string deliveryPhaseId => ExecutionData.GetInputParameter<string>(invln_getsingledeliveryphaseRequest.Fields.invln_deliveryPhaseId);
         private string fieldsToRetrieve => ExecutionData.GetInputParameter<string>(invln_getsingledeliveryphaseRequest.Fields.invln_fieldstoretrieve);
 
-        #endregion
+        #endregion Fields
 
         #region Base Methods Overrides
+
         public override bool CanWork()
         {
-            return deliveryPhaseId != null;
+            TracingService.Trace(deliveryPhaseId.ToString());
+            return deliveryPhaseId != null && deliveryPhaseId != Guid.Empty.ToString();
         }
 
         public override void DoWork()
         {
-            TracingService.Trace("method");
+            TracingService.Trace("Start Do Work");
             var deliveryPhase = CrmServicesFactory.Get<IDeliveryPhaseService>().GetDeliveryPhase(applicationId, organizationId, externalUserId, deliveryPhaseId, fieldsToRetrieve);
             if (deliveryPhase != null)
             {
@@ -41,6 +43,6 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi
             }
         }
 
-        #endregion
+        #endregion Base Methods Overrides
     }
 }

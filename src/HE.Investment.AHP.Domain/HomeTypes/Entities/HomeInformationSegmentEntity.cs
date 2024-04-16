@@ -1,5 +1,7 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
+using HE.Investment.AHP.Contract.HomeTypes.Events;
+using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.HomeTypes.Attributes;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investments.Common.Contract.Enum;
@@ -11,13 +13,16 @@ using HE.Investments.Common.Messages;
 namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 
 [HomeTypeSegmentType(HomeTypeSegmentType.HomeInformation)]
-public class HomeInformationSegmentEntity : IHomeTypeSegmentEntity
+public class HomeInformationSegmentEntity : DomainEntity, IHomeTypeSegmentEntity
 {
+    private readonly ApplicationBasicInfo _application;
+
     private readonly ModificationTracker _modificationTracker;
 
     private readonly List<NationallyDescribedSpaceStandardType> _nationallyDescribedSpaceStandards;
 
     public HomeInformationSegmentEntity(
+        ApplicationBasicInfo application,
         NumberOfHomes? numberOfHomes = null,
         NumberOfBedrooms? numberOfBedrooms = null,
         MaximumOccupancy? maximumOccupancy = null,
@@ -33,6 +38,7 @@ public class HomeInformationSegmentEntity : IHomeTypeSegmentEntity
         YesNoType meetNationallyDescribedSpaceStandards = YesNoType.Undefined,
         IEnumerable<NationallyDescribedSpaceStandardType>? nationallyDescribedSpaceStandards = null)
     {
+        _application = application;
         _modificationTracker = new ModificationTracker(() => SegmentModified?.Invoke());
         NumberOfHomes = numberOfHomes;
         NumberOfBedrooms = numberOfBedrooms;
@@ -85,7 +91,7 @@ public class HomeInformationSegmentEntity : IHomeTypeSegmentEntity
     public void ChangeNumberOfHomes(string? numberOfHomes)
     {
         var newValue = numberOfHomes.IsProvided() ? new NumberOfHomes(numberOfHomes) : null;
-        NumberOfHomes = _modificationTracker.Change(NumberOfHomes, newValue);
+        NumberOfHomes = _modificationTracker.Change(NumberOfHomes, newValue, () => Publish(new HomeTypeNumberOfHomesHasBeenUpdatedEvent(_application.Id)));
     }
 
     public void ChangeNumberOfBedrooms(string? numberOfBedrooms)
@@ -179,6 +185,7 @@ public class HomeInformationSegmentEntity : IHomeTypeSegmentEntity
     public IHomeTypeSegmentEntity Duplicate()
     {
         return new HomeInformationSegmentEntity(
+            _application,
             NumberOfHomes,
             NumberOfBedrooms,
             MaximumOccupancy,

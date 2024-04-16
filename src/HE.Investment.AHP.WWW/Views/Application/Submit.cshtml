@@ -5,7 +5,6 @@
 @using HE.Investment.AHP.Contract.Application
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ConfirmationCheckbox
 @using HE.Investment.AHP.WWW.Views.Shared.Components.RepresentationsAndWarrantiesText
-@using HE.Investments.Common.Gds
 @using HE.Investments.Common.WWW.Models
 @model HE.Investment.AHP.WWW.Models.Application.ApplicationSubmitModel
 @{
@@ -26,7 +25,7 @@
             checkbox="@(new ExtendedSelectListItem("By submitting this application for funding, I confirm the statement above.", "checked", false))"/>
 
         <vc:form-button text="Accept and submit"/>
-        <link-button class="govuk-!-margin-left-6" action-url="@Url.Action("Index", "Application")" button-type="@ButtonType.Secondary">Return to applications</link-button>
+        <vc:return-to-applications-list-link/>
     </form>
 
 </div>

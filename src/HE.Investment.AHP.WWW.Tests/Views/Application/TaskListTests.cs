@@ -132,7 +132,7 @@ public class TaskListTests : AhpViewTestBase
             .HasElementWithText("p", incompleteText, incompleteSectionsExist)
             .HasElementWithText("p", "Last saved on 29/11/2023 00:00:00 by Jan Kowalski", modificationDetailsExist)
             .HasElementWithText("p", "You must complete all sections before you can submit your application.", incompleteSectionsExist)
-            .HasElementWithText("a", "Return to applications");
+            .HasReturnToApplicationsListLink();
     }
 
     private static ApplicationSectionsModel CreateApplicationSectionsModel(

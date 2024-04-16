@@ -27,7 +27,7 @@ public class ExpectedTotalContributionsTests
         // given
         var expectedContributionsToScheme = ExpectedContributionsToSchemeBuilder
             .New()
-            .WithOwnResources(200)
+            .WithOwnResources("200")
             .Build();
 
         var financialDetailsEntity = FinancialDetailsEntityBuilder
@@ -48,13 +48,13 @@ public class ExpectedTotalContributionsTests
         // given
         var expectedContributionsToScheme = ExpectedContributionsToSchemeBuilder
             .New()
-            .WithOwnResources(200)
-            .WithSharedOwnershipSales(200)
+            .WithOwnResources("200")
+            .WithSharedOwnershipSales("200")
             .Build();
 
         var publicGrants = PublicGrantsBuilder
             .New()
-            .WithHealthRelatedGrants(200)
+            .WithHealthRelatedGrants("200")
             .Build();
 
         var financialDetailsEntity = FinancialDetailsEntityBuilder
@@ -76,13 +76,13 @@ public class ExpectedTotalContributionsTests
         // given
         var expectedContributionsToScheme = ExpectedContributionsToSchemeBuilder
             .New()
-            .WithOwnResources(200)
-            .WithSharedOwnershipSales(100)
+            .WithOwnResources("200")
+            .WithSharedOwnershipSales("100")
             .Build();
 
         var publicGrants = PublicGrantsBuilder
             .New()
-            .WithHealthRelatedGrants(200)
+            .WithHealthRelatedGrants("200")
             .Build();
 
         var financialDetailsEntity = FinancialDetailsEntityBuilder

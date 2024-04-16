@@ -1,5 +1,4 @@
 @using HE.Investment.AHP.WWW.Views.Application
-@using HE.Investments.Common.Gds
 @using HE.Investments.Common.WWW.TagHelpers
 @model HE.Investment.AHP.WWW.Models.Application.ApplicationSubmitModel
 @{
@@ -18,5 +17,5 @@
     <gds-p>We will contact you either to confirm your registration, or to ask for more information.</gds-p>
     <gds-p>If you have not been contacted within 10 working days, you should contact [INSERT CONTACT DETAILS]</gds-p>
 
-    <link-button action-url="@Url.Action("Index", "Application")" button-type="@ButtonType.Secondary">Return to applications</link-button>
+    <vc:return-to-applications-list-link/>
 </div>

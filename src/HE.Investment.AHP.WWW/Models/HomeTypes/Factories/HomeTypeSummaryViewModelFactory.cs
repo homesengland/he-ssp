@@ -182,12 +182,12 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
             "Affordable Rent details",
             factory.Question("Market value of each home", nameof(Controller.AffordableRent), CurrencyHelper.DisplayPounds(tenure.MarketValue)),
             factory.Question("Market rent per week", nameof(Controller.AffordableRent), CurrencyHelper.DisplayPoundsPences(tenure.MarketRentPerWeek)),
-            factory.Question("Affordable rent per week", nameof(Controller.AffordableRent), CurrencyHelper.DisplayPoundsPences(tenure.RentPerWeek)),
-            factory.Question("Affordable rent as percentage of market rent", nameof(Controller.AffordableRent), tenure.ProspectiveRentAsPercentageOfMarketRent.ToWholePercentage()),
+            factory.Question("Affordable Rent per week", nameof(Controller.AffordableRent), CurrencyHelper.DisplayPoundsPences(tenure.RentPerWeek)),
+            factory.Question("Affordable Rent as percentage of market rent", nameof(Controller.AffordableRent), tenure.ProspectiveRentAsPercentageOfMarketRent.ToWholePercentage()),
             factory.Question("Target rent exceeded 80% of market rent", nameof(Controller.AffordableRent), tenure.TargetRentExceedMarketRent),
             factory.DeadEnd(nameof(Controller.AffordableRentIneligible)),
             factory.Question(
-                "Exempt from Right to Shared ownership",
+                "Exempt from Right to Shared Ownership",
                 nameof(Controller.ExemptFromTheRightToSharedOwnership),
                 tenure.ExemptFromTheRightToSharedOwnership),
             factory.Question("Right to Shared Ownership criteria", nameof(Controller.ExemptionJustification), tenure.ExemptionJustification));
@@ -200,7 +200,7 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
             factory.Question("Market value of each home", nameof(Controller.SocialRent), CurrencyHelper.DisplayPounds(tenure.MarketValue)),
             factory.Question("Market rent per week", nameof(Controller.SocialRent), CurrencyHelper.DisplayPoundsPences(tenure.RentPerWeek)),
             factory.Question(
-                "Exempt from Right to Shared ownership",
+                "Exempt from Right to Shared Ownership",
                 nameof(Controller.ExemptFromTheRightToSharedOwnership),
                 tenure.ExemptFromTheRightToSharedOwnership),
             factory.Question("Right to Shared Ownership criteria", nameof(Controller.ExemptionJustification), tenure.ExemptionJustification));

@@ -14,7 +14,7 @@ using HE.Investments.Common.Messages;
 namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 
 [HomeTypeSegmentType(HomeTypeSegmentType.DesignPlans)]
-public class DesignPlansSegmentEntity : IHomeTypeSegmentEntity
+public class DesignPlansSegmentEntity : DomainEntity, IHomeTypeSegmentEntity
 {
     private const int AllowedNumberOfDesignFiles = 10;
 
@@ -75,10 +75,9 @@ public class DesignPlansSegmentEntity : IHomeTypeSegmentEntity
         }
     }
 
-    public void ChangeMoreInformation(string? moreInformation)
+    public void ChangeMoreInformation(MoreInformation? moreInformation)
     {
-        var newValue = string.IsNullOrEmpty(moreInformation) ? null : new MoreInformation(moreInformation);
-        MoreInformation = _modificationTracker.Change(MoreInformation, newValue);
+        MoreInformation = _modificationTracker.Change(MoreInformation, moreInformation);
     }
 
     public void AddFilesToUpload(IReadOnlyCollection<DesignPlanFileEntity> files)

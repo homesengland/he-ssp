@@ -17,76 +17,79 @@ namespace DataverseModel
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		ApplicationSubmitted = 858110001,
+		ApplicationSubmitted = 858110000,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Approved = 858110023,
+		Approved = 858110022,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		ApprovedContractExecuted = 858110022,
+		ApprovedContractExecuted = 858110021,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		ApprovedContractPassedComplianceChecks = 858110021,
+		ApprovedContractPassedComplianceChecks = 858110020,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		ApprovedContractReceivedBackToHE = 858110020,
+		ApprovedContractReceivedBackToHE = 858110019,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		ApprovedEngressmentIssued = 858110019,
+		ApprovedEngressmentIssued = 858110018,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		ApprovedSubjecttoContract = 858110018,
+		ApprovedSubjecttoContract = 858110017,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Deleted = 858110002,
+		Deleted = 858110024,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Draft = 858110000,
+		Draft = 1,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		InternallyApprovedSubjectToIPQ = 858110011,
+		Inactive = 2,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		InternallyApprovedSubjectToIPQAndRegulatorySignOff = 858110013,
+		InternallyApprovedSubjectToIPQ = 858110010,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		InternallyApprovedSubjectToRegulatorSignOff = 858110012,
+		InternallyApprovedSubjectToIPQAndRegulatorySignOff = 858110012,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		InternallyRejected = 858110014,
+		InternallyApprovedSubjectToRegulatorSignOff = 858110011,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		OnHold = 858110003,
+		InternallyRejected = 858110013,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		ReferredBackToApplicant = 858110017,
+		OnHold = 858110002,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Rejected = 858110015,
+		ReferredBackToApplicant = 858110016,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		RequestedEditing = 858110016,
+		Rejected = 858110014,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		UnderReviewGoingToBidClinic = 858110007,
+		RequestedEditing = 858110015,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		UnderReviewGoingToCMEModeration = 858110008,
+		UnderReviewGoingToBidClinic = 858110006,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		UnderReviewGoingToSLT = 858110009,
+		UnderReviewGoingToCMEModeration = 858110007,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		UnderReviewInAssessment = 858110006,
+		UnderReviewGoingToSLT = 858110008,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		UnderReviewInternallyApproved = 858110010,
+		UnderReviewInAssessment = 858110005,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		UnderReviewPendingAssessment = 858110005,
+		UnderReviewInternallyApproved = 858110009,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Withdrawn = 858110004,
+		UnderReviewPendingAssessment = 858110004,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Withdrawn = 858110023,
 	}
 }
 #pragma warning restore CS1591

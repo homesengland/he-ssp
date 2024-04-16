@@ -20,7 +20,7 @@ public class OtherApplicationCosts : ValueObject, IQuestion
 
     public ExpectedOnCosts? ExpectedOnCosts { get; }
 
-    public decimal? ExpectedTotalCosts()
+    public int? ExpectedTotalCosts()
     {
         if (AreAllNotAnswered())
         {
