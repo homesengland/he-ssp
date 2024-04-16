@@ -4,7 +4,7 @@ using HE.Base.Plugins.Handlers;
 
 namespace HE.CRM.AHP.Plugins.Handlers.AHPApplication
 {
-    internal class UpdateAplicationOnStatusChange : CrmEntityHandlerBase<invln_scheme, DataverseContext>
+    public class UpdateAplicationOnStatusChange : CrmEntityHandlerBase<invln_scheme, DataverseContext>
     {
         public override bool CanWork()
         {
