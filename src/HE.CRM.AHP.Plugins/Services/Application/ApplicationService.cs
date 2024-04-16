@@ -37,14 +37,12 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             _sharepointSiteRepository = CrmRepositoriesFactory.Get<ISharepointSiteRepository>();
             _ahpApplicationRepositoryAdmin = CrmRepositoriesFactory.GetSystem<IAhpApplicationRepository>();
             _ahpStatusChangeRepository = CrmRepositoriesFactory.Get<IAhpStatusChangeRepository>();
-
             _govNotifyEmailService = CrmServicesFactory.Get<IGovNotifyEmailService>();
         }
 
         public void ChangeApplicationStatus(string organisationId, string contactId, string applicationId, int newStatus, string changeReason, bool representationsandwarranties)
         {
             TracingService.Trace($"Service ChangeApplicationStatus");
-
             var contact = _contactRepository.GetContactViaExternalId(contactId);
             var application = _applicationRepository.GetById(new Guid(applicationId),
                 new string[] {
@@ -76,8 +74,15 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                         break;
 
                     case (int)invln_ExternalStatusAHP.OnHold:
-                        ahpWithNewStatusCodesAndOtherChanges.StatusCode = new OptionSetValue(application.invln_PreviousInternalStatus.Value);
-                        ahpWithNewStatusCodesAndOtherChanges.StateCode = new OptionSetValue(MapAhpStatusCodeToStateCode(application.invln_PreviousInternalStatus.Value));
+                        if (newStatus == application.invln_PreviousExternalStatus.Value)
+                        {
+                            ahpWithNewStatusCodesAndOtherChanges.StatusCode = new OptionSetValue(application.invln_PreviousInternalStatus.Value);
+                            ahpWithNewStatusCodesAndOtherChanges.StateCode = new OptionSetValue(MapAhpStatusCodeToStateCode(application.invln_PreviousInternalStatus.Value));
+                        }
+                        else
+                        {
+                            ahpWithNewStatusCodesAndOtherChanges = MapAhpExternalStatusToInternalAndSetOtherValues(new OptionSetValue(newStatus));
+                        }
                         break;
 
                     default:
@@ -107,10 +112,16 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                 {
                     applicationToUpdate.invln_PreviousExternalStatus = new OptionSetValue(application.invln_ExternalStatus.Value);
                 }
+                else
+                {
+                    applicationToUpdate.invln_PreviousExternalStatus = application.invln_ExternalStatus;
+                }
 
                 if (ahpWithNewStatusCodesAndOtherChanges.invln_DateSubmitted != null)
                 {
+                    var contact = _contactRepository.GetContactViaExternalId(contactId);
                     applicationToUpdate.invln_DateSubmitted = ahpWithNewStatusCodesAndOtherChanges.invln_DateSubmitted;
+                    applicationToUpdate.invln_submitedby = contact.ToEntityReference();
                 }
 
                 var ahpStatusChangeToCreate = new invln_AHPStatusChange()
@@ -220,7 +231,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             {
                 foreach (var application in applications)
                 {
-                    var contact = _contactRepository.GetById(application.invln_contactid.Id, new string[] { nameof(Contact.FirstName).ToLower(), nameof(Contact.LastName).ToLower(), nameof(Contact.invln_externalid).ToLower() });
+                    var contact = _contactRepository.GetById(application.invln_contactid.Id, new string[] { Contact.Fields.FirstName, Contact.Fields.LastName, nameof(Contact.invln_externalid).ToLower() });
 
                     var applicationDto = AhpApplicationMapper.MapRegularEntityToDto(application, contact.invln_externalid);
                     if (application.invln_lastexternalmodificationby != null)
@@ -232,6 +243,14 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                             firstName = lastExternalModificationBy.FirstName,
                             lastName = lastExternalModificationBy.LastName,
                         };
+
+                        var submitedBy = _contactRepository.GetById(application.invln_submitedby.Id, new string[] { Contact.Fields.FirstName, Contact.Fields.LastName });
+                        applicationDto.lastExternalSubmittedBy = new ContactDto()
+                        {
+                            firstName = submitedBy.FirstName,
+                            lastName = submitedBy.LastName,
+                        };
+
                     }
                     listOfApplications.Add(applicationDto);
                 }

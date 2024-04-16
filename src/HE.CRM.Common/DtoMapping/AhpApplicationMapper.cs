@@ -68,6 +68,11 @@ namespace HE.CRM.Common.DtoMapping
             {
                 applicationToReturn.invln_Site = new EntityReference(invln_Sites.EntityLogicalName, siteGuid);
             }
+            if (Guid.TryParse(applicationDto.programmeId, out var programmeId))
+            {
+                applicationToReturn.invln_programmelookup = new EntityReference(invln_programme.EntityLogicalName, programmeId);
+            }
+
             return applicationToReturn;
         }
 
@@ -82,7 +87,7 @@ namespace HE.CRM.Common.DtoMapping
                 financialDetailsSectionCompletionStatus = application.invln_financialdetailssectioncompletionstatus?.Value,
                 deliveryPhasesSectionCompletionStatus = application.invln_deliveryphasessectioncompletionstatus?.Value,
                 previousExternalStatus = application.invln_PreviousExternalStatus?.Value,
-                dateSubmitted = application .invln_DateSubmitted,
+                dateSubmitted = application.invln_DateSubmitted,
                 borrowingAgainstRentalIncomeFromThisScheme = application.invln_borrowingagainstrentalincome?.Value,
                 fundingFromOpenMarketHomesOnThisScheme = application.invln_fundingfromopenmarkethomesonthisscheme?.Value,
                 fundingFromOpenMarketHomesNotOnThisScheme = application.invln_fundingfromopenmarkethomesnotonthisscheme?.Value,
@@ -118,7 +123,12 @@ namespace HE.CRM.Common.DtoMapping
                 referenceNumber = application.invln_applicationid,
                 applicationStatus = application.invln_ExternalStatus?.Value,
                 contactExternalId = contactExternalId,
+
             };
+            if (application.invln_programmelookup != null)
+            {
+                applicationDtoToReturn.programmeId = application.invln_programmelookup.Id.ToString();
+            }
             if (application.Id != null)
             {
                 applicationDtoToReturn.id = application.Id.ToString();

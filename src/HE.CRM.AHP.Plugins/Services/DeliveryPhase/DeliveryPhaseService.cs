@@ -190,21 +190,66 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
             }
         }
 
-        private static void CalculateFundings(invln_DeliveryPhase deliveryPhase, decimal acquisitionPercentageValue, decimal startOnSitePercentageValue, decimal completionPercentageValue, decimal fundingForPhase)
+        private void CalculateFundings(invln_DeliveryPhase deliveryPhase, decimal acquisitionPercentageValue, decimal startOnSitePercentageValue, decimal completionPercentageValue, decimal fundingForPhase)
         {
-            deliveryPhase.invln_AcquisitionValue = new Money(fundingForPhase * acquisitionPercentageValue);
-            deliveryPhase.invln_AcquisitionPercentageValue = acquisitionPercentageValue;
-            deliveryPhase.invln_StartOnSiteValue = new Money(fundingForPhase * startOnSitePercentageValue);
-            deliveryPhase.invln_StartOnSitePercentageValue = startOnSitePercentageValue;
-            deliveryPhase.invln_CompletionValue = new Money(fundingForPhase * completionPercentageValue);
-            deliveryPhase.invln_CompletionPercentageValue = completionPercentageValue;
-            var leftOver = fundingForPhase
-                - (deliveryPhase.invln_AcquisitionValue.Value
-                + deliveryPhase.invln_StartOnSiteValue.Value
-                + deliveryPhase.invln_CompletionValue.Value);
-            if (leftOver > 0 && (leftOver < fundingForPhase * 0.01m || leftOver < 1))
+            var df = _deliveryPhaseRepository.GetById(deliveryPhase.Id,
+                                new string[] { invln_DeliveryPhase.Fields.invln_AcquisitionPercentageValue,
+                                               invln_DeliveryPhase.Fields.invln_StartOnSitePercentageValue,
+                                               invln_DeliveryPhase.Fields.invln_CompletionPercentageValue,
+                                               invln_DeliveryPhase.Fields.invln_AcquisitionValue,
+                                               invln_DeliveryPhase.Fields.invln_StartOnSiteValue,
+                                               invln_DeliveryPhase.Fields.invln_CompletionValue,
+                                });
+
+            if (deliveryPhase.invln_AcquisitionPercentageValue == null && deliveryPhase.invln_StartOnSitePercentageValue == null && deliveryPhase.invln_CompletionPercentageValue == null)
             {
-                deliveryPhase.invln_CompletionPercentageValue += leftOver;
+                deliveryPhase.invln_AcquisitionPercentageValue = acquisitionPercentageValue;
+                deliveryPhase.invln_StartOnSitePercentageValue = startOnSitePercentageValue;
+                deliveryPhase.invln_CompletionPercentageValue = completionPercentageValue;
+                deliveryPhase.invln_AcquisitionValue = new Money(fundingForPhase * deliveryPhase.invln_AcquisitionPercentageValue.Value);
+                deliveryPhase.invln_StartOnSiteValue = new Money(fundingForPhase * deliveryPhase.invln_StartOnSitePercentageValue.Value);
+                deliveryPhase.invln_CompletionValue = new Money(fundingForPhase * deliveryPhase.invln_CompletionPercentageValue.Value);
+                var leftOver = fundingForPhase
+                    - (deliveryPhase.invln_AcquisitionValue.Value
+                    + deliveryPhase.invln_StartOnSiteValue.Value
+                    + deliveryPhase.invln_CompletionValue.Value);
+                if (leftOver > 0 && (leftOver < fundingForPhase * 0.01m || leftOver < 1))
+                {
+                    deliveryPhase.invln_CompletionValue.Value += leftOver;
+                }
+            }
+            else
+            {
+                if (deliveryPhase.invln_AcquisitionPercentageValue != null)
+                {
+                    deliveryPhase.invln_AcquisitionValue = new Money(fundingForPhase * deliveryPhase.invln_AcquisitionPercentageValue.Value);
+                    CalculateFieldValue(deliveryPhase, fundingForPhase, df);
+                }
+                if (deliveryPhase.invln_StartOnSitePercentageValue != null)
+                {
+                    deliveryPhase.invln_StartOnSiteValue = new Money(fundingForPhase * deliveryPhase.invln_StartOnSitePercentageValue.Value);
+                    CalculateFieldValue(deliveryPhase, fundingForPhase, df);
+                }
+                if (deliveryPhase.invln_CompletionPercentageValue != null)
+                {
+                    deliveryPhase.invln_CompletionValue = new Money(fundingForPhase * deliveryPhase.invln_CompletionPercentageValue.Value);
+                    CalculateFieldValue(deliveryPhase, fundingForPhase, df);
+                }
+            }
+        }
+
+        private static void CalculateFieldValue(invln_DeliveryPhase deliveryPhase, decimal fundingForPhase, invln_DeliveryPhase df)
+        {
+            if (deliveryPhase.invln_AcquisitionPercentageValue + df.invln_StartOnSitePercentageValue + df.invln_CompletionPercentageValue == 1)
+            {
+                var leftOver = fundingForPhase
+                                - (deliveryPhase.invln_AcquisitionValue.Value
+                                    + df.invln_StartOnSiteValue.Value
+                                    + df.invln_CompletionValue.Value);
+                if (leftOver > 0 && (leftOver < fundingForPhase * 0.01m || leftOver < 1))
+                {
+                    deliveryPhase.invln_CompletionValue.Value += leftOver;
+                }
             }
         }
 
