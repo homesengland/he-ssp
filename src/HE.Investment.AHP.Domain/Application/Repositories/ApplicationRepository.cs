@@ -181,7 +181,7 @@ public class ApplicationRepository : IApplicationRepository
             .Select(CreateApplicationWithFundingDetails)
             .ToList();
 
-        return new PaginationResult<ApplicationWithFundingDetails>(filtered, paginationRequest.Page, paginationRequest.ItemsPerPage, filtered.Count);
+        return new PaginationResult<ApplicationWithFundingDetails>(filtered, paginationRequest.Page, paginationRequest.ItemsPerPage, applications.Count);
     }
 
     private ApplicationWithFundingDetails CreateApplicationWithFundingDetails(AhpApplicationDto ahpApplicationDto)
