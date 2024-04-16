@@ -45,7 +45,7 @@ namespace HE.CRM.AHP.Plugins.Services.AhpStatusChange
             if (target.invln_ChangeSource != null)
             {
                 this.TracingService.Trace("Change source: " +  target.invln_ChangeSource.Value);
-                var ahpApplication = _ahpApplicationRepository.GetById(target.invln_AHPApplication.Id, new string[] { nameof(invln_scheme.OwnerId).ToLower(), nameof(invln_scheme.invln_schemename).ToLower(), nameof(invln_scheme.invln_contactid).ToLower() });
+                var ahpApplication = _ahpApplicationRepository.GetById(target.invln_AHPApplication.Id, new string[] { nameof(invln_scheme.OwnerId).ToLower(), nameof(invln_scheme.invln_schemename).ToLower(), nameof(invln_scheme.invln_contactid).ToLower(), nameof(invln_scheme.invln_organisationid).ToLower() });
                 SendNotification(target, ahpApplication);
             }
         }
@@ -56,6 +56,17 @@ namespace HE.CRM.AHP.Plugins.Services.AhpStatusChange
         private void SendNotification(invln_AHPStatusChange ahpStatusChange, invln_scheme ahpApplication)
         {
             var statusLabel = string.Empty;
+            switch (ahpStatusChange.invln_Changeto.Value)
+            {
+                case (int)invln_AHPInternalStatus.Withdrawn:
+                    statusLabel = "Withdrawn";
+                    _govNotifyEmailService.SendNotifications_AHP_INTERNAL_REQUEST_TO_WITHDRAW(ahpStatusChange, ahpApplication);
+                    break;
+
+                default:
+                    break;
+            }
+
             var pastFormStatus = string.Empty;
             switch (ahpStatusChange.invln_Changeto.Value)
             {
