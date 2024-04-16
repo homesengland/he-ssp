@@ -13,7 +13,6 @@ namespace HE.CRM.AHP.Plugins.Handlers.AHPApplication
     public class UpdateLocalAuthorityWhenSiteIsChanged : CrmEntityHandlerBase<invln_scheme, DataverseContext>
     {
         private readonly IAhgLocalAuthorityRepository _localAuthorityRepository;
-
         private readonly IAhpApplicationRepository _ahpApplicationRepository;
 
         public UpdateLocalAuthorityWhenSiteIsChanged(IAhgLocalAuthorityRepository localAuthorityRepository, IAhpApplicationRepository ahpApplicationRepository)
