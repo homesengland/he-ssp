@@ -44,7 +44,6 @@ namespace HE.CRM.AHP.Plugins.Services.Application
         public void ChangeApplicationStatus(string organisationId, string contactId, string applicationId, int newStatus, string changeReason)
         {
             TracingService.Trace($"Service ChangeApplicationStatus");
-
             var contact = _contactRepository.GetContactViaExternalId(contactId);
             var application = _applicationRepository.GetById(new Guid(applicationId),
                 new string[] {
@@ -108,6 +107,10 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                 else if (application.invln_PreviousExternalStatus.Value != newStatus)
                 {
                     applicationToUpdate.invln_PreviousExternalStatus = new OptionSetValue(application.invln_ExternalStatus.Value);
+                }
+                else
+                {
+                    applicationToUpdate.invln_PreviousExternalStatus = application.invln_ExternalStatus;
                 }
 
                 if (ahpWithNewStatusCodesAndOtherChanges.invln_DateSubmitted != null)
