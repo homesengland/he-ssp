@@ -1,13 +1,9 @@
 using FluentAssertions;
-using HE.Investment.AHP.Contract.Site;
-using HE.Investment.AHP.Domain.Site.ValueObjects;
-using HE.Investment.AHP.Domain.Tests.Site.TestDataBuilders;
-using HE.Investments.Common.Contract.Exceptions;
 using Section106 = HE.Investment.AHP.Domain.Site.ValueObjects.Section106;
 
-namespace HE.Investment.AHP.Domain.Tests.Site.ValueObjects;
+namespace HE.Investment.AHP.Domain.Tests.Site.ValueObjects.Section106Tests;
 
-public class Section106Tests
+public class IsAnsweredTests
 {
     [Theory]
     [InlineData(false, null, null, null, null)]
@@ -32,8 +28,7 @@ public class Section106Tests
             affordableHousing,
             onlyAffordableHousing,
             additionalAffordableHousing,
-            capitalFundingEligibility,
-            null);
+            capitalFundingEligibility);
 
         // then
         section106.IsAnswered().Should().Be(true);
@@ -61,8 +56,7 @@ public class Section106Tests
             affordableHousing,
             onlyAffordableHousing,
             additionalAffordableHousing,
-            capitalFundingEligibility,
-            null);
+            capitalFundingEligibility);
 
         // then
         section106.IsAnswered().Should().Be(false);
@@ -87,8 +81,7 @@ public class Section106Tests
             affordableHousing,
             onlyAffordableHousing,
             additionalAffordableHousing,
-            capitalFundingEligibility,
-            null);
+            capitalFundingEligibility);
 
         // then
         section106.IsIneligible().Should().Be(true);
