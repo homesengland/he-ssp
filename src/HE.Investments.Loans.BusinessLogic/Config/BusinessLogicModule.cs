@@ -5,6 +5,7 @@ using FluentValidation.AspNetCore;
 using HE.Investments.Account.Shared.Config;
 using HE.Investments.Common;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Common.Infrastructure.Cache.Interfaces;
 using HE.Investments.Common.Utils;
 using HE.Investments.FrontDoor.Shared.Config;
 using HE.Investments.Loans.BusinessLogic.CompanyStructure;
@@ -21,6 +22,8 @@ using HE.Investments.Loans.BusinessLogic.Security.Repositories;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
 using MediatR.Pipeline;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.PowerPlatform.Dataverse.Client;
+using Org::HE.Investments.Organisation.LocalAuthorities;
 using Org::HE.Investments.Organisation.LocalAuthorities.Repositories;
 
 namespace HE.Investments.Loans.BusinessLogic.Config;
@@ -33,7 +36,10 @@ public static class BusinessLogicModule
         services.AddFrontDoorSharedModule();
         services.AddTransient(typeof(IRequestExceptionHandler<,,>), typeof(DomainValidationHandler<,,>));
         services.AddFluentValidationAutoValidation();
-        services.AddScoped<ILocalAuthorityRepository, LocalAuthorityRepository>();
+        services.AddScoped<ILocalAuthorityRepository>(x => new LocalAuthorityRepository(
+            x.GetRequiredService<IOrganizationServiceAsync2>(),
+            x.GetRequiredService<ICacheService>(),
+            LocalAuthoritySource.Loans));
         services.AddScoped<IApplicationProjectsRepository, ApplicationProjectsRepository>();
         services.AddScoped<IDateTimeProvider, DateTimeProvider>();
         services.AddAppConfiguration<ILoanAppConfig, LoanAppConfig>();

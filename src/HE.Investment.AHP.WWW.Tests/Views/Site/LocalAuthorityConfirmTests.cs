@@ -53,6 +53,6 @@ public class LocalAuthorityConfirmTests : AhpViewTestBase
 
     private ConfirmModel<LocalAuthorities> GetConfirmModel()
     {
-        return new ConfirmModel<LocalAuthorities> { ViewModel = new LocalAuthorities { LocalAuthorityId = "1", LocalAuthorityName = "Liverpool" } };
+        return new ConfirmModel<LocalAuthorities> { ViewModel = new LocalAuthorities { LocalAuthorityCode = "1", LocalAuthorityName = "Liverpool" } };
     }
 }

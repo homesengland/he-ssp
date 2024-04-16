@@ -1,6 +1,5 @@
 extern alias Org;
 
-using HE.Investments.Common.Contract;
 using HE.Investments.FrontDoor.Contract.LocalAuthority.Queries;
 using MediatR;
 
@@ -19,7 +18,7 @@ public class GetLocalAuthorityQueryHandler : IRequestHandler<GetLocalAuthorityQu
 
     public async Task<Investments.Common.Contract.LocalAuthority> Handle(GetLocalAuthorityQuery request, CancellationToken cancellationToken)
     {
-        var localAuthority = await _repository.GetById(new StringIdValueObject(request.LocalAuthorityCode.Value), cancellationToken);
+        var localAuthority = await _repository.GetByCode(request.LocalAuthorityCode, cancellationToken);
         return new Investments.Common.Contract.LocalAuthority(localAuthority.Code.Value, localAuthority.Name);
     }
 }

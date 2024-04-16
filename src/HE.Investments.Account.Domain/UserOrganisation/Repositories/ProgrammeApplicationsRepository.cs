@@ -2,7 +2,6 @@ using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Contract.UserOrganisation;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common;
-using HE.Investments.Common.CRM.Extensions;
 using HE.Investments.Common.CRM.Mappers;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Services;
@@ -67,7 +66,7 @@ public class ProgrammeApplicationsRepository : IProgrammeApplicationsRepository
         {
             invln_accountid = userAccount.SelectedOrganisationId().ToString(),
             invln_externalcontactid = userAccount.UserGlobalId.ToString(),
-            invln_usehetables = await _featureManager.GetUseHeTablesParameter(),
+            invln_usehetables = "true",
         };
 
         var loanApplications = (await _crmService.ExecuteAsync

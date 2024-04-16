@@ -1,3 +1,4 @@
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Pagination;
 
 namespace HE.Investment.AHP.Contract.Site;
@@ -10,7 +11,7 @@ public class LocalAuthorities
 
     public string SiteId { get; set; }
 
-    public string? LocalAuthorityId { get; set; }
+    public string? LocalAuthorityCode { get; set; }
 
     public string? LocalAuthorityName { get; set; }
 }

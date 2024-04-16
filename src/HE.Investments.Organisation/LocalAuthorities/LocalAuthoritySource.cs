@@ -1,6 +1,6 @@
 namespace HE.Investments.Organisation.LocalAuthorities;
 
-public enum LocalAuthoritiesSource
+public enum LocalAuthoritySource
 {
     Loans,
     Ahp,

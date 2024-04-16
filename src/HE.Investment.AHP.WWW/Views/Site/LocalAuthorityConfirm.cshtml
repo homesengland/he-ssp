@@ -11,7 +11,7 @@
 <gds-div-grid-column-two-thirds>
     <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("LocalAuthorityResult", "Site", new { siteId = Model.ViewModel.SiteId, phrase = Model.ViewModel.Phrase, redirect })"></gds-back-link>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
-    <form asp-controller="Site" asp-action="LocalAuthorityConfirm" asp-route-localAuthorityId=@(Model.ViewModel.LocalAuthorityId) asp-route-phrase=@(Model.ViewModel.Phrase) asp-route-redirect=@redirect asp-method="post" novalidate>
+    <form asp-controller="Site" asp-action="LocalAuthorityConfirm" asp-route-localAuthorityCode=@(Model.ViewModel.LocalAuthorityCode) asp-route-phrase=@(Model.ViewModel.Phrase) asp-route-redirect=@redirect asp-method="post" novalidate>
         <gds-field-set>
             <vc:page-header title="@SitePageTitles.LocalAuthorityConfirm"  caption="@ViewBag.SiteName"/>
 
@@ -35,7 +35,7 @@
 
         <vc:return-to-sites-link/>
         @Html.HiddenFor(c => c.ViewModel.SiteId)
-        @Html.HiddenFor(c => c.ViewModel.LocalAuthorityId)
+        @Html.HiddenFor(c => c.ViewModel.LocalAuthorityCode)
         @Html.HiddenFor(c => c.ViewModel.LocalAuthorityName)
         @Html.HiddenFor(c => c.ViewModel.Phrase)
     </form>

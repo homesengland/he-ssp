@@ -27,9 +27,10 @@ using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.FrontDoor.Shared.Project;
+using HE.Investments.Organisation.LocalAuthorities.ValueObjects;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using LocalAuthority = HE.Investment.AHP.Contract.Site.LocalAuthority;
+using LocalAuthority = HE.Investments.Common.Contract.LocalAuthority;
 
 namespace HE.Investment.AHP.WWW.Controllers;
 
@@ -299,7 +300,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         CancellationToken cancellationToken)
     {
         await GetSiteBasicDetails(siteId, cancellationToken);
-        var result = await _mediator.Send(new SearchLocalAuthoritiesQuery(phrase, new PaginationRequest(page ?? 1)), cancellationToken);
+        var result = await _mediator.Send(new SearchLocalAuthoritiesQuery(phrase, new PaginationRequest(page ?? 0)), cancellationToken);
 
         if (result.ReturnedData.Page?.TotalItems == 0)
         {
@@ -309,7 +310,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         var model = result.ReturnedData;
 
         model.SiteId = siteId;
-        model.Page = new PaginationResult<LocalAuthority>(model.Page!.Items, page ?? 1, model.Page.ItemsPerPage, model.Page.TotalItems);
+        model.Page = new PaginationResult<LocalAuthority>(model.Page!.Items, page ?? 0, model.Page.ItemsPerPage, model.Page.TotalItems);
 
         return View(model);
     }
@@ -321,17 +322,17 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         return View(nameof(LocalAuthorityNotFound), new LocalAuthorities { SiteId = siteId });
     }
 
-    [HttpGet("{siteId}/local-authority/{localAuthorityId}/confirm")]
+    [HttpGet("{siteId}/local-authority/{localAuthorityCode}/confirm")]
     [WorkflowState(SiteWorkflowState.LocalAuthorityConfirm)]
-    public async Task<IActionResult> LocalAuthorityConfirm(string siteId, string localAuthorityId, string? phrase, CancellationToken cancellationToken)
+    public async Task<IActionResult> LocalAuthorityConfirm(string siteId, string localAuthorityCode, string? phrase, CancellationToken cancellationToken)
     {
         var siteBasicDetails = await GetSiteBasicDetails(siteId, cancellationToken);
-        var localAuthority = await _mediator.Send(new GetLocalAuthorityQuery(new StringIdValueObject(localAuthorityId)), cancellationToken);
+        var localAuthority = await _mediator.Send(new GetLocalAuthorityQuery(LocalAuthorityCode.From(localAuthorityCode)), cancellationToken);
 
         var localAuthorities = new LocalAuthorities
         {
             SiteId = siteId,
-            LocalAuthorityId = localAuthorityId,
+            LocalAuthorityCode = localAuthorityCode,
             LocalAuthorityName = localAuthority.Name,
             Phrase = phrase,
         };
@@ -344,7 +345,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         return View(model);
     }
 
-    [HttpPost("{siteId}/local-authority/{localAuthorityId}/confirm")]
+    [HttpPost("{siteId}/local-authority/{localAuthorityCode}/confirm")]
     [WorkflowState(SiteWorkflowState.LocalAuthorityConfirm)]
     public async Task<IActionResult> LocalAuthorityConfirm(
         string siteId,
@@ -358,7 +359,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         }
 
         return await ExecuteSiteCommand<ConfirmModel<LocalAuthorities>>(
-            new ProvideLocalAuthorityCommand(new SiteId(siteId), model.ViewModel.LocalAuthorityId, model.ViewModel.LocalAuthorityName, model.Response),
+            new ProvideLocalAuthorityCommand(new SiteId(siteId), model.ViewModel.LocalAuthorityCode, model.ViewModel.LocalAuthorityName, model.Response),
             nameof(LocalAuthorityConfirm),
             _ => model,
             cancellationToken);

@@ -28,8 +28,9 @@ public static class SiteEntityToSiteDtoMapper
     private static readonly ModernMethodsConstruction3DSubcategoriesTypeMapper ModernMethodsConstruction3DSubcategoriesTypeMapper = new();
     private static readonly SiteProcurementMapper SiteProcurementMapper = new();
     private static readonly SiteStatusMapper SiteStatusMapper = new();
+    private static readonly PlanningStatusMapper PlanningStatusMapper = new();
 
-    public static SiteDto Map(SiteEntity entity, IPlanningStatusMapper planningStatusMapper)
+    public static SiteDto Map(SiteEntity entity)
     {
         return new SiteDto
         {
@@ -38,7 +39,7 @@ public static class SiteEntityToSiteDtoMapper
             status = SiteStatusMapper.ToDto(entity.Status),
             section106 = CreateSection106(entity.Section106),
             localAuthority = new SiteLocalAuthority { id = entity.LocalAuthority?.Code.Value },
-            planningDetails = CreatePlanningDetails(entity.PlanningDetails, planningStatusMapper),
+            planningDetails = CreatePlanningDetails(entity.PlanningDetails),
             nationalDesignGuidePriorities = MapCollection(entity.NationalDesignGuidePriorities.Values, NationalDesignGuideMapper),
             buildingForHealthyLife = BuildingForHealthyLifeTypeMapper.ToDto(entity.BuildingForHealthyLife),
             numberOfGreenLights = entity.NumberOfGreenLights?.Value,
@@ -67,11 +68,11 @@ public static class SiteEntityToSiteDtoMapper
         };
     }
 
-    private static PlanningDetailsDto CreatePlanningDetails(PlanningDetails planningDetails, IPlanningStatusMapper planningStatusMapper)
+    private static PlanningDetailsDto CreatePlanningDetails(PlanningDetails planningDetails)
     {
         return new PlanningDetailsDto
         {
-            planningStatus = planningStatusMapper.ToDto(planningDetails.PlanningStatus),
+            planningStatus = PlanningStatusMapper.ToDto(planningDetails.PlanningStatus),
             referenceNumber = planningDetails.ReferenceNumber?.Value,
             detailedPlanningApprovalDate = ToDateTime(planningDetails.DetailedPlanningApprovalDate),
             requiredFurtherSteps = planningDetails.RequiredFurtherSteps?.Value,

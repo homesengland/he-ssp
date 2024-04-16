@@ -49,7 +49,7 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
             Status = site.Status,
             Section106 = CreateSection106(site),
             LocalAuthority = localAuthority,
-            PlanningDetails = CreateSitePlanningDetails(site.PlanningDetails, localAuthority?.Id, prefillData),
+            PlanningDetails = CreateSitePlanningDetails(site.PlanningDetails, localAuthority?.Code, prefillData),
             NationalDesignGuidePriorities = site.NationalDesignGuidePriorities.Values.ToList(),
             BuildingForHealthyLife = site.BuildingForHealthyLife,
             NumberOfGreenLights = site.NumberOfGreenLights?.ToString(),
@@ -83,7 +83,7 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
 
     private static SitePlanningDetails CreateSitePlanningDetails(
         PlanningDetails planningDetails,
-        string? localAuthorityId,
+        string? localAuthorityCode,
         AhpSitePrefillData? prefillData)
     {
         return new SitePlanningDetails(
@@ -109,7 +109,7 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
             planningDetails.LandRegistryDetails?.IsGrantFundingForAllHomesCoveredByTitleNumber,
             planningDetails.IsQuestionActive(nameof(planningDetails.LandRegistryDetails)),
             planningDetails.IsAnswered(),
-            localAuthorityId);
+            localAuthorityCode);
     }
 
     private static SiteTenderingStatusDetails CreateSiteTenderingStatusDetails(TenderingStatusDetails tenderingStatusDetails)
