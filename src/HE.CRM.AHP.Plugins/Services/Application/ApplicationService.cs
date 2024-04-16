@@ -41,7 +41,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             _govNotifyEmailService = CrmServicesFactory.Get<IGovNotifyEmailService>();
         }
 
-        public void ChangeApplicationStatus(string organisationId, string contactId, string applicationId, int newStatus, string changeReason)
+        public void ChangeApplicationStatus(string organisationId, string contactId, string applicationId, int newStatus, string changeReason, bool representationsandwarranties)
         {
             TracingService.Trace($"Service ChangeApplicationStatus");
 
@@ -100,6 +100,11 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                     invln_ExternalStatus = new OptionSetValue(newStatus),
                     invln_PreviousInternalStatus = new OptionSetValue(application.StatusCode.Value),
                 };
+
+                if (representationsandwarranties)
+                {
+                    applicationToUpdate.invln_representationsandwarrantiesconfirmation = representationsandwarranties;
+                }
 
                 if (application.invln_PreviousExternalStatus == null)
                 {

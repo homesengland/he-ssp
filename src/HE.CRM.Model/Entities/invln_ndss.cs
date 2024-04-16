@@ -64,6 +64,7 @@ namespace DataverseModel
 			public const string Id = "invln_ndssid";
 			public const string invln_people = "invln_people";
 			public const string invln_Standard = "invln_standard";
+			public const string invln_StandardNumber = "invln_standardnumber";
 			public const string invln_storeys = "invln_storeys";
 			public const string lk_invln_ndss_createdby = "lk_invln_ndss_createdby";
 			public const string lk_invln_ndss_createdonbehalfby = "lk_invln_ndss_createdonbehalfby";
@@ -380,6 +381,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_Standard");
 				this.SetAttributeValue("invln_standard", value);
 				this.OnPropertyChanged("invln_Standard");
+			}
+		}
+		
+		/// <summary>
+		/// Standard (number = bedrooms people storeys)
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_standardnumber")]
+		public System.Nullable<int> invln_StandardNumber
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("invln_standardnumber");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_StandardNumber");
+				this.SetAttributeValue("invln_standardnumber", value);
+				this.OnPropertyChanged("invln_StandardNumber");
 			}
 		}
 		
