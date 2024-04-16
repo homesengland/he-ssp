@@ -17,7 +17,7 @@ namespace DataverseModel
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Alwayspreview = 509180002,
+		Always = 509180002,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Never = 509180000,
