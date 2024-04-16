@@ -1,11 +1,9 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Shared.User;
-using HE.Investments.Common.CRM.Extensions;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Serialization;
 using HE.Investments.Common.CRM.Services;
 using HE.Investments.FrontDoor.Shared.Project.Crm;
-using Microsoft.FeatureManagement;
 
 namespace HE.Investments.FrontDoor.Domain.Site.Crm;
 
@@ -13,12 +11,9 @@ public class SiteCrmContext : ISiteCrmContext
 {
     private readonly ICrmService _service;
 
-    private readonly IFeatureManager _featureManager;
-
-    public SiteCrmContext(ICrmService service, IFeatureManager featureManager)
+    public SiteCrmContext(ICrmService service)
     {
         _service = service;
-        _featureManager = featureManager;
     }
 
     public async Task<PagedResponseDto<FrontDoorProjectSiteDto>> GetSites(
@@ -32,7 +27,7 @@ public class SiteCrmContext : ISiteCrmContext
             invln_frontdoorprojectid = projectId,
             invln_pagingrequest = CrmResponseSerializer.Serialize(pagination),
             invln_fieldstoretrieve = ProjectSiteCrmFields.SiteToRead.FormatFields(),
-            invln_usehetables = await _featureManager.GetUseHeTablesParameter(),
+            invln_usehetables = "true",
         };
 
         return await _service
@@ -52,7 +47,7 @@ public class SiteCrmContext : ISiteCrmContext
             invln_frontdoorprojectsiteid = siteId,
             invln_frontdoorprojectid = projectId,
             invln_fieldstoretrieve = ProjectSiteCrmFields.SiteToRead.FormatFields(),
-            invln_usehetables = await _featureManager.GetUseHeTablesParameter(),
+            invln_usehetables = "true",
         };
 
         return await _service.ExecuteAsync<invln_getsinglefrontdoorprojectsiteRequest, invln_getsinglefrontdoorprojectsiteResponse, FrontDoorProjectSiteDto>(
@@ -68,7 +63,7 @@ public class SiteCrmContext : ISiteCrmContext
             invln_frontdoorprojectid = projectId,
             invln_frontdoorsiteid = dto.SiteId,
             invln_entityfieldsparameters = CrmResponseSerializer.Serialize(dto),
-            invln_usehetables = await _featureManager.GetUseHeTablesParameter(),
+            invln_usehetables = "true",
         };
 
         return await _service.ExecuteAsync<invln_setfrontdoorsiteRequest, invln_setfrontdoorsiteResponse>(
@@ -82,7 +77,7 @@ public class SiteCrmContext : ISiteCrmContext
         var request = new invln_deactivatefrontdoorsiteRequest
         {
             invln_frontdoorsiteid = siteId,
-            invln_usehetables = await _featureManager.GetUseHeTablesParameter(),
+            invln_usehetables = "true",
         };
 
         return await _service.ExecuteAsync<invln_deactivatefrontdoorsiteRequest, invln_deactivatefrontdoorsiteResponse>(

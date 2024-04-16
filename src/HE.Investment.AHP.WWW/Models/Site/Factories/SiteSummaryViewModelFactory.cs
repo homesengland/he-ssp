@@ -2,6 +2,7 @@ using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investment.AHP.WWW.Controllers;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Components.SectionSummary;
 using HE.Investments.Common.WWW.Helpers;
@@ -9,7 +10,6 @@ using HE.Investments.Common.WWW.Models.Summary;
 using HE.Investments.Common.WWW.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Controller = HE.Investment.AHP.WWW.Controllers.SiteController;
-using LocalAuthority = HE.Investment.AHP.Contract.Site.LocalAuthority;
 
 namespace HE.Investment.AHP.WWW.Models.Site.Factories;
 

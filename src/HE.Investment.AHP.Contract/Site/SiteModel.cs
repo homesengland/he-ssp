@@ -1,4 +1,5 @@
 using HE.Investment.AHP.Contract.Site.Enums;
+using HE.Investments.Common.Contract;
 
 namespace HE.Investment.AHP.Contract.Site;
 

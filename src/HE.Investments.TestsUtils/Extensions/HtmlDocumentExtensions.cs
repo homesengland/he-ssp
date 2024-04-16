@@ -80,7 +80,7 @@ public static class HtmlDocumentExtensions
     {
         var errorSummary = htmlDocument.GetElementsByClassName(CssConstants.GovUkErrorSummary).SingleOrDefault();
         errorSummary.Should().NotBeNull("Error summary should be present on a page");
-        var errorItems = errorSummary!.GetElementsByTagName("a").Select(x => x.TextContent.Trim()).ToArray();
+        var errorItems = errorSummary!.GetElementsByTagName("a").Select(x => x.TextContent.Trim()).Where(e => !string.IsNullOrWhiteSpace(e)).ToArray();
         errorItems.Should().NotBeEmpty();
         return errorItems;
     }

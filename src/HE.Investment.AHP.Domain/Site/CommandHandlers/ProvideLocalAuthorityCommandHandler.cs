@@ -31,13 +31,13 @@ public class ProvideLocalAuthorityCommandHandler : SiteBaseCommandHandler, IRequ
                         .CheckErrors();
                 }
 
-                if (request.LocalAuthorityId.IsNotProvided() || request.LocalAuthorityName.IsNotProvided())
+                if (request.LocalAuthorityCode.IsNotProvided() || request.LocalAuthorityName.IsNotProvided())
                 {
                     site.ProvideLocalAuthority(null);
                 }
                 else
                 {
-                    site.ProvideLocalAuthority(LocalAuthority.New(request.LocalAuthorityId!, request.LocalAuthorityName!));
+                    site.ProvideLocalAuthority(LocalAuthority.New(request.LocalAuthorityCode!, request.LocalAuthorityName!));
                 }
 
                 return Task.FromResult(OperationResult.Success());

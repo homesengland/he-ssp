@@ -18,6 +18,7 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public int? financialDetailsSectionCompletionStatus { get; set; }
         public int? deliveryPhasesSectionCompletionStatus { get; set; }
         public DateTime? dateSubmitted { get; set; }
+        public int? previousExternalStatus { get; set; }
 
         //financial
         public decimal? borrowingAgainstRentalIncomeFromThisScheme { get; set; }

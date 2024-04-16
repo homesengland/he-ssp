@@ -98,6 +98,7 @@
     <Compile Include="Handlers\AHPApplication\ChangeExternalStatusOnInternalStatusChangeHandler.cs" />
     <Compile Include="Handlers\AHPApplication\CheckIfApplicationWithNewNameExistsHandler.cs" />
     <Compile Include="Handlers\AHPApplication\CreateDocumentLocationOnCreateHandler.cs" />
+    <Compile Include="Handlers\AHPApplication\UpdateAplicationOnStatusChange.cs" />
     <Compile Include="Handlers\AHPApplication\UpdateLocalAuthorityWhenSiteIsChanged.cs" />
     <Compile Include="Handlers\AHPApplication\RecalculateDeliveryphaseHandler.cs" />
     <Compile Include="Handlers\AhpStatusChange\SendNotificationOnCreateHandler.cs" />
