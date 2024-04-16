@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using DataverseModel;
 using HE.Base.Plugins.Handlers;
 using HE.CRM.Common.Repositories.Interfaces;
+using Microsoft.Xrm.Sdk;
 
 namespace HE.CRM.AHP.Plugins.Handlers.HomeType
 {
@@ -40,7 +41,7 @@ namespace HE.CRM.AHP.Plugins.Handlers.HomeType
             if (nddsStandard == null)
             {
                 TracingService.Trace($"Cannot find entity {invln_ndss.EntityLogicalName} with value {concatenatevalue} in field {invln_ndss.Fields.invln_StandardNumber}");
-                return;
+                throw new InvalidPluginExecutionException("Home type not covered by NDSS");
             }
             TracingService.Trace($"Calculate value in {invln_HomeType.Fields.invln_PercentageValueofNDSSStandard}");
 
