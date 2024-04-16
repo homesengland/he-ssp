@@ -1,9 +1,10 @@
 using HE.Investments.Common.Contract.Enum;
+using HE.Investments.Common.CRM.Mappers;
 using HE.Investments.Common.CRM.Model;
 
-namespace HE.Investments.Common.CRM.Mappers;
+namespace HE.Investment.AHP.Domain.Site.Mappers;
 
-internal class InternalPlanningStatusMapper : EnumMapper<SitePlanningStatus>, IPlanningStatusMapper
+internal class PlanningStatusMapper : EnumMapper<SitePlanningStatus>
 {
     protected override IDictionary<SitePlanningStatus, int?> Mapping => new Dictionary<SitePlanningStatus, int?>
     {

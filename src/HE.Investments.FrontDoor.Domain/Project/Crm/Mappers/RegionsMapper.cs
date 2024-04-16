@@ -1,20 +1,24 @@
 using HE.Investments.Common.CRM.Mappers;
+using HE.Investments.Common.CRM.Model;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
 using HE.Investments.FrontDoor.Shared.Project.Contract;
-using HE.Investments.FrontDoor.Shared.Project.Crm;
 
 namespace HE.Investments.FrontDoor.Domain.Project.Crm.Mappers;
 
 public class RegionsMapper : EnumMapper<RegionType>
 {
-    private readonly IFrontDoorProjectEnumMapping _mapping;
-
-    public RegionsMapper(IFrontDoorProjectEnumMapping mapping)
+    protected override IDictionary<RegionType, int?> Mapping => new Dictionary<RegionType, int?>
     {
-        _mapping = mapping;
-    }
-
-    protected override IDictionary<RegionType, int?> Mapping => _mapping.RegionType;
+        { RegionType.NorthEast, (int)he_pipeline_he_regionlocation.NorthEast },
+        { RegionType.NorthWest, (int)he_pipeline_he_regionlocation.NorthWest },
+        { RegionType.YorkshireAndTheHumber, (int)he_pipeline_he_regionlocation.YorkshireandtheHumber },
+        { RegionType.EastMidlands, (int)he_pipeline_he_regionlocation.EastMidlands },
+        { RegionType.WestMidlands, (int)he_pipeline_he_regionlocation.WestMidlands },
+        { RegionType.EastOfEngland, (int)he_pipeline_he_regionlocation.EastofEngland },
+        { RegionType.SouthEast, (int)he_pipeline_he_regionlocation.SouthEast },
+        { RegionType.SouthWest, (int)he_pipeline_he_regionlocation.SouthWest },
+        { RegionType.London, (int)he_pipeline_he_regionlocation.London },
+    };
 
     public Regions Map(IList<int> values)
     {

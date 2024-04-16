@@ -2,6 +2,7 @@ using HE.Investments.Common;
 using HE.Investments.Common.Config;
 using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Common.Infrastructure.Cache.Interfaces;
 using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.Common.Models.App;
 using HE.Investments.Common.WWW.Config;
@@ -12,7 +13,9 @@ using HE.Investments.FrontDoor.Domain.Config;
 using HE.Investments.FrontDoor.WWW.Models.Factories;
 using HE.Investments.FrontDoor.WWW.Routing;
 using HE.Investments.Organisation.Config;
+using HE.Investments.Organisation.LocalAuthorities;
 using HE.Investments.Organisation.LocalAuthorities.Repositories;
+using Microsoft.PowerPlatform.Dataverse.Client;
 
 namespace HE.Investments.FrontDoor.WWW.Config;
 
@@ -22,7 +25,10 @@ public static class FrontDoorWebModule
     {
         services.AddAppConfiguration<IMvcAppConfig, MvcAppConfig>();
         services.AddOrganisationCrmModule();
-        services.AddScoped<ILocalAuthorityRepository, LocalAuthorityRepository>();
+        services.AddScoped<ILocalAuthorityRepository>(x => new LocalAuthorityRepository(
+            x.GetRequiredService<IOrganizationServiceAsync2>(),
+            x.GetRequiredService<ICacheService>(),
+            LocalAuthoritySource.FrontDoor));
 
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(DomainModule).Assembly));
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(DomainValidationHandler<,,>).Assembly));

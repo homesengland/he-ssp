@@ -63,11 +63,16 @@ namespace DataverseModel
 			public const string invln_AccountidName = "invln_accountidname";
 			public const string invln_AccountidYomiName = "invln_accountidyominame";
 			public const string invln_contact_invln_contactwebrole_Contactid = "invln_contact_invln_contactwebrole_Contactid";
+			public const string invln_ContactAssigningWebRole = "invln_contactassigningwebrole";
+			public const string invln_ContactAssigningWebRoleName = "invln_contactassigningwebrolename";
+			public const string invln_ContactAssigningWebRoleYomiName = "invln_contactassigningwebroleyominame";
 			public const string invln_Contactid = "invln_contactid";
 			public const string invln_ContactidName = "invln_contactidname";
 			public const string invln_ContactidYomiName = "invln_contactidyominame";
+			public const string invln_contactwebrole_ContactAssigningWebRole_co = "invln_contactwebrole_ContactAssigningWebRole_co";
 			public const string invln_contactwebroleId = "invln_contactwebroleid";
 			public const string Id = "invln_contactwebroleid";
+			public const string invln_DateTimeOfAssigningWebRole = "invln_datetimeofassigningwebrole";
 			public const string invln_invln_webrole_invln_contactwebrole_Webroleid = "invln_invln_webrole_invln_contactwebrole_Webroleid";
 			public const string invln_name = "invln_name";
 			public const string invln_Webroleid = "invln_webroleid";
@@ -330,6 +335,57 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_contactassigningwebrole")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_ContactAssigningWebRole
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_contactassigningwebrole");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_ContactAssigningWebRole");
+				this.SetAttributeValue("invln_contactassigningwebrole", value);
+				this.OnPropertyChanged("invln_ContactAssigningWebRole");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_contactassigningwebrolename")]
+		public string invln_ContactAssigningWebRoleName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_contactassigningwebrole"))
+				{
+					return this.FormattedValues["invln_contactassigningwebrole"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_contactassigningwebroleyominame")]
+		public string invln_ContactAssigningWebRoleYomiName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_contactassigningwebrole"))
+				{
+					return this.FormattedValues["invln_contactassigningwebrole"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_contactid")]
 		public Microsoft.Xrm.Sdk.EntityReference invln_Contactid
 		{
@@ -421,6 +477,23 @@ namespace DataverseModel
 			set
 			{
 				this.invln_contactwebroleId = value;
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_datetimeofassigningwebrole")]
+		public System.Nullable<System.DateTime> invln_DateTimeOfAssigningWebRole
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("invln_datetimeofassigningwebrole");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_DateTimeOfAssigningWebRole");
+				this.SetAttributeValue("invln_datetimeofassigningwebrole", value);
+				this.OnPropertyChanged("invln_DateTimeOfAssigningWebRole");
 			}
 		}
 		
@@ -901,6 +974,27 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_contact_invln_contactwebrole_Contactid");
 				this.SetRelatedEntity<DataverseModel.Contact>("invln_contact_invln_contactwebrole_Contactid", null, value);
 				this.OnPropertyChanged("invln_contact_invln_contactwebrole_Contactid");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_contactwebrole_ContactAssigningWebRole_co
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_contactassigningwebrole")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_contactwebrole_ContactAssigningWebRole_co")]
+		public DataverseModel.Contact invln_contactwebrole_ContactAssigningWebRole_co
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.Contact>("invln_contactwebrole_ContactAssigningWebRole_co", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_contactwebrole_ContactAssigningWebRole_co");
+				this.SetRelatedEntity<DataverseModel.Contact>("invln_contactwebrole_ContactAssigningWebRole_co", null, value);
+				this.OnPropertyChanged("invln_contactwebrole_ContactAssigningWebRole_co");
 			}
 		}
 		

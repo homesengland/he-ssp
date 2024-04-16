@@ -69,7 +69,6 @@ public class BuildActivity : ValueObject, IQuestion
             BuildActivityType.Reimprovement,
             BuildActivityType.Conversion,
             BuildActivityType.WorksOnlyRehab,
-            BuildActivityType.RegenerationRehab,
         };
 
         if (tenure.IsIn(Tenure.SharedOwnership, Tenure.RentToBuy, Tenure.OlderPersonsSharedOwnership))

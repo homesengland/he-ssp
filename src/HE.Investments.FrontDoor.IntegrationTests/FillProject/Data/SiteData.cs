@@ -26,7 +26,7 @@ public class SiteData
 
     public bool AddAnotherSite => false;
 
-    public string LocalAuthorityCode(string? useHeTablesParameter) => string.IsNullOrWhiteSpace(useHeTablesParameter) ? "E07000178" : "7000178";
+    public string LocalAuthorityCode => "7000178";
 
     public string GenerateSiteName()
     {

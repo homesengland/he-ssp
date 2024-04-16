@@ -14,7 +14,7 @@ public class LocalAuthority : ValueObject
 
     public string Name { get; }
 
-    public static LocalAuthority New(string id, string name) => new(LocalAuthorityCode.From(id), name);
+    public static LocalAuthority New(string code, string name) => new(LocalAuthorityCode.From(code), name);
 
     public static LocalAuthority New(LocalAuthorityCode code, string name) => new(code, name);
 

@@ -10,11 +10,11 @@ using Xunit.Extensions.Ordering;
 
 namespace HE.Investments.AHP.IntegrationTests.ChangeApplicationStatus;
 
-[Order(11)]
+[Order(12)]
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
-public class Order11Approved : AhpIntegrationTest
+public class Order12Approved : AhpIntegrationTest
 {
-    public Order11Approved(AhpIntegrationTestFixture fixture, ITestOutputHelper output)
+    public Order12Approved(AhpIntegrationTestFixture fixture, ITestOutputHelper output)
         : base(fixture, output)
     {
     }

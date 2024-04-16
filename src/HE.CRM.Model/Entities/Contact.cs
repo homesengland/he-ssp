@@ -664,6 +664,7 @@ namespace DataverseModel
 			public const string invln_contact_invln_organisationchangerequest_contactid = "invln_contact_invln_organisationchangerequest_contactid";
 			public const string invln_contact_invln_scheme_contactid = "invln_contact_invln_scheme_contactid";
 			public const string invln_contact_invln_scheme_lastexternalmodificationby = "invln_contact_invln_scheme_lastexternalmodificationby";
+			public const string invln_contactwebrole_ContactAssigningWebRole_co = "invln_contactwebrole_ContactAssigningWebRole_co";
 			public const string invln_externalid = "invln_externalid";
 			public const string invln_frontdoorprojectpoc_ContactId_contact = "invln_frontdoorprojectpoc_ContactId_contact";
 			public const string invln_invln_isp_TMName_contact = "invln_invln_isp_TMName_contact";
@@ -7527,6 +7528,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_contact_invln_scheme_lastexternalmodificationby");
 				this.SetRelatedEntities<DataverseModel.invln_scheme>("invln_contact_invln_scheme_lastexternalmodificationby", null, value);
 				this.OnPropertyChanged("invln_contact_invln_scheme_lastexternalmodificationby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_contactwebrole_ContactAssigningWebRole_co
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_contactwebrole_ContactAssigningWebRole_co")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_contactwebrole> invln_contactwebrole_ContactAssigningWebRole_co
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_contactwebrole>("invln_contactwebrole_ContactAssigningWebRole_co", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_contactwebrole_ContactAssigningWebRole_co");
+				this.SetRelatedEntities<DataverseModel.invln_contactwebrole>("invln_contactwebrole_ContactAssigningWebRole_co", null, value);
+				this.OnPropertyChanged("invln_contactwebrole_ContactAssigningWebRole_co");
 			}
 		}
 		

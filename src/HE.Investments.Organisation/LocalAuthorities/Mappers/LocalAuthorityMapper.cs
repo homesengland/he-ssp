@@ -18,13 +18,13 @@ public static class LocalAuthorityMapper
         return result;
     }
 
-    public static LocalAuthority? MapToLocalAuthority(string? localAuthorityId, string? localAuthorityName)
+    public static LocalAuthority? MapToLocalAuthority(string? localAuthorityCode, string? localAuthorityName)
     {
-        if (localAuthorityId.IsNotProvided() || localAuthorityName.IsNotProvided())
+        if (localAuthorityCode.IsNotProvided() || localAuthorityName.IsNotProvided())
         {
             return null;
         }
 
-        return new LocalAuthority(LocalAuthorityCode.From(localAuthorityId!), localAuthorityName!);
+        return new LocalAuthority(LocalAuthorityCode.From(localAuthorityCode!), localAuthorityName!);
     }
 }

@@ -86,6 +86,7 @@ namespace HE.CRM.Common.DtoMapping
                 homeTypesSectionCompletionStatus = application.invln_hometypessectioncompletionstatus?.Value,
                 financialDetailsSectionCompletionStatus = application.invln_financialdetailssectioncompletionstatus?.Value,
                 deliveryPhasesSectionCompletionStatus = application.invln_deliveryphasessectioncompletionstatus?.Value,
+                previousExternalStatus = application.invln_PreviousExternalStatus?.Value,
                 dateSubmitted = application.invln_DateSubmitted,
                 borrowingAgainstRentalIncomeFromThisScheme = application.invln_borrowingagainstrentalincome?.Value,
                 fundingFromOpenMarketHomesOnThisScheme = application.invln_fundingfromopenmarkethomesonthisscheme?.Value,

@@ -1,4 +1,5 @@
 using HE.Investments.Common.Contract;
+using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.Contract.Site;
 
@@ -14,6 +15,8 @@ public record SiteId : StringIdValueObject
     }
 
     public static SiteId New() => new();
+
+    public static SiteId? Create(string? id) => id.IsProvided() ? new SiteId(id!) : null;
 
     public override string ToString()
     {

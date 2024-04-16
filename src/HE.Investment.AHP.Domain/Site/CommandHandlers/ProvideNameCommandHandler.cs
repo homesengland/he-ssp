@@ -10,31 +10,29 @@ using MediatR;
 
 namespace HE.Investment.AHP.Domain.Site.CommandHandlers;
 
-public class ProvideNameCommandHandler : SiteBaseCommandHandler, IRequestHandler<ProvideNameCommand, OperationResult<SiteId>>
+public class ProvideNameCommandHandler : IRequestHandler<ProvideNameCommand, OperationResult<SiteId>>
 {
+    private readonly ISiteRepository _siteRepository;
+
+    private readonly IAccountUserContext _accountUserContext;
+
     public ProvideNameCommandHandler(ISiteRepository siteRepository, IAccountUserContext accountUserContext)
-        : base(siteRepository, accountUserContext)
     {
+        _siteRepository = siteRepository;
+        _accountUserContext = accountUserContext;
     }
 
     public async Task<OperationResult<SiteId>> Handle(ProvideNameCommand request, CancellationToken cancellationToken)
     {
-        return await PerformWithResultReturn(
-            async site =>
-            {
-                var siteName = new SiteName(request.Name);
-                await site.ProvideName(siteName, SiteRepository, cancellationToken);
-            },
-            request.SiteId.IsProvided() ? new SiteId(request.SiteId!) : SiteId.New(),
-            cancellationToken);
-    }
+        var userAccount = await _accountUserContext.GetSelectedAccount();
+        var site = request.SiteId.IsProvided()
+            ? await _siteRepository.GetSite(request.SiteId!, userAccount, cancellationToken)
+            : SiteEntity.NewSite(request.FrontDoorProjectId, request.FrontDoorSiteId);
+        var siteName = new SiteName(request.Name);
 
-    protected async Task<OperationResult<SiteId>> PerformWithResultReturn(Func<SiteEntity, Task> action, SiteId siteId, CancellationToken cancellationToken)
-    {
-        var userAccount = await AccountUserContext.GetSelectedAccount();
-        var site = await SiteRepository.GetSite(siteId, userAccount, cancellationToken);
-        await action(site);
-        var newSiteId = await SiteRepository.Save(site, userAccount, cancellationToken);
-        return OperationResult.Success(newSiteId);
+        await site.ProvideName(siteName, _siteRepository, cancellationToken);
+
+        var siteId = await _siteRepository.Save(site, userAccount, cancellationToken);
+        return OperationResult.Success(siteId);
     }
 }

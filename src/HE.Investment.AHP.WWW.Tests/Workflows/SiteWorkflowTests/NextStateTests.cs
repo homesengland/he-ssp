@@ -2,6 +2,7 @@ using FluentAssertions;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investment.AHP.WWW.Tests.TestDataBuilders;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.WWW.Routing;
 
@@ -457,7 +458,7 @@ public class NextStateTests
     public async Task ShouldReturnLocalAuthorityConfirm_WhenBackTriggerExecutedAndSiteHasLocalAuthoritySelected()
     {
         // given
-        var localAuthority = new LocalAuthority() { Id = "local authority id", Name = "local authority name" };
+        var localAuthority = new LocalAuthority("local authority id", "local authority name");
         var section106 = new Section106TestDataBuilder()
            .WithGeneralAgreement(false)
            .WithCapitalFundingEligibility(false)
@@ -526,7 +527,7 @@ public class NextStateTests
     public async Task ShouldReturnLocalAuthorityConfirmPage_WhenBackTriggeredForPlanningStatusAndLocalAuthorityIsProvided()
     {
         // given
-        var localAuthority = new LocalAuthority() { Id = "local authority id", Name = "local authority name" };
+        var localAuthority = new LocalAuthority("local authority id", "local authority name");
         var workflow = SiteWorkflowFactory.BuildWorkflow(SiteWorkflowState.PlanningStatus, localAuthority: localAuthority);
 
         // when

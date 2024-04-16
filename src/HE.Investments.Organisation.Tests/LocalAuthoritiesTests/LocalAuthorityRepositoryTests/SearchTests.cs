@@ -1,4 +1,5 @@
 using FluentAssertions;
+using HE.Investments.Organisation.LocalAuthorities;
 using HE.Investments.Organisation.LocalAuthorities.Repositories;
 using HE.Investments.Organisation.Tests.LocalAuthoritiesTests.TestData;
 using HE.Investments.Organisation.Tests.TestObjectBuilders;
@@ -14,20 +15,22 @@ public class SearchTests : TestBase<LocalAuthorityRepository>
     {
         // given
         var localAuthorities = LocalAuthorityTestData.LocalAuthoritiesList;
-        var phrase = "Liverpool";
+        var phrase = "r";
 
         var cacheServiceMock = CacheServiceMockTestBuilder
             .New()
-            .MockSearchLocalAuthorityRequest(localAuthorities)
+            .MockLoansSearchLocalAuthorityRequest(localAuthorities)
             .Build();
 
         RegisterDependency(cacheServiceMock);
+        RegisterDependency(LocalAuthoritySource.Loans);
 
         // when
-        var (_, totalItems) = await TestCandidate.Search(phrase, 1, 10, CancellationToken.None);
+        var (items, totalItems) = await TestCandidate.Search(phrase, 0, 3, CancellationToken.None);
 
         // then
-        totalItems.Should().BeGreaterThan(0);
+        items.Should().HaveCount(3);
+        totalItems.Should().Be(4);
     }
 
     [Fact]
@@ -39,7 +42,7 @@ public class SearchTests : TestBase<LocalAuthorityRepository>
 
         var cacheServiceMock = CacheServiceMockTestBuilder
             .New()
-            .MockSearchLocalAuthorityRequest(localAuthorities)
+            .MockLoansSearchLocalAuthorityRequest(localAuthorities)
             .Build();
 
         RegisterDependency(cacheServiceMock);

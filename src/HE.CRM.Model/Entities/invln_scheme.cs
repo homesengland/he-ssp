@@ -278,6 +278,8 @@ namespace DataverseModel
 			public const string invln_RegenBid = "invln_regenbid";
 			public const string invln_regenbidName = "invln_regenbidname";
 			public const string invln_regionalbenchmarkagainstthegrantperunit = "invln_regionalbenchmarkagainstthegrantperunit";
+			public const string invln_representationsandwarrantiesconfirmation = "invln_representationsandwarrantiesconfirmation";
+			public const string invln_representationsandwarrantiesconfirmationName = "invln_representationsandwarrantiesconfirmationname";
 			public const string invln_Rural = "invln_rural";
 			public const string invln_ruralbonusgrantperunitaspercentageofareaa = "invln_ruralbonusgrantperunitaspercentageofareaa";
 			public const string invln_ruralName = "invln_ruralname";
@@ -2830,6 +2832,40 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_regionalbenchmarkagainstthegrantperunit");
 				this.SetAttributeValue("invln_regionalbenchmarkagainstthegrantperunit", value);
 				this.OnPropertyChanged("invln_regionalbenchmarkagainstthegrantperunit");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_representationsandwarrantiesconfirmation")]
+		public System.Nullable<bool> invln_representationsandwarrantiesconfirmation
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_representationsandwarrantiesconfirmation");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_representationsandwarrantiesconfirmation");
+				this.SetAttributeValue("invln_representationsandwarrantiesconfirmation", value);
+				this.OnPropertyChanged("invln_representationsandwarrantiesconfirmation");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_representationsandwarrantiesconfirmationname")]
+		public string invln_representationsandwarrantiesconfirmationName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_representationsandwarrantiesconfirmation"))
+				{
+					return this.FormattedValues["invln_representationsandwarrantiesconfirmation"];
+				}
+				else
+				{
+					return default(string);
+				}
 			}
 		}
 		

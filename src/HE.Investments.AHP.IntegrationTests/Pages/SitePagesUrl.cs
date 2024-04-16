@@ -30,11 +30,11 @@ public static class SitePagesUrl
 
     public static string SiteLocalAuthorityResult(string siteId, string phrase) => $"{SiteLocalAuthorityResult(siteId)}?phrase={phrase}";
 
-    public static string SiteLocalAuthorityConfirm(string siteId, string localAuthorityId, string phrase) =>
-        $"ahp/site/{siteId}/local-authority/{localAuthorityId}/confirm?phrase={phrase}";
+    public static string SiteLocalAuthorityConfirm(string siteId, string localAuthorityCode, string phrase) =>
+        $"ahp/site/{siteId}/local-authority/{localAuthorityCode}/confirm?phrase={phrase}";
 
-    public static string SiteLocalAuthorityConfirmWithoutQuery(string siteId, string localAuthorityId) =>
-        $"ahp/site/{siteId}/local-authority/{localAuthorityId}/confirm";
+    public static string SiteLocalAuthorityConfirmWithoutQuery(string siteId, string localAuthorityCode) =>
+        $"ahp/site/{siteId}/local-authority/{localAuthorityCode}/confirm";
 
     public static string SitePlanningStatus(string siteId) => $"ahp/site/{siteId}/planning-status";
 
