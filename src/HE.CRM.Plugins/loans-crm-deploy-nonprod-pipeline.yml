@@ -48,7 +48,7 @@ resources:
       trigger: none
 
 stages:
-  - template: crm-deployment-pipelines/loans-crm-deploy.yml@he-invst-deployment
+  - template: crm-deployment-pipelines/loans-crm-deploy-nonprod.yml@he-invst-deployment
     parameters:
       artifactLocationPipeline: BuildPipeline
       deployWithUpgrade: "${{ parameters.deployWithUpgrade }}"
