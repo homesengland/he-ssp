@@ -41,7 +41,7 @@ public static class ApplicationStatusMapper
             (int)invln_ExternalStatus.ApplicationSubmitted => ApplicationStatus.ApplicationSubmitted,
             (int)invln_ExternalStatus.InDueDiligence => ApplicationStatus.InDueDiligence,
             (int)invln_ExternalStatus.ContractSignedSubjecttoCP => ApplicationStatus.AwaitingCpSatisfaction,
-            (int)invln_ExternalStatus.CPsSatisfied => ApplicationStatus.ConditionsSatisfied,
+            (int)invln_ExternalStatus.ConditionsSatisfied => ApplicationStatus.ConditionsSatisfied,
             (int)invln_ExternalStatus.LoanAvailable => ApplicationStatus.LoanAvailable,
             (int)invln_ExternalStatus.HoldRequested => ApplicationStatus.HoldRequested,
             (int)invln_ExternalStatus.OnHold => ApplicationStatus.OnHold,
