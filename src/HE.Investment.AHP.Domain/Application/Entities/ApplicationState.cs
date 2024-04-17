@@ -12,12 +12,15 @@ public class ApplicationState
 
     private readonly ApplicationStatus? _previousStatus;
 
+    private readonly bool _wasSubmitted;
+
     private readonly StateMachine<ApplicationStatus, AhpApplicationOperation> _machine;
 
-    public ApplicationState(ApplicationStatus currentStatus, IUserAccount userAccount, ApplicationStatus? previousStatus)
+    public ApplicationState(ApplicationStatus currentStatus, IUserAccount userAccount, ApplicationStatus? previousStatus, bool wasSubmitted)
     {
         _userAccount = userAccount;
         _previousStatus = previousStatus;
+        _wasSubmitted = wasSubmitted;
         _machine = new StateMachine<ApplicationStatus, AhpApplicationOperation>(currentStatus);
         ConfigureTransitions();
     }
@@ -39,7 +42,8 @@ public class ApplicationState
     {
         _machine.Configure(ApplicationStatus.Draft)
             .PermitReentryIf(AhpApplicationOperation.Modification, () => _userAccount.CanEditApplication)
-            .PermitIf(AhpApplicationOperation.Withdraw, ApplicationStatus.Deleted, () => _userAccount.CanEditApplication)
+            .PermitIf(AhpApplicationOperation.Withdraw, ApplicationStatus.Deleted, () => !_wasSubmitted && _userAccount.CanEditApplication)
+            .PermitIf(AhpApplicationOperation.Withdraw, ApplicationStatus.Withdrawn, () => _wasSubmitted && _userAccount.CanEditApplication)
             .PermitIf(AhpApplicationOperation.PutOnHold, ApplicationStatus.OnHold, () => _userAccount.CanEditApplication)
             .PermitIf(AhpApplicationOperation.Submit, ApplicationStatus.ApplicationSubmitted, () => _userAccount.CanSubmitApplication);
 
