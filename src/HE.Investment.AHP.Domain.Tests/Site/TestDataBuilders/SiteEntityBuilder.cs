@@ -19,7 +19,7 @@ namespace HE.Investment.AHP.Domain.Tests.Site.TestDataBuilders;
 public class SiteEntityBuilder : TestObjectBuilder<SiteEntityBuilder, SiteEntity>
 {
     private SiteEntityBuilder()
-        : base(SiteEntity.NewSite())
+        : base(SiteEntity.NewSite(null, null))
     {
     }
 

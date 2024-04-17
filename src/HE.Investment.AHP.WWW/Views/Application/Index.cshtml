@@ -11,8 +11,13 @@
         .WithApplicationsList()
         .Build();
 }
+
+<div class="govuk-grid-column-two-thirds govuk-!-padding-top-4">
+    <vc:notification/>
+</div>
+
 <div class="govuk-grid-column-full">
-    <vc:page-header title="@ApplicationPageTitles.ApplicationList" caption="@Model.OrganisationName" additional-css-class="govuk-!-padding-top-8"/>
+    <vc:page-header title="@ApplicationPageTitles.ApplicationList" caption="@Model.OrganisationName" additional-css-class="govuk-!-padding-top-2"/>
 
     @if (Model.Result.TotalItems > 0)
     {

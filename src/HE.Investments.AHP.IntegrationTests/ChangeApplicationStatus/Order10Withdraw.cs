@@ -11,11 +11,11 @@ using Xunit.Extensions.Ordering;
 
 namespace HE.Investments.AHP.IntegrationTests.ChangeApplicationStatus;
 
-[Order(9)]
+[Order(10)]
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
-public class Order09Withdraw : AhpIntegrationTest
+public class Order10Withdraw : AhpIntegrationTest
 {
-    public Order09Withdraw(AhpIntegrationTestFixture fixture, ITestOutputHelper output)
+    public Order10Withdraw(AhpIntegrationTestFixture fixture, ITestOutputHelper output)
         : base(fixture, output)
     {
     }
@@ -29,7 +29,7 @@ public class Order09Withdraw : AhpIntegrationTest
         taskListPage
             .UrlEndWith(ApplicationPagesUrl.TaskListSuffix)
             .HasTitle(ApplicationData.ApplicationName)
-            .HasStatusTagByTestId(ApplicationStatus.OnHold.GetDescription(), "application-status")
+            .HasStatusTagByTestId(ApplicationStatus.RequestedEditing.GetDescription(), "application-status")
             .HasLinkWithTestId("withdraw-application", out var withdrawLink);
 
         // when

@@ -25,6 +25,8 @@ public class ApplicationEntityBuilder
 
     private ApplicationStatus? _previousStatus;
 
+    private bool _wasSubmitted;
+
     private IList<ApplicationSection>? _sections;
 
     private IUserAccount _userAccount = UserAccountTestData.AdminUserAccountOne;
@@ -67,6 +69,12 @@ public class ApplicationEntityBuilder
         return this;
     }
 
+    public ApplicationEntityBuilder WithWasSubmitted(bool wasSubmitted)
+    {
+        _wasSubmitted = wasSubmitted;
+        return this;
+    }
+
     public ApplicationEntity Build()
     {
         return new ApplicationEntity(
@@ -75,7 +83,7 @@ public class ApplicationEntityBuilder
             _name,
             _status,
             new ApplicationTenure(Tenure.AffordableRent),
-            new ApplicationStateFactory(_userAccount, _previousStatus),
+            new ApplicationStateFactory(_userAccount, _previousStatus, _wasSubmitted),
             _reference,
             new ApplicationSections(_sections ?? new List<ApplicationSection>()));
     }

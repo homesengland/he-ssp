@@ -10,14 +10,17 @@ public class ApplicationStateFactory : IApplicationStateFactory
 
     private readonly ApplicationStatus? _previousStatus;
 
-    public ApplicationStateFactory(IUserAccount userAccount, ApplicationStatus? previousStatus = null)
+    private readonly bool _wasSubmitted;
+
+    public ApplicationStateFactory(IUserAccount userAccount, ApplicationStatus? previousStatus = null, bool? wasSubmitted = null)
     {
         _userAccount = userAccount;
         _previousStatus = previousStatus;
+        _wasSubmitted = wasSubmitted ?? false;
     }
 
     public ApplicationState Create(ApplicationStatus status)
     {
-        return new ApplicationState(status, _userAccount, _previousStatus);
+        return new ApplicationState(status, _userAccount, _previousStatus, _wasSubmitted);
     }
 }

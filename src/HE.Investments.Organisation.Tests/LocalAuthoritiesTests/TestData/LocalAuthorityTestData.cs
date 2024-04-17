@@ -1,6 +1,7 @@
 using HE.Investments.Organisation.LocalAuthorities.ValueObjects;
 
 namespace HE.Investments.Organisation.Tests.LocalAuthoritiesTests.TestData;
+
 internal static class LocalAuthorityTestData
 {
     public static readonly LocalAuthority LocalAuthorityOne = new(LocalAuthorityCode.From("1"), "Liverpool");

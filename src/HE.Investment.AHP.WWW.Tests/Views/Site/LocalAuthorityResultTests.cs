@@ -1,5 +1,6 @@
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.WWW.Views.Site.Const;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Pagination;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.Site;
@@ -15,7 +16,7 @@ public class LocalAuthorityResultTests : AhpViewTestBase
         var localAuthorities = new LocalAuthorities()
         {
             Page = new PaginationResult<LocalAuthority>(
-                new List<LocalAuthority>() { new() { Id = "1", Name = "Liverpool" } },
+                new List<LocalAuthority> { new("1", "Liverpool") },
                 1,
                 10,
                 1),

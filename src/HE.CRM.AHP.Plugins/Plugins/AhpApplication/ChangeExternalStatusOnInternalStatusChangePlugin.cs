@@ -25,23 +25,16 @@ namespace HE.CRM.AHP.Plugins.Plugins.AhpApplication
        Image1Type = ImageTypeEnum.PreImage)]
     public class ChangeExternalStatusOnInternalStatusChangePlugin : PluginBase<DataverseContext>, IPlugin
     {
-        #region Constructors
-
         public ChangeExternalStatusOnInternalStatusChangePlugin(string unsecureConfig, string secureConfig) : base(unsecureConfig, secureConfig)
         {
         }
-
-        #endregion Constructors
-
-        #region Base Methods Overrides
 
         public override void RegisterHandlers(CrmHandlerFactory<DataverseContext> handlerFactory, IList<ICrmHandler> registeredHandlers)
         {
             registeredHandlers.Add(handlerFactory.GetHandler<ChangeExternalStatusOnInternalStatusChangeHandler>());
             registeredHandlers.Add(handlerFactory.GetHandler<UpdateLocalAuthorityWhenSiteIsChanged>());
             registeredHandlers.Add(handlerFactory.GetHandler<RecalculateDeliveryphaseHandler>());
+            registeredHandlers.Add(handlerFactory.GetHandler<UpdateAplicationOnStatusChange>());
         }
-
-        #endregion Base Methods Overrides
     }
 }

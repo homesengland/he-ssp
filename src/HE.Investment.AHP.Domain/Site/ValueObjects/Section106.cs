@@ -1,8 +1,7 @@
-using System.Xml.Linq;
 using HE.Investment.AHP.Contract.Site;
-using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
 
 namespace HE.Investment.AHP.Domain.Site.ValueObjects;
@@ -110,7 +109,7 @@ public class Section106 : ValueObject, IQuestion
         if (affordableHousing == null)
         {
             OperationResult.New()
-                .AddValidationError(nameof(Section106Dto.AffordableHousing), ValidationErrorMessage.MustProvideRequiredField("Affordable Housing answer."))
+                .AddValidationError(nameof(Section106Dto.AffordableHousing), ValidationErrorMessage.MustProvideRequiredField("Affordable Housing answer"))
                 .CheckErrors();
         }
 
@@ -127,7 +126,7 @@ public class Section106 : ValueObject, IQuestion
         if (onlyAffordableHousing == null)
         {
             OperationResult.New()
-                .AddValidationError(nameof(Section106Dto.OnlyAffordableHousing), ValidationErrorMessage.MustProvideRequiredField("100% Affordable Housing answer."))
+                .AddValidationError(nameof(Section106Dto.OnlyAffordableHousing), ValidationErrorMessage.MustProvideRequiredField("100% Affordable Housing answer"))
                 .CheckErrors();
         }
 
@@ -144,7 +143,7 @@ public class Section106 : ValueObject, IQuestion
         if (additionalAffordableHousing == null)
         {
             OperationResult.New()
-                .AddValidationError(nameof(Section106Dto.AdditionalAffordableHousing), ValidationErrorMessage.MustProvideRequiredField("Additional Affordable Housing answer."))
+                .AddValidationError(nameof(Section106Dto.AdditionalAffordableHousing), ValidationErrorMessage.MustProvideRequiredField("Additional Affordable Housing answer"))
                 .CheckErrors();
         }
 
@@ -161,7 +160,7 @@ public class Section106 : ValueObject, IQuestion
         if (capitalFundingEligibility == null)
         {
             OperationResult.New()
-                .AddValidationError(nameof(Section106Dto.CapitalFundingEligibility), ValidationErrorMessage.MustProvideRequiredField("Capital funding Eligibility answer."))
+                .AddValidationError(nameof(Section106Dto.CapitalFundingEligibility), ValidationErrorMessage.MustProvideRequiredField("Capital funding Eligibility answer"))
                 .CheckErrors();
         }
 
@@ -175,6 +174,13 @@ public class Section106 : ValueObject, IQuestion
 
     public Section106 WithLocalAuthorityConfirmation(string? localAuthorityConfirmation)
     {
+        if (localAuthorityConfirmation.IsProvided() && localAuthorityConfirmation!.Length > MaximumInputLength.LongInput)
+        {
+            OperationResult.New()
+                .AddValidationError(nameof(LocalAuthorityConfirmation), ValidationErrorMessage.StringLengthExceeded("local authority confirmation", MaximumInputLength.LongInput))
+                .CheckErrors();
+        }
+
         return new Section106(GeneralAgreement, AffordableHousing, OnlyAffordableHousing, AdditionalAffordableHousing, CapitalFundingEligibility, localAuthorityConfirmation);
     }
 

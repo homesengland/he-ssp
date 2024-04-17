@@ -17,10 +17,12 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi
         private string organisationId => ExecutionData.GetInputParameter<string>(invln_changeahpapplicationstatusRequest.Fields.invln_organisationid);
         private int newStatus => ExecutionData.GetInputParameter<int>(invln_changeahpapplicationstatusRequest.Fields.invln_newapplicationstatus);
         private string changeReason => ExecutionData.GetInputParameter<string>(invln_changeahpapplicationstatusRequest.Fields.invln_changereason);
+        private bool representationsandwarranties => ExecutionData.GetInputParameter<bool>(invln_changeahpapplicationstatusRequest.Fields.invln_representationsandwarranties);
 
-        #endregion
+        #endregion Fields
 
         #region Base Methods Overrides
+
         public override bool CanWork()
         {
             return applicationId != null && contactId != null && organisationId != null && newStatus != null;
@@ -29,9 +31,9 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi
         public override void DoWork()
         {
             TracingService.Trace("method");
-            CrmServicesFactory.Get<IApplicationService>().ChangeApplicationStatus(organisationId, contactId, applicationId, newStatus, changeReason);
+            CrmServicesFactory.Get<IApplicationService>().ChangeApplicationStatus(organisationId, contactId, applicationId, newStatus, changeReason, representationsandwarranties);
         }
 
-        #endregion
+        #endregion Base Methods Overrides
     }
 }

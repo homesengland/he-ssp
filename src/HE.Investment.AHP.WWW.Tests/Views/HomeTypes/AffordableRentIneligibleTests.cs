@@ -18,7 +18,7 @@ public class AffordableRentIneligibleTests : HomeTypesTestBase
         document
             .HasPageHeader("My application - My homes", "Contact your Growth Manager")
             .HasElementWithText("p", "The rent for Affordable Rent homes must not exceed 80% of market rent, unless the local target rent, including service charge, is higher.")
-            .HasElementWithText("p", "Check the figures you have entered are correct. If the are, contact your Growth Manager to discuss this further.")
+            .HasElementWithText("p", "Check the figures you have entered are correct. If they are, contact your Growth Manager to discuss this further.")
             .HasElementWithText("a", "Go back and try again")
             .HasElementWithText("a", "Save and return to your account");
     }

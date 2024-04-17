@@ -1,7 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using FluentAssertions;
-using HE.Investments.Common.CRM.Extensions;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.FrontDoor.Contract.Project;
@@ -108,7 +107,6 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
     public async Task Order05_SelectLocalAuthority()
     {
         // given
-        var useHeTablesParameter = await FeatureManager.GetUseHeTablesParameter();
         var currentPage = await GetCurrentPage(SitePagesUrl.LocalAuthorityResult(ProjectData.Id, SiteData.Id));
         var confirmLocalAuthorityLink = currentPage
             .UrlWithoutQueryEndsWith(SitePagesUrl.LocalAuthorityResult(ProjectData.Id, SiteData.Id))
@@ -121,7 +119,7 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
 
         // then
         nextPage
-            .UrlEndWith(SitePagesUrl.LocalAuthorityConfirm(ProjectData.Id, SiteData.Id, SiteData.LocalAuthorityCode(useHeTablesParameter)))
+            .UrlEndWith(SitePagesUrl.LocalAuthorityConfirm(ProjectData.Id, SiteData.Id, SiteData.LocalAuthorityCode))
             .HasTitle(SitePageTitles.LocalAuthorityConfirm)
             .HasBackLink(out _)
             .HasSaveAndContinueButton();

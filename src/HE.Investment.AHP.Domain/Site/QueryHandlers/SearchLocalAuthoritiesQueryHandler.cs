@@ -1,34 +1,40 @@
-using HE.Common.IntegrationModel.PortalIntegrationModel;
+extern alias Org;
+
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Queries;
-using HE.Investment.AHP.Domain.Site.Repositories;
+using HE.Investment.AHP.Domain.Site.Mappers;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Contract.Validators;
 using MediatR;
+using Org::HE.Investments.Organisation.LocalAuthorities.Repositories;
 
 namespace HE.Investment.AHP.Domain.Site.QueryHandlers;
 
 public class SearchLocalAuthoritiesQueryHandler : IRequestHandler<SearchLocalAuthoritiesQuery, OperationResult<LocalAuthorities>>
 {
-    private readonly IAhgLocalAuthorityRepository _repository;
+    private readonly ILocalAuthorityRepository _repository;
 
-    public SearchLocalAuthoritiesQueryHandler(IAhgLocalAuthorityRepository repository)
+    public SearchLocalAuthoritiesQueryHandler(ILocalAuthorityRepository repository)
     {
         _repository = repository;
     }
 
     public async Task<OperationResult<LocalAuthorities>> Handle(SearchLocalAuthoritiesQuery request, CancellationToken cancellationToken)
     {
-        var paging = new PagingRequestDto { pageNumber = request.PaginationRequest.Page, pageSize = request.PaginationRequest.ItemsPerPage };
-        var localAuthorities = await _repository.Get(paging, request.Phrase, cancellationToken);
+        var (items, totalItems) = await _repository.Search(
+            request.Phrase,
+            request.PaginationRequest.Page - 1,
+            request.PaginationRequest.ItemsPerPage,
+            cancellationToken);
 
         var result = new LocalAuthorities
         {
             Page = new PaginationResult<LocalAuthority>(
-                localAuthorities.items.Select(c => new LocalAuthority { Id = c.id, Name = c.name }).ToList(),
+                items.Select(x => LocalAuthorityMapper.Map(x)!).ToList(),
                 request.PaginationRequest.Page,
                 request.PaginationRequest.ItemsPerPage,
-                localAuthorities.totalItemsCount),
+                totalItems),
             Phrase = request.Phrase,
         };
 

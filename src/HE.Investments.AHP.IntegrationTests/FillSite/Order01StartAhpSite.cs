@@ -184,7 +184,7 @@ public class Order01StartAhpSite : AhpIntegrationTest
 
         // then
         localAuthorityConfirmPage
-            .UrlEndWith(SitePagesUrl.SiteLocalAuthorityConfirm(SiteData.SiteId, SiteData.LocalAuthorityId, SiteData.LocalAuthorityName))
+            .UrlEndWith(SitePagesUrl.SiteLocalAuthorityConfirm(SiteData.SiteId, SiteData.LocalAuthorityCode, SiteData.LocalAuthorityName))
             .HasTitle(SitePageTitles.LocalAuthorityConfirm);
         SaveCurrentPage();
     }
@@ -194,9 +194,9 @@ public class Order01StartAhpSite : AhpIntegrationTest
     public async Task Order12_ShouldConfirmLocalAuthorityAndNavigateToPlanningStatus()
     {
         // given
-        var currentPage = await GetCurrentPage(SitePagesUrl.SiteLocalAuthorityConfirm(SiteData.SiteId, SiteData.LocalAuthorityId, SiteData.LocalAuthorityName));
+        var currentPage = await GetCurrentPage(SitePagesUrl.SiteLocalAuthorityConfirm(SiteData.SiteId, SiteData.LocalAuthorityCode, SiteData.LocalAuthorityName));
         currentPage
-            .UrlWithoutQueryEndsWith(SitePagesUrl.SiteLocalAuthorityConfirmWithoutQuery(SiteData.SiteId, SiteData.LocalAuthorityId))
+            .UrlWithoutQueryEndsWith(SitePagesUrl.SiteLocalAuthorityConfirmWithoutQuery(SiteData.SiteId, SiteData.LocalAuthorityCode))
             .HasTitle(SitePageTitles.LocalAuthorityConfirm)
             .HasBackLink(out _)
             .HasSubmitButton(out var confirmButton, "Continue");

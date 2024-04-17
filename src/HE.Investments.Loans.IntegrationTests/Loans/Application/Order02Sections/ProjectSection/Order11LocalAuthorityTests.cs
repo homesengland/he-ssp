@@ -1,7 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
 using HE.Investments.Common.Contract.Constants;
-using HE.Investments.Common.CRM.Extensions;
 using HE.Investments.Common.Messages;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Extensions;
@@ -129,11 +128,10 @@ public class Order11LocalAuthorityTests : IntegrationTest
     {
         // given
         var localAuthorityResultPage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
-        var useHeTablesParameter = await FeatureManager.GetUseHeTablesParameter();
 
         // when
-        localAuthorityResultPage.HasAnchorElementById($"local-authority-link-{UserData.LocalAuthorityId(useHeTablesParameter)}", out var liverpoolAuthorityLink);
-        var localAuthorityConfirmPage = await TestClient.NavigateTo(liverpoolAuthorityLink);
+        localAuthorityResultPage.HasAnchorElementById($"local-authority-link-{UserData.LocalAuthorityCode}", out var localAuthorityLink);
+        var localAuthorityConfirmPage = await TestClient.NavigateTo(localAuthorityLink);
 
         // then
         localAuthorityConfirmPage
