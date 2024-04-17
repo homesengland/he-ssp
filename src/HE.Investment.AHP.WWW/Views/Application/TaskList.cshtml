@@ -21,7 +21,9 @@
         .WithSchemes()
         .Build();
 }
-<div class="govuk-grid-column-two-thirds govuk-!-padding-top-8">
+<div class="govuk-grid-column-two-thirds">
+    <vc:ahp-workflow-back-button current-page="@ApplicationWorkflowState.TaskList"/>
+
     @if (Model.Status == ApplicationStatus.ReferredBackToApplicant)
     {
         <vc:notification display-notification="@ApplicationHasStatusReferredBackToApplicant.Create()"/>
