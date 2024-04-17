@@ -125,7 +125,9 @@ public class DeliveryPhaseTranches : IQuestion
             completion += leftOver;
         }
 
-        return new MilestonesTranches(acquisition, startOnSite, completion);
+        var sumOfGrantApportioned = acquisition + startOnSite + completion;
+
+        return new MilestonesTranches(sumOfGrantApportioned, acquisition, startOnSite, completion);
     }
 
     public bool IsAnswered()
