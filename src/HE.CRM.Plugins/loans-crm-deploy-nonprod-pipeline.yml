@@ -44,7 +44,7 @@ resources:
       ref: "main"
   pipelines:
     - pipeline: BuildPipeline
-      source: "Loans - CRM - Build WIP"
+      source: "Loans - CRM - Build"
       trigger: none
 
 stages:
