@@ -8,7 +8,12 @@ public static class CrmFields
 {
     public static readonly IReadOnlyList<string> ApplicationToUpdate = new List<string>
     {
-        nameof(invln_scheme.invln_schemename), nameof(invln_scheme.invln_Tenure), nameof(invln_ExternalStatus), nameof(invln_scheme.invln_applicationid), nameof(invln_scheme.invln_Site),
+        nameof(invln_scheme.invln_schemename),
+        nameof(invln_scheme.invln_Tenure),
+        nameof(invln_ExternalStatus),
+        nameof(invln_scheme.invln_applicationid),
+        nameof(invln_scheme.invln_Site),
+        nameof(invln_scheme.invln_programmelookup),
     };
 
     public static readonly IReadOnlyList<string> ApplicationToRead = ApplicationToUpdate.ToList()
