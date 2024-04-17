@@ -73,7 +73,7 @@ public class ApplicationRepository : IApplicationRepository
             application.Tenure.Value,
             application.Status,
             await _programmeRepository.GetProgramme(id, cancellationToken),
-            new ApplicationStateFactory(userAccount));
+            new ApplicationStateFactory(userAccount, wasSubmitted: application.LastSubmitted.IsProvided()));
     }
 
     public async Task<PaginationResult<ApplicationWithFundingDetails>> GetApplicationsWithFundingDetails(
