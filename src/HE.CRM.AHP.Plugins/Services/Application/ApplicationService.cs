@@ -119,7 +119,6 @@ namespace HE.CRM.AHP.Plugins.Services.Application
 
                 if (ahpWithNewStatusCodesAndOtherChanges.invln_DateSubmitted != null)
                 {
-                    var contact = _contactRepository.GetContactViaExternalId(contactId);
                     applicationToUpdate.invln_DateSubmitted = ahpWithNewStatusCodesAndOtherChanges.invln_DateSubmitted;
                     applicationToUpdate.invln_submitedby = contact.ToEntityReference();
                 }

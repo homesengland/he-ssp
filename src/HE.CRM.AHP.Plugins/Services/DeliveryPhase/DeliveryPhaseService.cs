@@ -217,6 +217,9 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
                 {
                     deliveryPhase.invln_CompletionValue.Value += leftOver;
                 }
+                deliveryPhase.invln_sumofcalculatedfounds = new Money(deliveryPhase.invln_AcquisitionValue.Value
+                                                            + deliveryPhase.invln_StartOnSiteValue.Value
+                                                            + deliveryPhase.invln_CompletionValue.Value);
             }
             else
             {
@@ -235,6 +238,9 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
                     deliveryPhase.invln_CompletionValue = new Money(fundingForPhase * deliveryPhase.invln_CompletionPercentageValue.Value);
                     CalculateFieldValue(deliveryPhase, fundingForPhase, df);
                 }
+                deliveryPhase.invln_sumofcalculatedfounds = new Money(deliveryPhase.invln_AcquisitionValue.Value
+                                            + deliveryPhase.invln_StartOnSiteValue.Value
+                                            + deliveryPhase.invln_CompletionValue.Value);
             }
         }
 
