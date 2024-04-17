@@ -43,6 +43,8 @@ resources:
     type: git
     name: 'Investments Programme/he-invst-deployment'
     ref: 'main'
+    pipelines:
+    - pipeline: BuildPipeline
 
 stages:
 - template: azure-pipelines-crm-ahp-build-export.yml@he-invst-deployment
@@ -56,6 +58,7 @@ stages:
 
 - template: azure-pipelines-crm-ahp-upgrade.yml@he-invst-deployment
   parameters:
+    artifactLocationPipeline: BuildPipeline
     deployWithUpgrade: '${{ parameters.deployWithUpgrade }}'
     deployMainSolution: '${{ parameters.deployMainSolution }}'
     deployFlowsSolution: '${{ parameters.deployFlowsSolution }}'
