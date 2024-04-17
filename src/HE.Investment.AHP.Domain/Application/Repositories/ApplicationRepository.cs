@@ -12,6 +12,7 @@ using HE.Investment.AHP.Domain.Programme;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.Contract;
+using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.CRM.Mappers;
 using HE.Investments.Common.Domain;
@@ -51,9 +52,15 @@ public class ApplicationRepository : IApplicationRepository
 
     public async Task<bool> IsExist(AhpApplicationId applicationId, OrganisationId organisationId, CancellationToken cancellationToken)
     {
-        var application = await _applicationCrmContext.GetUserApplicationById(applicationId.Value, organisationId.Value, CrmFields.ApplicationToRead.ToList(), cancellationToken);
-
-        return application.IsProvided();
+        try
+        {
+            var application = await _applicationCrmContext.GetUserApplicationById(applicationId.Value, organisationId.Value, CrmFields.ApplicationToRead.ToList(), cancellationToken);
+            return application.IsProvided();
+        }
+        catch (NotFoundException)
+        {
+            return false;
+        }
     }
 
     public async Task<ApplicationBasicInfo> GetApplicationBasicInfo(AhpApplicationId id, UserAccount userAccount, CancellationToken cancellationToken)
@@ -66,7 +73,7 @@ public class ApplicationRepository : IApplicationRepository
             application.Tenure.Value,
             application.Status,
             await _programmeRepository.GetProgramme(id, cancellationToken),
-            new ApplicationStateFactory(userAccount));
+            new ApplicationStateFactory(userAccount, wasSubmitted: application.LastSubmitted.IsProvided()));
     }
 
     public async Task<PaginationResult<ApplicationWithFundingDetails>> GetApplicationsWithFundingDetails(
@@ -146,7 +153,7 @@ public class ApplicationRepository : IApplicationRepository
             new ApplicationName(application.name ?? "Unknown"),
             applicationStatus,
             ApplicationTenureMapper.ToDomain(application.tenure)!,
-            new ApplicationStateFactory(userAccount, previousStatus),
+            new ApplicationStateFactory(userAccount, previousStatus, application.dateSubmitted.IsProvided()),
             new ApplicationReferenceNumber(application.referenceNumber),
             new ApplicationSections(
                 new List<ApplicationSection>

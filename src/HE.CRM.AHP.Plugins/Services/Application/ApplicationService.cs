@@ -119,7 +119,6 @@ namespace HE.CRM.AHP.Plugins.Services.Application
 
                 if (ahpWithNewStatusCodesAndOtherChanges.invln_DateSubmitted != null)
                 {
-                    var contact = _contactRepository.GetContactViaExternalId(contactId);
                     applicationToUpdate.invln_DateSubmitted = ahpWithNewStatusCodesAndOtherChanges.invln_DateSubmitted;
                     applicationToUpdate.invln_submitedby = contact.ToEntityReference();
                 }
@@ -237,21 +236,24 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                     if (application.invln_lastexternalmodificationby != null)
                     {
                         var lastExternalModificationBy = _contactRepository.GetById(application.invln_lastexternalmodificationby.Id,
-                            new string[] { nameof(Contact.FirstName).ToLower(), nameof(Contact.LastName).ToLower() });
+                        new string[] { nameof(Contact.FirstName).ToLower(), nameof(Contact.LastName).ToLower() });
                         applicationDto.lastExternalModificationBy = new ContactDto()
                         {
                             firstName = lastExternalModificationBy.FirstName,
                             lastName = lastExternalModificationBy.LastName,
                         };
+                    }
 
+                    if (application.invln_submitedby != null)
+                    {
                         var submitedBy = _contactRepository.GetById(application.invln_submitedby.Id, new string[] { Contact.Fields.FirstName, Contact.Fields.LastName });
                         applicationDto.lastExternalSubmittedBy = new ContactDto()
                         {
                             firstName = submitedBy.FirstName,
                             lastName = submitedBy.LastName,
                         };
-
                     }
+
                     listOfApplications.Add(applicationDto);
                 }
             }
