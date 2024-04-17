@@ -142,6 +142,7 @@
     <Compile Include="CustomAPI\SendReminderEmailForRefferedBackToApplicantPluginTests.cs" />
     <Compile Include="CustomAPI\SentInviteContactToJoinOrganisationPluginTests.cs" />
     <Compile Include="CustomAPI\SetApplicationPluginTests.cs" />
+    <Compile Include="CustomAPI\SetDeliveryPhaseTests.cs" />
     <Compile Include="CustomAPI\SetHomeTypePluginTests.cs" />
     <Compile Include="Handlers\AhpApplication\ChangeExternalStatusOnInternalStatusChangeHandlerTests.cs" />
     <Compile Include="Handlers\AhpApplication\CheckIfApplicationWithNewNameExistsHandlerTests.cs" />

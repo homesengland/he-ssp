@@ -24,10 +24,10 @@ namespace HE.CRM.AHP.Plugins.Handlers.AHPApplication
         {
             if (CurrentState.StatusCode.Value == (int)invln_scheme_StatusCode.ReferredBackToApplicant)
             {
-                if (CurrentState.invln_representationsandwarrantiesconfirmation != true)
-                    return;
-                ExecutionData.Target.invln_representationsandwarrantiesconfirmation = false;
-            }
+            if (CurrentState.invln_representationsandwarrantiesconfirmation != true)
+                return;
+            ExecutionData.Target.invln_representationsandwarrantiesconfirmation = false;
+        }
             if (CurrentState.StatusCode.Value == (int)invln_scheme_StatusCode.ApplicationSubmitted)
             {
                 var hometype = _homeTypeRepository.GetByAttribute(invln_HomeType.Fields.invln_application,
