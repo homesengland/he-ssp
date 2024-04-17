@@ -35,14 +35,14 @@ public class UserRepository : IUserRepository
             null);
     }
 
-    public async Task Save(UserEntity entity, OrganisationId organisationId, CancellationToken cancellationToken)
+    public async Task Save(UserEntity entity, string userAssigningId, OrganisationId organisationId, CancellationToken cancellationToken)
     {
         if (entity.IsRoleModified)
         {
             var role = UserRoleMapper.ToDto(entity.Role);
             if (role != null)
             {
-                await _usersCrmContext.ChangeUserRole(entity.Id.Value, role.Value, organisationId.Value);
+                await _usersCrmContext.ChangeUserRole(entity.Id.Value, userAssigningId, role.Value, organisationId.Value);
                 await _mediator.Publish(new UserAccountsChangedEvent(entity.Id), cancellationToken);
             }
         }
