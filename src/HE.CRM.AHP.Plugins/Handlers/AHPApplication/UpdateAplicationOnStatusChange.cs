@@ -38,7 +38,7 @@ namespace HE.CRM.AHP.Plugins.Handlers.AHPApplication
                 if (hometypes == null || hometypes.Count == 0)
                     return;
                 if (CurrentState.invln_Tenure.Value == (int)invln_Tenure.Affordablerent ||
-                        CurrentState.invln_Tenure.Value == (int)invln_Tenure.Renttobuy )
+                    CurrentState.invln_Tenure.Value == (int)invln_Tenure.Renttobuy)
                 {
 
                     var percentageValueofNDSSStandardMax = hometypes.Max(x => x.invln_PercentageValueofNDSSStandard);

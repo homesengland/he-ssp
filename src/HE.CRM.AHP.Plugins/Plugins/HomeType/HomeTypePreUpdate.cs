@@ -28,7 +28,11 @@ namespace HE.CRM.AHP.Plugins.Plugins.HomeType
                         invln_HomeType.Fields.invln_floorarea,
         Image1Type = ImageTypeEnum.PreImage
     )]
-    public class HomeTypePreUpdate
+    public class HomeTypePreUpdate : PluginBase<DataverseContext>, IPlugin
     {
+        public override void RegisterHandlers(CrmHandlerFactory<DataverseContext> handlerFactory, IList<ICrmHandler> registeredHandlers)
+        {
+            registeredHandlers.Add(handlerFactory.GetHandler<CalculatePercentageValueOfNDSSStandardHandler>());
+        }
     }
 }

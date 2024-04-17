@@ -37,7 +37,7 @@ namespace HE.CRM.AHP.Plugins.Handlers.HomeType
             }
 
             var concatenatevalue = $"{CurrentState.invln_numberofbedrooms}{CurrentState.invln_maxoccupancy}{CurrentState.invln_numberofstoreys}";
-            var nddsStandard = _ndssRepository.GetByAttribute(invln_ndss.Fields.invln_StandardNumber, decimal.Parse(concatenatevalue), new string[] { invln_ndss.Fields.invln_StandardNumber, invln_ndss.Fields.invln_Standard }).FirstOrDefault();
+            var nddsStandard = _ndssRepository.GetByAttribute(invln_ndss.Fields.invln_StandardNumber, int.Parse(concatenatevalue), new string[] { invln_ndss.Fields.invln_StandardNumber, invln_ndss.Fields.invln_Standard }).FirstOrDefault();
             if (nddsStandard == null)
             {
                 TracingService.Trace($"Cannot find entity {invln_ndss.EntityLogicalName} with value {concatenatevalue} in field {invln_ndss.Fields.invln_StandardNumber}");
