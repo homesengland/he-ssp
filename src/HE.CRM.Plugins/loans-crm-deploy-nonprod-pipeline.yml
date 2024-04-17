@@ -1,0 +1,59 @@
+trigger: none
+pr: none
+
+pool:
+  vmImage: windows-latest
+
+parameters:
+  - name: deployWithUpgrade
+    displayName: Upgrade Solutions?
+    type: boolean
+    default: true
+  - name: deployEnvironmentVariables
+    displayName: Deploy Environment Variables ?
+    type: boolean
+    default: true
+  - name: deployMainSolution
+    displayName: Deploy Main Solution ?
+    type: boolean
+    default: true
+  - name: deployFlowsSolution
+    displayName: Deploy Flows Solution ?
+    type: boolean
+    default: true
+  - name: deployPluginsSolution
+    displayName: Deploy Plugins Solution ?
+    type: boolean
+    default: true
+  - name: deployDataMigration
+    displayName: Migrate Data ?
+    type: boolean
+    default: true
+
+variables:
+  solution: "**/*.sln"
+  buildPlatform: "Any CPU"
+  buildConfiguration: "Release"
+  branch: "master"
+
+resources:
+  repositories:
+    - repository: he-invst-deployment
+      type: git
+      name: "Investments Programme/he-invst-deployment"
+      ref: "pipelines/separate-pipelines"
+  pipelines:
+    - pipeline: BuildPipeline
+      source: "Loans - CRM - Build WIP"
+      trigger: none
+
+stages:
+  - template: crm-deployment-pipelines/loans-crm-deploy-nonprod.yml@he-invst-deployment
+    parameters:
+      artifactLocationPipeline: BuildPipeline
+      deployWithUpgrade: "${{ parameters.deployWithUpgrade }}"
+      deployEnvironmentVariables: "${{ parameters.deployEnvironmentVariables }}"
+      deployMainSolution: "${{ parameters.deployMainSolution }}"
+      deployFlowsSolution: "${{ parameters.deployFlowsSolution }}"
+      deployPluginsSolution: "${{ parameters.deployPluginsSolution }}"
+      deployDataMigration: "${{ parameters.deployDataMigration }}"

@@ -1,0 +1,59 @@
+trigger: none
+pr: none
+
+pool:
+  vmImage: windows-latest
+
+parameters:
+  - name: buildAndUpdatePlugins
+    displayName: Build & Update Plugins ?
+    type: boolean
+    default: true
+  - name: buildAndUpdateWebResources
+    displayName: Build & Update Webresources ?
+    type: boolean
+    default: true
+  - name: exportMigrationData
+    displayName: Export Migration Data ?
+    type: boolean
+    default: false
+  - name: exportEnvironmentVariables
+    displayName: Export Environment Variables ?
+    type: boolean
+    default: true
+  - name: exportMainSolution
+    displayName: Export Main Solution ?
+    type: boolean
+    default: true
+  - name: exportFlowsSolution
+    displayName: Export Flows Solution ?
+    type: boolean
+    default: true
+  - name: exportPluginsSolution
+    displayName: Export Plugins Solution ?
+    type: boolean
+    default: true
+
+variables:
+  solution: "**/*.sln"
+  buildPlatform: "Any CPU"
+  buildConfiguration: "Release"
+  branch: "master"
+
+resources:
+  repositories:
+    - repository: he-invst-deployment
+      type: git
+      name: "Investments Programme/he-invst-deployment"
+      ref: "pipelines/separate-pipelines"
+
+stages:
+  - template: crm-deployment-pipelines/loans-crm-build-export.yml@he-invst-deployment
+    parameters:
+      buildAndUpdatePlugins: "${{ parameters.buildAndUpdatePlugins }}"
+      buildAndUpdateWebResources: "${{ parameters.buildAndUpdateWebResources }}"
+      exportMigrationData: "${{ parameters.exportMigrationData }}"
+      exportEnvironmentVariables: "${{ parameters.exportEnvironmentVariables }}"
+      exportMainSolution: "${{ parameters.exportMainSolution }}"
+      exportFlowsSolution: "${{ parameters.exportFlowsSolution }}"
+      exportPluginsSolution: "${{ parameters.exportPluginsSolution }}"
