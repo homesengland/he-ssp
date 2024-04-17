@@ -24,22 +24,51 @@ namespace HE.CRM.AHP.Plugins.Handlers.AHPApplication
         {
             if (CurrentState.StatusCode.Value == (int)invln_scheme_StatusCode.ReferredBackToApplicant)
             {
-            if (CurrentState.invln_representationsandwarrantiesconfirmation != true)
-                return;
-            ExecutionData.Target.invln_representationsandwarrantiesconfirmation = false;
-        }
+                if (CurrentState.invln_representationsandwarrantiesconfirmation != true)
+                    return;
+                ExecutionData.Target.invln_representationsandwarrantiesconfirmation = false;
+            }
             if (CurrentState.StatusCode.Value == (int)invln_scheme_StatusCode.ApplicationSubmitted)
             {
-                var hometype = _homeTypeRepository.GetByAttribute(invln_HomeType.Fields.invln_application,
-                    CurrentState.Id, new string[] { invln_HomeType.Fields.invln_PercentageValueofNDSSStandard });
-                if (hometype == null || hometype.Count == 0)
+                var hometypes = _homeTypeRepository.GetByAttribute(invln_HomeType.Fields.invln_application,
+                    CurrentState.Id,
+                    new string[] { invln_HomeType.Fields.invln_PercentageValueofNDSSStandard,
+                        invln_HomeType.Fields.invln_prospectiverentasofmarketrent,
+                        invln_HomeType.Fields.invln_FirstTrancheSalesReceipt    });
+                if (hometypes == null || hometypes.Count == 0)
                     return;
-                var percentageValueofNDSSStandardMax = hometype.Max(x => x.invln_PercentageValueofNDSSStandard);
-                var percentageValueofNDSSStandardMin = hometype.Min(x => x.invln_PercentageValueofNDSSStandard);
-                ExecutionData.Target.invln_Maximumm2asofNDSSoftheHomeTypesonthis = percentageValueofNDSSStandardMax;
-                ExecutionData.Target.invln_Minimumm2asofNDSSoftheHomeTypesonthis = percentageValueofNDSSStandardMin;
-            }
+                if (CurrentState.invln_Tenure.Value == (int)invln_Tenure.Affordablerent ||
+                        CurrentState.invln_Tenure.Value == (int)invln_Tenure.Renttobuy )
+                {
 
+                    var percentageValueofNDSSStandardMax = hometypes.Max(x => x.invln_PercentageValueofNDSSStandard);
+                    var percentageValueofNDSSStandardMin = hometypes.Min(x => x.invln_PercentageValueofNDSSStandard);
+
+                    var homeTypeWithMaxValue = hometypes.FirstOrDefault(x => x.invln_PercentageValueofNDSSStandard == percentageValueofNDSSStandardMax);
+                    var homeTypeWithMinValue = hometypes.FirstOrDefault(x => x.invln_PercentageValueofNDSSStandard == percentageValueofNDSSStandardMin);
+                    ExecutionData.Target.invln_Maximumm2asofNDSSoftheHomeTypesonthis = percentageValueofNDSSStandardMax;
+                    ExecutionData.Target.invln_Minimumm2asofNDSSoftheHomeTypesonthis = percentageValueofNDSSStandardMin;
+                    ExecutionData.Target.invln_MaxRentasofMarketRentoftheHomeTypeson = homeTypeWithMaxValue.invln_prospectiverentasofmarketrent;
+                    ExecutionData.Target.invln_MaxRentasofMarketRentoftheHomeTypeson = homeTypeWithMaxValue.invln_prospectiverentasofmarketrent;
+                }
+
+                if (CurrentState.invln_Tenure.Value == (int)invln_Tenure.Sharedownership ||
+                    CurrentState.invln_Tenure.Value == (int)invln_Tenure.OPSO ||
+                    CurrentState.invln_Tenure.Value == (int)invln_Tenure.HOLD)
+                {
+                    var percentageValueofNDSSStandardMax = hometypes.Max(x => x.invln_PercentageValueofNDSSStandard);
+                    var percentageValueofNDSSStandardMin = hometypes.Min(x => x.invln_PercentageValueofNDSSStandard);
+
+                    var homeTypeWithMaxValue = hometypes.FirstOrDefault(x => x.invln_PercentageValueofNDSSStandard == percentageValueofNDSSStandardMax);
+                    var homeTypeWithMinValue = hometypes.FirstOrDefault(x => x.invln_PercentageValueofNDSSStandard == percentageValueofNDSSStandardMin);
+                    ExecutionData.Target.invln_Maximumm2asofNDSSoftheHomeTypesonthis = percentageValueofNDSSStandardMax;
+                    ExecutionData.Target.invln_Minimumm2asofNDSSoftheHomeTypesonthis = percentageValueofNDSSStandardMin;
+                    ExecutionData.Target.invln_MaxAssumedFirstTrancheSaleoftheHomesType = homeTypeWithMinValue.invln_FirstTrancheSalesReceipt?.Value;
+                    ExecutionData.Target.invln_MinAssumedFirstTrancheSaleoftheHomesType = homeTypeWithMinValue.invln_FirstTrancheSalesReceipt?.Value;
+                    ExecutionData.Target.invln_MaxRentasofUnsoldEquityfortheHomeTypes = homeTypeWithMinValue.invln_RentasofUnsoldShare;
+                    ExecutionData.Target.invln_MinRentasofUnsoldEquityfortheHomeTypes = homeTypeWithMinValue.invln_RentasofUnsoldShare;
+                }
+            }
         }
     }
 }
