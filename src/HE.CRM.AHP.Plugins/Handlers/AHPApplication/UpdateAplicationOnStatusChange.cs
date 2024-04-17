@@ -10,9 +10,9 @@ namespace HE.CRM.AHP.Plugins.Handlers.AHPApplication
     {
         private readonly IHomeTypeRepository _homeTypeRepository;
 
-        public UpdateAplicationOnStatusChange(IHomeTypeRepository _homeTypeRepository)
+        public UpdateAplicationOnStatusChange(IHomeTypeRepository homeTypeRepository)
         {
-            this._homeTypeRepository = _homeTypeRepository;
+            _homeTypeRepository = homeTypeRepository;
         }
 
         public override bool CanWork()
@@ -34,8 +34,10 @@ namespace HE.CRM.AHP.Plugins.Handlers.AHPApplication
                     CurrentState.Id, new string[] { invln_HomeType.Fields.invln_PercentageValueofNDSSStandard });
                 if (hometype == null || hometype.Count == 0)
                     return;
-                var percentageValueofNDSSStandardMax = hometype.MaxBy(x => x.)
-                //var percentageValueofNDSSStandardMin
+                var percentageValueofNDSSStandardMax = hometype.Max(x => x.invln_PercentageValueofNDSSStandard);
+                var percentageValueofNDSSStandardMin = hometype.Min(x => x.invln_PercentageValueofNDSSStandard);
+                ExecutionData.Target.invln_Maximumm2asofNDSSoftheHomeTypesonthis = percentageValueofNDSSStandardMax;
+                ExecutionData.Target.invln_Minimumm2asofNDSSoftheHomeTypesonthis = percentageValueofNDSSStandardMin;
             }
 
         }
