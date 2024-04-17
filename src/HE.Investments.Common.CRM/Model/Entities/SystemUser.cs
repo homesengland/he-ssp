@@ -453,6 +453,7 @@ namespace HE.Investments.Common.CRM.Model
 			public const string InternalEMailAddress = "internalemailaddress";
 			public const string InviteStatusCode = "invitestatuscode";
 			public const string InviteStatusCodeName = "invitestatuscodename";
+			public const string invln_ahglocalauthorities_GrowthManager_systemu = "invln_ahglocalauthorities_GrowthManager_systemu";
 			public const string invln_ahpcontract_ContractLead_systemuser = "invln_ahpcontract_ContractLead_systemuser";
 			public const string invln_externalcomms_systemuser_createdby = "invln_externalcomms_systemuser_createdby";
 			public const string invln_externalcomms_systemuser_createdonbehalfby = "invln_externalcomms_systemuser_createdonbehalfby";
@@ -493,6 +494,10 @@ namespace HE.Investments.Common.CRM.Model
 			public const string lk_environmentvariablevalue_createdonbehalfby = "lk_environmentvariablevalue_createdonbehalfby";
 			public const string lk_environmentvariablevalue_modifiedby = "lk_environmentvariablevalue_modifiedby";
 			public const string lk_environmentvariablevalue_modifiedonbehalfby = "lk_environmentvariablevalue_modifiedonbehalfby";
+			public const string lk_invln_ahglocalauthorities_createdby = "lk_invln_ahglocalauthorities_createdby";
+			public const string lk_invln_ahglocalauthorities_createdonbehalfby = "lk_invln_ahglocalauthorities_createdonbehalfby";
+			public const string lk_invln_ahglocalauthorities_modifiedby = "lk_invln_ahglocalauthorities_modifiedby";
+			public const string lk_invln_ahglocalauthorities_modifiedonbehalfby = "lk_invln_ahglocalauthorities_modifiedonbehalfby";
 			public const string lk_invln_ahpcontract_createdby = "lk_invln_ahpcontract_createdby";
 			public const string lk_invln_ahpcontract_createdonbehalfby = "lk_invln_ahpcontract_createdonbehalfby";
 			public const string lk_invln_ahpcontract_modifiedby = "lk_invln_ahpcontract_modifiedby";
@@ -505,10 +510,6 @@ namespace HE.Investments.Common.CRM.Model
 			public const string lk_invln_borrowerpreviousschemes_createdonbehalfby = "lk_invln_borrowerpreviousschemes_createdonbehalfby";
 			public const string lk_invln_borrowerpreviousschemes_modifiedby = "lk_invln_borrowerpreviousschemes_modifiedby";
 			public const string lk_invln_borrowerpreviousschemes_modifiedonbehalfby = "lk_invln_borrowerpreviousschemes_modifiedonbehalfby";
-			public const string lk_invln_cashflow_createdby = "lk_invln_cashflow_createdby";
-			public const string lk_invln_cashflow_createdonbehalfby = "lk_invln_cashflow_createdonbehalfby";
-			public const string lk_invln_cashflow_modifiedby = "lk_invln_cashflow_modifiedby";
-			public const string lk_invln_cashflow_modifiedonbehalfby = "lk_invln_cashflow_modifiedonbehalfby";
 			public const string lk_invln_comment_createdby = "lk_invln_comment_createdby";
 			public const string lk_invln_comment_createdonbehalfby = "lk_invln_comment_createdonbehalfby";
 			public const string lk_invln_comment_modifiedby = "lk_invln_comment_modifiedby";
@@ -549,6 +550,14 @@ namespace HE.Investments.Common.CRM.Model
 			public const string lk_invln_financialcovenants_createdonbehalfby = "lk_invln_financialcovenants_createdonbehalfby";
 			public const string lk_invln_financialcovenants_modifiedby = "lk_invln_financialcovenants_modifiedby";
 			public const string lk_invln_financialcovenants_modifiedonbehalfby = "lk_invln_financialcovenants_modifiedonbehalfby";
+			public const string lk_invln_frontdoorprojectpoc_createdby = "lk_invln_frontdoorprojectpoc_createdby";
+			public const string lk_invln_frontdoorprojectpoc_createdonbehalfby = "lk_invln_frontdoorprojectpoc_createdonbehalfby";
+			public const string lk_invln_frontdoorprojectpoc_modifiedby = "lk_invln_frontdoorprojectpoc_modifiedby";
+			public const string lk_invln_frontdoorprojectpoc_modifiedonbehalfby = "lk_invln_frontdoorprojectpoc_modifiedonbehalfby";
+			public const string lk_invln_frontdoorprojectsitepoc_createdby = "lk_invln_frontdoorprojectsitepoc_createdby";
+			public const string lk_invln_frontdoorprojectsitepoc_createdonbehalfby = "lk_invln_frontdoorprojectsitepoc_createdonbehalfby";
+			public const string lk_invln_frontdoorprojectsitepoc_modifiedby = "lk_invln_frontdoorprojectsitepoc_modifiedby";
+			public const string lk_invln_frontdoorprojectsitepoc_modifiedonbehalfby = "lk_invln_frontdoorprojectsitepoc_modifiedonbehalfby";
 			public const string lk_invln_grantbenchmark_createdby = "lk_invln_grantbenchmark_createdby";
 			public const string lk_invln_grantbenchmark_createdonbehalfby = "lk_invln_grantbenchmark_createdonbehalfby";
 			public const string lk_invln_grantbenchmark_modifiedby = "lk_invln_grantbenchmark_modifiedby";
@@ -758,10 +767,10 @@ namespace HE.Investments.Common.CRM.Model
 			public const string user_accounts = "user_accounts";
 			public const string user_environmentvariabledefinition = "user_environmentvariabledefinition";
 			public const string user_environmentvariablevalue = "user_environmentvariablevalue";
+			public const string user_invln_ahglocalauthorities = "user_invln_ahglocalauthorities";
 			public const string user_invln_ahpcontract = "user_invln_ahpcontract";
 			public const string user_invln_ahpstatuschange = "user_invln_ahpstatuschange";
 			public const string user_invln_borrowerpreviousschemes = "user_invln_borrowerpreviousschemes";
-			public const string user_invln_cashflow = "user_invln_cashflow";
 			public const string user_invln_comment = "user_invln_comment";
 			public const string user_invln_conditions = "user_invln_conditions";
 			public const string user_invln_consortium = "user_invln_consortium";
@@ -772,6 +781,8 @@ namespace HE.Investments.Common.CRM.Model
 			public const string user_invln_emailnotification = "user_invln_emailnotification";
 			public const string user_invln_emailtemplate = "user_invln_emailtemplate";
 			public const string user_invln_financialcovenants = "user_invln_financialcovenants";
+			public const string user_invln_frontdoorprojectpoc = "user_invln_frontdoorprojectpoc";
+			public const string user_invln_frontdoorprojectsitepoc = "user_invln_frontdoorprojectsitepoc";
 			public const string user_invln_grantbenchmark = "user_invln_grantbenchmark";
 			public const string user_invln_homesindeliveryphase = "user_invln_homesindeliveryphase";
 			public const string user_invln_hometype = "user_invln_hometype";
@@ -4451,6 +4462,26 @@ namespace HE.Investments.Common.CRM.Model
 		}
 		
 		/// <summary>
+		/// 1:N invln_ahglocalauthorities_GrowthManager_systemu
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_ahglocalauthorities_GrowthManager_systemu")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities> invln_ahglocalauthorities_GrowthManager_systemu
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities>("invln_ahglocalauthorities_GrowthManager_systemu", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_ahglocalauthorities_GrowthManager_systemu");
+				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities>("invln_ahglocalauthorities_GrowthManager_systemu", null, value);
+				this.OnPropertyChanged("invln_ahglocalauthorities_GrowthManager_systemu");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N invln_ahpcontract_ContractLead_systemuser
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_ahpcontract_ContractLead_systemuser")]
@@ -5051,6 +5082,86 @@ namespace HE.Investments.Common.CRM.Model
 		}
 		
 		/// <summary>
+		/// 1:N lk_invln_ahglocalauthorities_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_ahglocalauthorities_createdby")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities> lk_invln_ahglocalauthorities_createdby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities>("lk_invln_ahglocalauthorities_createdby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_invln_ahglocalauthorities_createdby");
+				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities>("lk_invln_ahglocalauthorities_createdby", null, value);
+				this.OnPropertyChanged("lk_invln_ahglocalauthorities_createdby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_invln_ahglocalauthorities_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_ahglocalauthorities_createdonbehalfby")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities> lk_invln_ahglocalauthorities_createdonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities>("lk_invln_ahglocalauthorities_createdonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_invln_ahglocalauthorities_createdonbehalfby");
+				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities>("lk_invln_ahglocalauthorities_createdonbehalfby", null, value);
+				this.OnPropertyChanged("lk_invln_ahglocalauthorities_createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_invln_ahglocalauthorities_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_ahglocalauthorities_modifiedby")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities> lk_invln_ahglocalauthorities_modifiedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities>("lk_invln_ahglocalauthorities_modifiedby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_invln_ahglocalauthorities_modifiedby");
+				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities>("lk_invln_ahglocalauthorities_modifiedby", null, value);
+				this.OnPropertyChanged("lk_invln_ahglocalauthorities_modifiedby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_invln_ahglocalauthorities_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_ahglocalauthorities_modifiedonbehalfby")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities> lk_invln_ahglocalauthorities_modifiedonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities>("lk_invln_ahglocalauthorities_modifiedonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_invln_ahglocalauthorities_modifiedonbehalfby");
+				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities>("lk_invln_ahglocalauthorities_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("lk_invln_ahglocalauthorities_modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N lk_invln_ahpcontract_createdby
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_ahpcontract_createdby")]
@@ -5287,86 +5398,6 @@ namespace HE.Investments.Common.CRM.Model
 				this.OnPropertyChanging("lk_invln_borrowerpreviousschemes_modifiedonbehalfby");
 				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_BorrowerPreviousSchemes>("lk_invln_borrowerpreviousschemes_modifiedonbehalfby", null, value);
 				this.OnPropertyChanged("lk_invln_borrowerpreviousschemes_modifiedonbehalfby");
-			}
-		}
-		
-		/// <summary>
-		/// 1:N lk_invln_cashflow_createdby
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_cashflow_createdby")]
-		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_Cashflow> lk_invln_cashflow_createdby
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_Cashflow>("lk_invln_cashflow_createdby", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("lk_invln_cashflow_createdby");
-				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_Cashflow>("lk_invln_cashflow_createdby", null, value);
-				this.OnPropertyChanged("lk_invln_cashflow_createdby");
-			}
-		}
-		
-		/// <summary>
-		/// 1:N lk_invln_cashflow_createdonbehalfby
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_cashflow_createdonbehalfby")]
-		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_Cashflow> lk_invln_cashflow_createdonbehalfby
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_Cashflow>("lk_invln_cashflow_createdonbehalfby", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("lk_invln_cashflow_createdonbehalfby");
-				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_Cashflow>("lk_invln_cashflow_createdonbehalfby", null, value);
-				this.OnPropertyChanged("lk_invln_cashflow_createdonbehalfby");
-			}
-		}
-		
-		/// <summary>
-		/// 1:N lk_invln_cashflow_modifiedby
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_cashflow_modifiedby")]
-		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_Cashflow> lk_invln_cashflow_modifiedby
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_Cashflow>("lk_invln_cashflow_modifiedby", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("lk_invln_cashflow_modifiedby");
-				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_Cashflow>("lk_invln_cashflow_modifiedby", null, value);
-				this.OnPropertyChanged("lk_invln_cashflow_modifiedby");
-			}
-		}
-		
-		/// <summary>
-		/// 1:N lk_invln_cashflow_modifiedonbehalfby
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_cashflow_modifiedonbehalfby")]
-		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_Cashflow> lk_invln_cashflow_modifiedonbehalfby
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_Cashflow>("lk_invln_cashflow_modifiedonbehalfby", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("lk_invln_cashflow_modifiedonbehalfby");
-				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_Cashflow>("lk_invln_cashflow_modifiedonbehalfby", null, value);
-				this.OnPropertyChanged("lk_invln_cashflow_modifiedonbehalfby");
 			}
 		}
 		
@@ -6167,6 +6198,166 @@ namespace HE.Investments.Common.CRM.Model
 				this.OnPropertyChanging("lk_invln_financialcovenants_modifiedonbehalfby");
 				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_FinancialCovenants>("lk_invln_financialcovenants_modifiedonbehalfby", null, value);
 				this.OnPropertyChanged("lk_invln_financialcovenants_modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_invln_frontdoorprojectpoc_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_frontdoorprojectpoc_createdby")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_FrontDoorProjectPOC> lk_invln_frontdoorprojectpoc_createdby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_FrontDoorProjectPOC>("lk_invln_frontdoorprojectpoc_createdby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_invln_frontdoorprojectpoc_createdby");
+				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_FrontDoorProjectPOC>("lk_invln_frontdoorprojectpoc_createdby", null, value);
+				this.OnPropertyChanged("lk_invln_frontdoorprojectpoc_createdby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_invln_frontdoorprojectpoc_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_frontdoorprojectpoc_createdonbehalfby")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_FrontDoorProjectPOC> lk_invln_frontdoorprojectpoc_createdonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_FrontDoorProjectPOC>("lk_invln_frontdoorprojectpoc_createdonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_invln_frontdoorprojectpoc_createdonbehalfby");
+				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_FrontDoorProjectPOC>("lk_invln_frontdoorprojectpoc_createdonbehalfby", null, value);
+				this.OnPropertyChanged("lk_invln_frontdoorprojectpoc_createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_invln_frontdoorprojectpoc_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_frontdoorprojectpoc_modifiedby")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_FrontDoorProjectPOC> lk_invln_frontdoorprojectpoc_modifiedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_FrontDoorProjectPOC>("lk_invln_frontdoorprojectpoc_modifiedby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_invln_frontdoorprojectpoc_modifiedby");
+				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_FrontDoorProjectPOC>("lk_invln_frontdoorprojectpoc_modifiedby", null, value);
+				this.OnPropertyChanged("lk_invln_frontdoorprojectpoc_modifiedby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_invln_frontdoorprojectpoc_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_frontdoorprojectpoc_modifiedonbehalfby")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_FrontDoorProjectPOC> lk_invln_frontdoorprojectpoc_modifiedonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_FrontDoorProjectPOC>("lk_invln_frontdoorprojectpoc_modifiedonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_invln_frontdoorprojectpoc_modifiedonbehalfby");
+				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_FrontDoorProjectPOC>("lk_invln_frontdoorprojectpoc_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("lk_invln_frontdoorprojectpoc_modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_invln_frontdoorprojectsitepoc_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_frontdoorprojectsitepoc_createdby")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_FrontDoorProjectSitePOC> lk_invln_frontdoorprojectsitepoc_createdby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_FrontDoorProjectSitePOC>("lk_invln_frontdoorprojectsitepoc_createdby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_invln_frontdoorprojectsitepoc_createdby");
+				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_FrontDoorProjectSitePOC>("lk_invln_frontdoorprojectsitepoc_createdby", null, value);
+				this.OnPropertyChanged("lk_invln_frontdoorprojectsitepoc_createdby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_invln_frontdoorprojectsitepoc_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_frontdoorprojectsitepoc_createdonbehalfby")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_FrontDoorProjectSitePOC> lk_invln_frontdoorprojectsitepoc_createdonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_FrontDoorProjectSitePOC>("lk_invln_frontdoorprojectsitepoc_createdonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_invln_frontdoorprojectsitepoc_createdonbehalfby");
+				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_FrontDoorProjectSitePOC>("lk_invln_frontdoorprojectsitepoc_createdonbehalfby", null, value);
+				this.OnPropertyChanged("lk_invln_frontdoorprojectsitepoc_createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_invln_frontdoorprojectsitepoc_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_frontdoorprojectsitepoc_modifiedby")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_FrontDoorProjectSitePOC> lk_invln_frontdoorprojectsitepoc_modifiedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_FrontDoorProjectSitePOC>("lk_invln_frontdoorprojectsitepoc_modifiedby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_invln_frontdoorprojectsitepoc_modifiedby");
+				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_FrontDoorProjectSitePOC>("lk_invln_frontdoorprojectsitepoc_modifiedby", null, value);
+				this.OnPropertyChanged("lk_invln_frontdoorprojectsitepoc_modifiedby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_invln_frontdoorprojectsitepoc_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_frontdoorprojectsitepoc_modifiedonbehalfby")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_FrontDoorProjectSitePOC> lk_invln_frontdoorprojectsitepoc_modifiedonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_FrontDoorProjectSitePOC>("lk_invln_frontdoorprojectsitepoc_modifiedonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_invln_frontdoorprojectsitepoc_modifiedonbehalfby");
+				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_FrontDoorProjectSitePOC>("lk_invln_frontdoorprojectsitepoc_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("lk_invln_frontdoorprojectsitepoc_modifiedonbehalfby");
 			}
 		}
 		
@@ -8771,6 +8962,26 @@ namespace HE.Investments.Common.CRM.Model
 		}
 		
 		/// <summary>
+		/// 1:N user_invln_ahglocalauthorities
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("user_invln_ahglocalauthorities")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities> user_invln_ahglocalauthorities
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities>("user_invln_ahglocalauthorities", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("user_invln_ahglocalauthorities");
+				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities>("user_invln_ahglocalauthorities", null, value);
+				this.OnPropertyChanged("user_invln_ahglocalauthorities");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N user_invln_ahpcontract
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("user_invln_ahpcontract")]
@@ -8827,26 +9038,6 @@ namespace HE.Investments.Common.CRM.Model
 				this.OnPropertyChanging("user_invln_borrowerpreviousschemes");
 				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_BorrowerPreviousSchemes>("user_invln_borrowerpreviousschemes", null, value);
 				this.OnPropertyChanged("user_invln_borrowerpreviousschemes");
-			}
-		}
-		
-		/// <summary>
-		/// 1:N user_invln_cashflow
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("user_invln_cashflow")]
-		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_Cashflow> user_invln_cashflow
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_Cashflow>("user_invln_cashflow", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("user_invln_cashflow");
-				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_Cashflow>("user_invln_cashflow", null, value);
-				this.OnPropertyChanged("user_invln_cashflow");
 			}
 		}
 		
@@ -9047,6 +9238,46 @@ namespace HE.Investments.Common.CRM.Model
 				this.OnPropertyChanging("user_invln_financialcovenants");
 				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_FinancialCovenants>("user_invln_financialcovenants", null, value);
 				this.OnPropertyChanged("user_invln_financialcovenants");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N user_invln_frontdoorprojectpoc
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("user_invln_frontdoorprojectpoc")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_FrontDoorProjectPOC> user_invln_frontdoorprojectpoc
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_FrontDoorProjectPOC>("user_invln_frontdoorprojectpoc", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("user_invln_frontdoorprojectpoc");
+				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_FrontDoorProjectPOC>("user_invln_frontdoorprojectpoc", null, value);
+				this.OnPropertyChanged("user_invln_frontdoorprojectpoc");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N user_invln_frontdoorprojectsitepoc
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("user_invln_frontdoorprojectsitepoc")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_FrontDoorProjectSitePOC> user_invln_frontdoorprojectsitepoc
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_FrontDoorProjectSitePOC>("user_invln_frontdoorprojectsitepoc", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("user_invln_frontdoorprojectsitepoc");
+				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_FrontDoorProjectSitePOC>("user_invln_frontdoorprojectsitepoc", null, value);
+				this.OnPropertyChanged("user_invln_frontdoorprojectsitepoc");
 			}
 		}
 		
