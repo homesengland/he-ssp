@@ -66,7 +66,8 @@ namespace HE.Investments.Common.CRM.Model
 			public const string invln_avgprice = "invln_avgprice";
 			public const string invln_avgprice_Base = "invln_avgprice_base";
 			public const string invln_avgsqft = "invln_avgsqft";
-			public const string invln_comparablevalue = "invln_comparablevalue";
+			public const string invln_ComparableeValue = "invln_comparableevalue";
+			public const string invln_comparableevalue_Base = "invln_comparableevalue_base";
 			public const string invln_invln_isp_invln_plot = "invln_invln_isp_invln_plot";
 			public const string invln_ispid = "invln_ispid";
 			public const string invln_ispidName = "invln_ispidname";
@@ -404,20 +405,33 @@ namespace HE.Investments.Common.CRM.Model
 			}
 		}
 		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_comparablevalue")]
-		public System.Nullable<double> invln_comparablevalue
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_comparableevalue")]
+		public Microsoft.Xrm.Sdk.Money invln_ComparableeValue
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetAttributeValue<System.Nullable<double>>("invln_comparablevalue");
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_comparableevalue");
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("invln_comparablevalue");
-				this.SetAttributeValue("invln_comparablevalue", value);
-				this.OnPropertyChanged("invln_comparablevalue");
+				this.OnPropertyChanging("invln_ComparableeValue");
+				this.SetAttributeValue("invln_comparableevalue", value);
+				this.OnPropertyChanged("invln_ComparableeValue");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Comparable Value in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_comparableevalue_base")]
+		public Microsoft.Xrm.Sdk.Money invln_comparableevalue_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_comparableevalue_base");
 			}
 		}
 		

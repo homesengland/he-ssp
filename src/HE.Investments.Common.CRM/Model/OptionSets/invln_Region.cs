@@ -13,7 +13,7 @@ namespace HE.Investments.Common.CRM.Model
 	
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum invln_Region
+	public enum invln_region
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]

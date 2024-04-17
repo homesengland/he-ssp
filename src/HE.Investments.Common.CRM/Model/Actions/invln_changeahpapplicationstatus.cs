@@ -24,6 +24,7 @@ namespace HE.Investments.Common.CRM.Model
 			public const string invln_organisationid = "invln_organisationid";
 			public const string invln_userid = "invln_userid";
 			public const string invln_newapplicationstatus = "invln_newapplicationstatus";
+			public const string invln_representationsandwarranties = "invln_representationsandwarranties";
 		}
 		
 		public const string ActionLogicalName = "invln_changeahpapplicationstatus";
@@ -120,6 +121,25 @@ namespace HE.Investments.Common.CRM.Model
 			set
 			{
 				this.Parameters["invln_newapplicationstatus"] = value;
+			}
+		}
+		
+		public bool invln_representationsandwarranties
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_representationsandwarranties"))
+				{
+					return ((bool)(this.Parameters["invln_representationsandwarranties"]));
+				}
+				else
+				{
+					return default(bool);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_representationsandwarranties"] = value;
 			}
 		}
 		
