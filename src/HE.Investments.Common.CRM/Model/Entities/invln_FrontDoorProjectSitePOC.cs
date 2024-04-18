@@ -70,6 +70,7 @@ namespace HE.Investments.Common.CRM.Model
 			public const string invln_NumberofHomesEnabledBuilt = "invln_numberofhomesenabledbuilt";
 			public const string invln_PlanningStatus = "invln_planningstatus";
 			public const string invln_planningstatusName = "invln_planningstatusname";
+			public const string invln_sitedetails_FDSiteId_invln_frontdoorproje = "invln_sitedetails_FDSiteId_invln_frontdoorproje";
 			public const string lk_invln_frontdoorprojectsitepoc_createdby = "lk_invln_frontdoorprojectsitepoc_createdby";
 			public const string lk_invln_frontdoorprojectsitepoc_createdonbehalfby = "lk_invln_frontdoorprojectsitepoc_createdonbehalfby";
 			public const string lk_invln_frontdoorprojectsitepoc_modifiedby = "lk_invln_frontdoorprojectsitepoc_modifiedby";
@@ -840,6 +841,26 @@ namespace HE.Investments.Common.CRM.Model
 			get
 			{
 				return this.GetAttributeValue<System.Nullable<long>>("versionnumber");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_sitedetails_FDSiteId_invln_frontdoorproje
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_sitedetails_FDSiteId_invln_frontdoorproje")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_SiteDetails> invln_sitedetails_FDSiteId_invln_frontdoorproje
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_SiteDetails>("invln_sitedetails_FDSiteId_invln_frontdoorproje", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_sitedetails_FDSiteId_invln_frontdoorproje");
+				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_SiteDetails>("invln_sitedetails_FDSiteId_invln_frontdoorproje", null, value);
+				this.OnPropertyChanged("invln_sitedetails_FDSiteId_invln_frontdoorproje");
 			}
 		}
 		

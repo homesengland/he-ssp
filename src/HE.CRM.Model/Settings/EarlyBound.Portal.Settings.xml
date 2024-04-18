@@ -227,7 +227,7 @@ VoiceMail</TokenCapitalizationOverrides>
   <Namespace>HE.Investments.Common.CRM.Model</Namespace>
   <ServiceContextName>DataverseContext</ServiceContextName>
   <SuppressGeneratedCodeAttribute>true</SuppressGeneratedCodeAttribute>
-  <SettingsVersion>2.2023.12.22</SettingsVersion>
+  <SettingsVersion>2.2024.2.1</SettingsVersion>
   <UpdateBuilderSettingsJson>true</UpdateBuilderSettingsJson>
-  <Version>2.2023.12.22</Version>
+  <Version>2.2024.2.1</Version>
 </Config>
