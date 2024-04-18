@@ -49,7 +49,6 @@ public class RequestCacheApplicationCrmContextDecorator : IApplicationCrmContext
         var applicationId = await _decorated.Save(dto, organisationId, cancellationToken);
         _cache.Delete(applicationId);
 
-        // TODO: do we want to set modified on/modified by?
         return applicationId;
     }
 
