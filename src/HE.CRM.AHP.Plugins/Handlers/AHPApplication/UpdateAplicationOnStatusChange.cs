@@ -17,11 +17,13 @@ namespace HE.CRM.AHP.Plugins.Handlers.AHPApplication
 
         public override bool CanWork()
         {
+            TracingService.Trace("UpdateAplicationOnStatusChange - Can Work");
             return ValueChanged(invln_scheme.Fields.StatusCode);
         }
 
         public override void DoWork()
         {
+            TracingService.Trace("UpdateAplicationOnStatusChange - Do Work");
             if (CurrentState.StatusCode.Value == (int)invln_scheme_StatusCode.ReferredBackToApplicant)
             {
                 if (CurrentState.invln_representationsandwarrantiesconfirmation != true)
@@ -63,9 +65,9 @@ namespace HE.CRM.AHP.Plugins.Handlers.AHPApplication
                     var homeTypeWithMinValue = hometypes.FirstOrDefault(x => x.invln_PercentageValueofNDSSStandard == percentageValueofNDSSStandardMin);
                     ExecutionData.Target.invln_Maximumm2asofNDSSoftheHomeTypesonthis = percentageValueofNDSSStandardMax;
                     ExecutionData.Target.invln_Minimumm2asofNDSSoftheHomeTypesonthis = percentageValueofNDSSStandardMin;
-                    ExecutionData.Target.invln_MaxAssumedFirstTrancheSaleoftheHomesType = homeTypeWithMinValue.invln_FirstTrancheSalesReceipt?.Value;
+                    ExecutionData.Target.invln_MaxAssumedFirstTrancheSaleoftheHomesType = homeTypeWithMaxValue.invln_FirstTrancheSalesReceipt?.Value;
                     ExecutionData.Target.invln_MinAssumedFirstTrancheSaleoftheHomesType = homeTypeWithMinValue.invln_FirstTrancheSalesReceipt?.Value;
-                    ExecutionData.Target.invln_MaxRentasofUnsoldEquityfortheHomeTypes = homeTypeWithMinValue.invln_RentasofUnsoldShare;
+                    ExecutionData.Target.invln_MaxRentasofUnsoldEquityfortheHomeTypes = homeTypeWithMaxValue.invln_RentasofUnsoldShare;
                     ExecutionData.Target.invln_MinRentasofUnsoldEquityfortheHomeTypes = homeTypeWithMinValue.invln_RentasofUnsoldShare;
                 }
             }

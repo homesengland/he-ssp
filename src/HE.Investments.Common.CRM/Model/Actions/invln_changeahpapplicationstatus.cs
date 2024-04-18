@@ -124,17 +124,17 @@ namespace HE.Investments.Common.CRM.Model
 			}
 		}
 		
-		public bool invln_changereason
+		public string invln_changereason
 		{
 			get
 			{
 				if (this.Parameters.Contains("invln_changereason"))
 				{
-					return ((bool)(this.Parameters["invln_changereason"]));
+					return ((string)(this.Parameters["invln_changereason"]));
 				}
 				else
 				{
-					return default(bool);
+					return default(string);
 				}
 			}
 			set
@@ -151,7 +151,7 @@ namespace HE.Investments.Common.CRM.Model
 			this.invln_userid = default(string);
 			this.invln_newapplicationstatus = default(int);
 			this.invln_representationsandwarranties = default(bool);
-			this.invln_changereason = default(bool);
+			this.invln_changereason = default(string);
 		}
 	}
 	

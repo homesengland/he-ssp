@@ -722,6 +722,7 @@ namespace DataverseModel
 			public const string invln_account_invln_contactwebrole_Accountid = "invln_account_invln_contactwebrole_Accountid";
 			public const string invln_account_invln_organisationchangerequest_organisationid = "invln_account_invln_organisationchangerequest_organisationid";
 			public const string invln_account_invln_scheme_organisationid = "invln_account_invln_scheme_organisationid";
+			public const string invln_account_ProviderManagementLead_systemuser = "invln_account_ProviderManagementLead_systemuser";
 			public const string invln_AcqSOSpaymentsapproved = "invln_acqsospaymentsapproved";
 			public const string invln_acqsospaymentsapprovedName = "invln_acqsospaymentsapprovedname";
 			public const string invln_AcqSOSpaymentsrequested = "invln_acqsospaymentsrequested";
@@ -774,6 +775,9 @@ namespace DataverseModel
 			public const string invln_powerofattorneyName = "invln_powerofattorneyname";
 			public const string invln_PreviousCRR = "invln_previouscrr";
 			public const string invln_previouscrrName = "invln_previouscrrname";
+			public const string invln_ProviderManagementLead = "invln_providermanagementlead";
+			public const string invln_ProviderManagementLeadName = "invln_providermanagementleadname";
+			public const string invln_ProviderManagementLeadYomiName = "invln_providermanagementleadyominame";
 			public const string invln_rating = "invln_rating";
 			public const string invln_ratingName = "invln_ratingname";
 			public const string invln_scheme_DevelopingPartner_account = "invln_scheme_DevelopingPartner_account";
@@ -785,6 +789,8 @@ namespace DataverseModel
 			public const string invln_SecurityValue = "invln_securityvalue";
 			public const string invln_securityvalue_Base = "invln_securityvalue_base";
 			public const string invln_sites_AccountId_account = "invln_sites_AccountId_account";
+			public const string invln_SPorDP = "invln_spordp";
+			public const string invln_spordpName = "invln_spordpname";
 			public const string invln_Totalofexistingallocations = "invln_totalofexistingallocations";
 			public const string invln_totalofexistingallocations_Base = "invln_totalofexistingallocations_base";
 			public const string invln_UnregisteredBody = "invln_unregisteredbody";
@@ -4838,6 +4844,57 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_providermanagementlead")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_ProviderManagementLead
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_providermanagementlead");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_ProviderManagementLead");
+				this.SetAttributeValue("invln_providermanagementlead", value);
+				this.OnPropertyChanged("invln_ProviderManagementLead");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_providermanagementleadname")]
+		public string invln_ProviderManagementLeadName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_providermanagementlead"))
+				{
+					return this.FormattedValues["invln_providermanagementlead"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_providermanagementleadyominame")]
+		public string invln_ProviderManagementLeadYomiName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_providermanagementlead"))
+				{
+					return this.FormattedValues["invln_providermanagementlead"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_rating")]
 		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_rating
 		{
@@ -4933,6 +4990,43 @@ namespace DataverseModel
 			get
 			{
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_securityvalue_base");
+			}
+		}
+		
+		/// <summary>
+		/// Strategic Partner or Development Partner
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_spordp")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_SPorDP
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_spordp");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_SPorDP");
+				this.SetAttributeValue("invln_spordp", value);
+				this.OnPropertyChanged("invln_SPorDP");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_spordpname")]
+		public string invln_spordpName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_spordp"))
+				{
+					return this.FormattedValues["invln_spordp"];
+				}
+				else
+				{
+					return default(string);
+				}
 			}
 		}
 		
@@ -7665,6 +7759,27 @@ namespace DataverseModel
 				this.OnPropertyChanging("he_systemuser_account_RelationshipOwner");
 				this.SetRelatedEntity<DataverseModel.SystemUser>("he_systemuser_account_RelationshipOwner", null, value);
 				this.OnPropertyChanged("he_systemuser_account_RelationshipOwner");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_account_ProviderManagementLead_systemuser
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_providermanagementlead")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_account_ProviderManagementLead_systemuser")]
+		public DataverseModel.SystemUser invln_account_ProviderManagementLead_systemuser
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.SystemUser>("invln_account_ProviderManagementLead_systemuser", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_account_ProviderManagementLead_systemuser");
+				this.SetRelatedEntity<DataverseModel.SystemUser>("invln_account_ProviderManagementLead_systemuser", null, value);
+				this.OnPropertyChanged("invln_account_ProviderManagementLead_systemuser");
 			}
 		}
 		

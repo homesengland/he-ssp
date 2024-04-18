@@ -453,6 +453,7 @@ namespace DataverseModel
 			public const string InternalEMailAddress = "internalemailaddress";
 			public const string InviteStatusCode = "invitestatuscode";
 			public const string InviteStatusCodeName = "invitestatuscodename";
+			public const string invln_account_ProviderManagementLead_systemuser = "invln_account_ProviderManagementLead_systemuser";
 			public const string invln_ahglocalauthorities_GrowthManager_systemu = "invln_ahglocalauthorities_GrowthManager_systemu";
 			public const string invln_ahpcontract_ContractLead_systemuser = "invln_ahpcontract_ContractLead_systemuser";
 			public const string invln_externalcomms_systemuser_createdby = "invln_externalcomms_systemuser_createdby";
@@ -4458,6 +4459,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("he_systemuser_account_RelationshipOwner");
 				this.SetRelatedEntities<DataverseModel.Account>("he_systemuser_account_RelationshipOwner", null, value);
 				this.OnPropertyChanged("he_systemuser_account_RelationshipOwner");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_account_ProviderManagementLead_systemuser
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_account_ProviderManagementLead_systemuser")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.Account> invln_account_ProviderManagementLead_systemuser
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.Account>("invln_account_ProviderManagementLead_systemuser", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_account_ProviderManagementLead_systemuser");
+				this.SetRelatedEntities<DataverseModel.Account>("invln_account_ProviderManagementLead_systemuser", null, value);
+				this.OnPropertyChanged("invln_account_ProviderManagementLead_systemuser");
 			}
 		}
 		
