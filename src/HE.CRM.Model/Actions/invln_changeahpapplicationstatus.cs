@@ -19,34 +19,15 @@ namespace DataverseModel
 		
 		public static class Fields
 		{
-			public const string invln_changereason = "invln_changereason";
 			public const string invln_applicationid = "invln_applicationid";
 			public const string invln_organisationid = "invln_organisationid";
 			public const string invln_userid = "invln_userid";
 			public const string invln_newapplicationstatus = "invln_newapplicationstatus";
 			public const string invln_representationsandwarranties = "invln_representationsandwarranties";
+			public const string invln_changereason = "invln_changereason";
 		}
 		
 		public const string ActionLogicalName = "invln_changeahpapplicationstatus";
-		
-		public string invln_changereason
-		{
-			get
-			{
-				if (this.Parameters.Contains("invln_changereason"))
-				{
-					return ((string)(this.Parameters["invln_changereason"]));
-				}
-				else
-				{
-					return default(string);
-				}
-			}
-			set
-			{
-				this.Parameters["invln_changereason"] = value;
-			}
-		}
 		
 		public string invln_applicationid
 		{
@@ -143,6 +124,25 @@ namespace DataverseModel
 			}
 		}
 		
+		public bool invln_changereason
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_changereason"))
+				{
+					return ((bool)(this.Parameters["invln_changereason"]));
+				}
+				else
+				{
+					return default(bool);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_changereason"] = value;
+			}
+		}
+		
 		public invln_changeahpapplicationstatusRequest()
 		{
 			this.RequestName = "invln_changeahpapplicationstatus";
@@ -150,6 +150,8 @@ namespace DataverseModel
 			this.invln_organisationid = default(string);
 			this.invln_userid = default(string);
 			this.invln_newapplicationstatus = default(int);
+			this.invln_representationsandwarranties = default(bool);
+			this.invln_changereason = default(bool);
 		}
 	}
 	
