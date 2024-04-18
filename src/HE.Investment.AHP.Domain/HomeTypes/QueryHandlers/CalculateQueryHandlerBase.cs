@@ -26,8 +26,6 @@ public abstract class CalculateQueryHandlerBase<TQuery> : IRequestHandler<TQuery
         _logger = logger;
     }
 
-    protected abstract IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes { get; }
-
     protected abstract IEnumerable<Action<TQuery, IHomeTypeEntity>> CalculateActions { get; }
 
     public async Task<(OperationResult OperationResult, CalculationResult CalculationResult)> Handle(TQuery request, CancellationToken cancellationToken)
@@ -37,7 +35,6 @@ public abstract class CalculateQueryHandlerBase<TQuery> : IRequestHandler<TQuery
             request.ApplicationId,
             request.HomeTypeId,
             account,
-            SegmentTypes,
             cancellationToken);
 
         homeType.TenureDetails.ClearValuesForNewCalculation();

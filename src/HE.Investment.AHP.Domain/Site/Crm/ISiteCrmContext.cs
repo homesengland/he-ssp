@@ -1,6 +1,6 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 
-namespace HE.Investment.AHP.Domain.Data;
+namespace HE.Investment.AHP.Domain.Site.Crm;
 
 public interface ISiteCrmContext
 {

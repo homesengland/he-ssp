@@ -94,7 +94,7 @@ public class ModernMethodsConstructionSegmentEntity : DomainEntity, IHomeTypeSeg
         }
     }
 
-    public IHomeTypeSegmentEntity Duplicate()
+    public ModernMethodsConstructionSegmentEntity Duplicate()
     {
         return new ModernMethodsConstructionSegmentEntity(
             SiteUsingModernMethodsOfConstruction,

@@ -10,23 +10,6 @@ namespace HE.Investment.AHP.Domain.HomeTypes.Crm.Segments;
 
 public class TenureDetailsCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<TenureDetailsSegmentEntity>
 {
-    public TenureDetailsCrmSegmentMapper()
-        : base(new[]
-        {
-            nameof(invln_HomeType.invln_MarketValueofEachProperty),
-            nameof(invln_HomeType.invln_MarketRentperWeek),
-            nameof(invln_HomeType.invln_ProspectiveRentperWeek),
-            nameof(invln_HomeType.invln_prospectiverentasofmarketrent),
-            nameof(invln_HomeType.invln_targetrentover80ofmarketrent),
-            nameof(invln_HomeType.invln_rtsoexempt),
-            nameof(invln_HomeType.invln_reasonsforrtsoexemption),
-            nameof(invln_HomeType.invln_SharedOwnershipInitialSale),
-            nameof(invln_HomeType.invln_FirstTrancheSalesReceipt),
-            nameof(invln_HomeType.invln_proposedrentasaofunsoldshare),
-        })
-    {
-    }
-
     public override HomeTypeSegmentType SegmentType => HomeTypeSegmentType.TenureDetails;
 
     public override IHomeTypeSegmentEntity MapToEntity(

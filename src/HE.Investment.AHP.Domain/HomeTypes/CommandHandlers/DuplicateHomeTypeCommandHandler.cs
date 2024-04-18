@@ -1,6 +1,5 @@
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Commands;
-using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
@@ -23,10 +22,10 @@ public class DuplicateHomeTypeCommandHandler : IRequestHandler<DuplicateHomeType
     public async Task<OperationResult<HomeTypeId>> Handle(DuplicateHomeTypeCommand request, CancellationToken cancellationToken)
     {
         var account = await _accountUserContext.GetSelectedAccount();
-        var homeTypes = await _repository.GetByApplicationId(request.ApplicationId, account, HomeTypeSegmentTypes.All, cancellationToken);
+        var homeTypes = await _repository.GetByApplicationId(request.ApplicationId, account, cancellationToken);
         var duplicatedHomeType = homeTypes.Duplicate(request.HomeTypeId);
 
-        await _repository.Save(duplicatedHomeType, account.SelectedOrganisationId(), HomeTypeSegmentTypes.All, cancellationToken);
+        await _repository.Save(duplicatedHomeType, account.SelectedOrganisationId(), cancellationToken);
 
         return OperationResult.Success(duplicatedHomeType.Id);
     }

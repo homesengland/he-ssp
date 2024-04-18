@@ -18,33 +18,6 @@ namespace HE.Investment.AHP.Domain.Delivery.Crm;
 
 public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
 {
-    public IReadOnlyCollection<string> CrmFields => new[]
-    {
-        nameof(invln_DeliveryPhase.invln_phasename),
-        nameof(invln_DeliveryPhase.CreatedOn),
-        nameof(invln_DeliveryPhase.invln_iscompleted),
-        nameof(invln_DeliveryPhase.invln_buildactivitytype),
-        nameof(invln_DeliveryPhase.invln_rehabactivitytype),
-        nameof(invln_DeliveryPhase.invln_reconfiguringexistingproperties),
-        nameof(invln_DeliveryPhase.invln_acquisitiondate),
-        nameof(invln_DeliveryPhase.invln_acquisitionmilestoneclaimdate),
-        nameof(invln_DeliveryPhase.invln_startonsitedate),
-        nameof(invln_DeliveryPhase.invln_startonsitemilestoneclaimdate),
-        nameof(invln_DeliveryPhase.invln_completiondate),
-        nameof(invln_DeliveryPhase.invln_completionmilestoneclaimdate),
-        nameof(invln_DeliveryPhase.invln_urbrequestingearlymilestonepayments),
-        nameof(invln_DeliveryPhase.invln_nbrh),
-        nameof(invln_DeliveryPhase.invln_AcquisitionPercentageValue),
-        nameof(invln_DeliveryPhase.invln_StartOnSitePercentageValue),
-        nameof(invln_DeliveryPhase.invln_CompletionPercentageValue),
-        nameof(invln_DeliveryPhase.invln_ClaimingtheMilestoneConfirmed),
-        nameof(invln_DeliveryPhase.invln_AllowAmendmentstoMilestoneProportions),
-        nameof(invln_DeliveryPhase.invln_AcquisitionValue),
-        nameof(invln_DeliveryPhase.invln_CompletionValue),
-        nameof(invln_DeliveryPhase.invln_StartOnSiteValue),
-        nameof(invln_DeliveryPhase.invln_sumofcalculatedfounds),
-    };
-
     public DeliveryPhaseEntity MapToDomain(
         ApplicationBasicInfo application,
         OrganisationBasicInfo organisation,

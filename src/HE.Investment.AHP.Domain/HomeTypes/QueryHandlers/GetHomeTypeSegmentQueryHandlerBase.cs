@@ -26,7 +26,7 @@ internal abstract class GetHomeTypeSegmentQueryHandlerBase<TQuery, TSegment, TRe
         _accountUserContext = accountUserContext;
     }
 
-    protected abstract IReadOnlyCollection<HomeTypeSegmentType> Segments { get; }
+    protected virtual bool LoadFiles => false;
 
     public async Task<TResult> Handle(TQuery request, CancellationToken cancellationToken)
     {
@@ -35,8 +35,8 @@ internal abstract class GetHomeTypeSegmentQueryHandlerBase<TQuery, TSegment, TRe
             request.ApplicationId,
             request.HomeTypeId,
             account,
-            Segments,
-            cancellationToken);
+            cancellationToken,
+            loadFiles: LoadFiles);
 
         return _mapper.Map(homeType.Application.Name, homeType.Name, GetSegment(homeType));
     }

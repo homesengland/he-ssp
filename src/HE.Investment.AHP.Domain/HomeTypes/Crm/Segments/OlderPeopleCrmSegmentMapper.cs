@@ -8,11 +8,6 @@ namespace HE.Investment.AHP.Domain.HomeTypes.Crm.Segments;
 
 public class OlderPeopleCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<OlderPeopleHomeTypeDetailsSegmentEntity>
 {
-    public OlderPeopleCrmSegmentMapper()
-        : base(new[] { nameof(invln_HomeType.invln_typeofolderpeopleshousing) })
-    {
-    }
-
     public override HomeTypeSegmentType SegmentType => HomeTypeSegmentType.OlderPeople;
 
     public override IHomeTypeSegmentEntity MapToEntity(

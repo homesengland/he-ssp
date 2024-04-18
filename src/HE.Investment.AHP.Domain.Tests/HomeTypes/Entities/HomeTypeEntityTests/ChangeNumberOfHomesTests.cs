@@ -10,7 +10,7 @@ public class ChangeNumberOfHomesTests
     public void ShouldPublishDomainEvent_WhenNumberOfHomesWasChanged()
     {
         // given
-        var testCandidate = new HomeTypeEntityBuilder().WithSegments(new HomeInformationBuilder().Build()).Build();
+        var testCandidate = new HomeTypeEntityBuilder().WithHomeInformation(new HomeInformationBuilder().Build()).Build();
 
         // when
         testCandidate.HomeInformation.ChangeNumberOfHomes("10");
@@ -31,7 +31,7 @@ public class ChangeNumberOfHomesTests
     public void ShouldNotChangeEntity_WhenNumberOfHomesIsTheSame()
     {
         // given
-        var testCandidate = new HomeTypeEntityBuilder().WithSegments(new HomeInformationBuilder().WithNumberOfHomes(10).Build()).Build();
+        var testCandidate = new HomeTypeEntityBuilder().WithHomeInformation(new HomeInformationBuilder().WithNumberOfHomes(10).Build()).Build();
 
         // when
         testCandidate.HomeInformation.ChangeNumberOfHomes("10");
