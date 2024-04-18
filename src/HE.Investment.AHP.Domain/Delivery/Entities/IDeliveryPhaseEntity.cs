@@ -30,6 +30,8 @@ public interface IDeliveryPhaseEntity
 
     DeliveryPhaseTranches Tranches { get; }
 
+    MilestonesTranches MilestonesTranches { get; }
+
     bool? ReconfiguringExisting { get; }
 
     DateTime? CreatedOn { get; }

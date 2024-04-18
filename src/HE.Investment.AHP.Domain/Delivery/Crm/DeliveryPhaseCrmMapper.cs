@@ -18,7 +18,11 @@ namespace HE.Investment.AHP.Domain.Delivery.Crm;
 
 public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
 {
-    public DeliveryPhaseEntity MapToDomain(ApplicationBasicInfo application, OrganisationBasicInfo organisation, DeliveryPhaseDto dto, SchemeFunding schemeFunding)
+    public DeliveryPhaseEntity MapToDomain(
+        ApplicationBasicInfo application,
+        OrganisationBasicInfo organisation,
+        DeliveryPhaseDto dto,
+        SchemeFunding schemeFunding)
     {
         var typeOfHomes = MapTypeOfHomes(dto.typeOfHomes);
         var buildActivityType = MapBuildActivityType(dto.newBuildActivityType, dto.rehabBuildActivityType);
@@ -33,6 +37,11 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
                 dto.acquisitionPercentageValue != null ? new WholePercentage(dto.acquisitionPercentageValue.Value) : null,
                 dto.startOnSitePercentageValue != null ? new WholePercentage(dto.startOnSitePercentageValue.Value) : null,
                 dto.completionPercentageValue != null ? new WholePercentage(dto.completionPercentageValue.Value) : null),
+            new MilestonesTranches(
+                dto.sumOfCalculatedFounds,
+                dto.acquisitionValue,
+                dto.startOnSiteValue,
+                dto.completionValue),
             dto.allowAmendmentstoMilestoneProportions == true,
             schemeFunding,
             typeOfHomes,

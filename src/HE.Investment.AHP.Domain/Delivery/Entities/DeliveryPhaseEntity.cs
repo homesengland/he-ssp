@@ -28,7 +28,8 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
         DeliveryPhaseName name,
         OrganisationBasicInfo organisation,
         SectionStatus status,
-        MilestonesPercentageTranches milestones,
+        MilestonesPercentageTranches milestonesPercentageTranches,
+        MilestonesTranches milestonesTranches,
         bool milestoneTranchesAmendRequested,
         SchemeFunding schemaFunding,
         TypeOfHomes? typeOfHomes = null,
@@ -58,11 +59,12 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
         Tranches = new DeliveryPhaseTranches(
             Id,
             Application,
-            milestones,
+            milestonesPercentageTranches,
             CalculateGrantApportioned(schemaFunding),
             milestoneTranchesAmendRequested,
             claimMilestone,
             IsOnlyCompletionMilestone);
+        MilestonesTranches = milestonesTranches;
     }
 
     public ApplicationBasicInfo Application { get; }
@@ -78,6 +80,8 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
     public BuildActivity BuildActivity { get; private set; }
 
     public DeliveryPhaseTranches Tranches { get; private set; }
+
+    public MilestonesTranches MilestonesTranches { get; private set; }
 
     public bool? ReconfiguringExisting { get; private set; }
 
