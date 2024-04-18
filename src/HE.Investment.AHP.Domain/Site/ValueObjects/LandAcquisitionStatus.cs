@@ -1,6 +1,5 @@
 using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investments.Common.Domain;
-using HE.Investments.Common.Domain.ValueObjects;
 
 namespace HE.Investment.AHP.Domain.Site.ValueObjects;
 

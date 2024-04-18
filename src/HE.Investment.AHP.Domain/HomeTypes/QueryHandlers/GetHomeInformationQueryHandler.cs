@@ -18,7 +18,5 @@ internal sealed class GetHomeInformationQueryHandler :
     {
     }
 
-    protected override IReadOnlyCollection<HomeTypeSegmentType> Segments => new[] { HomeTypeSegmentType.HomeInformation };
-
     protected override HomeInformationSegmentEntity GetSegment(IHomeTypeEntity homeType) => homeType.HomeInformation;
 }

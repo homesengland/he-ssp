@@ -1,6 +1,6 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 
-namespace HE.Investment.AHP.Domain.Data;
+namespace HE.Investment.AHP.Domain.Site.Crm;
 
 // TODO: remove this class when CRM will use HE local authority codes for AHP sites
 public class LocalAuthorityCodeDecorator : ISiteCrmContext

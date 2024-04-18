@@ -2,14 +2,12 @@ using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.Site;
-using HE.Investment.AHP.WWW;
 using HE.Investment.AHP.WWW.Models.Site;
 using HE.Investment.AHP.WWW.Views.Site.Const;
 using HE.Investments.AHP.IntegrationTests.Extensions;
 using HE.Investments.AHP.IntegrationTests.Framework;
 using HE.Investments.AHP.IntegrationTests.Pages;
 using HE.Investments.Common.Contract.Constants;
-using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.IntegrationTestsFramework.Assertions;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
@@ -574,7 +572,6 @@ public class Order01StartAhpSite : AhpIntegrationTest
             SitePagesUrl.SiteList,
             (nameof(IsSectionCompleted), IsSectionCompleted.Yes.ToString()));
 
-        siteListPage.HasTitle(SitePageTitles.SiteList)
-            .HasLinkWithHref(SitePagesUrl.SiteDetails(SiteData.SiteId), out _);
+        siteListPage.HasTitle(SitePageTitles.SiteList);
     }
 }

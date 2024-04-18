@@ -136,7 +136,7 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
         IMilestoneDatesInProgrammeDateRangePolicy policy,
         CancellationToken cancellationToken)
     {
-        await policy.Validate(Application.Id, milestones, cancellationToken);
+        await policy.Validate(milestones, cancellationToken);
 
         DeliveryPhaseMilestones = _modificationTracker.Change(DeliveryPhaseMilestones, milestones, MarkAsNotCompleted);
     }

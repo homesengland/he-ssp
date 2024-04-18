@@ -1,6 +1,5 @@
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Queries;
-using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investments.Account.Shared;
 using MediatR;
@@ -26,7 +25,6 @@ internal sealed class GetHomeTypeDetailsQueryHandler : IRequestHandler<GetHomeTy
             request.ApplicationId,
             request.HomeTypeId,
             account,
-            new[] { HomeTypeSegmentType.HomeInformation },
             cancellationToken);
 
         return new HomeTypeDetails(

@@ -1,4 +1,3 @@
-using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Domain;
 
 namespace HE.Investment.AHP.Domain.Delivery.Tranches;

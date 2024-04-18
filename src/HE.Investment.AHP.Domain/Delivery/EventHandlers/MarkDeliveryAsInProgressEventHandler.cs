@@ -1,7 +1,7 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Delivery.Events;
 using HE.Investment.AHP.Contract.HomeTypes.Events;
-using HE.Investment.AHP.Domain.Delivery.Repositories;
+using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
@@ -15,13 +15,19 @@ public class MarkDeliveryAsInProgressEventHandler :
     IEventHandler<DeliveryPhaseHasBeenRemovedEvent>,
     IEventHandler<HomeTypeNumberOfHomesHasBeenUpdatedEvent>
 {
-    private readonly IDeliveryPhaseRepository _repository;
+    private readonly IApplicationRepository _applicationRepository;
+
+    private readonly IApplicationSectionStatusChanger _sectionStatusChanger;
 
     private readonly IAccountUserContext _accountUserContext;
 
-    public MarkDeliveryAsInProgressEventHandler(IDeliveryPhaseRepository repository, IAccountUserContext accountUserContext)
+    public MarkDeliveryAsInProgressEventHandler(
+        IApplicationRepository applicationRepository,
+        IApplicationSectionStatusChanger sectionStatusChanger,
+        IAccountUserContext accountUserContext)
     {
-        _repository = repository;
+        _applicationRepository = applicationRepository;
+        _sectionStatusChanger = sectionStatusChanger;
         _accountUserContext = accountUserContext;
     }
 
@@ -42,21 +48,23 @@ public class MarkDeliveryAsInProgressEventHandler :
 
     public async Task Handle(HomeTypeNumberOfHomesHasBeenUpdatedEvent domainEvent, CancellationToken cancellationToken)
     {
-        await ChangeStatus(domainEvent.ApplicationId, cancellationToken);
+        await ChangeStatus(domainEvent.ApplicationId, cancellationToken, preventStarting: true);
     }
 
-    private async Task ChangeStatus(AhpApplicationId applicationId, CancellationToken cancellationToken)
+    private async Task ChangeStatus(AhpApplicationId applicationId, CancellationToken cancellationToken, bool preventStarting = false)
     {
         var account = await _accountUserContext.GetSelectedAccount();
-        var deliveryPhases = await _repository.GetByApplicationId(applicationId, account, cancellationToken);
-
-        if (deliveryPhases.Status.IsIn(SectionStatus.NotStarted))
+        var application = await _applicationRepository.GetApplicationBasicInfo(applicationId, account, cancellationToken);
+        if (preventStarting && application.Sections.DeliveryStatus.IsIn(SectionStatus.NotStarted))
         {
             return;
         }
 
-        deliveryPhases.MarkAsInProgress();
-
-        await _repository.Save(deliveryPhases, account.SelectedOrganisationId(), cancellationToken);
+        await _sectionStatusChanger.ChangeSectionStatus(
+            applicationId,
+            account.SelectedOrganisationId(),
+            SectionType.DeliveryPhases,
+            SectionStatus.InProgress,
+            cancellationToken);
     }
 }

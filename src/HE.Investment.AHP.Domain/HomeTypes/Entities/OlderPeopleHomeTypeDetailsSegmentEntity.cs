@@ -27,7 +27,7 @@ public class OlderPeopleHomeTypeDetailsSegmentEntity : DomainEntity, IHomeTypeSe
         HousingType = _modificationTracker.Change(HousingType, housingType);
     }
 
-    public IHomeTypeSegmentEntity Duplicate()
+    public OlderPeopleHomeTypeDetailsSegmentEntity Duplicate()
     {
         return new OlderPeopleHomeTypeDetailsSegmentEntity(HousingType);
     }
