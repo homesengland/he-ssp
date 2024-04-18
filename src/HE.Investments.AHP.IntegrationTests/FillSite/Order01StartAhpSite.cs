@@ -572,6 +572,7 @@ public class Order01StartAhpSite : AhpIntegrationTest
             SitePagesUrl.SiteList,
             (nameof(IsSectionCompleted), IsSectionCompleted.Yes.ToString()));
 
-        siteListPage.HasTitle(SitePageTitles.SiteList);
+        siteListPage.HasTitle(SitePageTitles.SiteList)
+            .HasLinkWithHref(SitePagesUrl.SiteDetails(SiteData.SiteId), out _);
     }
 }
