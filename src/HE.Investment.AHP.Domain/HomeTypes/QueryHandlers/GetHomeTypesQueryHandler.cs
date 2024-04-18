@@ -26,7 +26,6 @@ internal sealed class GetHomeTypesQueryHandler : IRequestHandler<GetHomeTypesQue
         var homeTypes = await _repository.GetByApplicationId(
             request.ApplicationId,
             account,
-            new[] { HomeTypeSegmentType.HomeInformation },
             cancellationToken);
 
         return new ApplicationHomeTypes(

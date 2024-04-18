@@ -18,7 +18,5 @@ internal sealed class GetOlderPeopleHomeTypeDetailsQueryHandler
     {
     }
 
-    protected override IReadOnlyCollection<HomeTypeSegmentType> Segments => new[] { HomeTypeSegmentType.OlderPeople };
-
     protected override OlderPeopleHomeTypeDetailsSegmentEntity GetSegment(IHomeTypeEntity homeType) => homeType.OlderPeopleHomeTypeDetails;
 }

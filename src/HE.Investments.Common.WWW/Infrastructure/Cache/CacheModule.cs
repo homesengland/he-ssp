@@ -3,6 +3,7 @@ using HE.Investments.Common.Infrastructure.Cache.Config;
 using HE.Investments.Common.Infrastructure.Cache.Interfaces;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using StackExchange.Redis;
 
 namespace HE.Investments.Common.WWW.Infrastructure.Cache;
@@ -22,7 +23,7 @@ public static class CacheModule
         {
             var redis = new RedisConfigurationOptions(config, AppName);
 
-            services.AddSingleton<ICacheService>(_ => new RedisService(config, redis.ConfigurationOptions));
+            services.AddSingleton<ICacheService>(x => new RedisService(config, redis.ConfigurationOptions, x.GetRequiredService<ILogger<RedisService>>()));
             services.AddDataProtection()
                 .SetApplicationName(AppName)
                 .PersistKeysToStackExchangeRedis(ConnectionMultiplexer.Connect(redis.ConfigurationOptions), "DataProtection-Keys");

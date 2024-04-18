@@ -17,8 +17,6 @@ internal sealed class CalculateRentToBuyQueryHandler : CalculateQueryHandlerBase
     {
     }
 
-    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => new[] { HomeTypeSegmentType.TenureDetails };
-
     protected override IEnumerable<Action<CalculateRentToBuyQuery, IHomeTypeEntity>> CalculateActions => new[]
     {
         (CalculateRentToBuyQuery request, IHomeTypeEntity homeType) => homeType.TenureDetails.ChangeMarketValue(request.MarketValue, true),

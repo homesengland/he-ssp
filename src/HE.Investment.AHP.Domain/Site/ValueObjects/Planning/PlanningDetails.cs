@@ -1,4 +1,3 @@
-using HE.Investment.AHP.Contract.Site;
 using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;

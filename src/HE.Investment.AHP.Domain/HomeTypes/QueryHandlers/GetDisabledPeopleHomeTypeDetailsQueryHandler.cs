@@ -18,7 +18,5 @@ internal sealed class GetDisabledPeopleHomeTypeDetailsQueryHandler :
     {
     }
 
-    protected override IReadOnlyCollection<HomeTypeSegmentType> Segments => new[] { HomeTypeSegmentType.DisabledAndVulnerablePeople };
-
     protected override DisabledPeopleHomeTypeDetailsSegmentEntity GetSegment(IHomeTypeEntity homeType) => homeType.DisabledPeopleHomeTypeDetails;
 }

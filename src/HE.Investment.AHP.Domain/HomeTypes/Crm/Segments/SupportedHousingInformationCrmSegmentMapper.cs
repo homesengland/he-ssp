@@ -10,20 +10,6 @@ namespace HE.Investment.AHP.Domain.HomeTypes.Crm.Segments;
 
 public class SupportedHousingInformationCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<SupportedHousingInformationSegmentEntity>
 {
-    public SupportedHousingInformationCrmSegmentMapper()
-        : base(new[]
-        {
-            nameof(invln_HomeType.invln_localcommissioningbodiesconsulted),
-            nameof(invln_HomeType.invln_homesusedforshortstay),
-            nameof(invln_HomeType.invln_revenuefunding),
-            nameof(invln_HomeType.invln_revenuefundingsources),
-            nameof(invln_HomeType.invln_moveonarrangementsforshortstayhomes),
-            nameof(invln_HomeType.invln_typologylocationanddesing),
-            nameof(invln_HomeType.invln_supportedhousingexitplan),
-        })
-    {
-    }
-
     public override HomeTypeSegmentType SegmentType => HomeTypeSegmentType.SupportedHousingInformation;
 
     public override IHomeTypeSegmentEntity MapToEntity(

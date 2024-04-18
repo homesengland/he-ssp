@@ -18,7 +18,5 @@ internal sealed class GetModernMethodsConstructionQueryHandler :
     {
     }
 
-    protected override IReadOnlyCollection<HomeTypeSegmentType> Segments => new[] { HomeTypeSegmentType.ModernMethodsConstruction };
-
     protected override ModernMethodsConstructionSegmentEntity GetSegment(IHomeTypeEntity homeType) => homeType.ModernMethodsConstruction;
 }

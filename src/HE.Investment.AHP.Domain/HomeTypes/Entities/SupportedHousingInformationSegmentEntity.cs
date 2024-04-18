@@ -102,7 +102,7 @@ public class SupportedHousingInformationSegmentEntity : DomainEntity, IHomeTypeS
         ExitPlan = _modificationTracker.Change(ExitPlan, newValue);
     }
 
-    public IHomeTypeSegmentEntity Duplicate()
+    public SupportedHousingInformationSegmentEntity Duplicate()
     {
         return new SupportedHousingInformationSegmentEntity(
             LocalCommissioningBodiesConsulted,

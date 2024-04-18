@@ -1,4 +1,3 @@
-using HE.Investments.Common.Domain;
 using HE.Investments.Common.Domain.ValueObjects;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
