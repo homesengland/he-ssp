@@ -7,10 +7,73 @@ using HE.Investments.Common.CRM.Serialization;
 using HE.Investments.Common.CRM.Services;
 using HE.Investments.Common.User;
 
-namespace HE.Investment.AHP.Domain.Data;
+namespace HE.Investment.AHP.Domain.Application.Crm;
 
 public class ApplicationCrmContext : IApplicationCrmContext
 {
+    private static readonly string ApplicationListCrmFields =
+        string.Join(
+                ",",
+                nameof(invln_scheme.invln_schemename),
+                nameof(invln_scheme.invln_Tenure),
+                nameof(invln_ExternalStatus),
+                nameof(invln_scheme.invln_applicationid),
+                nameof(invln_scheme.invln_Site),
+                nameof(invln_scheme.invln_fundingrequired),
+                nameof(invln_scheme.invln_noofhomes),
+                nameof(invln_scheme.invln_pplicationid),
+                nameof(invln_scheme.invln_lastexternalmodificationby),
+                nameof(invln_scheme.invln_lastexternalmodificationon))
+            .ToLowerInvariant();
+
+    private static readonly string ApplicationCrmFields =
+        string.Join(
+                ",",
+                nameof(invln_scheme.invln_schemename),
+                nameof(invln_scheme.invln_Tenure),
+                nameof(invln_ExternalStatus),
+                nameof(invln_scheme.invln_applicationid),
+                nameof(invln_scheme.invln_Site),
+                nameof(invln_scheme.invln_schemeinformationsectioncompletionstatus),
+                nameof(invln_scheme.invln_hometypessectioncompletionstatus),
+                nameof(invln_scheme.invln_financialdetailssectioncompletionstatus),
+                nameof(invln_scheme.invln_deliveryphasessectioncompletionstatus),
+                nameof(invln_scheme.invln_lastexternalmodificationby),
+                nameof(invln_scheme.invln_lastexternalmodificationon),
+                nameof(invln_scheme.invln_pplicationid),
+                nameof(invln_scheme.invln_DateSubmitted),
+                nameof(invln_scheme.invln_PreviousExternalStatus),
+                nameof(invln_scheme.invln_fundingrequired),
+                nameof(invln_scheme.invln_noofhomes),
+                nameof(invln_scheme.invln_currentlandvalue),
+                nameof(invln_scheme.invln_expectedoncosts),
+                nameof(invln_scheme.invln_expectedonworks),
+                nameof(invln_scheme.invln_affordabilityevidence),
+                nameof(invln_scheme.invln_sharedownershipsalesrisk),
+                nameof(invln_scheme.invln_meetinglocalpriorities),
+                nameof(invln_scheme.invln_meetinglocalhousingneed),
+                nameof(invln_scheme.invln_discussionswithlocalstakeholders),
+                nameof(invln_scheme.invln_actualacquisitioncost),
+                nameof(invln_scheme.invln_expectedacquisitioncost),
+                nameof(invln_scheme.invln_publicland),
+                nameof(invln_scheme.invln_borrowingagainstrentalincome),
+                nameof(invln_scheme.invln_fundingfromopenmarkethomesonthisscheme),
+                nameof(invln_scheme.invln_fundingfromopenmarkethomesnotonthisscheme),
+                nameof(invln_scheme.invln_ownresources),
+                nameof(invln_scheme.invln_recycledcapitalgrantfund),
+                nameof(invln_scheme.invln_totalinitialsalesincome),
+                nameof(invln_scheme.invln_othercapitalsources),
+                nameof(invln_scheme.invln_transfervalue),
+                nameof(invln_scheme.invln_grantsfromcountycouncil),
+                nameof(invln_scheme.invln_grantsfromdhscextracare),
+                nameof(invln_scheme.invln_grantsfromlocalauthority1),
+                nameof(invln_scheme.invln_grantsfromsocialservices),
+                nameof(invln_scheme.invln_grantsfromdhscnhsorotherhealth),
+                nameof(invln_scheme.invln_grantsfromthelottery),
+                nameof(invln_scheme.invln_grantsfromotherpublicbodies),
+                nameof(invln_scheme.invln_programmelookup))
+            .ToLowerInvariant();
+
     private readonly ICrmService _service;
 
     private readonly IUserContext _userContext;
@@ -21,26 +84,26 @@ public class ApplicationCrmContext : IApplicationCrmContext
         _userContext = userContext;
     }
 
-    public async Task<AhpApplicationDto> GetOrganisationApplicationById(string id, Guid organisationId, IList<string> fieldsToRetrieve, CancellationToken cancellationToken)
+    public async Task<AhpApplicationDto> GetOrganisationApplicationById(string id, Guid organisationId, CancellationToken cancellationToken)
     {
         var request = new invln_getahpapplicationRequest
         {
             invln_userid = string.Empty,
             invln_organisationid = organisationId.ToString(),
             invln_applicationid = id,
-            invln_appfieldstoretrieve = FormatFields(fieldsToRetrieve),
+            invln_appfieldstoretrieve = ApplicationCrmFields,
         };
         return await Get(request, cancellationToken);
     }
 
-    public async Task<AhpApplicationDto> GetUserApplicationById(string id, Guid organisationId, IList<string> fieldsToRetrieve, CancellationToken cancellationToken)
+    public async Task<AhpApplicationDto> GetUserApplicationById(string id, Guid organisationId, CancellationToken cancellationToken)
     {
         var request = new invln_getahpapplicationRequest
         {
             invln_userid = _userContext.UserGlobalId,
             invln_organisationid = organisationId.ToString(),
             invln_applicationid = id,
-            invln_appfieldstoretrieve = FormatFields(fieldsToRetrieve),
+            invln_appfieldstoretrieve = ApplicationCrmFields,
         };
 
         return await Get(request, cancellationToken);
@@ -67,38 +130,38 @@ public class ApplicationCrmContext : IApplicationCrmContext
         return bool.TryParse(response, out var result) && result;
     }
 
-    public async Task<IList<AhpApplicationDto>> GetOrganisationApplications(Guid organisationId, IList<string> fieldsToRetrieve, CancellationToken cancellationToken)
+    public async Task<IList<AhpApplicationDto>> GetOrganisationApplications(Guid organisationId, CancellationToken cancellationToken)
     {
         var request = new invln_getmultipleahpapplicationsRequest
         {
             inlvn_userid = string.Empty,
             invln_organisationid = organisationId.ToString(),
-            invln_appfieldstoretrieve = FormatFields(fieldsToRetrieve),
+            invln_appfieldstoretrieve = ApplicationListCrmFields,
         };
 
         return await GetAll(request, cancellationToken);
     }
 
-    public async Task<IList<AhpApplicationDto>> GetUserApplications(Guid organisationId, IList<string> fieldsToRetrieve, CancellationToken cancellationToken)
+    public async Task<IList<AhpApplicationDto>> GetUserApplications(Guid organisationId, CancellationToken cancellationToken)
     {
         var request = new invln_getmultipleahpapplicationsRequest
         {
             inlvn_userid = _userContext.UserGlobalId,
             invln_organisationid = organisationId.ToString(),
-            invln_appfieldstoretrieve = FormatFields(fieldsToRetrieve),
+            invln_appfieldstoretrieve = ApplicationListCrmFields,
         };
 
         return await GetAll(request, cancellationToken);
     }
 
-    public async Task<string> Save(AhpApplicationDto dto, Guid organisationId, IList<string> fieldsToUpdate, CancellationToken cancellationToken)
+    public async Task<string> Save(AhpApplicationDto dto, Guid organisationId, CancellationToken cancellationToken)
     {
         var request = new invln_setahpapplicationRequest
         {
             invln_userid = _userContext.UserGlobalId,
             invln_organisationid = organisationId.ToString(),
             invln_application = CrmResponseSerializer.Serialize(dto),
-            invln_fieldstoupdate = FormatFields(fieldsToUpdate),
+            invln_fieldstoupdate = ApplicationCrmFields,
         };
 
         return await _service.ExecuteAsync<invln_setahpapplicationRequest, invln_setahpapplicationResponse>(
@@ -129,11 +192,6 @@ public class ApplicationCrmContext : IApplicationCrmContext
             request,
             r => r.ResponseName,
             cancellationToken);
-    }
-
-    private static string FormatFields(IList<string> fieldsToRetrieve)
-    {
-        return string.Join(",", fieldsToRetrieve.Select(f => f.ToLowerInvariant()));
     }
 
     private async Task<AhpApplicationDto> Get(invln_getahpapplicationRequest request, CancellationToken cancellationToken)

@@ -1,8 +1,7 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.HomeTypes.Events;
 using HE.Investment.AHP.Contract.Scheme.Events;
-using HE.Investment.AHP.Domain.HomeTypes.Entities;
-using HE.Investment.AHP.Domain.HomeTypes.Repositories;
+using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
@@ -16,13 +15,19 @@ public class MarkHomeTypesAsInProgressEventHandler :
     IEventHandler<HomeTypeHasBeenRemovedEvent>,
     IEventHandler<SchemeNumberOfHomesHasBeenUpdatedEvent>
 {
-    private readonly IHomeTypeRepository _repository;
+    private readonly IApplicationRepository _applicationRepository;
+
+    private readonly IApplicationSectionStatusChanger _sectionStatusChanger;
 
     private readonly IAccountUserContext _accountUserContext;
 
-    public MarkHomeTypesAsInProgressEventHandler(IHomeTypeRepository repository, IAccountUserContext accountUserContext)
+    public MarkHomeTypesAsInProgressEventHandler(
+        IApplicationRepository applicationRepository,
+        IApplicationSectionStatusChanger sectionStatusChanger,
+        IAccountUserContext accountUserContext)
     {
-        _repository = repository;
+        _applicationRepository = applicationRepository;
+        _sectionStatusChanger = sectionStatusChanger;
         _accountUserContext = accountUserContext;
     }
 
@@ -43,20 +48,23 @@ public class MarkHomeTypesAsInProgressEventHandler :
 
     public async Task Handle(SchemeNumberOfHomesHasBeenUpdatedEvent domainEvent, CancellationToken cancellationToken)
     {
-        await ChangeStatus(domainEvent.ApplicationId, cancellationToken);
+        await ChangeStatus(domainEvent.ApplicationId, cancellationToken, preventStarting: true);
     }
 
-    private async Task ChangeStatus(AhpApplicationId applicationId, CancellationToken cancellationToken)
+    private async Task ChangeStatus(AhpApplicationId applicationId, CancellationToken cancellationToken, bool preventStarting = false)
     {
         var account = await _accountUserContext.GetSelectedAccount();
-        var homeTypes = await _repository.GetByApplicationId(applicationId, account, HomeTypeSegmentTypes.None, cancellationToken);
-
-        if (homeTypes.Status.IsIn(SectionStatus.NotStarted))
+        var application = await _applicationRepository.GetApplicationBasicInfo(applicationId, account, cancellationToken);
+        if (preventStarting && application.Sections.HomeTypesStatus.IsIn(SectionStatus.NotStarted))
         {
             return;
         }
 
-        homeTypes.MarkAsInProgress();
-        await _repository.Save(homeTypes, account.SelectedOrganisationId(), cancellationToken);
+        await _sectionStatusChanger.ChangeSectionStatus(
+            applicationId,
+            account.SelectedOrganisationId(),
+            SectionType.HomeTypes,
+            SectionStatus.InProgress,
+            cancellationToken);
     }
 }

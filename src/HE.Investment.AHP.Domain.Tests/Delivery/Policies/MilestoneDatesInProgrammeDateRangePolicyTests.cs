@@ -17,7 +17,7 @@ public class MilestoneDatesInProgrammeDateRangePolicyTests
     public MilestoneDatesInProgrammeDateRangePolicyTests()
     {
         var mock = new Mock<IAhpProgrammeRepository>();
-        mock.Setup(r => r.GetProgramme(It.IsAny<AhpApplicationId>(), CancellationToken.None))
+        mock.Setup(r => r.GetProgramme(CancellationToken.None))
             .ReturnsAsync(_programme);
 
         _testCandidate = new MilestoneDatesInProgrammeDateRangePolicy(mock.Object);
@@ -31,7 +31,7 @@ public class MilestoneDatesInProgrammeDateRangePolicyTests
             .Build();
 
         // when
-        var action = async () => await _testCandidate.Validate(It.IsAny<AhpApplicationId>(), milestones, CancellationToken.None);
+        var action = async () => await _testCandidate.Validate(milestones, CancellationToken.None);
 
         // then
         action
@@ -99,7 +99,7 @@ public class MilestoneDatesInProgrammeDateRangePolicyTests
             .Build();
 
         // when
-        var action = async () => await _testCandidate.Validate(It.IsAny<AhpApplicationId>(), milestones, CancellationToken.None);
+        var action = async () => await _testCandidate.Validate(milestones, CancellationToken.None);
 
         // then
         AssertException(action, errorMessage);

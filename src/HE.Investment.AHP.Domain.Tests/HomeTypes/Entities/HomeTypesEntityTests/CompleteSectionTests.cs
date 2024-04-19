@@ -81,12 +81,12 @@ public class CompleteSectionTests
         var homeType1 = new HomeTypeEntityBuilder()
             .WithName("Mercury")
             .WithStatus(SectionStatus.Completed)
-            .WithSegments(new HomeInformationBuilder().WithNumberOfHomes(10).Build())
+            .WithHomeInformation(new HomeInformationBuilder().WithNumberOfHomes(10).Build())
             .Build();
         var homeType2 = new HomeTypeEntityBuilder()
             .WithName("Venus")
             .WithStatus(SectionStatus.Completed)
-            .WithSegments(new HomeInformationBuilder().WithNumberOfHomes(5).Build())
+            .WithHomeInformation(new HomeInformationBuilder().WithNumberOfHomes(5).Build())
             .Build();
         var testCandidate = new HomeTypesEntityBuilder().WithHomeTypes(homeType1, homeType2).Build();
 
@@ -108,12 +108,12 @@ public class CompleteSectionTests
         var homeType1 = new HomeTypeEntityBuilder()
             .WithName("Mercury")
             .WithStatus(SectionStatus.Completed)
-            .WithSegments(new HomeInformationBuilder().WithNumberOfHomes(10).Build())
+            .WithHomeInformation(new HomeInformationBuilder().WithNumberOfHomes(10).Build())
             .Build();
         var homeType2 = new HomeTypeEntityBuilder()
             .WithName("Venus")
             .WithStatus(SectionStatus.Completed)
-            .WithSegments(new HomeInformationBuilder().WithNumberOfHomes(5).Build())
+            .WithHomeInformation(new HomeInformationBuilder().WithNumberOfHomes(5).Build())
             .Build();
         var testCandidate = new HomeTypesEntityBuilder().WithHomeTypes(homeType1, homeType2).Build();
 

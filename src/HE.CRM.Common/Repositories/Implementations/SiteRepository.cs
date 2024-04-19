@@ -50,6 +50,7 @@ namespace HE.CRM.Common.Repositories.Implementations
                 $@"<fetch page=""{paging.pageNumber}"" count=""{paging.pageSize}"" returntotalrecordcount=""true"">
 	                <entity name=""invln_sites"">
                         {fieldsToRetrieveParameters}
+                        <order attribute=""createdon"" descending=""true"" />
                         {accountIdFilter}
                         <link-entity name=""invln_ahglocalauthorities"" to=""invln_localauthority"" from=""invln_ahglocalauthoritiesid""  link-type=""outer"">
                             <attribute name=""invln_gsscode"" />

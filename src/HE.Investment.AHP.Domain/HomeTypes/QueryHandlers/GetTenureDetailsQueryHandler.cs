@@ -18,7 +18,5 @@ internal sealed class GetTenureDetailsQueryHandler
     {
     }
 
-    protected override IReadOnlyCollection<HomeTypeSegmentType> Segments => new[] { HomeTypeSegmentType.TenureDetails };
-
     protected override TenureDetailsSegmentEntity GetSegment(IHomeTypeEntity homeType) => homeType.TenureDetails;
 }

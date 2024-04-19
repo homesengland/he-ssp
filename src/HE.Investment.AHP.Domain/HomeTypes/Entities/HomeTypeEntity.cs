@@ -1,10 +1,8 @@
 using System.Collections.ObjectModel;
-using System.Reflection;
 using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Domain.Common;
-using HE.Investment.AHP.Domain.HomeTypes.Attributes;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Infrastructure.Events;
@@ -17,28 +15,42 @@ namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 
 public class HomeTypeEntity : DomainEntity, IHomeTypeEntity
 {
-    private readonly IDictionary<HomeTypeSegmentType, IHomeTypeSegmentEntity> _segments;
+    private readonly SiteBasicInfo _site;
 
     private readonly ModificationTracker _modificationTracker = new();
 
     public HomeTypeEntity(
         ApplicationBasicInfo application,
+        SiteBasicInfo site,
         string? name,
         HousingType housingType,
         SectionStatus status,
         HomeTypeId? id = null,
         DateTime? createdOn = null,
-        params IHomeTypeSegmentEntity[] segments)
+        HomeInformationSegmentEntity? homeInformation = null,
+        DisabledPeopleHomeTypeDetailsSegmentEntity? disabledPeopleHomeTypeDetails = null,
+        OlderPeopleHomeTypeDetailsSegmentEntity? olderPeopleHomeTypeDetails = null,
+        DesignPlansSegmentEntity? designPlans = null,
+        SupportedHousingInformationSegmentEntity? supportedHousingInformation = null,
+        TenureDetailsSegmentEntity? tenureDetails = null,
+        ModernMethodsConstructionSegmentEntity? modernMethodsConstruction = null)
     {
+        _site = site;
         Application = application;
         Name = new HomeTypeName(name);
         HousingType = housingType;
         Status = status;
         Id = id ?? HomeTypeId.New();
         CreatedOn = createdOn;
-        _segments = segments.ToDictionary(x => GetSegmentType(x.GetType()), x => x);
+        HomeInformation = homeInformation ?? new HomeInformationSegmentEntity(application);
+        DisabledPeopleHomeTypeDetails = disabledPeopleHomeTypeDetails ?? new DisabledPeopleHomeTypeDetailsSegmentEntity();
+        OlderPeopleHomeTypeDetails = olderPeopleHomeTypeDetails ?? new OlderPeopleHomeTypeDetailsSegmentEntity();
+        DesignPlans = designPlans ?? new DesignPlansSegmentEntity(application);
+        SupportedHousingInformation = supportedHousingInformation ?? new SupportedHousingInformationSegmentEntity();
+        TenureDetails = tenureDetails ?? new TenureDetailsSegmentEntity();
+        ModernMethodsConstruction = modernMethodsConstruction ?? new ModernMethodsConstructionSegmentEntity(site.SiteUsingModernMethodsOfConstruction);
 
-        foreach (var segment in segments)
+        foreach (var segment in Segments)
         {
             segment.SegmentModified += MarkAsNotCompleted;
         }
@@ -54,25 +66,36 @@ public class HomeTypeEntity : DomainEntity, IHomeTypeEntity
 
     public DateTime? CreatedOn { get; }
 
-    public HomeInformationSegmentEntity HomeInformation => GetRequiredSegment<HomeInformationSegmentEntity>();
+    public HomeInformationSegmentEntity HomeInformation { get; }
 
-    public DisabledPeopleHomeTypeDetailsSegmentEntity DisabledPeopleHomeTypeDetails => GetRequiredSegment<DisabledPeopleHomeTypeDetailsSegmentEntity>();
+    public DisabledPeopleHomeTypeDetailsSegmentEntity DisabledPeopleHomeTypeDetails { get; }
 
-    public OlderPeopleHomeTypeDetailsSegmentEntity OlderPeopleHomeTypeDetails => GetRequiredSegment<OlderPeopleHomeTypeDetailsSegmentEntity>();
+    public OlderPeopleHomeTypeDetailsSegmentEntity OlderPeopleHomeTypeDetails { get; }
 
-    public DesignPlansSegmentEntity DesignPlans => GetRequiredSegment<DesignPlansSegmentEntity>();
+    public DesignPlansSegmentEntity DesignPlans { get; }
 
-    public SupportedHousingInformationSegmentEntity SupportedHousingInformation => GetRequiredSegment<SupportedHousingInformationSegmentEntity>();
+    public SupportedHousingInformationSegmentEntity SupportedHousingInformation { get; }
 
-    public TenureDetailsSegmentEntity TenureDetails => GetRequiredSegment<TenureDetailsSegmentEntity>();
+    public TenureDetailsSegmentEntity TenureDetails { get; }
 
-    public ModernMethodsConstructionSegmentEntity ModernMethodsConstruction => GetRequiredSegment<ModernMethodsConstructionSegmentEntity>();
+    public ModernMethodsConstructionSegmentEntity ModernMethodsConstruction { get; }
 
     public bool IsNew => Id.IsNew;
 
-    public bool IsModified => _modificationTracker.IsModified || _segments.Any(x => x.Value.IsModified);
+    public bool IsModified => _modificationTracker.IsModified || Segments.Any(x => x.IsModified);
 
     public SectionStatus Status { get; private set; }
+
+    private IEnumerable<IHomeTypeSegmentEntity> Segments => new IHomeTypeSegmentEntity[]
+    {
+        HomeInformation,
+        DisabledPeopleHomeTypeDetails,
+        OlderPeopleHomeTypeDetails,
+        DesignPlans,
+        SupportedHousingInformation,
+        TenureDetails,
+        ModernMethodsConstruction,
+    };
 
     public void CompleteHomeType(IsSectionCompleted isSectionCompleted)
     {
@@ -89,7 +112,7 @@ public class HomeTypeEntity : DomainEntity, IHomeTypeEntity
 
         var canBeCompleted = HousingType != HousingType.Undefined
                              && Name.IsProvided()
-                             && _segments.Where(x => x.Value.IsRequired(HousingType)).All(x => x.Value.IsCompleted(HousingType, Application.Tenure));
+                             && Segments.Where(x => x.IsRequired(HousingType)).All(x => x.IsCompleted(HousingType, Application.Tenure));
         if (!canBeCompleted)
         {
             OperationResult.New()
@@ -113,7 +136,7 @@ public class HomeTypeEntity : DomainEntity, IHomeTypeEntity
             return;
         }
 
-        foreach (var (_, segment) in _segments)
+        foreach (var segment in Segments)
         {
             segment.HousingTypeChanged(HousingType, newHousingType);
         }
@@ -126,37 +149,26 @@ public class HomeTypeEntity : DomainEntity, IHomeTypeEntity
     {
         return new HomeTypeEntity(
             Application,
+            _site,
             newName.Value,
             HousingType,
             SectionStatus.InProgress,
-            segments: _segments.Select(x => x.Value.Duplicate()).ToArray());
-    }
-
-    public bool HasSegment(HomeTypeSegmentType segmentType)
-    {
-        return _segments.ContainsKey(segmentType);
+            null,
+            null,
+            HomeInformation.Duplicate(),
+            DisabledPeopleHomeTypeDetails.Duplicate(),
+            OlderPeopleHomeTypeDetails.Duplicate(),
+            DesignPlans.Duplicate(),
+            SupportedHousingInformation.Duplicate(),
+            TenureDetails.Duplicate(),
+            ModernMethodsConstruction.Duplicate());
     }
 
     public override IReadOnlyList<IDomainEvent> GetDomainEventsAndRemove()
     {
         return new ReadOnlyCollection<IDomainEvent>(base.GetDomainEventsAndRemove()
-            .Concat(_segments.SelectMany(x => x.Value.GetDomainEventsAndRemove()))
+            .Concat(Segments.SelectMany(x => x.GetDomainEventsAndRemove()))
             .ToList());
-    }
-
-    private static HomeTypeSegmentType GetSegmentType(Type segmentType)
-    {
-        var segmentTypeAttribute = segmentType.GetCustomAttributes<HomeTypeSegmentTypeAttribute>().FirstOrDefault() ?? throw new ArgumentException($"{segmentType.Name} segment entity is missing {nameof(HomeTypeSegmentTypeAttribute)}.", nameof(segmentType));
-
-        return segmentTypeAttribute.SegmentType;
-    }
-
-    private TSegment GetRequiredSegment<TSegment>()
-        where TSegment : IHomeTypeSegmentEntity
-    {
-        return _segments.TryGetValue(GetSegmentType(typeof(TSegment)), out var segment)
-            ? (TSegment)segment
-            : throw new InvalidOperationException($"Cannot get {typeof(TSegment).Name} segment because it does not exist.");
     }
 
     private void MarkAsNotCompleted()

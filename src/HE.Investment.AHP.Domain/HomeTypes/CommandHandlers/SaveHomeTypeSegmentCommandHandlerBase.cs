@@ -33,7 +33,6 @@ public abstract class SaveHomeTypeSegmentCommandHandlerBase<TCommand> : HomeType
             request.ApplicationId,
             request.HomeTypeId,
             account,
-            SegmentTypes,
             cancellationToken);
 
         var errors = PerformWithValidation(SaveActions.Select<Action<TCommand, IHomeTypeEntity>, Action>(x => () => x(request, homeType)).ToArray());
@@ -42,7 +41,7 @@ public abstract class SaveHomeTypeSegmentCommandHandlerBase<TCommand> : HomeType
             return new OperationResult(errors);
         }
 
-        await _homeTypeRepository.Save(homeType, account.SelectedOrganisationId(), SegmentTypes, cancellationToken);
+        await _homeTypeRepository.Save(homeType, account.SelectedOrganisationId(), cancellationToken);
         return OperationResult.Success();
     }
 }

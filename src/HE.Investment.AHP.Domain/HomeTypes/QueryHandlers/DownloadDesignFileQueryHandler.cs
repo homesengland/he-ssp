@@ -1,5 +1,4 @@
 ﻿using HE.Investment.AHP.Contract.Common;
-using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Queries;
 using HE.Investment.AHP.Domain.Documents.Services;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;

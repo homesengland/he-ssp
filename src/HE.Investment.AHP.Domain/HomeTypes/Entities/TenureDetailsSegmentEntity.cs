@@ -179,7 +179,7 @@ public class TenureDetailsSegmentEntity : DomainEntity, IHomeTypeSegmentEntity
         return (rentPerWeek!.Value * weeksAYear / (marketValue.Value - expectedFirstTranche!.Value)).RoundToFourDecimalPlaces();
     }
 
-    public IHomeTypeSegmentEntity Duplicate()
+    public TenureDetailsSegmentEntity Duplicate()
     {
         return new TenureDetailsSegmentEntity(
             MarketValue,

@@ -4463,6 +4463,26 @@ namespace HE.Investments.Common.CRM.Model
 		}
 		
 		/// <summary>
+		/// 1:N invln_ahglocalauthorities_GrowthManager_systemu
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_ahglocalauthorities_GrowthManager_systemu")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities> invln_ahglocalauthorities_GrowthManager_systemu
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities>("invln_ahglocalauthorities_GrowthManager_systemu", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_ahglocalauthorities_GrowthManager_systemu");
+				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities>("invln_ahglocalauthorities_GrowthManager_systemu", null, value);
+				this.OnPropertyChanged("invln_ahglocalauthorities_GrowthManager_systemu");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N invln_account_ProviderManagementLead_systemuser
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_account_ProviderManagementLead_systemuser")]

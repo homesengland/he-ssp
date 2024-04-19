@@ -6,10 +6,8 @@ using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investment.AHP.Domain.Site.ValueObjects;
 using HE.Investment.AHP.Domain.Tests.Application.TestData;
-using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.Extensions;
 using HE.Investments.TestsUtils;
-using Microsoft.Crm.Sdk.Messages;
 
 namespace HE.Investment.AHP.Domain.Tests.FinancialDetails.TestObjectBuilders;
 
@@ -25,6 +23,8 @@ public class FinancialDetailsEntityBuilder
             new SiteBasicInfo(
                 applicationBasicInfo.SiteId,
                 new SiteName("Site name"),
+                null,
+                null,
                 new LandAcquisitionStatus(SiteLandAcquisitionStatus.FullOwnership),
                 SiteUsingModernMethodsOfConstruction.Yes));
     }

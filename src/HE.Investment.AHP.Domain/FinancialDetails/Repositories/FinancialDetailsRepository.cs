@@ -1,44 +1,39 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Site;
-using HE.Investment.AHP.Domain.Application.Factories;
+using HE.Investment.AHP.Domain.Application.Crm;
 using HE.Investment.AHP.Domain.Application.Repositories;
-using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
-using HE.Investment.AHP.Domain.Common.Mappers;
-using HE.Investment.AHP.Domain.Data;
 using HE.Investment.AHP.Domain.FinancialDetails.Entities;
 using HE.Investment.AHP.Domain.FinancialDetails.Mappers;
 using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
-using HE.Investment.AHP.Domain.Programme;
 using HE.Investment.AHP.Domain.Scheme.Repositories;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.ValueObjects;
-using HE.Investments.Common.CRM.Mappers;
 using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 
 public class FinancialDetailsRepository : IFinancialDetailsRepository
 {
-    private readonly IApplicationCrmContext _applicationCrmContext;
+    private readonly IApplicationCrmContext _crmContext;
 
-    private readonly IAhpProgrammeRepository _programmeRepository;
+    private readonly IApplicationRepository _applicationRepository;
 
     private readonly ISchemeRepository _schemeRepository;
 
     private readonly ISiteRepository _siteRepository;
 
     public FinancialDetailsRepository(
-        IApplicationCrmContext applicationCrmContext,
-        IAhpProgrammeRepository programmeRepository,
+        IApplicationCrmContext crmContext,
+        IApplicationRepository applicationRepository,
         ISchemeRepository schemeRepository,
         ISiteRepository siteRepository)
     {
-        _applicationCrmContext = applicationCrmContext;
-        _programmeRepository = programmeRepository;
+        _crmContext = crmContext;
+        _applicationRepository = applicationRepository;
         _schemeRepository = schemeRepository;
         _siteRepository = siteRepository;
     }
@@ -47,16 +42,16 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
     {
         var organisationId = userAccount.SelectedOrganisationId().Value;
         var application = userAccount.CanViewAllApplications()
-            ? await _applicationCrmContext.GetOrganisationApplicationById(
+            ? await _crmContext.GetOrganisationApplicationById(
                 id.Value,
                 organisationId,
-                CrmFields.FinancialDetailsToRead.ToList(),
                 cancellationToken)
-            : await _applicationCrmContext.GetUserApplicationById(id.Value, organisationId, CrmFields.FinancialDetailsToRead.ToList(), cancellationToken);
+            : await _crmContext.GetUserApplicationById(id.Value, organisationId, cancellationToken);
+        var applicationBasicInfo = await _applicationRepository.GetApplicationBasicInfo(id, userAccount, cancellationToken);
         var schemeFunding = (await _schemeRepository.GetByApplicationId(id, userAccount, false, cancellationToken)).Funding;
         var siteBasicInfo = await _siteRepository.GetSiteBasicInfo(new SiteId(application.siteId), userAccount, cancellationToken);
 
-        return await CreateEntity(application, userAccount, siteBasicInfo, schemeFunding, cancellationToken);
+        return CreateEntity(application, applicationBasicInfo, siteBasicInfo, schemeFunding);
     }
 
     public async Task<FinancialDetailsEntity> Save(FinancialDetailsEntity financialDetails, OrganisationId organisationId, CancellationToken cancellationToken)
@@ -66,44 +61,29 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
             return financialDetails;
         }
 
-        var dto = new AhpApplicationDto
-        {
-            id = financialDetails.ApplicationBasicInfo.Id.Value,
-            name = financialDetails.ApplicationBasicInfo.Name.Value,
-            actualAcquisitionCost = financialDetails.LandStatus.PurchasePrice?.Value,
-            expectedAcquisitionCost = financialDetails.LandStatus.ExpectedPurchasePrice?.Value,
-            isPublicLand = financialDetails.LandValue.IsPublicLand,
-            currentLandValue = financialDetails.LandValue.CurrentLandValue?.Value,
-            expectedOnWorks = financialDetails.OtherApplicationCosts.ExpectedWorksCosts?.Value,
-            expectedOnCosts = financialDetails.OtherApplicationCosts.ExpectedOnCosts?.Value,
-            financialDetailsSectionCompletionStatus = SectionStatusMapper.ToDto(financialDetails.SectionStatus),
-        };
+        var dto = await _crmContext.GetOrganisationApplicationById(financialDetails.ApplicationBasicInfo.Id.Value, organisationId.Value, cancellationToken);
+        dto.actualAcquisitionCost = financialDetails.LandStatus.PurchasePrice?.Value;
+        dto.expectedAcquisitionCost = financialDetails.LandStatus.ExpectedPurchasePrice?.Value;
+        dto.isPublicLand = financialDetails.LandValue.IsPublicLand;
+        dto.currentLandValue = financialDetails.LandValue.CurrentLandValue?.Value;
+        dto.expectedOnWorks = financialDetails.OtherApplicationCosts.ExpectedWorksCosts?.Value;
+        dto.expectedOnCosts = financialDetails.OtherApplicationCosts.ExpectedOnCosts?.Value;
+        dto.financialDetailsSectionCompletionStatus = SectionStatusMapper.ToDto(financialDetails.SectionStatus);
 
         ExpectedContributionsToSchemeMapper.MapFromExpectedContributions(financialDetails.ExpectedContributions, dto);
         PublicGrantsMapper.MapFromPublicGrants(financialDetails.PublicGrants, dto);
 
-        _ = await _applicationCrmContext.Save(dto, organisationId.Value, CrmFields.FinancialDetailsToUpdate.ToList(), cancellationToken);
+        _ = await _crmContext.Save(dto, organisationId.Value, cancellationToken);
 
         return financialDetails;
     }
 
-    private async Task<FinancialDetailsEntity> CreateEntity(
+    private static FinancialDetailsEntity CreateEntity(
         AhpApplicationDto application,
-        UserAccount userAccount,
+        ApplicationBasicInfo applicationBasicInfo,
         SiteBasicInfo siteBasicInfo,
-        SchemeFunding schemeFunding,
-        CancellationToken cancellationToken)
+        SchemeFunding schemeFunding)
     {
-        var applicationId = AhpApplicationId.From(application.id);
-        var applicationBasicInfo = new ApplicationBasicInfo(
-            applicationId,
-            new SiteId(application.siteId),
-            new ApplicationName(application.name),
-            ApplicationTenureMapper.ToDomain(application.tenure)!.Value,
-            AhpApplicationStatusMapper.MapToPortalStatus(application.applicationStatus),
-            await _programmeRepository.GetProgramme(applicationId, cancellationToken),
-            new ApplicationStateFactory(userAccount));
-
         return new FinancialDetailsEntity(
             applicationBasicInfo,
             siteBasicInfo,

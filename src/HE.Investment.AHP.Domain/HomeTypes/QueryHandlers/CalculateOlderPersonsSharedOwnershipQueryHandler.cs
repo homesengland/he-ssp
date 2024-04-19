@@ -17,8 +17,6 @@ internal sealed class CalculateOlderPersonsSharedOwnershipQueryHandler : Calcula
     {
     }
 
-    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => new[] { HomeTypeSegmentType.TenureDetails };
-
     protected override IEnumerable<Action<CalculateOlderPersonsSharedOwnershipQuery, IHomeTypeEntity>> CalculateActions => new[]
     {
         (CalculateOlderPersonsSharedOwnershipQuery request, IHomeTypeEntity homeType) => homeType.TenureDetails.ChangeMarketValue(request.MarketValue, true),

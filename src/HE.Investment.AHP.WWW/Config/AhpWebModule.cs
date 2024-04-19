@@ -8,7 +8,6 @@ using HE.Investment.AHP.WWW.Models.Scheme.Factories;
 using HE.Investment.AHP.WWW.Models.Site.Factories;
 using HE.Investment.AHP.WWW.Notifications;
 using HE.Investment.AHP.WWW.Routing;
-using HE.Investment.AHP.WWW.Utils;
 using HE.Investments.Common;
 using HE.Investments.Common.Config;
 using HE.Investments.Common.Contract.Enum;
@@ -43,8 +42,6 @@ public static class AhpWebModule
         services.AddDocumentServiceModule();
         AddViewModelFactories(services);
 
-        services.AddScoped<ISchemeProvider, CachedSchemeProvider>();
-        services.AddScoped<IDeliveryPhaseProvider, CachedDeliveryPhaseProvider>();
         services.AddSingleton<IAhpExternalLinks, AhpExternalLinks>();
     }
 
