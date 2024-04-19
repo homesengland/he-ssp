@@ -27,7 +27,7 @@ public abstract class UpdateUserCommandHandler<TCommand> : IRequestHandler<TComm
 
         Update(entity, request);
 
-        await _repository.Save(entity, userAccount.UserGlobalId.Value, userAccount.SelectedOrganisationId(), cancellationToken);
+        await _repository.Save(entity, userAccount.UserGlobalId, userAccount.SelectedOrganisationId(), cancellationToken);
 
         return OperationResult.Success();
     }
