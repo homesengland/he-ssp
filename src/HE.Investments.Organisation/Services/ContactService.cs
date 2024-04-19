@@ -1,8 +1,11 @@
 using System.Globalization;
 using System.Text;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.Investments.Common;
+using HE.Investments.Common.Utils;
 using HE.Investments.Organisation.CrmRepository;
 using Microsoft.Extensions.Primitives;
+using Microsoft.FeatureManagement;
 using Microsoft.PowerPlatform.Dataverse.Client;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Messages;
@@ -13,14 +16,23 @@ public class ContactService : IContactService
     private readonly IContactRepository _contactRepository;
     private readonly IWebRoleRepository _webRoleRepository;
     private readonly IPortalPermissionRepository _permissionRepository;
+    private readonly IFeatureManager _featureManager;
+    private readonly IDateTimeProvider _dateTimeProvider;
 
     private readonly int _commonPortalTypeOption = 858110002;
 
-    public ContactService(IContactRepository contactRepository, IWebRoleRepository webRoleRepository, IPortalPermissionRepository permissionRepository)
+    public ContactService(
+        IContactRepository contactRepository,
+        IWebRoleRepository webRoleRepository,
+        IPortalPermissionRepository permissionRepository,
+        IFeatureManager featureManager,
+        IDateTimeProvider dateTimeProvider)
     {
         _contactRepository = contactRepository;
         _webRoleRepository = webRoleRepository;
         _permissionRepository = permissionRepository;
+        _featureManager = featureManager;
+        _dateTimeProvider = dateTimeProvider;
     }
 
     public Task<ContactDto?> RetrieveUserProfile(IOrganizationServiceAsync2 service, string contactExternalId)
@@ -166,7 +178,7 @@ public class ContactService : IContactService
         return Task.FromResult(contactList);
     }
 
-    public async Task UpdateContactWebrole(IOrganizationServiceAsync2 service, string contactExternalId, Guid organisationGuid, int newWebRole, int? portalType = null)
+    public async Task UpdateContactWebrole(IOrganizationServiceAsync2 service, string contactExternalId, string contactAssigningExternalId, Guid organisationGuid, int newWebRole, int? portalType = null)
     {
         var contact = _contactRepository.GetContactViaExternalId(service, contactExternalId);
         if (contact != null)
@@ -178,13 +190,26 @@ public class ContactService : IContactService
                 var webrole = _webRoleRepository.GetWebroleByPermissionOptionSetValue(service, newWebRole, portalTypeFilter);
                 if (webrole != null)
                 {
+                    var attributes = new AttributeCollection
+                    {
+                         { "invln_webroleid", webrole.ToEntityReference() },
+                    };
+
+                    if (await _featureManager.IsEnabledAsync(FeatureFlags.WebRoleAuditFieldsImplemented))
+                    {
+                        var requesterContact = _contactRepository.GetContactViaExternalId(service, contactAssigningExternalId);
+                        if (requesterContact != null)
+                        {
+                            attributes.AddRange(
+                                new KeyValuePair<string, object>("invln_contactassigningwebrole", requesterContact.ToEntityReference()),
+                                new KeyValuePair<string, object>("invln_datetimeofassigningwebrole", _dateTimeProvider.UtcNow));
+                        }
+                    }
+
                     var contactWebroleToUpdate = new Entity("invln_contactwebrole")
                     {
                         Id = currentRoleName.Id,
-                        Attributes =
-                            {
-                                { "invln_webroleid", webrole.ToEntityReference() },
-                            },
+                        Attributes = attributes,
                     };
 
                     await service.UpdateAsync(contactWebroleToUpdate);
