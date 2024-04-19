@@ -347,7 +347,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                 case (int)invln_ExternalStatusAHP.ApplicationSubmitted:
                     ahpApplication.StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.ApplicationSubmitted);
                     ahpApplication.StateCode = new OptionSetValue((int)invln_schemeState.Active);
-                    ahpApplication.invln_DateSubmitted = DateTime.Today;
+                    ahpApplication.invln_DateSubmitted = DateTime.Now;
                     break;
 
                 case (int)invln_ExternalStatusAHP.Approved:
