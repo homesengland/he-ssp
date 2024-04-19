@@ -1,6 +1,7 @@
 using System.Text.Json;
 using HE.Investments.Common.Infrastructure.Cache.Config;
 using HE.Investments.Common.Infrastructure.Cache.Interfaces;
+using Microsoft.Extensions.Logging;
 using StackExchange.Redis;
 
 namespace HE.Investments.Common.Infrastructure.Cache;
@@ -9,11 +10,14 @@ public class RedisService : ICacheService
 {
     private readonly ICacheConfig _cacheConfig;
 
+    private readonly ILogger<RedisService> _logger;
+
     private readonly ConnectionMultiplexer _connection;
 
-    public RedisService(ICacheConfig cacheConfig, ConfigurationOptions options)
+    public RedisService(ICacheConfig cacheConfig, ConfigurationOptions options, ILogger<RedisService> logger)
     {
         _cacheConfig = cacheConfig;
+        _logger = logger;
         _connection = ConnectionMultiplexer.Connect(options);
     }
 
@@ -47,13 +51,6 @@ public class RedisService : ICacheService
         return value;
     }
 
-    public void SetValue(string key, object value) => SetValue(key, value, _cacheConfig.ExpireMinutes);
-
-    public void SetValue(string key, object value, int expireMinutes)
-    {
-        Cache.StringSet(key, Serialize(value), TimeSpan.FromMinutes(expireMinutes));
-    }
-
     public void SetValue<T>(string key, T value)
     {
         SetValue(key, (object)value!);
@@ -61,7 +58,14 @@ public class RedisService : ICacheService
 
     public async Task SetValueAsync<T>(string key, T value)
     {
-        await Cache.StringSetAsync(key, Serialize(value), TimeSpan.FromMinutes(_cacheConfig.ExpireMinutes));
+        try
+        {
+            await Cache.StringSetAsync(key, Serialize(value), TimeSpan.FromMinutes(_cacheConfig.ExpireMinutes));
+        }
+        catch (RedisServerException ex)
+        {
+            _logger.LogError(ex, "Error while saving key {Key} to Redis cache, value will not be saved.", key);
+        }
     }
 
     public void Delete(string key)
@@ -82,5 +86,19 @@ public class RedisService : ICacheService
     private static T? Deserialize<T>(string value)
     {
         return JsonSerializer.Deserialize<T>(value);
+    }
+
+    private void SetValue(string key, object value) => SetValue(key, value, _cacheConfig.ExpireMinutes);
+
+    private void SetValue(string key, object value, int expireMinutes)
+    {
+        try
+        {
+            Cache.StringSet(key, Serialize(value), TimeSpan.FromMinutes(expireMinutes));
+        }
+        catch (RedisServerException ex)
+        {
+            _logger.LogError(ex, "Error while saving key {Key} to Redis cache, value will not be saved.", key);
+        }
     }
 }

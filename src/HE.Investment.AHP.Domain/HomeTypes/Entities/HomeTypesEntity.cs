@@ -11,14 +11,17 @@ namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 
 public class HomeTypesEntity
 {
+    private readonly SiteBasicInfo _site;
+
     private readonly IList<HomeTypeEntity> _homeTypes;
 
     private readonly IList<HomeTypeEntity> _toRemove = new List<HomeTypeEntity>();
 
     private readonly ModificationTracker _statusModificationTracker = new();
 
-    public HomeTypesEntity(ApplicationBasicInfo application, IEnumerable<HomeTypeEntity> homeTypes, SectionStatus status)
+    public HomeTypesEntity(ApplicationBasicInfo application, SiteBasicInfo site, IEnumerable<HomeTypeEntity> homeTypes, SectionStatus status)
     {
+        _site = site;
         Application = application;
         _homeTypes = homeTypes.ToList();
         Status = status;
@@ -36,7 +39,7 @@ public class HomeTypesEntity
 
     public IHomeTypeEntity CreateHomeType(string? name, HousingType housingType)
     {
-        var homeType = new HomeTypeEntity(Application, ValidateNameUniqueness(name), housingType, SectionStatus.InProgress);
+        var homeType = new HomeTypeEntity(Application, _site, ValidateNameUniqueness(name), housingType, SectionStatus.InProgress);
         _homeTypes.Add(homeType);
 
         return homeType;

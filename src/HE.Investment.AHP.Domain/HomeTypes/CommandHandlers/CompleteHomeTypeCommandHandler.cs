@@ -1,5 +1,4 @@
 ﻿using HE.Investment.AHP.Contract.HomeTypes.Commands;
-using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
@@ -28,7 +27,6 @@ public class CompleteHomeTypeCommandHandler : HomeTypeCommandHandlerBase, IReque
             request.ApplicationId,
             request.HomeTypeId,
             account,
-            HomeTypeSegmentTypes.All,
             cancellationToken);
 
         var errors = PerformWithValidation(() => homeType.CompleteHomeType(request.IsSectionCompleted));
@@ -37,7 +35,7 @@ public class CompleteHomeTypeCommandHandler : HomeTypeCommandHandlerBase, IReque
             return new OperationResult(errors);
         }
 
-        await _homeTypeRepository.Save(homeType, account.SelectedOrganisationId(), HomeTypeSegmentTypes.None, cancellationToken);
+        await _homeTypeRepository.Save(homeType, account.SelectedOrganisationId(), cancellationToken);
         return OperationResult.Success();
     }
 }

@@ -130,7 +130,7 @@ public class DesignPlansSegmentEntity : DomainEntity, IHomeTypeSegmentEntity
         }
     }
 
-    public IHomeTypeSegmentEntity Duplicate()
+    public DesignPlansSegmentEntity Duplicate()
     {
         return new DesignPlansSegmentEntity(_application, DesignPrinciples, MoreInformation, new List<UploadedFile>());
     }

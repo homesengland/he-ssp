@@ -26,7 +26,7 @@ public class GetAhpSitePrefillDataQueryHandler : IRequestHandler<GetAhpSitePrefi
     public async Task<AhpSitePrefillData> Handle(GetAhpSitePrefillDataQuery request, CancellationToken cancellationToken)
     {
         var userAccount = await _accountUserContext.GetSelectedAccount();
-        var site = await _siteRepository.GetSite(request.SiteId, userAccount, cancellationToken);
+        var site = await _siteRepository.GetSiteBasicInfo(request.SiteId, userAccount, cancellationToken);
 
         if (site.FrontDoorProjectId.IsProvided() && site.FrontDoorSiteId.IsProvided())
         {

@@ -1,7 +1,7 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Domain.Common;
-using HE.Investment.AHP.Domain.Data;
+using HE.Investment.AHP.Domain.Site.Crm;
 using HE.Investment.AHP.Domain.Site.Entities;
 using HE.Investment.AHP.Domain.Site.Mappers;
 using HE.Investment.AHP.Domain.Site.ValueObjects;
@@ -46,6 +46,8 @@ public class SiteRepository : ISiteRepository
         return new SiteBasicInfo(
             site.Id,
             site.Name,
+            site.FrontDoorProjectId,
+            site.FrontDoorSiteId,
             site.LandAcquisitionStatus,
             site.ModernMethodsOfConstruction.SiteUsingModernMethodsOfConstruction ?? SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes);
     }

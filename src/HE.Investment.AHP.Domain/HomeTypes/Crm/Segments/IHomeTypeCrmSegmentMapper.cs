@@ -6,8 +6,6 @@ namespace HE.Investment.AHP.Domain.HomeTypes.Crm.Segments;
 
 public interface IHomeTypeCrmSegmentMapper
 {
-    IEnumerable<string> CrmFieldNames { get; }
-
     HomeTypeSegmentType SegmentType { get; }
 
     IHomeTypeSegmentEntity MapToEntity(ApplicationBasicInfo application, SiteBasicInfo site, HomeTypeDto dto, IReadOnlyCollection<UploadedFile> uploadedFiles);
