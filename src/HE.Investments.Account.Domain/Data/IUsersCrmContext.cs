@@ -10,5 +10,5 @@ public interface IUsersCrmContext
 
     Task<int?> GetUserRole(string id, Guid organisationId);
 
-    Task ChangeUserRole(string userId, int role, Guid organisationId);
+    Task ChangeUserRole(string userId, string userAssigningId, int role, Guid organisationId);
 }
