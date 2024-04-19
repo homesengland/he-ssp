@@ -211,11 +211,10 @@ public class ApplicationRepository : IApplicationRepository
         var filtered = applications
             .Where(x => filter == null || filter(x))
             .OrderByDescending(x => x.lastExternalModificationOn)
-            .TakePage(paginationRequest)
-            .Select(CreateApplicationWithFundingDetails)
             .ToList();
+        var siteApplications = filtered.TakePage(paginationRequest).Select(CreateApplicationWithFundingDetails).ToList();
 
-        return new PaginationResult<ApplicationWithFundingDetails>(filtered, paginationRequest.Page, paginationRequest.ItemsPerPage, applications.Count);
+        return new PaginationResult<ApplicationWithFundingDetails>(siteApplications, paginationRequest.Page, paginationRequest.ItemsPerPage, filtered.Count);
     }
 
     private async Task<AhpApplicationDto> GetAhpApplicationDto(AhpApplicationId id, UserAccount userAccount, CancellationToken cancellationToken)

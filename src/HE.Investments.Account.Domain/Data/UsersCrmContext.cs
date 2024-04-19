@@ -41,9 +41,9 @@ public class UsersCrmContext : IUsersCrmContext
         return roles.Select(GetUserRole).FirstOrDefault();
     }
 
-    public async Task ChangeUserRole(string userId, int role, Guid organisationId)
+    public async Task ChangeUserRole(string userId, string userAssigningId, int role, Guid organisationId)
     {
-        await _contactService.UpdateContactWebrole(_organizationServiceAsync, userId, organisationId, role);
+        await _contactService.UpdateContactWebrole(_organizationServiceAsync, userId, userAssigningId, organisationId, role);
     }
 
     private static int? GetUserRole(ContactRolesDto dto)
