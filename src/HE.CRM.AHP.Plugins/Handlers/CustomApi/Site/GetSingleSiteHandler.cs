@@ -9,6 +9,8 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.Site
     {
         private string SiteId => ExecutionData.GetInputParameter<string>(invln_getsinglesiteRequest.Fields.invln_siteid);
         private string FieldsToRetrieve => ExecutionData.GetInputParameter<string>(invln_getsinglesiteRequest.Fields.invln_fieldstoretrieve);
+        private string externalContactId => ExecutionData.GetInputParameter<string>(invln_getsinglesiteRequest.Fields.invln_externalcontactid);
+        private string accountId => ExecutionData.GetInputParameter<string>(invln_getsinglesiteRequest.Fields.invln_accountid);
 
         public override bool CanWork()
         {
@@ -17,7 +19,8 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.Site
 
         public override void DoWork()
         {
-            var result = CrmServicesFactory.Get<ISiteService>().GetById(SiteId, FieldsToRetrieve);
+            TracingService.Trace("GetSingleSiteHandler");
+            var result = CrmServicesFactory.Get<ISiteService>().GetSingle(SiteId, FieldsToRetrieve, externalContactId, accountId);
             if (result != null)
             {
                 var serialized = JsonSerializer.Serialize(result);
