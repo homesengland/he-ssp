@@ -28,8 +28,8 @@ namespace HE.CRM.Common.DtoMapping
                 },
                 localAuthority = new SiteLocalAuthority
                 {
-                   id = entity.GetAttributeValue<AliasedValue>("invln_ahglocalauthorities1.invln_gsscode")?.Value.ToString(),
-                   name = entity.invln_LocalAuthority?.Name,
+                    id = entity.GetAttributeValue<AliasedValue>("invln_ahglocalauthorities1.invln_gsscode")?.Value.ToString(),
+                    name = entity.invln_LocalAuthority?.Name,
                 },
                 planningDetails = new PlanningDetailsDto
                 {
@@ -62,7 +62,9 @@ namespace HE.CRM.Common.DtoMapping
                 siteTypeDetails =
                     new SiteTypeDetailsDto
                     {
-                        siteType = entity.invln_TypeofSite?.Value, isGreenBelt = entity.invln_greenbelt, isRegenerationSite = entity.invln_regensite,
+                        siteType = entity.invln_TypeofSite?.Value,
+                        isGreenBelt = entity.invln_greenbelt,
+                        isRegenerationSite = entity.invln_regensite,
                     },
                 siteUseDetails =
                     new SiteUseDetailsDto
@@ -73,7 +75,8 @@ namespace HE.CRM.Common.DtoMapping
                     },
                 ruralDetails = new RuralDetailsDto
                 {
-                    isRuralClassification = entity.invln_Ruralclassification, isRuralExceptionSite = entity.invln_RuralExceptionSite,
+                    isRuralClassification = entity.invln_Ruralclassification,
+                    isRuralExceptionSite = entity.invln_RuralExceptionSite,
                 },
                 environmentalImpact = entity.invln_ActionstoReduce,
                 modernMethodsOfConstruction = new ModernMethodsOfConstructionDto
@@ -89,6 +92,11 @@ namespace HE.CRM.Common.DtoMapping
                 },
 
                 procurementMechanisms = entity.invln_procurementmechanisms.ToIntValueList(),
+                organizationId = ,
+                organizationName = "",
+                developerPartner = null,
+                ownerOfTheLandDuringDevelopment = null,
+                ownerOfTheHomesAfterCompletion = null,
             };
         }
 
@@ -168,7 +176,6 @@ namespace HE.CRM.Common.DtoMapping
             SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_mmccategory2subcategories), CreateOptionSetValueCollection(dto.modernMethodsOfConstruction.mmc2DSubcategories));
 
             SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_procurementmechanisms), CreateOptionSetValueCollection(dto.procurementMechanisms));
-
 
             if (createdByContact != null)
             {

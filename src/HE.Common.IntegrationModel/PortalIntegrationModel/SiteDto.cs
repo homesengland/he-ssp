@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
+using DataverseModel;
 
 namespace HE.Common.IntegrationModel.PortalIntegrationModel
 {
@@ -40,6 +42,11 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public ModernMethodsOfConstructionDto modernMethodsOfConstruction { get; set; }
 
         public IList<int> procurementMechanisms { get; set; }
+        public string organizationId { get; set; }
+        public string organizationName { get; set; }
+        public UserAccountDto developerPartner { get; set; }
+        public UserAccountDto ownerOfTheLandDuringDevelopment { get; set; }
+        public UserAccountDto ownerOfTheHomesAfterCompletion { get; set; }
     }
 
     public class SiteLocalAuthority
