@@ -22,7 +22,10 @@ namespace HE.CRM.AHP.Plugins.Handlers.HomeType
         public override bool CanWork()
         {
             TracingService.Trace("CalculatePercentageValueOfNDSSStandard - Can Work");
-            return ValueChanged(invln_HomeType.Fields.invln_numberofbedrooms) || ValueChanged(invln_HomeType.Fields.invln_maxoccupancy) || ValueChanged(invln_HomeType.Fields.invln_numberofstoreys);
+            return ValueChanged(invln_HomeType.Fields.invln_numberofbedrooms)
+                || ValueChanged(invln_HomeType.Fields.invln_maxoccupancy)
+                || ValueChanged(invln_HomeType.Fields.invln_numberofstoreys)
+                || ValueChanged(invln_HomeType.Fields.invln_floorarea);
         }
 
         public override void DoWork()
@@ -30,9 +33,11 @@ namespace HE.CRM.AHP.Plugins.Handlers.HomeType
             TracingService.Trace("CalculatePercentageValueOfNDSSStandard - Do Work");
             if (CurrentState.invln_numberofbedrooms == null ||
                 CurrentState.invln_maxoccupancy == null ||
-                CurrentState.invln_numberofstoreys == null)
+                CurrentState.invln_numberofstoreys == null ||
+                CurrentState.invln_floorarea == null)
+
             {
-                TracingService.Trace($"One of: {CurrentState.invln_numberofbedrooms}, {CurrentState.invln_maxoccupancy}, {CurrentState.invln_numberofstoreys} is null calculation is not possible");
+                TracingService.Trace($"One of: {CurrentState.invln_numberofbedrooms}, {CurrentState.invln_maxoccupancy}, {CurrentState.invln_numberofstoreys}, {invln_HomeType.Fields.invln_floorarea} is null calculation is not possible");
                 return;
             }
 
@@ -41,11 +46,11 @@ namespace HE.CRM.AHP.Plugins.Handlers.HomeType
             if (nddsStandard == null)
             {
                 TracingService.Trace($"Cannot find entity {invln_ndss.EntityLogicalName} with value {concatenatevalue} in field {invln_ndss.Fields.invln_StandardNumber}");
-                //    throw new InvalidPluginExecutionException("Home type not covered by NDSS");
+                throw new InvalidPluginExecutionException("Home type not covered by NDSS");
             }
             TracingService.Trace($"Calculate value in {invln_HomeType.Fields.invln_PercentageValueofNDSSStandard}");
 
-            var pecentageValueOfNdssStandard = (decimal)(nddsStandard.invln_Standard.Value / CurrentState.invln_floorarea * 100);
+            var pecentageValueOfNdssStandard = (decimal)(CurrentState.invln_floorarea / nddsStandard.invln_Standard.Value * 100);
             ExecutionData.Target.invln_PercentageValueofNDSSStandard = pecentageValueOfNdssStandard;
         }
     }
