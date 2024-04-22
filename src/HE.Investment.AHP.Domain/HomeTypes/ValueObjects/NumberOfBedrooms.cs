@@ -1,6 +1,8 @@
+using HE.Investments.Common.Domain.ValueObjects;
+
 namespace HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 
-public class NumberOfBedrooms : RequiredIntValueObject
+public class NumberOfBedrooms : TheRequiredIntValueObject
 {
     private const string DisplayName = "number of bedrooms in each home";
 

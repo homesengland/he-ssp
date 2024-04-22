@@ -1,33 +1,43 @@
-using System.Globalization;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
-using HE.Investments.Common.Messages;
-using HE.Investments.Common.Validators;
 
 namespace HE.Investment.AHP.Domain.Scheme.ValueObjects;
 
 public class SchemeFunding : ValueObject, IQuestion
 {
+    private readonly RequiredFunding? _requiredFunding;
+
+    private readonly HousesToDeliver? _housesToDeliver;
+
     public SchemeFunding(string? requiredFunding, string? housesToDeliver)
     {
-        Build(requiredFunding, housesToDeliver).CheckErrors();
+        var operationResult = new OperationResult();
+        _requiredFunding = operationResult.Aggregate(() => new RequiredFunding(requiredFunding));
+        _housesToDeliver = operationResult.Aggregate(() => new HousesToDeliver(housesToDeliver));
+
+        operationResult.CheckErrors();
     }
 
     public SchemeFunding(int? requiredFunding, int? housesToDeliver)
     {
-        Build(requiredFunding?.ToString(CultureInfo.InvariantCulture), housesToDeliver?.ToString(CultureInfo.InvariantCulture));
+        _requiredFunding = requiredFunding.IsProvided() ? new RequiredFunding(requiredFunding!.Value) : null;
+        _housesToDeliver = housesToDeliver.IsProvided() ? new HousesToDeliver(housesToDeliver!.Value) : null;
     }
 
-    public int? RequiredFunding { get; private set; }
+    public int? RequiredFunding => _requiredFunding?.Value;
 
-    public int? HousesToDeliver { get; private set; }
+    public int? HousesToDeliver => _housesToDeliver?.Value;
 
     public static SchemeFunding Empty() => new((int?)null, null);
 
     public void CheckIsComplete()
     {
-        Build(RequiredFunding.ToString(), HousesToDeliver.ToString()).CheckErrors();
+        var operationResult = new OperationResult();
+        operationResult.Aggregate(() => new RequiredFunding(_requiredFunding?.ToString()));
+        operationResult.Aggregate(() => new HousesToDeliver(_housesToDeliver?.ToString()));
+
+        operationResult.CheckErrors();
     }
 
     public bool IsAnswered() => RequiredFunding.IsProvided() && HousesToDeliver.IsProvided();
@@ -38,29 +48,5 @@ public class SchemeFunding : ValueObject, IQuestion
     {
         yield return RequiredFunding;
         yield return HousesToDeliver;
-    }
-
-    private OperationResult Build(string? requiredFundingGbp, string? housesToDeliver)
-    {
-        var fundingOperationResult = OperationResult.New();
-        var housesOperationResult = OperationResult.New();
-
-        var requiredFundingName = "total of funding you are requesting";
-        RequiredFunding = NumericValidator
-            .For(requiredFundingGbp, nameof(RequiredFunding), requiredFundingName, fundingOperationResult)
-            .IsProvided(ValidationErrorMessage.MustProvideRequiredField(requiredFundingName))
-            .IsWholeNumber()
-            .IsGreaterOrEqualTo(1)
-            .IsLessOrEqualTo(999999999);
-
-        var housesToDeliverName = "number of homes this scheme will deliver";
-        HousesToDeliver = NumericValidator
-            .For(housesToDeliver, nameof(HousesToDeliver), housesToDeliverName, housesOperationResult)
-            .IsProvided(ValidationErrorMessage.MustProvideRequiredField(housesToDeliverName))
-            .IsWholeNumber()
-            .IsGreaterOrEqualTo(1)
-            .IsLessOrEqualTo(999999);
-
-        return fundingOperationResult.AddValidationErrors(housesOperationResult.Errors);
     }
 }
