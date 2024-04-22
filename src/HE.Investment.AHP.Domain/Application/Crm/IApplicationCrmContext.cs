@@ -22,5 +22,6 @@ public interface IApplicationCrmContext
         Guid organisationId,
         ApplicationStatus applicationStatus,
         string? changeReason,
+        bool representationsAndWarranties,
         CancellationToken cancellationToken);
 }

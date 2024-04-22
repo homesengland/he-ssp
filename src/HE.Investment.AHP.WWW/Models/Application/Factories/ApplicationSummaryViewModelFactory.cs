@@ -72,7 +72,7 @@ public class ApplicationSummaryViewModelFactory : IApplicationSummaryViewModelFa
         var deliveryPhases = await _mediator.Send(new GetDeliveryPhasesQuery(applicationId), cancellationToken);
         foreach (var deliveryPhaseId in deliveryPhases.DeliveryPhases.Select(x => new DeliveryPhaseId(x.Id)))
         {
-            var deliveryPhaseDetails = await _mediator.Send(new GetDeliveryPhaseDetailsQuery(applicationId, deliveryPhaseId, true), cancellationToken);
+            var deliveryPhaseDetails = await _mediator.Send(new GetDeliveryPhaseDetailsQuery(applicationId, deliveryPhaseId), cancellationToken);
             var deliveryPhaseHomes = await _mediator.Send(new GetDeliveryPhaseHomesQuery(applicationId, deliveryPhaseId), cancellationToken);
 
             sections.AddRange(_deliveryPhaseCheckAnswersViewModelFactory.CreateSummary(applicationId, deliveryPhaseDetails, deliveryPhaseHomes, urlHelper));

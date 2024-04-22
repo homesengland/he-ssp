@@ -117,6 +117,7 @@ public class ApplicationRepository : IApplicationRepository
                 organisationId.Value,
                 application.Status,
                 application.ChangeStatusReason,
+                application.RepresentationsAndWarranties.Value,
                 cancellationToken);
         }
 
@@ -184,7 +185,8 @@ public class ApplicationRepository : IApplicationRepository
                 application.lastExternalModificationBy?.firstName,
                 application.lastExternalModificationBy?.lastName,
                 application.lastExternalModificationOn),
-            lastSubmitted);
+            lastSubmitted,
+            new RepresentationsAndWarranties(application.representationsandwarranties ?? false));
     }
 
     private static ApplicationWithFundingDetails CreateApplicationWithFundingDetails(AhpApplicationDto ahpApplicationDto)
@@ -202,7 +204,7 @@ public class ApplicationRepository : IApplicationRepository
             ahpApplicationDto.fundingRequested,
             otherApplicationCosts.ExpectedTotalCosts(),
             ahpApplicationDto.currentLandValue,
-            ahpApplicationDto.dateSubmitted.IsProvided() ? true : null); // TODO: task AB#91399 fetch value from crm
+            ahpApplicationDto.representationsandwarranties);
     }
 
     private async Task<PaginationResult<ApplicationWithFundingDetails>> GetApplications(
