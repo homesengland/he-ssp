@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
 
@@ -23,7 +22,7 @@ public class ExemptionJustificationTests : HomeTypesTestBase
             .HasElementWithText("span", "My application - My homes")
             .HasElementWithText("label", "Outline the criteria under which you intend to apply for an exemption to the Right to Shared Ownership")
             .HasElementWithText("div", "You can enter up to 1500 characters")
-            .HasElementWithText("a", "Read about the Right to Shared Ownership and the types of property that are in scope (opens in the new tab).")
+            .HasElementWithText("a", "Read about the Right to Shared Ownership and the types of property that are in scope (opens in a new tab).")
             .HasTextAreaInput("MoreInformation", value: "My new important information")
             .HasSaveAndContinueButton();
     }
