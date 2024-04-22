@@ -51,7 +51,7 @@ public class UsersTable : ViewComponent
                     new(Component: CreateUsersLinkComponent(u.Id.Value, "Manage", nameof(UsersController.Manage)), IsDisplayed: canManageUsers),
                 };
 
-                return new TableRowViewModel(tableItems);
+                return new TableRowViewModel(u.Id.Value, tableItems);
             })
             .ToList();
 

@@ -1,8 +1,6 @@
 using FluentAssertions;
-using HE.Investment.AHP.Domain.FinancialDetails.Constants;
 using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 using HE.Investments.Common.Contract.Exceptions;
-using HE.Investments.Common.Messages;
 
 namespace HE.Investment.AHP.Domain.Tests.FinancialDetails.ValueObjects;
 
@@ -17,8 +15,7 @@ public class ExpectedPurchasePriceValueTests
         // then
         action.Should()
             .ThrowExactly<DomainValidationException>()
-            .Which.OperationResult.Errors.Should()
-            .ContainSingle(x => x.ErrorMessage == ValidationErrorMessage.MustProvideRequiredField("expected purchase price of the land"));
+            .WithMessage("Enter the expected purchase price of the land, in pounds");
     }
 
     [Fact]
@@ -57,7 +54,7 @@ public class ExpectedPurchasePriceValueTests
         action.Should()
             .ThrowExactly<DomainValidationException>()
             .Which.OperationResult.Errors.Should()
-            .ContainSingle(x => x.ErrorMessage == "The expected purchase price of the land must be a whole number, like 300");
+            .ContainSingle(x => x.ErrorMessage == "The expected purchase price of the land must not include pence, like 300");
     }
 
     [Fact]

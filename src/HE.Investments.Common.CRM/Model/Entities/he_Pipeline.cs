@@ -346,6 +346,17 @@ namespace HE.Investments.Common.CRM.Model
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
+	public enum he_Pipeline_he_RecordStatus
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Loancreated = 134370001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Open = 134370000,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
 	public enum he_pipeline_he_regionlocation
 	{
 		
@@ -534,6 +545,8 @@ namespace HE.Investments.Common.CRM.Model
 			public const string he_NumberOfHomes = "he_numberofhomes";
 			public const string he_parentproject = "he_parentproject";
 			public const string he_parentprojectName = "he_parentprojectname";
+			public const string he_PASIntegrationLastMessageReceivedDate = "he_pasintegrationlastmessagereceiveddate";
+			public const string he_PASIntegrationLastMessageReceivedStatus = "he_pasintegrationlastmessagereceivedstatus";
 			public const string he_Pathway = "he_pathway";
 			public const string he_pathwayName = "he_pathwayname";
 			public const string he_PCSProjectIdentifier = "he_pcsprojectidentifier";
@@ -568,6 +581,8 @@ namespace HE.Investments.Common.CRM.Model
 			public const string he_ReasonforArchive = "he_reasonforarchive";
 			public const string he_reasonforarchiveName = "he_reasonforarchivename";
 			public const string he_Reasonforhold = "he_reasonforhold";
+			public const string he_RecordStatus = "he_recordstatus";
+			public const string he_recordstatusName = "he_recordstatusname";
 			public const string he_regionlocation = "he_regionlocation";
 			public const string he_regionlocationName = "he_regionlocationname";
 			public const string he_SponsorName = "he_sponsorname";
@@ -1872,6 +1887,40 @@ namespace HE.Investments.Common.CRM.Model
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_pasintegrationlastmessagereceiveddate")]
+		public System.Nullable<System.DateTime> he_PASIntegrationLastMessageReceivedDate
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("he_pasintegrationlastmessagereceiveddate");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("he_PASIntegrationLastMessageReceivedDate");
+				this.SetAttributeValue("he_pasintegrationlastmessagereceiveddate", value);
+				this.OnPropertyChanged("he_PASIntegrationLastMessageReceivedDate");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_pasintegrationlastmessagereceivedstatus")]
+		public string he_PASIntegrationLastMessageReceivedStatus
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("he_pasintegrationlastmessagereceivedstatus");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("he_PASIntegrationLastMessageReceivedStatus");
+				this.SetAttributeValue("he_pasintegrationlastmessagereceivedstatus", value);
+				this.OnPropertyChanged("he_PASIntegrationLastMessageReceivedStatus");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_pathway")]
 		public virtual Microsoft.Xrm.Sdk.OptionSetValue he_Pathway
 		{
@@ -2383,6 +2432,40 @@ namespace HE.Investments.Common.CRM.Model
 				this.OnPropertyChanging("he_Reasonforhold");
 				this.SetAttributeValue("he_reasonforhold", value);
 				this.OnPropertyChanged("he_Reasonforhold");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_recordstatus")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue he_RecordStatus
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("he_recordstatus");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("he_RecordStatus");
+				this.SetAttributeValue("he_recordstatus", value);
+				this.OnPropertyChanged("he_RecordStatus");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_recordstatusname")]
+		public string he_recordstatusName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("he_recordstatus"))
+				{
+					return this.FormattedValues["he_recordstatus"];
+				}
+				else
+				{
+					return default(string);
+				}
 			}
 		}
 		

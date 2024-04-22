@@ -59,8 +59,8 @@ internal sealed class GetFullHomeTypeQueryHandler : IRequestHandler<GetFullHomeT
             request.ApplicationId,
             request.HomeTypeId,
             account,
-            HomeTypeSegmentTypes.All,
-            cancellationToken);
+            cancellationToken,
+            loadFiles: true);
 
         return new FullHomeType(
             ApplicationBasicInfoMapper.Map(homeType.Application),

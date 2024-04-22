@@ -1,4 +1,3 @@
-using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.HomeTypes.Events;
 using HE.Investment.AHP.Domain.Documents;
 using HE.Investment.AHP.Domain.Documents.Config;

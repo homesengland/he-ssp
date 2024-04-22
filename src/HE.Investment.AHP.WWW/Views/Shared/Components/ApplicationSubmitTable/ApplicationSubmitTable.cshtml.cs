@@ -19,14 +19,16 @@ public class ApplicationSubmitTable : ViewComponent
 
         var rows = new List<TableRowViewModel>
         {
-            new(new List<TableValueViewModel>
-            {
-                new(model.SiteName),
-                new($"{model.ApplicationName}: {model.Tenure}"),
-                new(model.NumberOfHomes),
-                new(model.FundingRequested),
-                new(model.TotalSchemeCost),
-            }),
+            new(
+                model.ApplicationId,
+                new List<TableValueViewModel>
+                {
+                    new(model.SiteName),
+                    new($"{model.ApplicationName}: {model.Tenure}"),
+                    new(model.NumberOfHomes),
+                    new(model.FundingRequested),
+                    new(model.TotalSchemeCost),
+                }),
         };
 
         return Task.FromResult<IViewComponentResult>(View("ApplicationSubmitTable", (tableHeaders, rows)));

@@ -8,7 +8,7 @@ namespace HE.CRM.AHP.Plugins.Services.Site
     {
         PagedResponseDto<SiteDto> GetMultiple(PagingRequestDto paging, string fieldsToRetrieve, string externalContactId, string accountId);
 
-        SiteDto GetById(string id, string fieldsToRetrieve);
+        SiteDto GetSingle(string id, string fieldsToRetrieve, string externalContactId, string accountId);
 
         bool Exist(string name);
 

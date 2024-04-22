@@ -28,7 +28,7 @@ public class SaveHomeTypeDetailsCommandHandler : HomeTypeCommandHandlerBase, IRe
     public async Task<OperationResult<HomeTypeId?>> Handle(SaveHomeTypeDetailsCommand request, CancellationToken cancellationToken)
     {
         var account = await _accountUserContext.GetSelectedAccount();
-        var homeTypes = await _repository.GetByApplicationId(request.ApplicationId, account, HomeTypeSegmentTypes.All, cancellationToken);
+        var homeTypes = await _repository.GetByApplicationId(request.ApplicationId, account, cancellationToken);
         var organisationId = account.SelectedOrganisationId();
 
         return request.HomeTypeId.IsNotProvided()
@@ -45,7 +45,7 @@ public class SaveHomeTypeDetailsCommandHandler : HomeTypeCommandHandlerBase, IRe
         try
         {
             var homeType = homeTypes.CreateHomeType(request.HomeTypeName, request.HousingType);
-            await _repository.Save(homeType, organisationId, HomeTypeSegmentTypes.All, cancellationToken);
+            await _repository.Save(homeType, organisationId, cancellationToken);
 
             return new OperationResult<HomeTypeId?>(homeType.Id);
         }
@@ -70,7 +70,7 @@ public class SaveHomeTypeDetailsCommandHandler : HomeTypeCommandHandlerBase, IRe
             return new OperationResult<HomeTypeId?>(validationErrors, null);
         }
 
-        await _repository.Save(homeType, organisationId, HomeTypeSegmentTypes.All, cancellationToken);
+        await _repository.Save(homeType, organisationId, cancellationToken);
 
         return new OperationResult<HomeTypeId?>(homeType.Id);
     }

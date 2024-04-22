@@ -45,6 +45,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\IspRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\LocalAuthorityRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\MilestoneFrameworkItemRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)repositories\implementations\NdssRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\ProgrammeRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\HeProjectLocalAuthorityRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\ProjectSpecificConditionRepository.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\ILoanStatusChangeRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\ILocalAuthorityRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IMilestoneFrameworkItemRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)repositories\interfaces\INdssRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\INotificationSettingRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IPortalPermissionRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IProgrammeRepository.cs" />

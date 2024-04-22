@@ -34,7 +34,6 @@ public class UploadDesignPlansFileCommandHandler : IRequestHandler<UploadDesignP
             request.ApplicationId,
             request.HomeTypeId,
             account,
-            new[] { HomeTypeSegmentType.DesignPlans },
             cancellationToken);
 
         try
@@ -46,7 +45,7 @@ public class UploadDesignPlansFileCommandHandler : IRequestHandler<UploadDesignP
                 _documentSettings);
             homeType.DesignPlans.AddFilesToUpload(new[] { designFile });
 
-            await _homeTypeRepository.Save(homeType, account.SelectedOrganisationId(), new[] { HomeTypeSegmentType.DesignPlans }, cancellationToken);
+            await _homeTypeRepository.Save(homeType, account.SelectedOrganisationId(), cancellationToken);
 
             var uploadedFile = homeType.DesignPlans.UploadedFiles.Single(x => x.Id == designFile.Id);
             return OperationResult.Success<UploadedFileContract?>(Map(uploadedFile));

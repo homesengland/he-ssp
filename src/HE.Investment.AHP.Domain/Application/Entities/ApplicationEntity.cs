@@ -30,7 +30,8 @@ public class ApplicationEntity : DomainEntity
         ApplicationReferenceNumber? referenceNumber = null,
         ApplicationSections? sections = null,
         AuditEntry? lastModified = null,
-        AuditEntry? lastSubmitted = null)
+        AuditEntry? lastSubmitted = null,
+        RepresentationsAndWarranties? representationsAndWarranties = null)
     {
         SiteId = siteId;
         Id = id;
@@ -42,6 +43,7 @@ public class ApplicationEntity : DomainEntity
         LastSubmitted = lastSubmitted;
         Sections = sections ?? new ApplicationSections(new List<ApplicationSection>());
         _applicationState = applicationStateFactory.Create(status);
+        RepresentationsAndWarranties = representationsAndWarranties ?? new RepresentationsAndWarranties(false);
     }
 
     public SiteId SiteId { get; }
@@ -66,13 +68,13 @@ public class ApplicationEntity : DomainEntity
 
     public ApplicationSections Sections { get; }
 
+    public RepresentationsAndWarranties RepresentationsAndWarranties { get; private set; }
+
     public bool IsModified => _modificationTracker.IsModified;
 
     public bool IsStatusModified => _statusModificationTracker.IsModified;
 
     public bool IsNew => Id.IsNew;
-
-    public RepresentationsAndWarranties? RepresentationsAndWarranties { get; private set; }
 
     public static ApplicationEntity New(SiteId siteId, ApplicationName name, ApplicationTenure tenure, IApplicationStateFactory applicationStateFactory) => new(
         siteId,

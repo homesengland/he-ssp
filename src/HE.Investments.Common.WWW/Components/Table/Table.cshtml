@@ -33,7 +33,7 @@
     <tbody class="govuk-table__body">
     @foreach (var row in Model.Rows)
     {
-        <tr class="govuk-table__row">
+        <tr class="govuk-table__row" data-testid="@row.TestId">
             @foreach (var value in row.Values)
             {
                 @if (value.IsDisplayed)

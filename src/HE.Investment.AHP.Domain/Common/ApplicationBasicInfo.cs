@@ -18,6 +18,7 @@ public class ApplicationBasicInfo
         ApplicationName name,
         Tenure tenure,
         ApplicationStatus status,
+        ApplicationSections sections,
         AhpProgramme programme,
         IApplicationStateFactory applicationStateFactory)
     {
@@ -26,6 +27,7 @@ public class ApplicationBasicInfo
         Name = name;
         Tenure = tenure;
         Status = status;
+        Sections = sections;
         Programme = programme;
         _applicationState = applicationStateFactory.Create(Status);
     }
@@ -39,6 +41,8 @@ public class ApplicationBasicInfo
     public Tenure Tenure { get; }
 
     public ApplicationStatus Status { get; }
+
+    public ApplicationSections Sections { get; }
 
     public AhpProgramme Programme { get; }
 

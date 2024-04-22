@@ -1,10 +1,8 @@
 extern alias Org;
 
-using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investment.AHP.Domain.Programme.Config;
 using HE.Investment.AHP.Domain.Programme.Crm;
-using Org::HE.Investments.Organisation.Services;
 
 namespace HE.Investment.AHP.Domain.Programme;
 
@@ -20,7 +18,7 @@ public class AhpProgrammeRepository : IAhpProgrammeRepository
         _crmContext = crmContext;
     }
 
-    public async Task<AhpProgramme> GetProgramme(AhpApplicationId applicationId, CancellationToken cancellationToken)
+    public async Task<AhpProgramme> GetProgramme(CancellationToken cancellationToken)
     {
         var programme = await _crmContext.GetProgramme(_settings.AhpProgrammeId, cancellationToken);
         if (programme == null)

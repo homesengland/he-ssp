@@ -38,7 +38,7 @@ namespace HE.CRM.Common.Repositories.Implementations
 
         public bool ApplicationWithGivenNameExists(string name)
         {
-            using(var ctx = new OrganizationServiceContext(service))
+            using (var ctx = new OrganizationServiceContext(service))
             {
                 return ctx.CreateQuery<invln_scheme>()
                     .Where(x => x.invln_schemename == name).AsEnumerable().Any();

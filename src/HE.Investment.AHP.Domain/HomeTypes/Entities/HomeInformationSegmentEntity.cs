@@ -182,7 +182,7 @@ public class HomeInformationSegmentEntity : DomainEntity, IHomeTypeSegmentEntity
         }
     }
 
-    public IHomeTypeSegmentEntity Duplicate()
+    public HomeInformationSegmentEntity Duplicate()
     {
         return new HomeInformationSegmentEntity(
             _application,

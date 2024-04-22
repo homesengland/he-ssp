@@ -17,8 +17,6 @@ internal sealed class CalculateHomeOwnershipDisabilitiesQueryHandler : Calculate
     {
     }
 
-    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => new[] { HomeTypeSegmentType.TenureDetails };
-
     protected override IEnumerable<Action<CalculateHomeOwnershipDisabilitiesQuery, IHomeTypeEntity>> CalculateActions => new[]
     {
         (CalculateHomeOwnershipDisabilitiesQuery request, IHomeTypeEntity homeType) => homeType.TenureDetails.ChangeMarketValue(request.MarketValue, true),
