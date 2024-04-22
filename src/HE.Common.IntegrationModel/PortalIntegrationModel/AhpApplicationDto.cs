@@ -15,6 +15,7 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
 
         //sections statuses
         public int? schemeInformationSectionCompletionStatus { get; set; }
+
         public int? homeTypesSectionCompletionStatus { get; set; }
         public int? financialDetailsSectionCompletionStatus { get; set; }
         public int? deliveryPhasesSectionCompletionStatus { get; set; }
@@ -23,6 +24,7 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
 
         //financial
         public decimal? borrowingAgainstRentalIncomeFromThisScheme { get; set; }
+
         public decimal? fundingFromOpenMarketHomesOnThisScheme { get; set; }
         public decimal? fundingFromOpenMarketHomesNotOnThisScheme { get; set; }
         public decimal? fundingGeneratedFromOtherSources { get; set; }
@@ -48,6 +50,7 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
 
         //schema
         public decimal? fundingRequested { get; set; }
+
         public int? noOfHomes { get; set; }
         public string affordabilityEvidence { get; set; }
         public string discussionsWithLocalStakeholders { get; set; }
@@ -58,10 +61,12 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
 
         //other
         public string contactId { get; set; }
+
         public string contactExternalId { get; set; }
         public string organisationId { get; set; }
         public DateTime? lastExternalModificationOn { get; set; }
         public ContactDto lastExternalModificationBy { get; set; }
         public ContactDto lastExternalSubmittedBy { get; set; }
+        public bool? representationsandwarranties { get; set; }
     }
 }
