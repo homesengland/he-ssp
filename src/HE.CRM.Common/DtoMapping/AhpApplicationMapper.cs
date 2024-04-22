@@ -128,7 +128,7 @@ namespace HE.CRM.Common.DtoMapping
                 referenceNumber = application.invln_applicationid,
                 applicationStatus = application.invln_ExternalStatus?.Value,
                 contactExternalId = contactExternalId,
-                representationsandwarranties = application.invln_representationsandwarrantiesconfirmation.Value
+                representationsandwarranties = application.invln_representationsandwarrantiesconfirmation
 
             };
             if (application.invln_programmelookup != null)
