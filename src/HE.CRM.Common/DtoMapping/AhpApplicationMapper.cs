@@ -52,6 +52,11 @@ namespace HE.CRM.Common.DtoMapping
                 invln_grantsfromthelottery = MapNullableDecimalToMoney(applicationDto.howMuchReceivedFromLotteryFunding),
                 invln_grantsfromotherpublicbodies = MapNullableDecimalToMoney(applicationDto.howMuchReceivedFromOtherPublicBodies),
             };
+
+            if (applicationDto.representationsandwarranties != null)
+            {
+                applicationToReturn.invln_representationsandwarrantiesconfirmation = applicationDto.representationsandwarranties;
+            }
             if (applicationDto.id != null && Guid.TryParse(applicationDto.id, out var applicationId))
             {
                 applicationToReturn.Id = applicationId;
@@ -123,6 +128,7 @@ namespace HE.CRM.Common.DtoMapping
                 referenceNumber = application.invln_applicationid,
                 applicationStatus = application.invln_ExternalStatus?.Value,
                 contactExternalId = contactExternalId,
+                representationsandwarranties = application.invln_representationsandwarrantiesconfirmation.Value
 
             };
             if (application.invln_programmelookup != null)
