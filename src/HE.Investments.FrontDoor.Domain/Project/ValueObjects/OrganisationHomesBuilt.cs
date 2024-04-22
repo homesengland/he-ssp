@@ -1,7 +1,6 @@
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Domain.ValueObjects;
 using HE.Investments.Common.Extensions;
-using HE.Investments.Common.Validators;
 
 namespace HE.Investments.FrontDoor.Domain.Project.ValueObjects;
 

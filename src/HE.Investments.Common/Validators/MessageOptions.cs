@@ -13,10 +13,10 @@ public enum MessageOptions
     /// <summary>
     ///     Value indicating that field is required for calculation and error message should contain such information.
     /// </summary>
-    IsCalculation = 2,
+    Calculation = 2,
 
     /// <summary>
     ///     Value indicating that field accepts money value so error message contains pounds/pence reference.
     /// </summary>
-    IsMoney = 4,
+    Money = 4,
 }

@@ -17,7 +17,7 @@ public abstract class YourRequiredIntValueObject : ValueObject
         MessageOptions options = MessageOptions.None)
     {
         var example = options.HasFlag(MessageOptions.HideExample) ? null : "30";
-        var isMoney = options.HasFlag(MessageOptions.IsMoney);
+        var isMoney = options.HasFlag(MessageOptions.Money);
 
         Value = NumberParser.TryParseDecimal(value, minValue, maxValue, 0, out var parsedValue) switch
         {

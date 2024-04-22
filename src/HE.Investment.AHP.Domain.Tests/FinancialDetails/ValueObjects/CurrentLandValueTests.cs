@@ -34,7 +34,7 @@ public class CurrentLandValueTests
     }
 
     [Fact]
-    public void ShouldThrowDomainValidationException_WhenValueLessThanMinInteger()
+    public void ShouldThrowDomainValidationException_WhenValueIsLessThanMinInteger()
     {
         // given && when
         var action = () => new CurrentLandValue("-1000000000000000000000000000000000000000000000000");

@@ -12,7 +12,7 @@ public class RequiredFunding : TheRequiredIntValueObject
     private const int MaxValue = 999999999;
 
     public RequiredFunding(string? value)
-        : base(value, nameof(RequiredFunding), DisplayName, MinValue, MaxValue, MessageOptions.HideExample | MessageOptions.IsMoney)
+        : base(value, nameof(RequiredFunding), DisplayName, MinValue, MaxValue, MessageOptions.HideExample | MessageOptions.Money)
     {
     }
 

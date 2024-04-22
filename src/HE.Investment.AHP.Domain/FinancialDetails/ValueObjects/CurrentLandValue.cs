@@ -7,7 +7,7 @@ namespace HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 public class CurrentLandValue : TheRequiredIntValueObject
 {
     public CurrentLandValue(string landValue)
-    : base(landValue, FinancialDetailsValidationFieldNames.LandValue, "current value of the land", 0, 999999999, MessageOptions.IsMoney)
+    : base(landValue, FinancialDetailsValidationFieldNames.LandValue, "current value of the land", 0, 999999999, MessageOptions.Money)
     {
     }
 

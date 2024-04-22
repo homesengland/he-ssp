@@ -17,8 +17,8 @@ public abstract class TheRequiredDecimalValueObject : ValueObject
         int precision = 2,
         MessageOptions options = MessageOptions.None)
     {
-        var isCalculation = options.HasFlag(MessageOptions.IsCalculation);
-        var isMoney = options.HasFlag(MessageOptions.IsMoney);
+        var isCalculation = options.HasFlag(MessageOptions.Calculation);
+        var isMoney = options.HasFlag(MessageOptions.Money);
         var example = BuildExample(options, precision);
 
         Value = NumberParser.TryParseDecimal(value, minValue, maxValue, precision, out var parsedValue) switch

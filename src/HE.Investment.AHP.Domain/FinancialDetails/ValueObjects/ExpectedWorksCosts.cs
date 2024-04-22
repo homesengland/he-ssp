@@ -7,7 +7,7 @@ namespace HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 public class ExpectedWorksCosts : TheRequiredIntValueObject
 {
     public ExpectedWorksCosts(string value)
-        : base(value, FinancialDetailsValidationFieldNames.ExpectedWorksCosts, "expected works costs", 0, 999999999, MessageOptions.IsMoney)
+        : base(value, FinancialDetailsValidationFieldNames.ExpectedWorksCosts, "expected works costs", 0, 999999999, MessageOptions.Money)
     {
     }
 

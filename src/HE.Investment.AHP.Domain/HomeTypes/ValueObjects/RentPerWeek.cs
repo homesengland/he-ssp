@@ -20,7 +20,7 @@ public class RentPerWeek : TheRequiredDecimalValueObject
             MinValue,
             MaxValue,
             precision: 2,
-            MessageOptions.IsMoney.WithCalculation(isCalculation))
+            MessageOptions.Money.WithCalculation(isCalculation))
     {
     }
 

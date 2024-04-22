@@ -13,7 +13,7 @@ public class MarketValue : TheRequiredIntValueObject
     private const int MaxValue = 99999999;
 
     public MarketValue(string? value, bool isCalculation)
-        : base(value, nameof(MarketValue), DisplayName, MinValue, MaxValue, MessageOptions.IsMoney.WithCalculation(isCalculation))
+        : base(value, nameof(MarketValue), DisplayName, MinValue, MaxValue, MessageOptions.Money.WithCalculation(isCalculation))
     {
     }
 

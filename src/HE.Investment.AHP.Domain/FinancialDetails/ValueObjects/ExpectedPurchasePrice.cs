@@ -7,7 +7,7 @@ namespace HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 public class ExpectedPurchasePrice : TheRequiredIntValueObject
 {
     public ExpectedPurchasePrice(string landValue)
-        : base(landValue, FinancialDetailsValidationFieldNames.PurchasePrice, "expected purchase price of the land", 0, 999999999, MessageOptions.IsMoney)
+        : base(landValue, FinancialDetailsValidationFieldNames.PurchasePrice, "expected purchase price of the land", 0, 999999999, MessageOptions.Money)
     {
     }
 

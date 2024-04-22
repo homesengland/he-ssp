@@ -16,8 +16,8 @@ public abstract class TheRequiredIntValueObject : ValueObject
         int maxValue = int.MaxValue,
         MessageOptions options = MessageOptions.None)
     {
-        var isCalculation = options.HasFlag(MessageOptions.IsCalculation);
-        var isMoney = options.HasFlag(MessageOptions.IsMoney);
+        var isCalculation = options.HasFlag(MessageOptions.Calculation);
+        var isMoney = options.HasFlag(MessageOptions.Money);
         var example = options.HasFlag(MessageOptions.HideExample) ? null : "300";
 
         Value = NumberParser.TryParseDecimal(value, minValue, maxValue, 0, out var parsedValue) switch

@@ -6,7 +6,7 @@ namespace HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 public class ExpectedContributionValue : TheRequiredIntValueObject
 {
     public ExpectedContributionValue(ExpectedContributionFields field, string value)
-    : base(value, field.ToString(), "expected contribution value", 0, 999999999, MessageOptions.IsMoney)
+    : base(value, field.ToString(), "expected contribution value", 0, 999999999, MessageOptions.Money)
     {
         Field = field;
     }
