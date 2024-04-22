@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Metrics;
-using DataverseModel;
 
 namespace HE.Common.IntegrationModel.PortalIntegrationModel
 {

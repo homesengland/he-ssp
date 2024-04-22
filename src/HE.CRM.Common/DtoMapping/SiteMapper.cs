@@ -94,18 +94,18 @@ namespace HE.CRM.Common.DtoMapping
                 procurementMechanisms = entity.invln_procurementmechanisms.ToIntValueList(),
                 developerPartner = new OrganizationDetailsDto()
                 {
-                    registeredCompanyName = entity.invln_developingpartner.Name,
-                    organisationId = entity.invln_developingpartner.Id.ToString()
+                    registeredCompanyName = entity.invln_developingpartner?.Name,
+                    organisationId = entity.invln_developingpartner?.Id.ToString()
                 },
                 ownerOfTheLandDuringDevelopment = new OrganizationDetailsDto()
                 {
-                    registeredCompanyName = entity.invln_ownerofthelandduringdevelopment.Name,
-                    organisationId = entity.invln_ownerofthelandduringdevelopment.Id.ToString()
+                    registeredCompanyName = entity.invln_ownerofthelandduringdevelopment?.Name,
+                    organisationId = entity.invln_ownerofthelandduringdevelopment?.Id.ToString()
                 },
                 ownerOfTheHomesAfterCompletion = new OrganizationDetailsDto()
                 {
-                    registeredCompanyName = entity.invln_Ownerofthehomesaftercompletion.Name,
-                    organisationId = entity.invln_Ownerofthehomesaftercompletion.Id.ToString()
+                    registeredCompanyName = entity.invln_Ownerofthehomesaftercompletion?.Name,
+                    organisationId = entity.invln_Ownerofthehomesaftercompletion?.Id.ToString()
                 },
             };
         }
