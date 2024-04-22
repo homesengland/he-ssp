@@ -57,7 +57,7 @@ public class PurchasePriceValueTests
         action.Should()
             .ThrowExactly<DomainValidationException>()
             .Which.OperationResult.Errors.Should()
-            .ContainSingle(x => x.ErrorMessage == "The purchase price of the land must be a whole number, like 300");
+            .ContainSingle(x => x.ErrorMessage == "The purchase price of the land must not include pence, like 300");
     }
 
     [Fact]

@@ -1,3 +1,4 @@
+using System.Globalization;
 using HE.Investments.Common.Extensions;
 
 namespace HE.Investments.Common.Messages;
@@ -23,10 +24,6 @@ public static class ValidationErrorMessage
     public const string CheckAnswersOption = "You have not completed this section. Select no if you want to come back later";
 
     public const string NoCheckAnswers = "Select whether you have completed this section";
-
-    public const string NoStartDate = "Enter a build start date";
-
-    public const string InvalidStartDate = "Enter a valid date. The build start date must include a day, month and year";
 
     public const string FuturePurchaseDate = "The date you purchased this land must be today or in the past";
 
@@ -72,8 +69,6 @@ public static class ValidationErrorMessage
 
     public const string EnterDate = "Enter a date. The date must include a day, month and year";
 
-    public const string SquareMetersMustBeNumber = "The square meterage in the internal floor each of each home must be a number, like 75.50";
-
     public const string FilesListEmpty = "Select at least one file to upload";
 
     public const string ProvideAllProjectAnswers = "To submit, you have to provide all answers";
@@ -98,27 +93,27 @@ public static class ValidationErrorMessage
 
     public static string MustProvideYourRequiredField(string displayName) => $"Enter your {displayName}";
 
-    public static string MustProvideYourHigherNumber(string fieldName, int minValue) => $"Your {fieldName} must be {minValue} or more";
+    public static string MustProvideYourHigherNumber<TNumber>(string fieldName, TNumber minValue) => string.Format(CultureInfo.InvariantCulture, "Your {0} must be {1} or more", fieldName, minValue);
 
-    public static string MustProvideYourLowerNumber(string fieldName, int maxValue) => $"Your {fieldName} must be {maxValue} or fewer";
+    public static string MustProvideYourLowerNumber<TNumber>(string fieldName, TNumber maxValue) => string.Format(CultureInfo.InvariantCulture, "Your {0} must be {1} or fewer", fieldName, maxValue);
 
-    public static string MustProvideTheHigherNumber(string fieldName, long minValue) => $"The {fieldName} must be {minValue} or more";
+    public static string MustProvideTheHigherNumber<TNumber>(string fieldName, TNumber minValue) => string.Format(CultureInfo.InvariantCulture, "The {0} must be {1} or more", fieldName, minValue);
 
-    public static string MustProvideTheLowerNumber(string fieldName, long maxValue) => $"The {fieldName} must be {maxValue} or fewer";
+    public static string MustProvideTheLowerNumber<TNumber>(string fieldName, TNumber maxValue) => string.Format(CultureInfo.InvariantCulture, "The {0} must be {1} or fewer", fieldName, maxValue);
 
-    public static string MustProvideYourWholeNumber(string fieldName, int example = 30) => $"Your {fieldName} must be a whole number, like {example}";
+    public static string MustBeYourWholeNumber(string fieldName, string? example) => $"Your {fieldName} must be a whole number{Example(example)}";
 
-    public static string MustBeNumberBetween(string displayName, int minValue, int maxValue) => $"The {displayName} must be between {minValue} and {maxValue}";
+    public static string MustBeTheWholeNumber(string displayName, string? example) => $"The {displayName} must be a whole number{Example(example)}";
 
-    public static string MustBeWholeNumberBetween(string displayName, int minValue, int maxValue) => $"The {displayName} must be a whole number between {minValue} and {maxValue}";
+    public static string MustNotIncludeYourPence(string displayName, string? example) => $"Your {displayName} must not include pence{Example(example)}";
 
-    public static string MustBeDecimalNumberBetween(string displayName, decimal minValue, decimal maxValue) => $"The {displayName} must be between {minValue} and {maxValue}";
+    public static string MustNotIncludeThePence(string displayName, string? example) => $"The {displayName} must not include pence{Example(example)}";
 
-    public static string MustBeNumberWithExample(string displayName) => $"The {displayName} must be a number, like 300.00";
+    public static string MustIncludeThePence(string displayName, string? example) => $"The {displayName} must include pence{Example(example)}";
 
-    public static string MustBeWholeNumber(string displayName) => $"The {displayName} must be a whole number";
+    public static string MustIncludeThePrecision(string displayName, int precision, string? example) => $"The {displayName} must include {precision} decimal places{Example(example)}";
 
-    public static string MustBeWholeNumberWithExample(string displayName) => $"The {displayName} must be a whole number, like 300";
+    public static string MustBeTheNumber(string displayName, string? example) => $"The {displayName} must be a number{Example(example)}";
 
     public static string MustBeProvidedForCalculation(string displayName) => $"Enter the {displayName} to calculate";
 
@@ -135,4 +130,9 @@ public static class ValidationErrorMessage
     public static string MustBeDate(string displayName) => $"The {displayName} must be a valid date";
 
     public static string MustBeSelected(string displayName) => $"Select the {displayName}";
+
+    private static string Example(string? example)
+    {
+        return example.IsProvided() ? $", like {example}" : string.Empty;
+    }
 }

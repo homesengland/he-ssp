@@ -74,6 +74,6 @@ public class HomesNumberCtorTests
         var result = () => new HomesNumber(homesNumber);
 
         // then
-        result.Should().Throw<DomainValidationException>().WithMessage(ValidationErrorMessage.MustBeWholeNumberWithExample(DisplayName));
+        result.Should().Throw<DomainValidationException>().WithMessage("The number of homes your project will enable must be a whole number, like 300");
     }
 }

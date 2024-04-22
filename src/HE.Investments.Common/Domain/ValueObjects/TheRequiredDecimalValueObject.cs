@@ -6,42 +6,43 @@ using HE.Investments.Common.Validators;
 
 namespace HE.Investments.Common.Domain.ValueObjects;
 
-public abstract class TheRequiredIntValueObject : ValueObject
+public abstract class TheRequiredDecimalValueObject : ValueObject
 {
-    protected TheRequiredIntValueObject(
+    protected TheRequiredDecimalValueObject(
         string? value,
         string fieldName,
         string displayName,
-        int minValue = int.MinValue,
-        int maxValue = int.MaxValue,
+        decimal minValue = decimal.MinValue,
+        decimal maxValue = decimal.MaxValue,
+        int precision = 2,
         MessageOptions options = MessageOptions.None)
     {
         var isCalculation = options.HasFlag(MessageOptions.IsCalculation);
         var isMoney = options.HasFlag(MessageOptions.IsMoney);
-        var example = options.HasFlag(MessageOptions.HideExample) ? null : "300";
+        var example = BuildExample(options, precision);
 
-        Value = NumberParser.TryParseDecimal(value, minValue, maxValue, 0, out var parsedValue) switch
+        Value = NumberParser.TryParseDecimal(value, minValue, maxValue, precision, out var parsedValue) switch
         {
             NumberParseResult.ValueMissing => ThrowValidationError(
                 fieldName,
                 isCalculation ? ValidationErrorMessage.MustBeProvidedForCalculation(displayName) : ValidationErrorMessage.MustProvideRequiredField(displayName)),
-            NumberParseResult.ValueNotANumber => ThrowValidationError(fieldName, ValidationErrorMessage.MustBeTheWholeNumber(displayName, example)),
+            NumberParseResult.ValueNotANumber => ThrowValidationError(fieldName, ValidationErrorMessage.MustBeTheNumber(displayName, example)),
             NumberParseResult.ValueInvalidPrecision => ThrowValidationError(
                 fieldName,
-                isMoney ? ValidationErrorMessage.MustNotIncludeThePence(displayName, example) : ValidationErrorMessage.MustBeTheWholeNumber(displayName, example)),
+                isMoney ? ValidationErrorMessage.MustIncludeThePence(displayName, example) : ValidationErrorMessage.MustIncludeThePrecision(displayName, precision, example)),
             NumberParseResult.ValueTooHigh => ThrowValidationError(fieldName, ValidationErrorMessage.MustProvideTheLowerNumber(displayName, maxValue)),
             NumberParseResult.ValueTooLow => ThrowValidationError(fieldName, ValidationErrorMessage.MustProvideTheHigherNumber(displayName, minValue)),
-            NumberParseResult.SuccessfullyParsed => (int)parsedValue!.Value,
+            NumberParseResult.SuccessfullyParsed => parsedValue!.Value,
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, null),
         };
     }
 
-    protected TheRequiredIntValueObject(
-        int value,
+    protected TheRequiredDecimalValueObject(
+        decimal value,
         string fieldName,
         string displayName,
-        int minValue = int.MinValue,
-        int maxValue = int.MaxValue)
+        decimal minValue = decimal.MinValue,
+        decimal maxValue = decimal.MaxValue)
     {
         if (value < minValue)
         {
@@ -56,7 +57,7 @@ public abstract class TheRequiredIntValueObject : ValueObject
         Value = value;
     }
 
-    public int Value { get; }
+    public decimal Value { get; }
 
     public override string ToString()
     {
@@ -68,6 +69,22 @@ public abstract class TheRequiredIntValueObject : ValueObject
         yield return Value;
     }
 
-    private static int ThrowValidationError(string affectedField, string validationMessage) =>
-        OperationResult.ThrowValidationError<int>(affectedField, validationMessage);
+    private static string? BuildExample(MessageOptions messageOptions, int precision)
+    {
+        if (messageOptions.HasFlag(MessageOptions.HideExample))
+        {
+            return null;
+        }
+
+        var example = "300";
+        if (precision <= 0)
+        {
+            return example;
+        }
+
+        return $"{example}.{new string(Enumerable.Repeat('0', precision).ToArray())}";
+    }
+
+    private static decimal ThrowValidationError(string affectedField, string validationMessage) =>
+        OperationResult.ThrowValidationError<decimal>(affectedField, validationMessage);
 }
