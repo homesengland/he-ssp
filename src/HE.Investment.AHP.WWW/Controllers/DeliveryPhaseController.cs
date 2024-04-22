@@ -242,8 +242,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
                     model.Tranches?.SummaryOfDeliveryAmend?.UnderstandClaimingMilestones),
                 nameof(SummaryOfDelivery),
                 deliveryPhaseDetails => deliveryPhaseDetails,
-                cancellationToken,
-                true);
+                cancellationToken);
         }
 
         return await this.ReturnToTaskListOrContinue(
@@ -548,7 +547,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     {
         var applicationId = this.GetApplicationIdFromRoute();
         var deliveryPhaseId = this.GetDeliveryPhaseIdFromRoute();
-        var deliveryPhaseDetails = await _mediator.Send(new GetDeliveryPhaseDetailsQuery(applicationId, deliveryPhaseId, true), cancellationToken);
+        var deliveryPhaseDetails = await _mediator.Send(new GetDeliveryPhaseDetailsQuery(applicationId, deliveryPhaseId), cancellationToken);
         var deliveryPhaseHomes = await _mediator.Send(new GetDeliveryPhaseHomesQuery(applicationId, deliveryPhaseId), cancellationToken);
         var sections = _deliveryPhaseCheckAnswersViewModelFactory.CreateSummary(
             applicationId,
@@ -602,8 +601,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         IRequest<OperationResult> command,
         string viewName,
         Func<DeliveryPhaseDetails, TViewModel> createViewModelForError,
-        CancellationToken cancellationToken,
-        bool includeSummary = false)
+        CancellationToken cancellationToken)
     {
         var applicationId = this.GetApplicationIdFromRoute();
         var deliveryPhaseId = this.GetDeliveryPhaseIdFromRoute();
@@ -620,7 +618,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
             async () =>
             {
                 var deliveryPhaseDetails = await _mediator.Send(
-                    new GetDeliveryPhaseDetailsQuery(applicationId, deliveryPhaseId, includeSummary),
+                    new GetDeliveryPhaseDetailsQuery(applicationId, deliveryPhaseId),
                     cancellationToken);
                 var model = createViewModelForError(deliveryPhaseDetails);
 

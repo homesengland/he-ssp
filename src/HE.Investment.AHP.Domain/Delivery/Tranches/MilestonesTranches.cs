@@ -1,4 +1,5 @@
 using HE.Investments.Common.Domain;
+using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.Domain.Delivery.Tranches;
 
@@ -25,6 +26,14 @@ public class MilestonesTranches : ValueObject
     public decimal? StartOnSiteMilestone { get; }
 
     public decimal? CompletionMilestone { get; }
+
+    public bool IsAnswered()
+    {
+        return SumOfGrantApportioned.IsProvided()
+               && AcquisitionMilestone.IsProvided()
+               && StartOnSiteMilestone.IsProvided()
+               && CompletionMilestone.IsProvided();
+    }
 
     protected override IEnumerable<object?> GetAtomicValues()
     {

@@ -57,9 +57,10 @@ public class RequestCacheApplicationCrmContextDecorator : IApplicationCrmContext
         Guid organisationId,
         ApplicationStatus applicationStatus,
         string? changeReason,
+        bool representationsAndWarranties,
         CancellationToken cancellationToken)
     {
         _cache.Delete(applicationId);
-        await _decorated.ChangeApplicationStatus(applicationId, organisationId, applicationStatus, changeReason, cancellationToken);
+        await _decorated.ChangeApplicationStatus(applicationId, organisationId, applicationStatus, changeReason, representationsAndWarranties, cancellationToken);
     }
 }

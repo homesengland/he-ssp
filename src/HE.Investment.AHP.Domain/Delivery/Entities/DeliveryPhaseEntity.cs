@@ -227,7 +227,8 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
                          reconfigureExistingValid &&
                          Tranches.IsAnswered() &&
                          _homesToDeliver.Any() &&
-                         DeliveryPhaseMilestones.IsAnswered();
+                         DeliveryPhaseMilestones.IsAnswered() &&
+                         MilestonesTranches.IsAnswered();
 
         if (Organisation.IsUnregisteredBody)
         {

@@ -23,6 +23,8 @@ public class DeliveryPhaseEntityBuilder
 
     private readonly ApplicationBasicInfo _applicationBasicInfo = ApplicationBasicInfoTestData.CreateAffordableRentInDraftState();
 
+    private readonly MilestonesTranches _milestonesTranches = new(1000, 100, 100, 100);
+
     private string _id = "dp-1-12313";
 
     private DeliveryPhaseName _name = new("First Phase");
@@ -196,7 +198,7 @@ public class DeliveryPhaseEntityBuilder
             _organisationBasicInfo,
             _status,
             MilestonesPercentageTranches.LackOfCalculation,
-            MilestonesTranches.LackOfCalculation,
+            _milestonesTranches,
             false,
             _schemeFunding,
             _typeOfHomes,

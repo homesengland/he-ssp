@@ -30,7 +30,11 @@ public class DeliveryPhaseCrmContext : IDeliveryPhaseCrmContext
                 nameof(invln_DeliveryPhase.invln_StartOnSitePercentageValue),
                 nameof(invln_DeliveryPhase.invln_CompletionPercentageValue),
                 nameof(invln_DeliveryPhase.invln_ClaimingtheMilestoneConfirmed),
-                nameof(invln_DeliveryPhase.invln_AllowAmendmentstoMilestoneProportions))
+                nameof(invln_DeliveryPhase.invln_AllowAmendmentstoMilestoneProportions),
+                nameof(invln_DeliveryPhase.invln_AcquisitionValue),
+                nameof(invln_DeliveryPhase.invln_CompletionValue),
+                nameof(invln_DeliveryPhase.invln_StartOnSiteValue),
+                nameof(invln_DeliveryPhase.invln_sumofcalculatedfounds))
             .ToLowerInvariant();
 
     private readonly JsonSerializerOptions _serializerOptions = new() { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
