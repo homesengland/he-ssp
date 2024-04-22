@@ -88,7 +88,7 @@ public class HomeTypesEntity
         entity.ChangeName(ValidateNameUniqueness(name, entity));
     }
 
-    public void CompleteSection(FinishHomeTypesAnswer finishAnswer, int expectedNumberOfHomes)
+    public void CompleteSection(FinishHomeTypesAnswer finishAnswer, int? expectedNumberOfHomes)
     {
         if (finishAnswer == FinishHomeTypesAnswer.Undefined)
         {
@@ -113,7 +113,7 @@ public class HomeTypesEntity
                     notCompletedHomeTypes.Select(x => new ErrorItem($"HomeType-{x.Id}", $"Complete {x.Name.Value} to save and continue")).ToList()));
             }
 
-            if (expectedNumberOfHomes != _homeTypes.Sum(x => x.HomeInformation.NumberOfHomes?.Value ?? 0))
+            if (expectedNumberOfHomes.HasValue && expectedNumberOfHomes != _homeTypes.Sum(x => x.HomeInformation.NumberOfHomes?.Value ?? 0))
             {
                 OperationResult.New().AddValidationError("HomeTypes", "You have not assigned all of the homes you are delivering to a home type").CheckErrors();
             }
