@@ -1,7 +1,6 @@
 using FluentAssertions;
 using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 using HE.Investments.Common.Contract.Exceptions;
-using HE.Investments.Common.Messages;
 
 namespace HE.Investment.AHP.Domain.Tests.FinancialDetails.ValueObjects;
 
@@ -16,8 +15,7 @@ public class CurrentLandValueTests
         // then
         action.Should()
             .ThrowExactly<DomainValidationException>()
-            .Which.OperationResult.Errors.Should()
-            .ContainSingle(x => x.ErrorMessage == ValidationErrorMessage.MustProvideRequiredField("current value of the land"));
+            .WithMessage("Enter the current value of the land, in pounds");
     }
 
     [Fact]

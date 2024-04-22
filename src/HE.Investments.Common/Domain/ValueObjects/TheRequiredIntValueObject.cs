@@ -16,19 +16,13 @@ public abstract class TheRequiredIntValueObject : ValueObject
         int maxValue = int.MaxValue,
         MessageOptions options = MessageOptions.None)
     {
-        var isCalculation = options.HasFlag(MessageOptions.Calculation);
-        var isMoney = options.HasFlag(MessageOptions.Money);
         var example = options.HasFlag(MessageOptions.HideExample) ? null : "300";
 
         Value = NumberParser.TryParseDecimal(value, minValue, maxValue, 0, out var parsedValue) switch
         {
-            NumberParseResult.ValueMissing => ThrowValidationError(
-                fieldName,
-                isCalculation ? ValidationErrorMessage.MustBeProvidedForCalculation(displayName) : ValidationErrorMessage.MustProvideRequiredField(displayName)),
+            NumberParseResult.ValueMissing => ThrowValidationError(fieldName, GetValueMissingMessage(options)(displayName)),
             NumberParseResult.ValueNotANumber => ThrowValidationError(fieldName, ValidationErrorMessage.MustBeTheWholeNumber(displayName, example)),
-            NumberParseResult.ValueInvalidPrecision => ThrowValidationError(
-                fieldName,
-                isMoney ? ValidationErrorMessage.MustNotIncludeThePence(displayName, example) : ValidationErrorMessage.MustBeTheWholeNumber(displayName, example)),
+            NumberParseResult.ValueInvalidPrecision => ThrowValidationError(fieldName, GetValueInvalidPrecisionMessage(options)(displayName, example)),
             NumberParseResult.ValueTooHigh => ThrowValidationError(fieldName, ValidationErrorMessage.MustProvideTheLowerNumber(displayName, maxValue)),
             NumberParseResult.ValueTooLow => ThrowValidationError(fieldName, ValidationErrorMessage.MustProvideTheHigherNumber(displayName, minValue)),
             NumberParseResult.SuccessfullyParsed => (int)parsedValue!.Value,
@@ -70,4 +64,24 @@ public abstract class TheRequiredIntValueObject : ValueObject
 
     private static int ThrowValidationError(string affectedField, string validationMessage) =>
         OperationResult.ThrowValidationError<int>(affectedField, validationMessage);
+
+    private static Func<string, string> GetValueMissingMessage(MessageOptions options)
+    {
+        if (options.HasFlag(MessageOptions.Calculation))
+        {
+            return ValidationErrorMessage.MustBeProvidedForCalculation;
+        }
+
+        if (options.HasFlag(MessageOptions.Money))
+        {
+            return ValidationErrorMessage.MustProvideRequiredFieldInPounds;
+        }
+
+        return ValidationErrorMessage.MustProvideRequiredField;
+    }
+
+    private static Func<string, string?, string> GetValueInvalidPrecisionMessage(MessageOptions options)
+    {
+        return options.HasFlag(MessageOptions.Money) ? ValidationErrorMessage.MustNotIncludeThePence : ValidationErrorMessage.MustBeTheWholeNumber;
+    }
 }

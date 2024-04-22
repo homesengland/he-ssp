@@ -17,15 +17,12 @@ public abstract class TheRequiredDecimalValueObject : ValueObject
         int precision = 2,
         MessageOptions options = MessageOptions.None)
     {
-        var isCalculation = options.HasFlag(MessageOptions.Calculation);
         var isMoney = options.HasFlag(MessageOptions.Money);
         var example = BuildExample(options, precision);
 
         Value = NumberParser.TryParseDecimal(value, minValue, maxValue, precision, out var parsedValue) switch
         {
-            NumberParseResult.ValueMissing => ThrowValidationError(
-                fieldName,
-                isCalculation ? ValidationErrorMessage.MustBeProvidedForCalculation(displayName) : ValidationErrorMessage.MustProvideRequiredField(displayName)),
+            NumberParseResult.ValueMissing => ThrowValidationError(fieldName, GetValueMissingMessage(options)(displayName)),
             NumberParseResult.ValueNotANumber => ThrowValidationError(fieldName, ValidationErrorMessage.MustBeTheNumber(displayName, example)),
             NumberParseResult.ValueInvalidPrecision => ThrowValidationError(
                 fieldName,
@@ -87,4 +84,16 @@ public abstract class TheRequiredDecimalValueObject : ValueObject
 
     private static decimal ThrowValidationError(string affectedField, string validationMessage) =>
         OperationResult.ThrowValidationError<decimal>(affectedField, validationMessage);
+
+    private static Func<string, string> GetValueMissingMessage(MessageOptions options)
+    {
+        if (options.HasFlag(MessageOptions.Calculation))
+        {
+            return ValidationErrorMessage.MustBeProvidedForCalculation;
+        }
+
+        return options.HasFlag(MessageOptions.Money)
+            ? ValidationErrorMessage.MustProvideRequiredFieldInPoundsAndPence
+            : ValidationErrorMessage.MustProvideRequiredField;
+    }
 }
