@@ -74,6 +74,6 @@ public class OrganisationHomesBuiltCtorTests
         var result = () => new OrganisationHomesBuilt(homesBuilt);
 
         // then
-        result.Should().Throw<DomainValidationException>().WithMessage(ValidationErrorMessage.MustProvideYourWholeNumber(DisplayName));
+        result.Should().Throw<DomainValidationException>().WithMessage("Your previous residential building experience must be a whole number, like 30");
     }
 }

@@ -32,4 +32,9 @@ public class InMemoryCache<TEntity, TKey>
     {
         _cache.TryRemove(key, out _);
     }
+
+    public void Purge()
+    {
+        _cache.Clear();
+    }
 }

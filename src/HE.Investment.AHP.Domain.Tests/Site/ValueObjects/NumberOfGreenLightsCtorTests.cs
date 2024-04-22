@@ -1,14 +1,11 @@
 using FluentAssertions;
 using HE.Investment.AHP.Domain.Site.ValueObjects;
 using HE.Investments.Common.Contract.Exceptions;
-using HE.Investments.Common.Messages;
 
 namespace HE.Investment.AHP.Domain.Tests.Site.ValueObjects;
 
 public class NumberOfGreenLightsCtorTests
 {
-    private readonly string _displayName = "value you enter for the Building for Life green traffic lights";
-
     [Fact]
     public void ShouldCreateNumberOfGreenLights_WhenProvidedValueIsWithinRange()
     {
@@ -31,7 +28,7 @@ public class NumberOfGreenLightsCtorTests
         // then
         result.Should()
             .Throw<DomainValidationException>()
-            .WithMessage(ValidationErrorMessage.MustBeWholeNumber(_displayName));
+            .WithMessage("The value you enter for the Building for Life green traffic lights must be a whole number");
     }
 
     [Fact]
@@ -43,7 +40,7 @@ public class NumberOfGreenLightsCtorTests
         // then
         result.Should()
             .Throw<DomainValidationException>()
-            .WithMessage(ValidationErrorMessage.MustBeNumberBetween(_displayName, 0, 12));
+            .WithMessage("The value you enter for the Building for Life green traffic lights must be 0 or more");
     }
 
     [Fact]
@@ -55,6 +52,6 @@ public class NumberOfGreenLightsCtorTests
         // then
         result.Should()
             .Throw<DomainValidationException>()
-            .WithMessage(ValidationErrorMessage.MustBeNumberBetween(_displayName, 0, 12));
+            .WithMessage("The value you enter for the Building for Life green traffic lights must be 12 or fewer");
     }
 }

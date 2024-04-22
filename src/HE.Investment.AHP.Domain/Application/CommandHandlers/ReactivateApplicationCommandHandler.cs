@@ -21,7 +21,7 @@ public class ReactivateApplicationCommandHandler : IRequestHandler<ReactivateApp
     public async Task<OperationResult> Handle(ReactivateApplicationCommand request, CancellationToken cancellationToken)
     {
         var account = await _accountUserContext.GetSelectedAccount();
-        var application = await _applicationRepository.GetById(request.Id, account, cancellationToken, fetchPreviousStatus: true);
+        var application = await _applicationRepository.GetById(request.Id, account, cancellationToken);
 
         application.Reactivate();
 
