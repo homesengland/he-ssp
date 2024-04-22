@@ -92,11 +92,21 @@ namespace HE.CRM.Common.DtoMapping
                 },
 
                 procurementMechanisms = entity.invln_procurementmechanisms.ToIntValueList(),
-                organizationId = ,
-                organizationName = "",
-                developerPartner = null,
-                ownerOfTheLandDuringDevelopment = null,
-                ownerOfTheHomesAfterCompletion = null,
+                developerPartner = new OrganizationDetailsDto()
+                {
+                    registeredCompanyName = entity.invln_developingpartner.Name,
+                    organisationId = entity.invln_developingpartner.Id.ToString()
+                },
+                ownerOfTheLandDuringDevelopment = new OrganizationDetailsDto()
+                {
+                    registeredCompanyName = entity.invln_ownerofthelandduringdevelopment.Name,
+                    organisationId = entity.invln_ownerofthelandduringdevelopment.Id.ToString()
+                },
+                ownerOfTheHomesAfterCompletion = new OrganizationDetailsDto()
+                {
+                    registeredCompanyName = entity.invln_Ownerofthehomesaftercompletion.Name,
+                    organisationId = entity.invln_Ownerofthehomesaftercompletion.Id.ToString()
+                },
             };
         }
 
@@ -176,6 +186,21 @@ namespace HE.CRM.Common.DtoMapping
             SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_mmccategory2subcategories), CreateOptionSetValueCollection(dto.modernMethodsOfConstruction.mmc2DSubcategories));
 
             SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_procurementmechanisms), CreateOptionSetValueCollection(dto.procurementMechanisms));
+
+            if (dto.developerPartner != null)
+            {
+                site.invln_developingpartner = new EntityReference(Account.EntityLogicalName, new Guid(dto.developerPartner.organisationId));
+            }
+
+            if (dto.ownerOfTheHomesAfterCompletion != null)
+            {
+                site.invln_Ownerofthehomesaftercompletion = new EntityReference(Account.EntityLogicalName, new Guid(dto.ownerOfTheHomesAfterCompletion.organisationId));
+            }
+
+            if (dto.ownerOfTheLandDuringDevelopment != null)
+            {
+                site.invln_ownerofthelandduringdevelopment = new EntityReference(Account.EntityLogicalName, new Guid(dto.ownerOfTheLandDuringDevelopment.organisationId));
+            }
 
             if (createdByContact != null)
             {

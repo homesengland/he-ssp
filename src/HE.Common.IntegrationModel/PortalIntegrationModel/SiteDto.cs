@@ -42,11 +42,9 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public ModernMethodsOfConstructionDto modernMethodsOfConstruction { get; set; }
 
         public IList<int> procurementMechanisms { get; set; }
-        public string organizationId { get; set; }
-        public string organizationName { get; set; }
-        public UserAccountDto developerPartner { get; set; }
-        public UserAccountDto ownerOfTheLandDuringDevelopment { get; set; }
-        public UserAccountDto ownerOfTheHomesAfterCompletion { get; set; }
+        public OrganizationDetailsDto developerPartner { get; set; }
+        public OrganizationDetailsDto ownerOfTheLandDuringDevelopment { get; set; }
+        public OrganizationDetailsDto ownerOfTheHomesAfterCompletion { get; set; }
     }
 
     public class SiteLocalAuthority
