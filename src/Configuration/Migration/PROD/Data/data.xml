@@ -1,5 +1,5 @@
 
-<entities xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" timestamp="2024-03-20T05:57:31.8670493Z">
+<entities xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" timestamp="2024-04-19T06:05:03.7676100Z">
   <entity name="invln_notificationsetting" displayname="Notification Setting">
     <records>
       <record id="1ab09971-d199-ee11-be37-0022480041cf">

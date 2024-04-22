@@ -34,13 +34,13 @@ public static class DomainModule
 
     private static void AddProjectCrmContext(this IServiceCollection services)
     {
-        services.AddScoped<ProjectCrmContext>();
-        services.AddScoped<IProjectCrmContext>(x => new CacheProjectCrmContext(x.GetRequiredService<ProjectCrmContext>()));
+        services.AddScoped<IProjectCrmContext, ProjectCrmContext>();
+        services.Decorate<IProjectCrmContext, RequestCacheProjectCrmContextDecorator>();
     }
 
     private static void AddSiteCrmContext(this IServiceCollection services)
     {
-        services.AddScoped<SiteCrmContext>();
-        services.AddScoped<ISiteCrmContext>(x => new CacheSiteCrmContext(x.GetRequiredService<SiteCrmContext>()));
+        services.AddScoped<ISiteCrmContext, SiteCrmContext>();
+        services.Decorate<ISiteCrmContext, RequestCacheSiteCrmContextDecorator>();
     }
 }

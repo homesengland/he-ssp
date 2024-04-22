@@ -3,6 +3,7 @@ using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
+using HE.Investments.Common.Utils;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 
@@ -16,55 +17,33 @@ public class InitialSale : ValueObject
 
     public InitialSale(string? value, bool isCalculation = false)
     {
-        if (value.IsNotProvided() && !isCalculation)
+        var minValue = MinValue.ToPercentage100();
+        var maxValue = MaxValue.ToPercentage100();
+
+        Value = NumberParser.TryParseDecimal(value, minValue, maxValue, 0, out var parsedValue) switch
         {
-            OperationResult.New()
-                .AddValidationError(nameof(InitialSale), ValidationErrorMessage.MustProvideRequiredField(DisplayName))
-                .CheckErrors();
-        }
-
-        if (value.IsNotProvided() && isCalculation)
-        {
-            OperationResult.New()
-                .AddValidationError(nameof(InitialSale), ValidationErrorMessage.MustBeProvidedForCalculation(DisplayName))
-                .CheckErrors();
-        }
-
-        if (!int.TryParse(value!, NumberStyles.Integer, CultureInfo.InvariantCulture, out var parsedValue))
-        {
-            OperationResult.New()
-                .AddValidationError(nameof(InitialSale), ValidationErrorMessage.MustBeWholeNumberBetween(
-                    DisplayName,
-                    MinValue.ToPercentage100(),
-                    MaxValue.ToPercentage100()))
-                .CheckErrors();
-        }
-
-        var percentage = parsedValue / 100m;
-
-        if (percentage is < MinValue or > MaxValue)
-        {
-            OperationResult.New()
-                .AddValidationError(nameof(InitialSale), ValidationErrorMessage.MustBeWholeNumberBetween(
-                    DisplayName,
-                    MinValue.ToPercentage100(),
-                    MaxValue.ToPercentage100()))
-                .CheckErrors();
-        }
-
-        Value = percentage;
+            NumberParseResult.ValueMissing => ThrowValidationError(
+                nameof(InitialSale),
+                isCalculation ? ValidationErrorMessage.MustBeProvidedForCalculation(DisplayName) : ValidationErrorMessage.MustProvideRequiredField(DisplayName)),
+            NumberParseResult.ValueNotANumber => ThrowValidationError(nameof(InitialSale), ValidationErrorMessage.MustBeTheWholeNumber(DisplayName, null)),
+            NumberParseResult.ValueInvalidPrecision => ThrowValidationError(nameof(InitialSale), ValidationErrorMessage.MustBeTheWholeNumber(DisplayName, null)),
+            NumberParseResult.ValueTooHigh => ThrowValidationError(nameof(InitialSale), ValidationErrorMessage.MustProvideTheLowerNumber(DisplayName, maxValue)),
+            NumberParseResult.ValueTooLow => ThrowValidationError(nameof(InitialSale), ValidationErrorMessage.MustProvideTheHigherNumber(DisplayName, minValue)),
+            NumberParseResult.SuccessfullyParsed => parsedValue!.Value / 100m,
+            _ => throw new ArgumentOutOfRangeException(nameof(value), value, null),
+        };
     }
 
     public InitialSale(decimal value)
     {
-        if (value is < MinValue or > MaxValue)
+        if (value < MinValue)
         {
-            OperationResult.New()
-                .AddValidationError(nameof(InitialSale), ValidationErrorMessage.MustBeWholeNumberBetween(
-                    DisplayName,
-                    MinValue.ToPercentage100(),
-                    MaxValue.ToPercentage100()))
-                .CheckErrors();
+            ThrowValidationError(nameof(InitialSale), ValidationErrorMessage.MustProvideTheHigherNumber(DisplayName, MinValue.ToPercentage100()));
+        }
+
+        if (value > MaxValue)
+        {
+            ThrowValidationError(nameof(InitialSale), ValidationErrorMessage.MustProvideTheLowerNumber(DisplayName, MaxValue.ToPercentage100()));
         }
 
         Value = value;
@@ -81,4 +60,7 @@ public class InitialSale : ValueObject
     {
         yield return Value;
     }
+
+    private static int ThrowValidationError(string affectedField, string validationMessage) =>
+        OperationResult.ThrowValidationError<int>(affectedField, validationMessage);
 }

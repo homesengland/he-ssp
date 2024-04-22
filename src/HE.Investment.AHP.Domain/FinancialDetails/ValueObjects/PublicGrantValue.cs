@@ -1,11 +1,12 @@
 using HE.Investments.Common.Domain.ValueObjects;
+using HE.Investments.Common.Validators;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 
 public class PublicGrantValue : TheRequiredIntValueObject
 {
     public PublicGrantValue(PublicGrantFields field, string value)
-        : base(value, field.ToString(), "public grant value", 0, 999999999)
+        : base(value, field.ToString(), "public grant value", 0, 999999999, MessageOptions.Money)
     {
         Field = field;
     }

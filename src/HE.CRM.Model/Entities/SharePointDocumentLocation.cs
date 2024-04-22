@@ -64,6 +64,7 @@ namespace DataverseModel
 			public const string CreatedOnBehalfByYomiName = "createdonbehalfbyyominame";
 			public const string Description = "description";
 			public const string ExchangeRate = "exchangerate";
+			public const string he_pipeline_SharePointDocumentLocations = "he_pipeline_SharePointDocumentLocations";
 			public const string ImportSequenceNumber = "importsequencenumber";
 			public const string invln_ahpcontract_SharePointDocumentLocations = "invln_ahpcontract_SharePointDocumentLocations";
 			public const string invln_conditions_SharePointDocumentLocations = "invln_conditions_SharePointDocumentLocations";
@@ -1130,6 +1131,27 @@ namespace DataverseModel
 				this.OnPropertyChanging("Account_SharepointDocumentLocation");
 				this.SetRelatedEntity<DataverseModel.Account>("Account_SharepointDocumentLocation", null, value);
 				this.OnPropertyChanged("Account_SharepointDocumentLocation");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 he_pipeline_SharePointDocumentLocations
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("he_pipeline_SharePointDocumentLocations")]
+		public DataverseModel.he_Pipeline he_pipeline_SharePointDocumentLocations
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.he_Pipeline>("he_pipeline_SharePointDocumentLocations", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("he_pipeline_SharePointDocumentLocations");
+				this.SetRelatedEntity<DataverseModel.he_Pipeline>("he_pipeline_SharePointDocumentLocations", null, value);
+				this.OnPropertyChanged("he_pipeline_SharePointDocumentLocations");
 			}
 		}
 		

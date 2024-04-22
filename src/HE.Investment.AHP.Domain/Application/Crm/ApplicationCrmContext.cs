@@ -42,6 +42,7 @@ public class ApplicationCrmContext : IApplicationCrmContext
                 nameof(invln_scheme.invln_lastexternalmodificationon),
                 nameof(invln_scheme.invln_pplicationid),
                 nameof(invln_scheme.invln_DateSubmitted),
+                nameof(invln_scheme.invln_submitedby),
                 nameof(invln_scheme.invln_PreviousExternalStatus),
                 nameof(invln_scheme.invln_fundingrequired),
                 nameof(invln_scheme.invln_noofhomes),

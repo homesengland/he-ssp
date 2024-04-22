@@ -1,6 +1,8 @@
+using HE.Investments.Common.Domain.ValueObjects;
+
 namespace HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 
-public class NumberOfStoreys : RequiredIntValueObject
+public class NumberOfStoreys : TheRequiredIntValueObject
 {
     private const string DisplayName = "number of storeys";
 
