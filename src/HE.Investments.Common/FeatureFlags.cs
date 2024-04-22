@@ -11,4 +11,6 @@ public static class FeatureFlags
     public const string StayInCurrentApplication = nameof(StayInCurrentApplication);
 
     public const string OrganisationsListImplemented = nameof(OrganisationsListImplemented);
+
+    public const string WebRoleAuditFieldsImplemented = nameof(WebRoleAuditFieldsImplemented);
 }

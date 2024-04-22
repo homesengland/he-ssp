@@ -133,7 +133,7 @@ public class CalculateTranchesTests
     {
         // given
         var tranches = new DeliveryPhaseEntityBuilder()
-            .WithSchemeFunding(1000, 0)
+            .WithSchemeFunding(1000, null)
             .WithMilestoneFramework(new MilestoneFramework(0.35m, 0.25m, 0.4m))
             .Build()
             .Tranches;

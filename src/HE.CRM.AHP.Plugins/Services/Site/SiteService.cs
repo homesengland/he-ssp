@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using DataverseModel;
 using HE.Base.Services;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
@@ -13,6 +15,8 @@ namespace HE.CRM.AHP.Plugins.Services.Site
         private readonly IAhgLocalAuthorityRepository _localAuthorityRepository;
         private readonly IContactRepository _contactRepository;
 
+        private readonly IHeLocalAuthorityRepository _heLocalAuthorityRepository;
+
 
 
         public SiteService(CrmServiceArgs args) : base(args)
@@ -20,32 +24,62 @@ namespace HE.CRM.AHP.Plugins.Services.Site
             _repository = CrmRepositoriesFactory.Get<ISiteRepository>();
             _localAuthorityRepository = CrmRepositoriesFactory.Get<IAhgLocalAuthorityRepository>();
             _contactRepository = CrmRepositoriesFactory.Get<IContactRepository>();
+
+            _heLocalAuthorityRepository = CrmRepositoriesFactory.Get<IHeLocalAuthorityRepository>();
         }
-
-
-
 
         public PagedResponseDto<SiteDto> GetMultiple(PagingRequestDto paging, string fieldsToRetrieve, string externalContactId, string accountId)
         {
+            TracingService.Trace($"SiteService GetMultiple");
             var externalContactIdFilter = GetFetchXmlConditionForGivenField(externalContactId, nameof(Contact.invln_externalid).ToLower());
             externalContactIdFilter = GenerateFilterMarksForCondition(externalContactIdFilter);
+
             var accountIdFilter = GetFetchXmlConditionForGivenField(accountId, nameof(invln_Sites.invln_AccountId).ToLower());
             accountIdFilter = GenerateFilterMarksForCondition(accountIdFilter);
 
             var result = _repository.GetMultiple(paging, fieldsToRetrieve, externalContactIdFilter, accountIdFilter);
 
+            List<SiteDto> siteDtoList = new List<SiteDto>();
+            foreach (var site in result.items)
+            {
+                he_LocalAuthority localAuth = null;
+                if (site.invln_HeLocalAuthorityId != null)
+                {
+                    localAuth = _heLocalAuthorityRepository.GetById(site.invln_HeLocalAuthorityId.Id, new string[] { nameof(he_LocalAuthority.he_LocalAuthorityId).ToLower(), nameof(he_LocalAuthority.he_Name).ToLower(), nameof(he_LocalAuthority.he_GSSCode).ToLower() });
+
+                }
+                siteDtoList.Add(SiteMapper.ToDto(site, localAuth));
+            }
             return new PagedResponseDto<SiteDto>
             {
                 paging = paging,
-                items = result.items.Select(SiteMapper.ToDto).ToList(),
+                items = siteDtoList,
                 totalItemsCount = result.totalItemsCount,
             };
         }
 
-        public SiteDto GetById(string id, string fieldsToRetrieve)
+        public SiteDto GetSingle(string id, string fieldsToRetrieve, string externalContactId, string accountId)
         {
-            var site = _repository.GetById(id, fieldsToRetrieve);
-            return SiteMapper.ToDto(site);
+            TracingService.Trace($"SiteService GetSingle");
+
+            var siteIdFilter = GetFetchXmlConditionForGivenField(id, nameof(invln_Sites.invln_SitesId).ToLower());
+            siteIdFilter = GenerateFilterMarksForCondition(siteIdFilter);
+
+            var externalContactIdFilter = GetFetchXmlConditionForGivenField(externalContactId, nameof(Contact.invln_externalid).ToLower());
+            externalContactIdFilter = GenerateFilterMarksForCondition(externalContactIdFilter);
+
+            var accountIdFilter = GetFetchXmlConditionForGivenField(accountId, nameof(invln_Sites.invln_AccountId).ToLower());
+            accountIdFilter = GenerateFilterMarksForCondition(accountIdFilter);
+
+            var site = _repository.GetSingle(siteIdFilter, fieldsToRetrieve, externalContactIdFilter, accountIdFilter);
+
+            he_LocalAuthority localAuth = null;
+            if (site.invln_HeLocalAuthorityId != null)
+            {
+                localAuth = _heLocalAuthorityRepository.GetById(site.invln_HeLocalAuthorityId.Id, new string[] { nameof(he_LocalAuthority.he_LocalAuthorityId).ToLower(), nameof(he_LocalAuthority.he_Name).ToLower(), nameof(he_LocalAuthority.he_GSSCode).ToLower() });
+            }
+
+            return SiteMapper.ToDto(site, localAuth);
         }
 
         public bool Exist(string name)
@@ -56,10 +90,10 @@ namespace HE.CRM.AHP.Plugins.Services.Site
         public string Save(string siteId, SiteDto site, string fieldsToSet, string externalContactId, string accountId)
         {
             TracingService.Trace($"SiteService Save");
-            invln_AHGLocalAuthorities localAuth = null;
-            if (!string.IsNullOrWhiteSpace(site.localAuthority.id))
+            he_LocalAuthority heLocalAuthority = null;
+            if (!string.IsNullOrWhiteSpace(site.localAuthority?.id))
             {
-                localAuth = _localAuthorityRepository.GetLocalAuthorityWithGivenCode(site.localAuthority.id);
+                heLocalAuthority = _heLocalAuthorityRepository.GetLocalAuthorityWithGivenCode(site.localAuthority.id);
             }
 
             Contact createdByContact = null;
@@ -67,7 +101,8 @@ namespace HE.CRM.AHP.Plugins.Services.Site
             {
                 createdByContact = _contactRepository.GetContactViaExternalId(externalContactId);
             }
-            var entity = SiteMapper.ToEntity(site, fieldsToSet, localAuth, createdByContact, accountId);
+
+            var entity = SiteMapper.ToEntity(site, fieldsToSet, heLocalAuthority, createdByContact, accountId, siteId);
 
             if (string.IsNullOrEmpty(siteId))
             {

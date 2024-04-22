@@ -24,6 +24,6 @@ public class Table : ViewComponent
 
 public record TableHeaderViewModel(string Title, CellWidth Width = CellWidth.Undefined, bool IsHidden = false, bool IsDisplayed = true);
 
-public record TableRowViewModel(IList<TableValueViewModel> Values);
+public record TableRowViewModel(string TestId, IList<TableValueViewModel> Values);
 
 public record TableValueViewModel(string? Value = null, DynamicComponentViewModel? Component = null, bool IsDisplayed = true);

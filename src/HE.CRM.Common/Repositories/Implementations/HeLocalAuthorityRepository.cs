@@ -65,5 +65,29 @@ namespace HE.CRM.Common.Repositories.Implementations
             query_invln_sitedetails.LinkCriteria.AddCondition("invln_sitedetailsid", ConditionOperator.Equal, siteDetailsId);
             return service.RetrieveMultiple(query).Entities.Select(x => x.ToEntity<he_LocalAuthority>()).FirstOrDefault();
         }
+
+        public he_LocalAuthority GetAhpLocalAuthoritiesReletedToSite(Guid siteId)
+        {
+            var query = new QueryExpression
+            {
+                EntityName = invln_Sites.EntityLogicalName,
+                ColumnSet = new ColumnSet(invln_Sites.Fields.Id, invln_Sites.Fields.invln_HeLocalAuthorityId)
+            };
+            query.Criteria.AddCondition(invln_Sites.Fields.Id, ConditionOperator.Equal, siteId);
+            var site = service.RetrieveMultiple(query).Entities.Select(x => x.ToEntity<invln_Sites>()).FirstOrDefault();
+            if (site.invln_HeLocalAuthorityId == null)
+            {
+                return null;
+            }
+
+            var queryLA = new QueryExpression
+            {
+                EntityName = he_LocalAuthority.EntityLogicalName,
+                ColumnSet = new ColumnSet(he_LocalAuthority.Fields.Id, he_LocalAuthority.Fields.OwningUser)
+            };
+            queryLA.Criteria.AddCondition(invln_AHGLocalAuthorities.Fields.Id, ConditionOperator.Equal, site.invln_LocalAuthority.Id);
+            return service.RetrieveMultiple(queryLA).Entities.Select(x => x.ToEntity<he_LocalAuthority>()).FirstOrDefault();
+        }
+
     }
 }

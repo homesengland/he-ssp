@@ -99,6 +99,7 @@ namespace DataverseModel
 			public const string Id = "he_projectlocalauthorityid";
 			public const string he_ProjectName = "he_projectname";
 			public const string ImportSequenceNumber = "importsequencenumber";
+			public const string invln_sitedetails_HeProjectLocalAuthorityId_he_ = "invln_sitedetails_HeProjectLocalAuthorityId_he_";
 			public const string lk_he_projectlocalauthority_createdby = "lk_he_projectlocalauthority_createdby";
 			public const string lk_he_projectlocalauthority_createdonbehalfby = "lk_he_projectlocalauthority_createdonbehalfby";
 			public const string lk_he_projectlocalauthority_modifiedby = "lk_he_projectlocalauthority_modifiedby";
@@ -866,6 +867,26 @@ namespace DataverseModel
 			get
 			{
 				return this.GetAttributeValue<System.Nullable<long>>("versionnumber");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_sitedetails_HeProjectLocalAuthorityId_he_
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_sitedetails_HeProjectLocalAuthorityId_he_")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_SiteDetails> invln_sitedetails_HeProjectLocalAuthorityId_he_
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_SiteDetails>("invln_sitedetails_HeProjectLocalAuthorityId_he_", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_sitedetails_HeProjectLocalAuthorityId_he_");
+				this.SetRelatedEntities<DataverseModel.invln_SiteDetails>("invln_sitedetails_HeProjectLocalAuthorityId_he_", null, value);
+				this.OnPropertyChanged("invln_sitedetails_HeProjectLocalAuthorityId_he_");
 			}
 		}
 		

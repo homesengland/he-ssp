@@ -444,6 +444,9 @@ namespace DataverseModel
 			public const string GovernmentId = "governmentid";
 			public const string he_account_keyaccountmanager_systemuser = "he_account_keyaccountmanager_systemuser";
 			public const string he_Department = "he_department";
+			public const string he_he_pipeline_LeadIntervention_systemuser = "he_he_pipeline_LeadIntervention_systemuser";
+			public const string he_he_pipeline_SponsorName_systemuser = "he_he_pipeline_SponsorName_systemuser";
+			public const string he_pipeline_substantiveowner_systemuser = "he_pipeline_substantiveowner_systemuser";
 			public const string he_systemuser_account_RelationshipOwner = "he_systemuser_account_RelationshipOwner";
 			public const string HomePhone = "homephone";
 			public const string IdentityId = "identityid";
@@ -495,10 +498,18 @@ namespace DataverseModel
 			public const string lk_environmentvariablevalue_createdonbehalfby = "lk_environmentvariablevalue_createdonbehalfby";
 			public const string lk_environmentvariablevalue_modifiedby = "lk_environmentvariablevalue_modifiedby";
 			public const string lk_environmentvariablevalue_modifiedonbehalfby = "lk_environmentvariablevalue_modifiedonbehalfby";
-			public const string lk_invln_ahglocalauthorities_createdby = "lk_invln_ahglocalauthorities_createdby";
-			public const string lk_invln_ahglocalauthorities_createdonbehalfby = "lk_invln_ahglocalauthorities_createdonbehalfby";
-			public const string lk_invln_ahglocalauthorities_modifiedby = "lk_invln_ahglocalauthorities_modifiedby";
-			public const string lk_invln_ahglocalauthorities_modifiedonbehalfby = "lk_invln_ahglocalauthorities_modifiedonbehalfby";
+			public const string lk_he_localauthority_createdby = "lk_he_localauthority_createdby";
+			public const string lk_he_localauthority_createdonbehalfby = "lk_he_localauthority_createdonbehalfby";
+			public const string lk_he_localauthority_modifiedby = "lk_he_localauthority_modifiedby";
+			public const string lk_he_localauthority_modifiedonbehalfby = "lk_he_localauthority_modifiedonbehalfby";
+			public const string lk_he_pipeline_createdby = "lk_he_pipeline_createdby";
+			public const string lk_he_pipeline_createdonbehalfby = "lk_he_pipeline_createdonbehalfby";
+			public const string lk_he_pipeline_modifiedby = "lk_he_pipeline_modifiedby";
+			public const string lk_he_pipeline_modifiedonbehalfby = "lk_he_pipeline_modifiedonbehalfby";
+			public const string lk_he_projectlocalauthority_createdby = "lk_he_projectlocalauthority_createdby";
+			public const string lk_he_projectlocalauthority_createdonbehalfby = "lk_he_projectlocalauthority_createdonbehalfby";
+			public const string lk_he_projectlocalauthority_modifiedby = "lk_he_projectlocalauthority_modifiedby";
+			public const string lk_he_projectlocalauthority_modifiedonbehalfby = "lk_he_projectlocalauthority_modifiedonbehalfby";
 			public const string lk_invln_ahpcontract_createdby = "lk_invln_ahpcontract_createdby";
 			public const string lk_invln_ahpcontract_createdonbehalfby = "lk_invln_ahpcontract_createdonbehalfby";
 			public const string lk_invln_ahpcontract_modifiedby = "lk_invln_ahpcontract_modifiedby";
@@ -768,7 +779,9 @@ namespace DataverseModel
 			public const string user_accounts = "user_accounts";
 			public const string user_environmentvariabledefinition = "user_environmentvariabledefinition";
 			public const string user_environmentvariablevalue = "user_environmentvariablevalue";
-			public const string user_invln_ahglocalauthorities = "user_invln_ahglocalauthorities";
+			public const string user_he_localauthority = "user_he_localauthority";
+			public const string user_he_pipeline = "user_he_pipeline";
+			public const string user_he_projectlocalauthority = "user_he_projectlocalauthority";
 			public const string user_invln_ahpcontract = "user_invln_ahpcontract";
 			public const string user_invln_ahpstatuschange = "user_invln_ahpstatuschange";
 			public const string user_invln_borrowerpreviousschemes = "user_invln_borrowerpreviousschemes";
@@ -4443,6 +4456,66 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// 1:N he_he_pipeline_LeadIntervention_systemuser
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("he_he_pipeline_LeadIntervention_systemuser")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.he_Pipeline> he_he_pipeline_LeadIntervention_systemuser
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.he_Pipeline>("he_he_pipeline_LeadIntervention_systemuser", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("he_he_pipeline_LeadIntervention_systemuser");
+				this.SetRelatedEntities<DataverseModel.he_Pipeline>("he_he_pipeline_LeadIntervention_systemuser", null, value);
+				this.OnPropertyChanged("he_he_pipeline_LeadIntervention_systemuser");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N he_he_pipeline_SponsorName_systemuser
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("he_he_pipeline_SponsorName_systemuser")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.he_Pipeline> he_he_pipeline_SponsorName_systemuser
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.he_Pipeline>("he_he_pipeline_SponsorName_systemuser", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("he_he_pipeline_SponsorName_systemuser");
+				this.SetRelatedEntities<DataverseModel.he_Pipeline>("he_he_pipeline_SponsorName_systemuser", null, value);
+				this.OnPropertyChanged("he_he_pipeline_SponsorName_systemuser");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N he_pipeline_substantiveowner_systemuser
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("he_pipeline_substantiveowner_systemuser")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.he_Pipeline> he_pipeline_substantiveowner_systemuser
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.he_Pipeline>("he_pipeline_substantiveowner_systemuser", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("he_pipeline_substantiveowner_systemuser");
+				this.SetRelatedEntities<DataverseModel.he_Pipeline>("he_pipeline_substantiveowner_systemuser", null, value);
+				this.OnPropertyChanged("he_pipeline_substantiveowner_systemuser");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N he_systemuser_account_RelationshipOwner
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("he_systemuser_account_RelationshipOwner")]
@@ -4485,20 +4558,20 @@ namespace DataverseModel
 		/// <summary>
 		/// 1:N invln_ahglocalauthorities_GrowthManager_systemu
 		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_ahglocalauthorities_GrowthManager_systemu")]
-		public System.Collections.Generic.IEnumerable<DataverseModel.invln_AHGLocalAuthorities> invln_ahglocalauthorities_GrowthManager_systemu
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_account_ProviderManagementLead_systemuser")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.Account> invln_account_ProviderManagementLead_systemuser
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntities<DataverseModel.invln_AHGLocalAuthorities>("invln_ahglocalauthorities_GrowthManager_systemu", null);
+				return this.GetRelatedEntities<DataverseModel.Account>("invln_account_ProviderManagementLead_systemuser", null);
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("invln_ahglocalauthorities_GrowthManager_systemu");
-				this.SetRelatedEntities<DataverseModel.invln_AHGLocalAuthorities>("invln_ahglocalauthorities_GrowthManager_systemu", null, value);
-				this.OnPropertyChanged("invln_ahglocalauthorities_GrowthManager_systemu");
+				this.OnPropertyChanging("invln_account_ProviderManagementLead_systemuser");
+				this.SetRelatedEntities<DataverseModel.Account>("invln_account_ProviderManagementLead_systemuser", null, value);
+				this.OnPropertyChanged("invln_account_ProviderManagementLead_systemuser");
 			}
 		}
 		
@@ -5103,82 +5176,242 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// 1:N lk_invln_ahglocalauthorities_createdby
+		/// 1:N lk_he_localauthority_createdby
 		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_ahglocalauthorities_createdby")]
-		public System.Collections.Generic.IEnumerable<DataverseModel.invln_AHGLocalAuthorities> lk_invln_ahglocalauthorities_createdby
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_he_localauthority_createdby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.he_LocalAuthority> lk_he_localauthority_createdby
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntities<DataverseModel.invln_AHGLocalAuthorities>("lk_invln_ahglocalauthorities_createdby", null);
+				return this.GetRelatedEntities<DataverseModel.he_LocalAuthority>("lk_he_localauthority_createdby", null);
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("lk_invln_ahglocalauthorities_createdby");
-				this.SetRelatedEntities<DataverseModel.invln_AHGLocalAuthorities>("lk_invln_ahglocalauthorities_createdby", null, value);
-				this.OnPropertyChanged("lk_invln_ahglocalauthorities_createdby");
+				this.OnPropertyChanging("lk_he_localauthority_createdby");
+				this.SetRelatedEntities<DataverseModel.he_LocalAuthority>("lk_he_localauthority_createdby", null, value);
+				this.OnPropertyChanged("lk_he_localauthority_createdby");
 			}
 		}
 		
 		/// <summary>
-		/// 1:N lk_invln_ahglocalauthorities_createdonbehalfby
+		/// 1:N lk_he_localauthority_createdonbehalfby
 		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_ahglocalauthorities_createdonbehalfby")]
-		public System.Collections.Generic.IEnumerable<DataverseModel.invln_AHGLocalAuthorities> lk_invln_ahglocalauthorities_createdonbehalfby
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_he_localauthority_createdonbehalfby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.he_LocalAuthority> lk_he_localauthority_createdonbehalfby
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntities<DataverseModel.invln_AHGLocalAuthorities>("lk_invln_ahglocalauthorities_createdonbehalfby", null);
+				return this.GetRelatedEntities<DataverseModel.he_LocalAuthority>("lk_he_localauthority_createdonbehalfby", null);
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("lk_invln_ahglocalauthorities_createdonbehalfby");
-				this.SetRelatedEntities<DataverseModel.invln_AHGLocalAuthorities>("lk_invln_ahglocalauthorities_createdonbehalfby", null, value);
-				this.OnPropertyChanged("lk_invln_ahglocalauthorities_createdonbehalfby");
+				this.OnPropertyChanging("lk_he_localauthority_createdonbehalfby");
+				this.SetRelatedEntities<DataverseModel.he_LocalAuthority>("lk_he_localauthority_createdonbehalfby", null, value);
+				this.OnPropertyChanged("lk_he_localauthority_createdonbehalfby");
 			}
 		}
 		
 		/// <summary>
-		/// 1:N lk_invln_ahglocalauthorities_modifiedby
+		/// 1:N lk_he_localauthority_modifiedby
 		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_ahglocalauthorities_modifiedby")]
-		public System.Collections.Generic.IEnumerable<DataverseModel.invln_AHGLocalAuthorities> lk_invln_ahglocalauthorities_modifiedby
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_he_localauthority_modifiedby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.he_LocalAuthority> lk_he_localauthority_modifiedby
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntities<DataverseModel.invln_AHGLocalAuthorities>("lk_invln_ahglocalauthorities_modifiedby", null);
+				return this.GetRelatedEntities<DataverseModel.he_LocalAuthority>("lk_he_localauthority_modifiedby", null);
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("lk_invln_ahglocalauthorities_modifiedby");
-				this.SetRelatedEntities<DataverseModel.invln_AHGLocalAuthorities>("lk_invln_ahglocalauthorities_modifiedby", null, value);
-				this.OnPropertyChanged("lk_invln_ahglocalauthorities_modifiedby");
+				this.OnPropertyChanging("lk_he_localauthority_modifiedby");
+				this.SetRelatedEntities<DataverseModel.he_LocalAuthority>("lk_he_localauthority_modifiedby", null, value);
+				this.OnPropertyChanged("lk_he_localauthority_modifiedby");
 			}
 		}
 		
 		/// <summary>
-		/// 1:N lk_invln_ahglocalauthorities_modifiedonbehalfby
+		/// 1:N lk_he_localauthority_modifiedonbehalfby
 		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_ahglocalauthorities_modifiedonbehalfby")]
-		public System.Collections.Generic.IEnumerable<DataverseModel.invln_AHGLocalAuthorities> lk_invln_ahglocalauthorities_modifiedonbehalfby
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_he_localauthority_modifiedonbehalfby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.he_LocalAuthority> lk_he_localauthority_modifiedonbehalfby
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntities<DataverseModel.invln_AHGLocalAuthorities>("lk_invln_ahglocalauthorities_modifiedonbehalfby", null);
+				return this.GetRelatedEntities<DataverseModel.he_LocalAuthority>("lk_he_localauthority_modifiedonbehalfby", null);
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("lk_invln_ahglocalauthorities_modifiedonbehalfby");
-				this.SetRelatedEntities<DataverseModel.invln_AHGLocalAuthorities>("lk_invln_ahglocalauthorities_modifiedonbehalfby", null, value);
-				this.OnPropertyChanged("lk_invln_ahglocalauthorities_modifiedonbehalfby");
+				this.OnPropertyChanging("lk_he_localauthority_modifiedonbehalfby");
+				this.SetRelatedEntities<DataverseModel.he_LocalAuthority>("lk_he_localauthority_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("lk_he_localauthority_modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_he_pipeline_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_he_pipeline_createdby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.he_Pipeline> lk_he_pipeline_createdby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.he_Pipeline>("lk_he_pipeline_createdby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_he_pipeline_createdby");
+				this.SetRelatedEntities<DataverseModel.he_Pipeline>("lk_he_pipeline_createdby", null, value);
+				this.OnPropertyChanged("lk_he_pipeline_createdby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_he_pipeline_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_he_pipeline_createdonbehalfby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.he_Pipeline> lk_he_pipeline_createdonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.he_Pipeline>("lk_he_pipeline_createdonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_he_pipeline_createdonbehalfby");
+				this.SetRelatedEntities<DataverseModel.he_Pipeline>("lk_he_pipeline_createdonbehalfby", null, value);
+				this.OnPropertyChanged("lk_he_pipeline_createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_he_pipeline_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_he_pipeline_modifiedby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.he_Pipeline> lk_he_pipeline_modifiedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.he_Pipeline>("lk_he_pipeline_modifiedby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_he_pipeline_modifiedby");
+				this.SetRelatedEntities<DataverseModel.he_Pipeline>("lk_he_pipeline_modifiedby", null, value);
+				this.OnPropertyChanged("lk_he_pipeline_modifiedby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_he_pipeline_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_he_pipeline_modifiedonbehalfby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.he_Pipeline> lk_he_pipeline_modifiedonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.he_Pipeline>("lk_he_pipeline_modifiedonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_he_pipeline_modifiedonbehalfby");
+				this.SetRelatedEntities<DataverseModel.he_Pipeline>("lk_he_pipeline_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("lk_he_pipeline_modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_he_projectlocalauthority_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_he_projectlocalauthority_createdby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.he_ProjectLocalAuthority> lk_he_projectlocalauthority_createdby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.he_ProjectLocalAuthority>("lk_he_projectlocalauthority_createdby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_he_projectlocalauthority_createdby");
+				this.SetRelatedEntities<DataverseModel.he_ProjectLocalAuthority>("lk_he_projectlocalauthority_createdby", null, value);
+				this.OnPropertyChanged("lk_he_projectlocalauthority_createdby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_he_projectlocalauthority_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_he_projectlocalauthority_createdonbehalfby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.he_ProjectLocalAuthority> lk_he_projectlocalauthority_createdonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.he_ProjectLocalAuthority>("lk_he_projectlocalauthority_createdonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_he_projectlocalauthority_createdonbehalfby");
+				this.SetRelatedEntities<DataverseModel.he_ProjectLocalAuthority>("lk_he_projectlocalauthority_createdonbehalfby", null, value);
+				this.OnPropertyChanged("lk_he_projectlocalauthority_createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_he_projectlocalauthority_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_he_projectlocalauthority_modifiedby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.he_ProjectLocalAuthority> lk_he_projectlocalauthority_modifiedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.he_ProjectLocalAuthority>("lk_he_projectlocalauthority_modifiedby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_he_projectlocalauthority_modifiedby");
+				this.SetRelatedEntities<DataverseModel.he_ProjectLocalAuthority>("lk_he_projectlocalauthority_modifiedby", null, value);
+				this.OnPropertyChanged("lk_he_projectlocalauthority_modifiedby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_he_projectlocalauthority_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_he_projectlocalauthority_modifiedonbehalfby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.he_ProjectLocalAuthority> lk_he_projectlocalauthority_modifiedonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.he_ProjectLocalAuthority>("lk_he_projectlocalauthority_modifiedonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_he_projectlocalauthority_modifiedonbehalfby");
+				this.SetRelatedEntities<DataverseModel.he_ProjectLocalAuthority>("lk_he_projectlocalauthority_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("lk_he_projectlocalauthority_modifiedonbehalfby");
 			}
 		}
 		
@@ -8983,22 +9216,62 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// 1:N user_invln_ahglocalauthorities
+		/// 1:N user_he_localauthority
 		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("user_invln_ahglocalauthorities")]
-		public System.Collections.Generic.IEnumerable<DataverseModel.invln_AHGLocalAuthorities> user_invln_ahglocalauthorities
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("user_he_localauthority")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.he_LocalAuthority> user_he_localauthority
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntities<DataverseModel.invln_AHGLocalAuthorities>("user_invln_ahglocalauthorities", null);
+				return this.GetRelatedEntities<DataverseModel.he_LocalAuthority>("user_he_localauthority", null);
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("user_invln_ahglocalauthorities");
-				this.SetRelatedEntities<DataverseModel.invln_AHGLocalAuthorities>("user_invln_ahglocalauthorities", null, value);
-				this.OnPropertyChanged("user_invln_ahglocalauthorities");
+				this.OnPropertyChanging("user_he_localauthority");
+				this.SetRelatedEntities<DataverseModel.he_LocalAuthority>("user_he_localauthority", null, value);
+				this.OnPropertyChanged("user_he_localauthority");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N user_he_pipeline
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("user_he_pipeline")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.he_Pipeline> user_he_pipeline
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.he_Pipeline>("user_he_pipeline", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("user_he_pipeline");
+				this.SetRelatedEntities<DataverseModel.he_Pipeline>("user_he_pipeline", null, value);
+				this.OnPropertyChanged("user_he_pipeline");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N user_he_projectlocalauthority
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("user_he_projectlocalauthority")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.he_ProjectLocalAuthority> user_he_projectlocalauthority
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.he_ProjectLocalAuthority>("user_he_projectlocalauthority", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("user_he_projectlocalauthority");
+				this.SetRelatedEntities<DataverseModel.he_ProjectLocalAuthority>("user_he_projectlocalauthority", null, value);
+				this.OnPropertyChanged("user_he_projectlocalauthority");
 			}
 		}
 		

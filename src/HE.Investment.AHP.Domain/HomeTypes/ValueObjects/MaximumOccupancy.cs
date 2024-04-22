@@ -1,6 +1,8 @@
+using HE.Investments.Common.Domain.ValueObjects;
+
 namespace HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 
-public class MaximumOccupancy : RequiredIntValueObject
+public class MaximumOccupancy : TheRequiredIntValueObject
 {
     private const string DisplayName = "maximum occupancy of each home";
 

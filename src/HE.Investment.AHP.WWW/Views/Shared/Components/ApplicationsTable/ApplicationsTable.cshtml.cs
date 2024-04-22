@@ -38,7 +38,7 @@ public class ApplicationsTable : ViewComponent
                     new(Component: CreateApplicationStatusComponent(x)),
                 };
 
-                return new TableRowViewModel(tableItems);
+                return new TableRowViewModel(x.Id.Value, tableItems);
             })
             .ToList();
 

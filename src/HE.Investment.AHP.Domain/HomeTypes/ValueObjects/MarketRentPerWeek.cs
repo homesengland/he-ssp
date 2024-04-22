@@ -1,6 +1,10 @@
+using HE.Investments.Common.Domain.ValueObjects;
+using HE.Investments.Common.Extensions;
+using HE.Investments.Common.Validators;
+
 namespace HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 
-public class MarketRentPerWeek : DecimalValueObject
+public class MarketRentPerWeek : TheRequiredDecimalValueObject
 {
     private const string DisplayName = "market rent per week";
 
@@ -9,7 +13,14 @@ public class MarketRentPerWeek : DecimalValueObject
     private const decimal MaxValue = 9999.99M;
 
     public MarketRentPerWeek(string? value, bool isCalculation)
-        : base(value, nameof(MarketRentPerWeek), DisplayName, isCalculation, MinValue, MaxValue)
+        : base(
+            value,
+            nameof(MarketRentPerWeek),
+            DisplayName,
+            MinValue,
+            MaxValue,
+            precision: 2,
+            MessageOptions.Money.WithCalculation(isCalculation))
     {
     }
 

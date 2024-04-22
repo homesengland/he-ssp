@@ -45,12 +45,11 @@ public class ApplicationRepository : IApplicationRepository
         _settings = settings;
     }
 
-    public async Task<ApplicationEntity> GetById(AhpApplicationId id, UserAccount userAccount, CancellationToken cancellationToken, bool fetchPreviousStatus = false)
+    public async Task<ApplicationEntity> GetById(AhpApplicationId id, UserAccount userAccount, CancellationToken cancellationToken)
     {
         var application = await GetAhpApplicationDto(id, userAccount, cancellationToken);
-        var previousApplicationStatus = AhpApplicationStatusMapper.MapToPortalStatus(application.previousExternalStatus);
 
-        return CreateEntity(application, userAccount, previousApplicationStatus);
+        return CreateEntity(application, userAccount);
     }
 
     public async Task<bool> IsNameExist(ApplicationName applicationName, OrganisationId organisationId, CancellationToken cancellationToken)
@@ -152,9 +151,18 @@ public class ApplicationRepository : IApplicationRepository
         await _eventDispatcher.Publish(domainEntity, cancellationToken);
     }
 
-    private static ApplicationEntity CreateEntity(AhpApplicationDto application, UserAccount userAccount, ApplicationStatus? previousStatus)
+    private static ApplicationEntity CreateEntity(AhpApplicationDto application, UserAccount userAccount)
     {
         var applicationStatus = AhpApplicationStatusMapper.MapToPortalStatus(application.applicationStatus);
+        ApplicationStatus? previousStatus = application.previousExternalStatus.IsProvided()
+            ? AhpApplicationStatusMapper.MapToPortalStatus(application.previousExternalStatus)
+            : null;
+        var lastSubmitted = application.dateSubmitted.IsProvided()
+            ? new AuditEntry(
+                application.lastExternalSubmittedBy?.firstName,
+                application.lastExternalSubmittedBy?.lastName,
+                application.dateSubmitted)
+            : null;
 
         return new ApplicationEntity(
             new SiteId(application.siteId),
@@ -176,7 +184,7 @@ public class ApplicationRepository : IApplicationRepository
                 application.lastExternalModificationBy?.firstName,
                 application.lastExternalModificationBy?.lastName,
                 application.lastExternalModificationOn),
-            application.dateSubmitted.IsProvided() ? new AuditEntry(application.lastExternalModificationBy?.firstName, application.lastExternalModificationBy?.lastName, application.dateSubmitted) : null); // TODO: AB#63432 Fetch submit user when added to CRM endpoint
+            lastSubmitted);
     }
 
     private static ApplicationWithFundingDetails CreateApplicationWithFundingDetails(AhpApplicationDto ahpApplicationDto)

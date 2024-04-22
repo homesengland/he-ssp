@@ -26,7 +26,11 @@ namespace HE.CRM.AHP.Plugins.Plugins.HomeType
       "HE.CRM.Plugins.Plugins.HomeType.SetWhichNdssStandardsHaveBeenMetValuePlugin: Update of Home Type",
       1,
       IsolationModeEnum.Sandbox,
-      Id = "aadeac61-ae7f-4714-96a1-5b18e87c4b0e")]
+      Id = "aadeac61-ae7f-4714-96a1-5b18e87c4b0e",
+       Image1Name = "PreImage",
+       Image1Attributes = "",
+       Image1Type = ImageTypeEnum.PreImage
+       )]
     public class SetWhichNdssStandardsHaveBeenMetValuePlugin : PluginBase<DataverseContext>, IPlugin
     {
         #region Constructors
@@ -39,6 +43,7 @@ namespace HE.CRM.AHP.Plugins.Plugins.HomeType
         public override void RegisterHandlers(CrmHandlerFactory<DataverseContext> handlerFactory, IList<ICrmHandler> registeredHandlers)
         {
             registeredHandlers.Add(handlerFactory.GetHandler<SetWhichNdssStandardsHaveBeenMetValueHandler>());
+            registeredHandlers.Add(handlerFactory.GetHandler<CalculatePercentageValueOfNDSSStandardHandler>());
         }
         #endregion
     }
