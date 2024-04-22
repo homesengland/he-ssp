@@ -12,7 +12,7 @@ namespace HE.Investment.AHP.Domain.Application.Repositories;
 
 public interface IApplicationRepository
 {
-    Task<ApplicationEntity> GetById(AhpApplicationId id, UserAccount userAccount, CancellationToken cancellationToken, bool fetchPreviousStatus = false);
+    Task<ApplicationEntity> GetById(AhpApplicationId id, UserAccount userAccount, CancellationToken cancellationToken);
 
     Task<bool> IsNameExist(ApplicationName applicationName, OrganisationId organisationId, CancellationToken cancellationToken);
 

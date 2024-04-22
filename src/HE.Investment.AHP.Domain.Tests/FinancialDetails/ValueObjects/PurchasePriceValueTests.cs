@@ -1,8 +1,6 @@
 using FluentAssertions;
-using HE.Investment.AHP.Domain.FinancialDetails.Constants;
 using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 using HE.Investments.Common.Contract.Exceptions;
-using HE.Investments.Common.Messages;
 
 namespace HE.Investment.AHP.Domain.Tests.FinancialDetails.ValueObjects;
 
@@ -17,8 +15,7 @@ public class PurchasePriceValueTests
         // then
         action.Should()
             .ThrowExactly<DomainValidationException>()
-            .Which.OperationResult.Errors.Should()
-            .ContainSingle(x => x.ErrorMessage == ValidationErrorMessage.MustProvideRequiredField("purchase price of the land"));
+            .WithMessage("Enter the purchase price of the land, in pounds");
     }
 
     [Fact]

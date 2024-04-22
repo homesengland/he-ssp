@@ -91,7 +91,13 @@ public static class ValidationErrorMessage
 
     public static string MustProvideRequiredField(string displayName) => $"Enter the {displayName}";
 
+    public static string MustProvideRequiredFieldInPounds(string displayName) => $"Enter the {displayName}, in pounds";
+
+    public static string MustProvideRequiredFieldInPoundsAndPence(string displayName) => $"Enter the {displayName}, in pounds and pence";
+
     public static string MustProvideYourRequiredField(string displayName) => $"Enter your {displayName}";
+
+    public static string MustProvideYourRequiredFieldInPounds(string displayName) => $"Enter the {displayName}, in pounds";
 
     public static string MustProvideYourHigherNumber<TNumber>(string fieldName, TNumber minValue) => string.Format(CultureInfo.InvariantCulture, "Your {0} must be {1} or more", fieldName, minValue);
 
