@@ -116,6 +116,8 @@ namespace DataverseModel
 			public const string invln_Sitecost = "invln_sitecost";
 			public const string invln_sitecost_Base = "invln_sitecost_base";
 			public const string invln_sitedetails_FDSiteId_invln_frontdoorproje = "invln_sitedetails_FDSiteId_invln_frontdoorproje";
+			public const string invln_sitedetails_HeLocalAuthorityId_he_localau = "invln_sitedetails_HeLocalAuthorityId_he_localau";
+			public const string invln_sitedetails_HeProjectLocalAuthorityId_he_ = "invln_sitedetails_HeProjectLocalAuthorityId_he_";
 			public const string invln_sitedetails_invln_Externalcommses = "invln_sitedetails_invln_Externalcommses";
 			public const string invln_sitedetails_invln_govnotifyemails = "invln_sitedetails_invln_govnotifyemails";
 			public const string invln_sitedetails_Loanapplication = "invln_sitedetails_Loanapplication";
@@ -2114,6 +2116,48 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_sitedetails_FDSiteId_invln_frontdoorproje");
 				this.SetRelatedEntity<DataverseModel.invln_FrontDoorProjectSitePOC>("invln_sitedetails_FDSiteId_invln_frontdoorproje", null, value);
 				this.OnPropertyChanged("invln_sitedetails_FDSiteId_invln_frontdoorproje");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_sitedetails_HeLocalAuthorityId_he_localau
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_helocalauthorityid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_sitedetails_HeLocalAuthorityId_he_localau")]
+		public DataverseModel.he_LocalAuthority invln_sitedetails_HeLocalAuthorityId_he_localau
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.he_LocalAuthority>("invln_sitedetails_HeLocalAuthorityId_he_localau", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_sitedetails_HeLocalAuthorityId_he_localau");
+				this.SetRelatedEntity<DataverseModel.he_LocalAuthority>("invln_sitedetails_HeLocalAuthorityId_he_localau", null, value);
+				this.OnPropertyChanged("invln_sitedetails_HeLocalAuthorityId_he_localau");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_sitedetails_HeProjectLocalAuthorityId_he_
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_heprojectlocalauthorityid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_sitedetails_HeProjectLocalAuthorityId_he_")]
+		public DataverseModel.he_ProjectLocalAuthority invln_sitedetails_HeProjectLocalAuthorityId_he_
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.he_ProjectLocalAuthority>("invln_sitedetails_HeProjectLocalAuthorityId_he_", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_sitedetails_HeProjectLocalAuthorityId_he_");
+				this.SetRelatedEntity<DataverseModel.he_ProjectLocalAuthority>("invln_sitedetails_HeProjectLocalAuthorityId_he_", null, value);
+				this.OnPropertyChanged("invln_sitedetails_HeProjectLocalAuthorityId_he_");
 			}
 		}
 		
