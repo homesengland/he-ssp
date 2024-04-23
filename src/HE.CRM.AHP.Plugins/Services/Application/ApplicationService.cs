@@ -129,7 +129,8 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                     invln_ChangeSource = new OptionSetValue((int)invln_ChangesourceSet.External),
                     invln_Changeto = ahpWithNewStatusCodesAndOtherChanges.StatusCode,
                     invln_AHPApplication = application.ToEntityReference(),
-                    invln_Comment = changeReason
+                    invln_Comment = changeReason,
+                    invln_changedby = contact?.ToEntityReference()
                 };
 
                 _applicationRepository.Update(applicationToUpdate);
