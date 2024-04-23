@@ -1,4 +1,5 @@
 using HE.Investment.AHP.Contract.Delivery;
+using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investments.Common.WWW.Routing;
 
 namespace HE.Investment.AHP.WWW.Workflows;
@@ -26,8 +27,8 @@ public class DeliveryPhaseWorkflow : EncodedStateRouting<DeliveryPhaseWorkflowSt
             DeliveryPhaseWorkflowState.Create => true,
             DeliveryPhaseWorkflowState.Name => true,
             DeliveryPhaseWorkflowState.TypeOfHomes => true,
-            DeliveryPhaseWorkflowState.NewBuildActivityType => !_model.IsReconfiguringExistingNeeded,
-            DeliveryPhaseWorkflowState.RehabBuildActivityType => _model.IsReconfiguringExistingNeeded,
+            DeliveryPhaseWorkflowState.NewBuildActivityType => IsNewBuildActivityType(),
+            DeliveryPhaseWorkflowState.RehabBuildActivityType => !IsNewBuildActivityType(),
             DeliveryPhaseWorkflowState.ReconfiguringExisting => _model.IsReconfiguringExistingNeeded,
             DeliveryPhaseWorkflowState.AddHomes => true,
             DeliveryPhaseWorkflowState.SummaryOfDelivery => IsNumberOfHomesCompleted(),
@@ -50,8 +51,8 @@ public class DeliveryPhaseWorkflow : EncodedStateRouting<DeliveryPhaseWorkflowSt
             .Permit(Trigger.Continue, DeliveryPhaseWorkflowState.TypeOfHomes);
 
         Machine.Configure(DeliveryPhaseWorkflowState.TypeOfHomes)
-            .PermitIf(Trigger.Continue, DeliveryPhaseWorkflowState.NewBuildActivityType, () => !_model.IsReconfiguringExistingNeeded)
-            .PermitIf(Trigger.Continue, DeliveryPhaseWorkflowState.RehabBuildActivityType, () => _model.IsReconfiguringExistingNeeded)
+            .PermitIf(Trigger.Continue, DeliveryPhaseWorkflowState.NewBuildActivityType, IsNewBuildActivityType)
+            .PermitIf(Trigger.Continue, DeliveryPhaseWorkflowState.RehabBuildActivityType, () => !IsNewBuildActivityType())
             .Permit(Trigger.Back, DeliveryPhaseWorkflowState.Name);
 
         Machine.Configure(DeliveryPhaseWorkflowState.NewBuildActivityType)
@@ -59,7 +60,8 @@ public class DeliveryPhaseWorkflow : EncodedStateRouting<DeliveryPhaseWorkflowSt
             .Permit(Trigger.Back, DeliveryPhaseWorkflowState.TypeOfHomes);
 
         Machine.Configure(DeliveryPhaseWorkflowState.RehabBuildActivityType)
-            .Permit(Trigger.Continue, DeliveryPhaseWorkflowState.ReconfiguringExisting)
+            .PermitIf(Trigger.Continue, DeliveryPhaseWorkflowState.ReconfiguringExisting, () => _model.IsReconfiguringExistingNeeded)
+            .PermitIf(Trigger.Continue, DeliveryPhaseWorkflowState.AddHomes, () => !_model.IsReconfiguringExistingNeeded)
             .Permit(Trigger.Back, DeliveryPhaseWorkflowState.TypeOfHomes);
 
         Machine.Configure(DeliveryPhaseWorkflowState.ReconfiguringExisting)
@@ -68,7 +70,8 @@ public class DeliveryPhaseWorkflow : EncodedStateRouting<DeliveryPhaseWorkflowSt
 
         Machine.Configure(DeliveryPhaseWorkflowState.AddHomes)
             .Permit(Trigger.Continue, DeliveryPhaseWorkflowState.SummaryOfDelivery)
-            .PermitIf(Trigger.Back, DeliveryPhaseWorkflowState.NewBuildActivityType, () => !_model.IsReconfiguringExistingNeeded)
+            .PermitIf(Trigger.Back, DeliveryPhaseWorkflowState.NewBuildActivityType, () => !_model.IsReconfiguringExistingNeeded && IsNewBuildActivityType())
+            .PermitIf(Trigger.Back, DeliveryPhaseWorkflowState.RehabBuildActivityType, () => !_model.IsReconfiguringExistingNeeded && !IsNewBuildActivityType())
             .PermitIf(Trigger.Back, DeliveryPhaseWorkflowState.ReconfiguringExisting, () => _model.IsReconfiguringExistingNeeded);
 
         Machine.Configure(DeliveryPhaseWorkflowState.SummaryOfDelivery)
@@ -113,4 +116,6 @@ public class DeliveryPhaseWorkflow : EncodedStateRouting<DeliveryPhaseWorkflowSt
     private bool IsRegisteredBody() => !IsUnregisteredBody();
 
     private bool IsNumberOfHomesCompleted() => _model.NumberOfHomes > 0;
+
+    private bool IsNewBuildActivityType() => _model.TypeOfHomes is TypeOfHomes.NewBuild;
 }
