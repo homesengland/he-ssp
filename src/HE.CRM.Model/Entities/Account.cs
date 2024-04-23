@@ -670,7 +670,6 @@ namespace DataverseModel
 			public const string FollowEmail = "followemail";
 			public const string FollowEmailName = "followemailname";
 			public const string FtpSiteURL = "ftpsiteurl";
-			public const string he_Account_Account_he_Pipeline = "he_Account_Account_he_Pipeline";
 			public const string Referencinghe_account_account_UltimateParent = "he_account_account_UltimateParent";
 			public const string he_account_keyaccountmanager_systemuser = "he_account_keyaccountmanager_systemuser";
 			public const string he_automaticsearch = "he_automaticsearch";
@@ -790,6 +789,9 @@ namespace DataverseModel
 			public const string invln_SecurityValue = "invln_securityvalue";
 			public const string invln_securityvalue_Base = "invln_securityvalue_base";
 			public const string invln_sites_AccountId_account = "invln_sites_AccountId_account";
+			public const string invln_sites_developingpartner_account = "invln_sites_developingpartner_account";
+			public const string invln_sites_Ownerofthehomesaftercompletion_acco = "invln_sites_Ownerofthehomesaftercompletion_acco";
+			public const string invln_sites_ownerofthelandduringdevelopment_acc = "invln_sites_ownerofthelandduringdevelopment_acc";
 			public const string invln_SPorDP = "invln_spordp";
 			public const string invln_spordpName = "invln_spordpname";
 			public const string invln_Totalofexistingallocations = "invln_totalofexistingallocations";
@@ -7325,26 +7327,6 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// 1:N he_Account_Account_he_Pipeline
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("he_Account_Account_he_Pipeline")]
-		public System.Collections.Generic.IEnumerable<DataverseModel.he_Pipeline> he_Account_Account_he_Pipeline
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<DataverseModel.he_Pipeline>("he_Account_Account_he_Pipeline", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("he_Account_Account_he_Pipeline");
-				this.SetRelatedEntities<DataverseModel.he_Pipeline>("he_Account_Account_he_Pipeline", null, value);
-				this.OnPropertyChanged("he_Account_Account_he_Pipeline");
-			}
-		}
-		
-		/// <summary>
 		/// 1:N he_account_account_UltimateParent
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("he_account_account_UltimateParent", Microsoft.Xrm.Sdk.EntityRole.Referenced)]
@@ -7621,6 +7603,66 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_sites_AccountId_account");
 				this.SetRelatedEntities<DataverseModel.invln_Sites>("invln_sites_AccountId_account", null, value);
 				this.OnPropertyChanged("invln_sites_AccountId_account");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_sites_developingpartner_account
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_sites_developingpartner_account")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_Sites> invln_sites_developingpartner_account
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_Sites>("invln_sites_developingpartner_account", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_sites_developingpartner_account");
+				this.SetRelatedEntities<DataverseModel.invln_Sites>("invln_sites_developingpartner_account", null, value);
+				this.OnPropertyChanged("invln_sites_developingpartner_account");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_sites_Ownerofthehomesaftercompletion_acco
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_sites_Ownerofthehomesaftercompletion_acco")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_Sites> invln_sites_Ownerofthehomesaftercompletion_acco
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_Sites>("invln_sites_Ownerofthehomesaftercompletion_acco", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_sites_Ownerofthehomesaftercompletion_acco");
+				this.SetRelatedEntities<DataverseModel.invln_Sites>("invln_sites_Ownerofthehomesaftercompletion_acco", null, value);
+				this.OnPropertyChanged("invln_sites_Ownerofthehomesaftercompletion_acco");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_sites_ownerofthelandduringdevelopment_acc
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_sites_ownerofthelandduringdevelopment_acc")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_Sites> invln_sites_ownerofthelandduringdevelopment_acc
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_Sites>("invln_sites_ownerofthelandduringdevelopment_acc", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_sites_ownerofthelandduringdevelopment_acc");
+				this.SetRelatedEntities<DataverseModel.invln_Sites>("invln_sites_ownerofthelandduringdevelopment_acc", null, value);
+				this.OnPropertyChanged("invln_sites_ownerofthelandduringdevelopment_acc");
 			}
 		}
 		

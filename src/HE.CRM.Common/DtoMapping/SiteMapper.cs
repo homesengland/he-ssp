@@ -27,6 +27,11 @@ namespace HE.CRM.Common.DtoMapping
                     areRestrictionsOrObligations = entity.invln_anyrestrictionsinthes106,
                     localAuthorityConfirmation = entity.invln_localauthorityconfirmationofadditionality,
                 },
+                localAuthority = new SiteLocalAuthority
+                {
+                    id = entity.GetAttributeValue<AliasedValue>("invln_ahglocalauthorities1.invln_gsscode")?.Value.ToString(),
+                    name = entity.invln_LocalAuthority?.Name,
+                },
                 planningDetails = new PlanningDetailsDto
                 {
                     planningStatus = entity.invln_planningstatus?.Value,
@@ -88,6 +93,21 @@ namespace HE.CRM.Common.DtoMapping
                 },
 
                 procurementMechanisms = entity.invln_procurementmechanisms.ToIntValueList(),
+                developerPartner = new OrganizationDetailsDto()
+                {
+                    registeredCompanyName = entity.invln_developingpartner?.Name,
+                    organisationId = entity.invln_developingpartner?.Id.ToString()
+                },
+                ownerOfTheLandDuringDevelopment = new OrganizationDetailsDto()
+                {
+                    registeredCompanyName = entity.invln_ownerofthelandduringdevelopment?.Name,
+                    organisationId = entity.invln_ownerofthelandduringdevelopment?.Id.ToString()
+                },
+                ownerOfTheHomesAfterCompletion = new OrganizationDetailsDto()
+                {
+                    registeredCompanyName = entity.invln_Ownerofthehomesaftercompletion?.Name,
+                    organisationId = entity.invln_Ownerofthehomesaftercompletion?.Id.ToString()
+                },
             };
 
             if (localAuthority != null)
@@ -179,6 +199,20 @@ namespace HE.CRM.Common.DtoMapping
 
             SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_procurementmechanisms), CreateOptionSetValueCollection(dto.procurementMechanisms));
 
+            if (dto.developerPartner != null)
+            {
+                site.invln_developingpartner = new EntityReference(Account.EntityLogicalName, new Guid(dto.developerPartner.organisationId));
+            }
+
+            if (dto.ownerOfTheHomesAfterCompletion != null)
+            {
+                site.invln_Ownerofthehomesaftercompletion = new EntityReference(Account.EntityLogicalName, new Guid(dto.ownerOfTheHomesAfterCompletion.organisationId));
+            }
+
+            if (dto.ownerOfTheLandDuringDevelopment != null)
+            {
+                site.invln_ownerofthelandduringdevelopment = new EntityReference(Account.EntityLogicalName, new Guid(dto.ownerOfTheLandDuringDevelopment.organisationId));
+            }
 
             if (createdByContact != null)
             {
