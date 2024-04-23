@@ -15,16 +15,5 @@ namespace HE.CRM.Common.Repositories.Implementations
         public ConsortiumRepository(CrmRepositoryArgs args) : base(args)
         {
         }
-
-        public invln_Consortium GetConsortiumById(string consortiumId, ColumnSet columnSet = null)
-        {
-            var query = new QueryExpression
-            {
-                ColumnSet = columnSet ?? new ColumnSet(true),
-                EntityName = invln_Consortium.EntityLogicalName
-            };
-            query.Criteria.AddCondition(invln_Consortium.Fields.Id, ConditionOperator.Equal, consortiumId);
-            return service.RetrieveMultiple(query).Entities.Select(x => x.ToEntity<invln_Consortium>()).FirstOrDefault();
-        }
     }
 }
