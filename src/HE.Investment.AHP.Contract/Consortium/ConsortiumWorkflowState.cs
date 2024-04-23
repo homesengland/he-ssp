@@ -4,4 +4,7 @@ public enum ConsortiumWorkflowState
 {
     Index = 1,
     Start,
+    Programme,
+    SearchOrganisation,
+    SearchResult,
 }

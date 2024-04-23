@@ -26,6 +26,7 @@ public class ConsortiumWorkflow : IStateRouting<ConsortiumWorkflowState>
         {
             ConsortiumWorkflowState.Index => true,
             ConsortiumWorkflowState.Start => true,
+            ConsortiumWorkflowState.Programme => true,
             _ => false,
         });
     }
@@ -38,7 +39,11 @@ public class ConsortiumWorkflow : IStateRouting<ConsortiumWorkflowState>
     private void ConfigureTransitions()
     {
         _machine.Configure(ConsortiumWorkflowState.Start)
-            .Permit(Trigger.Continue, ConsortiumWorkflowState.Index)
+            .Permit(Trigger.Continue, ConsortiumWorkflowState.Programme)
             .Permit(Trigger.Back, ConsortiumWorkflowState.Index);
+
+        _machine.Configure(ConsortiumWorkflowState.Programme)
+            .Permit(Trigger.Continue, ConsortiumWorkflowState.SearchOrganisation)
+            .Permit(Trigger.Back, ConsortiumWorkflowState.Start);
     }
 }
