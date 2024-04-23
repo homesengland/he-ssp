@@ -33,5 +33,6 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public bool? claimingtheMilestoneConfirmed { get; set; }
         public bool? allowAmendmentstoMilestoneProportions { get; set; }
         public decimal? sumOfCalculatedFounds { get; set; }
+        public int? statusCode { get; set; }
     }
 }
