@@ -212,7 +212,7 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
             "Shared Ownership details",
             factory.Question("Market value of each home", nameof(Controller.SharedOwnership), CurrencyHelper.DisplayPounds(tenure.MarketValue)),
             factory.Question("Average first tranche sale percentage", nameof(Controller.SharedOwnership), tenure.InitialSale.ToWholePercentage()),
-            factory.Question("First tranche sales receipt", nameof(Controller.SharedOwnership), tenure.ExpectedFirstTranche.DisplayPoundsPences()),
+            factory.Question("First tranche sales receipt", nameof(Controller.SharedOwnership), tenure.ExpectedFirstTranche.DisplayPounds()),
             factory.Question("Shared Ownership rent per week", nameof(Controller.SharedOwnership), tenure.RentPerWeek.DisplayPoundsPences()),
             factory.Question(
                 "Shared Ownership rent as percentage of the unsold share",
@@ -239,7 +239,7 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
             "HOLD details",
             factory.Question("Market value of each home", nameof(Controller.HomeOwnershipDisabilities), CurrencyHelper.DisplayPounds(tenure.MarketValue)),
             factory.Question("Average first tranche sale percentage", nameof(Controller.HomeOwnershipDisabilities), tenure.InitialSale.ToWholePercentage()),
-            factory.Question("First tranche sales receipt", nameof(Controller.HomeOwnershipDisabilities), tenure.ExpectedFirstTranche.DisplayPoundsPences()),
+            factory.Question("First tranche sales receipt", nameof(Controller.HomeOwnershipDisabilities), tenure.ExpectedFirstTranche.DisplayPounds()),
             factory.Question("Rent per week", nameof(Controller.HomeOwnershipDisabilities), tenure.RentPerWeek.DisplayPoundsPences()),
             factory.Question(
                 "Rent as percentage of the unsold share",
@@ -254,7 +254,7 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
             "OPSO details",
             factory.Question("Market value of each home", nameof(Controller.OlderPersonsSharedOwnership), CurrencyHelper.DisplayPounds(tenure.MarketValue)),
             factory.Question("Average first tranche sale percentage", nameof(Controller.OlderPersonsSharedOwnership), tenure.InitialSale.ToWholePercentage()),
-            factory.Question("First tranche sales receipt", nameof(Controller.OlderPersonsSharedOwnership), tenure.ExpectedFirstTranche.DisplayPoundsPences()),
+            factory.Question("First tranche sales receipt", nameof(Controller.OlderPersonsSharedOwnership), tenure.ExpectedFirstTranche.DisplayPounds()),
             factory.Question("Rent per week", nameof(Controller.OlderPersonsSharedOwnership), tenure.RentPerWeek.DisplayPoundsPences()),
             factory.Question(
                 "Rent as percentage of the unsold share",
