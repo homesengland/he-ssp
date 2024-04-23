@@ -2,7 +2,6 @@ using System.Collections.Generic;
 
 namespace HE.Common.IntegrationModel.PortalIntegrationModel
 {
-
     public class ConsortiumDto
     {
         public string id { get; set; }
