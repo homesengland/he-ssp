@@ -65,7 +65,6 @@ namespace HE.CRM.AHP.Plugins.Services.AhpStatusChange
 
                 case (int)invln_AHPInternalStatus.ApplicationSubmitted:
                     statusLabel = "ApplicationSubmitted";
-                    var zz = invln_AHPInternalStatus.ApplicationSubmitted;
                     if (ahpStatusChange.invln_Changefrom.Value == (int)invln_AHPInternalStatus.Draft)
                     {
                         _govNotifyEmailService.SendNotifications_AHP_EXTERNAL_APPLICATION_SUBMITTED(ahpStatusChange, ahpApplication);
