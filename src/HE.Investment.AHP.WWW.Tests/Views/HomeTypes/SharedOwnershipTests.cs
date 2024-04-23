@@ -50,7 +50,7 @@ public class SharedOwnershipTests : HomeTypesTestBase
             .HasElementWithText("h2", "Enter the market value of each home")
             .HasElementWithText("span", "Enter the market value in pounds only.")
             .HasInput("MarketValue")
-            .HasElementWithText("h2", "Enter the average assumed first tranche sale percentage")
+            .HasElementWithText("h2", "Enter the assumed average first tranche sale percentage")
             .HasElementWithText("span", "This is the average percentage share that you are assuming your purchasers will buy in their initial purchase (must be between 10% and 75%).")
             .HasInput("InitialSale")
             .HasElementWithText("h2", "Assumed first tranche sales receipt")
