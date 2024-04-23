@@ -25,10 +25,10 @@ public class ProvideAcquisitionMilestoneDetailsCommandHandler : UpdateDeliveryPh
     {
         var operationResult = OperationResult.New();
 
-        var acquisitionDate = operationResult.AggregateNullable(() =>
-            AcquisitionDate.Create(request.AcquisitionDate.Day, request.AcquisitionDate.Month, request.AcquisitionDate.Year));
-        var milestonePaymentDate = operationResult.AggregateNullable(() =>
-            MilestonePaymentDate.Create(request.PaymentDate.Day, request.PaymentDate.Month, request.PaymentDate.Year));
+        var acquisitionDate = operationResult.Aggregate(() =>
+            AcquisitionDate.FromDateDetails(true, request.AcquisitionDate));
+        var milestonePaymentDate = operationResult.Aggregate(() =>
+            MilestonePaymentDate.FromDateDetails(true, request.PaymentDate));
         var milestone = operationResult.AggregateNullable(() => AcquisitionMilestoneDetails.Create(acquisitionDate, milestonePaymentDate));
 
         operationResult.CheckErrors();

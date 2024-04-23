@@ -1,16 +1,36 @@
-using HE.Investment.AHP.Domain.Delivery.ValueObjects;
+using HE.Investments.Common.Contract;
+using HE.Investments.Common.Domain.ValueObjects;
 
 namespace HE.Investment.AHP.Domain.Site.ValueObjects.Planning;
 
 public class ApplicationForDetailedPlanningSubmittedDate : DateValueObject
 {
-    public ApplicationForDetailedPlanningSubmittedDate(string? day, string? month, string? year)
-        : base(day, month, year, "ApplicationForDetailedPlanningSubmittedDate", "application for detailed planning submitted date")
+    private const string FieldDescription = "application for detailed planning submitted date";
+
+    public ApplicationForDetailedPlanningSubmittedDate(bool exists, string? day, string? month, string? year)
+        : base(day, month, year, nameof(ApplicationForDetailedPlanningSubmittedDate), FieldDescription, !exists)
     {
+        Exists = exists;
     }
 
-    public static ApplicationForDetailedPlanningSubmittedDate? Create(string? day, string? month, string? year)
+    private ApplicationForDetailedPlanningSubmittedDate(bool exists, DateTime value)
+        : base(value)
     {
-        return ValuesProvided(day, month, year) ? new ApplicationForDetailedPlanningSubmittedDate(day, month, year) : null;
+        Exists = exists;
+    }
+
+    public new DateTime? Value => Exists ? base.Value : null;
+
+    public bool Exists { get; }
+
+    public static ApplicationForDetailedPlanningSubmittedDate FromCrm(DateTime? value) => new(value.HasValue, value ?? default);
+
+    public static ApplicationForDetailedPlanningSubmittedDate FromDateDetails(bool exists, DateDetails? date) =>
+        new(exists, date?.Day, date?.Month, date?.Year);
+
+    protected override IEnumerable<object> GetAtomicValues()
+    {
+        yield return Value!;
+        yield return Exists;
     }
 }

@@ -1,24 +1,36 @@
+using HE.Investments.Common.Contract;
+using HE.Investments.Common.Domain.ValueObjects;
+
 namespace HE.Investment.AHP.Domain.Delivery.ValueObjects;
 
 public class MilestonePaymentDate : DateValueObject
 {
-    public MilestonePaymentDate(string? day, string? month, string? year)
-        : base(day, month, year, "ClaimMilestonePaymentAt", "milestone payment date")
+    private const string FieldDescription = "milestone payment date";
+
+    public MilestonePaymentDate(bool exists, string? day, string? month, string? year)
+        : base(day, month, year, "ClaimMilestonePaymentAt", FieldDescription, !exists)
     {
+        Exists = exists;
     }
 
-    private MilestonePaymentDate(DateOnly value)
+    private MilestonePaymentDate(bool exists, DateTime value)
         : base(value)
     {
+        Exists = exists;
     }
 
-    public static MilestonePaymentDate? Create(string? day, string? month, string? year)
-    {
-        return ValuesProvided(day, month, year) ? new MilestonePaymentDate(day, month, year) : null;
-    }
+    public new DateTime? Value => Exists ? base.Value : null;
 
-    public static MilestonePaymentDate Create(DateOnly value)
+    public bool Exists { get; }
+
+    public static MilestonePaymentDate FromCrm(DateTime? value) => new(value.HasValue, value ?? default);
+
+    public static MilestonePaymentDate FromDateDetails(bool exists, DateDetails? date) =>
+        new(exists, date?.Day, date?.Month, date?.Year);
+
+    protected override IEnumerable<object> GetAtomicValues()
     {
-        return new MilestonePaymentDate(value);
+        yield return Value!;
+        yield return Exists;
     }
 }

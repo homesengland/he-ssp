@@ -1,16 +1,37 @@
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
+using HE.Investments.Common.Contract;
+using HE.Investments.Common.Domain.ValueObjects;
 
 namespace HE.Investment.AHP.Domain.Site.ValueObjects.Planning;
 
 public class ExpectedPlanningApprovalDate : DateValueObject
 {
-    public ExpectedPlanningApprovalDate(string? day, string? month, string? year)
-        : base(day, month, year, "ExpectedPlanningApprovalDate", "expected planning approval date")
+    private const string FieldDescription = "expected planning approval date";
+
+    public ExpectedPlanningApprovalDate(bool exists, string? day, string? month, string? year)
+        : base(day, month, year, nameof(ExpectedPlanningApprovalDate), FieldDescription, !exists)
     {
+        Exists = exists;
     }
 
-    public static ExpectedPlanningApprovalDate? Create(string? day, string? month, string? year)
+    private ExpectedPlanningApprovalDate(bool exists, DateTime value)
+        : base(value)
     {
-        return ValuesProvided(day, month, year) ? new ExpectedPlanningApprovalDate(day, month, year) : null;
+        Exists = exists;
+    }
+
+    public new DateTime? Value => Exists ? base.Value : null;
+
+    public bool Exists { get; }
+
+    public static ExpectedPlanningApprovalDate FromCrm(DateTime? value) => new(value.HasValue, value ?? default);
+
+    public static ExpectedPlanningApprovalDate FromDateDetails(bool exists, DateDetails? date) =>
+        new(exists, date?.Day, date?.Month, date?.Year);
+
+    protected override IEnumerable<object> GetAtomicValues()
+    {
+        yield return Value!;
+        yield return Exists;
     }
 }

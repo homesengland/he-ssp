@@ -1,5 +1,6 @@
 extern alias Org;
 
+using System.Globalization;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Queries;
 using HE.Investment.AHP.Domain.Common.Mappers;
@@ -12,6 +13,7 @@ using HE.Investment.AHP.Domain.Site.ValueObjects.Planning;
 using HE.Investment.AHP.Domain.Site.ValueObjects.StrategicSite;
 using HE.Investment.AHP.Domain.Site.ValueObjects.TenderingStatus;
 using HE.Investments.Account.Shared;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
 using MediatR;
 using SiteTypeDetails = HE.Investment.AHP.Contract.Site.SiteTypeDetails;
@@ -90,19 +92,19 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
             planningDetails.PlanningStatus ?? prefillData?.PlanningStatus,
             planningDetails.ReferenceNumber?.Value,
             planningDetails.IsQuestionActive(nameof(planningDetails.ReferenceNumber)),
-            DateValueObjectMapper.ToContract(planningDetails.DetailedPlanningApprovalDate),
+            DateDetails.FromDateTime(planningDetails.DetailedPlanningApprovalDate?.Value),
             planningDetails.IsQuestionActive(nameof(planningDetails.DetailedPlanningApprovalDate)),
             planningDetails.RequiredFurtherSteps?.Value,
             planningDetails.IsQuestionActive(nameof(planningDetails.RequiredFurtherSteps)),
-            DateValueObjectMapper.ToContract(planningDetails.ApplicationForDetailedPlanningSubmittedDate),
+            DateDetails.FromDateTime(planningDetails.ApplicationForDetailedPlanningSubmittedDate?.Value),
             planningDetails.IsQuestionActive(nameof(planningDetails.ApplicationForDetailedPlanningSubmittedDate)),
-            DateValueObjectMapper.ToContract(planningDetails.ExpectedPlanningApprovalDate),
+            DateDetails.FromDateTime(planningDetails.ExpectedPlanningApprovalDate?.Value),
             planningDetails.IsQuestionActive(nameof(planningDetails.ExpectedPlanningApprovalDate)),
-            DateValueObjectMapper.ToContract(planningDetails.OutlinePlanningApprovalDate),
+            DateDetails.FromDateTime(planningDetails.OutlinePlanningApprovalDate?.Value),
             planningDetails.IsQuestionActive(nameof(planningDetails.OutlinePlanningApprovalDate)),
             planningDetails.IsGrantFundingForAllHomesCoveredByApplication,
             planningDetails.IsQuestionActive(nameof(planningDetails.IsGrantFundingForAllHomesCoveredByApplication)),
-            DateValueObjectMapper.ToContract(planningDetails.PlanningSubmissionDate),
+            DateDetails.FromDateTime(planningDetails.PlanningSubmissionDate?.Value),
             planningDetails.IsQuestionActive(nameof(planningDetails.PlanningSubmissionDate)),
             planningDetails.LandRegistryDetails?.IsLandRegistryTitleNumberRegistered,
             planningDetails.LandRegistryDetails?.TitleNumber?.Value,

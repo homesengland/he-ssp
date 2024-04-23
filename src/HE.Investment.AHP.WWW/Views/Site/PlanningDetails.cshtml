@@ -13,6 +13,15 @@
     <vc:page-header caption="@ViewBag.SiteName"/>
 
     <form asp-controller="Site" asp-action="PlanningDetails" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
+        @Html.Hidden(nameof(Model.IsReferenceNumberActive), Model.IsReferenceNumberActive)
+        @Html.Hidden(nameof(Model.IsDetailedPlanningApprovalDateActive), Model.IsDetailedPlanningApprovalDateActive)
+        @Html.Hidden(nameof(Model.IsApplicationForDetailedPlanningSubmittedDateActive), Model.IsApplicationForDetailedPlanningSubmittedDateActive)
+        @Html.Hidden(nameof(Model.IsOutlinePlanningApprovalDateActive), Model.IsOutlinePlanningApprovalDateActive)
+        @Html.Hidden(nameof(Model.IsPlanningSubmissionDateActive), Model.IsPlanningSubmissionDateActive)
+        @Html.Hidden(nameof(Model.IsExpectedPlanningApprovalDateActive), Model.IsExpectedPlanningApprovalDateActive)
+        @Html.Hidden(nameof(Model.IsGrantFundingForAllHomesCoveredByApplicationActive), Model.IsGrantFundingForAllHomesCoveredByApplicationActive)
+        @Html.Hidden(nameof(Model.IsRequiredFurtherStepsActive), Model.IsRequiredFurtherStepsActive)
+        @Html.Hidden(nameof(Model.IsLandRegistryActive), Model.IsLandRegistryActive)
 
         <vc:text-input
             title="Enter your planning reference number"

@@ -56,7 +56,7 @@ public class ProvideAdditionalDataCommandHandlerTests : TestBase<ProvideAddition
         await action.Should()
             .ThrowAsync<DomainValidationException>()
             .WithMessage(
-                "Enter when you purchased this site" +
+                "Enter the purchase date" +
                 $"\n{ValidationErrorMessage.IncorrectProjectCost}" +
                 $"\n{ValidationErrorMessage.IncorrectProjectValue}" +
                 $"\n{ValidationErrorMessage.EnterMoreDetails}");

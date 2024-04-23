@@ -100,7 +100,7 @@ public class ProvideStartDateCommandHandlerTests : TestBase<ProvideStartDateComm
         var action = () => TestCandidate.Handle(_command, CancellationToken.None);
 
         // then
-        await action.Should().ThrowAsync<DomainValidationException>().WithMessage("When you plan to start the project must be a real date");
+        await action.Should().ThrowAsync<DomainValidationException>().WithMessage("THe project start date must be a real date");
     }
 
     [Fact]

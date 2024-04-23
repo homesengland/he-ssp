@@ -9,8 +9,8 @@ public class AcquisitionMilestoneDetails : MilestoneDetails<AcquisitionDate>
     {
     }
 
-    public static AcquisitionMilestoneDetails? Create(AcquisitionDate? acquisitionDate, MilestonePaymentDate? paymentDate)
+    public static AcquisitionMilestoneDetails? Create(AcquisitionDate acquisitionDate, MilestonePaymentDate paymentDate)
     {
-        return acquisitionDate.IsProvided() || paymentDate.IsProvided() ? new AcquisitionMilestoneDetails(acquisitionDate, paymentDate) : null;
+        return acquisitionDate.Exists || paymentDate.Exists ? new AcquisitionMilestoneDetails(acquisitionDate, paymentDate) : null;
     }
 }

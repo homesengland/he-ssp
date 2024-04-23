@@ -11,7 +11,7 @@ using HE.Investments.Loans.BusinessLogic.Projects.Consts;
 namespace HE.Investments.Loans.BusinessLogic.Projects.ValueObjects;
 public class StartDate : DateValueObject
 {
-    private const string FieldDescription = "you plan to start the project";
+    private const string FieldDescription = "project start date";
 
     public StartDate(bool exists, string? day, string? month, string? year)
         : base(day, month, year, nameof(StartDate), FieldDescription, !exists)

@@ -9,7 +9,7 @@ namespace HE.Investments.Loans.BusinessLogic.Projects.ValueObjects;
 
 public class PurchaseDate : DateValueObject
 {
-    private const string FieldDescription = "you purchased this site";
+    private const string FieldDescription = "purchase date";
 
     public PurchaseDate(string? day, string? month, string? year, IDateTimeProvider dateTimeProvider)
         : base(day, month, year, nameof(PurchaseDate), FieldDescription)

@@ -23,7 +23,7 @@ public abstract class DateValueObject : ValueObject
         if (string.IsNullOrWhiteSpace(day) && string.IsNullOrWhiteSpace(month) && string.IsNullOrWhiteSpace(year))
         {
             var operationResult = OperationResult.New();
-            operationResult.AddValidationError(dayFieldName, $"Enter when {fieldDescription}");
+            operationResult.AddValidationError(dayFieldName, $"Enter the {fieldDescription}");
             operationResult.AddValidationError(monthFieldName, string.Empty);
             operationResult.AddValidationError(yearFieldName, string.Empty);
             operationResult.CheckErrors();
@@ -41,7 +41,7 @@ public abstract class DateValueObject : ValueObject
         {
             var missingPartsDisplayNames = missingParts.Select(ms => ms.DisplayName).ToArray();
             var operationResult = OperationResult.New();
-            operationResult.AddValidationError(missingParts[0].FieldName, $"The date when {fieldDescription} must include a {string.Join(" and ", missingPartsDisplayNames)}");
+            operationResult.AddValidationError(missingParts[0].FieldName, $"The {fieldDescription} must include a {string.Join(" and ", missingPartsDisplayNames)}");
             foreach (var (displayName, partFieldName) in missingParts.Skip(1))
             {
                 operationResult.AddValidationError(partFieldName, string.Empty);
@@ -53,7 +53,7 @@ public abstract class DateValueObject : ValueObject
         var value = CreateDateTime(day, month, year);
         if (value == null)
         {
-            OperationResult.ThrowValidationError(fieldName, $"When {fieldDescription} must be a real date");
+            OperationResult.ThrowValidationError(fieldName, $"The {fieldDescription} must be a real date");
         }
 
         Value = value!.Value;

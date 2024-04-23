@@ -50,7 +50,7 @@ public class Order03StartDateIntegrationTests : IntegrationTest
         startDatePage
             .UrlEndWith(ProjectPagesUrls.StartDateSuffix)
             .HasTitle(ProjectPageTitles.StartDate)
-            .HasOneValidationMessages("Enter when you plan to start the project");
+            .HasOneValidationMessages("Enter the project start date");
 
         SetSharedData(SharedKeys.CurrentPageKey, startDatePage);
     }
@@ -77,7 +77,7 @@ public class Order03StartDateIntegrationTests : IntegrationTest
         startDate
             .UrlEndWith(ProjectPagesUrls.StartDateSuffix)
             .HasTitle(ProjectPageTitles.StartDate)
-            .HasOneValidationMessages("When you plan to start the project must be a real date");
+            .HasOneValidationMessages("The project start date must be a real date");
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]

@@ -9,8 +9,8 @@ public class CompletionMilestoneDetails : MilestoneDetails<CompletionDate>
     {
     }
 
-    public static CompletionMilestoneDetails? Create(CompletionDate? milestoneDate, MilestonePaymentDate? paymentDate)
+    public static CompletionMilestoneDetails? Create(CompletionDate milestoneDate, MilestonePaymentDate paymentDate)
     {
-        return milestoneDate.IsProvided() || paymentDate.IsProvided() ? new CompletionMilestoneDetails(milestoneDate, paymentDate) : null;
+        return milestoneDate.Exists || paymentDate.Exists ? new CompletionMilestoneDetails(milestoneDate, paymentDate) : null;
     }
 }

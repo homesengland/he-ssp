@@ -14,7 +14,7 @@ public class StartDateTests
     {
         var action = () => new StartDate(true, string.Empty, string.Empty, string.Empty);
 
-        action.Should().Throw<DomainValidationException>().WithOnlyOneErrorMessage("Enter when you plan to start the project");
+        action.Should().Throw<DomainValidationException>().WithOnlyOneErrorMessage("Enter the project start date");
     }
 
     [Theory]
@@ -28,7 +28,7 @@ public class StartDateTests
     {
         var action = () => new StartDate(true, day, month, year);
 
-        action.Should().Throw<DomainValidationException>().WithOnlyOneErrorMessage($"The date when you plan to start the project must include a {expectedMessage}");
+        action.Should().Throw<DomainValidationException>().WithOnlyOneErrorMessage($"The project start date must include a {expectedMessage}");
     }
 
     [Theory]
@@ -42,7 +42,7 @@ public class StartDateTests
     {
         var action = () => new StartDate(true, day, month, year);
 
-        action.Should().Throw<DomainValidationException>().WithOnlyOneErrorMessage("When you plan to start the project must be a real date");
+        action.Should().Throw<DomainValidationException>().WithOnlyOneErrorMessage("The project start date must be a real date");
     }
 
     [Fact]

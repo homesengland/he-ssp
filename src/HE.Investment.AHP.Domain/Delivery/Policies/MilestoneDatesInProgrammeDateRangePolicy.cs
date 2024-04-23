@@ -2,6 +2,7 @@ using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investment.AHP.Domain.Programme;
 using HE.Investments.Common.Contract.Exceptions;
+using HE.Investments.Common.Domain.ValueObjects;
 
 namespace HE.Investment.AHP.Domain.Delivery.Policies;
 
@@ -33,7 +34,7 @@ public class MilestoneDatesInProgrammeDateRangePolicy : IMilestoneDatesInProgram
     private void ValidateDateInProgrammeRange(DateValueObject? date, AhpProgramme programme, string fieldName, string fieldLabel)
     {
         if (date != null &&
-            (date.Value < programme.ProgrammeDates.ProgrammeStartDate || date.Value > programme.ProgrammeDates.ProgrammeEndDate))
+            (DateOnly.FromDateTime(date.Value) < programme.ProgrammeDates.ProgrammeStartDate || DateOnly.FromDateTime(date.Value) > programme.ProgrammeDates.ProgrammeEndDate))
         {
             throw new DomainValidationException(fieldName, $"{fieldLabel} must be within the programme date");
         }

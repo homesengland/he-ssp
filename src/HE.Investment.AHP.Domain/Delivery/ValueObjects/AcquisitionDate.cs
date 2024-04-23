@@ -1,24 +1,36 @@
+using HE.Investments.Common.Contract;
+using HE.Investments.Common.Domain.ValueObjects;
+
 namespace HE.Investment.AHP.Domain.Delivery.ValueObjects;
 
 public class AcquisitionDate : DateValueObject
 {
-    public AcquisitionDate(string? day, string? month, string? year)
-        : base(day, month, year, "MilestoneStartAt", "acquisition date")
+    private const string FieldDescription = "acquisition date";
+
+    public AcquisitionDate(bool exists, string? day, string? month, string? year)
+        : base(day, month, year, "MilestoneStartAt", FieldDescription, !exists) //todo ms milestonestartat?
     {
+        Exists = exists;
     }
 
-    private AcquisitionDate(DateOnly value)
+    private AcquisitionDate(bool exists, DateTime value)
         : base(value)
     {
+        Exists = exists;
     }
 
-    public static AcquisitionDate? Create(string? day, string? month, string? year)
-    {
-        return ValuesProvided(day, month, year) ? new AcquisitionDate(day, month, year) : null;
-    }
+    public new DateTime? Value => Exists ? base.Value : null;
 
-    public static AcquisitionDate Create(DateOnly value)
+    public bool Exists { get; }
+
+    public static AcquisitionDate FromCrm(DateTime? value) => new(value.HasValue, value ?? default);
+
+    public static AcquisitionDate FromDateDetails(bool exists, DateDetails? date) =>
+        new(exists, date?.Day, date?.Month, date?.Year);
+
+    protected override IEnumerable<object> GetAtomicValues()
     {
-        return new AcquisitionDate(value);
+        yield return Value!;
+        yield return Exists;
     }
 }

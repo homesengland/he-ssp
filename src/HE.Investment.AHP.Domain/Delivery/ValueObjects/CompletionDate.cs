@@ -1,24 +1,36 @@
+using HE.Investments.Common.Contract;
+using HE.Investments.Common.Domain.ValueObjects;
+
 namespace HE.Investment.AHP.Domain.Delivery.ValueObjects;
 
 public class CompletionDate : DateValueObject
 {
-    public CompletionDate(string? day, string? month, string? year)
-        : base(day, month, year, "MilestoneStartAt", "completion date")
+    private const string FieldDescription = "completion date";
+
+    public CompletionDate(bool exists, string? day, string? month, string? year)
+        : base(day, month, year, "MilestoneStartAt", FieldDescription, !exists) //todo ms milestonestartat?
     {
+        Exists = exists;
     }
 
-    private CompletionDate(DateOnly value)
+    private CompletionDate(bool exists, DateTime value)
         : base(value)
     {
+        Exists = exists;
     }
 
-    public static CompletionDate? Create(string? day, string? month, string? year)
-    {
-        return ValuesProvided(day, month, year) ? new CompletionDate(day, month, year) : null;
-    }
+    public new DateTime? Value => Exists ? base.Value : null;
 
-    public static CompletionDate Create(DateOnly value)
+    public bool Exists { get; }
+
+    public static CompletionDate FromCrm(DateTime? value) => new(value.HasValue, value ?? default);
+
+    public static CompletionDate FromDateDetails(bool exists, DateDetails? date) =>
+        new(exists, date?.Day, date?.Month, date?.Year);
+
+    protected override IEnumerable<object> GetAtomicValues()
     {
-        return new CompletionDate(value);
+        yield return Value!;
+        yield return Exists;
     }
 }

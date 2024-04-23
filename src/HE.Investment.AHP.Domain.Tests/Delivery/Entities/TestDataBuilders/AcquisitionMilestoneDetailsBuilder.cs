@@ -5,22 +5,22 @@ namespace HE.Investment.AHP.Domain.Tests.Delivery.Entities.TestDataBuilders;
 
 public class AcquisitionMilestoneDetailsBuilder
 {
-    public static readonly AcquisitionDate? DefaultAcquisitionDate = new("10", "1", "2025");
-    public static readonly MilestonePaymentDate? DefaultPaymentDate = new("1", "5", "2026");
+    public static readonly AcquisitionDate? DefaultAcquisitionDate = new(true, "10", "1", "2025");
+    public static readonly MilestonePaymentDate? DefaultPaymentDate = new(true, "1", "5", "2026");
 
     private AcquisitionDate? _acquisitionDate = DefaultAcquisitionDate;
     private MilestonePaymentDate? _paymentDate = DefaultPaymentDate;
 
     public AcquisitionMilestoneDetailsBuilder WithPaymentDateBeforeMilestoneDate()
     {
-        _paymentDate = new MilestonePaymentDate("9", "1", "2025");
+        _paymentDate = new MilestonePaymentDate(true, "9", "1", "2025");
 
         return this;
     }
 
     public AcquisitionMilestoneDetailsBuilder WithPaymentDateAtMilestoneDate()
     {
-        _paymentDate = new MilestonePaymentDate("10", "1", "2025");
+        _paymentDate = new MilestonePaymentDate(true, "10", "1", "2025");
 
         return this;
     }
@@ -35,6 +35,7 @@ public class AcquisitionMilestoneDetailsBuilder
     public AcquisitionMilestoneDetailsBuilder WithPaymentDate(DateOnly date)
     {
         _paymentDate = new MilestonePaymentDate(
+            true,
             date.Day.ToString(CultureInfo.InvariantCulture),
             date.Month.ToString(CultureInfo.InvariantCulture),
             date.Year.ToString(CultureInfo.InvariantCulture));
@@ -59,6 +60,7 @@ public class AcquisitionMilestoneDetailsBuilder
     public AcquisitionMilestoneDetailsBuilder WithAcquisitionDate(DateOnly date)
     {
         _acquisitionDate = new AcquisitionDate(
+            true,
             date.Day.ToString(CultureInfo.InvariantCulture),
             date.Month.ToString(CultureInfo.InvariantCulture),
             date.Year.ToString(CultureInfo.InvariantCulture));

@@ -10,9 +10,9 @@ public class IsAnsweredTests
     private readonly RequiredFurtherSteps? _requiredFurtherSteps = new("some steps");
 
     private readonly ApplicationForDetailedPlanningSubmittedDate? _applicationForDetailedPlanningSubmittedDate =
-        new("1", "2", "2024");
+        new(true, "1", "2", "2024");
 
-    private readonly ExpectedPlanningApprovalDate? _expectedPlanningApprovalDate = new("2", "3", "2033");
+    private readonly ExpectedPlanningApprovalDate? _expectedPlanningApprovalDate = new(true, "2", "3", "2033");
 
     [Fact]
     public void ShouldReturnTrue_WhenAllDataProvided()

@@ -77,11 +77,11 @@ public static class SiteDtoToSiteEntityMapper
                 dto.localAuthorityConfirmation);
     }
 
-    private static Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority? CreateLocalAuthority(string? id, string? name)
+    private static LocalAuthority? CreateLocalAuthority(string? id, string? name)
     {
         return string.IsNullOrWhiteSpace(id) || string.IsNullOrWhiteSpace(name)
             ? null
-            : new Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority(new LocalAuthorityCode(id), name);
+            : new LocalAuthority(new LocalAuthorityCode(id), name);
     }
 
     private static PlanningDetails CreatePlanningDetails(PlanningDetailsDto dto)
@@ -94,14 +94,12 @@ public static class SiteDtoToSiteEntityMapper
         return PlanningDetailsFactory.Create(
             PlanningStatusMapper.ToDomain(dto.planningStatus),
             string.IsNullOrWhiteSpace(dto.referenceNumber) ? null : new ReferenceNumber(dto.referenceNumber),
-            CreateDate(dto.detailedPlanningApprovalDate, (day, month, year) => new DetailedPlanningApprovalDate(day, month, year)),
+            DetailedPlanningApprovalDate.FromCrm(dto.detailedPlanningApprovalDate),
             string.IsNullOrWhiteSpace(dto.requiredFurtherSteps) ? null : new RequiredFurtherSteps(dto.requiredFurtherSteps),
-            CreateDate(
-                dto.applicationForDetailedPlanningSubmittedDate,
-                (day, month, year) => new ApplicationForDetailedPlanningSubmittedDate(day, month, year)),
-            CreateDate(dto.expectedPlanningApprovalDate, (day, month, year) => new ExpectedPlanningApprovalDate(day, month, year)),
-            CreateDate(dto.outlinePlanningApprovalDate, (day, month, year) => new OutlinePlanningApprovalDate(day, month, year)),
-            CreateDate(dto.planningSubmissionDate, (day, month, year) => new PlanningSubmissionDate(day, month, year)),
+            ApplicationForDetailedPlanningSubmittedDate.FromCrm(dto.applicationForDetailedPlanningSubmittedDate),
+            ExpectedPlanningApprovalDate.FromCrm(dto.expectedPlanningApprovalDate),
+            OutlinePlanningApprovalDate.FromCrm(dto.outlinePlanningApprovalDate),
+            PlanningSubmissionDate.FromCrm(dto.planningSubmissionDate),
             dto.isGrantFundingForAllHomes,
             new LandRegistryDetails(
                 dto.isLandRegistryTitleNumber,
@@ -166,17 +164,6 @@ public static class SiteDtoToSiteEntityMapper
                 MapCollection(dto.mmcCategories, ModernMethodsConstructionCategoriesTypeMapper),
                 MapCollection(dto.mmc2DSubcategories, ModernMethodsConstruction2DSubcategoriesTypeMapper),
                 MapCollection(dto.mmc3DSubcategories, ModernMethodsConstruction3DSubcategoriesTypeMapper)));
-
-    private static T? CreateDate<T>(DateTime? date, Func<string, string, string, T?> create)
-        where T : class
-    {
-        return date == null
-            ? null
-            : create(
-                date.Value.Day.ToString(CultureInfo.InvariantCulture),
-                date.Value.Month.ToString(CultureInfo.InvariantCulture),
-                date.Value.Year.ToString(CultureInfo.InvariantCulture));
-    }
 
     private static IList<T> MapCollection<T>(IList<int>? values, EnumMapper<T> mapper)
         where T : struct
