@@ -58,7 +58,7 @@
 
             <he-error-form-group asp-for="ExpectedFirstTranche">
                 <gds-legend>
-                    <gds-h2 class="govuk-!-margin-bottom-4">Assumed first tranche sales receipt</gds-h2>
+                    <gds-h2 class="govuk-!-margin-bottom-0">Assumed first tranche sales receipt</gds-h2>
                 </gds-legend>
 
                 @if (expectedFirstTrancheInvalid)
@@ -68,7 +68,7 @@
                     </p>
                 }
 
-                <gds-p class="govuk-!-margin-top-1">
+                <gds-p>
                     @(Model.ExpectedFirstTranche ?? "To calculate the assumed first tranche sales receipt, enter the market value of each home and the average assumed first tranche sale. Then select the calculate button.")
                 </gds-p>
             </he-error-form-group>
