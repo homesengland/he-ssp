@@ -64,7 +64,6 @@ namespace HE.Investments.Common.CRM.Model
 			public const string CreatedOnBehalfByYomiName = "createdonbehalfbyyominame";
 			public const string Description = "description";
 			public const string ExchangeRate = "exchangerate";
-			public const string he_pipeline_SharePointDocumentLocations = "he_pipeline_SharePointDocumentLocations";
 			public const string ImportSequenceNumber = "importsequencenumber";
 			public const string invln_ahpcontract_SharePointDocumentLocations = "invln_ahpcontract_SharePointDocumentLocations";
 			public const string invln_conditions_SharePointDocumentLocations = "invln_conditions_SharePointDocumentLocations";
@@ -1131,27 +1130,6 @@ namespace HE.Investments.Common.CRM.Model
 				this.OnPropertyChanging("Account_SharepointDocumentLocation");
 				this.SetRelatedEntity<HE.Investments.Common.CRM.Model.Account>("Account_SharepointDocumentLocation", null, value);
 				this.OnPropertyChanged("Account_SharepointDocumentLocation");
-			}
-		}
-		
-		/// <summary>
-		/// N:1 he_pipeline_SharePointDocumentLocations
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("he_pipeline_SharePointDocumentLocations")]
-		public HE.Investments.Common.CRM.Model.he_Pipeline he_pipeline_SharePointDocumentLocations
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<HE.Investments.Common.CRM.Model.he_Pipeline>("he_pipeline_SharePointDocumentLocations", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("he_pipeline_SharePointDocumentLocations");
-				this.SetRelatedEntity<HE.Investments.Common.CRM.Model.he_Pipeline>("he_pipeline_SharePointDocumentLocations", null, value);
-				this.OnPropertyChanged("he_pipeline_SharePointDocumentLocations");
 			}
 		}
 		
