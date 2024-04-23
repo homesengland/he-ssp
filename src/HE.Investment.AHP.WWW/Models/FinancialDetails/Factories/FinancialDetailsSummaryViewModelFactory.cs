@@ -45,7 +45,7 @@ public class FinancialDetailsSummaryViewModelFactory : IFinancialDetailsSummaryV
 
     private static IList<string> GetCurrencyStringWithPrefix(decimal? value)
     {
-        return CurrencyHelper.DisplayPounds(value).ToOneElementList() ?? Array.Empty<string>();
+        return value.DisplayPounds().ToOneElementList() ?? Array.Empty<string>();
     }
 
     private static string CreateFinancialDetailsActionUrl(IUrlHelper urlHelper, AhpApplicationId applicationId, string actionName, bool allowWcagDuplicate = false)
