@@ -181,8 +181,8 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
         return SectionSummaryViewModel.New(
             "Affordable Rent details",
             factory.Question("Market value of each home", nameof(Controller.AffordableRent), CurrencyHelper.DisplayPounds(tenure.MarketValue)),
-            factory.Question("Market rent per week", nameof(Controller.AffordableRent), CurrencyHelper.DisplayPoundsPences(tenure.MarketRentPerWeek)),
-            factory.Question("Affordable Rent per week", nameof(Controller.AffordableRent), CurrencyHelper.DisplayPoundsPences(tenure.RentPerWeek)),
+            factory.Question("Market rent per week", nameof(Controller.AffordableRent), tenure.MarketRentPerWeek.DisplayPoundsPences()),
+            factory.Question("Affordable Rent per week", nameof(Controller.AffordableRent), tenure.RentPerWeek.DisplayPoundsPences()),
             factory.Question("Affordable Rent as percentage of market rent", nameof(Controller.AffordableRent), tenure.ProspectiveRentAsPercentageOfMarketRent.ToWholePercentage()),
             factory.Question("Target rent exceeded 80% of market rent", nameof(Controller.AffordableRent), tenure.TargetRentExceedMarketRent),
             factory.DeadEnd(nameof(Controller.AffordableRentIneligible)),
@@ -198,7 +198,7 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
         return SectionSummaryViewModel.New(
             "Social Rent details",
             factory.Question("Market value of each home", nameof(Controller.SocialRent), CurrencyHelper.DisplayPounds(tenure.MarketValue)),
-            factory.Question("Market rent per week", nameof(Controller.SocialRent), CurrencyHelper.DisplayPoundsPences(tenure.RentPerWeek)),
+            factory.Question("Market rent per week", nameof(Controller.SocialRent), tenure.RentPerWeek.DisplayPoundsPences()),
             factory.Question(
                 "Exempt from Right to Shared Ownership",
                 nameof(Controller.ExemptFromTheRightToSharedOwnership),
@@ -212,8 +212,8 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
             "Shared Ownership details",
             factory.Question("Market value of each home", nameof(Controller.SharedOwnership), CurrencyHelper.DisplayPounds(tenure.MarketValue)),
             factory.Question("Average first tranche sale percentage", nameof(Controller.SharedOwnership), tenure.InitialSale.ToWholePercentage()),
-            factory.Question("First tranche sales receipt", nameof(Controller.SharedOwnership), CurrencyHelper.DisplayPoundsPences(tenure.ExpectedFirstTranche)),
-            factory.Question("Shared Ownership rent per week", nameof(Controller.SharedOwnership), CurrencyHelper.DisplayPoundsPences(tenure.RentPerWeek)),
+            factory.Question("First tranche sales receipt", nameof(Controller.SharedOwnership), tenure.ExpectedFirstTranche.DisplayPoundsPences()),
+            factory.Question("Shared Ownership rent per week", nameof(Controller.SharedOwnership), tenure.RentPerWeek.DisplayPoundsPences()),
             factory.Question(
                 "Shared Ownership rent as percentage of the unsold share",
                 nameof(Controller.SharedOwnership),
@@ -226,8 +226,8 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
         return SectionSummaryViewModel.New(
             "Rent to Buy details",
             factory.Question("Market value of each home", nameof(Controller.RentToBuy), CurrencyHelper.DisplayPounds(tenure.MarketValue)),
-            factory.Question("Market rent per week", nameof(Controller.RentToBuy), CurrencyHelper.DisplayPoundsPences(tenure.MarketRentPerWeek)),
-            factory.Question("Rent per week", nameof(Controller.RentToBuy), CurrencyHelper.DisplayPoundsPences(tenure.RentPerWeek)),
+            factory.Question("Market rent per week", nameof(Controller.RentToBuy), tenure.MarketRentPerWeek.DisplayPoundsPences()),
+            factory.Question("Rent per week", nameof(Controller.RentToBuy), tenure.RentPerWeek.DisplayPoundsPences()),
             factory.Question("Rent as percentage of market rent", nameof(Controller.RentToBuy), tenure.ProspectiveRentAsPercentageOfMarketRent.ToPercentageWithTwoDecimal()),
             factory.Question("Target rent exceed 80% of market rent", nameof(Controller.RentToBuy), tenure.TargetRentExceedMarketRent),
             factory.DeadEnd(nameof(Controller.RentToBuyIneligible)));
@@ -239,8 +239,8 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
             "HOLD details",
             factory.Question("Market value of each home", nameof(Controller.HomeOwnershipDisabilities), CurrencyHelper.DisplayPounds(tenure.MarketValue)),
             factory.Question("Average first tranche sale percentage", nameof(Controller.HomeOwnershipDisabilities), tenure.InitialSale.ToWholePercentage()),
-            factory.Question("First tranche sales receipt", nameof(Controller.HomeOwnershipDisabilities), CurrencyHelper.DisplayPoundsPences(tenure.ExpectedFirstTranche)),
-            factory.Question("Rent per week", nameof(Controller.HomeOwnershipDisabilities), CurrencyHelper.DisplayPoundsPences(tenure.RentPerWeek)),
+            factory.Question("First tranche sales receipt", nameof(Controller.HomeOwnershipDisabilities), tenure.ExpectedFirstTranche.DisplayPoundsPences()),
+            factory.Question("Rent per week", nameof(Controller.HomeOwnershipDisabilities), tenure.RentPerWeek.DisplayPoundsPences()),
             factory.Question(
                 "Rent as percentage of the unsold share",
                 nameof(Controller.HomeOwnershipDisabilities),
@@ -254,8 +254,8 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
             "OPSO details",
             factory.Question("Market value of each home", nameof(Controller.OlderPersonsSharedOwnership), CurrencyHelper.DisplayPounds(tenure.MarketValue)),
             factory.Question("Average first tranche sale percentage", nameof(Controller.OlderPersonsSharedOwnership), tenure.InitialSale.ToWholePercentage()),
-            factory.Question("First tranche sales receipt", nameof(Controller.OlderPersonsSharedOwnership), CurrencyHelper.DisplayPoundsPences(tenure.ExpectedFirstTranche)),
-            factory.Question("Rent per week", nameof(Controller.OlderPersonsSharedOwnership), CurrencyHelper.DisplayPoundsPences(tenure.RentPerWeek)),
+            factory.Question("First tranche sales receipt", nameof(Controller.OlderPersonsSharedOwnership), tenure.ExpectedFirstTranche.DisplayPoundsPences()),
+            factory.Question("Rent per week", nameof(Controller.OlderPersonsSharedOwnership), tenure.RentPerWeek.DisplayPoundsPences()),
             factory.Question(
                 "Rent as percentage of the unsold share",
                 nameof(Controller.OlderPersonsSharedOwnership),

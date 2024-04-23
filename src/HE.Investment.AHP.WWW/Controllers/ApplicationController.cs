@@ -318,8 +318,8 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
             siteBasicModel.Name,
             application.Tenure,
             application.NumberOfHomes.ToString()!,
-            CurrencyHelper.DisplayPounds(application.FundingRequested)!,
-            CurrencyHelper.DisplayPounds(application.TotalSchemeCost)!,
+            application.FundingRequested.DisplayPounds()!,
+            application.TotalSchemeCost.DisplayPounds()!,
             application.RepresentationsAndWarranties == true ? "checked" : null);
     }
 }

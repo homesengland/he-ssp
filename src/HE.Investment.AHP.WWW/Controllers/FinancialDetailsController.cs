@@ -139,7 +139,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
             CurrencyHelper.InputPounds(financialDetails.TransferValueOfHomes),
             isSharedOwnership,
             true,
-            CurrencyHelper.DisplayPounds(financialDetails.TotalExpectedContributions)));
+            financialDetails.TotalExpectedContributions.DisplayPounds()));
     }
 
     [HttpPost("expected-contributions")]
@@ -202,7 +202,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
             CurrencyHelper.InputPounds(financialDetails.HealthRelatedGrants),
             CurrencyHelper.InputPounds(financialDetails.LotteryFunding),
             CurrencyHelper.InputPounds(financialDetails.OtherPublicGrants),
-            CurrencyHelper.DisplayPounds(financialDetails.TotalReceivedGrants)));
+            financialDetails.TotalReceivedGrants.DisplayPounds()));
     }
 
     [HttpPost("grants")]
