@@ -26,23 +26,6 @@ namespace DataverseModel
 		Tier3 = 134370003,
 	}
 	
-	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum he_LocalAuthority_he_region
-	{
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		London = 134370002,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Midlands = 134370001,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		North = 134370003,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		South = 134370000,
-	}
-	
 	/// <summary>
 	/// Reason for the status of the Local Authority
 	/// </summary>
@@ -91,6 +74,8 @@ namespace DataverseModel
 			public const string he_AreaCodeDescription = "he_areacodedescription";
 			public const string he_GSSCode = "he_gsscode";
 			public const string he_he_projectlocalauthority_LocalAuthority_h = "he_he_projectlocalauthority_LocalAuthority_h";
+			public const string he_laregion = "he_laregion";
+			public const string he_laregionName = "he_laregionname";
 			public const string he_LATier = "he_latier";
 			public const string he_latierName = "he_latiername";
 			public const string he_LocalAuthorityId = "he_localauthorityid";
@@ -99,9 +84,9 @@ namespace DataverseModel
 			public const string he_pipeline_projectbelocated_he_localauthori = "he_pipeline_projectbelocated_he_localauthori";
 			public const string he_Priorityplace = "he_priorityplace";
 			public const string he_priorityplaceName = "he_priorityplacename";
-			public const string he_region = "he_region";
-			public const string he_regionName = "he_regionname";
 			public const string ImportSequenceNumber = "importsequencenumber";
+			public const string invln_sitedetails_HeLocalAuthorityId_he_localau = "invln_sitedetails_HeLocalAuthorityId_he_localau";
+			public const string invln_sites_HeLocalAuthorityId_he_localauthorit = "invln_sites_HeLocalAuthorityId_he_localauthorit";
 			public const string lk_he_localauthority_createdby = "lk_he_localauthority_createdby";
 			public const string lk_he_localauthority_createdonbehalfby = "lk_he_localauthority_createdonbehalfby";
 			public const string lk_he_localauthority_modifiedby = "lk_he_localauthority_modifiedby";
@@ -325,6 +310,40 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_laregion")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue he_laregion
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("he_laregion");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("he_laregion");
+				this.SetAttributeValue("he_laregion", value);
+				this.OnPropertyChanged("he_laregion");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_laregionname")]
+		public string he_laregionName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("he_laregion"))
+				{
+					return this.FormattedValues["he_laregion"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
 		/// <summary>
 		/// Local authority classification field. it is calculated/synchronized from SharePoint site
 		/// </summary>
@@ -448,40 +467,6 @@ namespace DataverseModel
 				if (this.FormattedValues.Contains("he_priorityplace"))
 				{
 					return this.FormattedValues["he_priorityplace"];
-				}
-				else
-				{
-					return default(string);
-				}
-			}
-		}
-		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_region")]
-		public virtual Microsoft.Xrm.Sdk.OptionSetValue he_region
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("he_region");
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("he_region");
-				this.SetAttributeValue("he_region", value);
-				this.OnPropertyChanged("he_region");
-			}
-		}
-		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_regionname")]
-		public string he_regionName
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				if (this.FormattedValues.Contains("he_region"))
-				{
-					return this.FormattedValues["he_region"];
 				}
 				else
 				{
@@ -931,6 +916,46 @@ namespace DataverseModel
 				this.OnPropertyChanging("he_pipeline_projectbelocated_he_localauthori");
 				this.SetRelatedEntities<DataverseModel.he_Pipeline>("he_pipeline_projectbelocated_he_localauthori", null, value);
 				this.OnPropertyChanged("he_pipeline_projectbelocated_he_localauthori");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_sitedetails_HeLocalAuthorityId_he_localau
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_sitedetails_HeLocalAuthorityId_he_localau")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_SiteDetails> invln_sitedetails_HeLocalAuthorityId_he_localau
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_SiteDetails>("invln_sitedetails_HeLocalAuthorityId_he_localau", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_sitedetails_HeLocalAuthorityId_he_localau");
+				this.SetRelatedEntities<DataverseModel.invln_SiteDetails>("invln_sitedetails_HeLocalAuthorityId_he_localau", null, value);
+				this.OnPropertyChanged("invln_sitedetails_HeLocalAuthorityId_he_localau");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_sites_HeLocalAuthorityId_he_localauthorit
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_sites_HeLocalAuthorityId_he_localauthorit")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_Sites> invln_sites_HeLocalAuthorityId_he_localauthorit
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_Sites>("invln_sites_HeLocalAuthorityId_he_localauthorit", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_sites_HeLocalAuthorityId_he_localauthorit");
+				this.SetRelatedEntities<DataverseModel.invln_Sites>("invln_sites_HeLocalAuthorityId_he_localauthorit", null, value);
+				this.OnPropertyChanged("invln_sites_HeLocalAuthorityId_he_localauthorit");
 			}
 		}
 		

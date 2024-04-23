@@ -8,7 +8,7 @@ public class StartOnSiteDate : DateValueObject
     private const string FieldDescription = "start on site date";
 
     public StartOnSiteDate(bool exists, string? day, string? month, string? year)
-        : base(day, month, year, "MilestoneStartAt", FieldDescription, !exists) //todo ms milestonestartat?
+        : base(day, month, year, "MilestoneStartAt", FieldDescription, !exists)
     {
         Exists = exists;
     }

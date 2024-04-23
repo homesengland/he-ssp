@@ -49,8 +49,8 @@ public class GetDeliveryPhaseDetailsQueryHandler : IRequestHandler<GetDeliveryPh
             deliveryPhase.TotalHomesToBeDeliveredInThisPhase,
             new DeliveryPhaseTranchesDto(
                 deliveryPhase.Tranches.CanBeAmended,
-                request.IncludeSummary ? GetSummaryOfDelivery(deliveryPhase) : null,
-                request.IncludeSummary ? GetSummaryOfDeliveryAmend(deliveryPhase) : null),
+                GetSummaryOfDelivery(deliveryPhase),
+                GetSummaryOfDeliveryAmend(deliveryPhase)),
             deliveryPhase.Organisation.IsUnregisteredBody,
             deliveryPhase.DeliveryPhaseMilestones.IsOnlyCompletionMilestone,
             DateDetails.FromDateTime(deliveryPhase.DeliveryPhaseMilestones.AcquisitionMilestone?.MilestoneDate?.Value),

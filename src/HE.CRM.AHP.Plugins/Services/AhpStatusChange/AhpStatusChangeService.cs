@@ -63,6 +63,18 @@ namespace HE.CRM.AHP.Plugins.Services.AhpStatusChange
                     _govNotifyEmailService.SendNotifications_AHP_INTERNAL_REQUEST_TO_WITHDRAW(ahpStatusChange, ahpApplication);
                     break;
 
+                case (int)invln_AHPInternalStatus.ApplicationSubmitted:
+                    statusLabel = "ApplicationSubmitted";
+                    if (ahpStatusChange.invln_Changefrom.Value == (int)invln_AHPInternalStatus.Draft)
+                    {
+                        _govNotifyEmailService.SendNotifications_AHP_EXTERNAL_APPLICATION_SUBMITTED(ahpStatusChange, ahpApplication);
+                    }
+                    else
+                    {
+                        TracingService.Trace("Changefrom is not Draft");
+                    }
+                    break;
+
                 default:
                     break;
             }

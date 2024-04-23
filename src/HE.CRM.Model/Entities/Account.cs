@@ -789,6 +789,9 @@ namespace DataverseModel
 			public const string invln_SecurityValue = "invln_securityvalue";
 			public const string invln_securityvalue_Base = "invln_securityvalue_base";
 			public const string invln_sites_AccountId_account = "invln_sites_AccountId_account";
+			public const string invln_sites_developingpartner_account = "invln_sites_developingpartner_account";
+			public const string invln_sites_Ownerofthehomesaftercompletion_acco = "invln_sites_Ownerofthehomesaftercompletion_acco";
+			public const string invln_sites_ownerofthelandduringdevelopment_acc = "invln_sites_ownerofthelandduringdevelopment_acc";
 			public const string invln_SPorDP = "invln_spordp";
 			public const string invln_spordpName = "invln_spordpname";
 			public const string invln_Totalofexistingallocations = "invln_totalofexistingallocations";
@@ -7600,6 +7603,66 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_sites_AccountId_account");
 				this.SetRelatedEntities<DataverseModel.invln_Sites>("invln_sites_AccountId_account", null, value);
 				this.OnPropertyChanged("invln_sites_AccountId_account");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_sites_developingpartner_account
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_sites_developingpartner_account")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_Sites> invln_sites_developingpartner_account
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_Sites>("invln_sites_developingpartner_account", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_sites_developingpartner_account");
+				this.SetRelatedEntities<DataverseModel.invln_Sites>("invln_sites_developingpartner_account", null, value);
+				this.OnPropertyChanged("invln_sites_developingpartner_account");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_sites_Ownerofthehomesaftercompletion_acco
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_sites_Ownerofthehomesaftercompletion_acco")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_Sites> invln_sites_Ownerofthehomesaftercompletion_acco
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_Sites>("invln_sites_Ownerofthehomesaftercompletion_acco", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_sites_Ownerofthehomesaftercompletion_acco");
+				this.SetRelatedEntities<DataverseModel.invln_Sites>("invln_sites_Ownerofthehomesaftercompletion_acco", null, value);
+				this.OnPropertyChanged("invln_sites_Ownerofthehomesaftercompletion_acco");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_sites_ownerofthelandduringdevelopment_acc
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_sites_ownerofthelandduringdevelopment_acc")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_Sites> invln_sites_ownerofthelandduringdevelopment_acc
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_Sites>("invln_sites_ownerofthelandduringdevelopment_acc", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_sites_ownerofthelandduringdevelopment_acc");
+				this.SetRelatedEntities<DataverseModel.invln_Sites>("invln_sites_ownerofthelandduringdevelopment_acc", null, value);
+				this.OnPropertyChanged("invln_sites_ownerofthelandduringdevelopment_acc");
 			}
 		}
 		

@@ -277,10 +277,10 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
             summary.Should().ContainKey($"Number of homes {homeType.Name}").WithValue(homeType.NumberOfHomes.ToString(CultureInfo.InvariantCulture));
         }
 
-        summary.Should().ContainKey("Grant apportioned to this phase").WhoseValue.Value.Should().BePoundsOnly(requiredFunding);
-        summary.Should().ContainKey("Acquisition milestone").WhoseValue.Value.Should().BePoundsOnly(requiredFunding * 0.5m);
-        summary.Should().ContainKey("Start on site milestone").WhoseValue.Value.Should().BePoundsOnly(requiredFunding * 0.4m);
-        summary.Should().ContainKey("Completion milestone").WhoseValue.Value.Should().BePoundsOnly(requiredFunding * 0.1m);
+        summary.Should().ContainKey("Grant apportioned to this phase").WhoseValue.Value.Should().BePoundsPences(requiredFunding);
+        summary.Should().ContainKey("Acquisition milestone").WhoseValue.Value.Should().BePoundsPences(requiredFunding * 0.4m);
+        summary.Should().ContainKey("Start on site milestone").WhoseValue.Value.Should().BePoundsPences(requiredFunding * 0.35m);
+        summary.Should().ContainKey("Completion milestone").WhoseValue.Value.Should().BePoundsPences(requiredFunding * 0.25m);
         summary.Should().ContainKey("Acquisition date").WithValue(RehabDeliveryPhase.AcquisitionMilestoneDate);
         summary.Should().ContainKey("Forecast acquisition claim date").WithValue(RehabDeliveryPhase.AcquisitionMilestonePaymentDate);
         summary.Should().ContainKey("Start on site date").WithValue(RehabDeliveryPhase.StartOnSiteMilestoneDate);

@@ -124,4 +124,19 @@ public class CompleteSectionTests
         testCandidate.Status.Should().Be(SectionStatus.Completed);
         testCandidate.IsStatusChanged.Should().BeTrue();
     }
+
+    [Fact]
+    public void ShouldChangeStatusToCompleted_WhenFinishAnswerIsYesAndExpectedNumberOfHomesIsNotProvided()
+    {
+        // given
+        var homeType = new HomeTypeEntityBuilder().WithName("Mercury").WithStatus(SectionStatus.Completed).Build();
+        var testCandidate = new HomeTypesEntityBuilder().WithHomeTypes(homeType).Build();
+
+        // when
+        testCandidate.CompleteSection(FinishHomeTypesAnswer.Yes, null);
+
+        // then
+        testCandidate.Status.Should().Be(SectionStatus.Completed);
+        testCandidate.IsStatusChanged.Should().BeTrue();
+    }
 }

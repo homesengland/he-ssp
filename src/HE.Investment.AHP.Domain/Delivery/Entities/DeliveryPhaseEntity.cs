@@ -201,7 +201,7 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
 
     public bool IsReconfiguringExistingNeeded()
     {
-        return TypeOfHomes == Contract.Delivery.Enums.TypeOfHomes.Rehab;
+        return TypeOfHomes is Contract.Delivery.Enums.TypeOfHomes.Rehab && BuildActivity.Type != BuildActivityType.ExistingSatisfactory;
     }
 
     private static bool OnlyCompletionMilestone(OrganisationBasicInfo organisation, BuildActivity buildActivity) => organisation.IsUnregisteredBody || buildActivity.IsOffTheShelfOrExistingSatisfactory;
@@ -227,7 +227,8 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
                          reconfigureExistingValid &&
                          Tranches.IsAnswered() &&
                          _homesToDeliver.Any() &&
-                         DeliveryPhaseMilestones.IsAnswered();
+                         DeliveryPhaseMilestones.IsAnswered() &&
+                         MilestonesTranches.IsAnswered();
 
         if (Organisation.IsUnregisteredBody)
         {

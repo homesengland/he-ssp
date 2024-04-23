@@ -42,14 +42,14 @@
 
             <he-error-form-group asp-for="InitialSale">
                 <gds-legend>
-                    <gds-h2 class="govuk-!-margin-bottom-0">Enter the average assumed first tranche sale percentage</gds-h2>
+                    <gds-h2 class="govuk-!-margin-bottom-0">Enter the assumed average first tranche sale percentage</gds-h2>
                 </gds-legend>
                 <gds-span-hint>
                     This is the average percentage share that you are assuming your purchasers will buy in their initial purchase (must be between 10% and 75%).
                 </gds-span-hint>
                 <gds-input
                     class="govuk-input--width-2"
-                    asp-hiddenlabeltext="Enter the average assumed first tranche sale percentage"
+                    asp-hiddenlabeltext="Enter the assumed average first tranche sale percentage"
                     govuk-formgroup-asp-for="InitialSale"
                     name="InitialSale"
                     value=@Model.InitialSale
@@ -58,7 +58,7 @@
 
             <he-error-form-group asp-for="ExpectedFirstTranche">
                 <gds-legend>
-                    <gds-h2 class="govuk-!-margin-bottom-4">Assumed first tranche sales receipt</gds-h2>
+                    <gds-h2 class="govuk-!-margin-bottom-0">Assumed first tranche sales receipt</gds-h2>
                 </gds-legend>
 
                 @if (expectedFirstTrancheInvalid)
@@ -68,8 +68,8 @@
                     </p>
                 }
 
-                <gds-p class="govuk-!-margin-top-1">
-                    @(Model.ExpectedFirstTranche ?? "To calculate the assumed first tranche sales receipt, enter the market value of each home and the average assumed first tranche sale. Then select the calculate button.")
+                <gds-p>
+                    @(Model.ExpectedFirstTranche ?? "To calculate the assumed first tranche sales receipt, enter the market value of each home and the assumed average first tranche sale. Then select the calculate button.")
                 </gds-p>
             </he-error-form-group>
 

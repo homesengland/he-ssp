@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.1.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HE.Investments.Account.Shared\HE.Investments.Account.Shared.csproj" />
+    <ProjectReference Include="..\HE.Investments.Common\HE.Investments.Common.csproj" />
+    <ProjectReference Include="..\HE.Investments.Organisation\HE.Investments.Organisation.csproj">
+      <Aliases>Org</Aliases>
+    </ProjectReference>
+  </ItemGroup>
+
+  <Import Project="..\HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems" Label="Shared" />
+
+</Project>

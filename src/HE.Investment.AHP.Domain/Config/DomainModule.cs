@@ -119,7 +119,6 @@ public static class DomainModule
     private static IServiceCollection AddSite(this IServiceCollection services)
     {
         services.AddScoped<ISiteCrmContext, SiteCrmContext>();
-        services.Decorate<ISiteCrmContext, LocalAuthorityCodeDecorator>();
         services.Decorate<ISiteCrmContext, RequestCacheSiteCrmContextDecorator>();
         services.AddScoped<ISiteRepository, SiteRepository>();
         services.Decorate<ISiteRepository, CacheSiteRepositoryDecorator>();

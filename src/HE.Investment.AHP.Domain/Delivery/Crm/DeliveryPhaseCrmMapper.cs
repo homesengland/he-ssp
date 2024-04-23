@@ -204,16 +204,6 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
         return milestoneDetails?.PaymentDate?.Value;
     }
 
-    private static TDate? MapDate<TDate>(DateTime? date, Func<DateTime, TDate> dateFactory)
-    {
-        if (!date.HasValue)
-        {
-            return default;
-        }
-
-        return dateFactory(new DateTime(date.Value.Year, date.Value.Month, date.Value.Day));
-    }
-
     private static IsAdditionalPaymentRequested? MapIsAdditionalPaymentRequested(string? value)
     {
         return value switch

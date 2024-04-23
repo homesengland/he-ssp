@@ -72,7 +72,8 @@ public class ApplicationCrmContext : IApplicationCrmContext
                 nameof(invln_scheme.invln_grantsfromdhscnhsorotherhealth),
                 nameof(invln_scheme.invln_grantsfromthelottery),
                 nameof(invln_scheme.invln_grantsfromotherpublicbodies),
-                nameof(invln_scheme.invln_programmelookup))
+                nameof(invln_scheme.invln_programmelookup),
+                nameof(invln_scheme.invln_representationsandwarrantiesconfirmation))
             .ToLowerInvariant();
 
     private readonly ICrmService _service;
@@ -176,6 +177,7 @@ public class ApplicationCrmContext : IApplicationCrmContext
         Guid organisationId,
         ApplicationStatus applicationStatus,
         string? changeReason,
+        bool representationsAndWarranties,
         CancellationToken cancellationToken)
     {
         var crmStatus = AhpApplicationStatusMapper.MapToCrmStatus(applicationStatus);
@@ -187,6 +189,7 @@ public class ApplicationCrmContext : IApplicationCrmContext
             invln_userid = _userContext.UserGlobalId,
             invln_newapplicationstatus = crmStatus,
             invln_changereason = changeReason ?? string.Empty,
+            invln_representationsandwarranties = representationsAndWarranties,
         };
 
         await _service.ExecuteAsync<invln_changeahpapplicationstatusRequest, invln_changeahpapplicationstatusResponse>(

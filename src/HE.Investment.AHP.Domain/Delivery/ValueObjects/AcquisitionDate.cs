@@ -8,7 +8,7 @@ public class AcquisitionDate : DateValueObject
     private const string FieldDescription = "acquisition date";
 
     public AcquisitionDate(bool exists, string? day, string? month, string? year)
-        : base(day, month, year, "MilestoneStartAt", FieldDescription, !exists) //todo ms milestonestartat?
+        : base(day, month, year, "MilestoneStartAt", FieldDescription, !exists)
     {
         Exists = exists;
     }

@@ -69,6 +69,9 @@ public class ApplicationWorkflow : IStateRouting<ApplicationWorkflowState>
         _machine.Configure(ApplicationWorkflowState.ApplicationTenure)
             .Permit(Trigger.Back, ApplicationWorkflowState.ApplicationName);
 
+        _machine.Configure(ApplicationWorkflowState.TaskList)
+            .Permit(Trigger.Back, ApplicationWorkflowState.ApplicationsList);
+
         _machine.Configure(ApplicationWorkflowState.OnHold)
             .Permit(Trigger.Continue, ApplicationWorkflowState.TaskList)
             .Permit(Trigger.Back, ApplicationWorkflowState.TaskList);
