@@ -414,6 +414,60 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
             }
         }
 
+        public void SendNotifications_AHP_INTERNAL_APPLICATION_APPROVED_SUBJECT_TO_CONTRACT(invln_AHPStatusChange ahpStatusChange, invln_scheme ahpApplication)
+        {
+            if (ahpStatusChange.invln_ChangeSource.Value == (int)invln_ChangesourceSet.Internal)
+            {
+                TracingService.Trace("AHP_INTERNAL_APPLICATION_APPROVED_SUBJECT_TO_CONTRACT");
+                var account = _accountRepositoryAdmin.GetById(ahpApplication.invln_organisationid.Id, Account.Fields.invln_ProviderManagementLead, Account.Fields.Name);
+                var emailTemplate = _notificationSettingRepositoryAdmin.GetTemplateViaTypeName("AHP_INTERNAL_APPLICATION_APPROVED_SUBJECT_TO_CONTRACT");
+                SystemUser user = null;
+                if (account.invln_ProviderManagementLead != null)
+                {
+                    user = _systemUserRepositoryAdmin.GetById(account.invln_ProviderManagementLead.Id, SystemUser.Fields.FullName, SystemUser.Fields.DomainName);
+                }
+
+                if (account != null && user != null && emailTemplate != null)
+                {
+                    var subject = emailTemplate.invln_subject.Replace("[SchemeName]", ahpApplication.invln_schemename);
+
+                    var govNotParams = new AHP_INTERNAL_APPLICATION_APPROVED_SUBJECT_TO_CONTRACT()
+                    {
+                        templateId = emailTemplate?.invln_templateid,
+                        personalisation = new parameters_AHP_INTERNAL_APPLICATION_APPROVED_SUBJECT_TO_CONTRACT()
+                        {
+                            recipientEmail = "",
+                            subject = subject,
+                            name = user.FullName ?? "NO NAME",
+                            organisationname = account.Name ?? "NO NAME",
+                            applicationname = ahpApplication.invln_schemename ?? "NO NAME",
+                            applicationurl = GetAhpApplicationUrl(ahpApplication.ToEntityReference()),
+                        }
+                    };
+
+                    var options = new JsonSerializerOptions
+                    {
+                        Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                        WriteIndented = true
+                    };
+
+
+                    govNotParams.personalisation.recipientEmail = user.DomainName;
+                    var parameters = JsonSerializer.Serialize(govNotParams, options);
+                    this.SendGovNotifyEmail(ahpApplication.OwnerId, ahpApplication.ToEntityReference(), subject, parameters, emailTemplate);
+
+
+                    govNotParams.personalisation.recipientEmail = "Housing.Contracts@homesengland.gov.uk";
+                    parameters = JsonSerializer.Serialize(govNotParams, options);
+                    this.SendGovNotifyEmail(ahpApplication.OwnerId, ahpApplication.ToEntityReference(), subject, parameters, emailTemplate);
+                }
+                else
+                {
+                    TracingService.Trace("Probably there is no email template or invln_ProviderManagementLead on Account. Mail not sent.");
+                }
+            }
+        }
+
 
         private string GetAhpApplicationUrl(EntityReference ahpApplicationId)
         {
