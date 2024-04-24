@@ -25,7 +25,7 @@ public class PurchaseDate : DateValueObject
     {
     }
 
-    public static PurchaseDate FromCrm(DateTime value) => new(value);
+    public static PurchaseDate FromDateTime(DateTime value) => new(value);
 
     public static PurchaseDate FromDateDetails(DateDetails? date, IDateTimeProvider dateTimeProvider) =>
         new(date?.Day, date?.Month, date?.Year, dateTimeProvider);

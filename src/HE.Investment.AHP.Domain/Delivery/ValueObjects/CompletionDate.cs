@@ -23,7 +23,7 @@ public class CompletionDate : DateValueObject
 
     public bool Exists { get; }
 
-    public static CompletionDate FromCrm(DateTime? value) => new(value.HasValue, value ?? default);
+    public static CompletionDate FromDateTime(DateTime? value) => new(value.HasValue, value ?? default);
 
     public static CompletionDate FromDateDetails(bool exists, DateDetails? date) =>
         new(exists, date?.Day, date?.Month, date?.Year);

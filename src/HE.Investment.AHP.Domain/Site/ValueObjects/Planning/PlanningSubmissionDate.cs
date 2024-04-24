@@ -24,7 +24,7 @@ public class PlanningSubmissionDate : DateValueObject
 
     public bool Exists { get; }
 
-    public static PlanningSubmissionDate FromCrm(DateTime? value) => new(value.HasValue, value ?? default);
+    public static PlanningSubmissionDate FromDateTime(DateTime? value) => new(value.HasValue, value ?? default);
 
     public static PlanningSubmissionDate FromDateDetails(bool exists, DateDetails? date) =>
         new(exists, date?.Day, date?.Month, date?.Year);

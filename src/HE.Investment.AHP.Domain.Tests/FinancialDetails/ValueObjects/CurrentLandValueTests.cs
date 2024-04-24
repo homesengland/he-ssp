@@ -113,7 +113,7 @@ public class CurrentLandValueTests
     public void ShouldCreateLandValue_WhenIntValueIsValid()
     {
         // given && when
-        var landValue = CurrentLandValue.FromCrm(100);
+        var landValue = new CurrentLandValue(100);
 
         // then
         landValue.Value.Should().Be(100);

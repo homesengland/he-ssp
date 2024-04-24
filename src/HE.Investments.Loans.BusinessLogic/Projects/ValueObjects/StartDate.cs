@@ -29,7 +29,7 @@ public class StartDate : DateValueObject
 
     public bool Exists { get; }
 
-    public static StartDate FromCrm(DateTime? value) => new(value.HasValue, value ?? default);
+    public static StartDate FromDateTime(DateTime? value) => new(value.HasValue, value ?? default);
 
     public static StartDate FromDateDetails(bool exists, DateDetails? date) =>
         new(exists, date?.Day, date?.Month, date?.Year);

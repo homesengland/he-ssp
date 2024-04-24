@@ -23,7 +23,7 @@ public class ApplicationForDetailedPlanningSubmittedDate : DateValueObject
 
     public bool Exists { get; }
 
-    public static ApplicationForDetailedPlanningSubmittedDate FromCrm(DateTime? value) => new(value.HasValue, value ?? default);
+    public static ApplicationForDetailedPlanningSubmittedDate FromDateTime(DateTime? value) => new(value.HasValue, value ?? default);
 
     public static ApplicationForDetailedPlanningSubmittedDate FromDateDetails(bool exists, DateDetails? date) =>
         new(exists, date?.Day, date?.Month, date?.Year);

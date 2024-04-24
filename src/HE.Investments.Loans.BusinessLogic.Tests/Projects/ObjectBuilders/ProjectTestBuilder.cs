@@ -36,7 +36,7 @@ internal sealed class ProjectTestBuilder
         _project.ProvideLandOwnership(new LandOwnership(true));
 
         _project.ProvideAdditionalData(new AdditionalDetails(
-            PurchaseDate.FromCrm(ProjectDateTestData.CorrectDateTime),
+            PurchaseDate.FromDateTime(ProjectDateTestData.CorrectDateTime),
             PoundsTestData.AnyAmount,
             PoundsTestData.AnyAmount,
             SourceOfValuationTestData.AnySource));

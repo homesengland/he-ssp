@@ -26,7 +26,7 @@ public class StartOnSiteMilestoneDetailsBuilder
     {
         _milestoneDate = new StartOnSiteDate(
             true,
-            milestoneDate.Day.ToString(CultureInfo.InvariantCulture), //todo ms unify all of these tostring invariantculture calls
+            milestoneDate.Day.ToString(CultureInfo.InvariantCulture),
             milestoneDate.Month.ToString(CultureInfo.InvariantCulture),
             milestoneDate.Year.ToString(CultureInfo.InvariantCulture));
         return this;

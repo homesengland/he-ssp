@@ -24,7 +24,7 @@ public class OutlinePlanningApprovalDate : DateValueObject
 
     public bool Exists { get; }
 
-    public static OutlinePlanningApprovalDate FromCrm(DateTime? value) => new(value.HasValue, value ?? default);
+    public static OutlinePlanningApprovalDate FromDateTime(DateTime? value) => new(value.HasValue, value ?? default);
 
     public static OutlinePlanningApprovalDate FromDateDetails(bool exists, DateDetails? date) =>
         new(exists, date?.Day, date?.Month, date?.Year);

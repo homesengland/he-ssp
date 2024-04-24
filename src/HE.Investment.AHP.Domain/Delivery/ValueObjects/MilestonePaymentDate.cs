@@ -23,7 +23,7 @@ public class MilestonePaymentDate : DateValueObject
 
     public bool Exists { get; }
 
-    public static MilestonePaymentDate FromCrm(DateTime? value) => new(value.HasValue, value ?? default);
+    public static MilestonePaymentDate FromDateTime(DateTime? value) => new(value.HasValue, value ?? default);
 
     public static MilestonePaymentDate FromDateDetails(bool exists, DateDetails? date) =>
         new(exists, date?.Day, date?.Month, date?.Year);

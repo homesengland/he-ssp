@@ -23,7 +23,7 @@ public class StartOnSiteDate : DateValueObject
 
     public bool Exists { get; }
 
-    public static StartOnSiteDate FromCrm(DateTime? value) => new(value.HasValue, value ?? default);
+    public static StartOnSiteDate FromDateTime(DateTime? value) => new(value.HasValue, value ?? default);
 
     public static StartOnSiteDate FromDateDetails(bool exists, DateDetails? date) =>
         new(exists, date?.Day, date?.Month, date?.Year);

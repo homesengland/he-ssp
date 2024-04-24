@@ -10,7 +10,7 @@ public static class OtherApplicationCostsMapper
     public static OtherApplicationCosts MapToOtherApplicationCosts(AhpApplicationDto application)
     {
         return new OtherApplicationCosts(
-            application.expectedOnWorks.IsProvided() ? ExpectedWorksCosts.FromCrm(application.expectedOnWorks!.Value) : null,
-            application.expectedOnCosts.IsProvided() ? ExpectedOnCosts.FromCrm(application.expectedOnCosts!.Value) : null);
+            application.expectedOnWorks.IsProvided() ? new ExpectedWorksCosts(application.expectedOnWorks!.Value) : null,
+            application.expectedOnCosts.IsProvided() ? new ExpectedOnCosts(application.expectedOnCosts!.Value) : null);
     }
 }

@@ -23,7 +23,7 @@ public class DetailedPlanningApprovalDate : DateValueObject
 
     public bool Exists { get; }
 
-    public static DetailedPlanningApprovalDate FromCrm(DateTime? value) => new(value.HasValue, value ?? default);
+    public static DetailedPlanningApprovalDate FromDateTime(DateTime? value) => new(value.HasValue, value ?? default);
 
     public static DetailedPlanningApprovalDate FromDateDetails(bool exists, DateDetails? date) =>
         new(exists, date?.Day, date?.Month, date?.Year);

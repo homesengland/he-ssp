@@ -198,12 +198,12 @@ public class MapToDomainTests : TestBase<DeliveryPhaseCrmMapper>
 
         // then
         result.DeliveryPhaseMilestones.AcquisitionMilestone.Should().NotBeNull();
-        result.DeliveryPhaseMilestones.AcquisitionMilestone!.MilestoneDate!.Value.Should().Be(new DateTime(2024, 01, 28));
-        result.DeliveryPhaseMilestones.AcquisitionMilestone!.PaymentDate!.Value.Should().Be(new DateTime(2024, 01, 29));
-        result.DeliveryPhaseMilestones.StartOnSiteMilestone!.MilestoneDate!.Value.Should().Be(new DateTime(2024, 01, 30));
-        result.DeliveryPhaseMilestones.StartOnSiteMilestone!.PaymentDate!.Value.Should().Be(new DateTime(2024, 01, 31));
-        result.DeliveryPhaseMilestones.CompletionMilestone!.MilestoneDate!.Value.Should().Be(new DateTime(2024, 02, 01));
-        result.DeliveryPhaseMilestones.CompletionMilestone!.PaymentDate!.Value.Should().Be(new DateTime(2024, 02, 02));
+        result.DeliveryPhaseMilestones.AcquisitionMilestone!.MilestoneDate!.Value.Should().Be(new DateTime(2024, 01, 28, 0, 0, 0, DateTimeKind.Utc));
+        result.DeliveryPhaseMilestones.AcquisitionMilestone!.PaymentDate!.Value.Should().Be(new DateTime(2024, 01, 29, 0, 0, 0, DateTimeKind.Utc));
+        result.DeliveryPhaseMilestones.StartOnSiteMilestone!.MilestoneDate!.Value.Should().Be(new DateTime(2024, 01, 30, 0, 0, 0, DateTimeKind.Utc));
+        result.DeliveryPhaseMilestones.StartOnSiteMilestone!.PaymentDate!.Value.Should().Be(new DateTime(2024, 01, 31, 0, 0, 0, DateTimeKind.Utc));
+        result.DeliveryPhaseMilestones.CompletionMilestone!.MilestoneDate!.Value.Should().Be(new DateTime(2024, 02, 01, 0, 0, 0, DateTimeKind.Utc));
+        result.DeliveryPhaseMilestones.CompletionMilestone!.PaymentDate!.Value.Should().Be(new DateTime(2024, 02, 02, 0, 0, 0, DateTimeKind.Utc));
     }
 
     [Theory]

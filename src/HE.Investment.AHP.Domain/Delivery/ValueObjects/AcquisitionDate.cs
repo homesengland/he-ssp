@@ -23,7 +23,7 @@ public class AcquisitionDate : DateValueObject
 
     public bool Exists { get; }
 
-    public static AcquisitionDate FromCrm(DateTime? value) => new(value.HasValue, value ?? default);
+    public static AcquisitionDate FromDateTime(DateTime? value) => new(value.HasValue, value ?? default);
 
     public static AcquisitionDate FromDateDetails(bool exists, DateDetails? date) =>
         new(exists, date?.Day, date?.Month, date?.Year);

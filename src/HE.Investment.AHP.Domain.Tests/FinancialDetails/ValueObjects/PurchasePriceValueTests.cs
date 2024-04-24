@@ -87,7 +87,7 @@ public class PurchasePriceValueTests
     public void ShouldCreatePurchasePrice_WhenIntValueIsValid()
     {
         // given && when
-        var landValue = PurchasePrice.FromCrm(100);
+        var landValue = new PurchasePrice(100);
 
         // then
         landValue.Value.Should().Be(100);
