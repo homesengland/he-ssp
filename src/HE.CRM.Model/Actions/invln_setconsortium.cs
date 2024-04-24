@@ -22,7 +22,7 @@ namespace DataverseModel
 			public const string invln_userid = "invln_userid";
 			public const string invln_programmeId = "invln_programmeId";
 			public const string invln_consortiumname = "invln_consortiumname";
-			public const string invln_leadpartner = "invln_leadpartner";
+			public const string invln_leadpartnerid = "invln_leadpartnerid";
 		}
 		
 		public const string ActionLogicalName = "invln_setconsortium";
@@ -84,13 +84,13 @@ namespace DataverseModel
 			}
 		}
 		
-		public string invln_leadpartner
+		public string invln_leadpartnerid
 		{
 			get
 			{
-				if (this.Parameters.Contains("invln_leadpartner"))
+				if (this.Parameters.Contains("invln_leadpartnerid"))
 				{
-					return ((string)(this.Parameters["invln_leadpartner"]));
+					return ((string)(this.Parameters["invln_leadpartnerid"]));
 				}
 				else
 				{
@@ -99,7 +99,7 @@ namespace DataverseModel
 			}
 			set
 			{
-				this.Parameters["invln_leadpartner"] = value;
+				this.Parameters["invln_leadpartnerid"] = value;
 			}
 		}
 		
@@ -109,7 +109,7 @@ namespace DataverseModel
 			this.invln_userid = default(string);
 			this.invln_programmeId = default(string);
 			this.invln_consortiumname = default(string);
-			this.invln_leadpartner = default(string);
+			this.invln_leadpartnerid = default(string);
 		}
 	}
 	

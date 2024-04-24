@@ -20,6 +20,7 @@ namespace DataverseModel
 		public static class Fields
 		{
 			public const string invln_consortiumid = "invln_consortiumid";
+			public const string invln_memberorganisationid = "invln_memberorganisationid";
 		}
 		
 		public const string ActionLogicalName = "invln_getconsortium";
@@ -43,10 +44,30 @@ namespace DataverseModel
 			}
 		}
 		
+		public string invln_memberorganisationid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_memberorganisationid"))
+				{
+					return ((string)(this.Parameters["invln_memberorganisationid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_memberorganisationid"] = value;
+			}
+		}
+		
 		public invln_getconsortiumRequest()
 		{
 			this.RequestName = "invln_getconsortium";
 			this.invln_consortiumid = default(string);
+			this.invln_memberorganisationid = default(string);
 		}
 	}
 	

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Metadata;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
@@ -16,6 +17,7 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.Consortium
     public class GetConsortiumHandler : CrmActionHandlerBase<invln_getconsortiumRequest, DataverseContext>
     {
         private string ConsortiumId => ExecutionData.GetInputParameter<string>(invln_getconsortiumRequest.Fields.invln_consortiumid);
+        private string MemberOrganisationId => ExecutionData.GetInputParameter<string>(invln_getconsortiumRequest.Fields.invln_memberorganisationid);
 
         private readonly IConsortiumRepository _consortiumRepository;
         private readonly IConsortiumMemberRepository _consortiumMemberRepository;
@@ -28,7 +30,8 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.Consortium
 
         public override bool CanWork()
         {
-            return ConsortiumId != null && ConsortiumId != string.Empty;
+            return ConsortiumId != null && ConsortiumId != string.Empty
+                && MemberOrganisationId != null && MemberOrganisationId != string.Empty;
         }
 
         public override void DoWork()
@@ -46,13 +49,28 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.Consortium
                     var consortiumMembers = _consortiumMemberRepository.GetByAttribute(invln_ConsortiumMember.Fields.invln_Consortium, ConsortiumId,
                                                                         new string[] { invln_ConsortiumMember.Fields.invln_Name, invln_ConsortiumMember.Fields.Id,
                                                                     invln_ConsortiumMember.Fields.StatusCode, invln_ConsortiumMember.Fields.invln_Partner }).ToList();
-                    var result = ConsortiumMapper.MapReguralEntityToDto(consortium, consortiumMembers);
+                    var result = ConsortiumMapper.MapRegularEntityToDto(consortium, consortiumMembers);
+                    if (!IsorganizationMemeberExist(consortium, consortiumMembers))
+                    {
+                        return;
+                    }
                     ExecutionData.SetOutputParameter(invln_getconsortiumResponse.Fields.invln_consortium, JsonSerializer.Serialize(result));
                 }
             }
+        }
 
+        private bool IsorganizationMemeberExist(invln_Consortium consortium, List<invln_ConsortiumMember> consortiumMembers)
+        {
+            if (consortium.invln_LeadPartner.Id.ToString().ToLower() == MemberOrganisationId.ToLower())
+            {
+                return true;
+            }
 
-
+            if (consortiumMembers.Count > 0)
+            {
+                return consortiumMembers.Any(x => x.invln_Partner.Id.ToString().ToLower() == MemberOrganisationId.ToLower())
+            }
+            return false;
         }
     }
 }

@@ -13,7 +13,7 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.Consortium
     public class SetConsortiumHandler : CrmActionHandlerBase<invln_setconsortiumRequest, DataverseContext>
     {
         private string UserId => ExecutionData.GetInputParameter<string>(invln_setconsortiumRequest.Fields.invln_userid);
-        private string LeadPartner => ExecutionData.GetInputParameter<string>(invln_setconsortiumRequest.Fields.invln_leadpartner);
+        private string LeadPartnerId => ExecutionData.GetInputParameter<string>(invln_setconsortiumRequest.Fields.invln_leadpartnerid);
         private string ProgrammeId => ExecutionData.GetInputParameter<string>(invln_setconsortiumRequest.Fields.invln_programmeId);
         private string ConsortiumName => ExecutionData.GetInputParameter<string>(invln_setconsortiumRequest.Fields.invln_consortiumname);
 
@@ -29,7 +29,7 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.Consortium
 
         public override bool CanWork()
         {
-            return UserId != null && LeadPartner != null && ProgrammeId != null && ConsortiumName != null;
+            return UserId != null && LeadPartnerId != null && ProgrammeId != null && ConsortiumName != null;
         }
 
         public override void DoWork()

@@ -9,7 +9,7 @@ namespace HE.CRM.Common.DtoMapping
 {
     public class ConsortiumMapper
     {
-        public static ConsortiumDto MapReguralEntityToDto(invln_Consortium consortium, List<invln_ConsortiumMember> consortiumMember)
+        public static ConsortiumDto MapRegularEntityToDto(invln_Consortium consortium, List<invln_ConsortiumMember> consortiumMember)
         {
             var consortiumDto = new ConsortiumDto
             {
