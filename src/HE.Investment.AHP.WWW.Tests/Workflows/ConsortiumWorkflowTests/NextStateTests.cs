@@ -8,7 +8,7 @@ namespace HE.Investment.AHP.WWW.Tests.Workflows.ConsortiumWorkflowTests;
 public class NextStateTests
 {
     [Theory]
-    [InlineData(ConsortiumWorkflowState.Start, ConsortiumWorkflowState.Index)]
+    [InlineData(ConsortiumWorkflowState.Start, ConsortiumWorkflowState.Programme)]
     public async Task ShouldReturnNextState_WhenContinueTriggerExecuted(ConsortiumWorkflowState current, ConsortiumWorkflowState expectedNext)
     {
         // given

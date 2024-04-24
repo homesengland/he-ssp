@@ -31,10 +31,16 @@
     <ProjectReference Include="..\HE.Investment.AHP.Contract\HE.Investment.AHP.Contract.csproj" />
     <ProjectReference Include="..\HE.Investment.AHP.Domain\HE.Investment.AHP.Domain.csproj" />
     <ProjectReference Include="..\HE.Investment.AHP.Contract\HE.Investment.AHP.Contract.csproj" />
+    <ProjectReference Include="..\HE.Investments.AHP.Consortium.Contract\HE.Investments.AHP.Consortium.Contract.csproj" />
+    <ProjectReference Include="..\HE.Investments.AHP.Consortium.Domain\HE.Investments.AHP.Consortium.Domain.csproj" />
     <ProjectReference Include="..\HE.Investments.Common.Contract\HE.Investments.Common.Contract.csproj" />
     <ProjectReference Include="..\HE.Investments.DocumentService\HE.Investments.DocumentService.csproj" />
     <ProjectReference Include="..\HE.Investments.Common.WWW\HE.Investments.Common.WWW.csproj" />
     <ProjectReference Include="..\HE.Investments.Common\HE.Investments.Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="Views\Shared\Components\ReturnToAccountLink\ReturnToAccountLink.cshtml" />
   </ItemGroup>
   
 </Project>
