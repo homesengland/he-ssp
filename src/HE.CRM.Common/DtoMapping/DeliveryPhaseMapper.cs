@@ -35,8 +35,8 @@ namespace HE.CRM.Common.DtoMapping
                 completionValue = deliveryPhase.invln_CompletionValue?.Value,
                 completionPercentageValue = deliveryPhase.invln_CompletionPercentageValue,
                 claimingtheMilestoneConfirmed = deliveryPhase.invln_ClaimingtheMilestoneConfirmed,
-                allowAmendmentstoMilestoneProportions = deliveryPhase.invln_AllowAmendmentstoMilestoneProportions,
-                sumOfCalculatedFounds = deliveryPhase.invln_sumofcalculatedfounds?.Value
+                sumOfCalculatedFounds = deliveryPhase.invln_sumofcalculatedfounds?.Value,
+                statusCode = deliveryPhase.StatusCode.Value
             };
 
             if (deliveryPhase.Id != null)
@@ -82,7 +82,6 @@ namespace HE.CRM.Common.DtoMapping
                 invln_StartOnSitePercentageValue = deliveryPhaseDto.startOnSitePercentageValue,
                 invln_CompletionPercentageValue = deliveryPhaseDto.completionPercentageValue,
                 invln_ClaimingtheMilestoneConfirmed = deliveryPhaseDto.claimingtheMilestoneConfirmed,
-                invln_AllowAmendmentstoMilestoneProportions = deliveryPhaseDto.allowAmendmentstoMilestoneProportions,
             };
 
             if (deliveryPhaseDto.numberOfHomes.Count > 0)
