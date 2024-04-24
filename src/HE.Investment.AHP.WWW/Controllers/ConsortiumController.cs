@@ -4,6 +4,7 @@ using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.AHP.Consortium.Contract.Commands;
 using HE.Investments.AHP.Consortium.Contract.Queries;
+using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Routing;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -45,10 +46,16 @@ public class ConsortiumController : WorkflowController<ConsortiumWorkflowState>
 
     [HttpPost("programme")]
     [WorkflowState(ConsortiumWorkflowState.Programme)]
-    public async Task<IActionResult> ProgrammePost(SelectProgramme model)
+    public async Task<IActionResult> ProgrammePost(SelectProgramme model, CancellationToken cancellationToken)
     {
-        var availableProgrammes = await _mediator.Send(new GetAvailableProgrammesQuery());
-        return View("Programme", model with { AvailableProgrammes = availableProgrammes });
+        var result = await _mediator.Send(new CreateConsortiumCommand(model.SelectedProgrammeId), cancellationToken);
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+            return View("Programme", model with { AvailableProgrammes = await _mediator.Send(new GetAvailableProgrammesQuery(), cancellationToken) });
+        }
+
+        return await Continue(new { consortiumId = result.ReturnedData });
     }
 
     protected override async Task<IStateRouting<ConsortiumWorkflowState>> Routing(ConsortiumWorkflowState currentState, object? routeData = null)
