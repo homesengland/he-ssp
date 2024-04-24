@@ -3,8 +3,10 @@ using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.AHP.Consortium.Contract;
 using HE.Investments.AHP.Consortium.Contract.Commands;
+using HE.Investments.AHP.Consortium.Contract.Enums;
 using HE.Investments.AHP.Consortium.Contract.Queries;
 using HE.Investments.Common.Contract.Pagination;
+using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.WWW.Components;
 using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Models;
@@ -34,9 +36,10 @@ public class ConsortiumMemberController : WorkflowController<ConsortiumMemberWor
 
     [HttpGet]
     [WorkflowState(ConsortiumMemberWorkflowState.Index)]
-    public IActionResult Index()
+    public async Task<IActionResult> Index(string consortiumId, CancellationToken cancellationToken)
     {
-        return View();
+        var consortium = await _mediator.Send(new GetConsortiumDetailsQuery(new ConsortiumId(consortiumId)), cancellationToken);
+        return View(consortium);
     }
 
     [HttpGet("search-organisation")]
@@ -81,6 +84,40 @@ public class ConsortiumMemberController : WorkflowController<ConsortiumMemberWor
     [HttpGet("search-no-results")]
     [WorkflowState(ConsortiumMemberWorkflowState.SearchNoResults)]
     public IActionResult SearchNoResults()
+    {
+        return View();
+    }
+
+    [HttpGet("add-members")]
+    [WorkflowState(ConsortiumMemberWorkflowState.AddMembers)]
+    public async Task<IActionResult> AddMembers(string consortiumId, CancellationToken cancellationToken)
+    {
+        return View(await _mediator.Send(new GetConsortiumDetailsQuery(new ConsortiumId(consortiumId)), cancellationToken));
+    }
+
+    [HttpPost("add-members")]
+    [WorkflowState(ConsortiumMemberWorkflowState.Index)]
+    public async Task<IActionResult> AddMembers(string consortiumId, [FromForm] AreAllMembersAdded areAllMembersAdded, CancellationToken cancellationToken)
+    {
+        if (areAllMembersAdded == AreAllMembersAdded.Yes)
+        {
+            return RedirectToAction("Index", new { consortiumId });
+        }
+
+        if (areAllMembersAdded == AreAllMembersAdded.No)
+        {
+            return RedirectToAction("SearchOrganisation", new { consortiumId });
+        }
+
+        this.AddOrderedErrors<string>(new OperationResult().AddValidationError(
+            nameof(AreAllMembersAdded),
+            "Select whether you have you added all members to this consortium"));
+        return View(await _mediator.Send(new GetConsortiumDetailsQuery(new ConsortiumId(consortiumId)), cancellationToken));
+    }
+
+    [HttpGet("remove-member/{memberId}")]
+    [WorkflowState(ConsortiumMemberWorkflowState.SearchNoResults)]
+    public IActionResult RemoveMember(string consortiumId, string memberId, CancellationToken cancellationToken)
     {
         return View();
     }

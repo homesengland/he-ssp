@@ -1,0 +1,52 @@
+@using HE.Investment.AHP.WWW.Views.ConsortiumMember.Const
+@using HE.Investments.AHP.Consortium.Contract.Enums
+@using HE.Investments.Common.WWW.Components.BackLinkWithCallback
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investments.Common.WWW.Components.PageHeader
+@using HE.Investments.Common.WWW.Components.RadioList
+@using HE.Investments.Common.WWW.Helpers
+@model HE.Investments.AHP.Consortium.Contract.ConsortiumDetails
+
+<gds-div-grid-column-two-thirds>
+    <vc:back-link-with-callback url="@Url.Action("Index", "Consortium")"/>
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+    <vc:page-header title="@ConsortiumMemberPageTitles.AddMembers" caption="@Model.ProgrammeName"/>
+</gds-div-grid-column-two-thirds>
+
+@if (Model.Members.Any())
+{
+    <div class="govuk-!-padding-3">
+        <gds-summary-list>
+            <div class="govuk-summary-list__row">
+                <dt/>
+            </div>
+            @foreach (var organisation in Model.Members)
+            {
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-!-margin-bottom-3">
+                        <div>@organisation.Name</div>
+                        <vc:organisation-details street="@organisation.Street" city="@organisation.City" postal-code="@organisation.PostalCode"/>
+                    </dt>
+                    <dd class="govuk-summary-list__actions">
+                        <gds-link href="@Url.Action("RemoveMember", "ConsortiumMember", new { consortiumId = Model.ConsortiumId.Value, memberId = organisation.OrganisationId ?? organisation.CompanyHouseNumber })">
+                            Remove
+                        </gds-link>
+                    </dd>
+                </div>
+            }
+        </gds-summary-list>
+    </div>
+}
+
+<gds-div-grid-column-two-thirds>
+    <form asp-controller="ConsortiumMember" asp-action="AddMembers" asp-method="post" novalidate>
+        <vc:radio-list
+            field-name="@(nameof(AreAllMembersAdded))"
+            title="Have you added all members to this consortium?"
+            hint="If you need to, you will be able to add more members later."
+            available-options="@SelectListHelper.FromEnumToExtendedList<AreAllMembersAdded>()"/>
+
+        <vc:form-button text="Continue"/>
+        <vc:return-to-account-link />
+    </form>
+</gds-div-grid-column-two-thirds>
