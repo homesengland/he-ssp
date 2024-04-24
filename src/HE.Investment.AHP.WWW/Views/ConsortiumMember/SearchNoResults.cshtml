@@ -1,0 +1,31 @@
+@using HE.Investment.AHP.WWW.Views.ConsortiumMember.Const
+@using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
+@using HE.Investments.AHP.Consortium.Contract
+@using HE.Investments.Common.WWW.Components.PageHeader
+@{
+    ViewData["Title"] = ConsortiumMemberPageTitles.SearchNoResults;
+    var consortiumId = ViewContext.RouteData.Values["consortiumId"];
+}
+
+<gds-div-grid-column-two-thirds>
+    <vc:ahp-workflow-back-button current-page="@ConsortiumMemberWorkflowState.SearchNoResults"/>
+    <vc:page-header title="@ConsortiumMemberPageTitles.SearchNoResults"/>
+
+    <gds-p>
+        We could not find the details you entered in our records.
+    </gds-p>
+
+    <gds-p>
+        If you think you have entered the wrong details, you can
+        <gds-link href="@Url.Action("SearchOrganisation", "ConsortiumMember", new { consortiumId })">
+            try again using a different name.
+        </gds-link>
+    </gds-p>
+
+    <gds-p>
+        Or,
+        <gds-link href="@Url.Action("SearchOrganisation", "ConsortiumMember", new { consortiumId })">
+            enter the details manually.
+        </gds-link>
+    </gds-p>
+</gds-div-grid-column-two-thirds>

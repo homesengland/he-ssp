@@ -19,6 +19,14 @@
         <label class="govuk-label govuk-radios__label" for="@id">
             @option.Text
         </label>
+
+        @if (option.ItemContent != null)
+        {
+            <div class="govuk-!-padding-left-3">
+                <vc:dynamic-component component="@option.ItemContent"/>
+            </div>
+        }
+
         @if (!string.IsNullOrWhiteSpace(option.Hint))
         {
             <he-div-hint class="govuk-!-padding-left-3">

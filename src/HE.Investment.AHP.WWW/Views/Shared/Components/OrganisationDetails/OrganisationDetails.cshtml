@@ -1,0 +1,21 @@
+@model (string Street, string City, string PostalCode, string ProviderCode)
+
+@if (!string.IsNullOrEmpty(Model.Street))
+{
+    <div>@Model.Street</div>
+}
+
+@if (!string.IsNullOrEmpty(Model.City))
+{
+    <div>@Model.City</div>
+}
+
+@if (!string.IsNullOrEmpty(Model.PostalCode))
+{
+    <div>@Model.PostalCode</div>
+}
+
+@if (!string.IsNullOrEmpty(Model.ProviderCode))
+{
+    <div>Provider code: @Model.ProviderCode</div>
+}

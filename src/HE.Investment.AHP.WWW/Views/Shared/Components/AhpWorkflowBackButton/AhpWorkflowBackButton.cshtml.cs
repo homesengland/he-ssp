@@ -18,6 +18,7 @@ public class AhpWorkflowBackButton : ViewComponent
             homeTypeId = ViewContext.RouteData.Values["homeTypeId"] as string,
             deliveryPhaseId = ViewContext.RouteData.Values["deliveryPhaseId"] as string,
             siteId = ViewContext.RouteData.Values["siteId"] as string,
+            consortiumId = ViewContext.RouteData.Values["consortiumId"] as string,
             currentPage = currentPage.ToString(),
         };
     }

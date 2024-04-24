@@ -1,8 +1,7 @@
-@using HE.Investment.AHP.WWW.Views.Consortium
+@using HE.Investment.AHP.WWW.Views.Consortium.Const
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ConsortiumHelpDetailsContent
 @using HE.Investments.Common.WWW.Components.Details
 @using HE.Investments.Common.WWW.Components.PageHeader
-
 @{
     ViewData["Title"] = ConsortiumPageTitles.Start;
 }
@@ -26,7 +25,9 @@
 
     </div>
 
-    <gds-button-start text="Start"></gds-button-start>
+    <a href="@Url.Action("Programme")">
+        <gds-button-start text="Start"></gds-button-start>
+    </a>
 
     <vc:details
         title="Help with consortiums"
