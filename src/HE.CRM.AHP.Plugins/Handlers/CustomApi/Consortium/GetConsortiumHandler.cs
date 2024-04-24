@@ -68,7 +68,7 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.Consortium
 
             if (consortiumMembers.Count > 0)
             {
-                return consortiumMembers.Any(x => x.invln_Partner.Id.ToString().ToLower() == MemberOrganisationId.ToLower())
+                return consortiumMembers.Any(x => x.invln_Partner.Id.ToString().ToLower() == MemberOrganisationId.ToLower());
             }
             return false;
         }
