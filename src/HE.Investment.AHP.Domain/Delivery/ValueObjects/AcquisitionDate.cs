@@ -28,9 +28,9 @@ public class AcquisitionDate : DateValueObject
     public static AcquisitionDate FromDateDetails(bool exists, DateDetails? date) =>
         new(exists, date?.Day, date?.Month, date?.Year);
 
-    protected override IEnumerable<object> GetAtomicValues()
+    protected override IEnumerable<object?> GetAtomicValues()
     {
-        yield return Value!;
+        yield return Value;
         yield return Exists;
     }
 }

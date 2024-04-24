@@ -29,9 +29,9 @@ public class OutlinePlanningApprovalDate : DateValueObject
     public static OutlinePlanningApprovalDate FromDateDetails(bool exists, DateDetails? date) =>
         new(exists, date?.Day, date?.Month, date?.Year);
 
-    protected override IEnumerable<object> GetAtomicValues()
+    protected override IEnumerable<object?> GetAtomicValues()
     {
-        yield return Value!;
+        yield return Value;
         yield return Exists;
     }
 }
