@@ -186,6 +186,7 @@
     "invln_gettemporaryportaldata*",
     "invln_gettypeofhomeslist*",
     "invln_invitecontacttojoinexistingorganisation*",
+    "invln_isconsortiumexistforprogrammeandorganisation*",
     "invln_linkcontactwithorganization*",
     "invln_returnuserprofile*",
     "invln_savetemporaryportaldata*",
