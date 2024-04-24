@@ -7,7 +7,7 @@ namespace HE.Investments.AHP.Consortium.Domain.Tests.TestObjectBuilders;
 
 public class IsPartOfConsortiumBuilder
 {
-    private Mock<IIsPartOfConsortium> _item;
+    private readonly Mock<IIsPartOfConsortium> _item;
 
     private IsPartOfConsortiumBuilder(Mock<IIsPartOfConsortium> item)
     {
