@@ -2252,6 +2252,9 @@ namespace DataverseModel
 			}
 		}
 		
+		/// <summary>
+		/// Lead Organisation
+		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_organisationid")]
 		public Microsoft.Xrm.Sdk.EntityReference invln_organisationid
 		{

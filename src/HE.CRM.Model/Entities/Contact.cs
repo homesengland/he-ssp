@@ -657,6 +657,7 @@ namespace DataverseModel
 			public const string he_PrefixID = "he_prefixid";
 			public const string Home2 = "home2";
 			public const string ImportSequenceNumber = "importsequencenumber";
+			public const string invln_ahpstatuschange_changedby_contact = "invln_ahpstatuschange_changedby_contact";
 			public const string invln_contact_invln_contactwebrole_Contactid = "invln_contact_invln_contactwebrole_Contactid";
 			public const string invln_contact_invln_loanapplication = "invln_contact_invln_loanapplication";
 			public const string invln_contact_invln_loanapplication_contactid = "invln_contact_invln_loanapplication_contactid";
@@ -7408,6 +7409,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("Referencedcontact_parent_contact");
 				this.SetRelatedEntities<DataverseModel.Contact>("contact_parent_contact", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
 				this.OnPropertyChanged("Referencedcontact_parent_contact");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_ahpstatuschange_changedby_contact
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_ahpstatuschange_changedby_contact")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_AHPStatusChange> invln_ahpstatuschange_changedby_contact
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_AHPStatusChange>("invln_ahpstatuschange_changedby_contact", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_ahpstatuschange_changedby_contact");
+				this.SetRelatedEntities<DataverseModel.invln_AHPStatusChange>("invln_ahpstatuschange_changedby_contact", null, value);
+				this.OnPropertyChanged("invln_ahpstatuschange_changedby_contact");
 			}
 		}
 		
