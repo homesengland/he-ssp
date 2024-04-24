@@ -22,7 +22,7 @@ public class NextStateTests
     }
 
     [Theory]
-    [InlineData(ConsortiumWorkflowState.Start, ConsortiumWorkflowState.Index)]
+    [InlineData(ConsortiumWorkflowState.Start, ConsortiumWorkflowState.Programme)]
     public async Task ShouldReturnNextState_WhenBackTriggerExecuted(ConsortiumWorkflowState current, ConsortiumWorkflowState expectedNext)
     {
         // given
