@@ -1,6 +1,6 @@
 using FluentAssertions;
-using HE.Investment.AHP.Contract.Consortium;
 using HE.Investment.AHP.WWW.Workflows;
+using HE.Investments.AHP.Consortium.Contract;
 using HE.Investments.Common.WWW.Routing;
 
 namespace HE.Investment.AHP.WWW.Tests.Workflows.ConsortiumWorkflowTests;
