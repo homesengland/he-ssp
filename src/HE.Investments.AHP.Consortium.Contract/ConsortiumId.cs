@@ -4,9 +4,13 @@ namespace HE.Investments.AHP.Consortium.Contract;
 
 public record ConsortiumId : StringIdValueObject
 {
-    public ConsortiumId(string value)
-        : base(value)
+    public ConsortiumId(string id)
+        : base(id)
     {
     }
-}
 
+    public override string ToString()
+    {
+        return Value;
+    }
+}

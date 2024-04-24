@@ -1,4 +1,4 @@
-using HE.Investment.AHP.Contract.Consortium;
+using HE.Investments.AHP.Consortium.Contract;
 using HE.Investments.Common.WWW.Routing;
 using Stateless;
 
@@ -43,7 +43,6 @@ public class ConsortiumWorkflow : IStateRouting<ConsortiumWorkflowState>
             .Permit(Trigger.Back, ConsortiumWorkflowState.Index);
 
         _machine.Configure(ConsortiumWorkflowState.Programme)
-            .Permit(Trigger.Continue, ConsortiumWorkflowState.SearchOrganisation)
             .Permit(Trigger.Back, ConsortiumWorkflowState.Start);
     }
 }

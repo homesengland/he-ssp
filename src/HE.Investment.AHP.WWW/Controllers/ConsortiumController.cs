@@ -1,8 +1,8 @@
-using HE.Investment.AHP.Contract.Consortium;
 using HE.Investment.AHP.WWW.Models.Consortium;
 using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Account.Api.Contract.User;
 using HE.Investments.Account.Shared.Authorization.Attributes;
+using HE.Investments.AHP.Consortium.Contract;
 using HE.Investments.AHP.Consortium.Contract.Commands;
 using HE.Investments.AHP.Consortium.Contract.Queries;
 using HE.Investments.Common.Validators;
@@ -59,7 +59,7 @@ public class ConsortiumController : WorkflowController<ConsortiumWorkflowState>
             return View("Programme", model with { AvailableProgrammes = await _mediator.Send(new GetAvailableProgrammesQuery(), cancellationToken) });
         }
 
-        return await Continue(new { consortiumId = result.ReturnedData });
+        return RedirectToAction("SearchOrganisation", "ConsortiumMember", new { consortiumId = result.ReturnedData });
     }
 
     protected override async Task<IStateRouting<ConsortiumWorkflowState>> Routing(ConsortiumWorkflowState currentState, object? routeData = null)
