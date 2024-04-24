@@ -2,6 +2,7 @@ using HE.Investment.AHP.Contract.Consortium;
 using HE.Investment.AHP.WWW.Models.Consortium;
 using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Account.Shared.Authorization.Attributes;
+using HE.Investments.AHP.Consortium.Contract.Commands;
 using HE.Investments.AHP.Consortium.Contract.Queries;
 using HE.Investments.Common.WWW.Routing;
 using MediatR;
@@ -39,7 +40,7 @@ public class ConsortiumController : WorkflowController<ConsortiumWorkflowState>
     public async Task<IActionResult> Programme()
     {
         var availableProgrammes = await _mediator.Send(new GetAvailableProgrammesQuery());
-        return View(new SelectProgramme(null, availableProgrammes));
+        return View(new SelectProgramme(string.Empty, availableProgrammes));
     }
 
     [HttpPost("programme")]
