@@ -33,7 +33,7 @@ public class ApplicationsTable : ViewComponent
                 {
                     new(Component: CreateLinkComponent(x)),
                     new(x.Unit?.ToString(CultureInfo.InvariantCulture)),
-                    new(CurrencyHelper.DisplayPounds(x.Grant)),
+                    new(x.Grant.DisplayPounds()),
                     new(x.LocalAuthority ?? GenericMessages.NotProvided),
                     new(Component: CreateApplicationStatusComponent(x)),
                 };

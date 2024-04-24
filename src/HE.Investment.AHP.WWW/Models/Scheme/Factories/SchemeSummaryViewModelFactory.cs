@@ -27,7 +27,7 @@ public class SchemeSummaryViewModelFactory : ISchemeSummaryViewModelFactory
                 IsEditable: false),
             new(
                 "Funding required",
-                CurrencyHelper.DisplayPounds(scheme.RequiredFunding).ToOneElementList(),
+                scheme.RequiredFunding.DisplayPounds().ToOneElementList(),
                 IsEditable: scheme.Application.IsEditable,
                 ActionUrl: CreateSchemeActionUrl(urlHelper, scheme.Application.Id, nameof(SchemeController.Funding))),
             new(
