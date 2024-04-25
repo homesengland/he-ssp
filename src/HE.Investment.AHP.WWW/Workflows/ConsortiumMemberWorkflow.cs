@@ -28,6 +28,7 @@ public class ConsortiumMemberWorkflow : IStateRouting<ConsortiumMemberWorkflowSt
             ConsortiumMemberWorkflowState.SearchOrganisation => true,
             ConsortiumMemberWorkflowState.SearchResult => true,
             ConsortiumMemberWorkflowState.SearchNoResults => true,
+            ConsortiumMemberWorkflowState.AddOrganisation => true,
             ConsortiumMemberWorkflowState.AddMembers => true,
             ConsortiumMemberWorkflowState.RemoveMember => true,
             _ => false,
@@ -50,6 +51,10 @@ public class ConsortiumMemberWorkflow : IStateRouting<ConsortiumMemberWorkflowSt
             .Permit(Trigger.Back, ConsortiumMemberWorkflowState.SearchOrganisation);
 
         _machine.Configure(ConsortiumMemberWorkflowState.SearchNoResults)
+            .Permit(Trigger.Back, ConsortiumMemberWorkflowState.SearchOrganisation);
+
+        _machine.Configure(ConsortiumMemberWorkflowState.AddOrganisation)
+            .Permit(Trigger.Continue, ConsortiumMemberWorkflowState.AddMembers)
             .Permit(Trigger.Back, ConsortiumMemberWorkflowState.SearchOrganisation);
 
         _machine.Configure(ConsortiumMemberWorkflowState.RemoveMember)

@@ -2,7 +2,7 @@ using HE.Investments.Common.Messages;
 
 namespace HE.Investments.Common.Domain.ValueObjects;
 
-public class ShortText : StringValueObject
+public abstract class ShortText : StringValueObject
 {
     protected ShortText(string? value, string fieldName, string fieldDisplayName)
         : base(

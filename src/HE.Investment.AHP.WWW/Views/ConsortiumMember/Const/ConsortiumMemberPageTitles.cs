@@ -8,6 +8,8 @@ public static class ConsortiumMemberPageTitles
 
     public const string SearchNoResults = "The details you entered did not match our records";
 
+    public const string AddOrganisation = "Add organisation to consortium";
+
     public const string AddMembers = "Providers";
 
     public static string ConsortiumManagement(string leadPartnerName) => $"{leadPartnerName} consortium management";

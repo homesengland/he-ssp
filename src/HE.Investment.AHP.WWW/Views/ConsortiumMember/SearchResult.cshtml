@@ -3,7 +3,7 @@
 @using HE.Investments.AHP.Consortium.Contract
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.Components.RadioList
-@model HE.Investment.AHP.WWW.Models.Consortium.SearchOrganisationResultModel
+@model HE.Investment.AHP.WWW.Models.ConsortiumMember.SearchOrganisationResultModel
 @{
     ViewData["Title"] = ConsortiumMemberPageTitles.SearchResult;
     var consortiumId = ViewContext.RouteData.Values["consortiumId"];
@@ -32,7 +32,7 @@
             total-items="@Model.Page.TotalItems">
         </he-pagination>
 
-        <gds-link href="@Url.Action("SearchOrganisation", "ConsortiumMember", new { consortiumId })">
+        <gds-link href="@Url.Action("AddOrganisation", "ConsortiumMember", new { consortiumId })">
             The organisation is not listed above, enter details manually
         </gds-link>
 
