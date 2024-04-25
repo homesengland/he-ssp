@@ -150,6 +150,12 @@ public class DeliveryPhaseCheckAnswersViewModelFactory : IDeliveryPhaseCheckAnsw
             summary?.CompletionMilestone.DisplayPoundsPences().ToOneElementList(),
             IsEditable: isEditable,
             ActionUrl: createAction(nameof(DeliveryPhaseController.SummaryOfDelivery)));
+
+        yield return new(
+            "Have you incurred costs and made payments to at least the level of the grant in these revised milestone amounts",
+            summary?.UnderstandClaimingMilestones.MapToYesNo().ToOneElementList(),
+            IsEditable: isEditable,
+            ActionUrl: createAction(nameof(DeliveryPhaseController.SummaryOfDelivery)));
     }
 
     private static SectionSummaryViewModel CreateMilestonesDatesSummary(DeliveryPhaseDetails deliveryPhase, CreateAction createAction, bool isEditable)
