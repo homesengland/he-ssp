@@ -1,4 +1,4 @@
-namespace HE.Investments.Common;
+namespace HE.Investments.Common.Validators;
 
 public static class Constants
 {

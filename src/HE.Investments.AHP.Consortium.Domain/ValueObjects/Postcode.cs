@@ -1,8 +1,8 @@
 using System.Text.RegularExpressions;
-using HE.Investments.Common;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain.ValueObjects;
 using HE.Investments.Common.Messages;
+using HE.Investments.Common.Validators;
 
 namespace HE.Investments.AHP.Consortium.Domain.ValueObjects;
 

@@ -9,9 +9,7 @@ public class AddManualOrganisationToConsortiumCommandHandler : IRequestHandler<A
 {
     public Task<OperationResult> Handle(AddManualOrganisationToConsortiumCommand request, CancellationToken cancellationToken)
     {
-#pragma warning disable S1481
-        var organisation = Organisation.CreateManual(request.Name, request.AddressLine1, request.AddressLine2, request.TownOrCity, request.County, request.Postcode);
-#pragma warning restore S1481
+        Organisation.CreateManual(request.Name, request.AddressLine1, request.AddressLine2, request.TownOrCity, request.County, request.Postcode);
 
         // TODO: save organisation in CRM + add to consortium
         return Task.FromResult(OperationResult.Success());
