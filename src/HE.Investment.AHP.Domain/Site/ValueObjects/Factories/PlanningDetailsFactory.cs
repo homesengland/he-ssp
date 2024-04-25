@@ -70,8 +70,8 @@ public static class PlanningDetailsFactory
                 new NoProgressOnPlanningApplicationPlanningDetails(expectedPlanningApprovalDate, landRegistryDetails),
             SitePlanningStatus.NoPlanningRequired =>
                 new NoPlanningRequiredPlanningDetails(landRegistryDetails),
-            null => throw new DomainValidationException("PlanningStatus", "Please select value"),
-            _ => throw new DomainValidationException("PlanningStatus", $"Value {planningStatus} is not supported."),
+            null => throw new DomainValidationException("PlanningStatus", "Select the planning status"),
+            _ => throw new DomainValidationException("PlanningStatus", $"Planning status {planningStatus} is not supported."),
         };
     }
 
