@@ -129,7 +129,8 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                     invln_ChangeSource = new OptionSetValue((int)invln_ChangesourceSet.External),
                     invln_Changeto = ahpWithNewStatusCodesAndOtherChanges.StatusCode,
                     invln_AHPApplication = application.ToEntityReference(),
-                    invln_Comment = changeReason
+                    invln_Comment = changeReason,
+                    invln_changedby = contact?.ToEntityReference()
                 };
 
                 _applicationRepository.Update(applicationToUpdate);
@@ -284,7 +285,17 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                         if (applicationMapped.Contains(field))
                         {
                             TracingService.Trace($"contains");
-                            applicationToUpdateOrCreate[field] = applicationMapped[field];
+                            if (field == "invln_representationsandwarrantiesconfirmation")
+                            {
+                                if (applicationMapped.invln_representationsandwarrantiesconfirmation.HasValue)
+                                {
+                                    applicationToUpdateOrCreate.invln_representationsandwarrantiesconfirmation = applicationMapped.invln_representationsandwarrantiesconfirmation;
+                                }
+                            }
+                            else
+                            {
+                                applicationToUpdateOrCreate[field] = applicationMapped[field];
+                            }
                         }
                     }
                 }
