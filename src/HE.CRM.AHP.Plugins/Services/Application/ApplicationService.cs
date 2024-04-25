@@ -2,10 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Remoting.Metadata.W3cXsd2001;
+using System.Security.Policy;
 using System.Text.Json;
 using DataverseModel;
 using HE.Base.Services;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.CRM.AHP.Plugins.Handlers.Site;
 using HE.CRM.AHP.Plugins.Services.GovNotifyEmail;
 using HE.CRM.Common.DtoMapping;
 using HE.CRM.Common.Repositories.Interfaces;
@@ -16,18 +18,13 @@ namespace HE.CRM.AHP.Plugins.Services.Application
     public class ApplicationService : CrmService, IApplicationService
     {
         private readonly IAhpApplicationRepository _applicationRepository;
-
         private readonly IContactRepository _contactRepository;
-
         private readonly ISharepointDocumentLocationRepository _sharepointDocumentLocationRepository;
-
         private readonly ISharepointSiteRepository _sharepointSiteRepository;
-
         private readonly IAhpApplicationRepository _ahpApplicationRepositoryAdmin;
-
         private readonly IAhpStatusChangeRepository _ahpStatusChangeRepository;
-
         private readonly IGovNotifyEmailService _govNotifyEmailService;
+        private readonly ISiteRepository _siteRepository;
 
         public ApplicationService(CrmServiceArgs args) : base(args)
         {
@@ -38,6 +35,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             _ahpApplicationRepositoryAdmin = CrmRepositoriesFactory.GetSystem<IAhpApplicationRepository>();
             _ahpStatusChangeRepository = CrmRepositoriesFactory.Get<IAhpStatusChangeRepository>();
             _govNotifyEmailService = CrmServicesFactory.Get<IGovNotifyEmailService>();
+            _siteRepository = CrmRepositoriesFactory.Get<ISiteRepository>();
         }
 
         public void ChangeApplicationStatus(string organisationId, string contactId, string applicationId, int newStatus, string changeReason, bool representationsandwarranties)
@@ -232,8 +230,9 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                 foreach (var application in applications)
                 {
                     var contact = _contactRepository.GetById(application.invln_contactid.Id, new string[] { Contact.Fields.FirstName, Contact.Fields.LastName, nameof(Contact.invln_externalid).ToLower() });
-
-                    var applicationDto = AhpApplicationMapper.MapRegularEntityToDto(application, contact.invln_externalid);
+                    var site = _siteRepository.GetById(application.invln_Site.Id, new string[] {invln_Sites.Fields.invln_developingpartner,
+                                                        invln_Sites.Fields.invln_ownerofthelandduringdevelopment, invln_Sites.Fields.invln_Ownerofthehomesaftercompletion } )
+                    var applicationDto = AhpApplicationMapper.MapRegularEntityToDto(application, contact.invln_externalid, site);
                     if (application.invln_lastexternalmodificationby != null)
                     {
                         var lastExternalModificationBy = _contactRepository.GetById(application.invln_lastexternalmodificationby.Id,
@@ -266,6 +265,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             var application = JsonSerializer.Deserialize<AhpApplicationDto>(applicationSerialized);
             var contact = _contactRepository.GetContactViaExternalId(contactId);
             var applicationMapped = AhpApplicationMapper.MapDtoToRegularEntity(application, contact.Id.ToString(), organisationId);
+            UpdateSite(application)
             if (string.IsNullOrEmpty(application.id))
             {
                 applicationMapped.invln_lastexternalmodificationon = DateTime.UtcNow;
@@ -308,6 +308,30 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                 applicationToUpdateOrCreate.invln_lastexternalmodificationby = contact.ToEntityReference();
                 _applicationRepository.Update(applicationToUpdateOrCreate);
                 return applicationToUpdateOrCreate.Id;
+            }
+        }
+
+        private void UpdateSite(AhpApplicationDto application)
+        {
+            if (application.siteId != null)
+            {
+                invln_Sites toUpdate = new invln_Sites();
+                toUpdate.Id = Guid.Parse(application.siteId);
+                if (application.developerPartner != null)
+                {
+                    toUpdate.invln_developingpartner = new EntityReference(Account.EntityLogicalName, new Guid(application.developerPartner.organisationId));
+                }
+
+                if (application.ownerOfTheHomesAfterCompletion != null)
+                {
+                    toUpdate.invln_Ownerofthehomesaftercompletion = new EntityReference(Account.EntityLogicalName, new Guid(application.ownerOfTheHomesAfterCompletion.organisationId));
+                }
+
+                if (application.ownerOfTheLandDuringDevelopment != null)
+                {
+                    toUpdate.invln_ownerofthelandduringdevelopment = new EntityReference(Account.EntityLogicalName, new Guid(application.ownerOfTheLandDuringDevelopment.organisationId));
+                }
+                _siteRepository.Update(toUpdate);
             }
         }
 

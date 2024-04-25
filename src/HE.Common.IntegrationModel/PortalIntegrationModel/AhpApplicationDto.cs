@@ -68,5 +68,8 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public ContactDto lastExternalModificationBy { get; set; }
         public ContactDto lastExternalSubmittedBy { get; set; }
         public bool? representationsandwarranties { get; set; }
+        public OrganizationDetailsDto developerPartner { get; set; }
+        public OrganizationDetailsDto ownerOfTheLandDuringDevelopment { get; set; }
+        public OrganizationDetailsDto ownerOfTheHomesAfterCompletion { get; set; }
     }
 }

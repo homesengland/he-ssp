@@ -3,6 +3,7 @@ using HE.Common.IntegrationModel.PortalIntegrationModel;
 using Microsoft.Xrm.Sdk;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Metadata;
 
 namespace HE.CRM.Common.DtoMapping
 {
@@ -81,7 +82,7 @@ namespace HE.CRM.Common.DtoMapping
             return applicationToReturn;
         }
 
-        public static AhpApplicationDto MapRegularEntityToDto(invln_scheme application, string contactExternalId = null)
+        public static AhpApplicationDto MapRegularEntityToDto(invln_scheme application, string contactExternalId = null, invln_Sites sites)
         {
             var applicationDtoToReturn = new AhpApplicationDto()
             {
@@ -128,8 +129,22 @@ namespace HE.CRM.Common.DtoMapping
                 referenceNumber = application.invln_applicationid,
                 applicationStatus = application.invln_ExternalStatus?.Value,
                 contactExternalId = contactExternalId,
-                representationsandwarranties = application.invln_representationsandwarrantiesconfirmation
-
+                representationsandwarranties = application.invln_representationsandwarrantiesconfirmation,
+                developerPartner = new OrganizationDetailsDto()
+                {
+                    registeredCompanyName = sites.invln_developingpartner?.Name,
+                    organisationId = sites.invln_developingpartner?.Id.ToString()
+                },
+                ownerOfTheLandDuringDevelopment = new OrganizationDetailsDto()
+                {
+                    registeredCompanyName = sites.invln_ownerofthelandduringdevelopment?.Name,
+                    organisationId = sites.invln_ownerofthelandduringdevelopment?.Id.ToString()
+                },
+                ownerOfTheHomesAfterCompletion = new OrganizationDetailsDto()
+                {
+                    registeredCompanyName = sites.invln_Ownerofthehomesaftercompletion?.Name,
+                    organisationId = sites.invln_Ownerofthehomesaftercompletion?.Id.ToString()
+                },
             };
             if (application.invln_programmelookup != null)
             {
