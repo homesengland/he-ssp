@@ -1,3 +1,4 @@
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Headings
 @using HE.Investment.AHP.WWW.Views.Delivery.Const
 @using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
@@ -6,7 +7,12 @@
 @using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.WWW.Models.Delivery
 @using HE.Investments.Common.Messages
+@using HE.Investments.Common.WWW.Components.PageHeader
+@using HE.Investments.Common.WWW.Components.RadioYesNo
+@using HE.Investments.Common.WWW.Extensions
 @using HE.Investments.Common.WWW.Helpers
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@inject ModelExpressionProvider ModelProvider
 @model DeliveryPhaseDetails;
 @{
     var applicationId = this.GetApplicationIdFromRoute();
@@ -14,16 +20,17 @@
     ViewData["Title"] = title;
     var isAmendable = Model.Tranches?.ShouldBeAmended ?? false;
     var summaryOfDelivery = Model.Tranches?.SummaryOfDelivery;
+    var (tranchesInvalid, tranchesErrors) = ViewData.ModelState.GetErrors(ModelProvider.GetExpressionText((DeliveryPhaseDetails x) => x.Tranches));
 }
 
 <div class="govuk-grid-column-full">
     <vc:ahp-workflow-back-button current-page="@DeliveryPhaseWorkflowState.SummaryOfDelivery"/>
 
-    <form asp-controller="DeliveryPhase" asp-action="SummaryOfDelivery" asp-method="post" asp-route-workflow="@Context.Request.Query["workflow"]" novalidate>
+    <form asp-controller="DeliveryPhase" asp-action="SummaryOfDelivery" asp-method="post" asp-route-applicationId="@applicationId" asp-route-deliveryPhaseId="@Model.Id" asp-route-workflow="@Context.Request.Query["workflow"]" novalidate>
         <vc:page-header caption="@($"{Model.Application.Name} - {Model.Name}")" title="@title"/>
 
         @Html.HiddenFor(x => x.Tranches!.ShouldBeAmended)
-        @Html.HiddenFor(x => x.Tranches!.SummaryOfDeliveryAmend)
+        @Html.HiddenFor(x => x.Tranches!.SummaryOfDelivery)
         <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0">
             @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
             @(isAmendable ? await Html.PartialAsync("Partials/_SummaryOfDeliveryAmendDescription") : null)
@@ -68,55 +75,63 @@
         </div>
         <div class="@(isAmendable ? "govuk-grid-column-full" : "govuk-grid-column-three-quarters") govuk-!-padding-left-0">
 
-            <table class="govuk-table govuk-!-margin-bottom-8">
-                <thead class="govuk-table__head">
-                <tr class="govuk-table__row">
-                    <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"> Tranche </th >
-                    <th scope="col" class="govuk-table__header govuk-!-width-one-third"> Amount of grant apportioned to this milestone </th >
-                    <th scope="col" class="govuk-table__header govuk-!-width-one-third"> Percentage of grant apportioned to this milestone </th >
-                    @(isAmendable ? Html.Raw("<th scope=\"col\" class=\"govuk-table__header govuk-!-width-one-sixth\"></th>") : null)
-                </tr >
-                </thead >
-                <tbody class="govuk-table__body">
-                @{
-                    if (Model is { IsOnlyCompletionMilestone: false })
-                    {
-                        @await Html.PartialAsync(
-                            "~/Views/DeliveryPhase/Partials/_SummaryOfDeliveryRow.cshtml",
-                            new SummaryOfDeliveryRow(
-                                "Acquisition",
-                                summaryOfDelivery?.AcquisitionMilestone,
-                                summaryOfDelivery?.AcquisitionPercentage,
-                                SummaryOfDeliveryTrancheType.Acquisition,
-                                Model.Id,
-                                applicationId,
-                                isAmendable))
-
-                        @await Html.PartialAsync(
-                            "~/Views/DeliveryPhase/Partials/_SummaryOfDeliveryRow.cshtml",
-                            new SummaryOfDeliveryRow(
-                                "Start on site",
-                                summaryOfDelivery?.StartOnSiteMilestone,
-                                summaryOfDelivery?.StartOnSitePercentage,
-                                SummaryOfDeliveryTrancheType.StartOnSite,
-                                Model.Id,
-                                applicationId,
-                                isAmendable))
-                    }
+            <he-error-form-group asp-for="Tranches">
+                @if (tranchesInvalid)
+                {
+                    <p class="govuk-error-message">
+                        <span class="govuk-visually-hidden">Error:</span> @tranchesErrors
+                    </p>
                 }
+                <table class="govuk-table govuk-!-margin-bottom-8" id="@nameof(Model.Tranches)">
+                    <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                        <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"> Tranche </th >
+                        <th scope="col" class="govuk-table__header govuk-!-width-one-third"> Amount of grant apportioned to this milestone </th >
+                        <th scope="col" class="govuk-table__header govuk-!-width-one-third"> Percentage of grant apportioned to this milestone </th >
+                        @(isAmendable ? Html.Raw("<th scope=\"col\" class=\"govuk-table__header govuk-!-width-one-sixth\"></th>") : null)
+                    </tr >
+                    </thead >
+                    <tbody class="govuk-table__body">
+                    @{
+                        if (Model is { IsOnlyCompletionMilestone: false })
+                        {
+                            @await Html.PartialAsync(
+                                "~/Views/DeliveryPhase/Partials/_SummaryOfDeliveryRow.cshtml",
+                                new SummaryOfDeliveryRow(
+                                    "Acquisition",
+                                    summaryOfDelivery?.AcquisitionMilestone,
+                                    summaryOfDelivery?.AcquisitionPercentage,
+                                    SummaryOfDeliveryTrancheType.Acquisition,
+                                    Model.Id,
+                                    applicationId,
+                                    isAmendable))
 
-                @await Html.PartialAsync(
-                    "~/Views/DeliveryPhase/Partials/_SummaryOfDeliveryRow.cshtml",
-                    new SummaryOfDeliveryRow(
-                        "Completion",
-                        summaryOfDelivery?.CompletionMilestone,
-                        summaryOfDelivery?.CompletionPercentage,
-                        SummaryOfDeliveryTrancheType.Completion,
-                        Model.Id,
-                        applicationId,
-                        isAmendable))
-                </tbody>
-            </table>
+                            @await Html.PartialAsync(
+                                "~/Views/DeliveryPhase/Partials/_SummaryOfDeliveryRow.cshtml",
+                                new SummaryOfDeliveryRow(
+                                    "Start on site",
+                                    summaryOfDelivery?.StartOnSiteMilestone,
+                                    summaryOfDelivery?.StartOnSitePercentage,
+                                    SummaryOfDeliveryTrancheType.StartOnSite,
+                                    Model.Id,
+                                    applicationId,
+                                    isAmendable))
+                        }
+                    }
+
+                    @await Html.PartialAsync(
+                        "~/Views/DeliveryPhase/Partials/_SummaryOfDeliveryRow.cshtml",
+                        new SummaryOfDeliveryRow(
+                            "Completion",
+                            summaryOfDelivery?.CompletionMilestone,
+                            summaryOfDelivery?.CompletionPercentage,
+                            SummaryOfDeliveryTrancheType.Completion,
+                            Model.Id,
+                            applicationId,
+                            isAmendable))
+                    </tbody>
+                </table>
+            </he-error-form-group>
         </div>
         <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0">
 
@@ -124,10 +139,10 @@
                 if (isAmendable)
                 {
                     <vc:radio-yes-no
-                        field-name="Tranches.SummaryOfDeliveryAmend.UnderstandClaimingMilestones"
+                        field-name="Tranches.SummaryOfDelivery.UnderstandClaimingMilestones"
                         title="Do you understand that you must have incurred costs and made payments to at least the level of the grant in these revised milestone amounts before claiming the milestone?"
                         title-type="InputTitleType.InputTitle"
-                        value=@Model.Tranches?.SummaryOfDeliveryAmend?.UnderstandClaimingMilestones/>
+                        value=@Model.Tranches?.SummaryOfDelivery?.UnderstandClaimingMilestones/>
 
                     <vc:form-button/>
 

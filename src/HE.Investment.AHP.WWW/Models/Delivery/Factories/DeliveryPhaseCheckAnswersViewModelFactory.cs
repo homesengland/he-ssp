@@ -96,32 +96,15 @@ public class DeliveryPhaseCheckAnswersViewModelFactory : IDeliveryPhaseCheckAnsw
     private static SectionSummaryViewModel CreateMilestonesSummary(DeliveryPhaseDetails deliveryPhase, CreateAction createAction, bool isEditable)
     {
         var summaryItems = deliveryPhase.Tranches?.ShouldBeAmended == true
-            ? CreateMilestoneWithAmendmentSummary(deliveryPhase, deliveryPhase.Tranches?.SummaryOfDeliveryAmend, createAction, isEditable)
-            : CreateMilestone(deliveryPhase, deliveryPhase.Tranches?.SummaryOfDelivery);
+            ? CreateMilestone(deliveryPhase, deliveryPhase.Tranches?.SummaryOfDelivery, createAction, isEditable)
+            : CreateMilestone(deliveryPhase, deliveryPhase.Tranches?.SummaryOfDelivery, createAction, false);
 
         return new SectionSummaryViewModel("Milestone summary", summaryItems.ToList());
     }
 
-    private static IEnumerable<SectionSummaryItemModel> CreateMilestone(DeliveryPhaseDetails deliveryPhase, SummaryOfDelivery? summary)
-    {
-        yield return new("Grant apportioned to this phase", ((summary?.GrantApportioned).DisplayPoundsPences() ?? "-").ToOneElementList(), IsEditable: false);
-
-        if (deliveryPhase is { IsOnlyCompletionMilestone: false })
-        {
-            yield return new("Acquisition milestone", ((summary?.AcquisitionMilestone).DisplayPoundsPences() ?? "-").ToOneElementList(), IsEditable: false);
-        }
-
-        if (deliveryPhase is { IsOnlyCompletionMilestone: false })
-        {
-            yield return new("Start on site milestone", ((summary?.StartOnSiteMilestone).DisplayPoundsPences() ?? "-").ToOneElementList(), IsEditable: false);
-        }
-
-        yield return new("Completion milestone", ((summary?.CompletionMilestone).DisplayPoundsPences() ?? "-").ToOneElementList(), IsEditable: false);
-    }
-
-    private static IEnumerable<SectionSummaryItemModel> CreateMilestoneWithAmendmentSummary(
+    private static IEnumerable<SectionSummaryItemModel> CreateMilestone(
         DeliveryPhaseDetails deliveryPhase,
-        SummaryOfDeliveryAmend? summary,
+        SummaryOfDelivery? summary,
         CreateAction createAction,
         bool isEditable)
     {
@@ -131,7 +114,7 @@ public class DeliveryPhaseCheckAnswersViewModelFactory : IDeliveryPhaseCheckAnsw
         {
             yield return new(
                 "Acquisition milestone",
-                summary?.AcquisitionMilestone.DisplayPoundsPences().ToOneElementList(),
+                (summary?.AcquisitionMilestone.DisplayPoundsPences() ?? "-").ToOneElementList(),
                 IsEditable: isEditable,
                 ActionUrl: createAction(nameof(DeliveryPhaseController.SummaryOfDelivery)));
         }
@@ -140,20 +123,14 @@ public class DeliveryPhaseCheckAnswersViewModelFactory : IDeliveryPhaseCheckAnsw
         {
             yield return new(
                 "Start on site milestone",
-                summary?.StartOnSiteMilestone.DisplayPoundsPences().ToOneElementList(),
+                (summary?.StartOnSiteMilestone.DisplayPoundsPences() ?? "-").ToOneElementList(),
                 IsEditable: isEditable,
                 ActionUrl: createAction(nameof(DeliveryPhaseController.SummaryOfDelivery)));
         }
 
         yield return new(
             "Completion milestone",
-            summary?.CompletionMilestone.DisplayPoundsPences().ToOneElementList(),
-            IsEditable: isEditable,
-            ActionUrl: createAction(nameof(DeliveryPhaseController.SummaryOfDelivery)));
-
-        yield return new(
-            "Have you incurred costs and made payments to at least the level of the grant in these revised milestone amounts",
-            summary?.UnderstandClaimingMilestones.MapToYesNo().ToOneElementList(),
+            (summary?.CompletionMilestone.DisplayPoundsPences() ?? "-").ToOneElementList(),
             IsEditable: isEditable,
             ActionUrl: createAction(nameof(DeliveryPhaseController.SummaryOfDelivery)));
     }
