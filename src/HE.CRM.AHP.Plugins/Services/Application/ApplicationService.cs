@@ -285,17 +285,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                         if (applicationMapped.Contains(field))
                         {
                             TracingService.Trace($"contains");
-                            if (field == "invln_representationsandwarrantiesconfirmation")
-                            {
-                                if (applicationMapped.invln_representationsandwarrantiesconfirmation.HasValue)
-                                {
-                                    applicationToUpdateOrCreate.invln_representationsandwarrantiesconfirmation = applicationMapped.invln_representationsandwarrantiesconfirmation;
-                                }
-                            }
-                            else
-                            {
-                                applicationToUpdateOrCreate[field] = applicationMapped[field];
-                            }
+                            applicationToUpdateOrCreate[field] = applicationMapped[field];
                         }
                     }
                 }
