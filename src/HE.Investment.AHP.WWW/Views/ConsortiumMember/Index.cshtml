@@ -1,10 +1,8 @@
 @using HE.Investment.AHP.WWW.Views.ConsortiumMember.Const
+@using HE.Investments.Common.WWW.Components.PageHeader
+@model HE.Investments.AHP.Consortium.Contract.ConsortiumDetails
+
 <gds-div-grid-column-two-thirds>
-    <vc:back-link-with-callback url="@Url.Action("Index", "Consortium")"/>
-    <vc:page-header title="@ConsortiumMemberPageTitles.Index" caption="TODO: Name of the programme"/>
-
-    <gds-link href="@Url.Action("SearchOrganisation", "ConsortiumMember", new { consortiumId = ViewContext.RouteData.Values["consortiumId"] })">
-        Add organisation
-    </gds-link>
-
+    <vc:page-header title="@ConsortiumMemberPageTitles.ConsortiumManagement(Model.LeadPartner.Name)"/>
+    <gds-p>TODO: consortium management</gds-p>
 </gds-div-grid-column-two-thirds>
