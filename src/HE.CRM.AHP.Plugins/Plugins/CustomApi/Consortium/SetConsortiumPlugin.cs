@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using DataverseModel;
 using HE.Base.Plugins;
 using HE.Base.Plugins.Handlers;
+using HE.CRM.AHP.Plugins.Handlers.CustomApi.Consortium;
 using Microsoft.Xrm.Sdk;
 
 namespace HE.CRM.AHP.Plugins.Plugins.CustomApi.Consortium
@@ -24,6 +25,7 @@ namespace HE.CRM.AHP.Plugins.Plugins.CustomApi.Consortium
     {
         public override void RegisterHandlers(CrmHandlerFactory<DataverseContext> handlerFactory, IList<ICrmHandler> registeredHandlers)
         {
+            registeredHandlers.Add(handlerFactory.GetHandler<SetConsortiumHandler>());
         }
     }
 }
