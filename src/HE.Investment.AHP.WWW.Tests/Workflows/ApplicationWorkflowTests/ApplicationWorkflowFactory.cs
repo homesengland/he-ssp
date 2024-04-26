@@ -38,7 +38,6 @@ public static class ApplicationWorkflowFactory
         return new ApplicationWorkflow(
             currentSiteWorkflowState,
             () => Task.FromResult(application),
-            () => Task.FromResult(true),
-            application.IsReadOnly);
+            () => Task.FromResult(true));
     }
 }
