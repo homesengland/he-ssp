@@ -16,7 +16,8 @@ namespace HE.CRM.Common.DtoMapping
                 id = consortium.Id.ToString(),
                 name = consortium.invln_Name.ToString(),
                 leadPartnerId = consortium.invln_LeadPartner.Id.ToString(),
-                leadPartnerName = consortium.invln_LeadPartner.Name
+                leadPartnerName = consortium.invln_LeadPartner.Name,
+                programmeId = consortium.invln_Programme.Id.ToString(),
             };
             var consortiumMemberDtos = new List<ConsortiumMemberDto>();
             foreach (var member in consortiumMember)
