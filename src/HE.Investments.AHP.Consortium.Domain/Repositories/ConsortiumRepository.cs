@@ -10,8 +10,6 @@ namespace HE.Investments.AHP.Consortium.Domain.Repositories;
 
 public class ConsortiumRepository : IConsortiumRepository
 {
-    private static readonly IDictionary<ConsortiumId, ConsortiumEntity> Consortia = new Dictionary<ConsortiumId, ConsortiumEntity>();
-
     private readonly IConsortiumCrmContext _crmContext;
 
     public ConsortiumRepository(IConsortiumCrmContext crmContext)
@@ -35,11 +33,6 @@ public class ConsortiumRepository : IConsortiumRepository
                 new ConsortiumMember(new OrganisationId(consortiumDto.leadPartnerId), consortiumDto.leadPartnerName));
         }
 
-        if (Consortia.TryGetValue(consortiumId, out var consortium))
-        {
-            return consortium;
-        }
-
         throw new NotFoundException("Consortium", consortiumId.Value);
     }
 
@@ -55,7 +48,6 @@ public class ConsortiumRepository : IConsortiumRepository
                 cancellationToken);
 
             consortiumEntity.SetId(new ConsortiumId(consortiumId));
-            Consortia[consortiumEntity.Id] = consortiumEntity;
         }
 
         return consortiumEntity;
