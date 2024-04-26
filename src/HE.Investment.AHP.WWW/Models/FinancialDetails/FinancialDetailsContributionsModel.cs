@@ -12,7 +12,7 @@ public class FinancialDetailsContributionsModel : FinancialDetailsBaseModel
         string? saleOfHomesOnThisScheme,
         string? saleOfHomesOnOtherSchemes,
         string? ownResources,
-        string? rCGFContribution,
+        string? rcgfContribution,
         string? otherCapitalSources,
         string? sharedOwnershipSales,
         string? homesTransferValue,
@@ -25,7 +25,7 @@ public class FinancialDetailsContributionsModel : FinancialDetailsBaseModel
         SaleOfHomesOnThisScheme = saleOfHomesOnThisScheme;
         SaleOfHomesOnOtherSchemes = saleOfHomesOnOtherSchemes;
         OwnResources = ownResources;
-        RCGFContribution = rCGFContribution;
+        RcgfContribution = rcgfContribution;
         OtherCapitalSources = otherCapitalSources;
         SharedOwnershipSales = sharedOwnershipSales;
         HomesTransferValue = homesTransferValue;
@@ -42,7 +42,7 @@ public class FinancialDetailsContributionsModel : FinancialDetailsBaseModel
 
     public string? OwnResources { get; set; }
 
-    public string? RCGFContribution { get; set; }
+    public string? RcgfContribution { get; set; }
 
     public string? OtherCapitalSources { get; set; }
 
