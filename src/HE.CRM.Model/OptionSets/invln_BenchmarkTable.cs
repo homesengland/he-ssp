@@ -8,31 +8,28 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HE.Investments.Common.CRM.Model
+namespace DataverseModel
 {
 	
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum he_Sector
+	public enum invln_BenchmarkTable
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Charity = 134370000,
+		Table1AreaaveragesforGrantasofTotalSchemeCosts = 858110000,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Financial = 134370003,
+		Table2Areaaveragesforworkscostsperm2 = 858110001,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		GovernmentCentral = 134370002,
+		Table3Areaaveragesforruralgrantperunit = 858110002,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		GovernmentLocal = 134370001,
+		Table4Areaaveragesforsupportedhousinggrantperunit = 858110003,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		OtherPublicSector = 134370005,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		PrivateSectornonfinancial = 134370004,
+		Table5RegionalBenchmarkGrantPerUnit = 858110004,
 	}
 }
 #pragma warning restore CS1591

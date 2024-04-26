@@ -61,6 +61,13 @@ namespace DataverseModel
 			public const string ImportSequenceNumber = "importsequencenumber";
 			public const string invln_benchmarkgpu = "invln_benchmarkgpu";
 			public const string invln_benchmarkgpu_Base = "invln_benchmarkgpu_base";
+			public const string invln_BenchmarkTable = "invln_benchmarktable";
+			public const string invln_benchmarktableName = "invln_benchmarktablename";
+			public const string invln_BenchmarkValuePercentage = "invln_benchmarkvaluepercentage";
+			public const string invln_BenchmarkValueType = "invln_benchmarkvaluetype";
+			public const string invln_benchmarkvaluetypeName = "invln_benchmarkvaluetypename";
+			public const string invln_GovernmentOfficeRegion = "invln_governmentofficeregion";
+			public const string invln_governmentofficeregionName = "invln_governmentofficeregionname";
 			public const string invln_grantbenchmarkId = "invln_grantbenchmarkid";
 			public const string Id = "invln_grantbenchmarkid";
 			public const string invln_grantbenchmarkname = "invln_grantbenchmarkname";
@@ -315,6 +322,125 @@ namespace DataverseModel
 			get
 			{
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_benchmarkgpu_base");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_benchmarktable")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_BenchmarkTable
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_benchmarktable");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_BenchmarkTable");
+				this.SetAttributeValue("invln_benchmarktable", value);
+				this.OnPropertyChanged("invln_BenchmarkTable");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_benchmarktablename")]
+		public string invln_benchmarktableName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_benchmarktable"))
+				{
+					return this.FormattedValues["invln_benchmarktable"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_benchmarkvaluepercentage")]
+		public System.Nullable<decimal> invln_BenchmarkValuePercentage
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_benchmarkvaluepercentage");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_BenchmarkValuePercentage");
+				this.SetAttributeValue("invln_benchmarkvaluepercentage", value);
+				this.OnPropertyChanged("invln_BenchmarkValuePercentage");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_benchmarkvaluetype")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_BenchmarkValueType
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_benchmarkvaluetype");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_BenchmarkValueType");
+				this.SetAttributeValue("invln_benchmarkvaluetype", value);
+				this.OnPropertyChanged("invln_BenchmarkValueType");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_benchmarkvaluetypename")]
+		public string invln_benchmarkvaluetypeName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_benchmarkvaluetype"))
+				{
+					return this.FormattedValues["invln_benchmarkvaluetype"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_governmentofficeregion")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_GovernmentOfficeRegion
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_governmentofficeregion");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_GovernmentOfficeRegion");
+				this.SetAttributeValue("invln_governmentofficeregion", value);
+				this.OnPropertyChanged("invln_GovernmentOfficeRegion");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_governmentofficeregionname")]
+		public string invln_governmentofficeregionName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_governmentofficeregion"))
+				{
+					return this.FormattedValues["invln_governmentofficeregion"];
+				}
+				else
+				{
+					return default(string);
+				}
 			}
 		}
 		

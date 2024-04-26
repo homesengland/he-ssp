@@ -30,6 +30,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getahpapplication.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getahpapplicationdocumentlocation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getconsortium.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getconsortiums.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getcontactrole.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getfilelocationforapplicationloan.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getloanapplicationsforaccountandcontact.cs" />
@@ -209,6 +210,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\Goal_FiscalPeriod.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\Goal_FiscalYear.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_Assistivesoftwaresupportlist.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_GovernmentOfficeRegion.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_howcouldweimprovethecrm.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_HoweasywasittousetheCRM.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_InteractionPipelineOpportunity.cs" />
@@ -237,6 +239,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_AssessedforBHL.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_BaseCaseType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_BaseRate.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_BenchmarkTable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_BenchmarkValueType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_brownfieldgreenfield.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Buildingtype.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_BuildType.cs" />

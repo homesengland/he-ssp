@@ -9,7 +9,7 @@ namespace HE.CRM.Common.DtoMapping
 {
     public class ConsortiumMapper
     {
-        public static ConsortiumDto MapRegularEntityToDto(invln_Consortium consortium, List<invln_ConsortiumMember> consortiumMember)
+        public static ConsortiumDto MapRegularEntityToDto(invln_Consortium consortium, List<invln_ConsortiumMember> consortiumMember = null)
         {
             var consortiumDto = new ConsortiumDto
             {
@@ -18,6 +18,7 @@ namespace HE.CRM.Common.DtoMapping
                 leadPartnerId = consortium.invln_LeadPartner.Id.ToString(),
                 leadPartnerName = consortium.invln_LeadPartner.Name,
                 programmeId = consortium.invln_Programme.Id.ToString(),
+                programmeName = consortium.invln_Programme.Name
             };
             var consortiumMemberDtos = new List<ConsortiumMemberDto>();
             foreach (var member in consortiumMember)

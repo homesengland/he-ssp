@@ -83,6 +83,8 @@ namespace DataverseModel
 			public const string invln_externalsitestatus = "invln_externalsitestatus";
 			public const string invln_externalsitestatusName = "invln_externalsitestatusname";
 			public const string invln_furtherstepsrequired = "invln_furtherstepsrequired";
+			public const string invln_GovernmentOfficeRegion = "invln_governmentofficeregion";
+			public const string invln_governmentofficeregionName = "invln_governmentofficeregionname";
 			public const string invln_grantfundingforallhomes = "invln_grantfundingforallhomes";
 			public const string invln_grantfundingforallhomesName = "invln_grantfundingforallhomesname";
 			public const string invln_greenbelt = "invln_greenbelt";
@@ -812,6 +814,40 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_furtherstepsrequired");
 				this.SetAttributeValue("invln_furtherstepsrequired", value);
 				this.OnPropertyChanged("invln_furtherstepsrequired");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_governmentofficeregion")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_GovernmentOfficeRegion
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_governmentofficeregion");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_GovernmentOfficeRegion");
+				this.SetAttributeValue("invln_governmentofficeregion", value);
+				this.OnPropertyChanged("invln_GovernmentOfficeRegion");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_governmentofficeregionname")]
+		public string invln_governmentofficeregionName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_governmentofficeregion"))
+				{
+					return this.FormattedValues["invln_governmentofficeregion"];
+				}
+				else
+				{
+					return default(string);
+				}
 			}
 		}
 		

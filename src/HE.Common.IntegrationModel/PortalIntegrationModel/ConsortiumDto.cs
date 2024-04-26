@@ -10,6 +10,7 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public string leadPartnerName { get; set; }
         public List<ConsortiumMemberDto> members { get; set; }
         public string programmeId { get; set; }
+        public string programmeName { get; set; }
 
     }
 }
