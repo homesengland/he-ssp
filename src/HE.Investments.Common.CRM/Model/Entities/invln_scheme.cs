@@ -287,6 +287,7 @@ namespace HE.Investments.Common.CRM.Model
 			public const string invln_scheme_GrowthTeam_team = "invln_scheme_GrowthTeam_team";
 			public const string invln_scheme_invln_Externalcommses = "invln_scheme_invln_Externalcommses";
 			public const string invln_scheme_invln_govnotifyemails = "invln_scheme_invln_govnotifyemails";
+			public const string invln_scheme_LocalAuthority_invln_ahglocalautho = "invln_scheme_LocalAuthority_invln_ahglocalautho";
 			public const string invln_scheme_OwneroftheHomes_account = "invln_scheme_OwneroftheHomes_account";
 			public const string invln_scheme_OwneroftheLand_account = "invln_scheme_OwneroftheLand_account";
 			public const string invln_scheme_ProviderNameNew_account = "invln_scheme_ProviderNameNew_account";
@@ -2251,6 +2252,9 @@ namespace HE.Investments.Common.CRM.Model
 			}
 		}
 		
+		/// <summary>
+		/// Lead Organisation
+		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_organisationid")]
 		public Microsoft.Xrm.Sdk.EntityReference invln_organisationid
 		{
@@ -4191,6 +4195,27 @@ namespace HE.Investments.Common.CRM.Model
 				this.OnPropertyChanging("invln_scheme_GrowthTeam_team");
 				this.SetRelatedEntity<HE.Investments.Common.CRM.Model.Team>("invln_scheme_GrowthTeam_team", null, value);
 				this.OnPropertyChanged("invln_scheme_GrowthTeam_team");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_scheme_LocalAuthority_invln_ahglocalautho
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_localauthority")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_scheme_LocalAuthority_invln_ahglocalautho")]
+		public HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities invln_scheme_LocalAuthority_invln_ahglocalautho
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities>("invln_scheme_LocalAuthority_invln_ahglocalautho", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_scheme_LocalAuthority_invln_ahglocalautho");
+				this.SetRelatedEntity<HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities>("invln_scheme_LocalAuthority_invln_ahglocalautho", null, value);
+				this.OnPropertyChanged("invln_scheme_LocalAuthority_invln_ahglocalautho");
 			}
 		}
 		

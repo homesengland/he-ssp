@@ -654,10 +654,11 @@ namespace HE.Investments.Common.CRM.Model
 			public const string he_isverifiedName = "he_isverifiedname";
 			public const string he_marketingsend = "he_marketingsend";
 			public const string he_marketingsendName = "he_marketingsendname";
-			public const string he_pipeline_portalowner_contact = "he_pipeline_portalowner_contact";
 			public const string he_PrefixID = "he_prefixid";
 			public const string Home2 = "home2";
 			public const string ImportSequenceNumber = "importsequencenumber";
+			public const string invln_ahpstatuschange_changedby_contact = "invln_ahpstatuschange_changedby_contact";
+			public const string invln_consortium_Createdby_contact = "invln_consortium_Createdby_contact";
 			public const string invln_contact_invln_contactwebrole_Contactid = "invln_contact_invln_contactwebrole_Contactid";
 			public const string invln_contact_invln_loanapplication = "invln_contact_invln_loanapplication";
 			public const string invln_contact_invln_loanapplication_contactid = "invln_contact_invln_loanapplication_contactid";
@@ -7413,22 +7414,42 @@ namespace HE.Investments.Common.CRM.Model
 		}
 		
 		/// <summary>
-		/// 1:N he_pipeline_portalowner_contact
+		/// 1:N invln_ahpstatuschange_changedby_contact
 		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("he_pipeline_portalowner_contact")]
-		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.he_Pipeline> he_pipeline_portalowner_contact
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_ahpstatuschange_changedby_contact")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_AHPStatusChange> invln_ahpstatuschange_changedby_contact
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.he_Pipeline>("he_pipeline_portalowner_contact", null);
+				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_AHPStatusChange>("invln_ahpstatuschange_changedby_contact", null);
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("he_pipeline_portalowner_contact");
-				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.he_Pipeline>("he_pipeline_portalowner_contact", null, value);
-				this.OnPropertyChanged("he_pipeline_portalowner_contact");
+				this.OnPropertyChanging("invln_ahpstatuschange_changedby_contact");
+				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_AHPStatusChange>("invln_ahpstatuschange_changedby_contact", null, value);
+				this.OnPropertyChanged("invln_ahpstatuschange_changedby_contact");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_consortium_Createdby_contact
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_consortium_Createdby_contact")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_Consortium> invln_consortium_Createdby_contact
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_Consortium>("invln_consortium_Createdby_contact", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_consortium_Createdby_contact");
+				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_Consortium>("invln_consortium_Createdby_contact", null, value);
+				this.OnPropertyChanged("invln_consortium_Createdby_contact");
 			}
 		}
 		

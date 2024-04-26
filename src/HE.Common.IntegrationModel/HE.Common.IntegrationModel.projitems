@@ -11,6 +11,8 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\AhgLocalAuthorityDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\AhpApplicationDto.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\ConsortiumDto.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\ConsortiumMemberDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\ContactDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\ContactRolesDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\DeliveryPhaseDto.cs" />
