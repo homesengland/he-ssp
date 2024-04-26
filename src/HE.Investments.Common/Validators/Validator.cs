@@ -85,7 +85,7 @@ public class Validator
             return this;
         }
 
-        MatchRegex("^[A-Z]{1,2}\\d[A-Z\\d]? ?\\d[A-Z]{2}$", errorMessage);
+        MatchRegex(Constants.UkPostcodeRegex, errorMessage);
 
         return this;
     }

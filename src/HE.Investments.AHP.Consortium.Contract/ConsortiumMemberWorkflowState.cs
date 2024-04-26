@@ -6,6 +6,7 @@ public enum ConsortiumMemberWorkflowState
     SearchOrganisation,
     SearchResult,
     SearchNoResults,
+    AddOrganisation,
     AddMembers,
     RemoveMember,
 }

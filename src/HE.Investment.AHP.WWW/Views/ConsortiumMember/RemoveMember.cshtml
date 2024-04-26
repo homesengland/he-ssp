@@ -1,11 +1,17 @@
 @using HE.Investment.AHP.WWW.Views.ConsortiumMember.Const
 @using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
 @using HE.Investments.AHP.Consortium.Contract
-@using HE.Investments.Common.WWW.Components.PageHeader
+@using HE.Investments.AHP.Consortium.Contract.Commands
+@model OrganisationDetails
 
 <gds-div-grid-column-two-thirds>
     <vc:ahp-workflow-back-button current-page="@ConsortiumMemberWorkflowState.RemoveMember"/>
-    <vc:page-header title="@ConsortiumMemberPageTitles.RemoveMember("TODO")"/>
+    <form asp-controller="ConsortiumMember" asp-action="RemoveMember" asp-method="post" novalidate>
+        <vc:radio-yes-no title="@ConsortiumMemberPageTitles.RemoveMember(Model.Name)"
+                         title-type="InputTitleType.PageHeader"
+                         hint="The organisation will no longer be able to view any applications."
+                         field-name="@nameof(RemoveOrganisationFromConsortiumCommand.IsConfirmed)"/>
 
-    TODO: remove member page
+        <vc:form-button text="Continue"/>
+    </form>
 </gds-div-grid-column-two-thirds>

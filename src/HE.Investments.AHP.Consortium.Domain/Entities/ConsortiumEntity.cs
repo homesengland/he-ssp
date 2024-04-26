@@ -9,8 +9,9 @@ namespace HE.Investments.AHP.Consortium.Domain.Entities;
 
 public class ConsortiumEntity
 {
-    private ConsortiumEntity(ConsortiumName name, ProgrammeSlim programme, ConsortiumMember leadPartner)
+    private ConsortiumEntity(ConsortiumName name, ProgrammeSlim programme, ConsortiumMember leadPartner, ConsortiumId? id = null)
     {
+        Id = id ?? ConsortiumId.New();
         Programme = programme;
         LeadPartner = leadPartner;
         Name = name;

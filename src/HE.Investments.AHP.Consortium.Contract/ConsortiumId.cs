@@ -9,6 +9,12 @@ public record ConsortiumId : StringIdValueObject
     {
     }
 
+    private ConsortiumId()
+    {
+    }
+
+    public static ConsortiumId New() => new();
+
     public override string ToString()
     {
         return Value;

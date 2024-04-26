@@ -1,0 +1,60 @@
+@using HE.Investment.AHP.WWW.Views.ConsortiumMember.Const
+@using HE.Investments.AHP.Consortium.Contract
+@model HE.Investment.AHP.WWW.Models.ConsortiumMember.AddOrganisationModel
+@{
+    ViewData["Title"] = ConsortiumMemberPageTitles.AddOrganisation;
+}
+
+<gds-div-grid-column-two-thirds>
+    <vc:ahp-workflow-back-button current-page="@ConsortiumMemberWorkflowState.AddOrganisation"/>
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+    <vc:page-header title="@ConsortiumMemberPageTitles.AddOrganisation"/>
+
+    <form asp-controller="ConsortiumMember" asp-action="AddOrganisation" asp-method="post" novalidate>
+        <vc:text-input
+            title="Organisation name"
+            title-type="InputTitleType.InputTitle"
+            field-name="@nameof(Model.Name)"
+            value="@Model.Name"/>
+
+        <gds-field-set role="group">
+            <gds-legend>
+                <gds-h2>Registered address</gds-h2>
+            </gds-legend>
+
+            <vc:text-input
+                title="Address line 1"
+                title-type="InputTitleType.InputDescription"
+                field-name="@nameof(Model.AddressLine1)"
+                value="@Model.AddressLine1"/>
+
+            <vc:text-input
+                title="Address line 2 (optional)"
+                title-type="InputTitleType.InputDescription"
+                field-name="@nameof(Model.AddressLine2)"
+                value="@Model.AddressLine2"/>
+
+            <vc:text-input
+                title="Town or city"
+                title-type="InputTitleType.InputDescription"
+                field-name="@nameof(Model.TownOrCity)"
+                value="@Model.TownOrCity"/>
+
+
+            <vc:text-input
+                title="County (optional)"
+                title-type="InputTitleType.InputDescription"
+                field-name="@nameof(Model.County)"
+                value="@Model.County"/>
+
+            <vc:text-input
+                title="Postcode"
+                title-type="InputTitleType.InputDescription"
+                field-name="@nameof(Model.Postcode)"
+                css-class="govuk-!-width-one-half"
+                value="@Model.Postcode"/>
+        </gds-field-set>
+
+        <vc:form-button/>
+    </form>
+</gds-div-grid-column-two-thirds>

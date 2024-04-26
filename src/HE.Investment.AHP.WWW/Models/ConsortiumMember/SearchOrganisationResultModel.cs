@@ -1,7 +1,7 @@
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.WWW.Models;
 
-namespace HE.Investment.AHP.WWW.Models.Consortium;
+namespace HE.Investment.AHP.WWW.Models.ConsortiumMember;
 
 public record SearchOrganisationResultModel(
     string ConsortiumId,
