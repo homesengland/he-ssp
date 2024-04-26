@@ -61,7 +61,7 @@ public class Order10Withdraw : AhpIntegrationTest
         taskListPage
             .UrlEndWith(ApplicationPagesUrl.TaskListSuffix)
             .HasTitle(ApplicationData.ApplicationName)
-            .HasSuccessNotificationBanner("You will no longer be able proceed with this application.")
+            .HasSuccessNotificationBanner("You will no longer be able to proceed with this application.")
             .HasStatusTagByTestId(ApplicationStatus.Withdrawn.GetDescription(), "application-status");
 
         SaveCurrentPage();
