@@ -87,6 +87,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\AHP_EXTERNAL_APPLICATION_SUBMITTED.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\AHP_EXTERNAL_REMINDER_TO_FINALIZE_APPLICATION_REFERRED_BACK.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\AHP_EXTERNAL_REMINDER_TO_FINALIZE_DRAFT_APPLICATION.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\AHP_INTERNAL_APPLICATION_APPROVED_SUBJECT_TO_CONTRACT.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\AHP_INTERNAL_REQUEST_TO_WITHDRAW.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\COMMON_CHANGE_EXTERNAL_USER_PERMISSIONS.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\COMMON_GRANT_ORGANISATION_ADMIN_PERMISSIONS.cs" />

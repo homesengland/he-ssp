@@ -165,6 +165,13 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
             {
                 return;
             }
+
+            if (application.invln_noofhomes == null || deliveryPhaseMapped.invln_NoofHomes == null ||
+                application.invln_fundingrequired == null)
+            {
+                return;
+            }
+
             TracingService.Trace($"numberOfHouseApplication: {application.invln_noofhomes.Value}");
             var numberOfHouseApplication = application.invln_noofhomes.Value;
             TracingService.Trace($"numberOfHousePhase: {deliveryPhaseMapped.invln_NoofHomes.Value}");

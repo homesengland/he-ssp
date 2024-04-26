@@ -1,4 +1,4 @@
-namespace HE.Investment.AHP.WWW.Views.Consortium;
+namespace HE.Investment.AHP.WWW.Views.Consortium.Const;
 
 public static class ConsortiumPageTitles
 {

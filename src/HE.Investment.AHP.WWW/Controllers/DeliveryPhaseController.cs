@@ -12,6 +12,7 @@ using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Validators;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.Workflow;
 using HE.Investments.Common.WWW.Controllers;
@@ -239,7 +240,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
                 new ClaimMilestonesCommand(
                     AhpApplicationId.From(applicationId),
                     new DeliveryPhaseId(deliveryPhaseId),
-                    model.Tranches?.SummaryOfDeliveryAmend?.UnderstandClaimingMilestones),
+                    model.Tranches?.SummaryOfDelivery?.UnderstandClaimingMilestones),
                 nameof(SummaryOfDelivery),
                 deliveryPhaseDetails => deliveryPhaseDetails,
                 cancellationToken);
@@ -261,9 +262,9 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
 
         var tranche = trancheType switch
         {
-            SummaryOfDeliveryTrancheType.Acquisition => deliveryPhaseDetails.Tranches?.SummaryOfDeliveryAmend?.AcquisitionPercentage,
-            SummaryOfDeliveryTrancheType.Completion => deliveryPhaseDetails.Tranches?.SummaryOfDeliveryAmend?.CompletionPercentage,
-            SummaryOfDeliveryTrancheType.StartOnSite => deliveryPhaseDetails.Tranches?.SummaryOfDeliveryAmend?.StartOnSitePercentage,
+            SummaryOfDeliveryTrancheType.Acquisition => deliveryPhaseDetails.Tranches?.SummaryOfDelivery?.AcquisitionPercentage,
+            SummaryOfDeliveryTrancheType.Completion => deliveryPhaseDetails.Tranches?.SummaryOfDelivery?.CompletionPercentage,
+            SummaryOfDeliveryTrancheType.StartOnSite => deliveryPhaseDetails.Tranches?.SummaryOfDelivery?.StartOnSitePercentage,
             _ => throw new NotSupportedException(nameof(trancheType)),
         };
 
@@ -271,7 +272,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
             "SummaryOfDeliveryTranche",
             new SummaryOfDeliveryTrancheModel(
                 trancheType,
-                tranche,
+                tranche.ToWholePercentage().WithoutPercentageChar(),
                 deliveryPhaseDetails.Id,
                 deliveryPhaseDetails.Name,
                 deliveryPhaseDetails.Application.Name));
@@ -287,6 +288,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     {
         var ahpApplicationId = AhpApplicationId.From(applicationId);
         var deliveryId = new DeliveryPhaseId(deliveryPhaseId);
+        Request.TryGetWorkflowQueryParameter(out var workflow);
 
         IRequest<OperationResult> command = summaryOfDeliveryAmend.TrancheType switch
         {
@@ -305,7 +307,14 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
             _ => throw new NotSupportedException(nameof(summaryOfDeliveryAmend.TrancheType)),
         };
 
-        return await ExecuteCommand(command, nameof(SummaryOfDeliveryTranche), _ => summaryOfDeliveryAmend, cancellationToken);
+        var result = await _mediator.Send(command, cancellationToken);
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+            return View("SummaryOfDeliveryTranche", summaryOfDeliveryAmend);
+        }
+
+        return RedirectToAction("SummaryOfDelivery", new { applicationId, deliveryPhaseId, workflow });
     }
 
     [HttpGet("{deliveryPhaseId}/remove")]

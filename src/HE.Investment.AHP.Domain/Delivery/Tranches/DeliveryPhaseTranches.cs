@@ -80,13 +80,13 @@ public class DeliveryPhaseTranches : IQuestion
         if (!understandClaimingMilestones.GetValueOrDefault())
         {
             OperationResult.ThrowValidationError(
-                "Tranches.SummaryOfDeliveryAmend.UnderstandClaimingMilestones",
+                "Tranches.SummaryOfDelivery.UnderstandClaimingMilestones",
                 "You must confirm you understand this to continue");
         }
 
         if (!PercentagesAmended.IsSumUpTo100Percentage())
         {
-            OperationResult.ThrowValidationError("Tranche", "Tranche proportions for this delivery phase must add to 100%");
+            OperationResult.ThrowValidationError("Tranches", "Tranche proportions for this delivery phase must add to 100%");
         }
 
         ClaimMilestone = _modificationTracker.Change(ClaimMilestone, true);
@@ -105,29 +105,6 @@ public class DeliveryPhaseTranches : IQuestion
         }
 
         return UseMilestonesPercentageTranches();
-    }
-
-    public MilestonesTranches CalculateTranches()
-    {
-        if (GrantApportioned <= 0)
-        {
-            return MilestonesTranches.LackOfCalculation;
-        }
-
-        var percentages = GetPercentageTranches();
-        var acquisition = (GrantApportioned * percentages.Acquisition?.Value).ToWholeNumberRoundFloor();
-        var startOnSite = (GrantApportioned * percentages.StartOnSite?.Value).ToWholeNumberRoundFloor();
-        var completion = (GrantApportioned * percentages.Completion?.Value).RoundToTwoDecimalPlaces();
-
-        var leftOver = (GrantApportioned - (acquisition + startOnSite + completion)).RoundToTwoDecimalPlaces();
-        if (leftOver > 0 && (leftOver < GrantApportioned * 0.01m || leftOver < 1))
-        {
-            completion += leftOver;
-        }
-
-        var sumOfGrantApportioned = acquisition + startOnSite + completion;
-
-        return new MilestonesTranches(sumOfGrantApportioned, acquisition, startOnSite, completion);
     }
 
     public bool IsAnswered()
