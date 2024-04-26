@@ -51,6 +51,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
 
     [HttpGet("start")]
     [WorkflowState(ApplicationWorkflowState.Start)]
+    [AuthorizeWithCompletedProfile(AccountAccessContext.EditApplications)]
     public IActionResult Start()
     {
         return View("Splash");
@@ -58,6 +59,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
 
     [HttpPost("start")]
     [WorkflowState(ApplicationWorkflowState.Start)]
+    [AuthorizeWithCompletedProfile(AccountAccessContext.EditApplications)]
     public async Task<IActionResult> StartPost(CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new GetSiteListQuery(new PaginationRequest(1, 1)), cancellationToken);
@@ -71,6 +73,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
 
     [WorkflowState(ApplicationWorkflowState.ApplicationName)]
     [HttpGet("/{siteId}/application/name")]
+    [AuthorizeWithCompletedProfile(AccountAccessContext.EditApplications)]
     public IActionResult Name([FromQuery] string? applicationName)
     {
         return View("Name", new ApplicationBasicModel(null, applicationName, Contract.Application.Tenure.Undefined));
@@ -78,6 +81,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
 
     [WorkflowState(ApplicationWorkflowState.ApplicationName)]
     [HttpPost("/{siteId}/application/name")]
+    [AuthorizeWithCompletedProfile(AccountAccessContext.EditApplications)]
     public async Task<IActionResult> Name([FromRoute] string siteId, ApplicationBasicModel model, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new IsApplicationNameAvailableQuery(model.Name), cancellationToken);
@@ -93,6 +97,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
 
     [WorkflowState(ApplicationWorkflowState.ApplicationTenure)]
     [HttpGet("/{siteId}/application/tenure")]
+    [AuthorizeWithCompletedProfile(AccountAccessContext.EditApplications)]
     public IActionResult Tenure([FromQuery] string applicationName)
     {
         return View("Tenure", new ApplicationBasicModel(null, applicationName, Contract.Application.Tenure.Undefined));
@@ -100,6 +105,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
 
     [WorkflowState(ApplicationWorkflowState.ApplicationTenure)]
     [HttpPost("/{siteId}/application/tenure")]
+    [AuthorizeWithCompletedProfile(AccountAccessContext.EditApplications)]
     public async Task<IActionResult> Tenure([FromRoute] string siteId, ApplicationBasicModel model, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new CreateApplicationCommand(new SiteId(siteId), model.Name, model.Tenure), cancellationToken);
@@ -283,16 +289,14 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
         return await Back(currentPage, new { applicationId });
     }
 
-    protected override async Task<IStateRouting<ApplicationWorkflowState>> Routing(ApplicationWorkflowState currentState, object? routeData = null)
+    protected override Task<IStateRouting<ApplicationWorkflowState>> Routing(ApplicationWorkflowState currentState, object? routeData = null)
     {
         var applicationId = this.TryGetApplicationIdFromRoute();
-        var isReadOnly = !await _accountAccessContext.CanEditApplication();
 
-        return new ApplicationWorkflow(
-                currentState,
-                async () => await _mediator.Send(new GetApplicationQuery(applicationId!)),
-                async () => applicationId.IsProvided() && await _mediator.Send(new IsApplicationExistQuery(applicationId!)),
-                isReadOnly);
+        return Task.FromResult<IStateRouting<ApplicationWorkflowState>>(new ApplicationWorkflow(
+            currentState,
+            async () => await _mediator.Send(new GetApplicationQuery(applicationId!)),
+            async () => applicationId.IsProvided() && await _mediator.Send(new IsApplicationExistQuery(applicationId!))));
     }
 
     private async Task<IActionResult> ReturnViewToChangeApplicationStatus(Guid applicationId, CancellationToken cancellationToken)
