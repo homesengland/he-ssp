@@ -1,0 +1,26 @@
+@using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investment.AHP.WWW.Views.ConsortiumMember.Const
+@using HE.Investments.AHP.Consortium.Contract
+@using HE.Investments.AHP.Consortium.Contract.Commands
+@using HE.Investments.Common.WWW.Components.TextInput
+@model string;
+@{
+    ViewData["Title"] = ConsortiumMemberPageTitles.SearchOrganisation;
+}
+
+<gds-div-grid-column-two-thirds>
+    <vc:ahp-workflow-back-button current-page="@ConsortiumMemberWorkflowState.SearchOrganisation"/>
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+
+    <form asp-controller="ConsortiumMember" asp-action="SearchOrganisation" asp-method="post" novalidate>
+        <vc:text-input
+            title-type="InputTitleType.PageHeader"
+            title="@ConsortiumMemberPageTitles.SearchOrganisation"
+            paragraph="You can search and add additional organisations before submitting the request."
+            field-name="@nameof(ProvideSearchOrganisationPhraseCommand.Phrase)"
+            value=@Model/>
+
+        <vc:form-button text="Search"/>
+    </form>
+</gds-div-grid-column-two-thirds>

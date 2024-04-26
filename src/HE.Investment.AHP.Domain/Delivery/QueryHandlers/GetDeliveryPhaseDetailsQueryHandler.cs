@@ -1,5 +1,4 @@
 using HE.Investment.AHP.Contract.Delivery;
-using HE.Investment.AHP.Contract.Delivery.MilestonePayments;
 using HE.Investment.AHP.Contract.Delivery.Queries;
 using HE.Investment.AHP.Domain.Application.Mappers;
 using HE.Investment.AHP.Domain.Common.Mappers;
@@ -49,8 +48,7 @@ public class GetDeliveryPhaseDetailsQueryHandler : IRequestHandler<GetDeliveryPh
             deliveryPhase.TotalHomesToBeDeliveredInThisPhase,
             new DeliveryPhaseTranchesDto(
                 deliveryPhase.Tranches.CanBeAmended,
-                GetSummaryOfDelivery(deliveryPhase),
-                GetSummaryOfDeliveryAmend(deliveryPhase)),
+                GetSummaryOfDelivery(deliveryPhase)),
             deliveryPhase.Organisation.IsUnregisteredBody,
             deliveryPhase.DeliveryPhaseMilestones.IsOnlyCompletionMilestone,
             DateDetails.FromDateTime(deliveryPhase.DeliveryPhaseMilestones.AcquisitionMilestone?.MilestoneDate?.Value),
@@ -73,23 +71,7 @@ public class GetDeliveryPhaseDetailsQueryHandler : IRequestHandler<GetDeliveryPh
             deliveryPhase.MilestonesTranches.StartOnSiteMilestone,
             milestonesPercentageTranches.StartOnSite?.Value,
             deliveryPhase.MilestonesTranches.CompletionMilestone,
-            milestonesPercentageTranches.Completion?.Value);
-    }
-
-    private SummaryOfDeliveryAmend GetSummaryOfDeliveryAmend(IDeliveryPhaseEntity deliveryPhase)
-    {
-        var tranches = deliveryPhase.Tranches;
-        var milestonesPercentageTranches = tranches.GetPercentageTranches();
-        var milestonesTranches = tranches.CalculateTranches();
-
-        return new SummaryOfDeliveryAmend(
-            tranches.GrantApportioned,
-            milestonesTranches.AcquisitionMilestone,
-            milestonesPercentageTranches.Acquisition?.Value.ToWholePercentage().WithoutPercentageChar(),
-            milestonesTranches.StartOnSiteMilestone,
-            milestonesPercentageTranches.StartOnSite?.Value.ToWholePercentage().WithoutPercentageChar(),
-            milestonesTranches.CompletionMilestone,
-            milestonesPercentageTranches.Completion?.Value.ToWholePercentage().WithoutPercentageChar(),
+            milestonesPercentageTranches.Completion?.Value,
             deliveryPhase.Tranches.ClaimMilestone);
     }
 }

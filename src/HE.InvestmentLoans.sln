@@ -126,11 +126,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.Investments.FrontDoor.WW
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.CRM.AHP.Plugins.Test", "HE.CRM.AHP.Plugins.Tests\HE.CRM.AHP.Plugins.Test.csproj", "{0CD54056-E9DF-4A43-8A95-D7A64CF14780}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.Investments.AHP.Consortium.Domain", "HE.Investments.AHP.Consortium.Domain\HE.Investments.AHP.Consortium.Domain.csproj", "{0E5AB8B0-78B3-4550-8F4D-92073AF4AC8D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.Investments.AHP.Consortium.Domain", "HE.Investments.AHP.Consortium.Domain\HE.Investments.AHP.Consortium.Domain.csproj", "{0E5AB8B0-78B3-4550-8F4D-92073AF4AC8D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.Investments.AHP.Consortium.Contract", "HE.Investments.AHP.Consortium.Contract\HE.Investments.AHP.Consortium.Contract.csproj", "{E0A31928-F735-4C75-900C-F8C2D642C965}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.Investments.AHP.Consortium.Contract", "HE.Investments.AHP.Consortium.Contract\HE.Investments.AHP.Consortium.Contract.csproj", "{E0A31928-F735-4C75-900C-F8C2D642C965}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.Investments.AHP.Consortium.Domain.Tests", "HE.Investments.AHP.Consortium.Domain.Tests\HE.Investments.AHP.Consortium.Domain.Tests.csproj", "{1AC4BF77-8965-4435-9061-80505017B61E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.Investments.AHP.Consortium.Domain.Tests", "HE.Investments.AHP.Consortium.Domain.Tests\HE.Investments.AHP.Consortium.Domain.Tests.csproj", "{1AC4BF77-8965-4435-9061-80505017B61E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -630,6 +630,7 @@ Global
 		SolutionGuid = {44D30F0B-F008-4D12-95FB-E893E3AFB749}
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems*{0e5ab8b0-78b3-4550-8f4d-92073af4ac8d}*SharedItemsImports = 5
 		HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems*{36e8826b-dd73-4a11-b523-486f3c54f1f4}*SharedItemsImports = 5
 		HE.CRM.Model\HE.CRM.Model.projitems*{36e8826b-dd73-4a11-b523-486f3c54f1f4}*SharedItemsImports = 5
 		HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems*{464f5b11-c934-42c4-b544-40cfcee6c683}*SharedItemsImports = 4

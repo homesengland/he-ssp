@@ -75,6 +75,16 @@ namespace HE.CRM.AHP.Plugins.Services.AhpStatusChange
                     }
                     break;
 
+                case (int)invln_AHPInternalStatus.ReferredBackToApplicant:
+                    statusLabel = "ReferredBackToApplicant";
+                    _govNotifyEmailService.SendNotifications_AHP_EXTERNAL_APPLICATION_REFERRED_BACK_TO_APPLICANT(ahpStatusChange, ahpApplication);
+                    break;
+
+                case (int)invln_AHPInternalStatus.ApprovedSubjecttoContract:
+                    statusLabel = "ApprovedSubjecttoContract";
+                    _govNotifyEmailService.SendNotifications_AHP_INTERNAL_APPLICATION_APPROVED_SUBJECT_TO_CONTRACT(ahpStatusChange, ahpApplication);
+                    break;
+
                 default:
                     break;
             }

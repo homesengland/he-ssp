@@ -1,6 +1,6 @@
 using FluentAssertions;
-using HE.Investment.AHP.Contract.Consortium;
 using HE.Investment.AHP.WWW.Workflows;
+using HE.Investments.AHP.Consortium.Contract;
 using HE.Investments.Common.WWW.Routing;
 
 namespace HE.Investment.AHP.WWW.Tests.Workflows.ConsortiumWorkflowTests;
@@ -8,7 +8,7 @@ namespace HE.Investment.AHP.WWW.Tests.Workflows.ConsortiumWorkflowTests;
 public class NextStateTests
 {
     [Theory]
-    [InlineData(ConsortiumWorkflowState.Start, ConsortiumWorkflowState.Index)]
+    [InlineData(ConsortiumWorkflowState.Start, ConsortiumWorkflowState.Programme)]
     public async Task ShouldReturnNextState_WhenContinueTriggerExecuted(ConsortiumWorkflowState current, ConsortiumWorkflowState expectedNext)
     {
         // given

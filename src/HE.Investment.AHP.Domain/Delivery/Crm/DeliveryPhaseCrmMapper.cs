@@ -42,7 +42,7 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
                 dto.acquisitionValue,
                 dto.startOnSiteValue,
                 dto.completionValue),
-            dto.allowAmendmentstoMilestoneProportions == true,
+            MapStatusCode(dto.statusCode) == StatusCode.PendingAdjustment,
             schemeFunding,
             typeOfHomes,
             buildActivity,
@@ -178,6 +178,17 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
             BuildActivityType.Reimprovement => (int)invln_RehabActivityType.Reimprovement,
             BuildActivityType.WorksOnlyRehab => (int)invln_RehabActivityType.WorksOnly,
             _ => null,
+        };
+    }
+
+    private static StatusCode MapStatusCode(int? statusCode)
+    {
+        return statusCode switch
+        {
+            (int)invln_DeliveryPhase_StatusCode.AdjustmentAccepted => StatusCode.AdjustmentAccepted,
+            (int)invln_DeliveryPhase_StatusCode.PendingAdjustment => StatusCode.PendingAdjustment,
+            (int)invln_DeliveryPhase_StatusCode.RejectedAdjustment => StatusCode.RejectedAdjustment,
+            _ => StatusCode.Default,
         };
     }
 

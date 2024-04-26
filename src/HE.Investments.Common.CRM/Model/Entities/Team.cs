@@ -83,8 +83,8 @@ namespace HE.Investments.Common.CRM.Model
 			public const string Description = "description";
 			public const string EMailAddress = "emailaddress";
 			public const string ExchangeRate = "exchangerate";
-			public const string he_pipeline_Teams = "he_pipeline_Teams";
 			public const string ImportSequenceNumber = "importsequencenumber";
+			public const string invln_ahglocalauthorities_GrowthHubsTeams_team = "invln_ahglocalauthorities_GrowthHubsTeams_team";
 			public const string invln_ahpcontract_ContractDraftedby_team = "invln_ahpcontract_ContractDraftedby_team";
 			public const string invln_externalcomms_team_owningteam = "invln_externalcomms_team_owningteam";
 			public const string invln_govnotifyemail_team_owningteam = "invln_govnotifyemail_team_owningteam";
@@ -125,9 +125,7 @@ namespace HE.Investments.Common.CRM.Model
 			public const string team_contacts = "team_contacts";
 			public const string team_environmentvariabledefinition = "team_environmentvariabledefinition";
 			public const string team_environmentvariablevalue = "team_environmentvariablevalue";
-			public const string team_he_localauthority = "team_he_localauthority";
-			public const string team_he_pipeline = "team_he_pipeline";
-			public const string team_he_projectlocalauthority = "team_he_projectlocalauthority";
+			public const string team_invln_ahglocalauthorities = "team_invln_ahglocalauthorities";
 			public const string team_invln_ahpcontract = "team_invln_ahpcontract";
 			public const string team_invln_ahpstatuschange = "team_invln_ahpstatuschange";
 			public const string team_invln_borrowerpreviousschemes = "team_invln_borrowerpreviousschemes";
@@ -1197,6 +1195,26 @@ namespace HE.Investments.Common.CRM.Model
 		}
 		
 		/// <summary>
+		/// 1:N invln_ahglocalauthorities_GrowthHubsTeams_team
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_ahglocalauthorities_GrowthHubsTeams_team")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities> invln_ahglocalauthorities_GrowthHubsTeams_team
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities>("invln_ahglocalauthorities_GrowthHubsTeams_team", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_ahglocalauthorities_GrowthHubsTeams_team");
+				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities>("invln_ahglocalauthorities_GrowthHubsTeams_team", null, value);
+				this.OnPropertyChanged("invln_ahglocalauthorities_GrowthHubsTeams_team");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N invln_ahpcontract_ContractDraftedby_team
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_ahpcontract_ContractDraftedby_team")]
@@ -1357,62 +1375,22 @@ namespace HE.Investments.Common.CRM.Model
 		}
 		
 		/// <summary>
-		/// 1:N team_he_localauthority
+		/// 1:N team_invln_ahglocalauthorities
 		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_he_localauthority")]
-		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.he_LocalAuthority> team_he_localauthority
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_invln_ahglocalauthorities")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities> team_invln_ahglocalauthorities
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.he_LocalAuthority>("team_he_localauthority", null);
+				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities>("team_invln_ahglocalauthorities", null);
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("team_he_localauthority");
-				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.he_LocalAuthority>("team_he_localauthority", null, value);
-				this.OnPropertyChanged("team_he_localauthority");
-			}
-		}
-		
-		/// <summary>
-		/// 1:N team_he_pipeline
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_he_pipeline")]
-		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.he_Pipeline> team_he_pipeline
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.he_Pipeline>("team_he_pipeline", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("team_he_pipeline");
-				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.he_Pipeline>("team_he_pipeline", null, value);
-				this.OnPropertyChanged("team_he_pipeline");
-			}
-		}
-		
-		/// <summary>
-		/// 1:N team_he_projectlocalauthority
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_he_projectlocalauthority")]
-		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.he_ProjectLocalAuthority> team_he_projectlocalauthority
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.he_ProjectLocalAuthority>("team_he_projectlocalauthority", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("team_he_projectlocalauthority");
-				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.he_ProjectLocalAuthority>("team_he_projectlocalauthority", null, value);
-				this.OnPropertyChanged("team_he_projectlocalauthority");
+				this.OnPropertyChanging("team_invln_ahglocalauthorities");
+				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities>("team_invln_ahglocalauthorities", null, value);
+				this.OnPropertyChanged("team_invln_ahglocalauthorities");
 			}
 		}
 		
@@ -2293,27 +2271,6 @@ namespace HE.Investments.Common.CRM.Model
 				this.OnPropertyChanging("teammembership_association");
 				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.SystemUser>("teammembership_association", null, value);
 				this.OnPropertyChanged("teammembership_association");
-			}
-		}
-		
-		/// <summary>
-		/// N:1 he_pipeline_Teams
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("he_pipeline_Teams")]
-		public HE.Investments.Common.CRM.Model.he_Pipeline he_pipeline_Teams
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<HE.Investments.Common.CRM.Model.he_Pipeline>("he_pipeline_Teams", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("he_pipeline_Teams");
-				this.SetRelatedEntity<HE.Investments.Common.CRM.Model.he_Pipeline>("he_pipeline_Teams", null, value);
-				this.OnPropertyChanged("he_pipeline_Teams");
 			}
 		}
 		

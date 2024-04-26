@@ -29,6 +29,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getabsoluteahpapplicationfilelocation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getahpapplication.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getahpapplicationdocumentlocation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getconsortium.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getcontactrole.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getfilelocationforapplicationloan.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getloanapplicationsforaccountandcontact.cs" />
@@ -54,6 +55,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_gettemporaryportaldata.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_gettypeofhomeslist.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_invitecontacttojoinexistingorganisation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_IsConsortiumExistForProgrammeAndOrganisation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_linkcontactwithorganization.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_returnuserprofile.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_savetemporaryportaldata.cs" />
@@ -67,6 +69,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_sendremindertofinalisadraftapplication.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_sendrequesttoassigncontacttoexistingorganisation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_setahpapplication.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_setconsortium.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_setdeliveryphase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_setfrontdoorproject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_setfrontdoorsite.cs" />
@@ -80,9 +83,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\RetrieveEnvironmentVariableValue.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\UpsertMultiple.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\AHP_DELIVERY_PHASE_NOTIFICATION_OF_ADDITIONAL_PAYMENTS_FOR_PHASE.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\AHP_EXTERNAL_APPLICATION_REFERRED_BACK_TO_APPLICANT.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\AHP_EXTERNAL_APPLICATION_SUBMITTED.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\AHP_EXTERNAL_REMINDER_TO_FINALIZE_APPLICATION_REFERRED_BACK.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\AHP_EXTERNAL_REMINDER_TO_FINALIZE_DRAFT_APPLICATION.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\AHP_INTERNAL_APPLICATION_APPROVED_SUBJECT_TO_CONTRACT.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\AHP_INTERNAL_REQUEST_TO_WITHDRAW.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\COMMON_CHANGE_EXTERNAL_USER_PERMISSIONS.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\COMMON_GRANT_ORGANISATION_ADMIN_PERMISSIONS.cs" />

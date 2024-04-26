@@ -63,8 +63,12 @@ namespace HE.Investments.Common.CRM.Model
 			public const string invln_AHPApplication = "invln_ahpapplication";
 			public const string invln_AHPApplicationName = "invln_ahpapplicationname";
 			public const string invln_ahpstatuschange_AHPApplication_invln_sche = "invln_ahpstatuschange_AHPApplication_invln_sche";
+			public const string invln_ahpstatuschange_changedby_contact = "invln_ahpstatuschange_changedby_contact";
 			public const string invln_AHPStatusChangeId = "invln_ahpstatuschangeid";
 			public const string Id = "invln_ahpstatuschangeid";
+			public const string invln_changedby = "invln_changedby";
+			public const string invln_changedbyName = "invln_changedbyname";
+			public const string invln_changedbyYomiName = "invln_changedbyyominame";
 			public const string invln_Changefrom = "invln_changefrom";
 			public const string invln_changefromName = "invln_changefromname";
 			public const string invln_ChangeSource = "invln_changesource";
@@ -388,6 +392,57 @@ namespace HE.Investments.Common.CRM.Model
 			set
 			{
 				this.invln_AHPStatusChangeId = value;
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_changedby")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_changedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_changedby");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_changedby");
+				this.SetAttributeValue("invln_changedby", value);
+				this.OnPropertyChanged("invln_changedby");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_changedbyname")]
+		public string invln_changedbyName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_changedby"))
+				{
+					return this.FormattedValues["invln_changedby"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_changedbyyominame")]
+		public string invln_changedbyYomiName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_changedby"))
+				{
+					return this.FormattedValues["invln_changedby"];
+				}
+				else
+				{
+					return default(string);
+				}
 			}
 		}
 		
@@ -929,6 +984,27 @@ namespace HE.Investments.Common.CRM.Model
 				this.OnPropertyChanging("invln_ahpstatuschange_AHPApplication_invln_sche");
 				this.SetRelatedEntity<HE.Investments.Common.CRM.Model.invln_scheme>("invln_ahpstatuschange_AHPApplication_invln_sche", null, value);
 				this.OnPropertyChanged("invln_ahpstatuschange_AHPApplication_invln_sche");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_ahpstatuschange_changedby_contact
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_changedby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_ahpstatuschange_changedby_contact")]
+		public HE.Investments.Common.CRM.Model.Contact invln_ahpstatuschange_changedby_contact
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<HE.Investments.Common.CRM.Model.Contact>("invln_ahpstatuschange_changedby_contact", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_ahpstatuschange_changedby_contact");
+				this.SetRelatedEntity<HE.Investments.Common.CRM.Model.Contact>("invln_ahpstatuschange_changedby_contact", null, value);
+				this.OnPropertyChanged("invln_ahpstatuschange_changedby_contact");
 			}
 		}
 		

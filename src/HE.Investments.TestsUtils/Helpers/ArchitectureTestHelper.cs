@@ -23,10 +23,12 @@ public static class ArchitectureTestHelper
             .Where(x => x.StartsWith(ProjectNamePrefix, StringComparison.InvariantCultureIgnoreCase))
             .ToList();
         var currentProjectPrefix = string.Join(".", assembly.GetName().Name!.Split(".").Take(3));
+        var currentProjectAlternativePrefix = currentProjectPrefix.Replace("Investment", "Investments");
 
         return investmentsProjects
             .Where(x => AllowedCommonProjects.TrueForAll(y => !x.StartsWith(y, StringComparison.InvariantCultureIgnoreCase)))
-            .Where(x => !x.StartsWith(currentProjectPrefix, StringComparison.InvariantCultureIgnoreCase))
+            .Where(x => !x.StartsWith(currentProjectPrefix, StringComparison.InvariantCultureIgnoreCase)
+                        && !x.StartsWith(currentProjectAlternativePrefix, StringComparison.InvariantCultureIgnoreCase))
             .ToList();
     }
 }
