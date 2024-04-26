@@ -229,37 +229,82 @@ namespace DataverseModel
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ALBArmsLengthBodyofGovernment = 134370015,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		ALMOArmsLengthManagementOrganisation = 134370011,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		CharitableOrganisation = 134370010,
+		Bank = 134370016,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		CombinedAuthority = 134370014,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Consultant = 134370002,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Education = 134370024,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		FinancialInstitution = 134370001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ForProfitRegisteredProvder = 134370000,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		GovernmentPolicyMaker = 134370008,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		HousingAssociation = 134370000,
+		HealthandSocialCare = 134370025,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Landowner = 134370003,
+		Insurer = 134370017,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		InvestmentManager = 134370018,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Landowner_134370003 = 134370003,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Landowner_134370023 = 134370023,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		LocalAuthority = 134370007,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		NonBankLender = 134370019,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		NonregisteredCharitableOrganisation = 134370013,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		NotForProfitRegisteredProvider = 134370021,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Other = 134370012,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		OtherFinancialInstitutionorAdvisory = 134370020,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		PrivateContractor = 134370009,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		PrivateSectorHousebuilder = 134370004,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		PublicPrivatePartnership = 134370026,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		RegisteredCharitableOrganisation = 134370010,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		TradeAssociation = 134370027,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		UnregisteredHousingAssociation = 134370022,
 	}
 	
 	/// <summary>
@@ -670,6 +715,7 @@ namespace DataverseModel
 			public const string FollowEmail = "followemail";
 			public const string FollowEmailName = "followemailname";
 			public const string FtpSiteURL = "ftpsiteurl";
+			public const string he_Account_Account_he_Pipeline = "he_Account_Account_he_Pipeline";
 			public const string Referencinghe_account_account_UltimateParent = "he_account_account_UltimateParent";
 			public const string he_account_keyaccountmanager_systemuser = "he_account_keyaccountmanager_systemuser";
 			public const string he_automaticsearch = "he_automaticsearch";
@@ -7323,6 +7369,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("contact_customer_accounts");
 				this.SetRelatedEntities<DataverseModel.Contact>("contact_customer_accounts", null, value);
 				this.OnPropertyChanged("contact_customer_accounts");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N he_Account_Account_he_Pipeline
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("he_Account_Account_he_Pipeline")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.he_Pipeline> he_Account_Account_he_Pipeline
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.he_Pipeline>("he_Account_Account_he_Pipeline", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("he_Account_Account_he_Pipeline");
+				this.SetRelatedEntities<DataverseModel.he_Pipeline>("he_Account_Account_he_Pipeline", null, value);
+				this.OnPropertyChanged("he_Account_Account_he_Pipeline");
 			}
 		}
 		

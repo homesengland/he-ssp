@@ -8,7 +8,7 @@ namespace HE.CRM.Common.DtoMapping
 {
     public class AhpApplicationMapper
     {
-        public static invln_scheme MapDtoToRegularEntity(AhpApplicationDto applicationDto, string contactId, string organisationId)
+        public static invln_scheme MapDtoToRegularEntity(AhpApplicationDto applicationDto, string contactId, string organisationId, he_LocalAuthority localAuthority)
         {
             var applicationToReturn = new invln_scheme()
             {
@@ -76,6 +76,17 @@ namespace HE.CRM.Common.DtoMapping
             if (Guid.TryParse(applicationDto.programmeId, out var programmeId))
             {
                 applicationToReturn.invln_programmelookup = new EntityReference(invln_programme.EntityLogicalName, programmeId);
+            }
+
+            if (localAuthority != null)
+            {
+                applicationToReturn.invln_HELocalAuthorityID = localAuthority.ToEntityReference();
+                if (localAuthority.he_growthmanager?.Id != null && localAuthority.he_growthhub?.Id != null)
+                {
+                    applicationToReturn.OwnerId = new EntityReference(SystemUser.EntityLogicalName, localAuthority.he_growthmanager.Id);
+                    applicationToReturn.invln_GrowthManager = new EntityReference(SystemUser.EntityLogicalName, localAuthority.he_growthmanager.Id);
+                    applicationToReturn.invln_GrowthTeam = new EntityReference(Team.EntityLogicalName, localAuthority.he_growthhub.Id);
+                }
             }
 
             return applicationToReturn;
