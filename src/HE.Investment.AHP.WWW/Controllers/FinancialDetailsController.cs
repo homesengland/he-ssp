@@ -159,15 +159,14 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
                     model.SaleOfHomesOnThisScheme,
                     model.SaleOfHomesOnOtherSchemes,
                     model.OwnResources,
-                    model.RCGFContribution,
+                    model.RcgfContribution,
                     model.OtherCapitalSources,
                     model.SharedOwnershipSales,
                     model.HomesTransferValue),
                 cancellationToken);
 
-            model.TotalExpectedContributions = CurrencyHelper.DisplayPoundsPences(calculationResult.TotalExpectedContributions);
-
-            ModelState.AddValidationErrors(operationResult);
+            model.TotalExpectedContributions = calculationResult.TotalExpectedContributions.DisplayPoundsPences();
+            this.AddOrderedErrors<FinancialDetailsContributionsModel>(operationResult);
 
             return View(model);
         }
@@ -179,7 +178,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
                 model.SaleOfHomesOnThisScheme,
                 model.SaleOfHomesOnOtherSchemes,
                 model.OwnResources,
-                model.RCGFContribution,
+                model.RcgfContribution,
                 model.OtherCapitalSources,
                 model.SharedOwnershipSales,
                 model.HomesTransferValue),
@@ -223,9 +222,8 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
                     model.OtherPublicBodiesGrants),
                 cancellationToken);
 
-            model.TotalGrants = CurrencyHelper.DisplayPoundsPences(calculationResult.TotalReceivedGrants);
-
-            ModelState.AddValidationErrors(operationResult);
+            model.TotalGrants = calculationResult.TotalReceivedGrants.DisplayPoundsPences();
+            this.AddOrderedErrors<FinancialDetailsGrantsModel>(operationResult);
 
             return View(model);
         }
