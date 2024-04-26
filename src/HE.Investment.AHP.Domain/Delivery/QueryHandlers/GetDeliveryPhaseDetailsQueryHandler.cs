@@ -5,6 +5,8 @@ using HE.Investment.AHP.Domain.Common.Mappers;
 using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.Repositories;
 using HE.Investments.Account.Shared;
+using HE.Investments.Common.Contract;
+using HE.Investments.Common.Extensions;
 using MediatR;
 using SummaryOfDelivery = HE.Investment.AHP.Contract.Delivery.MilestonePayments.SummaryOfDelivery;
 
@@ -49,12 +51,12 @@ public class GetDeliveryPhaseDetailsQueryHandler : IRequestHandler<GetDeliveryPh
                 GetSummaryOfDelivery(deliveryPhase)),
             deliveryPhase.Organisation.IsUnregisteredBody,
             deliveryPhase.DeliveryPhaseMilestones.IsOnlyCompletionMilestone,
-            DateValueObjectMapper.ToContract(deliveryPhase.DeliveryPhaseMilestones.AcquisitionMilestone?.MilestoneDate),
-            DateValueObjectMapper.ToContract(deliveryPhase.DeliveryPhaseMilestones.AcquisitionMilestone?.PaymentDate),
-            DateValueObjectMapper.ToContract(deliveryPhase.DeliveryPhaseMilestones.StartOnSiteMilestone?.MilestoneDate),
-            DateValueObjectMapper.ToContract(deliveryPhase.DeliveryPhaseMilestones.StartOnSiteMilestone?.PaymentDate),
-            DateValueObjectMapper.ToContract(deliveryPhase.DeliveryPhaseMilestones.CompletionMilestone?.MilestoneDate),
-            DateValueObjectMapper.ToContract(deliveryPhase.DeliveryPhaseMilestones.CompletionMilestone?.PaymentDate),
+            DateDetails.FromDateTime(deliveryPhase.DeliveryPhaseMilestones.AcquisitionMilestone?.MilestoneDate?.Value),
+            DateDetails.FromDateTime(deliveryPhase.DeliveryPhaseMilestones.AcquisitionMilestone?.PaymentDate?.Value),
+            DateDetails.FromDateTime(deliveryPhase.DeliveryPhaseMilestones.StartOnSiteMilestone?.MilestoneDate?.Value),
+            DateDetails.FromDateTime(deliveryPhase.DeliveryPhaseMilestones.StartOnSiteMilestone?.PaymentDate?.Value),
+            DateDetails.FromDateTime(deliveryPhase.DeliveryPhaseMilestones.CompletionMilestone?.MilestoneDate?.Value),
+            DateDetails.FromDateTime(deliveryPhase.DeliveryPhaseMilestones.CompletionMilestone?.PaymentDate?.Value),
             deliveryPhase.IsAdditionalPaymentRequested?.IsRequested);
     }
 

@@ -1,16 +1,23 @@
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
+using HE.Investments.Common.Contract;
+using HE.Investments.Common.Domain.ValueObjects;
 
 namespace HE.Investment.AHP.Domain.Site.ValueObjects.Planning;
 
 public class PlanningSubmissionDate : DateValueObject
 {
-    public PlanningSubmissionDate(string? day, string? month, string? year)
-        : base(day, month, year, "PlanningSubmissionDate", "planning submission date")
+    private const string FieldDescription = "planning submission date";
+
+    public PlanningSubmissionDate(bool exists, string? day, string? month, string? year)
+        : base(day, month, year, nameof(PlanningSubmissionDate), FieldDescription, !exists)
     {
     }
 
-    public static PlanningSubmissionDate? Create(string? day, string? month, string? year)
+    public PlanningSubmissionDate(DateTime? value)
+        : base(value)
     {
-        return ValuesProvided(day, month, year) ? new PlanningSubmissionDate(day, month, year) : null;
     }
+
+    public static PlanningSubmissionDate FromDateDetails(bool exists, DateDetails? date) =>
+        new(exists, date?.Day, date?.Month, date?.Year);
 }

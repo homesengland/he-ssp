@@ -48,7 +48,7 @@ internal static class ProjectMapper
             LoanApplicationStatus = project.LoanApplicationStatus,
             LocalAuthorityId = project.LocalAuthority?.Code.ToString(),
             LocalAuthorityName = project.LocalAuthority?.Name,
-            HasEstimatedStartDate = project.StartDate?.Exists.MapToCommonResponse(),
+            HasEstimatedStartDate = project.StartDate?.Value.HasValue.MapToCommonResponse(),
             StartDate = DateDetails.FromDateTime(project.StartDate?.Value),
             PlanningPermissionStatus = PlanningPermissionStatusMapper.MapToString(project.PlanningPermissionStatus ?? projectPrefillData?.PlanningPermissionStatus),
             Status = project.Status,

@@ -100,7 +100,7 @@ public class ProvideStartDateCommandHandlerTests : TestBase<ProvideStartDateComm
         var action = () => TestCandidate.Handle(_command, CancellationToken.None);
 
         // then
-        await action.Should().ThrowAsync<DomainValidationException>().WithMessage("When you plan to start the project must be a real date");
+        await action.Should().ThrowAsync<DomainValidationException>().WithMessage("The project start date must be a real date");
     }
 
     [Fact]
@@ -130,7 +130,7 @@ public class ProvideStartDateCommandHandlerTests : TestBase<ProvideStartDateComm
         // then
         result.IsValid.Should().BeTrue();
 
-        project.StartDate!.Exists.Should().BeTrue();
+        project.StartDate!.Value.HasValue.Should().BeTrue();
         project.StartDate.Should().Be(StartDateTestData.CorrectDate);
     }
 
@@ -161,6 +161,6 @@ public class ProvideStartDateCommandHandlerTests : TestBase<ProvideStartDateComm
         // then
         result.IsValid.Should().BeTrue();
 
-        project.StartDate!.Exists.Should().BeFalse();
+        project.StartDate!.Value.HasValue.Should().BeFalse();
     }
 }

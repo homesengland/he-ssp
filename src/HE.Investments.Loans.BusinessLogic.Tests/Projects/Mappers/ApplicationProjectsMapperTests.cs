@@ -55,7 +55,7 @@ public class ApplicationProjectsMapperTests
 
         project.StartDate.Should().NotBeNull();
 
-        project.StartDate!.Exists.Should().BeFalse();
+        project.StartDate!.Value.HasValue.Should().BeFalse();
     }
 
     [Fact]

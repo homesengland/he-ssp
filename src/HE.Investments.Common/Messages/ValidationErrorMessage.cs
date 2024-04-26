@@ -25,7 +25,7 @@ public static class ValidationErrorMessage
 
     public const string NoCheckAnswers = "Select whether you have completed this section";
 
-    public const string FuturePurchaseDate = "The date you purchased this land must be today or in the past";
+    public const string FuturePurchaseDate = "The purchase date must be today or in the past";
 
     public const string EnterExistingLegal = "Enter any existing legal charges or debt secured on this land";
 

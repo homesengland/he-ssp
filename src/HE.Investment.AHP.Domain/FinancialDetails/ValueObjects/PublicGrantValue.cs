@@ -12,13 +12,11 @@ public class PublicGrantValue : TheRequiredIntValueObject
         Field = field;
     }
 
-    private PublicGrantValue(PublicGrantFields field, int value)
-        : base(value, field.ToString(), field.GetDescription())
+    public PublicGrantValue(PublicGrantFields field, decimal value)
+        : base(decimal.ToInt32(value), field.ToString(), field.GetDescription())
     {
         Field = field;
     }
 
     public PublicGrantFields Field { get; }
-
-    public static PublicGrantValue FromCrm(PublicGrantFields field, decimal value) => new(field, decimal.ToInt32(value));
 }
