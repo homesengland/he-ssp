@@ -7,4 +7,5 @@ public record SummaryOfDelivery(
     decimal? StartOnSiteMilestone,
     decimal? StartOnSitePercentage,
     decimal? CompletionMilestone,
-    decimal? CompletionPercentage);
+    decimal? CompletionPercentage,
+    bool? UnderstandClaimingMilestones = null);

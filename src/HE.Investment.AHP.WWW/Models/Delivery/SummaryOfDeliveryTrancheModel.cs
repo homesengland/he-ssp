@@ -1,5 +1,3 @@
-using HE.Investment.AHP.Contract.Delivery;
-
 namespace HE.Investment.AHP.WWW.Models.Delivery;
 
 public record SummaryOfDeliveryTrancheModel(

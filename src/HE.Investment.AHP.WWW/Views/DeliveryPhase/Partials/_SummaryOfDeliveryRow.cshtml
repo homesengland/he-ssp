@@ -1,10 +1,10 @@
 @using HE.Investments.Common.WWW.Helpers
 @using HE.Investments.Common.Extensions
-@using HE.Investment.AHP.WWW.Models.Delivery
 @using HE.Investments.Common.WWW.Extensions
 @model HE.Investment.AHP.WWW.Models.Delivery.SummaryOfDeliveryRow
 @{
     var key = Model.ValueName.ToIdTag();
+    var workflow = Context.Request.Query["workflow"];
 }
 
 <tr class="govuk-table__row">
@@ -24,7 +24,7 @@
             <td class="govuk-table__cell">
                 <gds-link
                     data-testid=@($"{key}-change")
-                    href=@Url.Action("SummaryOfDeliveryAcquisitionTranche", "DeliveryPhase", new { Model.ApplicationId, deliveryPhaseId = Model.Id, trancheType = Model.TrancheType })>
+                    href=@Url.Action("SummaryOfDeliveryAcquisitionTranche", "DeliveryPhase", new { Model.ApplicationId, deliveryPhaseId = Model.Id, trancheType = Model.TrancheType, workflow })>
                     Change
                 </gds-link>
             </td>

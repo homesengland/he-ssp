@@ -34,7 +34,8 @@ public class DeliveryPhaseCrmContext : IDeliveryPhaseCrmContext
                 nameof(invln_DeliveryPhase.invln_AcquisitionValue),
                 nameof(invln_DeliveryPhase.invln_CompletionValue),
                 nameof(invln_DeliveryPhase.invln_StartOnSiteValue),
-                nameof(invln_DeliveryPhase.invln_sumofcalculatedfounds))
+                nameof(invln_DeliveryPhase.invln_sumofcalculatedfounds),
+                nameof(invln_DeliveryPhase.StatusCode))
             .ToLowerInvariant();
 
     private readonly JsonSerializerOptions _serializerOptions = new() { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
