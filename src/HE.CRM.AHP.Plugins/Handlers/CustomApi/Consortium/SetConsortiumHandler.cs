@@ -46,7 +46,7 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.Consortium
                 };
 
                 var consortiumId = _consortiumRepository.Create(consortium);
-                ExecutionData.SetOutputParameter(invln_setconsortiumResponse.Fields.invln_consortiumid, consortiumId);
+                ExecutionData.SetOutputParameter(invln_setconsortiumResponse.Fields.invln_consortiumid, consortiumId.ToString());
             }
         }
     }
