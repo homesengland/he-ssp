@@ -11,6 +11,6 @@ public class CompletionMilestoneDetails : MilestoneDetails<CompletionDate>
 
     public static CompletionMilestoneDetails? Create(CompletionDate milestoneDate, MilestonePaymentDate paymentDate)
     {
-        return milestoneDate.Exists || paymentDate.Exists ? new CompletionMilestoneDetails(milestoneDate, paymentDate) : null;
+        return milestoneDate.Value.HasValue || paymentDate.Value.HasValue ? new CompletionMilestoneDetails(milestoneDate, paymentDate) : null;
     }
 }

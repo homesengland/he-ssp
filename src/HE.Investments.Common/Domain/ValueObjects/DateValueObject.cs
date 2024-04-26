@@ -64,12 +64,12 @@ public abstract class DateValueObject : ValueObject
         Value = new DateTime(year, month, day, 0, 0, 0, 0, DateTimeKind.Unspecified);
     }
 
-    protected DateValueObject(DateTime value)
+    protected DateValueObject(DateTime? value)
     {
         Value = value;
     }
 
-    public DateTime Value { get; set; }
+    public DateTime? Value { get; set; }
 
     protected override IEnumerable<object?> GetAtomicValues()
     {

@@ -54,9 +54,9 @@ internal static class ProjectEntityMapper
 
         if (startDateExists!.Value)
         {
-            return StartDate.FromDateTime(siteDetailsDto!.startDate);
+            return new StartDate(siteDetailsDto!.startDate);
         }
 
-        return StartDate.FromDateTime(null);
+        return new StartDate(null);
     }
 }

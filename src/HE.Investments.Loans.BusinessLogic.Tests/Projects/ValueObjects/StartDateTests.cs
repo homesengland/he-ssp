@@ -50,7 +50,7 @@ public class StartDateTests
     {
         var startDate = new StartDate(false, "any", "any", "any");
 
-        startDate.Exists.Should().BeFalse();
+        startDate.Value.HasValue.Should().BeFalse();
     }
 
     [Fact]
@@ -58,7 +58,7 @@ public class StartDateTests
     {
         var startDate = new StartDate(true, "24", "9", "2023");
 
-        startDate.Exists.Should().BeTrue();
+        startDate.Value.HasValue.Should().BeTrue();
         startDate.Value.Should().Be(new DateTime(2023, 9, 24, 0, 0, 0, DateTimeKind.Unspecified));
     }
 }

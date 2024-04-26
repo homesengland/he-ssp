@@ -11,6 +11,6 @@ public class StartOnSiteMilestoneDetails : MilestoneDetails<StartOnSiteDate>
 
     public static StartOnSiteMilestoneDetails? Create(StartOnSiteDate milestoneDate, MilestonePaymentDate paymentDate)
     {
-        return milestoneDate.Exists || paymentDate.Exists ? new StartOnSiteMilestoneDetails(milestoneDate, paymentDate) : null;
+        return milestoneDate.Value.HasValue || paymentDate.Value.HasValue ? new StartOnSiteMilestoneDetails(milestoneDate, paymentDate) : null;
     }
 }

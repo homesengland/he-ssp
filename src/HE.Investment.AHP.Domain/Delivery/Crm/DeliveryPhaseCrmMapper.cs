@@ -49,14 +49,14 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
             dto.isReconfigurationOfExistingProperties,
             MapHomesToDeliver(dto.numberOfHomes),
             AcquisitionMilestoneDetails.Create(
-                AcquisitionDate.FromDateTime(dto.acquisitionDate),
-                MilestonePaymentDate.FromDateTime(dto.acquisitionPaymentDate)),
+                new AcquisitionDate(dto.acquisitionDate),
+                new MilestonePaymentDate(dto.acquisitionPaymentDate)),
             StartOnSiteMilestoneDetails.Create(
-                StartOnSiteDate.FromDateTime(dto.startOnSiteDate),
-                MilestonePaymentDate.FromDateTime(dto.startOnSitePaymentDate)),
+                new StartOnSiteDate(dto.startOnSiteDate),
+                new MilestonePaymentDate(dto.startOnSitePaymentDate)),
             CompletionMilestoneDetails.Create(
-                CompletionDate.FromDateTime(dto.completionDate),
-                MilestonePaymentDate.FromDateTime(dto.completionPaymentDate)),
+                new CompletionDate(dto.completionDate),
+                new MilestonePaymentDate(dto.completionPaymentDate)),
             new DeliveryPhaseId(dto.id),
             dto.createdOn,
             MapIsAdditionalPaymentRequested(dto.requiresAdditionalPayments),

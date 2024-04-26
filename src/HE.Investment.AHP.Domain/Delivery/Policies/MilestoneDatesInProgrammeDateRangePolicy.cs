@@ -33,8 +33,8 @@ public class MilestoneDatesInProgrammeDateRangePolicy : IMilestoneDatesInProgram
 
     private void ValidateDateInProgrammeRange(DateValueObject? date, AhpProgramme programme, string fieldName, string fieldLabel)
     {
-        if (date != null &&
-            (DateOnly.FromDateTime(date.Value) < programme.ProgrammeDates.ProgrammeStartDate || DateOnly.FromDateTime(date.Value) > programme.ProgrammeDates.ProgrammeEndDate))
+        if (date?.Value != null &&
+            (DateOnly.FromDateTime(date.Value.Value) < programme.ProgrammeDates.ProgrammeStartDate || DateOnly.FromDateTime(date.Value.Value) > programme.ProgrammeDates.ProgrammeEndDate))
         {
             throw new DomainValidationException(fieldName, $"{fieldLabel} must be within the programme date");
         }

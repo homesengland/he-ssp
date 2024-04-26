@@ -94,12 +94,12 @@ public static class SiteDtoToSiteEntityMapper
         return PlanningDetailsFactory.Create(
             PlanningStatusMapper.ToDomain(dto.planningStatus),
             string.IsNullOrWhiteSpace(dto.referenceNumber) ? null : new ReferenceNumber(dto.referenceNumber),
-            DetailedPlanningApprovalDate.FromDateTime(dto.detailedPlanningApprovalDate),
+            new DetailedPlanningApprovalDate(dto.detailedPlanningApprovalDate),
             string.IsNullOrWhiteSpace(dto.requiredFurtherSteps) ? null : new RequiredFurtherSteps(dto.requiredFurtherSteps),
-            ApplicationForDetailedPlanningSubmittedDate.FromDateTime(dto.applicationForDetailedPlanningSubmittedDate),
-            ExpectedPlanningApprovalDate.FromDateTime(dto.expectedPlanningApprovalDate),
-            OutlinePlanningApprovalDate.FromDateTime(dto.outlinePlanningApprovalDate),
-            PlanningSubmissionDate.FromDateTime(dto.planningSubmissionDate),
+            new ApplicationForDetailedPlanningSubmittedDate(dto.applicationForDetailedPlanningSubmittedDate),
+            new ExpectedPlanningApprovalDate(dto.expectedPlanningApprovalDate),
+            new OutlinePlanningApprovalDate(dto.outlinePlanningApprovalDate),
+            new PlanningSubmissionDate(dto.planningSubmissionDate),
             dto.isGrantFundingForAllHomes,
             new LandRegistryDetails(
                 dto.isLandRegistryTitleNumber,

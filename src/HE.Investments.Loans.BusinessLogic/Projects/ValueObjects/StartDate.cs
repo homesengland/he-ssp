@@ -16,27 +16,13 @@ public class StartDate : DateValueObject
     public StartDate(bool exists, string? day, string? month, string? year)
         : base(day, month, year, nameof(StartDate), FieldDescription, !exists)
     {
-        Exists = exists;
     }
 
-    private StartDate(bool exists, DateTime value)
+    public StartDate(DateTime? value)
         : base(value)
     {
-        Exists = exists;
     }
-
-    public new DateTime? Value => Exists ? base.Value : null;
-
-    public bool Exists { get; }
-
-    public static StartDate FromDateTime(DateTime? value) => new(value.HasValue, value ?? default);
 
     public static StartDate FromDateDetails(bool exists, DateDetails? date) =>
         new(exists, date?.Day, date?.Month, date?.Year);
-
-    protected override IEnumerable<object?> GetAtomicValues()
-    {
-        yield return Value;
-        yield return Exists;
-    }
 }

@@ -14,18 +14,16 @@ public class PurchaseDate : DateValueObject
     public PurchaseDate(string? day, string? month, string? year, IDateTimeProvider dateTimeProvider)
         : base(day, month, year, nameof(PurchaseDate), FieldDescription)
     {
-        if (Value.IsAfter(dateTimeProvider.Now.Date))
+        if (Value != null && Value.Value.IsAfter(dateTimeProvider.Now.Date))
         {
             OperationResult.ThrowValidationError(nameof(PurchaseDate), ValidationErrorMessage.FuturePurchaseDate);
         }
     }
 
-    private PurchaseDate(DateTime value)
+    public PurchaseDate(DateTime? value)
         : base(value)
     {
     }
-
-    public static PurchaseDate FromDateTime(DateTime value) => new(value);
 
     public static PurchaseDate FromDateDetails(DateDetails? date, IDateTimeProvider dateTimeProvider) =>
         new(date?.Day, date?.Month, date?.Year, dateTimeProvider);

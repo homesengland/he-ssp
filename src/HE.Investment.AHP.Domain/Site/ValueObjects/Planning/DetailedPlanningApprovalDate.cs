@@ -10,27 +10,13 @@ public class DetailedPlanningApprovalDate : DateValueObject
     public DetailedPlanningApprovalDate(bool exists, string? day, string? month, string? year)
         : base(day, month, year, nameof(DetailedPlanningApprovalDate), FieldDescription, !exists)
     {
-        Exists = exists;
     }
 
-    private DetailedPlanningApprovalDate(bool exists, DateTime value)
+    public DetailedPlanningApprovalDate(DateTime? value)
         : base(value)
     {
-        Exists = exists;
     }
-
-    public new DateTime? Value => Exists ? base.Value : null;
-
-    public bool Exists { get; }
-
-    public static DetailedPlanningApprovalDate FromDateTime(DateTime? value) => new(value.HasValue, value ?? default);
 
     public static DetailedPlanningApprovalDate FromDateDetails(bool exists, DateDetails? date) =>
         new(exists, date?.Day, date?.Month, date?.Year);
-
-    protected override IEnumerable<object?> GetAtomicValues()
-    {
-        yield return Value;
-        yield return Exists;
-    }
 }
