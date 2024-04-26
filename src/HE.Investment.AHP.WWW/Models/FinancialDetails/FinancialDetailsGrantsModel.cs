@@ -10,7 +10,7 @@ public class FinancialDetailsGrantsModel : FinancialDetailsBaseModel
         Guid applicationId,
         string applicationName,
         string? countyCouncilGrants,
-        string? dHSCExtraCreGrants,
+        string? dhscExtraCareGrants,
         string? localAuthorityGrants,
         string? socialServicesGrants,
         string? healthRelatedGrants,
@@ -20,7 +20,7 @@ public class FinancialDetailsGrantsModel : FinancialDetailsBaseModel
         : base(applicationId, applicationName)
     {
         CountyCouncilGrants = countyCouncilGrants;
-        DhscExtraCareGrants = dHSCExtraCreGrants;
+        DhscExtraCareGrants = dhscExtraCareGrants;
         LocalAuthorityGrants = localAuthorityGrants;
         SocialServicesGrants = socialServicesGrants;
         HealthRelatedGrants = healthRelatedGrants;

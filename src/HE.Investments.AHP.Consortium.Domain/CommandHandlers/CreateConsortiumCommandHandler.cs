@@ -8,7 +8,7 @@ using MediatR;
 
 namespace HE.Investments.AHP.Consortium.Domain.CommandHandlers;
 
-public class CreateConsortiumCommandHandler : IRequestHandler<CreateConsortiumCommand, OperationResult<string>>
+public class CreateConsortiumCommandHandler : IRequestHandler<CreateConsortiumCommand, OperationResult<ConsortiumId>>
 {
     private readonly IConsortiumRepository _consortiumRepository;
 
@@ -20,7 +20,7 @@ public class CreateConsortiumCommandHandler : IRequestHandler<CreateConsortiumCo
         _accountUserContext = accountUserContext;
     }
 
-    public async Task<OperationResult<string>> Handle(CreateConsortiumCommand request, CancellationToken cancellationToken)
+    public async Task<OperationResult<ConsortiumId>> Handle(CreateConsortiumCommand request, CancellationToken cancellationToken)
     {
         if (string.IsNullOrWhiteSpace(request.ProgrammeId))
         {
@@ -28,12 +28,13 @@ public class CreateConsortiumCommandHandler : IRequestHandler<CreateConsortiumCo
         }
 
         var programme = new ProgrammeSlim(new ProgrammeId(request.ProgrammeId), "AHP CME");
-        var organisation = (await _accountUserContext.GetSelectedAccount()).SelectedOrganisation();
+        var userAccount = await _accountUserContext.GetSelectedAccount();
+        var organisation = userAccount.SelectedOrganisation();
         var leadPartner = new ConsortiumMember(organisation.OrganisationId, organisation.RegisteredCompanyName);
 
         var consortium = await ConsortiumEntity.New(programme, leadPartner, _consortiumRepository);
 
-        await _consortiumRepository.Save(consortium);
-        return new OperationResult<string>(consortium.Id.ToString());
+        await _consortiumRepository.Save(consortium, userAccount, cancellationToken);
+        return new OperationResult<ConsortiumId>(consortium.Id);
     }
 }

@@ -1,7 +1,6 @@
 using He.AspNetCore.Mvc.Gds.Components.Constants;
 using He.AspNetCore.Mvc.Gds.Components.TagConstructs;
 using HE.Investments.Common.Contract;
-using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Gds;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -43,6 +42,8 @@ public class SectionStatusTag : TextWithIdTagHelper
             SectionStatus.NotStarted => TagColour.Grey,
             SectionStatus.InProgress => TagColour.Blue,
             SectionStatus.Submitted => TagColour.Green,
+            SectionStatus.OnHold => TagColour.Grey,
+            SectionStatus.RequestedEditing => TagColour.Grey,
             SectionStatus.NotSubmitted => TagColour.Red,
             SectionStatus.Withdrawn => TagColour.Red,
             SectionStatus.Completed => null,

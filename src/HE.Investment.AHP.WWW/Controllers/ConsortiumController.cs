@@ -59,7 +59,7 @@ public class ConsortiumController : WorkflowController<ConsortiumWorkflowState>
             return View("Programme", model with { AvailableProgrammes = await _mediator.Send(new GetAvailableProgrammesQuery(), cancellationToken) });
         }
 
-        return RedirectToAction("SearchOrganisation", "ConsortiumMember", new { consortiumId = result.ReturnedData });
+        return RedirectToAction("SearchOrganisation", "ConsortiumMember", new { consortiumId = result.ReturnedData.Value });
     }
 
     protected override async Task<IStateRouting<ConsortiumWorkflowState>> Routing(ConsortiumWorkflowState currentState, object? routeData = null)

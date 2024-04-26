@@ -9,9 +9,9 @@ namespace HE.Investments.AHP.Consortium.Domain.Entities;
 
 public class ConsortiumEntity
 {
-    private ConsortiumEntity(ConsortiumName name, ProgrammeSlim programme, ConsortiumMember leadPartner, ConsortiumId? id = null)
+    public ConsortiumEntity(ConsortiumId id, ConsortiumName name, ProgrammeSlim programme, ConsortiumMember leadPartner)
     {
-        Id = id ?? ConsortiumId.New();
+        Id = id;
         Programme = programme;
         LeadPartner = leadPartner;
         Name = name;
@@ -32,7 +32,7 @@ public class ConsortiumEntity
             OperationResult.ThrowValidationError("SelectedProgrammeId", "A consortium has already been added to this programme");
         }
 
-        return new ConsortiumEntity(ConsortiumName.GenerateName(programme.Name, leadPartner.OrganisationName), programme, leadPartner);
+        return new ConsortiumEntity(ConsortiumId.New(), ConsortiumName.GenerateName(programme.Name, leadPartner.OrganisationName), programme, leadPartner);
     }
 
     public void SetId(ConsortiumId newId)

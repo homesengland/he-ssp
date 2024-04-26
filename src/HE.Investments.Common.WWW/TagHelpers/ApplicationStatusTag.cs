@@ -55,6 +55,9 @@ public class ApplicationStatusTag : TextWithIdTagHelper
             ApplicationStatus.ApplicationDeclined => TagColour.Red,
             ApplicationStatus.NA => TagColour.Grey,
             ApplicationStatus.Approved => TagColour.Green,
+            ApplicationStatus.RequestedEditing => TagColour.Grey,
+            ApplicationStatus.Rejected => TagColour.Red,
+            ApplicationStatus.Deleted => TagColour.Red,
             _ => TagColour.Grey,
         };
     }
