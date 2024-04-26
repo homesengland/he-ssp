@@ -8,4 +8,6 @@ public record ProgrammeId : StringIdValueObject
         : base(value)
     {
     }
+
+    public override string ToString() => Value;
 }

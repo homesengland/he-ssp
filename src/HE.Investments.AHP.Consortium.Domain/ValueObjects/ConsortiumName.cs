@@ -31,6 +31,8 @@ public class ConsortiumName : ValueObject
         return new ConsortiumName($"{programmeName} - {leadPartnerName}");
     }
 
+    public override string ToString() => Value;
+
     protected override IEnumerable<object?> GetAtomicValues()
     {
         yield return Value;
