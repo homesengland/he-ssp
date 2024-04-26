@@ -576,6 +576,7 @@ namespace HE.Investments.Common.CRM.Model
 			public const string he_Projecttypedescription = "he_projecttypedescription";
 			public const string he_projecttypedescriptionName = "he_projecttypedescriptionname";
 			public const string he_projecttypeName = "he_projecttypename";
+			public const string he_projectyear = "he_projectyear";
 			public const string he_ProposedInterventions = "he_proposedinterventions";
 			public const string he_proposedinterventionsName = "he_proposedinterventionsname";
 			public const string he_ReasonforArchive = "he_reasonforarchive";
@@ -2347,6 +2348,23 @@ namespace HE.Investments.Common.CRM.Model
 				{
 					return default(string);
 				}
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_projectyear")]
+		public string he_projectyear
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("he_projectyear");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("he_projectyear");
+				this.SetAttributeValue("he_projectyear", value);
+				this.OnPropertyChanged("he_projectyear");
 			}
 		}
 		
