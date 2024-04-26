@@ -231,8 +231,8 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                 {
                     var contact = _contactRepository.GetById(application.invln_contactid.Id, new string[] { Contact.Fields.FirstName, Contact.Fields.LastName, nameof(Contact.invln_externalid).ToLower() });
                     var site = _siteRepository.GetById(application.invln_Site.Id, new string[] {invln_Sites.Fields.invln_developingpartner,
-                                                        invln_Sites.Fields.invln_ownerofthelandduringdevelopment, invln_Sites.Fields.invln_Ownerofthehomesaftercompletion } )
-                    var applicationDto = AhpApplicationMapper.MapRegularEntityToDto(application, contact.invln_externalid, site);
+                                                        invln_Sites.Fields.invln_ownerofthelandduringdevelopment, invln_Sites.Fields.invln_Ownerofthehomesaftercompletion });
+                    var applicationDto = AhpApplicationMapper.MapRegularEntityToDto(application, site, contact.invln_externalid);
                     if (application.invln_lastexternalmodificationby != null)
                     {
                         var lastExternalModificationBy = _contactRepository.GetById(application.invln_lastexternalmodificationby.Id,
@@ -253,7 +253,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                             lastName = submitedBy.LastName,
                         };
                     }
-
+                    applicationDto.confirmation = application.invln_partnerconfirmation;
                     listOfApplications.Add(applicationDto);
                 }
             }
@@ -265,7 +265,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             var application = JsonSerializer.Deserialize<AhpApplicationDto>(applicationSerialized);
             var contact = _contactRepository.GetContactViaExternalId(contactId);
             var applicationMapped = AhpApplicationMapper.MapDtoToRegularEntity(application, contact.Id.ToString(), organisationId);
-            UpdateSite(application)
+            UpdateSite(application);
             if (string.IsNullOrEmpty(application.id))
             {
                 applicationMapped.invln_lastexternalmodificationon = DateTime.UtcNow;

@@ -206,6 +206,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\Goal_FiscalPeriod.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\Goal_FiscalYear.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_Assistivesoftwaresupportlist.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_GovernmentOfficeRegion.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_howcouldweimprovethecrm.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_HoweasywasittousetheCRM.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_InteractionPipelineOpportunity.cs" />

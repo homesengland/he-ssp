@@ -38,6 +38,9 @@ namespace DataverseModel
 		English = 1033,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		EnglishAustralia = 3081,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		EnglishUnitedKingdom = 2057,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]

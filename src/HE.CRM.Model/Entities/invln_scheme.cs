@@ -256,6 +256,8 @@ namespace DataverseModel
 			public const string invln_OwneroftheLandYomiName = "invln_ownerofthelandyominame";
 			public const string invln_ownresources = "invln_ownresources";
 			public const string invln_ownresources_Base = "invln_ownresources_base";
+			public const string invln_partnerconfirmation = "invln_partnerconfirmation";
+			public const string invln_partnerconfirmationName = "invln_partnerconfirmationname";
 			public const string invln_PlanScoreorGeogScore = "invln_planscoreorgeogscore";
 			public const string invln_pplicationid = "invln_pplicationid";
 			public const string invln_PreviousExternalStatus = "invln_previousexternalstatus";
@@ -2465,6 +2467,40 @@ namespace DataverseModel
 			get
 			{
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_ownresources_base");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_partnerconfirmation")]
+		public System.Nullable<bool> invln_partnerconfirmation
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_partnerconfirmation");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_partnerconfirmation");
+				this.SetAttributeValue("invln_partnerconfirmation", value);
+				this.OnPropertyChanged("invln_partnerconfirmation");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_partnerconfirmationname")]
+		public string invln_partnerconfirmationName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_partnerconfirmation"))
+				{
+					return this.FormattedValues["invln_partnerconfirmation"];
+				}
+				else
+				{
+					return default(string);
+				}
 			}
 		}
 		

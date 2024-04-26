@@ -71,5 +71,6 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public OrganizationDetailsDto developerPartner { get; set; }
         public OrganizationDetailsDto ownerOfTheLandDuringDevelopment { get; set; }
         public OrganizationDetailsDto ownerOfTheHomesAfterCompletion { get; set; }
+        public bool? confirmation {  get; set; }
     }
 }

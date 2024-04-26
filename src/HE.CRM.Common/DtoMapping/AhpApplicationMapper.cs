@@ -4,6 +4,7 @@ using Microsoft.Xrm.Sdk;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Metadata;
+using System.ServiceModel.Configuration;
 
 namespace HE.CRM.Common.DtoMapping
 {
@@ -52,6 +53,7 @@ namespace HE.CRM.Common.DtoMapping
                 invln_grantsfromdhscnhsorotherhealth = MapNullableDecimalToMoney(applicationDto.howMuchReceivedFromDepartmentOfHealth),
                 invln_grantsfromthelottery = MapNullableDecimalToMoney(applicationDto.howMuchReceivedFromLotteryFunding),
                 invln_grantsfromotherpublicbodies = MapNullableDecimalToMoney(applicationDto.howMuchReceivedFromOtherPublicBodies),
+                invln_partnerconfirmation = applicationDto.confirmation,
             };
 
             if (applicationDto.representationsandwarranties != null)
@@ -78,11 +80,10 @@ namespace HE.CRM.Common.DtoMapping
             {
                 applicationToReturn.invln_programmelookup = new EntityReference(invln_programme.EntityLogicalName, programmeId);
             }
-
             return applicationToReturn;
         }
 
-        public static AhpApplicationDto MapRegularEntityToDto(invln_scheme application, string contactExternalId = null, invln_Sites sites)
+        public static AhpApplicationDto MapRegularEntityToDto(invln_scheme application, invln_Sites sites, string contactExternalId = null)
         {
             var applicationDtoToReturn = new AhpApplicationDto()
             {
@@ -130,6 +131,7 @@ namespace HE.CRM.Common.DtoMapping
                 applicationStatus = application.invln_ExternalStatus?.Value,
                 contactExternalId = contactExternalId,
                 representationsandwarranties = application.invln_representationsandwarrantiesconfirmation,
+                confirmation = application.invln_partnerconfirmation,
                 developerPartner = new OrganizationDetailsDto()
                 {
                     registeredCompanyName = sites.invln_developingpartner?.Name,

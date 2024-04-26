@@ -12,27 +12,39 @@ namespace DataverseModel
 {
 	
 	
+	/// <summary>
+	/// Field used by PWC. Notice that it has more options that the Region OptionSet.
+	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum he_Sector
+	public enum he_GovernmentOfficeRegion
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Charity = 134370000,
+		EastMidlands = 134370003,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Financial = 134370003,
+		EastofEngland = 134370005,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		GovernmentCentral = 134370002,
+		London = 134370008,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		GovernmentLocal = 134370001,
+		NorthEast = 134370000,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		OtherPublicSector = 134370005,
+		NorthWest = 134370001,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		PrivateSectornonfinancial = 134370004,
+		SouthEast = 134370006,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		SouthWest = 134370007,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		WestMidlands = 134370004,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		YorkshireandtheHumber = 134370002,
 	}
 }
 #pragma warning restore CS1591
