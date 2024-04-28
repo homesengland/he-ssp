@@ -42,6 +42,7 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.Consortium
                     invln_Consortium.Fields.Id,
                     invln_Consortium.Fields.invln_LeadPartner,
                     invln_Consortium.Fields.invln_Name,
+                    invln_Consortium.Fields.invln_Programme
                 }
                 );
                 if (consortium != null)

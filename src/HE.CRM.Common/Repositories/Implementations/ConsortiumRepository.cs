@@ -19,13 +19,13 @@ namespace HE.CRM.Common.Repositories.Implementations
 
         public bool GetByProgrammeAndOrganization(Guid programmeId, Guid organizationId)
         {
-            var query_1 = new QueryExpression(invln_Consortium.EntitySchemaName);
+            var query_1 = new QueryExpression(invln_Consortium.EntityLogicalName);
             query_1.ColumnSet = new ColumnSet(invln_Consortium.Fields.Id);
             query_1.Criteria.AddCondition(invln_Consortium.Fields.invln_Programme, ConditionOperator.Equal, programmeId);
             query_1.Criteria.AddCondition(invln_Consortium.Fields.invln_LeadPartner, ConditionOperator.Equal, organizationId);
             var response_1 = service.RetrieveMultiple(query_1);
 
-            var query_2 = new QueryExpression(invln_Consortium.EntitySchemaName)
+            var query_2 = new QueryExpression(invln_Consortium.EntityLogicalName)
             {
                 ColumnSet = new ColumnSet(invln_Consortium.Fields.Id)
             };
@@ -36,12 +36,11 @@ namespace HE.CRM.Common.Repositories.Implementations
             return response_1.Entities.Count > 0 || response_2.Entities.Count > 0;
         }
 
-        public List<invln_Consortium> getByPartnerInConsoriumMember(string organisationId)
+        public List<invln_Consortium> GetByPartnerInConsoriumMember(string organisationId)
         {
-            var query = new QueryExpression(invln_Consortium.EntitySchemaName);
+            var query = new QueryExpression(invln_Consortium.EntityLogicalName);
             query.ColumnSet = new ColumnSet(invln_Consortium.Fields.Id, invln_Consortium.Fields.invln_Programme,
-                                                invln_Consortium.Fields.invln_LeadPartner, invln_Consortium.Fields.StatusCode);
-            query.Criteria.AddCondition(invln_Consortium.Fields.invln_Programme, ConditionOperator.Equal);
+                                                invln_Consortium.Fields.invln_LeadPartner, invln_Consortium.Fields.StatusCode, invln_Consortium.Fields.invln_Name);
             var query_invln_consortiummember = query.AddLink(invln_ConsortiumMember.EntityLogicalName, invln_Consortium.Fields.invln_ConsortiumId, invln_ConsortiumMember.Fields.invln_Consortium);
             query_invln_consortiummember.LinkCriteria.AddCondition(invln_ConsortiumMember.Fields.invln_Partner, ConditionOperator.Equal, organisationId);
             return service.RetrieveMultiple(query).Entities.Select(x => x.ToEntity<invln_Consortium>()).ToList();

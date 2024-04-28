@@ -17,7 +17,7 @@ namespace HE.CRM.AHP.Plugins.Plugins.CustomApi.Consortium
     StageEnum.PostOperation,
     ExecutionModeEnum.Synchronous,
     "",
-    "HE.CRM.Plugins.Plugins.CustomApi.Consortium.GetConsortiumsPlugin: invln_getconsortiums",
+    "HE.CRM.Plugins.Plugins.CustomApi.Consortium.GetConsortiumsByOrganisationPlugin: invln_getconsortiums",
     1,
     IsolationModeEnum.Sandbox,
     Id = "ebd32009-dfcf-4b93-b8d1-b071255c0273")]

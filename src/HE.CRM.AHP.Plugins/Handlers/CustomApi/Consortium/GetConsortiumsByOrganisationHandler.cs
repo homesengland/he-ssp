@@ -32,12 +32,14 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.Consortium
         public override void DoWork()
         {
             var listOfConsortiums = new List<invln_Consortium>();
-            listOfConsortiums.AddRange(_consortiumRepository.GetByAttribute(invln_Consortium.Fields.invln_LeadPartner, OrganisationId,
+            listOfConsortiums.AddRange(_consortiumRepository.GetByAttribute(invln_Consortium.Fields.invln_LeadPartner, new Guid(OrganisationId),
                 new string[] { invln_Consortium.Fields.Id, invln_Consortium.Fields.invln_Programme, invln_Consortium.Fields.invln_LeadPartner,
-                             invln_Consortium.Fields.StatusCode})
+                             invln_Consortium.Fields.StatusCode, invln_Consortium.Fields.invln_Name})
                             .ToList());
-            var consortiesWhereAccountIsAMemer = _consortiumRepository.getByPartnerInConsoriumMember(OrganisationId);
+            var consortiesWhereAccountIsAMemer = _consortiumRepository.GetByPartnerInConsoriumMember(OrganisationId);
             listOfConsortiums.AddRange(consortiesWhereAccountIsAMemer);
+            if (listOfConsortiums.Count == 0)
+                return;
             var listOfConsortiumsDto = new List<ConsortiumDto>();
             foreach (var consortium in listOfConsortiums)
             {
