@@ -50,7 +50,7 @@ public class TenureDetailsTestDataBuilder
 
     public TenureDetailsTestDataBuilder WithExemptionJustification(string exemptionJustification)
     {
-        _exemptionJustification = MoreInformation.FromCrm(exemptionJustification);
+        _exemptionJustification = MoreInformation.Create(exemptionJustification);
         return this;
     }
 

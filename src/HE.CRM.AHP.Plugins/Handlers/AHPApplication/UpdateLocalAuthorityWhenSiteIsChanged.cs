@@ -31,12 +31,12 @@ namespace HE.CRM.AHP.Plugins.Handlers.AHPApplication
             this.TracingService.Trace($"{ExecutionData.Target.invln_Site.Id}");
             var heLocalAuthority = _heLocalAuthorityRepository.GetAhpLocalAuthoritiesReletedToSite(ExecutionData.Target.invln_Site.Id);
             this.TracingService.Trace($"Grow Manager");
-            if (heLocalAuthority.OwningUser == null)
+            if (heLocalAuthority.he_growthmanager == null)
             {
                 return;
             }
 
-            _ahpApplicationRepository.Assign(new invln_scheme() { Id = CurrentState.Id }, heLocalAuthority.OwningUser);
+            _ahpApplicationRepository.Assign(new invln_scheme() { Id = CurrentState.Id }, heLocalAuthority.he_growthmanager);
         }
     }
 }

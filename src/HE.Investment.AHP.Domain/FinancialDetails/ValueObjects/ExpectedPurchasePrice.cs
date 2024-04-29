@@ -11,10 +11,8 @@ public class ExpectedPurchasePrice : TheRequiredIntValueObject
     {
     }
 
-    private ExpectedPurchasePrice(int landValue)
-    : base(landValue, FinancialDetailsValidationFieldNames.PurchasePrice, "expected purchase price of the land")
+    public ExpectedPurchasePrice(decimal landValue)
+        : base(decimal.ToInt32(landValue), FinancialDetailsValidationFieldNames.PurchasePrice, "expected purchase price of the land")
     {
     }
-
-    public static ExpectedPurchasePrice FromCrm(decimal value) => new(decimal.ToInt32(value));
 }

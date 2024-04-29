@@ -144,6 +144,7 @@ namespace HE.CRM.Common.DtoMapping
             if (localAuthorities != null)
             {
                 SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_HeLocalAuthorityId), localAuthorities.ToEntityReference());
+                site.invln_GovernmentOfficeRegion = TryCreateOptionSetValue(localAuthorities.he_governmentofficeregion?.Value);
             }
 
             SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_planningstatus), TryCreateOptionSetValue(dto.planningDetails?.planningStatus));

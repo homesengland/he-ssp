@@ -11,10 +11,8 @@ public class ExpectedWorksCosts : TheRequiredIntValueObject
     {
     }
 
-    private ExpectedWorksCosts(int value)
-        : base(value, FinancialDetailsValidationFieldNames.ExpectedWorksCosts, "expected works costs")
+    public ExpectedWorksCosts(decimal value)
+        : base(decimal.ToInt32(value), FinancialDetailsValidationFieldNames.ExpectedWorksCosts, "expected works costs")
     {
     }
-
-    public static ExpectedWorksCosts FromCrm(decimal value) => new(decimal.ToInt32(value));
 }

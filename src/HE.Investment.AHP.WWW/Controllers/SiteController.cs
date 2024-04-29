@@ -418,16 +418,21 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     [WorkflowState(SiteWorkflowState.PlanningDetails)]
     public async Task<IActionResult> PlanningDetails(SitePlanningDetails model, CancellationToken cancellationToken)
     {
-        return await ExecuteSiteCommand<SitePlanningDetails>(
+        return await ExecuteSiteCommand(
             new ProvidePlanningDetailsCommand(
                 this.GetSiteIdFromRoute(),
                 model.ReferenceNumber,
+                model.IsDetailedPlanningApprovalDateActive,
                 model.DetailedPlanningApprovalDate ?? DateDetails.Empty(),
                 model.RequiredFurtherSteps,
+                model.IsApplicationForDetailedPlanningSubmittedDateActive,
                 model.ApplicationForDetailedPlanningSubmittedDate ?? DateDetails.Empty(),
+                model.IsExpectedPlanningApprovalDateActive,
                 model.ExpectedPlanningApprovalDate ?? DateDetails.Empty(),
+                model.IsOutlinePlanningApprovalDateActive,
                 model.OutlinePlanningApprovalDate ?? DateDetails.Empty(),
                 model.IsGrantFundingForAllHomesCoveredByApplication,
+                model.IsPlanningSubmissionDateActive,
                 model.PlanningSubmissionDate ?? DateDetails.Empty(),
                 model.IsLandRegistryTitleNumberRegistered),
             nameof(PlanningDetails),

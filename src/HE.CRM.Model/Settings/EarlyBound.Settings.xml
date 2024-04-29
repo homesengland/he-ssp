@@ -49,7 +49,6 @@ invln_getsinglesitedetails|
 invln_gettemporaryportaldata|
 invln_gettypeofhomeslist|
 invln_invitecontacttojoinexistingorganisation|
-invln_isconsortiumexistforprogrammeandorganisation|
 invln_linkcontactwithorganization|
 invln_returnuserprofile|
 invln_savetemporaryportaldata|
@@ -62,7 +61,6 @@ invln_sendreminderemailforrefferedbacktoapplicant|
 invln_sendremindertofinalisadraftapplication|
 invln_sendrequesttoassigncontacttoexistingorganisation|
 invln_setahpapplication|
-invln_setconsortium|
 invln_setdeliveryphase|
 invln_setfrontdoorproject|
 invln_sethometype|

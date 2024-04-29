@@ -11,10 +11,8 @@ public class CurrentLandValue : TheRequiredIntValueObject
     {
     }
 
-    private CurrentLandValue(int landValue)
-        : base(landValue, FinancialDetailsValidationFieldNames.LandValue, "current value of the land")
+    public CurrentLandValue(decimal landValue)
+        : base(decimal.ToInt32(landValue), FinancialDetailsValidationFieldNames.LandValue, "current value of the land")
     {
     }
-
-    public static CurrentLandValue FromCrm(decimal value) => new(decimal.ToInt32(value));
 }

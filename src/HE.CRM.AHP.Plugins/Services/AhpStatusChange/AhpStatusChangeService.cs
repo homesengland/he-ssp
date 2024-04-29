@@ -45,7 +45,7 @@ namespace HE.CRM.AHP.Plugins.Services.AhpStatusChange
             if (target.invln_ChangeSource != null)
             {
                 this.TracingService.Trace("Change source: " +  target.invln_ChangeSource.Value);
-                var ahpApplication = _ahpApplicationRepository.GetById(target.invln_AHPApplication.Id, new string[] { nameof(invln_scheme.OwnerId).ToLower(), nameof(invln_scheme.invln_schemename).ToLower(), nameof(invln_scheme.invln_contactid).ToLower(), nameof(invln_scheme.invln_organisationid).ToLower() });
+                var ahpApplication = _ahpApplicationRepository.GetById(target.invln_AHPApplication.Id, new string[] { invln_scheme.Fields.OwnerId, invln_scheme.Fields.invln_schemename, invln_scheme.Fields.invln_contactid, invln_scheme.Fields.invln_organisationid, invln_scheme.Fields.invln_programmelookup });
                 SendNotification(target, ahpApplication);
             }
         }

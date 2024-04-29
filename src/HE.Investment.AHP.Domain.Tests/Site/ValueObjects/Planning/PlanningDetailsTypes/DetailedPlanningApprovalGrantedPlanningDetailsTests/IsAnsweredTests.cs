@@ -7,7 +7,7 @@ namespace HE.Investment.AHP.Domain.Tests.Site.ValueObjects.Planning.PlanningDeta
 public class IsAnsweredTests
 {
     private readonly ReferenceNumber? _referenceNumber = new("123");
-    private readonly DetailedPlanningApprovalDate? _detailedPlanningApprovalDate = new("1", "2", "2025");
+    private readonly DetailedPlanningApprovalDate? _detailedPlanningApprovalDate = new(true, "1", "2", "2025");
 
     [Fact]
     public void ShouldIsAnsweredReturnTrue_WhenAllDataProvided()

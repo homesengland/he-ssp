@@ -27,6 +27,10 @@ namespace HE.CRM.AHP.Plugins.Services.Application
 
         private readonly IAhpStatusChangeRepository _ahpStatusChangeRepository;
 
+        private readonly ISiteRepository _siteRepository;
+
+        private readonly IHeLocalAuthorityRepository _heLocalAuthorityRepository;
+
         private readonly IGovNotifyEmailService _govNotifyEmailService;
 
         public ApplicationService(CrmServiceArgs args) : base(args)
@@ -37,6 +41,8 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             _sharepointSiteRepository = CrmRepositoriesFactory.Get<ISharepointSiteRepository>();
             _ahpApplicationRepositoryAdmin = CrmRepositoriesFactory.GetSystem<IAhpApplicationRepository>();
             _ahpStatusChangeRepository = CrmRepositoriesFactory.Get<IAhpStatusChangeRepository>();
+            _siteRepository = CrmRepositoriesFactory.Get<ISiteRepository>();
+            _heLocalAuthorityRepository = CrmRepositoriesFactory.Get<IHeLocalAuthorityRepository>();
             _govNotifyEmailService = CrmServicesFactory.Get<IGovNotifyEmailService>();
         }
 
@@ -265,7 +271,18 @@ namespace HE.CRM.AHP.Plugins.Services.Application
         {
             var application = JsonSerializer.Deserialize<AhpApplicationDto>(applicationSerialized);
             var contact = _contactRepository.GetContactViaExternalId(contactId);
-            var applicationMapped = AhpApplicationMapper.MapDtoToRegularEntity(application, contact.Id.ToString(), organisationId);
+
+            he_LocalAuthority localAuthority = null;
+            if (Guid.TryParse(application.siteId, out var siteGuid))
+            {
+                var site = _siteRepository.GetById(siteGuid, invln_Sites.Fields.invln_HeLocalAuthorityId);
+                if(site.invln_HeLocalAuthorityId != null)
+                {
+                    localAuthority = _heLocalAuthorityRepository.GetById(site.invln_HeLocalAuthorityId.Id, new string[] { he_LocalAuthority.Fields.he_growthmanager, he_LocalAuthority.Fields.he_growthhub });
+                }
+            }
+
+            var applicationMapped = AhpApplicationMapper.MapDtoToRegularEntity(application, contact.Id.ToString(), organisationId, localAuthority);
             if (string.IsNullOrEmpty(application.id))
             {
                 applicationMapped.invln_lastexternalmodificationon = DateTime.UtcNow;

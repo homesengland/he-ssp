@@ -23,7 +23,7 @@ public static class ExpectedContributionsToSchemeMapper
     public static ExpectedContributionsToScheme MapToExpectedContributionsToScheme(AhpApplicationDto application, Tenure tenure)
     {
         static ExpectedContributionValue? MapProvidedValues(decimal? value, ExpectedContributionFields field) => value.IsProvided()
-            ? ExpectedContributionValue.FromCrm(field, value!.Value)
+            ? new ExpectedContributionValue(field, value!.Value)
             : null;
 
         return new ExpectedContributionsToScheme(

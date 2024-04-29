@@ -83,7 +83,7 @@ namespace HE.CRM.Common.Repositories.Implementations
             var queryLA = new QueryExpression
             {
                 EntityName = he_LocalAuthority.EntityLogicalName,
-                ColumnSet = new ColumnSet(he_LocalAuthority.Fields.Id, he_LocalAuthority.Fields.OwningUser)
+                ColumnSet = new ColumnSet(he_LocalAuthority.Fields.Id, he_LocalAuthority.Fields.he_growthmanager)
             };
             queryLA.Criteria.AddCondition(invln_AHGLocalAuthorities.Fields.Id, ConditionOperator.Equal, site.invln_LocalAuthority.Id);
             return service.RetrieveMultiple(queryLA).Entities.Select(x => x.ToEntity<he_LocalAuthority>()).FirstOrDefault();

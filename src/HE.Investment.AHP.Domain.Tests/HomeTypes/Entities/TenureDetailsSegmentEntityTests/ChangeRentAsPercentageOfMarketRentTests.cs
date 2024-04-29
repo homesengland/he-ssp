@@ -12,6 +12,9 @@ public class ChangeRentAsPercentageOfMarketRentTests
     [InlineData(9999.99, 0, 0)]
     [InlineData(0, 9999.99, 0)]
     [InlineData(9999.99, 9999.99, 1)]
+    [InlineData(39, 1528, 39.1794)]
+    [InlineData(1528, 39, 0.0255)]
+    [InlineData(2345.21, 902, 0.3846)]
     public void ShouldReturnCalculatedResult_WhenInputsAreProvided(decimal marketRentPerWeek, decimal rentPerWeek, decimal expectedResult)
     {
         // given

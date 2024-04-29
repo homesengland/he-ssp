@@ -1,16 +1,22 @@
-using HE.Investment.AHP.Domain.Delivery.ValueObjects;
+using HE.Investments.Common.Contract;
+using HE.Investments.Common.Domain.ValueObjects;
 
 namespace HE.Investment.AHP.Domain.Site.ValueObjects.Planning;
 
 public class ApplicationForDetailedPlanningSubmittedDate : DateValueObject
 {
-    public ApplicationForDetailedPlanningSubmittedDate(string? day, string? month, string? year)
-        : base(day, month, year, "ApplicationForDetailedPlanningSubmittedDate", "application for detailed planning submitted date")
+    private const string FieldDescription = "application for detailed planning submitted date";
+
+    public ApplicationForDetailedPlanningSubmittedDate(bool exists, string? day, string? month, string? year)
+        : base(day, month, year, nameof(ApplicationForDetailedPlanningSubmittedDate), FieldDescription, !exists)
     {
     }
 
-    public static ApplicationForDetailedPlanningSubmittedDate? Create(string? day, string? month, string? year)
+    public ApplicationForDetailedPlanningSubmittedDate(DateTime? value)
+        : base(value)
     {
-        return ValuesProvided(day, month, year) ? new ApplicationForDetailedPlanningSubmittedDate(day, month, year) : null;
     }
+
+    public static ApplicationForDetailedPlanningSubmittedDate FromDateDetails(bool exists, DateDetails? date) =>
+        new(exists, date?.Day, date?.Month, date?.Year);
 }

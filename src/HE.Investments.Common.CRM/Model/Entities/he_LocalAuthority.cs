@@ -72,6 +72,14 @@ namespace HE.Investments.Common.CRM.Model
 			public const string CreatedOnBehalfByName = "createdonbehalfbyname";
 			public const string CreatedOnBehalfByYomiName = "createdonbehalfbyyominame";
 			public const string he_AreaCodeDescription = "he_areacodedescription";
+			public const string he_governmentofficeregion = "he_governmentofficeregion";
+			public const string he_governmentofficeregionName = "he_governmentofficeregionname";
+			public const string he_growthhub = "he_growthhub";
+			public const string he_growthhubName = "he_growthhubname";
+			public const string he_growthhubYomiName = "he_growthhubyominame";
+			public const string he_growthmanager = "he_growthmanager";
+			public const string he_growthmanagerName = "he_growthmanagername";
+			public const string he_growthmanagerYomiName = "he_growthmanageryominame";
 			public const string he_GSSCode = "he_gsscode";
 			public const string he_he_projectlocalauthority_LocalAuthority_h = "he_he_projectlocalauthority_LocalAuthority_h";
 			public const string he_laregion = "he_laregion";
@@ -84,6 +92,8 @@ namespace HE.Investments.Common.CRM.Model
 			public const string he_pipeline_projectbelocated_he_localauthori = "he_pipeline_projectbelocated_he_localauthori";
 			public const string he_Priorityplace = "he_priorityplace";
 			public const string he_priorityplaceName = "he_priorityplacename";
+			public const string he_systemuser_he_localauthority_growthmanager = "he_systemuser_he_localauthority_growthmanager";
+			public const string he_team_he_localauthority_growthhub = "he_team_he_localauthority_growthhub";
 			public const string ImportSequenceNumber = "importsequencenumber";
 			public const string invln_sitedetails_HeLocalAuthorityId_he_localau = "invln_sitedetails_HeLocalAuthorityId_he_localau";
 			public const string invln_sites_HeLocalAuthorityId_he_localauthorit = "invln_sites_HeLocalAuthorityId_he_localauthorit";
@@ -290,6 +300,145 @@ namespace HE.Investments.Common.CRM.Model
 				this.OnPropertyChanging("he_AreaCodeDescription");
 				this.SetAttributeValue("he_areacodedescription", value);
 				this.OnPropertyChanged("he_AreaCodeDescription");
+			}
+		}
+		
+		/// <summary>
+		/// Field used by PWC. Please note that it has more options than the existing region field (he_laregion)
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_governmentofficeregion")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue he_governmentofficeregion
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("he_governmentofficeregion");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("he_governmentofficeregion");
+				this.SetAttributeValue("he_governmentofficeregion", value);
+				this.OnPropertyChanged("he_governmentofficeregion");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_governmentofficeregionname")]
+		public string he_governmentofficeregionName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("he_governmentofficeregion"))
+				{
+					return this.FormattedValues["he_governmentofficeregion"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_growthhub")]
+		public Microsoft.Xrm.Sdk.EntityReference he_growthhub
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("he_growthhub");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("he_growthhub");
+				this.SetAttributeValue("he_growthhub", value);
+				this.OnPropertyChanged("he_growthhub");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_growthhubname")]
+		public string he_growthhubName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("he_growthhub"))
+				{
+					return this.FormattedValues["he_growthhub"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_growthhubyominame")]
+		public string he_growthhubYomiName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("he_growthhub"))
+				{
+					return this.FormattedValues["he_growthhub"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_growthmanager")]
+		public Microsoft.Xrm.Sdk.EntityReference he_growthmanager
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("he_growthmanager");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("he_growthmanager");
+				this.SetAttributeValue("he_growthmanager", value);
+				this.OnPropertyChanged("he_growthmanager");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_growthmanagername")]
+		public string he_growthmanagerName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("he_growthmanager"))
+				{
+					return this.FormattedValues["he_growthmanager"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_growthmanageryominame")]
+		public string he_growthmanagerYomiName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("he_growthmanager"))
+				{
+					return this.FormattedValues["he_growthmanager"];
+				}
+				else
+				{
+					return default(string);
+				}
 			}
 		}
 		
@@ -956,6 +1105,48 @@ namespace HE.Investments.Common.CRM.Model
 				this.OnPropertyChanging("invln_sites_HeLocalAuthorityId_he_localauthorit");
 				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_Sites>("invln_sites_HeLocalAuthorityId_he_localauthorit", null, value);
 				this.OnPropertyChanged("invln_sites_HeLocalAuthorityId_he_localauthorit");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 he_systemuser_he_localauthority_growthmanager
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_growthmanager")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("he_systemuser_he_localauthority_growthmanager")]
+		public HE.Investments.Common.CRM.Model.SystemUser he_systemuser_he_localauthority_growthmanager
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<HE.Investments.Common.CRM.Model.SystemUser>("he_systemuser_he_localauthority_growthmanager", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("he_systemuser_he_localauthority_growthmanager");
+				this.SetRelatedEntity<HE.Investments.Common.CRM.Model.SystemUser>("he_systemuser_he_localauthority_growthmanager", null, value);
+				this.OnPropertyChanged("he_systemuser_he_localauthority_growthmanager");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 he_team_he_localauthority_growthhub
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_growthhub")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("he_team_he_localauthority_growthhub")]
+		public HE.Investments.Common.CRM.Model.Team he_team_he_localauthority_growthhub
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<HE.Investments.Common.CRM.Model.Team>("he_team_he_localauthority_growthhub", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("he_team_he_localauthority_growthhub");
+				this.SetRelatedEntity<HE.Investments.Common.CRM.Model.Team>("he_team_he_localauthority_growthhub", null, value);
+				this.OnPropertyChanged("he_team_he_localauthority_growthhub");
 			}
 		}
 		

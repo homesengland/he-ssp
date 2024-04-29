@@ -11,6 +11,6 @@ public class ApplicationHasBeenWithdrawnDisplayNotificationFactory : IDisplayNot
     {
         return DisplayNotification.Success(
             "Your application has been withdrawn.",
-            body: "You will no longer be able proceed with this application.");
+            body: "You will no longer be able to proceed with this application.");
     }
 }
