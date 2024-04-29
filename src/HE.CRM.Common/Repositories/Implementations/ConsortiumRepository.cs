@@ -36,7 +36,7 @@ namespace HE.CRM.Common.Repositories.Implementations
             return response_1.Entities.Count > 0 || response_2.Entities.Count > 0;
         }
 
-        public List<invln_Consortium> GetByPartnerInConsoriumMember(string organisationId)
+        public List<invln_Consortium> GetByLeadPartnerInConsoriumMember(string organisationId)
         {
             var query = new QueryExpression(invln_Consortium.EntityLogicalName);
             query.ColumnSet = new ColumnSet(invln_Consortium.Fields.Id, invln_Consortium.Fields.invln_Programme,

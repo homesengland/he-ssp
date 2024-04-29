@@ -36,7 +36,7 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.Consortium
                 new string[] { invln_Consortium.Fields.Id, invln_Consortium.Fields.invln_Programme, invln_Consortium.Fields.invln_LeadPartner,
                              invln_Consortium.Fields.StatusCode, invln_Consortium.Fields.invln_Name})
                             .ToList());
-            var consortiesWhereAccountIsAMemer = _consortiumRepository.GetByPartnerInConsoriumMember(OrganisationId);
+            var consortiesWhereAccountIsAMemer = _consortiumRepository.GetByLeadPartnerInConsoriumMember(OrganisationId);
             listOfConsortiums.AddRange(consortiesWhereAccountIsAMemer);
             if (listOfConsortiums.Count == 0)
                 return;
