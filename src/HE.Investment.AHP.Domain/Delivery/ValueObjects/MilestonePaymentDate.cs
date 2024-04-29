@@ -1,24 +1,22 @@
+using HE.Investments.Common.Contract;
+using HE.Investments.Common.Domain.ValueObjects;
+
 namespace HE.Investment.AHP.Domain.Delivery.ValueObjects;
 
 public class MilestonePaymentDate : DateValueObject
 {
-    public MilestonePaymentDate(string? day, string? month, string? year)
-        : base(day, month, year, "ClaimMilestonePaymentAt", "milestone payment date")
+    private const string FieldDescription = "milestone payment date";
+
+    public MilestonePaymentDate(bool exists, string? day, string? month, string? year)
+        : base(day, month, year, "ClaimMilestonePaymentAt", FieldDescription, !exists)
     {
     }
 
-    private MilestonePaymentDate(DateOnly value)
+    public MilestonePaymentDate(DateTime? value)
         : base(value)
     {
     }
 
-    public static MilestonePaymentDate? Create(string? day, string? month, string? year)
-    {
-        return ValuesProvided(day, month, year) ? new MilestonePaymentDate(day, month, year) : null;
-    }
-
-    public static MilestonePaymentDate Create(DateOnly value)
-    {
-        return new MilestonePaymentDate(value);
-    }
+    public static MilestonePaymentDate FromDateDetails(bool exists, DateDetails? date) =>
+        new(exists, date?.Day, date?.Month, date?.Year);
 }

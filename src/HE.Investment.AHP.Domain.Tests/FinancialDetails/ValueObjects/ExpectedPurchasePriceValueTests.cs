@@ -87,7 +87,7 @@ public class ExpectedPurchasePriceValueTests
     public void ShouldCreateExpectedPurchasePrice_WhenIntValueIsValid()
     {
         // given && when
-        var landValue = ExpectedPurchasePrice.FromCrm(100);
+        var landValue = new ExpectedPurchasePrice(100);
 
         // then
         landValue.Value.Should().Be(100);

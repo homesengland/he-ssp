@@ -10,10 +10,8 @@ public class PurchasePrice : TheRequiredIntValueObject
     {
     }
 
-    private PurchasePrice(int value)
-        : base(value, FinancialDetailsValidationFieldNames.PurchasePrice, "purchase price of the land")
+    public PurchasePrice(decimal value)
+        : base(decimal.ToInt32(value), FinancialDetailsValidationFieldNames.PurchasePrice, "purchase price of the land")
     {
     }
-
-    public static PurchasePrice FromCrm(decimal value) => new(decimal.ToInt32(value));
 }

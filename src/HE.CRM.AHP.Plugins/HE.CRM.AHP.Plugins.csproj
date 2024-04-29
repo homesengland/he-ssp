@@ -106,6 +106,7 @@
     <Compile Include="Handlers\ContactWebrole\SendNotificationOnRoleModificationHandler.cs" />
     <Compile Include="Handlers\CustomApi\ChangeAhpApplicationHandler.cs" />
     <Compile Include="Handlers\CustomApi\CheckIfApplicationWithGivenNameExistsHandler.cs" />
+    <Compile Include="Handlers\CustomApi\Consortium\GetConsortiumsByOrganisationHandler.cs" />
     <Compile Include="Handlers\CustomApi\Consortium\GetConsortiumHandler.cs" />
     <Compile Include="Handlers\CustomApi\Consortium\IsConsortiumExistForProgrammeAndOrganisation.cs" />
     <Compile Include="Handlers\CustomApi\Consortium\SetConsortiumHandler.cs" />
@@ -208,6 +209,7 @@
     <Compile Include="Plugins\ContactWebrole\SendNotificationOnRoleModificationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\ChangeAhpApplicationStatusPlugin.cs" />
     <Compile Include="Plugins\CustomApi\CheckIfApplicationWithGivenNameExistsPlugin.cs" />
+    <Compile Include="Plugins\CustomApi\Consortium\GetConsortiumsByOrganisationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\Consortium\GetConsortiumPlugin.cs" />
     <Compile Include="Plugins\CustomApi\Consortium\IsConsortiumExist.cs" />
     <Compile Include="Plugins\CustomApi\Consortium\SetConsortiumPlugin.cs" />

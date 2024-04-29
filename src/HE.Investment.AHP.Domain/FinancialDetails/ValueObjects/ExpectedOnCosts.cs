@@ -11,10 +11,8 @@ public class ExpectedOnCosts : TheRequiredIntValueObject
     {
     }
 
-    private ExpectedOnCosts(int value)
-        : base(value, FinancialDetailsValidationFieldNames.ExpectedOnCosts, "expected on works costs")
+    public ExpectedOnCosts(decimal value)
+        : base(decimal.ToInt32(value), FinancialDetailsValidationFieldNames.ExpectedOnCosts, "expected on works costs")
     {
     }
-
-    public static ExpectedOnCosts FromCrm(decimal value) => new(decimal.ToInt32(value));
 }

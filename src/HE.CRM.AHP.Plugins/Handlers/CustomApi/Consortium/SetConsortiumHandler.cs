@@ -34,18 +34,22 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.Consortium
 
         public override void DoWork()
         {
+            TracingService.Trace($"Get Contact");
             var contact = _contactRepository.GetContactViaExternalId(UserId);
-            if (Guid.TryParse(UserId, out var leadPartnerId) && Guid.TryParse(UserId, out var programmeId))
+            TracingService.Trace($"contact with id: {contact.Id}");
+            if (contact != null && ProgrammeId != null)
             {
+                TracingService.Trace($"PrePare Data ");
                 var consortium = new invln_Consortium()
                 {
                     invln_Name = ConsortiumName,
-                    invln_LeadPartner = new EntityReference(Account.EntityLogicalName, leadPartnerId),
-                    invln_Programme = new EntityReference(invln_programme.EntityLogicalName, programmeId),
+                    invln_LeadPartner = new EntityReference(Account.EntityLogicalName, new Guid(LeadPartnerId)),
+                    invln_Programme = new EntityReference(invln_programme.EntityLogicalName, new Guid(ProgrammeId)),
                     invln_Createdby = contact.ToEntityReference()
                 };
-
+                TracingService.Trace($"Create Consortium");
                 var consortiumId = _consortiumRepository.Create(consortium);
+                TracingService.Trace($"consortium Id: {consortiumId}");
                 ExecutionData.SetOutputParameter(invln_setconsortiumResponse.Fields.invln_consortiumid, consortiumId.ToString());
             }
         }

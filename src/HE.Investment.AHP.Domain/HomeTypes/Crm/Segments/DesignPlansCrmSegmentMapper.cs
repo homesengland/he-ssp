@@ -20,7 +20,7 @@ public class DesignPlansCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<DesignPl
         return new DesignPlansSegmentEntity(
             application,
             dto.designPrinciples.Select(MapDesignPrinciple),
-            MoreInformation.FromCrm(dto.designPlansMoreInformation),
+            MoreInformation.Create(dto.designPlansMoreInformation),
             uploadedFiles);
     }
 

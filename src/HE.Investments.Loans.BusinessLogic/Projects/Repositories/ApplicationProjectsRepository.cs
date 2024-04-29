@@ -146,7 +146,7 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
             existingLegalCharges = projectToSave.ChargesDebt?.Exist,
             existingLegalChargesInformation = projectToSave.ChargesDebt?.Info,
             numberOfAffordableHomes = projectToSave.AffordableHomes?.Value,
-            projectHasStartDate = projectToSave.StartDate?.Exists,
+            projectHasStartDate = projectToSave.StartDate?.Value.HasValue,
             startDate = projectToSave.StartDate?.Value,
             planningPermissionStatus = projectToSave.Status.IsProvided() ? PlanningPermissionStatusMapper.Map(projectToSave.PlanningPermissionStatus) : null,
             affordableHousing = projectToSave.AffordableHomes?.Value?.MapToBool(),

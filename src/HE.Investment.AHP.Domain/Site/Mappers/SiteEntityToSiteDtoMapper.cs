@@ -74,12 +74,12 @@ public static class SiteEntityToSiteDtoMapper
         {
             planningStatus = PlanningStatusMapper.ToDto(planningDetails.PlanningStatus),
             referenceNumber = planningDetails.ReferenceNumber?.Value,
-            detailedPlanningApprovalDate = ToDateTime(planningDetails.DetailedPlanningApprovalDate),
+            detailedPlanningApprovalDate = planningDetails.DetailedPlanningApprovalDate?.Value,
             requiredFurtherSteps = planningDetails.RequiredFurtherSteps?.Value,
-            applicationForDetailedPlanningSubmittedDate = ToDateTime(planningDetails.ApplicationForDetailedPlanningSubmittedDate),
-            expectedPlanningApprovalDate = ToDateTime(planningDetails.ExpectedPlanningApprovalDate),
-            outlinePlanningApprovalDate = ToDateTime(planningDetails.OutlinePlanningApprovalDate),
-            planningSubmissionDate = ToDateTime(planningDetails.PlanningSubmissionDate),
+            applicationForDetailedPlanningSubmittedDate = planningDetails.ApplicationForDetailedPlanningSubmittedDate?.Value,
+            expectedPlanningApprovalDate = planningDetails.ExpectedPlanningApprovalDate?.Value,
+            outlinePlanningApprovalDate = planningDetails.OutlinePlanningApprovalDate?.Value,
+            planningSubmissionDate = planningDetails.PlanningSubmissionDate?.Value,
             isGrantFundingForAllHomes = planningDetails.IsGrantFundingForAllHomesCoveredByApplication,
             isLandRegistryTitleNumber = planningDetails.LandRegistryDetails?.IsLandRegistryTitleNumberRegistered,
             landRegistryTitleNumber = planningDetails.LandRegistryDetails?.TitleNumber?.Value,
@@ -135,11 +135,6 @@ public static class SiteEntityToSiteDtoMapper
             mmcFutureAdoptionPlans = mmc.FutureAdoption?.Plans?.Value,
             mmcFutureAdoptionExpectedImpact = mmc.FutureAdoption?.ExpectedImpact?.Value,
         };
-    }
-
-    private static DateTime? ToDateTime(DateValueObject? date)
-    {
-        return date?.Value.ToDateTime(TimeOnly.MinValue);
     }
 
     private static IList<int> MapCollection<T>(IEnumerable<T>? values, EnumMapper<T> mapper)

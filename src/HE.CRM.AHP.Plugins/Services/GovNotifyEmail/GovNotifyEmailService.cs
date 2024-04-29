@@ -378,8 +378,13 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
             if (ahpStatusChange.invln_ChangeSource.Value == (int)invln_ChangesourceSet.External)
             {
                 TracingService.Trace("AHP_EXTERNAL_APPLICATION_REFERRED_BACK_TO_APPLICANT");
-                var contact = _contactRepositoryAdmin.GetById(ahpApplication.invln_contactid.Id, nameof(Contact.FullName).ToLower(), nameof(Contact.EMailAddress1).ToLower());
-                var programme = _programmeRepositoryAdmin.GetById(ahpApplication.invln_programmelookup.Id, nameof(invln_programme.invln_programmename).ToLower());
+                var contact = _contactRepositoryAdmin.GetById(ahpApplication.invln_contactid.Id, Contact.Fields.FullName, Contact.Fields.EMailAddress1);
+                if (ahpApplication.invln_programmelookup == null)
+                {
+                    TracingService.Trace("There is no programme on ahpApplication. Mail not sent.");
+                    return;
+                }
+                var programme = _programmeRepositoryAdmin.GetById(ahpApplication.invln_programmelookup.Id, invln_programme.Fields.invln_programmename);
                 var emailTemplate = _notificationSettingRepositoryAdmin.GetTemplateViaTypeName("AHP_EXTERNAL_APPLICATION_REFERRED_BACK_TO_APPLICANT");
 
                 if (contact != null && programme != null && emailTemplate != null)

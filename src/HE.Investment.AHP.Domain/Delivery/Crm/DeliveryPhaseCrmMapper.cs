@@ -12,7 +12,7 @@ using HE.Investments.Common.Contract;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.Domain.ValueObjects;
 using HE.Investments.Common.Extensions;
-using DateValueObject = HE.Investment.AHP.Domain.Delivery.ValueObjects.DateValueObject;
+using DateValueObject = HE.Investments.Common.Domain.ValueObjects.DateValueObject;
 
 namespace HE.Investment.AHP.Domain.Delivery.Crm;
 
@@ -49,14 +49,14 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
             dto.isReconfigurationOfExistingProperties,
             MapHomesToDeliver(dto.numberOfHomes),
             AcquisitionMilestoneDetails.Create(
-                MapDate(dto.acquisitionDate, AcquisitionDate.Create),
-                MapDate(dto.acquisitionPaymentDate, MilestonePaymentDate.Create)),
+                new AcquisitionDate(dto.acquisitionDate),
+                new MilestonePaymentDate(dto.acquisitionPaymentDate)),
             StartOnSiteMilestoneDetails.Create(
-                MapDate(dto.startOnSiteDate, StartOnSiteDate.Create),
-                MapDate(dto.startOnSitePaymentDate, MilestonePaymentDate.Create)),
+                new StartOnSiteDate(dto.startOnSiteDate),
+                new MilestonePaymentDate(dto.startOnSitePaymentDate)),
             CompletionMilestoneDetails.Create(
-                MapDate(dto.completionDate, CompletionDate.Create),
-                MapDate(dto.completionPaymentDate, MilestonePaymentDate.Create)),
+                new CompletionDate(dto.completionDate),
+                new MilestonePaymentDate(dto.completionPaymentDate)),
             new DeliveryPhaseId(dto.id),
             dto.createdOn,
             MapIsAdditionalPaymentRequested(dto.requiresAdditionalPayments),
@@ -206,23 +206,13 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
     private static DateTime? MapMilestoneDate<TDate>(MilestoneDetails<TDate>? milestoneDetails)
         where TDate : DateValueObject
     {
-        return milestoneDetails?.MilestoneDate?.Value.ToDateTime(TimeOnly.MinValue);
+        return milestoneDetails?.MilestoneDate?.Value;
     }
 
     private static DateTime? MapPaymentDate<TDate>(MilestoneDetails<TDate>? milestoneDetails)
         where TDate : DateValueObject
     {
-        return milestoneDetails?.PaymentDate?.Value.ToDateTime(TimeOnly.MinValue);
-    }
-
-    private static TDate? MapDate<TDate>(DateTime? date, Func<DateOnly, TDate> dateFactory)
-    {
-        if (!date.HasValue)
-        {
-            return default;
-        }
-
-        return dateFactory(new DateOnly(date.Value.Year, date.Value.Month, date.Value.Day));
+        return milestoneDetails?.PaymentDate?.Value;
     }
 
     private static IsAdditionalPaymentRequested? MapIsAdditionalPaymentRequested(string? value)

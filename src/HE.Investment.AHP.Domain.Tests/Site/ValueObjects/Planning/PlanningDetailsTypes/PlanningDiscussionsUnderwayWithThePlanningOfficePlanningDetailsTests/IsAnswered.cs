@@ -6,7 +6,7 @@ namespace HE.Investment.AHP.Domain.Tests.Site.ValueObjects.Planning.PlanningDeta
 
 public class IsAnswered
 {
-    private readonly ExpectedPlanningApprovalDate? _expectedPlanningApprovalDate = new("1", "2", "2025");
+    private readonly ExpectedPlanningApprovalDate? _expectedPlanningApprovalDate = new(true, "1", "2", "2025");
     private readonly LandRegistryDetails? _landRegistryDetails = new(true, new LandRegistryTitleNumber("title"), false);
 
     [Fact]

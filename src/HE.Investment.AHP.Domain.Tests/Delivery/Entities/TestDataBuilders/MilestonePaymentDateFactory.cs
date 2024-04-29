@@ -12,9 +12,10 @@ public static class MilestonePaymentDateFactory
             throw new InvalidOperationException("Cannot create new date one day after provided date");
         }
 
-        var nextDate = date.Value.AddDays(1);
+        var nextDate = date.Value!.Value.AddDays(1);
 
         return new MilestonePaymentDate(
+            true,
             nextDate.Day.ToString(CultureInfo.InvariantCulture),
             nextDate.Month.ToString(CultureInfo.InvariantCulture),
             nextDate.Year.ToString(CultureInfo.InvariantCulture));

@@ -12,13 +12,11 @@ public class ExpectedContributionValue : TheRequiredIntValueObject
         Field = field;
     }
 
-    private ExpectedContributionValue(ExpectedContributionFields field, int value)
-        : base(value, field.ToString(), field.GetDescription())
+    public ExpectedContributionValue(ExpectedContributionFields field, decimal value)
+        : base(decimal.ToInt32(value), field.ToString(), field.GetDescription())
     {
         Field = field;
     }
 
     public ExpectedContributionFields Field { get; }
-
-    public static ExpectedContributionValue FromCrm(ExpectedContributionFields field, decimal value) => new(field, decimal.ToInt32(value));
 }

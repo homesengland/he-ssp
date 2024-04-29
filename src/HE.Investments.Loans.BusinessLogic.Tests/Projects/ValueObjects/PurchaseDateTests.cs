@@ -18,16 +18,16 @@ public class PurchaseDateTests
         var action = () => new PurchaseDate(null, null, null, _dateTimeProvider);
 
         // then
-        action.Should().Throw<DomainValidationException>().WithOnlyOneErrorMessage("Enter when you purchased this site");
+        action.Should().Throw<DomainValidationException>().WithOnlyOneErrorMessage("Enter the purchase date");
     }
 
     [Theory]
-    [InlineData("", "9", "2023", "The date when you purchased this site must include a day")]
-    [InlineData("", "", "2023", "The date when you purchased this site must include a day and month")]
-    [InlineData("", "9", "", "The date when you purchased this site must include a day and year")]
-    [InlineData("24", "", "2023", "The date when you purchased this site must include a month")]
-    [InlineData("24", "", "", "The date when you purchased this site must include a month and year")]
-    [InlineData("24", "9", "", "The date when you purchased this site must include a year")]
+    [InlineData("", "9", "2023", "The purchase date must include a day")]
+    [InlineData("", "", "2023", "The purchase date must include a day and month")]
+    [InlineData("", "9", "", "The purchase date must include a day and year")]
+    [InlineData("24", "", "2023", "The purchase date must include a month")]
+    [InlineData("24", "", "", "The purchase date must include a month and year")]
+    [InlineData("24", "9", "", "The purchase date must include a year")]
     public void ShouldThrowException_WhenSomeDateIsMissingSomePart(string day, string month, string year, string expectedErrorMessage)
     {
         // given & when
@@ -47,7 +47,7 @@ public class PurchaseDateTests
         var action = () => new PurchaseDate(day, month, year, _dateTimeProvider);
 
         // then
-        action.Should().Throw<DomainValidationException>().WithOnlyOneErrorMessage("When you purchased this site must be a real date");
+        action.Should().Throw<DomainValidationException>().WithOnlyOneErrorMessage("The purchase date must be a real date");
     }
 
     [Fact]
@@ -61,7 +61,7 @@ public class PurchaseDateTests
         var action = () => new PurchaseDate("4", "10", "2023", _dateTimeProvider);
 
         // then
-        action.Should().Throw<DomainValidationException>().WithOnlyOneErrorMessage("The date you purchased this land must be today or in the past");
+        action.Should().Throw<DomainValidationException>().WithOnlyOneErrorMessage("The purchase date must be today or in the past");
     }
 
     [Fact]

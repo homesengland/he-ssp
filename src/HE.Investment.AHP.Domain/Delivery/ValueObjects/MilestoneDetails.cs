@@ -1,5 +1,6 @@
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Domain;
+using HE.Investments.Common.Domain.ValueObjects;
 using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.Domain.Delivery.ValueObjects;

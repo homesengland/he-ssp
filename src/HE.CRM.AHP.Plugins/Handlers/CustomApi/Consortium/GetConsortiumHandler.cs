@@ -36,20 +36,24 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.Consortium
 
         public override void DoWork()
         {
-            if (Guid.TryParse(ConsortiumId, out var consortiumId))
             {
-                var consortium = _consortiumRepository.GetById(consortiumId, new string[] {
+                TracingService.Trace($"Get Consortium");
+                var consortium = _consortiumRepository.GetById(new Guid(ConsortiumId), new string[] {
                     invln_Consortium.Fields.Id,
                     invln_Consortium.Fields.invln_LeadPartner,
                     invln_Consortium.Fields.invln_Name,
+                    invln_Consortium.Fields.invln_Programme
                 }
                 );
                 if (consortium != null)
                 {
+                    TracingService.Trace($"Get Consortium Memebers");
                     var consortiumMembers = _consortiumMemberRepository.GetByAttribute(invln_ConsortiumMember.Fields.invln_Consortium, ConsortiumId,
                                                                         new string[] { invln_ConsortiumMember.Fields.invln_Name, invln_ConsortiumMember.Fields.Id,
                                                                     invln_ConsortiumMember.Fields.StatusCode, invln_ConsortiumMember.Fields.invln_Partner }).ToList();
+                    TracingService.Trace($"Map Consortium");
                     var result = ConsortiumMapper.MapRegularEntityToDto(consortium, consortiumMembers);
+                    TracingService.Trace($"Validate Memeber");
                     if (!IsorganizationMemeberExist(consortium, consortiumMembers))
                     {
                         return;
@@ -65,7 +69,6 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.Consortium
             {
                 return true;
             }
-
             if (consortiumMembers.Count > 0)
             {
                 return consortiumMembers.Any(x => x.invln_Partner.Id.ToString().ToLower() == MemberOrganisationId.ToLower());

@@ -1,24 +1,22 @@
+using HE.Investments.Common.Contract;
+using HE.Investments.Common.Domain.ValueObjects;
+
 namespace HE.Investment.AHP.Domain.Delivery.ValueObjects;
 
 public class AcquisitionDate : DateValueObject
 {
-    public AcquisitionDate(string? day, string? month, string? year)
-        : base(day, month, year, "MilestoneStartAt", "acquisition date")
+    private const string FieldDescription = "acquisition date";
+
+    public AcquisitionDate(bool exists, string? day, string? month, string? year)
+        : base(day, month, year, "MilestoneStartAt", FieldDescription, !exists)
     {
     }
 
-    private AcquisitionDate(DateOnly value)
+    public AcquisitionDate(DateTime? value)
         : base(value)
     {
     }
 
-    public static AcquisitionDate? Create(string? day, string? month, string? year)
-    {
-        return ValuesProvided(day, month, year) ? new AcquisitionDate(day, month, year) : null;
-    }
-
-    public static AcquisitionDate Create(DateOnly value)
-    {
-        return new AcquisitionDate(value);
-    }
+    public static AcquisitionDate FromDateDetails(bool exists, DateDetails? date) =>
+        new(exists, date?.Day, date?.Month, date?.Year);
 }

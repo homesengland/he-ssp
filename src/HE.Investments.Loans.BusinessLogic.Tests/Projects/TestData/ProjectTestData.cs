@@ -32,7 +32,7 @@ internal static class ProjectTestData
         project.ProvideLandOwnership(new LandOwnership(true));
 
         project.ProvideAdditionalData(new AdditionalDetails(
-            PurchaseDate.FromCrm(ProjectDateTestData.CorrectDateTime),
+            new PurchaseDate(ProjectDateTestData.CorrectDateTime),
             PoundsTestData.AnyAmount,
             PoundsTestData.AnyAmount,
             SourceOfValuationTestData.AnySource));
