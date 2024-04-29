@@ -29,9 +29,14 @@ public class ConsortiumCrmContext : IConsortiumCrmContext
             cancellationToken);
     }
 
-    public bool IsConsortiumExistForProgrammeAndOrganisation(string programmeId, string organisationId)
+    public async Task<bool> IsConsortiumExistForProgrammeAndOrganisation(string programmeId, string organisationId, CancellationToken cancellationToken)
     {
-        return false;
+        var request = new invln_IsConsortiumExistForProgrammeAndOrganisationRequest { invln_programmeid = programmeId, invln_organisationid = organisationId, };
+
+        return await _service.ExecuteAsync<invln_IsConsortiumExistForProgrammeAndOrganisationRequest, invln_IsConsortiumExistForProgrammeAndOrganisationResponse>(
+            request,
+            x => x.invln_isconsortiumexist,
+            cancellationToken);
     }
 
     public async Task<string> CreateConsortium(

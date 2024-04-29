@@ -21,13 +21,13 @@ public class IsPartOfConsortiumBuilder
 
     public IsPartOfConsortiumBuilder IsNotPartOfConsortium()
     {
-        _item.Setup(x => x.IsPartOfConsortiumForProgramme(It.IsAny<ProgrammeId>(), It.IsAny<OrganisationId>())).ReturnsAsync(false);
+        _item.Setup(x => x.IsPartOfConsortiumForProgramme(It.IsAny<ProgrammeId>(), It.IsAny<OrganisationId>(), It.IsAny<CancellationToken>())).ReturnsAsync(false);
         return this;
     }
 
     public IsPartOfConsortiumBuilder IsPartOfConsortium()
     {
-        _item.Setup(x => x.IsPartOfConsortiumForProgramme(It.IsAny<ProgrammeId>(), It.IsAny<OrganisationId>())).ReturnsAsync(true);
+        _item.Setup(x => x.IsPartOfConsortiumForProgramme(It.IsAny<ProgrammeId>(), It.IsAny<OrganisationId>(), It.IsAny<CancellationToken>())).ReturnsAsync(true);
         return this;
     }
 
