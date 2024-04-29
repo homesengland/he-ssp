@@ -8,6 +8,7 @@ using HE.Investments.AHP.IntegrationTests.FillApplication.Data;
 using HE.Investments.AHP.IntegrationTests.Framework;
 using HE.Investments.AHP.IntegrationTests.Pages;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.IntegrationTestsFramework.Assertions;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
@@ -270,7 +271,7 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
         summary.Should().ContainKey("Phase name").WithValue(RehabDeliveryPhase.Name);
         summary.Should().ContainKey("Type of homes").WithValue(RehabDeliveryPhase.TypeOfHomes);
         summary.Should().ContainKey("Build activity type").WithValue(RehabDeliveryPhase.BuildActivityType);
-        summary.Should().ContainKey("Reconfiguring existing residential properties").WithValue(RehabDeliveryPhase.ReconfiguringExisting.MapToTrueFalse());
+        summary.Should().ContainKey("Reconfiguring existing residential properties").WithValue(RehabDeliveryPhase.ReconfiguringExisting.MapToCommonResponse());
 
         foreach (var homeType in RehabDeliveryPhase.DeliveryPhaseHomes)
         {
