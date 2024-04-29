@@ -51,6 +51,7 @@ namespace HE.CRM.Common.DtoMapping
                 invln_grantsfromdhscnhsorotherhealth = MapNullableDecimalToMoney(applicationDto.howMuchReceivedFromDepartmentOfHealth),
                 invln_grantsfromthelottery = MapNullableDecimalToMoney(applicationDto.howMuchReceivedFromLotteryFunding),
                 invln_grantsfromotherpublicbodies = MapNullableDecimalToMoney(applicationDto.howMuchReceivedFromOtherPublicBodies),
+                invln_partnerconfirmation = applicationDto.applicationPartnerConfirmation
             };
 
             if (applicationDto.representationsandwarranties != null)
@@ -87,6 +88,21 @@ namespace HE.CRM.Common.DtoMapping
                     applicationToReturn.invln_GrowthManager = new EntityReference(SystemUser.EntityLogicalName, localAuthority.he_growthmanager.Id);
                     applicationToReturn.invln_GrowthTeam = new EntityReference(Team.EntityLogicalName, localAuthority.he_growthhub.Id);
                 }
+            }
+
+            if (Guid.TryParse(applicationDto.developingPartnerId, out var developingPartnerGuid))
+            {
+                applicationToReturn.invln_DevelopingPartner = new EntityReference(Account.EntityLogicalName, developingPartnerGuid);
+            }
+
+            if (Guid.TryParse(applicationDto.ownerOfTheLandDuringDevelopmentId, out var ownerOfTheLandDuringDevelopmentGuid))
+            {
+                applicationToReturn.invln_OwneroftheLand = new EntityReference(Account.EntityLogicalName, ownerOfTheLandDuringDevelopmentGuid);
+            }
+
+            if (Guid.TryParse(applicationDto.ownerOfTheHomesAfterCompletionId, out var ownerOfTheHomesAfterCompletionGuid))
+            {
+                applicationToReturn.invln_OwneroftheHomes = new EntityReference(Account.EntityLogicalName, ownerOfTheHomesAfterCompletionGuid);
             }
 
             return applicationToReturn;
@@ -139,8 +155,14 @@ namespace HE.CRM.Common.DtoMapping
                 referenceNumber = application.invln_applicationid,
                 applicationStatus = application.invln_ExternalStatus?.Value,
                 contactExternalId = contactExternalId,
-                representationsandwarranties = application.invln_representationsandwarrantiesconfirmation
-
+                representationsandwarranties = application.invln_representationsandwarrantiesconfirmation,
+                developingPartnerId = application.invln_DevelopingPartner?.Id.ToString(),
+                developingPartnerName = application.invln_DevelopingPartnerName,
+                ownerOfTheLandDuringDevelopmentId = application.invln_OwneroftheLand?.Id.ToString(),
+                ownerOfTheLandDuringDevelopmentName = application.invln_OwneroftheLandName,
+                ownerOfTheHomesAfterCompletionId = application.invln_OwneroftheHomes?.Id.ToString(),
+                ownerOfTheHomesAfterCompletionName = application.invln_OwneroftheHomesName,
+                applicationPartnerConfirmation = application.invln_partnerconfirmation
             };
             if (application.invln_programmelookup != null)
             {
