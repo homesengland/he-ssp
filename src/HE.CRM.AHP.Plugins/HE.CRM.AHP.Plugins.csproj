@@ -131,6 +131,7 @@
     <Compile Include="Handlers\CustomApi\SetDeliveryPhaseHandler.cs" />
     <Compile Include="Handlers\CustomApi\SetHomeTypeHandler.cs" />
     <Compile Include="Handlers\CustomApi\Site\CheckIfSiteWithGivenNameExistsHandler.cs" />
+    <Compile Include="Handlers\CustomApi\Site\CheckIfSiteWithStrategicSiteNameExistsHandler.cs" />
     <Compile Include="Handlers\CustomApi\Site\GetMultipleSitesHandler.cs" />
     <Compile Include="Handlers\CustomApi\Site\GetSingleSiteHandler.cs" />
     <Compile Include="Handlers\CustomApi\Site\SetSiteHandler.cs" />
@@ -234,6 +235,7 @@
     <Compile Include="Plugins\CustomApi\SetDeliveryPhasePlugin.cs" />
     <Compile Include="Plugins\CustomApi\SetHomeTypePlugin.cs" />
     <Compile Include="Plugins\CustomApi\Site\CheckIfSiteWithGivenNameExistsPlugin.cs" />
+    <Compile Include="Plugins\CustomApi\Site\CheckIfSiteWithStrategicSiteNameExistsPlugin.cs" />
     <Compile Include="Plugins\CustomApi\Site\GetMultipleSitesPlugin.cs" />
     <Compile Include="Plugins\CustomApi\Site\GetSingleSitePlugin.cs" />
     <Compile Include="Plugins\CustomApi\Site\SetSitePlugin.cs" />

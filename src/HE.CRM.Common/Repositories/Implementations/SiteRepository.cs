@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using System.Xml.Linq;
 using DataverseModel;
 using HE.Base.Repositories;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
@@ -56,6 +57,17 @@ namespace HE.CRM.Common.Repositories.Implementations
             {
                 return ctx.CreateQuery<invln_Sites>()
                     .Where(x => x.invln_sitename == name)
+                    .AsEnumerable()
+                    .Any();
+            }
+        }
+
+        public bool StrategicSiteNameExists(string strategicSiteName, Guid organisationGuid)
+        {
+            using (var ctx = new OrganizationServiceContext(service))
+            {
+                return ctx.CreateQuery<invln_Sites>()
+                    .Where(x => x.invln_StrategicSiteN == strategicSiteName && x.invln_AccountId.Id == organisationGuid)
                     .AsEnumerable()
                     .Any();
             }
