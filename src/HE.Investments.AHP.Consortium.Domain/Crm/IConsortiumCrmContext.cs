@@ -16,4 +16,10 @@ public interface IConsortiumCrmContext
         CancellationToken cancellationToken);
 
     bool IsConsortiumExistForProgrammeAndOrganisation(string programmeId, string organisationId);
+
+    Task CreateJoinConsortiumRequest(string consortiumId, string organisationId, string userId, CancellationToken cancellationToken);
+
+    Task CreateRemoveFromConsortiumRequest(string consortiumId, string organisationId, string userId, CancellationToken cancellationToken);
+
+    Task CancelPendingConsortiumRequest(string consortiumId, string organisationId, string userId, CancellationToken cancellationToken);
 }

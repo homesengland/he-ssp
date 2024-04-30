@@ -165,59 +165,12 @@ public class OrganizationRepository : IOrganizationRepository
 
     public async Task<EntityCollection?> SearchForOrganizationsByCompanyHouseNumber(IOrganizationServiceAsync2 service, IEnumerable<string> organizationNumbers)
     {
-        if (organizationNumbers != null)
-        {
-            var filter1 = new FilterExpression
-            {
-                FilterOperator = LogicalOperator.And,
-            };
+        return await SearchOrganisations(service, organizationNumbers.Select(x => new ConditionExpression("he_companieshousenumber", ConditionOperator.Equal, x)));
+    }
 
-            var cols = new ColumnSet("name", "he_companieshousenumber", "address1_line1", "address1_line2", "address1_line3", "address1_city", "address1_postalcode", "address1_country");
-
-            var query = new QueryExpression("account")
-            {
-                ColumnSet = cols,
-            };
-
-            var numberOfRequestsInQuery = 1;
-
-            var retrievedEntitiesCollection = new EntityCollection();
-            EntityCollection retrievedEntities;
-            foreach (var organizationNumber in organizationNumbers)
-            {
-                var condition1 = new ConditionExpression("he_companieshousenumber", ConditionOperator.Equal, organizationNumber);
-                filter1.Conditions.Add(condition1);
-                numberOfRequestsInQuery++;
-#pragma warning disable S2583 // Conditionally executed code should be reachable
-                if (numberOfRequestsInQuery >= 490)
-                {
-                    numberOfRequestsInQuery = 0;
-                    query.Criteria.AddFilter(filter1);
-
-                    retrievedEntities = service.RetrieveMultiple(query);
-                    if (retrievedEntities != null)
-                    {
-                        retrievedEntitiesCollection.Entities.AddRange(retrievedEntities.Entities);
-                    }
-
-                    filter1.Conditions.Clear();
-                    query.Criteria.Filters.Clear();
-                }
-#pragma warning restore S2583 // Conditionally executed code should be reachable
-            }
-
-            query.Criteria.AddFilter(filter1);
-
-            retrievedEntities = await service.RetrieveMultipleAsync(query);
-            if (retrievedEntities != null)
-            {
-                retrievedEntitiesCollection.Entities.AddRange(retrievedEntities.Entities);
-            }
-
-            return retrievedEntitiesCollection;
-        }
-
-        return null;
+    public async Task<EntityCollection?> GetOrganisationsById(IOrganizationServiceAsync2 service, IEnumerable<string> organisationIds)
+    {
+        return await SearchOrganisations(service, organisationIds.Select(x => new ConditionExpression("accountid", ConditionOperator.Equal, x)));
     }
 
     public async Task<Entity?> SearchForOrganizationsByOrganizationId(IOrganizationServiceAsync2 service, string organizationId)
@@ -231,5 +184,56 @@ public class OrganizationRepository : IOrganizationRepository
         }
 
         return null;
+    }
+
+    private async Task<EntityCollection?> SearchOrganisations(IOrganizationServiceAsync2 service, IEnumerable<ConditionExpression> conditions)
+    {
+        var filter1 = new FilterExpression
+        {
+            FilterOperator = LogicalOperator.Or,
+        };
+
+        var cols = new ColumnSet("name", "he_companieshousenumber", "address1_line1", "address1_line2", "address1_line3", "address1_city", "address1_postalcode", "address1_country");
+
+        var query = new QueryExpression("account")
+        {
+            ColumnSet = cols,
+        };
+
+        var numberOfRequestsInQuery = 1;
+
+        var retrievedEntitiesCollection = new EntityCollection();
+        EntityCollection retrievedEntities;
+        foreach (var condition1 in conditions)
+        {
+            filter1.Conditions.Add(condition1);
+            numberOfRequestsInQuery++;
+#pragma warning disable S2583 // Conditionally executed code should be reachable
+            if (numberOfRequestsInQuery >= 490)
+            {
+                numberOfRequestsInQuery = 0;
+                query.Criteria.AddFilter(filter1);
+
+                retrievedEntities = service.RetrieveMultiple(query);
+                if (retrievedEntities != null)
+                {
+                    retrievedEntitiesCollection.Entities.AddRange(retrievedEntities.Entities);
+                }
+
+                filter1.Conditions.Clear();
+                query.Criteria.Filters.Clear();
+            }
+#pragma warning restore S2583 // Conditionally executed code should be reachable
+        }
+
+        query.Criteria.AddFilter(filter1);
+
+        retrievedEntities = await service.RetrieveMultipleAsync(query);
+        if (retrievedEntities != null)
+        {
+            retrievedEntitiesCollection.Entities.AddRange(retrievedEntities.Entities);
+        }
+
+        return retrievedEntitiesCollection;
     }
 }

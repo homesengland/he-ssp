@@ -1,18 +1,22 @@
 @using HE.Investment.AHP.WWW.Views.ConsortiumMember.Const
 @using HE.Investments.Common.WWW.Components.PageHeader
 @using HE.Investment.AHP.WWW.Routing
+@using HE.Investments.AHP.Consortium.Contract.Enums
 @using HE.Investments.Common.Gds
 @model HE.Investments.AHP.Consortium.Contract.ConsortiumDetails
 @{
-    ViewData["Title"] = ConsortiumMemberPageTitles.ConsortiumManagement(Model.LeadPartner.Name);
+    ViewData["Title"] = ConsortiumMemberPageTitles.ConsortiumManagement(Model.LeadPartner.Details.Name);
     ViewBag.Breadcrumbs = AhpBreadcrumbsBuilder
         .New()
         .WithApplicationsList()
         .Build();
+
+    var members = Model.Members.Where(x => x.Status == ConsortiumMemberStatus.Active).ToList();
+    var pendingAddition = Model.Members.Where(x => x.Status == ConsortiumMemberStatus.PendingAddition).ToList();
 }
 
 <div class="govuk-grid-column-two-thirds">
-    <vc:page-header title="@ConsortiumMemberPageTitles.ConsortiumManagement(Model.LeadPartner.Name)"/>
+    <vc:page-header title="@ConsortiumMemberPageTitles.ConsortiumManagement(Model.LeadPartner.Details.Name)"/>
 
     <gds-h2>Add a new member</gds-h2>
     <gds-p>To add a new member, fill out their details and the request will be reviewed.</gds-p>
@@ -23,8 +27,7 @@
     </link-button>
 </div>
 
-@* TODO: introduce contracted/pending members in Model *@
-@if (Model.Members.Any())
+@if (members.Any())
 {
     <div class="govuk-grid-column-two-thirds govuk-!-margin-top-6">
         <gds-h2>Contracted consortium members</gds-h2>
@@ -33,11 +36,11 @@
     <div class="govuk-grid-column-full govuk-!-padding-left-3">
         <gds-summary-list>
             <strong class="govuk-!-margin-bottom-3">Name</strong>
-            @foreach (var organisation in Model.Members)
+            @foreach (var organisation in members)
             {
                 <div class="govuk-summary-list__row">
-                    <dt class="govuk-!-padding-top-1 govuk-!-padding-bottom-1">
-                        <div>@organisation.Name</div>
+                    <dt class="govuk-!-padding-top-2 govuk-!-padding-bottom-2">
+                        <div>@organisation.Details.Name</div>
                     </dt>
                 </div>
             }
@@ -45,7 +48,7 @@
     </div>
 }
 
-@if (Model.Members.Any())
+@if (pendingAddition.Any())
 {
     <div class="govuk-grid-column-two-thirds govuk-!-margin-top-6">
         <gds-h2>Pending consortium members</gds-h2>
@@ -54,14 +57,14 @@
     <div class="govuk-grid-column-full govuk-!-padding-left-3">
         <gds-summary-list>
             <strong class="govuk-!-margin-bottom-3">Name</strong>
-            @foreach (var organisation in Model.Members)
+            @foreach (var organisation in pendingAddition)
             {
                 <div class="govuk-summary-list__row">
-                    <dt class="govuk-!-padding-top-1 govuk-!-padding-bottom-1">
-                        <div>@organisation.Name</div>
+                    <dt class="govuk-!-padding-top-2 govuk-!-padding-bottom-2">
+                        <div>@organisation.Details.Name</div>
                     </dt>
                     <dd class="govuk-summary-list__actions">
-                        <gds-link href="@Url.Action("RemoveMember", "ConsortiumMember", new { consortiumId = Model.ConsortiumId.Value, memberId = organisation.OrganisationId ?? organisation.CompanyHouseNumber })">
+                        <gds-link href="@Url.Action("RemoveMember", "ConsortiumMember", new { consortiumId = Model.ConsortiumId.Value, memberId = organisation.OrganisationId.ToString() })">
                             Cancel request
                         </gds-link>
                     </dd>

@@ -1,8 +1,10 @@
 using HE.Investments.Account.Shared;
 using HE.Investments.AHP.Consortium.Contract;
 using HE.Investments.AHP.Consortium.Contract.Commands;
+using HE.Investments.AHP.Consortium.Contract.Enums;
 using HE.Investments.AHP.Consortium.Domain.Entities;
 using HE.Investments.AHP.Consortium.Domain.Repositories;
+using HE.Investments.AHP.Consortium.Domain.ValueObjects;
 using HE.Investments.Common.Contract.Validators;
 using MediatR;
 
@@ -30,7 +32,7 @@ public class CreateConsortiumCommandHandler : IRequestHandler<CreateConsortiumCo
         var programme = new ProgrammeSlim(new ProgrammeId(request.ProgrammeId), "AHP CME");
         var userAccount = await _accountUserContext.GetSelectedAccount();
         var organisation = userAccount.SelectedOrganisation();
-        var leadPartner = new ConsortiumMember(organisation.OrganisationId, organisation.RegisteredCompanyName);
+        var leadPartner = new ConsortiumMember(organisation.OrganisationId, organisation.RegisteredCompanyName, ConsortiumMemberStatus.Active);
 
         var consortium = await ConsortiumEntity.New(programme, leadPartner, _consortiumRepository);
 

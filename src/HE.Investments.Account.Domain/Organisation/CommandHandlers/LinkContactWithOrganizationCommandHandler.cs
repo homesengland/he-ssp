@@ -1,11 +1,10 @@
-using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Contract.Organisation.Commands;
 using HE.Investments.Account.Contract.User.Events;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Errors;
-using HE.Investments.Organisation.Contract;
 using HE.Investments.Organisation.Services;
+using HE.Investments.Organisation.ValueObjects;
 using MediatR;
 using Microsoft.PowerPlatform.Dataverse.Client;
 
@@ -14,26 +13,23 @@ namespace HE.Investments.Account.Domain.Organisation.CommandHandlers;
 public class LinkContactWithOrganizationCommandHandler : IRequestHandler<LinkContactWithOrganisationCommand>
 {
     private readonly IAccountUserContext _userContext;
-    private readonly IOrganizationService _organizationService;
-    private readonly IOrganisationSearchService _organisationSearchService;
     private readonly IOrganizationServiceAsync2 _organizationServiceAsync;
     private readonly IContactService _contactService;
     private readonly IMediator _mediator;
+    private readonly IInvestmentsOrganisationService _organisationService;
 
     public LinkContactWithOrganizationCommandHandler(
         IAccountUserContext userContext,
-        IOrganizationService organizationService,
-        IOrganisationSearchService organisationSearchService,
         IOrganizationServiceAsync2 organizationServiceAsync,
         IContactService contactService,
-        IMediator mediator)
+        IMediator mediator,
+        IInvestmentsOrganisationService organisationService)
     {
         _userContext = userContext;
-        _organizationService = organizationService;
-        _organisationSearchService = organisationSearchService;
         _organizationServiceAsync = organizationServiceAsync;
         _contactService = contactService;
         _mediator = mediator;
+        _organisationService = organisationService;
     }
 
     public async Task Handle(LinkContactWithOrganisationCommand request, CancellationToken cancellationToken)
@@ -45,31 +41,14 @@ public class LinkContactWithOrganizationCommandHandler : IRequestHandler<LinkCon
                 CommonErrorCodes.ContactAlreadyLinkedWithOrganization);
         }
 
-        var result = await _organisationSearchService.GetByOrganisation(request.CompaniesHouseNumber, cancellationToken);
-
-        if (!result.IsSuccessfull())
-        {
-            throw new ExternalServiceException();
-        }
-
-        var organization = result.Item ?? throw new NotFoundException(nameof(OrganisationSearchItem), request.CompaniesHouseNumber);
-        var organisationId = organization.OrganisationId;
-        if (!organization.ExistsInCrm)
-        {
-            organisationId = _organizationService.CreateOrganization(new OrganizationDetailsDto
-            {
-                registeredCompanyName = organization.Name,
-                addressLine1 = organization.Street,
-                city = organization.City,
-                companyRegistrationNumber = request.CompaniesHouseNumber,
-                postalcode = organization.PostalCode,
-            }).ToString();
-        }
+        var organisation = await _organisationService.GetOrganisation(
+            new OrganisationIdentifier(request.CompaniesHouseNumber),
+            cancellationToken);
 
         await _contactService.LinkContactWithOrganization(
             _organizationServiceAsync,
             _userContext.UserGlobalId.ToString(),
-            Guid.Parse(organisationId!),
+            Guid.Parse(organisation.Id.Value),
             PortalConstants.CommonPortalType);
 
         await _mediator.Publish(new UserAccountsChangedEvent(_userContext.UserGlobalId), cancellationToken);

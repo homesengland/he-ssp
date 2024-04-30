@@ -1,6 +1,7 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 
 namespace HE.Investments.Organisation.Services;
+
 public interface IOrganizationService
 {
     Task<OrganizationDetailsDto> GetOrganizationDetails(string accountId, string contactExternalId);

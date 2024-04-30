@@ -10,7 +10,7 @@
 <gds-div-grid-column-two-thirds>
     <vc:back-link-with-callback url="@Url.Action("Index", "Consortium")"/>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
-    <vc:page-header title="@ConsortiumMemberPageTitles.AddMembers" caption="@Model.ProgrammeName"/>
+    <vc:page-header title="@ConsortiumMemberPageTitles.AddMembers" caption="@Model.Programme.Name"/>
 </gds-div-grid-column-two-thirds>
 
 @if (Model.Members.Any())
@@ -24,11 +24,11 @@
             {
                 <div class="govuk-summary-list__row">
                     <dt class="govuk-!-margin-bottom-3">
-                        <div>@organisation.Name</div>
-                        <vc:organisation-details street="@organisation.Street" city="@organisation.City" postal-code="@organisation.PostalCode"/>
+                        <div>@organisation.Details.Name</div>
+                        <vc:organisation-details-component street="@organisation.Details.Street" city="@organisation.Details.City" postal-code="@organisation.Details.PostalCode"/>
                     </dt>
                     <dd class="govuk-summary-list__actions">
-                        <gds-link href="@Url.Action("RemoveMember", "ConsortiumMember", new { consortiumId = Model.ConsortiumId.Value, memberId = organisation.OrganisationId ?? organisation.CompanyHouseNumber })">
+                        <gds-link href="@Url.Action("RemoveMember", "ConsortiumMember", new { consortiumId = Model.ConsortiumId.Value, memberId = organisation.OrganisationId.ToString() })">
                             Remove
                         </gds-link>
                     </dd>

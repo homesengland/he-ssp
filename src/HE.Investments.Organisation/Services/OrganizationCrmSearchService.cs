@@ -20,35 +20,20 @@ internal class OrganizationCrmSearchService : IOrganizationCrmSearchService
     {
         IEnumerable<string> result = organisationNames.Split(' ').ToList();
         var retrievedEntities = await _organizationRepository.SearchForOrganizationsByName(_organizationService, result, recordsWithCompanyHouseNumberIncluded);
-        if (retrievedEntities != null && retrievedEntities.Entities.Count > 0)
-        {
-            var organizationDtoList = new List<OrganizationDetailsDto>();
-            foreach (var account in retrievedEntities.Entities)
-            {
-                organizationDtoList.Add(MapEntityToDto(account));
-            }
 
-            return organizationDtoList;
-        }
-
-        return Array.Empty<OrganizationDetailsDto>();
+        return MapRetrievedEntites(retrievedEntities);
     }
 
     public async Task<IList<OrganizationDetailsDto>> SearchOrganizationInCrmByCompanyHouseNumber(IEnumerable<string> organisationNumbers)
     {
         var retrievedEntities = await _organizationRepository.SearchForOrganizationsByCompanyHouseNumber(_organizationService, organisationNumbers);
-        if (retrievedEntities != null && retrievedEntities.Entities.Count > 0)
-        {
-            var organizationDtoList = new List<OrganizationDetailsDto>();
-            foreach (var account in retrievedEntities.Entities)
-            {
-                organizationDtoList.Add(MapEntityToDto(account));
-            }
+        return MapRetrievedEntites(retrievedEntities);
+    }
 
-            return organizationDtoList;
-        }
-
-        return new List<OrganizationDetailsDto>();
+    public async Task<IList<OrganizationDetailsDto>> GetOrganizationFromCrmByOrganisationId(IEnumerable<string> organisationIds)
+    {
+        var retrievedEntities = await _organizationRepository.GetOrganisationsById(_organizationService, organisationIds);
+        return MapRetrievedEntites(retrievedEntities);
     }
 
     public async Task<OrganizationDetailsDto?> SearchOrganizationInCrmByOrganizationId(string organizationId)
@@ -62,7 +47,7 @@ internal class OrganizationCrmSearchService : IOrganizationCrmSearchService
         return null;
     }
 
-    private OrganizationDetailsDto MapEntityToDto(Entity account)
+    private static OrganizationDetailsDto MapEntityToDto(Entity account)
     {
         var organization = new OrganizationDetailsDto()
         {
@@ -77,5 +62,21 @@ internal class OrganizationCrmSearchService : IOrganizationCrmSearchService
             organisationId = account.Contains("accountid") ? account["accountid"].ToString() : null,
         };
         return organization;
+    }
+
+    private static IList<OrganizationDetailsDto> MapRetrievedEntites(EntityCollection? retrievedEntities)
+    {
+        if (retrievedEntities != null && retrievedEntities.Entities.Count > 0)
+        {
+            var organizationDtoList = new List<OrganizationDetailsDto>();
+            foreach (var account in retrievedEntities.Entities)
+            {
+                organizationDtoList.Add(MapEntityToDto(account));
+            }
+
+            return organizationDtoList;
+        }
+
+        return new List<OrganizationDetailsDto>();
     }
 }

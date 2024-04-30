@@ -10,6 +10,8 @@ public interface IOrganizationRepository
 
     Task<EntityCollection?> SearchForOrganizationsByCompanyHouseNumber(IOrganizationServiceAsync2 service, IEnumerable<string> organizationNumbers);
 
+    Task<EntityCollection?> GetOrganisationsById(IOrganizationServiceAsync2 service, IEnumerable<string> organisationIds);
+
     Entity? GetDefaultAccount(IOrganizationServiceAsync2 service);
 
     Entity? GetOrganizationViaCompanyHouseNumber(IOrganizationServiceAsync2 service, string companyHouseNumber);

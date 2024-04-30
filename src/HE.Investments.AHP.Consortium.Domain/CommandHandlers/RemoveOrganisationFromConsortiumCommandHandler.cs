@@ -1,20 +1,20 @@
+using HE.Investments.Account.Shared;
 using HE.Investments.AHP.Consortium.Contract.Commands;
-using HE.Investments.Common.Contract.Validators;
-using HE.Investments.Common.Extensions;
-using MediatR;
+using HE.Investments.AHP.Consortium.Domain.Entities;
+using HE.Investments.AHP.Consortium.Domain.Repositories;
 
 namespace HE.Investments.AHP.Consortium.Domain.CommandHandlers;
 
-public class RemoveOrganisationFromConsortiumCommandHandler : IRequestHandler<RemoveOrganisationFromConsortiumCommand, OperationResult>
+public class RemoveOrganisationFromConsortiumCommandHandler : ConsortiumCommandHandlerBase<RemoveOrganisationFromConsortiumCommand>
 {
-    public Task<OperationResult> Handle(RemoveOrganisationFromConsortiumCommand request, CancellationToken cancellationToken)
+    public RemoveOrganisationFromConsortiumCommandHandler(IConsortiumRepository repository, IAccountUserContext accountUserContext)
+        : base(repository, accountUserContext)
     {
-        if (request.IsConfirmed.IsNotProvided())
-        {
-            // TODO: move to domain object
-            OperationResult.ThrowValidationError(nameof(request.IsConfirmed), "Select whether you want to remove this organisation from consortium");
-        }
+    }
 
-        return Task.FromResult(OperationResult.Success());
+    protected override Task Perform(ConsortiumEntity consortium, RemoveOrganisationFromConsortiumCommand request, CancellationToken cancellationToken)
+    {
+        consortium.RemoveMember(request.OrganisationId, request.IsConfirmed);
+        return Task.CompletedTask;
     }
 }

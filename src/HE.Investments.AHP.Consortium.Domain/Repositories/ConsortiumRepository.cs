@@ -1,8 +1,10 @@
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.AHP.Consortium.Contract;
+using HE.Investments.AHP.Consortium.Contract.Enums;
 using HE.Investments.AHP.Consortium.Domain.Crm;
 using HE.Investments.AHP.Consortium.Domain.Entities;
+using HE.Investments.AHP.Consortium.Domain.Mappers;
 using HE.Investments.AHP.Consortium.Domain.ValueObjects;
 using HE.Investments.Common.Contract.Exceptions;
 
@@ -26,11 +28,15 @@ public class ConsortiumRepository : IConsortiumRepository
 
         if (!string.IsNullOrWhiteSpace(consortiumDto.id))
         {
+            var members = consortiumDto.members.Select(x =>
+                new ConsortiumMember(new OrganisationId(x.id), x.name, ConsortiumMemberStatusMapper.ToDomain(x.status)));
+
             return new ConsortiumEntity(
                 consortiumId,
                 new ConsortiumName(consortiumDto.name),
                 new ProgrammeSlim(new ProgrammeId(consortiumDto.programmeId), "AHP CME"),
-                new ConsortiumMember(new OrganisationId(consortiumDto.leadPartnerId), consortiumDto.leadPartnerName));
+                new ConsortiumMember(new OrganisationId(consortiumDto.leadPartnerId), consortiumDto.leadPartnerName, ConsortiumMemberStatus.Active),
+                members);
         }
 
         throw new NotFoundException("Consortium", consortiumId.Value);
@@ -50,11 +56,41 @@ public class ConsortiumRepository : IConsortiumRepository
             consortiumEntity.SetId(new ConsortiumId(consortiumId));
         }
 
+        await SaveConsortiumMemberRequests(consortiumEntity, userAccount, cancellationToken);
+
         return consortiumEntity;
     }
 
     public Task<bool> IsPartOfConsortiumForProgramme(ProgrammeId programmeId, OrganisationId organisationId)
     {
         return Task.FromResult(false);
+    }
+
+    private async Task SaveConsortiumMemberRequests(
+        ConsortiumEntity consortiumEntity,
+        UserAccount userAccount,
+        CancellationToken cancellationToken)
+    {
+        var joinRequest = consortiumEntity.PopJoinRequest();
+        while (joinRequest != null)
+        {
+            await _crmContext.CreateJoinConsortiumRequest(
+                consortiumEntity.Id.Value,
+                joinRequest.Value.ToString(),
+                userAccount.UserGlobalId.ToString(),
+                cancellationToken);
+            joinRequest = consortiumEntity.PopJoinRequest();
+        }
+
+        var removeRequest = consortiumEntity.PopRemoveRequest();
+        while (removeRequest != null)
+        {
+            await _crmContext.CreateRemoveFromConsortiumRequest(
+                consortiumEntity.Id.Value,
+                removeRequest.Value.ToString(),
+                userAccount.UserGlobalId.ToString(),
+                cancellationToken);
+            removeRequest = consortiumEntity.PopRemoveRequest();
+        }
     }
 }

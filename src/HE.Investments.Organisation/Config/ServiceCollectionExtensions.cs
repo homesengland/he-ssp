@@ -10,17 +10,11 @@ namespace HE.Investments.Organisation.Config;
 
 public static class ServiceCollectionExtensions
 {
-    public static void AddOrganizationsModule(this IServiceCollection services)
+    public static void AddOrganisationCrmModule(this IServiceCollection services)
     {
         services.AddCompaniesHouseHttpClient();
         services.AddScoped<IOrganisationSearchService, OrganisationSearchService>();
-        AddOrganisationCrmModule(services);
 
-        services.AddAppConfiguration<ICompaniesHouseConfig, CompaniesHouseConfig>("CompaniesHouse");
-    }
-
-    public static void AddOrganisationCrmModule(this IServiceCollection services)
-    {
         if (services.All(s => s.ServiceType != typeof(IOrganizationServiceAsync2)))
         {
             throw new ConfigurationErrorsException($"{nameof(IOrganizationServiceAsync2)} is required to be added to service collection.");
@@ -35,5 +29,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IPortalPermissionRepository, PortalPermissionRepository>();
         services.AddScoped<IOrganizationService, OrganizationService>();
         services.AddScoped<IProgrammeService, ProgrammeService>();
+        services.AddScoped<IInvestmentsOrganisationService, InvestmentsOrganisationService>();
+        services.AddAppConfiguration<ICompaniesHouseConfig, CompaniesHouseConfig>("CompaniesHouse");
     }
 }

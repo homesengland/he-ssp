@@ -1,23 +1,42 @@
+extern alias Org;
+
+using HE.Investments.Account.Shared;
+using HE.Investments.Account.Shared.User.ValueObjects;
+using HE.Investments.AHP.Consortium.Contract;
 using HE.Investments.AHP.Consortium.Contract.Commands;
+using HE.Investments.AHP.Consortium.Domain.Entities;
+using HE.Investments.AHP.Consortium.Domain.Repositories;
+using HE.Investments.AHP.Consortium.Domain.ValueObjects;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
-using MediatR;
+using Org::HE.Investments.Organisation.Services;
 
 namespace HE.Investments.AHP.Consortium.Domain.CommandHandlers;
 
-public class AddOrganisationToConsortiumCommandHandler : IRequestHandler<AddOrganisationToConsortiumCommand, OperationResult>
+public class AddOrganisationToConsortiumCommandHandler : ConsortiumCommandHandlerBase<AddOrganisationToConsortiumCommand>
 {
-    public Task<OperationResult> Handle(AddOrganisationToConsortiumCommand request, CancellationToken cancellationToken)
+    private readonly IInvestmentsOrganisationService _organisationService;
+
+    public AddOrganisationToConsortiumCommandHandler(
+        IConsortiumRepository repository,
+        IInvestmentsOrganisationService organisationService,
+        IAccountUserContext accountUserContext)
+        : base(repository, accountUserContext)
     {
-        if (request.OrganisationId.IsNotProvided() && request.CompanyHouseNumber.IsNotProvided())
+        _organisationService = organisationService;
+    }
+
+    protected override async Task Perform(ConsortiumEntity consortium, AddOrganisationToConsortiumCommand request, CancellationToken cancellationToken)
+    {
+        if (request.SelectedMember.IsNotProvided())
         {
             OperationResult.ThrowValidationError(
-                "SelectedItem",
+                nameof(request.SelectedMember),
                 ValidationErrorMessage.MustBeSelected("organisation"));
         }
 
-        // TODO: validate whether organisation is already added to consortium
-        return Task.FromResult(OperationResult.Success());
+        var organisation = await _organisationService.GetOrganisation(request.SelectedMember!, cancellationToken);
+        consortium.AddMember(organisation);
     }
 }
