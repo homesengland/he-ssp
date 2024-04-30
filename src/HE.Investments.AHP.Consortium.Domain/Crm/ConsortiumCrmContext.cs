@@ -8,6 +8,10 @@ namespace HE.Investments.AHP.Consortium.Domain.Crm;
 
 public class ConsortiumCrmContext : IConsortiumCrmContext
 {
+    private static readonly IDictionary<string, IList<string>> JoinRequests = new Dictionary<string, IList<string>>();
+
+    private static readonly IDictionary<string, IList<string>> RemoveRequests = new Dictionary<string, IList<string>>();
+
     private readonly ICrmService _service;
 
     public ConsortiumCrmContext(ICrmService service)
@@ -23,10 +27,32 @@ public class ConsortiumCrmContext : IConsortiumCrmContext
             invln_memberorganisationid = organisationId,
         };
 
-        return await _service.ExecuteAsync<invln_getconsortiumRequest, invln_getconsortiumResponse, ConsortiumDto>(
+        var consortium = await _service.ExecuteAsync<invln_getconsortiumRequest, invln_getconsortiumResponse, ConsortiumDto>(
             request,
             x => x.invln_consortium,
             cancellationToken);
+
+        if (JoinRequests.TryGetValue(consortiumId, out var joinRequests))
+        {
+            consortium.members.AddRange(joinRequests.Select(x => new ConsortiumMemberDto
+            {
+                id = x,
+                name = "Dummy",
+                status = 858110001,
+            }));
+        }
+
+        if (RemoveRequests.TryGetValue(consortiumId, out var removeRequests))
+        {
+            consortium.members.AddRange(removeRequests.Select(x => new ConsortiumMemberDto
+            {
+                id = x,
+                name = "Dummy",
+                status = 858110005,
+            }));
+        }
+
+        return consortium;
     }
 
     public async Task<bool> IsConsortiumExistForProgrammeAndOrganisation(string programmeId, string organisationId, CancellationToken cancellationToken)
@@ -58,5 +84,52 @@ public class ConsortiumCrmContext : IConsortiumCrmContext
             request,
             x => x.invln_consortiumid,
             cancellationToken);
+    }
+
+    public Task CreateJoinConsortiumRequest(string consortiumId, string organisationId, string userId, CancellationToken cancellationToken)
+    {
+        // TODO: make request to CRM
+        if (JoinRequests.TryGetValue(consortiumId, out var requests))
+        {
+            requests.Add(organisationId);
+            return Task.CompletedTask;
+        }
+
+        JoinRequests.Add(consortiumId, new List<string> { organisationId });
+        return Task.CompletedTask;
+    }
+
+    public Task CreateRemoveFromConsortiumRequest(string consortiumId, string organisationId, string userId, CancellationToken cancellationToken)
+    {
+        // TODO: make request to CRM
+        if (JoinRequests.TryGetValue(consortiumId, out var joinRequests))
+        {
+            joinRequests.Remove(organisationId);
+        }
+
+        if (RemoveRequests.TryGetValue(consortiumId, out var removeRequests))
+        {
+            removeRequests.Add(organisationId);
+            return Task.CompletedTask;
+        }
+
+        RemoveRequests.Add(consortiumId, new List<string> { organisationId });
+        return Task.CompletedTask;
+    }
+
+    public Task CancelPendingConsortiumRequest(string consortiumId, string organisationId, string userId, CancellationToken cancellationToken)
+    {
+        // TODO: make request to CRM
+        if (JoinRequests.TryGetValue(consortiumId, out var joinRequests))
+        {
+            joinRequests.Remove(organisationId);
+        }
+
+        if (RemoveRequests.TryGetValue(consortiumId, out var removeRequests))
+        {
+            removeRequests.Remove(organisationId);
+        }
+
+        return Task.CompletedTask;
     }
 }

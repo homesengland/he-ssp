@@ -1,7 +1,7 @@
 using HE.Investments.Account.Api.Contract.User;
-using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
+using OrganisationId = HE.Investments.Account.Shared.User.ValueObjects.OrganisationId;
 
 namespace HE.Investments.Account.Shared.User;
 

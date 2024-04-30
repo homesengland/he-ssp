@@ -11,7 +11,6 @@ using HE.Investment.AHP.Domain.FinancialDetails.Mappers;
 using HE.Investment.AHP.Domain.Programme;
 using HE.Investment.AHP.Domain.Programme.Config;
 using HE.Investments.Account.Shared.User;
-using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Pagination;
@@ -20,6 +19,7 @@ using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Infrastructure.Events;
 using ApplicationSection = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationSection;
+using OrganisationId = HE.Investments.Account.Shared.User.ValueObjects.OrganisationId;
 
 namespace HE.Investment.AHP.Domain.Application.Repositories;
 

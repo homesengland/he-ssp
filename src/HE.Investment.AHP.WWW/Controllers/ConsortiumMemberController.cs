@@ -1,4 +1,5 @@
 using HE.Investment.AHP.WWW.Models.ConsortiumMember;
+using HE.Investment.AHP.WWW.Views.Shared.Components.OrganisationDetailsComponent;
 using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.AHP.Consortium.Contract;
@@ -8,13 +9,15 @@ using HE.Investments.AHP.Consortium.Contract.Queries;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Contract.Validators;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Components;
 using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Routing;
+using HE.Investments.Organisation.ValueObjects;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using OrganisationDetails = HE.Investment.AHP.WWW.Views.Shared.Components.OrganisationDetails.OrganisationDetails;
+using OrganisationId = HE.Investments.Account.Shared.User.ValueObjects.OrganisationId;
 
 namespace HE.Investment.AHP.WWW.Controllers;
 
@@ -39,7 +42,7 @@ public class ConsortiumMemberController : WorkflowController<ConsortiumMemberWor
     [WorkflowState(ConsortiumMemberWorkflowState.Index)]
     public async Task<IActionResult> Index(string consortiumId, CancellationToken cancellationToken)
     {
-        return View(await GetConsortiumDetails(consortiumId, cancellationToken));
+        return View(await GetConsortiumDetails(consortiumId, fetchAddress: false, cancellationToken));
     }
 
     [HttpGet("search-organisation")]
@@ -72,12 +75,11 @@ public class ConsortiumMemberController : WorkflowController<ConsortiumMemberWor
     [WorkflowState(ConsortiumMemberWorkflowState.SearchResult)]
     public async Task<IActionResult> SearchResult(string consortiumId, SearchOrganisationResultModel model, CancellationToken cancellationToken)
     {
-        var organisation = model.SelectedItem?.Split(Environment.NewLine);
         return await this.ExecuteCommand<SearchOrganisationResultModel>(
             _mediator,
-            new AddOrganisationToConsortiumCommand(new ConsortiumId(consortiumId), organisation?.FirstOrDefault(), organisation?.LastOrDefault()),
+            new AddOrganisationToConsortiumCommand(new ConsortiumId(consortiumId), model.SelectedMember.IsProvided() ? new OrganisationIdentifier(model.SelectedMember!) : null),
             async () => await Continue(new { consortiumId }),
-            async () => await SearchOrganisation(consortiumId, model.Phrase, model.Page.CurrentPage, model.SelectedItem, cancellationToken),
+            async () => await SearchOrganisation(consortiumId, model.Phrase, model.Page.CurrentPage, model.SelectedMember, cancellationToken),
             cancellationToken);
     }
 
@@ -118,7 +120,7 @@ public class ConsortiumMemberController : WorkflowController<ConsortiumMemberWor
     [WorkflowState(ConsortiumMemberWorkflowState.AddMembers)]
     public async Task<IActionResult> AddMembers(string consortiumId, CancellationToken cancellationToken)
     {
-        return View(await GetConsortiumDetails(consortiumId, cancellationToken));
+        return View(await GetConsortiumDetails(consortiumId, fetchAddress: true, cancellationToken));
     }
 
     [HttpPost("add-members")]
@@ -138,25 +140,25 @@ public class ConsortiumMemberController : WorkflowController<ConsortiumMemberWor
         this.AddOrderedErrors<string>(new OperationResult().AddValidationError(
             nameof(AreAllMembersAdded),
             "Select whether you have you added all members to this consortium"));
-        return View(await _mediator.Send(new GetConsortiumDetailsQuery(new ConsortiumId(consortiumId)), cancellationToken));
+        return View(await _mediator.Send(new GetConsortiumDetailsQuery(new ConsortiumId(consortiumId), FetchAddress: true), cancellationToken));
     }
 
     [HttpGet("remove-member/{memberId}")]
     [WorkflowState(ConsortiumMemberWorkflowState.RemoveMember)]
     public async Task<IActionResult> RemoveMember(string consortiumId, string memberId, CancellationToken cancellationToken)
     {
-        return View(await GetConsortiumMemberDetails(consortiumId, memberId, cancellationToken));
+        return View(await GetConsortiumMemberDetails(consortiumId, memberId, fetchAddress: false, cancellationToken));
     }
 
     [HttpPost("remove-member/{memberId}")]
     [WorkflowState(ConsortiumMemberWorkflowState.RemoveMember)]
     public async Task<IActionResult> RemoveMember(string consortiumId, string memberId, [FromForm] bool? isConfirmed, CancellationToken cancellationToken)
     {
-        return await this.ExecuteCommand<HE.Investments.AHP.Consortium.Contract.OrganisationDetails>(
+        return await this.ExecuteCommand<OrganisationDetails>(
             _mediator,
-            new RemoveOrganisationFromConsortiumCommand(new ConsortiumId(consortiumId), memberId, isConfirmed),
+            new RemoveOrganisationFromConsortiumCommand(new ConsortiumId(consortiumId), new OrganisationId(memberId), isConfirmed),
             async () => await Continue(new { consortiumId }),
-            async () => View("RemoveMember", await GetConsortiumMemberDetails(consortiumId, memberId, cancellationToken)),
+            async () => View("RemoveMember", await GetConsortiumMemberDetails(consortiumId, memberId, fetchAddress: false, cancellationToken)),
             cancellationToken);
     }
 
@@ -165,17 +167,17 @@ public class ConsortiumMemberController : WorkflowController<ConsortiumMemberWor
         return await Task.FromResult<IStateRouting<ConsortiumMemberWorkflowState>>(new ConsortiumMemberWorkflow(currentState));
     }
 
-    private async Task<ConsortiumDetails> GetConsortiumDetails(string consortiumId, CancellationToken cancellationToken)
+    private async Task<ConsortiumDetails> GetConsortiumDetails(string consortiumId, bool fetchAddress, CancellationToken cancellationToken)
     {
-        return await _mediator.Send(new GetConsortiumDetailsQuery(new ConsortiumId(consortiumId)), cancellationToken);
+        return await _mediator.Send(new GetConsortiumDetailsQuery(new ConsortiumId(consortiumId), fetchAddress), cancellationToken);
     }
 
-    private async Task<HE.Investments.AHP.Consortium.Contract.OrganisationDetails> GetConsortiumMemberDetails(string consortiumId, string memberId, CancellationToken cancellationToken)
+    private async Task<OrganisationDetails> GetConsortiumMemberDetails(string consortiumId, string memberId, bool fetchAddress, CancellationToken cancellationToken)
     {
-        var consortium = await _mediator.Send(new GetConsortiumDetailsQuery(new ConsortiumId(consortiumId)), cancellationToken);
-        var member = consortium.Members.SingleOrDefault(x => x.OrganisationId == memberId || x.CompanyHouseNumber == memberId);
+        var consortium = await _mediator.Send(new GetConsortiumDetailsQuery(new ConsortiumId(consortiumId), fetchAddress), cancellationToken);
+        var member = consortium.Members.SingleOrDefault(x => x.OrganisationId.ToString() == memberId);
 
-        return member ?? throw new NotFoundException($"Cannot find member with id {memberId}");
+        return member?.Details ?? throw new NotFoundException($"Cannot find member with id {memberId}");
     }
 
     private async Task<IActionResult> SearchOrganisation(
@@ -198,10 +200,10 @@ public class ConsortiumMemberController : WorkflowController<ConsortiumMemberWor
             new PaginationResult<ExtendedSelectListItem>(
                 result.Page.Items.Select(x => new ExtendedSelectListItem(
                         x.Name,
-                        $"{x.OrganisationId}{Environment.NewLine}{x.CompanyHouseNumber}",
+                        x.OrganisationId ?? x.CompanyHouseNumber ?? string.Empty,
                         false,
                         itemContent: new DynamicComponentViewModel(
-                            nameof(OrganisationDetails),
+                            nameof(OrganisationDetailsComponent),
                             new { street = x.Street, city = x.City, postalCode = x.PostalCode, providerCode = (string?)null })))
                     .ToList(),
                 result.Page.CurrentPage,

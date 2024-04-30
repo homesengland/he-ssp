@@ -1,8 +1,8 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Domain.Application.Crm;
-using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Domain;
+using OrganisationId = HE.Investments.Account.Shared.User.ValueObjects.OrganisationId;
 
 namespace HE.Investment.AHP.Domain.Application.Repositories;
 
