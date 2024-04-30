@@ -48,7 +48,7 @@ public class ProjectSummaryViewModelFactory : IProjectSummaryViewModelFactory
         }
     }
 
-    private static IList<SectionSummaryItemModel> CreateProjectWithoutSiteSummary(ProjectDetails projectDetails, CreateAction createAction, bool isEditable)
+    private static List<SectionSummaryItemModel> CreateProjectWithoutSiteSummary(ProjectDetails projectDetails, CreateAction createAction, bool isEditable)
     {
         var sectionSummary = CreateProjectBasicDetailsSummary(projectDetails, createAction, isEditable);
 

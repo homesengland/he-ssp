@@ -85,7 +85,7 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
         var siteDetailsDto = CrmResponseSerializer.Deserialize<SiteDetailsDto>(response.invln_sitedetail)
                              ?? throw new NotFoundException(nameof(Project), projectId.ToString());
 
-        return ProjectEntityMapper.Map(siteDetailsDto, _timeProvider.Now);
+        return ProjectEntityMapper.Map(siteDetailsDto);
     }
 
     public async Task SaveAsync(LoanApplicationId loanApplicationId, Project projectToSave, CancellationToken cancellationToken)

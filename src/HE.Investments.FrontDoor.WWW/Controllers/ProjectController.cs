@@ -507,7 +507,7 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     [HttpGet("{projectId}/check-answers")]
     [WorkflowState(ProjectWorkflowState.CheckAnswers)]
     [WorkflowState(SiteWorkflowState.CheckAnswers)]
-    public async Task<IActionResult> CheckAnswers(string projectId, CancellationToken cancellationToken)
+    public async Task<IActionResult> CheckAnswers(CancellationToken cancellationToken)
     {
         return View("CheckAnswers", await CreateProjectSummary(cancellationToken));
     }
