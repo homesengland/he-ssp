@@ -179,8 +179,15 @@ public class SiteEntity : DomainEntity, IQuestion
         TenderingStatusDetails = _modificationTracker.Change(TenderingStatusDetails, tenderingStatusDetails, MarkAsNotCompleted);
     }
 
-    public void ProvideStrategicSiteDetails(StrategicSiteDetails? details)
+    public async Task ProvideStrategicSiteDetails(StrategicSiteDetails? details, IStrategicSiteNameExists strategicSiteNameExists, CancellationToken cancellationToken)
     {
+        if (details?.SiteName.IsProvided() == true
+            && details.SiteName != StrategicSiteDetails?.SiteName
+            && await strategicSiteNameExists.IsExist(details.SiteName!, cancellationToken))
+        {
+            OperationResult.ThrowValidationError("StrategicSiteName", "There is already a strategic site with this name. Enter a different name");
+        }
+
         StrategicSiteDetails = _modificationTracker.Change(StrategicSiteDetails, details, MarkAsNotCompleted);
     }
 

@@ -12,5 +12,7 @@ public interface ISiteCrmContext
 
     Task<bool> Exist(string name, CancellationToken cancellationToken);
 
+    Task<bool> StrategicSiteExist(string name, string organisationId, CancellationToken cancellationToken);
+
     Task<string> Save(Guid organisationId, string userGlobalId, SiteDto dto, CancellationToken cancellationToken);
 }
