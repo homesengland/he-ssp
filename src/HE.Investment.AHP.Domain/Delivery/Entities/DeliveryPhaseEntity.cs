@@ -19,7 +19,7 @@ namespace HE.Investment.AHP.Domain.Delivery.Entities;
 
 public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
 {
-    private readonly IList<HomesToDeliverInPhase> _homesToDeliver;
+    private readonly List<HomesToDeliverInPhase> _homesToDeliver;
 
     private readonly ModificationTracker _modificationTracker = new();
 

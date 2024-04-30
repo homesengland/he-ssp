@@ -51,7 +51,7 @@ public abstract class CalculateQueryHandlerBase<TQuery> : IRequestHandler<TQuery
 
     protected abstract CalculationResult BuildCalculationResult(IHomeTypeEntity homeType);
 
-    private IList<ErrorItem> PerformWithValidation(params Action[] actions)
+    private List<ErrorItem> PerformWithValidation(params Action[] actions)
     {
         var errors = new List<ErrorItem>();
         foreach (var action in actions)

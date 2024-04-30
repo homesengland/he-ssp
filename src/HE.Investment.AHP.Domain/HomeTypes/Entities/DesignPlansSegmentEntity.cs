@@ -89,7 +89,7 @@ public class DesignPlansSegmentEntity : DomainEntity, IHomeTypeSegmentEntity
 
         foreach (var file in files)
         {
-            if (_uploadedFiles.Any(x => x.Name == file.Name) || _filesToUpload.Any(x => x.Name == file.Name))
+            if (_uploadedFiles.Exists(x => x.Name == file.Name) || _filesToUpload.Exists(x => x.Name == file.Name))
             {
                 OperationResult.New().AddValidationError("File", GenericValidationError.FileUniqueName).CheckErrors();
             }
@@ -102,7 +102,7 @@ public class DesignPlansSegmentEntity : DomainEntity, IHomeTypeSegmentEntity
 
     public void MarkFileToRemove(FileId fileId)
     {
-        var fileToRemove = _uploadedFiles.FirstOrDefault(x => x.Id == fileId) ?? throw new NotFoundException(nameof(DesignPlanFileEntity), fileId);
+        var fileToRemove = _uploadedFiles.Find(x => x.Id == fileId) ?? throw new NotFoundException(nameof(DesignPlanFileEntity), fileId);
 
         if (_application.Status == ApplicationStatus.ApplicationSubmitted)
         {

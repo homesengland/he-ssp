@@ -17,11 +17,11 @@ namespace HE.Investment.AHP.Domain.Delivery.Entities;
 
 public class DeliveryPhasesEntity : IHomeTypeConsumer
 {
-    private readonly IList<DeliveryPhaseEntity> _deliveryPhases;
+    private readonly List<DeliveryPhaseEntity> _deliveryPhases;
 
-    private readonly IList<DeliveryPhaseEntity> _toRemove = new List<DeliveryPhaseEntity>();
+    private readonly List<DeliveryPhaseEntity> _toRemove = new();
 
-    private readonly IList<HomesToDeliver> _homesToDeliver;
+    private readonly List<HomesToDeliver> _homesToDeliver;
 
     private readonly ModificationTracker _statusModificationTracker = new();
 

@@ -25,6 +25,7 @@ public class ProvideDeliveryPhaseHomesCommandHandler : DeliveryCommandHandlerBas
         deliveryPhases.ProvideHomesToBeDeliveredInPhase(request.DeliveryPhaseId, homesToDeliver);
     }
 
+
     private static IReadOnlyCollection<HomesToDeliverInPhase> CreateHomesToDeliver(IDictionary<string, string?> homesToDeliver)
     {
         var operationResult = new OperationResult();

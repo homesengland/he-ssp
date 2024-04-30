@@ -72,7 +72,7 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
         await TestQuestionPage(
             SitePagesUrl.HomesNumber(ProjectData.Id, SiteData.Id),
             SitePageTitles.HomesNumber,
-            SitePagesUrl.LocalAuthoritySearch(ProjectData.Id, SiteData.Id),
+            SitePagesUrl.LocalAuthoritySearch(),
             (nameof(SiteDetails.HomesNumber), SiteData.HomesNumber.ToString(CultureInfo.InvariantCulture)));
     }
 
@@ -81,9 +81,9 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
     public async Task Order04_SearchLocalAuthority()
     {
         // given
-        var currentPage = await GetCurrentPage(SitePagesUrl.LocalAuthoritySearch(ProjectData.Id, SiteData.Id));
+        var currentPage = await GetCurrentPage(SitePagesUrl.LocalAuthoritySearch());
         currentPage
-            .UrlWithoutQueryEndsWith(SitePagesUrl.LocalAuthoritySearch(ProjectData.Id, SiteData.Id))
+            .UrlWithoutQueryEndsWith(SitePagesUrl.LocalAuthoritySearch())
             .HasTitle(LocalAuthorityPageTitles.SearchForSite)
             .HasBackLink(out _)
             .HasSubmitButton(out var continueButton, "Search");
@@ -95,7 +95,7 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
 
         // then
         nextPage
-            .UrlWithoutQueryEndsWith(SitePagesUrl.LocalAuthorityResult(ProjectData.Id, SiteData.Id))
+            .UrlWithoutQueryEndsWith(SitePagesUrl.LocalAuthorityResult())
             .HasTitle(LocalAuthorityPageTitles.SearchResult)
             .HasBackLink(out _);
 
@@ -107,9 +107,9 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
     public async Task Order05_SelectLocalAuthority()
     {
         // given
-        var currentPage = await GetCurrentPage(SitePagesUrl.LocalAuthorityResult(ProjectData.Id, SiteData.Id));
+        var currentPage = await GetCurrentPage(SitePagesUrl.LocalAuthorityResult());
         var confirmLocalAuthorityLink = currentPage
-            .UrlWithoutQueryEndsWith(SitePagesUrl.LocalAuthorityResult(ProjectData.Id, SiteData.Id))
+            .UrlWithoutQueryEndsWith(SitePagesUrl.LocalAuthorityResult())
             .HasTitle(LocalAuthorityPageTitles.SearchResult)
             .HasBackLink(out _)
             .GetLinkByTestId(SiteData.LocalAuthorityName.ToIdTag());
@@ -355,7 +355,7 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
         await TestQuestionPage(
             SitePagesUrl.HomesNumber(ProjectData.Id, SecondSiteData.Id),
             SitePageTitles.HomesNumber,
-            SitePagesUrl.LocalAuthoritySearch(ProjectData.Id, SecondSiteData.Id),
+            SitePagesUrl.LocalAuthoritySearch(),
             (nameof(SiteDetails.HomesNumber), SecondSiteData.HomesNumber.ToString(CultureInfo.InvariantCulture)));
     }
 
@@ -364,9 +364,9 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
     public async Task Order20_SecondSiteSearchLocalAuthority()
     {
         // given
-        var currentPage = await GetCurrentPage(SitePagesUrl.LocalAuthoritySearch(ProjectData.Id, SecondSiteData.Id));
+        var currentPage = await GetCurrentPage(SitePagesUrl.LocalAuthoritySearch());
         currentPage
-            .UrlWithoutQueryEndsWith(SitePagesUrl.LocalAuthoritySearch(ProjectData.Id, SecondSiteData.Id))
+            .UrlWithoutQueryEndsWith(SitePagesUrl.LocalAuthoritySearch())
             .HasTitle(LocalAuthorityPageTitles.SearchForSite)
             .HasBackLink(out _)
             .HasSubmitButton(out var continueButton, "Search");
@@ -378,7 +378,7 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
 
         // then
         nextPage
-            .UrlWithoutQueryEndsWith(SitePagesUrl.LocalAuthorityResult(ProjectData.Id, SecondSiteData.Id))
+            .UrlWithoutQueryEndsWith(SitePagesUrl.LocalAuthorityResult())
             .HasTitle(LocalAuthorityPageTitles.SearchResult)
             .HasBackLink(out _);
 
@@ -390,9 +390,9 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
     public async Task Order21_SecondSiteSelectLocalAuthority()
     {
         // given
-        var currentPage = await GetCurrentPage(SitePagesUrl.LocalAuthorityResult(ProjectData.Id, SecondSiteData.Id));
+        var currentPage = await GetCurrentPage(SitePagesUrl.LocalAuthorityResult());
         var confirmLocalAuthorityLink = currentPage
-            .UrlWithoutQueryEndsWith(SitePagesUrl.LocalAuthorityResult(ProjectData.Id, SecondSiteData.Id))
+            .UrlWithoutQueryEndsWith(SitePagesUrl.LocalAuthorityResult())
             .HasTitle(LocalAuthorityPageTitles.SearchResult)
             .HasBackLink(out _)
             .GetLinkByTestId(SecondSiteData.LocalAuthorityName.ToIdTag());

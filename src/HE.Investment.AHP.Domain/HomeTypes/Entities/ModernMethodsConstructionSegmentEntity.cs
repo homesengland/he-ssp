@@ -63,7 +63,7 @@ public class ModernMethodsConstructionSegmentEntity : DomainEntity, IHomeTypeSeg
 
         if (!ModernMethodsConstructionCategories.Contains(ModernMethodsConstructionCategoriesType.Category1PreManufacturing3DPrimaryStructuralSystems))
         {
-            ChangeModernMethodsConstruction3DSubcategories(Enumerable.IDE0301Empty<ModernMethodsConstruction3DSubcategoriesType>());
+            ChangeModernMethodsConstruction3DSubcategories(Enumerable.Empty<ModernMethodsConstruction3DSubcategoriesType>());
         }
 
         if (!ModernMethodsConstructionCategories.Contains(ModernMethodsConstructionCategoriesType.Category2PreManufacturing2DPrimaryStructuralSystems))
