@@ -1,9 +1,9 @@
-FROM mcr.microsoft.com/dotnet/aspnet:6.0-bullseye-slim AS base
+FROM mcr.microsoft.com/dotnet/aspnet:8.0-bullseye-slim AS base
 WORKDIR /app
 ENV ASPNETCORE_URLS="http://*:5555"
 EXPOSE 5555
 
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 
 RUN curl -Lk "https://raw.githubusercontent.com/Microsoft/artifacts-credprovider/master/helpers/installcredprovider.sh" | sh
 ARG INTERNAL_FEED_ACCESSTOKEN
