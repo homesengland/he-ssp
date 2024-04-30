@@ -123,6 +123,16 @@ public class SiteCrmContext : ISiteCrmContext
         return bool.TryParse(response, out var result) && result;
     }
 
+    public async Task<bool> StrategicSiteExist(string name, string organisationId, CancellationToken cancellationToken)
+    {
+        var response = await _service.ExecuteAsync<invln_checkifsitewithstrategicsitenameexistsRequest, invln_checkifsitewithstrategicsitenameexistsResponse>(
+            new invln_checkifsitewithstrategicsitenameexistsRequest { invln_sitename = name, invln_accountid = organisationId, },
+            r => r.invln_siteexists,
+            cancellationToken);
+
+        return bool.TryParse(response, out var result) && result;
+    }
+
     public async Task<string> Save(Guid organisationId, string userGlobalId, SiteDto dto, CancellationToken cancellationToken)
     {
         return await _service.ExecuteAsync<invln_setsiteRequest, invln_setsiteResponse>(

@@ -18,15 +18,21 @@ public abstract class ProvideSiteDetailsBaseCommandHandler<TCommand> : SiteBaseC
     public Task<OperationResult> Handle(TCommand request, CancellationToken cancellationToken)
     {
         return Perform(
-            site =>
+            async site =>
             {
-                Provide(request, site);
-
-                return Task.FromResult(OperationResult.Success());
+                await Provide(request, site, cancellationToken);
             },
             request.SiteId,
             cancellationToken);
     }
 
-    protected abstract void Provide(TCommand request, SiteEntity site);
+    protected virtual void Provide(TCommand request, SiteEntity site)
+    {
+    }
+
+    protected virtual Task Provide(TCommand request, SiteEntity site, CancellationToken cancellationToken)
+    {
+        Provide(request, site);
+        return Task.CompletedTask;
+    }
 }

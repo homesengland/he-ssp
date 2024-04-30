@@ -61,9 +61,9 @@ public class ConsortiumRepository : IConsortiumRepository
         return consortiumEntity;
     }
 
-    public Task<bool> IsPartOfConsortiumForProgramme(ProgrammeId programmeId, OrganisationId organisationId)
+    public async Task<bool> IsPartOfConsortiumForProgramme(ProgrammeId programmeId, OrganisationId organisationId, CancellationToken cancellationToken = default)
     {
-        return Task.FromResult(false);
+        return await _crmContext.IsConsortiumExistForProgrammeAndOrganisation(programmeId.ToString(), organisationId.ToString(), cancellationToken);
     }
 
     private async Task SaveConsortiumMemberRequests(

@@ -3,6 +3,7 @@ using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Site.Entities;
 using HE.Investment.AHP.Domain.Site.ValueObjects;
+using HE.Investment.AHP.Domain.Site.ValueObjects.StrategicSite;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Infrastructure.Cache;
@@ -25,11 +26,6 @@ internal class CacheSiteRepositoryDecorator : ISiteRepository
         _cache = cache;
     }
 
-    public async Task<bool> IsExist(SiteName name, CancellationToken cancellationToken)
-    {
-        return await _decorated.IsExist(name, cancellationToken);
-    }
-
     public async Task<PaginationResult<SiteEntity>> GetSites(UserAccount userAccount, PaginationRequest paginationRequest, CancellationToken cancellationToken)
     {
         return await _decorated.GetSites(userAccount, paginationRequest, cancellationToken);
@@ -50,6 +46,16 @@ internal class CacheSiteRepositoryDecorator : ISiteRepository
     public async Task<SiteEntity> GetSite(SiteId siteId, UserAccount userAccount, CancellationToken cancellationToken)
     {
         return await _decorated.GetSite(siteId, userAccount, cancellationToken);
+    }
+
+    public async Task<bool> IsExist(SiteName name, CancellationToken cancellationToken)
+    {
+        return await _decorated.IsExist(name, cancellationToken);
+    }
+
+    public async Task<bool> IsExist(StrategicSiteName name, UserAccount userAccount, CancellationToken cancellationToken)
+    {
+        return await _decorated.IsExist(name, userAccount, cancellationToken);
     }
 
     public async Task<SiteId> Save(SiteEntity site, UserAccount userAccount, CancellationToken cancellationToken)
