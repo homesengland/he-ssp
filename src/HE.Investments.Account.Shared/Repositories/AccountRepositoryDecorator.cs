@@ -6,7 +6,7 @@ using Microsoft.FeatureManagement;
 
 namespace HE.Investments.Account.Shared.Repositories;
 
-internal class AccountRepositoryDecorator : IAccountRepository
+internal sealed class AccountRepositoryDecorator : IAccountRepository
 {
     private readonly IFeatureManager _featureManager;
 

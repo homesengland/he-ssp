@@ -91,7 +91,7 @@ public class ProjectSummaryViewModelFactory : IProjectSummaryViewModelFactory
         return sectionSummary;
     }
 
-    private static IList<SectionSummaryItemModel> CreateProjectBasicDetailsSummary(ProjectDetails projectDetails, CreateAction createAction, bool isEditable)
+    private static List<SectionSummaryItemModel> CreateProjectBasicDetailsSummary(ProjectDetails projectDetails, CreateAction createAction, bool isEditable)
     {
         var summary = new List<SectionSummaryItemModel>
         {
@@ -140,7 +140,7 @@ public class ProjectSummaryViewModelFactory : IProjectSummaryViewModelFactory
         return summary;
     }
 
-    private static IEnumerable<SectionSummaryViewModel> CreateSitesSummary(
+    private static List<SectionSummaryViewModel> CreateSitesSummary(
         IUrlHelper urlHelper,
         ProjectDetails projectDetails,
         ProjectSites projectSites,
@@ -179,7 +179,7 @@ public class ProjectSummaryViewModelFactory : IProjectSummaryViewModelFactory
         return summaries;
     }
 
-    private static IList<SectionSummaryItemModel> CreateSiteDetailsSummary(SiteDetails site, CreateAction createAction, bool isEditable)
+    private static List<SectionSummaryItemModel> CreateSiteDetailsSummary(SiteDetails site, CreateAction createAction, bool isEditable)
     {
         return new List<SectionSummaryItemModel>
         {
@@ -198,7 +198,7 @@ public class ProjectSummaryViewModelFactory : IProjectSummaryViewModelFactory
         };
     }
 
-    private static IList<SectionSummaryItemModel> CreateProjectFinancialDetailsSummary(
+    private static List<SectionSummaryItemModel> CreateProjectFinancialDetailsSummary(
         ProjectDetails projectDetails,
         CreateAction createAction,
         bool isEditable)

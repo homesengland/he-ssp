@@ -93,7 +93,7 @@ public class OrganisationSearchService : IOrganisationSearchService
         string organisationName,
         PagingQueryParams pagingParams,
         int totalItemsFromCompaniesHouseApi,
-        IList<OrganisationSearchItem> mergedResult)
+        List<OrganisationSearchItem> mergedResult)
     {
         var result = await _organizationCrmSearchService.SearchOrganizationInCrmByName(organisationName, false);
         var displayedItems = pagingParams.StartIndex == 1 ? 0 : pagingParams.StartIndex;
@@ -166,7 +166,7 @@ public class OrganisationSearchService : IOrganisationSearchService
             }
 
             _logger.LogError(ex, "Error occured while fetching organizations data from Company House API: {Message}", ex.Message);
-            return new OrganisationSearchResult(Array.Empty<OrganisationSearchItem>(), 0, ex.Message);
+            return new OrganisationSearchResult([], 0, ex.Message);
         }
     }
 
@@ -175,12 +175,12 @@ public class OrganisationSearchService : IOrganisationSearchService
         try
         {
             var companyHouseApiResult = await _companiesHouseApi.Search(organisationName, pagingParams with { StartIndex = 1 }, cancellationToken);
-            return new OrganisationSearchResult(Array.Empty<OrganisationSearchItem>(), companyHouseApiResult.Hits);
+            return new OrganisationSearchResult([], companyHouseApiResult.Hits);
         }
         catch (HttpRequestException ex)
         {
             _logger.LogError(ex, "Error occured while fetching organizations data from Company House API: {Message}", ex.Message);
-            return new OrganisationSearchResult(Array.Empty<OrganisationSearchItem>(), 0, ex.Message);
+            return new OrganisationSearchResult([], 0, ex.Message);
         }
     }
 
@@ -191,7 +191,7 @@ public class OrganisationSearchService : IOrganisationSearchService
         return await _organizationCrmSearchService.SearchOrganizationInCrmByCompanyHouseNumber(organizationCompanyNumbers);
     }
 
-    private IList<OrganisationSearchItem> MergeResults(
+    private List<OrganisationSearchItem> MergeResults(
         IList<OrganisationSearchItem> companyHousesOrganizations,
         IList<OrganizationDetailsDto> organizationsFromCrm)
     {

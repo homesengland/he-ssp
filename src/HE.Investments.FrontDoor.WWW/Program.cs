@@ -13,7 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddEnvironmentVariables();
 var appConfig = builder.Configuration.GetSection("AppConfiguration").Get<AppConfig>();
 
-builder.Services.AddCache(appConfig.Cache);
+builder.Services.AddCache(appConfig!.Cache);
 builder.Services.AddApplicationInsightsTelemetry();
 builder.Services.AddHttpClient();
 builder.Services.AddCrmConnection();

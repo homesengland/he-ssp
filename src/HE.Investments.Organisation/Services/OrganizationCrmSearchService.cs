@@ -18,7 +18,7 @@ internal class OrganizationCrmSearchService : IOrganizationCrmSearchService
 
     public async Task<IList<OrganizationDetailsDto>> SearchOrganizationInCrmByName(string organisationNames, bool recordsWithCompanyHouseNumberIncluded)
     {
-        IEnumerable<string> result = organisationNames.Split(' ').ToList();
+        IEnumerable<string> result = [.. organisationNames.Split(' ')];
         var retrievedEntities = await _organizationRepository.SearchForOrganizationsByName(_organizationService, result, recordsWithCompanyHouseNumberIncluded);
         if (retrievedEntities != null && retrievedEntities.Entities.Count > 0)
         {
@@ -31,7 +31,7 @@ internal class OrganizationCrmSearchService : IOrganizationCrmSearchService
             return organizationDtoList;
         }
 
-        return Array.Empty<OrganizationDetailsDto>();
+        return [];
     }
 
     public async Task<IList<OrganizationDetailsDto>> SearchOrganizationInCrmByCompanyHouseNumber(IEnumerable<string> organisationNumbers)
@@ -48,7 +48,7 @@ internal class OrganizationCrmSearchService : IOrganizationCrmSearchService
             return organizationDtoList;
         }
 
-        return new List<OrganizationDetailsDto>();
+        return [];
     }
 
     public async Task<OrganizationDetailsDto?> SearchOrganizationInCrmByOrganizationId(string organizationId)

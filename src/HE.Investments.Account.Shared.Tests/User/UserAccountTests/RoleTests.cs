@@ -11,7 +11,7 @@ public class RoleTests
     public void ShouldThrowException_WhenThereIsNoRole()
     {
         // given
-        var userAccount = UserAccountTestData.UserAccountOne with { Roles = Array.Empty<UserRole>() };
+        var userAccount = UserAccountTestData.UserAccountOne with { Roles = [] };
 
         // when
         Action action = () => userAccount.Role();

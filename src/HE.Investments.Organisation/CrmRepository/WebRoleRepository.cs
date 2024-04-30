@@ -34,7 +34,7 @@ public class WebRoleRepository : IWebRoleRepository
                                 </fetch>";
 
         var result = service.RetrieveMultiple(new FetchExpression(fetchXML));
-        return result.Entities.ToList();
+        return [.. result.Entities];
     }
 
     public List<Entity> GetDefaultPortalRoles(IOrganizationServiceAsync2 service, int portalType)
@@ -58,7 +58,7 @@ public class WebRoleRepository : IWebRoleRepository
 								</fetch>";
 
         var result = service.RetrieveMultiple(new FetchExpression(fetchXml));
-        return result.Entities.ToList();
+        return [.. result.Entities];
     }
 
     public Entity? GetContactWebroleForGivenOrganisationAndPortal(IOrganizationServiceAsync2 service, Guid organisationId, Guid contactId, string? portalTypeFiler = null)
@@ -186,6 +186,6 @@ public class WebRoleRepository : IWebRoleRepository
                         </fetch>";
 
         var result = service.RetrieveMultiple(new FetchExpression(fetchXml));
-        return result.Entities.ToList();
+        return [.. result.Entities];
     }
 }

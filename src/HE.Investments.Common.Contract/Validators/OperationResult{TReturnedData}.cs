@@ -4,7 +4,7 @@ public class OperationResult<TReturnedData> : OperationResult
 {
     public OperationResult()
     {
-        Errors = new List<ErrorItem>();
+        Errors = [];
     }
 
     public OperationResult(TReturnedData value)

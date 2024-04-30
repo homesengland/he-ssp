@@ -11,7 +11,7 @@ using HE.Investments.FrontDoor.Shared.Project;
 
 namespace HE.Investment.AHP.Domain.Site.Repositories;
 
-internal class CacheSiteRepositoryDecorator : ISiteRepository
+internal sealed class CacheSiteRepositoryDecorator : ISiteRepository
 {
     private readonly ISiteRepository _decorated;
 

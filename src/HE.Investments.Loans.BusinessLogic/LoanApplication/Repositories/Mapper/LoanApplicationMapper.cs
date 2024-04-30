@@ -87,7 +87,7 @@ public static class LoanApplicationMapper
             LoanApplicationId = Guid.Parse(loanApplicationDto.loanApplicationId),
             Purpose = loanApplicationDto.companyPurpose.MapToCommonResponse(),
             OrganisationMoreInformation = loanApplicationDto.existingCompany,
-            HomesBuilt = loanApplicationDto.companyExperience.ToString(),
+            HomesBuilt = loanApplicationDto.companyExperience?.ToString(CultureInfo.InvariantCulture),
             Status = SectionStatusMapper.Map(loanApplicationDto.CompanyStructureAndExperienceCompletionStatus),
         };
     }

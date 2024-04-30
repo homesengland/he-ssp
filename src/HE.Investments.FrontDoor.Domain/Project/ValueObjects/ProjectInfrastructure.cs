@@ -28,7 +28,7 @@ public class ProjectInfrastructure : ValueObject, IQuestion
 
     public ProjectInfrastructure()
     {
-        Values = Array.Empty<InfrastructureType>();
+        Values = [];
     }
 
     public IList<InfrastructureType> Values { get; }

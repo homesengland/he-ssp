@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Organisation.Services;
 using HE.Investments.TestsUtils.TestFramework;
@@ -5,6 +6,7 @@ using Moq;
 
 namespace HE.Investments.Organisation.Tests.TestObjectBuilders;
 
+[SuppressMessage("Style", "IDE0305", Justification = "Not sure how to fix it")]
 public class OrganizationCrmSearchServiceTestBuilder : TestServiceBuilder<IOrganizationCrmSearchService>
 {
     public static OrganizationCrmSearchServiceTestBuilder New() => new();
@@ -12,7 +14,7 @@ public class OrganizationCrmSearchServiceTestBuilder : TestServiceBuilder<IOrgan
     public OrganizationCrmSearchServiceTestBuilder ByCompanyHouseNumberReturnsNothing()
     {
         Mock.Setup(c => c.SearchOrganizationInCrmByCompanyHouseNumber(It.IsAny<IEnumerable<string>>()))
-            .ReturnsAsync(Array.Empty<OrganizationDetailsDto>());
+            .ReturnsAsync([]);
 
         return this;
     }
@@ -20,7 +22,7 @@ public class OrganizationCrmSearchServiceTestBuilder : TestServiceBuilder<IOrgan
     public OrganizationCrmSearchServiceTestBuilder ByNameReturnsNothing()
     {
         Mock.Setup(c => c.SearchOrganizationInCrmByName(It.IsAny<string>(), It.IsAny<bool>()))
-            .ReturnsAsync(Array.Empty<OrganizationDetailsDto>());
+            .ReturnsAsync([]);
 
         return this;
     }
@@ -28,7 +30,7 @@ public class OrganizationCrmSearchServiceTestBuilder : TestServiceBuilder<IOrgan
     public OrganizationCrmSearchServiceTestBuilder ByCompanyHouseNumberReturns(params OrganizationDetailsDto[] organizationsToReturn)
     {
         Mock.Setup(c => c.SearchOrganizationInCrmByCompanyHouseNumber(It.IsAny<IEnumerable<string>>()))
-            .ReturnsAsync(organizationsToReturn.ToList());
+            .ReturnsAsync(organizationsToReturn.ToList);
 
         return this;
     }

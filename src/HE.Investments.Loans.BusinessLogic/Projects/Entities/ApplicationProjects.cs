@@ -10,17 +10,14 @@ public class ApplicationProjects
     public ApplicationProjects(LoanApplicationId loanApplicationId, FrontDoorSiteId? frontDoorSiteId = null)
     {
         LoanApplicationId = loanApplicationId;
-        _projects = new List<Project>();
-
+        _projects = [];
         AddEmptyProject(frontDoorSiteId);
     }
 
     public ApplicationProjects(LoanApplicationId loanApplicationId, IEnumerable<Project> projects)
     {
         LoanApplicationId = loanApplicationId;
-
-        _projects = new List<Project>();
-
+        _projects = [];
         _projects.AddRange(projects);
     }
 

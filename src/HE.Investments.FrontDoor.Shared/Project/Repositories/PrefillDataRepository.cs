@@ -12,7 +12,7 @@ using Org::HE.Common.IntegrationModel.PortalIntegrationModel;
 
 namespace HE.Investments.FrontDoor.Shared.Project.Repositories;
 
-internal class PrefillDataRepository : IPrefillDataRepository
+internal sealed class PrefillDataRepository : IPrefillDataRepository
 {
     private readonly IProjectCrmContext _crmContext;
 

@@ -122,7 +122,7 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
 
     [HttpGet("{projectId}/not-eligible-for-anything")]
     [WorkflowState(ProjectWorkflowState.NotEligibleForAnything)]
-    public IActionResult NotEligibleForAnything([FromRoute] string projectId)
+    public IActionResult NotEligibleForAnything()
     {
         return View();
     }
@@ -329,7 +329,7 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
 
     [HttpGet("{projectId}/local-authority-search")]
     [WorkflowState(ProjectWorkflowState.LocalAuthoritySearch)]
-    public IActionResult LocalAuthoritySearch([FromRoute] string projectId, [FromQuery] string? redirect, CancellationToken cancellationToken)
+    public IActionResult LocalAuthoritySearch([FromRoute] string projectId, [FromQuery] string? redirect)
     {
         return RedirectToAction("Search", "LocalAuthority", new { projectId, redirect });
     }
@@ -507,7 +507,7 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     [HttpGet("{projectId}/check-answers")]
     [WorkflowState(ProjectWorkflowState.CheckAnswers)]
     [WorkflowState(SiteWorkflowState.CheckAnswers)]
-    public async Task<IActionResult> CheckAnswers(CancellationToken cancellationToken)
+    public async Task<IActionResult> CheckAnswers(string projectId, CancellationToken cancellationToken)
     {
         return View("CheckAnswers", await CreateProjectSummary(cancellationToken));
     }
@@ -533,7 +533,7 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     }
 
     [HttpGet("{projectId}/you-need-to-speak-to-homes-england")]
-    public IActionResult YouNeedToSpeakToHomesEngland([FromRoute] string projectId)
+    public IActionResult YouNeedToSpeakToHomesEngland()
     {
         return View("YouNeedToSpeakToHomesEngland");
     }

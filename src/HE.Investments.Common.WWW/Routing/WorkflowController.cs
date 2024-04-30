@@ -133,12 +133,12 @@ public abstract class WorkflowController<TState> : Controller
         return RedirectToState(nextState, routeData);
     }
 
-    private IActionResult ChangeState(TState targetState, object routeData)
+    private RedirectToActionResult ChangeState(TState targetState, object routeData)
     {
         return RedirectToState(targetState, routeData);
     }
 
-    private IActionResult RedirectToState(TState nextState, object? routeData)
+    private RedirectToActionResult RedirectToState(TState nextState, object? routeData)
     {
         var nextAction = GetWorkflowAction(nextState);
 
@@ -146,18 +146,16 @@ public abstract class WorkflowController<TState> : Controller
         {
             return RedirectToAction(nextAction.ActionName, nextAction.ControllerName.WithoutPrefix());
         }
-        else
-        {
-            return RedirectToAction(nextAction.ActionName, nextAction.ControllerName.WithoutPrefix(), routeData);
-        }
+
+        return RedirectToAction(nextAction.ActionName, nextAction.ControllerName.WithoutPrefix(), routeData);
     }
 
     private WorkflowAction<TState> GetWorkflowAction(TState nextState)
     {
-        return WorkflowGetMethodsFromAllControllers().FirstOrDefault(x => x.State.Equals(nextState)) ?? throw WorkflowActionCannotBePerformedException.CannotFindDestination(nextState);
+        return WorkflowGetMethodsFromAllControllers().Find(x => x.State.Equals(nextState)) ?? throw WorkflowActionCannotBePerformedException.CannotFindDestination(nextState);
     }
 
-    private IEnumerable<WorkflowAction<TState>> WorkflowGetMethodsFromAllControllers()
+    private List<WorkflowAction<TState>> WorkflowGetMethodsFromAllControllers()
     {
         return GetType()
             .Assembly

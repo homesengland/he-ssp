@@ -8,7 +8,7 @@ using HE.Investments.Loans.Contract.Common;
 namespace HE.Investments.Loans.BusinessLogic.Projects.Repositories.Mappers;
 internal static class AdditionalDetailsMapper
 {
-    public static AdditionalDetails? MapFromCrm(SiteDetailsDto projectFromCrm, DateTime now)
+    public static AdditionalDetails? MapFromCrm(SiteDetailsDto projectFromCrm)
     {
         if (!AdditionalDetailsExistsIn(projectFromCrm))
         {

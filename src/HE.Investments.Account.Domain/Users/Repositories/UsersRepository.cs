@@ -22,7 +22,7 @@ public class UsersRepository : IUsersRepository
         var users = await _usersCrmContext.GetUsers(organisationId.Value);
         if (!users.Any())
         {
-            return new List<UserDetails>();
+            return [];
         }
 
         return users

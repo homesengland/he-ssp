@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.Xrm.Sdk.Query;
 
 namespace HE.Investments.Organisation.CrmFields;
@@ -6,6 +7,7 @@ internal static class AccountEntity
 {
     public const string Name = "account";
 
+    [SuppressMessage("Style", "IDE0305", Justification = "Not sure how to fix it")]
     public static ColumnSet AllColumns(bool isAhpEnabled)
     {
         var columns = new List<string>

@@ -13,9 +13,9 @@ public class HomeTypesEntity
 {
     private readonly SiteBasicInfo _site;
 
-    private readonly IList<HomeTypeEntity> _homeTypes;
+    private readonly List<HomeTypeEntity> _homeTypes;
 
-    private readonly IList<HomeTypeEntity> _toRemove = new List<HomeTypeEntity>();
+    private readonly List<HomeTypeEntity> _toRemove = new();
 
     private readonly ModificationTracker _statusModificationTracker = new();
 

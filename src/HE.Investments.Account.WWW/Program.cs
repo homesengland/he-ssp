@@ -18,7 +18,7 @@ builder.Services.AddHttpClient();
 builder.Services.AddWebModule();
 builder.Services.AddFeatureManagement();
 builder.Services.AddCommonBuildingBlocks();
-builder.Services.AddCache(appConfig.Cache);
+builder.Services.AddCache(appConfig!.Cache);
 builder.Services.AddCrmConnection();
 
 var mvcBuilder = builder.Services.AddControllersWithViews(options =>

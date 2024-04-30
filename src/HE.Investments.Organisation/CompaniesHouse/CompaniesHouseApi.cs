@@ -30,7 +30,7 @@ internal class CompaniesHouseApi : ICompaniesHouseApi
 
         if (response.StatusCode == HttpStatusCode.NotFound)
         {
-            return new CompaniesHouseSearchResult { Items = Array.Empty<CompanyDetailsItem>() };
+            return new CompaniesHouseSearchResult { Items = [] };
         }
 
         response.EnsureSuccessStatusCode();

@@ -4,7 +4,7 @@ public class OrganisationDetails
 {
     public OrganisationDetails()
     {
-        AddressLines = new List<string>();
+        AddressLines = [];
     }
 
     public OrganisationDetails(

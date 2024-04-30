@@ -29,7 +29,7 @@ public class SupportActivities : ValueObject, IQuestion
 
     private SupportActivities()
     {
-        Values = new List<SupportActivityType>();
+        Values = [];
     }
 
     public IList<SupportActivityType> Values { get; }

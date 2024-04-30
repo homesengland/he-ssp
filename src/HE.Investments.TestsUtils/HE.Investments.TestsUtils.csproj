@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HE.Investments.Account.Api.Contract\HE.Investments.Account.Api.Contract.csproj"/>
+    <ProjectReference Include="..\HE.Investments.Common\HE.Investments.Common.csproj" />
   </ItemGroup>
 
 </Project>

@@ -22,11 +22,11 @@ public class DesignPlansSegmentEntity : DomainEntity, IHomeTypeSegmentEntity
 
     private readonly List<HappiDesignPrincipleType> _designPrinciples;
 
-    private readonly IList<UploadedFile> _uploadedFiles;
+    private readonly List<UploadedFile> _uploadedFiles;
 
-    private readonly IList<UploadedFile> _filesToRemove = new List<UploadedFile>();
+    private readonly List<UploadedFile> _filesToRemove = new();
 
-    private readonly IList<DesignPlanFileEntity> _filesToUpload = new List<DesignPlanFileEntity>();
+    private readonly List<DesignPlanFileEntity> _filesToUpload = new();
 
     private readonly ModificationTracker _modificationTracker;
 

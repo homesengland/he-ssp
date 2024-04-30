@@ -1,4 +1,5 @@
 using System.Globalization;
+using HE.Investments.Common.Extensions;
 
 namespace HE.Investments.Common.Workflow;
 
@@ -9,7 +10,7 @@ public class EncodedWorkflow<TState>
 
     public EncodedWorkflow(Predicate<TState> canBeAccessed)
     {
-        _availableStates = Enum.GetValues(typeof(TState)).Cast<TState>().Where(x => canBeAccessed(x)).OrderBy(x => x).ToList();
+        _availableStates = [.. Enum.GetValues(typeof(TState)).Cast<TState>().Where(x => canBeAccessed(x)).OrderBy(x => x)];
         Value = new string(_availableStates.Select(Encode).ToArray());
     }
 
@@ -27,7 +28,7 @@ public class EncodedWorkflow<TState>
             .Where(x => Convert.ToInt32(x, CultureInfo.InvariantCulture) > Convert.ToInt32(currentState, CultureInfo.InvariantCulture))
             .Except(lastWorkflow._availableStates)
             .ToList();
-        if (stateDifferences.Any())
+        if (stateDifferences.IsNotEmpty())
         {
             return stateDifferences[0];
         }

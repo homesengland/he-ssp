@@ -117,7 +117,7 @@ public class IntegrationTestClient
 
         var radioInputsWithFormName = radioInputs.Where(radio => radio!.Name.IsProvided() && radio.Name == formValue.Key).ToList();
 
-        if (!radioInputsWithFormName.Any())
+        if (!radioInputsWithFormName.IsNotEmpty())
         {
             return false;
         }
@@ -150,7 +150,7 @@ public class IntegrationTestClient
 
         var checkboxInputsWithFormName = checkboxInputs.Where(checkbox => checkbox!.Name.IsProvided() && checkbox.Name!.Contains(formValue.Key)).ToList();
 
-        if (!checkboxInputsWithFormName.Any())
+        if (!checkboxInputsWithFormName.IsNotEmpty())
         {
             return false;
         }

@@ -18,7 +18,7 @@ public class ProjectSitesEntity
 
     public FrontDoorProjectId ProjectId { get; }
 
-    public IList<ProjectSiteEntity> Sites { get; } = new List<ProjectSiteEntity>();
+    public IList<ProjectSiteEntity> Sites { get; } = [];
 
     public ProjectSiteEntity CreateNewSite(SiteName siteName)
     {

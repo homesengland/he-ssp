@@ -12,6 +12,6 @@ public class PortalPermissionRepository : IPortalPermissionRepository
             ColumnSet = new ColumnSet(allColumns: true),
         };
         var retrievedQueries = service.RetrieveMultiple(query);
-        return retrievedQueries.Entities.ToList();
+        return [.. retrievedQueries.Entities];
     }
 }

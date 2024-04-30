@@ -5,7 +5,7 @@ using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
 
 namespace HE.Investments.Loans.Contract.Common;
-public class Pounds : MoneyValueObject
+public partial class Pounds : MoneyValueObject
 {
     public Pounds(string value, string fieldName, string displayName)
         : base(value, fieldName, displayName)
@@ -21,7 +21,7 @@ public class Pounds : MoneyValueObject
 
     public static Pounds FromString(string value, string fieldName, string displayName)
     {
-        if (value.IsNotProvided() || !Regex.IsMatch(value, @"^[0-9]+([.][0-9]{1,2})?$"))
+        if (value.IsNotProvided() || !PoundsRegex().IsMatch(value))
         {
             OperationResult
                 .New()
@@ -36,4 +36,7 @@ public class Pounds : MoneyValueObject
     {
         return Value.ToString("0.##", CultureInfo.InvariantCulture);
     }
+
+    [GeneratedRegex(@"^[0-9]+([.][0-9]{1,2})?$")]
+    private static partial Regex PoundsRegex();
 }

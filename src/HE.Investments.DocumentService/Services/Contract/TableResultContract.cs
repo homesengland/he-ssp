@@ -1,6 +1,6 @@
 namespace HE.Investments.DocumentService.Services.Contract;
 
-internal class TableResultContract
+internal sealed class TableResultContract
 {
     public IList<FileTableRowContract> Items { get; set; }
 

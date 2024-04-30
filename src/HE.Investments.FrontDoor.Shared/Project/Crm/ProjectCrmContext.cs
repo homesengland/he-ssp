@@ -8,7 +8,7 @@ using Org::HE.Common.IntegrationModel.PortalIntegrationModel;
 
 namespace HE.Investments.FrontDoor.Shared.Project.Crm;
 
-internal class ProjectCrmContext : IProjectCrmContext
+internal sealed class ProjectCrmContext : IProjectCrmContext
 {
     private readonly ICrmService _service;
 

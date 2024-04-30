@@ -5,13 +5,13 @@ namespace HE.Investments.DocumentService.Services;
 
 public class MockedDocumentService : IDocumentService
 {
-    private static readonly IDictionary<string, MockedFile> Files = new Dictionary<string, MockedFile>();
+    private static readonly Dictionary<string, MockedFile> Files = [];
 
     public Task<IEnumerable<FileDetails<TMetadata>>> GetFilesAsync<TMetadata>(GetFilesQuery query, CancellationToken cancellationToken)
         where TMetadata : class
     {
         var fileKeys = GenerateFileKeys(query.ListTitle, query.FolderPaths);
-        var files = Files.Where(file => fileKeys.Any(fileKey => file.Key.StartsWith(fileKey, StringComparison.InvariantCulture)))
+        var files = Files.Where(file => fileKeys.Exists(fileKey => file.Key.StartsWith(fileKey, StringComparison.InvariantCulture)))
             .Select(x => new FileDetails<TMetadata>(
                 1,
                 x.Value.FileName,
@@ -43,10 +43,7 @@ public class MockedDocumentService : IDocumentService
     public Task DeleteAsync(FileLocation location, string fileName, CancellationToken cancellationToken)
     {
         var fileKey = GenerateFileKey(location, fileName);
-        if (Files.ContainsKey(fileKey))
-        {
-            Files.Remove(fileKey);
-        }
+        Files.Remove(fileKey);
 
         return Task.CompletedTask;
     }
@@ -66,7 +63,7 @@ public class MockedDocumentService : IDocumentService
         return $"{location.ListTitle}/{location.FolderPath}/{fileName}";
     }
 
-    private static IList<string> GenerateFileKeys(string listTitle, IEnumerable<string> folderPaths)
+    private static List<string> GenerateFileKeys(string listTitle, IEnumerable<string> folderPaths)
     {
         return folderPaths.Select(x => $"{listTitle}/{x}/").ToList();
     }

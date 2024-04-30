@@ -6,12 +6,12 @@ public class OperationResult : IOperationResult
 {
     public OperationResult()
     {
-        Errors = new List<ErrorItem>();
+        Errors = [];
     }
 
     public OperationResult(IEnumerable<ErrorItem>? errors)
     {
-        Errors = errors?.ToList() ?? new List<ErrorItem>();
+        Errors = errors?.ToList() ?? [];
     }
 
     public IList<ErrorItem> Errors { get; protected set; }

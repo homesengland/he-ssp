@@ -206,7 +206,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
 
     [WorkflowState(SiteWorkflowState.RemoveSite)]
     [HttpGet("{siteId}/remove")]
-    public IActionResult Remove()
+    public IActionResult Remove(string siteId)
     {
         return View();
     }

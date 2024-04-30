@@ -33,7 +33,7 @@ public class LocalAuthorityRepository : ILocalAuthorityRepository
         if (!string.IsNullOrEmpty(phrase))
         {
             localAuthorities = localAuthorities
-                .Where(c => c.Name.ToLower(CultureInfo.InvariantCulture).Contains(phrase.ToLower(CultureInfo.InvariantCulture)))
+                .Where(c => c.Name.Contains(phrase, StringComparison.CurrentCultureIgnoreCase))
                 .ToList();
         }
 
@@ -62,7 +62,7 @@ public class LocalAuthorityRepository : ILocalAuthorityRepository
         return await _cacheService.GetValueAsync(
                    $"local-authorities-{_source.ToString().ToLowerInvariant()}",
                    async () => await GetLocalAuthoritiesFromCrm(string.Empty, cancellationToken))
-               ?? new List<LocalAuthority>();
+               ?? [];
     }
 
     private async Task<IList<LocalAuthority>?> GetLocalAuthoritiesFromCrm(string searchPage, CancellationToken cancellationToken)
