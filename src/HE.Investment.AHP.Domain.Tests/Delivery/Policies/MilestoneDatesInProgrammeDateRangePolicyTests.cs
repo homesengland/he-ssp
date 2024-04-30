@@ -99,10 +99,10 @@ public class MilestoneDatesInProgrammeDateRangePolicyTests
             .Build();
 
         // when
-        var action = async () => await _testCandidate.Validate(milestones, CancellationToken.None);
+        async Task Action() => await _testCandidate.Validate(milestones, CancellationToken.None);
 
         // then
-        AssertException(action, errorMessage);
+        AssertException(Action, errorMessage);
     }
 
     private void AssertException(Func<Task> action, string errorMessage)
@@ -113,3 +113,4 @@ public class MilestoneDatesInProgrammeDateRangePolicyTests
             .WithMessage(errorMessage);
     }
 }
+

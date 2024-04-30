@@ -105,7 +105,7 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
 
     public bool IsHomeTypeUsed(HomeTypeId homeTypeId)
     {
-        return _homesToDeliver.Any(x => x.HomeTypeId == homeTypeId && x.Value > 0);
+        return _homesToDeliver.Exists(x => x.HomeTypeId == homeTypeId && x.Value > 0);
     }
 
     public int? GetHomesToBeDeliveredForHomeType(HomeTypeId homeTypeId)

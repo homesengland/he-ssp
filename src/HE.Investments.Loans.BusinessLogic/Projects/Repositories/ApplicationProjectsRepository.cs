@@ -19,18 +19,14 @@ namespace HE.Investments.Loans.BusinessLogic.Projects.Repositories;
 
 public class ApplicationProjectsRepository : IApplicationProjectsRepository
 {
-    private readonly IDateTimeProvider _timeProvider;
-
     private readonly IOrganizationServiceAsync2 _serviceClient;
 
     private readonly IEventDispatcher _eventDispatcher;
 
     public ApplicationProjectsRepository(
-        IDateTimeProvider dateTime,
         IOrganizationServiceAsync2 serviceClient,
         IEventDispatcher eventDispatcher)
     {
-        _timeProvider = dateTime;
         _serviceClient = serviceClient;
         _eventDispatcher = eventDispatcher;
     }

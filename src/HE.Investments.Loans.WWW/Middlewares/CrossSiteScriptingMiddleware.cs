@@ -28,13 +28,13 @@ public class CrossSiteScriptingMiddleware
         const string csp = "Content-Security-Policy";
         if (context.Response.Headers.All(x => x.Key != csp))
         {
-            context.Response.Headers.Add(csp, contenSecurityPolicy.ToString());
+            context.Response.Headers.Append(csp, contenSecurityPolicy.ToString());
         }
 
         const string referrerPolicy = "Referrer-Policy";
         if (context.Response.Headers.All(x => x.Key != referrerPolicy))
         {
-            context.Response.Headers.Add(referrerPolicy, "none");
+            context.Response.Headers.Append(referrerPolicy, "none");
         }
 
         await _next(context);

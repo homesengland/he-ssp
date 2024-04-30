@@ -16,7 +16,7 @@ namespace HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories.Mapper
 
 public static class LoanApplicationMapper
 {
-    public static LoanApplicationViewModel FromCrmDto(LoanApplicationDto loanApplicationDto, DateTime now)
+    public static LoanApplicationViewModel FromCrmDto(LoanApplicationDto loanApplicationDto)
     {
         var model = new LoanApplicationViewModel
         {

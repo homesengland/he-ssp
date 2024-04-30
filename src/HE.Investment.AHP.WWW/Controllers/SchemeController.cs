@@ -1,3 +1,4 @@
+using System.Globalization;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Contract.Common;
@@ -296,7 +297,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
             applicationId,
             scheme.Application.Name,
             CurrencyHelper.InputPounds(scheme.RequiredFunding),
-            scheme.HousesToDeliver.ToString(),
+            scheme.HousesToDeliver?.ToString(CultureInfo.InvariantCulture),
             scheme.AffordabilityEvidence,
             scheme.SalesRisk,
             scheme.MeetingLocalPriorities,
