@@ -1,4 +1,3 @@
-using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investment.AHP.Domain.Site.ValueObjects;
 using Moq;

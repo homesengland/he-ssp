@@ -5,6 +5,7 @@ using HE.Investment.AHP.Domain.Site.Crm;
 using HE.Investment.AHP.Domain.Site.Entities;
 using HE.Investment.AHP.Domain.Site.Mappers;
 using HE.Investment.AHP.Domain.Site.ValueObjects;
+using HE.Investment.AHP.Domain.Site.ValueObjects.StrategicSite;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Pagination;
@@ -18,11 +19,6 @@ public class SiteRepository : ISiteRepository
     public SiteRepository(ISiteCrmContext siteCrmContext)
     {
         _siteCrmContext = siteCrmContext;
-    }
-
-    public async Task<bool> IsExist(SiteName name, CancellationToken cancellationToken)
-    {
-        return await _siteCrmContext.Exist(name.Value, cancellationToken);
     }
 
     public async Task<PaginationResult<SiteEntity>> GetSites(UserAccount userAccount, PaginationRequest paginationRequest, CancellationToken cancellationToken)
@@ -57,6 +53,16 @@ public class SiteRepository : ISiteRepository
         var site = await _siteCrmContext.GetById(siteId.Value, cancellationToken) ?? throw new NotFoundException("Site not found", siteId);
 
         return SiteDtoToSiteEntityMapper.Map(site);
+    }
+
+    public async Task<bool> IsExist(SiteName name, CancellationToken cancellationToken)
+    {
+        return await _siteCrmContext.Exist(name.Value, cancellationToken);
+    }
+
+    public async Task<bool> IsExist(StrategicSiteName name, UserAccount userAccount, CancellationToken cancellationToken)
+    {
+        return await _siteCrmContext.StrategicSiteExist(name.Value, userAccount.SelectedOrganisationId().ToString(), cancellationToken);
     }
 
     public async Task<SiteId> Save(SiteEntity site, UserAccount userAccount, CancellationToken cancellationToken)
