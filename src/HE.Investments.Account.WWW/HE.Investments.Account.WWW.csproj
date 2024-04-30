@@ -1,55 +1,56 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="He.AspNetCore.Mvc.Gds.Components" Version="1.0.164" />
-    <PackageReference Include="He.AspNetCore.Mvc.GdsTagHelpers" Version="1.0.65" />
-    <PackageReference Include="MediatR" Version="12.1.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.24" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="7.0.0" />
-    <PackageReference Include="Microsoft.Extensions.FileProviders.Abstractions" Version="7.0.0" />
-    <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="7.0.13" />
-    <PackageReference Include="Microsoft.FeatureManagement" Version="3.0.0" />
-    <PackageReference Include="Microsoft.FeatureManagement.AspNetCore" Version="3.0.0" />
-    <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
-    <PackageReference Include="He.Cookies.Mvc" Version="1.0.36" />
-    <PackageReference Include="He.Identity" Version="2.1.1" />
-    <PackageReference Include="He.Identity.Auth0" Version="2.1.1" />
-    <PackageReference Include="He.Identity.Mvc" Version="2.1.1" />
-    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.15" />
-    <PackageReference Include="System.Net.Http" Version="4.3.4" />
-    <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
-    <PackageReference Include="NuGet.Common" Version="6.9.1" />
-    <PackageReference Include="NuGet.Protocol" Version="6.9.1" />
-    <PackageReference Include="System.Security.Cryptography.Pkcs" Version="7.0.3" />
+    <PackageReference Include="He.AspNetCore.Mvc.Gds.Components" Version="1.0.164"/>
+    <PackageReference Include="He.AspNetCore.Mvc.GdsTagHelpers" Version="1.0.65"/>
+    <PackageReference Include="MediatR" Version="12.1.1"/>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.24"/>
+    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="7.0.0"/>
+    <PackageReference Include="Microsoft.Extensions.FileProviders.Abstractions" Version="7.0.0"/>
+    <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="7.0.13"/>
+    <PackageReference Include="Microsoft.FeatureManagement" Version="3.0.0"/>
+    <PackageReference Include="Microsoft.FeatureManagement.AspNetCore" Version="3.0.0"/>
+    <PackageReference Include="BuildBundlerMinifier" Version="3.2.449"/>
+    <PackageReference Include="He.Cookies.Mvc" Version="1.0.36"/>
+    <PackageReference Include="He.Identity" Version="2.1.1"/>
+    <PackageReference Include="He.Identity.Auth0" Version="2.1.1"/>
+    <PackageReference Include="He.Identity.Mvc" Version="2.1.1"/>
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0"/>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.15"/>
+    <PackageReference Include="System.Net.Http" Version="4.3.4"/>
+    <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1"/>
+    <PackageReference Include="NuGet.Common" Version="6.9.1"/>
+    <PackageReference Include="NuGet.Protocol" Version="6.9.1"/>
+    <PackageReference Include="System.Security.Cryptography.Pkcs" Version="7.0.3"/>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HE.Investments.Account.Domain\HE.Investments.Account.Domain.csproj" />
-    <ProjectReference Include="..\HE.Investments.Common.WWW\HE.Investments.Common.WWW.csproj" />
+    <ProjectReference Include="..\HE.Investments.Account.Domain\HE.Investments.Account.Domain.csproj"/>
+    <ProjectReference Include="..\HE.Investments.Common.WWW\HE.Investments.Common.WWW.csproj"/>
   </ItemGroup>
 
   <ItemGroup>
-    <AdditionalFiles Include="Views\Organisation\ConfirmYourSelection.cshtml" />
-    <AdditionalFiles Include="Views\Organisation\CreateOrganisation.cshtml" />
-    <AdditionalFiles Include="Views\Organisation\NoMatchFound.cshtml" />
-    <AdditionalFiles Include="Views\Organisation\SearchOrganisation.cshtml" />
-    <AdditionalFiles Include="Views\Organisation\SearchOrganisationResult.cshtml" />
-    <AdditionalFiles Include="Views\UserOrganisation\ChangeOrganisationDetails.cshtml" />
-    <AdditionalFiles Include="Views\UserOrganisation\OrganisationDetails.cshtml" />
-    <AdditionalFiles Include="Views\UserOrganisation\UserOrganisation.cshtml" />
-    <AdditionalFiles Include="Views\UserOrganisation\_ListCard.cshtml" />
+    <AdditionalFiles Include="Views\Organisation\ConfirmYourSelection.cshtml"/>
+    <AdditionalFiles Include="Views\Organisation\CreateOrganisation.cshtml"/>
+    <AdditionalFiles Include="Views\Organisation\NoMatchFound.cshtml"/>
+    <AdditionalFiles Include="Views\Organisation\SearchOrganisation.cshtml"/>
+    <AdditionalFiles Include="Views\Organisation\SearchOrganisationResult.cshtml"/>
+    <AdditionalFiles Include="Views\UserOrganisation\ChangeOrganisationDetails.cshtml"/>
+    <AdditionalFiles Include="Views\UserOrganisation\OrganisationDetails.cshtml"/>
+    <AdditionalFiles Include="Views\UserOrganisation\UserOrganisation.cshtml"/>
+    <AdditionalFiles Include="Views\UserOrganisation\_ListCard.cshtml"/>
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\Components\JoinRequestsTable\JoinRequestsTable.cshtml" />
-    <EmbeddedResource Include="Views\Shared\Components\UsersTable\UsersTable.cshtml" />
-    <EmbeddedResource Include="Views\Shared\Components\ProjectStatusTagComponent\ProjectStatusTagComponent.cshtml" />
-    <EmbeddedResource Include="Views\Shared\Components\SelectedOrganisationInformation\SelectedOrganisationInformation.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Components\JoinRequestsTable\JoinRequestsTable.cshtml"/>
+    <EmbeddedResource Include="Views\Shared\Components\UsersTable\UsersTable.cshtml"/>
+    <EmbeddedResource Include="Views\Shared\Components\ProjectStatusTagComponent\ProjectStatusTagComponent.cshtml"/>
+    <EmbeddedResource Include="Views\Shared\Components\SelectedOrganisationInformation\SelectedOrganisationInformation.cshtml"/>
   </ItemGroup>
 
 </Project>

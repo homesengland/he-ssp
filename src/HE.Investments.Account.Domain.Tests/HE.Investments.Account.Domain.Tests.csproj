@@ -1,18 +1,22 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+  </PropertyGroup>
+
   <ItemGroup>
-    <PackageReference Include="Moq" Version="4.18.4" />
-    <PackageReference Include="MSTest.TestFramework" Version="3.1.1" />
+    <PackageReference Include="Moq" Version="4.18.4"/>
+    <PackageReference Include="MSTest.TestFramework" Version="3.1.1"/>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HE.Investments.Common.Tests\HE.Investments.Common.Tests.csproj" />
-    <ProjectReference Include="..\HE.Investments.Account.Contract\HE.Investments.Account.Contract.csproj" />
+    <ProjectReference Include="..\HE.Investments.Common.Tests\HE.Investments.Common.Tests.csproj"/>
+    <ProjectReference Include="..\HE.Investments.Account.Contract\HE.Investments.Account.Contract.csproj"/>
     <ProjectReference Include="..\HE.Investments.Organisation\HE.Investments.Organisation.csproj">
       <Aliases>Org</Aliases>
     </ProjectReference>
-    <ProjectReference Include="..\HE.Investments.TestsUtils\HE.Investments.TestsUtils.csproj" />
-    <ProjectReference Include="..\HE.Investments.Account.Domain\HE.Investments.Account.Domain.csproj" />
+    <ProjectReference Include="..\HE.Investments.TestsUtils\HE.Investments.TestsUtils.csproj"/>
+    <ProjectReference Include="..\HE.Investments.Account.Domain\HE.Investments.Account.Domain.csproj"/>
   </ItemGroup>
 
 </Project>

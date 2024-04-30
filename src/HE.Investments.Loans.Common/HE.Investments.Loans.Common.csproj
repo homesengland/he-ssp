@@ -1,21 +1,25 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+  </PropertyGroup>
+
   <ItemGroup>
-    <PackageReference Include="He.Cookies.Mvc" Version="1.0.36" />
-    <PackageReference Include="He.Identity.Auth0" Version="2.1.1" />
-    <PackageReference Include="He.Identity.Mvc" Version="2.1.1" />
-    <PackageReference Include="MediatR" Version="12.1.1" />
-    <PackageReference Include="StackExchange.Redis" Version="2.6.122" />
-    <PackageReference Include="FluentValidation" Version="11.8.0" />
+    <PackageReference Include="He.Cookies.Mvc" Version="1.0.36"/>
+    <PackageReference Include="He.Identity.Auth0" Version="2.1.1"/>
+    <PackageReference Include="He.Identity.Mvc" Version="2.1.1"/>
+    <PackageReference Include="MediatR" Version="12.1.1"/>
+    <PackageReference Include="StackExchange.Redis" Version="2.6.122"/>
+    <PackageReference Include="FluentValidation" Version="11.8.0"/>
   </ItemGroup>
 
   <ItemGroup>
-    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <FrameworkReference Include="Microsoft.AspNetCore.App"/>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HE.Investments.Common.CRM\HE.Investments.Common.CRM.csproj" />
-    <ProjectReference Include="..\HE.Investments.Common\HE.Investments.Common.csproj" />
+    <ProjectReference Include="..\HE.Investments.Common.CRM\HE.Investments.Common.CRM.csproj"/>
+    <ProjectReference Include="..\HE.Investments.Common\HE.Investments.Common.csproj"/>
   </ItemGroup>
 
 </Project>

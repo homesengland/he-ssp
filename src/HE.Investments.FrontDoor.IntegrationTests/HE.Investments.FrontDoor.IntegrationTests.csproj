@@ -1,5 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="AngleSharp" Version="1.0.7"/>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="6.0.24"/>
@@ -8,9 +12,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HE.Investments.FrontDoor.WWW\HE.Investments.FrontDoor.WWW.csproj" />
-    <ProjectReference Include="..\HE.Investments.IntegrationTestsFramework\HE.Investments.IntegrationTestsFramework.csproj" />
-    <ProjectReference Include="..\HE.Investments.TestsUtils\HE.Investments.TestsUtils.csproj" />
+    <ProjectReference Include="..\HE.Investments.FrontDoor.WWW\HE.Investments.FrontDoor.WWW.csproj"/>
+    <ProjectReference Include="..\HE.Investments.IntegrationTestsFramework\HE.Investments.IntegrationTestsFramework.csproj"/>
+    <ProjectReference Include="..\HE.Investments.TestsUtils\HE.Investments.TestsUtils.csproj"/>
   </ItemGroup>
 
 </Project>
