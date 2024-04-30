@@ -1,12 +1,9 @@
 extern alias Org;
 
 using HE.Investments.Account.Shared;
-using HE.Investments.Account.Shared.User.ValueObjects;
-using HE.Investments.AHP.Consortium.Contract;
 using HE.Investments.AHP.Consortium.Contract.Commands;
 using HE.Investments.AHP.Consortium.Domain.Entities;
 using HE.Investments.AHP.Consortium.Domain.Repositories;
-using HE.Investments.AHP.Consortium.Domain.ValueObjects;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
@@ -16,6 +13,8 @@ namespace HE.Investments.AHP.Consortium.Domain.CommandHandlers;
 
 public class AddOrganisationToConsortiumCommandHandler : ConsortiumCommandHandlerBase<AddOrganisationToConsortiumCommand>
 {
+    private readonly IConsortiumRepository _repository;
+
     private readonly IInvestmentsOrganisationService _organisationService;
 
     public AddOrganisationToConsortiumCommandHandler(
@@ -24,6 +23,7 @@ public class AddOrganisationToConsortiumCommandHandler : ConsortiumCommandHandle
         IAccountUserContext accountUserContext)
         : base(repository, accountUserContext)
     {
+        _repository = repository;
         _organisationService = organisationService;
     }
 
@@ -37,6 +37,6 @@ public class AddOrganisationToConsortiumCommandHandler : ConsortiumCommandHandle
         }
 
         var organisation = await _organisationService.GetOrganisation(request.SelectedMember!, cancellationToken);
-        consortium.AddMember(organisation);
+        await consortium.AddMember(organisation, _repository);
     }
 }

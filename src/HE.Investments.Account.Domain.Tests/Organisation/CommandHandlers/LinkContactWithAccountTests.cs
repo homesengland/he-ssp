@@ -3,6 +3,7 @@ extern alias Org;
 using FluentAssertions;
 using HE.Investments.Account.Contract.Organisation.Commands;
 using HE.Investments.Account.Domain.Organisation.CommandHandlers;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Errors;
 using HE.Investments.Common.Tests.TestObjectBuilders;

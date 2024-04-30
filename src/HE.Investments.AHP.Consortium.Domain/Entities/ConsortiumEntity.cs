@@ -55,9 +55,9 @@ public class ConsortiumEntity
             Enumerable.Empty<ConsortiumMember>());
     }
 
-    public void AddMember(InvestmentsOrganisation organisation)
+    public async Task AddMember(InvestmentsOrganisation organisation, IIsPartOfConsortium isPartOfConsortium)
     {
-        if (IsPartOfConsortium(organisation))
+        if (await IsPartOfConsortium(organisation, isPartOfConsortium))
         {
             OperationResult.ThrowValidationError(
                 "SelectedMember",
@@ -117,8 +117,13 @@ public class ConsortiumEntity
         Id = newId;
     }
 
-    private bool IsPartOfConsortium(InvestmentsOrganisation organisation)
+    private async Task<bool> IsPartOfConsortium(InvestmentsOrganisation organisation, IIsPartOfConsortium isPartOfConsortium)
     {
-        return organisation.Id.Value == LeadPartner.Id.ToString() || _members.Any(x => x.Id.ToString() == organisation.Id.Value);
+        if (organisation.Id.Value == LeadPartner.Id.ToString() || _members.Any(x => x.Id.ToString() == organisation.Id.Value))
+        {
+            return true;
+        }
+
+        return await isPartOfConsortium.IsPartOfConsortiumForProgramme(Programme.Id, new OrganisationId(organisation.Id.Value));
     }
 }

@@ -1,6 +1,4 @@
-using HE.Investments.Common.Contract;
-
-namespace HE.Investments.Organisation.ValueObjects;
+namespace HE.Investments.Common.Contract;
 
 public record OrganisationId : StringIdValueObject
 {
