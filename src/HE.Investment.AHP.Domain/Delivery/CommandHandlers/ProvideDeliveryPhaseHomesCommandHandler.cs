@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.Contract.Delivery.Commands;
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Domain.Delivery.Entities;
@@ -25,7 +26,7 @@ public class ProvideDeliveryPhaseHomesCommandHandler : DeliveryCommandHandlerBas
         deliveryPhases.ProvideHomesToBeDeliveredInPhase(request.DeliveryPhaseId, homesToDeliver);
     }
 
-
+    [SuppressMessage("Performance", "CA1859", Justification = "Reviewed")]
     private static IReadOnlyCollection<HomesToDeliverInPhase> CreateHomesToDeliver(IDictionary<string, string?> homesToDeliver)
     {
         var operationResult = new OperationResult();

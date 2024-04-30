@@ -51,7 +51,7 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
         var loanApplicationDto = CrmResponseSerializer.Deserialize<IList<LoanApplicationDto>>(response.invln_loanapplication)?.FirstOrDefault()
                                  ?? throw new NotFoundException(nameof(ApplicationProjects), loanApplicationId.ToString());
 
-        return ApplicationProjectsMapper.Map(loanApplicationDto, _timeProvider.Now);
+        return ApplicationProjectsMapper.Map(loanApplicationDto);
     }
 
     public async Task SaveAllAsync(ApplicationProjects applicationProjects, UserAccount userAccount, CancellationToken cancellationToken)

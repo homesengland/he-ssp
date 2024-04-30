@@ -359,6 +359,7 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
             (nameof(SiteDetails.HomesNumber), SecondSiteData.HomesNumber.ToString(CultureInfo.InvariantCulture)));
     }
 
+    [SuppressMessage("Maintainability Rules", "S4144", Justification = "Reviewed")]
     [Fact(Skip = FrontDoorConfig.SkipTest)]
     [Order(20)]
     public async Task Order20_SecondSiteSearchLocalAuthority()
