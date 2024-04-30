@@ -10,7 +10,7 @@ internal static class LoanApplicationSectionTestData
 
     public static readonly LoanApplicationSection IncompleteSection = new(SectionStatus.InProgress);
 
-    public static readonly ProjectsSection CompletedProjectsSection = new(new List<ProjectBasicData> { new ProjectBasicData(SectionStatus.Completed, ProjectIdTestData.AnyProjectId, HomesCountTestData.ValidHomesCount, new ProjectName("name")) });
+    public static readonly ProjectsSection CompletedProjectsSection = new(new List<ProjectBasicData> { new(SectionStatus.Completed, ProjectIdTestData.AnyProjectId, HomesCountTestData.ValidHomesCount, new ProjectName("name")) });
 
-    public static readonly ProjectsSection IncompleteProjectsSection = new(new List<ProjectBasicData> { new ProjectBasicData(SectionStatus.InProgress, ProjectIdTestData.AnyProjectId, HomesCountTestData.ValidHomesCount, new ProjectName("name")) });
+    public static readonly ProjectsSection IncompleteProjectsSection = new(new List<ProjectBasicData> { new(SectionStatus.InProgress, ProjectIdTestData.AnyProjectId, HomesCountTestData.ValidHomesCount, new ProjectName("name")) });
 }

@@ -11,7 +11,7 @@ public class CreateTests
     public void ShouldThrowException_WhenAcquisitionMilestoneDetailsProvidedAndIsOnlyCompletionMilestone()
     {
         // given && when
-        DeliveryPhaseMilestones Action() =>
+        static DeliveryPhaseMilestones Action() =>
             new DeliveryPhaseMilestonesBuilder().WithIsOnlyCompletionMilestone()
                 .Build();
 
@@ -23,7 +23,7 @@ public class CreateTests
     public void ShouldThrowException_WhenStartOnSiteMilestoneDetailsProvidedAndIsOnlyCompletionMilestone()
     {
         // given && when
-        DeliveryPhaseMilestones Action() =>
+        static DeliveryPhaseMilestones Action() =>
             new DeliveryPhaseMilestonesBuilder().WithIsOnlyCompletionMilestone()
                 .WithoutAcquisitionMilestoneDetails()
                 .Build();

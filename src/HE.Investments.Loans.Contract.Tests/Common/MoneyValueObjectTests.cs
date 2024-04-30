@@ -86,7 +86,7 @@ public class MoneyValueObjectTests
             .ContainSingle(x => x.ErrorMessage == ValidationErrorMessage.MustProvideTheLowerNumber("money value", 999999999));
     }
 
-    private class TestMoneyValueObject : MoneyValueObject
+    private sealed class TestMoneyValueObject : MoneyValueObject
     {
         public TestMoneyValueObject(string value, string fieldName, string displayName)
             : base(value, fieldName, displayName)

@@ -233,7 +233,6 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     public async Task<IActionResult> Complete(
         [FromRoute] string applicationId,
         [FromForm] IsSectionCompleted? isCompleted,
-        string? action,
         CancellationToken cancellationToken)
     {
         if (isCompleted == null)

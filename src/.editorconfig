@@ -557,7 +557,8 @@ dotnet_diagnostic.S6088.severity = suggestion
 dotnet_diagnostic.S3453.severity = none
 dotnet_diagnostic.S2589.severity = none
 dotnet_diagnostic.S1135.severity = none
-dotnet_diagnostic.S1125.severity = none
+dotnet_diagnostic.CA1861.severity = suggestion
+
 
 # To fix
 dotnet_diagnostic.IDE0060.severity = suggestion

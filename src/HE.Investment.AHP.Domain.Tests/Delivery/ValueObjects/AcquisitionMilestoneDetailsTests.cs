@@ -11,10 +11,10 @@ public class AcquisitionMilestoneDetailsTests
     public void ShouldThrowDomainValidationException_WhenPaymentDateBeforeAcquisitionDate()
     {
         // given && then
-        var action = () => new AcquisitionMilestoneDetailsBuilder().WithPaymentDateBeforeMilestoneDate().Build();
+        static AcquisitionMilestoneDetails Action() => new AcquisitionMilestoneDetailsBuilder().WithPaymentDateBeforeMilestoneDate().Build();
 
         // then
-        AssertException(action, "The milestone payment date must be on or after the milestone date");
+        AssertException(Action, "The milestone payment date must be on or after the milestone date");
     }
 
     [Fact]
