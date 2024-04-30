@@ -18,6 +18,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_checkiffrontdoorprojectwithgivennameexists.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_checkifloanapplicationwithgivennameexists.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_checkifsitewithgivennameexists.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_checkifsitewithstrategicsitenameexists.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_createsinglesitedetail.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_deactivatefrontdoorproject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_deactivatefrontdoorsite.cs" />

@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Policy;
+using System.Xml.Linq;
 using DataverseModel;
 using HE.Base.Services;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
@@ -85,6 +87,12 @@ namespace HE.CRM.AHP.Plugins.Services.Site
         public bool Exist(string name)
         {
             return _repository.Exist(name);
+        }
+
+        public bool StrategicSiteNameExists(string strategicSiteName, Guid organisationGuid)
+        {
+            TracingService.Trace($"SiteService StrategicSiteNameExists");
+            return _repository.StrategicSiteNameExists(strategicSiteName, organisationGuid);
         }
 
         public string Save(string siteId, SiteDto site, string fieldsToSet, string externalContactId, string accountId)
