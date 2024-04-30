@@ -84,7 +84,7 @@ internal sealed class ApplicationProjectsRepositoryBuilder : IDependencyTestBuil
     public ApplicationProjectsRepositoryBuilder ReturnsLocalAuthorities(string phrase, IList<LocalAuthority> localAuthorities)
     {
         var localAuthoritiesToReturn = localAuthorities
-            .Where(x => x.Name.ToLower(CultureInfo.InvariantCulture).Contains(phrase.ToLower(CultureInfo.InvariantCulture)))
+            .Where(x => x.Name.Contains(phrase, StringComparison.InvariantCultureIgnoreCase))
             .ToList();
         _localAuthorityMock
             .Setup(m => m.Search(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<CancellationToken>()))

@@ -10,7 +10,7 @@ public abstract class HomeTypesTestBase : AhpViewTestBase
 {
     protected const string ErrorMessage = "Some error message";
 
-    [SuppressMessage("Style", "dotnet_code_quality_unused_parameters", Justification = "Reviewed")]
+    [SuppressMessage("Style", "IDE0060", Justification = "Reviewed")]
     protected async Task<IHtmlDocument> RenderHomeTypePage<TModel>(
         string viewPath,
         TModel? model = null,
