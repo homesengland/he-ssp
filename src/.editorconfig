@@ -561,7 +561,6 @@ dotnet_diagnostic.CA1861.severity = suggestion
 
 
 # To fix
-dotnet_diagnostic.IDE0060.severity = suggestion
 dotnet_diagnostic.IDE0305.severity = suggestion
 dotnet_diagnostic.IDE0301.severity = suggestion
 dotnet_diagnostic.IDE0300.severity = suggestion
