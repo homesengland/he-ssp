@@ -37,6 +37,6 @@ public class AddOrganisationToConsortiumCommandHandler : ConsortiumCommandHandle
         }
 
         var organisation = await _organisationService.GetOrganisation(request.SelectedMember!, cancellationToken);
-        await consortium.AddMember(organisation, _repository);
+        await consortium.AddMember(organisation, _repository, cancellationToken);
     }
 }
