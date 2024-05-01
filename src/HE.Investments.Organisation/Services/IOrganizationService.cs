@@ -10,5 +10,5 @@ public interface IOrganizationService
 
     Task<Guid> CreateOrganisationChangeRequest(OrganizationDetailsDto organizationDetails, string contactExternalId);
 
-    Task<ContactDto?> GetOrganisationChangeDetailsRequestContact(Guid accountId);
+    Task<ContactDto?> GetOrganisationChangeDetailsRequestContact(string accountId);
 }

@@ -14,7 +14,7 @@ public class FinancialDetailsCheckAnswersModel : FinancialDetailsBaseModel, IEdi
     }
 
     public FinancialDetailsCheckAnswersModel(
-        Guid applicationId,
+        string applicationId,
         string applicationName,
         SectionSummaryViewModel landValueSummary,
         SectionSummaryViewModel costsSummary,

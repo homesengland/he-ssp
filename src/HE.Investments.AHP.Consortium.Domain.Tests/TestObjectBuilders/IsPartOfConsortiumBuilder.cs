@@ -1,6 +1,6 @@
-using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.AHP.Consortium.Contract;
 using HE.Investments.AHP.Consortium.Domain.Repositories;
+using HE.Investments.Common.Contract;
 using Moq;
 
 namespace HE.Investments.AHP.Consortium.Domain.Tests.TestObjectBuilders;

@@ -9,7 +9,7 @@ using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investment.AHP.Domain.Scheme.Repositories;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investments.Account.Shared.User;
-using HE.Investments.Account.Shared.User.ValueObjects;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Infrastructure.Events;
 
@@ -94,7 +94,7 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
         var entity = (DeliveryPhaseEntity)deliveryPhase;
         if (entity.IsNew)
         {
-            entity.Id = new DeliveryPhaseId(await _crmContext.Save(_crmMapper.MapToDto(entity), organisationId.Value, cancellationToken));
+            entity.Id = DeliveryPhaseId.From(await _crmContext.Save(_crmMapper.MapToDto(entity), organisationId.Value, cancellationToken));
             await _eventDispatcher.Publish(new DeliveryPhaseHasBeenCreatedEvent(entity.Application.Id, entity.Name.Value), cancellationToken);
         }
         else if (entity.IsModified)

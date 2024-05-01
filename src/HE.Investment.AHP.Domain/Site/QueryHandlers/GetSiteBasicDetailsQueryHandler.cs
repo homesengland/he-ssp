@@ -21,7 +21,7 @@ public class GetSiteBasicDetailsQueryHandler : IRequestHandler<GetSiteBasicDetai
     public async Task<SiteBasicModel> Handle(GetSiteBasicDetailsQuery request, CancellationToken cancellationToken)
     {
         var userAccount = await _accountUserContext.GetSelectedAccount();
-        var site = await _siteRepository.GetSite(new SiteId(request.SiteId), userAccount, cancellationToken);
+        var site = await _siteRepository.GetSite(SiteId.From(request.SiteId), userAccount, cancellationToken);
 
         return new SiteBasicModel(
             site.Id.Value,

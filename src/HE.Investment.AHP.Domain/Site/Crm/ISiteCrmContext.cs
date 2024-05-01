@@ -4,7 +4,7 @@ namespace HE.Investment.AHP.Domain.Site.Crm;
 
 public interface ISiteCrmContext
 {
-    Task<PagedResponseDto<SiteDto>> GetOrganisationSites(Guid organisationId, PagingRequestDto pagination, CancellationToken cancellationToken);
+    Task<PagedResponseDto<SiteDto>> GetOrganisationSites(string organisationId, PagingRequestDto pagination, CancellationToken cancellationToken);
 
     Task<PagedResponseDto<SiteDto>> GetUserSites(string userGlobalId, PagingRequestDto pagination, CancellationToken cancellationToken);
 
@@ -14,5 +14,5 @@ public interface ISiteCrmContext
 
     Task<bool> StrategicSiteExist(string name, string organisationId, CancellationToken cancellationToken);
 
-    Task<string> Save(Guid organisationId, string userGlobalId, SiteDto dto, CancellationToken cancellationToken);
+    Task<string> Save(string organisationId, string userGlobalId, SiteDto dto, CancellationToken cancellationToken);
 }

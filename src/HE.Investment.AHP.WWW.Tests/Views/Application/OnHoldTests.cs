@@ -8,7 +8,7 @@ namespace HE.Investment.AHP.WWW.Tests.Views.Application;
 public class OnHoldTests : AhpViewTestBase
 {
     private readonly string _viewPath = "/Views/Application/OnHold.cshtml";
-    private readonly ChangeApplicationStatusModel _model = new(Guid.NewGuid(), "my application");
+    private readonly ChangeApplicationStatusModel _model = new(Guid.NewGuid().ToString(), "my application");
 
     [Fact]
     public async Task ShouldDisplayView()

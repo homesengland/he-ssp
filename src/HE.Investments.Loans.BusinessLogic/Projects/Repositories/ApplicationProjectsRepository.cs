@@ -39,7 +39,7 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
     {
         var req = new invln_getsingleloanapplicationforaccountandcontactRequest
         {
-            invln_accountid = userAccount.SelectedOrganisationId().ToString(),
+            invln_accountid = userAccount.SelectedOrganisationId().ToGuidAsString(),
             invln_externalcontactid = userAccount.UserGlobalId.ToString(),
             invln_loanapplicationid = loanApplicationId.ToString(),
             invln_usehetables = "true",
@@ -72,7 +72,7 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
 
         var req = new invln_getsinglesitedetailsRequest
         {
-            invln_accountid = userAccount.SelectedOrganisationId().ToString(),
+            invln_accountid = userAccount.SelectedOrganisationId().ToGuidAsString(),
             invln_externalcontactid = userAccount.UserGlobalId.ToString(),
             invln_sitedetailsid = projectId.ToString(),
             invln_fieldstoretrieve = fieldsToRetrieve,
@@ -171,7 +171,7 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
         {
             siteDetailsId = projectToSave.Id.Value.ToString(),
             Name = projectToSave.Name?.Value,
-            frontDoorSiteId = projectToSave.FrontDoorSiteId?.Value,
+            frontDoorSiteId = projectToSave.FrontDoorSiteId?.ToGuidAsString(),
         };
 
         var req = new invln_createsinglesitedetailRequest

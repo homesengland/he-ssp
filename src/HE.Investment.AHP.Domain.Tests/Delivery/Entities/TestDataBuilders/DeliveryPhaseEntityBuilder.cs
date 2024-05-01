@@ -12,6 +12,7 @@ using HE.Investment.AHP.Domain.Tests.Application.TestData;
 using HE.Investment.AHP.Domain.Tests.Programme.TestData;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
+using HE.Investments.Common.Tests.TestData;
 using HE.Investments.TestsUtils;
 using HE.Investments.TestsUtils.TestData;
 
@@ -25,7 +26,7 @@ public class DeliveryPhaseEntityBuilder
 
     private readonly MilestonesTranches _milestonesTranches = new(1000, 100, 100, 100);
 
-    private string _id = "dp-1-12313";
+    private string _id = GuidTestData.GuidOne.ToString();
 
     private DeliveryPhaseName _name = new("First Phase");
 
@@ -208,7 +209,7 @@ public class DeliveryPhaseEntityBuilder
             _acquisitionMilestone,
             _startOnSiteMilestone,
             _completionMilestone,
-            new DeliveryPhaseId(_id),
+            DeliveryPhaseId.From(_id),
             DateTimeTestData.OctoberDay05Year2023At0858,
             isAdditionalPaymentRequested: _isAdditionalPaymentRequested);
     }

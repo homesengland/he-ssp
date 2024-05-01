@@ -1,5 +1,5 @@
 using HE.Investments.Account.Shared;
-using HE.Investments.Account.Shared.User.ValueObjects;
+using HE.Investments.Common.Contract;
 
 namespace HE.Investment.AHP.Domain.Tests.Delivery.Entities.TestDataBuilders;
 

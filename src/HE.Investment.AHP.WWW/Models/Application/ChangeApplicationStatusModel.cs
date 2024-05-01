@@ -6,13 +6,13 @@ public class ChangeApplicationStatusModel
     {
     }
 
-    public ChangeApplicationStatusModel(Guid applicationId, string applicationName)
+    public ChangeApplicationStatusModel(string applicationId, string applicationName)
     {
         ApplicationId = applicationId;
         ApplicationName = applicationName;
     }
 
-    public Guid ApplicationId { get; set; }
+    public string ApplicationId { get; set; }
 
     public string ApplicationName { get; set; }
 

@@ -5,7 +5,7 @@ using HE.Investments.Account.Contract.UserOrganisation.Commands;
 using HE.Investments.Account.Domain.Organisation.Entities;
 using HE.Investments.Account.Domain.Tests.Organisation.TestObjectBuilder;
 using HE.Investments.Account.Domain.UserOrganisation.CommandHandlers;
-using HE.Investments.Account.Shared.User.ValueObjects;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Tests.TestObjectBuilders;
 using HE.Investments.TestsUtils.TestFramework;
 using Moq;

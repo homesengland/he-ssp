@@ -12,7 +12,7 @@ public class OtherSchemeCostsTests : AhpViewTestBase
     [Fact]
     public async Task ShouldDisplayView()
     {
-        var model = new FinancialDetailsOtherApplicationCostsModel(Guid.NewGuid(), "TestApp", string.Empty, string.Empty);
+        var model = new FinancialDetailsOtherApplicationCostsModel(Guid.NewGuid().ToString(), "TestApp", string.Empty, string.Empty);
 
         // given & when
         var document = await Render(_viewPath, model);
@@ -25,7 +25,7 @@ public class OtherSchemeCostsTests : AhpViewTestBase
     public async Task ShouldDisplayView_ForInvalid()
     {
         // given
-        var model = new FinancialDetailsOtherApplicationCostsModel(Guid.NewGuid(), "TestApp", "56000", string.Empty);
+        var model = new FinancialDetailsOtherApplicationCostsModel(Guid.NewGuid().ToString(), "TestApp", "56000", string.Empty);
         var errorMessage = "some test error";
         var modelState = new ModelStateDictionary();
         modelState.AddModelError(nameof(FinancialDetailsOtherApplicationCostsModel.ExpectedWorksCosts), errorMessage);

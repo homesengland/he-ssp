@@ -1,11 +1,12 @@
 namespace HE.Investment.AHP.WWW.Models.FinancialDetails;
+
 public class FinancialDetailsLandStatusModel : FinancialDetailsBaseModel
 {
     public FinancialDetailsLandStatusModel()
     {
     }
 
-    public FinancialDetailsLandStatusModel(Guid applicationId, string applicationName, string? purchasePrice, bool isFullUnconditionalOption)
+    public FinancialDetailsLandStatusModel(string applicationId, string applicationName, string? purchasePrice, bool isFullUnconditionalOption)
         : base(applicationId, applicationName)
     {
         PurchasePrice = purchasePrice;

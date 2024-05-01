@@ -1,11 +1,11 @@
 using HE.Investments.Account.Shared.User;
-using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.AHP.Consortium.Contract;
 using HE.Investments.AHP.Consortium.Contract.Enums;
 using HE.Investments.AHP.Consortium.Domain.Crm;
 using HE.Investments.AHP.Consortium.Domain.Entities;
 using HE.Investments.AHP.Consortium.Domain.Mappers;
 using HE.Investments.AHP.Consortium.Domain.ValueObjects;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 
 namespace HE.Investments.AHP.Consortium.Domain.Repositories;
@@ -34,8 +34,8 @@ public class ConsortiumRepository : IConsortiumRepository
             return new ConsortiumEntity(
                 consortiumId,
                 new ConsortiumName(consortiumDto.name),
-                new ProgrammeSlim(new ProgrammeId(consortiumDto.programmeId), "AHP CME"),
-                new ConsortiumMember(new OrganisationId(consortiumDto.leadPartnerId), consortiumDto.leadPartnerName, ConsortiumMemberStatus.Active),
+                new ProgrammeSlim(ProgrammeId.From(consortiumDto.programmeId), "AHP CME"),
+                new ConsortiumMember(OrganisationId.From(consortiumDto.leadPartnerId), consortiumDto.leadPartnerName, ConsortiumMemberStatus.Active),
                 members);
         }
 
@@ -53,7 +53,7 @@ public class ConsortiumRepository : IConsortiumRepository
                 consortiumEntity.LeadPartner.Id.ToString(),
                 cancellationToken);
 
-            consortiumEntity.SetId(new ConsortiumId(consortiumId));
+            consortiumEntity.SetId(ConsortiumId.From(consortiumId));
         }
 
         await SaveConsortiumMemberRequests(consortiumEntity, userAccount, cancellationToken);

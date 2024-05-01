@@ -13,7 +13,6 @@ using HE.Investments.Common.User;
 using HE.Investments.TestsUtils.TestFramework;
 using Moq;
 using Xunit;
-using OrganisationId = HE.Investments.Account.Shared.User.ValueObjects.OrganisationId;
 using UserAccount = HE.Investments.Account.Shared.User.UserAccount;
 
 namespace HE.Investments.Account.Domain.Tests.Organisation.OrganizationRepositoryTests;
@@ -54,7 +53,7 @@ public class GetBasicInformationTests : TestBase<OrganizationRepository>
         // given
         var organizationDetailsDto = OrganizationDetailsDtoTestData.OrganizationDetailsDto;
         var userAccount = UserAccountTestData.UserAccountOne;
-        var fakeUserAccount = new UserAccount(UserGlobalId.From("FakeId"), string.Empty, new OrganisationBasicInfo(new OrganisationId(GuidTestData.GuidTwo), "AccountTwo", "4321", "London", false), Array.Empty<UserRole>());
+        var fakeUserAccount = new UserAccount(UserGlobalId.From("FakeId"), string.Empty, new OrganisationBasicInfo(new OrganisationId(GuidTestData.GuidTwo.ToString()), "AccountTwo", "4321", "London", false), Array.Empty<UserRole>());
 
         OrganizationServiceMockTestBuilder
             .New()

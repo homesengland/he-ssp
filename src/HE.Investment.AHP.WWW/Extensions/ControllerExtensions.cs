@@ -27,13 +27,13 @@ public static class ControllerExtensions
     public static DeliveryPhaseId GetDeliveryPhaseIdFromRoute(this Controller controller)
     {
         var deliveryPhase = controller.Request.GetRouteValue("deliveryPhaseId") ?? throw new NotFoundException("Missing required deliveryPhaseId path parameter.");
-        return new DeliveryPhaseId(deliveryPhase);
+        return DeliveryPhaseId.From(deliveryPhase);
     }
 
     public static SiteId GetSiteIdFromRoute(this Controller controller)
     {
         var siteId = controller.Request.GetRouteValue("siteId") ?? throw new NotFoundException("Missing required siteId path parameter.");
-        return new SiteId(siteId);
+        return SiteId.From(siteId);
     }
 
     public static async Task<IActionResult> ReturnToTaskListOrContinue(

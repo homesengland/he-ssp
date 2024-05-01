@@ -47,7 +47,7 @@ public class ProgrammeApplicationsRepository : IProgrammeApplicationsRepository
 
         var request = new invln_getmultipleahpapplicationsRequest
         {
-            invln_organisationid = userAccount.SelectedOrganisationId().ToString(),
+            invln_organisationid = userAccount.SelectedOrganisationId().ToGuidAsString(),
             inlvn_userid = string.Empty,
             invln_appfieldstoretrieve = nameof(invln_scheme.invln_schemename),
         };
@@ -64,7 +64,7 @@ public class ProgrammeApplicationsRepository : IProgrammeApplicationsRepository
     {
         var req = new invln_getloanapplicationsforaccountandcontactRequest
         {
-            invln_accountid = userAccount.SelectedOrganisationId().ToString(),
+            invln_accountid = userAccount.SelectedOrganisationId().ToGuidAsString(),
             invln_externalcontactid = userAccount.UserGlobalId.ToString(),
             invln_usehetables = "true",
         };
@@ -88,7 +88,7 @@ public class ProgrammeApplicationsRepository : IProgrammeApplicationsRepository
         var request = new invln_getmultipleahpapplicationsRequest
         {
             inlvn_userid = userAccount.CanViewAllApplications() ? string.Empty : userAccount.UserGlobalId.ToString(),
-            invln_organisationid = userAccount.SelectedOrganisationId().ToString(),
+            invln_organisationid = userAccount.SelectedOrganisationId().ToGuidAsString(),
             invln_appfieldstoretrieve = $"{nameof(invln_scheme.invln_schemename)},{nameof(invln_scheme.StatusCode)},{nameof(invln_ExternalStatus)}".ToLowerInvariant(),
         };
 

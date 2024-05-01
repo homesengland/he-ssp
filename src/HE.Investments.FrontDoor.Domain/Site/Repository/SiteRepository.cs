@@ -3,6 +3,7 @@ extern alias Org;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Contract.Enum;
+using HE.Investments.Common.Extensions;
 using HE.Investments.FrontDoor.Domain.Project.Crm.Mappers;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
 using HE.Investments.FrontDoor.Domain.Site.Crm;
@@ -42,7 +43,7 @@ public class SiteRepository : ISiteRepository, IRemoveSiteRepository
         var siteId = await _siteCrmContext.Save(site.ProjectId.Value, ToDto(site), userAccount, cancellationToken);
         if (site.Id.IsNew)
         {
-            site.SetId(new FrontDoorSiteId(siteId));
+            site.SetId(FrontDoorSiteId.From(siteId));
         }
 
         return site;
@@ -57,7 +58,7 @@ public class SiteRepository : ISiteRepository, IRemoveSiteRepository
     {
         return new FrontDoorProjectSiteDto
         {
-            SiteId = entity.Id.Value,
+            SiteId = entity.Id.ToGuidAsString(),
             SiteName = entity.Name.Value,
             NumberofHomesEnabledBuilt = entity.HomesNumber?.Value,
             PlanningStatus = entity.PlanningStatus.Value == SitePlanningStatus.Undefined ? null : _planningStatusMapper.ToDto(entity.PlanningStatus.Value),
@@ -70,7 +71,7 @@ public class SiteRepository : ISiteRepository, IRemoveSiteRepository
     {
         return new ProjectSiteEntity(
             projectId,
-            new FrontDoorSiteId(dto.SiteId),
+            FrontDoorSiteId.From(dto.SiteId),
             new SiteName(dto.SiteName),
             dto.CreatedOn,
             dto.NumberofHomesEnabledBuilt == null ? null : new HomesNumber(dto.NumberofHomesEnabledBuilt.Value),

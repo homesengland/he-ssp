@@ -42,7 +42,7 @@ public static class SiteDtoToSiteEntityMapper
     public static SiteEntity Map(SiteDto dto)
     {
         return new SiteEntity(
-            new SiteId(dto.id),
+            SiteId.From(dto.id),
             new SiteName(dto.name),
             SiteStatusMapper.ToDomain(dto.status),
             CreateSection106(dto.section106),

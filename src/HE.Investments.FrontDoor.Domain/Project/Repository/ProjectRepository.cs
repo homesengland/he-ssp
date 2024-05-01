@@ -54,7 +54,7 @@ public class ProjectRepository : IProjectRepository
         var projectId = await _crmContext.Save(dto, userAccount, cancellationToken);
         if (project.Id.IsNew)
         {
-            project.New(new FrontDoorProjectId(projectId));
+            project.New(FrontDoorProjectId.From(projectId));
         }
 
         await DispatchEvents(project, cancellationToken);

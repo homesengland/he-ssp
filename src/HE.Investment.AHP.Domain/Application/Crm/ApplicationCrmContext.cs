@@ -86,32 +86,32 @@ public class ApplicationCrmContext : IApplicationCrmContext
         _userContext = userContext;
     }
 
-    public async Task<AhpApplicationDto> GetOrganisationApplicationById(string id, Guid organisationId, CancellationToken cancellationToken)
+    public async Task<AhpApplicationDto> GetOrganisationApplicationById(string id, string organisationId, CancellationToken cancellationToken)
     {
         var request = new invln_getahpapplicationRequest
         {
             invln_userid = string.Empty,
-            invln_organisationid = organisationId.ToString(),
-            invln_applicationid = id,
+            invln_organisationid = ShortGuid.ToGuidAsString(organisationId),
+            invln_applicationid = ShortGuid.ToGuidAsString(id),
             invln_appfieldstoretrieve = ApplicationCrmFields,
         };
         return await Get(request, cancellationToken);
     }
 
-    public async Task<AhpApplicationDto> GetUserApplicationById(string id, Guid organisationId, CancellationToken cancellationToken)
+    public async Task<AhpApplicationDto> GetUserApplicationById(string id, string organisationId, CancellationToken cancellationToken)
     {
         var request = new invln_getahpapplicationRequest
         {
             invln_userid = _userContext.UserGlobalId,
-            invln_organisationid = organisationId.ToString(),
-            invln_applicationid = id,
+            invln_organisationid = ShortGuid.ToGuidAsString(organisationId),
+            invln_applicationid = ShortGuid.ToGuidAsString(id),
             invln_appfieldstoretrieve = ApplicationCrmFields,
         };
 
         return await Get(request, cancellationToken);
     }
 
-    public async Task<bool> IsNameExist(string applicationName, Guid organisationId, CancellationToken cancellationToken)
+    public async Task<bool> IsNameExist(string applicationName, string organisationId, CancellationToken cancellationToken)
     {
         var dto = new AhpApplicationDto
         {
@@ -121,7 +121,7 @@ public class ApplicationCrmContext : IApplicationCrmContext
         var request = new invln_checkifapplicationwithgivennameexistsRequest
         {
             invln_application = CrmResponseSerializer.Serialize(dto),
-            invln_organisationid = organisationId.ToString(),
+            invln_organisationid = ShortGuid.ToGuidAsString(organisationId),
         };
 
         var response = await _service.ExecuteAsync<invln_checkifapplicationwithgivennameexistsRequest, invln_checkifapplicationwithgivennameexistsResponse>(
@@ -132,36 +132,36 @@ public class ApplicationCrmContext : IApplicationCrmContext
         return bool.TryParse(response, out var result) && result;
     }
 
-    public async Task<IList<AhpApplicationDto>> GetOrganisationApplications(Guid organisationId, CancellationToken cancellationToken)
+    public async Task<IList<AhpApplicationDto>> GetOrganisationApplications(string organisationId, CancellationToken cancellationToken)
     {
         var request = new invln_getmultipleahpapplicationsRequest
         {
             inlvn_userid = string.Empty,
-            invln_organisationid = organisationId.ToString(),
+            invln_organisationid = ShortGuid.ToGuidAsString(organisationId),
             invln_appfieldstoretrieve = ApplicationListCrmFields,
         };
 
         return await GetAll(request, cancellationToken);
     }
 
-    public async Task<IList<AhpApplicationDto>> GetUserApplications(Guid organisationId, CancellationToken cancellationToken)
+    public async Task<IList<AhpApplicationDto>> GetUserApplications(string organisationId, CancellationToken cancellationToken)
     {
         var request = new invln_getmultipleahpapplicationsRequest
         {
             inlvn_userid = _userContext.UserGlobalId,
-            invln_organisationid = organisationId.ToString(),
+            invln_organisationid = ShortGuid.ToGuidAsString(organisationId),
             invln_appfieldstoretrieve = ApplicationListCrmFields,
         };
 
         return await GetAll(request, cancellationToken);
     }
 
-    public async Task<string> Save(AhpApplicationDto dto, Guid organisationId, CancellationToken cancellationToken)
+    public async Task<string> Save(AhpApplicationDto dto, string organisationId, CancellationToken cancellationToken)
     {
         var request = new invln_setahpapplicationRequest
         {
             invln_userid = _userContext.UserGlobalId,
-            invln_organisationid = organisationId.ToString(),
+            invln_organisationid = ShortGuid.ToGuidAsString(organisationId),
             invln_application = CrmResponseSerializer.Serialize(dto),
             invln_fieldstoupdate = ApplicationCrmFields,
         };
@@ -174,7 +174,7 @@ public class ApplicationCrmContext : IApplicationCrmContext
 
     public async Task ChangeApplicationStatus(
         string applicationId,
-        Guid organisationId,
+        string organisationId,
         ApplicationStatus applicationStatus,
         string? changeReason,
         bool representationsAndWarranties,
@@ -184,8 +184,8 @@ public class ApplicationCrmContext : IApplicationCrmContext
 
         var request = new invln_changeahpapplicationstatusRequest
         {
-            invln_applicationid = applicationId,
-            invln_organisationid = organisationId.ToString(),
+            invln_applicationid = ShortGuid.ToGuidAsString(applicationId),
+            invln_organisationid = ShortGuid.ToGuidAsString(organisationId),
             invln_userid = _userContext.UserGlobalId,
             invln_newapplicationstatus = crmStatus,
             invln_changereason = changeReason ?? string.Empty,

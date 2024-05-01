@@ -4,12 +4,12 @@ using HE.Investments.AHP.Consortium.Contract;
 using HE.Investments.AHP.Consortium.Contract.Enums;
 using HE.Investments.AHP.Consortium.Domain.Repositories;
 using HE.Investments.AHP.Consortium.Domain.ValueObjects;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Errors;
 using HE.Investments.Common.Extensions;
 using Org::HE.Investments.Organisation.ValueObjects;
-using OrganisationId = HE.Investments.Account.Shared.User.ValueObjects.OrganisationId;
 
 namespace HE.Investments.AHP.Consortium.Domain.Entities;
 
@@ -64,7 +64,7 @@ public class ConsortiumEntity
                 "This organisation cannot be added to your consortium. Check you have selected the correct organisation. If it is correct, contact your Growth Manager");
         }
 
-        var member = new ConsortiumMember(new OrganisationId(organisation.Id.Value), organisation.Name, ConsortiumMemberStatus.PendingAddition);
+        var member = new ConsortiumMember(OrganisationId.From(organisation.Id.Value), organisation.Name, ConsortiumMemberStatus.PendingAddition);
         _members.Add(member);
         _joinRequests.Add(member);
     }
@@ -127,6 +127,6 @@ public class ConsortiumEntity
             return true;
         }
 
-        return await isPartOfConsortium.IsPartOfConsortiumForProgramme(Programme.Id, new OrganisationId(organisation.Id.Value), cancellationToken);
+        return await isPartOfConsortium.IsPartOfConsortiumForProgramme(Programme.Id, OrganisationId.From(organisation.Id.Value), cancellationToken);
     }
 }

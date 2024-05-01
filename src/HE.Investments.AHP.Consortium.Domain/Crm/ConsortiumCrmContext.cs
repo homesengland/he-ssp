@@ -1,5 +1,6 @@
 extern alias Org;
 
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Services;
 using Org::HE.Common.IntegrationModel.PortalIntegrationModel;
@@ -23,8 +24,8 @@ public class ConsortiumCrmContext : IConsortiumCrmContext
     {
         var request = new invln_getconsortiumRequest
         {
-            invln_consortiumid = consortiumId,
-            invln_memberorganisationid = organisationId,
+            invln_consortiumid = ShortGuid.ToGuidAsString(consortiumId),
+            invln_memberorganisationid = ShortGuid.ToGuidAsString(organisationId),
         };
 
         var consortium = await _service.ExecuteAsync<invln_getconsortiumRequest, invln_getconsortiumResponse, ConsortiumDto>(
@@ -34,22 +35,12 @@ public class ConsortiumCrmContext : IConsortiumCrmContext
 
         if (JoinRequests.TryGetValue(consortiumId, out var joinRequests))
         {
-            consortium.members.AddRange(joinRequests.Select(x => new ConsortiumMemberDto
-            {
-                id = x,
-                name = "Dummy",
-                status = 858110001,
-            }));
+            consortium.members.AddRange(joinRequests.Select(x => new ConsortiumMemberDto { id = x, name = "Dummy", status = 858110001, }));
         }
 
         if (RemoveRequests.TryGetValue(consortiumId, out var removeRequests))
         {
-            consortium.members.AddRange(removeRequests.Select(x => new ConsortiumMemberDto
-            {
-                id = x,
-                name = "Dummy",
-                status = 858110005,
-            }));
+            consortium.members.AddRange(removeRequests.Select(x => new ConsortiumMemberDto { id = x, name = "Dummy", status = 858110005, }));
         }
 
         return consortium;
@@ -57,12 +48,17 @@ public class ConsortiumCrmContext : IConsortiumCrmContext
 
     public async Task<bool> IsConsortiumExistForProgrammeAndOrganisation(string programmeId, string organisationId, CancellationToken cancellationToken)
     {
-        var request = new invln_IsConsortiumExistForProgrammeAndOrganisationRequest { invln_programmeid = programmeId, invln_organisationid = organisationId, };
+        var request = new invln_IsConsortiumExistForProgrammeAndOrganisationRequest
+        {
+            invln_programmeid = ShortGuid.ToGuidAsString(programmeId),
+            invln_organisationid = ShortGuid.ToGuidAsString(organisationId),
+        };
 
-        return await _service.ExecuteAsync<invln_IsConsortiumExistForProgrammeAndOrganisationRequest, invln_IsConsortiumExistForProgrammeAndOrganisationResponse>(
-            request,
-            x => x.invln_isconsortiumexist,
-            cancellationToken);
+        return await _service
+            .ExecuteAsync<invln_IsConsortiumExistForProgrammeAndOrganisationRequest, invln_IsConsortiumExistForProgrammeAndOrganisationResponse>(
+                request,
+                x => x.invln_isconsortiumexist,
+                cancellationToken);
     }
 
     public async Task<string> CreateConsortium(
@@ -74,8 +70,8 @@ public class ConsortiumCrmContext : IConsortiumCrmContext
     {
         var request = new invln_setconsortiumRequest
         {
-            invln_programmeId = programmeId,
-            invln_leadpartnerid = leadOrganisationId,
+            invln_programmeId = ShortGuid.ToGuidAsString(programmeId),
+            invln_leadpartnerid = ShortGuid.ToGuidAsString(leadOrganisationId),
             invln_userid = userId,
             invln_consortiumname = consortiumName,
         };
@@ -91,43 +87,43 @@ public class ConsortiumCrmContext : IConsortiumCrmContext
         // TODO: make request to CRM
         if (JoinRequests.TryGetValue(consortiumId, out var requests))
         {
-            requests.Add(organisationId);
+            requests.Add(ShortGuid.ToGuidAsString(organisationId));
             return Task.CompletedTask;
         }
 
-        JoinRequests.Add(consortiumId, new List<string> { organisationId });
+        JoinRequests.Add(ShortGuid.ToGuidAsString(consortiumId), new List<string> { ShortGuid.ToGuidAsString(organisationId) });
         return Task.CompletedTask;
     }
 
     public Task CreateRemoveFromConsortiumRequest(string consortiumId, string organisationId, string userId, CancellationToken cancellationToken)
     {
         // TODO: make request to CRM
-        if (JoinRequests.TryGetValue(consortiumId, out var joinRequests))
+        if (JoinRequests.TryGetValue(ShortGuid.ToGuidAsString(consortiumId), out var joinRequests))
         {
-            joinRequests.Remove(organisationId);
+            joinRequests.Remove(ShortGuid.ToGuidAsString(organisationId));
         }
 
-        if (RemoveRequests.TryGetValue(consortiumId, out var removeRequests))
+        if (RemoveRequests.TryGetValue(ShortGuid.ToGuidAsString(consortiumId), out var removeRequests))
         {
-            removeRequests.Add(organisationId);
+            removeRequests.Add(ShortGuid.ToGuidAsString(organisationId));
             return Task.CompletedTask;
         }
 
-        RemoveRequests.Add(consortiumId, new List<string> { organisationId });
+        RemoveRequests.Add(ShortGuid.ToGuidAsString(consortiumId), new List<string> { ShortGuid.ToGuidAsString(organisationId) });
         return Task.CompletedTask;
     }
 
     public Task CancelPendingConsortiumRequest(string consortiumId, string organisationId, string userId, CancellationToken cancellationToken)
     {
         // TODO: make request to CRM
-        if (JoinRequests.TryGetValue(consortiumId, out var joinRequests))
+        if (JoinRequests.TryGetValue(ShortGuid.ToGuidAsString(consortiumId), out var joinRequests))
         {
-            joinRequests.Remove(organisationId);
+            joinRequests.Remove(ShortGuid.ToGuidAsString(organisationId));
         }
 
-        if (RemoveRequests.TryGetValue(consortiumId, out var removeRequests))
+        if (RemoveRequests.TryGetValue(ShortGuid.ToGuidAsString(consortiumId), out var removeRequests))
         {
-            removeRequests.Remove(organisationId);
+            removeRequests.Remove(ShortGuid.ToGuidAsString(organisationId));
         }
 
         return Task.CompletedTask;

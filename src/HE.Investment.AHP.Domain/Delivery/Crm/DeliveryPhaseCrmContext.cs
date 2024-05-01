@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Services;
 using HE.Investments.Common.User;
@@ -52,14 +53,14 @@ public class DeliveryPhaseCrmContext : IDeliveryPhaseCrmContext
 
     public async Task<IList<DeliveryPhaseDto>> GetAllOrganisationDeliveryPhases(
         string applicationId,
-        Guid organisationId,
+        string organisationId,
         CancellationToken cancellationToken)
     {
         var request = new invln_getmultipledeliveryphaseRequest
         {
             invln_userId = string.Empty,
-            invln_organisationId = organisationId.ToString(),
-            invln_applicationId = applicationId,
+            invln_organisationId = ShortGuid.ToGuidAsString(organisationId),
+            invln_applicationId = ShortGuid.ToGuidAsString(applicationId),
             invln_fieldstoretrieve = DeliveryPhaseCrmFields,
         };
 
@@ -68,14 +69,14 @@ public class DeliveryPhaseCrmContext : IDeliveryPhaseCrmContext
 
     public async Task<IList<DeliveryPhaseDto>> GetAllUserDeliveryPhases(
         string applicationId,
-        Guid organisationId,
+        string organisationId,
         CancellationToken cancellationToken)
     {
         var request = new invln_getmultipledeliveryphaseRequest
         {
             invln_userId = _userContext.UserGlobalId,
-            invln_organisationId = organisationId.ToString(),
-            invln_applicationId = applicationId,
+            invln_organisationId = ShortGuid.ToGuidAsString(organisationId),
+            invln_applicationId = ShortGuid.ToGuidAsString(applicationId),
             invln_fieldstoretrieve = DeliveryPhaseCrmFields,
         };
 
@@ -85,15 +86,15 @@ public class DeliveryPhaseCrmContext : IDeliveryPhaseCrmContext
     public async Task<DeliveryPhaseDto?> GetOrganisationDeliveryPhaseById(
         string applicationId,
         string deliveryPhaseId,
-        Guid organisationId,
+        string organisationId,
         CancellationToken cancellationToken)
     {
         var request = new invln_getsingledeliveryphaseRequest
         {
             invln_userid = string.Empty,
-            invln_organisationId = organisationId.ToString(),
-            invln_applicationId = applicationId,
-            invln_deliveryPhaseId = deliveryPhaseId,
+            invln_organisationId = ShortGuid.ToGuidAsString(organisationId),
+            invln_applicationId = ShortGuid.ToGuidAsString(applicationId),
+            invln_deliveryPhaseId = ShortGuid.ToGuidAsString(deliveryPhaseId),
             invln_fieldstoretrieve = DeliveryPhaseCrmFields,
         };
 
@@ -103,29 +104,29 @@ public class DeliveryPhaseCrmContext : IDeliveryPhaseCrmContext
     public async Task<DeliveryPhaseDto?> GetUserDeliveryPhaseById(
         string applicationId,
         string deliveryPhaseId,
-        Guid organisationId,
+        string organisationId,
         CancellationToken cancellationToken)
     {
         var request = new invln_getsingledeliveryphaseRequest
         {
             invln_userid = _userContext.UserGlobalId,
-            invln_organisationId = organisationId.ToString(),
-            invln_applicationId = applicationId,
-            invln_deliveryPhaseId = deliveryPhaseId,
+            invln_organisationId = ShortGuid.ToGuidAsString(organisationId),
+            invln_applicationId = ShortGuid.ToGuidAsString(applicationId),
+            invln_deliveryPhaseId = ShortGuid.ToGuidAsString(deliveryPhaseId),
             invln_fieldstoretrieve = DeliveryPhaseCrmFields,
         };
 
         return await GetSingle(request, cancellationToken);
     }
 
-    public async Task Remove(string applicationId, string deliveryPhaseId, Guid organisationId, CancellationToken cancellationToken)
+    public async Task Remove(string applicationId, string deliveryPhaseId, string organisationId, CancellationToken cancellationToken)
     {
         var request = new invln_deletedeliveryphaseRequest
         {
             invln_userId = _userContext.UserGlobalId,
-            invln_organisationId = organisationId.ToString(),
-            invln_applicationId = applicationId,
-            invln_deliveryPhaseId = deliveryPhaseId,
+            invln_organisationId = ShortGuid.ToGuidAsString(organisationId),
+            invln_applicationId = ShortGuid.ToGuidAsString(applicationId),
+            invln_deliveryPhaseId = ShortGuid.ToGuidAsString(deliveryPhaseId),
         };
 
         await _service.ExecuteAsync<invln_deletedeliveryphaseRequest, invln_deletedeliveryphaseResponse>(
@@ -134,13 +135,13 @@ public class DeliveryPhaseCrmContext : IDeliveryPhaseCrmContext
             cancellationToken);
     }
 
-    public async Task<string> Save(DeliveryPhaseDto deliveryPhase, Guid organisationId, CancellationToken cancellationToken)
+    public async Task<string> Save(DeliveryPhaseDto deliveryPhase, string organisationId, CancellationToken cancellationToken)
     {
         var request = new invln_setdeliveryphaseRequest
         {
-            invln_organisationId = organisationId.ToString(),
+            invln_organisationId = ShortGuid.ToGuidAsString(organisationId),
             invln_userId = _userContext.UserGlobalId,
-            invln_applicationId = deliveryPhase.applicationId,
+            invln_applicationId = ShortGuid.ToGuidAsString(deliveryPhase.applicationId),
             invln_deliveryPhase = JsonSerializer.Serialize(deliveryPhase, _serializerOptions),
             invln_fieldstoset = DeliveryPhaseCrmFields,
         };

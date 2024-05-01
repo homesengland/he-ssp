@@ -19,7 +19,7 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
 
     public IEnumerable<SectionSummaryViewModel> CreateSiteSummary(SiteModel siteDetails, IUrlHelper urlHelper, bool isEditable, bool useWorkflowRedirection)
     {
-        string CreateAction(string actionName) => CreateSiteActionUrl(urlHelper, new SiteId(siteDetails.Id!), actionName, useWorkflowRedirection);
+        string CreateAction(string actionName) => CreateSiteActionUrl(urlHelper, SiteId.From(siteDetails.Id!), actionName, useWorkflowRedirection);
 
         yield return new SectionSummaryViewModel("Site details", CreateSiteDetailsSummary(siteDetails, CreateAction, isEditable));
         yield return new SectionSummaryViewModel("Section 106", CreateSection106Summary(siteDetails.Section106, CreateAction, isEditable));

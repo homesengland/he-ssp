@@ -3,6 +3,7 @@ extern alias Org;
 using FluentAssertions;
 using HE.Investments.Account.Domain.UserOrganisation.Repositories;
 using HE.Investments.Account.Shared.User.ValueObjects;
+using HE.Investments.Common.Contract;
 using HE.Investments.TestsUtils.TestFramework;
 using Microsoft.PowerPlatform.Dataverse.Client;
 using Moq;
@@ -14,7 +15,7 @@ namespace HE.Investments.Account.Domain.Tests.UserOrganisation.Repositories.Orga
 
 public class GetOrganisationUsersTests : TestBase<OrganisationUsersRepository>
 {
-    private static readonly OrganisationId OrganisationId = new(Guid.NewGuid());
+    private static readonly OrganisationId OrganisationId = new(Guid.NewGuid().ToString());
 
     [Fact]
     public async Task ShouldReturnUserAsActive_WhenIsConnectedWithExternalIdentity()
@@ -64,7 +65,7 @@ public class GetOrganisationUsersTests : TestBase<OrganisationUsersRepository>
 
         contactService.Setup(x => x.GetAllOrganisationContactsForPortal(
                 It.IsAny<IOrganizationServiceAsync2>(),
-                OrganisationId.Value,
+                OrganisationId.ToGuidAsString(),
                 null))
             .ReturnsAsync(contacts.ToList());
     }

@@ -3,7 +3,7 @@ using HE.Investment.AHP.Contract.HomeTypes.Commands;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investments.Account.Shared;
-using HE.Investments.Account.Shared.User.ValueObjects;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;

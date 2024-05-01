@@ -26,7 +26,7 @@ public class DeliveryController : Controller
     }
 
     [HttpGet("start")]
-    public async Task<IActionResult> Start(Guid applicationId, CancellationToken cancellationToken)
+    public async Task<IActionResult> Start(string applicationId, CancellationToken cancellationToken)
     {
         var application = await _mediator.Send(new GetApplicationQuery(AhpApplicationId.From(applicationId)), cancellationToken);
         return View("Index", application);

@@ -7,7 +7,7 @@ public class FinancialDetailsGrantsModel : FinancialDetailsBaseModel
     }
 
     public FinancialDetailsGrantsModel(
-        Guid applicationId,
+        string applicationId,
         string applicationName,
         string? countyCouncilGrants,
         string? dhscExtraCareGrants,

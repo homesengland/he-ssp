@@ -6,7 +6,7 @@ public class FinancialDetailsContributionsModel : FinancialDetailsBaseModel
     }
 
     public FinancialDetailsContributionsModel(
-        Guid applicationId,
+        string applicationId,
         string applicationName,
         string? rentalIncomeBorrowing,
         string? saleOfHomesOnThisScheme,

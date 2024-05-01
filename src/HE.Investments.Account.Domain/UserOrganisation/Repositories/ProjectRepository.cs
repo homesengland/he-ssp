@@ -21,7 +21,7 @@ public class ProjectRepository : IProjectRepository
     {
         var request = new invln_getmultiplefrontdoorprojectsRequest
         {
-            invln_organisationid = userAccount.SelectedOrganisationId().ToString(),
+            invln_organisationid = userAccount.SelectedOrganisationId().ToGuidAsString(),
             inlvn_userid = userAccount.CanViewAllApplications() ? string.Empty : userAccount.UserGlobalId.ToString(),
             invln_usehetables = "true",
         };

@@ -21,7 +21,7 @@ public class AhpApplicationCrmContext
 
         var request = new invln_changeahpapplicationstatusRequest
         {
-            invln_applicationid = applicationId,
+            invln_applicationid = ShortGuid.ToGuidAsString(applicationId),
             invln_organisationid = loginData.OrganisationId,
             invln_userid = loginData.UserGlobalId,
             invln_newapplicationstatus = crmStatus,

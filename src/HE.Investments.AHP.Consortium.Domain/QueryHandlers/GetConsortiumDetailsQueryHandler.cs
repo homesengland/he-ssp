@@ -1,12 +1,12 @@
 extern alias Org;
 
 using HE.Investments.Account.Shared;
-using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.AHP.Consortium.Contract;
 using HE.Investments.AHP.Consortium.Contract.Queries;
 using HE.Investments.AHP.Consortium.Domain.Entities;
 using HE.Investments.AHP.Consortium.Domain.Repositories;
 using HE.Investments.AHP.Consortium.Domain.ValueObjects;
+using HE.Investments.Common.Contract;
 using MediatR;
 using Org::HE.Common.IntegrationModel.PortalIntegrationModel;
 using Org::HE.Investments.Organisation.Services;

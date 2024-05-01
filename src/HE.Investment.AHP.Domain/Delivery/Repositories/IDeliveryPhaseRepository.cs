@@ -2,7 +2,7 @@ using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investments.Account.Shared.User;
-using HE.Investments.Account.Shared.User.ValueObjects;
+using HE.Investments.Common.Contract;
 
 namespace HE.Investment.AHP.Domain.Delivery.Repositories;
 

@@ -43,7 +43,7 @@ internal class AddHomesModelFactory
         CancellationToken cancellationToken)
     {
         var deliveryPhaseHomes = await _mediator.Send(
-            new GetDeliveryPhaseHomesQuery(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId)),
+            new GetDeliveryPhaseHomesQuery(AhpApplicationId.From(applicationId), DeliveryPhaseId.From(deliveryPhaseId)),
             cancellationToken);
 
         return new AddHomesModel(

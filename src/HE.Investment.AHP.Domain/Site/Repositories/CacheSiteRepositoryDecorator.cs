@@ -69,13 +69,13 @@ internal class CacheSiteRepositoryDecorator : ISiteRepository
         return siteId;
     }
 
-    private static string SiteCacheKey(SiteId siteId) => $"ahp-site-{siteId.Value}";
+    private static string SiteCacheKey(SiteId siteId) => $"ahp-site-{siteId.ToGuidAsString()}";
 
     private static SiteBasicInfoDto ToSiteBasicInfoDto(SiteBasicInfo entity)
     {
         return new SiteBasicInfoDto
         {
-            Id = entity.Id.Value,
+            Id = entity.Id.ToGuidAsString(),
             Name = entity.Name.Value,
             ProjectId = entity.FrontDoorProjectId?.Value,
             SiteId = entity.FrontDoorSiteId?.Value,
@@ -87,7 +87,7 @@ internal class CacheSiteRepositoryDecorator : ISiteRepository
     private static SiteBasicInfo ToSiteBasicInfoEntity(SiteBasicInfoDto dto)
     {
         return new SiteBasicInfo(
-            new SiteId(dto.Id),
+            SiteId.From(dto.Id),
             new SiteName(dto.Name),
             FrontDoorProjectId.Create(dto.ProjectId),
             FrontDoorSiteId.Create(dto.SiteId),

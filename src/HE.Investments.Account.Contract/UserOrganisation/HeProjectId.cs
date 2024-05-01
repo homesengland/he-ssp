@@ -9,7 +9,9 @@ public record HeProjectId : StringIdValueObject
     {
     }
 
-    public static HeProjectId From(string value) => new(value);
+    public static HeProjectId From(string value) => new(FromStringToShortGuidAsString(value));
+
+    public static string ToGuidAsString(string value) => FromShortGuidAsStringToGuidAsString(value);
 
     public override string ToString()
     {

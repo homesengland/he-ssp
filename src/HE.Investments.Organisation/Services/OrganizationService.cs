@@ -43,7 +43,7 @@ public class OrganizationService : IOrganizationService
         return _service.Create(organizationToCreate);
     }
 
-    public async Task<ContactDto?> GetOrganisationChangeDetailsRequestContact(Guid accountId)
+    public async Task<ContactDto?> GetOrganisationChangeDetailsRequestContact(string accountId)
     {
         var organisationChangeDetailsRequest = await _organisationChangeRequestRepository.GetChangeRequestForOrganisation(_service, accountId);
         if (organisationChangeDetailsRequest != null)

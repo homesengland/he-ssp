@@ -58,9 +58,9 @@ internal class PrefillDataRepository : IPrefillDataRepository
     private ProjectPrefillData Map(FrontDoorProjectDto project, FrontDoorProjectSiteDto? site)
     {
         return new ProjectPrefillData(
-            new FrontDoorProjectId(project.ProjectId),
+            FrontDoorProjectId.From(project.ProjectId),
             project.ProjectName,
             new ReadOnlyCollection<SupportActivityType>(DomainEnumMapper.Map(project.ActivitiesinThisProject, FrontDoorProjectEnumMapping.ActivityType)),
-            site.IsProvided() ? new FrontDoorSiteId(site!.SiteId) : null);
+            site.IsProvided() ? FrontDoorSiteId.From(site!.SiteId) : null);
     }
 }

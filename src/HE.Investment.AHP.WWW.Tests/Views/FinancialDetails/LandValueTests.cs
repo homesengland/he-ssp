@@ -13,7 +13,7 @@ public class LandValueTests : AhpViewTestBase
     [Fact]
     public async Task ShouldDisplayView()
     {
-        var model = new FinancialDetailsLandValueModel(Guid.NewGuid(), "TestApp", string.Empty, null);
+        var model = new FinancialDetailsLandValueModel(Guid.NewGuid().ToString(), "TestApp", string.Empty, null);
 
         // given & when
         var document = await Render(_viewPath, model);
@@ -26,7 +26,7 @@ public class LandValueTests : AhpViewTestBase
     public async Task ShouldDisplayView_ForInvalid()
     {
         // given
-        var model = new FinancialDetailsLandValueModel(Guid.NewGuid(), "TestApp", "56000", null);
+        var model = new FinancialDetailsLandValueModel(Guid.NewGuid().ToString(), "TestApp", "56000", null);
         var errorMessage = "some test error";
         var modelState = new ModelStateDictionary();
         modelState.AddModelError(nameof(FinancialDetailsLandValueModel.LandValue), errorMessage);

@@ -9,7 +9,7 @@ using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investments.Account.Shared.User;
-using HE.Investments.Account.Shared.User.ValueObjects;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Infrastructure.Events;
 
@@ -99,7 +99,7 @@ public class HomeTypeRepository : IHomeTypeRepository
         var entity = (HomeTypeEntity)homeType;
         if (entity.IsNew)
         {
-            entity.Id = new HomeTypeId(await _homeTypeCrmContext.Save(_homeTypeCrmMapper.MapToDto(entity), organisationId.Value, cancellationToken));
+            entity.Id = HomeTypeId.From(await _homeTypeCrmContext.Save(_homeTypeCrmMapper.MapToDto(entity), organisationId.Value, cancellationToken));
             await _eventDispatcher.Publish(
                 new HomeTypeHasBeenCreatedEvent(homeType.Application.Id, entity.Id, entity.Name.Value),
                 cancellationToken);

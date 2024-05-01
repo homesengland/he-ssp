@@ -8,7 +8,6 @@ using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Organisation.Services;
 using Microsoft.PowerPlatform.Dataverse.Client;
-using OrganisationId = HE.Investments.Account.Shared.User.ValueObjects.OrganisationId;
 
 namespace HE.Investments.Account.Shared.Repositories;
 
@@ -39,7 +38,7 @@ public class AccountCrmRepository : IAccountRepository
         var result = new List<UserAccount>();
         foreach (var contactRole in contactRoles.contactRoles.GroupBy(x => x.accountId))
         {
-            var organisationId = new OrganisationId(contactRole.Key);
+            var organisationId = OrganisationId.From(contactRole.Key.ToString());
 
             // TODO: replace loop with single request when user will be assigned to multiple organisations
             var organisation = await GetOrganisationBasicInfo(organisationId, userGlobalId);
@@ -74,7 +73,7 @@ public class AccountCrmRepository : IAccountRepository
 
     private async Task<OrganisationBasicInfo> GetOrganisationBasicInfo(OrganisationId organisationId, UserGlobalId userGlobalId)
     {
-        var organisation = await _organizationService.GetOrganizationDetails(organisationId.Value.ToString(), userGlobalId.Value);
+        var organisation = await _organizationService.GetOrganizationDetails(organisationId.Value, userGlobalId.Value);
         return new OrganisationBasicInfo(
             organisationId,
             organisation.registeredCompanyName,

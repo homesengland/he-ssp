@@ -1,5 +1,6 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Shared.User;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Infrastructure.Cache;
 
 namespace HE.Investments.FrontDoor.Domain.Project.Crm;
@@ -15,31 +16,31 @@ internal class RequestCacheProjectCrmContextDecorator : IProjectCrmContext
         _decorated = decorated;
     }
 
-    public async Task<IList<FrontDoorProjectDto>> GetOrganisationProjects(string userGlobalId, Guid organisationId, CancellationToken cancellationToken)
+    public async Task<IList<FrontDoorProjectDto>> GetOrganisationProjects(string userGlobalId, string organisationId, CancellationToken cancellationToken)
     {
         return await _decorated.GetOrganisationProjects(userGlobalId, organisationId, cancellationToken);
     }
 
-    public async Task<IList<FrontDoorProjectDto>> GetUserProjects(string userGlobalId, Guid organisationId, CancellationToken cancellationToken)
+    public async Task<IList<FrontDoorProjectDto>> GetUserProjects(string userGlobalId, string organisationId, CancellationToken cancellationToken)
     {
         return await _decorated.GetUserProjects(userGlobalId, organisationId, cancellationToken);
     }
 
-    public async Task<FrontDoorProjectDto> GetOrganisationProjectById(string projectId, string userGlobalId, Guid organisationId, CancellationToken cancellationToken)
+    public async Task<FrontDoorProjectDto> GetOrganisationProjectById(string projectId, string userGlobalId, string organisationId, CancellationToken cancellationToken)
     {
         return (await _cache.GetFromCache(
-            projectId,
+            ShortGuid.ToGuidAsString(projectId),
             async () => await _decorated.GetOrganisationProjectById(projectId, userGlobalId, organisationId, cancellationToken)))!;
     }
 
-    public async Task<FrontDoorProjectDto> GetUserProjectById(string projectId, string userGlobalId, Guid organisationId, CancellationToken cancellationToken)
+    public async Task<FrontDoorProjectDto> GetUserProjectById(string projectId, string userGlobalId, string organisationId, CancellationToken cancellationToken)
     {
         return (await _cache.GetFromCache(
-            projectId,
+            ShortGuid.ToGuidAsString(projectId),
             async () => await _decorated.GetUserProjectById(projectId, userGlobalId, organisationId, cancellationToken)))!;
     }
 
-    public async Task<bool> IsThereProjectWithName(string projectName, Guid organisationId, CancellationToken cancellationToken)
+    public async Task<bool> IsThereProjectWithName(string projectName, string organisationId, CancellationToken cancellationToken)
     {
         return await _decorated.IsThereProjectWithName(projectName, organisationId, cancellationToken);
     }

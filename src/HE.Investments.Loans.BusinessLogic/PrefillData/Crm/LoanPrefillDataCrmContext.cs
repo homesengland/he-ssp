@@ -25,7 +25,7 @@ internal class LoanPrefillDataCrmContext : ILoanPrefillDataCrmContext
     {
         var req = new invln_getsingleloanapplicationforaccountandcontactRequest
         {
-            invln_accountid = userAccount.SelectedOrganisationId().ToString(),
+            invln_accountid = userAccount.SelectedOrganisationId().ToGuidAsString(),
             invln_externalcontactid = userAccount.UserGlobalId.ToString(),
             invln_loanapplicationid = loanApplicationId.ToString(),
             invln_fieldstoretrieve = FormatFields(

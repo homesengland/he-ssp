@@ -16,7 +16,13 @@ public record FrontDoorSiteId : StringIdValueObject
 
     public static FrontDoorSiteId New() => new();
 
-    public static FrontDoorSiteId? Create(string? id) => id.IsProvided() ? new FrontDoorSiteId(id!) : null;
+    public static FrontDoorSiteId From(string value) => new(FromStringToShortGuidAsString(value));
+
+    public static FrontDoorSiteId From(Guid value) => new(FromGuidToShortGuidAsString(value));
+
+    public string ToGuidAsString() => Value.IsProvided() ? ShortGuid.ToGuidAsString(Value) : Value;
+
+    public static FrontDoorSiteId? Create(string? id) => id.IsProvided() ? From(id!) : null;
 
     public override string ToString()
     {

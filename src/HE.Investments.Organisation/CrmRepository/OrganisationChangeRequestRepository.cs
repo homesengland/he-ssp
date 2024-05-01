@@ -5,7 +5,7 @@ using Microsoft.Xrm.Sdk.Query;
 namespace HE.Investments.Organisation.CrmRepository;
 public class OrganisationChangeRequestRepository : IOrganisationChangeRequestRepository
 {
-    public async Task<Entity?> GetChangeRequestForOrganisation(IOrganizationServiceAsync2 service, Guid organisationId)
+    public async Task<Entity?> GetChangeRequestForOrganisation(IOrganizationServiceAsync2 service, string organisationId)
     {
         var condition1 = new ConditionExpression("invln_organisationid", ConditionOperator.Equal, organisationId);
         var filter1 = new FilterExpression()

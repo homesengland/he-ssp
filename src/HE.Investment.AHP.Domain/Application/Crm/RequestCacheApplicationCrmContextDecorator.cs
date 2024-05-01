@@ -15,36 +15,36 @@ public class RequestCacheApplicationCrmContextDecorator : IApplicationCrmContext
         _decorated = decorated;
     }
 
-    public async Task<AhpApplicationDto> GetOrganisationApplicationById(string id, Guid organisationId, CancellationToken cancellationToken)
+    public async Task<AhpApplicationDto> GetOrganisationApplicationById(string id, string organisationId, CancellationToken cancellationToken)
     {
         return (await _cache.GetFromCache(
-            id,
+            ShortGuid.ToGuidAsString(id),
             async () => await _decorated.GetOrganisationApplicationById(id, organisationId, cancellationToken)))!;
     }
 
-    public async Task<AhpApplicationDto> GetUserApplicationById(string id, Guid organisationId, CancellationToken cancellationToken)
+    public async Task<AhpApplicationDto> GetUserApplicationById(string id, string organisationId, CancellationToken cancellationToken)
     {
         return (await _cache.GetFromCache(
-            id,
+            ShortGuid.ToGuidAsString(id),
             async () => await _decorated.GetUserApplicationById(id, organisationId, cancellationToken)))!;
     }
 
-    public async Task<bool> IsNameExist(string applicationName, Guid organisationId, CancellationToken cancellationToken)
+    public async Task<bool> IsNameExist(string applicationName, string organisationId, CancellationToken cancellationToken)
     {
         return await _decorated.IsNameExist(applicationName, organisationId, cancellationToken);
     }
 
-    public async Task<IList<AhpApplicationDto>> GetOrganisationApplications(Guid organisationId, CancellationToken cancellationToken)
+    public async Task<IList<AhpApplicationDto>> GetOrganisationApplications(string organisationId, CancellationToken cancellationToken)
     {
         return await _decorated.GetOrganisationApplications(organisationId, cancellationToken);
     }
 
-    public async Task<IList<AhpApplicationDto>> GetUserApplications(Guid organisationId, CancellationToken cancellationToken)
+    public async Task<IList<AhpApplicationDto>> GetUserApplications(string organisationId, CancellationToken cancellationToken)
     {
         return await _decorated.GetUserApplications(organisationId, cancellationToken);
     }
 
-    public async Task<string> Save(AhpApplicationDto dto, Guid organisationId, CancellationToken cancellationToken)
+    public async Task<string> Save(AhpApplicationDto dto, string organisationId, CancellationToken cancellationToken)
     {
         var applicationId = await _decorated.Save(dto, organisationId, cancellationToken);
         _cache.Delete(applicationId);
@@ -54,13 +54,13 @@ public class RequestCacheApplicationCrmContextDecorator : IApplicationCrmContext
 
     public async Task ChangeApplicationStatus(
         string applicationId,
-        Guid organisationId,
+        string organisationId,
         ApplicationStatus applicationStatus,
         string? changeReason,
         bool representationsAndWarranties,
         CancellationToken cancellationToken)
     {
-        _cache.Delete(applicationId);
+        _cache.Delete(ShortGuid.ToGuidAsString(applicationId));
         await _decorated.ChangeApplicationStatus(applicationId, organisationId, applicationStatus, changeReason, representationsAndWarranties, cancellationToken);
     }
 }
