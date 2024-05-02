@@ -11,11 +11,11 @@ public static class UserAccountTestData
         UserGlobalId.From("UserOne"),
         "User@one.com",
         new OrganisationBasicInfo(new OrganisationId(GuidTestData.GuidTwo.ToString()), "AccountOne", "1234", "London", false),
-        new[] { UserRole.Limited });
+        [UserRole.Limited]);
 
     public static readonly UserAccount AdminUserAccountOne = new(
         UserGlobalId.From("UserOne"),
         "User@one.com",
         new OrganisationBasicInfo(new OrganisationId(GuidTestData.GuidTwo.ToString()), "AccountOne", "1234", "London", false),
-        new[] { UserRole.Admin, UserRole.Limited });
+        [UserRole.Admin, UserRole.Limited]);
 }

@@ -366,7 +366,7 @@ public class Project : DomainEntity
         return StartDate.IsProvided() &&
             PlanningReferenceNumber.IsProvided() && (!PlanningReferenceNumber!.Exists || (ObjectExtensions.IsProvided(PlanningReferenceNumber.Value) && PlanningPermissionStatus.IsProvided())) &&
             HomesCount.IsProvided() &&
-            HomesTypes.IsProvided() && HomesTypes!.HomesTypesValue.Any() &&
+            HomesTypes.IsProvided() && HomesTypes!.HomesTypesValue.IsNotEmpty() &&
             ProjectType.IsProvided() &&
             (Coordinates.IsProvided() || LandRegistryTitleNumber.IsProvided()) &&
             LandOwnership.IsProvided() && (!LandOwnership!.ApplicantHasFullOwnership || AdditionalDetails.IsProvided()) &&

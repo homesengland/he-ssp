@@ -81,7 +81,7 @@ public class CompanyStructureEntity : DomainEntity
     {
         if (!filesToUpload.Any())
         {
-            return Array.Empty<UploadedFile>();
+            return [];
         }
 
         _files ??= (await fileService.GetFiles(LoanApplicationId, cancellationToken)).ToList();

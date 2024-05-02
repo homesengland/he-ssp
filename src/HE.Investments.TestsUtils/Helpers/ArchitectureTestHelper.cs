@@ -6,15 +6,15 @@ public static class ArchitectureTestHelper
 {
     private const string ProjectNamePrefix = "HE.Investment";
 
-    private static readonly List<string> AllowedCommonProjects = new()
-    {
+    private static readonly List<string> AllowedCommonProjects =
+    [
         "HE.Investments.Common",
         "HE.Investments.DocumentService",
         "HE.Investments.Organisation",
         "HE.Investments.Account.Shared",
         "HE.Investments.Account.Api.Contract",
-        "HE.Investments.FrontDoor.Shared",
-    };
+        "HE.Investments.FrontDoor.Shared"
+    ];
 
     public static IList<string> GetNotAllowedProjectReferences(Assembly assembly)
     {

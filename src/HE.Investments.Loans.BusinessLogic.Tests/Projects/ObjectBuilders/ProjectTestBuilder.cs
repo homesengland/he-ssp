@@ -25,7 +25,7 @@ internal sealed class ProjectTestBuilder
 
         _project.ProvideHomesCount(HomesCountTestData.ValidHomesCount);
 
-        _project.ProvideHomesTypes(new HomesTypes(new string[] { "Home" }, string.Empty));
+        _project.ProvideHomesTypes(new HomesTypes(["Home"], string.Empty));
 
         _project.ProvideProjectType(new ProjectType("Greenfield"));
 

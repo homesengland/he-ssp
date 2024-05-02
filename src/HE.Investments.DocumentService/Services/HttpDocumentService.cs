@@ -37,14 +37,12 @@ public class HttpDocumentService : IDocumentService
         {
             ListTitle = query.ListTitle,
             ListAlias = query.ListAlias,
-            FolderPaths = query.FolderPaths.ToList(),
+            FolderPaths = [.. query.FolderPaths],
             PagingInfo = null,
         };
 
-        using var request = new HttpRequestMessage(HttpMethod.Post, uri.ToString())
-        {
-            Content = new StringContent(JsonSerializer.Serialize(content), Encoding.UTF8, "application/json"),
-        };
+        using var request = new HttpRequestMessage(HttpMethod.Post, uri.ToString());
+        request.Content = new StringContent(JsonSerializer.Serialize(content), Encoding.UTF8, "application/json");
 
         var result = await SendAsync<TableResultContract>(request, cancellationToken);
         return result.Items.Select(x => new FileDetails<TMetadata>(

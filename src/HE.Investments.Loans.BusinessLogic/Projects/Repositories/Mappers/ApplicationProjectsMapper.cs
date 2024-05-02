@@ -8,10 +8,10 @@ namespace HE.Investments.Loans.BusinessLogic.Projects.Repositories.Mappers;
 
 internal static class ApplicationProjectsMapper
 {
-    public static ApplicationProjects Map(LoanApplicationDto loanApplicationDto, DateTime now)
+    public static ApplicationProjects Map(LoanApplicationDto loanApplicationDto)
     {
         var loanApplicationId = LoanApplicationId.From(loanApplicationDto.loanApplicationId);
-        var projects = loanApplicationDto.siteDetailsList.Select(site => ProjectEntityMapper.Map(site, now));
+        var projects = loanApplicationDto.siteDetailsList.Select(ProjectEntityMapper.Map);
 
         return new ApplicationProjects(loanApplicationId, projects);
     }

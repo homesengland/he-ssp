@@ -619,11 +619,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         return await this.ExecuteCommand<TViewModel>(
             _mediator,
             command,
-            async () =>
-            {
-                return await this.ReturnToTaskListOrContinue(
-                    async () => await Continue(new { applicationId = applicationId.Value, deliveryPhaseId, workflow }));
-            },
+            async () => await this.ReturnToTaskListOrContinue(async () => await Continue(new { applicationId = applicationId.Value, deliveryPhaseId, workflow })),
             async () =>
             {
                 var deliveryPhaseDetails = await _mediator.Send(

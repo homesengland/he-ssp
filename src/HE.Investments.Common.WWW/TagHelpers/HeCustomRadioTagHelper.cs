@@ -52,11 +52,11 @@ public class HeCustomRadioTagHelper : TagHelper
             TagConstruct.ConstructClass(output, css);
 
             var radioItems = RadioItems.ToArray();
-            var conditionalInputIds = ConditionalInputIds?.ToArray() ?? Array.Empty<string>();
-            var conditionalInputLabels = ConditionalInputLabels?.ToArray() ?? Array.Empty<string>();
-            var conditionalInputNames = ConditionalInputNames?.ToArray() ?? Array.Empty<string>();
-            var conditionalInputValues = ConditionalInputValues?.ToArray() ?? Array.Empty<string>();
-            var hints = RadioHints?.ToArray() ?? Array.Empty<string>();
+            var conditionalInputIds = ConditionalInputIds?.ToArray() ?? [];
+            var conditionalInputLabels = ConditionalInputLabels?.ToArray() ?? [];
+            var conditionalInputNames = ConditionalInputNames?.ToArray() ?? [];
+            var conditionalInputValues = ConditionalInputValues?.ToArray() ?? [];
+            var hints = RadioHints?.ToArray() ?? [];
 
             var sb = new StringBuilder();
             for (var i = 0; i < RadioItems.Count(); i++)

@@ -1,3 +1,4 @@
+using System.Globalization;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Commands;
 using HE.Investment.AHP.Contract.Application.Queries;
@@ -321,7 +322,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
             application.ReferenceNumber,
             siteBasicModel.Name,
             application.Tenure,
-            application.NumberOfHomes.ToString()!,
+            application.NumberOfHomes?.ToString(CultureInfo.InvariantCulture)!,
             application.FundingRequested.DisplayPounds()!,
             application.TotalSchemeCost.DisplayPounds()!,
             application.RepresentationsAndWarranties == true ? "checked" : null);

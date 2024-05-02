@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.DocumentService.Services;
 using HE.Investments.Loans.BusinessLogic.CompanyStructure.Constants;
@@ -7,6 +8,7 @@ using HE.Investments.Loans.Contract.Application.Events;
 
 namespace HE.Investments.Loans.BusinessLogic.LoanApplication.EventHandlers;
 
+[SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1118:ParameterMustNotSpanMultipleLines", Justification = "Reviewed.")]
 public class CreateLoanApplicationFolderStructureEventHandler : IEventHandler<LoanApplicationHasBeenStartedEvent>
 {
     private readonly IDocumentService _documentService;
@@ -31,12 +33,11 @@ public class CreateLoanApplicationFolderStructureEventHandler : IEventHandler<Lo
 
         await _documentService.CreateFoldersAsync(
             _documentSettings.ListTitle,
-            new List<string>
-            {
+            [
                 $"{basePath}{CompanyStructureConstants.MoreInformationAboutOrganizationExternal}",
                 $"{basePath}{CompanyStructureConstants.MoreInformationAboutOrganizationInternal}",
                 $"{basePath}/internal/cashflow",
-            },
+            ],
             cancellationToken);
     }
 }

@@ -26,14 +26,14 @@ public class AuthorizeWithCompletedProfileAttribute : AuthorizeAttribute, IAsync
     {
         if (allowedFor.IsNotProvided())
         {
-            _allowedFor = new[]
-            {
+            _allowedFor = [
+
                 UserRole.Admin,
                 UserRole.Enhanced,
                 UserRole.Input,
                 UserRole.ViewOnly,
                 UserRole.Limited,
-            };
+            ];
         }
         else
         {

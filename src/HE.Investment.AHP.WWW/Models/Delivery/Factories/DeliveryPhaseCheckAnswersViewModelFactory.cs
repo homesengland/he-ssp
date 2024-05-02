@@ -52,7 +52,7 @@ public class DeliveryPhaseCheckAnswersViewModelFactory : IDeliveryPhaseCheckAnsw
         CreateAction createAction,
         bool isEditable)
     {
-        IList<SectionSummaryItemModel> items = new List<SectionSummaryItemModel>
+        var items = new List<SectionSummaryItemModel>
         {
             new(
                 "Phase name",

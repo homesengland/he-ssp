@@ -19,18 +19,14 @@ namespace HE.Investments.Loans.BusinessLogic.Projects.Repositories;
 
 public class ApplicationProjectsRepository : IApplicationProjectsRepository
 {
-    private readonly IDateTimeProvider _timeProvider;
-
     private readonly IOrganizationServiceAsync2 _serviceClient;
 
     private readonly IEventDispatcher _eventDispatcher;
 
     public ApplicationProjectsRepository(
-        IDateTimeProvider dateTime,
         IOrganizationServiceAsync2 serviceClient,
         IEventDispatcher eventDispatcher)
     {
-        _timeProvider = dateTime;
         _serviceClient = serviceClient;
         _eventDispatcher = eventDispatcher;
     }
@@ -51,7 +47,7 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
         var loanApplicationDto = CrmResponseSerializer.Deserialize<IList<LoanApplicationDto>>(response.invln_loanapplication)?.FirstOrDefault()
                                  ?? throw new NotFoundException(nameof(ApplicationProjects), loanApplicationId.ToString());
 
-        return ApplicationProjectsMapper.Map(loanApplicationDto, _timeProvider.Now);
+        return ApplicationProjectsMapper.Map(loanApplicationDto);
     }
 
     public async Task SaveAllAsync(ApplicationProjects applicationProjects, UserAccount userAccount, CancellationToken cancellationToken)
@@ -85,7 +81,7 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
         var siteDetailsDto = CrmResponseSerializer.Deserialize<SiteDetailsDto>(response.invln_sitedetail)
                              ?? throw new NotFoundException(nameof(Project), projectId.ToString());
 
-        return ProjectEntityMapper.Map(siteDetailsDto, _timeProvider.Now);
+        return ProjectEntityMapper.Map(siteDetailsDto);
     }
 
     public async Task SaveAsync(LoanApplicationId loanApplicationId, Project projectToSave, CancellationToken cancellationToken)

@@ -6,7 +6,7 @@ using Org::HE.Common.IntegrationModel.PortalIntegrationModel;
 
 namespace HE.Investment.AHP.Domain.Programme.Crm;
 
-internal class RequestCacheProgrammeCrmContextDecorator : IProgrammeCrmContext
+internal sealed class RequestCacheProgrammeCrmContextDecorator : IProgrammeCrmContext
 {
     private readonly InMemoryCache<ProgrammeDto, string> _cache = new();
 

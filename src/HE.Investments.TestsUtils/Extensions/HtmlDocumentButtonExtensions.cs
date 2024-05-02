@@ -1,6 +1,7 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
+using HE.Investments.Common.Extensions;
 
 namespace HE.Investments.TestsUtils.Extensions;
 
@@ -101,7 +102,7 @@ public static class HtmlDocumentButtonExtensions
             .Where(i => string.IsNullOrWhiteSpace(text) || i.TextContent.Contains(text))
             .ToList();
 
-        buttons.Any().Should().BeFalse("Button should not exist");
+        buttons.IsEmpty().Should().BeTrue("Button should not exist");
 
         return htmlDocument;
     }
@@ -113,14 +114,14 @@ public static class HtmlDocumentButtonExtensions
         return htmlDocument;
     }
 
-    private static IList<IElement> HasButton(this IHtmlDocument htmlDocument, string selectors)
+    private static List<IElement> HasButton(this IHtmlDocument htmlDocument, string selectors)
     {
         var buttons = htmlDocument
             .QuerySelectorAll(selectors)
             .Select(i => i)
             .ToList();
 
-        buttons.Any().Should().BeTrue("There is no Button on page");
+        buttons.IsNotEmpty().Should().BeTrue("There is no Button on page");
 
         return buttons;
     }

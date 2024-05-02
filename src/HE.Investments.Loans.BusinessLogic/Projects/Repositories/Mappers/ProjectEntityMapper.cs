@@ -16,7 +16,7 @@ namespace HE.Investments.Loans.BusinessLogic.Projects.Repositories.Mappers;
 
 internal static class ProjectEntityMapper
 {
-    public static Project Map(SiteDetailsDto siteDetailsDto, DateTime now)
+    public static Project Map(SiteDetailsDto siteDetailsDto)
     {
         var startDate = GetStartDate(siteDetailsDto);
 
@@ -33,7 +33,7 @@ internal static class ProjectEntityMapper
             siteDetailsDto.siteCoordinates.IsProvided() ? new Coordinates(siteDetailsDto.siteCoordinates) : null,
             siteDetailsDto.landRegistryTitleNumber.IsProvided() ? new LandRegistryTitleNumber(siteDetailsDto.landRegistryTitleNumber) : null,
             siteDetailsDto.siteOwnership.IsProvided() ? new LandOwnership(siteDetailsDto.siteOwnership!.Value) : null,
-            AdditionalDetailsMapper.MapFromCrm(siteDetailsDto, now),
+            AdditionalDetailsMapper.MapFromCrm(siteDetailsDto),
             siteDetailsDto.IsProvided() ? GrantFundingStatusMapper.FromString(siteDetailsDto.publicSectorFunding) : null,
             PublicSectorGrantFundingMapper.MapFromCrm(siteDetailsDto),
             siteDetailsDto.existingLegalCharges.IsProvided() ? new ChargesDebt(siteDetailsDto.existingLegalCharges ?? false, siteDetailsDto.existingLegalChargesInformation) : null,

@@ -45,7 +45,7 @@ public class ProjectRepository : IProjectRepository
 
     public async Task<ProjectEntity> Save(ProjectEntity project, UserAccount userAccount, CancellationToken cancellationToken)
     {
-        if (project.IsModified is false)
+        if (!project.IsModified)
         {
             return project;
         }

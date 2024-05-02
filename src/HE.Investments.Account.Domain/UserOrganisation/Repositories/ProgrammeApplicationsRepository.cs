@@ -23,19 +23,19 @@ public class ProgrammeApplicationsRepository : IProgrammeApplicationsRepository
 
     public async Task<IList<Programme>> GetAllProgrammes(UserAccount userAccount, CancellationToken cancellationToken)
     {
-        return new List<Programme>
-        {
+        return
+        [
             new(ProgrammeType.Loans, await GetLoansApplications(userAccount, cancellationToken)),
             new(ProgrammeType.Ahp, await GetAhpApplications(userAccount, cancellationToken)),
-        };
+        ];
     }
 
     public async Task<IList<Programme>> GetLoanProgrammes(UserAccount userAccount, CancellationToken cancellationToken)
     {
-        return new List<Programme>
-        {
+        return
+        [
             new(ProgrammeType.Loans, await GetLoansApplications(userAccount, cancellationToken)),
-        };
+        ];
     }
 
     public async Task<bool> HasAnyAhpApplication(UserAccount userAccount, CancellationToken cancellationToken)

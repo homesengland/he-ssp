@@ -16,7 +16,7 @@ namespace HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories.Mapper
 
 public static class LoanApplicationMapper
 {
-    public static LoanApplicationViewModel FromCrmDto(LoanApplicationDto loanApplicationDto, DateTime now)
+    public static LoanApplicationViewModel FromCrmDto(LoanApplicationDto loanApplicationDto)
     {
         var model = new LoanApplicationViewModel
         {
@@ -27,7 +27,7 @@ public static class LoanApplicationMapper
             Funding = MapToFundingViewModel(loanApplicationDto),
             Security = MapToSecurityViewModel(loanApplicationDto),
             ReferenceNumber = loanApplicationDto.name,
-            Projects = ApplicationProjectsMapper.Map(loanApplicationDto, now).Projects.Select(p => ProjectMapper.MapToViewModel(p, LoanApplicationId.From(loanApplicationDto.loanApplicationId))),
+            Projects = ApplicationProjectsMapper.Map(loanApplicationDto).Projects.Select(p => ProjectMapper.MapToViewModel(p, LoanApplicationId.From(loanApplicationDto.loanApplicationId))),
         };
 
         model.SetTimestamp(loanApplicationDto.LastModificationOn ?? loanApplicationDto.createdOn);
@@ -87,7 +87,7 @@ public static class LoanApplicationMapper
             LoanApplicationId = Guid.Parse(loanApplicationDto.loanApplicationId),
             Purpose = loanApplicationDto.companyPurpose.MapToCommonResponse(),
             OrganisationMoreInformation = loanApplicationDto.existingCompany,
-            HomesBuilt = loanApplicationDto.companyExperience.ToString(),
+            HomesBuilt = loanApplicationDto.companyExperience?.ToString(CultureInfo.InvariantCulture),
             Status = SectionStatusMapper.Map(loanApplicationDto.CompanyStructureAndExperienceCompletionStatus),
         };
     }

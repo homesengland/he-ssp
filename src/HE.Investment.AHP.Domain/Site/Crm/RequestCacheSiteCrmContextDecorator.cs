@@ -4,7 +4,7 @@ using HE.Investments.Common.Infrastructure.Cache;
 
 namespace HE.Investment.AHP.Domain.Site.Crm;
 
-internal class RequestCacheSiteCrmContextDecorator : ISiteCrmContext
+internal sealed class RequestCacheSiteCrmContextDecorator : ISiteCrmContext
 {
     private readonly ISiteCrmContext _decorated;
 

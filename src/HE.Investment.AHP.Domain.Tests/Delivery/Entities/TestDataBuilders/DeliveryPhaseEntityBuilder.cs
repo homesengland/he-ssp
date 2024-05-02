@@ -20,7 +20,7 @@ namespace HE.Investment.AHP.Domain.Tests.Delivery.Entities.TestDataBuilders;
 
 public class DeliveryPhaseEntityBuilder
 {
-    private readonly IList<HomesToDeliverInPhase> _homesToDeliver = new List<HomesToDeliverInPhase>();
+    private readonly List<HomesToDeliverInPhase> _homesToDeliver = new();
 
     private readonly ApplicationBasicInfo _applicationBasicInfo = ApplicationBasicInfoTestData.CreateAffordableRentInDraftState();
 

@@ -256,7 +256,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
 
     [HttpPost("check-answers")]
     [WorkflowState(FinancialDetailsWorkflowState.CheckAnswers)]
-    public async Task<IActionResult> Complete(string applicationId, FinancialDetailsCheckAnswersModel model, string action, CancellationToken cancellationToken)
+    public async Task<IActionResult> Complete(string applicationId, FinancialDetailsCheckAnswersModel model, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new CompleteFinancialDetailsCommand(AhpApplicationId.From(applicationId), model.IsSectionCompleted), cancellationToken);
 
@@ -279,7 +279,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
 
     [HttpGet]
     [WorkflowState(FinancialDetailsWorkflowState.ReturnToTaskList)]
-    public IActionResult ReturnToTaskList(string applicationId, CancellationToken cancellationToken)
+    public IActionResult ReturnToTaskList(string applicationId)
     {
         return RedirectToAction(
                 nameof(ApplicationController.TaskList),

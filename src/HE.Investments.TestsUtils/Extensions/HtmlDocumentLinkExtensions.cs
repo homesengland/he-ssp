@@ -73,7 +73,7 @@ public static class HtmlDocumentLinkExtensions
         return htmlDocument;
     }
 
-    private static IList<IElement> GetLinkButtons(this IHtmlDocument htmlDocument)
+    private static List<IElement> GetLinkButtons(this IHtmlDocument htmlDocument)
     {
         return htmlDocument
             .QuerySelectorAll("button.govuk-button-link")
@@ -81,7 +81,7 @@ public static class HtmlDocumentLinkExtensions
             .ToList();
     }
 
-    private static IList<IElement> GetLinks(this IHtmlDocument htmlDocument)
+    private static List<IElement> GetLinks(this IHtmlDocument htmlDocument)
     {
         return htmlDocument
             .QuerySelectorAll("a.govuk-link")

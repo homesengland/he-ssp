@@ -34,7 +34,7 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
         yield return new SectionSummaryViewModel("Procurement", CreateProcurementSummary(siteDetails, CreateAction, isEditable));
     }
 
-    private static IList<SectionSummaryItemModel> CreateSiteDetailsSummary(SiteModel site, CreateAction createAction, bool isEditable)
+    private static List<SectionSummaryItemModel> CreateSiteDetailsSummary(SiteModel site, CreateAction createAction, bool isEditable)
     {
         return new List<SectionSummaryItemModel>
         {
@@ -42,7 +42,7 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
         };
     }
 
-    private static IList<SectionSummaryItemModel> CreateSection106Summary(Section106Dto? section, CreateAction createAction, bool isEditable)
+    private static List<SectionSummaryItemModel> CreateSection106Summary(Section106Dto? section, CreateAction createAction, bool isEditable)
     {
         var summary = new List<SectionSummaryItemModel>
         {
@@ -92,7 +92,7 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
         return summary;
     }
 
-    private static IList<SectionSummaryItemModel> CreateLocationSummary(LocalAuthority? localAuthority, CreateAction createAction, bool isEditable)
+    private static List<SectionSummaryItemModel> CreateLocationSummary(LocalAuthority? localAuthority, CreateAction createAction, bool isEditable)
     {
         return new List<SectionSummaryItemModel>
         {
@@ -104,7 +104,7 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
         };
     }
 
-    private static IList<SectionSummaryItemModel> CreatePlanningSummary(SitePlanningDetails planning, CreateAction createAction, bool isEditable)
+    private static List<SectionSummaryItemModel> CreatePlanningSummary(SitePlanningDetails planning, CreateAction createAction, bool isEditable)
     {
         var detailsAction = createAction(nameof(Controller.PlanningDetails));
         var summary = new List<SectionSummaryItemModel>
@@ -189,7 +189,7 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
         return summary;
     }
 
-    private static IList<SectionSummaryItemModel> CreateDesignGuidelinesSummary(SiteModel site, CreateAction createAction, bool isEditable)
+    private static List<SectionSummaryItemModel> CreateDesignGuidelinesSummary(SiteModel site, CreateAction createAction, bool isEditable)
     {
         var summary = new List<SectionSummaryItemModel>
         {
@@ -216,7 +216,7 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
         return summary;
     }
 
-    private static IList<SectionSummaryItemModel> CreateConsortiumSummary()
+    private static List<SectionSummaryItemModel> CreateConsortiumSummary()
     {
         // TODO: AB#65903: Site information - Partner information
         return new List<SectionSummaryItemModel>
@@ -227,13 +227,13 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
         };
     }
 
-    private static IList<SectionSummaryItemModel> CreateUrbSummary()
+    private static List<SectionSummaryItemModel> CreateUrbSummary()
     {
         // TODO: AB#65903: Site information - Partner information
         return new List<SectionSummaryItemModel> { new("Owner of the homes", "TODO".ToOneElementList()) };
     }
 
-    private static IList<SectionSummaryItemModel> CreateLandDetailsSummary(SiteModel site, CreateAction createAction, bool isEditable)
+    private static List<SectionSummaryItemModel> CreateLandDetailsSummary(SiteModel site, CreateAction createAction, bool isEditable)
     {
         var summary = new List<SectionSummaryItemModel>
         {
@@ -294,7 +294,7 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
         return summary;
     }
 
-    private static IList<SectionSummaryItemModel> CreateSiteUseSummary(SiteModel site, CreateAction createAction, bool isEditable)
+    private static List<SectionSummaryItemModel> CreateSiteUseSummary(SiteModel site, CreateAction createAction, bool isEditable)
     {
         var summary = new List<SectionSummaryItemModel>
         {
@@ -336,7 +336,7 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
         return summary;
     }
 
-    private static IList<SectionSummaryItemModel> CreateMmcSummary(SiteModernMethodsOfConstruction mmc, CreateAction createAction, bool isEditable)
+    private static List<SectionSummaryItemModel> CreateMmcSummary(SiteModernMethodsOfConstruction mmc, CreateAction createAction, bool isEditable)
     {
         var summary = new List<SectionSummaryItemModel>
         {
@@ -398,7 +398,7 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
         return summary;
     }
 
-    private static IList<SectionSummaryItemModel> CreateProcurementSummary(SiteModel site, CreateAction createAction, bool isEditable)
+    private static List<SectionSummaryItemModel> CreateProcurementSummary(SiteModel site, CreateAction createAction, bool isEditable)
     {
         return new List<SectionSummaryItemModel>
         {

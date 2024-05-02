@@ -4,8 +4,8 @@ namespace HE.Investments.FrontDoor.Shared.Project.Crm;
 
 public static class ProjectCrmFields
 {
-    public static readonly IReadOnlyList<string> ProjectToRead = new List<string>
-    {
+    public static readonly IReadOnlyList<string> ProjectToRead =
+    [
         nameof(invln_FrontDoorProjectPOC.invln_Name),
         nameof(invln_FrontDoorProjectPOC.invln_FrontDoorProjectPOCId),
         nameof(invln_FrontDoorProjectPOC.invln_AmountofAffordableHomes),
@@ -24,5 +24,5 @@ public static class ProjectCrmFields
         nameof(invln_FrontDoorProjectPOC.invln_StartofProjectYear),
         nameof(invln_FrontDoorProjectPOC.invln_StartofProjectMonth),
         nameof(invln_FrontDoorProjectPOC.invln_LocalAuthorityId),
-    };
+    ];
 }

@@ -39,7 +39,7 @@ public class UploadSupportingDocumentsFileCommandHandler : ApplicationBaseComman
             async loanApplication =>
             {
                 await using var file = _fileFactory.Create(request.File);
-                uploadedFile = (await loanApplication.UploadFiles(_fileService, new[] { file }, _eventDispatcher, cancellationToken)).Single();
+                uploadedFile = (await loanApplication.UploadFiles(_fileService, [file], _eventDispatcher, cancellationToken)).Single();
             },
             request.LoanApplicationId,
             cancellationToken);

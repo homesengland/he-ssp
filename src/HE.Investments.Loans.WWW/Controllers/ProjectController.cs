@@ -707,7 +707,7 @@ public class ProjectController : WorkflowController<ProjectState>
         return ApplicationStatusDivision.GetAllStatusesForReadonlyMode().Contains(response.LoanApplication.Status);
     }
 
-    private IActionResult RedirectToTaskList(Guid id)
+    private RedirectToActionResult RedirectToTaskList(Guid id)
     {
         return RedirectToAction(
             nameof(LoanApplicationV2Controller.TaskList),

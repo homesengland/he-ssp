@@ -5,7 +5,7 @@ using HE.Investments.Common.Messages;
 using HE.Investments.Loans.Contract.Common;
 
 namespace HE.Investments.Loans.Contract.Funding.ValueObjects;
-public class GrossDevelopmentValue : MoneyValueObject
+public partial class GrossDevelopmentValue : MoneyValueObject
 {
     private const string DisplayName = "Gross Development Value";
 
@@ -23,7 +23,7 @@ public class GrossDevelopmentValue : MoneyValueObject
 
     public static GrossDevelopmentValue FromString(string grossDevelopmentValue)
     {
-        if (!Regex.IsMatch(grossDevelopmentValue.Trim(), "^[0-9]+([.][0-9]{1,2})?$"))
+        if (!GrossDevelopmentRegex().IsMatch(grossDevelopmentValue.Trim()))
         {
             OperationResult.ThrowValidationError(nameof(FundingViewModel.GrossDevelopmentValue), ValidationErrorMessage.EstimatedPoundInput("GDV"));
         }
@@ -35,4 +35,7 @@ public class GrossDevelopmentValue : MoneyValueObject
     {
         return Value.ToString("0.##", CultureInfo.InvariantCulture);
     }
+
+    [GeneratedRegex("^[0-9]+([.][0-9]{1,2})?$")]
+    private static partial Regex GrossDevelopmentRegex();
 }

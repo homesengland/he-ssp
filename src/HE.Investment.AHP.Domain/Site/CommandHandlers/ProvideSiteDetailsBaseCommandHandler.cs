@@ -18,10 +18,7 @@ public abstract class ProvideSiteDetailsBaseCommandHandler<TCommand> : SiteBaseC
     public Task<OperationResult> Handle(TCommand request, CancellationToken cancellationToken)
     {
         return Perform(
-            async site =>
-            {
-                await Provide(request, site, cancellationToken);
-            },
+            async site => await Provide(request, site, cancellationToken),
             request.SiteId,
             cancellationToken);
     }

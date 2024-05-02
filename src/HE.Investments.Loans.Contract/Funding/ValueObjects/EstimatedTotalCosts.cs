@@ -5,7 +5,7 @@ using HE.Investments.Common.Messages;
 using HE.Investments.Loans.Contract.Common;
 
 namespace HE.Investments.Loans.Contract.Funding.ValueObjects;
-public class EstimatedTotalCosts : MoneyValueObject
+public partial class EstimatedTotalCosts : MoneyValueObject
 {
     private const string DisplayName = "Estimated Total Costs";
 
@@ -23,7 +23,7 @@ public class EstimatedTotalCosts : MoneyValueObject
 
     public static EstimatedTotalCosts FromString(string estimatedTotalCosts)
     {
-        if (!Regex.IsMatch(estimatedTotalCosts.Trim(), "^[0-9]+([.][0-9]{1,2})?$"))
+        if (!EstimatedTotalCostsRegex().IsMatch(estimatedTotalCosts.Trim()))
         {
             OperationResult.ThrowValidationError(nameof(FundingViewModel.TotalCosts), ValidationErrorMessage.EstimatedPoundInput("total cost"));
         }
@@ -35,4 +35,7 @@ public class EstimatedTotalCosts : MoneyValueObject
     {
         return Value.ToString("0.##", CultureInfo.InvariantCulture);
     }
+
+    [GeneratedRegex("^[0-9]+([.][0-9]{1,2})?$")]
+    private static partial Regex EstimatedTotalCostsRegex();
 }

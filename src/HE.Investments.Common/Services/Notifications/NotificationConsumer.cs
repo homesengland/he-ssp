@@ -3,11 +3,11 @@ using HE.Investments.Common.Infrastructure.Cache.Interfaces;
 
 namespace HE.Investments.Common.Services.Notifications;
 
-internal class NotificationConsumer : INotificationConsumer
+internal sealed class NotificationConsumer : INotificationConsumer
 {
     private readonly ICacheService _cacheService;
 
-    private readonly IDictionary<string, IDisplayNotificationFactory> _displayNotificationFactories;
+    private readonly Dictionary<string, IDisplayNotificationFactory> _displayNotificationFactories;
 
     private readonly string _userNotificationKey;
 

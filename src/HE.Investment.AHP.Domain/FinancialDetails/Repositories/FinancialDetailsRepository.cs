@@ -56,7 +56,7 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
 
     public async Task<FinancialDetailsEntity> Save(FinancialDetailsEntity financialDetails, OrganisationId organisationId, CancellationToken cancellationToken)
     {
-        if (financialDetails.IsModified is false)
+        if (!financialDetails.IsModified)
         {
             return financialDetails;
         }

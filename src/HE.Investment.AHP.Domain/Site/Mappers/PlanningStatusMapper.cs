@@ -4,7 +4,7 @@ using HE.Investments.Common.CRM.Model;
 
 namespace HE.Investment.AHP.Domain.Site.Mappers;
 
-internal class PlanningStatusMapper : EnumMapper<SitePlanningStatus>
+internal sealed class PlanningStatusMapper : EnumMapper<SitePlanningStatus>
 {
     protected override IDictionary<SitePlanningStatus, int?> Mapping => new Dictionary<SitePlanningStatus, int?>
     {

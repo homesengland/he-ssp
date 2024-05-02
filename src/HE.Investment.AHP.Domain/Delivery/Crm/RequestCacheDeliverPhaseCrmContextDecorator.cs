@@ -4,7 +4,7 @@ using HE.Investments.Common.Infrastructure.Cache;
 
 namespace HE.Investment.AHP.Domain.Delivery.Crm;
 
-internal class RequestCacheDeliverPhaseCrmContextDecorator : IDeliveryPhaseCrmContext
+internal sealed class RequestCacheDeliverPhaseCrmContextDecorator : IDeliveryPhaseCrmContext
 {
     private readonly InMemoryCache<DeliveryPhaseDto, string> _cache = new();
 

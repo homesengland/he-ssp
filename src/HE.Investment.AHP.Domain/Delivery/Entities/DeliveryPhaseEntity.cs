@@ -19,7 +19,7 @@ namespace HE.Investment.AHP.Domain.Delivery.Entities;
 
 public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
 {
-    private readonly IList<HomesToDeliverInPhase> _homesToDeliver;
+    private readonly List<HomesToDeliverInPhase> _homesToDeliver;
 
     private readonly ModificationTracker _modificationTracker = new();
 
@@ -105,7 +105,7 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
 
     public bool IsHomeTypeUsed(HomeTypeId homeTypeId)
     {
-        return _homesToDeliver.Any(x => x.HomeTypeId == homeTypeId && x.Value > 0);
+        return _homesToDeliver.Exists(x => x.HomeTypeId == homeTypeId && x.Value > 0);
     }
 
     public int? GetHomesToBeDeliveredForHomeType(HomeTypeId homeTypeId)

@@ -38,10 +38,10 @@ public class ContactService : IContactService
         if (!string.IsNullOrEmpty(contactExternalId))
         {
             string[] fields =
-            {
+            [
                 "firstname", "lastname", "emailaddress1", "address1_telephone1", "invln_externalid", "jobtitle", "address1_city",
-                "address1_county", "address1_postalcode", "address1_country", "address1_telephone2", "invln_termsandconditionsaccepted",
-            };
+                "address1_county", "address1_postalcode", "address1_country", "address1_telephone2", "invln_termsandconditionsaccepted"
+            ];
             var retrievedContact = _contactRepository.GetContactViaExternalId(service, contactExternalId, fields);
             if (retrievedContact != null)
             {
@@ -292,17 +292,21 @@ public class ContactService : IContactService
         {
             contactRolesList.Add(new ContactRolesDto()
             {
-                contactRoles = new List<ContactRoleDto>()
-                        {
-                            new ContactRoleDto()
-                            {
-                                accountId = contactWebrole.Contains("invln_accountid") && contactWebrole["invln_accountid"] != null ? ((EntityReference)contactWebrole["invln_accountid"]).Id : Guid.Empty,
-                                accountName = GetAliasedValueAsStringOrDefault(contactWebrole, "acc.name"),
-                                permissionLevel = GetAliasedValueAsStringOrDefault(contactWebrole, "ppl.invln_name"),
-                                webRoleName = GetAliasedValueAsStringOrDefault(contactWebrole, "wr.invln_name"),
-                                permission = (GetAliasedValueAsObjectOrDefault(contactWebrole, "ppl.invln_permission") as OptionSetValue)?.Value,
-                            },
-                        },
+                contactRoles =
+                [
+                    new()
+                    {
+                        accountId =
+                            contactWebrole.Contains("invln_accountid") && contactWebrole["invln_accountid"] != null
+                                ? ((EntityReference)contactWebrole["invln_accountid"]).Id
+                                : Guid.Empty,
+                        accountName = GetAliasedValueAsStringOrDefault(contactWebrole, "acc.name"),
+                        permissionLevel = GetAliasedValueAsStringOrDefault(contactWebrole, "ppl.invln_name"),
+                        webRoleName = GetAliasedValueAsStringOrDefault(contactWebrole, "wr.invln_name"),
+                        permission = (GetAliasedValueAsObjectOrDefault(contactWebrole, "ppl.invln_permission") as OptionSetValue)?.Value,
+                    }
+
+                ],
                 externalId = GetAliasedValueAsStringOrDefault(contactWebrole, "cnt.invln_externalid"),
             });
         }

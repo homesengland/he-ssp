@@ -7,6 +7,6 @@ public static class ContactCrmExtensions
     public static bool IsConnectedWithExternalIdentity(this ContactDto contact)
     {
         return !string.IsNullOrWhiteSpace(contact.contactExternalId)
-               && !contact.contactExternalId.StartsWith("_", StringComparison.InvariantCulture);
+               && !contact.contactExternalId.StartsWith('_');
     }
 }

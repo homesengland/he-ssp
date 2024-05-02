@@ -82,7 +82,7 @@ public class LoansFileService<TFileParams> : ILoansFileService<TFileParams>
 
     private async Task<IReadOnlyCollection<UploadedFile>> GetFiles(FileLocation fileLocation, CancellationToken cancellationToken)
     {
-        var query = new GetFilesQuery(fileLocation.ListTitle, fileLocation.ListAlias, new List<string> { fileLocation.FolderPath });
+        var query = new GetFilesQuery(fileLocation.ListTitle, fileLocation.ListAlias, [fileLocation.FolderPath]);
         var files = await _documentService.GetFilesAsync<LoansFileMetadata>(query, cancellationToken);
 
         return files.Select(MapToUploadedFile).ToList();

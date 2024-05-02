@@ -4,7 +4,7 @@ using HE.Investments.Common.Infrastructure.Cache;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Crm;
 
-internal class RequestCacheHomeTypeCrmContextDecorator : IHomeTypeCrmContext
+internal sealed class RequestCacheHomeTypeCrmContextDecorator : IHomeTypeCrmContext
 {
     private readonly InMemoryCache<HomeTypeDto, string> _cache = new();
 

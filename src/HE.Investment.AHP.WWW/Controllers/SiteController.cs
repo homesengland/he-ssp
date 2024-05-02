@@ -480,7 +480,6 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     [HttpPost("{siteId}/national-design-guide")]
     [WorkflowState(SiteWorkflowState.NationalDesignGuide)]
     public async Task<IActionResult> NationalDesignGuide(
-        [FromRoute] string siteId,
         NationalDesignGuidePrioritiesModel model,
         CancellationToken cancellationToken)
     {

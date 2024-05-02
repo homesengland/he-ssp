@@ -8,7 +8,7 @@ public class InformationAgreement : ValueObject
 {
     public InformationAgreement(string? value)
     {
-        if (bool.TryParse(value, out var parsedValue) != true)
+        if (!bool.TryParse(value, out var parsedValue))
         {
             OperationResult
                 .New()

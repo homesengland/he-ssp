@@ -36,7 +36,7 @@ public class UsersCrmContext : IUsersCrmContext
     {
         var roles = await _contactService.GetContactRolesForOrganisationContacts(
             _organizationServiceAsync,
-            new List<string> { id },
+            [id],
             ShortGuid.ToGuidAsString(organisationId));
 
         return roles.Select(GetUserRole).FirstOrDefault();

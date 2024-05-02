@@ -10,13 +10,13 @@ public record UserAccount(
     OrganisationBasicInfo? Organisation,
     IReadOnlyCollection<UserRole> Roles) : IUserAccount
 {
-    public bool CanManageUsers => HasOneOfRole(AccountAccessContext.ManageUsersRoles.ToArray());
+    public bool CanManageUsers => HasOneOfRole([.. AccountAccessContext.ManageUsersRoles]);
 
-    public bool CanAccessOrganisationView => HasOneOfRole(AccountAccessContext.OrganisationViewRoles.ToArray());
+    public bool CanAccessOrganisationView => HasOneOfRole([.. AccountAccessContext.OrganisationViewRoles]);
 
-    public bool CanSubmitApplication => HasOneOfRole(AccountAccessContext.SubmitApplicationRoles.ToArray());
+    public bool CanSubmitApplication => HasOneOfRole([.. AccountAccessContext.SubmitApplicationRoles]);
 
-    public bool CanEditApplication => HasOneOfRole(AccountAccessContext.EditApplicationRoles.ToArray());
+    public bool CanEditApplication => HasOneOfRole([.. AccountAccessContext.EditApplicationRoles]);
 
     public UserRole Role() => Roles.Count > 0 ? Roles.Max() : throw new UnauthorizedAccessException();
 

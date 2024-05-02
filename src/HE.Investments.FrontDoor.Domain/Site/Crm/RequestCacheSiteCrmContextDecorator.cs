@@ -5,7 +5,7 @@ using HE.Investments.Common.Infrastructure.Cache;
 
 namespace HE.Investments.FrontDoor.Domain.Site.Crm;
 
-internal class RequestCacheSiteCrmContextDecorator : ISiteCrmContext
+internal sealed class RequestCacheSiteCrmContextDecorator : ISiteCrmContext
 {
     private readonly InMemoryCache<FrontDoorProjectSiteDto, string> _siteCache = new();
 

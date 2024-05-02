@@ -137,10 +137,10 @@ public static class SiteEntityToSiteDtoMapper
         };
     }
 
-    private static IList<int> MapCollection<T>(IEnumerable<T>? values, EnumMapper<T> mapper)
+    private static List<int> MapCollection<T>(IEnumerable<T>? values, EnumMapper<T> mapper)
         where T : struct
     {
-        return (values ?? Enumerable.Empty<T>())
+        return (values ?? [])
             .Select(x => mapper.ToDto(x))
             .Where(x => x != null)
             .Cast<int>()

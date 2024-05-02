@@ -52,7 +52,7 @@ public class SectionSummaryItemTests : ViewComponentTestBase<SectionSummaryItemT
     public async Task ShouldDisplayView_ForMissingValue()
     {
         // given
-        var model = CreateTestModel(values: new List<string>());
+        var model = CreateTestModel(values: []);
 
         // when
         var document = await Render(ViewPath, model);
@@ -69,7 +69,7 @@ public class SectionSummaryItemTests : ViewComponentTestBase<SectionSummaryItemT
         bool isEditable = true,
         bool isVisible = true)
     {
-        values ??= new List<string> { "test text message", "second message" };
+        values ??= ["test text message", "second message"];
         files ??= new Dictionary<string, string> { { "some.pdf", "url" }, { "example.doc", "url" } };
 
         return new SectionSummaryItemModel(name, values, actionUrl, files, isEditable, isVisible);

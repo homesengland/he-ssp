@@ -1,6 +1,7 @@
 using HE.Investment.AHP.Domain.Common.FilePolicies;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
+using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.Domain.Common.Entities;
 
@@ -8,9 +9,9 @@ public class Files<TFileEntity>
 {
     private readonly IFilePolicy<int>? _filesCountPolicy;
 
-    private readonly IList<UploadedFile> _filesToRemove = new List<UploadedFile>();
+    private readonly List<UploadedFile> _filesToRemove = [];
 
-    private readonly IList<TFileEntity> _filesToUpload = new List<TFileEntity>();
+    private readonly List<TFileEntity> _filesToUpload = [];
 
     public Files(IEnumerable<UploadedFile>? uploadedFiles = null, IFilePolicy<int>? filesCountPolicy = null)
     {
@@ -20,7 +21,7 @@ public class Files<TFileEntity>
 
     public IList<UploadedFile> UploadedFiles { get; }
 
-    public bool IsModified => _filesToUpload.Any() || _filesToRemove.Any();
+    public bool IsModified => _filesToUpload.IsNotEmpty() || _filesToRemove.IsNotEmpty();
 
     public void AddFilesToUpload(IList<TFileEntity> files)
     {

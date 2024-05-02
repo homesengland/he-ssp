@@ -64,7 +64,7 @@ internal class OrganizationCrmSearchService : IOrganizationCrmSearchService
         return organization;
     }
 
-    private static IList<OrganizationDetailsDto> MapRetrievedEntites(EntityCollection? retrievedEntities)
+    private static List<OrganizationDetailsDto> MapRetrievedEntites(EntityCollection? retrievedEntities)
     {
         if (retrievedEntities != null && retrievedEntities.Entities.Count > 0)
         {
