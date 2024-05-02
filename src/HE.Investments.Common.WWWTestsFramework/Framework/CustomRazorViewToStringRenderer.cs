@@ -12,6 +12,14 @@ namespace HE.Investments.Common.WWWTestsFramework.Framework;
 
 internal sealed class CustomRazorViewToStringRenderer
 {
+    private static readonly string[] Second =
+    [
+        "Hint:",
+        "- Check whether you have added reference to the Razor Class Library that contains the view files.",
+        "- Check whether the view file name is correct or exists at the given path.",
+        "- Refer documentation or file issue here: https://github.com/soundaranbu/RazorTemplating"
+    ];
+
     private readonly IRazorViewEngine _viewEngine;
     private readonly ITempDataProvider _tempDataProvider;
     private readonly IServiceProvider _serviceProvider;
@@ -70,13 +78,7 @@ internal sealed class CustomRazorViewToStringRenderer
         var errorMessage = string.Join(
             Environment.NewLine,
             new string[] { $"Unable to find view '{viewName}'. The following locations were searched:" }.Concat(searchedLocations)
-                .Concat(new string[]
-                {
-                    "Hint:",
-                    "- Check whether you have added reference to the Razor Class Library that contains the view files.",
-                    "- Check whether the view file name is correct or exists at the given path.",
-                    "- Refer documentation or file issue here: https://github.com/soundaranbu/RazorTemplating",
-                }));
+                .Concat(Second));
 
         throw new InvalidOperationException(errorMessage);
     }

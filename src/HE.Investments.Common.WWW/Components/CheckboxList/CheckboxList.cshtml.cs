@@ -20,7 +20,7 @@ public class CheckboxList : ViewComponent
     {
         var availableOptionsList = availableOptions.ToList();
 
-        foreach (var value in selectedValues ?? new List<Enum>())
+        foreach (var value in selectedValues ?? [])
         {
             var option = availableOptionsList.Find(x => x.Value == value.ToString());
             if (option != null)

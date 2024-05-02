@@ -165,10 +165,10 @@ public static class SiteDtoToSiteEntityMapper
                 MapCollection(dto.mmc2DSubcategories, ModernMethodsConstruction2DSubcategoriesTypeMapper),
                 MapCollection(dto.mmc3DSubcategories, ModernMethodsConstruction3DSubcategoriesTypeMapper)));
 
-    private static IList<T> MapCollection<T>(IList<int>? values, EnumMapper<T> mapper)
+    private static List<T> MapCollection<T>(IList<int>? values, EnumMapper<T> mapper)
         where T : struct
     {
-        return (values ?? Enumerable.Empty<int>())
+        return (values ?? [])
             .Select(x => mapper.ToDomain(x))
             .Where(x => x != null)
             .Cast<T>()

@@ -22,7 +22,7 @@ internal static class ProjectMapper
         {
             ProjectId = project.Id.Value,
             ProjectName = project.Name?.Value ?? projectPrefillData?.Name,
-            HomesCount = project.HomesCount?.Value ?? projectPrefillData?.NumberOfHomes.ToString(),
+            HomesCount = project.HomesCount?.Value ?? projectPrefillData?.NumberOfHomes?.ToString(CultureInfo.InvariantCulture),
             HomeTypes = project.HomesTypes?.HomesTypesValue,
             OtherHomeTypes = project.HomesTypes?.OtherHomesTypesValue,
             ProjectType = project.ProjectType?.Value,

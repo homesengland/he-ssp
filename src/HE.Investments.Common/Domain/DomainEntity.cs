@@ -5,7 +5,7 @@ namespace HE.Investments.Common.Domain;
 
 public abstract class DomainEntity
 {
-    private readonly IList<IDomainEvent> _domainEvents = new List<IDomainEvent>();
+    private readonly IList<IDomainEvent> _domainEvents = [];
 
     public void Publish(IDomainEvent domainEvent)
     {
@@ -14,7 +14,7 @@ public abstract class DomainEntity
 
     public virtual IReadOnlyList<IDomainEvent> GetDomainEventsAndRemove()
     {
-        var toReturn = new ReadOnlyCollection<IDomainEvent>(_domainEvents.ToArray());
+        var toReturn = new ReadOnlyCollection<IDomainEvent>([.. _domainEvents]);
         _domainEvents.Clear();
         return toReturn;
     }

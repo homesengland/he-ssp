@@ -23,6 +23,6 @@ public class ErrorMessage : ViewComponent
         var (_, monthInputError) = ViewData.ModelState.GetErrors($"{fieldName}.Month");
         var (_, yearInputError) = ViewData.ModelState.GetErrors($"{fieldName}.Year");
 
-        return new List<string> { dayInputError, monthInputError, yearInputError };
+        return [dayInputError, monthInputError, yearInputError];
     }
 }

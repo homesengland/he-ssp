@@ -4,7 +4,7 @@ namespace HE.Investments.Common.WWW.Routing;
 
 public abstract class BreadcrumbsBuilderBase
 {
-    private readonly List<Breadcrumb> _breadcrumbs = new();
+    private readonly List<Breadcrumb> _breadcrumbs = [];
 
     public IList<Breadcrumb> Build()
     {

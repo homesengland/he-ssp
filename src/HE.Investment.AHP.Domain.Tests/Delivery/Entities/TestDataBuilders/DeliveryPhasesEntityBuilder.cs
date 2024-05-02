@@ -7,9 +7,9 @@ namespace HE.Investment.AHP.Domain.Tests.Delivery.Entities.TestDataBuilders;
 
 public class DeliveryPhasesEntityBuilder
 {
-    private readonly IList<HomesToDeliver> _homesToDelivers = new List<HomesToDeliver>();
+    private readonly List<HomesToDeliver> _homesToDelivers = new();
 
-    private readonly IList<DeliveryPhaseEntity> _deliveryPhases = new List<DeliveryPhaseEntity>();
+    private readonly List<DeliveryPhaseEntity> _deliveryPhases = new();
 
     private SectionStatus _status = SectionStatus.NotStarted;
 

@@ -32,7 +32,7 @@ public class ContactRepository : IContactRepository
                     </fetch>";
 
         var result = service.RetrieveMultiple(new FetchExpression(fetchXml));
-        return result.Entities.ToList();
+        return [.. result.Entities];
     }
 
     public Entity? GetContactViaExternalId(IOrganizationServiceAsync2 service, string contactExternalId, string[]? columnSet = null)

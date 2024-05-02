@@ -4,7 +4,7 @@ public static class TelephoneNumberRecognizer
 {
     public static bool StartWithCountryCode(string telephoneNumber)
     {
-        return telephoneNumber.StartsWith("+", StringComparison.InvariantCulture)
+        return telephoneNumber.StartsWith('+')
                || telephoneNumber.StartsWith("00", StringComparison.InvariantCulture);
     }
 

@@ -11,7 +11,7 @@ using OrganisationId = HE.Investments.Account.Shared.User.ValueObjects.Organisat
 
 namespace HE.Investments.Account.Shared.Repositories;
 
-internal class AccountHttpRepository : IAccountRepository
+internal sealed class AccountHttpRepository : IAccountRepository
 {
     private readonly HttpClient _httpClient;
 
@@ -22,11 +22,8 @@ internal class AccountHttpRepository : IAccountRepository
 
     public async Task<IList<UserAccount>> GetUserAccounts(UserGlobalId userGlobalId, string userEmail)
     {
-        var accounts = await _httpClient.GetFromJsonAsync<AccountDetails>($"api/user/{userGlobalId}/accounts?userEmail={HttpUtility.UrlEncode(userEmail)}");
-        if (accounts == null)
-        {
-            throw new NotFoundException($"Cannot find User Account with id {userGlobalId}.");
-        }
+        var accounts = await _httpClient.GetFromJsonAsync<AccountDetails>($"api/user/{userGlobalId}/accounts?userEmail={HttpUtility.UrlEncode(userEmail)}")
+            ?? throw new NotFoundException($"Cannot find User Account with id {userGlobalId}.");
 
         return accounts.Organisations.Select(x => new UserAccount(
                 userGlobalId,
@@ -43,11 +40,8 @@ internal class AccountHttpRepository : IAccountRepository
 
     public async Task<UserProfileDetails> GetProfileDetails(UserGlobalId userGlobalId)
     {
-        var profile = await _httpClient.GetFromJsonAsync<ProfileDetails>($"api/user/{userGlobalId}/profile");
-        if (profile == null)
-        {
-            throw new NotFoundException($"Cannot find User Profile with id {userGlobalId}.");
-        }
+        var profile = await _httpClient.GetFromJsonAsync<ProfileDetails>($"api/user/{userGlobalId}/profile")
+            ?? throw new NotFoundException($"Cannot find User Profile with id {userGlobalId}.");
 
         return new UserProfileDetails(
             profile.FirstName.IsProvided() ? new YourFirstName(profile.FirstName) : null,

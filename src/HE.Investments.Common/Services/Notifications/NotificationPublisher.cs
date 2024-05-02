@@ -3,7 +3,7 @@ using HE.Investments.Common.Infrastructure.Cache.Interfaces;
 
 namespace HE.Investments.Common.Services.Notifications;
 
-internal class NotificationPublisher : INotificationPublisher
+internal sealed class NotificationPublisher : INotificationPublisher
 {
     private readonly ICacheService _cacheService;
 

@@ -1,3 +1,5 @@
+using HE.Investments.Common.Extensions;
+
 namespace HE.Investments.Loans.BusinessLogic.LoanApplication.ValueObjects;
 public class ProjectsSection
 {
@@ -5,16 +7,15 @@ public class ProjectsSection
 
     public ProjectsSection(IEnumerable<ProjectBasicData> projects)
     {
-        _projects = new List<ProjectBasicData>();
-
+        _projects = [];
         _projects.AddRange(projects);
     }
 
     public IReadOnlyCollection<ProjectBasicData> Projects => _projects.AsReadOnly();
 
-    public static ProjectsSection Empty() => new(Enumerable.Empty<ProjectBasicData>());
+    public static ProjectsSection Empty() => new([]);
 
-    public bool IsCompleted() => _projects.Any() && _projects.TrueForAll(project => project.IsCompleted());
+    public bool IsCompleted() => _projects.IsNotEmpty() && _projects.TrueForAll(project => project.IsCompleted());
 
     public int TotalHomesBuilt() => _projects.Aggregate(0, (sum, project) => sum += project?.HomesCount?.AsInt() ?? 0);
 }

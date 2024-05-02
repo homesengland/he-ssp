@@ -11,25 +11,25 @@ public class CreateTests
     public void ShouldThrowException_WhenAcquisitionMilestoneDetailsProvidedAndIsOnlyCompletionMilestone()
     {
         // given && when
-        var action = () => new DeliveryPhaseMilestonesBuilder()
-            .WithIsOnlyCompletionMilestone()
-            .Build();
+        static DeliveryPhaseMilestones Action() =>
+            new DeliveryPhaseMilestonesBuilder().WithIsOnlyCompletionMilestone()
+                .Build();
 
         // then
-        AssertException(action, "Cannot provide Acquisition Milestone details.");
+        AssertException(Action, "Cannot provide Acquisition Milestone details.");
     }
 
     [Fact]
     public void ShouldThrowException_WhenStartOnSiteMilestoneDetailsProvidedAndIsOnlyCompletionMilestone()
     {
         // given && when
-        var action = () => new DeliveryPhaseMilestonesBuilder()
-            .WithIsOnlyCompletionMilestone()
-            .WithoutAcquisitionMilestoneDetails()
-            .Build();
+        static DeliveryPhaseMilestones Action() =>
+            new DeliveryPhaseMilestonesBuilder().WithIsOnlyCompletionMilestone()
+                .WithoutAcquisitionMilestoneDetails()
+                .Build();
 
         // then
-        AssertException(action, "Cannot provide Start On Site Milestone details.");
+        AssertException(Action, "Cannot provide Start On Site Milestone details.");
     }
 
     private static void AssertException(Func<DeliveryPhaseMilestones> action, string errorMessage)

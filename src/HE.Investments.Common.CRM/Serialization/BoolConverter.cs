@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace HE.Investments.Common.CRM.Serialization;
 
-internal class BoolConverter : JsonConverter<bool>
+internal sealed class BoolConverter : JsonConverter<bool>
 {
     public override void Write(Utf8JsonWriter writer, bool value, JsonSerializerOptions options) =>
         writer.WriteBooleanValue(value);

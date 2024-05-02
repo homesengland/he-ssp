@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using HE.Investments.Organisation.CompaniesHouse;
 using HE.Investments.Organisation.CompaniesHouse.Contract;
 using HE.Investments.TestsUtils.TestFramework;
@@ -5,6 +6,7 @@ using Moq;
 
 namespace HE.Investments.Organisation.Tests.TestObjectBuilders;
 
+[SuppressMessage("Style", "IDE0305", Justification = "Not sure how to fix it")]
 public class CompaniesHouseApiTestBuilder : TestServiceBuilder<ICompaniesHouseApi>
 {
     public static CompaniesHouseApiTestBuilder New()

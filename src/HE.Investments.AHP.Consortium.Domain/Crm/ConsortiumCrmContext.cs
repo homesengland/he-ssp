@@ -8,9 +8,9 @@ namespace HE.Investments.AHP.Consortium.Domain.Crm;
 
 public class ConsortiumCrmContext : IConsortiumCrmContext
 {
-    private static readonly IDictionary<string, IList<string>> JoinRequests = new Dictionary<string, IList<string>>();
+    private static readonly Dictionary<string, IList<string>> JoinRequests = new();
 
-    private static readonly IDictionary<string, IList<string>> RemoveRequests = new Dictionary<string, IList<string>>();
+    private static readonly Dictionary<string, IList<string>> RemoveRequests = new();
 
     private readonly ICrmService _service;
 

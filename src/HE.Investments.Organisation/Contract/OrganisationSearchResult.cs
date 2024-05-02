@@ -4,7 +4,7 @@ public record OrganisationSearchResult(IList<OrganisationSearchItem> Items, int 
 {
     public bool IsSuccessful() => string.IsNullOrEmpty(Error);
 
-    public static OrganisationSearchResult Empty() => new(Array.Empty<OrganisationSearchItem>(), 0);
+    public static OrganisationSearchResult Empty() => new([], 0);
 
-    public static OrganisationSearchResult FromSingleItem(OrganisationSearchItem item) => new(new List<OrganisationSearchItem> { item }, 1);
+    public static OrganisationSearchResult FromSingleItem(OrganisationSearchItem item) => new([item], 1);
 }

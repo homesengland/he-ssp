@@ -1,71 +1,71 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="He.Cookies.Mvc" Version="1.0.36" />
-    <PackageReference Include="He.Identity.Auth0" Version="2.1.1" />
-    <PackageReference Include="He.Identity.Mvc" Version="2.1.1" />
-    <PackageReference Include="Microsoft.AspNetCore.DataProtection.StackExchangeRedis" Version="7.0.13" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.24" />
-    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="7.0.13" />
-    <PackageReference Include="Stateless" Version="5.13.0" />
+    <PackageReference Include="He.Cookies.Mvc" Version="1.0.36"/>
+    <PackageReference Include="He.Identity.Auth0" Version="2.1.1"/>
+    <PackageReference Include="He.Identity.Mvc" Version="2.1.1"/>
+    <PackageReference Include="Microsoft.AspNetCore.DataProtection.StackExchangeRedis" Version="7.0.13"/>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.24"/>
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="7.0.13"/>
+    <PackageReference Include="Stateless" Version="5.13.0"/>
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Components\CheckboxListContent\CheckboxListContent.cshtml" />
-    <EmbeddedResource Include="Components\ApplicationStatusTagComponent\ApplicationStatusTagComponent.cshtml" />
-    <EmbeddedResource Include="Components\CheckboxListWithOr\CheckboxListWithOr.cshtml" />
-    <EmbeddedResource Include="Components\CheckboxList\CheckboxList.cshtml" />
-    <EmbeddedResource Include="Components\SelectListConfirmationHeader\SelectListConfirmationHeader.cshtml" />
-    <EmbeddedResource Include="_ViewImports.cshtml" />
-    <EmbeddedResource Include="Partials\Errors\_ErrorSummaryPartial.cshtml" />
-    <EmbeddedResource Include="Partials\Cookies\_AdditionalCookies.cshtml" />
-    <EmbeddedResource Include="Partials\Cookies\_Cookies.cshtml" />
-    <EmbeddedResource Include="Partials\Cookies\_CookiesTable.cshtml" />
-    <EmbeddedResource Include="Partials\Cookies\_EssentialCookies.cshtml" />
-    <EmbeddedResource Include="Partials\_Breadcrumbs.cshtml" />
-    <EmbeddedResource Include="Partials\TaskList\_TaskList.cshtml" />
-    <EmbeddedResource Include="Partials\_ViewImports.cshtml" />
-    <EmbeddedResource Include="Templates\CookieBannerTemplate.html" />
-    <EmbeddedResource Include="Components\HelpPanel\HelpPanel.cshtml" />
-    <EmbeddedResource Include="Components\FormButton\FormButton.cshtml" />
-    <EmbeddedResource Include="Components\PageHeader\PageHeader.cshtml" />
-    <EmbeddedResource Include="Components\WorkflowBackButton\WorkflowBackButton.cshtml" />
-    <EmbeddedResource Include="Components\FilesTable\FilesTable.cshtml" />
-    <EmbeddedResource Include="Components\UploadFile\UploadFile.cshtml" />
-    <EmbeddedResource Include="Components\SectionSummaryItem\SectionSummaryItem.cshtml" />
-    <EmbeddedResource Include="Components\SectionSummary\SectionSummary.cshtml" />
-    <EmbeddedResource Include="Components\ErrorMessage\ErrorMessage.cshtml" />
-    <EmbeddedResource Include="Components\BackLinkWithCallback\BackLinkWithCallback.cshtml" />
-    <EmbeddedResource Include="Components\Table\Table.cshtml" />
-    <EmbeddedResource Include="Components\Link\Link.cshtml" />
-    <EmbeddedResource Include="Components\SummaryItem\SummaryItem.cshtml" />
-    <EmbeddedResource Include="Components\RadioListWithOr\RadioListWithOr.cshtml" />
-    <EmbeddedResource Include="Components\RadioYesNo\RadioYesNo.cshtml" />
-    <EmbeddedResource Include="Components\RadioListContent\RadioListContent.cshtml" />
-    <EmbeddedResource Include="Components\RadioList\RadioList.cshtml" />
-    <EmbeddedResource Include="Components\TextInput\TextInput.cshtml" />
-    <EmbeddedResource Include="Components\InputHeader\InputHeader.cshtml" />
-    <EmbeddedResource Include="Components\TextAreaInput\TextAreaInput.cshtml" />
-    <EmbeddedResource Include="Components\InputListHeader\InputListHeader.cshtml" />
-    <EmbeddedResource Include="Components\NumericTextInput\NumericTextInput.cshtml" />
-    <EmbeddedResource Include="Components\PagedTable\PagedTable.cshtml" />
-    <EmbeddedResource Include="Components\TextAreaInputWithCounter\TextAreaInputWithCounter.cshtml" />
-    <EmbeddedResource Include="Components\DateInput\DateInput.cshtml" />
-    <EmbeddedResource Include="Components\Details\Details.cshtml" />
-    <EmbeddedResource Include="Components\SelectList\SelectList.cshtml" />
-    <EmbeddedResource Include="Components\DynamicComponent\DynamicComponent.cshtml" />
-    <EmbeddedResource Include="Components\ButtonStart\ButtonStart.cshtml" />
-    <EmbeddedResource Include="Components\LinkWorkingAsButton\LinkWorkingAsButton.cshtml" />
-    <EmbeddedResource Include="Components\Notification\Notification.cshtml" />
+    <EmbeddedResource Include="Components\CheckboxListContent\CheckboxListContent.cshtml"/>
+    <EmbeddedResource Include="Components\ApplicationStatusTagComponent\ApplicationStatusTagComponent.cshtml"/>
+    <EmbeddedResource Include="Components\CheckboxListWithOr\CheckboxListWithOr.cshtml"/>
+    <EmbeddedResource Include="Components\CheckboxList\CheckboxList.cshtml"/>
+    <EmbeddedResource Include="Components\SelectListConfirmationHeader\SelectListConfirmationHeader.cshtml"/>
+    <EmbeddedResource Include="_ViewImports.cshtml"/>
+    <EmbeddedResource Include="Partials\Errors\_ErrorSummaryPartial.cshtml"/>
+    <EmbeddedResource Include="Partials\Cookies\_AdditionalCookies.cshtml"/>
+    <EmbeddedResource Include="Partials\Cookies\_Cookies.cshtml"/>
+    <EmbeddedResource Include="Partials\Cookies\_CookiesTable.cshtml"/>
+    <EmbeddedResource Include="Partials\Cookies\_EssentialCookies.cshtml"/>
+    <EmbeddedResource Include="Partials\_Breadcrumbs.cshtml"/>
+    <EmbeddedResource Include="Partials\TaskList\_TaskList.cshtml"/>
+    <EmbeddedResource Include="Partials\_ViewImports.cshtml"/>
+    <EmbeddedResource Include="Templates\CookieBannerTemplate.html"/>
+    <EmbeddedResource Include="Components\HelpPanel\HelpPanel.cshtml"/>
+    <EmbeddedResource Include="Components\FormButton\FormButton.cshtml"/>
+    <EmbeddedResource Include="Components\PageHeader\PageHeader.cshtml"/>
+    <EmbeddedResource Include="Components\WorkflowBackButton\WorkflowBackButton.cshtml"/>
+    <EmbeddedResource Include="Components\FilesTable\FilesTable.cshtml"/>
+    <EmbeddedResource Include="Components\UploadFile\UploadFile.cshtml"/>
+    <EmbeddedResource Include="Components\SectionSummaryItem\SectionSummaryItem.cshtml"/>
+    <EmbeddedResource Include="Components\SectionSummary\SectionSummary.cshtml"/>
+    <EmbeddedResource Include="Components\ErrorMessage\ErrorMessage.cshtml"/>
+    <EmbeddedResource Include="Components\BackLinkWithCallback\BackLinkWithCallback.cshtml"/>
+    <EmbeddedResource Include="Components\Table\Table.cshtml"/>
+    <EmbeddedResource Include="Components\Link\Link.cshtml"/>
+    <EmbeddedResource Include="Components\SummaryItem\SummaryItem.cshtml"/>
+    <EmbeddedResource Include="Components\RadioListWithOr\RadioListWithOr.cshtml"/>
+    <EmbeddedResource Include="Components\RadioYesNo\RadioYesNo.cshtml"/>
+    <EmbeddedResource Include="Components\RadioListContent\RadioListContent.cshtml"/>
+    <EmbeddedResource Include="Components\RadioList\RadioList.cshtml"/>
+    <EmbeddedResource Include="Components\TextInput\TextInput.cshtml"/>
+    <EmbeddedResource Include="Components\InputHeader\InputHeader.cshtml"/>
+    <EmbeddedResource Include="Components\TextAreaInput\TextAreaInput.cshtml"/>
+    <EmbeddedResource Include="Components\InputListHeader\InputListHeader.cshtml"/>
+    <EmbeddedResource Include="Components\NumericTextInput\NumericTextInput.cshtml"/>
+    <EmbeddedResource Include="Components\PagedTable\PagedTable.cshtml"/>
+    <EmbeddedResource Include="Components\TextAreaInputWithCounter\TextAreaInputWithCounter.cshtml"/>
+    <EmbeddedResource Include="Components\DateInput\DateInput.cshtml"/>
+    <EmbeddedResource Include="Components\Details\Details.cshtml"/>
+    <EmbeddedResource Include="Components\SelectList\SelectList.cshtml"/>
+    <EmbeddedResource Include="Components\DynamicComponent\DynamicComponent.cshtml"/>
+    <EmbeddedResource Include="Components\ButtonStart\ButtonStart.cshtml"/>
+    <EmbeddedResource Include="Components\LinkWorkingAsButton\LinkWorkingAsButton.cshtml"/>
+    <EmbeddedResource Include="Components\Notification\Notification.cshtml"/>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HE.Investments.Common.Contract\HE.Investments.Common.Contract.csproj" />
-    <ProjectReference Include="..\HE.Investments.Common\HE.Investments.Common.csproj" />
+    <ProjectReference Include="..\HE.Investments.Common.Contract\HE.Investments.Common.Contract.csproj"/>
+    <ProjectReference Include="..\HE.Investments.Common\HE.Investments.Common.csproj"/>
   </ItemGroup>
 
 </Project>

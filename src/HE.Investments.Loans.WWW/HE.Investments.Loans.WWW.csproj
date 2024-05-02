@@ -1,45 +1,45 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <UserSecretsId>8b9cd221-46c5-4032-8de4-5f0560e83f09</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <Nullable>disable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.24" />
-    <PackageReference Include="Microsoft.FeatureManagement" Version="3.0.0" />
-    <PackageReference Include="Microsoft.FeatureManagement.AspNetCore" Version="3.0.0" />
-    <PackageReference Include="NuGet.Common" Version="6.9.1" />
-    <PackageReference Include="NuGet.Protocol" Version="6.9.1" />
-    <PackageReference Include="StackExchange.Redis.Extensions.Core" Version="9.1.0" />
-    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
-    <PackageReference Include="He.Cookies.Mvc" Version="1.0.36" />
-    <PackageReference Include="He.Identity" Version="2.1.1" />
-    <PackageReference Include="He.Identity.Auth0" Version="2.1.1" />
-    <PackageReference Include="He.Identity.Mvc" Version="2.1.1" />
-    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0" />
-    <PackageReference Include="Microsoft.AspNetCore.DataProtection.StackExchangeRedis" Version="7.0.13" />
-    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="7.0.13" />
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
-    <PackageReference Include="StackExchange.Redis" Version="2.6.122" />
-    <PackageReference Include="Stateless" Version="5.13.0" />
-    <PackageReference Include="He.AspNetCore.Mvc.Gds.Components" Version="1.0.154" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.15" />
-    <PackageReference Include="System.Net.Http" Version="4.3.4" />
-    <PackageReference Include="System.Security.Cryptography.Pkcs" Version="7.0.3" />
-    <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
+    <PackageReference Include="BuildBundlerMinifier" Version="3.2.449"/>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.24"/>
+    <PackageReference Include="Microsoft.FeatureManagement" Version="3.0.0"/>
+    <PackageReference Include="Microsoft.FeatureManagement.AspNetCore" Version="3.0.0"/>
+    <PackageReference Include="NuGet.Common" Version="6.9.1"/>
+    <PackageReference Include="NuGet.Protocol" Version="6.9.1"/>
+    <PackageReference Include="StackExchange.Redis.Extensions.Core" Version="9.1.0"/>
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0"/>
+    <PackageReference Include="He.Cookies.Mvc" Version="1.0.36"/>
+    <PackageReference Include="He.Identity" Version="2.1.1"/>
+    <PackageReference Include="He.Identity.Auth0" Version="2.1.1"/>
+    <PackageReference Include="He.Identity.Mvc" Version="2.1.1"/>
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0"/>
+    <PackageReference Include="Microsoft.AspNetCore.DataProtection.StackExchangeRedis" Version="7.0.13"/>
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="7.0.13"/>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5"/>
+    <PackageReference Include="StackExchange.Redis" Version="2.6.122"/>
+    <PackageReference Include="Stateless" Version="5.13.0"/>
+    <PackageReference Include="He.AspNetCore.Mvc.Gds.Components" Version="1.0.154"/>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.15"/>
+    <PackageReference Include="System.Net.Http" Version="4.3.4"/>
+    <PackageReference Include="System.Security.Cryptography.Pkcs" Version="7.0.3"/>
+    <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1"/>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\He.AspNetCore.Mvc.Gds.Components\He.AspNetCore.Mvc.Gds.Components.csproj" />
-    <ProjectReference Include="..\HE.Investments.Loans.BusinessLogic\HE.Investments.Loans.BusinessLogic.csproj" />
-    <ProjectReference Include="..\HE.Investments.Loans.Common\HE.Investments.Loans.Common.csproj" />
-    <ProjectReference Include="..\HE.Investments.Common.WWW\HE.Investments.Common.WWW.csproj" />
-    <ProjectReference Include="..\HE.Investments.DocumentService\HE.Investments.DocumentService.csproj" />
-    <ProjectReference Include="..\HE.Investments.Organisation\HE.Investments.Organisation.csproj" />
+    <ProjectReference Include="..\He.AspNetCore.Mvc.Gds.Components\He.AspNetCore.Mvc.Gds.Components.csproj"/>
+    <ProjectReference Include="..\HE.Investments.Loans.BusinessLogic\HE.Investments.Loans.BusinessLogic.csproj"/>
+    <ProjectReference Include="..\HE.Investments.Loans.Common\HE.Investments.Loans.Common.csproj"/>
+    <ProjectReference Include="..\HE.Investments.Common.WWW\HE.Investments.Common.WWW.csproj"/>
+    <ProjectReference Include="..\HE.Investments.DocumentService\HE.Investments.DocumentService.csproj"/>
+    <ProjectReference Include="..\HE.Investments.Organisation\HE.Investments.Organisation.csproj"/>
   </ItemGroup>
 
 </Project>

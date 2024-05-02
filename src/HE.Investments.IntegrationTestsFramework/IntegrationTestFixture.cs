@@ -94,7 +94,7 @@ public class IntegrationTestFixture<TProgram> : WebApplicationFactory<TProgram>
         }
     }
 
-    private class MockedDocumentServiceSettings : IDocumentServiceSettings
+    private sealed class MockedDocumentServiceSettings : IDocumentServiceSettings
     {
         public string Url => string.Empty;
 

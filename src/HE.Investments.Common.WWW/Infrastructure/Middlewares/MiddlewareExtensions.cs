@@ -13,7 +13,7 @@ public static class MiddlewareExtensions
             if (context.Response is { StatusCode: 404, HasStarted: false })
             {
                 context.Items["originalPath"] = context.Request.Path.Value;
-                context.Items["backUrl"] = context.Request.Headers["Referer"];
+                context.Items["backUrl"] = context.Request.Headers.Referer;
                 context.Request.Path = pageNotFoundRoute;
                 await next(context);
             }

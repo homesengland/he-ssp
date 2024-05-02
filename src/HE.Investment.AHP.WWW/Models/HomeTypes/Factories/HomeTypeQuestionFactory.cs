@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investment.AHP.WWW.Models.HomeTypes.Factories;
 
-internal class HomeTypeQuestionFactory
+internal sealed class HomeTypeQuestionFactory
 {
     private readonly FullHomeType _homeType;
 

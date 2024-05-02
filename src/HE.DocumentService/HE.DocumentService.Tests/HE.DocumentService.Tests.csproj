@@ -1,11 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
-    </PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+  </PropertyGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\HE.DocumentService.SharePoint\HE.DocumentService.SharePoint.csproj" />
-    </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HE.DocumentService.SharePoint\HE.DocumentService.SharePoint.csproj"/>
+  </ItemGroup>
 
 </Project>

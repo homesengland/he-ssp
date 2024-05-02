@@ -8,6 +8,6 @@ public class FilesTable : ViewComponent
 {
     public IViewComponentResult Invoke(ModelExpression aspFor, bool isReadOnly = false)
     {
-        return View("FilesTable", (aspFor.Name, aspFor.Model as IList<FileModel> ?? new List<FileModel>(), isReadOnly));
+        return View("FilesTable", (aspFor.Name, aspFor.Model as IList<FileModel> ?? [], isReadOnly));
     }
 }

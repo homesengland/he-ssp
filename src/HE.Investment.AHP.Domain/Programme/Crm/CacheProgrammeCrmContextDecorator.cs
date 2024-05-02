@@ -5,7 +5,7 @@ using Org::HE.Common.IntegrationModel.PortalIntegrationModel;
 
 namespace HE.Investment.AHP.Domain.Programme.Crm;
 
-internal class CacheProgrammeCrmContextDecorator : IProgrammeCrmContext
+internal sealed class CacheProgrammeCrmContextDecorator : IProgrammeCrmContext
 {
     private readonly ICacheService _cache;
 

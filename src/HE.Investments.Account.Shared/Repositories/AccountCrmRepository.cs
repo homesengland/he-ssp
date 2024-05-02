@@ -33,7 +33,7 @@ public class AccountCrmRepository : IAccountRepository
         var contactRoles = await _contactService.GetContactRoles(_serviceClient, userEmail, contactExternalId);
         if (contactRoles is null)
         {
-            return Array.Empty<UserAccount>();
+            return [];
         }
 
         var result = new List<UserAccount>();

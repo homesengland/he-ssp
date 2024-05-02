@@ -15,11 +15,11 @@ namespace HE.Investments.AHP.Consortium.Domain.Entities;
 
 public class ConsortiumEntity
 {
-    private readonly IList<ConsortiumMember> _members;
+    private readonly List<ConsortiumMember> _members;
 
-    private readonly IList<ConsortiumMember> _joinRequests = new List<ConsortiumMember>();
+    private readonly List<ConsortiumMember> _joinRequests = new();
 
-    private readonly IList<OrganisationId> _removeRequests = new List<OrganisationId>();
+    private readonly List<OrganisationId> _removeRequests = new();
 
     public ConsortiumEntity(ConsortiumId id, ConsortiumName name, ProgrammeSlim programme, ConsortiumMember leadPartner, IEnumerable<ConsortiumMember> members)
     {
@@ -122,7 +122,7 @@ public class ConsortiumEntity
         IIsPartOfConsortium isPartOfConsortium,
         CancellationToken cancellationToken)
     {
-        if (organisation.Id.Value == LeadPartner.Id.ToString() || _members.Any(x => x.Id.ToString() == organisation.Id.Value))
+        if (organisation.Id.Value == LeadPartner.Id.ToString() || _members.Exists(x => x.Id.ToString() == organisation.Id.Value))
         {
             return true;
         }

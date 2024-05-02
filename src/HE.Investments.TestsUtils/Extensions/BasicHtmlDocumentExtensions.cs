@@ -19,7 +19,7 @@ public static class BasicHtmlDocumentExtensions
     {
         if (string.IsNullOrWhiteSpace(text))
         {
-            return htmlDocument.QuerySelectorAll(selector).ToList();
+            return [.. htmlDocument.QuerySelectorAll(selector)];
         }
 
         return FilterByText(htmlDocument.QuerySelectorAll(selector), text);
@@ -44,7 +44,7 @@ public static class BasicHtmlDocumentExtensions
         }
     }
 
-    private static IList<IElement> FilterByText(IEnumerable<IElement> elements, string text)
+    private static List<IElement> FilterByText(IEnumerable<IElement> elements, string text)
     {
         return elements.Where(e => e.ChildElementCount == 0 && e.TextContent.Contains(text))
             .ToList();

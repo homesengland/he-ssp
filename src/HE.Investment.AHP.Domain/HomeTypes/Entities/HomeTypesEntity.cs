@@ -13,9 +13,9 @@ public class HomeTypesEntity
 {
     private readonly SiteBasicInfo _site;
 
-    private readonly IList<HomeTypeEntity> _homeTypes;
+    private readonly List<HomeTypeEntity> _homeTypes;
 
-    private readonly IList<HomeTypeEntity> _toRemove = new List<HomeTypeEntity>();
+    private readonly List<HomeTypeEntity> _toRemove = new();
 
     private readonly ModificationTracker _statusModificationTracker = new();
 
@@ -145,7 +145,7 @@ public class HomeTypesEntity
     // ReSharper disable once ParameterOnlyUsedForPreconditionCheck.Local
     private string? ValidateNameUniqueness(string? name, HomeTypeEntity? entity = null)
     {
-        if ((entity == null && _homeTypes.Any(x => x.Name.Value == name))
+        if ((entity == null && _homeTypes.Exists(x => x.Name.Value == name))
             || (entity != null && _homeTypes.Except(new[] { entity }).Any(x => x.Name.Value == name)))
         {
             throw new DomainValidationException(
@@ -163,7 +163,7 @@ public class HomeTypesEntity
         var suffixIndex = 1;
         var duplicatedName = homeType.Name;
 
-        while (_homeTypes.Any(x => x.Name == duplicatedName))
+        while (_homeTypes.Exists(x => x.Name == duplicatedName))
         {
             duplicatedName = duplicatedName.Duplicate(suffixIndex++);
         }

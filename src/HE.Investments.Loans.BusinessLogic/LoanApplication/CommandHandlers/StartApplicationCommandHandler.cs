@@ -44,7 +44,7 @@ public class StartApplicationCommandHandler : IRequestHandler<StartApplicationCo
         if (await _applicationRepository.IsExist(applicationName, userAccount, cancellationToken))
         {
             return new OperationResult<LoanApplicationId?>(
-                new[] { new ErrorItem(nameof(LoanApplicationName), "This name has been used for another application") },
+                [new ErrorItem(nameof(LoanApplicationName), "This name has been used for another application")],
                 null);
         }
 

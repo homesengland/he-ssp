@@ -1,17 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
-    </PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+  </PropertyGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\HE.Investments.Account.WWW\HE.Investments.Account.WWW.csproj" />
-      <ProjectReference Include="..\HE.Investments.IntegrationTestsFramework\HE.Investments.IntegrationTestsFramework.csproj" />
-    </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HE.Investments.Account.WWW\HE.Investments.Account.WWW.csproj"/>
+    <ProjectReference Include="..\HE.Investments.IntegrationTestsFramework\HE.Investments.IntegrationTestsFramework.csproj"/>
+  </ItemGroup>
 
-    <ItemGroup>
-      <PackageReference Include="Xunit.Extensions.Ordering" Version="1.4.5" />
-      <PackageReference Include="Xunit.SkippableFact" Version="1.4.13" />
-    </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Xunit.Extensions.Ordering" Version="1.4.5"/>
+    <PackageReference Include="Xunit.SkippableFact" Version="1.4.13"/>
+  </ItemGroup>
 
 </Project>

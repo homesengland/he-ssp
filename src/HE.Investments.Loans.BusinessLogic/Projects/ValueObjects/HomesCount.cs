@@ -7,11 +7,11 @@ using HE.Investments.Common.Messages;
 using HE.Investments.Loans.BusinessLogic.Projects.Consts;
 
 namespace HE.Investments.Loans.BusinessLogic.Projects.ValueObjects;
-public class HomesCount : ValueObject
+public partial class HomesCount : ValueObject
 {
     public HomesCount(string? value)
     {
-        if (value.IsNotProvided() || !Regex.IsMatch(value ?? string.Empty, @"^(?!0)[1-9]\d{0,3}$|^9999$"))
+        if (value.IsNotProvided() || !HomesCountRegex().IsMatch(value ?? string.Empty))
         {
             OperationResult
                 .New()
@@ -32,4 +32,7 @@ public class HomesCount : ValueObject
     {
         yield return Value;
     }
+
+    [GeneratedRegex(@"^(?!0)[1-9]\d{0,3}$|^9999$")]
+    private static partial Regex HomesCountRegex();
 }

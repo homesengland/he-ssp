@@ -74,11 +74,7 @@ public static class ApplicationSections
 
     private static string GetAction(IUrlHelper url, string applicationId, Type controller, string actionName)
     {
-        if (controller == null)
-        {
-            throw new ArgumentNullException(nameof(controller));
-        }
-
+        ArgumentNullException.ThrowIfNull(controller);
         return url.Action(actionName, new ControllerName(controller.Name).WithoutPrefix(), new { applicationId }) ?? string.Empty;
     }
 }

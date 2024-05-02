@@ -10,6 +10,7 @@ using Moq;
 namespace HE.Investments.Common.WWW.Tests.Controllers.ControllerExtensionsTests;
 
 [SuppressMessage("Major Code Smell", "S1144:Unused private types or members should be removed", Justification = "tests")]
+[SuppressMessage("Design", "CA1001", Justification = "tests")]
 public class ExecuteCommandTests
 {
     private const string FirstKey = "One";
@@ -88,22 +89,22 @@ public class ExecuteCommandTests
         errors.Last().Key.Should().Contain(secondKey);
     }
 
-    private class TestController : Controller
+    private sealed class TestController : Controller
     {
     }
 
-    private class TestCommand : IRequest<OperationResult>
+    private sealed class TestCommand : IRequest<OperationResult>
     {
     }
 
-    private class TestModelClass
+    private sealed class TestModelClass
     {
         public int One { get; set; }
 
         public IDictionary<string, int> Two { get; set; }
     }
 
-    private class TestModelClassWithCustomOrder
+    private sealed class TestModelClassWithCustomOrder
     {
         [ErrorSummaryOrder(2)]
         public int One { get; set; }
@@ -112,7 +113,7 @@ public class ExecuteCommandTests
         public IDictionary<string, int> Two { get; set; }
     }
 
-    private record TestModelRecord(int One, IDictionary<string, int> Two);
+    private sealed record TestModelRecord(int One, IDictionary<string, int> Two);
 
-    private record TestModelRecordWithCustomOrder([ErrorSummaryOrder(2)] int One, [ErrorSummaryOrder(1)] IDictionary<string, int> Two);
+    private sealed record TestModelRecordWithCustomOrder([ErrorSummaryOrder(2)] int One, [ErrorSummaryOrder(1)] IDictionary<string, int> Two);
 }

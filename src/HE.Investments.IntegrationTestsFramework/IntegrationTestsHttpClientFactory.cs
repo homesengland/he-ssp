@@ -9,7 +9,7 @@ public class IntegrationTestsHttpClientFactory : IHttpClientFactory
 {
     private const string BaseUrl = "https://localhost/integration-tests-mock/";
 
-    private static readonly IDictionary<string, HttpClient> MockedClients = new Dictionary<string, HttpClient>();
+    private static readonly Dictionary<string, HttpClient> MockedClients = [];
 
     private readonly IHttpClientFactory _decorated;
 

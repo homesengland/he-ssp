@@ -17,11 +17,11 @@ namespace HE.Investment.AHP.Domain.Delivery.Entities;
 
 public class DeliveryPhasesEntity : IHomeTypeConsumer
 {
-    private readonly IList<DeliveryPhaseEntity> _deliveryPhases;
+    private readonly List<DeliveryPhaseEntity> _deliveryPhases;
 
-    private readonly IList<DeliveryPhaseEntity> _toRemove = new List<DeliveryPhaseEntity>();
+    private readonly List<DeliveryPhaseEntity> _toRemove = new();
 
-    private readonly IList<HomesToDeliver> _homesToDeliver;
+    private readonly List<HomesToDeliver> _homesToDeliver;
 
     private readonly ModificationTracker _statusModificationTracker = new();
 
@@ -62,7 +62,7 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
         return null;
     }
 
-    public bool IsHomeTypeUsed(HomeTypeId homeTypeId) => _deliveryPhases.Any(x => x.IsHomeTypeUsed(homeTypeId));
+    public bool IsHomeTypeUsed(HomeTypeId homeTypeId) => _deliveryPhases.Exists(x => x.IsHomeTypeUsed(homeTypeId));
 
     public IEnumerable<(HomesToDeliver HomesToDeliver, int? ToDeliver)> GetHomesToDeliverInPhase(DeliveryPhaseId deliveryPhaseId)
     {
@@ -197,7 +197,7 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
 
     private DeliveryPhaseName ValidateNameUniqueness(DeliveryPhaseName name, DeliveryPhaseEntity? entity = null)
     {
-        if ((entity == null && _deliveryPhases.Any(x => x.Name == name))
+        if ((entity == null && _deliveryPhases.Exists(x => x.Name == name))
             || (entity != null && _deliveryPhases.Except(new[] { entity }).Any(x => x.Name == name)))
         {
             OperationResult.ThrowValidationError(nameof(DeliveryPhaseName), "Provided delivery phase name is already in use. Delivery phase name should be unique.");

@@ -1,10 +1,12 @@
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using HE.Investments.Common.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace HE.Investments.Loans.Common.Tests.Extensions.CollectionExtensionsTests;
 
+[SuppressMessage("Performance", "CA1861", Justification = "Reviewed")]
 public class AddRangeTests
 {
     [TestMethod]

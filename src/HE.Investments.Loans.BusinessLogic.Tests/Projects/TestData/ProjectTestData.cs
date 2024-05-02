@@ -21,7 +21,7 @@ internal static class ProjectTestData
 
         project.ProvideHomesCount(HomesCountTestData.ValidHomesCount);
 
-        project.ProvideHomesTypes(new HomesTypes(new[] { "Home" }, string.Empty));
+        project.ProvideHomesTypes(new HomesTypes(["Home"], string.Empty));
 
         project.ProvideProjectType(new ProjectType("Greenfield"));
 
@@ -62,7 +62,7 @@ internal static class ProjectTestData
 
         project.ProvideHomesCount(HomesCountTestData.ValidHomesCount);
 
-        project.ProvideHomesTypes(new HomesTypes(new[] { "Home" }, string.Empty));
+        project.ProvideHomesTypes(new HomesTypes(["Home"], string.Empty));
 
         project.ProvideProjectType(new ProjectType("Greenfield"));
 

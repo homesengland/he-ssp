@@ -83,7 +83,7 @@ internal sealed class CustomRazorTemplateEngineRenderer : IRazorTemplateEngine
     {
         var viewDataDictionary = new ViewDataDictionary(new EmptyModelMetadataProvider(), modelStateDictionary ?? new ModelStateDictionary());
 
-        foreach (var keyValuePair in viewBagOrViewData ?? new())
+        foreach (var keyValuePair in viewBagOrViewData ?? [])
         {
             viewDataDictionary.Add(keyValuePair!);
         }
