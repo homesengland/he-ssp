@@ -73,7 +73,7 @@ public class AccountCrmRepository : IAccountRepository
 
     private async Task<OrganisationBasicInfo> GetOrganisationBasicInfo(OrganisationId organisationId, UserGlobalId userGlobalId)
     {
-        var organisation = await _organizationService.GetOrganizationDetails(organisationId.Value, userGlobalId.Value);
+        var organisation = await _organizationService.GetOrganizationDetails(organisationId.ToGuidAsString(), userGlobalId.Value);
         return new OrganisationBasicInfo(
             organisationId,
             organisation.registeredCompanyName,

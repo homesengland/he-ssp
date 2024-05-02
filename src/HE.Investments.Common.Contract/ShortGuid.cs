@@ -17,6 +17,8 @@ public class ShortGuid
 
     public static string ToGuidAsString(string shortGuid) => Decode(shortGuid).ToString();
 
+    public static string TryToGuidAsString(string value) => TryDecode(value, out var guid) ? guid.ToString() : value;
+
     private static string Encode(Guid guid)
     {
         var encoded = Convert.ToBase64String(guid.ToByteArray());
@@ -39,5 +41,19 @@ public class ShortGuid
         value = value.Replace("_", "/").Replace("-", "+");
         var buffer = Convert.FromBase64String(value + "==");
         return new Guid(buffer);
+    }
+
+    private static bool TryDecode(string value, out Guid guid)
+    {
+        try
+        {
+            guid = Decode(value);
+            return true;
+        }
+        catch (FormatException)
+        {
+            guid = Guid.Empty;
+            return false;
+        }
     }
 }
