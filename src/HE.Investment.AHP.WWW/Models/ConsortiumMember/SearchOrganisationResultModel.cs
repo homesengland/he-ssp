@@ -8,4 +8,4 @@ public record SearchOrganisationResultModel(
     string Phrase,
     string NavigationUrl,
     PaginationResult<ExtendedSelectListItem> Page,
-    string? SelectedItem);
+    string? SelectedMember);

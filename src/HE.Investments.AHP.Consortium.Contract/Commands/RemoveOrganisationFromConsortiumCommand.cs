@@ -1,6 +1,5 @@
-using HE.Investments.Common.Contract.Validators;
-using MediatR;
+using HE.Investments.Account.Shared.User.ValueObjects;
 
 namespace HE.Investments.AHP.Consortium.Contract.Commands;
 
-public record RemoveOrganisationFromConsortiumCommand(ConsortiumId ConsortiumId, string OrganisationId, bool? IsConfirmed) : IRequest<OperationResult>;
+public record RemoveOrganisationFromConsortiumCommand(ConsortiumId ConsortiumId, OrganisationId OrganisationId, bool? IsConfirmed) : IConsortiumCommand;

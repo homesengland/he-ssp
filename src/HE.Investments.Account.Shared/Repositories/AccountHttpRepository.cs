@@ -7,6 +7,7 @@ using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Extensions;
+using OrganisationId = HE.Investments.Account.Shared.User.ValueObjects.OrganisationId;
 
 namespace HE.Investments.Account.Shared.Repositories;
 

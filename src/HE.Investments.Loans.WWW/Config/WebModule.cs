@@ -32,7 +32,7 @@ public static class WebModule
         services.AddValidatorsFromAssemblyContaining<LoanPurposeModel>();
         services.AddNotificationPublisher(ApplicationType.Loans);
         services.AddNotificationConsumer(ApplicationType.Loans, typeof(LoanApplicationHasBeenResubmittedDisplayNotificationFactory).Assembly);
-        services.AddOrganizationsModule();
+        services.AddOrganisationCrmModule();
         services.AddEventInfrastructure();
         services.AddHttpUserContext();
         services.AddSingleton<IErrorViewPaths, LoansErrorViewPaths>();

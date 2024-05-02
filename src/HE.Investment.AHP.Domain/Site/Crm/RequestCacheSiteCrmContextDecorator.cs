@@ -34,6 +34,11 @@ internal sealed class RequestCacheSiteCrmContextDecorator : ISiteCrmContext
         return await _decorated.Exist(name, cancellationToken);
     }
 
+    public async Task<bool> StrategicSiteExist(string name, string organisationId, CancellationToken cancellationToken)
+    {
+        return await _decorated.StrategicSiteExist(name, organisationId, cancellationToken);
+    }
+
     public async Task<string> Save(Guid organisationId, string userGlobalId, SiteDto dto, CancellationToken cancellationToken)
     {
         dto.id = await _decorated.Save(organisationId, userGlobalId, dto, cancellationToken);

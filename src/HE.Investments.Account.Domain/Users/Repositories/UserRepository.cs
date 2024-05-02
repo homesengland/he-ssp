@@ -2,9 +2,9 @@ using HE.Investments.Account.Contract.User.Events;
 using HE.Investments.Account.Domain.Data;
 using HE.Investments.Account.Domain.Users.Entities;
 using HE.Investments.Account.Shared.Repositories;
-using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.Contract;
 using MediatR;
+using OrganisationId = HE.Investments.Account.Shared.User.ValueObjects.OrganisationId;
 
 namespace HE.Investments.Account.Domain.Users.Repositories;
 

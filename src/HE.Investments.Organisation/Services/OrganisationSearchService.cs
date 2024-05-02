@@ -89,11 +89,34 @@ public class OrganisationSearchService : IOrganisationSearchService
         return new GetOrganizationByCompaniesHouseNumberResult(mergedResult.FirstOrDefault());
     }
 
+    private static IList<OrganisationSearchItem> MergeResults(
+        IList<OrganisationSearchItem> companyHousesOrganizations,
+        IList<OrganizationDetailsDto> organizationsFromCrm)
+    {
+        for (var i = 0; i < companyHousesOrganizations.Count; i++)
+        {
+            var crmOrganisation = organizationsFromCrm.SingleOrDefault(x => x.companyRegistrationNumber == companyHousesOrganizations[i].CompanyNumber);
+            if (crmOrganisation != null)
+            {
+                companyHousesOrganizations[i] = new OrganisationSearchItem(
+                    crmOrganisation.companyRegistrationNumber,
+                    crmOrganisation.registeredCompanyName,
+                    crmOrganisation.city,
+                    crmOrganisation.addressLine1,
+                    crmOrganisation.postalcode,
+                    crmOrganisation.organisationId,
+                    true);
+            }
+        }
+
+        return companyHousesOrganizations;
+    }
+
     private async Task<int> AppendSpvCompanies(
         string organisationName,
         PagingQueryParams pagingParams,
         int totalItemsFromCompaniesHouseApi,
-        List<OrganisationSearchItem> mergedResult)
+        IList<OrganisationSearchItem> mergedResult)
     {
         var result = await _organizationCrmSearchService.SearchOrganizationInCrmByName(organisationName, false);
         var displayedItems = pagingParams.StartIndex == 1 ? 0 : pagingParams.StartIndex;
@@ -166,7 +189,7 @@ public class OrganisationSearchService : IOrganisationSearchService
             }
 
             _logger.LogError(ex, "Error occured while fetching organizations data from Company House API: {Message}", ex.Message);
-            return new OrganisationSearchResult([], 0, ex.Message);
+            return new OrganisationSearchResult(Array.Empty<OrganisationSearchItem>(), 0, ex.Message);
         }
     }
 
@@ -175,12 +198,12 @@ public class OrganisationSearchService : IOrganisationSearchService
         try
         {
             var companyHouseApiResult = await _companiesHouseApi.Search(organisationName, pagingParams with { StartIndex = 1 }, cancellationToken);
-            return new OrganisationSearchResult([], companyHouseApiResult.Hits);
+            return new OrganisationSearchResult(Array.Empty<OrganisationSearchItem>(), companyHouseApiResult.Hits);
         }
         catch (HttpRequestException ex)
         {
             _logger.LogError(ex, "Error occured while fetching organizations data from Company House API: {Message}", ex.Message);
-            return new OrganisationSearchResult([], 0, ex.Message);
+            return new OrganisationSearchResult(Array.Empty<OrganisationSearchItem>(), 0, ex.Message);
         }
     }
 
@@ -189,30 +212,5 @@ public class OrganisationSearchService : IOrganisationSearchService
         var organizationCompanyNumbers = companyHousesOrganizations.Where(x => !string.IsNullOrEmpty(x.CompanyNumber)).Select(x => x.CompanyNumber!);
 
         return await _organizationCrmSearchService.SearchOrganizationInCrmByCompanyHouseNumber(organizationCompanyNumbers);
-    }
-
-    private List<OrganisationSearchItem> MergeResults(
-        IList<OrganisationSearchItem> companyHousesOrganizations,
-        IList<OrganizationDetailsDto> organizationsFromCrm)
-    {
-        var organizationsThatExistInCrm = companyHousesOrganizations.Join(
-                organizationsFromCrm,
-                c => c.CompanyNumber,
-                c => c.companyRegistrationNumber,
-                (_, crm) => new OrganisationSearchItem(
-                    crm.companyRegistrationNumber,
-                    crm.registeredCompanyName,
-                    crm.city,
-                    crm.addressLine1,
-                    crm.postalcode,
-                    crm.organisationId,
-                    true))
-            .ToList();
-
-        var organizationNumbersThatExistInCrm = organizationsThatExistInCrm.Select(c => c.CompanyNumber);
-
-        var organizationsThatNotExistInCrm = companyHousesOrganizations.Where(ch => !organizationNumbersThatExistInCrm.Contains(ch.CompanyNumber));
-
-        return organizationsThatNotExistInCrm.Concat(organizationsThatExistInCrm).ToList();
     }
 }

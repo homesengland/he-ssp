@@ -1,7 +1,7 @@
 using HE.Investments.Account.Api.Contract.User;
 using HE.Investments.Account.Shared;
-using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.Contract;
+using OrganisationId = HE.Investments.Account.Shared.User.ValueObjects.OrganisationId;
 using UserAccount = HE.Investments.Account.Shared.User.UserAccount;
 
 namespace HE.Investments.Common.Tests.TestData;

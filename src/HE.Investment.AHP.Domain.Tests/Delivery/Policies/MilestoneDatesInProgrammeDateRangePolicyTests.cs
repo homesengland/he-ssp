@@ -1,5 +1,4 @@
 using FluentAssertions;
-using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Domain.Delivery.Policies;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investment.AHP.Domain.Programme;

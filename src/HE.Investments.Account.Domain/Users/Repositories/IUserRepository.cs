@@ -1,6 +1,6 @@
 using HE.Investments.Account.Domain.Users.Entities;
-using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.Contract;
+using OrganisationId = HE.Investments.Account.Shared.User.ValueObjects.OrganisationId;
 
 namespace HE.Investments.Account.Domain.Users.Repositories;
 
