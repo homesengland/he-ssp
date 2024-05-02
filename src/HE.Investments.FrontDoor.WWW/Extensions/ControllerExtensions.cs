@@ -11,13 +11,13 @@ public static class ControllerExtensions
     public static FrontDoorProjectId GetProjectIdFromRoute(this Controller controller)
     {
         var projectId = controller.Request.GetRouteValue("projectId") ?? throw new NotFoundException("Missing required projectId path parameter.");
-        return new FrontDoorProjectId(projectId);
+        return FrontDoorProjectId.From(projectId);
     }
 
     public static FrontDoorSiteId GetSiteIdFromRoute(this Controller controller)
     {
         var siteId = controller.Request.GetRouteValue("siteId") ?? throw new NotFoundException("Missing required siteId path parameter.");
-        return new FrontDoorSiteId(siteId);
+        return FrontDoorSiteId.From(siteId);
     }
 
     public static string? GetOptionalParameterFromRoute(this Controller controller)

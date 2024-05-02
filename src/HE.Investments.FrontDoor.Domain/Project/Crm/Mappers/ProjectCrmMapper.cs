@@ -2,6 +2,7 @@ extern alias Org;
 
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Shared.User;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
 using HE.Investments.FrontDoor.Shared.Project;
@@ -27,10 +28,10 @@ public class ProjectCrmMapper : IProjectCrmMapper
     {
         return new FrontDoorProjectDto
         {
-            ProjectId = entity.Id.IsNew ? null : entity.Id.Value,
+            ProjectId = entity.Id.IsNew ? null : entity.Id.ToGuidAsString(),
             ProjectName = entity.Name.Value,
             ProjectSupportsHousingDeliveryinEngland = entity.IsEnglandHousingDelivery,
-            OrganisationId = userAccount.SelectedOrganisationId().Value,
+            OrganisationId = ShortGuid.ToGuid(userAccount.SelectedOrganisationId().Value),
             externalId = userAccount.UserGlobalId.Value,
             ActivitiesinThisProject = _supportActivitiesMapper.Map(entity.SupportActivities),
             AmountofAffordableHomes = _affordableHomesAmountMapper.ToDto(entity.AffordableHomesAmount.AffordableHomesAmount),
@@ -54,7 +55,7 @@ public class ProjectCrmMapper : IProjectCrmMapper
     public ProjectEntity ToEntity(FrontDoorProjectDto dto)
     {
         return new ProjectEntity(
-            new FrontDoorProjectId(dto.ProjectId),
+            FrontDoorProjectId.From(dto.ProjectId),
             new ProjectName(dto.ProjectName),
             dto.ProjectSupportsHousingDeliveryinEngland,
             supportActivityTypes: _supportActivitiesMapper.Map(dto.ActivitiesinThisProject),

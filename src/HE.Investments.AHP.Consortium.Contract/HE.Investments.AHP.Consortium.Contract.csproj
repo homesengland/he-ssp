@@ -13,6 +13,7 @@
     <ProjectReference Include="..\HE.Investments.Account.Shared\HE.Investments.Account.Shared.csproj"/>
     <ProjectReference Include="..\HE.Investments.Common.Contract\HE.Investments.Common.Contract.csproj"/>
     <ProjectReference Include="..\HE.Investments.Common\HE.Investments.Common.csproj"/>
+    <ProjectReference Include="..\HE.Investments.Organisation\HE.Investments.Organisation.csproj"/>
   </ItemGroup>
 
 </Project>

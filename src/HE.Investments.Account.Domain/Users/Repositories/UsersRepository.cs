@@ -4,7 +4,6 @@ using HE.Investments.Account.Domain.Data;
 using HE.Investments.Account.Domain.Data.Extensions;
 using HE.Investments.Account.Shared.Repositories;
 using HE.Investments.Common.Contract;
-using OrganisationId = HE.Investments.Account.Shared.User.ValueObjects.OrganisationId;
 
 namespace HE.Investments.Account.Domain.Users.Repositories;
 

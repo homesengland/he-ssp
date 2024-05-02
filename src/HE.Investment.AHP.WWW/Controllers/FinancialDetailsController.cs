@@ -39,7 +39,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
 
     [HttpGet("start")]
     [WorkflowState(FinancialDetailsWorkflowState.Index)]
-    public async Task<IActionResult> Start(Guid applicationId, CancellationToken cancellationToken)
+    public async Task<IActionResult> Start(string applicationId, CancellationToken cancellationToken)
     {
         var application = await _mediator.Send(new GetApplicationQuery(AhpApplicationId.From(applicationId)), cancellationToken);
         return View("Index", new FinancialDetailsBaseModel(applicationId, application.Name));
@@ -47,7 +47,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
 
     [HttpGet("land-status")]
     [WorkflowState(FinancialDetailsWorkflowState.LandStatus)]
-    public async Task<IActionResult> LandStatus(Guid applicationId)
+    public async Task<IActionResult> LandStatus(string applicationId)
     {
         var financialDetails = await _mediator.Send(new GetFinancialDetailsQuery(AhpApplicationId.From(applicationId)));
         return View(new FinancialDetailsLandStatusModel(
@@ -59,7 +59,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
 
     [HttpPost("land-status")]
     [WorkflowState(FinancialDetailsWorkflowState.LandStatus)]
-    public async Task<IActionResult> LandStatus(Guid applicationId, FinancialDetailsLandStatusModel model, CancellationToken cancellationToken)
+    public async Task<IActionResult> LandStatus(string applicationId, FinancialDetailsLandStatusModel model, CancellationToken cancellationToken)
     {
         return await ProvideFinancialDetails(
             new ProvideLandStatusCommand(AhpApplicationId.From(applicationId), model.PurchasePrice, model.IsFullUnconditionalOption),
@@ -69,7 +69,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
 
     [HttpGet("land-value")]
     [WorkflowState(FinancialDetailsWorkflowState.LandValue)]
-    public async Task<IActionResult> LandValue(Guid applicationId)
+    public async Task<IActionResult> LandValue(string applicationId)
     {
         var financialDetails = await _mediator.Send(new GetFinancialDetailsQuery(AhpApplicationId.From(applicationId)));
         return View(new FinancialDetailsLandValueModel(
@@ -81,7 +81,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
 
     [HttpPost("land-value")]
     [WorkflowState(FinancialDetailsWorkflowState.LandValue)]
-    public async Task<IActionResult> LandValue(Guid applicationId, FinancialDetailsLandValueModel model, CancellationToken cancellationToken)
+    public async Task<IActionResult> LandValue(string applicationId, FinancialDetailsLandValueModel model, CancellationToken cancellationToken)
     {
         return await ProvideFinancialDetails(
             new ProvideLandValueCommand(AhpApplicationId.From(applicationId), model.IsOnPublicLand, model.LandValue),
@@ -91,7 +91,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
 
     [HttpGet("other-application-costs")]
     [WorkflowState(FinancialDetailsWorkflowState.OtherApplicationCosts)]
-    public async Task<IActionResult> OtherApplicationCosts(Guid applicationId)
+    public async Task<IActionResult> OtherApplicationCosts(string applicationId)
     {
         var financialDetails = await _mediator.Send(new GetFinancialDetailsQuery(AhpApplicationId.From(applicationId)));
         return View(new FinancialDetailsOtherApplicationCostsModel(
@@ -104,7 +104,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
     [HttpPost("other-application-costs")]
     [WorkflowState(FinancialDetailsWorkflowState.OtherApplicationCosts)]
     public async Task<IActionResult> OtherApplicationCosts(
-        Guid applicationId,
+        string applicationId,
         FinancialDetailsOtherApplicationCostsModel model,
         CancellationToken cancellationToken)
     {
@@ -116,7 +116,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
 
     [HttpGet("expected-contributions")]
     [WorkflowState(FinancialDetailsWorkflowState.Contributions)]
-    public async Task<IActionResult> Contributions(Guid applicationId)
+    public async Task<IActionResult> Contributions(string applicationId)
     {
         var application = await _mediator.Send(new GetApplicationQuery(AhpApplicationId.From(applicationId)));
 
@@ -145,7 +145,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
     [HttpPost("expected-contributions")]
     [WorkflowState(FinancialDetailsWorkflowState.Contributions)]
     public async Task<IActionResult> Contributions(
-        Guid applicationId,
+        string applicationId,
         FinancialDetailsContributionsModel model,
         string action,
         CancellationToken cancellationToken)
@@ -188,7 +188,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
 
     [HttpGet("grants")]
     [WorkflowState(FinancialDetailsWorkflowState.Grants)]
-    public async Task<IActionResult> Grants(Guid applicationId)
+    public async Task<IActionResult> Grants(string applicationId)
     {
         var financialDetails = await _mediator.Send(new GetFinancialDetailsQuery(AhpApplicationId.From(applicationId)));
         return View(new FinancialDetailsGrantsModel(
@@ -206,7 +206,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
 
     [HttpPost("grants")]
     [WorkflowState(FinancialDetailsWorkflowState.Grants)]
-    public async Task<IActionResult> Grants(Guid applicationId, FinancialDetailsGrantsModel model, string action, CancellationToken cancellationToken)
+    public async Task<IActionResult> Grants(string applicationId, FinancialDetailsGrantsModel model, string action, CancellationToken cancellationToken)
     {
         if (action == GenericMessages.Calculate)
         {
@@ -244,7 +244,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
 
     [HttpGet("check-answers")]
     [WorkflowState(FinancialDetailsWorkflowState.CheckAnswers)]
-    public async Task<IActionResult> CheckAnswers(Guid applicationId, CancellationToken cancellationToken)
+    public async Task<IActionResult> CheckAnswers(string applicationId, CancellationToken cancellationToken)
     {
         var model = await _financialDetailsSummaryViewModelFactory.GetFinancialDetailsAndCreateSummary(
             AhpApplicationId.From(applicationId),
@@ -256,7 +256,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
 
     [HttpPost("check-answers")]
     [WorkflowState(FinancialDetailsWorkflowState.CheckAnswers)]
-    public async Task<IActionResult> Complete(Guid applicationId, FinancialDetailsCheckAnswersModel model, CancellationToken cancellationToken)
+    public async Task<IActionResult> Complete(string applicationId, FinancialDetailsCheckAnswersModel model, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new CompleteFinancialDetailsCommand(AhpApplicationId.From(applicationId), model.IsSectionCompleted), cancellationToken);
 
@@ -279,7 +279,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
 
     [HttpGet]
     [WorkflowState(FinancialDetailsWorkflowState.ReturnToTaskList)]
-    public IActionResult ReturnToTaskList(Guid applicationId)
+    public IActionResult ReturnToTaskList(string applicationId)
     {
         return RedirectToAction(
                 nameof(ApplicationController.TaskList),
@@ -288,7 +288,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
     }
 
     [HttpGet("back")]
-    public async Task<IActionResult> Back(FinancialDetailsWorkflowState currentPage, Guid applicationId)
+    public async Task<IActionResult> Back(FinancialDetailsWorkflowState currentPage, string applicationId)
     {
         return await Back(currentPage, new { applicationId });
     }

@@ -4,6 +4,7 @@ using HE.Investments.Account.Domain.UserOrganisation.Entities;
 using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Repositories;
 using HE.Investments.Account.Shared.User.ValueObjects;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.Organisation.Services;
@@ -31,7 +32,7 @@ public class OrganisationUsersRepository : IOrganisationUsersRepository
 
     public async Task<OrganisationUsersEntity> GetOrganisationUsers(OrganisationId organisationId, CancellationToken cancellationToken)
     {
-        var contacts = await _contactService.GetAllOrganisationContactsForPortal(_organizationServiceAsync, organisationId.Value);
+        var contacts = await _contactService.GetAllOrganisationContactsForPortal(_organizationServiceAsync, organisationId.ToGuidAsString());
         var activeUsers = contacts.Where(x => x.IsConnectedWithExternalIdentity()).Select(x => new EmailAddress(x.email));
         var invitedUsers = contacts.Where(x => !x.IsConnectedWithExternalIdentity()).Select(x => new EmailAddress(x.email));
 
@@ -52,7 +53,7 @@ public class OrganisationUsersRepository : IOrganisationUsersRepository
                     lastName = invitation.LastName.Value,
                     jobTitle = invitation.JobTitle.Value,
                 },
-                organisationUsers.OrganisationId.Value,
+                organisationUsers.OrganisationId.ToGuidAsString(),
                 UserRoleMapper.ToDto(invitation.Role)!.Value,
                 _userContext.UserGlobalId.ToString());
 

@@ -36,7 +36,7 @@ internal class SecurityRepository : ISecurityRepository
         var fieldsToRetrieve = SecurityCrmFieldNameMapper.Map(securityFieldsSet);
         var req = new invln_getsingleloanapplicationforaccountandcontactRequest
         {
-            invln_accountid = userAccount.SelectedOrganisationId().ToString(),
+            invln_accountid = userAccount.SelectedOrganisationId().ToGuidAsString(),
             invln_externalcontactid = userAccount.UserGlobalId.ToString(),
             invln_loanapplicationid = applicationId.ToString(),
             invln_fieldstoretrieve = fieldsToRetrieve,
@@ -92,7 +92,7 @@ internal class SecurityRepository : ISecurityRepository
         {
             invln_loanapplication = loanApplicationSerialized,
             invln_loanapplicationid = entity.LoanApplicationId.Value.ToString(),
-            invln_accountid = userAccount.SelectedOrganisationId().ToString(),
+            invln_accountid = userAccount.SelectedOrganisationId().ToGuidAsString(),
             invln_contactexternalid = userAccount.UserGlobalId.ToString(),
             invln_fieldstoupdate = string.Join(',', SecurityCrmFieldNameMapper.Map(SecurityFieldsSet.SaveAllFields)),
             invln_usehetables = "true",

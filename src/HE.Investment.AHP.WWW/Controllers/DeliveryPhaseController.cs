@@ -96,7 +96,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(
-            new ProvideDeliveryPhaseNameCommand(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId), model.DeliveryPhaseName),
+            new ProvideDeliveryPhaseNameCommand(AhpApplicationId.From(applicationId), DeliveryPhaseId.From(deliveryPhaseId), model.DeliveryPhaseName),
             cancellationToken);
         if (result.HasValidationErrors)
         {
@@ -124,7 +124,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         return await ExecuteCommand(
             new ProvideTypeOfHomesCommand(
                 AhpApplicationId.From(applicationId),
-                new DeliveryPhaseId(deliveryPhaseId),
+                DeliveryPhaseId.From(deliveryPhaseId),
                 deliveryPhaseDetails.TypeOfHomes),
             nameof(Details),
             savedModel => savedModel with { TypeOfHomes = deliveryPhaseDetails.TypeOfHomes },
@@ -182,7 +182,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
             _mediator,
             new ProvideDeliveryPhaseHomesCommand(
                 AhpApplicationId.From(applicationId),
-                new DeliveryPhaseId(deliveryPhaseId),
+                DeliveryPhaseId.From(deliveryPhaseId),
                 model.HomesToDeliver ?? new Dictionary<string, string?>()),
             async () => await this.ReturnToTaskListOrContinue(
                 async () => await ContinueWithRedirect(new { applicationId, deliveryPhaseId })),
@@ -210,7 +210,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         return await ExecuteCommand(
             new ProvideReconfiguringExistingCommand(
                 AhpApplicationId.From(applicationId),
-                new DeliveryPhaseId(deliveryPhaseId),
+                DeliveryPhaseId.From(deliveryPhaseId),
                 deliveryPhaseDetails.ReconfiguringExisting),
             nameof(ReconfiguringExisting),
             savedModel => savedModel with { ReconfiguringExisting = deliveryPhaseDetails.ReconfiguringExisting },
@@ -239,7 +239,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
             return await ExecuteCommand(
                 new ClaimMilestonesCommand(
                     AhpApplicationId.From(applicationId),
-                    new DeliveryPhaseId(deliveryPhaseId),
+                    DeliveryPhaseId.From(deliveryPhaseId),
                     model.Tranches?.SummaryOfDelivery?.UnderstandClaimingMilestones),
                 nameof(SummaryOfDelivery),
                 deliveryPhaseDetails => deliveryPhaseDetails,
@@ -287,7 +287,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         CancellationToken cancellationToken)
     {
         var ahpApplicationId = AhpApplicationId.From(applicationId);
-        var deliveryId = new DeliveryPhaseId(deliveryPhaseId);
+        var deliveryId = DeliveryPhaseId.From(deliveryPhaseId);
         Request.TryGetWorkflowQueryParameter(out var workflow);
 
         IRequest<OperationResult> command = summaryOfDeliveryAmend.TrancheType switch
@@ -333,7 +333,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(
-            new RemoveDeliveryPhaseCommand(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId), model.RemoveDeliveryPhaseAnswer),
+            new RemoveDeliveryPhaseCommand(AhpApplicationId.From(applicationId), DeliveryPhaseId.From(deliveryPhaseId), model.RemoveDeliveryPhaseAnswer),
             cancellationToken);
         if (result.HasValidationErrors)
         {
@@ -364,7 +364,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         return await ExecuteMilestoneCommand(
             new ProvideAcquisitionMilestoneDetailsCommand(
                 this.GetApplicationIdFromRoute(),
-                new DeliveryPhaseId(deliveryPhaseId),
+                DeliveryPhaseId.From(deliveryPhaseId),
                 model.MilestoneStartAt,
                 model.ClaimMilestonePaymentAt),
             nameof(AcquisitionMilestone),
@@ -392,7 +392,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         return await ExecuteMilestoneCommand(
             new ProvideStartOnSiteMilestoneDetailsCommand(
                 this.GetApplicationIdFromRoute(),
-                new DeliveryPhaseId(deliveryPhaseId),
+                DeliveryPhaseId.From(deliveryPhaseId),
                 model.MilestoneStartAt,
                 model.ClaimMilestonePaymentAt),
             nameof(StartOnSiteMilestone),
@@ -420,7 +420,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         return await ExecuteMilestoneCommand(
             new ProvideCompletionMilestoneDetailsCommand(
                 this.GetApplicationIdFromRoute(),
-                new DeliveryPhaseId(deliveryPhaseId),
+                DeliveryPhaseId.From(deliveryPhaseId),
                 model.MilestoneStartAt,
                 model.ClaimMilestonePaymentAt),
             nameof(PracticalCompletionMilestone),
@@ -452,7 +452,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         return await ExecuteCommand(
             new ProvideAdditionalPaymentRequestCommand(
                 this.GetApplicationIdFromRoute(),
-                new DeliveryPhaseId(deliveryPhaseId),
+                DeliveryPhaseId.From(deliveryPhaseId),
                 isAdditionalPaymentRequested),
             nameof(UnregisteredBodyFollowUp),
             savedModel => new DeliveryRequestAdditionalPaymentViewModel(
@@ -480,8 +480,8 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         }
 
         var result = isCompleted == IsSectionCompleted.Yes
-            ? await _mediator.Send(new CompleteDeliveryPhaseCommand(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId)), cancellationToken)
-            : await _mediator.Send(new UnCompleteDeliveryPhaseCommand(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId)), cancellationToken);
+            ? await _mediator.Send(new CompleteDeliveryPhaseCommand(AhpApplicationId.From(applicationId), DeliveryPhaseId.From(deliveryPhaseId)), cancellationToken)
+            : await _mediator.Send(new UnCompleteDeliveryPhaseCommand(AhpApplicationId.From(applicationId), DeliveryPhaseId.From(deliveryPhaseId)), cancellationToken);
 
         if (result.HasValidationErrors)
         {
@@ -535,7 +535,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         return await ExecuteCommand(
             new ProvideBuildActivityCommand(
                 AhpApplicationId.From(applicationId),
-                new DeliveryPhaseId(deliveryPhaseId),
+                DeliveryPhaseId.From(deliveryPhaseId),
                 deliveryPhaseDetails.BuildActivityType),
             "BuildActivityType",
             savedModel => savedModel with { BuildActivityType = deliveryPhaseDetails.BuildActivityType },
@@ -635,7 +635,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     private async Task<DeliveryPhaseDetails> GetDeliveryPhaseDetails(string applicationId, string deliveryPhaseId, CancellationToken cancellationToken)
     {
         return await _mediator.Send(
-            new GetDeliveryPhaseDetailsQuery(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId)),
+            new GetDeliveryPhaseDetailsQuery(AhpApplicationId.From(applicationId), DeliveryPhaseId.From(deliveryPhaseId)),
             cancellationToken);
     }
 }

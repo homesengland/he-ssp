@@ -7,7 +7,6 @@ using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Extensions;
-using OrganisationId = HE.Investments.Account.Shared.User.ValueObjects.OrganisationId;
 
 namespace HE.Investments.Account.Shared.Repositories;
 
@@ -29,7 +28,7 @@ internal sealed class AccountHttpRepository : IAccountRepository
                 userGlobalId,
                 userEmail,
                 new OrganisationBasicInfo(
-                    new OrganisationId(x.Organisation.OrganisationId),
+                    OrganisationId.From(x.Organisation.OrganisationId),
                     x.Organisation.CompanyRegisteredName,
                     x.Organisation.CompanyRegistrationNumber,
                     x.Organisation.CompanyAddressLine1,

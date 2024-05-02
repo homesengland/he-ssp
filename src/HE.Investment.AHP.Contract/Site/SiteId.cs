@@ -16,7 +16,13 @@ public record SiteId : StringIdValueObject
 
     public static SiteId New() => new();
 
-    public static SiteId? Create(string? id) => id.IsProvided() ? new SiteId(id!) : null;
+    public static SiteId From(string value) => new(FromStringToShortGuidAsString(value));
+
+    public static SiteId From(Guid value) => new(FromGuidToShortGuidAsString(value));
+
+    public string ToGuidAsString() => ShortGuid.ToGuidAsString(Value);
+
+    public static SiteId? Create(string? id) => id.IsProvided() ? From(id!) : null;
 
     public override string ToString()
     {

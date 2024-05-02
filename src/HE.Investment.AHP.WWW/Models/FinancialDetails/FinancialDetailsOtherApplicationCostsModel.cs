@@ -5,7 +5,7 @@ public class FinancialDetailsOtherApplicationCostsModel : FinancialDetailsBaseMo
     {
     }
 
-    public FinancialDetailsOtherApplicationCostsModel(Guid applicationId, string applicationName, string? expectedWorksCost, string? expectedOnCosts)
+    public FinancialDetailsOtherApplicationCostsModel(string applicationId, string applicationName, string? expectedWorksCost, string? expectedOnCosts)
         : base(applicationId, applicationName)
     {
         ExpectedWorksCosts = expectedWorksCost;

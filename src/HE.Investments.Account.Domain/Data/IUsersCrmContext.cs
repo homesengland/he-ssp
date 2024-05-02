@@ -4,11 +4,11 @@ namespace HE.Investments.Account.Domain.Data;
 
 public interface IUsersCrmContext
 {
-    Task<IList<ContactDto>> GetUsers(Guid organisationId);
+    Task<IList<ContactDto>> GetUsers(string organisationId);
 
     Task<ContactDto> GetUser(string id);
 
-    Task<int?> GetUserRole(string id, Guid organisationId);
+    Task<int?> GetUserRole(string id, string organisationId);
 
-    Task ChangeUserRole(string userId, string userAssigningId, int role, Guid organisationId);
+    Task ChangeUserRole(string userId, string userAssigningId, int role, string organisationId);
 }

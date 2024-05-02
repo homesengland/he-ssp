@@ -38,7 +38,7 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
     public async Task<SiteModel> Handle(GetSiteQuery request, CancellationToken cancellationToken)
     {
         var userAccount = await _accountUserContext.GetSelectedAccount();
-        var site = await _siteRepository.GetSite(new SiteId(request.SiteId), userAccount, cancellationToken);
+        var site = await _siteRepository.GetSite(SiteId.From(request.SiteId), userAccount, cancellationToken);
         var prefillData = site.FrontDoorProjectId.IsProvided() && site.FrontDoorSiteId.IsProvided()
             ? await _prefillDataRepository.GetAhpSitePrefillData(site.FrontDoorProjectId!, site.FrontDoorSiteId!, cancellationToken)
             : null;

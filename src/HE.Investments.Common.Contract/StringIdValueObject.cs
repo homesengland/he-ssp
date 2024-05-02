@@ -21,6 +21,12 @@ public record StringIdValueObject
 
     public bool IsNew => string.IsNullOrEmpty(Value);
 
+    public static string FromShortGuidAsStringToGuidAsString(string value) => ShortGuid.ToGuidAsString(value);
+
+    public static string FromGuidToShortGuidAsString(Guid value) => ShortGuid.FromGuid(value).Value;
+
+    public static string FromStringToShortGuidAsString(string value) => ShortGuid.FromString(value).Value;
+
     public override string ToString()
     {
         return Value;

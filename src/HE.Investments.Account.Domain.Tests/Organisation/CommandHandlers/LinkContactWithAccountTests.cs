@@ -69,6 +69,6 @@ public class LinkContactWithAccountTests : TestBase<LinkContactWithOrganizationC
         await TestCandidate.Handle(_command, CancellationToken.None);
 
         // then
-        contactServiceMock.Verify(x => x.LinkContactWithOrganization(It.IsAny<IOrganizationServiceAsync2>(), "UserOne", organisationId, 858110002), Times.Once);
+        contactServiceMock.Verify(x => x.LinkContactWithOrganization(It.IsAny<IOrganizationServiceAsync2>(), "UserOne", organisationId.ToString(), 858110002), Times.Once);
     }
 }

@@ -49,7 +49,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
     {
         var req = new invln_getsingleloanapplicationforaccountandcontactRequest
         {
-            invln_accountid = userAccount.SelectedOrganisationId().ToString(),
+            invln_accountid = userAccount.SelectedOrganisationId().ToGuidAsString(),
             invln_externalcontactid = userAccount.UserGlobalId.ToString(),
             invln_loanapplicationid = loanApplicationId.ToString(),
             invln_fieldstoretrieve = nameof(invln_Loanapplication.invln_LoanapplicationId).ToLowerInvariant(),
@@ -76,7 +76,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
         var req = new invln_checkifloanapplicationwithgivennameexistsRequest
         {
             invln_loanname = loanApplicationName.Value,
-            invln_organisationid = userAccount.Organisation?.OrganisationId.ToString(),
+            invln_organisationid = userAccount.Organisation.IsProvided() ? userAccount.Organisation!.OrganisationId.ToGuidAsString() : string.Empty,
         };
 
         var response = (invln_checkifloanapplicationwithgivennameexistsResponse)await _serviceClient.ExecuteAsync(req, cancellationToken);
@@ -87,7 +87,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
     {
         var req = new invln_getsingleloanapplicationforaccountandcontactRequest
         {
-            invln_accountid = userAccount.SelectedOrganisationId().ToString(),
+            invln_accountid = userAccount.SelectedOrganisationId().ToGuidAsString(),
             invln_externalcontactid = userAccount.UserGlobalId.ToString(),
             invln_loanapplicationid = id.ToString(),
             invln_usehetables = "true",
@@ -130,7 +130,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
     {
         var req = new invln_getloanapplicationsforaccountandcontactRequest()
         {
-            invln_accountid = userAccount.SelectedOrganisationId().ToString(),
+            invln_accountid = userAccount.SelectedOrganisationId().ToGuidAsString(),
             invln_externalcontactid = userAccount.UserGlobalId.ToString(),
             invln_usehetables = "true",
         };
@@ -158,14 +158,14 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
             LoanApplicationContact = LoanApplicationMapper.MapToUserAccountDto(loanApplication.UserAccount, userDetails),
             fundingReason = FundingPurposeMapper.Map(loanApplication.FundingReason),
             ApplicationName = loanApplication.Name.Value,
-            frontDoorProjectId = loanApplication.FrontDoorProjectId?.Value,
+            frontDoorProjectId = loanApplication.FrontDoorProjectId?.ToGuidAsString(),
         };
 
         var loanApplicationSerialized = CrmResponseSerializer.Serialize(loanApplicationDto);
         var req = new invln_sendinvestmentloansdatatocrmRequest
         {
             invln_entityfieldsparameters = loanApplicationSerialized,
-            invln_accountid = loanApplication.UserAccount.SelectedOrganisationId().ToString(),
+            invln_accountid = loanApplication.UserAccount.SelectedOrganisationId().ToGuidAsString(),
             invln_contactexternalid = loanApplication.UserAccount.UserGlobalId.ToString(),
             invln_usehetables = "true",
         };

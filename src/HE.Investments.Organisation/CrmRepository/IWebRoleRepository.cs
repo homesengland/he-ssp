@@ -5,17 +5,17 @@ using Microsoft.Xrm.Sdk.Messages;
 namespace HE.Investments.Organisation.CrmRepository;
 public interface IWebRoleRepository
 {
-    List<Entity> GetContactWebrole(IOrganizationServiceAsync2 service, Guid contactId, string portalTypeFilter);
+    List<Entity> GetContactWebRole(IOrganizationServiceAsync2 service, string contactId, string portalTypeFilter);
 
     List<Entity> GetDefaultPortalRoles(IOrganizationServiceAsync2 service, int portalType);
 
-    Entity? GetContactWebroleForGivenOrganisationAndPortal(IOrganizationServiceAsync2 service, Guid organisationId, Guid contactId, string? portalTypeFiler = null);
+    Entity? GetContactWebRoleForGivenOrganisationAndPortal(IOrganizationServiceAsync2 service, string organisationId, string contactId, string? portalTypeFiler = null);
 
-    Entity? GetContactWebroleForOrganisation(IOrganizationServiceAsync2 service, Guid contactId, Guid organisationId);
+    Entity? GetContactWebRoleForOrganisation(IOrganizationServiceAsync2 service, string contactId, string organisationId);
 
-    Entity? GetWebroleByName(IOrganizationServiceAsync2 service, string webroleName);
+    Entity? GetWebRoleByName(IOrganizationServiceAsync2 service, string webRoleName);
 
-    Entity? GetWebroleByPermissionOptionSetValue(IOrganizationServiceAsync2 service, int permission, string portalTypeFilter);
+    Entity? GetWebRoleByPermissionOptionSetValue(IOrganizationServiceAsync2 service, int permission, string portalTypeFilter);
 
-    List<Entity> GetWebrolesForPassedContacts(IOrganizationServiceAsync2 service, string contactExternalIds, Guid organisationGuid);
+    List<Entity> GetWebRolesForPassedContacts(IOrganizationServiceAsync2 service, string contactExternalIds, string organisationId);
 }

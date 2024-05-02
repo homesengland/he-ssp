@@ -15,9 +15,11 @@ public record AhpApplicationId : StringIdValueObject
 
     public static AhpApplicationId New() => new();
 
-    public static AhpApplicationId From(string value) => new(value);
+    public static AhpApplicationId From(string value) => new(FromStringToShortGuidAsString(value));
 
-    public static AhpApplicationId From(Guid value) => new(value.ToString());
+    public static AhpApplicationId From(Guid value) => new(FromGuidToShortGuidAsString(value));
+
+    public string ToGuidAsString() => ShortGuid.ToGuidAsString(Value);
 
     public override string ToString()
     {

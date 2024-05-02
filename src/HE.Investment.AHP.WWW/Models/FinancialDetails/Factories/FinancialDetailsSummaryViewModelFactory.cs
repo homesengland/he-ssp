@@ -34,7 +34,7 @@ public class FinancialDetailsSummaryViewModelFactory : IFinancialDetailsSummaryV
         var contributionsSectionSummary = GetContributionsSectionSummary(result.TotalContributions, applicationId, result.Application.IsEditable, urlHelper);
 
         return new FinancialDetailsCheckAnswersModel(
-            Guid.Parse(applicationId.Value),
+            applicationId.Value,
             result.Application.Name,
             landValueSectionSummary,
             costsSectionSummary,

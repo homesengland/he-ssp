@@ -29,7 +29,7 @@ public class CreateConsortiumCommandHandler : IRequestHandler<CreateConsortiumCo
             OperationResult.ThrowValidationError("SelectedProgrammeId", "Please select what programme the consortium is related to");
         }
 
-        var programme = new ProgrammeSlim(new ProgrammeId(request.ProgrammeId), "AHP CME");
+        var programme = new ProgrammeSlim(ProgrammeId.From(request.ProgrammeId), "AHP CME");
         var userAccount = await _accountUserContext.GetSelectedAccount();
         var organisation = userAccount.SelectedOrganisation();
         var leadPartner = new ConsortiumMember(organisation.OrganisationId, organisation.RegisteredCompanyName, ConsortiumMemberStatus.Active);

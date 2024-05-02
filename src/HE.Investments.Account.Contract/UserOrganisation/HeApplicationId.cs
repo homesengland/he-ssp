@@ -9,7 +9,11 @@ public record HeApplicationId : StringIdValueObject
     {
     }
 
-    public static HeApplicationId From(string value) => new(value);
+    public static HeApplicationId From(string value) => new(FromStringToShortGuidAsString(value));
+
+    public static HeApplicationId From(Guid value) => new(FromGuidToShortGuidAsString(value));
+
+    public string ToGuidAsString() => ShortGuid.ToGuidAsString(Value);
 
     public override string ToString()
     {

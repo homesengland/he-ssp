@@ -42,7 +42,7 @@ public class GetUserOrganisationWithProgrammesQueryHandler : IRequestHandler<Get
         var userDetails = await _profileRepository.GetProfileDetails(_accountUserContext.UserGlobalId);
         var projects = await _projectRepository.GetUserProjects(account, cancellationToken);
 
-        if (!await _featureManager.IsEnabledAsync(FeatureFlags.AhpProgram, account.SelectedOrganisationId().ToString()))
+        if (!await _featureManager.IsEnabledAsync(FeatureFlags.AhpProgram, account.SelectedOrganisationId().ToGuidAsString()))
         {
             return new GetUserOrganisationWithProgrammesQueryResponse(
                 organisationDetails,

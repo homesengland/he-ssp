@@ -15,7 +15,7 @@ public class ContributionsTests : AhpViewTestBase
     public async Task ShouldDisplayView()
     {
         var model = new FinancialDetailsContributionsModel(
-            Guid.NewGuid(),
+            Guid.NewGuid().ToString(),
             "TestApp",
             string.Empty,
             string.Empty,
@@ -41,7 +41,7 @@ public class ContributionsTests : AhpViewTestBase
     {
         // given
         var model = new FinancialDetailsContributionsModel(
-            Guid.NewGuid(),
+            Guid.NewGuid().ToString(),
             "TestApp",
             string.Empty,
             string.Empty,

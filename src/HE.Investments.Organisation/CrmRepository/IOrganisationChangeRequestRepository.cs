@@ -4,5 +4,5 @@ using Microsoft.Xrm.Sdk;
 namespace HE.Investments.Organisation.CrmRepository;
 public interface IOrganisationChangeRequestRepository
 {
-    Task<Entity?> GetChangeRequestForOrganisation(IOrganizationServiceAsync2 service, Guid organisationId);
+    Task<Entity?> GetChangeRequestForOrganisation(IOrganizationServiceAsync2 service, string organisationId);
 }

@@ -11,15 +11,15 @@ public interface IContactService
 
     Task<ContactRolesDto?> GetContactRoles(IOrganizationServiceAsync2 service, string contactEmail, string contactExternalId, int? portalType = null);
 
-    Task<Guid> LinkContactWithOrganization(IOrganizationServiceAsync2 service, string contactExternalId, Guid organisationGuid, int portalType);
+    Task<string> LinkContactWithOrganization(IOrganizationServiceAsync2 service, string contactExternalId, string organisationId, int portalType);
 
-    Task RemoveLinkBetweenContactAndOrganisation(IOrganizationServiceAsync2 service, Guid organisationGuid, string contactExternalId, int? portalType = null);
+    Task RemoveLinkBetweenContactAndOrganisation(IOrganizationServiceAsync2 service, string organisationId, string contactExternalId, int? portalType = null);
 
-    Task UpdateContactWebrole(IOrganizationServiceAsync2 service, string contactExternalId, string contactAssigningExternalId, Guid organisationGuid, int newWebRole, int? portalType = null);
+    Task UpdateContactWebRole(IOrganizationServiceAsync2 service, string contactExternalId, string contactAssigningExternalId, string organisationId, int newWebRole, int? portalType = null);
 
-    Task<List<ContactDto>> GetAllOrganisationContactsForPortal(IOrganizationServiceAsync2 service, Guid organisationGuid, int? portalType = null);
+    Task<List<ContactDto>> GetAllOrganisationContactsForPortal(IOrganizationServiceAsync2 service, string organisationId, int? portalType = null);
 
-    Task<List<ContactRolesDto>> GetContactRolesForOrganisationContacts(IOrganizationServiceAsync2 service, List<string> contactExternalId, Guid organisationGuid);
+    Task<List<ContactRolesDto>> GetContactRolesForOrganisationContacts(IOrganizationServiceAsync2 service, List<string> contactExternalId, string organisationId);
 
-    Task<Guid> CreateNotConnectedContact(IOrganizationServiceAsync2 service, ContactDto contact, Guid organisationGuid, int role, string inviterExternalId, int? portalType = null);
+    Task<string> CreateNotConnectedContact(IOrganizationServiceAsync2 service, ContactDto contact, string organisationId, int role, string inviterExternalId, int? portalType = null);
 }

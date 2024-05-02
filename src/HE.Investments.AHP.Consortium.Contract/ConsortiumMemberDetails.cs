@@ -1,5 +1,5 @@
-using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.AHP.Consortium.Contract.Enums;
+using HE.Investments.Common.Contract;
 
 namespace HE.Investments.AHP.Consortium.Contract;
 

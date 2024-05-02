@@ -1,14 +1,11 @@
-using Microsoft.Crm.Sdk.Messages;
 using Microsoft.PowerPlatform.Dataverse.Client;
 using Microsoft.Xrm.Sdk;
-using Microsoft.Xrm.Sdk.Client;
-using Microsoft.Xrm.Sdk.Messages;
 using Microsoft.Xrm.Sdk.Query;
 
 namespace HE.Investments.Organisation.CrmRepository;
 public class WebRoleRepository : IWebRoleRepository
 {
-    public List<Entity> GetContactWebrole(IOrganizationServiceAsync2 service, Guid contactId, string portalTypeFilter)
+    public List<Entity> GetContactWebRole(IOrganizationServiceAsync2 service, string contactId, string portalTypeFilter)
     {
         var fetchXML = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
 	                                <entity name='invln_contactwebrole'>
@@ -61,7 +58,7 @@ public class WebRoleRepository : IWebRoleRepository
         return [.. result.Entities];
     }
 
-    public Entity? GetContactWebroleForGivenOrganisationAndPortal(IOrganizationServiceAsync2 service, Guid organisationId, Guid contactId, string? portalTypeFiler = null)
+    public Entity? GetContactWebRoleForGivenOrganisationAndPortal(IOrganizationServiceAsync2 service, string organisationId, string contactId, string? portalTypeFiler = null)
     {
         var fetchXml = @"<fetch>
                       <entity name=""invln_contactwebrole"">
@@ -82,7 +79,7 @@ public class WebRoleRepository : IWebRoleRepository
         return result.Entities.FirstOrDefault();
     }
 
-    public Entity? GetContactWebroleForOrganisation(IOrganizationServiceAsync2 service, Guid contactId, Guid organisationId)
+    public Entity? GetContactWebRoleForOrganisation(IOrganizationServiceAsync2 service, string contactId, string organisationId)
     {
         var condition1 = new ConditionExpression("invln_accountid", ConditionOperator.Equal, organisationId);
         var condition2 = new ConditionExpression("invln_contactid", ConditionOperator.Equal, contactId);
@@ -108,9 +105,9 @@ public class WebRoleRepository : IWebRoleRepository
         return result1.Entities.FirstOrDefault();
     }
 
-    public Entity? GetWebroleByName(IOrganizationServiceAsync2 service, string webroleName)
+    public Entity? GetWebRoleByName(IOrganizationServiceAsync2 service, string webRoleName)
     {
-        var condition1 = new ConditionExpression("invln_name", ConditionOperator.Equal, webroleName);
+        var condition1 = new ConditionExpression("invln_name", ConditionOperator.Equal, webRoleName);
         var filter1 = new FilterExpression()
         {
             Conditions =
@@ -132,7 +129,7 @@ public class WebRoleRepository : IWebRoleRepository
         return result1.Entities.FirstOrDefault();
     }
 
-    public Entity? GetWebroleByPermissionOptionSetValue(IOrganizationServiceAsync2 service, int permission, string portalTypeFilter)
+    public Entity? GetWebRoleByPermissionOptionSetValue(IOrganizationServiceAsync2 service, int permission, string portalTypeFilter)
     {
         var fetchXml = @"<fetch>
                           <entity name=""invln_webrole"">
@@ -153,7 +150,7 @@ public class WebRoleRepository : IWebRoleRepository
         return result.Entities.FirstOrDefault();
     }
 
-    public List<Entity> GetWebrolesForPassedContacts(IOrganizationServiceAsync2 service, string contactExternalIds, Guid organisationGuid)
+    public List<Entity> GetWebRolesForPassedContacts(IOrganizationServiceAsync2 service, string contactExternalIds, string organisationId)
     {
         var fetchXml = @"<fetch>
                           <entity name=""invln_contactwebrole"">
@@ -162,7 +159,7 @@ public class WebRoleRepository : IWebRoleRepository
                             <attribute name=""invln_contactwebroleid"" />
                             <attribute name=""invln_webroleid"" />
                             <filter>
-                                  <condition attribute=""invln_accountid"" operator=""eq"" value=""" + organisationGuid + @""" />
+                                  <condition attribute=""invln_accountid"" operator=""eq"" value=""" + organisationId + @""" />
                                 </filter>
                             <link-entity name=""contact"" from=""contactid"" to=""invln_contactid"" alias=""cnt"">
                                 <attribute name=""invln_externalid"" />

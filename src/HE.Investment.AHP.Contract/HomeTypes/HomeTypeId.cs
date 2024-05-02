@@ -13,9 +13,13 @@ public record HomeTypeId : StringIdValueObject
     {
     }
 
-    public static HomeTypeId From(string value) => new(value);
-
     public static HomeTypeId New() => new();
+
+    public static HomeTypeId From(string value) => new(FromStringToShortGuidAsString(value));
+
+    public static HomeTypeId From(Guid value) => new(FromGuidToShortGuidAsString(value));
+
+    public string ToGuidAsString() => ShortGuid.ToGuidAsString(Value);
 
     public override string ToString()
     {

@@ -34,7 +34,7 @@ public class DeliveryPhaseCheckAnswersViewModelFactory : IDeliveryPhaseCheckAnsw
             CreateDeliveryPhaseActionUrl(
                 urlHelper,
                 applicationId,
-                new DeliveryPhaseId(deliveryPhase.Id),
+                DeliveryPhaseId.From(deliveryPhase.Id),
                 actionName,
                 encodedWorkflow);
 

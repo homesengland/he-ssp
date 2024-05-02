@@ -41,7 +41,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     [HttpGet("")]
     public async Task<IActionResult> NewName([FromRoute] string projectId, CancellationToken cancellationToken)
     {
-        var project = await _mediator.Send(new GetProjectDetailsQuery(new FrontDoorProjectId(projectId)), cancellationToken);
+        var project = await _mediator.Send(new GetProjectDetailsQuery(FrontDoorProjectId.From(projectId)), cancellationToken);
         ViewBag.ProjectName = project.Name;
         return View("Name");
     }
@@ -49,10 +49,10 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     [HttpPost("")]
     public async Task<IActionResult> NewName([FromRoute] string projectId, string? name, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new CreateSiteCommand(new FrontDoorProjectId(projectId), name), cancellationToken);
+        var result = await _mediator.Send(new CreateSiteCommand(FrontDoorProjectId.From(projectId), name), cancellationToken);
         if (result.HasValidationErrors)
         {
-            var project = await _mediator.Send(new GetProjectDetailsQuery(new FrontDoorProjectId(projectId)), cancellationToken);
+            var project = await _mediator.Send(new GetProjectDetailsQuery(FrontDoorProjectId.From(projectId)), cancellationToken);
             ViewBag.ProjectName = project.Name;
             ModelState.AddValidationErrors(result);
             return View(nameof(Name), name);
@@ -75,8 +75,8 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     {
         return await ExecuteSiteCommand(
             new ProvideSiteNameCommand(
-                new FrontDoorProjectId(projectId),
-                new FrontDoorSiteId(siteId),
+                FrontDoorProjectId.From(projectId),
+                FrontDoorSiteId.From(siteId),
                 name),
             nameof(Name),
             project => View(nameof(Name), name),
@@ -95,7 +95,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     public async Task<IActionResult> HomesNumber([FromRoute] string projectId, [FromRoute] string siteId, SiteDetails model, CancellationToken cancellationToken)
     {
         return await ExecuteSiteCommand(
-            new ProvideSiteHomesNumberCommand(new FrontDoorProjectId(projectId), new FrontDoorSiteId(siteId), model.HomesNumber),
+            new ProvideSiteHomesNumberCommand(FrontDoorProjectId.From(projectId), FrontDoorSiteId.From(siteId), model.HomesNumber),
             nameof(HomesNumber),
             project =>
             {
@@ -143,8 +143,8 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         {
             return await ExecuteSiteCommand(
                 new ProvideLocalAuthorityCommand(
-                    new FrontDoorProjectId(projectId),
-                    new FrontDoorSiteId(siteId),
+                    FrontDoorProjectId.From(projectId),
+                    FrontDoorSiteId.From(siteId),
                     new LocalAuthorityCode(model.LocalAuthorityCode),
                     model.LocalAuthorityName),
                 nameof(LocalAuthorityConfirm),
@@ -168,7 +168,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     public async Task<IActionResult> PlanningStatus([FromRoute] string projectId, [FromRoute] string siteId, SiteDetails model, CancellationToken cancellationToken)
     {
         return await ExecuteSiteCommand(
-            new ProvidePlanningStatusCommand(new FrontDoorProjectId(projectId), new FrontDoorSiteId(siteId), model.PlanningStatus),
+            new ProvidePlanningStatusCommand(FrontDoorProjectId.From(projectId), FrontDoorSiteId.From(siteId), model.PlanningStatus),
             nameof(PlanningStatus),
             project =>
             {
@@ -216,7 +216,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     public async Task<IActionResult> Remove([FromRoute] string projectId, [FromRoute] string siteId, SiteDetails model, CancellationToken cancellationToken)
     {
         return await ExecuteSiteCommand(
-            new RemoveSiteCommand(new FrontDoorProjectId(projectId), new FrontDoorSiteId(siteId), model.RemoveSiteAnswer),
+            new RemoveSiteCommand(FrontDoorProjectId.From(projectId), FrontDoorSiteId.From(siteId), model.RemoveSiteAnswer),
             nameof(Remove),
             site => site,
             cancellationToken,
@@ -235,7 +235,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
 
     private async Task<SiteDetails> GetSiteDetails(string projectId, string siteId, CancellationToken cancellationToken)
     {
-        var siteDetails = await _mediator.Send(new GetSiteDetailsQuery(new FrontDoorProjectId(projectId), new FrontDoorSiteId(siteId)), cancellationToken);
+        var siteDetails = await _mediator.Send(new GetSiteDetailsQuery(FrontDoorProjectId.From(projectId), FrontDoorSiteId.From(siteId)), cancellationToken);
         ViewBag.ProjectName = siteDetails.ProjectName;
         return siteDetails;
     }

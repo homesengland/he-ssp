@@ -57,7 +57,7 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
             CompletionMilestoneDetails.Create(
                 new CompletionDate(dto.completionDate),
                 new MilestonePaymentDate(dto.completionPaymentDate)),
-            new DeliveryPhaseId(dto.id),
+            DeliveryPhaseId.From(dto.id),
             dto.createdOn,
             MapIsAdditionalPaymentRequested(dto.requiresAdditionalPayments),
             dto.claimingtheMilestoneConfirmed);
@@ -67,8 +67,8 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
     {
         return new DeliveryPhaseDto
         {
-            id = entity.Id.IsNew ? null : entity.Id.Value,
-            applicationId = entity.Application.Id.Value,
+            id = entity.Id.IsNew ? null : entity.Id.ToGuidAsString(),
+            applicationId = entity.Application.Id.ToGuidAsString(),
             name = entity.Name.Value,
             isCompleted = entity.Status == SectionStatus.Completed,
             newBuildActivityType = MapNewBuildActivityType(entity.BuildActivity.Type),
@@ -200,7 +200,7 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
 
     private static Dictionary<string, int?> MapHomesToDeliver(IList<HomesToDeliverInPhase> homesToDeliver)
     {
-        return homesToDeliver.ToDictionary<HomesToDeliverInPhase, string, int?>(x => x.HomeTypeId.Value, x => x.Value);
+        return homesToDeliver.ToDictionary<HomesToDeliverInPhase, string, int?>(x => x.HomeTypeId.ToGuidAsString(), x => x.Value);
     }
 
     private static DateTime? MapMilestoneDate<TDate>(MilestoneDetails<TDate>? milestoneDetails)

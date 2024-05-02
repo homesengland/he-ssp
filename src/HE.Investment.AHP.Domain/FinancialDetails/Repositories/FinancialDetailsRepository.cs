@@ -11,7 +11,7 @@ using HE.Investment.AHP.Domain.Scheme.Repositories;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investments.Account.Shared.User;
-using HE.Investments.Account.Shared.User.ValueObjects;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.Repositories;
@@ -49,7 +49,7 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
             : await _crmContext.GetUserApplicationById(id.Value, organisationId, cancellationToken);
         var applicationBasicInfo = await _applicationRepository.GetApplicationBasicInfo(id, userAccount, cancellationToken);
         var schemeFunding = (await _schemeRepository.GetByApplicationId(id, userAccount, false, cancellationToken)).Funding;
-        var siteBasicInfo = await _siteRepository.GetSiteBasicInfo(new SiteId(application.siteId), userAccount, cancellationToken);
+        var siteBasicInfo = await _siteRepository.GetSiteBasicInfo(SiteId.From(application.siteId), userAccount, cancellationToken);
 
         return CreateEntity(application, applicationBasicInfo, siteBasicInfo, schemeFunding);
     }

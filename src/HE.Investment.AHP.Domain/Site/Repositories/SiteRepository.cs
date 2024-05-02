@@ -78,6 +78,6 @@ public class SiteRepository : ISiteRepository
             userAccount.UserGlobalId.Value,
             SiteEntityToSiteDtoMapper.Map(site),
             cancellationToken);
-        return new SiteId(id);
+        return SiteId.From(id);
     }
 }
