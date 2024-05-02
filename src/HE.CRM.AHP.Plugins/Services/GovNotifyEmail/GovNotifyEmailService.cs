@@ -353,7 +353,7 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
                             recipientEmail = contact.EMailAddress1,
                             subject = subject,
                             name = contact.FullName ?? "NO NAME",
-                            referencenumber = ahpApplication.invln_schemename ?? "NO NAME",
+                            referencenumber = ahpApplication.invln_applicationid ?? "NO NAME",
                         }
                     };
 
