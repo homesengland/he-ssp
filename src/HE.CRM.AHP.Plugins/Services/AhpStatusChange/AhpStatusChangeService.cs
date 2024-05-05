@@ -94,6 +94,19 @@ namespace HE.CRM.AHP.Plugins.Services.AhpStatusChange
                     _govNotifyEmailService.SendNotifications_AHP_INTERNAL_APPLICATION_APPROVED_SUBJECT_TO_CONTRACT(ahpStatusChange, ahpApplication);
                     break;
 
+                case (int)invln_AHPInternalStatus.OnHold:
+                    statusLabel = "OnHold";
+                    if (ahpStatusChange.invln_ChangeSource.Value == (int)invln_ChangesourceSet.External)
+                    {
+                        _govNotifyEmailService.SendNotifications_AHP_INTERNAL_APPLICATION_ON_HOLD(ahpStatusChange, ahpApplication);
+                    }
+
+                    if (ahpStatusChange.invln_ChangeSource.Value == (int)invln_ChangesourceSet.Internal)
+                    {
+                        _govNotifyEmailService.SendNotifications_AHP_EXTERNAL_APPLICATION_ON_HOLD(ahpStatusChange, ahpApplication);
+                    }
+                    break;
+
                 default:
                     break;
             }
