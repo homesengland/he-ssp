@@ -1,4 +1,5 @@
 ﻿using HE.Investments.Common.Contract;
+using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.Contract.Delivery;
 
@@ -19,7 +20,7 @@ public record DeliveryPhaseId : StringIdValueObject
 
     public static DeliveryPhaseId From(Guid value) => new(FromGuidToShortGuidAsString(value));
 
-    public string ToGuidAsString() => ShortGuid.ToGuidAsString(Value);
+    public string ToGuidAsString() => Value.ToGuidAsString();
 
     public override string ToString()
     {

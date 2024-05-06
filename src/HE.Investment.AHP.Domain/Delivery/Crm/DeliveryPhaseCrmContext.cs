@@ -1,9 +1,9 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.Investments.Common.Contract;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Services;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.User;
 
 namespace HE.Investment.AHP.Domain.Delivery.Crm;
@@ -59,8 +59,8 @@ public class DeliveryPhaseCrmContext : IDeliveryPhaseCrmContext
         var request = new invln_getmultipledeliveryphaseRequest
         {
             invln_userId = string.Empty,
-            invln_organisationId = ShortGuid.ToGuidAsString(organisationId),
-            invln_applicationId = ShortGuid.ToGuidAsString(applicationId),
+            invln_organisationId = organisationId.TryToGuidAsString(),
+            invln_applicationId = applicationId.ToGuidAsString(),
             invln_fieldstoretrieve = DeliveryPhaseCrmFields,
         };
 
@@ -75,8 +75,8 @@ public class DeliveryPhaseCrmContext : IDeliveryPhaseCrmContext
         var request = new invln_getmultipledeliveryphaseRequest
         {
             invln_userId = _userContext.UserGlobalId,
-            invln_organisationId = ShortGuid.ToGuidAsString(organisationId),
-            invln_applicationId = ShortGuid.ToGuidAsString(applicationId),
+            invln_organisationId = organisationId.TryToGuidAsString(),
+            invln_applicationId = applicationId.ToGuidAsString(),
             invln_fieldstoretrieve = DeliveryPhaseCrmFields,
         };
 
@@ -92,9 +92,9 @@ public class DeliveryPhaseCrmContext : IDeliveryPhaseCrmContext
         var request = new invln_getsingledeliveryphaseRequest
         {
             invln_userid = string.Empty,
-            invln_organisationId = ShortGuid.ToGuidAsString(organisationId),
-            invln_applicationId = ShortGuid.ToGuidAsString(applicationId),
-            invln_deliveryPhaseId = ShortGuid.ToGuidAsString(deliveryPhaseId),
+            invln_organisationId = organisationId.TryToGuidAsString(),
+            invln_applicationId = applicationId.ToGuidAsString(),
+            invln_deliveryPhaseId = deliveryPhaseId.ToGuidAsString(),
             invln_fieldstoretrieve = DeliveryPhaseCrmFields,
         };
 
@@ -110,9 +110,9 @@ public class DeliveryPhaseCrmContext : IDeliveryPhaseCrmContext
         var request = new invln_getsingledeliveryphaseRequest
         {
             invln_userid = _userContext.UserGlobalId,
-            invln_organisationId = ShortGuid.ToGuidAsString(organisationId),
-            invln_applicationId = ShortGuid.ToGuidAsString(applicationId),
-            invln_deliveryPhaseId = ShortGuid.ToGuidAsString(deliveryPhaseId),
+            invln_organisationId = organisationId.TryToGuidAsString(),
+            invln_applicationId = applicationId.ToGuidAsString(),
+            invln_deliveryPhaseId = deliveryPhaseId.ToGuidAsString(),
             invln_fieldstoretrieve = DeliveryPhaseCrmFields,
         };
 
@@ -124,9 +124,9 @@ public class DeliveryPhaseCrmContext : IDeliveryPhaseCrmContext
         var request = new invln_deletedeliveryphaseRequest
         {
             invln_userId = _userContext.UserGlobalId,
-            invln_organisationId = ShortGuid.ToGuidAsString(organisationId),
-            invln_applicationId = ShortGuid.ToGuidAsString(applicationId),
-            invln_deliveryPhaseId = ShortGuid.ToGuidAsString(deliveryPhaseId),
+            invln_organisationId = organisationId.TryToGuidAsString(),
+            invln_applicationId = applicationId.ToGuidAsString(),
+            invln_deliveryPhaseId = deliveryPhaseId.ToGuidAsString(),
         };
 
         await _service.ExecuteAsync<invln_deletedeliveryphaseRequest, invln_deletedeliveryphaseResponse>(
@@ -139,9 +139,9 @@ public class DeliveryPhaseCrmContext : IDeliveryPhaseCrmContext
     {
         var request = new invln_setdeliveryphaseRequest
         {
-            invln_organisationId = ShortGuid.ToGuidAsString(organisationId),
+            invln_organisationId = organisationId.TryToGuidAsString(),
             invln_userId = _userContext.UserGlobalId,
-            invln_applicationId = ShortGuid.ToGuidAsString(deliveryPhase.applicationId),
+            invln_applicationId = deliveryPhase.applicationId.ToGuidAsString(),
             invln_deliveryPhase = JsonSerializer.Serialize(deliveryPhase, _serializerOptions),
             invln_fieldstoset = DeliveryPhaseCrmFields,
         };

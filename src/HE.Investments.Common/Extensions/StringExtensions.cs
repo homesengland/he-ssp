@@ -1,4 +1,5 @@
 using System.Globalization;
+using HE.Investments.Common.Contract;
 
 namespace HE.Investments.Common.Extensions;
 
@@ -41,4 +42,8 @@ public static class StringExtensions
     }
 
     public static string? WithoutPercentageChar(this string? value) => value?.Replace("%", string.Empty, StringComparison.InvariantCulture);
+
+    public static string TryToGuidAsString(this string value) => ShortGuid.TryToGuidAsString(value);
+
+    public static string ToGuidAsString(this string value) => ShortGuid.ToGuidAsString(value);
 }

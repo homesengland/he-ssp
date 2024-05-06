@@ -1,5 +1,5 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.Investments.Common.Contract;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Infrastructure.Cache;
 
 namespace HE.Investment.AHP.Domain.Delivery.Crm;
@@ -28,14 +28,14 @@ internal sealed class RequestCacheDeliverPhaseCrmContextDecorator : IDeliveryPha
     public async Task<DeliveryPhaseDto?> GetOrganisationDeliveryPhaseById(string applicationId, string deliveryPhaseId, string organisationId, CancellationToken cancellationToken)
     {
         return await _cache.GetFromCache(
-            ShortGuid.ToGuidAsString(deliveryPhaseId),
+            deliveryPhaseId.ToGuidAsString(),
             async () => await _decorated.GetOrganisationDeliveryPhaseById(applicationId, deliveryPhaseId, organisationId, cancellationToken));
     }
 
     public async Task<DeliveryPhaseDto?> GetUserDeliveryPhaseById(string applicationId, string deliveryPhaseId, string organisationId, CancellationToken cancellationToken)
     {
         return await _cache.GetFromCache(
-            ShortGuid.ToGuidAsString(deliveryPhaseId),
+            deliveryPhaseId.ToGuidAsString(),
             async () => await _decorated.GetUserDeliveryPhaseById(applicationId, deliveryPhaseId, organisationId, cancellationToken));
     }
 
