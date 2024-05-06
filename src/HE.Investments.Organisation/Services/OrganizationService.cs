@@ -1,6 +1,6 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Common;
-using HE.Investments.Common.Contract;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Organisation.CrmFields;
 using HE.Investments.Organisation.CrmRepository;
 using HE.Investments.Organisation.Extensions;
@@ -46,7 +46,7 @@ public class OrganizationService : IOrganizationService
 
     public async Task<ContactDto?> GetOrganisationChangeDetailsRequestContact(string accountId)
     {
-        var organisationChangeDetailsRequest = await _organisationChangeRequestRepository.GetChangeRequestForOrganisation(_service, ShortGuid.TryToGuidAsString(accountId));
+        var organisationChangeDetailsRequest = await _organisationChangeRequestRepository.GetChangeRequestForOrganisation(_service, accountId.TryToGuidAsString());
         if (organisationChangeDetailsRequest != null)
         {
             var contactReference = (EntityReference)organisationChangeDetailsRequest["invln_contactid"];
@@ -65,7 +65,7 @@ public class OrganizationService : IOrganizationService
     public async Task<OrganizationDetailsDto> GetOrganizationDetails(string accountId, string contactExternalId)
     {
         var organizationDetailsDto = new OrganizationDetailsDto();
-        accountId = ShortGuid.TryToGuidAsString(accountId);
+        accountId = accountId.TryToGuidAsString();
         if (Guid.TryParse(accountId, out var organizationId))
         {
             var isAhpEnabled = await _featureManager.IsEnabledAsync(FeatureFlags.AhpProgram);
@@ -136,7 +136,7 @@ public class OrganizationService : IOrganizationService
                 { "invln_townorcity", organizationDetailsDto.city },
                 { "invln_county", organizationDetailsDto.county },
                 { "invln_postcode", organizationDetailsDto.postalcode },
-                { "invln_organisationid", new EntityReference(AccountEntity.Name, new Guid(ShortGuid.TryToGuidAsString(organizationDetailsDto.organisationId))) },
+                { "invln_organisationid", new EntityReference(AccountEntity.Name, new Guid(organizationDetailsDto.organisationId.TryToGuidAsString())) },
             },
         };
         return organisationChangeRequestEntity;

@@ -1,5 +1,5 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.Investments.Common.Contract;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Organisation.CrmRepository;
 using Microsoft.PowerPlatform.Dataverse.Client;
 using Microsoft.Xrm.Sdk;
@@ -33,14 +33,14 @@ internal class OrganizationCrmSearchService : IOrganizationCrmSearchService
 
     public async Task<IList<OrganizationDetailsDto>> GetOrganizationFromCrmByOrganisationId(IEnumerable<string> organisationIds)
     {
-        organisationIds = organisationIds.Select(ShortGuid.TryToGuidAsString);
+        organisationIds = organisationIds.Select(x => x.TryToGuidAsString());
         var retrievedEntities = await _organizationRepository.GetOrganisationsById(_organizationService, organisationIds);
         return MapRetrievedEntites(retrievedEntities);
     }
 
     public async Task<OrganizationDetailsDto?> SearchOrganizationInCrmByOrganizationId(string organizationId)
     {
-        var retrievedEntities = await _organizationRepository.SearchForOrganizationsByOrganizationId(_organizationService, ShortGuid.TryToGuidAsString(organizationId));
+        var retrievedEntities = await _organizationRepository.SearchForOrganizationsByOrganizationId(_organizationService, organizationId.TryToGuidAsString());
         if (retrievedEntities != null)
         {
             return MapEntityToDto(retrievedEntities);
@@ -61,7 +61,7 @@ internal class OrganizationCrmSearchService : IOrganizationCrmSearchService
             city = account.Contains("address1_city") ? account["address1_city"].ToString() : null,
             postalcode = account.Contains("address1_postalcode") ? account["address1_postalcode"].ToString() : null,
             country = account.Contains("address1_country") ? account["address1_country"].ToString() : null,
-            organisationId = account.Contains("accountid") ? ShortGuid.TryToGuidAsString(account["accountid"].ToString()!) : null,
+            organisationId = account.Contains("accountid") ? account["accountid"].ToString()!.TryToGuidAsString() : null,
         };
         return organization;
     }

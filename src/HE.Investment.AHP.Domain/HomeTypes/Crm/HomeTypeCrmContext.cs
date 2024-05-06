@@ -1,9 +1,9 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.Investments.Common.Contract;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Services;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.User;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Crm;
@@ -79,8 +79,8 @@ public class HomeTypeCrmContext : IHomeTypeCrmContext
         var request = new invln_gettypeofhomeslistRequest
         {
             invln_userid = string.Empty,
-            invln_organisationid = ShortGuid.ToGuidAsString(organisationId),
-            invln_applicationid = ShortGuid.ToGuidAsString(applicationId),
+            invln_organisationid = organisationId.TryToGuidAsString(),
+            invln_applicationid = applicationId.ToGuidAsString(),
             invln_fieldstoretrieve = HomeTypeCrmFields,
         };
 
@@ -95,8 +95,8 @@ public class HomeTypeCrmContext : IHomeTypeCrmContext
         var request = new invln_gettypeofhomeslistRequest
         {
             invln_userid = _userContext.UserGlobalId,
-            invln_organisationid = ShortGuid.ToGuidAsString(organisationId),
-            invln_applicationid = ShortGuid.ToGuidAsString(applicationId),
+            invln_organisationid = organisationId.TryToGuidAsString(),
+            invln_applicationid = applicationId.ToGuidAsString(),
             invln_fieldstoretrieve = HomeTypeCrmFields,
         };
 
@@ -112,9 +112,9 @@ public class HomeTypeCrmContext : IHomeTypeCrmContext
         var request = new invln_getsinglehometypeRequest
         {
             invln_userid = string.Empty,
-            invln_organisationid = ShortGuid.ToGuidAsString(organisationId),
-            invln_applicationid = ShortGuid.ToGuidAsString(applicationId),
-            invln_hometypeid = ShortGuid.ToGuidAsString(homeTypeId),
+            invln_organisationid = organisationId.TryToGuidAsString(),
+            invln_applicationid = applicationId.ToGuidAsString(),
+            invln_hometypeid = homeTypeId.ToGuidAsString(),
             invln_fieldstoretrieve = HomeTypeCrmFields,
         };
 
@@ -130,9 +130,9 @@ public class HomeTypeCrmContext : IHomeTypeCrmContext
         var request = new invln_getsinglehometypeRequest
         {
             invln_userid = _userContext.UserGlobalId,
-            invln_organisationid = ShortGuid.ToGuidAsString(organisationId),
-            invln_applicationid = ShortGuid.ToGuidAsString(applicationId),
-            invln_hometypeid = ShortGuid.ToGuidAsString(homeTypeId),
+            invln_organisationid = organisationId.TryToGuidAsString(),
+            invln_applicationid = applicationId.ToGuidAsString(),
+            invln_hometypeid = homeTypeId.ToGuidAsString(),
             invln_fieldstoretrieve = HomeTypeCrmFields,
         };
 
@@ -144,9 +144,9 @@ public class HomeTypeCrmContext : IHomeTypeCrmContext
         var request = new invln_deletehometypeRequest
         {
             invln_userid = _userContext.UserGlobalId,
-            invln_organisationid = ShortGuid.ToGuidAsString(organisationId),
-            invln_applicationid = ShortGuid.ToGuidAsString(applicationId),
-            invln_hometypeid = ShortGuid.ToGuidAsString(homeTypeId),
+            invln_organisationid = organisationId.TryToGuidAsString(),
+            invln_applicationid = applicationId.ToGuidAsString(),
+            invln_hometypeid = homeTypeId.ToGuidAsString(),
         };
 
         await _service.ExecuteAsync<invln_deletehometypeRequest, invln_deletehometypeResponse>(
@@ -159,9 +159,9 @@ public class HomeTypeCrmContext : IHomeTypeCrmContext
     {
         var request = new invln_sethometypeRequest
         {
-            invln_organisationid = ShortGuid.ToGuidAsString(organisationId),
+            invln_organisationid = organisationId.TryToGuidAsString(),
             invln_userid = _userContext.UserGlobalId,
-            invln_applicationid = ShortGuid.ToGuidAsString(homeType.applicationId),
+            invln_applicationid = homeType.applicationId.ToGuidAsString(),
             invln_hometype = JsonSerializer.Serialize(homeType, _serializerOptions),
             invln_fieldstoset = HomeTypeCrmFields,
         };

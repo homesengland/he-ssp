@@ -1,5 +1,6 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Common.Contract;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Infrastructure.Cache;
 
 namespace HE.Investment.AHP.Domain.Application.Crm;
@@ -18,14 +19,14 @@ public class RequestCacheApplicationCrmContextDecorator : IApplicationCrmContext
     public async Task<AhpApplicationDto> GetOrganisationApplicationById(string id, string organisationId, CancellationToken cancellationToken)
     {
         return (await _cache.GetFromCache(
-            ShortGuid.ToGuidAsString(id),
+            id.ToGuidAsString(),
             async () => await _decorated.GetOrganisationApplicationById(id, organisationId, cancellationToken)))!;
     }
 
     public async Task<AhpApplicationDto> GetUserApplicationById(string id, string organisationId, CancellationToken cancellationToken)
     {
         return (await _cache.GetFromCache(
-            ShortGuid.ToGuidAsString(id),
+            id.ToGuidAsString(),
             async () => await _decorated.GetUserApplicationById(id, organisationId, cancellationToken)))!;
     }
 
@@ -60,7 +61,7 @@ public class RequestCacheApplicationCrmContextDecorator : IApplicationCrmContext
         bool representationsAndWarranties,
         CancellationToken cancellationToken)
     {
-        _cache.Delete(ShortGuid.ToGuidAsString(applicationId));
+        _cache.Delete(applicationId.ToGuidAsString());
         await _decorated.ChangeApplicationStatus(applicationId, organisationId, applicationStatus, changeReason, representationsAndWarranties, cancellationToken);
     }
 }

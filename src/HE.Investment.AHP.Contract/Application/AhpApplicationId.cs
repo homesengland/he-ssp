@@ -1,4 +1,5 @@
 using HE.Investments.Common.Contract;
+using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.Contract.Application;
 
@@ -19,7 +20,7 @@ public record AhpApplicationId : StringIdValueObject
 
     public static AhpApplicationId From(Guid value) => new(FromGuidToShortGuidAsString(value));
 
-    public string ToGuidAsString() => ShortGuid.ToGuidAsString(Value);
+    public string ToGuidAsString() => Value.ToGuidAsString();
 
     public override string ToString()
     {

@@ -1,6 +1,6 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Organisation.Services;
 using Microsoft.PowerPlatform.Dataverse.Client;
 
@@ -21,7 +21,7 @@ public class UsersCrmContext : IUsersCrmContext
 
     public async Task<IList<ContactDto>> GetUsers(string organisationId)
     {
-        return await _contactService.GetAllOrganisationContactsForPortal(_organizationServiceAsync, ShortGuid.ToGuidAsString(organisationId));
+        return await _contactService.GetAllOrganisationContactsForPortal(_organizationServiceAsync, organisationId.TryToGuidAsString());
     }
 
     public async Task<ContactDto> GetUser(string id)
@@ -37,14 +37,14 @@ public class UsersCrmContext : IUsersCrmContext
         var roles = await _contactService.GetContactRolesForOrganisationContacts(
             _organizationServiceAsync,
             [id],
-            ShortGuid.ToGuidAsString(organisationId));
+            organisationId.TryToGuidAsString());
 
         return roles.Select(GetUserRole).FirstOrDefault();
     }
 
     public async Task ChangeUserRole(string userId, string userAssigningId, int role, string organisationId)
     {
-        await _contactService.UpdateContactWebRole(_organizationServiceAsync, userId, userAssigningId, ShortGuid.ToGuidAsString(organisationId), role);
+        await _contactService.UpdateContactWebRole(_organizationServiceAsync, userId, userAssigningId, organisationId.TryToGuidAsString(), role);
     }
 
     private static int? GetUserRole(ContactRolesDto dto)

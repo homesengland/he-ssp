@@ -1,6 +1,5 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Shared.User;
-using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Serialization;
@@ -23,7 +22,7 @@ public class ProjectCrmContext : IProjectCrmContext
     {
         var request = new invln_getmultiplefrontdoorprojectsRequest
         {
-            invln_organisationid = ShortGuid.ToGuidAsString(organisationId),
+            invln_organisationid = organisationId.TryToGuidAsString(),
             invln_fieldstoretrieve = ProjectCrmFields.ProjectToRead.FormatFields(),
             invln_usehetables = "true",
         };
@@ -36,7 +35,7 @@ public class ProjectCrmContext : IProjectCrmContext
         var request = new invln_getmultiplefrontdoorprojectsRequest
         {
             inlvn_userid = userGlobalId,
-            invln_organisationid = ShortGuid.ToGuidAsString(organisationId),
+            invln_organisationid = organisationId.TryToGuidAsString(),
             invln_fieldstoretrieve = ProjectCrmFields.ProjectToRead.FormatFields(),
             invln_usehetables = "true",
         };
@@ -48,8 +47,8 @@ public class ProjectCrmContext : IProjectCrmContext
     {
         var request = new invln_getsinglefrontdoorprojectRequest
         {
-            invln_organisationid = ShortGuid.ToGuidAsString(organisationId),
-            invln_frontdoorprojectid = ShortGuid.ToGuidAsString(projectId),
+            invln_organisationid = organisationId.TryToGuidAsString(),
+            invln_frontdoorprojectid = projectId.ToGuidAsString(),
             invln_fieldstoretrieve = ProjectCrmFields.ProjectToRead.FormatFields(),
             invln_usehetables = "true",
         };
@@ -61,9 +60,9 @@ public class ProjectCrmContext : IProjectCrmContext
     {
         var request = new invln_getsinglefrontdoorprojectRequest
         {
-            invln_organisationid = ShortGuid.ToGuidAsString(organisationId),
+            invln_organisationid = organisationId.TryToGuidAsString(),
             invln_userid = userGlobalId,
-            invln_frontdoorprojectid = ShortGuid.ToGuidAsString(projectId),
+            invln_frontdoorprojectid = projectId.ToGuidAsString(),
             invln_fieldstoretrieve = ProjectCrmFields.ProjectToRead.FormatFields(),
             invln_usehetables = "true",
         };
@@ -76,7 +75,7 @@ public class ProjectCrmContext : IProjectCrmContext
         var request = new invln_checkiffrontdoorprojectwithgivennameexistsRequest
         {
             invln_frontdoorprojectname = projectName,
-            invln_organisationid = ShortGuid.ToGuidAsString(organisationId),
+            invln_organisationid = organisationId.TryToGuidAsString(),
             invln_usehetables = "true",
         };
 
@@ -95,7 +94,7 @@ public class ProjectCrmContext : IProjectCrmContext
             invln_userid = userAccount.UserGlobalId.ToString(),
             invln_organisationid = userAccount.SelectedOrganisationId().ToGuidAsString(),
             invln_entityfieldsparameters = CrmResponseSerializer.Serialize(dto),
-            invln_frontdoorprojectid = dto.ProjectId.IsProvided() ? ShortGuid.ToGuidAsString(dto.ProjectId) : string.Empty,
+            invln_frontdoorprojectid = dto.ProjectId.IsProvided() ? dto.ProjectId.ToGuidAsString() : string.Empty,
             invln_usehetables = "true",
         };
 

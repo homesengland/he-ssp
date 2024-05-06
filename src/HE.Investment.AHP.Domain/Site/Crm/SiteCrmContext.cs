@@ -1,8 +1,8 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.Investments.Common.Contract;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Serialization;
 using HE.Investments.Common.CRM.Services;
+using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.Domain.Site.Crm;
 
@@ -80,7 +80,7 @@ public class SiteCrmContext : ISiteCrmContext
             {
                 invln_pagingrequest = CrmResponseSerializer.Serialize(pagination),
                 invln_fieldstoretrieve = SiteCrmFields,
-                invln_accountid = ShortGuid.ToGuidAsString(organisationId),
+                invln_accountid = organisationId.TryToGuidAsString(),
             },
             r => r.invln_sites,
             cancellationToken);
@@ -104,7 +104,7 @@ public class SiteCrmContext : ISiteCrmContext
         return await _service.ExecuteAsync<invln_getsinglesiteRequest, invln_getsinglesiteResponse, SiteDto>(
             new invln_getsinglesiteRequest
             {
-                invln_siteid = ShortGuid.ToGuidAsString(siteId),
+                invln_siteid = siteId.ToGuidAsString(),
                 invln_fieldstoretrieve = SiteCrmFields,
             },
             r => r.invln_site,
@@ -127,7 +127,7 @@ public class SiteCrmContext : ISiteCrmContext
     public async Task<bool> StrategicSiteExist(string name, string organisationId, CancellationToken cancellationToken)
     {
         var response = await _service.ExecuteAsync<invln_checkifsitewithstrategicsitenameexistsRequest, invln_checkifsitewithstrategicsitenameexistsResponse>(
-            new invln_checkifsitewithstrategicsitenameexistsRequest { invln_sitename = name, invln_accountid = ShortGuid.ToGuidAsString(organisationId), },
+            new invln_checkifsitewithstrategicsitenameexistsRequest { invln_sitename = name, invln_accountid = organisationId.TryToGuidAsString(), },
             r => r.invln_siteexists,
             cancellationToken);
 
@@ -142,7 +142,7 @@ public class SiteCrmContext : ISiteCrmContext
                 invln_siteid = dto.id,
                 invln_fieldstoset = SiteCrmFields,
                 invln_site = CrmResponseSerializer.Serialize(dto),
-                invln_accountid = ShortGuid.ToGuidAsString(organisationId),
+                invln_accountid = organisationId.TryToGuidAsString(),
                 invln_externalcontactid = userGlobalId,
             },
             r => r.invln_siteid,
