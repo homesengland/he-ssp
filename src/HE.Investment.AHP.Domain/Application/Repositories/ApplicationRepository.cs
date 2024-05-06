@@ -165,7 +165,7 @@ public class ApplicationRepository : IApplicationRepository
             : null;
 
         return new ApplicationEntity(
-            SiteId.From(application.siteId),
+            string.IsNullOrEmpty(application.siteId) ? SiteId.New() : SiteId.From(application.siteId),
             AhpApplicationId.From(application.id),
             new ApplicationName(application.name ?? "Unknown"),
             applicationStatus,
@@ -193,7 +193,7 @@ public class ApplicationRepository : IApplicationRepository
         var otherApplicationCosts = OtherApplicationCostsMapper.MapToOtherApplicationCosts(ahpApplicationDto);
 
         return new ApplicationWithFundingDetails(
-            SiteId.From(ahpApplicationDto.siteId),
+            string.IsNullOrEmpty(ahpApplicationDto.siteId) ? SiteId.New() : SiteId.From(ahpApplicationDto.siteId),
             AhpApplicationId.From(ahpApplicationDto.id),
             ahpApplicationDto.name,
             ahpApplicationDto.referenceNumber,
