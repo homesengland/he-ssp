@@ -62,7 +62,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                     nameof(invln_scheme.invln_contactid).ToLower()
                 });
 
-            if (application != null && application.invln_organisationid.Id == new Guid(organisationId) && application.invln_contactid.Id == contact.Id)
+            if (application != null && application.invln_organisationid.Id == new Guid(organisationId))
             {
                 var ahpWithNewStatusCodesAndOtherChanges = new invln_scheme();
                 switch (application.invln_ExternalStatus.Value)
@@ -276,7 +276,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             if (Guid.TryParse(application.siteId, out var siteGuid))
             {
                 var site = _siteRepository.GetById(siteGuid, invln_Sites.Fields.invln_HeLocalAuthorityId);
-                if(site.invln_HeLocalAuthorityId != null)
+                if (site.invln_HeLocalAuthorityId != null)
                 {
                     localAuthority = _heLocalAuthorityRepository.GetById(site.invln_HeLocalAuthorityId.Id, new string[] { he_LocalAuthority.Fields.he_growthmanager, he_LocalAuthority.Fields.he_growthhub });
                 }
