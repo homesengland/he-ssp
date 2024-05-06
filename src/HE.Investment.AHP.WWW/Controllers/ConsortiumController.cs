@@ -25,9 +25,10 @@ public class ConsortiumController : WorkflowController<ConsortiumWorkflowState>
 
     [HttpGet]
     [WorkflowState(ConsortiumWorkflowState.Index)]
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        return View();
+        var consortiumsList = await _mediator.Send(new GetConsortiumsListQuery());
+        return View(consortiumsList);
     }
 
     [HttpGet("start")]

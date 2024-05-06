@@ -42,6 +42,20 @@ public class ConsortiumRepository : IConsortiumRepository
         throw new NotFoundException("Consortium", consortiumId.Value);
     }
 
+    public async Task<IList<ConsortiumEntity>> GetConsortiumsListByMemberId(OrganisationId organisationId, CancellationToken cancellationToken)
+    {
+        var consortiumsListDto = await _crmContext.GetConsortiumsListByMemberId(
+            organisationId.ToGuidAsString(),
+            cancellationToken);
+
+        return consortiumsListDto.Select(x => new ConsortiumEntity(
+            ConsortiumId.From(x.id),
+            new ConsortiumName(x.name),
+            new ProgrammeSlim(ProgrammeId.From(x.programmeId), x.programmeName),
+            new ConsortiumMember(OrganisationId.From(x.leadPartnerId), x.leadPartnerName, ConsortiumMemberStatus.Active),
+            x.members.Select(y => new ConsortiumMember(OrganisationId.From(y.id), y.name, ConsortiumMemberStatusMapper.ToDomain(y.status))))).ToList();
+    }
+
     public async Task<ConsortiumEntity> Save(ConsortiumEntity consortiumEntity, UserAccount userAccount, CancellationToken cancellationToken)
     {
         if (consortiumEntity.Id.IsNew)
@@ -76,7 +90,7 @@ public class ConsortiumRepository : IConsortiumRepository
         {
             await _crmContext.CreateJoinConsortiumRequest(
                 consortiumEntity.Id.Value,
-                joinRequest.Value.ToString(),
+                joinRequest.Value,
                 userAccount.UserGlobalId.ToString(),
                 cancellationToken);
             joinRequest = consortiumEntity.PopJoinRequest();
@@ -87,7 +101,7 @@ public class ConsortiumRepository : IConsortiumRepository
         {
             await _crmContext.CreateRemoveFromConsortiumRequest(
                 consortiumEntity.Id.Value,
-                removeRequest.Value.ToString(),
+                removeRequest.Value,
                 userAccount.UserGlobalId.ToString(),
                 cancellationToken);
             removeRequest = consortiumEntity.PopRemoveRequest();

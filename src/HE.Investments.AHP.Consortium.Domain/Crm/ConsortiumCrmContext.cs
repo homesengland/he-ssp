@@ -46,6 +46,45 @@ public class ConsortiumCrmContext : IConsortiumCrmContext
         return consortium;
     }
 
+    public Task<IList<ConsortiumDto>> GetConsortiumsListByMemberId(string organisationId, CancellationToken cancellationToken)
+    {
+        // todo get from crm after implementation #95352
+        var consortiumsList = new List<ConsortiumDto>();
+        consortiumsList.AddRange(new[]
+        {
+            new ConsortiumDto
+            {
+                id = "1",
+                name = "Consortium 1",
+                programmeId = "1",
+                programmeName = "Programme 1",
+                leadPartnerId = "1",
+                leadPartnerName = "Lead Partner 1",
+                members = new List<ConsortiumMemberDto>
+                {
+                    new() { id = organisationId.TryToGuidAsString(), name = "Member 1", status = 858110001, },
+                    new() { id = "2", name = "Member 2", status = 858110001, },
+                },
+            },
+            new ConsortiumDto
+            {
+                id = "2",
+                name = "Consortium 2",
+                programmeId = "2",
+                programmeName = "Programme 2",
+                leadPartnerId = "2",
+                leadPartnerName = "Lead Partner 2",
+                members = new List<ConsortiumMemberDto>
+                {
+                    new() { id = organisationId.TryToGuidAsString(), name = "Member 3", status = 858110001, },
+                    new() { id = "4", name = "Member 4", status = 858110001, },
+                },
+            },
+        });
+
+        return Task.FromResult<IList<ConsortiumDto>>(consortiumsList);
+    }
+
     public async Task<bool> IsConsortiumExistForProgrammeAndOrganisation(string programmeId, string organisationId, CancellationToken cancellationToken)
     {
         var request = new invln_IsConsortiumExistForProgrammeAndOrganisationRequest
