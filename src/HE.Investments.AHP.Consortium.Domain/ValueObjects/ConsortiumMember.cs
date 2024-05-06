@@ -4,7 +4,7 @@ using HE.Investments.Common.Domain;
 
 namespace HE.Investments.AHP.Consortium.Domain.ValueObjects;
 
-public class ConsortiumMember : ValueObject
+public class ConsortiumMember : ValueObject, IConsortiumMember
 {
     public ConsortiumMember(OrganisationId id, string organisationName, ConsortiumMemberStatus status)
     {

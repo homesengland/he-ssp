@@ -48,7 +48,7 @@ public class LinkContactWithOrganizationCommandHandler : IRequestHandler<LinkCon
         await _contactService.LinkContactWithOrganization(
             _organizationServiceAsync,
             _userContext.UserGlobalId.ToString(),
-            organisation.Id.ToString(),
+            organisation.Id.ToGuidAsString(),
             PortalConstants.CommonPortalType);
 
         await _mediator.Publish(new UserAccountsChangedEvent(_userContext.UserGlobalId), cancellationToken);

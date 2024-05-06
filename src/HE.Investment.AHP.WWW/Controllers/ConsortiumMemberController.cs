@@ -9,10 +9,10 @@ using HE.Investments.AHP.Consortium.Contract.Queries;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Pagination;
-using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Components;
 using HE.Investments.Common.WWW.Controllers;
+using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.Organisation.ValueObjects;
@@ -127,20 +127,14 @@ public class ConsortiumMemberController : WorkflowController<ConsortiumMemberWor
     [WorkflowState(ConsortiumMemberWorkflowState.AddMembers)]
     public async Task<IActionResult> AddMembers(string consortiumId, [FromForm] AreAllMembersAdded areAllMembersAdded, CancellationToken cancellationToken)
     {
-        if (areAllMembersAdded == AreAllMembersAdded.Yes)
-        {
-            return RedirectToAction("Index", new { consortiumId });
-        }
-
-        if (areAllMembersAdded == AreAllMembersAdded.No)
-        {
-            return RedirectToAction("SearchOrganisation", new { consortiumId });
-        }
-
-        this.AddOrderedErrors<string>(new OperationResult().AddValidationError(
-            nameof(AreAllMembersAdded),
-            "Select whether you have you added all members to this consortium"));
-        return View(await _mediator.Send(new GetConsortiumDetailsQuery(ConsortiumId.From(consortiumId), FetchAddress: true), cancellationToken));
+        return await this.ExecuteCommand<ConsortiumDetails>(
+            _mediator,
+            new AddMembersCommand(ConsortiumId.From(consortiumId), areAllMembersAdded),
+            () => Task.FromResult<IActionResult>(areAllMembersAdded == AreAllMembersAdded.Yes
+                ? RedirectToAction("Index", new { consortiumId })
+                : RedirectToAction("SearchOrganisation", new { consortiumId })),
+            async () => View(await _mediator.Send(new GetConsortiumDetailsQuery(ConsortiumId.From(consortiumId), FetchAddress: true), cancellationToken)),
+            cancellationToken);
     }
 
     [HttpGet("remove-member/{memberId}")]
@@ -164,7 +158,12 @@ public class ConsortiumMemberController : WorkflowController<ConsortiumMemberWor
 
     protected override async Task<IStateRouting<ConsortiumMemberWorkflowState>> Routing(ConsortiumMemberWorkflowState currentState, object? routeData = null)
     {
-        return await Task.FromResult<IStateRouting<ConsortiumMemberWorkflowState>>(new ConsortiumMemberWorkflow(currentState));
+        var consortiumId = Request.GetRouteValue("consortiumId")
+                           ?? routeData?.GetPropertyValue<string>("consortiumId")
+                           ?? string.Empty;
+        var consortium = await GetConsortiumDetails(consortiumId, false, CancellationToken.None);
+
+        return new ConsortiumMemberWorkflow(consortium, currentState);
     }
 
     private async Task<ConsortiumDetails> GetConsortiumDetails(string consortiumId, bool fetchAddress, CancellationToken cancellationToken)

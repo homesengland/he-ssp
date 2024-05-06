@@ -29,7 +29,7 @@ public class InvestmentsOrganisationService : IInvestmentsOrganisationService
         var organisation = result.Item ?? throw new NotFoundException("Organisation", organisationIdentifier);
         if (organisation.OrganisationId.IsProvided())
         {
-            return new InvestmentsOrganisation(new OrganisationId(organisation.OrganisationId!), organisation.Name);
+            return new InvestmentsOrganisation(OrganisationId.From(organisation.OrganisationId!), organisation.Name);
         }
 
         var organisationDto = new OrganizationDetailsDto
@@ -40,8 +40,8 @@ public class InvestmentsOrganisationService : IInvestmentsOrganisationService
             companyRegistrationNumber = result.Item.CompanyNumber,
             postalcode = organisation.PostalCode,
         };
-        var organisationId = new OrganisationId(_organisationService.CreateOrganization(organisationDto).ToString());
+        var organisationId = _organisationService.CreateOrganization(organisationDto);
 
-        return new InvestmentsOrganisation(organisationId, organisation.Name);
+        return new InvestmentsOrganisation(OrganisationId.From(organisationId), organisation.Name);
     }
 }

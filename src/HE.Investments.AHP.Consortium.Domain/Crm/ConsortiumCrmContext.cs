@@ -33,12 +33,12 @@ public class ConsortiumCrmContext : IConsortiumCrmContext
             x => x.invln_consortium,
             cancellationToken);
 
-        if (JoinRequests.TryGetValue(consortiumId, out var joinRequests))
+        if (JoinRequests.TryGetValue(consortiumId.ToGuidAsString(), out var joinRequests))
         {
             consortium.members.AddRange(joinRequests.Select(x => new ConsortiumMemberDto { id = x, name = "Dummy", status = 858110001, }));
         }
 
-        if (RemoveRequests.TryGetValue(consortiumId, out var removeRequests))
+        if (RemoveRequests.TryGetValue(consortiumId.ToGuidAsString(), out var removeRequests))
         {
             consortium.members.AddRange(removeRequests.Select(x => new ConsortiumMemberDto { id = x, name = "Dummy", status = 858110005, }));
         }
@@ -85,13 +85,13 @@ public class ConsortiumCrmContext : IConsortiumCrmContext
     public Task CreateJoinConsortiumRequest(string consortiumId, string organisationId, string userId, CancellationToken cancellationToken)
     {
         // TODO: make request to CRM
-        if (JoinRequests.TryGetValue(consortiumId, out var requests))
+        if (JoinRequests.TryGetValue(consortiumId.ToGuidAsString(), out var requests))
         {
-            requests.Add(organisationId.TryToGuidAsString());
+            requests.Add(organisationId.ToGuidAsString());
             return Task.CompletedTask;
         }
 
-        JoinRequests.Add(consortiumId.ToGuidAsString(), new List<string> { organisationId.TryToGuidAsString() });
+        JoinRequests.Add(consortiumId.ToGuidAsString(), new List<string> { organisationId.ToGuidAsString() });
         return Task.CompletedTask;
     }
 
@@ -100,16 +100,16 @@ public class ConsortiumCrmContext : IConsortiumCrmContext
         // TODO: make request to CRM
         if (JoinRequests.TryGetValue(consortiumId.ToGuidAsString(), out var joinRequests))
         {
-            joinRequests.Remove(organisationId.TryToGuidAsString());
+            joinRequests.Remove(organisationId.ToGuidAsString());
         }
 
         if (RemoveRequests.TryGetValue(consortiumId.ToGuidAsString(), out var removeRequests))
         {
-            removeRequests.Add(organisationId.TryToGuidAsString());
+            removeRequests.Add(organisationId.ToGuidAsString());
             return Task.CompletedTask;
         }
 
-        RemoveRequests.Add(consortiumId.ToGuidAsString(), new List<string> { organisationId.TryToGuidAsString() });
+        RemoveRequests.Add(consortiumId.ToGuidAsString(), new List<string> { organisationId.ToGuidAsString() });
         return Task.CompletedTask;
     }
 
@@ -118,12 +118,12 @@ public class ConsortiumCrmContext : IConsortiumCrmContext
         // TODO: make request to CRM
         if (JoinRequests.TryGetValue(consortiumId.ToGuidAsString(), out var joinRequests))
         {
-            joinRequests.Remove(organisationId.TryToGuidAsString());
+            joinRequests.Remove(organisationId.ToGuidAsString());
         }
 
         if (RemoveRequests.TryGetValue(consortiumId.ToGuidAsString(), out var removeRequests))
         {
-            removeRequests.Remove(organisationId.TryToGuidAsString());
+            removeRequests.Remove(organisationId.ToGuidAsString());
         }
 
         return Task.CompletedTask;

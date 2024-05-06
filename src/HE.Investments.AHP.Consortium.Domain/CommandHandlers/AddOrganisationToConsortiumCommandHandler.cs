@@ -11,7 +11,7 @@ using Org::HE.Investments.Organisation.Services;
 
 namespace HE.Investments.AHP.Consortium.Domain.CommandHandlers;
 
-public class AddOrganisationToConsortiumCommandHandler : ConsortiumCommandHandlerBase<AddOrganisationToConsortiumCommand>
+public class AddOrganisationToConsortiumCommandHandler : DraftConsortiumCommandHandlerBase<AddOrganisationToConsortiumCommand>
 {
     private readonly IConsortiumRepository _repository;
 
@@ -19,15 +19,16 @@ public class AddOrganisationToConsortiumCommandHandler : ConsortiumCommandHandle
 
     public AddOrganisationToConsortiumCommandHandler(
         IConsortiumRepository repository,
+        IDraftConsortiumRepository draftConsortiumRepository,
         IInvestmentsOrganisationService organisationService,
         IAccountUserContext accountUserContext)
-        : base(repository, accountUserContext)
+        : base(repository, draftConsortiumRepository, accountUserContext)
     {
         _repository = repository;
         _organisationService = organisationService;
     }
 
-    protected override async Task Perform(ConsortiumEntity consortium, AddOrganisationToConsortiumCommand request, CancellationToken cancellationToken)
+    protected override async Task Perform(IConsortiumEntity consortium, AddOrganisationToConsortiumCommand request, CancellationToken cancellationToken)
     {
         if (request.SelectedMember.IsNotProvided())
         {

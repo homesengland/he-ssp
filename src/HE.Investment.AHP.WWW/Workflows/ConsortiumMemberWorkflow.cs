@@ -6,10 +6,13 @@ namespace HE.Investment.AHP.WWW.Workflows;
 
 public class ConsortiumMemberWorkflow : IStateRouting<ConsortiumMemberWorkflowState>
 {
+    private readonly ConsortiumDetails _consortium;
+
     private readonly StateMachine<ConsortiumMemberWorkflowState, Trigger> _machine;
 
-    public ConsortiumMemberWorkflow(ConsortiumMemberWorkflowState currentWorkflowState)
+    public ConsortiumMemberWorkflow(ConsortiumDetails consortium, ConsortiumMemberWorkflowState currentWorkflowState)
     {
+        _consortium = consortium;
         _machine = new StateMachine<ConsortiumMemberWorkflowState, Trigger>(currentWorkflowState);
         ConfigureTransitions();
     }
@@ -29,7 +32,7 @@ public class ConsortiumMemberWorkflow : IStateRouting<ConsortiumMemberWorkflowSt
             ConsortiumMemberWorkflowState.SearchResult => true,
             ConsortiumMemberWorkflowState.SearchNoResults => true,
             ConsortiumMemberWorkflowState.AddOrganisation => true,
-            ConsortiumMemberWorkflowState.AddMembers => true,
+            ConsortiumMemberWorkflowState.AddMembers => _consortium.IsDraft,
             ConsortiumMemberWorkflowState.RemoveMember => true,
             _ => false,
         });
@@ -44,21 +47,26 @@ public class ConsortiumMemberWorkflow : IStateRouting<ConsortiumMemberWorkflowSt
     {
         _machine.Configure(ConsortiumMemberWorkflowState.SearchOrganisation)
             .Permit(Trigger.Continue, ConsortiumMemberWorkflowState.SearchResult)
-            .Permit(Trigger.Back, ConsortiumMemberWorkflowState.AddMembers);
+            .PermitIf(Trigger.Back, ConsortiumMemberWorkflowState.AddMembers, () => _consortium.IsDraft)
+            .PermitIf(Trigger.Back, ConsortiumMemberWorkflowState.Index, () => !_consortium.IsDraft);
 
         _machine.Configure(ConsortiumMemberWorkflowState.SearchResult)
-            .Permit(Trigger.Continue, ConsortiumMemberWorkflowState.AddMembers)
+            .PermitIf(Trigger.Continue, ConsortiumMemberWorkflowState.AddMembers, () => _consortium.IsDraft)
+            .PermitIf(Trigger.Continue, ConsortiumMemberWorkflowState.Index, () => !_consortium.IsDraft)
             .Permit(Trigger.Back, ConsortiumMemberWorkflowState.SearchOrganisation);
 
         _machine.Configure(ConsortiumMemberWorkflowState.SearchNoResults)
             .Permit(Trigger.Back, ConsortiumMemberWorkflowState.SearchOrganisation);
 
         _machine.Configure(ConsortiumMemberWorkflowState.AddOrganisation)
-            .Permit(Trigger.Continue, ConsortiumMemberWorkflowState.AddMembers)
+            .PermitIf(Trigger.Continue, ConsortiumMemberWorkflowState.AddMembers, () => _consortium.IsDraft)
+            .PermitIf(Trigger.Continue, ConsortiumMemberWorkflowState.Index, () => !_consortium.IsDraft)
             .Permit(Trigger.Back, ConsortiumMemberWorkflowState.SearchOrganisation);
 
         _machine.Configure(ConsortiumMemberWorkflowState.RemoveMember)
-            .Permit(Trigger.Continue, ConsortiumMemberWorkflowState.AddMembers)
-            .Permit(Trigger.Back, ConsortiumMemberWorkflowState.AddMembers);
+            .PermitIf(Trigger.Continue, ConsortiumMemberWorkflowState.AddMembers, () => _consortium.IsDraft)
+            .PermitIf(Trigger.Continue, ConsortiumMemberWorkflowState.Index, () => !_consortium.IsDraft)
+            .PermitIf(Trigger.Back, ConsortiumMemberWorkflowState.AddMembers, () => _consortium.IsDraft)
+            .PermitIf(Trigger.Back, ConsortiumMemberWorkflowState.Index, () => !_consortium.IsDraft);
     }
 }

@@ -14,11 +14,14 @@ public class CreateConsortiumCommandHandler : IRequestHandler<CreateConsortiumCo
 {
     private readonly IConsortiumRepository _consortiumRepository;
 
+    private readonly IDraftConsortiumRepository _draftConsortiumRepository;
+
     private readonly IAccountUserContext _accountUserContext;
 
-    public CreateConsortiumCommandHandler(IConsortiumRepository consortiumRepository, IAccountUserContext accountUserContext)
+    public CreateConsortiumCommandHandler(IConsortiumRepository consortiumRepository, IDraftConsortiumRepository draftConsortiumRepository, IAccountUserContext accountUserContext)
     {
         _consortiumRepository = consortiumRepository;
+        _draftConsortiumRepository = draftConsortiumRepository;
         _accountUserContext = accountUserContext;
     }
 
@@ -37,6 +40,8 @@ public class CreateConsortiumCommandHandler : IRequestHandler<CreateConsortiumCo
         var consortium = await ConsortiumEntity.New(programme, leadPartner, _consortiumRepository);
 
         await _consortiumRepository.Save(consortium, userAccount, cancellationToken);
+        _draftConsortiumRepository.Create(consortium);
+
         return new OperationResult<ConsortiumId>(consortium.Id);
     }
 }
