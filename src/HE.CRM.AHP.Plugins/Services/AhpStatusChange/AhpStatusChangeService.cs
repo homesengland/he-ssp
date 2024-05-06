@@ -45,7 +45,16 @@ namespace HE.CRM.AHP.Plugins.Services.AhpStatusChange
             if (target.invln_ChangeSource != null)
             {
                 this.TracingService.Trace("Change source: " +  target.invln_ChangeSource.Value);
-                var ahpApplication = _ahpApplicationRepository.GetById(target.invln_AHPApplication.Id, new string[] { invln_scheme.Fields.OwnerId, invln_scheme.Fields.invln_schemename, invln_scheme.Fields.invln_contactid, invln_scheme.Fields.invln_organisationid, invln_scheme.Fields.invln_programmelookup });
+                var ahpApplication = _ahpApplicationRepository.GetById(
+                    target.invln_AHPApplication.Id,
+                    new string[] {
+                        invln_scheme.Fields.invln_applicationid,
+                        invln_scheme.Fields.OwnerId,
+                        invln_scheme.Fields.invln_schemename,
+                        invln_scheme.Fields.invln_contactid,
+                        invln_scheme.Fields.invln_organisationid,
+                        invln_scheme.Fields.invln_programmelookup
+                    });
                 SendNotification(target, ahpApplication);
             }
         }
@@ -83,6 +92,19 @@ namespace HE.CRM.AHP.Plugins.Services.AhpStatusChange
                 case (int)invln_AHPInternalStatus.ApprovedSubjecttoContract:
                     statusLabel = "ApprovedSubjecttoContract";
                     _govNotifyEmailService.SendNotifications_AHP_INTERNAL_APPLICATION_APPROVED_SUBJECT_TO_CONTRACT(ahpStatusChange, ahpApplication);
+                    break;
+
+                case (int)invln_AHPInternalStatus.OnHold:
+                    statusLabel = "OnHold";
+                    if (ahpStatusChange.invln_ChangeSource.Value == (int)invln_ChangesourceSet.External)
+                    {
+                        _govNotifyEmailService.SendNotifications_AHP_INTERNAL_APPLICATION_ON_HOLD(ahpStatusChange, ahpApplication);
+                    }
+
+                    if (ahpStatusChange.invln_ChangeSource.Value == (int)invln_ChangesourceSet.Internal)
+                    {
+                        _govNotifyEmailService.SendNotifications_AHP_EXTERNAL_APPLICATION_ON_HOLD(ahpStatusChange, ahpApplication);
+                    }
                     break;
 
                 default:

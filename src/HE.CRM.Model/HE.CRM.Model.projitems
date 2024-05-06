@@ -85,11 +85,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\RetrieveEnvironmentVariableValue.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\UpsertMultiple.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\AHP_DELIVERY_PHASE_NOTIFICATION_OF_ADDITIONAL_PAYMENTS_FOR_PHASE.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\AHP_EXTERNAL_APPLICATION_ON_HOLD.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\AHP_EXTERNAL_APPLICATION_REFERRED_BACK_TO_APPLICANT.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\AHP_EXTERNAL_APPLICATION_SUBMITTED.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\AHP_EXTERNAL_REMINDER_TO_FINALIZE_APPLICATION_REFERRED_BACK.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\AHP_EXTERNAL_REMINDER_TO_FINALIZE_DRAFT_APPLICATION.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\AHP_INTERNAL_APPLICATION_APPROVED_SUBJECT_TO_CONTRACT.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\AHP_INTERNAL_APPLICATION_ON_HOLD.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\AHP_INTERNAL_REQUEST_TO_WITHDRAW.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\COMMON_CHANGE_EXTERNAL_USER_PERMISSIONS.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\COMMON_GRANT_ORGANISATION_ADMIN_PERMISSIONS.cs" />
