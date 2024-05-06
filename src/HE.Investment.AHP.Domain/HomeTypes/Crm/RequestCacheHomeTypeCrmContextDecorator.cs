@@ -1,5 +1,5 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.Investments.Common.Contract;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Infrastructure.Cache;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Crm;
@@ -28,14 +28,14 @@ internal sealed class RequestCacheHomeTypeCrmContextDecorator : IHomeTypeCrmCont
     public async Task<HomeTypeDto?> GetOrganisationHomeTypeById(string applicationId, string homeTypeId, string organisationId, CancellationToken cancellationToken)
     {
         return await _cache.GetFromCache(
-            ShortGuid.ToGuidAsString(homeTypeId),
+            homeTypeId.ToGuidAsString(),
             async () => await _decorated.GetOrganisationHomeTypeById(applicationId, homeTypeId, organisationId, cancellationToken));
     }
 
     public async Task<HomeTypeDto?> GetUserHomeTypeById(string applicationId, string homeTypeId, string organisationId, CancellationToken cancellationToken)
     {
         return await _cache.GetFromCache(
-            ShortGuid.ToGuidAsString(homeTypeId),
+            homeTypeId.ToGuidAsString(),
             async () => await _decorated.GetUserHomeTypeById(applicationId, homeTypeId, organisationId, cancellationToken));
     }
 

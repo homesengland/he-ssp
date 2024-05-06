@@ -5,6 +5,7 @@ using HE.Investments.Common.CRM.Mappers;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Serialization;
 using HE.Investments.Common.CRM.Services;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.User;
 
 namespace HE.Investment.AHP.Domain.Application.Crm;
@@ -91,8 +92,8 @@ public class ApplicationCrmContext : IApplicationCrmContext
         var request = new invln_getahpapplicationRequest
         {
             invln_userid = string.Empty,
-            invln_organisationid = ShortGuid.ToGuidAsString(organisationId),
-            invln_applicationid = ShortGuid.ToGuidAsString(id),
+            invln_organisationid = organisationId.TryToGuidAsString(),
+            invln_applicationid = id.ToGuidAsString(),
             invln_appfieldstoretrieve = ApplicationCrmFields,
         };
         return await Get(request, cancellationToken);
@@ -103,8 +104,8 @@ public class ApplicationCrmContext : IApplicationCrmContext
         var request = new invln_getahpapplicationRequest
         {
             invln_userid = _userContext.UserGlobalId,
-            invln_organisationid = ShortGuid.ToGuidAsString(organisationId),
-            invln_applicationid = ShortGuid.ToGuidAsString(id),
+            invln_organisationid = organisationId.TryToGuidAsString(),
+            invln_applicationid = id.ToGuidAsString(),
             invln_appfieldstoretrieve = ApplicationCrmFields,
         };
 
@@ -121,7 +122,7 @@ public class ApplicationCrmContext : IApplicationCrmContext
         var request = new invln_checkifapplicationwithgivennameexistsRequest
         {
             invln_application = CrmResponseSerializer.Serialize(dto),
-            invln_organisationid = ShortGuid.ToGuidAsString(organisationId),
+            invln_organisationid = organisationId.TryToGuidAsString(),
         };
 
         var response = await _service.ExecuteAsync<invln_checkifapplicationwithgivennameexistsRequest, invln_checkifapplicationwithgivennameexistsResponse>(
@@ -137,7 +138,7 @@ public class ApplicationCrmContext : IApplicationCrmContext
         var request = new invln_getmultipleahpapplicationsRequest
         {
             inlvn_userid = string.Empty,
-            invln_organisationid = ShortGuid.ToGuidAsString(organisationId),
+            invln_organisationid = organisationId.TryToGuidAsString(),
             invln_appfieldstoretrieve = ApplicationListCrmFields,
         };
 
@@ -149,7 +150,7 @@ public class ApplicationCrmContext : IApplicationCrmContext
         var request = new invln_getmultipleahpapplicationsRequest
         {
             inlvn_userid = _userContext.UserGlobalId,
-            invln_organisationid = ShortGuid.ToGuidAsString(organisationId),
+            invln_organisationid = organisationId.TryToGuidAsString(),
             invln_appfieldstoretrieve = ApplicationListCrmFields,
         };
 
@@ -161,7 +162,7 @@ public class ApplicationCrmContext : IApplicationCrmContext
         var request = new invln_setahpapplicationRequest
         {
             invln_userid = _userContext.UserGlobalId,
-            invln_organisationid = ShortGuid.ToGuidAsString(organisationId),
+            invln_organisationid = organisationId.TryToGuidAsString(),
             invln_application = CrmResponseSerializer.Serialize(dto),
             invln_fieldstoupdate = ApplicationCrmFields,
         };
@@ -184,8 +185,8 @@ public class ApplicationCrmContext : IApplicationCrmContext
 
         var request = new invln_changeahpapplicationstatusRequest
         {
-            invln_applicationid = ShortGuid.ToGuidAsString(applicationId),
-            invln_organisationid = ShortGuid.ToGuidAsString(organisationId),
+            invln_applicationid = applicationId.ToGuidAsString(),
+            invln_organisationid = organisationId.TryToGuidAsString(),
             invln_userid = _userContext.UserGlobalId,
             invln_newapplicationstatus = crmStatus,
             invln_changereason = changeReason ?? string.Empty,

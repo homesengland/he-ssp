@@ -1,4 +1,5 @@
 using HE.Investments.Common.Contract;
+using HE.Investments.Common.Extensions;
 
 namespace HE.Investments.AHP.Consortium.Contract;
 
@@ -19,7 +20,7 @@ public record ConsortiumId : StringIdValueObject
 
     public static ConsortiumId From(Guid value) => new(FromGuidToShortGuidAsString(value));
 
-    public string ToGuidAsString() => ShortGuid.ToGuidAsString(Value);
+    public string ToGuidAsString() => Value.ToGuidAsString();
 
     public override string ToString()
     {

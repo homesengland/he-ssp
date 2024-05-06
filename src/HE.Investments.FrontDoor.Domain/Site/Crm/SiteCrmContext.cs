@@ -1,6 +1,5 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Shared.User;
-using HE.Investments.Common.Contract;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Serialization;
 using HE.Investments.Common.CRM.Services;
@@ -26,7 +25,7 @@ public class SiteCrmContext : ISiteCrmContext
     {
         var request = new invln_getmultiplefrontdoorprojectssiteRequest
         {
-            invln_frontdoorprojectid = ShortGuid.ToGuidAsString(projectId),
+            invln_frontdoorprojectid = projectId.ToGuidAsString(),
             invln_pagingrequest = CrmResponseSerializer.Serialize(pagination),
             invln_fieldstoretrieve = ProjectSiteCrmFields.SiteToRead.FormatFields(),
             invln_usehetables = "true",
@@ -46,8 +45,8 @@ public class SiteCrmContext : ISiteCrmContext
     {
         var request = new invln_getsinglefrontdoorprojectsiteRequest
         {
-            invln_frontdoorprojectsiteid = ShortGuid.ToGuidAsString(siteId),
-            invln_frontdoorprojectid = ShortGuid.ToGuidAsString(projectId),
+            invln_frontdoorprojectsiteid = siteId.ToGuidAsString(),
+            invln_frontdoorprojectid = projectId.ToGuidAsString(),
             invln_fieldstoretrieve = ProjectSiteCrmFields.SiteToRead.FormatFields(),
             invln_usehetables = "true",
         };
@@ -62,8 +61,8 @@ public class SiteCrmContext : ISiteCrmContext
     {
         var request = new invln_setfrontdoorsiteRequest
         {
-            invln_frontdoorprojectid = ShortGuid.ToGuidAsString(projectId),
-            invln_frontdoorsiteid = dto.SiteId.IsProvided() ? ShortGuid.ToGuidAsString(dto.SiteId) : string.Empty,
+            invln_frontdoorprojectid = projectId.ToGuidAsString(),
+            invln_frontdoorsiteid = dto.SiteId.IsProvided() ? dto.SiteId.ToGuidAsString() : string.Empty,
             invln_entityfieldsparameters = CrmResponseSerializer.Serialize(dto),
             invln_usehetables = "true",
         };
@@ -78,7 +77,7 @@ public class SiteCrmContext : ISiteCrmContext
     {
         var request = new invln_deactivatefrontdoorsiteRequest
         {
-            invln_frontdoorsiteid = ShortGuid.ToGuidAsString(siteId),
+            invln_frontdoorsiteid = siteId.ToGuidAsString(),
             invln_usehetables = "true",
         };
 

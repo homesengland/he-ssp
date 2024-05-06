@@ -1,5 +1,5 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.Investments.Common.Contract;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Infrastructure.Cache;
 
 namespace HE.Investment.AHP.Domain.Site.Crm;
@@ -27,7 +27,7 @@ internal sealed class RequestCacheSiteCrmContextDecorator : ISiteCrmContext
 
     public async Task<SiteDto?> GetById(string siteId, CancellationToken cancellationToken)
     {
-        return await _cache.GetFromCache(ShortGuid.ToGuidAsString(siteId), async () => await _decorated.GetById(siteId, cancellationToken));
+        return await _cache.GetFromCache(siteId.ToGuidAsString(), async () => await _decorated.GetById(siteId, cancellationToken));
     }
 
     public async Task<bool> Exist(string name, CancellationToken cancellationToken)

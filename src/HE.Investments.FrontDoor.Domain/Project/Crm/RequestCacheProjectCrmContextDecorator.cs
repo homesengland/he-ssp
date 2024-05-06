@@ -1,6 +1,6 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Shared.User;
-using HE.Investments.Common.Contract;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Infrastructure.Cache;
 
 namespace HE.Investments.FrontDoor.Domain.Project.Crm;
@@ -29,14 +29,14 @@ internal sealed class RequestCacheProjectCrmContextDecorator : IProjectCrmContex
     public async Task<FrontDoorProjectDto> GetOrganisationProjectById(string projectId, string userGlobalId, string organisationId, CancellationToken cancellationToken)
     {
         return (await _cache.GetFromCache(
-            ShortGuid.ToGuidAsString(projectId),
+            projectId.ToGuidAsString(),
             async () => await _decorated.GetOrganisationProjectById(projectId, userGlobalId, organisationId, cancellationToken)))!;
     }
 
     public async Task<FrontDoorProjectDto> GetUserProjectById(string projectId, string userGlobalId, string organisationId, CancellationToken cancellationToken)
     {
         return (await _cache.GetFromCache(
-            ShortGuid.ToGuidAsString(projectId),
+            projectId.ToGuidAsString(),
             async () => await _decorated.GetUserProjectById(projectId, userGlobalId, organisationId, cancellationToken)))!;
     }
 

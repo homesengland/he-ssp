@@ -1,6 +1,6 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Shared.User;
-using HE.Investments.Common.Contract;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Infrastructure.Cache;
 
 namespace HE.Investments.FrontDoor.Domain.Site.Crm;
@@ -21,14 +21,14 @@ internal sealed class RequestCacheSiteCrmContextDecorator : ISiteCrmContext
     public async Task<PagedResponseDto<FrontDoorProjectSiteDto>> GetSites(string projectId, UserAccount userAccount, PagingRequestDto pagination, CancellationToken cancellationToken)
     {
         return (await _sitesCache.GetFromCache(
-            $"{ShortGuid.ToGuidAsString(projectId)}-{pagination.pageNumber}-{pagination.pageSize}",
+            $"{projectId.ToGuidAsString()}-{pagination.pageNumber}-{pagination.pageSize}",
             async () => await _decorated.GetSites(projectId, userAccount, pagination, cancellationToken)))!;
     }
 
     public async Task<FrontDoorProjectSiteDto> GetSite(string projectId, string siteId, UserAccount userAccount, CancellationToken cancellationToken)
     {
         return (await _siteCache.GetFromCache(
-            ShortGuid.ToGuidAsString(siteId),
+            siteId.ToGuidAsString(),
             async () => await _decorated.GetSite(projectId, siteId, userAccount, cancellationToken)))!;
     }
 
