@@ -11,16 +11,6 @@
         .New()
         .WithOrganisation(Model.OrganisationName)
         .Build();
-
-    var createNewConsortium = new DynamicComponentViewModel(
-        "Link",
-        new
-        {
-            text = "Create new consortium",
-            controller = new ControllerName(nameof(ConsortiumController)).WithoutPrefix(),
-            action = nameof(ConsortiumController.Start),
-            isStrong = true,
-        });
 }
 
 <gds-div-grid-column-two-thirds>
@@ -42,7 +32,12 @@
         </gds-p>
     }
 
-    <vc:dynamic-component component="@createNewConsortium"/>
+    <a
+        class="govuk-heading-m"
+        href="@Url.Action(nameof(ConsortiumController.Start), new ControllerName(nameof(ConsortiumController)).WithoutPrefix())"
+        data-testId="create-new-consortium">
+        Create new consortium
+    </a>
 
     <gds-p>
         A consortium is a group of organisations or separate legal entities acting together to deliver homes under the Affordable Homes Programme.
