@@ -34,7 +34,7 @@ public class FinancialDetailsSummaryViewModelFactory : IFinancialDetailsSummaryV
         var contributionsSectionSummary = GetContributionsSectionSummary(result.TotalContributions, applicationId, result.Application.IsEditable, urlHelper);
 
         return new FinancialDetailsCheckAnswersModel(
-            Guid.Parse(applicationId.Value),
+            applicationId.Value,
             result.Application.Name,
             landValueSectionSummary,
             costsSectionSummary,
@@ -45,7 +45,7 @@ public class FinancialDetailsSummaryViewModelFactory : IFinancialDetailsSummaryV
 
     private static IList<string> GetCurrencyStringWithPrefix(decimal? value)
     {
-        return CurrencyHelper.DisplayPounds(value).ToOneElementList() ?? Array.Empty<string>();
+        return value.DisplayPounds().ToOneElementList() ?? Array.Empty<string>();
     }
 
     private static string CreateFinancialDetailsActionUrl(IUrlHelper urlHelper, AhpApplicationId applicationId, string actionName, bool allowWcagDuplicate = false)

@@ -37,7 +37,7 @@ public class DisabledPeopleHomeTypeDetailsSegmentEntity : DomainEntity, IHomeTyp
         ClientGroupType = _modificationTracker.Change(ClientGroupType, clientGroupType);
     }
 
-    public IHomeTypeSegmentEntity Duplicate()
+    public DisabledPeopleHomeTypeDetailsSegmentEntity Duplicate()
     {
         return new DisabledPeopleHomeTypeDetailsSegmentEntity(HousingType, ClientGroupType);
     }

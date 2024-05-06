@@ -11,16 +11,20 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public string referenceNumber { get; set; }
         public int? applicationStatus { get; set; }
         public string siteId { get; set; }
+        public string programmeId { get; set; }
 
         //sections statuses
         public int? schemeInformationSectionCompletionStatus { get; set; }
+
         public int? homeTypesSectionCompletionStatus { get; set; }
         public int? financialDetailsSectionCompletionStatus { get; set; }
         public int? deliveryPhasesSectionCompletionStatus { get; set; }
         public DateTime? dateSubmitted { get; set; }
+        public int? previousExternalStatus { get; set; }
 
         //financial
         public decimal? borrowingAgainstRentalIncomeFromThisScheme { get; set; }
+
         public decimal? fundingFromOpenMarketHomesOnThisScheme { get; set; }
         public decimal? fundingFromOpenMarketHomesNotOnThisScheme { get; set; }
         public decimal? fundingGeneratedFromOtherSources { get; set; }
@@ -44,9 +48,9 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public decimal? howMuchReceivedFromLotteryFunding { get; set; }
         public decimal? howMuchReceivedFromOtherPublicBodies { get; set; }
 
-
         //schema
         public decimal? fundingRequested { get; set; }
+
         public int? noOfHomes { get; set; }
         public string affordabilityEvidence { get; set; }
         public string discussionsWithLocalStakeholders { get; set; }
@@ -57,9 +61,20 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
 
         //other
         public string contactId { get; set; }
+
         public string contactExternalId { get; set; }
         public string organisationId { get; set; }
         public DateTime? lastExternalModificationOn { get; set; }
         public ContactDto lastExternalModificationBy { get; set; }
+        public ContactDto lastExternalSubmittedBy { get; set; }
+        public bool? representationsandwarranties { get; set; }
+
+        public string developingPartnerId { get; set; }
+        public string developingPartnerName { get; set; }
+        public string ownerOfTheLandDuringDevelopmentId { get; set; }
+        public string ownerOfTheLandDuringDevelopmentName { get; set; }
+        public string ownerOfTheHomesAfterCompletionId { get; set; }
+        public string ownerOfTheHomesAfterCompletionName { get; set; }
+        public bool? applicationPartnerConfirmation { get; set; }
     }
 }

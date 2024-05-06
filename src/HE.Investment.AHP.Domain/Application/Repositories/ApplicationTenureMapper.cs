@@ -6,7 +6,7 @@ namespace HE.Investment.AHP.Domain.Application.Repositories;
 
 public static class ApplicationTenureMapper
 {
-    private static readonly IDictionary<Tenure, invln_Tenure> Tenures = new Dictionary<Tenure, invln_Tenure>
+    private static readonly Dictionary<Tenure, invln_Tenure> Tenures = new()
     {
         { Tenure.AffordableRent, invln_Tenure.Affordablerent },
         { Tenure.SocialRent, invln_Tenure.Socialrent },

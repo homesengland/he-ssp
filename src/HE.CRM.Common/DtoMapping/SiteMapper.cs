@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Linq;
 using DataverseModel;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.CRM.Common.Extensions.Entities;
@@ -10,9 +11,9 @@ namespace HE.CRM.Common.DtoMapping
 {
     public static class SiteMapper
     {
-        public static SiteDto ToDto(invln_Sites entity)
+        public static SiteDto ToDto(invln_Sites entity, he_LocalAuthority localAuthority = null)
         {
-            return new SiteDto
+            var siteDto = new SiteDto
             {
                 id = entity.invln_SitesId?.ToString(),
                 name = entity.invln_sitename,
@@ -28,8 +29,8 @@ namespace HE.CRM.Common.DtoMapping
                 },
                 localAuthority = new SiteLocalAuthority
                 {
-                   id = entity.GetAttributeValue<AliasedValue>("invln_ahglocalauthorities1.invln_gsscode")?.Value.ToString(),
-                   name = entity.invln_LocalAuthority?.Name,
+                    id = entity.GetAttributeValue<AliasedValue>("invln_ahglocalauthorities1.invln_gsscode")?.Value.ToString(),
+                    name = entity.invln_LocalAuthority?.Name,
                 },
                 planningDetails = new PlanningDetailsDto
                 {
@@ -62,7 +63,9 @@ namespace HE.CRM.Common.DtoMapping
                 siteTypeDetails =
                     new SiteTypeDetailsDto
                     {
-                        siteType = entity.invln_TypeofSite?.Value, isGreenBelt = entity.invln_greenbelt, isRegenerationSite = entity.invln_regensite,
+                        siteType = entity.invln_TypeofSite?.Value,
+                        isGreenBelt = entity.invln_greenbelt,
+                        isRegenerationSite = entity.invln_regensite,
                     },
                 siteUseDetails =
                     new SiteUseDetailsDto
@@ -73,7 +76,8 @@ namespace HE.CRM.Common.DtoMapping
                     },
                 ruralDetails = new RuralDetailsDto
                 {
-                    isRuralClassification = entity.invln_Ruralclassification, isRuralExceptionSite = entity.invln_RuralExceptionSite,
+                    isRuralClassification = entity.invln_Ruralclassification,
+                    isRuralExceptionSite = entity.invln_RuralExceptionSite,
                 },
                 environmentalImpact = entity.invln_ActionstoReduce,
                 modernMethodsOfConstruction = new ModernMethodsOfConstructionDto
@@ -89,46 +93,73 @@ namespace HE.CRM.Common.DtoMapping
                 },
 
                 procurementMechanisms = entity.invln_procurementmechanisms.ToIntValueList(),
+                developerPartner = new OrganizationDetailsDto()
+                {
+                    registeredCompanyName = entity.invln_developingpartner?.Name,
+                    organisationId = entity.invln_developingpartner?.Id.ToString()
+                },
+                ownerOfTheLandDuringDevelopment = new OrganizationDetailsDto()
+                {
+                    registeredCompanyName = entity.invln_ownerofthelandduringdevelopment?.Name,
+                    organisationId = entity.invln_ownerofthelandduringdevelopment?.Id.ToString()
+                },
+                ownerOfTheHomesAfterCompletion = new OrganizationDetailsDto()
+                {
+                    registeredCompanyName = entity.invln_Ownerofthehomesaftercompletion?.Name,
+                    organisationId = entity.invln_Ownerofthehomesaftercompletion?.Id.ToString()
+                },
             };
+
+            if (localAuthority != null)
+            {
+                siteDto.localAuthority = new SiteLocalAuthority
+                {
+                    id = localAuthority.he_GSSCode,
+                    name = localAuthority.he_Name,
+                };
+            };
+
+            return siteDto;
         }
 
-        public static invln_Sites ToEntity(SiteDto dto, string fieldsToSet, invln_AHGLocalAuthorities localAuthorities, Contact createdByContact, string accountId)
+        public static invln_Sites ToEntity(SiteDto dto, string fieldsToSet, he_LocalAuthority localAuthorities = null, Contact createdByContact = null, string accountId = null, string siteid = null)
         {
             var site = new invln_Sites();
 
-            if (!string.IsNullOrWhiteSpace(dto.id) && Guid.TryParse(dto.id, out var siteId))
+            if (!string.IsNullOrWhiteSpace(siteid) && Guid.TryParse(siteid, out var siteGuid))
             {
-                site.Id = siteId;
+                site.Id = siteGuid;
             }
 
             SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_sitename), dto.name);
             SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_externalsitestatus), TryCreateOptionSetValue(dto.status));
 
-            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_s106agreementinplace), dto.section106.isAgreement106);
-            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_developercontributionsforah), dto.section106.areContributionsForAffordableHomes);
-            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_siteis100affordable), dto.section106.isAffordableHousing100);
-            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_homesintheapplicationareadditional), dto.section106.areAdditionalHomes);
-            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_anyrestrictionsinthes106), dto.section106.areRestrictionsOrObligations);
-            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_localauthorityconfirmationofadditionality), dto.section106.localAuthorityConfirmation);
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_s106agreementinplace), dto.section106?.isAgreement106);
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_developercontributionsforah), dto.section106?.areContributionsForAffordableHomes);
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_siteis100affordable), dto.section106?.isAffordableHousing100);
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_homesintheapplicationareadditional), dto.section106?.areAdditionalHomes);
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_anyrestrictionsinthes106), dto.section106?.areRestrictionsOrObligations);
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_localauthorityconfirmationofadditionality), dto.section106?.localAuthorityConfirmation);
 
             if (localAuthorities != null)
             {
-                SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_LocalAuthority), new EntityReference(nameof(invln_AHGLocalAuthorities).ToLower(), localAuthorities.Id));
+                SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_HeLocalAuthorityId), localAuthorities.ToEntityReference());
+                site.invln_GovernmentOfficeRegion = TryCreateOptionSetValue(localAuthorities.he_governmentofficeregion?.Value);
             }
 
-            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_planningstatus), TryCreateOptionSetValue(dto.planningDetails.planningStatus));
-            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_planningreferencenumber), dto.planningDetails.referenceNumber);
-            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_detailedplanningapprovaldate), dto.planningDetails.detailedPlanningApprovalDate);
-            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_furtherstepsrequired), dto.planningDetails.requiredFurtherSteps);
-            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_applicationfordetailedplanningsubmitted), dto.planningDetails.applicationForDetailedPlanningSubmittedDate);
-            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_expectedplanningapproval), dto.planningDetails.expectedPlanningApprovalDate);
-            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_outlineplanningapprovaldate), dto.planningDetails.outlinePlanningApprovalDate);
-            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_planningsubmissiondate), dto.planningDetails.planningSubmissionDate);
-            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_grantfundingforallhomes), dto.planningDetails.isGrantFundingForAllHomes);
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_planningstatus), TryCreateOptionSetValue(dto.planningDetails?.planningStatus));
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_planningreferencenumber), dto.planningDetails?.referenceNumber);
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_detailedplanningapprovaldate), dto.planningDetails?.detailedPlanningApprovalDate);
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_furtherstepsrequired), dto.planningDetails?.requiredFurtherSteps);
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_applicationfordetailedplanningsubmitted), dto.planningDetails?.applicationForDetailedPlanningSubmittedDate);
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_expectedplanningapproval), dto.planningDetails?.expectedPlanningApprovalDate);
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_outlineplanningapprovaldate), dto.planningDetails?.outlinePlanningApprovalDate);
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_planningsubmissiondate), dto.planningDetails?.planningSubmissionDate);
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_grantfundingforallhomes), dto.planningDetails?.isGrantFundingForAllHomes);
 
-            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_landregistrytitle), dto.planningDetails.isLandRegistryTitleNumber);
-            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_landregistrytitlenumber), dto.planningDetails.landRegistryTitleNumber);
-            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_invlngrantfundingforallhomescoveredbytit), dto.planningDetails.isGrantFundingForAllHomesCoveredByTitleNumber);
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_landregistrytitle), dto.planningDetails?.isLandRegistryTitleNumber);
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_landregistrytitlenumber), dto.planningDetails?.landRegistryTitleNumber);
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_invlngrantfundingforallhomescoveredbytit), dto.planningDetails?.isGrantFundingForAllHomesCoveredByTitleNumber);
 
             SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_nationaldesignguideelements), CreateOptionSetValueCollection(dto.nationalDesignGuidePriorities));
 
@@ -137,38 +168,52 @@ namespace HE.CRM.Common.DtoMapping
 
             SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_landstatus), TryCreateOptionSetValue(dto.landStatus));
 
-            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_workstenderingstatus), TryCreateOptionSetValue(dto.tenderingDetails.tenderingStatus));
-            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_maincontractorname), dto.tenderingDetails.contractorName);
-            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_sme), dto.tenderingDetails.isSme);
-            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_intentiontoworkwithsme), dto.tenderingDetails.isIntentionToWorkWithSme);
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_workstenderingstatus), TryCreateOptionSetValue(dto.tenderingDetails?.tenderingStatus));
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_maincontractorname), dto.tenderingDetails?.contractorName);
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_sme), dto.tenderingDetails?.isSme);
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_intentiontoworkwithsme), dto.tenderingDetails?.isIntentionToWorkWithSme);
 
-            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_strategicsite), dto.strategicSiteDetails.isStrategicSite);
-            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_StrategicSiteN), dto.strategicSiteDetails.name);
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_strategicsite), dto.strategicSiteDetails?.isStrategicSite);
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_StrategicSiteN), dto.strategicSiteDetails?.name);
 
-            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_TypeofSite), TryCreateOptionSetValue(dto.siteTypeDetails.siteType));
-            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_greenbelt), dto.siteTypeDetails.isGreenBelt);
-            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_regensite), dto.siteTypeDetails.isRegenerationSite);
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_TypeofSite), TryCreateOptionSetValue(dto.siteTypeDetails?.siteType));
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_greenbelt), dto.siteTypeDetails?.isGreenBelt);
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_regensite), dto.siteTypeDetails?.isRegenerationSite);
 
-            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_streetfrontinfill), dto.siteUseDetails.isPartOfStreetFrontInfill);
-            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_travellerpitchsite), dto.siteUseDetails.isForTravellerPitchSite);
-            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_travellerpitchsitetype), TryCreateOptionSetValue(dto.siteUseDetails.travellerPitchSiteType));
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_streetfrontinfill), dto.siteUseDetails?.isPartOfStreetFrontInfill);
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_travellerpitchsite), dto.siteUseDetails?.isForTravellerPitchSite);
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_travellerpitchsitetype), TryCreateOptionSetValue(dto.siteUseDetails?.travellerPitchSiteType));
 
-            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_Ruralclassification), dto.ruralDetails.isRuralClassification);
-            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_RuralExceptionSite), dto.ruralDetails.isRuralExceptionSite);
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_Ruralclassification), dto.ruralDetails?.isRuralClassification);
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_RuralExceptionSite), dto.ruralDetails?.isRuralExceptionSite);
 
             SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_ActionstoReduce), dto.environmentalImpact);
 
-            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_mmcuse), TryCreateOptionSetValue(dto.modernMethodsOfConstruction.usingMmc));
-            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_mmcplans), dto.modernMethodsOfConstruction.mmcFutureAdoptionPlans);
-            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_mmcexpectedimpact), dto.modernMethodsOfConstruction.mmcFutureAdoptionExpectedImpact);
-            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_mmcbarriers), dto.modernMethodsOfConstruction.mmcBarriers);
-            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_mmcimpact), dto.modernMethodsOfConstruction.mmcImpact);
-            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_mmccategories), CreateOptionSetValueCollection(dto.modernMethodsOfConstruction.mmcCategories));
-            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_mmccategory1subcategories), CreateOptionSetValueCollection(dto.modernMethodsOfConstruction.mmc3DSubcategories));
-            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_mmccategory2subcategories), CreateOptionSetValueCollection(dto.modernMethodsOfConstruction.mmc2DSubcategories));
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_mmcuse), TryCreateOptionSetValue(dto.modernMethodsOfConstruction?.usingMmc));
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_mmcplans), dto.modernMethodsOfConstruction?.mmcFutureAdoptionPlans);
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_mmcexpectedimpact), dto.modernMethodsOfConstruction?.mmcFutureAdoptionExpectedImpact);
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_mmcbarriers), dto.modernMethodsOfConstruction?.mmcBarriers);
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_mmcimpact), dto.modernMethodsOfConstruction?.mmcImpact);
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_mmccategories), CreateOptionSetValueCollection(dto.modernMethodsOfConstruction?.mmcCategories));
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_mmccategory1subcategories), CreateOptionSetValueCollection(dto.modernMethodsOfConstruction?.mmc3DSubcategories));
+            SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_mmccategory2subcategories), CreateOptionSetValueCollection(dto.modernMethodsOfConstruction?.mmc2DSubcategories));
 
             SetFieldValue(site, fieldsToSet, nameof(invln_Sites.invln_procurementmechanisms), CreateOptionSetValueCollection(dto.procurementMechanisms));
 
+            if (dto.developerPartner != null)
+            {
+                site.invln_developingpartner = new EntityReference(Account.EntityLogicalName, new Guid(dto.developerPartner.organisationId));
+            }
+
+            if (dto.ownerOfTheHomesAfterCompletion != null)
+            {
+                site.invln_Ownerofthehomesaftercompletion = new EntityReference(Account.EntityLogicalName, new Guid(dto.ownerOfTheHomesAfterCompletion.organisationId));
+            }
+
+            if (dto.ownerOfTheLandDuringDevelopment != null)
+            {
+                site.invln_ownerofthelandduringdevelopment = new EntityReference(Account.EntityLogicalName, new Guid(dto.ownerOfTheLandDuringDevelopment.organisationId));
+            }
 
             if (createdByContact != null)
             {
@@ -196,9 +241,16 @@ namespace HE.CRM.Common.DtoMapping
             return value != null ? new OptionSetValue((int)value) : null;
         }
 
-        private static OptionSetValueCollection CreateOptionSetValueCollection(IList<int> dto)
+        private static OptionSetValueCollection CreateOptionSetValueCollection(IList<int> dto = null)
         {
-            return new OptionSetValueCollection(dto.Select(x => new OptionSetValue(x)).ToList());
+            if (dto != null && dto.Any())
+            {
+                return new OptionSetValueCollection(dto.Select(x => new OptionSetValue(x)).ToList());
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Messages;
@@ -7,6 +8,7 @@ using Xunit;
 
 namespace HE.Investments.Loans.BusinessLogic.Tests.CompanyStructure.ValueObjects;
 
+[SuppressMessage("Performance", "CA1863", Justification = "Reviewed")]
 public class OrganisationMoreInformationFileCtorTests
 {
     [Theory]

@@ -98,6 +98,7 @@
     <Compile Include="Handlers\AHPApplication\ChangeExternalStatusOnInternalStatusChangeHandler.cs" />
     <Compile Include="Handlers\AHPApplication\CheckIfApplicationWithNewNameExistsHandler.cs" />
     <Compile Include="Handlers\AHPApplication\CreateDocumentLocationOnCreateHandler.cs" />
+    <Compile Include="Handlers\AHPApplication\UpdateAplicationOnStatusChange.cs" />
     <Compile Include="Handlers\AHPApplication\UpdateLocalAuthorityWhenSiteIsChanged.cs" />
     <Compile Include="Handlers\AHPApplication\RecalculateDeliveryphaseHandler.cs" />
     <Compile Include="Handlers\AhpStatusChange\SendNotificationOnCreateHandler.cs" />
@@ -105,6 +106,10 @@
     <Compile Include="Handlers\ContactWebrole\SendNotificationOnRoleModificationHandler.cs" />
     <Compile Include="Handlers\CustomApi\ChangeAhpApplicationHandler.cs" />
     <Compile Include="Handlers\CustomApi\CheckIfApplicationWithGivenNameExistsHandler.cs" />
+    <Compile Include="Handlers\CustomApi\Consortium\GetConsortiumsByOrganisationHandler.cs" />
+    <Compile Include="Handlers\CustomApi\Consortium\GetConsortiumHandler.cs" />
+    <Compile Include="Handlers\CustomApi\Consortium\IsConsortiumExistForProgrammeAndOrganisation.cs" />
+    <Compile Include="Handlers\CustomApi\Consortium\SetConsortiumHandler.cs" />
     <Compile Include="Handlers\CustomApi\DeleteDeliveryPhaseHandler.cs" />
     <Compile Include="Handlers\CustomApi\DeleteHomeTypeHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetAbsoluteAhpApplicationFileLocationHandler.cs" />
@@ -126,10 +131,12 @@
     <Compile Include="Handlers\CustomApi\SetDeliveryPhaseHandler.cs" />
     <Compile Include="Handlers\CustomApi\SetHomeTypeHandler.cs" />
     <Compile Include="Handlers\CustomApi\Site\CheckIfSiteWithGivenNameExistsHandler.cs" />
+    <Compile Include="Handlers\CustomApi\Site\CheckIfSiteWithStrategicSiteNameExistsHandler.cs" />
     <Compile Include="Handlers\CustomApi\Site\GetMultipleSitesHandler.cs" />
     <Compile Include="Handlers\CustomApi\Site\GetSingleSiteHandler.cs" />
     <Compile Include="Handlers\CustomApi\Site\SetSiteHandler.cs" />
     <Compile Include="Handlers\DeliveryPhase\SendNotificationUrbWantsAdditionalPaymentsForPhaseHandler.cs" />
+    <Compile Include="Handlers\HomeType\CalculatePercentageValueOfNDSSStandardHandler.cs" />
     <Compile Include="Handlers\HomeType\CreateDocumentLocationOnCreateHandler.cs" />
     <Compile Include="Handlers\HomeType\SetHappiPrinciplesValueHandler.cs" />
     <Compile Include="Handlers\HomeType\SetWhichNdssStandardsHaveBeenMetValueHandler.cs" />
@@ -203,6 +210,10 @@
     <Compile Include="Plugins\ContactWebrole\SendNotificationOnRoleModificationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\ChangeAhpApplicationStatusPlugin.cs" />
     <Compile Include="Plugins\CustomApi\CheckIfApplicationWithGivenNameExistsPlugin.cs" />
+    <Compile Include="Plugins\CustomApi\Consortium\GetConsortiumsByOrganisationPlugin.cs" />
+    <Compile Include="Plugins\CustomApi\Consortium\GetConsortiumPlugin.cs" />
+    <Compile Include="Plugins\CustomApi\Consortium\IsConsortiumExist.cs" />
+    <Compile Include="Plugins\CustomApi\Consortium\SetConsortiumPlugin.cs" />
     <Compile Include="Plugins\CustomApi\DeleteDeliveryPhasePlugin.cs" />
     <Compile Include="Plugins\CustomApi\DeleteHomeTypePlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetMultipleDeliveryPhasePlugin.cs" />
@@ -224,11 +235,13 @@
     <Compile Include="Plugins\CustomApi\SetDeliveryPhasePlugin.cs" />
     <Compile Include="Plugins\CustomApi\SetHomeTypePlugin.cs" />
     <Compile Include="Plugins\CustomApi\Site\CheckIfSiteWithGivenNameExistsPlugin.cs" />
+    <Compile Include="Plugins\CustomApi\Site\CheckIfSiteWithStrategicSiteNameExistsPlugin.cs" />
     <Compile Include="Plugins\CustomApi\Site\GetMultipleSitesPlugin.cs" />
     <Compile Include="Plugins\CustomApi\Site\GetSingleSitePlugin.cs" />
     <Compile Include="Plugins\CustomApi\Site\SetSitePlugin.cs" />
     <Compile Include="Plugins\DeliveryPhase\SendNotificationUrbWantsAdditionalPaymentsForPhasePlugin.cs" />
     <Compile Include="Plugins\HomeType\CreateDocumentLocationOnCreatePlugin.cs" />
+    <Compile Include="Plugins\HomeType\HomeTypePreUpdate.cs" />
     <Compile Include="Plugins\HomeType\SetHappiPrinciplesValuePlugin.cs" />
     <Compile Include="Plugins\HomeType\SetWhichNdssStandardsHaveBeenMetValuePlugin.cs" />
     <Compile Include="Plugins\Programme\PreValidation.cs" />
@@ -238,6 +251,8 @@
     <Compile Include="Services\AhpStatusChange\IAhpStatusChangeService.cs" />
     <Compile Include="Services\Application\ApplicationService.cs" />
     <Compile Include="Services\Application\IApplicationService.cs" />
+    <Compile Include="Services\Consortium\ConsortiumService.cs" />
+    <Compile Include="Services\Consortium\IConsortiumService.cs" />
     <Compile Include="Services\Contacts\ContactService.cs" />
     <Compile Include="Services\Contacts\IContactService.cs" />
     <Compile Include="Services\DeliveryPhase\DeliveryPhaseService.cs" />

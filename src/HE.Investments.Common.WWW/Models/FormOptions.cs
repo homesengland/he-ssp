@@ -4,17 +4,9 @@ namespace HE.Investments.Common.WWW.Models;
 
 public static class FormOptions
 {
-    public static List<SelectListItem> YesNo { get; } = new()
-    {
-        new SelectListItem
-        {
-            Value = "Yes",
-            Text = "Yes",
-        },
-        new SelectListItem
-        {
-            Value = "No",
-            Text = "No",
-        },
-    };
+    public static List<SelectListItem> YesNo { get; } =
+    [
+        new SelectListItem { Value = "Yes", Text = "Yes", },
+        new SelectListItem { Value = "No", Text = "No", }
+    ];
 }

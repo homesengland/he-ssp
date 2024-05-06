@@ -25,7 +25,7 @@ internal sealed class ProjectTestBuilder
 
         _project.ProvideHomesCount(HomesCountTestData.ValidHomesCount);
 
-        _project.ProvideHomesTypes(new HomesTypes(new string[] { "Home" }, string.Empty));
+        _project.ProvideHomesTypes(new HomesTypes(["Home"], string.Empty));
 
         _project.ProvideProjectType(new ProjectType("Greenfield"));
 
@@ -36,7 +36,7 @@ internal sealed class ProjectTestBuilder
         _project.ProvideLandOwnership(new LandOwnership(true));
 
         _project.ProvideAdditionalData(new AdditionalDetails(
-            PurchaseDate.FromCrm(ProjectDateTestData.CorrectDateTime),
+            new PurchaseDate(ProjectDateTestData.CorrectDateTime),
             PoundsTestData.AnyAmount,
             PoundsTestData.AnyAmount,
             SourceOfValuationTestData.AnySource));

@@ -3,6 +3,7 @@ using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.Domain.Delivery.Crm;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investment.AHP.Domain.Tests.Delivery.Entities.TestDataBuilders;
+using HE.Investments.Common.Tests.TestData;
 using HE.Investments.TestsUtils.TestFramework;
 
 namespace HE.Investment.AHP.Domain.Tests.Delivery.Crm.DeliveryPhaseCrmMapperTests;
@@ -14,7 +15,7 @@ public class MapToDtoTests : TestBase<DeliveryPhaseCrmMapper>
     {
         // given
         var entity = new DeliveryPhaseEntityBuilder()
-            .WithId("123123")
+            .WithId(GuidTestData.GuidTwo.ToString())
             .WithName("my phase")
             .WithReconfiguringExisting()
             .WithoutAcquisitionMilestone()
@@ -27,8 +28,8 @@ public class MapToDtoTests : TestBase<DeliveryPhaseCrmMapper>
 
         // then
         result.Should().NotBeNull();
-        result.id.Should().Be("123123");
-        result.applicationId.Should().Be(entity.Application.Id.Value);
+        result.id.Should().Be(GuidTestData.GuidTwo.ToString());
+        result.applicationId.Should().Be(entity.Application.Id.ToGuidAsString());
         result.name.Should().Be("my phase");
         result.isReconfigurationOfExistingProperties.Should().BeTrue();
         result.acquisitionDate.Should().BeNull();
@@ -66,7 +67,6 @@ public class MapToDtoTests : TestBase<DeliveryPhaseCrmMapper>
     [InlineData(BuildActivityType.Reimprovement, 858110004)]
     [InlineData(BuildActivityType.Conversion, 858110005)]
     [InlineData(BuildActivityType.WorksOnlyRehab, 858110006)]
-    [InlineData(BuildActivityType.RegenerationRehab, 858110007)]
     public void ShouldMapBuildActivity_WhenTypeOfHomesIsRehab(BuildActivityType buildActivityType, int expectedRehabBuildActivityType)
     {
         // given
@@ -112,8 +112,8 @@ public class MapToDtoTests : TestBase<DeliveryPhaseCrmMapper>
     {
         // given
         var entity = new DeliveryPhaseEntityBuilder()
-            .WithHomesToBeDelivered(0, "ht-1")
-            .WithHomesToBeDelivered(12, "ht-2")
+            .WithHomesToBeDelivered(0, GuidTestData.GuidTwo.ToString())
+            .WithHomesToBeDelivered(12, GuidTestData.GuidOne.ToString())
             .Build();
 
         // when
@@ -121,8 +121,8 @@ public class MapToDtoTests : TestBase<DeliveryPhaseCrmMapper>
 
         // then
         result.numberOfHomes.Should().HaveCount(2);
-        result.numberOfHomes.Should().ContainKey("ht-1").WhoseValue.Should().Be(0);
-        result.numberOfHomes.Should().ContainKey("ht-2").WhoseValue.Should().Be(12);
+        result.numberOfHomes.Should().ContainKey(GuidTestData.GuidTwo.ToString()).WhoseValue.Should().Be(0);
+        result.numberOfHomes.Should().ContainKey(GuidTestData.GuidOne.ToString()).WhoseValue.Should().Be(12);
     }
 
     [Fact]

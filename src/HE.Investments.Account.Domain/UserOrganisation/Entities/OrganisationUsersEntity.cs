@@ -1,5 +1,6 @@
 using HE.Investments.Account.Contract.UserOrganisation.Events;
 using HE.Investments.Account.Shared.User.ValueObjects;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 
@@ -9,9 +10,9 @@ public class OrganisationUsersEntity : DomainEntity
 {
     private readonly IReadOnlyCollection<EmailAddress> _activeUserEmails;
 
-    private readonly IList<EmailAddress> _invitedUserEmails;
+    private readonly List<EmailAddress> _invitedUserEmails;
 
-    private readonly IList<UserInvitationEntity> _pendingInvitations = new List<UserInvitationEntity>();
+    private readonly List<UserInvitationEntity> _pendingInvitations = [];
 
     public OrganisationUsersEntity(
         OrganisationId organisationId,
@@ -40,8 +41,8 @@ public class OrganisationUsersEntity : DomainEntity
                 .CheckErrors();
         }
 
-        if (_invitedUserEmails.Any(x => x == invitation.Email)
-            || _pendingInvitations.Any(x => x.Email == invitation.Email))
+        if (_invitedUserEmails.Exists(x => x == invitation.Email)
+            || _pendingInvitations.Exists(x => x.Email == invitation.Email))
         {
             OperationResult.New()
                 .AddValidationError(nameof(UserInvitationEntity.Email), "An invitation has already been sent to this email")

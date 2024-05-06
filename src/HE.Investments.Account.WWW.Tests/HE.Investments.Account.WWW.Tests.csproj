@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,8 +13,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HE.Investments.Account.WWW\HE.Investments.Account.WWW.csproj"/>
-    <ProjectReference Include="..\HE.Investments.Common.WWWTestsFramework\HE.Investments.Common.WWWTestsFramework.csproj" />
-    <ProjectReference Include="..\HE.Investments.TestsUtils\HE.Investments.TestsUtils.csproj" />
+    <ProjectReference Include="..\HE.Investments.Common.WWWTestsFramework\HE.Investments.Common.WWWTestsFramework.csproj"/>
+    <ProjectReference Include="..\HE.Investments.TestsUtils\HE.Investments.TestsUtils.csproj"/>
   </ItemGroup>
 
 </Project>

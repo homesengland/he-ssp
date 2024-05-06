@@ -1,5 +1,4 @@
 using FluentAssertions;
-using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Domain.Delivery.Policies;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investment.AHP.Domain.Programme;
@@ -17,7 +16,7 @@ public class MilestoneDatesInProgrammeDateRangePolicyTests
     public MilestoneDatesInProgrammeDateRangePolicyTests()
     {
         var mock = new Mock<IAhpProgrammeRepository>();
-        mock.Setup(r => r.GetProgramme(It.IsAny<AhpApplicationId>(), CancellationToken.None))
+        mock.Setup(r => r.GetProgramme(CancellationToken.None))
             .ReturnsAsync(_programme);
 
         _testCandidate = new MilestoneDatesInProgrammeDateRangePolicy(mock.Object);
@@ -31,7 +30,7 @@ public class MilestoneDatesInProgrammeDateRangePolicyTests
             .Build();
 
         // when
-        var action = async () => await _testCandidate.Validate(It.IsAny<AhpApplicationId>(), milestones, CancellationToken.None);
+        var action = async () => await _testCandidate.Validate(milestones, CancellationToken.None);
 
         // then
         action
@@ -99,10 +98,10 @@ public class MilestoneDatesInProgrammeDateRangePolicyTests
             .Build();
 
         // when
-        var action = async () => await _testCandidate.Validate(It.IsAny<AhpApplicationId>(), milestones, CancellationToken.None);
+        async Task Action() => await _testCandidate.Validate(milestones, CancellationToken.None);
 
         // then
-        AssertException(action, errorMessage);
+        AssertException(Action, errorMessage);
     }
 
     private void AssertException(Func<Task> action, string errorMessage)

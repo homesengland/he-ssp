@@ -121,7 +121,7 @@ public static class HtmlDocumentInputExtensions
 
         if (!string.IsNullOrWhiteSpace(value))
         {
-            var selected = inputs.FirstOrDefault(i => i.IsChecked());
+            var selected = inputs.Find(i => i.IsChecked());
 
             selected.Should().NotBeNull($"Radio input with name {fieldName} should be checked.");
             selected!.Attributes.FirstOrDefault(a => a.Name == "value")!.Value.Should()
@@ -201,7 +201,7 @@ public static class HtmlDocumentInputExtensions
         return default;
     }
 
-    private static IList<T> GetAndValidateInputs<T>(IHtmlDocument htmlDocument, string fieldName, string? label = null, bool exist = true)
+    private static List<T> GetAndValidateInputs<T>(IHtmlDocument htmlDocument, string fieldName, string? label = null, bool exist = true)
     {
         var inputs = htmlDocument.GetElementsByName(fieldName);
 

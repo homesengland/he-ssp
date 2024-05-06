@@ -1,24 +1,22 @@
+using HE.Investments.Common.Contract;
+using HE.Investments.Common.Domain.ValueObjects;
+
 namespace HE.Investment.AHP.Domain.Delivery.ValueObjects;
 
 public class StartOnSiteDate : DateValueObject
 {
-    public StartOnSiteDate(string? day, string? month, string? year)
-        : base(day, month, year, "MilestoneStartAt", "start on site date")
+    private const string FieldDescription = "start on site date";
+
+    public StartOnSiteDate(bool exists, string? day, string? month, string? year)
+        : base(day, month, year, "MilestoneStartAt", FieldDescription, !exists)
     {
     }
 
-    private StartOnSiteDate(DateOnly value)
+    public StartOnSiteDate(DateTime? value)
         : base(value)
     {
     }
 
-    public static StartOnSiteDate? Create(string? day, string? month, string? year)
-    {
-        return ValuesProvided(day, month, year) ? new StartOnSiteDate(day, month, year) : null;
-    }
-
-    public static StartOnSiteDate Create(DateOnly value)
-    {
-        return new StartOnSiteDate(value);
-    }
+    public static StartOnSiteDate FromDateDetails(bool exists, DateDetails? date) =>
+        new(exists, date?.Day, date?.Month, date?.Year);
 }

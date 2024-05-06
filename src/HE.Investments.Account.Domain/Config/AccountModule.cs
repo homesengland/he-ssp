@@ -18,7 +18,7 @@ public static class AccountModule
 {
     public static void AddAccountModule(this IServiceCollection services)
     {
-        services.AddOrganizationsModule();
+        services.AddOrganisationCrmModule();
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(AccountModule).Assembly));
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(AccountSharedModule).Assembly));
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(DomainValidationException).Assembly));

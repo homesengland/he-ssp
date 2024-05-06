@@ -19,33 +19,15 @@ namespace HE.Investments.Common.CRM.Model
 		
 		public static class Fields
 		{
-			public const string invln_changereason = "invln_changereason";
 			public const string invln_applicationid = "invln_applicationid";
 			public const string invln_organisationid = "invln_organisationid";
 			public const string invln_userid = "invln_userid";
 			public const string invln_newapplicationstatus = "invln_newapplicationstatus";
+			public const string invln_representationsandwarranties = "invln_representationsandwarranties";
+			public const string invln_changereason = "invln_changereason";
 		}
 		
 		public const string ActionLogicalName = "invln_changeahpapplicationstatus";
-		
-		public string invln_changereason
-		{
-			get
-			{
-				if (this.Parameters.Contains("invln_changereason"))
-				{
-					return ((string)(this.Parameters["invln_changereason"]));
-				}
-				else
-				{
-					return default(string);
-				}
-			}
-			set
-			{
-				this.Parameters["invln_changereason"] = value;
-			}
-		}
 		
 		public string invln_applicationid
 		{
@@ -123,6 +105,44 @@ namespace HE.Investments.Common.CRM.Model
 			}
 		}
 		
+		public bool invln_representationsandwarranties
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_representationsandwarranties"))
+				{
+					return ((bool)(this.Parameters["invln_representationsandwarranties"]));
+				}
+				else
+				{
+					return default(bool);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_representationsandwarranties"] = value;
+			}
+		}
+		
+		public string invln_changereason
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_changereason"))
+				{
+					return ((string)(this.Parameters["invln_changereason"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_changereason"] = value;
+			}
+		}
+		
 		public invln_changeahpapplicationstatusRequest()
 		{
 			this.RequestName = "invln_changeahpapplicationstatus";
@@ -130,6 +150,8 @@ namespace HE.Investments.Common.CRM.Model
 			this.invln_organisationid = default(string);
 			this.invln_userid = default(string);
 			this.invln_newapplicationstatus = default(int);
+			this.invln_representationsandwarranties = default(bool);
+			this.invln_changereason = default(string);
 		}
 	}
 	

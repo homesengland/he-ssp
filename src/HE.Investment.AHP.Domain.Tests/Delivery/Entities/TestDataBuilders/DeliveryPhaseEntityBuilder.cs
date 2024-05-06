@@ -2,15 +2,13 @@ using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.Contract.HomeTypes;
-using HE.Investment.AHP.Contract.Site;
-using HE.Investment.AHP.Domain.Application.Factories;
-using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.Tranches;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investment.AHP.Domain.Programme;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
+using HE.Investment.AHP.Domain.Tests.Application.TestData;
 using HE.Investment.AHP.Domain.Tests.Programme.TestData;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
@@ -22,18 +20,13 @@ namespace HE.Investment.AHP.Domain.Tests.Delivery.Entities.TestDataBuilders;
 
 public class DeliveryPhaseEntityBuilder
 {
-    private readonly IList<HomesToDeliverInPhase> _homesToDeliver = new List<HomesToDeliverInPhase>();
+    private readonly List<HomesToDeliverInPhase> _homesToDeliver = new();
 
-    private readonly ApplicationBasicInfo _applicationBasicInfo = new(
-        new AhpApplicationId("test-app-42123"),
-        new SiteId("test-site-12312"),
-        new ApplicationName("Test Application"),
-        Tenure.AffordableRent,
-        ApplicationStatus.Draft,
-        new AhpProgramme(ProgrammeDatesTestData.ProgrammeDates, MilestoneFramework.Default),
-        new ApplicationStateFactory(UserAccountTestData.AdminUserAccountOne));
+    private readonly ApplicationBasicInfo _applicationBasicInfo = ApplicationBasicInfoTestData.CreateAffordableRentInDraftState();
 
-    private string _id = "dp-1-12313";
+    private readonly MilestonesTranches _milestonesTranches = new(1000, 100, 100, 100);
+
+    private string _id = GuidTestData.GuidOne.ToString();
 
     private DeliveryPhaseName _name = new("First Phase");
 
@@ -206,6 +199,7 @@ public class DeliveryPhaseEntityBuilder
             _organisationBasicInfo,
             _status,
             MilestonesPercentageTranches.LackOfCalculation,
+            _milestonesTranches,
             false,
             _schemeFunding,
             _typeOfHomes,
@@ -215,7 +209,7 @@ public class DeliveryPhaseEntityBuilder
             _acquisitionMilestone,
             _startOnSiteMilestone,
             _completionMilestone,
-            new DeliveryPhaseId(_id),
+            DeliveryPhaseId.From(_id),
             DateTimeTestData.OctoberDay05Year2023At0858,
             isAdditionalPaymentRequested: _isAdditionalPaymentRequested);
     }

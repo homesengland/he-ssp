@@ -8,8 +8,8 @@ public class IsAnswered
 {
     private readonly ReferenceNumber? _referenceNumber = new("123");
     private readonly RequiredFurtherSteps? _requiredFurtherSteps = new("some steps");
-    private readonly ExpectedPlanningApprovalDate? _expectedPlanningApprovalDate = new("1", "2", "2033");
-    private readonly PlanningSubmissionDate? _planningSubmissionDate = new("1", "2", "2033");
+    private readonly ExpectedPlanningApprovalDate? _expectedPlanningApprovalDate = new(true, "1", "2", "2033");
+    private readonly PlanningSubmissionDate? _planningSubmissionDate = new(true, "1", "2", "2033");
 
     [Fact]
     public void ShouldIsAnsweredReturnTrue_WhenAllDataProvided()

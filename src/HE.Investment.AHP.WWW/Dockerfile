@@ -1,9 +1,9 @@
-FROM mcr.microsoft.com/dotnet/aspnet:6.0-bullseye-slim AS base
+FROM mcr.microsoft.com/dotnet/aspnet:8.0-bookworm-slim AS base
 WORKDIR /app
 ENV ASPNETCORE_URLS="http://*:5555"
 EXPOSE 5555
 
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 
 RUN curl -Lk "https://raw.githubusercontent.com/Microsoft/artifacts-credprovider/master/helpers/installcredprovider.sh" | sh
 ARG INTERNAL_FEED_ACCESSTOKEN
@@ -25,6 +25,8 @@ COPY ["HE.Investments.Common/HE.Investments.Common.csproj", "HE.Investments.Comm
 COPY ["HE.Investments.Organisation/HE.Investments.Organisation.csproj", "HE.Investments.Organisation/"]
 COPY ["HE.Investments.DocumentService/HE.Investments.DocumentService.csproj", "HE.Investments.DocumentService/"]
 COPY ["HE.Investments.Common.WWW/HE.Investments.Common.WWW.csproj", "HE.Investments.Common.WWW/"]
+COPY ["HE.Investments.AHP.Consortium.Contract/HE.Investments.AHP.Consortium.Contract.csproj", "HE.Investments.AHP.Consortium.Contract/"]
+COPY ["HE.Investments.AHP.Consortium.Domain/HE.Investments.AHP.Consortium.Domain.csproj", "HE.Investments.AHP.Consortium.Domain/"]
 RUN dotnet restore "./HE.Investment.AHP.WWW/./HE.Investment.AHP.WWW.csproj"
 
 COPY . .

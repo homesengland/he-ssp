@@ -1,5 +1,4 @@
 using HE.Investment.AHP.Contract.HomeTypes.Commands;
-using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investment.AHP.Domain.Scheme.Repositories;
 using HE.Investments.Account.Shared;
@@ -28,10 +27,12 @@ public class SaveFinishHomeTypesAnswerCommandHandler : HomeTypeCommandHandlerBas
     public async Task<OperationResult> Handle(SaveFinishHomeTypesAnswerCommand request, CancellationToken cancellationToken)
     {
         var account = await _accountUserContext.GetSelectedAccount();
-        var homeTypes = await _repository.GetByApplicationId(request.ApplicationId, account, HomeTypeSegmentTypes.HomeInformationOnly, cancellationToken);
-        var scheme = await _schemeRepository.GetByApplicationId(request.ApplicationId, account, false, cancellationToken);
+        var homeTypes = await _repository.GetByApplicationId(request.ApplicationId, account, cancellationToken);
+        int? expectedNumberOfHomes = request.IsCheckOnly
+            ? null
+            : (await _schemeRepository.GetByApplicationId(request.ApplicationId, account, false, cancellationToken)).Funding.HousesToDeliver ?? 0;
 
-        var validationErrors = PerformWithValidation(() => homeTypes.CompleteSection(request.FinishHomeTypesAnswer, scheme.Funding.HousesToDeliver ?? 0));
+        var validationErrors = PerformWithValidation(() => homeTypes.CompleteSection(request.FinishHomeTypesAnswer, expectedNumberOfHomes));
         if (validationErrors.Any())
         {
             return new OperationResult(validationErrors);

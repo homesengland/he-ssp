@@ -32,7 +32,7 @@ public class RedisConfigurationOptions
 
     public ConfigurationOptions ConfigurationOptions { get; }
 
-    private X509Certificate OptionsOnCertificateSelection(object sender, string targethost, X509CertificateCollection localcertificates, X509Certificate? remotecertificate, string[] acceptableissuers)
+    private X509Certificate2 OptionsOnCertificateSelection(object sender, string targethost, X509CertificateCollection localcertificates, X509Certificate? remotecertificate, string[] acceptableissuers)
     {
         return CreateCertFromPemFile(_cacheConfig.RedisCertificatePath, _cacheConfig.RedisCertificateKeyPath);
     }

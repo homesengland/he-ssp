@@ -2,46 +2,36 @@ extern alias Org;
 
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Shared.User;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
 using HE.Investments.FrontDoor.Shared.Project;
-using HE.Investments.FrontDoor.Shared.Project.Crm;
 using ProjectLocalAuthority = Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
 
 namespace HE.Investments.FrontDoor.Domain.Project.Crm.Mappers;
 
 public class ProjectCrmMapper : IProjectCrmMapper
 {
-    private readonly SupportActivitiesMapper _supportActivitiesMapper;
+    private readonly SupportActivitiesMapper _supportActivitiesMapper = new();
 
-    private readonly AffordableHomesAmountMapper _affordableHomesAmountMapper;
+    private readonly AffordableHomesAmountMapper _affordableHomesAmountMapper = new();
 
-    private readonly ProjectInfrastructureMapper _projectInfrastructureMapper;
+    private readonly ProjectInfrastructureMapper _projectInfrastructureMapper = new();
 
-    private readonly RegionsMapper _regionsMapper;
+    private readonly RegionsMapper _regionsMapper = new();
 
-    private readonly ProjectGeographicFocusMapper _projectGeographicFocusMapper;
+    private readonly ProjectGeographicFocusMapper _projectGeographicFocusMapper = new();
 
-    private readonly RequiredFundingMapper _requiredFundingMapper;
-
-    public ProjectCrmMapper(IFrontDoorProjectEnumMapping mapping)
-    {
-        _supportActivitiesMapper = new SupportActivitiesMapper(mapping);
-        _affordableHomesAmountMapper = new AffordableHomesAmountMapper(mapping);
-        _projectInfrastructureMapper = new ProjectInfrastructureMapper(mapping);
-        _regionsMapper = new RegionsMapper(mapping);
-        _projectGeographicFocusMapper = new ProjectGeographicFocusMapper(mapping);
-        _requiredFundingMapper = new RequiredFundingMapper(mapping);
-    }
+    private readonly RequiredFundingMapper _requiredFundingMapper = new();
 
     public FrontDoorProjectDto ToDto(ProjectEntity entity, UserAccount userAccount)
     {
         return new FrontDoorProjectDto
         {
-            ProjectId = entity.Id.IsNew ? null : entity.Id.Value,
+            ProjectId = entity.Id.IsNew ? null : entity.Id.ToGuidAsString(),
             ProjectName = entity.Name.Value,
             ProjectSupportsHousingDeliveryinEngland = entity.IsEnglandHousingDelivery,
-            OrganisationId = userAccount.SelectedOrganisationId().Value,
+            OrganisationId = ShortGuid.ToGuid(userAccount.SelectedOrganisationId().Value),
             externalId = userAccount.UserGlobalId.Value,
             ActivitiesinThisProject = _supportActivitiesMapper.Map(entity.SupportActivities),
             AmountofAffordableHomes = _affordableHomesAmountMapper.ToDto(entity.AffordableHomesAmount.AffordableHomesAmount),
@@ -65,7 +55,7 @@ public class ProjectCrmMapper : IProjectCrmMapper
     public ProjectEntity ToEntity(FrontDoorProjectDto dto)
     {
         return new ProjectEntity(
-            new FrontDoorProjectId(dto.ProjectId),
+            FrontDoorProjectId.From(dto.ProjectId),
             new ProjectName(dto.ProjectName),
             dto.ProjectSupportsHousingDeliveryinEngland,
             supportActivityTypes: _supportActivitiesMapper.Map(dto.ActivitiesinThisProject),

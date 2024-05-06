@@ -14,11 +14,11 @@ public class CheckCompleteTests
             .WithAcquisitionPaymentDateAfterStartOnSitePaymentDate()
             .Build();
 
-        // when
-        var action = () => milestones.CheckComplete();
-
         // then
-        AssertException(action, "The start on site milestone claim date cannot be before the acquisition milestone claim date");
+        AssertException(Action, "The start on site milestone claim date cannot be before the acquisition milestone claim date");
+
+        // when
+        void Action() => milestones.CheckComplete();
     }
 
     [Fact]
@@ -30,10 +30,10 @@ public class CheckCompleteTests
             .Build();
 
         // when
-        var action = () => milestones.CheckComplete();
+        void Action() => milestones.CheckComplete();
 
         // then
-        AssertException(action, "The completion milestone claim date cannot be before the start on site milestone claim date");
+        AssertException(Action, "The completion milestone claim date cannot be before the start on site milestone claim date");
     }
 
     [Fact]
@@ -45,10 +45,10 @@ public class CheckCompleteTests
             .Build();
 
         // when
-        var action = () => milestones.CheckComplete();
+        void Action() => milestones.CheckComplete();
 
         // then
-        AssertException(action, "The completion milestone claim date cannot be before the acquisition milestone claim date");
+        AssertException(Action, "The completion milestone claim date cannot be before the acquisition milestone claim date");
     }
 
     private static void AssertException(Action action, string errorMessage)

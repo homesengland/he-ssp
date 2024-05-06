@@ -41,7 +41,7 @@ public class ProjectsSectionTests
         section.IsCompleted().Should().BeTrue();
     }
 
-    private IEnumerable<ProjectBasicData> Projects(params ProjectBasicData[] projects)
+    private ProjectBasicData[] Projects(params ProjectBasicData[] projects)
     {
         return projects;
     }

@@ -152,7 +152,7 @@ namespace HE.Investments.Common.CRM.Model
 			public const string invln_costguaranteeName = "invln_costguaranteename";
 			public const string invln_CustomSecurity = "invln_customsecurity";
 			public const string invln_Dateapproved = "invln_dateapproved";
-			public const string invln_DateCashflowRequested = "invln_datecashflowrequested";
+			public const string invln_DateStatusChangedtoCashflowRequested = "invln_datestatuschangedtocashflowrequested";
 			public const string invln_Datesubmitted = "invln_datesubmitted";
 			public const string invln_DaysSinceCashflowRequested = "invln_dayssincecashflowrequested";
 			public const string invln_DebentureHolder = "invln_debentureholder";
@@ -182,6 +182,8 @@ namespace HE.Investments.Common.CRM.Model
 			public const string invln_invln_loanapplication_invln_contract_Loanapplication = "invln_invln_loanapplication_invln_contract_Loanapplication";
 			public const string invln_invln_precomplete_Loanapplication_invln_l = "invln_invln_precomplete_Loanapplication_invln_l";
 			public const string invln_invln_vft_Loanapplication_invln_loanappli = "invln_invln_vft_Loanapplication_invln_loanappli";
+			public const string invln_LARegion = "invln_laregion";
+			public const string invln_laregionName = "invln_laregionname";
 			public const string invln_lastchangebyid = "invln_lastchangebyid";
 			public const string invln_lastchangebyidName = "invln_lastchangebyidname";
 			public const string invln_lastchangebyidYomiName = "invln_lastchangebyidyominame";
@@ -998,13 +1000,20 @@ namespace HE.Investments.Common.CRM.Model
 		/// <summary>
 		/// The date the TM changes the status of a loan application to "Cashflow Requested"
 		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_datecashflowrequested")]
-		public System.Nullable<System.DateTime> invln_DateCashflowRequested
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_datestatuschangedtocashflowrequested")]
+		public System.Nullable<System.DateTime> invln_DateStatusChangedtoCashflowRequested
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetAttributeValue<System.Nullable<System.DateTime>>("invln_datecashflowrequested");
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("invln_datestatuschangedtocashflowrequested");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_DateStatusChangedtoCashflowRequested");
+				this.SetAttributeValue("invln_datestatuschangedtocashflowrequested", value);
+				this.OnPropertyChanged("invln_DateStatusChangedtoCashflowRequested");
 			}
 		}
 		
@@ -1410,6 +1419,40 @@ namespace HE.Investments.Common.CRM.Model
 				if (this.FormattedValues.Contains("invln_investedbyborrower"))
 				{
 					return this.FormattedValues["invln_investedbyborrower"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_laregion")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_LARegion
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_laregion");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_LARegion");
+				this.SetAttributeValue("invln_laregion", value);
+				this.OnPropertyChanged("invln_LARegion");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_laregionname")]
+		public string invln_laregionName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_laregion"))
+				{
+					return this.FormattedValues["invln_laregion"];
 				}
 				else
 				{

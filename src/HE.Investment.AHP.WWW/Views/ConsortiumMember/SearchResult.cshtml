@@ -1,0 +1,43 @@
+@using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
+@using HE.Investment.AHP.WWW.Views.ConsortiumMember.Const
+@using HE.Investments.AHP.Consortium.Contract
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investments.Common.WWW.Components.RadioList
+@model HE.Investment.AHP.WWW.Models.ConsortiumMember.SearchOrganisationResultModel
+@{
+    ViewData["Title"] = ConsortiumMemberPageTitles.SearchResult;
+    var consortiumId = ViewContext.RouteData.Values["consortiumId"];
+}
+
+<gds-div-grid-column-two-thirds>
+    <vc:ahp-workflow-back-button current-page="@ConsortiumMemberWorkflowState.SearchResult"/>
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+
+    <form asp-controller="ConsortiumMember" asp-action="SearchResult" asp-route-phrase="@Context.Request.Query["phrase"]" asp-route-page="@Context.Request.Query["page"]" asp-method="post" novalidate>
+        @Html.HiddenFor(x => x.Phrase)
+        @Html.HiddenFor(x => x.Page.CurrentPage)
+        @Html.HiddenFor(x => x.Page.ItemsPerPage)
+
+        <vc:radio-list
+            title="Select an organisation to add to the consortium"
+            title-type="InputTitleType.PageHeader"
+            available-options="@Model.Page.Items"
+            field-name="@nameof(Model.SelectedMember)"
+            string-value="@Model.SelectedMember"/>
+
+        <he-pagination
+            base-url="@Model.NavigationUrl"
+            page="@Model.Page.CurrentPage"
+            items-per-page="@Model.Page.ItemsPerPage"
+            total-items="@Model.Page.TotalItems">
+        </he-pagination>
+
+        <gds-link href="@Url.Action("AddOrganisation", "ConsortiumMember", new { consortiumId })">
+            The organisation is not listed above, enter details manually
+        </gds-link>
+
+        <div class="govuk-!-margin-top-6">
+            <vc:form-button text="Continue"/>
+        </div>
+    </form>
+</gds-div-grid-column-two-thirds>

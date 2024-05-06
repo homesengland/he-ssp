@@ -76,14 +76,21 @@ namespace HE.Investments.Common.CRM.Model
 			public const string invln_detailedplanningapprovaldate = "invln_detailedplanningapprovaldate";
 			public const string invln_developercontributionsforah = "invln_developercontributionsforah";
 			public const string invln_developercontributionsforahName = "invln_developercontributionsforahname";
+			public const string invln_developingpartner = "invln_developingpartner";
+			public const string invln_developingpartnerName = "invln_developingpartnername";
+			public const string invln_developingpartnerYomiName = "invln_developingpartneryominame";
 			public const string invln_expectedplanningapproval = "invln_expectedplanningapproval";
 			public const string invln_externalsitestatus = "invln_externalsitestatus";
 			public const string invln_externalsitestatusName = "invln_externalsitestatusname";
 			public const string invln_furtherstepsrequired = "invln_furtherstepsrequired";
+			public const string invln_GovernmentOfficeRegion = "invln_governmentofficeregion";
+			public const string invln_governmentofficeregionName = "invln_governmentofficeregionname";
 			public const string invln_grantfundingforallhomes = "invln_grantfundingforallhomes";
 			public const string invln_grantfundingforallhomesName = "invln_grantfundingforallhomesname";
 			public const string invln_greenbelt = "invln_greenbelt";
 			public const string invln_greenbeltName = "invln_greenbeltname";
+			public const string invln_HeLocalAuthorityId = "invln_helocalauthorityid";
+			public const string invln_HeLocalAuthorityIdName = "invln_helocalauthorityidname";
 			public const string invln_homesintheapplicationareadditional = "invln_homesintheapplicationareadditional";
 			public const string invln_homesintheapplicationareadditionalName = "invln_homesintheapplicationareadditionalname";
 			public const string invln_intentiontoworkwithsme = "invln_intentiontoworkwithsme";
@@ -117,6 +124,12 @@ namespace HE.Investments.Common.CRM.Model
 			public const string invln_nationaldesignguideelements = "invln_nationaldesignguideelements";
 			public const string invln_nationaldesignguideelementsName = "invln_nationaldesignguideelementsname";
 			public const string invln_outlineplanningapprovaldate = "invln_outlineplanningapprovaldate";
+			public const string invln_Ownerofthehomesaftercompletion = "invln_ownerofthehomesaftercompletion";
+			public const string invln_OwnerofthehomesaftercompletionName = "invln_ownerofthehomesaftercompletionname";
+			public const string invln_OwnerofthehomesaftercompletionYomiName = "invln_ownerofthehomesaftercompletionyominame";
+			public const string invln_ownerofthelandduringdevelopment = "invln_ownerofthelandduringdevelopment";
+			public const string invln_ownerofthelandduringdevelopmentName = "invln_ownerofthelandduringdevelopmentname";
+			public const string invln_ownerofthelandduringdevelopmentYomiName = "invln_ownerofthelandduringdevelopmentyominame";
 			public const string invln_planningreferencenumber = "invln_planningreferencenumber";
 			public const string invln_planningstatus = "invln_planningstatus";
 			public const string invln_planningstatusName = "invln_planningstatusname";
@@ -146,6 +159,10 @@ namespace HE.Investments.Common.CRM.Model
 			public const string invln_SiteReferenceNumber = "invln_sitereferencenumber";
 			public const string invln_sites_AccountId_account = "invln_sites_AccountId_account";
 			public const string invln_sites_CreatedByContactId_contact = "invln_sites_CreatedByContactId_contact";
+			public const string invln_sites_developingpartner_account = "invln_sites_developingpartner_account";
+			public const string invln_sites_HeLocalAuthorityId_he_localauthorit = "invln_sites_HeLocalAuthorityId_he_localauthorit";
+			public const string invln_sites_Ownerofthehomesaftercompletion_acco = "invln_sites_Ownerofthehomesaftercompletion_acco";
+			public const string invln_sites_ownerofthelandduringdevelopment_acc = "invln_sites_ownerofthelandduringdevelopment_acc";
 			public const string invln_SitesId = "invln_sitesid";
 			public const string Id = "invln_sitesid";
 			public const string invln_sme = "invln_sme";
@@ -678,6 +695,60 @@ namespace HE.Investments.Common.CRM.Model
 			}
 		}
 		
+		/// <summary>
+		/// Developing Partner
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_developingpartner")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_developingpartner
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_developingpartner");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_developingpartner");
+				this.SetAttributeValue("invln_developingpartner", value);
+				this.OnPropertyChanged("invln_developingpartner");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_developingpartnername")]
+		public string invln_developingpartnerName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_developingpartner"))
+				{
+					return this.FormattedValues["invln_developingpartner"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_developingpartneryominame")]
+		public string invln_developingpartnerYomiName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_developingpartner"))
+				{
+					return this.FormattedValues["invln_developingpartner"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_expectedplanningapproval")]
 		public System.Nullable<System.DateTime> invln_expectedplanningapproval
 		{
@@ -746,6 +817,40 @@ namespace HE.Investments.Common.CRM.Model
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_governmentofficeregion")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_GovernmentOfficeRegion
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_governmentofficeregion");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_GovernmentOfficeRegion");
+				this.SetAttributeValue("invln_governmentofficeregion", value);
+				this.OnPropertyChanged("invln_GovernmentOfficeRegion");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_governmentofficeregionname")]
+		public string invln_governmentofficeregionName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_governmentofficeregion"))
+				{
+					return this.FormattedValues["invln_governmentofficeregion"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_grantfundingforallhomes")]
 		public System.Nullable<bool> invln_grantfundingforallhomes
 		{
@@ -806,6 +911,40 @@ namespace HE.Investments.Common.CRM.Model
 				if (this.FormattedValues.Contains("invln_greenbelt"))
 				{
 					return this.FormattedValues["invln_greenbelt"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_helocalauthorityid")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_HeLocalAuthorityId
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_helocalauthorityid");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_HeLocalAuthorityId");
+				this.SetAttributeValue("invln_helocalauthorityid", value);
+				this.OnPropertyChanged("invln_HeLocalAuthorityId");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_helocalauthorityidname")]
+		public string invln_HeLocalAuthorityIdName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_helocalauthorityid"))
+				{
+					return this.FormattedValues["invln_helocalauthorityid"];
 				}
 				else
 				{
@@ -1358,6 +1497,114 @@ namespace HE.Investments.Common.CRM.Model
 				this.OnPropertyChanging("invln_outlineplanningapprovaldate");
 				this.SetAttributeValue("invln_outlineplanningapprovaldate", value);
 				this.OnPropertyChanged("invln_outlineplanningapprovaldate");
+			}
+		}
+		
+		/// <summary>
+		/// Owner of the homes after completion
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_ownerofthehomesaftercompletion")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_Ownerofthehomesaftercompletion
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_ownerofthehomesaftercompletion");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_Ownerofthehomesaftercompletion");
+				this.SetAttributeValue("invln_ownerofthehomesaftercompletion", value);
+				this.OnPropertyChanged("invln_Ownerofthehomesaftercompletion");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_ownerofthehomesaftercompletionname")]
+		public string invln_OwnerofthehomesaftercompletionName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_ownerofthehomesaftercompletion"))
+				{
+					return this.FormattedValues["invln_ownerofthehomesaftercompletion"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_ownerofthehomesaftercompletionyominame")]
+		public string invln_OwnerofthehomesaftercompletionYomiName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_ownerofthehomesaftercompletion"))
+				{
+					return this.FormattedValues["invln_ownerofthehomesaftercompletion"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
+		/// <summary>
+		/// Owner of the land during development
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_ownerofthelandduringdevelopment")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_ownerofthelandduringdevelopment
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_ownerofthelandduringdevelopment");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_ownerofthelandduringdevelopment");
+				this.SetAttributeValue("invln_ownerofthelandduringdevelopment", value);
+				this.OnPropertyChanged("invln_ownerofthelandduringdevelopment");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_ownerofthelandduringdevelopmentname")]
+		public string invln_ownerofthelandduringdevelopmentName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_ownerofthelandduringdevelopment"))
+				{
+					return this.FormattedValues["invln_ownerofthelandduringdevelopment"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_ownerofthelandduringdevelopmentyominame")]
+		public string invln_ownerofthelandduringdevelopmentYomiName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_ownerofthelandduringdevelopment"))
+				{
+					return this.FormattedValues["invln_ownerofthelandduringdevelopment"];
+				}
+				else
+				{
+					return default(string);
+				}
 			}
 		}
 		
@@ -2595,6 +2842,90 @@ namespace HE.Investments.Common.CRM.Model
 				this.OnPropertyChanging("invln_sites_CreatedByContactId_contact");
 				this.SetRelatedEntity<HE.Investments.Common.CRM.Model.Contact>("invln_sites_CreatedByContactId_contact", null, value);
 				this.OnPropertyChanged("invln_sites_CreatedByContactId_contact");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_sites_developingpartner_account
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_developingpartner")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_sites_developingpartner_account")]
+		public HE.Investments.Common.CRM.Model.Account invln_sites_developingpartner_account
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<HE.Investments.Common.CRM.Model.Account>("invln_sites_developingpartner_account", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_sites_developingpartner_account");
+				this.SetRelatedEntity<HE.Investments.Common.CRM.Model.Account>("invln_sites_developingpartner_account", null, value);
+				this.OnPropertyChanged("invln_sites_developingpartner_account");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_sites_HeLocalAuthorityId_he_localauthorit
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_helocalauthorityid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_sites_HeLocalAuthorityId_he_localauthorit")]
+		public HE.Investments.Common.CRM.Model.he_LocalAuthority invln_sites_HeLocalAuthorityId_he_localauthorit
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<HE.Investments.Common.CRM.Model.he_LocalAuthority>("invln_sites_HeLocalAuthorityId_he_localauthorit", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_sites_HeLocalAuthorityId_he_localauthorit");
+				this.SetRelatedEntity<HE.Investments.Common.CRM.Model.he_LocalAuthority>("invln_sites_HeLocalAuthorityId_he_localauthorit", null, value);
+				this.OnPropertyChanged("invln_sites_HeLocalAuthorityId_he_localauthorit");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_sites_Ownerofthehomesaftercompletion_acco
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_ownerofthehomesaftercompletion")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_sites_Ownerofthehomesaftercompletion_acco")]
+		public HE.Investments.Common.CRM.Model.Account invln_sites_Ownerofthehomesaftercompletion_acco
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<HE.Investments.Common.CRM.Model.Account>("invln_sites_Ownerofthehomesaftercompletion_acco", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_sites_Ownerofthehomesaftercompletion_acco");
+				this.SetRelatedEntity<HE.Investments.Common.CRM.Model.Account>("invln_sites_Ownerofthehomesaftercompletion_acco", null, value);
+				this.OnPropertyChanged("invln_sites_Ownerofthehomesaftercompletion_acco");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_sites_ownerofthelandduringdevelopment_acc
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_ownerofthelandduringdevelopment")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_sites_ownerofthelandduringdevelopment_acc")]
+		public HE.Investments.Common.CRM.Model.Account invln_sites_ownerofthelandduringdevelopment_acc
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<HE.Investments.Common.CRM.Model.Account>("invln_sites_ownerofthelandduringdevelopment_acc", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_sites_ownerofthelandduringdevelopment_acc");
+				this.SetRelatedEntity<HE.Investments.Common.CRM.Model.Account>("invln_sites_ownerofthelandduringdevelopment_acc", null, value);
+				this.OnPropertyChanged("invln_sites_ownerofthelandduringdevelopment_acc");
 			}
 		}
 		

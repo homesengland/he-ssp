@@ -3,7 +3,7 @@ using HE.Investments.Account.Contract.Organisation;
 using HE.Investments.Account.Contract.Organisation.Queries;
 using HE.Investments.Account.Domain.Organisation.Entities;
 using HE.Investments.Account.Domain.Organisation.Mappers;
-using HE.Investments.Account.Shared.User.ValueObjects;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.User;
 using HE.Investments.Organisation.Services;
@@ -26,7 +26,7 @@ public class OrganizationRepository : IOrganizationRepository
 
     public async Task<OrganizationBasicInformation> GetBasicInformation(OrganisationId organisationId, CancellationToken cancellationToken)
     {
-        var organizationDetailsDto = await _organizationService.GetOrganizationDetails(organisationId.ToString(), _userContext.UserGlobalId)
+        var organizationDetailsDto = await _organizationService.GetOrganizationDetails(organisationId.ToGuidAsString(), _userContext.UserGlobalId)
                                         ?? throw new NotFoundException(nameof(OrganizationBasicInformation), organisationId);
 
         return new OrganizationBasicInformation(
@@ -47,7 +47,7 @@ public class OrganizationRepository : IOrganizationRepository
 
     public async Task<OrganisationChangeRequestState> GetOrganisationChangeRequestDetails(OrganisationId organisationId, CancellationToken cancellationToken)
     {
-        var response = await _organizationService.GetOrganisationChangeDetailsRequestContact(organisationId.Value);
+        var response = await _organizationService.GetOrganisationChangeDetailsRequestContact(organisationId.ToGuidAsString());
 
         if (response == null)
         {
@@ -76,7 +76,7 @@ public class OrganizationRepository : IOrganizationRepository
             county = organisation.Address.County,
         });
 
-        return await Task.FromResult(new OrganisationId(id));
+        return await Task.FromResult(OrganisationId.From(id));
     }
 
     public async Task Save(OrganisationId organisationId, OrganisationEntity organisation, CancellationToken cancellationToken)
@@ -84,7 +84,7 @@ public class OrganizationRepository : IOrganizationRepository
         await _organizationService.CreateOrganisationChangeRequest(
             new OrganizationDetailsDto
             {
-                organisationId = organisationId.ToString(),
+                organisationId = organisationId.ToGuidAsString(),
                 registeredCompanyName = organisation.Name.ToString(),
                 organisationPhoneNumber = organisation.PhoneNumber.ToString(),
                 addressLine1 = organisation.Address.AddressLine1,

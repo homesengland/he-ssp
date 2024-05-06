@@ -13,6 +13,7 @@ using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
+using HE.Investments.FrontDoor.Shared.Project;
 using LocalAuthority = Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
 using Section106 = HE.Investment.AHP.Domain.Site.ValueObjects.Section106;
 using SiteModernMethodsOfConstruction = HE.Investment.AHP.Domain.Site.ValueObjects.Mmc.SiteModernMethodsOfConstruction;
@@ -44,7 +45,9 @@ public class SiteEntity : DomainEntity, IQuestion
         SiteRuralClassification? ruralClassification = null,
         EnvironmentalImpact? environmentalImpact = null,
         SiteModernMethodsOfConstruction? modernMethodsOfConstruction = null,
-        SiteProcurements? siteProcurements = null)
+        SiteProcurements? siteProcurements = null,
+        FrontDoorProjectId? frontDoorProjectId = null,
+        FrontDoorSiteId? frontDoorSiteId = null)
     {
         Id = id;
         Name = name;
@@ -64,9 +67,15 @@ public class SiteEntity : DomainEntity, IQuestion
         EnvironmentalImpact = environmentalImpact;
         ModernMethodsOfConstruction = modernMethodsOfConstruction ?? new SiteModernMethodsOfConstruction();
         Procurements = siteProcurements ?? new SiteProcurements();
+        FrontDoorProjectId = frontDoorProjectId;
+        FrontDoorSiteId = frontDoorSiteId;
     }
 
     public SiteId Id { get; set; }
+
+    public FrontDoorProjectId? FrontDoorProjectId { get; }
+
+    public FrontDoorSiteId? FrontDoorSiteId { get; }
 
     public SiteName Name { get; private set; }
 
@@ -104,9 +113,9 @@ public class SiteEntity : DomainEntity, IQuestion
 
     public bool IsModified => _modificationTracker.IsModified;
 
-    public static SiteEntity NewSite()
+    public static SiteEntity NewSite(FrontDoorProjectId? projectId, FrontDoorSiteId? siteId)
     {
-        return new SiteEntity(SiteId.New(), new SiteName("New Site"));
+        return new SiteEntity(SiteId.New(), new SiteName($"New Site - {Guid.NewGuid()}"), frontDoorProjectId: projectId, frontDoorSiteId: siteId);
     }
 
     public async Task ProvideName(SiteName siteName, ISiteNameExist siteNameExist, CancellationToken cancellationToken)
@@ -170,8 +179,15 @@ public class SiteEntity : DomainEntity, IQuestion
         TenderingStatusDetails = _modificationTracker.Change(TenderingStatusDetails, tenderingStatusDetails, MarkAsNotCompleted);
     }
 
-    public void ProvideStrategicSiteDetails(StrategicSiteDetails? details)
+    public async Task ProvideStrategicSiteDetails(StrategicSiteDetails? details, IStrategicSiteNameExists strategicSiteNameExists, CancellationToken cancellationToken)
     {
+        if (details?.SiteName.IsProvided() == true
+            && details.SiteName != StrategicSiteDetails?.SiteName
+            && await strategicSiteNameExists.IsExist(details.SiteName!, cancellationToken))
+        {
+            OperationResult.ThrowValidationError("StrategicSiteName", "There is already a strategic site with this name. Enter a different name");
+        }
+
         StrategicSiteDetails = _modificationTracker.Change(StrategicSiteDetails, details, MarkAsNotCompleted);
     }
 

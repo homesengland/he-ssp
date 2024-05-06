@@ -27,6 +27,10 @@ namespace HE.CRM.AHP.Plugins.Services.Application
 
         private readonly IAhpStatusChangeRepository _ahpStatusChangeRepository;
 
+        private readonly ISiteRepository _siteRepository;
+
+        private readonly IHeLocalAuthorityRepository _heLocalAuthorityRepository;
+
         private readonly IGovNotifyEmailService _govNotifyEmailService;
 
         public ApplicationService(CrmServiceArgs args) : base(args)
@@ -37,31 +41,92 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             _sharepointSiteRepository = CrmRepositoriesFactory.Get<ISharepointSiteRepository>();
             _ahpApplicationRepositoryAdmin = CrmRepositoriesFactory.GetSystem<IAhpApplicationRepository>();
             _ahpStatusChangeRepository = CrmRepositoriesFactory.Get<IAhpStatusChangeRepository>();
-
+            _siteRepository = CrmRepositoriesFactory.Get<ISiteRepository>();
+            _heLocalAuthorityRepository = CrmRepositoriesFactory.Get<IHeLocalAuthorityRepository>();
             _govNotifyEmailService = CrmServicesFactory.Get<IGovNotifyEmailService>();
         }
 
-        public void ChangeApplicationStatus(string organisationId, string contactId, string applicationId, int newStatus, string changeReason)
+        public void ChangeApplicationStatus(string organisationId, string contactId, string applicationId, int newStatus, string changeReason, bool representationsandwarranties)
         {
-            var additionalFilters = GetFetchXmlConditionForGivenField(applicationId, nameof(invln_scheme.invln_schemeId).ToLower());
-            var contactExternalFilter = GetFetchXmlConditionForGivenField(contactId, nameof(Contact.invln_externalid).ToLower());
-            contactExternalFilter = GenerateFilterMarksForCondition(contactExternalFilter);
-            var applications = _applicationRepository.GetApplicationsForOrganisationAndContact(organisationId, contactExternalFilter, null, additionalFilters);
-            if (applications.Any())
+            TracingService.Trace($"Service ChangeApplicationStatus");
+            var contact = _contactRepository.GetContactViaExternalId(contactId);
+            var application = _applicationRepository.GetById(new Guid(applicationId),
+                new string[] {
+                    nameof(invln_scheme.invln_schemeId).ToLower(),
+                    nameof(invln_scheme.invln_schemename).ToLower(),
+                    nameof(invln_scheme.invln_ExternalStatus).ToLower(),
+                    nameof(invln_scheme.invln_PreviousInternalStatus).ToLower(),
+                    nameof(invln_scheme.invln_PreviousExternalStatus).ToLower(),
+                    nameof(invln_scheme.StatusCode).ToLower(),
+                    nameof(invln_scheme.invln_organisationid).ToLower(),
+                    nameof(invln_scheme.invln_contactid).ToLower()
+                });
+
+            if (application != null && application.invln_organisationid.Id == new Guid(organisationId) && application.invln_contactid.Id == contact.Id)
             {
-                var ahpWithNewStatusCodesAndOtherChanges = MapAhpExternalStatusToInternalAndSetOtherValues(new OptionSetValue(newStatus));
-                var application = applications.First();
+                var ahpWithNewStatusCodesAndOtherChanges = new invln_scheme();
+                switch (application.invln_ExternalStatus.Value)
+                {
+                    case (int)invln_ExternalStatusAHP.ReferredBackToApplicant:
+                        if (newStatus == (int)invln_ExternalStatusAHP.UnderReview)
+                        {
+                            ahpWithNewStatusCodesAndOtherChanges.StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.UnderReviewInAssessment);
+                            ahpWithNewStatusCodesAndOtherChanges.StateCode = new OptionSetValue((int)invln_schemeState.Active);
+                        }
+                        else
+                        {
+                            ahpWithNewStatusCodesAndOtherChanges = MapAhpExternalStatusToInternalAndSetOtherValues(new OptionSetValue(newStatus));
+                        }
+                        break;
+
+                    case (int)invln_ExternalStatusAHP.OnHold:
+                        if (newStatus == application.invln_PreviousExternalStatus.Value)
+                        {
+                            ahpWithNewStatusCodesAndOtherChanges.StatusCode = new OptionSetValue(application.invln_PreviousInternalStatus.Value);
+                            ahpWithNewStatusCodesAndOtherChanges.StateCode = new OptionSetValue(MapAhpStatusCodeToStateCode(application.invln_PreviousInternalStatus.Value));
+                        }
+                        else
+                        {
+                            ahpWithNewStatusCodesAndOtherChanges = MapAhpExternalStatusToInternalAndSetOtherValues(new OptionSetValue(newStatus));
+                        }
+                        break;
+
+                    default:
+                        ahpWithNewStatusCodesAndOtherChanges = MapAhpExternalStatusToInternalAndSetOtherValues(new OptionSetValue(newStatus));
+                        break;
+                }
+
                 var applicationToUpdate = new invln_scheme()
                 {
                     Id = application.Id,
                     StatusCode = ahpWithNewStatusCodesAndOtherChanges.StatusCode,
                     StateCode = ahpWithNewStatusCodesAndOtherChanges.StateCode,
                     invln_ExternalStatus = new OptionSetValue(newStatus),
+                    invln_PreviousInternalStatus = new OptionSetValue(application.StatusCode.Value),
                 };
+
+                if (representationsandwarranties)
+                {
+                    applicationToUpdate.invln_representationsandwarrantiesconfirmation = representationsandwarranties;
+                }
+
+                if (application.invln_PreviousExternalStatus == null)
+                {
+                    applicationToUpdate.invln_PreviousExternalStatus = new OptionSetValue(application.invln_ExternalStatus.Value);
+                }
+                else if (application.invln_PreviousExternalStatus.Value != newStatus)
+                {
+                    applicationToUpdate.invln_PreviousExternalStatus = new OptionSetValue(application.invln_ExternalStatus.Value);
+                }
+                else
+                {
+                    applicationToUpdate.invln_PreviousExternalStatus = application.invln_ExternalStatus;
+                }
 
                 if (ahpWithNewStatusCodesAndOtherChanges.invln_DateSubmitted != null)
                 {
                     applicationToUpdate.invln_DateSubmitted = ahpWithNewStatusCodesAndOtherChanges.invln_DateSubmitted;
+                    applicationToUpdate.invln_submitedby = contact.ToEntityReference();
                 }
 
                 var ahpStatusChangeToCreate = new invln_AHPStatusChange()
@@ -70,7 +135,8 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                     invln_ChangeSource = new OptionSetValue((int)invln_ChangesourceSet.External),
                     invln_Changeto = ahpWithNewStatusCodesAndOtherChanges.StatusCode,
                     invln_AHPApplication = application.ToEntityReference(),
-                    invln_Comment = changeReason
+                    invln_Comment = changeReason,
+                    invln_changedby = contact?.ToEntityReference()
                 };
 
                 _applicationRepository.Update(applicationToUpdate);
@@ -171,19 +237,30 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             {
                 foreach (var application in applications)
                 {
-                    var contact = _contactRepository.GetById(application.invln_contactid.Id, new string[] { nameof(Contact.FirstName).ToLower(), nameof(Contact.LastName).ToLower(), nameof(Contact.invln_externalid).ToLower() });
+                    var contact = _contactRepository.GetById(application.invln_contactid.Id, new string[] { Contact.Fields.FirstName, Contact.Fields.LastName, nameof(Contact.invln_externalid).ToLower() });
 
                     var applicationDto = AhpApplicationMapper.MapRegularEntityToDto(application, contact.invln_externalid);
                     if (application.invln_lastexternalmodificationby != null)
                     {
                         var lastExternalModificationBy = _contactRepository.GetById(application.invln_lastexternalmodificationby.Id,
-                            new string[] { nameof(Contact.FirstName).ToLower(), nameof(Contact.LastName).ToLower() });
+                        new string[] { nameof(Contact.FirstName).ToLower(), nameof(Contact.LastName).ToLower() });
                         applicationDto.lastExternalModificationBy = new ContactDto()
                         {
                             firstName = lastExternalModificationBy.FirstName,
                             lastName = lastExternalModificationBy.LastName,
                         };
                     }
+
+                    if (application.invln_submitedby != null)
+                    {
+                        var submitedBy = _contactRepository.GetById(application.invln_submitedby.Id, new string[] { Contact.Fields.FirstName, Contact.Fields.LastName });
+                        applicationDto.lastExternalSubmittedBy = new ContactDto()
+                        {
+                            firstName = submitedBy.FirstName,
+                            lastName = submitedBy.LastName,
+                        };
+                    }
+
                     listOfApplications.Add(applicationDto);
                 }
             }
@@ -194,7 +271,18 @@ namespace HE.CRM.AHP.Plugins.Services.Application
         {
             var application = JsonSerializer.Deserialize<AhpApplicationDto>(applicationSerialized);
             var contact = _contactRepository.GetContactViaExternalId(contactId);
-            var applicationMapped = AhpApplicationMapper.MapDtoToRegularEntity(application, contact.Id.ToString(), organisationId);
+
+            he_LocalAuthority localAuthority = null;
+            if (Guid.TryParse(application.siteId, out var siteGuid))
+            {
+                var site = _siteRepository.GetById(siteGuid, invln_Sites.Fields.invln_HeLocalAuthorityId);
+                if(site.invln_HeLocalAuthorityId != null)
+                {
+                    localAuthority = _heLocalAuthorityRepository.GetById(site.invln_HeLocalAuthorityId.Id, new string[] { he_LocalAuthority.Fields.he_growthmanager, he_LocalAuthority.Fields.he_growthhub });
+                }
+            }
+
+            var applicationMapped = AhpApplicationMapper.MapDtoToRegularEntity(application, contact.Id.ToString(), organisationId, localAuthority);
             if (string.IsNullOrEmpty(application.id))
             {
                 applicationMapped.invln_lastexternalmodificationon = DateTime.UtcNow;
@@ -214,7 +302,17 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                         if (applicationMapped.Contains(field))
                         {
                             TracingService.Trace($"contains");
-                            applicationToUpdateOrCreate[field] = applicationMapped[field];
+                            if (field == "invln_representationsandwarrantiesconfirmation")
+                            {
+                                if (applicationMapped.invln_representationsandwarrantiesconfirmation.HasValue)
+                                {
+                                    applicationToUpdateOrCreate.invln_representationsandwarrantiesconfirmation = applicationMapped.invln_representationsandwarrantiesconfirmation;
+                                }
+                            }
+                            else
+                            {
+                                applicationToUpdateOrCreate[field] = applicationMapped[field];
+                            }
                         }
                     }
                 }
@@ -277,7 +375,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                 case (int)invln_ExternalStatusAHP.ApplicationSubmitted:
                     ahpApplication.StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.ApplicationSubmitted);
                     ahpApplication.StateCode = new OptionSetValue((int)invln_schemeState.Active);
-                    ahpApplication.invln_DateSubmitted = DateTime.Today;
+                    ahpApplication.invln_DateSubmitted = DateTime.Now;
                     break;
 
                 case (int)invln_ExternalStatusAHP.Approved:
@@ -403,6 +501,18 @@ namespace HE.CRM.AHP.Plugins.Services.Application
 
                 default:
                     return null;
+            }
+        }
+
+        private int MapAhpStatusCodeToStateCode(int statusCode)
+        {
+            if (statusCode == (int)invln_AHPInternalStatus.Inactive || statusCode == (int)invln_AHPInternalStatus.Withdrawn || statusCode == (int)invln_AHPInternalStatus.Deleted)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
             }
         }
 

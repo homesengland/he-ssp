@@ -10,5 +10,5 @@ public interface IContactRepository
 
     Entity? GetContactWithGivenEmail(IOrganizationServiceAsync2 service, string contactEmail);
 
-    List<Entity> GetContactsForOrganisation(IOrganizationServiceAsync2 service, Guid organisationId, string? portalTypeFilter = null);
+    List<Entity> GetContactsForOrganisation(IOrganizationServiceAsync2 service, string organisationId, string? portalTypeFilter = null);
 }

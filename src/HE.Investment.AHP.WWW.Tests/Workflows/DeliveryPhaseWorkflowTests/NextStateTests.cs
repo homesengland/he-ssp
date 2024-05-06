@@ -23,7 +23,7 @@ public class NextStateTests
         DeliveryPhaseWorkflowState expectedNext)
     {
         // given
-        var workflow = BuildWorkflow(current, DeliveryPhaseDetailsTestData.WithNames with { IsUnregisteredBody = false });
+        var workflow = BuildWorkflow(current, DeliveryPhaseDetailsTestData.WithNames with { IsUnregisteredBody = false, TypeOfHomes = TypeOfHomes.NewBuild });
 
         // when
         var result = await workflow.NextState(Trigger.Continue);
@@ -46,7 +46,12 @@ public class NextStateTests
         DeliveryPhaseWorkflowState expectedNext)
     {
         // given
-        var workflow = BuildWorkflow(current, DeliveryPhaseDetailsTestData.WithNames with { IsUnregisteredBody = true, IsOnlyCompletionMilestone = true });
+        var workflow = BuildWorkflow(current, DeliveryPhaseDetailsTestData.WithNames with
+        {
+            IsUnregisteredBody = true,
+            IsOnlyCompletionMilestone = true,
+            TypeOfHomes = TypeOfHomes.NewBuild,
+        });
 
         // when
         var result = await workflow.NextState(Trigger.Continue);
@@ -69,7 +74,12 @@ public class NextStateTests
         DeliveryPhaseWorkflowState expectedNext)
     {
         // given
-        var workflow = BuildWorkflow(current, DeliveryPhaseDetailsTestData.WithNames with { IsUnregisteredBody = false, IsOnlyCompletionMilestone = false });
+        var workflow = BuildWorkflow(current, DeliveryPhaseDetailsTestData.WithNames with
+        {
+            IsUnregisteredBody = false,
+            IsOnlyCompletionMilestone = false,
+            TypeOfHomes = TypeOfHomes.NewBuild,
+        });
 
         // when
         var result = await workflow.NextState(Trigger.Back);
@@ -89,7 +99,12 @@ public class NextStateTests
     public async Task ShouldReturnNextState_WhenBackTriggerExecutedAsUnregisteredBody(DeliveryPhaseWorkflowState current, DeliveryPhaseWorkflowState expectedNext)
     {
         // given
-        var workflow = BuildWorkflow(current, DeliveryPhaseDetailsTestData.WithNames with { IsUnregisteredBody = true, IsOnlyCompletionMilestone = true });
+        var workflow = BuildWorkflow(current, DeliveryPhaseDetailsTestData.WithNames with
+        {
+            IsUnregisteredBody = true,
+            IsOnlyCompletionMilestone = true,
+            TypeOfHomes = TypeOfHomes.NewBuild,
+        });
 
         // when
         var result = await workflow.NextState(Trigger.Back);
@@ -139,6 +154,44 @@ public class NextStateTests
     }
 
     [Theory]
+    [InlineData(DeliveryPhaseWorkflowState.TypeOfHomes, DeliveryPhaseWorkflowState.RehabBuildActivityType)]
+    [InlineData(DeliveryPhaseWorkflowState.RehabBuildActivityType, DeliveryPhaseWorkflowState.AddHomes)]
+    public async Task ShouldReturnNextState_WhenContinueTriggerExecutedForRehabBuildActivityTypeWithReconfiguringNotNeeded(
+        DeliveryPhaseWorkflowState current,
+        DeliveryPhaseWorkflowState expectedNext)
+    {
+        // given
+        var workflow = BuildWorkflow(
+            current,
+            DeliveryPhaseDetailsTestData.WithNames with { TypeOfHomes = TypeOfHomes.Rehab, IsReconfiguringExistingNeeded = false });
+
+        // when
+        var result = await workflow.NextState(Trigger.Continue);
+
+        // then
+        result.Should().Be(expectedNext);
+    }
+
+    [Theory]
+    [InlineData(DeliveryPhaseWorkflowState.AddHomes, DeliveryPhaseWorkflowState.RehabBuildActivityType)]
+    [InlineData(DeliveryPhaseWorkflowState.RehabBuildActivityType, DeliveryPhaseWorkflowState.TypeOfHomes)]
+    public async Task ShouldReturnNextState_WhenBackTriggerExecutedForRehabBuildActivityTypeWithReconfiguringNotNeeded(
+        DeliveryPhaseWorkflowState current,
+        DeliveryPhaseWorkflowState expectedNext)
+    {
+        // given
+        var workflow = BuildWorkflow(
+            current,
+            DeliveryPhaseDetailsTestData.WithNames with { TypeOfHomes = TypeOfHomes.Rehab, IsReconfiguringExistingNeeded = false });
+
+        // when
+        var result = await workflow.NextState(Trigger.Back);
+
+        // then
+        result.Should().Be(expectedNext);
+    }
+
+    [Theory]
     [InlineData(DeliveryPhaseWorkflowState.Create, DeliveryPhaseWorkflowState.TypeOfHomes)]
     [InlineData(DeliveryPhaseWorkflowState.Name, DeliveryPhaseWorkflowState.TypeOfHomes)]
     [InlineData(DeliveryPhaseWorkflowState.TypeOfHomes, DeliveryPhaseWorkflowState.NewBuildActivityType)]
@@ -150,7 +203,11 @@ public class NextStateTests
         DeliveryPhaseWorkflowState expectedNext)
     {
         // given
-        var workflow = BuildWorkflow(current, DeliveryPhaseDetailsTestData.WithNames with { IsOnlyCompletionMilestone = true });
+        var workflow = BuildWorkflow(current, DeliveryPhaseDetailsTestData.WithNames with
+        {
+            IsOnlyCompletionMilestone = true,
+            TypeOfHomes = TypeOfHomes.NewBuild,
+        });
 
         // when
         var result = await workflow.NextState(Trigger.Continue);
@@ -169,7 +226,11 @@ public class NextStateTests
     public async Task ShouldReturnNextState_WhenBackTriggerExecutedForIsOnlyCompletionMilestone(DeliveryPhaseWorkflowState current, DeliveryPhaseWorkflowState expectedNext)
     {
         // given
-        var workflow = BuildWorkflow(current, DeliveryPhaseDetailsTestData.WithNames with { IsOnlyCompletionMilestone = true });
+        var workflow = BuildWorkflow(current, DeliveryPhaseDetailsTestData.WithNames with
+        {
+            IsOnlyCompletionMilestone = true,
+            TypeOfHomes = TypeOfHomes.NewBuild,
+        });
 
         // when
         var result = await workflow.NextState(Trigger.Back);
@@ -180,6 +241,6 @@ public class NextStateTests
 
     private static DeliveryPhaseWorkflow BuildWorkflow(DeliveryPhaseWorkflowState currentSiteWorkflowState, DeliveryPhaseDetails deliveryPhaseDetails)
     {
-        return new DeliveryPhaseWorkflow(currentSiteWorkflowState, deliveryPhaseDetails, false);
+        return new DeliveryPhaseWorkflow(currentSiteWorkflowState, deliveryPhaseDetails);
     }
 }

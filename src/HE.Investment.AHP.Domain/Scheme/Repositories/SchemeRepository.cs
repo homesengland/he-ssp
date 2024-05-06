@@ -1,50 +1,46 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investment.AHP.Contract.Application;
-using HE.Investment.AHP.Contract.Site;
-using HE.Investment.AHP.Domain.Application.Factories;
+using HE.Investment.AHP.Domain.Application.Crm;
 using HE.Investment.AHP.Domain.Application.Repositories;
-using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
-using HE.Investment.AHP.Domain.Data;
 using HE.Investment.AHP.Domain.Documents.Services;
-using HE.Investment.AHP.Domain.Programme;
 using HE.Investment.AHP.Domain.Scheme.Entities;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investments.Account.Shared.User;
-using HE.Investments.Account.Shared.User.ValueObjects;
-using HE.Investments.Common.CRM.Mappers;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Infrastructure.Events;
 
 namespace HE.Investment.AHP.Domain.Scheme.Repositories;
 
 public class SchemeRepository : ISchemeRepository
 {
-    private readonly IApplicationCrmContext _repository;
+    private readonly IApplicationCrmContext _crmContext;
 
-    private readonly IAhpProgrammeRepository _programmeRepository;
+    private readonly IApplicationRepository _applicationRepository;
 
     private readonly IAhpFileService<LocalAuthoritySupportFileParams> _fileService;
 
     private readonly IEventDispatcher _eventDispatcher;
 
     public SchemeRepository(
-        IApplicationCrmContext repository,
-        IAhpProgrammeRepository programmeRepository,
+        IApplicationCrmContext crmContext,
+        IApplicationRepository applicationRepository,
         IAhpFileService<LocalAuthoritySupportFileParams> fileService,
         IEventDispatcher eventDispatcher)
     {
-        _repository = repository;
+        _crmContext = crmContext;
+        _applicationRepository = applicationRepository;
         _fileService = fileService;
         _eventDispatcher = eventDispatcher;
-        _programmeRepository = programmeRepository;
     }
 
     public async Task<SchemeEntity> GetByApplicationId(AhpApplicationId id, UserAccount userAccount, bool includeFiles, CancellationToken cancellationToken)
     {
         var organisationId = userAccount.SelectedOrganisationId().Value;
         var application = userAccount.CanViewAllApplications()
-            ? await _repository.GetOrganisationApplicationById(id.Value, organisationId, CrmFields.SchemeToRead.ToList(), cancellationToken)
-            : await _repository.GetUserApplicationById(id.Value, organisationId, CrmFields.SchemeToRead.ToList(), cancellationToken);
+            ? await _crmContext.GetOrganisationApplicationById(id.Value, organisationId, cancellationToken)
+            : await _crmContext.GetUserApplicationById(id.Value, organisationId, cancellationToken);
+        var applicationBasicInfo = await _applicationRepository.GetApplicationBasicInfo(id, userAccount, cancellationToken);
 
         UploadedFile? file = null;
         if (includeFiles)
@@ -54,7 +50,7 @@ public class SchemeRepository : ISchemeRepository
             file = stakeholderDiscussionsFiles.Any() ? stakeholderDiscussionsFiles.First() : null;
         }
 
-        return await CreateEntity(application, userAccount, file, cancellationToken);
+        return CreateEntity(application, applicationBasicInfo, file);
     }
 
     public async Task<SchemeEntity> Save(SchemeEntity entity, OrganisationId organisationId, CancellationToken cancellationToken)
@@ -64,48 +60,34 @@ public class SchemeRepository : ISchemeRepository
             return entity;
         }
 
-        var dto = new AhpApplicationDto
-        {
-            id = entity.Application.Id.Value,
-            organisationId = organisationId.ToString(),
-            schemeInformationSectionCompletionStatus = SectionStatusMapper.ToDto(entity.Status),
-            fundingRequested = entity.Funding.RequiredFunding,
-            noOfHomes = entity.Funding.HousesToDeliver,
-            affordabilityEvidence = entity.AffordabilityEvidence.Evidence,
-            discussionsWithLocalStakeholders = entity.StakeholderDiscussions.StakeholderDiscussionsDetails.Report,
-            meetingLocalProrities = entity.HousingNeeds.MeetingLocalPriorities,
-            meetingLocalHousingNeed = entity.HousingNeeds.MeetingLocalHousingNeed,
-            sharedOwnershipSalesRisk = entity.SalesRisk.Value,
-        };
+        var dto = await _crmContext.GetOrganisationApplicationById(entity.Application.Id.Value, organisationId.Value, cancellationToken);
+        dto.schemeInformationSectionCompletionStatus = SectionStatusMapper.ToDto(entity.Status);
+        dto.fundingRequested = entity.Funding.RequiredFunding;
+        dto.noOfHomes = entity.Funding.HousesToDeliver;
+        dto.affordabilityEvidence = entity.AffordabilityEvidence.Evidence;
+        dto.discussionsWithLocalStakeholders = entity.StakeholderDiscussions.StakeholderDiscussionsDetails.Report;
+        dto.meetingLocalProrities = entity.HousingNeeds.MeetingLocalPriorities;
+        dto.meetingLocalHousingNeed = entity.HousingNeeds.MeetingLocalHousingNeed;
+        dto.sharedOwnershipSalesRisk = entity.SalesRisk.Value;
 
-        await _repository.Save(dto, organisationId.Value, CrmFields.SchemeToUpdate.ToList(), cancellationToken);
+        await _crmContext.Save(dto, organisationId.Value, cancellationToken);
         await entity.StakeholderDiscussions.SaveChanges(entity.Application.Id, _fileService, cancellationToken);
         await _eventDispatcher.Publish(entity, cancellationToken);
 
         return entity;
     }
 
-    private async Task<SchemeEntity> CreateEntity(AhpApplicationDto application, UserAccount userAccount, UploadedFile? stakeholderDiscussionsFile, CancellationToken cancellationToken)
+    private static SchemeEntity CreateEntity(AhpApplicationDto dto, ApplicationBasicInfo applicationBasicInfo, UploadedFile? stakeholderDiscussionsFile)
     {
-        var applicationId = AhpApplicationId.From(application.id);
-        var applicationBasicInfo = new ApplicationBasicInfo(
-            applicationId,
-            new SiteId(application.siteId),
-            new ApplicationName(application.name),
-            ApplicationTenureMapper.ToDomain(application.tenure)!.Value,
-            AhpApplicationStatusMapper.MapToPortalStatus(application.applicationStatus),
-            await _programmeRepository.GetProgramme(applicationId, cancellationToken),
-            new ApplicationStateFactory(userAccount));
-
         return new SchemeEntity(
             applicationBasicInfo,
-            new SchemeFunding((int?)application.fundingRequested, application.noOfHomes),
-            SectionStatusMapper.ToDomain(application.schemeInformationSectionCompletionStatus, applicationBasicInfo.Status),
-            new AffordabilityEvidence(application.affordabilityEvidence),
-            new SalesRisk(application.sharedOwnershipSalesRisk),
-            new HousingNeeds(application.meetingLocalProrities, application.meetingLocalHousingNeed),
+            new SchemeFunding((int?)dto.fundingRequested, dto.noOfHomes),
+            SectionStatusMapper.ToDomain(dto.schemeInformationSectionCompletionStatus, applicationBasicInfo.Status),
+            new AffordabilityEvidence(dto.affordabilityEvidence),
+            new SalesRisk(dto.sharedOwnershipSalesRisk),
+            new HousingNeeds(dto.meetingLocalProrities, dto.meetingLocalHousingNeed),
             new StakeholderDiscussions(
-                new StakeholderDiscussionsDetails(application.discussionsWithLocalStakeholders),
+                new StakeholderDiscussionsDetails(dto.discussionsWithLocalStakeholders),
                 new LocalAuthoritySupportFileContainer(stakeholderDiscussionsFile)));
     }
 }

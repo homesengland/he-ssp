@@ -8,11 +8,6 @@ namespace HE.Investment.AHP.Domain.HomeTypes.Crm.Segments;
 
 public class DisabledAndVulnerablePeopleCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<DisabledPeopleHomeTypeDetailsSegmentEntity>
 {
-    public DisabledAndVulnerablePeopleCrmSegmentMapper()
-        : base(new[] { nameof(invln_HomeType.invln_typeofhousingfordisabledvulnerablepeople), nameof(invln_HomeType.invln_clientgroup), })
-    {
-    }
-
     public override HomeTypeSegmentType SegmentType => HomeTypeSegmentType.DisabledAndVulnerablePeople;
 
     public override IHomeTypeSegmentEntity MapToEntity(

@@ -28,16 +28,16 @@ public class ProvidePlanningDetailsCommandHandler : ProvideSiteDetailsBaseComman
         var operationResult = OperationResult.New();
         var referenceNumber = operationResult.AggregateNullable(() => ReferenceNumber.Create(request.ReferenceNumber));
         var approvalDate = operationResult.AggregateNullable(() =>
-            DetailedPlanningApprovalDate.Create(approvalDateInput.Day, approvalDateInput.Month, approvalDateInput.Year));
+            DetailedPlanningApprovalDate.FromDateDetails(request.IsDetailedPlanningApprovalDateActive, approvalDateInput));
         var requiredFurtherSteps = operationResult.AggregateNullable(() => RequiredFurtherSteps.Create(request.RequiredFurtherSteps));
         var submittedDate = operationResult.AggregateNullable(() =>
-            ApplicationForDetailedPlanningSubmittedDate.Create(submittedDateInput.Day, submittedDateInput.Month, submittedDateInput.Year));
+            ApplicationForDetailedPlanningSubmittedDate.FromDateDetails(request.IsApplicationForDetailedPlanningSubmittedDateActive, submittedDateInput));
         var expectedDate = operationResult.AggregateNullable(() =>
-            ExpectedPlanningApprovalDate.Create(expectedDateInput.Day, expectedDateInput.Month, expectedDateInput.Year));
+            ExpectedPlanningApprovalDate.FromDateDetails(request.IsExpectedPlanningApprovalDateActive, expectedDateInput));
         var outlineDate = operationResult.AggregateNullable(() =>
-            OutlinePlanningApprovalDate.Create(outlineDateInput.Day, outlineDateInput.Month, outlineDateInput.Year));
+            OutlinePlanningApprovalDate.FromDateDetails(request.IsOutlinePlanningApprovalDateActive, outlineDateInput));
         var submissionDate = operationResult.AggregateNullable(() =>
-            PlanningSubmissionDate.Create(submissionDateInput.Day, submissionDateInput.Month, submissionDateInput.Year));
+            PlanningSubmissionDate.FromDateDetails(request.IsPlanningSubmissionDateActive, submissionDateInput));
         var landRegistryDetails = operationResult.AggregateNullable(() =>
             LandRegistryDetails.WithIsRegistered(site.PlanningDetails.LandRegistryDetails, request.IsLandRegistryTitleNumberRegistered));
         operationResult.CheckErrors();

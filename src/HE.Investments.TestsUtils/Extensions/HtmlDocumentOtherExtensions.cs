@@ -216,13 +216,13 @@ public static class HtmlDocumentOtherExtensions
         }
     }
 
-    private static IList<IElement> GetValidationErrors(this IHtmlDocument htmlDocument, string forName)
+    private static List<IElement> GetValidationErrors(this IHtmlDocument htmlDocument, string forName)
     {
-        return htmlDocument.QuerySelectorAll($"span[data-valmsg-for=\"{forName}\"]").ToList();
+        return [.. htmlDocument.QuerySelectorAll($"span[data-valmsg-for=\"{forName}\"]")];
     }
 
-    private static IList<IElement> GetNavigationAnchors(this IHtmlDocument htmlDocument, string href)
+    private static List<IElement> GetNavigationAnchors(this IHtmlDocument htmlDocument, string href)
     {
-        return htmlDocument.QuerySelectorAll($"a[href=\"#{href}\"]").ToList();
+        return [.. htmlDocument.QuerySelectorAll($"a[href=\"#{href}\"]")];
     }
 }

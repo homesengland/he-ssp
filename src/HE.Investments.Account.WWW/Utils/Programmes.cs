@@ -9,7 +9,7 @@ public class Programmes : IProgrammes
 {
     private readonly ProgrammeUrlConfig _programmeUrlConfig;
 
-    private readonly IDictionary<ProgrammeType, ProgrammeModel> _programmes;
+    private readonly Dictionary<ProgrammeType, ProgrammeModel> _programmes;
 
     public Programmes(ProgrammeUrlConfig programmeUrlConfig)
     {
@@ -39,7 +39,7 @@ public class Programmes : IProgrammes
         throw new InvalidEnumArgumentException($"Programme for {programmeType} does not exist.");
     }
 
-    private IDictionary<ProgrammeType, ProgrammeModel> BuildProgrammeModels()
+    private Dictionary<ProgrammeType, ProgrammeModel> BuildProgrammeModels()
     {
         return new Dictionary<ProgrammeType, ProgrammeModel>
         {

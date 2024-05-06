@@ -1,0 +1,37 @@
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investments.Common.WWW.Components.PageHeader
+@using HE.Investment.AHP.WWW.Views.Consortium.Const
+@using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToAccountLink
+@using HE.Investments.Common.WWW.Components.RadioList
+@using HE.Investments.Common.WWW.Models
+
+@model HE.Investment.AHP.WWW.Models.Consortium.SelectProgramme;
+@{
+    var title = ConsortiumPageTitles.Programme;
+    ViewData["Title"] = title;
+    var availableProgrammes = Model.AvailableProgrammes
+        .Select(p => new ExtendedSelectListItem(p.ProgrammeName, p.ProgrammeId, false))
+        .ToList();
+}
+
+<gds-div-grid-column-two-thirds>
+    <gds-back-link href="@Url.Action("Start", "Consortium")"></gds-back-link>
+
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+
+    <form asp-controller="Consortium" asp-action="Programme" asp-method="post" novalidate>
+        <vc:page-header title=@title/>
+
+        <gds-p>You can only add one consortium per programme.</gds-p>
+        <gds-p>Only available programmes will be shown below. For example, if you already have a consortium for Affordable Homes Programme 21-26 Continuous Market Engagement, it will not be shown below.</gds-p>
+
+        <vc:radio-list
+            field-name="@(nameof(Model.SelectedProgrammeId))"
+            available-options=availableProgrammes
+            string-value="@Model.SelectedProgrammeId"/>
+
+        <vc:form-button/>
+
+        <vc:return-to-account-link />
+    </form>
+</gds-div-grid-column-two-thirds>

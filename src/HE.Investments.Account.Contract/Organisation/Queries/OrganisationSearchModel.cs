@@ -4,7 +4,7 @@ public class OrganisationSearchModel
 {
     public OrganisationSearchModel()
     {
-        Organisations = new List<OrganisationBasicDetails>();
+        Organisations = [];
     }
 
     public OrganisationSearchModel(IEnumerable<OrganisationBasicDetails> organisations)

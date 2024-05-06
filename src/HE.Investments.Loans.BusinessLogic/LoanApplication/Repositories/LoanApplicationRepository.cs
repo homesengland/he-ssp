@@ -3,7 +3,6 @@ using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.Entities;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
-using HE.Investments.Common.CRM.Extensions;
 using HE.Investments.Common.CRM.Mappers;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Serialization;
@@ -20,7 +19,6 @@ using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories.Mapper;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.ValueObjects;
 using HE.Investments.Loans.BusinessLogic.Projects.ValueObjects;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
-using Microsoft.FeatureManagement;
 using Microsoft.PowerPlatform.Dataverse.Client;
 
 namespace HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories;
@@ -35,31 +33,27 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
 
     private readonly ILoansDocumentSettings _documentSettings;
 
-    private readonly IFeatureManager _featureManager;
-
     public LoanApplicationRepository(
         IOrganizationServiceAsync2 serviceClient,
         IEventDispatcher eventDispatcher,
         IFileApplicationRepository fileRepository,
-        ILoansDocumentSettings documentSettings,
-        IFeatureManager featureManager)
+        ILoansDocumentSettings documentSettings)
     {
         _serviceClient = serviceClient;
         _eventDispatcher = eventDispatcher;
         _fileRepository = fileRepository;
         _documentSettings = documentSettings;
-        _featureManager = featureManager;
     }
 
     public async Task<bool> IsExist(LoanApplicationId loanApplicationId, UserAccount userAccount, CancellationToken cancellationToken)
     {
         var req = new invln_getsingleloanapplicationforaccountandcontactRequest
         {
-            invln_accountid = userAccount.SelectedOrganisationId().ToString(),
+            invln_accountid = userAccount.SelectedOrganisationId().ToGuidAsString(),
             invln_externalcontactid = userAccount.UserGlobalId.ToString(),
             invln_loanapplicationid = loanApplicationId.ToString(),
             invln_fieldstoretrieve = nameof(invln_Loanapplication.invln_LoanapplicationId).ToLowerInvariant(),
-            invln_usehetables = await _featureManager.GetUseHeTablesParameter(),
+            invln_usehetables = "true",
         };
 
         var response = await _serviceClient.ExecuteAsync(req, cancellationToken) as invln_getsingleloanapplicationforaccountandcontactResponse;
@@ -82,7 +76,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
         var req = new invln_checkifloanapplicationwithgivennameexistsRequest
         {
             invln_loanname = loanApplicationName.Value,
-            invln_organisationid = userAccount.Organisation?.OrganisationId.ToString(),
+            invln_organisationid = userAccount.Organisation.IsProvided() ? userAccount.Organisation!.OrganisationId.ToGuidAsString() : string.Empty,
         };
 
         var response = (invln_checkifloanapplicationwithgivennameexistsResponse)await _serviceClient.ExecuteAsync(req, cancellationToken);
@@ -93,10 +87,10 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
     {
         var req = new invln_getsingleloanapplicationforaccountandcontactRequest
         {
-            invln_accountid = userAccount.SelectedOrganisationId().ToString(),
+            invln_accountid = userAccount.SelectedOrganisationId().ToGuidAsString(),
             invln_externalcontactid = userAccount.UserGlobalId.ToString(),
             invln_loanapplicationid = id.ToString(),
-            invln_usehetables = await _featureManager.GetUseHeTablesParameter(),
+            invln_usehetables = "true",
         };
 
         var response = await _serviceClient.ExecuteAsync(req, cancellationToken) as invln_getsingleloanapplicationforaccountandcontactResponse
@@ -136,9 +130,9 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
     {
         var req = new invln_getloanapplicationsforaccountandcontactRequest()
         {
-            invln_accountid = userAccount.SelectedOrganisationId().ToString(),
+            invln_accountid = userAccount.SelectedOrganisationId().ToGuidAsString(),
             invln_externalcontactid = userAccount.UserGlobalId.ToString(),
-            invln_usehetables = await _featureManager.GetUseHeTablesParameter(),
+            invln_usehetables = "true",
         };
 
         var response = await _serviceClient.ExecuteAsync(req, cancellationToken) as invln_getloanapplicationsforaccountandcontactResponse
@@ -164,16 +158,16 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
             LoanApplicationContact = LoanApplicationMapper.MapToUserAccountDto(loanApplication.UserAccount, userDetails),
             fundingReason = FundingPurposeMapper.Map(loanApplication.FundingReason),
             ApplicationName = loanApplication.Name.Value,
-            frontDoorProjectId = loanApplication.FrontDoorProjectId?.Value,
+            frontDoorProjectId = loanApplication.FrontDoorProjectId?.ToGuidAsString(),
         };
 
         var loanApplicationSerialized = CrmResponseSerializer.Serialize(loanApplicationDto);
         var req = new invln_sendinvestmentloansdatatocrmRequest
         {
             invln_entityfieldsparameters = loanApplicationSerialized,
-            invln_accountid = loanApplication.UserAccount.SelectedOrganisationId().ToString(),
+            invln_accountid = loanApplication.UserAccount.SelectedOrganisationId().ToGuidAsString(),
             invln_contactexternalid = loanApplication.UserAccount.UserGlobalId.ToString(),
-            invln_usehetables = await _featureManager.GetUseHeTablesParameter(),
+            invln_usehetables = "true",
         };
 
         var response = (invln_sendinvestmentloansdatatocrmResponse)await _serviceClient.ExecuteAsync(req, cancellationToken);

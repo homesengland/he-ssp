@@ -26,4 +26,4 @@ public record SitePlanningDetails(
     bool? IsGrantFundingForAllHomesCoveredByTitleNumber = null,
     bool IsLandRegistryActive = false,
     bool ArePlanningDetailsProvided = false,
-    string? LocalAuthorityId = null);
+    string? LocalAuthorityCode = null);

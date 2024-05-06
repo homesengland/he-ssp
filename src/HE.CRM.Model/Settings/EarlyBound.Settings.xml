@@ -24,6 +24,8 @@ invln_generaterichtextdocument|
 invln_getabsoluteahpapplicationfilelocation|
 invln_getahpapplication|
 invln_getahpapplicationdocumentlocation|
+invln_getconsortium|
+invln_getconsortiums|
 invln_getcontactrole|
 invln_getfilelocationforapplicationloan|
 invln_getloanapplicationsforaccountandcontact|

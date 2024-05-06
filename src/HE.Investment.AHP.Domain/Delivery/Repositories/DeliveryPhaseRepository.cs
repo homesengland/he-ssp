@@ -4,14 +4,12 @@ using HE.Investment.AHP.Contract.Delivery.Events;
 using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.Delivery.Crm;
 using HE.Investment.AHP.Domain.Delivery.Entities;
-using HE.Investment.AHP.Domain.Delivery.Tranches;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
-using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investment.AHP.Domain.Scheme.Repositories;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investments.Account.Shared.User;
-using HE.Investments.Account.Shared.User.ValueObjects;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Infrastructure.Events;
 
@@ -25,6 +23,8 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
 
     private readonly IApplicationRepository _applicationRepository;
 
+    private readonly IApplicationSectionStatusChanger _sectionStatusChanger;
+
     private readonly IHomeTypeRepository _homeTypeRepository;
 
     private readonly ISchemeRepository _schemeRepository;
@@ -37,11 +37,13 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
         IApplicationRepository applicationRepository,
         IHomeTypeRepository homeTypeRepository,
         ISchemeRepository schemeRepository,
+        IApplicationSectionStatusChanger sectionStatusChanger,
         IEventDispatcher eventDispatcher)
     {
         _applicationRepository = applicationRepository;
         _homeTypeRepository = homeTypeRepository;
         _eventDispatcher = eventDispatcher;
+        _sectionStatusChanger = sectionStatusChanger;
         _schemeRepository = schemeRepository;
         _crmContext = crmContext;
         _crmMapper = crmMapper;
@@ -53,9 +55,8 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
         var organisationId = organisation.OrganisationId.Value;
         var application = await _applicationRepository.GetApplicationBasicInfo(applicationId, userAccount, cancellationToken);
         var deliveryPhases = userAccount.CanViewAllApplications()
-            ? await _crmContext.GetAllOrganisationDeliveryPhases(applicationId.Value, organisationId, _crmMapper.CrmFields, cancellationToken)
-            : await _crmContext.GetAllUserDeliveryPhases(applicationId.Value, organisationId, _crmMapper.CrmFields, cancellationToken);
-        var sectionStatus = await _crmContext.GetDeliveryStatus(applicationId.Value, organisationId, cancellationToken);
+            ? await _crmContext.GetAllOrganisationDeliveryPhases(applicationId.Value, organisationId, cancellationToken)
+            : await _crmContext.GetAllUserDeliveryPhases(applicationId.Value, organisationId, cancellationToken);
         var homesToDeliver = await GetHomesToDeliver(applicationId, userAccount, cancellationToken);
         var schemeFunding = await GetSchemeFunding(applicationId, userAccount, cancellationToken);
 
@@ -63,7 +64,7 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
             application,
             deliveryPhases.Select(x => _crmMapper.MapToDomain(application, organisation, x, schemeFunding)).ToList(),
             homesToDeliver,
-            SectionStatusMapper.ToDomain(sectionStatus, application.Status));
+            application.Sections.DeliveryStatus);
     }
 
     public async Task<IDeliveryPhaseEntity> GetById(
@@ -76,8 +77,8 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
         var organisationId = organisation.OrganisationId.Value;
         var application = await _applicationRepository.GetApplicationBasicInfo(applicationId, userAccount, cancellationToken);
         var deliveryPhase = userAccount.CanViewAllApplications()
-            ? await _crmContext.GetOrganisationDeliveryPhaseById(applicationId.Value, deliveryPhaseId.Value, organisationId, _crmMapper.CrmFields, cancellationToken)
-            : await _crmContext.GetUserDeliveryPhaseById(applicationId.Value, deliveryPhaseId.Value, organisationId, _crmMapper.CrmFields, cancellationToken);
+            ? await _crmContext.GetOrganisationDeliveryPhaseById(applicationId.Value, deliveryPhaseId.Value, organisationId, cancellationToken)
+            : await _crmContext.GetUserDeliveryPhaseById(applicationId.Value, deliveryPhaseId.Value, organisationId, cancellationToken);
         var schemeFunding = await GetSchemeFunding(applicationId, userAccount, cancellationToken);
 
         if (deliveryPhase != null)
@@ -93,12 +94,12 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
         var entity = (DeliveryPhaseEntity)deliveryPhase;
         if (entity.IsNew)
         {
-            entity.Id = new DeliveryPhaseId(await _crmContext.Save(_crmMapper.MapToDto(entity), organisationId.Value, _crmMapper.CrmFields, cancellationToken));
+            entity.Id = DeliveryPhaseId.From(await _crmContext.Save(_crmMapper.MapToDto(entity), organisationId.Value, cancellationToken));
             await _eventDispatcher.Publish(new DeliveryPhaseHasBeenCreatedEvent(entity.Application.Id, entity.Name.Value), cancellationToken);
         }
         else if (entity.IsModified)
         {
-            await _crmContext.Save(_crmMapper.MapToDto(entity), organisationId.Value, _crmMapper.CrmFields, cancellationToken);
+            await _crmContext.Save(_crmMapper.MapToDto(entity), organisationId.Value, cancellationToken);
             await _eventDispatcher.Publish(new DeliveryPhaseHasBeenUpdatedEvent(entity.Application.Id), cancellationToken);
         }
 
@@ -109,10 +110,11 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
     {
         if (deliveryPhases.IsStatusChanged)
         {
-            await _crmContext.SaveDeliveryStatus(
-                deliveryPhases.Application.Id.Value,
-                organisationId.Value,
-                SectionStatusMapper.ToDto(deliveryPhases.Status),
+            await _sectionStatusChanger.ChangeSectionStatus(
+                deliveryPhases.Application.Id,
+                organisationId,
+                SectionType.DeliveryPhases,
+                deliveryPhases.Status,
                 cancellationToken);
         }
 
@@ -139,7 +141,6 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
         var homeTypes = await _homeTypeRepository.GetByApplicationId(
             applicationId,
             userAccount,
-            new[] { HomeTypeSegmentType.HomeInformation },
             cancellationToken);
 
         return homeTypes.HomeTypes.Select(x => new HomesToDeliver(x.Id, x.Name, x.HomeInformation.NumberOfHomes?.Value ?? 0));

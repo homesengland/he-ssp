@@ -9,11 +9,6 @@ namespace HE.Investment.AHP.Domain.HomeTypes.Crm.Segments;
 
 public class DesignPlansCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<DesignPlansSegmentEntity>
 {
-    public DesignPlansCrmSegmentMapper()
-        : base(new[] { nameof(invln_HomeType.invln_designplancomments), nameof(invln_HomeType.invln_happiprinciples) })
-    {
-    }
-
     public override HomeTypeSegmentType SegmentType => HomeTypeSegmentType.DesignPlans;
 
     public override IHomeTypeSegmentEntity MapToEntity(
@@ -25,7 +20,7 @@ public class DesignPlansCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<DesignPl
         return new DesignPlansSegmentEntity(
             application,
             dto.designPrinciples.Select(MapDesignPrinciple),
-            MoreInformation.FromCrm(dto.designPlansMoreInformation),
+            MoreInformation.Create(dto.designPlansMoreInformation),
             uploadedFiles);
     }
 

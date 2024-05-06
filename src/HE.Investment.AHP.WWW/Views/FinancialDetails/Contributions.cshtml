@@ -74,17 +74,17 @@
                            asp-prefixtext=@(GdsInputPrefixText.Pounds)
                            value=@Model.OwnResources />
             </he-error-form-group>
-            <he-error-form-group asp-for="RCGFContribution">
+            <he-error-form-group asp-for="RcgfContribution">
                 <gds-legend class="govuk-!-margin-bottom-0">
                     <gds-h2 class="govuk-!-margin-bottom-0">Enter how much you intend to contribute from your Recycled Capital Grant Fund</gds-h2>
                 </gds-legend>
                 <gds-input asp-hiddenlabeltext="RcgfContribution"
                            class="govuk-input--width-5"
                            asp-labelclass="govuk-label"
-                           govuk-formgroup-asp-for="RCGFContribution"
+                           govuk-formgroup-asp-for="RcgfContribution"
                            name="RcgfContribution"
                            asp-prefixtext=@(GdsInputPrefixText.Pounds)
-                           value=@Model.RCGFContribution />
+                           value=@Model.RcgfContribution />
             </he-error-form-group>
             <he-error-form-group asp-for="OtherCapitalSources">
                 <gds-legend class="govuk-!-margin-bottom-0">
@@ -102,7 +102,7 @@
             {
                 <he-error-form-group asp-for="SharedOwnershipSales">
                     <gds-legend class="govuk-!-margin-bottom-0">
-                        <gds-h2 class="govuk-!-margin-bottom-0">Enter how much you will contribute from initial sales receipts from shared ownership homes</gds-h2>
+                        <gds-h2 class="govuk-!-margin-bottom-0">Enter how much you will contribute from initial sales receipts from Shared Ownership homes</gds-h2>
                     </gds-legend>
                     <gds-input asp-hiddenlabeltext="SharedOwnershipSales"
                                class="govuk-input--width-5"

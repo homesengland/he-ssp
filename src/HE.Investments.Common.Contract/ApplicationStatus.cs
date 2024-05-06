@@ -35,7 +35,7 @@ public enum ApplicationStatus
     InDueDiligence,
     [Description("Approved Subject to Contract")]
     ApprovedSubjectToContract,
-    [Description("Contract Signed Subject to CP")]
+    [Description("Contract Signed Subject to Conditions")]
     AwaitingCpSatisfaction,
     [Description("Conditions Satisfied")]
     ConditionsSatisfied,

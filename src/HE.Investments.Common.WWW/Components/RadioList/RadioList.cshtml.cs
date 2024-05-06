@@ -13,8 +13,11 @@ public class RadioList : ViewComponent
         InputTitleType? titleType = null,
         DynamicComponentViewModel? additionalContent = null,
         string? hint = null,
-        Enum? value = null)
+        Enum? value = null,
+        string? stringValue = null)
     {
-        return View("RadioList", (fieldName, title, titleType ?? InputTitleType.InputTitle, additionalContent, hint, availableOptions, value?.ToString()));
+        return View(
+            "RadioList",
+            (fieldName, title, titleType ?? InputTitleType.InputTitle, additionalContent, hint, availableOptions, value?.ToString() ?? stringValue));
     }
 }

@@ -16,7 +16,7 @@ public class BuildActivityTests : AhpViewTestBase
     [Fact]
     public async Task ShouldDisplayRadiosForRehab_WhenTypeOfHomesIsRehab()
     {
-        var availableTypes = new List<BuildActivityType>() { BuildActivityType.WorksOnly, BuildActivityType.RegenerationRehab };
+        var availableTypes = new List<BuildActivityType>() { BuildActivityType.WorksOnly, BuildActivityType.AcquisitionAndWorksRehab };
         var model = new DeliveryPhaseDetails(
             ApplicationTestData.SampleApplication,
             "Id",

@@ -1,6 +1,6 @@
 ﻿namespace HE.Investments.DocumentService.Services.Contract;
 
-internal class FileTableFilterContract
+internal sealed class FileTableFilterContract
 {
     public string ListTitle { get; set; }
 

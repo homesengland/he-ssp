@@ -22,7 +22,7 @@ internal static class ProjectMapper
         {
             ProjectId = project.Id.Value,
             ProjectName = project.Name?.Value ?? projectPrefillData?.Name,
-            HomesCount = project.HomesCount?.Value ?? projectPrefillData?.NumberOfHomes.ToString(),
+            HomesCount = project.HomesCount?.Value ?? projectPrefillData?.NumberOfHomes?.ToString(CultureInfo.InvariantCulture),
             HomeTypes = project.HomesTypes?.HomesTypesValue,
             OtherHomeTypes = project.HomesTypes?.OtherHomesTypesValue,
             ProjectType = project.ProjectType?.Value,
@@ -48,7 +48,7 @@ internal static class ProjectMapper
             LoanApplicationStatus = project.LoanApplicationStatus,
             LocalAuthorityId = project.LocalAuthority?.Code.ToString(),
             LocalAuthorityName = project.LocalAuthority?.Name,
-            HasEstimatedStartDate = project.StartDate?.Exists.MapToCommonResponse(),
+            HasEstimatedStartDate = project.StartDate?.Value.HasValue.MapToCommonResponse(),
             StartDate = DateDetails.FromDateTime(project.StartDate?.Value),
             PlanningPermissionStatus = PlanningPermissionStatusMapper.MapToString(project.PlanningPermissionStatus ?? projectPrefillData?.PlanningPermissionStatus),
             Status = project.Status,

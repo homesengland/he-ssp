@@ -1,5 +1,4 @@
 using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
-using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 

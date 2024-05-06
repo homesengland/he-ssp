@@ -53,7 +53,7 @@ if (!app.Environment.IsDevelopment())
         if (context.Response.StatusCode == 404 && !context.Response.HasStarted)
         {
             context.Items["originalPath"] = context.Request.Path.Value;
-            context.Items["backUrl"] = context.Request.Headers["Referer"];
+            context.Items["backUrl"] = context.Request.Headers.Referer;
             context.Request.Path = "/Home/PageNotFound";
             await next();
         }

@@ -1,16 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MediatR.Contracts" Version="2.0.1" />
-    <PackageReference Include="Stateless" Version="5.13.0" />
-      </ItemGroup>
+    <PackageReference Include="MediatR.Contracts" Version="2.0.1"/>
+    <PackageReference Include="Stateless" Version="5.13.0"/>
+  </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HE.Investments.Common.Contract\HE.Investments.Common.Contract.csproj" />
+    <ProjectReference Include="..\HE.Investments.Common.Contract\HE.Investments.Common.Contract.csproj"/>
+    <ProjectReference Include="..\HE.Investments.FrontDoor.Shared\HE.Investments.FrontDoor.Shared.csproj"/>
   </ItemGroup>
 
 </Project>

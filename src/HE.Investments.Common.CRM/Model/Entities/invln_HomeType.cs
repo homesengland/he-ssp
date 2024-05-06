@@ -111,6 +111,8 @@ namespace HE.Investments.Common.CRM.Model
 			public const string invln_marketvalueofeachproperty_Base = "invln_marketvalueofeachproperty_base";
 			public const string invln_maxoccupancy = "invln_maxoccupancy";
 			public const string invln_meetingtheneedsoftheclientgroup = "invln_meetingtheneedsoftheclientgroup";
+			public const string invln_mmcapplied = "invln_mmcapplied";
+			public const string invln_mmcappliedName = "invln_mmcappliedname";
 			public const string invln_mmccategories = "invln_mmccategories";
 			public const string invln_mmccategoriesName = "invln_mmccategoriesname";
 			public const string invln_mmccategory1manufacturer = "invln_mmccategory1manufacturer";
@@ -125,8 +127,10 @@ namespace HE.Investments.Common.CRM.Model
 			public const string invln_numberofbedrooms = "invln_numberofbedrooms";
 			public const string invln_numberofhomeshometype = "invln_numberofhomeshometype";
 			public const string invln_numberofstoreys = "invln_numberofstoreys";
+			public const string invln_PercentageValueofNDSSStandard = "invln_percentagevalueofndssstandard";
 			public const string invln_proposedrentasaofunsoldshare = "invln_proposedrentasaofunsoldshare";
 			public const string invln_prospectiverentasofmarketrent = "invln_prospectiverentasofmarketrent";
+			public const string invln_ProspectiveRentasofMarketRentRtB = "invln_prospectiverentasofmarketrentrtb";
 			public const string invln_ProspectiveRentperWeek = "invln_prospectiverentperweek";
 			public const string invln_prospectiverentperweek_Base = "invln_prospectiverentperweek_base";
 			public const string invln_reasonsforrtsoexemption = "invln_reasonsforrtsoexemption";
@@ -150,6 +154,8 @@ namespace HE.Investments.Common.CRM.Model
 			public const string invln_SharedOwnershipInitialSale = "invln_sharedownershipinitialsale";
 			public const string invln_SharedOwnershipMarketvalue = "invln_sharedownershipmarketvalue";
 			public const string invln_sharedownershipmarketvalue_Base = "invln_sharedownershipmarketvalue_base";
+			public const string invln_SharedOwnershipProspectiveRent = "invln_sharedownershipprospectiverent";
+			public const string invln_sharedownershipprospectiverent_Base = "invln_sharedownershipprospectiverent_base";
 			public const string invln_SocialRentMarketValue = "invln_socialrentmarketvalue";
 			public const string invln_socialrentmarketvalue_Base = "invln_socialrentmarketvalue_base";
 			public const string invln_SocialRentProspectiveRent = "invln_socialrentprospectiverent";
@@ -1225,6 +1231,40 @@ namespace HE.Investments.Common.CRM.Model
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_mmcapplied")]
+		public System.Nullable<bool> invln_mmcapplied
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_mmcapplied");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_mmcapplied");
+				this.SetAttributeValue("invln_mmcapplied", value);
+				this.OnPropertyChanged("invln_mmcapplied");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_mmcappliedname")]
+		public string invln_mmcappliedName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_mmcapplied"))
+				{
+					return this.FormattedValues["invln_mmcapplied"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_mmccategories")]
 		public virtual Microsoft.Xrm.Sdk.OptionSetValueCollection invln_mmccategories
 		{
@@ -1463,6 +1503,27 @@ namespace HE.Investments.Common.CRM.Model
 			}
 		}
 		
+		/// <summary>
+		/// Floor Area/ NDSS Standard Area
+///(Updated when Application is Submitted)
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_percentagevalueofndssstandard")]
+		public System.Nullable<decimal> invln_PercentageValueofNDSSStandard
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_percentagevalueofndssstandard");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_PercentageValueofNDSSStandard");
+				this.SetAttributeValue("invln_percentagevalueofndssstandard", value);
+				this.OnPropertyChanged("invln_PercentageValueofNDSSStandard");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_proposedrentasaofunsoldshare")]
 		public System.Nullable<decimal> invln_proposedrentasaofunsoldshare
 		{
@@ -1494,6 +1555,23 @@ namespace HE.Investments.Common.CRM.Model
 				this.OnPropertyChanging("invln_prospectiverentasofmarketrent");
 				this.SetAttributeValue("invln_prospectiverentasofmarketrent", value);
 				this.OnPropertyChanged("invln_prospectiverentasofmarketrent");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_prospectiverentasofmarketrentrtb")]
+		public System.Nullable<decimal> invln_ProspectiveRentasofMarketRentRtB
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_prospectiverentasofmarketrentrtb");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_ProspectiveRentasofMarketRentRtB");
+				this.SetAttributeValue("invln_prospectiverentasofmarketrentrtb", value);
+				this.OnPropertyChanged("invln_ProspectiveRentasofMarketRentRtB");
 			}
 		}
 		
@@ -1865,6 +1943,36 @@ namespace HE.Investments.Common.CRM.Model
 			get
 			{
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_sharedownershipmarketvalue_base");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_sharedownershipprospectiverent")]
+		public Microsoft.Xrm.Sdk.Money invln_SharedOwnershipProspectiveRent
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_sharedownershipprospectiverent");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_SharedOwnershipProspectiveRent");
+				this.SetAttributeValue("invln_sharedownershipprospectiverent", value);
+				this.OnPropertyChanged("invln_SharedOwnershipProspectiveRent");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Shared Ownership - Prospective Rent in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_sharedownershipprospectiverent_base")]
+		public Microsoft.Xrm.Sdk.Money invln_sharedownershipprospectiverent_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_sharedownershipprospectiverent_base");
 			}
 		}
 		

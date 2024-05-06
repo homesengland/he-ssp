@@ -3,30 +3,12 @@ using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Common.Mappers;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
-using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Crm.Segments;
 
 public class TenureDetailsCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<TenureDetailsSegmentEntity>
 {
-    public TenureDetailsCrmSegmentMapper()
-        : base(new[]
-        {
-            nameof(invln_HomeType.invln_MarketValueofEachProperty),
-            nameof(invln_HomeType.invln_MarketRentperWeek),
-            nameof(invln_HomeType.invln_ProspectiveRentperWeek),
-            nameof(invln_HomeType.invln_prospectiverentasofmarketrent),
-            nameof(invln_HomeType.invln_targetrentover80ofmarketrent),
-            nameof(invln_HomeType.invln_rtsoexempt),
-            nameof(invln_HomeType.invln_reasonsforrtsoexemption),
-            nameof(invln_HomeType.invln_SharedOwnershipInitialSale),
-            nameof(invln_HomeType.invln_FirstTrancheSalesReceipt),
-            nameof(invln_HomeType.invln_proposedrentasaofunsoldshare),
-        })
-    {
-    }
-
     public override HomeTypeSegmentType SegmentType => HomeTypeSegmentType.TenureDetails;
 
     public override IHomeTypeSegmentEntity MapToEntity(
@@ -42,7 +24,7 @@ public class TenureDetailsCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Tenure
             dto.prospectiveRentAsPercentOfMarketRent.IsProvided() ? new ProspectiveRentPercentage(dto.prospectiveRentAsPercentOfMarketRent!.Value) : null,
             YesNoTypeMapper.Map(dto.targetRentOver80PercentOfMarketRent),
             YesNoTypeMapper.Map(dto.RtSOExemption),
-            MoreInformation.FromCrm(dto.exemptionJustification),
+            MoreInformation.Create(dto.exemptionJustification),
             dto.initialSalePercent.IsProvided() ? new InitialSale(dto.initialSalePercent!.Value) : null,
             dto.expectedFirstTrancheSaleReceipt.IsProvided() ? new ExpectedFirstTranche(dto.expectedFirstTrancheSaleReceipt!.Value) : null,
             dto.proposedRentAsPercentOfUnsoldShare.IsProvided() ? new ProspectiveRentPercentage(dto.proposedRentAsPercentOfUnsoldShare!.Value) : null);

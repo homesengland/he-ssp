@@ -34,4 +34,14 @@ public static class CollectionExtensions
             source.Add(itemToAdd);
         }
     }
+
+    public static bool IsNotEmpty<T>(this IList<T> source)
+    {
+        return source.Count != 0;
+    }
+
+    public static bool IsEmpty<T>(this IList<T> source)
+    {
+        return source.Count == 0;
+    }
 }

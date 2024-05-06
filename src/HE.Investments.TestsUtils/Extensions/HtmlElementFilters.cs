@@ -20,7 +20,7 @@ public static class HtmlElementFilters
                 .BeTrue($"There is no Element with text: '{text}'");
         }
 
-        return elements.ToList();
+        return [.. elements];
     }
 
     public static List<IElement> WithClass(IList<IElement> elements, string? className = null)
@@ -37,7 +37,7 @@ public static class HtmlElementFilters
                 .BeTrue($"There is no Element with class: '{className}'");
         }
 
-        return elements.ToList();
+        return [.. elements];
     }
 
     public static List<IElement> WithAttribute(IList<IElement> elements, string? attributeName = null, string? value = null)
@@ -54,6 +54,6 @@ public static class HtmlElementFilters
                 .BeTrue($"There is no Element with attribute : '{attributeName}' value: '{value}'");
         }
 
-        return elements.ToList();
+        return [.. elements];
     }
 }

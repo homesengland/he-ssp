@@ -3,7 +3,7 @@ using HE.Investment.AHP.Contract.HomeTypes.Commands;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investments.Account.Shared;
-using HE.Investments.Account.Shared.User.ValueObjects;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
@@ -28,7 +28,7 @@ public class SaveHomeTypeDetailsCommandHandler : HomeTypeCommandHandlerBase, IRe
     public async Task<OperationResult<HomeTypeId?>> Handle(SaveHomeTypeDetailsCommand request, CancellationToken cancellationToken)
     {
         var account = await _accountUserContext.GetSelectedAccount();
-        var homeTypes = await _repository.GetByApplicationId(request.ApplicationId, account, HomeTypeSegmentTypes.All, cancellationToken);
+        var homeTypes = await _repository.GetByApplicationId(request.ApplicationId, account, cancellationToken);
         var organisationId = account.SelectedOrganisationId();
 
         return request.HomeTypeId.IsNotProvided()
@@ -45,7 +45,7 @@ public class SaveHomeTypeDetailsCommandHandler : HomeTypeCommandHandlerBase, IRe
         try
         {
             var homeType = homeTypes.CreateHomeType(request.HomeTypeName, request.HousingType);
-            await _repository.Save(homeType, organisationId, HomeTypeSegmentTypes.All, cancellationToken);
+            await _repository.Save(homeType, organisationId, cancellationToken);
 
             return new OperationResult<HomeTypeId?>(homeType.Id);
         }
@@ -70,7 +70,7 @@ public class SaveHomeTypeDetailsCommandHandler : HomeTypeCommandHandlerBase, IRe
             return new OperationResult<HomeTypeId?>(validationErrors, null);
         }
 
-        await _repository.Save(homeType, organisationId, HomeTypeSegmentTypes.All, cancellationToken);
+        await _repository.Save(homeType, organisationId, cancellationToken);
 
         return new OperationResult<HomeTypeId?>(homeType.Id);
     }

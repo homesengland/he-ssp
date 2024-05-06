@@ -229,37 +229,82 @@ namespace HE.Investments.Common.CRM.Model
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ALBArmsLengthBodyofGovernment = 134370015,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		ALMOArmsLengthManagementOrganisation = 134370011,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		CharitableOrganisation = 134370010,
+		Bank = 134370016,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		CombinedAuthority = 134370014,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Consultant = 134370002,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Education = 134370024,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		FinancialInstitution = 134370001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ForProfitRegisteredProvder = 134370000,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		GovernmentPolicyMaker = 134370008,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		HousingAssociation = 134370000,
+		HealthandSocialCare = 134370025,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Landowner = 134370003,
+		Insurer = 134370017,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		InvestmentManager = 134370018,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Landowner_134370003 = 134370003,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Landowner_134370023 = 134370023,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		LocalAuthority = 134370007,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		NonBankLender = 134370019,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		NonregisteredCharitableOrganisation = 134370013,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		NotForProfitRegisteredProvider = 134370021,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Other = 134370012,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		OtherFinancialInstitutionorAdvisory = 134370020,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		PrivateContractor = 134370009,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		PrivateSectorHousebuilder = 134370004,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		PublicPrivatePartnership = 134370026,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		RegisteredCharitableOrganisation = 134370010,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		TradeAssociation = 134370027,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		UnregisteredHousingAssociation = 134370022,
 	}
 	
 	/// <summary>
@@ -670,6 +715,7 @@ namespace HE.Investments.Common.CRM.Model
 			public const string FollowEmail = "followemail";
 			public const string FollowEmailName = "followemailname";
 			public const string FtpSiteURL = "ftpsiteurl";
+			public const string he_Account_Account_he_Pipeline = "he_Account_Account_he_Pipeline";
 			public const string Referencinghe_account_account_UltimateParent = "he_account_account_UltimateParent";
 			public const string he_account_keyaccountmanager_systemuser = "he_account_keyaccountmanager_systemuser";
 			public const string he_automaticsearch = "he_automaticsearch";
@@ -722,6 +768,7 @@ namespace HE.Investments.Common.CRM.Model
 			public const string invln_account_invln_contactwebrole_Accountid = "invln_account_invln_contactwebrole_Accountid";
 			public const string invln_account_invln_organisationchangerequest_organisationid = "invln_account_invln_organisationchangerequest_organisationid";
 			public const string invln_account_invln_scheme_organisationid = "invln_account_invln_scheme_organisationid";
+			public const string invln_account_ProviderManagementLead_systemuser = "invln_account_ProviderManagementLead_systemuser";
 			public const string invln_AcqSOSpaymentsapproved = "invln_acqsospaymentsapproved";
 			public const string invln_acqsospaymentsapprovedName = "invln_acqsospaymentsapprovedname";
 			public const string invln_AcqSOSpaymentsrequested = "invln_acqsospaymentsrequested";
@@ -745,6 +792,7 @@ namespace HE.Investments.Common.CRM.Model
 			public const string invln_externalcreditratingName = "invln_externalcreditratingname";
 			public const string invln_ExternalStatus = "invln_externalstatus";
 			public const string invln_externalstatusName = "invln_externalstatusname";
+			public const string invln_frontdoorprojectpoc_AccountId_account = "invln_frontdoorprojectpoc_AccountId_account";
 			public const string invln_Governance = "invln_governance";
 			public const string invln_governanceName = "invln_governancename";
 			public const string invln_GradingsunderReviewRegulatoryNotice = "invln_gradingsunderreviewregulatorynotice";
@@ -773,13 +821,25 @@ namespace HE.Investments.Common.CRM.Model
 			public const string invln_powerofattorneyName = "invln_powerofattorneyname";
 			public const string invln_PreviousCRR = "invln_previouscrr";
 			public const string invln_previouscrrName = "invln_previouscrrname";
+			public const string invln_ProviderManagementLead = "invln_providermanagementlead";
+			public const string invln_ProviderManagementLeadName = "invln_providermanagementleadname";
+			public const string invln_ProviderManagementLeadYomiName = "invln_providermanagementleadyominame";
 			public const string invln_rating = "invln_rating";
 			public const string invln_ratingName = "invln_ratingname";
+			public const string invln_scheme_DevelopingPartner_account = "invln_scheme_DevelopingPartner_account";
+			public const string invln_scheme_OwneroftheHomes_account = "invln_scheme_OwneroftheHomes_account";
+			public const string invln_scheme_OwneroftheLand_account = "invln_scheme_OwneroftheLand_account";
 			public const string invln_scheme_ProviderNameNew_account = "invln_scheme_ProviderNameNew_account";
 			public const string invln_SecurityType = "invln_securitytype";
 			public const string invln_securitytypeName = "invln_securitytypename";
 			public const string invln_SecurityValue = "invln_securityvalue";
 			public const string invln_securityvalue_Base = "invln_securityvalue_base";
+			public const string invln_sites_AccountId_account = "invln_sites_AccountId_account";
+			public const string invln_sites_developingpartner_account = "invln_sites_developingpartner_account";
+			public const string invln_sites_Ownerofthehomesaftercompletion_acco = "invln_sites_Ownerofthehomesaftercompletion_acco";
+			public const string invln_sites_ownerofthelandduringdevelopment_acc = "invln_sites_ownerofthelandduringdevelopment_acc";
+			public const string invln_SPorDP = "invln_spordp";
+			public const string invln_spordpName = "invln_spordpname";
 			public const string invln_Totalofexistingallocations = "invln_totalofexistingallocations";
 			public const string invln_totalofexistingallocations_Base = "invln_totalofexistingallocations_base";
 			public const string invln_UnregisteredBody = "invln_unregisteredbody";
@@ -4833,6 +4893,57 @@ namespace HE.Investments.Common.CRM.Model
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_providermanagementlead")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_ProviderManagementLead
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_providermanagementlead");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_ProviderManagementLead");
+				this.SetAttributeValue("invln_providermanagementlead", value);
+				this.OnPropertyChanged("invln_ProviderManagementLead");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_providermanagementleadname")]
+		public string invln_ProviderManagementLeadName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_providermanagementlead"))
+				{
+					return this.FormattedValues["invln_providermanagementlead"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_providermanagementleadyominame")]
+		public string invln_ProviderManagementLeadYomiName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_providermanagementlead"))
+				{
+					return this.FormattedValues["invln_providermanagementlead"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_rating")]
 		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_rating
 		{
@@ -4928,6 +5039,43 @@ namespace HE.Investments.Common.CRM.Model
 			get
 			{
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_securityvalue_base");
+			}
+		}
+		
+		/// <summary>
+		/// Strategic Partner or Development Partner
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_spordp")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_SPorDP
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_spordp");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_SPorDP");
+				this.SetAttributeValue("invln_spordp", value);
+				this.OnPropertyChanged("invln_SPorDP");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_spordpname")]
+		public string invln_spordpName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_spordp"))
+				{
+					return this.FormattedValues["invln_spordp"];
+				}
+				else
+				{
+					return default(string);
+				}
 			}
 		}
 		
@@ -7225,6 +7373,26 @@ namespace HE.Investments.Common.CRM.Model
 		}
 		
 		/// <summary>
+		/// 1:N he_Account_Account_he_Pipeline
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("he_Account_Account_he_Pipeline")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.he_Pipeline> he_Account_Account_he_Pipeline
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.he_Pipeline>("he_Account_Account_he_Pipeline", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("he_Account_Account_he_Pipeline");
+				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.he_Pipeline>("he_Account_Account_he_Pipeline", null, value);
+				this.OnPropertyChanged("he_Account_Account_he_Pipeline");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N he_account_account_UltimateParent
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("he_account_account_UltimateParent", Microsoft.Xrm.Sdk.EntityRole.Referenced)]
@@ -7365,6 +7533,26 @@ namespace HE.Investments.Common.CRM.Model
 		}
 		
 		/// <summary>
+		/// 1:N invln_frontdoorprojectpoc_AccountId_account
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_frontdoorprojectpoc_AccountId_account")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_FrontDoorProjectPOC> invln_frontdoorprojectpoc_AccountId_account
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_FrontDoorProjectPOC>("invln_frontdoorprojectpoc_AccountId_account", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_frontdoorprojectpoc_AccountId_account");
+				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_FrontDoorProjectPOC>("invln_frontdoorprojectpoc_AccountId_account", null, value);
+				this.OnPropertyChanged("invln_frontdoorprojectpoc_AccountId_account");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N invln_loanapplication_account
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_loanapplication_account")]
@@ -7385,6 +7573,66 @@ namespace HE.Investments.Common.CRM.Model
 		}
 		
 		/// <summary>
+		/// 1:N invln_scheme_DevelopingPartner_account
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_scheme_DevelopingPartner_account")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_scheme> invln_scheme_DevelopingPartner_account
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_scheme>("invln_scheme_DevelopingPartner_account", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_scheme_DevelopingPartner_account");
+				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_scheme>("invln_scheme_DevelopingPartner_account", null, value);
+				this.OnPropertyChanged("invln_scheme_DevelopingPartner_account");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_scheme_OwneroftheHomes_account
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_scheme_OwneroftheHomes_account")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_scheme> invln_scheme_OwneroftheHomes_account
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_scheme>("invln_scheme_OwneroftheHomes_account", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_scheme_OwneroftheHomes_account");
+				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_scheme>("invln_scheme_OwneroftheHomes_account", null, value);
+				this.OnPropertyChanged("invln_scheme_OwneroftheHomes_account");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_scheme_OwneroftheLand_account
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_scheme_OwneroftheLand_account")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_scheme> invln_scheme_OwneroftheLand_account
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_scheme>("invln_scheme_OwneroftheLand_account", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_scheme_OwneroftheLand_account");
+				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_scheme>("invln_scheme_OwneroftheLand_account", null, value);
+				this.OnPropertyChanged("invln_scheme_OwneroftheLand_account");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N invln_scheme_ProviderNameNew_account
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_scheme_ProviderNameNew_account")]
@@ -7401,6 +7649,86 @@ namespace HE.Investments.Common.CRM.Model
 				this.OnPropertyChanging("invln_scheme_ProviderNameNew_account");
 				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_scheme>("invln_scheme_ProviderNameNew_account", null, value);
 				this.OnPropertyChanged("invln_scheme_ProviderNameNew_account");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_sites_AccountId_account
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_sites_AccountId_account")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_Sites> invln_sites_AccountId_account
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_Sites>("invln_sites_AccountId_account", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_sites_AccountId_account");
+				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_Sites>("invln_sites_AccountId_account", null, value);
+				this.OnPropertyChanged("invln_sites_AccountId_account");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_sites_developingpartner_account
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_sites_developingpartner_account")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_Sites> invln_sites_developingpartner_account
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_Sites>("invln_sites_developingpartner_account", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_sites_developingpartner_account");
+				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_Sites>("invln_sites_developingpartner_account", null, value);
+				this.OnPropertyChanged("invln_sites_developingpartner_account");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_sites_Ownerofthehomesaftercompletion_acco
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_sites_Ownerofthehomesaftercompletion_acco")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_Sites> invln_sites_Ownerofthehomesaftercompletion_acco
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_Sites>("invln_sites_Ownerofthehomesaftercompletion_acco", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_sites_Ownerofthehomesaftercompletion_acco");
+				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_Sites>("invln_sites_Ownerofthehomesaftercompletion_acco", null, value);
+				this.OnPropertyChanged("invln_sites_Ownerofthehomesaftercompletion_acco");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_sites_ownerofthelandduringdevelopment_acc
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_sites_ownerofthelandduringdevelopment_acc")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_Sites> invln_sites_ownerofthelandduringdevelopment_acc
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_Sites>("invln_sites_ownerofthelandduringdevelopment_acc", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_sites_ownerofthelandduringdevelopment_acc");
+				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_Sites>("invln_sites_ownerofthelandduringdevelopment_acc", null, value);
+				this.OnPropertyChanged("invln_sites_ownerofthelandduringdevelopment_acc");
 			}
 		}
 		
@@ -7560,6 +7888,27 @@ namespace HE.Investments.Common.CRM.Model
 				this.OnPropertyChanging("he_systemuser_account_RelationshipOwner");
 				this.SetRelatedEntity<HE.Investments.Common.CRM.Model.SystemUser>("he_systemuser_account_RelationshipOwner", null, value);
 				this.OnPropertyChanged("he_systemuser_account_RelationshipOwner");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_account_ProviderManagementLead_systemuser
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_providermanagementlead")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_account_ProviderManagementLead_systemuser")]
+		public HE.Investments.Common.CRM.Model.SystemUser invln_account_ProviderManagementLead_systemuser
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<HE.Investments.Common.CRM.Model.SystemUser>("invln_account_ProviderManagementLead_systemuser", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_account_ProviderManagementLead_systemuser");
+				this.SetRelatedEntity<HE.Investments.Common.CRM.Model.SystemUser>("invln_account_ProviderManagementLead_systemuser", null, value);
+				this.OnPropertyChanged("invln_account_ProviderManagementLead_systemuser");
 			}
 		}
 		

@@ -6,7 +6,7 @@ using MediatR;
 
 namespace HE.Investments.Account.Domain.Organisation.QueryHandlers;
 
-internal class SearchOrganisationsQueryHandler : IRequestHandler<SearchOrganisationsQuery, SearchOrganisationsQueryResponse>
+internal sealed class SearchOrganisationsQueryHandler : IRequestHandler<SearchOrganisationsQuery, SearchOrganisationsQueryResponse>
 {
     private readonly IOrganisationSearchService _searchService;
 

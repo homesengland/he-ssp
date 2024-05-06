@@ -27,7 +27,7 @@ public static class ModelStateExtensions
             .ToDictionary(i => i.Key, i => GetErrorMessage(i.Value))
             .OrderBy(i =>
             {
-                var index = i.Key.IndexOf("[", StringComparison.InvariantCulture);
+                var index = i.Key.IndexOf('[');
                 return orderedKeys.IndexOf(i.Key.Remove(index < 0 ? i.Key.Length : index));
             })
             .ToDictionary(x => x.Key, x => x.Value);

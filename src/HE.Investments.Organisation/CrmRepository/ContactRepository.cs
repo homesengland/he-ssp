@@ -6,7 +6,7 @@ using Microsoft.Xrm.Sdk.Query;
 namespace HE.Investments.Organisation.CrmRepository;
 public class ContactRepository : IContactRepository
 {
-    public List<Entity> GetContactsForOrganisation(IOrganizationServiceAsync2 service, Guid organisationId, string? portalTypeFilter = null)
+    public List<Entity> GetContactsForOrganisation(IOrganizationServiceAsync2 service, string organisationId, string? portalTypeFilter = null)
     {
         var fetchXml = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                       <entity name=""contact"">
@@ -32,7 +32,7 @@ public class ContactRepository : IContactRepository
                     </fetch>";
 
         var result = service.RetrieveMultiple(new FetchExpression(fetchXml));
-        return result.Entities.ToList();
+        return [.. result.Entities];
     }
 
     public Entity? GetContactViaExternalId(IOrganizationServiceAsync2 service, string contactExternalId, string[]? columnSet = null)

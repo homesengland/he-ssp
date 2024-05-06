@@ -36,7 +36,7 @@ public class UploadOrganisationMoreInformationFileCommandHandler : CompanyStruct
             async companyStructure =>
             {
                 await using var file = _fileFactory.Create(request.File);
-                uploadedFile = (await companyStructure.UploadFiles(_fileService, new[] { file }, cancellationToken)).Single();
+                uploadedFile = (await companyStructure.UploadFiles(_fileService, [file], cancellationToken)).Single();
             },
             request.LoanApplicationId,
             cancellationToken);

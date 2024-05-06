@@ -14,7 +14,7 @@ public class RadioListContentTests : ViewComponentTestBase<RadioListContentTests
     private const string RadioInputFieldName = "fieldName";
     private const string TextInputFieldName = "secondNestedField";
     private const string TextAreaInputFieldName = "estedField";
-    private readonly string[] _availableOptions = { "val1", "val2", "val3" };
+    private readonly string[] _availableOptions = ["val1", "val2", "val3"];
 
     [Fact(Skip = Constants.SkipTest)]
     public async Task ShouldDisplayView()

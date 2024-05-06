@@ -11,14 +11,6 @@ namespace HE.Investment.AHP.Domain.HomeTypes.Crm;
 
 public class HomeTypeCrmMapper : IHomeTypeCrmMapper
 {
-    private static readonly IList<string> BasicCrmFields = new[]
-    {
-        nameof(invln_HomeType.invln_typeofhousing),
-        nameof(invln_HomeType.invln_hometypename),
-        nameof(invln_HomeType.CreatedOn),
-        nameof(invln_HomeType.invln_ishometypecompleted),
-    };
-
     private readonly IList<IHomeTypeCrmSegmentMapper> _segmentMappers;
 
     public HomeTypeCrmMapper(IEnumerable<IHomeTypeCrmSegmentMapper> segmentMappers)
@@ -26,52 +18,50 @@ public class HomeTypeCrmMapper : IHomeTypeCrmMapper
         _segmentMappers = segmentMappers.ToList();
     }
 
-    public IEnumerable<string> GetCrmFields(IEnumerable<HomeTypeSegmentType> segments)
-    {
-        return GetSegmentMappers(segments).SelectMany(x => x.CrmFieldNames).Concat(BasicCrmFields);
-    }
-
-    public IEnumerable<string> SaveCrmFields(HomeTypeEntity entity, IEnumerable<HomeTypeSegmentType> segments)
-    {
-        return GetSegmentMappers(segments.Where(entity.HasSegment)).SelectMany(x => x.CrmFieldNames).Concat(BasicCrmFields);
-    }
-
     public HomeTypeEntity MapToDomain(
         ApplicationBasicInfo application,
         SiteBasicInfo site,
         HomeTypeDto dto,
-        IEnumerable<HomeTypeSegmentType> segments,
         IDictionary<HomeTypeSegmentType, IReadOnlyCollection<UploadedFile>> uploadedFiles)
     {
-        var segmentEntities = GetSegmentMappers(segments)
-            .Select(x => x.MapToEntity(
-                application,
-                site,
-                dto,
-                uploadedFiles.TryGetValue(x.SegmentType, out var file) ? file : Array.Empty<UploadedFile>()));
+        var segments = _segmentMappers
+            .ToDictionary(
+                x => x.SegmentType,
+                x => x.MapToEntity(
+                    application,
+                    site,
+                    dto,
+                    uploadedFiles.TryGetValue(x.SegmentType, out var file) ? file : Array.Empty<UploadedFile>()));
 
         return new HomeTypeEntity(
             application,
+            site,
             dto.homeTypeName,
             MapHousingType(dto.housingType),
             dto.isCompleted == true ? SectionStatus.Completed : SectionStatus.InProgress,
-            new HomeTypeId(dto.id),
+            HomeTypeId.From(dto.id),
             dto.createdOn,
-            segments: segmentEntities.ToArray());
+            (HomeInformationSegmentEntity)segments[HomeTypeSegmentType.HomeInformation],
+            (DisabledPeopleHomeTypeDetailsSegmentEntity)segments[HomeTypeSegmentType.DisabledAndVulnerablePeople],
+            (OlderPeopleHomeTypeDetailsSegmentEntity)segments[HomeTypeSegmentType.OlderPeople],
+            (DesignPlansSegmentEntity)segments[HomeTypeSegmentType.DesignPlans],
+            (SupportedHousingInformationSegmentEntity)segments[HomeTypeSegmentType.SupportedHousingInformation],
+            (TenureDetailsSegmentEntity)segments[HomeTypeSegmentType.TenureDetails],
+            (ModernMethodsConstructionSegmentEntity)segments[HomeTypeSegmentType.ModernMethodsConstruction]);
     }
 
-    public HomeTypeDto MapToDto(HomeTypeEntity entity, IEnumerable<HomeTypeSegmentType> segments)
+    public HomeTypeDto MapToDto(HomeTypeEntity entity)
     {
         var homeTypeDto = new HomeTypeDto
         {
-            id = entity.Id.IsNew ? null : entity.Id.Value,
+            id = entity.Id.IsNew ? null : entity.Id.ToGuidAsString(),
             applicationId = entity.Application.Id.Value,
             homeTypeName = entity.Name.Value,
             housingType = MapHousingType(entity.HousingType),
             isCompleted = entity.Status == SectionStatus.Completed,
         };
 
-        return GetSegmentMappers(segments).Aggregate(homeTypeDto, (dto, segmentMapper) => segmentMapper.MapToDto(dto, entity));
+        return _segmentMappers.Aggregate(homeTypeDto, (dto, segmentMapper) => segmentMapper.MapToDto(dto, entity));
     }
 
     private static int? MapHousingType(HousingType value)
@@ -94,10 +84,5 @@ public class HomeTypeCrmMapper : IHomeTypeCrmMapper
             (int)invln_Typeofhousing.Housingfordisabledandvulnerablepeople => HousingType.HomesForDisabledAndVulnerablePeople,
             _ => HousingType.Undefined,
         };
-    }
-
-    private IEnumerable<IHomeTypeCrmSegmentMapper> GetSegmentMappers(IEnumerable<HomeTypeSegmentType> segments)
-    {
-        return segments.Select(x => _segmentMappers.Single(y => y.SegmentType == x));
     }
 }

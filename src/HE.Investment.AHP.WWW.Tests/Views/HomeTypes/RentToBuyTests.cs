@@ -62,7 +62,7 @@ public class RentToBuyTests : HomeTypesTestBase
             .HasElementWithText("h2", "Rent as percentage of market rent")
             .HasElementWithText("h2", "Would the target rent plus service charge for these homes exceed 80% of market rent?")
             .HasElementWithText("span", "Help with target rent")
-            .HasElementWithText("a", "Find out more information on our Rent Policy Statement (opens in the new tab).")
+            .HasElementWithText("a", "Find out more information on our Rent Policy Statement (opens in a new tab).")
             .HasRadio(
                 "TargetRentExceedMarketRent",
                 new[]

@@ -11,7 +11,8 @@ public abstract class TriggerTestBase
         ApplicationStatus applicationStatus,
         bool canEditApplication = true,
         bool canSubmitApplication = true,
-        ApplicationStatus? previousApplicationStatus = null)
+        ApplicationStatus? previousApplicationStatus = null,
+        bool wasSubmitted = false)
     {
         var userAccount = new Mock<IUserAccount>();
         userAccount.Setup(x => x.CanEditApplication).Returns(canEditApplication);
@@ -20,6 +21,7 @@ public abstract class TriggerTestBase
         return new ApplicationState(
             applicationStatus,
             userAccount.Object,
-            previousApplicationStatus);
+            previousApplicationStatus,
+            wasSubmitted);
     }
 }

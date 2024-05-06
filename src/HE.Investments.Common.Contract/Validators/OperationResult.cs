@@ -6,12 +6,12 @@ public class OperationResult : IOperationResult
 {
     public OperationResult()
     {
-        Errors = new List<ErrorItem>();
+        Errors = [];
     }
 
     public OperationResult(IEnumerable<ErrorItem>? errors)
     {
-        Errors = errors?.ToList() ?? new List<ErrorItem>();
+        Errors = errors?.ToList() ?? [];
     }
 
     public IList<ErrorItem> Errors { get; protected set; }
@@ -28,6 +28,12 @@ public class OperationResult : IOperationResult
 
     public static void ThrowValidationError(string affectedField, string validationMessage) =>
         New().AddValidationError(affectedField, validationMessage).CheckErrors();
+
+    public static TResult? ThrowValidationError<TResult>(string affectedField, string validationMessage)
+    {
+        New().AddValidationError(affectedField, validationMessage).CheckErrors();
+        return default;
+    }
 
     public static OperationResult<TReturnedData> ResultOf<TReturnedData>(Func<TReturnedData> action)
         where TReturnedData : class

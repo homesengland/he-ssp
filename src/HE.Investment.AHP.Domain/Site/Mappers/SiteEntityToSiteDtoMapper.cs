@@ -28,17 +28,18 @@ public static class SiteEntityToSiteDtoMapper
     private static readonly ModernMethodsConstruction3DSubcategoriesTypeMapper ModernMethodsConstruction3DSubcategoriesTypeMapper = new();
     private static readonly SiteProcurementMapper SiteProcurementMapper = new();
     private static readonly SiteStatusMapper SiteStatusMapper = new();
+    private static readonly PlanningStatusMapper PlanningStatusMapper = new();
 
-    public static SiteDto Map(SiteEntity entity, IPlanningStatusMapper planningStatusMapper)
+    public static SiteDto Map(SiteEntity entity)
     {
         return new SiteDto
         {
-            id = string.IsNullOrWhiteSpace(entity.Id.Value) ? null : entity.Id.Value,
+            id = string.IsNullOrWhiteSpace(entity.Id.Value) ? null : entity.Id.ToGuidAsString(),
             name = entity.Name.Value,
             status = SiteStatusMapper.ToDto(entity.Status),
             section106 = CreateSection106(entity.Section106),
-            localAuthority = new SiteLocalAuthority { id = entity.LocalAuthority?.Code.Value },
-            planningDetails = CreatePlanningDetails(entity.PlanningDetails, planningStatusMapper),
+            localAuthority = new SiteLocalAuthority { id = entity.LocalAuthority?.Code.Value, name = entity.LocalAuthority?.Name },
+            planningDetails = CreatePlanningDetails(entity.PlanningDetails),
             nationalDesignGuidePriorities = MapCollection(entity.NationalDesignGuidePriorities.Values, NationalDesignGuideMapper),
             buildingForHealthyLife = BuildingForHealthyLifeTypeMapper.ToDto(entity.BuildingForHealthyLife),
             numberOfGreenLights = entity.NumberOfGreenLights?.Value,
@@ -67,18 +68,18 @@ public static class SiteEntityToSiteDtoMapper
         };
     }
 
-    private static PlanningDetailsDto CreatePlanningDetails(PlanningDetails planningDetails, IPlanningStatusMapper planningStatusMapper)
+    private static PlanningDetailsDto CreatePlanningDetails(PlanningDetails planningDetails)
     {
         return new PlanningDetailsDto
         {
-            planningStatus = planningStatusMapper.ToDto(planningDetails.PlanningStatus),
+            planningStatus = PlanningStatusMapper.ToDto(planningDetails.PlanningStatus),
             referenceNumber = planningDetails.ReferenceNumber?.Value,
-            detailedPlanningApprovalDate = ToDateTime(planningDetails.DetailedPlanningApprovalDate),
+            detailedPlanningApprovalDate = planningDetails.DetailedPlanningApprovalDate?.Value,
             requiredFurtherSteps = planningDetails.RequiredFurtherSteps?.Value,
-            applicationForDetailedPlanningSubmittedDate = ToDateTime(planningDetails.ApplicationForDetailedPlanningSubmittedDate),
-            expectedPlanningApprovalDate = ToDateTime(planningDetails.ExpectedPlanningApprovalDate),
-            outlinePlanningApprovalDate = ToDateTime(planningDetails.OutlinePlanningApprovalDate),
-            planningSubmissionDate = ToDateTime(planningDetails.PlanningSubmissionDate),
+            applicationForDetailedPlanningSubmittedDate = planningDetails.ApplicationForDetailedPlanningSubmittedDate?.Value,
+            expectedPlanningApprovalDate = planningDetails.ExpectedPlanningApprovalDate?.Value,
+            outlinePlanningApprovalDate = planningDetails.OutlinePlanningApprovalDate?.Value,
+            planningSubmissionDate = planningDetails.PlanningSubmissionDate?.Value,
             isGrantFundingForAllHomes = planningDetails.IsGrantFundingForAllHomesCoveredByApplication,
             isLandRegistryTitleNumber = planningDetails.LandRegistryDetails?.IsLandRegistryTitleNumberRegistered,
             landRegistryTitleNumber = planningDetails.LandRegistryDetails?.TitleNumber?.Value,
@@ -136,15 +137,10 @@ public static class SiteEntityToSiteDtoMapper
         };
     }
 
-    private static DateTime? ToDateTime(DateValueObject? date)
-    {
-        return date?.Value.ToDateTime(TimeOnly.MinValue);
-    }
-
-    private static IList<int> MapCollection<T>(IEnumerable<T>? values, EnumMapper<T> mapper)
+    private static List<int> MapCollection<T>(IEnumerable<T>? values, EnumMapper<T> mapper)
         where T : struct
     {
-        return (values ?? Enumerable.Empty<T>())
+        return (values ?? [])
             .Select(x => mapper.ToDto(x))
             .Where(x => x != null)
             .Cast<int>()

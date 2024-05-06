@@ -6,9 +6,9 @@ namespace HE.Investments.FrontDoor.Shared.Project.Crm;
 
 internal interface IProjectCrmContext
 {
-    Task<FrontDoorProjectDto> GetOrganisationProjectById(string projectId, Guid organisationId, CancellationToken cancellationToken);
+    Task<FrontDoorProjectDto> GetOrganisationProjectById(string projectId, string organisationId, CancellationToken cancellationToken);
 
-    Task<FrontDoorProjectDto> GetUserProjectById(string projectId, string userGlobalId, Guid organisationId, CancellationToken cancellationToken);
+    Task<FrontDoorProjectDto> GetUserProjectById(string projectId, string userGlobalId, string organisationId, CancellationToken cancellationToken);
 
     Task<FrontDoorProjectSiteDto> GetProjectSite(string projectId, string siteId, CancellationToken cancellationToken);
 

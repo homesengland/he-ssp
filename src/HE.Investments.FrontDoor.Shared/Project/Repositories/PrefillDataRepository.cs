@@ -12,19 +12,13 @@ using Org::HE.Common.IntegrationModel.PortalIntegrationModel;
 
 namespace HE.Investments.FrontDoor.Shared.Project.Repositories;
 
-internal class PrefillDataRepository : IPrefillDataRepository
+internal sealed class PrefillDataRepository : IPrefillDataRepository
 {
     private readonly IProjectCrmContext _crmContext;
 
-    private readonly IFrontDoorProjectEnumMapping _mapping;
-
-    private readonly IPlanningStatusMapper _planningStatusMapper;
-
-    public PrefillDataRepository(IProjectCrmContext crmContext, IFrontDoorProjectEnumMapping mapping, IPlanningStatusMapper planningStatusMapper)
+    public PrefillDataRepository(IProjectCrmContext crmContext)
     {
         _crmContext = crmContext;
-        _mapping = mapping;
-        _planningStatusMapper = planningStatusMapper;
     }
 
     public async Task<ProjectPrefillData> GetProjectPrefillData(
@@ -52,7 +46,7 @@ internal class PrefillDataRepository : IPrefillDataRepository
             siteId,
             site.SiteName,
             site.NumberofHomesEnabledBuilt,
-            _planningStatusMapper.ToDomain(site.PlanningStatus) ?? SitePlanningStatus.Undefined,
+            DomainEnumMapper.Map(site.PlanningStatus, FrontDoorProjectEnumMapping.PlanningStatus, SitePlanningStatus.Undefined)!.Value,
             site.LocalAuthorityName);
     }
 
@@ -64,9 +58,9 @@ internal class PrefillDataRepository : IPrefillDataRepository
     private ProjectPrefillData Map(FrontDoorProjectDto project, FrontDoorProjectSiteDto? site)
     {
         return new ProjectPrefillData(
-            new FrontDoorProjectId(project.ProjectId),
+            FrontDoorProjectId.From(project.ProjectId),
             project.ProjectName,
-            new ReadOnlyCollection<SupportActivityType>(DomainEnumMapper.Map(project.ActivitiesinThisProject, _mapping.ActivityType)),
-            site.IsProvided() ? new FrontDoorSiteId(site!.SiteId) : null);
+            new ReadOnlyCollection<SupportActivityType>(DomainEnumMapper.Map(project.ActivitiesinThisProject, FrontDoorProjectEnumMapping.ActivityType)),
+            site.IsProvided() ? FrontDoorSiteId.From(site!.SiteId) : null);
     }
 }

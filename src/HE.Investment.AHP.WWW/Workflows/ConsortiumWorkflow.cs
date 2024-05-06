@@ -1,4 +1,4 @@
-using HE.Investment.AHP.Contract.Consortium;
+using HE.Investments.AHP.Consortium.Contract;
 using HE.Investments.Common.WWW.Routing;
 using Stateless;
 
@@ -26,6 +26,7 @@ public class ConsortiumWorkflow : IStateRouting<ConsortiumWorkflowState>
         {
             ConsortiumWorkflowState.Index => true,
             ConsortiumWorkflowState.Start => true,
+            ConsortiumWorkflowState.Programme => true,
             _ => false,
         });
     }
@@ -38,7 +39,10 @@ public class ConsortiumWorkflow : IStateRouting<ConsortiumWorkflowState>
     private void ConfigureTransitions()
     {
         _machine.Configure(ConsortiumWorkflowState.Start)
-            .Permit(Trigger.Continue, ConsortiumWorkflowState.Index)
+            .Permit(Trigger.Continue, ConsortiumWorkflowState.Programme)
             .Permit(Trigger.Back, ConsortiumWorkflowState.Index);
+
+        _machine.Configure(ConsortiumWorkflowState.Programme)
+            .Permit(Trigger.Back, ConsortiumWorkflowState.Start);
     }
 }

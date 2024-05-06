@@ -5,5 +5,5 @@ namespace HE.Investment.AHP.Domain.Delivery.Policies;
 
 public interface IMilestoneDatesInProgrammeDateRangePolicy
 {
-    Task Validate(AhpApplicationId applicationId, DeliveryPhaseMilestones milestones, CancellationToken cancellationToken);
+    Task Validate(DeliveryPhaseMilestones milestones, CancellationToken cancellationToken);
 }

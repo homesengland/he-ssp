@@ -1,5 +1,4 @@
 using HE.Investments.Account.Api.Contract.User;
-using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.Contract;
 using HE.Investments.TestsUtils;
 using HE.Investments.TestsUtils.TestFramework;

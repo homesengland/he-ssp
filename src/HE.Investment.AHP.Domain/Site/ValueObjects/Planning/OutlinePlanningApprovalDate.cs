@@ -1,16 +1,23 @@
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
+using HE.Investments.Common.Contract;
+using HE.Investments.Common.Domain.ValueObjects;
 
 namespace HE.Investment.AHP.Domain.Site.ValueObjects.Planning;
 
 public class OutlinePlanningApprovalDate : DateValueObject
 {
-    public OutlinePlanningApprovalDate(string? day, string? month, string? year)
-        : base(day, month, year, "OutlinePlanningApprovalDate", "outline planning approval date")
+    private const string FieldDescription = "outline planning approval date";
+
+    public OutlinePlanningApprovalDate(bool exists, string? day, string? month, string? year)
+        : base(day, month, year, nameof(OutlinePlanningApprovalDate), FieldDescription, !exists)
     {
     }
 
-    public static OutlinePlanningApprovalDate? Create(string? day, string? month, string? year)
+    public OutlinePlanningApprovalDate(DateTime? value)
+        : base(value)
     {
-        return ValuesProvided(day, month, year) ? new OutlinePlanningApprovalDate(day, month, year) : null;
     }
+
+    public static OutlinePlanningApprovalDate FromDateDetails(bool exists, DateDetails? date) =>
+        new(exists, date?.Day, date?.Month, date?.Year);
 }

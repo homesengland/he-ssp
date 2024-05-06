@@ -12,14 +12,13 @@ namespace HE.CRM.AHP.Plugins.Handlers.AHPApplication
 {
     public class UpdateLocalAuthorityWhenSiteIsChanged : CrmEntityHandlerBase<invln_scheme, DataverseContext>
     {
-        private readonly IAhgLocalAuthorityRepository _localAuthorityRepository;
-
         private readonly IAhpApplicationRepository _ahpApplicationRepository;
+        private readonly IHeLocalAuthorityRepository _heLocalAuthorityRepository;
 
-        public UpdateLocalAuthorityWhenSiteIsChanged(IAhgLocalAuthorityRepository localAuthorityRepository, IAhpApplicationRepository ahpApplicationRepository)
+        public UpdateLocalAuthorityWhenSiteIsChanged(IAhpApplicationRepository ahpApplicationRepository, IHeLocalAuthorityRepository heLocalAuthorityRepository)
         {
-            _localAuthorityRepository = localAuthorityRepository;
             _ahpApplicationRepository = ahpApplicationRepository;
+            _heLocalAuthorityRepository = heLocalAuthorityRepository;
         }
 
         public override bool CanWork()
@@ -30,11 +29,14 @@ namespace HE.CRM.AHP.Plugins.Handlers.AHPApplication
         public override void DoWork()
         {
             this.TracingService.Trace($"{ExecutionData.Target.invln_Site.Id}");
-            var ahpLocalAuthority = _localAuthorityRepository.GetAhpLocalAuthoritiesReletedToSite(ExecutionData.Target.invln_Site.Id);
+            var heLocalAuthority = _heLocalAuthorityRepository.GetAhpLocalAuthoritiesReletedToSite(ExecutionData.Target.invln_Site.Id);
             this.TracingService.Trace($"Grow Manager");
-            if (ahpLocalAuthority.invln_GrowthManager == null)
+            if (heLocalAuthority.he_growthmanager == null)
+            {
                 return;
-            _ahpApplicationRepository.Assign(new invln_scheme() { Id = CurrentState.Id }, ahpLocalAuthority.invln_GrowthManager);
+            }
+
+            _ahpApplicationRepository.Assign(new invln_scheme() { Id = CurrentState.Id }, heLocalAuthority.he_growthmanager);
         }
     }
 }

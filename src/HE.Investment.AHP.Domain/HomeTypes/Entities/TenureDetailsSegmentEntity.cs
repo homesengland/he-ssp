@@ -149,7 +149,7 @@ public class TenureDetailsSegmentEntity : DomainEntity, IHomeTypeSegmentEntity
             return 0;
         }
 
-        return (rentPerWeek!.Value / marketRentPerWeek.Value).RoundToTwoDecimalPlaces();
+        return (rentPerWeek!.Value / marketRentPerWeek.Value).RoundToFourDecimalPlaces();
     }
 
     public decimal? CalculateExpectedFirstTranche(MarketValue? marketValue, InitialSale? initialSale)
@@ -179,7 +179,7 @@ public class TenureDetailsSegmentEntity : DomainEntity, IHomeTypeSegmentEntity
         return (rentPerWeek!.Value * weeksAYear / (marketValue.Value - expectedFirstTranche!.Value)).RoundToFourDecimalPlaces();
     }
 
-    public IHomeTypeSegmentEntity Duplicate()
+    public TenureDetailsSegmentEntity Duplicate()
     {
         return new TenureDetailsSegmentEntity(
             MarketValue,

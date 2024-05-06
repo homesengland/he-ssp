@@ -114,7 +114,7 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
         CancellationToken cancellationToken)
     {
         return await ExecuteProjectCommand(
-            new ProvideEnglandHousingDeliveryCommand(new FrontDoorProjectId(projectId), isEnglandHousingDelivery),
+            new ProvideEnglandHousingDeliveryCommand(FrontDoorProjectId.From(projectId), isEnglandHousingDelivery),
             nameof(EnglandHousingDelivery),
             _ => isEnglandHousingDelivery,
             cancellationToken);
@@ -122,7 +122,7 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
 
     [HttpGet("{projectId}/not-eligible-for-anything")]
     [WorkflowState(ProjectWorkflowState.NotEligibleForAnything)]
-    public IActionResult NotEligibleForAnything([FromRoute] string projectId)
+    public IActionResult NotEligibleForAnything()
     {
         return View();
     }
@@ -147,7 +147,7 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     public async Task<IActionResult> Name([FromRoute] string projectId, string? name, CancellationToken cancellationToken)
     {
         return await ExecuteProjectCommand(
-            new ProvideProjectNameCommand(new FrontDoorProjectId(projectId), name),
+            new ProvideProjectNameCommand(FrontDoorProjectId.From(projectId), name),
             nameof(Name),
             _ => name,
             cancellationToken);
@@ -165,7 +165,7 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     public async Task<IActionResult> SupportRequiredActivities([FromRoute] string projectId, ProjectDetails model, CancellationToken cancellationToken)
     {
         return await ExecuteProjectCommand(
-            new ProvideSupportActivitiesCommand(new FrontDoorProjectId(projectId), model.SupportActivityTypes ?? new List<SupportActivityType>()),
+            new ProvideSupportActivitiesCommand(FrontDoorProjectId.From(projectId), model.SupportActivityTypes ?? new List<SupportActivityType>()),
             nameof(SupportRequiredActivities),
             project =>
             {
@@ -187,7 +187,7 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     public async Task<IActionResult> Infrastructure([FromRoute] string projectId, ProjectDetails model, CancellationToken cancellationToken)
     {
         return await ExecuteProjectCommand(
-            new ProvideInfrastructureTypesCommand(new FrontDoorProjectId(projectId), model.InfrastructureTypes ?? new List<InfrastructureType>()),
+            new ProvideInfrastructureTypesCommand(FrontDoorProjectId.From(projectId), model.InfrastructureTypes ?? new List<InfrastructureType>()),
             nameof(Infrastructure),
             project =>
             {
@@ -209,7 +209,7 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     public async Task<IActionResult> Tenure([FromRoute] string projectId, ProjectDetails model, CancellationToken cancellationToken)
     {
         return await ExecuteProjectCommand(
-            new ProvideAffordableHomesAmountCommand(new FrontDoorProjectId(projectId), model.AffordableHomesAmount),
+            new ProvideAffordableHomesAmountCommand(FrontDoorProjectId.From(projectId), model.AffordableHomesAmount),
             nameof(Tenure),
             project =>
             {
@@ -231,7 +231,7 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     public async Task<IActionResult> OrganisationHomesBuilt([FromRoute] string projectId, ProjectDetails model, CancellationToken cancellationToken)
     {
         return await ExecuteProjectCommand(
-            new ProvideOrganisationHomesBuiltCommand(new FrontDoorProjectId(projectId), model.OrganisationHomesBuilt),
+            new ProvideOrganisationHomesBuiltCommand(FrontDoorProjectId.From(projectId), model.OrganisationHomesBuilt),
             nameof(OrganisationHomesBuilt),
             project =>
             {
@@ -253,7 +253,7 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     public async Task<IActionResult> IdentifiedSite([FromRoute] string projectId, ProjectDetails model, CancellationToken cancellationToken)
     {
         return await ExecuteProjectCommand(
-            new ProvideIdentifiedSiteCommand(new FrontDoorProjectId(projectId), model.IsSiteIdentified),
+            new ProvideIdentifiedSiteCommand(FrontDoorProjectId.From(projectId), model.IsSiteIdentified),
             nameof(IdentifiedSite),
             project =>
             {
@@ -295,7 +295,7 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     public async Task<IActionResult> GeographicFocus([FromRoute] string projectId, ProjectDetails model, CancellationToken cancellationToken)
     {
         return await ExecuteProjectCommand(
-            new ProvideGeographicFocusCommand(new FrontDoorProjectId(projectId), model.GeographicFocus),
+            new ProvideGeographicFocusCommand(FrontDoorProjectId.From(projectId), model.GeographicFocus),
             nameof(GeographicFocus),
             project =>
             {
@@ -317,7 +317,7 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     public async Task<IActionResult> Region([FromRoute] string projectId, ProjectDetails model, CancellationToken cancellationToken)
     {
         return await ExecuteProjectCommand(
-            new ProvideRegionCommand(new FrontDoorProjectId(projectId), model.Regions ?? new List<RegionType>()),
+            new ProvideRegionCommand(FrontDoorProjectId.From(projectId), model.Regions ?? new List<RegionType>()),
             nameof(Region),
             project =>
             {
@@ -329,7 +329,7 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
 
     [HttpGet("{projectId}/local-authority-search")]
     [WorkflowState(ProjectWorkflowState.LocalAuthoritySearch)]
-    public IActionResult LocalAuthoritySearch([FromRoute] string projectId, [FromQuery] string? redirect, CancellationToken cancellationToken)
+    public IActionResult LocalAuthoritySearch([FromRoute] string projectId, [FromQuery] string? redirect)
     {
         return RedirectToAction("Search", "LocalAuthority", new { projectId, redirect });
     }
@@ -363,7 +363,7 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
         if (model.IsConfirmed.Value)
         {
             return await ExecuteProjectCommand(
-                new ProvideLocalAuthorityCommand(new FrontDoorProjectId(projectId), new LocalAuthorityCode(model.LocalAuthorityCode), model.LocalAuthorityName),
+                new ProvideLocalAuthorityCommand(FrontDoorProjectId.From(projectId), new LocalAuthorityCode(model.LocalAuthorityCode), model.LocalAuthorityName),
                 nameof(LocalAuthorityConfirm),
                 project => project,
                 cancellationToken);
@@ -384,7 +384,7 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     public async Task<IActionResult> HomesNumber([FromRoute] string projectId, ProjectDetails model, CancellationToken cancellationToken)
     {
         return await ExecuteProjectCommand(
-            new ProvideHomesNumberCommand(new FrontDoorProjectId(projectId), model.HomesNumber),
+            new ProvideHomesNumberCommand(FrontDoorProjectId.From(projectId), model.HomesNumber),
             nameof(HomesNumber),
             project =>
             {
@@ -406,7 +406,7 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     public async Task<IActionResult> Progress([FromRoute] string projectId, ProjectDetails model, CancellationToken cancellationToken)
     {
         return await ExecuteProjectCommand(
-            new ProvideIsSupportRequiredCommand(new FrontDoorProjectId(projectId), model.IsSupportRequired),
+            new ProvideIsSupportRequiredCommand(FrontDoorProjectId.From(projectId), model.IsSupportRequired),
             nameof(Progress),
             project =>
             {
@@ -428,7 +428,7 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     public async Task<IActionResult> RequiresFunding([FromRoute] string projectId, ProjectDetails model, CancellationToken cancellationToken)
     {
         return await ExecuteProjectCommand(
-            new ProvideIsFundingRequiredCommand(new FrontDoorProjectId(projectId), model.IsFundingRequired),
+            new ProvideIsFundingRequiredCommand(FrontDoorProjectId.From(projectId), model.IsFundingRequired),
             nameof(RequiresFunding),
             project =>
             {
@@ -450,7 +450,7 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     public async Task<IActionResult> FundingAmount([FromRoute] string projectId, ProjectDetails model, CancellationToken cancellationToken)
     {
         return await ExecuteProjectCommand(
-            new ProvideRequiredFundingCommand(new FrontDoorProjectId(projectId), model.RequiredFunding),
+            new ProvideRequiredFundingCommand(FrontDoorProjectId.From(projectId), model.RequiredFunding),
             nameof(FundingAmount),
             project =>
             {
@@ -472,7 +472,7 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     public async Task<IActionResult> Profit([FromRoute] string projectId, ProjectDetails model, CancellationToken cancellationToken)
     {
         return await ExecuteProjectCommand(
-            new ProvideIsProfitCommand(new FrontDoorProjectId(projectId), model.IsProfit),
+            new ProvideIsProfitCommand(FrontDoorProjectId.From(projectId), model.IsProfit),
             nameof(Profit),
             project =>
             {
@@ -494,7 +494,7 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     public async Task<IActionResult> ExpectedStart([FromRoute] string projectId, ProjectDetails model, CancellationToken cancellationToken)
     {
         return await ExecuteProjectCommand(
-            new ProvideExpectedStartDateCommand(new FrontDoorProjectId(projectId), model.ExpectedStartDate),
+            new ProvideExpectedStartDateCommand(FrontDoorProjectId.From(projectId), model.ExpectedStartDate),
             nameof(ExpectedStart),
             project =>
             {
@@ -516,7 +516,7 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     [WorkflowState(ProjectWorkflowState.CheckAnswers)]
     public async Task<IActionResult> Complete([FromRoute] string projectId, CancellationToken cancellationToken)
     {
-        var (operationResult, applicationType) = await _mediator.Send(new ValidateProjectAnswersQuery(new FrontDoorProjectId(projectId)), cancellationToken);
+        var (operationResult, applicationType) = await _mediator.Send(new ValidateProjectAnswersQuery(FrontDoorProjectId.From(projectId)), cancellationToken);
 
         if (operationResult.HasValidationErrors)
         {
@@ -533,7 +533,7 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     }
 
     [HttpGet("{projectId}/you-need-to-speak-to-homes-england")]
-    public IActionResult YouNeedToSpeakToHomesEngland([FromRoute] string projectId)
+    public IActionResult YouNeedToSpeakToHomesEngland()
     {
         return View("YouNeedToSpeakToHomesEngland");
     }
@@ -580,7 +580,7 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
 
     private async Task<ProjectDetails> GetProjectDetails(string projectId, CancellationToken cancellationToken)
     {
-        var projectDetails = await _mediator.Send(new GetProjectDetailsQuery(new FrontDoorProjectId(projectId)), cancellationToken);
+        var projectDetails = await _mediator.Send(new GetProjectDetailsQuery(FrontDoorProjectId.From(projectId)), cancellationToken);
         ViewBag.ProjectName = projectDetails.Name;
         return projectDetails;
     }

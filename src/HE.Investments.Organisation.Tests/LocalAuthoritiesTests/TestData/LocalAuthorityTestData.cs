@@ -1,6 +1,7 @@
 using HE.Investments.Organisation.LocalAuthorities.ValueObjects;
 
 namespace HE.Investments.Organisation.Tests.LocalAuthoritiesTests.TestData;
+
 internal static class LocalAuthorityTestData
 {
     public static readonly LocalAuthority LocalAuthorityOne = new(LocalAuthorityCode.From("1"), "Liverpool");
@@ -9,12 +10,11 @@ internal static class LocalAuthorityTestData
     public static readonly LocalAuthority LocalAuthorityFour = new(LocalAuthorityCode.From("4"), "Brighton");
     public static readonly LocalAuthority LocalAuthorityFive = new(LocalAuthorityCode.From("5"), "Leicester");
 
-    public static readonly IList<LocalAuthority> LocalAuthoritiesList = new List<LocalAuthority>
-    {
+    public static readonly IList<LocalAuthority> LocalAuthoritiesList = [
         LocalAuthorityOne,
         LocalAuthorityTwo,
         LocalAuthorityThree,
         LocalAuthorityFour,
         LocalAuthorityFive,
-    };
+    ];
 }

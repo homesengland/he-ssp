@@ -6,7 +6,14 @@ namespace HE.Investment.AHP.Domain.Application.ValueObjects;
 
 public class RepresentationsAndWarranties : ValueObject
 {
-    public RepresentationsAndWarranties(string? value)
+    public RepresentationsAndWarranties(bool value)
+    {
+        Value = value;
+    }
+
+    public bool Value { get; }
+
+    public static RepresentationsAndWarranties FromString(string? value)
     {
         if (value != "checked")
         {
@@ -15,12 +22,10 @@ public class RepresentationsAndWarranties : ValueObject
                 .CheckErrors();
         }
 
-        Value = true;
+        return new(true);
     }
 
-    public bool Value { get; }
-
-    public static RepresentationsAndWarranties Confirmed() => new("checked");
+    public static RepresentationsAndWarranties Confirmed() => new(true);
 
     public override string ToString()
     {

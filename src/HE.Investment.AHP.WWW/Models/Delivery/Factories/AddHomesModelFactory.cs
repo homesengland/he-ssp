@@ -1,3 +1,4 @@
+using System.Globalization;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Queries;
@@ -5,7 +6,7 @@ using MediatR;
 
 namespace HE.Investment.AHP.WWW.Models.Delivery.Factories;
 
-internal class AddHomesModelFactory
+internal sealed class AddHomesModelFactory
 {
     private readonly IMediator _mediator;
 
@@ -33,7 +34,7 @@ internal class AddHomesModelFactory
 
     private static string? GetHomesToDeliverOrDefault(IDictionary<string, string?> homesToDeliver, string homeTypeId, int? usedHomes)
     {
-        return homesToDeliver.TryGetValue(homeTypeId, out var toDeliver) ? toDeliver : usedHomes.ToString();
+        return homesToDeliver.TryGetValue(homeTypeId, out var toDeliver) ? toDeliver : usedHomes?.ToString(CultureInfo.InvariantCulture);
     }
 
     private async Task<AddHomesModel> Create(
@@ -43,7 +44,7 @@ internal class AddHomesModelFactory
         CancellationToken cancellationToken)
     {
         var deliveryPhaseHomes = await _mediator.Send(
-            new GetDeliveryPhaseHomesQuery(AhpApplicationId.From(applicationId), new DeliveryPhaseId(deliveryPhaseId)),
+            new GetDeliveryPhaseHomesQuery(AhpApplicationId.From(applicationId), DeliveryPhaseId.From(deliveryPhaseId)),
             cancellationToken);
 
         return new AddHomesModel(

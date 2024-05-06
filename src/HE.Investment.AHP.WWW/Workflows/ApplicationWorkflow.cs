@@ -1,6 +1,5 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investments.Common.Contract;
-using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.WWW.Routing;
 using Stateless;
 
@@ -14,13 +13,10 @@ public class ApplicationWorkflow : IStateRouting<ApplicationWorkflowState>
 
     private readonly Func<Task<bool>> _isApplicationExist;
 
-    private readonly bool _isReadOnly;
-
-    public ApplicationWorkflow(ApplicationWorkflowState currentWorkflowState, Func<Task<Application>> modelFactory, Func<Task<bool>> isApplicationExist, bool isReadOnly)
+    public ApplicationWorkflow(ApplicationWorkflowState currentWorkflowState, Func<Task<Application>> modelFactory, Func<Task<bool>> isApplicationExist)
     {
         _isApplicationExist = isApplicationExist;
         _modelFactory = modelFactory;
-        _isReadOnly = isReadOnly;
         _machine = new StateMachine<ApplicationWorkflowState, Trigger>(currentWorkflowState);
         ConfigureTransitions();
     }
@@ -51,16 +47,6 @@ public class ApplicationWorkflow : IStateRouting<ApplicationWorkflowState>
         };
     }
 
-    public ApplicationWorkflowState CurrentState(ApplicationWorkflowState targetState)
-    {
-        if (_isReadOnly)
-        {
-            throw new NotFoundException("State could not be accessed when application is read only.");
-        }
-
-        return targetState;
-    }
-
     private void ConfigureTransitions()
     {
         _machine.Configure(ApplicationWorkflowState.ApplicationName)
@@ -68,6 +54,9 @@ public class ApplicationWorkflow : IStateRouting<ApplicationWorkflowState>
 
         _machine.Configure(ApplicationWorkflowState.ApplicationTenure)
             .Permit(Trigger.Back, ApplicationWorkflowState.ApplicationName);
+
+        _machine.Configure(ApplicationWorkflowState.TaskList)
+            .Permit(Trigger.Back, ApplicationWorkflowState.ApplicationsList);
 
         _machine.Configure(ApplicationWorkflowState.OnHold)
             .Permit(Trigger.Continue, ApplicationWorkflowState.TaskList)

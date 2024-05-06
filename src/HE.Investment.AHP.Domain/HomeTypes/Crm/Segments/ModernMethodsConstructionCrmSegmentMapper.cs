@@ -9,17 +9,6 @@ namespace HE.Investment.AHP.Domain.HomeTypes.Crm.Segments;
 
 public class ModernMethodsConstructionCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<ModernMethodsConstructionSegmentEntity>
 {
-    public ModernMethodsConstructionCrmSegmentMapper()
-        : base(new[]
-        {
-            "invln_mmcapplied", // TODO: AB#86986 use nameof when earlybound will be provided
-            nameof(invln_HomeType.invln_mmccategories),
-            nameof(invln_HomeType.invln_mmccategory1subcategories),
-            nameof(invln_HomeType.invln_mmccategory2subcategories),
-        })
-    {
-    }
-
     public override HomeTypeSegmentType SegmentType => HomeTypeSegmentType.ModernMethodsConstruction;
 
     public override IHomeTypeSegmentEntity MapToEntity(

@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investment.AHP.WWW.Views.Application;
+using HE.Investments.AHP.IntegrationTests.Extensions;
 using HE.Investments.AHP.IntegrationTests.Framework;
 using HE.Investments.AHP.IntegrationTests.Pages;
 using HE.Investments.Common.Contract;
@@ -78,14 +79,15 @@ public class Order06Submit : AhpIntegrationTest
         applicationCompletedPage
             .UrlEndWith(ApplicationPagesUrl.CompletedSuffix)
             .HasTitle(ApplicationPageTitles.CompletedSecondTitle)
-            .HasLinkButton("Return to applications");
+            .HasLinkWithTestId("return-to-applications", out _);
 
         // when
-        var mainPage = await TestClient.NavigateTo(applicationCompletedPage.GetLinkButton("Return to applications"));
+        var mainPage = await TestClient.NavigateTo(applicationCompletedPage.GetLinkByTestId("return-to-applications"));
 
         // then
         mainPage
             .UrlEndWith(MainPagesUrl.ApplicationList)
-            .HasTitle(ApplicationPageTitles.ApplicationList);
+            .HasTitle(ApplicationPageTitles.ApplicationList)
+            .HasApplicationInStatus(ApplicationData.ApplicationId, ApplicationStatus.ApplicationSubmitted);
     }
 }

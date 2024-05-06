@@ -18,10 +18,7 @@ public abstract class AccountViewTestBase : ViewTestBase
         Action<IServiceCollection>? mockDependencies = null)
         where TModel : class
     {
-        var document = await base.Render(viewPath, model, viewBagOrViewData, modelStateDictionary, routeData, services =>
-        {
-            services.AddSingleton(_ => new Mock<IAccountExternalLinks>().Object);
-        });
+        var document = await base.Render(viewPath, model, viewBagOrViewData, modelStateDictionary, routeData, services => services.AddSingleton(_ => new Mock<IAccountExternalLinks>().Object));
 
         return document;
     }

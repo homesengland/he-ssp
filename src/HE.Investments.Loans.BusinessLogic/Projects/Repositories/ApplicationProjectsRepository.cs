@@ -1,7 +1,6 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Contract.Exceptions;
-using HE.Investments.Common.CRM.Extensions;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Serialization;
 using HE.Investments.Common.Extensions;
@@ -14,41 +13,32 @@ using HE.Investments.Loans.BusinessLogic.Projects.Repositories.Mappers;
 using HE.Investments.Loans.Common.Utils.Enums;
 using HE.Investments.Loans.Contract.Application.Events;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
-using Microsoft.FeatureManagement;
 using Microsoft.PowerPlatform.Dataverse.Client;
 
 namespace HE.Investments.Loans.BusinessLogic.Projects.Repositories;
 
 public class ApplicationProjectsRepository : IApplicationProjectsRepository
 {
-    private readonly IDateTimeProvider _timeProvider;
-
     private readonly IOrganizationServiceAsync2 _serviceClient;
 
     private readonly IEventDispatcher _eventDispatcher;
 
-    private readonly IFeatureManager _featureManager;
-
     public ApplicationProjectsRepository(
-        IDateTimeProvider dateTime,
         IOrganizationServiceAsync2 serviceClient,
-        IEventDispatcher eventDispatcher,
-        IFeatureManager featureManager)
+        IEventDispatcher eventDispatcher)
     {
-        _timeProvider = dateTime;
         _serviceClient = serviceClient;
         _eventDispatcher = eventDispatcher;
-        _featureManager = featureManager;
     }
 
     public async Task<ApplicationProjects> GetAllAsync(LoanApplicationId loanApplicationId, UserAccount userAccount, CancellationToken cancellationToken)
     {
         var req = new invln_getsingleloanapplicationforaccountandcontactRequest
         {
-            invln_accountid = userAccount.SelectedOrganisationId().ToString(),
+            invln_accountid = userAccount.SelectedOrganisationId().ToGuidAsString(),
             invln_externalcontactid = userAccount.UserGlobalId.ToString(),
             invln_loanapplicationid = loanApplicationId.ToString(),
-            invln_usehetables = await _featureManager.GetUseHeTablesParameter(),
+            invln_usehetables = "true",
         };
 
         var response = await _serviceClient.ExecuteAsync(req, cancellationToken) as invln_getsingleloanapplicationforaccountandcontactResponse
@@ -57,7 +47,7 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
         var loanApplicationDto = CrmResponseSerializer.Deserialize<IList<LoanApplicationDto>>(response.invln_loanapplication)?.FirstOrDefault()
                                  ?? throw new NotFoundException(nameof(ApplicationProjects), loanApplicationId.ToString());
 
-        return ApplicationProjectsMapper.Map(loanApplicationDto, _timeProvider.Now);
+        return ApplicationProjectsMapper.Map(loanApplicationDto);
     }
 
     public async Task SaveAllAsync(ApplicationProjects applicationProjects, UserAccount userAccount, CancellationToken cancellationToken)
@@ -78,11 +68,11 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
 
         var req = new invln_getsinglesitedetailsRequest
         {
-            invln_accountid = userAccount.SelectedOrganisationId().ToString(),
+            invln_accountid = userAccount.SelectedOrganisationId().ToGuidAsString(),
             invln_externalcontactid = userAccount.UserGlobalId.ToString(),
             invln_sitedetailsid = projectId.ToString(),
             invln_fieldstoretrieve = fieldsToRetrieve,
-            invln_usehetables = await _featureManager.GetUseHeTablesParameter(),
+            invln_usehetables = "true",
         };
 
         var response = await _serviceClient.ExecuteAsync(req, cancellationToken) as invln_getsinglesitedetailsResponse
@@ -91,7 +81,7 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
         var siteDetailsDto = CrmResponseSerializer.Deserialize<SiteDetailsDto>(response.invln_sitedetail)
                              ?? throw new NotFoundException(nameof(Project), projectId.ToString());
 
-        return ProjectEntityMapper.Map(siteDetailsDto, _timeProvider.Now);
+        return ProjectEntityMapper.Map(siteDetailsDto);
     }
 
     public async Task SaveAsync(LoanApplicationId loanApplicationId, Project projectToSave, CancellationToken cancellationToken)
@@ -152,7 +142,7 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
             existingLegalCharges = projectToSave.ChargesDebt?.Exist,
             existingLegalChargesInformation = projectToSave.ChargesDebt?.Info,
             numberOfAffordableHomes = projectToSave.AffordableHomes?.Value,
-            projectHasStartDate = projectToSave.StartDate?.Exists,
+            projectHasStartDate = projectToSave.StartDate?.Value.HasValue,
             startDate = projectToSave.StartDate?.Value,
             planningPermissionStatus = projectToSave.Status.IsProvided() ? PlanningPermissionStatusMapper.Map(projectToSave.PlanningPermissionStatus) : null,
             affordableHousing = projectToSave.AffordableHomes?.Value?.MapToBool(),
@@ -165,7 +155,7 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
             invln_loanapplicationid = loanApplicationId.Value.ToString(),
             invln_sitedetailsid = projectToSave.Id.ToString(),
             invln_fieldstoupdate = ProjectCrmFieldNameMapper.Map(ProjectFieldsSet.SaveAllFields),
-            invln_usehetables = await _featureManager.GetUseHeTablesParameter(),
+            invln_usehetables = "true",
         };
 
         await _serviceClient.ExecuteAsync(req, cancellationToken);
@@ -177,14 +167,14 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
         {
             siteDetailsId = projectToSave.Id.Value.ToString(),
             Name = projectToSave.Name?.Value,
-            frontDoorSiteId = projectToSave.FrontDoorSiteId?.Value,
+            frontDoorSiteId = projectToSave.FrontDoorSiteId?.ToGuidAsString(),
         };
 
         var req = new invln_createsinglesitedetailRequest
         {
             invln_sitedetails = CrmResponseSerializer.Serialize(siteDetails),
             invln_loanapplicationid = loanApplicationId.Value.ToString(),
-            invln_usehetables = await _featureManager.GetUseHeTablesParameter(),
+            invln_usehetables = "true",
         };
 
         await _serviceClient.ExecuteAsync(req, cancellationToken);

@@ -8,7 +8,7 @@ using HE.Investment.AHP.WWW.Models.Scheme.Factories;
 using HE.Investment.AHP.WWW.Models.Site.Factories;
 using HE.Investment.AHP.WWW.Notifications;
 using HE.Investment.AHP.WWW.Routing;
-using HE.Investment.AHP.WWW.Utils;
+using HE.Investments.AHP.Consortium.Domain.Config;
 using HE.Investments.Common;
 using HE.Investments.Common.Config;
 using HE.Investments.Common.Contract.Enum;
@@ -37,14 +37,13 @@ public static class AhpWebModule
         AddConfiguration(services);
         services.AddHttpUserContext();
         services.AddDomainModule();
+        services.AddConsortiumDomainModule();
         services.AddEventInfrastructure();
         services.AddNotificationPublisher(ApplicationType.Ahp);
         services.AddNotificationConsumer(ApplicationType.Ahp, typeof(HomeTypeHasBeenCreatedDisplayNotificationFactory).Assembly);
         services.AddDocumentServiceModule();
         AddViewModelFactories(services);
 
-        services.AddScoped<ISchemeProvider, CachedSchemeProvider>();
-        services.AddScoped<IDeliveryPhaseProvider, CachedDeliveryPhaseProvider>();
         services.AddSingleton<IAhpExternalLinks, AhpExternalLinks>();
     }
 

@@ -1,7 +1,7 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Domain.Scheme.Entities;
 using HE.Investments.Account.Shared.User;
-using HE.Investments.Account.Shared.User.ValueObjects;
+using HE.Investments.Common.Contract;
 
 namespace HE.Investment.AHP.Domain.Scheme.Repositories;
 

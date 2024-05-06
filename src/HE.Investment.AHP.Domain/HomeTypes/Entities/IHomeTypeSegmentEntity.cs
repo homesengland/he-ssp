@@ -11,8 +11,6 @@ public interface IHomeTypeSegmentEntity
 
     bool IsModified { get; }
 
-    IHomeTypeSegmentEntity Duplicate();
-
     bool IsRequired(HousingType housingType);
 
     bool IsCompleted(HousingType housingType, Tenure tenure);

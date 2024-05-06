@@ -10,5 +10,5 @@ public class MoreInformation : LongText
     {
     }
 
-    public static MoreInformation? FromCrm(string? value) => value.IsProvided() ? new MoreInformation(value!, "more information") : null;
+    public static MoreInformation? Create(string? value) => value.IsProvided() ? new MoreInformation(value!, "more information") : null;
 }

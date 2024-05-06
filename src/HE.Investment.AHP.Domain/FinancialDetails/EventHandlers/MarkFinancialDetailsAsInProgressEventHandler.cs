@@ -4,7 +4,6 @@ using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Infrastructure.Events;
-using MediatR;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.EventHandlers;
 

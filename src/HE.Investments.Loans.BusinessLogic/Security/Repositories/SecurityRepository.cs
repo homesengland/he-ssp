@@ -1,7 +1,6 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Contract.Exceptions;
-using HE.Investments.Common.CRM.Extensions;
 using HE.Investments.Common.CRM.Mappers;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Serialization;
@@ -12,7 +11,6 @@ using HE.Investments.Loans.Common.Utils.Enums;
 using HE.Investments.Loans.Contract.Application.Events;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
 using HE.Investments.Loans.Contract.Security.ValueObjects;
-using Microsoft.FeatureManagement;
 using Microsoft.PowerPlatform.Dataverse.Client;
 
 namespace HE.Investments.Loans.BusinessLogic.Security.Repositories;
@@ -23,13 +21,10 @@ internal class SecurityRepository : ISecurityRepository
 
     private readonly IEventDispatcher _eventDispatcher;
 
-    private readonly IFeatureManager _featureManager;
-
-    public SecurityRepository(IOrganizationServiceAsync2 serviceClient, IEventDispatcher eventDispatcher, IFeatureManager featureManager)
+    public SecurityRepository(IOrganizationServiceAsync2 serviceClient, IEventDispatcher eventDispatcher)
     {
         _serviceClient = serviceClient;
         _eventDispatcher = eventDispatcher;
-        _featureManager = featureManager;
     }
 
     public async Task<SecurityEntity> GetAsync(
@@ -41,11 +36,11 @@ internal class SecurityRepository : ISecurityRepository
         var fieldsToRetrieve = SecurityCrmFieldNameMapper.Map(securityFieldsSet);
         var req = new invln_getsingleloanapplicationforaccountandcontactRequest
         {
-            invln_accountid = userAccount.SelectedOrganisationId().ToString(),
+            invln_accountid = userAccount.SelectedOrganisationId().ToGuidAsString(),
             invln_externalcontactid = userAccount.UserGlobalId.ToString(),
             invln_loanapplicationid = applicationId.ToString(),
             invln_fieldstoretrieve = fieldsToRetrieve,
-            invln_usehetables = await _featureManager.GetUseHeTablesParameter(),
+            invln_usehetables = "true",
         };
 
         var response = await _serviceClient.ExecuteAsync(req, cancellationToken) as invln_getsingleloanapplicationforaccountandcontactResponse
@@ -97,10 +92,10 @@ internal class SecurityRepository : ISecurityRepository
         {
             invln_loanapplication = loanApplicationSerialized,
             invln_loanapplicationid = entity.LoanApplicationId.Value.ToString(),
-            invln_accountid = userAccount.SelectedOrganisationId().ToString(),
+            invln_accountid = userAccount.SelectedOrganisationId().ToGuidAsString(),
             invln_contactexternalid = userAccount.UserGlobalId.ToString(),
             invln_fieldstoupdate = string.Join(',', SecurityCrmFieldNameMapper.Map(SecurityFieldsSet.SaveAllFields)),
-            invln_usehetables = await _featureManager.GetUseHeTablesParameter(),
+            invln_usehetables = "true",
         };
 
         await _serviceClient.ExecuteAsync(req, cancellationToken);

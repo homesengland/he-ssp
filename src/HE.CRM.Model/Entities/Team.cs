@@ -83,8 +83,9 @@ namespace DataverseModel
 			public const string Description = "description";
 			public const string EMailAddress = "emailaddress";
 			public const string ExchangeRate = "exchangerate";
+			public const string he_pipeline_Teams = "he_pipeline_Teams";
+			public const string he_team_he_localauthority_growthhub = "he_team_he_localauthority_growthhub";
 			public const string ImportSequenceNumber = "importsequencenumber";
-			public const string invln_ahglocalauthorities_GrowthHubsTeams_team = "invln_ahglocalauthorities_GrowthHubsTeams_team";
 			public const string invln_ahpcontract_ContractDraftedby_team = "invln_ahpcontract_ContractDraftedby_team";
 			public const string invln_externalcomms_team_owningteam = "invln_externalcomms_team_owningteam";
 			public const string invln_govnotifyemail_team_owningteam = "invln_govnotifyemail_team_owningteam";
@@ -125,7 +126,9 @@ namespace DataverseModel
 			public const string team_contacts = "team_contacts";
 			public const string team_environmentvariabledefinition = "team_environmentvariabledefinition";
 			public const string team_environmentvariablevalue = "team_environmentvariablevalue";
-			public const string team_invln_ahglocalauthorities = "team_invln_ahglocalauthorities";
+			public const string team_he_localauthority = "team_he_localauthority";
+			public const string team_he_pipeline = "team_he_pipeline";
+			public const string team_he_projectlocalauthority = "team_he_projectlocalauthority";
 			public const string team_invln_ahpcontract = "team_invln_ahpcontract";
 			public const string team_invln_ahpstatuschange = "team_invln_ahpstatuschange";
 			public const string team_invln_borrowerpreviousschemes = "team_invln_borrowerpreviousschemes";
@@ -1195,22 +1198,22 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// 1:N invln_ahglocalauthorities_GrowthHubsTeams_team
+		/// 1:N he_team_he_localauthority_growthhub
 		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_ahglocalauthorities_GrowthHubsTeams_team")]
-		public System.Collections.Generic.IEnumerable<DataverseModel.invln_AHGLocalAuthorities> invln_ahglocalauthorities_GrowthHubsTeams_team
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("he_team_he_localauthority_growthhub")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.he_LocalAuthority> he_team_he_localauthority_growthhub
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntities<DataverseModel.invln_AHGLocalAuthorities>("invln_ahglocalauthorities_GrowthHubsTeams_team", null);
+				return this.GetRelatedEntities<DataverseModel.he_LocalAuthority>("he_team_he_localauthority_growthhub", null);
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("invln_ahglocalauthorities_GrowthHubsTeams_team");
-				this.SetRelatedEntities<DataverseModel.invln_AHGLocalAuthorities>("invln_ahglocalauthorities_GrowthHubsTeams_team", null, value);
-				this.OnPropertyChanged("invln_ahglocalauthorities_GrowthHubsTeams_team");
+				this.OnPropertyChanging("he_team_he_localauthority_growthhub");
+				this.SetRelatedEntities<DataverseModel.he_LocalAuthority>("he_team_he_localauthority_growthhub", null, value);
+				this.OnPropertyChanged("he_team_he_localauthority_growthhub");
 			}
 		}
 		
@@ -1375,22 +1378,62 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// 1:N team_invln_ahglocalauthorities
+		/// 1:N team_he_localauthority
 		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_invln_ahglocalauthorities")]
-		public System.Collections.Generic.IEnumerable<DataverseModel.invln_AHGLocalAuthorities> team_invln_ahglocalauthorities
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_he_localauthority")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.he_LocalAuthority> team_he_localauthority
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntities<DataverseModel.invln_AHGLocalAuthorities>("team_invln_ahglocalauthorities", null);
+				return this.GetRelatedEntities<DataverseModel.he_LocalAuthority>("team_he_localauthority", null);
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("team_invln_ahglocalauthorities");
-				this.SetRelatedEntities<DataverseModel.invln_AHGLocalAuthorities>("team_invln_ahglocalauthorities", null, value);
-				this.OnPropertyChanged("team_invln_ahglocalauthorities");
+				this.OnPropertyChanging("team_he_localauthority");
+				this.SetRelatedEntities<DataverseModel.he_LocalAuthority>("team_he_localauthority", null, value);
+				this.OnPropertyChanged("team_he_localauthority");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N team_he_pipeline
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_he_pipeline")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.he_Pipeline> team_he_pipeline
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.he_Pipeline>("team_he_pipeline", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("team_he_pipeline");
+				this.SetRelatedEntities<DataverseModel.he_Pipeline>("team_he_pipeline", null, value);
+				this.OnPropertyChanged("team_he_pipeline");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N team_he_projectlocalauthority
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_he_projectlocalauthority")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.he_ProjectLocalAuthority> team_he_projectlocalauthority
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.he_ProjectLocalAuthority>("team_he_projectlocalauthority", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("team_he_projectlocalauthority");
+				this.SetRelatedEntities<DataverseModel.he_ProjectLocalAuthority>("team_he_projectlocalauthority", null, value);
+				this.OnPropertyChanged("team_he_projectlocalauthority");
 			}
 		}
 		
@@ -2271,6 +2314,27 @@ namespace DataverseModel
 				this.OnPropertyChanging("teammembership_association");
 				this.SetRelatedEntities<DataverseModel.SystemUser>("teammembership_association", null, value);
 				this.OnPropertyChanged("teammembership_association");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 he_pipeline_Teams
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("he_pipeline_Teams")]
+		public DataverseModel.he_Pipeline he_pipeline_Teams
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.he_Pipeline>("he_pipeline_Teams", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("he_pipeline_Teams");
+				this.SetRelatedEntity<DataverseModel.he_Pipeline>("he_pipeline_Teams", null, value);
+				this.OnPropertyChanged("he_pipeline_Teams");
 			}
 		}
 		

@@ -2,7 +2,6 @@ using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Contract.UserOrganisation;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common;
-using HE.Investments.Common.CRM.Extensions;
 using HE.Investments.Common.CRM.Mappers;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Services;
@@ -24,19 +23,19 @@ public class ProgrammeApplicationsRepository : IProgrammeApplicationsRepository
 
     public async Task<IList<Programme>> GetAllProgrammes(UserAccount userAccount, CancellationToken cancellationToken)
     {
-        return new List<Programme>
-        {
+        return
+        [
             new(ProgrammeType.Loans, await GetLoansApplications(userAccount, cancellationToken)),
             new(ProgrammeType.Ahp, await GetAhpApplications(userAccount, cancellationToken)),
-        };
+        ];
     }
 
     public async Task<IList<Programme>> GetLoanProgrammes(UserAccount userAccount, CancellationToken cancellationToken)
     {
-        return new List<Programme>
-        {
+        return
+        [
             new(ProgrammeType.Loans, await GetLoansApplications(userAccount, cancellationToken)),
-        };
+        ];
     }
 
     public async Task<bool> HasAnyAhpApplication(UserAccount userAccount, CancellationToken cancellationToken)
@@ -48,7 +47,7 @@ public class ProgrammeApplicationsRepository : IProgrammeApplicationsRepository
 
         var request = new invln_getmultipleahpapplicationsRequest
         {
-            invln_organisationid = userAccount.SelectedOrganisationId().ToString(),
+            invln_organisationid = userAccount.SelectedOrganisationId().ToGuidAsString(),
             inlvn_userid = string.Empty,
             invln_appfieldstoretrieve = nameof(invln_scheme.invln_schemename),
         };
@@ -65,9 +64,9 @@ public class ProgrammeApplicationsRepository : IProgrammeApplicationsRepository
     {
         var req = new invln_getloanapplicationsforaccountandcontactRequest
         {
-            invln_accountid = userAccount.SelectedOrganisationId().ToString(),
+            invln_accountid = userAccount.SelectedOrganisationId().ToGuidAsString(),
             invln_externalcontactid = userAccount.UserGlobalId.ToString(),
-            invln_usehetables = await _featureManager.GetUseHeTablesParameter(),
+            invln_usehetables = "true",
         };
 
         var loanApplications = (await _crmService.ExecuteAsync
@@ -89,7 +88,7 @@ public class ProgrammeApplicationsRepository : IProgrammeApplicationsRepository
         var request = new invln_getmultipleahpapplicationsRequest
         {
             inlvn_userid = userAccount.CanViewAllApplications() ? string.Empty : userAccount.UserGlobalId.ToString(),
-            invln_organisationid = userAccount.SelectedOrganisationId().ToString(),
+            invln_organisationid = userAccount.SelectedOrganisationId().ToGuidAsString(),
             invln_appfieldstoretrieve = $"{nameof(invln_scheme.invln_schemename)},{nameof(invln_scheme.StatusCode)},{nameof(invln_ExternalStatus)}".ToLowerInvariant(),
         };
 

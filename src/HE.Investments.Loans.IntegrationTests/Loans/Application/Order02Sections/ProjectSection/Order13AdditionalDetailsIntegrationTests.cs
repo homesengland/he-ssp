@@ -47,7 +47,7 @@ public class Order13AdditionalDetailsIntegrationTests : IntegrationTest
         grantFunding
             .UrlEndWith(ProjectPagesUrls.AdditionalDetailsSuffix)
             .HasTitle(ProjectPageTitles.AdditionalDetails)
-            .ContainsValidationMessage("Enter when you purchased this site");
+            .ContainsValidationMessage("Enter the purchase date");
 
         SetCurrentPage(ownershipPage);
     }
@@ -74,7 +74,7 @@ public class Order13AdditionalDetailsIntegrationTests : IntegrationTest
         grantFunding
             .UrlEndWith(ProjectPagesUrls.AdditionalDetailsSuffix)
             .HasTitle(ProjectPageTitles.AdditionalDetails)
-            .ContainsValidationMessage("When you purchased this site must be a real date");
+            .ContainsValidationMessage("The purchase date must be a real date");
 
         SetCurrentPage(ownershipPage);
     }
@@ -190,7 +190,7 @@ public class Order13AdditionalDetailsIntegrationTests : IntegrationTest
             .UrlEndWith(ProjectPagesUrls.AdditionalDetailsSuffix)
             .HasTitle(ProjectPageTitles.AdditionalDetails)
             .ContainsValidationMessages(
-                "Enter when you purchased this site",
+                "Enter the purchase date",
                 ValidationErrorMessage.IncorrectProjectCost,
                 ValidationErrorMessage.IncorrectProjectValue,
                 ValidationErrorMessage.EnterMoreDetails);

@@ -2,7 +2,6 @@ using HE.Investments.Account.Contract.User.Events;
 using HE.Investments.Account.Domain.Data;
 using HE.Investments.Account.Domain.Users.Entities;
 using HE.Investments.Account.Shared.Repositories;
-using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.Contract;
 using MediatR;
 
@@ -35,14 +34,14 @@ public class UserRepository : IUserRepository
             null);
     }
 
-    public async Task Save(UserEntity entity, OrganisationId organisationId, CancellationToken cancellationToken)
+    public async Task Save(UserEntity entity, UserGlobalId userAssigningId, OrganisationId organisationId, CancellationToken cancellationToken)
     {
         if (entity.IsRoleModified)
         {
             var role = UserRoleMapper.ToDto(entity.Role);
             if (role != null)
             {
-                await _usersCrmContext.ChangeUserRole(entity.Id.Value, role.Value, organisationId.Value);
+                await _usersCrmContext.ChangeUserRole(entity.Id.Value, userAssigningId.Value, role.Value, organisationId.Value);
                 await _mediator.Publish(new UserAccountsChangedEvent(entity.Id), cancellationToken);
             }
         }

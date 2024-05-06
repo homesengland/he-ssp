@@ -11,14 +11,17 @@ namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 
 public class HomeTypesEntity
 {
-    private readonly IList<HomeTypeEntity> _homeTypes;
+    private readonly SiteBasicInfo _site;
 
-    private readonly IList<HomeTypeEntity> _toRemove = new List<HomeTypeEntity>();
+    private readonly List<HomeTypeEntity> _homeTypes;
+
+    private readonly List<HomeTypeEntity> _toRemove = new();
 
     private readonly ModificationTracker _statusModificationTracker = new();
 
-    public HomeTypesEntity(ApplicationBasicInfo application, IEnumerable<HomeTypeEntity> homeTypes, SectionStatus status)
+    public HomeTypesEntity(ApplicationBasicInfo application, SiteBasicInfo site, IEnumerable<HomeTypeEntity> homeTypes, SectionStatus status)
     {
+        _site = site;
         Application = application;
         _homeTypes = homeTypes.ToList();
         Status = status;
@@ -36,7 +39,7 @@ public class HomeTypesEntity
 
     public IHomeTypeEntity CreateHomeType(string? name, HousingType housingType)
     {
-        var homeType = new HomeTypeEntity(Application, ValidateNameUniqueness(name), housingType, SectionStatus.InProgress);
+        var homeType = new HomeTypeEntity(Application, _site, ValidateNameUniqueness(name), housingType, SectionStatus.InProgress);
         _homeTypes.Add(homeType);
 
         return homeType;
@@ -85,7 +88,7 @@ public class HomeTypesEntity
         entity.ChangeName(ValidateNameUniqueness(name, entity));
     }
 
-    public void CompleteSection(FinishHomeTypesAnswer finishAnswer, int expectedNumberOfHomes)
+    public void CompleteSection(FinishHomeTypesAnswer finishAnswer, int? expectedNumberOfHomes)
     {
         if (finishAnswer == FinishHomeTypesAnswer.Undefined)
         {
@@ -110,7 +113,7 @@ public class HomeTypesEntity
                     notCompletedHomeTypes.Select(x => new ErrorItem($"HomeType-{x.Id}", $"Complete {x.Name.Value} to save and continue")).ToList()));
             }
 
-            if (expectedNumberOfHomes != _homeTypes.Sum(x => x.HomeInformation.NumberOfHomes?.Value ?? 0))
+            if (expectedNumberOfHomes.HasValue && expectedNumberOfHomes != _homeTypes.Sum(x => x.HomeInformation.NumberOfHomes?.Value ?? 0))
             {
                 OperationResult.New().AddValidationError("HomeTypes", "You have not assigned all of the homes you are delivering to a home type").CheckErrors();
             }
@@ -142,7 +145,7 @@ public class HomeTypesEntity
     // ReSharper disable once ParameterOnlyUsedForPreconditionCheck.Local
     private string? ValidateNameUniqueness(string? name, HomeTypeEntity? entity = null)
     {
-        if ((entity == null && _homeTypes.Any(x => x.Name.Value == name))
+        if ((entity == null && _homeTypes.Exists(x => x.Name.Value == name))
             || (entity != null && _homeTypes.Except(new[] { entity }).Any(x => x.Name.Value == name)))
         {
             throw new DomainValidationException(
@@ -160,7 +163,7 @@ public class HomeTypesEntity
         var suffixIndex = 1;
         var duplicatedName = homeType.Name;
 
-        while (_homeTypes.Any(x => x.Name == duplicatedName))
+        while (_homeTypes.Exists(x => x.Name == duplicatedName))
         {
             duplicatedName = duplicatedName.Duplicate(suffixIndex++);
         }

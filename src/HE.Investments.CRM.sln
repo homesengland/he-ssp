@@ -8,8 +8,6 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "HE.CRM.Model", "HE.CRM.Mode
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "HE.CRM.Common", "HE.CRM.Common\HE.CRM.Common.shproj", "{C57C0CF7-DC36-45CD-BFAA-C0F9B632AECB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.Xrm.ServiceClientExample", "HE.Xrm.ServiceClient\HE.Xrm.ServiceClientExample.csproj", "{36E8826B-DD73-4A11-B523-486F3C54F1F4}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.CRM.Plugins.Tests", "HE.CRM.Plugins.Tests\HE.CRM.Plugins.Tests.csproj", "{87D9EABA-C229-42AF-95B7-B8C100124499}"
 EndProject
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "HE.CRM.WebResources", "HE.CRM.WebResources\HE.CRM.WebResources.njsproj", "{23CA5083-A949-46EB-8B60-E1E856E95324}"
@@ -45,14 +43,6 @@ Global
 		{464F5B11-C934-42C4-B544-40CFCEE6C683}.Release|Any CPU.Build.0 = Release|Any CPU
 		{464F5B11-C934-42C4-B544-40CFCEE6C683}.Release|x64.ActiveCfg = Release|x64
 		{464F5B11-C934-42C4-B544-40CFCEE6C683}.Release|x64.Build.0 = Release|x64
-		{36E8826B-DD73-4A11-B523-486F3C54F1F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{36E8826B-DD73-4A11-B523-486F3C54F1F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{36E8826B-DD73-4A11-B523-486F3C54F1F4}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{36E8826B-DD73-4A11-B523-486F3C54F1F4}.Debug|x64.Build.0 = Debug|Any CPU
-		{36E8826B-DD73-4A11-B523-486F3C54F1F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{36E8826B-DD73-4A11-B523-486F3C54F1F4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{36E8826B-DD73-4A11-B523-486F3C54F1F4}.Release|x64.ActiveCfg = Release|Any CPU
-		{36E8826B-DD73-4A11-B523-486F3C54F1F4}.Release|x64.Build.0 = Release|Any CPU
 		{87D9EABA-C229-42AF-95B7-B8C100124499}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{87D9EABA-C229-42AF-95B7-B8C100124499}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87D9EABA-C229-42AF-95B7-B8C100124499}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -93,8 +83,6 @@ Global
 		SolutionGuid = {44D30F0B-F008-4D12-95FB-E893E3AFB749}
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems*{36e8826b-dd73-4a11-b523-486f3c54f1f4}*SharedItemsImports = 5
-		HE.CRM.Model\HE.CRM.Model.projitems*{36e8826b-dd73-4a11-b523-486f3c54f1f4}*SharedItemsImports = 5
 		HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems*{464f5b11-c934-42c4-b544-40cfcee6c683}*SharedItemsImports = 4
 		HE.CRM.Common\HE.CRM.Common.projitems*{464f5b11-c934-42c4-b544-40cfcee6c683}*SharedItemsImports = 4
 		HE.CRM.Model\HE.CRM.Model.projitems*{464f5b11-c934-42c4-b544-40cfcee6c683}*SharedItemsImports = 4

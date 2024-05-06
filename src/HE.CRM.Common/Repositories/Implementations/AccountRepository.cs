@@ -18,7 +18,7 @@ namespace HE.CRM.Common.Repositories.Implementations
         {
         }
 
-        #endregion
+        #endregion Constructors
 
         #region Interface Implementation
 
@@ -34,7 +34,7 @@ namespace HE.CRM.Common.Repositories.Implementations
         public Account RetrieveAccountById(EntityReference accountId, ColumnSet columnSet = null)
         {
             logger.Trace("RetrieveAccountById");
-            if(accountId != null)
+            if (accountId != null)
             {
                 logger.Trace("acount not null: " + accountId.LogicalName + accountId.Id);
                 return service.Retrieve(accountId.LogicalName, accountId.Id, columnSet).ToEntity<Account>();
@@ -54,6 +54,6 @@ namespace HE.CRM.Common.Repositories.Implementations
             }
         }
 
-        #endregion
+        #endregion Interface Implementation
     }
 }

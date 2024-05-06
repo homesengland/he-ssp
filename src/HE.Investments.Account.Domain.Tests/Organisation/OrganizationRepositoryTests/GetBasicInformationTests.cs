@@ -6,7 +6,6 @@ using HE.Investments.Account.Domain.Organisation.Repositories;
 using HE.Investments.Account.Domain.Tests.Organisation.TestData;
 using HE.Investments.Account.Domain.Tests.Organisation.TestObjectBuilder;
 using HE.Investments.Account.Shared;
-using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Tests.TestData;
@@ -54,7 +53,7 @@ public class GetBasicInformationTests : TestBase<OrganizationRepository>
         // given
         var organizationDetailsDto = OrganizationDetailsDtoTestData.OrganizationDetailsDto;
         var userAccount = UserAccountTestData.UserAccountOne;
-        var fakeUserAccount = new UserAccount(UserGlobalId.From("FakeId"), string.Empty, new OrganisationBasicInfo(new OrganisationId(GuidTestData.GuidTwo), "AccountTwo", "4321", "London", false), Array.Empty<UserRole>());
+        var fakeUserAccount = new UserAccount(UserGlobalId.From("FakeId"), string.Empty, new OrganisationBasicInfo(new OrganisationId(GuidTestData.GuidTwo.ToString()), "AccountTwo", "4321", "London", false), []);
 
         OrganizationServiceMockTestBuilder
             .New()

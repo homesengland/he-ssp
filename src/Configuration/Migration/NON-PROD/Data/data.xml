@@ -1,5 +1,5 @@
 
-<entities xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" timestamp="2024-04-08T11:36:59.8627383Z">
+<entities xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" timestamp="2024-04-10T12:09:14.0132626Z">
   <entity name="invln_notificationsetting" displayname="Notification Setting">
     <records>
       <record id="1ab09971-d199-ee11-be37-0022480041cf">
@@ -3253,6 +3253,268 @@
         <field name="invln_region" value="858110003" />
         <field name="statecode" value="0" />
         <field name="statuscode" value="1" />
+      </record>
+    </records>
+    <m2mrelationships />
+  </entity>
+  <entity name="invln_ndss" displayname="NDSS">
+    <records>
+      <record id="c45ecb51-19f7-ee11-a1ff-002248004a06">
+        <field name="invln_ndssid" value="c45ecb51-19f7-ee11-a1ff-002248004a06" />
+        <field name="invln_standard" value="39.0000000000" />
+        <field name="invln_standardnumber" value="111" />
+      </record>
+      <record id="95f65283-19f7-ee11-a1ff-0022481b5893">
+        <field name="importsequencenumber" value="6" />
+        <field name="invln_ndssid" value="95f65283-19f7-ee11-a1ff-0022481b5893" />
+        <field name="invln_standard" value="50.0000000000" />
+        <field name="invln_standardnumber" value="121" />
+      </record>
+      <record id="97f65283-19f7-ee11-a1ff-0022481b5893">
+        <field name="importsequencenumber" value="6" />
+        <field name="invln_ndssid" value="97f65283-19f7-ee11-a1ff-0022481b5893" />
+        <field name="invln_standard" value="58.0000000000" />
+        <field name="invln_standardnumber" value="122" />
+      </record>
+      <record id="99f65283-19f7-ee11-a1ff-0022481b5893">
+        <field name="importsequencenumber" value="6" />
+        <field name="invln_ndssid" value="99f65283-19f7-ee11-a1ff-0022481b5893" />
+        <field name="invln_standard" value="61.0000000000" />
+        <field name="invln_standardnumber" value="231" />
+      </record>
+      <record id="9bf65283-19f7-ee11-a1ff-0022481b5893">
+        <field name="importsequencenumber" value="6" />
+        <field name="invln_ndssid" value="9bf65283-19f7-ee11-a1ff-0022481b5893" />
+        <field name="invln_standard" value="70.0000000000" />
+        <field name="invln_standardnumber" value="232" />
+      </record>
+      <record id="9df65283-19f7-ee11-a1ff-0022481b5893">
+        <field name="importsequencenumber" value="6" />
+        <field name="invln_ndssid" value="9df65283-19f7-ee11-a1ff-0022481b5893" />
+        <field name="invln_standard" value="70.0000000000" />
+        <field name="invln_standardnumber" value="241" />
+      </record>
+      <record id="9ff65283-19f7-ee11-a1ff-0022481b5893">
+        <field name="importsequencenumber" value="6" />
+        <field name="invln_ndssid" value="9ff65283-19f7-ee11-a1ff-0022481b5893" />
+        <field name="invln_standard" value="79.0000000000" />
+        <field name="invln_standardnumber" value="242" />
+      </record>
+      <record id="a1f65283-19f7-ee11-a1ff-0022481b5893">
+        <field name="importsequencenumber" value="6" />
+        <field name="invln_ndssid" value="a1f65283-19f7-ee11-a1ff-0022481b5893" />
+        <field name="invln_standard" value="74.0000000000" />
+        <field name="invln_standardnumber" value="341" />
+      </record>
+      <record id="a3f65283-19f7-ee11-a1ff-0022481b5893">
+        <field name="importsequencenumber" value="6" />
+        <field name="invln_ndssid" value="a3f65283-19f7-ee11-a1ff-0022481b5893" />
+        <field name="invln_standard" value="84.0000000000" />
+        <field name="invln_standardnumber" value="342" />
+      </record>
+      <record id="a5f65283-19f7-ee11-a1ff-0022481b5893">
+        <field name="importsequencenumber" value="6" />
+        <field name="invln_ndssid" value="a5f65283-19f7-ee11-a1ff-0022481b5893" />
+        <field name="invln_standard" value="90.0000000000" />
+        <field name="invln_standardnumber" value="343" />
+      </record>
+      <record id="a7f65283-19f7-ee11-a1ff-0022481b5893">
+        <field name="importsequencenumber" value="6" />
+        <field name="invln_ndssid" value="a7f65283-19f7-ee11-a1ff-0022481b5893" />
+        <field name="invln_standard" value="86.0000000000" />
+        <field name="invln_standardnumber" value="351" />
+      </record>
+      <record id="a9f65283-19f7-ee11-a1ff-0022481b5893">
+        <field name="importsequencenumber" value="6" />
+        <field name="invln_ndssid" value="a9f65283-19f7-ee11-a1ff-0022481b5893" />
+        <field name="invln_standard" value="93.0000000000" />
+        <field name="invln_standardnumber" value="352" />
+      </record>
+      <record id="abf65283-19f7-ee11-a1ff-0022481b5893">
+        <field name="importsequencenumber" value="6" />
+        <field name="invln_ndssid" value="abf65283-19f7-ee11-a1ff-0022481b5893" />
+        <field name="invln_standard" value="99.0000000000" />
+        <field name="invln_standardnumber" value="353" />
+      </record>
+      <record id="adf65283-19f7-ee11-a1ff-0022481b5893">
+        <field name="importsequencenumber" value="6" />
+        <field name="invln_ndssid" value="adf65283-19f7-ee11-a1ff-0022481b5893" />
+        <field name="invln_standard" value="95.0000000000" />
+        <field name="invln_standardnumber" value="361" />
+      </record>
+      <record id="aff65283-19f7-ee11-a1ff-0022481b5893">
+        <field name="importsequencenumber" value="6" />
+        <field name="invln_ndssid" value="aff65283-19f7-ee11-a1ff-0022481b5893" />
+        <field name="invln_standard" value="102.0000000000" />
+        <field name="invln_standardnumber" value="362" />
+      </record>
+      <record id="b1f65283-19f7-ee11-a1ff-0022481b5893">
+        <field name="importsequencenumber" value="6" />
+        <field name="invln_ndssid" value="b1f65283-19f7-ee11-a1ff-0022481b5893" />
+        <field name="invln_standard" value="108.0000000000" />
+        <field name="invln_standardnumber" value="363" />
+      </record>
+      <record id="b3f65283-19f7-ee11-a1ff-0022481b5893">
+        <field name="importsequencenumber" value="6" />
+        <field name="invln_ndssid" value="b3f65283-19f7-ee11-a1ff-0022481b5893" />
+        <field name="invln_standard" value="90.0000000000" />
+        <field name="invln_standardnumber" value="451" />
+      </record>
+      <record id="b5f65283-19f7-ee11-a1ff-0022481b5893">
+        <field name="importsequencenumber" value="6" />
+        <field name="invln_ndssid" value="b5f65283-19f7-ee11-a1ff-0022481b5893" />
+        <field name="invln_standard" value="97.0000000000" />
+        <field name="invln_standardnumber" value="452" />
+      </record>
+      <record id="b7f65283-19f7-ee11-a1ff-0022481b5893">
+        <field name="importsequencenumber" value="6" />
+        <field name="invln_ndssid" value="b7f65283-19f7-ee11-a1ff-0022481b5893" />
+        <field name="invln_standard" value="103.0000000000" />
+        <field name="invln_standardnumber" value="453" />
+      </record>
+      <record id="b9f65283-19f7-ee11-a1ff-0022481b5893">
+        <field name="importsequencenumber" value="6" />
+        <field name="invln_ndssid" value="b9f65283-19f7-ee11-a1ff-0022481b5893" />
+        <field name="invln_standard" value="99.0000000000" />
+        <field name="invln_standardnumber" value="461" />
+      </record>
+      <record id="bbf65283-19f7-ee11-a1ff-0022481b5893">
+        <field name="importsequencenumber" value="6" />
+        <field name="invln_ndssid" value="bbf65283-19f7-ee11-a1ff-0022481b5893" />
+        <field name="invln_standard" value="106.0000000000" />
+        <field name="invln_standardnumber" value="462" />
+      </record>
+      <record id="bdf65283-19f7-ee11-a1ff-0022481b5893">
+        <field name="importsequencenumber" value="6" />
+        <field name="invln_ndssid" value="bdf65283-19f7-ee11-a1ff-0022481b5893" />
+        <field name="invln_standard" value="112.0000000000" />
+        <field name="invln_standardnumber" value="463" />
+      </record>
+      <record id="bff65283-19f7-ee11-a1ff-0022481b5893">
+        <field name="importsequencenumber" value="6" />
+        <field name="invln_ndssid" value="bff65283-19f7-ee11-a1ff-0022481b5893" />
+        <field name="invln_standard" value="108.0000000000" />
+        <field name="invln_standardnumber" value="471" />
+      </record>
+      <record id="c1f65283-19f7-ee11-a1ff-0022481b5893">
+        <field name="importsequencenumber" value="6" />
+        <field name="invln_ndssid" value="c1f65283-19f7-ee11-a1ff-0022481b5893" />
+        <field name="invln_standard" value="115.0000000000" />
+        <field name="invln_standardnumber" value="472" />
+      </record>
+      <record id="c3f65283-19f7-ee11-a1ff-0022481b5893">
+        <field name="importsequencenumber" value="6" />
+        <field name="invln_ndssid" value="c3f65283-19f7-ee11-a1ff-0022481b5893" />
+        <field name="invln_standard" value="121.0000000000" />
+        <field name="invln_standardnumber" value="473" />
+      </record>
+      <record id="c5f65283-19f7-ee11-a1ff-0022481b5893">
+        <field name="importsequencenumber" value="6" />
+        <field name="invln_ndssid" value="c5f65283-19f7-ee11-a1ff-0022481b5893" />
+        <field name="invln_standard" value="117.0000000000" />
+        <field name="invln_standardnumber" value="481" />
+      </record>
+      <record id="c7f65283-19f7-ee11-a1ff-0022481b5893">
+        <field name="importsequencenumber" value="6" />
+        <field name="invln_ndssid" value="c7f65283-19f7-ee11-a1ff-0022481b5893" />
+        <field name="invln_standard" value="124.0000000000" />
+        <field name="invln_standardnumber" value="482" />
+      </record>
+      <record id="c9f65283-19f7-ee11-a1ff-0022481b5893">
+        <field name="importsequencenumber" value="6" />
+        <field name="invln_ndssid" value="c9f65283-19f7-ee11-a1ff-0022481b5893" />
+        <field name="invln_standard" value="130.0000000000" />
+        <field name="invln_standardnumber" value="483" />
+      </record>
+      <record id="cbf65283-19f7-ee11-a1ff-0022481b5893">
+        <field name="importsequencenumber" value="6" />
+        <field name="invln_ndssid" value="cbf65283-19f7-ee11-a1ff-0022481b5893" />
+        <field name="invln_standard" value="103.0000000000" />
+        <field name="invln_standardnumber" value="561" />
+      </record>
+      <record id="cdf65283-19f7-ee11-a1ff-0022481b5893">
+        <field name="importsequencenumber" value="6" />
+        <field name="invln_ndssid" value="cdf65283-19f7-ee11-a1ff-0022481b5893" />
+        <field name="invln_standard" value="110.0000000000" />
+        <field name="invln_standardnumber" value="562" />
+      </record>
+      <record id="cff65283-19f7-ee11-a1ff-0022481b5893">
+        <field name="importsequencenumber" value="6" />
+        <field name="invln_ndssid" value="cff65283-19f7-ee11-a1ff-0022481b5893" />
+        <field name="invln_standard" value="116.0000000000" />
+        <field name="invln_standardnumber" value="563" />
+      </record>
+      <record id="d1f65283-19f7-ee11-a1ff-0022481b5893">
+        <field name="importsequencenumber" value="6" />
+        <field name="invln_ndssid" value="d1f65283-19f7-ee11-a1ff-0022481b5893" />
+        <field name="invln_standard" value="112.0000000000" />
+        <field name="invln_standardnumber" value="571" />
+      </record>
+      <record id="d3f65283-19f7-ee11-a1ff-0022481b5893">
+        <field name="importsequencenumber" value="6" />
+        <field name="invln_ndssid" value="d3f65283-19f7-ee11-a1ff-0022481b5893" />
+        <field name="invln_standard" value="119.0000000000" />
+        <field name="invln_standardnumber" value="572" />
+      </record>
+      <record id="d5f65283-19f7-ee11-a1ff-0022481b5893">
+        <field name="importsequencenumber" value="6" />
+        <field name="invln_ndssid" value="d5f65283-19f7-ee11-a1ff-0022481b5893" />
+        <field name="invln_standard" value="125.0000000000" />
+        <field name="invln_standardnumber" value="573" />
+      </record>
+      <record id="d7f65283-19f7-ee11-a1ff-0022481b5893">
+        <field name="importsequencenumber" value="6" />
+        <field name="invln_ndssid" value="d7f65283-19f7-ee11-a1ff-0022481b5893" />
+        <field name="invln_standard" value="121.0000000000" />
+        <field name="invln_standardnumber" value="581" />
+      </record>
+      <record id="d9f65283-19f7-ee11-a1ff-0022481b5893">
+        <field name="importsequencenumber" value="6" />
+        <field name="invln_ndssid" value="d9f65283-19f7-ee11-a1ff-0022481b5893" />
+        <field name="invln_standard" value="128.0000000000" />
+        <field name="invln_standardnumber" value="582" />
+      </record>
+      <record id="dbf65283-19f7-ee11-a1ff-0022481b5893">
+        <field name="importsequencenumber" value="6" />
+        <field name="invln_ndssid" value="dbf65283-19f7-ee11-a1ff-0022481b5893" />
+        <field name="invln_standard" value="134.0000000000" />
+        <field name="invln_standardnumber" value="583" />
+      </record>
+      <record id="ddf65283-19f7-ee11-a1ff-0022481b5893">
+        <field name="importsequencenumber" value="6" />
+        <field name="invln_ndssid" value="ddf65283-19f7-ee11-a1ff-0022481b5893" />
+        <field name="invln_standard" value="116.0000000000" />
+        <field name="invln_standardnumber" value="671" />
+      </record>
+      <record id="dff65283-19f7-ee11-a1ff-0022481b5893">
+        <field name="importsequencenumber" value="6" />
+        <field name="invln_ndssid" value="dff65283-19f7-ee11-a1ff-0022481b5893" />
+        <field name="invln_standard" value="123.0000000000" />
+        <field name="invln_standardnumber" value="672" />
+      </record>
+      <record id="e1f65283-19f7-ee11-a1ff-0022481b5893">
+        <field name="importsequencenumber" value="6" />
+        <field name="invln_ndssid" value="e1f65283-19f7-ee11-a1ff-0022481b5893" />
+        <field name="invln_standard" value="129.0000000000" />
+        <field name="invln_standardnumber" value="673" />
+      </record>
+      <record id="e3f65283-19f7-ee11-a1ff-0022481b5893">
+        <field name="importsequencenumber" value="6" />
+        <field name="invln_ndssid" value="e3f65283-19f7-ee11-a1ff-0022481b5893" />
+        <field name="invln_standard" value="125.0000000000" />
+        <field name="invln_standardnumber" value="681" />
+      </record>
+      <record id="e5f65283-19f7-ee11-a1ff-0022481b5893">
+        <field name="importsequencenumber" value="6" />
+        <field name="invln_ndssid" value="e5f65283-19f7-ee11-a1ff-0022481b5893" />
+        <field name="invln_standard" value="132.0000000000" />
+        <field name="invln_standardnumber" value="682" />
+      </record>
+      <record id="e7f65283-19f7-ee11-a1ff-0022481b5893">
+        <field name="importsequencenumber" value="6" />
+        <field name="invln_ndssid" value="e7f65283-19f7-ee11-a1ff-0022481b5893" />
+        <field name="invln_standard" value="138.0000000000" />
+        <field name="invln_standardnumber" value="683" />
       </record>
     </records>
     <m2mrelationships />

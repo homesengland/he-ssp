@@ -82,6 +82,8 @@ namespace HE.Investments.Common.CRM.Model
 			public const string invln_HeLocalAuthorityIdName = "invln_helocalauthorityidname";
 			public const string invln_HeProjectLocalAuthorityId = "invln_heprojectlocalauthorityid";
 			public const string invln_HeProjectLocalAuthorityIdName = "invln_heprojectlocalauthorityidname";
+			public const string invln_HERegion = "invln_heregion";
+			public const string invln_heregionName = "invln_heregionname";
 			public const string invln_HowMuch = "invln_howmuch";
 			public const string invln_howmuch_Base = "invln_howmuch_base";
 			public const string invln_Landregistrytitlenumber = "invln_landregistrytitlenumber";
@@ -750,6 +752,40 @@ namespace HE.Investments.Common.CRM.Model
 				if (this.FormattedValues.Contains("invln_heprojectlocalauthorityid"))
 				{
 					return this.FormattedValues["invln_heprojectlocalauthorityid"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_heregion")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_HERegion
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_heregion");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_HERegion");
+				this.SetAttributeValue("invln_heregion", value);
+				this.OnPropertyChanged("invln_HERegion");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_heregionname")]
+		public string invln_heregionName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_heregion"))
+				{
+					return this.FormattedValues["invln_heregion"];
 				}
 				else
 				{

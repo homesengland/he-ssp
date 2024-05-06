@@ -12,6 +12,6 @@ public class HeOlTagHelper : TagHelper
     {
         output.TagName = "ol";
         TagConstruct.ConstructClass(output, "govuk-list govuk-list--number");
-        output.Content.SetHtmlContent(TagConstruct.ConstructUlLists(Items.ToArray()));
+        output.Content.SetHtmlContent(TagConstruct.ConstructUlLists([.. Items]));
     }
 }

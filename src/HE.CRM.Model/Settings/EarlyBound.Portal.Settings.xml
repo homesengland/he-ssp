@@ -24,6 +24,8 @@ invln_generaterichtextdocument|
 invln_getabsoluteahpapplicationfilelocation|
 invln_getahpapplication|
 invln_getahpapplicationdocumentlocation|
+invln_getconsortium|
+invln_getconsortiums|
 invln_getcontactrole|
 invln_getfilelocationforapplicationloan|
 invln_getloanapplicationsforaccountandcontact|
@@ -47,6 +49,7 @@ invln_getsinglesitedetails|
 invln_gettemporaryportaldata|
 invln_gettypeofhomeslist|
 invln_invitecontacttojoinexistingorganisation|
+invln_isconsortiumexistforprogrammeandorganisation|
 invln_linkcontactwithorganization|
 invln_returnuserprofile|
 invln_savetemporaryportaldata|
@@ -59,6 +62,7 @@ invln_sendreminderemailforrefferedbacktoapplicant|
 invln_sendremindertofinalisadraftapplication|
 invln_sendrequesttoassigncontacttoexistingorganisation|
 invln_setahpapplication|
+invln_setconsortium|
 invln_setdeliveryphase|
 invln_setfrontdoorproject|
 invln_sethometype|
@@ -227,7 +231,7 @@ VoiceMail</TokenCapitalizationOverrides>
   <Namespace>HE.Investments.Common.CRM.Model</Namespace>
   <ServiceContextName>DataverseContext</ServiceContextName>
   <SuppressGeneratedCodeAttribute>true</SuppressGeneratedCodeAttribute>
-  <SettingsVersion>2.2023.12.22</SettingsVersion>
+  <SettingsVersion>2.2024.2.1</SettingsVersion>
   <UpdateBuilderSettingsJson>true</UpdateBuilderSettingsJson>
-  <Version>2.2023.12.22</Version>
+  <Version>2.2024.2.1</Version>
 </Config>

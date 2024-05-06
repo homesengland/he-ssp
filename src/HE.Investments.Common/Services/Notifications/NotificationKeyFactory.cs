@@ -3,7 +3,7 @@ using HE.Investments.Common.User;
 
 namespace HE.Investments.Common.Services.Notifications;
 
-internal class NotificationKeyFactory : INotificationKeyFactory
+internal sealed class NotificationKeyFactory : INotificationKeyFactory
 {
     private readonly IUserContext _userContext;
 

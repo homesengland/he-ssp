@@ -26,7 +26,7 @@ public static class ControllerExtensions
             controller.ModelState.AddValidationErrors(result);
 
             var orderedProperties = GetOrderedPropertiesNames<TModel>();
-            controller.ViewBag.validationErrors = controller.ViewData.ModelState.GetOrderedErrors(orderedProperties.ToList());
+            controller.ViewBag.validationErrors = controller.ViewData.ModelState.GetOrderedErrors([.. orderedProperties]);
 
             return await onError();
         }
@@ -38,10 +38,10 @@ public static class ControllerExtensions
     {
         controller.ModelState.AddValidationErrors(operationResult);
         var orderedProperties = GetOrderedPropertiesNames<T>();
-        controller.ViewBag.validationErrors = controller.ViewData.ModelState.GetOrderedErrors(orderedProperties.ToList());
+        controller.ViewBag.validationErrors = controller.ViewData.ModelState.GetOrderedErrors([.. orderedProperties]);
     }
 
-    private static IList<string> GetOrderedPropertiesNames<T>()
+    private static List<string> GetOrderedPropertiesNames<T>()
     {
         var type = typeof(T);
         var order = new Dictionary<string, ErrorSummaryOrderAttribute?>();
@@ -71,7 +71,7 @@ public static class ControllerExtensions
 
         if (order.Values.All(v => v == null))
         {
-            return order.Keys.ToList();
+            return [.. order.Keys];
         }
 
         return order

@@ -17,7 +17,7 @@ internal sealed class GetDesignPlansQueryHandler : GetHomeTypeSegmentQueryHandle
     {
     }
 
-    protected override IReadOnlyCollection<HomeTypeSegmentType> Segments => new[] { HomeTypeSegmentType.DesignPlans };
+    protected override bool LoadFiles => true;
 
     protected override DesignPlansSegmentEntity GetSegment(IHomeTypeEntity homeType) => homeType.DesignPlans;
 }

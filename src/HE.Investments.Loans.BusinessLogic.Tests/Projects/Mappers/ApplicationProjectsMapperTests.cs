@@ -8,8 +8,6 @@ using Xunit;
 namespace HE.Investments.Loans.BusinessLogic.Tests.Projects.Mappers;
 public class ApplicationProjectsMapperTests
 {
-    private readonly DateTime _now = DateTimeTestData.SeptemberDay20Year2023At0736;
-
     [Fact]
     public void StartDateShouldBeEmpty_WhenStartDateExistNotProvided()
     {
@@ -23,7 +21,7 @@ public class ApplicationProjectsMapperTests
             .Build();
 
         // when
-        var applicationProjects = ApplicationProjectsMapper.Map(dto, _now);
+        var applicationProjects = ApplicationProjectsMapper.Map(dto);
 
         // then
         applicationProjects.GetActiveProjects().Should().HaveCount(1);
@@ -46,7 +44,7 @@ public class ApplicationProjectsMapperTests
             .Build();
 
         // when
-        var applicationProjects = ApplicationProjectsMapper.Map(dto, _now);
+        var applicationProjects = ApplicationProjectsMapper.Map(dto);
 
         // then
         applicationProjects.GetActiveProjects().Should().HaveCount(1);
@@ -55,7 +53,7 @@ public class ApplicationProjectsMapperTests
 
         project.StartDate.Should().NotBeNull();
 
-        project.StartDate!.Exists.Should().BeFalse();
+        project.StartDate!.Value.HasValue.Should().BeFalse();
     }
 
     [Fact]
@@ -71,7 +69,7 @@ public class ApplicationProjectsMapperTests
             .Build();
 
         // when
-        var applicationProjects = ApplicationProjectsMapper.Map(dto, _now);
+        var applicationProjects = ApplicationProjectsMapper.Map(dto);
 
         // then
         applicationProjects.GetActiveProjects().Should().HaveCount(1);

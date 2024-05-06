@@ -152,7 +152,7 @@ namespace DataverseModel
 			public const string invln_costguaranteeName = "invln_costguaranteename";
 			public const string invln_CustomSecurity = "invln_customsecurity";
 			public const string invln_Dateapproved = "invln_dateapproved";
-			public const string invln_DateCashflowRequested = "invln_datecashflowrequested";
+			public const string invln_DateStatusChangedtoCashflowRequested = "invln_datestatuschangedtocashflowrequested";
 			public const string invln_Datesubmitted = "invln_datesubmitted";
 			public const string invln_DaysSinceCashflowRequested = "invln_dayssincecashflowrequested";
 			public const string invln_DebentureHolder = "invln_debentureholder";
@@ -193,6 +193,7 @@ namespace DataverseModel
 			public const string invln_loanapplication_account = "invln_loanapplication_account";
 			public const string invln_loanapplication_contact = "invln_loanapplication_contact";
 			public const string invln_loanapplication_FDProjectId_invln_frontdo = "invln_loanapplication_FDProjectId_invln_frontdo";
+			public const string invln_loanapplication_HeProjectId_he_pipeline = "invln_loanapplication_HeProjectId_he_pipeline";
 			public const string invln_loanapplication_invln_Externalcommses = "invln_loanapplication_invln_Externalcommses";
 			public const string invln_loanapplication_invln_govnotifyemails = "invln_loanapplication_invln_govnotifyemails";
 			public const string invln_loanapplication_SharePointDocumentLocations = "invln_loanapplication_SharePointDocumentLocations";
@@ -999,13 +1000,20 @@ namespace DataverseModel
 		/// <summary>
 		/// The date the TM changes the status of a loan application to "Cashflow Requested"
 		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_datecashflowrequested")]
-		public System.Nullable<System.DateTime> invln_DateCashflowRequested
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_datestatuschangedtocashflowrequested")]
+		public System.Nullable<System.DateTime> invln_DateStatusChangedtoCashflowRequested
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetAttributeValue<System.Nullable<System.DateTime>>("invln_datecashflowrequested");
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("invln_datestatuschangedtocashflowrequested");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_DateStatusChangedtoCashflowRequested");
+				this.SetAttributeValue("invln_datestatuschangedtocashflowrequested", value);
+				this.OnPropertyChanged("invln_DateStatusChangedtoCashflowRequested");
 			}
 		}
 		
@@ -3307,6 +3315,27 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_loanapplication_FDProjectId_invln_frontdo");
 				this.SetRelatedEntity<DataverseModel.invln_FrontDoorProjectPOC>("invln_loanapplication_FDProjectId_invln_frontdo", null, value);
 				this.OnPropertyChanged("invln_loanapplication_FDProjectId_invln_frontdo");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_loanapplication_HeProjectId_he_pipeline
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_heprojectid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_loanapplication_HeProjectId_he_pipeline")]
+		public DataverseModel.he_Pipeline invln_loanapplication_HeProjectId_he_pipeline
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.he_Pipeline>("invln_loanapplication_HeProjectId_he_pipeline", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_loanapplication_HeProjectId_he_pipeline");
+				this.SetRelatedEntity<DataverseModel.he_Pipeline>("invln_loanapplication_HeProjectId_he_pipeline", null, value);
+				this.OnPropertyChanged("invln_loanapplication_HeProjectId_he_pipeline");
 			}
 		}
 		

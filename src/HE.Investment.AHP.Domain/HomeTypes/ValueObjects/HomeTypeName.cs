@@ -4,10 +4,8 @@ using HE.Investments.Common.Messages;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 
-public class HomeTypeName : ShortText
+public partial class HomeTypeName : ShortText
 {
-    private static readonly Regex NumberSuffixRegex = new(@" - \d", RegexOptions.Compiled);
-
     public HomeTypeName(string? value)
         : base(value, nameof(HomeTypeName), "home type name")
     {
@@ -16,7 +14,7 @@ public class HomeTypeName : ShortText
     public HomeTypeName Duplicate(int suffixIndex)
     {
         var suffix = Suffix(suffixIndex);
-        var duplicatedName = NumberSuffixRegex.Replace(Value, string.Empty);
+        var duplicatedName = HomeTypeRegex().Replace(Value, string.Empty);
         duplicatedName = duplicatedName[..Math.Min(MaximumInputLength.ShortInput - suffix.Length, duplicatedName.Length)];
         duplicatedName += suffix;
 
@@ -32,4 +30,7 @@ public class HomeTypeName : ShortText
     {
         return $" - {suffixIndex}";
     }
+
+    [GeneratedRegex(@" - \d", RegexOptions.Compiled)]
+    private static partial Regex HomeTypeRegex();
 }

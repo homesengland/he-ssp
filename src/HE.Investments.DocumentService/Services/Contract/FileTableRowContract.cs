@@ -1,6 +1,6 @@
 namespace HE.Investments.DocumentService.Services.Contract;
 
-internal class FileTableRowContract
+internal sealed class FileTableRowContract
 {
     public int Id { get; set; }
 

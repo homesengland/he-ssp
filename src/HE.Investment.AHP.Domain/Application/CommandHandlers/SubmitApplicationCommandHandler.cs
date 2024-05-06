@@ -19,7 +19,7 @@ public class SubmitApplicationCommandHandler : ApplicationCommandHandlerBase, IR
         return await Perform(
             application =>
             {
-                application.Submit(new RepresentationsAndWarranties(request.RepresentationsAndWarranties));
+                application.Submit(RepresentationsAndWarranties.FromString(request.RepresentationsAndWarranties));
 
                 return Task.CompletedTask;
             },

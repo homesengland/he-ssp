@@ -29,6 +29,9 @@ namespace DataverseModel
 		GovernmentLocal = 134370001,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		OtherPublicSector = 134370005,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		PrivateSectornonfinancial = 134370004,
 	}
 }

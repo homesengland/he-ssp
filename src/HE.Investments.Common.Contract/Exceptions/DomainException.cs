@@ -6,7 +6,7 @@ public class DomainException : Exception
         : base(message, innerException)
     {
         ErrorCode = errorCode;
-        AdditionalData = new Dictionary<string, object>();
+        AdditionalData = [];
     }
 
     public DomainException(string message, string errorCode, params (string Key, object Value)[] additionalData)
@@ -14,7 +14,7 @@ public class DomainException : Exception
     {
         ErrorCode = errorCode;
 
-        AdditionalData = new Dictionary<string, object>();
+        AdditionalData = [];
 
         foreach (var (key, value) in additionalData)
         {

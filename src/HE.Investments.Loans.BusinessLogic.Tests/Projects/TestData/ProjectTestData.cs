@@ -21,7 +21,7 @@ internal static class ProjectTestData
 
         project.ProvideHomesCount(HomesCountTestData.ValidHomesCount);
 
-        project.ProvideHomesTypes(new HomesTypes(new[] { "Home" }, string.Empty));
+        project.ProvideHomesTypes(new HomesTypes(["Home"], string.Empty));
 
         project.ProvideProjectType(new ProjectType("Greenfield"));
 
@@ -32,7 +32,7 @@ internal static class ProjectTestData
         project.ProvideLandOwnership(new LandOwnership(true));
 
         project.ProvideAdditionalData(new AdditionalDetails(
-            PurchaseDate.FromCrm(ProjectDateTestData.CorrectDateTime),
+            new PurchaseDate(ProjectDateTestData.CorrectDateTime),
             PoundsTestData.AnyAmount,
             PoundsTestData.AnyAmount,
             SourceOfValuationTestData.AnySource));
@@ -62,7 +62,7 @@ internal static class ProjectTestData
 
         project.ProvideHomesCount(HomesCountTestData.ValidHomesCount);
 
-        project.ProvideHomesTypes(new HomesTypes(new[] { "Home" }, string.Empty));
+        project.ProvideHomesTypes(new HomesTypes(["Home"], string.Empty));
 
         project.ProvideProjectType(new ProjectType("Greenfield"));
 

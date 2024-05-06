@@ -95,7 +95,7 @@ public class LocalAuthorityController : WorkflowController<LocalAuthorityWorkflo
 
     private async Task GetProjectDetails(string projectId, CancellationToken cancellationToken)
     {
-        var projectDetails = await _mediator.Send(new GetProjectDetailsQuery(new FrontDoorProjectId(projectId)), cancellationToken);
+        var projectDetails = await _mediator.Send(new GetProjectDetailsQuery(FrontDoorProjectId.From(projectId)), cancellationToken);
         ViewBag.ProjectName = projectDetails.Name;
     }
 }

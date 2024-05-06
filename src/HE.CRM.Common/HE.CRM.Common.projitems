@@ -10,6 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)dtomapping\AhpApplicationMapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)dtomapping\ConsortiumMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)dtomapping\ContactDtoMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DtoMapping\DeliveryPhaseMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)dtomapping\FrontDoorProjectMapper.cs" />
@@ -30,6 +31,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\AhpApplicationRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\implementations\AhpStatusChangeRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\ConditionRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)repositories\implementations\ConsortiumRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\ContactRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\ContactWebroleRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\implementations\DeliveryPhaseRepository.cs" />
@@ -42,9 +44,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\HeProjectRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\implementations\HomesInDeliveryPhaseRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\HomeTypeRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)repositories\implementations\IConsortiumMembersRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\IspRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\LocalAuthorityRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\MilestoneFrameworkItemRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)repositories\implementations\NdssRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\ProgrammeRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\HeProjectLocalAuthorityRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\ProjectSpecificConditionRepository.cs" />
@@ -61,12 +65,14 @@
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\SystemUserRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\TeamRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\WebRoleRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)repositories\interfaces\ConsortiumMembersRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IAccountRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\TraceHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IAhgLocalAuthorityRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IAhpApplicationRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IAhpStatusChangeRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IConditionRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)repositories\interfaces\IConsortiumrepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IContactRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IContactWebroleRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IDeliveryPhaseRepository.cs" />
@@ -84,6 +90,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\ILoanStatusChangeRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\ILocalAuthorityRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IMilestoneFrameworkItemRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)repositories\interfaces\INdssRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\INotificationSettingRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IPortalPermissionRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IProgrammeRepository.cs" />

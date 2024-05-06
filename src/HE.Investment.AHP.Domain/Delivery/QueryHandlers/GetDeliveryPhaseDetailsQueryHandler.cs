@@ -1,11 +1,11 @@
 using HE.Investment.AHP.Contract.Delivery;
-using HE.Investment.AHP.Contract.Delivery.MilestonePayments;
 using HE.Investment.AHP.Contract.Delivery.Queries;
 using HE.Investment.AHP.Domain.Application.Mappers;
 using HE.Investment.AHP.Domain.Common.Mappers;
 using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.Repositories;
 using HE.Investments.Account.Shared;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
 using MediatR;
 using SummaryOfDelivery = HE.Investment.AHP.Contract.Delivery.MilestonePayments.SummaryOfDelivery;
@@ -48,47 +48,30 @@ public class GetDeliveryPhaseDetailsQueryHandler : IRequestHandler<GetDeliveryPh
             deliveryPhase.TotalHomesToBeDeliveredInThisPhase,
             new DeliveryPhaseTranchesDto(
                 deliveryPhase.Tranches.CanBeAmended,
-                request.IncludeSummary ? GetSummaryOfDelivery(deliveryPhase) : null,
-                request.IncludeSummary ? GetSummaryOfDeliveryAmend(deliveryPhase) : null),
+                GetSummaryOfDelivery(deliveryPhase)),
             deliveryPhase.Organisation.IsUnregisteredBody,
             deliveryPhase.DeliveryPhaseMilestones.IsOnlyCompletionMilestone,
-            DateValueObjectMapper.ToContract(deliveryPhase.DeliveryPhaseMilestones.AcquisitionMilestone?.MilestoneDate),
-            DateValueObjectMapper.ToContract(deliveryPhase.DeliveryPhaseMilestones.AcquisitionMilestone?.PaymentDate),
-            DateValueObjectMapper.ToContract(deliveryPhase.DeliveryPhaseMilestones.StartOnSiteMilestone?.MilestoneDate),
-            DateValueObjectMapper.ToContract(deliveryPhase.DeliveryPhaseMilestones.StartOnSiteMilestone?.PaymentDate),
-            DateValueObjectMapper.ToContract(deliveryPhase.DeliveryPhaseMilestones.CompletionMilestone?.MilestoneDate),
-            DateValueObjectMapper.ToContract(deliveryPhase.DeliveryPhaseMilestones.CompletionMilestone?.PaymentDate),
+            DateDetails.FromDateTime(deliveryPhase.DeliveryPhaseMilestones.AcquisitionMilestone?.MilestoneDate?.Value),
+            DateDetails.FromDateTime(deliveryPhase.DeliveryPhaseMilestones.AcquisitionMilestone?.PaymentDate?.Value),
+            DateDetails.FromDateTime(deliveryPhase.DeliveryPhaseMilestones.StartOnSiteMilestone?.MilestoneDate?.Value),
+            DateDetails.FromDateTime(deliveryPhase.DeliveryPhaseMilestones.StartOnSiteMilestone?.PaymentDate?.Value),
+            DateDetails.FromDateTime(deliveryPhase.DeliveryPhaseMilestones.CompletionMilestone?.MilestoneDate?.Value),
+            DateDetails.FromDateTime(deliveryPhase.DeliveryPhaseMilestones.CompletionMilestone?.PaymentDate?.Value),
             deliveryPhase.IsAdditionalPaymentRequested?.IsRequested);
     }
 
     private SummaryOfDelivery GetSummaryOfDelivery(IDeliveryPhaseEntity deliveryPhase)
     {
-        var tranches = deliveryPhase.Tranches;
-        var milestonesPercentageTranches = tranches.GetPercentageTranches();
-        var milestonesTranches = tranches.CalculateTranches();
+        var milestonesPercentageTranches = deliveryPhase.Tranches.GetPercentageTranches();
 
         return new SummaryOfDelivery(
-            tranches.GrantApportioned,
-            milestonesTranches.AcquisitionMilestone,
+            deliveryPhase.MilestonesTranches.SumOfGrantApportioned,
+            deliveryPhase.MilestonesTranches.AcquisitionMilestone,
             milestonesPercentageTranches.Acquisition?.Value,
-            milestonesTranches.StartOnSiteMilestone,
+            deliveryPhase.MilestonesTranches.StartOnSiteMilestone,
             milestonesPercentageTranches.StartOnSite?.Value,
-            milestonesTranches.CompletionMilestone,
-            milestonesPercentageTranches.Completion?.Value);
-    }
-
-    private SummaryOfDeliveryAmend GetSummaryOfDeliveryAmend(IDeliveryPhaseEntity deliveryPhase)
-    {
-        var result = GetSummaryOfDelivery(deliveryPhase);
-
-        return new SummaryOfDeliveryAmend(
-            result.GrantApportioned,
-            result.AcquisitionMilestone,
-            result.AcquisitionPercentage.ToWholePercentage().WithoutPercentageChar(),
-            result.StartOnSiteMilestone,
-            result.StartOnSitePercentage.ToWholePercentage().WithoutPercentageChar(),
-            result.CompletionMilestone,
-            result.CompletionPercentage.ToWholePercentage().WithoutPercentageChar(),
+            deliveryPhase.MilestonesTranches.CompletionMilestone,
+            milestonesPercentageTranches.Completion?.Value,
             deliveryPhase.Tranches.ClaimMilestone);
     }
 }

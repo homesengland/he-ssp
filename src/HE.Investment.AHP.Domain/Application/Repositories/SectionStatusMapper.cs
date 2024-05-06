@@ -6,8 +6,8 @@ namespace HE.Investment.AHP.Domain.Application.Repositories;
 
 public static class SectionStatusMapper
 {
-    private static readonly IDictionary<SectionStatus, invln_AHPSectioncompletionstatusSet> SectionStatuses =
-        new Dictionary<SectionStatus, invln_AHPSectioncompletionstatusSet>
+    private static readonly Dictionary<SectionStatus, invln_AHPSectioncompletionstatusSet> SectionStatuses =
+        new()
         {
             { SectionStatus.NotStarted, invln_AHPSectioncompletionstatusSet.Notstarted },
             { SectionStatus.InProgress, invln_AHPSectioncompletionstatusSet.InProgress },

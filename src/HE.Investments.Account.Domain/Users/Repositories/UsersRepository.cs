@@ -3,7 +3,6 @@ using HE.Investments.Account.Contract.Users;
 using HE.Investments.Account.Domain.Data;
 using HE.Investments.Account.Domain.Data.Extensions;
 using HE.Investments.Account.Shared.Repositories;
-using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.Contract;
 
 namespace HE.Investments.Account.Domain.Users.Repositories;
@@ -22,7 +21,7 @@ public class UsersRepository : IUsersRepository
         var users = await _usersCrmContext.GetUsers(organisationId.Value);
         if (!users.Any())
         {
-            return new List<UserDetails>();
+            return [];
         }
 
         return users

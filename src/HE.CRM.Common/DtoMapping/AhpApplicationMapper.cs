@@ -8,7 +8,7 @@ namespace HE.CRM.Common.DtoMapping
 {
     public class AhpApplicationMapper
     {
-        public static invln_scheme MapDtoToRegularEntity(AhpApplicationDto applicationDto, string contactId, string organisationId)
+        public static invln_scheme MapDtoToRegularEntity(AhpApplicationDto applicationDto, string contactId, string organisationId, he_LocalAuthority localAuthority)
         {
             var applicationToReturn = new invln_scheme()
             {
@@ -51,7 +51,13 @@ namespace HE.CRM.Common.DtoMapping
                 invln_grantsfromdhscnhsorotherhealth = MapNullableDecimalToMoney(applicationDto.howMuchReceivedFromDepartmentOfHealth),
                 invln_grantsfromthelottery = MapNullableDecimalToMoney(applicationDto.howMuchReceivedFromLotteryFunding),
                 invln_grantsfromotherpublicbodies = MapNullableDecimalToMoney(applicationDto.howMuchReceivedFromOtherPublicBodies),
+                invln_partnerconfirmation = applicationDto.applicationPartnerConfirmation
             };
+
+            if (applicationDto.representationsandwarranties != null)
+            {
+                applicationToReturn.invln_representationsandwarrantiesconfirmation = applicationDto.representationsandwarranties;
+            }
             if (applicationDto.id != null && Guid.TryParse(applicationDto.id, out var applicationId))
             {
                 applicationToReturn.Id = applicationId;
@@ -68,6 +74,37 @@ namespace HE.CRM.Common.DtoMapping
             {
                 applicationToReturn.invln_Site = new EntityReference(invln_Sites.EntityLogicalName, siteGuid);
             }
+            if (Guid.TryParse(applicationDto.programmeId, out var programmeId))
+            {
+                applicationToReturn.invln_programmelookup = new EntityReference(invln_programme.EntityLogicalName, programmeId);
+            }
+
+            if (localAuthority != null)
+            {
+                applicationToReturn.invln_HELocalAuthorityID = localAuthority.ToEntityReference();
+                if (localAuthority.he_growthmanager?.Id != null && localAuthority.he_growthhub?.Id != null)
+                {
+                    applicationToReturn.OwnerId = new EntityReference(SystemUser.EntityLogicalName, localAuthority.he_growthmanager.Id);
+                    applicationToReturn.invln_GrowthManager = new EntityReference(SystemUser.EntityLogicalName, localAuthority.he_growthmanager.Id);
+                    applicationToReturn.invln_GrowthTeam = new EntityReference(Team.EntityLogicalName, localAuthority.he_growthhub.Id);
+                }
+            }
+
+            if (Guid.TryParse(applicationDto.developingPartnerId, out var developingPartnerGuid))
+            {
+                applicationToReturn.invln_DevelopingPartner = new EntityReference(Account.EntityLogicalName, developingPartnerGuid);
+            }
+
+            if (Guid.TryParse(applicationDto.ownerOfTheLandDuringDevelopmentId, out var ownerOfTheLandDuringDevelopmentGuid))
+            {
+                applicationToReturn.invln_OwneroftheLand = new EntityReference(Account.EntityLogicalName, ownerOfTheLandDuringDevelopmentGuid);
+            }
+
+            if (Guid.TryParse(applicationDto.ownerOfTheHomesAfterCompletionId, out var ownerOfTheHomesAfterCompletionGuid))
+            {
+                applicationToReturn.invln_OwneroftheHomes = new EntityReference(Account.EntityLogicalName, ownerOfTheHomesAfterCompletionGuid);
+            }
+
             return applicationToReturn;
         }
 
@@ -81,7 +118,8 @@ namespace HE.CRM.Common.DtoMapping
                 homeTypesSectionCompletionStatus = application.invln_hometypessectioncompletionstatus?.Value,
                 financialDetailsSectionCompletionStatus = application.invln_financialdetailssectioncompletionstatus?.Value,
                 deliveryPhasesSectionCompletionStatus = application.invln_deliveryphasessectioncompletionstatus?.Value,
-                dateSubmitted = application .invln_DateSubmitted,
+                previousExternalStatus = application.invln_PreviousExternalStatus?.Value,
+                dateSubmitted = application.invln_DateSubmitted,
                 borrowingAgainstRentalIncomeFromThisScheme = application.invln_borrowingagainstrentalincome?.Value,
                 fundingFromOpenMarketHomesOnThisScheme = application.invln_fundingfromopenmarkethomesonthisscheme?.Value,
                 fundingFromOpenMarketHomesNotOnThisScheme = application.invln_fundingfromopenmarkethomesnotonthisscheme?.Value,
@@ -117,7 +155,19 @@ namespace HE.CRM.Common.DtoMapping
                 referenceNumber = application.invln_applicationid,
                 applicationStatus = application.invln_ExternalStatus?.Value,
                 contactExternalId = contactExternalId,
+                representationsandwarranties = application.invln_representationsandwarrantiesconfirmation,
+                developingPartnerId = application.invln_DevelopingPartner?.Id.ToString(),
+                developingPartnerName = application.invln_DevelopingPartnerName,
+                ownerOfTheLandDuringDevelopmentId = application.invln_OwneroftheLand?.Id.ToString(),
+                ownerOfTheLandDuringDevelopmentName = application.invln_OwneroftheLandName,
+                ownerOfTheHomesAfterCompletionId = application.invln_OwneroftheHomes?.Id.ToString(),
+                ownerOfTheHomesAfterCompletionName = application.invln_OwneroftheHomesName,
+                applicationPartnerConfirmation = application.invln_partnerconfirmation
             };
+            if (application.invln_programmelookup != null)
+            {
+                applicationDtoToReturn.programmeId = application.invln_programmelookup.Id.ToString();
+            }
             if (application.Id != null)
             {
                 applicationDtoToReturn.id = application.Id.ToString();

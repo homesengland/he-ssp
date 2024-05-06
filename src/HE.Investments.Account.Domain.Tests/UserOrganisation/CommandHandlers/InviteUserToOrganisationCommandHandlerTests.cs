@@ -5,7 +5,6 @@ using HE.Investments.Account.Domain.Tests.UserOrganisation.TestDataBuilders;
 using HE.Investments.Account.Domain.UserOrganisation.CommandHandlers;
 using HE.Investments.Account.Domain.UserOrganisation.Repositories;
 using HE.Investments.Account.Shared;
-using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Tests.TestData;

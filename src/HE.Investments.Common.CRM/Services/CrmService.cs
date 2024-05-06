@@ -34,4 +34,14 @@ public class CrmService : ICrmService
 
         return getResponse(response);
     }
+
+    public async Task<bool> ExecuteAsync<TRequest, TResponse>(TRequest request, Func<TResponse, bool> getResponse, CancellationToken cancellationToken)
+        where TRequest : OrganizationRequest
+        where TResponse : OrganizationResponse
+    {
+        var response = await _serviceClient.ExecuteAsync(request, cancellationToken) as TResponse
+                       ?? throw new NotFoundException($"Cannot find resource for {typeof(TRequest).Name} request");
+
+        return getResponse(response);
+    }
 }
