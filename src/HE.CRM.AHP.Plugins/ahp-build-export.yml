@@ -1,19 +1,35 @@
 # AHP-CRM-Deploy-UPGRADE
+trigger: none
+pr: none
 
-trigger:
-- none
-pr:
-- none
-
-schedules:
-- cron: '0 1 * * 1,2,3,4,5'
-  displayName: AHP - CRM - Deploy - Upgrade - Automatic night Deploy
-  branches:
-    include:
-    - main
-
-pool: 
+pool:
   vmImage: windows-latest
+
+parameters:
+- name: buildAndUpdatePlugins
+  displayName: Build & Update Plugins ?
+  type: boolean
+  default: true
+- name: buildAndUpdateWebResources
+  displayName: Build & Update Webresources ?
+  type: boolean
+  default: true
+- name: deployWithUpgrade
+  displayName: Upgrade Solutions?
+  type: boolean
+  default: true
+- name: deployMainSolution
+  displayName: Deploy Main Solution ?
+  type: boolean
+  default: true
+- name: deployFlowsSolution
+  displayName: Deploy Flows Solution ?
+  type: boolean
+  default: true
+- name: deployPluginsSolution
+  displayName: Deploy Plugins Solution ?
+  type: boolean
+  default: true
 
 variables:
   solution: '**/*.sln'
@@ -21,14 +37,29 @@ variables:
   buildConfiguration: 'Release'
   branch: 'master'
 
-
 resources:
   repositories:
   - repository: he-invst-deployment
     type: git
     name: 'Investments Programme/he-invst-deployment'
     ref: 'main'
+    pipelines:
+    - pipeline: BuildPipeline
 
 stages:
 - template: azure-pipelines-crm-ahp-build-export.yml@he-invst-deployment
+  parameters:
+    buildAndUpdatePlugins: '${{ parameters.buildAndUpdatePlugins }}'
+    buildAndUpdateWebResources: '${{ parameters.buildAndUpdateWebResources }}'
+    deployMainSolution: '${{ parameters.deployMainSolution }}'
+    deployFlowsSolution: '${{ parameters.deployFlowsSolution }}'
+    deployPluginsSolution: '${{ parameters.deployPluginsSolution }}'
+
+
 - template: azure-pipelines-crm-ahp-upgrade.yml@he-invst-deployment
+  parameters:
+    artifactLocationPipeline: BuildPipeline
+    deployWithUpgrade: '${{ parameters.deployWithUpgrade }}'
+    deployMainSolution: '${{ parameters.deployMainSolution }}'
+    deployFlowsSolution: '${{ parameters.deployFlowsSolution }}'
+    deployPluginsSolution: '${{ parameters.deployPluginsSolution }}'
