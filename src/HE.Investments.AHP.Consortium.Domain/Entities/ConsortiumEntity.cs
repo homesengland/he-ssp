@@ -21,13 +21,13 @@ public class ConsortiumEntity : IConsortiumEntity
 
     private readonly List<OrganisationId> _removeRequests = new();
 
-    public ConsortiumEntity(ConsortiumId id, ConsortiumName name, ProgrammeSlim programme, ConsortiumMember leadPartner, IEnumerable<ConsortiumMember> members)
+    public ConsortiumEntity(ConsortiumId id, ConsortiumName name, ProgrammeSlim programme, ConsortiumMember leadPartner, IEnumerable<ConsortiumMember>? members)
     {
         Id = id;
         Programme = programme;
         LeadPartner = leadPartner;
         Name = name;
-        _members = members.ToList();
+        _members = members?.ToList() ?? [];
     }
 
     public ConsortiumId Id { get; private set; }

@@ -18,10 +18,6 @@ public record ConsortiumId : StringIdValueObject
 
     public static ConsortiumId From(string value) => new(FromStringToShortGuidAsString(value));
 
-    public static ConsortiumId From(Guid value) => new(FromGuidToShortGuidAsString(value));
-
-    public string ToGuidAsString() => Value.ToGuidAsString();
-
     public override string ToString()
     {
         return Value;

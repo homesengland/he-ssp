@@ -18,8 +18,6 @@ public record SiteId : StringIdValueObject
 
     public static SiteId From(string value) => new(FromStringToShortGuidAsString(value));
 
-    public static SiteId From(Guid value) => new(FromGuidToShortGuidAsString(value));
-
     public string ToGuidAsString() => Value.ToGuidAsString();
 
     public static SiteId? Create(string? id) => id.IsProvided() ? From(id!) : null;

@@ -12,9 +12,5 @@ public record ProgrammeId : StringIdValueObject
 
     public static ProgrammeId From(string value) => new(FromStringToShortGuidAsString(value));
 
-    public static ProgrammeId From(Guid value) => new(FromGuidToShortGuidAsString(value));
-
-    public string ToGuidAsString() => Value.ToGuidAsString();
-
     public override string ToString() => Value;
 }
