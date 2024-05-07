@@ -53,7 +53,7 @@ public class ConsortiumRepository : IConsortiumRepository
             new ConsortiumName(x.name),
             new ProgrammeSlim(ProgrammeId.From(x.programmeId), x.programmeName),
             new ConsortiumMember(OrganisationId.From(x.leadPartnerId), x.leadPartnerName, ConsortiumMemberStatus.Active),
-            x.members.Select(y => new ConsortiumMember(OrganisationId.From(y.id), y.name, ConsortiumMemberStatusMapper.ToDomain(y.status))))).ToList();
+            x.members?.Select(y => new ConsortiumMember(OrganisationId.From(y.id), y.name, ConsortiumMemberStatusMapper.ToDomain(y.status))))).ToList();
     }
 
     public async Task<ConsortiumEntity> Save(ConsortiumEntity consortiumEntity, UserAccount userAccount, CancellationToken cancellationToken)

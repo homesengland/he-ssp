@@ -18,8 +18,6 @@ public record FrontDoorProjectId : StringIdValueObject
 
     public static FrontDoorProjectId From(string value) => new(FromStringToShortGuidAsString(value));
 
-    public static FrontDoorProjectId From(Guid value) => new(FromGuidToShortGuidAsString(value));
-
     public string ToGuidAsString() => Value.ToGuidAsString();
 
     public static FrontDoorProjectId? Create(string? id) => id.IsProvided() ? From(id!) : null;
