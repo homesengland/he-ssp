@@ -8,6 +8,8 @@ using Microsoft.Xrm.Sdk;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Xrm.Sdk.Metadata;
+using FakeXrmEasy.Extensions;
 
 namespace HE.CRM.AHP.Plugins.Tests.CustomApi
 {
@@ -23,6 +25,21 @@ namespace HE.CRM.AHP.Plugins.Tests.CustomApi
         {
             fakedContext = new XrmFakedContext();
             pluginContext = fakedContext.GetDefaultPluginContext();
+
+            var entityMetadata = new EntityMetadata()
+            {
+                LogicalName = "contact",
+            };
+            var nameAttribute = new StringAttributeMetadata()
+            {
+                LogicalName = "invln_externalid",
+                RequiredLevel = new AttributeRequiredLevelManagedProperty(AttributeRequiredLevel.ApplicationRequired)
+            };
+            entityMetadata.SetAttributeCollection(new[] { nameAttribute });
+
+            fakedContext.InitializeMetadata(entityMetadata);
+            entityMetadata.LogicalName = "invln_loanapplication";
+            fakedContext.InitializeMetadata(entityMetadata);
         }
 
         [TestMethod]
@@ -33,13 +50,14 @@ namespace HE.CRM.AHP.Plugins.Tests.CustomApi
             var appId_1 = Guid.NewGuid();
             var appId_2 = Guid.NewGuid();
 
+            var contact = new Contact()
+            {
+                Id = contactId,
+                invln_externalid = contactId.ToString()
+            };
+
             fakedContext.Initialize(new List<Entity>()
             {
-                new Contact()
-                {
-                    Id = contactId,
-                    invln_externalid = contactId.ToString()
-                },
                 new Account()
                 {
                     Id= accountId
@@ -56,7 +74,18 @@ namespace HE.CRM.AHP.Plugins.Tests.CustomApi
                 },
             });
 
-            //   var request = new invln_changeahpapplicationstatusRequest();
+            var metadata = fakedContext.GetEntityMetadataByName("contact");
+            var keymetadata = new EntityKeyMetadata[]
+            {
+                new EntityKeyMetadata()
+                {
+                    KeyAttributes = new string[]{ "invln_externalid" }
+                }
+            };
+            metadata.SetFieldValue("_keys", keymetadata);
+            fakedContext.SetEntityMetadata(metadata);
+            contact.KeyAttributes.Add("invln_externalid", contactId.ToString());
+
             pluginContext.InputParameters = new ParameterCollection
             {
                 { invln_getmultipleahpapplicationsRequest.Fields.invln_appfieldstoretrieve, null},
