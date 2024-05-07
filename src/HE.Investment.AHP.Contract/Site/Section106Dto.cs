@@ -1,6 +1,4 @@
-﻿using HE.Investments.Common.Contract;
-
-namespace HE.Investment.AHP.Contract.Site;
+﻿namespace HE.Investment.AHP.Contract.Site;
 
 public record Section106Dto(
     string SiteId,
