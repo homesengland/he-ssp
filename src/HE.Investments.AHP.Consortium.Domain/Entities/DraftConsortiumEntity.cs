@@ -2,6 +2,7 @@ extern alias Org;
 
 using HE.Investments.AHP.Consortium.Contract;
 using HE.Investments.AHP.Consortium.Domain.Repositories;
+using HE.Investments.AHP.Consortium.Domain.ValueObjects;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
@@ -11,23 +12,25 @@ namespace HE.Investments.AHP.Consortium.Domain.Entities;
 
 public class DraftConsortiumEntity : IConsortiumEntity
 {
-    public DraftConsortiumEntity(string id, string name, string programmeId, string programmeName, DraftConsortiumMember leadPartner, IList<DraftConsortiumMember> members)
+    public DraftConsortiumEntity(
+        ConsortiumId id,
+        ConsortiumName name,
+        ProgrammeSlim programme,
+        DraftConsortiumMember leadPartner,
+        IList<DraftConsortiumMember> members)
     {
         Id = id;
         Name = name;
-        ProgrammeId = programmeId;
-        ProgrammeName = programmeName;
+        Programme = programme;
         LeadPartner = leadPartner;
         Members = members;
     }
 
-    public string Id { get; }
+    public ConsortiumId Id { get; }
 
-    public string Name { get; }
+    public ConsortiumName Name { get; }
 
-    public string ProgrammeId { get; }
-
-    public string ProgrammeName { get; }
+    public ProgrammeSlim Programme { get; }
 
     public DraftConsortiumMember LeadPartner { get; }
 
@@ -73,6 +76,6 @@ public class DraftConsortiumEntity : IConsortiumEntity
             return true;
         }
 
-        return await isPartOfConsortium.IsPartOfConsortiumForProgramme(new ProgrammeId(ProgrammeId), organisation.Id, cancellationToken);
+        return await isPartOfConsortium.IsPartOfConsortiumForProgramme(Programme.Id, organisation.Id, cancellationToken);
     }
 }

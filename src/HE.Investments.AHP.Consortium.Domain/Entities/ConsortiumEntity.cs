@@ -71,13 +71,12 @@ public class ConsortiumEntity : IConsortiumEntity
 
     public bool AddMembersFromDraft(DraftConsortiumEntity draftConsortium, AreAllMembersAdded? requestAreAllMembersAdded)
     {
-        if (draftConsortium.Id != Id.Value
-            || draftConsortium.LeadPartner.Id != LeadPartner.Id)
+        if (draftConsortium.Id != Id || draftConsortium.LeadPartner.Id != LeadPartner.Id)
         {
             throw new InvalidOperationException("Draft consortium members cannot be added to consortium because consortium details does not match.");
         }
 
-        if (requestAreAllMembersAdded.IsNotProvided())
+        if (requestAreAllMembersAdded is null or AreAllMembersAdded.Undefined)
         {
             OperationResult.ThrowValidationError(nameof(AreAllMembersAdded), "Select whether you have you added all members to this consortium");
         }
