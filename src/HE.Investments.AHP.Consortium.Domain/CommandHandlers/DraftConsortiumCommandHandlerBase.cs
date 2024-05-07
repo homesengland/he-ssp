@@ -30,11 +30,11 @@ public abstract class DraftConsortiumCommandHandlerBase<TRequest> : IRequestHand
     public async Task<OperationResult> Handle(TRequest request, CancellationToken cancellationToken)
     {
         var account = await _accountUserContext.GetSelectedAccount();
-        var draftConsortium = _draftConsortiumRepository.Get(request.ConsortiumId);
+        var draftConsortium = _draftConsortiumRepository.Get(request.ConsortiumId, account);
         if (draftConsortium.IsProvided())
         {
             await Perform(draftConsortium!, request, cancellationToken);
-            _draftConsortiumRepository.Save(draftConsortium!);
+            _draftConsortiumRepository.Save(draftConsortium!, account);
         }
         else
         {
