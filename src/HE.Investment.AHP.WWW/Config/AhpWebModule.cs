@@ -17,6 +17,7 @@ using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.Common.Models.App;
 using HE.Investments.Common.WWW.Config;
 using HE.Investments.Common.WWW.Infrastructure.Authorization;
+using HE.Investments.Common.WWW.Infrastructure.Cache;
 using HE.Investments.Common.WWW.Infrastructure.ErrorHandling;
 using HE.Investments.Common.WWW.Infrastructure.Middlewares;
 using HE.Investments.DocumentService.Extensions;
@@ -42,6 +43,7 @@ public static class AhpWebModule
         services.AddNotificationPublisher(ApplicationType.Ahp);
         services.AddNotificationConsumer(ApplicationType.Ahp, typeof(HomeTypeHasBeenCreatedDisplayNotificationFactory).Assembly);
         services.AddDocumentServiceModule();
+        services.AddTemporaryUserStorage();
         AddViewModelFactories(services);
 
         services.AddSingleton<IAhpExternalLinks, AhpExternalLinks>();

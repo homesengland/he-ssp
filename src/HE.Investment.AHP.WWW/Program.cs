@@ -20,6 +20,7 @@ builder.Services.AddCrmConnection();
 builder.Services.AddWebModule();
 builder.Services.AddFeatureManagement();
 builder.Services.AddCommonBuildingBlocks();
+builder.Services.AddSession();
 
 var mvcBuilder = builder.Services
     .AddControllersWithViews(options =>
@@ -52,6 +53,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseMiddleware<HeaderSecurityMiddleware>();
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",

@@ -13,7 +13,7 @@ using Org::HE.Investments.Organisation.ValueObjects;
 
 namespace HE.Investments.AHP.Consortium.Domain.Entities;
 
-public class ConsortiumEntity
+public class ConsortiumEntity : IConsortiumEntity
 {
     private readonly List<ConsortiumMember> _members;
 
@@ -64,9 +64,37 @@ public class ConsortiumEntity
                 "This organisation cannot be added to your consortium. Check you have selected the correct organisation. If it is correct, contact your Growth Manager");
         }
 
-        var member = new ConsortiumMember(OrganisationId.From(organisation.Id.Value), organisation.Name, ConsortiumMemberStatus.PendingAddition);
+        var member = new ConsortiumMember(organisation.Id, organisation.Name, ConsortiumMemberStatus.PendingAddition);
         _members.Add(member);
         _joinRequests.Add(member);
+    }
+
+    public bool AddMembersFromDraft(DraftConsortiumEntity draftConsortium, AreAllMembersAdded? requestAreAllMembersAdded)
+    {
+        if (draftConsortium.Id != Id.Value
+            || draftConsortium.LeadPartner.Id != LeadPartner.Id)
+        {
+            throw new InvalidOperationException("Draft consortium members cannot be added to consortium because consortium details does not match.");
+        }
+
+        if (requestAreAllMembersAdded.IsNotProvided())
+        {
+            OperationResult.ThrowValidationError(nameof(AreAllMembersAdded), "Select whether you have you added all members to this consortium");
+        }
+
+        if (requestAreAllMembersAdded == AreAllMembersAdded.No)
+        {
+            return false;
+        }
+
+        foreach (var draftMember in draftConsortium.Members)
+        {
+            var member = new ConsortiumMember(draftMember.Id, draftMember.OrganisationName, ConsortiumMemberStatus.PendingAddition);
+            _members.Add(member);
+            _joinRequests.Add(member);
+        }
+
+        return true;
     }
 
     public void RemoveMember(OrganisationId organisationId, bool? isConfirmed)
@@ -74,6 +102,11 @@ public class ConsortiumEntity
         if (isConfirmed.IsNotProvided())
         {
             OperationResult.ThrowValidationError(nameof(isConfirmed), "Select whether you want to remove this organisation from consortium");
+        }
+
+        if (isConfirmed == false)
+        {
+            return;
         }
 
         // TODO: add validation when member does not exist
@@ -122,11 +155,11 @@ public class ConsortiumEntity
         IIsPartOfConsortium isPartOfConsortium,
         CancellationToken cancellationToken)
     {
-        if (organisation.Id.Value == LeadPartner.Id.ToString() || _members.Exists(x => x.Id.ToString() == organisation.Id.Value))
+        if (organisation.Id == LeadPartner.Id || _members.Exists(x => x.Id == organisation.Id))
         {
             return true;
         }
 
-        return await isPartOfConsortium.IsPartOfConsortiumForProgramme(Programme.Id, OrganisationId.From(organisation.Id.Value), cancellationToken);
+        return await isPartOfConsortium.IsPartOfConsortiumForProgramme(Programme.Id, organisation.Id, cancellationToken);
     }
 }

@@ -14,6 +14,7 @@ public static class DomainModule
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(DomainModule).Assembly));
         services.AddScoped<IConsortiumCrmContext, ConsortiumCrmContext>();
         services.AddScoped<IConsortiumRepository, ConsortiumRepository>();
+        services.AddScoped<IDraftConsortiumRepository, DraftConsortiumRepository>();
         ServiceCollectionExtensions.AddOrganisationCrmModule(services);
     }
 }

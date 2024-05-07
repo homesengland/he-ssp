@@ -29,7 +29,7 @@ public class ConsortiumRepository : IConsortiumRepository
         if (!string.IsNullOrWhiteSpace(consortiumDto.id))
         {
             var members = consortiumDto.members.Select(x =>
-                new ConsortiumMember(new OrganisationId(x.id), x.name, ConsortiumMemberStatusMapper.ToDomain(x.status)));
+                new ConsortiumMember(OrganisationId.From(x.id), x.name, ConsortiumMemberStatusMapper.ToDomain(x.status)));
 
             return new ConsortiumEntity(
                 consortiumId,
