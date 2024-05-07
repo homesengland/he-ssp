@@ -5,6 +5,8 @@ using HE.Investments.Account.Domain.Organisation.Entities;
 using HE.Investments.Account.Domain.Organisation.Mappers;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
+using HE.Investments.Common.Domain;
+using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.Common.User;
 using HE.Investments.Organisation.Services;
 
@@ -18,10 +20,13 @@ public class OrganizationRepository : IOrganizationRepository
 
     private readonly InvestmentPartnerStatusMapper _investmentPartnerStatusMapper = new();
 
-    public OrganizationRepository(IOrganizationService organizationService, IUserContext userContext)
+    private readonly IEventDispatcher _eventDispatcher;
+
+    public OrganizationRepository(IOrganizationService organizationService, IUserContext userContext, IEventDispatcher eventDispatcher)
     {
         _organizationService = organizationService;
         _userContext = userContext;
+        _eventDispatcher = eventDispatcher;
     }
 
     public async Task<OrganizationBasicInformation> GetBasicInformation(OrganisationId organisationId, CancellationToken cancellationToken)
@@ -96,5 +101,10 @@ public class OrganizationRepository : IOrganizationRepository
                 county = organisation.Address.County,
             },
             _userContext.UserGlobalId);
+    }
+
+    public async Task DispatchEvents(DomainEntity domainEntity, CancellationToken cancellationToken)
+    {
+        await _eventDispatcher.Publish(domainEntity, cancellationToken);
     }
 }
