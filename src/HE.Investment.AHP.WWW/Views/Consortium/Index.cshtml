@@ -1,7 +1,50 @@
+@using HE.Investment.AHP.WWW.Controllers
+@using HE.Investment.AHP.WWW.Routing
+@using HE.Investment.AHP.WWW.Views.Consortium.Const
+@using HE.Investments.AHP.Consortium.Contract;
+@using HE.Investments.Common.WWW.Components.PageHeader
+@using HE.Investments.Common.WWW.Utils
+@model ConsortiumsList;
+@{
+    ViewData["Title"] = ConsortiumPageTitles.ConsortiumManagement;
+    ViewBag.Breadcrumbs = AhpBreadcrumbsBuilder
+        .New()
+        .WithOrganisation(Model.OrganisationName)
+        .Build();
+}
+
 <gds-div-grid-column-two-thirds>
+    <vc:page-header title="@ConsortiumPageTitles.ConsortiumManagement" caption="@Model.OrganisationName"/>
 
-    <vc:page-header title="Index"/>
+    @if (Model.Consortiums.Any())
+    {
+        <gds-p>
+            View the list of your consortia.
+        </gds-p>
 
-    TODO
+        <vc:consortiums-table consortiums-list="@Model"/>
+    }
+    else
+    {
+        <gds-p>
+            Your organisation is not yet a member or Lead Partner of a consortium.
+            You can create a new consortium below, or be added to a consortium as a member. To be added to one, speak to the consortium Lead Partner.
+        </gds-p>
+    }
 
+    <a
+        class="govuk-heading-m"
+        href="@Url.Action(nameof(ConsortiumController.Start), new ControllerName(nameof(ConsortiumController)).WithoutPrefix())"
+        data-testId="create-new-consortium">
+        Create new consortium
+    </a>
+
+    <gds-p>
+        A consortium is a group of organisations or separate legal entities acting together to deliver homes under the Affordable Homes Programme.
+    </gds-p>
+    <gds-p>
+        You can only add one consortium per programme.
+    </gds-p>
+
+    <vc:return-to-account-link/>
 </gds-div-grid-column-two-thirds>
