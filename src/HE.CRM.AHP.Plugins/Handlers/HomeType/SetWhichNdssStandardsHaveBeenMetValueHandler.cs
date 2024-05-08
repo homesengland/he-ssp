@@ -10,11 +10,13 @@ namespace HE.CRM.AHP.Plugins.Handlers.HomeType
 
         private invln_HomeType target => ExecutionData.Target;
 
-        #endregion
+        #endregion Fields
+
         #region Base Methods Overrides
+
         public override bool CanWork()
         {
-            return target != null;
+            return ValueChanged(invln_HomeType.Fields.invln_whichndssstandardshavebeenmet);
         }
 
         public override void DoWork()
@@ -22,6 +24,6 @@ namespace HE.CRM.AHP.Plugins.Handlers.HomeType
             CrmServicesFactory.Get<IHomeTypeService>().SetWhichNdssStandardsHaveBeenMetValue(target);
         }
 
-        #endregion
+        #endregion Base Methods Overrides
     }
 }
