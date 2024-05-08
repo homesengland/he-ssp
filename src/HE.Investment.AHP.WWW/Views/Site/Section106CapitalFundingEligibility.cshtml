@@ -1,6 +1,8 @@
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investment.AHP.Contract.Site
 @using HE.Investment.AHP.WWW.Views.Site.Const
+@using HE.Investment.AHP.WWW.Config
+@inject IAhpExternalLinks ExternalLinks
 @model Section106Dto
 @{
     ViewData["Title"] = SitePageTitles.SiteSection106CapitalFundingEligibility;
@@ -18,9 +20,10 @@
             requirements.
         </gds-p>
         <gds-p>
-            For guidance on the requirements for funding eligibility, read more about affordable housing
-            funding (opens in a new tab). It also includes links to additional information in the Capital
-            Funding Guide.
+            For guidance on the requirements for funding eligibility,
+            <a href="@ExternalLinks.CapitalFundingGuide" target="_blank">
+                read more about affordable housing funding (opens in a new tab)
+            </a>. It also includes links to additional information in the Capital Funding Guide.
         </gds-p>
 
         <vc:radio-yes-no field-name="@nameof(Model.CapitalFundingEligibility)"
