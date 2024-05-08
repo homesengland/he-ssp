@@ -1,6 +1,7 @@
 using HE.Investment.AHP.WWW.Models.ConsortiumMember;
 using HE.Investment.AHP.WWW.Views.Shared.Components.OrganisationDetailsComponent;
 using HE.Investment.AHP.WWW.Workflows;
+using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.AHP.Consortium.Contract;
 using HE.Investments.AHP.Consortium.Contract.Commands;
@@ -27,9 +28,12 @@ public class ConsortiumMemberController : WorkflowController<ConsortiumMemberWor
 {
     private readonly IMediator _mediator;
 
-    public ConsortiumMemberController(IMediator mediator)
+    private readonly IAccountUserContext _accountUserContext;
+
+    public ConsortiumMemberController(IMediator mediator, IAccountUserContext accountUserContext)
     {
         _mediator = mediator;
+        _accountUserContext = accountUserContext;
     }
 
     [HttpGet("back")]
@@ -42,7 +46,12 @@ public class ConsortiumMemberController : WorkflowController<ConsortiumMemberWor
     [WorkflowState(ConsortiumMemberWorkflowState.Index)]
     public async Task<IActionResult> Index(string consortiumId, CancellationToken cancellationToken)
     {
-        return View(await GetConsortiumDetails(consortiumId, fetchAddress: false, cancellationToken));
+        var userAccount = await _accountUserContext.GetSelectedAccount();
+        var consortium = await GetConsortiumDetails(consortiumId, fetchAddress: false, cancellationToken);
+
+        return consortium.LeadPartner.OrganisationId != userAccount.SelectedOrganisationId()
+            ? View("MemberDashboard", consortium)
+            : View(consortium);
     }
 
     [HttpGet("search-organisation")]
