@@ -5,8 +5,8 @@ namespace HE.Investment.AHP.Contract.Delivery;
 
 public record DeliveryPhaseId : StringIdValueObject
 {
-    public DeliveryPhaseId(string id)
-        : base(id)
+    public DeliveryPhaseId(string value)
+        : base(value)
     {
     }
 

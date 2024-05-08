@@ -5,8 +5,8 @@ namespace HE.Investment.AHP.Contract.HomeTypes;
 
 public record HomeTypeId : StringIdValueObject
 {
-    public HomeTypeId(string id)
-        : base(id)
+    public HomeTypeId(string value)
+        : base(value)
     {
     }
 

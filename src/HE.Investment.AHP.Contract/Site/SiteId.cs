@@ -5,8 +5,8 @@ namespace HE.Investment.AHP.Contract.Site;
 
 public record SiteId : StringIdValueObject
 {
-    public SiteId(string id)
-        : base(id)
+    public SiteId(string value)
+        : base(value)
     {
     }
 

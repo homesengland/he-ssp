@@ -38,6 +38,8 @@ public class ConsortiumEntity : IConsortiumEntity
 
     public ConsortiumMember LeadPartner { get; }
 
+    public IEnumerable<ConsortiumMember> ActiveMembers => _members.Where(x => x.Status is ConsortiumMemberStatus.Active);
+
     public IEnumerable<ConsortiumMember> Members => _members;
 
     public static async Task<ConsortiumEntity> New(ProgrammeSlim programme, ConsortiumMember leadPartner, IIsPartOfConsortium isPartOfConsortium)

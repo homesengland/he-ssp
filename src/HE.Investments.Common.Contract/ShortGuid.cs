@@ -33,27 +33,30 @@ public class ShortGuid
 
     private static Guid Decode(string value)
     {
-        if (Guid.TryParse(value, out _))
+        if (TryDecode(value, out var guid))
         {
-            return new Guid(value);
+            return guid;
         }
 
-        value = value.Replace("_", "/").Replace("-", "+");
-        var buffer = Convert.FromBase64String(value + "==");
-        return new Guid(buffer);
+        throw new FormatException($"Invalid encoded short guid {value}");
     }
 
     private static bool TryDecode(string value, out Guid guid)
     {
-        try
+        if (Guid.TryParse(value, out guid))
         {
-            guid = Decode(value);
             return true;
         }
-        catch (FormatException)
+
+        value = value.Replace("_", "/").Replace("-", "+");
+
+        var buffer = new Span<byte>(new byte[16]);
+        if (Convert.TryFromBase64String(value + "==", buffer, out _))
         {
-            guid = Guid.Empty;
-            return false;
+            guid = new Guid(buffer);
+            return true;
         }
+
+        return false;
     }
 }

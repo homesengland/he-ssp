@@ -5,8 +5,8 @@ namespace HE.Investments.FrontDoor.Shared.Project;
 
 public record FrontDoorSiteId : StringIdValueObject
 {
-    public FrontDoorSiteId(string id)
-        : base(id)
+    public FrontDoorSiteId(string value)
+        : base(value)
     {
     }
 

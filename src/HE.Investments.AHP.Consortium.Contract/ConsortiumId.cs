@@ -5,8 +5,8 @@ namespace HE.Investments.AHP.Consortium.Contract;
 
 public record ConsortiumId : StringIdValueObject
 {
-    public ConsortiumId(string id)
-        : base(id)
+    public ConsortiumId(string value)
+        : base(value)
     {
     }
 

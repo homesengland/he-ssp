@@ -2,8 +2,8 @@ namespace HE.Investments.Common.Contract;
 
 public record FileId : StringIdValueObject
 {
-    private FileId(string id)
-        : base(id)
+    private FileId(string value)
+        : base(value)
     {
     }
 

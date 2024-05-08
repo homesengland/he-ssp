@@ -55,7 +55,7 @@ public class ConsortiumCrmContext : IConsortiumCrmContext
 
         var consortiumsList = await _service.ExecuteAsync<invln_getconsortiumsRequest, invln_getconsortiumsResponse, IList<ConsortiumDto>>(
             request,
-            x => x.invln_consortiums,
+            x => string.IsNullOrWhiteSpace(x.invln_consortiums) ? "[]" : x.invln_consortiums,
             cancellationToken);
 
         return consortiumsList;

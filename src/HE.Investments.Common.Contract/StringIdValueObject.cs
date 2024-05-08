@@ -1,18 +1,18 @@
 namespace HE.Investments.Common.Contract;
 
-public record StringIdValueObject
+public abstract record StringIdValueObject
 {
-    public StringIdValueObject(string id)
+    protected StringIdValueObject(string value)
     {
-        if (string.IsNullOrWhiteSpace(id))
+        if (string.IsNullOrWhiteSpace(value))
         {
             throw new ArgumentException("Cannot create id for empty value");
         }
 
-        Value = id;
+        Value = value;
     }
 
-    public StringIdValueObject()
+    protected StringIdValueObject()
     {
         Value = string.Empty;
     }
@@ -26,6 +26,26 @@ public record StringIdValueObject
     public static string FromGuidToShortGuidAsString(Guid value) => ShortGuid.FromGuid(value).Value;
 
     public static string FromStringToShortGuidAsString(string value) => ShortGuid.FromString(value).Value;
+
+    public virtual bool Equals(StringIdValueObject? other)
+    {
+        if (other is null)
+        {
+            return false;
+        }
+
+        if (ReferenceEquals(this, other))
+        {
+            return true;
+        }
+
+        return ShortGuid.TryToGuidAsString(Value) == ShortGuid.TryToGuidAsString(other.Value);
+    }
+
+    public override int GetHashCode()
+    {
+        return ShortGuid.TryToGuidAsString(Value).GetHashCode();
+    }
 
     public override string ToString()
     {

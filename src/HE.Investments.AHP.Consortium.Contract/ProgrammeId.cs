@@ -1,5 +1,4 @@
 using HE.Investments.Common.Contract;
-using HE.Investments.Common.Extensions;
 
 namespace HE.Investments.AHP.Consortium.Contract;
 
