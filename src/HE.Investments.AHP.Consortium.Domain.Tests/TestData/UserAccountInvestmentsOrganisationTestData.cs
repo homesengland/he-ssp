@@ -5,7 +5,7 @@ using HE.Investments.Common.Contract;
 
 namespace HE.Investments.AHP.Consortium.Domain.Tests.TestData;
 
-public class UserAccountInvestmentsOrganisationTestData
+public static class UserAccountInvestmentsOrganisationTestData
 {
     public static readonly UserAccount JjCompanyEmployee = new(
         UserGlobalId.From("MasterJ"),
