@@ -1,6 +1,5 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investments.Common.Contract;
-using HE.Investments.Common.Contract.Enum;
 using MediatR;
 
 namespace HE.Investment.AHP.Contract.FinancialDetails.Queries;

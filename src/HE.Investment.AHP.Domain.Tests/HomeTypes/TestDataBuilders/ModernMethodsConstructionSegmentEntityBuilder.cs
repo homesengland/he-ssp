@@ -1,4 +1,3 @@
-using System.Collections.ObjectModel;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;

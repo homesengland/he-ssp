@@ -1,6 +1,5 @@
 using System.Globalization;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
-using Microsoft.VisualStudio.TestPlatform.Common.DataCollection;
 
 namespace HE.Investment.AHP.Domain.Tests.Delivery.Entities.TestDataBuilders;
 
