@@ -160,7 +160,7 @@ namespace HE.Investments.Common.CRM.Model
 			public const string invln_sites_AccountId_account = "invln_sites_AccountId_account";
 			public const string invln_sites_CreatedByContactId_contact = "invln_sites_CreatedByContactId_contact";
 			public const string invln_sites_developingpartner_account = "invln_sites_developingpartner_account";
-			public const string invln_sites_HeLocalAuthorityId_he_localauthorit = "invln_sites_HeLocalAuthorityId_he_localauthorit";
+			public const string invln_sites_LocalAuthority_invln_ahglocalauthor = "invln_sites_LocalAuthority_invln_ahglocalauthor";
 			public const string invln_sites_Ownerofthehomesaftercompletion_acco = "invln_sites_Ownerofthehomesaftercompletion_acco";
 			public const string invln_sites_ownerofthelandduringdevelopment_acc = "invln_sites_ownerofthelandduringdevelopment_acc";
 			public const string invln_SitesId = "invln_sitesid";
@@ -2867,23 +2867,23 @@ namespace HE.Investments.Common.CRM.Model
 		}
 		
 		/// <summary>
-		/// N:1 invln_sites_HeLocalAuthorityId_he_localauthorit
+		/// N:1 invln_sites_LocalAuthority_invln_ahglocalauthor
 		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_helocalauthorityid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_sites_HeLocalAuthorityId_he_localauthorit")]
-		public HE.Investments.Common.CRM.Model.he_LocalAuthority invln_sites_HeLocalAuthorityId_he_localauthorit
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_localauthority")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_sites_LocalAuthority_invln_ahglocalauthor")]
+		public HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities invln_sites_LocalAuthority_invln_ahglocalauthor
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntity<HE.Investments.Common.CRM.Model.he_LocalAuthority>("invln_sites_HeLocalAuthorityId_he_localauthorit", null);
+				return this.GetRelatedEntity<HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities>("invln_sites_LocalAuthority_invln_ahglocalauthor", null);
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("invln_sites_HeLocalAuthorityId_he_localauthorit");
-				this.SetRelatedEntity<HE.Investments.Common.CRM.Model.he_LocalAuthority>("invln_sites_HeLocalAuthorityId_he_localauthorit", null, value);
-				this.OnPropertyChanged("invln_sites_HeLocalAuthorityId_he_localauthorit");
+				this.OnPropertyChanging("invln_sites_LocalAuthority_invln_ahglocalauthor");
+				this.SetRelatedEntity<HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities>("invln_sites_LocalAuthority_invln_ahglocalauthor", null, value);
+				this.OnPropertyChanged("invln_sites_LocalAuthority_invln_ahglocalauthor");
 			}
 		}
 		

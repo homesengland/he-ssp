@@ -444,11 +444,7 @@ namespace HE.Investments.Common.CRM.Model
 			public const string GovernmentId = "governmentid";
 			public const string he_account_keyaccountmanager_systemuser = "he_account_keyaccountmanager_systemuser";
 			public const string he_Department = "he_department";
-			public const string he_he_pipeline_LeadIntervention_systemuser = "he_he_pipeline_LeadIntervention_systemuser";
-			public const string he_he_pipeline_SponsorName_systemuser = "he_he_pipeline_SponsorName_systemuser";
-			public const string he_pipeline_substantiveowner_systemuser = "he_pipeline_substantiveowner_systemuser";
 			public const string he_systemuser_account_RelationshipOwner = "he_systemuser_account_RelationshipOwner";
-			public const string he_systemuser_he_localauthority_growthmanager = "he_systemuser_he_localauthority_growthmanager";
 			public const string HomePhone = "homephone";
 			public const string IdentityId = "identityid";
 			public const string ImportSequenceNumber = "importsequencenumber";
@@ -458,6 +454,7 @@ namespace HE.Investments.Common.CRM.Model
 			public const string InviteStatusCode = "invitestatuscode";
 			public const string InviteStatusCodeName = "invitestatuscodename";
 			public const string invln_account_ProviderManagementLead_systemuser = "invln_account_ProviderManagementLead_systemuser";
+			public const string invln_ahglocalauthorities_GrowthManager_systemu = "invln_ahglocalauthorities_GrowthManager_systemu";
 			public const string invln_ahpcontract_ContractLead_systemuser = "invln_ahpcontract_ContractLead_systemuser";
 			public const string invln_externalcomms_systemuser_createdby = "invln_externalcomms_systemuser_createdby";
 			public const string invln_externalcomms_systemuser_createdonbehalfby = "invln_externalcomms_systemuser_createdonbehalfby";
@@ -499,18 +496,10 @@ namespace HE.Investments.Common.CRM.Model
 			public const string lk_environmentvariablevalue_createdonbehalfby = "lk_environmentvariablevalue_createdonbehalfby";
 			public const string lk_environmentvariablevalue_modifiedby = "lk_environmentvariablevalue_modifiedby";
 			public const string lk_environmentvariablevalue_modifiedonbehalfby = "lk_environmentvariablevalue_modifiedonbehalfby";
-			public const string lk_he_localauthority_createdby = "lk_he_localauthority_createdby";
-			public const string lk_he_localauthority_createdonbehalfby = "lk_he_localauthority_createdonbehalfby";
-			public const string lk_he_localauthority_modifiedby = "lk_he_localauthority_modifiedby";
-			public const string lk_he_localauthority_modifiedonbehalfby = "lk_he_localauthority_modifiedonbehalfby";
-			public const string lk_he_pipeline_createdby = "lk_he_pipeline_createdby";
-			public const string lk_he_pipeline_createdonbehalfby = "lk_he_pipeline_createdonbehalfby";
-			public const string lk_he_pipeline_modifiedby = "lk_he_pipeline_modifiedby";
-			public const string lk_he_pipeline_modifiedonbehalfby = "lk_he_pipeline_modifiedonbehalfby";
-			public const string lk_he_projectlocalauthority_createdby = "lk_he_projectlocalauthority_createdby";
-			public const string lk_he_projectlocalauthority_createdonbehalfby = "lk_he_projectlocalauthority_createdonbehalfby";
-			public const string lk_he_projectlocalauthority_modifiedby = "lk_he_projectlocalauthority_modifiedby";
-			public const string lk_he_projectlocalauthority_modifiedonbehalfby = "lk_he_projectlocalauthority_modifiedonbehalfby";
+			public const string lk_invln_ahglocalauthorities_createdby = "lk_invln_ahglocalauthorities_createdby";
+			public const string lk_invln_ahglocalauthorities_createdonbehalfby = "lk_invln_ahglocalauthorities_createdonbehalfby";
+			public const string lk_invln_ahglocalauthorities_modifiedby = "lk_invln_ahglocalauthorities_modifiedby";
+			public const string lk_invln_ahglocalauthorities_modifiedonbehalfby = "lk_invln_ahglocalauthorities_modifiedonbehalfby";
 			public const string lk_invln_ahpcontract_createdby = "lk_invln_ahpcontract_createdby";
 			public const string lk_invln_ahpcontract_createdonbehalfby = "lk_invln_ahpcontract_createdonbehalfby";
 			public const string lk_invln_ahpcontract_modifiedby = "lk_invln_ahpcontract_modifiedby";
@@ -780,9 +769,7 @@ namespace HE.Investments.Common.CRM.Model
 			public const string user_accounts = "user_accounts";
 			public const string user_environmentvariabledefinition = "user_environmentvariabledefinition";
 			public const string user_environmentvariablevalue = "user_environmentvariablevalue";
-			public const string user_he_localauthority = "user_he_localauthority";
-			public const string user_he_pipeline = "user_he_pipeline";
-			public const string user_he_projectlocalauthority = "user_he_projectlocalauthority";
+			public const string user_invln_ahglocalauthorities = "user_invln_ahglocalauthorities";
 			public const string user_invln_ahpcontract = "user_invln_ahpcontract";
 			public const string user_invln_ahpstatuschange = "user_invln_ahpstatuschange";
 			public const string user_invln_borrowerpreviousschemes = "user_invln_borrowerpreviousschemes";
@@ -4457,66 +4444,6 @@ namespace HE.Investments.Common.CRM.Model
 		}
 		
 		/// <summary>
-		/// 1:N he_he_pipeline_LeadIntervention_systemuser
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("he_he_pipeline_LeadIntervention_systemuser")]
-		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.he_Pipeline> he_he_pipeline_LeadIntervention_systemuser
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.he_Pipeline>("he_he_pipeline_LeadIntervention_systemuser", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("he_he_pipeline_LeadIntervention_systemuser");
-				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.he_Pipeline>("he_he_pipeline_LeadIntervention_systemuser", null, value);
-				this.OnPropertyChanged("he_he_pipeline_LeadIntervention_systemuser");
-			}
-		}
-		
-		/// <summary>
-		/// 1:N he_he_pipeline_SponsorName_systemuser
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("he_he_pipeline_SponsorName_systemuser")]
-		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.he_Pipeline> he_he_pipeline_SponsorName_systemuser
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.he_Pipeline>("he_he_pipeline_SponsorName_systemuser", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("he_he_pipeline_SponsorName_systemuser");
-				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.he_Pipeline>("he_he_pipeline_SponsorName_systemuser", null, value);
-				this.OnPropertyChanged("he_he_pipeline_SponsorName_systemuser");
-			}
-		}
-		
-		/// <summary>
-		/// 1:N he_pipeline_substantiveowner_systemuser
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("he_pipeline_substantiveowner_systemuser")]
-		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.he_Pipeline> he_pipeline_substantiveowner_systemuser
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.he_Pipeline>("he_pipeline_substantiveowner_systemuser", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("he_pipeline_substantiveowner_systemuser");
-				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.he_Pipeline>("he_pipeline_substantiveowner_systemuser", null, value);
-				this.OnPropertyChanged("he_pipeline_substantiveowner_systemuser");
-			}
-		}
-		
-		/// <summary>
 		/// 1:N he_systemuser_account_RelationshipOwner
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("he_systemuser_account_RelationshipOwner")]
@@ -4537,26 +4464,6 @@ namespace HE.Investments.Common.CRM.Model
 		}
 		
 		/// <summary>
-		/// 1:N he_systemuser_he_localauthority_growthmanager
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("he_systemuser_he_localauthority_growthmanager")]
-		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.he_LocalAuthority> he_systemuser_he_localauthority_growthmanager
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.he_LocalAuthority>("he_systemuser_he_localauthority_growthmanager", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("he_systemuser_he_localauthority_growthmanager");
-				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.he_LocalAuthority>("he_systemuser_he_localauthority_growthmanager", null, value);
-				this.OnPropertyChanged("he_systemuser_he_localauthority_growthmanager");
-			}
-		}
-		
-		/// <summary>
 		/// 1:N invln_account_ProviderManagementLead_systemuser
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_account_ProviderManagementLead_systemuser")]
@@ -4573,6 +4480,26 @@ namespace HE.Investments.Common.CRM.Model
 				this.OnPropertyChanging("invln_account_ProviderManagementLead_systemuser");
 				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.Account>("invln_account_ProviderManagementLead_systemuser", null, value);
 				this.OnPropertyChanged("invln_account_ProviderManagementLead_systemuser");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_ahglocalauthorities_GrowthManager_systemu
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_ahglocalauthorities_GrowthManager_systemu")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities> invln_ahglocalauthorities_GrowthManager_systemu
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities>("invln_ahglocalauthorities_GrowthManager_systemu", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_ahglocalauthorities_GrowthManager_systemu");
+				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities>("invln_ahglocalauthorities_GrowthManager_systemu", null, value);
+				this.OnPropertyChanged("invln_ahglocalauthorities_GrowthManager_systemu");
 			}
 		}
 		
@@ -5197,242 +5124,82 @@ namespace HE.Investments.Common.CRM.Model
 		}
 		
 		/// <summary>
-		/// 1:N lk_he_localauthority_createdby
+		/// 1:N lk_invln_ahglocalauthorities_createdby
 		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_he_localauthority_createdby")]
-		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.he_LocalAuthority> lk_he_localauthority_createdby
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_ahglocalauthorities_createdby")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities> lk_invln_ahglocalauthorities_createdby
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.he_LocalAuthority>("lk_he_localauthority_createdby", null);
+				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities>("lk_invln_ahglocalauthorities_createdby", null);
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("lk_he_localauthority_createdby");
-				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.he_LocalAuthority>("lk_he_localauthority_createdby", null, value);
-				this.OnPropertyChanged("lk_he_localauthority_createdby");
+				this.OnPropertyChanging("lk_invln_ahglocalauthorities_createdby");
+				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities>("lk_invln_ahglocalauthorities_createdby", null, value);
+				this.OnPropertyChanged("lk_invln_ahglocalauthorities_createdby");
 			}
 		}
 		
 		/// <summary>
-		/// 1:N lk_he_localauthority_createdonbehalfby
+		/// 1:N lk_invln_ahglocalauthorities_createdonbehalfby
 		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_he_localauthority_createdonbehalfby")]
-		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.he_LocalAuthority> lk_he_localauthority_createdonbehalfby
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_ahglocalauthorities_createdonbehalfby")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities> lk_invln_ahglocalauthorities_createdonbehalfby
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.he_LocalAuthority>("lk_he_localauthority_createdonbehalfby", null);
+				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities>("lk_invln_ahglocalauthorities_createdonbehalfby", null);
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("lk_he_localauthority_createdonbehalfby");
-				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.he_LocalAuthority>("lk_he_localauthority_createdonbehalfby", null, value);
-				this.OnPropertyChanged("lk_he_localauthority_createdonbehalfby");
+				this.OnPropertyChanging("lk_invln_ahglocalauthorities_createdonbehalfby");
+				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities>("lk_invln_ahglocalauthorities_createdonbehalfby", null, value);
+				this.OnPropertyChanged("lk_invln_ahglocalauthorities_createdonbehalfby");
 			}
 		}
 		
 		/// <summary>
-		/// 1:N lk_he_localauthority_modifiedby
+		/// 1:N lk_invln_ahglocalauthorities_modifiedby
 		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_he_localauthority_modifiedby")]
-		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.he_LocalAuthority> lk_he_localauthority_modifiedby
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_ahglocalauthorities_modifiedby")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities> lk_invln_ahglocalauthorities_modifiedby
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.he_LocalAuthority>("lk_he_localauthority_modifiedby", null);
+				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities>("lk_invln_ahglocalauthorities_modifiedby", null);
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("lk_he_localauthority_modifiedby");
-				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.he_LocalAuthority>("lk_he_localauthority_modifiedby", null, value);
-				this.OnPropertyChanged("lk_he_localauthority_modifiedby");
+				this.OnPropertyChanging("lk_invln_ahglocalauthorities_modifiedby");
+				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities>("lk_invln_ahglocalauthorities_modifiedby", null, value);
+				this.OnPropertyChanged("lk_invln_ahglocalauthorities_modifiedby");
 			}
 		}
 		
 		/// <summary>
-		/// 1:N lk_he_localauthority_modifiedonbehalfby
+		/// 1:N lk_invln_ahglocalauthorities_modifiedonbehalfby
 		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_he_localauthority_modifiedonbehalfby")]
-		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.he_LocalAuthority> lk_he_localauthority_modifiedonbehalfby
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_ahglocalauthorities_modifiedonbehalfby")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities> lk_invln_ahglocalauthorities_modifiedonbehalfby
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.he_LocalAuthority>("lk_he_localauthority_modifiedonbehalfby", null);
+				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities>("lk_invln_ahglocalauthorities_modifiedonbehalfby", null);
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("lk_he_localauthority_modifiedonbehalfby");
-				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.he_LocalAuthority>("lk_he_localauthority_modifiedonbehalfby", null, value);
-				this.OnPropertyChanged("lk_he_localauthority_modifiedonbehalfby");
-			}
-		}
-		
-		/// <summary>
-		/// 1:N lk_he_pipeline_createdby
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_he_pipeline_createdby")]
-		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.he_Pipeline> lk_he_pipeline_createdby
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.he_Pipeline>("lk_he_pipeline_createdby", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("lk_he_pipeline_createdby");
-				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.he_Pipeline>("lk_he_pipeline_createdby", null, value);
-				this.OnPropertyChanged("lk_he_pipeline_createdby");
-			}
-		}
-		
-		/// <summary>
-		/// 1:N lk_he_pipeline_createdonbehalfby
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_he_pipeline_createdonbehalfby")]
-		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.he_Pipeline> lk_he_pipeline_createdonbehalfby
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.he_Pipeline>("lk_he_pipeline_createdonbehalfby", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("lk_he_pipeline_createdonbehalfby");
-				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.he_Pipeline>("lk_he_pipeline_createdonbehalfby", null, value);
-				this.OnPropertyChanged("lk_he_pipeline_createdonbehalfby");
-			}
-		}
-		
-		/// <summary>
-		/// 1:N lk_he_pipeline_modifiedby
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_he_pipeline_modifiedby")]
-		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.he_Pipeline> lk_he_pipeline_modifiedby
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.he_Pipeline>("lk_he_pipeline_modifiedby", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("lk_he_pipeline_modifiedby");
-				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.he_Pipeline>("lk_he_pipeline_modifiedby", null, value);
-				this.OnPropertyChanged("lk_he_pipeline_modifiedby");
-			}
-		}
-		
-		/// <summary>
-		/// 1:N lk_he_pipeline_modifiedonbehalfby
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_he_pipeline_modifiedonbehalfby")]
-		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.he_Pipeline> lk_he_pipeline_modifiedonbehalfby
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.he_Pipeline>("lk_he_pipeline_modifiedonbehalfby", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("lk_he_pipeline_modifiedonbehalfby");
-				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.he_Pipeline>("lk_he_pipeline_modifiedonbehalfby", null, value);
-				this.OnPropertyChanged("lk_he_pipeline_modifiedonbehalfby");
-			}
-		}
-		
-		/// <summary>
-		/// 1:N lk_he_projectlocalauthority_createdby
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_he_projectlocalauthority_createdby")]
-		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.he_ProjectLocalAuthority> lk_he_projectlocalauthority_createdby
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.he_ProjectLocalAuthority>("lk_he_projectlocalauthority_createdby", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("lk_he_projectlocalauthority_createdby");
-				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.he_ProjectLocalAuthority>("lk_he_projectlocalauthority_createdby", null, value);
-				this.OnPropertyChanged("lk_he_projectlocalauthority_createdby");
-			}
-		}
-		
-		/// <summary>
-		/// 1:N lk_he_projectlocalauthority_createdonbehalfby
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_he_projectlocalauthority_createdonbehalfby")]
-		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.he_ProjectLocalAuthority> lk_he_projectlocalauthority_createdonbehalfby
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.he_ProjectLocalAuthority>("lk_he_projectlocalauthority_createdonbehalfby", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("lk_he_projectlocalauthority_createdonbehalfby");
-				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.he_ProjectLocalAuthority>("lk_he_projectlocalauthority_createdonbehalfby", null, value);
-				this.OnPropertyChanged("lk_he_projectlocalauthority_createdonbehalfby");
-			}
-		}
-		
-		/// <summary>
-		/// 1:N lk_he_projectlocalauthority_modifiedby
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_he_projectlocalauthority_modifiedby")]
-		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.he_ProjectLocalAuthority> lk_he_projectlocalauthority_modifiedby
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.he_ProjectLocalAuthority>("lk_he_projectlocalauthority_modifiedby", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("lk_he_projectlocalauthority_modifiedby");
-				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.he_ProjectLocalAuthority>("lk_he_projectlocalauthority_modifiedby", null, value);
-				this.OnPropertyChanged("lk_he_projectlocalauthority_modifiedby");
-			}
-		}
-		
-		/// <summary>
-		/// 1:N lk_he_projectlocalauthority_modifiedonbehalfby
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_he_projectlocalauthority_modifiedonbehalfby")]
-		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.he_ProjectLocalAuthority> lk_he_projectlocalauthority_modifiedonbehalfby
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.he_ProjectLocalAuthority>("lk_he_projectlocalauthority_modifiedonbehalfby", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("lk_he_projectlocalauthority_modifiedonbehalfby");
-				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.he_ProjectLocalAuthority>("lk_he_projectlocalauthority_modifiedonbehalfby", null, value);
-				this.OnPropertyChanged("lk_he_projectlocalauthority_modifiedonbehalfby");
+				this.OnPropertyChanging("lk_invln_ahglocalauthorities_modifiedonbehalfby");
+				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities>("lk_invln_ahglocalauthorities_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("lk_invln_ahglocalauthorities_modifiedonbehalfby");
 			}
 		}
 		
@@ -9237,62 +9004,22 @@ namespace HE.Investments.Common.CRM.Model
 		}
 		
 		/// <summary>
-		/// 1:N user_he_localauthority
+		/// 1:N user_invln_ahglocalauthorities
 		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("user_he_localauthority")]
-		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.he_LocalAuthority> user_he_localauthority
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("user_invln_ahglocalauthorities")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities> user_invln_ahglocalauthorities
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.he_LocalAuthority>("user_he_localauthority", null);
+				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities>("user_invln_ahglocalauthorities", null);
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("user_he_localauthority");
-				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.he_LocalAuthority>("user_he_localauthority", null, value);
-				this.OnPropertyChanged("user_he_localauthority");
-			}
-		}
-		
-		/// <summary>
-		/// 1:N user_he_pipeline
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("user_he_pipeline")]
-		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.he_Pipeline> user_he_pipeline
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.he_Pipeline>("user_he_pipeline", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("user_he_pipeline");
-				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.he_Pipeline>("user_he_pipeline", null, value);
-				this.OnPropertyChanged("user_he_pipeline");
-			}
-		}
-		
-		/// <summary>
-		/// 1:N user_he_projectlocalauthority
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("user_he_projectlocalauthority")]
-		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.he_ProjectLocalAuthority> user_he_projectlocalauthority
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.he_ProjectLocalAuthority>("user_he_projectlocalauthority", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("user_he_projectlocalauthority");
-				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.he_ProjectLocalAuthority>("user_he_projectlocalauthority", null, value);
-				this.OnPropertyChanged("user_he_projectlocalauthority");
+				this.OnPropertyChanging("user_invln_ahglocalauthorities");
+				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities>("user_invln_ahglocalauthorities", null, value);
+				this.OnPropertyChanged("user_invln_ahglocalauthorities");
 			}
 		}
 		
