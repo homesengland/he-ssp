@@ -44,7 +44,7 @@ namespace HE.CRM.AHP.Plugins.Services.AhpStatusChange
         {
             if (target.invln_ChangeSource != null)
             {
-                this.TracingService.Trace("Change source: " +  target.invln_ChangeSource.Value);
+                this.TracingService.Trace("Change source: " + target.invln_ChangeSource.Value);
                 var ahpApplication = _ahpApplicationRepository.GetById(
                     target.invln_AHPApplication.Id,
                     new string[] {
@@ -67,11 +67,9 @@ namespace HE.CRM.AHP.Plugins.Services.AhpStatusChange
             var statusLabel = string.Empty;
             switch (ahpStatusChange.invln_Changeto.Value)
             {
-                case (int)invln_AHPInternalStatus.Withdrawn:
-                    statusLabel = "Withdrawn";
-                    _govNotifyEmailService.SendNotifications_AHP_INTERNAL_REQUEST_TO_WITHDRAW(ahpStatusChange, ahpApplication);
+                case (int)invln_AHPInternalStatus.Draft:
+                    statusLabel = "Draft";
                     break;
-
                 case (int)invln_AHPInternalStatus.ApplicationSubmitted:
                     statusLabel = "ApplicationSubmitted";
                     if (ahpStatusChange.invln_Changefrom.Value == (int)invln_AHPInternalStatus.Draft)
@@ -83,17 +81,40 @@ namespace HE.CRM.AHP.Plugins.Services.AhpStatusChange
                         TracingService.Trace("Changefrom is not Draft");
                     }
                     break;
-
-                case (int)invln_AHPInternalStatus.ReferredBackToApplicant:
-                    statusLabel = "ReferredBackToApplicant";
-                    _govNotifyEmailService.SendNotifications_AHP_EXTERNAL_APPLICATION_REFERRED_BACK_TO_APPLICANT(ahpStatusChange, ahpApplication);
+                case (int)invln_AHPInternalStatus.Approved:
+                    statusLabel = "Approved";
                     break;
-
+                case (int)invln_AHPInternalStatus.ApprovedContractExecuted:
+                    statusLabel = "ApprovedContractExecuted";
+                    break;
+                case (int)invln_AHPInternalStatus.ApprovedContractPassedComplianceChecks:
+                    statusLabel = "ApprovedContractPassedComplianceChecks";
+                    break;
+                case (int)invln_AHPInternalStatus.ApprovedContractReceivedBackToHE:
+                    statusLabel = "ApprovedContractReceivedBackToHE";
+                    break;
+                case (int)invln_AHPInternalStatus.ApprovedEngressmentIssued:
+                    statusLabel = "ApprovedEngressmentIssued";
+                    break;
                 case (int)invln_AHPInternalStatus.ApprovedSubjecttoContract:
                     statusLabel = "ApprovedSubjecttoContract";
                     _govNotifyEmailService.SendNotifications_AHP_INTERNAL_APPLICATION_APPROVED_SUBJECT_TO_CONTRACT(ahpStatusChange, ahpApplication);
                     break;
-
+                case (int)invln_AHPInternalStatus.Deleted:
+                    statusLabel = "Deleted";
+                    break;
+                case (int)invln_AHPInternalStatus.InternallyApprovedSubjectToIPQ:
+                    statusLabel = "InternallyApprovedSubjectToIPQ";
+                    break;
+                case (int)invln_AHPInternalStatus.InternallyApprovedSubjectToIPQAndRegulatorySignOff:
+                    statusLabel = "InternallyApprovedSubjectToIPQAndRegulatorySignOff";
+                    break;
+                case (int)invln_AHPInternalStatus.InternallyApprovedSubjectToRegulatorSignOff:
+                    statusLabel = "InternallyApprovedSubjectToRegulatorSignOff";
+                    break;
+                case (int)invln_AHPInternalStatus.InternallyRejected:
+                    statusLabel = "InternallyRejected";
+                    break;
                 case (int)invln_AHPInternalStatus.OnHold:
                     statusLabel = "OnHold";
                     if (ahpStatusChange.invln_ChangeSource.Value == (int)invln_ChangesourceSet.External)
@@ -106,123 +127,39 @@ namespace HE.CRM.AHP.Plugins.Services.AhpStatusChange
                         _govNotifyEmailService.SendNotifications_AHP_EXTERNAL_APPLICATION_ON_HOLD(ahpStatusChange, ahpApplication);
                     }
                     break;
-
-                default:
-                    break;
-            }
-
-            var pastFormStatus = string.Empty;
-            switch (ahpStatusChange.invln_Changeto.Value)
-            {
-                case (int)invln_AHPInternalStatus.Draft:
-                    statusLabel = "Draft";
-                    pastFormStatus = "has been changed to " + statusLabel; //TODO: to update
-                    break;
-                case (int)invln_AHPInternalStatus.ApplicationSubmitted:
-                    statusLabel = "ApplicationSubmitted";
-                    pastFormStatus = "has been changed to " + statusLabel; //TODO: to update
-                    break;
-                case (int)invln_AHPInternalStatus.Approved:
-                    statusLabel = "Approved";
-                    pastFormStatus = "has been changed to " + statusLabel; //TODO: to update
-                    break;
-                case (int)invln_AHPInternalStatus.ApprovedContractExecuted:
-                    statusLabel = "ApprovedContractExecuted";
-                    pastFormStatus = "has been changed to " + statusLabel; //TODO: to update
-                    break;
-                case (int)invln_AHPInternalStatus.ApprovedContractPassedComplianceChecks:
-                    statusLabel = "ApprovedContractPassedComplianceChecks";
-                    pastFormStatus = "has been changed to " + statusLabel; //TODO: to update
-                    break;
-                case (int)invln_AHPInternalStatus.ApprovedContractReceivedBackToHE:
-                    statusLabel = "ApprovedContractReceivedBackToHE";
-                    pastFormStatus = "has been changed to " + statusLabel; //TODO: to update
-                    break;
-                case (int)invln_AHPInternalStatus.ApprovedEngressmentIssued:
-                    statusLabel = "ApprovedEngressmentIssued";
-                    pastFormStatus = "has been changed to " + statusLabel; //TODO: to update
-                    break;
-                case (int)invln_AHPInternalStatus.ApprovedSubjecttoContract:
-                    statusLabel = "ApprovedSubjecttoContract";
-                    pastFormStatus = "has been changed to " + statusLabel; //TODO: to update
-                    break;
-                case (int)invln_AHPInternalStatus.Deleted:
-                    statusLabel = "Deleted";
-                    pastFormStatus = "has been changed to " + statusLabel; //TODO: to update
-                    break;
-                case (int)invln_AHPInternalStatus.InternallyApprovedSubjectToIPQ:
-                    statusLabel = "InternallyApprovedSubjectToIPQ";
-                    pastFormStatus = "has been changed to " + statusLabel; //TODO: to update
-                    break;
-                case (int)invln_AHPInternalStatus.InternallyApprovedSubjectToIPQAndRegulatorySignOff:
-                    statusLabel = "InternallyApprovedSubjectToIPQAndRegulatorySignOff";
-                    pastFormStatus = "has been changed to " + statusLabel; //TODO: to update
-                    break;
-                case (int)invln_AHPInternalStatus.InternallyApprovedSubjectToRegulatorSignOff:
-                    statusLabel = "InternallyApprovedSubjectToRegulatorSignOff";
-                    pastFormStatus = "has been changed to " + statusLabel; //TODO: to update
-                    break;
-                case (int)invln_AHPInternalStatus.InternallyRejected:
-                    statusLabel = "InternallyRejected";
-                    pastFormStatus = "has been changed to " + statusLabel; //TODO: to update
-                    break;
-                case (int)invln_AHPInternalStatus.OnHold:
-                    statusLabel = "OnHold";
-                    pastFormStatus = "has been changed to " + statusLabel; //TODO: to update
-                    break;
                 case (int)invln_AHPInternalStatus.ReferredBackToApplicant:
                     statusLabel = "ReferredBackToApplicant";
-                    pastFormStatus = "has been changed to " + statusLabel; //TODO: to update
+                    _govNotifyEmailService.SendNotifications_AHP_EXTERNAL_APPLICATION_REFERRED_BACK_TO_APPLICANT(ahpStatusChange, ahpApplication);
                     break;
                 case (int)invln_AHPInternalStatus.Rejected:
                     statusLabel = "Rejected";
-                    pastFormStatus = "has been changed to " + statusLabel; //TODO: to update
+                    _govNotifyEmailService.SendNotifications_AHP_EXTERNAL_APPLICATION_REJECTED(ahpStatusChange, ahpApplication);
                     break;
                 case (int)invln_AHPInternalStatus.RequestedEditing:
                     statusLabel = "RequestedEditing";
-                    pastFormStatus = "has been changed to " + statusLabel; //TODO: to update
                     break;
                 case (int)invln_AHPInternalStatus.UnderReviewGoingToBidClinic:
                     statusLabel = "UnderReviewGoingToBidClinic";
-                    pastFormStatus = "has been changed to " + statusLabel; //TODO: to update
                     break;
                 case (int)invln_AHPInternalStatus.UnderReviewGoingToCMEModeration:
                     statusLabel = "UnderReviewGoingToCMEModeration";
-                    pastFormStatus = "has been changed to " + statusLabel; //TODO: to update
                     break;
                 case (int)invln_AHPInternalStatus.UnderReviewGoingToSLT:
                     statusLabel = "UnderReviewGoingToSLT";
-                    pastFormStatus = "has been changed to " + statusLabel; //TODO: to update
                     break;
                 case (int)invln_AHPInternalStatus.UnderReviewInAssessment:
                     statusLabel = "UnderReviewInAssessment";
-                    pastFormStatus = "has been changed to " + statusLabel; //TODO: to update
                     break;
                 case (int)invln_AHPInternalStatus.UnderReviewInternallyApproved:
                     statusLabel = "UnderReviewInternallyApproved";
-                    pastFormStatus = "has been changed to " + statusLabel; //TODO: to update
                     break;
                 case (int)invln_AHPInternalStatus.UnderReviewPendingAssessment:
                     statusLabel = "UnderReviewPendingAssessment";
-                    pastFormStatus = "has been changed to " + statusLabel; //TODO: to update
                     break;
                 case (int)invln_AHPInternalStatus.Withdrawn:
                     statusLabel = "Withdrawn";
-                    pastFormStatus = "has been changed to " + statusLabel; //TODO: to update
+                    _govNotifyEmailService.SendNotifications_AHP_INTERNAL_REQUEST_TO_WITHDRAW(ahpStatusChange, ahpApplication);
                     break;
-               
-                //    statusLabel = "Draft";
-                //    pastFormStatus = "is now being edited by the applicant";
-                //    if (loanStatusChange.invln_changefrom == null)
-                //    {
-                //        _govNotifyEmailService.SendNotifications_EXTERNAL_APPLICATION_STATUS_CONFIRMATION(loanStatusChange, loanApplication, "saved your development loan application as draft");
-                //    }
-                //    break;
-                //case (int)invln_InternalStatus.ApplicationSubmitted:
-                //    statusLabel = "Application submitted";
-                //    pastFormStatus = "has been changed to " + statusLabel; //TODO: to update
-                //    _govNotifyEmailService.SendNotifications_EXTERNAL_APPLICATION_STATUS_CONFIRMATION(loanStatusChange, loanApplication, "submitted your application");
-                //    break;
 
                 default:
                     break;
@@ -230,8 +167,6 @@ namespace HE.CRM.AHP.Plugins.Services.AhpStatusChange
 
             this.TracingService.Trace("Status Label: " + statusLabel);
             SendInternalCrmNotification(ahpStatusChange, ahpApplication, statusLabel);
-            //_govNotifyEmailService.SendNotifications_INTERNAL_LOAN_APP_STATUS_CHANGE(ahpStatusChange, ahpApplication, statusLabel, pastFormStatus);
-
         }
 
         public void SendInternalCrmNotification(invln_AHPStatusChange statusChange, invln_scheme ahpApplication, string statusLabel)
