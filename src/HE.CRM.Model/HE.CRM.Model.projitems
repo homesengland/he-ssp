@@ -59,6 +59,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_invitecontacttojoinexistingorganisation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_IsConsortiumExistForProgrammeAndOrganisation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_linkcontactwithorganization.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_requestaddingmembertoconsortium.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_returnuserprofile.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_savetemporaryportaldata.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_searchlocalauthority.cs" />
@@ -176,10 +177,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\activity_typecode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\addlistcampaign.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\AIOperationOverrideType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\AIPluginSubType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\AIPluginType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\AllocationType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\applicationbasedaccesslist_cloud.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\BookableResourceCharacteristicType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\botComponentcollectionsharingroletype.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\botcomponentreusepolicy.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\botsharingroletypes.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\BudgetStatus.cs" />
