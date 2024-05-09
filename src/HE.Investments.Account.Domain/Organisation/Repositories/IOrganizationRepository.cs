@@ -2,6 +2,7 @@ using HE.Investments.Account.Contract.Organisation;
 using HE.Investments.Account.Contract.Organisation.Queries;
 using HE.Investments.Account.Domain.Organisation.Entities;
 using HE.Investments.Common.Contract;
+using HE.Investments.Common.Domain;
 
 namespace HE.Investments.Account.Domain.Organisation.Repositories;
 
@@ -14,4 +15,6 @@ public interface IOrganizationRepository
     Task<OrganisationId> CreateOrganisation(OrganisationEntity organisation);
 
     Task Save(OrganisationId organisationId, OrganisationEntity organisation, CancellationToken cancellationToken);
+
+    Task DispatchEvents(DomainEntity domainEntity, CancellationToken cancellationToken);
 }

@@ -21,13 +21,13 @@ public class ConsortiumEntity : IConsortiumEntity
 
     private readonly List<OrganisationId> _removeRequests = new();
 
-    public ConsortiumEntity(ConsortiumId id, ConsortiumName name, ProgrammeSlim programme, ConsortiumMember leadPartner, IEnumerable<ConsortiumMember> members)
+    public ConsortiumEntity(ConsortiumId id, ConsortiumName name, ProgrammeSlim programme, ConsortiumMember leadPartner, IEnumerable<ConsortiumMember>? members)
     {
         Id = id;
         Programme = programme;
         LeadPartner = leadPartner;
         Name = name;
-        _members = members.ToList();
+        _members = members?.ToList() ?? [];
     }
 
     public ConsortiumId Id { get; private set; }
@@ -37,6 +37,8 @@ public class ConsortiumEntity : IConsortiumEntity
     public ProgrammeSlim Programme { get; }
 
     public ConsortiumMember LeadPartner { get; }
+
+    public IEnumerable<ConsortiumMember> ActiveMembers => _members.Where(x => x.Status is ConsortiumMemberStatus.Active);
 
     public IEnumerable<ConsortiumMember> Members => _members;
 
@@ -71,13 +73,12 @@ public class ConsortiumEntity : IConsortiumEntity
 
     public bool AddMembersFromDraft(DraftConsortiumEntity draftConsortium, AreAllMembersAdded? requestAreAllMembersAdded)
     {
-        if (draftConsortium.Id != Id.Value
-            || draftConsortium.LeadPartner.Id != LeadPartner.Id)
+        if (draftConsortium.Id != Id || draftConsortium.LeadPartner.Id != LeadPartner.Id)
         {
             throw new InvalidOperationException("Draft consortium members cannot be added to consortium because consortium details does not match.");
         }
 
-        if (requestAreAllMembersAdded.IsNotProvided())
+        if (requestAreAllMembersAdded is null or AreAllMembersAdded.Undefined)
         {
             OperationResult.ThrowValidationError(nameof(AreAllMembersAdded), "Select whether you have you added all members to this consortium");
         }

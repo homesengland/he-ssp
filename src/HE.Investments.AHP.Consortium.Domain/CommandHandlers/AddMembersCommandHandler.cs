@@ -27,13 +27,13 @@ public class AddMembersCommandHandler : IRequestHandler<AddMembersCommand, Opera
     public async Task<OperationResult> Handle(AddMembersCommand request, CancellationToken cancellationToken)
     {
         var userAccount = await _accountUserContext.GetSelectedAccount();
-        var draftConsortium = _draftConsortiumRepository.Get(request.ConsortiumId, throwException: true)!;
+        var draftConsortium = _draftConsortiumRepository.Get(request.ConsortiumId, userAccount, throwException: true)!;
         var consortium = await _consortiumRepository.GetConsortium(request.ConsortiumId, userAccount, cancellationToken);
 
         if (consortium.AddMembersFromDraft(draftConsortium, request.AreAllMembersAdded))
         {
             await _consortiumRepository.Save(consortium, userAccount, cancellationToken);
-            _draftConsortiumRepository.Delete(draftConsortium);
+            _draftConsortiumRepository.Delete(draftConsortium, userAccount);
         }
 
         return OperationResult.Success();

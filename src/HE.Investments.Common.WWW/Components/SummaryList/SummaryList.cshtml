@@ -1,0 +1,35 @@
+@model (string Header, string Paragraph, List<HE.Investments.Common.WWW.Components.SummaryList.SummaryListItem> Items);
+
+<div class="govuk-grid-column-two-thirds govuk-!-margin-top-6">
+    <gds-h2>@Model.Header</gds-h2>
+
+    @if (!string.IsNullOrWhiteSpace(Model.Paragraph))
+    {
+        <gds-p>@Model.Paragraph</gds-p>
+    }
+</div>
+
+<div class="govuk-grid-column-full govuk-!-padding-left-3">
+    <gds-summary-list>
+        <strong class="govuk-!-margin-bottom-3">Name</strong>
+        @foreach (var item in Model.Items)
+        {
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-!-padding-top-2 govuk-!-padding-bottom-2">
+                    <div>@item.Name</div>
+                </dt>
+
+                @if (item.Actions.Count > 0)
+                {
+                    <dd class="govuk-summary-list__actions">
+                        @foreach (var action in item.Actions)
+                        {
+                            <gds-link href="@action.Url">@action.Name</gds-link>
+                        }
+                    </dd>
+                }
+
+            </div>
+        }
+    </gds-summary-list>
+</div>

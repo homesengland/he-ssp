@@ -1,5 +1,4 @@
 ﻿using HE.Investment.AHP.Contract.Application;
-using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.Contract.Validators;
 using MediatR;
 

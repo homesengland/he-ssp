@@ -1,6 +1,7 @@
 extern alias Org;
 
 using HE.Investments.Account.Shared;
+using HE.Investments.Account.Shared.User;
 using HE.Investments.AHP.Consortium.Contract;
 using HE.Investments.AHP.Consortium.Contract.Queries;
 using HE.Investments.AHP.Consortium.Domain.Repositories;
@@ -37,7 +38,9 @@ public class GetConsortiumDetailsQueryHandler : IRequestHandler<GetConsortiumDet
 
     public async Task<ConsortiumDetails> Handle(GetConsortiumDetailsQuery request, CancellationToken cancellationToken)
     {
-        return await GetDraftConsortiumDetails(request) ?? await GetConsortiumDetails(request, cancellationToken);
+        var account = await _accountUserContext.GetSelectedAccount();
+
+        return await GetDraftConsortiumDetails(request, account) ?? await GetConsortiumDetails(request, account, cancellationToken);
     }
 
     private static ConsortiumMemberDetails CreateMemberDetails(IConsortiumMember consortiumMember, OrganizationDetailsDto organisationDetails)
@@ -59,9 +62,9 @@ public class GetConsortiumDetailsQueryHandler : IRequestHandler<GetConsortiumDet
         return organisations.Single(x => x.organisationId == id.ToGuidAsString());
     }
 
-    private async Task<ConsortiumDetails?> GetDraftConsortiumDetails(GetConsortiumDetailsQuery request)
+    private async Task<ConsortiumDetails?> GetDraftConsortiumDetails(GetConsortiumDetailsQuery request, UserAccount account)
     {
-        var consortium = _draftConsortiumRepository.Get(request.ConsortiumId);
+        var consortium = _draftConsortiumRepository.Get(request.ConsortiumId, account);
         if (consortium.IsNotProvided())
         {
             return null;
@@ -70,16 +73,15 @@ public class GetConsortiumDetailsQueryHandler : IRequestHandler<GetConsortiumDet
         var organisations = await FetchOrganisationAddress([consortium!.LeadPartner, .. consortium.Members], request.FetchAddress);
 
         return new ConsortiumDetails(
-            new ConsortiumId(consortium.Id),
-            new ProgrammeSlim(new ProgrammeId(consortium.ProgrammeId), consortium.ProgrammeName),
+            consortium.Id,
+            consortium.Programme,
             CreateMemberDetails(consortium.LeadPartner, GetOrganisationDetails(organisations, consortium.LeadPartner.Id)),
             true,
             consortium.Members.Select(x => CreateMemberDetails(x, GetOrganisationDetails(organisations, x.Id))).ToList());
     }
 
-    private async Task<ConsortiumDetails> GetConsortiumDetails(GetConsortiumDetailsQuery request, CancellationToken cancellationToken)
+    private async Task<ConsortiumDetails> GetConsortiumDetails(GetConsortiumDetailsQuery request, UserAccount account, CancellationToken cancellationToken)
     {
-        var account = await _accountUserContext.GetSelectedAccount();
         var consortium = await _repository.GetConsortium(request.ConsortiumId, account, cancellationToken);
         var organisations = await FetchOrganisationAddress([consortium.LeadPartner, .. consortium.Members], request.FetchAddress);
 

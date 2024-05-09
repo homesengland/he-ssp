@@ -1,12 +1,15 @@
+extern alias Org;
+
 using HE.Investments.AHP.Consortium.Domain.ValueObjects;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain.ValueObjects;
+using Org::HE.Investments.Organisation.Entities;
 
 namespace HE.Investments.AHP.Consortium.Domain.Entities;
 
-public class Organisation
+public class ManualOrganisationEntity : IManualOrganisation
 {
-    private Organisation(
+    private ManualOrganisationEntity(
         ShortText name,
         ShortText addressLine1,
         ShortText? addressLine2,
@@ -32,9 +35,9 @@ public class Organisation
 
     public ShortText? County { get; }
 
-    public Postcode Postcode { get; }
+    public ShortText Postcode { get; }
 
-    public static Organisation CreateManual(
+    public static ManualOrganisationEntity Create(
         string? organisationName,
         string? organisationAddressLine1,
         string? organisationAddressLine2,
@@ -56,14 +59,9 @@ public class Organisation
 
         operationResult.CheckErrors();
 
-        return new Organisation(name!, addressLine1!, addressLine2, townOrCity!, county, postcode!);
+        return new ManualOrganisationEntity(name!, addressLine1!, addressLine2, townOrCity!, county, postcode!);
     }
 
-    private sealed class AddressPart : ShortText
-    {
-        public AddressPart(string? value, string fieldName, string fieldDisplayName)
-            : base(value, fieldName, $"organisation {fieldDisplayName}")
-        {
-        }
-    }
+    private sealed class AddressPart(string? value, string fieldName, string fieldDisplayName)
+        : ShortText(value, fieldName, $"organisation {fieldDisplayName}");
 }

@@ -1,5 +1,4 @@
 using FluentAssertions;
-using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investment.AHP.Domain.Tests.HomeTypes.TestDataBuilders;
 using HE.Investments.Common.Contract.Enum;
 

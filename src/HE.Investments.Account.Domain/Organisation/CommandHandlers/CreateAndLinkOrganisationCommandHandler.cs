@@ -49,6 +49,7 @@ public class CreateAndLinkOrganisationCommandHandler : IRequestHandler<CreateAnd
         operationResult.CheckErrors();
 
         var organisationId = await _repository.CreateOrganisation(organisation);
+        await _repository.DispatchEvents(organisation, cancellationToken);
 
         await _contactRepository.LinkOrganisation(organisationId, PortalConstants.CommonPortalType);
         await _mediator.Publish(new UserAccountsChangedEvent(_userContext.UserGlobalId), cancellationToken);

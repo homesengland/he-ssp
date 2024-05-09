@@ -40,7 +40,7 @@ public class CreateConsortiumCommandHandler : IRequestHandler<CreateConsortiumCo
         var consortium = await ConsortiumEntity.New(programme, leadPartner, _consortiumRepository);
 
         await _consortiumRepository.Save(consortium, userAccount, cancellationToken);
-        _draftConsortiumRepository.Create(consortium);
+        _draftConsortiumRepository.Create(consortium, userAccount);
 
         return new OperationResult<ConsortiumId>(consortium.Id);
     }

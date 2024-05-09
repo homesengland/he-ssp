@@ -13,7 +13,7 @@
         .Build();
 }
 
-<gds-div-grid-column-two-thirds>
+<he-div-grid-column-full>
     <vc:page-header title="@ConsortiumPageTitles.ConsortiumManagement" caption="@Model.OrganisationName"/>
 
     @if (Model.Consortiums.Any())
@@ -31,20 +31,22 @@
             You can create a new consortium below, or be added to a consortium as a member. To be added to one, speak to the consortium Lead Partner.
         </gds-p>
     }
+</he-div-grid-column-full>
 
+<gds-div-grid-column-two-thirds>
     <a
-        class="govuk-heading-m"
+        class="govuk-heading-m govuk-!-margin-top-9"
         href="@Url.Action(nameof(ConsortiumController.Start), new ControllerName(nameof(ConsortiumController)).WithoutPrefix())"
         data-testId="create-new-consortium">
         Create new consortium
     </a>
-
-    <gds-p>
-        A consortium is a group of organisations or separate legal entities acting together to deliver homes under the Affordable Homes Programme.
-    </gds-p>
-    <gds-p>
-        You can only add one consortium per programme.
-    </gds-p>
-
+    <div class="govuk-!-margin-bottom-9 govuk-!-margin-top-7">
+        <gds-p>
+            A consortium is a group of organisations or separate legal entities acting together to deliver homes under the Affordable Homes Programme.
+        </gds-p>
+        <gds-p>
+            You can only add one consortium per programme.
+        </gds-p>
+    </div>
     <vc:return-to-account-link/>
 </gds-div-grid-column-two-thirds>
