@@ -1,0 +1,40 @@
+@using HE.Investment.AHP.WWW.Views.ConsortiumMember.Const
+@using HE.Investments.Common.WWW.Components.PageHeader
+@using HE.Investment.AHP.WWW.Routing
+@using HE.Investments.AHP.Consortium.Contract.Enums
+@using HE.Investments.Common.WWW.Components.SummaryList
+@model HE.Investments.AHP.Consortium.Contract.ConsortiumDetails
+@{
+    ViewData["Title"] = ConsortiumMemberPageTitles.ConsortiumMember(Model.LeadPartner.Details.Name);
+    ViewBag.Breadcrumbs = AhpBreadcrumbsBuilder
+        .New()
+        .WithApplicationsList()
+        .Build();
+
+    var leadPartners = new[] { new SummaryListItem(Model.LeadPartner.Details.Name) };
+    var contractedMembers = Model.Members
+        .Where(x => x.Status == ConsortiumMemberStatus.Active)
+        .Select(x => new SummaryListItem(x.Details.Name))
+        .ToList();
+}
+
+<div class="govuk-grid-column-two-thirds">
+    <vc:page-header title="@ConsortiumMemberPageTitles.ConsortiumMember(Model.LeadPartner.Details.Name)"/>
+
+    <gds-p>You are a member of the following consortium. To leave the consortium, contact the Lead Partner who will initiate the deed of release.</gds-p>
+</div>
+
+<vc:summary-list header="Lead partner"
+                 paragraph="The Lead Partner of this consortium can add and remove members."
+                 items="@leadPartners"/>
+
+@if (contractedMembers.Any())
+{
+    <vc:summary-list header="Contracted consortium members"
+                     paragraph="Approved consortium members will be shown here."
+                     items="@contractedMembers"/>
+}
+
+<div class="govuk-grid-column-two-thirds">
+    <vc:return-to-account-link/>
+</div>

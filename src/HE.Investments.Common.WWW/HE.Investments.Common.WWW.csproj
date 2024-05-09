@@ -43,6 +43,7 @@
     <EmbeddedResource Include="Components\Table\Table.cshtml"/>
     <EmbeddedResource Include="Components\Link\Link.cshtml"/>
     <EmbeddedResource Include="Components\SummaryItem\SummaryItem.cshtml"/>
+    <EmbeddedResource Include="Components\SummaryList\SummaryList.cshtml"/>
     <EmbeddedResource Include="Components\RadioListWithOr\RadioListWithOr.cshtml"/>
     <EmbeddedResource Include="Components\RadioYesNo\RadioYesNo.cshtml"/>
     <EmbeddedResource Include="Components\RadioListContent\RadioListContent.cshtml"/>
