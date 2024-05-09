@@ -147,6 +147,7 @@ public class UserOrganisationController : Controller
     private async Task<List<ActionModel>> UserOrganisationActions(string organisationName)
     {
         var canViewOrganisationDetails = await _accountAccessContext.CanAccessOrganisationView();
+        var canSubmitApplicationAndIsNotLimitedUser = await _accountAccessContext.CanSubmitApplication() && canViewOrganisationDetails;
         var userOrganisationActions = new List<ActionModel>();
         if (canViewOrganisationDetails)
         {
@@ -159,9 +160,9 @@ public class UserOrganisationController : Controller
 
         userOrganisationActions.Add(new("Manage your account", "GetProfileDetails", "User", new { callback = Url.Action("Index") }, true));
 
-        if (await _featureManager.IsEnabledAsync(FeatureFlags.AhpReleaseTwoFeatures))
+        if (await _featureManager.IsEnabledAsync(FeatureFlags.AhpReleaseTwoFeatures) && canSubmitApplicationAndIsNotLimitedUser)
         {
-            userOrganisationActions.Add(new("Add AHP consortium", "Index", "Consortium", HasAccess: canViewOrganisationDetails));
+            userOrganisationActions.Add(new("Add AHP consortium", "Index", "Consortium", HasAccess: canSubmitApplicationAndIsNotLimitedUser));
         }
 
         return userOrganisationActions;
