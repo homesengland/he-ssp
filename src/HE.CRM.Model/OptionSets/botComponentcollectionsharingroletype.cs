@@ -13,20 +13,26 @@ namespace DataverseModel
 	
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum AIPluginType
+	public enum botComponentcollectionsharingroletype
 	{
 		
+		/// <summary>
+		/// Chatbot user has access to the content of the component collection
+		/// </summary>
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Connector = 2,
+		Chatbotuser = 1,
 		
+		/// <summary>
+		/// Can author the component collection
+		/// </summary>
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		CustomConnector = 1,
+		Componentcollectionauthor = 3,
 		
+		/// <summary>
+		/// Has access to the content of the component collection and can add component collection to the copilot
+		/// </summary>
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Dataverse = 0,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Flow = 3,
+		Componentcollectionuser = 2,
 	}
 }
 #pragma warning restore CS1591

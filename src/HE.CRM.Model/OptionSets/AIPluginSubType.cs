@@ -13,20 +13,35 @@ namespace DataverseModel
 	
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum AIPluginType
+	public enum AIPluginSubType
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Connector = 2,
+		CertifiedConnector = 1,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		CustomConnector = 1,
+		Conversational = 5,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		CustomApi = 6,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		CustomConnector = 8,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Dataverse = 0,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Flow = 3,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Prompt = 4,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		QA = 2,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		RestApi = 7,
 	}
 }
 #pragma warning restore CS1591

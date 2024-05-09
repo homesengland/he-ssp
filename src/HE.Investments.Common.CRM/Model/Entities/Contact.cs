@@ -654,7 +654,6 @@ namespace HE.Investments.Common.CRM.Model
 			public const string he_isverifiedName = "he_isverifiedname";
 			public const string he_marketingsend = "he_marketingsend";
 			public const string he_marketingsendName = "he_marketingsendname";
-			public const string he_pipeline_portalowner_contact = "he_pipeline_portalowner_contact";
 			public const string he_PrefixID = "he_prefixid";
 			public const string Home2 = "home2";
 			public const string ImportSequenceNumber = "importsequencenumber";
@@ -7411,26 +7410,6 @@ namespace HE.Investments.Common.CRM.Model
 				this.OnPropertyChanging("Referencedcontact_parent_contact");
 				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.Contact>("contact_parent_contact", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
 				this.OnPropertyChanged("Referencedcontact_parent_contact");
-			}
-		}
-		
-		/// <summary>
-		/// 1:N he_pipeline_portalowner_contact
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("he_pipeline_portalowner_contact")]
-		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.he_Pipeline> he_pipeline_portalowner_contact
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.he_Pipeline>("he_pipeline_portalowner_contact", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("he_pipeline_portalowner_contact");
-				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.he_Pipeline>("he_pipeline_portalowner_contact", null, value);
-				this.OnPropertyChanged("he_pipeline_portalowner_contact");
 			}
 		}
 		

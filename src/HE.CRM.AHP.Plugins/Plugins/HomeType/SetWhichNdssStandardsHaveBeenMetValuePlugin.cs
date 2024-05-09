@@ -22,16 +22,16 @@ namespace HE.CRM.AHP.Plugins.Plugins.HomeType
       invln_HomeType.EntityLogicalName,
       StageEnum.PreOperation,
       ExecutionModeEnum.Synchronous,
-      invln_HomeType.Fields.invln_whichndssstandardshavebeenmet +
-      invln_HomeType.Fields.invln_numberofbedrooms +
-      invln_HomeType.Fields.invln_maxoccupancy +
-      invln_HomeType.Fields.invln_numberofstoreys +
+      invln_HomeType.Fields.invln_whichndssstandardshavebeenmet + "," +
+      invln_HomeType.Fields.invln_numberofbedrooms + "," +
+      invln_HomeType.Fields.invln_maxoccupancy + "," +
+      invln_HomeType.Fields.invln_numberofstoreys + "," +
       invln_HomeType.Fields.invln_floorarea,
       "HE.CRM.Plugins.Plugins.HomeType.SetWhichNdssStandardsHaveBeenMetValuePlugin: Update of Home Type",
       1,
       IsolationModeEnum.Sandbox,
       Id = "aadeac61-ae7f-4714-96a1-5b18e87c4b0e",
-       Image1Name = "PreImage",
+        Image1Name = "PreImage",
        Image1Attributes = "",
        Image1Type = ImageTypeEnum.PreImage
        )]
