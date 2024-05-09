@@ -26,7 +26,7 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.Consortium
         public override bool CanWork()
         {
             TracingService.Trace($"RequestAddingMemberToConsortiumHandler Can Work");
-            return ConsortiumId != null && OrganizationId != null && ConsortiumId != string.Empty && OrganizationId != string.Empty;
+            return !string.IsNullOrEmpty(ConsortiumId) && !string.IsNullOrEmpty(OrganizationId);
         }
 
         public override void DoWork()
