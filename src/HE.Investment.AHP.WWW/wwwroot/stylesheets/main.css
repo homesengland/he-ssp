@@ -25,6 +25,12 @@
   justify-content: center;
 }
 
+.link-disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  text-decoration: none;
+}
+
 .loader-line {
   width: 66px;
   height: 3px;

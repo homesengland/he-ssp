@@ -43,6 +43,7 @@ public static class OrganisationWebModule
         services.AddAppConfiguration<ProgrammeUrlConfig>();
         services.AddScoped<IProgrammes, Programmes>();
         services.AddAppConfiguration<IDataverseConfig, DataverseConfig>("Dataverse");
+        services.AddAppConfiguration<AhpConfig>("AhpService");
     }
 
     private static void AddCommonModule(IServiceCollection services)

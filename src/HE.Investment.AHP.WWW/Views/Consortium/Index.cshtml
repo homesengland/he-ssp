@@ -35,8 +35,8 @@
 
 <gds-div-grid-column-two-thirds>
     <a
-        class="govuk-heading-m govuk-!-margin-top-9"
-        href="@Url.Action(nameof(ConsortiumController.Start), new ControllerName(nameof(ConsortiumController)).WithoutPrefix())"
+        class="govuk-heading-m govuk-!-margin-top-9 @(Model.CanCreateConsortium ? null : "link-disabled")"
+        href="@(Model.CanCreateConsortium ? Url.Action(nameof(ConsortiumController.Start), new ControllerName(nameof(ConsortiumController)).WithoutPrefix()) : null)"
         data-testId="create-new-consortium">
         Create new consortium
     </a>

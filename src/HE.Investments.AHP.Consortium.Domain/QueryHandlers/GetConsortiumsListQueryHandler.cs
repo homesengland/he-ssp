@@ -29,7 +29,7 @@ public class GetConsortiumsListQueryHandler : IRequestHandler<GetConsortiumsList
 
         var consortiumsList = await _repository.GetConsortiumsListByMemberId(organisation.OrganisationId, cancellationToken);
 
-        return new ConsortiumsList(CreateConsortiumByMemberRole(consortiumsList, organisation), organisation.RegisteredCompanyName);
+        return new ConsortiumsList(CreateConsortiumByMemberRole(consortiumsList, organisation), organisation.RegisteredCompanyName, account.CanSubmitApplication);
     }
 
     private static List<ConsortiumByMemberRole> CreateConsortiumByMemberRole(IList<ConsortiumEntity> consortiumsList, OrganisationBasicInfo organisation)
