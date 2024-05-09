@@ -10,7 +10,8 @@
   <EntityTypesFolder>..\Entities</EntityTypesFolder>
   <ExtensionConfig>
     <ActionPrefixesWhitelist />
-    <ActionsWhitelist>invln_changeahpapplicationstatus|
+    <ActionsWhitelist>invln_canceladdmember|
+invln_changeahpapplicationstatus|
 invln_changeloanapplicationexternalstatus|
 invln_checkifapplicationwithgivennameexists|
 invln_checkifloanapplicationwithgivennameexists|
@@ -34,6 +35,7 @@ invln_getmultipledeliveryphase|
 invln_getmultiplefrontdoorprojects|
 invln_getmultiplefrontdoorprojectssite|
 invln_getmultiplelocalauthorities|
+invln_getmultiplelocalauthoritiesformodule|
 invln_getmultipleprogramme|
 invln_getmultiplesites|
 invln_getorganisationchangedetails|
@@ -49,8 +51,10 @@ invln_getsinglesitedetails|
 invln_gettemporaryportaldata|
 invln_gettypeofhomeslist|
 invln_invitecontacttojoinexistingorganisation|
+invln_isconsortiumexistforprogrammeandorganisation|
 invln_linkcontactwithorganization|
 invln_requestaddingmembertoconsortium|
+invln_requesttoremovemember|
 invln_returnuserprofile|
 invln_savetemporaryportaldata|
 invln_searchlocalauthority|
@@ -62,8 +66,10 @@ invln_sendreminderemailforrefferedbacktoapplicant|
 invln_sendremindertofinalisadraftapplication|
 invln_sendrequesttoassigncontacttoexistingorganisation|
 invln_setahpapplication|
+invln_setconsortium|
 invln_setdeliveryphase|
 invln_setfrontdoorproject|
+invln_setfrontdoorsite|
 invln_sethometype|
 invln_setsite|
 invln_updatesingleloanapplication|

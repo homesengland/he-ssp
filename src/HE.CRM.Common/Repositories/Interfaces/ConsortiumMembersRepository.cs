@@ -16,5 +16,11 @@ namespace HE.CRM.Common.Repositories.Implementations
         {
         }
 
+        public invln_ConsortiumMember GetMemberByOrganizstationIdAndConsortiumId(string organizationId, string consortiumId)
+        {
+            var query = new QueryExpression();
+            query.EntityName = invln_ConsortiumMember.EntityLogicalName;
+
+        }
     }
 }
