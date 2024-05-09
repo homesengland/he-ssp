@@ -7,37 +7,46 @@
 @using HE.Investments.Common.Gds
 @using HE.Investments.Common.WWW.Components.SummaryList
 @using HE.Investments.Common.WWW.TagHelpers
-@model HE.Investments.AHP.Consortium.Contract.ConsortiumDetails
+@model HE.Investment.AHP.WWW.Models.ConsortiumMember.ManageConsortiumModel
 @{
-    ViewData["Title"] = ConsortiumMemberPageTitles.ConsortiumManagement(Model.LeadPartner.Details.Name);
+    ViewData["Title"] = ConsortiumMemberPageTitles.ConsortiumManagement(Model.Detals.LeadPartner.Details.Name);
     ViewBag.Breadcrumbs = AhpBreadcrumbsBuilder
         .New()
         .WithApplicationsList()
         .Build();
 
-    var contractedMembers = Model.Members
+    var contractedMembers = Model.Detals.Members
         .Where(x => x.Status == ConsortiumMemberStatus.Active)
+        .Select(x => new SummaryListItem(x.Details.Name, Model.CanManageConsortium ? new[] { MemberActionFactory("RemoveMember", "Request to remove", x) } : Array.Empty<SummaryListItemAction>()))
+        .ToList();
+
+    var pendingConsortiumMembers = Model.Detals.Members
+        .Where(x => x.Status == ConsortiumMemberStatus.PendingAddition)
         .Select(x => new SummaryListItem(x.Details.Name))
         .ToList();
 
-    var pendingConsortiumMembers = Model.Members
-        .Where(x => x.Status == ConsortiumMemberStatus.PendingAddition)
-        .Select(x => new SummaryListItem(x.Details.Name, new[] { new SummaryListItemAction("Cancel request", RemoveMemberUrlFactory(x)) }))
+    var requestsToRemove = Model.Detals.Members
+        .Where(x => x.Status == ConsortiumMemberStatus.PendingRemoval)
+        .Select(x => new SummaryListItem(x.Details.Name))
         .ToList();
 
-    string RemoveMemberUrlFactory(ConsortiumMemberDetails member) => Url.Action("RemoveMember", "ConsortiumMember", new { consortiumId = Model.ConsortiumId.Value, memberId = member.OrganisationId.ToString() }) ?? string.Empty;
+    SummaryListItemAction MemberActionFactory(string actionName, string displayName, ConsortiumMemberDetails member) =>
+        new(displayName, Url.Action(actionName, "ConsortiumMember", new { consortiumId = Model.Detals.ConsortiumId.Value, memberId = member.OrganisationId.ToString() }) ?? string.Empty);
 }
 
 <div class="govuk-grid-column-two-thirds">
-    <vc:page-header title="@ConsortiumMemberPageTitles.ConsortiumManagement(Model.LeadPartner.Details.Name)"/>
+    <vc:page-header title="@ConsortiumMemberPageTitles.ConsortiumManagement(Model.Detals.LeadPartner.Details.Name)"/>
 
-    <gds-h2>Add a new member</gds-h2>
-    <gds-p>To add a new member, fill out their details and the request will be reviewed.</gds-p>
-    <link-button
-        button-type="@ButtonType.Standard"
-        action-url="@Url.Action("SearchOrganisation", new { consortiumId = Model.ConsortiumId.Value })">
-        Add new member
-    </link-button>
+    @if (Model.CanManageConsortium)
+    {
+        <gds-h2>Add a new member</gds-h2>
+        <gds-p>To add a new member, fill out their details and the request will be reviewed.</gds-p>
+        <link-button
+            button-type="@ButtonType.Standard"
+            action-url="@Url.Action("SearchOrganisation", new { consortiumId = Model.Detals.ConsortiumId.Value })">
+            Add new member
+        </link-button>
+    }
 </div>
 
 @if (contractedMembers.Any())
@@ -52,6 +61,13 @@
     <vc:summary-list header="Pending consortium members"
                      paragraph="New members will be shown here until they are approved internally. You can cancel a request below."
                      items="@pendingConsortiumMembers"/>
+}
+
+@if (requestsToRemove.Any())
+{
+    <vc:summary-list header="Requests to remove"
+                     paragraph="Removed members will be shown here until they are approved internally. You can cancel a request below."
+                     items="@requestsToRemove"/>
 }
 
 <div class="govuk-grid-column-two-thirds govuk-!-margin-top-6">

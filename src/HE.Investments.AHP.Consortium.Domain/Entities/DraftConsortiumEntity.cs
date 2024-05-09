@@ -4,6 +4,7 @@ using HE.Investments.AHP.Consortium.Contract;
 using HE.Investments.AHP.Consortium.Domain.Repositories;
 using HE.Investments.AHP.Consortium.Domain.ValueObjects;
 using HE.Investments.Common.Contract;
+using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
 using InvestmentsOrganisation = Org::HE.Investments.Organisation.ValueObjects.InvestmentsOrganisation;
@@ -40,9 +41,7 @@ public class DraftConsortiumEntity : IConsortiumEntity
     {
         if (await IsPartOfConsortium(organisation, isPartOfConsortium, cancellationToken))
         {
-            OperationResult.ThrowValidationError(
-                "SelectedMember",
-                "This organisation cannot be added to your consortium. Check you have selected the correct organisation. If it is correct, contact your Growth Manager");
+            OperationResult.ThrowValidationError("SelectedMember", ConsortiumValidationErrors.IsAlreadyPartOfConsortium);
         }
 
         Members.Add(new DraftConsortiumMember(organisation.Id, organisation.Name));
@@ -52,7 +51,7 @@ public class DraftConsortiumEntity : IConsortiumEntity
     {
         if (isConfirmed.IsNotProvided())
         {
-            OperationResult.ThrowValidationError(nameof(isConfirmed), "Select whether you want to remove this organisation from consortium");
+            OperationResult.ThrowValidationError(nameof(isConfirmed), ConsortiumValidationErrors.RemoveConfirmationNotSelected);
         }
 
         if (isConfirmed == false)
@@ -60,10 +59,7 @@ public class DraftConsortiumEntity : IConsortiumEntity
             return;
         }
 
-        // TODO: add validation when member does not exist
-        var member = Members.Single(x => x.Id == organisationId);
-
-        Members.Remove(member);
+        Members.Remove(GetMember(organisationId));
     }
 
     private async Task<bool> IsPartOfConsortium(
@@ -78,4 +74,7 @@ public class DraftConsortiumEntity : IConsortiumEntity
 
         return await isPartOfConsortium.IsPartOfConsortiumForProgramme(Programme.Id, organisation.Id, cancellationToken);
     }
+
+    private DraftConsortiumMember GetMember(OrganisationId organisationId) => Members.SingleOrDefault(x => x.Id == organisationId) ??
+                                                                              throw new NotFoundException(nameof(DraftConsortiumMember), organisationId);
 }
