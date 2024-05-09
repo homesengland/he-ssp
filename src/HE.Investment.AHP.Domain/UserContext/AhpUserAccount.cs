@@ -17,4 +17,6 @@ public record AhpUserAccount(
         : this(userAccount.UserGlobalId, userAccount.UserEmail, userAccount.Organisation, userAccount.Roles, consortium)
     {
     }
+
+    public bool CanManageConsortium => HasOneOfRole([.. AhpAccessContext.ManageConsortiumRoles]);
 }

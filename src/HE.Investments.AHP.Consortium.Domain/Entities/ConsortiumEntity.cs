@@ -61,9 +61,7 @@ public class ConsortiumEntity : IConsortiumEntity
     {
         if (await IsPartOfConsortium(organisation, isPartOfConsortium, cancellationToken))
         {
-            OperationResult.ThrowValidationError(
-                "SelectedMember",
-                "This organisation cannot be added to your consortium. Check you have selected the correct organisation. If it is correct, contact your Growth Manager");
+            OperationResult.ThrowValidationError("SelectedMember", ConsortiumValidationErrors.IsAlreadyPartOfConsortium);
         }
 
         var member = new ConsortiumMember(organisation.Id, organisation.Name, ConsortiumMemberStatus.PendingAddition);
@@ -102,7 +100,7 @@ public class ConsortiumEntity : IConsortiumEntity
     {
         if (isConfirmed.IsNotProvided())
         {
-            OperationResult.ThrowValidationError(nameof(isConfirmed), "Select whether you want to remove this organisation from consortium");
+            OperationResult.ThrowValidationError(nameof(isConfirmed), ConsortiumValidationErrors.RemoveConfirmationNotSelected);
         }
 
         if (isConfirmed == false)
@@ -110,36 +108,16 @@ public class ConsortiumEntity : IConsortiumEntity
             return;
         }
 
-        // TODO: add validation when member does not exist
-        var member = _members.Single(x => x.Id == organisationId);
+        var member = GetMember(organisationId);
 
         _removeRequests.Add(organisationId);
         _members.Remove(member);
+        _members.Add(new ConsortiumMember(member.Id, member.OrganisationName, ConsortiumMemberStatus.PendingRemoval));
     }
 
-    public OrganisationId? PopJoinRequest()
-    {
-        if (_joinRequests.Any())
-        {
-            var result = _joinRequests[0];
-            _joinRequests.RemoveAt(0);
-            return result.Id;
-        }
+    public OrganisationId? PopJoinRequest() => _joinRequests.PopItem()?.Id;
 
-        return null;
-    }
-
-    public OrganisationId? PopRemoveRequest()
-    {
-        if (_removeRequests.Any())
-        {
-            var result = _removeRequests[0];
-            _removeRequests.RemoveAt(0);
-            return result;
-        }
-
-        return null;
-    }
+    public OrganisationId? PopRemoveRequest() => _removeRequests.PopItem();
 
     public void SetId(ConsortiumId newId)
     {
@@ -163,4 +141,7 @@ public class ConsortiumEntity : IConsortiumEntity
 
         return await isPartOfConsortium.IsPartOfConsortiumForProgramme(Programme.Id, organisation.Id, cancellationToken);
     }
+
+    private ConsortiumMember GetMember(OrganisationId organisationId) => _members.SingleOrDefault(x => x.Id == organisationId) ??
+                                                                         throw new NotFoundException(nameof(ConsortiumMember), organisationId);
 }

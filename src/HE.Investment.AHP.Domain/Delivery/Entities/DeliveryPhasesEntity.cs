@@ -50,17 +50,7 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
 
     public string HomeTypeConsumerName => "Delivery Phase";
 
-    public IDeliveryPhaseEntity? PopRemovedDeliveryPhase()
-    {
-        if (_toRemove.Any())
-        {
-            var result = _toRemove[0];
-            _toRemove.RemoveAt(0);
-            return result;
-        }
-
-        return null;
-    }
+    public IDeliveryPhaseEntity? PopRemovedDeliveryPhase() => _toRemove.PopItem();
 
     public bool IsHomeTypeUsed(HomeTypeId homeTypeId) => _deliveryPhases.Exists(x => x.IsHomeTypeUsed(homeTypeId));
 

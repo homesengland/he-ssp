@@ -1,6 +1,6 @@
+using HE.Investment.AHP.Domain.UserContext;
 using HE.Investment.AHP.WWW.Models.Consortium;
 using HE.Investment.AHP.WWW.Workflows;
-using HE.Investments.Account.Api.Contract.User;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.AHP.Consortium.Contract;
 using HE.Investments.AHP.Consortium.Contract.Commands;
@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HE.Investment.AHP.WWW.Controllers;
 
 [Route("consortium")]
-[AuthorizeWithCompletedProfile(new[] { UserRole.Admin, UserRole.Enhanced, UserRole.Input, UserRole.ViewOnly })]
+[AuthorizeWithCompletedProfile(AhpAccessContext.ViewConsortium)]
 public class ConsortiumController : WorkflowController<ConsortiumWorkflowState>
 {
     private readonly IMediator _mediator;
@@ -33,7 +33,7 @@ public class ConsortiumController : WorkflowController<ConsortiumWorkflowState>
 
     [HttpGet("start")]
     [WorkflowState(ConsortiumWorkflowState.Start)]
-    [AuthorizeWithCompletedProfile(new[] { UserRole.Admin, UserRole.Enhanced })]
+    [AuthorizeWithCompletedProfile(AhpAccessContext.ManageConsortium)]
     public IActionResult Start()
     {
         return View();
@@ -41,7 +41,7 @@ public class ConsortiumController : WorkflowController<ConsortiumWorkflowState>
 
     [HttpGet("programme")]
     [WorkflowState(ConsortiumWorkflowState.Programme)]
-    [AuthorizeWithCompletedProfile(new[] { UserRole.Admin, UserRole.Enhanced })]
+    [AuthorizeWithCompletedProfile(AhpAccessContext.ManageConsortium)]
     public async Task<IActionResult> Programme()
     {
         var availableProgrammes = await _mediator.Send(new GetAvailableProgrammesQuery());
@@ -50,7 +50,7 @@ public class ConsortiumController : WorkflowController<ConsortiumWorkflowState>
 
     [HttpPost("programme")]
     [WorkflowState(ConsortiumWorkflowState.Programme)]
-    [AuthorizeWithCompletedProfile(new[] { UserRole.Admin, UserRole.Enhanced })]
+    [AuthorizeWithCompletedProfile(AhpAccessContext.ManageConsortium)]
     public async Task<IActionResult> ProgrammePost(SelectProgramme model, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new CreateConsortiumCommand(model.SelectedProgrammeId), cancellationToken);

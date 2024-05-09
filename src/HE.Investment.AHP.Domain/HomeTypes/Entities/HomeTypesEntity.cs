@@ -6,6 +6,7 @@ using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
+using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 
@@ -45,17 +46,7 @@ public class HomeTypesEntity
         return homeType;
     }
 
-    public IHomeTypeEntity? PopRemovedHomeType()
-    {
-        if (_toRemove.Any())
-        {
-            var result = _toRemove[0];
-            _toRemove.RemoveAt(0);
-            return result;
-        }
-
-        return null;
-    }
+    public IHomeTypeEntity? PopRemovedHomeType() => _toRemove.PopItem();
 
     public void Remove(HomeTypeId homeTypeId, RemoveHomeTypeAnswer removeAnswer, IHomeTypeConsumer homeTypeConsumer)
     {

@@ -80,31 +80,41 @@ public class ConsortiumRepository : IConsortiumRepository
         return await _crmContext.IsConsortiumExistForProgrammeAndOrganisation(programmeId.ToString(), organisationId.ToString(), cancellationToken);
     }
 
+    private static async Task SaveMemberRequests(
+        ConsortiumEntity consortiumEntity,
+        UserAccount userAccount,
+        Func<OrganisationId?> popRequest,
+        Func<string, string, string, CancellationToken, Task> persistRequest,
+        CancellationToken cancellationToken)
+    {
+        var organisationId = popRequest();
+        while (organisationId != null)
+        {
+            await persistRequest(
+                consortiumEntity.Id.Value,
+                organisationId.Value,
+                userAccount.UserGlobalId.ToString(),
+                cancellationToken);
+            organisationId = popRequest();
+        }
+    }
+
     private async Task SaveConsortiumMemberRequests(
         ConsortiumEntity consortiumEntity,
         UserAccount userAccount,
         CancellationToken cancellationToken)
     {
-        var joinRequest = consortiumEntity.PopJoinRequest();
-        while (joinRequest != null)
-        {
-            await _crmContext.CreateJoinConsortiumRequest(
-                consortiumEntity.Id.Value,
-                joinRequest.Value,
-                userAccount.UserGlobalId.ToString(),
-                cancellationToken);
-            joinRequest = consortiumEntity.PopJoinRequest();
-        }
-
-        var removeRequest = consortiumEntity.PopRemoveRequest();
-        while (removeRequest != null)
-        {
-            await _crmContext.CreateRemoveFromConsortiumRequest(
-                consortiumEntity.Id.Value,
-                removeRequest.Value,
-                userAccount.UserGlobalId.ToString(),
-                cancellationToken);
-            removeRequest = consortiumEntity.PopRemoveRequest();
-        }
+        await SaveMemberRequests(
+            consortiumEntity,
+            userAccount,
+            consortiumEntity.PopJoinRequest,
+            _crmContext.CreateJoinConsortiumRequest,
+            cancellationToken);
+        await SaveMemberRequests(
+            consortiumEntity,
+            userAccount,
+            consortiumEntity.PopRemoveRequest,
+            _crmContext.CreateRemoveFromConsortiumRequest,
+            cancellationToken);
     }
 }
