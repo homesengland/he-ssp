@@ -11,6 +11,6 @@ public class AcquisitionMilestoneDetails : MilestoneDetails<AcquisitionDate>
 
     public static AcquisitionMilestoneDetails? Create(AcquisitionDate acquisitionDate, MilestonePaymentDate paymentDate)
     {
-        return acquisitionDate.Value.HasValue || paymentDate.Value.HasValue ? new AcquisitionMilestoneDetails(acquisitionDate, paymentDate) : null;
+        return acquisitionDate?.Value != null || paymentDate?.Value != null ? new AcquisitionMilestoneDetails(acquisitionDate, paymentDate) : null;
     }
 }
