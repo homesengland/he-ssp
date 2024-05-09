@@ -5,21 +5,23 @@
 @using HE.Investments.Common.WWW.Components.SummaryList
 @model HE.Investment.AHP.WWW.Models.ConsortiumMember.ManageConsortiumModel
 @{
-    ViewData["Title"] = ConsortiumMemberPageTitles.ConsortiumMember(Model.Detals.LeadPartner.Details.Name);
+    ViewData["Title"] = ConsortiumMemberPageTitles.ConsortiumMember(Model.Details.LeadPartner.Details.Name);
     ViewBag.Breadcrumbs = AhpBreadcrumbsBuilder
-        .New()
-        .WithApplicationsList()
+        .Empty()
+        .WithOrganisation(Model.OrganisationName)
+        .WithConsortiumManagement()
+        .WithApplicationsList(Model.Details.Programme.Name)
         .Build();
 
-    var leadPartners = new[] { new SummaryListItem(Model.Detals.LeadPartner.Details.Name) };
-    var contractedMembers = Model.Detals.Members
+    var leadPartners = new[] { new SummaryListItem(Model.Details.LeadPartner.Details.Name) };
+    var contractedMembers = Model.Details.Members
         .Where(x => x.Status == ConsortiumMemberStatus.Active)
         .Select(x => new SummaryListItem(x.Details.Name))
         .ToList();
 }
 
 <div class="govuk-grid-column-two-thirds">
-    <vc:page-header title="@ConsortiumMemberPageTitles.ConsortiumMember(Model.Detals.LeadPartner.Details.Name)"/>
+    <vc:page-header title="@ConsortiumMemberPageTitles.ConsortiumMember(Model.Details.LeadPartner.Details.Name)"/>
 
     <gds-p>You are a member of the following consortium. To leave the consortium, contact the Lead Partner who will initiate the deed of release.</gds-p>
 </div>
