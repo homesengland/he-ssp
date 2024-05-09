@@ -52,6 +52,13 @@ public class AhpBreadcrumbsBuilder : BreadcrumbsBuilderBase
         return this;
     }
 
+    public AhpBreadcrumbsBuilder WithConsortiumManagement()
+    {
+        AddBreadcrumb("Consortium Management", nameof(ConsortiumController.Index), GetControllerName(nameof(ConsortiumController)));
+
+        return this;
+    }
+
     private AhpBreadcrumbsBuilder WithHome()
     {
         AddBreadcrumb("Home", nameof(HomeController.Index), GetControllerName(nameof(HomeController)));

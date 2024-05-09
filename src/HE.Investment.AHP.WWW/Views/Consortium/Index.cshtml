@@ -8,8 +8,9 @@
 @{
     ViewData["Title"] = ConsortiumPageTitles.ConsortiumManagement;
     ViewBag.Breadcrumbs = AhpBreadcrumbsBuilder
-        .New()
+        .Empty()
         .WithOrganisation(Model.OrganisationName)
+        .WithConsortiumManagement()
         .Build();
 }
 
