@@ -518,7 +518,7 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
                 return;
             }
             var programme = _programmeRepositoryAdmin.GetById(ahpApplication.invln_programmelookup.Id, invln_programme.Fields.invln_programmename);
-            var emailTemplate = _notificationSettingRepositoryAdmin.GetTemplateViaTypeName("AHP_INTERNAL_APPLICATION_ON_HOLD");
+            var emailTemplate = _notificationSettingRepositoryAdmin.GetTemplateViaTypeName("AHP_EXTERNAL_APPLICATION_ON_HOLD");
 
 
             if (contact != null && programme != null && emailTemplate != null)
