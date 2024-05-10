@@ -9,33 +9,35 @@
 @using HE.Investments.Common.WWW.TagHelpers
 @model HE.Investment.AHP.WWW.Models.ConsortiumMember.ManageConsortiumModel
 @{
-    ViewData["Title"] = ConsortiumMemberPageTitles.ConsortiumManagement(Model.Detals.LeadPartner.Details.Name);
+    ViewData["Title"] = ConsortiumMemberPageTitles.ConsortiumManagement(Model.Details.LeadPartner.Details.Name);
     ViewBag.Breadcrumbs = AhpBreadcrumbsBuilder
-        .New()
-        .WithApplicationsList()
+        .Empty()
+        .WithOrganisation(Model.OrganisationName)
+        .WithConsortiumManagement()
+        .WithApplicationsList(Model.Details.Programme.Name)
         .Build();
 
-    var contractedMembers = Model.Detals.Members
+    var contractedMembers = Model.Details.Members
         .Where(x => x.Status == ConsortiumMemberStatus.Active)
         .Select(x => new SummaryListItem(x.Details.Name, Model.CanManageConsortium ? new[] { MemberActionFactory("RemoveMember", "Request to remove", x) } : Array.Empty<SummaryListItemAction>()))
         .ToList();
 
-    var pendingConsortiumMembers = Model.Detals.Members
+    var pendingConsortiumMembers = Model.Details.Members
         .Where(x => x.Status == ConsortiumMemberStatus.PendingAddition)
         .Select(x => new SummaryListItem(x.Details.Name))
         .ToList();
 
-    var requestsToRemove = Model.Detals.Members
+    var requestsToRemove = Model.Details.Members
         .Where(x => x.Status == ConsortiumMemberStatus.PendingRemoval)
         .Select(x => new SummaryListItem(x.Details.Name))
         .ToList();
 
     SummaryListItemAction MemberActionFactory(string actionName, string displayName, ConsortiumMemberDetails member) =>
-        new(displayName, Url.Action(actionName, "ConsortiumMember", new { consortiumId = Model.Detals.ConsortiumId.Value, memberId = member.OrganisationId.ToString() }) ?? string.Empty);
+        new(displayName, Url.Action(actionName, "ConsortiumMember", new { consortiumId = Model.Details.ConsortiumId.Value, memberId = member.OrganisationId.ToString() }) ?? string.Empty);
 }
 
 <div class="govuk-grid-column-two-thirds">
-    <vc:page-header title="@ConsortiumMemberPageTitles.ConsortiumManagement(Model.Detals.LeadPartner.Details.Name)"/>
+    <vc:page-header title="@ConsortiumMemberPageTitles.ConsortiumManagement(Model.Details.LeadPartner.Details.Name)"/>
 
     @if (Model.CanManageConsortium)
     {
@@ -43,7 +45,7 @@
         <gds-p>To add a new member, fill out their details and the request will be reviewed.</gds-p>
         <link-button
             button-type="@ButtonType.Standard"
-            action-url="@Url.Action("SearchOrganisation", new { consortiumId = Model.Detals.ConsortiumId.Value })">
+            action-url="@Url.Action("SearchOrganisation", new { consortiumId = Model.Details.ConsortiumId.Value })">
             Add new member
         </link-button>
     }
