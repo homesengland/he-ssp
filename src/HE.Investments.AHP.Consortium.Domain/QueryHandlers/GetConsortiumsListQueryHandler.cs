@@ -15,12 +15,16 @@ public class GetConsortiumsListQueryHandler : IRequestHandler<GetConsortiumsList
 
     private readonly IAccountUserContext _accountUserContext;
 
+    private readonly IAhpAccessContext _ahpAccessContext;
+
     public GetConsortiumsListQueryHandler(
         IConsortiumRepository repository,
-        IAccountUserContext accountUserContext)
+        IAccountUserContext accountUserContext,
+        IAhpAccessContext ahpAccessContext)
     {
         _repository = repository;
         _accountUserContext = accountUserContext;
+        _ahpAccessContext = ahpAccessContext;
     }
 
     public async Task<ConsortiumsList> Handle(GetConsortiumsListQuery request, CancellationToken cancellationToken)
@@ -30,7 +34,7 @@ public class GetConsortiumsListQueryHandler : IRequestHandler<GetConsortiumsList
 
         var consortiumsList = await _repository.GetConsortiumsListByMemberId(organisation.OrganisationId, cancellationToken);
 
-        return new ConsortiumsList(CreateConsortiumByMemberRole(consortiumsList, organisation), organisation.RegisteredCompanyName, AhpAccessContext.CanManageConsortium(account.Roles));
+        return new ConsortiumsList(CreateConsortiumByMemberRole(consortiumsList, organisation), organisation.RegisteredCompanyName, await _ahpAccessContext.CanManageConsortium());
     }
 
     private static List<ConsortiumByMemberRole> CreateConsortiumByMemberRole(IList<ConsortiumEntity> consortiumsList, OrganisationBasicInfo organisation)
