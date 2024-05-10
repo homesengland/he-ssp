@@ -1,6 +1,7 @@
 using System.Reflection;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Common.Workflow;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Utils;
 using Microsoft.AspNetCore.Mvc;
@@ -81,6 +82,29 @@ public abstract class WorkflowController<TState> : Controller
         return Continue(redirect, routeData);
     }
 
+    public Task<IActionResult> ContinueWithWorkflow(object routeData, string? workflow = null)
+    {
+        if (string.IsNullOrEmpty(workflow))
+        {
+            if (!Request.TryGetWorkflowQueryParameter(out var queryWorkflow))
+            {
+                return Continue(routeData);
+            }
+
+            workflow = queryWorkflow;
+        }
+
+        var dynamicRouteData = new System.Dynamic.ExpandoObject() as IDictionary<string, object>;
+        foreach (var property in routeData.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public))
+        {
+            dynamicRouteData.Add(property.Name, property.GetValue(routeData)!);
+        }
+
+        dynamicRouteData.Add("workflow", workflow);
+
+        return Continue(dynamicRouteData);
+    }
+
     public IActionResult Change(string redirectToState, object routeData)
     {
         if (!Enum.TryParse<TState>(redirectToState, true, out var nextState))
@@ -111,6 +135,23 @@ public abstract class WorkflowController<TState> : Controller
     }
 
     protected abstract Task<IStateRouting<TState>> Routing(TState currentState, object? routeData = null);
+
+    protected IStateRouting<TState> CreateChangedFlowWorkflow(
+        EncodedStateRouting<TState> workflow,
+        TState currentState,
+        Func<TState, EncodedStateRouting<TState>> changedWorkflowFactory)
+    {
+        if (Request.TryGetWorkflowQueryParameter(out var lastEncodedWorkflow))
+        {
+            var lastWorkflow = new EncodedWorkflow<TState>(lastEncodedWorkflow);
+            var currentWorkflow = workflow.GetEncodedWorkflow();
+            var changedState = currentWorkflow.GetNextChangedWorkflowState(currentState, lastWorkflow);
+
+            return changedWorkflowFactory(changedState);
+        }
+
+        return workflow;
+    }
 
     private static WorkflowStateAttribute? CurrentActionStateAttribute(ActionDescriptor actionDescriptor)
     {

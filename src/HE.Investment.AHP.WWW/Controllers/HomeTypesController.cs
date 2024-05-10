@@ -1348,17 +1348,11 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         }
 
         var homeType = await _mediator.Send(new GetHomeTypeQuery(AhpApplicationId.From(applicationId), HomeTypeId.From(homeTypeId)));
-        var workflow = new HomeTypesWorkflow(currentState, homeType, homeType.Application.IsReadOnly);
-        if (Request.TryGetWorkflowQueryParameter(out var lastEncodedWorkflow))
-        {
-            var lastWorkflow = new EncodedWorkflow<HomeTypesWorkflowState>(lastEncodedWorkflow);
-            var currentWorkflow = workflow.GetEncodedWorkflow();
-            var changedState = currentWorkflow.GetNextChangedWorkflowState(currentState, lastWorkflow);
 
-            return new HomeTypesWorkflow(changedState, homeType, homeType.Application.IsReadOnly, true);
-        }
-
-        return workflow;
+        return CreateChangedFlowWorkflow(
+            new HomeTypesWorkflow(currentState, homeType, homeType.Application.IsReadOnly),
+            currentState,
+            changedState => new HomeTypesWorkflow(changedState, homeType, homeType.Application.IsReadOnly, true));
     }
 
     private static HousingType GetDefaultHousingType(Tenure applicationTenure)
@@ -1411,10 +1405,8 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
 
     private async Task<IActionResult> ProcessAction(AhpApplicationId applicationId, HomeTypeId homeTypeId)
     {
-        return await this.ReturnToTaskListOrContinue(
-            async () => Request.TryGetWorkflowQueryParameter(out var workflow)
-                ? await Continue(new { applicationId = applicationId.Value, homeTypeId = homeTypeId.Value, workflow })
-                : await Continue(new { applicationId = applicationId.Value, homeTypeId = homeTypeId.Value }));
+        return await this.ReturnToTaskListOrContinue(async () =>
+            await ContinueWithWorkflow(new { applicationId = applicationId.Value, homeTypeId = homeTypeId.Value }));
     }
 
     private async Task<HomeTypeSummaryModel> GetHomeTypeAndCreateSummary(
