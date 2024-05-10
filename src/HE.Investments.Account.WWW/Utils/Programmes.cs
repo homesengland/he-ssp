@@ -33,7 +33,7 @@ public class Programmes : IProgrammes
 
         if (programmeType == ProgrammeType.Loans)
         {
-            return $"{_programmeUrlConfig.Loans}/application/{applicationId}";
+            return $"{_programmeUrlConfig.Loans}/application/{applicationId.ToGuidAsString()}";
         }
 
         throw new InvalidEnumArgumentException($"Programme for {programmeType} does not exist.");
