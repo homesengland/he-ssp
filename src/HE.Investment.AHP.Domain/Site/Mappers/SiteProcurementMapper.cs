@@ -9,8 +9,8 @@ public class SiteProcurementMapper : EnumMapper<SiteProcurement>
     protected override IDictionary<SiteProcurement, int?> Mapping =>
         new Dictionary<SiteProcurement, int?>
         {
-            { SiteProcurement.LargeScaleContractProcurementAsIndividualProvider, (int)invln_Procurementmechanisms.Largescalecontractprocurement_858110000 },
-            { SiteProcurement.LargeScaleContractProcurementThroughConsortium, (int)invln_Procurementmechanisms.Largescalecontractprocurement_858110001 },
+            { SiteProcurement.LargeScaleContractProcurementAsIndividualProvider, (int)invln_Procurementmechanisms.Largescalecontractprocurementasindividualprovider  },
+            { SiteProcurement.LargeScaleContractProcurementThroughConsortium, (int)invln_Procurementmechanisms.Largescalecontractprocurementthroughconsortium  },
             { SiteProcurement.BulkPurchaseOfComponents, (int)invln_Procurementmechanisms.Bulkpurchaseofcomponents },
             { SiteProcurement.PartneringSupplyChain, (int)invln_Procurementmechanisms.Partneringsupplychain },
             { SiteProcurement.PartneringArrangementsWithContractor, (int)invln_Procurementmechanisms.Partneringarrangementswithcontractor },
