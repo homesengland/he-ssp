@@ -7,11 +7,10 @@
   <CodeWriterMessageFilterService>DLaB.ModelBuilderExtensions.CodeWriterMessageFilterService,DLaB.ModelBuilderExtensions</CodeWriterMessageFilterService>
   <EmitEntityETC>false</EmitEntityETC>
   <EmitVirtualAttributes>true</EmitVirtualAttributes>
-  <EntityTypesFolder>..\Entities</EntityTypesFolder>
+  <EntityTypesFolder>..\..\HE.Investments.Common.CRM\Model\Entities\</EntityTypesFolder>
   <ExtensionConfig>
     <ActionPrefixesWhitelist />
-    <ActionsWhitelist>invln_canceladdmember|
-invln_changeahpapplicationstatus|
+    <ActionsWhitelist>invln_changeahpapplicationstatus|
 invln_changeloanapplicationexternalstatus|
 invln_checkifapplicationwithgivennameexists|
 invln_checkifloanapplicationwithgivennameexists|
@@ -69,7 +68,6 @@ invln_setahpapplication|
 invln_setconsortium|
 invln_setdeliveryphase|
 invln_setfrontdoorproject|
-invln_setfrontdoorsite|
 invln_sethometype|
 invln_setsite|
 invln_updatesingleloanapplication|
@@ -228,12 +226,12 @@ VoiceMail</TokenCapitalizationOverrides>
   </ExtensionConfig>
   <GenerateMessages>true</GenerateMessages>
   <IncludeCommandLine>false</IncludeCommandLine>
-  <MessageTypesFolder>..\Actions</MessageTypesFolder>
+  <MessageTypesFolder>..\..\HE.Investments.Common.CRM\Model\Actions\</MessageTypesFolder>
   <MetadataProviderService>DLaB.ModelBuilderExtensions.MetadataProviderService,DLaB.ModelBuilderExtensions</MetadataProviderService>
   <MetadataQueryProviderService>DLaB.ModelBuilderExtensions.MetadataQueryProviderService,DLaB.ModelBuilderExtensions</MetadataQueryProviderService>
   <NamingService>DLaB.ModelBuilderExtensions.NamingService,DLaB.ModelBuilderExtensions</NamingService>
-  <OptionSetsTypesFolder>..\OptionSets</OptionSetsTypesFolder>
-  <Namespace>DataverseModel</Namespace>
+  <OptionSetsTypesFolder>..\..\HE.Investments.Common.CRM\Model\OptionSets\</OptionSetsTypesFolder>
+  <Namespace>HE.Investments.Common.CRM.Model</Namespace>
   <ServiceContextName>DataverseContext</ServiceContextName>
   <SuppressGeneratedCodeAttribute>true</SuppressGeneratedCodeAttribute>
   <SettingsVersion>2.2024.2.1</SettingsVersion>

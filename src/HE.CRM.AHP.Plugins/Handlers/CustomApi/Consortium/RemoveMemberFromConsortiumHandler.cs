@@ -1,12 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DataverseModel;
 using HE.Base.Plugins.Handlers;
 using HE.CRM.Common.Repositories.Interfaces;
-using Microsoft.Crm.Sdk.Messages;
+using Microsoft.Xrm.Sdk;
 
 namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.Consortium
 {
@@ -30,6 +25,11 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.Consortium
         public override void DoWork()
         {
             var consortium = _consortiumMemberRepository.GetMemberByOrganizstationIdAndConsortiumId(OrganizationId, ConsortiumId);
+            if (consortium != null)
+            {
+                consortium.StatusCode = new OptionSetValue((int)invln_ConsortiumMember_StatusCode.Removalsubmitted);
+                _consortiumMemberRepository.Update(consortium);
+            }
         }
     }
 }
