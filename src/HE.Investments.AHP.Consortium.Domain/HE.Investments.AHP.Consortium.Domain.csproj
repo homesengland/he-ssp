@@ -11,7 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HE.Investment.AHP.Domain\HE.Investment.AHP.Domain.csproj" />
     <ProjectReference Include="..\HE.Investments.Account.Shared\HE.Investments.Account.Shared.csproj"/>
     <ProjectReference Include="..\HE.Investments.AHP.Consortium.Contract\HE.Investments.AHP.Consortium.Contract.csproj"/>
     <ProjectReference Include="..\HE.Investments.Common\HE.Investments.Common.csproj"/>

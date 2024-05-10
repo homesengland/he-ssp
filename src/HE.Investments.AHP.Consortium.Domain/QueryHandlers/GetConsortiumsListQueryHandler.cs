@@ -1,4 +1,3 @@
-using HE.Investment.AHP.Domain.UserContext;
 using HE.Investments.Account.Shared;
 using HE.Investments.AHP.Consortium.Contract;
 using HE.Investments.AHP.Consortium.Contract.Enums;
@@ -15,16 +14,12 @@ public class GetConsortiumsListQueryHandler : IRequestHandler<GetConsortiumsList
 
     private readonly IAccountUserContext _accountUserContext;
 
-    private readonly IAhpAccessContext _ahpAccessContext;
-
     public GetConsortiumsListQueryHandler(
         IConsortiumRepository repository,
-        IAccountUserContext accountUserContext,
-        IAhpAccessContext ahpAccessContext)
+        IAccountUserContext accountUserContext)
     {
         _repository = repository;
         _accountUserContext = accountUserContext;
-        _ahpAccessContext = ahpAccessContext;
     }
 
     public async Task<ConsortiumsList> Handle(GetConsortiumsListQuery request, CancellationToken cancellationToken)
@@ -34,7 +29,7 @@ public class GetConsortiumsListQueryHandler : IRequestHandler<GetConsortiumsList
 
         var consortiumsList = await _repository.GetConsortiumsListByMemberId(organisation.OrganisationId, cancellationToken);
 
-        return new ConsortiumsList(CreateConsortiumByMemberRole(consortiumsList, organisation), organisation.RegisteredCompanyName, await _ahpAccessContext.CanManageConsortium());
+        return new ConsortiumsList(CreateConsortiumByMemberRole(consortiumsList, organisation), organisation.RegisteredCompanyName);
     }
 
     private static List<ConsortiumByMemberRole> CreateConsortiumByMemberRole(IList<ConsortiumEntity> consortiumsList, OrganisationBasicInfo organisation)
