@@ -1,4 +1,4 @@
-using HE.Investments.Account.WWW.Config;
+using HE.Investments.Account.WWW.Routing;
 using HE.Investments.Common;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.FeatureManagement;
@@ -8,13 +8,13 @@ namespace HE.Investments.Account.WWW.Controllers;
 [Route("consortium")]
 public class ConsortiumController : Controller
 {
-    private readonly AhpConfig _ahpConfig;
+    private readonly ProgrammeUrlConfig _programmeUrlConfig;
 
     private readonly IFeatureManager _featureManager;
 
-    public ConsortiumController(AhpConfig ahpConfig, IFeatureManager featureManager)
+    public ConsortiumController(ProgrammeUrlConfig programmeUrlConfig, IFeatureManager featureManager)
     {
-        _ahpConfig = ahpConfig;
+        _programmeUrlConfig = programmeUrlConfig;
         _featureManager = featureManager;
     }
 
@@ -26,6 +26,6 @@ public class ConsortiumController : Controller
             return RedirectToAction("Index", "Home");
         }
 
-        return new RedirectResult(_ahpConfig.ConsortiumManagementUrl);
+        return new RedirectResult($"{_programmeUrlConfig.Ahp}/consortium");
     }
 }

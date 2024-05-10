@@ -160,7 +160,7 @@ public class UserOrganisationController : Controller
 
         userOrganisationActions.Add(new("Manage your account", "GetProfileDetails", "User", new { callback = Url.Action("Index") }, true));
 
-        if (await _featureManager.IsEnabledAsync(FeatureFlags.AhpReleaseTwoFeatures) && canSubmitApplicationAndIsNotLimitedUser)
+        if (await _featureManager.IsEnabledAsync(FeatureFlags.AhpProgram) && canSubmitApplicationAndIsNotLimitedUser)
         {
             userOrganisationActions.Add(new("Add AHP consortium", "Index", "Consortium", HasAccess: canSubmitApplicationAndIsNotLimitedUser));
         }
