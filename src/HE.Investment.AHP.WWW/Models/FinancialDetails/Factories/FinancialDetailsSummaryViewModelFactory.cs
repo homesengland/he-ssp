@@ -74,7 +74,7 @@ public class FinancialDetailsSummaryViewModelFactory : IFinancialDetailsSummaryV
                 IsEditable: isEditable),
             new(
                 "Public land",
-                landValueSummary.IsPublicLand.MapToYesNo().ToOneElementList(),
+                landValueSummary.IsPublicLand.MapToYesNoNotProvided().ToOneElementList(),
                 CreateFinancialDetailsActionUrl(urlHelper, applicationId, nameof(FinancialDetailsController.LandValue)),
                 IsEditable: isEditable),
         };

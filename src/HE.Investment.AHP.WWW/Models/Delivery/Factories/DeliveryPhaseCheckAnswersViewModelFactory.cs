@@ -75,7 +75,7 @@ public class DeliveryPhaseCheckAnswersViewModelFactory : IDeliveryPhaseCheckAnsw
         items.AddWhen(
             new(
                 "Reconfiguring existing residential properties",
-                deliveryPhase.ReconfiguringExisting.MapToYesNo().ToOneElementList(),
+                deliveryPhase.ReconfiguringExisting.MapToYesNoNotProvided().ToOneElementList(),
                 IsEditable: isEditable,
                 ActionUrl: createAction(nameof(DeliveryPhaseController.ReconfiguringExisting))),
             deliveryPhase.IsReconfiguringExistingNeeded);
