@@ -4,7 +4,6 @@ using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
-using HE.Investments.Common.Workflow;
 using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Models.Summary;
@@ -542,17 +541,11 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     {
         var projectId = routeData?.GetPropertyValue<string>("projectId") ?? this.GetProjectIdFromRoute().Value;
         var project = await GetProjectDetails(projectId, CancellationToken.None);
-        var workflow = new ProjectWorkflow(currentState, project);
-        if (Request.TryGetWorkflowQueryParameter(out var lastEncodedWorkflow))
-        {
-            var lastWorkflow = new EncodedWorkflow<ProjectWorkflowState>(lastEncodedWorkflow);
-            var currentWorkflow = workflow.GetEncodedWorkflow();
-            var changedState = currentWorkflow.GetNextChangedWorkflowState(currentState, lastWorkflow);
 
-            return new ProjectWorkflow(changedState, project, true);
-        }
-
-        return workflow;
+        return CreateChangedFlowWorkflow(
+            new ProjectWorkflow(currentState, project),
+            currentState,
+            changedState => new ProjectWorkflow(changedState, project, true));
     }
 
     private async Task<IActionResult> ExecuteProjectCommand<TViewModel>(

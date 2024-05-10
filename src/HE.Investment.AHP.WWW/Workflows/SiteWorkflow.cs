@@ -3,36 +3,27 @@ using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Routing;
-using Stateless;
 
 namespace HE.Investment.AHP.WWW.Workflows;
 
-public class SiteWorkflow : IStateRouting<SiteWorkflowState>
+public class SiteWorkflow : EncodedStateRouting<SiteWorkflowState>
 {
-    private readonly StateMachine<SiteWorkflowState, Trigger> _machine;
-
     private readonly SiteModel? _siteModel;
 
-    public SiteWorkflow(SiteWorkflowState currentSiteWorkflowState, SiteModel? siteModel)
+    public SiteWorkflow(SiteWorkflowState currentWorkflowState, SiteModel? siteModel, bool isLocked = false)
+        : base(currentWorkflowState, isLocked)
     {
-        _machine = new StateMachine<SiteWorkflowState, Trigger>(currentSiteWorkflowState);
         _siteModel = siteModel;
         ConfigureTransitions();
     }
 
-    public async Task<SiteWorkflowState> NextState(Trigger trigger)
+    public override bool CanBeAccessed(SiteWorkflowState state, bool? isReadOnlyMode = null)
     {
-        await _machine.FireAsync(trigger);
-        return _machine.State;
-    }
+        if (isReadOnlyMode == true)
+        {
+            return state == SiteWorkflowState.CheckAnswers;
+        }
 
-    public Task<bool> StateCanBeAccessed(SiteWorkflowState nextState)
-    {
-        return Task.FromResult(CanBeAccessed(nextState));
-    }
-
-    private bool CanBeAccessed(SiteWorkflowState state)
-    {
         return state switch
         {
             SiteWorkflowState.Start => true,
@@ -44,12 +35,12 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             SiteWorkflowState.PlanningStatus => true,
             SiteWorkflowState.PlanningDetails => true,
             SiteWorkflowState.Section106GeneralAgreement => true,
-            SiteWorkflowState.Section106AffordableHousing => true,
-            SiteWorkflowState.Section106AdditionalAffordableHousing => true,
-            SiteWorkflowState.Section106OnlyAffordableHousing => true,
-            SiteWorkflowState.Section106CapitalFundingEligibility => true,
-            SiteWorkflowState.Section106LocalAuthorityConfirmation => true,
-            SiteWorkflowState.Section106Ineligible => true,
+            SiteWorkflowState.Section106AffordableHousing => _siteModel?.Section106?.GeneralAgreement == true,
+            SiteWorkflowState.Section106AdditionalAffordableHousing => _siteModel?.Section106?.OnlyAffordableHousing == false,
+            SiteWorkflowState.Section106OnlyAffordableHousing => _siteModel?.Section106?.AffordableHousing == true,
+            SiteWorkflowState.Section106CapitalFundingEligibility => _siteModel?.Section106?.GeneralAgreement == true,
+            SiteWorkflowState.Section106LocalAuthorityConfirmation => _siteModel?.Section106?.AdditionalAffordableHousing == true,
+            SiteWorkflowState.Section106Ineligible => _siteModel?.Section106?.IsIneligible == true,
             SiteWorkflowState.NationalDesignGuide => true,
             SiteWorkflowState.BuildingForHealthyLife => true,
             SiteWorkflowState.NumberOfGreenLights => IsBuildingForHealthyLife(),
@@ -78,30 +69,30 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
 
     private void ConfigureTransitions()
     {
-        _machine.Configure(SiteWorkflowState.Name)
+        Machine.Configure(SiteWorkflowState.Name)
             .Permit(Trigger.Continue, SiteWorkflowState.Section106GeneralAgreement)
             .Permit(Trigger.Back, SiteWorkflowState.Start);
 
-        _machine.Configure(SiteWorkflowState.Section106GeneralAgreement)
+        Machine.Configure(SiteWorkflowState.Section106GeneralAgreement)
             .PermitIf(Trigger.Continue, SiteWorkflowState.Section106AffordableHousing, () => _siteModel?.Section106?.GeneralAgreement == true)
             .PermitIf(Trigger.Continue, SiteWorkflowState.LocalAuthoritySearch, () => _siteModel?.Section106?.GeneralAgreement == false)
             .Permit(Trigger.Back, SiteWorkflowState.Name);
 
-        _machine.Configure(SiteWorkflowState.Section106AffordableHousing)
+        Machine.Configure(SiteWorkflowState.Section106AffordableHousing)
             .PermitIf(Trigger.Continue, SiteWorkflowState.Section106OnlyAffordableHousing, () => _siteModel?.Section106?.AffordableHousing == true)
             .PermitIf(Trigger.Continue, SiteWorkflowState.Section106CapitalFundingEligibility, () => _siteModel?.Section106?.AffordableHousing == false)
             .Permit(Trigger.Back, SiteWorkflowState.Section106GeneralAgreement);
 
-        _machine.Configure(SiteWorkflowState.Section106OnlyAffordableHousing)
+        Machine.Configure(SiteWorkflowState.Section106OnlyAffordableHousing)
             .PermitIf(Trigger.Continue, SiteWorkflowState.Section106CapitalFundingEligibility, () => _siteModel?.Section106?.OnlyAffordableHousing == true)
             .PermitIf(Trigger.Continue, SiteWorkflowState.Section106AdditionalAffordableHousing, () => _siteModel?.Section106?.OnlyAffordableHousing == false)
             .Permit(Trigger.Back, SiteWorkflowState.Section106AffordableHousing);
 
-        _machine.Configure(SiteWorkflowState.Section106AdditionalAffordableHousing)
+        Machine.Configure(SiteWorkflowState.Section106AdditionalAffordableHousing)
             .Permit(Trigger.Continue, SiteWorkflowState.Section106CapitalFundingEligibility)
             .Permit(Trigger.Back, SiteWorkflowState.Section106AffordableHousing);
 
-        _machine.Configure(SiteWorkflowState.Section106CapitalFundingEligibility)
+        Machine.Configure(SiteWorkflowState.Section106CapitalFundingEligibility)
             .PermitIf(Trigger.Continue, SiteWorkflowState.Section106Ineligible, () => _siteModel?.Section106?.IsIneligible == true)
             .PermitIf(Trigger.Continue, SiteWorkflowState.Section106LocalAuthorityConfirmation, IsSection106EligibleWithAdditionalAffordableHousing)
             .PermitIf(Trigger.Continue, SiteWorkflowState.LocalAuthoritySearch, IsSection106EligibleWithoutAdditionalAffordableHousing)
@@ -109,143 +100,143 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             .PermitIf(Trigger.Back, SiteWorkflowState.Section106OnlyAffordableHousing, () => _siteModel?.Section106?.OnlyAffordableHousing == true)
             .PermitIf(Trigger.Back, SiteWorkflowState.Section106AffordableHousing, () => _siteModel?.Section106?.OnlyAffordableHousing == null);
 
-        _machine.Configure(SiteWorkflowState.Section106LocalAuthorityConfirmation)
+        Machine.Configure(SiteWorkflowState.Section106LocalAuthorityConfirmation)
             .Permit(Trigger.Continue, SiteWorkflowState.LocalAuthoritySearch)
             .Permit(Trigger.Back, SiteWorkflowState.Section106CapitalFundingEligibility);
 
-        _machine.Configure(SiteWorkflowState.Section106Ineligible)
+        Machine.Configure(SiteWorkflowState.Section106Ineligible)
             .Permit(Trigger.Back, SiteWorkflowState.Section106CapitalFundingEligibility);
 
-        _machine.Configure(SiteWorkflowState.LocalAuthoritySearch)
+        Machine.Configure(SiteWorkflowState.LocalAuthoritySearch)
             .Permit(Trigger.Continue, SiteWorkflowState.LocalAuthorityResult)
             .PermitIf(Trigger.Back, SiteWorkflowState.Section106GeneralAgreement, () => _siteModel?.Section106?.GeneralAgreement == false)
             .PermitIf(
                 Trigger.Back,
                 SiteWorkflowState.Section106LocalAuthorityConfirmation,
-                () => _siteModel?.Section106?.AdditionalAffordableHousing != false && _siteModel?.Section106?.GeneralAgreement != false)
+                () => _siteModel?.Section106?.AdditionalAffordableHousing == true)
             .PermitIf(
                 Trigger.Back,
                 SiteWorkflowState.Section106CapitalFundingEligibility,
-                () => _siteModel?.Section106?.AdditionalAffordableHousing == false && _siteModel?.Section106?.GeneralAgreement != false);
+                () => _siteModel?.Section106?.AdditionalAffordableHousing == false);
 
-        _machine.Configure(SiteWorkflowState.LocalAuthorityResult)
+        Machine.Configure(SiteWorkflowState.LocalAuthorityResult)
             .Permit(Trigger.Continue, SiteWorkflowState.LocalAuthorityConfirm)
             .Permit(Trigger.Back, SiteWorkflowState.LocalAuthoritySearch);
 
-        _machine.Configure(SiteWorkflowState.LocalAuthorityConfirm)
+        Machine.Configure(SiteWorkflowState.LocalAuthorityConfirm)
             .Permit(Trigger.Continue, SiteWorkflowState.PlanningStatus);
 
-        _machine.Configure(SiteWorkflowState.LocalAuthorityReset)
+        Machine.Configure(SiteWorkflowState.LocalAuthorityReset)
             .Permit(Trigger.Continue, SiteWorkflowState.PlanningStatus)
             .Permit(Trigger.Back, SiteWorkflowState.LocalAuthoritySearch);
 
-        _machine.Configure(SiteWorkflowState.PlanningStatus)
+        Machine.Configure(SiteWorkflowState.PlanningStatus)
             .Permit(Trigger.Continue, SiteWorkflowState.PlanningDetails)
             .PermitIf(Trigger.Back, SiteWorkflowState.LocalAuthorityConfirm, IsLocalAuthorityProvided)
             .PermitIf(Trigger.Back, SiteWorkflowState.LocalAuthoritySearch, () => !IsLocalAuthorityProvided());
 
-        _machine.Configure(SiteWorkflowState.PlanningDetails)
+        Machine.Configure(SiteWorkflowState.PlanningDetails)
             .PermitIf(Trigger.Continue, SiteWorkflowState.LandRegistry, IsLandTitleRegistered)
             .PermitIf(Trigger.Continue, SiteWorkflowState.NationalDesignGuide, () => !IsLandTitleRegistered())
             .Permit(Trigger.Back, SiteWorkflowState.PlanningStatus);
 
-        _machine.Configure(SiteWorkflowState.LandRegistry)
+        Machine.Configure(SiteWorkflowState.LandRegistry)
             .Permit(Trigger.Continue, SiteWorkflowState.NationalDesignGuide)
             .Permit(Trigger.Back, SiteWorkflowState.PlanningDetails);
 
-        _machine.Configure(SiteWorkflowState.NationalDesignGuide)
+        Machine.Configure(SiteWorkflowState.NationalDesignGuide)
             .Permit(Trigger.Continue, SiteWorkflowState.BuildingForHealthyLife)
             .PermitIf(Trigger.Back, SiteWorkflowState.LandRegistry, IsLandTitleRegistered)
             .PermitIf(Trigger.Back, SiteWorkflowState.PlanningDetails, () => !IsLandTitleRegistered());
 
-        _machine.Configure(SiteWorkflowState.BuildingForHealthyLife)
+        Machine.Configure(SiteWorkflowState.BuildingForHealthyLife)
             .PermitIf(Trigger.Continue, SiteWorkflowState.NumberOfGreenLights, IsBuildingForHealthyLife)
             .PermitIf(Trigger.Continue, SiteWorkflowState.LandAcquisitionStatus, () => !IsBuildingForHealthyLife())
             .Permit(Trigger.Back, SiteWorkflowState.NationalDesignGuide);
 
-        _machine.Configure(SiteWorkflowState.NumberOfGreenLights)
+        Machine.Configure(SiteWorkflowState.NumberOfGreenLights)
             .Permit(Trigger.Continue, SiteWorkflowState.LandAcquisitionStatus)
             .Permit(Trigger.Back, SiteWorkflowState.BuildingForHealthyLife);
 
-        _machine.Configure(SiteWorkflowState.LandAcquisitionStatus)
+        Machine.Configure(SiteWorkflowState.LandAcquisitionStatus)
             .Permit(Trigger.Continue, SiteWorkflowState.TenderingStatus)
             .PermitIf(Trigger.Back, SiteWorkflowState.NumberOfGreenLights, IsBuildingForHealthyLife)
             .PermitIf(Trigger.Back, SiteWorkflowState.BuildingForHealthyLife, () => !IsBuildingForHealthyLife());
 
-        _machine.Configure(SiteWorkflowState.TenderingStatus)
+        Machine.Configure(SiteWorkflowState.TenderingStatus)
             .PermitIf(Trigger.Continue, SiteWorkflowState.ContractorDetails, IsConditionalOrUnconditionalWorksContract)
             .PermitIf(Trigger.Continue, SiteWorkflowState.IntentionToWorkWithSme, IsTenderForWorksContractOrContractingHasNotYetBegun)
             .PermitIf(Trigger.Continue, SiteWorkflowState.StrategicSite, IsNotApplicableOrMissing)
             .Permit(Trigger.Back, SiteWorkflowState.LandAcquisitionStatus);
 
-        _machine.Configure(SiteWorkflowState.ContractorDetails)
+        Machine.Configure(SiteWorkflowState.ContractorDetails)
             .Permit(Trigger.Continue, SiteWorkflowState.StrategicSite)
             .Permit(Trigger.Back, SiteWorkflowState.TenderingStatus);
 
-        _machine.Configure(SiteWorkflowState.IntentionToWorkWithSme)
+        Machine.Configure(SiteWorkflowState.IntentionToWorkWithSme)
             .Permit(Trigger.Continue, SiteWorkflowState.StrategicSite)
             .Permit(Trigger.Back, SiteWorkflowState.TenderingStatus);
 
-        _machine.Configure(SiteWorkflowState.StrategicSite)
+        Machine.Configure(SiteWorkflowState.StrategicSite)
             .Permit(Trigger.Continue, SiteWorkflowState.SiteType)
             .PermitIf(Trigger.Back, SiteWorkflowState.TenderingStatus, IsNotApplicableOrMissing)
             .PermitIf(Trigger.Back, SiteWorkflowState.IntentionToWorkWithSme, IsTenderForWorksContractOrContractingHasNotYetBegun)
             .PermitIf(Trigger.Back, SiteWorkflowState.ContractorDetails, IsConditionalOrUnconditionalWorksContract);
 
-        _machine.Configure(SiteWorkflowState.SiteType)
+        Machine.Configure(SiteWorkflowState.SiteType)
             .Permit(Trigger.Continue, SiteWorkflowState.SiteUse)
             .Permit(Trigger.Back, SiteWorkflowState.StrategicSite);
 
-        _machine.Configure(SiteWorkflowState.SiteUse)
+        Machine.Configure(SiteWorkflowState.SiteUse)
             .PermitIf(Trigger.Continue, SiteWorkflowState.TravellerPitchType, IsForTravellerPitchSite)
             .PermitIf(Trigger.Continue, SiteWorkflowState.RuralClassification, () => !IsForTravellerPitchSite())
             .Permit(Trigger.Back, SiteWorkflowState.SiteType);
 
-        _machine.Configure(SiteWorkflowState.TravellerPitchType)
+        Machine.Configure(SiteWorkflowState.TravellerPitchType)
             .Permit(Trigger.Continue, SiteWorkflowState.RuralClassification)
             .PermitIf(Trigger.Back, SiteWorkflowState.SiteUse);
 
-        _machine.Configure(SiteWorkflowState.RuralClassification)
+        Machine.Configure(SiteWorkflowState.RuralClassification)
             .Permit(Trigger.Continue, SiteWorkflowState.EnvironmentalImpact)
             .PermitIf(Trigger.Back, SiteWorkflowState.SiteUse, () => !IsForTravellerPitchSite())
             .PermitIf(Trigger.Back, SiteWorkflowState.TravellerPitchType, IsForTravellerPitchSite);
 
-        _machine.Configure(SiteWorkflowState.EnvironmentalImpact)
+        Machine.Configure(SiteWorkflowState.EnvironmentalImpact)
             .Permit(Trigger.Continue, SiteWorkflowState.MmcUsing)
             .Permit(Trigger.Back, SiteWorkflowState.RuralClassification);
 
-        _machine.Configure(SiteWorkflowState.MmcUsing)
+        Machine.Configure(SiteWorkflowState.MmcUsing)
             .PermitIf(Trigger.Continue, SiteWorkflowState.MmcFutureAdoption, IsNotUsingModernMethodsOfConstruction)
             .PermitIf(Trigger.Continue, SiteWorkflowState.MmcInformation, () => IsUsingModernMethodsOfConstruction() || IsPartiallyUsingModernMethodsOfConstruction())
             .PermitIf(Trigger.Continue, SiteWorkflowState.Procurements, IsUsingModernMethodsOfConstructionNotSelected)
             .Permit(Trigger.Back, SiteWorkflowState.EnvironmentalImpact);
 
-        _machine.Configure(SiteWorkflowState.MmcFutureAdoption)
+        Machine.Configure(SiteWorkflowState.MmcFutureAdoption)
             .Permit(Trigger.Continue, SiteWorkflowState.Procurements)
             .Permit(Trigger.Back, SiteWorkflowState.MmcUsing);
 
-        _machine.Configure(SiteWorkflowState.MmcInformation)
+        Machine.Configure(SiteWorkflowState.MmcInformation)
             .PermitIf(Trigger.Continue, SiteWorkflowState.MmcCategories, IsUsingModernMethodsOfConstruction)
             .PermitIf(Trigger.Continue, SiteWorkflowState.Procurements, IsPartiallyUsingModernMethodsOfConstruction)
             .Permit(Trigger.Back, SiteWorkflowState.MmcUsing);
 
-        _machine.Configure(SiteWorkflowState.MmcCategories)
+        Machine.Configure(SiteWorkflowState.MmcCategories)
             .PermitIf(Trigger.Continue, SiteWorkflowState.Mmc3DCategory, Is3DCategorySelected)
             .PermitIf(Trigger.Continue, SiteWorkflowState.Mmc2DCategory, () => Is2DCategorySelected() && !Is3DCategorySelected())
             .PermitIf(Trigger.Continue, SiteWorkflowState.Procurements, () => !Is3DOr2DCategorySelected())
             .Permit(Trigger.Back, SiteWorkflowState.MmcInformation);
 
-        _machine.Configure(SiteWorkflowState.Mmc3DCategory)
+        Machine.Configure(SiteWorkflowState.Mmc3DCategory)
             .PermitIf(Trigger.Continue, SiteWorkflowState.Mmc2DCategory, Is2DCategorySelected)
             .PermitIf(Trigger.Continue, SiteWorkflowState.Procurements, () => !Is2DCategorySelected())
             .Permit(Trigger.Back, SiteWorkflowState.MmcCategories);
 
-        _machine.Configure(SiteWorkflowState.Mmc2DCategory)
+        Machine.Configure(SiteWorkflowState.Mmc2DCategory)
             .Permit(Trigger.Continue, SiteWorkflowState.Procurements)
             .PermitIf(Trigger.Back, SiteWorkflowState.Mmc3DCategory, Is3DCategorySelected)
             .PermitIf(Trigger.Back, SiteWorkflowState.MmcCategories, () => !Is3DCategorySelected());
 
-        _machine.Configure(SiteWorkflowState.Procurements)
+        Machine.Configure(SiteWorkflowState.Procurements)
             .Permit(Trigger.Continue, SiteWorkflowState.CheckAnswers)
             .PermitIf(Trigger.Back, SiteWorkflowState.Mmc2DCategory, Is2DCategorySelected)
             .PermitIf(Trigger.Back, SiteWorkflowState.Mmc3DCategory, () => Is3DCategorySelected() && !Is2DCategorySelected())
@@ -254,7 +245,7 @@ public class SiteWorkflow : IStateRouting<SiteWorkflowState>
             .PermitIf(Trigger.Back, SiteWorkflowState.MmcUsing, IsUsingModernMethodsOfConstructionNotSelected)
             .PermitIf(Trigger.Back, SiteWorkflowState.MmcFutureAdoption, IsNotUsingModernMethodsOfConstruction);
 
-        _machine.Configure(SiteWorkflowState.CheckAnswers)
+        Machine.Configure(SiteWorkflowState.CheckAnswers)
             .Permit(Trigger.Back, SiteWorkflowState.Procurements);
     }
 

@@ -549,7 +549,7 @@ public class Order01StartAhpSite : AhpIntegrationTest
         // given
         var checkAnswersPage = await GetCurrentPage(SitePagesUrl.SiteCheckAnswers(SiteData.SiteId));
         checkAnswersPage
-            .UrlEndWith(SitePagesUrl.SiteCheckAnswers(SiteData.SiteId))
+            .UrlWithoutQueryEndsWith(SitePagesUrl.SiteCheckAnswers(SiteData.SiteId))
             .HasTitle(SitePageTitles.CheckAnswers);
 
         // when
