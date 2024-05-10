@@ -50,6 +50,7 @@ public static class DomainModule
         services.AddScoped<IDateTimeProvider, DateTimeProvider>();
         services.AddTransient(typeof(IRequestExceptionHandler<,,>), typeof(DomainValidationHandler<,,>));
         services.AddScoped<IAhpUserContext, AhpUserContext>();
+        services.AddScoped<IAhpAccessContext, AhpAccessContext>();
 
         services
             .AddProgramme()

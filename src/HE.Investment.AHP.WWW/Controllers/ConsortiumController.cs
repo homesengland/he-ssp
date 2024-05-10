@@ -18,9 +18,12 @@ public class ConsortiumController : WorkflowController<ConsortiumWorkflowState>
 {
     private readonly IMediator _mediator;
 
-    public ConsortiumController(IMediator mediator)
+    private readonly IAhpAccessContext _ahpAccessContext;
+
+    public ConsortiumController(IMediator mediator, IAhpAccessContext ahpAccessContext)
     {
         _mediator = mediator;
+        _ahpAccessContext = ahpAccessContext;
     }
 
     [HttpGet]
@@ -28,7 +31,7 @@ public class ConsortiumController : WorkflowController<ConsortiumWorkflowState>
     public async Task<IActionResult> Index()
     {
         var consortiumsList = await _mediator.Send(new GetConsortiumsListQuery());
-        return View(consortiumsList);
+        return View((consortiumsList, await _ahpAccessContext.CanManageConsortium()));
     }
 
     [HttpGet("start")]
