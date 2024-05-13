@@ -95,9 +95,17 @@ public class ConsortiumCrmContext : IConsortiumCrmContext
             cancellationToken);
     }
 
-    public Task CreateRemoveFromConsortiumRequest(string consortiumId, string organisationId, string userId, CancellationToken cancellationToken)
+    public async Task CreateRemoveFromConsortiumRequest(string consortiumId, string organisationId, string userId, CancellationToken cancellationToken)
     {
-        // TODO: make request to CRM
-        return Task.CompletedTask;
+        var request = new invln_requesttoremovememberRequest
+        {
+            invln_consortiumid = consortiumId.ToGuidAsString(),
+            invln_organizationid = organisationId.ToGuidAsString(),
+        };
+
+        await _service.ExecuteAsync<invln_requesttoremovememberRequest, invln_requesttoremovememberResponse>(
+            request,
+            x => x.ResponseName,
+            cancellationToken);
     }
 }
