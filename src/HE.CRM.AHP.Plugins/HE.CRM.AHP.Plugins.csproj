@@ -109,6 +109,7 @@
     <Compile Include="Handlers\CustomApi\Consortium\GetConsortiumsByOrganisationHandler.cs" />
     <Compile Include="Handlers\CustomApi\Consortium\GetConsortiumHandler.cs" />
     <Compile Include="Handlers\CustomApi\Consortium\IsConsortiumExistForProgrammeAndOrganisation.cs" />
+    <Compile Include="Handlers\CustomApi\Consortium\RemoveMemberFromConsortiumHandler.cs" />
     <Compile Include="Handlers\CustomApi\Consortium\RequestAddingMemberToConsortiumHandler.cs" />
     <Compile Include="Handlers\CustomApi\Consortium\SetConsortiumHandler.cs" />
     <Compile Include="Handlers\CustomApi\DeleteDeliveryPhaseHandler.cs" />
@@ -214,6 +215,7 @@
     <Compile Include="Plugins\CustomApi\Consortium\GetConsortiumsByOrganisationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\Consortium\GetConsortiumPlugin.cs" />
     <Compile Include="Plugins\CustomApi\Consortium\IsConsortiumExist.cs" />
+    <Compile Include="Plugins\CustomApi\Consortium\RemoveMemberFromConsortiumPlugin.cs" />
     <Compile Include="Plugins\CustomApi\Consortium\RequestAddingMemberToConsortiumPlugin.cs" />
     <Compile Include="Plugins\CustomApi\Consortium\SetConsortiumPlugin.cs" />
     <Compile Include="Plugins\CustomApi\DeleteDeliveryPhasePlugin.cs" />

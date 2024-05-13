@@ -38,9 +38,9 @@ public class AhpBreadcrumbsBuilder : BreadcrumbsBuilderBase
         return this;
     }
 
-    public AhpBreadcrumbsBuilder WithApplicationsList()
+    public AhpBreadcrumbsBuilder WithApplicationsList(string? programmeName = null)
     {
-        AddBreadcrumb("AHP 21-26 CME", nameof(ApplicationController.Index), GetControllerName(nameof(ApplicationController)));
+        AddBreadcrumb(programmeName ?? "AHP 21-26 CME", nameof(ApplicationController.Index), GetControllerName(nameof(ApplicationController)));
 
         return this;
     }
@@ -48,6 +48,13 @@ public class AhpBreadcrumbsBuilder : BreadcrumbsBuilderBase
     public AhpBreadcrumbsBuilder WithApplication(string applicationId, string applicationName)
     {
         AddBreadcrumb(applicationName, nameof(ApplicationController.TaskList), GetControllerName(nameof(ApplicationController)), new { applicationId });
+
+        return this;
+    }
+
+    public AhpBreadcrumbsBuilder WithConsortiumManagement()
+    {
+        AddBreadcrumb("Consortium Management", nameof(ConsortiumController.Index), GetControllerName(nameof(ConsortiumController)));
 
         return this;
     }

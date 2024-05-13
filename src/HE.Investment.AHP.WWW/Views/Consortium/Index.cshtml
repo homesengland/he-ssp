@@ -4,25 +4,26 @@
 @using HE.Investments.AHP.Consortium.Contract;
 @using HE.Investments.Common.WWW.Components.PageHeader
 @using HE.Investments.Common.WWW.Utils
-@model ConsortiumsList;
+@model (ConsortiumsList ConsortiumsList, bool CanManageConsortium);
 @{
     ViewData["Title"] = ConsortiumPageTitles.ConsortiumManagement;
     ViewBag.Breadcrumbs = AhpBreadcrumbsBuilder
-        .New()
-        .WithOrganisation(Model.OrganisationName)
+        .Empty()
+        .WithOrganisation(Model.ConsortiumsList.OrganisationName)
+        .WithConsortiumManagement()
         .Build();
 }
 
 <he-div-grid-column-full>
-    <vc:page-header title="@ConsortiumPageTitles.ConsortiumManagement" caption="@Model.OrganisationName"/>
+    <vc:page-header title="@ConsortiumPageTitles.ConsortiumManagement" caption="@Model.ConsortiumsList.OrganisationName"/>
 
-    @if (Model.Consortiums.Any())
+    @if (Model.ConsortiumsList.Consortiums.Any())
     {
         <gds-p>
             View the list of your consortia.
         </gds-p>
 
-        <vc:consortiums-table consortiums-list="@Model"/>
+        <vc:consortiums-table consortiums-list="@Model.ConsortiumsList"/>
     }
     else
     {
@@ -35,8 +36,8 @@
 
 <gds-div-grid-column-two-thirds>
     <a
-        class="govuk-heading-m govuk-!-margin-top-9"
-        href="@Url.Action(nameof(ConsortiumController.Start), new ControllerName(nameof(ConsortiumController)).WithoutPrefix())"
+        class="govuk-heading-m govuk-!-margin-top-9 @(Model.CanManageConsortium ? null : "link-disabled")"
+        href="@(Model.CanManageConsortium ? Url.Action(nameof(ConsortiumController.Start), new ControllerName(nameof(ConsortiumController)).WithoutPrefix()) : null)"
         data-testId="create-new-consortium">
         Create new consortium
     </a>

@@ -675,6 +675,12 @@ namespace HE.Investments.Common.CRM.Model
 			public const string invln_Note = "invln_note";
 			public const string invln_PEP = "invln_pep";
 			public const string invln_pepName = "invln_pepname";
+			public const string invln_PrimaryContactforGrowth = "invln_primarycontactforgrowth";
+			public const string invln_primarycontactforgrowthName = "invln_primarycontactforgrowthname";
+			public const string invln_PrimaryContactforProviderManagement = "invln_primarycontactforprovidermanagement";
+			public const string invln_primarycontactforprovidermanagementName = "invln_primarycontactforprovidermanagementname";
+			public const string invln_PrimaryContactforProviderServices = "invln_primarycontactforproviderservices";
+			public const string invln_primarycontactforproviderservicesName = "invln_primarycontactforproviderservicesname";
 			public const string invln_role = "invln_role";
 			public const string invln_roleName = "invln_rolename";
 			public const string invln_scheme_submitedby_contact = "invln_scheme_submitedby_contact";
@@ -4857,6 +4863,108 @@ namespace HE.Investments.Common.CRM.Model
 				if (this.FormattedValues.Contains("invln_pep"))
 				{
 					return this.FormattedValues["invln_pep"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_primarycontactforgrowth")]
+		public System.Nullable<bool> invln_PrimaryContactforGrowth
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_primarycontactforgrowth");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_PrimaryContactforGrowth");
+				this.SetAttributeValue("invln_primarycontactforgrowth", value);
+				this.OnPropertyChanged("invln_PrimaryContactforGrowth");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_primarycontactforgrowthname")]
+		public string invln_primarycontactforgrowthName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_primarycontactforgrowth"))
+				{
+					return this.FormattedValues["invln_primarycontactforgrowth"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_primarycontactforprovidermanagement")]
+		public System.Nullable<bool> invln_PrimaryContactforProviderManagement
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_primarycontactforprovidermanagement");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_PrimaryContactforProviderManagement");
+				this.SetAttributeValue("invln_primarycontactforprovidermanagement", value);
+				this.OnPropertyChanged("invln_PrimaryContactforProviderManagement");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_primarycontactforprovidermanagementname")]
+		public string invln_primarycontactforprovidermanagementName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_primarycontactforprovidermanagement"))
+				{
+					return this.FormattedValues["invln_primarycontactforprovidermanagement"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_primarycontactforproviderservices")]
+		public System.Nullable<bool> invln_PrimaryContactforProviderServices
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_primarycontactforproviderservices");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_PrimaryContactforProviderServices");
+				this.SetAttributeValue("invln_primarycontactforproviderservices", value);
+				this.OnPropertyChanged("invln_PrimaryContactforProviderServices");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_primarycontactforproviderservicesname")]
+		public string invln_primarycontactforproviderservicesName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_primarycontactforproviderservices"))
+				{
+					return this.FormattedValues["invln_primarycontactforproviderservices"];
 				}
 				else
 				{

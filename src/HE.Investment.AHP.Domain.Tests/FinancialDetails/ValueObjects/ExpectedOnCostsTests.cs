@@ -15,7 +15,7 @@ public class ExpectedOnCostsTests
         // then
         action.Should()
             .ThrowExactly<DomainValidationException>()
-            .WithMessage("Enter the expected on works costs, in pounds");
+            .WithMessage("Enter the expected on costs, in pounds");
     }
 
     [Fact]
@@ -28,7 +28,7 @@ public class ExpectedOnCostsTests
         action.Should()
             .ThrowExactly<DomainValidationException>()
             .Which.OperationResult.Errors.Should()
-            .ContainSingle(x => x.ErrorMessage == "The expected on works costs must be 0 or more");
+            .ContainSingle(x => x.ErrorMessage == "The expected on costs must be 0 or more");
     }
 
     [Fact]
@@ -41,7 +41,7 @@ public class ExpectedOnCostsTests
         action.Should()
             .ThrowExactly<DomainValidationException>()
             .Which.OperationResult.Errors.Should()
-            .ContainSingle(x => x.ErrorMessage == "The expected on works costs must be a whole number, like 300");
+            .ContainSingle(x => x.ErrorMessage == "The expected on costs must be a whole number, like 300");
     }
 
     [Theory]

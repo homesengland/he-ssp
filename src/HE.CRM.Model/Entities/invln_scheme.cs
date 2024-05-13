@@ -334,6 +334,8 @@ namespace DataverseModel
 			public const string invln_workscostsm2 = "invln_workscostsm2";
 			public const string invln_workscostsm2asapercentoftheareaavgscore = "invln_workscostsm2asapercentoftheareaavgscore";
 			public const string invln_worksm2asapercentageofareaavg = "invln_worksm2asapercentageofareaavg";
+			public const string invln_WorkssCostsm2 = "invln_worksscostsm2";
+			public const string invln_worksscostsm2_Base = "invln_worksscostsm2_base";
 			public const string lk_invln_scheme_createdby = "lk_invln_scheme_createdby";
 			public const string lk_invln_scheme_createdonbehalfby = "lk_invln_scheme_createdonbehalfby";
 			public const string lk_invln_scheme_modifiedby = "lk_invln_scheme_modifiedby";
@@ -3594,6 +3596,36 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_worksm2asapercentageofareaavg");
 				this.SetAttributeValue("invln_worksm2asapercentageofareaavg", value);
 				this.OnPropertyChanged("invln_worksm2asapercentageofareaavg");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_worksscostsm2")]
+		public Microsoft.Xrm.Sdk.Money invln_WorkssCostsm2
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_worksscostsm2");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_WorkssCostsm2");
+				this.SetAttributeValue("invln_worksscostsm2", value);
+				this.OnPropertyChanged("invln_WorkssCostsm2");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Works Costs/m2 in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_worksscostsm2_base")]
+		public Microsoft.Xrm.Sdk.Money invln_worksscostsm2_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_worksscostsm2_base");
 			}
 		}
 		

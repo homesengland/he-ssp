@@ -5,13 +5,13 @@
 
 @{
     ViewData["Title"] = "Confirm Your Local Authority";
-    var redirect = Context.Request.Query["redirect"];
+    var workflow = Context.Request.Query["workflow"];
 }
 
 <gds-div-grid-column-two-thirds>
-    <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("LocalAuthorityResult", "Site", new { siteId = Model.ViewModel.SiteId, phrase = Model.ViewModel.Phrase, redirect })"></gds-back-link>
+    <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("LocalAuthorityResult", "Site", new { siteId = Model.ViewModel.SiteId, phrase = Model.ViewModel.Phrase, workflow })"></gds-back-link>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
-    <form asp-controller="Site" asp-action="LocalAuthorityConfirm" asp-route-localAuthorityCode=@(Model.ViewModel.LocalAuthorityCode) asp-route-phrase=@(Model.ViewModel.Phrase) asp-route-redirect=@redirect asp-method="post" novalidate>
+    <form asp-controller="Site" asp-action="LocalAuthorityConfirm" asp-route-localAuthorityCode=@(Model.ViewModel.LocalAuthorityCode) asp-route-phrase=@(Model.ViewModel.Phrase) asp-route-workflow=@workflow asp-method="post" novalidate>
         <gds-field-set>
             <vc:page-header title="@SitePageTitles.LocalAuthorityConfirm"  caption="@ViewBag.SiteName"/>
 

@@ -17,6 +17,11 @@
                 {
                     <gds-p>@item.Description</gds-p>
                 }
+
+                @if (item.DynamicContent != null)
+                {
+                    <vc:dynamic-component component="@item.DynamicContent"/>
+                }
             </gds-p>
         </li>
     }

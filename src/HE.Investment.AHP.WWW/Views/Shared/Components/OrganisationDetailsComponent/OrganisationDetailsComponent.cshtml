@@ -1,4 +1,4 @@
-@model (string Street, string City, string PostalCode, string ProviderCode)
+@model (string Street, string City, string PostalCode, string ProviderCode, string CompanyHouseNumber)
 
 @if (!string.IsNullOrEmpty(Model.Street))
 {
@@ -18,4 +18,9 @@
 @if (!string.IsNullOrEmpty(Model.ProviderCode))
 {
     <div>Provider code: @Model.ProviderCode</div>
+}
+
+@if (!string.IsNullOrEmpty(Model.CompanyHouseNumber))
+{
+    <div>Companies house number: @Model.CompanyHouseNumber</div>
 }

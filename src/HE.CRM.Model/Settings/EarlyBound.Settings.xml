@@ -13,9 +13,13 @@
     <ActionsWhitelist>invln_changeahpapplicationstatus|
 invln_changeloanapplicationexternalstatus|
 invln_checkifapplicationwithgivennameexists|
+invln_checkiffrontdoorprojectwithgivennameexists|
 invln_checkifloanapplicationwithgivennameexists|
 invln_checkifsitewithgivennameexists|
+invln_checkifsitewithstrategicsitenameexists|
 invln_createsinglesitedetail|
+invln_deactivatefrontdoorproject|
+invln_deactivatefrontdoorsite|
 invln_deletedeliveryphase|
 invln_deletehometype|
 invln_deleteloanapplication|
@@ -34,6 +38,7 @@ invln_getmultipledeliveryphase|
 invln_getmultiplefrontdoorprojects|
 invln_getmultiplefrontdoorprojectssite|
 invln_getmultiplelocalauthorities|
+invln_getmultiplelocalauthoritiesformodule|
 invln_getmultipleprogramme|
 invln_getmultiplesites|
 invln_getorganisationchangedetails|
@@ -49,8 +54,10 @@ invln_getsinglesitedetails|
 invln_gettemporaryportaldata|
 invln_gettypeofhomeslist|
 invln_invitecontacttojoinexistingorganisation|
+invln_isconsortiumexistforprogrammeandorganisation|
 invln_linkcontactwithorganization|
 invln_requestaddingmembertoconsortium|
+invln_requesttoremovemember|
 invln_returnuserprofile|
 invln_savetemporaryportaldata|
 invln_searchlocalauthority|

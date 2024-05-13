@@ -2,6 +2,7 @@ using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investment.AHP.WWW.Controllers;
+using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Components.SectionSummary;
@@ -19,7 +20,11 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
 
     public IEnumerable<SectionSummaryViewModel> CreateSiteSummary(SiteModel siteDetails, IUrlHelper urlHelper, bool isEditable, bool useWorkflowRedirection)
     {
-        string CreateAction(string actionName) => CreateSiteActionUrl(urlHelper, SiteId.From(siteDetails.Id!), actionName, useWorkflowRedirection);
+        var workflow = useWorkflowRedirection
+            ? new SiteWorkflow(SiteWorkflowState.Name, siteDetails).GetEncodedWorkflow().Value
+            : null;
+
+        string CreateAction(string actionName) => CreateSiteActionUrl(urlHelper, SiteId.From(siteDetails.Id!), actionName, workflow);
 
         yield return new SectionSummaryViewModel("Site details", CreateSiteDetailsSummary(siteDetails, CreateAction, isEditable));
         yield return new SectionSummaryViewModel("Section 106", CreateSection106Summary(siteDetails.Section106, CreateAction, isEditable));
@@ -410,12 +415,12 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
         };
     }
 
-    private static string CreateSiteActionUrl(IUrlHelper urlHelper, SiteId siteId, string actionName, bool useWorkflowRedirection)
+    private static string CreateSiteActionUrl(IUrlHelper urlHelper, SiteId siteId, string actionName, string? workflow)
     {
         var action = urlHelper.Action(
             actionName,
             new ControllerName(nameof(SiteController)).WithoutPrefix(),
-            new { siteId = siteId.Value, redirect = useWorkflowRedirection ? nameof(SiteController.CheckAnswers) : null });
+            new { siteId = siteId.Value, workflow });
 
         return action ?? string.Empty;
     }

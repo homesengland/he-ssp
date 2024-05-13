@@ -48,7 +48,7 @@ public class ConsortiumMemberController : WorkflowController<ConsortiumMemberWor
     {
         var userAccount = await _ahpUserContext.GetSelectedAccount();
         var consortium = await GetConsortiumDetails(consortiumId, fetchAddress: false, cancellationToken);
-        var model = new ManageConsortiumModel(consortium, userAccount.CanManageConsortium);
+        var model = new ManageConsortiumModel(consortium, userAccount.Organisation!.RegisteredCompanyName, userAccount.CanManageConsortium);
 
         return consortium.LeadPartner.OrganisationId != userAccount.SelectedOrganisationId()
             ? View("MemberDashboard", model)
