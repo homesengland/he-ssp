@@ -30,6 +30,10 @@ parameters:
   displayName: Deploy Plugins Solution ?
   type: boolean
   default: true
+- name: deployEnvironmentVariable
+  displayName: Deploy Environment Variable ?
+  type: boolean
+  default: true
 
 variables:
   solution: '**/*.sln'
@@ -54,6 +58,7 @@ stages:
     deployMainSolution: '${{ parameters.deployMainSolution }}'
     deployFlowsSolution: '${{ parameters.deployFlowsSolution }}'
     deployPluginsSolution: '${{ parameters.deployPluginsSolution }}'
+    deployEnvironmentVariable: '${{ parameters.deployEnvironmentVariable }}'
 
 
 - template: azure-pipelines-crm-ahp-upgrade.yml@he-invst-deployment
@@ -63,3 +68,4 @@ stages:
     deployMainSolution: '${{ parameters.deployMainSolution }}'
     deployFlowsSolution: '${{ parameters.deployFlowsSolution }}'
     deployPluginsSolution: '${{ parameters.deployPluginsSolution }}'
+    deployEnvironmentVariable: '${{ parameters.deployEnvironmentVariable }}'
