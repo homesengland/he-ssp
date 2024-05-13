@@ -28,23 +28,29 @@ public class SiteWorkflow : EncodedStateRouting<SiteWorkflowState>
         {
             SiteWorkflowState.Start => true,
             SiteWorkflowState.Name => true,
+            SiteWorkflowState.Section106GeneralAgreement => true,
+            SiteWorkflowState.Section106AffordableHousing => _siteModel?.Section106?.GeneralAgreement == true,
+            SiteWorkflowState.Section106OnlyAffordableHousing => _siteModel?.Section106?.AffordableHousing == true,
+            SiteWorkflowState.Section106AdditionalAffordableHousing => _siteModel?.Section106?.OnlyAffordableHousing == false,
+            SiteWorkflowState.Section106CapitalFundingEligibility => _siteModel?.Section106?.GeneralAgreement == true,
+            SiteWorkflowState.Section106LocalAuthorityConfirmation => _siteModel?.Section106?.AdditionalAffordableHousing == true,
+            SiteWorkflowState.Section106Ineligible => _siteModel?.Section106?.IsIneligible == true,
             SiteWorkflowState.LocalAuthoritySearch => true,
             SiteWorkflowState.LocalAuthorityResult => true,
             SiteWorkflowState.LocalAuthorityConfirm => true,
             SiteWorkflowState.LocalAuthorityReset => true,
             SiteWorkflowState.PlanningStatus => true,
             SiteWorkflowState.PlanningDetails => true,
-            SiteWorkflowState.Section106GeneralAgreement => true,
-            SiteWorkflowState.Section106AffordableHousing => _siteModel?.Section106?.GeneralAgreement == true,
-            SiteWorkflowState.Section106AdditionalAffordableHousing => _siteModel?.Section106?.OnlyAffordableHousing == false,
-            SiteWorkflowState.Section106OnlyAffordableHousing => _siteModel?.Section106?.AffordableHousing == true,
-            SiteWorkflowState.Section106CapitalFundingEligibility => _siteModel?.Section106?.GeneralAgreement == true,
-            SiteWorkflowState.Section106LocalAuthorityConfirmation => _siteModel?.Section106?.AdditionalAffordableHousing == true,
-            SiteWorkflowState.Section106Ineligible => _siteModel?.Section106?.IsIneligible == true,
+            SiteWorkflowState.LandRegistry => IsLandTitleRegistered(),
             SiteWorkflowState.NationalDesignGuide => true,
             SiteWorkflowState.BuildingForHealthyLife => true,
             SiteWorkflowState.NumberOfGreenLights => IsBuildingForHealthyLife(),
-            SiteWorkflowState.LandRegistry => IsLandTitleRegistered(),
+            SiteWorkflowState.DevelopingPartner => IsConsortiumMember(),
+            SiteWorkflowState.DevelopingPartnerConfirm => IsConsortiumMember(),
+            SiteWorkflowState.OwnerOfTheLand => IsConsortiumMember(),
+            SiteWorkflowState.OwnerOfTheLandConfirm => IsConsortiumMember(),
+            SiteWorkflowState.OwnerOfTheHomes => IsConsortiumMember(),
+            SiteWorkflowState.OwnerOfTheHomesConfirm => IsConsortiumMember(),
             SiteWorkflowState.LandAcquisitionStatus => true,
             SiteWorkflowState.TenderingStatus => true,
             SiteWorkflowState.ContractorDetails => IsConditionalOrUnconditionalWorksContract(),
@@ -270,6 +276,8 @@ public class SiteWorkflow : EncodedStateRouting<SiteWorkflowState>
     private bool IsNotApplicableOrMissing() => _siteModel?.TenderingStatusDetails.TenderingStatus is SiteTenderingStatus.NotApplicable or null;
 
     private bool IsBuildingForHealthyLife() => _siteModel?.BuildingForHealthyLife is BuildingForHealthyLifeType.Yes;
+
+    private bool IsConsortiumMember() => _siteModel?.IsConsortiumMember == true;
 
     private bool IsForTravellerPitchSite() => _siteModel?.SiteUseDetails.IsForTravellerPitchSite == true;
 
