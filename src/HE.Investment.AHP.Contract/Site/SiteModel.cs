@@ -40,4 +40,6 @@ public class SiteModel
     public IList<SiteProcurement> SiteProcurements { get; set; }
 
     public SiteModernMethodsOfConstruction ModernMethodsOfConstruction { get; set; }
+
+    public bool IsConsortiumMember { get; set; }
 }

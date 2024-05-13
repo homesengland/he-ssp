@@ -1,5 +1,6 @@
 using He.AspNetCore.Mvc.Gds.Components.Extensions;
 using HE.Investment.AHP.Contract.Common.Enums;
+using HE.Investment.AHP.Contract.Common.Queries;
 using HE.Investment.AHP.Contract.PrefillData.Queries;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Commands;
@@ -539,6 +540,48 @@ public class SiteController : WorkflowController<SiteWorkflowState>
             cancellationToken);
     }
 
+    [HttpGet("{siteId}/developing-partner")]
+    [WorkflowState(SiteWorkflowState.DevelopingPartner)]
+    public async Task<IActionResult> DevelopingPartner([FromRoute] string siteId, [FromQuery] int? page, CancellationToken cancellationToken)
+    {
+        return View(await GetSelectPartnerModel(siteId, page, cancellationToken));
+    }
+
+    [HttpGet("{siteId}/developing-partner-confirm")]
+    [WorkflowState(SiteWorkflowState.DevelopingPartnerConfirm)]
+    public Task<IActionResult> DevelopingPartnerConfirm()
+    {
+        return Task.FromResult<IActionResult>(View(null));
+    }
+
+    [HttpGet("{siteId}/owner-of-the-land")]
+    [WorkflowState(SiteWorkflowState.OwnerOfTheLand)]
+    public async Task<IActionResult> OwnerOfTheLand([FromRoute] string siteId, [FromQuery] int? page, CancellationToken cancellationToken)
+    {
+        return View(await GetSelectPartnerModel(siteId, page, cancellationToken));
+    }
+
+    [HttpGet("{siteId}/owner-of-the-land-confirm")]
+    [WorkflowState(SiteWorkflowState.OwnerOfTheLandConfirm)]
+    public Task<IActionResult> OwnerOfTheLandConfirm()
+    {
+        return Task.FromResult<IActionResult>(View(null));
+    }
+
+    [HttpGet("{siteId}/owner-of-the-homes")]
+    [WorkflowState(SiteWorkflowState.OwnerOfTheHomes)]
+    public async Task<IActionResult> OwnerOfTheHomes([FromRoute] string siteId, [FromQuery] int? page, CancellationToken cancellationToken)
+    {
+        return View(await GetSelectPartnerModel(siteId, page, cancellationToken));
+    }
+
+    [HttpGet("{siteId}/owner-of-the-homes-confirm")]
+    [WorkflowState(SiteWorkflowState.OwnerOfTheHomesConfirm)]
+    public Task<IActionResult> OwnerOfTheHomesConfirm()
+    {
+        return Task.FromResult<IActionResult>(View(null));
+    }
+
     [HttpGet("{siteId}/land-acquisition-status")]
     [WorkflowState(SiteWorkflowState.LandAcquisitionStatus)]
     public async Task<IActionResult> LandAcquisitionStatus([FromRoute] string siteId, CancellationToken cancellationToken)
@@ -986,5 +1029,13 @@ public class SiteController : WorkflowController<SiteWorkflowState>
             isSectionCompleted ?? (siteDetails.Status == SiteStatus.Completed ? IsSectionCompleted.Yes : IsSectionCompleted.Undefied),
             sections.ToList(),
             isEditable);
+    }
+
+    private async Task<SelectPartnerModel> GetSelectPartnerModel(string siteId, int? page, CancellationToken cancellationToken)
+    {
+        var site = await GetSiteBasicDetails(siteId, cancellationToken);
+        var partners = await _mediator.Send(new GetConsortiumPartnersQuery(new PaginationRequest(page ?? 1)), cancellationToken);
+
+        return new SelectPartnerModel(site.Id, site.Name, partners);
     }
 }
