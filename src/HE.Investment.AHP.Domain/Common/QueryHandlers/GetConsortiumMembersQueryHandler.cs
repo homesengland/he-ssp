@@ -9,19 +9,19 @@ using MediatR;
 
 namespace HE.Investment.AHP.Domain.Common.QueryHandlers;
 
-public class GetConsortiumPartnersQueryHandler : IRequestHandler<GetConsortiumPartnersQuery, PaginationResult<ConsortiumMemberDetails>>
+public class GetConsortiumMembersQueryHandler : IRequestHandler<GetConsortiumMembersQuery, PaginationResult<ConsortiumMemberDetails>>
 {
     private readonly IMediator _mediator;
 
     private readonly IAhpUserContext _ahpUserContext;
 
-    public GetConsortiumPartnersQueryHandler(IMediator mediator, IAhpUserContext ahpUserContext)
+    public GetConsortiumMembersQueryHandler(IMediator mediator, IAhpUserContext ahpUserContext)
     {
         _mediator = mediator;
         _ahpUserContext = ahpUserContext;
     }
 
-    public async Task<PaginationResult<ConsortiumMemberDetails>> Handle(GetConsortiumPartnersQuery request, CancellationToken cancellationToken)
+    public async Task<PaginationResult<ConsortiumMemberDetails>> Handle(GetConsortiumMembersQuery request, CancellationToken cancellationToken)
     {
         var userAccount = await _ahpUserContext.GetSelectedAccount();
         if (userAccount.Consortium.HasNoConsortium)
@@ -30,14 +30,14 @@ public class GetConsortiumPartnersQueryHandler : IRequestHandler<GetConsortiumPa
         }
 
         var consortiumDetails = await _mediator.Send(new GetConsortiumDetailsQuery(userAccount.Consortium.ConsortiumId, true), cancellationToken);
-        var partners = new[] { consortiumDetails.LeadPartner }.Concat(consortiumDetails.Members.Where(x => x.Status == ConsortiumMemberStatus.Active))
+        var members = new[] { consortiumDetails.LeadPartner }.Concat(consortiumDetails.Members.Where(x => x.Status == ConsortiumMemberStatus.Active))
             .OrderBy(x => x.Details.Name)
             .ToList();
 
         return new PaginationResult<ConsortiumMemberDetails>(
-            partners.Skip((request.PaginationRequest.Page - 1) * request.PaginationRequest.ItemsPerPage).Take(request.PaginationRequest.ItemsPerPage).ToList(),
+            members.Skip((request.PaginationRequest.Page - 1) * request.PaginationRequest.ItemsPerPage).Take(request.PaginationRequest.ItemsPerPage).ToList(),
             request.PaginationRequest.Page,
             request.PaginationRequest.ItemsPerPage,
-            partners.Count);
+            members.Count);
     }
 }

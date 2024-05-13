@@ -24,6 +24,12 @@
                 @Model.title
             </legend>
         }
+        else if (Model.titleType == InputTitleType.InputBoldDescription)
+        {
+            <strong>
+                @Model.title
+            </strong>
+        }
         else
         {
             <gds-p>@Model.title</gds-p>

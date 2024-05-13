@@ -1,8 +1,40 @@
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
+@using HE.Investment.AHP.WWW.Extensions
+@using HE.Investment.AHP.WWW.Views.Shared.Components.OrganisationDetailsComponent
+@using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToSitesLink
 @using HE.Investment.AHP.WWW.Views.Site.Const
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model (HE.Investments.AHP.Consortium.Contract.OrganisationDetails Organisation, bool? IsConfirmed)
 @{
-    ViewData["Title"] = SitePageTitles.OwnerOfTheLand;
+    ViewData["Title"] = SitePageTitles.OwnerOfTheLandConfirm;
+    var workflow = Context.Request.Query["workflow"];
+    var siteId = this.GetSiteIdFromRoute();
+
+    var organisationDetails = new DynamicComponentViewModel(
+        nameof(OrganisationDetailsComponent),
+        new
+        {
+            street = Model.Organisation.Street,
+            city = Model.Organisation.City,
+            postalCode = Model.Organisation.PostalCode,
+            companyHouseNumber = Model.Organisation.CompanyHouseNumber
+        });
 }
 
 <gds-div-grid-column-two-thirds>
-    TODO: @SitePageTitles.OwnerOfTheLand
+    <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("OwnerOfTheLand", "Site", new { siteId, workflow })"></gds-back-link>
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+    <vc:page-header title="@SitePageTitles.OwnerOfTheLandConfirm" caption="@ViewBag.SiteName"/>
+
+    <form asp-controller="Site" asp-action="OwnerOfTheLandConfirm" asp-route-workflow=@workflow asp-method="post" novalidate>
+        <vc:radio-yes-no
+            title="@Model.Organisation.Name"
+            title-type="InputTitleType.InputBoldDescription"
+            field-name="IsConfirmed"
+            value="@Model.IsConfirmed"
+            additional-content="@organisationDetails"/>
+
+        <vc:form-button/>
+        <vc:return-to-sites-link/>
+    </form>
 </gds-div-grid-column-two-thirds>

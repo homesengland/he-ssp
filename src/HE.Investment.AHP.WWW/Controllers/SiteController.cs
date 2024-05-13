@@ -16,6 +16,8 @@ using HE.Investment.AHP.WWW.Models.Site.Factories;
 using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
+using HE.Investments.AHP.Consortium.Contract;
+using HE.Investments.AHP.Consortium.Contract.Queries;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Constants;
 using HE.Investments.Common.Contract.Enum;
@@ -547,11 +549,11 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         return View(await GetSelectPartnerModel(siteId, page, cancellationToken));
     }
 
-    [HttpGet("{siteId}/developing-partner-confirm")]
+    [HttpGet("{siteId}/developing-partner-confirm/{organisationId}")]
     [WorkflowState(SiteWorkflowState.DevelopingPartnerConfirm)]
-    public Task<IActionResult> DevelopingPartnerConfirm()
+    public async Task<IActionResult> DevelopingPartnerConfirm([FromRoute] string siteId, [FromRoute] string organisationId, CancellationToken cancellationToken)
     {
-        return Task.FromResult<IActionResult>(View(null));
+        return View(await GetConfirmPartnerModel(siteId, organisationId, x => x.DevelopingPartner?.OrganisationId, cancellationToken));
     }
 
     [HttpGet("{siteId}/owner-of-the-land")]
@@ -561,11 +563,11 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         return View(await GetSelectPartnerModel(siteId, page, cancellationToken));
     }
 
-    [HttpGet("{siteId}/owner-of-the-land-confirm")]
+    [HttpGet("{siteId}/owner-of-the-land-confirm/{organisationId}")]
     [WorkflowState(SiteWorkflowState.OwnerOfTheLandConfirm)]
-    public Task<IActionResult> OwnerOfTheLandConfirm()
+    public async Task<IActionResult> OwnerOfTheLandConfirm([FromRoute] string siteId, [FromRoute] string organisationId, CancellationToken cancellationToken)
     {
-        return Task.FromResult<IActionResult>(View(null));
+        return View(await GetConfirmPartnerModel(siteId, organisationId, x => x.OwnerOfTheLand?.OrganisationId, cancellationToken));
     }
 
     [HttpGet("{siteId}/owner-of-the-homes")]
@@ -575,11 +577,11 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         return View(await GetSelectPartnerModel(siteId, page, cancellationToken));
     }
 
-    [HttpGet("{siteId}/owner-of-the-homes-confirm")]
+    [HttpGet("{siteId}/owner-of-the-homes-confirm/{organisationId}")]
     [WorkflowState(SiteWorkflowState.OwnerOfTheHomesConfirm)]
-    public Task<IActionResult> OwnerOfTheHomesConfirm()
+    public async Task<IActionResult> OwnerOfTheHomesConfirm([FromRoute] string siteId, [FromRoute] string organisationId, CancellationToken cancellationToken)
     {
-        return Task.FromResult<IActionResult>(View(null));
+        return View(await GetConfirmPartnerModel(siteId, organisationId, x => x.OwnerOfTheHomes?.OrganisationId, cancellationToken));
     }
 
     [HttpGet("{siteId}/land-acquisition-status")]
@@ -1034,8 +1036,21 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     private async Task<SelectPartnerModel> GetSelectPartnerModel(string siteId, int? page, CancellationToken cancellationToken)
     {
         var site = await GetSiteBasicDetails(siteId, cancellationToken);
-        var partners = await _mediator.Send(new GetConsortiumPartnersQuery(new PaginationRequest(page ?? 1)), cancellationToken);
+        var partners = await _mediator.Send(new GetConsortiumMembersQuery(new PaginationRequest(page ?? 1)), cancellationToken);
 
         return new SelectPartnerModel(site.Id, site.Name, partners);
+    }
+
+    private async Task<(OrganisationDetails Organisation, bool? IsConfirmed)> GetConfirmPartnerModel(
+        string siteId,
+        string organisationId,
+        Func<SiteModel, string?> getSelectedPartnerId,
+        CancellationToken cancellationToken)
+    {
+        var site = await GetSiteDetails(siteId, cancellationToken);
+        var organisationDetails = await _mediator.Send(new GetOrganisationDetailsQuery(OrganisationId.From(organisationId)), cancellationToken);
+        var currentlySelectedPartner = getSelectedPartnerId(site);
+
+        return (organisationDetails, organisationDetails.OrganisationId == currentlySelectedPartner ? true : null);
     }
 }
