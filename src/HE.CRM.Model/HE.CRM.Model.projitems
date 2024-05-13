@@ -88,6 +88,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\RetrieveEnvironmentVariableValue.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\UpsertMultiple.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\AHP_DELIVERY_PHASE_NOTIFICATION_OF_ADDITIONAL_PAYMENTS_FOR_PHASE.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)crmserialiedparameters\AHP_DELIVERY_PHASE_NOTIFICATION_OF_ADJUSTMENT_ACCEPTED.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\AHP_EXTERNAL_APPLICATION_ON_HOLD.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\AHP_EXTERNAL_APPLICATION_REFERRED_BACK_TO_APPLICANT.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\AHP_EXTERNAL_APPLICATION_REJECTED.cs" />

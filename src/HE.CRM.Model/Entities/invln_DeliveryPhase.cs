@@ -77,6 +77,9 @@ namespace DataverseModel
 			public const string invln_allowamendmentstomilestoneproportionsName = "invln_allowamendmentstomilestoneproportionsname";
 			public const string invln_Application = "invln_application";
 			public const string invln_ApplicationName = "invln_applicationname";
+			public const string invln_Approvedby = "invln_approvedby";
+			public const string invln_ApprovedbyName = "invln_approvedbyname";
+			public const string invln_ApprovedbyYomiName = "invln_approvedbyyominame";
 			public const string invln_buildactivitytype = "invln_buildactivitytype";
 			public const string invln_buildactivitytypeName = "invln_buildactivitytypename";
 			public const string invln_ClaimingtheMilestoneConfirmed = "invln_claimingthemilestoneconfirmed";
@@ -86,7 +89,9 @@ namespace DataverseModel
 			public const string invln_CompletionPercentageValue = "invln_completionpercentagevalue";
 			public const string invln_CompletionValue = "invln_completionvalue";
 			public const string invln_completionvalue_Base = "invln_completionvalue_base";
+			public const string invln_Dateofapproval = "invln_dateofapproval";
 			public const string invln_deliveryphase_Application_invln_scheme = "invln_deliveryphase_Application_invln_scheme";
+			public const string invln_deliveryphase_Approvedby_systemuser = "invln_deliveryphase_Approvedby_systemuser";
 			public const string invln_DeliveryPhaseId = "invln_deliveryphaseid";
 			public const string Id = "invln_deliveryphaseid";
 			public const string invln_invln_homesindeliveryphase_deliveryphasel = "invln_invln_homesindeliveryphase_deliveryphasel";
@@ -482,6 +487,57 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_approvedby")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_Approvedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_approvedby");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_Approvedby");
+				this.SetAttributeValue("invln_approvedby", value);
+				this.OnPropertyChanged("invln_Approvedby");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_approvedbyname")]
+		public string invln_ApprovedbyName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_approvedby"))
+				{
+					return this.FormattedValues["invln_approvedby"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_approvedbyyominame")]
+		public string invln_ApprovedbyYomiName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_approvedby"))
+				{
+					return this.FormattedValues["invln_approvedby"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_buildactivitytype")]
 		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_buildactivitytype
 		{
@@ -628,6 +684,23 @@ namespace DataverseModel
 			get
 			{
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_completionvalue_base");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_dateofapproval")]
+		public System.Nullable<System.DateTime> invln_Dateofapproval
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("invln_dateofapproval");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_Dateofapproval");
+				this.SetAttributeValue("invln_dateofapproval", value);
+				this.OnPropertyChanged("invln_Dateofapproval");
 			}
 		}
 		
@@ -1485,6 +1558,27 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_deliveryphase_Application_invln_scheme");
 				this.SetRelatedEntity<DataverseModel.invln_scheme>("invln_deliveryphase_Application_invln_scheme", null, value);
 				this.OnPropertyChanged("invln_deliveryphase_Application_invln_scheme");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_deliveryphase_Approvedby_systemuser
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_approvedby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_deliveryphase_Approvedby_systemuser")]
+		public DataverseModel.SystemUser invln_deliveryphase_Approvedby_systemuser
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.SystemUser>("invln_deliveryphase_Approvedby_systemuser", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_deliveryphase_Approvedby_systemuser");
+				this.SetRelatedEntity<DataverseModel.SystemUser>("invln_deliveryphase_Approvedby_systemuser", null, value);
+				this.OnPropertyChanged("invln_deliveryphase_Approvedby_systemuser");
 			}
 		}
 		
