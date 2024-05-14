@@ -4,6 +4,10 @@ namespace HE.Investment.AHP.Domain.UserContext;
 
 public class AhpAccessContext : IAhpAccessContext
 {
+    public const string EditApplications = $"{nameof(UserRole.Admin)},{nameof(UserRole.Enhanced)},{nameof(UserRole.Input)},{nameof(UserRole.Limited)}";
+
+    public const string SubmitApplication = $"{nameof(UserRole.Admin)},{nameof(UserRole.Enhanced)},{nameof(UserRole.Limited)}";
+
     public const string ViewConsortium = $"{nameof(UserRole.Admin)},{nameof(UserRole.Enhanced)},{nameof(UserRole.Input)},{nameof(UserRole.ViewOnly)}";
 
     public const string ManageConsortium = $"{nameof(UserRole.Admin)},{nameof(UserRole.Enhanced)}";
@@ -20,7 +24,13 @@ public class AhpAccessContext : IAhpAccessContext
     public async Task<bool> CanManageConsortium()
     {
         var account = await _ahpUserContext.GetSelectedAccount();
-        return account.CanManageConsortium;
+        return account is { CanManageConsortium: true, Consortium.IsLeadPartner: true };
+    }
+
+    public async Task<bool> CanEditApplication()
+    {
+        var account = await _ahpUserContext.GetSelectedAccount();
+        return account.CanEditApplication;
     }
 
     private static UserRole[] ToUserAccountRoles(string roles)
